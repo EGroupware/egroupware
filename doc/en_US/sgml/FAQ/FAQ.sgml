@@ -1,71 +1,128 @@
 <!DOCTYPE Article PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
 
-<Article id="FAQ">
+<Article id="FAQ" class="faq">
 <Title>phpGroupWare FAQ</title>
 <articleinfo>
-<AUTHOR>
-<firstname>Brandon</FirstName><SurName>Neill</SurName>
-</AUTHOR>
-<PubDate>$Revision$, $Date: 2001/09/25</PubDate>
+<authorgroup>
+<author>
+<firstname>Dan</firstname><surname>Kuykendall</surname>
+</author>
+<author>
+<firstname>Brandon</firstname><surname>Neill</surname>
+</author>
+</authorgroup>
+<pubdate>$Revision$, $Date: 2002/01/05</pubdate>
 
-<Abstract>
+<abstract>
 
-<Para>
+<para>
 Frequently Asked questions related to phpGroupWare
-</Para>
+</para>
 
-</Abstract>
+</abstract>
 </articleinfo>
-<sect1 id="install">
-<Title>Installation</title>
+
+<qandaset>
+<qandadiv> <title>General</title>
+<qandaentry>
+<question><para>Is it phpGroupWare, PHPGroupWare, PHP Groupware, etc?</para></question>
+<answer><para>
+Its phpGroupWare, not any of the others. Only the G and the W should be in caps, its also 1 word, not 2. Sometimes for short we call it phpGW, again, the G and the W are in caps.
+</para></answer>
+</qandaentry>
+<qandaentry>
+<question><para>I didn't find my question here, where can I ask?</para></question>
+<answer><para>
+Many of the developers are on the openprojects irc network (irc.openproject.net) in the #phpgroupware channel.  You can also check the mailing lists and archives at <ulink url="http://savannah.gnu.org/mail/?group_idj=509"><citetitle>phpGroupware - Mailing Lists</citetitle></ulink>
+</para></answer>
+</qandaentry>
+<qandaentry>
+<question><para>How do I add new questions to this list?</para></question>
+<answer><para>
+Email me at <email>brandonne@colorado.dyndns.org</email> or submit them in Tracker on the phpGroupWare site and assign them to brandonne.
+</para></answer>
+</qandaentry>
+</qandadiv>
+
+<qandadiv> <title>Installation</title>
 <para>
 Installation Questions
 </para>
-<sect2>
-<title>Will phpGroupWare work with Windows?</title>
+<qandaentry><question><para>Will phpGroupWare work with Windows?</para></question>
+<answer>
 <para>
-Yes, there are several people who are using it.
+Yes, there are several people who are using it.  Thanks Vincent Larchet <email>vinz@users.sourceforge.net</email> for patching anything we do that breaks phpGroupWare on NT.
 </para>
-</sect2>
-</sect1>
-<sect1>
-<title>Administration</title>
-<sect2>
-<title>Deselecting an application for a user doesn't seem to restrict thier access to that application</title>
+</answer>
+</qandaentry>
+<qandaentry>
+<question><para>Will phpGroupWare work with PHP4/PHP3?</para></question>
+<answer><para>
+Yes, it runs on both PHP3 and PHP4
+</para></answer>
+</qandaentry>
+<qandaentry>
+<question><para>Will phpGroupWare work with SSL</para></question>
+<answer><para>
+Yes, since there are no references to http:// or https:// (unless you put them in the header) there shoudn't be any problems with it.
+</para></answer>
+</qandaentry>
+<qandaentry>
+<question><para>I am having problems installing on PostgreSQL 6.x.</para></question>
+<answer><para>
+phpGroupware is being developed with version 7.x.  I tried installing it on 6.x and ran into several problems.  Unless you plan on toying around with it, you're better of with 7.x.
+</para></answer>
+</qandaentry>
+</qandadiv>
+
+<qandadiv> <title>Administration</title>
+<qandaentry>
+<question><para>Deselecting an application for a user doesn't seem to restrict thier access to that application</para></question>
+<answer>
 <para>
 A user gains access to an application one of two ways, being given access directly, or by belonging to a group that has access.  In order to deny a user access to an application, it must be removed from both the users account, and all the users groups.
 </para>
-</sect2>
-</sect2>
-</sect1>
-<sect1>
-<title>Email application</title>
-<sect2>
-<title>The mail preferences are not updated from the interface "mail preferences"</title>
+</answer>
+</qandaentry>
+</qandadiv>
+<qandadiv> <title>Applications</title>
+<qandadiv> <title>Email</title>
+<qandaentry>
+<question><para>The mail preferences are not updated from the interface "mail preferences"</para></question>
+<answer>
 <para>
 If you are referring to setting the password when using custom email preferences, this is actually a security feature. We do not send the password back to the user as it would still be sent back in plain text. Even though it is displayed with asterisks, it would be in plain text if you view the source html for the page. What we do is check to see if the user entered a value in that field. If so, we take the new password the user enters and encrypt it and save it into the database. This provides for maximum security of user passwords.
 </para>
-</sect2>
-<sect2>
-<title>I'm composing mail, what do I put in the "To" and/or "CC" boxes</title>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question><para>I'm composing mail, what do I put in the "To" and/or "CC" boxes</para></question>
+<answer>
 <para>
- The easiest was is to follow these examples, pay close attention to the spaces, do not add spaces you do not see here: johndoe@example.com johndoe@example.com,jane@example.com,tarzan@example.com "John Doe" <johndoe@example.com> "John Doe" <johndoe@example.com>,"Jane" <jane@example.com> johndoe@example.com,"Jane" <jane@example.com>,tarzan@example.com
+The easiest was is to follow these examples, pay close attention to the spaces, do not add spaces you do not see here: johndoe@example.com johndoe@example.com,jane@example.com,tarzan@example.com "John Doe" &lt;johndoe@example.com&gt; "John Doe" &lt;johndoe@example.com&gt;,"Jane" &lt;jane@example.com&gt; johndoe@example.com,"Jane" &lt;jane@example.com&gt;,tarzan@example.com
 </para>
-</sect2>
-<sect2>
-<title>My IMAP server logs show many login attempts with garbage usernames, why?</title>
+</answer>
+</qandaentry>
+<qandaentry>
+<question><para>My IMAP server logs show many login attempts with garbage usernames, why?</para></question>
+<answer>
 <para>
 At this time we know this happens when you enter "localhost" for your POP/IMAP mail server hostname or IP address.  For now the solution would be to try the actual IP or the machine name (resolvable via DNS, hosts, or other means) for your IMAP email server.
 </para>
-</sect2>
-<sect2>
-<title>Error message when adding large signature files</title>
+</answer>
+</qandaentry>
+<qandaentry>
+<question><para>Error message when adding large signature files</para></question>
+<answer>
 <para>
 The max number of characters for a sig file is 8140.  Extremely large sig files are not recommnded anyway,  Usenet recommends sig files of 1-5 lines in length, 3 being preferred.
 </para>
-</sect2>
-<sect2>
-<title>I can not attach files to an email, I get errors about "unlink"</title>
+</answer>
+</qandaentry>
+<qandaentry>
+<question><para>I can not attach files to an email, I get errors about "unlink"</para></question>
+<answer>
 <para>
 There are two possible causes for this problem, the first and least likely is the web server temp directory, check your webserver configuration for this.  The second is the temp directory which phpGroupWare uses.  To check this, follow these steps:
 </para>
@@ -76,11 +133,14 @@ There are two possible causes for this problem, the first and least likely is th
 - under "Path Information" see the box labeled "Enter full path for temporary files: Examples: /tmp, C:\TEMP"
 - Make sure that directory listed has permissions thar are at least 0700 and the owner is nobody.nobody (note: this assumes your webserver runs as user nobody, adjust for your installation) 
 - The other directory to check is the temporary directory that your web server typically uses, but the information listed above is by far the most common config issue with email attachments.
-</sect1>
-<sect1>
-<title>File Manager</title>
-<sect2>
-<title>File Manager not working</title>
+</literallayout></blockquote>
+</answer>
+</qandaentry>
+</qandadiv>
+<qandadiv> <title>File Manager</title>
+<qandaentry>
+<question><para>File Manager not working</para></question>
+<answer>
 <para>
 To use the filemanager app:
 </para>
@@ -95,15 +155,28 @@ To use the filemanager app:
 <para>
 Make sure you have the correct FULL path in setup (ie. /home/httpd/phpgroupware/files)
 </para>
-</sect2>
-</sect1>
-<sect1>
-<title>Forum</title>
-<sect2>
-<title>index.php not loaded automatically by apache</title>
+</answer>
+</qandaentry>
+</qandadiv>
+
+<qandadiv> <title>Forum</title>
+<qandaentry>
+<question><para>index.php not loaded automatically by apache</para></question>
+<answer>
 <para>
 Sometimes /forum/index.php is not loaded automatically by apache, this appears to be a bug in apache 1.3.13mdk.  If you have the same problem just add /index.php in lines 49, 57 and 82 of preference_category.php.
 </para>
-</sect2>
-</sect1>
+</answer>
+</qandaentry>
+</qandadiv>
+</qandadiv>
+<qandadiv> <title>Development</title>
+<qandaentry>
+<question><para>Why don't you just use the session class from phplib? Why not use cookies to hold the sessionid?</para></question>
+<answer><para>
+I personally don't like using cookies for something like this.  However, the session management is currently being abstracted for the applications. This means that switching to cookies will be possible for those that are interested.
+</para></answer>
+</qandaentry>
+</qandadiv>
+</qandaset>
 </article>
