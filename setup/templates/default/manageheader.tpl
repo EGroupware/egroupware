@@ -44,8 +44,8 @@
   <tr>
     <td><b>{lang_persist}</b><br>
       <select type="checkbox" name="setting[db_persistent]">
-        <option value="True"{db_persistent_yes}>True</option>
-        <option value="False"{db_persistent_no}>False</option>
+        <option value="True"{db_persistent_yes}>{lang_Yes}</option>
+        <option value="False"{db_persistent_no}>{lang_No}</option>
       </select>
     </td>
     <td>{lang_persistdescr}</td>
@@ -61,8 +61,8 @@
   <tr>
     <td><b>{lang_enablemcrypt}</b><br>
       <select name="setting[enable_mcrypt]">
-        <option value="True"{mcrypt_enabled_yes}>True
-        <option value="False"{mcrypt_enabled_no}>False
+        <option value="True"{mcrypt_enabled_yes}>{lang_Yes}</option>
+        <option value="False"{mcrypt_enabled_no}>{lang_No}</option>
       </select>
     </td>
     <td>{lang_mcrypt_warning}</td>
@@ -78,8 +78,8 @@
   <tr>
     <td><b>{lang_domselect}</b><br>
       <select name="setting[domain_selectbox]">
-        <option value="True"{domain_selectbox_yes}>True</option>
-        <option value="False"{domain_selectbox_no}>False</option>
+        <option value="True"{domain_selectbox_yes}>{lang_Yes}</option>
+        <option value="False"{domain_selectbox_no}>{lang_No}</option>
       </select></td><td>&nbsp;
     </td>
   </tr>

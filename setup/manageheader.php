@@ -650,6 +650,8 @@
 			$setup_tpl->set_var('lang_domselect',lang('Domain select box on login'));
 			$setup_tpl->set_var('lang_finaldescr',lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".'));
 			$setup_tpl->set_var('lang_continue',lang('Continue'));
+			$setup_tpl->set_var('lang_Yes',lang('Yes'));
+			$setup_tpl->set_var('lang_No',lang('No'));
 
 
 			$setup_tpl->pfp('out','manageheader');
