@@ -92,7 +92,6 @@
 				$preserv = array();
 			}
 			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
 			$id = $this->save_appsession(array(
 				'name' => $this->name,
@@ -106,9 +105,9 @@
 				'method' => $method
 			));
 
-			echo $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
+			$GLOBALS['phpgw']->template->set_var('phpgw_body',$this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
 				$this->html->form($this->show($content,$sel_options,$readonlys,'exec'),
-					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec');
+					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec'));
 		}
 
 		/*!
