@@ -99,7 +99,7 @@
 							$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
 							$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
 							$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
-							if ($upgrademethod == 'addmissing' && $upgrademethod == 'dumpold')
+							if ($upgrademethod == 'addmissing' || $upgrademethod == 'dumpold')
 							{
 								//echo '<br>Test: addmissing';
 								$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='".$message_id."' and lang='".$GLOBALS['phpgw_setup']->db_lang."' and (app_name='".$app_name."' or app_name='common')",__LINE__,__FILE__);
