@@ -50,11 +50,11 @@
                               . "','" . addslashes($newsetting[1]) . "')");
     }
     if ($newsettings["auth_type"] == "ldap") {
-      Header("Location: ldap.php");
+      Header('Location: '.$newsettings['webserver_url'].'/setup/ldap.php');
       exit;
     } else {
       //echo "<center>Your config has been updated<br><a href='".$newsettings["webserver_url"]."/login.php'>Click here to login</a>";
-      Header("Location: index.php");
+      Header("Location: '.$newsettings['webserver_url'].'/index.php');
       exit;
     }
   }
