@@ -197,7 +197,7 @@
 				}
 			}
 
-			$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
+			$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
 			while ($this->db2->next_record()) {
 				// If its not in the list to be returned, don't return it.
 				// This is still quicker then 5(+) separate queries
@@ -222,13 +222,14 @@
 			}
 
 			$this->db2 = $this->db;
- 
-			$this->db->query("select max(id) from $this->std_table");
-			$this->db->next_record();
-       
-			$id = $this->db->f("max(id)");
 
-			$this->db->query("select id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'");
+			$this->db->query('SELECT max(id) FROM '.$this->std_table,__LINE__,__FILE__);
+			$this->db->next_record();
+
+			$id = $this->db->f(0);
+			echo $id;exit;
+
+			$this->db->query("SELECT id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]["id"]		= $this->db->f("id");
