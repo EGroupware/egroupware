@@ -1,9 +1,9 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare - save redirect script                                      *
+	* eGroupWare - save redirect script                                        *
 	* idea by: Jason Wies <jason@xc.net>                                       *
 	* doing and adding to cvs: Lars Kneschke <lkneschke@linux-at-work.de>      *
-	* http://www.egroupware.org                                              *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -15,20 +15,20 @@
 
 	/*
 	  Use this script when you want to link to a external url.
-	  This way you don't send sonething like sessionid's as referer
+	  This way you don't send something like sessionid as referer
 	  
 	  Use this in your app:
 	  
 	  "<a href=\"$webserverURL/redirect.php?go=".htmlentities(urlencode('http://www.egroupware.org')).'">'
 	*/
 
-	if ($_GET['go'])
+	if($_GET['go'])
 	{
-	        Header('Location: ' . html_entity_decode(urldecode($_GET['go'])));
-	        exit;
+		Header('Location: ' . html_entity_decode(urldecode($_GET['go'])));
+		exit;
 	}
 	else
 	{
-		print "this want work!!";
+		echo "this won't work!!";
 	}
 ?>
