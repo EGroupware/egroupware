@@ -346,7 +346,7 @@
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 					$cols .= $phpgw->nextmatchs->show_sort_order($this->sort,
-						$column[0],$this->order,"/index.php",$showcol,'menuaction=addressbook.uiaddressbook.get_list&cat_id='.$this->cat_id);
+						$column[0],$this->order,"/index.php",$showcol,'&menuaction=addressbook.uiaddressbook.get_list&cat_id='.$this->cat_id);
 					$cols .= "</font>\n  </td>";
 					$cols .= "\n";
 				}
