@@ -780,6 +780,8 @@
 			if ((int) $account_id)
 			{
 				$this->db->query('DELETE FROM phpgw_acl WHERE acl_account='.(int)$account_id,__LINE__,__FILE__);
+				// delete all memberships in account_id (if it is a group)
+				$this->db->query("DELETE FROM phpgw_acl WHERE acl_appname='phpgw_group' AND acl_location='".(int)$account_id."'",__LINE__,__FILE__);
 			}
 		}
 	} //end of acl class
