@@ -1,280 +1,693 @@
-	common	it	
-(for weekly)	calendar	it	(per settimanale)
 1 match found	calendar	it	Trovata 1 occorrenza
+1 message has been deleted	email	it	1 messaggio &eacute; stato cancellato
+a	calendar	it	A
 access	common	it	Accesso
-access type	todo	it	Tipo di accesso
+access not permitted	common	it	Accesso non permesso
 access type	common	it	Tipo di accesso
-account active	admin	it	Account inattivo
-account has been created	common	it	L'account è stato creato
-account has been deleted	common	it	L'Account è stato cancellato
-account has been updated	common	it	L'account è stato aggiornato
+account active	admin	it	Account attivo
+account has been created	common	it	L'account &eacute; stato creato
+account has been deleted	common	it	L'account &eacute; stato cancellato
+account has been updated	common	it	L'account &eacute; stato aggiornato
+account permissions	admin	it	Permessi dell'account
+account preferences	common	it	Preferenze dell'account
+acl	common	it	ACL
+action	admin	it	Azione
 active	admin	it	Attivo
+add a single phrase	transy	it	Aggiungi una singola frase
+add	bookkeeping	it	Aggiungi
+add category	common	it	Aggiungi una categoria
 add	common	it	Aggiungi
+add_expense	bookkeeping	it	Aggiungi spesa
+add global category	admin	it	Aggiungi categoria globale
+add_income	bookkeeping	it	Aggiungi guadagno
+add new account	admin	it	Aggiungi un nuovo account
+add new application	admin	it	Aggiungi una nuova applicazione
+add new phrase	transy	it	Aggiungi una nuova frase
+add new ticket	tts	it	Aggiungi un nuovo biglietto
+add note	notes	it	Aggiungi una nota
 address book	common	it	Rubrica
 addressbook	common	it	Rubrica
-admin	common	it	Amministratore
+addressbook preferences	common	it	Preferenze della rubrica
+address book - view	addressbook	it	Rubrica - visualizza
+address line 2	addressbook	it	Indirizzo linea 2
+address line 3	addressbook	it	Indirizzo linea 3
+address type	addressbook	it	Tipo di indirizzo
+addsub	todo	it	AggiungiSub
+add sub	todo	it	Aggiungi Sub
+add ticket	tts	it	Aggiungi biglietto
+add to addressbook	email	it	Aggiungi alla rubrica
+addvcard	common	it	Aggiungi Vcard
+admin	bookkeeping	it	Amministrazione
+admin	common	it	Amministrazione
 administration	common	it	Amministrazione
-all records and account information will be lost!	admin	it	Tutte le registrazioni e gli account andranno persi!
+all	common	it	Tutto
+all day	calendar	it	Tutto il giorno
+allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa applicazione
+all records and account information will be lost!	admin	it	Tutte le registrazioni e le informazioni dell'account andranno perse!
+amount	bookkeeping	it	Ammontare
 anonymous user	admin	it	Utente anonimo
+any	transy	it	Qualsiasi
+application name	admin	it	Nome applicazione
+applications	admin	it	Applicazioni
+application title	admin	it	Titolo applicazione
+application	transy	it	Applicazione
 april	common	it	Aprile
+are you sure\nyou want to\ndelete this entry ?	calendar	it	Sei sicuro\ndi voler\ncancellare questa nota ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro di\nvoler cancellare\nquesta nota ?\n\nQuesto cancellerà\nquesta nota per tutti gli utenti.
 are you sure you want to delete this account ?	admin	it	Sei sicuro di voler cancellare questo account ?
+are you sure you want to delete this application ?	admin	it	Sei sicuro di voler cancellare questa applicazione ?
+are you sure you want to delete this entry ?	common	it	Sei sicuro di voler cancellare questa note ?
+are you sure you want to delete this entry	todo	it	Sei sicuro di voler cancellare quasta nota ?
 are you sure you want to delete this group ?	admin	it	Sei sicuro di voler cancellare questo gruppo ?
-are you sure you want to delete this news site ?	admin	it	Sei sicuro di voler cancellare questo sito di notizie ?
-are you sure you want to kill this session ?	admin	it	sei sicuro di voler eliminare questa sessione ?
-are you sure\nyou want to\ndelete this entry ?	calendar	it	sei sicuro\ndi voler cancellare\nquesta nota ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro\ndi voler\ncancellare questo appuntamento ?\n\nQuesta azione lo cancellerà per\ntutti gli utenti.
+are you sure you want to delete this news site ?	admin	it	Sei sicuro di voler cancellare questo sito di news ?
+are you sure you want to delete this note ?	notes	it	Sei sicuro di voler cancellare questa annotazione ?
+are you sure you want to kill this session ?	admin	it	Sei sicuro di voler terminare questa sessione ?
+arial	notes	it	Arial
 august	common	it	Agosto
-bad login or password	login	it	login o password sbagliate
-base url	admin	it	URL di base
-book marks	common	it	Segnalibri
-brief description	calendar	it	Breve Descrizione
-calendar	common	it	Calendario
+author	nntp	it	Autore
+autosave default category	common	it	Categoria default di salvataggio automatico
+available groups	nntp	it	Gruppi disponibili
+bad login or password	login	it	Login o password sbagliate
+base url	admin	it	URL Base
+bbs phone	addressbook	it	Telefono BBS
+birthday	addressbook	it	Compleanno
+bookkeeping admins	common	it	Amministratori Contabilità
+bookkeeping	common	it	contabilità
+book marks	common	it	segnalibri
+bookmarks	common	it	segnalibri
+brief description	calendar	it	Descrizione breve
+business city	common	it	Città Ufficio
+business	common	it	Ufficio
+business address type	addressbook	it	Tipo di indirizzo dell'ufficio
+business country	common	it	Città Ufficio
+business email	common	it	Email Ufficio
+business email type	common	it	Tipo email ufficio
+business fax	common	it	Fax ufficio
+business phone	common	it	Telefono ufficio
+business state	common	it	Provincia ufficio
+business street	common	it	Via ufficio
+business zip code	common	it	CAP ufficio
 calendar - add	calendar	it	Calendario - Aggiungi
+calendar	common	it	calendario
 calendar - edit	calendar	it	Calendario - Modifica
+calendar preferences	common	it	Preferenze calendario
 cancel	common	it	Cancella
+cannot display the requested article from the requested newsgroup	nntp	it	Impossibile visualizzare l'articolo richiesto dal newsgroup scelto
+car phone	addressbook	it	Telefono auto
+categories	common	it	Categorie
+category	common	it	Categoria
+category description	admin	it	Descrizione categoria
+category name	admin	it	Nome categoria
+category x has been added !	admin	it	La categoria %1 è stata aggiunta !
+cc	email	it	CC
+cell phone	addressbook	it	telefono cellulare
+center	weather	it	Centro
 change	common	it	Cambia
-change your password	preferences	it	Cambia la password
-change your settings	preferences	it	Cambia le preferenze
+change main screen message	admin	it	Modifica messaggio della schermata principale
+change your password	preferences	it	Cambia la tua password
+change your profile	preferences	it	Cambia il tuo profilo
+change your settings	preferences	it	Cambia i tuoi settaggi
 charset	common	it	iso-8859-1
 chat	common	it	Chat
+choose a font	notes	it	Scegli un font
+choose the font size	notes	it	Scegli la dimensione del font
+city	addressbook	it	Città
+city	admin	it	Città
+city	weather	it	Città
 clear	common	it	Cancella
-clear form	common	it	Cancella modulo
-clear form	todo	it	Cancella modulo
-clipboard_contents	filemanager	it	Contenuto Appunti
+clear form	common	it	Cancella il modulo
+clipboard_contents	filemanager	it	Contenuto degli appunti
+common	transy	it	Comune
+company	common	it	Società
+company name	addressbook	it	Nome società
 completed	todo	it	completato
-copy	common	it	Copia
+compose	email	it	Componi
+contact	common	it	Contatto
 copy_as	filemanager	it	Copia come
-create	common	it	Crea
-create group	admin	it	Crea Gruppo
+copy	common	it	Copia
+country	addressbook	it	Stato
+country	weather	it	Stato
+courier new	notes	it	Courier New
+create	common	it	Create
 created by	common	it	Creato da
-created by	todo	it	Creato da
-current users	common	it	Utenti attivi ora
-current_file	filemanager	it	File in uso
-daily	calendar	it	giornaliera
+create group	admin	it	Crea gruppo
+create lang.sql file	transy	it	Crea file lang.sql
+create new language set	transy	it	Crea nuovo set di lingua
+currency	common	it	Valuta
+current_file	filemanager	it	File attivo
+current users	common	it	Utenti attivi
+custom	common	it	Personalizza
+custom fields	addressbook	it	Campi Personalizzati
+daily	calendar	it	Giornaliero
+daily matrix view	calendar	it	Visualizza Matrice Giornaliera
+date	bookkeeping	it	Data
 date	common	it	Data
-date due	todo	it	Date scadenza
+date due	todo	it	Data Consegna
 date format	preferences	it	Formato data
-days repeated	calendar	it	giorni ripetizione
+days datedue	todo	it	Giorni alla consegna
+days repeated	calendar	it	giorni ripetuti
 december	common	it	Dicembre
+default application	preferences	it	Applicazione preferita
+default calendar filter	calendar	it	Filtro del calendario preferito
+default calendar view	calendar	it	Visualizzazione preferita del calendario
+default sorting order	email	it	Ordinamento preferito
+delete	bookkeeping	it	Cancella
 delete	common	it	Cancella
+department	addressbook	it	Dipartimento
+description	admin	it	Descrizione
+description	bookkeeping	it	Descrizione
 description	calendar	it	Descrizione
+detail	tts	it	Dettagli
 disabled	admin	it	Disabilitato
-display	admin	it	Mostra
-done	common	it	Finito
+display	admin	it	Visualizza
+display missing phrases in lang set	transy	it	Visualizza frasi mancanti nel set della lingua
+display note for	notes	it	Visualizza nota per
+display status of events	calendar	it	Visualizza lo stato per gli Eventi
+do_delete	filemanager	it	Elimina
+domestic	common	it	Locale
+done	common	it	Terminato
 download	filemanager	it	Scarica
 duration	calendar	it	Durata
-e-mail	common	it	E-Mail
+edit application	admin	it	Modifica Applicazione
+edit	bookkeeping	it	Modifica
 edit	common	it	Modifica
-email	common	it	E-Mail
-email signature	preferences	it	Firma dell'E-Mail
-enter your new password	preferences	it	Inserisci la nuova password
-entry has been deleted sucessfully	common	it	Nota cancellata con successo
-entry updated sucessfully	common	it	Nota modificata con successo
+edit category	common	it	Modifica Categoria
+edit categories	common	it	Modifica Categorie
+edit custom fields	preferences	it	modifica campi personalizzati
+edit_expense	bookkeeping	it	Modifica Spese
+edit group	admin	it	Modifica Gruppo
+edit_income	bookkeeping	it	Modifica Fatturato
+edit note for	notes	it	Modifica nota per
+edit user account	admin	it	Modifica account dell'utente
+email account name	email	it	nome accoune email
+email address	email	it	Indirizzo email
+e-mail	common	it	Email
+email	common	it	Email
+email password	email	it	Password dell'email
+e-mail preferences	common	it	Preferenze email
+email signature	email	it	Firma email
+email type	common	it	Tipo email
+enabled	admin	it	Attivo
+enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
+enabled	weather	it	Attivo
+end date/time	calendar	it	Data/Ora finale
+end date	todo	it	Data finale
+end time	common	it	Ora Fine
+enter your new password	preferences	it	Inserisci la tua nuova password
+entries	bookkeeping	it	scrittura
+entry has been deleted sucessfully	common	it	La scrittura è stata cancellata correttamente
+entry updated sucessfully	common	it	La scrittura è stata aggiornata correttamente
 error	common	it	Errore
-err_saving_file	filemanager	it	Errore durante il salvataggio sul disco
-exit	common	it	Esci
+error creating x x directory	common	it	Errore durante la creazione della %1%2 cartella
+error deleting x x directory	common	it	Errore durante la cancellazione della %1%2 cartella
+error renaming x x directory	common	it	Errore durante la rinomina della %1%2 cartella
+err_saving_file	filemanager	it	Errore durante il salvataggio del file su disco
+exit	common	it	Uscita
+extra	common	it	Extra
+expense	bookkeeping	it	Spesa
+expenses	bookkeeping	it	Spese
+export contacts	addressbook	it	Esporta Contatti
+failed to find your station	weather	it	Impossibile trovare la tua città
+fax	addressbook	it	Fax
 february	common	it	Febbraio
-file manager	common	it	gestione risorse
-files	filemanager	it	File
-file_upload	filemanager	it	Invia file
+fields	common	it	Campi
+fields to show in address list	addressbook	it	Campi da visualizzare nella lista dell'indirizzo
+file manager	common	it	File manager
+files	common	it	File
+file_upload	filemanager	it	Uplod file
 filter	common	it	Filtro
+firstname	bookkeeping	it	Nome
 first name	common	it	Nome
 first page	common	it	prima pagina
-frequency	calendar	it	Frequeza
+folder	email	it	Cartella
+forecast	admin	it	Previsione
+forecasts	weather	it	Previsioni
+forecast	weather	it	Previsione
+forecast zone	admin	it	Zona di previsione
+forum	common	it	Forum
+forward	email	it	Inoltra
+(for weekly)	calendar	it	(per settimana)
+fr	calendar	it	V
+free/busy	calendar	it	Libero/Occupato
+frequency	calendar	it	Frequenza
 fri	calendar	it	Ven
 friday	common	it	Venerdì
+from	email	it	Da
 ftp	common	it	FTP
-full description	calendar	it	Descrizione Completa
-generate printer-friendly version	calendar	it	Genera versione per Stampante
+full description	calendar	it	Descrizione completa
+full name	addressbook	it	Nome completo
+fzone	admin	it	ZonaF
+fzone	weather	it	ZonaF
+generate new lang.sql file	transy	it	Genera un nuovo file lang.sql
+generate printer-friendly version	calendar	it	Genera versione stampabile
+geo	addressbook	it	GEO
+georgia	notes	it	Georgia
+global categories	admin	it	Categorie Globali
+global	common	it	Globale
+global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
 global public	common	it	Pubblico Globale
+global public only	calendar	it	Solo Pubblico Globale
+global	weather	it	Globale
 go!	calendar	it	Vai!
+grant addressbook access	common	it	Permetti accesso alla Rubrica
+grant calendar access	common	it	Permetti accesso al Calendario
+grant todo access	common	it	Permetti accesso al DaFare
 group access	common	it	Accesso Gruppo
+group	common	it	Gruppo
+group_files	filemanager	it	file del gruppo
 group has been added	common	it	Il gruppo è stato aggiunto
 group has been deleted	common	it	Il gruppo è stato cancellato
 group has been updated	common	it	Il gruppo è stato aggiornato
 group name	admin	it	Nome Gruppo
 group public	common	it	Gruppo Pubblico
+group public only	calendar	it	Solo Pubblico per il Gruppo
 groups	common	it	Gruppi
-groupsfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e dei gruppi.<BR> Nei sistemi *nix digita: chmod 770
-group_files	filemanager	it	file del gruppo
-headline sites	admin	it	Siti con titoli
-headlines	common	it	Titoli
-help	common	it	Guida
+groupsfile_perm_error	filemanager	it	Per correggere questo errore è necessario settare in maniera corretta i permessi della cartella dei file/guppi.<BR> Sui sistemi *nix digitare: chmod 770
+headline preferences	common	it	Preferenze NEWS
+headlines	common	it	NEWS
+headline sites	admin	it	Siti NEWS
+help	common	it	Aiuto
+helvetica	notes	it	Helvetica
+hide php information	admin	it	nascondi informazioni php
 high	common	it	Alta
-home	common	it	Pagina iniziale
+home city	addressbook	it	Città casa
+home	common	it	Casa
+home address type	addressbook	it	Tipo indirizzo di Casa
+home country	addressbook	it	Paese Casa
+home directory	admin	it	Cartella Personale
+home email	addressbook	it	Email a Casa
+home email type	addressbook	it	Tipo di email a Casa
+home phone	addressbook	it	Telefono Casa
+home state	addressbook	it	Stato Casa
+home street	addressbook	it	Via Casa
+home zip code	addressbook	it	CAP Casa
+human resources	common	it	Risorse umane
+icons and text	preferences	it	Icone e testo
+icons only	preferences	it	Solo icone
+id	admin	it	ID
 idle	admin	it	inattivo
+id	weather	it	ID
+if applicable	email	it	Se disponibile
+ignore conflict	calendar	it	Ignora Conflitto
+image	email	it	Immagine
+imap server type	email	it	Tipo di server IMAP
+import contacts	addressbook	it	Importa Contatti
+import file	addressbook	it	Importa File
+import from outlook	addressbook	it	Importa da Outlook
+import lang set	transy	it	Importa set di frasi da una lingua
+income	bookkeeping	it	Guadagno
+installed applications	admin	it	Applicazioni Installate
+international	common	it	Internazionale
+inventory	common	it	Inventario
 ip	admin	it	IP
-it has been more then x days since you changed your password	common	it	Sono passati più di %1 giorni dall'ultmia volta che hai cambiato la tua password
+i participate	calendar	it	Io Partecipo
+isdn phone	addressbook	it	Telefono ISDN
+it has been more then x days since you changed your password	common	it	Sono passati più di %1 da quando hai cambiato la password
 january	common	it	Gennaio
 july	common	it	Luglio
 june	common	it	Giugno
 kill	admin	it	Termina
+label	addressbook	it	Etichetta
 language	preferences	it	Lingua
+large	notes	it	Grande
+last login	admin	it	ultimo login
+last login from	admin	it	ultimo login da
+lastname	bookkeeping	it	Cognome
 last name	common	it	Cognome
 last page	common	it	ultima pagina
-last time read	admin	it	Letto ultima volta
-last updated	todo	it	Ultima Modifica
+last time read	admin	it	Ultima volta letto
+last updated	todo	it	Ultimo Aggiornamento
 last x logins	admin	it	Ultimi %1 login
-list of current users	admin	it	lista degli utenti attivi adesso
-listings displayed	admin	it	Listings elencati
-login	login	it	Login
+line 2	addressbook	it	Linea 2
+links	weather	it	Link
+listings displayed	admin	it	Elementi Visualizzati
+list of current users	admin	it	lista utenti attuali
+logging	bookkeeping	it	Accessi
 login	common	it	Login
-login time	admin	it	Ora del Login
-loginid	admin	it	Identificativo Login
+loginid	admin	it	LoginID
+loginid	bookkeeping	it	LoginID
+login screen	admin	it	Schermo di login
+login shell	admin	it	Shell di login
+login time	admin	it	Ora Login
 logout	common	it	Logout
 low	common	it	Bassa
+mail folder(uw-maildir)	email	it	Cartella Mail (uw-maildir)
+mail server	email	it	Server email
+mail server type	email	it	Tipo di mail server
+main screen	common	it	Schermata principale
+main screen message	admin	it	Messaggio nella schermata principale
 manager	admin	it	Manager
+manual	common	it	Manuale
 march	common	it	Marzo
 max matchs per page	preferences	it	Numero massimo di risultati per pagina
 may	common	it	Maggio
-medium	common	it	Media
+medium	common	it	Medio
+message	common	it	Messaggio
+message phone	addressbook	it	Telefono per Messaggi
+messages	email	it	Messaggi
+message x	nntp	it	Messaggio %1
+metar	admin	it	Metar
+metar	weather	it	Metar
+middle name	addressbook	it	Secondo Nome
+minutes between reloads	admin	it	Minuti fra gli aggiornamenti
 minutes	calendar	it	minuti
-minutes between reloads	admin	it	Minuti fra i caricamenti
+mobile	addressbook	it	Mobile
+mobile phone	common	it	Telefono cellulare
+mo	calendar	it	L
+modem phone	common	it	telefono Modem
 mon	calendar	it	Lun
 monday	common	it	Lunedì
+monitor	common	it	Monitor
+monitor newsgroups	preferences	it	Monitor Newsgroups
 month	calendar	it	Mese
-monthly (by date)	calendar	it	mensile (per data)
-monthly (by day)	calendar	it	mensile (per giorno)
+monthly (by date)	calendar	it	Mensile (per data)
+monthly (by day)	calendar	it	Mensile (per giorno)
+monthly	calendar	it	Mensile
+move selected messages into	email	it	Move Selected Messages into
 name	common	it	Nome
-new entry	calendar	it	Nuovo appuntamento
-new entry added sucessfully	common	it	Nuova nota inserita correttamente
-new group name	admin	it	Nuovo nome gruppo
-new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia vuoto se non vuoi cambiarla ]
-news file	admin	it	File delle news
-news headlines	common	it	Titoli Notizie
-news reader	common	it	Visualizzaore News
-news type	admin	it	Tipo di news
-new_file	filemanager	it	Nuovo file
+network news	admin	it	Network News
+new entry added sucessfully	common	it	Nuovo appuntamento aggiunto con successo
+new entry	calendar	it	Nuovo Appuntamento
+new_file	filemanager	it	Nuovo File
+new group name	admin	it	Nome nuovo gruppo
+new message	email	it	Nuovo messaggio
+new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in bianco per non cambiarla ]
+new phrase has been added	transy	it	La nuova frase è stata aggiunta
+news file	admin	it	File delle NEWS
+newsgroups	nntp	it	Newsgroup
+newsgroups	preferences	it	Newsgroup
+news headlines	common	it	Titoli delle NEWS
+news reader	common	it	newsreader
+news type	admin	it	Tipo di NEWS
+new ticket	tts	it	Nuovo Biglietto
+next	common	it	Avanti
 next page	common	it	prossima pagina
+nntp	common	it	NNTP
 no	common	it	No
-no matches found.	calendar	it	Nessuna occorrenza trovata.
-none	common	it	Nessuna
+no_file_name	filemanager	it	Nessun nomefile è stato specificato
+no matches found.	calendar	it	Nessuna corrispondenza trovata.
+no matchs found	admin	it	Nessuna corrispondenza trovata.
+none	calendar	it	Nessuna
+non-standard	email	it	Non-Standard
 normal	common	it	Normale
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	it	Nota: Questa funzione *non* cambia la tua password di posta elettronica. Deve essere fatto manualmente.
+no subject	email	it	Nessun oggetto
+not applicable	weather	it	Non Applicabile
+notes	common	it	Note
+notes list	notes	it	Lista Note
+notes preferences	common	it	Preferenze delle note
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	it	Nota: Questo *non* cambia la vostra password di email. Questo deve essere fatto manualemnte.
+no tickets found	tts	it	Nessun biglietto trovato.
 november	common	it	Novembre
-no_file_name	filemanager	it	Nessun nome è stato specificato
+observations	weather	it	Osservazioni
 october	common	it	Ottobre
 ok	common	it	OK
-only yours	common	it	solo i tuoi
+only yours	common	it	solo tuoi
+on *nix systems please type: x	common	it	Nei sistemi *nix per favore digitare: %1
+or: days from startdate:	todo	it	oppure: giorni dalla data d'inizio:
+original	transy	it	Originale
+or: select for today:	todo	it	oppure: seleziona per oggi:
+other	common	it	Altro
+other number	addressbook	it	Altro Numero
+other phone	common	it	Altro Telefono
+owner	common	it	Proprietario
+pager	addressbook	it	TeleDrin
+parcel	addressbook	it	Parcel
+parent project	todo	it	progetto genitore
 participants	calendar	it	Partecipanti
-password	login	it	Password
 password	common	it	Password
-password has been updated	common	it	La pasword è stata aggiornata
-percent of users that logged out	admin	it	Percentuale di utenti che hanno terminato la connessione correttamente
-please, select a new theme	preferences	it	per favore, seleziona un tema
-powered by phpgroupware version	common	it	realizzato con <a href=www.phpgroupware.org>phpGroupWare</a> versione
+password has been updated	common	it	La password è stata aggiornata
+percent of users that logged out	admin	it	Percentuale di utenti che sono usciti dal sistema in maniera corretta
+permissions	admin	it	Permessi
+permissions this group has	admin	it	Permessi che questo gruppo ha
+permissions to the files/users directory	common	it	permissi alla cartella file/utenti
+personal	common	it	Personale
+phone numbers	addressbook	it	Numeri telefono
+phpgroupware login	login	it	login phpGroupWare
+php information	admin	it	Informazioni su PHP
+phrase in english	transy	it	Frase in Inglese
+phrase in new language	transy	it	Frase nella nuova lingua
+please enter a name for that category !	admin	it	Please enter a name for that category !
+please select a message first	email	it	Please select a message first
+please, select a new theme	preferences	it	Please, select a new theme
+please set your preferences for this app	common	it	Per favore specifica le tue preferenze per questa applicazione
+please x by hand	common	it	Please %1 by hand
+postal	addressbook	it	Postal
+powered by phpgroupware version x	common	it	Creato con <a href=http://www.phpgroupware.org>phpGroupWare</a> versione %1
+pref	common	it	pref
+prefer	common	it	Prefer
 preferences	common	it	Preferenze
-previous page	common	it	pagina precedente
-printer friendly	calendar	it	Per Stampa
+prefix	addressbook	it	Prefisso
+previous	email	it	Indietro
+previous page	common	it	Pagina precedente
+print	common	it	Stampa
+printer friendly	calendar	it	Versione Stampabile
 priority	common	it	Priorità
+private and global public	calendar	it	Privato e Pubblico Globale
+private and group public	calendar	it	Private e Pubblico per il Gruppo
 private	common	it	Privato
 private_files	filemanager	it	File privati
+private only	calendar	it	Solo privato
+proceed	bookkeeping	it	Procedi.
+project description	todo	it	Descrizione Progetto
+read	common	it	Leggi
+recent	weather	it	Recente
+record access	addressbook	it	Accesso alla registrazione
+record owner	addressbook	it	Proprietario della registrazione
+re-edit event	calendar	it	Ri-modifica l'evento
 re-enter password	admin	it	Reinserisci la password
 re-enter your password	preferences	it	Reinserisci la password
+region	admin	it	Regione
+regions	admin	it	Regioni
+regions	weather	it	Regioni
+region	weather	it	Regione
+remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gruppo
 rename	common	it	Rinomina
-rename_to	filemanager	it	Rinomina come
+rename_to	filemanager	it	Rinomina in
 repeat day	calendar	it	Giorno ripetizione
-repeat end date	calendar	it	Data fine ripetizioni
+repeat end date	calendar	it	Data ultima ripetizione
+repeating event information	calendar	it	Informazioni sugli eventi ricorrenti
 repeat type	calendar	it	Tipo di ripetizione
 repetition	calendar	it	Ripetizione
+reply all	email	it	Rispondi a tutti
+reply	email	it	Rispondere
+reports	bookkeeping	it	Rapporti
+sa	calendar	it	Sa
 sat	calendar	it	Sab
 saturday	common	it	Sabato
 save	common	it	Salva
 search	common	it	Cerca
-search results	calendar	it	Risultati ricerca
+search results	calendar	it	Risultati Ricerca
+section	email	it	Sezione
+select application	transy	it	Seleziona applicazione
+select category	common	it	Seleziona categoria
 select different theme	preferences	it	Seleziona un tema differente
-select headline news sites	preferences	it	Seleziona i siti da cui prendere le notizie
+select headline news sites	common	it	Seleziona siti di NEWS
+select language to generate for	transy	it	Seleziona una lingua per cui generare
+select parent category	admin	it	Seleziona categoria superiore
+select permissions this group will have	admin	it	Seleziona i permessi che questo gruppo avrà
+select users for inclusion	admin	it	Seleziona utenti per l'inclusione
+select which application for this phrase	transy	it	seleziona quale applicazione per questa frase
+select which language for this phrase	transy	it	seleziona quale lingua per questa frase
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	it	Seleziona in quale punto della Barra di Navigazione, dal più basso (sinistra) al più alto (destra)
+send deleted messages to the trash	email	it	Invia messaggi cancellati all Cestino
+send	email	it	Invia
+send updates via email	common	it	Invia aggiornamenti via email
 september	common	it	Settembre
 session has been killed	common	it	La sessione è stata terminata
-show all	common	it	mostra tutti
-show birthday reminders on main screen	preferences	it	Mostra sullo schermo i promemoria dei compleanni
-show current users on navigation bar	preferences	it	Mostra gli utenti collegati nella barra di navigazioner
-show high priority events on main screen	preferences	it	Mostra sullo schermo gli eventi a priorità alta
-show new messages on main screen	preferences	it	Mostra i nuovi messaggi sullo schremo principale
-show text on navigation icons	preferences	it	Mostra il testo nella barra di navigazione
-showing x	common	it	Visualizzo %1
-showing x - x of x	common	it	Visualizzo %1 - %2 di %3
+show all	common	it	mostra tutto
+show all groups	nntp	it	Mostra tutti i gruppi
+show birthday reminders on main screen	addressbook	it	Mostra annunci dei compleanni nella schermata principale
+show current users on navigation bar	preferences	it	Mostra utenti attuali nella barra di navigazione
+show day view on main screen	calendar	it	Mostra la vista giornaliera nella schermata principale
+show groups containing	nntp	it	Mostra i gruppi contenenti
+show high priority events on main screen	calendar	it	Mostra eventi ad alta priorità nella schermata principale
+showing x	common	it	visualizzati %1
+showing # x of x	weather	it	mostro # %1 di %2
+showing x - x of x	common	it	mostro %1 - %2 si %3
+show navigation bar as	preferences	it	Mostra la barra di navigazione come
+show new messages on main screen	email	it	Mostra i nuovi messaggi nella schermata principale
+show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
 site	admin	it	Sito
-sorry, there was a problem proccesing your request.	common	it	Spiacente, c'è stato un un problema nel processare la tua richiesta.
-sorry, your login has expired	login	it	Spiacente, la tua login è scaduta
+size	email	it	Size
+sorry, that group name has already been taking.	admin	it	Peccato, quel nome di gruppo è già stato preso.
+sorry, the follow users are still a member of the group x	admin	it	Peccato, i seguenti utenti sono ancora membri del gruppo %1
+sorry, there was a problem processing your request.	common	it	Peccato, c'è stato un problema nel processare la tua richiesta.
+sorry, your login has expired	login	it	Peccato, il tuo login è scaduto
+source language	transy	it	Lingua Sorgente
 specify_file_name	filemanager	it	Devi specificare un nome per il file che desideri creare
-status	todo	it	Stato
-submit	common	it	Inserisci
+start date/time	calendar	it	Data/Ora Inizio
+start date	todo	it	Data Inizio
+start time	common	it	Ora Inizio
+state	addressbook	it	Provincia
+state	weather	it	Stato
+station	admin	it	Stazione
+stations	admin	it	Stazioni
+stations	weather	it	Stazioni
+station	weather	it	Stazione
+statistics	bookkeeping	it	Statistiche
+status	common	it	Stato
+street	addressbook	it	Via
+subject	common	it	Oggetto
+submit changes	admin	it	Invia Cambiamenti
+submit	common	it	Invia
+subproject description	todo	it	Descrizione Sotto-progetto
+sub	todo	it	sotto
+su	calendar	it	Do
+suffix	addressbook	it	Suffisso
 sun	calendar	it	Dom
 sunday	common	it	Domenica
-that loginid has already been taken	admin	it	Questo nome utente è già in uso
+switch current folder to	email	it	Passa alla Cartella
+switch to	bookkeeping	it	Cambia in
+table	admin	it	Tabella
+tables	weather	it	Tabelle
+target language	transy	it	Lingua destinazione
+text only	preferences	it	Solo Testo
+that category name has been used already !	admin	it	Quel nome di categoria è gia' stato usato !
+that loginid has already been taken	admin	it	Quel nome utente è già stato scelto
+that phrase already exists	common	it	Quella frase esiste già
 that site has already been entered	admin	it	Quel sito è già stato inserito
+th	calendar	it	G
 the following conflicts with the suggested time:<ul>x</ul>	calendar	it	Il seguente è in conflitto con l'orario suggerito:<ul>%1</ul>
-the login and password can not be the same	admin	it	Il nome utente e la passvord non possono essere uguali
-the two passwords are not the same	preferences	it	Le due password non sono uguali
-the two passwords are not the same	admin	it	Tle due password non sono uguali
+the login and password can not be the same	admin	it	La login e la pasword non possono essere uguali
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	it	C'è stato un errore nel cercare di collegarsi al tuo server email.<br>Prego, controlla username e password, o contatta l'amministratore.
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	nntp	it	Si è verificato un errore durante il collegamento al tuo serve di news.<br>Per favore contatta il tuo amministratore di sistema.
+the two passwords are not the same	common	it	Le due password non sono identiche
+they must be removed before you can continue	admin	it	Devono essere rimossi prima di proseguire
+this folder is empty	email	it	Questa cartella è vuota
 this month	calendar	it	Questo mese
-this server is located in the x timezone	preferences	it	Questo server è situato nel fuso orario %1
+this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
+this server is located in the x timezone	preferences	it	 Questo server è situato nel fuso orario %1
 this week	calendar	it	Questa settimana
-thu	calendar	it	Giov
+threads	nntp	it	Thread
+thu	calendar	it	Gio
 thursday	common	it	Giovedì
 time	common	it	Ora
-time format	preferences	it	Formato orario
-time zone offset	preferences	it	Differenza di fuso orario
+time created	notes	it	Ora di creazione
+time format	preferences	it	Formato ora
+times new roman	notes	it	Times New Roman
+time zone	common	it	Fuso orario
+time zone offset	common	it	differenza di fuso orario
+title	common	it	Titolo
+to correct this error for the future you will need to properly set the	common	it	Per correggere questo errore in futuro occorre settare in maniera corretta
 today	calendar	it	Oggi
 today is x's birthday!	common	it	Oggi è il compleanno di %1!
-todo	todo	it	da fare
-todo list	todo	it	Agenda
-todo list	common	it	Agenda
-todo list - add	todo	it	Agenda - aggiungi
-todo list - edit	todo	it	Agenda - modifica
+todo list - add sub-project	todo	it	Lista DaFare - aggiungi sotto-progetto
+todo list - add	todo	it	Lista da-fare - aggiungi
+todo list	common	it	Lista Da-Fare
+todo list - edit	todo	it	Lista da-fare - modifica
+todo	todo	it	da-fare
+to	email	it	A
 tomorrow is x's birthday.	common	it	Domani è il compleanno di %1.
 total	common	it	Totale
-total records	admin	it	Totale registrazioni
-trouble ticket system	common	it	Sistema di gestione problemi
+total records	admin	it	Inserimenti totali
+translation management	common	it	Gestione Traduzione
+translation	transy	it	Traduzione
+trouble ticket system	common	it	Sistema per la gestione dei problemi
+tu	calendar	it	M
 tue	calendar	it	Mar
 tuesday	common	it	Martedì
+undisclosed recipients	email	it	Destinatari nascosti
+undisclosed sender	email	it	Mittente nascosto
 updated	common	it	Aggiornato
-upload	filemanager	it	Invia
+update	nntp	it	Aggiorna
+upload	filemanager	it	Upload
 urgency	todo	it	Urgenza
+url	addressbook	it	URL
 use cookies	login	it	usa i cookie
-use end date	calendar	it	Usa data finale
-user accounts	admin	it	Account Utenti
-user groups	admin	it	gruppi di utenti
-username	login	it	Nome Utente
-usersfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e degli utenti.<BR> Nei sistemi *nix digita: chmod 770
+use custom settings	email	it	Usa settaggi personalizzati
+use end date	calendar	it	Usa data di termine
+user accounts	admin	it	Account utenti
+user groups	admin	it	Gruppi utenti
+username	login	it	Nome utente
+users	common	it	utenti
+usersfile_perm_error	filemanager	it	Per correggere questo errore è necessario settare in maniera corretta i permessi della cartella dei file/utenti.<BR> Sui sistemi *nix digitare: chmod 707
+vcard	common	it	VCard
+vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
+verdana notes	it	Verdana
+very large	notes	it	Molto grande
+very small	notes	it	Piccolo
+video phone	addressbook	it	Videotelefono
+view access log	admin	it	Visualizza elenco collegamenti
+view all tickets	tts	it	Visualizza tutti i biglietti
+view	bookkeeping	it	Visualizza
 view	common	it	Visualizza
-view access log	admin	it	Visualizza Log di accesso
+view/edit/delete all phrases	transy	it	Visualizza/modifica/cancella tutte le frasi
+view_expense	bookkeeping	it	Visualizza spese
+view_income	bookkeeping	it	View guadagni
+view matrix of actual month	todo	it	Visualizza la matrice del mese attuale
+view only open tickets	tts	it	Visualizza solo i problemi aperti
 view sessions	admin	it	Visualizza sessioni
-view this entry	calendar	it	Visualizza questo appuntamento
+view this entry	calendar	it	Visualizza questo inserimento
+voice phone	addressbook	it	Telefono Vocale
+weather center	admin	it	Centro Meteo
+weather center	preferences	it	Centro Meteo
+weather	preferences	it	Meteo
+weather	weather	it	Weather
+we	calendar	it	M
 wed	calendar	it	Mer
 wednesday	common	it	Mercoledì
 week	calendar	it	Settimana
-weekday starts on	preferences	it	La settiman inizia il
-weekly	calendar	it	settimanale
-which groups	common	it	quale gruppo
-which groups	todo	it	Quali gruppi
-work day ends on	preferences	it	La giornata lavorativa finisce alle
-work day starts on	preferences	it	La giornata lavorativa inizia alle
-x matches found	calendar	it	%1 occorrenze trovate
+weekday starts on	calendar	it	La settimana inizia di
+weekly	calendar	it	Settimanale
+when creating new events default set to private	calendar	it	Quando vengono creati nuovi eventi settali automaticamente privati
+which groups	common	it	Quali gruppi
+work day ends on	calendar	it	La giornata lavorativa termina alle
+work day starts on	calendar	it	La giornata lavorativa inizia alle
+work phone	addressbook	it	Telefono Ufficio
+x matches found	calendar	it	Trovate %1 occorrenze
+x messages have been deleted	email	it	%1 messaggi sono stati cancellati
 year	calendar	it	Anno
 yearly	calendar	it	Annuale
 yes	common	it	Sì
-you have 1 high priority event on your calendar today.	common	it	Nel calendario di oggi hai 1 evento ad alta priorità.
-you have 1 new message!	common	it	Hai 1 nuovo messaggio!
-you have been successfully logged out	login	it	Sei riuscito a scollegarti correttamente
-you have entered an invailed date	todo	it	hai inserito una data sbagliata
-you have not entered a\nbrief description	calendar	it	Non hai inserito una a\nBreve Descrizione
-you have not entered a\nvalid time of day.	calendar	it	Hai inserito un a\norario non valido.
-you have x high priority events on your calendar today.	common	it	Nel calendario di oggi hai %1 eventi ad alta priorità.
+you are required to change your password during your first login	common	it	Devi cambiare la tua password durante la tua prima sessione
+you have 1 high priority event on your calendar today.	common	it	Oggi hai 1 evento a priorità alta nel tuo calendario.
+you have 1 new message!	common	it	hai un nuovo messaggio!
+you have been successfully logged out	login	it	Sei uscito dal sistema con successo
+you have entered an invailed date	todo	it	hai inserito una data non valida
+you have messages!	common	it	Hai nuovi messaggi
+you have no new messages	common	it	Non hai nuovi messaggi
+you have not entered a\nbrief description	calendar	it	Non hai inserito una\nBreve Descrizione
+you have not entered a\nvalid time of day.	calendar	it	Non hai inserito un\norario valido.
+you have x high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nel tuo calendario.
 you have x new messages!	common	it	Hai %1 nuovi messaggi!
-you must enter a base url	admin	it	Devi inserire un URL di base
-you must enter a display	admin	it	Devi inserire un display
-you must enter a news url	admin	it	Devi inserire un url con notizie
-you must enter a password	preferences	it	Devi inserire una password
-you must enter a password	admin	it	Devi inserire una password
-you must enter one or more search keywords	calendar	it	Devi specificare una o più parole chiave per la ricerca
-you must enter the number of listings display	admin	it	Devi inserire il numero di display elencati
+you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
+you must enter a base url	admin	it	Devi inserire un url di base
+you must enter a display	admin	it	Dedi inserire un display
+you must enter an application name and title.	admin	it	Devi inserire un nome e un titolo per l'applicazione.
+you must enter a news url	admin	it	Devi inserire un url per le nesw
+you must enter a password	common	it	Devi inserire una nuova password
+you must enter one or more search keywords	calendar	it	Devi inserire una o più keyword per la ricerca
+you must enter the number of listings display	admin	it	Devi inserire il numero di righe da visualizzare
 you must enter the number of minutes between reload	admin	it	Devi inserire il numero di minuti fra i caricamenti
-you must select a file type	admin	it	Devi selezionare un tipo di file
-your current theme is: x	preferences	it	il tuo tema attuale è: 
-your message as been sent	common	it	Il tuo messaggio è stato inviato
-your search returned 1 match	common	it	La tua ricerca ha restituito 1 corrispondenza
-your search returned x matchs	common	it	La tua ricerca ha restituito %1 corrispondenze
-your settings have been updated	common	it	Le tue preferenze sono state aggiornate
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	it	L'orario da te suggerito: <B> %1 - %2 </B> è in conflitto con i seguenti appuntamenti in calendario:
+you must select a file type	admin	it	Devi selezionare un tipo-file
+your current theme is: x	preferences	it	il tuo tema</b>
+your message has been sent	common	it	Il tuo messaggio è stato spedito
+your search returned 1 match	common	it	la tua ricerca ha restituito un risultato
+your search returned x matchs	common	it	your search returned %1 matches
+your session could not be verified.	login	it	La tua sessione non può essere verificata.
+your settings have been updated	common	it	I tuoi settaggi sono aggiornati
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	it	L'orario suggerito <B> %1 - %2 </B> è in conflittop con i seguenti appunamenti presenti in calendario:
+zip code	addressbook	it	CAP
+zone	admin	it	Zone
+zone	weather	it	Zone
+notes categories	preferences	it	Categorie delle note
+description	preferences	it	Descrizione
+notes categories for	common	it	Categorie delle note per
+todo	preferences	it	Preferenze
+user	calendar	it	utente
+week	common	it	settimana
+start date 	calendar	it	Data Inizio
+end date	calendar	it	Data Fine
+this year	calendar	it	Quest'anno
+participates	common	it	partecipa
+participates	calendar	it	partecipa
+start date 	common	it	Data Inizio
+end date	common	it	Data Fine
+squirrelmail	admin	it	Squirrelmail
+images	admin	it	Immagini
+themes	admin	it	Temi
+cron	admin	it	cron
+inc	admin	it	inc
+todo	admin	it	Da-fare
+personalized notes for	notes	it	Note personalizzate per
+who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTE le registrazioni di questo utente?
