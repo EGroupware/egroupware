@@ -280,7 +280,7 @@
 			return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
 				'info_type'     => $this->bo->enums['type'],
 				'info_status'   => $all_stati
-			),$readonlys,$persist,'',$return_html);
+			),$readonlys,$persist,(int) $return_html);
 		}
 
 		function delete($values=0,$referer='')
@@ -502,8 +502,7 @@
 						}
 						break;
 				}
-				$content['link_to']['primary'] = $content['info_link_id'] ? $content['info_link_id'] : True;
-
+				$content['link_to']['primary'] = (int)$content['info_link_id'];
 				if (!isset($this->bo->enums['type'][$content['info_type']]))
 				{
 					$content['info_type'] = 'note';
