@@ -12,11 +12,24 @@
 
   /* $Id$ */
 
-	$phpgw_info['flags']['currentapp'] = 'infolog';
-	$phpgw_info['flags']['enable_contacts_class'] = True;
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'currentapp' => 'infolog',
+		'noheader'   => True,
+		'nonavbar'   => True,
+		'enable_contacts_class' => True
+	);
 	include("../header.inc.php");
 
-	$phpgw->infolog = createobject('infolog.uiinfolog');
+	if (!isset($GLOBALS['phpgw_info']['user']['apps']['admin']) ||
+		 !$GLOBALS['phpgw_info']['user']['apps']['admin'])		// no admin
+   {
+		Header('Location: ' .  $GLOBALS['phpgw']->link('/home.php'));
+		$GLOBALS['phpgw']->common->phpgw_exit();
+	}
+	$GLOBALS['phpgw']->common->phpgw_header();
+	echo parse_navbar();
+
+	$infolog = createobject('infolog.uiinfolog');
 
 	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); // $t->unknows = 'keep'; $t->debug = 1;
 	$t->set_file(array('import' => 'csv_import.tpl'));
@@ -26,14 +39,14 @@
 	$t->set_block('import','ffooter','ffooterhandle');
 	$t->set_block('import','imported','importedhandle');
 	
-	// $t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
-	// $t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
+	// $t->set_var("navbar_bg",$GLOBALS['phpgw_info']["theme"]["navbar_bg"]);
+	// $t->set_var("navbar_text",$GLOBALS['phpgw_info']["theme"]["navbar_text"]);
 	
 	if ($action == 'download' && (!$fieldsep || !$csvfile || !($fp=fopen($csvfile,"r")))) {
 		$action = '';
 	}		
-	$t->set_var("action_url",$phpgw->link("/infolog/csv_import.php"));
-	$t->set_var( $phpgw->infolog->setStyleSheet( ));
+	$t->set_var("action_url",$GLOBALS['phpgw']->link("/infolog/csv_import.php"));
+	$t->set_var( $infolog->setStyleSheet( ));
 	$t->set_var("lang_info_action",lang("InfoLog - Import CSV-File"));
 
 	$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
@@ -83,20 +96,20 @@ function cat_id( $cats )
 		if (isset($cat2id[$cat])) {
 			$ids[$cat] = $cat2id[$cat];								// cat is in cache
 		} else {
-			if (!is_object($phpgw->categories)) {
-				$phpgw->categories = createobject('phpgwapi.categories');
+			if (!is_object($GLOBALS['phpgw']->categories)) {
+				$GLOBALS['phpgw']->categories = createobject('phpgwapi.categories');
 			}			
-			if ($id = $phpgw->categories->name2id( $cat )) {	// cat exists
+			if ($id = $GLOBALS['phpgw']->categories->name2id( $cat )) {	// cat exists
 				$cat2id[$cat] = $ids[$cat] = $id;
 			} else {															// create new cat
-				$phpgw->categories->add( $cat,0,$cat,'','public',0);
-				$cat2id[$cat] = $ids[$cat] = $phpgw->categories->name2id( $cat );
+				$GLOBALS['phpgw']->categories->add( $cat,0,$cat,'','public',0);
+				$cat2id[$cat] = $ids[$cat] = $GLOBALS['phpgw']->categories->name2id( $cat );
 			}
 		}
 	}
 	return implode( ',',$ids );
-}											
-	
+}
+
 	switch ($action) {
 	case '':	// Start, ask Filename
 		$t->set_var('lang_csvfile',lang('CSV-Filename'));
@@ -109,7 +122,7 @@ function cat_id( $cats )
 
 		$t->parse('filenamehandle','filename');
 		break;
-		
+
 	case 'download':
 		$pref_file = '/tmp/csv_import_info_log.php';
 		if (is_readable($pref_file) && ($prefs = fopen($pref_file,'r'))) {
@@ -117,7 +130,7 @@ function cat_id( $cats )
 			// echo "<p>defaults = array".dump_array($defaults)."</p>\n";
 		}	else {
 			$defaults = array();
-		}		
+		}
 		$t->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
 		$t->set_var('lang_info_fieldname',lang('InfoLog-Fieldname'));
 		$t->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
@@ -149,7 +162,7 @@ function cat_id( $cats )
 									'addr_id'	=>	'Addressbook id, to set use @addr_id(nlast,nfirst,org)' );
 
 		$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
-		
+
 		$defaults += array(	'Land'			=> "addr$PSep.*[(]+([0-9]+)[)]+$ASep+${VPre}1 (${CPre}Ortsvorwahl$CPos) ${CPre}Telefon$CPos$PSep${CPre}Telefon$CPos",
 									'Notiz'			=> 'des',
 									'Privat'			=> "access${PSep}1${ASep}private${PSep}public",
@@ -161,15 +174,15 @@ function cat_id( $cats )
 																		"${PSep}${CPre}Nachname$CPos, ${CPre}Vorname$CPos",
 									'no CSV 1'		=>	"type${PSep}phone",
 									'no CSV 2'		=>	"subject${PSep}@substr(${CPre}Notiz$CPos,0,60).' ...'" );
-		
+
 		$info_name_options = "<option value=\"\">none\n";
 		while (list($field,$name) = each($info_names)) {
-			$info_name_options .= "<option value=\"$field\">".$phpgw->strip_html($name)."\n";
-		}		
+			$info_name_options .= "<option value=\"$field\">".$GLOBALS['phpgw']->strip_html($name)."\n";
+		}
 		$csv_fields = fgetcsv($fp,8000,$fieldsep);
 		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
-		$csv_fields[] = 'no CSV 2'; 
-		$csv_fields[] = 'no CSV 3'; 
+		$csv_fields[] = 'no CSV 2';
+		$csv_fields[] = 'no CSV 3';
 		while (list($csv_idx,$csv_field) = each($csv_fields)) {
 			$t->set_var('csv_field',$csv_field);
 			$t->set_var('csv_idx',$csv_idx);
@@ -177,20 +190,20 @@ function cat_id( $cats )
 				list( $info,$trans ) = explode($PSep,$def,2);
 				$t->set_var('trans',$trans);
 				$t->set_var('info_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$info_name_options));
-			} else {		
+			} else {
 				$t->set_var('trans','');
 				$t->set_var('info_fields',$info_name_options);
-			}			
-			$t->parse('fieldshandle','fields',True); 
-		}		
+			}
+			$t->parse('fieldshandle','fields',True);
+		}
 		$t->set_var('lang_start',lang('Startrecord'));
 		$t->set_var('start',$start);
 		$t->set_var('lang_max',lang('Number of records to read (<=200)'));
 		$t->set_var('max',200);
-		$t->parse('ffooterhandle','ffooter'); 
+		$t->parse('ffooterhandle','ffooter');
 		fclose($fp);
-		$old = $csvfile; $csvfile = $phpgw_info['server']['temp_dir'].'/info_log_import_'.basename($csvfile);
-		rename($old,$csvfile); 
+		$old = $csvfile; $csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/info_log_import_'.basename($csvfile);
+		rename($old,$csvfile);
 		$hiddenvars .= '<input type="hidden" name="csvfile" value="'.$csvfile.'">';
 		$help_on_trans = 	"<a name='help'><b>How to use Translation's</b><p>".
 								"Translations enable you to change / adapt the content of each CSV field for your needs. <br>".
@@ -223,16 +236,16 @@ function cat_id( $cats )
 								"<b>@cat_id(Cat1,...,CatN)</b> returns a (','-separated) list with the cat_id's. If a category isn't found, it ".
 								"will be automaticaly added.<p>".
 								"I hope that helped to understand the features, if not <a href='mailto:RalfBecker@outdoor-training.de'>ask</a>.";
-								
+
 		$t->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
 		break;
-		
+
 	case 'import':
 		$fp=fopen($csvfile,"r");
 		$csv_fields = fgetcsv($fp,8000,$fieldsep);
-		
+
 		$info_fields = array_diff($info_fields,array( '' ));	// throw away empty / not assigned entrys
-		
+
 		if ($pref_file) {
 			// echo "writing pref_file ...<p>";
 			if (file_exists($pref_file)) rename($pref_file,$pref_file.'.old');
@@ -244,9 +257,9 @@ function cat_id( $cats )
 			}
 			fwrite($pref,'$defaults = array'.dump_array( $defaults ).';');
 			fclose($pref);
-		}		
+		}
 		$log = "<table border=1>\n\t<tr><td>#</td>\n";
-	
+
 		reset($info_fields);
 		while (list($csv_idx,$info) = each($info_fields)) {	// convert $trans[$csv_idx] into array of pattern => value
 			// if (!$debug) echo "<p>$csv_idx: ".$csv_fields[$csv_idx].": $info".($trans[$csv_idx] ? ': '.$trans[$csv_idx] : '')."</p>";
@@ -262,15 +275,15 @@ function cat_id( $cats )
 				$trans[$csv_idx] = $values;
 			} else
 				unset( $trans[$csv_idx] );
-						
-			$log .= "\t\t<td><b>$info</b></td>\n";		
+
+			$log .= "\t\t<td><b>$info</b></td>\n";
 		}
 		if ($start < 1) $start = 1;
 		for ($i = 1; $i < $start && fgetcsv($fp,8000,$fieldsep); ++$i) ; 	// overread lines before our start-record
-		
+
 		for ($anz = 0; $anz < $max && ($fields = fgetcsv($fp,8000,$fieldsep)); ++$anz) {
 			$log .= "\t</tr><tr><td>".($start+$anz)."</td>\n";
-			
+
 			reset($info_fields); $values = array();
 			while (list($csv_idx,$info) = each($info_fields)) {
 				//echo "<p>$csv: $info".($trans[$csv] ? ': '.$trans[$csv] : '')."</p>";
@@ -284,8 +297,8 @@ function cat_id( $cats )
 							// echo "'$val'</p>";
 
 							$quote = $val[0] == '@' ? "'" : '';
-									
-							$reg = $CPreReg.'([a-zA-Z_0-9]+)'.$CPosReg; 
+
+							$reg = $CPreReg.'([a-zA-Z_0-9]+)'.$CPosReg;
 							while (ereg($reg,$val,$vars)) {	// expand all CSV fields
 								$val = str_replace($CPre.$vars[1].$CPos,$quote.$fields[index($vars[1],$csv_fields)].$quote,$val);
 							}
@@ -294,24 +307,24 @@ function cat_id( $cats )
 								// echo "<p>eval('$val')=";
 								$val = eval($val);
 								// echo "'$val'</p>";
-							}								
+							}
 							if ($pattern[0] != '@' || $val)
 								break;
 						}
-					}											
+					}
 				}
 				$values[$info] = $val;
-				
+
 				$log .= "\t\t<td>$val</td>\n";
 			}
 			if (!isset($values['datecreated'])) $values['datecreated'] = $values['startdate'];
-			
+
 			if (!$debug) {
-				$phpgw->infolog->write($values);
-			}			
-		}		
+				$infolog->bo->write($values);
+			}
+		}
 		$log .= "\t</tr>\n</table>\n";
-		
+
 		$t->set_var('anz_imported',$debug ? lang( '%1 records read (not yet imported, you may go back and uncheck Test Import)',
 																$anz,'<a href="javascript:history.back()">','</a>' ) :
 														lang( '%1 records imported',$anz ));
@@ -321,6 +334,6 @@ function cat_id( $cats )
 	}
 	$t->set_var('hiddenvars',$hiddenvars);
 	$t->pfp('out','import',True);
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 
 ?>
