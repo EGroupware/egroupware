@@ -86,10 +86,10 @@
       else
 	$query_result++;
       $phpgw->db->query("SELECT con FROM newsgroups "
-		    ."WHERE name LIKE '%".$query."%'$orderby LIMIT "
+		    ."WHERE name LIKE '%$query%'$orderby LIMIT "
 		    .$phpgw->nextmatchs->sql_limit($query_result));
       $phpgw->db->next_record();
-      $start = $phpgw->db->f("con");
+      $start = $phpgw->db->f("con") - 1;
     }
      
     $urlname = $phpgw_info["server"]["webserver_url"]."/admin/nntp.php";
