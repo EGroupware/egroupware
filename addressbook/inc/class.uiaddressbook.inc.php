@@ -301,7 +301,7 @@
 			}
 
 			/* Check if prefs were set, if not, create some defaults */
-			//if(!$columns_to_display)
+			if(!$columns_to_display)
 			{
 				/* No prefs,. so cols above may have been set to '' or a bunch of <td></td> */
 				$cols='';
