@@ -1084,8 +1084,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		function navbar()
 		{
 			$GLOBALS['phpgw_info']['navbar']['home']['title'] = 'Home';
-			$GLOBALS['phpgw_info']['navbar']['home']['url']   = $GLOBALS['phpgw']->link('/index.php');
-			$GLOBALS['phpgw_info']['navbar']['home']['icon']  = $this->image('phpgwapi',Array('home.gif','nonav.gif'));
+			$GLOBALS['phpgw_info']['navbar']['home']['url']   = $GLOBALS['phpgw']->link('/home.php');
+			$GLOBALS['phpgw_info']['navbar']['home']['icon']  = $this->image('phpgwapi',Array('home','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['home']['icon_hover']  = $this->image_on('phpgwapi',Array('home','nonav'),'-over');
 
 			reset($GLOBALS['phpgw_info']['user']['apps']);
@@ -1134,7 +1134,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 //					if($GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon'] == '')
 //					{
-//						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image('phpgwapi','nonav.gif');
+//						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']  = $this->image('phpgwapi','nonav');
 //					}
 				}
 			}
