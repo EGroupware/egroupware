@@ -79,7 +79,6 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/redirect.php
 %{prefix}/%{egwdirname}/set_box.php
 %{prefix}/%{egwdirname}/header.inc.php.template
-%{prefix}/%{egwdirname}/version.inc.php
 %{prefix}/%{egwdirname}/index.php
 %{prefix}/%{egwdirname}/soap.php
 %{prefix}/%{egwdirname}/xmlrpc.php

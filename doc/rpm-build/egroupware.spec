@@ -371,7 +371,6 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/xmlrpc.php.old
 %{prefix}/%{egwdirname}/soap.php
 %{prefix}/%{egwdirname}/header.inc.php.template
-%{prefix}/%{egwdirname}/version.inc.php
 %{prefix}/%{egwdirname}/index.php
 %{prefix}/%{egwdirname}/login.php
 %{prefix}/%{egwdirname}/logout.php

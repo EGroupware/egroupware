@@ -24,7 +24,6 @@
 	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
 	unset($setup_info);
-	#include('../version.inc.php');
 
 	/* Fetch the current real path.
 	 * If this is in the server document root, then it is probably ok.
