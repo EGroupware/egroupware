@@ -150,7 +150,7 @@
   //echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
   
   if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"]) {
-     include($phpgw_info["server"]["server_root"] . "/stocks/inc/functions.inc.php");
+     include(PHPGW_INCLUDE_ROOT . "/stocks/inc/functions.inc.php");
      echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
   }  
   $phpgw->common->hook('',array('email','calendar','news'));
