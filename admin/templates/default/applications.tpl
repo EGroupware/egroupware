@@ -27,8 +27,11 @@
   <tr>
    <td align="left">
     <form method="POST" action="{new_action}">
-     <input type="submit" value="{lang_add}">
+     <input type="submit" value="{lang_add}"> 
     </form>
+   </td>
+   <td>
+    {lang_note}
    </td>
   </tr>
  </table>

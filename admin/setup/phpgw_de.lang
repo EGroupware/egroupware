@@ -1,4 +1,5 @@
 (stored password will not be shown here)	admin	de	(Gespeicherte Passwort wird hier nicht angezeigt)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
 account has been deleted	common	de	Konto wurde gel.scht

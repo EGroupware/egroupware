@@ -1,4 +1,5 @@
 (stored password will not be shown here)	admin	en	(Stored password will not be shown here)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
 account active	admin	en	Account active
 account has been created	common	en	Account has been created
 account has been deleted	common	en	Account has been deleted

@@ -102,6 +102,7 @@
 			$GLOBALS['phpgw']->template->set_var('lang_enabled',lang('Enabled'));
 
 			$GLOBALS['phpgw']->template->set_var('new_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.add'));
+			$GLOBALS['phpgw']->template->set_var('lang_note',lang('(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)'));
 			$GLOBALS['phpgw']->template->set_var('lang_add',lang('add'));
 
 			@reset($applications);
