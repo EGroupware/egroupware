@@ -62,7 +62,7 @@
 			
 			if($this->debug)
 			{
-				echo "Locale = ".$this->locales[0]."<br>\n";
+				echo '<-- Locale = '.$this->locales[0].' -->'."\n";
 			}
 
 			$this->total = $this->so->holiday_total($this->locales[0],$this->query);
@@ -173,7 +173,8 @@
 
 		function prepare_read_holidays($year=0,$owner=0)
 		{
-			$this->year = ($year?$year:$GLOBALS['phpgw']->common->show_date(time(),'Y'));
+			$datetime = CreateObject('phpgwapi.datetime');
+			$this->year = ($year?$year:$GLOBALS['phpgw']->common->show_date(time() - $datetime->tz_offset,'Y'));
 			$this->owner = ($owner?$owner:$GLOBALS['phpgw_info']['user']['account_id']);
 
 			if(@$GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
