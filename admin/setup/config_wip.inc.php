@@ -12,6 +12,7 @@
     <td>
      <select name="newsettings[auth_type]">
       <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
+      <option value="sqlssl"<?php echo $selected["sqlssl"]; ?>>SQL / SSL</option>
       <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
       <option value="mail"<?php echo $selected["mail"]; ?>>Mail</option>
       <option value="http"<?php echo $selected["http"]; ?>>HTTP</option>
@@ -28,6 +29,7 @@
      <select name="newsettings[account_repository]">
       <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
       <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
+      <option value="contacts"<?php echo $selected["contacts"]; ?>>Contacts</option>
      </select>
     </td>
    </tr>
