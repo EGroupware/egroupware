@@ -340,53 +340,58 @@
 			        ($function == '' || $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->public_functions[$function]);
 		}
 
-		function extensionPreProcess(&$cell,&$value,&$readonlys)
+		function extensionPreProcess($type,$name,&$value,&$cell,&$readonlys)
 		/*
 		@function extensionPreProcess
 		@syntax extensionPreProcess(&$cell,&$value,&$readonlys)
+		@param $type of the extension
+		@param $name form-name of this widget/field (used as a unique index into extension_data)
 		@param &$cell table-cell on which the extension operates
 		@param &$value value of the extensions content(-array)
 		@param &$readonlys value of the extensions readonly-setting(-array)
 		@abstract executes the pre_process-function of the extension $cell[]type]
 		*/
 		{
-			if (!$this->haveExtension($type = $cell['type']))
+			if (!$this->haveExtension($type))
 			{
 				return False;
 			}
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->pre_process($cell,$value,
-				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$type][$cell['name']],$readonlys,$this);
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],$this);
 		}
 
-		function extensionPostProcess(&$cell,&$value)
+		function extensionPostProcess($type,$name,&$value,$value_in)
 		/*
 		@function extensionPostProcess
 		@syntax extensionPostProcess(&$cell,&$value)
+		@param $type of the extension
+		@param $name form-name of this widget/field (used as a unique index into extension_data)
+		@param &$value value of the extensions content(-array)
 		@abstract executes the post_process-function of the extension $cell[type]
 		*/
 		{
-			if (!$this->haveExtension($type = $cell['type'],'post_process'))
+			if (!$this->haveExtension($type,'post_process'))
 			{
 				return False;
 			}
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->post_process($cell,$value,
-				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$type][$cell['name']],
-				$GLOBALS['phpgw_info']['etemplate']['loop'],$this);
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->post_process($name,$value,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],
+				$GLOBALS['phpgw_info']['etemplate']['loop'],$this,$value_in);
 		}
 
-		function extensionRender(&$cell,$form_name,&$value,$readonly)
+		function extensionRender($type,$name,&$value,&$cell,$readonly)
 		/*
 		@function extensionRender
 		@syntax extensionRender(&$cell,$form_name,&$value,$readonly)
 		@abstract executes the render-function of the extension $cell[type]
 		*/
 		{
-			if (!$this->haveExtension($type = $cell['type'],'render'))
+			if (!$this->haveExtension($type,'render'))
 			{
 				return False;
 			}
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->render($cell,$form_name,$value,$readonly,
-				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$type][$cell['name']],$this);
+			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->render($cell,$name,$value,$readonly,
+				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],$this);
 		}
 
 		/*!
@@ -424,7 +429,12 @@
 			}
 			eval($code = str_replace(']',"']",str_replace('[',"['",$code)));
 
-			//echo "set_array: $code = '$val'\n";
+			//echo "set_array: $code = '$val'<br>\n";
+		}
+
+		function unset_array(&$arr,$idx)
+		{
+			$this->set_array($arr,$idx,0,False);
 		}
 
 		function &get_array(&$arr,$idx)
@@ -432,7 +442,7 @@
 			if (ereg('^([^[]*)(\\[.*\\])$',$idx,$regs))	// idx contains array-index
 			{
 				eval($code = str_replace(']',"']",str_replace('[',"['",'$val = &$arr['.$regs[1].']'.$regs[2].';')));
-				//echo "get_array: $code = '$val'\n";
+				//echo "get_array: $code = '$val'<br>\n";
 			}
 			else
 			{
@@ -446,15 +456,14 @@
 		@syntax complete_array_merge( $old,$new )
 		@author ralfbecker
 		@abstract merges $old and $new, content of $new has precedence over $old
-		@discussion THIS IS NOT THE SAME AS PHP4: array_merge (as it calls itself recursive for values which are arrays,
-		@discussion if there key does NOT start with a '_' (array_merge just overwrites the old (sub)array)
+		@discussion THIS IS NOT THE SAME AS PHP4: array_merge (as it calls itself recursive for values which are arrays.
 		*/
 		function complete_array_merge($old,$new)
 		{
 			@reset($new);
 			while (list($k,$v) = @each($new))
 			{
-				if (!is_array($v) || !isset($old[$k]) || $k[0] == '_')
+				if (!is_array($v) || !isset($old[$k]))
 				{
 					$old[$k] = $v;
 				}

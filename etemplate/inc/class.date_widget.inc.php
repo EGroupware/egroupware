@@ -44,8 +44,9 @@
 			return 0;
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys,&$tmpl)
+		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			$extension_data = $cell['size'];
 			if ($cell['size'] != '')
 			{
 				$date = split('[/.-]',$value);
@@ -77,7 +78,7 @@
 			return $this->$func($cell,$form_name,$value,$readonly,$tmpl);
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop,&$tmpl)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
 		{
 			if (!isset($value))
 			{
@@ -93,15 +94,15 @@
 				{
 					$value['Y'] = date('Y');
 				}
-				if ($cell['size'] == '')
+				if ($extension_data)
 				{
 					$value = mktime(0,0,0,$value['m'],$value['d'],$value['Y']);
 				}
 				else
 				{
-					for ($n = 0,$str = ''; $n < strlen($cell['size']); ++$n)
+					for ($n = 0,$str = ''; $n < strlen($extension_data); ++$n)
 					{
-						if (strstr('Ymd',$c = $cell['size'][$n]))
+						if (strstr('Ymd',$c = $extension_data[$n]))
 						{
 							$str .= sprintf($c=='Y'?'%04d':'%02d',$value[$c]);
 						}

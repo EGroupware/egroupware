@@ -31,7 +31,7 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys,&$tmpl)
+		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
@@ -47,10 +47,10 @@
 			while (list($k,$name) = each($names))
 			{
 				$tcell = $tabs->empty_cell();
-				if (is_array($value['_tab_widget']) && $value['_tab_widget'][$name][0])
+				if ($extension_data == $name)
 				{
 					// save selected tab in persistent extension_data to use it in post_process
-					$extension_data = $selected_tab = $name;
+					$selected_tab = $name;
 					$tcell['obj'] = &$tab_active;
 					$tcell['name'] = $tab_active->name;
 				}
@@ -60,8 +60,8 @@
 					$tcell['name'] = $tab->name;
 				}
 				$tcell['type'] = 'template';
-				$tcell['size'] = "_tab_widget[$name]";
-				$value['_tab_widget'][$name] = array(
+				$tcell['size'] = $cell['name']/*form_name*/.'['.$name.']';
+				$value[$name] = array(
 					'name'  => $name,
 					'label' => $labels[$k],
 					'help'  => $helps[$k]
@@ -98,22 +98,18 @@
 			return False;	// NO extra Label
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop,&$tmpl)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
 		{
-			$old_value = array(
-				'_tab_widget' => array(
-					$extension_data => array(True)
-			));
-			$this->pre_process($cell,$old_value,$extension_data,$dummy,$tmpl);
-
-			if (is_array($value['_tab_widget']))
+			//echo "<p>tab_widget::post_process($name): value = "; _debug_array($value);
+			if (is_array($value))
 			{
-				while (list($key,$val) = each($value['_tab_widget']))
+				reset($value);
+				list($tab,$button) = each($value);
+				list(,$button) = each($button);
+				if ($button)
 				{
-					if (is_array($val) && $val[0])
-					{
-						$loop = True;
-					}
+					$extension_data = $tab;
+					$loop = True;
 				}
 			}
 			return True;

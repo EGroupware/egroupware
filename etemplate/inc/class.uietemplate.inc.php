@@ -103,12 +103,14 @@
 			$id = $this->appsession_id();
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
+			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
 			$html .= ($this->stable ? $this->html->nextMatchStyles()."\n\n" : ''). // so they get included once
 				$this->html->form($this->include_java_script() .
-					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),
-					array('etemplate_exec_id' => $id,'app' => $GLOBALS['phpgw_info']['flags']['currentapp']),
-					'/etemplate/process_exec.php','','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
-
+					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
+						'etemplate_exec_id' => $id,
+						'etemplate_exec_app' => $GLOBALS['phpgw_info']['flags']['currentapp']
+					),'/etemplate/process_exec.php','','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
+			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']);
 			list($width,$height,,,,,$overflow) = explode(',',$this->size);
 			if ($overflow)
 			{
@@ -121,6 +123,7 @@
 				'sel_options' => $sel_options,
 				'preserv' => $preserv,
 				'extension_data' => $GLOBALS['phpgw_info']['etemplate']['extension_data'],
+				'to_process' => $GLOBALS['phpgw_info']['etemplate']['to_process'],
 				'java_script' => $GLOBALS['phpgw_info']['etemplate']['java_script'],
 				'method' => $method
 			),$id);
@@ -161,7 +164,7 @@
 			$GLOBALS['phpgw_info']['etemplate']['java_script'] = $session_data['java_script'] || $GLOBALS['HTTP_POST_VARS']['java_script'];
 			//echo "globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', session_data[java_script] = '".$session_data['java_script']."', HTTP_POST_VARS[java_script] = '".$GLOBALS['HTTP_POST_VARS']['java_script']."'\n";
 			//echo "process_exec($this->name) content ="; _debug_array($content);
-			$this->process_show($content,$session_data['readonlys']);
+			$this->process_show($content,$session_data['to_process'],'exec');
 
 			//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
 			//echo "process_exec($this->name) session_data[changes] ="; _debug_array($session_data['changes']);
@@ -197,7 +200,7 @@
 		@param $show_xxx row,col name/index for name expansion
 		@result the generated HTML
 		*/
-		function show($content,$sel_options='',$readonlys='',$cname='cont',$show_c=0,$show_row=0)
+		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0)
 		{
 			if (!$sel_options)
 			{
@@ -339,11 +342,11 @@
 			}
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
-			if (strstr($name,'|'))	// extension which uses whole content array
+			/*if (strstr($name,'|'))	// extension which uses whole content array
 			{
 				$value = $content;
 			}
-			elseif (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
+			else*/if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
 			{
 				$form_name = $cname == '' ? $name : $cname.'['.$regs[1].']'.$regs[2];
 				eval(str_replace(']',"']",str_replace('[',"['",'$value = $content['.$regs[1].']'.$regs[2].';')));
@@ -371,14 +374,14 @@
 
 			if (!$this->types[$cell['type']] && $this->haveExtension($cell['type'],'pre_process'))
 			{
-				$type = $cell['type'];
-				$extra_label = $this->extensionPreProcess($cell,$value,$readonlys[$name]);
-				//echo "<p>$type::pre_process"; _debug_array($cell);
-				if (strstr($name,'|'))
+				$ext_type = $cell['type'];
+				$extra_label = $this->extensionPreProcess($ext_type,$form_name,$value,$cell,$readonlys[$name]);
+
+				/*if (strstr($name,'|'))
 				{
 					$content = $this->complete_array_merge($content,$value);
 				}
-				elseif (!$regs)
+				else*/if (!$regs)
 				{
 					$content[$name] = $value;	// set result for template
 				}
@@ -442,11 +445,14 @@
 					{
 						$html .= $this->html->input($form_name,$value,'',
 							$options.$this->html->formatOptions($cell['size'],'SIZE,MAXLENGTH'));
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					}
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					$html .= $this->html->textarea($form_name,$value,
 						$options.$this->html->formatOptions($cell['size'],'ROWS,COLS'));
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'checkbox':
 					if ($value)
@@ -454,6 +460,8 @@
 						$options .= ' CHECKED';
 					}
 					$html .= $this->html->input($form_name,'1','CHECKBOX',$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'radio':		// size: value if checked
 					if ($value == $cell['size'])
@@ -461,6 +469,8 @@
 						$options .= ' CHECKED';
 					}
 					$html .= $this->html->input($form_name,$cell['size'],'RADIO',$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'button':
 					if ($this->java_script() && $cell['onchange'])
@@ -478,6 +488,8 @@
 							$this->html->image(substr($this->name,0,strpos($this->name,'.')),$ro_img);
 					}
 					$extra_label = False;
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'hrule':
 					$html .= $this->html->hr($cell['size']);
@@ -515,7 +527,7 @@
 					{
 						if ($span == '' && isset($content[$idx]['span']))
 						{	// this allows a colspan in autorepeated cells like the editor
-							$span = explode(',',$content[$idx]['span']); $span = $span[0];
+							list($span) = explode(',',$content[$idx]['span']);
 							if ($span == 'all')
 							{
 								$span = 1 + $content['cols'] - $show_c;
@@ -549,25 +561,39 @@
 					}
 					$html .= $this->sbox->getArrayItem($form_name.'[]',$value,$sel_options,$cell['no_lang'],
 						$options,$cell['size']);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'select-percent':
 					$html .= $this->sbox->getPercentage($form_name,$value,$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'select-priority':
 					$html .= $this->sbox->getPriority($form_name,$value,$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'select-access':
 					$html .= $this->sbox->getAccessList($form_name,$value,$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'select-country':
 					$html .= $this->sbox->getCountry($form_name,$value,$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'select-state':
 					$html .= $this->sbox->list_states($form_name,$value);  // no helptext - old Function!!!
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'select-cat':
 					$html .= $this->sbox->getCategory($form_name.'[]',$value,$cell['size'] >= 0,
 						False,$cell['size'],$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'select-account':
 					$type = substr(strstr($cell['size'],','),1);
@@ -576,6 +602,8 @@
 						$type = 'accounts';	// default is accounts
 					}
 					$html .= $this->sbox->getAccount($form_name.'[]',$value,2,$type,0+$cell['size'],$options);
+					if (!$readonly)
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'image':
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
@@ -588,17 +616,23 @@
 					$html .= $this->html->input($form_name,'','file');
 					$GLOBALS['phpgw_info']['etemplate']['form_options'] =
 						"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path','$form_name')\"";
+					$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					$GLOBALS['phpgw_info']['etemplate']['to_process'][$path] = 'file-path';
 					break;
 				default:
-					if ($this->haveExtension($cell['type'],'render'))
+					if ($ext_type && $this->haveExtension($ext_type,'render'))
 					{
-						$html .= $this->extensionRender($cell,$form_name,$value,$readonly);
+						$html .= $this->extensionRender($ext_type,$form_name,$value,$cell,$readonly);
 					}
 					else
 					{
 						$html .= "<i>unknown type '$cell[type]'</i>";
 					}
 					break;
+			}
+			if ($ext_type && !$readonly)	// extension-processing need to be after all other
+			{
+				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'ext-'.$ext_type;
 			}
 			if ($extra_label && ($label != '' || $html == ''))
 			{
@@ -624,243 +658,76 @@
 			return $html;
 		}
 
+
 		/*!
 		@function process_show
 		@abstract makes necessary adjustments on HTTP_POST_VARS after a eTemplate / form gots submitted
 		@discussion This is only an internal function, dont call it direct use only exec
-		@discussion process_show recursivly calls itself for the included eTemplates.
-		@param $vars HTTP_POST_VARS on first call, later (deeper recursions) subscripts of it
-		@param $readonly array with cell- / var-names which should NOT return content (this is to workaround browsers who not understand READONLY correct)
+		@discussion Process_show uses a list of input-fields/widgets generated by show.
+		@param $content HTTP_POST_VARS[$cname]
+		@param $to_process list of widgets/form-fields to process
 		@param $cname basename of our returnt content (same as in call to show)
 		@result the adjusted content (by using the var-param &$content)
 		*/
-		function process_show(&$content,$readonlys='')
+		function process_show(&$content,$to_process,$cname='')
 		{
-			if (!$readonlys)
-			{
-				$readonlys = array();
-			}
 			if (!isset($content) || !is_array($content))
 			{
 				return;
 			}
 			if ($this->debug >= 1 || $this->debug == $this->name && $this->name)
 			{
-				echo "<p>process_show($this->name) start: content ="; _debug_array($content);
+				echo "<p>process_show($this->name) start: content ="; _debug_array($GLOBALS['HTTP_POST_VARS']/*$content*/);
 			}
-			reset($this->data);
-			if (isset($this->data[0]))
+			$content_in = $cname ? array($cname => $content) : $content;
+			$content = array();
+			reset($to_process);
+			while (list($form_name,$type) = each($to_process))
 			{
-				each($this->data);	// skip width
+				$value = $this->get_array($content_in,$form_name);
+				list($type,$sub) = explode('-',$type);
+				switch ($type)
+				{
+					case 'ext':
+						$this->extensionPostProcess($sub,$form_name,$this->get_array($content,$form_name),$value);
+						break;
+					case 'text':
+					case 'textarea':
+						if (isset($value))
+						{
+							$value = stripslashes($value);
+						}
+						$this->set_array($content,$form_name,$value);
+						break;
+					case 'button':
+						if ($value)
+						{
+							$this->set_array($content,$form_name,$value);
+						}
+						break;
+					case 'select':
+						$this->set_array($content,$form_name,is_array($value) ? implode(',',$value) : $value);
+						break;
+					case 'checkbox':
+						if (!isset($value))	// checkbox was not checked
+						{
+							$value = 0;			// need to be reported too
+						}
+						$this->set_array($content,$form_name,$value);
+						break;
+					default:
+						$this->set_array($content,$form_name,$value);
+						break;
+				}
 			}
-			for ($r = 0; True /*list($row,$cols) = each($this->data)*/; ++$r)
+			if ($cname)
 			{
-				if (!(list($r_key) = each($this->data)))	// no further row
-				{
-					//list($nul,$cell) = each($cols); reset($cols);
-					if ((!$this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) ||
-						$idx_cname == '' || !$this->isset_array($content,$idx)) &&
-						(!$this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) ||
-						$idx_cname == '' || !$this->isset_array($content,$idx)))
-					{
-						break;	// no auto-row-repeat
-					}
-				}
-				else
-				{
-					$cols = &$this->data[$r_key];
-				}
-				$row = 1+$r;
-				reset($cols);
-				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
-				{
-					//$old_cell = $cell;
-					if (!(list($c_key/*,$cell*/) = each($cols)))	// no further cols
-					{
-						//$cell = $old_cell;
-						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
-							$idx_cname == '' || !$this->isset_array($content,$idx))
-						{
-							break;	// no auto-col-repeat
-						}
-					}
-					else
-					{
-						$cell = &$cols[$c_key];
-						$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True); // get idx_cname
-					}
-					$col = $this->num2chrs($c);
-
-					$name = $this->expand_name($cell['name'],$c,$r);
-					$readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'] ||
-						$cell['type'] == 'label' || $cell['type'] == 'image' || $cell['type'] == 'raw' ||
-						$cell['type'] == 'hrule';
-
-					if ($idx_cname == '' && $cell['type'] == 'template' || strstr($name,'|'))	// only templates or extensions
-					{
-						if ($readonly && !isset($readonlys['__ALL__']))		// can't unset whole content!!!
-						{
-							$readonlys['__ALL__'] = True;
-							$this->process_show_cell($cell,$name,$c,$r,$readonlys,$content);
-							unset($readonlys['__ALL__']);		// unset it after or everything gets set readonly
-						}
-						else
-						{
-							$this->process_show_cell($cell,$name,$c,$r,$readonlys,$content);
-						}
-					}
-					elseif (ereg('^([^[]*)\\[(.*)\\]$',$idx_cname,$regs))	// name contains array-index
-					{
-						/*  Attention: the unsets here and in the next else are vor two reasons:
-						*  1) some browsers does NOT understand the READONLY-tag and sent content back
-						*     this has to be unset, as we only report no-readonly fields
-						*  2) php has a fault / feature :-) that it set unset array-elements passed as
-						*     variable / changeable (&$var) to a function, this messes up a lot, as we
-						*     depend on the fact variables are set or not for the autorepeat. To work
-						*     around that, process_show_cell reports back if a variable is set or not
-						*     via the returnvalue and we unset it or even the parent if is was not set.
-						*/
-						$parent_isset = isset($content[$regs[1]]);
-
-						if ($readonly || !$this->process_show_cell($cell,$name,$c,$r,
-								$readonlys[$regs[1]][$regs[2]],$content[$regs[1]][$regs[2]]))
-						{
-							if (!$parent_isset)
-							{
-								unset($content[$regs[1]]);
-							}
-							else
-							{
-								unset($content[$regs[1]][$regs[2]]);
-							}
-						}
-					}
-					else
-					{
-						if ($readonly || !$this->process_show_cell($cell,$name,$c,$r,
-								$readonlys[$idx_cname],$content[$idx_cname]))
-						{
-							unset($content[$idx_cname]);
-						}
-					}
-				}
+				$content = $content[$cname];
 			}
 			if ($this->debug >= 2 || $this->debug == $this->name && $this->name)
 			{
 				echo "<p>process_show($this->name) end: content ="; _debug_array($content);
 			}
-		}
-
-		/*!
-		@function process_show_cell
-		@syntax process_show_cell( $cell,$name,$c,$r,$readonlys,&$value )
-		@author ralfbecker
-		@abstract makes necessary adjustments on $value eTemplate / form gots submitted
-		@discussion This is only an internal function, dont call it direct use only exec
-		@discussion process_show recursivly calls itself for the included eTemplates.
-		@param $cell processed cell
-		@param $name expanded name of cell
-		@param $c,$r col,row index
-		@param $readonlys readonlys-array to pass on for templates
-		@param &$value value to change
-		@result if $value is set
-		*/
-		function process_show_cell($cell,$name,$c,$r,$readonlys,&$value)
-		{
-			if (is_array($cell['type']))
-			{
-				$cell['type'] = $cell['type'][0];
-			}
-			if ($this->debug >= 3 || $this->debug == $this->name || $this->debug == $cell['type'])
-			{
-				if (is_object($name))
-				{
-					$name = $name->name;
-				}
-				echo "<p>process_show_cell(c=$c, r=$r, name='$name',type='${cell['type']}') start: isset(value)=".(0+isset($value)).", value=";
-				if (is_array($value))
-				{
-					_debug_array($value);
-				}
-				else
-				{
-					echo "'$value'</p>\n";
-				}
-			}
-			if ($this->haveExtension($cell['type'],'post_process'))
-			{
-				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
-				{
-					echo "<p>value for $cell[type]::post_process: "; _debug_array($value);
-				}
-				$this->extensionPostProcess($cell,$value);
-
-				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
-				{
-					echo "<p>value after $cell[type]::post_process: ";
-					if (is_array($value))
-					{
-						_debug_array($value);
-					}
-					else
-					{
-						echo "'$value'</p>";
-					}
-				}
-			}
-			switch ($cell['type'])
-			{
-				case 'int':
-				case 'float':
-					list($min,$max) = explode(',',$cell['size']);
-					/*
-					* TO DO: number- and range-check, if not enshured by java-script
-					*/
-					break;
-				case 'text':
-				case 'textarea':
-					if (isset($value))
-					{
-						$value = stripslashes($value);
-					}
-					break;
-				case 'checkbox':
-					if (!isset($value))	// checkbox was not checked
-					{
-						$value = 0;			// need to be reported too
-					}
-					break;
-				case 'template':
-					if (!is_object($cell['obj']))
-					{
-						$cell['obj'] = new etemplate($cell['name'],$this->as_array());
-					}
-					//$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name'],$this->as_array());
-					$cell['obj']->process_show($value,$readonlys);
-					break;
-				case 'select':
-				case 'select-cat':
-				case 'select-account':
-					if (is_array($value))
-					{
-						$value = count($value) <= 1 ? $value[0] : implode(',',$value);
-					}
-					break;
-				default: // do nothing, $value is correct as is
-			}
-			if ($this->debug >= 3 || $this->debug == $this->name || $this->debug == $cell['type'])
-			{
-				echo "<p>process_show_cell(name='$name',type='${cell['type']}) end: isset(value)=".(0+isset($value)).", value=";
-				if (is_array($value))
-				{
-					_debug_array($value);
-				}
-				else
-				{
-					echo "'$value'</p>\n";
-				}
-			}
-			return isset($value);
 		}
 
 		/*!

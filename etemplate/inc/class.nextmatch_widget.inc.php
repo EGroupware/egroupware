@@ -31,28 +31,33 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys,&$tmpl)
+		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			//echo "<p>nextmatch_widget.pre_process: value = "; _debug_array($value);
 			// save values in persistent extension_data to be able use it in post_process
-			$extension_data = $value;
+			//$extension_data = $value;
 
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			$obj = CreateObject($app.'.'.$class);
+			if (!is_object($obj))
+			{
+				echo "<p>nextmatch_widget::pre_process($name): '$value[get_rows]' is no valid method !!!</p>\n";
+				return;
+			}
 			$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			if ($value['start'] > $total)
 			{
-				$extension_data['start'] = $value['start'] = 0;
+				$value['start'] = 0;
 				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			}
-			$extension_data['total'] = $total;
-
-			if ($cell['size'])
+			if ($cell['size'])	// template name can be supplied either in $value['template'] or the options-field
 			{
 				$value['template'] = $cell['size'];
 			}
-			$value['template'] = new etemplate($value['template'],$tmpl->as_array());
-
+			if (!is_object($value['template']))
+			{
+				$value['template'] = new etemplate($value['template'],$tmpl->as_array());
+			}
 			$nextmatch = new etemplate('etemplate.nextmatch_widget');
 
 			if ($value['no_cat'])
@@ -82,18 +87,16 @@
 			$cell['name'] = $nextmatch->name;
 			$cell['label'] = $cell['help'] = '';
 
+			$extension_data = $value;
+
 			return False;	// NO extra Label
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop,&$tmpl)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
 		{
 			//echo "<p>nextmatch_widget.post_process: value = "; _debug_array($value);
-
 			$old_value = $extension_data;
 
-			list($value['cat_id']) = $value['cat_id'];
-			list($value['filter']) = $value['filter'];
-			list($value['filter2'])= $value['filter2'];
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 

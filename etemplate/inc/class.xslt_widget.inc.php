@@ -24,7 +24,8 @@
 	{
 		var $public_functions = array(
 			'pre_process' => True,
-			'render' => True
+			'render' => True,
+			'post_process' => True
 		);
 		var $human_name = 'XSLT Template';	// this is the name for the editor
 
@@ -44,7 +45,7 @@
 			return 0;
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys,&$tmpl)
+		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			return False;	// no extra label
 		}
@@ -93,5 +94,12 @@
 				'align'  => $cell['align']
 			));
 			return $this->xslttemplates->parse();
+		}
+
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
+		{
+			//echo "<p>xslt_widget.post_process: $name = "; _debug_array($value_in);
+
+			$value = $value_in;
 		}
 	}
