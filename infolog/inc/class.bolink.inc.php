@@ -60,10 +60,10 @@
 				'query' => 'infolog.boinfolog.link_query',
 				'title' => 'infolog.boinfolog.link_title',
 				'view' => array(
-					'menuaction' => 'infolog.uiinfolog.get_list',
+					'menuaction' => 'infolog.uiinfolog.index',
 					'action' => 'sp'
 				),
-				'view_id' => 'info_id',
+				'view_id' => 'action_id',
 			)
 		);
 
@@ -88,7 +88,7 @@
 		@param $remark Remark to be saved with the link (defaults to '')
 		@param $owner Owner of the link (defaults to user)
 		@discussion Does NOT check if link already exists
-		@result db-errno or -1 (for param-error) or 0 for success
+		@result False (for db or param-error) or link_id on success
 		@result if $id1==0 or already an array: $id1 is array with links
 		*/
 		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
@@ -99,7 +99,7 @@
 			}
 			if (!$app1 || !$app2 || !$id1 && is_array($id2) || $app1 == $app2 && $id1 == $id2)
 			{
-				return -1;
+				return False;
 			}
 			if (is_array($id1) || !$id1)		// create link only in $id1 array
 			{
@@ -107,25 +107,26 @@
 				{
 					$id1 = array( );
 				}
-				$id1["$app2:$id2"] = array(
+				$link_id = "$app2:$id2";
+				$id1[$link_id] = array(
 					'app' => $app2,
 					'id'  => $id2,
 					'remark' => $remark,
 					'owner'  => $owner,
-					'link_id' => "$app2:$id2",
+					'link_id' => $link_id,
 					'lastmod' => time()
 				);
-				return 0;
+				return $link_id;
 			}
 			if (is_array($app2) && !$id2)
 			{
 				reset($app2);
-				$err = 0;
-				while (!$err && list(,$link) = each($app2))
+				$link_id = True;
+				while ($link_id && list(,$link) = each($app2))
 				{
-					$err = solink::link($app1,$id1,$link['app'],$link['id'],$link['remark'],$link['owner'],$link['lastmod']);
+					$link_id = solink::link($app1,$id1,$link['app'],$link['id'],$link['remark'],$link['owner'],$link['lastmod']);
 				}
-				return $err;
+				return $link_id;
 			}
 			return solink::link($app1,$id1,$app2,$id2,$remark,$owner);
 		}
@@ -168,9 +169,32 @@
 		}
 
 		/*!
-      @function unlink
-      @syntax unlink( $link_id,$app='',$id='',$owner='',$app2='',$id2='' )
-      @author ralfbecker
+		@function get_link
+		@syntax get_link(  $app_link_id,$id='',$app2='',$id2='' )
+		@author ralfbecker
+		@abstract returns data of a link
+		@param $app_link_id > 0 link_id of link or app-name of link
+		@param $id,$app2,$id2 other param of the link if not link_id given
+		@result array with link-data or False
+		@disscussion If $id is an array (links not yet created) only link_ids are allowed.
+		*/ 
+		function get_link($app_link_id,$id='',$app2='',$id2='')
+		{
+			if (is_array($id))
+			{
+				if (isset($id[$app_link_id]))
+				{
+					return $id[$app_link_id];
+				}
+				return False;
+			}
+			return solink::get_link($app_link_id,$id,$app2,$id2);
+		}
+
+		/*!
+		@function unlink
+		@syntax unlink( $link_id,$app='',$id='',$owner='',$app2='',$id2='' )
+		@author ralfbecker
 		@abstract Remove link with $link_id or all links matching given $app,$id
 		@param $link_id link-id to remove if > 0
 		@param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params

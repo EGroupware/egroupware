@@ -13,7 +13,7 @@
 
 	$setup_info['infolog']['name']      = 'infolog';
 	$setup_info['infolog']['title']     = 'Info Log';
-	$setup_info['infolog']['version']   = '0.9.15.003';
+	$setup_info['infolog']['version']   = '0.9.15.004';
 	$setup_info['infolog']['app_order'] = 20;
 	$setup_info['infolog']['tables']    = array('phpgw_infolog','phpgw_links');
 	$setup_info['infolog']['enable']    = 1;

@@ -158,4 +158,62 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.003';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
+
+
+	$test[] = '0.9.15.003';
+	function infolog_upgrade0_9_15_003()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_type',array(
+			'type' => 'varchar',
+			'precision' => '10',
+			'nullable' => False,
+			'default' => 'task'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_pri',array(
+			'type' => 'varchar',
+			'precision' => '10',
+			'nullable' => True,
+			'default' => 'normal'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_status',array(
+			'type' => 'varchar',
+			'precision' => '10',
+			'nullable' => True,
+			'default' => 'done'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_confirm',array(
+			'type' => 'varchar',
+			'precision' => '10',
+			'nullable' => True,
+			'default' => 'not'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_infolog','info_modifier',array(
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => False,
+			'default' => '0'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_infolog','info_link_id',array(
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => False,
+			'default' => '0'
+		));
+
+		// ORDER BY link_app2 DESC gives addressbook the highes precedens, use ASC for projects
+		$GLOBALS['phpgw_setup']->oProc->query("SELECT link_id,link_id1 FROM phpgw_links WHERE link_app1='infolog' ORDER BY link_app2 DESC");
+		$links = array();
+		while ($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			$links[$GLOBALS['phpgw_setup']->oProc->f(1)] = $GLOBALS['phpgw_setup']->oProc->f(0);
+		}
+		reset($links);
+		while (list($info_id,$link_id) = each($links))
+		{
+			$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_infolog SET info_link_id=$link_id WHERE info_id=$info_id");
+		}
+
+		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.004';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
 ?>

@@ -28,7 +28,8 @@
 			'link'      => True,
 			'get_links' => True,
 			'unlink'    => True,
-			'chown'     => True
+			'chown'     => True,
+			'get_link'  => True
 		);
 		var $db;
 		var $user;
@@ -55,7 +56,7 @@
 		@param $remark Remark to be saved with the link (defaults to '')
 		@param $owner Owner of the link (defaults to user)
 		@discussion Does NOT check if link already exists
-		@result db-errno or -1 (for param-error) or 0 for success
+		@result False (for db or param-error) or link_id for success
 		*/
 		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0,$lastmod=0 )
 		{
@@ -66,7 +67,11 @@
 			if ($app1 == $app2 && $id1 == $id2 ||
 			    $id1 == '' || $id2 == '' || $app1 == '' || $app2 == '')
 			{
-				return -1;	// dont link to self or other nosense
+				return False;	// dont link to self or other nosense
+			}
+			if ($this->get_link($app1,$id1,$app2,$id2))
+			{
+				return $link['link_id'];	// link alread exist
 			}
 			if (!$owner)
 			{
@@ -76,9 +81,7 @@
 			if (!$lastmod)
 			{
 				$lastmod = time();
-         }
-			$this->unlink(0,$app1,$id1,'',$app2,$id2);	// remove link if one exists
-
+			}
 			$sql = "INSERT INTO $this->db_name (link_app1,link_id1,link_app2,link_id2,link_remark,link_lastmod,link_owner) ".
 			       " VALUES ('$app1','$id1','$app2','$id2','$remark',$lastmod,$owner)";
 
@@ -86,9 +89,9 @@
 			{
 				echo "<p>solink.link($app1,$id1,$app2,$id2,'$remark',$owner) sql='$sql'</p>\n";
 			}
-			$this->db->query($sql);
+			$this->db->query($sql,__LINE__,__FILE__);
 
-			return $this->db->errno;
+			return $this->db->errno ? False : $this->db->get_last_insert_id($this->db_name,'link_id');
 		}
 
 		/*!
@@ -113,7 +116,7 @@
 			{
 				echo "<p>solink.get_links($app,$id,$only_app,$order) sql='$sql'</p>\n";
 			}
-			$this->db->query($sql);
+			$this->db->query($sql,__LINE__,__FILE__);
 
 			if ($not_only = $only_app[0] == '!')
 			{
@@ -150,6 +153,40 @@
 				$links[] = $only_app && !$not_only ? $link['id'] : $link;
 			}
 			return $links;
+		}
+		
+		/*!
+		@function get_link
+		@syntax get_link(  $app_link_id,$id='',$app2='',$id2='' )
+		@author ralfbecker
+		@abstract returns data of a link
+		@param $app_link_id > 0 link_id of link or app-name of link
+		@param $id,$app2,$id2 other param of the link if not link_id given
+		@result array with link-data or False
+		*/
+		function get_link($app_link_id,$id='',$app2='',$id2='')
+		{
+			$sql = "SELECT * FROM $this->db_name WHERE ";
+			if (intval($app_link_id) > 0)
+			{
+				$sql .= "link_id=$app_link_id";
+			}
+			else
+			{
+				if ($app_link_id == '' || $id == '' || $app2 == '' || $id2 == '')
+				{
+					return False;
+				}
+				$sql .= "(link_app1='$app_link_id' AND link_id1='$id' AND link_app2='$app2' AND link_id2='$id2') OR".
+				        "(link_app2='$app_link_id' AND link_id2='$id' AND link_app1='$app2' AND link_id1='$id2')";
+			}
+			$this->db->query($sql,__LINE__,__FILE__);
+
+			if ($this->db->next_record())
+			{
+				return $this->db->Record;
+			}
+			return False;
 		}
 
 		/*!
@@ -199,7 +236,7 @@
 			{
 				echo "<p>solink.unlink($link_id,$app,$id,$owner,$app2,$id2) sql='$sql'</p>\n";
 			}
-			$this->db->query($sql);
+			$this->db->query($sql,__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}
@@ -219,7 +256,7 @@
 			{
 				return 0;
 			}
-			$this->db->query("UPDATE $this->db_name SET owner=$new_owner WHERE owner=$owner");
+			$this->db->query("UPDATE $this->db_name SET owner=$new_owner WHERE owner=$owner",__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}

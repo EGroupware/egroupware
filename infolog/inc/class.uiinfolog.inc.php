@@ -17,7 +17,6 @@
 	{
 		var $public_functions = array
 		(
-			//'get_list'    => True,
 			'index'       => True,
 			'edit'        => True,
 			'delete'      => True,
@@ -79,7 +78,7 @@
 			//$this->html = CreateObject('etemplate.html');
 			//$this->categories = CreateObject('phpgwapi.categories');
 			//$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
-			$this->link = CreateObject('infolog.uilink');
+			$this->link = &$this->bo->link;
 			
 			$this->tmpl = CreateObject('etemplate.etemplate');
 			$this->html = &$this->tmpl->html;
@@ -92,10 +91,16 @@
 				$info = $this->bo->read($info);
 			}
 			$id = $info['info_id'];
-			$info += $this->formatInfo($info,$action,$action_id);
+			$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed';
+			$info['sub_class'] = $info['info_pri'] . ($done ? '_done' : '');
+			if (!$done && $info['info_enddate'] < time()+(60*60)*$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'])
+			{
+				$info['end_class'] = 'overdue';
+			}
 			$info['info_des'] = nl2br($info['info_des']);
 			$info['info_anz_subs'] = $this->bo->anzSubs($id);
-
+			$this->bo->link_id2title(&$info,$action,$action_id);
+			
 			$readonlys["edit[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_EDIT);
 			$readonlys["delete[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_DELETE);
 			$readonlys["sp[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_ADD);
@@ -130,7 +135,7 @@
 			}
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			reset($rows);
-
+			
 			return $total;
 		}
 
@@ -152,9 +157,11 @@
 					'cat_id' => $values['nm']['cat_id']
 				));
 			}
-			$action = $action ? $action : $values['action'];
-			$action_id = $action_id ? $action_id : $values['action_id'];
-
+			if ($action == '')
+			{
+				$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
+				$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
+			}
 			if ($values['add'] || $values['cancel'] || isset($values['nm']['rows']) || isset($values['main']))
 			{
 
@@ -167,7 +174,7 @@
 				{
 					list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 					list($do_id) = @each($do_id);
-					echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
+					//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
 					switch($do)
 					{
 						case 'edit':
@@ -259,16 +266,39 @@
 				$action    = $content['action'];
 				$action_id = $content['action_id'];
 				$referer   = $content['referer'];
-				
+
+				if (isset($content['link_to']['primary']))
+				{
+					$content['info_link_id'] = $content['link_to']['primary'];
+				}
+				if (!$this->link->get_link($content['info_link_id']))
+				{
+					$content['info_link_id'] = 0;	// link has been deleted
+				}
+				if ($content['set_today'])
+				{
+					$content['info_startdate'] = time();
+					unset($content['set_today']);
+				}
 				if ($content['save'] || $content['delete'] || $content['cancel'])
 				{
 					if ($content['save'] && (!$info_id || $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
 					{
 						$this->bo->write($content);
 
-						if (!$info_id && is_array($content['link_to']['to_id']))
+						if (!$info_id && is_array($content['link_to']['to_id']))	// writing link for new entry
 						{
-							$this->link->link('infolog',$this->bo->so->data['info_id'],$content['link_to']['to_id']);
+							$info_id = $this->bo->so->data['info_id'];
+							$this->link->link('infolog',$info_id,$content['link_to']['to_id']);
+							if (strstr($content['info_link_id'],':') !== False)
+							{
+								list($app,$id) = explode(':',$content['info_link_id']);
+								$content['info_link_id'] = $this->link->get_link('info_log',$info_id,$app,$id);
+								$this->bo->write(array(
+									'info_id' => $info_id,
+									'info_link_id' => $content['info_link_id']
+								));
+							}
 						}
 					}
 					elseif ($content['delete'] && $info_id > 0)
@@ -295,10 +325,6 @@
 					get_var('HTTP_REFERER',Array('GLOBAL')));
 				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 				
-				if (!isset($this->bo->enums['type'][$type]))
-				{
-					$type = 'note';
-				}
 				$this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
 				$content = $this->bo->so->data;
 
@@ -334,7 +360,7 @@
 				}
 				$content['links'] = $content['link_to'] = array(
 					'to_id' => $info_id,
-					'to_app' => 'infolog'
+					'to_app' => 'infolog',
 				);
 				switch ($action)
 				{
@@ -343,14 +369,19 @@
 					case 'addressbook':
 					case 'projects':
 					case 'calendar':
-                  $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
-					case 'new':
-						$content['info_type'] = $type;
+						$content['info_link_id'] = $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
+					case 'new': 
+						if ($type != '')
+						{
+							$content['info_type'] = $type;
+						}
 						break;
 					default:
 						$action = '';
 						break;
 				}
+				$content['link_to']['primary'] = $content['info_link_id'] ? $content['info_link_id'] : True;
+				
 				if (!isset($this->bo->enums['type'][$content['info_type']]))
 				{
 					$content['info_type'] = 'note';
@@ -369,6 +400,7 @@
 			),$readonlys,array(
 				'info_id'   => $info_id,
 				'info_id_parent' => $content['info_id_parent'],
+				'info_link_id' => $content['info_link_id'],
 				'action'    => $action,
 				'action_id' => $action_id,
 				'referer'   => $referer,
@@ -1523,10 +1555,19 @@
 		/*!
 		@function writeLangFile
 		@abstract writes langfile with all templates and messages registered here
-		@discussion can be called via http://domain/phpgroupware/index.php?infolog.uiinfolog.writeLangFile
+		@discussion call as http://domain/phpgroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
 		*/
 		function writeLangFile()
 		{
-			$this->tmpl->writeLangFile('infolog','en',$this->messages);
+			$extra = $this->messages + $this->filters;
+			$enums = $this->bo->enums + $this->bo->status;
+			unset($enums['defaults']);
+			reset($enums);
+			while (list($key,$msg_arr) = each($enums))
+			{
+				$extra += $msg_arr;
+			}
+			_debug_array($extra);
+			echo $this->tmpl->writeLangFile('infolog','en',$extra);
 		}
 	}

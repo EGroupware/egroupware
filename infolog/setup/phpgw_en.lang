@@ -1,5 +1,18 @@
 %1 records imported	infolog	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+%s $row_cont[info_addr]	infolog	en	%s $row_cont[info_addr]
+%s today	infolog	en	%s Today
+- subprojects from	infolog	en	- Subprojects from
+0%	infolog	en	0%
+10%	infolog	en	10%
+20%	infolog	en	20%
+30%	infolog	en	30%
+40%	infolog	en	40%
+50%	infolog	en	50%
+60%	infolog	en	60%
+70%	infolog	en	70%
+80%	infolog	en	80%
+90%	infolog	en	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	en	
 a short subject for the entry	infolog	en	a short subject for the entry
 abort without deleting	infolog	en	Abort without deleting
@@ -28,6 +41,7 @@ call	infolog	en	call
 cancel	infolog	en	Cancel
 categories	infolog	en	Categories
 category	infolog	en	Category
+check to set startday	infolog	en	check to set startday
 click here to create the link	infolog	en	click here to create the Link
 click here to start the search	infolog	en	click here to start the search
 close	infolog	en	Close
@@ -72,6 +86,7 @@ fax	infolog	en	Fax
 fieldseparator	infolog	en	Fieldseparator
 finish	infolog	en	finish
 from	infolog	en	From
+high	infolog	en	high
 id	infolog	en	Id
 import	infolog	en	Import
 info log	common	en	InfoLog
@@ -93,11 +108,13 @@ links	infolog	en	Links
 links of this entry	infolog	en	Links of this entry
 list no subs/childs	infolog	en	List no Subs/Childs
 longer textual description	infolog	en	longer textual description
+low	infolog	en	low
 new search	infolog	en	New search
 no - cancel	infolog	en	No - Cancel
 no entries found, try again ...	infolog	en	no entries found, try again ...
 no filter	infolog	en	no Filter
 none	infolog	en	None
+normal	infolog	en	normal
 not	infolog	en	not
 not assigned	infolog	en	not assigned
 note	infolog	en	Note
@@ -170,6 +187,7 @@ view other subs	infolog	en	view other Subs
 view parent	infolog	en	View parent
 view subs	infolog	en	view Subs
 view the parent of this entry and all his subs	infolog	en	View the parent of this entry and all his subs
+view this linked entry in its application	infolog	en	view this linked entry in its application
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)
 will-call	infolog	en	will call
 yes - delete	infolog	en	Yes - Delete

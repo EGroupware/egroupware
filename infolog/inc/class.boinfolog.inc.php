@@ -22,13 +22,13 @@
 			'write'          => True,
 			'delete'         => True,
 			'check_access'   => True,
-			'readProj'       => True,
-			'readAddr'       => True,
 			'anzSubs'        => True,
 			'search'         => True,
 			'get_rows'       => True,
 			'accountInfo'    => True,	// in class boinfolog (this class)
-			'addr2name'      => True,
+/*			'readProj'       => True,
+			'readAddr'       => True,
+			'addr2name'      => True,*/
 			'attach_file'    => True,
 			'delete_attached'=> True,
 			'info_attached'  => True,
@@ -36,7 +36,8 @@
 			'read_attached'  => True,
 			'attached_local' => True,
 			'link_title'     => True,
-			'link_query'     => True
+			'link_query'     => True,
+			'link_id2title'  => True
 		);
 		var $enums;
 		var $so;
@@ -51,24 +52,26 @@
 				'priority' => array (
 					'urgent' => 'urgent','high' => 'high','normal' => 'normal',
 					'low' => 'low' ),
-				'status'   => array(
+/*				'status'   => array(
 					'offer' => 'offer','ongoing' => 'ongoing','call' => 'call',
 					'will-call' => 'will-call','done' => 'done',
 					'billed' => 'billed' ),
-				'confirm'   => array(
+*/				'confirm'   => array(
 					'not' => 'not','accept' => 'accept','finish' => 'finish',
 					'both' => 'both' ),
 				'type'      => array(
 					'task' => 'task','phone' => 'phone','note' => 'note'
 				/*	,'confirm' => 'confirm','reject' => 'reject','email' => 'email',
-					'fax' => 'fax' no implemented so far */ )
+					'fax' => 'fax' not implemented so far */ )
 			);
 			$this->status = array(
 				'defaults' => array(
 					'task' => 'ongoing', 'phone' => 'call', 'note' => 'done'),
 				'task' => array(
-					'offer' => 'offer','ongoing' => 'ongoing',
-					'done' => 'done', 'billed' => 'billed' ),
+					'offer' => 'offer','ongoing' => 'ongoing','done' => 'done',
+					'0%' => '0%', '10%' => '10%', '20%' => '20%', '30%' => '30%', '40%' => '40%',
+					'50%' => '50%', '60%' => '60%', '70%' => '70%', '80%' => '80%', '90%' => '90%',
+					'billed' => 'billed' ),
 				'phone' => array(
 					'call' => 'call','will-call' => 'will-call',
 					'done' => 'done', 'billed' => 'billed' ),
@@ -78,6 +81,7 @@
 
 			$this->so = CreateObject('infolog.soinfolog');
 			$this->vfs = CreateObject('infolog.vfs');
+			$this->link = CreateObject('infolog.bolink');
 
 			$this->config = CreateObject('phpgwapi.config');
 			$this->config->read_repository();
@@ -111,110 +115,7 @@
 			}
 			return $account_data['account_lid'];
 		}
-
-		function addr2name( $addr )
-		{
-			if (!is_array($addr) && !($addr = $this->readAddr($addr)))
-			{
-				return '';
-			}
-			$name = $addr['n_family'];
-			if ($addr['n_given'])
-			{
-				$name .= ', '.$addr['n_given'];
-			}
-			else
-			{
-				if ($addr['n_prefix'])
-				{
-					$name .= ', '.$addr['n_prefix'];
-				}
-			}
-			if ($addr['org_name'])
-			{
-				$name = $addr['org_name'].': '.$name;
-			}
-			return $GLOBALS['phpgw']->strip_html($name);
-		}
-
-		function proj2name( $proj )
-		{
-			if (!is_array($proj))
-			{
-				$proj = $this->readProj($proj);
-			}
-			return is_array($proj) ? $proj['title'] : '';
-		}
-
-		function readProj($proj_id)
-		{
-			if ($proj_id)
-			{
-				if (!is_object($this->projects) && file_exists(PHPGW_SERVER_ROOT.'/projects'))
-				{
-					$this->projects = createobject('projects.boprojects');
-				}
-				if (is_object($this->projects) && ($proj = $this->projects->read_single_project( $proj_id)))
-				{
-					return $proj;
-				}
-			}
-			return False;
-		}
-
-		function readAddr($addr_id)
-		{
-			if ($addr_id)
-			{
-				if (!is_object($this->contacts))
-				{
-					$this->contacts = createobject('phpgwapi.contacts');
-				}
-				if (list( $addr ) = $this->contacts->read_single_entry( $addr_id ))
-				{
-					return $addr;
-				}
-			}
-			return False;
-		}
-
-		function event2name( $event )
-		{
-			if (!is_object($this->bocal) && file_exists(PHPGW_SERVER_ROOT.'/projects'))
-			{
-				$this->bocal = createobject('calendar.bocalendar');
-			}
-			if (is_object($this->bocal) && !is_array($event) && (int) $event > 0)
-			{
-				$event = $this->bocal->read_entry($event);
-			}
-			if (!is_array($event))
-			{
-				return '';
-			}
-			$name = $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset);
-			$name .= ' -- ' . $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['end']) - $this->bocal->datetime->tz_offset);
-			$name .= ': ' . $event['title'];
-
-			return $GLOBALS['phpgw']->strip_html($name);
-		}
-
-		function readEvent($cal_id)
-		{
-			if ($cal_id)
-			{
-				if (!is_object($this->bocal) && file_exists(PHPGW_SERVER_ROOT.'/projects'))
-				{
-					$this->bocal = createobject('calendar.bocalendar');
-				}
-				if (is_object($this->bocal) && $event = $this->bocal->read_entry( $cal_id ))
-				{
-					return $event;
-				}
-			}
-			return False;
-		}
-
+		
 		/*
 		 * check's if user has the requiered rights on entry $info_id
 		 */
@@ -226,28 +127,54 @@
 		function init()
 		{
 			$this->so->init();
-		}      
+		}
+
+		function link_id2title(&$info,$not_app='',$not_id='')
+		{
+			if ($info['info_link_id'] > 0 &&
+				 ($link = $this->link->get_link($info['info_link_id'])) !== False)
+			{
+				$nr = $link['link_app1'] == 'infolog' && $link['link_id1'] == $info['info_id'] ? '2' : '1';
+				$title = $this->link->title($link['link_app'.$nr],$link['link_id'.$nr]);
+				if ($link['link_app'.$nr] == $not_app && $link['link_id'.$nr] == $not_id)
+				{
+					if ($title == $info['info_from'])
+					{
+						$info['info_from'] = '';
+					}
+					return False;
+				}
+				if ($info['info_from'] == '' || $info['info_from'] == $title)
+				{
+					$info['info_link_view'] = $this->link->view($link['link_app'.$nr],$link['link_id'.$nr]);
+					$info['info_from'] = $info['info_link_title'] = $title;
+				}
+				return $title;
+			}
+			return False;
+		}
 
 		function read($info_id)
 		{
 			$err = $this->so->read($info_id) === False;
-				
-			if ($this->so->data['info_subject'] ==
-				 (substr($this->so->data['info_des'],0,60).' ...'))
+			$data = &$this->so->data;
+
+			if ($data['info_subject'] == (substr($data['info_des'],0,60).' ...'))
 			{
-				$this->so->data['info_subject'] = '';
+				$data['info_subject'] = '';
 			}
-			if ($this->so->data['info_addr_id'] && $this->so->data['info_from'] ==
-				 $this->addr2name( $this->readAddr( $this->so->data['info_addr_id'] )))
+			$data['info_link_title'] = $this->link_id2title($data,$data['info_link_view']);
+			if ($data['info_link_title'] == $data['info_from'])
 			{
-				$this->so->data['info_from'] = '';
+				$data['info_from'] = '';
 			}
-			return $err ? False : $this->so->data;
+			return $err ? False : $data;
 		}
 
 		function delete($info_id)
 		{
 			$this->delete_attached($info_id);
+			$this->link->unlink(0,'infolog',$info_id);
 
 			$this->so->delete($info_id);
 		}
@@ -270,16 +197,17 @@
 			{
 				$values['info_owner'] = $this->so->user;
 			}
-			$values['info_datemodified'] = time();
-
 			if (!$values['info_subject'])
 			{
 				$values['info_subject'] = substr($values['info_des'],0,60).' ...';
 			}
-			if ($values['info_addr_id'] && !$values['info_from'])
+			if ($values['info_link_id'] && $values['info_from'] == '')
 			{
-				$values['info_from'] = $this->addr2name( $this->readAddr( $values['info_addr_id'] ));
+				$values['info_from'] = $this->link_id2title($values);
 			}
+			$values['info_datemodified'] = time();
+			$values['info_modifier'] = $this->so->user;
+
 			$this->so->write($values);
 		}
 
@@ -454,6 +382,7 @@
 			}
 			return False;
 		}
+		
 		/*!
 		@function link_title
 		@syntax link_title(  $id  )
