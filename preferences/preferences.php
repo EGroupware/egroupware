@@ -25,6 +25,11 @@
 	);
 	include('../header.inc.php');
 
+	if ($GLOBALS['HTTP_POST_VARS']['cancel'])
+	{
+		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php'));
+	}
+
 	// Make things a little easier to follow
 	function is_admin()
 	{
