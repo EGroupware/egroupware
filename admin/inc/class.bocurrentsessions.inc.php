@@ -32,12 +32,6 @@
 
 		function list_sessions($start,$order,$sort)
 		{
-//			if (! $sort || ! $order)
-//			{
-//				$order = 'session_dla';
-//				$sort  = 'asc';
-//			}
-
 			$values = $this->so->list_sessions($start,$sort,$order);
 
 			while (list(,$value) = each($values))
@@ -69,7 +63,7 @@
 		{
 			if ($GLOBALS['ksession'] && $GLOBALS['sessionid'] != $GLOBALS['ksession'] && ! $GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
 			{
-				$GLOBALS['phpgw']->session->destroy($GLOBALS['ksession']);
+				$GLOBALS['phpgw']->session->destroy($GLOBALS['ksession'],0);
 			}
 			$this->ui = createobject('admin.uicurrentsessions');
 			$this->ui->list_sessions();
