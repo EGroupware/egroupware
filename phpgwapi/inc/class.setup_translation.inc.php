@@ -60,7 +60,9 @@
 				$fp = fopen($fn,'r');
 				while ($data = fgets($fp,8000))
 				{
-					list($message_id,$app_name,$null,$content) = explode("\t",substr($data,0,-1));
+// this is not working if mbstring.overloading = 7 and the content contains a special char
+//					list($message_id,$app_name,$null,$content) = explode("\t",substr($data,0,-1));
+					list($message_id,$app_name,$null,$content) = split("[\t\n]",$data);
 					$this->langarray[strtolower(trim($message_id))] = $content;
 				}
 				fclose($fp);
