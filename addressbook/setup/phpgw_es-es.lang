@@ -19,7 +19,7 @@ addvcard	addressbook	es-es	Añadir tarjeta de visita
 alt. csv import	addressbook	es-es	Importar CSV (avanzado)
 are you sure you want to delete this field?	addressbook	es-es	¿Está seguro de que desea borrar este campo?
 bbs phone	addressbook	es-es	Teléfono BBS
-birthday	common	es-es	Cumpleaños
+birthday	common	es-es	Fecha de nacimiento
 birthdays	common	es-es	Cumpleaños
 blank	addressbook	es-es	Vacío
 business	common	es-es	Empresa
@@ -81,7 +81,7 @@ home address type	addressbook	es-es	Tipo de dirección particular
 home city	addressbook	es-es	Ciudad de residencia
 home country	addressbook	es-es	Pais de residencia
 home email	addressbook	es-es	Correo electrónico personal
-home email type	addressbook	es-es	Tipo de correo electróico personal
+home email type	addressbook	es-es	Tipo de correo electrónico personal
 home phone	addressbook	es-es	Telefono personal
 home state	addressbook	es-es	Provincia de residencia
 home street	addressbook	es-es	Domicilio personal
