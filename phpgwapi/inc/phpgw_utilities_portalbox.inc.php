@@ -45,8 +45,6 @@ class baseportalbox {
     function baseportalbox($title="", $primary="", $secondary="", $tertiary="") {
         $this->setvar("title",$title);
 //        echo "After SetVar Title = ".$this->getvar("title")."<br>\n";
-        $this->setvar("outerwidth",220);
-        $this->setvar("innerwidth",220);
         $this->setvar("outerborderwidth",1);
         $this->setvar("titlebgcolor",$primary);
         $this->setvar("innerbgcolor",$secondary);
@@ -72,6 +70,8 @@ class linkbox extends baseportalbox {
     */ 
     function linkbox($title="", $primary="", $secondary="", $tertiary="") { 
         $this->baseportalbox($title, $primary, $secondary, $tertiary);
+        $this->setvar("outerwidth",300);
+        $this->setvar("innerwidth",300);
     } 
     /* 
         This is the only method within the class. Quite simply, as you can see  
@@ -79,19 +79,30 @@ class linkbox extends baseportalbox {
     */ 
     function draw() { 
 		global $phpgw, $phpgw_info;
-		
-        echo '<table border="'.$this->getvar("outerborderwidth").'" cellpadding="0" cellspacing="0" width="'.$this->getvar("outerwidth").'" bordercolor="'.$this->getvar("outerbordercolor").'" bgcolor="'.$this->getvar("titlebgcolor").'">'; 
-        echo '<tr><td align="center">'.$this->getvar("title").'</td></tr>';
-        echo '<tr><td>';
-        echo '<table border="1" cellpadding="0" cellspacing="0" width="'.$this->getvar("innerwidth").'" bgcolor="'.$this->getvar("innerbgcolor").'">';
-        echo '<tr><td><ul>';
-        for ($x = 0; $x < count($this->data); $x++) { 
-            echo '<li><a href="'.$this->data[$x][1].'">'.$this->data[$x][0].'</a></li>';
-        } 
-        echo '</ul></td></tr>';
-        echo '</table>';
-        echo '</td></tr>';
-        echo '</table>';
+
+		$p = new Template($phpgw->common->get_tpl_dir('home'));
+		$p->set_file(array('portal_main' => 'portal_main.tpl',
+      					 'portal_linkbox_header' => 'portal_linkbox_header.tpl',
+      					 'portal_linkbox' => 'portal_linkbox.tpl',
+      					 'portal_linkbox_footer' => 'portal_linkbox_footer.tpl'));
+        $p->set_block('portal_main','portal_linkbox_header','portal_linkbox','portal_linkbox_footer');
+
+        $p->set_var('outer_border',$this->getvar('outerborderwidth'));
+        $p->set_var('outer_width',$this->getvar('outerwidth'));
+        $p->set_var('outer_bordercolor',$this->getvar('outerbordercolor'));
+        $p->set_var('outer_bgcolor',$this->getvar('titlebgcolor'));
+        $p->set_var('title',$this->getvar('title'));
+        $p->set_var('inner_width',$this->getvar('innerwidth'));
+        $p->set_var('inner_bgcolor',$this->getvar('innerbgcolor'));
+        $p->parse('output','portal_linkbox_header',True);
+        
+        for ($x = 0; $x < count($this->data); $x++) {
+            $p->set_var('link',$this->data[$x][1]);
+            $p->set_var('text',$this->data[$x][0]);
+            $p->parse('output','portal_linkbox',True);
+        }
+        $p->parse('output','portal_linkbox_footer',True);
+        return $p->parse('out','portal_main');
     } 
 } 
 
@@ -104,6 +115,8 @@ class resultbox extends baseportalbox {
     //constructor 
     function resultbox($title="", $primary="", $secondary="", $tertiary="") { 
         $this->baseportalbox($title, $primary, $secondary, $tertiary);
+        $this->setvar("outerwidth",400);
+        $this->setvar("innerwidth",400);
     } 
     /* 
         This is the only method within the class. Quite simply, as you can see  
