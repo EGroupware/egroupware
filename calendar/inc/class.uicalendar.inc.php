@@ -476,7 +476,7 @@
 			$p->pparse('out','year_t');
 		}
 		
-		function view($vcal_id=0)
+		function view($vcal_id=0,$cal_date=0)
 		{
   			unset($GLOBALS['phpgw_info']['flags']['noheader']);
    		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -485,6 +485,8 @@
 	   	echo '<center>';
 
    		$cal_id = $vcal_id?$vcal_id:$GLOBALS['HTTP_GET_VARS']['cal_id'];
+   		$date = $cal_date?$cal_date:0;
+   		$date = $date?$date:intval($GLOBALS['HTTP_GET_VARS']['date']);
 	   	
 			// First, make sure they have permission to this entry
 			if ($cal_id < 1)
@@ -507,6 +509,23 @@
 				return;
 			}
 
+			$this->bo->repeating_events = Array();
+			$this->bo->cached_events = Array();
+			$this->bo->repeating_events[0] = $event;
+			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
+			$this->bo->check_repeating_events($datetime);
+			if($this->bo->cached_events[$GLOBALS['phpgw']->common->show_date($datetime,'Ymd')][0] == $event)
+			{
+				$starttime = $this->bo->maketime($event['start']);
+				$endtime = $this->bo->maketime($event['end']);
+				$event['start']['month'] = $this->bo->month;
+				$event['start']['mday'] = $this->bo->day;
+				$event['start']['year'] = $this->bo->year;
+				$temp_end =  $this->bo->maketime($event['start']) + ($endtime - $starttime);
+				$event['end']['month'] = date('m',$temp_end);
+				$event['end']['mday'] = date('d',$temp_end);
+				$event['end']['year'] = date('Y',$temp_end);
+			}
 			echo $this->view_event($event);
 
 			if($this->bo->owner == $event['owner'])
@@ -2129,7 +2148,7 @@
 				@reset($cat_string);
 				$var[] = Array(
 					'field'	=>	lang('Category'),
-					'data'	=>	implode($cat_string,',')
+					'data'	=>	implode(',',$cat_string)
 				);
 			}
 
@@ -2845,9 +2864,26 @@
 			);
 
 // Display Categories
+			if(strpos($event['category'],','))
+			{
+				$temp_cats = explode(',',$event['category']);
+				@reset($temp_cats);
+				while(list($key,$value) = each($temp_cats))
+				{
+					$check_cats[] = intval($value);
+				}
+			}
+			elseif($event['category'])
+			{
+				$check_cats[] = intval($event['category']);
+			}
+			else
+			{
+				$check_cats[] = 0;
+			}
 			$var[] = Array(
 				'field'	=> lang('Category'),
-				'data'	=> '<select name="categories" multiple size="5"><option value="0">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',explode(',',$event['category']),True).'</select>'
+				'data'	=> '<select name="categories[]" multiple size="5"><option value="0">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',$check_cats,True).'</select>'
 			);
 
 // Location

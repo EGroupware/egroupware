@@ -446,7 +446,7 @@
 				$is_public = ($l_cal['private'] == 'public'?1:0);
 				$this->so->event_init();
 				$this->add_attribute('uid',$l_cal['uid']);
-				$this->so->set_category(implode($l_categories,','));
+				$this->so->set_category(implode(',',$l_categories));
 				$this->so->set_title($l_cal['title']);
 				$this->so->set_description($l_cal['description']);
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
@@ -465,7 +465,7 @@
 					$l_recur_enddate['month'] = 0;
 					$l_recur_enddate['mday'] = 0;
 				}
-		
+
 				switch(intval($l_cal['recur_type']))
 				{
 					case MCAL_RECUR_NONE:
@@ -475,7 +475,7 @@
 						$this->so->set_recur_daily(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
 						break;
 					case MCAL_RECUR_WEEKLY:
-						$cal['recur_data'] = intval($l_cal['rpt_sun']) + intval($l_cal['rpt_mon']) + intval($l_cal['rpt_tue']) + intval($l_cal['rpt_wed']) + intval($l_cal['rpt_thu']) + intval($l_cal['rpt_fri']) + intval($l_cal['rpt_sat']);
+						$l_cal['recur_data'] = intval($l_cal['rpt_sun']) + intval($l_cal['rpt_mon']) + intval($l_cal['rpt_tue']) + intval($l_cal['rpt_wed']) + intval($l_cal['rpt_thu']) + intval($l_cal['rpt_fri']) + intval($l_cal['rpt_sat']);
 						$this->so->set_recur_weekly(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']),$l_cal['recur_data']);
 						break;
 					case MCAL_RECUR_MONTHLY_MDAY:
@@ -868,7 +868,7 @@
 				$groups = $GLOBALS['phpgw']->accounts->membership($owner);
 				while (list($key,$group) = each($groups))
 				{
-					if (strpos(' '.implode($event['groups'],',').' ',$group['account_id']))
+					if (strpos(' '.implode(',',$event['groups']).' ',$group['account_id']))
 					{
 						return False;
 					}
