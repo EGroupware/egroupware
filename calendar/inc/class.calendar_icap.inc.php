@@ -152,4 +152,14 @@ class calendar_
 		return $events;		
 	}
 
+	function append_event($mcal_stream)
+	{
+		return mcal_append_event($mcal_stream);
+	}
+
+	function event_init($stream)
+	{
+		return mcal_event_init($stream);
+	}
+
 }

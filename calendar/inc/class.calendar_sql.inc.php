@@ -386,6 +386,23 @@ class calendar_
 		return $this->get_event_ids(False,$startDate.$endDate);
 	}
 
+	function append_event($mcal_stream)
+	{
+		$this->save_event($this->event);
+		return $this->event->id;
+	}
+
+	function store_event($mcal_stream)
+	{
+		return $this->save_event($this->event);
+	}
+
+	function event_init($stream)
+	{
+		$this->event = CreateObject('calendar.calendar_item');
+		return True;
+	}
+
 	/***************** Local functions for SQL based Calendar *****************/
 
 	function get_event_ids($search_repeats=False,$extra='')
@@ -402,7 +419,9 @@ class calendar_
 			$repeats_where = '';
 		}
 		
-		$sql = 'SELECT DISTINCT calendar_entry.cal_id '
+		$sql = 'SELECT DISTINCT calendar_entry.cal_id,'
+				. 'calendar_entry.cal_datetime,calendar_entry.cal_edatetime,'
+				. 'calendar_entry.cal_priority '
 				. 'FROM calendar_entry, calendar_entry_user'
 				. $repeats_from
 				. 'WHERE (calendar_entry_user.cal_id = calendar_entry.cal_id) '
@@ -423,6 +442,120 @@ class calendar_
 		}
 
 		return $retval;
+	}
+
+	function save_event(&$event)
+	{
+		global $phpgw_info;
+		
+		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
+		if($event->id == 0)
+		{
+			$temp_name = tempnam($phpgw_info['server']['temp_dir'],'cal');
+			$this->stream->query("INSERT INTO calendar_entry(cal_name) values('".$temp_name."')");
+			$this->stream->query("SELECT cal_id FROM calendar_entry WHERE cal_name='".$temp_name."'");
+			$this->stream->next_record();
+			$event->id = $this->stream->f('cal_id');
+		}
+
+		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+		{
+			if ($event->ampm == 'pm' && ($event->hour < 12 && $event->hour <> 12))
+			{
+				$event->hour += 12;
+			}
+			
+			if ($event->end_ampm == 'pm' && ($event->end_hour < 12 && $event->end_hour <> 12))
+			{
+				$event->end_hour += 12;
+			}
+		}
+		$date = $this->makegmttime($event->hour,$event->minute,0,$event->month,$event->day,$event->year);
+		$enddate = $this->makegmttime($event->end_hour,$event->end_minute,0,$event->end_month,$event->end_day,$event->end_year);
+		$today = $this->gmtdate(time());
+
+		if($event->rpt_type != 'none')
+		{
+			$type = 'M';
+		}
+		else
+		{
+			$type = 'E';
+		}
+
+		$sql = 'UPDATE calendar_entry SET cal_id='.$event->id.', '
+				. 'cal_owner='.$event->owner.', '
+				. 'cal_datetime='.$date['raw'].', '
+				. 'cal_mdatetime='.$today['raw'].', '
+				. 'cal_edatetime='.$enddate['raw'].', '
+				. 'cal_priority='.$event->priority.', '
+				. "cal_type='".$type."', "
+				. "cal_access='".$event->access."', "
+				. "cal_name='".$event->name."', "
+				. "cal_description='".$event->description."' "
+				. 'WHERE cal_id='.$event->id;
+				
+		$this->stream->query($sql,__LINE__,__FILE__);
+		
+		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event->id,__LINE__,__FILE__);
+
+		while ($participant = each($event->participants))
+		{
+			$this->stream->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
+				. 'VALUES('.$event->id.','.$participant[1].",'A')",__LINE__,__FILE__);
+		}
+
+		if(strcmp($event->rpt_type,'none') <> 0)
+		{
+			$freq = ($event->rpt_freq?$event->rpt_freq:0);
+
+			if($event->rpt_use_end)
+			{
+				$end = $this->makegmttime(0,0,0,$event->rpt_month,$event->rpt_day,$event->rpt_year);
+				$use_end = 1;
+			}
+			else
+			{
+				$end = 'NULL';
+				$use_end = 0;
+			}
+
+			if($event->rpt_type == 'weekly' || $event->rpt_type == 'daily')
+			{
+				$days = ($event->rpt_sun?'y':'n')
+						. ($event->rpt_mon?'y':'n')
+						. ($event->rpt_tue?'y':'n')
+						. ($event->rpt_wed?'y':'n')
+						. ($event->rpt_thu?'y':'n')
+						. ($event->rpt_fri?'y':'n')
+						. ($event->rpt_sat?'y':'n');
+			}
+			else
+			{
+				$days = 'nnnnnnn';
+			}
+			
+			$this->stream->query('SELECT count(cal_id) FROM calendar_entry_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
+			$this->stream->next_record();
+			$num_rows = $this->stream->f(0);
+			if($num_rows == 0)
+			{
+				$this->stream->query('INSERT INTO calendar_entry_repeats(cal_id,cal_type,cal_use_end,cal_end,cal_days,cal_frequency) '
+					.'VALUES('.$event->id.",'".$event->rpt_type."',".$use_end.','.$end['raw'].",'$days',$freq)",__LINE__,__FILE__);
+			}
+			else
+			{
+				$this->stream->query("UPDATE calendar_entry_repeats SET cal_type='".$event->rpt_type."', cal_use_end=".$use_end.', '
+					."cal_end='".$end['raw']."', cal_days='".$days."', cal_frequency=".$freq.' '
+					.'WHERE cal_id='.$event->id,__LINE__,__FILE__);
+			}
+		}
+		else
+		{
+			$this->stream->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
+		}
+		
+		$this->stream->unlock();
 	}
 // End of ICal style support.......
 
