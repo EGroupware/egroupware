@@ -122,9 +122,11 @@
 			
 
 			session_start();
-			$this->session_flags = $GLOBALS['HTTP_SESSION_VARS']['session_flags'];
+			$GLOBALS['phpgw_session'] = $GLOBALS['HTTP_SESSION_VARS']['phpgw_session'];
+
+			$this->session_flags = $GLOBALS['phpgw_session']['session_flags'];
 			
-			$login_array = explode('@',$GLOBALS['HTTP_SESSION_VARS']['session_lid']);
+			$login_array = explode('@',$GLOBALS['phpgw_session']['session_lid']);
 			$this->account_lid = $login_array[0];
 
 			if (@$login_array[1] != '')
@@ -138,7 +140,7 @@
 
 			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
 
-			$userid_array = explode('@',$GLOBALS['HTTP_SESSION_VARS']['session_lid']);
+			$userid_array = explode('@',$GLOBALS['phpgw_session']['session_lid']);
 // Thinking this might solve auth_http problems
 			if(@$userid_array[1] == '')
 			{
@@ -179,7 +181,7 @@
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
-			$GLOBALS['phpgw_info']['user']['session_ip'] = $GLOBALS['HTTP_SESSION_VARS']['session_ip'];
+			$GLOBALS['phpgw_info']['user']['session_ip'] = $GLOBALS['phpgw_session']['session_ip'];
 			$GLOBALS['phpgw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
@@ -378,14 +380,17 @@
 
 			session_start();
 
-			$GLOBALS['HTTP_SESSION_VARS']['session_id'] = $this->sessionid;
-			$GLOBALS['HTTP_SESSION_VARS']['session_lid'] = $login;
-			$GLOBALS['HTTP_SESSION_VARS']['session_ip'] = $user_ip;
-			$GLOBALS['HTTP_SESSION_VARS']['session_logintime'] = $now;
-			$GLOBALS['HTTP_SESSION_VARS']['session_dla'] = $now;
-			$GLOBALS['HTTP_SESSION_VARS']['session_action'] = $GLOBALS['PHP_SELF'];
-			$GLOBALS['HTTP_SESSION_VARS']['session_flags'] = $session_flags;
-			
+			$GLOBALS['phpgw_session']['session_id'] = $this->sessionid;
+			$GLOBALS['phpgw_session']['session_lid'] = $login;
+			$GLOBALS['phpgw_session']['session_ip'] = $user_ip;
+			$GLOBALS['phpgw_session']['session_logintime'] = $now;
+			$GLOBALS['phpgw_session']['session_dla'] = $now;
+			$GLOBALS['phpgw_session']['session_action'] = $GLOBALS['PHP_SELF'];
+			$GLOBALS['phpgw_session']['session_flags'] = $session_flags;
+		
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
+			session_register($phpgw_session);
+
 			//$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
 			//	." VALUES ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
 
@@ -402,10 +407,11 @@
 			$this->kp3       = $kp3;
 
 			session_start();
+			$GLOBALS['phpgw_session'] = $GLOBALS['HTTP_SESSION_VARS']['phpgw_session'];
+			
+			$this->session_flags = $GLOBALS['phpgw_session']['session_flags'];
 
-			$this->session_flags = $GLOBALS['HTTP_SESSION_VARS']['session_flags'];
-
-			$login_array = explode('@', $GLOBALS['HTTP_SESSION_VARS']['session_lid']);
+			$login_array = explode('@', $GLOBALS['phpgw_session']['session_lid']);
 			$this->account_lid = $login_array[0];
 
 			if (@$login_array[1] != '')
@@ -421,7 +427,7 @@
 			$phpgw_info_flags = $GLOBALS['phpgw_info']['flags'];
 
 			$GLOBALS['phpgw_info']['flags'] = $phpgw_info_flags;
-			$userid_array = explode('@',$GLOBALS['HTTP_SESSION_VARS']['session_lid']);
+			$userid_array = explode('@',$GLOBALS['phpgw_session']['session_lid']);
 // Thinking this might solve auth_http problems
 			if(@$userid_array[1] == '')
 			{
@@ -448,7 +454,7 @@
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
-			$GLOBALS['phpgw_info']['user']['session_ip'] = $GLOBALS['HTTP_SESSION_VARS']['session_ip'];
+			$GLOBALS['phpgw_info']['user']['session_ip'] = $GLOBALS['phpgw_session']['session_ip'];
 			$GLOBALS['phpgw_info']['user']['passwd'] = base64_decode($this->appsession('password','phpgwapi'));
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
@@ -587,13 +593,16 @@
 
 			session_start();
 
-			$GLOBALS['HTTP_SESSION_VARS']['session_id'] = $this->sessionid;
-			$GLOBALS['HTTP_SESSION_VARS']['session_lid'] = $login;
-			$GLOBALS['HTTP_SESSION_VARS']['session_ip'] = $user_ip;
-			$GLOBALS['HTTP_SESSION_VARS']['session_logintime'] = $now;
-			$GLOBALS['HTTP_SESSION_VARS']['session_dla'] = $now;
-			$GLOBALS['HTTP_SESSION_VARS']['session_action'] = $GLOBALS['PHP_SELF'];
-			$GLOBALS['HTTP_SESSION_VARS']['session_flags'] = $session_flags;
+			$GLOBALS['phpgw_session']['session_id'] = $this->sessionid;
+			$GLOBALS['phpgw_session']['session_lid'] = $login;
+			$GLOBALS['phpgw_session']['session_ip'] = $user_ip;
+			$GLOBALS['phpgw_session']['session_logintime'] = $now;
+			$GLOBALS['phpgw_session']['session_dla'] = $now;
+			$GLOBALS['phpgw_session']['session_action'] = $GLOBALS['PHP_SELF'];
+			$GLOBALS['phpgw_session']['session_flags'] = $session_flags;
+		
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
+			session_register($phpgw_session);
 
 			//$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
 			//	. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
@@ -617,8 +626,11 @@
 				$action = $PHP_SELF;
 			}
 
-			$GLOBALS['HTTP_SESSION_VARS']['session_dla'] = time();
-			$GLOBALS['HTTP_SESSION_VARS']['session_action'] = $action;
+			$GLOBALS['phpgw_session']['session_dla'] = time();
+			$GLOBALS['phpgw_session']['session_action'] = $action;
+		
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
+			session_register($phpgw_session);
 
 			return True;
 		}
@@ -705,7 +717,10 @@
 		{
 			$account_id = get_account_id($accountid,$this->account_id);
 
-			$GLOBALS['HTTP_SESSION_VARS']['phpgw_app_sessions']['phpgwapi']['phpgw_info_cache'] = '';
+			$GLOBALS['phpgw_session']['phpgw_app_sessions']['phpgwapi']['phpgw_info_cache'] = '';
+	
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
+			session_register($phpgw_session);
 		}
 	
 		function save_repositories()
@@ -730,10 +745,14 @@
 			/* This allows the user to put '' as the value. */
 			if ($data == '##NOTHING##')
 			{
-				$GLOBALS['HTTP_SESSION_VARS']['phpgw_app_sessions'][$appname][$location] = '';
+				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location] = '';
+
+				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location] = '';
 
 				// I added these into seperate steps for easier debugging
-				$data = $GLOBALS['HTTP_SESSION_VARS']['phpgw_app_sessions'][$appname][$location]['content'];
+				$data = $GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location]['content'];
+				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
+				session_register($phpgw_session);
 				// Changed by Skeeter 2001 Mar 04 0400Z
 				// This was not properly decoding structures saved into session data properly
 //				$data = $GLOBALS['phpgw']->common->decrypt($data);
@@ -752,7 +771,9 @@
 			else
 			{
 				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
-				$GLOBALS['HTTP_SESSION_VARS']['phpgw_app_sessions'][$appname][$location]['content'] = $encrypteddata;
+				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location]['content'] = $encrypteddata;
+				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
+				session_register($phpgw_session);
 				return $data;
 			}
 		}
