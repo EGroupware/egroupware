@@ -177,7 +177,7 @@
 				$jselect = ' onChange="this.form.submit();"';
 			}
 			/* Setup all and none first */
-			$cats_link  = "\n" .'<select name="entry[cat_id]'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
+			$cats_link  = "\n" .'<select name="fcat_id'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
 			if (!$notall)
 			{
 				$cats_link .= '<option value=""';
@@ -552,7 +552,7 @@
 
 		function get_form()
 		{
-			global $entry;
+			global $entry,$fcat_id;
 			/* _debug_array($entry); */
 
 			if (!$entry['bday_month'] && !$entry['bday_day'] && !$entry['bday_year'])
@@ -670,13 +670,13 @@
 				$fields['access'] = 'public';
 			}
 
-			if (is_array($entry['cat_id']))
+			if (is_array($fcat_id))
 			{
-				$fields['cat_id'] = count($entry['cat_id']) > 1 ? ','.implode(',',$entry['cat_id']).',' : $entry['cat_id'][0];
+				$fields['cat_id'] = count($fcat_id) > 1 ? ','.implode(',',$fcat_id).',' : $fcat_id[0];
 			}
 			else
 			{
-				$fields['cat_id'] = $entry['cat_id'];
+				$fields['cat_id'] = $fcat_id;
 			}	
 
 			$fields['ab_id']   = $entry['ab_id'];
