@@ -27,14 +27,14 @@
 	$GLOBALS['kp3']       = $GLOBALS['HTTP_GET_VARS']['kp3'] ? $GLOBALS['HTTP_GET_VARS']['kp3'] : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
 
 	$verified = $GLOBALS['phpgw']->session->verify();
-	if ($verified)
+	if($verified)
 	{
-		if (file_exists($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']))
+		if(file_exists($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']))
 		{
 			$dh = opendir($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
-			while ($file = readdir($dh))
+			while($file = readdir($dh))
 			{
-				if ($file != '.' && $file != '..')
+				if($file != '.' && $file != '..')
 				{
 					unlink($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid'] . SEP . $file);
 				}
@@ -55,9 +55,13 @@
 			));
 		}
 	}
-	Setcookie('sessionid');
-	Setcookie('kp3');
-	Setcookie('domain');
+
+	if($GLOBALS['phpgw_info']['server']['usecookies'])
+	{
+		Setcookie('sessionid');
+		Setcookie('kp3');
+		Setcookie('domain');
+	}
 
 	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?cd=1');
 ?>
