@@ -18,6 +18,7 @@
 
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'                => True,
+		'noappheader'             => True,
 		'nonavbar'                => True,
 		'currentapp'              => $appname,
 		'enable_nextmatchs_class' => True
@@ -40,8 +41,8 @@
 	$t->set_block('_preferences','footer');
 	$t->set_block('_preferences','row_error');
 
-	// Make things a little easier to follow
-	// Some places we will need to change this if there in common
+	/* Make things a little easier to follow */
+	/* Some places we will need to change this if there in common */
 	function check_app($appname)
 	{
 		if ($appname == 'preferences')
@@ -167,20 +168,20 @@
 	$p = createobject('phpgwapi.preferences');
 	$p->read_repository();
 
-	// So we can check if the admin is allowing users to make there own choices
-	// in life.
+	/* So we can check if the admin is allowing users to make there own choices */
+	/* in life. */
 	$gp = createobject('phpgwapi.preferences',-1);
 	$gp->read_repository();
 
-	// Only check this once
+	/* Only check this once */
 	if ($GLOBALS['phpgw']->acl->check('run',1,'admin'))
 	{
-		// Don't use a global variable for this ...
+		/* Don't use a global variable for this ... */
 		define('HAS_ADMIN_RIGHTS',1);
 	}
 
-	// Makes the ifs a little nicer, plus ... this will change once the ACL manager is in place
-	// and is able to create less powerfull admins.  This will handle the ACL checks for that (jengo)
+	/* Makes the ifs a little nicer, plus ... this will change once the ACL manager is in place */
+	/* and is able to create less powerfull admins.  This will handle the ACL checks for that (jengo) */
 	function is_admin()
 	{
 		if (HAS_ADMIN_RIGHTS == 1)
@@ -195,8 +196,8 @@
 
 	if (is_admin())
 	{
-		// This is where we will keep track of our postion.
-		// Developers won't have to pass around a variable then
+		/* This is where we will keep track of our postion. */
+		/* Developers won't have to pass around a variable then */
 		$session_data = $phpgw->session->appsession('session_data','preferences');
 
 		if (! is_array($session_data))
@@ -245,7 +246,7 @@
 		$GLOBALS['type'] = 'user';
 	}
 
-	// Only load if there working on the default preferences
+	/* Only load if there working on the default preferences */
 	if ($type == 'default')
 	{
 		$dp = createobject('phpgwapi.preferences',-2);
@@ -254,7 +255,7 @@
 
 	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
-		// Don't use a switch here, we need to check some permissions durring the ifs
+		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($type == 'user')
 		{
 			process_array(&$p, $user);
@@ -270,7 +271,7 @@
 			process_array(&$gp, $forced);
 		}
 
-		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname));
+		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php'));
 		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
@@ -310,8 +311,8 @@
 	if ($error)
 	{
 		$t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
-				$GLOBALS['phpgw_info']['navbar'][$appname]['title'],PHPGW_SERVER_ROOT . SEP
-				. $appname . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
+			$GLOBALS['phpgw_info']['navbar'][$appname]['title'],PHPGW_SERVER_ROOT . SEP
+			. $appname . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
 	}
 	$t->pfp('out','header');
 
@@ -325,5 +326,4 @@
 	}
 
 	$GLOBALS['phpgw']->common->phpgw_footer();
-
 ?>
