@@ -29,6 +29,8 @@
 		var $BROWSER_AGENT;
 		var $BROWSER_VER;
 		var $BROWSER_PLATFORM;
+		var $br;
+		var $p;
 		var $data;
 
 		function browser ()
@@ -108,6 +110,28 @@
 			echo "\nVersion: ".browser_get_version();
 			echo "\nAgent: ".browser_get_agent();
 			*/
+
+			// The br and p functions are supposed to return the correct
+			// value for tags that do not need to be closed.  This is
+			// per the xhmtl spec, so we need to fix this to include
+			// all compliant browsers we know of.
+			if ($this->BROWSER_AGENT == 'IE')
+			{
+				$this->br = '<br/>';
+			}
+			else
+			{
+				$this->br = '<br>';
+			}
+
+			if ($this->BROWSER_AGENT =='IE')
+			{
+				$this->p = '<p/>';
+			}
+			else
+			{
+				$this->p = '<p>';
+			}
 		}
 
 		function return_array()
