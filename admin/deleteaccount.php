@@ -13,7 +13,7 @@
 
 	$phpgw_info = array();
 
-	if ($delete_account || !$account_id)
+	if ($delete_account || $cancel || !$account_id )
 	{
 		$phpgw_info['flags'] = array(
 			'noheader' => True,
