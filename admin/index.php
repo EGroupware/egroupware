@@ -49,7 +49,7 @@
 
   for( $i =0; $i < sizeof($apps); $i++) {
     $appname = $apps[$i];
-    $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/admin.inc.php";
+    $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_admin.inc.php";
     if (file_exists($f)) {
       include($f);
       echo "<p>\n";
