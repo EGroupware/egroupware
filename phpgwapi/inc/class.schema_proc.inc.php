@@ -316,8 +316,24 @@
 		function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData=True)
 		{
 			$table_def = $this->GetTableDefinition($sTableName);
+			
+			if (isset($table_def['fd'][$sOldColumnName]))
+			{
+				$old_def = $table_def['fd'][$sOldColumnName];
+			}
+			else
+			{
+				foreach($table_def['fd'] as $col => $def)
+				{
+					if (strlower($col) == strtolower($OldColumnName))
+					{
+						$old_def = $def;
+						break;
+					}
+				}
+			}
 			$col_def = $this->_egw2adodb_columndef(array(
-					'fd' => array($sNewColumnName => $table_def['fd'][strtolower($sOldColumnName)]),
+					'fd' => array($sNewColumnName => $old_def),
 					'pk' => array(),
 				));
 			
