@@ -1,10 +1,11 @@
 <?php
 	/**************************************************************************\
 	* phpGroupWare API - Auth from LDAP                                        *
-	* This file written by Lars Kneschke <kneschke@phpgroupware.org>           *
+	* This file written by Lars Kneschke <lkneschke@linux-at-work.de>          *
 	* and Joseph Engo <jengo@phpgroupware.org>                                 *
 	* Authentication based on LDAP Server                                      *
 	* Copyright (C) 2000, 2001 Joseph Engo                                     *
+	* Copyright (C) 2002, 2003 Lars Kneschke                                   *
 	* -------------------------------------------------------------------------*
 	* This library is part of the phpGroupWare API                             *
 	* http://www.phpgroupware.org/api                                          * 
@@ -54,8 +55,9 @@
 				return False;
 			}
 			/* find the dn for this uid, the uid is not always in the dn */
-			$attributes = array( "uid", "dn" );
-			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], "(uid=$username)", $attributes);
+			$attributes	= array( "uid", "dn" );
+			$filter 	= "(&(uid=$username)(phpgwaccountstatus=A))";
+			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], $filter, $attributes);
 			$allValues = ldap_get_entries($ldap, $sri);
 			if ($allValues['count'] > 0)
 			{

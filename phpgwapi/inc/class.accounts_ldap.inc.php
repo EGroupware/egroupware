@@ -853,60 +853,67 @@
 					$entry['objectclass'][4] = 'posixAccount';
 					$entry['objectclass'][5] = 'shadowAccount';
 					$entry['objectclass'][6] = 'phpgwAccount';
-					$entry['phpgwaccountstatus']    = $account_info['account_status'];
+					if($account_info['account_status'])
+						$entry['phpgwaccountstatus']    = $account_info['account_status'];
 					$entry['phpgwaccounttype']      = $account_info['account_type'];
 					$entry['phpgwaccountexpires']   = $account_info['account_expires'];
 				}
 
 				#_debug_array($entry);
 
-				ldap_add($this->ds, $dn, $entry);
+				// stop processing if ldap_add fails
+				if(!ldap_add($this->ds, $dn, $entry))
+				{
+					return false;
+				}
 			}
 			// print ldap_error($this->ds);
 
 			// lets check group the user needs to be added
 			if($account_info['account_type'] == 'u')
 			{
-			foreach($account_info['account_groups'] as $key => $value)
-			{
-				// search for the group
-				$filter 	= 'gidnumber='.$value;
-				$justThese 	= array('memberuid');
-				$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
-				if($sri)
+				foreach($account_info['account_groups'] as $key => $value)
 				{
-					$allValues = ldap_get_entries($this->ds, $sri);
-					// if the user is not member of this group, add him
-					if(is_array($allValues[0]['memberuid']))
+					// search for the group
+					$filter 	= 'gidnumber='.$value;
+					$justThese 	= array('memberuid');
+					$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
+					if($sri)
 					{
-						// this group has already some members
-						if(!in_array($account_info['account_lid'],$allValues[0]['memberuid']))
+						$allValues = ldap_get_entries($this->ds, $sri);
+						// if the user is not member of this group, add him
+						if(is_array($allValues[0]['memberuid']))
 						{
+							// this group has already some members
+							if(!in_array($account_info['account_lid'],$allValues[0]['memberuid']))
+							{
+								$dn = $allValues[0]['dn'];
+								$newData = array();
+								$newData['memberuid'] = $allValues[0]['memberuid'];
+								unset($newData['memberuid']['count']);
+								$newData['memberuid'][]	= $account_info['account_lid'];
+								$newData['memberuid'] = array_unique($newData['memberuid']);
+								ldap_mod_replace($this->ds, $dn, $newData);
+								#print ldap_error($this->ds)."<br>";
+							}
+						}
+						else
+						{
+							// this group has no members
 							$dn = $allValues[0]['dn'];
 							$newData = array();
-							$newData['memberuid'] = $allValues[0]['memberuid'];
-							unset($newData['memberuid']['count']);
-							$newData['memberuid'][]	= $account_info['account_lid'];
-							$newData['memberuid'] = array_unique($newData['memberuid']);
+							$newData['memberuid'][] = $account_info['account_lid'];
 							ldap_mod_replace($this->ds, $dn, $newData);
-							#print ldap_error($this->ds)."<br>";
 						}
-					}
-					else
-					{
-						// this group has no members
-						$dn = $allValues[0]['dn'];
-						$newData = array();
-						$newData['memberuid'][] = $account_info['account_lid'];
-						ldap_mod_replace($this->ds, $dn, $newData);
 					}
 				}
 			}
-			}
+			
 			if($account_id && is_object($GLOBALS['phpgw']->preferences) && $default_prefs)
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($account_id);
 			}
+			
 			return $account_id;
 		}
 
