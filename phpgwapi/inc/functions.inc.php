@@ -21,16 +21,18 @@
 	 * along with this library; if not, write to the Free Software Foundation,  *
 	 * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	 \**************************************************************************/
+	
 	/* $Id$ */
-
-	/***************************************************************************\
-	* If running in PHP3, then load up the support functions file for           *
-	* transparent support.                                                      *
-	\***************************************************************************/
+	
+	/****************************************************************************\
+	* If running in PHP3, then force admin to upgrade			     *
+	\****************************************************************************/
 
 	if (floor(phpversion()) == 3)
 	{
-		include(PHPGW_API_INC.'/php3_support_functions.inc.php');
+		echo 'phpGroupWare now requires PHP 4.1 or greater.<br>';
+		echo 'Please contact your System Administrator';
+		exit;
 	}
 
 	include(PHPGW_API_INC.'/common_functions.inc.php');
@@ -89,7 +91,7 @@
 	/****************************************************************************\
 	* Multi-Domain support                                                       *
 	\****************************************************************************/
-
+	
 	/* make them fix their header */
 	if (!isset($GLOBALS['phpgw_domain']))
 	{
@@ -97,39 +99,20 @@
 		exit;
 	}
 	reset($GLOBALS['phpgw_domain']);
-	$default_domain = each($GLOBALS['phpgw_domain']);
-	$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
-	unset ($default_domain); // we kill this for security reasons
+	list($GLOBALS['phpgw_info']['server']['default_domain']) = each($GLOBALS['phpgw_domain']);
 
-	$GLOBALS['login'] = get_var('login',Array('POST'));
-	$GLOBALS['logindomain'] = get_var('logindomain',Array('POST'));
-
-	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
-	if (isset($domain) && $domain)
+	if (isset($_POST['login']))	// on login
 	{
-		$GLOBALS['phpgw_info']['user']['domain'] = $domain;
+		$GLOBALS['login'] = $_POST['login'];
+		if (strstr($GLOBALS['login'],'@') === False)
+		{
+			$GLOBALS['login'] .= '@' . get_var('logindomain',array('POST'),$GLOBALS['phpgw_info']['server']['default_domain']);
+		}
+		list(,$GLOBALS['phpgw_info']['user']['domain']) = explode('@',$GLOBALS['login']);
 	}
-	elseif (isset($GLOBALS['login']) && isset($GLOBALS['logindomain']))
+	else	// on "normal" pageview
 	{
-		if (!ereg ("\@", $GLOBALS['login']))
-		{
-			$GLOBALS['login'] = $GLOBALS['login'] . '@' . $GLOBALS['logindomain'];
-		}
-		$GLOBALS['phpgw_info']['user']['domain'] = $GLOBALS['logindomain'];
-		unset ($GLOBALS['logindomain']);
-	}
-	elseif (isset($GLOBALS['login']) && !isset($GLOBALS['logindomain']))
-	{
-		if (ereg ("\@", $GLOBALS['login']))
-		{
-			$login_array = explode('@', $GLOBALS['login']);
-			$GLOBALS['phpgw_info']['user']['domain'] = $login_array[1];
-		}
-		else
-		{
-			$GLOBALS['phpgw_info']['user']['domain'] = $GLOBALS['phpgw_info']['server']['default_domain'];
-			$GLOBALS['login'] = $GLOBALS['login'] . '@' . $GLOBALS['phpgw_info']['user']['domain'];
-		}
+		$GLOBALS['phpgw_info']['user']['domain'] = get_var('domain', array('GET', 'COOKIE'), FALSE);
 	}
 
 	if (@isset($GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]))
@@ -153,7 +136,6 @@
 	{
 		unset ($GLOBALS['phpgw_domain']); // we kill this for security reasons
 	}
-	unset ($domain); // we kill this to save memory
 
 	@print_debug('domain',$GLOBALS['phpgw_info']['user']['domain'],'api');
 
@@ -232,6 +214,12 @@
 	unset($cache_query);
 	unset($server_info_cache);
 
+	if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && !$HTTPS)
+	{
+		Header('Location: https://' . $GLOBALS['phpgw_info']['server']['hostname'] . $GLOBALS['phpgw_info']['server']['webserver_url'] . $_SERVER['REQUEST_URI']);
+		exit;
+	}
+
 	/************************************************************************\
 	* Required classes                                                       *
 	\************************************************************************/
@@ -289,16 +277,12 @@
 	{
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login')
 		{
-			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
+			if (@$_POST['login'] != '')
 			{
-				$GLOBALS['phpgw']->redirect($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']);
-			}
-			if (@$login != '')
-			{
-				$login_array = explode("@",$login);
-				print_debug('LID : '.$login_array[0], 'messageonly','api');
-				$login_id = $GLOBALS['phpgw']->accounts->name2id($login_array[0]);
-				print_debug('User ID : '.$login_id, 'messageonly','api');
+				list($login) = explode("@",$_POST['login']);
+				print_debug('LID',$login,'app');
+				$login_id = $GLOBALS['phpgw']->accounts->name2id($login);
+				print_debug('User ID',$login_id,'app');
 				$GLOBALS['phpgw']->accounts->accounts($login_id);
 				$GLOBALS['phpgw']->preferences->preferences($login_id);
 			}

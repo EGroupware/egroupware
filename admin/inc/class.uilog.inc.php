@@ -255,6 +255,7 @@
 			$table = $this->html->hash_table($rows,$header,$this, 'format_row');
 			$this->t->set_var('event_list',$table);
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.($this->editmode?lang('Edit Table format') : lang('View error log'));
 			$GLOBALS['phpgw']->common->phpgw_header();
 			$this->t->pfp('out','log_list_t');
 //			$this->set_app_langs();

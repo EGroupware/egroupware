@@ -8,11 +8,11 @@
 			<td>
 				<div align="center">
 					<table border="0" width="100%">
-						<tr>
-							<td align="left">
+						<tr valign="bottom">
+							<td align="left" colspan="2">
 								{lang_last_x_logins}
 							</td>
-							<td align="center" colspan="3">
+							<td align="center" colspan="2">
 								{showing}
 							</td>
 							<td align="right">
@@ -24,10 +24,10 @@
 							</td>
 						</tr>
 						<tr class="th">
-							<td>{lang_loginid}</td>
-							<td>{lang_ip}</td>
-							<td>{lang_login}</td>
-							<td>{lang_logout}</td>
+							<td width="10%">{lang_loginid}</td>
+							<td width="15%">{lang_ip}</td>
+							<td width="20%">{lang_login}</td>
+							<td width="30%">{lang_logout}</td>
 							<td>{lang_total}</td>
 						</tr>
 						{rows_access}

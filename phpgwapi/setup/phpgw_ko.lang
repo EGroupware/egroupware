@@ -108,7 +108,7 @@ your message has been sent	common	ko	메시지가 전송되었습니다.
 your search returned 1 match	common	ko	1건의 결과가 검색되었습니다.
 your search returned %1 matchs	common	ko	%1건의 결과가 검색되었습니다.
 your settings have been updated	common	ko	설정이 변경되었습니다.
-bad login or password	login	ko	사용자ID나 패스워드가 틀립니다.
+bad login or password	common	ko	사용자ID나 패스워드가 틀립니다.
 login	login	ko	로그인
 password	login	ko	비밀번호
 sorry, your login has expired	login	ko	사용자ID를 더 이상 사용하실수 없습니다.

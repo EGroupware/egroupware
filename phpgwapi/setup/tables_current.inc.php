@@ -112,12 +112,12 @@
 		),
 		'phpgw_access_log' => array(
 			'fd' => array(
-				'sessionid' => array('type' => 'char', 'precision' => 32),
-				'loginid' => array('type' => 'varchar', 'precision' => 30),
-				'ip' => array('type' => 'varchar', 'precision' => 30),
-				'li' => array('type' => 'int', 'precision' => 4),
-				'lo' => array('type' => 'varchar', 'precision' => 255),
-				'account_id' => array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => False)
+				'sessionid' => array('type' => 'char','precision' => '32','nullable' => False),
+				'loginid' => array('type' => 'varchar','precision' => '30','nullable' => False),
+				'ip' => array('type' => 'varchar','precision' => '30','nullable' => False),
+				'li' => array('type' => 'int','precision' => '4','nullable' => False),
+				'lo' => array('type' => 'int','precision' => '4','nullable' => True,'default' => '0'),
+				'account_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
 			),
 			'pk' => array(),
 			'fk' => array(),

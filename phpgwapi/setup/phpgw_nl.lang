@@ -123,7 +123,7 @@ your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
 your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
 your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
 powered by phpgroupware version %1	all	nl	Deze site werkt met <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-bad login or password	login	nl	Onjuiste gebruikersnaam of wachtwoord
+bad login or password	common	nl	Onjuiste gebruikersnaam of wachtwoord
 login	login	nl	Aanmelden
 password	login	nl	Wachtwoord
 phpgroupware login	login	nl	pgpGroupWare aanmelding

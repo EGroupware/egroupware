@@ -32,7 +32,7 @@
 		{
 			$where = $this->test_account_id($account_id);
 
-			$this->db->limit_query("select loginid,ip,li,lo,account_id from phpgw_access_log $where order by li desc",$start,__LINE__,__FILE__);
+			$this->db->limit_query("select loginid,ip,li,lo,account_id,sessionid from phpgw_access_log $where order by li desc",$start,__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				$records[] = array(
@@ -40,7 +40,8 @@
 					'ip'         => $this->db->f('ip'),
 					'li'         => $this->db->f('li'),
 					'lo'         => $this->db->f('lo'),
-					'account_id' => $this->db->f('account_id')
+					'account_id' => $this->db->f('account_id'),
+					'sessionid'  => $this->db->f('sessionid')
 				);
 			}
 			return $records;

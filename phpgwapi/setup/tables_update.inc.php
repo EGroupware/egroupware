@@ -139,6 +139,14 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.14.506';
+	function phpgwapi_upgrade0_9_14_506()
+	{
+		// 0.9.15.001-13 are already included in 0.9.14.506
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.013';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 	$test[] = '0.9.15.001';
 	function phpgwapi_upgrade0_9_15_001()
 	{
@@ -380,6 +388,21 @@
 			));
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.012';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.15.012';
+	function phpgwapi_upgrade0_9_15_012()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_access_log','lo',array(
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => True,
+			'default' => '0'
+		));
+
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.013';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 ?>

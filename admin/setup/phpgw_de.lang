@@ -1,6 +1,8 @@
+%1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 (stored password will not be shown here)	admin	de	(Gespeicherte Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
+accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von BruteForce Angriffen
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
 account has been deleted	common	de	Konto wurde gel.scht
@@ -18,26 +20,30 @@ add new account	admin	de	Neues Konto hinzuf&uuml;gen
 add new application	admin	de	Neue Anwendung hinzufügen
 add peer server	admin	de	Peer Server hinzufügen
 admin email	admin	de	Email Administration
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify) ?	admin	de	Email Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen (leer für keine Benachrichtigung) ?
 admin name	admin	de	Admin Name
 administration	admin	de	Administration
 admins	admin	de	Admins
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wie vielen erfolglosen Versuchen sich anzumelden, soll ein Benutzerkonto gesperrt werden (Vorgabe 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	de	Nach wie vielen erfolglosen Versuchen sich anzumelden, soll eine IP-Adresse gesperrt werden (Vorgabe 3) ?
 all records and account information will be lost!	admin	de	Alle Datens&auml;tze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
 anonymous user	admin	de	Anonymer Benutzer
+anonymous user<br>(not shown in list sessions)	admin	de	Anonymer Benutzer<br>(wird bei Sitzungen anzeigen nicht angezeigt)
 application	admin	de	Anwendung
 application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
+are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen wollen ?
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen wollen ?
-are you sure you want to delete this application ?	admin	de	Sind Sie sicher, dass Sie diese Anwendung löschen wollen ?
 are you sure you want to delete this category ?	common	de	Sind Sie sicher, dass Sie diese Kategorie l&ouml;schen wollen ?
 are you sure you want to delete this group ?	admin	de	Sind Sie sicher, dass Sie diese Gruppe löschen wollen ?
 are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie diesen Server löschen wollen ?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie diese Session killen wollen ?
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden den richtigen MINE-typ für FTP zu verwenden, statt dem default 'application/octet-stream'
 authentication / accounts	admin	de	Benutzerauthentifizierung / Benutzerkonten
-auto create account records for authenticated users	admin	de	Automatisch Kontendaten für authentifizierte Benutzer anlegen
+auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten für authentifizierte Benutzer anlegen
 bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 bottom	admin	de	unten
@@ -78,6 +84,9 @@ edit table format	admin	de	Tabellenformat bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
+enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
+enter the background color for the site title	admin	de	Hintergrundfarbe für den Title der phpGroupWare installation
+enter the file name of your logo	admin	de	Dateiname ihres Logos
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
@@ -85,11 +94,14 @@ enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpg
 enter the site password for peer servers	admin	de	Site Passwort für Peer Server
 enter the site username for peer servers	admin	de	Site Benutzername für Peer Server
 enter the title for your site	admin	de	Titel der phpGroupWare Installation
+enter the title of your logo	admin	de	Titel Ihres Logos
+enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
 enter your default ftp server	admin	de	Default FTP Server
 enter your http proxy server	admin	de	HTTP Proxy Server
 enter your http proxy server port	admin	de	HTTP Proxy Server Port
 expires	admin	de	abgelaufen
 file space	admin	de	Dateiraum
+file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
 find and register all application hooks	admin	de	Registrieren aller Applikation hooks
 force selectbox	admin	de	Auswahl erzwingen
 global categories	admin	de	Globale Kategorien
@@ -102,6 +114,8 @@ group name	admin	de	Gruppenname
 hide php information	admin	de	PHP Informationen ausblenden
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host Information
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30) ?
 idle	admin	de	im Leerlauf
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
@@ -138,15 +152,17 @@ message has been updated	admin	de	Nachricht wurde geändert
 minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer Id (zB.
 mode	admin	de	Modus
 never	admin	de	Nie
+new group	admin	de	Neuer Benutzer
 new group name	admin	de	Neuer Gruppenname
-new password [ leave blank for no change	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
-new password [ leave blank for no change 	admin	de	
+new password [ leave blank for no change	admin	de	
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
+new user	admin	de	Neue Gruppe
 no algorithms available	admin	de	Kein Algorithmus verfügbar
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden
 no modes available	admin	de	Kein Modus verfügbar
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung erzeugt wurde
+open popup window	admin	de	PopUp Fenster öffnen
 outbound	admin	de	ausgehend
 passthrough	admin	de	durchgehend
 path information	admin	de	Pfad-Information
@@ -159,6 +175,7 @@ phpinfo	admin	de	PHP Informationen
 please enter a name	admin	de	Bitte einen Namen eingeben
 please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben !
 please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
+please select	admin	de	Bitte auswählen
 preferences	admin	de	Einstellungen
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
@@ -179,7 +196,7 @@ server password	admin	de	Server Passwort
 server type(mode)	admin	de	Server Typ (Modus)
 server url	admin	de	Server URL
 server username	admin	de	Server Benutzername
-set preference values.	admin	de	Einstellungswert würde geändert
+set preference values.	admin	de	Einstellungswert wurde geändert
 show 'powered by' logo on	admin	de	Zeige 'powered by' Logo
 site	admin	de	Site
 site configuration	admin	de	Konfiguration der Anwendung
@@ -203,6 +220,8 @@ they must be removed before you can continue	admin	de	Sie müssen zuvor aus diese
 this application is current	admin	de	Diese Anwendung ist aktuell
 this application requires an upgrade	admin	de	Diese Anwednung benötigt ein Upgrade
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig als &uuml;bergeordnete Kategorie benutzt.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag) 
+timeout for sessions in seconds (default 14400 = 4 hours)<br>(not for php4 sessions!!!)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)<br>(nicht für php4 Sitzungen)
 top	admin	de	oben
 total records	admin	de	Anzahl Datensätze insgesamt
 trust level	admin	de	Grad des Vertrauens
@@ -215,7 +234,7 @@ user data	admin	de	Benutzerdaten
 user groups	admin	de	Benutzergruppen
 userdata	admin	de	Benutzerkonto
 users choice	admin	de	Benutzerauswahl
-view access log	admin	de	Zugriffs-Protokoll anzeigen
+view access log	admin	de	Zugangsprotokoll anzeigen
 view error log	admin	de	Fehler-Protokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
 view user account	admin	de	Benutzerkonto anzeigen

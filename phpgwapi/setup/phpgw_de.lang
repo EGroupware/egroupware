@@ -35,7 +35,7 @@ austria	common	de	&Ouml;STERREICH
 autosave default category	common	de	Standard-Kategorie automatisch speichern
 azerbaijan	common	de	ASERBAIDSCHAN
 back	common	de	Zur&uuml;ck
-bad login or password	login	de	Falsches Login order Passwort
+bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
 bahrain	common	de	BAHRAIN
 bangladesh	common	de	BANGLADESH
@@ -47,6 +47,7 @@ belize	common	de	BELIZE
 benin	common	de	BENIN
 bermuda	common	de	BERMUDA
 bhutan	common	de	BHUTAN
+blocked, too many attempts	common	de	Gesperrt, zu viele Versuche
 bolivia	common	de	BOLIVIEN
 bosnia and herzegovina	common	de	BOSNIEN UND HERZEGOVINA
 botswana	common	de	BOTSWANA
@@ -452,7 +453,7 @@ todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
-total	common	de	Gesammt
+total	common	de	Gesamt
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
 tuesday	common	de	Dienstag
 tunisia	common	de	TUNISIEN

@@ -36,7 +36,7 @@ author	common	en	Author
 autosave default category	common	en	Autosave Default Category
 azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
-bad login or password	login	en	Bad login or password
+bad login or password	common	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
 bangladesh	common	en	BANGLADESH
@@ -48,6 +48,7 @@ belize	common	en	BELIZE
 benin	common	en	BENIN
 bermuda	common	en	BERMUDA
 bhutan	common	en	BHUTAN
+blocked, too many attempts	common	en	Blocked, too many attempts
 bolivia	common	en	BOLIVIA
 bosnia and herzegovina	common	en	BOSNIA AND HERZEGOVINA
 botswana	common	en	BOTSWANA
@@ -182,8 +183,11 @@ group access	common	en	Group Access
 group has been added	common	en	Group has been added
 group has been deleted	common	en	Group has been deleted
 group has been updated	common	en	Group has been updated
+group name	common	en	group name
 group public	common	en	Group Public
 groups	common	en	Groups
+groups with permission for %1	common	en	Groups with permission for %1
+groups without permission for %1	common	en	Groups without permission for %1
 guadeloupe	common	en	GUADELOUPE
 guam	common	en	GUAM
 guatemala	common	en	GUATEMALA
@@ -246,6 +250,7 @@ list	common	en	List
 lithuania	common	en	LITHUANIA
 local	common	en	Local
 login	common	en	Login
+loginid	common	en	LoginID
 logout	common	en	Logout
 low	common	en	Low
 lowest	common	en	Lowest
@@ -399,7 +404,9 @@ search	common	en	Search
 section	common	en	Section
 select	common	en	Select
 select category	common	en	Select Category
+select group	common	en	Select group
 select one	common	en	Select one
+select user	common	en	Select user
 send	common	en	Send
 senegal	common	en	SENEGAL
 september	common	en	September
@@ -483,6 +490,8 @@ use button to search for	common	en	use Button to search for
 use button to search for address	common	en	use Button to search for Address
 use button to search for project	common	en	use Button to search for Project
 user	common	en	User
+user accounts	common	en	user accounts
+user groups	common	en	user groups
 username	common	en	Username
 users	common	en	users
 users choice	common	en	Users Choice

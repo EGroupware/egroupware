@@ -48,7 +48,7 @@
 					'session_logintime' => $GLOBALS['phpgw']->common->show_date($value['session_logintime']),
 					'session_action'    => $value['session_action'],
 					'session_dla'       => $value['session_dla'],
-					'session_idle'      => gmdate('G:i:s',($GLOBALS['phpgw']->datetime->gmtnow - $value['session_dla']))
+					'session_idle'      => gmdate('G:i:s',(time() - $value['session_dla']))
 				);
 			}
 			return $_values;
@@ -56,11 +56,11 @@
 
 		function kill()
 		{
-			if ($GLOBALS['HTTP_GET_VARS']['ksession'] &&
-				($GLOBALS['sessionid'] != $GLOBALS['HTTP_GET_VARS']['ksession']) &&
+			if ($_GET['ksession'] &&
+				($GLOBALS['sessionid'] != $_GET['ksession']) &&
 				! $GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
 			{
-				$GLOBALS['phpgw']->session->destroy($GLOBALS['HTTP_GET_VARS']['ksession'],0);
+				$GLOBALS['phpgw']->session->destroy($_GET['ksession'],0);
 			}
 			$this->ui = createobject('admin.uicurrentsessions');
 			$this->ui->list_sessions();

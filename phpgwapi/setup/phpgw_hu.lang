@@ -112,7 +112,7 @@ your message has been sent	common	hu	Üzenet elküldve
 your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
 your search returned %1 matchs	common	hu	Keresés végeredménye: %1 találat
 your settings have been updated	common	hu	A beállításai módosításra kerültek
-bad login or password	login	hu	Rossz felhasználó vagy jelszó
+bad login or password	common	hu	Rossz felhasználó vagy jelszó
 login	login	hu	Belépés
 password	login	hu	Jelszó
 phpgroupware login	login	hu	phpGroupWare bejelentkezés

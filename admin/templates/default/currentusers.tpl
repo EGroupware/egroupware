@@ -1,7 +1,6 @@
 <!-- BEGIN list -->
-<center>
-{lang_current_users}:
-<table border="0" width="95%">
+<br>
+<table border="0" width="95%" align="center">
  <tr class="bg_color">
    {left_next_matchs}
    <td>&nbsp;</td>
@@ -20,8 +19,8 @@
 
  {rows}
 
-</center>
 </table>
+<br>
 <!-- END list -->
 
 <!-- BEGIN row -->
@@ -34,5 +33,3 @@
   <td>{row_kill}</td>
  </tr>
 <!-- END row -->
-
-

@@ -11,7 +11,7 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	/* $Id$ */
-	$phpgw_info = array();
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags'] = array
 	(
 		'login'			=> True,
@@ -22,6 +22,7 @@
 	if(file_exists('./header.inc.php'))
 	{
 		include('./header.inc.php');
+		$GLOBALS['phpgw']->sessions = createObject('phpgwapi.sessions');
 	}
 	else
 	{
@@ -65,18 +66,9 @@
 
 	$data['login_standard']['loginscreen'] = True;
 
-	function show_cookie()
-	{
-		/* This needs to be this way, because if someone doesnt want to use cookies, we shouldnt sneak one in */
-		if ($GLOBALS['HTTP_GET_VARS']['code'] != 5 && (isset($GLOBALS['phpgw_info']['server']['usecookies']) && $GLOBALS['phpgw_info']['server']['usecookies']))
-		{
-			return $GLOBALS['HTTP_COOKIE_VARS']['last_loginid'];
-		}
-	}
-
 	function check_logoutcode()
 	{
-		switch($GLOBALS['HTTP_GET_VARS']['code'])
+		switch($_GET['code'])
 		{
 			case 1:
 				$GLOBALS['phpgw_info']['flags']['msgbox_data']['You have been successfully logged out'] = True;
@@ -87,14 +79,21 @@
 			case 5:
 				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Bad login or password'] = False;
 				break;
+			case 99:
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Blocked, too many attempts'] = False;
+				break;
 			case 10:
-				if($GLOBALS['phpgw_info']['server']['usecookies'])
-				{
-					Setcookie('sessionid');
-					Setcookie('kp3');
-					Setcookie('domain');
-				}
 				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Your session could not be verified'] = False;
+
+				$GLOBALS['phpgw']->sessions->phpgw_setcookie('sessionid');
+				$GLOBALS['phpgw']->sessions->phpgw_setcookie('kp3');
+				$GLOBALS['phpgw']->sessions->phpgw_setcookie('domain');
+
+				//fix for bug php4 expired sessions bug
+				if($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4')
+				{
+					$GLOBALS['phpgw']->sessions->phpgw_setcookie(PHPGW_PHPSESSID);
+				}
 				break;
 		}
 	}
@@ -139,34 +138,34 @@
 		
 		$GLOBALS['phpgw_setup']->detection->check_lang(false);	// get installed langs
 		$langs = $GLOBALS['phpgw_info']['setup']['installed_langs'];
-		while (list($lang) = each($langs))
+		while (list($lang) = @each($langs))
 		{
 			$langs[$lang] = $lang;
 		}
-		$GLOBALS['HTTP_POST_VARS']['submit'] = true;
-		$GLOBALS['HTTP_POST_VARS']['lang_selected'] = $langs;
-		$GLOBALS['HTTP_POST_VARS']['upgrademethod'] = 'dumpold';
+		$_POST['submit'] = true;
+		$_POST['lang_selected'] = $langs;
+		$_POST['upgrademethod'] = 'dumpold';
 		$included = 'from_login';
 		
 		include(PHPGW_SERVER_ROOT . '/setup/lang.php');
 	}
 
 	/* Program starts here */
-	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'http' && isset($PHP_AUTH_USER))
+	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
 	{
 		$submit = True;
-		$login  = $PHP_AUTH_USER;
-		$passwd = $PHP_AUTH_PW;
+		$login  = $_SERVER['PHP_AUTH_USER'];
+		$passwd = $_SERVER['PHP_AUTH_PW'];
 	}
 
 	# Apache + mod_ssl style SSL certificate authentication
 	# Certificate (chain) verification occurs inside mod_ssl
-	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'sqlssl' && isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']) && !isset($GLOBALS['HTTP_GET_VARS']['code']))
+	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'sqlssl' && isset($_SERVER['SSL_CLIENT_S_DN']) && !isset($_GET['code']))
 	{
 		# an X.509 subject looks like:
 		# /CN=john.doe/OU=Department/O=Company/C=xx/Email=john@comapy.tld/L=City/
 		# the username is deliberately lowercase, to ease LDAP integration
-		$sslattribs = explode('/',$HTTP_SERVER_VARS['SSL_CLIENT_S_DN']);
+		$sslattribs = explode('/',$_SERVER['SSL_CLIENT_S_DN']);
 		# skip the part in front of the first '/' (nothing)
 		while ($sslattrib = next($sslattribs))
 		{
@@ -180,36 +179,41 @@
 
 			# login will be set here if the user logged out and uses a different username with
 			# the same SSL-certificate.
-			if (!isset($login)&&isset($sslattributes['Email']))
-			{
+			if (!isset($_POST['login'])&&isset($sslattributes['Email'])) {
 				$login = $sslattributes['Email'];
 				# not checked against the database, but delivered to authentication module
-				$passwd = $HTTP_SERVER_VARS['SSL_CLIENT_S_DN'];
+				$passwd = $_SERVER['SSL_CLIENT_S_DN'];
 			}
 		}
 		unset($key);
 		unset($val);
 		unset($sslattributes);
 	}
-	if (isset($GLOBALS['HTTP_POST_VARS']['passwd_type']) || $submit_x || $submit_y)
-//		 isset($GLOBALS['HTTP_POST_VARS']['passwd']) && $GLOBALS['HTTP_POST_VARS']['passwd']) // enable konqueror to login via Return
+
+	if (isset($_POST['passwd_type']) || $submit_x || $submit_y)
+//		 isset($_POST['passwd']) && $_POST['passwd']) // enable konqueror to login via Return
 	{
 		if (getenv(REQUEST_METHOD) != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST'
-			&& !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']))
+			&& !isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','code=5'));
 		}
-		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($GLOBALS['HTTP_POST_VARS']['login'],$GLOBALS['HTTP_POST_VARS']['passwd'],$GLOBALS['HTTP_POST_VARS']['passwd_type']);
+		$login = $_POST['login'];
+		if (strstr($login,'@') === False && isset($_POST['logindomain']))
+		{
+			$login .= '@' . $_POST['logindomain'];
+		}
+		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($login,$_POST['passwd'],$_POST['passwd_type']);
 
 		if(!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php?code=5');
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php?code=' . $GLOBALS['phpgw']->session->cd_reason);
 		}
 		else
 		{
 			if ($GLOBALS['phpgw_forward'])
 			{
-				while (list($name,$value) = each($GLOBALS['HTTP_GET_VARS']))
+				while (list($name,$value) = each($_GET))
 				{
 					if (ereg('phpgw_',$name))
 					{
@@ -219,7 +223,7 @@
 			}
 			check_langs();
 			
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/home.php','code=yes' . $extra_vars,True));
+			$GLOBALS['phpgw']->redirect_link('/home.php','cd=yes' . $extra_vars);
 		}
 	}
 	else
@@ -227,10 +231,10 @@
 		// !!! DONT CHANGE THESE LINES !!!
 		// If there is something wrong with this code TELL ME!
 		// Commenting out the code will not fix it. (jengo)
-		if (isset($GLOBALS['HTTP_COOKIE_VARS']['last_loginid']))
+		if (isset($_COOKIE['last_loginid']))
 		{
 			$accounts = CreateObject('phpgwapi.accounts');
-			$prefs = CreateObject('phpgwapi.preferences', $accounts->name2id($last_loginid));
+			$prefs = CreateObject('phpgwapi.preferences', $accounts->name2id($_COOKIE['last_loginid']));
 
 			if (! $prefs->account_id)
 			{
@@ -241,47 +245,45 @@
 				$GLOBALS['phpgw_info']['user']['preferences'] = $prefs->read_repository();
 			}
 			#print 'LANG:' . $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] . '<br>';
-			$GLOBALS['phpgw']->translation->add_app('login');
-			$GLOBALS['phpgw']->translation->add_app('loginscreen');
-			if (lang('loginscreen_message') != 'loginscreen_message*')
-			{
-				$data['login_standard']['phpgw_loginscreen_message'] = stripslashes(lang('loginscreen_message'));
-			}
 		}
 		else
 		{
 			// If the lastloginid cookies isn't set, we will default to english.
 			// Change this if you need.
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = 'en';
-			$GLOBALS['phpgw']->translation->add_app('login');
-			$GLOBALS['phpgw']->translation->add_app('loginscreen');
-			if (lang('loginscreen_message') != 'loginscreen_message*')
-			{
-				$data['login_standard']['phpgw_loginscreen_message'] = stripslashes(lang('loginscreen_message'));
-			}
+		}
+		$GLOBALS['phpgw']->translation->add_app('login');
+		$GLOBALS['phpgw']->translation->add_app('loginscreen');
+		if (lang('loginscreen_message') != 'loginscreen_message*')
+		{
+			$data['login_standard']['phpgw_loginscreen_message'] = stripslashes(lang('loginscreen_message'));
 		}
 	}
 
-	if (!isset($GLOBALS['HTTP_GET_VARS']['code']) || !$GLOBALS['HTTP_GET_VARS']['code'])
-	{
-		$GLOBALS['HTTP_GET_VARS']['code'] = '';
-	}
-
+	$last_loginid = $_COOKIE['last_loginid'];
 	if ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
 		foreach ($phpgw_domain as $domain => $domain_data)
 		{
 			$ds = array('domain' => $domain);
-			if ($domain == $last_domain)
+			if ($domain == $_COOKIE['last_domain'])
 			{
-				$ds += array('selected' => 'selected');
+				$ds['selected'] = 'selected';
 			}
-
 			$data['login_standard']['domain_select'][] = $ds;
 		}
 	}
+	elseif ($last_loginid !== '')
+	{
+		reset($GLOBALS['phpgw_domain']);
+		list($default_domain) = each($GLOBALS['phpgw_domain']);
+		if ($_COOKIE['last_domain'] != $default_domain)
+		{
+			$last_loginid .= '@' . $_COOKIE['last_domain'];
+		}
+	}
 
-	while (list($name,$value) = each($GLOBALS['HTTP_GET_VARS']))
+	while (list($name,$value) = each($_GET))
 	{
 		if (ereg('phpgw_',$name))
 		{
@@ -305,7 +307,7 @@
 
 	$data['login_standard']['website_title']	= $GLOBALS['phpgw_info']['server']['site_title'];
 	$data['login_standard']['login_url']		= 'login.php' . $extra_vars;
-	$data['login_standard']['cookie']			= show_cookie();
+	$data['login_standard']['cookie']			= $last_loginid;
 	$data['login_standard']['lang_username']	= lang('username');
 	$data['login_standard']['lang_powered_by']	= lang('powered by');
 	$data['login_standard']['lang_version']		= lang('version');

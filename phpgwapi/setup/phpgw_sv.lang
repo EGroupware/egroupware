@@ -125,7 +125,7 @@ your search returned 1 match	common	sv	din sökning gav 1 träff
 your search returned %1 matchs	common	sv	din sökning gav %1 träffar
 your settings have been updated	common	sv	Dina innställningar har blivit uppdaterade
 zip code	common	sv	Postnummer
-bad login or password	login	sv	Ogiltigt login eller lösenord
+bad login or password	common	sv	Ogiltigt login eller lösenord
 sorry, your login has expired	login	sv	Beklagar, din login har utgått
 use cookies	login	sv	Använd cookies
 username	login	sv	Användarnamn

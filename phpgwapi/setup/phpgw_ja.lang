@@ -213,7 +213,7 @@ your search has returned no matchs !	common	ja	見つかりません。
 your search returned 1 match	common	ja	１件見つかりました。
 your search returned %1 matchs	common	ja	%1 件見つかりました。
 your settings have been updated	common	ja	Your settings have been Updated
-bad login or password	login	ja	パスワードが誤っています
+bad login or password	common	ja	パスワードが誤っています
 login	login	ja	ログイン
 password	login	ja	パスワード
 phpgroupware login	login	ja	phpGroupWare login

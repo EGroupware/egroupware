@@ -40,6 +40,7 @@
 			$sort = ($GLOBALS['HTTP_POST_VARS']['sort']?$GLOBALS['HTTP_POST_VARS']['sort']:0);
 			$order = ($GLOBALS['HTTP_POST_VARS']['order']?$GLOBALS['HTTP_POST_VARS']['order']:0);
 			
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('View access log');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$total_records = $this->bo->total($account_id);
@@ -64,7 +65,7 @@
 						'account_id' => $account_id
 					)
 				) . '">' . lang('Return to view account') . '</a>';
-				$var['lang_last_x_logins'] = lang('Last %1 logins for %2',$total_records,$this->bo->grab_fullname($account_id));
+				$var['lang_last_x_logins'] = lang('Last %1 logins for %2',$total_records,$GLOBALS['phpgw']->common->grab_owner_name($account_id));
 			}
 			else
 			{
@@ -82,7 +83,7 @@
 					'row_loginid' => $record['loginid'],
 					'row_ip'      => $record['ip'],
 					'row_li'      => $record['li'],
-					'row_lo'      => $record['lo'],
+					'row_lo'      => $record['account_id'] ? $record['lo'] : '<b>'.lang($record['sessionid']).'</b>',
 					'row_total'   => ($record['lo']?$record['total']:'&nbsp;')
 				);
 				$this->template->set_var($var);

@@ -102,7 +102,7 @@ your message has been sent	common	no	Din melding har blitt sent
 your search returned 1 match	common	no	ditt søk gav 1 match
 your search returned %1 matchs	common	no	ditt søk gav %1 match
 your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
-bad login or password	login	no	Ugyldig login eller passord
+bad login or password	common	no	Ugyldig login eller passord
 login	login	no	Login
 password	login	no	Passord
 sorry, your login has expired	login	no	Beklager, din login er utgått

@@ -71,6 +71,7 @@
 				$this->store_location($info);
 			}
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('List of current users');
 			$this->header();
 
 			$this->template->set_file('current','currentusers.tpl');
@@ -89,7 +90,6 @@
 
 			$total = $this->bo->total();
 
-			$this->template->set_var('lang_current_users',lang('List of current users'));
 			$this->template->set_var('bg_color',$GLOBALS['phpgw_info']['theme']['bg_color']);
 			$this->template->set_var('left_next_matchs',$this->nextmatchs->left('/admin/currentusers.php',$info['start'],$total));
 			$this->template->set_var('right_next_matchs',$this->nextmatchs->right('/admin/currentusers.php',$info['start'],$total));
@@ -164,13 +164,13 @@
 				return False;
 			}
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Kill session');
 			$this->header();
 			$this->template->set_file('form','kill_session.tpl');
 
-			$this->template->set_var('lang_title',lang('Kill session'));
 			$this->template->set_var('lang_message',lang('Are you sure you want to kill this session ?'));
 			$this->template->set_var('link_no','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' . lang('No') . '</a>');
-			$this->template->set_var('link_yes','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.bocurrentsessions.kill&ksession=' . $GLOBALS['HTTP_GET_VARS']['ksession']) . '">' . lang('Yes') . '</a>');
+			$this->template->set_var('link_yes','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.bocurrentsessions.kill&ksession=' . $_GET['ksession']) . '">' . lang('Yes') . '</a>');
 
 			$this->template->pfp('out','form');
 		}

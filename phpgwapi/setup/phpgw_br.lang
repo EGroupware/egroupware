@@ -100,7 +100,7 @@ your message as been sent	common	br	Sua mensagem foi enviada
 your search returned 1 match	common	br	sua pesquisa retornou 1 correspondecia
 your search returned %1 matchs	common	br	Sua pesquisa retornou %1 correspondencias
 your settings have been updated	common	br	suas preferencias foram atualizadas
-bad login or password	login	br	login ou senha incorreta
+bad login or password	common	br	login ou senha incorreta
 login	login	br	Login
 password	login	br	Password
 sorry, your login has expired	login	br	Desculpe, sua conta expiorou

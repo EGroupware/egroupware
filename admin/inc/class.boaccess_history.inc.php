@@ -45,9 +45,13 @@
 					$record['li'] = $GLOBALS['phpgw']->common->show_date($record['li']);
 				}
 
-				if ($record['lo'] != '')
+				if ($record['lo'])
 				{
 					$record['lo'] = $GLOBALS['phpgw']->common->show_date($record['lo']);
+				}
+				else
+				{
+					$record['lo'] = '';		// dont show a 0 for not loged out
 				}
 
 				if (ereg('@',$record['loginid']))
@@ -62,17 +66,11 @@
 					'li'         => $record['li'],
 					'lo'         => $record['lo'],
 					'account_id' => $record['account_id'],
+					'sessionid'  => $record['sessionid'],     
 					'total'      => $total
 				);
 			}
 			return $_records;
-		}
-
-		function grab_fullname($account_id)
-		{
-			$acct = createobject('phpgwapi.accounts',$account_id);
-			$acct->read_repository();
-			return $GLOBALS['phpgw']->common->display_fullname($acct->data['account_lid'],$acct->data['firstname'],$acct->data['lastname']);
 		}
 
 		function total($account_id)
