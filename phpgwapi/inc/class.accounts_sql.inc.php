@@ -24,7 +24,7 @@
 
   /* $Id$ */
 
-	$phpgw_info['server']['global_denied_users'] = array();
+	$GLOBALS['phpgw_info']['server']['global_denied_users'] = array();
 
 	class accounts_
 	{
@@ -34,13 +34,11 @@
 
 		function accounts_()
 		{
-			global $phpgw;
-			$this->db = $phpgw->db;
+			$this->db = $GLOBALS['phpgw']->db;
 		}
 
 		function read_repository()
 		{
-			global $phpgw, $phpgw_info;
 			$this->db->query("SELECT * FROM phpgw_accounts WHERE account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
@@ -55,6 +53,7 @@
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
 			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires']           = $this->db->f('account_expires');
+
 			return $this->data;
 		}
 
@@ -69,8 +68,6 @@
 
 		function delete($accountid = '')
 		{
-			global $phpgw, $phpgw_info;
-
 			$account_id = get_account_id($accountid);
 
 			/* Do this last since we are depending upon this record to get the account_lid above */
@@ -82,8 +79,6 @@
 
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			global $phpgw, $phpgw_info;
-
 			if (! $sort)
 			{
 				$sort = "DESC";
@@ -160,7 +155,6 @@
 
 		function name2id($account_lid)
 		{
-			global $phpgw, $phpgw_info;
 			static $name_list;
 
 			if($name_list[$account_lid] && $name_list[$account_lid] != '')
@@ -183,7 +177,6 @@
 
 		function id2name($account_id)
 		{
-			global $phpgw, $phpgw_info;
 			static $id_list;
 
 			if($id_list[$account_id])
@@ -206,7 +199,6 @@
 
 		function get_type($accountid)
 		{
-			global $phpgw, $phpgw_info;
 			static $account_type;
 
 			$account_id = get_account_id($accountid);
@@ -276,8 +268,6 @@
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
-			global $phpgw;
-
 			if (!$expiredate)
 			{
 				/* expire in 30 days by default */
@@ -299,15 +289,22 @@
 			$this->db->transaction_begin();
 			if ($default_prefs == False)
 			{
-				$default_prefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
+				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
 /*				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}'; */
-				$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
+				$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
 			}
 
 			if ($default_acls == False)
 			{
+				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
+				$default_group_id  = $this->name2id($default_group_lid);
+				$defaultgroupid = $default_group_id ? $default_group_id : $this->name2id('Default');
+				if($defaultgroupid)
+				{
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
+						. $defaultgroupid . ", " . $accountid . ", 1)",__LINE__,__FILE__);
+				}
 				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '1', ".$accountid.", 1)",__LINE__,__FILE__);
 				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
 				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
 				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
