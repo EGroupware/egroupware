@@ -49,7 +49,11 @@
 				'show'			=> True,
 				'process_show'	=> True,
 			);
-			$this->html = CreateObject('etemplate.html');	// should  be in the api (older version in infolog)
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
+			$this->html = &$GLOBALS['phpgw']->html;
 
 			$this->boetemplate($name,$load_via);
 

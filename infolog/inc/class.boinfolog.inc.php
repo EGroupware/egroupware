@@ -294,6 +294,12 @@
 			{
 				return False;
 			}
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
+			$GLOBALS['phpgw']->translation->add_app('infolog');
+
 			$do_events = $args['location'] == 'calendar_include_events';
 			$start = 0;
 			$to_include = array();
@@ -309,11 +315,6 @@
 					    !$do_events && $time && $date == $date_wanted)
 					{
 						continue;
-					}
-					if (!is_object($GLOBALS['phpgw']->html))	// only once and only if thers something to report
-					{
-						$GLOBALS['phpgw']->html = CreateObject('etemplate.html');
-						$GLOBALS['phpgw']->translation->add_app('infolog');
 					}
 					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']+$this->tz_offset_sec),date('i',$info['info_startdate']+$this->tz_offset_sec)).' ':'').
 						$info['info_subject'];

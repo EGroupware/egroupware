@@ -32,6 +32,10 @@
 				'getEntry' => True,
 				'showLinks' => True
 			);
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObjecet('phpgwapi.html');
+			}
 		}
 
 		/*!
@@ -65,8 +69,7 @@
 					'remark' => ''
 				);
 				$etemplate = CreateObject('etemplate.etemplate','infolog.linkto_widget.create');
-				$html = CreateObject('etemplate.html');
-				$out = $etemplate->show($value,'','',$name)."\n".$html->input_hidden($name.'[app]',$value['app']);
+				$out = $etemplate->show($value,'','',$name)."\n".$GLOBALS['phpgw']->html->input_hidden($name.'[app]',$value['app']);
 			}
 			else
 			{
@@ -136,15 +139,14 @@
 		@param $content if set result will be like "<a href=[link]>$content</a>"
 		@result link to view $id in $app or False if no link for $app registered or $id==''
 		*/
-		function viewLink($app,$id,$html='')
+		function viewLink($app,$id)
 		{
 			$view = $this->view($app,$id);
 			if (!count($view))
 			{
 				return False;
 			}
-			$html = CreateObject('etemplate.html');
-			return $content == '' ? $html->link('/index.php',$view) : $html->a_href($content,'/index.php',$view);
+			return $content == '' ? $GLOBALS['phpgw']->html->link('/index.php',$view) : $GLOBALS['phpgw']->html->a_href($content,'/index.php',$view);
 		}
 
 		/*!
