@@ -5,6 +5,7 @@
 	- The sessions class now base64 encodes passwords in appsessions to prevent invaild chars.
 	- Added a $phpgw_info flag to allow apps to have admin only sections and keeping the currentapp
 		as the true appname
+	- Added limit_query() function, this is a replacement for limit() which should no longer be used
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
