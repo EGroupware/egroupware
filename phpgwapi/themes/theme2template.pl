@@ -7,12 +7,12 @@
 # $Id$
 
 $t=localtime;
-print << "EOF";
+print << 'EOF';
 # template file for making phpGroupWare themes using template2theme.pl
 
 EOF
 while( $_ = <STDIN> ) {
   chomp($_);
-  next unless ( $_ =~ /\$phpgw_info\[\"theme\"\]\[\"(.*)\"\].*=.*\"(.*)\".*/ );
-  print "$1=$2\n";
+  next unless ( $_ =~ /\$phpgw_info\[\'theme\'\]\[\'(.*)\'\].*=.*\'(.*)\'.*/ );
+  print '$1=$2\n';
 }

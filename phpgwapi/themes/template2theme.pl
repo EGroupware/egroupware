@@ -5,9 +5,9 @@
 # template2theme.pl < infile > outfile
 # by Stephan
 # $Id$
-$wrap='$phpgw_info["theme"]["_KEY_"]= "_VAL_"';
-print "<?\n";
-print << "EOF";
+$wrap='$phpgw_info['theme']['_KEY_']= '_VAL_'';
+print '<?\n';
+print << 'EOF';
 # phpGroupWare Theme file
 EOF
 
@@ -18,6 +18,6 @@ while( $_ = <STDIN> ) {
   my $foo = $wrap;
   $foo =~ s/_KEY_/$k/;
   $foo =~ s/_VAL_/$v/;
-  print "$foo;\n";
+  print '$foo;\n';
 }
-print "?>";
+print '?>';
