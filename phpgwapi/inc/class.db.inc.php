@@ -970,9 +970,8 @@
 							return "'" . $this->Link_ID->BlobEncode($value) . "'";
 						case 'I':
 							return $this->Link_ID->BlobEncode($value);
-						default:
-							break;	// handled like strings					
 					}
+					break;	// handled like strings					
 				case 'date':
 					return $this->Link_ID->DBDate($value);
 				case 'timestamp':
@@ -1139,12 +1138,16 @@
 			$table_def = $this->get_table_definitions($app,$table);
 
 			$sql_append = '';
+			$cmd = 'INSERT';
 			if (is_array($where) && count($where))
 			{
 				switch($this->Type)
 				{
 					case 'sapdb': case 'maxdb':
 						$sql_append = ' UPDATE DUPLICATES';
+						break;
+					case 'mysql':
+						$cmd = 'REPLACE';
 						break;
 					default:
 						$this->select($table,'count(*)',$where,$line,$file);
@@ -1156,7 +1159,7 @@
 				}
 				$data = array_merge($where,$data);	// the checked values need to be inserted too, value in data has precedence
 			}
-			$sql = "INSERT INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']).$sql_append;
+			$sql = "$cmd INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']).$sql_append;
 
 			if ($this->Debug) echo "<p>db::insert('$table',".print_r($data,True).",".print_r($where,True).",$line,$file,'$app') sql='$sql'</p>\n";
 			return $this->query($sql,$line,$file);
