@@ -64,7 +64,7 @@
 				$where = "and account_id='$account_id'";
 			}
 
-			$this->db->query("select count(*) from phpgw_access_log where lo!='' $where");
+			$this->db->query("select count(*) from phpgw_access_log where lo!=0 $where");
 			$this->db->next_record();
 
 			return $this->db->f(0);
