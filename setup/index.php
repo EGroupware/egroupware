@@ -10,21 +10,15 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	/*
-	 Idea:  This is so I don't forget.  When they are performing a new install, after config,
-	 forward them right to index.php.  Create a session for them and have a nice little intro
-	 page explaining what to do from there (e.g., create their own account).
-	*/
 	$GLOBALS['DEBUG'] = False;
-
-	$GLOBALS['phpgw_info'] = array();
+	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array
 	(
-		'noheader' 			=> True,
-		'nonavbar'			=> True,
-		'currentapp'		=> 'home',
-		'noapi'				=> True,
-		'nocachecontrol'	=> True
+		'noheader'   => True,
+		'nonavbar'   => True,
+		'currentapp' => 'home',
+		'noapi'      => True,
+		'nocachecontrol' => True
 	);
 	include('./inc/functions.inc.php');
 
@@ -34,13 +28,13 @@
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array
 	(
-		'T_head'				=> 'head.tpl',
-		'T_footer'				=> 'footer.tpl',
-		'T_alert_msg'			=> 'msg_alert_msg.tpl',
-		'T_login_main'			=> 'login_main.tpl',
-		'T_login_stage_header'	=> 'login_stage_header.tpl',
-		'T_setup_main'			=> 'setup_main.tpl',
-		'T_setup_db_blocks'		=> 'setup_db_blocks.tpl'
+		'T_head'       => 'head.tpl',
+		'T_footer'     => 'footer.tpl',
+		'T_alert_msg'  => 'msg_alert_msg.tpl',
+		'T_login_main' => 'login_main.tpl',
+		'T_login_stage_header' => 'login_stage_header.tpl',
+		'T_setup_main' => 'setup_main.tpl',
+		'T_setup_db_blocks'    => 'setup_db_blocks.tpl'
 	));
 
 	$setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
@@ -64,7 +58,7 @@
 		Header('Location: check_install.php');
 		exit;
 	}
-	elseif (!$GLOBALS['phpgw_setup']->auth('Config'))
+	elseif(!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		$GLOBALS['phpgw_setup']->html->show_header(lang('Please login'),True);
 		$GLOBALS['phpgw_setup']->html->login_form();
@@ -79,12 +73,12 @@
 
 	// Database actions
 	$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
-	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db();
+	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db($setup_info);
 	if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 1)
 	{
 		$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
 		$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
-		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db();
+		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db($setup_info);
 		if($GLOBALS['DEBUG'])
 		{
 			_debug_array($setup_info);
@@ -170,26 +164,29 @@
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
 			$setup_tpl->set_var('createdb',lang('Or we can attempt to create the database for you:'));
 			$setup_tpl->set_var('create_database',lang('Create database'));
-			$info = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']];
+			$info = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_setup']->ConfigDomain];
 			switch ($info['db_type'])
 			{
 				case 'mysql':
 					$setup_tpl->set_var('instr',
-						lang("Instructions for creating the database in %1:",'MySql').
-						'<br>'.lang('Login to mysql -').
-						'<br><i>[user@server user]# mysql -u root -p</i><br>'.
-						lang('Create the empty database and grant user permissions -').
-						"<br><i>mysql> create database $info[db_name];</i>".
-						"<br><i>mysql> grant all on $info[db_name].* to $info[db_user]@localhost identified by '$info[db_pass]';</i>");
+						lang("Instructions for creating the database in %1:",'MySql')
+						. '<br>'.lang('Login to mysql -')
+						. '<br><i>[user@server user]# mysql -u root -p</i><br>'
+						. lang('Create the empty database and grant user permissions -')
+						. "<br><i>mysql> create database $info[db_name];</i>"
+						. "<br><i>mysql> grant all on " . $info['db_name']
+						. ".* to " . $info['db_user'] . "@localhost identified by '" . $info['db_pass'] . "';</i>");
 					break;
 				case 'pgsql':
 					$setup_tpl->set_var('instr',
-						lang('Instructions for creating the database in %1:','PostgreSQL').
-						'<br>'.lang('Start the postmaster').
-						"<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>".
-						lang('Create the empty database -').
-						"<br><i>[user@server user]# createdb $info[db_name]</i>");
+						lang('Instructions for creating the database in %1:','PostgreSQL')
+						. '<br>'.lang('Start the postmaster')
+						. "<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>"
+						. lang('Create the empty database -')
+						. "<br><i>[user@server user]# createdb " . $info['db_name'] . "</i>");
 					break;
+				default:
+					$setup_tpl->set_var('instr','');
 			}
 			$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_1');
@@ -243,7 +240,7 @@
 			$setup_tpl->set_var('tblchange',lang('Table Change Messages'));
 			$setup_tpl->parse('V_db_stage_6_pre','B_db_stage_6_pre');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_6_pre');
-			
+
 			// FIXME : CAPTURE THIS OUTPUT
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'report';
 
@@ -458,7 +455,7 @@
 		$GLOBALS['phpgw_info']['setup']['header_msg'],
 		False,
 		'config',
-		$GLOBALS['ConfigDomain'] . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'] . ')'
+		$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')'
 	);
 	$setup_tpl->pparse('out','T_setup_main');
 	$GLOBALS['phpgw_setup']->html->show_footer();

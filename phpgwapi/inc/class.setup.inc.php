@@ -53,16 +53,68 @@
 		*/
 		function loaddb()
 		{
-			$GLOBALS['ConfigDomain'] = get_var('ConfigDomain',array('COOKIE','POST'),$_POST['FormDomain']);
+			if(!isset($this->ConfigDomain) || empty($this->ConfigDomain))
+			{
+				$this->ConfigDomain = get_var('ConfigDomain',array('COOKIE','POST'),$_POST['FormDomain']);
+			}
 
-			$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];
+			$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_type'];
 
 			$this->db           = CreateObject('phpgwapi.db');
-			$this->db->Host     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_host'];
-			$this->db->Type     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];
-			$this->db->Database = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_name'];
-			$this->db->User     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_user'];
-			$this->db->Password = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_pass'];
+			$this->db->Host     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_host'];
+			$this->db->Type     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_type'];
+			$this->db->Database = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_name'];
+			$this->db->User     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_user'];
+			$this->db->Password = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_pass'];
+		}
+
+		/**
+		* Set the domain used for cookies
+		*
+		* @return string domain
+		*/
+		function set_cookiedomain()
+		{
+			$dom = $_SERVER['HTTP_HOST'];
+			if (preg_match("/^(.*):(.*)$/",$dom,$arr))
+			{
+				$dom = $arr[1];
+			}
+			$parts = explode('.',$dom);
+			if (count($parts) > 2)
+			{
+				if (!ereg('[0-9]+',$parts[1]))
+				{
+					for($i=1;$i<count($parts);$i++)
+					{
+						$this->cookie_domain .= '.'.$parts[$i];
+					}
+				}
+				else
+				{
+					$this->cookie_domain = '';
+				}
+			}
+			else
+			{
+				$this->cookie_domain = '';
+			}
+		}
+
+		/**
+		* Set a cookie
+		*
+		* @param string $cookiename name of cookie to be set
+		* @param string $cookievalue value to be used, if unset cookie is cleared (optional)
+		* @param int $cookietime when cookie should expire, 0 for session only (optional)
+		*/
+		function set_cookie($cookiename,$cookievalue='',$cookietime=0)
+		{
+			if(!$this->cookie_domain)
+			{
+				$this->set_cookiedomain();
+			}
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain); 
 		}
 
 		/*!
@@ -76,132 +128,125 @@
 			$remoteip     = $_SERVER['REMOTE_ADDR'];
 
 			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
-			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
-			$HeaderLogin  = get_var('HeaderLogin', array('POST'));
-			$FormDomain   = get_var('FormDomain',  array('POST'));
-			$FormPW       = get_var('FormPW',      array('POST'));
-
-			$ConfigDomain = get_var('ConfigDomain',array('POST','COOKIE'));
-			$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
-			$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
-			$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
-
-			/*
-			if(!empty($remoteip) && !$this->checkip($remoteip))
+			if(!$FormLogout)
 			{
-				return False;
+				$ConfigLogin  = get_var('ConfigLogin', array('POST'));
+				$HeaderLogin  = get_var('HeaderLogin', array('POST'));
+				$FormDomain   = get_var('FormDomain',  array('POST'));
+				$FormPW       = get_var('FormPW',      array('POST'));
+
+				$this->ConfigDomain = get_var('ConfigDomain',array('POST','COOKIE'));
+				$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
+				$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
+				$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
 			}
-			*/
 
-			/* 6 cases:
-				1. Logging into header admin
-				2. Logging into config admin
-				3. Logging out of config admin
-				4. Logging out of header admin
-				5. Return visit to config OR header
-				6. None of the above
-			*/
+			/* if(!empty($remoteip) && !$this->checkip($remoteip)) { return False; } */
 
-			$expire = (int)(time() + (1200*9)); /* Expire login if idle for 20 minutes. */
-
-			if(!empty($HeaderLogin) && $auth_type == 'Header')
+			/* If FormLogout is set, simply invalidate the cookies (LOGOUT) */
+			switch(strtolower($FormLogout))
 			{
-				/* header admin login */
-				if($FormPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
-				{
-					setcookie('HeaderPW',"$FormPW",$expire,'/');
-					setcookie('ConfigLang',"$ConfigLang",$expire,'/');
-					return True;
-				}
-				else
-				{
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
-					return False;
-				}
-			}
-			elseif(!empty($ConfigLogin) && $auth_type == 'Config')
-			{
-				/* config login */
-				if(isset($GLOBALS['phpgw_domain'][$FormDomain]) && $FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
-				{
-					setcookie('ConfigPW',"$FormPW",$expire,'/');
-					setcookie('ConfigDomain',"$FormDomain",$expire,'/');
-					setcookie('ConfigLang',"$ConfigLang",$expire,'/');
-					return True;
-				}
-				else
-				{
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
-					return False;
-				}
-			}
-			elseif(!empty($FormLogout))
-			{
-				/* logout */
-				if($FormLogout == 'config')
-				{
+				case 'config':
 					/* config logout */
-					setcookie('ConfigPW','');
+					$expire = time() - 86400;
+					$this->set_cookie('ConfigPW','',$expire,'/');
+					$this->set_cookie('ConfigDomain','',$expire,'/');
+					$this->set_cookie('ConfigLang','',$expire,'/');
 					$GLOBALS['phpgw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
-					setcookie('ConfigDomain','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
-					setcookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
-
 					return False;
-				}
-				elseif($FormLogout == 'header')
-				{
+				case 'header':
 					/* header admin logout */
-					setcookie('HeaderPW','');
+					$expire = time() - 86400;
+					$this->set_cookie('HeaderPW','',$expire,'/');
+					$this->set_cookie('ConfigLang','',$expire,'/');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
-					setcookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+					return False;
+			}
 
-					return False;
-				}
-			}
-			elseif(!empty($ConfigPW) && $auth_type == 'Config')
+			/* We get here if FormLogout is not set (LOGIN or subsequent pages) */
+			/* Expire login if idle for 20 minutes.  The cookies are updated on every page load. */
+			$expire = (int)(time() + (1200*9));
+
+			switch(strtolower($auth_type))
 			{
-				/* Returning after login to config */
-				if($ConfigPW == stripslashes($GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd']))
-				{
-					setcookie('ConfigPW',"$ConfigPW",$expire,'/');
-					setcookie('ConfigDomain',"$ConfigDomain",$expire,'/');
-					setcookie('ConfigLang',"$ConfigLang",$expire,'/');
-					return True;
-				}
-				else
-				{
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
-					return False;
-				}
+				case 'header':
+					if(!empty($HeaderLogin))
+					{
+						/* header admin login */
+						if($FormPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
+						{
+							$this->set_cookie('HeaderPW',"$FormPW",$expire,'/');
+							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							return True;
+						}
+						else
+						{
+							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
+							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+							return False;
+						}
+					}
+					elseif(!empty($HeaderPW) && $auth_type == 'Header')
+					{
+						// Returning after login to header admin
+						if($HeaderPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
+						{
+							$this->set_cookie('HeaderPW',"$HeaderPW",$expire,'/');
+							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							return True;
+						}
+						else
+						{
+							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
+							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+							return False;
+						}
+					}
+					break;
+				case 'config':
+					if(!empty($ConfigLogin))
+					{
+						/* config login */
+						if(isset($GLOBALS['phpgw_domain'][$FormDomain]) && $FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
+						{
+							$this->set_cookie('ConfigPW',"$FormPW",$expire,'/');
+							$this->set_cookie('ConfigDomain',"$FormDomain",$expire,'/');
+							/* Set this now since the cookie will not be available until the next page load */
+							$this->ConfigDomain = "$FormDomain";
+							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							return True;
+						}
+						else
+						{
+							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
+							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+							return False;
+						}
+					}
+					elseif(!empty($ConfigPW))
+					{
+						// Returning after login to config
+						if($ConfigPW == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']))
+						{
+							$this->set_cookie('ConfigPW',"$ConfigPW",$expire,'/');
+							$this->set_cookie('ConfigDomain',$this->ConfigDomain,$expire,'/');
+							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
+							return True;
+						}
+						else
+						{
+							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
+							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+							return False;
+						}
+					}
+					break;
 			}
-			elseif(!empty($HeaderPW) && $auth_type == 'Header')
-			{
-				/* Returning after login to header admin */
-				if($HeaderPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
-				{
-					setcookie('HeaderPW',"$HeaderPW",$expire,'/');
-					setcookie('ConfigLang',"$ConfigLang",$expire,'/');
-					return True;
-				}
-				else
-				{
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
-					return False;
-				}
-			}
-			else
-			{
-				$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
-				$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
-				return False;
-			}
+
+			return False;
 		}
 
 		function checkip($remoteip='')
