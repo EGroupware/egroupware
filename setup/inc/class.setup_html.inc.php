@@ -55,7 +55,7 @@
 			}
 			else
 			{
-				$btn_logout = '<a href="'.basename($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']).'?FormLogout='.$logoutfrom.'" class="link">'.lang('Logout').'</a>';
+				$btn_logout = '<a href="index.php?FormLogout=' . $logoutfrom . '" class="link">'.lang('Logout').'</a>';
 			}
 
 			$GLOBALS['setup_tpl']->set_var('lang_setup', lang('setup'));

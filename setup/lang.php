@@ -204,8 +204,7 @@
 			$setup_tpl->set_var('lang_install',lang('install'));
 			$setup_tpl->set_var('lang_cancel',lang('cancel'));
 
-			// True = do not show logout link in top right corner
-			$phpgw_setup->show_header("$stage_title",True,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+			$phpgw_setup->show_header("$stage_title",False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 			$setup_tpl->pparse('out','T_lang_main');
 			$phpgw_setup->show_footer();
 		}
