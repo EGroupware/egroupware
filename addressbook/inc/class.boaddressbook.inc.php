@@ -281,7 +281,7 @@
 			if (isset($data['bday']))
 			{
 				$arr = $GLOBALS['server']->iso86012date($data['bday']);
-				$data['bday'] = $y && $m && $d ? sprintf('%d/%02d/%04d',$arr['month'],$arr['mday'],$arr['year']) : '';
+				$data['bday'] = $arr['year'] && $arr['month'] && $arr['mday'] ? sprintf('%d/%02d/%04d',$arr['month'],$arr['mday'],$arr['year']) : '';
 			}
 			if (isset($data['last_mod']))
 			{
