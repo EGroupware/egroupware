@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="et_media.show.rows" template="" lang="" group="0" version="" width="100%">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="nmh">
+				<description value="Name"/>
+				<description value="Author"/>
+				<description/>
+			</row>
+			<row class="nmr">
+				<description no_lang="1" id="${row}[name]"/>
+				<description class="ml10" no_lang="1" id="${row}[author]"/>
+				<button label="Edit" align="center" id="edit[$row_cont[id]]" statustext="click here to edit the entry"/>
+			</row>
+		</rows>
+		<styles>.nmh { font-weight: bold; }</styles>
+	</grid>
+	<grid id="et_media.show" template="" lang="" group="" version="" width="100%">
+		<columns>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<description options="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
+			</row>
+			<row>
+				<hrule span="all"/>
+			</row>
+			<row>
+				<description span="all"/>
+			</row>
+			<row>
+				<grid content="entry" id="et_media.show.rows"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>
