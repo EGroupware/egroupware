@@ -56,10 +56,10 @@ department	common	fr	Département
 domestic	addressbook	fr	Domestique
 download	addressbook	fr	Télécharger
 download export file (uncheck to debug output in browser)	addressbook	fr	Télécharger le fichier export (Décocher pour debugger la sortie dans le navigateur)
-empty for all	addressbook	fr	vide pour tous
-enter the path to the exported file here	addressbook	fr	Entrer ici le chemin vers le fichier exporté
 edit custom field	addressbook	fr	Editer le champ personnalisé
 edit custom fields	admin	fr	Editer les champs personnalisés
+empty for all	addressbook	fr	vide pour tous
+enter the path to the exported file here	addressbook	fr	Entrer ici le chemin vers le fichier exporté
 export contacts	addressbook	fr	Exporter les contacts
 export file name	addressbook	fr	Nom du fichier d'export
 export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
@@ -108,6 +108,7 @@ mobile	addressbook	fr	Portable
 mobile phone	addressbook	fr	Téléphone portable
 modem phone	addressbook	fr	Téléphone modem
 no vcard	addressbook	fr	Pas de VCard
+number of records to read (%1)	addressbook	fr	Nombre d'enregistrements à lire (%1)
 number of records to read (<=200)	addressbook	fr	Nombre d'enregistrements à lire (<=200)
 other number	addressbook	fr	Autre numéro
 other phone	addressbook	fr	Autre téléphone
@@ -139,9 +140,10 @@ test import (show importable records <u>only</u> in browser)	addressbook	fr	Test
 that field name has been used already !	addressbook	fr	Ce nom de champ a déjà été utilisé !
 this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses.
 this person's last name was not in the address book.	addressbook	fr	Le nom de cette personne n'était pas dans le carnet d'adresses.
-too many might exceed your execution-time-limit	addressbook	fr	trop, peut excéder votre temps d´exécuton limite.
+to many might exceed your execution-time-limit	addressbook	fr	trop pourraient dépasser votre limite de temps d'exéction
 today is %1's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1 !
 tomorrow is %1's birthday.	common	fr	Demain c'est l'anniversaire de %1.
+too many might exceed your execution-time-limit	addressbook	fr	trop, peut excéder votre temps d´exécuton limite.
 translation	addressbook	fr	Traduction
 update a single entry by passing the fields.	addressbook	fr	Mettre à jour une seule entrée en passant les champs.
 use country list	addressbook	fr	Utiliser la liste des pays
