@@ -115,7 +115,7 @@
 
 	if(@get_var('submit',Array('POST')))
 	{
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
 		$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
 		$setup_tpl->pparse('out','header');
 
@@ -236,7 +236,7 @@
 	}
 	else
 	{
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
 	}
 
 	$detail = get_var('detail',Array('GET'));

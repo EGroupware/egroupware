@@ -395,7 +395,7 @@
 		$setup_complete = True;
 	}
 
-	$GLOBALS['phpgw_setup']->html->show_header('LDAP Import','','config',$GLOBALS['phpgw_setup']['ConfigDomain']);
+	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Import'),False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
 
 	if ($error)
 	{
