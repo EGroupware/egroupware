@@ -22,7 +22,8 @@
 			'delete_user' => True,
 			'edit_user'   => True,
 			'edit_group'  => True,
-			'view_user'   => True
+			'view_user'   => True,
+			'group_manager'	=> True
 		);
 
 		var $bo;
@@ -670,6 +671,41 @@
 			$t->pfp('out','form');
 		}
 
+		function group_manager($cd='',$account_id='')
+		{
+			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
+			{
+				$this->list_groups();
+				return False;
+			}
+
+			$cdid = $cd;
+			settype($cd,'integer');
+			$cd = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:intval($cdid));
+
+			$accountid = $account_id;
+			settype($account_id,'integer');
+			$account_id = ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:intval($accountid));
+			
+			// todo
+			// not needed if i use the same file for new groups too
+			if (! $account_id)
+			{
+				$this->list_groups();
+			}
+			else
+			{
+				$group_info = Array(
+					'account_id'   => intval($GLOBALS['HTTP_GET_VARS']['account_id']),
+					'account_name' => $GLOBALS['phpgw']->accounts->id2name($GLOBALS['HTTP_GET_VARS']['account_id']),
+					'account_user' => $GLOBALS['phpgw']->accounts->member($GLOBALS['HTTP_GET_VARS']['account_id']),
+					'account_managers' => $this->bo->load_group_managers($GLOBALS['HTTP_GET_VARS']['account_id'])
+				);
+
+				$this->edit_group_managers($group_info);
+			}
+		}
+
 		function create_edit_group($group_info,$_errors='')
 		{
 			$apps_with_acl = Array(
@@ -771,7 +807,7 @@
 					. '<td width="5%"><input type="checkbox" name="account_apps['
 					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'></td><td width="5%">'
 					.($apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['phpgw']->link('/preferences/acl_preferences.php','acl_app='.$app.'&owner='.$group_info['account_id'])
-					.'" target="_blank"><img src="'.$GLOBALS['phpgw']->common->image('admin','dot.gif').'" border="0" hspace="3" align="absmiddle" alt="'
+					.'" target="_blank"><img src="'.$GLOBALS['phpgw']->common->image('admin','dot').'" border="0" hspace="3" align="absmiddle" alt="'
 					.lang('Grant Access').'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
 			}
 			if($i & 1)
@@ -784,6 +820,10 @@
 				'lang_submit_button' => lang('submit changes')
 			);
 			$p->set_var($var);
+
+			// create the menu on the left, if needed
+			$p->set_var('rows',ExecMethod('admin.uimenuclass.createHTMLCode','group_manager'));
+
 			$p->pfp('out','form');
 		}
 
@@ -1045,5 +1085,59 @@
 
 			echo $t->fp('out','form');
 		}
+
+		function edit_group_managers($group_info,$_errors='')
+		{
+			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
+			{
+				$this->list_groups();
+				return False;
+			}
+
+			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id'],'u');
+			$account_list = $accounts->member($group_info['account_id']);
+			$user_list = '';
+			while (list($key,$entry) = each($account_list))
+			{
+				$user_list .= '<option value="' . $entry['account_id'] . '"'
+					. $group_info['account_managers'][intval($entry['account_id'])] . '>'
+					. $GLOBALS['phpgw']->common->grab_owner_name($entry['account_id'])
+					. '</option>'."\n";
+			}
+
+			unset($GLOBALS['phpgw_info']['flags']['noheader']);
+			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			$GLOBALS['phpgw']->common->phpgw_header();
+
+			$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+			$t->set_unknowns('remove');
+
+			$t->set_file(
+				Array(
+					'manager'	=>'group_manager.tpl'
+				)
+			);
+
+			$t->set_block('manager','form','form');
+			$t->set_block('manager','link_row','link_row');
+
+			$var['th_bg'] = $GLOBALS['phpgw_info']['user']['theme']['th_bg'];
+			$var['lang_group'] = lang('Group');
+			$var['group_name'] = $group_info['account_name'];
+			$var['tr_color1'] = $GLOBALS['phpgw_info']['user']['theme']['row_on'];
+			$var['form_action'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boaccounts.set_group_managers');
+			$var['hidden'] = '<input type="hidden" name="account_id" value="'.$group_info['account_id'].'">';
+			$var['lang_select_managers'] = lang('Select Group Managers');
+			$var['group_members'] = '<select name="managers[]" size="'.(count($account_list)<5?count($account_list):5).'" multiple>'.$user_list.'</select>';
+			$var['form_buttons'] = '<tr align="center"><td colspan="2"><input type="submit" name="submit" value="'.lang('Submit').'">&nbsp;&nbsp;'
+				. '<input type="submit" name="cancel" value="'.lang('Cancel').'"><td></tr>';
+			$t->set_var($var);
+
+			// create the menu on the left, if needed
+			$t->set_var('rows',ExecMethod('admin.uimenuclass.createHTMLCode','edit_group'));
+
+			$t->pfp('out','form');
+		}
+
 	}
 ?>

@@ -61,7 +61,15 @@
 
 			$this->t->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 
-			$this->t->set_var('link_done',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
+			if(strpos($_userdata[0]['description'],'User'))
+			{
+				$destination = 'users';
+			}
+			else
+			{
+				$destination = 'groups';
+			}
+			$this->t->set_var('link_done',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_'.$destination));
 			$this->t->set_var('lang_done',lang('Back'));
 
 			$this->t->set_var('row_on',$this->rowColor[0]);
@@ -90,11 +98,25 @@
 						'extradata'   => 'menuaction=admin.uiaccounts.view_user'
 					);
 					break;
+				case 'edit_group':
+					$GLOBALS['menuData'][] = array(
+						'description' => 'Edit Group',
+						'url'         => '/index.php',
+						'extradata'   => 'menuaction=admin.uiaccounts.edit_group'
+					);
+					break;
+				case 'group_manager':
+					$GLOBALS['menuData'][] = array(
+						'description' => 'Group Manager',
+						'url'         => '/index.php',
+						'extradata'   => 'menuaction=admin.uiaccounts.group_manager'
+					);
+					break;
 			}
 
 			$GLOBALS['phpgw']->hooks->process($_hookname);
 
-			if (count($GLOBALS['menuData']) > 1) 
+			if (count($GLOBALS['menuData']) >= 1) 
 			{
 				$result = $this->display_section($GLOBALS['menuData']);
 				//clear $menuData

@@ -20,7 +20,8 @@
 			'delete_group' => True,
 			'delete_user'  => True,
 			'edit_group'   => True,
-			'edit_user'    => True
+			'edit_user'    => True,
+			'set_group_managers'	=> True
 		);
 
 		var $xml_functions = array();
@@ -550,7 +551,7 @@
 					}
 					else
 					{
-						ExecMethod('admin.uiaccountsiedit_user',$GLOBALS['HTTP_GET_VARS']['account_id']);
+						ExecMethod('admin.uiaccounts.edit_user',$GLOBALS['HTTP_GET_VARS']['account_id']);
 						return False;
 					}
 				}
@@ -560,6 +561,34 @@
 					$ui->create_edit_user($userData['account_id'],$userData,$errors);
 				}
 			}
+		}
+
+		function set_group_managers()
+		{
+			if($GLOBALS['phpgw']->acl->check('group_access',16,'admin') || $GLOBALS['HTTP_POST_VARS']['cancel'])
+			{
+				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+			elseif($GLOBALS['HTTP_POST_VARS']['submit'])
+			{
+				$acl = CreateObject('phpgwapi.acl',intval($GLOBALS['HTTP_POST_VARS']['account_id']));
+				
+				$users = $GLOBALS['phpgw']->accounts->member($GLOBALS['HTTP_POST_VARS']['account_id']);
+				@reset($users);
+				while($managers && list($key,$user) = each($users))
+				{
+					$acl->add_repository('phpgw_group',intval($GLOBALS['HTTP_POST_VARS']['account_id']),$user['account_id'],1);
+				}
+				$managers = $GLOBALS['HTTP_POST_VARS']['managers'];
+				@reset($managers);
+				while($managers && list($key,$manager) = each($managers))
+				{
+					$acl->add_repository('phpgw_group',intval($GLOBALS['HTTP_POST_VARS']['account_id']),$manager,(1 + PHPGW_ACL_GROUP_MANAGERS));
+				}
+			}
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function validate_group($group_info)
@@ -753,6 +782,26 @@
 		function load_group_users($account_id)
 		{
 			$temp_user = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
+			if(!$temp_user)
+			{
+				return Array();
+			}
+			else
+			{
+				$group_user = $temp_user;
+			}
+			$account_user = Array();
+			while (list($key,$user) = each($group_user))
+			{
+				$account_user[$user] = ' selected';
+			}
+			@reset($account_user);
+			return $account_user;
+		}
+
+		function load_group_managers($account_id)
+		{
+			$temp_user = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,PHPGW_ACL_GROUP_MANAGERS,'phpgw_group');
 			if(!$temp_user)
 			{
 				return Array();

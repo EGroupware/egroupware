@@ -708,6 +708,7 @@
 	define('PHPGW_ACL_EDIT',4);
 	define('PHPGW_ACL_DELETE',8);
 	define('PHPGW_ACL_PRIVATE',16);
+	define('PHPGW_ACL_GROUP_MANAGERS',32);
 
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
