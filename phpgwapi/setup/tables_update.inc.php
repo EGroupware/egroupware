@@ -2047,4 +2047,35 @@
 		return $setup_info['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.13.009';
+	function phpgwapi_upgrade0_9_13_009()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->CreateTable(
+			'phpgw_interserv', array(
+				'fd' => array(
+					'server_id'   => array('type' => 'auto'),
+					'server_name' => array('type' => 'varchar', 'precision' => 64,  'nullable' => True),
+					'server_host' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+					'server_url'  => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+					'trust_level' => array('type' => 'int',     'precision' => 4,   'nullable' => True),
+					'trust_rel'   => array('type' => 'int',     'precision' => 4,   'nullable' => True),
+					'username'    => array('type' => 'varchar', 'precision' => 64,  'nullable' => True),
+					'password'    => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+					'admin_name'  => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+					'admin_email' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+					'server_mode' => array('type' => 'varchar', 'precision' => 16,  'nullable' => False, 'default' => 'xmlrpc'),
+					'server_security' => array('type' => 'varchar', 'precision' => 16,'nullable' => True)
+				),
+				'pk' => array('server_id'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array()
+			)
+		);
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.010';
+		return $setup_info['phpgwapi']['currentver'];
+	}
 ?>

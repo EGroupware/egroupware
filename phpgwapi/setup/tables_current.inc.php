@@ -289,6 +289,26 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'phpgw_interserv' => array(
+			'fd' => array(
+				'server_id'   => array('type' => 'auto'),
+				'server_name' => array('type' => 'varchar', 'precision' => 64,  'nullable' => True),
+				'server_host' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+				'server_url'  => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+				'trust_level' => array('type' => 'int',     'precision' => 4,   'nullable' => True),
+				'trust_rel'   => array('type' => 'int',     'precision' => 4,   'nullable' => True),
+				'username'    => array('type' => 'varchar', 'precision' => 64,  'nullable' => True),
+				'password'    => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+				'admin_name'  => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+				'admin_email' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+				'server_mode' => array('type' => 'varchar', 'precision' => 16,  'nullable' => False, 'default' => 'xmlrpc'),
+				'server_security' => array('type' => 'varchar', 'precision' => 16,'nullable' => True)
+			),
+			'pk' => array('server_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
 	);
 ?>
