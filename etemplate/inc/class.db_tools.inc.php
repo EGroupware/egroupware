@@ -302,7 +302,10 @@
 				'edited_table' => $edited_table,
 				'changes' => $this->changes
 			);
-			$content['new_version'] = $content['version'];
+			$new_version = explode('.',$content['version']);
+			$minor = count($new_version)-1;
+			$new_version[$minor] = sprintf('%03d',1+$new_version[$minor]);
+			$content['new_version'] = implode('.',$new_version);
 
 			$tmpl = new etemplate('etemplate.db-tools.ask_save');
 
@@ -549,13 +552,13 @@
 		}
 
 		/*!
-		@function setup_version($app,$new = '')
+		@function setup_version($app,$new = '',$tables='')
 		@abstract reads and updates the version in file $app/setup/setup.inc.php if $new != ''
 		@return the version or False if the file could not be read or written
 		*/
-		function setup_version($app,$new = '')
+		function setup_version($app,$new = '',$tables='')
 		{
-			//echo "<p>etemplate.db_tools.setup_version('$app','$new')</p>\n";
+			//echo "<p>etemplate.db_tools.setup_version('$app','$new','$tables')</p>\n";
 
 			$file = PHPGW_SERVER_ROOT."/$app/setup/setup.inc.php";
 			if (file_exists($file))
@@ -582,6 +585,8 @@
 				rename($file,PHPGW_SERVER_ROOT."/$app/setup/setup.old.inc.php");
 			}
 			$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['version'\\][ \\t]*=[ \\t]*')[^']*('.*)","\\1$new"."\\2",$fcontent);
+			if ($tables != '')
+				$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*","\\1$tables",$fnew);
 
 			if (!is_writeable(PHPGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
 			{
@@ -638,7 +643,7 @@
 	function $app"."_upgrade$old_version_()
 	{\n";
 
-			$update .= $this->update_schema($app,$current);
+			$update .= $this->update_schema($app,$current,$tables);
 
 			$update .= "\n
 		\$GLOBALS['setup_info']['$app']['currentver'] = '$version';
@@ -653,7 +658,7 @@
 			fwrite($f,$update);
 			fclose($f);
 
-			$this->setup_version($app,$version);
+			$this->setup_version($app,$version,$tables);
 
 			return True;
 		}
@@ -670,10 +675,11 @@
 			}
 		}
 
-		function update_schema($app,$current)
+		function update_schema($app,$current,&$tables)
 		{
 			$this->read($app,$old);
 
+			$tables = '';
 			reset($old);
 			while (list($name,$table_def) = each($old))
 			{
@@ -683,14 +689,16 @@
 				}
 				else
 				{
+					$tables .= ($tables ? ',' : '') . "'$name'";
+
 					reset($table_def['fd']);
+					$new_table_def = $table_def;
 					while(list($col,$col_def) = each($table_def['fd']))
 					{
 						if (!isset($current[$name]['fd'][$col]))	// column $col droped
 						{
 							if (!isset($this->changes[$name][$col]) || $this->changes[$name][$col] == '**deleted**')
 							{
-								$new_table_def = $table_def;
 								unset($new_table_def['fd'][$col]);
 								$this->remove_from_array($new_table_def['pk'],$col);
 								$this->remove_from_array($new_table_def['fk'],$col);
@@ -722,6 +730,8 @@
 			{
 				if (!isset($old[$name]))	// table $name added
 				{
+					$tables .= ($tables ? ',' : '') . "'$name'";
+
 					$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->CreateTable('$name',";
 					$update .= $this->write_array($table_def,2).");\n";
 				}
