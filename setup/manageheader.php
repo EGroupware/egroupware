@@ -274,6 +274,7 @@
 				$phpgw_info['server']['db_type'] = 'mysql'; //mysql, pgsql (for postgresql), or oracle
 
 				/* These are a few of the advanced settings */
+				$phpgw_info['server']['db_persistent'] = True;
 				$phpgw_info['server']['config_passwd'] = 'changeme';
 				$phpgw_info['server']['mcrypt_enabled'] = False;
 				$phpgw_info['server']['mcrypt_version'] = '2.6.3';
@@ -335,6 +336,12 @@
         </td><td>What Database do you want to use with PHPGroupWare?
 
         <tr><td><b>Configuration Password</b><br><input type=text name="setting[config_pass]" value="<?php echo $phpgw_info['server']['config_passwd'] ?>"></td><td>Password needed for configuration</td></tr>
+        <tr><td><b>Persistent connection</b><br>
+        <select type="checkbox" name="setting[db_persistent]">
+        <option value="True"<?php echo ($phpgw_info['server']['db_persistent']?' selected':''); ?>>True</option>
+        <option value="False"<?php echo (! $phpgw_info['server']['db_persistent']?' selected':''); ?>>False</option>
+		  </select></td>
+		  <td>Do you want persistent connections (higher performance, but eats memory)</td></tr>
         <tr><td colspan=2><b>Enable MCrypt</b><br>
         <select name="setting[enable_mcrypt]">
         <?php if($phpgw_info["server"]["mcrypt_enabled"] == True) { ?>
@@ -346,13 +353,13 @@
         <?php } ?>
         </select>
         </td></tr>
-        <tr><td><b>MCrypt version</b><br><input type="text" name="setting[mcrypt_version]" value="<?php echo $phpgw_info['server']['versions']['mcrypt'] ?>"></td><td>Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use</td></tr>
+        <tr><td><b>MCrypt version</b><br><input type="text" name="setting[mcrypt_version]" value="<?php echo $phpgw_info['server']['versions']['mcrypt'] ?>"></td><td>Set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use</td></tr>
         <tr><td><b>MCrypt initilazation vector</b><br><input type="text" name="setting[mcrypt_iv]" value="<?php echo $phpgw_info['server']['mcrypt_iv'] ?>" size="30"></td><td>It should be around 30 bytes in length.<br>Note: The default has been randomly generated.</td></tr>
         <tr><td><b>Domain select box on login</b><br>
          <select name="setting[domain_selectbox]">
           <option value="True"<?php echo ($phpgw_info['server']['domain_selectbox']?' selected':''); ?>>True</option>
           <option value="False"<?php echo (! $phpgw_info['server']['domain_selectbox']?' selected':''); ?>>False</option>
-         </select></td><td></td>
+         </select></td><td>&nbsp;</td>
         </tr>
        </table>
       <?php

@@ -23,7 +23,6 @@
 		var $Password = '';
 
 		/* public: configuration parameters */
-		var $use_pconnect      = True;
 		var $auto_stripslashes = False;
 		var $Auto_Free     = 0;     ## Set to 1 for automatic mysql_free_result()
 		var $Debug         = 0;     ## Set to 1 for debugging messages.
@@ -86,7 +85,7 @@
 			/* establish connection, select database */
 			if ( 0 == $this->Link_ID )
 			{
-				if ($this->use_pconnect)
+				if ($GLOBALS['phpgw_info']['server']['db_persistent'])
 				{
 					$this->Link_ID=mysql_pconnect($Host, $User, $Password);
 				}
@@ -97,7 +96,7 @@
 
 				if (!$this->Link_ID)
 				{
-					$this->halt("connect($Host, $User, \$Password) failed.");
+					$this->halt(($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')."connect($Host, $User, \$Password) failed.");
 					return 0;
 				}
 

@@ -22,7 +22,6 @@
 		var $User     = '';
 		var $Password = '';
 
-		var $use_pconnect      = False;
 		var $auto_stripslashes = False;
 
 		/* "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning) */
@@ -64,7 +63,7 @@
 					. $this->ifadd($this->Port, 'port=')
 					. $this->ifadd($this->User, 'user=')
 					. $this->ifadd("'".$this->Password."'", 'password=');
-				if ($this->use_pconnect)
+				if ($GLOBALS['phpgw_info']['server']['db_persistent'])
 				{
 					$this->Link_ID=pg_pconnect($cstr);
 				}
@@ -75,7 +74,7 @@
 
 				if (! $this->Link_ID)
 				{
-					$this->halt('Link-ID == false, pconnect failed');
+					$this->halt('Link-ID == false, '.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'').'connect failed');
 				}
 				else
 				{

@@ -34,6 +34,8 @@
 		'config_passwd' => '{CONFIG_PASS}'
 	);
 
+	$phpgw_info['server']['db_persistent'] = {DB_PERSISTENT};
+
 	/*
 	** If you want to have your domains in a select box, change to True
 	** If not, users will have to login as user@domain
@@ -84,7 +86,7 @@
 	$phpgw_info["server"]["versions"]["phpgwapi"] = $setup_info['phpgwapi']['version'];
 	$phpgw_info['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
-	$phpgw_info['server']['versions']['header'] = '1.17';
+	$phpgw_info['server']['versions']['header'] = '1.18';
 	/* This is a fix for NT */
 	if (!isset($phpgw_info['flags']['noapi']) || !$phpgw_info['flags']['noapi'] == True)
 	{

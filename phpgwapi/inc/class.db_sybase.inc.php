@@ -30,17 +30,28 @@ class db {
 
   var $Auto_Free = 0;     ## Set this to 1 for automatic sybase_free_result()
 
-  function connect() {
-    if ( 0 == $this->Link_ID ) {
-      $this->Link_ID=sybase_pconnect($this->Host,$this->User,$this->Password);
-      if (!$this->Link_ID) {
-        $this->halt("Link-ID == false, pconnect failed");
-      }
-	  if(!sybase_select_db($this->Database, $this->Link_ID)) {
-        $this->halt("cannot use database ".$this->Database);
-      }
-    }
-  }
+		function connect()
+		{
+			if ( 0 == $this->Link_ID )
+			{
+				if ($GLOBALS['phpgw_info']['server']['db_persistent'])
+				{
+					$this->Link_ID=sybase_pconnect($this->Host,$this->User,$this->Password);
+				}
+				else
+				{
+					$this->Link_ID=sybase_connect($this->Host,$this->User,$this->Password);
+				}
+			}
+			if (!$this->Link_ID)
+			{
+				$this->halt('Link-ID == false, '.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')..'connect failed");
+			}
+			if(!sybase_select_db($this->Database, $this->Link_ID))
+			{
+				$this->halt("cannot use database ".$this->Database);
+			}
+		}
 
   function query($Query_String) {
     $this->connect();

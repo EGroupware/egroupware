@@ -72,27 +72,43 @@ class db {
         if($this->Remote) {
           if($this->Debug) {
             printf("<br>connect() $this->User/******@$this->Database.world<br>\n");
-          }   
-          $this->Link_ID=ora_plogon
-                 ("$this->User/$this->Password@$this->Database","");
-          /************** (comment by SSilk)
-           this dosn't work on my system:
-          $this->Link_ID=ora_plogon
-                 ("$this->User@$this->Database.world","$this->Password");
-          ***************/
+          }
+          if($GLOBALS['phpgw_info']['server']['db_persistent'])
+          {
+	          $this->Link_ID=ora_plogon("$this->User/$this->Password@$this->Database","");
+	          /************** (comment by SSilk)
+   	        this dosn't work on my system:
+      	    $this->Link_ID=ora_plogon("$this->User@$this->Database.world","$this->Password");
+	          ***************/
+          }
+          else
+          {
+	          $this->Link_ID=ora_logon("$this->User/$this->Password@$this->Database","");
+	          /************** (comment by SSilk)
+   	        this dosn't work on my system:
+      	    $this->Link_ID=ora_logon("$this->User@$this->Database.world","$this->Password");
+	          ***************/
+          }
         } else {
           if($this->Debug) {
             printf("<br>connect() $this->User, $this->Password <br>\n");
           }   
-          $this->Link_ID=ora_plogon("$this->User","$this->Password");
-          /* (comment by SSilk: don't know how this could work, but I leave this untouched!) */
+          if($GLOBALS['phpgw_info']['server']['db_persistent'])
+          {
+	          $this->Link_ID=ora_plogon("$this->User","$this->Password");
+   	       /* (comment by SSilk: don't know how this could work, but I leave this untouched!) */
+   	    }
+   	    else
+   	    {
+	          $this->Link_ID=ora_logon("$this->User","$this->Password");
+   	    }
         }
         if($this->Debug) {
           printf("<br>connect() Link_ID: $this->Link_ID<br>\n");
         }
         if (!$this->Link_ID) {
           $this->halt("connect() Link-ID == false " .
-                 "($this->Link_ID), ora_plogon failed");
+                 "($this->Link_ID), ora_".($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')."logon failed");
         } else {
 			//echo "commit on<p>";
           ora_commiton($this->Link_ID);

@@ -34,7 +34,6 @@ class db
 
 	var $Errno        = 0;
 	var $Error        = '';
-	var $use_pconnect = false;
 	var $Auto_Free    = 0;     ## set this to 1 to automatically free results
 	var $Debug        = false;
 
@@ -42,7 +41,7 @@ class db
 	{
 		if ( 0 == $this->Link_ID )
 		{
-			if ($this->use_pconnect)
+			if ($GLOBALS['phpgw_info']['server']['db_persistent'])
 			{
 				$this->Link_ID=mssql_pconnect($this->Host, $this->User, $this->Password);
 			}
@@ -52,7 +51,7 @@ class db
 			}
 			if (!$this->Link_ID)
 			{
-				$this->halt("Link-ID == false, mssql_pconnect failed");
+				$this->halt('Link-ID == false, mssql_'.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'').'connect failed');
 			}
 			else
 			{
