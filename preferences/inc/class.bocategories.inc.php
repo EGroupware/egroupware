@@ -106,9 +106,9 @@
 			return $this->cats->formated_list($format,$type,$cat_parent,$global_cats);
 		}
 
-		function delete($cat_id,$drop_subs,$modify_subs=false)
+		function delete($cat_id,$subs)
 		{
-			return $this->cats->delete($cat_id,$drop_subs,$modify_subs);
+			return $this->cats->delete($cat_id,$subs,!$subs);	// either delete the subs or modify them
 		}
 
 		function check_values($values)

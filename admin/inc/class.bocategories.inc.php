@@ -129,7 +129,7 @@
 
 		function delete($cat_id,$subs=False)
 		{
-			return $this->cats->delete($cat_id,$subs);
+			return $this->cats->delete($cat_id,$subs,!$subs);	// either delete the subs or modify them
 		}
 
 		function check_values($values)
