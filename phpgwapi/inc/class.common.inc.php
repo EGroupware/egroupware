@@ -107,15 +107,13 @@
 		*/
 		function sql_search($table,$owner=0)
 		{
-			global $phpgw, $phpgw_info;
-
 			$this->debug_info[] = 'sql_search() is a deprecated function - use ACL instead';
 			$s = '';
 			if (!$owner)
 			{
-				$owner = $phpgw_info['user']['account_id'];
+				$owner = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
-			$groups = $phpgw->accounts->membership(intval($owner));
+			$groups = $GLOBALS['phpgw']->accounts->membership(intval($owner));
 			if (gettype($groups) == 'array')
 			{
 				while ($group = each($groups))
