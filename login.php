@@ -71,6 +71,8 @@
         return "<font color=FF0000>" . lang("Bad login or password") . "</font>";
         break;
       case "10":
+        Setcookie("sessionid");
+        Setcookie("kp3");
         return "<font color=FF0000>" . lang("Your session could not be verified.") . "</font>";
         break;
       default:

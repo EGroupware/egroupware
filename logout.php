@@ -56,6 +56,8 @@
     }
     $phpgw->session->destroy();
   }
+  Setcookie("sessionid");
+  Setcookie("kp3");
 
   Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=1");
 ?>
