@@ -144,7 +144,7 @@
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-	$phpgw->db->query("select * FROM infolog where info_id='$info_id'");
+	$phpgw->db->query("select * FROM phpgw_infolog where info_id='$info_id'");
 	$phpgw->db->next_record();
 
 	$pri_selected[$phpgw->infolog->data['info_pri']] = ' selected';

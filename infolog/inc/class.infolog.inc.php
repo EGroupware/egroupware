@@ -289,7 +289,7 @@
 	
 		function read($info_id) {								// did _not_ ensure ACL, has to be done by the calling code
 			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
-										(!$this->db->query("select * FROM infolog where info_id='$info_id'") ||	!$this->db->next_record())) 
+										(!$this->db->query("select * FROM phpgw_infolog where info_id='$info_id'") ||	!$this->db->next_record())) 
 			{
 				$this->init( );
 				return False;
@@ -316,7 +316,7 @@
 				
 		function delete($info_id) {							// did _not_ ensure ACL, has to be done by the calling code
 			global $phpgw_info;
-			$this->db->query("delete FROM infolog where info_id='$info_id' or info_id_parent='"
+			$this->db->query("delete FROM phpgw_infolog where info_id='$info_id' or info_id_parent='"
 				. "$info_id' AND ((info_access='public' and info_owner != '"
 				. $phpgw_info['user']['account_id'] . "') or (info_owner='"
 				. $phpgw_info['user']['account_id'] . "'))" ,__LINE__,__FILE__);
@@ -355,9 +355,9 @@
 				}
 			}
 			if ($values['info_id']) {
-				$query = 'update infolog set '.$query.' where info_id=\'' . $values['info_id'] .'\'';
+				$query = 'update phpgw_infolog set '.$query.' where info_id=\'' . $values['info_id'] .'\'';
 			} else {
-				$query = 'insert INTO infolog set '.$query;
+				$query = 'insert INTO phpgw_infolog set '.$query;
 				/*
 				 * need to set $this->data['info_id'] with assigned autoincrement id
 				 */

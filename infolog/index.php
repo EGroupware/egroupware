@@ -101,7 +101,7 @@
 	if ($phpgw->infolog->listChilds && $action != 'sp')
 	   $pid = '';
 	
-	$db->query("SELECT COUNT(*) FROM infolog WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
+	$db->query("SELECT COUNT(*) FROM phpgw_infolog WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
 	$db->next_record();
 	$total = $db->f(0);
 
@@ -145,13 +145,13 @@
 
 	$limit = $db->limit($start);
 
-	$db->query($q="SELECT * FROM infolog WHERE $filtermethod $pid $sql_query $ordermethod $limit",__LINE__,__FILE__);
+	$db->query($q="SELECT * FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod $limit",__LINE__,__FILE__);
 	
 	while ($db->next_record()) {
 		// ========================================
 		// check if actual project has subprojects
 		// ========================================
-		$db2->query("select count(*) as cnt FROM infolog where info_id_parent=" .$db->f('info_id'),__LINE__,__FILE__);
+		$db2->query("select count(*) as cnt FROM phpgw_infolog where info_id_parent=" .$db->f('info_id'),__LINE__,__FILE__);
 		$db2->next_record();
 		if ($db2->f('cnt') > 0) {
 			$subproact = 1;
