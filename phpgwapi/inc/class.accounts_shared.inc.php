@@ -104,7 +104,7 @@
 
 		function is_expired()
 		{
-			if ($this->data['expires'] != -1 && $this->data['expires'] < time())
+			if($this->data['expires'] != -1 && $this->data['expires'] < time())
 			{
 				return True;
 			}
@@ -116,7 +116,7 @@
 
 		function read()
 		{
-			if (count($this->data) == 0)
+			if(count($this->data) == 0)
 			{
 				$this->read_repository();
 			}
@@ -142,14 +142,14 @@
 			$security_equals = Array();
 			$security_equals = $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $account_id);
 
-			if ($security_equals == False)
+			if($security_equals == False)
 			{
 				return False;
 			}
 
 			$this->memberships = Array();
 
-			for ($idx=0; $idx<count($security_equals); $idx++)
+			for($idx=0; $idx<count($security_equals); $idx++)
 			{
 				$groups = intval($security_equals[$idx]);
 				$this->memberships[] = Array('account_id' => $groups, 'account_name' => $this->id2name($groups));
@@ -167,12 +167,12 @@
 			$security_equals = $acl->get_ids_for_location($account_id, 1, 'phpgw_group');
 			unset($acl);
 
-			if ($security_equals == False)
+			if($security_equals == False)
 			{
 				return False;
 			}
 
-			for ($idx=0; $idx<count($security_equals); $idx++)
+			for($idx=0; $idx<count($security_equals); $idx++)
 			{
 				$name = $this->id2name(intval($security_equals[$idx]));
 				$this->members[] = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $name);
@@ -191,7 +191,7 @@
 			$min = $GLOBALS['phpgw_info']['server']['account_min_id'] ? $GLOBALS['phpgw_info']['server']['account_min_id'] : 0;
 			$max = $GLOBALS['phpgw_info']['server']['account_max_id'] ? $GLOBALS['phpgw_info']['server']['account_max_id'] : 0;
 
-			if ($account_type == 'g')
+			if($account_type == 'g')
 			{
 				$type = 'groups';
 			}
@@ -203,11 +203,11 @@
 
 			/* Loop until we find a free id */
 			$free = 0;
-			while (!$free)
+			while(!$free)
 			{
 				$account_lid = '';
 				//echo '<br>calling search for id: '.$nextid;
-				if ($this->exists($nextid))
+				if($this->exists($nextid))
 				{
 					$nextid = intval($GLOBALS['phpgw']->common->next_id($type,$min,$max));
 				}
@@ -225,7 +225,7 @@
 					}
 				}
 			}
-			if	($GLOBALS['phpgw_info']['server']['account_max_id'] &&
+			if($GLOBALS['phpgw_info']['server']['account_max_id'] &&
 				($nextid > $GLOBALS['phpgw_info']['server']['account_max_id']))
 			{
 				return False;

@@ -817,11 +817,11 @@
 			$this->account_id = $account_id;
 			$this->read_repository();
 
-			$data[$this->data['account_id']]['lid']			= $this->data['account_lid'];
-			$data[$this->data['account_id']]['firstname']	= $this->data['firstname'];
-			$data[$this->data['account_id']]['lastname']	= $this->data['lastname'];
-			$data[$this->data['account_id']]['fullname']	= $this->data['fullname'];
-			$data[$this->data['account_id']]['type']		= $this->data['account_type'];
+			$data[$this->data['account_id']]['lid']       = $this->data['account_lid'];
+			$data[$this->data['account_id']]['firstname'] = $this->data['firstname'];
+			$data[$this->data['account_id']]['lastname']  = $this->data['lastname'];
+			$data[$this->data['account_id']]['fullname']  = $this->data['fullname'];
+			$data[$this->data['account_id']]['type']      = $this->data['account_type'];
 
 			return $data;
 		}
