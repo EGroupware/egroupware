@@ -145,7 +145,6 @@ function cat_id($cats)
 		$GLOBALS['phpgw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
 		$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
 		$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
-		$hiddenvars .= '<input type="hidden" name="action" value="download">'."\n";
 
 		$GLOBALS['phpgw']->template->parse('rows','filename');
 		break;
