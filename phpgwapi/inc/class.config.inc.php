@@ -36,13 +36,13 @@
 				$appname = $phpgw_info['flags']['currentapp'];
 			}
 
-			$this->db       = $phpgw->db;
+			$this->db      = $phpgw->db;
 			$this->appname = $appname;
 		}
 
 		function read_repository()
 		{
-			$this->db->query("select * from phpgw_config where config_appname='" . $this->appname . "'",__LINE__,__FILE__);
+			$this->db->query("select * from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				$this->config_data[$this->db->f('config_name')] = $this->db->f('config_value');
@@ -54,12 +54,12 @@
 			$config_data = $this->config_data;
 
 			$this->db->lock('phpgw_config');
-			$this->db->query("delete from phpgw_config where config_appname='" . $this->appname . "'",__LINE__,__FILE__);
+			$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 			while (list($name,$value) = each($config_data))
 			{
 				$name  = addslashes($name);
 				$value = addslashes($value);
-				$this->db->query("insert into phpgw_config (config_appname,config_name,config_value) "
+				$this->db->query("insert into phpgw_config (config_app,config_name,config_value) "
 					. "values ('" . $this->appname . "','" . $name . "','" . $value . "')",__LINE__,__FILE__);
 			}
 			$this->db->unlock();
@@ -67,12 +67,12 @@
 
 		function delete_repository()
 		{
-			$this->db->query("delete from phpgw_config where config_appname='" . $this->appname . "'",__LINE__,__FILE__);
+			$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 		}
 
 		function value($variable_name,$variable_data)
 		{
 			$this->config_data[$variable_name] = $variable_data;
 		}
-
 	}
+?>
