@@ -20,6 +20,9 @@
   $phpgw_info["flags"]["enable_addressbook_class"] = True;
   include("../header.inc.php");
 
+  $t = new Template($phpgw_info["server"]["app_tpl"]);
+  $t->set_file(array( "view"	=> "view.tpl"));
+
   function checkfor_specialformat($field,$data)
   {
      global $phpgw_info, $phpgw;
@@ -63,7 +66,7 @@
   }
   $phpgw->db->next_record();
 
-  echo "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
+  $view_header = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
 
   $i = 0;
   while ($column = each($abc)) {
@@ -79,7 +82,7 @@
      $columns_to_display[$i]["field_value"] = $phpgw->db->f("ab_notes");
   }
 
-  echo '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
+  $view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
   for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
       if (! $columns_to_display[$i]["field_name"]) break;
 
@@ -102,40 +105,39 @@
   $owner  = $phpgw->db->f("ab_owner");
   $ab_id  = $phpgw->db->f("ab_id");
 
-  echo $columns_html . '<tr><td colspan="4">&nbsp;</td></tr>';
-  echo "<tr><td><b>" . lang("Record owner") . "</b></td><td>"
-     . $phpgw->common->grab_owner_name($owner) . "</td><td><b>"
-     . lang("Record Access") . "</b></td><td>";
+  $columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
+  . '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
+  . $phpgw->common->grab_owner_name($owner) . '</td><td><b>'
+  . lang("Record Access") . '</b></td><td></table>';
      
   if ($access != "private" && $access != "public") {
-	 echo lang("Group access") . " - " . $phpgw->accounts->convert_string_to_names_access($access);
+    $access_link .= lang("Group access") . " - " . $phpgw->accounts->convert_string_to_names_access($access);
   } else {
-     echo $access;
+    $access_link .= $access;
   }
-     
-  echo "</td></tr></table>";
-?>
 
- <TABLE border="0" cellpadding="1" cellspacing="1">
-  <TR> 
-   <TD align="left">
-    <?php
-      echo $phpgw->common->check_owner($owner,"edit.php","Edit","ab_id=$ab_id");
-    ?>
-   </TD>
-   <TD align=left>
-    <form action="<?php echo $phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>" method="post" name="Vcardform">
-     <input type="submit" value="Vcard">
-    </form>
-   </TD>
-   <TD align="left">
-    <form action="<?php echo $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>" method="post" name="Doneform">
-     <input type="submit" value="Done">
-    </form>
-   </TD>
-  </TR>
- </TABLE>
+  $editlink .= $phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")."&start=".$start."&sort=".$sort."&order=".$order);
+  $vcardlink = '<form action="'.$phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+  $donelink = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 
-<?php
+  $t->set_var("ab_id",$ab_id);
+  $t->set_var("sort",$sort);
+  $t->set_var("order",$order);
+  $t->set_var("filter",$filter);
+  $t->set_var("start",$start);
+  $t->set_var("view_header",$view_header);
+  $t->set_var("cols",$columns_html);
+  $t->set_var("lang_ok",lang("ok"));
+  $t->set_var("lang_done",lang("done"));
+  $t->set_var("lang_edit",lang("edit"));
+  $t->set_var("lang_submit",lang("submit"));
+  $t->set_var("lang_vcard",lang("vcard"));
+  $t->set_var("done_link",$donelink);
+  $t->set_var("edit_link",$editlink);
+  $t->set_var("vcard_link",$vcardlink);
+
+  $t->parse("out","view");
+  $t->pparse("out","view");
+
   $phpgw->common->phpgw_footer();
 ?>
