@@ -147,7 +147,7 @@
 				/* Setup defaults to aid in header upgrade to version 1.26.
 				 * This was the first version to include the following values.
 				 */
-				if(!@isset($GLOBALS['phpgw_domain'][$FormDomain]['config_user']))
+				if(!@isset($GLOBALS['phpgw_domain'][$FormDomain]['config_user']) && isset($GLOBALS['phpgw_domain'][$FormDomain]))
 				{
 					@$GLOBALS['phpgw_domain'][$FormDomain]['config_user'] = 'admin';
 				}

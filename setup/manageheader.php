@@ -389,8 +389,6 @@
 					$GLOBALS['phpgw_info']['server']['config_passwd'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['config_passwd'];
 					$GLOBALS['phpgw_info']['server']['config_user'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['config_user'];
 
-
-
 					if(@$adddomain)
 					{
 						$GLOBALS['phpgw_domain'][lang('new')] = array();
