@@ -529,7 +529,7 @@
        global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
 
        if (!isset($phpgw_info["flags"]["nofooter"]) || !$phpgw_info["flags"]["nofooter"]) {
-         include($phpgw_info["server"]["api_inc"] . "/footer.inc.php");
+          include(PHPGW_API_INC . "/footer.inc.php");
        }
  
        // Clean up mcrypt
