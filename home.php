@@ -145,8 +145,9 @@
 			{
 				$_db_version  = $GLOBALS['phpgw']->db->f('app_version');
 				$_app_name    = $GLOBALS['phpgw']->db->f('app_name');
-				$_versionfile = $GLOBALS['phpgw']->common->get_app_dir($_app_name) . '/setup/setup.inc.php';
-				if(file_exists($_versionfile))
+				$_app_dir = $GLOBALS['phpgw']->common->get_app_dir($_app_name);
+				$_versionfile = $_app_dir . '/setup/setup.inc.php';
+				if($_app_dir && file_exists($_versionfile))
 				{
 					include($_versionfile);
 					$_file_version = $setup_info[$_app_name]['version'];
