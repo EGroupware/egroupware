@@ -21,7 +21,7 @@ forward also to	emailadmin	sl	posreduj tudi
 forward email's to	emailadmin	sl	posreduj sporo&#269;ila k
 forward only	emailadmin	sl	samo posreduj
 imap admin password	emailadmin	sl	Geslo upravljalca IMAPa
-imap admin user		emailadmin	sl	IMAP upravljalec
+imap admin user	emailadmin	sl	IMAP upravljalec
 imap server hostname or ip address	emailadmin	sl	Ime ali IP IMAP stre¾nika
 imap server logintyp	emailadmin	sl	Na&#269;in prijave na IMAP stre¾nik
 imap server port	emailadmin	sl	Vrata IMAP stre¾nika
