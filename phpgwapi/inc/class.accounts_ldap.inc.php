@@ -231,14 +231,15 @@
 			if (gettype($account_id) == "string") {
 				$account_id = $this->name2id($account_id);
 			}
-			$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id=".$account_id;
-			$this->db->query($sql,__LINE__,__FILE__);
-			if ($this->db->num_rows() == 1) {
-				$insql = True;
-			} else {
-				$insql = False;
+			if ($account_id) {
+				$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id=".$account_id;
+				$this->db->query($sql,__LINE__,__FILE__);
+				if ($this->db->num_rows() == 1) {
+					$insql = True;
+				} else {
+					$insql = False;
+				}
 			}
-
 			$ds = $phpgw->common->ldapConnect();
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
