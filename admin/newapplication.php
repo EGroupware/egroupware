@@ -77,11 +77,6 @@
 				. addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
 				. "$n_app_status','$app_order')",__LINE__,__FILE__);
 
-			if($n_app_anonymous)
-			{
-				$phpgw->acl->add_repository($n_app_name,'everywhere',0,PHPGW_ACL_READ);
-			}
-
 			Header("Location: " . $phpgw->link("/admin/applications.php"));
 			$phpgw->common->phpgw_exit();
 		}
@@ -121,8 +116,6 @@
 	}
 
 	display_row(lang("Select which location this app should appear on the navbar, lowest (left) to highest (right)"),'<input name="app_order" value="' . $app_order . '">');
-
-	display_row(lang("Allow Anonymous access to this app"),'<input type="checkbox" name="n_app_anonymous" value="True">');
 
 	$p->set_var("lang_submit_button",lang("add"));
 
