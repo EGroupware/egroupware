@@ -30,7 +30,7 @@ connect phpgw/phpgw;
 CREATE TABLE applications (
   app_name varchar2(25) NOT NULL,
   app_title varchar2(50),
-  app_enabled int
+  app_enabled number
 );
 
 create unique index applications_app_name 
@@ -169,8 +169,8 @@ create table access_log (
   sessionid	varchar2(30),
   loginid	varchar2(30),
   ip		varchar2(30),
-  li		int,
-  lo		int
+  li		number(11),
+  lo		number(11)
 );
 
 --------------
