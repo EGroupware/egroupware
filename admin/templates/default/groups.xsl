@@ -183,11 +183,11 @@
 						</tr>
  						</form>
 						<tr>
-						<xsl:variable name="done_url"><xsl:value-of select="done_url"/></xsl:variable>
-						<xsl:variable name="lang_done"><xsl:value-of select="lang_done"/></xsl:variable>
-						<form method="POST" action="{$done_url}">
+						<xsl:variable name="cancel_url"><xsl:value-of select="cancel_url"/></xsl:variable>
+						<xsl:variable name="lang_cancel"><xsl:value-of select="lang_cancel"/></xsl:variable>
+						<form method="POST" action="{$cancel_url}">
 							<td align="left">
-								<input type="submit" name="done" value="{$lang_done}"/>
+								<input type="submit" name="cancel" value="{$lang_cancel}"/>
 							</td>
 						</form>
 						</tr>

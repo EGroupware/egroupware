@@ -446,7 +446,7 @@
 			$data = array
 			(
 				'edit_url'				=> $GLOBALS['phpgw']->link('/index.php',$link_data),
-				'done_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
+				'cancel_url'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
 				'account_id'			=> $group_info['account_id'],
 				'lang_account_name'		=> lang('group name'),
 				'value_account_name'	=> $group_info['account_name'],
@@ -457,7 +457,7 @@
 				'lang_permissions'		=> lang('permissions this group has'),
 				'lang_application'		=> lang('application'),
 				'lang_acl'				=> lang('acl'),
-				'lang_done'				=> lang('done'),
+				'lang_cancel'			=> lang('cancel'),
 				'lang_save'				=> lang('save'),
 				'app_list'				=> $app_list,
 				'account_id'			=> $account_id
@@ -692,7 +692,7 @@
 			$data = array
 			(
 				'edit_url'				=> $GLOBALS['phpgw']->link('/index.php',$page_params),
-				'done_url'				=> $GLOBALS['phpgw']->link('/admin/index.php'),
+				'cancel_url'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_user'),
 				'lang_lid'				=> lang('loginid'),
 				'lang_account_active'	=> lang('account active'),
 				'lang_password'			=> lang('password'),
@@ -703,7 +703,7 @@
 				'lang_firstname'		=> lang('firstname'),
 				'lang_applications'		=> lang('applications'),
 				'lang_save'				=> lang('save'),
-				'lang_cancel_done'		=> ((is_array($values) && !$error)?lang('done'):lang('cancel')),
+				'lang_cancel'			=> lang('cancel'),
 				'select_expires'		=> $GLOBALS['phpgw']->common->dateformatorder($_y,$_m,$_d,True),
 				'lang_never'			=> lang('Never'),
 				'account_lid'			=> $userData['account_lid'],
