@@ -203,7 +203,7 @@
 		}
 
 
-		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False)
+		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
 		{
 			if ($globals)
 			{
@@ -246,6 +246,15 @@
 				}
 			}
 
+			if ($parent_id)
+			{
+				$parent_select = " AND cat_parent='$parent_id'";
+			}
+			else
+			{
+				$parent_select = " AND cat_parent='0'";
+			}
+
 			if ($query)
 			{
 				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
@@ -254,15 +263,15 @@
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 					. $querymethod;
 
-			$mainselect = ' AND cat_level=0';
+			//$mainselect = ' AND cat_level=0';
 
 			if ($limit)
 			{
-				$this->db->limit_query($sql . $mainselect . $ordermethod,$start,__LINE__,__FILE__);
+				$this->db->limit_query($sql . $parent_select . $ordermethod,$start,__LINE__,__FILE__);
 			}
 			else
 			{
-				$this->db->query($sql . $mainselect . $ordermethod,__LINE__,__FILE__);
+				$this->db->query($sql . $parent_select . $ordermethod,__LINE__,__FILE__);
 			}
 
 			$i = 0;
@@ -284,15 +293,15 @@
 			$num_cats = count($cats);
 			for ($i=0;$i < $num_cats;$i++)
 			{
-				$subselect = " AND cat_parent='" . $cats[$i]['id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
+				$sub_select = " AND cat_parent='" . $cats[$i]['id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
 
 				if ($limit)
 				{
-					$this->db->limit_query($sql . $subselect . $ordermethod,$start,__LINE__,__FILE__);
+					$this->db->limit_query($sql . $sub_select . $ordermethod,$start,__LINE__,__FILE__);
 				}
 				else
 				{
-					$this->db->query($sql . $subselect . $ordermethod,__LINE__,__FILE__);
+					$this->db->query($sql . $sub_select . $ordermethod,__LINE__,__FILE__);
 				}
 
 				$subcats = array();
@@ -510,14 +519,46 @@
 		@abstract delete category
 		@param $cat_id int - category id
 		*/
-		function delete($cat_id,$subs = False)
+		function delete($cat_id, $drop_subs = False, $modify_subs = False)
 		{
-			if ($subs)
+			if ($drop_subs)
 			{
-				$subdelete = " OR cat_parent='$cat_id' OR cat_main='$cat_id' "; 
+				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
 			}
 
-			$this->db->query("DELETE FROM phpgw_categories WHERE cat_id='$cat_id' $subdelete AND cat_appname='"
+			if ($modify_subs)
+			{
+				$cats = $this->return_sorted_array('',False,'','','',False, $cat_id);
+
+				$new_parent = $this->id2name($cat_id,'parent');
+
+				for ($i=0;$i<count($cats);$i++)
+				{
+					if ($cats[$i]['level'] == 1)
+					{
+						$this->db->query('UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main=' . $cats[$i]['id']
+										. ' WHERE cat_id=' . $cats[$i]['id'],__LINE__,__FILE__);
+						$new_main = $cats[$i]['id'];
+					}
+					else
+					{
+						if ($new_main)
+						{
+							$update_main = ',cat_main=' . $new_main;
+						}
+
+						if ($cats[$i]['parent'] == $cat_id)
+						{
+							$update_parent = ',cat_parent=' . $new_parent;
+						}
+
+						$this->db->query('UPDATE phpgw_categories set cat_level=' . ($cats[$i]['level']-1) . $update_main . $update_parent 
+										. ' WHERE cat_id=' . $cats[$i]['id'],__LINE__,__FILE__);
+					}
+				}
+			}
+
+			$this->db->query("DELETE FROM phpgw_categories WHERE cat_id='" . $cat_id . $subdelete . "'AND cat_appname='"
 							. $this->app_name . "'",__LINE__,__FILE__);
 		}
 
@@ -556,8 +597,7 @@
 		function name2id($cat_name)
 		{
 			$this->db->query("SELECT cat_id FROM phpgw_categories WHERE cat_name='" . $this->db->db_addslashes($cat_name) . "' "
-				."AND cat_appname='" . $this->app_name . "' "
-				."AND cat_owner=" . $this->account_id,__LINE__,__FILE__);
+							."AND cat_appname='" . $this->app_name . "' AND cat_owner=" . $this->account_id,__LINE__,__FILE__);
 
 			if(!$this->db->num_rows())
 			{
@@ -581,7 +621,8 @@
 				case 'owner':	$value = 'cat_owner'; break;
 				case 'main':	$value = 'cat_main'; break;
 				case 'level':	$value = 'cat_level'; break;
-				case 'data':	$value = 'cat_data'; break;	
+				case 'data':	$value = 'cat_data'; break;
+				case 'parent':	$value = 'cat_parent'; break;
 			}
 
 			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id='" . $cat_id . "'",__LINE__,__FILE__);
