@@ -184,7 +184,7 @@
 				$nr = $link['link_app1'] == 'infolog' && $link['link_id1'] == $info['info_id'] ? '2' : '1';
 				$title = $this->link->title($link['link_app'.$nr],$link['link_id'.$nr]);
 
-				if ($title == $info['info_from'] || htmlentities($title) == $info['info_from'])
+				if ($title == $info['info_from'] || @htmlentities($title) == $info['info_from'])
 				{
 					$info['info_from'] = '';
 				}
