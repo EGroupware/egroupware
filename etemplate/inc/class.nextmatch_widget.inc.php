@@ -47,6 +47,10 @@
 				$value['template'] = $cell['size'];
 			}
 			$nextmatch = new etemplate('etemplate.nextmatch_widget');
+			if ($value['no_cat'])
+			{
+				$nextmatch->disable_cells('cat_id');
+			}
 			if ($value['no_filter'])
 			{
 				$nextmatch->disable_cells('filter');
@@ -103,12 +107,17 @@
 			}
 			elseif ($value['left'])
 			{
-				$value['start'] -= $max;
+				$value['start'] = $old_value['start'] - $max;
 				$templ->loop = True;
 			}
 			elseif ($value['right'])
 			{
-				$value['start'] = $old_value['total'] / $max * $max;
+				$value['start'] = $old_value['start'] + $max;
+				$templ->loop = True;
+			}
+			elseif ($value['last'])
+			{
+				$value['start'] = (int) (($old_value['total']-2) / $max) * $max;
 				$templ->loop = True;
 			}
 			return True;
