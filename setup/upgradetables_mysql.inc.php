@@ -295,10 +295,22 @@
          $db->query("alter table config change config_name config_name varchar(255) NOT NULL");
          $db->query("create table domains (domain_id int NOT NULL auto_increment, domain_name varchar(255),"
          		 . "domain_database varchar(255),domain_status enum('Active,Disabled'),primary key(domain_id))");
+        	$currentver = "0.9.3pre5";
+      }
+
+      if ($currentver == "0.9.3pre5") {
+		$db->query("CREATE TABLE categories (
+   				cat_id int(9) DEFAULT '0' NOT NULL auto_increment,
+   				account_id int(11) DEFAULT '0' NOT NULL,
+   				app_name varchar(25) NOT NULL,
+   				cat_name varchar(150) NOT NULL,
+   				cat_description text NOT NULL,
+   				PRIMARY KEY (cat_id))");
+        	$currentver = "0.9.3pre6";
       }
 
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.2 to 0.9.3pre5 is completed.</td>\n";
+      echo "    <td>Upgrade from 0.9.2 to 0.9.3pre6 is completed.</td>\n";
       echo "  </tr>\n";
     }
   }
