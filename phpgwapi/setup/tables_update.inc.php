@@ -36,8 +36,9 @@
 	
 	function phpgwapi_v0_9_2to0_9_3update_owner($table, $field)
 	{
-		global $phpgw_setup, $oProc;
-		
+		global $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->m_odb->query("select distinct($field) from $table");
 		if ($oProc->m_odb->num_rows()) {
 			while ($oProc->m_odb->next_record()) {
@@ -53,11 +54,22 @@
 		$oProc->AlterColumn($table, $field, array("type" => "int", "precision" => 4, "nullable" => false, "default" => 0));
 	}
 
+	$test[] = "0.9.2";
+	function phpgwapi_upgrade0_9_2()
+	{
+		global $setup_info;
+		
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre4';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
 	$test[] = "0.9.3pre4";
 	function phpgwapi_upgrade0_9_3pre4()
 	{
-		global $setup_info, $oProc;
-		
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->AlterColumn("config", "config_name", array("type" => "varchar", "precision" => 255, "nullable" => false));
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre5';
@@ -68,8 +80,9 @@
 	$test[] = "0.9.3pre5";
 	function phpgwapi_upgrade0_9_3pre5()
 	{
-		global $setup_info, $oProc;
-		
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->CreateTable(
 			'categories', array(
 				'fd' => array(
@@ -94,8 +107,9 @@
 	$test[] = "0.9.3pre6";
 	function phpgwapi_upgrade0_9_3pre6()
 	{
-		global $setup_info, $oProc;
-		
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->m_odb->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$setup_info['phpgwapi']['version']."')");
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre7';
@@ -106,8 +120,9 @@
 	$test[] = "0.9.3pre7";
 	function phpgwapi_upgrade0_9_3pre7()
 	{
-		global $setup_info, $oProc;
-		
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->CreateTable('languages', array(
 				'fd' => array(
 					'lang_id' =>   array('type' => 'varchar', 'precision' => 2, 'nullable' => false),
@@ -262,24 +277,44 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	
+
+	$test[] = "0.9.3pre8";
+	function phpgwapi_upgrade0_9_3pre8()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.4pre4';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
 	$test[] = "0.9.4pre4";
 	function phpgwapi_upgrade0_9_4pre4()
 	{
-		global $setup_info, $oProc;
-		
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->AlterColumn("sessions", "session_lid", array("type" => "varchar", "precision" => 255));
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.4pre5';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	
+
+	$test[] = "0.9.4pre5";
+	function phpgwapi_upgrade0_9_4pre5()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.4';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
 	$test[] = "0.9.4";
 	function phpgwapi_upgrade0_9_4()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
 
+		$oProc = $phpgw_setup->oProc;
 		$oProc->m_odb->query("delete from languages");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('aa','Afar','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('ab','Abkhazian','No')");
@@ -426,8 +461,9 @@
 	$test[] = "0.9.5pre1";
 	function phpgwapi_upgrade0_9_5pre1()
 	{
-		global $phpgw_info, $oProc;
-		
+		global $phpgw_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->DropTable("sessions");
 		$oProc->CreateTable("phpgw_sessions", array(
 				"fd" => array(
@@ -492,6 +528,15 @@
 		//return True;
 	}
 
+	$test[] = "0.9.5pre2";
+	function phpgwapi_upgrade0_9_5pre2()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.5';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
 	$test[] = "0.9.5";
 	function phpgwapi_upgrade0_9_5()
 	{
@@ -505,7 +550,16 @@
 	function phpgwapi_upgrade0_9_6()
 	{
 		global $setup_info;
-		$phpgw_info['phpgwapi']['currentver'] = '0.9.7pre1';
+		$setup_info['phpgwapi']['currentver'] = '0.9.7pre1';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
+	$test[] = "0.9.7pre1";
+	function phpgwapi_upgrade0_9_7pre1()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.7pre3';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
@@ -531,8 +585,9 @@
 	$test[] = "0.9.8pre1";
 	function phpgwapi_upgrade0_9_8pre1()
 	{
-		global $setup_info, $oProc;
-		
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->m_odb->query("select * from preferences order by preference_owner");
 		$t = array();
 		while ($oProc->m_odb->next_record()) {
@@ -561,11 +616,21 @@
 		//return True;
 	}
 
+	$test[] = "0.9.8pre2";
+	function phpgwapi_upgrade0_9_8pre2()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.8pre3';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
 	$test[] = "0.9.8pre3";
 	function phpgwapi_upgrade0_9_8pre3()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
 
+		$oProc = $phpgw_setup->oProc;
 		$oProc->DropTable("phpgw_sessions");
 		$oProc->CreateTable(
 			"phpgw_sessions", array(
@@ -592,8 +657,9 @@
 	$test[] = "0.9.8pre4";
 	function phpgwapi_upgrade0_9_8pre4()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
 
+		$oProc = $phpgw_setup->oProc;
 		$oProc->CreateTable(
 			"phpgw_hooks", array(
 				"fd" => array(
