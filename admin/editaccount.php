@@ -27,9 +27,16 @@
   		
 		$t = new Template($phpgw->common->get_tpl_dir("admin"));
   		$t->set_file(array("form" => "account_form.tpl"));
-
-		$account = CreateObject('phpgwapi.accounts',$_account_id);
-		$userData = $account->read_repository();
+		
+		if ($_userData)
+		{
+			$userData=$_userData;
+		}
+		else
+		{
+			$account = CreateObject('phpgwapi.accounts',$_account_id);
+			$userData = $account->read_repository();
+		}
 
 		$t->set_var("form_action",$phpgw->link("editaccount.php",
 			"account_id=$_account_id&old_loginid=".rawurlencode($userData['account_lid'])));
