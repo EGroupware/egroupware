@@ -2,9 +2,8 @@
   /**************************************************************************\
   * phpGroupWare API - VFS                                                   *
   * This file written by Jason Wies (Zone) <zone@users.sourceforge.net>      *
-  * and Dan Kuykendall <seek3r@phpgroupware.org>,                            *
   * This class handles file/dir access for phpGroupWare                      *
-  * Copyright (C) 2000, 2001 Dan Kuykendall, Jason Wies                      *
+  * Copyright (C) 2001 Jason Wies		                             *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
   * http://www.phpgroupware.org/api                                          * 
@@ -26,7 +25,7 @@
 		/*!
 		@class vfs
 		@abstract virtual file system
-		@description Authors: Zone, Seek3r
+		@description Authors: Zone
 		*/
 
 	/* Relative defines.  Used mainly by getabsolutepath () */
@@ -39,6 +38,15 @@
 	define (RELATIVE_CURRENT, 64);
 	define (VFS_REAL, 1024);
 	define (RELATIVE_ALL, RELATIVE_PATH);
+
+	/* ACL access defines.  Used by acl_check () */
+	define (VFS_ACL_READ, 1);
+	define (VFS_ACL_ADD, 2);
+	define (VFS_ACL_EDIT, 4);
+	define (VFS_ACL_DELETE, 8);
+	define (VFS_ACL_PRIVATE, 16);
+	define (VFS_ACL_USER, VFS_ACL_READ|VFS_ACL_ADD|VFS_ACL_EDIT|VFS_ACL_DELETE);
+	define (VFS_ACL_ALL, VFS_ACL_READ|VFS_ACL_ADD|VFS_ACL_EDIT|VFS_ACL_DELETE|VFS_ACL_PRIVATE);
 
 	/*!
 	@class path_class
@@ -217,7 +225,7 @@ class vfs
 	function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object = True)
 	{
 		global $phpgw, $phpgw_info;
-		$sep = $phpgw_info["server"]["dir_separator"];
+		$sep = SEP;
 
 		$rarray["mask"] = RELATIVE_NONE;
 
@@ -384,7 +392,7 @@ class vfs
 		}
 		else
 		{
-			$sep = $phpgw_info["server"]["dir_separator"];
+			$sep = SEP;
 		}
 
 		/* if RELATIVE_CURRENT, retrieve the current mask */
@@ -447,6 +455,20 @@ class vfs
 	}
 
 	/*!
+	@function acl_check
+	@abstract Check ACL access to $file for $this->account_id
+	@param $file File to check access of
+	@param $relatives Standard relativity array
+	@param $operation Operation to check access to.  In the form of a VFS_ACL defines bitmask.  Default is read
+	@result True if access is ok, function does not return if access is bad
+	*/
+
+	function acl_check ($file, $relatives = array (RELATIVE_CURRENT), $operation = VFS_ACL_READ)
+	{
+		global $phpgw, $phpgw_info;
+	}
+	
+	/*!
 	@function cd
 	@abstract Change directory
 	@discussion To cd to the files root "/", use cd ("/", False, array (RELATIVE_NONE));
@@ -460,7 +482,7 @@ class vfs
 
 		if ($relatives[0] & VFS_REAL)
 		{
-			$sep = $phpgw_info["server"]["dir_separator"];
+			$sep = SEP;
 		}
 		else
 		{
@@ -654,6 +676,8 @@ class vfs
 
 		$f = $this->path_parts ($from, array ($relatives[0]));
 		$t = $this->path_parts ($to, array ($relatives[1]));
+
+//		$this->acl_check ($t, array ($t->mask));
 
 		umask(000);
 
@@ -1245,3 +1269,5 @@ class vfs
 		return $this->ls ($dir, $relatives, $checksubdirs, $mime_type, $nofiles);
 	}
 }
+
+?>
