@@ -241,7 +241,7 @@
 	{
 		if($accounts[$i] != $owner && !isset($users[$accounts[$i]]))
 		{
-			$users[$user] = $phpgw->common->grab_owner_name($accounts[$i]);
+			$users[$accounts[$i]] = $phpgw->common->grab_owner_name($accounts[$i]);
 			if($phpgw->accounts->get_type($accounts[$i]) == 'g')
 			{
 				$group_members = $phpgw->acl->get_ids_for_location($accounts[$i],1,'phpgw_group');
@@ -249,9 +249,9 @@
 				{
 					for($j=0;$j<count($group_members);$j++)
 					{
-						if(intval($group_members[$j]) != $owner && !isset($users[intval($group_members[$j])]))
+						if($group_members[$j] != $owner && !isset($users[$group_members[$j]]))
 						{
-							$users[intval($group_members[$j])] = $phpgw->common->grab_owner_name(intval($group_members[$j]));
+							$users[$group_members[$j]] = $phpgw->common->grab_owner_name($group_members[$j]);
 						}
 					}
 				}
