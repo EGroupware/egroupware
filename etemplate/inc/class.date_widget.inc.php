@@ -13,69 +13,85 @@
 	/* $Id$ */
 
 	/*!
-	@class date_widget
+	@class datefield_widget
 	@author ralfbecker
-	@abstract widget that reads dates in via 3 select-boxes
-	@discussion This widget is generates html vi the sbox-class, so it does not work (without an extra implementation) in an other UI
+	@abstract widget that reads a date
+	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class date_widget
 	{
 		var $public_functions = array(
 			'pre_process' => True,
-			'render' => True,
 			'post_process' => True
 		);
 		var $human_name = 'Date';	// this is the name for the editor
 
-		function date_widget($ui='')
+		function date_widget($ui)
 		{
-			switch($ui)
-			{
-				case '':
-				case 'html':
-					$this->ui = 'html';
-					break;
-				case 'gtk':
-					$this->ui = 'gtk';
-					break;
-				default:
-					return "UI='$ui' not implemented";
-			}
-			return 0;
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$extension_data = $cell['size'];
-			if ($cell['size'] != '')
+			list($data_format,$options) = explode(',',$cell['size']);
+			$extension_data = $data_format;
+
+			if (!$value)
+			{
+				$value = array(
+					'Y' => '',
+					'm' => '',
+					'd' => ''
+				);
+			}
+			elseif ($data_format != '')
 			{
 				$date = split('[/.-]',$value);
-				$mdy  = split('[/.-]',$cell['size']);
+				$mdy  = split('[/.-]',$data_format);
 				for ($value=array(),$n = 0; $n < 3; ++$n)
 				{
 					switch($mdy[$n])
 					{
-						case 'Y': $value[0] = $date[$n]; break;
-						case 'm': $value[1] = $date[$n]; break;
-						case 'd': $value[2] = $date[$n]; break;
+						case 'Y': $value['Y'] = $date[$n]; break;
+						case 'm': $value['m'] = $date[$n]; break;
+						case 'd': $value['d'] = $date[$n]; break;
 					}
 				}
 			}
 			else
 			{
-				$value = array(date('Y',$value),date('m',$value),date('d',$value));
+				$value = array(
+					'Y' => date('Y',$value),
+					'm' => date('m',$value),
+					'd' => date('d',$value)
+				);
 			}
+			$tpl = new etemplate;
+			$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
+
+			$format = split('[/.-]',$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+			$fields = array('Y' => 'year', 'm' => 'month', 'd' => 'day');
+			$row = array();
+			for ($n=0; $n < 3; ++$n)
+			{
+				$dcell = $tpl->empty_cell();
+				$dcell['type'] = 'select-'.$fields[$format[$n]];
+				$dcell['name'] = $format[$n];
+				$dcell['help'] = lang($fields[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
+				$dcell['no_lang'] = True;
+				$row[$tpl->num2chrs($n)] = &$dcell;
+				unset($dcell);
+			}
+			$tpl->data[0] = array();
+			$tpl->data[1] = &$row;
+			$tpl->set_rows_cols();
+			$tpl->size = ',,,,0';
+
+			$cell['size'] = $cell['name'];
+			$cell['type'] = 'template';
+			$cell['name'] = $tpl->name;
+			$cell['obj'] = &$tpl;
+
 			return True;	// extra Label is ok
-		}
-
-		function render(&$cell,$form_name,&$value,$readonly,&$extension_data,&$tmpl)
-		{
-			$func = 'render_'.$this->ui;
-
-			if (!method_exists($this,$func))
-				return False;
-
-			return $this->$func($cell,$form_name,$value,$readonly,$tmpl);
 		}
 
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
@@ -94,7 +110,11 @@
 				{
 					$value['Y'] = date('Y');
 				}
-				if ($extension_data)
+				elseif ($value['Y'] < 100)
+				{
+					$value['Y'] += $value['Y'] < 30 ? 2000 : 1900;
+				}
+				if (empty($extension_data))
 				{
 					$value = mktime(0,0,0,$value['m'],$value['d'],$value['Y']);
 				}
@@ -119,14 +139,5 @@
 				$value = '';
 			}
 			return True;
-		}
-
-		function render_html($cell,$form_name,$value,$readonly,&$tmpl)
-		{
-			if ($readonly)
-			{
-				return $GLOBALS['phpgw']->common->dateformatorder($value[0],$value[1],$value[2],True);
-			}
-			return $tmpl->sbox->getDate($form_name.'[Y]',$form_name.'[m]',$form_name.'[d]',$value,$options);
 		}
 	}
