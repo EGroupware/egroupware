@@ -18,6 +18,7 @@
 		function defaultimap($_profileData)
 		{
 			$this->profileData = $_profileData;
+			if (function_exists('mb_convert_encoding')) $this->mbAvailable = TRUE;
 		}
 		
 		function addAccount($_hookValues)

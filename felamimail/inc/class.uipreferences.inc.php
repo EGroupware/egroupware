@@ -51,13 +51,11 @@
 		function listFolder()
 		{
 			// rename a mailbox
-			if(isset($GLOBALS['HTTP_POST_VARS']['newMailboxName']))
+			if(isset($_POST['newMailboxName']))
 			{
-				#print "rename to: ".$GLOBALS['HTTP_POST_VARS']['newMailboxName'];
+				$oldMailboxName = $this->bofelamimail->sessionData['preferences']['mailbox'];
+				$newMailboxName = $_POST['newMailboxName'];
 				
-				$oldMailboxName = $this->selectedFolder;
-				$newMailboxName = $GLOBALS['HTTP_POST_VARS']['newMailboxName'];
-
 				if($position = strrpos($oldMailboxName,'.'))
 				{
 					$newMailboxName		= substr($oldMailboxName,0,$position+1).$newMailboxName;
@@ -73,7 +71,7 @@
 			}
 			
 			// delete a Folder
-			if(isset($GLOBALS['HTTP_POST_VARS']['deleteFolder']) && $this->bofelamimail->sessionData['preferences']['mailbox'] != 'INBOX')
+			if(isset($_POST['deleteFolder']) && $this->bofelamimail->sessionData['preferences']['mailbox'] != 'INBOX')
 			{
 				if($this->bofelamimail->imap_deletemailbox($this->bofelamimail->sessionData['preferences']['mailbox']))
 				{
@@ -84,11 +82,11 @@
 			}
 
 			// create a new Mailbox
-			if(isset($GLOBALS['HTTP_POST_VARS']['newSubFolder']))
+			if(isset($_POST['newSubFolder']))
 			{
 				$oldMailboxName = $this->bofelamimail->sessionData['preferences']['mailbox'].'.';
 				$oldMailboxName	= ($oldMailboxName == '--topfolderselected--.') ? '' : $oldMailboxName;
-				$newMailboxName = $oldMailboxName.$GLOBALS['HTTP_POST_VARS']['newSubFolder'];
+				$newMailboxName = $oldMailboxName.$_POST['newSubFolder'];
 
 				$this->bofelamimail->imap_createmailbox($newMailboxName,True);
 			}
@@ -110,9 +108,9 @@
 			$this->selectedFolder	= $this->bofelamimail->sessionData['preferences']['mailbox'];
 			
 			// (un)subscribe to a folder??
-			if(isset($GLOBALS['HTTP_POST_VARS']['folderStatus']))
+			if(isset($_POST['folderStatus']))
 			{
-				$this->bofelamimail->subscribe($this->selectedFolder,$GLOBALS['HTTP_POST_VARS']['folderStatus']);
+				$this->bofelamimail->subscribe($this->selectedFolder,$_POST['folderStatus']);
 			}
 			
 
