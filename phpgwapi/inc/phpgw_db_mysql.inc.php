@@ -18,6 +18,7 @@ class db {
   var $Password = "";
 
   /* public: configuration parameters */
+  var $auto_stripslashes = False;
   var $Auto_Free     = 0;     ## Set to 1 for automatic mysql_free_result()
   var $Debug         = 0;     ## Set to 1 for debugging messages.
   var $Halt_On_Error = "yes"; ## "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)
@@ -230,8 +231,13 @@ class db {
     print $this->num_rows();
   }
 
-  function f($Name) {
-    return $this->Record[$Name];
+  function f($Name, $strip_slashes = "")
+  {
+     if ($strip_slashes || ($this->auto_stripslashes && ! $strip_slashes)) {
+        return stripslashes($this->Record[$Name]);
+     } else {
+        return $this->Record[$Name];
+     }
   }
 
   function p($Name) {
@@ -350,25 +356,29 @@ class db {
   }
 
   /* private: error handling */
-  function halt($msg, $line = "", $file = "") {
-    $this->unlock();				// Just in case there is a table currently locked
-
-    $this->Error = @mysql_error($this->Link_ID);
-    $this->Errno = @mysql_errno($this->Link_ID);
-    if ($this->Halt_On_Error == "no")
-      return;
-
-    $this->haltmsg($msg);
-    
-    if ($file) {
-       printf("<br><b>File:</b> %s",$file);
-    }
-    if ($line) {
-       printf("<br><b>Line:</b> %s",$line);
-    }
-
-    if ($this->Halt_On_Error != "report")
-      die("<p><b>Session halted.</b>");
+  function halt($msg, $line = "", $file = "")
+  {
+     global $phpgw;
+     $this->unlock();				// Just in case there is a table currently locked
+ 
+     $this->Error = @mysql_error($this->Link_ID);
+     $this->Errno = @mysql_errno($this->Link_ID);
+     if ($this->Halt_On_Error == "no")
+       return;
+ 
+     $this->haltmsg($msg);
+     
+     if ($file) {
+        printf("<br><b>File:</b> %s",$file);
+     }
+     if ($line) {
+        printf("<br><b>Line:</b> %s",$line);
+     }
+ 
+     if ($this->Halt_On_Error != "report") {
+        echo "<p><b>Session halted.</b>";
+        $phpgw->common->phpgw_exit(True);
+     }
   }
 
   function haltmsg($msg)

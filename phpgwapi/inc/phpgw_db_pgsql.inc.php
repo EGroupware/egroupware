@@ -14,6 +14,9 @@ class db {
   var $Database = "";
   var $User     = "";
   var $Password = "";
+
+  var $auto_stripslashes = False;
+  
   var $Halt_On_Error = "yes"; ## "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)    
 
   var $Link_ID  = 0;
@@ -214,34 +217,43 @@ class db {
     print $this->num_rows();
   }
 
-  function f($Name) {
-    return $this->Record[$Name];
+  function f($Name,$strip_slashes = "")
+  {
+     if ($strip_slashes || ($this->auto_stripslashes && ! $strip_slashes)) {
+        return stripslashes($this->Record[$Name]);
+     } else {
+        return $this->Record[$Name];
+     }
   }
 
   function p($Name) {
     print $this->Record[$Name];
   }
   
-  function halt($msg, $line = "", $file = "") {
-    if($this->Halt_On_Error == "no") {
-       return;
-    }
-    $this->unlock();				// Just in case there is a table currently locked
-
-    printf("<b>Database error:</b> %s<br>\n", $msg);
-    printf("<b>PostgreSQL Error</b>: %s (%s)<br>\n",
-      $this->Errno,
-      $this->Error);
-    if ($file) {
-       printf("<br><b>File:</b> %s",$file);
-    }
-    if ($line) {
-       printf("<br><b>Line:</b> %s",$line);
-    }
-
-    if($this->Halt_On_Error == "yes") {
-      die("<p><b>Session halted.</b>");
-    }
+  function halt($msg, $line = "", $file = "")
+  {
+     global $phpgw;
+ 
+     if($this->Halt_On_Error == "no") {
+        return;
+     }
+     $this->unlock();				// Just in case there is a table currently locked
+ 
+     printf("<b>Database error:</b> %s<br>\n", $msg);
+     printf("<b>PostgreSQL Error</b>: %s (%s)<br>\n",
+       $this->Errno,
+       $this->Error);
+     if ($file) {
+        printf("<br><b>File:</b> %s",$file);
+     }
+     if ($line) {
+        printf("<br><b>Line:</b> %s",$line);
+     }
+ 
+     if ($this->Halt_On_Error == "yes") {
+        echo "<p><b>Session halted.</b>";
+        $phpgw->common->phpgw_exit(True);
+     }
   }
 
   function table_names() {
