@@ -15,12 +15,15 @@
 		global $phpgw_info, $phpgw_setup;
 		$phpgw_setup->loaddb();
 
+		// create db objects for the main and two nested queries below
+		$db1 = $db2 = $phpgw_setup->db;
+
 		// create new contacts class tables
 		$sql = "DROP TABLE IF EXISTS phpgw_addressbook";
-		$phpgw_setup->db->query($sql);
+		$db1->query($sql);
 
 		$sql = "DROP TABLE IF EXISTS phpgw_addressbook_extra";
-		$phpgw_setup->db->query($sql);
+		$db1->query($sql);
 
 		$sql = "CREATE TABLE phpgw_addressbook (
 			id int(8) DEFAULT '0' NOT NULL,
@@ -80,7 +83,7 @@
 			UNIQUE id (id)
 		)";
 
-		$phpgw_setup->db->query($sql);
+		$db1->query($sql);
 
 		$sql = "CREATE TABLE phpgw_addressbook_extra (
 			contact_id int(11),
@@ -89,11 +92,8 @@
 			contact_value varchar(255)
 		)";
   
-		$phpgw_setup->db->query($sql);  
+		$db1->query($sql);  
 
-		// create db objects for the main and two nested queries below
-		$db1 = $db2 = $phpgw_setup->db;
-		
 		// read in old addressbook
 		$db1->query("select * from addressbook");
 
@@ -126,6 +126,7 @@
 			$extra["bday"]				= $db1->f("ab_bday");
 			$extra["url"]				= $db1->f("ab_url");
 			$extra["notes"]				= $db1->f("ab_notes");
+			$extra["access"]			= $db1->f("ab_access");
 
 			// add this record's standard with current entry's owner as owner
 			$sql="INSERT INTO phpgw_addressbook ("
