@@ -82,7 +82,9 @@
 												<table cellspacing="0" cellpadding="0" align="right">
 													<tr>
 														<td><a href="{$home_link}" onMouseOver="" onMouseOut=""><img src="{$home_img}" border="0" name="nine" alt="{$home_title}" title="{$home_title}"/></a></td>
-														<td><a href="{$prefs_link}" onMouseOver="" onMouseOut=""><img src="{$prefs_img}" border="0" name="ten" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+														<xsl:if test="$prefs_link != ''">
+															<td><a href="{$prefs_link}" onMouseOver="" onMouseOut=""><img src="{$prefs_img}" border="0" name="ten" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+														</xsl:if>
 														<td><a href="{$logout_link}" onMouseOver="" onMouseOut=""><img src="{$logout_img}" border="0" name="eleven" alt="{$logout_title}" title="{$logout_title}"/></a></td>
 														<td><a href="{$about_link}" onMouseOver="" onMouseOut=""><img src="{$about_img}" border="0" name="about" alt="{$about_title}" title="{$about_title}"/></a></td>
 														<td><a href="{$help_link}" onMouseOver="" onMouseOut="" target="_blank"><img src="{$help_img}" border="0" name="help" alt="{$help_title}" title="{$help_title}"/></a></td>

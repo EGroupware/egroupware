@@ -50,7 +50,9 @@
 									<td width="218" height="33" class="top_top"><img src="{$logo_img}" alt="phpGroupWare" title="phpGroupWare"/></td>
 									<td width="100%" valign="bottom" class="top_top"> </td>
 									<td valign="bottom" width="56" class="top"><a href="{$home_link}"><img src="{$home_img" width="56" height="23" border="0" alt="{$home_title}" title="{$home_title}"/></a></td>
-									<td valign="bottom" width="85" class="top"><a href="{$prefs_link}"><img src="{$prefs_img}" width="85" height="23" border="0" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+									<xsl:if test="$prefs_link != ''">
+										<td valign="bottom" width="85" class="top"><a href="{$prefs_link}"><img src="{$prefs_img}" width="85" height="23" border="0" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+									</xsl:if>
 									<td valign="bottom" width="56" class="top"><a href="{$logout_link}"><img src="{$logout_img}" width="56" height="23" border="0" alt="{$logout_title}" title="{$logout_title}"/></a></td>
 									<td valign="bottom" width="39" class="top"><a href="{$about_link}"><img src="{$about_img}" width="39" height="23" border="0" alt="{$about_title}" title="{$about_title}"/></a></td>
 									<td valign="bottom" width="39" class="top"><a href="{$help_link}" target="_blank"><img src="{$help_img}" width="39" height="23" border="0" alt="{$help_title}" title="{$help_title}"/></a></td>

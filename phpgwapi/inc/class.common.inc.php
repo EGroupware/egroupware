@@ -1346,13 +1346,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$GLOBALS['phpgw_info']['navbar']['home']['icon']		= $this->image('phpgwapi',Array('home','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['home']['icon_hover']	= $this->image_on('phpgwapi',Array('home','nonav'),'-over');
 
-			reset($GLOBALS['phpgw_info']['user']['apps']);
-			/* ksort($GLOBALS['phpgw_info']['user']['apps']); */
-
-			if(is_array($GLOBALS['phpgw_info']['user']['apps']['admin']))
+			list($first) = each($GLOBALS['phpgw_info']['user']['apps']);
+			if(is_array($GLOBALS['phpgw_info']['user']['apps']['admin']) && $first != 'admin')
 			{
 				$newarray['admin'] = $GLOBALS['phpgw_info']['user']['apps']['admin'];
-				while(list($index,$value) = each($GLOBALS['phpgw_info']['user']['apps']))
+				foreach($GLOBALS['phpgw_info']['user']['apps'] as $index => $value)
 				{
 					if($index != 'admin')
 					{
@@ -1375,14 +1373,14 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$navbar = False;
 			}
 
-			while (list($app,$data) = each($GLOBALS['phpgw_info']['user']['apps']))
+			foreach($GLOBALS['phpgw_info']['user']['apps'] as $app => $data)
 			{
 				if (is_long($app))
 				{
 					continue;
 				}
 
-				if ($GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
+				if ($app == 'preferences' || $GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
 				{
 					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= $data['title'];
 					$GLOBALS['phpgw_info']['navbar'][$app]['url']	= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
@@ -1402,23 +1400,26 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			/* apps for the top menu */
-			$GLOBALS['phpgw_info']['navbar']['preferences']['title']		= lang('preferences');
-			$GLOBALS['phpgw_info']['navbar']['preferences']['url']			= $GLOBALS['phpgw']->link('/preferences/index.php');
-			$GLOBALS['phpgw_info']['navbar']['preferences']['icon']			= $this->image('preferences',Array('navbar','nonav'));
-			$GLOBALS['phpgw_info']['navbar']['preferences']['icon_hover']	= $this->image_on('preferences',Array('navbar','nonav'),'-over');
-
 			$GLOBALS['phpgw_info']['navbar']['help']['title']				= lang('manual');
 			$GLOBALS['phpgw_info']['navbar']['help']['url']					= $GLOBALS['phpgw']->link('/help.php');
 			$GLOBALS['phpgw_info']['navbar']['help']['icon']				= $this->image('phpgwapi',Array('help','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['help']['icon_hover']			= $this->image_on('phpgwapi',Array('help','nonav'),'-over');
 
-			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home') //|| $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
+			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home')
 			{
-				$app = 'phpGroupWare';
+				$app = $app_title = 'phpGroupWare';
 			}
 			else
 			{
 				$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				$app_title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
+			}
+
+			if ($GLOBALS['phpgw_info']['user']['apps']['preferences'])	// preferences last
+			{
+				$prefs = $GLOBALS['phpgw_info']['navbar']['preferences'];
+				unset($GLOBALS['phpgw_info']['navbar']['preferences']);
+				$GLOBALS['phpgw_info']['navbar']['preferences'] = $prefs;
 			}
 
 			/* We handle this here becuase its special */

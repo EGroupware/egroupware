@@ -80,7 +80,9 @@
 										<table cellpadding="0" cellspacing="0">
 											<tr class="top_bottom">
 												<td><a href="{$home_link}" onMouseOver="nine.src='{$home_img_hover}'" onMouseOut="nine.src='{$home_img}'"><img src="{$home_img}" border="0" name="nine" alt="{$home_title}" title="{$home_title}"/></a></td>
-												<td><a href="{$prefs_link}" onMouseOver="ten.src='{$prefs_img_hover}'" onMouseOut="ten.src='{$prefs_img}'"><img src="{$prefs_img}" border="0" name="ten" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+												<xsl:if test="$prefs_link != ''">
+													<td><a href="{$prefs_link}" onMouseOver="ten.src='{$prefs_img_hover}'" onMouseOut="ten.src='{$prefs_img}'"><img src="{$prefs_img}" border="0" name="ten" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+												</xsl:if>
 												<td><a href="{$logout_link}" onMouseOver="eleven.src='{$logout_img_hover}'" onMouseOut="eleven.src='{$logout_img}'"><img src="{$logout_img}" border="0" name="eleven" alt="{$logout_title}" title="{$logout_title}"/></a></td>
 												<td><a href="{$about_link}" onMouseOver="about.src='{$about_img_hover}'" onMouseOut="about.src='{$about_img}'"><img src="{$about_img}" border="0" name="about" alt="{$about_title}" title="{$about_title}"/></a></td>
 												<td><a href="{$help_link}" onMouseOver="help.src='{$help_img_hover}'" onMouseOut="help.src='{$help_img}'" target="_blank"><img src="{$help_img}" border="0" name="help" alt="{$help_title}" title="{$help_title}"/></a></td>

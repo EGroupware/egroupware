@@ -60,7 +60,9 @@
 							<table cellpadding="2" cellspacing="2">
 								<tr class="top_bottom">
 									<td class="top_menu"><a href="{$home_link}" onMouseOver="window.status='{$home_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_home}">[<xsl:value-of select="home_title"/>]</a></td>
-									<td class="top_menu"><a href="{$prefs_link}" onMouseOver="window.status='{$prefs_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_prefs}">[<xsl:value-of select="prefs_title"/>]</a></td>
+									<xsl:if test="$prefs_link != ''">
+										<td class="top_menu"><a href="{$prefs_link}" onMouseOver="window.status='{$prefs_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_prefs}">[<xsl:value-of select="prefs_title"/>]</a></td>
+									</xsl:if>
 									<td class="top_menu"><a href="{$logout_link}" onMouseOver="window.status='{$logout_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css}">[<xsl:value-of select="logout_title"/>]</a></td>
 									<td class="top_menu"><a href="{$about_link}" onMouseOver="window.status='{$about_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_about}">[<xsl:value-of select="about_img"/>]</a></td>
 									<td class="top_menu"><a href="{$help_link}" onMouseOver="window.status='{$help_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_help}" target="_blank">[<xsl:value-of select="help_img"/>]</a></td>

@@ -56,7 +56,9 @@
 										<table cellspacing="0" cellpadding="0" border="0">
 											<tr>
 												<td><a href="{$home_link}"><img src="{$home_img}" border="0" alt="{$home_title}" title="{$home_title}"/></a></td>
-												<td><a href="{$prefs_link}"><img src="{$prefs_img}" border="0" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+												<xsl:if test="$prefs_link != ''">
+													<td><a href="{$prefs_link}"><img src="{$prefs_img}" border="0" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+												</xsl:if>
 												<td><a href="{$logout_link}"><img src="{$logout_img}" border="0" alt="{$logout_title}" title="{$logout_title}"/></a></td>
 												<td><a href="{$about_link}"><img src="{$about_img}" border="0" alt="{$about_title}" title="{$about_title}"/></a></td>
 												<td><a href="{$help_link}" target="_blank"><img src="{$help_img}" border="0" alt="{$help_title}" title="{$help_title}"/></a></td>			
