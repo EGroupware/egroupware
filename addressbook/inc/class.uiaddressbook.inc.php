@@ -240,12 +240,13 @@
 			/* Setup query for 1st char of fullname, company, lastname using user lang */
 			if(lang('alphabet') == 'alphabet*')
 			{
-				$aar = array('a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z');
+				$chars = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
 			}
 			else
 			{
-				$aar = explode(',',lang('alphabet'));
+				$chars = lang('alphabet');
 			}
+			$aar = explode(',',$chars);
 			$aar[] = 'all';
 			foreach($aar as $char)
 			{
