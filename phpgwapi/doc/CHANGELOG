@@ -9,6 +9,8 @@
 	- Admins can now force a default app
 	- Added global option to disable checking the IP address on sessions, usefull for those
 		behind load balanced proxys.
+	- Merged patch for eventlog, this will show debugging info and warnings to admins.
+		Thanks j3rry
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
