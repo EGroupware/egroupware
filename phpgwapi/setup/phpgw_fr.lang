@@ -149,8 +149,6 @@ group public	all	fr	Publique par groupe
 groups	all	fr	Groupes
 groupsfile_perm_error	all	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/groups.<BR> Sur un system *nix tappez: chmod 770
 group_files	all	fr	Fichiers de groupe
-headline sites	all	fr	Sites d'Headline
-headlines	all	fr	Headlines
 help	all	fr	Aide
 high	all	fr	Haut
 home	all	fr	Home
@@ -260,7 +258,6 @@ printer friendly	all	fr	Version imprimable
 priority	all	fr	Priorit&eacute;
 private	all	fr	Priv&eacute;
 private_files	all	fr	Fichiers priv&eacutes;s
-project description	all	fr	Descripition du projet
 re-edit event	all	fr	Re-Editer L'Evenement
 re-enter password	all	fr	Re-saisissez le mot de passe
 re-enter your password	all	fr	Re-rentrer votre mot de passe

@@ -9,7 +9,6 @@ note: this feature does *not* change your email password. this will need to be d
 please, select a new theme	preferences	no	Vennligst velg et nytt tema
 re-enter your password	preferences	no	Skriv inn ditt passord igjen
 select different theme	preferences	no	Velg annet tema
-select headline news sites	preferences	no	Velg Headline News sites
 show birthday reminders on main screen	preferences	no	Vis fødselsdags påminnere på hovedskjerm
 show current users on navigation bar	preferences	no	Vis current brukere i navigation bar
 show high priority events on main screen	preferences	no	Vis høyprioritets events på hovedskjermen

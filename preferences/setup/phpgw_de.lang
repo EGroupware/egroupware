@@ -1,15 +1,12 @@
-bookmark categorys	preferences	de	Lesezeichen Kategorien
-bookmark sub-categorys	preferences	de	Lesezeichen Sub-Kategorien
-bookmark preferences	preferences	de	Lesezeichen Einstellungen
 change your password 	preferences	de	Passwort ändern
 change your profile	preferences	de	Profil ändern
 change your settings	preferences	de	Einstellungen ändern
 date format	preferences	de	Datumsformat
 default application	preferences	de	Standard-Anwendung
+do you also want to delete all subcategories ?	preferences	de	Wollen sie auch alle Unterkategorien l&ouml;schen ?
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 enter your new password	preferences	de	Neues Passwort eingeben
 grant access	preferences	de	Zugriff gew&auml;hren
-grant bookmark access	preferences	de	Berechtigungen für Lesezeichen Zugriffe
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
@@ -19,7 +16,6 @@ note: this feature does *not* change your email password. this will need to be d
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
 re-enter your password	preferences	de	Neues Passwort wiederholen
 select different theme	preferences	de	anderes Schema wählen
-select headlines to display	preferences	de	Anzuzeigende Schlagzeilen auswählen
 show current users on navigation bar	preferences	de	Anzahl gegenwärtiger Benutzer in der Navigationsleiste anzeigen
 show high priority events on main screen	preferences	de	Ereignisse mit hoher Priorität auf der Startseite anzeigen
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
@@ -28,5 +24,4 @@ text only	preferences	de	nur Text
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
 this server is located in the x timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 time format	preferences	de	Zeitformat
-todo categories	preferences	de	Kategorien editieren
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben

@@ -63,6 +63,7 @@ delete	common	en	Delete
 description	common	en	Description
 domestic	common	en	Domestic
 done	common	en	Done
+do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 edit	common	en	Edit
 edit category	common	en	Edit Category
 edit categories	common	en	Edit Categories
@@ -103,8 +104,6 @@ group has been deleted	common	en	Group has been deleted
 group has been updated	common	en	Group has been updated
 group public	common	en	Group Public
 groups	common	en	Groups
-headline preferences	common	en	Headline preferences
-headlines	common	en	Headlines
 help	common	en	Help
 high	common	en	High
 home	common	en	Home

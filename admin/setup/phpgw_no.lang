@@ -11,7 +11,6 @@ create group	admin	no	Lag Gruppe
 disabled	admin	no	Deaktivert
 display	admin	no	Vis
 group name	admin	no	Gruppe Navn
-headline sites	admin	no	Headline Siter
 idle	admin	no	idle
 ip	admin	no	IP
 kill	admin	no	Avslutt

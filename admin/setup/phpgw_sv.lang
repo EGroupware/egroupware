@@ -23,7 +23,6 @@ edit group	admin	sv	Editera Grupp
 enabled	admin	sv	Aktiv
 enabled - hidden from navbar	admin	sv	Aktiv - Gömd på navbar
 group name	admin	sv	Grupp Namn
-headline sites	admin	sv	Headline Sites
 idle	admin	sv	idle
 installed applications	admin	sv	Installerade applicationer
 ip	admin	sv	IP

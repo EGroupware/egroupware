@@ -63,9 +63,7 @@ user groups	admin	hu	Felhasználói csoportok
 view access log	admin	hu	Elérési napló megtekintése
 view sessions	admin	hu	Kapcsolatok megtekintése
 you must add at least 1 permission to this account	admin	hu	Legalább egy jogosultságot meg kell adni a belépési joghoz
-you must enter a base url	admin	hu	Meg kell adni az alap url-t
 you must enter a display	admin	hu	Meg kell adni egy megjelenítõt
-you must enter a news url	admin	hu	Meg kell adni egy news url-t
 you must enter a password	admin	hu	Kötelezõ jelszót megadni
 you must enter an application name and title.	admin	hu	Kötelezõ megadni az alkalmazás nevét és címét!
 you must enter the number of listings display	admin	hu	You must enter the number of listings display

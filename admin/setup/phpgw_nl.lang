@@ -21,7 +21,6 @@ edit group	admin	nl	Groep bewerken
 enabled	admin	nl	Ingeschakeld
 enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
 group name	admin	nl	Groepsnaam
-headline sites	admin	nl	Krantekoppen Sites
 idle	admin	nl	inactief
 installed applications	admin	nl	Geinstalleerde toepassingen
 ip	admin	nl	IP
@@ -64,9 +63,6 @@ user profiles	admin	nl	Gebruikersprofielen
 view access log	admin	nl	Toegangslog bekijken
 view sessions	admin	nl	Sessies bekijken
 you must add at least 1 permission to this account	admin	nl	U moet tenminste 1 recht toekennen aan deze gebruiker
-you must enter a base url	admin	nl	U moet een basis-url invoeren
-you must enter a display	admin	nl	U moet een weergave invoeren
-you must enter a news url	admin	nl	U moet een nieuws-url invoeren
 you must enter a password	admin	nl	U moet een wachtwoord invoeren
 you must enter an application name and title.	admin	nl	U moet een toepassingsnaam en -titel invoeren
 you must enter the number of listings display	admin	nl	U moet het aantal weer te geven lijsten invoeren

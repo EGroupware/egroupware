@@ -10,9 +10,7 @@ applications	admin	da	Applikationer
 are you sure you want to delete this account ?	admin	da	Vil Du virkelig slette denne bruger?
 are you sure you want to delete this application ?	admin	da	Vil Du virkelig slette denne applikation?
 are you sure you want to delete this group ?	admin	da	Vil Du virkelig slette denne gruppe?
-are you sure you want to delete this news site ?	admin	da	Vil Du virkelig slette denne nyhedsside?
 are you sure you want to kill this session ?	admin	da	Vil Du virkelig slette denne session?
-base url	admin	da	Base-url
 create group	admin	da	Opret gruppe
 disabled	admin	da	Inaktiveret
 display	admin	da	Visning
@@ -21,7 +19,6 @@ edit group	admin	da	Redigér gruppe
 enabled	admin	da	Aktiveret
 enabled - hidden from navbar	admin	da	Aktiveret - skjult fra navigationsbjælken
 group name	admin	da	Gruppenavn
-headline sites	admin	da	Overskrift sites
 idle	admin	da	Inaktiv
 installed applications	admin	da	Installerede applikationer
 ip	admin	da	IP
@@ -29,16 +26,12 @@ kill	admin	da	Fjern
 last time read	admin	da	Sidst læst
 last x logins	admin	da	Sidste %1 log ind
 list of current users	admin	da	Liste over nuværende brugere
-listings displayed	admin	da	Viste lister
 login time	admin	da	Log ind tid
 loginid	admin	da	Login ID
 manager	admin	da	Manager
-minutes between reloads	admin	da	Minutter mellem opdateringer
 network news	admin	da	Netværk nyheder
 new group name	admin	da	Nyt gruppe navn
 new password [ leave blank for no change ]	admin	da	Nyt password [efterlad tom for ikke at ændre]
-news file	admin	da	Nyheds fil
-news type	admin	da	Nyheds type
 percent of users that logged out	admin	da	Procent af brugere som er logget ud
 permissions	admin	da	Rettigheder
 permissions this group has	admin	da	Denne gruppes rettigheder
@@ -64,9 +57,6 @@ user profiles	admin	da	Bruger profiler
 view access log	admin	da	Se adgangs log
 view sessions	admin	da	Se sessioner
 you must add at least 1 permission to this account	admin	da	Du skal angive mindst 1 rettighed til denne bruger
-you must enter a base url	admin	da	Du skal angive en basis-url
-you must enter a display	admin	da	Du skal angive en visning
-you must enter a news url	admin	da	Du skal angive en nyheds-url
 you must enter a password	admin	da	Du skal angive et password
 you must enter an application name and title.	admin	da	Du skal angive en applikations navn og titel
 you must enter the number of listings display	admin	da	Du må angive antallet af linier der skal vises

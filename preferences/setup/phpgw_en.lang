@@ -3,6 +3,7 @@ change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
 date format	preferences	en	Date format
 default application	preferences	en	Default application
+do you also want to delete all subcategories ?	preferences	en	Do you also want to delete all subcategories ?
 edit custom fields	preferences	en	edit custom fields
 enter your new password	preferences	en	Enter your new password
 grant access	preferences	en	Grant access
@@ -23,6 +24,4 @@ text only	preferences	en	Text only
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
 this server is located in the x timezone	preferences	en	 This server is located in the %1 timezone
 time format	preferences	en	Time format
-weather center	preferences	en	Weather Center
-weather	preferences	en	Weather
 your current theme is: x	preferences	en	</b>

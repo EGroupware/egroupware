@@ -13,7 +13,8 @@
 
 	if (! $cat_id)
 	{
-		Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+		Header('Location: ' . $phpgw->link('/preferences/categories.php','cats_app=' . $cats_app . '&extra=' . $extra . '&cats_level=' . $cats_level
+										. '&global_cats=' . $global_cats));
 	}
 
 	if ($confirm)
@@ -41,7 +42,8 @@
 		{
 			$c->delete($cat_id);
 		}
-		Header('Location: ' . $phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+		Header('Location: ' . $phpgw->link('/preferences/categories.php','cats_app=' . $cats_app . '&extra=' . $extra . '&cats_level=' . $cats_level
+										. '&global_cats=' . $global_cats));
 	}
 	else
 	{
@@ -74,14 +76,16 @@
 			$t->set_var('subs', '');
 		}
 
-		$t->set_var('nolink',$phpgw->link('/preferences/categories.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+		$t->set_var('nolink',$phpgw->link('/preferences/categories.php','cat_id=' . $cat_id . '&cats_app=' . $cats_app . '&extra=' . $extra . '&cats_level='
+										. $cats_level . '&global_cats=' . $global_cats));
 		$t->set_var('lang_no',lang('No'));
 
-		$t->set_var('action_url',$phpgw->link('/preferences/deletecategory.php',"cat_id=$cat_id$cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+		$t->set_var('action_url',$phpgw->link('/preferences/deletecategory.php','cat_id=' . $cat_id . '&cats_app=' . $cats_app . '&extra=' . $extra
+											. '&cats_level=' . $cats_level . '&global_cats=' . $global_cats));
 		$t->set_var('lang_yes',lang('Yes'));
 
 		$t->pparse('out','category_delete');
 	}
-    
+
 	$phpgw->common->phpgw_footer();
 ?>

@@ -21,7 +21,6 @@ edit group	admin	es	Editar Grupo
 enabled	admin	es	Habilitado
 enabled - hidden from navbar	admin	es	Habilitado - Esconder es la Barra
 group name	admin	es	Nombre Grupo
-headline sites	admin	es	Sitios encabezados de noticias
 idle	admin	es	idle
 installed applications	admin	es	Aplicaciones Instaladas
 ip	admin	es	IP
@@ -64,7 +63,6 @@ view access log	admin	es	Ver log de acceso
 view sessions	admin	es	Ver sesiones
 you must add at least 1 permission to this account	admin	es	Debe agregar por lo menos 1 permiso para esta cuenta.
 you must enter a base url	admin	es	Debe entrar una dirección url base
-you must enter a display	admin	es	Debe entrar un display
 you must enter a news url	admin	es	Debe entrar una dirección url de noticias
 you must enter a password	admin	es	Debe entrar una contraseña
 you must enter an application name and title.	admin	es	Debe entrar un nombre y titulo para la aplicación.
@@ -72,8 +70,6 @@ you must enter the number of listings display	admin	es	Debe entrar el numero de 
 you must enter the number of minutes between reload	admin	es	Debe entrar el numero de minutos entre recargas
 you must select a file type	admin	es	Debe seleccionar un tipo de archivo
 change main screen message	admin	es	Cambiar mensaje de la pantalla principal
-edit headline sites	admin	es	Editar los sitios de encabezados
-edit headlines shown by default	admin	es	Editar los encabezados mostrados por defecto
 notes	admin	es	Notas
 weather	admin	es	Tiempo Metereológico
 manual	admin	es	Manual

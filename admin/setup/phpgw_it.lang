@@ -94,12 +94,8 @@ user accounts	admin	it	Account utenti
 user groups	admin	it	Gruppi utenti
 view access log	admin	it	Visualizza elenco collegamenti
 view sessions	admin	it	Visualizza sessioni
-weather center	admin	it	Centro Meteo
 you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
-you must enter a base url	admin	it	Devi inserire un url di base
-you must enter a display	admin	it	Dedi inserire un display
 you must enter an application name and title.	admin	it	Devi inserire un nome e un titolo per l'applicazione.
-you must enter a news url	admin	it	Devi inserire un url per le nesw
 you must enter the number of listings display	admin	it	Devi inserire il numero di righe da visualizzare
 you must enter the number of minutes between reload	admin	it	Devi inserire il numero di minuti fra i caricamenti
 you must select a file type	admin	it	Devi selezionare un tipo-file
