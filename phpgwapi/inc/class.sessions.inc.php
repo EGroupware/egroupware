@@ -372,7 +372,7 @@
 	#				$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
 					$data = addslashes(serialize($data));
 					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) "
-					. "VALUES ('".$this->sessionid."',".$this->account_id."','".$appname
+					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
 					. "','".$location."','".$data."')",__LINE__,__FILE__);
 				} else {
 	# 				some how the next line is not working correctly! knecke

@@ -49,7 +49,8 @@
 		function read_repository()
 		{
 			$this->db->lock("phpgw_preferences");
-			$this->db->query("SELECT preference_value FROM phpgw_preferences WHERE preference_owner='".$this->account_id."'",__LINE__,__FILE__);
+			//$this->db->query("SELECT preference_value FROM phpgw_preferences WHERE preference_owner='".$this->account_id."'",__LINE__,__FILE__);
+			$this->db->query("SELECT preference_value FROM phpgw_preferences WHERE preference_owner='4'",__LINE__,__FILE__);
 			$this->db->next_record();
 			$pref_info = $this->db->f("preference_value");
 			$this->data = Array();
