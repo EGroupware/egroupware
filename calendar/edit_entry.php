@@ -168,7 +168,7 @@
 	$p->parse('out','edit_entry_begin');
 
 // Brief Description
-	display_item(lang('Brief Description'),'<input name="title" size="25" value="'.$event->title.'">');
+	display_item(lang('Title'),'<input name="title" size="25" value="'.$event->title.'">');
 
 // Full Description
 	display_item(lang('Full Description'),'<textarea name="description" rows="5" cols="40" wrap="virtual">'.$event->description.'</textarea>');
@@ -239,6 +239,7 @@
 	$users = Array();
 	for($i=0;$i<count($accounts);$i++)
 	{
+		echo '<!-- account_id '.$accounts[$i].' should be valid -->'."\n";
 		if($accounts[$i] != $owner && !isset($users[$accounts[$i]]))
 		{
 			$users[$accounts[$i]] = $phpgw->common->grab_owner_name($accounts[$i]);
