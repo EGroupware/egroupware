@@ -16,7 +16,8 @@
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'disable_Template_class' => True,
 		'currentapp' => 'login',
-		'noheader'   => True
+		'noheader'   => True,
+		'disable_Template_class' => True
 	);
 
 	include('./header.inc.php');
