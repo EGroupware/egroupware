@@ -2174,8 +2174,8 @@
 	{
 		global $phpgw_info,$phpgw_setup;
 
-		$phpgw_setup->db->query("drop table profiles",__LINE__,__TABLE__);
-		$phpgw_setup->db->query("drop sequence profiles_con_seq",__LINE__,__TABLE__);
+		@$phpgw_setup->db->query("drop table profiles",__LINE__,__FILE__);
+		@$phpgw_setup->db->query("drop sequence profiles_con_seq",__LINE__,__FILE__);
 		
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.009';
 	}
