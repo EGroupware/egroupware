@@ -19,7 +19,7 @@
 		$GLOBALS['phpgw']->translation->add_app('infolog');
 
 		global $filter;
-		$filter = 'own+open+today';
+		$filter = 'own-open-today';
 		$infolog = CreateObject('infolog.uiinfolog');
 		$infolog->get_list(True);
 
