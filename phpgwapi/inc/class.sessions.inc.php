@@ -654,8 +654,8 @@
 			    $GLOBALS['phpgw_info']['server']['login_blocked_mail_time'] < time()-5*60)
 			{
 				// notify admin(s) via email
-				$from    = 'phpGroupWare@'.$GLOBALS['phpgw_info']['server']['mail_suffix'];
-				$subject = lang("phpGroupWare: login blocked for user '%1', IP %2",$login,$ip);
+				$from    = 'eGroupWare@'.$GLOBALS['phpgw_info']['server']['mail_suffix'];
+				$subject = lang("eGroupWare: login blocked for user '%1', IP %2",$login,$ip);
 				$body    = lang("Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4",$false_id,$login,$false_ip,$ip);
 				
 				if(!is_object($GLOBALS['phpgw']->send))
