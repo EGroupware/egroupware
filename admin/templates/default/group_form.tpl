@@ -4,12 +4,12 @@
     {hidden_vars}
     <tr>
      <td>{lang_group_name}</td>
-     <td><input name="n_group" value="{group_name_value}"></td>
+     <td><input name="account_name" value="{group_name_value}"></td>
     </tr>
 
     <tr>
      <td>{lang_include_user}</td>
-     <td><select name="n_users[]" multiple size="{select_size}">
+     <td><select name="account_user[]" multiple size="{select_size}">
           {user_list}
          </select>
      </td>

@@ -15,7 +15,7 @@
 		'Site Configuration'         => $phpgw->link('/admin/config.php','appname=admin'),
 		'Peer Servers'               => $phpgw->link('/admin/servers.php'),
 		'User Accounts'              => $phpgw->link('/index.php','menuaction=admin.uiaccounts.list_users'),
-		'User Groups'                => $phpgw->link('/admin/groups.php'),
+		'User Groups'                => $phpgw->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
 		'Applications'               => $phpgw->link('/admin/applications.php'),
 		'Global Categories'          => $phpgw->link('/admin/categories.php'),
 		'Change Main Screen Message' => $phpgw->link('/admin/mainscreen_message.php'),

@@ -12,7 +12,9 @@
 	class boaccounts
 	{
 		var $public_functions = array(
+			'add_group'	=> True,
 			'add_user'	=> True,
+			'delete_group'	=> True,
 			'delete_user'	=> True,
 			'edit_group'	=> True,
 			'edit_user'	=> True
@@ -28,6 +30,64 @@
 		function account_total($account_type,$query='')
 		{
 			return $this->so->account_total($account_type,$query);
+		}
+
+		function delete_group()
+		{
+			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'])
+			{
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+			
+			if($GLOBALS['HTTP_POST_VARS']['account_id'])
+			{
+				$account_id = intval($GLOBALS['HTTP_POST_VARS']['account_id']);
+				$group_name = $GLOBALS['phpgw']->accounts->id2name($account_id);
+
+				$GLOBALS['phpgw']->db->lock(
+					Array(
+						'phpgw_accounts',
+						'phpgw_acl'
+					)
+				);
+				
+				$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
+
+				@reset($old_group_list);
+				while($old_group_list && $id = each($old_group_list))
+				{
+					$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,intval($id[1]));
+				}
+
+				$GLOBALS['phpgw']->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id,__LINE__,__FILE__);
+				$GLOBALS['phpgw']->acl->delete_repository('%%','run',$account_id);
+
+				if (! @rmdir($GLOBALS['phpgw_info']['server']['files_dir'].SEP.'groups'.SEP.$group_name))
+				{
+					$cd = 38;
+				}
+				else
+				{
+					$cd = 32;
+				}
+
+				$GLOBALS['phpgw']->db->unlock();
+
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
+						Array(
+							'menuaction'	=> 'admin.uiaccounts.list_groups',
+							'cd'	=> $cd
+						)
+					)
+				);
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+			else
+			{
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
 		}
 
 		function delete_user()
@@ -82,6 +142,119 @@
 				);
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
+		}
+
+		function add_group()
+		{
+			$temp_users = ($GLOBALS['HTTP_POST_VARS']['account_user']?$GLOBALS['HTTP_POST_VARS']['account_user']:Array());
+			$account_user = Array();
+			@reset($temp_users);
+			while(list($key,$user_id) = each($temp_users))
+			{
+				$account_user[$user_id] = ' selected';
+			}
+			@reset($account_user);
+
+			$group_permissions = ($GLOBALS['HTTP_POST_VARS']['account_apps']?$GLOBALS['HTTP_POST_VARS']['account_apps']:Array());
+			$account_apps = Array();
+			@reset($group_permissions);
+			while(list($key,$value) = each($group_permissions))
+			{
+				if($value)
+				{
+					$account_apps[$key] = True;
+				}
+			}
+			@reset($account_apps);
+
+			$group_info = Array(
+				'account_id'	=> ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
+				'account_name'	=> ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
+				'account_user'	=> $account_user,
+				'account_apps'	=> $account_apps
+			);
+
+			$this->validate_group($group_info);
+
+			$GLOBALS['phpgw']->db->lock(
+				Array(
+					'phpgw_accounts',
+					'phpgw_nextid',
+					'phpgw_preferences',
+					'phpgw_sessions',
+					'phpgw_acl',
+					'phpgw_applications'
+				)
+			);
+
+			$group = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$account_info = array(
+				'account_type'      => 'g',
+				'account_lid'       => $group_info['account_name'],
+				'account_passwd'    => '',
+				'account_firstname' => $group_info['account_name'],
+				'account_lastname'  => 'Group',
+				'account_status'    => 'A',
+				'account_expires'   => -1
+//				'account_file_space' => $account_file_space_number . "-" . $account_file_space_type,
+			);
+			$group->create($account_info);
+			$group_info['account_id'] = $GLOBALS['phpgw']->accounts->name2id($group_info['account_name']);
+
+			$apps = CreateObject('phpgwapi.applications',intval($group_id));
+			$apps->update_data(Array());
+			reset($group_info['account_apps']);
+			while(list($app,$value) = each($group_info['account_apps']))
+			{
+				$apps->add($app);
+				$new_apps[] = $app;
+			}
+			$apps->save_repository();
+
+			$acl = CreateObject('phpgwapi.acl',$group_info['account_id']);
+			$acl->read_repository();
+
+			@reset($group_info['account_user']);
+			while(list($user_id,$dummy) = each($group_info['account_user']))
+			{
+				$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
+
+				$docommit = False;
+				$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$user_id);
+				$t = $GLOBALS['pref']->read_repository();
+				@reset($new_apps);
+				while(list($app_key,$app_name) = each($new_apps))
+				{
+					if (!$t[($app_name=='admin'?'common':$app_name)])
+					{
+						$GLOBALS['phpgw']->common->hook_single('add_def_pref', $app_name);
+						$docommit = True;
+					}
+				}
+				if ($docommit)
+				{
+					$GLOBALS['pref']->save_repository();
+				}
+			}
+			
+			$basedir = $phpgw_info['server']['files_dir'] . SEP . 'groups' . SEP;
+			$cd = 31;
+			umask(000);
+			if (! @mkdir ($basedir . $group_info['account_name'], 0707))
+			{
+				$cd = 37;
+			}
+
+			$GLOBALS['phpgw']->db->unlock();
+
+			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
+					Array(
+						'menuaction'	=> 'admin.uiaccounts.list_groups',
+						'cd'	=> $cd
+					)
+				)
+			);
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function add_user()
@@ -232,33 +405,36 @@
 
 		function edit_group()
 		{
-			$account_id = ($GLOBALS['HTTP_POST_VARS']['account_id']?$GLOBALS['HTTP_POST_VARS']['account_id']:0);
-			$group_name = ($GLOBALS['HTTP_POST_VARS']['n_group']?$GLOBALS['HTTP_POST_VARS']['n_group']:'');
-			$group_permissions = ($GLOBALS['HTTP_POST_VARS']['n_group_permissions']?$GLOBALS['HTTP_POST_VARS']['n_group_permissions']:Array());
-			$group_users = ($GLOBALS['HTTP_POST_VARS']['n_users']?$GLOBALS['HTTP_POST_VARS']['n_users']:Array());
-			
-			$group = CreateObject('phpgwapi.accounts',intval($account_id));
-			$group->read_repository();
-			$old_group_name = $group->id2name($account_id);
-
-			if($group_name != $old_group_name)
+			$temp_users = ($GLOBALS['HTTP_POST_VARS']['account_user']?$GLOBALS['HTTP_POST_VARS']['account_user']:Array());
+			$account_user = Array();
+			@reset($temp_users);
+			while(list($key,$user_id) = each($temp_users))
 			{
-				if ($group->exists($group_name))
+				$account_user[$user_id] = ' selected';
+			}
+			@reset($account_user);
+
+			$group_permissions = ($GLOBALS['HTTP_POST_VARS']['account_apps']?$GLOBALS['HTTP_POST_VARS']['account_apps']:Array());
+			$account_apps = Array();
+			@reset($group_permissions);
+			while(list($key,$value) = each($group_permissions))
+			{
+				if($value)
 				{
-					$error = lang('Sorry, that group name has already been taken.');
-					$ui = createobject('admin.uiaccounts');
-					$ui->edit_group($account_id,$errors);
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$account_apps[$key] = True;
 				}
 			}
+			@reset($account_apps);
 
-		/*
-			if (preg_match ("/\D/", $account_file_space_number))
-			{
-				$error = lang ('File space must be an integer');
-			}
-		*/
+			$group_info = Array(
+				'account_id'	=> ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
+				'account_name'	=> ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
+				'account_user'	=> $account_user,
+				'account_apps'	=> $account_apps
+			);
 
+			$this->validate_group($group_info);
+			
 			// Lock tables
 			$GLOBALS['phpgw']->db->lock(
 				Array(
@@ -272,74 +448,89 @@
 				)
 			);
 
+			$group = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$old_group_info = $group->read_repository();
+
 			// Set group apps
-			$apps = CreateObject('phpgwapi.applications',intval($GLOBALS['HTTP_POST_VARS']['account_id']));
+			$apps = CreateObject('phpgwapi.applications',$group_info['account_info']);
 			$apps_before = $apps->read_account_specific();
 			$apps->update_data(Array());
 			$new_apps = Array();
-			if(isset($group_permissions))
+			if(count($group_info['account_apps']))
 			{
-				reset($group_permissions);
-				while($app = each($group_permissions))
+				reset($group_info['account_apps']);
+				while(list($app,$value) = each($group_info['account_apps']))
 				{
-					if($app[1])
+					$apps->add($app);
+					if(!@$apps_before[$app] || @$apps_before == False)
 					{
-						$apps->add($app[0]);
-						if(!@$apps_before[$app[0]] || @$apps_before == False)
-						{
-							$new_apps[] = $app[0];
-						}
+						$new_apps[] = $app;
 					}
 				}
 			}
 			$apps->save_repository();
 
 			// Set new account_lid, if needed
-			if($old_group_name <> $group_name)
+			if($old_group_info['account_lid'] <> $group_info['account_name'])
 			{
-				$group->data['account_lid'] = $group_name;
+				$group->data['account_lid'] = $group_info['account_name'];
+				
+				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
+				if (! @rename($basedir . $old_group_info['account_lid'], $basedir . $group_info['account_name']))
+				{
+					$cd = 39;
+				}
+				else
+				{
+					$cd = 33;
+				}
+			}
+			else
+			{
+				$cd = 33;
 			}
 
 			// Set group acl
-			$acl = CreateObject('phpgwapi.acl',$account_id);
+			$acl = CreateObject('phpgwapi.acl',$group_info['account_id']);
 			$acl->read_repository();
-			$old_group_list = $acl->get_ids_for_location($account_id,1,'phpgw_group');
+			$old_group_list = $acl->get_ids_for_location($group_info['account_id'],1,'phpgw_group');
 			@reset($old_group_list);
-			while($old_group_list && $user_id = each($old_group_list))
+			while($old_group_list && list($key,$user_id) = each($old_group_list))
 			{
-				$acl->delete_repository('phpgw_group',$account_id,$user_id[1]);
+				$acl->delete_repository('phpgw_group',$account_id,$user_id);
+				if(!$group_info['account_user'][$user_id])
+				{
+					// If the user is logged in, it will force a refresh of the session_info
+					$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_action='' "
+						."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name($user_id)
+						. '@' . $GLOBALS['phpgw_info']['user']['domain'] . "'",__LINE__,__FILE__);
+
+				}
 			}
 
-			for ($i=0; $i<count($group_users);$i++)
+			@reset($group_info['account_user']);
+			while(list($user_id,$dummy) = each($group_info['account_user']))
 			{
-				$acl->add_repository('phpgw_group',$account_id,$group_users[$i],1);
-
+				$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
+				
 				// If the user is logged in, it will force a refresh of the session_info
 				$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_action='' "
-					."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name(intval($group_users[$i]))
+					."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name($user_id)
 					. '@' . $GLOBALS['phpgw_info']['user']['domain'] . "'",__LINE__,__FILE__);
-
+					
 				// The following sets any default preferences needed for new applications..
 				// This is smart enough to know if previous preferences were selected, use them.
 				$docommit = False;
 				if($new_apps)
 				{
-					$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',intval($group_users[$i]));
+					$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$user_id);
 					$t = $GLOBALS['pref']->read_repository();
-
-					for ($j=1;$j<count($new_apps) - 1;$j++)
+					@reset($new_apps);
+					while(list($app_key,$app_name) = each($new_apps))
 					{
-						if($new_apps[$j]=='admin')
+						if (!$t[($app_name=='admin'?'common':$app_name)])
 						{
-							$check = 'common';
-						}
-						else
-						{
-							$check = $new_apps[$j];
-						}
-						if (!$t[$check])
-						{
-							$GLOBALS['phpgw']->common->hook_single('add_def_pref', $new_apps[$j]);
+							$GLOBALS['phpgw']->common->hook_single('add_def_pref', $app_name);
 							$docommit = True;
 						}
 					}
@@ -360,23 +551,6 @@
 			$group->data['file_space'] = $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'];
 			$group->save_repository();
 		*/
-
-			if ($old_group_name <> $group_name)
-			{
-				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
-				if (! @rename($basedir . $old_group_name, $basedir . $group_name))
-				{
-					$cd = 39;
-				}
-				else
-				{
-					$cd = 33;
-				}
-			}
-			else
-			{
-				$cd = 33;
-			}
 
 			$GLOBALS['phpgw']->db->unlock();
 
@@ -448,6 +622,40 @@
 					$ui = createobject('admin.uiaccounts');
 					$ui->create_edit_user($userData['account_id'],$userData,$errors);
 				}
+			}
+		}
+
+		function validate_group($group_info)
+		{
+			$errors = Array();
+			
+			$group = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$group->read_repository();
+
+			if(!$group_info['account_name'])
+			{
+				$errors[] = lang('You must enter a group name.');
+			}
+
+			if($group_info['account_name'] != $group->id2name($group_info['account_id']))
+			{
+				if ($group->exists($group_info['account_name']))
+				{
+					$errors[] = lang('Sorry, that group name has already been taken.');
+				}
+			}
+
+		/*
+			if (preg_match ("/\D/", $account_file_space_number))
+			{
+				$errors[] = lang ('File space must be an integer');
+			}
+		*/
+			if(count($errors))
+			{
+				$ui = createobject('admin.uiaccounts');
+				$ui->create_edit_group($group_info,$errors);
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 		}
 
@@ -566,9 +774,11 @@
 			$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
 			$allGroups = $account->get_list('groups');
 
-			if ($_userData['account_groups']) {
+			if ($_userData['account_groups'])
+			{
 				reset($_userData['account_groups']);
-				while (list($key,$value) = each($_userData['account_groups'])) {
+				while (list($key,$value) = each($_userData['account_groups']))
+				{
 					$newGroups[$value] = $value;
 				}
 			}
@@ -591,6 +801,32 @@
 				}
 			}
 			$GLOBALS['phpgw']->session->delete_cache(intval($_userData['account_id']));
+		}
+
+		function load_group_users($account_id)
+		{
+			$group_user = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
+			if (!$group_user) { $group_user = array(); }
+			$account_user = Array();
+			while (list($key,$user) = each($group_user))
+			{
+				$account_user[$user] = ' selected';
+			}
+			@reset($account_user);
+			return $account_user;
+		}
+
+		function load_group_apps($account_id)
+		{
+			$apps = CreateObject('phpgwapi.applications',intval($account_id));
+			$app_list = $apps->read_account_specific();
+			$account_apps = Array();
+			while(list($key,$app) = each($app_list))
+			{
+				$account_apps[$app['name']] = True;
+			}
+			@reset($account_apps);
+			return $account_apps;
 		}
 	}
 ?>

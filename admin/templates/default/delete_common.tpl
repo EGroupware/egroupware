@@ -1,14 +1,14 @@
 <!-- BEGIN form -->
  <center>
-  <table border="0" with="65%">
+  <table align="center" border="0" width="55%" cols="2">
+   {messages}
    <tr>
-    <td colspan="2" align="center">
-     {messages}
+    <td width="50%" align="center">
+     {no}
     </td>
-   </tr>
-   <tr>
-    <td align="center">{no}</td>
-    <td align="center">{yes}</td>
+    <td width="50%" align="center">
+     {yes}
+    </td>
    </tr>
   </table>
  </center>
