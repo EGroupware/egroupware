@@ -1,0 +1,95 @@
+<?php
+// This file defines a set of functions and an associative array.
+// The key of the array corresponds to a header in the source
+// export file and the value of the array item will be used in
+// the creation of the output file.
+//
+// The array need not be in any order and any fields not defined will
+// not be transferred.  If the val='+', the value will be appended to
+// the previous field and any text after the '+' will be appended 
+// before the value.  For example, the following would add a comma and
+// a space between LastName and FirstName and store it in FullName:
+//
+//	array("LastName" => "FullName","FirstName" => "+, ");
+//
+// Also start with a '#' symbol and a comma separated list will be
+// turned into a number of the same entries.
+
+	class export_conv
+	{
+		var $currentrecord = array(); //used for buffering to allow uid lines to go first
+		var $id;
+		//list of all id's
+		var $ids = array();
+
+		var $export= array(
+			"title"               => "title", 
+			"n_given"             => "givenname",
+			"n_family"            => "sn",
+			"fn"                  => "cn",
+			"org_name"            => "o",
+			"org_unit"            => "ou",
+			"adr_one_street"      => "streetaddress",
+			"adr_one_locality"    => "locality",
+			"adr_one_state"       => "st",
+			"adr_one_postalcode"  => "postalcode",
+			"adr_one_countryname" => "countryname",
+			"tel_work"            => "telephonenumber",
+			"tel_home"            => "homephone",
+			"tel_fax"             => "facsimiletelephonenumber",
+			"ophone"              => "xmozillaanyphone",
+			"tel_cell"            => "cellphone",
+			"note"                => "description",
+			"tel_pager"           => "pagerphone",
+			"email"               => "mail",
+			"url"                 => "homeurl",
+		);
+
+		// This will store the contacts object
+		var $contacts = '';
+
+		// Read full list of user's contacts only to get id's for each
+		function export_start_file($buffer) {
+			$this->contacts = CreateObject('phpgwapi.contacts');
+			$tmp = $this->contacts->read(0,'');
+			for ($i=0;$i<count($tmp);$i++) {
+				$this->ids[$i] = $tmp[$i]['id'];
+			}
+			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
+			// $buffer is still empty
+			return $buffer;
+		}
+
+		// Read each entry
+		function export_start_record($buffer) {
+			$top = $this->contacts->read_single_entry($this->id,$this->qfields);
+			$this->currentrecord = $top[0];
+			return $buffer;
+		}
+
+		// Read each attribute, populate buffer
+		// name/value are the fields from the export array above
+		function export_new_attrib($buffer,$name,$value) {
+			if ($this->export[$name]) {
+				$buffer[$this->id][$this->export[$name]] = $value;
+				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
+			}
+			return $buffer;
+		}
+
+		// Tack on some extra values
+		function export_end_record($buffer) {
+			$buffer[$this->id]["dn"]                          = 'dn: cn='.$buffer[$this->id]["cn"].',mail='.$buffer[$this->id]["mail"];
+			$buffer[$this->id]["xmozillauseconferenceserver"] = "";
+			$buffer[$this->id]["xmozillanickname"]            = "";
+			$buffer[$this->id]["xmozillausehtmlmail"]         = "";
+			$buffer[$this->id]["objectClass"]                 = "person";
+			//echo '<br>'.$this->id.' - '.$buffer[$this->id]['dn'];
+			return $buffer;
+		}
+
+		function export_end_file($buffer) {
+			return $buffer;
+		}
+	}
+?>
