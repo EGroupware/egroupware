@@ -905,7 +905,6 @@
 				$i++;
 			}
 			$val = implode('&',$vars);
-			echo $val;
 			return $val;
 		}
 
