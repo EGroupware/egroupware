@@ -13,20 +13,8 @@
 <!-- BEGIN body -->
 
    <tr class="row_on">
-    <td colspan="2">&nbsp;</td>
-   </tr>
-   <tr class="row_off">
     <td>{lang_Enter_the_title_for_your_site}.</td>
     <td><input name="newsettings[site_title]" value="{value_site_title}"></td>
-   </tr>
-
-   <tr class="row_on">
-    <td>{lang_Country_Selection} ({lang_Text_Entry}/{lang_SelectBox}):</td>
-    <td>
-     <select name="newsettings[countrylist]">
-{hook_country_set}
-     </select>
-    </td>
    </tr>
 
    <tr class="row_off">
