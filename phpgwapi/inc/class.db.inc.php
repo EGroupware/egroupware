@@ -399,14 +399,21 @@
 		/**
 		* Move to the next row in the results set
 		*
+		* Specifying a fetch_mode only works for newly fetched rows, the first row always gets fetched by query!!!
+		*
+		* @param int $fetch_mode ADODB_FETCH_BOTH = numerical+assoc keys (eGW default), ADODB_FETCH_ASSOC or ADODB_FETCH_NUM
 		* @return bool was another row found?
 		*/
-		function next_record()
+		function next_record($fetch_mode=ADODB_FETCH_BOTH)
 		{
 			if (!$this->Query_ID)
 			{
 				$this->halt('next_record called with no query pending.');
 				return 0;
+			}
+			if ($this->Link_ID->fetchMode != $fetch_mode)
+			{
+				$this->Link_ID->SetFetchMode($fetch_mode);
 			}
 			if ($this->Row)	// first row is already fetched
 			{
@@ -428,6 +435,32 @@
 					$this->Record[strtolower($column)] = $value;
 					// add a numeric version
 					$this->Record[] = $value;
+				}
+				if (!function_exists('array_change_key_case'))
+				{
+					define('CASE_LOWER',0);
+					define('CASE_UPPER',1);
+					function array_change_key_case($arr,$mode=CASE_LOWER)
+					{
+						foreach($arr as $key => $val)
+						{
+							$changed[$mode == CASE_LOWER ? strtolower($key) : strtoupper($key)] = $val;
+						}
+						return $changed;
+					}
+				}
+				switch($fetch_mode)
+				{
+					case ADODB_FETCH_ASSOC:
+						$this->Record = array_change_key_case($this->Record);
+						break;
+					case ADODB_FETCH_NUM:
+						$this->Record = array_values($this->Record);
+						break;
+					default:
+						$this->Record = array_change_key_case($this->Record);
+						$this->Record += array_values($this->Record);
+						break;
 				}
 			}
 			return True;
@@ -623,11 +656,12 @@
 		* Returns a query-result-row as an associative array (no numerical keys !!!)
 		*
 		* @param bool $do_next_record should next_record() be called or not (default not)
+		* @param string $strip string to strip of the column-name, default ''
 		* @return array/bool the associative array or False if no (more) result-row is availible
 		*/
-		function row($do_next_record=False)
+		function row($do_next_record=False,$strip='')
 		{
-			if ($do_next_record && !$this->next_record() || !is_array($this->Record))
+			if ($do_next_record && !$this->next_record(ADODB_FETCH_ASSOC) || !is_array($this->Record))
 			{
 				return False;
 			}
@@ -636,7 +670,7 @@
 			{
 				if (!is_numeric($column))
 				{
-					if ($this->Type == 'sapdb') $column = strtolower($column);
+					if ($strip) $column = str_replace($strip,'',$column);
 
 					$result[$column] = $value;
 				}
