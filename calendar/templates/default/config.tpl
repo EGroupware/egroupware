@@ -28,7 +28,7 @@
     <td>
      <select name="newsettings[holidays_url_path]">
       <option value="localhost"{selected_holidays_url_path_localhost}>localhost</option>
-      <option value="http://www.phpgroupware.org/cal"{selected_holidays_url_path_http://www.phpgroupware.org/cal}>www.phpgroupware.org</option>
+      <option value="http://www.egroupware.org/cal"{selected_holidays_url_path_http://www.egroupware.org/cal}>www.egroupware.org</option>
      </select>
     </td>
    </tr>

@@ -102,7 +102,7 @@
 			@set_time_limit(0);
 
 			// get the file that contains the calendar events for your locale
-			// "http://www.phpgroupware.org/headlines.rdf";
+			// "http://www.egroupware.org/headlines.rdf";
 			$network = CreateObject('phpgwapi.network');
 			if(isset($GLOBALS['phpgw_info']['server']['holidays_url_path']) && $GLOBALS['phpgw_info']['server']['holidays_url_path'] != 'localhost')
 			{
