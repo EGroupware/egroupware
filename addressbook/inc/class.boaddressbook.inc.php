@@ -95,7 +95,9 @@
 			{
 				$this->query  = $query;
 			}
-			if(isset($fcat_id) || $fcat_id == '0' || $fcat_id == 0) { $this->cat_id = $fcat_id; }
+
+			if(isset($fcat_id)) { $this->cat_id = $fcat_id; }
+			if($fcat_id == '0' || $fcat_id == 0 || $fcat_id == '') { $this->cat_id = 0; }
 			if(isset($sort))    { $this->sort   = $sort;   }
 			if(isset($order))   { $this->order  = $order;  }
 			if(isset($filter))  { $this->filter = $filter; }
