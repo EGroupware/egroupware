@@ -1277,11 +1277,11 @@
 
 		/*!
 		@function cp
-		@abstract copy of symlink a file
+		@abstract copy a file
 		@param $from from file/directory
 		@param $to to file/directory
 		@param $relatives Relativity array
-		@symlink boolean True/False
+		@symlink boolean True/False (only internal, use symlink function)
 		@result boolean True/False
 		*/
 		function cp ($from, $to, $relatives = '',$symlink=False)
@@ -1308,6 +1308,10 @@
 				if (!$this->acl_check ($t->fake_full_path, array ($t->mask), PHPGW_ACL_EDIT))
 				{
 					return False;
+				}
+				if ($cmd == 'symlink')
+				{
+					unlink($t->real_full_path);	// else symlink does not work
 				}
 			}
 			else
@@ -1431,6 +1435,8 @@
 		*/
 		function symlink($from,$to,$relatives = '')
 		{
+			if ($this->file_exists ($to, array ($relatives[1])))
+
 			return $this->cp ($from, $to, $relatives, True);
 		}
 
