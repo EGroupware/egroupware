@@ -310,15 +310,15 @@
 				$firstname = $phpgw_info['user']['firstname'];
 				$lastname  = $phpgw_info['user']['lastname'];
 			}
-    
-			if ($firstname)
-			{
-				$a[] = $firstname;
-			}
 
 			if ($lastname)
 			{
 				$a[] = $lastname;
+			}
+    
+			if ($firstname)
+			{
+				$a[] = $firstname;
 			}
 
 			return '&lt;' . $lid . '&gt; ' . implode(', ',$a);
