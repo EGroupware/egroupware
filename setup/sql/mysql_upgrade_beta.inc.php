@@ -1352,6 +1352,18 @@
         $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre20';
     }
 
+	$test[] = '0.9.10pre20';
+	function upgrade0_9_10pre20()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add column access char(7) after owner",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre21';
+	}
+
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
