@@ -1,18 +1,17 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Template class                                        *
-  * (C) Copyright 1999-2000 NetUSE GmbH Kristian Koehntopp                   *
-  * ------------------------------------------------------------------------ *
-  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-  * http://www.phpgroupware.org/                                             * 
-  * ------------------------------------------------------------------------ *
-  * This program is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published    *
-  * by the Free Software Foundation; either version 2.1 of the License, or   *
-  * any later version.                                                       *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare API - Template class                                        *
+	* (C) Copyright 1999-2000 NetUSE GmbH Kristian Koehntopp                   *
+	* ------------------------------------------------------------------------ *
+	* This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+	* http://www.phpgroupware.org/                                             * 
+	* ------------------------------------------------------------------------ *
+	* This program is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published    *
+	* by the Free Software Foundation; either version 2.1 of the License, or   *
+	* any later version.                                                       *
+	\**************************************************************************/
+	/* $Id$ */
 
 	class Template
 	{
@@ -26,7 +25,6 @@
 
 		/* relative filenames are relative to this pathname */
 		var $root = '';
-		var $oldroot = '';
 
 		/* $varkeys[key] = 'key'; $varvals[key] = 'value'; */
 		var $varkeys = array();
@@ -43,8 +41,7 @@
 
 		/* last error message is retained here */
 		var $last_error = '';
-		var $print = False;
-		
+
 		/***************************************************************************/
 		/* public: Constructor.
 		 * root:     template directory.
@@ -52,10 +49,6 @@
 		 */
 		function Template($root = '.', $unknowns = 'remove')
 		{
-			if(@isset($GLOBALS['phpgw_info']['flags']['printview']) && $GLOBALS['phpgw_info']['flags']['printview'] == True)
-			{
-				$this->print = True;
-			}
 			$this->set_root($root);
 			$this->set_unknowns($unknowns);
 		}
@@ -68,16 +61,10 @@
 			if (!is_dir($root))
 			{
 				$this->halt("set_root: $root is not a directory.");
-				return False;
+				return false;
 			}
-			$this->oldroot = $this->root;
 			$this->root = $root;
-			return True;
-		}
-
-		function reset_root()
-		{
-			$this->root = $this->oldroot;
+			return true;
 		}
 
 		/* public: set_unknowns(enum $unknowns)
@@ -103,7 +90,7 @@
 				if ($filename == '')
 				{
 					$this->halt("set_file: For handle $handle filename is empty.");
-					return False;
+					return false;
 				}
 				$this->file[$handle] = $this->filename($filename);
 			}
@@ -126,9 +113,8 @@
 			if (!$this->loadfile($parent))
 			{
 				$this->halt("subst: unable to load $parent.");
-				return False;
+				return false;
 			}
-
 			if ($name == '')
 			{
 				$name = $handle;
@@ -136,13 +122,9 @@
 			$str = $this->get_var($parent);
 			$reg = "/<!--\s+BEGIN $handle\s+-->(.*)\n\s*<!--\s+END $handle\s+-->/sm";
 			preg_match_all($reg, $str, $m);
-			$this->set_var($name, $m[1][0]);
-			// ralfbecker: readded for compatibility with old way to set blocks
-			$this->set_var($parent,preg_replace($reg,'{'.$name.'}',$str));
-			if ($name != $handle)
-			{
-				$this->set_var($handle, $m[1][0]);
-			}
+			$str = preg_replace($reg, '{' . "$name}", $str);
+			$this->set_var($handle, $m[1][0]);
+			$this->set_var($parent, $str);
 		}
 
 		/* public: set_var(array $values)
@@ -152,7 +134,7 @@
 		 * varname: name of a variable that is to be defined
 		 * value:   value of that variable
 		 */
-		function set_var($varname, $value = '', $append=False)
+		function set_var($varname, $value = '')
 		{
    			if ($varname == 'phpgw_body' && is_object($GLOBALS['phpgw']->xslttpl))
 			{
@@ -169,15 +151,7 @@
 						print "scalar: set *$varname* to *$value*<br>\n";
 					}
 					$this->varkeys[$varname] = $this->varname($varname);
-
-					if ($append)
-					{
-						$this->varvals[$varname] = $this->get_var($varname).$value;
-					}
-					else
-					{
-						$this->varvals[$varname] = $value;
-					}
+					$this->varvals[$varname] = $value;
 				}
 			}
 			else
@@ -192,16 +166,7 @@
 							print "array: set *$k* to *$v*<br>\n";
 						}
 						$this->varkeys[$k] = $this->varname($k);
-
-						if ($append)
-						{
-							$this->varvals[$k] = $this->get_var($k).$v;
-						}
-						else
-						{
-							$this->varvals[$k] = $v;
-						}
-
+						$this->varvals[$k] = $v;
 					}
 				}
 			}
@@ -215,7 +180,7 @@
 			if (!$this->loadfile($handle))
 			{
 				$this->halt("subst: unable to load $handle.");
-				return False;
+				return false;
 			}
 
 			$str = $this->get_var($handle);
@@ -233,7 +198,7 @@
 		function psubst($handle)
 		{
 			print $this->subst($handle);
-			return False;
+			return false;
 		}
 
 		/* public: parse(string $target, string $handle, boolean append)
@@ -242,12 +207,19 @@
 		 * handle: handle of template to substitute
 		 * append: append to target handle
 		 */
-		function parse($target, $handle, $append = False)
+		function parse($target, $handle, $append = false)
 		{
 			if (!is_array($handle))
 			{
 				$str = $this->subst($handle);
-				$this->set_var($target, $str, $append);
+				if ($append)
+				{
+					$this->set_var($target, $this->get_var($target) . $str);
+				}
+				else
+				{
+					$this->set_var($target, $str);
+				}
 			}
 			else
 			{
@@ -261,10 +233,10 @@
 			return $str;
 		}
 
-		function pparse($target, $handle, $append = False)
+		function pparse($target, $handle, $append = false)
 		{
 			print $this->parse($target, $handle, $append);
-			return False;
+			return false;
 		}
 
 		/* This is short for finish parse */
@@ -322,14 +294,14 @@
 			if (!$this->loadfile($handle))
 			{
 				$this->halt("get_undefined: unable to load $handle.");
-				return False;
+				return false;
 			}
 
 			preg_match_all("/\{([^}]+)\}/", $this->get_var($handle), $m);
 			$m = $m[1];
 			if (!is_array($m))
 			{
-				return False;
+				return false;
 			}
 			reset($m);
 			while(list($k, $v) = each($m))
@@ -346,7 +318,7 @@
 			}
 			else
 			{
-				return False;
+				return false;
 			}
 		}
 
@@ -366,11 +338,7 @@
 					$str = preg_replace('/{([^ \t\r\n}]+)}/', "<!-- Template $handle: Variable \\1 undefined -->", $str);
 					break;
 			}
-			/* If they want NOGIF policy, then I do a global replace */
-			if (@$GLOBALS['phpgw_info']['server']['image_type'] == 2)
-			{
-				$str = str_replace ('.gif','.png',$str);
-			}
+
 			return $str;
 		}
 
@@ -406,35 +374,16 @@
 				$new_filename = $filename;
 			}
 
-			if ($this->print && $time!=2 && $time!=4)
-			{
-				$new_filename = $new_filename.'_print';
-			}
-			
 			if (!file_exists($new_filename))
 			{
-				switch($time)
+				if($time==2)
 				{
-					case 2:
-						$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
-						$new_filename = $this->filename($filename,$new_root,3);
-						break;
-					case 3:
-						$new_filename = $this->filename($filename,$root,4);
-						break;
-					case 4:
-						$this->halt("filename: file $new_filename does not exist.");
-						break;
-					default:
-						if (!$this->print)
-						{
-							$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
-							$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,4);
-						}
-						else
-						{
-							$new_filename = $this->filename($filename,$root,2);
-						}
+					$this->halt("filename: file $new_filename does not exist.");
+				}
+				else
+				{
+					$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
+					$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
 				}
 			}
 			return $new_filename;
@@ -455,12 +404,12 @@
 		{
 			if (isset($this->varkeys[$handle]) and !empty($this->varvals[$handle]))
 			{
-				return True;
+				return true;
 			}
 			if (!isset($this->file[$handle]))
 			{
 				$this->halt("loadfile: $handle is not a valid handle.");
-				return False;
+				return false;
 			}
 			$filename = $this->file[$handle];
 
@@ -468,7 +417,7 @@
 			if (empty($str))
 			{
 				$this->halt("loadfile: While loading $handle, $filename does not exist or is empty.");
-				return False;
+				return false;
 			}
 
 			$this->set_var($handle, $str);
@@ -492,8 +441,6 @@
 			{
 				echo('<b>Halted.</b>');
 			}
-
-			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
 			exit;
 		}
 

@@ -463,17 +463,23 @@
 				$_query = stripslashes($GLOBALS['query']);
 			}
 
-			// If the place a in there search, it will mess everything up
+			// If the place a '"' in there search, it will mess everything up
 			// Our only option is to remove it
 			if(ereg('"',$_query))
 			{
 				$_query = ereg_replace('"','',$_query);
 			}
-			$var = array(
+			$var = array
+			(
 				'query_value' => stripslashes($_query),
-				'searchby'    => $this->searchby($search_obj),
 				'lang_search' => lang('Search')
 			);
+
+			if (is_array($search_obj))
+			{
+				$var['searchby'] = $this->searchby($search_obj);
+			}
+
 			$this->template->set_var($var);
 			return $this->template->fp('out','search');
 		} /* search() */
@@ -597,50 +603,109 @@
 			return $this->template->fp('out','filter');
 		} /* filter() */
 
+		/* replacement for function filter */
+		function new_filter($data=0)
+		{
+			if(is_array($data))
+			{
+				$filter	= (isset($data['filter'])?$data['filter']:'');
+				$format	= (isset($data['format'])?$data['format']:'all');
+			}
+			else
+			{
+				//$filter = get_var('filter',Array('GET','POST'));
+				$filter = $data;
+				$format	= 'all';
+			}
+
+			switch($format)
+			{
+				case 'yours':
+					$filter_obj = array
+					(
+						array('none',lang('show all')),
+						array('yours',lang('only yours'))
+					);
+					break;
+				case 'private':
+					$filter_obj = array
+					(
+						array('none',lang('show all')),
+						array('private',lang('only private'))
+					);
+					break;
+				default:
+					$filter_obj = array
+					(
+						array('none',lang('show all')),
+						array('yours',lang('only yours')),
+						array('private',lang('only private'))
+					);
+			}
+
+			$str = '';
+			$indexlimit = count($filter_obj);
+
+			for($index=0; $index<$indexlimit; $index++)
+			{
+				if($filter == '')
+				{
+					$filter = $filter_obj[$index][0];
+				}
+				$str .= '         <option value="' . $filter_obj[$index][0] . '"'.($filter == $filter_obj[$index][0]?' selected':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
+			}
+
+			$str = '        <select name="filter" onChange="this.form.submit()">'."\n" . $str . '        </select>';
+			$this->template->set_var('select',$str);
+			$this->template->set_var('lang_filter',lang('Filter'));
+
+			return $this->template->fp('out','filter');
+		} /* filter() */
 
 		function xslt_filter($data=0)
 		{
 			if(is_array($data))
 			{
-				$filter = (isset($data['filter'])?$data['filter']:'');
-				$yours  = (isset($data['yours'])?$data['yours']:'');
+				$filter	= (isset($data['filter'])?$data['filter']:'');
+				$format	= (isset($data['format'])?$data['format']:'all');
 			}
 			else
 			{
-				$filter = get_var('filter',Array('GET','POST'));
+				//$filter = get_var('filter',Array('GET','POST'));
+				$filter = $data;
+				$format	= 'all';
 			}
 
-			$filter_obj = array
-			(
-				array
-				(
-					'key' => 'none',
-					'lang' => lang('show all')
-				),
-				array
-				(
-					'key'	=> 'yours',
-					'lang'	=> lang('only yours')
-				),
-				array
-				(
-					'key'	=> 'private',
-					'lang'	=> lang('only private')
-				)
-			);
-
-			if(is_array($filter_obj))
+			switch($format)
 			{
-				for($i=0;$i<count($filter_obj);$i++)
+				case 'yours':
+					$filter_obj = array
+					(
+						array('key' => 'none','lang' => lang('show all')),
+						array('key' => 'yours','lang' => lang('only yours'))
+					);
+					break;
+				case 'private':
+					$filter_obj = array
+					(
+						array('key' => 'none','lang' => lang('show all')),
+						array('key' => 'private','lang' => lang('only private'))
+					);
+					break;
+				default:
+					$filter_obj = array
+					(
+						array('key' => 'none','lang' => lang('show all')),
+						array('key' => 'yours','lang' => lang('only yours')),
+						array('key' => 'private','lang' => lang('only private'))
+					);
+			}
+
+			for($i=0;$i<count($filter_obj);$i++)
+			{
+				if($filter_obj[$i]['key'] == $filter)
 				{
-					if($filter_obj[$i]['key'] == $filter)
-					{
-						$filter_obj[$i]['selected'] = 'yes';
-					}
-					if (!$yours && $filter_obj[$i]['key'] == 'yours')
-					{
-						unset($filter_obj[$i]);
-					}
+					$filter_obj[$i]['selected'] = 'yes';
 				}
 			}
 			return $filter_obj;

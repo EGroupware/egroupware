@@ -139,6 +139,9 @@
 										<xsl:when test="$app_tpl = 'delete'">
 											<xsl:call-template name="app_delete"/>
 										</xsl:when>
+										<xsl:when test="$app_tpl = 'config'">
+											<xsl:call-template name="app_config"/>
+										</xsl:when>
 										<xsl:otherwise>
 											<xsl:call-template name="app_data"/>
 										</xsl:otherwise>
