@@ -22,7 +22,7 @@
 	<xsl:template match="filter_list">
 	<xsl:variable name="key"><xsl:value-of select="key"/></xsl:variable>
 		<xsl:choose>
-			<xsl:when test="selected">
+			<xsl:when test="selected = 'yes'">
 				<option value="{$key}" selected="selected"><xsl:value-of select="lang"/></option>
 			</xsl:when>
 			<xsl:otherwise>
