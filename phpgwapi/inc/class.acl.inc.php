@@ -140,7 +140,8 @@
 			$groups = $this->get_location_list_for_id('phpgw_group', 1, $this->account_id);
 			while($groups && list($key,$value) = each($groups))
 			{
-				$sql .= ','.$value;
+				if($value != '')
+					$sql .= ','.$value;
 			}
 			$sql .= '))';
 			$this->db->query($sql ,__LINE__,__FILE__);
