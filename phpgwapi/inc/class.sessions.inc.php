@@ -73,10 +73,13 @@
 			}
 		}
 
-		function verify()
+		function verify($sessionid='',$kp3='')
 		{
-			$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
-			$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+			if(empty($sessionid) || !$sessionid)
+			{
+				$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+				$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+			}
 
 			$db              = $GLOBALS['phpgw']->db;
 			$db2             = $GLOBALS['phpgw']->db;
@@ -490,39 +493,40 @@
 								. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
 		}
     
-		function destroy()
+		function destroy($sessionid='',$kp3='')
 		{
-			global $phpgw, $phpgw_info;
-
-			$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
-			$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+			if(empty($sessionid) || !$sessionid)
+			{
+				$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+				$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+			}
 
 			if(!$sessionid && $kp3)
 			{
 				return False;
 			}
 
-			$phpgw_info['user']['sessionid'] = $sessionid;
-			$phpgw_info['user']['kp3'] = $kp3;
+			$GLOBALS['phpgw_info']['user']['sessionid'] = $sessionid;
+			$GLOBALS['phpgw_info']['user']['kp3'] = $kp3;
 	 
-			$phpgw->db->transaction_begin();
-			$phpgw->db->query("delete from phpgw_sessions where session_id='"
-								. $phpgw_info['user']['sessionid'] . "'",__LINE__,__FILE__);
-			$phpgw->db->query("delete from phpgw_app_sessions where sessionid='"
-								. $phpgw_info['user']['sessionid'] . "'",__LINE__,__FILE__);
-			$phpgw->db->query("update phpgw_access_log set lo='" . time() . "' where sessionid='"
-								. $phpgw_info['user']['sessionid'] . "'",__LINE__,__FILE__);
-			if ($phpgw_info['server']['usecookies'])
+			$GLOBALS['phpgw']->db->transaction_begin();
+			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_id='"
+								. $sessionid . "'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("delete from phpgw_app_sessions where sessionid='"
+								. $sessionid . "'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("update phpgw_access_log set lo='" . time() . "' where sessionid='"
+								. $sessionid . "'",__LINE__,__FILE__);
+			if ($GLOBALS['phpgw_info']['server']['usecookies'])
 			{
 				Setcookie('sessionid');
 				Setcookie('kp3');
-				if ($phpgw_info['multiable_domains'])
+				if ($GLOBALS['phpgw_info']['multiable_domains'])
 				{
 					Setcookie('domain');
 				}
 			}
 			$this->clean_sessions();
-			$phpgw->db->transaction_commit();
+			$GLOBALS['phpgw']->db->transaction_commit();
 
 			return True;
 		}

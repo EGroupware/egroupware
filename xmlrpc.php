@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'currentapp' => 'login',
 		'noheader'   => True
 	);
@@ -20,25 +20,35 @@
 	include('./header.inc.php');
 
 	$server = CreateObject('phpgwapi.xmlrpc_server');
+	$server->authed = False;
 	/* _debug_array($server);exit; */
 	//include(PHPGW_API_INC . '/xmlrpc.interop.php');
 
-	if($PHP_AUTH_USER && $PHP_AUTH_PW)
+	$headers = getallheaders();
+
+	if(ereg('Basic',$headers['Authorization']))
 	{
-		if($HTTP_X_PHPGW_SERVER)
+		$tmp = $headers['Authorization'];
+		$tmp = ereg_replace(' ','',$tmp);
+		$tmp = ereg_replace('Basic','',$tmp);
+		$auth = base64_decode(trim($tmp));
+		list($sessionid,$kp3) = split(':',$auth);
+
+		if($HTTP_SERVER_VARS['HTTP_X_PHPGW_SERVER'])
 		{
-			if(!@$phpgw->session->verify_server($PHP_AUTH_USER,$PHP_AUTH_PW))
+			if($GLOBALS['phpgw']->session->verify_server($sessionid,$kp3))
 			{
-				exit;
+				$server->authed = True;
 			}
 		}
 		else
 		{
-			if(!@$phpgw->session->verify($PHP_AUTH_USER,$PHP_AUTH_PW))
+			if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
 			{
-				exit;
+				$server->authed = True;
 			}
 		}
 	}
+
 	$server->service($HTTP_RAW_POST_DATA);
 ?>

@@ -728,7 +728,7 @@
 		$sessionid = $data['sessionid']->scalarval();
 		$kp3       = $data['kp3']->scalarval();
 
-		$later = $GLOBALS['phpgw']->session->destroy();
+		$later = $GLOBALS['phpgw']->session->destroy($sessionid,$kp3);
 
 		if($later)
 		{
