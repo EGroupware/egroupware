@@ -218,7 +218,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$db1 = $phpgw_setup->oProc;
+		$db1 = $phpgw_setup->db;
 
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_addressbook', array(
@@ -299,38 +299,39 @@
 			)
 		);
 
-		$db1->query("SELECT * FROM addressbook");
+		$phpgw_setup->oProc->query("SELECT * FROM addressbook");
+		echo '<br>numrows: ' . $phpgw_setup->oProc->num_rows;
 
-		while ($db1->next_record())
+		while ($phpgw_setup->oProc->next_record())
 		{
 			$fields = $extra = array();
 
-			$fields['id']         = $db1->f('ab_id');
-			$fields['owner']      = addslashes($db1->f('ab_owner'));
-			$fields['n_given']    = addslashes($db1->f('ab_firstname'));
-			$fields['n_family']   = addslashes($db1->f('ab_lastname'));
-			$fields['d_email']    = addslashes($db1->f('ab_email'));
-			$fields['b_tel']      = addslashes($db1->f('ab_hphone'));
-			$fields['a_tel']      = addslashes($db1->f('ab_wphone'));
-			$fields['c_tel']      = addslashes($db1->f('ab_fax'));
-			$fields['fn']         = addslashes($db1->f('ab_firstname').' '.$db1->f('ab_lastname'));
+			$fields['id']         = $phpgw_setup->oProc->f('ab_id');
+			$fields['owner']      = addslashes($phpgw_setup->oProc->f('ab_owner'));
+			$fields['n_given']    = addslashes($phpgw_setup->oProc->f('ab_firstname'));
+			$fields['n_family']   = addslashes($phpgw_setup->oProc->f('ab_lastname'));
+			$fields['d_email']    = addslashes($phpgw_setup->oProc->f('ab_email'));
+			$fields['b_tel']      = addslashes($phpgw_setup->oProc->f('ab_hphone'));
+			$fields['a_tel']      = addslashes($phpgw_setup->oProc->f('ab_wphone'));
+			$fields['c_tel']      = addslashes($phpgw_setup->oProc->f('ab_fax'));
+			$fields['fn']         = addslashes($phpgw_setup->oProc->f('ab_firstname').' '.$phpgw_setup->oProc->f('ab_lastname'));
 			$fields['a_tel_work'] = 'y';
 			$fields['b_tel_home'] = 'y';
 			$fields['c_tel_fax']  = 'y';
-			$fields['org_name']   = addslashes($db1->f('ab_company'));
-			$fields['title']      = addslashes($db1->f('ab_title'));
-			$fields['adr_street'] = addslashes($db1->f('ab_street'));
-			$fields['adr_locality']   = addslashes($db1->f('ab_city'));
-			$fields['adr_region']     = addslashes($db1->f('ab_state'));
-			$fields['adr_postalcode'] = addslashes($db1->f('ab_zip'));
+			$fields['org_name']   = addslashes($phpgw_setup->oProc->f('ab_company'));
+			$fields['title']      = addslashes($phpgw_setup->oProc->f('ab_title'));
+			$fields['adr_street'] = addslashes($phpgw_setup->oProc->f('ab_street'));
+			$fields['adr_locality']   = addslashes($phpgw_setup->oProc->f('ab_city'));
+			$fields['adr_region']     = addslashes($phpgw_setup->oProc->f('ab_state'));
+			$fields['adr_postalcode'] = addslashes($phpgw_setup->oProc->f('ab_zip'));
 
-			$extra['pager']       = $db1->f('ab_pager');
-			$extra['mphone']      = $db1->f('ab_mphone');
-			$extra['ophone']      = $db1->f('ab_ophone');
-			$extra['bday']        = $db1->f('ab_bday');
-			$extra['notes']       = $db1->f('ab_notes');
-			$extra['address2']    = $db1->f('ab_address2');
-			$extra['url']         = $db1->f('ab_url');
+			$extra['pager']       = $phpgw_setup->oProc->f('ab_pager');
+			$extra['mphone']      = $phpgw_setup->oProc->f('ab_mphone');
+			$extra['ophone']      = $phpgw_setup->oProc->f('ab_ophone');
+			$extra['bday']        = $phpgw_setup->oProc->f('ab_bday');
+			$extra['notes']       = $phpgw_setup->oProc->f('ab_notes');
+			$extra['address2']    = $phpgw_setup->oProc->f('ab_address2');
+			$extra['url']         = $phpgw_setup->oProc->f('ab_url');
 
 			$sql = "INSERT INTO phpgw_addressbook (org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
 				. "b_tel,b_tel_home,c_tel,c_tel_fax,adr_street,adr_locality,adr_region,adr_postalcode,owner)"
@@ -341,13 +342,13 @@
 				. $fields['adr_locality']."','".$fields['adr_region']."','".$fields['adr_postalcode']."','"
 				. $fields['owner'] ."')";
 
-			$phpgw_setup->oProc->query($sql);
+			$db1->query($sql);
 
 			while (list($name,$value) = each($extra))
 			{
 				$sql = "INSERT INTO phpgw_addressbook_extra VALUES ('".$fields['id']."','" . $fields['owner'] . "','"
 					. addslashes($name) . "','" . addslashes($value) . "')";
-				$phpgw_setup->oProc->query($sql);
+				$db1->query($sql);
 			}
 		}
 		$setup_info['addressbook']['currentver'] = '0.9.10pre13';
@@ -469,7 +470,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$db = $db1 = $phpgw_setup->oProc;
+		$db1 = $phpgw_setup->db;
 
 		$phpgw_setup->oProc->RenameTable('phpgw_addressbook', 'phpgw_addressbook_old');
 		$phpgw_setup->oProc->CreateTable(
@@ -540,9 +541,9 @@
 			$fields['n_family']            = $phpgw_setup->oProc->f("lastname");
 			$fields['email']               = $phpgw_setup->oProc->f("d_email");
 			$fields['email_type']          = $phpgw_setup->oProc->f("d_emailtype");
-			$fields['tel_home']            = $phpgw_setup->oProc->f("hphone");
-			$fields['tel_work']            = $phpgw_setup->oProc->f("wphone");
-			$fields['tel_fax']             = $phpgw_setup->oProc->f("fax");
+			$fields['tel_home']            = $phpgw_setup->oProc->f("b_tel");
+			$fields['tel_work']            = $phpgw_setup->oProc->f("a_tel");
+			$fields['tel_fax']             = $phpgw_setup->oProc->f("c_tel");
 			$fields['fn']                  = $phpgw_setup->oProc->f("fn");
 			$fields['org_name']            = $phpgw_setup->oProc->f("org_name");
 			$fields['title']               = $phpgw_setup->oProc->f("title");
@@ -567,7 +568,7 @@
 			$db1->query($sql,__LINE__,__FILE__);
 		}
  
-		$db->query("DROP TABLE phpgw_addressbook_old");
+		$phpgw_setup->oProc->query("DROP TABLE phpgw_addressbook_old");
  
 		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_home=''   where tel_home='n'   OR tel_home='y'");
 		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_work=''   where tel_work='n'   OR tel_work='y'");
