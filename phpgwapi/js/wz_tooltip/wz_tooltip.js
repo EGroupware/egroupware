@@ -46,7 +46,7 @@ var ttPadding      = 3;            // spacing between border and content
 var ttShadowColor  = '';
 var ttShadowWidth  = 0;
 var ttTitleColor   = '#ffffff';    // color of caption text
-var ttWidth        = 200;
+var ttWidth        = 'auto';
 ////////////////////  END OF TOOLTIP CONFIG  ////////////////////////
 
 
