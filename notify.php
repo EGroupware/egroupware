@@ -14,6 +14,7 @@
 	$phpgw_info['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
+		'disable_Template_class' => True,
 		'currentapp' => 'notifywindow'
 	);
 	include('header.inc.php');
