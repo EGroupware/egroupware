@@ -220,11 +220,20 @@
 			
 			$headers['th_bg'] = $phpgw_info['theme']['th_bg'];
 			
-			$fields = array( 'type','status','urgency','subject','startdate',
-								  'enddate','owner','datecreated','responsible' );
-			for ( ;$f = $h = current($fields); $f = next($fields))
+			$fields = array(
+				'type'		=> 'Type',
+				'status'		=> 'Status',
+				'urgency'	=>	'Urgency',
+				'subject'	=> 'Subject',
+				'startdate'	=>	'Startdate',
+				'enddate'	=>	'Enddate',
+				'owner'		=>	'Owner',
+				'datecreated' => 'Modificationdate',
+				'responsible' => 'Responsible'
+			);
+			while (list($f,$lang) = each($fields))
 			{
-				$lang = lang(ucfirst( $f ));
+				$lang = lang($lang);
 				$headers['lang_'.$f] = $do_sort_header ? $this->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/index.php',$lang,'&menuaction=infolog.uiinfolog.get_list') : $lang;            
 			}
 			return $headers;         
@@ -334,6 +343,8 @@
 			$t->set_var(h_lang_sub,lang('Sub'));
 			$t->set_var(h_lang_action,lang('Action'));
 			// -------------- end header declaration -----------------
+
+			if (!$filter) $filter = 'none';
 
 			$ids = $this->bo->readIdArray($order,$sort,$filter,$cat_id,$query,
 								  					$action,$addr_id,$proj_id,$info_id,

@@ -34,8 +34,10 @@
 		var $data;
 		var $grants;
 
-		function boinfolog( $info_id = 0) {
+		function boinfolog( $info_id = 0)
+		{
 			global $phpgw;
+
 			$this->enums = array( 
 				'priority' => array (
 					'urgent' => 'urgent','high' => 'high','normal' => 'normal',
@@ -59,54 +61,77 @@
 			$this->read( $info_id);
 		}
 				
-		function accountInfo($id,$account_data=0,$longname=0) {
+		function accountInfo($id,$account_data=0)
+		{
 			global $phpgw,$phpgw_info;
 			
 			if (!$id) return '&nbsp;';
 			
-			if (!is_array($account_data)) {
+			if (!is_array($account_data))
+			{
 				$accounts = createobject('phpgwapi.accounts',$id);
 				$accounts->db = $phpgw->db;
 				$accounts->read_repository();
 				$account_data = $accounts->data;
 			}
 			if ($phpgw_info['user']['preferences']['infolog']['longNames'])
+			{
 				return $account_data['firstname'].' '.$account_data['lastname'];
-				
+			}
 			return $account_data['account_lid'];   
 		}      
 
-		function addr2name( $addr ) {
+		function addr2name( $addr )
+		{
 			global $phpgw;
+
 			$name = $addr['n_family'];
 			if ($addr['n_given'])
+			{
 				$name .= ', '.$addr['n_given'];
-			else 
+			}
+			else
+			{
 				if ($addr['n_prefix'])
+				{
 					$name .= ', '.$addr['n_prefix'];
+				}
+			}
 			if ($addr['org_name'])
+			{
 				$name = $addr['org_name'].': '.$name;
+			}
 			return $phpgw->strip_html($name);         
 		}
 
-		function readProj($proj_id) {
-			if ($proj_id) {
-				if (!is_object($this->projects)) {
+		function readProj($proj_id)
+		{
+			if ($proj_id)
+			{
+				if (!is_object($this->projects))
+				{
 					$this->projects = createobject('projects.projects');
 				}            
-				if (list( $proj ) = $this->projects->read_single_project( $proj_id ))
+				if (list( $proj ) = $this->projects->read_single_project( $proj_id))
+				{
 					return $proj;
+				}
 			}
 			return False;         
 		}               
 
-		function readAddr($addr_id) {
-			if ($addr_id) {
-				if (!is_object($this->contacts)) {
+		function readAddr($addr_id)
+		{
+			if ($addr_id)
+			{
+				if (!is_object($this->contacts))
+				{
 					$this->contacts = createobject('phpgwapi.contacts');
 				}            
 				if (list( $addr ) = $this->contacts->read_single_entry( $addr_id ))
+				{
 					return $addr;
+				}
 			}
 			return False;                  
 		}      
@@ -114,61 +139,66 @@
 		/*
 		 * check's if user has the requiered rights on entry $info_id
 		 */
-		function check_access( $info_id,$required_rights ) {
+		function check_access( $info_id,$required_rights )
+		{
 			return $this->so->check_access( $info_id,$required_rights );
 		}
 		
-		/*
-		 * returns sql to be AND into query to ensure ACL is respected (incl.
-		 * _PRIVATE), $filter: none - list all entry user have rights to see
-		 *                     private - list only personal entry (incl. those
-		 *                               he is responsible for
-		 */
-		function aclFilter($filter = 'none') {
-			return $this->so->aclFilter($filter);
-		}      
-	
-		function init() {
+		function init()
+		{
 			$this->so->init();
 		}      
 
-		function read($info_id) {
+		function read($info_id)
+		{
 			$this->so->read($info_id);
 				
-			if ($this->data['info_subject'] == (substr($this->data['info_des'],0,60).' ...')) {
+			if ($this->data['info_subject'] ==
+				 (substr($this->data['info_des'],0,60).' ...'))
+			{
 				$this->data['info_subject'] = '';
 			}
-			if ($this->data['info_addr_id'] && $this->data['info_from'] == $this->addr2name( $this->readAddr( $this->data['info_addr_id'] ))) {
+			if ($this->data['info_addr_id'] && $this->data['info_from'] ==
+				 $this->addr2name( $this->readAddr( $this->data['info_addr_id'] )))
+			{
 				$this->data['info_from'] = '';
 			}            
 			return $this->data;
 		}
 
-		function delete($info_id) {
+		function delete($info_id)
+		{
 			$this->so->delete($info_id);            
 		}
 
-		function write($values) {
+		function write($values)
+		{
 			global $phpgw_info;
-			if ($values['responsible'] && $values['status'] == 'offer') {
+
+			if ($values['responsible'] && $values['status'] == 'offer')
+			{
 				$values['status'] = 'ongoing';   // have to match if not finished
 			}
-			if (!$values['info_id'] && !$values['owner']) {
-				// echo "write(value[info_id]==0,values[owner]==0) --> owner set to user";
+			if (!$values['info_id'] && !$values['owner'])
+			{
 				$values['owner'] = $phpgw_info['user']['account_id'];
 			}
-			if (!$values['info_id'] && !$values['datecreated'])
-				$values['datecreated'] = time();               // set creation time
+			$values['datecreated'] = time(); // is now MODIFICATION-date
 				
-			if (!$values['subject']) $values['subject'] = substr($values['des'],0,60).' ...';
-			
-			if ($values['addr_id'] && !$values['from']) 
-				$values['from'] = $this->addr2name( $this->readAddr( $values['addr_id'] ));
-
+			if (!$values['subject'])
+			{
+				$values['subject'] = substr($values['des'],0,60).' ...';
+			}	
+			if ($values['addr_id'] && !$values['from'])
+			{
+				$values['from'] = $this->addr2name( $this->readAddr(
+																			$values['addr_id'] ));
+			}
 			$this->so->write($values);
 		}
 		
-		function anzSubs( $info_id ) {
+		function anzSubs( $info_id )
+		{
 			return $this->so->anzSubs( $info_id );
 		}
 
