@@ -14,7 +14,7 @@
 		<!-- top row back images are 58px high, but the row may be smaller than that -->
 		<!-- row 2 images are 15 px high, so this table with these 2 rows is 58 plus 15 equals 73px high  -->
 		<td width="154" height="58" align="left" valign="top" background="{em_img}">
-			<a href="{logo_url}" target="_blank"><img src="{logo_file}" title="{logo_title}" border="0"></a>
+			<a href="http://{logo_url}" target="_blank"><img src="{logo_file}" title="{logo_title}" border="0"></a>
 		</td>
 		<td width="100%" align="right" background="{em_img}">
 			<table width="100%" height="28" cellpadding="0" cellspacing="0" border="0" valign="top">

@@ -5,14 +5,14 @@
 
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
 <META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
-<META NAME="description" CONTENT="phpGroupWare login screen">
-<META NAME="keywords" CONTENT="phpGroupWare login screen">
+<META NAME="description" CONTENT="{website_title} login screen, working environment powered by eGroupWare">
+<META NAME="keywords" CONTENT="{website_title} login screen, eGroupWare, groupware, groupware suite">
 
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>
 
 <BODY bgcolor="#FFFFFF">
-<A href="http://www.phpgroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="phpGroupWare"  border="0"></a>
+<a href="http://{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
 <p>&nbsp;</p>
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>

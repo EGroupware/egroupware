@@ -3,7 +3,7 @@
 		<td> 
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr background="{img_root}/menu_filler.gif">
-					<td width="218" height="33"><a href="{logo_url}" target="_blank"><img src="{logo_file}" title="{logo_title}" border="0"></a></td>
+					<td width="218" height="33"><a href="http://{logo_url}" target="_blank"><img src="{logo_file}" title="{logo_title}" border="0"></a></td>
 					<td width="100%" valign="bottom">&nbsp;</td>
 					<td valign="bottom" width="56"><a href="{home_link}"><img src="{img_root}/tab_home.gif" width="56" height="23" border="0"></a></td>
 <!-- BEGIN preferences -->
