@@ -1,3 +1,7 @@
+<?php
+  if (! $phpgw_info["flags"]["nocalendarheader"]) {
+     ?>
+
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
  <tr>
   <td width="2%">
@@ -31,3 +35,6 @@
   </td>
  </tr>
 </table>
+  <?php
+    }
+  ?>

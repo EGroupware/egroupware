@@ -23,7 +23,7 @@
      if (! $totalerrors) {
         $phpgw->common->preferences_delete("byapp",$phpgw_info["user"]["userid"],"addressbook");
         while ($pref = each($ab_selected)) {
-          $phpgw->common->preferences_add($phpgw_info["user"]["userid"],$pref[0],"addressbook",$pref[1]);
+          $phpgw->common->preferences_add($phpgw_info["user"]["userid"],$pref[0],"addressbook","addressbook_" . $pref[1]);
         }
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      }
@@ -51,7 +51,7 @@
       while (list($col, $descr) = each($abc)) {
          $i++; $j++;
          echo '<td><input type="checkbox" name="ab_selected[' . $col . ']" value="True"'
-            . ($phpgw_info["user"]["preferences"][$col]?" checked":"") . '>' . $descr
+            . ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . $descr
             . '</option></td>';
 
          if ($i ==3) {

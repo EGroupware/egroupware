@@ -12,19 +12,13 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "preferences");
 
-  $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
-
-  if ($phpgw_info["user"]["permissions"]["anonymous"]) {
-     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
-     exit;
-  }
-
+  
   if ($ntheme) {
      $theme = $ntheme;
-     $phpgw->common->preferences_update($phpgw_info["user"]["userid"],"theme");
+     $phpgw->common->preferences_update($phpgw_info["user"]["userid"],"theme","common");
      Header("location: " . $phpgw->link("changetheme.php"));
      exit;
   }

@@ -149,81 +149,35 @@
          </td>
        </tr>
 <?php
-         display_option("show current users on navigation bar","admin","show_currentusers",0);
-         display_option("show new messages on main screen","email","mainscreen_showmail",0);
-         display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays",0);
-         
-         if ($phpgw_info["user"]["apps"]["calendar"]) {
-            ?>
-            <tr>
-             <td><?php echo lang("show high priority events on main screen"); ?> ?</td>
-	     <td><input type="checkbox" name="mainscreen_showevents" value="Y" <?php if ($phpgw_info["user"]["preferences"]["mainscreen_showevents"] == "Y") echo " checked"; ?>></td>
-
-            </tr>
-<?php
-            $t_weekday[$phpgw_info["user"]["preferences"]["weekdaystarts"]] = " selected";
-?>
-             <tr>
-              <td><?php echo lang("weekday starts on"); ?></td>
-              <td>
-               <select name="weekdaystarts">
-	        <option value="Monday"<?php echo $t_weekday["monday"]; ?>><?php echo lang("monday"); ?></option>
-	        <option value="Sunday"<?php echo $t_weekday["sunday"]; ?>><?php echo lang("sunday"); ?></option>
-	       </select>
-              </td>
-<?php
-
-            $t_workdaystarts[$phpgw_info["user"]["preferences"]["workdaystarts"]] = " selected";
-?>
-             <tr>
-              <td><?php echo lang("work day starts on"); ?></td>
-              <td>
-               <select name="workdaystarts">
-	       <?php
-	         for ($i=0; $i<24; $i++)
-	             echo "<option value=\"$i\"" . $t_workdaystarts[$i] . ">"
-		        . $phpgw->common->formattime($i+1,"00") . "</option>";
-	       ?>
-               </select>
-              </td>
-             </tr>
-            <?php $t_workdayends[$phpgw_info["user"]["preferences"]["workdayends"]] = " selected"; ?>
-             <tr>
-              <td><?php echo lang("work day ends on"); ?></td>
-              <td>
-               <select name="workdayends">
-	        <?php
-		  for ($i=0; $i<24; $i++)
-		      echo "<option value=\"$i\"" . $t_workdayends[$i] . ">"
-		         . $phpgw->common->formattime($i+1,"00") . "</option>";
-	        ?>
-               </select>
-              </td>
-             </tr>
-
-             <tr>
-              <td><?php echo lang("Default application"); ?></td>
-	         <td><select name="default_app">
-                   <option value="">&nbsp;</option>
-                  <?php
- 			     $db_perms = $phpgw->accounts->read_apps($phpgw_info["user"]["userid"]);
-                    while ($permission = each($db_perms)) {
-                       if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+  display_option("show current users on navigation bar","admin","show_currentusers",0);
+  display_option("show new messages on main screen","email","mainscreen_showmail",0);
+  display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays",0);
+?>        
+       <tr>
+        <td><?php echo lang("Default application"); ?></td>
+        <td>
+         <select name="default_app">
+          <option value="">&nbsp;</option>
+           <?php
+ 			$db_perms = $phpgw->accounts->read_apps($phpgw_info["user"]["userid"]);
+             while ($permission = each($db_perms)) {
+               if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
 				  echo "<option value=\"" . $permission[0] . "\"";
 				  if ($phpgw_info["user"]["preferences"]["default_app"] == $permission[0]) {
 					 echo " selected";
-                          }
+                  }
 				  echo ">" . lang($phpgw_info["apps"][$permission[0]]["title"])
 					 . "</option>";
-                       }
-                    }
-              ?></select></td>
-             </tr>
+               }
+             }
+           ?></select>
+          </td>
+         </tr>
 
-             <tr>
-              <td><?php echo lang("Default sorting order"); ?></td>
+         <tr>
+          <td><?php echo lang("Default sorting order"); ?></td>
 	      <td><?php
-                    $default_order_display[$phpgw_info["user"]["preferences"]["default_sorting"]] = " selected"; ?>
+                $default_order_display[$phpgw_info["user"]["preferences"]["default_sorting"]] = " selected"; ?>
                   <select name="default_sorting">
              	   <option value="old_new"<?php echo $default_order_display["old_new"]; ?>>oldest -> newest</option>   
              	   <option value="new_old"<?php echo $default_order_display["new_old"]; ?>>newest -> oldest</option>
@@ -231,7 +185,7 @@
               </td>
              </tr>
 <?php
-         }
+//         }
 ?>
 
        <tr>
@@ -254,54 +208,40 @@
         $phpgw->db->lock("preferences");
      }
 
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"maxmatchs");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"tz_offset");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"dateformat");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"timeformat");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"lang");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_sorting");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_app");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"maxmatchs","common");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"tz_offset","common");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"dateformat","common");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"timeformat","common");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"lang","common");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_sorting","common");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_app","common");
 
      if ($navbar_text) {
-        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"navbar_text");
+        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"navbar_text","common");
      }
 
      if ($phpgw_info["user"]["apps"]["admin"]) {
         if ($show_currentusers) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"show_currentusers");
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"show_currentusers","common");
         }
      }
 
      if ($phpgw_info["user"]["apps"]["email"]) {
         if ($mainscreen_showmail) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showmail");
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showmail","email");
         }
-        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"email_sig");
+        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"email_sig","email");
      }
 
      if ($phpgw_info["user"]["apps"]["addressbook"]) {
         if ($mainscreen_showbirthdays) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays");
-        }
-        $abc = get_abc();	# AddressBook Columns
-        while (list($col, $descr) = each($abc)) {
-            $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"addressbook_view_".$col);
-        }
-     }
-
-     if ($phpgw_info["user"]["apps"]["calendar"]) {
-        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"weekdaystarts");
-        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdaystarts");
-        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdayends");
-        if ($mainscreen_showevents) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showevents");
+           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays","addressbook");
         }
      }
 
      $phpgw->db->unlock();
 
-     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
-	  . "/preferences/"));
+     Header("Location: " . $phpgw->link("index.php"));
   }
   $phpgw->common->phpgw_footer();
 ?>

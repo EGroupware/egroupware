@@ -75,16 +75,17 @@
      $phpgw->db->query("select count(*) from addressbook where $filtermethod");
      $phpgw->db->next_record();
   }
-  if($phpgw_info["apps"]["timetrack"]["enabled"])
-   $company_sortorder = "c.company_name";
-  else
-   $company_sortorder = "ab_company";
+  if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
+     $company_sortorder = "c.company_name";
+  } else {
+     $company_sortorder = "ab_company";
+  }
 
   //$phpgw->db->next_record();
 
-  if ($phpgw->db->f(0) > $phpgw_info["user"]["preferences"]["maxmatchs"])
+  if ($phpgw->db->f(0) > $phpgw_info["user"]["preferences"]["common"]["maxmatchs"])
      echo "<br>" . lang("showing x - x of x",($start + 1),
-			   ($start + $phpgw_info["user"]["preferences"]["maxmatchs"]),$phpgw->db->f(0));
+			   ($start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]),$phpgw->db->f(0));
   else
      echo "<br>" . lang("showing x",$phpgw->db->f(0)); 
 ?>
@@ -97,34 +98,34 @@
   <table width=75% border=0 cellspacing=1 cellpadding=3>
     <tr bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>">
     <?php
-       if ( $phpgw_info["user"]["preferences"]["addressbook_view_company"] == "True" ) {
+       if ($phpgw_info["user"]["preferences"]["addressbook"]["company"]) {
           echo '<td height="21">';
           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
           echo $phpgw->nextmatchs->show_sort_order($sort,$company_sortorder,$order,"index.php",lang("Company Name"));
           echo '</font></td>';
        }
-       if ( $phpgw_info["user"]["preferences"]["addressbook_view_lastname"] == "True" ) {
+       if ($phpgw_info["user"]["preferences"]["addressbook"]["lastname"]) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
            echo $phpgw->nextmatchs->show_sort_order($sort,"ab_lastname",$order,"index.php",
                               lang("Last Name"));
            echo '</font></td>';
        }
-       if ( $phpgw_info["user"]["preferences"]["addressbook_view_firstname"] == "True" ) {
+       if ($phpgw_info["user"]["preferences"]["addressbook"]["firstname"]) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
            echo $phpgw->nextmatchs->show_sort_order($sort,"ab_firstname",$order,"index.php",
                               lang("First Name"));
            echo '</font></td>';
         }
-       if ( $phpgw_info["user"]["preferences"]["addressbook_view_email"] == "True" ) {
+       if ($phpgw_info["user"]["preferences"]["addressbook"]["email"]) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
            echo $phpgw->nextmatchs->show_sort_order($sort,"ab_email",$order,"index.php",
                               lang("Email"));
            echo '</font></td>';
        }
-       if ( $phpgw_info["user"]["preferences"]["addressbook_view_wphone"] == "True" ) {
+       if ($phpgw_info["user"]["preferences"]["addressbook"]["wphone"]) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
            echo $phpgw->nextmatchs->show_sort_order($sort,"ab_wphone",$order,"index.php",
@@ -187,48 +188,49 @@
 
     $firstname	= $phpgw->db->f("ab_firstname");
     $lastname 	= $phpgw->db->f("ab_lastname");
-    $email     = $phpgw->db->f("ab_email");
-    if($phpgw_info["apps"]["timetrack"]["enabled"])
+    $email        = $phpgw->db->f("ab_email");
+    if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
       $company   = $phpgw->db->f("company_name");
-    else
+    } else {
       $company   = $phpgw->db->f("company");
-    $wphone    = $phpgw->db->f("ab_wphone");
-    $ab_id	= $phpgw->db->f("ab_id");
+    }
+    $wphone      = $phpgw->db->f("ab_wphone");
+    $ab_id	   = $phpgw->db->f("ab_id");
 
-    if($firstname == "") $firstname = "&nbsp;";
-    if($lastname  == "") $lastname  = "&nbsp;";
-    if($email     == "") $email     = "&nbsp;";
-    if($company   == "") $company   = "&nbsp;";
-    if($wphone    == "") $wphone    = "&nbsp;";
+    if ($firstname == "") $firstname = "&nbsp;";
+    if ($lastname  == "") $lastname  = "&nbsp;";
+    if ($email     == "") $email     = "&nbsp;";
+    if ($company   == "") $company   = "&nbsp;";
+    if ($wphone    == "") $wphone    = "&nbsp;";
 
     ?>
     <?php
      echo '<tr bgcolor="#'.$tr_color.'";>';
-     if ( $phpgw_info["user"]["preferences"]["addressbook_view_company"] == 'True' ) {
+     if ($phpgw_info["user"]["preferences"]["addressbook"]["company"]) {
          echo '<td valign=top>';
          echo '<font face=Arial, Helvetica, sans-serif size=2>';
          echo $company;
          echo '</font></td>';
      };
-     if ( $phpgw_info["user"]["preferences"]["addressbook_view_lastname"] == 'True' ) {
+     if ($phpgw_info["user"]["preferences"]["addressbook"]["lastname"]) {
          echo '<td valign=top>';
          echo '<font face=Arial, Helvetica, sans-serif size=2>';
          echo $lastname;
          echo '</font></td>';
      };
-     if ( $phpgw_info["user"]["preferences"]["addressbook_view_firstname"] == 'True' ) {
+     if ($phpgw_info["user"]["preferences"]["addressbook"]["firstname"]) {
          echo '<td valign=top>';
          echo '<font face=Arial, Helvetica, sans-serif size=2>';
          echo $firstname;
          echo '</font></td>';
      };
-     if ( $phpgw_info["user"]["preferences"]["addressbook_view_email"] == 'True' ) {
+     if ($phpgw_info["user"]["preferences"]["addressbook"]["email"]) {
          echo '<td valign=top>';
          echo '<font face=Arial, Helvetica, sans-serif size=2>';
          echo '<a href="mailto:' . $email . '">' . $email . '</a>';
          echo '</font></td>';
      };
-     if ( $phpgw_info["user"]["preferences"]["addressbook_view_wphone"] == 'True' ) {
+     if ($phpgw_info["user"]["preferences"]["addressbook"]["wphone"]) {
          echo '<td valign=top>';
          echo '<font face=Arial, Helvetica, sans-serif size=2>';
          echo $wphone;
