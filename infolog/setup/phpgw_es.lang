@@ -1,108 +1,241 @@
 %1 records imported	infolog	es	%1 registros importados
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	es	%1 registros leidos (aun no importados, puede %2volver%3 y desmarcar Testear Importacion)
+- subprojects from	infolog	es	- Subproyecto de
+0%	infolog	es	
+10%	infolog	es	
+20%	infolog	es	
+30%	infolog	es	
+40%	infolog	es	
+50%	infolog	es	
+60%	infolog	es	
+70%	infolog	es	
+80%	infolog	es	
+90%	infolog	es	
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	es	
+a short subject for the entry	infolog	es	descripción corta para la entrada
+abort without deleting	infolog	es	Cancxelar sin eliminar
 accept	infolog	es	aceptar
 action	infolog	es	Accion
-Add a file	infolog	es	Agregar archivo
 add	infolog	es	Agregar
+add a file	infolog	es	Agregar archivo
+add a new entry	infolog	es	Añadir nueva Entrada
+add a new note	infolog	es	Añadir nueva Nota
+add a new phonecall	infolog	es	Añadir nueva Llamada
+add a new sub-task, -note, -call to this entry	infolog	es	Añadir nueva subtarea, nota, llamada a esta entrada
+add a new todo	infolog	es	Añadir nueva Tarea (ToDo)
+add file	infolog	es	Añadir archivo
 add sub	infolog	es	agregar Sub
+add:	infolog	es	Añadir:
 all	infolog	es	Todos
+all links and attachments	infolog	es	todos los links y archivos adjuntos
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	es	permite establecer el estado de una entrada, p.e. establecer una Tarea (ToDo) cono finalizada si está acabada (los valores dependen del tipo de entrada)
+applies the changes	infolog	es	aplica los cambios
+are you shure you want to delete this entry ?	infolog	es	¿Está seguro de querer borrar esta entrada?
 are you sure you want to delete this entry	infolog	es	Esta seguro de querer borrar esta entrada?
+attach a file	infolog	es	Adjuntar un archivo
 attach file	infolog	es	Adjuntar Archivo
-back to Projectlist	infolog	en	Volver a la Lista de Proyectos
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog es	<b>Archivos adjuntos por enlace simbolico</b> en vez de uploads y descargas via archivo:/camino para clientes locales de red
+back to main list	infolog	es	Volver a lista principal
+back to projectlist	infolog	es	Volver a la Lista de Proyectos
 billed	infolog	es	facturado
 both	infolog	es	ambos
 call	infolog	es	llamar
+cancel	infolog	es	Cancelar
+categories	infolog	es	Categorías
 category	infolog	es	Categoria
+check to set startday	infolog	es	marcar para establecer fecha de inicio
+click here to create the link	infolog	es	marcar para crear un link
+click here to start the search	infolog	es	marcar para empezar la búsqueda
 close	infolog	es	Cerrar
 comment	infolog	es	Comentario
 configuration	infolog	es	Configuracion
 confirm	infolog	es	confirmar
+contact	infolog	es	Contacto
+create new links	infolog	es	Crear nuevos links
+creates a new field	infolog	es	crea campo nuevo
+creates a new status with the given values	infolog	es	crea un nuevo estado con los valores dados
+creates a new typ with the given name	infolog	es	crea un nuevo tipo con el nombre dado
 csv-fieldname	infolog	es	CSV-NombredeCampo
 csv-filename	infolog	es	CSV-NombredeArchivo
 csv-import	common	es	CSV-Importar
+custom	infolog	es	
+custom contact-address, leave empty to use information from most recent link	infolog	es	
+custom contact-information, leave emtpy to use information from most recent link	infolog	es	
+custom fields	infolog	es	
+custom fields, typ and status	common	es	
+custom regarding	infolog	es	
+custom status for typ	infolog	es	
 datecreated	infolog	es	fecha de creacion
+dates, status, access	infolog	es	Fechas, Estado, Acceso
 days	infolog	es	dias
-default Filter for InfoLog	infolog	es	Filtro por Defecto para InfoLog
-description can not exceed 8000 characters in length	infolog	es	La descripcion no puede exceder 8000 caracteres de largo
+default filter for infolog	infolog	es	Filtro por Defecto para InfoLog
+default status for a new log entry	infolog	es	
+delegation	infolog	es	Delegación
+delete	infolog	es	Eliminar
+delete the entry	infolog	es	Eliminar la entrada
+delete this entry	infolog	es	eliminar esta entrada
+deletes the selected typ	infolog	es	elimina el tipo seleccionado
+deletes this field	infolog	es	elimina este campo
+deletes this status	infolog	es	elimina este estado
 description	infolog	es	Descripcion
-done	infolog	es	Hecho
+description can not exceed 8000 characters in length	infolog	es	La descripcion no puede exceder 8000 caracteres de largo
+determines the order the fields are displayed	infolog	es	determina el orden en el que se muestran los campos
+disables a status without deleting it	infolog	es	deshabilita un estado sin eliminarlo
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	es	
+done	infolog	es	hecho
 download	infolog	es	Descargar
 duration	infolog	es	Duración
-enddate can not be before startdate	infolog	es	La fecha de finalizacion no puede ser anterior a la de Inicio
+each value is a line like <id>[=<label>]	infolog	es	
+edit	infolog	es	Editar
+edit or create categories for ingolog	infolog	es	Editar o crear categorías para InfoLog
+edit the entry	infolog	es	Editar la entrada
+edit this entry	infolog	es	Editar esta entrada
 enddate	infolog	es	Fecha de Finalizacion
+enddate can not be before startdate	infolog	es	La fecha de finalizacion no puede ser anterior a la de Inicio
+enter a custom contact, leave empty if linked entry should be used	infolog	es	introduzca un contacto, o déjelo vacío si prefiere utilizar un link
+enter a custom phone/email, leave empty if linked entry should be used	infolog	es	introduzca teléfono/email, o déjelo vacío si prefiere utilizar un link
+enter a textual description of the log-entry	infolog	es	introduzca un texto descriptivo de la entrada
+enter the query pattern	infolog	es	
 entry and all files	infolog	es	Entrada y todos los archivos
+existing links	infolog	es	Links existentes
 fax	infolog	es	Fax
 fieldseparator	infolog	es	Separador de Campos
 finish	infolog	es	finalizar
+for which types should this field be used	infolog	es	
 from	infolog	es	De
+high	infolog	es	
+id	infolog	es	
 import	infolog	es	Importar
+info log	common	es	
 infolog	common	es	InfoLog
 infolog - delete	infolog	es	Info Log - Eliminar
 infolog - edit	infolog	es	InfoLog - Editar
-infolog-fieldname	infolog	es	Info Log - Nombre del Campo
-infolog - import CSV-File	infolog	es	InfoLog - Importar Archivo CSV
+infolog - import csv-file	infolog	es	InfoLog - Importar Archivo CSV
 infolog - new	infolog	es	InfoLog - Nuevo
 infolog - new subproject	infolog	es	InfoLog - Nuevo Subproyecto
-infolog preferences	common	es	InfoLog - preferencias
 infolog - subprojects from	infolog	es	InfoLog - Subproyectos de
-Invalid filename	infolog	es	Nombre de Archivo Invalido
+infolog preferences	common	es	InfoLog - preferencias
+infolog-fieldname	infolog	es	Info Log - Nombre del Campo
+invalid filename	infolog	es	Nombre de Archivo Invalido
+label<br>helptext	infolog	es	Marca<br>Ayuda
 last changed	infolog	es	ultimo cambio
-list no Subs/Childs	infolog	es	No Listar Subs/Hijos
+last modified	infolog	es	Última modificación
+leave without saveing the entry	infolog	es	abandonar sin guardar la entrada
+leaves without saveing	infolog	es	abandonar sin guardar
+length<br>rows	infolog	es	Longitud<br>Filas
+link	infolog	es	Link
+links	infolog	es	Links
+links of this entry	infolog	es	Links de la entrada
+list no subs/childs	infolog	es	No Listar Subs/Hijos
+longer textual description	infolog	es	descripción larga de la entrada
+low	infolog	es	baja
+max length of the input [, length of the inputfield (optional)]	infolog	es	
+name must not be empty !!!	infolog	es	¡El nombre no puede quedar vació!
+name of new type to create	infolog	es	
+new name	infolog	es	nuevo nombre
+new search	infolog	es	Nueva búsqueda
 no - cancel	infolog	es	No - Cancelar
 no entries found, try again ...	infolog	es	no se encontraron registros, reintentelo ...
 no filter	infolog	es	sin Filtro
+no links or attachments	infolog	es	sin links o adjuntos
 none	infolog	es	Ninguno
+normal	infolog	es	normal
+not	infolog	es	no
 not assigned	infolog	es	no asignado
 note	infolog	es	Nota
-not	infolog	es	no
 number of records to read (<=200)	infolog	es	Numero de registros a leer (<=200)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	es	
 offer	infolog	es	ofrecer
 ongoing	infolog	es	actuales
+only the attachments	infolog	es	sólo los adjuntos
+only the links	infolog	es	sólo los links
 open	infolog	es	abrir
+optional note to the link	infolog	es	nota opcional para el link
+order	infolog	es	Ordenar
 overdue	infolog	es	vencido
-owner	infolog	es	Due&ntilde;o
 own	infolog	es	propio
 own open	infolog	es	propio abierto
 own overdue	infolog	es	propio vencido
 own upcoming	infolog	es	propio
-path on (web-)serverside<br>eg. /var/samba/Share	infolog	es	Camino en el servidor ej. /var/samba/Share
+owner	infolog	es	Dueño
+owner responsible	infolog	es	Responsable
+path on (web-)serverside<br>eg. /var/samba/share	infolog	es	Camino en el servidor ej. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	es	
 pattern for search in addressbook	infolog	es	expresion a buscar en la Libreta de direcciones
 pattern for search in projects	infolog	es	expresion a buscar en Proyectos
-phonecall	infolog	es	Llamado
-phone/email	infolog	es	Telefono/Email
 phone	infolog	es	Llamada Telefonica
+phone/email	infolog	es	Telefono/Email
+phonecall	infolog	es	Llamado
 priority	infolog	es	Prioridad
 private	infolog	es	Privado
 project	infolog	es	Proyecto
-reg. expr. for local IP's<br>eg. ^192\.168\.1\.	infolog	es	expresion regular para IP locales <br>ej. ^192\.168\.1\.
 re:	infolog	es	Re:
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es	expresion regular para IP locales <br>ej. ^192\.168\.1\.
 reject	infolog	es	rechazar
+remark	infolog	es	
+remove this link (not the entry itself)	infolog	es	Eliminar este link (no la entrada en sí)
 responsible	infolog	es	Responsable
+responsible user, priority, ...	infolog	es	
+save	infolog	es	Guardar
+saves the changes made and leaves	infolog	es	guardar los cambios realizados y salir
+saves this entry	infolog	es	Guardar esta entrada
+search	infolog	es	Buscar
 search for:	infolog	es	Buscar:
 select	infolog	es	Seleccionar
+select a category for this entry	infolog	es	seleccionar una categoría para esta entrada
+select a priority for this task	infolog	es	seleccionar una prioridad para esta tarea
+select a responsible user: a person you want to delegate this task	infolog	es	seleccionar un responsable: persona a la que se quiere delegar la tarea
+select a typ to edit it's status-values or delete it	infolog	es	seleccionar un tipo para editar su valor o eliminarlo
+select an app to search in	infolog	es	Seleccionar una Aplicación en la que buscar
+select an entry to link with	infolog	es	Seleccionar una entrada con la que crear un link
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	es	
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	es	
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	es	
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	es	
+should this entry only be visible to you and people you grant privat access via the acl	infolog	es	
 show full usernames	infolog	es	Mostrar nombres de usuario completos
-show open Events: Tasks/Calls/Notes on main screen	infolog	es	Mostrar eventos abiertos: Tareas/Llamados/Notas en la Pantalla Principal
+show in the infolog list	infolog	es	
+show open entries: tasks/calls/notes on main screen	infolog	es	
+show open events: tasks/calls/notes on main screen	infolog	es	Mostrar eventos abiertos: Tareas/Llamados/Notas en la Pantalla Principal
+start a new search, cancel this link	infolog	es	iniciar nueva búsqueda, cancelar este link
 startdate	infolog	es	Fecha de Inicio
+startdate enddate	infolog	es	Fechas Inicio/Fin
 startrecord	infolog	es	Comenzar Registro
 status	infolog	es	Estado
 sub	infolog	es	Sub
 subject	infolog	es	Asunto
 task	infolog	es	Tareas
-test Import (show importable records <u>only</u> in browser)	infolog	es	Probar Importacion (mostrar registros importables <u>solo</u> en el navegador)
+test import (show importable records <u>only</u> in browser)	infolog	es	Probar Importacion (mostrar registros importables <u>solo</u> en el navegador)
+the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	es	
+the text displayed to the user	infolog	es	
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	es	
+til when should the todo or phonecall be finished	infolog	es	
 today	infolog	es	Hoy
+todo	infolog	es	Tarea
 translation	infolog	es	Traducción
+typ	infolog	es	Tipo
+typ '%1' already exists !!!	infolog	es	¡Tipo '%1' ya existe!
 type	infolog	es	Tipo
+type of the log-entry: note, phonecall or todo	infolog	es	
+unlink	infolog	es	Desvincular
 upcoming	infolog	es	actuales
 urgency	infolog	es	Urgencia
 urgent	infolog	es	urgente
-use Button to search for Address	infolog	es	usar Boton para buscar por Direccion
-use Button to search for Project	infolog	es	usar Boton para buscar por Proyecto
-valid path on clientside<br>eg. \\Server\Share or e:\	infolog	es	camino valido en el cliente<br>ej. \\Servidor\Share o e:\
+use button to search for address	infolog	es	usar Boton para buscar por Direccion
+use button to search for project	infolog	es	usar Boton para buscar por Proyecto
+valid path on clientside<br>eg. \\server\share or e:\	infolog	es	camino valido en el cliente<br>ej. \\Servidor\Share o e:\
+values for selectbox	infolog	es	Valores para lista desplegable
+view all subs of this entry	infolog	es	Ver todos los Subs de esta entrada
 view other subs	infolog	es	ver otros Subs
+view parent	infolog	es	Ver padre
 view subs	infolog	es	ver Subs
+view the parent of this entry and all his subs	infolog	es	Ver el padre de esta entrada y todos sus Subs
+view this linked entry in its application	infolog	es	ver esta entrada linkada en su apliación
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	es	
 will-call	infolog	es	va a llamar
 yes - delete	infolog	es	Si - Eliminar
+you can't delete one of the stock types !!!	infolog	es	
 you have entered an invalid ending date	infolog	es	Usted ha ingresado una fecha de finalizacion invalida
 you have entered an invalid starting date	infolog	es	Usted ha ingresado una fecha de comienzo invalida
+you have to enter a name, to create a new typ!!!	infolog	es	¡Usted debe introducir un nombre para crear un tipo nuevo!
 you must enter a subject or a description	infolog	es	Usted debe ingresar un asunto o descripcion
+
