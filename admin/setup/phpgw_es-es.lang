@@ -396,7 +396,7 @@ who would you like to transfer all records owned by the deleted user to?	admin	e
 would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión<br>cuando inicien la sesión los administradores?
 would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión de las aplicaciones cuando inicien la sesión los administradores?
 would you like egroupware to cache the phpgw info array ?	admin	es-es	¿Desea que eGroupWare almacene en memoria el array phpgw info?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que phpGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
+would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
 would you like phpgroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que phpGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	es-es	¿Desea cargar automáticamente nuevos ficheros de idioma (al iniciar la sesión)?
 would you like to show each application's upgrade status ?	admin	es-es	Desea mostrar el estado de actualizacion de cada aplicacion?

@@ -355,7 +355,7 @@ who would you like to transfer all records owned by the deleted user to?	admin	z
 would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查系統最新版本嗎？
 would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查應用程式最新版本嗎？
 would you like phpgroupware to cache the phpgw info array ?	admin	zh	需要phpGroupWare缓存phpgw信息数组吗?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	zt	您希望 phpGroupWare 自動於管理者登入時檢查是否有最新版本？
+would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望 eGroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like phpgroupware to check for new application versions when admins login ?	admin	zt	您希望phpGroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	登录时，是否自动加载新的语言文件?
 would you like to show each application's upgrade status ?	admin	zh	是否显示每个应用程序的升级情况?

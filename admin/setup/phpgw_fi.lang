@@ -194,7 +194,7 @@ view error log	admin	fi	N‰yt‰ virheloki
 view sessions	admin	fi	N‰yt‰ istunnot
 who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirret‰‰n KAIKKI poistetun k‰ytt‰j‰n tietueet?
 would you like egroupWare to cache the phpgw info array ?	admin	fi	S‰ilytet‰‰nkˆ egw info -rakenne v‰limuistissa?
-would you like phpgroupWare to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko phpGroupWare:sta uutta versiota<br>kun p‰‰k‰ytt‰j‰ kirjautuu j‰rjestelm‰‰n?
+would you like egroupware to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko eGroupWare:sta uutta versiota<br>kun p‰‰k‰ytt‰j‰ kirjautuu j‰rjestelm‰‰n?
 would you like to show each application's upgrade status ?	admin	fi	N‰ytet‰‰nkˆ kunkin sovelluksen p‰ivitystilanne?
 you have entered an invalid expiration date	admin	fi	Vanhenemisp‰iv‰ ei kelpaa
 you must add at least 1 permission or group to this account	admin	fi	Lis‰‰ tunnukseen ainakin yksi oikeus tai ryhm‰

@@ -354,7 +354,7 @@ who would you like to transfer all records owned by the deleted user to?	admin	n
 would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u dat eGroupWare controleerd op <br> een nieuwe versie als de admin aanmeld?
 would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u dat eGroupWare controleerd op <br> nieuwe applicaties als de admin aanmeld?
 would you like phpgroupware to cache the phpgw info array ?	admin	nl	Wilt u eGroupWare de phpgwinfo-array laten cachen ? (EXTREEM GEVAARLIJK!)
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie wanneer beheerders inloggen?
+would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie wanneer beheerders inloggen?
 would you like phpgroupware to check for new application versions when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor nieuwe toepassingensversies wanneer beheerders inloggen?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wilt u automatisch (bij inloggen) nieuwe taalbestanden laden?
 would you like to show each application's upgrade status ?	admin	nl	Wilt u bij de elke toepassing de upgradestatus weergeven?

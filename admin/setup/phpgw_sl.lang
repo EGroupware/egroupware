@@ -343,7 +343,7 @@ view this user	admin	sl	Preglej tega uporabnika
 view user account	admin	sl	Preglej uporabnikov ra&#269;un
 who would you like to transfer all records owned by the deleted user to?	admin	sl	Komu se dodelijo <b>vsi</b> zapisi v lasti izbrisanega uporabnika?
 would you like phpgroupware to cache the phpgw info array ?	admin	sl	Ali 푘lite, da eGroupware shrani spremenljivko phpgw_info v predpomnilnik?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	sl	Ali 푘lite, da eGroupware preveri veljavnost razli&#269;ice ob administratorjevi prijavi?
+would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali 푘lite, da eGroupware preveri veljavnost razli&#269;ice ob administratorjevi prijavi?
 would you like phpgroupware to check for new application versions when admins login ?	admin	sl	Ali 푘lite, da eGroupware preveri veljavnost razli&#269;ice aplikacij ob administratorjevi prijavi?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sl	Ali 푘lite avtomati&#269;no nalo푝ti popravke jezika (ob prijavi)?
 would you like to show each application's upgrade status ?	admin	sl	Ali 푘lite prikazati status razli&#269;ice vsake aplikacije?
