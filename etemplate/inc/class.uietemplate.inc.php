@@ -48,7 +48,7 @@
 			);
 			$this->boetemplate();
 			$this->html = CreateObject('etemplate.html');	// should  be in the api (older version in infolog)
-			$this->sbox = CreateObject('phpgwapi.sbox2');	// older version is in the api
+			$this->sbox = CreateObject('etemplate.sbox2');	// older version is in the api
 
 			if (!$this->read($name,$template,$lang,$group,$version))
 			{
@@ -105,9 +105,20 @@
 				'method' => $method
 			));
 
-			$GLOBALS['phpgw']->template->set_var('phpgw_body',$this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
+			$html = $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
 				$this->html->form($this->show($content,$sel_options,$readonlys,'exec'),
-					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec'));
+					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec');
+
+			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			//echo "Version: $a.$b.$c.$d\n";
+			if ($a <= 0 && $b <= 9 && $c <= 14)
+			{
+				echo parse_navbar() . $html;
+			}
+			else
+			{
+				$GLOBALS['phpgw']->template->set_var('phpgw_body',$html);
+			}
 		}
 
 		/*!
