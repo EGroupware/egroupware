@@ -474,7 +474,7 @@
 			/* set basic vars and parse the header */
 			$GLOBALS['phpgw']->template->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
 			$GLOBALS['phpgw']->template->set_var('lang_actions',lang('Actions'));
-			$GLOBALS['phpgw']->template->set_var('check','');
+			$GLOBALS['phpgw']->template->set_var('check',$GLOBALS['phpgw']->common->image('phpgwapi','transparent'));
 			$GLOBALS['phpgw']->template->set_var('select_all','');
 			if(count($entries))
 			{
