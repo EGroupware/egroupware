@@ -175,7 +175,7 @@
 			}
 			$html = CreateObject('phpgwapi.html');
 			
-			return $html->select($name,strtolower($selected),$charsets,true);
+			return $html->select($name,trim(strtolower($selected)),$charsets,true);
 		}								
 	}
 ?>
