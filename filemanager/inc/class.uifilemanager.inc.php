@@ -209,7 +209,7 @@
 
 				if($test[mime_type]!='Directory')
 				{
-					die('Fake Base directory does not exist and could not be created, please ask the adminstrator to check the global configuration.');
+					die('Fake Base directory does not exist and could not be created, please ask the administrator to check the global configuration.');
 				}
 				else
 				{
