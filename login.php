@@ -168,7 +168,7 @@
 					}
 				}
 			}
-			$phpgw->redirect($phpgw->link('/index.php','cd=yes' . $extra_vars));
+			$phpgw->redirect($phpgw->link('/home.php','cd=yes' . $extra_vars));
 		}
 	}
 	else

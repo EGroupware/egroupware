@@ -34,19 +34,14 @@
 		'enable_nextmatchs_class' => True
 	);
 	include('header.inc.php');
-	// Note: I need to add checks to make sure these apps are installed.
 
 	if ($phpgw_forward)
 	{
-		// Why again?
-		if ($phpgw_forward)
+		while (list($name,$value) = each($HTTP_GET_VARS))
 		{
-			while (list($name,$value) = each($HTTP_GET_VARS))
+			if (ereg('phpgw_',$name))
 			{
-				if (ereg('phpgw_',$name))
-				{
-					$extra_vars .= '&' . $name . '=' . urlencode($value);
-				}
+				$extra_vars .= '&' . $name . '=' . urlencode($value);
 			}
 		}
 		$phpgw->redirect($phpgw->link($phpgw_forward,$extra_vars));
@@ -113,12 +108,6 @@
 			$phpgw->common->phpgw_header();
 			echo parse_navbar();
 		}
-
-		// $phpgw->hooks->proccess("location","mainscreen");
-		// $phpgw->preferences->read_preferences("addressbook");
-		// $phpgw->preferences->read_preferences("email");
-		// $phpgw->preferences->read_preferences("calendar");
-		// $phpgw->preferences->read_preferences("stocks");
 
 		$phpgw->db->query("select app_version from phpgw_applications where app_name='phpgwapi'",__LINE__,__FILE__);
 		if($phpgw->db->next_record())
