@@ -11,7 +11,7 @@
         - Fixed submitting of calendar entry when javascript turned off.
         - Fixed calendar preferences not updating properly
         - Fixed denylogin form not display and converted it to a template.
-
+        - Added select box option for multiable domains in login.php
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
