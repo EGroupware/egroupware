@@ -34,7 +34,10 @@
 	/**************************************************************************\
 	* Include the apps footer files if it exists                               *
 	\**************************************************************************/
-	$GLOBALS['phpgw']->common->phpgw_footer();
+	if (is_object($GLOBALS['phpgw']->common))
+	{
+		$GLOBALS['phpgw']->common->phpgw_footer();
+	}
 ?>
 </BODY>
 </HTML>
