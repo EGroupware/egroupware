@@ -16,6 +16,7 @@
      $phpgw_info["flags"] = array("nonavbar" => True, "noheader" => True);  
   }
   $phpgw_info["flags"]["currentapp"] = "preferences";
+  $phpgw_info["flags"]["enable_sbox_class"] = True;
 
   include("../header.inc.php");
 
@@ -195,6 +196,35 @@
           ?>
         </td>
        </tr>
+
+       <tr>
+         <?php $selected[$phpgw_info['user']['preferences']['common']['country']] = ' selected'; ?>
+        <td><?php echo lang('country'); ?></td>
+        <td>
+        <?php
+          echo $phpgw->sbox->form_select($phpgw_info['user']['preferences']['common']['country'],'settings[country]');
+        ?>
+         </select>
+        </td>
+       </tr>
+
+       <?php if ($phpgw_info['server']['countrylist'] == 'user_choice'){ ?>
+       <tr>
+         <?php $selected_country[$phpgw_info['user']['preferences']['common']['countrylist']] = ' selected'; ?>
+        <td><?php echo lang('Country Selection') . ':'; ?><br></td>
+        <td>
+         <select name="settings[countrylist]">
+        <?php
+          $country = array('use_select' => lang('Use Selectbox'), 'use_text' => lang('Use Text Entry'));
+          while (list ($key, $value) = each ($country)){
+            echo '<option value="'.$key.'" '.$selected_country[$key].'>'.$value.'</option>';
+          }
+        ?>
+         </select>
+        </td>
+       </tr>
+      <?php } ?>
+
        <tr>
          <?php $selected[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; ?>
         <td><?php echo lang("language"); ?></td>

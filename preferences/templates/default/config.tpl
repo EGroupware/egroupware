@@ -30,6 +30,15 @@
    </tr>
 
    <tr bgcolor="{row_on}">
+    <td>{lang_Country_Selection} ({lang_Text_Entry}/{lang_SelectBox}):</td>
+    <td>
+     <select name="newsettings[countrylist]">
+{hook_country_set}
+     </select>
+    </td>
+   </tr>
+
+   <tr bgcolor="{row_on}">
     <td>{lang_Interface}/{lang_Template_Selection}:</td>
     <td>
      <select name="newsettings[template_set]">

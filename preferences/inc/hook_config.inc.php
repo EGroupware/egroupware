@@ -12,6 +12,33 @@
 
   /* $Id$ */
 
+
+	function country_set($config)
+	{
+		global $phpgw;
+
+		$country  = array(
+			'user_choice'  => 'User Choice',
+			'force_select' => 'Force Selectbox'
+		);
+
+		while (list ($key, $value) = each ($country))
+		{
+			if ($config['countrylist'] == $key)
+			{
+				$selected = ' selected';
+			}
+			else
+			{
+				$selected = '';
+			}
+			$descr = lang($value);
+
+			$out .= '<option value="' . $key . '"' . $selected . '>' . $descr . '</option>' . "\n";
+		}
+		return $out;
+	}
+
 	function force_theme($config)
 	{
 		global $phpgw;
