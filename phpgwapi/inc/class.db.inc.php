@@ -266,7 +266,8 @@
 				return '';
 			}
 			// REMOVE-IF-ONLY-ADODB
-			if (!@$GLOBALS['phpgw_info']['server']['use_adodb'])
+			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
+			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
 			{
 				return addslashes($str);
 			}
@@ -855,7 +856,8 @@
 					return (int) $value;
 			}
 			// REMOVE-IF-ONLY-ADODB
-			if (!@$GLOBALS['phpgw_info']['server']['use_adodb'])
+			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
+			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
 			{
 				return "'" . (!isset($value) || $value == '' ? '' : addslashes($value)) . "'";
 			}
