@@ -42,7 +42,7 @@
 					$sTranslated = 'int4';
 					break;
 				case 'blob':
-					$sTranslated = 'text';
+					$sTranslated = 'bytea';
 					break;
 				case 'char':
 					if($iPrecision > 0 && $iPrecision < 256)
