@@ -144,7 +144,7 @@
 			{
 				$this->data[$posted_table] = $this->content2table($content);
 			}
-			if (isset($content['write_tables']))
+			if ($content['write_tables'])
 			{
 				if ($this->needs_save('',$this->app,$this->table,$this->data[$posted_table]))
 				{
@@ -152,7 +152,7 @@
 				}
 				$msg .= $this->messages[$this->write($this->app,$this->data) ? 'writen' : 'error_writing'];
 			}
-			elseif (isset($content['delete']))
+			elseif ($content['delete'])
 			{
 				list($col) = each($content['delete']);
 
@@ -162,7 +162,7 @@
 				unset($this->data[$posted_table]['fd'][$key]);
 				$this->changes[$posted_table][$key] = '**deleted**';
 			}
-			elseif (isset($content['add_column']))
+			elseif ($content['add_column'])
 			{
 				$this->data[$posted_table]['fd'][''] = array();
 			}
