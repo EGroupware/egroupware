@@ -10,7 +10,7 @@
 	$tables[] = 'phpgw_config';
 	$tables[] = 'phpgw_categories';
 	$tables[] = 'phpgw_applications';
-	$tables[] = 'phpgw_ass_sessions';
+	$tables[] = 'phpgw_app_sessions';
 	$tables[] = 'phpgw_accounts';
 	$tables[] = 'phpgw_access_log';
 	$tables[] = 'phpgw_lang';
