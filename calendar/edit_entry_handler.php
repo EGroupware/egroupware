@@ -33,7 +33,7 @@
       $cal_info->owner = $cal_info->participants[0];
     }
     $phpgw->common->appsession($cal_info);
-    $overlapping_events = $phpgw->calendar->overlap($cal_info->month,$cal_info->day,$cal_info->year,$cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->end_month,$cal_info->end_day,$cal_info->end_year,$cal_info->end_hour,$cal_info->end_minute,$cal_info->end_ampm,$cal_info->participants,$cal_info->id);
+    $overlapping_events = $phpgw->calendar->overlap($cal_info->month,$cal_info->day,$cal_info->year,$cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->end_month,$cal_info->end_day,$cal_info->end_year,$cal_info->end_hour,$cal_info->end_minute,$cal_info->end_ampm,$cal_info->participants,$cal_info->owner,$cal_info->id);
   } else {
     $cal_info = $phpgw->common->appsession();
   }

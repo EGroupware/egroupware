@@ -41,6 +41,7 @@
     $cal_info = $phpgw->common->appsession();
     $can_edit = true;
   } else {
+//    $cal_info->owner = $phpgw_info["user"]["account_id"];
     $can_edit = true;
 
     if (!isset($day) || !$day)
@@ -230,7 +231,10 @@
 // Groups
     $phpgw->template->set_var("field",lang("Groups"));
     $str = "<select name=\"groups[]\" multiple size=\"5\">";
-    $user_groups = $phpgw->accounts->read_group_names();
+    $db2 = $phpgw->db;
+    $db2->query("SELECT account_lid FROM accounts WHERE account_id=".$cal_info->owner,__LINE__,__FILE__);
+    $db2->next_record();
+    $user_groups = $phpgw->accounts->read_group_names($db2->f("account_lid"));
     for ($i=0;$i<count($user_groups);$i++) {
       $str .= "<option value=\"" . $user_groups[$i][0] . "\"";
       for($j=0;$j<count($cal_info->groups);$j++) {
