@@ -27,6 +27,7 @@
 
 		function mainscreen()
 		{
+			$GLOBALS['phpgw_info']['flags']['java_script_url'] = 'default/app_scripts.js';
 			$GLOBALS['phpgw']->xslttpl->add_file('app_data');
 			$GLOBALS['phpgw']->hooks->process('admin');
 
