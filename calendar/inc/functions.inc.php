@@ -11,89 +11,91 @@
 
   /* $Id$ */
 
-  global $phpgw_info, $phpgw, $grants, $owner, $rights, $filter;
-  global $date, $year, $month, $day, $thisyear, $thismonth, $thisday;
+	global $phpgw_info, $phpgw, $grants, $owner, $rights, $filter;
+	global $date, $year, $month, $day, $thisyear, $thismonth, $thisday;
 
-  if(!isset($filter) || !$filter)
-  {
-    $filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
-  }
+	if(!isset($filter) || !$filter)
+	{
+		$filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
+	}
 
-  // This is the initialization of the ACL usage
+	// This is the initialization of the ACL usage
 
-  $grants = $phpgw->acl->get_grants('calendar');
+	$grants = $phpgw->acl->get_grants('calendar');
 
-  if(!isset($owner))
-  {
-    $owner = 0;
-  }
+	if(!isset($owner))
+	{
+		$owner = 0;
+	}
 
-  if(!isset($owner) || !$owner)
-  {
-    $owner = $phpgw_info['user']['account_id'];
-    $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-  }
-  else
-  {
-    if($grants[$owner])
-    {
-      $rights = $grants[$owner];
-      if ($rights == 0)
-      {
-	$owner = $phpgw_info['user']['account_id'];
-	$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-      }
-    }
-  }
+	if(!isset($owner) || !$owner)
+	{
+		$owner = $phpgw_info['user']['account_id'];
+		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+	}
+	else
+	{
+		if($grants[$owner])
+		{
+			$rights = $grants[$owner];
+			if ($rights == 0)
+			{
+				$owner = $phpgw_info['user']['account_id'];
+				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+			}
+		}
+	}
 
-  /* Load calendar class */
-  $parameters = Array(
-			'printer_friendly'	=> ((isset($friendly) && ($friendly==1))?True:False),
-			'owner'			=> $owner,
-			'rights'		=> $rights
-  );
+	/* Load calendar class */
+	$parameters = Array(
+		'printer_friendly'=> ((isset($friendly) && ($friendly==1))?True:False),
+		'owner'				=> $owner,
+		'rights'				=> $rights
+	);
   
-  $phpgw->calendar  = CreateObject('calendar.calendar',$parameters);
+	$phpgw->calendar  = CreateObject('calendar.calendar',$parameters);
 
-  if(!isset($phpgw_info['user']['preferences']['calendar']['weekdaystarts']))
-    $phpgw_info['user']['preferences']['calendar']['weekdaystarts'] = 'Sunday';
+	if(!isset($phpgw_info['user']['preferences']['calendar']['weekdaystarts']))
+	{
+		$phpgw_info['user']['preferences']['calendar']['weekdaystarts'] = 'Sunday';
+	}
+	
+	if (isset($date) && strlen($date) > 0)
+	{
+		$thisyear  = intval(substr($date, 0, 4));
+		$thismonth = intval(substr($date, 4, 2));
+		$thisday   = intval(substr($date, 6, 2));
+	}
+	else
+	{
+		if (!isset($day) || !$day)
+		{
+			$thisday = $phpgw->calendar->today['day'];
+		}
+		else
+		{
+			$thisday = $day;
+		}
     
-  if (isset($date) && strlen($date) > 0)
-  {
-    $thisyear  = intval(substr($date, 0, 4));
-    $thismonth = intval(substr($date, 4, 2));
-    $thisday   = intval(substr($date, 6, 2));
-  }
-  else
-  {
-    if (!isset($day) || !$day)
-    {
-      $thisday = $phpgw->calendar->today['day'];
-    }
-    else
-    {
-      $thisday = $day;
-    }
+		if (!isset($month) || !$month)
+		{
+			$thismonth = $phpgw->calendar->today['month'];
+		}
+		else
+		{
+			$thismonth = $month;
+		}
     
-    if (!isset($month) || !$month)
-    {
-      $thismonth = $phpgw->calendar->today['month'];
-    }
-    else
-    {
-      $thismonth = $month;
-    }
-    
-    if (!isset($year) || !$year)
-    {
-      $thisyear = $phpgw->calendar->today['year'];
-    }
-    else
-    {
-      $thisyear = $year;
-    }
+		if (!isset($year) || !$year)
+		{
+			$thisyear = $phpgw->calendar->today['year'];
+		}
+		else
+		{
+			$thisyear = $year;
+		}
 
-  }
+	}
   
   $phpgw->calendar->tempyear = $thisyear;
   $phpgw->calendar->tempmonth = $thismonth;

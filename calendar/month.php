@@ -12,57 +12,69 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-  $phpgw_info['flags'] = array('currentapp' => 'calendar', 'enable_nextmatchs_class' => True);
+	if (isset($friendly) && $friendly)
+	{
+		$phpgw_flags = Array(
+			'currentapp'					=>	'calendar',
+			'enable_nextmatchs_class'	=>	True,
+			'noheader'						=>	True,
+			'nonavbar'						=>	True,
+			'noappheader'					=>	True,
+			'noappfooter'					=>	True,
+			'nofooter'						=>	True
+		);
+	}
+	else
+	{
+		$phpgw_flags = Array(
+			'currentapp'					=>	'calendar',
+			'enable_nextmatchs_class'	=>	True
+		);
+		
+		$friendly = 0;
+	}
 
-  if (isset($friendly) && $friendly){
-     $phpgw_info['flags']['noheader'] = True;
-     $phpgw_info['flags']['nonavbar'] = True;
-     $phpgw_info['flags']['noappheader'] = True;
-     $phpgw_info['flags']['noappfooter'] = True;
-     $phpgw_info['flags']['nofooter'] = True;
-  } else {
-     $friendly = 0;
-  }
+	$phpgw_info['flags'] = $phpgw_flags;
+	include('../header.inc.php');
 
-  include('../header.inc.php');
+	$view = "month";
 
-  $view = "month";
+	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 
-  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	$templates = Array(
+		'index_t'	=>	'index.tpl'
+	);
+	
+	$p->set_file($templates);
 
-  $p->set_file(array('index_t' => 'index.tpl'));
-
-  $p->set_block('index_t','index');
-
-  if ($friendly) {
-    $p->set_var('printer_friendly','<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">');
-  } else {
-    $p->set_var('printer_friendly','');
-  }
-
-  $p->set_var('bg_text',$phpgw_info['theme']['bg_text']);
-
-  $p->set_var('small_calendar_prev',$phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php'));
-
-  $m = mktime(0,0,0,$thismonth,1,$thisyear);
-  $p->set_var('month_identifier',lang(strftime("%B",$m)) . ' ' . $thisyear);
-  $p->set_var('username',$phpgw->common->grab_owner_name($owner));
-  $p->set_var('small_calendar_next',$phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php'));
-  $p->set_var('large_month',$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
+	$m = mktime(0,0,0,$thismonth,1,$thisyear);
 
 	if ($friendly == 0)
 	{
+		$printer = '';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;
 		$print = '<a href="'.$phpgw->link('',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 	}
 	else
 	{
+		$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 		$print =	'';
 	}
 
-	$p->set_var('print',$print);
-  $p->pparse('out','index_t');
-  $phpgw->common->phpgw_footer();
+	$var = Array(
+		'printer_friendly'		=>	$printer,
+		'bg_text'					=> $phpgw_info['themem']['bg_text'],
+		'small_calendar_prev'	=>	$phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php'),
+		'month_identifier'		=>	lang(strftime("%B",$m)) . ' ' . $thisyear,
+		'username'					=>	$phpgw->common->grab_owner_name($owner),
+		'small_calendar_next'	=>	$phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php'),
+		'large_month'				=>	$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner),
+		'print'						=>	$print
+	);
+
+	$p->set_var($var);
+	$p->pparse('out','index_t');
+	$phpgw->common->phpgw_footer();
 ?>

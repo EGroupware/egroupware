@@ -12,71 +12,70 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
-
-	$phpgw_flags = Array (
-		'currentapp'					=> 'calendar',
-		'enable_nextmatchs_class'	=> True
-	);
-
-	$phpgw_info['flags'] = $phpgw_flags;
+	/* $Id$ */
 
 	if (isset($friendly) && $friendly)
 	{
-		$phpgw_info['flags']['noheader'] = True;
-		$phpgw_info['flags']['nonavbar'] = True;
-		$phpgw_info['flags']['noappheader'] = True;
-		$phpgw_info['flags']['noappfooter'] = True;
-		$phpgw_info['flags']['nofooter'] = True;
+		$phpgw_flags = Array(
+			'currentapp'					=>	'calendar',
+			'enable_nextmatchs_class'	=>	True,
+			'noheader'						=>	True,
+			'nonavbar'						=>	True,
+			'noappheader'					=>	True,
+			'noappfooter'					=>	True,
+			'nofooter'						=>	True
+		);
 	}
 	else
 	{
+		$phpgw_flags = Array(
+			'currentapp'					=>	'calendar',
+			'enable_nextmatchs_class'	=>	True
+		);
+		
 		$friendly = 0;
 	}
 
+	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 	
 	$view = 'day';
 
-	$now	= $phpgw->calendar->makegmttime(0, 0, 0, $thismonth, $thisday, $thisyear);
-
 	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	
 	$template = Array(
 		'day_t' => 'day.tpl'
 	);
 
 	$p->set_file($template);
 
-//	$phpgw->template->set_block('day_t');
-
-	if ($friendly)
-	{
-		$p->set_var('printer_friendly','<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">');
-	}
-	else
-	{
-		$p->set_var('printer_friendly','');
-	}
-
-	$p->set_var('bg_text',$phpgw_info['theme']['bg_text']);
-
-	$m = mktime(0,0,0,$thismonth,1,$thisyear);
-	$p->set_var('date',lang(date('F',$m)).' '.$thisday.', '.$thisyear);
-	$p->set_var('username',$phpgw->common->grab_owner_name($owner));
-	$p->set_var('daily_events',$phpgw->calendar->print_day_at_a_glance($now,$owner));
-	$p->set_var('small_calendar',$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,'day.php'));
-
 	if ($friendly == 0)
 	{
+		$printer = '';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&friendly=1&filter='.$filter.'&owner='.$owner;
 		$print = '<a href="'.$phpgw->link('',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 	}
 	else
 	{
+		$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 		$print =	'';
 	}
 
-	$p->set_var('print',$print);
+	$now	= $phpgw->calendar->makegmttime(0, 0, 0, $thismonth, $thisday, $thisyear);
+
+	$m = mktime(0,0,0,$thismonth,1,$thisyear);
+	
+	$var = Array(
+		'printer_friendly'		=>	$printer,
+		'bg_text'					=> $phpgw_info['themem']['bg_text'],
+		'daily_events'				=>	$phpgw->calendar->print_day_at_a_glance($now,$owner),
+		'small_calendar'			=>	$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,'day.php'),
+		'date'						=>	lang(date('F',$m)).' '.$thisday.', '.$thisyear,
+		'username'					=>	$phpgw->common->grab_owner_name($owner),
+		'print'						=>	$print
+	);
+
+	$p->set_var($var);
 
 	$p->pparse('out','day_t');
 	$phpgw->common->phpgw_footer();
