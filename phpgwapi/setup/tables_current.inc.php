@@ -63,7 +63,8 @@
 				'account_lastpwd_change' => array('type' => 'int', 'precision' => 4),
 				'account_status' => array('type' => 'char', 'precision' => 1, 'nullable' => false, 'default' => 'A'),
 				'account_expires' => array('type' => 'int', 'precision' => 4),
-				'account_type' => array('type' => 'char', 'precision' => 1, 'nullable' => true)
+				'account_type' => array('type' => 'char', 'precision' => 1, 'nullable' => true),
+				'account_file_space' => array('type' => 'varchar', 'precision' => 25),
 			),
 			'pk' => array('account_id'),
 			'fk' => array(),

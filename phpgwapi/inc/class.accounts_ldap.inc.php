@@ -89,6 +89,7 @@
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
 			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires'] = -1;
+			$this->data['file_space']	 = $this->db->f('account_file_space');
 
 			return $this->data;
 		}
@@ -136,8 +137,8 @@
 
 			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
-
+				. $this->data['status'] . "', account_file_space='" . $this->data['file_space']
+				. "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 		}
 
 		function delete($accountid = '')
@@ -218,7 +219,8 @@
 						'account_type' => $this->db->f('account_type'),
 						'account_firstname' => $allValues[0]['givenname'][0],
 						'account_lastname' => $allValues[0]['sn'][0],
-						'account_status' => $this->db->f('account_status')
+						'account_status' => $this->db->f('account_status'),
+						'account_file_space' => $this->db->f('account_file_space'),
 					);
 				}
 				else
@@ -229,7 +231,8 @@
 						'account_type' => $this->db->f('account_type'),
 						'account_firstname' => $this->db->f('account_firstname'),
 						'account_lastname' => $this->db->f('account_lastname'),
-						'account_status' => $this->db->f('account_status')
+						'account_status' => $this->db->f('account_status'),
+						'account_file_space' => $this->db->f('account_file_space'),
 					);
 				}
 			}
@@ -363,9 +366,10 @@
 			}
 
 			$this->db->query("INSERT INTO phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status, account_expires) VALUES ('" . $account_id . "','" . $account_info['account_lid']
+				. "account_firstname, account_lastname, account_status, account_expires, account_file_space) VALUES ('" . $account_id . "','" . $account_info['account_lid']
 				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
-				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "'," . $account_info['account_expires'] . ")",__LINE__,__FILE__);
+				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "'," . $account_info['account_expires'] . ",'" . $account_info['account_file_space'] . "')",__LINE__,__FILE__);
+
 
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'],'uid=' . $account_info['account_lid']);
 			$allValues = ldap_get_entries($ds, $sri);
@@ -480,8 +484,8 @@
 //				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
 			}
 			$sql = "insert into phpgw_accounts";
-			$sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_type)";
-			$sql .= "values (".$accountid.", '".$accountname."', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A','u')";
+			$sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_type, account_file_space)";
+			$sql .= "values (".$accountid.", '".$accountname."', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A','u','" . $phpgw_info['server']['vfs_default_account_size_number'] . "-" .  $phpgw_info['server']['vfs_default_account_size_type'] . "')";
 			$this->db->query($sql);
 			$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
 			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 1)",__LINE__,__FILE__);

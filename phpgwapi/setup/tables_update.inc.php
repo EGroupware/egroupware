@@ -1489,4 +1489,14 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
+
+	$test[] = '0.9.13.002';
+	function phpgwapi_upgrade0_9_13_002()
+	{
+		global $setup_info,$phpgw_setup;
+		$phpgw_setup->oProc->AddColumn('phpgw_accounts','account_file_space', array ('type' => 'varchar', 'precision' => 25));
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
 ?>

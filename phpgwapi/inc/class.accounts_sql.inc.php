@@ -56,6 +56,7 @@
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
 			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires']           = $this->db->f('account_expires');
+			$this->data['file_space']           = $this->db->f('account_file_space');
 			return $this->data;
 		}
 
@@ -63,7 +64,8 @@
 		{
 			$this->db->query("UPDATE phpgw_accounts SET account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "', account_expires='" . $this->data['expires'] . "' WHERE account_id='"
+				. $this->data['status'] . "', account_expires='" . $this->data['expires']
+				. "', account_file_space='" . $this->data['file_space'] . "' WHERE account_id='"
 				. $this->account_id . "'",__LINE__,__FILE__);
 		}
 
@@ -148,7 +150,8 @@
 					'account_firstname' => $this->db->f('account_firstname'),
 					'account_lastname'  => $this->db->f('account_lastname'),
 					'account_status'    => $this->db->f('account_status'),
-					'account_expires'   => $this->db->f('account_expires')
+					'account_expires'   => $this->db->f('account_expires'),
+					'account_file_space'	=> $this->db->f('account_file_space'),
 				);
 			}
 			return $accounts;
@@ -220,9 +223,9 @@
 		function create($account_info)
 		{
 			$this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_info['account_lid']
+				. "account_firstname, account_lastname, account_status, account_expires, account_file_space) values ('" . $account_info['account_lid']
 				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
-				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "','" . $account_info['account_expires']
+				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "','" . $account_info['account_expires'] . "','" . $account_info['account_file_space']
 				. "')",__LINE__,__FILE__);
 		}
 
@@ -243,7 +246,8 @@
 				'account_firstname' => '',
 				'account_lastname'  => '',
 				'account_status'    => $account_status,
-				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
+				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate)),
+				'account_file_space'   => $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type'],
 			);
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
