@@ -280,7 +280,6 @@
 			{
 				return False;
 			}
-			// the substring is needed as the string is already in quotes
 			return $this->Link_ID->addq($str);
 		}
 
@@ -959,11 +958,15 @@
 			switch($type)
 			{
 				case 'blob':
-					if ($this->Type == 'mysql')
+					switch ($this->Link_ID->blobEncodeType)
 					{
-						break;	// ADOdb has no BlobEncode for mysql and returns an unquoted string !!!
+						case 'C':	// eg. postgres
+							return "'" . $this->Link_ID->BlobEncode($value) . "'";
+						case 'I':
+							return $this->Link_ID->BlobEncode($value);
+						default:
+							break;	// handled like strings					
 					}
-					return "'" . $this->Link_ID->BlobEncode($value) . "'";
 				case 'date':
 					return $this->Link_ID->DBDate($value);
 				case 'timestamp':
