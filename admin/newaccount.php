@@ -89,7 +89,7 @@
 
   $phpgw->template->set_var("lang_action",lang("Add new account"));
 
-  if ($phpgw->templateotalerrors) {
+  if ($totalerrors) {
      $phpgw->template->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
   } else {
      $phpgw->template->set_var("error_messages","");
