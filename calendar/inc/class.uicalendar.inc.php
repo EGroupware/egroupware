@@ -866,7 +866,7 @@
 				)
 			);
 
-			$event = $this->bo->read_entry($HTTP_GET_VARS['cal_id']);
+			$event = $this->bo->read_entry($GLOBALS['HTTP_GET_VARS']['cal_id']);
 			echo $this->view_event($event);
 
 			echo $this->get_response($event['id']);
