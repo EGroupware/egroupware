@@ -177,7 +177,7 @@
       if ($phpgw_info["server"]["global_denied_users"][$this->account_lid]) {
          return False;
       }
- 
+
       if (! $phpgw->auth->authenticate($this->account_lid, $passwd)) {
          return False;
          exit;
@@ -190,11 +190,11 @@
       }
       $phpgw->accounts->account_id = $this->account_id;
 
-      $this->sessionid		= md5($phpgw->common->randomstring(10));
+      $this->sessionid    = md5($phpgw->common->randomstring(10));
       $this->kp3          = md5($phpgw->common->randomstring(15));
 
-			$phpgw->common->key  = md5($this->kp3 . $this->sessionid . $phpgw_info["server"]["encryptkey"]);
-      $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
+      $phpgw->common->key = md5($this->kp3 . $this->sessionid . $phpgw_info["server"]["encryptkey"]);
+      $phpgw->common->iv  = $phpgw_info["server"]["mcrypt_iv"];
       $cryptovars[0] = $phpgw->common->key;
       $cryptovars[1] = $phpgw->common->iv;
       $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
