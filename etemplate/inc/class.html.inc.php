@@ -14,18 +14,22 @@
 
 class html
 {
+	var $user_agent,$ua_version;
 	var $prefered_img_title;
 
 	function html()
-	{
-		global $HTTP_USER_AGENT;
-																// should be Ok for all HTML 4 compatible browsers
-		$this->prefered_img_title = stristr($HTTP_USER_AGENT,'konqueror') ? 'title' : 'alt';
+	{																// should be Ok for all HTML 4 compatible browsers
+		if (!eregi('compatible; ([a-z_]+)[/ ]+([0-9.]+)',$GLOBALS['HTTP_USER_AGENT'],$parts))
+			eregi('^([a-z_]+)/([0-9.]+)',$GLOBALS['HTTP_USER_AGENT'],$parts);
+		list(,$this->user_agent,$this->ua_version) = $parts;
+		$this->user_agent = strtolower($this->user_agent);
+		$this->prefered_img_title = $this->user_agent == 'mozilla' && $this->ua_version < 5 ? 'ALT' : 'TITLE';
+		//echo "<p>HTTP_USER_AGENT='$GLOBALS[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
 	}
 
 	function div($content,$options='')
 	{
-		return "<div $options>\n$content</div>\n";
+		return "<DIV $options>\n$content</DIV>\n";
 	}
 
 	function input_hidden($vars,$value='',$ignore_empty=True)
@@ -37,10 +41,9 @@ class html
 		while (list($name,$value) = each($vars))
 		{
 			if (is_array($value)) $value = serialize($value);
-			$del = strchr($value,'"') ? "'" : '"';
 			if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
-				$html .= "<INPUT TYPE=HIDDEN NAME=\"$name\" VALUE=$del$value$del>\n";
+				$html .= "<INPUT TYPE=HIDDEN NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\">\n";
 			}
 		}
 		return $html;
