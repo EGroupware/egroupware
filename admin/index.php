@@ -21,6 +21,7 @@
 <p>
 <br><a href="<?php echo $phpgw->link("accounts.php") . "\">" . lang_admin("User accounts"); ?></a>
 <br><a href="<?php echo $phpgw->link("groups.php")  . "\">" . lang_admin("User groups"); ?></a>
+<br><a href="<?php echo $phpgw->link("applications.php")  . "\">" . lang_admin("Applications"); ?></a>
 <p><a href="<?php echo $phpgw->link("currentusers.php") . "\">" . lang_admin("View sessions"); ?></a>
 <br><a href="<?php echo $phpgw->link("accesslog.php") . "\">" . lang_admin("View Access Log"); ?></a>
 <p><a href="<?php echo $phpgw->link("headlines.php") . "\">" . lang_admin("Headline Sites"); ?></a>
