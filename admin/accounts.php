@@ -15,6 +15,8 @@
   $phpgw_info["flags"]["disable_message_class"] = True;
   $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
+  include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
+        . $phpgw_info["server"]["auth_type"] . ".inc.php");
 
   $t = new Template($phpgw_info["server"]["template_dir"]);
   $t->set_file(array( "header"	=> "accounts.tpl",
@@ -23,27 +25,7 @@
 
   $t->set_block("header","row","footer");
 
-  if (! $start)
-     $start = 0;
-
-  if ($order)
-      $ordermethod = "order by $order $sort";
-   else
-      $ordermethod = "order by account_lastname,account_firstname,account_lid asc";
-
-  if (! $sort)
-     $sort = "desc";
-
-  if ($query) {
-     $querymethod = " where account_firstname like '%$query%' OR account_lastname like '%$query%' OR account_lid "
-		        . "like '%$query%' ";
-  }
-
-  $phpgw->db->query("select count(*) from accounts $querymethod");
-  $phpgw->db->next_record();
-
-  $total = $phpgw->db->f(0);
-  $limit = $phpgw->nextmatchs->sql_limit($start);
+  $total = account_total();
 
   $t->set_var("bg_color",$phpgw_info["theme"]["bg_color"]);
   $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
@@ -61,16 +43,15 @@
 
   $t->parse("out","header");
 
-  $phpgw->db->query("select account_id,account_firstname,account_lastname,account_lid from accounts $querymethod "
-	             . "$ordermethod limit $limit");
+  $account_info = account_read($method,$start,$sort,$order);
 
-  $i = 0;
-  while ($phpgw->db->next_record()) {
+  while (list($null,$account) = each($account_info)) {
+    echo "<br>" . $account[1];
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var("tr_color",$tr_color);
 
-    $lastname  = $phpgw->db->f("account_lastname");
-    $firstname = $phpgw->db->f("account_firstname");
+    $lastname  = $account["account_lastname"];
+    $firstname = $account["account_firstname"];
 
     if (! $lastname)  $lastname  = '&nbsp;';
     if (! $firstname) $firstname = '&nbsp;';
@@ -78,17 +59,17 @@
     $t->set_var("row_firstname",$firstname);
     $t->set_var("row_lastname",$lastname);
     $t->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","account_id="
-				     . $phpgw->db->f("account_id")) . '"> ' . lang("Edit") . ' </a>');
+				     . $account["account_id"]) . '"> ' . lang("Edit") . ' </a>');
 
-    if ($phpgw_info["user"]["userid"] != $phpgw->db->f("account_lid")) {
+    if ($phpgw_info["user"]["userid"] != $account["account_lid"]) {
        $t->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'account_id='
-						. $phpgw->db->f("account_id")) . '"> '.lang("Delete").' </a>');
+						. $account["account_id"]) . '"> '.lang("Delete").' </a>');
     } else {
        $t->set_var("row_delete","&nbsp;");
     }
 
     $t->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
-				     . $phpgw->db->f("account_id")) . '"> ' . lang("View") . ' </a>');
+				     . $account["account_id"]) . '"> ' . lang("View") . ' </a>');
 
     if ($phpgw->db->num_rows() == 1) {
        $t->set_var("output","");

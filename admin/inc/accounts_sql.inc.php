@@ -13,7 +13,41 @@
   
   function account_read($method,$start,$sort,$order)
   {
+     global $phpgw;
+     
+     if (! $start) {
+        $start = 0;
+     }
+
+     if ($order) {
+        $ordermethod = "order by $order $sort";
+     } else {
+        $ordermethod = "order by account_lastname,account_firstname,account_lid asc";
+     }
+
+     if (! $sort) {
+        $sort = "desc";
+     }
+
+     if ($query) {
+        $querymethod = " where account_firstname like '%$query%' OR account_lastname like "
+        			 . "'%$query%' OR account_lid like '%$query%' ";
+     }
   
+     $phpgw->db->query("select account_id,account_firstname,account_lastname,account_lid "
+     				. "from accounts $querymethod $ordermethod limit "
+     				. $phpgw->nextmatchs->sql_limit($start));
+
+     $i = 0;
+     while ($phpgw->db->next_record()) {
+        $account_info[$i]["account_id"]        = $phpgw->db->f("account_id");
+        $account_info[$i]["account_lid"]       = $phpgw->db->f("account_lid");
+        $account_info[$i]["account_lastname"]  = $phpgw->db->f("account_lastname");
+        $account_info[$i]["account_firstname"] = $phpgw->db->f("account_firstname");
+        $i++;
+     }
+
+     return $account_info;
   }
   
   function account_add($account_info)
@@ -195,4 +229,17 @@
      }  
   }
   
-  
+  function account_total()
+  {
+     global $phpgw, $query;
+
+     if ($query) {
+        $querymethod = " where account_firstname like '%$query%' OR account_lastname like "
+        			 . "'%$query%' OR account_lid like '%$query%' ";
+     }
+     
+     $phpgw->db->query("select count(*) from accounts $querymethod");
+     $phpgw->db->next_record();
+
+     return $phpgw->db->f(0);
+  }
