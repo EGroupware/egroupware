@@ -34,9 +34,40 @@
 	/**************************************************************************\
 	* Include the apps footer files if it exists                               *
 	\**************************************************************************/
-	if (is_object($GLOBALS['phpgw']->common))
+	if (PHPGW_APP_INC != PHPGW_API_INC &&	// this prevents an endless inclusion on the homepage 
+		                                	// (some apps set currentapp in hook_home => it's not releyable)
+		(file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($GLOBALS['HTTP_GET_VARS']['menuaction'])) &&
+		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
+		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
+		!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 	{
-		$GLOBALS['phpgw']->common->phpgw_footer();
+		if ($GLOBALS['HTTP_GET_VARS']['menuaction'])
+		{
+			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
+			{
+//				eval("\$GLOBALS[$class]->footer();");
+				$GLOBALS[$class]->footer();
+			}
+			elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
+			{
+				include(PHPGW_APP_INC . '/footer.inc.php');
+			}
+		}
+		elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
+		{
+			include(PHPGW_APP_INC . '/footer.inc.php');
+		}
+	}
+	if(function_exists('parse_navbar_end'))
+	{
+		parse_navbar_end();
+	}
+	if (DEBUG_TIMER)
+	{
+		$GLOBALS['debug_timer_stop'] = perfgetmicrotime();
+		echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
 	}
 ?>
 </BODY>

@@ -1,0 +1,76 @@
+INSTALL : WebDAV file share
+---------------------------
+Note: if you don't know what WebDAV is you probably don't need it.  The default
+vfs_sql is generally faster and easier to setup.
+
+Filemanager's WebDAV support allows you to store your files online in 
+phpgroupware, in a way that cooperates well with other web applications (for
+instance, in Windows you can then access your files as a "web folder", and
+similarly KDE, Gnome, MacOSX, and amultitude of applications (eg MS Office and
+OpenOffice.org) all include some way of browsing files on a WebDAV share)
+
+
+Installation
+------------
+To install:
+
+1/	Setup a WebDAV server - currently this code has only been well tested using
+	Apache's mod_dav (http://www.webdav.org/mod_dav/).  mod_dav is included in
+	Apache 2, and most Linux distributions include it as a package.
+
+	To setup mod_dav ensure that you have the module installed correctly ( RTFM :)
+	and create a virtual host (eg files.yourdomain.com) something like this:
+
+		<VirtualHost files.yourdomain.com:80>
+			AccessFileName .htaccess
+			ServerAdmin webmaster@yourdomain.com
+			DocumentRoot /var/files
+			<Location />
+				AllowOverride All
+				Options +Indexes
+				DAV on
+				DirectoryIndex /
+				RemoveHandler cgi-script .cgi .pl
+				RemoveType application/x-httpd-php .php .php3
+				RemoveType application/x-httpd-php-source .phps
+			</Location>
+			<Files ~ "^\.ht">
+				#This ensures phpgroupware can modify .htaccess files
+				order deny,allow
+				deny from all
+				#make sure your phpgroupware server is included here.
+				allow from localhost .localdomain
+			</Files>
+			ServerName files.yourdomain.com
+			ErrorLog logs/dav_err
+			CustomLog logs/dav_acc combined
+		</VirtualHost>
+
+2/	On the setup page (phpgroupware/setup/config.php) specify
+	the WebDAV server URL (eg http://files.yourdomain.com ) in the: "Full path
+	for users and groups files" text area, and select DAV in the:
+	"Select where you want to store/retrieve filesystem information"
+	combo.  If your file repository supports SSL you might want to enter
+	'https://files.yourdomain.com' instead - note that phpGroupWare itself wont
+	use SSL to access the repository, but when it redirects the users browser to
+	the repository it will use the secure https url.
+
+3/	Make sure your WebDAV repository contains a "home" directory (important!)
+	So if your WebDAV directory is /var/files, you would need:
+		/var/files/
+		/var/files/home/
+
+4/	(OPTIONAL) Ideally you want some kind of authentication on the WebDAV
+	repository, so that users accessing it directly still need their phpgroupware
+	password.
+	To enable authentication you must use a third-party Apache authentication
+	module.  Which you use depends on how you have setup authentication in
+	phpGroupWare - for instance if you use an SQL DB (the default) then set up
+	mod_auth_pgsql (http://www.giuseppetanzilli.it/mod_auth_pgsql/) or
+	mod_auth_mysql (http://modauthmysql.sourceforge.net/)
+	An example .htaccess file is included for postgresql - mysql would be
+	similar. Your file repository also needs to be configured to allow
+	phpGroupWare to write .htaccess files (the setup in (3) will allow this)
+
+	Note that using an Apache module for authentication is not strictly
+	required in order to use WebDAV within phpGroupWare.

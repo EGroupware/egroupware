@@ -10,7 +10,7 @@
  </tr>
 
 <!-- BEGIN list -->
- <tr class="th">
+ <tr bgcolor="{th_bg}">
   <td colspan="2"><b>{list_header}</b></td>
  </tr>
 {rows}
@@ -29,18 +29,18 @@
 <!-- END form -->
 
 <!-- BEGIN row -->
- <tr class={tr_color}>
+ <tr bgcolor="{tr_color}">
   <td>{row_name}</td>
   <td>{row_value}</td>
  </tr>
 <!-- END row -->
 
 <!-- BEGIN help_row -->
-  <tr class="{tr_color}">
+  <tr bgcolor="{tr_color}">
   <td><b>{row_name}<b></td>
   <td>{row_value}</td>
  </tr>
- <tr class="{tr_color}">
+ <tr bgcolor="{tr_color}">
   <td colspan="2">{help_value}</td>
  </tr>
 <!-- END help_row -->

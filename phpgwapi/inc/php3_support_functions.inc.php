@@ -2,9 +2,6 @@
 	 /**************************************************************************\
 	 * phpGroupWare API - PHP3 Compatibility layer                              *
 	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	 * and Mark Peters <skeeter@phpgroupware.org>                               *
-	 * and Miles Lott <milosch@phpgroupware.org>                                *
-	 * and Jason Wies <Zone@phpgroupware.org>                                   *
 	 * Has replications of PHP4 only functions to allow for transparent PHP3    *
 	 * compatibility                                                            *
 	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
@@ -31,12 +28,12 @@
 	 *   array array_keys (array input, mixed [search_value])
 	 * array_keys() returns the keys, numeric and string, from the input array.
 	 */
-	function array_keys($arr, $term='')
+	function array_keys ($arr, $term='')
 	{
 		$t = array();
-		while(list($k,$v) = each($arr))
+		while (list($k,$v) = each($arr))
 		{
-			if($term && $v != $term)
+			if ($term && $v != $term)
 			{
 				continue;
 				$t[] = $k;
@@ -50,19 +47,19 @@
 	 * array_merge() merges the elements of two or more arrays together so that the values
 	 * of one are appended to the end of the previous one. It returns the resulting array.
 	 */
-	function array_merge($array1, $array2, $array3='', $array4='', $array5='', $array6='', $array7='', $array8='', $array9='', $array10='')
+	function array_merge ($array1, $array2, $array3 = '', $array4 = '', $array5 = '', $array6 = '', $array7 = '', $array8 = '', $array9 = '', $array10 = '')
 	{
-		$rarray = array();
+		$rarray = array ();
 
-		for($i = 1; $i <= 10; $i++)
+		for ($i = 1; $i <= 10; $i++)
 		{
 			$this_array = ${'array' . $i};
-			if(is_array($this_array))
+			if (is_array ($this_array))
 			{
-				reset($this_array);
-				while(list($key,$value) = each($this_array))
+				reset ($this_array);
+				while (list ($key, $value) = each ($this_array))
 				{
-					if(is_int($key))
+					if (is_int ($key))
 					{
 						$rarray[] = $value;
 					}
@@ -144,12 +141,12 @@
 	 * Searches haystack for needle and returns the key if it is found in the array, FALSE
 	 * otherwise.
 	 */
-	function array_search($needle, $haystack, $strict=False)
+	function array_search ($needle, $haystack, $strict = False)
 	{
 		@reset($haystack);
 		while(list($key,$value) = each($haystack))
 		{
-			if($haystack[$key]==$needle && (!$strict || gettype($haystack[$key])==gettype($needle)))
+			if ($haystack[$key]==$needle && (!$strict || gettype($haystack[$key])==gettype($needle)))
 			{
 				return $key;
 			}
@@ -200,7 +197,7 @@
 		$reversed_array = Array();
 		while(list($key,$value) = each($array))
 		{
-			if(!isset($reversed_array[$value]))
+			if (!isset($reversed_array[$value]))
 			{
 				$reversed_array[$value] = $key;
 			}
@@ -231,9 +228,9 @@
 	 * Searches haystack for needle and returns TRUE if it is found in the array, FALSE
 	 * otherwise.
 	 */
-	function in_array($needle, $haystack='', $strict = False)
+	function in_array ($needle, $haystack, $strict = False)
 	{
-		if(is_array($haystack) && count($haystack))
+		if(is_array ($haystack) && count($haystack))
 		{
 			for(@reset($haystack); $x=each($haystack); )
 			{
@@ -244,10 +241,6 @@
 			}
 			return False; 
 		}
-		elseif($haystack=='')
-		{
-			return False;
-		}
 	}
 
 	/* is_bool (PHP 4 >= 4.0.0)
@@ -256,11 +249,11 @@
 	 */
 	function is_bool($var)
 	{
-		$retval = gettype($var);
-		if(strcmp($retval,'unknown type') == 0)
+		$retval = gettype($var) ;
+		if ( strcmp( $retval, 'unknown type') == 0 )
 		{
 			/* Chances are that we have a boolean */
-			if($var == True || $var == False)
+			if ($var == True || $var == False)
 			{
 				return True;
 			}
@@ -275,86 +268,6 @@
 		}
 	}
 
-	function print_r($array,$recursed=False,$print=True)
-	{
-		$str = '';
-		if(is_array($array) || is_object($array))
-		{
-			if(!$recursed)
-			{
-				$str .= '<p>';
-			}
-			$str .= ucfirst(gettype($array)) . '(<ul>';
-
-			while(list($index, $subarray) = each($array) )
-			{
-				$str .= '<li>'.$index.' <code>=&gt;&nbsp;</code>';
-				$str .= print_r($subarray,True,$print);
-				$str .= '</li>';
-			}
-			$str .= '</ul>)';
-		}
-		elseif(is_string($array))
-		{
-			$str .= ucfirst(gettype($array)) . '("' . $array . '")';
-		}
-		else
-		{
-			$str .= gettype($array) . '(' . $array . ')';
-		}
-		if($print)
-		{
-			echo $str;
-		}
-		else
-		{
-			return $str;
-		}
-	}
-
-	if(!defined('STR_PAD_LEFT'))
-	{
-		define('STR_PAD_LEFT',0);
-		define('STR_PAD_RIGHT',1);
-		define('STR_PAD_BOTH',2);
-	}
-	/* str_pad --  Pad a string to a certain length with another string (PHP4)
-	 *   string str_pad ( string input, int pad_length [, string pad_string [, int pad_type]])
-	 * This functions returns the input string padded on the left, the right, or both sides to the specified
-	 * padding length. If the optional argument pad_string is not supplied, the input is padded with spaces,
-	 * otherwise it is padded with characters from pad_string up to the limit. 
-	 *
-	 * Optional argument pad_type can be STR_PAD_RIGHT, STR_PAD_LEFT, or STR_PAD_BOTH. If pad_type is not
-	 * specified it is assumed to be STR_PAD_RIGHT. 
-	 *
-	 * If the value of pad_length is negative or less than the length of the input string, no padding takes
-	 * place.
-	 */
-	function str_pad($pm, $lt, $pw=' ', $dn=STR_PAD_RIGHT)
-	{
-		if($lt < 0 || $lt < strlen($pm))
-		{
-			return $pm;
-		}
-		$cnt = $lt - strlen($pm);
-		for($i=0;$i<$cnt;$i++)
-		{
-			switch($dn)
-			{
-				case 2:
-					$i % 2 ? $pm = $pw . $pm : $pm = $pm . $pw;
-					break;
-				case 1:
-					$pm = $pm . $pw;
-					break;
-				default:
-					$pm = $pw . $pm;
-					break;  
-			}
-		}
-		return $pm;
-	}
-
 	/* str_repeat (PHP 4 >= 4.0.0)
 	 *   string str_repeat (string input, int multiplier)
 	 * Returns input_str repeated multiplier times. multiplier has to be greater than 0.
@@ -366,5 +279,33 @@
 			$output .= $input;
 		}
 		return $output;
+	}
+
+	function print_r($array,$print=True)
+	{
+		$str = '';
+		if(gettype($array)=="array")
+		{
+			$str .= '<ul>';
+			while (list($index, $subarray) = each($array) )
+			{
+				$str .= '<li>'.$index.' <code>=&gt;</code>';
+				$str .= print_r($subarray,$print);
+				$str .= '</li>';
+			}
+			$str .= '</ul>';
+		}
+		else
+		{
+			$str .= $array;
+		}
+		if($print)
+		{
+			echo $str;
+		}
+		else
+		{
+			return $str;
+		}
 	}
 ?>

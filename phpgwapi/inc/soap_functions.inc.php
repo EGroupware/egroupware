@@ -138,7 +138,7 @@
 			while ($GLOBALS['phpgw']->db->next_record())
 			{
 				$name   = $GLOBALS['phpgw']->db->f('app_name');
-				$title  = lang($GLOBALS['phpgw']->db->f('app_name'));
+				$title  = $GLOBALS['phpgw']->db->f('app_title');
 				$status = $GLOBALS['phpgw']->db->f('app_enabled');
 				$version= $GLOBALS['phpgw']->db->f('app_version');
 				$apps[$name] = array(

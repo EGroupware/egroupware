@@ -27,6 +27,15 @@
 	class auth
 	{
 		var $previous_login = -1;
+		var $xmlrpc_methods = array();
+
+		function auth()
+		{
+			$this->xmlrpc_methods[] = array(
+				'name'       => 'change_password',
+				'decription' => 'Change the current users password'
+			);
+		}
 
 		function authenticate($username, $passwd, $passwd_type)
 		{
@@ -59,19 +68,27 @@
 
 		function change_password($old_passwd, $new_passwd, $account_id = '')
 		{
-			if (! $account_id)
+			// Don't allow passwords changes for other accounts when using XML-RPC
+			if (! $account_id || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'login')
 			{
 				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+				$pwd_check  = " and account_pwd='" . md5($old_passwd) . "'";
 			}
 
 			$encrypted_passwd = md5($new_passwd);
 
 			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "',"
-				. "account_lastpwd_change='" . time() . "' where account_id='" . $account_id . "'",__LINE__,__FILE__);
+				. "account_lastpwd_change='" . time() . "' where account_id='" . $account_id . "'" . $pwd_check,__LINE__,__FILE__);
 
-			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
-
-			return $encrypted_passwd;
+			if ($GLOBALS['phpgw']->db->affected_rows())
+			{
+				$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
+				return $encrypted_passwd;
+			}
+			else
+			{
+				return False;
+			}
 		}
 
 		function update_lastlogin($account_id, $ip)

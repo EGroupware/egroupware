@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Filemanager                                               *
+  * phpGroupWare - filemanager                                             *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *

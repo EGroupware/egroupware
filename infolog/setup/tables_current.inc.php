@@ -56,5 +56,16 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'phpgw_infolog_extra' => array(
+			'fd' => array(
+				'info_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'info_extra_name' => array('type' => 'varchar','precision' => '32','nullable' => False),
+				'info_extra_value' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '')
+			),
+			'pk' => array('info_id','info_extra_name'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
 	);

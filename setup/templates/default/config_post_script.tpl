@@ -15,6 +15,12 @@
       <input type="submit" name="cancel" value="{lang_cancel}">
     </td>
   </tr>
+  <tr class="banner">
+    <td colspan="2">
+	&nbsp;
+    </td>
+  </tr>
 </table>
 </form>
 <!-- end config_post_script.tpl -->
+

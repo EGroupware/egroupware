@@ -22,9 +22,9 @@
 
   /* $Id$ */
 
-	class service_schedule extends service
+	class service_contacts extends service
 	{
-		function service_schedule()
+		function service_contacts()
 		{
 			$this->provider = $GLOBALS['phpgw_info']['schedule_service'] ? $GLOBALS['phpgw_info']['schedule_service'] : 'calendar';
 			$this->svc = $this->provider . '.bo' . $this->provider;

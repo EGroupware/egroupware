@@ -1,10 +1,14 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	fr	%1 (%2 nouveaux) Messages écrits pour l'Application '%3' et les langues '%4'
 %1 etemplates deleted	etemplate	fr	%1 eTemplates effacé(s)
+%1 etemplates for application '%2' dumped to '%3'	etemplate	fr	%1 eTemplates pour l'Application '%2' écrits dans '%3'
 %1 etemplates found	etemplate	fr	%1 eTemplates trouvé(s)
-%1 disabled	etemplate	fr	%1 désactivé
-%1 needed	etemplate	fr	%1 nécessaire
-%1 notranslation	etemplate	fr	%1 PasDeTraduction
-%1 onchange	etemplate	fr	%1 EnCoursDeModification
-%1 readonly	etemplate	fr	%1 LectureSeulement
+%1 matches on search criteria	etemplate	fr	%1 occurences sur les critères de recherche
+%1 new etemplates imported for application '%2'	etemplate	fr	%1 nouveaux eTemplates importés pour l'Application '%2'
+%s disabled	etemplate	fr	%s désactivé
+%s needed	etemplate	fr	%s nécessaire
+%s notranslation	etemplate	fr	%s PasDeTraduction
+%s onchange	etemplate	fr	%s surChangement
+%s readonly	etemplate	fr	%s LectureSeule
 a pattern to be searched for	etemplate	fr	Une chaine de caractères à rechercher
 add a new column (after the existing ones)	etemplate	fr	Ajouter une nouvelle colonne (après celles existant déjà)
 add column	etemplate	fr	Ajouter une colonne
@@ -60,9 +64,9 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	fr	fface le eTemplate spécifié ci-dessus
 deletes this column	etemplate	fr	Efface cette colonne
 discard changes	etemplate	fr	Annuler les changements
-displayed in front of input or input is inserted for a '%1' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché devant l'entrée ou l'entrée est insérée pour un '%1' dans le label (label du bouton de soumission ou nom de fichier image)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché en face de l'entrée our l'entrée est insérée pour un '%s' dans le label (le label du Boutonsoumettre ou le nom du fichierimage)
 displayed in statusline of browser if input-field gets focus	etemplate	fr	affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
-do you want to save the changes you made in table %1?	etemplate	fr	Voulez-vous enregistrer les modifications que vous avez apporté à la table %1 ?
+do you want to save the changes you made in table %s?	etemplate	fr	Voulez-vous enregistrer les modifications que vous avez effectuées dans la table %s?
 drop a table - this can not be undone	etemplate	fr	Détruire une table - ceci ne peut PAS être annulé
 drop table	etemplate	fr	Effacer table
 dump4setup	etemplate	fr	DumpPourRéglage
@@ -80,6 +84,7 @@ enter a search pattern	etemplate	fr	Entrez une chaîne de recherche
 enter filename to upload and attach, use [browse...] to search for it	etemplate	fr	Entrez un nom de fichier à uploader et attacher, utilisez [naviguer...] pour le rechercher
 enter the new version number here (> old_version), empty for no update-file	etemplate	fr	Entrez le nouveau numéro de version ici (> ancienne_version), vide pour aucun fichier de mise à jour
 enter the new version number here (has to be > old_version)	etemplate	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
+entry saved	etemplate	fr	Entrée enregistrée
 error: template not found !!!	etemplate	fr	Erreur: Template non trouvé !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !!!
 error: while saveing !!!	etemplate	fr	Erreur: pendant la sauvegarde !!!
@@ -93,6 +98,7 @@ export the loaded etemplate into a xml-file	etemplate	fr	exporter l'eTemplate ch
 export xml	etemplate	fr	Exporter XML
 extensions loaded:	etemplate	fr	Extensions chargées:
 file	etemplate	fr	Fichier
+file contains more than one etemplate, last one is shown !!!	etemplate	fr	Le fichier contient plus d'un eTemplate, le dernier est affiché !!!
 file writen	etemplate	fr	Fichier écrit
 fileupload	etemplate	fr	UploadFichier
 first	etemplate	fr	Premier
@@ -134,6 +140,7 @@ left	etemplate	fr	Gauche
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	fr	Longueur pour char+varchar, précision d'entiers: 2, 4, 8 et flottants: 4, 8
 link	etemplate	fr	Lien
 linklist	etemplate	fr	Liste de liens
+linkstring	etemplate	fr	ChaîneDeLien
 linkto	etemplate	fr	LierVers
 load this template into the editor	etemplate	fr	Charger ce template dans l'éditeur
 minute	etemplate	fr	Minute
@@ -151,6 +158,7 @@ nextmatch	etemplate	fr	Occurrence trouvée suivante
 no file	etemplate	fr	Pas de fichier
 no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec naviguer...
 nothing found - try again !!!	etemplate	fr	Rien trouvé - essayez encore !!!
+nothing matched search criteria !!!	etemplate	fr	Aucune occurrence correspondant aux critères de recherche !!!
 nullable	etemplate	fr	Positionnable à zéro
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	fr	Nombre de colonnes sur lesquelles le champ/cellule devrait s'étendre ou 'tous' pour les colonnes qui restent, nom de la classe CSS (pour le tag TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	fr	Nombre de lignes/colonnes dans une boîte H/V, remplissage de cellule, espacement de cellule
@@ -236,7 +244,7 @@ type of the field (select label if field should be empty)	etemplate	fr	Type du c
 unique	etemplate	fr	Unique
 unlink	etemplate	fr	Délier
 update a single entry by passing the fields.	etemplate	fr	Mettre à jour une unique entrée en passant les champs.
-update from version '%1' to	etemplate	fr	Mettre à jour depuis la version '%1' vers
+update from version '%s' to	etemplate	fr	Mettre à jour depuis la Version '%s' vers
 upload	etemplate	fr	Uploader
 value	etemplate	fr	Valeur
 vbox	etemplate	fr	BoîteV

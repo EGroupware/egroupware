@@ -9,7 +9,7 @@
 		<td align="center" colspan="2">{deleteheader}</td>
 	</tr>
 	<tr>
-		<td align="center" colspan="2">{sub_select}</td>
+		<td align="center" colspan="2">{lang_subs}&nbsp;{subs}</td>
 	</tr>
 	<tr height="50" valign="botton">
 		<td align="center" width="50%"><input type="submit" name="confirm" value="{lang_yes}"></td>

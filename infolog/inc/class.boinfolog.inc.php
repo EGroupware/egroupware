@@ -38,7 +38,7 @@
 
 		function boinfolog( $info_id = 0)
 		{
-			$this->enums = array(
+			$this->enums = $this->stock_enums = array(
 				'priority' => array (
 					'urgent' => 'urgent','high' => 'high','normal' => 'normal',
 					'low' => 'low' ),
@@ -54,7 +54,7 @@
 				/*	,'confirm' => 'confirm','reject' => 'reject','email' => 'email',
 					'fax' => 'fax' not implemented so far */ )
 			);
-			$this->status = array(
+			$this->status = $this->stock_status = array(
 				'defaults' => array(
 					'task' => 'ongoing', 'phone' => 'call', 'note' => 'done'),
 				'task' => array(
@@ -76,13 +76,53 @@
 			$this->config = CreateObject('phpgwapi.config');
 			$this->config->read_repository();
 
+			$this->customfields = array();
 			if ($this->config->config_data)
 			{
 				$this->link_pathes   = $this->config->config_data['link_pathes'];
 				$this->send_file_ips = $this->config->config_data['send_file_ips'];
+
+				if (isset($this->config->config_data['status']) && is_array($this->config->config_data['status']))
+				{
+					foreach($this->config->config_data['status'] as $key => $data)
+					{
+						if (!is_array($this->status[$key]))
+						{
+							$this->status[$key] = array();
+						}
+						$this->status[$key] += $this->config->config_data['status'][$key];
+					}
+				}
+				if (isset($this->config->config_data['types']) && is_array($this->config->config_data['types']))
+				{
+					//echo "stock-types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
+					//echo "config-types:<pre>"; print_r($this->config->config_data['types']); echo "</pre>\n";
+					$this->enums['type'] += $this->config->config_data['types'];
+					//echo "types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
+				}
+				if (isset($this->config->config_data['customfields']) && is_array($this->config->config_data['customfields']))
+				{
+					$this->customfields = $this->config->config_data['customfields'];
+				}
 			}
 
 			$this->read( $info_id);
+		}
+
+		/*!
+		@function has_customfields
+		@abstract checks if there are customfields for typ $typ
+		*/
+		function has_customfields($typ)
+		{
+			foreach($this->customfields as $name => $field)
+			{
+				if (empty($field['typ']) || $field['typ'] == $typ)
+				{
+					return True;
+				}
+			}
+			return False;
 		}
 
 		/*
@@ -100,34 +140,31 @@
 
 		function link_id2from(&$info,$not_app='',$not_id='')
 		{
-			//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id], from='$info[info_from]')";
+			//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id], from='$info[info_from]', not_app='$not_app', not_id='$not_id')";
 			if ($info['info_link_id'] > 0 &&
 				 ($link = $this->link->get_link($info['info_link_id'])) !== False)
 			{
 				$nr = $link['link_app1'] == 'infolog' && $link['link_id1'] == $info['info_id'] ? '2' : '1';
 				$title = $this->link->title($link['link_app'.$nr],$link['link_id'.$nr]);
-				
-				if (htmlentities($title) == $info['info_from'])
+
+				if ($title == $info['info_from'] || htmlentities($title) == $info['info_from'])
 				{
-					$info['info_from'] = $title;	// correct old entries
+					$info['info_from'] = '';
 				}
 				if ($link['link_app'.$nr] == $not_app && $link['link_id'.$nr] == $not_id)
 				{
-					if ($title == $info['info_from'])
-					{
-						$info['info_from'] = '';
-					}
 					return False;
 				}
 				$info['info_link_view'] = $this->link->view($link['link_app'.$nr],$link['link_id'.$nr]);
-				$info['info_link_title'] = $title;
-				
+				$info['info_link_title'] = !empty($info['info_from']) ? $info['info_from'] : $title;
+
 				//echo " title='$title'</p>\n";
-				return $title;
+				return $info['blur_title'] = $title;
 			}
 			else
 			{
 				$info['info_link_title'] = $info['info_from'];
+				$info['info_link_id'] = 0;	// link might have been deleted
 			}
 			return False;
 		}
@@ -157,7 +194,7 @@
 		{
 			while (list($key,$val) = each($values))
 			{
-				if (substr($key,0,5) != 'info_')
+				if ($key[0] != '#' && substr($key,0,5) != 'info_')
 				{
 					$values['info_'.$key] = $val;
 					unset($values[$key]);
@@ -198,11 +235,9 @@
 			return $this->so->anzSubs( $info_id );
 		}
 
-		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,
-							 $ordermethod,&$start,&$total)
+		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total)
 		{
-			return $this->so->search($order,$sort,$filter,$cat_id,$query,
-											 $action,$action_id,$ordermethod,$start,$total);
+			return $this->so->search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,$start,$total);
 		}
 
 		/*!
@@ -217,7 +252,7 @@
 			{
 				$info = $this->read( $info );
 			}
-			return $info['info_subject'];
+			return $info ? $info['info_subject'] : False;
 		}
 
 		/*!

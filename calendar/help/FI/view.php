@@ -34,3 +34,4 @@ asetuksista.<br/>
 <i>Kuukausi:</i><br/>
 Valittu kuukausi sekä edellinen ja seuraava kuukausi mini-kalentereina.
 Voit siirtyä päivänäkymään haluamaasi päivää napsauttamalla.<p/></li></ul></font>
+<?php $phpgw->common->phpgw_footer(); ?>

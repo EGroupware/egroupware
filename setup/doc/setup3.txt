@@ -3,7 +3,7 @@
 phpGroupWare Setup
 
 June 18, 2001 
-
+Updated May 9, 2003
 
 
 Abstract
@@ -71,7 +71,7 @@ a look at the following section:
 
 $setup_info['addressbook']['name'] = 'addressbook';
 
-$setup_info['addressbook']['title'] = 'Addressbook';
+$setup_info['addressbook']['title'] = 'Addressbook'; - Deprecated .0.9.16+
 
 $setup_info['addressbook']['version'] = '0.9.13.002';
 
@@ -83,8 +83,9 @@ $setup_info['addressbook']['enable'] = 1;
 flags such as 'currentapp' or as the 'app_name' almost everywhere
 else.
 
-'title' would be used in the navbar, admin, preferences,
-as well as in the application itself.
+'title' is now deprecated.  Now simply include an entry like this 
+in the lang file for you application:
+addressbook en common Address Book
 
 The 'version' string defines the version of the application
 and table code. This would be incremented whenever you create

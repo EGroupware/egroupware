@@ -8,6 +8,7 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
+
 	/* $Id$ */
 
 	class uiaclprefs
@@ -24,16 +25,16 @@
 
 		function index()
 		{
-			$acl_app  = get_var('acl_app',Array('GET','POST'));
-			$start    = get_var('start',Array('GET','POST'));
-			$query    = get_var('query',Array('GET','POST'));
-			$s_groups = get_var('s_groups',Array('GET','POST'));
-			$s_users  = get_var('s_users',Array('GET','POST'));
-			$owner = get_var('owner',Array('POST','GET'));
+			$acl_app	= get_var('acl_app',array('POST','GET'));
+			$start		= get_var('start',array('POST','GET'));
+			$query		= get_var('query',array('POST','GET'));
+			$s_groups	= get_var('s_groups',array('POST','GET'));
+			$s_users	= get_var('s_users',array('POST','GET'));
+			$owner		= get_var('owner',array('POST','GET'));
 
 			if (! $acl_app)
 			{
-				$acl_app = 'preferences';
+				$acl_app            = 'preferences';
 				$acl_app_not_passed = True;
 			}
 			else
@@ -56,10 +57,10 @@
 				}
 			}
 
-			if ($GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
+			if ($GLOBALS['phpgw_info']['server']['deny_user_grants_access'] && !isset($GLOBALS['phpgw_info']['user']['apps']['admin']))
 			{
 				echo '<center><b>' . lang('Access not permitted') . '</b></center>';
-				exit;
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 
 			/*
@@ -71,6 +72,7 @@
 			elseif(@isset($save_my_owner))
 			{
 				echo '<center>'.lang('You do not have permission to set ACL\'s in this mode!').'</center>';
+				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 			*/
 
@@ -79,11 +81,11 @@
 				$owner = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 
-			$acct = CreateObject('phpgwapi.accounts',$owner);
-			$groups = $acct->get_list('groups');
-			$users = $acct->get_list('accounts');
-			$owner_name = $acct->id2name($owner);		// get owner name for title
-			if($is_group = $acct->get_type($owner) == 'g')
+			$acct			= CreateObject('phpgwapi.accounts',$owner);
+			$groups			= $acct->get_list('groups');
+			$users			= $acct->get_list('accounts');
+			$owner_name		= $acct->id2name($owner);		// get owner name for title
+			if($is_group	= $acct->get_type($owner) == 'g')
 			{
 				$owner_name = lang('Group').' ('.$owner_name.')';
 			}
@@ -91,9 +93,9 @@
 			$this->acl = CreateObject('phpgwapi.acl',intval($owner));
 			$this->acl->read_repository();
 
-			if(get_var('submit',Array('POST')))
+			if ($_POST['submit'])
 			{
-				$processed = get_var('processed',Array('POST'));
+				$processed = $_POST['processed'];
 				$to_remove = unserialize(urldecode($processed));
 
 				for($i=0;$i<count($to_remove);$i++)
@@ -102,7 +104,7 @@
 				}
 
 				/* Group records */
-				$group_variable = get_var('g_'.$GLOBALS['phpgw_info']['flags']['currentapp'],Array('POST'));
+				$group_variable = $_POST['g_'.$GLOBALS['phpgw_info']['flags']['currentapp']];
 
 				if (!$group_variable)
 				{
@@ -128,9 +130,9 @@
 				}
 
 				/* User records */
-				$user_variable = get_var('u_'.$GLOBALS['phpgw_info']['flags']['currentapp'],Array('POST'));
+				$user_variable = $_POST['u_'.$GLOBALS['phpgw_info']['flags']['currentapp']];
 
-				if(!$user_variable)
+				if (!$user_variable)
 				{
 					$user_variable = array();
 				}
@@ -182,7 +184,7 @@
 
 			if(!isset($query))
 			{
-				$query = '';
+				$query = "";
 			}
 
 			if(!isset($maxm))
@@ -201,6 +203,7 @@
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$acl_app]['title']).' - '.lang('acl').': '.$owner_name;
 			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 
 			$this->template = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($acl_app));
 			$templates = Array (
@@ -244,17 +247,19 @@
 
 			$this->template->set_var('common_hidden_vars',$common_hidden_vars);
 
-			$var = Array(
-				'read_lang'   => lang('Read'),
-				'add_lang'    => lang('Add'),
-				'edit_lang'   => lang('Edit'),
-				'delete_lang' => lang('Delete')
-			);
+			$vars = $this->template->get_undefined('row_colspan');
+			while (list(,$var) = each($vars))
+			{
+				if (ereg('lang_',$var))
+				{
+					$value = ereg_replace('lang_','',$var);
+					$value = ereg_replace('_',' ',$value);
 
-			$this->template->set_var($var);
-			$this->template->set_var('private_lang',lang('Private'));
+					$this->template->set_var($var,lang($value));
+				}
+			}
 
-			if(intval($s_groups) <> count($groups))
+			if (intval($s_groups) <> count($groups))
 			{
 				$this->template->set_var('string',lang('Groups'));
 				$this->template->parse('row','row_colspan',True);
@@ -387,6 +392,9 @@
 			$this->check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE,($is_group_set && ($rights & PHPGW_ACL_DELETE && !$is_group)?$is_group_set:False));
 			$this->check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE,$is_group);
 
+			$this->check_acl($label,$id,'custom_1',$rights,PHPGW_ACL_CUSTOM_1,($is_group_set && ($rights & PHPGW_ACL_CUSTOM_1) && !$is_group?$is_group_set:False));
+			$this->check_acl($label,$id,'custom_2',$rights,PHPGW_ACL_CUSTOM_2,($is_group_set && ($rights & PHPGW_ACL_CUSTOM_2) && !$is_group?$is_group_set:False));
+			$this->check_acl($label,$id,'custom_3',$rights,PHPGW_ACL_CUSTOM_3,($is_group_set && ($rights & PHPGW_ACL_CUSTOM_3) && !$is_group?$is_group_set:False));
 			$this->template->parse('row','acl_row',True);
 		}
 	}

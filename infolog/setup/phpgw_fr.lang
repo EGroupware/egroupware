@@ -27,6 +27,7 @@ add file	infolog	fr	Ajouter un fichier
 add sub	infolog	fr	Ajouter sous
 add:	infolog	fr	Ajouter:
 all	infolog	fr	Tous
+all links and attachments	infolog	fr	Tous les liens et attachements
 are you shure you want to delete this entry ?	infolog	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
 are you sure you want to delete this entry	infolog	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
 attach a file	infolog	fr	Attacher un fichier
@@ -111,6 +112,7 @@ new search	infolog	fr	Nouvelle recherche
 no - cancel	infolog	fr	Non - Abandonner
 no entries found, try again ...	infolog	fr	Aucune occurrence trouvée, essayez à nouveau ...
 no filter	infolog	fr	Aucun filtre
+no links or attachments	infolog	fr	Aucun lien ou attachement
 none	infolog	fr	Aucun
 normal	infolog	fr	Normal
 not	infolog	fr	pas
@@ -119,6 +121,8 @@ note	infolog	fr	Note
 number of records to read (<=200)	infolog	fr	Nombre d'enregistrements à lire (<=200)
 offer	infolog	fr	Offrir
 ongoing	infolog	fr	Entrant
+only the attachments	infolog	fr	Seulement les attachements
+only the links	infolog	fr	Seulement les liens
 open	infolog	fr	Ouvrir
 optional note to the link	infolog	fr	Note optionnelle vers le lien
 overdue	infolog	fr	Tardif
@@ -129,6 +133,7 @@ own upcoming	infolog	fr	Propre arrivant
 owner	infolog	fr	Propriétaire
 owner responsible	infolog	fr	Propriétaire Responsable
 path on (web-)serverside<br>eg. /var/samba/share	infolog	fr	Chemin sur (web-)côté serveur<br>p.e. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	fr	Le chemin vers les fichiers utilisateurs et groupes DOIT ETRE EN DEHORS du répoertoire racine des serveurs Web!!!
 pattern for search in addressbook	infolog	fr	Chaîne de caractères à rechercher dans le carnet d'adresses
 pattern for search in projects	infolog	fr	Chaîne de caractères à rechercher dans les projets
 phone	infolog	fr	Appel téléphonique
@@ -153,9 +158,14 @@ select a priority for this task	infolog	fr	Choisissez une priorité pour cette tâ
 select a responsible user: a person you want to delegate this task	infolog	fr	Choisissez un utilisateur responsable: une personne qui veut déléguer cette tâche
 select an app to search in	infolog	fr	Choisissez une app dans laquelle rechercher
 select an entry to link with	infolog	fr	Choisissez une entrée vers laquelle lier
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	fr	Est-ce que InfoLog doit afficher vos entrées ouvertes - tâches non terminées, appels ou notes - sur la page principale. Fonctionne uniquement si vous n'avez pas sélectionné une application par défaut pour la page principale (dans vos préférences).
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	fr	Est-ce que InfoLog doit afficher les sous-tâches, -appels ou -notes dans la vue normale ou pas. Vous pouvez toujours voir les sous- via leurs parents.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	fr	Est-ce que InfoLog doit afficher les liens vers les autres applications et/ou les attachements de fichier dans la liste InfoLog (vue normale quand vous entrez dans Infolog).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	fr	Est-ce que Infolog doit utiliser les noms complets (surnom et nom de famille) ou juste les noms de connexion.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	fr	Cette entrée ne doit-elle être visible que par vous et les personnes à qui vous avez donné l'accès privé par l'ACL
 show full usernames	infolog	fr	Montrer les noms complets d'utilisateurs
-show open events: tasks/calls/notes on main screen	infolog	fr	Montrer les évènements ouverts: tâches/appels/notes sur l'écran principal
+show in the infolog list	infolog	fr	Montrer dans la liste Infolog
+show open entries: tasks/calls/notes on main screen	infolog	fr	Montrer les entrées ouvertes: Tâches/Appels/Notes sur l'écran principal
 start a new search, cancel this link	infolog	fr	Démarre une nouvelle recherche, annule ce lien
 startdate	infolog	fr	Date de départ
 startdate enddate	infolog	fr	Date de départ date de fin
@@ -165,6 +175,7 @@ sub	infolog	fr	Sous
 subject	infolog	fr	Sujet
 task	infolog	fr	Tâche
 test import (show importable records <u>only</u> in browser)	infolog	fr	Tester l'import (montrer les enregistrements importables <u>seulement</u> dans le navigateur)
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
 til when should the todo or phonecall be finished	infolog	fr	jusqu'à quand le A-faire ou l'appel téléphonique devrait être terminé
 today	infolog	fr	Aujourd'hui
 todo	infolog	fr	A-faire

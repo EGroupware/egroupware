@@ -1,33 +1,48 @@
 <!-- $Id$ -->
 <!-- BEGIN alarm_management -->
 <form action="{action_url}" method="post" name="alarmform">
+{hidden_vars}
 <center>
   <table border="0" width="90%">
-   {row}
+   {rows}
   </table>
+</center>
+<p>
+<center>
+<b>{input_text}</b><p>
+{input_days}&nbsp;{input_hours}&nbsp;{input_minutes}&nbsp;{input_owner}
+<p>
+{input_add}
 </center>
 </form>
 <!-- END alarm_management -->
 <!-- BEGIN alarm_headers -->
-  <tr class="th">
-   <th valign="top" align="left" width="4%">&nbsp;</b></th>
-   <th valign="top" align="left" width="30%">&nbsp;<b>{time_lang}</b></th>
-   <th valign="top" align="left" width="54%">&nbsp;{text_lang}</th>
-   <th valign="top" align="center" width="6%"><img src="{enabled_pict}" width="13" height="13" alt="enabled"></th>
-   <th valign="top" align="center" width="6%"><img src="{disabled_pict}" width="13" height="13" alt="disabled"></th>
+  <tr bgcolor="{tr_color}">
+   <th align="left" width="25%">{lang_time}</th>
+   <th align="left" width="30%">{lang_text}</th>
+   <th align="left" width="25%">{lang_owner}</th>
+   <th width="10%">{lang_enabled}</th>
+   <th width="10%">{lang_select}</th>
   </tr>
 <!-- END alarm_headers -->
 <!-- BEGIN list -->
-  <tr class="{tr_color}">
-   <td valign="top" align="left" width="4%">{edit_box}</td>
-   <td valign="top" align="left" width="30%"><b>{field}:</b></td>
-   <td valign="top" align="left" width="54%">{data}</td>
-   <td valign="top" align="left" width="6%">{alarm_enabled}</td>
-   <td valign="top" align="left" width="6%">{alarm_disabled}</td>
+  <tr bgcolor="{tr_color}">
+   <td><b>{field}:</b></td>
+   <td>{data}</td>
+   <td>{owner}</td>
+   <td align="center">{enabled}</td>
+   <td align="center">{select}</td>
   </tr>
 <!-- END list -->
 <!-- BEGIN hr -->
- <tr class="th">
+ <tr bgcolor="{th_bg}">
   <td colspan="5" align="center"><b>{hr_text}</b></td>
  </tr>
 <!-- END hr -->
+<!-- BEGIN buttons -->
+ <tr>
+  <td colspan="6" align="right">
+   {enable_button}&nbsp;{disable_button}&nbsp;{delete_button}
+  </td>
+ </tr>
+<!-- END buttons -->

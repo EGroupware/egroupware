@@ -68,7 +68,8 @@
 		'Y.m.d' => 'Y.m.d',
 		'd/m/Y' => 'd/m/Y',
 		'd-m-Y' => 'd-m-Y',
-		'd.m.Y' => 'd.m.Y'
+		'd.m.Y' => 'd.m.Y',
+		'd-M-Y' => 'd-M-Y'
 	);
 	create_select_box('Date format','dateformat',$date_formats,
 		'How should phpGroupWare display dates for you.');

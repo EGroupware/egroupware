@@ -1,0 +1,50 @@
+<?php
+	/**************************************************************************\
+	* phpGroupWare                                                             *
+	* http://www.phpgroupware.org                                              *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+
+	/* $Id$ */
+
+	$phpgw_info['theme']['bg_color']    = '#ffffff';
+	$phpgw_info['theme']['bg_text']     = '#000000';
+	// vlink is annoying and unncessary for most apps, make same as link
+	//$phpgw_info['theme']['vlink']     = '#333366';
+	$phpgw_info['theme']['vlink']       = '#336699';
+	$phpgw_info['theme']['alink']       = '#ff0000';
+	//  A.hover in CSS currently works only with idsociety theme + template combo
+	$phpgw_info['theme']['hovlink']     = '#cc0000';
+	$phpgw_info['theme']['link']        = '#336699';
+	$phpgw_info['theme']['row_on']      = '#dddddd';
+	$phpgw_info['theme']['row_off']     = '#eeeeee';
+	$phpgw_info['theme']['row_text']    = '#000000';
+	$phpgw_info['theme']['th_bg']       = '#adadad';
+	$phpgw_info['theme']['th_text']     = '#000000';
+	$phpgw_info['theme']['navbar_bg']   = '#adadad';
+	$phpgw_info['theme']['navbar_text'] = '#ffffff';
+	$phpgw_info['theme']['table_bg']    = '#9999ff';
+	$phpgw_info['theme']['table_text']  = '#000000';
+	$phpgw_info['theme']['font']        = 'Arial, Helvetica, san-serif';
+	$phpgw_info['theme']['bg01']        = '#dadada';
+	$phpgw_info['theme']['bg02']        = '#dad0d0';
+	$phpgw_info['theme']['bg03']        = '#dacaca';
+	$phpgw_info['theme']['bg04']        = '#dac0c0';
+	$phpgw_info['theme']['bg05']        = '#dababa';
+	$phpgw_info['theme']['bg06']        = '#dab0b0';
+	$phpgw_info['theme']['bg07']        = '#daaaaa';
+	$phpgw_info['theme']['bg08']        = '#da9090';
+	$phpgw_info['theme']['bg09']        = '#da8a8a';
+	$phpgw_info['theme']['bg10']        = '#da7a7a';
+
+	// Theses are for the calendar only
+	$phpgw_info['theme']['cal_today']   = '#ffffcc';
+	$phpgw_info['theme']['cal_dayview'] = '#c0c0c0';
+
+	// These are for the email only
+	$phpgw_info['theme']['em_folder']      = '#adadad';
+	$phpgw_info['theme']['em_folder_text'] = '#ffffff';

@@ -23,3 +23,4 @@
 <font face="<?php echo $GLOBALS['phpgw_info']['theme']['font']; ?>" size="2">
 Version: <b><?php echo $setup_info[$appname]['version']; ?></b><p/>
 </font>
+<?php $GLOBALS['phpgw']->common->phpgw_footer(); ?>

@@ -15,11 +15,11 @@ show high priority events on main screen	preferences	ko	중요도가 높은 작업 보여�
 show new messages on main screen	preferences	ko	새로운 메시지를 메인화면에 보여줍니다.
 show text on navigation icons	preferences	ko	툴팁보기
 the two passwords are not the same	preferences	ko	암호가 잘못 입력되었습니다.
-this server is located in the %1 timezone	preferences	ko	 %1 의 시간대를 사용하고 있습니다.
+this server is located in the %1 timezone	preferences	ko	 의 시간대를 사용하고 있습니다.
 time format	preferences	ko	시간 형식
 time zone offset	preferences	ko	시간대 변경
 weekday starts on	preferences	ko	한주일의 시작
 work day ends on	preferences	ko	근무 종료 시각
 work day starts on	preferences	ko	근무 시작 시각
 you must enter a password	preferences	ko	암호를 입력해야만 합니다.
-your current theme is: %1	preferences	ko	%1 입니다.
+your current theme is: %1	preferences	ko	</b> 입니다.

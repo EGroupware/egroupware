@@ -1,5 +1,25 @@
-CA	Quebec Civic Holiday	3	1	0	0	1
+CA	New Years	1	1	0	0	0
+CA	Civic Holiday (Quebec)	2	1	0	0	0
+CA	Valentines Day	14	2	0	0	0
+CA	St Patricks Day	17	3	0	0	0
+CA	Beginning of Spring	20	3	0	0	0
+CA	Good Friday	25	3	2005	0	0
+CA	Easter	27	3	2005	0	0
+CA	Easter Monday	28	3	2005	0	0
+CA	Good Friday	9	4	2004	0	0
+CA	Easter	11	4	2004	0	0
+CA	Easter Monday	12	4	2004	0	0
+CA	Good Friday	18	4	2003	5	0
+CA	Easter	20	4	2003	0	0
+CA	Easter Monday	21	4	2003	1	0
+CA	Victoria Day (Monday b4 M24)	0	5	3	1	0
+CA	Mothers Day	0	5	2	0	0
+CA	Fathers Day	0	6	3	0	0
+CA	St Jean Baptiste Day (Quebec)	24	6	0	0	0
+CA	Canada Day	1	7	0	0	0
 CA	Canadian Civic Holiday	0	8	1	1	0
-CA	Rememberence Day	11	11	0	0	1
+CA	Labour Day	0	9	1	1	0
+CA	Thanksgiving	25	10	2	1	0
+CA	Remembrance Day	11	11	0	0	0
 CA	Christmas Day	25	12	0	0	1
-CA	Boxing Day		26	12	0	0	1
+CA	Boxing Day	26	12	0	0	0

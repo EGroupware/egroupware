@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="infolog.edit.description" template="" lang="" group="0" version="0.9.15.001" width="100%" border="0">
+	<grid id="infolog.edit.description" template="" lang="" group="0" version="0.9.15.002" width="100%" border="0">
 		<columns>
 			<column width="100"/>
 			<column/>
@@ -10,29 +10,28 @@
 			<row class="th">
 				<description span="all" value="Description"/>
 			</row>
-			<row class="row">
+			<row class="row" valign="top">
 				<description/>
 				<textbox multiline="true" rows="15" cols="80" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry"/>
 			</row>
 		</rows>
 	</grid>
-	<grid id="infolog.edit.links" template="" lang="" group="0" version="0.9.15.002" width="100%">
+	<grid id="infolog.edit.links" template="" lang="" group="0" version="0.9.15.003" width="100%">
 		<columns>
 			<column width="100"/>
-			<column/>
 		</columns>
 		<rows>
 			<row class="th">
-				<description span="all" value="Create new links"/>
+				<description value="Create new links"/>
 			</row>
 			<row class="row">
-				<link-to span="all" id="link_to"/>
+				<link-to id="link_to"/>
 			</row>
 			<row class="th">
-				<description span="all" value="Existing links"/>
+				<description value="Existing links"/>
 			</row>
 			<row class="row_off" valign="top" height="164">
-				<link-list span="all" id="link_to"/>
+				<link-list id="link_to"/>
 			</row>
 		</rows>
 	</grid>
@@ -71,7 +70,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.003" width="100%">
+	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.008" width="100%">
 		<columns>
 			<column width="103"/>
 			<column width="300"/>
@@ -79,13 +78,6 @@
 			<column/>
 		</columns>
 		<rows>
-			<row>
-				<description options="b" span="3" class="headertext" id="appheader"/>
-				<button label="Categories" align="right" id="cats" statustext="Edit or create categories for IngoLog"/>
-			</row>
-			<row>
-				<hrule span="all"/>
-			</row>
 			<row class="th">
 				<description value="Type"/>
 				<menulist span="all">
@@ -104,7 +96,7 @@
 			</row>
 			<row class="row">
 				<description value="Contact"/>
-				<textbox size="40" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link"/>
+				<textbox size="40" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title"/>
 				<description value="Phone/Email"/>
 				<textbox size="40" maxlength="64" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
 			</row>
@@ -112,7 +104,7 @@
 				<description value="Subject"/>
 				<textbox size="64" maxlength="64" span="all" id="info_subject" needed="1" statustext="a short subject for the entry"/>
 			</row>
-			<row>
+			<row height="250">
 				<tabbox>
 					<tabs span="all">
 						<tab label="Description" statustext="longer textual description"/>
@@ -131,32 +123,29 @@
 			</row>
 			<row class="row">
 				<description value="Startdate"/>
-				<hbox options="0,0">
-					<date id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
-					<checkbox label="%s Today" id="set_today" statustext="check to set startday"/>
-				</hbox>
+				<date-time options=",2" id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
 				<description value="Enddate"/>
 				<date id="info_enddate" statustext="til when should the ToDo or Phonecall be finished"/>
 			</row>
 			<row class="row">
 				<description value="Status"/>
 				<menulist>
-					<menupopup id="info_status" statustext="@status_help"/>
+					<menupopup id="info_status" statustext="allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-typ)"/>
 				</menulist>
 				<description value="Private"/>
 				<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL"/>
 			</row>
-			<row class="th">
+			<row class="row">
 				<description value="Owner"/>
 				<menulist>
-					<menupopup type="select-account" options=",,2" id="info_owner" readonly="true"/>
+					<menupopup type="select-account" id="info_owner" readonly="true"/>
 				</menulist>
 				<description value="Last modified"/>
 				<hbox options="0,0">
 					<menulist>
-						<menupopup type="select-account" options=",,2" id="info_modifier" readonly="true"/>
+						<menupopup type="select-account" id="info_modifier" readonly="true"/>
 					</menulist>
-					<date class="lpadding5" id="info_datemodified" readonly="true"/>
+					<date-time class="lpadding5" id="info_datemodified" readonly="true"/>
 				</hbox>
 			</row>
 			<row>

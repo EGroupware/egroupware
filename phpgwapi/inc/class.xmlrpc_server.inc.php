@@ -40,9 +40,13 @@
 		var $authed = False;
 		var $req_array = array();
 		var $resp_struct = array();
+		var $debug = False;
+		var $method_requested;
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
+			global $HTTP_RAW_POST_DATA;
+
 			// dispMap is a despatch array of methods
 			// mapped to function names and signatures
 			// if a method
@@ -72,12 +76,22 @@
 
 		function service()
 		{
+			global $HTTP_RAW_POST_DATA;
+
 			$r = $this->parseRequest();
-			$payload = '<?xml version="1.0" encoding="' . $GLOBALS['xmlrpc_defencoding'] . '"?>' . "\n"
-				. $this->serializeDebug()
-				. $r->serialize();
+			$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
 			Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
 			print $payload;
+
+			if ($this->debug)
+			{
+				$this->echoInput();
+
+				$fp = fopen('/tmp/xmlrpc_debug.out','w');
+				fputs($fp,$payload);
+				fclose($fp);
+			}
+
 		}
 
 		/*
@@ -197,20 +211,38 @@
 				$_type = (is_integer($_res)?'int':gettype($_res));
 				if ($recursed)
 				{
-					return CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
+					// Passing an integer of 0 to the xmlrpcval constructor results in the value being lost. (jengo)
+					if ($_type == 'int' && $_res == 0)
+					{
+						return CreateObject('phpgwapi.xmlrpcval','0',$_type);
+					}
+					else
+					{
+						return CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
+					}
 				}
 				else
 				{
-					$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
+					// Passing an integer of 0 to the xmlrpcval constructor results in the value being lost. (jengo)
+					if ($_type == 'int' && $_res == 0)
+					{
+						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval','0',$_type);
+					}
+					else
+					{
+						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
+					}
 				}
 			}
 		}
 
 		function parseRequest($data='')
 		{
+			global $HTTP_RAW_POST_DATA;
+	
 			if ($data == '')
 			{
-				$data = $GLOBALS['HTTP_RAW_POST_DATA'];
+				$data = $HTTP_RAW_POST_DATA;
 			}
 			$parser = xml_parser_create($GLOBALS['xmlrpc_defencoding']);
 	
@@ -282,6 +314,9 @@
 					if ($this->authed)
 					{
 						/* phpgw mod - fetch the (bo) class methods to create the dmap */
+						// This part is to update session action to match
+						$this->method_requested = $methName;
+
 						$method = $methName;
 						$tmp = explode('.',$methName);
 						$methName = $tmp[2];
@@ -367,7 +402,7 @@
 								/* _debug_array($res);exit; */
 								$this->resp_struct = array();
 								$this->build_resp($res);
-								/* _debug_array($this->resp_struct); */
+								/*_debug_array($this->resp_struct); */
 								@reset($this->resp_struct);
 								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
 								/* _debug_array($r); */
@@ -410,11 +445,18 @@
 
 		function echoInput()
 		{
+			global $HTTP_RAW_POST_DATA;
+
 			// a debugging routine: just echos back the input
 			// packet as a string value
 
-			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '" . $GLOBALS['HTTP_RAW_POST_DATA'],'string'));
-			echo $r->serialize();
+			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '" . $HTTP_RAW_POST_DATA,'string'));
+			//echo $r->serialize();
+
+			$fp = fopen('/tmp/xmlrpc_debug.in','w');
+			fputs($fp,$r->serialize);
+			fputs($fp,$HTTP_RAW_POST_DATA);
+			fclose($fp);
 		}
 	}
 ?>

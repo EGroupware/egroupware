@@ -134,8 +134,8 @@
 				'i' => 'select-number'
 			);
 			$opts = array(
-				'H' => $this->timeformat == '12' ? ',0,12' : ',0,23',
-				'i' => $value['i'] % 5 || $options & 4 ? ',0,59' : ',0,59,5' // 5min steps, if ok with value
+				'H' => $this->timeformat == '12' ? ',0,12' : ',0,23,01',
+				'i' => $value['i'] % 5 || $options & 4 ? ',0,59,01' : ',0,59,05' // 5min steps, if ok with value
 			);
 			$help = array(
 				'Y' => 'Year',
@@ -153,7 +153,7 @@
 				{
 					$dcell['type'] = 'html';
 					$dcell['name'] = 'str';
-					$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],$cell['help']);
+					$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],lang($cell['help']));
 					$n = 2;				// no other fields
 					$options &= ~2;		// no set-today button
 					// register us for process_exec
@@ -164,7 +164,7 @@
 					$dcell['type'] = $types[$format[$n]];
 					$dcell['size'] = $opts[$format[$n]];
 					$dcell['name'] = $format[$n];
-					$dcell['help'] = lang($help[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
+					$dcell['help'] = lang($help[$format[$n]]).': '.lang($cell['help']);	// note: no lang on help, already done
 				}
 				if ($n == 4)
 				{
@@ -192,7 +192,7 @@
 				if ($n == 2 && $type == 'date-time')	// insert some space between date+time
 				{
 					$dcell = $tpl->empty_cell();
-					$dcell['type'] = 'label';
+					$dcell['type'] = 'html';
 					$dcell['name'] = 'space';
 					$value['space'] = ' &nbsp; &nbsp; ';
 					$dcell['no_lang'] = True;
@@ -240,9 +240,13 @@
 					$value[$d] = date($d);
 				}
 			}
-			if (isset($value_in['str']))
+			if (isset($value_in['str']) && !empty($value_in['str']))
 			{
-				$value = $this->jscal->input2date($value_in['str'],False,'d','m','Y');
+				if (!is_array($value))
+				{
+					$value = array();
+				}
+				$value += $this->jscal->input2date($value_in['str'],False,'d','m','Y');
 			}
 			if ($value['d'] || isset($value['H']) && $value['H'] !== '' ||
 			                   isset($value['i']) && $value['i'] !== '')

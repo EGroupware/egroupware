@@ -168,14 +168,16 @@ class html
 	*/
 	function link($url,$vars='')
 	{
+		//echo "<p>html::link(url='$url',vars='"; print_r($vars); echo "')</p>\n";
 		if (!is_array($vars))
 		{
-			$vars = explode('&',$vars);
+			parse_str($vars,$vars);
 		}
 		list($url,$v) = explode('?',$url);	// url may contain additional vars
 		if ($v)
 		{
-			$vars += explode('&',$v);
+			parse_str($v,$v);
+			$vars += $v;
 		}
 		return $GLOBALS['phpgw']->link($url,$vars);
 	}

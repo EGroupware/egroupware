@@ -489,7 +489,7 @@ text is a string, it contains the body of the message.
 				'ctApostrophes'        => CreateObject('phpgwapi.xmlrpcval',$ap, 'int'),
 				'ctQuotes'             => CreateObject('phpgwapi.xmlrpcval',$qu, 'int')
 			),
-			'struct'
+   		     'struct'
 		));
 	}
 
@@ -589,7 +589,7 @@ text is a string, it contains the body of the message.
 			'toolkitVersion' => $GLOBALS['xmlrpcVersion'],
 			'toolkitOperatingSystem' => $GLOBALS['SERVER_SOFTWARE']
 		);
-		return CreateObject('phpgwapi.xmlrpcresp',xmlrpc_encode($ret));
+		return CreateObject('phpgwapi.xmlrpcresp',phpgw_xmlrpc_encode($ret));
 	}
 
 	$server->add_to_map('examples.getStateName',            'findstate',$findstate_sig,$findstate_doc);

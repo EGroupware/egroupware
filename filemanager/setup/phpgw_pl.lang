@@ -25,7 +25,7 @@ created %1	filemanager	pl	Utworzono %1
 date	filemanager	pl	Data
 default number of upload fields to show	filemanager	pl	
 delete	filemanager	pl	Usuñ
-deleted %1	filemanager	pl	Usuniêto 51
+deleted x	filemanager	pl	Usuniêto 51
 directory	filemanager	pl	Katalog
 directory names cannot contain "%1"	filemanager	pl	Nazwa katalogu zawiera "%1"
 directory %1 already exists	filemanager	pl	Katalog %1 ju¿ istnieje
@@ -40,7 +40,7 @@ failed to create directory	filemanager	pl
 file	filemanager	pl	Plik
 file name	filemanager	pl	Nazwa pliku
 file names cannot contain "%1"	filemanager	pl	Plik nie zawiera "%1"
-file names cannot contain \\ or /	filemanager	pl	Nazwa pliku nie mo¿e zawierac \\ lub /
+file names cannot contain \ or /	filemanager	pl	Nazwa pliku nie mo¿e zawierac \ lub /
 file %1 already exists. please edit it or delete it first.	filemanager	pl	Plik %1 ju¿ istnieje. proszê edytowaæ go lub usun±æ
 file %1 could not be created.	filemanager	pl	Plik %1 nie mo¿e byæ utworzony
 filename	filemanager	pl	Nazwa pliku
@@ -82,7 +82,7 @@ unknown mime-type defaults to text/plain when viewing	filemanager	pl
 unused space	filemanager	pl	Wolne miejsce
 up	filemanager	pl	W górê
 update	filemanager	pl	Aktualizuj
-updated comment for %1	filemanager	pl	Zaktualizowano komentarz do 51
+updated comment for %1	filemanager	pl	Zaktualizowano komentarz do %1
 upload fields	filemanager	pl	wczytywanych plików
 upload files	filemanager	pl	Wczytaj pliki
 used space	filemanager	pl	Wykorzystane miejsce

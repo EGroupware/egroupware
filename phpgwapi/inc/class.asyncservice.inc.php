@@ -339,7 +339,7 @@
 			{
 				$this->db->lock($this->db_table,'write');	// this will block til we get exclusive access to the table
 
-				set_time_limit(0);		// dont stop for an execution-time-limit
+				@set_time_limit(0);		// dont stop for an execution-time-limit
 				ignore_user_abort(True);
 			}
 			if ($exists = $this->read('##last-check-run##'))
@@ -423,6 +423,7 @@
 							if ($lang != $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 							{
 								unset($GLOBALS['lang']);
+								$GLOBALS['phpgw']->translation->add_app('common');
 							}
 						}
 						else

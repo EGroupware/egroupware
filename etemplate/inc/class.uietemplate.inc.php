@@ -77,8 +77,8 @@
 		@discussion do NOT abstract the UI-layer, because they return HTML.
 		@discussion Generates a webpage with a form from the template and puts process_exec in the
 		@discussion form as submit-url to call process_show for the template before it
-		@discussion ExecuteMethod's the given $methode of the caller.
-		@param $methode Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
+		@discussion ExecuteMethod's the given $method of the caller.
+		@param $method Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
 		@param $content Array with content to fill the input-fields of template, eg. the text-field
 		@param          with name 'name' gets its content from $content['name']
 		@param $sel_options Array or arrays with the options for each select-field, keys are the
@@ -86,8 +86,8 @@
 		@param              options for field 'name'. ($content['options-name'] is possible too !!!)
 		@param $readonlys Array with field-names as keys for fields with should be readonly
 		@param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
-		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) 
-			sets $HTTP_POST_VARS['id'] for the $method-call
+		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id)
+			sets $_POST['id'] for the $method-call
 		@param $return_html if true, dont show the page, just return the html
 		@result nothing
 		*/
@@ -114,28 +114,6 @@
 			{
 				$GLOBALS['phpgw_info']['flags']['app_header'] = $content['app_header'];
 			}
-/*
-			$html = '';
-			if ($this->stable)
-			{
-				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
-				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && !$return_html)
-				{
-					$GLOBALS['phpgw_info']['flags']['java_script'] = $this->include_java_script(2);
-					$GLOBALS['phpgw']->common->phpgw_header();
-				}
-				else
-				{
-					$html = $this->include_java_script(2);	// better than nothing
-				}
-			}
-			else
-			{
-				$hooked = $GLOBALS['phpgw']->xslttpl->get_var('phpgw');
-				$hooked = $hooked['body_data'];
-				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $this->include_java_script(2)));
-			}
-*/
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
 			{
 				$GLOBALS['phpgw']->translation->add_app('etemplate');	// some extensions have own texts
@@ -147,9 +125,8 @@
 			$html = ($this->stable ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
 				$this->html->form($this->include_java_script(1).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
-						'etemplate_exec_id' => $id,
-						'etemplate_exec_app' => $GLOBALS['phpgw_info']['flags']['currentapp']
-					),'/etemplate/process_exec.php','','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
+						'etemplate_exec_id' => $id
+					),'/etemplate/process_exec.php?menuaction='.$method,'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
 			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']);
 			if ($this->stable)
 			{
@@ -170,11 +147,13 @@
 				$hooked = $hooked['body_data'];
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $GLOBALS['phpgw_info']['flags']['java_script'].$this->include_java_script(2)));
 			}
+			/* is in show now for every template
 			list($width,$height,,,,,$overflow) = explode(',',$this->size);
 			if ($overflow)
 			{
 				$html = $this->html->div($html,'STYLE="'.($width?"width: $width; ":'').($height?"height: $height; ":'')."overflow: $overflow;\"");
 			}
+			*/
 			$id = $this->save_appsession($this->as_array(1) + array(
 				'readonlys' => $readonlys,
 				'content' => $content,
@@ -185,8 +164,7 @@
 				'to_process' => $GLOBALS['phpgw_info']['etemplate']['to_process'],
 				'java_script' => $GLOBALS['phpgw_info']['etemplate']['java_script'],
 				'dom_enabled' => $GLOBALS['phpgw_info']['etemplate']['dom_enabled'],
-				'method' => $method,
-				'hooked' => $hooked
+				'hooked' => $hooked != '' ? $hooked : $GLOBALS['phpgw_info']['etemplate']['hook_content']
 			),$id);
 
 			if ($return_html)
@@ -199,9 +177,10 @@
 				{
 					echo parse_navbar();
 				}
-				echo $html;
+				echo $GLOBALS['phpgw_info']['etemplate']['hook_content'].$html;
 
-				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && !isset($_GET['menuaction']))
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] &&
+				    (!isset($_GET['menuaction']) || strstr($_SERVER['PHP_SELF'],'process_exec.php')))
 				{
 					$GLOBALS['phpgw']->common->phpgw_footer();
 				}
@@ -214,29 +193,34 @@
 
 		/*!
 		@function process_exec
-		@abstract Makes the necessary adjustments to HTTP_POST_VARS before it calls the app's method
+		@abstract Makes the necessary adjustments to _POST before it calls the app's method
 		@discussion This function is only to submit forms to, create with exec.
 		@discussion All eTemplates / forms executed with exec are submited to this function
 		@discussion (via the global index.php and menuaction). It then calls process_show
-		@discussion for the eTemplate (to adjust the content of the HTTP_POST_VARS) and
+		@discussion for the eTemplate (to adjust the content of the _POST) and
 		@discussion ExecMethod's the given callback from the app with the content of the form as first argument.
 		*/
 		function process_exec()
 		{
-			//echo "process_exec: HTTP_POST_VARS ="; _debug_array($GLOBALS['HTTP_POST_VARS']);
-			$session_data = $this->get_appsession($GLOBALS['HTTP_POST_VARS']['etemplate_exec_id']);
+			//echo "process_exec: _POST ="; _debug_array($_POST);
+			$session_data = $this->get_appsession($_POST['etemplate_exec_id']);
 			//echo "<p>process_exec: session_data ="; _debug_array($session_data);
 
-			$content = $GLOBALS['HTTP_POST_VARS']['exec'];
+			if (!$_POST['etemplate_exec_id'] || !is_array($session_data) || count($session_data) < 10)
+			{
+				// this prevents an empty screen, if the sessiondata gets lost somehow
+				$this->location(array('menuaction' => $_GET['menuaction']));
+			}
+			$content = $_POST['exec'];
 			if (!is_array($content))
 			{
 				$content = array();
 			}
 			$this->init($session_data);
 			$GLOBALS['phpgw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
-			$GLOBALS['phpgw_info']['etemplate']['java_script'] = $session_data['java_script'] || $GLOBALS['HTTP_POST_VARS']['java_script'];
-			$GLOBALS['phpgw_info']['etemplate']['dom_enabled'] = $session_data['dom_enabled'] || $GLOBALS['HTTP_POST_VARS']['dom_enabled'];
-			//echo "globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', session_data[java_script] = '".$session_data['java_script']."', HTTP_POST_VARS[java_script] = '".$GLOBALS['HTTP_POST_VARS']['java_script']."'\n";
+			$GLOBALS['phpgw_info']['etemplate']['java_script'] = $session_data['java_script'] || $_POST['java_script'];
+			$GLOBALS['phpgw_info']['etemplate']['dom_enabled'] = $session_data['dom_enabled'] || $_POST['dom_enabled'];
+			//echo "globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', session_data[java_script] = '".$session_data['java_script']."', _POST[java_script] = '".$_POST['java_script']."'\n";
 			//echo "process_exec($this->name) content ="; _debug_array($content);
 			$this->process_show($content,$session_data['to_process'],'exec');
 
@@ -251,7 +235,8 @@
 				{
 					if ($this->stable)
 					{
-						$GLOBALS['phpgw']->template->set_var('phpgw_body',$session_data['hooked']);
+						//echo "<p>process_exec: hook_content set</p>\n";
+						$GLOBALS['phpgw_info']['etemplate']['hook_content'] = $session_data['hooked'];
 					}
 					else
 					{
@@ -259,12 +244,12 @@
 					}
 				}
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
-				$this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
+				$this->exec($_GET['menuaction'],$session_data['content'],$session_data['sel_options'],
 					$session_data['readonlys'],$session_data['preserv'],$content);
 			}
 			else
 			{
-				ExecMethod($session_data['method'],$this->complete_array_merge($session_data['preserv'],$content));
+				ExecMethod($_GET['menuaction'],$this->complete_array_merge($session_data['preserv'],$content));
 			}
 		}
 
@@ -303,8 +288,8 @@
 		@param $sel_options array with options for the selectboxes, keys are the name of the selectbox
 		@param $readonlys array with names of cells/form-elements to be not allowed to change
 		@param            This is to facilitate complex ACL's which denies access on field-level !!!
-		@param $cname basename of names for form-elements, means index in $HTTP_POST_VARS
-		@param        eg. $cname='cont', element-name = 'name' returned content in $HTTP_POST_VARS['cont']['name']
+		@param $cname basename of names for form-elements, means index in $_POST
+		@param        eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
 		@param $show_xxx row,col name/index for name expansion
 		@result the generated HTML
 		*/
@@ -434,7 +419,7 @@
 					$colspan = $span == 'all' ? $this->cols-$c : 0+$span;
 					if ($colspan > 1)
 					{
-						$row_data[".$col"] .= " COLSPAN=$colspan";
+						$row_data[".$col"] .= " COLSPAN=\"$colspan\"";
 						for ($i = 1; $i < $colspan; ++$i,++$c)
 						{
 							each($cols);	// skip next cell(s)
@@ -464,12 +449,11 @@
 			}
 			$html = $this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING'),$no_table_tr);
 
-			/* does NOT work with mozilla: shows nothing if a div is inside a form
 			list($width,$height,,,,,$overflow) = explode(',',$this->size);
 			if (!empty($overflow)) {
 				$div_style=' STYLE="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow\"";
 				$html = $this->html->div($html,$div_style);
-			}*/
+			}
 			return "\n\n<!-- BEGIN $this->name -->\n$style\n".$html."<!-- END $this->name -->\n\n";
 		}
 
@@ -507,7 +491,7 @@
 			}
 			$value = $this->get_array($content,$name);
 
-			if ($readonly = $cell['readonly'] || @$readonlys[$name] || $readonlys['__ALL__'])
+			if ($readonly = $cell['readonly'] || (@$readonlys[$name] && !is_array($readonlys[$name])) || $readonlys['__ALL__'])
 			{
 				$options .= ' READONLY';
 			}
@@ -541,17 +525,37 @@
 			{
 				$help = $this->get_array($content,substr($help,1));
 			}
+			$blur = $cell['blur'][0] == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
+				(strlen($cell['blur']) <= 1 ? $cell['blur'] : lang($cell['blur']));
+
 			if ($this->java_script())
 			{
+				if ($blur)
+				{
+					if (empty($value))
+					{
+						$value = $blur;
+					}
+					$onFocus .= "if(this.value=='".addslashes(htmlspecialchars($blur))."') this.value='';";
+					$onBlur  .= "if(this.value=='') this.value='".addslashes(htmlspecialchars($blur))."';";
+				}
 				if ($help)
 				{
-					$options .= " onFocus=\"self.status='".addslashes(lang($help))."'; return true;\"";
-					$options .= " onBlur=\"self.status=''; return true;\"";
+					if ($cell['no_lang'] < 2)
+					{
+						$help = lang($help);
+					}
+					$onFocus .= "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
+					$onBlur  .= "self.status=''; return true;";
 					if ($cell['type'] == 'button' || $cell['type'] == 'file')	// for button additionally when mouse over button
 					{
-						$options .= " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
+						$options .= " onMouseOver=\"self.status='".addslashes(htmlspecialchars($help))."'; return true;\"";
 						$options .= " onMouseOut=\"self.status=''; return true;\"";
 					}
+				}
+				if ($onBlur)
+				{
+					$options .= " onFocus=\"$onFocus\" onBlur=\"$onBlur\"";
 				}
 				if ($cell['onchange'] && $cell['type'] != 'button') // values != '1' can only set by a program (not in the editor so fa
 				{
@@ -742,7 +746,11 @@
 					list($multiple) = explode(',',$cell_options);
 					if (!empty($multiple) && 0+$multiple <= 0)
 					{
-						$sels[''] = $multiple < 0 ? lang('all') : lang($multiple);
+						$sels[''] = $multiple < 0 ? 'all' : $multiple;
+						if ($cell['no_lang'])
+						{
+							$sels[''] = lang($sels['']);
+						}
 						$multiple = 0;
 					}
 					if (!empty($cell['sel_options']))
@@ -892,9 +900,15 @@
 				unset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]);
 				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'ext-'.$ext_type;
 			}
+			// save blur-value to strip it in process_exec
+			if (!empty($blur) && isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
+			{
+				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = is_array($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]) ? $GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] : array('type' => $GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]);
+				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]['blur'] = $blur;
+			}
 			if ($extra_label && ($label != '' || $html == ''))
 			{
-				if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label))
+				if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label || $cell['no_lang'] == 2))
 				{
 					$label = lang($label);
 				}
@@ -933,11 +947,11 @@
 
 		/*!
 		@function process_show
-		@abstract makes necessary adjustments on HTTP_POST_VARS after a eTemplate / form gots submitted
+		@abstract makes necessary adjustments on _POST after a eTemplate / form gots submitted
 		@discussion This is only an internal function, dont call it direct use only exec
 		@discussion Process_show uses a list of input-fields/widgets generated by show.
 		@syntax process_show(&$content,$to_process,$cname='')
-		@param $content HTTP_POST_VARS[$cname]
+		@param $content _POST[$cname]
 		@param $to_process list of widgets/form-fields to process
 		@param $cname basename of our returnt content (same as in call to show)
 		@result the adjusted content (by using the var-param &$content)
@@ -967,6 +981,11 @@
 					$attr = array();
 				}
 				$value = $this->get_array($content_in,$form_name);
+
+				if (isset($attr['blur']) && $attr['blur'] == stripslashes($value))
+				{
+					$value = '';	// blur-values is equal to emtpy
+				}
 				//echo "<p>process_show($this->name) $type: $form_name = '$value'</p>\n";
 				list($type,$sub) = explode('-',$type);
 				switch ($type)
@@ -1082,61 +1101,8 @@ if (document.getElementById) {
 			// here are going all the necesarry functions if javascript is enabled
 			if ($what & 2 && $this->java_script(True))
 			{
-				$js .= "<script language=\"JavaScript\">
-function set_element(form,name,value)
-{
-". /* "	alert('set_element: '+name+'='+value);". */ "
-	for (i = 0; i < form.length; i++)
-	{
-		if (form.elements[i].name == name)
-		{
-			form.elements[i].value = value;
-		}
-	}
-}
-
-function set_element2(form,name,vname)
-{
-". /* "	alert('set_element2: '+name+'='+vname);". */ "
-	for (i = 0; i < form.length; i++)
-	{
-		if (form.elements[i].name == vname)
-		{
-			value = form.elements[i].value;
-		}
-	}
-". /* "	alert('set_element2: '+name+'='+value);". */ "
-	for (i = 0; i < form.length; i++)
-	{
-		if (form.elements[i].name == name)
-		{
-			form.elements[i].value = value;
-		}
-	}
-}
-
-function activate_tab(tab,all_tabs,name)
-{
-	var tabs = all_tabs.split('|');
-	var parts = tab.split('.');
-	var last_part = parts.length-1;
-	
-	for (n = 0; n < tabs.length; n++)
-	{
-		var t = tabs[n];
-		
-		if (t.indexOf('.') < 0 && parts.length > 1) 
-		{
-			parts[last_part] = t;
-			t = parts.join('.');
-		}
-		document.getElementById(t).style.visibility = t == tab ? 'visible' : 'hidden';
-		document.getElementById(t+'-tab').className = 'etemplate_tab'+(t == tab ? '_active th' : ' row_on');
-	}
-	document.getElementByName(name).value = tab;
-}
-</script>
-";
+				$js .= '<script type="text/javascript" src="'.
+					$GLOBALS['phpgw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js"></script>';
 			}
 			return $js;
 		}

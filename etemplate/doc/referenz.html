@@ -320,7 +320,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td><b>Disabled</b><br>column-attr.<br>row-attr.</td>
 	<td>disabled</td>
 	<td>no</td>
-	<td>&nbsp;</td>
+	<td>disabled</td>
 	<td>
 		Syntax: <b>[!]{@name|value}[={@name2|value2}]</b><br>
 		Disables (=dont show it) a row/column if a certain criteria is (not (=!)) meet.<br>
@@ -343,6 +343,18 @@ implement only a subset of XUL. Here are the main differences:</p>
 		gets replaced by the etemplate class with nmr0 or nmr1.<p>
 		<b>valign</b>: vertical alignment of the widgets in the row: 'top', 'middle' (default)
 		or 'bottom'
+	</td>
+</tr>
+<tr>
+	<td><b>blurText</b></td>
+	<td>blur</td>
+	<td>no</td>
+	<td>blur</td>
+	<td>
+		This text get displayed if an input-field is empty <u>and</u> does not have the
+		input-focus (blur). It can be used to show a default value or a kind of help-text.<br>
+		If it contains a text (eg. 'Search...'), this text is run through lang(), if it contains
+		a reference to the content array (eg. '@blur_text') it does <u>not</u> get translated.
 	</td>
 </tr>
 </table>
@@ -548,7 +560,9 @@ implement only a subset of XUL. Here are the main differences:</p>
 				years from now or if > 100 a absolut year)<br>
 			<b>select-number</b>:<br>
 				Select a number out of a range specified by the options-field:<br>
-				,{start (default=1)},{end (incl., default=10)},{decrement (default=1)}<br>
+				,{start (default=1)},{end (incl., default=10)},{decrement (default={padding zeros}1)}.<br>
+				Example with padding zeros: options=',0,59,05' will give values: 00, 05, 10, ..., 55
+				(like you would use it for minutes in a time-field)<br>
 			<b>select-app</b>:<br>
 				Select an application, availible options: ,{''=user enabled(default)|installed|all)}
 	</td>

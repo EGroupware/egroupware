@@ -1062,4 +1062,22 @@
 			return False;
 		}
 	}
+	
+	/*!
+	 @function prepend_tables_prefix
+	 @abstract prepend a prefix to an array of table names
+	 @author Adam Hull (aka fixe) - No copyright claim
+	 @param	$prefix	the string to be prepended
+	 @param	$tables	and array of tables to have the prefix prepended to
+	 @return array of table names with the prefix prepended
+	*/
+							
+	function prepend_tables_prefix($prefix,$tables)
+	{
+		foreach($tables as $key => $value)
+		{
+			$tables[$key] = $prefix.$value;
+		}
+		return $tables;
+	}
 ?>

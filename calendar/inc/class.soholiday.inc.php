@@ -19,9 +19,7 @@
 
 		function soholiday()
 		{
-			global $phpgw;
-
-			$this->db = $phpgw->db;
+			$this->db = $GLOBALS['phpgw']->db;
 		}
 
 		/* Begin Holiday functions */
@@ -49,14 +47,12 @@
 
 		function store_to_array(&$holidays)
 		{
-			global $phpgw;
-			
 			while($this->db->next_record())
 			{
 				$holidays[] = Array(
 					'index'			=> $this->db->f('hol_id'),
 					'locale'		=> $this->db->f('locale'),
-					'name'			=> $phpgw->strip_html($this->db->f('name')),
+					'name'			=> $GLOBALS['phpgw']->strip_html($this->db->f('name')),
 					'day'			=> intval($this->db->f('mday')),
 					'month'			=> intval($this->db->f('month_num')),
 					'occurence'		=> intval($this->db->f('occurence')),
@@ -65,15 +61,13 @@
 				);
 				if($this->debug)
 				{
-					echo "Holiday ID: ".$this->db->f("hol_id")."<br>\n";
+					echo 'Holiday ID: '.$this->db->f('hol_id').'<br>'."\n";
 				}
 			}
 		}
 
 		function read_holidays($locales='',$query='',$order='',$year=0)
 		{
-			global $phpgw;
-
 			$holidays = Array();
 
 			if($locales == '')
@@ -85,7 +79,7 @@
 
 			if($this->debug)
 			{
-				echo "Read Holidays : ".$sql."<br>\n";
+				echo 'Read Holidays : '.$sql.'<br>'."\n";
 			}
 
 			$this->db->query($sql,__LINE__,__FILE__);
@@ -98,7 +92,7 @@
 			$holidays = Array();
 			if($this->debug)
 			{
-				echo "Reading Holiday ID : ".$id."<br>\n";
+				echo 'Reading Holiday ID : '.$id.'<br>'."\n";
 			}
 			$this->db->query('SELECT * FROM phpgw_cal_holidays WHERE hol_id='.$id,__LINE__,__FILE__);
 			$this->store_to_array($holidays);
@@ -186,7 +180,7 @@
 
 			if($this->debug)
 			{
-				echo "HOLIDAY_TOTAL : ".$sql."<br>\n";
+				echo 'HOLIDAY_TOTAL : '.$sql.'<br>'."\n";
 			}
 			
 			$this->db->query($sql,__LINE__,__FILE__);

@@ -17,39 +17,45 @@
 
 	class db
 	{
-		var $Host     = '';
-		var $Database = '';
-
-		var $Link_ID  = 0;
-		var $Query_ID = 0;
-		var $Record   = array();
-		var $Row;
-
-		var $Error    = '';
-
-		var $Auto_Free = 0;     /* Set this to 1 for automatic msql_free_result() */
-
-		function connect()
+		function connect($Database = '', $Host = '', $User = '', $Password = '')
 		{
-			/* Not connected? Then connect? */
-			if ( 0 == $this->Link_ID )
+			/* Handle defaults */
+			if ($Database == '')
 			{
-				// Check for local connect
-				$this->Link_ID = empty($this->Host)? 
-				$this->Link_ID=msql_pconnect():
-				$this->Link_ID=msql_pconnect($this->Host);
+				$Database = $this->Database;
+			}
+			if ($Host == '')
+			{
+				$Host     = $this->Host;
+			}
+			if ($User == '')
+			{
+				$User     = $this->User;
+			}
+			if ($Password == '')
+			{
+				$Password = $this->Password;
 			}
 
-			/* Still not connected? Raise error. */
-			if(0 == $this->Link_ID)
+			// Not connected? Then connect?
+			if (! $this->Link_ID)
+			{
+				// Check for local connect
+				$this->Link_ID = empty($Host)?
+					$this->Link_ID=msql_pconnect():
+					$this->Link_ID=msql_pconnect($Host);
+			}
+
+			// Still not connected? Raise error.
+			if (! $this->Link_ID )
 			{
 				$this->halt('Link-ID == false, pconnect failed');
 			}
 
 			// Select current database
-			if(!msql_select_db($this->Database, $this->Link_ID))
+			if (!msql_select_db($Database, $this->Link_ID))
 			{
-				$this->halt('cannot use database '.$this->Database);
+				$this->halt('cannot use database '.$Database);
 			}
 		}
 
@@ -57,12 +63,12 @@
 		{
 			$this->connect();
 
-			/* printf("Debug: query = %s<br>\n", $Query_String); */
+			#   printf("Debug: query = %s<br>\n", $Query_String);
 
 			$this->Query_ID = msql_query($Query_String,$this->Link_ID);
 			$this->Row   = 0;
 			$this->Error = msql_error();
-			if(!$this->Query_ID)
+			if (!$this->Query_ID)
 			{
 				$this->halt('Invalid SQL: '.$Query_String);
 			}
@@ -76,7 +82,7 @@
 			$this->Error = msql_error();
 
 			$stat = is_array($this->Record);
-			if(!$stat && $this->Auto_Free)
+			if (!$stat && $this->Auto_Free)
 			{
 				msql_free_result($this->Query_ID);
 				$this->Query_ID = 0;
@@ -87,7 +93,7 @@
 		function seek($pos)
 		{
 			$status = msql_data_seek($this->Query_ID, $pos);
-			if($status)
+			if ($status)
 			{
 				$this->Row = $pos;
 			}
@@ -102,14 +108,14 @@
 
 			$this->connect();
 			$id = @msql_list_fields($this->Database, $table);
-			if($id < 0)
+			if ($id < 0)
 			{
 				$this->Error = msql_error();
 				$this->halt('Metadata query failed.');
 			}
 			$count = msql_num_fields($id);
 
-			for($i=0; $i<$count; $i++)
+			for ($i=0; $i<$count; $i++)
 			{
 				$res[$i]['table'] = msql_fieldtable ($id, $i);
 				$res[$i]['name']  = msql_fieldname  ($id, $i);
@@ -137,26 +143,6 @@
 		function num_fields()
 		{
 			return msql_num_fields($this->Query_ID);
-		}
-
-		function nf()
-		{
-			return $this->num_rows();
-		}
-
-		function np()
-		{
-			print $this->num_rows();
-		}
-
-		function f($Name)
-		{
-			return $this->Record[$Name];
-		}
-
-		function p($Name)
-		{
-			print $this->Record[$Name];
 		}
 
 		function halt($msg)

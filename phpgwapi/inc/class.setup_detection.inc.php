@@ -43,14 +43,14 @@
 			$tname = Array();
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
 			$tables = $GLOBALS['phpgw_setup']->db->table_names();
-			while(list($key,$val) = @each($tables))
+			foreach($tables as $key => $val)
 			{
 				$tname[] = $val['table_name'];
 			}
 			$newapps = in_array('phpgw_applications',$tname);
 			$oldapps = in_array('applications',$tname);
 
-			if((is_array($tables)) && (count($tables) > 0) && ($newapps || $oldapps))
+			if((count($tables) > 0) && (is_array($tables)) && ($newapps || $oldapps))
 			{
 				/* one of these tables exists. checking for post/pre beta version */
 				if($newapps)
@@ -69,8 +69,8 @@
 						$setup_info['phpgwapi']['version'] = $setup_info['admin']['currentver'];
 						$setup_info['phpgwapi']['enabled'] = $setup_info['admin']['enabled'];
 						// _debug_array($setup_info['phpgwapi']);exit;
-// There seems to be a problem here.  If ['phpgwapi']['currentver'] is set,
-// The GLOBALS never gets set.
+						// There seems to be a problem here.  If ['phpgwapi']['currentver'] is set,
+						// The GLOBALS never gets set.
 						$GLOBALS['setup_info'] = $setup_info;
 						$GLOBALS['phpgw_setup']->register_app('phpgwapi');
 					}
@@ -109,23 +109,22 @@
 		*/
 		function compare_versions($setup_info)
 		{
-			reset ($setup_info);
-			while(list($key, $value) = each($setup_info))
+			foreach($setup_info as $key => $value)
 			{
-				//echo '<br>'.$setup_info[$key]['name'].'STATUS: '.$setup_info[$key]['status'];
+				//echo '<br>'.$value['name'].'STATUS: '.$value['status'];
 				/* Only set this if it has not already failed to upgrade - Milosch */
-				if(!( (@$setup_info[$key]['status'] == 'F') || (@$setup_info[$key]['status'] == 'C') ))
+				if(!( (@$value['status'] == 'F') || (@$value['status'] == 'C') ))
 				{
 					//if ($setup_info[$key]['currentver'] > $setup_info[$key]['version'])
-					if($GLOBALS['phpgw_setup']->amorethanb($setup_info[$key]['currentver'],@$setup_info[$key]['version']))
+					if($GLOBALS['phpgw_setup']->amorethanb($value['currentver'],@$value['version']))
 					{
 						$setup_info[$key]['status'] = 'V';
 					}
-					elseif(@$setup_info[$key]['currentver'] == @$setup_info[$key]['version'])
+					elseif(@$value['currentver'] == @$value['version'])
 					{
 						$setup_info[$key]['status'] = 'C';
 					}
-					elseif($GLOBALS['phpgw_setup']->alessthanb(@$setup_info[$key]['currentver'],@$setup_info[$key]['version']))
+					elseif($GLOBALS['phpgw_setup']->alessthanb(@$value['currentver'],@$value['version']))
 					{
 						$setup_info[$key]['status'] = 'U';
 					}
@@ -141,22 +140,22 @@
 
 		function check_depends($setup_info)
 		{
-			reset($setup_info);
 			/* Run the list of apps */
-			while(list ($key, $value) = each ($setup_info))
+			foreach($setup_info as $key => $value)
 			{
 				/* Does this app have any depends */
 				if(isset($value['depends']))
 				{
-					/* If so find out which apps it depends on */
-					while(list($depkey, $depvalue) = each($value['depends']))
+                                /* If so find out which apps it depends on */
+					foreach($value['depends'] as $depkey => $depvalue)
 					{
 						/* I set this to False until we find a compatible version of this app */
 						$setup_info['depends'][$depkey]['status'] = False;
 						/* Now we loop thru the versions looking for a compatible version */
-						while(list ($depskey, $depsvalue) = each($value['depends'][$depkey]['versions']))
+                                        
+						foreach($depvalue['versions'] as $depskey => $depsvalue)
 						{
-							$major = $GLOBALS['phpgw_setup']->get_major($setup_info[$value['depends'][$depkey]['appname']]['currentver']);
+							$major = $GLOBALS['phpgw_setup']->get_major($setup_info[$depvalue['appname']]['currentver']);
 							if ($major == $depsvalue)
 							{
 								$setup_info['depends'][$depkey]['status'] = True;
@@ -165,7 +164,7 @@
 							{
 								$major_depsvalue = $GLOBALS['phpgw_setup']->get_major($depsvalue);
 								list(,,,$minor_depsvalue) = explode('.',$depsvalue);
-								list(,,,$minor) = explode('.',$setup_info[$value['depends'][$depkey]['appname']]['currentver']);
+								list(,,,$minor) = explode('.',$setup_info[$depsvalue['appname']]['currentver']);
 								if ($major == $major_depsvalue && $minor <= $minor_depsvalue)
 								{
 									$setup_info['depends'][$depkey]['status'] = True;
@@ -177,8 +176,7 @@
 					 Finally, we loop through the dependencies again to look for apps that still have a failure status
 					 If we find one, we set the apps overall status as a dependency failure.
 					*/
-					reset($value['depends']);
-					while(list($depkey, $depvalue) = each($value['depends']))
+					foreach($value['depends'] as $depkey => $depvalue)
 					{
 						if ($setup_info['depends'][$depkey]['status'] == False)
 						{
@@ -207,8 +205,7 @@
 		*/
 		function upgrade_exclude($setup_info)
 		{
-			@reset ($setup_info);
-			while(list($key,$value) = @each($setup_info))
+			foreach($setup_info as $key => $value)
 			{
 				if(isset($value['no_mass_update']))
 				{
@@ -237,7 +234,7 @@
 					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
 					return '3';
 				}
-				elseif ($GLOBALS['phpgw_info']['server']['versions']['header'] != $GLOBALS['phpgw_info']['server']['versions']['current_header'])
+				elseif (@$GLOBALS['phpgw_info']['server']['versions']['header'] != @$GLOBALS['phpgw_info']['server']['versions']['current_header'])
 				{
 					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
 					return '3';
@@ -262,7 +259,7 @@
 			// _debug_array($setup_info);
 			if (isset($setup_info['phpgwapi']['currentver']))
 			{
-				if($setup_info['phpgwapi']['currentver'] == $setup_info['phpgwapi']['version'])
+				if(@$setup_info['phpgwapi']['currentver'] == @$setup_info['phpgwapi']['version'])
 				{
 					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 1 (Tables Complete)';
 					return 10;
@@ -294,14 +291,14 @@
 		function check_config()
 		{
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
-			if($GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
+			if(@$GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
 			{
 				return '';
 			}
 
 			/* Since 0.9.10pre6 config table is named as phpgw_config */
 			$config_table = 'config';
-			$ver = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$ver = explode('.',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 
 			if(ereg("([0-9]+)(pre)([0-9]+)",$ver[2],$regs))
 			{
@@ -360,8 +357,7 @@
 				{
 					$GLOBALS['phpgw_info']['setup']['installed_langs'][$GLOBALS['phpgw_setup']->db->f('lang')] = $GLOBALS['phpgw_setup']->db->f('lang');
 				}
-				reset($GLOBALS['phpgw_info']['setup']['installed_langs']);
-				while(list($key, $value) = each($GLOBALS['phpgw_info']['setup']['installed_langs']))
+				foreach($GLOBALS['phpgw_info']['setup']['installed_langs'] as $key => $value)
 				{
 					$sql = "SELECT lang_name FROM $languagestbl WHERE lang_id = '".$value."'";
 					$GLOBALS['phpgw_setup']->db->query($sql);
@@ -389,13 +385,13 @@
 				/* Make a copy, else we send some callers into an infinite loop */
 				$copy = $setup_info;
 				$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
-				$tablenames = $GLOBALS['phpgw_setup']->db->table_names();
+				$table_names = $GLOBALS['phpgw_setup']->db->table_names();
 				$tables = Array();
-				while(list($key,$val) = @each($tablenames))
+				foreach($table_names as $key => $val)
 				{
 					$tables[] = $val['table_name'];
 				}
-				while(list($key,$val) = @each($copy[$appname]['tables']))
+				foreach($copy[$appname]['tables'] as $key => $val)
 				{
 					if($GLOBALS['DEBUG'])
 					{

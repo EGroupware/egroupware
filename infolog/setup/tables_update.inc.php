@@ -238,4 +238,25 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.005';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
+
+
+	$test[] = '0.9.15.005';
+	function infolog_upgrade0_9_15_005()
+	{
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_infolog_extra',array(
+			'fd' => array(
+				'info_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'info_extra_name' => array('type' => 'varchar','precision' => '32','nullable' => False),
+				'info_extra_value' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '')
+			),
+			'pk' => array('info_id','info_extra_name'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+
+		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.006';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
 ?>

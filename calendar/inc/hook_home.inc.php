@@ -18,8 +18,7 @@
 	if($d1 == 'htt' || $d1 == 'ftp' )
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
-		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-		exit;
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 	unset($d1);
 
@@ -36,6 +35,8 @@
 		$GLOBALS['g_month'] = substr($GLOBALS['date'],4,2);
 		$GLOBALS['g_day'] = substr($GLOBALS['date'],6,2);
 		$GLOBALS['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+		$GLOBALS['css'] = "\n".'<STYLE type="text/css">'."\n".'<!--'."\n"
+			. ExecMethod('calendar.uicalendar.css').'-->'."\n".'</style>';
 
 		$page_ = explode('.',$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']);
 		$_page = substr($page_[0],0,7);	// makes planner from planner_{user|category}
@@ -52,11 +53,39 @@
 		}
 		include(PHPGW_INCLUDE_ROOT.'/calendar/inc/hook_home_'.$_page.'.inc.php');
 		
+		$title = '<font color="#FFFFFF">'.lang('Calendar').'</font>';
+		
+		$portalbox = CreateObject('phpgwapi.listbox',
+			Array(
+				'title'	=> $title,
+				'primary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'secondary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'width'	=> '100%',
+				'outerborderwidth'	=> '0',
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
+			)
+		);
+
 		$app_id = $GLOBALS['phpgw']->applications->name2id('calendar');
 		$GLOBALS['portal_order'][] = $app_id;
+		$var = Array(
+			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id)
+		);
 
-		$GLOBALS['phpgw']->portalbox->set_params(array('app_id'	=> $app_id,
-														'title'	=> lang('calendar')));
-		$GLOBALS['phpgw']->portalbox->draw($GLOBALS['extra_data']);
-	}
+		while(list($key,$value) = each($var))
+		{
+			$portalbox->set_controls($key,$value);
+		}
+
+		$portalbox->data = Array();
+
+		echo "\n".'<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($GLOBALS['extra_data'])."\n".'<!-- END Calendar info -->'."\n";
+		unset($cal);
+	} 
+	flush();
 ?>

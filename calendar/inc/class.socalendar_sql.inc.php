@@ -31,6 +31,12 @@ class socalendar_ extends socalendar__
 	function socalendar_()
 	{
 		$this->socalendar__();
+		
+		if (!is_object($GLOBALS['phpgw']->asyncservice))
+		{
+			$GLOBALS['phpgw']->asyncservice = CreateObject('phpgwapi.asyncservice');
+		}
+		$this->async = &$GLOBALS['phpgw']->asyncservice;
 	}
 
 	function open($calendar='',$user='',$passwd='',$options='')
@@ -96,6 +102,111 @@ class socalendar_ extends socalendar__
 		return $calendar;
 	}
 
+	/*!
+	@function read_alarms
+	@abstract read the alarms of a calendar-event specified by $cal_id
+	@returns array of alarms with alarm-id as key
+	@note the alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
+	*/
+	function read_alarms($cal_id)
+	{
+		$alarms = array();
+
+		if ($jobs = $this->async->read('cal:'.intval($cal_id).':%'))
+		{
+			foreach($jobs as $id => $job)
+			{
+				$alarm         = $job['data'];	// text, enabled
+				$alarm['id']   = $id;
+				$alarm['time'] = $job['next'];
+
+				$alarms[$id] = $alarm;
+			}
+		}
+		return $alarms;
+	}
+
+	/*!
+	@function read_alarm
+	@abstract read a single alarm specified by it's $id
+	@returns array with data of the alarm
+	@note the alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
+	*/
+	function read_alarm($id)
+	{
+		if (!($jobs = $this->async->read($id)))
+		{
+			return False;
+		}
+		list($id,$job) = each($jobs);
+		$alarm         = $job['data'];	// text, enabled
+		$alarm['id']   = $id;
+		$alarm['time'] = $job['next'];
+
+		//echo "<p>read_alarm('$id')="; print_r($alarm); echo "</p>\n";
+		return $alarm;
+	}
+
+	/*!
+	@function save_alarm
+	@abstract saves a new or updated alarm
+	@syntax save_alarm($cal_id,$alarm,$id=False)
+	@param $cal_id Id of the calendar-entry
+	@param $alarm array with fields: text, owner, enabled, ..
+	*/
+	function save_alarm($cal_id,$alarm)
+	{
+		//echo "<p>save_alarm(cal_id=$cal_id, alarm="; print_r($alarm); echo ")</p>\n";
+		if (!($id = $alarm['id']))
+		{
+			$alarms = $this->read_alarms($cal_id);	// find a free alarm#
+			$n = count($alarms);
+			do
+			{
+				$id = 'cal:'.intval($cal_id).':'.$n;
+				++$n;
+			}
+			while (@isset($alarms[$id]));
+		}
+		else
+		{
+			$this->async->cancel_timer($id);
+		}
+		$alarm['cal_id'] = $cal_id;		// we need the back-reference
+
+		if (!$this->async->set_timer($alarm['time'],$id,'calendar.bocalendar.send_alarm',$alarm))
+		{
+			return False;
+		}
+		return $id;
+	}
+	
+	/*!
+	@function delete_alarms($cal_id)
+	@abstract delete all alarms of a calendar-entry
+	@returns the number of alarms deleted
+	*/
+	function delete_alarms($cal_id)
+	{
+		$alarms = $this->read_alarms($cal_id);
+		
+		foreach($alarms as $id => $alarm)
+		{
+			$this->async->cancel_timer($id);
+		}
+		return count($alarms);
+	}
+	
+	/*!
+	@function delete_alarm($id)
+	@abstract delete one alarms identified by its id
+	@returns the number of alarms deleted
+	*/
+	function delete_alarm($id)
+	{
+		return $this->async->cancel_timer($id);
+	}
+
 	function fetch_event($event_id,$options='')
 	{
 		if(!isset($this->stream))
@@ -103,7 +214,9 @@ class socalendar_ extends socalendar__
 			return False;
 		}
 
-		$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats','phpgw_cal_alarm'));
+		$event_id = intval($event_id);
+
+		$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats','phpgw_cal_extra'/* OLD-ALARM,'phpgw_cal_alarm'*/));
 
 		$this->stream->query('SELECT * FROM phpgw_cal WHERE cal_id='.$event_id,__LINE__,__FILE__);
 		
@@ -210,8 +323,20 @@ class socalendar_ extends socalendar__
 				}
 			}
 
+		// Custom fields
+			$this->stream->query('SELECT * FROM phpgw_cal_extra WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			if($this->stream->num_rows())
+			{
+				while($this->stream->next_record())
+				{
+					$this->add_attribute('#'.$this->stream->f('cal_extra_name'),$this->stream->f('cal_extra_value'));
+				}
+			}
+
+/* OLD-ALARM
 			if($this->event['reference'])
 			{
+				// What is event['reference']???
 				$alarm_cal_id = $event_id.','.$this->event['reference'];
 			}
 			else
@@ -219,7 +344,9 @@ class socalendar_ extends socalendar__
 				$alarm_cal_id = $event_id;
 			}
 
-			$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id in ('.$alarm_cal_id.') AND cal_owner='.$this->user,__LINE__,__FILE__);
+			//echo '<!-- cal_id='.$alarm_cal_id.' -->'."\n";
+			//$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id in ('.$alarm_cal_id.') AND cal_owner='.$this->user,__LINE__,__FILE__);
+			$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id='.$event_id.' AND cal_owner='.$this->user,__LINE__,__FILE__);
 			if($this->stream->num_rows())
 			{
 				while($this->stream->next_record())
@@ -232,6 +359,7 @@ class socalendar_ extends socalendar__
 					);
 				}
 			}
+*/
 		}
 		else
 		{
@@ -240,6 +368,15 @@ class socalendar_ extends socalendar__
       
 		$this->stream->unlock();
 
+		if ($this->event)
+		{
+			$this->event['alarm'] = $this->read_alarms($event_id);
+
+			if($this->event['reference'])
+			{
+				$this->event['alarm'] += $this->read_alarms($event_id);
+			}
+		}
 		return $this->event;
 	}
 
@@ -340,7 +477,6 @@ class socalendar_ extends socalendar__
 
 	function expunge()
 	{
-		reset($this->deleted_events);
 		if(count($this->deleted_events) <= 0)
 		{
 			return 1;
@@ -350,43 +486,51 @@ class socalendar_ extends socalendar__
 			'phpgw_cal',
 			'phpgw_cal_user',
 			'phpgw_cal_repeats',
-			'phpgw_cal_alarm'
+			'phpgw_cal_extra'
+// OLD-ALARM			'phpgw_cal_alarm'
 		);
 		$this->stream->lock($locks);
-		for($i=0;$i<count($this->deleted_events);$i++)
+		foreach($this->deleted_events as $cal_id)
 		{
-			for($k=0;$k<count($locks);$k++)
+			foreach ($locks as $table)
 			{
-				$this->stream->query('DELETE FROM '.$locks[$k].' WHERE cal_id='.$this->deleted_events[$i],__LINE__,__FILE__);
+				$this->stream->query('DELETE FROM '.$table.' WHERE cal_id='.$cal_id,__LINE__,__FILE__);
 			}
 		}
 		$this->stream->unlock();
+
+		foreach($this->deleted_events as $cal_id)
+		{
+			$this->delete_alarms($cal_id);
+		}
+		$this->deleted_events = array();
+
 		$this->event = $this_event;
 		return 1;
 	}
 	
 	/***************** Local functions for SQL based Calendar *****************/
 
-	function get_event_ids($search_repeats=False,$extra='')
+	function get_event_ids($search_repeats=False,$extra='',$search_extra=False)
 	{
-		if($search_repeats == True)
+		$from = $where = ' ';
+		if($search_repeats)
 		{
-			$repeats_from = ', phpgw_cal_repeats ';
-			$repeats_where = 'AND (phpgw_cal_repeats.cal_id = phpgw_cal.cal_id) ';
+			$from  = ', phpgw_cal_repeats ';
+			$where = 'AND (phpgw_cal_repeats.cal_id = phpgw_cal.cal_id) ';
 		}
-		else
+		if($search_extra)
 		{
-			$repeats_from = ' ';
-			$repeats_where = '';
+			$from  .= 'LEFT JOIN phpgw_cal_extra ON phpgw_cal_extra.cal_id = phpgw_cal.cal_id ';
 		}
-		
+
 		$sql = 'SELECT DISTINCT phpgw_cal.cal_id,'
 				. 'phpgw_cal.datetime,phpgw_cal.edatetime,'
 				. 'phpgw_cal.priority '
 				. 'FROM phpgw_cal, phpgw_cal_user'
-				. $repeats_from
+				. $from
 				. 'WHERE (phpgw_cal_user.cal_id = phpgw_cal.cal_id) '
-				. $repeats_where . $extra;
+				. $where . $extra;
 
 		if($this->debug)
 		{
@@ -421,7 +565,9 @@ class socalendar_ extends socalendar__
 		$locks = Array(
 			'phpgw_cal',
 			'phpgw_cal_user',
-			'phpgw_cal_repeats'
+			'phpgw_cal_repeats',
+			'phpgw_cal_extra'
+// OLD-ALARM			'phpgw_cal_alarm'
 		);
 		$this->stream->lock($locks);
 		if($event['id'] == 0)
@@ -451,14 +597,6 @@ class socalendar_ extends socalendar__
 				}
 				$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
 			}
-/*	makes problems if tempnam is to long for title column, see bug #3162
-			$temp_name = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],'cal');
-			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
-				. "values('".$event['uid']."','".$temp_name."',".$event['owner'].','.$event['priority'].','.$event['public'].",'".$event['category']."')");
-			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
-			$this->stream->next_record();
-			$event['id'] = $this->stream->f('cal_id');
-*/
 			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
 				. "values('".$event['uid']."','".$this->stream->db_addslashes($event['title'])
 				. "',".$event['owner'].','.$event['priority'].','.$event['public'].",'"
@@ -490,7 +628,7 @@ class socalendar_ extends socalendar__
 				. 'is_public='.$event['public'].', '
 				. "title='".$this->stream->db_addslashes($event['title'])."', "
 				. "description='".$this->stream->db_addslashes($event['description'])."', "
-				. "location='".$event['location']."', "
+				. "location='".$this->stream->db_addslashes($event['location'])."', "
 				. ($event['groups']?"groups='".(count($event['groups'])>1?implode(',',$event['groups']):','.$event['groups'][0].',')."', ":'')
 				. 'reference='.$event['reference'].' '
 				. 'WHERE cal_id='.$event['id'];
@@ -502,7 +640,6 @@ class socalendar_ extends socalendar__
 		@reset($event['participants']);
 		while (list($key,$value) = @each($event['participants']))
 		{
-//			if(intval($key) == intval($this->user))
 			if(intval($key) == $event['owner'])
 			{
 				$value = 'A';
@@ -545,16 +682,59 @@ class socalendar_ extends socalendar__
 		{
 			$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 		}
+		// Custom fields
+		$this->stream->query('DELETE FROM phpgw_cal_extra WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 
+		foreach($event as $name => $value)
+		{
+			if ($name[0] == '#' && strlen($value))
+			{
+				$this->stream->query('INSERT INTO phpgw_cal_extra (cal_id,cal_extra_name,cal_extra_value) '
+				. 'VALUES('.$event['id'].",'".addslashes(substr($name,1))."','".addslashes($value)."')",__LINE__,__FILE__);
+			}
+		}
+/*
+		$alarmcount = count($event['alarm']);
+		if ($alarmcount > 1)
+		{
+			// this should never happen, $event['alarm'] should only be set
+			// if creating a new event and uicalendar only sets up 1 alarm
+			// the user must use "Alarm Management" to create/establish multiple
+			// alarms or to edit/change an alarm
+			echo '<!-- how did this happen, too many alarms -->'."\n";
+			$this->stream->unlock();
+			return True;
+		}
+
+		if ($alarmcount == 1)
+		{
+
+			list($key,$alarm) = @each($event['alarm']);
+
+			$this->stream->query('INSERT INTO phpgw_cal_alarm(cal_id,cal_owner,cal_time,cal_text,alarm_enabled) VALUES('.$event['id'].','.$event['owner'].','.$alarm['time'].",'".$alarm['text']."',".$alarm['enabled'].')',__LINE__,__FILE__);
+			$this->stream->query('SELECT LAST_INSERT_ID()');
+			$this->stream->next_record();
+			$alarm['id'] = $this->stream->f(0);
+		}
+*/
 		print_debug('Event Saved: ID #',$event['id']);
 
 		$this->stream->unlock();
-		$GLOBALS['phpgw_info']['cal_new_event_id'] = $event['id'];
+
+		if (is_array($event['alarm']))
+		{
+			foreach ($event['alarm'] as $alarm)	// this are all new alarms
+			{
+				$this->save_alarm($event['id'],$alarm);
+			}
+		}
+		$GLOBALS['phpgw_info']['cal_new_event_id'] = $event['id']; 
 		return True;
 	}
 
-	function get_alarm($id)
+	function get_alarm($cal_id)
 	{
+/* OLD-ALARM		
 		$this->stream->query('SELECT cal_time, cal_text FROM phpgw_cal_alarm WHERE cal_id='.$id.' AND cal_owner='.$this->user,__LINE__,__FILE__);
 		if($this->stream->num_rows())
 		{
@@ -569,6 +749,18 @@ class socalendar_ extends socalendar__
 		{
 			return False;
 		}
+*/
+		$alarms = $this->read_alarms($cal_id);
+		$ret = False;
+
+		foreach($alarms as $alarm)
+		{
+			if ($alarm['owner'] == $this->user || !$alarm['owner'])
+			{
+				$ret[$alarm['time']] = $alarm['text'];
+			}
+		}
+		return $ret;
 	}
 
 	function set_status($id,$owner,$status)
@@ -581,6 +773,12 @@ class socalendar_ extends socalendar__
 		);
 		
 		$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
+/* OLD-ALARM
+		if ($status == 'R')
+		{
+			$this->stream->query('UPDATE phpgw_cal_alarm set alarm_enabled=0 where cal_id='.$id.' and cal_owner='.$owner,__LINE__,__FILE__);
+		}
+*/
 		return True;
 	}
 	
@@ -619,4 +817,57 @@ class socalendar_ extends socalendar__
 	{
 		return $this->localdates(mktime(0,0,0,intval(substr($d,4,2)),intval(substr($d,6,2)),intval(substr($d,0,4))));
 	}
+
+	function list_dirty_events($lastmod=-1,$repeats=false)
+	{
+		if(!isset($this->stream))
+		{
+			return False;
+		}
+		$lastmod = intval($lastmod);
+		$repeats = (bool) $repeats;
+
+		$user_where = " AND phpgw_cal_user.cal_login = $this->user";
+
+		$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
+		@reset($member_groups);
+		while($member_groups != False && list($key,$group_info) = each($member_groups))
+		{
+			$member[] = $group_info['account_id'];
+		}
+		@reset($member);
+//		$user_where .= ','.implode(',',$member);
+		//$user_where .= ')) ';
+
+		if($this->debug)
+		{
+			echo '<!-- '.$user_where.' -->'."\n";
+		}
+
+		if($lastmod > 0)
+		{
+			$wheremod = "AND mdatetime = $lastmod"; 
+		}
+		
+		$order_by = ' ORDER BY phpgw_cal.cal_id ASC';
+		if($this->debug)
+		{
+			echo "SQL : ".$user_where.$wheremod.$extra."<br>\n";
+		}
+		return $this->get_event_ids($repeats,$user_where.$wheremod.$extra.$order_by);
+	}
+
+/* OLD-ALARM
+	function add_alarm($eventid,$alarm,$owner)
+	{
+		$this->stream->query('INSERT INTO phpgw_cal_alarm(cal_id,cal_owner,cal_time,cal_text,alarm_enabled) VALUES('.$eventid.','.$owner.','.$alarm['time'].",'".$alarm['text']."',1)",__LINE__,__FILE__);
+		$this->stream->query('SELECT LAST_INSERT_ID()');
+		$this->stream->next_record();
+		return($this->stream->f(0));
+	}
+	function delete_alarm($alarmid)
+	{
+		$this->stream->query('DELETE FROM phpgw_cal_alarm WHERE alarm_id='.$alarmid,__LINE__,__FILE__);
+	}
+*/
 }

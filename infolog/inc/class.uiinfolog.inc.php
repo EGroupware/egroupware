@@ -115,6 +115,9 @@
 					}
 				}
 			}
+			$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
+			$info['info_status_label'] = $this->bo->status[$info['info_type']][$info['info_status']];
+
 			return $info;
 		}
 
@@ -295,11 +298,6 @@
 				{
 					$content['info_link_id'] = $content['link_to']['primary'];
 				}
-				if ($content['set_today'])
-				{
-					$content['info_startdate'] = time();
-					unset($content['set_today']);
-				}
 				if ($content['save'] || $content['delete'] || $content['cancel'])
 				{
 					if ($content['save'] && (!$info_id || $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
@@ -387,6 +385,10 @@
 					{
 						$content['info_startdate'] = time();
 					}
+					if ($content['info_enddate'] < time())		// parent-enddate is in the past => empty
+					{
+						$content['info_enddate'] = '';
+					}
 				}
 				else
 				{
@@ -442,8 +444,17 @@
 			$readonlys['delete'] = $action != '';
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang($this->messages[$info_id ? 'edit' : ($action == 'sp' ? 'add_sub' : 'add')]);
 
-			//echo "<p>uiinfolog.edit(info_id=$info_id,mode=$mode) content = "; _debug_array($content);
 			$this->tmpl->read('infolog.edit');
+			if ($this->bo->has_customfields($content['info_type']))
+			{
+				$content['customfields'] = $this->bo->customfields;
+				$content['customfields']['###typ###'] = $content['info_type'];
+			}
+			else
+			{
+				$this->tmpl->set_cell_attribute('description|links|delegation|customfields','name','description|links|delegation');
+			}
+			//echo "<p>uiinfolog.edit(info_id=$info_id,mode=$mode) content = "; _debug_array($content);
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
 				'info_type'     => $this->bo->enums['type'],
 				'info_pri'      => $this->bo->enums['priority'],

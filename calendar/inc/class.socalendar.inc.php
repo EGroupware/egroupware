@@ -23,6 +23,7 @@
 		var $owner;
 		var $g_owner;
 		var $is_group = False;
+		var $datetime;
 		var $filter;
 		var $cat_id;
 
@@ -133,43 +134,31 @@
 			return $this->get_event_ids(True,$sql);
 		}
 
-		function list_events_keyword($keywords)
+		function list_events_keyword($keywords,$members='')
 		{
-//			$sql = 'AND (phpgw_cal_user.cal_login='.$this->owner.') ';
-			$o = $this->owner;
-			$type = $GLOBALS['phpgw']->accounts->get_type($o);
-
-			if($type == 'g') 
+			if (!$members)
 			{
-			   $members = $GLOBALS['phpgw']->acl->get_ids_for_location($o, 1, 'phpgw_group');
+				$members[] = $this->owner;
 			}
-			else
-			{
-			  $members[0] = $o;
-			}
+			$sql = 'AND (phpgw_cal_user.cal_login IN ('.implode(',',$members).')) AND '.
+				'(phpgw_cal_user.cal_login='.intval($this->owner).' OR phpgw_cal.is_public=1) AND (';
 
-			$sql = 'AND (phpgw_cal_user.cal_login='.$members[0];
-
-			for($i=1; $i<count($members); $i++)
+			$words = split(' ',$keywords);
+			foreach($words as $i => $word)
 			{
-			  $sql .= ' OR phpgw_cal_user.cal_login='.$members[$i];
+				$sql .= $i > 0 ? ' OR ' : '';
+				$sql .= "(UPPER(phpgw_cal.title) LIKE UPPER('%".addslashes($word)."%') OR "
+						. "UPPER(phpgw_cal.description) LIKE UPPER('%".addslashes($word)."%') OR "
+						. "UPPER(phpgw_cal.location) LIKE UPPER('%".addslashes($word)."%') OR "
+						. "UPPER(phpgw_cal_extra.cal_extra_value) LIKE UPPER('%".addslashes($word)."%'))";
 			}
 			$sql .= ') ';
 
-			$words = split(' ',$keywords);
-			for ($i=0;$i<count($words);$i++)
-			{
-				$sql .= ($i==0?' AND (':'');
-				$sql .= ($i>0?' OR ':'');
-				$sql .= "(UPPER(phpgw_cal.title) LIKE UPPER('%".$words[$i]."%') OR "
-						. "UPPER(phpgw_cal.description) LIKE UPPER('%".$words[$i]."%'))";
-				$sql .= ($i==count($words) - 1?') ':'');
-			}
-
 			$sql .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
-			$sql .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
-			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
-			return $this->get_event_ids(False,$sql);
+			$sql .= ($this->cat_id? "AND (phpgw_cal.category='$this->cat_id' OR phpgw_cal.category like '%,".$this->cat_id.",%') ":'');
+			$sql .= 'ORDER BY phpgw_cal.datetime DESC, phpgw_cal.edatetime DESC, phpgw_cal.priority ASC';
+
+			return $this->get_event_ids(False,$sql,True);
 		}
 
 		function read_from_store($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endDay='')
@@ -183,9 +172,9 @@
 			return $events_cached;
 		}
 
-		function get_event_ids($include_repeats=False, $sql='')
+		function get_event_ids($search_repeats=False, $sql='',$search_extra=False)
 		{
-			return $this->cal->get_event_ids($include_repeats,$sql);
+			return $this->cal->get_event_ids($search_repeats,$sql,$search_extra);
 		}
 
 		function find_uid($uid)
@@ -210,6 +199,16 @@
 		function add_entry(&$event)
 		{
 			$this->cal->store_event($event);
+		}
+
+		function save_alarm($cal_id,$alarm,$id=0)
+		{
+			$this->cal->save_alarm($cal_id,$alarm,$id);
+		}
+
+		function delete_alarm($id)
+		{
+			$this->cal->delete_alarm($id);
 		}
 
 		function delete_entry($id)
@@ -237,6 +236,7 @@
 				{
 					$id = $this->cal->stream->f('cal_id');
 					$db2->query('SELECT count(*) FROM phpgw_cal_user WHERE cal_id='.$id.' AND cal_login='.$new_owner,__LINE__,__FILE__);
+					$db2->next_record();
 					if($db2->f(0) == 0)
 					{
 						$db2->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_id='.$id.' AND cal_login='.$account_id,__LINE__,__FILE__);
@@ -255,15 +255,31 @@
 			$this->cal->set_status($id,$this->owner,$status);
 		}
 
-		function get_alarm($id)
+		function get_alarm($cal_id)
 		{
-			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
+			if (!method_exists($this->cal,'get_alarm'))
 			{
-				return $this->cal->get_alarm($id);	
+				return False;
 			}
-			else
+			return $this->cal->get_alarm($cal_id);
+		}
+
+		function read_alarm($id)
+		{
+			if (!method_exists($this->cal,'read_alarm'))
 			{
+				return False;
 			}
+			return $this->cal->read_alarm($id);
+		}
+
+		function read_alarms($cal_id)
+		{
+			if (!method_exists($this->cal,'read_alarms'))
+			{
+				return False;
+			}
+			return $this->cal->read_alarms($cal_id);
 		}
 
 		function find_recur_exceptions($event_id)

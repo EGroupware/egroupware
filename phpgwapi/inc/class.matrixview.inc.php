@@ -40,8 +40,8 @@
 		var $items_count = 0;
 	
 		var $arr_second_dim = 0;
-		var $image1pix = '';
-
+		var $image1pix = 'images/pix.gif';
+	
 		var $color_headerfield = '#FFFF33';
 		var $color_emptyfield = '#CCCCCC';
 
@@ -68,7 +68,7 @@
 
 			$this->month = $month_int;
 			$this->year = $year_int;
-			$this->set1PixelGif($GLOBALS['phpgw']->common->image('todo','pix'));
+			$this->set1PixelGif($GLOBALS['phpgw']->common->get_image_path('todo').'/pix.gif');
 		}
 
 		/**

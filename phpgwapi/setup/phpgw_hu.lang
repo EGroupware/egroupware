@@ -76,7 +76,7 @@ password	common	hu	Jelszó
 password has been updated	common	hu	Jelszó módosítva
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
 please %1 by hand	common	hu	Kérem %1 kézzel
-powered by phpgroupware version %1	common	hu	
+powered by phpgroupware version %1	common	hu %1
 preferences	common	hu	Tulajdonságok
 previous page	common	hu	Elõzõ oldal
 print	common	hu	Nyomtat

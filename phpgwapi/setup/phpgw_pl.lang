@@ -386,7 +386,7 @@ time	common	pl	Czas
 time zone	common	pl	Strefa czasowa
 time zone offset	common	pl	Przesuniêcie strefy czasowej
 title	common	pl	Tytu³
-to go back to the msg list, click <a href="%1">here</a>	common	pl	Aby wróciæ do listy wiadomo¶ci, kliknij <a href="%1">tutaj</a>
+to go back to the msg list, click <a href= %1 >here</a>	common	pl	Aby wróciæ do listy wiadomo¶ci, kliknij <a href="%1">tutaj</a>
 togo	common	pl	TOGO
 tokelau	common	pl	TOKELAU
 tonga	common	pl	TONGA

@@ -9,7 +9,7 @@
  <tr>
   <td colspan="2">
    <table width="100%" border="0" cellspacing="5">
-    <tr valign="top">
+    <tr>
      <td>
       <input type="submit" name="submit" value="{lang_add}"></form>
      </td>
@@ -27,7 +27,7 @@
 </center>
 <!-- END form -->
 <!-- BEGIN list -->
- <tr class="{tr_color}">
+ <tr bgcolor="{tr_color}">
   <td valign="top" width="35%"><b>{field}:</b></td>
   <td valign="top" width="65%">{data}</td>
  </tr>

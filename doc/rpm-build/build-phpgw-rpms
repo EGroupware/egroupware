@@ -1,0 +1,73 @@
+#! /bin/bash
+# This script work for generating rpms without Root rights
+# When you create rmp's with Root rights and you have as example 
+# the follow command rm -rf / in your script you are in trouble :-)
+#
+# Change the path names for ANONCVSDIR and RHBASE to you needs.
+# 
+# When you would create daily rpm's with update from CVS include
+# delete the # sign at the start from the follow lines
+# 
+# cd $ANONCVSDIR
+# cvs update -Pd
+# This scipt create auotmaticly signed rpm's
+# When you don't want signed rpm's change the follow line from
+#
+# rpmbuild -bb --sign phpgroupware-rh.spec             >> $LOGFILE 2>&1
+# 
+# to
+# rpmbuild -bb phpgroupware-rh.spec                    >> $LOGFILE 2>&1
+#  
+# in the sript
+# How to create GPG keys to sign your rpm's you will found in a seperate
+# Document
+#
+# Script changed 2003 Jul 06 Reiner Jung
+ 
+VERSION=`grep "%define version" phpgroupware-rh.spec | cut -f3 -d' '`
+HOMEBUILDDIR=`whoami`
+ANONCVSDIR=/build_root/phpgroupware_stable/phpgroupware
+RHBASE=/home/$HOMEBUILDDIR/redhat
+SRCDIR=$RHBASE/SOURCES
+SPECDIR=$RHBASE/SPECS
+LOGFILE=$SPECDIR/build-$VERSION.log
+MD5SUM=$SRCDIR/md5sum-$VERSION.txt
+
+echo "Start Build Process of - $VERSION"                     > $LOGFILE
+echo "---------------------------------------"              >> $LOGFILE 2>&1
+date                                                        >> $LOGFILE 2>&1
+cd $ANONCVSDIR
+cvs update -dP                                              >> $LOGFILE 2>&1
+cd $ANONCVSDIR/..
+tar czvf $SRCDIR/phpgroupware-$VERSION.tar.gz phpgroupware  >> $LOGFILE 2>&1
+tar cjvf $SRCDIR/phpgroupware-$VERSION.tar.bz2 phpgroupware >> $LOGFILE 2>&1
+zip -r -9 $SRCDIR/phpgroupware-$VERSION.zip phpgroupware    >> $LOGFILE 2>&1
+echo "End Build Process of tar.gz, tar.bz, zip"		    >> $LOGFILE 2>&1	
+echo "---------------------------------------"              >> $LOGFILE 2>&1
+echo "Create the md5sum file for tar.gz, tar.bz, zip"	    >> $LOGFILE 2>&1	
+echo "md5sum from file phpgroupware-$VERSION.tar.gz is:"     > $MD5SUM  
+md5sum $SRCDIR/phpgroupware-$VERSION.tar.gz | cut -f1 -d' ' >> $MD5SUM  2>&1
+echo "---------------------------------------"              >> $MD5SUM  2>&1
+echo " "						    >> $MD5SUM  2>&1
+echo "md5sum from file phpgroupware-$VERSION.tar.bz2 is:"   >> $MD5SUM  2>&1
+md5sum $SRCDIR/phpgroupware-$VERSION.tar.bz2 | cut -f1 -d' '>> $MD5SUM  2>&1
+echo "---------------------------------------"              >> $MD5SUM  2>&1
+echo " "						    >> $MD5SUM  2>&1
+echo "md5sum from file phpgroupware-$VERSION.zip is:"       >> $MD5SUM  2>&1
+md5sum $SRCDIR/phpgroupware-$VERSION.zip | cut -f1 -d' '    >> $MD5SUM  2>&1
+echo "End Build md5sum of tar.gz, tar.bz, zip"              >> $LOGFILE 2>&1
+echo "---------------------------------------"              >> $LOGFILE 2>&1
+echo "Build signed source files"			    >> $LOGFILE 2>&1
+gpg -s $SRCDIR/phpgroupware-$VERSION.tar.gz		    >> $LOGFILE 2>&1
+gpg -s $SRCDIR/phpgroupware-$VERSION.tar.bz2		    >> $LOGFILE 2>&1 
+gpg -s $SRCDIR/phpgroupware-$VERSION.zip		    >> $LOGFILE 2>&1
+echo "End build of signed of tar.gz, tar.bz, zip"           >> $LOGFILE 2>&1
+echo "---------------------------------------"              >> $LOGFILE 2>&1
+cd $SPECDIR
+rpmbuild -ba --sign phpgroupware-rh.spec                    >> $LOGFILE 2>&1
+echo "End Build Process of - $VERSION single packages"      >> $LOGFILE 2>&1
+echo "---------------------------------------"              >> $LOGFILE 2>&1
+rpmbuild -ba --sign phpgroupware-rh-allapp.spec             >> $LOGFILE 2>&1
+echo "End Build Process of - $VERSION all applications"     >> $LOGFILE 2>&1
+echo "---------------------------------------"              >> $LOGFILE 2>&1
+

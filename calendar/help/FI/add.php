@@ -46,3 +46,4 @@ Täytä vain kentät ja napsauta Lähetä.</ul><br/>
 <b>Huomaa:</b>
 Kuten muidenkin sovellusten kohdalla, voit antaa tiedon
 käyttöoikeudeksi Yksityinen, Oma ryhmä tai Kaikki.<p/></font>
+<?php $phpgw->common->phpgw_footer(); ?>

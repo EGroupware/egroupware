@@ -48,8 +48,6 @@
 		{
 			$this->so = CreateObject('calendar.soholiday');
 
-			if(isset($GLOBALS['locale'])) { $this->locales[] = $GLOBALS['locale']; }
-
 			if(isset($GLOBALS['start']))  { $this->start = intval($GLOBALS['start']); } else { $this->start = 0; }
 
 			if(isset($GLOBALS['query']))  { $this->query = $GLOBALS['query'];      }
@@ -58,9 +56,13 @@
 
 			if(isset($GLOBALS['order']))  { $this->order = $GLOBALS['order'];      }
 
-			if(isset($GLOBALS['id']))     { $this->id = $GLOBALS['id'];            }
-			
-			if(isset($GLOBALS['year']))   { $this->year = $GLOBALS['year'];        } else { $this->year = date('Y'); }
+			$this->id   = get_var('id',array('POST','GET'));
+			$this->year = get_var('year',array('POST','GET'),date('Y'));
+			$this->locale = get_var('locale',array('POST','GET'));
+			if ($this->locale)
+			{
+				$this->locales[] = $this->locale;
+			}
 			
 			if($this->debug)
 			{
@@ -176,8 +178,7 @@
 
 		function prepare_read_holidays($year=0,$owner=0)
 		{
-			$datetime = CreateObject('phpgwapi.datetime');
-			$this->year = (isset($year) && $year > 0?$year:$GLOBALS['phpgw']->common->show_date(time() - $datetime->tz_offset,'Y'));
+			$this->year = (isset($year) && $year > 0?$year:$GLOBALS['phpgw']->common->show_date(time() - $GLOBALS['phpgw']->datetime->tz_offset,'Y'));
 			$this->owner = ($owner?$owner:$GLOBALS['phpgw_info']['user']['account_id']);
 
 			if($this->debug)
@@ -393,7 +394,6 @@
 			}			
 
 			$temp_locale = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
-			$datetime = CreateObject('phpgwapi.datetime');
 			for($i=0;$i<count($holidays);$i++)
 			{
 				$c = $i;
@@ -406,14 +406,13 @@
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['country'] = $holidays[$i]['locale'];
 					$holidaycalc = CreateObject('calendar.holidaycalc');
 				}
-				$holidays[$i]['date'] = $holidaycalc->calculate_date($holidays[$i], $holidays, $this->year, $datetime, $c);
+				$holidays[$i]['date'] = $holidaycalc->calculate_date($holidays[$i], $holidays, $this->year, $c);
 				if($c != $i)
 				{
 					$i = $c;
 				}
 			}
 			unset($holidaycalc);
-			unset($datetime);
 			$this->holidays = $this->sort_holidays_by_date($holidays);
 			$this->cached_holidays = $this->set_holidays_to_date($this->holidays);
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['country'] = $temp_locale;

@@ -1,30 +1,29 @@
 <?php
-	/**************************************************************************\
-	* phpGroupWare API - Commononly used functions                             *
-	* Written by Dan Kuykendall <seek3r@phpgroupware.org>                      *
-	*        and Joseph Engo <jengo@phpgroupware.org>                          *
-	*        and Mark Peters <skeeter@phpgroupware.org>                        *
-	*        and Bettina Gille [ceb@phpgroupware.org]                          *
-	* Commononly used functions by phpGroupWare developers                     *
-	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* Copyright (C) 2002, 2003 Dan Kuykendall, Bettina Gille                   *
-	* ------------------------------------------------------------------------ *
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org                                              * 
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
-	/* $Id$ */
+  /**************************************************************************\
+  * phpGroupWare API - Commononly used functions                             *
+  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+  * and Joseph Engo <jengo@phpgroupware.org>                                 *
+  * and Mark Peters <skeeter@phpgroupware.org>                               *
+  * Commononly used functions by phpGroupWare developers                     *
+  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+  * -------------------------------------------------------------------------*
+  * This library is part of the phpGroupWare API                             *
+  * http://www.phpgroupware.org/api                                          * 
+  * ------------------------------------------------------------------------ *
+  * This library is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published by *
+  * the Free Software Foundation; either version 2.1 of the License,         *
+  * or any later version.                                                    *
+  * This library is distributed in the hope that it will be useful, but      *
+  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+  * See the GNU Lesser General Public License for more details.              *
+  * You should have received a copy of the GNU Lesser General Public License *
+  * along with this library; if not, write to the Free Software Foundation,  *
+  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  \**************************************************************************/
+
+  /* $Id$ */
 
 	$d1 = strtolower(@substr(PHPGW_API_INC,0,3));
 	$d2 = strtolower(@substr(PHPGW_SERVER_ROOT,0,3));
@@ -44,12 +43,6 @@
 	{
 		var $debug_info; // An array with debugging info from the API
 		var $found_files;
-		var $output;
-
-		function common()
-		{
-			$this->output = array();
-		}
 
 		/*!
 		@function cmp_version
@@ -62,35 +55,23 @@
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
-			if($debug)
-			{
-				echo '<br>cmp_version(' . $str1 . ',' . $str2 . ')';
-				echo "<br>$regs[0] - $regs2[0]";
-			}
+			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
 
 			for($i=1;$i<5;$i++)
 			{
 				if($debug) { echo "<br>$i: $regs[$i] - $regs2[$i]"; }
 				if($regs2[$i] == $regs[$i])
 				{
-					if($debug) { echo ' are equal...'; }
 					continue;
 				}
 				if($regs2[$i] > $regs[$i])
 				{
-					if($debug) { echo ', and a < b.  Returning 1.'; }
 					return 1;
 				}
 				elseif($regs2[$i] < $regs[$i])
 				{
-					if($debug) { echo ', and a > b.  Returning 0.'; }
 					return 0;
 				}
-			}
-			if($debug)
-			{
-				echo ' - all equal.  Returning NULL.';
-				return '';
 			}
 		}
 
@@ -105,16 +86,7 @@
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str2,$regs2);
-			if($debug)
-			{
-				echo '<br>cmp_version_long(' . $str1 . ',' . $str2 . ')';
-				echo "<br>$regs[0] - $regs2[0]";
-			}
-			if(!$regs[0])
-			{
-				if($debug) { echo '<br>calling cmp_version(' . $str1 . ',' . $str2 . ')'; }
-				return $this->cmp_version($str1,$str2,$debug);
-			}
+			if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
 
 			for($i=1;$i<6;$i++)
 			{
@@ -127,20 +99,16 @@
 				}
 				if($regs2[$i] > $regs[$i])
 				{
-					if($debug) { echo ', and a < b.  Returning 1.'; }
+					if($debug) { echo ', and a > b'; }
 					return 1;
 				}
 				elseif($regs2[$i] < $regs[$i])
 				{
-					if($debug) { echo ', and a > b.  Returning 0.'; }
+					if($debug) { echo ', and a < b'; }
 					return 0;
 				}
 			}
-			if($debug)
-			{
-				echo ' - all equal.  Returning NULL.';
-				return '';
-			}
+			if($debug) { echo ' - all equal.'; }
 		}
 
 		// Convert an array into the format needed for the access column.
@@ -308,6 +276,51 @@
 			return $ds;
 		}
 
+		// This function is used if the developer wants to stop a running app in the middle of execution
+		// We may need to do some clean up before hand
+		/*!
+		@function phpgw_exit
+		@abstract function to stop running an app
+		@discussion used to stop running an app in the middle of execution <br>
+		There may need to be some cleanup before hand
+		@param $call_footer boolean value to if true then call footer else exit
+		*/
+		function phpgw_exit($call_footer = False)
+		{
+			if (!defined('PHPGW_EXIT'))
+			{
+				define('PHPGW_EXIT',True);
+
+				if ($call_footer)
+				{
+					$this->phpgw_footer();
+				}
+			}
+			exit;
+		}
+
+		function phpgw_final()
+		{
+			if (!defined('PHPGW_FINAL'))
+			{
+				define('PHPGW_FINAL',True);
+
+				// call the asyncservice check_run function if it is not explicitly set to cron-only
+				//
+				if (!$GLOBALS['phpgw_info']['server']['asyncservice'])	// is default
+				{
+					ExecMethod('phpgwapi.asyncservice.check_run','fallback');
+				}
+				/* Clean up mcrypt */
+				if (@is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
+				$GLOBALS['phpgw']->db->disconnect();
+			}
+		}
+
 		/*!
 		@function randomstring
 		@abstract return a random string of size $size
@@ -347,21 +360,13 @@
 				return False;
 			}
 
-			if ($text == 'Error')
+			$html_error = '<table border="0" width="100%"><tr><td align="right"><b>' . lang($text)
+				. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
+			for ($i=1; $i<count($errors); $i++)
 			{
-				$text = '';
+				$html_error .= '<tr><td>&nbsp;</td><td align="left">' . $errors[$i] . '</td></tr>';
 			}
-			else
-			{
-				$text .= ': ';
-			}
-			reset($errors);
-			while(list(,$value) = each($errors))
-			{
-				$msgbox_input[$text.$value] = False;
-				
-			}
-			return $this->msgbox($msgbox_input);
+			return $html_error . '</table>';
 		}
 
 		/*!
@@ -471,11 +476,11 @@
 		@param $selected ?
 		@param $fontsize optional
 		*/
-		function create_tabs($tabs, $selected)
+		function create_tabs($tabs, $selected, $fontsize = '')
 		{
-			$output_text = '<table cellspacing="0" cellpadding="0"><tr>';
+			$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 
-			/* This is a php3 workaround
+			/* This is a php3 workaround */
 			if(PHPGW_IMAGES_DIR == 'PHPGW_IMAGES_DIR')
 			{
 				$ir = ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi');
@@ -483,7 +488,13 @@
 			else
 			{
 				$ir = PHPGW_IMAGES_DIR;
-			} */
+			}
+
+			if ($fontsize)
+			{
+				$fs  = '<font size="' . $fontsize . '">';
+				$fse = '</font>';
+			}
 
 			$i = 1;
 			while ($tab = each($tabs))
@@ -492,54 +503,54 @@
 				{
 					if ($i == 1)
 					{
-						$output_text .= '<td align="right"><img src="' . $this->image('phpgwapi','tabs-start1') . '"></td>';
+						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start1.gif"></td>';
 					}
 
-					$output_text .= '<td align="left" nowrap background="' . $this->image('phpgwapi','tabs-bg1') . '">&nbsp;<b><a href="'
+					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
 						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label']
 						. $fse . '</a></b>&nbsp;</td>';
 					if ($i == count($tabs))
 					{
-						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-end1') . '"></td>';
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
 					}
 					else
 					{
-						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepr') . '"></td>';
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
 					}
 				}
 				else
 				{
 					if ($i == 1)
 					{
-						$output_text .= '<td align="right"><img src="' . $this->image('phpgwapi','tabs-start0') . '"></td>';
+						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
 					}
-					$output_text .= '<td align="left" nowrap background="' . $this->image('phpgwapi','tabs-bg0') . '">&nbsp;<b><a href="'
+					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
 						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label'] . $fse
 						. '</a></b>&nbsp;</td>';
 					if (($i + 1) == $selected)
 					{
-						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepl') . '"></td>';
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
 					}
 					elseif ($i == $selected || $i != count($tabs))
 					{
-						$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepm') . '"></td>';
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepm.gif"></td>';
 					}
 					elseif ($i == count($tabs))
 					{
 						if ($i == $selected)
 						{
-							$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-end1') . '"></td>';
+							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
 						}
 						else
 						{
-							$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-end0') . '"></td>';
+							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end0.gif"></td>';
 						}
 					}
 					else
 					{
 						if ($i != count($tabs))
 						{
-							$output_text .= '<td align="left"><img src="' . $this->image('phpgwapi','tabs-sepr') . '"></td>';
+							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
 						}
 					}
 				}
@@ -621,17 +632,32 @@
 		/*!
 		@function list_themes
 		@abstract list themes available
+		@note themes can either be css file like in HEAD (if the template has a css-dir) \
+			or ordinary .14 themes-files
 		*/
 		function list_themes()
 		{
 			$tpl_dir = $this->get_tpl_dir('phpgwapi');
 
-			$dh = opendir($tpl_dir . SEP . 'css');
-			while ($file = readdir($dh))
+			if ($dh = @opendir($tpl_dir . SEP . 'css'))
 			{
-				if (eregi("\.css$", $file) && $file != 'phpgw.css')
+				while ($file = readdir($dh))
 				{
-					$list[] = substr($file,0,strpos($file,'.'));
+					if (eregi("\.css$", $file) && $file != 'phpgw.css')
+					{
+						$list[] = substr($file,0,strpos($file,'.'));
+					}
+				}
+			}
+			else
+			{
+				$dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
+				while ($file = readdir($dh))
+				{
+					if (eregi("\.theme$", $file))
+					{
+						$list[] = substr($file,0,strpos($file,'.'));
+					}
 				}
 			}
 			closedir($dh);
@@ -648,7 +674,7 @@
 			$d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
 			while ($entry=$d->read())
 			{
-				if ($entry != 'CVS' && $entry != '.' && $entry != '..' && is_dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry))
+				if ($entry != 'CVS' && $entry != '.' && $entry != '..' && $entry != 'phpgw_website' && is_dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry))
 				{
 					$list[$entry]['name'] = $entry;
 					$f = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
@@ -673,13 +699,13 @@
 		@abstract get template dir of an application
 		@param $appname appication name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-		function get_tpl_dir($appname = '',$layout = '')
+		function get_tpl_dir($appname = '')
 		{
 			if (! $appname)
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			if ($appname == 'home' || $appname == 'logout' || $appname == 'login' || $appname == 'about' || $appname == 'help')
+			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
 			{
 				$appname = 'phpgwapi';
 			}
@@ -690,37 +716,25 @@
 			}
 
 			// Setting this for display of template choices in user preferences
-			if (@$GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
+			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
 			{
 				$GLOBALS['phpgw_info']['server']['usrtplchoice'] = 'user_choice';
 			}
 
-			if ((@$GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
+			if (($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
 				!isset($GLOBALS['phpgw_info']['server']['template_set'])) &&
 				isset($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']))
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'];
 			}
-			elseif (@$GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
+			elseif ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
 				!isset($GLOBALS['phpgw_info']['server']['template_set']))
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
 			}
-/******** start temporarily code **************************************/
-/* this just makes sure the template set is updated to the new format */
-if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'].'/phpgw.xsl'))
-{
-	$GLOBALS['phpgw_info']['server']['template_set'] = 'idsociety';
-}
-/******** end temporarily code **************************************/
 
 			$tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['phpgw_info']['server']['template_set'];
 			$tpldir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default';
-
-			if ($layout == 'default')
-			{
-				$tpldir = $tpldir_default;
-			}
 
 			if (@is_dir($tpldir))
 			{
@@ -767,7 +781,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@abstract get image dir of an application
 		@param $appname application name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-		function get_image_dir($appname = '',$layout = '')
+		function get_image_dir($appname = '')
 		{
 			if ($appname == '')
 			{
@@ -778,16 +792,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
 			}
 
-			if ($layout)
-			{
-				$imagedir_layout = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'templates' . SEP . $layout . SEP . 'images';
-				if (@is_dir ($imagedir_layout))
-				{
-					return $imagedir_layout;
-				}
-			}
-
-			$imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['phpgw_info']['server']['template_set'] . '/images';
+			$imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
+				. $GLOBALS['phpgw_info']['server']['template_set'] . '/images';
 			$imagedir_default    = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
 			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/' . $appname . '/images';
 
@@ -814,7 +820,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@abstract get image path of an application
 		@param $appname appication name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-		function get_image_path($appname = '',$layout = '')
+		function get_image_path($appname = '')
 		{
 			if ($appname == '')
 			{
@@ -824,15 +830,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			if (empty($GLOBALS['phpgw_info']['server']['template_set']))
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
-			}
-
-			if ($layout)
-			{
-				$imagedir_layout = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'templates' . SEP . $layout . SEP . 'images';
-				if (@is_dir ($imagedir_layout))
-				{
-					return $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . $appname . SEP . 'templates' . SEP . $layout . SEP . 'images';
-				}
 			}
 
 			$imagedir            = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
@@ -857,66 +854,38 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 		}
 
-		function find_image($appname,$image,$force_layout=False)
+		function find_image($appname,$image)
 		{
-			static $imgpref;
-
-			if($GLOBALS['phpgw_info']['server']['template_set'] == 'funkwerk')
-			{
-				$force_layout = True;
-			}
-
-			if(! @$imgpref)
-			{
-				switch(@$GLOBALS['phpgw_info']['server']['image_type'])
-				{
-					case 1:
-						$imgpref = Array('png','jpg','gif');
-						break;
-					case 2:
-						$imgpref = Array('png','jpg','nogifs');
-						break;
-					default:
-						$imgpref = Array('gif','jpg','png');
-						break;
-				}
-			}
 			if (!@is_array($this->found_files[$appname]))
 			{
+				$imagedir_olddefault = '/'.$appname.'/images';
+				$imagedir_default    = '/'.$appname.'/templates/default/images';
 				$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
 
-				if (!$force_layout)
+				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
 				{
-					//$imagedir_olddefault = '/'.$appname.'/images';
-					$imagedir_default    = '/'.$appname.'/templates/default/images';
-
-					/* apps should be updated now to use the tpl img_dirs
-
-					if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
+					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault);
+					while (false != ($entry = $d->read()))
 					{
-						$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault);
-						while (false != ($entry = $d->read()))
+						if ($entry != '.' && $entry != '..')
 						{
-							if ($entry != '.' && $entry != '..')
-							{
-								$this->found_files[$appname][$entry] = $imagedir_olddefault;
-							}
+							$this->found_files[$appname][$entry] = $imagedir_olddefault;
 						}
-						$d->close();
-					} */
-
-					if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
-					{
-						$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_default);
-						while (false != ($entry = $d->read()))
-						{
-							if ($entry != '.' && $entry != '..')
-							{
-								$this->found_files[$appname][$entry] = $imagedir_default;
-							}
-						}
-						$d->close();
 					}
+					$d->close();
+				}
+
+				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
+				{
+					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_default);
+					while (false != ($entry = $d->read()))
+					{
+						if ($entry != '.' && $entry != '..')
+						{
+							$this->found_files[$appname][$entry] = $imagedir_default;
+						}
+					}
+					$d->close();
 				}
 
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir))
@@ -933,33 +902,33 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 			}
 
-			if(isset($this->found_files[$appname][$image.'.'.$imgpref[0]]))
+			if(isset($this->found_files[$appname][$image.'.png']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.'.$imgpref[0]].'/'.$image.'.'.$imgpref[0];
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.png'].'/'.$image.'.png';
 			}
-			elseif(isset($this->found_files[$appname][$image.'.'.$imgpref[1]]))
+			elseif(isset($this->found_files[$appname][$image.'.jpg']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.'.$imgpref[1]].'/'.$image.'.'.$imgpref[1];
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.jpg'].'/'.$image.'.jpg';
 			}
-			elseif(isset($this->found_files[$appname][$image.'.'.$imgpref[2]]))
+			elseif(isset($this->found_files[$appname][$image.'.gif']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.'.$imgpref[2]].'/'.$image.'.'.$imgpref[2];
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.gif'].'/'.$image.'.gif';
 			}
 			elseif(isset($this->found_files[$appname][$image]))
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image].'/'.$image;
 			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.'.$imgpref[0]]))
+			elseif(isset($this->found_files['phpgwapi'][$image.'.png']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.'.$imgpref[0]].'/'.$image.'.'.$imgpref[0];
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.png'].'/'.$image.'.png';
 			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.'.$imgpref[1]]))
+			elseif(isset($this->found_files['phpgwapi'][$image.'.jpg']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.'.$imgpref[1]].'/'.$image.'.'.$imgpref[1];
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.jpg'].'/'.$image.'.jpg';
 			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.'.$imgpref[2]]))
+			elseif(isset($this->found_files['phpgwapi'][$image.'.gif']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.'.$imgpref[2]].'/'.$image.'.'.$imgpref[2];
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.gif'].'/'.$image.'.gif';
 			}
 			elseif(isset($this->found_files['phpgwapi'][$image]))
 			{
@@ -972,7 +941,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			return $imgfile;
 		}
 
-		function image($appname,$image='',$ext='',$force_layout=False,$use_lang=True)
+		function image($appname,$image='',$ext='',$use_lang=True)
 		{
 			if (!is_array($image))
 			{
@@ -999,16 +968,16 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 				else
 				{
-					$image_found = $this->find_image($appname,$img.$ext,$force_layout);
+					$image_found = $this->find_image($appname,$img.$ext);
 				}
 			}
 			return $image_found;
 		}
 
-		function image_on($appname,$image,$extension='_on',$force_layout=False)
+		function image_on($appname,$image,$extension='_on')
 		{
-			$with_extension = $this->image($appname,$image,$extension,$navbar);
-			$without_extension = $this->image($appname,$image,'',$navbar);
+			$with_extension = $this->image($appname,$image,$extension);
+			$without_extension = $this->image($appname,$image);
 			if($with_extension != '')
 			{
 				return $with_extension;
@@ -1024,422 +993,16 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		}
 
 		/*!
-		@function msgbox
-		@abstract Generate a consistant msgbox for app apps to use
-		@discussion makes it easier and more consistant to generate message boxes
-		*/
-
-		function msgbox($text = '', $type = True, $base = '')
-		{
-			if ($text=='' && @isset($GLOBALS['phpgw_info']['flags']['msgbox_data']))
-			{
-				$text = $GLOBALS['phpgw_info']['flags']['msgbox_data'];
-				unset($GLOBALS['phpgw_info']['flags']['msgbox_data']);
-			}
-			elseif($text=='')
-			{
-				return;
-			}
-
-			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi','default') . SEP . 'msgbox');
-
-			$prev_helper = $GLOBALS['phpgw']->translation->translator_helper;
-			$GLOBALS['phpgw']->translation->translator_helper = '';
-
-			if (is_array($text))
-			{
-				reset($text);
-
-				while (list($key,$value) = each($text))
-				{
-					if ($value == True)
-					{
-						$img	= $this->image('phpgwapi','msgbox_good');
-						$alt	= lang('OK');
-					}
-					else
-					{
-						$img	= $this->image('phpgwapi','msgbox_bad');
-						$alt	= lang('ERROR');
-					}
-
-					$data[] = array
-					(
-						'msgbox_text'				=> lang($key),
-						'msgbox_img'				=> $img,
-						'msgbox_img_alt'			=> $alt,
-						'lang_msgbox_statustext'	=> $alt
-					);
-				}
-			}
-			else
-			{
-				if ($type == True)
-				{
-					$img	= $this->image('phpgwapi','msgbox_good');
-					$alt	= lang('OK');
-				}
-				else
-				{
-					$img	= $this->image('phpgwapi','msgbox_bad');
-					$alt	= lang('ERROR');
-				}
-
-				$data = array
-				(
-					'msgbox_text'				=> lang($text),
-					'msgbox_img'				=> $img,
-					'msgbox_img_alt'			=> $alt,
-					'lang_msgbox_statustext'	=> $alt
-				);
-			}
-
-			$GLOBALS['phpgw']->translation->translator_helper = $prev_helper;
-
-			if ($base)
-			{
-				$GLOBALS['phpgw']->xslttpl->set_var($base,array('msgbox_data' => $data),True);
-			}
-			else
-			{
-				return $data;
-			}
-		}
-
-		function framework()
-		{
-			$this->navbar();
-			
-			$cur_app	= $GLOBALS['phpgw_info']['flags']['currentapp'];
-			$app_title	= empty($cur_app) ? '' : ' ['.
-				(isset($GLOBALS['phpgw_info']['apps'][$cur_app]) ? $GLOBALS['phpgw_info']['apps'][$cur_app]['title'] : 
-				(isset($GLOBALS['phpgw_info']['navbar'][$cur_app]) ? $GLOBALS['phpgw_info']['navbar'][$cur_app]['title'] : 
-				lang($cur_app))).']';
-			$css = $this->get_css_url();
-			$var = array
-			(
-				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'] . $app_title,
-				'webserver_url'		=> $GLOBALS['phpgw_info']['server']['webserver_url'],
-				'phpgw_css_file'	=> $css[0],
-				'theme_css_file'	=> $css[1],
-				'current_app'		=> $cur_app
-			);
-
-			if ($GLOBALS['phpgw_info']['flags']['headonly'] == True)
-			{
-				$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi','default') . SEP . 'phpgw_header');
-			}
-			else
-			{
-				$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
-			}
-
-			switch ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'])
-			{
-				case 'idsociety':
-					$find_single = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'/');
-					$find_double = strpos(strrev($GLOBALS['phpgw_info']['server']['webserver_url'].' '),'//');
-					if($find_double)
-					{
-						$find_double = strlen($GLOBALS['phpgw_info']['server']['webserver_url']) - $find_double - 1;
-					}
-					if($find_double)
-					{
-						if($find_single == $find_double + 1)
-						{
-							$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'];
-						}
-						else
-						{
-							$GLOBALS['strip_portion'] = substr($GLOBALS['phpgw_info']['server']['webserver_url'],0,$find_double + 1);
-						}
-					}
-					else
-					{
-						$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'].'/';
-					}
-
-					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
-					{
-						$var['home_img'] = $this->image('phpgwapi','welcome2');
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('phpgwapi','welcome2','_over');
-					}
-					else
-					{
-						$var['home_img'] = $this->image_on('phpgwapi','welcome2','_over');
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image('phpgwapi','welcome2');
-					}
-					$var['home_img_hover'] = $this->image_on('phpgwapi','welcome2','_over');
-
-					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
-					{
-						$var['prefs_img'] = $this->image('preferences','preferences2');
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('preferences','preferences2','_over');
-					}
-					else
-					{
-						$var['prefs_img'] = $this->image_on('preferences','preferences2','_over');
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image('preferences','preferences2');
-					}
-					$var['prefs_img_hover'] = $this->image_on('preferences','preferences2','_over');
-
-					$var['logout_img'] = $this->image('phpgwapi','log_out2');
-					$GLOBALS['phpgw_info']['flags']['preload_images'][] = $this->image_on('phpgwapi','log_out2','_over');
-					$var['logout_img_hover'] = $this->image_on('phpgwapi','log_out2','_over');
-
-					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
-					{
-						$var['about_img']		= $this->image('phpgwapi','question_mark2');
-						$var['about_img_hover']	= $this->image_on('phpgwapi','question_mark2','_over');
-					}
-					else
-					{
-						$var['about_img'] = $this->image_on('phpgwapi','question_mark2','_over');
-						$var['about_img_hover'] = $this->image('phpgwapi','question_mark2');
-					}
-
-					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'help')
-					{
-						$var['help_img']			= $this->image('phpgwapi','help');
-						$var['help_img_hover']		= $this->image_on('phpgwapi','help','_over');
-					}
-					else
-					{
-						$var['help_img']			= $this->image_on('phpgwapi','help','_over');
-						$var['help_img_hover']		= $this->image('phpgwapi','help');
-					}
-
-					$var['logo_img'] = $this->image('phpgwapi','logo2');
-					$var['nav_bar_left_top_bg_img'] = $this->image('phpgwapi','nav_bar_left_top_bg');
-					break; 
-				
-				case 'verdilak':
-					$var['logo_img']	= $this->image('phpgwapi','logo');
-					$var['home_img']	= $this->image('phpgwapi','welcome-'.($cur_app=='home' ? 'red' : 'grey'));
-					$var['prefs_img']	= $this->image('preferences','preferences-'.($cur_app=='preferences' ? 'red' : 'grey'));
-					$var['logout_img']	= $this->image('phpgwapi','logout');
-					$var['about_img']	= $this->image('phpgwapi','about-'.($cur_app=='about' ? 'red' : 'grey'));
-					$var['help_img']	= $this->image('phpgwapi','help');
-					$var['greybar']		= $this->image('phpgwapi','greybar');
-					break;
-				case 'justweb':
-					$var['logo_img']	= $this->image('phpgwapi','logo');
-					$var['home_img']	= $this->image('phpgwapi','tab_home');
-					$var['prefs_img']	= $this->image('preferences','tab_prefs');
-					$var['logout_img']	= $this->image('phpgwapi','tab_logout');
-					$var['about_img']	= $this->image('phpgwapi','tab_help');
-					$var['help_img']	= $this->image('phpgwapi','tab_help');
-					break;
-				case 'funkwerk':
-					$var['about_img']	= '!';
-					$var['help_img']	= '?';
-
-					switch ($cur_app)
-					{
-						case 'home':
-							$var['top_css_home'] = 'top_menu_selected';
-							$var['top_css'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_help'] = 'top_menu';
-							break;
-						case 'preferences':
-							$var['top_css_prefs'] = 'top_menu_selected';
-							$var['top_css'] = $var['top_css_home'] = $var['top_css_about'] = $var['top_css_help'] = 'top_menu';
-							break;
-						case 'about':
-							$var['top_css_about'] = 'top_menu_selected';
-							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_help'] = 'top_menu';
-							break;
-						case 'help':
-							$var['top_css_help'] = 'top_menu_selected';
-							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_about'] = 'top_menu';
-							break;
-						default:
-							$var['top_css'] = $var['top_css_home'] = $var['top_css_prefs'] = $var['top_css_about'] = $var['top_css_help'] = 'top_menu';
-							break;
-					}
-					break;
-				default:
-					$var['home_img']	= $GLOBALS['phpgw_info']['navbar']['home']['icon'];
-					$var['prefs_img']	= $GLOBALS['phpgw_info']['navbar']['preferences']['icon'];
-					$var['logout_img']	= $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
-					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon'];
-					$var['help_img']	= $GLOBALS['phpgw_info']['navbar']['help']['icon'];
-					break;
-			}
-
-			$var['home_link']			= $GLOBALS['phpgw_info']['navbar']['home']['url'];
-			$var['prefs_link']			= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
-			$var['logout_link']			= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
-			$var['about_link']			= $GLOBALS['phpgw_info']['navbar']['about']['url'];
-			$var['help_link']			= $GLOBALS['phpgw_info']['navbar']['help']['url'];
-
-			$var['home_title']			= $GLOBALS['phpgw_info']['navbar']['home']['title'];
-			$var['prefs_title']			= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
-			$var['logout_title']		= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
-			$var['about_title']			= $GLOBALS['phpgw_info']['navbar']['about']['title'];
-			$var['help_title']			= $GLOBALS['phpgw_info']['navbar']['help']['title'];
-
-			$var['home_statustext']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
-			$var['prefs_statustext']	= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
-			$var['logout_statustext']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
-			$var['about_statustext']	= $GLOBALS['phpgw_info']['navbar']['about']['title'];
-			$var['help_statustext']		= $GLOBALS['phpgw_info']['navbar']['help']['title'];
-
-			if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
-			{
-				$var['current_users']		= lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total();
-				$var['url_current_users']	= $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
-			}
-
-			$var['user_info_name'] = $this->display_fullname();
-			$now = time();
-			$var['user_info_date'] = lang($this->show_date($now,'l')) . ' '
-									. $this->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
-			$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
-
-			foreach($GLOBALS['phpgw_info']['navbar'] as $app => $data)
-			{
-				if ($app == $cur_app)
-				{
-					$app_css = 'left_selected';
-				}
-				else
-				{
-					$app_css = 'left';
-				}
-
-				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'help' && $app != 'manual')
-				{
-					$var['applications'][] = array
-					(
-						'icon'			=> $data['icon'],
-						'title'			=> $data['title'],
-						'img_src_over'	=> $data['icon_hover'],
-						'url'			=> $data['url'],
-						'name'			=> $data['title'],
-						'statustext'	=> $data['title'],
-						'css'			=> $app_css
-					);
-
-					if($data['icon_hover'] != '')
-					{
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $data['icon_hover'];
-					}
-
-					if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text' &&
-				    	$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'default')
-					{
-						$tabs[$app] = array
-						(
-							'label' => $data['title'],
-							'link'  => $data['url']
-						);
-					}
-				}
-
-				if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text' &&
-				    $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'default')
-				{
-					if ($app == 'home' || $app == 'preferences' || $app == 'about' || $app == 'logout' || $app == 'manual')
-					{
-						$base_tabs[$app] = array
-						(
-							'label' => $data['title'],
-							'link'  => $data['url']
-						);
-					}
-				}
-			}
-
-			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text' &&
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'default')
-			{
-				$var['app_tabs']	= $this->create_tabs($tabs,$GLOBALS['phpgw_info']['flags']['currentapp'],-1);
-				$var['base_tabs']	= $this->create_tabs($base_tabs,$GLOBALS['phpgw_info']['flags']['currentapp'],-1);
-			}
-
-			$var['onload'] = $this->load_preload_images_data();
-
-			if($GLOBALS['phpgw_info']['flags']['msgbox_data'])
-			{
-				$this->msgbox('',False,'phpgw');
-			}
-
-			$var['app_tpl'] = '';
-
-			$menuaction	= get_var('menuaction',Array('GET'));
-			if ($menuaction && isset($GLOBALS['phpgw_info']['flags']['xslt_app']))
-			{
-				list($app,$class,$method) = explode('.',$menuaction);
-				$var['app_tpl']	= $method;
-			}
-
-			$var['lang_powered_by']			= lang('powered by');
-			$var['lang_version']			= lang('version');
-			$var['phpgw_version']			= $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
-			$var['lang_phpgw_statustext']	= lang('phpGroupWare --> homepage');
-			$var['top_spacer_middle_img']	= $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
-			$var['navbar_format']			= $GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'];
-
-			if (isset($GLOBALS['phpgw_info']['flags']['app_header']))
-			{
-				$var['app_header'] = $GLOBALS['phpgw_info']['flags']['app_header'];
-			}
-
-			$var['app_java_script'] = $var['app_css'] = $var['app_java_script_url'] = $var['app_css_url'] = '';
-
-			if (isset($_GET['menuaction']))
-			{
-				list($app,$class,$method) = explode('.',$_GET['menuaction']);
-
-				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
-				{
-					$var['app_css'] = $GLOBALS[$class]->css();
-				}
-
-				/*$class = CreateObject("$app.$class");
-				if (isset($class->public_functions['css']))
-				{
-					$var['app_css'] = $class->css();
-				}*/
-				if (isset($class->public_functions['java_script']))
-				{
-					$var['app_java_script'] = $class->java_script();
-				}
-				unset($class);
-			}
-
-			if (isset($GLOBALS['phpgw_info']['flags']['css']))
-			{
-				$var['app_css'] .= $GLOBALS['phpgw_info']['flags']['css'];
-			}
-			if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
-			{
-				$var['app_java_script'] .= $GLOBALS['phpgw_info']['flags']['java_script'];
-			}
-
-			if (isset($GLOBALS['phpgw_info']['flags']['css_url']))
-			{
-				$var['app_css_url'] = $GLOBALS['phpgw_info']['flags']['css_url'];
-			}
-			if (isset($GLOBALS['phpgw_info']['flags']['java_script_url']))
-			{
-				$var['app_java_script_url'] = $GLOBALS['phpgw_info']['flags']['java_script_url'];
-			}
-
-			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var);
-		}
-
-		/*!
 		@function navbar
-		@abstract Build the application navigation bar based on user's accessible applications
+		@abstract none yet
 		@discussion *someone wanna add some detail here*
 		*/
 		function navbar()
 		{
-			$GLOBALS['phpgw_info']['navbar']['home']['title']		= lang('home');
-			$GLOBALS['phpgw_info']['navbar']['home']['url']			= $GLOBALS['phpgw']->link('/home.php');
-			$GLOBALS['phpgw_info']['navbar']['home']['icon']		= $this->image('phpgwapi',Array('home','nonav'));
-			$GLOBALS['phpgw_info']['navbar']['home']['icon_hover']	= $this->image_on('phpgwapi',Array('home','nonav'),'-over');
+			$GLOBALS['phpgw_info']['navbar']['home']['title'] = 'Home';
+			$GLOBALS['phpgw_info']['navbar']['home']['url']   = $GLOBALS['phpgw']->link('/home.php');
+			$GLOBALS['phpgw_info']['navbar']['home']['icon']  = $this->image('phpgwapi',Array('home','nonav'));
+			$GLOBALS['phpgw_info']['navbar']['home']['icon_hover']  = $this->image_on('phpgwapi',Array('home','nonav'),'-over');
 
 			list($first) = each($GLOBALS['phpgw_info']['user']['apps']);
 			if(is_array($GLOBALS['phpgw_info']['user']['apps']['admin']) && $first != 'admin')
@@ -1458,13 +1021,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			unset($index);
 			unset($value);
 			unset($newarray);
-
-			$force_layout = False;
-			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety')
-			{
-				$force_layout = True;
-			}
-
+			
 			foreach($GLOBALS['phpgw_info']['user']['apps'] as $app => $data)
 			{
 				if (is_long($app))
@@ -1474,30 +1031,28 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 				if ($app == 'preferences' || $GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
 				{
-					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= $GLOBALS['phpgw_info']['apps'][$app]['title'];
-					$GLOBALS['phpgw_info']['navbar'][$app]['url']	= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
-					$GLOBALS['phpgw_info']['navbar'][$app]['name']	= $app;
+					$GLOBALS['phpgw_info']['navbar'][$app]['title'] = $GLOBALS['phpgw_info']['apps'][$app]['title'];
+					$GLOBALS['phpgw_info']['navbar'][$app]['url']   = $GLOBALS['phpgw']->link('/' . $app . '/index.php');
+					$GLOBALS['phpgw_info']['navbar'][$app]['name']  = $app;
 
 					if ($app != $GLOBALS['phpgw_info']['flags']['currentapp'])
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image($app,Array('navbar','nonav','',$force_layout));
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over',$force_layout);
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']  = $this->image($app,Array('navbar','nonav'));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']  = $this->image_on($app,Array('navbar','nonav'),'-over');
 					}
 					else
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image_on($app,Array('navbar','nonav'),'-over',$force_layout);
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav','',$force_layout));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']  = $this->image_on($app,Array('navbar','nonav'),'-over');
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']  = $this->image($app,Array('navbar','nonav'));
 					}
+
+//					if($GLOBALS['phpgw_info']['navbar'][$app]['icon'] == '')
+//					{
+//						$GLOBALS['phpgw_info']['navbar'][$app]['icon']  = $this->image('phpgwapi','nonav');
+//					}
 				}
 			}
-
-			/* apps for the top menu */
-			$GLOBALS['phpgw_info']['navbar']['help']['title']				= lang('manual');
-			$GLOBALS['phpgw_info']['navbar']['help']['url']					= $GLOBALS['phpgw']->link('/help.php');
-			$GLOBALS['phpgw_info']['navbar']['help']['icon']				= $this->image('phpgwapi',Array('help','nonav'));
-			$GLOBALS['phpgw_info']['navbar']['help']['icon_hover']			= $this->image_on('phpgwapi',Array('help','nonav'),'-over');
-
-			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home')
+			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'about')
 			{
 				$app = $app_title = 'phpGroupWare';
 			}
@@ -1514,214 +1069,86 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$GLOBALS['phpgw_info']['navbar']['preferences'] = $prefs;
 			}
 
-			/* We handle this here becuase its special */
-			$app_title = isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : 'phpGroupWare';
+			// We handle this here becuase its special
+			$GLOBALS['phpgw_info']['navbar']['about']['title'] = lang('About %1',$app_title);
 
-			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about %1',$app_title);
-			$GLOBALS['phpgw_info']['navbar']['about']['url']		= $GLOBALS['phpgw']->link('/about.php','app='.$app);
-			$GLOBALS['phpgw_info']['navbar']['about']['icon']		= $this->image('phpgwapi',Array('about','nonav'));
-			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']	= $this->image_on('phpgwapi',Array('about','nonav'),'-over');
+			$GLOBALS['phpgw_info']['navbar']['about']['url']   = $GLOBALS['phpgw']->link('/about.php','app='.$app);
+			$GLOBALS['phpgw_info']['navbar']['about']['icon']  = $this->image('phpgwapi',Array('about','nonav'));
+			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']  = $this->image_on('phpgwapi',Array('about','nonav'),'-over');
 
-			$GLOBALS['phpgw_info']['navbar']['logout']['title'] = lang('logout');
+			$GLOBALS['phpgw_info']['navbar']['logout']['title'] = 'Logout';
 			$GLOBALS['phpgw_info']['navbar']['logout']['url']   = $GLOBALS['phpgw']->link('/logout.php');
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi',Array('logout','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi',Array('logout','nonav'),'-over');
 		}
 
 		/*!
-		@function get_css_url
-		@abstract returns the path of the css file for the choosen layout/theme
-		@discussion *someone wanna add some detail here*
+		@function app_header
+		@abstract load header.inc.php for an application
 		*/
-		function get_css_url()
+		function app_header()
 		{
-			if (! $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
+			if (file_exists(PHPGW_APP_INC . '/header.inc.php'))
 			{
-				if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
-				}
-				else
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['template_set'];
-				}
+				include(PHPGW_APP_INC . '/header.inc.php');
 			}
-			if ($GLOBALS['phpgw_info']['server']['force_theme'] == 'user_choice')
-			{
-				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme']))
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
-				}
-			}
-			else
-			{
-				if (isset($GLOBALS['phpgw_info']['server']['force_theme']))
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['force_theme'];
-				}
-			}
-
-			if(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
-							. SEP . 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.css'))
-			{
-				$css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
-						. SEP . 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.css';
-			}
-			elseif(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . SEP 
-					. 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . '.css'))
-			{
-				$css_file =  $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
-							. SEP . 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . '.css';
-			}
-			else
-			{
-				/* Hope we don't get to this point.  Better then the user seeing a */
-				/* complety back screen and not know whats going on                */
-				$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
-			}
-			$phpgw_css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
-							. SEP . 'css' . SEP . 'phpgw.css';
-			return array($phpgw_css_file,$css_file);
 		}
-
-		function load_preload_images_data()
+		/*!
+		@function phpgw_header
+		@abstract load the phpgw header
+		*/
+		function phpgw_header()
 		{
-			if(@is_array($GLOBALS['phpgw_info']['flags']['preload_images']))
+			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set']
+				. '/head.inc.php');
+			$this->navbar(False);
+			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set']
+				. '/navbar.inc.php');
+			if (!@$GLOBALS['phpgw_info']['flags']['nonavbar'] && !@$GLOBALS['phpgw_info']['flags']['navbar_target'])
 			{
-				$preload_image_string = '';
-				reset($GLOBALS['phpgw_info']['flags']['preload_images']);
-				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['preload_images']))
-				{
-					if($preload_image_string != '')
-					{
-						$preload_image_string .= ",'$value'";
-					}
-					else
-					{
-						$preload_image_string .= "'$value'";
-					}
-				}
-				return " MM_preloadImages($preload_image_string);";
-			}
-			return '';
-		}
-
-		function start_xslt_capture()
-		{
-			if (!isset($GLOBALS['phpgw_info']['xslt_capture']))
-			{
-				$GLOBALS['phpgw_info']['xslt_capture'] = True;
-				ob_start();		// capture the output
+				echo parse_navbar();
 			}
 		}
 
-		/* Note: need to be run BEFORE exit is called, as buffers get flushed automatically before
-		 *       any registered shutdown-functions (eg. phpgw_footer) gets called
-		 */
-		function stop_xslt_capture()
+		function phpgw_footer()
 		{
-			if (isset($GLOBALS['phpgw_info']['xslt_capture']))
+			if (!defined('PHPGW_FOOTER'))
 			{
-				unset($GLOBALS['phpgw_info']['xslt_capture']);
-				$output = ob_get_contents();	// get captured output
-				ob_end_clean();					// stop capture and clean output-buffer
-				if (!empty($output))
+				define('PHPGW_FOOTER',True);
+				if (!isset($GLOBALS['phpgw_info']['flags']['nofooter']) || !$GLOBALS['phpgw_info']['flags']['nofooter'])
 				{
-					$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $output));
+					include(PHPGW_API_INC . '/footer.inc.php');
 				}
 			}
+		}
+
+		function get_css()
+		{
+			$tpl = createObject('phpgwapi.Template', $this->get_tpl_dir('phpgwapi'));
+			$tpl->set_file('css', 'css.tpl');
+			$tpl->set_var($GLOBALS['phpgw_info']['theme']);
+			$app_css = '';
+    	if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+    	{
+    		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+    		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
+    		{
+    			$app_css .= $GLOBALS[$class]->css();
+    		}
+    		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['java_script'])
+    		{
+    			$java_script = $GLOBALS[$class]->java_script();
+    		}
+    	}
+    	if (isset($GLOBALS['phpgw_info']['flags']['css']))
+    	{
+    		$app_css .= $GLOBALS['phpgw_info']['flags']['css'];
+    	}
+			$tpl->set_var('app_css', $app_css);
+			
+			return $tpl->subst('css');			
 		}
 		
-		function phpgw_final()
-		{
-			if(!defined('PHPGW_FINAL'))
-			{
-				define('PHPGW_FINAL',True);
-
-				if (!$GLOBALS['phpgw_info']['flags']['noframework'])
-				{
-					$cur_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-
-					if($cur_app != 'home' && $cur_app != 'login' && $cur_app != 'logout')
-					{
-						if($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
-						{
-							$this->start_xslt_capture();	// if index already turned it off
-						}
-					}
-
-					if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
-					{
-						$this->stop_xslt_capture();
-					}
-
-					if ($cur_app != 'login'&& $cur_app != 'logout')
-					{
-						$this->framework();
-					}
-					$GLOBALS['phpgw']->xslttpl->pp();
-				}
-				// call the asyncservice check_run function if it is not explicitly set to cron-only
-				//
-				if (!$GLOBALS['phpgw_info']['server']['asyncservice'])	// is default
-				{
-					ExecMethod('phpgwapi.asyncservice.check_run','fallback');
-				}
-				$GLOBALS['phpgw']->db->disconnect();
-
-				/* Clean up mcrypt */
-				if (@is_object($GLOBALS['phpgw']->crypto))
-				{
-					$GLOBALS['phpgw']->crypto->cleanup();
-					unset($GLOBALS['phpgw']->crypto);
-				}
-				
-				if (DEBUG_TIMER)
-				{
-					$GLOBALS['debug_timer_stop'] = perfgetmicrotime();
-					echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
-				}
-			}
-		}
-
-		/*!
-		@function display_mainscreen
-		@abstract shows the applications preferences and admin links
-		*/
-		function display_mainscreen($appname,$file)
-		{
-			if(is_array($file))
-			{
-				$icon = $this->image($appname,'navbar');
-
-				while(is_array($file) && list($text,$url) = each($file))
-				{
-					$link_data[] = array
-					(
-						'pref_link'	=> $url,
-						'pref_text'	=> lang($text)
-					);
-				}
-
-				if ($icon)
-				{
-					$pref = 'app_row_icon';
-				}
-				else
-				{
-					$pref = 'app_row_noicon';
-				}
-
-				$this->output[$pref][] = array
-				(
-					'app_title' => $GLOBALS['phpgw_info']['apps'][$appname]['title'],
-					'app_name'	=> $appname,
-					'app_icon'	=> $icon,
-					'link_row'	=> $link_data
-				);
-			}
-		}
-
 		function hex2bin($data)
 		{
 			$len = strlen($data);
@@ -1737,6 +1164,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		{
 			return $GLOBALS['phpgw']->crypto->encrypt($data);
 		}
+
 		/*!
 		@function decrypt
 		@abstract decrypt $data
@@ -1766,7 +1194,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@abstract md5 encrypt password
 		@param $userpass user password
 		@param $random random seed
-		*/
+		*/ 
 		function md5_cryptpasswd($userpass, $random)
 		{
 			$bsalt = '$1$';
@@ -1775,18 +1203,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$modsalt = sprintf('%s%s%s', $bsalt, $random, $esalt);
 			$password = crypt($userpass, $modsalt);
 			$ldappassword = sprintf('%s%s', $lcrypt, $password);
-
-			return $ldappassword;
-		}
-		/*!
-		@function sha_cryptpasswd
-		@abstract sha encrypt password
-		@param $userpass user password
-		*/
-		function sha_cryptpasswd($userpass)
-		{
-			$hash = base64_encode(mhash(MHASH_SHA1, $userpass));
-			$ldappassword = sprintf('%s%s', '{SHA}', $hash);
 
 			return $ldappassword;
 		}
@@ -1803,26 +1219,18 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				$salt       = $this->randomstring(2);
 				$e_password = $this->des_cryptpasswd($password, $salt);
+				
+				return $_epassword;
 			}
 			elseif (strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'md5')
 			{
 				$salt       = $this->randomstring(8);
 				$e_password = $this->md5_cryptpasswd($password, $salt);
+				
+				return $e_password;
 			}
-			elseif(strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'sha')
-			{
-				if(@function_exists('mhash'))
-				{
-					$e_password = $this->sha_cryptpasswd($password);
-				}
-				else
-				{
-					/* this should error instead... */
-					$salt       = $this->randomstring(8);
-					$e_password = $this->md5_cryptpasswd($password, $salt);
-				}
-			}
-			return $e_password;
+			
+			return false;
 		}
 
 		/*!
@@ -1916,11 +1324,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$format = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] . ' - ';
 				if ($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12')
 				{
-					$format .= 'h:i:s a';
+					$format .= 'h:i a';
 				}
 				else
 				{
-					$format .= 'H:i:s';
+					$format .= 'H:i';
 				}
 			}
 			return date($format,$t);
@@ -2142,7 +1550,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
  				$prefs['email']['mail_port'] = '995';
  			}
 			// This is going to be used to switch to the nntp class
-			if (isset($GLOBALS['phpgw_info']['flags']['newsmode']) &&
+			if (isset($phpgw_info['flags']['newsmode']) &&
 				$GLOBALS['phpgw_info']['flags']['newsmode'])
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';
@@ -2183,7 +1591,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						. ',<br>' . lang('Please %1 by hand',lang('delete')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
 					break;
 				case 35:	$s .= lang('Account has been updated') . '<p>'
@@ -2193,7 +1601,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						lang('rename')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
 					break;
 				case 36:	$s .= lang('Account has been created') . '<p>'
@@ -2203,7 +1611,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						lang('create')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
 					break;
 				case 37:	$s .= lang('Group has been added') . '<p>'
@@ -2212,7 +1620,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						lang('create')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
 					break;
 				case 38:	$s .= lang('Group has been deleted') . '<p>'
@@ -2221,7 +1629,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						lang('delete')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
 					break;
 				case 39:	$s .= lang('Group has been updated') . '<p>'
@@ -2230,7 +1638,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						lang('rename')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
-						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. '<br>' . lang('On *nix systems please type: %1','chmod 770 '
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
 					break;
 				case 40: $s .= lang('You have not entered a title').'.';
@@ -2459,52 +1867,5 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				return intval($id);
 			}
 		}
-
-		/* THIS FUNCTION IS NOT LONGER USED! */
-		function phpgw_header($forceheader = True, $forcenavbar = True)
-		{
-			/* not longer needed für xslttpl and would require to load the phpgw template */
-		}
-
-		/* THIS FUNCTION IS NOT LONGER USED! */
-		function phpgw_appheader()
-		{
-			/*if (!is_array(MENUACTION))
-			{
-				list($app,$class,$method) = explode('.',MENUACTION);
-				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
-				{
-					$GLOBALS[$class]->header();
-				}
-			}
-			elseif (file_exists(PHPGW_APP_INC . '/header.inc.php'))
-			{
-				include(PHPGW_APP_INC . '/header.inc.php');
-			}*/
-		}
-
-		/* THIS FUNCTION IS NOT LONGER USED! */
-		function phpgw_appfooter()
-		{
-			/*if (!is_array(MENUACTION))
-			{
-				list($app,$class,$method) = explode('.',MENUACTION);
-				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
-				{
-					$GLOBALS[$class]->footer();
-				}
-			}
-			elseif (file_exists(PHPGW_APP_INC . '/footer.inc.php'))
-			{
-				include(PHPGW_APP_INC . '/footer.inc.php');
-			}*/
-		}
-
-		/* Note: does nothing any more under XSLT
-		 */
-		function phpgw_footer()
-		{
-		}
-
 	}//end common class
 

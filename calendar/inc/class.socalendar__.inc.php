@@ -40,7 +40,7 @@ if(extension_loaded('mcal') == False)
 	define('MCAL_M_FRIDAY',32);
 	define('MCAL_M_SATURDAY',64);
 	
-	define('MCAL_M_WEEKDAYS',63);
+	define('MCAL_M_WEEKDAYS',62);
 	define('MCAL_M_WEEKEND',65);
 	define('MCAL_M_ALLDAYS',127);
 }
@@ -51,6 +51,7 @@ define('MSG_ADDED',2);
 define('MSG_REJECTED',3);
 define('MSG_TENTATIVE',4);
 define('MSG_ACCEPTED',5);
+define('MSG_ALARM',6);
 
 define('REJECTED',0);
 define('NO_RESPONSE',1);
@@ -68,10 +69,6 @@ class socalendar__
 
 	function socalendar__()
 	{
-		if(!is_object($GLOBALS['phpgw']->datetime))
-		{
-			$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
-		}
 	}
 
 	function maketime($time)

@@ -327,7 +327,7 @@
 			{
 				return $this->delete_attached($app,$id,$id2);
 			}
-			if ($link_id > 0 || !is_array($id))
+			if (!is_array($id))
 			{
 				return solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
 			}
@@ -388,7 +388,7 @@
 		@syntax title( $app,$id )
 		@author ralfbecker
 		@abstract returns the title (short description) of entry $id and $app
-		@result the title
+		@result the title or false if $id does not exist in $app
 		*/
 		function title($app,$id,$link='')
 		{
@@ -427,7 +427,14 @@
 			}
 			$method = $reg['title'];
 
-			return strchr($method,'.') ? ExecMethod($method,$id) : $this->$method($id);
+			$title = strchr($method,'.') ? ExecMethod($method,$id) : $this->$method($id);
+
+			if (!$title)	// $app,$id has been deleted ==> unlink als links to it
+			{
+				$this->unlink(0,$app,$id);
+				return False;
+			}
+			return $title;
 		}
 
 		/*!
@@ -823,7 +830,7 @@
 			}
 			if (!is_array($event))
 			{
-				return 'not an event !!!';
+				return False;
 			}
 			$format = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] . ' '.
 				($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12' ? 'h:i a' : 'H:i');
@@ -846,12 +853,18 @@
 			{
 				$this->bocal = createobject('calendar.bocalendar');
 			}
-			$event_ids = $this->bocal->search_keywords($pattern);
-
 			$content = array( );
-			while (is_array($event_ids) && list( $key,$id ) = each( $event_ids ))
+
+			if ($event_ids = $this->bocal->search_keywords($pattern))
 			{
-				$content[$id] = $this->calendar_title( $id );
+				foreach($event_ids as $id)
+				{
+					// only include it in the list, if we have permissions to read it
+					if ($this->bocal->check_perms(PHPGW_ACL_READ,$id))
+					{
+						$content[$id] = $this->calendar_title( $id );
+					}
+				}
 			}
 			return $content;
 		}
@@ -871,6 +884,10 @@
 			if (!is_array($addr))
 			{
 				list( $addr ) = $this->contacts->read_single_entry( $addr );
+			}
+			if (!is_array($addr))
+			{
+				return False;
 			}
 			$name = $addr['n_family'];
 			if ($addr['n_given'])
@@ -930,7 +947,7 @@
 			{
 				$proj = $this->boprojects->read_single_project( $proj );
 			}
-			return $proj['title'];
+			return is_array($proj) ? $proj['title'] : False;
 		}
 
 		/*!

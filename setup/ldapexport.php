@@ -240,8 +240,8 @@
 
 	if($setup_complete)
 	{
-		echo lang('<br><center>Export has been completed!  You will need to set the user passwords manually.</center>');
-		echo lang('<br><center>Click <a href="index.php">here</a> to return to setup </center>');
+		echo '<br><center>'.lang('Export has been completed!  You will need to set the user passwords manually.').'</center>';
+		echo '<br><center>'.lang('Click <a href="index.php">here</a> to return to setup.').'</center>';
 		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}

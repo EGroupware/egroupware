@@ -32,6 +32,30 @@
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
+
+	// test if $path lies within the webservers document-root
+	//
+	function in_docroot($path)
+	{
+		$docroots = array(PHPGW_SERVER_ROOT,$GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT']);
+		
+		foreach ($docroots as $docroot)
+		{
+			$len = strlen($docroot);
+
+			if ($docroot == substr($path,0,$len))
+			{
+				$rest = substr($path,$len);
+
+				if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
+				{
+					return True;
+				}
+			}
+		}
+		return False;
+	}
+
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
 		'T_footer' => 'footer.tpl',
@@ -46,8 +70,10 @@
 	$GLOBALS['phpgw_setup']->loaddb();
 
 	/* Guessing default values. */
-	$GLOBALS['current_config']['hostname']  = $HTTP_HOST;
-	$GLOBALS['current_config']['files_dir'] = ereg_replace('/setup','/files',dirname($SCRIPT_FILENAME));
+	$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'];
+	// files-dir is not longer allowed in document root, for security reasons !!!
+	$GLOBALS['current_config']['files_dir'] = '/outside/webserver/docroot';
+
 	if(@is_dir('/tmp'))
 	{
 		$GLOBALS['current_config']['temp_dir'] = '/tmp';
@@ -56,6 +82,11 @@
 	{
 		$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
 	}
+	// guessing the phpGW url
+	$parts = explode('/',$_SERVER['PHP_SELF']);
+	unset($parts[count($parts)-1]); // config.php
+	unset($parts[count($parts)-1]); // setup
+	$GLOBALS['current_config']['webserver_url'] = implode('/',$parts);
 
 	if(@get_var('cancel',Array('POST')))
 	{
@@ -65,6 +96,7 @@
 
 	/* Check api version, use correct table */
 	$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions();
+
 	if($GLOBALS['phpgw_setup']->alessthanb($setup_info['phpgwapi']['currentver'], '0.9.10pre7'))
 	{
 		$configtbl = 'config';
@@ -75,7 +107,9 @@
 	}
 
 	$newsettings = get_var('newsettings',Array('POST'));
-	if(@get_var('submit',Array('POST')) && @$newsettings)
+	$files_in_docroot = in_docroot($GLOBALS['HTTP_POST_VARS']['newsettings']['files_dir']);
+
+	if(@get_var('submit',Array('POST')) && @$newsettings && !$files_in_docroot)
 	{
 		$datetime = CreateObject('phpgwapi.datetime');
 		switch (intval($newsettings['daytime_port']))
@@ -103,7 +137,7 @@
 		{
 			/* echo '<br>Updating: ' . $setting . '=' . $value; */
 			/* Don't erase passwords, since we also do not print them below */
-			if(!ereg('passwd',$setting) && !ereg('password',$setting) && !ereg('root_pw',$setting))
+			if($value || (!ereg('passwd',$setting) && !ereg('password',$setting) && !ereg('root_pw',$setting)))
 			{
 				@$GLOBALS['phpgw_setup']->db->query("DELETE FROM $configtbl WHERE config_name='" . $setting . "'");
 			}
@@ -151,10 +185,16 @@
 	{
 		$GLOBALS['current_config'][$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
 	}
-
-	if($GLOBALS['current_config']['files_dir'] == '/path/to/dir/phpgroupware/files')
+	
+	// are we here because of an error: files-dir in docroot
+	if (is_array($GLOBALS['HTTP_POST_VARS']['newsettings']) && $files_in_docroot)
 	{
-		$GLOBALS['current_config']['files_dir'] = $GLOBALS['phpgw_info']['server']['server_root'] . '/files';
+		echo '<p align="center"><font color="red"><b>'.lang('Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!')."</b></font></p>\n";
+
+		foreach($GLOBALS['HTTP_POST_VARS']['newsettings'] as $key => $val)
+		{
+			$GLOBALS['current_config'][$key] = $val;
+		}
 	}
 
 	if($GLOBALS['error'] == 'badldapconnection')
@@ -187,10 +227,6 @@
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));
 		$t->set_block('config','body','body');
-		$t->set_var('th_bg',   '486591');
-		$t->set_var('th_text', 'FFFFFF');
-		$t->set_var('row_on',  'DDDDDD');
-		$t->set_var('row_off', 'EEEEEE');
 
 		$vars = $t->get_undefined('body');
 		$GLOBALS['phpgw_setup']->hook('config','setup');
@@ -260,9 +296,10 @@
 
 	$setup_tpl->set_var('more_configs',lang('Please login to phpgroupware and run the admin application for additional site configuration') . '.');
 
-	$setup_tpl->set_var('lang_submit',lang('submit'));
-	$setup_tpl->set_var('lang_cancel',lang('cancel'));
+	$setup_tpl->set_var('lang_submit',lang('Save'));
+	$setup_tpl->set_var('lang_cancel',lang('Cancel'));
 	$setup_tpl->pparse('out','T_config_post_script');
 
 	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>
+

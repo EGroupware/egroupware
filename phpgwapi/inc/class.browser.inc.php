@@ -33,9 +33,9 @@
 		var $p;
 		var $data;
 
-		function browser ()
+		function browser()
 		{
-			$HTTP_USER_AGENT = $GLOBALS['HTTP_USER_AGENT'];
+			global $HTTP_USER_AGENT;
 			/*
 				Determine browser and version
 			*/
@@ -62,20 +62,20 @@
 				$this->BROWSER_AGENT = 'Netscape';
 			}
 			elseif(ereg('Konqueror/([0-9].[0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
-				ereg( 'Konqueror/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+				ereg('Konqueror/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
-				$this->BROWSER_VER   = $log_version[1];
-				$this->BROWSER_AGENT = 'Konqueror';
+				$this->BROWSER_VER=$log_version[1];
+				$this->BROWSER_AGENT='Konqueror';
 			}
 			elseif(ereg('Mozilla/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
-				$this->BROWSER_VER   = $log_version[1];
-				$this->BROWSER_AGENT = 'MOZILLA';
+				$this->BROWSER_VER=$log_version[1];
+				$this->BROWSER_AGENT='MOZILLA';
 			}
 			else
 			{
-				$this->BROWSER_VER   = 0;
-				$this->BROWSER_AGENT = 'OTHER';
+				$this->BROWSER_VER=0;
+				$this->BROWSER_AGENT='OTHER';
 			}
 
 			/*
@@ -108,27 +108,27 @@
 
 			/*
 			echo "\n\nAgent: $HTTP_USER_AGENT";
-			echo "\nIE: "       . $this->is_ie();
-			echo "\nMac: "      . $this->is_mac();
-			echo "\nWindows: "  . $this->is_windows();
-			echo "\nPlatform: " . $this->get_platform();
-			echo "\nVersion: "  . $this->get_version();
-			echo "\nAgent: "    . $this->get_agent();
+			echo "\nIE: ".browser_is_ie();
+			echo "\nMac: ".browser_is_mac();
+			echo "\nWindows: ".browser_is_windows();
+			echo "\nPlatform: ".browser_get_platform();
+			echo "\nVersion: ".browser_get_version();
+			echo "\nAgent: ".browser_get_agent();
 			*/
 
-			// The br and p vars are supposed to return the correct
+			// The br and p functions are supposed to return the correct
 			// value for tags that do not need to be closed.  This is
 			// per the xhmtl spec, so we need to fix this to include
 			// all compliant browsers we know of.
 			if($this->BROWSER_AGENT == 'IE')
 			{
 				$this->br = '<br/>';
-				$this->p  = '<p/>';
+				$this->p = '<p/>';
 			}
 			else
 			{
 				$this->br = '<br>';
-				$this->p  = '<p>';
+				$this->p = '<p>';
 			}
 		}
 
@@ -263,18 +263,18 @@
 			}
 			if($fn)
 			{
-				if($this->get_agent() == 'IE')
+				if($this->get_agent() == 'IE') // && browser_get_version() == "5.5")
 				{
 					$attachment = '';
-					header('Cache-control: private');
 				}
 				else
 				{
 					$attachment = ' attachment;';
 				}
 
-				header('Content-type: ' . $mime);
-				header('Content-disposition:' . $attachment . ' filename="' . $fn . '"');
+				// Show this for all
+				header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
+				header('Content-type: '.$mime);
 
 				if($length)
 				{

@@ -405,7 +405,7 @@
 
 	if ($setup_complete)
 	{
-		echo lang('<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>');
+		echo '<br><center>'.lang('Import has been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'</center>';
 		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}

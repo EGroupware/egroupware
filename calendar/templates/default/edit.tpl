@@ -1,9 +1,16 @@
 <!-- $Id$ -->
 <!-- BEGIN edit_entry -->
+<script language="JavaScript">
+	self.name="first_Window";
+	function accounts_popup()
+	{
+		Window1=window.open('{accounts_link}',"Search","width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes");
+	}
+</script>
 <center>
 <font color="#000000" face="{font}">
 
-<form action="{action_url}" method="post" name="addform">
+<form action="{action_url}" method="post" name="app_form">
 {common_hidden}
 <table border="0" width="90%">
  <tr>
@@ -14,7 +21,7 @@
 {row}
  <tr>
   <td>
-   <table><tr valign="top">
+   <table><tr>
     <td><input type="submit" value="{submit_button}">&nbsp;</form></td>
     <td>{cancel_button}</td>
    </tr></table>
@@ -26,13 +33,13 @@
 </center>
 <!-- END edit_entry -->
 <!-- BEGIN list -->
- <tr class="{tr_color}">
+ <tr bgcolor="{tr_color}">
   <td valign="top" width="35%">&nbsp;<b>{field}:</b></td>
   <td valign="top" width="65%">{data}</td>
  </tr>
 <!-- END list -->
 <!-- BEGIN hr -->
- <tr class="{tr_color}">
+ <tr bgcolor="{tr_color}">
   <td colspan="2">
    {hr_text}
   </td>

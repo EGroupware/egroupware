@@ -53,7 +53,7 @@
 	*/
 	function parseobject($input)
 	{
-		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access','required','optional');
+		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 		$new = explode("@",$input);
 		while (list($x,$y) = each($new))
 		{
@@ -83,7 +83,7 @@
 				}
 			}
 		}
-
+		
 		if ($GLOBALS['object_type'].' '.$GLOBALS['HTTP_GET_VARS']['object'] == $t)
 		{
 			$GLOBALS['special_request'] = $output[$t];
@@ -100,7 +100,8 @@
 	*/
 	function parsesimpleobject($input)
 	{
-		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access','required','optional');
+		
+		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 		$input = ereg_replace ("@", "@#", $input);
 		$new = explode("@",$input);
 		if (count($new) < 3)
@@ -148,18 +149,6 @@
 	* limiting and selecting what to print                                     *
 	\**************************************************************************/
 
-	/* Prevents passing files[]=../../../secret_file or files[]=/etc/passwd */
-	if (is_array($GLOBALS['files']))
-	{
-		while (list($p, $fn) = each ($GLOBALS['files']))
-		{
-			if (ereg('\.\.', $fn) || ereg('^/', $fn))
-			{
-				unset($GLOBALS['files'][$p]);
-			}
-		}
-	}
-
 	if (!isset($GLOBALS['HTTP_GET_VARS']['object_type']))
 	{
 		$GLOBALS['object_type'] = 'function';
@@ -168,7 +157,7 @@
 	{
 		$GLOBALS['object_type'] = $GLOBALS['HTTP_GET_VARS']['object_type'];
 	}
-
+	
 	$app = $GLOBALS['HTTP_GET_VARS']['app'];
 	$fn  = $GLOBALS['HTTP_GET_VARS']['fn'];
 
@@ -293,7 +282,7 @@
 		unset($sstype);
 		unset($idx);
 		reset($startstop);
-
+		
 		/**************************************************************************\
 		* Now that I have the list groups and which records belong in which groups *
 		* its time to parse each function and stick it under the appropriate group *
@@ -303,7 +292,6 @@
 		while (list($key,$val) = each($matches))
 		{
 			preg_match_all("#@(.*)$#sUi",$val[1],$data);
-			$data[1][0] = ereg_replace ("\n([[:space:]]+)\*", "\n\\1", $data[1][0]);
 			$data[1][0] = ereg_replace ("@", "@#", $data[1][0]);
 			$returndata = parseobject($data[1][0], $fn);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
@@ -452,6 +440,7 @@
 		}
 	}
 
+	
 	$GLOBALS['template']->fp('doc','border_top',True);
 	reset($doc_array);
 	while(list($group_key, $group_value) = each($doc_array))
@@ -472,7 +461,7 @@
 			}
 			if(is_array($object_value))
 			{
-				parsedetails($object_value);
+				parsedetails($object_value);	
 				$GLOBALS['template']->set_var('generic_name',$docline_key);
 				$GLOBALS['template']->set_var('generic_value',$docline_value[0]);
 				$GLOBALS['template']->fp('group_contents','object',True);

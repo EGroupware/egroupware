@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 <!-- BEGIN search -->
 <table width="90%">
- <tr><td colspan="2" align="center" class="th"><b>{quantity}</b></td></tr>
+ <tr><td colspan="2" align="center" bgcolor="{th_bg}"><b>{quantity}</b></td></tr>
 {rows}
 </table>
 <!-- END search -->
@@ -9,7 +9,7 @@
 
 <!-- END search_list_header -->
 <!-- BEGIN search_list -->
- <tr class="{tr_color}">
+ <tr bgcolor="{tr_color}">
   <td width="20%">&nbsp;{date}</td>
   <td>{link}</td>
  </tr>

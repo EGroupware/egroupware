@@ -6,9 +6,11 @@ alarms	calendar	ja	アラーム
 alarm management	calendar	ja	アラーム管理
 all day	calendar	ja	全ての日
 am	calendar	ja	午前
+are you sure you want to delete this country ?	calendar	ja	この国の休日を削除してもよろしいですか。
 are you sure\nyou want to\ndelete this entry ?	calendar	ja	この項目を\n削除してもよろしいですか。
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	削除してもよろしいですか。\n（全てのユーザに影響します）
 Are you sure\nyou want to\ndelete this single occurence ?\n\nThis will delete\nthis entry for all users.	calendar	ja	削除してもよろしいですか。\n（全てのユーザに影響します）
+back	calendar	ja	戻る
 brief description	calendar	ja	件名
 calendar	common	ja	カレンダー
 calendar preferences	common	ja	カレンダーユーザ設定
@@ -17,6 +19,7 @@ calendar - add	calendar	ja	カレンダー - 追加
 calendar - edit	calendar	ja	カレンダー - 訂正
 calendar holiday management	admin	ja	休日設定
 countries	calendar	ja	国一覧
+country	calendar	ja	国
 daily	calendar	ja	日単位
 daily matrix view	calendar	ja	日程表示
 days repeated	calendar	ja	曜日
@@ -24,6 +27,7 @@ delete series	calendar	ja	連続削除
 delete single	calendar	ja	単独削除
 default calendar filter	calendar	ja	カレンダーの初期選択
 default calendar view	calendar	ja	カレンダーの初期表示
+display interval in day View	calendar	ja	日表示時の時間間隔
 display mini calendars when printing	calendar	ja	印刷用の時、小カレンダを表示
 display status of events	calendar	ja	イベント状況表示
 do you wish to autoload calendar holidays files dynamically?	admin	ja	休日ファイルを自動ロードする
@@ -66,12 +70,15 @@ no matches found.	calendar	ja	見つかりません。
 no matchs found	calendar	ja	見つかりません。
 no response	calendar	ja	返答なし
 observance rule	calendar	ja	休日のルールを適用
+overlap holiday	calendar	ja	振替休日
 occurence	calendar	ja	曜日指定
 participant	calendar	ja	参加者
 participates	calendar	ja	も参加
 participants	calendar	ja	参加者
+people holiday	calendar	ja	国民の休日
 planner	calendar	ja	プランナー
 pm	calendar	ja	午後
+print calendars in black & white	calendar	ja	印刷用の時、白黒表示にする
 printer friendly	calendar	ja	印刷用へ
 private and global public	calendar	ja	プライベートと共有
 private and group public	calendar	ja	プライベートと所属グループ
@@ -94,6 +101,7 @@ search results	calendar	ja	検索結果
 select country for including holidays	calendar	ja	休日データ選択
 send/receive updates via email	calendar	ja	更新情報を電子メールで受取る
 show day view on main screen	calendar	ja	今日の予定をメイン画面に表示
+show default view on main screen	calendar	ja	初期表示をメイン画面に表示
 show high priority events on main screen	calendar	ja	優先度が高いイベントをメイン画面に表示
 start date/time	calendar	ja	開始日時
 su	calendar	ja	日

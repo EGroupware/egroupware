@@ -1,11 +1,11 @@
 <?php
 
-$phpgw_info['flags'] = array('currentapp' => 'filemanager',
-                                'noheader' => False,
-                                'noappheader' => False,
-                                'enable_vfs_class' => True);
+$phpgw_info["flags"] = array("currentapp" => "filemanager",
+                                "noheader" => False,
+                                "noappheader" => False,
+                                "enable_vfs_class" => True);
 
-include('../../header.inc.php');
+include("../header.inc.php");
 
 /*
 	General format for output is:
@@ -272,7 +272,7 @@ while (list ($i, $o) = each ($io))
 $phpgw->vfs->cd ();
 
 html_break (2);
-html_text_bold ("The less output, the better.  Please file errors as a " . html_link ('https://savannah.gnu.org/bugs/?group=phpgroupware', 'bug report', True, False) .  ". Be sure to include the system information line at the top, and anything special about your setup.  Thanks!");
+html_text_bold ("The less output, the better.  Please file errors as a " . html_link ("https://sourceforge.net/tracker/?group_id=7305&atid=107305", "bug report", True, False) .  ". Be sure to include the system information line at the top, and anything special about your setup.  Thanks!");
 
 html_page_close ();
 

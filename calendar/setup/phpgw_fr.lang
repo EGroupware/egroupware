@@ -8,29 +8,37 @@
 a	calendar	fr	un
 accept	calendar	fr	Accepte
 accepted	calendar	fr	Accepté
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fr	L'action qui a causé la notification: Ajouté, Annulé, Accepté, Rejeté, ...
 add a single entry by passing the fields.	calendar	fr	Ajouter une unique entrée en passant les champs.
 add alarm	calendar	fr	Ajouter une alarme
+add contact	calendar	fr	Ajouter un contact
 added	calendar	fr	Ajouté
+address book	calendar	fr	Carnet d'adresses
 alarm	calendar	fr	Alarme
+alarm for %1 at %2 in %3	calendar	fr	Alarme pour %1 à %2 dans %3
 alarm management	calendar	fr	Gestion des alarmes
 alarm-management	calendar	fr	Gestion des alarmes
 alarms	calendar	fr	Alarmes
 all day	calendar	fr	Journée entière
 are you sure you want to delete this country ?	calendar	fr	Etes-vous sûr de vouloir effacer ce pays ?
 are you sure you want to delete this holiday ?	calendar	fr	Etes-vous sûr de vouloir effacer ces vacances ?
+are you sure\nyou want to\ndelete these alarms?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer ces alarmes?
 are you sure\nyou want to\ndelete this entry ?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?
 Are you sure\nyou want to\ndelete this entry ?\n\nThis will delete\nthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
 Are you sure\nyou want to\ndelete this single occurence ?\n\nThis will delete\nthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette unique occurence ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
+before the event	calendar	fr	avant l'évènement
 brief description	calendar	fr	Description brève
+business	calendar	fr	Travail
 calendar	common	fr	Calendrier
+calendar - [iv]cal importer	calendar	fr	Calendrier - Importateur [iv]Cal
 calendar - add	calendar	fr	Calendrier - Ajouter
 calendar - edit	calendar	fr	Calendrier - Modifier
-calendar - [iv]cal importer	calendar	fr	Calendrier - Importateur [iv]Cal
 calendar event	calendar	fr	Evénement de calendrier
 calendar holiday management	admin	fr	Gestion du calendrier des vacances
 calendar preferences	calendar	fr	Préférences du calendrier
 calendar settings	admin	fr	Réglages calendrier
 calendar-fieldname	calendar	fr	Calendrier-nom des champs
+canceled	calendar	fr	Annulé
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	fr	Changer tous les évènements pour $params['old_owner'] vers $params['new_owner'].
 change status	calendar	fr	Modifier le statut
 configuration	calendar	fr	Configuration
@@ -38,14 +46,21 @@ countries	calendar	fr	Pays
 country	calendar	fr	Pays
 csv-fieldname	calendar	fr	CSV-nom des champs
 csv-filename	calendar	fr	CSV-nom du fichier
+custom fields	calendar	fr	Champs personnalisés
+custom fields and sorting	common	fr	Champs personnalisés et tri
 daily	calendar	fr	Journalier
 daily matrix view	calendar	fr	Vue journalière de la matrice
+days	calendar	fr	Jours
 days repeated	calendar	fr	Jours répétés
 dayview	calendar	fr	Vue journalière
+default appointment length (in minutes)	calendar	fr	Durée du rendez-vous par défaut (en minutes)
 default calendar filter	calendar	fr	Filtre de calendrier par défaut
 default calendar view	calendar	fr	Vue du calendrier par défaut
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	fr	Durée par défaut des évènements nouvellement crées. La durée est en minutes, p.e. 60 pour 1 heure.
+defines the size in minutes of the lines in the day view.	calendar	fr	Définit la taille en minutes des lignes dans la vue journalière.
 delete a single entry by passing the id.	calendar	fr	Effacer une unique entrée en passant l'ID.
 delete an entire users calendar.	calendar	fr	Efface l'ensemble du calendrier de l'utilisateur.
+delete selected contacts	calendar	fr	Effacer les contacts sélectionnés
 delete series	calendar	fr	Effacer les séries
 delete single	calendar	fr	Effacer un unique
 deleted	calendar	fr	Effacé
@@ -53,47 +68,64 @@ description	calendar	fr	Description
 display interval in day view	calendar	fr	Afficher l'intervalle dans la vue journalière
 display mini calendars when printing	calendar	fr	Afficher mini calendriers à l'impression
 display status of events	calendar	fr	Afficher le statut des événements
-Display week days only in Month/Week View	calendar	fr	Afficher les jours ouvrés seulement dans la vue Mois/Semaine
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	fr	Afficher votre vue de calendrier par défaut sur la page de démarrage (page que vous obtenez quand vous entrez dans phpGroupWare ou cliquez sur l'icône page maison (homepage))?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	fr	Voulez-vous être prévenu des rendez-vous nouveaux ou modifiés? Vous serez prévenu des modifications que vous faites vous-même.<br>Vous pouvez limiter les notifications à certains changements seulement. Chaque objet inclut toutes les notifications listées au-dessus de lui. Toutes les modifications inclut les modifications de titre, description, participants, mais pas les réponses des participants. Si le propriétaire d'un évènement a demandé aucune notification, il aura toujours les réponses des participants comme les acceptations et les rejets aussi.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fr	Voulez-vous recevoir un résumé régulier de vos rendez-vous par EMail?<br>Le résumé est envoyé à votre adresse EMail standard le matin de ce jour ou le lundi pour les résumés hebdomadaires.<br>Il est envoyé seulement quand vous avez des rendez-vous ce jour-là ou cette semaine-là.
 do you wish to autoload calendar holidays files dynamically?	admin	fr	Voulez-vous auto-charger les fichiers de vacances calendrier dynamiquement?
 download	calendar	fr	Downloader
 duration	calendar	fr	Durée
 edit series	calendar	fr	Modifier toutes les occurrences
 edit single	calendar	fr	Modifier cette occurrence
+email reminder	calendar	fr	EMail de rappel
 end date/time	calendar	fr	Date/Heure de fin
+enddate	calendar	fr	Date de fin
 ends	calendar	fr	Finit
 enter output filename: ( .vcs appended )	calendar	fr	Entrer le nom du fichier de sortie: ( .vcs ajouté )
 event details follow	calendar	fr	Les détails de l'évènement suivent
 exceptions	calendar	fr	Exceptions
 export	calendar	fr	Export
 export a list of entries in ical format.	calendar	fr	Exporter une liste d'entrées dans le format iCal.
+extended	calendar	fr	Etendu
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	fr	Les mises à jour étendues incluent toujours les détails complets de l'évènement. Les iCals peuvent être importés par certaines autres applications de calendrier.
+external participants	calendar	fr	Participants extérieurs
 fieldseparator	calendar	fr	Séparateur de champs
+firstname of person to notify	calendar	fr	Prénom de la personne à prévenir
+format of event updates	calendar	fr	Format des mises à jour d'évènement
 fr	calendar	fr	F
 free/busy	calendar	fr	Libre/occupé
 frequency	calendar	fr	Fréquence
 fri	calendar	fr	Ven
 full description	calendar	fr	Description complète
+fullname of person to notify	calendar	fr	Nom complet de la personne à prévenir
 generate printer-friendly version	calendar	fr	Générer une version imprimable
+global categories	calendar	fr	Catégories globales
 global public and group public	calendar	fr	Public global et groupe public
 global public only	calendar	fr	Public global seulement
 go!	calendar	fr	Go!
 grant calendar access	common	fr	Régler les autorisations d'accès au calendrier
 group planner	calendar	fr	Planificateur de groupe
 group public only	calendar	fr	Groupe public seulement
-has been canceled	calendar	fr	a été annulé
-has been rescheduled to	calendar	fr	a été replanifié le
+here is your requested alarm.	calendar	fr	Voici votre alarme demandée.
 high priority	calendar	fr	Priorité haute
 holiday	calendar	fr	Vacance
 holiday management	calendar	fr	Gestion des vacances
 holiday-management	calendar	fr	Gestion des vacances
 holidays	calendar	fr	Vacances
+hours	calendar	fr	Heures
 i participate	calendar	fr	Je participe
+ical / rfc2445	calendar	fr	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	fr	Si activé les vacances tombant sur un Week-End, sont prises sur le lundi d'après.
 ignore conflict	calendar	fr	Ignorer le conflit
 import	calendar	fr	Import
 import csv-file into calendar	calendar	fr	Importer un fichier CSV dans le calendrier
 interval	calendar	fr	Intervalle
+intervals in day view	calendar	fr	Intervalles dans la vue journalière
+intervals per day in planner view	calendar	fr	Intervalles par jour dans la vue planning
 invalid entry id.	calendar	fr	ID d'entrée invalide.
 last	calendar	fr	Dernier
+lastname of person to notify	calendar	fr	Nom de famille de la personne à prévenir
+length shown<br>(emtpy for full length)	calendar	fr	Longueur montrée<br>(vide pour longueur complète)
+length<br>(<= 255)	calendar	fr	Longueur<br>(<= 255)
 load [iv]cal	calendar	fr	Charger [iv]Cal
 location	calendar	fr	Emplacement
 location to autoload from	admin	fr	Emplacement depuis lequel auto-charger
@@ -101,6 +133,7 @@ matrixview	calendar	fr	Vue matricielle
 minutes	calendar	fr	minutes
 mo	calendar	fr	L
 modified	calendar	fr	Modifié
+modify list of external participants	calendar	fr	Modifier la liste des participants extérieurs
 mon	calendar	fr	Lun
 month	calendar	fr	Mois
 monthly	calendar	fr	Mensuel
@@ -108,14 +141,29 @@ monthly (by date)	calendar	fr	Mensuel (par date)
 monthly (by day)	calendar	fr	Mensuel (par jour)
 monthview	calendar	fr	Vue mensuelle
 new entry	calendar	fr	Nouvelle entrée
-no matches found.	calendar	fr	Pas d'occurences trouvées.
+new name must not exist and not be empty!!!	calendar	fr	Le nouveau nom ne doit pas exister et ne doit pas être vide!!!
+no matches found	calendar	fr	Pas d'occurences trouvées
 no response	calendar	fr	Pas de réponse
+notification messages for added events	calendar	fr	Messages de notification pour les évènements ajoutés
+notification messages for canceled events	calendar	fr	Messages de notification pour les évènements annulés
+notification messages for modified events	calendar	fr	Messages de notification pour les évènements modifiés
+notification messages for your alarms	calendar	fr	Messages de notification pour vos alarmes
+notification messages for your responses	calendar	fr	Messages de notification pour vos réponses
 number of intervals per day in planner view	calendar	fr	Nombre d'intervalles par jour dans la vue planificateur
 number of months	calendar	fr	Nombre de mois
 number of records to read (<=200)	calendar	fr	Nombre d'enregistrements à lire (<=200)
 observance rule	calendar	fr	Règle d'observation
 occurence	calendar	fr	Occurence
+old startdate	calendar	fr	Ancienne date de début
+olddate	calendar	fr	Ancienne date
 on %1 %2 %3 your meeting request for %4	calendar	fr	Le %1 %2 %3 votre demande de réunion pour %4
+on all changes	calendar	fr	Sur tous les changements
+on all modification, but responses	calendar	fr	Sur toutes les modifications, sauf les réponses
+on any time change too	calendar	fr	Sur n'importe quel changement de temps aussi
+on invitation / cancelation only	calendar	fr	sur invitation / annulation seulement
+on participant responses too	calendar	fr	Sur les réponses des participants aussi
+on time change of more than 4 hours too	calendar	fr	sur le changement de temps de plus de 4 heures aussi
+order	calendar	fr	Ordre
 overlap holiday	calendar	fr	Vacances recouvrantes
 participant	calendar	fr	Participant
 participants	calendar	fr	Participants
@@ -125,10 +173,10 @@ permission denied	calendar	fr	Permission refusée
 planner	calendar	fr	Planificateur
 planner by category	calendar	fr	Planificateur par catégrie
 planner by user	calendar	fr	Planificateur par utilisateur
-planner_user	calendar	fr	Utilisateur planificateur
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	fr	SVP confirmez, acceptez, rejetez ou examinez les modifications dans l'entrée correspondante de votre calendrier
 preselected group for entering the planner	calendar	fr	Groupe présélectionné pour entrer le planificateur
 print calendars in black & white	calendar	fr	Imprimer les calendriers en noir & blanc
+print the mini calendars	calendar	fr	Imprimer les mini-calendriers
 printer friendly	calendar	fr	Imprimable
 privat	calendar	fr	Privée
 private and global public	calendar	fr	Public privé et global
@@ -138,7 +186,9 @@ re-edit event	calendar	fr	Remodifier l'événement
 read a list of entries.	calendar	fr	Lire une liste d'entrées.
 read a single entry by passing the id and fieldlist.	calendar	fr	Lire une unique entrée en passant l'ID et la liste des champs.
 read this list of methods.	calendar	fr	Lire cette liste de méthodes.
+receive email updates	calendar	fr	Recevoir les mises à jour par EMail
 receive extra information in event mails	calendar	fr	Recevoir des informations supplémentaires dans les EMails d'évènements
+receive summary of appointments	calendar	fr	Recevoir le résumé des rendez-vous
 recurring event	calendar	fr	Evènement récurrent
 refresh	calendar	fr	Rafraîchir
 reinstate	calendar	fr	Réinstaller
@@ -148,26 +198,36 @@ repeat end date	calendar	fr	Date de fin de répétition
 repeat type	calendar	fr	Type de répétition
 repeating event information	calendar	fr	Informations d'événement répétitif
 repetition	calendar	fr	Répétition
+repetitiondetails (or empty)	calendar	fr	Détails de répétition (ou vide)
 reset	calendar	fr	Réinitialiser
 rule	calendar	fr	Règle
 sa	calendar	fr	Sa
 sat	calendar	fr	Sam
 scheduling conflict	calendar	fr	Conflit de planification
 search results	calendar	fr	Résultats de recherche
+selected contacts (%1)	calendar	fr	Contacts choisis (%1)
 send updates via email	common	fr	Envoyer les mises à jour par EMail
 send/receive updates via email	calendar	fr	Envoyer/recevoir les mises à jour par EMail
-send_extra	calendar	fr	Envoyer extra
 set a year only for one-time / non-regular holidays.	calendar	fr	Régler sur une année seulement pour les vacances uniques / non-régulières.
+set new events to private	calendar	fr	Régler les nouveaux évènements comme privés
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	fr	Les invitations que vous avez rejeté doivent-elles être encore montrées dans votre calendrier ?<br>Vous ne pourrez les accepter plus tard (p.e. quand le conflit de rendez-vous est supprimé), que si elles sont encore montrées dans votre calendrier!
+should new events created as private by default ?	calendar	fr	Les nouveaux évènements doivent-ils être crées comme privés par défaut ?
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	fr	Les mini-calendriers doivent-ils être imprimés / affichés dans les vues compatibles imprimante ?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	fr	La vue compatible imprimante doit-elle être en noir & blanc ou en couleur (comme dans la vue normale)?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	fr	Le statut de chaque participant à l'évènement (accepté, rejeté, ...) doit-il être montré entre crochets après le nom de chaque participant ?
 show day view on main screen	calendar	fr	Montrer la vue du jour sur l'écran principal
 show default view on main screen	calendar	fr	Montrer la vue par défaut sur l'écran principal
 show high priority events on main screen	calendar	fr	Montrer les événements prioritaires sur la page principale
+show invitations you rejected	calendar	fr	Montrer les invitations que vous avez rejeté
 single event	calendar	fr	Evènement unique
 sorry, the owner has just deleted this event	calendar	fr	Désolé, le propriétaire vient juste d'effacer cet événement
 sorry, this event does not exist	calendar	fr	Désolé, cet évènement n'existe pas
 sorry, this event does not have exceptions defined	calendar	fr	Désolé, cet évènement n'a pas d'exceptions définies
 sort by	calendar	fr	Sort by
+specifies the the number of intervals shown in the planner view.	calendar	fr	Spécifie le nombre d'intervalles montrés dans la vue planning.
 start date/time	calendar	fr	Date/heure de début
 start- and enddates	calendar	fr	Dates de début et de fin
+startdate	calendar	fr	Date de début
 startrecord	calendar	fr	Enregistrement de début
 su	calendar	fr	Di
 submit to repository	calendar	fr	Soumettre au dépôt
@@ -179,11 +239,25 @@ th	calendar	fr	J
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	fr	L'élément suivant entre en conflit avec l'heure suggérée:<ul>%1</ul>
 the user %1 is not participating in this event!	calendar	fr	L'utilisateur %1 ne participe pas à cet évènement!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	fr	Il y a eu une erreur en essayant de se connecter à votre serveur de News.<br>SVP, contactez votre administrateur pour vérifier le nom du serveur de News, votre nom ou mot de passe.
+this day is shown as first day in the week or month view.	calendar	fr	Ce jour est montré comme le premier jour dans la vue hebdomadaire ou mensuelle.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	fr	Ceci définit la fin de votre vue journalière. Les évènements après cette heure sont montrés sous la vue journalière.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	fr	Ceci définit le début de votre vue journalière. Les évènements avant cette heuresont montrés au-dessus de la vue journalière.<br>Cette heure est aussi utilisée comme l'heure de début par défaut pour les nouveaux évènements.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fr	Ce groupe qui est présélectionné quand vous entrez dans le planning. Vous pouvez le changer dans le planning chaque fois que vous le voulez.
+this message is sent for canceled or deleted events.	calendar	fr	Ce message est envoyé pour les évènements annulés ou effacés.
+this message is sent for modified or moved events.	calendar	fr	Ce message est envoyé pour les évènements modifiés ou déplacés.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	fr	Ce message est envoyé à tous les participants des évènements vous appartenant qui ont demandé des notifications à propos des nouveaux évènements.<br>Vous pouvez utiliser certaines variables qui seront remplacées par les données de l'évènement. La première ligne est le sujet de l'EMail.
+this message is sent when you accept, tentative accept or reject an event.	calendar	fr	Ce message est envoyé quand vous acceptez, essayez d'accepter ou rejetez un évènement.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	fr	Ce message est envoyé quand vous réglez une Alarme pour un évènement précis. Incluez toutes les informations dont vous pourriez avoir besoin.
 this month	calendar	fr	Ce mois
 this week	calendar	fr	Cette semaine
 this year	calendar	fr	Cette année
 thu	calendar	fr	Jeu
 title	calendar	fr	Titre
+title of the event	calendar	fr	Titre de l'évènement
+title-row	calendar	fr	Titre de ligne
+to-firstname	calendar	fr	A-prénom
+to-fullname	calendar	fr	A-Nom complet
+to-lastname	calendar	fr	A-Nom de famille
 today	calendar	fr	Aujourd'hui
 translation	calendar	fr	Traduction
 tu	calendar	fr	M
@@ -199,6 +273,8 @@ weekday starts on	calendar	fr	La semaine débute le
 weekly	calendar	fr	Hebdomadaire
 weekview	calendar	fr	Vue hebdomadaire
 when creating new events default set to private	calendar	fr	A la création de nouveaux événements mettre par défaut en privé
+which events do you want to see when you enter the calendar.	calendar	fr	Quels évènements voulez-vous voir quand vous entrez dans le calendrier.
+which of calendar view do you want to see, when you start calendar ?	calendar	fr	Laquelle des vues du calendrier vous voulez voir, quand vous entrez dans le calendrier ?
 work day ends on	calendar	fr	Jour de travail finit à
 work day starts on	calendar	fr	Jour de travail démarre à
 workdayends	calendar	fr	Le jour de travail finit
@@ -206,10 +282,13 @@ yearly	calendar	fr	Annuel
 yearview	calendar	fr	Vue annuelle
 you can either set a year or a occurence, not both !!!	calendar	fr	Vous pouvez soit régler une année ou une Occurence, pas les deux !!!
 you can only set a year or a occurence !!!	calendar	fr	Vous pouvez uniquement régler une année ou une occurrence !!!
+you do not have permission to add alarms to this event !!!	calendar	fr	Vous n'avez pas les droits pour ajouter des alarmes à cet évènement !!!
+you do not have permission to delete this alarm !!!	calendar	fr	Vous n'avez pas les droits pour effacer cette alarme !!!
+you do not have permission to enable/disable this alarm !!!	calendar	fr	Vous n'avez pas les droits pour activer/désactiver cette alarme !!!
 you do not have permission to read this record!	calendar	fr	Vous n'avez pas les droits pour lire cet enregistrement!
 you have %1 high priority events on your calendar today.	common	fr	Vous avez %1 événements de haute priorité dans votre calendrier aujourd'hui.
 you have 1 high priority event on your calendar today.	common	fr	Vous avez 1 événement de haute priorité dans votre calendrier aujourd'hui.
-you have a meeting scheduled for	calendar	fr	Vous avez une réunion planifiée le
+you have a meeting scheduled for %1	calendar	fr	Vous avez une réunion planifiée pour %1
 you have not entered a title	calendar	fr	Vous n'avez pas entré de titre
 you have not entered a valid date	calendar	fr	Vous n'avez pas entré une date correcte
 you have not entered a valid time of day	calendar	fr	Vous n'avez pas entré une heure de la journée correcte
@@ -217,6 +296,6 @@ you have not entered participants	calendar	fr	Vous n'avez pas sélectionné de par
 you must enter one or more search keywords	calendar	fr	Vous devez entrer un ou plusieurs mots clés de recherche
 you must select a [iv]cal. (*.[iv]cs)	calendar	fr	Vous devez choisir un [iv]Cal. (*.[iv]cs)
 you need to set either a day or a occurence !!!	calendar	fr	Vous devez régler soit un jour soit une occurrence !!!
-your meeting scheduled for	calendar	fr	Votre réunion planifiée le
-your meeting that had been scheduled for	calendar	fr	Votre réunion qui a été planifiée le
+your meeting scheduled for %1 has been canceled	calendar	fr	Votre réunion planifiée pour %1 a été annulée
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	fr	Votre réunion qui avait été planifiée pour %1 a été replanifiée pour %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	fr	L'heure que vous avez suggéré <B> %1 - %2 </B> entre en conflit avec les entrés suivantes du calendrier:

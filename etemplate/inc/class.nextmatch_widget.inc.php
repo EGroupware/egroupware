@@ -152,7 +152,7 @@
 				}
 				unset($value['bottom']);
 			}
-			if ($value['start_search'] ||
+			if ($value['start_search'] || $value['search'] != $old_value['search'] ||
 			    isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
 			    $old_value['filter'] != '' && isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
 			    $old_value['filter2'] != '' && isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])

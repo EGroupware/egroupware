@@ -16,27 +16,31 @@
 
 	class db
 	{
-		var $Host     = '';
-		var $Database = '';
-		var $User     = '';
-		var $Password = '';
 		var $UseODBCCursor = 0;
 
-		var $Link_ID  = 0;
-		var $Query_ID = 0;
-		var $Record   = array();
-		var $Row      = 0;
-
-		var $Errno    = 0;
-		var $Error    = '';
-
-		var $Auto_Free = 0;     ## set this to 1 to automatically free results
-
-		function connect()
+		function connect($Database = '', $Host = '', $User = '', $Password = '')
 		{
-			if ( 0 == $this->Link_ID )
+			/* Handle defaults */
+			if ($Database == '')
 			{
-				$this->Link_ID=odbc_pconnect($this->Database, $this->User, $this->Password, $this->UseODBCCursor);
+				$Database = $this->Database;
+			}
+			if ($Host == '')
+			{
+				$Host     = $this->Host;
+			}
+			if ($User == '')
+			{
+				$User     = $this->User;
+			}
+			if ($Password == '')
+			{
+				$Password = $this->Password;
+			}
+
+			if (! $this->Link_ID)
+			{
+				$this->Link_ID=odbc_pconnect($Database, $User, $Password, $this->UseODBCCursor);
 				if (!$this->Link_ID)
 				{
 					$this->halt('Link-ID == false, odbc_pconnect failed');
@@ -182,24 +186,9 @@
 			return count($this->Record)/2;
 		}
 
-		function nf()
-		{
-			return $this->num_rows();
-		}
-
-		function np()
-		{
-			print $this->num_rows();
-		}
-
 		function f($Field_Name)
 		{
 			return $this->Record[strtolower($Field_Name)];
-		}
-
-		function p($Field_Name)
-		{
-			print $this->f($Field_Name);
 		}
 
 		function halt($msg)

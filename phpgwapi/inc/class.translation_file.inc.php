@@ -22,23 +22,15 @@
 
   /* $Id$ */
 
+	// This should be considered experimental.  It works, at the app level.
+	// But, for admin and prefs it really slows things down.  See the note
+	// in the translate() function.
+	// To use, set $GLOBALS['phpgw_info']["server"]["translation_system"] = "file"; in
+	// class.translation.inc.php
 	class translation
 	{
-		var $lang;   // Currently loaded translations
-		var $loaded = False;
-		var $all_loaded = False;
-		var $translator_helper = '*';
-
-		function translation()
-		{
-			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
-			{
-				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-			}
-
-			$this->currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
-		}
+		var $langarray;   // Currently loaded translations
+		var $loaded_apps = array(); // Loaded app langs
 
 		/*!
 		@function translate
@@ -46,31 +38,72 @@
 		@param $key  phrase to translate
 		@param $vars vars sent to lang function, passed to us
 		*/
-		function translate($key,$vars=False) 
+		function translation($appname='phpgwapi',$loadlang='')
 		{
-			if(!$vars)
+			global $lang;
+			if($loadlang)
+			{
+				$lang = $loadlang;
+			}
+			$this->add_app($appname,$lang);
+		}
+
+		function isin_array($needle,$haystack)
+		{
+			while (list ($k,$v) = each($haystack))
+			{
+				if ($v == $needle)
+				{
+					return True;
+				}
+			}
+			return False;
+		}
+
+		function translate($key, $vars=False) 
+		{
+			global $lang;
+
+			if (!$this->isin_array($GLOBALS['phpgw_info']['flags']['currentapp'],$this->loaded_apps) &&
+				$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
+			{
+				//echo '<br>loading app "' . $GLOBALS['phpgw_info']['flags']['currentapp'] . '" for the first time.';
+				$this->add_app($GLOBALS['phpgw_info']['flags']['currentapp'],$lang);
+			}
+			elseif ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'admin' ||
+				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
+			{
+				// This is done because for these two apps, all langs must be loaded.
+				// Note we cannot load for navbar, since it would slow down EVERY page.
+				// This is true until all common/admin/prefs langs are in the api file only.
+				@ksort($GLOBALS['phpgw_info']['apps']);
+				while(list($x,$app) = each($GLOBALS['phpgw_info']['apps']))
+				{
+					if (!$this->isin_array($app['name'],$this->loaded_apps))
+					{
+						//echo '<br>loading app "' . $app['name'] . '" for the first time.';
+						$this->add_app($app['name'],$lang);
+					}
+				}
+			}
+
+			if (!$vars)
 			{
 				$vars = array();
 			}
-			$ret  = $key;
-			$_key = strtolower($key);
 
-			if(!@isset($this->lang[$_key]) && !$this->loaded)
+			$ret = $key;
+
+			if (isset($this->langarray[strtolower ($key)]) && $this->langarray[strtolower ($key)])
 			{
-				$this->load_langs();
+				$ret = $this->langarray[strtolower ($key)];
 			}
-			if(!@isset($this->lang[$_key]) &&
-				($this->currentapp == 'admin' || $this->currentapp == 'preferences' || $this->currentapp == 'home') &&
-				!$this->all_loaded
-			)
+			else
 			{
-				$this->load_langs(True);
+				$ret = $key."*";
 			}
-
-			$ret = @isset($this->lang[$_key]) ? $this->lang[$_key] : $key . $this->translator_helper;	
-
 			$ndx = 1;
-			while(list($key,$val) = each($vars))
+			while( list($key,$val) = each( $vars ) )
 			{
 				$ret = preg_replace( "/%$ndx/", $val, $ret );
 				++$ndx;
@@ -78,62 +111,52 @@
 			return $ret;
 		}
 
-		function load_langs($all=False)
+		/*!
+		@function add_app
+		@abstract loads all app phrases into langarray
+		@param $lang	user lang variable (defaults to en)
+		*/
+		function add_app($app,$lang='')
 		{
-			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
-			{
-				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-			}
+			define('SEP',filesystem_separator());
 
-			if($all)
+			//echo '<br>add_app(): called with app="' . $app . '", lang="' . $userlang . '"';
+			if (!isset($lang) || !$lang)
 			{
-				@reset($GLOBALS['phpgw_info']['user']['apps']);
-				while(list(,$appname) = @each($GLOBALS['phpgw_info']['user']['apps']))
+				if (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 				{
-					$this->add_app($appname['name']);
+					$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 				}
-				$this->all_loaded = True;
+				else
+				{
+					$userlang = 'en';
+				}
 			}
 			else
 			{
-				$this->add_app('phpgwapi');
-				$this->add_app($this->currentapp);
+				$userlang = $lang;
 			}
 
-			$this->loaded = True;
-		}
-
-		/*!
-		@function add_app
-		@abstract loads all app phrases into lang
-		@param $lang	user lang variable (defaults to en)
-		*/
-		function add_app($app)
-		{
-			//echo '<br>add_app(): adding phrases from: ' . $app;
-			define('SEP',filesystem_separator());
-
-			$userlang = $this->userlang ? $this->userlang : 'en';
-			//echo '<br>add_app(): userlang is: ' . $userlang;
-
 			$fn = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . $userlang . '.lang';
-			if(!@file_exists($fn))
+			if (!file_exists($fn))
 			{
 				$fn = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_en.lang';
 			}
 
-			if(@file_exists($fn))
+			if (file_exists($fn))
 			{
 				$fp = fopen($fn,'r');
-				while($data = fgets($fp,8000))
+				while ($data = fgets($fp,8000))
 				{
 					list($message_id,$app_name,$null,$content) = explode("\t",$data);
-					//echo '<br>add_app(): adding phrase: $this->lang["'.$message_id.'"]=' . trim($content);
-					$this->lang[$message_id] = trim($content);
+					//echo '<br>add_app(): adding phrase: $this->langarray["'.$message_id.'"]=' . trim($content);
+					$this->langarray[$message_id] = trim($content);
 				}
 				fclose($fp);
 			}
+			// stuff class array listing apps that are included already
+			$this->loaded_apps[] = $app;
 		}
 	}
 ?>

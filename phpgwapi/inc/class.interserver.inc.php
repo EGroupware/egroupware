@@ -159,7 +159,7 @@
 		function _send_xmlrpc_ssl($method_name, $args, $url, $debug=True)
 		{
 			list($uri,$hostpart) = $this->_split_url($url);
-			if(!is_array($args))
+			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'string');
@@ -168,7 +168,7 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(is_array($val))
+					if(gettype($val) == 'array')
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -190,15 +190,15 @@
 			$c->setCredentials($this->sessionid,$this->kp3);
 			$c->setDebug(0);
 			$r = $c->send($f,0,'https');
-			if(!$r)
+			if (!$r)
 			{
 				$this->debug('send failed');
 			}
 			$v = $r->value();
-			if(!$r->faultCode())
+			if (!$r->faultCode())
 			{
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
-				$this->result = xmlrpc_decode($v);
+				$this->result = phpgw_xmlrpc_decode($v);
 			}
 			else
 			{
@@ -211,7 +211,7 @@
 		function _send_xmlrpc_($method_name, $args, $url, $debug=True)
 		{
 			list($uri,$hostpart) = $this->_split_url($url);
-			if(!is_array($args))
+			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'string');
@@ -220,7 +220,7 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(is_array($val))
+					if(gettype($val) == 'array')
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -243,15 +243,15 @@
 //			_debug_array($c);
 			$c->setDebug(0);
 			$r = $c->send($f);
-			if(!$r)
+			if (!$r)
 			{
 				$this->debug('send failed');
 			}
 			$v = $r->value();
-			if(!$r->faultCode())
+			if (!$r->faultCode())
 			{
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
-				$this->result = xmlrpc_decode($v);
+				$this->result = phpgw_xmlrpc_decode($v);
 			}
 			else
 			{
@@ -265,7 +265,7 @@
 		{
 			$method_name = str_replace('.','_',$method_name);
 			list($uri,$hostpart) = $this->_split_url($url);
-			if(!is_array($args))
+			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
 			}
@@ -273,7 +273,7 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(is_array($val))
+					if(gettype($val) == 'array')
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -319,7 +319,7 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(is_array($val))
+					if(gettype($val) == 'array')
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -375,7 +375,7 @@
 			}
 			else
 			{
-				$_type = (is_long($_req) ? 'int' : gettype($_req));
+				$_type = (is_long($_req)?'int':gettype($_req));
 				if($recursed)
 				{
 					return CreateObject('phpgwapi.soapval',$ext,$_type,$_req);
@@ -394,7 +394,7 @@
 			{
 				$serverid = $this->serverid;
 			}
-			$sql = "SELECT * FROM ".$this->table." WHERE server_id=" . intval($serverid);
+			$sql = "SELECT * FROM $this->table WHERE server_id=" . intval($serverid);
 			$this->db->query($sql,__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
@@ -418,7 +418,7 @@
 			{
 				$serverid = $this->serverid;
 			}
-			if($serverid && is_array($this->server))
+			if($serverid && gettype($this->server) == 'array')
 			{
 				$sql = "UPDATE $this->table SET "
 					. "server_name='" . $this->server['server_name'] . "',"
@@ -440,7 +440,7 @@
 
 		function create($server_info='')
 		{
-			if(!is_array($server_info))
+			if(gettype($server_info) != 'array')
 			{
 				return False;
 			}
@@ -482,11 +482,11 @@
 
 		function get_list($start='',$sort='',$order='',$query='',$offset='',&$total)
 		{
-			if(!$sort)
+			if (!$sort)
 			{
 				$sort = 'DESC';
 			}
-			if($query)
+			if ($query)
 			{
 				$whereclause = "WHERE server_name LIKE '%$query%'"
 					. "OR server_url  LIKE '%$query%'"
@@ -494,7 +494,7 @@
 					. "OR admin_name  LIKE '%$query%'"
 					. "OR admin_email LIKE '%$query%'";
 			}
-			if($order)
+			if ($order)
 			{
 				$orderclause = 'ORDER BY ' . $order . ' ' . $sort;
 			}
@@ -506,7 +506,7 @@
 			$sql = "SELECT * FROM $this->table $whereclause $orderclause";
 			$this->db->query($sql,__LINE__,__FILE__);
 			
-			while($this->db->next_record())
+			while ($this->db->next_record())
 			{
 				$this->servers[$this->db->f('server_name')]['server_id']   = $this->db->f('server_id');
 				$this->servers[$this->db->f('server_name')]['server_name'] = $this->db->f('server_name');
@@ -525,7 +525,7 @@
 
 		function formatted_list($server_id=0,$java=False,$local=False)
 		{
-			if($java)
+			if ($java)
 			{
 				$jselect = ' onChange="this.form.submit();"';
 			}
@@ -540,11 +540,11 @@
 
 			$x = '';
 			$slist = $this->get_list('','','','','',$x);
-			while(list($key,$val) = each($slist))
+			while (list($key,$val) = each($slist))
 			{
 				$foundservers = True;
 				$select .= '<option value="' . $val['server_id'] . '"';
-				if($val['server_id'] == $server_id)
+				if ($val['server_id'] == $server_id)
 				{
 					$select .= ' selected';
 				}
@@ -605,7 +605,7 @@
 			{
 				return False;
 			}
-			if(is_int($serverdata))
+			if(gettype($serverdata) == 'integer')
 			{
 				$serverid = $serverdata;
 				settype($server_name,'string');
@@ -627,7 +627,7 @@
 		/* TODO - Determine trust level here */
 		function auth($serverdata='')
 		{
-			if(!$serverdata || !is_array($serverdata))
+			if(!$serverdata || gettype($serverdata) != 'array')
 			{
 				return False;
 			}
@@ -639,7 +639,7 @@
 			$this->db->query($sql,__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
-				if($username == $GLOBALS['phpgw_info']['server']['site_username'] &&
+				if ($username == $GLOBALS['phpgw_info']['server']['site_username'] &&
 					$password == $GLOBALS['phpgw_info']['server']['site_password'] &&
 					$this->db->f('trust_rel') >= 1)
 				{

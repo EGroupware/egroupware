@@ -1,7 +1,7 @@
 <?php
 
 
-$phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
+$phpgw_info["flags"] = array("currentapp" => "filemanager",
                                 "noheader" => False,
                                 "noappheader" => False,
                                 "enable_vfs_class" => True);

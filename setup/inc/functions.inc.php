@@ -32,6 +32,16 @@
 	{
 		include('../header.inc.php');
 	}
+
+	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
+	{
+		echo 'phpGroupWare now requires PHP 4.1 or greater.<br>';
+		echo 'Please contact your System Administrator';
+		exit;
+	}
+										
+
+	
 	/*  If we included the header.inc.php, but it is somehow broken, cover ourselves... */
 	if(!defined('PHPGW_SERVER_ROOT') && !defined('PHPGW_INCLUDE_ROOT'))
 	{
@@ -39,10 +49,6 @@
 		define('PHPGW_INCLUDE_ROOT','..');
 	}
 
-	if (floor(phpversion()) == 3)
-	{
-		include(PHPGW_INCLUDE_ROOT . '/phpgwapi/inc/php3_support_functions.inc.php');
-	}
 	include(PHPGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
 
 	define('SEP',filesystem_separator());
@@ -97,19 +103,19 @@
 		return $languages;
 	}
 
-	function lang_select()
+	function lang_select($onChange=False)
 	{
 		$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
 
-		$select = '<select name="ConfigLang">' . "\n";
+		$select = '<select name="ConfigLang"'.($onChange ? ' onChange="this.form.submit();"' : '').'>' . "\n";
 		$languages = get_langs();
 		while(list($null,$data) = each($languages))
 		{
-			if($data['available'])
+			if($data['available'] && !empty($data['lang']))
 			{
 				$selected = '';
 				$short = substr($data['lang'],0,2);
-				if ($short == $ConfigLang)
+				if ($short == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
 				{
 					$selected = ' selected';
 				}

@@ -75,6 +75,14 @@
 		function show_header($title='',$nologoutbutton=False, $logoutfrom='config', $configdomain='')
 		{
 			$GLOBALS['setup_tpl']->set_var('lang_charset',lang('charset'));
+			$style = array('th_bg'		=> '#486591',
+					'th_text'	=> '#FFFFFF',
+					'row_on'	=> '#DDDDDD',
+					'row_off'	=> '#EEEEEE',
+					'banner_bg'	=> '#4865F1',
+					'msg'		=> '#FF0000',
+					);
+			$GLOBALS['setup_tpl']->set_var($style);
 			if ($nologoutbutton)
 			{
 				$btn_logout = '&nbsp;';
@@ -148,6 +156,12 @@
 				$GLOBALS['setup_tpl']->set_var('lang_select',lang_select());
 				if (count($GLOBALS['phpgw_domain']) > 1)
 				{
+					foreach($GLOBALS['phpgw_domain'] as $domain => $data)
+					{
+						$domains .= "<option value=\"$domain\" ".($domain == @$GLOBALS['phpgw_info']['setup']['LastDomain'] ? ' SELECTED' : '').">$domain</option>\n";
+					}
+					$GLOBALS['setup_tpl']->set_var('domains',$domains);
+
 					// use BLOCK B_multi_domain inside of login_stage_header
 					$GLOBALS['setup_tpl']->parse('V_multi_domain','B_multi_domain');
 					// in this case, the single domain block needs to be nothing

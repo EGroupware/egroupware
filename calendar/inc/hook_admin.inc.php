@@ -9,18 +9,18 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
+
 	/* $Id$ */
-	{
-
+{
 // Only Modify the $file and $title variables.....
-
-		$file = Array
-		(
-			'Site Configuration'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
-			'Calendar Holiday Management'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uiholiday.admin'),
-			'Global categories'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True')
-		);
+	$title = $appname;
+	$file = Array(
+		'Site Configuration' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+		'Custom fields and sorting' => $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicustom_fields.index'),
+		'Calendar Holiday Management' => $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uiholiday.admin'),
+		'Global Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=calendar')
+	);
 //Do not modify below this line
-		$GLOBALS['phpgw']->common->display_mainscreen($appname,$file);
-	}
+	display_section($appname,$title,$file);
+}
 ?>

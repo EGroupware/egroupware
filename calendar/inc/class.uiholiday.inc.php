@@ -81,7 +81,7 @@
 			@reset($locales);
 			if (!$locales)
 			{
-				$p->set_var('message',lang('No matches found.'));
+				$p->set_var('message',lang('no matches found'));
 				$p->parse('rows','row_empty',True);
 			}
 			else
@@ -118,6 +118,10 @@
 
 		function edit_locale($locale='')
 		{
+			if ($locale === '')
+			{
+				$locale = $this->bo->locale;
+			}
 			if ($locale)
 			{
 				$this->bo->locales = array($locale);
@@ -128,7 +132,7 @@
 				$link_params = Array(
 					'menuaction'	=> 'calendar.uiholiday.admin'
 				);
-				Header('Location: ' . $GLOBALS['phpgw']->link($this->base_url,$link_params));
+				$GLOBALS['phpgw']->redirect_link($this->base_url,$link_params);
 			}
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -165,7 +169,7 @@
 
 			if (!count($holidays))
 			{
-				$p->set_var('message',lang('No matches found.'));
+				$p->set_var('message',lang('no matches found'));
 				$p->parse('rows','row_empty',True);
 			}
 			else
@@ -228,9 +232,9 @@
 			{
 				$holiday = $this->bo->read_entry($this->bo->id);
 			}
-			if ($GLOBALS['HTTP_GET_VARS']['locale'])
+			if ($this->locale)
 			{
-				$holiday['locale'] = $GLOBALS['HTTP_GET_VARS']['locale'];
+				$holiday['locale'] = $this->locale;
 			}
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -445,7 +449,7 @@
 			$this->bo->year = 0;	// for a complete list with all years
 			$holidays = $this->bo->get_holiday_list();
 
-			if (isset($GLOBALS['HTTP_GET_VARS']['download']))
+			if (isset($_GET['download']))
 			{
 				$locale = $this->bo->locales[0];
 				$browser = CreateObject('phpgwapi.browser');

@@ -24,6 +24,7 @@ angola	common	en	ANGOLA
 anguilla	common	en	ANGUILLA
 antarctica	common	en	ANTARCTICA
 antigua and barbuda	common	en	ANTIGUA AND BARBUDA
+apply	common	en	Apply
 april	common	en	April
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 argentina	common	en	ARGENTINA
@@ -41,7 +42,6 @@ bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
 bangladesh	common	en	BANGLADESH
 barbados	common	en	BARBADOS
-based on	common	en	Based on
 belarus	common	en	BELARUS
 belgium	common	en	BELGIUM
 belize	common	en	BELIZE
@@ -81,10 +81,10 @@ choose the parent category	common	en	Choose the parent category
 christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
 clear form	common	en	Clear Form
+close	common	en	Close
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
 colombia	common	en	COLOMBIA
 comoros	common	en	COMOROS
-compare an array of apps/versions against the repository and return new/updated list of apps.	phpgwapi	en	compare an array of apps/versions against the repository and return new/updated list of apps.
 congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	en	COOK ISLANDS
@@ -110,10 +110,9 @@ description	common	en	Description
 detail	common	en	Detail
 details	common	en	Details
 disabled	common	en	Disabled
+display monday first	common	en	Display Monday first
+display sunday first	common	en	Display Sunday first
 djibouti	common	en	DJIBOUTI
-do you really want to delete this entry	common	en	Do you really want to delete this entry ?
-do you want to delete all subcategories ?	common	en	Do you want to delete all subcategories ?
-do you want to move all subcategories one level down ?	common	en	Do you want to move all subcategories one level down ?
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 domain	common	en	Domain
 domain name for mail-address, eg. "%1"	common	en	domain name for mail-address, eg. "%1"
@@ -121,6 +120,7 @@ domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
+drag to move	common	en	Drag to move
 e-mail	common	en	E-Mail
 east timor	common	en	EAST TIMOR
 ecuador	common	en	ECUADOR
@@ -166,14 +166,17 @@ french polynesia	common	en	FRENCH POLYNESIA
 french southern territories	common	en	FRENCH SOUTHERN TERRITORIES
 friday	common	en	Friday
 ftp	common	en	FTP
+fullname	common	en	Fullname
 gabon	common	en	GABON
 gambia	common	en	GAMBIA
+general menu	common	en	General Menu
 georgia	common	en	GEORGIA
 germany	common	en	GERMANY
 ghana	common	en	GHANA
 gibraltar	common	en	GIBRALTAR
 global	common	en	Global
 global public	common	en	Global Public
+go today	common	en	Go Today
 grant access	common	en	Grant access
 greece	common	en	GREECE
 greenland	common	en	GREENLAND
@@ -213,7 +216,6 @@ invalid password	common	en	Invalid password
 iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	en	IRAQ
 ireland	common	en	IRELAND
-is a multi-user, web-based groupware suite written in PHP	about	en	is a multi-user, web-based groupware suite written in PHP.
 israel	common	en	ISRAEL
 it has been more then %1 days since you changed your password	common	en	It has been more then %1 days since you changed your password
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
@@ -235,7 +237,6 @@ kyrgyzstan	common	en	KYRGYZSTAN
 language	common	en	Language
 lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	en	Last name
-last page	common	en	Last page
 last name of the user, eg. "%1"	common	en	last name of the user, eg. "%1"
 last page	common	en	Last page
 lastname	common	en	Lastname
@@ -258,6 +259,7 @@ luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	en	MADAGASCAR
+mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
 maintainer	about	en	Maintainer
@@ -275,6 +277,7 @@ mauritius	common	en	MAURITIUS
 may	common	en	May
 mayotte	common	en	MAYOTTE
 medium	common	en	Medium
+menu	common	en	Menu
 message	common	en	Message
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
@@ -300,13 +303,14 @@ new main category	common	en	New main category
 new value	common	en	New Value
 new zealand	common	en	NEW ZEALAND
 next	common	en	Next
+next month (hold for menu)	common	en	Next month (hold for menu)
 next page	common	en	Next page
+next year (hold for menu)	common	en	Next year (hold for menu)
 nicaragua	common	en	NICARAGUA
 niger	common	en	NIGER
 nigeria	common	en	NIGERIA
 niue	common	en	NIUE
 no	common	en	No
-no category	common	en	no category
 no entries found, try again ...	common	en	no entries found, try again ...
 no history for this record	common	en	No history for this record
 no subject	common	en	No Subject
@@ -327,12 +331,12 @@ oman	common	en	OMAN
 on *nix systems please type: %1	common	en	On *nix systems please type: %1
 only private	common	en	only private
 only yours	common	en	only yours
-open notify window	common	en	Open Notify Window
+open notify window	common	en	Open notify window
+open popup window	common	en	Open popup window
 original	common	en	Original
 other	common	en	Other
 overview	common	en	Overview
 owner	common	en	Owner
-package an application for transport back to the calling client.	phpgwapi	en	Package an application for transport back to the calling client.
 pakistan	common	en	PAKISTAN
 palau	common	en	PALAU
 palestinian territory, occupied	common	en	PALESTINIAN TERRITORY, OCCUPIED
@@ -351,8 +355,6 @@ permissions to the files/users directory	common	en	permissions to the files/user
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
-phpgroupware --> homepage	phpgwapi	en	phpGroupWare --> homepage
-phpgwapi	common	en	phpGroupWare API
 phone number	common	en	phone number
 pitcairn	common	en	PITCAIRN
 please %1 by hand	common	en	Please %1 by hand
@@ -364,10 +366,11 @@ please set your preferences for this application	common	en	Please set your prefe
 please wait...	common	en	Please Wait...
 poland	common	en	POLAND
 portugal	common	en	PORTUGAL
-powered by	common	en	Powered by
 postal	common	en	Postal
 powered by phpgroupware version %1	common	en	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	en	Preferences
+prev. month (hold for menu)	common	en	Prev. month (hold for menu)
+prev. year (hold for menu)	common	en	Prev. year (hold for menu)
 previous page	common	en	Previous page
 print	common	en	Print
 priority	common	en	Priority
@@ -377,8 +380,6 @@ public	common	en	public
 puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
 read	common	en	Read
-read a single app by id.	phpgwapi	en	Read a single app by id.
-read a single app by name.	phpgwapi	en	Read a single app by name.
 read this list of methods.	common	en	Read this list of methods.
 reject	common	en	Reject
 rename	common	en	Rename
@@ -404,6 +405,7 @@ search	common	en	Search
 section	common	en	Section
 select	common	en	Select
 select category	common	en	Select Category
+select date	common	en	Select date
 select group	common	en	Select group
 select one	common	en	Select one
 select user	common	en	Select user
@@ -449,11 +451,8 @@ tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
 thailand	common	en	THAILAND
 the api is current	common	en	The API is current
 the api requires an upgrade	common	en	The API requires an upgrade
-The core of phpGroupWare, the API itself	about	en	The core of phpGroupWare, the API itself.
 the following applications require upgrades	common	en	The following applications require upgrades
 the mail server returned	common	en	The mail server returned
-there was an error trying to connect to your imap server.<br>please contact your admin to check the servername, username or password.	phpgwapi	en	There was an error trying to connect to your IMAP server.<br>Please contact your admin to check the servername, username or password.
-there was an error trying to connect to your pop3 server.<br>please contact your admin to check the servername, username or password.	phpgwapi	en	There was an error trying to connect to your POP3 server.<br>Please contact your admin to check the servername, username or password.
 this application is current	common	en	This application is current
 this application requires an upgrade	common	en	This application requires an upgrade
 this name has been used already	common	en	This name has been used already !
@@ -462,9 +461,11 @@ time	common	en	Time
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
-to go back to the msg list, click <a href="%1">here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
+to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
+today	common	en	Today
 todays date, eg. "%1"	common	en	todays date, eg. "%1"
+toggle first day of week	common	en	Toggle first day of week
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
@@ -488,6 +489,7 @@ url	common	en	URL
 uruguay	common	en	URUGUAY
 use button to search for	common	en	use Button to search for
 use button to search for address	common	en	use Button to search for Address
+use button to search for calendarevent	common	en	use Button to search for Calendarevent
 use button to search for project	common	en	use Button to search for Project
 user	common	en	User
 user accounts	common	en	user accounts
@@ -508,7 +510,8 @@ wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western sahara	common	en	WESTERN SAHARA
 which groups	common	en	Which groups
-written by	common	en	Written by
+wk	common	en	wk
+written by:	common	en	Written by:
 year	common	en	Year
 yemen	common	en	YEMEN
 yes	common	en	Yes

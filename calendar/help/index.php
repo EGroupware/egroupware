@@ -25,3 +25,4 @@ Version: <b><?php echo $setup_info[$appname]['version']; ?></b><p/>
 This app was based on <a href="http://webcalendar.sourceforge.net" target="_new">WebCalendar</a><br/><p/>
 Transformed by <a href="<?php echo $phpgw->link('/email/compose.php','to=skeeter@phpgroupware.org'); ?>" target="_new">Mark A Peters (Skeeter)</a><br/>
 </font>
+<?php $phpgw->common->phpgw_footer(); ?>

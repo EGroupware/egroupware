@@ -1,5 +1,9 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
 %1 etemplates deleted	etemplate	de	%1 eTemplates gelöscht
+%1 etemplates for application '%2' dumped to '%3'	etemplate	de	%1 eTemplates für die Anwendung '%2' nach '%3' geschrieben
 %1 etemplates found	etemplate	de	%1 eTemplates gefunden
+%1 matches on search criteria	etemplate	de	%1 Treffer bei der Suche
+%1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplates importiert für die Anwendung '%2'
 %s disabled	etemplate	de	%s deaktiviert
 %s needed	etemplate	de	%s benötigt
 %s notranslation	etemplate	de	%s nicht übersetzen
@@ -18,6 +22,7 @@ application	etemplate	de	Anwendung
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
 attach	etemplate	de	Anhängen
 attach file	etemplate	de	Datei anhängen
+blurtext	etemplate	de	blurText
 border	etemplate	de	Rand
 border-line-thickness for the table-tag	etemplate	de	Randbreite (border) für die Tabelle
 can have special sql-value null	etemplate	de	darf speziellen SQL Wert NULL annehmen
@@ -80,9 +85,12 @@ enter a search pattern	etemplate	de	Suchmuster eingeben
 enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
 enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
+entry saved	etemplate	de	Eintrag gespeichert
 error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
 error: while saveing !!!	etemplate	de	Fehler: beim Speichern !!!
+error: writeing !!!	etemplate	de	Fehler: schreiben !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
 etemplate	common	de	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
 etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' geschrieben
@@ -93,6 +101,7 @@ export the loaded etemplate into a xml-file	etemplate	de	das geladene eTemplate 
 export xml	etemplate	de	XML Export
 extensions loaded:	etemplate	de	Erweiterungen geladen:
 file	etemplate	de	Datei
+file contains more than one etemplate, last one is shown !!!	etemplate	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
 file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
@@ -152,6 +161,7 @@ nextmatch	etemplate	de	Nextmatch
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
+nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchkriterium !!!
 nullable	etemplate	de	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
@@ -226,6 +236,7 @@ template deleted	etemplate	de	Template gelöscht
 template saved	etemplate	de	Template gespeichert
 text	etemplate	de	Textfeld
 textarea	etemplate	de	mehrzeiliges Textfeld
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
 time	etemplate	de	Uhrzeit
 to start the db-tools	etemplate	de	startet die DB-Tools
 to start the etemplate editor	etemplate	de	startet den eTemplate Editor

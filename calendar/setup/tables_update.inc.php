@@ -827,6 +827,12 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.001';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+	$test[] = '0.9.12';
+	function calendar_upgrade0_9_12()
+	{
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.001';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 	$test[] = '0.9.13.001';
 	function calendar_upgrade0_9_13_001()
 	{
@@ -905,6 +911,35 @@
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_cal_repeats','recur_exception',array('type' => 'varchar', 'precision' => 255, 'nullable' => True, 'default' => ''));
 
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.007';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '0.9.13.007';
+	function calendar_upgrade0_9_13_007()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_cal_user','cal_type',array(
+			'type' => 'varchar',
+			'precision' => '1',
+			'nullable' => False,
+			'default' => ''
+		));
+
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_cal_extra',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'cal_extra_name' => array('type' => 'varchar','precision' => '40','nullable' => False),
+				'cal_extra_value' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '')
+			),
+			'pk' => array('cal_id','cal_extra_name'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_cal_alarm');
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.001';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
 ?>

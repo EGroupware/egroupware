@@ -163,17 +163,14 @@
 		/* send this the id and whatever fields you want to see */
 		function read_single_entry($id,$fields='')
 		{
-			if(!$fields || empty($fields))
-			{
-				$fields = $this->stock_contact_fields;
-			}
+			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
 
-			if(count($stock_fieldnames))
+			if (count($stock_fieldnames))
 			{
 				$t_fields = ',' . implode(',',$stock_fieldnames);
-				if($t_fields == ',')
+				if ($t_fields == ',')
 				{
 					unset($t_fields);
 				}
@@ -189,38 +186,38 @@
 			$return_fields[0]['access'] = $this->db->f('access');
 			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
 
-			if(is_array($stock_fieldnames))
+			if (gettype($stock_fieldnames) == 'array')
 			{
-				while(list($f_name) = each($stock_fieldnames))
+				while (list($f_name) = each($stock_fieldnames))
 				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
 				}
 			}
 
 			/* Setup address type fields for ui forms display */
-			if($this->db->f('adr_one_type'))
+			if ($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
 				reset($this->adr_types);
-				while(list($name,$val) = each($this->adr_types))
+				while (list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if($this->db->f('adr_two_type'))
+			if ($this->db->f('adr_two_type'))
 			{
 				$two_type = $this->db->f('adr_two_type');
 				reset($this->adr_types);
-				while(list($name,$val) = each($this->adr_types))
+				while (list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
-			while($this->db->next_record())
+			while ($this->db->next_record())
 			{
-				if($extra_fields[$this->db->f('contact_name')])
+				if ($extra_fields[$this->db->f('contact_name')])
 				{
 					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
@@ -230,17 +227,14 @@
 
 		function read_last_entry($fields='')
 		{
-			if(!$fields || empty($fields))
-			{
-				$fields = $this->stock_contact_fields;
-			}
+			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
 
-			if(count($stock_fieldnames))
+			if (count($stock_fieldnames))
 			{
 				$t_fields = ',' . implode(',',$stock_fieldnames);
-				if($t_fields == ',')
+				if ($t_fields == ',')
 				{
 					unset($t_fields);
 				}
@@ -261,38 +255,38 @@
 			$return_fields[0]['access'] = $this->db->f('access');
 			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
 
-			if(is_array($stock_fieldnames))
+			if (gettype($stock_fieldnames) == 'array')
 			{
-				while(list($f_name) = each($stock_fieldnames))
+				while (list($f_name) = each($stock_fieldnames))
 				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
 				}
 			}
 
 			/* Setup address type fields for ui forms display */
-			if($this->db->f('adr_one_type'))
+			if ($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
 				reset($this->adr_types);
-				while(list($name,$val) = each($this->adr_types))
+				while (list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if($this->db->f('adr_two_type'))
+			if ($this->db->f('adr_two_type'))
 			{
 				$two_type = $this->db->f('adr_two_type');
 				reset($this->adr_types);
-				while(list($name,$val) = each($this->adr_types))
+				while (list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
-			while($this->db->next_record())
+			while ($this->db->next_record())
 			{
-				if($extra_fields[$this->db->f('contact_name')])
+				if ($extra_fields[$this->db->f('contact_name')])
 				{
 					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
@@ -301,44 +295,41 @@
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='',$cquery='')
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1)
 		{
 			if(!$start)  { $start  = 0; }
 			if(!$limit)  { $limit  = 0; }
 			if(!$filter) { $filter = 'tid=n'; }
 
-			if(!$fields || empty($fields))
-			{
-				$fields = $this->stock_contact_fields;
-			}
+			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			$DEBUG = 0;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-			if(count($stock_fieldnames))
+			if (count($stock_fieldnames))
 			{
 				$t_fields = ',' . implode(',',$stock_fieldnames);
-				if($t_fields == ',')
+				if ($t_fields == ',')
 				{
 					unset($t_fields);
 				}
 			}
 
 			/* turn filter's a=b,c=d OR a=b into an array */
-			if($filter)
+			if ($filter)
 			{
 				$check_stock = $this->stock_contact_fields + $this->non_contact_fields;
 
-				if($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
+				if ($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
 				$filterarray = split(',',$filter);
-				if($filterarray[1])
+				if ($filterarray[1])
 				{
 					$i=0;
-					for($i=0;$i<count($filterarray);$i++)
+					for ($i=0;$i<count($filterarray);$i++)
 					{
 						list($name,$value) = split('=',$filterarray[$i]);
-						if($name)
+						if ($name)
 						{
-							if($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 1: #'.$name.'# => #'.$value.'#'; }
+							if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 1: #'.$name.'# => #'.$value.'#'; }
 							$filterfields[$name] = $value;
 						}
 					}
@@ -346,7 +337,7 @@
 				else
 				{
 					list($name,$value) = split('=',$filter);
-					if($DEBUG)
+					if ($DEBUG)
 					{
 						echo '<br>DEBUG - Filter intermediate strings 1: #'.$name.'# => #'.$value.'#';
 					}
@@ -356,19 +347,19 @@
 				/* now check each element of the array and convert into SQL for queries below */
 				$i=0;
 				reset($filterfields);
-				while(list($name,$value) = each($filterfields))
+				while (list($name,$value) = each($filterfields))
 				{
-					if($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 2: #'.$name.'# => #'.$value.'#'; }
+					if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 2: #'.$name.'# => #'.$value.'#'; }
 					$isstd=0;
-					if($name && empty($value))
+					if ($name && empty($value))
 					{
-						if($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is empty (NULL)'; }
-						while(list($fname,$fvalue)=each($check_stock))
+						if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is empty (NULL)'; }
+						while (list($fname,$fvalue)=each($check_stock))
 						{
-							if($fvalue==$name)
+							if ($fvalue==$name)
 							{
 								$filterlist .= $name.' is NULL,';
-								if($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is a stock field'; }
+								if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is a stock field'; }
 								break;
 							}
 						}
@@ -376,17 +367,17 @@
 					elseif($name && $value)
 					{
 						reset($check_stock);
-						while(list($fname,$fvalue)=each($check_stock))
+						while (list($fname,$fvalue)=each($check_stock))
 						{
-							if($fvalue==$name)
+							if ($fvalue==$name)
 							{
-								if($name == 'cat_id')
+								if ($name == 'cat_id')
 								{
-									$filterlist .= '(' . $name . " LIKE '%," . $value . ",%' OR " . $name."='".$value."');";
+									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."='".$value."');";
 								}
-								elseif(is_int($value))
+								elseif (gettype($value) == "integer")
 								{
-									$filterlist .= $name.'='.$value.';';
+									$filterlist .= $name."=".$value.";";
 								}
 								else
 								{
@@ -401,12 +392,12 @@
 				$filterlist = substr($filterlist,0,-1);
 				$filterlist = ereg_replace(';',' AND ',$filterlist);
 				
-				if($DEBUG)
+				if ($DEBUG)
 				{
 					echo '<br>DEBUG - Filter output string: #'.$filterlist.'#';
 				}
 
-				if($filterlist)
+				if ($filterlist)
 				{
 					$filtermethod = '('.$filterlist.') ';
 					$fwhere = ' WHERE '; $fand = ' AND ';
@@ -417,7 +408,7 @@
 				$filtermethod = " AND (tid='n' OR tid is null)";
 			}
 
-			if(!$filtermethod)
+			if (!$filtermethod)
 			{
 				if($this->account_id)
 				{
@@ -440,10 +431,10 @@
 				}
 			}
 
-			if(is_array($this->grants))
+			if (is_array($this->grants))
 			{
 				$grants = $this->grants;
-				while(list($user) = each($grants))
+				while (list($user) = each($grants))
 				{
 					$public_user_list[] = $user;
 				}
@@ -456,17 +447,14 @@
 				$fwhere .= ') '; $fand .= ') ';
 			}
 
-			if($DEBUG && $filtermethod)
+			if ($DEBUG && $filtermethod)
 			{
 				echo '<br>DEBUG - Filtering with: #' . $filtermethod . '#';
 			}
 
-			if(!$sort)
-			{
-				$sort = 'ASC';
-			}
+			if (!$sort) { $sort = 'ASC'; }
 
-			if($order)
+			if ($order)
 			{
 				$ordermethod = "ORDER BY $order $sort ";
 			}
@@ -475,33 +463,28 @@
 				$ordermethod = "ORDER BY n_family,n_given,email $sort";
 			}
 
-			if($DEBUG && $ordermethod)
+			if ($DEBUG && $ordermethod)
 			{
 				echo "<br>DEBUG - $ordermethod";
+			}
+			
+			if($lastmod >= 0 && $fwhere)
+			{
+				$fwhere .= " AND last_mod > $lastmod ";
+			}
+			else if($lastmod >= 0)
+			{
+				$fwhere = " WHERE last_mod > $lastmod ";
+			}
+
+			if ($DEBUG && $last_mod_filter && fwhere)
+			{
+				echo "<br>DEBUG - last_mod_filter added to fwhere: $fwhere";
 			}
 
 			$filtermethod = '';
 
-			if($cquery)
-			{
-				$cqueryl = strtolower($cquery);
-				$cqueryu = strtoupper($cquery);
-
-				$sql = "SELECT * FROM $this->std_table WHERE (";
-				$cfields = array(
-					'fn'       => 'cn',
-					'n_family' => 'sn',
-					'org_name' => 'o'
-				);
-				while(list($f,$x) = each($cfields))
-				{
-					$sql .= " $f LIKE '$cqueryl%' OR $f LIKE '$cqueryu%' OR ";
-				}
-				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
-				unset($f); unset($x);
-				unset($cqueryl); unset($cqueryu);
-			}
-			elseif($query)
+			if ($query)
 			{
 				$query  = ereg_replace("'",'',$query);
 				$query  = ereg_replace('"','',$query);
@@ -520,18 +503,18 @@
 				$sql = "SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod . ' ' . $ordermethod;
 			}
-			if($DEBUG) { echo '<br>' . $sql; }
+			if ($DEBUG) { echo '<br>' . $sql; }
 
 			$db2 = $this->db;
 
 			$this->db->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db->num_rows();
 
-			if($start && $limit)
+			if ($start && $limit)
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$limit);
 			}
-			elseif(!$limit)
+			elseif (!$limit)
 			{
 				$this->db->query($sql,__LINE__,__FILE__);
 			}
@@ -541,7 +524,7 @@
 			}
 
 			$i = 0;
-			while($this->db->next_record())
+			while ($this->db->next_record())
 			{
 				$return_fields[$i]['id']     = $this->db->f('id');
 				$return_fields[$i]['lid']    = $this->db->f('lid');
@@ -549,10 +532,11 @@
 				$return_fields[$i]['owner']  = $this->db->f('owner');
 				$return_fields[$i]['access'] = $this->db->f('access');
 				$return_fields[$i]['cat_id'] = $this->db->f('cat_id');
+				$return_fields[$i]['last_mod']	= $this->db->f('last_mod');
 
-				if(is_array($stock_fieldnames))
+				if (gettype($stock_fieldnames) == 'array')
 				{
-					while(list($f_name) = each($stock_fieldnames))
+					while (list($f_name) = each($stock_fieldnames))
 					{
 						$return_fields[$i][$f_name] = $this->db->f($f_name);
 					}
@@ -560,9 +544,9 @@
 				}
 				$db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
 					. $this->db->f('id') . "'" .$filterextra,__LINE__,__FILE__);
-				while($db2->next_record())
+				while ($db2->next_record())
 				{
-					if($extra_fields[$db2->f('contact_name')])
+					if ($extra_fields[$db2->f('contact_name')])
 					{
 						$return_fields[$i][$db2->f('contact_name')] = $db2->f('contact_value');
 					}
@@ -581,15 +565,19 @@
 				$tid = 'n';
 			}
 
-			if($fields['lid'])
+			if ($fields['lid'])
 			{
 				$lid[0] = 'lid,';
 				$lid[1] = $fields['lid']."','";
 				unset($fields['lid']);
 			}
-
+			
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
+			//this is added here so it is never tainted
+			$this->stock_contact_fields['last_mod'] = 'last_mod'; 
+			$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
+			
 			$this->db->query("INSERT INTO $this->std_table (owner,access,cat_id,tid,".$lid[0]
 				. implode(",",$this->stock_contact_fields)
 				. ") VALUES ('$owner','$access','$cat_id','$tid','".$lid[1]
@@ -597,9 +585,9 @@
 
 			$id = $id = $this->db->get_last_insert_id($this->std_table, 'id');
 
-			if(count($extra_fields))
+			if (count($extra_fields))
 			{
-				while(list($name,$value) = each($extra_fields))
+				while (list($name,$value) = each($extra_fields))
 				{
 					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $this->account_id . "','"
 						. $this->db->db_addslashes($name) . "','" . $this->db->db_addslashes($value) . "')",__LINE__,__FILE__);
@@ -633,20 +621,21 @@
 			/* First make sure that id number exists */
 			$this->db->query("SELECT COUNT(*) FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
-			if(!$this->db->f(0))
+			if (!$this->db->f(0))
 			{
 				return False;
 			}
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-			if(count($stock_fields))
+			if (count($stock_fields))
 			{
-				while(list($stock_fieldname) = each($stock_fieldnames))
+				while (list($stock_fieldname) = each($stock_fieldnames))
 				{
 					$ta[] = $stock_fieldname . "='" . $this->db->db_addslashes($stock_fields[$stock_fieldname]) . "'";
 				}
+				$ta[] = 'last_mod=' . $GLOBALS['phpgw']->datetime->gmtnow; 
 				$fields_s = ',' . implode(',',$ta);
-				if($field_s == ',')
+				if ($field_s == ',')
 				{
 					unset($field_s);
 				}
@@ -654,11 +643,11 @@
 					. "id='$id'",__LINE__,__FILE__);
 			}
 
-			while(list($x_name,$x_value) = @each($extra_fields))
+			while (list($x_name,$x_value) = @each($extra_fields))
 			{
-				if($this->field_exists($id,$x_name))
+				if ($this->field_exists($id,$x_name))
 				{
-					if(!$x_value)
+					if (!$x_value)
 					{
 						$this->delete_single_extra_field($id,$x_name);
 					}
@@ -679,7 +668,7 @@
 		/* Used by admin to change ownership on account delete */
 		function change_owner($old_owner='',$new_owner='')
 		{
-			if(!($new_owner && $old_owner))
+			if (!($new_owner && $old_owner))
 			{
 				return False;
 			}
@@ -700,7 +689,7 @@
 		/* This is for the admin script deleteaccount.php */
 		function delete_all($owner=0)
 		{
-			if($owner)
+			if ($owner)
 			{
 				$this->db->query("DELETE FROM $this->std_table WHERE owner=$owner",__LINE__,__FILE__);
 				$this->db->query("DELETE FROM $this->ext_table WHERE contact_owner=$owner",__LINE__,__FILE__);

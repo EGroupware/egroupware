@@ -236,8 +236,8 @@
 			$info_id = intval($info_id);
 
 			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
-				(!$this->db->query("select * FROM phpgw_infolog where info_id=$info_id",__LINE__,__FILE__) ||
-				 !$this->db->next_record())) 
+				(!$this->db->query("select * FROM phpgw_infolog WHERE info_id=$info_id",__LINE__,__FILE__) ||
+				 !$this->db->next_record()))
 			{
 				$this->init( );
 				return False;
@@ -245,6 +245,12 @@
 			if ($info_id != $this->data['info_id'])      // data yet read in
 			{
 				$this->db2data($this->data);
+
+				$this->db->query("SELECT info_extra_name,info_extra_value FROM phpgw_infolog_extra WHERE info_id=$info_id",__LINE__,__FILE__);
+				while ($this->db->next_record())
+				{
+					$this->data['#'.$this->db->f(0)] = $this->db->f(1);
+				}
 			}
 			return $this->data;
 		}
@@ -254,23 +260,34 @@
 		@abstract delete InfoLog entry $info_id AND the links to it
 		@syntax delete( $info_id )
 		@param $info_id id of log-entry
+		@param int $delete_children delete the children, if not set there parent-id to 0
 		*/
-		function delete($info_id)  // did _not_ ensure ACL
+		function delete($info_id,$delete_children=True)  // did _not_ ensure ACL
 		{
 			if (($info_id = intval($info_id)) <= 0)
 			{
 				return;
 			}
-			$this->db->query("delete FROM phpgw_infolog where info_id=$info_id or info_id_parent=$info_id" .
-				" AND ((info_access='public' and info_owner != $this->user) OR (info_owner=$this->user))",
-				__LINE__,__FILE__);
-				
+			$this->db->query("DELETE FROM phpgw_infolog WHERE info_id=$info_id",__LINE__,__FILE__);
+			$this->db->query("DELETE FORM phpgw_infolog_extra WHERE info_id=$info_id");
 			$this->links->unlink(0,'infolog',$info_id);
 
 			if ($this->data['info_id'] == $info_id)
 			{
 				$this->init( );            
 			}
+			// delete children, if they are owned by the user
+			if ($delete_children)
+			{
+				$db2 = $this->db;	// we need an extra result-set
+				$db2->query("SELECT info_id FROM phpgw_infolog WHERE info_id_parent=$info_id AND info_owner=$this->user",__LINE__,__FILE__);
+				while ($db2->next_record())
+				{
+					$this->delete($db2->f(0),$delete_children);
+				}
+			}
+			// set parent_id to 0 for all not deleted children
+			$this->db->query("UPDATA phpgw_infolog SET info_parent_id=0 WHERE info_parent_id=$info_id",__LINE__,__FILE__);
 		}
 
 		/*!
@@ -285,16 +302,18 @@
 			$owner = intval($owner);
 			if (!($new_owner = intval($new_owner)))
 			{
-				$sql = "delete FROM phpgw_infolog where info_owner=$owner";
-				$sql2 = "update phpgw_infolog set info_responsible=0 where info_responsible=$owner";
+				$db2 = $this->db;	// we need an extra result-set
+				$db2->db->query("SELECT info_id FROM phpgw_infolog WHERE info_owner=$owner",__LINE__,__FILE__);
+				while($db2->next_record())
+				{
+					$this->delete($this->db->f(0),False);
+				}
 			}
 			else
 			{
-				$sql = "update phpgw_infolog set info_owner=$new_owner where info_owner=$owner";
-				$sql2 = "update phpgw_infolog set info_responsible=$new_owner where info_responsible=$owner";
+				$this->db->query("UPDATE phpgw_infolog SET info_owner=$new_owner WHERE info_owner=$owner",__LINE__,__FILE__);
 			}
-			$this->db->query($sql,__LINE__,__FILE__);
-			$this->db->query($sql2,__LINE__,__FILE__);
+			$this->db->query("UPDATE phpgw_infolog SET info_responsible=$new_owner WHERE info_responsible=$owner",__LINE__,__FILE__);
 		}
 
 		/*!
@@ -310,7 +329,9 @@
 			$db_cols = $phpgw_baseline['phpgw_infolog']['fd'];
 			unset($phpgw_baseline);
 
-			while (list($key,$val) = each($values))
+			$info_id = intval($values['info_id']) > 0 ? intval($values['info_id']) : 0;
+
+			foreach($values as $key => $val)
 			{
 				if ($key != 'info_id')
 				{
@@ -334,9 +355,9 @@
 					$query .= (strlen($query) ? ',' : '')."$key=$val";
 				}
 			}
-			if (($this->data['info_id'] = intval($values['info_id'])) > 0)
+			if (($this->data['info_id'] = $info_id))
 			{
-				$query = "UPDATE phpgw_infolog SET $query where info_id='".$this->data['info_id']."'";
+				$query = "UPDATE phpgw_infolog SET $query WHERE info_id=$info_id";
 				$this->db->query($query,__LINE__,__FILE__);
 			}
 			else
@@ -345,7 +366,38 @@
 				$this->db->query($query,__LINE__,__FILE__);
 				$this->data['info_id']=$this->db->get_last_insert_id('phpgw_infolog','info_id');
 			}
-			// echo "<p>soinfolog.write values= "; _debug_array($values);
+			//echo "<p>soinfolog.write values= "; _debug_array($values);
+
+			// write customfields now
+			$existing = array();
+			if ($info_id)	// existing entry
+			{
+				$this->db->query("SELECT info_extra_name FROM phpgw_infolog_extra WHERE info_id=$info_id",__LINE__,__FILE__);
+				while($this->db->next_record())
+				{
+					$existing[strtolower($this->db->f(0))] = True;
+				}
+			}
+			foreach($values as $key => $val)
+			{
+				if ($key[0] != '#')
+				{
+					continue;	// no customfield
+				}
+				$this->data[$key] = $val;	// update internal data
+
+				$val  = $this->db->db_addslashes($val);
+				$name = $this->db->db_addslashes($key = substr($key,1));
+				if ($existing[strtolower($key)])
+				{
+					$query = "UPDATE phpgw_infolog_extra SET info_extra_value='$val' WHERE info_id=$info_id AND info_extra_name='$name'";
+				}
+				else
+				{
+					$query = "INSERT INTO phpgw_infolog_extra (info_id,info_extra_name,info_extra_value) VALUES ($info_id,'$name','$val')";
+				}
+				$this->db->query($query,__LINE__,__FILE__);
+			}
 			// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
 
 			return $this->data['info_id'];
@@ -364,7 +416,7 @@
 			{
 				return 0;
 			}
-			$this->db->query("select count(*) FROM phpgw_infolog where info_id_parent=$info_id",__LINE__,__FILE__);
+			$this->db->query("select count(*) FROM phpgw_infolog WHERE info_id_parent=$info_id",__LINE__,__FILE__);
 
 			$this->db->next_record();
 
@@ -402,7 +454,7 @@
 			
 				if (count($links))
 				{
-					$link_extra = ($action == 'sp' ? 'OR' : 'AND').' info_id IN ('.implode(',',$links).')';
+					$link_extra = ($action == 'sp' ? 'OR' : 'AND').' phpgw_infolog.info_id IN ('.implode(',',$links).')';
 				}
 			}
 			if ($order)
@@ -422,11 +474,13 @@
 			{
 			  $filtermethod .= ' AND info_cat='.intval($cat_id).' ';
 			}
-			if ($query)			  // we search in _from, _subject and _des for $query
+			$join = '';
+			if ($query)			  // we search in _from, _subject, _des and _extra_value for $query
 			{
 				$query = $this->db->db_addslashes($query);
 				$sql_query = "AND (info_from like '%$query%' OR info_subject ".
-								 "LIKE '%$query%' OR info_des LIKE '%$query%') ";
+								 "LIKE '%$query%' OR info_des LIKE '%$query%' OR info_extra_value LIKE '%$query%') ";
+				$join = 'LEFT JOIN phpgw_infolog_extra ON phpgw_infolog.info_id=phpgw_infolog_extra.info_id';
 			}
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $action_id : 0);
 
@@ -438,17 +492,15 @@
 			$ids = array( );
 			if ($action == '' || $action == 'sp' || count($links))
 			{
-				$this->db->query($sql="SELECT COUNT(*) FROM phpgw_infolog i WHERE ($filtermethod $pid $sql_query) $link_extra",__LINE__,__FILE__);
-				
-				$this->db->next_record();
-				$total = $this->db->f(0);
+				$query = "FROM phpgw_infolog $join WHERE ($filtermethod $pid $sql_query) $link_extra";
+				$this->db->query($sql='SELECT DISTINCT phpgw_infolog.info_id '.$query,__LINE__,__FILE__);
+				$total = $this->db->num_rows();
 
 				if (!$start || $start > $total)
 				{
 					$start = 0;
 				}
-				$this->db->limit_query($sql="SELECT * FROM phpgw_infolog WHERE ($filtermethod $pid $sql_query) $link_extra $ordermethod",$start,__LINE__,__FILE__);
-
+				$this->db->limit_query($sql="SELECT DISTINCT phpgw_infolog.* $query $ordermethod",$start,__LINE__,__FILE__);
 				while ($this->db->next_record())
 				{
 					$this->db2data(&$info);

@@ -65,6 +65,7 @@
 		'phpgwapi',
 		'phpgwnetsaint',
 		'phpsysinfo',
+		'phpwebhosting',
 		'polls',
 		'preferences',
 		'projects',

@@ -1,7 +1,7 @@
 <!-- BEGIN manageheader -->
 {detected}
-  <tr bgcolor="486591">
-    <th colspan="2"><font color="fefefe">{lang_settings}</font></th>
+  <tr class="th">
+    <th colspan="2">{lang_settings}</th>
   </tr>
    <form action="manageheader.php" method="post">
     <input type="hidden" name="setting[write_config]" value="true">
@@ -59,12 +59,15 @@
     </td>
   </tr>
 {domains}{comment_l}
-  <tr bgcolor="486500">
+  <tr class="th">
     <td colspan="2"><input type="submit" name="adddomain" value="{lang_adddomain}"></td>
   </tr>{comment_r}
-</table>
-{errors}
+  <tr>
+    <td colspan="2">{errors}</td>
+  </tr>
 {formend}
+  <tr>
+    <td colspan="3">
  <form action="index.php" method="post">
   <br>{lang_finaldescr}<br>
   <input type="hidden" name="FormLogout"  value="header">
@@ -72,15 +75,21 @@
   <input type="hidden" name="ConfigLogin" value="Login">
   <input type="hidden" name="FormPW"      value="{FormPW}">
   <input type="hidden" name="FormDomain"  value="{FormDomain}">
-  <input type="submit" name="junk"        value="continue">
+  <input type="submit" name="junk"        value="{lang_continue}">
  </form>
+    </td>
+  </tr>
+  <tr class="banner">
+    <td colspan="3">&nbsp;</td>
+  </tr>
+</table>
 </body>
 </html>
 <!-- END manageheader -->
 
 <!-- BEGIN domain -->
-  <tr bgcolor="486500">
-    <td><b><font color="fefefe">{lang_domain}</font></b>:</td>&nbsp;<td><input name="domains[{db_domain}]" value="{db_domain}">&nbsp;&nbsp;<input type="checkbox" name="deletedomain[{db_domain}]">&nbsp;<font color="fefefe">{lang_delete}</font></td>
+  <tr class="th">
+    <td>{lang_domain}:</td>&nbsp;<td><input name="domains[{db_domain}]" value="{db_domain}">&nbsp;&nbsp;<input type="checkbox" name="deletedomain[{db_domain}]">&nbsp;<font color="fefefe">{lang_delete}</font></td>
   </tr>
   <tr>
     <td><b>{lang_dbhost}</b><br><input type="text" name="setting_{db_domain}[db_host]" value="{db_host}"></td><td>{lang_dbhostdescr}</td>

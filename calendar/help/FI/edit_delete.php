@@ -26,3 +26,4 @@ Muokataksesi tapahtumaa napsauta tätä kuvaketta.
 Näytölle avautuu muokkauslomake.
 Valitse muokkaa tai poista sivun alareunasta.</li><p/>
 <b>Huomaa:</b>Voit muokata ja poistaa vain itse luomiasi tapahtumia.<p/></ul></font>
+<?php $phpgw->common->phpgw_footer(); ?>

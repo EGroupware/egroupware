@@ -12,8 +12,10 @@
 
 	/* $Id$ */
 
+	list($app) = explode('.',$_GET['menuaction']);
+
 	$GLOBALS['phpgw_info']['flags'] = array(
-		'currentapp'	=> $GLOBALS['HTTP_POST_VARS']['etemplate_exec_app'],
+		'currentapp'	=> $app,
 		'noheader'		=> True,
 		'nonavbar'		=> True
 	);

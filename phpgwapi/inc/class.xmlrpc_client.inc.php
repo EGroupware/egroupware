@@ -53,7 +53,7 @@
 
 		function setDebug($in)
 		{
-			if($in)
+			if ($in)
 			{
 				$this->debug = 1;
 			}
@@ -80,7 +80,7 @@
 			/* where msg is an xmlrpcmsg */
 			$msg->debug = $this->debug;
  
-			if($method == 'https')
+			if ($method == 'https')
 			{
 				return $this->sendPayloadHTTPS(
 					$msg,
@@ -114,13 +114,13 @@
 			}
 			if($timeout>0)
 			{
-				$fp = fsockopen($server, $port, $this->errno, $this->errstr, $timeout);
+				$fp = fsockopen($server, $port, &$this->errno, &$this->errstr, $timeout);
 			}
 			else
 			{
-				$fp = fsockopen($server, $port, $this->errno, $this->errstr);
+				$fp = fsockopen($server, $port, &$this->errno, &$this->errstr);
 			}
-			if(!$fp)
+			if (!$fp)
 			{
 				$r = CreateObject(
 					'phpgwapi.xmlrpcresp',
@@ -139,12 +139,12 @@
 			// thanks to Grant Rauscher <grant7@firstworld.net>
 			// for this
 			$credentials = '';
-			if($username && $password)
+			if ($username && $password)
 			{
 				$credentials = 'Authorization: Basic ' . base64_encode($username . ':' . $password) . "\r\n";
 			}
 
-			$op = 'POST ' . $this->path . " HTTP/1.0\r\nUser-Agent: phpGroupWare\r\n"
+			$op = 'POST ' . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
 				. 'Host: '. $this->server . "\r\n"
 				. 'X-PHPGW-Server: '  . $this->server . ' ' . "\r\n"
 				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
@@ -153,7 +153,7 @@
 				. strlen($msg->payload) . "\r\n\r\n"
 				. $msg->payload;
 
-			if(!fputs($fp, $op, strlen($op)))
+			if (!fputs($fp, $op, strlen($op)))
 			{
 				$this->errstr = 'Write error';
 				return CreateObject(
@@ -171,7 +171,7 @@
 		/* contributed by Justin Miller <justin@voxel.net> - requires curl to be built into PHP */
 		function sendPayloadHTTPS($msg, $server, $port, $timeout=0,$username='', $password='', $cert='',$certpass='')
 		{
-			if(!function_exists('curl_init'))
+			if (!function_exists('curl_init'))
 			{
 				return CreateObject(
 					'phpgwapi.xmlrpcresp',
@@ -181,7 +181,7 @@
 				);
 			}
 
-			if($port == 0)
+			if ($port == 0)
 			{
 				$port = 443;
 			}
@@ -195,11 +195,11 @@
 
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			// results into variable
-			if($this->debug)
+			if ($this->debug)
 			{
 				curl_setopt($curl, CURLOPT_VERBOSE, 1);
 			}
-			curl_setopt($curl, CURLOPT_USERAGENT, 'phpGroupWare');
+			curl_setopt($curl, CURLOPT_USERAGENT, 'PHP XMLRPC 1.0');
 			// required for XMLRPC
 			curl_setopt($curl, CURLOPT_POST, 1);
 			// post the data
@@ -212,19 +212,19 @@
 				'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
 				'Content-Type: text/xml'
 			));
-			if($timeout)
+			if ($timeout)
 			{
 				curl_setopt($curl, CURLOPT_TIMEOUT, $timeout == 1 ? 1 : $timeout - 1);
 			}
-			if($username && $password)
+			if ($username && $password)
 			{
 				curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
 			}
-			if($cert)
+			if ($cert)
 			{
 				curl_setopt($curl, CURLOPT_SSLCERT, $cert);
 			}
-			if($certpass)
+			if ($certpass)
 			{
 				curl_setopt($curl, CURLOPT_SSLCERTPASSWD,$certpass);
 			}
@@ -232,7 +232,7 @@
 
 			$result = curl_exec($curl);
 
-			if(!$result)
+			if (!$result)
 			{
 				$this->errstr = 'Write error';
 				$resp = CreateObject(

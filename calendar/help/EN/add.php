@@ -43,3 +43,4 @@ Frequency:</td></table>
 Simply fill in the fields, and click Submit.</ul><br/>
 <b>Note:</b> Access can be set as with other applications in this suite, Private,Group Readable,Globally
 Readable.<p/></font>
+<?php $phpgw->common->phpgw_footer(); ?>

@@ -15,11 +15,11 @@ show high priority events on main screen	preferences	no	Vis høyprioritets events
 show new messages on main screen	preferences	no	Vis nye meldinger på hovedskjerm
 show text on navigation icons	preferences	no	Vis tekst på navigasjons ikoner
 the two passwords are not the same	preferences	no	Passordene stemmer ikke overens
-this server is located in the %1 timezone	preferences	no	 tids-sonen %1
+this server is located in the %1 timezone	preferences	no	 tids-sonen
 time format	preferences	no	Tids format
 time zone offset	preferences	no	Tids-sone offset
 weekday starts on	preferences	no	Ukedag begynner på
 work day ends on	preferences	no	Arbeidsdag slutter på
 work day starts on	preferences	no	Arbeidsdag begynner på
 you must enter a password	preferences	no	Du må skrive inn et passord
-your current theme is: %1	preferences	no	%1
+your current theme is: %1	preferences	no	</b>

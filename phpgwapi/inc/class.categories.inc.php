@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
 	* phpGroupWare API - Categories                                            *
-	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
+	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	*                  and Bettina Gille [ceb@phpgroupware.org]                *
 	* Category manager                                                         *
 	* Copyright (C) 2000, 2001 Joseph Engo, Bettina Gille                      *
@@ -22,7 +22,8 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
-	/* $Id$ */
+	// $Id$
+	// $Source$
 
 	/*!
 	@class categories
@@ -48,13 +49,13 @@
 		{
 			$account_id = get_account_id($accountid);
 
-			if (!$app_name)
+			if (! $app_name)
 			{
 				$app_name = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
 			$this->account_id	= $account_id;
-			$this->app_name		= $app_name;
+			$this->app_name		= $GLOBALS['phpgw']->db->db_addslashes($app_name);
 			$this->db			= $GLOBALS['phpgw']->db;
 			$this->db2			= $this->db;
 			$this->grants		= $GLOBALS['phpgw']->acl->get_grants($app_name);
@@ -94,8 +95,8 @@
 				case 'app':			$w = " WHERE cat_appname='" . $this->app_name . "'"; break;
 				case 'appandmains':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent =0"; break;
 				case 'appandsubs':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !=0"; break;
-				case 'subs':		$w = " WHERE cat_parent != 0"; break;
-				case 'mains':		$w = " WHERE cat_parent = 0"; break;
+				case 'subs':		$w = ' WHERE cat_parent != 0'; break;
+				case 'mains':		$w = ' WHERE cat_parent = 0'; break;
 				default:			return False;
 			}
 
@@ -103,28 +104,6 @@
 			$this->db->next_record();
 
 			return $this->db->f(0);
-		}
-
-		function db2cats()
-		{
-			while ($this->db->next_record())
-			{
-				$cats[] = array
-				(
-					'cat_id'	=> $this->db->f('cat_id'),
-					'owner'		=> $this->db->f('cat_owner'),
-					'access'	=> $this->db->f('cat_access'),
-					'app_name'	=> $this->db->f('cat_appname'),
-					'main'		=> $this->db->f('cat_main'),
-					'level'		=> $this->db->f('cat_level'),
-					'parent'	=> $this->db->f('cat_parent'),
-					'name'		=> $this->db->f('cat_name'),
-					'descr'		=> $this->db->f('cat_description'),
-					'data'		=> $this->db->f('cat_data'),
-					'last_mod'	=> $this->db->f('last_mod')
-				);
-			}
-			return $cats;
 		}
 
 		/*!
@@ -139,11 +118,14 @@
 		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $cats array
 		*/
-		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '',$lastmod = -1,$column = '')
+		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '', $lastmod = -1, $column = '')
 		{
+			//casting and addslashes for security
 			$start		= intval($start);
 			$parent_id	= intval($parent_id);
 			$query		= $this->db->db_addslashes($query);
+			$sort		= $this->db->db_addslashes($sort);
+			$order		= $this->db->db_addslashes($order);
 
 			if ($globals)
 			{
@@ -151,7 +133,7 @@
 			}
 
 			$filter = $this->filter($type);
-			
+
 			if (!$sort)
 			{
 				$sort = 'ASC';
@@ -166,7 +148,7 @@
 				$ordermethod = ' ORDER BY cat_main, cat_level, cat_name ASC';
 			}
 
-			if ($this->account_id == -1)
+			if ($this->account_id == '-1')
 			{
 				$grant_cats = ' cat_owner=-1 ';
 			}
@@ -190,12 +172,12 @@
 
 			if ($parent_id > 0)
 			{
-				$parent_filter	= ' AND cat_parent=' . $parent_id;
+				$parent_filter = ' AND cat_parent=' . $parent_id;
 			}
 
 			if ($query)
 			{
-				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%')";
+				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
 			}
 
 			if($lastmod && $lastmod >= 0)
@@ -207,15 +189,15 @@
 			{
 				switch($column)
 				{	
-					case 'cat_id':		$table_column = ' cat_id '; break;
-					case 'owner':		$table_column = ' cat_owner '; break;
-					case 'access':		$table_column = ' cat_access '; break;
-					case 'app_name':	$table_column = ' cat_appname '; break;
-					case 'main':		$table_column = ' cat_main '; break;
-					case 'parent':		$table_column = ' cat_parent '; break;
-					case 'name':		$table_column = ' cat_name '; break;
-					case 'descr':		$table_column = ' cat_description '; break;
-					case 'data':		$table_column = ' cat_data '; break;
+					case 'id': 			$table_column = ' cat_id '; break;
+					case 'owner': 		$table_column = ' cat_owner '; break;
+					case 'access': 		$table_column = ' cat_access '; break;
+					case 'app_name': 	$table_column = ' cat_appname '; break;
+					case 'main': 		$table_column = ' cat_main '; break;
+					case 'parent': 		$table_column = ' cat_parent '; break;
+					case 'name': 		$table_column = ' cat_name '; break;
+					case 'description': $table_column = ' cat_description '; break;
+					case 'data': 		$table_column = ' cat_data '; break;
 					case 'last_mod':	$table_column = ' last_mod '; break;
 					default:			$table_column = ' cat_id '; break;
 				}
@@ -225,10 +207,9 @@
 				$table_column = ' * ';
 			}
 
-
 			$sql = "SELECT $table_column from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ')'
 				. $parent_filter . $querymethod . $filter;
-			
+
 			$this->db2->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db2->num_rows();
 
@@ -241,27 +222,44 @@
 				$this->db->query($sql . $ordermethod,__LINE__,__FILE__);
 			}
 
-			if ($column)
+			while ($this->db->next_record())
 			{
-				while ($this->db->next_record())
+				if ($column)
 				{
 					$cats[] = array
 					(
 						"$column" => $this->db->f(0)
 					);
 				}
+				else
+				{
+					$cats[] = array
+					(
+						'id'			=> $this->db->f('cat_id'),
+						'owner'			=> $this->db->f('cat_owner'),
+						'access'		=> $this->db->f('cat_access'),
+						'app_name'		=> $this->db->f('cat_appname'),
+						'main'			=> $this->db->f('cat_main'),
+						'level'			=> $this->db->f('cat_level'),
+						'parent'		=> $this->db->f('cat_parent'),
+						'name'			=> $this->db->f('cat_name'),
+						'description'	=> $this->db->f('cat_description'),
+						'data'			=> $this->db->f('cat_data'),
+						'last_mod'		=> $this->db->f('last_mod')
+					);
+				}
 			}
-			else
-			{
-				return $this->db2cats();
-			}
+			return $cats;
 		}
 
 		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
 		{
-			$start		= intval($start);
-			$parent_id	= intval($parent_id);
-			$query		= $this->db->db_addslashes($query);
+			//casting and slashes for security
+			$start = intval($start);
+			$query = $this->db->db_addslashes($query);
+			$sort  = $this->db->db_addslashes($sort);
+			$order = $this->db->db_addslashes($order);
+			$parent_id = intval($parent_id);
 
 			if ($globals)
 			{
@@ -284,7 +282,7 @@
 
 			if ($this->account_id == '-1')
 			{
-				$grant_cats = ' cat_owner=-1 ';
+				$grant_cats = " cat_owner='-1' ";
 			}
 			else
 			{
@@ -326,12 +324,26 @@
 				$this->db->query($sql . $parent_select . $ordermethod,__LINE__,__FILE__);
 			}
 
-			$cats = $this->db2cats();
+			$i = 0;
+			while ($this->db->next_record())
+			{
+				$cats[$i]['id']          = (int)$this->db->f('cat_id');
+				$cats[$i]['owner']       = (int)$this->db->f('cat_owner');
+				$cats[$i]['access']      = $this->db->f('cat_access');
+				$cats[$i]['app_name']    = $this->db->f('cat_appname');
+				$cats[$i]['main']        = (int)$this->db->f('cat_main');
+				$cats[$i]['level']       = (int)$this->db->f('cat_level');
+				$cats[$i]['parent']      = (int)$this->db->f('cat_parent');
+				$cats[$i]['name']        = $this->db->f('cat_name');
+				$cats[$i]['description'] = $this->db->f('cat_description');
+				$cats[$i]['data']        = $this->db->f('cat_data');
+				$i++;
+			}
 
 			$num_cats = count($cats);
 			for ($i=0;$i < $num_cats;$i++)
 			{
-				$sub_select = ' AND cat_parent=' . $cats[$i]['cat_id'] . ' AND cat_level=' . ($cats[$i]['level']+1);
+				$sub_select = ' AND cat_parent=' . $cats[$i]['id'] . ' AND cat_level=' . ($cats[$i]['level']+1);
 
 				/*$this->db2->query($sql . $sub_select,__LINE__,__FILE__);
 				$total_subs += $this->db2->num_rows();
@@ -346,7 +358,22 @@
 					$total += $this->db->num_rows();
 				//}
 
-				$subcats = $this->db2cats();
+				$subcats = array();
+				$j = 0;
+				while ($this->db->next_record())
+				{
+					$subcats[$j]['id']          = (int)$this->db->f('cat_id');
+					$subcats[$j]['owner']       = (int)$this->db->f('cat_owner');
+					$subcats[$j]['access']      = $this->db->f('cat_access');
+					$subcats[$j]['app_name']    = $this->db->f('cat_appname');
+					$subcats[$j]['main']        = (int)$this->db->f('cat_main');
+					$subcats[$j]['level']       = (int)$this->db->f('cat_level');
+					$subcats[$j]['parent']      = (int)$this->db->f('cat_parent');
+					$subcats[$j]['name']        = $this->db->f('cat_name');
+					$subcats[$j]['description'] = $this->db->f('cat_description');
+					$subcats[$j]['data']        = $this->db->f('cat_data');
+					$j++;
+				}
 
 				$num_subcats = count($subcats);
 				if ($num_subcats != 0)
@@ -378,37 +405,51 @@
 		@param $id integer id of category
 		@result $cats  array populated with
 		*/
-		function return_single($cat_id = '')
+		function return_single($id = '')
 		{
-			$this->db->query('SELECT * FROM phpgw_categories WHERE cat_id=' . intval($cat_id),__LINE__,__FILE__);
+			$this->db->query('SELECT * FROM phpgw_categories WHERE cat_id=' . intval($id),__LINE__,__FILE__);
 
-			list($cat) = $this->db2cats();
-
-			return $cat;
+			if ($this->db->next_record())
+			{
+				$cats[0]['id']          = $this->db->f('cat_id');
+				$cats[0]['owner']       = $this->db->f('cat_owner');
+				$cats[0]['access']      = $this->db->f('cat_access');
+				$cats[0]['app_name']    = $this->db->f('cat_appname');
+				$cats[0]['main']        = $this->db->f('cat_main');
+				$cats[0]['level']       = $this->db->f('cat_level');
+				$cats[0]['parent']      = $this->db->f('cat_parent');
+				$cats[0]['name']        = $this->db->f('cat_name');
+				$cats[0]['description'] = $this->db->f('cat_description');
+				$cats[0]['data']        = $this->db->f('cat_data');
+			}
+			return $cats;
 		}
 
 		/*!
-		@function formatted_list
+		@function formated_list
 		@abstract return into a select box, list or other formats
-		@param $format currently only supports select (select box)
+		@param $format currently supports select (select box) or list
 		@param $type string - subs or mains
 		@param $selected - cat_id or array with cat_id values 
 		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $s array - populated with categories
 		*/
-
-		function formatted_list($format,$type = 'all',$selected = '',$globals = True,$site_link = 'site',$self = '')
+		function formatted_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')
+		{
+			return $this->formated_list($format,$type,$selected,$globals,$site_link);
+		}
+		function formated_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')
 		{
 			if(is_array($format))
 			{
-				$temp_format	= $format['format'];
-				$type			= (isset($format['type'])?$format['type']:'all');
-				$selected		= (isset($format['selected'])?$format['selected']:'');
-				$self			= (isset($format['self'])?$format['self']:'');
-				$globals		= (isset($format['globals'])?$format['globals']:True);
-				$site_link		= (isset($format['site_link'])?$format['site_link']:'site');
+				$temp_format = $format['format'];
+				$type = ($format['type']?$format['type']:'all');
+				$selected = (isset($format['selected'])?$format['selected']:'');
+				$self = (isset($format['self'])?$format['self']:'');
+				$globals = (isset($format['globals'])?$format['globals']:True);
+				$site_link = (isset($format['site_link'])?$format['site_link']:'site');
 				settype($format,'string');
-				$format			= ($temp_format?$temp_format:'select');
+				$format = ($temp_format?$temp_format:'select');
 				unset($temp_format);
 			}
 
@@ -430,7 +471,7 @@
 			{
 				for ($i=0;$i<count($cats);$i++)
 				{
-					if ($cats[$i]['cat_id'] == $self)
+					if ($cats[$i]['id'] == $self)
 					{
 						unset($cats[$i]);
 					}
@@ -439,17 +480,17 @@
 
 			if ($format == 'select')
 			{
-				while (is_array($cats) && list(,$cat)=each($cats))
+				while (is_array($cats) && list(,$cat) = each($cats))
 				{
-					$s .= '<option value="' . $cat['cat_id'] . '"';
-					if (in_array($cat['cat_id'],$selected))
+					$s .= '<option value="' . $cat['id'] . '"';
+					if (in_array($cat['id'],$selected))
 					{
 						$s .= ' selected';
 					}
 					$s .= '>';
 					for ($j=0;$j<$cat['level'];$j++)
 					{
-						$s .= '&nbsp;.&nbsp;';
+						$s .= '&nbsp;';
 					}
 					$s .= $GLOBALS['phpgw']->strip_html($cat['name']);
 					if ($cat['app_name'] == 'phpgw')
@@ -460,7 +501,6 @@
 					{
 						$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
 					}
-
 					$s .= '</option>' . "\n";
 				}
 				return $s;
@@ -478,21 +518,21 @@
 					{
 						$image_set = '&nbsp;';
 
-						if (in_array($cats[$i]['cat_id'],$selected))
+						if (in_array($cats[$i]['id'],$selected))
 						{
-							$image_set = '<img src="' . $GLOBALS['phpgw']->common->image('phpgwapi','roter_pfeil') . '">';
+							$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/roter_pfeil.gif">';
 						}
 
-						if (($cats[$i]['level'] == 0) && !in_array($cats[$i]['cat_id'],$selected))
+						if (($cats[$i]['level'] == 0) && !in_array($cats[$i]['id'],$selected))
 						{
-							$image_set = '<img src="' . $GLOBALS['phpgw']->common->image('phpgwapi','grauer_pfeil') . '">';
+							$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/grauer_pfeil.gif">';
 						}
 
 						$space_set = str_repeat($space,$cats[$i]['level']);
 
 						$s .= '<tr>' . "\n";
 						$s .= '<td width="8">' . $image_set . '</td>' . "\n";
-						$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['phpgw']->link($site_link,'cat_id=' . $cats[$i]['cat_id']) . '">'
+						$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['phpgw']->link($site_link,'cat_id=' . $cats[$i]['id']) . '">'
 							. $GLOBALS['phpgw']->strip_html($cats[$i]['name'])
 							. '</a></td>' . "\n"
 							. '</tr>' . "\n";
@@ -501,86 +541,6 @@
 				$s .= '</table>' . "\n";
 				return $s;
 			}
-		}
-
-		function formatted_xslt_list($data)
-		{
-			if(is_array($data))
-			{
-				$format			= (isset($data['format'])?$data['format']:'filter');
-				$type			= (isset($data['type'])?$data['type']:'all');
-				$selected		= (isset($data['selected'])?$data['selected']:'');
-				$self			= (isset($data['self'])?$data['self']:'');
-				$globals		= (isset($data['globals'])?$data['globals']:True);
-			}
-
-			if (!is_array($selected))
-			{
-				$selected = explode(',',$selected);
-			}
-
-			if ($type != 'all')
-			{
-				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$globals);
-			}
-			else
-			{
-				$cats = $this->return_sorted_array($start,False,$query,$sort,$order,$globals);
-			}
-
-			switch($format)
-			{
-				case 'select':
-					$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'cat_select');
-					break;
-				case 'filter':
-					$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'cat_filter');
-					break;
-			}
-
-			if($self)
-			{
-				for ($i=0;$i<count($cats);$i++)
-				{
-					if ($cats[$i]['cat_id'] == $self)
-					{
-						unset($cats[$i]);
-					}
-				}
-			}
-
-			while (is_array($cats) && list(,$cat) = each($cats))
-			{
-				$sel_cat = '';
-				if (in_array($cat['cat_id'],$selected))
-				{
-					$sel_cat = 'selected';
-				}
-
-				$name = '';
-				for ($i=0;$i<$cat['level'];$i++)
-				{
-					$name .= '&nbsp;.&nbsp;';
-				}
-				$name .= $GLOBALS['phpgw']->strip_html($cat['name']);
-
-				if ($cat['app_name'] == 'phpgw')
-				{
-					$name .= ' <' . lang('Global') . '>';
-				}
-				if ($cat['owner'] == '-1')
-				{
-					$name .= ' <' . lang('Global') . ' ' . lang($this->app_name) . '>';
-				}
-
-				$cat_list[] = array
-				(
-					'cat_id'	=> $cat['cat_id'],
-					'name'		=> $name,
-					'selected'	=> $sel_cat
-				);
-			}
-			return $cat_list;
 		}
 
 		/*!
@@ -593,28 +553,39 @@
 		*/
 		function add($values)
 		{
-			if ($values['parent'] && $values['parent'] != 0)
+			$values['id']		= intval($values['id']);
+			$values['parent']	= intval($values['parent']);
+
+			if ($values['parent'] > 0)
 			{
-				$values['main']		= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
-				$values['level']	= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
+				$values['level'] = $this->id2name($values['parent'],'level')+1;
 			}
 
-			$values['descr']	= $this->db->db_addslashes($values['descr']);
-			$values['name']		= $this->db->db_addslashes($values['name']);
+			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
+			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
 
-			if (isset($values['cat_id']))
+			if ($values['id'] > 0)
 			{
 				$id_col = 'cat_id,';
-				$id_val = $values['cat_id'].',';
+				$id_val = $values['id'] . ',';
 			}
-			$this->db->query("INSERT INTO phpgw_categories (${id_col}cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
-				. "cat_main,cat_level,last_mod) VALUES ($id_val" . intval($values['parent']) . "," . $this->account_id . ",'" . $values['access']
-				. "','" . $this->app_name . "','" . $values['name'] . "','" . $values['descr'] . "','" . $values['data']
-				. "'," . $values['main'] . "," . $values['level'] . "," . time() . ")",__LINE__,__FILE__);
 
-			$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
+			$this->db->query('INSERT INTO phpgw_categories (' . $id_col . 'cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,'
+				. 'cat_main,cat_level, last_mod) VALUES (' . $id_val  . intval($values['parent']) . ',' . $this->account_id . ",'" . $values['access']
+				. "','" . $this->app_name . "','" . $values['name'] . "','" . $cat_values['descr'] . "','" . $values['data']
+				. "'," . intval($cat_values['main']) . ',' . intval($values['level']) . ',' . time() . ')',__LINE__,__FILE__);
 
-			if (!$values['parent'] || $values['parent'] == 0)
+			if ($values['id'] > 0)
+			{
+				$max = $values['id'];
+			}
+			else
+			{
+				$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
+			}
+
+			$max = intval($max);
+			if ($values['parent'] == 0)
 			{
 				$this->db->query('UPDATE phpgw_categories SET cat_main=' . $max . ' WHERE cat_id=' . $max,__LINE__,__FILE__);
 			}
@@ -626,121 +597,60 @@
 		@abstract delete category
 		@param $cat_id int - category id
 		*/
-		function delete($data)
+		/*function delete($cat_id,$subs = False)
 		{
-			if(is_array($data))
+			$cat_id = intval($cat_id);
+			if ($subs)
 			{
-				$cat_id			= $data['cat_id'];
-				$drop_subs		= (isset($data['drop_subs'])?$data['drop_subs']:False);
-				$modify_subs	= (isset($data['modify_subs'])?$data['modify_subs']:False);
+				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
 			}
 
-			if ($cat_id > 0)
+			$this->db->query('DELETE FROM phpgw_categories WHERE cat_id=' . $cat_id . $subdelete . " AND cat_appname='"
+							. $this->app_name . "'",__LINE__,__FILE__);
+		} */
+
+		function delete($cat_id, $drop_subs = False, $modify_subs = False)
+		{
+			$cat_id = intval($cat_id);
+			if ($drop_subs)
 			{
-				if ($drop_subs)
+				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
+			}
+
+			if ($modify_subs)
+			{
+				$cats = $this->return_sorted_array('',False,'','','',False, $cat_id);
+
+				$new_parent = $this->id2name($cat_id,'parent');
+
+				for ($i=0;$i<count($cats);$i++)
 				{
-					$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
-				}
-
-				if ($modify_subs)
-				{
-					$cats = $this->return_sorted_array('',False,'','','',False, $cat_id);
-
-					$new_parent = $this->id2item(array('cat_id' => $cat_id,'item' => 'parent'));
-
-					for ($i=0;$i<count($cats);$i++)
+					if ($cats[$i]['level'] == 1)
 					{
-						if ($cats[$i]['level'] == 1)
+						$this->db->query('UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main=' . intval($cats[$i]['id'])
+										. ' WHERE cat_id=' . intval($cats[$i]['id']) . " AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+						$new_main = $cats[$i]['id'];
+					}
+					else
+					{
+						if ($new_main)
 						{
-							$this->db->query('UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main=' . intval($cats[$i]['cat_id'])
-										. ' WHERE cat_id=' . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
-							$new_main = $cats[$i]['cat_id'];
+							$update_main = ',cat_main=' . $new_main;
 						}
-						else
+
+						if ($cats[$i]['parent'] == $cat_id)
 						{
-							if ($new_main)
-							{
-								$update_main = ',cat_main=' . $new_main;
-							}
-
-							if ($cats[$i]['parent'] == $cat_id)
-							{
-								$update_parent = ',cat_parent=' . $new_parent;
-							}
-
-							$this->db->query('UPDATE phpgw_categories set cat_level=' . ($cats[$i]['level']-1) . $update_main . $update_parent 
-											. ' WHERE cat_id=' . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+							$update_parent = ',cat_parent=' . $new_parent;
 						}
+
+						$this->db->query('UPDATE phpgw_categories set cat_level=' . ($cats[$i]['level']-1) . $update_main . $update_parent 
+										. ' WHERE cat_id=' . intval($cats[$i]['id']) . " AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 					}
 				}
-
-				$this->db->query('DELETE FROM phpgw_categories WHERE cat_id=' . $cat_id . $subdelete . "' AND cat_appname='"
-								. $this->app_name . "'",__LINE__,__FILE__);
-			}
-		}
-
-		function subs($parent,&$subs,&$main)
-		{
-			if (!is_array($main))
-			{
-				$this->db->query('SELECT * from phpgw_categories WHERE cat_main=' . $main,__LINE__,__FILE__);
-				$main = $this->db2cats();
-				//echo "main: "; _debug_array($main);
-			}
-			reset($main);
-			for ($n = 0; $n < count($main); $n++)
-			{
-				$cat = $main[$n];
-				if ($cat['parent'] == $parent)
-				{
-					//echo "Adding($cat[cat_id])<br>";
-					$subs[$cat['cat_id']] = $cat;
-					$this->subs($cat['cat_id'],$subs,$main);
-				}
-			}
-		}
-
-		function reparent($values)
-		{
-			$id = $values['cat_id'];
-			$parent = $values['parent'];
-			$old_parent = $values['old_parent'];
-			$main = $old_parent ? intval($this->id2name($old_parent,'main')) : $id;
-			//echo "<p>reparent: $id/$main: $old_parent --> $parent</p>\n";
-
-			$subs = array();
-			$this->subs($id,$subs,$main);
-         //echo "<p>subs($id) = "; _debug_array($subs);
-
-			if (isset($subs[$parent]))
-			{
-				//echo "<p>new parent $parent is sub of $id</p>\n";
-				$parent = $subs[$parent];
-				$parent['old_parent'] = $parent['parent'];
-				$parent['parent'] = intval($values['old_parent']);
-				$this->reparent($parent);
-
-				unset($parent['old_parent']);
-				unset($parent['main']);
-
-				$this->edit($parent);
-				$this->reparent($values);
-				return;
 			}
 
-			$new_main = $parent ? $this->id2name($parent,'main') : $id;
-			$new_parent_level = $parent ? $this->id2name($parent,'level') : -1;
-			$old_parent_level = $old_parent ? $this->id2name($old_parent,'level') : -1;
-			$level_adj = $old_parent_level - $new_parent_level;
-			reset($subs);
-         //echo "new_main=$new_main,level_adj = $level_adj<br>";
-			while (list($n) = each($subs))
-			{
-				$subs[$n]['main'] = $new_main;
-				$subs[$n]['level'] -= $level_adj;
-				//echo "<p>$n: id=".$subs[$n]['cat_id']." set main to $new_main, subs[$n] = \n"; _debug_array($subs[$n]);
-				$this->edit($subs[$n]);
-			}
+			$this->db->query('DELETE FROM phpgw_categories WHERE cat_id=' . $cat_id . $subdelete . " AND cat_appname='"
+							. $this->app_name . "'",__LINE__,__FILE__);
 		}
 
 		/*!
@@ -753,41 +663,44 @@
 		*/
 		function edit($values)
 		{
-			if (isset($values['old_parent']) && $values['old_parent'] != $values['parent'])
-			{
-				//$this->delete(array('cat_id' => $values['cat_id'],'drop_subs' => False,'modify_subs' => True));
-				//return $this->add($values);
+			$values['id']		= intval($values['id']);
+			$values['parent']	= intval($values['parent']);
 
-				$this->reparent($values);
-			}
-			if (!isset($values['main']) || !isset($values['level']))
+			if (isset($values['old_parent']) && intval($values['old_parent']) != $values['parent'])
 			{
-				if ($values['parent'] && ($values['parent'] != 0))
+				$this->delete($values['id'],False,True);
+				return $this->add($values);
+			}
+			else
+			{
+				if ($values['parent'] > 0)
 				{
-					$values['main']		= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
-					$values['level']	= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
+					$values['main']  = intval($this->id2name($values['parent'],'main'));
+					$values['level'] = intval($this->id2name($values['parent'],'level')+1);
 				}
 				else
 				{
-					$values['main'] = intval($values['cat_id']);
+					$values['main']  = $values['id'];
+					$values['level'] = 0;
 				}
 			}
 
-			$values['descr']	= $this->db->db_addslashes($values['descr']);
-			$values['name']		= $this->db->db_addslashes($values['name']);
+			$values['descr'] = $this->db->db_addslashes($values['descr']);
+			$values['name'] = $this->db->db_addslashes($values['name']);
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $values['name'] . "', cat_description='" . $values['descr']
-					. "', cat_data='" . $values['data'] . "', cat_parent=" . intval($values['parent']) . ", cat_access='"
-					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . intval($values['level']) . ", last_mod=" . time()
-					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($values['cat_id']);
+					. "', cat_data='" . $values['data'] . "', cat_parent=" . $values['parent'] . ", cat_access='"
+					. $values['access'] . "', cat_main=" . $values['main'] . ', cat_level=' . $values['level'] . ',last_mod=' . time()
+					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . $values['id'];
+
 			$this->db->query($sql,__LINE__,__FILE__);
-			return intval($values['cat_id']);
+			return $values['id'];
 		}
 
 		function name2id($cat_name)
 		{
 			$this->db->query("SELECT cat_id FROM phpgw_categories WHERE cat_name='" . $this->db->db_addslashes($cat_name) . "' "
-							."AND cat_appname='" . $this->app_name . "' AND (cat_owner=" . $this->account_id ." OR cat_owner=-1)",__LINE__,__FILE__);
+							."AND cat_appname='" . $this->app_name . "' AND (cat_owner=" . $this->account_id . ' OR cat_owner=-1)',__LINE__,__FILE__);
 
 			if(!$this->db->num_rows())
 			{
@@ -801,15 +714,10 @@
 
 		function id2name($cat_id = '', $item = 'name')
 		{
-			return $this->id2item(array('cat_id' => $cat_id,'item' => $item));
-		}
-
-		function id2item($data)
-		{
-			if(is_array($data))
+			$cat_id = intval($cat_id);
+			if ($cat_id == 0)
 			{
-				$cat_id	= $data['cat_id'];
-				$item	= (isset($data['item'])?$data['item']:'name');
+				return '--';
 			}
 			switch($item)
 			{
@@ -817,14 +725,15 @@
 				case 'owner':	$value = 'cat_owner'; break;
 				case 'main':	$value = 'cat_main'; break;
 				case 'level':	$value = 'cat_level'; break;
-				case 'data':	$value = 'cat_data'; break;
 				case 'parent':	$value = 'cat_parent'; break;
 			}
 
-			$this->db->query('SELECT ' . $value . ' FROM phpgw_categories WHERE cat_id=' . intval($cat_id),__LINE__,__FILE__);
-			if ($this->db->next_record())
+			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id=" . $cat_id,__LINE__,__FILE__);
+			$this->db->next_record();
+
+			if ($this->db->f($value))
 			{
-				return $this->db->f(0);
+				return $this->db->f($value);
 			}
 			else
 			{
@@ -836,6 +745,18 @@
 		}
 
 		/*!
+		@function return_name
+		@abstract return category name given $cat_id
+		@param $cat_id
+		@result cat_name category name
+		*/
+		// NOTE: This is only a temp wrapper, use id2name() to keep things matching across the board. (jengo)
+		function return_name($cat_id)
+		{
+			return $this->id2name($cat_id);
+		}
+
+		/*!
 		@function exists
 		@abstract used for checking if a category name exists
 		@param $type subs or mains
@@ -844,16 +765,7 @@
 		*/
 		function exists($type,$cat_name = '',$cat_id = '')
 		{
-			if(is_array($type))
-			{
-				$temp_type = $type['type'];
-				$cat_name = $type['cat_name'] ? $type['cat_name'] : '';
-				$cat_id = $type['cat_id'] ? $type['cat_id'] : '';
-				settype($type,'string');
-				$type = $temp_type;
-				unset($temp_type);
-			}
-
+			$cat_id = intval($cat_id);
 			$filter = $this->filter($type);
 
 			if ($cat_name)
@@ -868,7 +780,7 @@
 
 			if ($cat_name && $cat_id)
 			{
-				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' AND cat_id != " . $cat_id;
+				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' AND cat_id != $cat_id ";
 			}
 
 			$this->db->query("SELECT COUNT(cat_id) FROM phpgw_categories WHERE $cat_exists $filter",__LINE__,__FILE__);

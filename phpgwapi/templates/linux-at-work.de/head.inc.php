@@ -11,54 +11,52 @@
 
   /* $Id$ */
 
-	// needed until hovlink is specified in all theme files
-	if (isset($GLOBALS['phpgw_info']['theme']['hovlink'])
-	 && ($GLOBALS['phpgw_info']['theme']['hovlink'] != ''))
-	{
-		$csshover = 'A:hover{ text-decoration:none; color: ' .$GLOBALS['phpgw_info']['theme']['hovlink'] .'; }';
-	}
-	else
-	{
-		$csshover = '';
-	}
-
-	$app_css = '';
+	$java_script = '';
 	if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 	{
 		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
+		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['java_script'])
 		{
-			$app_css = $GLOBALS[$class]->css();
+			$java_script = $GLOBALS[$class]->java_script();
 		}
+	}
+	if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
+	{
+		$java_script .= $GLOBALS['phpgw_info']['flags']['java_script'];
 	}
 
 	$bodyheader = 'bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'" alink="'.$GLOBALS['phpgw_info']['theme']['alink'].'" link="'.$GLOBALS['phpgw_info']['theme']['link'].'" vlink="'.$GLOBALS['phpgw_info']['theme']['vlink'].'"';
-	if (!$GLOBALS['phpgw_info']['server']['htmlcompliant'])
-	{
-		$bodyheader .= ' topmargin="0" marginheight="0" marginwidth="0" leftmargin="0"';
-	}
 
 	if ($fp = @fopen(PHPGW_APP_TPL."/app.css","r"))
 	{
 		$app_css = fread ($fp, filesize (PHPGW_APP_TPL."/app.css"));
 		fclose($fp);
 	}
+
+        $p = createobject('phpgwapi.preferences');
+        $preferences = $p->read_repository();
+	if(isset($preferences[$GLOBALS['phpgw_info']['flags']['currentapp']]['refreshTime']))
+	{ 
+		$refreshTime = $preferences[$GLOBALS['phpgw_info']['flags']['currentapp']]['refreshTime']*60;
+	}
 	
+	$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+	$app = $app ? ' ['.(isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app)).']':'';
+
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
 	$var = Array (
+		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
+		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'charset'	=> lang('charset'),
-		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
-		'app_name'	=> lang($GLOBALS['phpgw_info']['flags']['currentapp']),
+		'app_name'	=> $app,
 		'body_tags'	=> $bodyheader,
 		'bg_color'	=> $GLOBALS['phpgw_info']['theme']['bg_color'],
-		'css_link'	=> $GLOBALS['phpgw_info']['theme']['link'],
-		'css_alink'	=> $GLOBALS['phpgw_info']['theme']['alink'],
-		'css_vlink'	=> $GLOBALS['phpgw_info']['theme']['vlink'],
-		'css_hovlink'	=> $csshover,
-		'app_css'	=> $app_css
+		'refreshTime'	=> $refreshTime,
+		'css'			=> $GLOBALS['phpgw']->common->get_css(),
+		'java_script'	=> $java_script
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');

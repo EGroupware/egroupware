@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Filemanager                                               *
+  * phpGroupWare - PHPWebHosting                                             *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -13,13 +13,13 @@
 
 	$phpgw_info["flags"] = array
 	(
-		'currentapp' => 'filemanger',
-		'enable_nextmatchs_class' => True,
-		'noheader' => True,
-		'nonavbar' => True
+		"currentapp" => "filemanager",
+		"enable_nextmatchs_class" => True,
+		"noheader" => True,
+		"nonavbar" => True
 	);
 
-	include('../header.inc.php');
+	include("../header.inc.php");
 
 	/*
 	   To add an on/off preference, just add it here.  Key is internal name, value is displayed name
@@ -86,7 +86,7 @@
 	$p->set_file ($templates);
 
 	$var = array (
-		'title'			=>	lang ('Filemanager preferences'),
+		'title'			=>	lang ('FileManager preferences'),
 		'action_url'	=>	$phpgw->link ('/' . $phpgw_info['flags']['currentapp'] . '/preferences.php'),
 		'bg_color'		=>	$phpgw_info['theme']['th_bg'],
 		'submit_lang'	=>	lang ('submit')
@@ -104,7 +104,7 @@
 	while (list ($internal, $displayed) = each ($file_attributes))
 	{
 		unset ($checked);
-		if ($phpgw_info['user']['preferences']['filemanager'][$internal])
+		if ($phpgw_info["user"]["preferences"]["filemanager"][$internal])
 		{
 			$checked = 1;
 		}
@@ -118,7 +118,7 @@
 	while (list ($internal, $displayed) = each ($other_checkboxes))
 	{
 		unset ($checked);
-		if ($phpgw_info['user']['preferences']['filemanager'][$internal])
+		if ($phpgw_info["user"]["preferences"]["filemanager"][$internal])
 		{
 			$checked = 1;
 		}
@@ -140,7 +140,7 @@
 				continue;
 			}
 
-			$options .= html_form_option ($value, $value, $phpgw_info['user']['preferences']['filemanager'][$internal] == $value, True);
+			$options .= html_form_option ($value, $value, $phpgw_info["user"]["preferences"]["filemanager"][$internal] == $value, True);
 		}
 
 		$output = html_form_select_begin ($internal, True);

@@ -97,6 +97,7 @@ class boicalendar
 	var $parameter = Array();
 	var $debug_str = False;
 	var $api = True;
+	var $chunk_split = True;
 	
 	/*
 	 * Base Functions
@@ -1253,7 +1254,7 @@ class boicalendar
 		);
 		if(!is_object($GLOBALS['phpgw']->datetime))
 		{
-			$GLOBALS['phpgw']->datetime = createobject('phpgwaqpi.datetime');
+			$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
 		}
 	}
 
@@ -1293,12 +1294,12 @@ class boicalendar
 
 	function fold($str)
 	{
-		return chunk_split($str,FOLD_LENGTH,"\r\n");
+		 return $this->chunk_split==True ? chunk_split($str,FOLD_LENGTH,"\r\n") : $str."\r\n";
 	}
 
 	function strip_quotes($str)
 	{
-		return str_replace('\"','',$str);
+		return str_replace('"','',$str);
 	}
 
 	function from_text($str)
@@ -1563,7 +1564,7 @@ class boicalendar
 		$quote = '';
 		if($seperator == '=')
 		{
-			$quote = '\"';
+			$quote = '"';
 		}
 		
 		$return_value = $this->fold('X-'.$x_type['name'].$seperator.$quote.$x_type['value'].$quote);
@@ -1612,7 +1613,7 @@ class boicalendar
 					$include_datetime = True;
 					continue;
 				}
-				$quote = (@$this->parameter[$key]['quoted']?'\"':'');
+				$quote = (@$this->parameter[$key]['quoted']?'"':'');
 				if(isset($event[$key]) && @$this->parameter[$key]['properties'][$property])
 				{
 					$change_text = @$this->parameter[$key]['to_text'];
@@ -1792,7 +1793,7 @@ class boicalendar
 				case 'function':
 					$str .= ';'.str_replace('_','-',strtoupper($value)).'=';
 					$function = @$this->parameter[$key]['function'];
-					$str .= (@$this->parameter[$key]['quoted']?'\"':'').$this->$function($event[$key]).(@$this->parameter[$key]['quoted']?'\"':'');
+					$str .= (@$this->parameter[$key]['quoted']?'"':'').$this->$function($event[$key]).(@$this->parameter[$key]['quoted']?'"':'');
 					break;
 				case 'float':
 					if(!empty($event[$value]))
@@ -2274,28 +2275,28 @@ class boicalendar
 			switch($var)
 			{
 				case 'NEEDS-ACTION':
-					return NEEDS_ACTION;
+				   return 0; // NEEDS_ACTION;
 					break;
 				case 'ACCEPTED':
-					return ACCEPTED;
+				   return 1; // ACCEPTED;
 					break;
 				case 'DECLINED':
-					return DECLINED;
+				   return 2; // DECLINED;
 					break;
 				case 'TENTATIVE':
-					return TENTATIVE;
+				   return 3; // TENTATIVE;
 					break;
 				case 'DELEGATED':
-					return DELEGATED;
+					return 4; // DELEGATED;
 					break;
 				case 'COMPLETED':
-					return COMPLETED;
+					return 5; // COMPLETED;
 					break;
 				case 'IN-PROCESS':
-					return IN_PROCESS;
+					return 6; // IN_PROCESS;
 					break;
 				default:
-					return OTHER;
+					return 99; // OTHER;
 					break;
 			}
 		}
@@ -2303,25 +2304,25 @@ class boicalendar
 		{
 			switch(intval($var))
 			{
-				case NEEDS_ACTION:
+			case 0: // NEEDS_ACTION:
 					return 'NEEDS-ACTION';
 					break;
-				case ACCEPTED:
+			case 1: //  ACCEPTED:
 					return 'ACCEPTED';
 					break;
-				case DECLINED:
+			case 2: // DECLINED:
 					return 'DECLINED';
 					break;
-				case TENTATIVE:
+			case 3: // TENTATIVE:
 					return 'TENTATIVE';
 					break;
-				case DELEGATED:
+			case 4: // DELEGATED:
 					return 'DELEGATED';
 					break;
-				case COMPLETED:
+			case 5: // COMPLETED:
 					return 'COMPLETED';
 					break;
-				case IN_PROCESS:
+			case 6: // IN_PROCESS:
 					return 'IN-PROCESS';
 					break;
 				default:
@@ -2903,8 +2904,7 @@ class boicalendar
 						)
 					)
 				);
-				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-				exit;
+				$GLOBALS['phpwg']->common->phpgw_exit();
 			}
 			$uploaddir = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP;
 
@@ -2941,8 +2941,7 @@ class boicalendar
 						)
 					)
 				);
-				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-				exit;
+				$GLOBALS['phpwg']->common->phpgw_exit();				
 			}
 
 			if(!is_object($GLOBALS['uicalendar']))
@@ -3204,13 +3203,14 @@ class boicalendar
 					)
 				)
 			);
-			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-			exit;
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
-		function export($l_event_id=0)
+		function export($params)
 		{
-			$event_id = ($l_event_id?$l_event_id:$GLOBALS['HTTP_GET_VARS']['cal_id']);
+			$event_id = ($params['l_event_id']?$params['l_event_id']:$GLOBALS['HTTP_GET_VARS']['cal_id']);
+			$this->chunk_split = $params['chunk_split'];
+			$method = ($params['method']?$params['method']:"publish");
 
 			$string_array = Array(
 				'summary'		=> 'description',
@@ -3235,7 +3235,7 @@ class boicalendar
 
 			$this->set_var($ical['prodid'],'value','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
 			$this->set_var($ical['version'],'value','2.0');
-			$this->set_var($ical['method'],'value',strtoupper('publish'));
+			$this->set_var($ical['method'],'value',strtoupper($method));
 
 			if(!$GLOBALS['phpgw_info']['flags']['included_classes']['uicalendar'])
 			{
@@ -3276,13 +3276,24 @@ class boicalendar
 					}
 				}
 
+				// use system's date info for caluculating local timezone's offset in minutes
+				//
+				$gmt_offset = date('O',$GLOBALS['phpgw']->datetime->users_localtime);  // offset to GMT
+				$offset = intval(substr($gmt_offset, 1, 2)) * 60 + intval(substr($gmt_offset, 3, 2));
+				if ($offset > 0)
+				{
+					$event['start']['min']   -= $offset;
+					$event['end']['min']     -= $offset;
+					$event['modtime']['min'] -= $offset;
+				}
+
 				$ical_event['priority'] = $event['priority'];
 				$ical_event['class'] = intval($event['public']);
-				$dtstart_mktime = $so_event->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
+				$dtstart_mktime = $so_event->maketime($event['start']);
 				$this->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'vevent');
-				$dtend_mktime = $so_event->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
+				$dtend_mktime = $so_event->maketime($event['end']);
 				$this->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'vevent');
-				$mod_mktime = $so_event->maketime($event['modtime']) - $GLOBALS['phpgw']->datetime->tz_offset;
+				$mod_mktime = $so_event->maketime($event['modtime']);
 				$this->parse_value($ical_event,'last_modified',date('Ymd\THis\Z',$mod_mktime),'vevent');
 				@reset($string_array);
 				while(list($ical_value,$event_value) = each($string_array))
@@ -3316,11 +3327,15 @@ class boicalendar
 					@reset($event['participants']);
 					while(list($part,$status) = each($event['participants']))
 					{
-						$GLOBALS['phpgw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
+						$GLOBALS['phpgw']->accounts->get_account_name($part,$lid,$fname,$lname);
 						$name = $fname.' '.$lname;
+
 						$owner_status = $this->switch_partstat(intval($this->switch_phpgw_status($event['participants'][$part])));
-						$owner_mailto = 'mpeters@satx.rr.com';
-						$str = 'CN="'.$name.'";PARTSTAT='.$owner_status.':'.$owner_mailto;
+
+						$mail_prefs = $GLOBALS['phpgw']->preferences->create_email_preferences($part);
+						$mailto = $mail_prefs['email']['address'];
+
+						$str = 'CN="'.$name.'";PARTSTAT='.$owner_status.':'.$mailto;
 						if($part == $event['owner'])
 						{
 							$str = 'ROLE=CHAIR;'.$str;
@@ -3329,7 +3344,10 @@ class boicalendar
 						{
 							$str = 'ROLE=REQ-PARTICIPANT;'.$str;
 						}
-						$this->parse_value($ical_event,'attendee',$str,'vevent');
+						if ($method != 'reply' || $part == $GLOBALS['phpgw_info']['user']['account_id'])
+						{
+							$this->parse_value($ical_event,'attendee',$str,'vevent');
+						}
 						if($part == $event['owner'])
 						{
 							$this->parse_value($ical_event,'organizer',$str,'vevent');

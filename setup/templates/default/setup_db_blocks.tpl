@@ -11,7 +11,7 @@
     {dbnotexist}<br>
 		{makesure}.<br>
 		<br>
-		{instr}<br>
+		{instr}<p>
 		<form action="index.php" method="post">
 		{createdb}<br>
 		    DB root username: <input type="text" name="db_root" value="root">

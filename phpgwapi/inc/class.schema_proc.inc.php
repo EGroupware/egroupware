@@ -36,12 +36,10 @@
 			{
 				return False;
 			}
-
 			$this->m_aTables = $aTables;
 
-			reset($this->m_aTables);
 			$sAllTableSQL = '';
-			while (list($sTableName, $aTableDef) = each($this->m_aTables))
+			foreach ($this->m_aTables as $sTableName => $aTableDef)
 			{
 				$sSequenceSQL = '';
 				if($this->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
@@ -59,6 +57,7 @@
 					if($bOutputHTML)
 					{
 						print('<br>Failed generating script for <b>' . $sTableName . '</b><br>');
+						echo '<pre style="text-align: left;">'.$sTableName.' = '; print_r($aTableDef); echo "</pre>\n";
 					}
 
 					return false;

@@ -19,50 +19,66 @@
 
 	class db
 	{
-		var $Host     = '';
-		var $Database = '';
-		var $User     = '';
-		var $Password = '';
 
-		var $Link_ID  = 0;
-		var $Query_ID = 0;
-		var $Record   = array();
-		var $Row;
-
-		var $Auto_Free = 0;     /* Set this to 1 for automatic sybase_free_result() */
-
-		function connect()
+		function connect($Database = '', $Host = '', $User = '', $Password = '')
 		{
-			if(0 == $this->Link_ID)
+			/* Handle defaults */
+			if ($Database == '')
 			{
-				if($GLOBALS['phpgw_info']['server']['db_persistent'])
+				$Database = $this->Database;
+			}
+			if ($Host == '')
+			{
+				$Host     = $this->Host;
+			}
+			if ($User == '')
+			{
+				$User     = $this->User;
+			}
+			if ($Password == '')
+			{
+				$Password = $this->Password;
+			}
+
+			if (! $this->Link_ID)
+			{
+				if ($GLOBALS['phpgw_info']['server']['db_persistent'])
 				{
-					$this->Link_ID = sybase_pconnect($this->Host,$this->User,$this->Password);
+					$this->Link_ID=sybase_pconnect($Host,$User,$Password);
 				}
 				else
 				{
-					$this->Link_ID = sybase_connect($this->Host,$this->User,$this->Password);
+					$this->Link_ID=sybase_connect($Host,$User,$Password);
 				}
 			}
-			if(!$this->Link_ID)
+			if (!$this->Link_ID)
 			{
 				$this->halt('Link-ID == false, '.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')..'connect failed');
 			}
-			if(!sybase_select_db($this->Database, $this->Link_ID))
+			if(!sybase_select_db($Database, $this->Link_ID))
 			{
-				$this->halt('cannot use database '.$this->Database);
+				$this->halt('cannot use database '.$Database);
 			}
+		}
+
+		function db_addslashes($str)
+		{
+			if (!IsSet($str) || $str == '')
+			{
+				return '';
+			}
+			return str_replace("'", "''", $str);
 		}
 
 		function query($Query_String)
 		{
 			$this->connect();
 
-			/* printf("Debug: query = %s<br>\n", $Query_String); */
+			#   printf("Debug: query = %s<br>\n", $Query_String);
 
 			$this->Query_ID = sybase_query($Query_String,$this->Link_ID);
 			$this->Row   = 0;
-			if(!$this->Query_ID)
+			if (!$this->Query_ID)
 			{
 				$this->halt('Invalid SQL: '.$Query_String);
 			}
@@ -76,7 +92,7 @@
 			$this->Row   += 1;
 
 			$stat = is_array($this->Record);
-			if(!$stat && $this->Auto_Free)
+			if (!$stat && $this->Auto_Free)
 			{
 				sybase_free_result($this->Query_ID);
 				$this->Query_ID = 0;
@@ -87,7 +103,7 @@
 		function seek($pos)
 		{
 			$status = sybase_data_seek($this->Query_ID, $pos);
-			if($status)
+			if ($status)
 			{
 				$this->Row = $pos;
 			}
@@ -102,7 +118,7 @@
 
 			$this->connect(); 
 			$result = $this->query("exec sp_columns $table");
-			if($result < 0)
+			if ($result < 0)
 			{
 				$this->Errno = 1;
 				$this->Error = 'Metadata query failed';
@@ -110,7 +126,7 @@
 			}
 			$count = sybase_num_rows($result);
 
-			for($i=0; $i<$count; $i++)
+			for ($i=0; $i<$count; $i++)
 			{
 				$res[$i]['table'] = $table ;
 				$res[$i]['name']  = sybase_result ($result, $i, 'COLUMN_NAME');
@@ -118,6 +134,7 @@
 				$res[$i]['len']   = sybase_result ($result, $i, 'LENGTH');
 				$res[$i]['position'] = sybase_result ($result, $i, 'ORDINAL_POSITION');
 				$res[$i]['flags'] = sybase_result ($result, $i, 'REMARKS');
+
 			}
 		}
 
@@ -136,24 +153,16 @@
 			return sybase_num_fields($this->Query_ID);
 		}
 
-		function nf()
+		function f($Name, $strip_slashes = False)
 		{
-			return $this->num_rows();
-		}
-
-		function np()
-		{
-			print $this->num_rows();
-		}
-
-		function f($Name)
-		{
-			return $this->Record[$Name];
-		}
-
-		function p($Name)
-		{
-			print $this->Record[$Name];
+        	if ($strip_slashes || ($this->auto_stripslashes && ! $strip_slashes))
+			{
+				return str_replace("''", "'", $this->Record[$Name]);
+			}
+			else
+			{
+				return $this->Record[$Name];
+			}
 		}
 
 		function halt($msg)

@@ -23,8 +23,8 @@ show navigation bar as	preferences	ja	ナビゲーション
 show text on navigation icons	preferences	ja	ナビゲーションアイコンにテキスト表示
 text only	preferences	ja	テキストのみ
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
-this server is located in the %1 timezone	preferences	ja	 タイムゾーン %1
+this server is located in the %1 timezone	preferences	ja	 タイムゾーン
 time format	preferences	ja	時間書式
 use selectbox	preferences	ja	セレクトボックス
 use text entry	preferences	ja	テキスト入力
-your current theme is: %1	preferences	ja	%1
+your current theme is: %1	preferences	ja	</b>

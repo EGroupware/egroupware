@@ -25,12 +25,12 @@
 		var $payload;
 		var $methodname;
 		var $params = array();
-		var $debug  = False;
+		var $debug  = 0;
 
 		function xmlrpcmsg($meth, $pars=0)
 		{
 			$this->methodname = $meth;
-			if(is_array($pars) && sizeof($pars)>0)
+			if (is_array($pars) && sizeof($pars)>0)
 			{
 				for($i=0; $i<sizeof($pars); $i++) 
 				{
@@ -41,8 +41,7 @@
 
 		function xml_header()
 		{
-			return '<?xml version="1.0" encoding="' . $GLOBALS['xmlrpc_defencoding']
-				. '"?>' . "\n" . '<methodCall>' . "\n";
+			return '<?xml version="1.0"?>' . "\n" . '<methodCall>' . "\n";
 		}
 
 		function xml_footer()
@@ -199,7 +198,6 @@
 						xml_error_string(xml_get_error_code($parser)),
 						xml_get_current_line_number($parser));
 				}
-//				echo $errstr;
 				error_log($errstr);
 				$r = CreateObject('phpgwapi.xmlrpcresp', '', $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
 				xml_parser_free($parser);

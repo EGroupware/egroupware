@@ -41,7 +41,7 @@
 	}
 -->
 </STYLE>
-<LINK rel="stylesheet" href="/phpgroupware_devel/phpgwapi/templates/linux-at-work.de/copy.css">
+<LLINK rel="stylesheet" href="/phpgroupware_devel/phpgwapi/templates/linux-at-work.de/copy.css">
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>
 
@@ -50,7 +50,7 @@
 <p>&nbsp;</p>
 
 <center>
-<A href="http://linux-at-work.de"><img src="phpgwapi/templates/{template_set}/images/vater_logo.gif" alt="Vater GmbH" border="0"></a>
+<img src="/phpgroupware/phpgwapi/templates/linux-at-work.de/images/vater_logo.gif" border="0">
 
 <br>
 
@@ -71,11 +71,11 @@ target="_lawde">http://linux-at-work.de</a>
          </TD>
         </TR>
         <TR bgcolor="#1559a9">
-         <TD align="left"><font color="#FFFF99">{lang_username}:&nbsp;</font></TD>
+         <TD align="left"><font color="#FFFF99">Benutzername:&nbsp;</font></TD>
          <TD><input name="login" value="{cookie}"></TD>
         </TR>
         <TR bgcolor="#1559a9">
-         <TD align="left"><font color="#FFFF99">{lang_password}:&nbsp;</font></TD>
+         <TD align="left"><font color="#FFFF99">Passwort:&nbsp;</font></TD>
          <TD><input name="passwd" type="password"></TD>
         </TR>
         <TR bgcolor="#1559a9">
@@ -85,7 +85,7 @@ target="_lawde">http://linux-at-work.de</a>
         </TR>
         <TR bgcolor="#1559a9">
          <TD colspan="2" align="CENTER">
-          <input class="submit" type="submit" value="{lang_login}" name="submit">
+          <input class="submit" type="submit" value="Anmelden" name="submit">
          </TD>
         </TR>
         <TR bgcolor="#1559a9">
@@ -95,7 +95,7 @@ target="_lawde">http://linux-at-work.de</a>
         </TR>
         <TR bgcolor="#1559a9">
          <TD colspan="2" align="RIGHT">
-          <font color="000000" size="-1">{lang_based_on} phpGroupWare {version}</font>
+          <font color="000000" size="-1">basierend auf PHPGroupware {version}</font>
          </TD>
         </TR>       
        </TABLE>
@@ -108,6 +108,6 @@ target="_lawde">http://linux-at-work.de</a>
 document.login_form.login.focus();
 //-->
 </script>
-
+     
 <!-- END login_form -->
 </HTML>

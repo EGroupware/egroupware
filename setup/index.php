@@ -101,42 +101,42 @@
 		case 'Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
 			$submsg = lang('Are you sure you want to delete your existing tables and data?') . '.';
-			$subaction = 'uninstall';
+			$subaction = lang('uninstall');
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'predrop';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
 			break;
 		case 'Create Database':
 			$subtitle = lang('Create Database');
 			$submsg = lang('At your request, this script is going to attempt to create the database and assign the db user rights to it');
-			$subaction = 'created';
+			$subaction = lang('created');
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'dbcreate';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'REALLY Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
 			$submsg = lang('At your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data') . '.';
-			$subaction = 'uninstalled';
+			$subaction = lang('uninstalled');
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'drop';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'Upgrade':
 			$subtitle = lang('Upgrading Tables');
 			$submsg = lang('At your request, this script is going to attempt to upgrade your old applications to the current versions').'.';
-			$subaction = 'upgraded';
+			$subaction = lang('upgraded');
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'Install':
 			$subtitle = lang('Creating Tables');
 			$submsg = lang('At your request, this script is going to attempt to install the core tables and the admin and preferences applications for you').'.';
-			$subaction = 'installed';
+			$subaction = lang('installed');
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'new';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 	}
 	$setup_tpl->set_var('subtitle',@$subtitle);
 	$setup_tpl->set_var('submsg',@$submsg);
-	$setup_tpl->set_var('subaction',lang(@$subaction));
+	$setup_tpl->set_var('subaction',@$subaction);
 
 	// Old PHP
 	if (phpversion() < '3.0.16')
@@ -168,6 +168,7 @@
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
 			$setup_tpl->set_var('createdb',lang('Or we can attempt to create the database for you:'));
+			$setup_tpl->set_var('create_database',lang('Create database'));
 			switch ($phpgw_domain[$GLOBALS['ConfigDomain']]['db_type'])
 			{
 				case 'mysql':
@@ -421,7 +422,6 @@
 //	$GLOBALS['phpgw_info']['setup']['stage']['apps'] = $GLOBALS['phpgw_setup']->check_apps();
 	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{
-		case 1:
 		case 10:
 			$setup_tpl->set_var('apps_status_img',$completed);
 			$setup_tpl->set_var('apps_status_alt',lang('completed'));

@@ -431,6 +431,9 @@
 		{
 			if ($type)
 			{
+//				global $GLOBALS['namespaces'],$GLOBALS['soapTypes'],$GLOBALS['typemap'];
+//				global $GLOBALS['namespaces'],$GLOBALS['typemap'];
+
 				@reset($GLOBALS['typemap']);
 				while(list($namespace,$types) = @each($GLOBALS['typemap']))
 				/* foreach($GLOBALS['typemap'] as $namespace => $types) */

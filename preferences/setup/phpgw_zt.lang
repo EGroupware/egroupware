@@ -22,6 +22,6 @@ text only	preferences	zt	只顯示文字
 theme (colors/fonts) selection	preferences	zt	選擇畫面配置（顏色及字型）
 this server is located in the %1 timezone	preferences	zt	這台伺服器主機放置於 %1 時區
 time format	preferences	zt	時間格式
-your current theme is: %1	preferences	zt	%1
+your current theme is: %1	preferences	zt	</b>
 you must enter a password	preferences	zt	您必須輸入密碼
 

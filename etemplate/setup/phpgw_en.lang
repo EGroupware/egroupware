@@ -1,5 +1,9 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	en	%1 (%2 new) Messages writen for Application '%3' and Languages '%4'
 %1 etemplates deleted	etemplate	en	%1 eTemplates deleted
+%1 etemplates for application '%2' dumped to '%3'	etemplate	en	%1 eTemplates for Application '%2' dumped to '%3'
 %1 etemplates found	etemplate	en	%1 eTemplates found
+%1 matches on search criteria	etemplate	en	%1 matches on search criteria
+%1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for Application '%2'
 %s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
 %s notranslation	etemplate	en	%s NoTranslation
@@ -18,6 +22,7 @@ application	etemplate	en	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
 attach	etemplate	en	Attach
 attach file	etemplate	en	attach file
+blurtext	etemplate	en	blurText
 border	etemplate	en	Border
 border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
 can have special sql-value null	etemplate	en	can have special SQL-value NULL
@@ -80,9 +85,12 @@ enter a search pattern	etemplate	en	Enter a search pattern
 enter filename to upload and attach, use [browse...] to search for it	etemplate	en	Enter filename to upload and attach, use [Browse...] to search for it
 enter the new version number here (> old_version), empty for no update-file	etemplate	en	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
+entry saved	etemplate	en	Entry saved
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: webserver is not allowed to write into '%1' !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
+error: writeing !!!	etemplate	en	Error: writeing !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error: writing file (no write-permission for the webserver) !!!
 etemplate	common	en	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, use Save to put it in the database
 etemplate '%1' written to '%2'	etemplate	en	eTemplate '%1' written to '%2'
@@ -93,6 +101,7 @@ export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemp
 export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
 file	etemplate	en	File
+file contains more than one etemplate, last one is shown !!!	etemplate	en	File contains more than one eTemplate, last one is shown !!!
 file writen	etemplate	en	File writen
 fileupload	etemplate	en	FileUpload
 first	etemplate	en	First
@@ -152,6 +161,7 @@ nextmatch	etemplate	en	Nextmatch
 no file	etemplate	en	no file
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
 nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
+nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria !!!
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
@@ -226,6 +236,7 @@ template deleted	etemplate	en	Template deleted
 template saved	etemplate	en	Template saved
 text	etemplate	en	Text
 textarea	etemplate	en	Textarea
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	this text gets displayed if the input-field is empty and has no focus (blur)
 time	etemplate	en	Time
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor

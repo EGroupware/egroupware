@@ -1,20 +1,20 @@
 <!-- BEGIN header -->
 <form method="POST" action="{action_url}">
 <table border="0" align="center">
-   <tr class="th">
+   <tr bgcolor="{th_bg}">
     <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
    </tr>
 <!-- END header -->
 
 <!-- BEGIN body -->
-   <tr class="row_on">
+   <tr bgcolor="{row_on}">
     <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr class="row_off">
+   <tr bgcolor="{row_off}">
     <td colspan="2"><b>{lang_Calendar_settings}</b></td>
    </tr>
-   <tr class="row_on">
+   <tr bgcolor="{row_on}">
     <td>{lang_Do_you_wish_to_autoload_calendar_holidays_files_dynamically?}</td>
     <td>
      <select name="newsettings[auto_load_holidays]">
@@ -23,7 +23,7 @@
      </select>
     </td>
    </tr>
-   <tr class="row_off">
+   <tr bgcolor="{row_off}">
     <td>{lang_Location_to_autoload_from}:</td>
     <td>
      <select name="newsettings[holidays_url_path]">
@@ -35,7 +35,7 @@
 <!-- END body -->
 
 <!-- BEGIN footer -->
-  <tr class="th">
+  <tr bgcolor="{th_bg}">
     <td colspan="2">
 &nbsp;
     </td>

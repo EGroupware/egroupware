@@ -489,18 +489,22 @@
 					$type3 = 1;
 					// fall-through
 					
-				case 'select-number':	// options: rows,min,max,dec
-					$cell['sel_options'][''] = '';
-					$type = $type === '' ? 1 : intval($type);
-					$type2 = $type2 === '' ? 10 : intval($type2);
-					$type3 = !$type3 ? 1 : intval($type3);
+				case 'select-number':	// options: rows,min,max,decrement
+					$type = $type === '' ? 1 : intval($type);		// min
+					$type2 = $type2 === '' ? 10 : intval($type2);	// max
+					$format = '%d';
+					if (!empty($type3) && $type3[0] == '0')			// leading zero
+					{
+						$format = '%0'.strlen($type3).'d';
+					}
+					$type3 = !$type3 ? 1 : intval($type3);			// decrement
 					if (($type < $type2) != ($type3 > 0))
 					{
 						$type3 = -$type3;	// void infinite loop
 					}
 					for ($i=0,$n=$type; $n <= $type2 && $i <= 100; $n += $type3)
 					{
-						$cell['sel_options'][$n] = $n;
+						$cell['sel_options'][$n] = sprintf($format,$n);
 					}
 					$cell['no_lang'] = True;
 					break;

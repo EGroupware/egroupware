@@ -88,8 +88,7 @@
 		$phpgw->preferences->save_repository(True);
      
 		Header('Location: '.$phpgw->link('/preferences/index.php'));
-		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-		exit;
+		$phpgw->common->phpgw_exit();
 	}
 
 	function display_item($field,$data)
@@ -107,6 +106,7 @@
 	}
 
 	$phpgw->common->phpgw_header();
+	echo parse_navbar();
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 	$templates = Array(
@@ -235,4 +235,5 @@
 	display_item(lang('Print calendars in black & white'),$str);
 
 	$p->pparse('out','pref');
+	$phpgw->common->phpgw_footer();
 ?>

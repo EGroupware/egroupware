@@ -81,6 +81,18 @@
 				$this->file_actions = 0;
 			}
 	
+			// test if the files-dir is inside the document-root, and refuse working if so
+			//
+			if ($this->file_actions && $this->in_docroot($this->basedir))
+			{
+				$GLOBALS['phpgw']->common->phpgw_header();
+				if ($GLOBALS['phpgw_info']['flags']['noheader']) 
+				{
+					echo parse_navbar();
+				}
+				echo '<p align="center"><font color="red"><b>'.lang('Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!')."</b></font></p>\n";
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
 			/*
 			   These are stored in the MIME-type field and should normally be ignored.
 			   Adding a type here will ensure it is normally ignored, but you will have to
@@ -105,6 +117,31 @@
 			{
 				$this->linked_dirs[] = $GLOBALS['phpgw']->db->Record;
 			}
+		}
+
+		/*!
+		@function in_docroot
+		@abstract test if $path lies within the webservers document-root
+		*/
+		function in_docroot($path)
+		{
+			$docroots = array(PHPGW_SERVER_ROOT,$GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT']);
+
+			foreach ($docroots as $docroot)
+			{
+				$len = strlen($docroot);
+
+				if ($docroot == substr($path,0,$len))
+				{
+					$rest = substr($path,$len);
+
+					if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
+					{
+						return True;
+					}
+				}
+			}
+			return False;
 		}
 
 		/*!

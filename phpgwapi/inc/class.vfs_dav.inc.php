@@ -22,30 +22,6 @@
   \**************************************************************************/
 
 
-	/* Relative defines.  Used mainly by getabsolutepath () */
-	define ('RELATIVE_ROOT', 1);
-	define ('RELATIVE_USER', 2);
-	define ('RELATIVE_CURR_USER', 4);
-	define ('RELATIVE_USER_APP', 8);
-	define ('RELATIVE_PATH', 16);
-	define ('RELATIVE_NONE', 32);
-	define ('RELATIVE_CURRENT', 64);
-	define ('VFS_REAL', 1024);
-	define ('RELATIVE_ALL', RELATIVE_PATH);
-
-	/* These are used in calls to extra_sql () */
-	define ('VFS_SQL_SELECT', 1);
-	define ('VFS_SQL_DELETE', 2);
-	define ('VFS_SQL_UPDATE', 4);
-
-	/* These are used in calls to add_journal (), and allow journal messages to be more standard */
-	define ('VFS_OPERATION_CREATED', 1);
-	define ('VFS_OPERATION_EDITED', 2);
-	define ('VFS_OPERATION_EDITED_COMMENT', 4);
-	define ('VFS_OPERATION_COPIED', 8);
-	define ('VFS_OPERATION_MOVED', 16);
-	define ('VFS_OPERATION_DELETED', 32);
-
 	/*Different aspects of debugging. DEBUG enables debug output for this class
 	DEBUG_SQL enables some SQL debugging.  DEBUG_DAV enables (LOTS) of debugging inside
 	the HTTP class
@@ -54,39 +30,6 @@
 	define ('TRACE', 0);//This generates a whole lotta output
 	define ('DEBUG_SQL', 0);
 	define ('DEBUG_DAV', 0);
-
-	/*!
-	@class path_class
-	@abstract helper class for path_parts
-	*/
-
-	class path_class
-	{
-		var $mask;
-		var $outside;
-		var $fake_full_path;
-		var $fake_leading_dirs;
-		var $fake_extra_path;
-		var $fake_name;
-		var $real_full_url;
-		var $real_full_auth_url;
-		var $real_full_secure_url;
-		var $real_full_path;
-		var $real_leading_dirs;
-		var $real_extra_path;
-		var $real_name;
-		var $fake_full_path_clean;
-		var $fake_leading_dirs_clean;
-		var $fake_extra_path_clean;
-		var $fake_name_clean;
-		var $real_full_url_clean;
-		var $real_full_auth_url_clean;
-		var $real_full_secure_url_clean;
-		var $real_full_path_clean;
-		var $real_leading_dirs_clean;
-		var $real_extra_path_clean;
-		var $real_name_clean;
-	}
 
 	class vfs
 	{
@@ -101,6 +44,7 @@
 		var $meta_types;
 		var $now;
 		var $override_locks;
+
 		//These are DAV-native properties that have different names in VFS
 		var $vfs_property_map = array(
 			'creationdate' => 'created',

@@ -12,14 +12,14 @@
 </center>
 <!-- END view_event -->
 <!-- BEGIN list -->
-  <tr class="{tr_color}">
+  <tr bgcolor="{tr_color}">
    <td valign="top" width="30%">&nbsp;<b>{field}:</b></td>
    <td colspan="2" valign="top" width="70%">{data}</td>
   </tr>
 <!-- END list -->
 <!-- BEGIN hr -->
  <tr>
-  <td colspan="3" class="th" align="center">
+  <td colspan="3" bgcolor="{th_bg}" align="center">
    <b>{hr_text}</b>
   </td>
  </tr>

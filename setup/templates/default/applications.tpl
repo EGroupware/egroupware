@@ -21,19 +21,19 @@ function check_all(which)
 
 <br>
 <div align="center">
-<table border="0" width="70%" cellspacing="0" cellpadding="2">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
   <tr>
     <td align="center">{description}</td>
   </tr>
 </table>
-<table border="0" width="70%">
+<table width="70%" cellspacing="0" cellpadding="2" style="{ border: 1px solid #000000; }">
 <!-- END header -->
 
 <!-- BEGIN app_header -->
 <form name="apps" method="POST" action="{action_url}">
-  <tr>
-    <td colspan="5" bgcolor="#486591"><center><font color="#fefefe">{appdata}</font></center></td>
-    <td colspan="4" bgcolor="#486591"><center><font color="#fefefe">{actions}</font></center></td>
+  <tr class="th">
+    <td colspan="5" align="center">{appdata}</td>
+    <td colspan="4" align="center">{actions}</td>
   </tr>
   <tr bgcolor="#99cccc">
     <td colspan="2">{app_info}</td>
@@ -62,7 +62,7 @@ function check_all(which)
 
 <!-- BEGIN apps -->
   <tr bgcolor="{bg_color}">
-    <td><a href="applications.php?detail={appname}"><img src="templates/default/images/{instimg}" alt="{instalt}" border="0"></a></td>
+    <td><a href="applications.php?detail={appname}"><img src="templates/default/images/{instimg}" alt="{instalt}" title="{instalt}" border="0"></a></td>
     <td>{appinfo}&nbsp;</td>
     <td>{apptitle}&nbsp;</td>
     <td>{currentver}&nbsp;</td>
@@ -76,7 +76,8 @@ function check_all(which)
 
 <!-- BEGIN detail -->
   <tr bgcolor="{bg_color}">
-    <td>{name}&nbsp;</td><td>{details}&nbsp;</td>
+    <td>{name}&nbsp;</td>
+    <td>{details}&nbsp;</td>
   </tr>
 <!-- END detail -->
 
@@ -105,12 +106,12 @@ function check_all(which)
 <!-- END resolve -->
 
 <!-- BEGIN submit -->
-{goback]
+{goback}
 <!-- END submit -->
 
 <!-- BEGIN app_footer -->
   <tr>
-    <td bgcolor="{bg_color}" colspan="5">&nbsp;</td>
+    <td bgcolor="{bg_color}" colspan="5">{debug} {lang_debug}</td>
     <td bgcolor="{bg_color}" align="center">
      <a href="javascript:check_all('install')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{install_all}"></a>
     </td>
@@ -135,6 +136,13 @@ function check_all(which)
 <!-- END app_footer -->
 
 <!-- BEGIN footer -->
+  </tr>
+</table>
+<br>
+<table width="100%" cellspacing="0">
+  <tr class="banner">
+    <td>&nbsp;</td>
+  </tr>
 </table>
 </div>
 <!-- END footer -->

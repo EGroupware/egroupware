@@ -462,9 +462,14 @@
 	$GLOBALS['phpgw_info']['flags']['app_header'] = $_GET['appname'] == 'preferences' ?
 		lang('Preferences') : lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$_GET['appname']]['title']);
 	$GLOBALS['phpgw']->common->phpgw_header();
+	echo parse_navbar();
 
 	$t->set_var('messages',$error);
 	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $_GET['appname']));
+	$t->set_var('th_bg',  $GLOBALS['phpgw_info']['theme']['th_bg']);
+	$t->set_var('th_text',$GLOBALS['phpgw_info']['theme']['th_text']);
+	$t->set_var('row_on', $GLOBALS['phpgw_info']['theme']['row_on']);
+	$t->set_var('row_off',$GLOBALS['phpgw_info']['theme']['row_off']);
 
 	switch ($GLOBALS['type'])	// set up some globals to be used by the hooks
 	{
@@ -543,7 +548,9 @@
 	{
 		show_list();
 	}
-	$t->parse('phpgw_body','preferences');
+	$t->pfp('phpgw_body','preferences');
 	
 	//echo '<pre style="text-align: left;">'; print_r($GLOBALS['phpgw']->preferences->data); echo "</pre>\n";
+	
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

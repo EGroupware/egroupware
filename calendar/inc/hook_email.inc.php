@@ -20,33 +20,35 @@
 	if($d1 == 'htt' || $d1 == 'ftp')
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
-		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-		exit;
+		$phpgw->common->phpgw_exit();
 	}
 	unset($d1);
 
-	$GLOBALS['phpgw']->translation->add_app('calendar');
+	if ($calendar_id)
+	{
+		$GLOBALS['phpgw']->translation->add_app('calendar');
 
-	$cal = CreateObject('calendar.uicalendar');
-	//echo "Event ID: $calendar_id<br>\n";
+		$cal = CreateObject('calendar.uicalendar');
+		//echo "Event ID: $calendar_id<br>\n";
 
-	$event = $cal->bo->read_entry($calendar_id);
+		if ($event = $cal->bo->read_entry($calendar_id))
+		{
+			echo $cal->timematrix(
+				Array(
+					'date'		=> $GLOBALS['phpgw']->datetime->localdates(mktime(0,0,0,$event['start']['month'],$event['start']['mday'],$event['start']['year']) - $phpgw->calendar->tz_offset),
+					'starttime'	=> $cal->bo->splittime('000000',False),
+					'endtime'	=> 0,
+					'participants'	=> $event['participants'])
+					) .
 
-	echo $cal->timematrix(
-		Array(
-			'date'		=> $GLOBALS['phpgw']->datetime->localdates(mktime(0,0,0,$event['start']['month'],$event['start']['mday'],$event['start']['year']) - $phpgw->calendar->tz_offset),
-			'starttime'	=> $cal->bo->splittime('000000',False),
-			'endtime'	=> 0,
-			'participants'	=> $event['participants'])
-			) .
+				'</td></tr><tr><td>' .
 
-		'</td></tr><tr><td>' .
+				$cal->view_event($event) .
 
-		$cal->view_event($event) .
+				'</td></tr><tr><td align="center">' .
 
-		'</td></tr><tr><td align="center">' .
-
-		$cal->get_response($calendar_id);
-		
-	unset($cal); unset($event);
+				$cal->get_response($calendar_id);
+		}
+		unset($cal); unset($event);
+	}
 ?>

@@ -36,9 +36,11 @@
 		* @param $fl Field list (in order of importance)
 		*/
 		
-		function arfsort( $a, $fl )
+		function arfsort( $a, $fl, $_sort='ASC' )
 		{
 			$GLOBALS['__ARFSORT_LIST__'] = $fl;
+			
+			$this->sort=$_sort;
 
 			if (is_array($a))
 			{
@@ -55,7 +57,14 @@
 		{
 			foreach( $GLOBALS['__ARFSORT_LIST__'] as $f )
 			{
-				$strc = strcmp( $a[$f], $b[$f] );
+				if($this->sort == 'ASC')
+				{
+					$strc = strcmp( $a[$f], $b[$f] );
+				}
+				else
+				{
+					$strc = strcmp( $b[$f], $a[$f] );
+				}
 				if ( $strc != 0 )
 				{
 					return $strc;

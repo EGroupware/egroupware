@@ -420,7 +420,7 @@ time zone	common	cs	Èasová zóna
 time zone offset	common	cs	Rozdíl èasové zóny
 title	common	cs	Titul
 to correct this error for the future you will need to properly set the	common	cs	 = Aby se chyba neobjevovala v budoucnosti musíte právnì nastavit
-to go back to the msg list, click <a href="%1">here</a>	common	cs	<a href="%1">Zpìt na seznam zpráv</a>
+to go back to the msg list, click <a href= %1 >here</a>	common	cs	<a href="%1">Zpìt na seznam zpráv</a>
 togo	common	cs	
 tokelau	common	cs	
 tonga	common	cs	

@@ -3,8 +3,7 @@
   * phpGroupWare API - Translation class for SQL                             *
   * This file written by Joseph Engo <jengo@phpgroupware.org>                *
   * and Dan Kuykendall <seek3r@phpgroupware.org>                             *
-  * and Miles Lott <milosch@phpgroupware.org>                                *
-  * Handles multi-language support using SQL                                 *
+  * Handles multi-language support use SQL tables                            *
   * Copyright (C) 2000, 2001 Joseph Engo                                     *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
@@ -27,100 +26,63 @@
 
 	// define the maximal length of a message_id, all message_ids have to be unique 
 	// in this length, our column is varchar 255, but addslashes might add some length
-	if (!defined('MAX_MESSAGE_ID_LENGTH'))
-	{
-		define('MAX_MESSAGE_ID_LENGTH',230);	
-	}
-
+	define('MAX_MESSAGE_ID_LENGTH',230);	
+	
 	class translation
 	{
-		var $lang = array();
-		var $userlang   = '';
-		var $currentapp = '';
-		var $loaded = False;
-		var $translator_helper = '*';
-
-		/*!
-		 @function translation
-		 @abstract class constructor - sets class vars for currentapp and user lang preference
-		 @discussion User lang defaults to 'en'.
-		*/
-		function translation()
+		function translate($key, $vars=false ) 
 		{
-			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
-			{
-				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-			}
-
-			$this->currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
-		}
-
-		/*!
-		 @function load_langs
-		 @abstract loads up translations into $this->lang based on currentapp and userlang preference.
-		 @discussion This also loads translations with appname='common' or appname='all'.
-		*/
-		function load_langs()
-		{
-			if($this->userlang == '')
-			{
-				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] ?
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] : 'en';
-			}
-			$sql = "SELECT message_id,content FROM phpgw_lang WHERE lang LIKE '" . $this->userlang
-				. "' AND (app_name LIKE '" . $this->currentapp
-				. "' OR app_name LIKE 'common' OR app_name LIKE 'all') ORDER BY app_name ";
-
-			if(strcasecmp($this->currentapp, 'common') > 0)
-			{
-				$sql .= 'ASC';
-			}
-			else
-			{
-				$sql .= 'DESC';
-			}
-
-			$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->next_record();
-
-			$count = $GLOBALS['phpgw']->db->num_rows();
-			for($idx = 0; $idx < $count; ++$idx)
-			{
-				$this->lang[strtolower($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
-				$GLOBALS['phpgw']->db->next_record();
-			}
-			/* Done stuffing the array.  If someone prefers to have $GLOBALS['lang'] set to this as before,
-			   it could be done here. - $GLOBALS['lang'] = $this->lang;
-			*/
-			$this->loaded = True;
-		}
-
-		/*!
-		 @function translate
-		 @abstract Return the translated string from $this->lang, if it exists.  If no translation exists, return the same string with an asterisk.
-		 @discussion This should be called from the global function lang(), not directly.
-		 @syntax translate('translate %1',array('replacement'));  OR  translate('translate this');
-		 @example translate('translate this %1', array('lang entry'));  returns 'Translate this Lang Entry' or 'translate this lang %1*'
-		*/
-		function translate($key,$vars=False) 
-		{
-			if(!$vars)
+			if (!$vars)
 			{
 				$vars = array();
 			}
-			$ret  = $key;
-			$_key = trim(substr(strtolower($key),0,MAX_MESSAGE_ID_LENGTH));
-
-			if(!@isset($this->lang[$_key]) && !$this->loaded)
+			$ret = $key;
+			// check also if $GLOBALS['lang'] is a array
+			// php-nuke and postnuke are using $GLOBALS['lang'] too
+			// as string
+			// this makes many problems
+			if (!isset($GLOBALS['lang']) || !$GLOBALS['lang'] || !is_array($GLOBALS['lang']))
 			{
-				$this->load_langs();
+				$GLOBALS['lang'] = array();
+				if (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+				{
+					$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+				}
+				else
+				{
+					$userlang = 'en';
+				}
+				$sql = "select message_id,content from phpgw_lang where lang like '".$userlang."' ".
+					"and (app_name like '".$GLOBALS['phpgw_info']['flags']['currentapp']."' or app_name like 'common' or app_name like 'all')";
+
+				if (strcasecmp ($GLOBALS['phpgw_info']['flags']['currentapp'], 'common')>0)
+				{
+					$sql .= ' order by app_name asc';
+				}
+				else
+				{
+					$sql .= ' order by app_name desc';
+				}
+
+				$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->next_record();
+				$count = $GLOBALS['phpgw']->db->num_rows();
+				for ($idx = 0; $idx < $count; ++$idx)
+				{
+					$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
+					$GLOBALS['phpgw']->db->next_record();
+				}
 			}
+			$ret = $key.'*';	// save key if we dont find a translation
+			$key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
 
-			$ret = @isset($this->lang[$_key]) ? $this->lang[$_key] : $key . $this->translator_helper;	
-
+			if (isset($GLOBALS['lang'][$key]))
+			{
+				$ret = $GLOBALS['lang'][$key];
+			}
 			$ndx = 1;
-			while(list($key,$val) = each($vars))
+			while( list($key,$val) = each( $vars ) )
 			{
 				$ret = preg_replace( "/%$ndx/", $val, $ret );
 				++$ndx;
@@ -128,30 +90,35 @@
 			return $ret;
 		}
 
-		/*!
-		 @function add_app
-		 @abstract Add an additional app's translations to $this->lang
-		*/
 		function add_app($app) 
 		{
-			$sql = "SELECT message_id,content FROM phpgw_lang WHERE lang LIKE '" . $this->userlang
-				. "' AND app_name LIKE '" . $app . "'";
-
+			// post-nuke and php-nuke are using $GLOBALS['lang'] too
+			// but not as array!
+			// this produces very strange results
+			if (!is_array($GLOBALS['lang']))
+			{
+				$GLOBALS['lang'] = array();
+			}
+			
+			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+			{
+				$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+			}
+			else
+			{
+				$userlang = 'en';
+			}
+			$sql = "select message_id,content from phpgw_lang where lang like '".$userlang."' and app_name like '".$app."'";
 			$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->next_record();
-
 			$count = $GLOBALS['phpgw']->db->num_rows();
-			for($idx = 0; $idx < $count; ++$idx)
+			for ($idx = 0; $idx < $count; ++$idx)
 			{
-				$this->lang[strtolower($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
+				$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
 				$GLOBALS['phpgw']->db->next_record();
 			}
 		}
 		
-		/*!
-		 @function get_installed_langs
-		 @returns array of installed langs, in the form eg. 'de' => 'German'
-		*/
 		function get_installed_langs()
 		{
 			$GLOBALS['phpgw']->db->query("SELECT DISTINCT l.lang,ln.lang_name FROM phpgw_lang l,phpgw_languages ln WHERE l.lang = ln.lang_id",__LINE__,__FILE__);

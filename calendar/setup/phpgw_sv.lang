@@ -2,12 +2,9 @@
 1 match found	calendar	sv	1 träff hittad
 a	calendar	sv	a
 all	calendar	sv	Alla
-are you sure\\\\nyou want to\\\\ndelete this entry ?	calendar	sv	Är du säker på attndu villnta bort denna?
-are you sure\\\\nyou want to\\\\ndelete this entry ?\\\\n\\\\nthis will delete\\\\nthis entry for all users.	calendar	sv	Är du säker på attndu villnta bort denna entry ?nnDetta vill ta bortndenna entry för alla användare.
-are you sure\\nyou want to\\ndelete this entry ?	calendar	sv	Är du säker\\natt du vill\\ntabort denna post?
-are you sure\\nyou want to\\ndelete this entry ?\\n\\nthis will delete\\nthis entry for all users.	calendar	sv	Är du säker\\natt du vill\\ntabort denna post?\\n\\nDetta tar bort den\\nför alla användare.
-are you sure\nyou want to\ndelete this entry ?	calendar	sv	Är du säker\natt du vill\\nradera denna post?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	sv	Är du säker\\natt du vill\\nradera denna post?\\n\\nDetta tar bort\\ndenna post för alla\\nanvändare.
+are you sure\nyou want to\ndelete this entry ?	calendar	sv	Är du säker på att\ndu vill\nta bort denna?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	sv	Är du säker på attndu villnta bort denna entry ?\n\nDetta vill ta bortndenna entry för alla användare.
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	sv	Är du säker\natt du vill\ntabort denna post?\n\nDetta tar bort den\nför alla användare.
 brief description	calendar	sv	Kort beskrivning
 calendar	common	sv	kalender
 calendar preferences	common	sv	Kalender inställningar
@@ -80,11 +77,11 @@ year	calendar	sv	År
 yearly	calendar	sv	Årligen
 you have 1 high priority event on your calendar today.	common	sv	Du har 1 högprioritets händelse i din kalender i dag.
 you have %1 high priority events on your calendar today.	common	sv	Du har %1 högprioritets händelse i din kalender i dag.
-you have not entered a\\\\nbrief description	calendar	sv	Du har inte skrivit in ennkort beskrivning
-you have not entered a\\\\nvalid time of day.	calendar	sv	Du har inte skrivit in enngiltig tid.
-you have not entered a\\nbrief description	calendar	sv	Du har inte gett\\nnågon beskrivning
-you have not entered a\\nvalid time of day.	calendar	sv	Du har inte angett\\nnågon giltig tid på dagen.
-you have not entered a\nbrief description	calendar	sv	Du har inte skrivit\\nen beskrivning.
-you have not entered a\nvalid time of day.	calendar	sv	Du har inte angivit\\nen giltig tid.
+you have not entered a\nbrief description	calendar	sv	Du har inte skrivit in ennkort beskrivning
+you have not entered a\nvalid time of day.	calendar	sv	Du har inte skrivit in enngiltig tid.
+you have not entered a\nbrief description	calendar	sv	Du har inte gett\nnågon beskrivning
+you have not entered a\nvalid time of day.	calendar	sv	Du har inte angett\nnågon giltig tid på dagen.
+you have not entered a\nbrief description	calendar	sv	Du har inte skrivit\nen beskrivning.
+you have not entered a\nvalid time of day.	calendar	sv	Du har inte angivit\nen giltig tid.
 you must enter one or more search keywords	calendar	sv	Du måste skriva in ett eller flera sökord
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	sv	Din föreslagna tid av <B> %1 - %2 </B> är i konflikt med de följande kalender entries:

@@ -4,10 +4,10 @@
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	* and Mark Peters <skeeter@phpgroupware.org>                               *
 	* Manages user preferences                                                 *
-	* Copyright (C) 2000 - 2003 Joseph Engo                                    *
+	* Copyright (C) 2000, 2001 Joseph Engo                                     *
 	* -------------------------------------------------------------------------*
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org                                              *
+	* http://www.phpgroupware.org/api                                          *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -21,6 +21,7 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
+
 	/* $Id$ */
 
 	/*!
@@ -48,11 +49,6 @@
 		var $forced = array();
 		/*! @var db */
 		var $db;
-		/*! @var debug_init_prefs */
-		var $debug_init_preys = 0;
-		//var $debug_init_prefs = 1;
-		//var $debug_init_prefs = 2;
-		//var $debug_init_prefs = 3;
 		
 		var $values,$vars;	// standard notify substitues, will be set by standard_substitues()
 
@@ -66,8 +62,8 @@
 		*/
 		function preferences($account_id = '')
 		{
-			$this->db			= $GLOBALS['phpgw']->db;
-			$this->account_id	= get_account_id($account_id);
+			$this->db         = $GLOBALS['phpgw']->db;
+			$this->account_id = get_account_id($account_id);
 		}
 
 		/**************************************************************************\
@@ -223,7 +219,8 @@
 			$this->forced = $this->default = $this->user = array();
 			while($this->db->next_record())
 			{
-				$app = $this->db->f('preference_app');
+				// The following ereg is required for PostgreSQL to work
+				$app = ereg_replace(' ','',$this->db->f('preference_app'));
 				$value = unserialize($this->db->f('preference_value'));
 				$this->unquote($value);
 				if (!is_array($value))
@@ -244,7 +241,7 @@
 				}
 			}
 			$this->data = $this->user;
-			
+
 			// now use defaults if needed (user-value unset or empty)
 			//
 			foreach($this->default as $app => $values)
@@ -419,7 +416,7 @@
 		{
 			/* eval is slow and dangerous
 			$code = '$this->data[$app_name]'.$var.' = $value;';
-			//echo 'class.preferences: add_struct: $code: '.$code.'<br>';
+			print_debug('class.preferences: add_struct: $code: ', $code,'api');
 			eval($code);
 			*/
 			$parts = explode('/',str_replace(array('][','[',']','"',"'"),array('/','','','',''),$var));
@@ -448,10 +445,10 @@
 		{
 			/* eval is slow and dangerous
 			$code_1 = '$this->data[$app_name]'.$var.' = "";';
-			//echo 'class.preferences: delete_struct: $code_1: '.$code_1.'<br>';
+			print_debug('class.preferences: delete_struct: $code_1:', $code_1,'api');
 			eval($code_1);
 			$code_2 = 'unset($this->data[$app_name]'.$var.');' ;
-			//echo 'class.preferences: delete_struct:  $code_2: '.$code_2.'<br>';
+			print_debug('class.preferences: delete_struct:  $code_2: ', $code_2,'api');
 			eval($code_2);
 			*/
 			$parts = explode('/',str_replace(array('][','[',']','"',"'"),array('/','','','',''),$var));
@@ -525,14 +522,14 @@
 			if (! $GLOBALS['phpgw']->acl->check('session_only_preferences',1,'preferences'))
 			{
 				$this->db->transaction_begin();
-				$this->db->query("delete from phpgw_preferences where preference_owner=$account_id",
+				$this->db->query("delete from phpgw_preferences where preference_owner='$account_id'",
 					__LINE__,__FILE__);
 
 				foreach($prefs as $app => $value)
 				{
 					if (!is_array($value)) continue;
 					$this->quote($value);
-					$value = $this->db->db_addslashes(serialize($value));	// this addslashes is for the database
+					$value = addslashes(serialize($value));	// this addslashes is for the database
 					$app = $this->db->db_addslashes($app);
 					
 					$this->db->query($sql = "INSERT INTO phpgw_preferences".
@@ -570,7 +567,7 @@
 
 			if($this->db->f('preference_value'))
 			{
-				$this->db->query("INSERT INTO phpgw_preferences VALUES (" . intval($account_id) . ",'"
+				$this->db->query("insert into phpgw_preferences values ('$account_id','"
 					. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
 			}
 			
@@ -578,6 +575,7 @@
 			{
 				$GLOBALS['phpgw']->session->read_repositories(False);
 			}
+
 		}
 
 		/*!
@@ -602,7 +600,7 @@
 		}
 		function commit($update_session_info = True)
 		{
-			return $this->save_repository($update_session_info);
+			//return $this->save_repository($update_session_info);
 		}
 
 		/**************************************************************************\
@@ -616,7 +614,7 @@
 		*/
 		function verify_basic_settings()
 		{
-			if (!@is_array($GLOBALS['phpgw_info']['user']['preferences']))
+			if (gettype($GLOBALS['phpgw_info']['user']['preferences']) != 'array')
 			{
 				 $GLOBALS['phpgw_info']['user']['preferences'] = array();
 			}
@@ -689,25 +687,24 @@
 		@author  Angles
 		@access Private
 		*/
-		function sub_get_mailsvr_port($prefs)
+		function sub_get_mailsvr_port($prefs, $acctnum=0)
 		{
-			/*// UNCOMMENT WHEN mail_port IS A REAL, USER SET OPTION
 			// first we try the port number supplied in preferences
-			if ( (isset($prefs['email']['mail_port']))
-			&& ($prefs['email']['mail_port'] != '') )
+			if ( (isset($prefs['email']['accounts'][$acctnum]['mail_port']))
+			&& ($prefs['email']['accounts'][$acctnum]['mail_port'] != '') )
 			{
-				$port_number = $prefs['email']['mail_port'];
+				$port_number = $prefs['email']['accounts'][$acctnum]['mail_port'];
 			}
 			// preferences does not have a port number, generate a default value
 			else
 			{
-			*/
-				switch($prefs['email']['mail_server_type'])
+				if (!isset($prefs['email']['accounts'][$acctnum]['mail_server_type']))
 				{
-					case 'imaps':
-						// IMAP over SSL
-						$port_number = 993;
-						break;
+					$prefs['email']['accounts'][$acctnum]['mail_server_type'] = $prefs['email']['mail_server_type'];
+				}
+					
+				switch($prefs['email']['accounts'][$acctnum]['mail_server_type'])
+				{
 					case 'pop3s':
 						// POP3 over SSL
 						$port_number = 995;
@@ -721,6 +718,10 @@
 						// NNTP news server port
 						$port_number = 119;
 						break;
+					case 'imaps':
+						// IMAP over SSL
+						$port_number = 993;
+						break;
 					case 'imap':
 						// IMAP normal connection, No SSL 
 					default:
@@ -730,10 +731,7 @@
 						$port_number = 143;
 						break;
 				}
-				// set the preference string, since it was not set and that's why we are here
-				//$prefs['email']['mail_port'] = $port_number;
-			// UNCOMMENT WHEN mail_port IS A REAL, USER SET OPTION
-			//}
+			}
 			return $port_number;
 		}
 
@@ -803,9 +801,9 @@
 		a preference value for any particular preference item available to the user.
 		@access Public
 		*/
-		function create_email_preferences($accountid='', $acctnum='')
+		function create_email_preferences($accountid='', $acctnum=0)
 		{
-			if ($this->debug_init_prefs > 0) { echo 'class.preferences: create_email_preferences: ENTERING<br>'; }
+			print_debug('class.preferences: create_email_preferences: ENTERING<br>', 'messageonly','api');
 			// we may need function "html_quotes_decode" from the mail_msg class
 			$email_base = CreateObject("email.mail_msg");
 
@@ -834,14 +832,7 @@
 				$prefs = $this->data;
 			}
 			// are we dealing with the default email account or an extra email account?
-			if (!(isset($acctnum)) || ((string)$acctnum == ''))
-			{
-				settype($acctnum,'integer');
-				// account 0 is the default email account
-				$acctnum = 0;
-				// $prefs stays AS IS!
-			}
-			else
+			if ($acctnum != 0)
 			{
 				// prefs are actually a sub-element of the main email prefs
 				// at location [email][ex_accounts][X][...pref names] => pref values
@@ -858,12 +849,7 @@
 				$prefs['email'] = $sub_prefs['email'];
 				// since we return just $prefs, it's up to the calling program to put the sub prefs in the right place
 			}
-
-			if ($this->debug_init_prefs > 0)
-			{
-				echo 'class.preferences: create_email_preferences: $acctnum: ['.$acctnum.'] ; raw $this->data dump';
-				_debug_array($this->data);
-			}
+			print_debug('class.preferences: create_email_preferences: $acctnum: ['.$acctnum.'] ; raw $this->data dump', $this->data,'api');
 
 			// = = = =  NOT-SIMPLE  PREFS  = = = =
 			// Default Preferences info that is:
@@ -886,15 +872,6 @@
 			// ---  DELETE THE ABOVE WHEN THIS OPTION GETS INTO THE SYSTEM SETUP
 			// pick up custom "mail_folder" if it exists (used for UWash and UWash Maildir servers)
 			// else use the system default (which we temporarily hard coded to "mail" just above here)
-
-			//---  [email][newsmode]  ---
-			// == Orphan == currently NOT USED
-			// This is going to be used to switch to the nntp class
-			if ((isset($GLOBALS['phpgw_info']['flags']['newsmode']) &&
-				$GLOBALS['phpgw_info']['flags']['newsmode']))
-			{
-				$prefs['email']['mail_server_type'] = 'nntp';
-			}
 
 			//---  [email][mail_port]  ---
 			// These sets the mail_port server variable
@@ -942,11 +919,7 @@
 				$next_idx = count($avail_pref_array);
 				$avail_pref_array[$next_idx] = $bo_mail_prefs->cust_prefs[$i];
 			}
-			if ($this->debug_init_prefs > 1)
-			{
-				echo 'class.preferences: create_email_preferences: std AND cust arrays combined:';
-				_debug_array($avail_pref_array);
-			}
+			print_debug('class.preferences: create_email_preferences: std AND cust arrays combined:', $avail_pref_array,'api');
 
 			// --- make the schema-based pref data for this user ---
 			// user defined values and/or user specified custom email prefs are read from the
@@ -979,12 +952,8 @@
 			for($i=0;$i<$c_prefs;$i++)
 			{
 				$this_avail_pref = $avail_pref_array[$i];
-				if ($this->debug_init_prefs > 1) { echo 'class.preferences: create_email_preferences: value from DB for $prefs[email]['.$this_avail_pref['id'].'] = ['.$prefs['email'][$this_avail_pref['id']].']<br>'; }
-				if ($this->debug_init_prefs > 2)
-				{
-					echo 'class.preferences: create_email_preferences: std/cust_prefs $this_avail_pref['.$i.'] dump:';
-					_debug_array($this_avail_pref);
-				}
+				print_debug('class.preferences: create_email_preferences: value from DB for $prefs[email]['.$this_avail_pref['id'].'] = ['.$prefs['email'][$this_avail_pref['id']].']', 'messageonly','api');
+				print_debug('class.preferences: create_email_preferences: std/cust_prefs $this_avail_pref['.$i.'] dump:', $this_avail_pref,'api');
 
 				// --- is there a value in the DB for this preference item ---
 				// if the prefs DB has no value for this defined available preference, we must make one.
@@ -997,7 +966,7 @@
 
 					// --- get instructions on how to generate a default value ---
 					$set_proc = explode(',', $this_avail_pref['init_default']);
-					if ($this->debug_init_prefs > 1) { echo ' * set_proc=['.serialize($set_proc).']<br>'; }
+					print_debug(' * set_proc=['.serialize($set_proc).']', 'messageonly','api');
 
 					// --- use "instructional token" in $set_proc[0] to take appropriate action ---
 					// STRING
@@ -1005,7 +974,7 @@
 					{
 						// means this pref item's value type is string
 						// which defined string default value is in $set_proc[1]
-						if ($this->debug_init_prefs > 2) { echo ' * handle "string" set_proc: '.serialize($set_proc).'<br>'; }
+						print_debug('* handle "string" set_proc: ', serialize($set_proc),'api');
 						if (trim($set_proc[1]) == '')
 						{
 							// this happens when $this_avail_pref['init_default'] = "string, "
@@ -1021,7 +990,7 @@
 					elseif ($set_proc[0] == 'set_or_not')
 					{
 						// typical with boolean options, True = "set/exists" and False = unset
-						if ($this->debug_init_prefs > 2) { echo ' * handle "set_or_not" set_proc: '.serialize($set_proc).'<br>'; }
+						print_debug('* handle "set_or_not" set_proc: ', serialize($set_proc),'api');
 						if ($set_proc[1] == 'not_set')
 						{
 							// leave it NOT SET
@@ -1038,19 +1007,15 @@
 					{
 						// string in $set_proc[1] should be "eval"uated as code, calling a function
 						// which will give us a default value to put in users session [email][] prefs array
-						if ($this->debug_init_prefs > 2) { echo ' * handle "function" set_proc: '.serialize($set_proc).'<br>'; }
+						print_debug(' * handle "function" set_proc: ', serialize($set_proc),'api');
 						$evaled = '';
 						//eval('$evaled = $this->'.$set_proc[1].'('.$account_id.');');
 
 						$code = '$evaled = $this->'.$set_proc[1].'('.$account_id.');';
-						if ($this->debug_init_prefs > 2) { echo ' * $code: '.$code.'<br>'; }
+						print_debug(' * $code: ', $code,'api');
 						eval($code);
 
-						//$code = '$evaled = '.$set_proc[1];
-						//if ($this->debug_init_prefs > 1) { echo ' * $code: '.$code.'<br>'; }
-						//eval($code);
-
-						if ($this->debug_init_prefs > 2) { echo ' * $evaled: '.$evaled.'<br>'; }
+						print_debug('* $evaled:', $evaled,'api');
 						$prefs['email'][$this_avail_pref['id']] = $evaled;
 					}
 					// INIT_NO_FILL
@@ -1058,7 +1023,7 @@
 					{
 						// we have an available preference item that we may NOT fill with a default 
 						// value. Only the user may supply a value for this pref item.
-						if ($this->debug_init_prefs > 1) { echo ' * handle "init_no_fill" set_proc: '.serialize($set_proc).'<br>'; }
+						print_debug('* handle "init_no_fill" set_proc:', serialize($set_proc),'api');
 						// we are FORBADE from filling this at this time!
 					}
 					// varEVAL
@@ -1066,12 +1031,12 @@
 					{
 						// similar to "function" but used for array references, the string in $set_proc[1] 
 						// represents code which typically is an array referencing a system/api property
-						if ($this->debug_init_prefs > 2) { echo ' * handle "GLOBALS" set_proc: '.serialize($set_proc).'<br>'; }
+						print_debug('* handle "GLOBALS" set_proc:', serialize($set_proc),'api');
 						$evaled = '';
 						$code = '$evaled = '.$set_proc[1];
-						if ($this->debug_init_prefs > 2) { echo ' * $code: '.$code.'<br>'; }
+						print_debug(' * $code:', $code,'api');
 						eval($code);
-						if ($this->debug_init_prefs > 2) { echo ' * $evaled: '.$evaled.'<br>'; }
+						print_debug('* $evaled:', $evaled,'api');
 						$prefs['email'][$this_avail_pref['id']] = $evaled;
 					}
 					else
@@ -1126,13 +1091,8 @@
 			// DEBUG : force some settings to test stuff
 			//$prefs['email']['p_persistent'] = 'True';
 			
-			if ($this->debug_init_prefs > 1)
-			{
-				echo 'class.preferences: $acctnum: ['.$acctnum.'] ; create_email_preferences: $prefs[email]';
-				_debug_array($prefs['email']);
-			}
-			
-			if ($this->debug_init_prefs > 0) { echo 'class.preferences: create_email_preferences: LEAVING<br>'; }
+			print_debug('class.preferences: $acctnum: ['.$acctnum.'] ; create_email_preferences: $prefs[email]', $prefs['email'],'api');
+			print_debug('class.preferences: create_email_preferences: LEAVING', 'messageonly','api');
 			return $prefs;
 		}
 

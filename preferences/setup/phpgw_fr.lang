@@ -2,7 +2,7 @@
 %1 hours	preferences	fr	%1 heures
 12 hour	preferences	fr	12 heures
 24 hour	preferences	fr	24 heures
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	fr	Un modèle définit la mise en page de phpGroupWare et contient les icônes pour chaque application.
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition de phpGroupWare et contient les icônes pour chaque application.
 a theme defines the colors and fonts used by the template.	preferences	fr	Un thème définit les couleurs et fontes utilisées par le modèle.
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	N'importe quelle liste dans phpGW va vous montrer ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite vous en montre moins.
@@ -35,8 +35,7 @@ interface/template selection	preferences	fr	Sélection de l'interface/modèle
 language	preferences	fr	Langue
 max matches per page	preferences	fr	Nombre max d'occurences correspondantes par page
 no default	preferences	fr	Pas de défaut
-note: this feature might *not* change your email password. this may need to be done manually. 	preferences	fr	Note: cette fonctionnalité ne devrait *pas* changer le mot de passe de votre compte EMail. Ceci devra être fait manuellement.
-please choose one of the methods to handle the subcategories	preferences	fr	SVP sélectionnez une des méthodes de gestion des sous-catégories
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci va devoir être fait manuellement.
 please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
 popup with search	preferences	fr	Ouvrir une fenêtre Popup avec la recherche
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe

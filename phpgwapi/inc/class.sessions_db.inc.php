@@ -23,11 +23,11 @@
 
 	/* $Id$ */
 
-	class sessions_
+	class sessions extends sessions_
 	{
-		function sessions_()
+		function sessions()
 		{
-			// empty for now, but needed
+			$this->sessions_();
 		}
 		
 		function read_session($sessionid)
@@ -52,16 +52,11 @@
 				. "'",__LINE__,__FILE__);
 		}
 
-		function set_cookie_params($domain)
-		{
-			// only for php4-sessions
-		}
-
 		function register_session($login,$user_ip,$now,$session_flags)
 		{
 			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
 				. "','".$login."','" . $user_ip . "','"
-				. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
+				. $now . "','" . $now . "','" . $_SERVER['PHP_SELF'] . "','" . $session_flags
 				. "')",__LINE__,__FILE__);
 		}
 
@@ -190,7 +185,7 @@
 			}
 		}
 
-		function list_sessions($start,$order,$sort)
+		function list_sessions($start, $order, $sort, $all_no_sort = False)
 		{
 			$values = array();
 			

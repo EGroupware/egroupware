@@ -55,3 +55,4 @@ Click on as many news headline news sites as you wish, these will be displayed f
 when using the headlines function.The systems admin set these as default, so be sure to
 let them know if you want some that are not there ;)
 </li></ul></font>
+<?php $phpgw->common->phpgw_footer(); ?>

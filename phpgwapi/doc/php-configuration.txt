@@ -2,8 +2,8 @@
 - Suggested PHP Configuration -
 -------------------------------
 
-This is a suggested php.ini config for running phpGroupWare 0.9.14 on php4.  It 
-is roughly in the order of the paramters in you php.ini file.  These recommendations
+This is a suggested php.ini config for running phpGroupWare 0.9.14 on php4. It 
+is roughly in the order of the paramters in you php.ini file. These recommendations
 are based on feedback from users and developers.
 
 RESOURCES
@@ -56,5 +56,5 @@ second so set it to 3660 if you want it to one hour ... the default is
 
 REGISTER GLOBALS
 register_globals = On
-Upto and including the 0.9.14 releases phpGroupWare will not work, if the value is set to Off.
+Until release 0.9.14 phpGroupWare will not work, if the value is set to Off.
 All further releases will support the Off setting.

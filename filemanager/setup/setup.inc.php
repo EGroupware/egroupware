@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Filemanager                                               *
+	* phpGroupWare - PHP Webhosting                                            *
 	* http://www.phpgroupware.org                                              *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -12,20 +12,24 @@
 	/* $Id$ */
 
 	$setup_info['filemanager']['name']    = 'filemanager';
-	$setup_info['filemanager']['version'] = '0.9.15.001';
+	$setup_info['filemanager']['title']   = 'Filemanager';
+	$setup_info['filemanager']['version'] = '0.9.13.005';
 	$setup_info['filemanager']['app_order'] = 10;
 	$setup_info['filemanager']['enable']  = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['filemanager']['hooks'][] = 'add_def_pref';
-	$setup_info['filemanager']['hooks'][] = 'admin';
-	$setup_info['filemanager']['hooks'][] = 'deleteaccount';
-	$setup_info['filemanager']['hooks'][] = 'preferences';
-	$setup_info['filemanager']['hooks'][] = 'settings';
+	$setup_info['filemanager']['hooks'] = array
+	(
+		'add_def_pref',
+		'admin',
+		'deleteaccount',
+		'preferences'
+	);
 
 	/* Dependencies for this app to work */
-	$setup_info['filemanager']['depends'][] = array(
+	$setup_info['filemanager']['depends'][] = array
+	(
 		 'appname' => 'phpgwapi',
-		 'versions' => array('0.9.15')
+		 'versions' => array('0.9.14','0.9.16')
 	);
 ?>

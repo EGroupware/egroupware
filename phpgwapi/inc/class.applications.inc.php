@@ -1,37 +1,31 @@
 <?php
-	/**************************************************************************\
-	* phpGroupWare API - Applications manager functions                        *
-	* Written by Mark Peters <skeeter@phpgroupware.org>                        *
-	* Copyright (C) 2001 - 2002 Mark Peters                                    *
-	* ------------------------------------------------------------------------ *
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
-	/* $Id$ */
+  /**************************************************************************\
+  * phpGroupWare API - Applications manager functions                        *
+  * This file written by Mark Peters <skeeter@phpgroupware.org>              *
+  * Copyright (C) 2001 Mark Peters                                           *
+  * -------------------------------------------------------------------------*
+  * This library is part of the phpGroupWare API                             *
+  * http://www.phpgroupware.org/api                                          * 
+  * ------------------------------------------------------------------------ *
+  * This library is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published by *
+  * the Free Software Foundation; either version 2.1 of the License,         *
+  * or any later version.                                                    *
+  * This library is distributed in the hope that it will be useful, but      *
+  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+  * See the GNU Lesser General Public License for more details.              *
+  * You should have received a copy of the GNU Lesser General Public License *
+  * along with this library; if not, write to the Free Software Foundation,  *
+  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  \**************************************************************************/
 
+  /* $Id$ */
 	/*!
 	@class applicatons
 	@abstract functions for managing and installing apps
 	@discussion Author: skeeter
 	*/
-
-	/*
-		we should remove app_title from this class and always use the lang function 
-		to to translate app_name for in functions, where it is needed (ceb)
-	*/
-
 	class applications
 	{
 		var $account_id;
@@ -41,6 +35,7 @@
 			'list_methods' => True,
 			'read'         => True
 		);
+		var $xmlrpc_methods = array();
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
@@ -55,9 +50,14 @@
 		{
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->account_id = get_account_id($account_id);
+
+			$this->xmlrpc_methods[] = array(
+				'name'        => 'read',
+				'description' => 'Return a list of applications the current user has access to'
+			);
 		}
 
-		function DONTlist_methods($_type='xmlrpc')
+		function list_methods($_type='xmlrpc')
 		{
 			/*
 			  This handles introspection or discovery by the logged in client,
@@ -121,12 +121,11 @@
 				if ($check)
 				{
 					$this->data[$app[0]] = array(
-						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[0]]['title'],
-						'name'		=> $app[0],
-						'enabled'	=> True,
-						'status'	=> $GLOBALS['phpgw_info']['apps'][$app[0]]['status'],
-						'id'		=> $GLOBALS['phpgw_info']['apps'][$app[0]]['id'],
-						'version'	=> $GLOBALS['phpgw_info']['apps'][$app[0]]['version']
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app[0]]['title'],
+						'name'    => $app[0],
+						'enabled' => True,
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[0]]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app[0]]['id']
 					);
 				} 
 			}
@@ -160,27 +159,23 @@
 			{
 				while($app = each($apps))
 				{
-					$this->data[$app[1]] = array
-					(
-						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
-						'name'		=> $app[1],
-						'enabled'	=> True,
-						'status'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
-						'id'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['id'],
-						'version'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['version']
+					$this->data[$app[1]] = array(
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
+						'name'    => $app[1],
+						'enabled' => True,
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
 					);
 				}
 			}
 			elseif(gettype($apps))
 			{
-				$this->data[$apps] = array
-				(
-					'title'		=> $GLOBALS['phpgw_info']['apps'][$apps]['title'],
-					'name'		=> $apps,
-					'enabled'	=> True,
-					'status'	=> $GLOBALS['phpgw_info']['apps'][$apps]['status'],
-					'id'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['id'],
-					'version'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['version']
+				$this->data[$apps] = array(
+					'title'   => $GLOBALS['phpgw_info']['apps'][$apps]['title'],
+					'name'    => $apps,
+					'enabled' => True,
+					'status'  => $GLOBALS['phpgw_info']['apps'][$apps]['status'],
+					'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
 				);
 			}
 			reset($this->data);
@@ -271,14 +266,12 @@
 			{
 				if ($this->is_system_enabled($app[1]))
 				{
-					$this->data[$app[1]] = array
-					(
-						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
-						'name'		=> $app[1],
-						'enabled'	=> True,
-						'status'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
-						'id'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['id'],
-						'version'	=> $GLOBALS['phpgw_info']['apps'][$app[1]]['version']
+					$this->data[$app[1]] = array(
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
+						'name'    => $app[1],
+						'enabled' => True,
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
 					);
 				}
 			}
@@ -301,21 +294,21 @@
 			{
 				while ($this->db->next_record())
 				{
-					$title = $this->db->f('app_name');
+					$title = $app_name = $this->db->f('app_name');
+
 					if (@is_array($GLOBALS['phpgw_info']['user']['preferences']) && 
-					    ($t = lang($title)) != $title.'*')
+					    ($t = lang($app_name)) != $app_name.'*')
 					{
 						$title = $t;
 					}
-					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array
-					(
-						'title'   	=> $title,
-						'name'		=> $this->db->f('app_name'),
-						'enabled'	=> True,
-						'status'	=> $this->db->f('app_enabled'),
-						'id'		=> intval($this->db->f('app_id')),
-						'order'		=> intval($this->db->f('app_order')),
-						'version'	=> $this->db->f('app_version') 
+					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array(
+						'title'   => $title,
+						'name'    => $this->db->f('app_name'),
+						'enabled' => True,
+						'status'  => $this->db->f('app_enabled'),
+						'id'      => intval($this->db->f('app_id')),
+						'order'   => intval($this->db->f('app_order')),
+						'version' => $this->db->f('app_version')
 					);
 				}
 			}
@@ -340,6 +333,7 @@
 				return False;
 			}
 		}
+
 		function id2name($id)
 		{
 			@reset($GLOBALS['phpgw_info']['apps']);

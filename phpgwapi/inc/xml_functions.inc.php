@@ -3,7 +3,7 @@
 	// <edd@usefulinc.com>
 	// xmlrpc.inc,v 1.18 2001/07/06 18:23:57 edmundd
 
-	// License is granted to use or modify this software ('XML-RPC for PHP')
+	// License is granted to use or modify this software ("XML-RPC for PHP")
 	// for commercial or non-commercial use provided the copyright of the author
 	// is preserved in any distributed or derivative work.
 
@@ -22,7 +22,7 @@
 
 	if (!function_exists('xml_parser_create'))
 	{
-		// Win 32 fix. From: 'Leo West' <lwest@imaginet.fr>
+		// Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
 		if($WINDIR)
 		{
 			dl('php3_xml.dll');
@@ -115,8 +115,7 @@
 		Header('Content-type: text/xml');
 		Header('Content-length: ' . strlen($payload));
 		print $payload;
-		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-		exit;
+		$GLOBALS['phpgw']->common->phpgw_exit(False);
 	}
 
 	// used to store state during parsing
@@ -126,7 +125,7 @@
 	//   qt - used to decide if quotes are needed for evaluation
 	//   cm - used to denote struct or array (comma needed)
 	//   isf - used to indicate a fault
-	//   lv - used to indicate 'looking for a value': implements
+	//   lv - used to indicate "looking for a value": implements
 	//        the logic to allow values with no types to be strings
 	//   params - used to store parameters in method calls
 	//   method - used to store method name
@@ -315,9 +314,8 @@
 						$GLOBALS['_xh'][$parser]['st'].=$GLOBALS['_xh'][$parser]['ac'];
 					}
 				}
-				$GLOBALS['_xh'][$parser]['ac'] = '';
-				$GLOBALS['_xh'][$parser]['qt'] = 0;
-				$GLOBALS['_xh'][$parser]['lv'] = 3; // indicate we've found a value
+				$GLOBALS['_xh'][$parser]['ac']=""; $GLOBALS['_xh'][$parser]['qt']=0;
+				$GLOBALS['_xh'][$parser]['lv']=3; // indicate we've found a value
 				break;
 			case 'VALUE':
 				// deal with a string value
@@ -327,7 +325,7 @@
 					$GLOBALS['_xh'][$parser]['st'].='"'. $GLOBALS['_xh'][$parser]['ac'] . '"'; 
 				}
 				// This if() detects if no scalar was inside <VALUE></VALUE>
-				// and pads an empty ''.
+				// and pads an empty "".
 				if($GLOBALS['_xh'][$parser]['st'][strlen($GLOBALS['_xh'][$parser]['st'])-1] == '(')
 				{
 					$GLOBALS['_xh'][$parser]['st'].= '""';
@@ -335,22 +333,22 @@
 				$GLOBALS['_xh'][$parser]['st'].=", '" . $GLOBALS['_xh'][$parser]['vt'] . "')";
 				if ($GLOBALS['_xh'][$parser]['cm'])
 				{
-					$GLOBALS['_xh'][$parser]['st'].=',';
+					$GLOBALS['_xh'][$parser]['st'].=",";
 				}
 				break;
 			case 'MEMBER':
-				$GLOBALS['_xh'][$parser]['ac']='';
+				$GLOBALS['_xh'][$parser]['ac']="";
 				$GLOBALS['_xh'][$parser]['qt']=0;
 				break;
 			case 'DATA':
-				$GLOBALS['_xh'][$parser]['ac']='';
+				$GLOBALS['_xh'][$parser]['ac']="";
 				$GLOBALS['_xh'][$parser]['qt']=0;
 				break;
 			case 'PARAM':
 				$GLOBALS['_xh'][$parser]['params'][]=$GLOBALS['_xh'][$parser]['st'];
 				break;
 			case 'METHODNAME':
-				$GLOBALS['_xh'][$parser]['method']=ereg_replace("^[\n\r\t ]+", '', $GLOBALS['_xh'][$parser]['ac']);
+				$GLOBALS['_xh'][$parser]['method']=ereg_replace("^[\n\r\t ]+", "", $GLOBALS['_xh'][$parser]['ac']);
 				break;
 			case 'BOOLEAN':
 				// special case here: we translate boolean 1 or 0 into PHP
@@ -382,7 +380,7 @@
 
 		if ($GLOBALS['_xh'][$parser]['lv']!=3)
 		{
-			// 'lookforvalue==3' means that we've found an entire value
+			// "lookforvalue==3" means that we've found an entire value
 			// and should discard any further character data
 			if ($GLOBALS['_xh'][$parser]['lv']==1)
 			{
@@ -428,19 +426,19 @@
 		// and an adjustment for locale is made when encoding
 		if (!$utc)
 		{
-			$t=strftime('%Y%m%dT%H:%M:%S', $timet);
+			$t=strftime("%Y%m%dT%H:%M:%S", $timet);
 		}
 		else
 		{
-			if (function_exists('gmstrftime')) 
+			if (function_exists("gmstrftime")) 
 			{
 				// gmstrftime doesn't exist in some versions
 				// of PHP
-				$t=gmstrftime('%Y%m%dT%H:%M:%S', $timet);
+				$t=gmstrftime("%Y%m%dT%H:%M:%S", $timet);
 			}
 			else
 			{
-				$t=strftime('%Y%m%dT%H:%M:%S', $timet-date('Z'));
+				$t=strftime("%Y%m%dT%H:%M:%S", $timet-date("Z"));
 			}
 		}
 		return $t;
@@ -470,38 +468,35 @@
 	*                                                               *
 	* author: Dan Libby (dan@libby.com)                             *
 	****************************************************************/
-	if (!function_exists('xmlrpc_decode'))
+	function phpgw_xmlrpc_decode($xmlrpc_val)
 	{
-		function xmlrpc_decode($xmlrpc_val, $encoding = '')
+		$kind = @$xmlrpc_val->kindOf();
+
+		if($kind == "scalar")
 		{
-			$kind = @$xmlrpc_val->kindOf();
+			return $xmlrpc_val->scalarval();
+		}
+		elseif($kind == "array")
+		{
+			$size = $xmlrpc_val->arraysize();
+			$arr = array();
 
-			if($kind == 'scalar')
+			for($i = 0; $i < $size; $i++)
 			{
-				return $xmlrpc_val->scalarval();
+				$arr[]=phpgw_xmlrpc_decode($xmlrpc_val->arraymem($i));
 			}
-			elseif($kind == 'array')
-			{
-				$size = $xmlrpc_val->arraysize();
-				$arr = array();
-	
-				for($i = 0; $i < $size; $i++)
-				{
-					$arr[]=xmlrpc_decode($xmlrpc_val->arraymem($i));
-				}
-				return $arr; 
-			}
-			elseif($kind == 'struct')
-			{
-				$xmlrpc_val->structreset();
-				$arr = array();
+			return $arr; 
+		}
+		elseif($kind == "struct")
+		{
+			$xmlrpc_val->structreset();
+			$arr = array();
 
-				while(list($key,$value)=$xmlrpc_val->structeach())
-				{
-					$arr[$key] = xmlrpc_decode($value);
-				}
-				return $arr;
+			while(list($key,$value)=$xmlrpc_val->structeach())
+			{
+				$arr[$key] = phpgw_xmlrpc_decode($value);
 			}
+			return $arr;
 		}
 	}
 
@@ -517,46 +512,43 @@
 	*                                                               *
 	* author: Dan Libby (dan@libby.com)                             *
 	****************************************************************/
-	if (!function_exists('xmlrpc_encode'))
+	function phpgw_xmlrpc_encode($php_val)
 	{
-		function xmlrpc_encode($php_val)
-		{
-			$type = gettype($php_val);
-			$xmlrpc_val = CreateObject('phpgwapi.xmlrpcval');
+		$type = gettype($php_val);
+		$xmlrpc_val = CreateObject('phpgwapi.xmlrpcval');
 
-			switch($type)
-			{
-				case 'array':
-				case 'object':
-					$arr = array();
-					while (list($k,$v) = each($php_val))
-					{
-						$arr[$k] = xmlrpc_encode($v);
-					}
-					$xmlrpc_val->addStruct($arr);
-					break;
-				case 'integer':
-					$xmlrpc_val->addScalar($php_val, xmlrpcInt);
-					break;
-				case 'double':
-					$xmlrpc_val->addScalar($php_val, xmlrpcDouble);
-					break;
-				case 'string':
-					$xmlrpc_val->addScalar($php_val, xmlrpcString);
-					break;
-				// <G_Giunta_2001-02-29>
-				// Add support for encoding/decoding of booleans, since they are supported in PHP
-				case 'boolean':
-					$xmlrpc_val->addScalar($php_val, xmlrpcBoolean);
-					break;
-				// </G_Giunta_2001-02-29>
-				case 'unknown type':
-				default:
-					$xmlrpc_val = false;
-					break;
-			}
-			return $xmlrpc_val;
+		switch($type)
+		{
+			case "array":
+			case "object":
+				$arr = array();
+				while (list($k,$v) = each($php_val))
+				{
+					$arr[$k] = phpgw_xmlrpc_encode($v);
+				}
+				$xmlrpc_val->addStruct($arr);
+				break;
+			case "integer":
+				$xmlrpc_val->addScalar($php_val, xmlrpcInt);
+				break;
+			case "double":
+				$xmlrpc_val->addScalar($php_val, xmlrpcDouble);
+				break;
+			case "string":
+				$xmlrpc_val->addScalar($php_val, xmlrpcString);
+				break;
+			// <G_Giunta_2001-02-29>
+			// Add support for encoding/decoding of booleans, since they are supported in PHP
+			case "boolean":
+				$xmlrpc_val->addScalar($php_val, xmlrpcBoolean);
+				break;
+			// </G_Giunta_2001-02-29>
+			case "unknown type":
+			default:
+				$xmlrpc_val = false;
+				break;
 		}
+		return $xmlrpc_val;
 	}
 
 	// listMethods: either a string, or nothing
@@ -662,6 +654,36 @@
 		return $r;
 	}
 
+	/*
+	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_listApps_doc'] = 'Returns a list of installed phpgw apps';
+	function _xmlrpcs_listApps($server,$m)
+	{
+		$m->getParam(0);
+		$GLOBALS['phpgw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+		if($GLOBALS['phpgw']->db->num_rows())
+		{
+			while ($GLOBALS['phpgw']->db->next_record())
+			{
+				$name   = $GLOBALS['phpgw']->db->f('app_name');
+				$title  = $GLOBALS['phpgw']->db->f('app_title');
+				$status = $GLOBALS['phpgw']->db->f('app_enabled');
+				$version= $GLOBALS['phpgw']->db->f('app_version');
+				$apps[$name] = CreateObject('phpgwapi.xmlrpcval',
+					array(
+						'title'  => CreateObject('phpgwapi.xmlrpcval',$title,'string'),
+						'name'   => CreateObject('phpgwapi.xmlrpcval',$name,'string'),
+						'status' => CreateObject('phpgwapi.xmlrpcval',$status,'string'),
+						'version'=> CreateObject('phpgwapi.xmlrpcval',$version,'string')
+					),
+					'struct'
+				);
+			}
+		}
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$apps, 'struct'));
+	}
+	*/
+
 	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
 	function _xmlrpcs_login($server,$m)
@@ -682,7 +704,7 @@
 
 		if($server_name)
 		{
-			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password,'text');
+			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password,"text");
 		}
 		else
 		{
@@ -694,7 +716,7 @@
 			{
 				$user = $username;
 			}
-			$sessionid = $GLOBALS['phpgw']->session->create($user,$password,'text');
+			$sessionid = $GLOBALS['phpgw']->session->create($user,$password,"text");
 			$kp3 = $GLOBALS['phpgw']->session->kp3;
 			$domain = $GLOBALS['phpgw']->session->account_domain;
 		}
@@ -711,6 +733,16 @@
 		}
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}
+
+	$GLOBALS['_xmlrpcs_phpgw_api_version_sig'] = array(array(xmlrpcString,xmlrpcString));
+	$GLOBALS['_xmlrpcs_phpgw_api_version_doc'] = 'Returns the phpGroupWare API version';
+	function _xmlrpcs_phpgw_api_version($server,$m)
+	{
+		$version = $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
+
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$version,'string'));
+	}
+
 
 	$GLOBALS['_xmlrpcs_logout_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_logout_doc'] = 'phpGroupWare client or server logout via XML-RPC';
@@ -736,60 +768,29 @@
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}
 
-	$GLOBALS['_xmlrpcs_list_apps_sig'] = array(array(xmlrpcStruct));
-	$GLOBALS['_xmlrpcs_list_apps_doc'] = 'Returns an array of information for all applications';
-	function _xmlrpcs_list_apps($server,$m)
-	{
-		return ExecMethod('phpgwapi.app_registry.list_apps');
-	}
-
-	$GLOBALS['_xmlrpcs_get_appbyname_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_get_appbyname_doc'] = 'Returns an array of information for the requested application name';
-	function _xmlrpcs_get_appbyname($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.get_appbyname',$app->scalarval());
-	}
-
-	$GLOBALS['_xmlrpcs_get_appbyid_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_get_appbyid_doc'] = 'Returns an array of information for the requested application ID';
-	function _xmlrpcs_get_appbyid($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.get_appbyid',$app->scalarval());
-	}
-
-	$GLOBALS['_xmlrpcs_find_new_app_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
-	$GLOBALS['_xmlrpcs_find_new_app_doc'] = 'Returns an array of information for the requested application ID';
-	function _xmlrpcs_find_new_app($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.find_new_app',$app->scalarval());
-	}
-
-	$GLOBALS['_xmlrpcs_package_app_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_package_app_doc'] = 'Package an application for transport back to the calling client';
-	function _xmlrpcs_package_app($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.package_app',$app->scalarval());
-	}
 	$GLOBALS['_xmlrpcs_dmap'] = array(
 		'system.listMethods' => array(
 			'function'  => '_xmlrpcs_listMethods',
 			'signature' => $GLOBALS['_xmlrpcs_listMethods_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_listMethods_doc']
 		),
-		'system.methodSignature' => array(
-			'function'  => '_xmlrpcs_methodSignature',
-			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
-		),
 		'system.methodHelp' => array(
 			'function'  => '_xmlrpcs_methodHelp',
 			'signature' => $GLOBALS['_xmlrpcs_methodHelp_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_methodHelp_doc']
 		),
+		'system.methodSignature' => array(
+			'function'  => '_xmlrpcs_methodSignature',
+			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
+		),
+		/*
+		'system.listApps' => array(
+			'function'  => '_xmlrpcs_listApps',
+			'signature' => $GLOBALS['_xmlrpcs_listApps_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
+		),
+		*/
 		'system.login'  => array(
 			'function'  => '_xmlrpcs_login',
 			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
@@ -800,32 +801,10 @@
 			'signature' => $GLOBALS['_xmlrpcs_logout_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_logout_doc']
 		),
-		/*
-		'system.list_apps' => array(
-			'function'  => '_xmlrpcs_list_apps',
-			'signature' => $GLOBALS['_xmlrpcs_list_apps_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_list_apps_doc']
-		),
-		*/
-		'system.get_appbyname' => array(
-			'function'  => '_xmlrpcs_get_appbyname',
-			'signature' => $GLOBALS['_xmlrpcs_get_appbyname_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_get_appbyname_doc']
-		),
-		'system.get_appbyid' => array(
-			'function'  => '_xmlrpcs_get_appbyid',
-			'signature' => $GLOBALS['_xmlrpcs_get_appbyid_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_get_appbyid_doc']
-		),
-		'system.find_new_app' => array(
-			'function'  => '_xmlrpcs_find_new_app',
-			'signature' => $GLOBALS['_xmlrpcs_find_new_app_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_find_new_app_doc']
-		),
-		'system.package_app' => array(
-			'function'  => '_xmlrpcs_package_app',
-			'signature' => $GLOBALS['_xmlrpcs_package_app_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_package_app_doc']
+		'system.phpgw_api_version' => array(
+			'function'  => '_xmlrpcs_phpgw_api_version',
+			'signature' => $GLOBALS['_xmlrpcs_phpgw_api_version_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_phpgw_api_version_doc']
 		)
 	);
 

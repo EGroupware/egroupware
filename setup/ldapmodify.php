@@ -347,7 +347,7 @@
 
 	if ($setup_complete)
 	{
-		echo lang('<br><center>Modifications have been completed!  Click <a href="index.php">here</a> to return to setup </center>');
+		echo '<br><center>'.lang('Modifications have been completed!').' '.lang('Click <a href="index.php">here</a> to return to setup.').'<br><center>';
 		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}

@@ -48,7 +48,6 @@
 			{
 				return False;
 			}
-			
 			/* find the dn for this uid, the uid is not always in the dn */
 			$attributes = array( "uid", "dn" );
 			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], "(uid=$username)", $attributes);
@@ -89,7 +88,6 @@
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
 			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], "uidnumber=$_account_id");
 			$allValues = ldap_get_entries($ds, $sri);
-	
 	
 			$entry['userpassword'] = $GLOBALS['phpgw']->common->encrypt_password($new_passwd);
 			$dn = $allValues[0]['dn'];

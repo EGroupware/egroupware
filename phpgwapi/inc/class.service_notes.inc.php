@@ -22,12 +22,12 @@
 
   /* $Id$ */
 
-	class service_notes extends service
+	class service_contacts extends service
 	{
-		function service_notes()
+		function service_contacts()
 		{
 			$this->provider = $GLOBALS['phpgw_info']['notes_service'] ? $GLOBALS['phpgw_info']['notes_service'] : 'notes';
-			$this->svc = $this->provider . '.bo';
+			$this->svc = $this->provider . '.bo' . $this->provider;
 			$type = $this->type ? $this->type : 'xmlrpc';
 			$this->function_map = ExecMethod($this->svc . '.list_methods',$type);
 		}

@@ -33,7 +33,7 @@ FULL EXPLANATION
 
 SECURITY CONCERNS
 -----------------
-There are many security concerns related with allowing users to store files on the server.  The most common problem is that users can upload any type of file, including CGI and PHP scripts.  This in effect grants them local access to the machine, and can be used to read database passwords and other sensitive files.  The ability to upload files of any type is not forbidden by filemanager because it is sometimes desired, and also the types of vulnerable files differ from server to server.  To combat this, you can add a simple entry to Apache's httpd.conf to prevent certain types of files from being executed.  Included below is an example that results in .cgi, .pl, .php, .php3, and .phps files being treated as normal text files.  It also explicitly turns all Options off, which includes turning Indexes (listing of files) off.
+There are many security concerns related with allowing users to store files on the server.  The most common problem is that users can upload any type of file, including CGI and PHP scripts.  This in effect grants them local access to the machine, and can be used to read database passwords and other sensitive files.  The ability to upload files of any type is not forbidden by phpwebhosting because it is sometimes desired, and also the types of vulnerable files differ from server to server.  To combat this, you can add a simple entry to Apache's httpd.conf to prevent certain types of files from being executed.  Included below is an example that results in .cgi, .pl, .php, .php3, and .phps files being treated as normal text files.  It also explicitly turns all Options off, which includes turning Indexes (listing of files) off.
 
 <Directory /path/to/files>
 Options None

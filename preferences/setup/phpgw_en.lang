@@ -35,8 +35,7 @@ interface/template selection	preferences	en	Interface/Template Selection
 language	preferences	en	Language
 max matches per page	preferences	en	Max matches per page
 no default	preferences	en	No default
-note: this feature might *not* change your email password. this may need to be done manually. 	preferences	en	note: This feature might *not* change your email password. This may need to be done manually.
-please choose one of the methods to handle the subcategories	preferences	en	Please choose one of the methods to handle the subcategories
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
 please, select a new theme	preferences	en	Please, select a new theme
 popup with search	preferences	en	Popup with search
 re-enter your password	preferences	en	Re-Enter your password

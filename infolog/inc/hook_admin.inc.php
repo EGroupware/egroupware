@@ -13,9 +13,15 @@
 	{
 		$file = Array
 		(
-			'Site configuration'	=> $GLOBALS['phpgw']->link('/index.php',array('menuaction' => 'infolog.uiinfolog.admin' )),
-			'Global Categories'		=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True'),
-			'CSV-Import'			=> $GLOBALS['phpgw']->link('/infolog/csv_import.php')
+			'Site configuration' => $GLOBALS['phpgw']->link('/index.php',array(
+				'menuaction' => 'infolog.uiinfolog.admin' )),
+			'Global Categories'  => $GLOBALS['phpgw']->link('/index.php',array(
+				'menuaction' => 'admin.uicategories.index',
+				'appname'    => $appname,
+				'global_cats'=> True)),
+			'Custom fields, typ and status' => $GLOBALS['phpgw']->link('/index.php',array(
+				'menuaction' => 'infolog.uicustomfields.edit')),
+			'CSV-Import'         => $GLOBALS['phpgw']->link('/infolog/csv_import.php')
 		);
 
 //Do not modify below this line

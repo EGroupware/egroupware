@@ -1,16 +1,14 @@
 <!-- begin login_stage_header.tpl -->
-<tr bgcolor="#486591">
+<tr class="th">
 	<td colspan="2">
-		<font color="#fefefe">&nbsp;<b>Setup/Config Admin Login</b></font>
+		&nbsp;<b>Setup/Config Admin Login</b>
 	</td>
 </tr>
-<tr bgcolor="#e6e6e6">
-	<td colspan="2">
-		<font color="#ff0000">{ConfigLoginMSG}</font>
-	</td>
+<tr class="row_on">
+	<td colspan="2" class="msg" align="center">{ConfigLoginMSG}</td>
 </tr>
-<tr bgcolor="#e6e6e6">
-	<td>
+<tr class="row_on">
+	<td colspan="2">
 		<form action="index.php" method="POST" name="config">
 		<!-- BEGIN B_multi_domain -->
 		<table>
@@ -19,7 +17,7 @@
 				Domain: 
 			</td>
 			<td>
-				<input type="text" name="FormDomain" value="">
+				<select name="FormDomain">{domains}</select>
 			</td>
 		</tr>
 		<tr>
@@ -46,3 +44,4 @@
 	</td>
 </tr>
 <!-- end login_stage_header.tpl -->
+

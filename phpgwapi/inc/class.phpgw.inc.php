@@ -5,6 +5,7 @@
 	* and Joseph Engo <jengo@phpgroupware.org>                                 *
 	* This is the central class for the phpGroupWare API                       *
 	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	* Parts Copyright (C) 2003 Free Software Foundation                        *
 	* -------------------------------------------------------------------------*
 	* This library is part of the phpGroupWare API                             *
 	* http://www.phpgroupware.org/api                                          * 
@@ -75,7 +76,7 @@
 		 * Used as a shortcut for stripping out html special chars. 
 		 *
 		 * @access	public
-		 *	@param $s string  The string to have its html special chars stripped out.
+		 * @param $s string  The string to have its html special chars stripped out.
 		 * @return string  The string with html special characters removed
 		 * @syntax strip_html($string)
 		 * @example $reg_string = strip_html($urlencode_string);
@@ -91,8 +92,8 @@
 		 * Used for backwards compatibility and as a shortcut. If no url is passed, it will use PHP_SELF. Wrapper to session->link()
 		 *
 		 * @access	public
-		 *	@param	string	$string	The url the link is for
-		 *	@param  string	$extravars	Extra params to be passed to the url
+		 * @param	string	$string	The url the link is for
+		 * @param  string	$extravars	Extra params to be passed to the url
 		 * @return string	The full url after processing
 		 * @see	session->link()
 		 * @syntax link($string, $extravars)
@@ -109,50 +110,58 @@
 		}
 		
 		/**
+	 * Repsost Prevention Detection
+	 *
+	 * Used as a shortcut. Wrapper to session->is_repost()
+	 *
+	 * @access	public
+	 * @param	bool	$display_error	Use common error handler? - not yet implemented
+	 * @return bool	True if called previously, else False - call ok
+	 * @see	session->is_repost()
+	 * @syntax is_post()
+	 * @example $repost = $GLOBALS['phpgwapi']->is_repost();
+		* @author	Dave Hall
+	 */
+		function is_repost($display_error = False)
+		{
+			return $this->session->is_repost($display_error);
+		}
+		
+		/**
 		 * Handles redirects under iis and apache
 		 *
 		 * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
 		 *
 		 * @access	public
 		 *	@param  string The url ro redirect to
-		 * @syntax redirect($string)
+		 * @syntax redirect(key as string)
 		 * @example None yet
 		 */
 		function redirect($url = '')
 		{
-			$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
+			/* global $HTTP_ENV_VARS; */
 
-			if (!$url)
+			$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
+			
+			if ( !$url )
 			{
 				$url = $GLOBALS['PHP_SELF'];
 			}
-			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
-			{
-				if(substr($url ,0,4) != 'http')
-				{
-					$url = 'https://'.$GLOBALS['phpgw_info']['server']['hostname'].$url;
-				}
-				else
-				{
-					$url = str_replace ( 'http:', 'https:', $url);
-				}
-			}
-
-			if ($iis)
+			if ( $iis )
 			{
 				echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
 				echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";
 				echo "\n</HEAD><BODY>";
 				echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
 				echo "\n</BODY></HTML>";
+				exit;
 			}
 			else
 			{
 				Header("Location: $url");
 				print("\n\n");
+				exit;
 			}
-			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-			exit;
 		}
 
 		/**
@@ -170,6 +179,7 @@
 		 */
 		function lang($key, $m1 = '', $m2 = '', $m3 = '', $m4 = '') 
 		{
+			/* global $phpgw; */
 			return $this->translation->translate($key);
 		}
 	} /* end of class */

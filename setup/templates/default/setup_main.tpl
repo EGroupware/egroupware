@@ -1,26 +1,18 @@
 <!-- begin setup_main.tpl -->
 <!-- begin the db section -->
-<table border="0" width="100%" cellspacing="0" cellpadding="2">
-<tr>
-	<td align="left" bgcolor="#486591">
-		<font color="#fefefe">{db_step_text}</font>
-	</td>
-	<td align="right" bgcolor="#486591">
-		&nbsp;
-	</td>
+<table border="0" width="100%" cellspacing="0" cellpadding="2" style="{ border: 1px solid #000000; }">
+<tr class="th">
+	<td align="left">{db_step_text}</td>
+	<td align="right">&nbsp;</td>
 </tr>
 
 {V_db_filled_block}
 <!-- end the db section -->
 
 <!-- begin the config section -->
-<tr>
-	<td align="left" bgcolor="#486591">
-		<font color="#fefefe">{config_step_text}</font>
-	</td>
-	<td align="right" bgcolor="#486591">
-		&nbsp;
-	</td>
+<tr class="th">
+	<td align="left">{config_step_text}</td>
+	<td align="right">&nbsp;</td>
 </tr>
 <tr>
 	<td align="center">
@@ -38,13 +30,9 @@
 </tr>
 <!-- end the config section -->
 <!-- begin the lang section -->
-<tr>
-	<td align="left" bgcolor="#486591">
-		<font color="#fefefe">{lang_step_text}</font>
-	</td>
-	<td align="right" bgcolor="#486591">
-		&nbsp;
-	</td>
+<tr class="th">
+	<td align="left">{lang_step_text}</td>
+	<td align="right">&nbsp;</td>
 </tr>
 <tr>
 	<td align="center">
@@ -56,13 +44,9 @@
 </tr>
 <!-- end the lang section -->
 <!-- begin the apps section -->
-<tr>
-	<td align="left" bgcolor="#486591">
-		<font color="#fefefe">{apps_step_text}</font>
-	</td>
-	<td align="right" bgcolor="#486591">
-		&nbsp;
-	</td>
+<tr class="th">
+	<td align="left">{apps_step_text}</td>
+	<td align="right">&nbsp;</td>
 </tr>
 <tr>
 	<td align="center">
@@ -73,6 +57,8 @@
 	</td>
 </tr>
 <!-- end the apps section -->
-
+<tr class="banner">
+	<td colspan="2">&nbsp;</td>
+</tr>
 </table>
 <!-- end setup_main.tpl -->

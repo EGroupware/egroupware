@@ -24,11 +24,12 @@
 
 	/* $Id$ */
 
-	class sessions_
+	class sessions extends sessions_
 	{
-		function sessions_()
+		function sessions()
 		{
-			//controls the time out for php4 sessions - skwashd 18-May-2003
+			$this->sessions_();
+                //controls the time out for php4 sessions - skwashd 18-May-2003
 			ini_set('session.gc_maxlifetime', $GLOBALS['phpgw_info']['server']['sessions_timeout']);
 			define('PHPGW_PHPSESSID', ini_get('session.name'));
 		}
@@ -37,12 +38,6 @@
 		{
 			session_start();
 			return $GLOBALS['phpgw_session'] = $_SESSION['phpgw_session'];
-		}
-
-		// This will remove stale sessions out of the database
-		function clean_sessions()
-		{
-			// With php4 sessions support this isnt really our job
 		}
 
 		function set_cookie_params($domain)

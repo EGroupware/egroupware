@@ -1,17 +1,17 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
-  * This file written by Joseph Engo<jengo@phpgroupware.org>                 *
-  *  and Dan Kuykendall<seek3r@phpgroupware.org>                             *
-  *  and Mark Peters<skeeter@phpgroupware.org>                               *
-  *  and Miles Lott<milosch@phpgroupware.org>                                *
-  * --------------------------------------------                             *
+  * phpGroupWare - Setup						    *
+  * http://www.phpgroupware.org					     *
+  * --------------------------------------------			    *
+  * This file written by Joseph Engo<jengo@phpgroupware.org>		*
+  *  and Dan Kuykendall<seek3r@phpgroupware.org>			    *
+  *  and Mark Peters<skeeter@phpgroupware.org>			      *
+  *  and Miles Lott<milosch@phpgroupware.org>				*
+  * --------------------------------------------			    *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
+  *  option) any later version.					     *
   \**************************************************************************/
 
   /* $Id$ */
@@ -26,6 +26,11 @@
 		var $lang = '';
 		var $html = '';
 		var $appreg = '';
+	
+	/* table name vars */
+	var $tbl_apps;
+	var $tbl_config;
+	var $tbl_hooks;
 
 		function setup($html=False, $translation=False)
 		{
@@ -34,8 +39,12 @@
 			$this->appreg    = CreateObject('phpgwapi.app_registry');
 
 			/* The setup application needs these */
-			$this->html        = $html ? CreateObject('phpgwapi.setup_html') : '';
+			$this->html	= $html ? CreateObject('phpgwapi.setup_html') : '';
 			$this->translation = $translation ? CreateObject('phpgwapi.setup_translation') : '';
+                
+//                $this->tbl_apps    = $this->get_apps_table_name();
+//                $this->tbl_config  = $this->get_config_table_name();
+                $this->tbl_hooks   = $this->get_hooks_table_name();
 		}
 
 		/*!
@@ -44,17 +53,11 @@
 		*/
 		function loaddb()
 		{
-			$GLOBALS['ConfigDomain'] = get_var('ConfigDomain',array('COOKIE','POST'));
-
-			if(empty($GLOBALS['ConfigDomain']))
-			{
-				/* This is to fix the reading of this value immediately after the cookie was set on login */
-				$GLOBALS['ConfigDomain'] = get_var('ConfigDomain',Array('DEFAULT','POST'),'default');
-			}
+			$GLOBALS['ConfigDomain'] = get_var('ConfigDomain',array('COOKIE','POST'),$_POST['FormDomain']);
 
 			$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];
 
-			$this->db           = CreateObject('phpgwapi.db');
+			$this->db	  = CreateObject('phpgwapi.db');
 			$this->db->Host     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_host'];
 			$this->db->Type     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];
 			$this->db->Database = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_name'];
@@ -69,7 +72,7 @@
 		*/
 		function auth($auth_type='Config')
 		{
-			$remoteip     = $GLOBALS['REMOTE_ADDR'];
+			$remoteip     = $_SERVER['REMOTE_ADDR'];
 
 			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
 			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
@@ -103,11 +106,11 @@
 			if(!empty($HeaderLogin) && $auth_type == 'Header')
 			{
 				/* header admin login */
-				if($FormPW == $GLOBALS['phpgw_info']['server']['header_admin_password'])
+				if($FormPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
 				{
 					setcookie('HeaderPW',"$FormPW","$expire");
-					header('Location: manageheader.php');
-					echo '<meta http-equiv="Refresh" content="1">' . lang('Please Wait...');
+					setcookie('ConfigLang',"$ConfigLang","$expire");
+					return True;
 				}
 				else
 				{
@@ -119,12 +122,12 @@
 			elseif(!empty($ConfigLogin) && $auth_type == 'Config')
 			{
 				/* config login */
-				if($FormPW == @$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'])
+				if($FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
 				{
 					setcookie('ConfigPW',"$FormPW","$expire");
 					setcookie('ConfigDomain',"$FormDomain","$expire");
 					setcookie('ConfigLang',"$ConfigLang","$expire");
-					echo '<meta http-equiv="Refresh" content="1">' . lang('Please Wait...');
+					return True;
 				}
 				else
 				{
@@ -140,6 +143,7 @@
 				{
 					/* config logout */
 					setcookie('ConfigPW','');
+					$GLOBALS['phpgw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
 					setcookie('ConfigDomain','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
 					setcookie('ConfigLang','');
@@ -161,7 +165,7 @@
 			elseif(!empty($ConfigPW) && $auth_type == 'Config')
 			{
 				/* Returning after login to config */
-				if($ConfigPW == $GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd'])
+				if($ConfigPW == stripslashes($GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd']))
 				{
 					setcookie('ConfigPW',"$ConfigPW","$expire");
 					setcookie('ConfigDomain',"$ConfigDomain","$expire");
@@ -178,9 +182,10 @@
 			elseif(!empty($HeaderPW) && $auth_type == 'Header')
 			{
 				/* Returning after login to header admin */
-				if($HeaderPW == $GLOBALS['phpgw_info']['server']['header_admin_password'])
+				if($HeaderPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
 				{
 					setcookie('HeaderPW',"$HeaderPW","$expire");
+					setcookie('ConfigLang',"$ConfigLang","$expire");
 					return True;
 				}
 				else
@@ -264,7 +269,7 @@
 				return False;
 			}
 			
-			$version = ereg_replace('pre','.',$versionstring);
+			$version = str_replace('pre','.',$versionstring);
 			$varray  = explode('.',$version);
 			$major   = implode('.',array($varray[0],$varray[1],$varray[2]));
 
@@ -280,7 +285,7 @@
 		{
 			$tables = Array();
 			$tablenames = $this->db->table_names();
-			while(list($key,$val) = @each($tablenames))
+			foreach($tablenames as $key => $val)
 			{
 				$tables[] = $val['table_name'];
 			}
@@ -315,8 +320,8 @@
 			$enable = intval($enable);
 
 			/*
-			 Use old applications table if the currentver is less than 0.9.10pre8,
-			 but not if the currentver = '', which probably means new install.
+			Use old applications table if the currentver is less than 0.9.10pre8,
+			but not if the currentver = '', which probably means new install.
 			*/
 			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
@@ -342,6 +347,17 @@
 				if($setup_info[$appname]['tables'])
 				{
 					$tables = implode(',',$setup_info[$appname]['tables']);
+				}
+				if ($setup_info[$appname]['tables_use_prefix'] == True)
+				{
+					echo $setup_info[$appname]['name'] . ' uses tables_use_prefix, storing ' 
+					. $setup_info[$appname]['tables_prefix']
+						. ' as prefix for ' . $setup_info[$appname]['name'] . " tables\n";
+																			
+					$sql = "INSERT INTO phpgw_config (config_app,config_name,config_value) "
+						."VALUES ('".$setup_info[$appname]['name']."','"
+						.$appname."_tables_prefix','".$setup_info[$appname]['tables_prefix']."');";
+					$this->db->query($sql,__LINE__,__FILE__);
 				}
 				if($use_appid)
 				{
@@ -603,11 +619,11 @@
 		}
 
 		/*!
-		  @function hook
-		  @abstract call the hooks for a single application
-		  @param $location hook location - required
-		  @param $appname application name - optional
-		 */
+		 @function hook
+		 @abstract call the hooks for a single application
+		 @param $location hook location - required
+		 @param $appname application name - optional
+		*/
 		function hook($location, $appname='')
 		{
 			if (!is_object($this->hooks))
@@ -786,5 +802,16 @@
 				return False;
 			}
 		}
+	
+       
+       function get_hooks_table_name()
+       {
+       		if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5') && ($setup_info['phpgwapi']['currentver'] != ''))
+			{
+				/* No phpgw_hooks table yet. */
+				return False;
+			}
+                return 'phpgw_hooks';
+       }
 	}
 ?>

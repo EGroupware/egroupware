@@ -56,7 +56,7 @@
 			{
 				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server'].'/pop3'
 					.':'.$GLOBALS['phpgw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
- 			}
+			}
  			elseif ( $GLOBALS['phpgw_info']['server']['mail_server_type']=='imaps' )
  			{
  				// IMAPS support:

@@ -21,6 +21,7 @@
 				'navbar' => 'navbar.tpl'
 			)
 		);
+		$tpl->set_block('navbar','preferences','preferences_icon');
 
 		//$tpl->set_block('navbar','B_powered_top','V_powered_top');
 		//$tpl->set_block('navbar','B_num_users','V_num_users');
@@ -31,33 +32,24 @@
 
 		#  echo '<pre>'; print_r($GLOBALS['phpgw_info']['navbar']); echo '</pre>';
 		$applications = '';
-		while ($app = each($GLOBALS['phpgw_info']['navbar']))
+		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
-			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && ! ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
+			if ($app != 'home' && $app != 'preferences' && ! ereg('about',$app) && $app != 'logout')
 			{
-				$title = lang($app[1]['title']);
-
-				$applications .= '<tr><td class="main_menu_apps"><a class="main_menu" href="' . $app[1]['url'] . '"';
+				$applications .= '<tr><td class="main_menu_apps"><a class="main_menu" href="' . $app_data['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']))
 				{
 					$applications .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 				}
 
-				$applications .= '>'.$title.'</a></td></tr>'."\r\n";
+				$applications .= '>'.$app_data['title'].'</a></td></tr>'."\r\n";
 			}
-			$img_src_over = $GLOBALS['phpgw']->common->image($app[0],'navbar-over.gif');
+			$img_src_over = $GLOBALS['phpgw']->common->image($app,'navbar-over.gif');
 			if($img_src_over)
 			{
 				$pre_load[] = $img_src_over;
 			}
 		}
-
-		$applications .= '<tr><td class="main_menu_bottom">'.$GLOBALS['phpgw']->common->display_fullname().'<br>'
-			. lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
-			. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
-			. $GLOBALS['phpgw']->common->show_date(time(),'d, Y').'<br>'
-			. lang('version').': '.$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
-			. '</td></tr>'."\r\n";
 
 		$var['applications'] = $applications;
      
@@ -65,7 +57,7 @@
 		$var['preferences_link'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
 		$var['logout_link'] 	= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
 		$var['help_link'] 	= $GLOBALS['phpgw_info']['navbar']['about']['url'];
-		$var['lang_welcome']	= lang('Welcome');
+		$var['lang_welcome']	= lang('welcome');
 		$var['lang_preferences']	= lang('preferences');
 		$var['lang_logout']	= lang('logout');
 		$var['lang_help']	= lang('help');
@@ -83,15 +75,14 @@
 			$var['powered_by'] = '';
 			$tpl->set_var($var);
 		}
+		$var['phpgw_version'] = lang("version").": ".$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
+		
 		$tpl->set_var($var);
 
-		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
+		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 		{
-			$db  = $GLOBALS['phpgw']->db;
-			$db->query('select count(session_id) from phpgw_sessions');
-			$db->next_record();
-			$var['current_users'] = '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
-			 	. '">&nbsp;' . lang('Current users') . ': ' . $db->f(0) . '</a>';
+			$var['current_users'] = '<a class="main_menu_bottom" href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
+			 	. '">' . lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
 			$tpl->set_var($var);
 		}
 		else
@@ -100,13 +91,18 @@
 			$tpl->set_var($var);
 		}
 
+		$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
+		$var['user_info_date'] =
+				  lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
+				. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
+				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 		$var['user_info_size'] = '2';
 		$var['user_info_color'] = '#000000';
 
 		// Maybe we should create a common function in the phpgw_accounts_shared.inc.php file
 		// to get rid of duplicate code.
-/*		if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
+		if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
 		{
 			$api_messages = lang('You are required to change your password during your first login')
 				. '<br> Click this image on the navbar: <img src="'
@@ -120,11 +116,44 @@
 		// This is gonna change
 		if (isset($cd))
 		{
-			$var['messages'] = $api_messages . '<br>' . checkcode($cd);
+			$var['messages'] = $api_messages . "<br>" . checkcode($cd);
 		}
-*/
+
+		if (isset($GLOBALS['phpgw_info']['flags']['app_header']))
+		{
+			$var['current_app_header'] = $GLOBALS['phpgw_info']['flags']['app_header'];
+			$var['th_bg'] = $GLOBALS['phpgw_info']['theme']['th_bg'];
+			$var['message_top'] = '30px';
+			$var['app_top'] = '40px';
+		}
+		else
+		{
+			$tpl->set_block('navbar','app_header','app_header');
+			$var['app_header'] = '';
+			$var['message_top'] = '0px';
+			$var['app_top'] = '15px';
+		}
 		$tpl->set_var($var);
+		// check if user is allowed to change his prefs
+		if ($GLOBALS['phpgw_info']['user']['apps']['preferences'])
+		{
+			$tpl->parse('preferences_icon','preferences');
+		}
+		else
+		{
+			$tpl->set_var('preferences_icon','');
+		}
 		$tpl->pfp('out','navbar');
+		// If the application has a header include, we now include it
+		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+		{
+			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
+			{
+				$GLOBALS[$class]->header();
+			}
+		}
+		$GLOBALS['phpgw']->hooks->process('after_navbar');
 		return;
 	}
 

@@ -87,7 +87,7 @@
 			echo "Start Time : ".$GLOBALS['phpgw']->common->show_date()."<br>\n";
 			@set_time_limit(0);
 
-			$icsfile=PHPGW_APP_INC.'/events.vcs';
+			$icsfile=PHPGW_APP_INC.'/events.ics';
 			$fp=fopen($icsfile,'rt');
 			$contents = explode("\n",fread($fp, filesize($icsfile)));
 			fclose($fp);

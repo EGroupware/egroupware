@@ -1,17 +1,18 @@
 <?php
-	/**************************************************************************\
-	* phpGroupWare API - Template class                                        *
-	* (C) Copyright 1999-2000 NetUSE GmbH Kristian Koehntopp                   *
-	* ------------------------------------------------------------------------ *
-	* This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-	* http://www.phpgroupware.org/                                             * 
-	* ------------------------------------------------------------------------ *
-	* This program is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published    *
-	* by the Free Software Foundation; either version 2.1 of the License, or   *
-	* any later version.                                                       *
-	\**************************************************************************/
-	/* $Id$ */
+  /**************************************************************************\
+  * phpGroupWare API - Template class                                        *
+  * (C) Copyright 1999-2000 NetUSE GmbH Kristian Koehntopp                   *
+  * ------------------------------------------------------------------------ *
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  * http://www.phpgroupware.org/                                             * 
+  * ------------------------------------------------------------------------ *
+  * This program is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published    *
+  * by the Free Software Foundation; either version 2.1 of the License, or   *
+  * any later version.                                                       *
+  \**************************************************************************/
+
+  /* $Id$ */
 
 	class Template
 	{
@@ -136,12 +137,6 @@
 		 */
 		function set_var($varname, $value = '')
 		{
-   			if ($varname == 'phpgw_body' && is_object($GLOBALS['phpgw']->xslttpl))
-			{
-				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $value));
-				return;
-			}
-
 			if (!is_array($varname))
 			{
 				if (!empty($varname))
@@ -421,7 +416,7 @@
 			}
 
 			$this->set_var($handle, $str);
-			return True;
+			return true;
 		}
 
 		/***************************************************************************/
@@ -441,7 +436,8 @@
 			{
 				echo('<b>Halted.</b>');
 			}
-			exit;
+
+			$GLOBALS['phpgw']->common->phpgw_exit(True);
 		}
 
 		/* public, override: haltmsg($msg)

@@ -56,6 +56,10 @@
 		function boetemplate($name='',$load_via='')
 		{
 			$this->public_functions += array(
+				'set_row_attribute' => True,
+				'disable_row' => True,
+				'set_column_attribute' => True,
+				'disable_column' => True,
 				'disable_cells' => True,
 				'set_cell_attribute' => True,
 				'get_cell_attribute' => True,
@@ -203,6 +207,87 @@
 		}
 
 		/*!
+		@functin appsession
+		@syntax appsession($location = 'default', $appname = '', $data = '##NOTHING##')
+		@abstract db-sessions appsession function
+		@note It is used to overcome the problem with overflowing php4-sessions
+		*/
+		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
+		{
+			// use the version from the sessions-class if we use db-sessions
+			//
+			if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'db')
+			{
+				return $GLOBALS['phpgw']->session->appsession($location,$appname,$data);
+			}
+			// if not, we use or own copy of the appsessions function
+			// setting these class vars to be compatible with the session-class
+			//
+			$this->sessionid  = $GLOBALS['phpgw']->session->sessionid;
+			$this->account_id = $GLOBALS['phpgw']->session->account_id;
+
+			if (! $appname)
+			{
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			}
+
+			if ($data == '##NOTHING##')
+			{
+				$query = "SELECT content FROM phpgw_app_sessions WHERE"
+					." sessionid='".$this->sessionid."' AND loginid='".$this->account_id."'"
+					." AND app = '".$appname."' AND location='".$location."'";
+
+				$GLOBALS['phpgw']->db->query($query,__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->next_record();
+
+				// I added these into seperate steps for easier debugging
+				$data = $GLOBALS['phpgw']->db->f('content');
+				// Changed by Skeeter 2001 Mar 04 0400Z
+				// This was not properly decoding structures saved into session data properly
+//				$data = $GLOBALS['phpgw']->common->decrypt($data);
+//				return stripslashes($data);
+				// Changed by milosch 2001 Dec 20
+				// do not stripslashes here unless this proves to be a problem.
+				// Changed by milosch 2001 Dec 25
+				/* do not decrypt and return if no data (decrypt returning garbage) */
+				if($data)
+				{
+					$data = $GLOBALS['phpgw']->crypto->decrypt($data);
+//					echo 'appsession returning: '; _debug_array($data);
+				}
+			}
+			else
+			{
+				$GLOBALS['phpgw']->db->query("SELECT content FROM phpgw_app_sessions WHERE "
+					. "sessionid = '".$this->sessionid."' AND loginid = '".$this->account_id."'"
+					. " AND app = '".$appname."' AND location = '".$location."'",__LINE__,__FILE__);
+
+				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
+				$encrypteddata = $GLOBALS['phpgw']->db->db_addslashes($encrypteddata);
+
+				if ($GLOBALS['phpgw']->db->num_rows()==0)
+				{
+					$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
+						. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
+						. "','".$location."','".$encrypteddata."','" . time() . "')",__LINE__,__FILE__);
+				}
+				else
+				{
+					$GLOBALS['phpgw']->db->query("UPDATE phpgw_app_sessions SET content='".$encrypteddata."'"
+						. "WHERE sessionid = '".$this->sessionid."'"
+						. "AND loginid = '".$this->account_id."' AND app = '".$appname."'"
+						. "AND location = '".$location."'",__LINE__,__FILE__);
+				}
+			}
+			// we need to clean up not longer used records, else the db gets bigger and bigger
+			//
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout'])
+				. "'",__LINE__,__FILE__);
+
+			return $data;
+		}
+
+		/*!
 		@function save_appsession
 		@syntax save_appsession( $data,$id='' )
 		@author ralfbecker
@@ -221,7 +306,7 @@
 			{
 				$id = $this->appsession_id;
 			}
-			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
+			$this/*GLOBALS['phpgw']->session*/->appsession($id,'etemplate',$data);
 
 			return $id;
 		}
@@ -236,9 +321,13 @@
 		*/
 		function get_appsession($id)
 		{
-			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
+			$data = $this/*GLOBALS['phpgw']->session*/->appsession($id,'etemplate');
 
 			//echo "<p>get_appsession('$id') data="; _debug_array($data);
+
+			// if we delete the returned value here, we cant get back (back-button),
+			// not even to a non-submitted page
+			//$GLOBALS['phpgw']->session->appsession_delete($id,'etemplate');
 
 			return $data;
 		}
@@ -280,11 +369,10 @@
 		{
 			//echo "<p>set_cell_attribute(tpl->name=$this->name, name='$name', attr='$attr',val='$val')</p>\n";
 
-			reset($this->data);
 			$n = 0;
-         while(list($row,$cols) = each($this->data))
+			foreach($this->data as $row => $cols)
 			{
-				while(list($col,$cell) = each($cols))
+				foreach($cols as $col => $cell)
 				{
 					if ($cell['name'] == $name)
 					{
@@ -301,7 +389,6 @@
 					}
 				}
 			}
-			reset($this->data);
 
 			return $n;
 		}
@@ -318,17 +405,62 @@
 		}
 		
 		/*!
+		@function set_row_attributes
+		@syntax set_row_attibutes( $n,$height=0,$class=0,$valign=0,$disabled=0 )
+		@author ralfbecker
+		@abstract set one or more attibutes for row $n
+		@param $n is numerical row-number starting with 1 (!)
+		@param $height in percent or pixel or '' for no height
+		@param $class name of css class (without the leading '.') or '' for no class
+		@param $valign alignment (top,middle,bottom) or '' for none
+		@param $disabled True or expression or False to disable or enable the row
+		@param Only the number 0 means dont change the attribute !!!
+		*/
+		function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0)
+		{
+			list($old_height,$old_disabled) = explode(',',$this->data[0]["h$n"]);
+			$disabled = $disabled !== 0 ? $disabled : $old_disabled;
+			$this->data[0]["h$n"] = ($height !== 0 ? $height : $old_height).
+				($disabled ? ','.$disabled : '');
+			list($old_class,$old_valign) = explode(',',$this->data[0]["c$n"]);
+			$valign = $valign !== 0 ? $valign : $old_valign;
+			$this->data[0]["c$n"] = ($class !== 0 ? $class : $old_class).
+				($valign ? ','.$valign : '');
+		}
+
+		/*!
 		@function disable_row
 		@syntax disable_row( $n,$enable=False )
 		@author ralfbecker
 		@abstract disables row $n
-		@param $n is numerical row-number starting with 1 (!) 
+		@param $n is numerical row-number starting with 1 (!)
 		@param $enable can be used to re-enable a row if set to True
 		*/
 		function disable_row($n,$enable=False)
 		{
-			list($height) = explode(',',$this->data[0]["h$n"]);
-			$this->data[0]["h$n"] = $height.($enable?'':',1');
+			$this->set_row_attributes($n,0,0,0,!$enable);
+		}
+
+		/*!
+		@function set_column_attributes
+		@syntax set_column_attibutes( $n,$width=0,$disabled=0 )
+		@author ralfbecker
+		@abstract set one or more attibutes for column $c
+		@param $c is numerical column-number starting with 0 (!), or the char-code starting with 'A'
+		@param $width in percent or pixel or '' for no height
+		@param $disabled True or expression or False to disable or enable the column
+		@param Only the number 0 means dont change the attribute !!!
+		*/
+		function set_column_attributes($c,$width=0,$disabled=0)
+		{
+			if (is_numeric($c))
+			{
+				$c = $this->num2chrs($c);
+			}
+			list($old_width,$old_disabled) = explode(',',$this->data[0][$c]);
+			$disabled = $disabled !== 0 ? $disabled : $old_disabled;
+			$this->data[0][$c] = ($width !== 0 ? $width : $old_width).
+				($disabled ? ','.$disabled : '');
 		}
 
 		/*!
@@ -336,17 +468,12 @@
 		@syntax disable_column( $c,$enable=False )
 		@author ralfbecker
 		@abstract disables column $c
-		@param $c is numerical column-number starting with 1 (!), or the char-code starting with 'A'
+		@param $c is numerical column-number starting with 0 (!), or the char-code starting with 'A'
 		@param $enable can be used to re-enable a column if set to True
 		*/
 		function disable_column($c,$enable=False)
 		{
-			if (is_numeric($c))
-			{
-				$c = $this->num2chars($c);
-			}
-			list($height) = explode(',',$this->data[0][$c]);
-			$this->data[0][$c] = $height.($enable?'':',1');
+			$this->set_column_attributes($c,0,!$enable);
 		}
 
 		/*!

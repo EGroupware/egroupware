@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$DEBUG = False;
+	$DEBUG = $_POST['debug'] || $_GET['debug'];
 	/*
 	 TODO: We allow a user to hose their setup here, need to make use
 	 of dependencies so they are warned that they are pulling the rug
@@ -69,9 +69,9 @@
 	function parsedep($depends,$main=True)
 	{
 		$depstring = '(';
-		while (list($a,$b) = each ($depends))
+		foreach($depends as $a => $b)
 		{
-			while (list($c,$d) = each($b))
+			foreach($b as $c => $d)
 			{
 				if (is_array($d))
 				{
@@ -126,91 +126,100 @@
 		$install = get_var('install',Array('POST'));
 		$upgrade = get_var('upgrade',Array('POST'));
 
-		while (list($appname,$key) = @each($remove))
+		if(!empty($remove) && is_array($remove))
 		{
-			$terror = array();
-			$terror[] = $setup_info[$appname];
-
-			if ($setup_info[$appname]['tables'])
+			foreach($remove as $appname => $key)
 			{
-				$GLOBALS['phpgw_setup']->process->droptables($terror,$DEBUG);
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('tables dropped') . '.';
-			}
+				$terror = array();
+				$terror[] = $setup_info[$appname];
 
-			$GLOBALS['phpgw_setup']->deregister_app($setup_info[$appname]['name']);
-			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('deregistered') . '.';
-
-			if ($setup_info[$appname]['hooks'])
-			{
-				$GLOBALS['phpgw_setup']->deregister_hooks($setup_info[$appname]['name']);
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks deregistered') . '.';
-			}
-
-			$terror = $GLOBALS['phpgw_setup']->process->drop_langs($terror,$DEBUG);
-			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
-		}
-
-		while (list($appname,$key) = @each($install))
-		{
-			$terror = array();
-			$terror[] = $setup_info[$appname];
-
-			if ($setup_info[$appname]['tables'])
-			{
-				$terror = $GLOBALS['phpgw_setup']->process->current($terror,$DEBUG);
-				$terror = $GLOBALS['phpgw_setup']->process->default_records($terror,$DEBUG);
-				echo '<br>' . $setup_info[$appname]['title'] . ' '
-					. lang('tables installed, unless there are errors printed above') . '.';
-			}
-			else
-			{
-				if ($GLOBALS['phpgw_setup']->app_registered($setup_info[$appname]['name']))
+				if ($setup_info[$appname]['tables'])
 				{
-					$GLOBALS['phpgw_setup']->update_app($setup_info[$appname]['name']);
+					$GLOBALS['phpgw_setup']->process->droptables($terror,$DEBUG);
+					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('tables dropped') . '.';
 				}
-				else
-				{
-					$GLOBALS['phpgw_setup']->register_app($setup_info[$appname]['name']);
-				}
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('registered') . '.';
+
+				$GLOBALS['phpgw_setup']->deregister_app($setup_info[$appname]['name']);
+				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('deregistered') . '.';
 
 				if ($setup_info[$appname]['hooks'])
 				{
-					$GLOBALS['phpgw_setup']->register_hooks($setup_info[$appname]['name']);
-					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
+					$GLOBALS['phpgw_setup']->deregister_hooks($setup_info[$appname]['name']);
+					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks deregistered') . '.';
 				}
+
+				$terror = $GLOBALS['phpgw_setup']->process->drop_langs($terror,$DEBUG);
+				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
 			}
-			$force_en = False;
-			if($appname == 'phpgwapi')
-			{
-				$force_en = True;
-			}
-			$terror = $GLOBALS['phpgw_setup']->process->add_langs($terror,$DEBUG,$force_en);
-			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations added') . '.';
 		}
 
-		while (list($appname,$key) = @each($upgrade))
+		if(!empty($install) && is_array($install))
 		{
-			$terror = array();
-			$terror[] = $setup_info[$appname];
-
-			$GLOBALS['phpgw_setup']->process->upgrade($terror,$DEBUG);
-			if ($setup_info[$appname]['tables'])
+			foreach($install as $appname => $key)
 			{
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('tables upgraded') . '.';
-				// The process_upgrade() function also handles registration
-			}
-			else
-			{
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('upgraded') . '.';
-			}
+				$terror = array();
+				$terror[] = $setup_info[$appname];
 
-			$terror = $GLOBALS['phpgw_setup']->process->upgrade_langs($terror,$DEBUG);
-			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations upgraded') . '.';
+				if ($setup_info[$appname]['tables'])
+				{
+					$terror = $GLOBALS['phpgw_setup']->process->current($terror,$DEBUG);
+					$terror = $GLOBALS['phpgw_setup']->process->default_records($terror,$DEBUG);
+					echo '<br>' . $setup_info[$appname]['title'] . ' '
+						. lang('tables installed, unless there are errors printed above') . '.';
+				}
+				else
+				{
+					if ($GLOBALS['phpgw_setup']->app_registered($setup_info[$appname]['name']))
+					{
+						$GLOBALS['phpgw_setup']->update_app($setup_info[$appname]['name']);
+					}
+					else
+					{
+						$GLOBALS['phpgw_setup']->register_app($setup_info[$appname]['name']);
+					}
+					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('registered') . '.';
+
+					if ($setup_info[$appname]['hooks'])
+					{
+						$GLOBALS['phpgw_setup']->register_hooks($setup_info[$appname]['name']);
+						echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
+					}
+				}
+				$force_en = False;
+				if($appname == 'phpgwapi')
+				{
+					$force_en = True;
+				}
+				$terror = $GLOBALS['phpgw_setup']->process->add_langs($terror,$DEBUG,$force_en);
+				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations added') . '.';
+			}
+		}
+
+		if(!empty($upgrade) && is_array($upgrade))
+		{
+			foreach($upgrade as $appname => $key)
+			{
+				$terror = array();
+				$terror[] = $setup_info[$appname];
+
+				$GLOBALS['phpgw_setup']->process->upgrade($terror,$DEBUG);
+				if ($setup_info[$appname]['tables'])
+				{
+					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('tables upgraded') . '.';
+					// The process_upgrade() function also handles registration
+				}
+				else
+				{
+					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('upgraded') . '.';
+				}
+
+				$terror = $GLOBALS['phpgw_setup']->process->upgrade_langs($terror,$DEBUG);
+				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations upgraded') . '.';
+			}
 		}
 
 		//$setup_tpl->set_var('goback',
-		echo '<br><a href="applications.php">' . lang('Go back') . '</a>';
+		echo '<br><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 		//$setup_tpl->pparse('out','submit');
 		$setup_tpl->pparse('out','footer');
 		exit;
@@ -225,37 +234,41 @@
 	if(@$detail)
 	{
 		@ksort($setup_info[$detail]);
-		@reset($setup_info[$detail]);
 		$setup_tpl->set_var('description',lang('App details') . ':');
 		$setup_tpl->pparse('out','header');
-		
-		while (list($key,$val) = each($setup_info[$detail]))
+
+		$setup_tpl->set_var('name','application');
+		$setup_tpl->set_var('details', lang($setup_info[$detail]['title']));
+		$setup_tpl->pparse('out','detail');
+	
+		foreach($setup_info[$detail] as $key => $val)
 		{
-			if ($i) { $i = 0; }
-			else    { $i = 1; }
-
-			//if(!$val) { $val = 'none'; }
-
-			if ($key == 'tables')
+			if($key != 'title')
 			{
-				$tblcnt = count($setup_info[$detail][$key]);
-				if(is_array($val))
-				{
-					$key = '<a href="sqltoarray.php?appname=' . $detail . '&submit=True">' . $key . '(' . $tblcnt . ')</a>' . "\n";
-					$val = implode(',' . "\n",$val);
-				}
-			}
-			if ($key == 'hooks')   { $val = implode(',',$val); }
-			if ($key == 'depends') { $val = parsedep($val); }
-			if (is_array($val))    { $val = implode(',',$val); }
+				$i = ($i ? 0 : 1);
+			
 
-			$setup_tpl->set_var('bg_color',$bgcolor[$i]);
-			$setup_tpl->set_var('name',$key);
-			$setup_tpl->set_var('details',$val);
-			$setup_tpl->pparse('out','detail');
+				if ($key == 'tables')
+				{
+					$tblcnt = count($setup_info[$detail][$key]);
+					if(is_array($val))
+					{
+						$key = '<a href="sqltoarray.php?appname=' . $detail . '&submit=True">' . $key . '(' . $tblcnt . ')</a>' . "\n";
+						$val = implode(',' . "\n",$val);
+					}
+				}
+				if ($key == 'hooks')   { $val = implode(',',$val); }
+				if ($key == 'depends') { $val = parsedep($val); }
+				if (is_array($val))    { $val = implode(',',$val); }
+
+				$setup_tpl->set_var('bg_color',$bgcolor[$i]);
+				$setup_tpl->set_var('name',$key);
+				$setup_tpl->set_var('details',$val);
+				$setup_tpl->pparse('out','detail');
+			}
 		}
 
-		echo '<br><a href="applications.php">' . lang('Go back') . '</a>';
+		echo '<br><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 		$setup_tpl->pparse('out','footer');
 		exit;
 	}
@@ -301,11 +314,12 @@
 				{
 					echo lang('because it depends upon') . ':<br>' . "\n";
 					list($depapp,$depver) = parsedep($setup_info[$resolve]['depends'],False);
-					for ($i=0;$i<count($depapp);$i++)
+                                $depapp_count = count($depapp);
+					for ($i=0; $i<$depapp_count; $i++)
 					{
 						echo '<br>' . $depapp[$i] . ': ';
 						$list = '';
-						while(list($x,$y) = @each($depver[$i]))
+						foreach($depver[$i] as $x => $y)
 						{
 							$list .= $y . ', ';
 						}
@@ -343,7 +357,7 @@
 			echo '<br>' . lang('However, the application is otherwise installed') . '.';
 		}
 
-		echo '<br><a href="applications.php">' . lang('Go back') . '</a>';
+		echo '<br><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
 		$setup_tpl->pparse('out','footer');
 		exit;
 	}
@@ -367,29 +381,23 @@
 		$setup_tpl->set_var('install_all',lang('Install All'));
 		$setup_tpl->set_var('upgrade_all',lang('Upgrade All'));
 		$setup_tpl->set_var('remove_all',lang('Remove All'));
+		$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
+		$setup_tpl->set_var('debug','<input type="checkbox" name="debug" value="True"' .($DEBUG ? ' checked' : '') . '>');
 		$setup_tpl->set_var('bg_color',$bgcolor[0]);
 
 		$setup_tpl->pparse('out','app_header');
 
-		@reset ($setup_info);
 		$i = 0;
-		while (list ($key, $value) = each ($setup_info))
+		foreach($setup_info as $key => $value)
 		{
 			if(@$value['name'])
 			{
-				if ($i)
-				{
-					$i = 0;
-				}
-				else
-				{
-					$i = 1;
-				}
+				$i = ($i ? 0 : 1); 
 				$setup_tpl->set_var('apptitle',$value['title']);
 				$setup_tpl->set_var('currentver',@$value['currentver']);
 				$setup_tpl->set_var('version',$value['version']);
 				$setup_tpl->set_var('bg_color',$bgcolor[$i]);
-
+                        
 				switch($value['status'])
 				{
 					case 'C':
@@ -513,7 +521,7 @@
 			}
 		}
 
-		$setup_tpl->set_var('submit',lang('Submit'));
+		$setup_tpl->set_var('submit',lang('Save'));
 		$setup_tpl->set_var('cancel',lang('Cancel'));
 		$setup_tpl->pparse('out','app_footer');
 		$setup_tpl->pparse('out','footer');

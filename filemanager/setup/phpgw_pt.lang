@@ -40,7 +40,7 @@ failed to create directory	filemanager	pt	falhou ao criar pasta
 file	filemanager	pt	Arquivo
 file name	filemanager	pt	Nome do Arquivo
 file names cannot contain "%1"	filemanager	pt	Nomes de arquivos não podem conter "%1"
-file names cannot contain \\ or /	filemanager	pt	Nomes de arquivos não podem conter \\ ou /
+file names cannot contain \ or /	filemanager	pt	Nomes de arquivos não podem conter \ ou /
 file %1 already exists. please edit it or delete it first.	filemanager	pt	Arquivo %1 já existe. Por favor edite-o ou remova-o antes.
 file %1 could not be created.	filemanager	pt	Arquivo %1 não pôde ser criado.
 files	filemanager	pt	Arquivos

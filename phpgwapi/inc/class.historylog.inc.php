@@ -20,7 +20,8 @@
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
 
-	/* $Id$ */
+	// $Id$
+	// $Source$
 
 	class historylog
 	{
@@ -52,14 +53,17 @@
 				. "history_appname='" . $this->appname . "'",__LINE__,__FILE__);
 		}
 
-		function add($status,$record_id,$new_value)
+		function add($status,$record_id,$new_value,$old_value)
 		{
-			$this->db->query("insert into phpgw_history_log (history_record_id,"
-				. "history_appname,history_owner,history_status,history_new_value,history_timestamp) "
-				. "values ('".intval($record_id)."','" . $this->appname . "','"
-				. $GLOBALS['phpgw_info']['user']['account_id'] . "','$status','"
-				. addslashes($new_value) . "','" . $this->db->to_timestamp(time())
-				. "')",__LINE__,__FILE__);
+			if ($new_value != $old_value)
+			{
+				$this->db->query("insert into phpgw_history_log (history_record_id,"
+					. "history_appname,history_owner,history_status,history_new_value,history_old_value,history_timestamp) "
+					. "values ('".intval($record_id)."','" . $this->appname . "','"
+					. $GLOBALS['phpgw_info']['user']['account_id'] . "','$status','"
+					. addslashes($new_value) . "','" . addslashes($old_value) . "','" . $this->db->to_timestamp(time())
+					. "')",__LINE__,__FILE__);
+			}
 		}
 
 		// array $filter_out
@@ -92,7 +96,7 @@
 
 			if (is_array($_only_show))
 			{
-				$only_show_filter = ' and (' . implode(' or ',$_only_show) . ')';
+				$only_show_filter = ' and (' . implode(' or ',$_only_show). ')';
 			}
 
 			$this->db->query("select * from phpgw_history_log where history_appname='"
@@ -107,6 +111,7 @@
 //					'status'     => lang($this->types[$this->db->f('history_status')]),
 					'status'     => ereg_replace(' ','',$this->db->f('history_status')),
 					'new_value'  => $this->db->f('history_new_value'),
+					'old_value'  => $this->db->f('history_old_value'),
 					'datetime'   => $this->db->from_timestamp($this->db->f('history_timestamp'))
 				);
 			}
@@ -134,6 +139,7 @@
 			$this->template->set_var('sort_owner',lang('User'));
 			$this->template->set_var('sort_status',lang('Status'));
 			$this->template->set_var('sort_new_value',lang('New value'));
+			$this->template->set_var('sort_old_value',lang('Old value'));
 
 			$values = $this->return_array($filter_out,array(),$orderby,$sort,$record_id);
 
@@ -157,11 +163,17 @@
 					eval('\$s = ' . $this->alternate_handlers[$value['status']] . '(' . $value['new_value'] . ');');
 					$this->template->set_var('row_new_value',$s);
 					unset($s);
+
+					eval('\$s = ' . $this->alternate_handlers[$value['status']] . '(' . $value['old_value'] . ');');
+					$this->template->set_var('row_old_value',$s);
+					unset($s);
 				}
 				else
 				{
 					$this->template->set_var('row_new_value',$value['new_value']);
+					$this->template->set_var('row_old_value',$value['old_value']);
 				}
+
 				$this->template->set_var('row_status',$this->types[$value['status']]);
 
 				$this->template->fp('rows','row',True);

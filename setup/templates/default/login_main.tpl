@@ -1,28 +1,34 @@
 <!-- begin login_main.tpl -->
 <p>&nbsp;</p>
-<table border="0" align="center">
+<table align="center" cellspacing="0" cellpadding="2" style="border: 1px solid #486591;">
 
 {V_login_stage_header}
 
-<tr bgcolor="#486591">
-	<td colspan="2">
-		<font color="#fefefe">&nbsp;<b>Header Admin Login</b></font>
-	</td>
+<tr class="th">
+	<td colspan="2">&nbsp;<b>Header Admin Login</b></td>
 </tr>
-<tr bgcolor="#e6e6e6">
-	<td colspan="2">
-		<font color="#ff0000">{HeaderLoginMSG}</font>
-	</td>
+<tr class="row_on">
+	<td colspan="2" class="msg" align="center">{HeaderLoginMSG}</td>
 </tr>
-<tr bgcolor="#e6e6e6">
+<form action="manageheader.php" method="POST" name="admin">
+<tr class="row_on">
 	<td>
-		<form action="manageheader.php" method="POST" name="admin">
+		Password:
+	</td>
+	<td>
 		<input type="password" name="FormPW" value="">
-		<input type="hidden" name="HeaderLogin" value="Login">
-		<input type="submit" name="Submit" value="Login">
-		</form>
 	</td>
 </tr>
+<tr class="row_on">
+	<td colspan="2">
+		{lang_select}
+		<input type="submit" name="Submit" value="Login">
+		<input type="hidden" name="HeaderLogin" value="Login">
+	</td>
+</tr>
+</form>
 
 </table>
 <!-- end login_main.tpl -->
+
+

@@ -1,0 +1,21 @@
+body { font-family: Geneva,Arial,Helvetica,sans-serif; font-size: 10pt; }
+pre { font-family: Lucida Console, monospace; font-size: 10pt; }
+tt { font-family: Lucida Console, monospace; font-size: 10pt; }
+td { font-family: Geneva,Arial,Helvetica,sans-serif; font-size: 10pt; }
+
+.h1 { font-size: 18pt; color: white; font-family: Verdana,Geneva,Arial,Helvetica,sans-serif; }
+.h1black { font-size: 18pt; color: black; font-family: Verdana,Geneva,Arial,Helvetica,sans-serif; }
+.h2 { font-size: 14pt; color: #ccccff; }
+.h2black { font-size: 14pt; color: black; }
+
+a { color: #333399; text-decoration: underline; }
+a:visited { color: #6666aa; text-decoration: underline; }
+a:hover { color: #0000ff; text-decoration: underline; }
+
+a.side { color: #ff9900; text-decoration: none; }
+a.side:visited { color: #ffcc66; text-decoration: none; }
+a.side:hover { color: #ffffcc; text-decoration: underline; }
+
+a.anchor { color: #000066; text-decoration: none; }
+
+td.side { color: white; }

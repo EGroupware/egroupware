@@ -1,26 +1,26 @@
-First off, I would not recommend using this in any type of environment in which
+First off, I would not recommend using this in a type of enviroment that 
 security is a really big concern.  I am *NOT* saying that you shouldn't be
-concerned about it.  But, until the system is thoroughly tested, I would not
+concerned about it, but, until the system is thoughly tested.  I would not
 recommend it.
 
-Because of the current methods that the email system uses, it is required
+Because of the current methods that the email system works.  It is required
 that the users password is in the sessions table.  IMAP needs the password
 to verify the user.  This is one of the main reasons for the stalesessions
-program.  I do not like keeping passwords in any medium that is not encrypted.
+program.  I do not like keeping passwords in any medium that is not encryped.
 
-The email system stores its file attachments in a temp directory.  For now,
-you need to watch this directory because it can fill up very quickly.
-If a user does not finish composing the message (going else where in the program, 
-Internet connection dieing, browser crash, etc) the file will sit there until
+The email system stores its file attachments in a temp directory.  For right
+now, you need to watch this directory because it can fill up very quickly.
+If a user does not finsh composing the message (going else where in the program, 
+internet connection dieing, browser crash, etc) the file will sit there until
 it is deleted.  There will be a simple cron program to go through and clean
 things up.  
 
 The files/users and files/groups directories need to be writable by the UID
-that php runs under (nobody or your apache UID).  This is a security risk
+that php runs under (nobody or your apache UID). This is a security risk
 if 3rd parties can place php or cgi scripts on your machine, because they
 will have full read/write access to those directories.
 You should also consider moving the files directory outside of the
-tree your web server has access to to prevent web surfers from directly accessing
+tree your webserver has access to to prevent websurfers from directly accessing
 the files, or add in .htaccess files to restrict access to that tree.
 
 Besides this, there is nothing else that I am aware of.  Let me know if you

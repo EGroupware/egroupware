@@ -74,8 +74,8 @@
 		$setup_tpl->set_var('adminpassword2',lang('Re-enter password'));
 		$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
 
-		$setup_tpl->set_var('lang_submit',lang('submit'));
-		$setup_tpl->set_var('lang_cancel',lang('cancel'));
+		$setup_tpl->set_var('lang_submit',lang('Save'));
+		$setup_tpl->set_var('lang_cancel',lang('Cancel'));
 		$setup_tpl->pparse('out','T_setup_demo');
 		$GLOBALS['phpgw_setup']->html->show_footer();
 	}
@@ -145,8 +145,8 @@
 		$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_acl');
 
 		/* Create the demo groups */
-		$defaultgroupid = add_account('Default','Default','Group',$passwd,'g');
-		$admingroupid   = add_account('Admins','Admin', 'Group',$passwd,'g');
+		$defaultgroupid = intval(add_account('Default','Default','Group',$passwd,'g'));
+		$admingroupid   = intval(add_account('Admins','Admin', 'Group',$passwd,'g'));
 
 		/* Group perms for the default group */
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $defaultgroupid . ", 1)");

@@ -379,7 +379,7 @@ time	common	pt	Hora
 time zone	common	pt	Fuso horário
 time zone offset	common	pt	Faixa de fuso horário
 title	common	pt	Título
-to go back to the msg list, click <a href="%1">here</a>	common	pt	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
+to go back to the msg list, click <a href= %1 >here</a>	common	pt	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
 togo	common	pt	TOGO
 tokelau	common	pt	TOKELAU
 tonga	common	pt	TONGA

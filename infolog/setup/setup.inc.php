@@ -12,9 +12,9 @@
 	/* $Id$ */
 
 	$setup_info['infolog']['name']      = 'infolog';
-	$setup_info['infolog']['version']   = '0.9.15.005';
+	$setup_info['infolog']['version']   = '0.9.15.006';
 	$setup_info['infolog']['app_order'] = 4;
-	$setup_info['infolog']['tables']    = array('phpgw_infolog','phpgw_links');
+	$setup_info['infolog']['tables']    = array('phpgw_infolog','phpgw_links','phpgw_infolog_extra');
 	$setup_info['infolog']['enable']    = 1;
 
 	$setup_info['infolog']['author'] = 

@@ -35,3 +35,4 @@ Here you can set a few details about yourself, for public viewing by the
 rest of the users of the system. Title,Phone number, Comments, Picture upload.</li><p/>
 <li><b>Monitor Newsgroups:</b><br/>
 Easily choose which news groups you want to set for reading.</li>
+<?php $phpgw->common->phpgw_footer(); ?>

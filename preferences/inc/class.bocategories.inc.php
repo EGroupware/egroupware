@@ -19,30 +19,23 @@
 		var $query;
 		var $sort;
 		var $order;
-		var $cat_id;
 
-		function bocategories($cats_app)
+		function bocategories($cats_app='')
 		{
-			$this->cats = CreateObject('phpgwapi.categories');
+			$this->cats           = CreateObject('phpgwapi.categories');
 			$this->cats->app_name = $cats_app;
 
 			$this->read_sessiondata($cats_app);
 
-			$start  = get_var('start',Array('GET','POST'));
-			$query  = get_var('query',Array('GET','POST'));
-			$sort   = get_var('sort',Array('GET','POST'));
-			$order  = get_var('order',Array('GET','POST'));
-			$cat_id = intval(get_var('cat_id', array('POST','GET')));
+			$start  = $GLOBALS['HTTP_POST_VARS']['start']  ? $GLOBALS['HTTP_POST_VARS']['start']  : $GLOBALS['HTTP_GET_VARS']['start'];
+			$query  = $GLOBALS['HTTP_POST_VARS']['query']  ? $GLOBALS['HTTP_POST_VARS']['query']  : $GLOBALS['HTTP_GET_VARS']['query'];
+			$sort   = $GLOBALS['HTTP_POST_VARS']['sort']   ? $GLOBALS['HTTP_POST_VARS']['sort']   : $GLOBALS['HTTP_GET_VARS']['sort'];
+			$order  = $GLOBALS['HTTP_POST_VARS']['order']  ? $GLOBALS['HTTP_POST_VARS']['order']  : $GLOBALS['HTTP_GET_VARS']['order'];
 
 			if(!empty($start) || $start == '0' || $start == 0)
 			{
 				$this->start = $start;
 			}
-			else
-			{
-				$this->start = 0;
-			}
-
 			if((empty($query) && !empty($this->query)) || !empty($query))
 			{
 				$this->query = $query;
@@ -55,15 +48,6 @@
 			if(isset($order) && !empty($order))
 			{
 				$this->order = $order;
-			}
-			if(isset($cat_id))
-			{
-				$this->cat_id = $cat_id;
-			}
-
-			if($cat_id == 0)
-			{
-				unset($this->cat_id);
 			}
 		}
 
@@ -78,14 +62,10 @@
 			$colum = $cats_app . '_cats';
 			$data = $GLOBALS['phpgw']->session->appsession('session_data',$column);
 
-			$this->start	= $data['start'];
-			$this->query	= $data['query'];
-			$this->sort		= $data['sort'];
-			$this->order	= $data['order'];
-			if(isset($data['cat_id']))
-			{
-				$this->cat_id = $data['cat_id'];
-			}
+			$this->start  = $data['start'];
+			$this->query  = $data['query'];
+			$this->sort   = $data['sort'];
+			$this->order  = $data['order'];
 		}
 
 		function get_list($global_cats)
@@ -104,7 +84,7 @@
 				$values['access'] = 'public';
 			}
 
-			if ($values['cat_id'] && $values['cat_id'] != 0)
+			if ($values['id'] && $values['id'] != 0)
 			{
 				return $this->cats->edit($values);
 			}
@@ -116,20 +96,19 @@
 
 		function exists($data)
 		{
-			return $this->cats->exists($data);
+			$data['type']   = $data['type'] ? $data['type'] : '';
+			$data['cat_id'] = $data['cat_id'] ? $data['cat_id'] : '';
+			return $this->cats->exists($data['type'],$data['cat_name'],$data['cat_id']);
 		}
 
-		function formatted_list($data)
+		function formatted_list($format,$type,$cat_parent,$global_cats)
 		{
-			return $this->cats->formatted_list($data);
+			return $this->cats->formated_list($format,$type,$cat_parent,$global_cats);
 		}
 
-		function delete($data)
+		function delete($cat_id,$subs)
 		{
-			if (is_array($data))
-			{
-				$this->cats->delete($data);
-			}
+			return $this->cats->delete($cat_id,$subs);
 		}
 
 		function check_values($values)
@@ -151,7 +130,7 @@
 					(
 						'type'     => 'appandmains',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['cat_id']
+						'cat_id'   => $values['id']
 					));
 				}
 				else
@@ -160,7 +139,7 @@
 					(
 						'type'     => 'appandsubs',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['cat_id']
+						'cat_id'   => $values['id']
 					));
 				}
 

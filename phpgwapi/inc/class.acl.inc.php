@@ -64,7 +64,7 @@
 			$this->db = $GLOBALS['phpgw']->db;
 			if (!($this->account_id = intval($account_id)))
 			{
-				$this->account_id = get_account_id($account_id,$GLOBALS['phpgw_info']['user']['account_id']);
+				$this->account_id = get_account_id($account_id,@$GLOBALS['phpgw_info']['user']['account_id']);
 			}
 		}
 

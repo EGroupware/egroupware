@@ -11,7 +11,14 @@
 
   <style type="text/css">
   <!-- 
-  .link { color: #FFFFFF; } 
+  a, body, tr, th, td, input, select { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; text-decoration: none; }
+  a:hover, a:active { text-decoration: underline; }
+  .banner { background-color: {banner_bg}; color: {th_text}; font-weight: bold; }
+  .msg { color: {msg}; }
+  .link { color: #FFFFFF; }
+  .th { background: {th_bg}; font-weight: bold; color: {th_text} }
+  .row_on,.th_bright { background: {row_on}; }
+  .row_off { background: {row_off}; }
   -->
   </style>
   <title>phpGroupWare {lang_setup} {page_title}</title>
@@ -19,13 +26,13 @@
 
 <body bgcolor="#FFFFFF">
 
-<table border="0" width="100%" cellspacing="0" cellpadding="2">
-<tr>
-	<td align="left" bgcolor="#4865F1">
-		&nbsp;<font color="#fefefe">phpGroupWare version {pgw_ver} {lang_setup} {configdomain}</font>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+<tr class="banner">
+	<td align="left">
+		&nbsp;phpGroupWare version {pgw_ver} {lang_setup} {configdomain}
 	</td>
-	<td align="right" bgcolor="#4865F1">
-		{logoutbutton}
-	</tr>
+	<td align="right">{logoutbutton}</td>
+</tr>
 </table>
 <!-- end head.tpl -->
+

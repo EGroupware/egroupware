@@ -155,7 +155,7 @@
 				}
 			}
 
-			return True;
+			return Rrue;
 		}
 
 		function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)

@@ -23,6 +23,7 @@
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
 	/* $Id$ */
+	/* $Source$ */
 
 	/*!
 	@class nextmatchs
@@ -33,6 +34,7 @@
 		var $maxmatches;
 		var $action;
 		var $template;
+		var $extra_filters = array();
 
 		function nextmatchs($website=False)
 		{
@@ -63,9 +65,9 @@
 				$this->maxmatches = 15;
 			}
 
-			if(MENUACTION)
+			if(isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 			{
-				$this->action = MENUACTION;
+				$this->action = $GLOBALS['HTTP_GET_VARS']['menuaction'];
 			}
 		}
 
@@ -194,7 +196,7 @@
 		@param $filter_obj ?
 		@param $showsearch ?
 		*/
-		function show_tpl($sn,$localstart,$total,$extra,$twidth,$bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0,$cat_id=0,$cat_field='fcat_id')
+		function show_tpl($sn,$localstart,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0,$cat_id=0,$cat_field='fcat_id')
 		{
 			list($filter,$qfield,$start,$order,$sort) = $this->get_var();
 
@@ -211,7 +213,7 @@
 				'lang_all'      => lang('All'),
 				'lang_select'   => lang('Select'),
 				'cat_field'     => $cat_field,
-				'categories'    => $cats->formatted_list('select','all',$cat_id,'True'),
+				'categories'    => $cats->formated_list('select','all',$cat_id,'True'),
 				'filter_value'  => $filter,
 				'qfield'        => $qfield,
 				'start_value'   => $start,
@@ -297,7 +299,7 @@
 		*/
 		function left($scriptname,$start,$total,$extradata = '')
 		{
-			list($filter,$qfield,$NULL,$order,$sort) = $this->get_var();
+			list($filter,$qfield,,$order,$sort) = $this->get_var();
 
 			$extravars = Array(
 				'order'   => $order,
@@ -310,21 +312,21 @@
 			$extravars = $this->split_extras($extravars,$extradata);
 			$ret_str = '';
 
-			if(($start != 0) &&
+			if (($start != 0) &&
 				($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
-				$ret_str .= $this->set_link('left','first.png',$scriptname,lang('First page'),$extravars);
+				$ret_str .= $this->set_link('left','first.gif',$scriptname,lang('First page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','first-grey.png',lang('First page'));
+				$ret_str .= $this->set_icon('left','first-grey.gif',lang('First page'));
 			}
 
-			if($start != 0)
+			if ($start != 0)
 			{
 				// Changing the sorting order screaws up the starting number
-				if(($start - $this->maxmatches) < 0)
+				if (($start - $this->maxmatches) < 0)
 				{
 					$extravars['start'] = 0;
 				}
@@ -332,11 +334,11 @@
 				{
 					$extravars['start'] = ($start - $this->maxmatches);
 				}
-				$ret_str .= $this->set_link('left','left.png',$scriptname,lang('Previous page'),$extravars);
+				$ret_str .= $this->set_link('left','left.gif',$scriptname,lang('Previous page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','left-grey.png',lang('Previous page'));
+				$ret_str .= $this->set_icon('left','left-grey.gif',lang('Previous page'));
 			}
 			return $ret_str;
 		} /* left() */
@@ -351,7 +353,7 @@
 		*/
 		function right($scriptname,$start,$total,$extradata = '')
 		{
-			list($filter,$qfield,$NULL,$order,$sort) = $this->get_var();
+			list($filter,$qfield,,$order,$sort) = $this->get_var();
 
 			$extravars = Array(
 				'order'   => $order,
@@ -365,26 +367,26 @@
 
 			$ret_str = '';
 
-			if(($total > $this->maxmatches) &&
+			if (($total > $this->maxmatches) &&
 				($total > $start + $this->maxmatches))
 			{
 				$extravars['start'] = ($start + $this->maxmatches);
-				$ret_str .= $this->set_link('right','right.png',$scriptname,lang('Next page'),$extravars);
+				$ret_str .= $this->set_link('right','right.gif',$scriptname,lang('Next page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','right-grey.png',lang('Next page'));
+				$ret_str .= $this->set_icon('right','right-grey.gif',lang('Next page'));
 			}
 
-			if(($start != $total - $this->maxmatches) &&
+			if (($start != $total - $this->maxmatches) &&
 				(($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
 				$extravars['start'] = ($total - $this->maxmatches);
-				$ret_str .= $this->set_link('right','last.png',$scriptname,lang('Last page'),$extravars);
+				$ret_str .= $this->set_link('right','last.gif',$scriptname,lang('Last page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','last-grey.png',lang('Last page'));
+				$ret_str .= $this->set_icon('right','last-grey.gif',lang('Last page'));
 			}
 			return $ret_str;
 		} /* right() */
@@ -432,7 +434,7 @@
 				'lang_all'      => lang('All'),
 				'lang_select'   => lang('Select'),
 				'cat_field'     => $cat_field,
-				'categories'    => $cats->formatted_list('select','all',$cat_id,'True'),
+				'categories'    => $cats->formated_list('select','all',$cat_id,'True'),
 				'filter_value'  => $filter,
 				'qfield'        => $qfield,
 				'start_value'   => $start,
@@ -457,8 +459,8 @@
 			if(is_array($search_obj))
 			{
 				$params		= $search_obj;
-				$_query		= stripslashes($params['query']);
-				$search_obj	= $params['search_obj'];
+				$s_query	= stripslashes($params['query']);
+				$search_obj = $params['search_obj'];
 			}
 			else
 			{
@@ -467,7 +469,7 @@
 
 			// If the place a '"' in there search, it will mess everything up
 			// Our only option is to remove it
-			if(ereg('"',$_query))
+			if (ereg('"',$_query))
 			{
 				$_query = ereg_replace('"','',$_query);
 			}
@@ -519,12 +521,12 @@
 			$qfield = get_var('qfield',Array('GET','POST'));
 
 			$str = '';
-			if(is_array($search_obj))
+			if (is_array($search_obj))
 			{
 				$indexlimit = count($search_obj);
-				for($index=0; $index<$indexlimit; $index++)
+				for ($index=0; $index<$indexlimit; $index++)
 				{
-					if($qfield == '')
+					if ($qfield == '')
 					{
 						$qfield = $search_obj[$index][0];
 					}
@@ -542,40 +544,48 @@
 		*/
 		function filter($filter_obj,$yours=0)
 		{
-			if(is_array($yours))
+			if (is_array($yours))
 			{
-				$params = $yours;
-				$filter = $params['filter'];
-				$yours  = $params['yours'];
+				$params	= $yours;
+				$filter	= $params['filter'];
+				$yours	= $params['yours'];
 			}
 			else
 			{
-				$filter = get_var('filter',Array('GET','POST'));
+				$filter = $GLOBALS['HTTP_POST_VARS']['filter'] ? $GLOBALS['HTTP_POST_VARS']['filter'] : $GLOBALS['HTTP_GET_VARS']['filter'];
 			}
 
-			if(is_long($filter_obj))
+			if (is_long($filter_obj))
 			{
-				if($filter_obj == 1)
+				if ($filter_obj == 1)
 				{
 					//  $user_groups = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
 					$indexlimit = count($user_groups);
 
-					if($yours)
+					if ($yours)
 					{
-						$filter_obj = array(
-							array('none',lang('show all')),
-							array('yours',lang('only yours')),
-							array('private',lang('only private'))
+						$filter_obj = array
+						(
+							array('none',lang('Show all')),
+							array('yours',lang('Only yours')),
+							array('private',lang('private'))
 						);
 					}
 					else
 					{
-						$filter_obj = array(
-							array('none',lang('show all')),
-							array('private',lang('only private'))
+						$filter_obj = array
+						(
+							array('none',lang('Show all')),
+							array('private',lang('private'))
 						);
 					}
-					for($index=0; $index<$indexlimit; $index++)
+
+					while (is_array($this->extra_filters) && list(,$efilter) = each($this->extra_filters))
+					{
+						$filter_obj[] = $efilter;
+					}
+
+					for ($index=0; $index<$indexlimit; $index++)
 					{
 						$filter_obj[2+$index][0] = $user_groups[$index]['account_id'];
 						$filter_obj[2+$index][1] = 'Group - ' . $user_groups[$index]['account_name'];
@@ -583,14 +593,14 @@
 				}
 			}
 
-			if(is_array($filter_obj))
+			if (is_array($filter_obj))
 			{
 				$str = '';
 				$indexlimit = count($filter_obj);
 
-				for($index=0; $index<$indexlimit; $index++)
+				for ($index=0; $index<$indexlimit; $index++)
 				{
-					if($filter == '')
+					if ($filter == '')
 					{
 						$filter = $filter_obj[$index][0];
 					}
@@ -664,68 +674,19 @@
 			return $this->template->fp('out','filter');
 		} /* filter() */
 
-		function xslt_filter($data=0)
-		{
-			if(is_array($data))
-			{
-				$filter	= (isset($data['filter'])?$data['filter']:'');
-				$format	= (isset($data['format'])?$data['format']:'all');
-			}
-			else
-			{
-				//$filter = get_var('filter',Array('GET','POST'));
-				$filter = $data;
-				$format	= 'all';
-			}
-
-			switch($format)
-			{
-				case 'yours':
-					$filter_obj = array
-					(
-						array('key' => 'none','lang' => lang('show all')),
-						array('key' => 'yours','lang' => lang('only yours'))
-					);
-					break;
-				case 'private':
-					$filter_obj = array
-					(
-						array('key' => 'none','lang' => lang('show all')),
-						array('key' => 'private','lang' => lang('only private'))
-					);
-					break;
-				default:
-					$filter_obj = array
-					(
-						array('key' => 'none','lang' => lang('show all')),
-						array('key' => 'yours','lang' => lang('only yours')),
-						array('key' => 'private','lang' => lang('only private'))
-					);
-			}
-
-			for($i=0;$i<count($filter_obj);$i++)
-			{
-				if($filter_obj[$i]['key'] == $filter)
-				{
-					$filter_obj[$i]['selected'] = 'yes';
-				}
-			}
-			return $filter_obj;
-		}
-
 		/*!
 		@function alternate_row_color
 		@abstract alternate row colour
 		@param $currentcolor default ''
 		*/
-		/*function alternate_row_color($currentcolor = '')
+		function alternate_row_color($currentcolor = '')
 		{
-			if(!$currentcolor)
+			if (! $currentcolor)
 			{
 				$currentcolor = $GLOBALS['tr_color'];
 			}
 
-			if($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
+			if ($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
 			{
 				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
 			}
@@ -734,24 +695,6 @@
 				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_on'];
 			}
 
-			return $GLOBALS['tr_color'];
-		}*/
-
-		function alternate_row_color($currentcolor = '')
-		{
-			if(!$currentcolor)
-			{
-				$currentcolor = $GLOBALS['tr_color'];
-			}
-
-			if($currentcolor == 'row_on')
-			{
-				$GLOBALS['tr_color'] = 'row_off';
-			}
-			else
-			{
-				$GLOBALS['tr_color'] = 'row_on';
-			}
 			return $GLOBALS['tr_color'];
 		}
 
@@ -764,11 +707,7 @@
 		*/
 		function template_alternate_row_color(&$tpl)
 		{
-			$this->template->set_var('tr_color',$color = $this->alternate_row_color());
-			if (is_object($tpl))
-			{
-				$tpl->set_var('tr_color',$color);	// set the supplied template too
-			}
+			$tpl->set_var('tr_color',$this->alternate_row_color());
 		}
 
 		/*!
@@ -780,31 +719,16 @@
 		@param $program ?
 		@param $text ?
 		@param $extra default ''
-		@param $build_an_href default True
 		*/
-		function show_sort_order($sort, $var = '', $order = '', $program = '', $text = '', $extra='', $build_an_href = True)
+		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_a_href=True)
 		{
-			if(is_array($sort))
-			{
-				$temp_format	= $sort['sort'];
-				$var			= (isset($sort['var'])?$sort['var']:'');
-				$order			= (isset($sort['order'])?$sort['order']:'');
-				$program		= (isset($sort['program'])?$sort['program']:'/index.php');
-				$text			= (isset($sort['text'])?$sort['text']:'xslt');
-				$extra			= (isset($sort['extra'])?$sort['extra']:'');
-				$build_an_href	= (isset($sort['build_an_href'])?$sort['build_an_href']:True);
-				settype($sort,'string');
-				$sort			= $temp_format;
-				unset($temp_format);
-			}
+			list($filter,$qfield,$start) = $this->get_var();
 
-			list($filter,$qfield,$start,$NULL1,$NULL) = $this->get_var();
-
-			if(($order == $var) && ($sort == 'ASC'))
+			if (($order == $var) && ($sort == 'ASC'))
 			{
 				$sort = 'DESC';
 			}
-			elseif(($order == $var) && ($sort == 'DESC'))
+			elseif (($order == $var) && ($sort == 'DESC'))
 			{
 				$sort = 'ASC';
 			}
@@ -813,7 +737,7 @@
 				$sort = 'ASC';
 			}
 
-			if(is_array($extra))
+			if (is_array($extra))
 			{
 				$extra = $this->extras_to_string($extra);
 			}
@@ -822,11 +746,7 @@
 
 			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 
-			if ($text == 'xslt')
-			{
-				return $link;
-			}
-			elseif($build_an_href)
+			if ($build_a_href)
 			{
 				return '<a href="' . $link . '">' . $text . '</a>';
 			}
@@ -838,9 +758,9 @@
 
 		function show_hits($total_records='',$start=0)
 		{
-			if($total_records > $this->maxmatches)
+			if ($total_records > $this->maxmatches)
 			{
-				if($start + $this->maxmatches > $total_records)
+				if ($start + $this->maxmatches > $total_records)
 				{
 					$end = $total_records;
 				}
@@ -931,7 +851,7 @@
 			// things that stay the same
 			$out_vars['common_uri'] = $feed_vars['common_uri'];
 			$out_vars['total'] = $feed_vars['total'];
-			
+
 			// first page
 			if(($feed_vars['start'] != 0) &&
 				($feed_vars['start'] > $this->maxmatches))
@@ -941,7 +861,7 @@
 			}
 			else
 			{
-				$return_array['first_page']= $this->set_icon_imap('left','first-grey.gif',lang('First page'));
+				$return_array['first_page'] = $this->set_icon_imap('left','first-grey.gif',lang('First page'));
 			}
 			// previous page
 			if($feed_vars['start'] != 0)

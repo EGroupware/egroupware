@@ -95,7 +95,7 @@
 			break;
 		case '3':
 			$GLOBALS['phpgw_info']['setup']['HeaderFormMSG'] = lang('Your header.inc.php needs upgrading.');
-			$GLOBALS['phpgw_info']['setup']['PageMSG'] = lang('Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br><b>MAKE BACKUPS!</b>');
+			$GLOBALS['phpgw_info']['setup']['PageMSG'] = lang('Your header.inc.php needs upgrading.<br><blink><b class="msg">WARNING!</b></blink><br><b>MAKE BACKUPS!</b>');
 			$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Your header.inc.php needs upgrading.');
 			if (!$GLOBALS['phpgw_setup']->auth('Header'))
 			{
@@ -118,7 +118,9 @@
 			break;
 	}
 
-	switch(@get_var('action',Array('POST')))
+	$action = @get_var('action',Array('POST'));
+	list($action) = @each($action);
+	switch($action)
 	{
 		case 'download':
 			check_form_values();
@@ -146,11 +148,11 @@
 			echo '<form action="index.php" method="post">';
 			echo '<br>' . lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".') . '<br>';
 			echo '<input type="hidden" name="FormLogout" value="header">';
-			echo '<input type="submit" name="junk" value="continue">';
+			echo '<input type="submit" name="junk" value="'.lang('Continue').'">';
 			echo '</form>';
 			echo '</body></html>';
 			break;
-		case 'write config':
+		case 'write':
 			check_form_values();
 			$header_template = CreateObject('setup.Template','../');
 			if(is_writeable('../header.inc.php') || (!file_exists('../header.inc.php') && is_writeable('../')))
@@ -163,7 +165,7 @@
 				echo '<form action="index.php" method="post">';
 				echo '<br>Created header.inc.php! ';
 				echo '<input type="hidden" name="FormLogout" value="header">';
-				echo '<input type="submit" name="junk" value="continue">';
+				echo '<input type="submit" name="junk" value="'.lang('Continue').'">';
 				echo '</form>';
 				echo '</body></html>';
 				break;
@@ -179,13 +181,21 @@
 		default:
 			$GLOBALS['phpgw_setup']->html->show_header($GLOBALS['phpgw_info']['setup']['HeaderFormMSG'], False, 'header');
 
-			$detected  = $GLOBALS['phpgw_info']['setup']['PageMSG'];
+			$detected = '';
 
-			$detected .= '<p><b>Please consult the <a href="../doc/en_US/html/admin/" target="manual">phpGroupWare Administration Manual</a>.</b></p>';
-			$detected .= '<b>If you running this the first time, don\'t forget to manualy <a href="../doc/en_US/html/admin/x62.html#AEN134" target="manual">Setup the database</a> !!!</b>'; 
+			if (!$ConfigLang)
+			{
+				$_POST['ConfigLang'] = 'en';
+				$detected .= '<br><form action="manageheader.php" method="Post">Please Select your language '.lang_select(True)."</form>\n";
+			}
 
-			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="2">';
-			$detected .= '<tr bgcolor="486591"><td align="center" colspan="2"><font color="fefefe">' . lang('Analysis') . '</font></td></tr><tr><td colspan="2">';
+			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="0" style="{ border: 1px solid #000000; }">' . "\n";
+
+			$detected .= '<tr><td colspan="2"><p>' . $GLOBALS['phpgw_info']['setup']['PageMSG'] . '<br />&nbsp;</p></td></tr>';
+			$manual = '<a href="../doc/en_US/html/admin/" target="manual">'.lang('phpGroupWare Administration Manual').'</a>';
+			$detected .= '<tr><td colspan="2"><p><b>'.lang('Please consult the %1.',$manual).'</b><br>&nbsp;</td></tr>'. "\n";
+
+			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr><tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
 			if (extension_loaded('mysql') || function_exists('mysql_connect'))
@@ -234,19 +244,22 @@
 			}
 			if(!count($supported_db))
 			{
-				$detected .= '<b><p align="center"><font size="+2" color="red">'
+				$detected .= '<b><p align="center" class="msg">'
 					. lang('Did not find any valid DB support!')
-					. '<br>'
+					. "<br>\n"
 					. lang('Try to configure your php to support one of the above mentioned DBMS, or install phpGroupWare by hand.')
-					. '</font></p></b><td></tr></table></body></html>';
+					. '</p></b><td></tr></table></body></html>';
 				echo $detected;
 				exit;
 			}
 
-			if (floor(phpversion()) == 3)
+			if (!function_exists('version_compare'))
 			{
-				$detected .= lang('You appear to be using PHP3. Disabling PHP4 sessions support') . '<br>' . "\n";
-				$supported_sessions_type[] = 'db';
+				$detected .= '<b><p align="center" class="msg">'
+					. lang('You appear to be using PHP earlier than 4.1.0. phpGroupWare now requires 4.1.0 or later'). "\n"
+					. '</p></b><td></tr></table></body></html>';
+				echo $detected;
+				exit;
 			}
 			else
 			{
@@ -476,17 +489,24 @@
 			if(is_writeable('../header.inc.php') ||
 				(!file_exists('../header.inc.php') && is_writeable('../')))
 			{
-				$errors .= '<br><input type="submit" name="action" value="write config">&nbsp;'
-					. lang('or') . '&nbsp;<input type="submit" name="action" value="download">&nbsp;'
-					. lang('or') . '&nbsp;<input type=submit name="action" value="view"> the file.</form>';
+				$errors .= '<br><input type="submit" name="action[write]" value="'.lang('Write config').'">&nbsp;'
+					. lang('or') . '&nbsp;<input type="submit" name="action[download]" value="'.lang('Download').'">&nbsp;'
+					. lang('or') . '&nbsp;<input type=submit name="action[view]" value="'.lang('View').'"> '.lang('the file').'.</form>';
 			}
 			else
 			{
 				$errors .= '<br>'
 					. lang('Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 the file.',
-					'<input type="submit" name="action" value="download">' . lang('or') . '&nbsp;<input type="submit" name="action" value="view">')
+					'<input type="submit" name="action[download]" value="'.lang('Download').'">' . lang('or') . '&nbsp;<input type="submit" name="action[view]" value="'.lang('View').'">')
 					. '</form>';
 			}
+			// set domain and password for the continue button
+			@reset($GLOBALS['phpgw_domain']);
+			list($firstDomain) = @each($GLOBALS['phpgw_domain']);
+			$setup_tpl->set_var(array(
+				'FormDomain' => $firstDomain,
+				'FormPW'     => $GLOBALS['phpgw_domain'][$firstDomain]['config_passwd']
+			));
 			$setup_tpl->set_var('errors',$errors);
 
 			$setup_tpl->set_var('lang_settings',lang('Settings'));
@@ -517,8 +537,10 @@
 			$setup_tpl->set_var('lang_mcryptivdescr',lang('This should be around 30 bytes in length.<br>Note: The default has been randomly generated.'));
 			$setup_tpl->set_var('lang_domselect',lang('Domain select box on login'));
 			$setup_tpl->set_var('lang_finaldescr',lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".'));
+			$setup_tpl->set_var('lang_continue',lang('Continue'));
 
 			$setup_tpl->pfp('out','manageheader');
 			break; // ending the switch default
 	}
 ?>
+

@@ -34,6 +34,8 @@
 	{
 		var $public_functions = array(
 			'init'	=> True,
+			'empty_cell' => True,
+			'new_cell' => True,
 			'read'	=> True,
 			'search'	=> True,
 			'save'	=> True,
@@ -113,9 +115,58 @@
 		@syntax empty_cell()
 		@result the cell
 		*/
-		function empty_cell()
+		function empty_cell($type='label',$name='')
 		{
-			return array('type' => 'label', 'name' => '');
+			return array(
+				'type' => $type,
+				'name' => $name,
+			);
+		}
+
+		/*!
+		@function new_cell
+		@abstract constructs a new cell in a give row or the last row, not existing rows will be created
+		@syntax new_cell( $row=False )
+		@param int $row row-number starting with 1 (!)
+		@param string $type type of the cell
+		@param string $label label for the cell
+		@param string $name name of the cell (index in the content-array)
+		@param array $attributes other attributes for the cell
+		@returns a reference to the new cell, use $new_cell = &$tpl->new_cell(); (!)
+		*/
+		function &new_cell($row=False,$type='label',$label='',$name='',$attributes=False)
+		{
+			$row = $row >= 0 ? intval($row) : 0;
+			if ($row && !isset($this->data[$row]) || !isset($this->data[1]))	// new row ?
+			{
+				if (!$row) $row = 1;
+
+				$this->data[$row] = array();
+			}
+			if (!$row)	// use last row
+			{
+				$row = count($this->data);
+				while (!isset($this->data[$row]))
+				{
+					--$row;
+				}
+			}
+			$row = &$this->data[$row];
+			$col = $this->num2chrs(count($row));
+			$cell = &$row[$col];
+			$cell = $this->empty_cell($type,$name);
+			if ($label !== '')
+			{
+				$attributes['label'] = $label;
+			}
+			if (is_array($attributes))
+			{
+				foreach($attributes as $name => $value)
+				{
+					$cell[$name] = $value;
+				}
+			}
+			return $cell;
 		}
 
 		/*!
@@ -160,7 +211,7 @@
 				return;	// data already set
 			}
 			$this->size = $this->style = '';
-			$this->data = array();
+			$this->data = array(0 => array());
 			$this->rows = $rows < 0 ? 1 : $rows;
 			$this->cols = $cols < 0 ? 1 : $cols;
 			for ($row = 1; $row <= $rows; ++$row)
@@ -641,16 +692,26 @@
 
 		function getToTranslateCell($cell,&$to_trans)
 		{
+			$strings = explode('|',$cell['help']);
+
+			if ($cell['type'] != 'image')
+			{
+				$strings += explode('|',$cell['label']);
+			}
 			list($extra_row) = explode(',',$cell['size']);
-			if (substr($cell['type'],0,6) != 'select' || !empty($extra_row) && $extra_row > 0)
-				$extra_row = '';
-			$all = explode('|',$cell['help'].($cell['type'] != 'image'?'|'.$cell['label']:'').
-				(!empty($extra_row) ? '|'.$extra_row : ''));
-			while (list(,$str) = each($all))
+			if (substr($cell['type'],0,6) == 'select' && !empty($extra_row) && !intval($extra_row))
+			{
+				$strings[] = $extra_row;
+			}
+			if (!empty($cell['blur']))
+			{
+				$strings[] = $cell['blur'];
+			}
+			foreach($strings as $str)
 			{
 				if (strlen($str) > 1 && $str[0] != '@')
 				{
-					$to_trans[strtolower($str)] = $str;
+					$to_trans[trim(strtolower($str))] = $str;
 				}
 			}
 		}
@@ -669,7 +730,7 @@
 			reset($this->data); each($this->data); // skip width
 			while (list($row,$cols) = each($this->data))
 			{
-				while (list($col,$cell) = each($cols))
+				foreach($cols as $col => $cell)
 				{
 					$this->getToTranslateCell($cell,$to_trans);
 
@@ -745,29 +806,31 @@
 			{
 				$langarr = array();
 			}
+			$commonarr = $solangfile->load_app('phpgwapi',$lang) + $solangfile->load_app('etemplate',$lang);
+
 			$to_trans = $this->getToTranslateApp($app);
 			if (is_array($additional))
 			{
 				//echo "writeLangFile: additional ="; _debug_array($additional);
-				reset($additional);
-				while (list($nul,$msg) = each($additional))
+				foreach($additional as $msg)
 				{
-					$to_trans[strtolower($msg)] = $msg;
+					$to_trans[trim(strtolower($msg))] = $msg;
 				}
 			}
 			unset($to_trans['']);
 
-			for ($new = $n = 0; list($message_id,$content) = each($to_trans); ++$n) {
-				if (!isset($langarr[$message_id]))
+			for ($new = $n = 0; list($message_id,$content) = each($to_trans); ++$n)
+			{
+				if (!isset($langarr[$message_id]) && !isset($commonarr[$message_id]))
 				{
-					if (isset($langarr[$content]))	// caused by not lowercased-message_id's
+					if (@isset($langarr[$content]))	// caused by not lowercased-message_id's
 					{
 						unset($langarr[$content]);
 					}
 					$langarr[$message_id] = array(
 						'message_id' => $message_id,
-						'app_name' => $app,
-						'content' => $content
+						'app_name'   => $app,
+						'content'    => $content
 					);
 					++$new;
 				}

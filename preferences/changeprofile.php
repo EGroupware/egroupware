@@ -23,8 +23,7 @@
 	if ($GLOBALS['phpgw_info']['user']['permissions']['anonymous'])
 	{
 		Header('Location: ' . $GLOBALS['phpgw']->link('/'));
-		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-		exit;
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
 	if ($submit)
@@ -106,3 +105,6 @@
    </table>
 
   </form>
+<?php
+	$GLOBALS['phpgw']->common->phpgw_footer();
+?>

@@ -35,12 +35,44 @@
 		var $account_id;
 		var $data;
 		var $total;
-		var $account_type;
 
 		function accounts_()
 		{
 			/* Don't think this ever gets called */
 			$this->db = $GLOBALS['phpgw']->db;
+		}
+
+		function list_methods($_type='xmlrpc')
+		{
+			if (is_array($_type))
+			{
+				$_type = $_type['type'] ? $_type['type'] : $_type[0];
+			}
+
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'get_list' => array(
+							'function'  => 'get_list',
+							'signature' => array(array(xmlrpcStruct)),
+							'docstring' => lang('Returns a full list of accounts on the system.  Warning: This is return can be quite large')
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+						)
+					);
+					return $xml_functions;
+					break;
+ 				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
+			}
 		}
 
 		/*!
@@ -52,18 +84,17 @@
 			$this->db->query('SELECT * FROM phpgw_accounts WHERE account_id=' . intval($this->account_id),__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$this->data['userid']        = $this->db->f('account_lid');
-			$this->data['account_id']    = $this->db->f('account_id');
-			$this->data['account_lid']   = $this->db->f('account_lid');
-			$this->data['firstname']     = $this->db->f('account_firstname');
-			$this->data['lastname']      = $this->db->f('account_lastname');
-			$this->data['fullname']      = $this->db->f('account_firstname') . ' ' . $this->db->f('account_lastname');
-			$this->data['lastlogin']     = $this->db->f('account_lastlogin');
-			$this->data['lastloginfrom'] = $this->db->f('account_lastloginfrom');
+			$this->data['userid']            = $this->db->f('account_lid');
+			$this->data['account_id']        = $this->db->f('account_id');
+			$this->data['account_lid']       = $this->db->f('account_lid');
+			$this->data['firstname']         = $this->db->f('account_firstname');
+			$this->data['lastname']          = $this->db->f('account_lastname');
+			$this->data['fullname']          = $this->db->f('account_firstname') . ' ' . $this->db->f('account_lastname');
+			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
+			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
-			$this->data['status']        = $this->db->f('account_status');
-			$this->data['expires']       = $this->db->f('account_expires');
-			$this->data['account_type']  = $this->db->f('account_type');
+			$this->data['status']            = $this->db->f('account_status');
+			$this->data['expires']           = $this->db->f('account_expires');
 
 			return $this->data;
 		}
@@ -94,12 +125,23 @@
 
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			if(!$sort)
+			// For XML-RPC
+/*			if (is_array($_type))
+			{
+				$p      = $_type;
+				$_type  = $p[0]['type'];
+				$start  = $p[0]['start'];
+				$order  = $p[0]['order'];
+				$query  = $p[0]['query'];
+				$offset = $p[0]['offset'];
+			}
+*/
+			if (! $sort)
 			{
 				$sort = "DESC";
 			}
 
-			if($order)
+			if ($order)
 			{
 				$orderclause = "ORDER BY $order $sort";
 			}
@@ -120,18 +162,15 @@
 					$whereclause = '';
 			}
 
-			if($query)
+			if ($query)
 			{
-				$query = ereg_replace("'",'',$query);
-				$query = ereg_replace('"','',$query);
-
-				if($whereclause)
+				if ($whereclause)
 				{
 					$whereclause .= ' AND ( ';
 				}
 				else
 				{
-					$whereclause .= ' WHERE ( ';
+					$whereclause = ' WHERE ( ';
 				}
 
 				$whereclause .= " account_firstname LIKE '%$query%' OR account_lastname LIKE "
@@ -139,11 +178,11 @@
 			}
 
 			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause";
-			if($offset)
+			if ($offset)
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
 			}
-			elseif($start)
+			elseif ($start !== '')
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
 			}
@@ -152,7 +191,7 @@
 				$this->db->query($sql,__LINE__,__FILE__);
 			}
 
-			while($this->db->next_record())
+			while ($this->db->next_record())
 			{
 				$accounts[] = Array(
 					'account_id'        => $this->db->f('account_id'),
@@ -164,7 +203,10 @@
 					'account_expires'   => $this->db->f('account_expires')
 				);
 			}
-			$this->total = count($accounts);
+			$this->db->query("SELECT count(*) FROM phpgw_accounts $whereclause");
+			$this->db->next_record();
+			$this->total = $this->db->f(0);
+
 			return $accounts;
 		}
 
@@ -172,7 +214,7 @@
 		{
 			static $name_list;
 
-			if(!$account_lid)
+			if (! $account_lid)
 			{
 				return False;
 			}
@@ -182,7 +224,7 @@
 				return $name_list[$account_lid];
 			}
 
-			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='" . $account_lid . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
@@ -199,7 +241,7 @@
 		{
 			static $id_list;
 
-			if(!$account_id)
+			if (! $account_id)
 			{
 				return False;
 			}
@@ -226,22 +268,23 @@
 		{
 			static $account_type;
 			$account_id = get_account_id($accountid);
-
+			
 			if (isset($this->account_type) && $account_id == $this->account_id)
 			{
 				return $this->account_type;
-			}
-			elseif($account_id == '')
-			{
-				return False;
 			}
 
 			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
 			{
 				return $account_type[$account_id];
 			}
+			elseif($account_id == '')
+			{
+				return False;
+			}
+			$this->db->Halt_On_Error = 'no';
 			$this->db->query('SELECT account_type FROM phpgw_accounts WHERE account_id=' . $account_id,__LINE__,__FILE__);
-			if($this->db->num_rows())
+			if ($this->db->num_rows())
 			{
 				$this->db->next_record();
 				$account_type[$account_id] = $this->db->f('account_type');
@@ -250,6 +293,7 @@
 			{
 				$account_type[$account_id] = False;
 			}
+			$this->db->Halt_On_Error = 'yes';
 			return $account_type[$account_id];
 		}
 
@@ -272,7 +316,7 @@
 				{
 					return $by_lid[$account_lid];
 				}
-				$sql .= "account_lid ='" . $account_lid . "'";
+				$sql .= "account_lid = '".$account_lid."'";
 			}
 
 			$this->db->query($sql,__LINE__,__FILE__);
@@ -296,7 +340,7 @@
 			$this->db->query('insert into phpgw_accounts (account_lid, account_type, account_pwd, '
 				. "account_firstname, account_lastname, account_status, account_expires) values ('"
 				. $account_info['account_lid'] . "','" . $account_info['account_type'] . "','"
-				. md5($account_info['account_passwd']) . "','" . $account_info['account_firstname']
+				. md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
 				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status']
 				. "'," . $account_info['account_expires'] . ')',__LINE__,__FILE__);
 
@@ -310,7 +354,7 @@
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
-			if($expiredate)
+			if ($expiredate)
 			{
 				$expires = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
 			}
@@ -350,24 +394,22 @@
 			$this->create($acct_info,$default_prefs);
 			$accountid = $this->name2id($accountname);
 
-			if($default_acls == False)
+			if ($default_acls == False)
 			{
 				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
 				$default_group_id  = $this->name2id($default_group_lid);
 				$defaultgroupid = $default_group_id ? $default_group_id : $this->name2id('Default');
-				if($defaultgroupid)
+				if ($defaultgroupid)
 				{
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
-									. $defaultgroupid . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', "
-									. $accountid . ', 1)',__LINE__,__FILE__);
+						. $defaultgroupid . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', " . $accountid . ', 1)',__LINE__,__FILE__);
 				}
 				else
 				{
-					// If they dont have a default group, they need some sort of permissions.
+					// If they don't have a default group, they need some sort of permissions.
 					// This generally doesn't / shouldn't happen, but will (jengo)
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', "
-									. $accountid . ', 1)',__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', " . $accountid . ', 1)',__LINE__,__FILE__);
 
 					$apps = Array(
 						'addressbook',
@@ -375,7 +417,7 @@
 						'email',
 						'notes',
 						'todo',
-						'filemanager',
+						'phpwebhosting',
 						'manual'
 					);
 

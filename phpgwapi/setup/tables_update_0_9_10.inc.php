@@ -78,7 +78,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$db2 = $phpgw_setup->db;
+		$db2 = $phpgw_setup->oProc;
 
 		$phpgw_setup->oProc->query("SELECT account_groups,account_id FROM accounts",__LINE__,__FILE__);
 		if($phpgw_setup->oProc->num_rows())
@@ -190,8 +190,8 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$db2 = $phpgw_setup->db;
-		$db3 = $phpgw_setup->db;
+		$db2 = $phpgw_setup->oProc;
+		$db3 = $phpgw_setup->oProc;
 
 		$phpgw_setup->oProc->query("SELECT MAX(group_id) FROM groups",__LINE__,__FILE__);
 		$phpgw_setup->oProc->next_record();
@@ -223,10 +223,7 @@
 			{
 				$new_group_id = mt_rand ($max_group_id, 60000);
 				$db2->query("SELECT account_id FROM phpgw_accounts WHERE account_id=$new_group_id",__LINE__,__FILE__);
-				if(!$db2->num_rows())
-				{
-					break;
-				}
+				if(!$db2->num_rows()) { break; }
 			}
 			$db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_lid='$group_name'",__LINE__,__FILE__);
 			if($db2->num_rows())

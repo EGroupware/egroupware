@@ -267,7 +267,7 @@
 			}
 		}
 	}
-	$GLOBALS['setup_tpl']->set_var('submit',lang('Submit'));
+	$GLOBALS['setup_tpl']->set_var('submit',lang('Save'));
 	$GLOBALS['setup_tpl']->set_var('cancel',lang('Cancel'));
 	$GLOBALS['setup_tpl']->pparse('out','app_footer');
 	$GLOBALS['setup_tpl']->pparse('out','footer');
