@@ -245,10 +245,34 @@ class html
 	 * @param $base_href string set a base href to get relative image-pathes working
 	 * @param $plugins string plugins to load seperated by comma's, eg 'TableOperations,ContextMenu'
 	 * (htmlarea breaks when a plugin calls a nonexisiting lang file)
+	 * @param $custom_toolbar when given this toolbar lay-out replaces the default lay-out.
 	 * @return the necessary html for the textarea
 	 */
-	function htmlarea($name,$content='',$style='',$base_href='',$plugins='')
-	{
+	 function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='')
+	 {
+
+		/* initialize the custom toolbar like the default initialization below 
+		$custom_toolbar = '[
+		[ "fontname", "space",
+		"fontsize", "space",
+		"formatblock", "space",
+		"bold", "italic", "underline", "separator",
+		"strikethrough", "subscript", "superscript", "separator",
+		"copy", "cut", "paste", "space", "undo", "redo" ],
+
+		[ "justifyleft", "justifycenter", "justifyright", "justifyfull", "separator",
+		"orderedlist", "unorderedlist", "outdent", "indent", "separator",
+		"forecolor", "hilitecolor", "textindicator", "separator",
+		"inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator",
+		"popupeditor", "separator", "showhelp", "about" ]
+		];';
+		*/
+
+		if($custom_toolbar)
+		{
+		   $custom_toolbar='htmlareaConfig.toolbar = '.$custom_toolbar;
+		}
+
 		if (!$style) $style = 'width:100%; min-width:500px; height:300px;';
 		// check if htmlarea is availible for the browser and use a textarea if not
 		if (!$this->htmlarea_availible())
@@ -347,6 +371,9 @@ HTMLArea.replace = function(id, config)
 '.$load_plugin_string.'
 
 var htmlareaConfig = new HTMLArea.Config();
+
+'.$custom_toolbar.'
+
 htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 
 			$GLOBALS['phpgw_info']['flags']['java_script'] .="</script>\n";
