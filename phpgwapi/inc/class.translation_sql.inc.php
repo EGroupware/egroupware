@@ -258,15 +258,18 @@
 			}
 			/* 
 			   php does not seem to support gb2312
-			   but seems to be able to decode it as another charset
+			   but seems to be able to decode it as EUC-CN
 			*/
-			if(strtolower($from) == 'gb2312')
+			switch(strtolower($from))
 			{
-				$from = mb_detect_encoding($data);
-			}
-			if(strtolower($from) == 'us-ascii')
-			{
-				$from = 'iso-8859-1';
+				case 'gb2312':
+				case 'gb18030':
+					$from = "EUC-CN";
+					break;
+					
+				case 'us-ascii':
+					$from = 'iso-8859-1';
+					break;
 			}
 			if (!$to)
 			{
