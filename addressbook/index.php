@@ -44,14 +44,21 @@
   if (! $start)
      $start = 0;
 
-  // insert acl stuff here
-
   $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
 
+  // insert acl stuff here in lieu of old access perms
+  // following sets up the filter for read, then restores the filter string for later checking
   if ($filter == "none") { $filter = ""; }
+  $savefilter = $filter;
   if ($filter != "" )    { $filter = "access=$filter"; }
 
-  $entries = $this->read($start,$offset,$columns_to_display,$query,$filter,$sort,$order);
+  $qfilter = $filter;
+  $filter = $savefilter;
+
+  $qcols = $columns_to_display + array("access");
+
+  // read the entry list
+  $entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order);
 
   $search_filter = $phpgw->nextmatchs->show_tpl("index.php",
                    $start, $this->total_records,
@@ -98,47 +105,52 @@
 
   // Show the entries
   for ($i=0;$i<count($entries);$i++) { // each entry
-    $t->set_var(columns,"");
-    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    $t->set_var(row_tr_color,$tr_color);
-    $myid    = $entries[$i]["id"];
-    $myowner = $entries[$i]["owner"];
+    if ( ($entries[$i]["access"] == $filter) ||
+         ($entries[$i]["access"] == "," . $filter . ",") ||
+         ($filter == "") ||
+         ($filter == "none")) {
+      $t->set_var(columns,"");
+      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+      $t->set_var(row_tr_color,$tr_color);
+      $myid    = $entries[$i]["id"];
+      $myowner = $entries[$i]["owner"];
 
-    while ($column = each($columns_to_display)) { // each entry column
-      $ref=$data="";
-      $coldata = $entries[$i][$column[0]];
-      // Some fields require special formatting.       
-      if ($column[0] == "url") {
-        $ref='<a href="'.$coldata.'" target="_new">';
-	$data=$coldata.'</a>';
-      } elseif ($column[0] == "email") {
-        if ($phpgw_info["user"]["apps"]["email"]) {
-          $ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
-	    . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
-        } else {
+      while ($column = each($columns_to_display)) { // each entry column
+        $ref=$data="";
+        $coldata = $entries[$i][$column[0]];
+        // Some fields require special formatting.       
+        if ($column[0] == "url") {
+          $ref='<a href="'.$coldata.'" target="_new">';
+          $data=$coldata.'</a>';
+        } elseif ($column[0] == "email") {
+          if ($phpgw_info["user"]["apps"]["email"]) {
+            $ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
+              . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+          } else {
 //changed frmo a patch posted on sf, have not fully tested. Seek3r, Jan 30 2001
 //          $ref='<a href="mailto:"'.$coldata.'">'.$coldata.'</a>';
-          $ref='<a href="mailto:'.$coldata.'">';
+            $ref='<a href="mailto:'.$coldata.'">';
+          }
+          $data=$coldata."</a>";
+        } else { // But these do not
+          $ref=""; $data=$coldata;
         }
-        $data=$coldata."</a>";
-      } else { // But these do not
-        $ref=""; $data=$coldata;
+        $t->set_var(col_data,$ref.$data);
+        $t->parse("columns","column",True);
       }
-      $t->set_var(col_data,$ref.$data);
-      $t->parse("columns","column",True);
-    }
     
-    $t->set_var(row_view_link,$phpgw->link("view.php","ab_id=$myid&start=$start&order=$order&filter="
-      . "$filter&query=$query&sort=$sort"));
-    $t->set_var(row_vcard_link,$phpgw->link("vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
-      .  "$filter&query=$query&sort=$sort"));
-    $t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id="
-      .$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort));
+      $t->set_var(row_view_link,$phpgw->link("view.php","ab_id=$myid&start=$start&order=$order&filter="
+        . "$filter&query=$query&sort=$sort"));
+      $t->set_var(row_vcard_link,$phpgw->link("vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
+        .  "$filter&query=$query&sort=$sort"));
+      $t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id="
+        .$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort));
 
-    $t->parse("rows","row",True);
-    $t->pparse("out","row");
+      $t->parse("rows","row",True);
+      $t->pparse("out","row");
 
-    reset($columns_to_display); // If we don't reset it, our inside while won't loop
+      reset($columns_to_display); // If we don't reset it, our inside while won't loop
+    }
   }
 
   $t->pparse("out","addressbook_footer");
