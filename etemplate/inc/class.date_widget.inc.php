@@ -188,6 +188,13 @@
 				unset($cell['size']);
 				return True;
 			}
+			if ($cell['needed'])
+			{
+				$GLOBALS['egw_info']['etemplate']['to_process'][$name] = array(
+					'type' => 'ext-'.$type,
+					'needed' => $cell['needed'],
+				);
+			}
 			$tpl =& new etemplate;
 			$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
 			// keep the editor away from the generated tmpls
@@ -367,7 +374,7 @@
 				// checking the date is a correct one
 				if (!checkdate($value['m'],$value['d'],$value['Y']))
 				{
-					$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] = lang("'%1' is not a valid date !!!",
+					$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] .= lang("'%1' is not a valid date !!!",
 						$GLOBALS['phpgw']->common->dateformatorder($value['Y'],$value['m'],$value['d'],true));
 				}
 				$data_format = $extension_data['data_format'];
