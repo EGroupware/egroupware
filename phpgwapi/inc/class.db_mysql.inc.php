@@ -576,6 +576,7 @@
 
 		function table_names()
 		{
+			$return - Array();
 			$this->query('SHOW TABLES',__LINE__,__FILE__);
 			$i=0;
 			while($info=mysql_fetch_row($this->Query_ID))
