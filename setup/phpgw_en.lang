@@ -67,15 +67,15 @@ book marks	common	en	Book marks
 bookmarks	common	en	Bookmarks
 brief description	calendar	en	Brief Description
 business	common	en	Business
-business city	addressbook	en	Business City
-business country	addressbook	en	Business Country
-business email	addressbook	en	Business EMail
-business email type	addressbook	en	Business EMail Type
-business fax	addressbook	en	Business Fax
-business phone	addressbook	en	Business Phone
-business state	addressbook	en	Business State
-business street	addressbook	en	Business Street
-business zip code	addressbook	en	Business Postal Code
+business city	common	en	Business City
+business country	common	en	Business Country
+business email	common	en	Business EMail
+business email type	common	en	Business EMail Type
+business fax	common	en	Business Fax
+business phone	common	en	Business Phone
+business state	common	en	Business State
+business street	common	en	Business Street
+business zip code	common	en	Business Postal Code
 calendar	common	addressbook	en	calendar
 calendar - add	calendar	en	Calendar - Add
 calendar - edit	calendar	en	Calendar - Edit
@@ -101,6 +101,7 @@ company	common	en	Company
 company name	addressbook	en	Company Name
 completed	todo	en	completed
 compose	email	en	Compose
+contact	common	en	Contact
 copy	common	en	Copy
 copy_as	filemanager	en	Copy as
 country	addressbook	en	Country
@@ -332,7 +333,7 @@ original	transy	en	Original
 other number	addressbook	en	Other Number
 other phone	common	en	Other phone
 owner	addressbook	en	Owner
-pager	addressbook	en	Pager
+pager	comon	en	Pager
 parcel	addressbook	en	Parcel
 participants	calendar	en	Participants
 password	common	en	Password
