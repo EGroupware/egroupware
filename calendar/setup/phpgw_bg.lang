@@ -1,0 +1,23 @@
+accept	calendar	bg	Приемане
+accepted	calendar	bg	Прието
+added	calendar	bg	Добавено
+all day	calendar	bg	Всеки ден
+calendar	common	bg	Календар
+calendar - add	calendar	bg	Календар - добавяне
+calendar - edit	calendar	bg	Календар - редактиране
+canceled	calendar	bg	Отказано
+fri	calendar	bg	Пт
+minutes	calendar	bg	минути
+mon	calendar	bg	Пон
+month	calendar	bg	Месец
+order	calendar	bg	Подреждане
+sa	calendar	bg	Сб
+sat	calendar	bg	Съб
+su	calendar	bg	Нд
+sun	calendar	bg	Нед
+text	calendar	bg	Текст
+thu	calendar	bg	Чет
+today	calendar	bg	Днес
+tue	calendar	bg	Вто
+wed	calendar	bg	Сря
+week	calendar	bg	Седмица

@@ -1,0 +1,408 @@
+about	common	bg	Относно
+about %1	common	bg	Относно %1
+access	common	bg	Достъп
+access not permitted	common	bg	Достъпът отказан
+action	common	bg	Действие
+add	common	bg	Добавяне
+add category	common	bg	Добавяне на категория
+addressbook	common	bg	Адресник
+admin	common	bg	Администрация
+administration	common	bg	Администрация
+afghanistan	common	bg	Афганистан
+albania	common	bg	Албания
+algeria	common	bg	Алжир
+all	common	bg	Всички
+andorra	common	bg	Андора
+angola	common	bg	Ангола
+antarctica	common	bg	Антарктика
+antigua and barbuda	common	bg	Антигуа и Барбуда
+apply	common	bg	Прилагане
+april	common	bg	Април
+are you sure you want to delete these entries ?	common	bg	Наистина ли искате да изтриете тези записи?
+are you sure you want to delete this entry ?	common	bg	Наистина ли искате да изтриете този запис?
+argentina	common	bg	Аржентина
+armenia	common	bg	Армения
+aruba	common	bg	Аруба
+august	common	bg	Август
+australia	common	bg	Австралия
+austria	common	bg	Автсрия
+author	common	bg	Автор
+azerbaijan	common	bg	Азербайджан
+back	common	bg	Назад
+back to user login	common	bg	Назад към входа за потребители
+bad login or password	common	bg	Грешно потребителско име или парола
+bahamas	common	bg	Бахамски острови
+bahrain	common	bg	Бахрейн
+bangladesh	common	bg	Бангладеш
+barbados	common	bg	Барбадос
+belarus	common	bg	Беларус
+belgium	common	bg	Белгия
+benin	common	bg	Бенин
+bhutan	common	bg	Бутан
+blocked, too many attempts	common	bg	Блокирани сте заради твърде много грешни опити
+bolivia	common	bg	Боливия
+bosnia and herzegovina	common	bg	Босна и Херцеговина
+botswana	common	bg	Ботсвана
+brazil	common	bg	Бразилия
+bulgaria	common	bg	България
+burkina faso	common	bg	Буркина Фасо
+burundi	common	bg	Бурунди
+calendar	common	bg	Календар
+cambodia	common	bg	Камбоджа
+cameroon	common	bg	Камерун
+canada	common	bg	Канада
+cancel	common	bg	Отказ
+cape verde	common	bg	Острови Зелени Нос
+categories	common	bg	Категории
+category	common	bg	Категория
+category %1 has been added !	common	bg	Категорията %1 беше добавена!
+category %1 has been updated !	common	bg	Категорията %1 беше обновена!
+cayman islands	common	bg	Каймански острови
+central african republic	common	bg	Централноафриканска Републикя
+chad	common	bg	Чад
+change	common	bg	Промяна
+charset	common	bg	windows-1251
+check installation	common	bg	Проверка на инсталацията
+chile	common	bg	Чили
+china	common	bg	Китай
+clear	common	bg	Изчистване
+clear form	common	bg	Изчистване на формата
+close	common	bg	Затваряне
+colombia	common	bg	Колумбия
+comoros	common	bg	Коморски оствори
+company	common	bg	Фирма
+congo	common	bg	Конго
+congo, the democratic republic of the	common	bg	Демократична Република Конго
+cook islands	common	bg	Острови Кук
+copy	common	bg	Копиране
+costa rica	common	bg	Коста Рика
+cote d ivoire	common	bg	Бряг на Слоновата Кост
+create	common	bg	Създаване
+created by	common	bg	Създадено от
+croatia	common	bg	Хърватска
+cuba	common	bg	Куба
+currency	common	bg	Валута
+current users	common	bg	Включени потребители
+cyprus	common	bg	Кипър
+czech republic	common	bg	Чешка Република
+date	common	bg	Дата
+december	common	bg	Декември
+default category	common	bg	Категория по подразбиране
+delete	common	bg	Изтриване
+denmark	common	bg	Дания
+description	common	bg	Описание
+details	common	bg	Подробности
+disabled	common	bg	Забранено
+display monday first	common	bg	Седмицата да започва с понеделник
+display sunday first	common	bg	Седмицата да започва с неделя
+djibouti	common	bg	Джибути
+do you also want to delete all subcategories ?	common	bg	Искате ли също така да изтриете и всички подкатегории?
+dominican republic	common	bg	Доминиканска Република
+done	common	bg	Готово
+e-mail	common	bg	ЕПоща
+east timor	common	bg	Източен Тимур
+ecuador	common	bg	Еквадор
+edit	common	bg	Редактиране
+edit categories	common	bg	Редактиране на категориите
+edit category	common	bg	Редактиране на категория
+egroupware api version %1	common	bg	eGroupWare: версия на API - %1
+egroupware: login blocked for user '%1', ip %2	common	bg	eGroupWare: влизането блокирано за потребител '%1' от IP-адрес %2
+egypt	common	bg	Египет
+el salvador	common	bg	Ел Салвадор
+email	common	bg	ЕПоща
+email-address of the user, eg. "%1"	common	bg	потребителски пощенски адрес, например "%1"
+enabled	common	bg	Разрешено
+entry has been deleted sucessfully	common	bg	Записът беше изтрит успешно
+entry updated sucessfully	common	bg	Записът беше обновен успешно
+equatorial guinea	common	bg	Екваториална Гвинея
+error	common	bg	Грешка
+estonia	common	bg	Естония
+ethiopia	common	bg	Етиопия
+falkland islands (malvinas)	common	bg	Фолклендски (Малвински) острови
+faroe islands	common	bg	Фаройски острови
+fax number	common	bg	факс номер
+february	common	bg	Февруари
+fields	common	bg	Полета
+fiji	common	bg	Острови Фиджи
+finland	common	bg	Финландия
+first page	common	bg	Първа страница
+france	common	bg	Франция
+french guiana	common	bg	Френска Гвиана
+french polynesia	common	bg	Френска Полинезия
+french southern territories	common	bg	Френски Южни Територии
+friday	common	bg	Петък
+fullname	common	bg	Пълно име
+gabon	common	bg	Габон
+gambia	common	bg	Гамбия
+general menu	common	bg	Основно меню
+germany	common	bg	Германия
+ghana	common	bg	Гана
+gibraltar	common	bg	Гибралтар
+grant access	common	bg	Разрешаване на достъп
+greece	common	bg	Гърция
+greenland	common	bg	Гренландия
+grenada	common	bg	Гренада
+group	common	bg	Група
+group has been added	common	bg	Групата беше добавена
+group has been deleted	common	bg	Групата беше изтрита
+group has been updated	common	bg	Групата беше обновена
+group name	common	bg	име на групата
+groups	common	bg	Групи
+guadeloupe	common	bg	Гваделупа
+guatemala	common	bg	Гватемала
+guinea	common	bg	Гвинея
+guinea-bissau	common	bg	Гвинея-Бисау
+guyana	common	bg	Гвиана
+haiti	common	bg	Хаити
+help	common	bg	Помощ
+home	common	bg	Начало
+home email	common	bg	home email
+honduras	common	bg	Хондурас
+hong kong	common	bg	Хонг-Конг
+hungary	common	bg	Унгария
+iceland	common	bg	Исландия
+india	common	bg	Индия
+indonesia	common	bg	Индонезия
+invalid ip address	common	bg	Невалиден IP адрес
+invalid password	common	bg	Грешна парола
+iran, islamic republic of	common	bg	Ислямска Република Иран
+iraq	common	bg	Ирак
+ireland	common	bg	Ейре
+israel	common	bg	Израел
+it has been more then %1 days since you changed your password	common	bg	Изминали са повече от %1 дни, откакто сте променяли паролата си
+it is recommended that you run setup to upgrade your tables to the current version	common	bg	Препоръчително е да преминете през "инсталация" (setup), за да обновите таблиците си до текущата версия.
+italy	common	bg	Италия
+jamaica	common	bg	Ямайка
+january	common	bg	Януари
+japan	common	bg	Япония
+jordan	common	bg	Йордания
+july	common	bg	Юли
+june	common	bg	Юни
+kazakstan	common	bg	Казахстан
+kenya	common	bg	Кения
+keywords	common	bg	Ключови думи
+korea, democratic peoples republic of	common	bg	Народно Демократична Република Корея
+korea, republic of	common	bg	Република Корея
+kuwait	common	bg	Кувейт
+kyrgyzstan	common	bg	Киргизстан
+language	common	bg	Език
+last name	common	bg	Фамилно име
+last name of the user, eg. "%1"	common	bg	фамилията на потребителя, например "%1"
+last page	common	bg	Последна страница
+lastname	common	bg	Фамилия
+latvia	common	bg	Латвия
+lebanon	common	bg	Ливан
+lesotho	common	bg	Лесото
+liberia	common	bg	Либерия
+libyan arab jamahiriya	common	bg	Либийска Арабска Джамахирия
+license	common	bg	Лиценз
+liechtenstein	common	bg	Лихтенщайн
+list	common	bg	Списък
+lithuania	common	bg	Литва
+logout	common	bg	Изход
+luxembourg	common	bg	Люксембург
+macau	common	bg	Макао
+macedonia, the former yugoslav republic of	common	bg	Македония
+madagascar	common	bg	Мадагаскар
+mail domain, eg. "%1"	common	bg	пощенски домейн, например "%1"
+main category	common	bg	Основна категория
+main screen	common	bg	Основен екран
+maintainer	common	bg	Поддържа се от
+malaysia	common	bg	Малайзия
+maldives	common	bg	Малдивски острови
+mali	common	bg	Мали
+malta	common	bg	Малта
+march	common	bg	Март
+marshall islands	common	bg	Маршалски острови
+max number of icons in navbar	common	bg	Максимален брой икони в лентата за управление
+may	common	bg	Май
+menu	common	bg	Меню
+message	common	bg	Съобщение
+mexico	common	bg	Мексико
+moldova, republic of	common	bg	Молдовска Република
+monaco	common	bg	Монако
+monday	common	bg	Понеделник
+mongolia	common	bg	Монголия
+morocco	common	bg	Мароко
+mozambique	common	bg	Мозамбик
+name	common	bg	Име
+name of the user, eg. "%1"	common	bg	Име на потребителя, например "%1"
+namibia	common	bg	Намибия
+nauru	common	bg	Науру
+nepal	common	bg	Непал
+netherlands	common	bg	Холандия
+netherlands antilles	common	bg	Холандски Антили
+never	common	bg	Никога
+new caledonia	common	bg	Нова Каледония
+new entry added sucessfully	common	bg	Новият запис е добавен успешно
+new main category	common	bg	Нова основна категория
+new value	common	bg	Нова стойност
+new zealand	common	bg	Нова Зеландия
+next page	common	bg	Следваща страница
+nicaragua	common	bg	Никарагуа
+niger	common	bg	Нигер
+nigeria	common	bg	Нигерия
+no	common	bg	Не
+no entries found, try again ...	common	bg	няма резултати, опитайте отново...
+norway	common	bg	Норвегия
+note	common	bg	Бележка
+notes	common	bg	Бележки
+november	common	bg	Ноември
+october	common	bg	Октомври
+old value	common	bg	Стара стойност
+oman	common	bg	Оман
+on *nix systems please type: %1	common	bg	На *nix системи напишете: %1
+only private	common	bg	само "лични"
+only yours	common	bg	само вашите
+owner	common	bg	Собственик
+page was generated in %1 seconds	common	bg	Страницата беше създадена за %1 секунди
+pakistan	common	bg	Пакистан
+palestinian territory, occupied	common	bg	Окупирани Палестински Територии
+panama	common	bg	Панама
+papua new guinea	common	bg	Папуа Нова Гвинея
+paraguay	common	bg	Парагвай
+parent category	common	bg	Родителска категория
+password	common	bg	Парола
+password could not be changed	common	bg	Паролата не може да бъде сменена
+password has been updated	common	bg	Паролата беше обновена
+path to user and group files has to be outside of the webservers document-root!!!	common	bg	Пътят до файловете на потребители и групи ТРЯБВА ДА БЪДЕ ИЗВЪН дирукторията с документи на уеб-сървъра!!!
+peru	common	bg	Перу
+philippines	common	bg	Филипини
+phone number	common	bg	телефонен номер
+please enter a name	common	bg	Моля въведете име!
+please run setup to become current	common	bg	Моля минете през "инсталация", за да обновите
+please select	common	bg	Моля изберете
+please set your global preferences	common	bg	Моля задайте общите си настройки!
+please set your preferences for this application	common	bg	Моля задайте настройките си за това приложение!
+please wait...	common	bg	Моля изчакайте...
+poland	common	bg	Полша
+portugal	common	bg	Португалия
+powered by phpgroupware version %1	common	bg	Задвижвано от <a href="http://www.phpgroupware.org">phpGroupWare</a> версия %1
+preferences	common	bg	Настройки
+previous page	common	bg	Предишна страница
+print	common	bg	Печат
+puerto rico	common	bg	Пуерто Рико
+qatar	common	bg	Катар
+reject	common	bg	Отхвърляне
+rename	common	bg	Преименуване
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	bg	Пълен списък на потребителите на системата. Внимание: списъкът може да бъде много дълъг!
+romania	common	bg	Румъния
+russian federation	common	bg	Руска Федерация
+rwanda	common	bg	Руанда
+saint helena	common	bg	Света Елена
+saint lucia	common	bg	Санта Лучия
+samoa	common	bg	Самоа
+san marino	common	bg	Сан Марино
+saturday	common	bg	Събота
+saudi arabia	common	bg	Саудитска Арабия
+save	common	bg	Запис
+search	common	bg	Търсене
+select category	common	bg	Изберете категория
+select date	common	bg	Изберете дата
+select group	common	bg	Изберете група
+select home email address	common	bg	Изберете домашен адрес на епоща
+select one	common	bg	Изберете едно
+select user	common	bg	Изберете потребител
+select work email address	common	bg	Изберете служебен адрес на епоща
+send	common	bg	Изпращане
+senegal	common	bg	Сенегал
+september	common	bg	Септември
+server %1 has been added	common	bg	Сървърът %1 беше добавен
+server name	common	bg	Име на сървър
+session has been killed	common	bg	Сесията беше премахната
+setup	common	bg	Инсталация
+seychelles	common	bg	Сейшелски острови
+show all	common	bg	показване на всички
+show all categorys	common	bg	Показване на всички категории
+show page generation time	common	bg	Показване на времето за създаване на страниците
+show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците?
+showing %1	common	bg	показване на %1
+showing %1 - %2 of %3	common	bg	показване на %1 до %2 от %3
+sierra leone	common	bg	Сиера Леоне
+singapore	common	bg	Сингапур
+slovakia	common	bg	Словакия
+slovenia	common	bg	Словения
+solomon islands	common	bg	Соломонови острови
+somalia	common	bg	Сомалия
+south africa	common	bg	Южна Африка
+spain	common	bg	Испания
+sri lanka	common	bg	Шри-Ланка
+start date	common	bg	Начална дата
+start time	common	bg	Начален час
+status	common	bg	Състояние
+subject	common	bg	Относно
+submit	common	bg	Изпращане
+sudan	common	bg	Судан
+sunday	common	bg	Неделя
+suriname	common	bg	Суринам
+sweden	common	bg	Швеция
+switzerland	common	bg	Швейцария
+taiwan	common	bg	Тайван/Тайпе
+tajikistan	common	bg	Таджикистан
+tanzania, united republic of	common	bg	Обединена Република Танзания
+thailand	common	bg	Тайланд
+the api is current	common	bg	API е последна версия
+the api requires an upgrade	common	bg	API има нужда от обновяване
+the following applications require upgrades	common	bg	Следните приложения имат нужда от обновяване
+the mail server returned	common	bg	Пощенският сървър върна следното съобщение
+this application is current	common	bg	Приложението е последна версия
+this application requires an upgrade	common	bg	Приложението има нужда от обновяване
+this name has been used already	common	bg	Това име вече е използвано !
+thursday	common	bg	Четвъртък
+time zone	common	bg	Часови пояс
+to	common	bg	До
+to go back to the msg list, click <a href= %1 >here</a>	common	bg	За връщане към списъка със съобщения, натиснете <a href="%1">тук</a>
+today	common	bg	Днес
+todays date, eg. "%1"	common	bg	днешна дата, например "%1"
+toggle first day of week	jscalendar	bg	Настройка на първия ден на седмицата
+togo	common	bg	Того
+total	common	bg	общо
+trinidad and tobago	common	bg	Тринидад и Тобаго
+tuesday	common	bg	Вторник
+turkey	common	bg	Турция
+turkmenistan	common	bg	Туркменистан
+uganda	common	bg	Уганда
+ukraine	common	bg	Украйна
+united arab emirates	common	bg	Обединени Арабски Емирства
+united kingdom	common	bg	Великобритания
+united states	common	bg	Съединени Американски Щати
+unknown	common	bg	Unknown
+update	common	bg	Обновяване
+uruguay	common	bg	Уругвай
+user	common	bg	Потребител
+user accounts	common	bg	потребители
+user groups	common	bg	групи
+username	common	bg	Потребителско име
+users	common	bg	потребители
+users choice	common	bg	По избор на потребителя
+uzbekistan	common	bg	Узбекистан
+venezuela	common	bg	Венецуела
+version	common	bg	Версия
+viet nam	common	bg	Виетнам
+view	common	bg	Преглед
+wednesday	common	bg	Сряда
+welcome	common	bg	Добре дошли
+western sahara	common	bg	Западна Сахара
+written by:	common	bg	Написано от:
+year	common	bg	Година
+yemen	common	bg	Йемен
+yes	common	bg	Да
+you are required to change your password during your first login	common	bg	Трябва да смените паролата си при първото влизане
+you are running a newer version of phpgroupware than your database is setup for	common	bg	Използвате по-нова версия на phpGroupWare от тази, за която е настроена базата ви данни.
+you have been successfully logged out	login	bg	Излизането ви от системата приключи успешно
+you have not entered a title	common	bg	Не сте въвели заглавие
+you have not entered a valid date	common	bg	Не сте въвели валидна дата
+you have not entered a valid time of day	common	bg	Не сте въвели валидно време на деня
+you have not entered participants	common	bg	Не сте въвели участници
+you have selected an invalid date	common	bg	Избрали сте невалидна дата!
+you have selected an invalid main category	common	bg	Избрали сте невалидна основна категория!
+you have successfully logged out	common	bg	Излязохте успешно
+your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не може</b> да бъде изпратено!<br>
+your message has been sent	common	bg	Писмото ви беше изпратено
+your search returned %1 matchs	common	bg	търсенето ви върна %1 съвпадения
+your search returned 1 match	common	bg	търсенето ви върна 1 съвпадение
+your session could not be verified.	login	bg	Сесията ви не може да бъде проверена.
+your settings have been updated	common	bg	Настройките ви са обновени
+yugoslavia	common	bg	Югославия
+zambia	common	bg	Замбия
+zimbabwe	common	bg	Зимбабве
