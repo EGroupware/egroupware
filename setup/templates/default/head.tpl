@@ -103,6 +103,10 @@
 								</tr>
 
 								<tr class="divSideboxEntry">
+									<td width="20" align="center" valign="middle" class="textSidebox">{indeximg}</td><td class="textSidebox">{indexbutton}</td>
+								</tr>
+
+								<tr class="divSideboxEntry">
 									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
 								</tr>
 <!-- END loged_in -->

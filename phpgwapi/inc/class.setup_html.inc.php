@@ -144,9 +144,17 @@
 			{
 				$GLOBALS['setup_tpl']->set_var('configdomain',' - ' . lang('Domain') . ': ' . $configdomain);
 			}
-			$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+
+			if(basename($_SERVER['SCRIPT_FILENAME']) != 'index.php')
+			{
+				$index_btn = '<a href="index.php" class="link">' . lang('Setup Main Menu') . '</a>';
+				$index_img = '<img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" />';
+				$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			}
 			$GLOBALS['setup_tpl']->set_var(array(
-				'logoutbutton' => $btn_logout,
+				'logoutbutton'  => $btn_logout,
+				'indexbutton'   => $index_btn,
+				'indeximg'      => $index_img,
 				'check_install' => $check_install,
 				'main_menu'     => lang('Setup Main Menu'),
 				'user_login'    => lang('Back to user login')
