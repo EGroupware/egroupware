@@ -2835,7 +2835,7 @@ class boicalendar
 					$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
 					$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['organizer']['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
 				}
-				else
+				elseif(isset($ical['attendee']))
 				{
 					$attendee_count = count($ical['attendee']);
 
@@ -2846,6 +2846,11 @@ class boicalendar
 							$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['attendee'][$j]['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
 						}
 					}
+				}
+				else
+				{
+					$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
+					$so_event->add_attribute('participants',$this->switch_to_phpgw_status($ical['organizer']['partstat']),$GLOBALS['phpgw_info']['user']['account_id']);
 				}
 			}
 		}
@@ -3067,10 +3072,10 @@ class boicalendar
 //rrule
 					}
 				
-					if(!isset($ical['event'][$i]['organizer']))
+					if(!isset($ical['event'][$i]['organizer']) || (isset($ical['event'][$i]['organizer']) && $ical['event'][$i]['organizer']['cn'] == $GLOBALS['phpgw_info']['user']['account_lid']))
 					{
 						$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
-						$so_event->add_attribute('participants','A',$GLOBALS['phpgw_info']['user']['account_id']);
+						$so_event->add_attribute('participants','A',intval($GLOBALS['phpgw_info']['user']['account_id']));
 					}
 					else
 					{
