@@ -97,6 +97,8 @@ default category	common	en	Default Category
 delete	common	en	Delete
 denmark	common	en	DENMARK
 description	common	en	Description
+detail	common	en	Detail
+details	common	en	Details
 disabled	common	en	Disabled
 djibouti	common	en	DJIBOUTI
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
@@ -168,6 +170,7 @@ haiti	common	en	HAITI
 heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	en	Help
 high	common	en	High
+highest	common	en	Highest
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
 honduras	common	en	HONDURAS
@@ -211,6 +214,7 @@ lithuania	common	en	LITHUANIA
 login	common	en	Login
 logout	common	en	Logout
 low	common	en	Low
+lowest	common	en	Lowest
 luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
