@@ -213,7 +213,6 @@
     function link($url = "", $extravars = "")
     {
       global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
-
       if (! $kp3)
          $kp3 = $phpgw_info["user"]["kp3"];
 
@@ -246,11 +245,15 @@
       $slash_check = strtolower(substr($url ,0,1));
       
       if(substr($url ,0,$webserver_url_count) != $phpgw_info["server"]["webserver_url"]) {
-        if($slash_check != "/") {
-          $url = $phpgw_info["server"]["webserver_url"]."/".$url; 
-        } else{
-          $url = $phpgw_info["server"]["webserver_url"].$url; 
-        } 
+        $app = $phpgw_info["flags"]["currentapp"];
+        if($slash_check == "/") {
+          $app = ""; 
+        } elseif ($app == "home" || $app == "logout" || $app == "login"){
+          $app = "/"; 
+        }else{ 
+          $app = "/".$app."/";
+        }
+        $url = $phpgw_info["server"]["webserver_url"].$app.$url; 
       } 
       return $url;
     }  
