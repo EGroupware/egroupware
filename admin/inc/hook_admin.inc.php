@@ -38,7 +38,7 @@
 
 	if (! $GLOBALS['phpgw']->acl->check('global_categories_access',1,'admin'))
 	{
-		$file['Global Categories']          = $GLOBALS['phpgw']->link('/admin/categories.php');
+		$file['Global Categories']          = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index');
 	}
 
 	if (! $GLOBALS['phpgw']->acl->check('mainscreen_message_access',1,'admin'))
