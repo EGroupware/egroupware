@@ -37,13 +37,13 @@
   $t->set_var("right_next_matchs",$phpgw->nextmatchs->right("currentusers.php",$start,$total));
   $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
-  $t->set_var("sort_loginid",$phpgw->nextmatchs->show_sort_order($sort,"loginid",$order,
+  $t->set_var("sort_loginid",$phpgw->nextmatchs->show_sort_order($sort,"session_lid",$order,
 					 "currentusers.php",lang("LoginID")));
-  $t->set_var("sort_ip",$phpgw->nextmatchs->show_sort_order($sort,"ip",$order,
+  $t->set_var("sort_ip",$phpgw->nextmatchs->show_sort_order($sort,"session_ip",$order,
 				"currentusers.php",lang("IP")));
-  $t->set_var("sort_login_time",$phpgw->nextmatchs->show_sort_order($sort,"logintime",$order,
+  $t->set_var("sort_login_time",$phpgw->nextmatchs->show_sort_order($sort,"session_logintime",$order,
 						"currentusers.php",lang("Login Time")));
-  $t->set_var("sort_idle",$phpgw->nextmatchs->show_sort_order($sort,"dla",$order,
+  $t->set_var("sort_idle",$phpgw->nextmatchs->show_sort_order($sort,"session_dla",$order,
 				  "currentusers.php",lang("idle")));
   $t->set_var("lang_kill",lang("Kill"));
 

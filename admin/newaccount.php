@@ -18,25 +18,30 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   if ($submit) {
+     $totalerrors = 0;
+  
      if (! $n_loginid)
-        $error = "<br>" . lang("You must enter a loginid");
+        $error[$totalerrors++] = lang("You must enter a loginid");
 
      if (! $n_passwd)
-        $error .= "<br>" . lang("You must enter a password");
+        $error[$totalerrors++] = lang("You must enter a password");
 
      if ($n_passwd == $n_loginid)
-        $error = "<br>" . lang("The login and password can not be the same");
+        $error[$totalerrors++] = lang("The login and password can not be the same");
 
      if ($n_passwd != $n_passwd_2)
-        $error .= "<br>" . lang("The two passwords are not the same");
+        $error[$totalerrors++] = lang("The two passwords are not the same");
 
      if (count($new_permissions) == 0)
-        $error .= "<br>" . lang("You must add at least 1 permission to this account");
+        $error[$totalerrors++] = lang("You must add at least 1 permission to this account");
+        
+     if (count($n_groups) == 0)
+        $error[$totalerrors++] = lang("Account must belong to at least 1 group");
 
-     $phpgw->db->query("select account_lid from accounts where account_lid='$n_loginid'");
+     $phpgw->db->query("select count(*) from accounts where account_lid='$n_loginid'");
      $phpgw->db->next_record();
-     if ($phpgw->db->f("loginid"))
-        $error .= "<br>" . lang("That loginid has already been taken");
+     if ($phpgw->db->f(0) != 0)
+        $error[$totalerrors++] = lang("That loginid has already been taken");
 
      if (! $error) {
         $phpgw->db->lock(array("accounts","preferences"));
@@ -63,45 +68,42 @@
              $phpgw->accounts->add_app($permission[0]);
           }
         }
-        //$phpgw->permissions->add("hr");
 
-        if ($n_anonymous && ! $n_admin)
-	   $phpgwpermissions->add("anonymous");
+        $sql = "insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,"
+	        . "account_permissions,account_groups,account_status,account_lastpwd_change) values ('$n_loginid'"
+	        . ",'" . md5($n_passwd) . "','" . addslashes($n_firstname) . "','"
+	        . addslashes($n_lastname) . "','" . $phpgw->accounts->add_app("",True)
+	        . "','" . $phpgw->accounts->array_to_string("none",$n_groups) . "','A',0)";
 
-          $sql = "insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,"
- 	          . "account_permissions,account_groups,account_status,account_lastpwd_change) values ('$n_loginid'"
-	          . ",'" . md5($n_passwd) . "','" . addslashes($n_firstname) . "','"
-	          . addslashes($n_lastname) . "','" . $phpgw->accounts->add_app("",True)
-	          . "','" . $phpgw->accounts->array_to_string("none",$n_groups) . "','A',0)";
+        $phpgw->db->query($sql);
+        $phpgw->db->unlock();
 
-          $phpgw->db->query($sql);
-          $phpgw->db->unlock();
+        $sep = $phpgw->common->filesystem_separator();
 
-          $sep = $phpgw->common->filesystem_separator();
+        $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
-          $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
+        if (! @mkdir($basedir . $n_loginid, 0707)) {
+//         $cd = 36;
+        } else {
+           $cd = 28;
+        }
 
-          umask(000);
-          if (! @mkdir($basedir . $n_loginid, 0707)) {
-//             $cd = 36;
-          } else {
-             $cd = 28;
-          }
-
-          Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
-          exit;
+        Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
+        exit;
      }
   }
 
      $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
-     ?>
+     
+     echo "<p><b>" . lang("Add new account") . "</b><hr><br>";
+
+     if ($totalerrors) {
+        echo "<center>" . $phpgw->common->error_list($error) . "</center>";
+     }
+
+     ?>     
        <form method="POST" action="<?php echo $phpgw->link("newaccount.php"); ?>">
-       <?php
-         if ($error) {
-            echo "<center>" . lang("Error") . ":$error</center>";
-         }
-       ?>
         <center>
          <table border=0 width=65%>
            <tr>
@@ -173,16 +175,6 @@
 
                 $i++;
              }
-
-/*
-           // Just until we can get thing the $phpgw_info["apps"] then figured out
-	   echo "<tr><td>" . lang("Anonymous user") . "</td> <td><input type=\""
-	      . "checkbox\" name=\"new_permissions[anonymous]\" value=\"Y\"></td>";
-
-           echo "<td>" . lang("Manager") . "</td> <td><input type=\""
-	      . "checkbox\" name=\"new_permissions[manager]\" value=\"Y\"></td></tr>";
-*/	      
-
            ?>
            <tr>
              <td colspan=2>

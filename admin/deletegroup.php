@@ -43,8 +43,9 @@
 
      $group_name = $phpgw->db->f("group_name");
 
-     $phpgw->db->query("select account_id,account_lid from accounts where account_groups like '%$group_id%'");
-     if ($phpgw->db->num_rows()) {
+     $phpgw->db->query("select count(*) from accounts where account_groups like '%$group_id%'");
+     $phpgw->db->next_record();
+     if ($phpgw->db->f(0) != 0) {
         $phpgw->common->phpgw_header();
         $phpgw->common->navbar();
 
@@ -55,6 +56,7 @@
 
         echo '<table border="0"><tr><td>';
 
+        $phpgw->db->query("select account_id,account_lid from accounts where account_groups like '%$group_id%'");
         while ($phpgw->db->next_record()) {
           echo '<tr><td><a href="' . $phpgw->link("editaccount.php","account_=" . $phpgw->db->f("account_id")) . '">' . $phpgw->db->f("loginid") . '</a></tr></td>';
         }
