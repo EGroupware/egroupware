@@ -58,7 +58,7 @@
 			{
 				foreach($GLOBALS['acl_manager'] as $app => $locations)
 				{
-					$icon = $GLOBALS['phpgw']->common->image($app,array('navbar.gif',$app.'.gif'));
+					$icon = $GLOBALS['phpgw']->common->image($app,array('navbar.png',$app.'png','navbar.gif',$app.'.gif'));
 					$this->template->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 					$this->template->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 					$this->template->set_var('app_name',$GLOBALS['phpgw_info']['apps'][$app]['title']);
