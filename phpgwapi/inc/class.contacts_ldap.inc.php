@@ -516,11 +516,25 @@
 				return $qarray;
 			}
 
+			$first = $last = "*";
+			if(strstr($query,"*"))
+			{
+				if(substr($query,-1) == "*")
+				{
+					$last = '';
+				}
+				if(substr($query,1) == "*")
+				{
+					$first = '';
+				}
+			}
+
 			if(@is_array($extra))
 			{
 				if($DEBUG) { echo '<br>Searching...'; }
 				foreach($extra as $name => $value)
 				{
+
 					$qarray[] = array($value => $query);
 				}
 			}
@@ -557,7 +571,7 @@
 						}
 						else
 						{
-							$oquery .= '(' . $x . '=*' . $y . '*)';
+							$oquery .= '(' . $x . '=' . $first . $y . $last . ')';
 							$hasor = True;
 						}
 					}
@@ -565,7 +579,7 @@
 				elseif($value == $query)
 				{
 					/* searching */
-					$oquery .= '(' . $name . '=*' . $value . '*)';
+					$oquery .= '(' . $name . '=' . $first . $value . $last . ')';
 					$hasor = True;
 				}
 				else
@@ -615,6 +629,7 @@
 				echo '<br>Will search in "' . $GLOBALS['phpgw_info']['server']['ldap_contact_context'] . '"';
 			}
 
+//			echo $fquery;
 			return $fquery;
 		}
 
