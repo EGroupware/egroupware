@@ -62,7 +62,7 @@
 			),
 			'pk' => array('test_auto'),
 			'fk' => array(),
-			'ix' => array('test_varchar',array('test_text','options'=>array('mysql'=>'FULLTEXT','sapdb'=>false,'maxdb'=>false,'pgsql'=>false,'mssql'=>false))),
+			'ix' => array(array('test_char','test_varchar'),'test_varchar',array('test_text','options'=>array('mysql'=>'FULLTEXT','sapdb'=>false,'maxdb'=>false,'pgsql'=>false,'mssql'=>false))),
 			'uc' => array('test_char')
 		),
 	);
@@ -169,10 +169,10 @@
 	}
 	echo $indexes !== False ? "==> SUCCESS\n" : "==> unchecked\n";	
 	
-	echo "Droping index from renamed column test_varchar_renamed:\n";
-	$schema_proc->DropIndex('schema_proc_renamed',array('test_varchar_renamed'));
+	echo "Droping index from renamed column (test_char,test_varchar_renamed):\n";
+	$schema_proc->DropIndex('schema_proc_renamed',array('test_char','test_varchar_renamed'));
 	$indexes = $adodb->MetaIndexes('schema_proc_renamed');
-	if ($indexes !== False) check_index('test_varchar_renamed',False,$indexes,False);
+	if ($indexes !== False) check_index(array('test_char','test_varchar_renamed'),False,$indexes,False);
 	echo $indexes !== False ? "==> SUCCESS\n" : "==> unchecked\n";	
 	
 	//print_r($adodb->MetaColumns('schema_proc_renamed'));
