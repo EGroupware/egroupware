@@ -1,28 +1,27 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Accounts manager for LDAP                             *
-  * This file written by Joseph Engo <jengo@phpgroupware.org>                *
-  * and Lars Kneschke <kneschke@phpgroupware.org>                            *
-  * View and manipulate account records using LDAP                           *
-  * Copyright (C) 2000, 2001 Joseph Engo                                     *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare API - Accounts manager for LDAP                             *
+	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
+	* and Lars Kneschke <lkneschke@phpgw.de>                                   *
+	* View and manipulate account records using LDAP                           *
+	* Copyright (C) 2000 - 2002 Joseph Engo                                    *
+	* ------------------------------------------------------------------------ *
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
+	/* $Id$ */
 
 	class accounts_
 	{
@@ -108,26 +107,26 @@
 			
 			if($acct_type == 'u')
 			{
-				$entry['cn']                = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+				$entry['cn'] = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
 			}
 			else
 			{
-				$entry['cn']                = $this->data['firstname'];
+				$entry['cn'] = $this->data['firstname'];
 			}
 
-			$entry['sn']                    = $this->data['lastname'];
-			$entry['givenname']             = $this->data['firstname'];
-			$entry['phpgwaccountlastlogin']     = $this->data['lastlogin'];
-			$entry['phpgwaccountlastloginfrom'] = $this->data['lastloginfrom'];
-			$entry['phpgwlastpasswdchange'] = $this->data['lastpasswd_change'];
-			$entry['phpgwaccountstatus']    = $this->data['status'];
-			$entry['phpgwaccounttype']      = $this->data['type'];
-			$entry['phpgwaccountexpires']   = $this->data['expires'];
+			$entry['sn']						= $this->data['lastname'];
+			$entry['givenname']					= $this->data['firstname'];
+			$entry['phpgwaccountlastlogin']		= $this->data['lastlogin'];
+			$entry['phpgwaccountlastloginfrom']	= $this->data['lastloginfrom'];
+			$entry['phpgwlastpasswdchange']		= $this->data['lastpasswd_change'];
+			$entry['phpgwaccountstatus']		= $this->data['status'];
+			$entry['phpgwaccounttype']			= $this->data['type'];
+			$entry['phpgwaccountexpires']		= $this->data['expires'];
 
 			if($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 			{
-				$entry['homedirectory'] = $this->data['homedirectory'];
-				$entry['loginshell']    = $this->data['loginshell'];
+				$entry['homedirectory']	= $this->data['homedirectory'];
+				$entry['loginshell']	= $this->data['loginshell'];
 			}
 
 			/*
@@ -201,26 +200,26 @@
 				/* Accounts */
 				else
 				{
-					$dn = 'uid='.$this->data['account_lid'].','.$this->user_context;
-					$entry['uidnumber']      = $this->data['account_id'];
-					$entry['cn'] = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
-					$entry['uid']       = $this->data['account_lid'];
-					$entry['givenname']      = $this->data['firstname'];
-					$entry['sn']             = $this->data['lastname'];
-					$entry['objectclass']    = '';
-					$entry['objectclass'][0] = 'top';
-					$entry['objectclass'][1] = 'person';
-					$entry['objectclass'][2] = 'organizationalPerson';
-					$entry['objectclass'][3] = 'inetOrgPerson';
-					/* $entry['objectclass'][4] = 'account'; Causes problems with some LDAP servers */
-					$entry['objectclass'][4] = 'posixAccount';
-					$entry['objectclass'][5] = 'shadowAccount';
-					$entry['objectclass'][6] = 'phpgwAccount';
+					$dn							= 'uid='.$this->data['account_lid'].','.$this->user_context;
+					$entry['uidnumber']			= $this->data['account_id'];
+					$entry['cn']				= sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+					$entry['uid']				= $this->data['account_lid'];
+					$entry['givenname']			= $this->data['firstname'];
+					$entry['sn']				= $this->data['lastname'];
+					$entry['objectclass']		= '';
+					$entry['objectclass'][0]	= 'top';
+					$entry['objectclass'][1]	= 'person';
+					$entry['objectclass'][2]	= 'organizationalPerson';
+					$entry['objectclass'][3]	= 'inetOrgPerson';
+					/* $entry['objectclass'][4]	= 'account'; Causes problems with some LDAP servers */
+					$entry['objectclass'][4]	= 'posixAccount';
+					$entry['objectclass'][5]	= 'shadowAccount';
+					$entry['objectclass'][6]	= 'phpgwAccount';
 
 					if($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 					{
-						$entry['homedirectory'] = $this->data['homedirectory'];
-						$entry['loginshell']    = $this->data['loginshell'];
+						$entry['homedirectory']	= $this->data['homedirectory'];
+						$entry['loginshell']	= $this->data['loginshell'];
 					}
 				}
 				/* print_r($entry); exit;*/
@@ -309,85 +308,147 @@
 
 		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			if($offset)
+			#print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset<br>";
+			$query = strtolower($query);
+			if ($offset)
 			{
 				$limitclause = '';//$phpgw->db->limit($start,$offset);
 			}
-			elseif($start && !$offset)
+			elseif ($start && !$offset)
 			{
 				$limitclause = '';//$phpgw->db->limit($start);
 			}
 
-			if(!$sort)
+			if (! $sort)
 			{
 				$sort = '';//"desc";
 			}
 
-			if($order)
+			if ($_type == 'accounts')
 			{
-				$orderclause = '';//"order by $order $sort";
-			}
-			else
-			{
-				$orderclause = '';//"order by account_lid,account_lastname,account_firstname asc";
-			}
-
-			if($_type == 'both' || $_type == 'accounts')
-			{
-				$sri = ldap_search($this->ds, $this->user_context, '(&(uidnumber=*)(phpgwaccounttype=u))');
+				if(empty($query) || $query == "*")
+				{
+					$filter = "(&(uidnumber=*)(phpgwaccounttype=u))";
+				}
+				else
+				{
+					$filter = "(&(uidnumber=*)(phpgwaccounttype=u)(|(uid=*$query*)(sn=*$query*)(cn=*$query*)(givenname=*$query*)))";
+				}
+				$sri = ldap_search($this->ds, $this->user_context, $filter);
 				$allValues = ldap_get_entries($this->ds, $sri);
-				while(list($null,$allVals) = @each($allValues))
+				while (list($null,$allVals) = @each($allValues))
 				{
 					settype($allVals,'array');
 					$test = @$allVals['uid'][0];
-					if(!$GLOBALS['phpgw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
+					if (!$GLOBALS['phpgw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
 					{
-						if(!$query ||
-							strpos(' ' . $allVals['cn'][0],$query) ||
-							strpos(' ' . $allVals['givenname'][0],$query) ||
-							strpos(' ' . $allVals['sn'][0],$query))
-						{
-							$accounts[] = Array(
-								'account_id'        => $allVals['uidnumber'][0],
-								'account_lid'       => $allVals['uid'][0],
-								'account_type'      => $allVals['phpgwaccounttype'][0],
-								'account_firstname' => $allVals['givenname'][0],
-								'account_lastname'  => $allVals['sn'][0],
-								'account_status'    => $allVals['phpgwaccountstatus'][0]
-							);
-						}
+						$accounts[] = Array(
+							'account_id'        => $allVals['uidnumber'][0],
+							'account_lid'       => $allVals['uid'][0],
+							'account_type'      => $allVals['phpgwaccounttype'][0],
+							'account_firstname' => $allVals['givenname'][0],
+							'account_lastname'  => $allVals['sn'][0],
+							'account_status'    => $allVals['phpgwaccountstatus'][0]
+						);
 					}
 				}
 			}
-			elseif($_type == 'both' || $_type == 'groups')
+			elseif ($_type == 'groups')
 			{
-				$sri = ldap_search($this->ds, $this->group_context, '(&(gidnumber=*)(phpgwaccounttype=g))');
+				if(empty($query) || $query == "*")
+				{
+					$filter = "(&(gidnumber=*)(phpgwaccounttype=g))";
+				}
+				else
+				{
+					$filter = "(&(gidnumber=*)(phpgwaccounttype=g)(|(uid=*$query*)(sn=*$query*)(cn=*$query*)(givenname=*$query*)))";
+				}
+				$sri = ldap_search($this->ds, $this->group_context, $filter);
 				$allValues = ldap_get_entries($this->ds, $sri);
-				while(list($null,$allVals) = @each($allValues))
+				while (list($null,$allVals) = @each($allValues))
 				{
 					settype($allVals,'array');
 					$test = $allVals['cn'][0];
-					if(!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
+					if (!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
-						if(!$query ||
-							strpos(' ' . $allVals['cn'][0],$query) ||
-							strpos(' ' . $allVals['givenname'][0],$query) ||
-							strpos(' ' . $allVals['sn'][0],$query))
-						{
-							$accounts[] = Array(
-								'account_id'        => $allVals['gidnumber'][0],
-								'account_lid'       => $allVals['cn'][0],
-								'account_type'      => $allVals['phpgwaccounttype'][0],
-								'account_firstname' => $allVals['givenname'][0],
-								'account_lastname'  => $allVals['sn'][0],
-								'account_status'    => $allVals['phpgwaccountstatus'][0]
-							);
-						}
+						$accounts[] = Array(
+							'account_id'        => $allVals['gidnumber'][0],
+							'account_lid'       => $allVals['cn'][0],
+							'account_type'      => $allVals['phpgwaccounttype'][0],
+							'account_firstname' => $allVals['givenname'][0],
+							'account_lastname'  => $allVals['sn'][0],
+							'account_status'    => $allVals['phpgwaccountstatus'][0]
+						);
 					}
 				}
 			}
+			else
+			{
+				if(empty($query) || $query == "*")
+				{
+					$filter = "(&(gidnumber=*)(phpgwaccounttype=*))";
+				}
+				else
+				{
+					$filter = "(&(gidnumber=*)(phpgwaccounttype=*)(|(uid=*$query*)(sn=*$query*)(cn=*$query*)(givenname=*$query*)))";
+				}
+				$sri = ldap_search($this->ds, $this->group_context, $filter);
+				$allValues = ldap_get_entries($this->ds, $sri);
+				while (list($null,$allVals) = @each($allValues))
+				{
+					settype($allVals,'array');
+
+					if($allVals['phpgwaccounttype'][0] == 'u')
+					{
+						$_uid = @$allVals['uid'][0];
+					}
+					else
+					{
+						$_uid = $allVals['cn'][0];
+					}
+
+					if (!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$_uid] && $_uid)
+					{
+						$accounts[] = Array(
+							'account_id'        => $allVals['gidnumber'][0],
+							'account_lid'       => $_uid,
+							'account_type'      => $allVals['phpgwaccounttype'][0],
+							'account_firstname' => $allVals['givenname'][0],
+							'account_lastname'  => $allVals['sn'][0],
+							'account_status'    => $allVals['phpgwaccountstatus'][0]
+						);
+					}
+				}
+			}
+
+			// sort the array
+			$arrayFunctions = CreateObject('phpgwapi.arrayfunctions');
+			if(empty($order))
+			{
+				$order = 'account_lid';
+			}
+			$sortedAccounts = $arrayFunctions->arfsort($accounts,array($order));
 			$this->total = count($accounts);
-			return $accounts;
+
+			// return only the wanted accounts
+
+			if (is_array($sortedAccounts))
+			{
+				reset($sortedAccounts);
+				if(is_int($start) && is_int($offset))
+				{
+					return array_slice($sortedAccounts, $start, $offset);
+				}
+				elseif(is_int($start))
+				{
+					return array_slice($sortedAccounts, $start, $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']);
+				}
+				else
+				{
+					return $sortedAccounts;
+				}
+			}
+			return False;
 		}
 
 		function name2id($account_lid)
