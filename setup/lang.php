@@ -114,9 +114,9 @@
     <?php
       if (! $newinstall) {
          echo '<td valign="top">Select which method of upgrade you would like to do'
-            . '<br><input type="radio" name="upgrademethod" value="dumpold">&nbsp;Delete all old languages and install new ones'
+            . '<br><br><input type="radio" name="upgrademethod" value="addonlynew" checked>&nbsp;Only add languages that are not in the database already.'
             . '<br><input type="radio" name="upgrademethod" value="addmissing">&nbsp;Only add new phrases'
-            . '<br><input type="radio" name="upgrademethod" value="addonlynew">&nbsp;only add languages that are not in the database already.'
+            . '<br><input type="radio" name="upgrademethod" value="dumpold">&nbsp;Delete all old languages and install new ones'
             . '</td>';
       }
     ?>
