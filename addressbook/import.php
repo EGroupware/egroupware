@@ -157,14 +157,18 @@
 		{
 			while ($data = fgets($fp,8000))
 			{
-				list($name,$value,$extra) = split(':', $data);
+				$data = trim($data);											// RB 2001/05/07 added for Lotus Organizer
+				while (substr($data,-1) == '=') {						// '=' at end-of-line --> line to be continued with next line
+					$data = substr($data,0,-1) . trim(fgets($fp,8000));
+				}
+				if (strstr($data,';ENCODING=QUOTED-PRINTABLE')) {	// RB 2001/05/07 added for Lotus Organizer
+					$data = quoted_printable_decode(str_replace(';ENCODING=QUOTED-PRINTABLE','',$data));
+				}								
+				list($name,$value) = explode(':', $data,2); 			// RB 2001/05/09 to allow ':' in Values (not only in URL's)
+
 				if (strtolower(substr($name,0,5)) == 'begin')
 				{
 					$buffer = $this->import_start_record($buffer);
-				}
-				if (substr($value,0,5) == "http")
-				{
-					$value = $value . ":".$extra;
 				}
 				if ($name && $value)
 				{
