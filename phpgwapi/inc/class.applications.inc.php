@@ -1,26 +1,27 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Applications manager functions                        *
-  * This file written by Mark Peters <skeeter@phpgroupware.org>              *
-  * Copyright (C) 2001 Mark Peters                                           *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare API - Applications manager functions                        *
+	* This file written by Mark Peters <skeeter@phpgroupware.org>              *
+	* Copyright (C) 2001 Mark Peters                                           *
+	* -------------------------------------------------------------------------*
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          *
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
+
 	/*!
 	@class applicatons
 	@abstract functions for managing and installing apps
@@ -111,25 +112,24 @@
 				$this->read_installed_apps();
 			}
 			$this->data = Array();
-			if($this->account_id == False) { return False; }
-			$apps = $GLOBALS['phpgw']->acl->get_user_applications($this->account_id);
-			reset($GLOBALS['phpgw_info']['apps']);
-			while ($app = each($GLOBALS['phpgw_info']['apps']))
+			if(!$this->account_id)
 			{
-//				$check = $phpgw->acl->check('run',1,$app[0]);
-				$check = (isset($apps[$app[0]])?$apps[$app[0]]:False);
-				if ($check)
+				return False;
+			}
+			$apps = $GLOBALS['phpgw']->acl->get_user_applications($this->account_id);
+			foreach($GLOBALS['phpgw_info']['apps'] as $app => $data)
+			{
+				if (isset($apps[$app]) && $apps[$app])
 				{
-					$this->data[$app[0]] = array(
-						'title'   => $GLOBALS['phpgw_info']['apps'][$app[0]]['title'],
-						'name'    => $app[0],
+					$this->data[$app] = array(
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app]['title'],
+						'name'    => $app,
 						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[0]]['status'],
-						'id'      => $GLOBALS['phpgw_info']['apps'][$app[0]]['id']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app]['id']
 					);
 				} 
 			}
-			reset($this->data);
 			return $this->data;
 		}
 
@@ -140,11 +140,10 @@
 		*/
 		function read()
 		{
-			if (count($this->data) == 0)
+			if (!count($this->data))
 			{
 				$this->read_repository();
 			}
-			reset($this->data);
 			return $this->data;
 		}
 		/*!
@@ -157,14 +156,14 @@
 		{
 			if(is_array($apps))
 			{
-				while($app = each($apps))
+				foreach($apps as $app)
 				{
-					$this->data[$app[1]] = array(
-						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
-						'name'    => $app[1],
+					$this->data[$app] = array(
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app]['title'],
+						'name'    => $app,
 						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
-						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app]['id']
 					);
 				}
 			}
@@ -175,10 +174,9 @@
 					'name'    => $apps,
 					'enabled' => True,
 					'status'  => $GLOBALS['phpgw_info']['apps'][$apps]['status'],
-					'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
+					'id'      => $GLOBALS['phpgw_info']['apps'][$apps]['id']
 				);
 			}
-			reset($this->data);
 			return $this->data;
 		}
 		/*!
@@ -193,7 +191,6 @@
 			{
 				unset($this->data[$appname]);
 			}
-			reset($this->data);
 			return $this->data;
 		}
 		/*!
@@ -204,10 +201,7 @@
 		*/
 		function update_data($data)
 		{
-			reset($data);
-			$this->data = Array();
 			$this->data = $data;
-			reset($this->data);
 			return $this->data;
 		}
 		/*!
@@ -218,16 +212,14 @@
 		function save_repository()
 		{
 			$num_rows = $GLOBALS['phpgw']->acl->delete_repository("%%", 'run', $this->account_id);
-			reset($this->data);
-			while($app = each($this->data))
+			foreach($this->data as $app => $data)
 			{
-				if(!$this->is_system_enabled($app[0]))
+				if(!$this->is_system_enabled($app))
 				{
 					continue;
 				}
-				$GLOBALS['phpgw']->acl->add_repository($app[0],'run',$this->account_id,1);
+				$GLOBALS['phpgw']->acl->add_repository($app,'run',$this->account_id,1);
 			}
-			reset($this->data);
 			return $this->data;
 		}
 
@@ -237,16 +229,15 @@
 
 		function app_perms()
 		{
-			if (count($this->data) == 0)
+			if (!count($this->data))
 			{
 				$this->read_repository();
 			}
-			@reset($this->data);
-			while (list ($key) = each ($this->data))
+			foreach ($this->data as $app => $data)
 			{
-				$app[] = $this->data[$key]['name'];
+				$apps[] = $this->data[$app]['name'];
 			}
-			return $app;
+			return $apps;
 		}
 
 		function read_account_specific()
@@ -255,27 +246,22 @@
 			{
 				$this->read_installed_apps();
 			}
-			$app_list = $GLOBALS['phpgw']->acl->get_app_list_for_id('run',1,$this->account_id);
-			if(!$app_list)
+			if ($app_list = $GLOBALS['phpgw']->acl->get_app_list_for_id('run',1,$this->account_id))
 			{
-				reset($this->data);
-				return $this->data;
-			}
-			@reset($app_list);
-			while ($app = each($app_list))
-			{
-				if ($this->is_system_enabled($app[1]))
+				foreach($app_list as $app)
 				{
-					$this->data[$app[1]] = array(
-						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
-						'name'    => $app[1],
-						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
-						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
-					);
+					if ($this->is_system_enabled($app))
+					{
+						$this->data[$app] = array(
+							'title'   => $GLOBALS['phpgw_info']['apps'][$app]['title'],
+							'name'    => $app,
+							'enabled' => True,
+							'status'  => $GLOBALS['phpgw_info']['apps'][$app]['status'],
+							'id'      => $GLOBALS['phpgw_info']['apps'][$app]['id']
+						);
+					}
 				}
 			}
-			reset($this->data);
 			return $this->data;
 		}
 
@@ -336,16 +322,13 @@
 
 		function id2name($id)
 		{
-			@reset($GLOBALS['phpgw_info']['apps']);
-			while (list($appname,$app) = each($GLOBALS['phpgw_info']['apps']))
+			foreach($GLOBALS['phpgw_info']['apps'] as $appname => $app)
 			{
 				if(intval($app['id']) == intval($id))
 				{
-					@reset($GLOBALS['phpgw_info']['apps']);
 					return $appname;
 				}
 			}
-			@reset($GLOBALS['phpgw_info']['apps']);
 			return '';
 		}
 		
@@ -355,10 +338,7 @@
 			{
 				return $GLOBALS['phpgw_info']['apps'][$appname]['id'];
 			}
-			else
-			{
-				return 0;
-			}
+			return 0;
 		}
 	}
 ?>
