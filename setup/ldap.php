@@ -25,7 +25,10 @@
   include( PHPGW_INCLUDE_ROOT . "/phpgwapi/inc/class.common.inc.php");
 
   $common = new common;
-  $phpgw_setup->loaddb(); 
+  $phpgw_setup->loaddb();
+
+  $phpgw_info["server"]["auth_type"] = "ldap";
+  $acct = CreateObject("phpgwapi.accounts");
 
   $phpgw_setup->db->query("select config_name,config_value from phpgw_config where config_name like 'ldap%'",__LINE__,__FILE__);
   while ($phpgw_setup->db->next_record()) {
