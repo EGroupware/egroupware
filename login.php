@@ -29,6 +29,7 @@
   }
 */
   $deny_login = False;
+  
 
   $tmpl = new Template($phpgw_info["server"]["template_dir"]);
   $tmpl->set_file(array("login_form"  => "login.tpl",
@@ -51,7 +52,7 @@
   {
     global $phpgw_info, $code, $lastloginid, $login;
     /* This needs to be this way, because if someone doesnt want to use cookies, we shouldnt sneak one in */
-    if ($code != 5 && $phpgw_info["server"]["usecookies"] == True){
+    if ($code != 5 && (isset($phpgw_info["server"]["usecookies"]) && $phpgw_info["server"]["usecookies"])){
       if (!empty($login)) {
         SetCookie("lastloginid",$login, time() + (24 * 3600 * 14),"/");
       }
@@ -88,20 +89,20 @@
      deny_login();
   }
 
-  if ($submit) {
+  if (isset($submit) && $submit) {
     if (getenv(REQUEST_METHOD) != "POST") {
-       Header("Location: " . $phpgw->link("", "code=5"));
+       Header("Location: ".$phpgw->link("","code=5"));
     }
 
     $sessionid = $phpgw->session->create($login,$passwd);
-    if (! $sessionid) {
-       Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=5");
+    if (!isset($sessionid) || !$sessionid) {
+       Header("Location: ".$phpgw_info["server"]["webserver_url"]."/login.php?cd=5");
     } else {
-       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
+       Header("Location: ".$phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
     }
 
   } else {
-    if ($last_loginid) {
+    if (isset($last_loginid) && $last_loginid) {
        $phpgw->db->query("select account_id from accounts where account_lid='$last_loginid'");
        $phpgw->db->next_record();
     

@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-  if (! $sessionid) {
+  if (!isset($sessionid) || !$sessionid) {
      Header("Location: login.php");
      exit;
   }
@@ -43,7 +43,10 @@
         . "</b>";
   }
 
-  if ($phpgw_info["user"]["apps"]["admin"] && $phpgw_info["server"]["checkfornewversion"]) {
+  if ((isset($phpgw_info["user"]["apps"]["admin"]) &&
+       $phpgw_info["user"]["apps"]["admin"]) && 
+      (isset($phpgw_info["server"]["checkfornewversion"]) &&
+       $phpgw_info["server"]["checkfornewversion"])) {
      $phpgw->network->set_addcrlf(False);
      if ($phpgw->network->open_port("phpgroupware.org",80,30)) {
 	 $phpgw->network->write_port("GET /currentversion HTTP/1.0\nHOST: www.phpgroupware.org\n\n");
@@ -75,14 +78,18 @@
 <?php
   //echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
 
-  switch($code){
-    case "5":
-      echo lang("You do not have permissions to that application");
-      break;
+  if(isset($code) && $code){
+    switch($code){
+      case "5":
+	echo lang("You do not have permissions to that application");
+	break;
+    }
   }
 
-  if ($phpgw_info["user"]["apps"]["email"]
-  && $phpgw_info["user"]["preferences"]["email"]["mainscreen_showmail"]) {
+  if ((isset($phpgw_info["user"]["apps"]["email"]) &&
+       $phpgw_info["user"]["apps"]["email"]) &&
+      (isset($phpgw_info["user"]["preferences"]["email"]["mainscreen_showmail"]) &&
+       $phpgw_info["user"]["preferences"]["email"]["mainscreen_showmail"])) {
     echo "<!-- Mailox info -->\n";
 
     $mbox = $phpgw->msg->login();
