@@ -30,6 +30,9 @@
 		'T_config_post_script' => 'config_post_script.tpl'
 	));
 
+	/* Following to ensure windows file paths are saved correctly */
+	set_magic_quotes_runtime(0);
+
 	/*
 	Authorize the user to use setup app and load the database
 	Does not return unless user is authorized
