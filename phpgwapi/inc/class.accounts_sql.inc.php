@@ -326,13 +326,9 @@
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
-			if ($expiredate)
+			if ($expiredate == 0)
 			{
-				$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
-			}
-			else
-			{
-				if($GLOBALS['phpgw_info']['server']['auto_create_expire'])
+				if(isset($GLOBALS['phpgw_info']['server']['auto_create_expire']) == True)
 				{
 					if($GLOBALS['phpgw_info']['server']['auto_create_expire'] == 'never')
 					{
@@ -341,16 +337,17 @@
 					else
 					{
 						$expiredate = time() + $GLOBALS['phpgw_info']['server']['auto_create_expire'];
-						$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 					}
 				}
-				else
-				{
-					/* expire in 30 days by default */
-					$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
-					$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
-				}
 			}
+			else
+			{
+				/* expire in 30 days by default */
+				$expiredate = time() + ((60 * 60) * (30 * 24));
+			}
+
+			$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
+
 			$default_group_id  = $this->name2id($GLOBALS['phpgw_info']['server']['default_group_lid']);
 			if (!$default_group_id)
 			{
@@ -365,48 +362,84 @@
 				'account_lid'       => $accountname,
 				'account_type'      => 'u',
 				'account_passwd'    => $passwd,
-				'account_firstname' => $GLOBALS['auto_create_acct']['firstname'],
-				'account_lastname'  => $GLOBALS['auto_create_acct']['lastname'],
+				'account_firstname' => $GLOBALS['auto_create_acct']['firstname'] ? $GLOBALS['auto_create_acct']['firstname'] : 'New',
+				'account_lastname'  => $GLOBALS['auto_create_acct']['lastname'] ? $GLOBALS['auto_create_acct']['lastname'] : 'User',
 				'account_status'    => $account_status,
 				'account_expires'   => $expires,
 				'account_primary_group' => $primary_group,
-				'account_email'     => $GLOBALS['auto_create_acct']['email'],
 			);
 
+			/* attempt to set an email address */
+			if (isset($GLOBALS['auto_create_acct']['email']) == True && $GLOBALS['auto_create_acct']['email'] != '')
+			{
+				$acct_info['account_email'] = $GLOBALS['auto_create_acct']['email'];
+			}
+			elseif(isset($GLOBALS['phpgw_info']['server']['mail_suffix']) == True && $GLOBALS['phpgw_info']['server']['mail_suffix'] != '')
+			{
+				$acct_info['account_email'] = $accountname . '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
+			}
+
 			$this->db->transaction_begin();
-			$this->create($acct_info);
-			$accountid = $this->name2id($accountname);
-			// if we have a primary_group, add it as "regular" eGW group (via ACL) too
-			if ($accountid && $primary_group)
+
+			$this->create($acct_info); /* create the account */
+
+			$accountid = $this->name2id($accountname); /* grab the account id or an error code */
+
+			if ($accountid) /* begin account setup */
 			{
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
-					. $primary_group . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
-			}
-			// if we have an mail address set it as email pref
-			if ($accountid && @$GLOBALS['auto_create_acct']['email'])
+				/* If we have a primary_group, add it as "regular" eGW group (via ACL) too. */
+				if ($primary_group)
+				{
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
+						. $primary_group . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
+				}
+
+				/* if we have an mail address set it in the uesrs' email preference */
+				if (isset($GLOBALS['auto_create_acct']['email']) && $GLOBALS['auto_create_acct']['email'] != '')
+				{
+					$GLOBALS['phpgw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
+					$GLOBALS['phpgw']->preferences->preferences($accountid);
+					$GLOBALS['phpgw']->preferences->read_repository();
+					$GLOBALS['phpgw']->preferences->add('email','address',$GLOBALS['auto_create_acct']['email']);
+					$GLOBALS['phpgw']->preferences->save_repository();
+				}
+				/* use the default mail domain to set the uesrs' email preference  */
+				elseif(isset($GLOBALS['phpgw_info']['server']['mail_suffix']) && $GLOBALS['phpgw_info']['server']['mail_suffix'] != '') 
+				{
+					$GLOBALS['phpgw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
+					$GLOBALS['phpgw']->preferences->preferences($accountid);
+					$GLOBALS['phpgw']->preferences->read_repository();
+					$GLOBALS['phpgw']->preferences->add('email','address', $accountname . '@' . $GLOBALS['phpgw_info']['server']['mail_suffix']);
+					$GLOBALS['phpgw']->preferences->save_repository();
+				}
+
+				/* commit the new account transaction */
+				$this->db->transaction_commit();
+
+				/* does anyone know what the heck this is required for? */
+				$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
+				$GLOBALS['hook_values']['account_id']	= $accountid;
+				$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
+				$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
+				$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_firstname'];
+				$GLOBALS['hook_values']['account_lastname'] =  $acct_info['account_lastname'];
+				$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'addaccount'
+				),False,True);  /* called for every app now, not only enabled ones */
+
+			} /* end account setup */
+			else /* if no account id abort the account creation */
 			{
-				$GLOBALS['phpgw']->acl->acl($accountid);	// needed als preferences::save_repository calls acl
-				$GLOBALS['phpgw']->preferences->preferences($accountid);
-				$GLOBALS['phpgw']->preferences->read_repository();
-				$GLOBALS['phpgw']->preferences->add('email','address',$GLOBALS['auto_create_acct']['email']);
-				$GLOBALS['phpgw']->preferences->save_repository();
+				$this->db->transaction_abort();
 			}
-			// commit the new account transaction
-			$this->db->transaction_commit();
-			
-			$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
-			$GLOBALS['hook_values']['account_id']	= $accountid;
-			$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
-			$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
-			$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_lid'];
-			$GLOBALS['hook_values']['account_lastname'] = 'eGW Account';
-			$GLOBALS['hook_values']['account_email'] = $acct_info['account_passwd'];
-			$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
-				'location' => 'addaccount'
-			),False,True);  // called for every app now, not only enabled ones
-			
+
+			/* 
+			 * If we succeeded in creating the account (above), return the accountid, else, 
+			 * return the error value from $this->name2id($accountname)
+			 */
 			return $accountid;
-		}
+
+		} /* end auto_add() */
 
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
