@@ -98,8 +98,6 @@
 
 		function start_template($extra = '')
 		{
-			echo 'APPNAME: ' . $this->app_name;
-
 			if ($extra && $this->app_name)
 			{
 				$GLOBALS['phpgw']->xslttpl->add_file(array('portal',$GLOBALS['phpgw']->common->get_tpl_dir($this->app_name,'default') . SEP . 'extrabox'));

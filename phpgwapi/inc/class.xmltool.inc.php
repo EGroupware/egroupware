@@ -27,7 +27,7 @@
 			$this->indentstring = $indentstring;
 			if ($this->node_type == 'node')
 			{
-				if($name != '')
+				if($name !== '')
 				{
 					$this->name = $name;
 				}
@@ -146,7 +146,7 @@
 		{
 			return $this->attributes;
 		}
-		
+
 		function add_comment ($comment)
 		{
 			$this->comments[] = $comment;
@@ -190,7 +190,7 @@
 							}
 						}
 					}
-					reset($value);	
+					reset($value);
 					while (list ($key, $val) = each ($value))
 					{
 						if($new_index)
@@ -211,7 +211,7 @@
 							case 'NULL':
 								$subnode = new xmltool('node', $nextkey,$this->indentstring);
 								$subnode->set_value($val);
-								$node->add_node($subnode);							
+								$node->add_node($subnode);
 								break;
 							case 'boolean':
 								$subnode = new xmltool('node', $nextkey,$this->indentstring);
@@ -223,10 +223,11 @@
 								{
 									$subnode->set_value('0');
 								}
-								$node->add_node($subnode);							
+								$node->add_node($subnode);
 								break;
 							case 'array':
-								if($new_index)
+								list($first_key) = each($val); reset($val);
+								if($new_index && is_int($first_key))
 								{
 									while (list ($subkey, $subval) = each ($val))
 									{
@@ -236,13 +237,13 @@
 								else
 								{
 									$subnode = $this->import_var($nextkey, $val);
-									$node->add_node($subnode);							
+									$node->add_node($subnode);
 								}
 								break;
 							case 'object':
 								$subnode = new xmltool('node', $nextkey,$this->indentstring);
 								$subnode->set_value('PHP_SERIALIZED_OBJECT&:'.serialize($val));
-								$node->add_node($subnode);							
+								$node->add_node($subnode);
 								break;
 							case 'resource':
 								echo 'Halt: Cannot package PHP resource pointers into XML<br>';
@@ -251,6 +252,7 @@
 								echo 'Halt: Invalid or unknown data type<br>';
 								exit;
 						}
+
 					}
 					break;
 				case 'object':
@@ -588,4 +590,5 @@
 			return $this->add_node($root_node);
 		}
 	}
+
 ?>

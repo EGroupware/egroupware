@@ -142,7 +142,7 @@
 						$this->vars[$name][$key] = $val;
 					}
 				}
-				_debug_array($this->vars);
+				//_debug_array($this->vars);
 			}
 			else
 			{

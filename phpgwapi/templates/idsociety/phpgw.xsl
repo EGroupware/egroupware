@@ -102,6 +102,7 @@
 												<td width="33%" class="info"><xsl:value-of select="user_info_name"/></td>
 												<xsl:choose>
 													<xsl:when test="current_users">
+													<xsl:variable name="url_current_users"><xsl:value-of select="url_current_users"/></xsl:variable>
 														<td width="33%" class="info"><a href="{$url_current_users}"><xsl:value-of select="current_users"/></a></td>
 													</xsl:when>
 													<xsl:otherwise>
