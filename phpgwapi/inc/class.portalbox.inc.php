@@ -93,8 +93,8 @@
 
 			$this->output = array
 			(
-				'title'						=> $this->getvar('title'),
-				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler.png')
+				'title'	=> $this->getvar('title'),
+				'space'	=> '&nbsp;'
 			);
 		}
 

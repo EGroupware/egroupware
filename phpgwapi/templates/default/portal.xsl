@@ -1,13 +1,11 @@
 <!-- $Id$ -->
 
 	<xsl:template match="portal">
-		<xsl:variable name="outer_width"><xsl:value-of select="outer_width"/></xsl:variable>
-		<xsl:variable name="header_background_image"><xsl:value-of select="header_background_image"/></xsl:variable>
-		<xsl:variable name="inner_width"><xsl:value-of select="inner_width"/></xsl:variable>
 			<table cellpadding="0" cellspacing="0" class="portal">
  				<tr>
-  					<td align="center" class="portal_text">
-						<xsl:value-of select="title"/> 
+  					<td class="portal_text">
+						<xsl:value-of disable-output-escaping="yes" select="space"/>
+						<xsl:value-of select="title"/>
 					</td>
 					<td valign="middle" align="right" class="portal_text">
 						<xsl:apply-templates select="control_link"/>
@@ -15,24 +13,35 @@
 				</tr>
  				<tr>
   					<td colspan="2">
-   						<table cellpadding="3" cellspacing="0" class="portal">
-							<tr>
-								<td>
-									<xsl:choose>
-										<xsl:when test="listbox">
+						<table cellpadding="3" cellspacing="0" class="portal">
+							<xsl:choose>
+								<xsl:when test="listbox">
+									<tr>
+										<td>
 											<ul>
 												<xsl:apply-templates select="listbox"/>
 											</ul>
-										</xsl:when>
-										<xsl:when test="extrabox">
+										</td>
+									</tr>
+								</xsl:when>
+							</xsl:choose>
+
+							<xsl:choose>
+								<xsl:when test="extrabox">
+									<tr>
+										<td>
 											<xsl:value-of disable-output-escaping="yes" select="extrabox"/>
-										</xsl:when>
-										<xsl:otherwise>
+										</td>
+									</tr>
+								</xsl:when>
+								<xsl:otherwise>
+									<tr>
+										<td>
 											<xsl:call-template name="extrabox"/>
-										</xsl:otherwise>
-									</xsl:choose>
-								</td>
-							</tr>
+										</td>
+									</tr>
+								</xsl:otherwise>
+							</xsl:choose>
    						</table>
   					</td>
  				</tr>
