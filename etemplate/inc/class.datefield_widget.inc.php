@@ -58,7 +58,8 @@
 				'f1' => $value[$format[0]],
 				'f2' => $value[$format[1]],
 				'f3' => $value[$format[2]],
-				'sep' => $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'][1]
+				'sep' => $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'][1],
+				'help' => $cell['help']
 			);
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';
