@@ -42,6 +42,38 @@
 		}
 	}
 
+	/* array_merge (PHP 4 >= 4.0.0)
+	 *   array array_merge (array array1, array array2 [, array ...])
+	 * array_merge() merges the elements of two or more arrays together so that the values
+	 * of one are appended to the end of the previous one. It returns the resulting array.
+	 */
+	function array_merge ($array1, $array2, $array3 = '', $array4 = '', $array5 = '', $array6 = '', $array7 = '', $array8 = '', $array9 = '', $array10 = '')
+	{
+		$rarray = array ();
+
+		for ($i = 1; $i <= 10; $i++)
+		{
+			$this_array = ${'array' . $i};
+			if (is_array ($this_array))
+			{
+				reset ($this_array);
+				while (list ($key, $value) = each ($this_array))
+				{
+					if (is_int ($key))
+					{
+						$rarray[] = $value;
+					}
+					else
+					{
+						$rarray[$key] = $value;
+					}
+				}
+			}
+		}
+
+		return $rarray;
+	}
+
 	/* array_pop (PHP 4 >= 4.0.0)
 	 *   mixed array_pop (array array)
 	 * array_pop() pops and returns the last value of the array, shortening the array by
