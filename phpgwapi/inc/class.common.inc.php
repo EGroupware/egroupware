@@ -250,7 +250,7 @@
       global $phpgw;
 
       $db = $phpgw->db;
-      $db->query("select account_lid,account_firstname,account_lastname from accounts where account_id=".$id,__LINE__,__FILE__);
+      $db->query("select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id=".$id,__LINE__,__FILE__);
       $db->next_record();
 
       return $phpgw->common->display_fullname($db->f("account_lid"),$db->f("account_firstname"),$db->f("account_lastname"));
