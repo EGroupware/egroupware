@@ -167,7 +167,7 @@
 		$d = dir('./lang');
 		while($entry=$d->read())
 		{
-			if (ereg('phpgw_',$entry))
+			if (ereg('^phpgw_',$entry))
 			{
 				$z = substr($entry,6,2);
 				$languages[$z]['available'] = True;
