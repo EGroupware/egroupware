@@ -39,4 +39,11 @@
 		// identical to 1.0.0.001, only created to get a new version of the packages
 		return phpgwapi_upgrade1_0_0_001();
 	}
+
+	$test[] = '1.0.0.003';
+	function phpgwapi_upgrade1_0_0_003()
+	{
+		// identical to 1.0.0.001, only created to get a new version of the final 1.0 packages
+		return phpgwapi_upgrade1_0_0_001();
+	}
 ?>
