@@ -31,7 +31,7 @@
 
 	if($participating == False)
 	{
-		echo '<center>The user '.$phpgw->common->grab_owner($owner).' is not participating in this event!</center>';
+		echo '<center>The user '.$phpgw->common->grab_owner_name($owner).' is not participating in this event!</center>';
 		$phpgw->common->footer();
 		$phpgw->common->phpgw_exit();
 	}
