@@ -179,15 +179,15 @@
 	    
 			if ($this->db->next_record()) 
 			{
-			    $cats[0]['id']		= $this->db->f('cat_id');
-        		    $cats[0]['owner']		= $this->db->f('cat_owner');
-        		    $cats[0]['access']		= $this->db->f('cat_access');
-        		    $cats[0]['main']		= $this->db->f('cat_main');
-        		    $cats[0]['level']		= $this->db->f('cat_level');
-        		    $cats[0]['parent']		= $this->db->f('cat_parent');
-        		    $cats[0]['name']		= $this->db->f('cat_name');
-        		    $cats[0]['description'] 	= $this->db->f('cat_description');
-        		    $cats[0]['data']        	= $this->db->f('cat_data');
+				$cats[0]['id']		= $this->db->f('cat_id');
+				$cats[0]['owner']		= $this->db->f('cat_owner');
+				$cats[0]['access']		= $this->db->f('cat_access');
+				$cats[0]['main']		= $this->db->f('cat_main');
+				$cats[0]['level']		= $this->db->f('cat_level');
+				$cats[0]['parent']		= $this->db->f('cat_parent');
+				$cats[0]['name']		= $this->db->f('cat_name');
+				$cats[0]['description']	= $this->db->f('cat_description');
+				$cats[0]['data']		= $this->db->f('cat_data');
 			}
 		    return $cats;
 		}
