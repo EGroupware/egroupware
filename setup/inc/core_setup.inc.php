@@ -24,6 +24,7 @@
   // if true, ../index.php falls through to app setup
   $ok = true;
 
+  $incdir = $phpgw_info["server"]["server_root"]."/setup/inc/";
 
   if (!isset($oldversion)){
     @$db->query("select app_version from applications where app_name='admin'");
@@ -135,7 +136,7 @@
       echo "  </tr>\n";
       $db->Halt_On_Error = "report";
       $currentver = "drop";
-      include ("../sql/common_main.inc.php");
+      include ($incdir."/sql/common_main.inc.php");
       $db->Halt_On_Error = "no";
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
@@ -158,7 +159,7 @@
       echo "</table>\n";
       $currentver = $oldversion;
       $db->Halt_On_Error = "report";
-      include ("../sql/common_main.inc.php");
+      include ($incdir."/sql/common_main.inc.php");
       $db->Halt_On_Error = "no";
       echo "<table border=\"0\" align=\"center\">\n";
       echo "  <tr bgcolor=\"486591\">\n";
@@ -192,7 +193,7 @@
             echo "  </tr>\n";
             $db->Halt_On_Error = "report";
             $currentver = "new";
-            include ("../sql/common_main.inc.php");
+            include ($incdir."/sql/common_main.inc.php");
             $db->Halt_On_Error = "no";
             echo "  <tr bgcolor=\"486591\">\n";
             echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
