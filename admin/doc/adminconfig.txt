@@ -1,10 +1,10 @@
 
-phpGroupWare admin/config.php
+eGroupWare admin/config.php
 
 Abstract
 
 A brief introduction to writing hooks and templates for any application to use
-this admin interface, by Miles Lott <milosch@phpgroupware.org> Dec 22, 2001.
+this admin interface, by Miles Lott <milosch@groupwhere.org> Dec 22, 2001.
 
 1 Files
 
@@ -147,7 +147,7 @@ Here we created a function to check the entered value for
 the config item, ldap_contact_context. We want to make sure
 the admin did not set this value to one which would conflict
 with another config item, used for accounts or groups in
-phpGroupWare.
+eGroupWare.
 
 config.php calls this function, sending it the POSTed value.
 config.php continues, adding all other config items from

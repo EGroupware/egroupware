@@ -24,14 +24,14 @@
 
 \layout Title
 
-phpGroupWare admin/config.php
+eGroupWare admin/config.php
 \layout Abstract
 
 A brief introduction to writing hooks and templates for any application
  to use this admin interface, by
 \layout Abstract
 
-Miles Lott <milosch@phpgroupware.org> Dec 22, 2001.
+Miles Lott <milosch@groupwhere.org> Dec 22, 2001.
 \layout Section
 
 Files
@@ -47,7 +47,7 @@ In your application/templates/default directory, create a new template file
  The following template tags may be used:
 \layout Enumerate
 
-{action_url} - A phpgw->link to config.php will be inserted.
+{action_url} - A egw->link to config.php will be inserted.
 \layout Enumerate
 
 {title} - This will be parsed to display 'Site Configuration'.
@@ -336,7 +336,7 @@ If this file exists, it sets a var to tell config.php it was found.
 Here we created a function to check the entered value for the config item,
  ldap_contact_context.
  We want to make sure the admin did not set this value to one which would
- conflict with another config item, used for accounts or groups in phpGroupWare.
+ conflict with another config item, used for accounts or groups in eGroupWare.
 \layout Standard
 
 config.php calls this function, sending it the POSTed value.
