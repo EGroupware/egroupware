@@ -454,8 +454,10 @@
 
 		function time_compare($a_hour,$a_minute,$a_second,$b_hour,$b_minute,$b_second)
 		{
-			$a_time = mktime(intval($a_hour),intval($a_minute),intval($a_second),0,0,70);
-			$b_time = mktime(intval($b_hour),intval($b_minute),intval($b_second),0,0,70);
+			// I use the 1970/1/2 to compare the times, as the 1. can get via TZ-offest still 
+			// before 1970/1/1, which is the earliest date allowed on windows
+			$a_time = mktime(intval($a_hour),intval($a_minute),intval($a_second),1,2,1970);
+			$b_time = mktime(intval($b_hour),intval($b_minute),intval($b_second),1,2,1970);
 			if($a_time == $b_time)
 			{
 				return 0;
