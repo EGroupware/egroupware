@@ -1620,31 +1620,31 @@ class calendar extends calendar_
 			if($event->recur_type == RECUR_WEEKLY || $event->recur_type == RECUR_DAILY)
 			{
 				$repeat_days = '';
-				if ($event->recur_data & M_SUNDAY)
+				if (!!($event->recur_data & M_SUNDAY) == True)
 				{
 					$this->view_add_day(lang('Sunday '),$repeat_days);
 				}
-				if ($event->recur_data & M_MONDAY)
+				if (!!($event->recur_data & M_MONDAY) == True)
 				{
 					$this->view_add_day(lang('Monday '),$repeat_days);
 				}
-				if ($event->recur_data & M_TUESDAY)
+				if (!!($event->recur_data & M_TUESDAY) == True)
 				{
 					$this->view_add_day(lang('Tuesay '),$repeat_days);
 				}
-				if ($event->recur_data & M_WEDNESDAY)
+				if (!!($event->recur_data & M_WEDNESDAY) == True)
 				{
 					$this->view_add_day(lang('Wednesday '),$repeat_days);
 				}
-				if ($event->recur_data & M_THURSDAY)
+				if (!!($event->recur_data & M_THURSDAY) == True)
 				{
 					$this->view_add_day(lang('Thursday '),$repeat_days);
 				}
-				if ($event->recur_data & M_FRIDAY)
+				if (!!($event->recur_data & M_FRIDAY) == True)
 				{
 					$this->view_add_day(lang('Friday '),$repeat_days);
 				}
-				if ($event->recur_data & M_SATURDAY)
+				if (!!($event->recur_data & M_SATURDAY) == True)
 				{
 					$this->view_add_day(lang('Saturday '),$repeat_days);
 				}

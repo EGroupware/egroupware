@@ -339,7 +339,7 @@ class calendar_ extends calendar__
 				//$this->event->recur_data = $this->stream->f('recur_data');
 				// But until then, do it this way...
 		//Legacy Support
-				$rpt_days = strtoupper($this->stream->f('cal_rpt_days'));
+				$rpt_days = strtoupper($this->stream->f('cal_days'));
 				$this->event->rpt_days = $rpt_days;
 				$this->event->rpt_sun = (substr($rpt_days,0,1)=='Y'?1:0);
 				$this->event->rpt_mon = (substr($rpt_days,1,1)=='Y'?1:0);
@@ -350,7 +350,7 @@ class calendar_ extends calendar__
 				$this->event->rpt_sat = (substr($rpt_days,6,1)=='Y'?1:0);
 
 		//Legacy Support (New)
-				$rpt_days = strtoupper($this->stream->f('cal_rpt_days'));
+				$rpt_days = strtoupper($this->stream->f('cal_days'));
 				$this->event->recur_data = 0;
 				$this->event->recur_data += (substr($rpt_days,0,1)=='Y'?M_SUNDAY:0);
 				$this->event->recur_data += (substr($rpt_days,1,1)=='Y'?M_MONDAY:0);

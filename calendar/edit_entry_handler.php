@@ -128,6 +128,8 @@
 			$recur_enddate[mday] = 0;
 		}
 
+		$recur_data = $cal[rpt_sun] + $cal[rpt_mon] + $cal[rpt_tue] + $cal[rpt_wed] + $cal[rpt_thu] + $cal[rpt_fri] + $cal[rpt_sat];
+		
 		switch($recur_type)
 		{
 			case RECUR_NONE:
