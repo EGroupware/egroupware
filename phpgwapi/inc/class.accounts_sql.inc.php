@@ -38,9 +38,11 @@
 
 		function accounts_()
 		{
-			copyobj($GLOBALS['phpgw']->db,$this->db);
-
-			unset($this->query_types['email']);
+			//copyobj($GLOBALS['phpgw']->db,$this->db);
+			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			
+			$this->table = 'phpgw_accounts';
+			$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
 		}
 
 		function list_methods($_type='xmlrpc')
@@ -82,7 +84,7 @@
 		*/
 		function read_repository()
 		{
-			$this->db->query('SELECT * FROM phpgw_accounts WHERE account_id=' . (int)$this->account_id,__LINE__,__FILE__);
+			$this->db->select($this->table,'*',array('account_id'=>$this->account_id),__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$this->data['userid']            = $this->db->f('account_lid');
@@ -98,6 +100,7 @@
 			$this->data['expires']           = $this->db->f('account_expires');
 			$this->data['person_id']         = $this->db->f('person_id');
 			$this->data['account_primary_group'] = $this->db->f('account_primary_group');
+			$this->data['email']             = $this->db->f('account_email');
 
 			return $this->data;
 		}
@@ -108,15 +111,18 @@
 		*/
 		function save_repository()
 		{
-			$this->db->query('UPDATE phpgw_accounts SET'
-				. " account_firstname='" . $this->db->db_addslashes($this->data['firstname'])
-				. "', account_lastname='" . $this->db->db_addslashes($this->data['lastname'])
-				. "', account_status='". $this->db->db_addslashes($this->data['status'])
-				. "', account_expires=" . (int)$this->data['expires']
-				. ($this->data['account_lid']?", account_lid='".$this->db->db_addslashes($this->data['account_lid'])."'":'')
-				. ', person_id='.(int)$this->data['person_id']
-				. ', account_primary_group='.(int)$this->data['account_primary_group']
-				. ' WHERE account_id=' . (int)$this->account_id,__LINE__,__FILE__);
+			$this->db->update($this->table,array(
+				'account_firstname' => $this->data['firstname'],
+				'account_lastname'  => $this->data['lastname'],
+				'account_status'    => $this->data['status'],
+				'account_expires'   => $this->data['expires'],
+				'account_lid'       => $this->data['account_lid'],
+				'person_id'         => $this->data['person_id'],
+				'account_primary_group' => $this->data['account_primary_group'],
+				'account_email'     => $this->data['email'],
+			),array(
+				'account_id'        => $this->account_id
+			),__LINE__,__FILE__);
 		}
 
 		function delete($accountid = '')
@@ -124,9 +130,8 @@
 			$account_id = get_account_id($accountid);
 
 			/* Do this last since we are depending upon this record to get the account_lid above */
-			$tables_array = Array('phpgw_accounts');
-			$this->db->lock($tables_array);
-			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
+			$this->db->lock(Array($this->table));
+			$this->db->delete($this->table,array('account_id'=>$account_id),__LINE__,__FILE__);
 			$this->db->unlock();
 		}
 
@@ -184,18 +189,19 @@
 					case 'firstname':
 					case 'lastname':
 					case 'lid':
+					case 'email':
 						$query = $this->db->quote('%'.$query.'%');
 						$whereclause .= " account_$query_type LIKE $query )";
 						break;
 				}
 			}
 
-			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause";
+			$sql = "SELECT * FROM $this->table $whereclause $orderclause";
 			if ($offset)
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
 			}
-			elseif ($start !== '')
+			elseif (is_numeric($start))
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
 			}
@@ -214,61 +220,60 @@
 					'account_status'    => $this->db->f('account_status'),
 					'account_expires'   => $this->db->f('account_expires'),
 					'person_id'         => $this->db->f('person_id'),
-					'account_primary_group' => $this->db->f('account_primary_group')
+					'account_primary_group' => $this->db->f('account_primary_group'),
+					'account_email'     => $this->db->f('account_email'),
 				);
 			}
-			$this->db->query("SELECT count(*) FROM phpgw_accounts $whereclause");
+			$this->db->query("SELECT count(*) FROM $this->table $whereclause");
 			$this->db->next_record();
 			$this->total = $this->db->f(0);
 
 			return $accounts;
 		}
 
-		function name2id($account_lid)
+		/**
+		 * converts a name / unique value from the accounts-table (account_lid,account_email) to an id
+		 */
+		function name2id($name,$which='account_lid')
 		{
-			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$this->db->db_addslashes($account_lid)."'",__LINE__,__FILE__);
-			if($this->db->num_rows())
+			$this->db->select($this->table,'account_id',array($which=>$name),__LINE__,__FILE__);
+			if($this->db->next_record())
 			{
-				$this->db->next_record();
 				return (int)$this->db->f('account_id');
 			}
 			return False;
 		}
 
-		function id2name($account_id)
+		/**
+		 * converts an id to the corresponding value of the accounts-table (account_lid,account_email,account_firstname,...)
+		 */
+		function id2name($account_id,$which='account_lid')
 		{
-			$this->db->query('SELECT account_lid FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
-			if($this->db->num_rows())
+			$this->db->select($this->table,$this->db->name_quote($which),array('account_id'=>$account_id),__LINE__,__FILE__);
+			if($this->db->next_record())
 			{
-				$this->db->next_record();
-				return $this->db->f('account_lid');
+				return $this->db->f(0);
 			}
 			return False;
 		}
 
 		function get_type($account_id)
 		{
-			$this->db->query('SELECT account_type FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
-			if ($this->db->num_rows())
-			{
-				$this->db->next_record();
-				return $this->db->f('account_type');
-			}
-			return False;
+			return $this->id2name($account_id,'account_type');
 		}
 
 		function exists($account_lid)
 		{
 			static $by_id, $by_lid;
 
-			$sql = 'SELECT count(account_id) FROM phpgw_accounts WHERE ';
+			$where = array();
 			if(is_numeric($account_lid))
 			{
 				if(@isset($by_id[$account_lid]) && $by_id[$account_lid] != '')
 				{
 					return $by_id[$account_lid];
 				}
-				$sql .= 'account_id=' . $account_lid;
+				$where['account_id'] = $account_lid;
 			}
 			else
 			{
@@ -276,10 +281,10 @@
 				{
 					return $by_lid[$account_lid];
 				}
-				$sql .= "account_lid = '".$this->db->db_addslashes($account_lid)."'";
+				$where['account_lid'] = $account_lid;
 			}
 
-			$this->db->query($sql,__LINE__,__FILE__);
+			$this->db->select($this->table,'count(*)',$where,__LINE__,__FILE__);
 			$this->db->next_record();
 			$ret_val = $this->db->f(0) > 0;
 			if(is_numeric($account_lid))
@@ -302,24 +307,9 @@
 				// account_id already used => discard it
 				unset($account_info['account_id']);
 			}
-			$this->db->query('INSERT INTO phpgw_accounts ('.(isset($account_info['account_id'])?'account_id,':'')
-				. 'account_lid,account_type,account_pwd,'
-				. 'account_firstname,account_lastname,account_status,account_expires,person_id,'
-				. 'account_primary_group) VALUES ('
-				. (isset($account_info['account_id'])?(int)$account_info['account_id'].',':'')
-				. "'" . $this->db->db_addslashes($account_info['account_lid'])
-				. "','" . $this->db->db_addslashes($account_info['account_type'])
-				. "','" . $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd'], True)
-				. "', '" . $this->db->db_addslashes($account_info['account_firstname'])
-				. "','" . $this->db->db_addslashes($account_info['account_lastname'])
-				. "','" . $this->db->db_addslashes($account_info['account_status'])
-				. "'," . (int)$account_info['account_expires']
-				. ',' . (int)$account_info['person_id']
-				. ',' . (int)$account_info['account_primary_group'] . ')',__LINE__,__FILE__);
+			$this->db->insert($this->table,$account_info,False,__LINE__,__FILE__);
 
-			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
-
-			return $accountid;
+			return $this->db->get_last_insert_id($this->table,'account_id');
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
@@ -363,6 +353,7 @@
 				'account_status'    => $account_status,
 				'account_expires'   => $expires,
 				'account_primary_group' => $primary_group,
+				'account_email'     => $GLOBALS['auto_create_acct']['email'],
 			);
 
 			$this->db->transaction_begin();
@@ -420,6 +411,7 @@
 			$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
 			$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_lid'];
 			$GLOBALS['hook_values']['account_lastname'] = 'eGW Account';
+			$GLOBALS['hook_values']['account_email'] = $acct_info['account_passwd'];
 			$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 				'location' => 'addaccount'
 			),False,True);  // called for every app now, not only enabled ones
@@ -429,15 +421,14 @@
 
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
-			$db = $GLOBALS['phpgw']->db;
-			$db->query('SELECT account_lid,account_firstname,account_lastname FROM phpgw_accounts WHERE account_id=' . (int)$accountid,__LINE__,__FILE__);
-			if (!$db->next_record())
+			$this->db->select($this->table,'account_lid,account_firstname,account_lastname',array('account_id'=>$accountid),__LINE__,__FILE__);
+			if (!$this->db->next_record())
 			{
 				return False;
 			}
-			$lid   = $db->f('account_lid');
-			$fname = $db->f('account_firstname');
-			$lname = $db->f('account_lastname');
+			$lid   = $this->db->f('account_lid');
+			$fname = $this->db->f('account_firstname');
+			$lname = $this->db->f('account_lastname');
 
 			return True;
 		}

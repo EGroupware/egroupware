@@ -203,7 +203,7 @@
 			//echo "<p>accounts::search(".print_r($param,True).")</p>\n";
 			$this->setup_cache();
 			$account_search = &$this->cache['account_search'];
-
+			
 			$serial = serialize($param);
 
 			if (isset($account_search[$serial]))
@@ -218,9 +218,9 @@
 			else
 			{
 				$serial2 = $serial;
-				if (is_numeric($param['type']) || $param[$app] || $param['type'] == 'owngroups')	// do we need to limit the search on a group or app?
+				if (is_numeric($param['type']) || $param['app'] || $param['type'] == 'owngroups')	// do we need to limit the search on a group or app?
 				{
-					$app = $param[$app];
+					$app = $param['app'];
 					unset($param['app']);
 					if (is_numeric($param['type']))
 					{
@@ -239,7 +239,7 @@
 				if (!isset($account_search[$serial2]))	// check if we already did this general search
 				{
 					$account_search[$serial2]['data'] = array();
-					$accounts = accounts_::get_list($param['type'],'',$param['sort'],$param['order'],$param['query'],'',$param['query_type']);
+					$accounts = accounts_::get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type']);
 					if (!$accounts) $accounts = array();
 					foreach($accounts as $data)
 					{
@@ -290,7 +290,7 @@
 					$account_search[$serial]['total'] = $this->total;
 				}
 			}
-			//echo "<p>accounts::search(...)=<pre>".print_r($account_search[$serial]['data'],True).")</pre>\n";
+			//echo "<p>accounts::search('$serial')=<pre>".print_r($account_search[$serial]['data'],True).")</pre>\n";
 			return $account_search[$serial]['data'];
 		}
 
@@ -598,25 +598,25 @@
 			);
 		}
 
-		function name2id($account_lid)
+		function name2id($name,$which='account_lid')
 		{
 			$this->setup_cache();
 			$name_list = &$this->cache['name_list'];
 
-			if(@isset($name_list[$account_lid]) && $name_list[$account_lid])
+			if(@isset($name_list[$which][$name]) && $name_list[$which][$name])
 			{
-				return $name_list[$account_lid];
+				return $name_list[$which][$name];
 			}
 
 			/* Don't bother searching for empty account_lid */
-			if(empty($account_lid))
+			if(empty($name))
 			{
 				return False;
 			}
-			return $name_list[$account_lid] = accounts_::name2id($account_lid);
+			return $name_list[$which][$name] = accounts_::name2id($name,$which);
 		}
 
-		function id2name($account_id)
+		function id2name($account_id,$which='account_lid')
 		{
 			$this->setup_cache();
 			$id_list = &$this->cache['id_list'];
@@ -626,11 +626,11 @@
 				return False;
 			}
 
-			if($id_list[$account_id])
+			if($id_list[$account_id][$which])
 			{
-				return $id_list[$account_id];
+				return $id_list[$account_id][$which];
 			}
-			return $id_list[$account_id] = accounts_::id2name($account_id);
+			return $id_list[$account_id][$which] = accounts_::id2name($account_id,$which);
 		}
 
 		function get_type($accountid)

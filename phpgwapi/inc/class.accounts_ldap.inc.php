@@ -79,7 +79,7 @@
 				$this->data['lastname']    = $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
 				if(isset($allValues[0]['mail'][0]))
 				{
-					$this->data['mailaddress'] = $allValues[0]['mail'][0];
+					$this->data['email'] = $allValues[0]['mail'][0];
 				}
 			}
 			$this->data['account_dn']  = $allValues[0]['dn'];
@@ -184,6 +184,10 @@
 				{
 					$newData['phpgwaccountexpires'] = $this->data['expires'];
 				}
+				if($this->data['email'])
+				{
+					$newData['mail'] = $this->data['email'];
+				}
 
 				$newAccountID = $newData['uid'];
 				$oldAccountID = $newData['uid'];
@@ -259,7 +263,7 @@
 					for($i=0;$i<count($members);$i++)
 					{
 						$currname = $this->id2name($members[$i]['account_id']);
-						if(!$this->isin_array($currname,$entry['memberuid']))
+						if(!in_array($currname,$entry['memberuid']))
 						{
 							$newData['memberuid'][] = $currname;
 						}
@@ -290,7 +294,7 @@
 					for($i=0;$i<count($members);$i++)
 					{
 						$currname = $this->id2name($members[$i]['account_id']);
-						if(!$this->isin_array($currname,$newData['memberuid']))
+						if(!in_array($currname,$newData['memberuid']))
 						{
 							$newData['memberuid'][] = $currname;
 						}
@@ -390,16 +394,6 @@
 					}
 				}
 			}
-		}
-
-		function isin_array($needle,$haystack='')
-		{
-			if(!@is_array($haystack))
-			{
-				return False;
-			}
-			for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++);
-				return ($i!=count($haystack));
 		}
 
 		function delete($accountid = '')
@@ -502,7 +496,7 @@
 								'firstname' => 'sn',
 								'lastname'  => 'givenname',
 								'lid'       => 'uid',
-								'email'     => 'email',
+								'email'     => 'mail',
 							);
 							$filter .= '('.$to_ldap[$query_type].'=*'.$query.'*)';
 							break;
@@ -524,7 +518,8 @@
 							'account_type'      => $allVals['phpgwaccounttype'][0],
 							'account_firstname' => $GLOBALS['phpgw']->translation->convert($allVals['givenname'][0],'utf-8'),
 							'account_lastname'  => $GLOBALS['phpgw']->translation->convert($allVals['sn'][0],'utf-8'),
-							'account_status'    => $allVals['phpgwaccountstatus'][0]
+							'account_status'    => $allVals['phpgwaccountstatus'][0],
+							'account_email'     => $allVals['mail'][0],
 						);
 					}
 				}
@@ -553,7 +548,8 @@
 							'account_type'      => $allVals['phpgwaccounttype'][0],
 							'account_firstname' => $GLOBALS['phpgw']->translation->convert($allVals['givenname'][0],'utf-8'),
 							'account_lastname'  => $GLOBALS['phpgw']->translation->convert($allVals['sn'][0],'utf-8'),
-							'account_status'    => $allVals['phpgwaccountstatus'][0]
+							'account_status'    => $allVals['phpgwaccountstatus'][0],
+							'account_email'     => $allVals['mail'][0],
 						);
 					}
 				}
@@ -566,7 +562,7 @@
 				}
 				else
 				{
-					$filter = "(&(gidnumber=*)(phpgwaccounttype=*)(|(uid=*$query*)(sn=*$query*)(cn=*$query*)(givenname=*$query*)))";
+					$filter = "(&(gidnumber=*)(phpgwaccounttype=*)(|(uid=*$query*)(sn=*$query*)(cn=*$query*)(givenname=*$query*)(mail=*$query*)))";
 				}
 				$sri = ldap_search($this->ds, $this->group_context, $filter);
 				$allValues = ldap_get_entries($this->ds, $sri);
@@ -591,7 +587,8 @@
 							'account_type'		=> $allVals['phpgwaccounttype'][0],
 							'account_firstname'	=> $allVals['givenname'][0],
 							'account_lastname'	=> $allVals['sn'][0],
-							'account_status'	=> $allVals['phpgwaccountstatus'][0]
+							'account_status'	=> $allVals['phpgwaccountstatus'][0],
+							'account_email'     => $allVals['mail'][0],
 						);
 					}
 				}
@@ -627,7 +624,7 @@
 			return False;
 		}
 
-		function name2id($account_lid)
+		function name2id($name,$which='account_lid')
 		{
 			$sri = ldap_search($this->ds, $this->group_context, '(&(cn=' . (string)$account_lid . ')(phpgwaccounttype=g))');
 			$allValues = ldap_get_entries($this->ds, $sri);
@@ -637,7 +634,13 @@
 				return (int)$allValues[0]['gidnumber'][0];
 			}
 
-			$sri = ldap_search($this->ds, $this->user_context, '(&(uid=' . (string)$account_lid . ')(phpgwaccounttype=u))');
+			$to_ldap = array(
+				'account_lid'   => 'uid',
+				'account_email' => 'mail',
+			);
+			if (!isset($to_ldap[$which])) return False;
+
+			$sri = ldap_search($this->ds, $this->user_context, '(&('.$to_ldap[$which].'=' . (string)$name . ')(phpgwaccounttype=u))');
 
 			$allValues = ldap_get_entries($this->ds, $sri);
 
@@ -649,7 +652,7 @@
 			return False;
 		}
 
-		function id2name($account_id)
+		function id2name($account_id,$which='account_lid')
 		{
 			$allValues = array();
 			$sri = ldap_search($this->ds, $this->group_context, '(&(gidnumber=' . (int)$account_id . ')(phpgwaccounttype=g))');
@@ -660,13 +663,22 @@
 				return $allValues[0]['cn'][0];
 			}
 
+			$to_ldap = array(
+				'account_lid'   => 'uid',
+				'account_email' => 'mail',
+				'account_firstname' => 'surname',
+				'account_lastname'  => 'cn',
+				'account_type'      => 'phpgwaccounttype',
+			);
+			if (!isset($to_ldap[$which])) return False;
+
 			$allValues = array();
 			$sri = ldap_search($this->ds, $this->user_context, '(&(uidnumber=' . (int)$account_id . ')(phpgwaccounttype=u))');
 			$allValues = ldap_get_entries($this->ds, $sri);
 
-			if (@$allValues[0]['uid'][0])
+			if (@$allValues[0][$to_ldap[$which]][0])
 			{
-				return $allValues[0]['uid'][0];
+				return $allValues[0][$to_ldap[$which]][0];
 			}
 			return False;
 		}
@@ -886,6 +898,14 @@
 					{
 						$entry['givenname'] = $GLOBALS['phpgw']->translation->convert(
 							$account_info['account_firstname'],
+							$GLOBALS['phpgw']->translation->charset(),
+							'utf-8'
+						);
+					}
+					if($account_info['account_email'])
+					{
+						$entry['mail'] = $GLOBALS['phpgw']->translation->convert(
+							$account_info['account_email'],
 							$GLOBALS['phpgw']->translation->charset(),
 							'utf-8'
 						);

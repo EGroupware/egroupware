@@ -806,6 +806,11 @@
 			{
 				return $this->data['email']['address'];
 			}
+			// if email-address is set in the account, return it
+			if ($email = $GLOBALS['phpgw']->accounts->id2name($account_id,'account_email'))
+			{
+				return $email;
+			}
 			$prefs_email_address = $GLOBALS['phpgw']->accounts->id2name($account_id);
 			if (strstr($prefs_email_address,'@') === False)
 			{

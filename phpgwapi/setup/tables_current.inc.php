@@ -64,7 +64,8 @@
 				'account_expires' => array('type' => 'int','precision' => '4'),
 				'account_type' => array('type' => 'char','precision' => '1'),
 				'person_id' => array('type' => 'int','precision' => '4'),
-				'account_primary_group' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
+				'account_primary_group' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'account_email' => array('type' => 'varchar','precision' => '100')
 			),
 			'pk' => array('account_id'),
 			'fk' => array(),

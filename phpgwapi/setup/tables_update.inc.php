@@ -1268,14 +1268,6 @@
 	$test[] = '0.9.99.024';
 	function phpgwapi_upgrade0_9_99_024()
 	{
-/*
-		$sql = "SELECT ae1.contact_id,ae1.contact_name,ae1.contact_value,ae2.contact_value FROM phpgw_addressbook_extra ae1 LEFT JOIN phpgw_addressbook_extra ae2 ON ae1.contact_id==ae2.contact_id AND ae1.contact_name == ae2.contact_name WHERE ae1.contact_value != ae2.contact_vaue";
-		$GLOBALS['phpgw_setup']->oProc->query($sql,__LINE__,__FILE__);
-		while ($GLOBALS['phpgw_setup']->oProc->next_record())
-		{
-			
-		}
-*/
 		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_addressbook_extra',array(
 			'fd' => array(
 				'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
@@ -1377,5 +1369,35 @@
 		
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '1.0.0';
+	function phpgwapi_upgrade1_0_0()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_accounts','account_email',array(
+			'type' => 'varchar',
+			'precision' => '100'
+		));
+		
+		$GLOBALS['phpgw_setup']->oProc->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='mail_suffix'",__LINE__,__FILE__);
+		$mail_domain = $GLOBALS['phpgw_setup']->oProc->next_record() ? $GLOBALS['phpgw_setup']->oProc->f(0) : '';
+
+		// copy the email-addresses from the preferences of the mail-app (if set) to the new field
+		$db2 = $GLOBALS['phpgw_setup']->oProc->m_odb;
+		$sql = "SELECT account_id,account_lid,preference_value FROM phpgw_accounts LEFT JOIN phpgw_preferences ON account_id=preference_owner AND preference_app='email' WHERE account_type = 'u'";
+		$GLOBALS['phpgw_setup']->oProc->query($sql,__LINE__,__FILE__);
+		while ($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			$email_prefs = unserialize($GLOBALS['phpgw_setup']->oProc->f('preference_value'));
+			$account_lid = $GLOBALS['phpgw_setup']->oProc->f('account_lid');
+			$db2->update('phpgw_accounts',array(
+				'account_email' => $email_prefs['address'] ? $email_prefs['address'] : $account_lid.(strstr($account_lid,'@')===False?'@'.$mail_domain:''),
+			),array(
+				'account_id' => $GLOBALS['phpgw_setup']->oProc->f('account_id')
+			),__LINE__,__FILE__);
+		}
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0.000';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 ?>

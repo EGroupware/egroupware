@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'phpgwapi';
-	$setup_info['phpgwapi']['version']   = '1.0.0';
+	$setup_info['phpgwapi']['version']   = '1.0.0.000';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.27';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -50,6 +50,7 @@
 	$setup_info['notifywindow']['app_order'] = 1;
 	$setup_info['notifywindow']['tables']    = '';
 	$setup_info['notifywindow']['hooks'][]   = 'home';
+
 
 
 
