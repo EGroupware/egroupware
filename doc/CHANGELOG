@@ -19,7 +19,13 @@
 	     displayed ("xxx not an object"). Fixed.
 	   - Inventory program now supports changeable status fields.
 	   - Added feature to show minium in stock products in different colors.
-	   
+	   - Added error checking for changing a group name to a name that already exsists
+	   - Removed session->hidden_var(), use link() from now on.
+	     NOTE: You need to make sure you use the POST method.  GET will cause problems.
+	   - Cookie sessionid support works a little better now.
+	   - Started adding LDAP account authencation support.
+	   - Converted session->loginid, session->firstname, session->lastname, session->con to store
+	     this data in the phpgw_info array.
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly

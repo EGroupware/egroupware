@@ -26,7 +26,7 @@
 
   function display_option($text,$check,$option) {
     global $phpgw, $phpgw_info;
-    if ($phpgw_info["user"]["permissions"][$check]) {
+    if ($phpgw_info["user"]["apps"][$check]) {
 ?>
       <tr>
        <td>
@@ -147,7 +147,7 @@
          display_option("show new messages on main screen","email","mainscreen_showmail");
          display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays");
          
-         if ($phpgw_info["user"]["permissions"]["calendar"]) {
+         if ($phpgw_info["user"]["apps"]["calendar"]) {
             ?>
             <tr>
              <td><?php echo lang_pref("show high priority events on main screen"); ?> ?</td>
@@ -197,10 +197,10 @@
 
              <tr>
               <td><?php echo lang_pref("Default application"); ?></td>
-	      <td><select name="default_app">
+	         <td><select name="default_app">
                    <option value="">&nbsp;</option>
                   <?php
- 			     $db_perms = $phpgw->accounts->read_apps($phpgw_info["user"]["sessionid"]);
+ 			     $db_perms = $phpgw->accounts->read_apps($phpgw_info["user"]["userid"]);
                     while ($permission = each($db_perms)) {
                        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
 				  echo "<option value=\"" . $permission[0] . "\"";
@@ -227,7 +227,7 @@
 <?php
          }
 
-         if ($phpgw_info["user"]["permissions"]["headlines"]) {
+         if ($phpgw_info["user"]["apps"]["headlines"]) {
 ?>
             <tr>
              <td><?php echo lang_pref("select headline news sites"); ?>:</td>
