@@ -32,7 +32,7 @@
 	{
 		if ($subs)
 		{
-			$c->delete($cat_id,'True');
+			$c->delete($cat_id,True);
 		}
 		else
 		{
@@ -60,7 +60,7 @@
 
 		$apps_cats = $c->exists('subs',$cat_name='',$cat_id);
 
-		if ($apps_cats==True)
+		if ($apps_cats)
 		{
 			$t->set_var('messages',lang('This category is currently being used by applications as a parent category') . '<br>'
 									. lang('You will need to remove the subcategories before you can delete the parent category'));
@@ -82,7 +82,7 @@
 
 			$exists = $c->exists('subs',$cat_name='',$cat_id);
 
-			if ($exists==True)
+			if ($exists)
 			{
 				$t->set_var('lang_subs',lang('Do you also want to delete all global subcategories ?'));
 				$t->set_var('subs','<input type="checkbox" name="subs" value="True">');

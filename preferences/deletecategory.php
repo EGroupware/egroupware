@@ -36,12 +36,13 @@
 	{
 		if ($subs)
 		{
-			$c->delete($cat_id,'True');
+			$c->delete($cat_id,True);
 		}
 		else
 		{
 			$c->delete($cat_id);
 		}
+
 		Header('Location: ' . $phpgw->link('/preferences/categories.php','cats_app=' . $cats_app . '&extra=' . $extra . '&cats_level=' . $cats_level
 										. '&global_cats=' . $global_cats));
 	}
@@ -65,7 +66,8 @@
 		$t->set_var('hidden_vars',$hidden_vars);
 
 		$exists = $c->exists('subs',$cat_name='',$cat_id);
-		if ($exists==True)
+
+		if ($exists)
 		{
 			$t->set_var('lang_subs',lang('Do you also want to delete all subcategories ?'));
 			$t->set_var('subs','<input type="checkbox" name="subs" value="True">');

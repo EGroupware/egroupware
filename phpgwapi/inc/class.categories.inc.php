@@ -183,7 +183,6 @@
 		*/
 		function return_single($id = '')
 		{
-
 			$this->db->query("select * from phpgw_categories where cat_id='$id'",__LINE__,__FILE__);
 
 			if ($this->db->next_record())
@@ -361,11 +360,11 @@
 		@abstract delete category
 		@param $cat_id int - category id
 		*/
-		function delete($cat_id,$subs = 'False')
+		function delete($cat_id,$subs = False)
 		{
-			if ($subs == 'True')
+			if ($subs)
 			{
-				$subdelete = " OR cat_parent='$cat_id'"; 
+				$subdelete = " OR cat_parent='$cat_id' OR cat_main='$cat_id' "; 
 			}
 
 			$this->db->query("delete from phpgw_categories where cat_id='$cat_id' $subdelete and cat_appname='"
