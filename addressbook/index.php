@@ -28,9 +28,10 @@
   while ($column = each($this->stock_contact_fields)) {
     if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) &&
       $phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) {
+      $showcol = display_name($column[0]);
       $cols .= "  <td height=\"21\">\n";
       $cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-      $cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"index.php",lang($column[1]));
+      $cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"index.php",lang($showcol));
       $cols .= "</font>\n  </td>";
       $cols .= "\n";
              
@@ -45,8 +46,10 @@
   // insert acl stuff here
 
   $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+  //$extra = 1; // filtering to be done on extra fields
+  //"access='$filter'"
 
-  $entries = $this->read($start,$offset,$columns_to_display,$query,$sort,$order);
+  $entries = $this->read($start,$offset,$columns_to_display,$query,$extra,$sort,$order);
 
   $search_filter = $phpgw->nextmatchs->show_tpl("index.php",
                    $start, $this->total_records,
