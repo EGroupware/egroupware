@@ -2605,6 +2605,53 @@ class boicalendar
 				$state = 'required';
 			}
 
+                        if($majortype == 'duration')
+                        {
+                                // Unset dur var
+                                unset($dur);
+
+                                // Split «DURATION»
+                                list($_f_["day_raw"], $_f_["time_raw"]) = split("T", substr($value, 1, strlen($value)-1) );
+
+                                /* Datecode */
+                                if( isset($_f_["day_raw"]) OR $_f_["day_raw"] )
+                                {
+                                        // Days
+                                        if(ereg("D", $_f_["day_raw"]))
+                                                $dur["days"] = eregi_replace("([0-9]+)D(.*)", "\\1", $_f_["day_raw"]);
+
+                                        // Weeks
+                                        if(ereg("W", $_f_["day_raw"]))
+                                                $dur["weeks"] = eregi_replace("([^|.*]+D)?([0-9]+)W", "\\2", $_f_["day_raw"]);
+                                }
+
+                                /* Timecode */
+                                if( isset($_f_["time_raw"]) OR $_f_["time_raw"] )
+                                {
+                                        // Hours
+                                        if(ereg("H", $_f_["time_raw"]))
+                                                $dur["hours"] = eregi_replace("([0-9]+)H(.*)", "\\1", $_f_["time_raw"]);
+
+                                        // Minutes
+                                        /* If you find better, contact me very quickly :) */
+                                        if(ereg("M", $_f_["time_raw"]) )
+                                                $dur["minutes"] = eregi_replace("([^|.*]+H)?([0-9]+)M(.*)", "\\2", $_f_["time_raw"]);
+
+                                        // Seconds
+                                        /* Same comment :) */
+                                        if(ereg("S", $_f_["time_raw"]) )
+                                                $dur["seconds"] = eregi_replace("([^|.*]+M)?([0-9]+)S(.*)", "\\2", $_f_["time_raw"]);
+                                }
+
+                                $dur["raw"] = Array(
+                                                        "timecode" => $_f_["time_raw"],
+                                                        "datecode" => $_f_["day_raw"],
+                                                        "all"      => $value );
+                                // Add new parameters in Event
+                                $this->set_var($event, $majortype, $dur);
+                        }
+
+
 			if($majortype == 'begin')
 			{
 				$tmode = $mode;
@@ -3109,7 +3156,7 @@ class boicalendar
 					}
 
 //rrule
-					if(isset($ical['event'][$i]['rrule']))
+					if(isset($ical['event'][$i]['rrule'])  OR isset($ical['event'][$i]['duration']) )
 					{
 // recur_enddate
 						if(isset($ical['event'][$i]['rrule']['until']))
@@ -3118,6 +3165,87 @@ class boicalendar
 							$recur_enddate['month'] = intval($ical['event'][$i]['rrule']['until']['month']);
 							$recur_enddate['mday'] = intval($ical['event'][$i]['rrule']['until']['mday']);
 						}
+                                                elseif( isset($ical['event'][$i]['duration']) )
+                                                {
+                                                        // Create timecode for strtotime
+                                                        $ptimer = mktime($ical['event'][$i]['dtstart']['hour'],
+                                                                         $ical['event'][$i]['dtstart']['min'],
+                                                                         $ical['event'][$i]['dtstart']['sec'],
+                                                                         $ical['event'][$i]['dtstart']['month'],
+                                                                         $ical['event'][$i]['dtstart']['mday'],
+                                                                         $ical['event'][$i]['dtstart']['year']
+                                                                        );
+
+
+                                                        /*  -- Fixbug --
+                                                         * if "DURATION" has 1 day (for example).
+                                                         * Event takes places between the first date
+                                                         * (this define in "start" tag) and next day  :(
+                                                         * This "fix" destroy one day and set hours as "23" and minutes as "59"
+                                                         */
+
+                                                        // Weeks::Day--
+                                                        if(     $ical['event'][$i]['duration']['weeks']
+                                                                AND
+                                                                ( $ical['event'][$i]['duration']['hours'] == 0 )
+                                                                        AND
+                                                                ( $ical['event'][$i]['duration']['minutes'] == 0 )
+                                                          )
+                                                        {
+                                                                $ical['event'][$i]['duration']['days'] = (
+                                                                        $ical['event'][$i]['duration']['days'] +
+                                                                        ($ical['event'][$i]['duration']['weeks']*7))-1;
+                                                                unset($ical['event'][$i]['duration']['weeks']);
+                                                                $ical['event'][$i]['duration']['hours'] = "23";
+                                                                $ical['event'][$i]['duration']['minutes'] = "59";
+                                                                $ical['event'][$i]['duration']['seconds'] = "59";
+                                                        }
+                                                        // Days::Day--
+                                                        if(
+                                                                $ical['event'][$i]['duration']['days']
+                                                                AND
+                                                                ( $ical['event'][$i]['duration']['hours'] == 0 )
+                                                                        AND
+                                                                ( $ical['event'][$i]['duration']['minutes'] == 0 )
+                                                          )
+                                                        {
+                                                                $ical['event'][$i]['duration']['days']--;
+                                                                $ical['event'][$i]['duration']['hours'] = "23";
+                                                                $ical['event'][$i]['duration']['minutes'] = "59";
+                                                                $ical['event'][$i]['duration']['seconds'] = "59";
+                                                        }
+
+                                                        // Create string contains datetime for strtotime
+                                                        $pdate = "+";
+                                                        if( isset($ical['event'][$i]['duration']['weeks']) )
+                                                                $pdate .= $ical['event'][$i]['duration']['weeks'] . " weeks ";
+                                                        if( isset($ical['event'][$i]['duration']['days']) )
+                                                                $pdate .= $ical['event'][$i]['duration']['days'] . " days ";
+                                                        if( isset($ical['event'][$i]['duration']['hours']) )
+                                                                $pdate .= $ical['event'][$i]['duration']['hours'] . " hours ";
+                                                        if( isset($ical['event'][$i]['duration']['minutes']) )
+                                                                $pdate .= $ical['event'][$i]['duration']['minutes'] . " minutes ";
+                                                        if( isset($ical['event'][$i]['duration']['seconds']) )
+                                                                $pdate .= $ical['event'][$i]['duration']['seconds'] . " seconds ";
+
+                                                        // What is datetime in 2192 ?
+                                                        $enddate = strtotime($pdate, $ptimer);
+                                                        list(   $recur_enddate['year'],
+                                                                $recur_enddate['month'],
+                                                                $recur_enddate['mday'],
+                                                                $recur_enddate['hour'],
+                                                                $recur_enddate['min'],
+                                                                $recur_enddate['sec'] ) = split(":", date("Y:m:d:H:i:s", $enddate));
+
+                                                        // Set End of event
+                                                        $so_event->set_end(     $recur_enddate['year'],
+                                                                                $recur_enddate['month'],
+                                                                                $recur_enddate['mday'],
+                                                                                $recur_enddate['hour'],
+                                                                                $recur_enddate['min'],
+                                                                                $recur_enddate['sec']);
+
+                                                }
 						else
 						{
 							$recur_enddate['year'] = 0;
