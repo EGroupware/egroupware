@@ -137,6 +137,8 @@
 	//    $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('transy', 'run', ".$accountid.", 1)");
 		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('manual', 'run', ".$accountid.", 1)");
 
+		$phpgw_setup->db->query("update phpgw_accounts set account_expires='-1'",__LINE__,__FILE__);
+
 		Header("Location: index.php");
 		exit;
   }
