@@ -8,7 +8,7 @@
 	* Parts Copyright (C) 2003 Free Software Foundation                        *
 	* -------------------------------------------------------------------------*
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* http://www.phpgroupware.org/api                                          *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -40,12 +40,12 @@
 		var $applications;
 		var $acl;
 		var $auth;
-		var $db; 
+		var $db;
 		/**
 		 * Turn on debug mode. Will output additional data for debugging purposes.
 		 * @var	string	$debug
 		 * @access	public
-		 */	
+		 */
 		var $debug = 0;		// This will turn on debugging information.
 		var $crypto;
 		var $categories;
@@ -73,7 +73,7 @@
 		/**
 		 * Strips out html chars
 		 *
-		 * Used as a shortcut for stripping out html special chars. 
+		 * Used as a shortcut for stripping out html special chars.
 		 *
 		 * @access	public
 		 * @param $s string  The string to have its html special chars stripped out.
@@ -108,20 +108,20 @@
 		{
 			$this->redirect($this->session->link($url, $extravars));
 		}
-		
-	/**
-	 * Repsost Prevention Detection
-	 *
-	 * Used as a shortcut. Wrapper to session->is_repost()
-	 *
-	 * @access	public
-	 * @param	bool	$display_error	Use common error handler? - not yet implemented
-	 * @return bool	True if called previously, else False - call ok
-	 * @see	session->is_repost()
-	 * @syntax is_post()
-	 * @example $repost = $GLOBALS['phpgwapi']->is_repost();
-	 * @author	Dave Hall
-	 */
+
+		/**
+		* Repost Prevention Detection
+		*
+		* Used as a shortcut. Wrapper to session->is_repost()
+		*
+		* @access	public
+		* @param	bool	$display_error	Use common error handler? - not yet implemented
+		* @return bool	True if called previously, else False - call ok
+		* @see	session->is_repost()
+		* @syntax is_post()
+		* @example $repost = $GLOBALS['phpgwapi']->is_repost();
+		* @author	Dave Hall
+		*/
 		function is_repost($display_error = False)
 		{
 			return $this->session->is_repost($display_error);
@@ -142,12 +142,12 @@
 			/* global $HTTP_ENV_VARS; */
 
 			$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
-			
-			if ( !$url )
+
+			if(!$url)
 			{
 				$url = $_SERVER['PHP_SELF'];
 			}
-			if ( $iis )
+			if($iis)
 			{
 				echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
 				echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";
@@ -177,7 +177,7 @@
 		 *	@param  string	the fourth additional param
 		 * @see	translation->translate()
 		 */
-		function lang($key, $m1 = '', $m2 = '', $m3 = '', $m4 = '') 
+		function lang($key, $m1 = '', $m2 = '', $m3 = '', $m4 = '')
 		{
 			/* global $phpgw; */
 			return $this->translation->translate($key);
