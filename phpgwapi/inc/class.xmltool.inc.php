@@ -239,7 +239,7 @@
 								break;
 							case 'object':
 								$subnode = new xmltool('node', $nextkey);
-								$subnode->set_value('PHP_SERIALIZED_OBJECT:'.serialize($val));
+								$subnode->set_value('PHP_SERIALIZED_OBJECT&:'.serialize($val));
 								$node->add_node($subnode);							
 								break;
 							case 'resource':
@@ -252,7 +252,7 @@
 					}
 					break;
 				case 'object':
-					$node->set_value('PHP_SERIALIZED_OBJECT:'.serialize($value));
+					$node->set_value('PHP_SERIALIZED_OBJECT&:'.serialize($value));
 					break;
 				case 'resource':
 					echo 'Halt: Cannot package PHP resource pointers into XML<br>';
@@ -282,36 +282,21 @@
 			}
 		}
 
-		function export_var ($is_start = True)
+		function export_var()
 		{
-			switch	($this->data_type)
+			if($this->node_type == 'root')
 			{
-				case 'root':
-					break;
-				case 'node':
-					break;
-				case 'object':
-					break;
+				return $this->data->export_var();
 			}
-			
-					
+
 			if($this->data_type != 'node')
 			{	
-				$data = $this->data;
-				$found_at = strstr($xmldata['value'],'PHP_SERIALIZED_OBJECT:');
+				$found_at = strstr($this->data,'PHP_SERIALIZED_OBJECT&:');
 				if($found_at != False)
 				{
-					$data = str_replace ('PHP_SERIALIZED_OBJECT:', '', $this->data);
-					$data = unserialize ($xmldata['value']);
+					return unserialize(str_replace ('PHP_SERIALIZED_OBJECT&:', '', $this->data));
 				}
-				//if($is_start)
-				//{
-				//	$xml_array[$this->data] = $data;
-				//}
-				//else
-				//{
-					return $data;
-				//}
+				return $this->data;
 			}
 			else
 			{
@@ -328,13 +313,14 @@
 						$new_index = True;
 					}
 				}
-	
+
 				if($new_index)
 				{
 					reset($this->data);
 					while(list($key,$val) = each($this->data))
 					{
-						//$xml_array[$val->name][] = $this->export_var($val,False);
+
+						$return_array[$val->name][] = $val->export_var();
 					}				
 				}
 				else
@@ -342,12 +328,46 @@
 					reset($this->data);
 					while(list($key,$val) = each($this->data))
 					{
-						//$xml_array[$val->name] = $this->export_var($val,False);
+						$return_array[$val->name] = $val->export_var();
 					}
 				}
+				return $return_array;
 			}
-			return $xml_array;
 		}
+
+		function export_struct()
+		{
+			if($this->node_type == 'root')
+			{
+				return $this->data->export_struct();
+			}
+
+			$retval['tag'] = $this->name;
+			$retval['attributes'] = $this->attributes;
+			if($this->data_type != 'node')
+			{	
+				$found_at = strstr($this->data,'PHP_SERIALIZED_OBJECT&:');
+				if($found_at != False)
+				{
+					$retval['value'] = unserialize(str_replace ('PHP_SERIALIZED_OBJECT&:', '', $this->data));
+				}
+				else
+				{
+					$retval['value'] = $this->data;
+				}
+				return $retval;
+			}
+			else
+			{
+				reset($this->data);
+				while(list($key,$val) = each($this->data))
+				{
+					$retval['children'][] = $val->export_struct();
+				}				
+				return $retval;
+			}
+		}
+
 		
 		function import_xml_children($data, &$i, $parent_node)
 		{
