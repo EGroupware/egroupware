@@ -38,7 +38,7 @@
 		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
 		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
 	{
-		global $phpgw_info, $phpgw, $phpgw_domain;
+		global $phpgw_info;
 
 		/* error_reporting(0); */
 		list($appname,$classname) = explode(".", $class);
@@ -74,28 +74,6 @@
 			eval($code);
 		}
 		/* error_reporting(E_ERROR | E_WARNING | E_PARSE); */
-		return $obj;
-	}
-
-	function oldCreateObject($classname, $constructor_param = "")
-	{
-		global $phpgw, $phpgw_info, $phpgw_domain;
-		$classpart = explode (".", $classname);
-		$appname = $classpart[0];
-		$classname = $classpart[1];
-		if (!$phpgw_info["flags"]["included_classes"][$classname])
-		{
-			$phpgw_info["flags"]["included_classes"][$classname] = True;
-			include(PHPGW_INCLUDE_ROOT."/".$appname."/inc/class.".$classname.".inc.php");
-		}
-		if ($constructor_param == "")
-		{
-			$obj = new $classname;
-		}
-		else
-		{
-			$obj = new $classname($constructor_param);
-		}
 		return $obj;
 	}
 
@@ -153,11 +131,10 @@
 	*/
 	function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
 	{
-		global $phpgw_setup;
 		// # TODO: check if $m1 is of type array.
 		// If so, use it instead of $m2-$mN (Stephan)
 		$vars = array( $m1, $m2, $m3, $m4, $m5, $m6, $m7, $m8, $m9, $m10 );
-		$value = $phpgw_setup->translate("$key", $vars );
+		$value = $GLOBALS['phpgw_setup']->translate("$key", $vars );
 		return $value;
 	}
 
@@ -195,7 +172,7 @@
 
 	function lang_select()
 	{
-		global $ConfigLang;
+		$ConfigLang = $GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] : $GLOBALS['HTTP_POST_VARS']['ConfigLang']; 
 
 		$select = '<select name="ConfigLang">' . "\n";
 		$languages = get_langs();
@@ -225,14 +202,14 @@
 	{
 		include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); // To set the current core version
 		// This will change to just use setup_info
-		$phpgw_info['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
+		$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	}
 	else
 	{
-		$phpgw_info['server']['versions']['phpgwapi'] = 'Undetected';
+		$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] = 'Undetected';
 	}
 
-	$phpgw_info['server']['app_images'] = 'templates/default/images';
+	$GLOBALS['phpgw_info']['server']['app_images'] = 'templates/default/images';
 
 	include('./inc/class.setup.inc.php');
 	$phpgw_setup = new phpgw_setup;

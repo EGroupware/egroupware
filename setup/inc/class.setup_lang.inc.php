@@ -34,7 +34,8 @@
 		*/
 		function phpgw_setup_lang()
 		{
-			global $ConfigLang;
+			$ConfigLang = $GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] : $GLOBALS['HTTP_POST_VARS']['ConfigLang'];
+
 			if(!$ConfigLang)
 			{
 				$lang = 'en';

@@ -33,8 +33,6 @@
 
 		function setup_tpl_dir($app_name='setup')
 		{
-			global $phpgw_info;
-
 			// hack to get tpl dir
 			if (is_dir(PHPGW_SERVER_ROOT))
 			{
@@ -52,57 +50,48 @@
 
 		function show_header($title = '',$nologoutbutton = False, $logoutfrom = 'config', $configdomain = '')
 		{
-			global $phpgw_info, $setup_tpl, $HTTP_SERVER_VARS;
-
-			$setup_tpl->set_var('lang_charset',lang('charset'));
+			$GLOBALS['setup_tpl']->set_var('lang_charset',lang('charset'));
 			if ($nologoutbutton)
 			{
 				$btn_logout = '&nbsp;';
 			}
 			else
 			{
-				$btn_logout = '<a href="'.basename($HTTP_SERVER_VARS['REQUEST_URI']).'?FormLogout='.$logoutfrom.'" class="link">'.lang('Logout').'</a>';
+				$btn_logout = '<a href="'.basename($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']).'?FormLogout='.$logoutfrom.'" class="link">'.lang('Logout').'</a>';
 			}
 
-			$setup_tpl->set_var('lang_setup', lang('setup'));
-			$setup_tpl->set_var('page_title',$title);
+			$GLOBALS['setup_tpl']->set_var('lang_setup', lang('setup'));
+			$GLOBALS['setup_tpl']->set_var('page_title',$title);
 			if ($configdomain == '')
 			{
-				$setup_tpl->set_var('configdomain',"");
+				$GLOBALS['setup_tpl']->set_var('configdomain',"");
 			}
 			else
 			{
-				$setup_tpl->set_var('configdomain',' - ' . lang('Domain') . ': '.$configdomain);
+				$GLOBALS['setup_tpl']->set_var('configdomain',' - ' . lang('Domain') . ': '.$configdomain);
 			}
-			$setup_tpl->set_var('pgw_ver',$phpgw_info['server']['versions']['phpgwapi']);
-			$setup_tpl->set_var('logoutbutton',$btn_logout);
-			$setup_tpl->pparse('out','T_head');
+			$GLOBALS['setup_tpl']->set_var('pgw_ver',$phpgw_info['server']['versions']['phpgwapi']);
+			$GLOBALS['setup_tpl']->set_var('logoutbutton',$btn_logout);
+			$GLOBALS['setup_tpl']->pparse('out','T_head');
 			//$setup_tpl->set_var('T_head','');
 		}
 
 		function show_footer()
 		{
-			global $phpgw_info, $setup_tpl;
-
-			$setup_tpl->pparse('out','T_footer');
-			unset($setup_tpl);
+			$GLOBALS['setup_tpl']->pparse('out','T_footer');
+			unset($GLOBALS['setup_tpl']);
 		}
 
 		function show_alert_msg($alert_word='Setup alert',$alert_msg='setup alert (generic)')
 		{
-			global $phpgw_info, $setup_tpl;
-
-			$setup_tpl->set_var('V_alert_word',$alert_word);
-			$setup_tpl->set_var('V_alert_msg',$alert_msg);
-			$setup_tpl->pparse('out','T_alert_msg');
+			$GLOBALS['setup_tpl']->set_var('V_alert_word',$alert_word);
+			$GLOBALS['setup_tpl']->set_var('V_alert_msg',$alert_msg);
+			$GLOBALS['setup_tpl']->pparse('out','T_alert_msg');
 		}
 
 		function make_frm_btn_simple($pre_frm_blurb='',$frm_method='POST',$frm_action='',$input_type='submit',$input_value='',$post_frm_blurb='')
 		{
-			// are these golbals necessary?
-			global $phpgw_info, $setup_tpl;
-
-			// a simple form has simple components
+			/* a simple form has simple components */
 			$simple_form = 
 				$pre_frm_blurb  ."\n"
 				.'<form method="'.$frm_method.'" action="'.$frm_action.'">'  ."\n"
@@ -114,10 +103,7 @@
 
 		function make_href_link_simple($pre_link_blurb='',$href_link='',$href_text='default text',$post_link_blurb='')
 		{
-			// are these golbals necessary?
-			global $phpgw_info, $setup_tpl;
-
-			// a simple href link has simple components
+			/* a simple href link has simple components */
 			$simple_link =
 				 $pre_link_blurb
 				.'<a href="' .$href_link .'">' .$href_text .'</a> '
@@ -127,54 +113,51 @@
 
 		function login_form()
 		{
-			global $phpgw_info, $phpgw_domain, $setup_tpl;
-			
 			// begin use TEMPLATE login_main.tpl
-			$setup_tpl->set_var('ConfigLoginMSG',$phpgw_info['setup']['ConfigLoginMSG']);
-			$setup_tpl->set_var('HeaderLoginMSG',$phpgw_info['setup']['HeaderLoginMSG']);
+			$GLOBALS['setup_tpl']->set_var('ConfigLoginMSG',$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG']);
+			$GLOBALS['setup_tpl']->set_var('HeaderLoginMSG',$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG']);
 
-			if ($phpgw_info['setup']['stage']['header'] == '10')
+			if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == '10')
 			{
 				// begin use SUB-TEMPLATE login_stage_header,
 				// fills V_login_stage_header used inside of login_main.tpl
-				$setup_tpl->set_var('lang_select',lang_select());
-				if (count($phpgw_domain) > 1)
+				$GLOBALS['setup_tpl']->set_var('lang_select',lang_select());
+				if (count($GLOBALS['phpgw_domain']) > 1)
 				{
 					// use BLOCK B_multi_domain inside of login_stage_header
-					$setup_tpl->parse('V_multi_domain','B_multi_domain');
+					$GLOBALS['setup_tpl']->parse('V_multi_domain','B_multi_domain');
 					// in this case, the single domain block needs to be nothing
-					$setup_tpl->set_var('V_single_domain','');
+					$GLOBALS['setup_tpl']->set_var('V_single_domain','');
 				}
 				else
 				{
-					reset($phpgw_domain);
-					$default_domain = each($phpgw_domain);
-					$setup_tpl->set_var('default_domain_zero',$default_domain[0]);
+					reset($GLOBALS['phpgw_domain']);
+					$default_domain = each($GLOBALS['phpgw_domain']);
+					$GLOBALS['setup_tpl']->set_var('default_domain_zero',$default_domain[0]);
 					
 					// use BLOCK B_single_domain inside of login_stage_header
-					$setup_tpl->parse('V_single_domain','B_single_domain');
+					$GLOBALS['setup_tpl']->parse('V_single_domain','B_single_domain');
 					// // in this case, the multi domain block needs to be nothing
-					$setup_tpl->set_var('V_multi_domain','');
+					$GLOBALS['setup_tpl']->set_var('V_multi_domain','');
 				}
 				// end use SUB-TEMPLATE login_stage_header
 				// put all this into V_login_stage_header for use inside login_main
-				$setup_tpl->parse('V_login_stage_header','T_login_stage_header');
+				$GLOBALS['setup_tpl']->parse('V_login_stage_header','T_login_stage_header');
 			}
 			else
 			{
 				// begin SKIP SUB-TEMPLATE login_stage_header
-				$setup_tpl->set_var('V_multi_domain','');
-				$setup_tpl->set_var('V_single_domain','');
-				$setup_tpl->set_var('V_login_stage_header','');
+				$GLOBALS['setup_tpl']->set_var('V_multi_domain','');
+				$GLOBALS['setup_tpl']->set_var('V_single_domain','');
+				$GLOBALS['setup_tpl']->set_var('V_login_stage_header','');
 			}
 			// end use TEMPLATE login_main.tpl
 			// now out the login_main template
-			$setup_tpl->pparse('out','T_login_main');
+			$GLOBALS['setup_tpl']->pparse('out','T_login_main');
 		}
 
 		function get_template_list()
 		{
-			global $phpgw_info;
 			$d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
 			//$list['user_choice']['name'] = 'user_choice';
 			//$list['user_choice']['title'] = 'Users Choice';
@@ -187,7 +170,7 @@
 					if (file_exists ($f))
 					{
 						include($f);
-						$list[$entry]['title'] = 'Use ' . $phpgw_info['template'][$entry]['title'] . 'interface';
+						$list[$entry]['title'] = 'Use ' . $GLOBALS['phpgw_info']['template'][$entry]['title'] . 'interface';
 					}
 					else
 					{

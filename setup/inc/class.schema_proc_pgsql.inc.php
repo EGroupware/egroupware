@@ -408,7 +408,7 @@
 		function GetSequenceForTable($oProc,$table,&$sSequenceName)
 		{
 			global $DEBUG;
-			if($DEBUG) { echo '<br>GetSequenceForTable: You rang?'; }
+			if($DEBUG) { echo '<br>GetSequenceForTable: ' . $table; }
 
 			$oProc->m_odb->query("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relname LIKE 'seq_$table' AND relkind='S' ORDER BY relname",__LINE__,__FILE__);
 			$oProc->m_odb->next_record();
