@@ -1,3 +1,6 @@
+[0.9.12]
+	- Created a config option to force users to use a certian theme.
+
 [0.9.10]
 	- Fixed the cron programs, they where out of date in the table structures
 	- Added the ["flags"]["nofooter"] . ["flags"]["noappfooter"] flags.

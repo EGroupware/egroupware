@@ -334,19 +334,40 @@
 			}
 		}
 
-		include(PHPGW_SERVER_ROOT . "/phpgwapi/themes/" .
-		 $phpgw_info["user"]["preferences"]["common"]["theme"] . ".theme");
+		if ($phpgw_info['server']['force_theme'] == 'user_choice')
+		{
+			@include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['user']['preferences']['common']['theme'] . '.theme');
 
-		if ($phpgw_info["theme"]["bg_color"] == "") {
-			/* Looks like there was a problem finding that theme. Try the default */
-			echo "Warning: error locating selected theme";
-			include (PHPGW_SERVER_ROOT . "/phpgwapi/themes/default.theme");
-			if ($phpgw_info["theme"]["bg_color"] == "") {
-				/* Hope we don't get to this point.  Better then the user seeing a */
-				/* complety back screen and not know whats going on                */
-				echo "<body bgcolor=FFFFFF>Fatal error: no themes found";
-				exit;
+			if ($phpgw_info['theme']['bg_color'] == '')
+			{
+				/* Looks like there was a problem finding that theme. Try the default */
+				echo 'Warning: error locating selected theme';
+				include (PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
+				if ($phpgw_info['theme']['bg_color'] == '')
+				{
+					/* Hope we don't get to this point.  Better then the user seeing a */
+					/* complety back screen and not know whats going on                */
+					echo '<body bgcolor="FFFFFF"><b>Fatal error: no themes found</b>';
+					exit;
+				}
 			}
+		}
+		else
+		{
+			@include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['server']['force_theme'] . '.theme');
+			if ($phpgw_info['theme']['bg_color'] == '')
+			{
+				/* Looks like there was a problem finding that theme. Try the default */
+				echo 'Warning: error locating selected theme';
+				include (PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
+				if ($phpgw_info['theme']['bg_color'] == '')
+				{
+					/* Hope we don't get to this point.  Better then the user seeing a */
+					/* complety back screen and not know whats going on                */
+					echo '<body bgcolor="FFFFFF"><b>Fatal error: no themes found</b>';
+					exit;
+				}
+			}			
 		}
 
 		/*************************************************************************\

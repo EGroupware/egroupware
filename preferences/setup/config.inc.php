@@ -39,6 +39,27 @@
    </tr>
    <?php $selected = array(); ?>
 
+   <?php $selected[$current_config["force_theme"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Use theme:<br></td>
+    <td>
+     <select name="newsettings[force_theme]">
+    <?php
+
+      $themes = $phpgw_setup->list_themes();
+		echo '<option value="user_choice"' . $selected['user_choice'] . '>Users Choice</option>';
+		while (list ($key, $value) = each ($themes))
+		{
+			echo '<option value="'.$value.'" '.$selected[$value].'>'.$value.'</option>';
+		}
+    ?>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
+
+
    <?php/* $selected[$current_config["useframes"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Frame support:</td>

@@ -87,6 +87,7 @@
        </tr>
       <?php } ?>
 
+       <?php if ($phpgw_info["server"]["force_theme"] == "user_choice"){ ?>
        <tr>
          <?php $selected_theme[$phpgw_info["user"]["preferences"]["common"]["theme"]] = " selected"; ?>
         <td><?php echo lang("Theme (colors/fonts) Selection") . ":"; ?><br></td>
@@ -101,6 +102,8 @@
          </select>
         </td>
        </tr>
+      <?php } ?>
+
        <tr>
         <td><?php echo lang("Show navigation bar as"); ?>: </td>
         <td>
