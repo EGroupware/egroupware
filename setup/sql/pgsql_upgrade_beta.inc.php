@@ -2185,7 +2185,7 @@
 	{
 		global $phpgw_info,$phpgw_setup;
 
-		$phpgw_setup->db->query("alter table phpgw_holidays add column observance_rule int default 0",__LINE__,__TABLE__);
+		$phpgw_setup->db->query("alter table phpgw_cal_holidays add column observance_rule int default 0",__LINE__,__TABLE__);
 		$phpgw_setup->db->query("delete from phpgw_cal_holidays",__LINE__,__FILE__);
 		
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.010';
