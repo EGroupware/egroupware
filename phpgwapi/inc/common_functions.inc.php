@@ -1209,11 +1209,11 @@
 			{
 				if (is_array($val))
 				{
-					_check_script($var[$key]);
+					_check_script_tag($var[$key]);
 				}
 				else
 				{
-					if (preg_match('/(<|&lt;)+\/?script(>|&gt;)+/i',$val))
+					if (preg_match('/<\/?script>/i',$val))
 					{
 						unset($var[$key]);
 					}
