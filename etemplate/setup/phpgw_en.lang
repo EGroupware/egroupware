@@ -51,6 +51,7 @@ db-tools	etemplate	en	DB-Tools
 deck	etemplate	en	Deck (internal)
 default	etemplate	en	Default
 delete	etemplate	en	Delete
+delete a single entry by passing the id.	etemplate	en	Delete a single entry by passing the id.
 delete all selected etemplates, without further inquiry	etemplate	en	delete ALL selected eTemplates, WITHOUT further inquiry
 delete column	etemplate	en	Delete Column
 delete this etemplate	etemplate	en	delete this eTemplate
@@ -147,6 +148,7 @@ new search	etemplate	en	New search
 new table created	etemplate	en	New table created
 newer version '%s' exists !!!	etemplate	en	newer version '%s' exists !!!
 nextmatch	etemplate	en	Nextmatch
+no file	etemplate	en	no file
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
 nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
 nullable	etemplate	en	Nullable
@@ -165,6 +167,8 @@ primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
 radiobutton	etemplate	en	Radiobutton
 read	etemplate	en	Read
+read a list of entries.	etemplate	en	Read a list of entries.
+read a single entry by passing the id and fieldlist.	etemplate	en	Read a single entry by passing the id and fieldlist.
 read etemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
 remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
@@ -231,6 +235,7 @@ type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
 unique	etemplate	en	Unique
 unlink	etemplate	en	Unlink
+update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields.
 update from version '%s' to	etemplate	en	Update from Version '%s' to
 upload	etemplate	en	Upload
 value	etemplate	en	Value
