@@ -516,7 +516,7 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return '<div title="'.$title.'" '.$options.
 			' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px;'.
 			(stristr($options,'onclick="') ? ' cursor: pointer; cursor: hand;' : '').'">'."\n\t".
-			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';" />'."\n</div>\n";
+			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';"></div>'."\n</div>\n";
 	}
 
 	function image( $app,$name,$title='',$options='' )
