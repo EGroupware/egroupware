@@ -25,7 +25,11 @@
     include("./sql/common_default_records.inc.php");
     $included = True;
     include($phpgw_info["server"]["server_root"] . "/setup/lang.php");
+    $currentver = "oldversion";
+  }
 
+  if ($currentver == "oldversion") {
+    $currentver = $oldversion;
     if ($currentver == "7122000" || $currentver == "8032000" || $currentver == "8072000" || $currentver == "8212000" || $currentver == "9052000" || $currentver == "9072000") {
       include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_upgrade_prebeta.inc.php");
     }

@@ -41,7 +41,6 @@
      echo "You appear to be running an old version of PHP.  It its recommend that you upgrade "
         . "to a new version.  Older version of PHP might not run phpGroupWare correctly, if at all.";
   }
-
   /* Database setup */
   switch($action){
     case "Delete all my tables and data":
@@ -54,7 +53,8 @@
       $subtitle = "Upgrading Tables";
       $submsg = "At your request, this script is going to attempt to upgrade your old tables to the new format.";
       $subaction = "upgraded";
-      $currentver = $oldversion;
+//      $currentver = $oldversion;
+      $currentver = "oldversion";
       break;      
     case "Create":
       $subtitle = "Creating Tables";
@@ -63,6 +63,7 @@
       $currentver = "new";
       break;      
   }
+
   $stage = 2.5;
   show_header($header_msg);
   show_steps($stage);

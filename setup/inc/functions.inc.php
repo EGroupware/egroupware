@@ -215,7 +215,7 @@
       echo "You appear to be running version $oldversion of phpGroupWare.<br>\n";
       echo "We will automaticly update your tables/records to ".$phpgw_info["server"]["version"].", but we highly recommend backing up your tables in case the script causes damage to your data.\n";
       echo "These automated scripts can easily destroy your data. Please backup before going any further!\n";
-      echo "<form method=\"POST\" action=\"$PHP_SELF\">\n";
+      echo "<form method=\"POST\" action=\"tables.php\">\n";
       echo "<input type=\"hidden\" name=\"oldversion\" value=\"".$oldversion."\">\n";
       echo "<input type=\"hidden\" name=\"useglobalconfigsettings\">\n";
       echo "<input type=\"submit\" name=\"action\" value=\"Upgrade\">\n";
