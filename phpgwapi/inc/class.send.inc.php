@@ -76,12 +76,14 @@
 			}
 			$header .= 'X-Mailer: phpGroupWare (http://www.phpgroupware.org)'."\n";
 
+			/* // moved to email/send_message.php
 			if ($phpgw_info['user']['preferences']['email']['email_sig'] && $attach_sig)
 			{
 				//$body .= "\n-----\n".$phpgw_info['user']['preferences']['email']['email_sig'];
 				$get_sig = $this->sig_html_to_text($phpgw_info['user']['preferences']['email']['email_sig']);
 				$body .= "\n-----\n" .$get_sig;
 			}
+			*/
 
 			if (ereg('Message-Boundary', $body)) 
 			{
