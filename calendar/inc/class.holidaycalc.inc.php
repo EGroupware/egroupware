@@ -13,13 +13,13 @@
 
   /* $Id$ */
 
-	if (empty($phpgw_info['user']['preferences']['common']['country']))
+	if (empty($GLOBALS['phpgw_info']['user']['preferences']['common']['country']))
 	{
 		$rule = 'US';
 	}
 	else
 	{
-		$rule = $phpgw_info['user']['preferences']['common']['country'];
+		$rule = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 	}
 
 	$calc_include = PHPGW_INCLUDE_ROOT.'/calendar/inc/class.holidaycalc_'.$rule.'.inc.php';
