@@ -30,8 +30,13 @@
 		{
 			if ( ! $vars ) $vars = array();
 			$ret = $key;
-			if (!isset($GLOBALS['lang']) || !$GLOBALS['lang'])
+			// check also if $GLOBALS['lang'] is a array
+			// php-nuke and postnuke are using $GLOBALS['lang'] too
+			// as string
+			// this makes many problems
+			if (!isset($GLOBALS['lang']) || !$GLOBALS['lang'] || !is_array($GLOBALS['lang']))
 			{
+				$GLOBALS['lang'] = array();
 				if (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 				{
@@ -81,6 +86,14 @@
 
 		function add_app($app) 
 		{
+			// post-nuke and php-nuke are using $GLOBALS['lang'] too
+			// but not as array!
+			// this produces very strange results
+			if (!is_array($GLOBALS['lang']))
+			{
+				$GLOBALS['lang'] = array();
+			}
+			
 			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 			{
 				$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
