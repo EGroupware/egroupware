@@ -42,7 +42,7 @@
 			}
 			session_id($this->sessionid);
 			session_start();
-			return $GLOBALS['phpgw_session'] = $_SESSION['phpgw_session'];
+			return $_SESSION['egw'];
 		}
 
 		function set_cookie_params($domain)
@@ -60,19 +60,15 @@
 		function register_session($login,$user_ip,$now,$session_flags)
 		{
 			// session_start() is now called in new_session_id() !!!
-
-			$GLOBALS['phpgw_session']['session_id'] = $this->sessionid;
-			$GLOBALS['phpgw_session']['session_lid'] = $login;
-			$GLOBALS['phpgw_session']['session_ip'] = $user_ip;
-			$GLOBALS['phpgw_session']['session_logintime'] = $now;
-			$GLOBALS['phpgw_session']['session_dla'] = $now;
-			$GLOBALS['phpgw_session']['session_action'] = $_SERVER['PHP_SELF'];
-			$GLOBALS['phpgw_session']['session_flags'] = $session_flags;
+			$_SESSION['egw']['session_id'] = $this->sessionid;
+			$_SESSION['egw']['session_lid'] = $login;
+			$_SESSION['egw']['session_ip'] = $user_ip;
+			$_SESSION['egw']['session_logintime'] = $now;
+			$_SESSION['egw']['session_dla'] = $now;
+			$_SESSION['egw']['session_action'] = $_SERVER['PHP_SELF'];
+			$_SESSION['egw']['session_flags'] = $session_flags;
 			// we need the install-id to differ between serveral installs shareing one tmp-dir
-			$GLOBALS['phpgw_session']['session_install_id'] = $GLOBALS['phpgw_info']['server']['install_id'];
-
-			session_register('phpgw_session');
-			$_SESSION['phpgw_session'] = $GLOBALS['phpgw_session'];
+			$_SESSION['egw']['session_install_id'] = $GLOBALS['phpgw_info']['server']['install_id'];
 		}
 
 		// This will update the DateLastActive column, so the login does not expire
@@ -94,11 +90,8 @@
 				$action = $this->xmlrpc_method_called;
 			}
 
-			$GLOBALS['phpgw_session']['session_dla'] = time();
-			$GLOBALS['phpgw_session']['session_action'] = $action;
-
-			session_register('phpgw_session');
-			$_SESSION['phpgw_session'] = $GLOBALS['phpgw_session'];
+			$_SESSION['egw']['session_dla'] = time();
+			$_SESSION['egw']['session_action'] = $action;
 
 			return True;
 		}
@@ -144,10 +137,7 @@
 		{
 			$account_id = get_account_id($accountid,$this->account_id);
 
-			$GLOBALS['phpgw_session']['phpgw_app_sessions']['phpgwapi']['phpgw_info_cache'] = '';
-
-			session_register('phpgw_session');
-			$_SESSION['phpgw_session'] = $GLOBALS['phpgw_session'];
+			$_SESSION['egw']['app_sessions']['phpgwapi']['phpgw_info_cache'] = '';
 		}
 
 		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
@@ -160,25 +150,16 @@
 			/* This allows the user to put '' as the value. */
 			if ($data == '##NOTHING##')
 			{
-				// I added these into seperate steps for easier debugging
-				$data = $GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location]['content'];
-
 				/* do not decrypt and return if no data (decrypt returning garbage) */
-				if($data)
+				if($_SESSION['egw']['app_sessions'][$appname][$location])
 				{
-					$data = $GLOBALS['phpgw']->crypto->decrypt($data);
-					//echo "appsession returning: location='$location',app='$appname',data=$data"; _debug_array($data);
-					return $data;
+					return $GLOBALS['phpgw']->crypto->decrypt($_SESSION['egw']['app_sessions'][$appname][$location]);
 				}
+				return false;
 			}
-			else
-			{
-				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
-				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location]['content'] = $encrypteddata;
-				session_register('phpgw_session');
-				$_SESSION['phpgw_session'] = $GLOBALS['phpgw_session'];
-				return $data;
-			}
+			$_SESSION['egw']['app_sessions'][$appname][$location] = $GLOBALS['phpgw']->crypto->encrypt($data);
+
+			return $data;
 		}
 
 		function session_sort($a,$b)
@@ -211,28 +192,23 @@
 			}
 			while ($file = readdir($dir))
 			{
-				if (substr($file,0,5) != 'sess_')
+				if (substr($file,0,5) != 'sess_' || $session_cache[$file] === false)
 				{
 					continue;
 				}
 				if (isset($session_cache[$file]))	// use copy from cache
 				{
-					$session = $session_cache[$file];
-
-					if ($session['session_flags'] == 'A' || !$session['session_id'] ||
-						$session['session_install_id'] != $GLOBALS['phpgw_info']['server']['install_id'])
-					{
-						continue;	// no anonymous sessions or other domains or installations
-					}
 					if (!$all_no_sort)	// we need the up-to-date data --> unset and reread it
 					{
 						unset($session_cache[$file]);
 					}
+					$session = $session_cache[$file];
 				}
 				if (!isset($session_cache[$file]))	// not in cache, read and cache it
 				{
 					if (!is_readable($path. '/' . $file))
 					{
+						$session_cache[$file] = false;	// dont try reading it again
 						continue;	// happens if webserver runs multiple user-ids
 					}
 					$session = '';
@@ -241,17 +217,19 @@
 						$session = ($size = filesize ($path . '/' . $file)) ? fread ($fd, $size) : 0;
 						fclose ($fd);
 					}
-					if (substr($session,0,14) != 'phpgw_session|')
+					if (substr($session,0,4) != 'egw|')
 					{
+						$session_cache[$file] = false;	// dont try reading it again
 						continue;
 					}
-					$session = unserialize(substr($session,14));
-					unset($session['phpgw_app_sessions']);	// not needed, saves memory
+					$session = unserialize(substr($session,4));
+					unset($session['app_sessions']);	// not needed, saves memory
 					$session_cache[$file] = $session;
 				}
 				if($session['session_flags'] == 'A' || !$session['session_id'] ||
 					$session['session_install_id'] != $GLOBALS['phpgw_info']['server']['install_id'])
 				{
+					$session_cache[$file] = false;	// dont try reading it again
 					continue;	// no anonymous sessions or other domains or installations
 				}
 				//echo "file='$file'=<pre>"; print_r($session); echo "</pre>"; 
