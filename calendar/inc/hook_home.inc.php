@@ -35,7 +35,7 @@
 		$GLOBALS['g_month'] = substr($GLOBALS['date'],4,2);
 		$GLOBALS['g_day'] = substr($GLOBALS['date'],6,2);
 		$GLOBALS['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
-		$GLOBALS['css'] = "\n".'<STYLE type="text/css">'."\n".'<!--'."\n"
+		$GLOBALS['css'] = "\n".'<style type="text/css">'."\n".'<!--'."\n"
 			. ExecMethod('calendar.uicalendar.css').'-->'."\n".'</style>';
 
 		$page_ = explode('.',$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']);
