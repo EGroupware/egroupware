@@ -69,7 +69,7 @@
 		 * @example acl->acl(5); // 5 is the user id  <br>
 		 * @param int $account_id int-the user id
 		 */
-		function acl($account_id = 0)
+		function acl($account_id = '')
 		{
 			$this->db = clone($GLOBALS['egw']->db);
 			$this->db->set_app('phpgwapi');
@@ -394,7 +394,7 @@
 		 * @param int/boolean $account_id account id, default 0=$this->account_id, or false to delete all entries for $app/$location
 		 * @return int number of rows deleted
 		 */
-		function delete_repository($app, $location, $accountid=0)
+		function delete_repository($app, $location, $accountid='')
 		{
 			static $cache_accountid;
 
@@ -426,7 +426,7 @@
 		 * @param int $account_id account id defaults to $GLOBALS['egw_info']['user']['account_id'];
 		 * @return array/boolean false if there are no matching row in the db, else array with app-names
 		 */
-		function get_app_list_for_id($location, $required, $accountid = 0)
+		function get_app_list_for_id($location, $required, $accountid = '')
 		{
 			static $cache_accountid;
 
@@ -466,13 +466,13 @@
 		 *
 		 * @param string $app app
 		 * @param int $required required rights
-		 * @param int $account_id optional defaults to $GLOBALS['egw_info']['user']['account_id'];
+		 * @param int $accountid optional defaults to $GLOBALS['egw_info']['user']['account_id'];
 		 * @return array/boolean false if there are no matching rows in the db or array with location-strings
 		 */
-		function get_location_list_for_id($app, $required, $accountid = 0)
+		function get_location_list_for_id($app, $required, $accountid = '')
 		{
 			static $cache_accountid;
-
+			
 			if($cache_accountid[$accountid])
 			{
 				$accountid = $cache_accountid[$accountid];
@@ -531,7 +531,7 @@
 		 * @param int $account_id optional defaults to $GLOBALS['egw_info']['user']['account_id'];
 		 * @return boolean/array containing list of apps or false if there are none
 		 */
-		function get_user_applications($accountid = 0)
+		function get_user_applications($accountid = '')
 		{
 			static $cache_accountid;
 
