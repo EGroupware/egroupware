@@ -55,7 +55,7 @@ delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen E
 department	common	de	Abteilung
 domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen
-download export file (uncheck to debug output in browser)	addressbook	de	
+download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 empty for all	addressbook	de	leer für alle
