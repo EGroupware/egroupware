@@ -368,7 +368,7 @@
 
 		if ($phpgw_info['server']['force_theme'] == 'user_choice')
 		{
-			@include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['user']['preferences']['common']['theme'] . '.theme');
+			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['user']['preferences']['common']['theme'] . '.theme');
 
 			if ($phpgw_info['theme']['bg_color'] == '')
 			{
@@ -386,7 +386,7 @@
 		}
 		else
 		{
-			@include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['server']['force_theme'] . '.theme');
+			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['server']['force_theme'] . '.theme');
 			if ($phpgw_info['theme']['bg_color'] == '')
 			{
 				/* Looks like there was a problem finding that theme. Try the default */

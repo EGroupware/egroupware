@@ -88,7 +88,7 @@
 				'session_logintime' => array('type' => 'varchar', 'precision' => 4),
 				'session_dla' => array('type' => 'varchar', 'precision' => 4),
 				'session_action' => array('type' => 'varchar', 'precision' => 255),
-				'session_flags' => array('type' => 'char', 'precision' => 2),
+				'session_flags' => array('type' => 'char', 'precision' => 2)
 			),
 			'pk' => array(),
 			'fk' => array(),
@@ -160,7 +160,7 @@
 		'phpgw_nextid' => array(
 			'fd' => array(
 				'id' => array('type' => 'int', 'precision' => 4, 'nullable' => true),
-				'appname' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
+				'appname' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false)
 			),
 			'pk' => array(),
 			'fk' => array(),
@@ -184,6 +184,6 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
-		),
+		)
 	);
 ?>
