@@ -14,7 +14,7 @@
 
 	/* $Id$ */
 
-	global $msgtype, $owner, $rights;
+	global $owner, $rights, $calendar_id;
 
 	$d1 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
 	if($d1 == 'htt' || $d1 == 'ftp')
@@ -31,9 +31,10 @@
 
 	$str = '';
 
-	$msg_type = explode(';',$msgtype);
-	$id_array = explode('=',$msg_type[2]);
-	$id = intval(substr($id_array[1],1,strlen($id_array[1])-2));
+//	$msg_type = explode(';',$msgtype);
+//	$id_array = explode('=',$msg_type[2]);
+//	$id = intval(substr($id_array[1],1,strlen($id_array[1])-2));
+	$id = $calendar_id;
 
 	echo 'Event ID: '.$id."<br>\n";
 
