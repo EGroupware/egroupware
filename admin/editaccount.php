@@ -17,9 +17,14 @@
   $phpgw_info["flags"]["disable_message_class"] = True;
   $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
-  if (! $account_id)
-     Header("Location: " . $phpgw->link("accounts.php"));
+  include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
+        . $phpgw_info["server"]["auth_type"] . ".inc.php");
 
+  if (! $account_id) {
+     Header("Location: " . $phpgw->link("accounts.php"));
+  }
+
+  // This function is gonna go soon. (jengo)
   function change_owner($app,$table,$field,$new,$old)
   {
     global $phpgw, $phpgw_info;
@@ -30,30 +35,42 @@
   }
 
   if ($submit) {
-    $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
-    $phpgw->db->next_record();
-    $lid = $phpgw->db->f("account_lid");
+     if ($old_loginid != $n_loginid) {
+        if (account_exsists($n_loginid)) {
+           $error .= "<br>" . lang("That loginid has already been taken");
+        }
+        $c_loginid = $n_loginid;
+        $n_loginid = $old_loginid;
+     }
+  
+     if ($n_passwd || $n_passwd_2) {
+        if ($n_passwd != $n_passwd_2) {
+           $error .= lang("The two passwords are not the same");
+        }
+        if (! $n_passwd){
+           $error .= lang("You must enter a password");
+        }
+     }
 
-    if ($n_passwd || $n_passwd_2) {
-      if ($n_passwd != $n_passwd_2){
-        $error .= lang("The two passwords are not the same");
-      }
-      if (! $n_passwd){
-        $error .= lang("You must enter a password");
-      }
-    } 
+     if (count($new_permissions) == 0){
+        $error .= "<br>" . lang("You must add at least 1 permission to this account");
+     }
+     
+     if (! $error) {  
+        $cd = account_edit(array("loginid"   => $n_loginid,   "permissions"    => $new_permissions,
+        				         "firstname" => $n_firstname, "lastname"       => $n_lastname,
+        				         "passwd"    => $n_passwd,    "account_status" => $account_status,
+        				         "c_loginid" => $c_loginid,
+        				         "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+     }
 
-    if ($lid != $n_loginid) {
-      $phpgw->db->query("select account_lid from accounts where account_lid='$n_loginid'");
-      if ($phpgw->db->num_rows() != 0) {
-        $error .= "<br>" . lang("That loginid has already been taken");
-      }
-    }
+     
+//    $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
+//    $phpgw->db->next_record();
+//    $lid = $phpgw->db->f("account_lid");
 
-    if (count($new_permissions) == 0){
-      $error .= "<br>" . lang("You must add at least 1 permission to this account");
-    }
-    if (! $error) {
+
+/*    if (! $error) {
       $phpgw->db->lock(array('accounts','preferences','sessions'));
 	    if ($n_passwd) {
         $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "', "
@@ -66,12 +83,8 @@
           $phpgw->accounts->add_app($permission[0]);
         }
       }
-      //$phpgw->permissions->add("hr");
 
-      if ($new_permissions["anonymous"] && ! $new_permissions["admin"]){
-	      $phpgw->accounts->add_app("anonymous");
-	    }
-      if (! $n_account_status){
+      if (! $n_account_status) {
         $n_account_status = "L";
       }
       $cd = 27;
@@ -108,7 +121,7 @@
         $phpgw->db->unlock();
         Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
         exit;
-    }		// if ! $error
+    }		// if ! $error */
   }		// if $submit
 
   $phpgw->common->phpgw_header();
@@ -124,6 +137,7 @@
 ?>
     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
       <input type="hidden" name="account_id" value="<? echo $account_id; ?>">
+      <input type="hidden" name="old_loginid" value="<? echo $phpgw->db->f("account_lid"); ?>">
 <?php
   if ($error) {
     echo "<center>" . lang("Error") . ":$error</center>";

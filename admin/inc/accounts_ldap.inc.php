@@ -11,7 +11,7 @@
   
   /* $Id$ */
   
-  function account_list($start,$sort,$order)
+  function account_read($method,$start,$sort,$order)
   {
   
   }
@@ -21,7 +21,7 @@
   
   }
   
-  function account_edit($account_id,$account_info)
+  function account_edit($account_info)
   {
   
   }

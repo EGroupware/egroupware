@@ -11,7 +11,7 @@
   
   /* $Id$ */
   
-  function account_list($start,$sort,$order)
+  function account_read($method,$start,$sort,$order)
   {
   
   }
@@ -66,9 +66,71 @@
      return $cd;
   }
   
-  function account_edit($account_id,$account_info)
+  function account_edit($account_info)
   {
+     global $phpgw_info, $phpgw;
   
+     $phpgw->db->lock(array('accounts','preferences','sessions'));
+     
+     if ($account_info["c_loginid"]) {
+        $phpgw->db->query("update accounts set account_lid='" . $account_info["c_loginid"]
+                        . "' where account_lid='" . $account_info["loginid"] . "'");
+
+        $account_info["loginid"] = $account_info["c_loginid"];
+     }
+
+     if ($account_info["passwd"]) {
+        $phpgw->db->query("update accounts set account_pwd='" . md5($account_info["passwd"]) . "', "
+		               . "account_lastpwd_change='" . time() . "' where account_lid='"
+		               . $account_info["loginid"] . "'");
+        $phpgw->db->query("update sessions set session_pwd='" . addslashes($account_info["passwd"])
+                        . "' where session_lid='" . $account_info["loginid"] . "'");
+      }
+
+      while ($permission = each($account_info["permissions"])) {
+        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+           $phpgw->accounts->add_app($permission[0]);
+        }
+      }
+
+      if (! $account_info["account_status"]) {
+         $account_info["account_status"] = "L";
+      }
+      $cd = 27;
+
+      // If they changed there loginid, we need to change the owner in ALL
+      // tables to reflect on the new one
+      if ($lid != $account_info["loginid"]) {
+         change_owner("","preferences","preference_owner",$account_info["loginid"],$lid);
+         change_owner("addressbook","addressbook","ab_owner",$account_info["loginid"],$lid);
+         change_owner("todo","todo","todo_owner",$account_info["loginid"],$lid);
+         change_owner("","accounts","account_lid",$account_info["loginid"],$lid);
+         change_owner("","sessions","session_lid",$account_info["loginid"],$lid);
+         change_owner("calendar","webcal_entry","cal_create_by",$account_info["loginid"],$lid);
+         change_owner("calendar","webcal_entry_user","cal_login",$account_info["loginid"],$lid);
+
+         if ($lid != $n_loginid) {
+            $sep = $phpgw->common->filesystem_separator();
+	
+            $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
+
+  	      if (! @rename($basedir . $lid, $basedir . $account_info["loginid"])) {
+	           $cd = 35;
+            }
+         }
+      }
+
+      $phpgw->db->query("update accounts set account_firstname='"
+      			 . addslashes($account_info["firstname"]) . "', account_lastname='"
+      			 . addslashes($account_info["lastname"]) . "', account_permissions='"
+	  	         . $phpgw->accounts->add_app("",True) . "', account_status='"
+			       . $account_info["account_status"] . "', account_groups='"
+    		       . $account_info["groups"] . "' where account_lid='" . $account_info["loginid"]
+    		       . "'");
+
+      $phpgw->db->unlock();
+  
+      return $cd;
   }
   
   function account_delete($account_id)
