@@ -455,8 +455,8 @@ class db {
 			$this->Database = "mysql";
 		}
 		$this->disconnect();
-    $this->query("CREATE DATABASE $currentDatabase");
-    $this->query("grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'");
+		$this->query("CREATE DATABASE $currentDatabase");
+		$this->query("grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'");
 		$this->disconnect();
 
 		$this->User = $currentUser;
