@@ -322,6 +322,16 @@
     <td colspan="4"><font size="-1"></font></td>
   </tr>
   <tr>
+    <td></td>
+    <td><font color="#000000" face="" size="-1">{lang_ophone}:</font></td>
+    <td>
+      <font size="-1">
+      {ophone}
+    </font></td>
+    <td></td>
+    <td colspan="4"><font size="-1"></font></td>
+  </tr>
+  <tr>
   <!-- BEGIN creator -->
   {create}
   <!-- END creator -->
