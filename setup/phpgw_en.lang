@@ -685,8 +685,9 @@ you have been successfully logged out	login	en	You have been successfully logged
 you have entered an invailed date	todo	en	you have entered an invailed date
 you have messages!	common	en	You have messages!
 you have no new messages	common	en	You have no new messages
-you have not entered a\nbrief description	calendar	en	You have not entered a\nBrief Description
-you have not entered a\nvalid time of day.	calendar	en	You have not entered a\nvalid time of day.
+you have not entered a valid date	calendar	en	You have not entered a valid date
+you have not entered a title	calendar	en	You have not entered a title
+you have not entered a valid time of day	calendar	en	You have not entered a valid time of day
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
 you have x new messages!	common	en	You have %1 new messages!
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account

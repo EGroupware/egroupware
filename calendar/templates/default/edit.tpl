@@ -2,14 +2,15 @@
 <!-- BEGIN edit_entry -->
 <body bgcolor="#C0C0C0">
 <center>
-<h2><font color="#000000">{calendar_action}</font></h2>
+<font color="#000000" face="{font}">
+<h2>{calendar_action}</h2>
 
 <form action="{action_url}" method="post" name="addform">
 {common_hidden}
 <table border="0" width="75%">
  <tr>
   <td colspan="2">
-   <center><h1>{errormsg}</h1></center>
+   <center><font size="+1"><b>{errormsg}</b></font></center>
    <hr>
   </td>
  </tr>
@@ -19,6 +20,7 @@
 </form>
 
 {delete_button}
+</font>
 </center>
 <!-- END edit_entry -->
 <!-- BEGIN list -->

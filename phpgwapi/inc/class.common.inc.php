@@ -1258,11 +1258,11 @@
 		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
 			. $phpgw_info['server']['files_dir'] . '/groups/'); 
 		break;
-      case 40: $s .= lang("You have not entered a\nBrief Description").'.';
+      case 40: $s .= lang("You have not entered a title").'.';
 		break;
-      case 41: $s .= lang("You have not entered a\nvalid time of day.");
+      case 41: $s .= lang("You have not entered a valid time of day").'.';
 		break;
-      case 42: $s .= lang("You have not entered a\nvalid date.");
+      case 42: $s .= lang("You have not entered a valid date").'.';
 		break;
       default:	return '';
     }

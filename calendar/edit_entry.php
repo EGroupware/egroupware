@@ -174,6 +174,7 @@
 						. '<input type="hidden" name="owner" value="'.$owner.'">'."\n";
 						
 	$vars = Array(
+						'font'				=>	$phpgw_info['theme']['font'],
 						'bg_color'			=>	$phpgw_info['theme']['bg_text'],
 						'calendar_action'	=>	$action,
 						'action_url'		=>	$phpgw->link('/calendar/edit_entry_handler.php'),
