@@ -161,4 +161,18 @@ create table webcal_entry_groups (
   groups	varchar(255)
 );
 
+CREATE TABLE newsgroups (
+  con		serial,
+  name		varchar(255) NOT NULL,
+  messagecount	int NOT NULL,
+  lastmessage	int NOT NULL,
+  active	char DEFAULT 'N' NOT NULL,
+  lastread	int
+);
+
+CREATE TABLE users_newsgroups (
+  owner		int NOT NULL,
+  newsgroup	int NOT NULL
+);
+
 COMMIT;

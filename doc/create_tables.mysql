@@ -168,3 +168,19 @@ create table webcal_entry_groups (
   groups	varchar(255)
 );
 
+CREATE TABLE newsgroups (
+  con		int(11) NOT NULL auto_increment,
+  name		varchar(255) NOT NULL,
+  messagecount	int(11) NOT NULL,
+  lastmessage	int(11) NOT NULL,
+  active	char DEFAULT 'N' NOT NULL,
+  lastread	int(11),
+  PRIMARY KEY (con),
+  UNIQUE name (name)
+);
+
+CREATE TABLE users_newsgroups (
+  owner		int(11) NOT NULL,
+  newsgroup	int(11) NOT NULL
+);
+
