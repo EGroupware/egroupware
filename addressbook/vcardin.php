@@ -31,7 +31,8 @@
 	// Some of the methods where borrowed from
 	// Squirrelmail <Luke Ehresman> http://www.squirrelmail.org
 
-	$sep = $phpgw->common->filesystem_separator();
+	//$sep = $phpgw->common->filesystem_separator();
+	$sep = SEP;
 
 	$uploaddir = $phpgw_info["server"]["temp_dir"] . $sep . $phpgw_info["user"]["sessionid"] . $sep;
 
@@ -51,10 +52,10 @@
 
 			// This has to be non-interactive in case of a multi-entry vcard.
 			$filename = $uploaddir . $newfilename;
-			$n_groups = $phpgw->accounts->array_to_string($access,$n_groups);
+			//$n_groups = $phpgw->accounts->array_to_string($access,$n_groups);
       
-			if($access == "group")
-				$access = $n_groups;
+			//if($access == "group")
+			//	$access = $n_groups;
 			//echo $access . "<BR>";
 
 			parsevcard($filename,$access);
@@ -82,7 +83,7 @@
 	$t->set_var(action_url,$phpgw->link("/addressbook/vcardin.php"));
 	$t->set_var(lang_access,lang("Access"));
 	$t->set_var(lang_groups,lang("Which groups"));
-
+/*
 	$access_option = "<option value=\"private\"";
 	if($access == "private")
 		$access_option .= "selected";
@@ -98,9 +99,9 @@
 		$access_option .= "selected";
     $access_option .= ">" . lang("Group Public"); 
     $access_option .= "</option>\n";
-	
+*/	
 	$t->set_var(access_option,$access_option);
-	
+/*	
     //$user_groups = $phpgw->accounts->read_group_names($fields["ab_owner"]);
     for ($i=0;$i<count($user_groups);$i++) {
     	$group_option = "<option value=\"" . $user_groups[$i][0] . "\"";
@@ -110,7 +111,7 @@
 			$group_option .= "</option>\n";
 		}
 	}
-
+*/
 	$t->set_var(group_option,$group_option);
 	
 	$t->pparse("out","vcardin");
