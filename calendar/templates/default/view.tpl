@@ -6,7 +6,7 @@
    {name}
   </font>
  </h2>
- <table border="0" width="50%">
+ <table border="0" width="75%">
   {row}
  </table>
 </center>
