@@ -1,0 +1,539 @@
+%1 email addresses inserted	common	iw	נקלטו %1 כתובות דואר אלקטרוני
+%1 is not executable by the webserver !!!	common	iw	!%1 אינו ניתן להרצה על יד שרת הווב
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	iw	%4PHP%3-הנו סוויטת תוכנה קבוצתית, רב-משתמשים, מבוססת ווב, התכובה ב %2 eGroupWare%1
+(shift-)click or drag to change value	jscalendar	iw	הקלק או גרור כדי לשנות ערך(-Shift)
+- click on any of the time parts to increase it	jscalendar	iw	הקלק על חלק כלשהו של השעון כדי לקדם אותו -
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	iw	- אחזק את כפתור העכבר על כל אחד מהכפתורים לעיל לבחירה מהירה יותר
+- or click and drag for faster selection.	jscalendar	iw	.או הקלק וגרור עבור בחירה מהירה יותר -
+- or shift-click to decrease it	jscalendar	iw	. הקלק כדי להוריד אותו-Shift או -
+- use the %1, %2 buttons to select month	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור חודש -
+- use the %1, %2 buttons to select year	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור שנה -
+00 (disable)	admin	iw	00 (בטל)
+3 number of chars for day-shortcut	jscalendar	iw	3 כמות התווים לקיצור של יום
+3 number of chars for month-shortcut	jscalendar	iw	3 כמות התווים לקיצור של חודש
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	iw	...המתן בבקשה .HTML-מנקה את מקור ה \n
+_delete row	htmlarea-ContextMenu	iw	_מחק שורה
+_image properties...	htmlarea-ContextMenu	iw	..._תכונות תמונה
+_modify link...	htmlarea-ContextMenu	iw	...שנה _קישור
+_remove link...	htmlarea-ContextMenu	iw	...ה_סר קישור
+_table properties...	htmlarea-ContextMenu	iw	...תכונות _טבלה
+about	common	iw	אודות
+about %1	common	iw	אודות %1
+about the calendar	jscalendar	iw	אודות לוח השנה
+about this editor	htmlarea	iw	אודות עורך זה
+access	common	iw	גישה
+access not permitted	common	iw	הגישה אסורה
+account has been created	common	iw	החשבון נוצר
+account has been deleted	common	iw	החשבון הוסר
+account has been updated	common	iw	החשבון עודכן
+account is expired	common	iw	פג תוקפו של החשבון
+acl	common	iw	רשימות גישה
+action	common	iw	פעולה
+active	common	iw	פעיל
+add	common	iw	הוסף
+add %1 category for	common	iw	הוסף קטגוריה %1 עבור
+add category	common	iw	הוסף קטגוריה
+add sub	common	iw	הוסף תת קטגוריה
+addressbook	common	iw	ספר כתובות
+admin	common	iw	מנהל
+administration	common	iw	ניהול
+align	htmlarea-TableOperations	iw	יישור
+all	common	iw	הכל
+all fields	common	iw	כל השדות
+all four sides	htmlarea-TableOperations	iw	כל ארבעת הצדדים
+alphabet	common	iw	א,ב,ג,ד,ה,ו,ז,ח,ט,י,כ,ל,מ,נ,ס,ע,פ,צ,ק,ר,ש,ת
+alternate style-sheet:	common	iw	:דף סגנון חלופי
+apply	common	iw	בצע
+april	common	iw	אפריל
+are you sure you want to delete these entries ?	common	iw	?בטוח שהנך רוצה למחוק רשומות אילו
+are you sure you want to delete this entry ?	common	iw	?בטוח שהנך רוצה למחוק רשומה זו
+august	common	iw	אוגוסט
+author	common	iw	הכותב
+autohide sidebox menus	common	iw	הסתרה אוטומטית של תפריטי צד
+automatically hide the sidebox menus?	common	iw	?להסתיר אוטומטית תפריטים בתיבת צד אוטומטית
+autosave default category	common	iw	שמירה אוטומטית של קטגוריה ברירת מחדל
+back	common	iw	חזור
+back to user login	common	iw	חזור אל כניסת משתמש
+background	htmlarea-TableOperations	iw	רקע
+background color	htmlarea	iw	צבע רקע
+background color:	common	iw	:צבע רקע
+bad login or password	common	iw	שם כניסה או סיסמא שגויה
+baseline	htmlarea-TableOperations	iw	קו הבסיס
+bcc	common	iw	העתק מוסתר
+blocked, too many attempts	common	iw	חסום, יותר מדי נסיונות
+bold	htmlarea	iw	מודגש
+border	htmlarea-TableOperations	iw	גבול
+borders	htmlarea-TableOperations	iw	גבולות
+bottom	htmlarea-TableOperations	iw	תחתית
+bulleted list	htmlarea	iw	רשימה עם בולטים
+c_ell properties...	htmlarea-ContextMenu	iw	...תכונות ת_א
+calendar	common	iw	לוח שנה
+cancel	common	iw	בטל
+caption	htmlarea-TableOperations	iw	כותרת
+categories	common	iw	קטגוריות
+categories for	common	iw	קטגוריות עבור
+category	common	iw	קטגוריה
+category %1 has been added !	common	iw	!קטגוריה %1 נוספה
+category %1 has been updated !	common	iw	!קטגוריה %1 עודכנה
+cc	common	iw	העתק
+cell properties	htmlarea-TableOperations	iw	תכונות תא
+center	htmlarea-TableOperations	iw	מרכז
+change	common	iw	שנה
+char	htmlarea-TableOperations	iw	תו
+charset	common	iw	UTF-8
+chec_k link...	htmlarea-ContextMenu	iw	..._בדוק קישור
+check installation	common	iw	בדוק התקנה
+check now	common	iw	בדוק עכשיו
+choose list style type (for ordered lists)	htmlarea-ListType	iw	(בחר סוג סגנון לרשימות (עבור רשימות מסודרות
+choose the category	common	iw	בחר את הקטגוריה
+choose the parent category	common	iw	בחר את קטגורית אם
+clear	common	iw	נקה
+clear form	common	iw	נקה טופס
+click	common	iw	הקלק
+click or mouse over to show menus	common	iw	הקלק או העבר את העכבר מעל כדי לראות תפריטים
+click or mouse over to show menus?	common	iw	?הקלק או העבר את העכבר מעל כדי לראות תפריטים
+close	common	iw	סגור
+collapsed borders	htmlarea-TableOperations	iw	גבולות מכונסות
+color	htmlarea-TableOperations	iw	צבע
+company	common	iw	חברה
+copy	common	iw	העתק
+copy selection	htmlarea	iw	העתק בחירה
+create	common	iw	צור
+create a link	htmlarea-ContextMenu	iw	צור קישור
+created by	common	iw	נוצר על ידי
+currency	common	iw	מטבע
+current	common	iw	נוכחי
+current style	htmlarea	iw	סגנון נוכחי
+current url is	htmlarea-ContextMenu	iw	הנוכחי הנו URL
+current users	common	iw	משתמשים נוכחיים
+cut	htmlarea-ContextMenu	iw	גזור
+cut selection	htmlarea	iw	גזור בחירה
+date	common	iw	תאריך
+date due	common	iw	תאריך יעד
+date selection:	jscalendar	iw	:בחירת תאריך
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	iw	הפורט של תאריך/שעה
+de_lete column	htmlarea-ContextMenu	iw	מ_חק עמודה
+december	common	iw	דצמבר
+decimal numbers	htmlarea-ListType	iw	מספרים עשרוניים
+decrease indent	htmlarea	iw	הקטן כניסה
+default category	common	iw	קטגוריה ברירת מחדל
+delete	common	iw	מחק
+delete cell	htmlarea-TableOperations	iw	מחק תא
+delete column	htmlarea-TableOperations	iw	מחק עמודה
+delete row	htmlarea-TableOperations	iw	מחק שורה
+delete the current column	htmlarea-ContextMenu	iw	מחק עמודה נוכחית
+delete the current row	htmlarea-ContextMenu	iw	מחק שורה נוכחית
+description	common	iw	תיאור
+detail	common	iw	פירוט
+details	common	iw	פרטים
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	iw	?PNG וחדש יותר כדי להציג שקיפות בתמונות Internet Explorer 5.5-לבטל תיקון הבג ב
+dictionary	htmlarea-SpellChecker	iw	מילון
+disable internet explorer png-image-bugfix	common	iw	internet Explorer-ב PNG של תמונות bug-לבטל את תיקון ה
+disable slider effects	common	iw	בטל אפקט סליידר
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	iw	לבטל את אפקט האנימציה של הסליידר?<br>
+disabled	common	iw	מבוטל
+display %s first	jscalendar	iw	הצג %s קודם
+do you also want to delete all subcategories ?	common	iw	?האם למחוק גם את כל תתי הקטגוריה
+doctype:	common	iw	:סוג מסמך
+document properties	common	iw	תכונות המסמך
+document title:	common	iw	:כותרת המסמך
+domain	common	iw	דומיין
+domain name for mail-address, eg. "%1"	common	iw	שם הדומיין עבור כתובות דואר אלקטרוני, למשל "%1"
+domestic	common	iw	מקומי
+done	common	iw	בוצע
+drag to move	jscalendar	iw	גרור כדי להזיז
+e-mail	common	iw	דואר אלקטרוני
+edit	common	iw	ערוך
+edit %1 category for	common	iw	ערוך קטגוריה %1 עבור
+edit categories	common	iw	ערוך קטגוריות
+edit category	common	iw	ערוך קטגוריה
+egroupware api version %1	common	iw	גירסא %1 eGroupWare של API
+egroupware: login blocked for user '%1', ip %2	common	iw	eGroupWare: הכניסה נחסמה למשתמש '%1', IP %2
+element...	htmlarea-ContextMenu	iw	...רכיב
+email	common	iw	דואר אלקטרוני
+email-address of the user, eg. "%1"	common	iw	כתובת דוא"ל של המשתמש, לדוגמא "%1"
+enabled	common	iw	מאופשר
+end date	common	iw	תאריך סיום
+end time	common	iw	שעת סיום
+enlarge editor	htmlarea	iw	הגדל עורך
+entry has been deleted sucessfully	common	iw	הרשומה נמחקה בהצלחה
+entry updated sucessfully	common	iw	הרשומה עודכנה בהצלחה
+error	common	iw	שגיאה
+error creating %1 %2 directory	common	iw	שגיאה אירע בעת יצירת סיפריה %1 %2
+error deleting %1 %2 directory	common	iw	שגיאה אירע בעת מחיקת סיפריה %1 %2
+error renaming %1 %2 directory	common	iw	שגיאה אירע בעת שינוי שם סיפריה %1 %2
+exact	common	iw	בדיוק
+fax number	common	iw	מספר פקס
+february	common	iw	פברואר
+fg color	htmlarea-TableOperations	iw	צבע קדמי
+fields	common	iw	שדות
+files	common	iw	קבצים
+filter	common	iw	מסנן
+finished list of mispelled words	htmlarea-SpellChecker	iw	רשימה שלמה של מילים עם שגיאות כתיב
+first name	common	iw	שם פרטי
+first name of the user, eg. "%1"	common	iw	שם פרטי של המשתמש, לדוגמא "%1"
+first page	common	iw	עמוד ראשון
+firstname	common	iw	שם פרטי
+fixme!	common	iw	!תקן אותי
+float	htmlarea-TableOperations	iw	צף
+font color	htmlarea	iw	צבע גופן
+force selectbox	common	iw	לחייב תיבת בחירה
+frames	htmlarea-TableOperations	iw	מסגרות
+friday	common	iw	יום שישי
+fullname	common	iw	שם מלא
+general menu	common	iw	תפריט כללי
+global	common	iw	גלובלי
+global public	common	iw	ציבור גלובלי
+go today	jscalendar	iw	אל היום
+grant access	common	iw	לאפשר כניסה
+group	common	iw	קבוצה
+group access	common	iw	גישת קבוצה
+group has been added	common	iw	הקבוצה נוספה
+group has been deleted	common	iw	הקבוצה נמחקה
+group has been updated	common	iw	הקבוצה עודכנה
+group name	common	iw	שם הקבוצה
+group public	common	iw	קבוצה ציבורית
+groups	common	iw	קבוצות
+groups with permission for %1	common	iw	קבוצות בעלי הרשאות עבור %1
+groups without permission for %1	common	iw	קבוצות ללא הרשאות עבור %1
+height	htmlarea-TableOperations	iw	גובה
+help	common	iw	עזרה
+help using editor	htmlarea	iw	עזרה בשימוש בעורך
+high	common	iw	גבוה
+highest	common	iw	הגבוה ביותר
+home	common	iw	בית
+home email	common	iw	דוא"ל בבית
+horizontal rule	htmlarea	iw	חוק אופקי
+how did you get here? (please report!)	htmlarea-ContextMenu	iw	(!איך הגעת הנה? (דווח נא
+how many columns would you like to merge?	htmlarea-TableOperations	iw	?כמה עמודות יש למזג
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	iw	?(כמה צלמיות יש להציג בפס הניווט (בראש העמוד<br>
+how many rows would you like to merge?	htmlarea-TableOperations	iw	?כמה שורות ברצונך למזג
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	iw	.מסרב למחוק את התא האחרון בשורה HTMLArea
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	iw	.מסרב למחוק את העמודה האחרונה בטבלה HTMLArea
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	iw	.מסרב למחוק את השורה האחרונה בטבלה HTMLArea
+i will open it in a new page.	htmlarea-SpellChecker	iw	.אני אפתח אותו בעמוד חדש
+i_nsert row before	htmlarea-ContextMenu	iw	הוסף _שורה לפני
+ignore	htmlarea-SpellChecker	iw	התעלם
+ignore all	htmlarea-SpellChecker	iw	התעלם מהכל
+image url	htmlarea-TableOperations	iw	של התמונה URL
+in_sert row after	htmlarea-ContextMenu	iw	הו_סף שורה אחרי
+increase indent	htmlarea	iw	הגדל כניסה
+insert _column before	htmlarea-ContextMenu	iw	הוסף _עמודה לפני
+insert a new column after the current one	htmlarea-ContextMenu	iw	הוסף עמודה חדשה אחרי העמודה הנוכחית
+insert a new column before the current one	htmlarea-ContextMenu	iw	הוסף עמודה חדשה לפני העמודה הנוכחית
+insert a new row after the current one	htmlarea-ContextMenu	iw	הוסף שורה חדשה אחרי העמודה הנוכחית
+insert a new row before the current one	htmlarea-ContextMenu	iw	הוסף שורה חדשה לפני העמודה הנוכחית
+insert all %1 addresses of the %2 contacts in %3	common	iw	הוסף את כל %1 הכתובות של %2 אנשי הקשר בתוך %3
+insert c_olumn after	htmlarea-ContextMenu	iw	ה_וסף עמודה אחרי
+insert cell after	htmlarea-TableOperations	iw	הוסף תא אחרי
+insert cell before	htmlarea-TableOperations	iw	הוסף תא לפני
+insert column after	htmlarea-TableOperations	iw	הוסף עמודה אחרי
+insert column before	htmlarea-TableOperations	iw	הוסף עמודה לפני
+insert image	htmlarea	iw	הוסף תמונה
+insert row after	htmlarea-TableOperations	iw	הוסף שורה אחרי
+insert row before	htmlarea-TableOperations	iw	הוסף שורה לפני
+insert table	htmlarea	iw	הוסף טבלה
+insert web link	htmlarea	iw	הוסף קישור ווב
+international	common	iw	בינלאומי
+invalid ip address	common	iw	לא חוקית IP כתובת
+invalid password	common	iw	סיסמא לא חוקית
+israel	common	iw	ישראל
+it has been more then %1 days since you changed your password	common	iw	עברו יותר מ-%1 ימים מאז שינית את סיסמתך
+it is recommended that you run setup to upgrade your tables to the current version	common	iw	.מומלץ שתריץ "הגדרה" כדי לשדרג את הטבלאות שלך לגירסא הנוכחית
+italic	common	iw	נטוי
+january	common	iw	ינואר
+july	common	iw	יולי
+jun	common	iw	יוני
+june	common	iw	יוני
+justify	htmlarea-TableOperations	iw	יישור לשני הצדדים
+justify center	common	iw	יישור למרכז
+justify full	common	iw	יישור מלא
+justify left	common	iw	יישור שמאלה
+justify right	common	iw	יישור ימינה
+keywords	common	iw	מלות מפתח
+language	common	iw	שפה
+last name	common	iw	שם משפחה
+last name of the user, eg. "%1"	common	iw	שם משפחה של המשתמש, לדוגמא "%1"
+last page	common	iw	עמוד אחרון
+lastname	common	iw	שם משפחה
+layout	htmlarea-TableOperations	iw	תצורה
+left	htmlarea-TableOperations	iw	שמאל
+license	common	iw	רשיון
+link points to:	htmlarea-ContextMenu	iw	:הקישור מצביע על
+list	common	iw	רשימה
+list members	common	iw	חברים ברשימה
+local	common	iw	מקומי
+login	common	iw	כניסה
+loginid	common	iw	זיהוי כניסה
+logout	common	iw	יציאה
+low	common	iw	נמוך
+lower greek letters	htmlarea-ListType	iw	אותיות יווניות קטנות
+lower latin letters	htmlarea-ListType	iw	אותיות לטיניות קטנות
+lower roman numbers	htmlarea-ListType	iw	מספרים רומיים קטנים
+lowest	common	iw	הנמוך ביותר
+mail domain, eg. "%1"	common	iw	דומיין של הדואר, לדוגמא "%1"
+main category	common	iw	קטגוריה ראשית
+main screen	common	iw	מסך ראשי
+maintainer	common	iw	מתחזק
+make lin_k...	htmlarea-ContextMenu	iw	_צור קישור...
+march	common	iw	מרץ
+margin	htmlarea-TableOperations	iw	שול
+max number of icons in navbar	common	iw	כמות מירבית של צלמיות בפס ניווט
+may	common	iw	מאי
+medium	common	iw	בינוני
+menu	common	iw	תפריט
+merge cells	htmlarea-TableOperations	iw	מזג תאים
+message	common	iw	הודעה
+middle	htmlarea-TableOperations	iw	אמצע
+modify url	htmlarea-ContextMenu	iw	URL שנוי
+monday	common	iw	יום שני
+name	common	iw	שם
+name of the user, eg. "%1"	common	iw	שם המשתמש, לדוגמא "%1"
+never	common	iw	לעולם לא
+new entry added sucessfully	common	iw	רשומה חדשה נוספה בהצלחה
+new main category	common	iw	קטגוריה ראשית חדשה
+new value	common	iw	ערך חדש
+next	common	iw	הבאה
+next month (hold for menu)	jscalendar	iw	(החודש הבא (החזק לקבלת תפריט
+next page	common	iw	עמוד הבא
+next year (hold for menu)	jscalendar	iw	(השנה הבאה (החזק לקבלת תפריט
+no	common	iw	לא
+no entries found, try again ...	common	iw	...לא נמצאו רשומות, נסה שוב
+no history for this record	common	iw	אין היסטוריה לרשומה זו
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	iw	.לא נמצאו שגיאות כתיב בעזרת המילון הנבחר
+no rules	htmlarea-TableOperations	iw	אין חוקים
+no sides	htmlarea-TableOperations	iw	אין צדדים
+no subject	common	iw	אין נושא
+none	common	iw	ללא
+normal	common	iw	רגיל
+not assigned	common	iw	לא נקבע
+note	common	iw	הערה
+notes	common	iw	הערות
+notify window	common	iw	חלון הודעות
+november	common	iw	נובמבר
+october	common	iw	אוקטובר
+ok	common	iw	בסדר
+old value	common	iw	ערך קודם
+on *nix systems please type: %1	common	iw	במערכות 'ניקס יש לכתוב: %1
+on mouse over	common	iw	במעבר עכבר
+only private	common	iw	רק פרטיים
+only yours	common	iw	רק את שלך
+open notify window	common	iw	פתח חלון הודעות
+open popup window	common	iw	פתח חלון קופץ
+opens this link in a new window	htmlarea-ContextMenu	iw	פתח קישור זה בחלון חדש
+ordered list	htmlarea	iw	רשימה מסודרת
+original	common	iw	מקור
+original word	htmlarea-SpellChecker	iw	מילה מקורית
+other	common	iw	אחר
+overview	common	iw	סקירה כללית
+owner	common	iw	הבעלים
+padding	htmlarea-TableOperations	iw	ריפוד
+page	common	iw	עמוד
+page was generated in %1 seconds	common	iw	עמוד נוצר ב-%1 שניות
+parcel	common	iw	חבילה
+parent category	common	iw	קטגורית האם
+password	common	iw	סיסמא
+password could not be changed	common	iw	לא הצלחתי לשנות את הסיסמא
+password has been updated	common	iw	הסיסמא עודכן
+paste	htmlarea-ContextMenu	iw	הדבק
+paste from clipboard	htmlarea	iw	הדבק מהלוח
+path	htmlarea	iw	המסלול
+path to user and group files has to be outside of the webservers document-root!!!	common	iw	!המסלול את קבצי משתמשים וקבותות חייב להיות מחוץ לבסיס של שרת הווב
+pattern for search in addressbook	common	iw	תבנית לחיפוש בספר כתובות
+pattern for search in calendar	common	iw	תבנית לחיפוש בלוח שנה
+pattern for search in projects	common	iw	תבנית לחיפוש בפרויקטים
+percent	htmlarea-TableOperations	iw	אחוז
+permissions to the files/users directory	common	iw	הרשאות לקבצים/סיפריות משתמשים
+personal	common	iw	אישי
+phone number	common	iw	מספר טלפון
+pixels	htmlarea-TableOperations	iw	פיקסלים
+please %1 by hand	common	iw	נא ל%1 ידנית
+please click into some cell	htmlarea-TableOperations	iw	נא לקליק בתא כלשהו
+please confirm that you want to open this link	htmlarea-SpellChecker	iw	נא לאשר שברצונך לפתוח קישור זה
+please confirm that you want to remove this element:	htmlarea-ContextMenu	iw	:נא לאשר שברצונך למחוק רכיב זה
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	iw	.נא לאשר שברצונך להסיר את הקישור מרכיב זה
+please enter a name	common	iw	!נא להקליד שם
+please run setup to become current	common	iw	נא להריץ הגדרה כדי להיות מעודכן
+please select	common	iw	נא לבחור
+please set your global preferences	common	iw	!נא לקבוע את עדיפויות הגלובלית שלך
+please set your preferences for this application	common	iw	!נא לקבוע את העדיפויות שלך ליישום זה
+please wait.  calling spell checker.	htmlarea-SpellChecker	iw	.נא להמתין. אני קורא לבודק האיות
+please wait...	common	iw	...המתן בבקשה
+please wait: changing dictionary to	htmlarea-SpellChecker	iw	-המתן בבקשה. מחליף סיפריה ל
+pliz weit ;-)	htmlarea-SpellChecker	iw	;-) רק רגע אחד
+postal	common	iw	דואר
+powered by phpgroupware version %1	common	iw	בגירסא %1 <a href="http://www.egroupware.org">eGroupWare</a> ממונע בעזרת
+preferences	common	iw	העדיפויות
+preferences for the idots template set	common	iw	idots עדיפויות לסט התבניות
+prev. month (hold for menu)	jscalendar	iw	(החודש הקודם (החזק לקבלת תפריט
+prev. year (hold for menu)	jscalendar	iw	(השנה הקודמת (החזק לקבלת תפריט
+previous page	common	iw	עמוד קודם
+primary style-sheet:	common	iw	:דף סגנון ראשי
+print	common	iw	הדפס
+priority	common	iw	עדיפות
+private	common	iw	פרטי
+project	common	iw	פרויקט
+public	common	iw	ציבורי
+re-check	htmlarea-SpellChecker	iw	בדיקה חוזרת
+read	common	iw	קרא
+read this list of methods.	common	iw	.קרא רשימת מטודות זו
+redoes your last action	htmlarea	iw	.מבצע שוב את הפעולה האחרונה
+reject	common	iw	דחה
+remove selected accounts	common	iw	מחק חשבונות מובחרים
+remove the	htmlarea-ContextMenu	iw	-מחק את ה
+remove this node from the document	htmlarea-ContextMenu	iw	הסר נוד זה מהמסמך
+rename	common	iw	שנה שם
+replace	htmlarea-SpellChecker	iw	החלף
+replace all	htmlarea-SpellChecker	iw	החלף הכל
+replace with	htmlarea-SpellChecker	iw	-החלף ב
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	iw	מחזיר רשימה מלאה של חשבונות במערכת. אזהרה: הרשימה עשויה להיות גדולה למדי
+returns an array of todo items	common	iw	מחזיר מערך של פרטי משימות
+returns struct of users application access	common	iw	מחזיר את מבנה הגישה של משתמשים ליישומים
+revert	htmlarea-SpellChecker	iw	שחזר
+right	htmlarea-TableOperations	iw	ימין
+ro_w properties...	htmlarea-ContextMenu	iw	...תכונות _שורה
+row properties	htmlarea-TableOperations	iw	תכונות שורה
+rules	htmlarea-TableOperations	iw	חוקים
+rules will appear between all rows and columns	htmlarea-TableOperations	iw	החוקים יופיעו בין כל השורות והעמודות
+rules will appear between columns only	htmlarea-TableOperations	iw	החוקים יופיעו בין העמודות בלבד
+rules will appear between rows only	htmlarea-TableOperations	iw	החוקים יופיעו בין השורות בלבד
+saturday	common	iw	יום שבת
+save	common	iw	שמור
+search	common	iw	חיפוש
+search %1 '%2'	common	iw	חיפוש %1 '%2'
+search or select accounts	common	iw	חפש או בחר חשבונות
+section	common	iw	חלק
+select	common	iw	בחר
+select all %1 %2 for %3	common	iw	בחר כל %1 %2 עבור %3
+select category	common	iw	בחר קטגוריה
+select date	common	iw	בחר תאריך
+select group	common	iw	בחר קבוצה
+select home email address	common	iw	בחר כתובת דוא"ל בבית
+select one	common	iw	בחר אחד
+select user	common	iw	בחר משתמש
+select work email address	common	iw	בחר כתובת דוא"ל בעבודה
+selection	common	iw	בחירה
+send	common	iw	שלח
+september	common	iw	ספטמבר
+server %1 has been added	common	iw	השרת %1 נוסף
+server name	common	iw	שם השרת
+session has been killed	common	iw	הרגתי את המושב
+setup	common	iw	הגדרה
+setup main menu	common	iw	הגדרת תפריט ראשי
+show all	common	iw	הצג הכל
+show all categorys	common	iw	הצג כל הקטגוריות
+show menu	common	iw	הצג תפריט
+show page generation time	common	iw	הצג זמן יצירת העמוד
+show page generation time on the bottom of the page?	common	iw	?להציג את זמן יצירת העמוד בתחתית העמוד
+show the image properties dialog	htmlarea-ContextMenu	iw	הצג את תיבת הדו-שיח של תכונות תמונה
+show the table cell properties dialog	htmlarea-ContextMenu	iw	הצג את תיבת הדו-שיח של תכונות תאי טבלה
+show the table properties dialog	htmlarea-ContextMenu	iw	הצג את תיבת הדו-שיח של תכונות טבלה
+show the table row properties dialog	htmlarea-ContextMenu	iw	הצג את תיבת הדו-שיח של תכונות שורות הטבלה
+show_more_apps	common	iw	הצג_עוד_יישומים
+showing %1	common	iw	מציג %1
+showing %1 - %2 of %3	common	iw	מציג %1 - %2 מתוך %3
+sorry, your login has expired	login	iw	מצטער, פג תוקפו של החשבון שלך
+spacing	htmlarea-TableOperations	iw	ריווח
+spacing and padding	htmlarea-TableOperations	iw	ריווח וריפוד
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	iw	...בדיקת האיות הסתיימה. לא מצאתי מילים עם שגיאות כתיב. סוגר כעת
+spell-check	htmlarea-SpellChecker	iw	בדיקת איות
+split cell	htmlarea-TableOperations	iw	פצל תא
+split column	htmlarea-TableOperations	iw	פצל עמודה
+split row	htmlarea-TableOperations	iw	פצל שורה
+start date	common	iw	תאריך התחלה
+start time	common	iw	שעת התחלה
+start with	common	iw	-התחל ב
+status	common	iw	סטאטוס
+strikethrough	htmlarea	iw	קו מוחק
+style [css]	htmlarea-TableOperations	iw	(CSS) סגנון
+subject	common	iw	נושא
+submit	common	iw	הגש
+subscript	htmlarea	iw	כתב תחתי
+substitutions and their meanings:	common	iw	:חלופות ופירושן
+suggestions	htmlarea-SpellChecker	iw	הצעות
+summary	htmlarea-TableOperations	iw	סיכום
+sunday	common	iw	יום ראשון
+superscript	htmlarea	iw	כתב עילי
+table properties	htmlarea-TableOperations	iw	תכונות טבלה
+text align	htmlarea-TableOperations	iw	יישור טקסט
+text color:	common	iw	:צבע טקסט
+the api is current	common	iw	מעודכן API-ה
+the api requires an upgrade	common	iw	זקוק לעדכון API-ה
+the bottom side only	htmlarea-TableOperations	iw	צד תחתון בלבד
+the following applications require upgrades	common	iw	היישומים הבאים זקוקים לעדכונים
+the left-hand side only	htmlarea-TableOperations	iw	בצד שמאל בלבד
+the mail server returned	common	iw	שרת הדואר החזיר
+the right and left sides only	htmlarea-TableOperations	iw	בצד ימין ובצד שמאל בלבד
+the right-hand side only	htmlarea-TableOperations	iw	בצד ימין בלבד
+the top and bottom sides only	htmlarea-TableOperations	iw	צד עליון ותחתון בלבד
+the top side only	htmlarea-TableOperations	iw	צד עליון בלבד
+this application is current	common	iw	יישום זה מעודכן
+this application requires an upgrade	common	iw	יישום זה זקוק לעדכון
+this name has been used already	common	iw	!שם זה בשימוש כבר
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	iw	.זה ינטוש את השינוים, ויסיים את בדיקת האיות. נא אישורך
+thursday	common	iw	יום חמישי
+time	common	iw	שעה
+time selection:	jscalendar	iw	:בחירת שעה
+time zone	common	iw	איזור שעון
+time zone offset	common	iw	סתיה של איזור שעון
+title	common	iw	כותרת
+to	common	iw	אל
+to correct this error for the future you will need to properly set the	common	iw	-כדי לתקן שגיאה זאת לעתיד, עליך לקבוע נכון את ה
+to go back to the msg list, click <a href= %1 >here</a>	common	iw	כדי לחזור אל רשימת ההודעות, לחץ <a href="%1">כאן</a>
+today	common	iw	היום
+todays date, eg. "%1"	common	iw	תאריך היום, לדוגמא "%1"
+toggle first day of week	jscalendar	iw	מתג את היום הראשון בשבוע
+toggle html source	htmlarea	iw	HTML מתג מקור
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	iw	%4 IP-יותר מידי נסיונות כניסה כושלים : %1 למשתמש %2, %3 לכתובת ה
+top	htmlarea-TableOperations	iw	עליון
+total	common	iw	סך הכל
+tuesday	common	iw	יום שלישי
+underline	htmlarea	iw	קו תחתי
+undoes your last action	htmlarea	iw	מבטל את הפעולה האחרונה
+unknown	common	iw	לא מוכר
+unlink the current element	htmlarea-ContextMenu	iw	בטל קישור של הרכיב הנוכחי
+unset color	htmlarea-TableOperations	iw	בטל קבע צבע
+update	common	iw	עדכן
+upload image	htmlarea-UploadImage	iw	העלה תמונה
+upper latin letters	htmlarea-ListType	iw	אותיות לטיניות גדולות
+upper roman numbers	htmlarea-ListType	iw	מספרים רומיים גדולים
+use button to search for	common	iw	השתמש בכפתור כדי לחפש
+use button to search for address	common	iw	השתמש בכפתור לחיפוש כתובת
+use button to search for calendarevent	common	iw	השתמש בכפתור לחפש אירוע בלוח שנה
+use button to search for project	common	iw	השתמש בכפתור לחפש פרויקט
+user	common	iw	משתמש
+user accounts	common	iw	חשבונות משתמשים
+user groups	common	iw	קבוצות משתמשים
+username	common	iw	שם משתמש
+users	common	iw	משתמשים
+users choice	common	iw	בחירת המשתמשים
+version	common	iw	גירסא
+vertical align	htmlarea-TableOperations	iw	יישור אנכי
+view	common	iw	תצוגה
+wednesday	common	iw	יום רביעי
+welcome	common	iw	ברוך בואך
+which groups	common	iw	איזו קבוצות
+width	htmlarea-TableOperations	iw	רוחב
+wk	jscalendar	iw	שבוע
+work email	common	iw	דוא"ל בעבודה
+written by:	common	iw	:נכתב על ידי
+year	common	iw	שנה
+yes	common	iw	כן
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	iw	WYSIWYG אתה במצב טקסט. השתמש בכפתור [<>] כדי לחזור למצב
+you are required to change your password during your first login	common	iw	עליך לשנות את סיסמתך בכניסה הראשונה שלך למערכת
+you are running a newer version of phpgroupware than your database is setup for	common	iw	.מאשר מוגדר בבסיס הנתונים שלך phpGroupWare אתה מריץ גירסא חדשה יותר של
+you have been successfully logged out	login	iw	יצאת מהמערכת בהצלחה
+you have not entered a title	common	iw	לא הקלדת כותרת
+you have not entered a valid date	common	iw	לא הקלדת תאריך חוקי
+you have not entered a valid time of day	common	iw	לא הקלדת שעת יום חוקי
+you have not entered participants	common	iw	לא הכנסת משתתפים
+you have selected an invalid date	common	iw	!בחרת תאריך לא חוקי
+you have selected an invalid main category	common	iw	!בחרת קטגוריה ראשית לא חוקית
+you have successfully logged out	common	iw	יצאת מהמערכת בהצלחה
+you need to add the webserver user '%1' to the group '%2'.	common	iw	.עליך להוסיף את שמ משתמש הווב '%1' לקבוצה '%2'
+your message could <b>not</b> be sent!<br>	common	iw	.לא הצלחתי לשלוח את ההודעה שלך
+your message has been sent	common	iw	ההודעה שלך נשלחה
+your search returned %1 matchs	common	iw	חיפושך מצא %1 התאמות
+your search returned 1 match	common	iw	החיפוש שלך מצא התאמה אחד
+your session could not be verified.	login	iw	.לא הצלחתי לשחזר את המושב
+your settings have been updated	common	iw	ההגדרות שלך עודכנו
