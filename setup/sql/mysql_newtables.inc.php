@@ -266,7 +266,6 @@
             cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
             cat_parent      int(9) DEFAULT '0' NOT NULL,
             cat_owner       int(11) DEFAULT '0' NOT NULL,
-            cat_access      varchar(25),
             cat_appname     varchar(50) NOT NULL,
             cat_name        varchar(150) NOT NULL,
             cat_description varchar(255) NOT NULL,

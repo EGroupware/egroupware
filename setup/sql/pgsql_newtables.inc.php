@@ -241,7 +241,6 @@
             cat_id          serial,
             cat_parent      int,
             cat_owner       int,
-            cat_access      varchar(25),
             cat_appname     varchar(50) NOT NULL,
             cat_name        varchar(150) NOT NULL,
             cat_description varchar(255) NOT NULL,
