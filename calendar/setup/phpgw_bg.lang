@@ -1,144 +1,552 @@
-%1 matches found	calendar	bg	Бяха намерени %1 съвпадения
-%1 records imported	calendar	bg	Бяха внесени %1 записа
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	bg	Бяха прочетени %1 записа (не са внесени още; можете да се върнете и да махнете отметката на "Изпробване на внасянето")
-1 match found	calendar	bg	Беше намерено 1 съвпадение
+%1 matches found	calendar	bg	Открити са %1 съвпадения
+%1 messages have been deleted	email	bg	%1 писма бяха изтрити
+%1 records imported	calendar	bg	%1 записа са вмъкнати
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	bg	Прочетени са %1 записа, но не са вмъкнати. Можете да се върнете на предната съпка и да демаркирате "Тест за вмъкване".
+(for weekly)	calendar	bg	(за Седмично)
+(required)	email	bg	(задължително)
+1 match found	calendar	bg	Открито е едно съвпадение
+1 message has been deleted	email	bg	1 писмо беше изтрито
+1 message has been moved to	email	bg	1 писмо беше преместено в
+<b>*apply*</b> this filter	email	bg	<b>*ИЗПОЛЗВАЙ*</b> този филтър
+<b>apply all</b> filters	email	bg	<b>ИЗПОЛЗВАЙ ВСИЧКИ</b> филтри
 accept	calendar	bg	Приемане
 accepted	calendar	bg	Прието
-add contact	calendar	bg	Добавяне на контакт
+account	email	bg	акаунт
+account name	email	bg	Име на акаунта
+account user name	email	bg	Акаунт - име на потребителя
+accounts	common	bg	Акаунти
+accounts:	email	bg	Акаунти:
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	bg	Действия, причиняващи известяване: Добавяне, Премахване, Приемане, Отказване, ...
+add alarm	calendar	bg	Добавяне на напомняне
+add contact	calendar	bg	Добави в адресника
+add to address book	email	bg	Добави в адресника
+add to addressbook	email	bg	Добави в адресника
 added	calendar	bg	Добавено
-address book	calendar	bg	Адресна книга
-all categories	calendar	bg	Всички категории
+address book	calendar	bg	Адресник
+after	email	bg	След
+alarm	calendar	bg	Напомняне
+alarm for %1 at %2 in %3	calendar	bg	Напомняне за %1 - %2 в %3
+alarm management	calendar	bg	Редактиране на напомнянията
+alarm-management	calendar	bg	Напомняне-Редактиране
+alarms	calendar	bg	Напомняния
 all day	calendar	bg	Всеки ден
-are you sure you want to delete this country ?	calendar	bg	Наистина ли искате да изтриете тази държава?
-are you sure you want to delete this holiday ?	calendar	bg	Наистина ли искате да изтриете този празник?
-are you sure\nyou want to\ndelete this entry ?	calendar	bg	Наистина ли\nискате да изтриете\nтози запис?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	bg	Наистина ли\nискате да изтриете\nтози запис?\n\nТова ще го премахне\nза всички потребители.
+all messages	email	bg	Всички писма
+and	email	bg	и
+and stop filtering	email	bg	и прекрати филтрирането
+answered	email	bg	на които е отговорено
+apply	email	bg	приложи
+apply filters report:	email	bg	Резултат след прилагане на филтрите:
+apr	email	bg	Април
+aqua fusion	email	bg	Стил "Aqua Fusion"
+are you sure you want to delete this country ?	calendar	bg	Потвърдете изтриването на държавата ...
+are you sure you want to delete this holiday ?	calendar	bg	Потвърдете изтриването на празника ...
+are you sure\nyou want to\ndelete these alarms?	calendar	bg	Потвърдете изтриването на напомнянията ...
+are you sure\nyou want to\ndelete this entry ?	calendar	bg	Потвърдете изтриването на записа ...
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	bg	Потвърдете изтриването на записа. Това ще го изтрие и за всички други потребители !
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	bg	Потвърдете изтриването само на това събитие. Ще го изтриете и за всички други потребители !
+arrival date	email	bg	Дата на пристигане
+as	email	bg	като
+attach file	email	bg	Прикрепи файл
+attach signature	email	bg	Добави подпис
+attachment	email	bg	Прикрепен файл
+aug	email	bg	Август
+bcc	email	bg	"ВСС" копие
+bcc address	email	bg	Адрес за "ВСС" копие
+before	email	bg	Преди
 before the event	calendar	bg	преди събитието
+big	email	bg	Голям
+bigger	email	bg	По-голям
+biggest	email	bg	Най-голям
+body	email	bg	Текст на писмото
+both	email	bg	Двете
 brief description	calendar	bg	Кратко описание
+button type	email	bg	Тип бутони
+cache server data whenever possible	email	bg	запомняй често ползваното, когато е възможно
 calendar	common	bg	Календар
 calendar - add	calendar	bg	Календар - добавяне
 calendar - edit	calendar	bg	Календар - редактиране
 calendar event	calendar	bg	Събитие в календара
-calendar holiday management	admin	bg	Управление на празниците в календара
-calendar preferences	calendar	bg	Предпочитания за календара
-calendar settings	admin	bg	Настройки на календара
-calendar-fieldname	calendar	bg	Календар - име на поле
+calendar holiday management	admin	bg	Календар - Редактиране на празниците
+calendar preferences	calendar	bg	Календар - Предпочитания
+calendar settings	admin	bg	Календар - Настройки
+calendar-fieldname	calendar	bg	Календар - Име на поле
 canceled	calendar	bg	Отказано
-change status	calendar	bg	Промяна на състоянието
-configuration	calendar	bg	Настройка
+cc	email	bg	"СС" копие
+cc address	email	bg	Адрес за "СС" копие
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	bg	Прехвърли всички ангажименти на $params['old_owner'] към тези на $params['new_owner'].
+change font size in your e-mail pages	email	bg	Променя шрифта в страниците на ЕПоща
+check flags for type of mails	email	bg	Маркирай за избор на тип писмо
+choose for rename	email	bg	Преименовай
+choose to rename	email	bg	преименовай
+click here for more info in a new window	email	bg	Натисни за повече информация в нов прозорец
+click here to continue	email	bg	Продължавай
+click here to edit the settings for this email account.	email	bg	натисни за редактиране настройките на тази пощенска кутия
+click here to return to your home page.	email	bg	натисни за преход към началната страница
+company	email	bg	Фирма
+compose	common	bg	Писане
+compose message	email	bg	писане на писмо
+compose new	common	bg	Напиши ново
+contains	email	bg	Съдържа
+could not open this mailbox	email	bg	Не мога да отворя тази кутия
 countries	calendar	bg	Държави
 country	calendar	bg	Държава
-created by	calendar	bg	Създадено от
+create (expert)	email	bg	създай (експерт)
+create a folder	email	bg	Създай папка
+created by	calendar	bg	Автор
+current attachments (%1)	email	bg	Приложени (%1)
+custom e-mail preferences	email	bg	Потребителски настройки на ЕПоща
+custom e-mail settings	email	bg	Е-поща настройки
+daily	calendar	bg	Дневен
+daily matrix view	calendar	bg	Преглед за деня (матричен)
 days	calendar	bg	дни
-default calendar filter	calendar	bg	Филтър на календара по подразбиране
-default calendar view	calendar	bg	Изглед на календара по подразбиране
-delete a single entry by passing the id.	calendar	bg	Изтриване на отделен запис по зададено id
-delete an entire users calendar.	calendar	bg	Изтриване на целия потребителски календар
-delete selected contacts	calendar	bg	Изтриване на избраните контакти
-delete single	calendar	bg	Отделно изтриване
-deleted	calendar	bg	Изтрито
+days repeated	calendar	bg	дни за повторение
+dayview	calendar	bg	Дневен вид
+debugging page	email	bg	Страница за диагностика
+dec	email	bg	Декември
+default appointment length (in minutes)	calendar	bg	Нормална продължителност (в минути)
+default calendar filter	calendar	bg	Филтър по подразбиране
+default calendar view	calendar	bg	Вид по подразбиране
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	bg	Продължителност по подразбиране в минути на новосъздадените ангажименти.
+default sorting order	email	bg	Сортиране по подразбиране
+default:	common	bg	текущ:
+defines the size in minutes of the lines in the day view.	calendar	bg	Задава продължителност в минути на редовете в "Дневен вид"
+delete (expert)	email	bg	Премахни (експерт)
+delete a folder	email	bg	Премахни папка
+delete account	common	bg	Премахни пощ. кутия
+delete an entire users calendar.	calendar	bg	Изтрий целия календар на потребителя.
+delete selected contacts	calendar	bg	Изтрий маркираните контакти.
+deleted	calendar	bg	премахнати
+deleted messages (trash) folder	email	bg	Папка за изтрити писма (Trash)
+deleted messages folder name	email	bg	Име на папката за изтрити писма
+deleted messages go to trash	email	bg	Премествай изтритите в папката за изтрити
+deleted messages saved to folder:	email	bg	Записах изтритите писма в папка:
 description	calendar	bg	Описание
-determining window width ...	calendar	bg	Определяне на широчината на прозореца...
-disable	calendar	bg	Отмяна
-disabled	calendar	bg	отменено
-download	calendar	bg	Изтегляне
+disable	calendar	bg	Забрани
+disabled	calendar	bg	забранен
+discard	email	bg	Откажи
+display status of events	calendar	bg	Изобразявай статуса на поканите
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	bg	Изобразяване на вида календар по подразбиране и на страницата "Начало".
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	bg	Желаете ли редовно да получавате кратко описание на ангажиментите Ви чрез e-mail? Писмата за деня се изпращат сутрин, а за седмицата - в понеделник. Не се изпращат писма ако нямате ангажименти за деня, съответно седмицата.
+does not contain	email	bg	Не съдържа
+draft	email	bg	чернова
 duration	calendar	bg	Продължителност
-edit single	calendar	bg	Единично редактиране
-email notification	calendar	bg	Уведомяване по електронна поща
-email notification for %1	calendar	bg	Уведомяване по електронна поща за %1
-enable	calendar	bg	Активиране
-enabled	calendar	bg	активно
-end date/time	calendar	bg	Крайна дата/час
-enddate	calendar	bg	Крайна дата
-ends	calendar	bg	приключва
-enter output filename: ( .vcs appended )	calendar	bg	Въведете име на изходния файл (добавя се ".vcs")
+e-mail extra account	email	bg	Допълнителна пощ. кутия
+e-mail extra accounts	email	bg	Допълнителни пощ. кутии
+e-mail extra accounts list	email	bg	Списък допълнителни пощ. кутии
+e-mail filters	common	bg	Филтри в ЕПоща
+e-mail folders	common	bg	Папки в ЕПоща
+e-mail inbox filters list	email	bg	Списък филтри в ЕПоща Получени
+e-mail preferences	common	bg	ЕПоща настройки
+each user has a summary page which can display a variety of information. this option will show a small list of email messages in the inbox of the users default email account on the users summary home page.	email	bg	Всеки потребител разполага със собствена начална страница. Тази настройка определя дали и как на нея да се изобразява списъка с получени писма.
+edit filters	email	bg	Редактиране на филтрите
+email account name	email	bg	Име на e-mail акаунта
+email address	email	bg	E-mail адрес
+email notification	calendar	bg	Напомняне с писмо
+email notification for %1	calendar	bg	Напомняне с писмо за %1
+email password	email	bg	Парола на акаунта
+email signature	email	bg	Текст за подпис
+email type	common	bg	Тип e-mail
+enable	calendar	bg	Разреши
+enable this email account	common	bg	Разреши този e-mail акаунт
+enable utf-7 encoded folder names	email	bg	Разреши utf-7 символи в имената на папките
+enabled	calendar	bg	разрешен
+end date/time	calendar	bg	Край Дата/Час
+enddate	calendar	bg	ДатаКрай
+enter the search string in the text boxes	email	bg	В съответното поле въведете текст за търсене
+enter your pop	admin	bg	Въведете POP сървър
+error moving messages to	email	bg	Грешка при местенето на писмата в
+error text not provided	email	bg	липсва описание на грешката
+error: unknown message data	email	bg	Грешка:  Непознати данни в писмото
+evolution style	email	bg	Стил "Evolution"
 exceptions	calendar	bg	Изключения
-export	calendar	bg	Изнасяне
+extended	calendar	bg	Разширен
 external participants	calendar	bg	Външни участници
-fieldseparator	calendar	bg	Разделител на полетата
-firstname of person to notify	calendar	bg	Малко име на уведомяваното лице
+extra accounts	email	bg	Допълнителни акаунти
+extra e-mail account	common	bg	Допълнителен e-mail акаунт
+extra e-mail accounts	common	bg	Допълнителни e-mail акаунти
+extra e-mail preferences number %1	email	bg	Настройки на допълнителен акаунт %1
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	bg	Опита за изпращане на писмо до '%1' #%2 относно '%3', с подател '%4' е неуспешен !!!
+feb	email	bg	Февруари
+fewer actions	email	bg	По-малко действия
+fewer choices	email	bg	По-малко избрани
+file	email	bg	Файл
+file attachment	email	bg	Прикрепен файл
+file into	email	bg	Информация за файла
+fill in as much as you can	email	bg	попълнете колкото може повече
+filter [number] and name	email	bg	Филтър [номер] и име
+filter inbox for accounts	email	bg	Филтрирай получените в акаунти
+filter name	email	bg	Име на филтъра
+filter name:	email	bg	име на филтъра:
+filter number	email	bg	Номер на филтъра
+filters	email	bg	Филтри
+filters list	email	bg	Списък на филтрите
+firstname of person to notify	calendar	bg	Собствено име на лицето за известяване.
+flag as important	email	bg	Флаг за важност
+flagged	email	bg	с флаг
+folder	common	bg	Папка
+folder maintenance	email	bg	Редактиране на папките
+folder name	email	bg	Име на папката
+folder size	email	bg	Обем на папката
+folders	email	bg	Папки
+for the file to actually upload	email	bg	за зареждане на файла
+for these items, fill only what is different from you default e-mail preferences	common	bg	Променете само тези настройки за ЕПоща, които се различават от предпочитаното
+forward	email	bg	Препращане
 free/busy	calendar	bg	Свободен/Зает
-frequency	calendar	bg	Честота
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	bg	заетост: Непознат потребител '%1', грешна парола или достъпа е забранен за външни потребители !!!
 fri	calendar	bg	Пт
-full description	calendar	bg	Пълно описание
-fullname of person to notify	calendar	bg	Пълно име на уведомяваното лице
-global categories	calendar	bg	Общи категории
+from	email	bg	От
+from address	email	bg	Подател
+full description	calendar	bg	Подробно описание
+fullname of person to notify	calendar	bg	Пълно име на лицето за известяване
+generate printer-friendly version	calendar	bg	Генериране на вариант за отпечатване
+get size	email	bg	Какъв е обема?
+go	email	bg	продължавай
+go back	email	bg	Назад
+go back to	email	bg	Върни се на
+go!	calendar	bg	Давай!
+group planner	calendar	bg	Планер на група
+header field	email	bg	Заглавно поле
+here is your requested alarm.	calendar	bg	Това е поискано от Вас напомняне.
+hidden	email	bg	скрито
+hide help	email	bg	Скрий описанията
 high priority	calendar	bg	висок приоритет
 holiday	calendar	bg	Празник
-holiday management	calendar	bg	Управление на празниците
-holiday-management	calendar	bg	Управление на празниците
+holiday management	calendar	bg	Редактиране на празниците
+holiday-management	calendar	bg	Празници-редактиране
 holidays	calendar	bg	Празници
-i participate	calendar	bg	Участвам
-import	calendar	bg	Внасяне
-import csv-file	common	bg	Внасяне на CSV-файл
+hours	calendar	bg	часа
+html messages with the iframe  tag may be klez or other worm emails.	email	bg	писмо с html IFRAME може да съдържа вирус
+i participate	calendar	bg	Ще участвам
+icon size	email	bg	Големина на иконите
+icon theme	email	bg	Вид на иконите
+idots crystal style	email	bg	Стил "iDots Crystal"
+if &quot; deleted messages go to trash &quot; is checked, deleted message will be sent to the folder name you type in this box. if this folder does not exist, it will be created for you automatically. default name is &quot;trash&quot;. this will be your &quot;trash&quot; folder, but it does not have to actually be called &quot;trash&quot;, you can name it anything. only works with imap servers, pop servers do not have folders.	email	bg	Ако &quot;Премествай изтритите в папката ...&quot; е маркирано, всяко изтрито писмо ще бъде премествано в папката, чието име напишете тук. Ако тя не съществува, ще бъде създадена автоматично. Обикновено името и е &quot;Sent&quot;. Наложително е периодично или веднага да изпразвате тази папка. Функцията работи само с IMAP сървър, и не работи с POP.
+if &quot; sent messages folder &quot; is checked, a copy of your sent mail will be stored in the folder name you type in this box. if this folder does not exist, it will be created for you automatically. default name is &quot;sent&quot;. this will be your &quot;sent&quot; folder, but it does not have to actually be called &quot;sent&quot;, you can name it anything. only works with imap servers, pop servers do not have folders.	email	bg	Ако &quot;Записвай изпратените съобщения в папка ...&quot; е маркирано, копие на всяко изпратено писмо ще бъде записвано в папката, чието име напишете тук. Ако тя не съществува, ще бъде създадена автоматично. Обикновено името и е &quot;Sent&quot;. Наложително е периодично да почиствате тази папка от излишните писма. Тази функция работи само с IMAP сървър, и не работи с POP.
+if applicable	email	bg	Ако е приложимо
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	bg	Маркирайте за преместване на празника в следващия понеделник ако попадне в събота или в неделя.
+if checked, a copy of your sent mail will be stored in the &quot;sent&quot; folder name which you specify in the box for &quot;sent messages folder &quot;. only works with imap servers, pop servers do not have folders.	email	bg	Ако е маркирано, в папката с име &quot;Sent&quot; ще бъде записвано копие на всяко изпратено писмо. Това налага периодично или веднага да почиствате тази папка. Името и се задава в поле &quot;Папка за изпратени писма&quot;. Тази функция работи само с IMAP сървър, и не работи с POP.
+if checked, deleted message will be sent to the &quot;trash&quot; folder name which you specify in the box for &quot; deleted messages (trash) folder &quot;. only works with imap servers, pop servers do not have folders.	email	bg	Ако е маркирано, писмата, които изтривате ще бъдат премествани в папката с име &quot;Trash&quot; вместо да бъдат изтрити. Това налага периодично или веднага да я изпразвате. Името на папката се задава в поле &quot;Папка за изтрити писма&quot;. Тази функция работи само с IMAP сървър, и не работи с POP.
+if messages match	email	bg	Ако се намери писмо
+if there is no obvious error, check your email account name and password first.	email	bg	ако грешката не е ясна, първо проверете името и паролата за акаунта
+if there is no obvious error, check your username and password first.	email	bg	ако грешката не е ясна, първо проверете името и паролата за акаунта
+if using an imap server, what kind is it, most often this option can safely be set to &quot;cyrus or courier&quot;. technically, this means the server uses a dot between the different parts of the folder names, such as &quot;inbox.sent&quot;. the other major kind of imap server is the university of washington &quot;uwash&quot; imap server. it uses slashes instead of the dots the other servers use, and although it has a folder called &quot;inbox&quot;, it is not considered the &quot;namespace&quot; for the other folder names. the &quot;uw-maildir&quot; is a rare combination of the two above types. this is the least used kind of imap server. if you are unsure, ask your it administrator. only applies to imap servers.	email	bg	Тази настройка може да е &quot;Cyrus или Courier&quot; и всичко да работи нормално ако ползвате IMAP сървър, независимо от вида му. Тези сървъри ползват за разделител знакът точка , докато сървърът UWash, разработен от университета във Вашингтон, ползва за равделител наклонена черта. Ако не сте сигурни, попитайте администратора. Ползва се само за IMAP сървъри.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	bg	Ако тук не въведете парола, информацията за Вашата заетост ще е достъпна за всеки, който знае URL адреса!!!
+ignore conflict	calendar	bg	Игнорирай конфликта
+image	email	bg	Изображение
+imap mail server hostname or ip address	admin	bg	IP или име на IMAP сървъра
+imap server type	common	bg	Тип на IMAP сървъра
+imap server type - if applicable	email	bg	Тип на IMAP сървъра - ако се ползва такъв
+important	email	bg	важно
+in the email index page, the page which lists all the mails in a folder, mail may be sorted by date, author, size, or subject, however all of these need to be ordered from first to last, this options controlls what is first and last. for example, if sorting by date, the newest to oldest displays the most recent emails first, in decending order down to the oldest emails last.	email	bg	Когато гледате списъка писма в дадена папка, Вие можете да ги сортирате по дата, подател, големина или "Относно". Освен това можете да ги подредите отпред-назад или отзад-напред. Ако са сортирани по дата тази настройка определя дали първото писмо в списъка да е най-новото или да е най-старото писмо.
+inbox	email	bg	Получени
 interval	calendar	bg	Интервал
-invalid entry id.	calendar	bg	Невалидно id на запис.
-last	calendar	bg	последно
-lastname of person to notify	calendar	bg	Фамилия на уведомяваното лице
-length<br>(<= 255)	calendar	bg	Дължина<br>(<= 255)
-list all categories.	calendar	bg	Показване на всички категории
+intervals in day view	calendar	bg	Интервал в "Дневен вид"
+jan	email	bg	Януари
+jul	email	bg	Юли
+jun	email	bg	Юни
+keep	email	bg	Запази
+keyword	email	bg	ключова дума
+keywords	email	bg	Ключови думи
+last	calendar	bg	последен
+lastname of person to notify	calendar	bg	Фамилия на лицето за известяване
+layout 1	common	bg	Вид 1
+layout 2	common	bg	Вид 2
+length shown<br>(emtpy for full length)	calendar	bg	Изобразявана дължина (празно за цялата)
+length<br>(<= 255)	calendar	bg	Дължина (<= 255)
+lines	email	bg	Линии
+link	calendar	bg	Препратка
+link to view the event	calendar	bg	Препратка за преглед на събитието
+list all categories.	calendar	bg	Покажи всички категории.
+list messages	email	bg	списък на писмата
+location	calendar	bg	Място на събитието
+long names	email	bg	дълги имена
+mail folder(uw-maildir)	email	bg	Папка за писма(UW-папка)
+mail server	email	bg	Пощенски сървър
+mail server type	email	bg	Вид пощенски сървър
+mail you send will use this address as the &quot;from&quot; address. this may be the same as your egroupware login name, or the server administrator may have set it for you. when the recipient clicks reply, this address will be used. you can leave this box blank and the default value will be used.	email	bg	Писмата, които пращате ще носят този адрес като адрес на подателя. Когато получателя натисне "Отговор" автоматично ще бъде използван този адрес за връзка с Вас. Ако изтриете съдържанието на полето в настройките на основния акаунт то автоматично ще бъде попълнено с първоначалните настройки, направени от администратора.
+make freebusy information availible to not loged in persons?	calendar	bg	Нека информацията за моята заетост да е достъпна и за потребители, които не са влезли в системата.
+manage accounts	email	bg	Редактиране на акаунтите
+manage folders	email	bg	Редактиране на папките
+mar	email	bg	Март
+matrixview	calendar	bg	Матричен вид
+message list layout	common	bg	Изглед  на списъка на писмата
+messages	email	bg	Писма
+messages found in folder	email	bg	Писма открити в папка
+messages have been moved to	email	bg	писмата бяха преместени в
 minutes	calendar	bg	минути
-modified	calendar	bg	Променено
+modified	calendar	bg	Редактирано
+modify list of external participants	calendar	bg	Редактиране списъка на външните участници
 mon	calendar	bg	Пон
 month	calendar	bg	Месец
-needs javascript to be enabled !!!	calendar	bg	Изисква включен javascript!
-new entry	calendar	bg	Нов запис
-next day	calendar	bg	следващ ден
-no filter	calendar	bg	Няма филтър
-no matches found	calendar	bg	Нама съвпадения
-no response	calendar	bg	Няма отговор
+monthly	calendar	bg	Месечен
+monthly (by date)	calendar	bg	Месечно (по дати)
+monthly (by day)	calendar	bg	Месечно (по дни)
+monthview	calendar	bg	Месечен вид
+more actions	email	bg	Повече действия
+more choices	email	bg	Повече избрани
+most us and european users do not need to enable this. if this option is checked then your email server can handle folder names with non us-ascii charactors in them / default is disabled, not checked. only use if you are really sure you need it. only works with imap servers, pop servers do not have folders.	email	bg	Повечето потребители в Европа и САЩ няма нужда да разрешават това. Ако е маркирано, имената на папките ще могат да съдържат не US-ASCII символи. Обикновено е забранено (не е маркирано). Разрешете го само ако наистина се нуждаете от това и ако сте сигурни, че ще работи. Тази функция работи само с IMAP сървър, и не работи с POP.
+move down	email	bg	Премести надолу
+move selected messages into	email	bg	Премести маркираните в
+move this message into	email	bg	Премести писмото в
+move up	email	bg	Премести нагоре
+mozilla modern style	email	bg	Стил "Mozilla Modern"
+name of the mail server you want to access. should be a name like &quot;mail.example.com&quot;. if you leave this box blank then the default value will be used.	email	bg	Име или IP адрес на пощенския сървър. Ако го оставите празно, автоматично ще бъде попълнено с първоначалното съдържание.
+new	email	bg	Нови
+new account	email	bg	Нов акаунт
+new entry	calendar	bg	Записване (ново)
+new filter	email	bg	Добавяне на филтър
+new message	email	bg	Ново писмо
+new messages	email	bg	Нови писма
+new name must not exist and not be empty!!!	calendar	bg	Новото име да е несъществуващо и да не е празно !!!
+newest	common	bg	първо
+next message	email	bg	Следващо писмо
+no change	email	bg	не променяй
+no error returned from server	email	bg	Няма грешка според сървъра
+no matches found	calendar	bg	Не са открити съвпадения
+no message found in folder '%1'	email	bg	Не са намерени писма в папка '%1'
+no next message	email	bg	Няма следващо
+no previous message	email	bg	Няма предишно
+no response	calendar	bg	Без отговор
+noia &#64; carlitus style	email	bg	Стил "Noia @ Carlitus"
+non-standard	email	bg	Нестандартен
+not used	email	bg	неизползван
+notification messages for added events	calendar	bg	Известие за добавен ангажимент
+notification messages for canceled events	calendar	bg	Известие за премахнат ангажимент
+notification messages for modified events	calendar	bg	Известие за променен ангажимент
+notification messages for your alarms	calendar	bg	Напомняне за ангажимент
+notification messages for your responses	calendar	bg	Известие за Ваш отговор на покана
+notify on delivery	email	bg	Обратна разписка
+nov	email	bg	Ноември
+number	common	bg	Номер
+number of matches:	email	bg	брой намерени:
 number of months	calendar	bg	Брой месеци
+oct	email	bg	Октомври
+old	email	bg	Стар
 old startdate	calendar	bg	Стара начална дата
-olddate	calendar	bg	Стара дата
+olddate	calendar	bg	СтараДата
+oldest	common	bg	последно
+on	email	bg	На
+only needed with the university of washington &quot;uwash&quot; imap server. the default value is &quot;mail&quot; which means your mail folders, other then inbox, are located in a directory called &quot;mail&quot; directly under your &quot;home&quot; directory. this box may be left empty, which means your mail folders are located in your &quot;home&quot; directory, not a subdirectory. if your mail folders are located in a subdirectory of &quot;home&quot; then put the name of that subdirectory here. generally, it is not necessary to use any special slashes or tildes, &quot;home&quot; is always considered the base directory, and the slash bewteen &quot;home&quot; and the subdirectory will be added for you automatically, do not put the slash in this box.	email	bg	Необходимо само ако ползвате разработения от университета във Вашингтон UWash IMAP сървър. The default value is &quot;mail&quot; which means your mail folders, other then INBOX, are located in a directory called &quot;mail&quot; directly under your &quot;HOME&quot; directory. This box may be left empty, which means your mail folders are located in your &quot;HOME&quot; directory, not a subdirectory. If your mail folders are located in a subdirectory of &quot;HOME&quot; then put the name of that subdirectory here. Generally, it is not necessary to use any special slashes or tildes, &quot;HOME&quot; is always considered the base directory, and the slash bewteen &quot;HOME&quot; and the subdirectory will be added for you automatically, do not put the slash in this box.
+or	common	bg	или
+or enter text	email	bg	или въведете текст
+or you can use custom settings for this email account	email	bg	или да ползвате Вашите потребителски настройки за този акаунт
 order	calendar	bg	Подреждане
+organization	email	bg	Организация
 participant	calendar	bg	Участник
 participants	calendar	bg	Участници
-participates	calendar	bg	Участва
-permission denied	calendar	bg	Достъпът отказан
-please enter a filename !!!	calendar	bg	мола въведете име на файл!
-previous day	calendar	bg	предишен ден
-printer friendly	calendar	bg	Изглед за печат
-re-edit event	calendar	bg	Повторно редактиране на събитието
-refresh	calendar	bg	Обновяване
-rejected	calendar	bg	Отхвърлено
-repeat type	calendar	bg	Вид повторяемост
-repetition	calendar	bg	Повторяемост
-rule	calendar	bg	Правило
+participates	calendar	bg	Ще участва
+password for not loged in users to your freebusy information?	calendar	bg	Парола за достъп до информацията за Вашата заетост за потребители, които не са влезли в системата. Задайте парола, различна от Вашата!
+permission denied	calendar	bg	Не е позволено
+persistent email server session	email	bg	текущия обмен с пощенския сървър
+phone	email	bg	Телефон
+planner	calendar	bg	Планер
+planner by category	calendar	bg	Планер по категории
+planner by user	calendar	bg	Планер по потребители
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	bg	Моля потвърдете, приемете, откажете или прегледайте промените в съответния запис в календара Ви !
+please enter a filename !!!	calendar	bg	Моля въведете име на файл!
+please fill in everything you need	email	bg	Моля, попълнете всичко от което се нуждаете
+please select a folder to rename	email	bg	Моля, изберете папката за преименоване
+please select a message first	email	bg	Моля първо да посочите писмото
+please submit a filename to attach	email	bg	Моля задайте името на файла за прикрепяне
+please type a folder name in the text box	email	bg	Моля напишете текст за име на папката
+preselected group for entering the planner	calendar	bg	Група при влизане в "Планер"
+previous	email	bg	Предишно
+previous message	email	bg	Предишно писмо
+print calendars in black & white	calendar	bg	Черно/бяло отпечатване на календарите
+print the mini calendars	calendar	bg	Печатане на мини календари
+printable	email	bg	за отпечатване
+printer friendly	calendar	bg	Вариант за отпечатване
+private only	calendar	bg	Само личните
+raw message	email	bg	необработено
+re-edit event	calendar	bg	Редактиране отново
+read mail	email	bg	Отвори
+recent	email	bg	скорошни
+recipient	email	bg	Получател
+refresh	calendar	bg	Опресни
+rejected	calendar	bg	Отказано
+rename a folder	email	bg	Преименуване на папка
+repeat day	calendar	bg	Повторение в дните
+repeat end date	calendar	bg	Повтаряне до (дата)
+repeat type	calendar	bg	Тип на повторение
+repeating event information	calendar	bg	Информация за повтарящи се събития
+reply	email	bg	Отговор
+reply all	email	bg	Отговор на всички
+request delivery notification	email	bg	Искане за обратна разписка
+required	email	bg	задължително
+return mails during this time period	email	bg	Търси в периода
 sa	calendar	bg	Сб
 sat	calendar	bg	Съб
-search results	calendar	bg	Резултати от търсенето
-selected contacts (%1)	calendar	bg	Избрани контакти (%1)
-sorry, the owner has just deleted this event	calendar	bg	Съжалявам, собственикът току-що изтри това събитие
-sorry, this event does not exist	calendar	bg	Съжалявам, такова събитие не съществува
-sort by	calendar	bg	Подреждане по
-start date/time	calendar	bg	Начална дата/час
-start- and enddates	calendar	bg	Начални и крайни дати
-startdate	calendar	bg	Начална дата
+search for mails in these folders	email	bg	Търси сред писмата в папките
+search results	calendar	bg	Резултат от търсенето
+seen	email	bg	видяни
+select this box if you want the text body of the message you are forwarding to appear inline in the body of your sent message	email	bg	Ако е маркирано, когато препращате писмо, текста му ще бъде вмъкнат в кавички в новото писмо.
+select your screensize for proper showing of the javascript addressbook	email	bg	Посочете големината на екрана в точки (pixels) за коректното изобразяване на Java адресника.
+select your screensize for propper showing of the javascript addressbook	email	bg	Посочете големината на екрана в точки (pixels) за коректното изобразяване на Java адресника.
+select your style for the addressbook. the traditional, simple style. or the new javascript enabled complex addressbook	email	bg	Изберете вида на адресника. Може да е обикновен (традиционен) или новия стил, разработен на езика Java.
+send	email	bg	Изпращане
+send deleted messages to the trash	email	bg	Премести изтритите в папката за изтрити
+send forwarded mail as quoted attachment	email	bg	Изпращай препратените като като вмъкнат в кавички текст
+sender	email	bg	Подател
+sent	common	bg	изпратени
+sent folder	email	bg	папка за изпратени
+sent messages folder	common	bg	Папка за изпратени писма
+sent messages folder name	email	bg	Име на папка "Изпратени"
+sent messages saved in &quot;sent&quot; folder	common	bg	Записвай изпратените съобщения в папка &quot;sent&quot
+sent messages saved to folder:	email	bg	Записах изпратените в папка:
+sep	email	bg	Септември
+set a year only for one-time / non-regular holidays.	calendar	bg	Задайте годината само ако празникът е едиствено за тази година и няма да се повтаря през следващите.
+set new events to private	calendar	bg	При добавяне на ангажимент  - "Личен"
+settings	common	bg	Настройки
+short names	email	bg	кратки имена
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	bg	Искате ли събитията, за които сте били поканени, но сте отказали участие, да се изобразяват в календара? Вие можете по-късно да приемете участието (напр. при отпадане на конфликт в програмата Ви).
+should new events created as private by default ?	calendar	bg	При добавяне на нов ангажимент,  "Личен" по подразбиране да е маркирано.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	bg	Бихте могли да разрешите на потребители, които нямат акаунт за влизане в тази система, да имат достъп до информацията за Вашата заетост. Информацията е в iCal формат и включва само времето, през което сте зает, като не включва заглавието, описанието и местото на ангажиментите. Можете да зададете парола за достъп до информацията, а URL адресът е %1
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	bg	Желаете ли във варианта за отпечатване да се изобразяват мини календарчета?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	bg	Желаете ли варианта за отпечатване да е черно/бял?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	bg	В скоби, след името на поканения за дадено събитие, ще се изписва неговия отговор (Приема, Отказва,...).
+show day view on main screen	calendar	bg	Изобразявай дневен вид на календара на страницата "Начало"
+show default view on main screen	calendar	bg	Показвай го и на страницата "Начало"
+show help	email	bg	Покажи описанията
+show high priority events on main screen	calendar	bg	Показвай събитията с висок приоритет на страницата "Начало"
+show invitations you rejected	calendar	bg	Показвай и поканите, които съм отказал
+show list of upcoming events	calendar	bg	Покажи списък на приближаващите събития
+show long names	email	bg	Покажи с дълги имена
+show message	email	bg	покажи писмото
+show new messages in combobox	email	bg	Показвай броя на новите в падащия списък
+show new messages on main screen	email	bg	Покажи новите на началния екран
+show next seven days	calendar	bg	Покажи следващите седем дни
+show only one day	calendar	bg	Покажи само един ден
+show sender's email address with name	email	bg	Покажи адреса на подателя с име
+show short names	email	bg	Покажи с кратки имена
+show total folder size by default	email	bg	Показвай пълния обем на папките
+size	email	bg	Обем
+size larger than	email	bg	Обемът е по-голям от
+size smaller than	email	bg	Обемът е по-малък от
+small	email	bg	Малък
+small view	email	bg	малък шрифт
+smaller	email	bg	По-малък
+smallest	email	bg	Най-малък
+somebody	email	bg	някой
+sorry, the owner has just deleted this event	calendar	bg	Съжаляваме, но автора току що изтри това събитие.
+sorry, this event does not exist	calendar	bg	Съжаляваме, но това събитие не съществува.
+sorry, this event does not have exceptions defined	calendar	bg	Съжаляваме, но за това събитие не са дефинирани изключения.
+sort by	calendar	bg	Сортиране по
+spell check	email	bg	Проверка на правописа
+standard e-mail preferences	email	bg	Стандартни настройки на ЕПоща
+start date/time	calendar	bg	Начало Дата/Час
+start- and enddates	calendar	bg	Начална и крайна дата
+startdate	calendar	bg	ДатаНачало
 su	calendar	bg	Нд
 sun	calendar	bg	Нед
+switch accounts	email	bg	Преход към акаунт
+switch current folder to	common	bg	Покажи ми папка
+tentative	calendar	bg	Пробно
+test all filters	email	bg	Тествай всички филтри
+test import (show importable records <u>only</u> in browser)	calendar	bg	Тест за вмъкване. Само ще провери възможността за вмъкване.
+test or apply all filters	email	bg	Тестване и прилагане на филтрите
+test run this filter	email	bg	Тествай този филтър
 text	calendar	bg	Текст
-the user %1 is not participating in this event!	calendar	bg	Потребителят %1 не участва в това събитие!
+the email application offers 2 different layouts for the index page, that is the page that lists the emails in a folder. this page may be the page the user looks at the most and so different layouts, or looks, are offered.	email	bg	Приложението ЕПоща предлага два варианта за изглед на най-често изобразяваната страница - списъка на писмата в дадена папка.
+the email application offers different button displays, these buttons can be text, images, or both.	email	bg	Приложението ЕПоща предлага три варианта за изглед на бутоните - само изображение (икона), само текст или и двете.
+the email application offers different icon image themes, groups of images of a similar style which are used in this email application. currently the available themes are images based on evolution by ximian and the netscape6 / mozilla browser buttons. additional themes are anticipated and welcome.	email	bg	Приложението ЕПоща предлага няколко варианта за изглед на иконите. Наличните в момента са взаимствани от бутоните на браузърите Evolution (Ximian) и Netscape6 / Mozilla.
+the email application offers different icon image themes, groups of images of a similar style which are used in this email application. currently the available themes are images based on evolution by ximian and the netscape7, mozilla browser buttons. additional themes are anticipated and welcome.	email	bg	Приложението ЕПоща предлага няколко варианта за изглед на иконите. Наличните в момента са взаимствани от бутоните на браузърите Evolution (Ximian) и Netscape7 / Mozilla.
+the email application offers different icon image themes, these icons can be big or small.	email	bg	Приложението ЕПоща предлага няколко варианта за изглед на иконите, които могат да бъдат и малки и големи.
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	bg	Предпочетеното време <ul>%1</ul> е заето от следния ангажимент:
+the login name to use when checking mail for this email account. this may be the same as your egroupware login name, or the server administrator may have set it for you. if your have multiple email accounts set up, you will need to fill this in. if you have only one email account set up, then you can probably leave this alone. if you clear this box, then it goes back to the default value. if you only need some custom settings but want this one to be the default value, then leave this box blank, the default value will be used, and you will see that default value in this box the next time you come to this preferences page.	email	bg	Името на акаунта за пред пощенския сървър. Може да бъде същото като името на акаунта в eGroupWare или друго, зададено от администратора на сървъра. Ще трябва да зададете име ако имате повече от един пощенски акаунт. В противен случай няма нужда да го променяте. Ако изтриете съдържанието на полето, то ще бъде автоматично попълнено и при следващото влизане на тази страница ще видите настройката по подразбиране.
+the password to use when checking mail for this email account. this may be the same as your egroupware password, or the server administrator may have set it for you. if your have multiple email accounts set up, you will need to fill this in. if you have only one email account set up, then you can probably leave this alone. if you do set a custom password, this box will be blank the next time you come to this settings page. this is a security feature because your custom email password is not sent to your browser after you set it. to change your custom password, simply enter a new password in the box. extra email accounts require you to set this. for your default email account, you can clear your custom password by unchecking the &quot;use custom settings&quot; option.	email	bg	Паролата на акаунта за пред пощенския сървър. Може да бъде същата като паролата на акаунта в eGroupWare или друга, зададена от администратора на сървъра. Ще трябва да я зададете ако имате повече от един пощенски акаунт. В противен случай няма нужда да я променяте. Ако зададете друга парола, при следващото влизане на тази страница полето ще бъде празно с цел запазване на паролата в тайна. За да смените паролата си просто въведете тук новата. За допълнителните акаунти това е задължително. Ако искате да изчистите съдържанието на полето за основния акаунт, демаркирайте клетката "Ползвай следващите потребителски настройки".
+the type of mail server you want to access. imap mail servers have folders, such as the sent and trash folders. pop servers do not have folders. pop, pop-3, and pop3 are the same thing. you can have the server connection encrypted by using imaps or pops, only if the mailserver supports it and if your egroupware installation has a &quot;ssl&quot; capabable version of php.	email	bg	Тип на пощенския сървър. POP, POP-3 и POP3 е едно и също. Ако поддържа криптиране на връзката и ако инсталацията на PHP, която ползвате е с SSL поддръжка, можете да ползвате IMAPS или POPS. Сървърът IMAP може да работи с папки, а сървърът POP - не.
+the user %1 is not participating in this event!	calendar	bg	Потребителят %1 не прие да участва в това събитие!
+there is no text or other part of the email to display to the user, all part(s) are attachments.	email	bg	Няма текст или друго за изобразяване. Има само приложения.
+there was an error trying to connect to your imap server.<br>please contact your admin to check the servername, username or password.	email	bg	Възникна грешка при опита за връзка с IMAP сървъра.<br>Моля, свържете се с администратора за проверка името на сървъра, името на потребителя и паролата му.
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	bg	Възникна грешка при опита за връзка с пощенския сървър.<br>Моля, проверете името и паролата си или се свържете с администратора.
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	bg	Грешка при опита за свързване със сървъра за новини. Моля, свържете се с администратора и проверете името на сървъра, както и името и паролата на акаунта.
+there was an error trying to connect to your pop3 server.<br>please contact your admin to check the servername, username or password.	email	bg	Възникна грешка при опита за връзка с POP3 сървъра.<br>Моля, свържете се с администратора за проверка името на сървъра, името на потребителя и паролата му.
+this confusing and often misunderstood option is left over from this email apps origins as aeromail by mark cushman. when viewing a list of emails in a folder, the from column may show you a) the senders name only, if a name was provided, b) the senders from email address, in addition to the senders name, or c) the senders reply to address if it is different from the senders from address, in addition to the senders name if it was provided. typically users set this to none, which will show only the senders name. if no name was supplied by the sender, then the senders from email address will be shown, whether a seperate reply to address is provided has no effect on this, the from address is always used if the senders name is not provided.	email	bg	Тази, често неправилно разбирана настройка, е наследена от оригиналното приложение Aeromail, чийто автор е Mark Cushman. В колоната "Подател" в списъка писма може да бъде изписвано а)само името на подателя ако е приложено; б)e-mail адреса на подателя заедно с името на подателя или в)адреса за обратна връзка ако е различен от адреса на подателя и името на подателя ако е приложено. Обикновено потребителите оставят полето със съдържание none*, което отговаря на вариант "а". Ако име на подателя не е приложено, ще бъде изписан e-mail адреса на подателя. , whether a seperate reply to address is provided has no effect on this, the FROM address is always used if the senders name is not provided.
+this confusing and often misunderstood option is left over from this email apps origins as aeromail by mark cushman. when viewing a list of emails in a folder, the from column may show you<br>a) the senders name only, if a name was provided,<br>b) the senders from email address, in addition to the senders name, or<br>c) the senders reply to address if it is different from the senders<br>from address, in addition to the senders name if it was provided. typically users set this to none, which will show only the senders name. if no name was supplied by the sender, then the senders from email address will be shown, whether a seperate reply to address is provided has no effect on this, the from address is always used if the senders name is not provided.	email	bg	Тази, често неправилно разбирана настройка, е наследена от оригиналното приложение Aeromail, чийто автор е Mark Cushman. В колоната "Подател" в списъка писма може да бъде изписвано<br>а)само името на подателя ако е приложено;<br>б)e-mail адреса на подателя заедно с името на подателя или<br>в)адреса за обратна връзка ако е различен от адреса на подателя и името на подателя ако е приложено. Обикновено потребителите оставят полето със съдържание none*, което отговаря на вариант "а". Ако име на подателя не е приложено, ще бъде изписан e-mail адреса на подателя. , whether a seperate reply to address is provided has no effect on this, the FROM address is always used if the senders name is not provided.
+this day is shown as first day in the week or month view.	calendar	bg	Този ден ще е първи в седмичния и в месечния вид на календара.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	bg	Това определя края на работното време в Дневен вид на календара. Ангажиментите, след този час се изобразяват отдолу.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	bg	Това определя началото на работното време в Дневен вид на календара. Ангажиментите, преди този час се изобразяват отгоре. Този час се ползва и за Начален час в бланката за добавяне на нов ангажимент.
+this folder is empty	email	bg	Тази папка е празна
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	bg	При влизане в "Планер" ще виждате информацията за тази група. След това можете да поискате изобразяване на информацията за друга група.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	bg	Това овикновено се причинява от неправилно конфигуриран SMTP сървър. Съобщете на Вашия администратор.
+this is the name that appears in the account combobox. if for leave this blank, your accounts will be given a standard name like account[1]: jane doe, where jane doe is the name you give below as your full name. if you want to give an account a special name you can fill this in. no matter what, this is for your use, your emails will still use your full name as your from name for email messages. note that your full name for your email account 0 is the name you gave in the egroupware setup.	email	bg	Това е името, което се появява в падащия списък за избор на акаунт. Ако го оставяте празно на акаунтите Ви ще бъдат задавани стандартни имена като Account[1]:Jane Doe, където Jane Doe  е името, което сте задали в поле "Пълното Ви име" по-долу. Ако искате акаунта да има специално име, задайте го тук. То е само за Ваша употреба - писмата, които изпращате, ползват името в полето "Пълното Ви име" за име на подателя. Трябва да отбележа, че "Пълното Ви име" за акаунт 0 е името, което администраторът Ви е задал при създаването на Вашия акаунт.
+this is the name that appears in the users from address. the default mail account gets this value automatically from the phpgwapi. additional accounts are created with the phpgwapi supplied fullname you can specify a different fullname for each extra email account.	email	bg	Това е името, което се появява като име на подателя в писмата, които пращате. Името за акаунт 0 е името, което администраторът Ви е задал при създаването на Вашия акаунт. Акаунтите, допълнително добавени от Вас, могат да ползват зададено от Вас име.
+this message is sent for canceled or deleted events.	calendar	bg	Писмо с такъв текст ще бъде изпратено при прекратяване или премахване на ангажимент.
+this message is sent for modified or moved events.	calendar	bg	Писмо с такъв текст ще бъде изпратено при редактиране или преместване на ангажимент.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	bg	Когато записвате ново събитие, писмо с такъв текст ще получи всеки от участниците в събитието, който в предпочитанията си е задал да му бъде изпращано известие при добавяне на нов ангажимент. Можете да ползвате няколко променливи, които ще се заместват със съответните данни за ангажимента. За "Относно" в писмото се ползва първия ред от текста.
+this message is sent when you accept, tentative accept or reject an event.	calendar	bg	Писмо с такъв текст ще бъде изпратено, когато приемете, приемете с колебание или откажете участие в ангажимент.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	bg	Писмо с такъв текст ще получавате ако зададете "Напомняне" за дадено събитие. Можете да включите цялата информация, от която ще се нуждаете.
 this month	calendar	bg	Този месец
+this pref currently does nothing users may have more than one email account. in the future it is anticipated that automatic actions may be performed on these accounts, such as automatic new mail checks,auto filtering, etc... perhaps the user may want to disable an account so that these automatic actions do not occur for that account. this is one possible use. also, an admin may want to disable accounts from time to time.	email	bg	ТОВА ЗАСЕГА НЕ ПРАВИ НИЩО. Потребителите могат да имат повече от един e-mail акаунт. Очаква се в бъдеще да могат да бъдат извършвани автоматични действия с писмата в тези акаунти, като проверка за нови получени писма, автоматично филтриране и др. Възможно е потребителят да поиска да спре извършването на тези действия. Това е едно от възможните приложения.
+this pref currently does nothing<br>users may have more than one email account. in the future it is anticipated that automatic actions may be performedon these accounts, such as automatic new mail checks, auto filtering, etc... perhaps the user may want to disable an account so that these automatic actions do not occur for that account. this is one possible use.<br>also, an admin may want to disable accounts from time to time.	email	bg	ТОВА ЗАСЕГА НЕ ПРАВИ НИЩО.<br>Потребителите могат да имат повече от един e-mail акаунт. Очаква се в бъдеще да могат да бъдат извършвани автоматични действия с писмата в тези акаунти, като проверка за нови получени писма, автоматично филтриране и др. Възможно е потребителят да поиска да спре извършването на тези действия. Това е едно от възможните приложения.
+this specifies whether or not to show the number of new message in the folders combo box on the index screen.	email	bg	Определя дали в падащия списък с имената на папките "Покажи ми папка" да бъде изписван и броя на новите писма.
+this specifies whether or not to show the total size of folders by default. if this is not checked, you will be presented with a button allowing you to display folder size.	email	bg	Определя дали да бъде изобразяван обема на папките. Ако не е маркирано, можете да узнаете обема на папка с натискането на бутон.
+this text will be appended to the bottom of the users emails for this email account. currently, html tags are not supported. also, forwarded email will not get this email sig appended to it for reasons such as it clutters the email, the forwarded part probably has its own email sig from the original author, which is really the information that matters the most.	email	bg	Този текст ще се добавя в края на писмата, които пращате от този акаунт. За сега HTML не се поддържа. Освен това, този текст НЕ се добавя към препратените от Вас писма, тъй като те може да съдържат подобен текст от автора им, който текст е важен в този случай.
 this week	calendar	bg	Тази седмица
 this year	calendar	bg	Тази година
 thu	calendar	bg	Чет
 title	calendar	bg	Заглавие
 title of the event	calendar	bg	Заглавие на събитието
+to	email	bg	До
+to address	email	bg	Адрес на получателя
 today	calendar	bg	Днес
+total messages	email	bg	Общо писма
+translation	calendar	bg	Превод
+trash	email	bg	кошче
+trash folder	email	bg	папка за кошче
 tue	calendar	bg	Вто
-updated	calendar	bg	Обновено
-view this entry	calendar	bg	Преглед на това събитие
+u-wash mail folder	email	bg	U-Wash папка за писма
+u-wash mail folder - if applicable	email	bg	U-Wash папка за писма - Ако е приложимо
+unanswered	email	bg	неотговорени
+undeleted	email	bg	неизтрити
+undisclosed recipients	email	bg	Получателя запазен в тайна
+undisclosed sender	email	bg	Подателя запазен в тайна
+unflagged	email	bg	немаркирани
+unknown action	email	bg	Неизвестно действие
+unknown error	email	bg	Неизвестна грешка
+unknown translation	email	bg	неизвестен превод
+unseen	email	bg	непрочетени
+use custom settings	email	bg	Ползвай следващите потребителски настройки
+use end date	calendar	bg	Дата за край
+view formatted	email	bg	Форматиран вид
+view unformatted	email	bg	Неформатиран вид
+we have recently added this new addressbook so that users can choose to have a more complex addressbook that features a) easy, point and click searching, b) best suited for organizations with large central addressbooks with many categories. you can choose here which addressbook do you prefer.	email	bg	Добавихме скоро тази възможност за потребителите с много богат адресник. Позволява лесно търсене и маркиране. Подходящо за организации с голям общ адресник с много категории. Тук можете да изберете предпочитания вариант.
+we have recently added this new addressbook so that users can choose to have a more complex addressbook that features<br>a) easy, point and click searching,<br>b) best suited for organizations with large central addressbooks with many categories.<br>you can choose here which addressbook do you prefer.	email	bg	Добавихме скоро тази възможност за потребителите с много богат адресник. Позволява лесно търсене и маркиране. Подходящо за организации с голям общ адресник с много категории. Тук можете да изберете предпочитания вариант.
+we have three sizes that tell us how to better render the addressbook for you: 800x600 (addressbook will popout in a 700 pixel wide box), 1024x768 (it will be a 800 box), 1200x1600 (will be a 900 box). the fonts for all html stuff will be, respectively set to xx-small, x-small and normal (no font setting).	email	bg	Съобразявайки се с режима на Вашия екран ще изобразим Java адресника по един от тези три начина. Ако работите в режим 800х600 точки, адресника ще се появява със ширина 700 точки, а за режимите 1024х768 и 1200х1600 съответно 800 и 900 точки. Шрифта за трите режима ще бъде съответно много малък, малък и нормален.
 wed	calendar	bg	Сря
 week	calendar	bg	Седмица
-weekday starts on	calendar	bg	Седмицата започва от
-you do not have permission to read this record!	calendar	bg	Нямате права за прочитане на този запис!
-you have %1 high priority events on your calendar today.	common	bg	Днес имате %1 събития в календара с висок приоритет!
-you have 1 high priority event on your calendar today.	common	bg	Днес имате 1 събитие в календара с висок приоритет!
-you have a meeting scheduled for %1	calendar	bg	Имате среща, насрочена за %1
+weekday starts on	calendar	bg	Работната седмица започва в
+weekly	calendar	bg	Седмичен
+weekview	calendar	bg	Седмичен вид
+when creating new events default set to private	calendar	bg	При записване на нов ангажимент по подразбиране да е "Личен"
+which events do you want to see when you enter the calendar.	calendar	bg	Кои ангажименти искате да се изобразяват при влизане в "Календар" ?
+which of calendar view do you want to see, when you start calendar ?	calendar	bg	Предпочитан вид календар за изобразяване при влизане в приложението "Календар"
+work day ends on	calendar	bg	Работно време - край
+work day starts on	calendar	bg	Работно време - начало
+wrote	email	bg	запаметени
+yearly	calendar	bg	Годишен
+yearview	calendar	bg	Годишен вид
+you do not have permission to add alarms to this event !!!	calendar	bg	Нямате права за за добавяне на напомняне за това събитие!
+you do not have permission to delete this alarm !!!	calendar	bg	Нямате права за премахване на това напомняне!
+you do not have permission to enable/disable this alarm !!!	calendar	bg	Нямате права за разрешаване или забраняване на напомнянето!
+you do not have permission to read this record!	calendar	bg	Нямате права за четене на този запис!
+you have %1 high priority events on your calendar today.	common	bg	Днес в календара Ви има %1 ангажименти с висок приоритет.
+you have %1 new messages!	common	bg	Имате %1 нови писма!
+you have 1 high priority event on your calendar today.	common	bg	Днес в календара Ви има един ангажимент с висок приоритет.
+you have 1 new message!	common	bg	Имате 1 ново писмо!
+you have a meeting scheduled for %1	calendar	bg	Имате ангажимент, насрочен за %1
+you have messages!	common	bg	Имате съобщения!
+you have no new messages	common	bg	За Вас няма нови съобщения.
 you have not entered a title	calendar	bg	Не сте въвели заглавие
 you have not entered a valid date	calendar	bg	Не сте въвели валидна дата
-you have not entered a valid time of day	calendar	bg	Не сте въвели валидно време
-you have not entered participants	calendar	bg	Не се въвели участници
-you must enter one or more search keywords	calendar	bg	Трябва да въведете една или повече ключови думи
-your meeting scheduled for %1 has been canceled	calendar	bg	Срещата ви, насрочена за %1 беше отменена
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	bg	Насрочената ви среща за %1 беше променена за %2
+you have not entered a valid time of day	calendar	bg	Не сте въвели валиден час
+you have not entered participants	calendar	bg	Не сте въвели участници
+you must click	email	bg	Трябва да натиснете
+you must click %1 for the file to actually upload	email	bg	Трябва да натиснете %1 за да заредите файла
+you must enter one or more search keywords	calendar	bg	Трябва да въведете една или повече думи за търсене
+your full name	common	bg	Пълното Ви име
+your meeting scheduled for %1 has been canceled	calendar	bg	Вашият ангажимент, насрочен за %1 беше отменен
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	bg	Вашият ангажимент, насрочен за %1 беше пренасрочен за %2
+your message has been sent	common	bg	Писмото Ви е изпратено!
+your server administrator will set the default values for the following options. you may never need to change any of them. if you do need to use settings that are different from the defaults for the options below here, then check this box. default is disabled, not checked. if you fill in some of the options, but later decide to go back to the default values, unchecking this box will erase your custom values and put back the default values. all of the following options start out with the default value, so you may see some settings below even if you have never filled them in. this checkbox only shows up for the default email account. if you are setting up additional email accounts, you will be required to fill in the following options and this checkbox will not be displayed, it will be checked for all extra email accounts.	email	bg	Следващите настройки са направени от администратора на Вашия сървър. Някои ще имат зададени стойности, въпреки че никога не сте попълвали нищо в тях. Вероятно няма да се наложи да ги променяте, но ако все пак решите да го направите, маркирайте тази клетка. По подразбиране тя не е маркирана. Ако някога решите да се върнете към настройките, направени от администратора, можете да демаркирате клетката. При това, настройките направени от Вас ще бъдат изтрити и заменени с първоначалните им стойности. Тази клетка се появява само за основната пошенска кутия. Тя не се появява за евентуално активираните от Вас допълнителни пощенски кутии. Там тя ще е маркирана и Вие ще трябва да попълните тези настройки.
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	bg	Предпочетеното време <B> %1 - %2 </B> е в конфликт със следните съществуващи ангажименти:
