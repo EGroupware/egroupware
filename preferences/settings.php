@@ -97,21 +97,24 @@
          <td>
           <select name="lang">
           <?php 
-          $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; 
-          $strSql = "SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'";
-          $phpgw->db->query($strSql);
-          while ($phpgw->db->next_record()) {
-              echo "<option value=\"" . $phpgw->db->f("lang_id") . "\"";
-              if ($phpgw_info["user"]["preferences"]["common"]["lang"]) {
-                 if ($phpgw->db->f("lang_id") == $phpgw_info["user"]["preferences"]["common"]["lang"]) {
-                    echo " selected";
-                 }
-              } elseif ($phpgw->db->f("lang_id") == "EN") {
-                 echo " selected";
-              }
-              echo ">" . $phpgw->db->f("lang_name") . "</option>";
-          }
-          ?>
+            if (! $phpgw_info["user"]["preferences"]["common"]["lang"]) {
+               $phpgw_info["user"]["preferences"]["common"]["lang"] = "en";
+            }
+            $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; 
+            $strSql = "SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'";
+            $phpgw->db->query($strSql);
+            while ($phpgw->db->next_record()) {
+                echo "<option value=\"" . $phpgw->db->f("lang_id") . "\"";
+                if ($phpgw_info["user"]["preferences"]["common"]["lang"]) {
+                   if ($phpgw->db->f("lang_id") == $phpgw_info["user"]["preferences"]["common"]["lang"]) {
+                      echo " selected";
+                   }
+                } elseif ($phpgw->db->f("lang_id") == "EN") {
+                   echo " selected";
+                }
+                echo ">" . $phpgw->db->f("lang_name") . "</option>";
+            }
+            ?>
           </select>
          </td>
        </tr>
