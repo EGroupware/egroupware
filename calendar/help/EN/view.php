@@ -31,4 +31,3 @@ Current week is displayed. Start day of week can be set in preferences.<p/>
 <i>Month:</i><br/>
 Default entry is to the current month, viewed in monthly option, with both prior and future
 months easily accessible with one click.<p/></li></ul></font>
-<?php $phpgw->common->phpgw_footer(); ?>

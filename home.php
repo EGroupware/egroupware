@@ -205,5 +205,4 @@
 		}
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
-	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

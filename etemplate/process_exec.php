@@ -20,5 +20,3 @@
 	include('../header.inc.php');
 
 	ExecMethod('etemplate.etemplate.process_exec');
-
-	$GLOBALS['phpgw']->common->phpgw_footer();

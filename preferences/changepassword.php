@@ -61,7 +61,6 @@
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
 			$GLOBALS['phpgw']->template->pfp('out','form');
-			$GLOBALS['phpgw']->common->phpgw_footer();
 		}
 		else
 		{
@@ -88,6 +87,5 @@
 	{
 		$GLOBALS['phpgw']->common->phpgw_header();
 		$GLOBALS['phpgw']->template->pfp('out','form');
-		$GLOBALS['phpgw']->common->phpgw_footer();
 	}
 ?>

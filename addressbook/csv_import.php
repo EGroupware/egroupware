@@ -381,5 +381,4 @@
 
 	$GLOBALS['phpgw']->template->set_var('hiddenvars',$hiddenvars);
 	$GLOBALS['phpgw']->template->fp('phpgw_body','import');
-	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

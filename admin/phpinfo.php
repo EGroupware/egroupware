@@ -26,6 +26,4 @@
 	}
 
 	phpinfo();
-
-//	$phpgw->common->phpgw_footer();
 ?>

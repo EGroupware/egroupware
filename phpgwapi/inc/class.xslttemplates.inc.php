@@ -1,4 +1,17 @@
 <?php
+
+	if (!extension_loaded('xslt'))
+	{
+		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2')
+		{
+			dl('php_xslt.dll');	
+		}
+		else
+		{
+			dl('xslt.so');
+		}
+	}
+
 	require_once('class.xmltool.inc.php');
 
 	class xslttemplates

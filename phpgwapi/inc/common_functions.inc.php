@@ -528,21 +528,27 @@
 
 		/* error_reporting(0); */
 		list($appname,$classname) = explode('.', $class);
+		$filename = PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php';
+		$included_files = get_included_files();
 
-		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
-			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
+		if (!isset($included_files[$filename]))
 		{
-			if(@file_exists(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
+			if(@file_exists($filename))
 			{
-				include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
-				$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
+				include_once($filename);
+				$is_included = True;
 			}
 			else
 			{
-				$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = False;
+				$is_included = False;
 			}
 		}
-		if($GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
+		else
+		{
+			$is_included = True;
+		}
+		
+		if($is_included)
 		{
 			if ($p1 == '_UNDEF_' && $p1 != 1)
 			{

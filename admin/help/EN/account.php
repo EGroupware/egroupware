@@ -30,4 +30,3 @@ Create, edit and delete users accounts. Set membership of groups, and access to 
 <i>User groups:</i><br/>
 Create, edit and delete groups.<p/>
 </ul></font>
-<?php $phpgw->common->phpgw_footer(); ?>

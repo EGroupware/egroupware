@@ -64,8 +64,6 @@
 			$this->template->set_var('group_option',$group_option);
 
 			$this->template->pparse('out','vcardin');
-
-			$GLOBALS['phpgw']->common->phpgw_footer();
 		}
 
 		function out()
@@ -188,11 +186,6 @@
 				echo lang('Vcards require a last name entry.') . '<br><br>';
 				echo '<a href="' . $GLOBALS['phpgw']->link('/addressbook/index.php') . '">' . lang('OK') . '</a>';
 				echo '</center>';
-			}
-
-			if($nolname || $nofname)
-			{
-				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 		}
 	}

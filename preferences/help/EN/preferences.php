@@ -67,4 +67,3 @@ of the system. Title,Phone number, Comments, Picture upload.</li><p/>
 <li><b>Monitor Newsgroups:</b><br/>
 Easily choose which news groups you want to set for reading.</li></ul>
 </font>
-<?php $phpgw->common->phpgw_footer(); ?>

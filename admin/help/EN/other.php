@@ -29,4 +29,3 @@ Manual update for news groups.</li><p/>
 <li><b>Server information:</b><br/>
 At present phpinfo of the server that is running.</li><p/>
 </ul></font>
-<?php $phpgw->common->phpgw_footer(); ?>

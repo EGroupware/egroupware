@@ -29,4 +29,3 @@
 <li><b>サーバ情報:</b><br/>
 サーバで動作している PHP の情報を、phpinfo() で表示します。</li><p/>
 </ul></font>
-<?php $phpgw->common->phpgw_footer(); ?>

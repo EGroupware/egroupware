@@ -61,4 +61,3 @@ To edit an entry group click on the small icon as shown above.
 A form page will be presented, where you can edit the relevant fields.
 Chose edit or delete from the bottom of the page.<br/>
 <b>Note:</b>You can only make changes or delete those calendar entries created by you.</li><p/></ul></font>
-<?php $phpgw->common->phpgw_footer(); ?>

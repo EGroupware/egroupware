@@ -32,4 +32,3 @@ Administration of all applications, user and group accounts, session logging and
 <p><i>View Access Log:</i>
 <br>LoginId, IP, Login Time, Logout Time, Total time spent.
 </ul>
-<?php $phpgw->common->phpgw_footer(); ?>

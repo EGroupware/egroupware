@@ -23,5 +23,4 @@
 
 	$obj = CreateObject('addressbook.uiaddressbook');
 	$obj->index();
-	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

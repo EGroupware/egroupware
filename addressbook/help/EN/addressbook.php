@@ -52,5 +52,3 @@ Simply fill in the fields, and click OK.</li><p/></ul>
 Access can be restricted to private, overriding acl preferences settings.
 From preferences, you can grant access to users to the be able to view, 
 edit, and even delete your entries.<p/>
-<?php $phpgw->common->phpgw_footer(); ?>
-

@@ -89,6 +89,4 @@
 
 	$GLOBALS['phpgw']->hooks->process('admin');
 	$GLOBALS['admin_tpl']->pparse('out','list');
-
-	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

@@ -135,5 +135,4 @@
 
 	$GLOBALS['phpgw']->hooks->process('preferences',array('preferences'));
 	$pref_tpl->pfp('out','list');
-	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

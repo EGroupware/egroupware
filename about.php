@@ -53,5 +53,4 @@
 	}
 
 	$tpl->pparse('out','phpgw_about');
-	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

@@ -106,6 +106,4 @@
 		$_obj->get_list();
 		*/
 	}
-
-	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

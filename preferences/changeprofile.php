@@ -105,6 +105,3 @@
    </table>
 
   </form>
-<?php
-	$GLOBALS['phpgw']->common->phpgw_footer();
-?>

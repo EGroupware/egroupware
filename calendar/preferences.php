@@ -234,5 +234,4 @@
 	display_item(lang('Print calendars in black & white'),$str);
 
 	$p->pparse('out','pref');
-	$phpgw->common->phpgw_footer();
 ?>

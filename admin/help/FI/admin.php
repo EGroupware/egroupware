@@ -50,4 +50,3 @@ Uutisryhmien päivitys käsin.</li><p/>
 <li><b>Palvelimen tiedot:</b><br/>
 Tällä hetkellä palvelimen phpinfo.</li><p/>
 </ul></font>
-<?php $phpgw->common->phpgw_footer(); ?>

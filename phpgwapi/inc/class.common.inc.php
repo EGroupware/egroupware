@@ -1506,7 +1506,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 		function phpgw_footer()
 		{
-			global $HTMLCOMPLIANT;
 			if(!defined('PHPGW_FOOTER_RAN'))
 			{
 				define('PHPGW_FOOTER_RAN',True);
@@ -1522,22 +1521,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$GLOBALS['phpgw']->db->disconnect();
 					$this->phpgw_header();
 					$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
-/*
-				
-					$GLOBALS['phpgw']->template->p('phpgw_head');
-					$GLOBALS['phpgw']->template->p('phpgw_navbar_start');
-					$this->msgbox('',False);
-					$GLOBALS['phpgw']->template->fp('phpgw_msgbox');
-					$GLOBALS['phpgw']->template->p('phpgw_appspace');
-					$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
-					parse_navbar_end();
-					$GLOBALS['phpgw']->template->reset_root();
-					$GLOBALS['phpgw']->hooks->process('navbar_end');
-					$GLOBALS['phpgw']->template->p('phpgw_navbar_end');
-					$GLOBALS['phpgw']->template->p('phpgw_footer');
-					$GLOBALS['phpgw']->template->parse('phpgw_main_body','login_form');
-					$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
-*/	
 				}
 
 				/* Clean up mcrypt */

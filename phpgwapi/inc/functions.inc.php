@@ -269,6 +269,12 @@
 	define('PHPGW_ACL_GROUP_MANAGERS',32);
 
 	/****************************************************************************\
+	* Forcing the footer to run when the rest of the script is done.             *
+	\****************************************************************************/
+	$footer_common = &$GLOBALS['phpgw']->common;
+	register_shutdown_function(array(&$footer_common, 'phpgw_footer'));
+	
+	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
 	\****************************************************************************/
 	if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'logout')
@@ -476,7 +482,7 @@
 			}
 			if(PHPGW_USE_FRAMES)
 			{
-				$GLOBALS['phpgw']->common->phpgw_footer();
+				exit;
 			}
 		}
 		/*************************************************************************\
@@ -498,7 +504,7 @@
 			}
 			if(PHPGW_USE_FRAMES)
 			{
-				$GLOBALS['phpgw']->common->phpgw_footer();
+				exit;
 			}
 		}
 		/*************************************************************************\
@@ -520,7 +526,7 @@
 			}
 			if(PHPGW_USE_FRAMES)
 			{
-				$GLOBALS['phpgw']->common->phpgw_footer();
+				exit;
 			}
 		}
 		/*************************************************************************\
@@ -542,7 +548,7 @@
 			}
 			if(PHPGW_USE_FRAMES)
 			{
-				$GLOBALS['phpgw']->common->phpgw_footer();
+				exit;
 			}
 		}
 		
@@ -571,7 +577,6 @@
 					$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
 					$continue_app_data = False;
 					$GLOBALS['phpgw']->template->set_var('phpgw_body',"user has no rights to this app!!!<br>\n");
-					//$GLOBALS['phpgw']->common->phpgw_footer();
 					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 			}
@@ -581,6 +586,11 @@
 				if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
 				{
 					$GLOBALS['phpgw']->common->phpgw_header();
+				}
+				
+				if(!PHPGW_USE_FRAMES)
+				{
+//					echo '<div style="width: 100%; height: 100%; overflow: auto;">';
 				}
 
 				/* Make sure user is keeping his password in order */

@@ -68,7 +68,6 @@
 			elseif(@isset($save_my_owner))
 			{
 				echo '<center>'.lang('You do not have permission to set ACL\'s in this mode!').'</center>';
-				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 			*/
 
