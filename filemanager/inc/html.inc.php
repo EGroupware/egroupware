@@ -1,82 +1,110 @@
 <?php
 
-function html_form_begin ($action, $method = "post", $enctype = NULL, $string = HTML_FORM_BEGIN_STRING, $return = 0)
+function html_form_begin ($action, $method = 'post', $enctype = NULL, $string = HTML_FORM_BEGIN_STRING, $return = 0)
 {
-	global $phpgw;
-	global $sep;
-
 	$action = string_encode ($action, 1);
-	$action = $sep . $action;
-	$action = html_link ($action, NULL, 1, 0, 1);
+	$action = SEP . $action;
+	$text = 'action="'.html_link ($action, NULL, 1, 0, 1).'"';
 
 	if ($method == NULL)
-		$method = "post";
-	$method = "method=$method";
+	{
+		$method = 'post';
+	}
+	$text .= ' method="'.$method.'"';
+	
 	if ($enctype != NULL && $enctype)
-		$enctype = "enctype=$enctype";
-	$rstring = "<form action=$action $method $enctype $string>";
+	{
+		$text .= ' enctype="'.$enctype.'"';
+	}
+	
+	$rstring = '<form '.$text.' '.$string.'>';
 	return (eor ($rstring, $return));
 }
 
 function html_form_input ($type = NULL, $name = NULL, $value = NULL, $maxlength = NULL, $size = NULL, $checked = NULL, $string = HTML_FORM_INPUT_STRING, $return = 0)
 {
+	$text = ' ';
 	if ($type != NULL && $type)
 	{
-		if ($type == "checkbox")
+		if ($type == 'checkbox')
 		{
 			$value = string_encode ($value, 1);
 		}
-		$type = "type=$type";
+		$text .= 'type="'.$type.'" ';
 	}
 	if ($name != NULL && $name)
-		$name = "name=\"$name\"";
+	{
+		$text .= 'name="'.$name.'" ';
+	}
 	if ($value != NULL && $value)
 	{
-		$value = "value=\"$value\"";
+		$text .= 'value="'.$value.'" ';
 	}
 	if (is_int ($maxlength) && $maxlength >= 0)
-		$maxlength = "maxlength=$maxlength";
+	{
+		$text .= 'maxlength="'.$maxlength.'" ';
+	}
 	if (is_int ($size) && $size >= 0)
-		$size = "size=$size";
+	{
+		$text .= 'size="'.$size.'" ';
+	}
 	if ($checked != NULL && $checked)
-		$checked = "checked";
-	$rstring = "<input $type $name $value $maxlength $size $checked $string>";
+	{
+		$text .= 'checked ';
+	}
+
+	$rstring = '<input'.$text.$string.'>';
 	return (eor ($rstring, $return));
 }
 
 function html_form_textarea ($name = NULL, $rows = NULL, $cols = NULL, $value = NULL, $string = HTML_FORM_TEXTAREA_STRING, $return = 0)
 {
+	$text =' ';
 	if ($name != NULL && $name)
-		$name = "name=\"$name\"";
+	{
+		$text .= 'name="'.$name.'" ';
+	}
 	if (is_int ($rows) && $rows >= 0)
-		$rows = "rows=$rows";
+	{
+		$text .= 'rows="'.$rows.'" ';
+	}
 	if (is_int ($cols) && $cols >= 0)
-		$cols = "cols=$cols";
-	$rstring = "<textarea $name $rows $cols $string>$value</textarea>";
+	{
+		$text .= 'cols="'.$cols.'" ';
+	}
+	$rstring = '<textarea'.$text.$string.'>'.$value.'</textarea>';
 	return (eor ($rstring, $return));
 }
 
 function html_form_select_begin ($name = NULL, $return = 0)
 {
+	$test = ' ';
 	if ($name != NULL && $name)
-		$name = "name=$name";
-	$rstring = "<select $name>";
+	{
+		$text = 'name="'.$name.'" ';
+	}
+	$rstring = '<select'.$text.'>';
 	return (eor ($rstring, $return));
 }
 
 function html_form_select_end ($return = 0)
 {
-	$rstring = "</select>";
+	$rstring = '</select>';
 	return (eor ($rstring, $return));
 }
 
 function html_form_option ($value = NULL, $displayed = NULL, $selected = NULL, $return = 0)
 {
+	$text = ' ';
 	if ($value != NULL && $value)
-		$value = "value=\"$value\"";
+	{
+		$text .= ' value="'.$value.'" ';
+	}
 	if ($selected != NULL && $selected)
-		$selected = "selected";
-	$rstring = "<option $value $selected>$displayed</option>";
+	{
+		$text .= ' selected';
+	}
+	$rstring = '<option'.$text.'>'.$displayed.'</option>';
 	return (eor ($rstring, $return));
 }
 
@@ -89,16 +117,24 @@ function html_form_end ($return = 0)
 function html_nbsp ($times = 1, $return = 0)
 {
 	if ($times == NULL)
+	{
 		$times = 1;
+	}
 	for ($i = 0; $i != $times; $i++)
 	{
 		if ($return)
-			$rstring .= "&nbsp;";
+		{
+			$rstring .= '&nbsp;';
+		}
 		else
-			echo "&nbsp;";
+		{
+			echo '&nbsp;';
+		}
 	}
 	if ($return)
+	{
 		return ($rstring);
+	}
 }
 
 function html ($string, $times = 1, $return = 0)
@@ -106,23 +142,35 @@ function html ($string, $times = 1, $return = 0)
 	for ($i = 0; $i != $times; $i++)
 	{
 		if ($return)
+		{
 			$rstring .= $string;
+		}
 		else
+		{
 			echo $string;
+		}
 	}
 	if ($return)
+	{
 		return ($rstring);
+	}
 }
 
-function html_break ($break, $string = "", $return = 0)
+function html_break ($break, $string = '', $return = 0)
 {
-	if ($break == 1)
-		$break = '<br>';
-	if ($break == 2)
-		$break = '<p>';
-	if ($break == 5)
-		$break = '<hr>';
-	return (eor ($break . $string, $return));
+	switch($break)
+	{
+		case 1:
+			$break_str = '<br>';
+			break;
+		case 2:
+			$break_str = '<p>';
+			break;
+		case 5:
+			$break_str = '<hr>';
+			break;
+	}
+	return (eor ($break_str . $string, $return));
 }
 
 function html_page_begin ($title = NULL, $return = 0)
@@ -133,71 +181,91 @@ function html_page_begin ($title = NULL, $return = 0)
 
 function html_page_body_begin ($bgcolor = HTML_PAGE_BODY_COLOR, $background = NULL, $text = NULL, $link = NULL, $vlink = NULL, $alink = NULL, $string = HTML_PAGE_BODY_STRING, $return = 0)
 {
+	$text_out = ' ';
 	if ($bgcolor != NULL && $bgcolor)
-		$bgcolor = "bgcolor=$bgcolor";
+	{
+		$text_out .= 'bgcolor="'.$bgcolor.'" ';
+	}
 	if ($background != NULL && $background)
-		$background = "background=$background";
+	{
+		$text_out .= 'background="'.$background.'" ';
+	}
 	if ($text != NULL && $text)
-		$text = "text=$text";
+	{
+		$text_out .= 'text="'.$text.'" ';
+	}
 	if ($link != NULL && $link)
-		$link = "link=$link";
+	{
+		$text_out .= 'link="'.$link.'" ';
+	}
 	if ($vlink != NULL && $vlink)
-		$vlink = "vlink=$vlink";
+	{
+		$text_out .= 'vlink="'.$vlink.'" ';
+	}
 	if ($alink != NULL && $alink)
-		$alink = "alink=$alink";
-//	$rstring = "<body $bgcolor $background $text $link $vlink $alink $string>";
+	{
+		$text_out .= 'alink="'.$alink.'" ';
+	}
+//	$rstring = '<body'.$text_out.$string.'>';
 	return (eor ($rstring, $return));
 }
 
 function html_page_body_end ($return = 0)
 {
-//	$rstring = "</body>";
+//	$rstring = '</body>';
 	return (eor ($rstring, $return));
 }
 
 function html_page_end ($return = 0)
 {
-//	$rstring = "</html>";
+//	$rstring = '</html>';
 	return (eor ($rstring, $return));
 }
 
 function html_page_close ()
 {
-	global $phpgw;
 //	html_page_body_end ();
 //	html_page_end ();
-	$phpgw->common->phpgw_footer ();
-	$phpgw->common->phpgw_exit ();
+	$GLOBALS['phpgw']->common->phpgw_footer ();
+	$GLOBALS['phpgw']->common->phpgw_exit ();
 }
 function html_text_bold ($text = NULL, $return = 0, $lang = 0)
 {
 	if ($lang)
+	{
 		$text = translate ($text);
-	$rstring = "<b>$text</b>";	
+	}
+	$rstring = '<b>'.$text.'</b>';	
 	return (eor ($rstring, $return));
 }
 
 function html_text_underline ($text = NULL, $return = 0, $lang = 0)
 {
 	if ($lang)
+	{
 		$text = translate ($text);
-	$rstring = "<u>$text</u>";
+	}
+	$rstring = '<u>'.$text.'</u>';
 	return (eor ($rstring, $return));
 }
 
 function html_text_italic ($text = NULL, $return = 0, $lang = 0)
 {
 	if ($lang)
+	{
 		$text = translate ($text);
-	$rstring = "<i>$text</i>";
+	}
+	$rstring = '<i>'.$text.'</i>';
 	return (eor ($rstring, $return));
 }
 
 function html_text_summary ($text = NULL, $size = NULL, $return = 0, $lang = 0)
 {
 	if ($lang)
+	{
 		$text = translate ($text);
-	$rstring .= html_break (1, NULL, $return);
+	}
+	$rstring = html_break (1, NULL, $return);
 	$rstring .= html_text_bold ($text, $return);
 	$rstring .= html_nbsp (3, $return);
 	if ($size != NULL && $size >= 0)
@@ -206,24 +274,36 @@ function html_text_summary ($text = NULL, $size = NULL, $return = 0, $lang = 0)
 	$rstring = html_encode ($rstring, 1);
 
 	if ($return)
+	{
 		return ($rstring);
+	}
 }
 
 function html_text_summary_error ($text = NULL, $text2 = NULL, $size = NULL, $return = 0, $lang = 0)
 {
 	if ($lang)
+	{
 		$text = translate ($lang);
-	$rstring .= html_text_error ($text, 1, $return);
+	}
+	$rstring = html_text_error ($text, 1, $return);
 
 	if (($text2 != NULL && $text2) || ($size != NULL && $size))
+	{
 		$rstring .= html_nbsp (3, $return);
+	}
 	if ($text2 != NULL && $text2)
+	{
 		$rstring .= html_text_error ($text2, NULL, $return);
+	}
 	if ($size != NULL && $size >= 0)
+	{
 		$rstring .= borkb ($size, 1, $return);
+	}
 
 	if ($return)
+	{
 		return ($rstring);
+	}
 }
 
 function html_font_set ($size = NULL, $color = NULL, $family = NULL, $return = 0)
@@ -272,10 +352,6 @@ function html_page_error ($errorwas = NULL, $title = "Error", $return = 0)
 
 function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linkonly = 0, $target = NULL)
 {
-	global $phpgw;
-	global $sep;
-	global $appname;
-
 	if ($encode)
 		$href = string_encode ($href, 1);
 
@@ -288,11 +364,11 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linko
 	/* Auto-detect and don't disturb absolute links */
 	if (!preg_match ("|^http(.{0,1})://|", $href))
 	{
-		$href = $sep . $href;
+		$href = SEP . $href;
 
 		/* $phpgw->link requires that the extra vars be passed separately */
 		$link_parts = explode ("?", $href, 2);
-		$address = $phpgw->link ($link_parts[0], $link_parts[1]);
+		$address = $GLOBALS['phpgw']->link ($link_parts[0], $link_parts[1]);
 	}
 	else
 	{
@@ -307,9 +383,11 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linko
 	else
 	{
 		if ($target)
-			$target = "target=$target";
+		{
+			$target = 'target='.$target;
+		}
 
-		$rstring = "<a href=$address $target>$text</a>";
+		$rstring = '<a href="'.$address.'" '.$target.'>'.$text.'</a>';
 	}
 
 	return (eor ($rstring, $return));
@@ -317,12 +395,9 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linko
 
 function html_link_back ($return = 0)
 {
-	global $hostname;
 	global $path;
-	global $groupinfo;
-	global $appname;
 
-	$rstring .= html_link ("$appname/index.php?path=$path", HTML_TEXT_NAVIGATION_BACK_TO_USER, 1);
+	$rstring .= html_link ($GLOBALS['appname'].'/index.php?path='.$path, HTML_TEXT_NAVIGATION_BACK_TO_USER, 1);
 
 	return (eor ($rstring, $return));
 }

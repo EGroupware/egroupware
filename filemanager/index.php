@@ -6,11 +6,18 @@
 
 $phpwh_debug = 0;
 
-reset ($GLOBALS['HTTP_POST_VARS']);
+@reset ($GLOBALS['HTTP_POST_VARS']);
 while (list ($name,) = each ($GLOBALS['HTTP_POST_VARS']))
 {
 	$$name = $GLOBALS['HTTP_POST_VARS'][$name];
 }
+
+@reset ($GLOBALS['HTTP_GET_VARS']);
+while (list ($name,) = each ($GLOBALS['HTTP_GET_VARS']))
+{
+	$$name = $GLOBALS['HTTP_GET_VARS'][$name];
+}
+
 
 $to_decode = array
 (
@@ -63,29 +70,29 @@ while (list ($var, $conditions) = each ($to_decode))
 	}
 }
 
-if ($noheader || $nofooter || ($download && (count ($fileman) > 0)) || ($op == "view" && $file) || ($op == "history" && $file) || ($op == help && $help_name))
+if ($noheader || $nofooter || ($download && (count ($fileman) > 0)) || ($op == 'view' && $file) || ($op == 'history' && $file) || ($op == 'help' && $help_name))
 {
 	$noheader = True;
 	$nofooter = True;
 }
 
-$phpgw_info["flags"] = array
+$GLOBALS['phpgw_info']['flags'] = array
 (
-	"currentapp"	=> "phpwebhosting",
-	"noheader"	=> $noheader,
-	"nofooter"	=> $nofooter,
-	"noappheader"	=> False,
-	"enable_vfs_class"	=> True,
-	"enable_browser_class"	=> True
+	'currentapp'	=> 'phpwebhosting',
+	'noheader'	=> $noheader,
+	'nofooter'	=> $nofooter,
+	'noappheader'	=> False,
+	'enable_vfs_class'	=> True,
+	'enable_browser_class'	=> True
 );
 
-include ("../header.inc.php");
+include ('../header.inc.php');
 
 if ($execute && $command_line)
 {
-	if ($result = $phpgw->vfs->command_line (stripslashes ($command_line)))
+	if ($result = $GLOBALS['phpgw']->vfs->command_line (stripslashes ($command_line)))
 	{
-		$messages = html_text_bold ("Command sucessfully run", 1);
+		$messages = html_text_bold ('Command sucessfully run', 1);
 		if ($result != 1 && strlen ($result) > 0)
 		{
 			$messages .= html_break (2, NULL, 1) . $result;
@@ -93,7 +100,7 @@ if ($execute && $command_line)
 	}
 	else
 	{
-		$messages = $phpgw->common->error_list (array ("Error running command"));
+		$messages = $GLOBALS['phpgw']->common->error_list (array ('Error running command'));
 	}
 }
 
@@ -114,40 +121,40 @@ if ($go)
 
 if (!$path)
 {
-	$path = $phpgw->vfs->pwd ();
+	$path = $GLOBALS['phpgw']->vfs->pwd ();
 
-	if (!$path || $phpgw->vfs->pwd (False) == "")
+	if (!$path || $GLOBALS['phpgw']->vfs->pwd (False) == '')
 	{
-		$path = $homedir;
+		$path = $GLOBALS['homedir'];
 	}
 }
 
-$phpgw->vfs->cd (False, False, array (RELATIVE_NONE));
-$phpgw->vfs->cd ($path, False, array (RELATIVE_NONE));
+$GLOBALS['phpgw']->vfs->cd (False, False, array (RELATIVE_NONE));
+$GLOBALS['phpgw']->vfs->cd ($path, False, array (RELATIVE_NONE));
 
-$pwd = $phpgw->vfs->pwd ();
+$pwd = $GLOBALS['phpgw']->vfs->pwd ();
 
-if (!$cwd = substr ($path, strlen ($homedir) + 1))
+if (!$cwd = substr ($path, strlen ($GLOBALS['homedir']) + 1))
 {
-	$cwd = "/";
+	$cwd = '/';
 }
 else
 {
-	$cwd = substr ($pwd, strrpos ($pwd, "/") + 1);
+	$cwd = substr ($pwd, strrpos ($pwd, '/') + 1);
 }
 
 $disppath = $path;
 
 /* This just prevents // in some cases */
-if ($path == "/")
-	$dispsep = "";
+if ($path == '/')
+	$dispsep = '';
 else
-	$dispsep = "/";
+	$dispsep = '/';
 
-if (!($lesspath = substr ($path, 0, strrpos ($path, "/"))))
-	$lesspath = "/";
+if (!($lesspath = substr ($path, 0, strrpos ($path, '/'))))
+	$lesspath = '/';
 
-$now = date ("Y-m-d");
+$now = date ('Y-m-d');
 
 if ($phpwh_debug)
 {
@@ -158,17 +165,17 @@ if ($phpwh_debug)
 		lesspath: $lesspath
 		<p>
 		<b>phpGW debug:</b><br>
-		real getabsolutepath: " . $phpgw->vfs->getabsolutepath (False, False, False) . "<br>
-		fake getabsolutepath: " . $phpgw->vfs->getabsolutepath (False) . "<br>
-		appsession: " . $phpgw->common->appsession () . "<br>
-		pwd: " . $phpgw->vfs->pwd () . "<br>";
+		real getabsolutepath: " . $GLOBALS['phpgw']->vfs->getabsolutepath (False, False, False) . "<br>
+		fake getabsolutepath: " . $GLOBALS['phpgw']->vfs->getabsolutepath (False) . "<br>
+		appsession: " . $GLOBALS['phpgw']->session->appsession ('vfs','') . "<br>
+		pwd: " . $GLOBALS['phpgw']->vfs->pwd () . "<br>";
 }
 
 ###
 # Get their memberships to be used throughout the script
 ###
 
-$memberships = $phpgw->accounts->membership ($userinfo["username"]);
+$memberships = $GLOBALS['phpgw']->accounts->membership ($GLOBALS['userinfo']['username']);
 
 if (!is_array ($memberships))
 {
@@ -177,10 +184,10 @@ if (!is_array ($memberships))
 
 while (list ($num, $group_array) = each ($memberships))
 {
-	$membership_id = $phpgw->accounts->name2id ($group_array["account_name"]);
+	$membership_id = $GLOBALS['phpgw']->accounts->name2id ($group_array['account_name']);
 
 	$group_applications = CreateObject('phpgwapi.applications', $membership_id);
-	$membership_applications[$group_array["account_name"]] = $group_applications->read_account_specific ();
+	$membership_applications[$group_array['account_name']] = $group_applications->read_account_specific ();
 }
 
 ###
@@ -188,47 +195,47 @@ while (list ($num, $group_array) = each ($memberships))
 # and set the VFS working_id appropriately
 ###
 
-if ((preg_match ("+^$fakebase\/(.*)(\/|$)+U", $path, $matches)) && $matches[1] != $userinfo["account_lid"])
+if ((preg_match ('+^'.$GLOBALS['fakebase'].'\/(.*)(\/|$)+U', $path, $matches)) && $matches[1] != $GLOBALS['userinfo']['account_lid'])
 {
-	$phpgw->vfs->working_id = $phpgw->accounts->name2id ($matches[1]);
+	$GLOBALS['phpgw']->vfs->working_id = $GLOBALS['phpgw']->accounts->name2id ($matches[1]);
 }
 else
 {
-	$phpgw->vfs->working_id = $userinfo["username"];
+	$GLOBALS['phpgw']->vfs->working_id = $GLOBALS['userinfo']['username'];
 }
 
-if ($path != $homedir && $path != $fakebase && $path != "/" && !$phpgw->vfs->acl_check ($path, array (RELATIVE_NONE), PHPGW_ACL_READ))
+if ($path != $GLOBALS['homedir'] && $path != $GLOBALS['fakebase'] && $path != '/' && !$GLOBALS['phpgw']->vfs->acl_check ($path, array (RELATIVE_NONE), PHPGW_ACL_READ))
 {
-	echo $phpgw->common->error_list (array ("You do not have access to $path"));
+	echo $GLOBALS['phpgw']->common->error_list (array ('You do not have access to '.$path));
 	html_break (2);
-	html_link ("$appname/index.php?path=$homedir", "Go to your home directory");
+	html_link ($GLOBALS['appname'].'/index.php?path='.$GLOBALS['homedir'], 'Go to your home directory');
 	html_page_close ();
 }
 
-$userinfo["working_id"] = $phpgw->vfs->working_id;
-$userinfo["working_lid"] = $phpgw->accounts->id2name ($userinfo["working_id"]);
+$GLOBALS['userinfo']['working_id'] = $GLOBALS['phpgw']->vfs->working_id;
+$GLOBALS['userinfo']['working_lid'] = $GLOBALS['phpgw']->accounts->id2name ($GLOBALS['userinfo']['working_id']);
 
 ###
 # If their home directory doesn't exist, we create it
 # Same for group directories
 ###
 
-if (($path == $homedir) && !$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
+if (($path == $GLOBALS['homedir']) && !$GLOBALS['phpgw']->vfs->file_exists ($GLOBALS['homedir'], array (RELATIVE_NONE)))
 {
-	$phpgw->vfs->override_acl = 1;
-	$phpgw->vfs->mkdir ($homedir, array (RELATIVE_NONE));
-	$phpgw->vfs->override_acl = 0;
+//	$GLOBALS['phpgw']->vfs->override_acl = 1;
+	$GLOBALS['phpgw']->vfs->mkdir ($GLOBALS['homedir'], array (RELATIVE_NONE));
+//	$GLOBALS['phpgw']->vfs->override_acl = 0;
 }
-elseif (preg_match ("|^$fakebase\/(.*)$|U", $path, $matches))
+elseif (preg_match ('|^'.$GLOBALS['fakebase'].'\/(.*)$|U', $path, $matches))
 {
-	if (!$phpgw->vfs->file_exists ($path, array (RELATIVE_NONE)))
+	if (!$GLOBALS['phpgw']->vfs->file_exists ($path, array (RELATIVE_NONE)))
 	{
-		$phpgw->vfs->override_acl = 1;
-		$phpgw->vfs->mkdir ($path, array (RELATIVE_NONE));
-		$phpgw->vfs->override_acl = 0;
+//		$GLOBALS['phpgw']->vfs->override_acl = 1;
+		$GLOBALS['phpgw']->vfs->mkdir ($path, array (RELATIVE_NONE));
+//		$GLOBALS['phpgw']->vfs->override_acl = 0;
 
-		$group_id = $phpgw->accounts->name2id ($matches[1]);
-		$phpgw->vfs->set_attributes ($path, array (RELATIVE_NONE), array ("owner_id" => $group_id, "createdby_id" => $group_id));
+		$group_id = $GLOBALS['phpgw']->accounts->name2id ($matches[1]);
+		$GLOBALS['phpgw']->vfs->set_attributes ($path, array (RELATIVE_NONE), array ('owner_id' => $group_id, 'createdby_id' => $group_id));
 	}
 }
 
@@ -236,13 +243,13 @@ elseif (preg_match ("|^$fakebase\/(.*)$|U", $path, $matches))
 # Verify path is real
 ###
 
-if ($path != $homedir && $path != "/" && $path != $fakebase)
+if ($path != $GLOBALS['homedir'] && $path != '/' && $path != $GLOBALS['fakebase'])
 {
-	if (!$phpgw->vfs->file_exists ($path, array (RELATIVE_NONE)))
+	if (!$GLOBALS['phpgw']->vfs->file_exists ($path, array (RELATIVE_NONE)))
 	{
-		echo $phpgw->common->error_list (array ("Directory $path does not exist"));
+		echo $GLOBALS['phpgw']->common->error_list (array ('Directory '.$path.' does not exist'));
 		html_break (2);
-		html_link ("$appname/index.php?path=$homedir", "Go to your home directory");
+		html_link ($GLOBALS['appname'].'/index.php?path='.$GLOBALS['homedir'], 'Go to your home directory');
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
@@ -253,7 +260,7 @@ if ($path != $homedir && $path != "/" && $path != $fakebase)
 srand ((double) microtime() * 1000000);
 if ($update || rand (0, 19) == 4)
 {
-	$phpgw->vfs->update_real ($path, array (RELATIVE_NONE));
+	$GLOBALS['phpgw']->vfs->update_real ($path, array (RELATIVE_NONE));
 }
 
 ###
@@ -262,7 +269,7 @@ if ($update || rand (0, 19) == 4)
 
 if (!$sortby)
 {
-	$sortby = "name";
+	$sortby = 'name';
 }
 
 ###
@@ -271,7 +278,7 @@ if (!$sortby)
 
 if (!$show_upload_boxes || $show_upload_boxes <= 0)
 {
-	if (!$show_upload_boxes = $settings["show_upload_boxes"])
+	if (!$show_upload_boxes = $GLOBALS['settings']['show_upload_boxes'])
 	{
 		$show_upload_boxes = 5;
 	}
@@ -284,16 +291,19 @@ if (!$show_upload_boxes || $show_upload_boxes <= 0)
 # home directory and the directories for the groups they're in
 ###
 
-if ($path == $fakebase)
+$numoffiles = 0;
+if ($path == $GLOBALS['fakebase'])
 {
-	if (!$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
+	if (!$GLOBALS['phpgw']->vfs->file_exists ($GLOBALS['homedir'], array (RELATIVE_NONE)))
 	{
-		$phpgw->vfs->mkdir ($homedir, array (RELATIVE_NONE));
+		$GLOBALS['phpgw']->vfs->mkdir ($GLOBALS['homedir'], array (RELATIVE_NONE));
 	}
 
-	$ls_array = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), False, False, True);
+	$ls_array = $GLOBALS['phpgw']->vfs->ls ($GLOBALS['homedir'], array (RELATIVE_NONE), False, False, True);
 	$files_array[] = $ls_array[0];
 	$numoffiles++;
+//	$files_array = $ls_array;
+//	$numoffiles = count($ls_array);
 
 	reset ($memberships);
 	while (list ($num, $group_array) = each ($memberships))
@@ -302,18 +312,18 @@ if ($path == $fakebase)
 		# If the group doesn't have access to this app, we don't show it
 		###
 
-		if (!$membership_applications[$group_array["account_name"]][$appname]["enabled"])
+		if (!$membership_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
 		{
 			continue;
 		}
 
-		if (!$phpgw->vfs->file_exists ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE)))
+		if (!$GLOBALS['phpgw']->vfs->file_exists ($GLOBALS['fakebase'].'/'.$group_array['account_name'], array (RELATIVE_NONE)))
 		{
-			$phpgw->vfs->mkdir ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE));
-			$phpgw->vfs->set_attributes ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), array ("owner_id" => $group_array["account_id"], "createdby_id" => $group_array["account_id"]));
+			$GLOBALS['phpgw']->vfs->mkdir ($GLOBALS['fakebase'].'/'.$group_array['account_name'], array (RELATIVE_NONE));
+			$GLOBALS['phpgw']->vfs->set_attributes ($GLOBALS['fakebase'].'/'.$group_array['account_name'], array (RELATIVE_NONE), array ('owner_id' => $group_array['account_id'], 'createdby_id' => $group_array['account_id']));
 		}
 
-		$ls_array = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), False, False, True);
+		$ls_array = $GLOBALS['phpgw']->vfs->ls ($GLOBALS['fakebase'].'/'.$group_array['account_name'], array (RELATIVE_NONE), False, False, True);
 
 		$files_array[] = $ls_array[0];
 
@@ -322,12 +332,21 @@ if ($path == $fakebase)
 }
 else
 {
-	$ls_array = $phpgw->vfs->ls ($path, array (RELATIVE_NONE), False, False, False, $sortby);
+	$ls_array = $GLOBALS['phpgw']->vfs->ls ($path, array (RELATIVE_NONE), False, False, False, $sortby);
+
+	if ($phpwh_debug)
+	{
+		echo '# of files found in "'.$path.'" : '.count($ls_array).'<br>'."\n";
+	}
 
 	while (list ($num, $file_array) = each ($ls_array))
 	{
 		$numoffiles++;
 		$files_array[] = $file_array;
+		if ($phpwh_debug)
+		{
+			echo 'Filename: '.$file_array['name'].'<br>'."\n";
+		}
 	}
 }
 
@@ -347,62 +366,68 @@ if ($download)
 
 		$download_browser = CreateObject ('phpgwapi.browser');
 		$download_browser->content_header ($fileman[$i]);
-		echo $phpgw->vfs->read ($fileman[$i]);
-		$phpgw->common->phpgw_exit ();
+		echo $GLOBALS['phpgw']->vfs->read ($fileman[$i]);
+		$GLOBALS['phpgw']->common->phpgw_exit ();
 	}
 }
 
-if ($op == "view" && $file)
+if ($op == 'view' && $file)
 {
-	$ls_array = $phpgw->vfs->ls ($file, array (RELATIVE_ALL), False, False, True);
+//	$ls_array = $GLOBALS['phpgw']->vfs->ls ($path.'/'.$file, array (RELATIVE_ALL), False, False, True);
 
-	if ($ls_array[0]["mime_type"])
-	{
-		$mime_type = $ls_array[0]["mime_type"];
-	}
-	elseif ($settings["viewtextplain"])
-	{
-		$mime_type = "text/plain";
-	}
+//	if ($ls_array[0]['mime_type'])
+//	{
+//		$mime_type = $ls_array[0]['mime_type'];
+//	}
+//	elseif ($GLOBALS['settings']['viewtextplain'])
+//	{
+//		$mime_type = 'text/plain';
+//	}
 
-	header('Content-type: ' . $mime_type);
-	echo $phpgw->vfs->read ($file);
-	$phpgw->common->phpgw_exit ();
+	Header('Content-length: '.$GLOBALS['phpgw']->vfs->get_size($path.'/'.$file,array(RELATIVE_ALL)));
+	Header('Content-type: '.$GLOBALS['phpgw']->vfs->file_type($path.'/'.$file,array(RELATIVE_ALL)));
+	Header('Content-disposition: attachment; filename="'.$file.'"');
+	echo $GLOBALS['phpgw']->vfs->read($path.'/'.$file,array(RELATIVE_ALL));
+	flush();
+
+//	header('Content-type: ' . $mime_type);
+//	echo $GLOBALS['phpgw']->vfs->read ($path.'/'.$file);
+	$GLOBALS['phpgw']->common->phpgw_exit ();
 }
 
-if ($op == "history" && $file)
+if ($op == 'history' && $file)
 {
 	html_table_begin ();
 	html_table_row_begin ();
 	html_table_col_begin ();
-	html_text_bold ("Date");
+	html_text_bold ('Date');
 	html_table_col_end ();
 	html_table_col_begin ();
-	html_text_bold ("Version");
+	html_text_bold ('Version');
 	html_table_col_end ();
 	html_table_col_begin ();
-	html_text_bold ("Who");
+	html_text_bold ('Who');
 	html_table_col_end ();
 	html_table_col_begin ();
-	html_text_bold ("Operation");
+	html_text_bold ('Operation');
 	html_table_col_end ();
 	html_table_row_end ();
 
-	$journal_array = $phpgw->vfs->get_journal ($file, array (RELATIVE_ALL));
+	$journal_array = $GLOBALS['phpgw']->vfs->get_journal ($file, array (RELATIVE_ALL));
 	while (list ($num, $journal_entry) = each ($journal_array))
 	{
 		html_table_row_begin ();
 		html_table_col_begin ();
-		html_text ($journal_entry["created"] . html_nbsp (3, 1));
+		html_text ($journal_entry['created'] . html_nbsp (3, 1));
 		html_table_col_end ();
 		html_table_col_begin ();
-		html_text ($journal_entry["version"] . html_nbsp (3, 1));
+		html_text ($journal_entry['version'] . html_nbsp (3, 1));
 		html_table_col_end ();
 		html_table_col_begin ();
-		html_text ($phpgw->accounts->id2name ($journal_entry["owner_id"]) . html_nbsp (3, 1));
+		html_text ($GLOBALS['phpgw']->accounts->id2name ($journal_entry['owner_id']) . html_nbsp (3, 1));
 		html_table_col_end ();
 		html_table_col_begin ();
-		html_text ($journal_entry["comment"]);
+		html_text ($journal_entry['comment']);
 		html_table_col_end ();
 	}
 
@@ -414,21 +439,21 @@ if ($newfile && $createfile)
 {
 	if ($badchar = bad_chars ($createfile, True, True))
 	{
-		echo $phpgw->common->error_list (array (html_encode ("Filenames cannot contain \"$badchar\"", 1)));
+		echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('Filenames cannot contain "'.$badchar.'"', 1)));
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
 	}
 
-	if ($phpgw->vfs->file_exists ($createfile, array (RELATIVE_ALL)))
+	if ($GLOBALS['phpgw']->vfs->file_exists ($createfile, array (RELATIVE_ALL)))
 	{
-		echo $phpgw->common->error_list (array ("File $createfile already exists.  Please edit it or delete it first."));
+		echo $GLOBALS['phpgw']->common->error_list (array ('File '.$createfile.' already exists.  Please edit it or delete it first.'));
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
 	}
 
-	if ($phpgw->vfs->touch ($createfile, array (RELATIVE_ALL)))
+	if ($GLOBALS['phpgw']->vfs->touch ($createfile, array (RELATIVE_ALL)))
 	{
 		$fileman = array ();
 		$fileman[0] = $createfile;
@@ -436,11 +461,11 @@ if ($newfile && $createfile)
 	}
 	else
 	{
-		echo $phpgw->common->error_list (array ("File $createfile could not be created."));
+		echo $GLOBALS['phpgw']->common->error_list (array ('File '.$createfile.' could not be created.'));
 	}
 }
 
-if ($op == "help" && $help_name)
+if ($op == 'help' && $help_name)
 {
 	while (list ($num, $help_array) = each ($help_info))
 	{
@@ -450,27 +475,27 @@ if ($op == "help" && $help_name)
 		$help_array[1] = preg_replace ("/\[(.*)\|(.*)\]/Ue", "html_help_link ('\\1', '\\2', False, True)", $help_array[1]);
 		$help_array[1] = preg_replace ("/\[(.*)\]/Ue", "html_help_link ('\\1', '\\1', False, True)", $help_array[1]);
 
-		html_font_set ("4");
-		$title = ereg_replace ("_", " ", $help_array[0]);
+		html_font_set ('4');
+		$title = ereg_replace ('_', ' ', $help_array[0]);
 		$title = ucwords ($title);
 		html_text ($title);
 		html_font_end ();
 
 		html_break (2);
 
-		html_font_set ("2");
+		html_font_set ('2');
 		html_text ($help_array[1]);
 		html_font_end ();
 	}
 
-	$phpgw->common->phpgw_exit ();
+	$GLOBALS['phpgw']->common->phpgw_exit ();
 }
 
 ###
 # Start Main Page
 ###
 
-html_page_begin ("Users :: $userinfo[username]");
+html_page_begin ('Users :: '.$GLOBALS['userinfo']['username']);
 html_page_body_begin (HTML_PAGE_BODY_COLOR);
 
 if ($messages)
@@ -478,13 +503,13 @@ if ($messages)
 	html_text ($messages);
 }
 
-if (!is_array ($settings))
+if (!is_array ($GLOBALS['settings']))
 {
-	$pref = CreateObject ('phpgwapi.preferences', $userinfo["username"]);
-	$phpgw->common->hook_single ('add_def_pref', $appname);
+	$pref = CreateObject ('phpgwapi.preferences', $GLOBALS['userinfo']['username']);
+	$GLOBALS['phpgw']->common->hook_single ('add_def_pref', $GLOBALS['appname']);
 	$pref->save_repository (True);
 	$pref_array = $pref->read_repository ();
-	$settings = $pref_array[$appname];
+	$GLOBALS['settings'] = $pref_array[$GLOBALS['appname']];
 }
 
 ###
@@ -493,14 +518,14 @@ if (!is_array ($settings))
 
 if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$edit && !$comment_files)
 {
-	html_table_begin ("100%");
+	html_table_begin ('100%');
 	html_table_row_begin ();
-	html_table_col_begin ("center", NULL, "top");
-	html_align ("center");
-	html_form_begin ("$appname/index.php?path=$path");
+	html_table_col_begin ('center', NULL, 'top');
+	html_align ('center');
+	html_form_begin ($GLOBALS['appname'].'/index.php?path='.$path);
 	if ($numoffiles || $cwd)
 	{
-		while (list ($num, $name) = each ($settings))
+		while (list ($num, $name) = each ($GLOBALS['settings']))
 		{
 			if ($name)
 			{
@@ -510,47 +535,47 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		$columns++;
 		html_table_begin ();
 		html_table_row_begin (NULL, NULL, NULL, HTML_TABLE_FILES_HEADER_BG_COLOR);
-		html_table_col_begin ("center", NULL, NULL, NULL, $columns);
-		html_table_begin ("100%");
+		html_table_col_begin ('center', NULL, NULL, NULL, $columns);
+		html_table_begin ('100%');
 		html_table_row_begin ();
-		html_table_col_begin ("left");
+		html_table_col_begin ('left');
 		
-		if ($path != "/")
+		if ($path != '/')
 		{
-			html_link ("$appname/index.php?path=$lesspath", html_image ("images/folder-up.gif", "Up", "left", 0, NULL, 1));
-			html_help_link ("up");
+			html_link ($GLOBALS['appname'].'/index.php?path='.$lesspath, html_image ('images/folder-up.gif', 'Up', 'left', 0, NULL, 1));
+			html_help_link ('up');
 		}
 		
 		html_table_col_end ();
-		html_table_col_begin ("center");
+		html_table_col_begin ('center');
 		
 		if ($cwd)
 		{
-			if ($path == $homedir)
+			if ($path == $GLOBALS['homedir'])
 			{
-				html_image ("images/folder-home.gif", "Folder", "center");
+				html_image ('images/folder-home.gif', 'Folder', 'center');
 			}
 			else
 			{
-				html_image ("images/folder.gif", "Folder", "center");
+				html_image ('images/folder.gif', 'Folder', 'center');
 			}
 		}
 		else
 		{
-			html_image ("images/folder-home.gif", "Home");
+			html_image ('images/folder-home.gif', 'Home');
 		}
 		
 		html_font_set (4, HTML_TABLE_FILES_HEADER_TEXT_COLOR);
                 html_text_bold (strtoupper ($disppath));
 		html_font_end ();
-		html_help_link ("directory_name");
+		html_help_link ('directory_name');
 		html_table_col_end ();
-		html_table_col_begin ("right");
+		html_table_col_begin ('right');
 		
-		if ($path != $homedir)
+		if ($path != $GLOBALS['homedir'])
 		{
-			html_link ("$appname/index.php?path=$homedir", html_image ("images/folder-home.gif", "Home", "right", 0, NULL, 1));
-			html_help_link ("home");
+			html_link ($GLOBALS['appname'].'/index.php?path='.$GLOBALS['homedir'], html_image ('images/folder-home.gif', 'Home', 'right', 0, NULL, 1));
+			html_help_link ('home');
 		}
 
 		html_table_col_end ();
@@ -566,18 +591,18 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		###
 
 		html_table_col_begin ();
-		html_text ("Sort by:" . html_nbsp (1, 1), NULL, NULL, 1);
-		html_help_link ("sort_by");
+		html_text ('Sort by:' . html_nbsp (1, 1), NULL, NULL, 1);
+		html_help_link ('sort_by');
 		html_table_col_end ();
 
 		reset ($file_attributes);
 		while (list ($internal, $displayed) = each ($file_attributes))
 		{
-			if ($settings[$internal])
+			if ($GLOBALS['settings'][$internal])
 			{
 				html_table_col_begin ();
-				html_link ("$appname/index.php?path=$path&sortby=$internal", html_text_bold ("$displayed", 1, 1));
-				html_help_link (strtolower (ereg_replace (" ", "_", $displayed)));
+				html_link ($GLOBALS['appname'].'/index.php?path='.$path.'&sortby='.$internal, html_text_bold ($displayed, 1, 1));
+				html_help_link (strtolower (ereg_replace (' ', '_', $displayed)));
 				html_table_col_end ();
 			}
 		}
@@ -586,7 +611,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_table_col_end ();
 		html_table_row_end ();
 
-		if ($settings["dotdot"] && $settings["name"] && $path != "/")
+		if ($GLOBALS['settings']['dotdot'] && $GLOBALS['settings']['name'] && $path != '/')
 		{
 			html_table_row_begin ();
 			html_table_col_begin ();
@@ -594,14 +619,14 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 			/* We can assume the next column is the name */
 			html_table_col_begin ();
-			html_image ("images/folder.gif", "Folder");
-			html_link ("$appname/index.php?path=$lesspath", "..");
+			html_image ('images/folder.gif', 'Folder');
+			html_link ($GLOBALS['appname'].'/index.php?path='.$lesspath, '..');
 			html_table_col_end ();
 
-			if ($settings["mime_type"])
+			if ($GLOBALS['settings']['mime_type'])
 			{
 				html_table_col_begin ();
-				html_text ("Directory");
+				html_text ('Directory');
 				html_table_col_end ();
 			}
 
@@ -623,14 +648,14 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 				unset ($renamethis);
 				unset ($edit_this_comment);
 
-        	                for ($j = 0; $j != $numoffiles; $j++)
+				for ($j = 0; $j != $numoffiles; $j++)
 				{
-                	                if ($fileman[$j] == $files["name"])
+					if ($fileman[$j] == $files['name'])
 					{
-                        	                $this_selected = 1;
+						$this_selected = 1;
 						break;
 					}
-        			}
+				}
 
 				if ($rename && $this_selected)
 				{
@@ -642,7 +667,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 				}
 			}
 
-			if (!$settings["dotfiles"] && ereg ("^\.", $files["name"]))
+			if (!$GLOBALS['settings']['dotfiles'] && ereg ("^\.", $files['name']))
 			{
 				continue;
 			}
@@ -653,19 +678,19 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Checkboxes
 			###
 
-			html_table_col_begin ("right");
+			html_table_col_begin ('right');
 
-			if (!$rename && !$edit_comments && $path != $fakebase && $path != "/")
+			if (!$rename && !$edit_comments && $path != $GLOBALS['fakebase'] && $path != '/')
 			{
-				html_form_input ("checkbox", "fileman[$i]", base64_encode ("$files[name]"));
+				html_form_input ('checkbox', 'fileman['.$i.']', base64_encode ($files['name']));
 			}
 			elseif ($renamethis)
 			{
-				html_form_input ("hidden", "fileman[" . base64_encode ($files[name]) . "]", "$files[name]", NULL, NULL, "checked");
+				html_form_input ('hidden', 'fileman[' . base64_encode ($files['name']) . ']', $files['name'], NULL, NULL, 'checked');
 			}
 			else
 			{
-				html_nbsp;
+				html_nbsp();
 			}
 
 			html_table_col_end ();
@@ -674,44 +699,50 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# File name and icon
 			###
 
-			if ($settings["name"])
+			if ($GLOBALS['settings']['name'])
 			{
+				if ($phpwh_debug)
+				{
+					echo 'Setting file name: '.$files['name'].'<br>'."\n";
+				}
+
 				html_table_col_begin ();
 
 				if ($renamethis)
 				{
-					if ($files["mime_type"] == "Directory")
+					if ($files['mime_type'] == 'Directory')
 					{
-						html_image ("images/folder.gif", "Folder");
+						html_image ('images/folder.gif', 'Folder');
 					}
-					html_form_input ("text", "renamefiles[" . base64_encode ($files[name]) . "]", $files["name"], 255);
+					html_form_input ('text', 'renamefiles[' . base64_encode ($files['name']) . ']', $files['name'], 255);
 				}
 				else
 				{
-					if ($files["mime_type"] == "Directory")
+					if ($files['mime_type'] == 'Directory')
 					{
-						html_image ("images/folder.gif", "Folder");		
-						html_link ("$appname/index.php?path=$path$dispsep$files[name]", $files["name"]);
-	                                }
+						html_image ('images/folder.gif', 'Folder');		
+						html_link ($GLOBALS['appname'].'/index.php?path='.$path.$dispsep.$files['name'], $files['name']);
+					}
 					else
 					{
-						if ($settings["viewonserver"] && isset ($filesdir) && !$files["link_directory"])
+						if ($GLOBALS['settings']['viewonserver'] && isset ($GLOBALS['filesdir']) && !$files['link_directory'])
 						{
-							$clickview = "$filesdir$pwd/$files[name]";
+							$clickview = $GLOBALS['filesdir'].$pwd.'/'.$files['name'];
+							echo 'Setting clickview = '.$clickview.'<br>'."\n";
 						}
 						else
 						{
-							$clickview = "$appname/index.php?op=view&file=$files[name]&path=$path";
+							$clickview = $GLOBALS['appname'].'/index.php?op=view&file='.$files['name'].'&path='.$path;
 						}
 
-	        	                        if ($settings["viewinnewwin"])
+						if ($GLOBALS['settings']['viewinnewwin'])
 						{
-							$target = "_new";
+							$target = '_new';
 						}
 
-						html_link ($clickview, $files["name"], 0, 1, 0, $target);
+						html_link ($clickview, $files['name'], 0, 1, 0, $target);
 					}
-	                        }
+				}
 
 				html_table_col_end ();
 			}
@@ -720,10 +751,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# MIME type
 			###
 
-			if ($settings["mime_type"])
+			if ($GLOBALS['settings']['mime_type'])
 			{
 				html_table_col_begin ();
-				html_text ($files["mime_type"]);
+				html_text ($files['mime_type']);
 				html_table_col_end ();
 			}
 
@@ -731,11 +762,11 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# File size
 			###
 
-			if ($settings["size"])
+			if ($GLOBALS['settings']['size'])
 			{
 				html_table_col_begin ();
 
-				$size = $phpgw->vfs->get_size ($files["directory"] . "/" . $files["name"], array (RELATIVE_NONE));
+				$size = $GLOBALS['phpgw']->vfs->get_size ($files['directory'] . '/' . $files['name'], array (RELATIVE_NONE));
 				borkb ($size);
 
 				html_table_col_end ();
@@ -744,10 +775,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			###
 			# Date created
 			###
-			if ($settings["created"])
+			if ($GLOBALS['settings']['created'])
 			{
 				html_table_col_begin ();
-				html_text ($files["created"]);
+				html_text ($files['created']);
 				html_table_col_end ();
 			}
 
@@ -755,12 +786,12 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Date modified
 			###
 
-			if ($settings["modified"])
+			if ($GLOBALS['settings']['modified'])
 			{
 				html_table_col_begin ();
-				if ($files["modified"] != "0000-00-00")
+				if ($files['modified'] != '0000-00-00')
 				{
-					html_text ($files["modified"]);
+					html_text ($files['modified']);
 				}
 				html_table_col_end ();
 			}
@@ -769,10 +800,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Owner name
 			###
 
-			if ($settings["owner"])
+			if ($GLOBALS['settings']['owner'])
 			{
 				html_table_col_begin ();
-				html_text ($phpgw->accounts->id2name ($files["owner_id"]));
+				html_text ($GLOBALS['phpgw']->accounts->id2name ($files['owner_id']));
 				html_table_col_end ();
 			}
 
@@ -780,12 +811,12 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Creator name
 			###
 
-			if ($settings["createdby_id"])
+			if ($GLOBALS['settings']['createdby_id'])
 			{
 				html_table_col_begin ();
-				if ($files["createdby_id"])
+				if ($files['createdby_id'])
 				{
-					html_text ($phpgw->accounts->id2name ($files["createdby_id"]));
+					html_text ($GLOBALS['phpgw']->accounts->id2name ($files['createdby_id']));
 				}
 				html_table_col_end ();
 			}
@@ -794,12 +825,12 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Modified by name
 			###
 
-			if ($settings["modifiedby_id"])
+			if ($GLOBALS['settings']['modifiedby_id'])
 			{
 				html_table_col_begin ();
-				if ($files["modifiedby_id"])
+				if ($files['modifiedby_id'])
 				{
-					html_text ($phpgw->accounts->id2name ($files["modifiedby_id"]));
+					html_text ($GLOBALS['phpgw']->accounts->id2name ($files['modifiedby_id']));
 				}
 				html_table_col_end ();
 			}
@@ -808,10 +839,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Application
 			###
 
-			if ($settings["app"])
+			if ($GLOBALS['settings']['app'])
 			{
 				html_table_col_begin ();
-				html_text ($files["app"]);
+				html_text ($files['app']);
 				html_table_col_end ();
 			}
 
@@ -819,16 +850,16 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Comment
 			###
 
-			if ($settings["comment"])
+			if ($GLOBALS['settings']['comment'])
 			{
 				html_table_col_begin ();
 				if ($edit_this_comment)
 				{
-					html_form_input ("text", "comment_files[" . base64_encode ($files[name]) . "]", html_encode ($files["comment"], 1), 255);
+					html_form_input ('text', 'comment_files[' . base64_encode ($files['name']) . ']', html_encode ($files['comment'], 1), 255);
 				}
 				else
 				{
-					html_text ($files["comment"]);
+					html_text ($files['comment']);
 				}
 				html_table_col_end ();
 			}
@@ -837,10 +868,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Version
 			###
 
-			if ($settings["version"])
+			if ($GLOBALS['settings']['version'])
 			{
 				html_table_col_begin ();
-				html_link ("$appname/index.php?op=history&file=$files[name]&path=$path", $files["version"], NULL, True, NULL, "_new");
+				html_link ($GLOBALS['appname'].'/index.php?op=history&file='.$files['name'].'&path='.$path, $files['version'], NULL, True, NULL, '_new');
 				html_table_col_end ();
 			}
 
@@ -848,12 +879,12 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Deleteable (currently not used)
 			###
 
-			if ($settings["deleteable"])
+			if ($GLOBALS['settings']['deleteable'])
 			{
-				if ($files["deleteable"] == "N")
+				if ($files['deleteable'] == 'N')
 				{
 					html_table_col_begin ();
-					html_image ("images/locked.gif", "Locked");
+					html_image ('images/locked.gif', 'Locked');
 					html_table_col_end ();
 				}
 				else
@@ -865,46 +896,46 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 			html_table_row_end ();
 
-			if ($files["mime_type"] == "Directory")
+			if ($files['mime_type'] == 'Directory')
 			{
 				$usedspace += $fileinfo[0];
 			}
 			else
 			{
-				$usedspace += $files["size"];
+				$usedspace += $files['size'];
 			}
 		}
 
 		html_table_end ();
 		html_break (2);
 
-		if ($path != "/" && $path != $fakebase)
+		if ($path != '/' && $path != $GLOBALS['fakebase'])
 		{
 			if (!$rename && !$edit_comments)
 			{
-				html_form_input ("submit", "edit", "Edit");
-				html_help_link ("edit");
+				html_form_input ('submit', 'edit', 'Edit');
+				html_help_link ('edit');
 				html_nbsp (3);
 			}
 
 			if (!$edit_comments)
 			{
-				html_form_input ("submit", "rename", "Rename");
-				html_help_link ("rename");
+				html_form_input ('submit', 'rename', 'Rename');
+				html_help_link ('rename');
 				html_nbsp (3);
 			}
 
 			if (!$rename && !$edit_comments)
 			{
-				html_form_input ("submit", "delete", "Delete");
-				html_help_link ("delete");
+				html_form_input ('submit', 'delete', 'Delete');
+				html_help_link ('delete');
 				html_nbsp (3);
 			}
 
 			if (!$rename)
 			{
-				html_form_input ("submit", "edit_comments", "Edit comments");
-				html_help_link ("edit_comments");
+				html_form_input ('submit', 'edit_comments', 'Edit comments');
+				html_help_link ('edit_comments');
 			}
 		}
 	}
@@ -920,19 +951,19 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		###
 		
 		html_break (1);
-		html_form_input ("submit", "go", "Go to:");
-		html_help_link ("go_to");
+		html_form_input ('submit', 'go', 'Go to:');
+		html_help_link ('go_to');
 
-		if ($path != "/" && $path != $fakebase)
+		if ($path != '/' && $path != $GLOBALS['fakebase'])
 		{
-			html_form_input ("submit", "copy", "Copy to:");
-			html_help_link ("copy_to");
+			html_form_input ('submit', 'copy', 'Copy to:');
+			html_help_link ('copy_to');
 
-			html_form_input ("submit", "move", "Move to:");
-			html_help_link ("move_to");
+			html_form_input ('submit', 'move', 'Move to:');
+			html_help_link ('move_to');
 		}
 
-		html_form_select_begin ("todir");
+		html_form_select_begin ('todir');
 
 		html_break (1);
 
@@ -940,9 +971,9 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		# First we get the directories in their home directory
 		###
 
-		$dirs[] = array ("directory" => $fakebase, "name" => $userinfo["account_lid"]);
+		$dirs[] = array ('directory' => $GLOBALS['fakebase'], 'name' => $GLOBALS['userinfo']['account_lid']);
 
-		$ls_array = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), True, "Directory");
+		$ls_array = $GLOBALS['phpgw']->vfs->ls ($GLOBALS['homedir'], array (RELATIVE_NONE), True, 'Directory');
 		while (list ($num, $dir) = each ($ls_array))
 		{
 			$dirs[] = $dir;
@@ -959,14 +990,14 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# Don't list directories for groups that don't have access
 			###
 
-			if (!$membership_applications[$group_array["account_name"]][$appname]["enabled"])
+			if (!$membership_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
 			{
 				continue;
 			}
 
-			$dirs[] = array ("directory" => $fakebase, "name" => $group_array["account_name"]);
+			$dirs[] = array ('directory' => $GLOBALS['fakebase'], 'name' => $group_array['account_name']);
 
-			$ls_array = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), True, "Directory");
+			$ls_array = $phpgw->vfs->ls ($GLOBALS['fakebase'].'/'.$group_array[account_name], array (RELATIVE_NONE), True, 'Directory');
 			while (list ($num, $dir) = each ($ls_array))
 			{
 				$dirs[] = $dir;
@@ -976,7 +1007,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		reset ($dirs);
 		while (list ($num, $dir) = each ($dirs))
 		{
-			if (!$dir["directory"])
+			if (!$dir['directory'])
 			{
 				continue;
 			}
@@ -985,82 +1016,82 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			# So we don't display //
 			###
 
-			if ($dir["directory"] != '/')
+			if ($dir['directory'] != '/')
 			{
-				$dir["directory"] .= '/';
+				$dir['directory'] .= '/';
 			}
 
 			###
 			# No point in displaying the current directory, or a directory that doesn't exist
 			###
 			
-			if ((($dir["directory"] . $dir["name"]) != $path) && $phpgw->vfs->file_exists ($dir["directory"] . $dir["name"], array (RELATIVE_NONE)))
+			if ((($dir['directory'] . $dir['name']) != $path) && $GLOBALS['phpgw']->vfs->file_exists ($dir['directory'] . $dir['name'], array (RELATIVE_NONE)))
 			{
-				html_form_option ($dir["directory"] . $dir["name"], $dir["directory"] . $dir["name"]);
+				html_form_option ($dir['directory'] . $dir['name'], $dir['directory'] . $dir['name']);
 			}
 		}
 
 		html_form_select_end ();
-		html_help_link ("directory_list");
+		html_help_link ('directory_list');
 
-		if ($path != "/" && $path != $fakebase)
+		if ($path != '/' && $path != $GLOBALS['fakebase'])
 		{
 			html_break (1);
 
-			html_form_input ("submit", "download", "Download");
-			html_help_link ("download");
+			html_form_input ('submit', 'download', 'Download');
+			html_help_link ('download');
 			html_nbsp (3);
 
-			html_form_input ("text", "createdir", NULL, 255, 15);
-			html_form_input ("submit", "newdir", "Create Folder");
-			html_help_link ("create_folder");
+			html_form_input ('text', 'createdir', NULL, 255, 15);
+			html_form_input ('submit', 'newdir', 'Create Folder');
+			html_help_link ('create_folder');
 		}
 
 		html_break (1);
-		html_form_input ("submit", "update", "Update");
-		html_help_link ("update");
+		html_form_input ('submit', 'update', 'Update');
+		html_help_link ('update');
 
-		if ($path != "/" && $path != $fakebase)
+		if ($path != '/' && $path != $GLOBALS['fakebase'])
 		{
 			html_nbsp (3);
-			html_form_input ("text", "createfile", NULL, 255, 15);
-			html_form_input ("submit", "newfile", "Create File");
-			html_help_link ("create_file");
+			html_form_input ('text', 'createfile', NULL, 255, 15);
+			html_form_input ('submit', 'newfile', 'Create File');
+			html_help_link ('create_file');
 		}
 
-		if ($settings["show_command_line"])
+		if ($GLOBALS['settings']['show_command_line'])
 		{
 			html_break (2);
-			html_form_input ("text", "command_line", NULL, NULL, 50);
-			html_help_link ("command_line");
+			html_form_input ('text', 'command_line', NULL, NULL, 50);
+			html_help_link ('command_line');
 
 			html_break (1);
-			html_form_input ("submit", "execute", "Execute");
-			html_help_link ("execute");
+			html_form_input ('submit', 'execute', 'Execute');
+			html_help_link ('execute');
 		}
 
 		html_form_end ();
 
-		html_help_link ("file_stats");
+		html_help_link ('file_stats');
 		html_break (1);
-		html_text_bold ("Files: ");
+		html_text_bold ('Files: ');
 		html_text ($numoffiles);
 		html_nbsp (3);
 
-		html_text_bold ("Used space: ");
+		html_text_bold ('Used space: ');
 		html_text (borkb ($usedspace, NULL, 1));
 		html_nbsp (3);
 		
-		if ($path == $homedir || $path == $fakebase)
+		if ($path == $GLOBALS['homedir'] || $path == $GLOBALS['fakebase'])
 		{
-			html_text_bold ("Unused space: ");
-			html_text (borkb ($userinfo["hdspace"] - $usedspace, NULL, 1));
+			html_text_bold ('Unused space: ');
+			html_text (borkb ($GLOBALS['userinfo']['hdspace'] - $usedspace, NULL, 1));
 
-			$ls_array = $phpgw->vfs->ls ($path, array (RELATIVE_NONE));
+			$ls_array = $GLOBALS['phpgw']->vfs->ls ($path, array (RELATIVE_NONE));
 			$i = count ($ls_array);
 
 			html_break (2);
-			html_text_bold ("Total Files: ");
+			html_text_bold ('Total Files: ');
 			html_text ($i);
 		}
 		
@@ -1068,47 +1099,47 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		# Show file upload boxes. Note the last argument to html ().  Repeats $show_upload_boxes times
 		###
 
-		if ($path != "/" && $path != $fakebase)
+		if ($path != '/' && $path != $GLOBALS['fakebase'])
 		{
 			html_break (2);
-			html_form_begin ("$appname/index.php?op=upload&path=$path", "post", "multipart/form-data");
+			html_form_begin ($GLOBALS['appname'].'/index.php?op=upload&path='.$path, 'post', 'multipart/form-data');
 			html_table_begin ();
-			html_table_row_begin ("center");
+			html_table_row_begin ('center');
 			html_table_col_begin ();
-			html_text_bold ("File");
-			html_help_link ("upload_file");
+			html_text_bold ('File');
+			html_help_link ('upload_file');
 			html_table_col_end ();
 			html_table_col_begin ();
-			html_text_bold ("Comment");
-			html_help_link ("upload_comment");
+			html_text_bold ('Comment');
+			html_help_link ('upload_comment');
 			html_table_col_end ();
 			html_table_row_end ();
 
 			html_table_row_begin ();
 			html_table_col_begin ();
-			html_form_input ("hidden", "show_upload_boxes", base64_encode ($show_upload_boxes));
-			html (html_form_input ("file", "upload_file[]", NULL, 255, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), $show_upload_boxes);
+			html_form_input ('hidden', 'show_upload_boxes', base64_encode ($show_upload_boxes));
+			html (html_form_input ('file', 'upload_file[]', NULL, 255, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), $show_upload_boxes);
 			html_table_col_end ();
 			html_table_col_begin ();
-			html (html_form_input ("text", "upload_comment[]", NULL, NULL, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), $show_upload_boxes);
+			html (html_form_input ('text', 'upload_comment[]', NULL, NULL, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), $show_upload_boxes);
 			html_table_col_end ();
 			html_table_row_end ();
 			html_table_end ();
-			html_form_input ("submit", "upload_files", "Upload files");
-			html_help_link ("upload_files");
+			html_form_input ('submit', 'upload_files', 'Upload files');
+			html_help_link ('upload_files');
 			html_break (2);
-			html_text ("Show" . html_nbsp (1, True));
-			html_link ("$appname/index.php?show_upload_boxes=5", "5");
+			html_text ('Show' . html_nbsp (1, True));
+			html_link ($GLOBALS['appname'].'/index.php?show_upload_boxes=5', '5');
 			html_nbsp ();
-			html_link ("$appname/index.php?show_upload_boxes=10", "10");
+			html_link ($GLOBALS['appname'].'/index.php?show_upload_boxes=10', '10');
 			html_nbsp ();
-			html_link ("$appname/index.php?show_upload_boxes=20", "20");
+			html_link ($GLOBALS['appname'].'/index.php?show_upload_boxes=20', '20');
 			html_nbsp ();
-			html_link ("$appname/index.php?show_upload_boxes=50", "50");
+			html_link ($GLOBALS['appname'].'/index.php?show_upload_boxes=50', '50');
 			html_nbsp ();
-			html_text ("upload fields");
+			html_text ('upload fields');
 			html_nbsp ();
-			html_help_link ("show_upload_fields");
+			html_help_link ('show_upload_fields');
 			html_form_end ();
 		}
 	}
@@ -1139,10 +1170,10 @@ if ($edit)
 		$content = $edit_file_content;
 
 		html_break (1);
-		html_text_bold ("Preview of $path/$edit_file");
+		html_text_bold ('Preview of '.$path.'/'.$edit_file);
 		html_break (2);
 
-		html_table_begin ("90%");
+		html_table_begin ('90%');
 		html_table_row_begin ();
 		html_table_col_begin ();
 		html_text (nl2br ($content));
@@ -1154,15 +1185,15 @@ if ($edit)
 	{
 		$content = $edit_file_content;
 
-		if ($phpgw->vfs->write ($edit_file, array (RELATIVE_ALL), $content))
+		if ($GLOBALS['phpgw']->vfs->write ($edit_file, array (RELATIVE_ALL), $content))
 		{
-			html_text_bold ("Saved $path/$edit_file");
+			html_text_bold ('Saved '.$path.'/'.$edit_file);
 			html_break (2);
 			html_link_back ();
 		}
 		else
 		{
-			html_text_error ("Could not save $path/$edit_file");
+			html_text_error ('Could not save '.$path.'/'.$edit_file);
 			html_break (2);
 			html_link_back ();
 		}
@@ -1176,17 +1207,17 @@ if ($edit)
 			$fileman[$j];
 
 			$content = $$fileman[$j];
-			echo "fileman[$j]: $fileman[$j]<br><b>$content</b><br>";
+			echo 'fileman['.$j.']: '.$fileman[$j].'<br><b>'.$content.'</b><br>';
 			continue;
 
-			if ($phpgw->vfs->write ($fileman[$j], array (RELATIVE_ALL), $content))
+			if ($GLOBALS['phpgw']->vfs->write ($fileman[$j], array (RELATIVE_ALL), $content))
 			{
-				html_text_bold ("Saved $path/$fileman[$j]");
+				html_text_bold ('Saved '.$path.'/'.$fileman[$j]);
 				html_break (1);
 			}
 			else
 			{
-				html_text_error ("Could not save $path/$fileman[$j]");
+				html_text_error ('Could not save '.$path.'/'.$fileman[$j]);
 				html_break (1);
 			}
 		}
@@ -1211,7 +1242,7 @@ if ($edit)
 			continue;
 		}
 
-		if ($fileman[$j] && $phpgw->vfs->file_exists ($fileman[$j], array (RELATIVE_ALL)))
+		if ($fileman[$j] && $GLOBALS['phpgw']->vfs->file_exists ($fileman[$j], array (RELATIVE_ALL)))
 		{
 			if ($edit_file)
 			{
@@ -1219,13 +1250,13 @@ if ($edit)
 			}
 			else
 			{
-				$content = $phpgw->vfs->read ($fileman[$j]);
+				$content = $GLOBALS['phpgw']->vfs->read ($fileman[$j]);
 			}
 
-			html_table_begin ("100%");
-			html_form_begin ("$appname/index.php?path=$path");
-			html_form_input ("hidden", "edit", True);
-			html_form_input ("hidden", "edit_file", $fileman[$j]);
+			html_table_begin ('100%');
+			html_form_begin ($GLOBALS['appname'].'/index.php?path='.$path);
+			html_form_input ('hidden', 'edit', True);
+			html_form_input ('hidden', 'edit_file', $fileman[$j]);
 
 			###
 			# We need to include all of the fileman entries for each file's form,
@@ -1234,19 +1265,19 @@ if ($edit)
 
 			for ($i = 0; $i != $numoffiles; $i++)
 			{
-				html_form_input ("hidden", "fileman[$i]", base64_encode ($fileman[$i]));
+				html_form_input ('hidden', 'fileman['.$i.']', base64_encode ($fileman[$i]));
 			}
 
 			html_table_row_begin ();
 			html_table_col_begin ();
-			html_form_textarea ("edit_file_content", 35, 75, $content);
+			html_form_textarea ('edit_file_content', 35, 75, $content);
 			html_table_col_end ();
-			html_table_col_begin ("center");
-			html_form_input ("submit", "edit_preview", "Preview " . html_encode ($fileman[$j], 1));
+			html_table_col_begin ('center');
+			html_form_input ('submit', 'edit_preview', 'Preview ' . html_encode ($fileman[$j], 1));
 			html_break (1);
-			html_form_input ("submit", "edit_save", "Save " . html_encode ($fileman[$j], 1));
+			html_form_input ('submit', 'edit_save', 'Save ' . html_encode ($fileman[$j], 1));
 //			html_break (1);
-//			html_form_input ("submit", "edit_save_all", "Save all");
+//			html_form_input ('submit', 'edit_save_all', 'Save all');
 			html_table_col_end ();
 			html_table_row_end ();
 			html_break (2);
@@ -1260,13 +1291,13 @@ if ($edit)
 # Handle File Uploads
 ###
 
-elseif ($op == "upload" && $path != "/" && $path != $fakebase)
+elseif ($op == 'upload' && $path != '/' && $path != $GLOBALS['fakebase'])
 {
 	for ($i = 0; $i != $show_upload_boxes; $i++)
 	{
 		if ($badchar = bad_chars ($upload_file_name[$i], True, True))
 		{
-			echo $phpgw->common->error_list (array (html_encode ("Filenames cannot contain \"$badchar\"", 1)));
+			echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('Filenames cannot contain "'.$badchar.'"', 1)));
 
 			continue;
 		}
@@ -1275,41 +1306,41 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 		# Check to see if the file exists in the database, and get its info at the same time
 		###
 
-		$ls_array = $phpgw->vfs->ls ($path . "/" . $upload_file_name[$i], array (RELATIVE_NONE), False, False, True);
+		$ls_array = $GLOBALS['phpgw']->vfs->ls ($path . '/' . $upload_file_name[$i], array (RELATIVE_NONE), False, False, True);
 		$fileinfo = $ls_array[0];
 
-		if ($fileinfo["name"])
+		if ($fileinfo['name'])
 		{
-			if ($fileinfo["mime_type"] == "Directory")
+			if ($fileinfo['mime_type'] == 'Directory')
 			{
-				echo $phpgw->common->error_list (array ("Cannot replace $fileinfo[name] because it is a directory"));
+				echo $GLOBALS['phpgw']->common->error_list (array ('Cannot replace '.$fileinfo['name'].' because it is a directory'));
 				continue;
 			}
 		}
 
 		if ($upload_file_size[$i] > 0)
 		{
-			if ($fileinfo["name"] && $fileinfo["deleteable"] != "N")
+			if ($fileinfo['name'] && $fileinfo['deleteable'] != 'N')
 			{
-				$phpgw->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $upload_file_size[$i], mime_type => $upload_file_type[$i], "deleteable" => "Y", "comment" => stripslashes ($upload_comment[$i])));
-				$phpgw->vfs->cp ($upload_file[$i], "$upload_file_name[$i]", array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
+				$GLOBALS['phpgw']->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ('owner_id' => $GLOBALS['userinfo']['username'], 'modifiedby_id' => $GLOBALS['userinfo']['username'], 'modified' => $now, 'size' => $upload_file_size[$i], 'mime_type' => $upload_file_type[$i], 'deleteable' => 'Y', 'comment' => stripslashes ($upload_comment[$i])));
+				$GLOBALS['phpgw']->vfs->cp ($upload_file[$i], $upload_file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
 
-				html_text_summary ("Replaced $disppath/$upload_file_name[$i]", $upload_file_size[$i]);
+				html_text_summary ('Replaced '.$disppath.'/'.$upload_file_name[$i], $upload_file_size[$i]);
 			}
 			else
 			{
-				$phpgw->vfs->cp ($upload_file[$i], $upload_file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
-				$phpgw->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $upload_file_type[$i], "comment" => stripslashes ($upload_comment[$i])));
+				$GLOBALS['phpgw']->vfs->cp ($upload_file[$i], $upload_file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
+				$GLOBALS['phpgw']->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ('mime_type' => $upload_file_type[$i], 'comment' => stripslashes ($upload_comment[$i])));
 
-				html_text_summary ("Created $disppath/$upload_file_name[$i]", $upload_file_size[$i]);
+				html_text_summary ('Created '.$disppath.'/'.$upload_file_name[$i], $upload_file_size[$i]);
 			}
 		}
 		elseif ($upload_file_name[$i])
 		{
-			$phpgw->vfs->touch ($upload_file_name[$i], array (RELATIVE_ALL));
-			$phpgw->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $upload_file_type[$i], "comment" => $upload_comment[$i]));
+			$GLOBALS['phpgw']->vfs->touch ($upload_file_name[$i], array (RELATIVE_ALL));
+			$GLOBALS['phpgw']->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ('mime_type' => $upload_file_type[$i], 'comment' => $upload_comment[$i]));
 
-			html_text_summary ("Created $disppath/$upload_file_name[$i]", $file_size[$i]);
+			html_text_summary ('Created '.$disppath.'/'.$upload_file_name[$i], $file_size[$i]);
 		}
 	}
 
@@ -1327,13 +1358,13 @@ elseif ($comment_files)
 	{
 		if ($badchar = bad_chars ($comment_files[$file], False, True))
 		{
-			echo $phpgw->common->error_list (array (html_text_italic ($file, 1) . html_encode (": Comments cannot contain \"$badchar\"", 1)));
+			echo $GLOBALS['phpgw']->common->error_list (array (html_text_italic ($file, 1) . html_encode (': Comments cannot contain "'.$badchar.'"', 1)));
 			continue;
 		}
 
-		$phpgw->vfs->set_attributes ($file, array (RELATIVE_ALL), array ("comment" => stripslashes ($comment_files[$file])));
+		$GLOBALS['phpgw']->vfs->set_attributes ($file, array (RELATIVE_ALL), array ('comment' => stripslashes ($comment_files[$file])));
 
-		html_text_summary ("Updated comment for $path/$file");
+		html_text_summary ('Updated comment for '.$path.'/'.$file);
 	}
 
 	html_break (2);
@@ -1350,21 +1381,21 @@ elseif ($renamefiles)
 	{
 		if ($badchar = bad_chars ($to, True, True))
 		{
-			echo $phpgw->common->error_list (array (html_encode ("File names cannot contain \"$badchar\"", 1)));
+			echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('File names cannot contain "'.$badchar.'"', 1)));
 			continue;
 		}
 
 		if (ereg ("/", $to) || ereg ("\\\\", $to))
 		{
-			echo $phpgw->common->error_list (array ("File names cannot contain \\ or /"));
+			echo $GLOBALS['phpgw']->common->error_list (array ("File names cannot contain \\ or /"));
 		}
-		elseif (!$phpgw->vfs->mv ($from, $to))
+		elseif (!$GLOBALS['phpgw']->vfs->mv ($from, $to))
 		{
-			echo $phpgw->common->error_list (array ("Could not rename $disppath/$from to $disppath/$to"));
+			echo $GLOBALS['phpgw']->common->error_list (array ('Could not rename '.$disppath.'/'.$from.' to '.$disppath.'/'.$to));
 		}
 		else 
 		{
-			html_text_summary ("Renamed $disppath/$from to $disppath/$to");
+			html_text_summary ('Renamed '.$disppath.'/'.$from.' to '.$disppath.'/'.$to);
 		}
 	}
 
@@ -1380,21 +1411,21 @@ elseif ($move)
 {
 	while (list ($num, $file) = each ($fileman))
 	{
-		if ($phpgw->vfs->mv ($file, $todir . "/" . $file, array (RELATIVE_ALL, RELATIVE_NONE)))
+		if ($GLOBALS['phpgw']->vfs->mv ($file, $todir . '/' . $file, array (RELATIVE_ALL, RELATIVE_NONE)))
 		{
 			$moved++;
-			html_text_summary ("Moved $disppath/$file to $todir/$file");
+			html_text_summary ('Moved '.$disppath.'/'.$file.' to '.$todir.'/'.$file);
 		}
 		else
 		{
-			echo $phpgw->common->error_list (array ("Could not move $disppath/$file to $todir/$file"));
+			echo $GLOBALS['phpgw']->common->error_list (array ('Could not move '.$disppath.'/'.$file.' to '.$todir.'/'.$file));
 		}
 	}
 
 	if ($moved)
 	{
 		html_break (2);
-		html_link ("$appname/index.php?path=$todir", "Go to $todir");
+		html_link ($GLOBALS['appname'].'/index.php?path='.$todir, 'Go to '.$todir);
 	}
 
 	html_break (2);
@@ -1409,21 +1440,21 @@ elseif ($copy)
 {
 	while (list ($num, $file) = each ($fileman))
 	{
-		if ($phpgw->vfs->cp ($file, $todir . "/" . $file, array (RELATIVE_ALL, RELATIVE_NONE)))
+		if ($GLOBALS['phpgw']->vfs->cp ($file, $todir . '/' . $file, array (RELATIVE_ALL, RELATIVE_NONE)))
 		{
 			$copied++;
-			html_text_summary ("Copied $disppath/$file to $todir/$file");
+			html_text_summary ('Copied '.$disppath.'/'.$file.' to '.$todir.'/'.$file);
 		}
 		else
 		{
-			echo $phpgw->common->error_list (array ("Could not copy $disppath/$file to $todir/$file"));
+			echo $GLOBALS['phpgw']->common->error_list (array ('Could not copy '.$disppath.'/'.$file.' to '.$todir.'/'.$file));
 		}
 	}
 
 	if ($copied)
 	{
 		html_break (2);
-		html_link ("$appname/index.php?path=$todir", "Go to $todir");
+		html_link ($GLOBALS['appname'].'/index.php?path='.$todir, 'Go to '.$todir);
 	}
 
 	html_break (2);
@@ -1440,13 +1471,13 @@ elseif ($delete)
 	{
 		if ($fileman[$i])
 		{
-			if ($phpgw->vfs->delete ($fileman[$i]))
+			if ($GLOBALS['phpgw']->vfs->delete ($fileman[$i]))
 			{
-				html_text_summary ("Deleted $disppath/$fileman[$i]", $fileinfo["size"]);
+				html_text_summary ('Deleted '.$disppath.'/'.$fileman[$i], $fileinfo['size']);
 			}
 			else
 			{
-				$phpgw->common->error_list (array ("Could not delete $disppath/$fileman[$i]"));
+				$GLOBALS['phpgw']->common->error_list (array ('Could not delete '.$disppath.'/'.$fileman[$i]));
 			}
 		}
 	}
@@ -1459,35 +1490,35 @@ elseif ($newdir && $createdir)
 {
 	if ($badchar = bad_chars ($createdir, True, True))
 	{
-		echo $phpgw->common->error_list (array (html_encode ("Directory names cannot contain \"$badchar\"", 1)));
+		echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('Directory names cannot contain "'.$badchar.'"', 1)));
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
 	}
 	
-	if ($createdir[strlen($createdir)-1] == " " || $createdir[0] == " ")
+	if ($createdir[strlen($createdir)-1] == ' ' || $createdir[0] == ' ')
 	{
-		echo $phpgw->common->error_list (array ("Cannot create directory because it begins or ends in a space"));
+		echo $GLOBALS['phpgw']->common->error_list (array ('Cannot create directory because it begins or ends in a space'));
 		html_break (2);
 		html_link_back ();
 		html_page_close ();
 	}
 
-	$ls_array = $phpgw->vfs->ls ($path . "/" . $createdir, array (RELATIVE_NONE), False, False, True);
+	$ls_array = $GLOBALS['phpgw']->vfs->ls ($path . '/' . $createdir, array (RELATIVE_NONE), False, False, True);
 	$fileinfo = $ls_array[0];
 
-	if ($fileinfo["name"])
+	if ($fileinfo['name'])
 	{
-		if ($fileinfo["mime_type"] != "Directory")
+		if ($fileinfo['mime_type'] != 'Directory')
 		{
-			echo $phpgw->common->error_list (array ("$fileinfo[name] already exists as a file"));
+			echo $GLOBALS['phpgw']->common->error_list (array ($fileinfo['name'].' already exists as a file'));
 			html_break (2);
 			html_link_back ();
 			html_page_close ();
 		}
 		else
 		{
-			echo $phpgw->common->error_list (array ("Directory $fileinfo[name] already exists"));
+			echo $GLOBALS['phpgw']->common->error_list (array ('Directory '.$fileinfo['name'].' already exists'));
 			html_break (2);
 			html_link_back ();
 			html_page_close ();
@@ -1495,15 +1526,15 @@ elseif ($newdir && $createdir)
 	}
 	else
 	{
-		if ($phpgw->vfs->mkdir ($createdir))
+		if ($GLOBALS['phpgw']->vfs->mkdir ($createdir))
 		{
-			html_text_summary ("Created directory $disppath/$createdir");
+			html_text_summary ('Created directory '.$disppath.'/'.$createdir);
 			html_break (2);
-			html_link ("$appname/index.php?path=$disppath/$createdir", "Go to $disppath/$createdir");
+			html_link ($GLOBALS['appname'].'/index.php?path='.$disppath.'/'.$createdir, 'Go to '.$disppath.'/'.$createdir);
 		}
 		else
 		{
-			echo $phpgw->common->error_list (array ("Could not create $disppath/$createdir"));
+			echo $GLOBALS['phpgw']->common->error_list (array ('Could not create '.$disppath.'/'.$createdir));
 		}
 	}
 

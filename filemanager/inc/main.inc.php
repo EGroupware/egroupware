@@ -2,48 +2,48 @@
 
 error_reporting (4);
 
-if (@!$phpgw->vfs)
+if (@!is_object($GLOBALS['phpgw']->vfs))
 {
-	$phpgw->vfs = CreateObject ('phpgwapi.vfs');
+	$GLOBALS['phpgw']->vfs = CreateObject ('phpgwapi.vfs');
 }
 
 ### Start Configuration Options ###
 ### These are automatically set in phpGW - do not edit ###
 
 $sep = SEP;
-$rootdir = $phpgw->vfs->basedir;
-$fakebase = $phpgw->vfs->fakebase;
-$appname = $phpgw_info["flags"]["currentapp"];
-$settings = $phpgw_info["user"]["preferences"][$appname];
+$GLOBALS['rootdir'] = $GLOBALS['phpgw']->vfs->basedir;
+$GLOBALS['fakebase'] = $GLOBALS['phpgw']->vfs->fakebase;
+$GLOBALS['appname'] = $GLOBALS['phpgw_info']['flags']['currentapp'];
+$GLOBALS['settings'] = $GLOBALS['phpgw_info']['user']['preferences'][$appname];
 
-if (stristr ($rootdir, PHPGW_SERVER_ROOT))
+if (stristr ($GLOBALS['rootdir'], PHPGW_SERVER_ROOT))
 {
-	$filesdir = substr ($rootdir, strlen (PHPGW_SERVER_ROOT));
+	$GLOBALS['filesdir'] = substr ($GLOBALS['rootdir'], strlen (PHPGW_SERVER_ROOT));
 }
 else
 {
-	unset ($filesdir);
+	unset ($GLOBALS['filesdir']);
 }
 
-$hostname = $phpgw_info["server"]["webserver_url"] . $filesdir;
+$GLOBALS['hostname'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . $GLOBALS['filesdir'];
 
 ###
 # Note that $userinfo["username"] is actually the id number, not the login name
 ###
 
-$userinfo["username"] = $phpgw_info["user"]["account_id"];
-$userinfo["account_lid"] = $phpgw->accounts->id2name ($userinfo["username"]);
-$userinfo["hdspace"] = 10000000000;
-$homedir = "$fakebase/$userinfo[account_lid]";
+$GLOBALS['userinfo']['username'] = $GLOBALS['phpgw_info']['user']['account_id'];
+$GLOBALS['userinfo']['account_lid'] = $GLOBALS['phpgw']->accounts->id2name ($GLOBALS['userinfo']['username']);
+$GLOBALS['userinfo']['hdspace'] = 10000000000;
+$GLOBALS['homedir'] = $GLOBALS['fakebase'].'/'.$GLOBALS['userinfo']['account_lid'];
 
 ### End Configuration Options ###
 
-if (!defined ("NULL"))
+if (!defined ('NULL'))
 {
-	define ("NULL", "");
+	define ('NULL', '');
 }
 
-require (PHPGW_APP_INC . "/db.inc.php");
+require (PHPGW_APP_INC . '/db.inc.php');
 
 /* Set up any initial db settings */
 db_init ();
@@ -54,27 +54,40 @@ db_init ();
 
 /* We have to define these by hand in phpGW, or rely on it's templates */
 
-define ('HTML_TABLE_FILES_HEADER_BG_COLOR', "");
-define ('HTML_TABLE_FILES_HEADER_TEXT_COLOR', "maroon");
-define ('HTML_TABLE_FILES_COLUMN_HEADER_BG_COLOR', "");
-define ('HTML_TABLE_FILES_COLUMN_HEADER_TEXT_COLOR', "maroon");
-define ('HTML_TABLE_FILES_BG_COLOR', "");
-define ('HTML_TABLE_FILES_TEXT_COLOR', "maroon");
-define ('HTML_TEXT_ERROR_COLOR', "red");
-define ('HTML_TEXT_NAVIGATION_BACK_TO_USER', "Back to file manager");
+define ('HTML_TABLE_FILES_HEADER_BG_COLOR', '');
+define ('HTML_TABLE_FILES_HEADER_TEXT_COLOR', 'maroon');
+define ('HTML_TABLE_FILES_COLUMN_HEADER_BG_COLOR', '');
+define ('HTML_TABLE_FILES_COLUMN_HEADER_TEXT_COLOR', 'maroon');
+define ('HTML_TABLE_FILES_BG_COLOR', '');
+define ('HTML_TABLE_FILES_TEXT_COLOR', 'maroon');
+define ('HTML_TEXT_ERROR_COLOR', 'red');
+define ('HTML_TEXT_NAVIGATION_BACK_TO_USER', 'Back to file manager');
 
 ###
 # Need to include this here so they recognize the settings
 ###
 
-require (PHPGW_APP_INC . "/html.inc.php");
+require (PHPGW_APP_INC . '/html.inc.php');
 
 ###
 # Define the list of file attributes.  Format is "internal_name" => "Displayed name"
 # This is used both by internally and externally for things like preferences
 ###
 
-$file_attributes = array ("name" => "Filename", "mime_type" => "MIME Type", "size" => "Size", "created" => "Created", "modified" => "Modified", "owner" => "Owner", "createdby_id" => "Created by", "modifiedby_id" => "Created by", "modifiedby_id" => "Modified by", "app" => "Application", "comment" => "Comment", "version" => "Version");
+$file_attributes = Array(
+	'name' => 'Filename',
+	'mime_type' => 'MIME Type',
+	'size' => 'Size',
+	'created' => 'Created',
+	'modified' => 'Modified',
+	'owner' => 'Owner',
+	'createdby_id' => 'Created by',
+	'modifiedby_id' => 'Created by',
+	'modifiedby_id' => 'Modified by',
+	'app' => 'Application',
+	'comment' => 'Comment',
+	'version' => 'Version'
+);
 
 ###
 # Calculate and display B or KB
@@ -89,14 +102,14 @@ function borkb ($size, $enclosed = NULL, $return = 0)
 
 	if ($enclosed)
 	{
-		$left = "(";
-		$right = ")";
+		$left = '(';
+		$right = ')';
 	}
 
 	if ($size < 1024)
-		$rstring = $left . $size . "B" . $right;
+		$rstring = $left . $size . 'B' . $right;
 	else
-		$rstring = $left . round($size/1024) . "KB" . $right;
+		$rstring = $left . round($size/1024) . 'KB' . $right;
 	
 	return (eor ($rstring, $return));
 }
@@ -164,24 +177,22 @@ function eor ($rstring, $return)
 
 function string_encode ($string, $return = False)
 {
-	global $hostname;
-
 	if (preg_match ("/=(.*)(&|$)/U", $string))
 	{
 		$rstring = preg_replace ("/=(.*)(&|$)/Ue", "'=' . rawurlencode (base64_encode ('\\1')) . '\\2'", $string);
 	}
-	elseif (ereg ("^$hostname", $string))
+	elseif (ereg ('^'.$GLOBALS['hostname'], $string))
 	{
-		$rstring = ereg_replace ("^$hostname/", "", $string);
+		$rstring = ereg_replace ('^'.$GLOBALS['hostname'].'/', '', $string);
 		$rstring = preg_replace ("/(.*)(\/|$)/Ue", "rawurlencode (base64_encode ('\\1')) . '\\2'", $rstring);
-		$rstring = "$hostname/$rstring";
+		$rstring = $GLOBALS['hostname'].'/'.$rstring;
 	}
 	else
 	{
 		$rstring = rawurlencode ($string);
 
 		/* Terrible hack, decodes all /'s back to normal */  
-		$rstring = preg_replace ("/%2F/", "/", $rstring);
+		$rstring = preg_replace ("/%2F/", '/', $rstring);
 	}
 
 	return (eor ($rstring, $return));
@@ -208,13 +219,10 @@ function html_encode ($string, $return)
 
 function translate ($text)
 {
-	global $phpgw;
-
-	return ($phpgw->lang ($text));
+	return ($GLOBALS['phpgw']->lang($text));
 }
 
-$help_info = array
-	(
+$help_info = Array(
 		array ("up", "The Up button takes you to the directory above the current directory.  For example, if you're in /home/jdoe/mydir, the Up button would take you to /home/jdoe."),
 		array ("directory_name", "The name of the directory you're currently in."),
 		array ("home", "The Home button takes you to your personal home directory."),

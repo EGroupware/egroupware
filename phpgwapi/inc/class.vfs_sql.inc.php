@@ -91,6 +91,7 @@
 		var $override_acl;
 		var $linked_dirs;
 		var $meta_types;
+		var $now;
 
 		/*!
 		@function vfs
@@ -103,12 +104,15 @@
 			$this->working_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			$this->working_lid = $GLOBALS['phpgw']->accounts->id2name($this->working_id);
 			$this->now = date ('Y-m-d');
-			$this->override_acl = 0;
+//			$this->override_acl = 0;
+			$this->override_acl = 1;
 
 			/*
 			   File/dir attributes, each corresponding to a database field.  Useful for use in loops
 			   If an attribute was added to the table, add it here and possibly add it to
 			   set_attributes ()
+
+			   set_attributes now uses this array().   07-Dec-01 skeeter
 			*/
 
 			$this->attributes = array(
@@ -355,7 +359,7 @@
 							{
 								return False;
 							}
-							$value = "Copied $state_one to $state_two";
+							$value = 'Copied '.$state_one.' to '.$state_two;
 							$incversion = False;
 							break;
 						case VFS_OPERATION_MOVED:
@@ -367,7 +371,7 @@
 							{
 								return False;
 							}
-							$value = "Moved $state_one to $state_two";
+							$value = 'Moved '.$state_one.' to '.$state_two;
 							$incversion = False;
 							break;
 						case VFS_OPERATION_DELETED:
@@ -480,14 +484,14 @@
 				   We copy it going the other way as well, so both files show the operation.
 				   The code is a bad hack to prevent recursion.  Ideally it would use VFS_OPERATION_COPIED
 				*/
-				$this->add_journal ($state_two, array (RELATIVE_NONE), "Copied $state_one to $state_two", NULL, NULL, False);
+				$this->add_journal ($state_two, array (RELATIVE_NONE), 'Copied '.$state_one.' to '.$state_two, NULL, NULL, False);
 			}
 
 			if ($operation == VFS_OPERATION_MOVED)
 			{
 				$state_one_path_parts = $this->path_parts ($state_one, array (RELATIVE_NONE));
 
-				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='$state_one_path_parts->fake_leading_dirs_clean' AND name='$state_one_path_parts->fake_name_clean' AND mime_type='journal'");
+				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='".$state_one_path_parts->fake_leading_dirs_clean."' AND name='".$state_one_path_parts->fake_name_clean."' AND mime_type='journal'");
 
 				/*
 				   We create the file in addition to logging the MOVED operation.  This is an
@@ -532,7 +536,7 @@
 
 			$p = $this->path_parts ($string, array ($relatives[0]));
 
-			$sql = "DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'";
+			$sql = "DELETE FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'";
 
 			if (!$deleteall)
 			{
@@ -582,7 +586,7 @@
 				return False;
 			}
 
-			$sql = "SELECT * FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'";
+			$sql = "SELECT * FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'";
 
 			if ($type == 1)
 			{
@@ -896,7 +900,7 @@
 				$basedir = ereg_replace ($sep . $sep, $sep, $basedir);
 			}
 
-			$basedir = ereg_replace ("$sep$", '', $basedir);
+			$basedir = ereg_replace ($sep.'$', '', $basedir);
 
 			return $basedir;
 		}
@@ -922,9 +926,6 @@
 			{
 				return True;
 			}
-
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$account_lid = $GLOBALS['phpgw']->accounts->id2name ($GLOBALS['phpgw_info']['user']['account_id']);
 
 			$p = $this->path_parts ($file, array ($relatives[0]));
 
@@ -956,7 +957,7 @@
 			}
 
 			/* Read access is always allowed here, but nothing else is */
-			if ($file == "/" || $file == $this->fakebase)
+			if ($file == '/' || $file == $this->fakebase)
 			{
 				if ($operation == PHPGW_ACL_READ)
 				{
@@ -972,22 +973,22 @@
 			   We don't use ls () to get owner_id as we normally would,
 			   because ls () calls acl_check (), which would create an infinite loop
 			*/
-			$query = $GLOBALS['phpgw']->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='$p2->fake_leading_dirs_clean' AND name='$p2->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
+			$query = $GLOBALS['phpgw']->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='".$p2->fake_leading_dirs_clean."' AND name='".$p2->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
 			$GLOBALS['phpgw']->db->next_record ();
 			$group_id = $GLOBALS['phpgw']->db->Record['owner_id'];
 
 			/* They always have access to their own files */
-			if ($group_id == $account_id)
+			if ($group_id == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				return True;
 			}
 
 			/* Check if they're in the group.  If so, they have access */
-			$memberships = $GLOBALS['phpgw']->accounts->membership ($account_id);
+			$memberships = $GLOBALS['phpgw']->accounts->membership ($GLOBALS['phpgw_info']['user']['account_id']);
 
 			if (is_array ($memberships))
 			{
-				reset ($memberships);
+				@reset ($memberships);
 
 				while (list ($num, $group_array) = @each ($memberships))
 				{
@@ -1060,7 +1061,7 @@
 				}
 				else
 				{
-					$currentdir = $GLOBALS['phpgw']->common->appsession ();
+					$currentdir = $GLOBALS['phpgw']->session->appsession('vfs','');
 					$basedir = $this->getabsolutepath ($currentdir . $sep . $target, array ($relatives[0]), True);
 				}
 			}
@@ -1069,7 +1070,7 @@
 				$basedir = $this->getabsolutepath ($target, array ($relatives[0]));
 			}
 
-			$GLOBALS['phpgw']->common->appsession ($basedir);
+			$GLOBALS['phpgw']->session->appsession('vfs','',$basedir);
 
 			return True;
 		}
@@ -1082,7 +1083,7 @@
 		*/
 		function pwd ($full = True)
 		{
-			$currentdir = $GLOBALS['phpgw']->common->appsession ();
+			$currentdir = $GLOBALS['phpgw']->session->appsession('vfs','');
 
 			if (!$full)
 			{
@@ -1139,10 +1140,11 @@
 		@param $contents contents
 		@result Boolean True/False
 		*/
-		function write ($file, $relatives = '', $contents)
+		function write ($file, $relatives = '', $contents = '')
 		{
 			if (!is_array ($relatives))
 			{
+				settype($relatives,'array');
 				$relatives = array (RELATIVE_CURRENT);
 			}
 
@@ -1171,12 +1173,12 @@
 			*/
 			$this->touch ($p->fake_full_path, array ($p->mask));
 
-			if ($fp = fopen ($p->real_full_path, "wb"))
+			if ($fp = fopen ($p->real_full_path, 'wb'))
 			{
 				fwrite ($fp, $contents, strlen ($contents));
 				fclose ($fp);
 
-				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ('size' => $this->get_size ($p->real_full_path, array (RELATIVE_NONE|VFS_REAL))));
+				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ('size' => filesize($p->real_full_path)));
 
 				if ($journal_operation)
 				{
@@ -1205,9 +1207,6 @@
 				$relatives = array (RELATIVE_CURRENT);
 			}
 
-			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
-
 			$p = $this->path_parts ($file, array ($relatives[0]));
 
 			umask (000);
@@ -1224,7 +1223,7 @@
 			}
 
 			/* We, however, have to decide this ourselves */
-			if ($this->file_exists ($p->fake_full_path, array ($p->mask)))
+			if ($this->file_exists($p->fake_full_path, array ($p->mask)))
 			{
 				if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_EDIT))
 				{
@@ -1235,7 +1234,7 @@
 					$p->fake_full_path,
 					array ($p->mask),
 					array (
-						'modifiedby_id' => $account_id,
+						'modifiedby_id' => $GLOBALS['phpgw_info']['user']['account_id'],
 						'modified' => $this->now
 					)
 				);
@@ -1247,17 +1246,18 @@
 					return False;
 				}
 
-				$query = $GLOBALS['phpgw']->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '$p->fake_leading_dirs_clean', '$p->fake_name_clean')", __LINE__, __FILE__);
-
 				$this->set_attributes(
 					$p->fake_full_path,
 					array ($p->mask),
 					array (
-						'createdby_id' => $account_id,
+						'owner_id' => $this->working_id,
+						'directory' => $p->fake_leading_dirs_clean,
+						'name' => $p->fake_name_clean,
+						'createdby_id' => $GLOBALS['phpgw_info']['user']['account_id'],
 						'created' => $this->now,
 						'size' => 0,
 						'deleteable' => 'Y',
-						'app' => $currentapp
+						'app' => $GLOBALS['phpgw_info']['flags']['currentapp']
 					)
 				);
 				$this->correct_attributes ($p->fake_full_path, array ($p->mask));
@@ -1703,12 +1703,13 @@
 
 			if (!$this->file_exists ($p->fake_full_path, array ($p->mask)))
 			{
-				$query = $GLOBALS['phpgw']->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
-	
 				$this->set_attributes(
 					$p->fake_full_path,
 					array ($p->mask),
 					array (
+						'owner_id' => $this->working_id,
+						'name' => $p->fake_name_clean,
+						'directory' => $p->fake_leading_dirs_clean,
 						'createdby_id' => $account_id,
 						'size' => 4096,
 						'mime_type' => 'Directory',
@@ -1804,6 +1805,8 @@
 				link_directory
 				link_name
 				version
+				name
+				directory
 		*/
 		function set_attributes ($file, $relatives = '', $attributes = '')
 		{
@@ -1830,63 +1833,78 @@
 
 			if (!$this->file_exists ($file, array ($relatives[0])))
 			{
-				return False;
+				$exists = False;
 			}
-
+			else
+			{
+				$exists = True;
+			}
+			
 			/*
 			   All this voodoo just decides which attributes to update
 			   depending on if the attribute was supplied in the $attributes array
 			*/
 
+
 			$ls_array = $this->ls ($p->fake_full_path, array ($p->mask), False, False, True);
 			$record = $ls_array[0];
 
-			$attribute_names = array(
-				'owner_id', 'createdby_id', 'modifiedby_id',
-				'created', 'modified', 'size', 'mime_type',
-				'deleteable', 'comment', 'app',
-				'link_directory', 'link_name', 'version'
-			);
-
-			$sql = 'UPDATE phpgw_vfs SET ';
-
-			$change_attributes = 0;
-			while (list ($num, $attribute) = each ($attribute_names))
+			$sql_array = Array();
+			$sql_fields = '';
+			$sql_vals = '';
+			@reset($this->attributes);
+			while (list ($num, $attribute) = each ($this->attributes))
 			{
-				if (isset ($attributes[$attribute]))
+				if (isset($attributes[$attribute]))
 				{
-					$$attribute = $attributes[$attribute];
-
-					/*
-					   Indicate that the EDITED_COMMENT operation needs to be journaled,
-					   but only if the comment changed
-					*/
-					if ($attribute == 'comment' && $attributes[$attribute] != $record[$attribute])
+					if($exists)
 					{
-						$edited_comment = 1;
+						if($sql_vals)
+						{
+							$sql_vals .= ', ';
+						}
+						$sql_vals .= "$attribute='".$this->db_clean($attributes[$attribute])."'";
 					}
-
-					$$attribute = $this->db_clean ($$attribute);
-
-					if ($change_attributes > 0)
+					else
 					{
-						$sql .= ', ';
+						if($sql_fields)
+						{
+							$sql_fields .= ',';
+						}
+						if($sql_vals)
+						{
+							$sql_vals .= ',';
+						}
+						$sql_fields .= $attribute;
+						$sql_vals .= "'".$this->db_clean($attributes[$attribute])."'";
 					}
-
-					$sql .= "$attribute='" . $$attribute . "'";
-
-					$change_attributes++;
 				}
 			}
 
-			$sql .= " WHERE file_id='$record[file_id]'";
-			$sql .= $this->extra_sql (VFS_SQL_UPDATE);
-
-			$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
+			if($exists)
+			{
+				if($sql_vals)
+				{
+					$sql = "UPDATE phpgw_vfs SET $sql_vals WHERE file_id='".$record['file_id']."'".$this->extra_sql(VFS_SQL_UPDATE);
+				}
+				else
+				{
+					$sql = '';
+				}
+			}
+			else
+			{
+				$sql = "INSERT INTO phpgw_vfs($sql_fields) VALUES ($sql_vals)";
+			}
+			$query = ($sql?$GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__):False);
 
 			if ($query) 
 			{
-				if ($edited_comment)
+				/*
+				   Indicate that the EDITED_COMMENT operation needs to be journaled,
+				   but only if the comment changed
+				*/
+				if (isset($attributes['comment']) && $attributes['comment'] != $record['comment'])
 				{
 					$this->add_journal ($p->fake_full_path, array ($p->mask), VFS_OPERATION_EDITED_COMMENT);
 				}
@@ -1919,19 +1937,16 @@
 			{
 				$ls_array = $this->ls ($p->fake_leading_dirs, array ($p->mask), False, False, True);
 				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ('owner_id' => $ls_array[0]['owner_id']));
-
 				return True;
 			}
 			elseif (preg_match ("+^$this->fakebase\/(.*)$+U", $p->fake_full_path, $matches))
 			{
-				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $GLOBALS['phpgw']->accounts->name2id ($matches[1])));
-
+				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ('owner_id' => $GLOBALS['phpgw']->accounts->name2id ($matches[1])));
 				return True;
 			}
 			else
 			{
 				$this->set_attributes ($p->fake_full_name, array ($p->mask), array ('owner_id' => 0));
-
 				return True;
 			}
 		}
@@ -1999,14 +2014,12 @@
 
 			if ($p->outside)
 			{
-				$rr = file_exists ($p->real_full_path);
-
-				return $rr;
+				return file_exists ($p->real_full_path);
 			}
 
-			$query = $GLOBALS['phpgw']->db->query ("SELECT name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
+			$query = $GLOBALS['phpgw']->db->query ("SELECT name FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
 
-			if ($GLOBALS['phpgw']->db->next_record ())
+			if ($GLOBALS['phpgw']->db->num_rows())
 			{
 				return True;
 			}
@@ -2140,10 +2153,10 @@
 						$sql .= ', ';
 					}
 
-					$sql .= "$attribute";
+					$sql .= $attribute;
 				}
 
-				$sql .= " FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'";
+				$sql .= " FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'";
 
 				$sql .= $this->extra_sql (VFS_SQL_SELECT);
 
@@ -2200,19 +2213,19 @@
 					$sql .= ", ";
 				}
 
-				$sql .= "$attribute";
+				$sql .= $attribute;
 			}
 
 			$dir_clean = $this->db_clean ($dir);
-			$sql .= " FROM phpgw_vfs WHERE directory LIKE '$dir_clean%'";
+			$sql .= " FROM phpgw_vfs WHERE directory LIKE '".$dir_clean."%'";
 			$sql .= $this->extra_sql (VFS_SQL_SELECT);
 
 			if ($mime_type)
 			{
-				$sql .= " AND mime_type='$mime_type'";
+				$sql .= " AND mime_type='".$mime_type."'";
 			}
 
-			$sql .= " ORDER BY $orderby";
+			$sql .= ' ORDER BY '.$orderby;
 
 			$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
 
@@ -2427,12 +2440,10 @@
 				$mime_type = 'Directory';
 			}
 
-			$size = filesize ($p->real_full_path);
-
 			$rarray = array(
 				'directory' => $p->fake_leading_dirs,
 				'name' => $p->fake_name,
-				'size' => $size,
+				'size' => filesize ($p->real_full_path),
 				'mime_type' => $mime_type
 			);
 
