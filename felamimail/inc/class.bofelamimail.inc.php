@@ -107,8 +107,10 @@
 		
 		function adminMenu()
 		{
-			$data = Array
-			(
+		    if ($GLOBALS['phpgw_info']['server']['account_repository'] == "ldap")
+		    {
+    		        $data = Array
+		        (
 				'description'   => 'email settings',
 				'url'           => '/index.php',
 				'extradata'     => 'menuaction=emailadmin.uiuserdata.editUserData'
@@ -118,6 +120,7 @@
 			global $menuData;
 			
 			$menuData[] = $data;
+		    }
 		}
 		
 		function appendMessage($_folderName, $_header, $_body, $_flags)
