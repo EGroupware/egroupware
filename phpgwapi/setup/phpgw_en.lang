@@ -18,10 +18,10 @@ anguilla	common	en	ANGUILLA
 antarctica	common	en	ANTARCTICA
 antigua and barbuda	common	en	ANTIGUA AND BARBUDA
 april	common	en	April
+are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 argentina	common	en	ARGENTINA
 armenia	common	en	ARMENIA
 aruba	common	en	ARUBA
-are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 august	common	en	August
 australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
@@ -95,19 +95,19 @@ denmark	common	en	DENMARK
 description	common	en	Description
 disabled	common	en	Disabled
 djibouti	common	en	DJIBOUTI
+do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
-do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
+e-mail	common	en	E-Mail
 east timor	common	en	EAST TIMOR
 ecuador	common	en	ECUADOR
 edit	common	en	Edit
-edit category	common	en	Edit category
 edit categories	common	en	Edit Categories
+edit category	common	en	Edit category
 edit x category for	common	en	Edit %1 category for
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
-e-mail	common	en	E-Mail
 email	common	en	E-Mail
 enabled	common	en	Enabled
 end date	common	en	End date
@@ -150,8 +150,8 @@ grant access	common	en	Grant access
 greece	common	en	GREECE
 greenland	common	en	GREENLAND
 grenada	common	en	GRENADA
-group access	common	en	Group Access
 group	common	en	Group
+group access	common	en	Group Access
 group public	common	en	Group Public
 groups	common	en	Groups
 guadeloupe	common	en	GUADELOUPE
@@ -162,11 +162,11 @@ guinea-bissau	common	en	GUINEA-BISSAU
 guyana	common	en	GUYANA
 haiti	common	en	HAITI
 heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
+help	common	en	Help
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
+home	common	en	Home
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
-help	common	en	Help
-home	common	en	Home
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
 india	common	en	INDIA
@@ -175,9 +175,9 @@ iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	en	IRAQ
 ireland	common	en	IRELAND
 israel	common	en	ISRAEL
-italy	common	en	ITALY
-it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
 it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
+it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
+italy	common	en	ITALY
 jamaica	common	en	JAMAICA
 january	common	en	January
 japan	common	en	JAPAN
@@ -194,8 +194,6 @@ kyrgyzstan	common	en	KYRGYZSTAN
 lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	en	Last name
 lastname	common	en	Lastname
-login	common	en	Login
-logout	common	en	Logout
 latvia	common	en	LATVIA
 lebanon	common	en	LEBANON
 lesotho	common	en	LESOTHO
@@ -203,6 +201,8 @@ liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 liechtenstein	common	en	LIECHTENSTEIN
 lithuania	common	en	LITHUANIA
+login	common	en	Login
+logout	common	en	Logout
 luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
@@ -250,11 +250,11 @@ niger	common	en	NIGER
 nigeria	common	en	NIGERIA
 niue	common	en	NIUE
 no	common	en	No
+no subject	common	en	No Subject
 none	common	en	None
 norfolk island	common	en	NORFOLK ISLAND
 northern mariana islands	common	en	NORTHERN MARIANA ISLANDS
 norway	common	en	NORWAY
-no subject	common	en	No Subject
 note	common	en	Note
 notes	common	en	Notes
 november	common	en	November
@@ -346,7 +346,11 @@ taiwan, province of china	common	en	TAIWAN, PROVINCE OF CHINA
 tajikistan	common	en	TAJIKISTAN
 tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
 thailand	common	en	THAILAND
+the api is current	common	en	The API is current
+the api requires an upgrade	common	en	The API requires an upgrade
 the following applications require upgrades	common	en	The following applications require upgrades
+this application is current	common	en	This application is current common
+this application requires an upgrade	common	en	This application requires an upgrade
 this name has been used already	common	en	This name has been used already !
 thursday	common	en	Thursday
 time	common	en	Time
@@ -370,9 +374,9 @@ united arab emirates	common	en	UNITED ARAB EMIRATES
 united kingdom	common	en	UNITED KINGDOM
 united states	common	en	UNITED STATES
 united states minor outlying islands	common	en	UNITED STATES MINOR OUTLYING ISLANDS
+update	common	en	Update
 url	common	en	URL
 uruguay	common	en	URUGUAY
-update	common	en	Update
 user	common	en	User
 username	common	en	Username
 users	common	en	users
@@ -391,13 +395,13 @@ written by:	common	en	Written by:
 yemen	common	en	YEMEN
 yes	common	en	Yes
 you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for.
+you have been successfully logged out	login	en	You have been successfully logged out
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 your search returned 1 match	common	en	your search returned 1 match
 your search returned x matchs	common	en	your search returned %1 matches
+your session could not be verified.	login	en	Your session could not be verified.
 your settings have been updated	common	en	Your settings have been Updated
 yugoslavia	common	en	YUGOSLAVIA
-you have been successfully logged out	login	en	You have been successfully logged out
-your session could not be verified.	login	en	Your session could not be verified.
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
