@@ -25,7 +25,7 @@
 	// This should be considered experimental.  It works, at the app level.
 	// But, for admin and prefs it really slows things down.  See the note
 	// in the translate() function.
-	// To use, set $phpgw_info["server"]["translation_system"] = "file"; in
+	// To use, set $GLOBALS['phpgw_info']["server"]["translation_system"] = "file"; in
 	// class.translation.inc.php
 	class translation
 	{
@@ -38,10 +38,14 @@
 		@param $key  phrase to translate
 		@param $vars vars sent to lang function, passed to us
 		*/
-		function translation()
+		function translation($appname='phpgwapi',$loadlang='')
 		{
-			global $phpgw_info, $lang;
-			$this->add_app('phpgwapi',$lang);
+			global $lang;
+			if($loadlang)
+			{
+				$lang = $loadlang;
+			}
+			$this->add_app($appname,$lang);
 		}
 
 		function isin_array($needle,$haystack)
@@ -58,22 +62,22 @@
 
 		function translate($key, $vars=False) 
 		{
-			global $phpgw_info, $lang;
+			global $lang;
 
-			if (!$this->isin_array($phpgw_info['flags']['currentapp'],$this->loaded_apps) &&
-				$phpgw_info['flags']['currentapp'] != 'home')
+			if (!$this->isin_array($GLOBALS['phpgw_info']['flags']['currentapp'],$this->loaded_apps) &&
+				$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
 			{
-				//echo '<br>loading app "' . $phpgw_info['flags']['currentapp'] . '" for the first time.';
-				$this->add_app($phpgw_info['flags']['currentapp'],$lang);
+				//echo '<br>loading app "' . $GLOBALS['phpgw_info']['flags']['currentapp'] . '" for the first time.';
+				$this->add_app($GLOBALS['phpgw_info']['flags']['currentapp'],$lang);
 			}
-			elseif ($phpgw_info['flags']['currentapp'] == 'admin' ||
-				$phpgw_info['flags']['currentapp'] == 'preferences')
+			elseif ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'admin' ||
+				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
 			{
 				// This is done because for these two apps, all langs must be loaded.
 				// Note we cannot load for navbar, since it would slow down EVERY page.
 				// This is true until all common/admin/prefs langs are in the api file only.
-				@ksort($phpgw_info['apps']);
-				while(list($x,$app) = each($phpgw_info['apps']))
+				@ksort($GLOBALS['phpgw_info']['apps']);
+				while(list($x,$app) = each($GLOBALS['phpgw_info']['apps']))
 				{
 					if (!$this->isin_array($app['name'],$this->loaded_apps))
 					{
@@ -114,17 +118,15 @@
 		*/
 		function add_app($app,$lang='')
 		{
-			global $phpgw_info;
-
 			define('SEP',filesystem_separator());
 
 			//echo '<br>add_app(): called with app="' . $app . '", lang="' . $userlang . '"';
 			if (!isset($lang) || !$lang)
 			{
-				if (isset($phpgw_info['user']['preferences']['common']['lang']) &&
-					$phpgw_info['user']['preferences']['common']['lang'])
+				if (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 				{
-					$userlang = $phpgw_info['user']['preferences']['common']['lang'];
+					$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 				}
 				else
 				{

@@ -286,15 +286,13 @@
 
 		function hour_formated_text($name, $selected = 0)
 		{
-			global $phpgw;
-
 			$s = '<select name="' . $name . '">';
 			$t_s[$selected] = ' selected';
 
 			for ($i=0; $i<24; $i++)
 			{
 				$s .= '<option value="' . $i . '"' . $t_s[$i] . '>'
-					. $phpgw->common->formattime($i+1,"00") . '</option>' . "\n";
+					. $GLOBALS['phpgw']->common->formattime($i+1,"00") . '</option>' . "\n";
 			}
 			$s .= "</select>";
 
@@ -303,8 +301,6 @@
 
 		function hour_text($name, $selected = 0)
 		{
-			global $phpgw;
-
 			$s = '<select name="' . $name . '">';
 			$t_s[$selected] = " selected";
 			for ($i=1; $i<13; $i++)
@@ -484,8 +480,6 @@
 
 		function getGroups($groups, $selected="", $name="n_groups[]")
 		{
-			global $phpgw;
-
 			$out = '<select name="' . $name . '" multiple>';
 			while (list($null,$group) = each($groups))
 			{
