@@ -23,7 +23,7 @@
 
 			$phpgw->contacts   = CreateObject('phpgwapi.contacts');
 
-			$this->contacts = &$phpgw->contacts;
+			$this->contacts = $phpgw->contacts;
 			$this->rights   = $rights;
 		}
 

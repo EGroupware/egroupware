@@ -57,19 +57,19 @@
 			$phpgw->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
 			$this->bo       = CreateObject('addressbook.boaddressbook',True);
-			$this->template = &$phpgw->template;
-			$this->contacts = &$phpgw->contacts;
+			$this->template = $phpgw->template;
+			$this->contacts = $this->bo->so->contacts;
 			$this->cat      = CreateObject('phpgwapi.categories');
 			$this->company  = CreateObject('phpgwapi.categories','addressbook_company');
-			$this->prefs    = &$phpgw_info['user']['preferences']['addressbook'];
+			$this->prefs    = $phpgw_info['user']['preferences']['addressbook'];
 
-			$this->start    = &$this->bo->start;
-			$this->limit    = &$this->bo->limit;
-			$this->query    = &$this->bo->query;
-			$this->sort     = &$this->bo->sort;
-			$this->order    = &$this->bo->order;
-			$this->filter   = &$this->bo->filter;
-			$this->cat_id   = &$this->bo->cat_id;
+			$this->start    = $this->bo->start;
+			$this->limit    = $this->bo->limit;
+			$this->query    = $this->bo->query;
+			$this->sort     = $this->bo->sort;
+			$this->order    = $this->bo->order;
+			$this->filter   = $this->bo->filter;
+			$this->cat_id   = $this->bo->cat_id;
 			if($this->debug) { $this->_debug_sqsof(); }
 /*			_debug_array($this); */
 		}

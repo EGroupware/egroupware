@@ -21,7 +21,6 @@
 			'add_entry'       => True,
 			'add_vcard'       => True,
 			'add_email'       => True,
-			'copy_entry'      => True,
 			'update_entry'    => True
 		);
 
@@ -197,7 +196,7 @@
 				. $phpgw->link('/addressbook/main.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
 		}
 
-		function copy_entry($ab_id)
+		function OLDcopy_entry($ab_id)
 		{
 			global $phpgw,$phpgw_info;
 
