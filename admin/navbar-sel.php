@@ -36,7 +36,7 @@ function getRGB($web_color) {
 		return $retval;
 	}
 }
-
+  $phpgw_info = array();
   $phpgw_info["flags"]["currentapp"] = "admin";
   $phpgw_info["flags"]["nonavbar"] = True;
   $phpgw_info["flags"]["noheader"] = True;

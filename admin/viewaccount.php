@@ -12,6 +12,7 @@
 
   /* $Id$ */
 
+  $phpgw_info = array();
   if (! $account_id) {
      $phpgw_info["flags"] = array("nonavbar" => True, "noheader" => True);
   }

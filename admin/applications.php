@@ -11,6 +11,7 @@
 
   /* $Id$ */
 
+  $phpgw_info = array();
   $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 

@@ -1,4 +1,5 @@
 <?php
+  $phpgw_info = array();
   $phpgw_info["flags"]["currentapp"] = "admin";
   $phpgw_info["server"]["site_title"] = "Create a selected navbar image";
   include("../header.inc.php");
