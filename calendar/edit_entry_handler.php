@@ -214,7 +214,6 @@
 	if($datetime_check)
 	{
 		Header('Location: '.$phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&cd='.$datetime_check));
-		$phpgw->common->phpgw_exit();
 	}
 	elseif($overlapping_events)
 	{
@@ -277,6 +276,8 @@
 		$p->parse('reedit_button','form_button');
 
 		$p->pparse('out','overlap');
+		$phpgw_info['flags']['nofooter'] = False;
+		$phpgw->common->phpgw_footer();
 		
 	}
 	else
@@ -285,5 +286,4 @@
 		$phpgw->calendar->store_event($cal_stream);
 		Header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php','year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday.'&cd=14&owner='.$owner));
 	}
-	$phpgw->common->phpgw_footer();
 ?>
