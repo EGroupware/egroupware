@@ -1,5 +1,6 @@
 <?php
-	$setup_info['phpgwapi']['name'] = 'phpgwapi';
+	$setup_info['phpgwapi']['name']    = 'phpgwapi';
+	$setup_info['phpgwapi']['title']   = 'phpgwapi';
 	$setup_info['phpgwapi']['version'] = '0.9.11';
 //	$setup_info['phpgwapi']['app_order'] = '6';
 	$tables = Array();
