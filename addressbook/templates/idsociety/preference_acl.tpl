@@ -16,7 +16,7 @@
  </tr>
 </table>
 <form method="POST" action="{action_url}">
- <table border="0" align="center" width="50%" cols="4">
+ <table border="0" align="center" width="50%">
 {row}
  </table>
 {common_hidden_vars_form}

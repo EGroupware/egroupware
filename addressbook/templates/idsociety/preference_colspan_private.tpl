@@ -1,8 +1,6 @@
   <tr bgcolor="{bg_color}">
     <td>{string}</td>
-    <td align="center">{read_lang}</td>
-    <td align="center">{add_lang}</td>
-    <td align="center">{edit_lang}</td>
-    <td align="center">{delete_lang}</td>
-    <td align="center">{private_lang}</td>
+    <td align="center" width="10%">{read_lang}</td>
+    <td align="center" width="10%">{edit_lang}</td>
+    <td align="center" width="10%">{delete_lang}</td>
   </tr>

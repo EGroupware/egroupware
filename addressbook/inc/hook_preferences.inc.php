@@ -30,7 +30,7 @@
 	echo '<a href="' . $phpgw->link('/addressbook/preferences.php') . '">'
 		. lang('Addressbook preferences') . '</a><br>';
 
-	echo '<a href="' . $phpgw->link('/addressbook/acl_preferences.php') . '">'
+	echo '<a href="' . $phpgw->link('/preferences/acl_preferences.php','acl_app=addressbook') . '">'
 		. lang('Grant Addressbook Access') . '</a><br>';
 
 	echo '<a href="' . $phpgw->link('/addressbook/categories.php') . '">'
