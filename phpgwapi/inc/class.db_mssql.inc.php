@@ -4,9 +4,14 @@
   * http://www.phpgroupware.org/api                                          *
   * (C) Copyright 1998 Cameron Taggart (cameront@wolfenet.com)               *
   *  Modified by Guarneri carmelo (carmelo@melting-soft.com)                 *
-  *	 Modified by Cameron Just     (C.Just@its.uq.edu.au)                     *
-  * -------------------------------------------------------------------------*
-  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  *	 Modified by Cameron Just     (C.Just@its.uq.edu.au)                  *
+  * ------------------------------------------------------------------------ *
+  * This file is not part of the phpGroupWare API                            * 
+  * ------------------------------------------------------------------------ *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
   \**************************************************************************/
 
   /* $Id$ */
