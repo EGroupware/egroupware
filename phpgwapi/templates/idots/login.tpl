@@ -60,7 +60,7 @@
 </TD>
 </TR>
 </TABLE>
-<div style="bottom:10px;left:10px;position:absolute;">
+<div style="bottom:10px;left:10px;position:absolute;visibility:hidden;">
 <img src="phpgwapi/templates/{template_set}/images/valid-html401.png" border="0" alt="Valid HTML 4.01">
 <img src="phpgwapi/templates/{template_set}/images/vcss.png" border="0" alt="Valid CSS">
 </div>
