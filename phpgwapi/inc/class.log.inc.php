@@ -83,8 +83,9 @@
 			global $phpgw, $phpgw_info;
 			$db = $phpgw->db;
 			$db->query	("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
-						."(".time()
-						.",".$phpgw->session->account_id
+						."('". $phpgw->db->to_timestamp(time()
+)
+						."',".$phpgw->session->account_id
 						.",'".$phpgw_info['flags']['currentapp']."'"
 						.",'".$this->severity()."'"
 						.")"
@@ -98,8 +99,9 @@
 							."(log_msg_seq_no, log_msg_date, "
 							."log_msg_severity, log_msg_code, log_msg_msg, log_msg_parms) values "
 							."(" . $i
-							.", " . $err->timestamp
-							.", '". $err->severity . "'"
+							.", '" . $phpgw->db->to_timestamp($err->timestamp
+)
+							."', '". $err->severity . "'"
 							.", '". $err->code     . "'"
 							.", '". $err->msg      . "'"
 							.", '". addslashes(implode('|',$err->parms)). "'"
