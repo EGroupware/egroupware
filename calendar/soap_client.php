@@ -26,10 +26,11 @@
 	include('../header.inc.php');
 	include('../soap/vars.php');
 
-//	$method_params = Array();
+	$dest_server = basename(
 	$server['calendar.bocalendar.read_entry'] = array(
 		'soapaction' => "urn:soapinterop",
-		'endpoint' => "http://devel/phpgroupware/calendar/soap_server.php?sessionid=$sessionid&kp3=$soap_temp_kp3&domain=$soap_temp_domain",
+		'endpoint' => $phpgw->link('/calendar/soap_server.php'),
+//		'endpoint' => "http://devel/phpgroupware/calendar/soap_server.php?sessionid=$sessionid&kp3=$soap_temp_kp3&domain=$soap_temp_domain",
 //		'endpoint' => "http://devel/phpgroupware/calendar/soap_server.php",
 		'methodNamespace' => "http://soapinterop.org",
 		'soapactionNeedsMethod' => 0,
@@ -71,16 +72,15 @@
 <?php
 $now = time() - ((60 * 60) * (intval($phpgw_info['user']['preferences']['common']['tz_offset'])));
 
-echo '<td>Start : '.$phpgw->common->dateformatorder(
-	$sb->getYears('method_params[calendar.bocalendar.store_to_cache][syear]',intval($phpgw->common->show_date($now,'Y')),intval($phpgw->common->show_date($now,'Y'))),
-	$sb->getMonthText('method_params[calendar.bocalendar.store_to_cache][smonth]',intval($phpgw->common->show_date($now,'n'))),
-	$sb->getDays('method_params[calendar.bocalendar.store_to_cache][sday]',intval($phpgw->common->show_date($now,'d')))
-)."</td>";
-echo '<tr><td></td><td>End : '.$phpgw->common->dateformatorder(
-	$sb->getYears('method_params[calendar.bocalendar.store_to_cache][eyear]',intval($phpgw->common->show_date($now,'Y')),intval($phpgw->common->show_date($now,'Y'))),
-	$sb->getMonthText('method_params[calendar.bocalendar.store_to_cache][emonth]',intval($phpgw->common->show_date($now,'n'))),
-	$sb->getDays('method_params[calendar.bocalendar.store_to_cache][eday]',intval($phpgw->common->show_date($now,'d')))
-);
+echo '<td>Start : '.
+	$sb->getYears('method_params[calendar.bocalendar.store_to_cache][syear]',intval($phpgw->common->show_date($now,'Y')),intval($phpgw->common->show_date($now,'Y'))).
+	$sb->getMonthText('method_params[calendar.bocalendar.store_to_cache][smonth]',intval($phpgw->common->show_date($now,'n'))).
+	$sb->getDays('method_params[calendar.bocalendar.store_to_cache][sday]',intval($phpgw->common->show_date($now,'d')))."</td>";
+echo '<tr><td></td><td>End : '.
+	$sb->getYears('method_params[calendar.bocalendar.store_to_cache][eyear]',intval($phpgw->common->show_date($now,'Y')),intval($phpgw->common->show_date($now,'Y'))).
+	$sb->getMonthText('method_params[calendar.bocalendar.store_to_cache][emonth]',intval($phpgw->common->show_date($now,'n'))).
+	$sb->getDays('method_params[calendar.bocalendar.store_to_cache][eday]',intval($phpgw->common->show_date($now,'d')));
+
 echo "</td></table><br>\n".'<input type="submit" name="submit" value="'.lang('Submit').'"></form>';
 
 	if($method && $submit)
