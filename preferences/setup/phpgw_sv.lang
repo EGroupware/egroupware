@@ -18,10 +18,10 @@ show current users on navigation bar	preferences	sv	Visa nuvarande användare i n
 show high priority events on main screen	preferences	sv	Visa högprioritets händelse på huvudskärmen
 show new messages on main screen	preferences	sv	Visa nya meddelande på huvudskärmen
 show text on navigation icons	preferences	sv	Visa text på navigations ikoner
-this server is located in the x timezone	preferences	sv	 Denna server är placerad i %1 tidszone
+this server is located in the %1 timezone	preferences	sv	 Denna server är placerad i %1 tidszone
 time format	preferences	sv	Tids format
 time zone offset	preferences	sv	Tids-Zone offset
 weekday starts on	preferences	sv	Vecka börjar på
 work day ends on	preferences	sv	Arbetsdag slutar kl:
 work day starts on	preferences	sv	Arbetsdag börjar kl:
-your current theme is: x	preferences	sv	Ditt nuvarande tema är: %1
+your current theme is: %1	preferences	sv	Ditt nuvarande tema är: %1

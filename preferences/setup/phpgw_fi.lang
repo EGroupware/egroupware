@@ -23,8 +23,8 @@ show text on navigation icons	preferences	fi	Näytä teksti käyttöliittymän ikonei
 text only	preferences	fi	Vain teksti
 theme (colors/fonts) selection	preferences	fi	Teeman (värit/tekstit) valinta
 the two passwords are not the same	preferences	fi	Salasanat eivät vastaa toisiaan
-this server is located in the x timezone	preferences	fi	 Palvelin sijaitsee aikavyöhykkeessä %1
+this server is located in the %1 timezone	preferences	fi	 Palvelin sijaitsee aikavyöhykkeessä %1
 time format	preferences	fi	Ajan muoto
-your current theme is: x	preferences	fi	Nykyinen teema: %1
+your current theme is: %1	preferences	fi	Nykyinen teema: %1
 you must enter a password	preferences	fi	Anna salasana
 your preferences	preferences	fi	Henkilökohtaiset asetukset

@@ -18,11 +18,11 @@ show high priority events on main screen	preferences	cs	Ukázat události s vysoko
 show new messages on main screen	preferences	cs	Ukázat nové zprávy na hlavní obrazovce
 show text on navigation icons	preferences	cs	Ukázat text na navigaèních ikonách
 the two passwords are not the same	preferences	cs	Hesla nejsou shodná
-this server is located in the x timezone	preferences	cs	Tento server je v %1 èasové zónì
+this server is located in the %1 timezone	preferences	cs	Tento server je v %1 èasové zónì
 time format	preferences	cs	Formát èasu
 time zone offset	preferences	cs	Èasová zóna (rozdíl)
 weekday starts on	preferences	cs	Týden zaèíná v 
 work day ends on	preferences	cs	Pracovní dny konèí v
 work day starts on	preferences	cs	Pracovní dny zaèínají v
 you must enter a password	preferences	cs	Musíte vlo¾it heslo
-your current theme is: x	preferences	cs	Va¹e barevné téma je: <b>%1</b>
+your current theme is: %1	preferences	cs	Va¹e barevné téma je: <b>%1</b>

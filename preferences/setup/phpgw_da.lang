@@ -23,9 +23,9 @@ show text on navigation icons	preferences	da	Vis tekst på navigationsbjælkens ik
 text only	preferences	da	Kun tekst
 theme (colors/fonts) selection	preferences	da	Tema (farver/fonte) Valg
 the two passwords are not the same	preferences	da	De to passwords stemmer ikke overens
-this server is located in the x timezone	preferences	da	Denne server er placeret i tidszone %1
+this server is located in the %1 timezone	preferences	da	Denne server er placeret i tidszone %1
 time format	preferences	da	Tidsformat
 time zone offset	preferences	da	Tidszone forskel
 you must enter a password	preferences	da	Du skal angive et password
-your current theme is: x	preferences	da	Det nuværende tema er
+your current theme is: %1	preferences	da	Det nuværende tema er %1
 your preferences	preferences	da	Dine Preferencer

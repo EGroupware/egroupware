@@ -13,8 +13,8 @@ select different theme	preferences	nl	Selecteer een ander thema
 show current users on navigation bar	preferences	nl	Geef huidige gebruikers weer op de navigatiebalk
 show text on navigation icons	preferences	nl	Geef tekst weer op de navigatiebalk
 the two passwords are not the same	preferences	nl	De twee wachtwoorden komen niet overeen
-this server is located in the x timezone	preferences	nl	Tijdzone
+this server is located in the %1 timezone	preferences	nl	Tijdzone %1
 time format	preferences	nl	Tijdweergave
 time zone offset	preferences	nl	Tijdzoneverschil
 you must enter a password	preferences	nl	U moet een wachtwoord invoeren
-your current theme is: x	preferences	nl	Uw huidige thema is
+your current theme is: %1	preferences	nl	Uw huidige thema is %1

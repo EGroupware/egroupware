@@ -2,7 +2,7 @@
 %1 hours	preferences	en	%1 hours
 12 hour	preferences	en	12 hour
 24 hour	preferences	en	24 hour
-a template defines the layout of phpgroupware and it contains icons vor each application.	preferences	en	A template defines the layout of phpGroupWare and it contains icons vor each application.
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	en	A template defines the layout of phpGroupWare and it contains icons for each application.
 a theme defines the colors and fonts used by the template.	preferences	en	A theme defines the colors and fonts used by the template.
 acl grants have been updated	preferences	en	ACL grants have been updated
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in phpGW will show you this number of entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.
@@ -35,7 +35,8 @@ interface/template selection	preferences	en	Interface/Template Selection
 language	preferences	en	Language
 max matches per page	preferences	en	Max matches per page
 no default	preferences	en	No default
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
+note: this feature might *not* change your email password. this may need to be done manually. 	preferences	en	note: This feature might *not* change your email password. This may need to be done manually.
+please choose one of the methods to handle the subcategories	preferences	en	Please choose one of the methods to handle the subcategories
 please, select a new theme	preferences	en	Please, select a new theme
 popup with search	preferences	en	Popup with search
 re-enter your password	preferences	en	Re-Enter your password

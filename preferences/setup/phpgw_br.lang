@@ -15,11 +15,11 @@ show high priority events on main screen	preferences	br	Mostra eventos de alta p
 show new messages on main screen	preferences	br	Mostra novas mensagens na tela principal
 show text on navigation icons	preferences	br	Mostra texto na barra de navegacao
 the two passwords are not the same	preferences	br	As duas senhas nao sao a mesma
-this server is located in the x timezone	preferences	br	Este servidor esta localizado no fuso horario %1
+this server is located in the %1 timezone	preferences	br	Este servidor esta localizado no fuso horario %1
 time format	preferences	br	Formato horario
 time zone offset	preferences	br	Diferenca de fuso horario
 weekday starts on	preferences	br	A Semana comeca em
 work day ends on	preferences	br	A jornada de trabalho termina em
 work day starts on	preferences	br	A jornada de trabalho comeca em
 you must enter a password	preferences	br	Voce deve digitar uma senha
-your current theme is: x	preferences	br	Seu tema corrente e': 
+your current theme is: %1	preferences	br	Seu tema corrente e': %1

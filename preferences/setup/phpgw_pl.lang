@@ -28,11 +28,11 @@ show text on navigation icons	preferences	pl	Poka¿ tekst na ikonach nawigacji
 text only	preferences	pl	Tylko tekst
 theme (colors/fonts) selection	preferences	pl	Wybór tematu (kolory/czcionki)
 the two passwords are not the same	preferences	pl	Te dwa has³a nie s± identyczne
-this server is located in the x timezone	preferences	pl	Ten serwer znajduje siê w strefie czasowej %1
+this server is located in the %1 timezone	preferences	pl	Ten serwer znajduje siê w strefie czasowej %1
 time format	preferences	pl	Format czasu
 weather center	preferences	pl	Centrum pogodowe
 weather	preferences	pl	Pogoda
 weather preferences	preferences	pl	Ustawienia pogody
 you must enter a password	preferences	pl	Musisz wprowadziæ has³o
-your current theme is: x	preferences	pl	Twój bie¿±cy temat to: %1
+your current theme is: %1	preferences	pl	Twój bie¿±cy temat to: %1
 your preferences	preferences	pl	Twoje ustawienia

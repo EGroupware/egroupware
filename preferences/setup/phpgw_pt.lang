@@ -23,8 +23,8 @@ show text on navigation icons	preferences	pt	Exibir texto na barra de navegação
 text only	preferences	pt	Somente texto
 theme (colors/fonts) selection	preferences	pt	Seleção de tema (cores/fontes)
 the two passwords are not the same	preferences	pt	As duas senhas não são iguais
-this server is located in the x timezone	preferences	pt	Este servidor está localizado no fuso horário %1
+this server is located in the %1 timezone	preferences	pt	Este servidor está localizado no fuso horário %1
 time format	preferences	pt	Formato do horário
 you must enter a password	preferences	pt	Você deve digitar uma senha
-your current theme is: x	preferences	pt	Seu tema atual é: 
+your current theme is: %1	preferences	pt	Seu tema atual é: %1
 your preferences	preferences	pt	Suas preferências

@@ -20,8 +20,8 @@ show navigation bar as	preferences	zt	功能列顯示內容
 show text on navigation icons	preferences	zt	在功能列圖示上顯示文字說明
 text only	preferences	zt	只顯示文字
 theme (colors/fonts) selection	preferences	zt	選擇畫面配置（顏色及字型）
-this server is located in the x timezone	preferences	zt	這台伺服器主機放置於 %1 時區
+this server is located in the %1 timezone	preferences	zt	這台伺服器主機放置於 %1 時區
 time format	preferences	zt	時間格式
-your current theme is: x	preferences	zt	</b>
+your current theme is: %1	preferences	zt	%1
 you must enter a password	preferences	zt	您必須輸入密碼
 
