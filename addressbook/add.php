@@ -50,7 +50,7 @@
 
      $this->id         = $ab_id;
      $this->company    = $company;
-     $this->company_id = $company_id;
+     //$this->company_id = $company_id;
      $this->firstname  = $firstname;
      $this->lastname   = $lastname;
      $this->email      = $email;

@@ -13,7 +13,7 @@
   /* $Id$ */
   class addressbook extends addressbook_
   {
-    function colname($column,$listid) {
+    function coldata($column,$listid) {
       if     ($column == "company")   return $this->company[$listid];
       elseif ($column == "firstname") return $this->firstname[$listid];
       elseif ($column == "lastname")  return $this->lastname[$listid];

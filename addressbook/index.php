@@ -24,13 +24,13 @@
   $t = new Template($phpgw_info["server"]["app_tpl"]);
   $t->set_file(array( "addressbook_header"	=> "header.tpl",
 		      "searchfilter"		=> "searchfilter.tpl",
-		      "body"			=> "list.tpl",
+		      "column"			=> "column.tpl",
+		      "row"			=> "row.tpl",
 		      "addressbook_footer"	=> "footer.tpl" ));
 
   $this = CreateObject("addressbook.addressbook");
   $entries = $this->get_entries($query,$filter,$sort,$order,$start);
 
-  $rows="";
   $columns_to_display=$this->columns_to_display;
   if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] ) {
     $limit = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
@@ -38,56 +38,10 @@
     $limit = 15;
   }
 
-  for ($i=0;$i<$limit;$i++) { // each entry
-    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    $rows .= '<tr bgcolor="#'.$tr_color . '">';
-    while ($column = each($columns_to_display)) { // each entry column
-      $colname = $this->colname($column[0],$i);
-      $myid = $entries->ab_id[$i];
-      $myowner = $entries->owner[$i];
-      // Some fields require special formatting.       
-      if ($column[0] == "url") {
-        $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-        . '<a href="' . $colname . '" target="_new">' . $colname . '</a>&nbsp;</font></td>';
-      } else if ($column[0] == "email") {
-        if ($phpgw_info["user"]["apps"]["email"]) {
-          $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-          . '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
-          "to=" . urlencode($colname)) . '" target="_new">' . $colname . '</a>&nbsp;</font></td>';
-        } else {
-          $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-          . '<a href="mailto:' . $colname . '">' . $colname . '</a>&nbsp;</font></td>';
-        }
-      } else { // But these do not
-        $rows .= '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-        . $colname . '&nbsp;</font></td>';
-      }
-    }
-
-    reset($columns_to_display); // If we don't reset it, our inside while won't loop
-
-    $rows .= '<td valign="top" width="3%">
-    <font face="'.$phpgw_info["theme"]["font"].'" size="2">
-    <a href="'. $phpgw->link("view.php","ab_id=$myid&start=$start&order=$order&filter="
-	      . "$filter&query=$query&sort=$sort").'
-     ">'.lang("View").'</a>
-     </font>
-    </td>
-     <td valign=top width=3%>
-      <font face="'.$phpgw_info["theme"]["font"].'" size=2>
-        <a href="'.$phpgw->link("vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
-                  . "$filter&query=$query&sort=$sort").'
-        ">'.lang("vcard").'</a>
-      </font>
-     </td>
-    <td valign="top" width="5%">
-     <font face="'.$phpgw_info["theme"]["font"].'" size="2">
-      '.$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id=".$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort).'
-     </font>
-    </td>
-   </tr>
-';
-  }
+  $t->set_var(font,$phpgw_info["theme"]["font"]);
+  $t->set_var("lang_view",lang("View"));
+  $t->set_var("lang_vcard",lang("VCard"));
+  $t->set_var("lang_edit",lang("Edit"));
 
   $t->set_var(searchreturn,$this->searchreturn);
   $t->set_var(lang_showing,$this->lang_showing);
@@ -100,9 +54,6 @@
   $t->set_var("lang_addvcard",lang("AddVCard"));
   $t->set_var("lang_import",lang("Import File"));
   $t->set_var("import_url",$phpgw->link("import.php"));
-  $t->set_var("lang_view",lang("View"));
-  $t->set_var("lang_vcard",lang("VCard"));
-  $t->set_var("lang_edit",lang("Edit"));
   $t->set_var("start",$start);
   $t->set_var("sort",$sort);
   $t->set_var("order",$order);
@@ -113,15 +64,51 @@
   $t->set_var("start",$start);
   $t->set_var("filter",$filter);
   $t->set_var("cols",$this->cols);
-  $t->set_var("rows",$rows);
 
-  $t->parse("out","addressbook_header");
   $t->pparse("out","addressbook_header");
-  $t->parse("out","searchfilter");
   $t->pparse("out","searchfilter");
-  $t->parse("out","body");
-  $t->pparse("out","body");
-  $t->parse("out","addressbook_footer");
+
+  for ($i=0;$i<$limit;$i++) { // each entry
+    $t->set_var(columns,"");
+    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+    $t->set_var(row_tr_color,$tr_color);
+    while ($column = each($columns_to_display)) { // each entry column
+      $ref=$data="";
+      $coldata = $this->coldata($column[0],$i);
+      $myid = $entries->ab_id[$i];
+      $myowner = $entries->owner[$i];
+      // Some fields require special formatting.       
+      if ($column[0] == "url") {
+        $ref='<a href="'.$coldata.'" target="_new">';
+	$data=$coldata.'</a>';
+      } elseif ($column[0] == "email") {
+        if ($phpgw_info["user"]["apps"]["email"]) {
+          $ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
+	    . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+        } else {
+          $ref='<a href="mailto:"'.$coldata.'">'.$coldata.'</a>';
+        }
+        $data=$coldata."</a>";
+      } else { // But these do not
+        $ref=" "; $data=$coldata;
+      }
+      $t->set_var(col_data,$ref.$data);
+      $t->parse("columns","column",True);
+    }
+    
+    reset($columns_to_display); // If we don't reset it, our inside while won't loop
+
+    $t->set_var(row_view_link,$phpgw->link("view.php","ab_id=$myid&start=$start&order=$order&filter="
+      . "$filter&query=$query&sort=$sort"));
+    $t->set_var(row_vcard_link,$phpgw->link("vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
+      .  "$filter&query=$query&sort=$sort"));
+    $t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id="
+      .$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort));
+
+    $t->parse("rows","row",True);
+    $t->pparse("out","row");
+  }
+
   $t->pparse("out","addressbook_footer");
 
   $phpgw->common->phpgw_footer();

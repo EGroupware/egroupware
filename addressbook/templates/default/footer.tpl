@@ -1,4 +1,5 @@
 <!-- BEGIN addressbook_footer -->
+ </table>
  <form method="POST" action="{actionurl}">
  <input type="hidden" name="start" value="{start}">
  <input type="hidden" name="filter" value="{filter}">
