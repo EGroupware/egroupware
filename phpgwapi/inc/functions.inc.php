@@ -650,28 +650,26 @@
 			$GLOBALS['phpgw_info']['server'][$GLOBALS['phpgw']->db->f('config_name')] = stripslashes($GLOBALS['phpgw']->db->f('config_value'));
 		}
 
-		if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && !$HTTPS)
-		{
-			Header('Location: https://' . $GLOBALS['phpgw_info']['server']['hostname'] . $GLOBALS['phpgw_info']['server']['webserver_url'] . $REQUEST_URI);
-		}
-
 		if(@isset($GLOBALS['phpgw_info']['server']['cache_phpgw_info']))
 		{
 			if($server_info_cache)
 			{
-				$cache_query = "UPDATE phpgw_app_sessions set content='".addslashes(serialize($GLOBALS['phpgw_info']['server']))."'"
-					." WHERE sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'";
+				$cache_query = "DELETE FROM phpgw_app_sessions WHERE sessionid='0' and loginid='0' and app='phpgwapi' and location='config'";
+				$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);				
 			}
-			else
-			{
-				$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
-					. "'0','0','phpgwapi','config','".addslashes(serialize($GLOBALS['phpgw_info']['server']))."')";
-			}
+			$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
+				. "'0','0','phpgwapi','config','".addslashes(serialize($GLOBALS['phpgw_info']['server']))."')";
 			$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);
 		}
 	}
 	unset($cache_query);
 	unset($server_info_cache);
+	if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && !$HTTPS)
+	{
+		Header('Location: https://' . $GLOBALS['phpgw_info']['server']['hostname'] . $GLOBALS['phpgw_info']['server']['webserver_url'] . $REQUEST_URI);
+		exit;
+	}
+
 	/************************************************************************\
 	* Required classes                                                       *
 	\************************************************************************/

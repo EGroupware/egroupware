@@ -163,7 +163,13 @@
 
 			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
 
+			/* init the crypto object before appsession call below */
+			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
+
 			$this->read_repositories(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info']);
+			
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
 				if(is_object($GLOBALS['phpgw']->log))
@@ -176,13 +182,13 @@
 					));
 					$GLOBALS['phpgw']->log->commit();
 				}
+				if(is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
 				return False;
 			}
-
-			/* init the crypto object before appsession call below */
-			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
-			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
-			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
 
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
@@ -203,7 +209,6 @@
 					));
 					$GLOBALS['phpgw']->log->commit();
 				}
-
 				if(is_object($GLOBALS['phpgw']->crypto))
 				{
 					$GLOBALS['phpgw']->crypto->cleanup();
@@ -228,7 +233,6 @@
 						));
 						$GLOBALS['phpgw']->log->commit();
 					}
-
 					if(is_object($GLOBALS['phpgw']->crypto))
 					{
 						$GLOBALS['phpgw']->crypto->cleanup();
@@ -255,12 +259,12 @@
 					));
 					$GLOBALS['phpgw']->log->commit();
 				}
-
 				if(is_object($GLOBALS['phpgw']->crypto))
 				{
 					$GLOBALS['phpgw']->crypto->cleanup();
 					unset($GLOBALS['phpgw']->crypto);
 				}
+				echo 'DEBUG: Sessions: account_id is empty!<br>'."\n";
 				return False;
 			}
 			else
@@ -355,6 +359,11 @@
 				unset($GLOBALS['phpgw_info']['server']['default_domain']); /* we kill this for security reasons */
 			}
 
+			/* init the crypto object */
+			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
+
 			$this->read_repositories(False);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
@@ -371,11 +380,6 @@
 
 				return False;
 			}
-
-			/* init the crypto object */
-			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
-			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
-			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
 
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
@@ -666,7 +670,7 @@
 		/*************************************************************************\
 		* Functions for appsession data and session cache                         *
 		\*************************************************************************/
-		function read_repositories($cached='')
+		function read_repositories($cached='',$write_cache=True)
 		{
 			$GLOBALS['phpgw']->acl->acl($this->account_id);
 			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
@@ -686,17 +690,17 @@
 				}
 				else
 				{
-					$this->setup_cache();
+					$this->setup_cache($write_cache);
 				}
 			}
 			else
 			{
-				$this->setup_cache();
+				$this->setup_cache($write_cache);
 			}
 			$this->hooks = $GLOBALS['phpgw']->hooks->read();
 		}
 
-		function setup_cache()
+		function setup_cache($write_cache=True)
 		{
 			$this->user                = $GLOBALS['phpgw']->accounts->read_repository();
 			$this->user['acl']         = $GLOBALS['phpgw']->acl->read_repository();
@@ -713,8 +717,9 @@
 			$this->user['account_lid'] = $this->account_lid;
 			$this->user['userid']      = $this->account_lid;
 			$this->user['passwd']      = @$this->passwd;
-			if(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info'])
+			if(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $write_cache)
 			{
+				$this->delete_cache();
 				$this->appsession('phpgw_info_cache','phpgwapi',$this->user);
 			}
 		}
@@ -728,7 +733,12 @@
 
 			$GLOBALS['phpgw']->db->query($query);
 		}
-	
+
+// This looks to be useless
+// This will capture everything in the $GLOBALS['phpgw_info'] including server info,
+// and store it in appsessions.  This is really incompatible with any type of restoring
+// from appsession as the saved user info is really in ['user'] rather than the root of
+// the structure, which is what this class likes.
 		function save_repositories()
 		{
 			$phpgw_info_temp = $GLOBALS['phpgw_info'];
@@ -771,7 +781,7 @@
 				if($data)
 				{
 					$data = $GLOBALS['phpgw']->crypto->decrypt($data);
-					//echo 'appsession returning: '; _debug_array($data);
+//					echo 'appsession returning: '; _debug_array($data);
 					return $data;
 				}
 			}
