@@ -492,9 +492,15 @@
 			$phpgw_info['flags']['currentapp'] != 'preferences' &&
 			$phpgw_info['flags']['currentapp'] != 'about')
 		{
-			if (! $phpgw_info['user']['apps'][$phpgw_info['flags']['currentapp']])
+			// This will need to use ACL in the future
+			if (! $phpgw_info['user']['apps'][$phpgw_info['flags']['currentapp']] || ($phpgw_info['flags']['admin_only'] && ! $phpgw_info['user']['apps']['admin']))
 			{
 				$phpgw->common->phpgw_header();
+				if ($phpgw_info['flags']['noheader'])
+				{
+					echo parse_navbar();
+				}
+
 				echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
 				$phpgw->common->phpgw_exit(True);
 			}
