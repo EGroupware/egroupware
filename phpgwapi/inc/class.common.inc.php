@@ -412,7 +412,7 @@
 
         $tpldir         = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/"
                         . $phpgw_info["server"]["template_set"];
-        $tpldir_default = PHPGW_SERVER_ROOT . "/".$appname . "/templates/default";
+        $tpldir_default = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/default";
 
         if (is_dir($tpldir)) {
            return $tpldir;
