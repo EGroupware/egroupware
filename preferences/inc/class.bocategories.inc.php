@@ -27,10 +27,10 @@
 
 			$this->read_sessiondata($cats_app);
 
-			$start  = $GLOBALS['HTTP_POST_VARS']['start']  ? $GLOBALS['HTTP_POST_VARS']['start']  : $GLOBALS['HTTP_GET_VARS']['start'];
-			$query  = $GLOBALS['HTTP_POST_VARS']['query']  ? $GLOBALS['HTTP_POST_VARS']['query']  : $GLOBALS['HTTP_GET_VARS']['query'];
-			$sort   = $GLOBALS['HTTP_POST_VARS']['sort']   ? $GLOBALS['HTTP_POST_VARS']['sort']   : $GLOBALS['HTTP_GET_VARS']['sort'];
-			$order  = $GLOBALS['HTTP_POST_VARS']['order']  ? $GLOBALS['HTTP_POST_VARS']['order']  : $GLOBALS['HTTP_GET_VARS']['order'];
+			$start  = get_var('start',Array('GET','POST'));
+			$query  = get_var('query',Array('GET','POST'));
+			$sort   = get_var('sort',Array('GET','POST'));
+			$order  = get_var('order',Array('GET','POST'));
 
 			if(!empty($start) || $start == '0' || $start == 0)
 			{

@@ -41,13 +41,13 @@
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
-		if (! $GLOBALS['HTTP_GET_VARS']['type'])
+		$type = get_var('type',Array('GET'));
+		if(!$type)
 		{
 			$type = $session_data['type'];
 		}
 		else
 		{
-			$type = $GLOBALS['HTTP_GET_VARS']['type'];
 			$session_data = array('type' => $type);
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}

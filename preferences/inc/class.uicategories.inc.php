@@ -276,13 +276,13 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$new_parent			= $GLOBALS['HTTP_POST_VARS']['new_parent'];
-			$submit				= $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'] ? $GLOBALS['HTTP_POST_VARS']['cat_parent'] : $GLOBALS['HTTP_GET_VARS']['cat_parent'];
-			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
-			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
-			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
-			$cat_access			= $GLOBALS['HTTP_POST_VARS']['cat_access'];
+			$new_parent      = get_var('new_parent',Array('POST'));
+			$submit          = get_var('submit',Array('POST'));
+			$cat_parent      = get_var('cat_parent',Array('GET','POST'));
+			$cat_name        = get_var('cat_name',Array('POST'));
+			$cat_description = get_var('cat_description',Array('POST'));
+			$cat_data        = get_var('cat_data',Array('POST'));
+			$cat_access      = get_var('cat_access',Array('POST'));
 
 			$this->t->set_file(array('form' => 'category_form.tpl'));
 			$this->t->set_block('form','data_row','row');
@@ -389,13 +389,13 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$new_parent			= $GLOBALS['HTTP_POST_VARS']['new_parent'];
-			$submit				= $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'];
-			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
-			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
-			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
-			$cat_access			= $GLOBALS['HTTP_POST_VARS']['cat_access'];
+			$new_parent      = get_var('new_parent',Array('POST'));
+			$submit          = get_var('submit',Array('POST'));
+			$cat_parent      = get_var('cat_parent',Array('POST'));
+			$cat_name        = get_var('cat_name',Array('POST'));
+			$cat_description = get_var('cat_description',Array('POST'));
+			$cat_data        = get_var('cat_data',Array('POST'));
+			$cat_access      = get_var('cat_access',Array('POST'));
 
 			$this->t->set_file(array('form' => 'category_form.tpl'));
 			$this->t->set_block('form','data_row','row');
@@ -517,9 +517,9 @@
 
 			$this->bo->cats->app_name = $cats_app;
 
-			if ($GLOBALS['HTTP_POST_VARS']['confirm'])
+			if(get_var('confirm',Array('POST')))
 			{
-				if ($GLOBALS['HTTP_POST_VARS']['subs'])
+				if(get_var('subs',Array('POST')))
 				{
 					$this->bo->delete($cat_id,True);
 				}

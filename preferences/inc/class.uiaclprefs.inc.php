@@ -25,7 +25,7 @@
 
 		function index()
 		{
-			$acl_app = $GLOBALS['HTTP_GET_VARS']['acl_app'];
+			$acl_app = get_vars('acl_app',Array('GET'));
 			$owner   = $GLOBALS['owner'];
 
 			if (! $acl_app)
@@ -85,9 +85,9 @@
 			$this->acl = CreateObject('phpgwapi.acl',intval($owner));
 			$this->acl->read_repository();
 
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
+			if(get_var('submit',Array('POST')))
 			{
-				$processed = $GLOBALS['HTTP_POST_VARS']['processed'];
+				$processed = get_var('processed',Array('POST'));
 				$to_remove = unserialize(urldecode($processed));
 
 				for($i=0;$i<count($to_remove);$i++)
@@ -96,7 +96,7 @@
 				}
 
 				/* Group records */
-				$group_variable = $GLOBALS['HTTP_POST_VARS']['g_'.$GLOBALS['phpgw_info']['flags']['currentapp']];
+				$group_variable = get_var('g_'.$GLOBALS['phpgw_info']['flags']['currentapp'],Array('POST'));
 
 				if (!$group_variable)
 				{
@@ -122,9 +122,9 @@
 				}
 
 				/* User records */
-				$user_variable = $GLOBALS['HTTP_POST_VARS']['u_'.$GLOBALS['phpgw_info']['flags']['currentapp']];
+				$user_variable = get_var('u_'.$GLOBALS['phpgw_info']['flags']['currentapp'],Array('POST'));
 
-				if (!$user_variable)
+				if(!$user_variable)
 				{
 					$user_variable = array();
 				}

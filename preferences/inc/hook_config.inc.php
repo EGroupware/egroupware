@@ -19,6 +19,7 @@
 			'force_select' => 'Force Selectbox'
 		);
 
+		$out = '';
 		while (list ($key, $value) = each ($country))
 		{
 			if ($config['countrylist'] == $key)

@@ -20,8 +20,8 @@
 
 	include('../header.inc.php');
 
-	$n_passwd   = $GLOBALS['HTTP_POST_VARS']['n_passwd'];
-	$n_passwd_2 = $GLOBALS['HTTP_POST_VARS']['n_passwd_2'];
+	$n_passwd   = get_var('n_passwd',Array('POST'));
+	$n_passwd_2 = get_var('n_passwd_2',Array('POST'));
 
 	if (! $GLOBALS['phpgw']->acl->check('changepassword', 1))
 	{
@@ -38,25 +38,25 @@
 	$GLOBALS['phpgw']->template->set_var('lang_change',lang('Change'));
 	$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/preferences/changepassword.php'));
 
-	if ($GLOBALS['phpgw_info']['server']['auth_type'] != 'ldap')
+	if($GLOBALS['phpgw_info']['server']['auth_type'] != 'ldap')
 	{
 		$GLOBALS['phpgw']->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
 			. 'need to be done manually.'));
 	}
 
-	if ($GLOBALS['HTTP_POST_VARS']['submit'])
+	if(get_var('submit',Array('POST')))
 	{
-		if ($n_passwd != $n_passwd_2)
+		if($n_passwd != $n_passwd_2)
 		{
 			$errors[] = lang('The two passwords are not the same');
 		}
 
-		if (! $n_passwd)
+		if(! $n_passwd)
 		{
 			$errors[] = lang('You must enter a password');
 		}
 
-		if (is_array($errors))
+		if(is_array($errors))
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
@@ -67,7 +67,7 @@
 
 		$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
 		$passwd_changed = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
-		if (! $passwd_changed)
+		if(!$passwd_changed)
 		{
 			// This need to be changed to show a different message based on the result
 			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=38'));

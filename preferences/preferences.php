@@ -11,10 +11,6 @@
 
 	/* $Id$ */
 
-	$user    = (@isset($GLOBALS['HTTP_POST_VARS']['user'])?$GLOBALS['HTTP_POST_VARS']['user']:'');
-	$global  = (@isset($GLOBALS['HTTP_POST_VARS']['global'])?$GLOBALS['HTTP_POST_VARS']['global']:'');
-	$default = (@isset($GLOBALS['HTTP_POST_VARS']['default'])?$GLOBALS['HTTP_POST_VARS']['default']:'');
-
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'                => True,
 		'noappheader'             => True,
@@ -24,7 +20,12 @@
 	);
 	include('../header.inc.php');
 
-	if ($GLOBALS['HTTP_POST_VARS']['cancel'])
+	$user    = get_var('user',Array('POST'));
+	$global  = get_var('global',Array('POST'));
+	$default = get_var('default',Array('POST'));
+	$GLOBALS['appname'] = get_var('appname',Array('GET'));
+
+	if(get_var('cancel',Array('POST')))
 	{
 		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php'));
 	}
@@ -44,13 +45,13 @@
 	/* Some places we will need to change this if there in common */
 	function check_app()
 	{
-		if ($GLOBALS['HTTP_GET_VARS']['appname'] == 'preferences')
+		if ($GLOBALS['appname'] == 'preferences')
 		{
 			return 'common';
 		}
 		else
 		{
-			return $GLOBALS['HTTP_GET_VARS']['appname'];
+			return $GLOBALS['appname'];
 		}
 	}
 
@@ -207,13 +208,14 @@
 			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
-		if (!isset($GLOBALS['HTTP_GET_VARS']['type']))
+		$type = get_vars('type',Array('GET'));
+		if (!isset($type))
 		{
 			$GLOBALS['type'] = $session_data['type'];
 		}
 		else
 		{
-			$GLOBALS['type'] = $GLOBALS['HTTP_GET_VARS']['type'];
+			$GLOBALS['type'] = $type;
 			$session_data = array(
 				'type' => $GLOBALS['type']
 			);
@@ -222,15 +224,15 @@
 
 		$tabs[] = array(
 			'label' => lang('Your preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['HTTP_GET_VARS']['appname'] . '&type=user')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['appname'] . '&type=user')
 		);
 		$tabs[] = array(
 			'label' => lang('Default preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['HTTP_GET_VARS']['appname'] . '&type=default')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['appname'] . '&type=default')
 		);
 		$tabs[] = array(
 			'label' => lang('Forced preferences'),
-			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['HTTP_GET_VARS']['appname'] . '&type=forced')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['appname'] . '&type=forced')
 		);
 
 		switch($GLOBALS['type'])
@@ -253,7 +255,7 @@
 		$GLOBALS['dp']->read_repository();
 	}
 
-	if ($GLOBALS['HTTP_POST_VARS']['submit'])
+	if (get_var('submit',Array('POST')))
 	{
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($GLOBALS['type'] == 'user')
@@ -278,22 +280,22 @@
 	$GLOBALS['phpgw']->common->phpgw_header();
 	echo parse_navbar();
 
-	if ($GLOBALS['HTTP_GET_VARS']['appname'] == 'preferences')
+	if ($GLOBALS['appname'] == 'preferences')
 	{
 		$t->set_var('lang_title',lang('Preferences'));
 	}
 	else
 	{
-		$t->set_var('lang_title',lang('%1 - Preferences',$GLOBALS['phpgw_info']['navbar'][$GLOBALS['HTTP_GET_VARS']['appname']]['title']));
+		$t->set_var('lang_title',lang('%1 - Preferences',$GLOBALS['phpgw_info']['navbar'][$GLOBALS['appname']]['title']));
 	}
 
-	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['HTTP_GET_VARS']['appname']));
+	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['appname']));
 	$t->set_var('th_bg',  $GLOBALS['phpgw_info']['theme']['th_bg']);
 	$t->set_var('th_text',$GLOBALS['phpgw_info']['theme']['th_text']);
 	$t->set_var('row_on', $GLOBALS['phpgw_info']['theme']['row_on']);
 	$t->set_var('row_off',$GLOBALS['phpgw_info']['theme']['row_off']);
 
-	if ($GLOBALS['HTTP_GET_VARS']['appname'] == 'preferences')
+	if ($GLOBALS['appname'] == 'preferences')
 	{
 		if (! $GLOBALS['phpgw']->hooks->single('settings','preferences',True))
 		{
@@ -302,7 +304,7 @@
 	}
 	else
 	{
-		if (! $GLOBALS['phpgw']->hooks->single('settings',$GLOBALS['HTTP_GET_VARS']['appname']))
+		if (! $GLOBALS['phpgw']->hooks->single('settings',$GLOBALS['appname']))
 		{
 			$error = True;
 		}
@@ -311,8 +313,8 @@
 	if ($error)
 	{
 		$t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
-			$GLOBALS['phpgw_info']['navbar'][$GLOBALS['HTTP_GET_VARS']['appname']]['title'],PHPGW_SERVER_ROOT . SEP
-			. $GLOBALS['HTTP_GET_VARS']['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
+			$GLOBALS['phpgw_info']['navbar'][$GLOBALS['appname']]['title'],PHPGW_SERVER_ROOT . SEP
+			. $GLOBALS['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
 	}
 	$t->pfp('out','header');
 
