@@ -60,7 +60,7 @@
 	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 
 	// create column list and the top row of the table based on user prefs
-	while ($column = each($this->stock_contact_fields))
+	while ($column = each($qfields))
 	{
 		$test = strtolower($column[0]);
 		if (isset($phpgw_info['user']['preferences']['addressbook'][$test]) &&
