@@ -35,23 +35,28 @@
     $c = CreateObject('phpgwapi.categories');
     $c->app_name = $cats_app;
 
-    if ($submit) {
-    $errorcount = 0;
+	if ($submit)
+	{
+		$errorcount = 0;
 
-    if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
-    if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
-    else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
-    if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
+		if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
+		if (!$error)
+		{
+			if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
+			else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
+			if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
+		}
 
-    if (! $error) {
-	$cat_name = addslashes($cat_name);
-	$cat_description = addslashes($cat_description);
-        if ($access) { $cat_access = 'private'; }
-        else { $cat_access = 'public'; }
+		if (!$error)
+		{
+			$cat_name = addslashes($cat_name);
+			$cat_description = addslashes($cat_description);
+			if ($access) { $cat_access = 'private'; }
+			else { $cat_access = 'public'; }
 
-	$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
+			$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
+		}
 	}
-    }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
     if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category x has been added !",$cat_name)); }
