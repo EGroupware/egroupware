@@ -7,8 +7,10 @@
         - Fix for Day View warning in calendar.
         - Fix for TTS with Update by non-email user.
         - Fixed admin/accesslog.php wasn't using phpgw_access_log
-	- Fix for Week View warning in calendar.
-	- Fix for Matrix View not working with Netscape 6.
+        - Fix for Week View warning in calendar.
+        - Fix for Matrix View not working with Netscape 6.
+        - Added text only feature for navbar
+        - Converted navbar to work off templates
 
 [0.9.6] - Fix user permissions where not being checked properly.
 
