@@ -192,7 +192,7 @@
     if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
       $company   = $phpgw->db->f("company_name");
     } else {
-      $company   = $phpgw->db->f("company");
+      $company   = $phpgw->db->f("ab_company");
     }
     $wphone      = $phpgw->db->f("ab_wphone");
     $ab_id	   = $phpgw->db->f("ab_id");
