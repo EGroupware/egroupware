@@ -137,7 +137,6 @@
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->sessionid = get_var('sessionid',array('GET','COOKIE'));
 			$this->kp3       = get_var('kp3',array('GET','COOKIE'));
-
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
 			if ($GLOBALS['phpgw_info']['server']['usecookies'])
@@ -316,11 +315,6 @@
 					));
 					$GLOBALS['phpgw']->log->commit();
 				}
-				if(is_object($GLOBALS['phpgw']->crypto))
-				{
-					$GLOBALS['phpgw']->crypto->cleanup();
-					unset($GLOBALS['phpgw']->crypto);
-				}
 				return False;
 			}
 
@@ -343,11 +337,6 @@
 					));
 					$GLOBALS['phpgw']->log->commit();
 				}
-				if(is_object($GLOBALS['phpgw']->crypto))
-				{
-					$GLOBALS['phpgw']->crypto->cleanup();
-					unset($GLOBALS['phpgw']->crypto);
-				}
 				return False;
 			}
 
@@ -368,11 +357,6 @@
 							'file' => __FILE__
 						));
 						$GLOBALS['phpgw']->log->commit();
-					}
-					if(is_object($GLOBALS['phpgw']->crypto))
-					{
-						$GLOBALS['phpgw']->crypto->cleanup();
-						unset($GLOBALS['phpgw']->crypto);
 					}
 					return False;
 				}
@@ -395,18 +379,10 @@
 					));
 					$GLOBALS['phpgw']->log->commit();
 				}
-				if(is_object($GLOBALS['phpgw']->crypto))
-				{
-					$GLOBALS['phpgw']->crypto->cleanup();
-					unset($GLOBALS['phpgw']->crypto);
-				}
 				//echo 'DEBUG: Sessions: account_id is empty!<br>'."\n";
 				return False;
 			}
-			else
-			{
-				return True;
-			}
+			return True;
 		}
 
 		/**
