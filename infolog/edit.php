@@ -29,7 +29,7 @@
 
 	$phpgw->infolog = createobject('infolog.infolog');
 
-	if ($submit) {
+	if ($save || $add) {
 		if (strlen($des) >= 8000) {
 			$error[] = lang('Description can not exceed 8000 characters in length');
 		}
@@ -249,7 +249,7 @@
      
 	$t->set_var('delete_action',$phpgw->link('/infolog/delete.php'));
 
-	$t->set_var('edit_button','<input type="submit" name="submit" value="' . lang('Save') . '">');
+	$t->set_var('edit_button','<input type="submit" name="save" value="' . lang('Save') . '">');
     
 	if (!$action && $phpgw->infolog->check_access($info_id,PHPGW_ACL_DELETE)) {
 		$t->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
