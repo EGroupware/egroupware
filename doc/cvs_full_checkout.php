@@ -93,23 +93,23 @@
 	chdir($co_dir);
 	if ($cvs_anonymous)
 	{
-		docvscommand('cvs -d:pserver:anonymous@subversions.gnu.org:443/cvsroot/phpgroupware login',True);
-		docvscommand('cvs -d:pserver:anonymous@subversions.gnu.org:443/cvsroot/phpgroupware co phpgroupware',True);
+		docvscommand('cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware login',True);
+		docvscommand('cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware co egroupware',True);
 	}
 	else
 	{
-		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:/cvsroot/phpgroupware co phpgroupware');
+		docvscommand('cvs -d' . $cvs_login . '@cvs.sourceforge.net:/cvsroot/egroupware co egroupware');
 	}
 
-	chdir($co_dir . '/phpgroupware');
+	chdir($co_dir . '/egroupware');
 
 	if ($cvs_anonymous)
 	{
-		docvscommand('cvs -z3 -d:pserver:anonymous@subversions.gnu.org:443/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
+		docvscommand('cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware co ' . implode(' ',$co_modules));
 	}
 	else
 	{
-		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
+		docvscommand('cvs -d' . $cvs_login . '@cvs.sourceforge.net:/cvsroot/egroupware co ' . implode(' ',$co_modules));
 	}
 
 	docvscommand('cvs update -dP');

@@ -7,9 +7,9 @@
 <HTML>
 	<HEAD>
 		<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-		<META name="AUTHOR" content="phpGroupWare inline documentation parser http://www.phpgroupware.org">
-		<META NAME="description" CONTENT="phpGroupWare documentation">
-		<META NAME="keywords" CONTENT="phpGroupWare documentation">
+		<META name="AUTHOR" content="eGroupWare inline documentation parser http://www.egroupware.org">
+		<META NAME="description" CONTENT="eGroupWare documentation">
+		<META NAME="keywords" CONTENT="eGroupWare documentation">
 		<TITLE>Local setup - Login</TITLE>
 	</HEAD>
 
