@@ -149,7 +149,7 @@
 		),
 		'lang' => array(
 			'fd' => array(
-				'message_id' => array('type' => 'varchar', 'precision' => 150, 'nullable' => false, 'default' => ''),
+				'message_id' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false, 'default' => ''),
 				'app_name' => array('type' => 'varchar', 'precision' => 100, 'nullable' => false, 'default' => 'common'),
 				'lang' => array('type' => 'varchar', 'precision' => 5, 'nullable' => false, 'default' => ''),
 				'content' => array('type' => 'text')

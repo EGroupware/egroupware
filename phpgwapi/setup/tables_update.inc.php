@@ -1278,7 +1278,7 @@
 		);
 
 		$phpgw_setup->oProc->query("SELECT * FROM addressbook");
-		echo '<br>numrows: ' . $phpgw_setup->oProc->num_rows;
+		/* echo '<br>numrows: ' . $phpgw_setup->oProc->num_rows; */
 
 		while ($phpgw_setup->oProc->next_record())
 		{
@@ -2204,6 +2204,24 @@
 		}
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.13.015';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.13.015';
+	function phpgwapi_upgrade0_9_13_015()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn(
+			'lang',
+			'message_id',
+			array(
+				'type' => 'varchar',
+				'precision' => 255,
+				'nullable' => false,
+				'default' => ''
+			)
+		);
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.13.016';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 ?>
