@@ -165,7 +165,6 @@
 			{
 				return (str_replace('=0D=0A',"\n",$string));
 			}
-			return $out;
 		}
 
 		function encode($string, $type='qp')
@@ -174,8 +173,8 @@
 			switch($type)
 			{
 				case 'qp':
-					$out = ereg_replace("\r\n",'=0D=0A',$string);
-					$out = ereg_replace("\n",'=0D=0A',$out);
+					$out = str_replace("\r\n",'=0D=0A',$string);
+					$out = str_replace("\n",'=0D=0A',$out);
 					break;
 				case 'base64':
 					$out = base64_encode($string);
