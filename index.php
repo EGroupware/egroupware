@@ -18,7 +18,7 @@
 		exit;
 	}
 
-	$GLOBALS['sessionid'] = isset($_GET['sessionid']) ? $_GET['sessionid'] : $_COOKIE['sessionid'];
+	$GLOBALS['sessionid'] = isset($_GET['sessionid']) ? $_GET['sessionid'] : @$_COOKIE['sessionid'];
 	if(!$GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
@@ -28,9 +28,9 @@
 	/*
 		This is the menuaction driver for the multi-layered design
 	*/
-	if(@isset($_GET['menuaction']))
+	if(isset($_GET['menuaction']))
 	{
-		list($app,$class,$method) = explode('.',$_GET['menuaction']);
+		list($app,$class,$method) = explode('.',@$_GET['menuaction']);
 		if(! $app || ! $class || ! $method)
 		{
 			$invalid_data = True;
