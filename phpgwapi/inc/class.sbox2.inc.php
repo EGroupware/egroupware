@@ -35,6 +35,7 @@
 		 *            $id_name  id of previosly selected entry
 		 *            $content  from id (eg. 'company: lastname, givenname' for address $id) if $id != 0, or
 		 *                      array with searchresult (id's as key), if array is empty if search was unsucsessful
+		 *            $multipe	present a multiple selectable box instead of one selector-button
 		 * Returns:  array with vars to set in temaplate, the vars are:
 		 *           {doSearchFkt}  Javascript Funktion, place somewhere in Template (before rest of the vars)
 		 *           {$name.'_title} button with titel $lang_name (if JS) or just $lang_name
@@ -42,11 +43,11 @@
 		 *           {$name.'_nojs}  searchfield + button if we have no JavaScript, else empty
 		 *
 		 * To use call $template->set_var(getIdSearch( ... ));
-		 * the template should look like {doSeachFkt} <tr><td>{XXX_title}</td><td>{XXX}</td><td>{XXX_nojs}</td></tr>   (XXX is content of $name)
+		 * the template should look like {doSearchFkt} <tr><td>{XXX_title}</td><td>{XXX}</td><td>{XXX_nojs}</td></tr>   (XXX is content of $name)
 		 * In the submitted page the vars $query_XXX and $id_XXX are set according to what is selected, see getAddress as Example
 		 */
 
-		function getId($name,$lang_name,$prompt,$id_name,$content='',$note='')
+		function getId($name,$lang_name,$prompt,$id_name,$content='',$note='',$multiple=False)
 		{
 			// echo "<p>getId('$name','$lang_name','$prompt',$id_name,'$content') =";
 			$ret['doSearchFkt'] = 
@@ -80,7 +81,14 @@
 				else
 				{
 					$ret[$name.'_OK'] = '';	// flag we have something so select
-					$ret[$name] = "<select name=\"id_$name\">\n";
+					if ($multiple)
+					{
+						$ret[$name] = '<select name="id_'.$name.'[]" size=10 multiple>'."\n";
+					}
+					else
+					{
+						$ret[$name] = '<select name="id_'.$name.'">'."\n";
+					}
 					while (list( $id,$text ) = each( $content ))
 					{
 						$ret[$name] .= "<option value=\"$id\">" . $GLOBALS['phpgw']->strip_html($text) . "\n";
@@ -136,6 +144,7 @@
 		 * Parameters	$name 		string with basename of all variables (not to conflict with the name other template or submitted vars !!!)
 		 *					$id_name		id of the address for edit or 0 if none selected so far
 		 *					$query_name have to be called $query_XXX, the search pattern after the submit, has to be passed back to the function
+		 *					$multipe	present a multiple selectable box instead of one selector-button
 		 * On Submit	$id_XXX		contains the selected address (if != 0)
 		 *					$query_XXX	search pattern if the search button is pressed by the user, or '' if regular submit
 		 * Returns		array with vars to set for the template, set with: $template->set_var( getAddress( ... )); (see getId( ))
@@ -143,7 +152,7 @@
 		 * Note			As query's for an address are submitted, you have to check $query_XXX if it is a search or a regular submit (!$query_string)
 		 */
 		 
-		function getAddress( $name,$id_name,$query_name,$title='')
+		function getAddress( $name,$id_name,$query_name,$title='',$multiple=False)
 		{
 			// echo "<p>getAddress('$name',$id_name,'$query_name','$title')</p>";
 			if ($id_name || $query_name)
@@ -172,8 +181,7 @@
 			{
 				$title = lang('Addressbook');
 			}
-			
-			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content,lang('use Button to search for Address'));
+			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content,lang('use Button to search for Address'),$multiple);
 		}
 
 		function addr2email( $addr,$home='' )
@@ -380,3 +388,5 @@
 				$this->getDays($n_day,$day));
 		}
 	}
+
+?>
