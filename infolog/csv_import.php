@@ -16,7 +16,7 @@
 	$phpgw_info['flags']['enable_contacts_class'] = True;
 	include("../header.inc.php");
 
-	$phpgw->infolog = createobject('infolog.infolog');
+	$phpgw->infolog = createobject('infolog.uiinfolog');
 
 	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); // $t->unknows = 'keep'; $t->debug = 1;
 	$t->set_file(array('import' => 'csv_import.tpl'));
