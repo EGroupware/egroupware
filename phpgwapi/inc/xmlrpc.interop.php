@@ -1,9 +1,12 @@
 <?php
   /**************************************************************************\
-  * eGroupWare xmlrpc server                                                 *
+  * eGroupWare xmlrpc interop functions                                      *
   * http://www.egroupware.org                                                *
-  * Written by Dan Kuykendall <dan@kuykendall.org>                           *
-  * --------------------------------------------                             *
+  * Portions of code from server.php by Edd Dumbill <edd@usefulinc.com>      *
+  *  part of the xml-rpc for php library                                     *
+  *  http://sourceforge.net/projects/phpxmlrpc/                              *
+  * Incorporated for egroupware by Miles Lott <milos@groupwhere.org>         *
+  * ------------------------------------------------------------------------ *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
