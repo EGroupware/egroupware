@@ -221,19 +221,40 @@
 			$this->cats				= $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
 		}
 
+		function in_array($needle,$haystack)
+		{
+			if (function_exists('in_array'))
+			{
+				return in_array($needle,$haystack);
+			}			
+			while (list ($k,$v) = each($haystack))
+			{
+				if ($v == $needle)
+				{
+					return True;
+				}
+			}							
+			return False;
+		}
+
 		// Return into a select box, list or other formats
 		/*!
 		@function formated_list
 		@abstract return into a select box, list or other formats
 		@param $format currently only supports select (select box)
 		@param $type string - subs or mains
-		@param $selected ?
+		@param $selected - cat_id or array with cat_id values 
 		@result $s array - populated with categories
 		*/
 		function formated_list($format,$type,$selected = '',$public = False,$site_link = 'site')
 		{
 			global $phpgw;
 			$filter = $this->filter($type);
+			
+			if (!is_array($selected))
+			{
+				$selected = explode(',',$selected);
+			}			
 
 			if ($format == 'select')
 			{
@@ -242,7 +263,7 @@
 				for ($i=0;$i<count($cats);$i++)
 				{
 					$s .= '<option value="' . $cats[$i]['id'] . '"';
-					if ($cats[$i]['id'] == $selected)
+					if ($this->in_array($cats[$i]['id'],$selected))
 					{
 						$s .= ' selected';
 					}
@@ -251,7 +272,7 @@
 					{
 					$s .= '&lt;' . lang('Global') . '&gt;';
 					}
-					$s .= '</option>';
+					$s .= "</option>\n";
 				}
 				return $s;
 			}
@@ -268,12 +289,12 @@
 				{
 					$image_set = '&nbsp;';
 
-					if ($cats[$i]['id'] == $selected)
+					if ($this->in_array($cats[$i]['id'],$selected))
 					{
 						$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/roter_pfeil.gif">';
 					}
 
-					if (($cats[$i]['level'] == 0) && ($cats[$i]['id'] != $selected))
+					if (($cats[$i]['level'] == 0) && !$this->in_array($cats[$i]['id'],$selected))
 					{
 						$image_set = '<img src="' . PHPGW_IMAGES_DIR . '/grauer_pfeil.gif">';
 					}
@@ -286,7 +307,7 @@
 					$s .= '</tr>' . "\n";
 				}
 				$s .= '</table>' . "\n";
-            	return $s;
+				return $s;
 			}
 		}
 		/*!
@@ -331,7 +352,7 @@
 				$this->db2->query("select max(cat_id) as max from phpgw_categories",__LINE__,__FILE__);
 				$this->db2->next_record();
 				$this->db->query("update phpgw_categories set cat_main='" . $this->db2->f('max') . "' where cat_id='"
-								. $this->db2->f('max') . "'",__LINE__,__FILE__);     
+								. $this->db2->f('max') . "'",__LINE__,__FILE__);
 			}
 		}
 		/*!
@@ -392,7 +413,7 @@
 		function name2id($cat_name)
 		{
 			$this->db->query("select cat_id from phpgw_categories where cat_name='"
-                        . "$cat_name'",__LINE__,__FILE__);
+				. "$cat_name'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			return $this->db->f('cat_id');
@@ -401,7 +422,7 @@
 		function id2name($cat_id)
 		{
 			$this->db->query("select cat_name from phpgw_categories where cat_id='"
-                        . "$cat_id'",__LINE__,__FILE__);
+				. "$cat_id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			if ($this->db->f('cat_name'))
