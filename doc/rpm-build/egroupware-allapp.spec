@@ -1,6 +1,6 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 0.9.99.014
+%define version 0.9.99.025
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -69,16 +69,17 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
     echo "* the follow lines to you httpd.conf              *"
     echo "*                                                 *"
     echo "* <Directory /var/www/html/egroupware>            *"
-    echo "*   <Files ~ "\.inc\.php$|.tpl$">                 *"
+    echo "*   <Files ~ "\.inc\.php$ \| \.tpl$">             *"
     echo "*      Order allow,deny                           *"
     echo "*      Deny from all                              *"
     echo "*    </Files>                                     *"
+    echo "* </Directory>                                    *"
     echo "***************************************************"
 
 %postun
 
 %files
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %dir %{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/home.php
 %{prefix}/%{egwdirname}/about.php
@@ -91,7 +92,6 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/index.php
 %{prefix}/%{egwdirname}/soap.php
 %{prefix}/%{egwdirname}/xmlrpc.php
-%{prefix}/%{egwdirname}/xmlrpc.php.old
 %{prefix}/%{egwdirname}/login.php
 %{prefix}/%{egwdirname}/logout.php
 %{prefix}/%{egwdirname}/CVS
@@ -132,8 +132,29 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
+* Thu May 21 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.025-1
+- JiNN extended
+- projects updated
+- new knowledge base available
+- new language available Catalan
+- languages updated
+
+* Thu Apr 27 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.015-1
+- rewrite of projects added.
+- Wiki with WYSIWYG editor added
+- bugfixes for sitemgr
+- email don't need longer php-imap module, many bugfixes for email included
+- Traditional Chinese lang updated
+- Danish lang updated
+- Italien lang files updated
+- Russian translation started
+- jerryr template updated
+- many bugs fixed in all applications
+
 * Wed Mar 03 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.014-1
-- add support to spec file for SuSE directory structure
+- add support to spec file for SuSE directory structure.
+  When you want build packages for SuSE, please download the source RPM and make
+  rpmbuild --rebuild eGroupWare.xxxxx.spec.
 - extensions to Danish language
 - extensions at sitemgr
 - bugfixes for upcomming 1.0 release

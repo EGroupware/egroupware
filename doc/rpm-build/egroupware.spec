@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 0.9.99.014
+%define version 0.9.99.025
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -201,7 +201,7 @@ This is the %{headlines} app for eGroupWare.
 Summary: The eGroupWare %{infolog} application
 Group: Web/Database
 AutoReqProv: no
-Requires: eGroupWare = %{version}-%{packaging} 
+Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-etemplate = %{version}-%{packaging}
 %description %{infolog}
 This is the %{infolog} app for eGroupWare.
 
@@ -273,7 +273,7 @@ This is the %{projects} app for eGroupWare.
 Summary: The eGroupWare %{registration} application
 Group: Web/Database
 AutoReqProv: no
-Requires: eGroupWare = %{version}-%{registration}
+Requires: eGroupWare = %{version}-%{packaging}
 %description %{registration}
 This is the %{registration} app for eGroupWare.
 
@@ -313,7 +313,7 @@ This is the trouble ticket system} app for eGroupWare.
 Summary: The eGroupWare %{wiki} application
 Group: Web/Database
 AutoReqProv: no
-Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-addressbook = %{version}-%{packaging}
+Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-etemplate = %{version}-%{packaging}
 %description %{wiki}
 This is the %{wiki} app for eGroupWare.
 
@@ -351,16 +351,17 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
     echo "* the follow lines to you httpd.conf              *"
     echo "*                                                 *"
     echo "* <Directory /var/www/html/egroupware>            *"
-    echo "*   <Files ~ "\.inc\.php$|.tpl$">                 *"
+    echo "*   <Files ~ "\.inc\.php$ \| \.tpl$">             *"
     echo "*      Order allow,deny                           *"
     echo "*      Deny from all                              *"
     echo "*    </Files>                                     *"
+    echo "* </Directory>                                    *"
     echo "***************************************************"
 
 %postun
 
 %files
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %dir %{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/home.php
 %{prefix}/%{egwdirname}/about.php
@@ -370,7 +371,6 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/redirect.php
 %{prefix}/%{egwdirname}/set_box.php
 %{prefix}/%{egwdirname}/xmlrpc.php
-%{prefix}/%{egwdirname}/xmlrpc.php.old
 %{prefix}/%{egwdirname}/soap.php
 %{prefix}/%{egwdirname}/header.inc.php.template
 %{prefix}/%{egwdirname}/index.php
@@ -384,144 +384,160 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/setup
 
 %files %{addressbook}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{addressbook}
 
 %files %{backup}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{backup}
 
 %files %{bookmarks}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{bookmarks}
 
 %files %{calendar}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{calendar}
 
 %files %{comic}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{comic}
 
 %files %{developer_tools}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{developer_tools}
 
 %files %{email}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{email}
 
 %files %{emailadmin}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{emailadmin}
 
 %files %{etemplate}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{etemplate}
 
 %files %{felamimail}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{felamimail}
 
 %files %{filemanager}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{filemanager}
 
 %files %{forum}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{forum}
 
 %files %{ftp}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{ftp}
 
 %files %{fudforum}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{fudforum}
 
 %files %{headlines}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{headlines}
 
 %files %{infolog}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{infolog}
 
 %files %{jinn}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{jinn}
 
 %files %{messenger}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{messenger}
 
 %files %{news_admin}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{news_admin}
 
 %files %{phpbrain}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{phpbrain}
 
 %files %{phpldapadmin}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{phpldapadmin}
 
 %files %{phpsysinfo}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{phpsysinfo}
 
 %files %{polls}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{polls}
 
 %files %{projects}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{projects}
 
 %files %{registration}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{registration}
 
 %files %{sitemgr}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{sitemgr}
 
 %files %{skel}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{skel}
 
 %files %{stocks}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{stocks}
 
 %files %{tts}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{tts}
 
 %files %{wiki}
-%defattr(-,root,root)
+%defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
+* Thu May 21 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.025-1
+- JiNN extended. 
+- projects updated
+- new knowledge base available
+- new language available Catalan
+- languages updated
+
+* Thu Apr 27 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.015-1
+- rewrite of projects added. 
+- Wiki with WYSIWYG editor added
+- bugfixes for sitemgr
+- email don't need longer php-imap module, many bugfixes for email included
+- Traditional Chinese lang updated
+- Danish lang updated
+- Italien lang files updated
+- Russian translation started
+- jerryr template updated
+- many bugs fixed in all applications
+
 * Wed Mar 03 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.014-1
-- add support to spec file for SuSE directory structure
+- add support to spec file for SuSE directory structure. 
+  When you want build packages for SuSE, please download the source RPM and make
+  rpmbuild --rebuild eGroupWare.xxxxx.spec.
 - extensions to Danish language
 - extensions at sitemgr
 - bugfixes for upcomming 1.0 release
 
-* Sat Fe 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-2
+* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-2
 - bugfix for broken calender ACL
 
 * Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-1
 - Release RC3-3 is only a small bugfixing for some installations
 - PostgreSQL bug fixed
 - Email Bug fixed
--r 03 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.014-1
-- add support to spec file for SuSE directory structure
-- extensions to Danish language
-- extensions at sitemgr
-- bugfixes for upcomming 1.0 release Login problem on some clients fixed
 
 * Wed Jan 28 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.012-2
 - We use the download problem at out server buf fix some other problems
