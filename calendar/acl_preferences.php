@@ -59,7 +59,7 @@
 
     $to_remove = unserialize(urldecode($processed));
     for($i=0;$i<count($to_remove);$i++) {
-      $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],$to_remove[$i]);
+      $phpgw->acl->delete($phpgw_info["flags"]["currentapp"],$to_remove[$i],$phpgw_info["user"]["account_id"],'u');
     }
 // Group records
     $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
