@@ -22,7 +22,7 @@
 				'mdatetime' => array('type' => 'int', 'precision' => 11,'nullable' => True),
 				'edatetime' => array('type' => 'int', 'precision' => 11,'nullable' => True),
 				'priority' => array('type' => 'int', 'precision' => 11,'nullable' => False,'default' => '2'),
-				'cal_type' => array('type' => 'varchar', 'precision' => 10,'nullable' => True,'default' => '2'),
+				'cal_type' => array('type' => 'varchar', 'precision' => 10,'nullable' => True),
 				'is_public' => array('type' => 'int', 'precision' => 11,'nullable' => False,'default' => '1'),
 				'title' => array('type' => 'varchar', 'precision' => 80,'nullable' => False,'default' => '1'),
 				'description' => array('type' => 'text','nullable' => True,'default' => '1')
