@@ -14,7 +14,7 @@ account preferences	admin	zt	帳號喜好設定
 acl manager	admin	zt	ACL管理者
 acl rights	common	zt	ACL權限
 action	admin	zt	動作
-activate wsiwyg-editor	admin	zt	啟用所見即所得編輯器
+activate wysiwyg-editor	admin	zt	啟用所見即所得編輯器
 add a category	admin	zt	新增類別
 add a group	admin	zt	新增群組
 add a new account.	admin	zt	新增帳號
@@ -78,6 +78,8 @@ change config settings	admin	zt	改變組態設定
 change main screen message	admin	zt	變更主畫面訊息
 check ip address of all sessions	admin	zt	檢查所有連線的網路位址
 check items to <b>%1</b> to %2 for %3	admin	zt	檢查%3的項目 <b>%1</b> 到 %2
+click to select a color	admin	zt	選一個顏色
+color	admin	zt	顏色
 country selection	admin	zt	選擇國家
 create group	admin	zt	新增群組
 crontab only (recomended)	admin	zt	僅crontab  (建議)
@@ -115,7 +117,7 @@ deny access to user accounts	admin	zt	無法存取使用者帳號
 deny all users access to grant other users access to their entries ?	admin	zt	不允許任何使用者將自己的資料開放給其它使用者存取？
 description can not exceed 255 characters in length !	admin	zt	描述文章的長度不可以超過255字元！
 disable "auto completion" of the login form	admin	zt	停止登入頁面中的自動完成功能
-disable wsiwyg-editor	admin	zt	停用所見即所得編輯器
+disable wysiwyg-editor	admin	zt	停用所見即所得編輯器
 disabled (not recomended)	admin	zt	停用(不建議)
 display	admin	zt	顯示
 do not delete the category and return back to the list	admin	zt	不要刪除這個類別並且回到清單
@@ -157,8 +159,11 @@ enter the title of your logo	admin	zt	輸入您的首頁圖示說明文字
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	zt	輸入圖示的網址或檔案名稱(在phpgwapi/templates/default/images)
 enter the url where your logo should link to	admin	zt	輸入您的首頁圖示連結
 enter your default ftp server	admin	zt	輸入預設的檔案傳輸伺服器主機名稱
+enter your default mail domain ( from: user@domain )	admin	zt	輸入您的預設郵件網域
 enter your http proxy server	admin	zt	輸入網頁代理伺服器主機名稱
 enter your http proxy server port	admin	zt	輸入網頁代理伺服器主機埠
+enter your smtp server hostname or ip address	admin	zt	輸入您的SMTP伺服器主機名稱或IP位址
+enter your smtp server port	admin	zt	輸入您的SMTP伺服器連接埠
 error canceling timer, maybe there's none set !!!	admin	zt	刪除計時器錯誤，也許並未設定！
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	zt	計時器設定錯誤，錯誤的語法或是已經有一個正在執行！
 error: %1 not found or other error !!!	admin	zt	錯誤：找不到%1或是其他錯誤！
@@ -184,9 +189,10 @@ host information	admin	zt	Host information
 hour<br>(0-23)	admin	zt	小時<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zt	存取紀錄應該保留幾天內的事件後刪除(預設90)？
 how many minutes should an account or ip be blocked (default 30) ?	admin	zt	帳號鎖定將持續幾分鐘(預設30)？
+icon	admin	zt	圖示
 idle	admin	zt	閒置時間
-if no acl records for user or any group the user is a member of	admin	zt	If no ACL records for user or any group the user is a member of
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zt	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+if no acl records for user or any group the user is a member of	admin	zt	如果沒有使用者的 ACL 記錄或這個使用者的任何群組
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zt	如果使用 LDAP，您是否要管理家目錄與登入管理介面屬性？
 inbound	admin	zt	聚集
 install crontab	admin	zt	安裝排定的工作
 installed applications	common	zt	已安裝之應用程式
@@ -220,6 +226,7 @@ login screen	admin	zt	登入畫面
 login shell	admin	zt	登入命令處理器
 login time	admin	zt	登入時間
 loginid	admin	zt	登入代碼
+mail settings	admin	zt	郵件設定
 main screen message	admin	zt	主畫面訊息
 manager	admin	zt	管理者
 maximum account id (e.g. 65535 or 1000000)	admin	zt	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
@@ -244,6 +251,7 @@ no permission to create groups	admin	zt	沒有權限建立群組
 note: ssl available only if php is compiled with curl support	admin	zt	注意：SSL只有在PHP編譯時附加CURL支援時才有效
 outbound	admin	zt	登出
 passthrough	admin	zt	傳送到
+password for smtp-authentication	admin	zt	SMTP認證密碼
 path information	admin	zt	路徑資訊
 peer server list	admin	zt	伺服器清單
 peer servers	admin	zt	對接伺服器
@@ -341,6 +349,7 @@ use pure html compliant code (not fully working yet)	admin	zt	使用標準 HTML 
 use theme	admin	zt	使用布景主題
 user accounts	admin	zt	使用者管理
 user data	admin	zt	使用者資料
+user for smtp-authentication (leave it empty if no auth required)	admin	zt	SMTP認證的帳號(如果不需要認證可以保持空白)
 user groups	admin	zt	使用者群組管理
 userdata	admin	zt	使用者資料
 users choice	admin	zt	使用者的選擇
@@ -352,11 +361,9 @@ view sessions	admin	zt	列出連線
 view this user	admin	zt	查看該使用者
 view user account	admin	zt	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zt	您希望將被移除使用者的資料轉移給誰？
+would you like egroupware to cache the egw info array ?	admin	zt	您希望eGroupWare暫存網頁資料嗎？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查系統最新版本嗎？
 would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查應用程式最新版本嗎？
-would you like egroupware to cache the egw info array ?	admin	zt	您希望 eGroupWare 將系統資訊存到存取緩衝區內嗎？
-would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望 eGroupWare 自動於管理者登入時檢查是否有最新版本？
-would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zt	您想要自動讀取新的語言檔案嗎(登入時)？
 would you like to show each application's upgrade status ?	admin	zt	您希望顯示每一個應用程式升級的資訊嗎？
 xml-rpc	admin	zt	XML-RPC
@@ -371,7 +378,3 @@ you must enter an application title.	admin	zt	您必須輸入應用程式標題
 you must select a file type	admin	zt	您必須選擇一種檔案型態。
 you will need to remove the subcategories before you can delete the parent category	admin	zt	您需要將所有子分類移除後才可以移除上一層之分類！
 you will need to remove the subcategories before you can delete this category	admin	zt	您必須在刪除這個類別前刪除所有的子類別！
-enter your default mail domain ( from: user@domain )	admin	zt	輸入您的預設郵件網域
-enter your smtp server hostname or ip address	admin	zt	輸入您的SMTP伺服器主機名稱或IP位址
-enter your smtp server port	admin	zt	輸入您的SMTP伺服器連接埠
-mail settings	admin	zt	郵件設定
