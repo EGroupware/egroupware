@@ -112,6 +112,39 @@
 			);
 		}
 
+		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
+		{
+			static $account_list;
+
+			// For XML-RPC
+			if (is_array($_type))
+			{
+				$p      = $_type[0];
+				$_type  = $p['type'];
+				$start  = $p['start'];
+				$order  = $p['order'];
+				$query  = $p['query'];
+				$offset = $p['offset'];
+			}
+			else
+			{
+				$p = array(
+					'type' => $_type,
+					'start' => $start,
+					'order' => $order,
+					'query' => $query,
+					'offset' => $offset
+				);
+			}
+			$serial = serialize($p);
+
+			if (isset($account_list[$serial]))
+			{
+				return $account_list[$serial];
+			}
+			return $account_list[$serial] = accounts_::get_list($_type,$start,$sort,$order,$query,$offset);
+		}
+
 		function is_expired()
 		{
 			if ($this->data['expires'] != -1 && $this->data['expires'] < time())
@@ -147,14 +180,21 @@
 
 		function membership($accountid = '')
 		{
+			static $membership_list;
+
 			$account_id = get_account_id($accountid);
+
+			if (isset($membership_list[$account_id]))
+			{
+				return $membership_list[$account_id];
+			}
 
 			$security_equals = Array();
 			$security_equals = $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $account_id);
 
 			if ($security_equals == False)
 			{
-				return False;
+				return $membership_list[$account_id] = False;
 			}
 
 			$this->memberships = Array();
@@ -165,7 +205,7 @@
 				$this->memberships[] = Array('account_id' => $groups, 'account_name' => $this->id2name($groups));
 			}
 
-			return $this->memberships;
+			return $membership_list[$account_id] = $this->memberships;
 		}
 
 		function member($accountid = '')
@@ -244,6 +284,96 @@
 			return $nextid;
 		}
 
+		function name2id($account_lid)
+		{
+			static $name_list;
+
+			if(@isset($name_list[$account_lid]) && $name_list[$account_lid])
+			{
+				return $name_list[$account_lid];
+			}
+
+			/* Don't bother searching for empty account_lid */
+			if(empty($account_lid))
+			{
+				return False;
+			}
+			return $name_list[$account_lid] = accounts_::name2id($account_lid);
+		}
+
+		function id2name($account_id)
+		{
+			static $id_list;
+
+			if (! $account_id)
+			{
+				return False;
+			}
+
+			if($id_list[$account_id])
+			{
+				return $id_list[$account_id];
+			}
+			return $id_list[$account_id] = accounts_::id2name($account_id);
+		}
+
+		function get_type($accountid)
+		{
+			static $account_type;
+			$account_id = get_account_id($accountid);
+
+			if (isset($this->account_type) && $account_id == $this->account_id)
+			{
+				return $this->account_type;
+			}
+
+			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
+			{
+				return $account_type[$account_id];
+			}
+			elseif($account_id == '')
+			{
+				return False;
+			}
+			return $account_type[$account_id] = accounts_::get_type($account_id);
+		}
+
+		function get_account_name($accountid,&$lid,&$fname,&$lname)
+		{
+			static $account_name;
+
+			$account_id = get_account_id($accountid);
+			if(isset($account_name[$account_id]))
+			{
+				$lid = $account_name[$account_id]['lid'];
+				$fname = $account_name[$account_id]['fname'];
+				$lname = $account_name[$account_id]['lname'];
+				return $account_name[$account_id] !== False;
+			}
+			$Ok = accounts_::get_account_name($accountid,&$lid,&$fname,&$lname);
+
+			$account_name[$account_id] = array(
+				'lid' => $lid,
+				'fname' => $fname,
+				'lname' => $lname,
+			);
+			return $Ok;
+		}
+
+		function get_account_data($account_id)
+		{
+			$this->account_id = $account_id;
+			$this->read_repository();
+
+			$data[$this->data['account_id']]['lid']       = $this->data['account_lid'];
+			$data[$this->data['account_id']]['firstname'] = $this->data['firstname'];
+			$data[$this->data['account_id']]['lastname']  = $this->data['lastname'];
+			$data[$this->data['account_id']]['fullname']  = $this->data['fullname'];
+			$data[$this->data['account_id']]['type']      = $this->data['account_type'];
+
+			return $data;
+		}
+
 		function accounts_popup($app)
 		{
 			$group_id = get_var('group_id',array('GET','POST'));
@@ -257,7 +387,7 @@
 			{
 				$GLOBALS['query'] = $_POST['query'];
 			}
-			
+
 			if(isset($_POST['start']))
 			{
 				$start = (int)$_POST['start'];

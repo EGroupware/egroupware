@@ -602,25 +602,12 @@
 
 		function name2id($account_lid)
 		{
-			static $name_list;
-
-			if(@isset($name_list[$account_lid]) && $name_list[$account_lid])
-			{
-				return $name_list[$account_lid];
-			}
-
-			/* Don't bother searching for empty account_lid */
-			if(empty($account_lid))
-			{
-				return False;
-			}
-
 			$sri = ldap_search($this->ds, $this->group_context, '(&(cn=' . (string)$account_lid . ')(phpgwaccounttype=g))');
 			$allValues = ldap_get_entries($this->ds, $sri);
 
 			if (@$allValues[0]['gidnumber'][0])
 			{
-				$name_list[$account_lid] = (int)$allValues[0]['gidnumber'][0];
+				return (int)$allValues[0]['gidnumber'][0];
 			}
 
 			$sri = ldap_search($this->ds, $this->user_context, '(&(uid=' . (string)$account_lid . ')(phpgwaccounttype=u))');
@@ -629,29 +616,21 @@
 
 			if (@$allValues[0]['uidnumber'][0])
 			{
-				$name_list[$account_lid] = (int)$allValues[0]['uidnumber'][0];
+				return (int)$allValues[0]['uidnumber'][0];
 			}
 
-			return $name_list[$account_lid];
+			return False;
 		}
 
 		function id2name($account_id)
 		{
-			static $id_list;
-
-			if(isset($id_list[$account_id]))
-			{
-				return $id_list[$account_id];
-			}
-
 			$allValues = array();
 			$sri = ldap_search($this->ds, $this->group_context, '(&(gidnumber=' . (int)$account_id . ')(phpgwaccounttype=g))');
 			$allValues = ldap_get_entries($this->ds, $sri);
 
 			if (@$allValues[0]['cn'][0])
 			{
-				$id_list[$account_id] = $allValues[0]['cn'][0];
-				return $id_list[$account_id];
+				return $allValues[0]['cn'][0];
 			}
 
 			$allValues = array();
@@ -660,36 +639,20 @@
 
 			if (@$allValues[0]['uid'][0])
 			{
-				$id_list[$account_id] = $allValues[0]['uid'][0];
-				return $id_list[$account_id];
+				return $allValues[0]['uid'][0];
 			}
-
-			return $id_list[$account_id];
+			return False;
 		}
 
-		function get_type($accountid = '')
+		function get_type($account_id)
 		{
-			static $account_type;
-			$account_id = get_account_id($accountid);
-
-			if (isset($this->account_type) && $account_id == $this->account_id)
-			{
-				return $this->account_type;
-			}
-
-			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
-			{
-				return $account_type[$account_id];
-			}
 			$allValues = array();
 			$sri = ldap_search($this->ds, $this->user_context, '(&(uidnumber=' . (int)$account_id . ')(phpgwaccounttype=u))');
 			$allValues = ldap_get_entries($this->ds, $sri);
 
 			if ($allValues[0]['phpgwaccounttype'][0])
 			{
-				$allValues[0]['phpgwaccounttype'][0];
-				$account_type[$account_id] = $allValues[0]['phpgwaccounttype'][0];
-				return $account_type[$account_id];
+				return $allValues[0]['phpgwaccounttype'][0];
 			}
 
 			$allValues = array();
@@ -698,10 +661,9 @@
 
 			if ($allValues[0]['phpgwaccounttype'][0])
 			{
-				$account_type[$account_id] = $allValues[0]['phpgwaccounttype'][0];
-				return $account_type[$account_id];
+				return $allValues[0]['phpgwaccounttype'][0];
 			}
-			return $account_type[$account_id];
+			return False;
 		}
 
 		/*
@@ -1064,16 +1026,6 @@
 
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
-			static $account_name;
-
-			$account_id = get_account_id($accountid);
-			if(isset($account_name[$account_id]))
-			{
-				$lid = $account_name[$account_id]['lid'];
-				$fname = $account_name[$account_id]['fname'];
-				$lname = $account_name[$account_id]['lname'];
-				return;
-			}
 			$acct_type = $this->get_type($account_id);
 
 			/* search the dn for the given uid */
@@ -1089,34 +1041,17 @@
 
 			if($acct_type =='g')
 			{
-				$account_name[$account_id]['lid']   = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
-				$account_name[$account_id]['fname'] = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
-				$account_name[$account_id]['lname'] = lang('Group');
+				$lid   = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
+				$fname = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
+				$lname = lang('Group');
 			}
 			else
 			{
-				$account_name[$account_id]['lid']   = $GLOBALS['phpgw']->translation->convert($allValues[0]['uid'][0],'utf-8');
-				$account_name[$account_id]['fname'] = $GLOBALS['phpgw']->translation->convert($allValues[0]['givenname'][0],'utf-8');
-				$account_name[$account_id]['lname'] = $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
+				$lid   = $GLOBALS['phpgw']->translation->convert($allValues[0]['uid'][0],'utf-8');
+				$fname = $GLOBALS['phpgw']->translation->convert($allValues[0]['givenname'][0],'utf-8');
+				$lname = $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
 			}
-			$lid = $account_name[$account_id]['lid'];
-			$fname = $account_name[$account_id]['fname'];
-			$lname = $account_name[$account_id]['lname'];
-			return;
-		}
-
-		function get_account_data($account_id)
-		{
-			$this->account_id = $account_id;
-			$this->read_repository();
-
-			$data[$this->data['account_id']]['lid']       = $this->data['account_lid'];
-			$data[$this->data['account_id']]['firstname'] = $this->data['firstname'];
-			$data[$this->data['account_id']]['lastname']  = $this->data['lastname'];
-			$data[$this->data['account_id']]['fullname']  = $this->data['fullname'];
-			$data[$this->data['account_id']]['type']      = $this->data['account_type'];
-
-			return $data;
+			return !empty($lid);
 		}
 
 		function getDNforID($_accountid = '')

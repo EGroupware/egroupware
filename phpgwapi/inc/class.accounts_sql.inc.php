@@ -130,17 +130,6 @@
 
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			// For XML-RPC
-/*			if (is_array($_type))
-			{
-				$p      = $_type;
-				$_type  = $p[0]['type'];
-				$start  = $p[0]['start'];
-				$order  = $p[0]['order'];
-				$query  = $p[0]['query'];
-				$offset = $p[0]['offset'];
-			}
-*/
 			if (! $sort)
 			{
 				$sort = "DESC";
@@ -219,89 +208,35 @@
 
 		function name2id($account_lid)
 		{
-			static $name_list;
-
-			if (! $account_lid)
-			{
-				return False;
-			}
-
-			if($name_list[$account_lid] && $name_list[$account_lid] != '')
-			{
-				return $name_list[$account_lid];
-			}
-
 			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$this->db->db_addslashes($account_lid)."'",__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
-				$name_list[$account_lid] = (int)$this->db->f('account_id');
+				return (int)$this->db->f('account_id');
 			}
-			else
-			{
-				$name_list[$account_lid] = False;
-			}
-			return $name_list[$account_lid];
+			return False;
 		}
 
 		function id2name($account_id)
 		{
-			static $id_list;
-
-			if (! $account_id)
-			{
-				return False;
-			}
-
-			if($id_list[$account_id])
-			{
-				return $id_list[$account_id];
-			}
-
 			$this->db->query('SELECT account_lid FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
-				$id_list[$account_id] = $this->db->f('account_lid');
+				return $this->db->f('account_lid');
 			}
-			else
-			{
-				$id_list[$account_id] = False;
-			}
-			return $id_list[$account_id];
+			return False;
 		}
 
-		function get_type($accountid)
+		function get_type($account_id)
 		{
-			static $account_type;
-			$account_id = get_account_id($accountid);
-			
-			if (isset($this->account_type) && $account_id == $this->account_id)
-			{
-				return $this->account_type;
-			}
-
-			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
-			{
-				return $account_type[$account_id];
-			}
-			elseif($account_id == '')
-			{
-				return False;
-			}
-			$this->db->Halt_On_Error = 'no';
-			$this->db->query('SELECT account_type FROM phpgw_accounts WHERE account_id=' . $account_id,__LINE__,__FILE__);
+			$this->db->query('SELECT account_type FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
 			if ($this->db->num_rows())
 			{
 				$this->db->next_record();
-				$account_type[$account_id] = $this->db->f('account_type');
+				return $this->db->f('account_type');
 			}
-			else
-			{
-				$account_type[$account_id] = False;
-			}
-			$this->db->Halt_On_Error = 'yes';
-			return $account_type[$account_id];
+			return False;
 		}
 
 		function exists($account_lid)
@@ -457,40 +392,17 @@
 
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
-			static $account_name;
-
-			$account_id = get_account_id($accountid);
-			if(isset($account_name[$account_id]))
-			{
-				$lid = $account_name[$account_id]['lid'];
-				$fname = $account_name[$account_id]['fname'];
-				$lname = $account_name[$account_id]['lname'];
-				return;
-			}
 			$db = $GLOBALS['phpgw']->db;
 			$db->query('SELECT account_lid,account_firstname,account_lastname FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
-			$db->next_record();
-			$account_name[$account_id]['lid']   = $db->f('account_lid');
-			$account_name[$account_id]['fname'] = $db->f('account_firstname');
-			$account_name[$account_id]['lname'] = $db->f('account_lastname');
-			$lid   = $account_name[$account_id]['lid'];
-			$fname = $account_name[$account_id]['fname'];
-			$lname = $account_name[$account_id]['lname'];
-			return;
-		}
+			if (!$db->next_record())
+			{
+				return False;
+			}
+			$lid   = $db->f('account_lid');
+			$fname = $db->f('account_firstname');
+			$lname = $db->f('account_lastname');
 
-		function get_account_data($account_id)
-		{
-			$this->account_id = $account_id;
-			$this->read_repository();
-
-			$data[$this->data['account_id']]['lid']       = $this->data['account_lid'];
-			$data[$this->data['account_id']]['firstname'] = $this->data['firstname'];
-			$data[$this->data['account_id']]['lastname']  = $this->data['lastname'];
-			$data[$this->data['account_id']]['fullname']  = $this->data['fullname'];
-			$data[$this->data['account_id']]['type']      = $this->data['account_type'];
-
-			return $data;
+			return True;
 		}
 	}
 	/*!
