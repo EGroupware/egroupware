@@ -25,6 +25,12 @@
 	</tr>
 </table>
 
+{buttons}
+
+</div>
+
+<!-- END form -->
+
 <!-- BEGIN add -->
 
 <table width="50%" border="0" cellspacing="2" cellpadding="2">
@@ -57,8 +63,5 @@
 			<input type="submit" name="done" value="{lang_done}"></form></td>
 	</tr>
 </table>
-</div>
 
 <!-- END edit -->
-
-<!-- END form -->

@@ -1,5 +1,7 @@
 <!-- $Id$ -->
 
+<!-- BEGIN cat_list -->
+
 	<center>
 		<table border="0" cellspacing="2" cellpadding="2">
 			<tr>
@@ -30,19 +32,7 @@
 				<td width=8% bgcolor="{th_bg}" align="center">{lang_delete}</td>
 			</tr>
 
-<!-- BEGIN cat_list -->
-
-			<tr bgcolor="{tr_color}">
-				<td>{name}</td>
-				<td>{descr}</td>
-				<td align="center"><a href="{add_sub}">{lang_sub_entry}</a></td>
-				<td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
-				<td align="center"><a href="{delete}">{lang_delete_entry}</a></td>  
-			</tr>
-
-<!-- END cat_list -->
-
-<!-- BEGINN add   -->
+			{rows}
 
 			<tr valign="bottom">
 				<td>
@@ -57,7 +47,19 @@
 				</td>
 			</tr>
 
-<!-- END add -->
-
 		</table>
 	</center>
+
+<!-- END cat_list -->
+
+<!-- BEGIN cat_row -->
+
+			<tr bgcolor="{tr_color}">
+				<td>{name}</td>
+				<td>{descr}</td>
+				<td align="center"><a href="{add_sub}">{lang_sub_entry}</a></td>
+				<td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
+				<td align="center"><a href="{delete}">{lang_delete_entry}</a></td>
+			</tr>
+
+<!-- END cat_row -->
