@@ -6,9 +6,9 @@
 	* Handles limiting number of rows displayed                                *
 	* Copyright (C) 2000, 2001 Joseph Engo                                     *
 	* Copyright (C) 2002, 2003 Joseph Engo, Bettina Gille                      *
-	* -------------------------------------------------------------------------*
+	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org                                              * 
+	* http://www.phpgroupware.org                                              *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -65,10 +65,7 @@
 				$this->maxmatches = 15;
 			}
 
-			if(isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
-			{
-				$this->action = $GLOBALS['HTTP_GET_VARS']['menuaction'];
-			}
+			$this->action = $_GET['menuaction'] ? $_GET['menuaction'];
 		}
 
 		/*!
@@ -118,8 +115,7 @@
 			}
 			elseif($extravars && is_array($extravars))
 			{
-				@reset($extravars);
-				while(list($var,$value) = each($extravars))
+				foreach($extravars as $var => $value)
 				{
 					if($var != 'menuaction')
 					{
@@ -143,7 +139,7 @@
 		function set_link($align,$img,$link,$alt,$extravars)
 		{
 			$hidden = '';
-			while(list($var,$value) = each($extravars))
+			foreach($extravars as $var => $value)
 			{
 				if((is_int($value) && $value == 0) || $value)
 				{
@@ -249,7 +245,7 @@
 				}
 				elseif(is_array($extradata))
 				{
-					while(list($var,$value) = each($extradata))
+					foreach($extradata as $var => $value)
 					{
 						if($var != 'menuaction')
 						{
@@ -269,8 +265,7 @@
 		{
 			if(is_array($extra))
 			{
-				@reset($extra);
-				while(list($var,$value) = each($extra))
+				foreach($extra as $var => $value)
 				{
 					$t_extras[] = $var . '=' . $value;
 				}
@@ -441,9 +436,10 @@
 				$_query = stripslashes($GLOBALS['query']);
 			}
 
-			// If the place a '"' in there search, it will mess everything up
+			// If they place a '"' in their search, it will mess everything up
 			// Our only option is to remove it
-			if (ereg('"',$_query))
+//			if (ereg('"',$_query))
+			if(strstr($query,'"'))
 			{
 				$_query = str_replace('"','',$_query);
 			}
@@ -526,7 +522,7 @@
 			}
 			else
 			{
-				$filter = $GLOBALS['HTTP_POST_VARS']['filter'] ? $GLOBALS['HTTP_POST_VARS']['filter'] : $GLOBALS['HTTP_GET_VARS']['filter'];
+				$filter = get_var('filter',array('POST','GET'));
 			}
 
 			if (is_long($filter_obj))
@@ -799,9 +795,9 @@
 		@function nav_left_right_imap
 		@abstract same code as left and right (as of Dec 07, 2001) except all combined into one function
 		@param feed_vars : array with these elements: <br>
-			start 
-			total 
-			cmd_prefix 
+			start
+			total
+			cmd_prefix
 			cmd_suffix
 		@return array, combination of functions left and right above, with these elements:
 			first_page
