@@ -47,6 +47,8 @@
 		var $default = array();
 		/*! @var forced forced prefs */
 		var $forced = array();
+		/*! @var session session / tempory prefs */
+		var $session = array();
 		/*! @var db */
 		var $db;
 
@@ -213,6 +215,11 @@
 		*/
 		function read_repository()
 		{
+			$this->session = $GLOBALS['phpgw']->session->appsession('preferences','preferences');
+			if (!is_array($this->session))
+			{
+				$this->session = array();
+			}
 			$this->db->query("SELECT * FROM phpgw_preferences"
 				. " WHERE preference_owner IN (-1,-2," . (int)$this->account_id . ')',__LINE__,__FILE__);
 
@@ -240,7 +247,7 @@
 						break;
 				}
 			}
-			$this->data = $this->user;
+			$this->data = array_merge_recursive($this->user,$this->session);
 
 			// now use defaults if needed (user-value unset or empty)
 			//
@@ -321,6 +328,14 @@
  
 			switch ($type)
 			{
+				case 'session':
+					if (!isset($this->forced[$app_name][$var]) || $this->forced[$app_name][$var] === '')
+					{
+						$this->session[$app_name][$var] = $this->data[$app_name][$var] = $value;
+						$GLOBALS['phpgw']->sessions->appsession('preferences','preferences',$this->session);
+					}
+					break;
+
 				case 'forced':
 					$this->data[$app_name][$var] = $this->forced[$app_name][$var] = $value;
 					break;
