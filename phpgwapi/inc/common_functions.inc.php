@@ -640,4 +640,174 @@
 			echo '</pre>';
 		}
 	}
+
+	/*
+	@function alessthanb
+	@abstract phpgw version checking, is param 1 < param 2 in phpgw versionspeak?
+	@param	$a	phpgw version number to check if less than $b
+	@param	$b	phpgw version number to check $a against
+	#return	True if $a < $b
+	*/
+	function alessthanb($a,$b,$DEBUG=False)
+	{
+		$num = array('1st','2nd','3rd','4th');
+
+		if ($DEBUG)
+		{
+			echo'<br>Input values: '
+				. 'A="'.$a.'", B="'.$b.'"';
+		}
+		$newa = ereg_replace('pre','.',$a);
+		$newb = ereg_replace('pre','.',$b);
+		$testa = explode('.',$newa);
+		if(@$testa[1] == '')
+		{
+			$testa[1] = 0;
+		}
+		if(@$testa[3] == '')
+		{
+			$testa[3] = 0;
+		}
+		$testb = explode('.',$newb);
+		if(@$testb[1] == '')
+		{
+			$testb[1] = 0;
+		}
+		if(@$testb[3] == '')
+		{
+			$testb[3] = 0;
+		}
+		$less = 0;
+
+		for ($i=0;$i<count($testa);$i++)
+		{
+			if ($DEBUG) { echo'<br>Checking if '. intval($testa[$i]) . ' is less than ' . intval($testb[$i]) . ' ...'; }
+			if (intval($testa[$i]) < intval($testb[$i]))
+			{
+				if ($DEBUG) { echo ' yes.'; }
+				$less++;
+				if ($i<3)
+				{
+					/* Ensure that this is definitely smaller */
+					if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely less than B."; }
+					$less = 5;
+					break;
+				}
+			}
+			elseif(intval($testa[$i]) > intval($testb[$i]))
+			{
+				if ($DEBUG) { echo ' no.'; }
+				$less--;
+				if ($i<2)
+				{
+					/* Ensure that this is definitely greater */
+					if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely greater than B."; }
+					$less = -5;
+					break;
+				}
+			}
+			else
+			{
+				if ($DEBUG) { echo ' no, they are equal.'; }
+				$less = 0;
+			}
+		}
+		if ($DEBUG) { echo '<br>Check value is: "'.$less.'"'; }
+		if ($less>0)
+		{
+			if ($DEBUG) { echo '<br>A is less than B'; }
+			return True;
+		}
+		elseif($less<0)
+		{
+			if ($DEBUG) { echo '<br>A is greater than B'; }
+			return False;
+		}
+		else
+		{
+			if ($DEBUG) { echo '<br>A is equal to B'; }
+			return False;
+		}
+	}
+
+	/*!
+	@function amorethanb
+	@abstract phpgw version checking, is param 1 > param 2 in phpgw versionspeak?
+	@param	$a	phpgw version number to check if more than $b
+	@param	$b	phpgw version number to check $a against
+	#return	True if $a < $b
+	*/
+	function amorethanb($a,$b,$DEBUG=False)
+	{
+		$num = array('1st','2nd','3rd','4th');
+
+		if ($DEBUG)
+		{
+			echo'<br>Input values: '
+				. 'A="'.$a.'", B="'.$b.'"';
+		}
+		$newa = ereg_replace('pre','.',$a);
+		$newb = ereg_replace('pre','.',$b);
+		$testa = explode('.',$newa);
+		if($testa[3] == '')
+		{
+			$testa[3] = 0;
+		}
+		$testb = explode('.',$newb);
+		if($testb[3] == '')
+		{
+			$testb[3] = 0;
+		}
+		$less = 0;
+
+		for ($i=0;$i<count($testa);$i++)
+		{
+			if ($DEBUG) { echo'<br>Checking if '. intval($testa[$i]) . ' is more than ' . intval($testb[$i]) . ' ...'; }
+			if (intval($testa[$i]) > intval($testb[$i]))
+			{
+				if ($DEBUG) { echo ' yes.'; }
+				$less++;
+				if ($i<3)
+				{
+					/* Ensure that this is definitely greater */
+					if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely greater than B."; }
+					$less = 5;
+					break;
+				}
+			}
+			elseif(intval($testa[$i]) < intval($testb[$i]))
+			{
+				if ($DEBUG) { echo ' no.'; }
+				$less--;
+				if ($i<2)
+				{
+					/* Ensure that this is definitely smaller */
+					if ($DEBUG) { echo"  This is the $num[$i] octet, so A is definitely less than B."; }
+					$less = -5;
+					break;
+				}
+			}
+			else
+			{
+				if ($DEBUG) { echo ' no, they are equal.'; }
+				$less = 0;
+			}
+		}
+		if ($DEBUG) { echo '<br>Check value is: "'.$less.'"'; }
+		if ($less>0)
+		{
+			if ($DEBUG) { echo '<br>A is greater than B'; }
+			return True;
+		}
+		elseif($less<0)
+		{
+			if ($DEBUG) { echo '<br>A is less than B'; }
+			return False;
+		}
+		else
+		{
+			if ($DEBUG) { echo '<br>A is equal to B'; }
+			return False;
+		}
+	}
 ?>
