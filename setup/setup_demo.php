@@ -192,7 +192,7 @@
 					"tz_offset"    => 0,
 					"dateformat"   => "Y/m/d",
 					"timeformat"   => "24",
-					"lang"         => "en",
+					"lang"         => get_var('ConfigLang',Array('POST','COOKIE'),'en'),
 					"default_app"  => "calendar",
 					"currency"     => "$",
 					'show_help'    => True,

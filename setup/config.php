@@ -24,7 +24,7 @@
 	Authorize the user to use setup app and load the database
 	Does not return unless user is authorized
 	*/
-	if(!$GLOBALS['phpgw_setup']->auth('Config'))
+	if(!$GLOBALS['phpgw_setup']->auth('Config') || @$_POST['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
@@ -69,31 +69,6 @@
 
 	$GLOBALS['phpgw_setup']->loaddb();
 
-	/* Guessing default values. */
-	$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'];
-	// files-dir is not longer allowed in document root, for security reasons !!!
-	$GLOBALS['current_config']['files_dir'] = '/outside/webserver/docroot';
-
-	if(@is_dir('/tmp'))
-	{
-		$GLOBALS['current_config']['temp_dir'] = '/tmp';
-	}
-	else
-	{
-		$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
-	}
-	// guessing the phpGW url
-	$parts = explode('/',$_SERVER['PHP_SELF']);
-	unset($parts[count($parts)-1]); // config.php
-	unset($parts[count($parts)-1]); // setup
-	$GLOBALS['current_config']['webserver_url'] = implode('/',$parts);
-
-	if(@get_var('cancel',Array('POST')))
-	{
-		Header('Location: index.php');
-		exit;
-	}
-
 	/* Check api version, use correct table */
 	$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions();
 
@@ -106,8 +81,8 @@
 		$configtbl = 'phpgw_config';
 	}
 
-	$newsettings = get_var('newsettings',Array('POST'));
-	$files_in_docroot = in_docroot($GLOBALS['HTTP_POST_VARS']['newsettings']['files_dir']);
+	$newsettings = $_POST['newsettings'];
+	$files_in_docroot = in_docroot($newsettings['files_dir']);
 
 	if(@get_var('submit',Array('POST')) && @$newsettings && !$files_in_docroot)
 	{

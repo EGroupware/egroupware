@@ -164,12 +164,18 @@
 		@abstract process an application's lang files, calling get_langs() to see what langs the admin installed already
 		@param $appname app_name of application to process
 		*/
-		function add_langs($appname,$DEBUG=False,$force_en=False)
+		function add_langs($appname,$DEBUG=False,$force_langs=False)
 		{
 			$langs = $this->get_langs($DEBUG);
-			if($force_en && !@in_array('en',$langs))
+			if(is_array($force_langs))
 			{
-				$langs[] = 'en';
+				foreach($force_langs as $lang)
+				{
+					if (!in_array($lang,$langs))
+					{
+						$langs[] = $lang;
+					}
+				}
 			}
 
 			if($DEBUG)

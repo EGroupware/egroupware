@@ -259,9 +259,6 @@
 					/* process all apps and langs(last param True), excluding apps with the no_mass_update flag set. */
 					$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
 					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$GLOBALS['DEBUG'],True);
-
-					$GLOBALS['included'] = True;
-					include('lang.php');
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 				case 'oldversion':

@@ -2,8 +2,7 @@
 <!-- begin the db section -->
 <table border="0" width="100%" cellspacing="0" cellpadding="2" style="{ border: 1px solid #000000; }">
 <tr class="th">
-	<td align="left">{db_step_text}</td>
-	<td align="right">&nbsp;</td>
+	<td align="left" colspan="2">{db_step_text}</td>
 </tr>
 
 {V_db_filled_block}
@@ -11,11 +10,10 @@
 
 <!-- begin the config section -->
 <tr class="th">
-	<td align="left">{config_step_text}</td>
-	<td align="right">&nbsp;</td>
+	<td align="left" colspan="2">{config_step_text}</td>
 </tr>
 <tr>
-	<td align="center">
+	<td align="center" width="30%">
 		<img src="{config_status_img}" alt="{config_status_alt}" border="0">
 	</td>
 	<td>
@@ -31,8 +29,7 @@
 <!-- end the config section -->
 <!-- begin the lang section -->
 <tr class="th">
-	<td align="left">{lang_step_text}</td>
-	<td align="right">&nbsp;</td>
+	<td align="left" colspan="2">{lang_step_text}</td>
 </tr>
 <tr>
 	<td align="center">
@@ -45,8 +42,7 @@
 <!-- end the lang section -->
 <!-- begin the apps section -->
 <tr class="th">
-	<td align="left">{apps_step_text}</td>
-	<td align="right">&nbsp;</td>
+	<td align="left" colspan="2">{apps_step_text}</td>
 </tr>
 <tr>
 	<td align="center">

@@ -117,7 +117,9 @@
 						/* Create tables and insert new records for each app in this list */
 						$passing = $this->current($pass,$DEBUG);
 						$passing = $this->default_records($passing,$DEBUG);
-						$passing = $this->add_langs($passing,$DEBUG,$force_en);
+						$my_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+						$passing = $this->add_langs($passing,$DEBUG,array($my_lang,'en'));
+						$this->save_minimal_config();
 						break;
 					case 'upgrade':
 						/* Run upgrade scripts on each app in the list */
@@ -179,6 +181,44 @@
 			}
 
 			return ($setup_info);
+		}
+
+		/*!
+		@function save_minimal_config
+		@abstract saves a minimal default config, so you get a running install without entering and saveing Step #2 config
+		*/
+		function save_minimal_config()
+		{
+			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
+			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'];
+			// files-dir is not longer allowed in document root, for security reasons !!!
+			$GLOBALS['current_config']['files_dir'] = '/outside/webserver/docroot';
+
+			if(@is_dir('/tmp'))
+			{
+				$GLOBALS['current_config']['temp_dir'] = '/tmp';
+			}
+			else
+			{
+				$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
+			}
+			// guessing the phpGW url
+			$parts = explode('/',$_SERVER['PHP_SELF']);
+			array_pop($parts);	// remove config.php
+			array_pop($parts);	// remove setup
+			$GLOBALS['current_config']['webserver_url'] = implode('/',$parts);
+
+			$datetime = CreateObject('phpgwapi.datetime');
+			$GLOBALS['current_config']['tz_offset'] = $datetime->getbestguess();
+			unset($datetime);
+
+			foreach($GLOBALS['current_config'] as $setting => $value)
+			{
+				$setting = $GLOBALS['phpgw_setup']->db->db_addslashes($setting);
+				$value   = $GLOBALS['phpgw_setup']->db->db_addslashes($value);
+				@$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='$setting'",__LINE__,__FILE__);
+				$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name, config_value) VALUES ('phpgwapi','$setting','$value')");
+			}
 		}
 
 		/*!
@@ -350,13 +390,13 @@
 		@abstract process application lang files and uninstall
 		@param $setup_info	array of application info from setup.inc.php files, etc.
 		*/
-		function add_langs($setup_info,$DEBUG=False,$force_en=False)
+		function add_langs($setup_info,$DEBUG=False,$force_langs=False)
 		{
 			@reset($setup_info);
 			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
-				$this->translation->add_langs($appname,$DEBUG,$force_en);
+				$this->translation->add_langs($appname,$DEBUG,$force_langs);
 				if($DEBUG)
 				{
 					echo '<br>process->add_langs(): Translations added for ' . $appname . "\n";
