@@ -74,8 +74,13 @@
   $phpgw->common->navbar();
 
   $userData = $phpgw->accounts->read_userData($account_id);
-
   $db_perms = $phpgw->accounts->read_apps($userData["account_lid"]);
+
+  if (! $submit) {
+     $n_loginid   = $userData["account_lid"];
+     $n_firstname = $userData["firstname"];
+     $n_lastname  = $userData["lastname"];
+  }
 
   if ($phpgw_info["server"]["account_repository"] == "ldap") {
       $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . rawurlencode($userData["account_dn"]) . "&old_loginid=" . $userData["account_lid"]));
@@ -103,7 +108,7 @@
   $phpgw->template->set_var("lang_groups",lang("Groups"));
   $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
 
-  $group_select = '<select name="n_groups[]" multiple>';
+  $groups_select = '<select name="n_groups[]" multiple>';
   $phpgw->db->query("select * from groups");
   while ($phpgw->db->next_record()) {
      $groups_select .= '<option value="' . $phpgw->db->f("group_id") . '"';
@@ -114,8 +119,8 @@
      }
      $groups_select .= ">" . $phpgw->db->f("group_name") . "</option>\n";
   }
-  $group_select .= "</select>";
-  $phpgw->template->set_var("groups_select",$group_select);
+  $groups_select .= "</select>";
+  $phpgw->template->set_var("groups_select",$groups_select);
 
   $i = 0;
   while ($permission = each($phpgw_info["apps"])) {
