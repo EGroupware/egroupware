@@ -348,8 +348,7 @@
 			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
-				/* This is in the setup_lang class */
-				$this->add_langs($appname,$DEBUG,$force_en);
+				$this->translation->add_langs($appname,$DEBUG,$force_en);
 				if($DEBUG)
 				{
 					echo '<br>process->add_langs(): Translations added for ' . $appname . "\n";
@@ -370,8 +369,7 @@
 			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
-				/* This is in the setup_lang class */
-				$this->drop_langs($appname,$DEBUG);
+				$this->translation->drop_langs($appname,$DEBUG);
 				if($DEBUG)
 				{
 					echo '<br>process->drop_langs():  Translations removed for ' . $appname . "\n";
@@ -397,9 +395,8 @@
 					continue;
 				}
 				$appname = $setup_info[$key]['name'];
-				/* These are in the setup_lang class */
-				$this->drop_langs($appname,$DEBUG);
-				$this->add_langs($appname,$DEBUG);
+				$this->translation->drop_langs($appname,$DEBUG);
+				$this->translation->add_langs($appname,$DEBUG);
 				if($DEBUG)
 				{
 					echo '<br>process->upgrade_langs(): Translations reinstalled for ' . $appname . "\n";
@@ -408,6 +405,7 @@
 			/* Done, return current status */
 			return ($setup_info);
 		}
+
 		/*!
 		@function test_data
 		@abstract process test_data.inc.php in each application/setup dir for developer tests
