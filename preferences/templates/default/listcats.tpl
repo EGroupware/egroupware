@@ -3,7 +3,7 @@
 <center>
 <table border="0" cellspacing="0" cellpadding="0" width="80%">
 		<tr>
-			<td colspan="3" width="80%" align="center" bgcolor="#c9c9c9"><b>{lang_app}&nbsp;{title_categories}:&nbsp;{user_name}<b/><</td>
+			<td colspan="3" width="80%" align="center" bgcolor="#c9c9c9"><b>{lang_app}&nbsp;{title_categories}:&nbsp;{user_name}<b/></td>
 		</tr> 
 		<tr>
 			<td colspan="3" align=left>
