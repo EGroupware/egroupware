@@ -200,9 +200,16 @@
 
 			if ($GLOBALS['phpgw_info']['server']['httpproxy_server'])
 			{
+				$proxyAuth = '';
+				if(!empty($GLOBALS['phpgw_info']['server']['httpproxy_server_username']))
+				{
+					$proxyUsername = $GLOBALS['phpgw_info']['server']['httpproxy_server_username'];
+					$proxyPassword = $GLOBALS['phpgw_info']['server']['httpproxy_server_password'];
+					$proxyAuth = 'Proxy-Authorization: Basic '.base64_encode("$proxyUsername:$proxyPassword")."\n";
+				}
 				if ($this->open_port($server,80, 15))
 				{
-					if (! $this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n".$auth."\r\n\r\n"))
+					if (! $this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n".$proxyAuth.$auth."\r\n\r\n"))
 					{
 						return False;
 					}
