@@ -325,9 +325,6 @@
 			$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
 		}
 
-		
-/*DELETE ME SOON!!!!*/ $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'default'; 
-
 		/*************************************************************************\
 		* A few hacker resistant constants that will be used throught the program *
 		\*************************************************************************/
@@ -352,16 +349,16 @@
 		/* These default values will be overridden and appended to as needed by template sets */
 		$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','0');
-		$GLOBALS['phpgw']->template->set_var('phpgw_top_scrolling','NO');
+		$GLOBALS['phpgw']->template->set_var('phpgw_top_scrolling','AUTO');
 		$GLOBALS['phpgw']->template->set_var('phpgw_left_table_width','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_left_frame_width','0');
-		$GLOBALS['phpgw']->template->set_var('phpgw_left_scrolling','NO');
+		$GLOBALS['phpgw']->template->set_var('phpgw_left_scrolling','AUTO');
 		$GLOBALS['phpgw']->template->set_var('phpgw_right_table_width','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_right_frame_width','0');
-		$GLOBALS['phpgw']->template->set_var('phpgw_right_scrolling','NO');
+		$GLOBALS['phpgw']->template->set_var('phpgw_right_scrolling','AUTO');
 		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','0');
-		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_scrolling','NO');
+		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_scrolling','AUTO');
 
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_charset',lang('charset'));
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_description','phpGroupWare');
@@ -562,6 +559,11 @@
 		\*************************************************************************/
 		if(!PHPGW_USE_FRAMES || PHPGW_FRAME_PART == 'body')
 		{
+			/* parse_bodypart() should not output anything. This is here for them to set body tags and such */
+			if(function_exists('parse_bodypart'))
+			{
+				parse_bodypart();
+			}
 			/* Verify that user has rights to the currentapp */
 			$continue_app_data = True;
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&

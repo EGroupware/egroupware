@@ -105,7 +105,7 @@
 			$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
 			$GLOBALS['phpgw']->template->set_block('parts','bottom_part');
 			$var = Array(
-				'msg'			=> "<p><p>\n".lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
+				'msg'			=> "<p><p>\n".lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']).'<p>',
 				'version'		=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);
 			$GLOBALS['phpgw']->template->set_var($var);

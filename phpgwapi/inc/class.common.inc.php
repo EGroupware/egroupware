@@ -715,6 +715,14 @@
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
 			}
 
+/******** start temporarily code **************************************/
+/* this just makes sure the template set is updated to the new format */
+if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'].'/parts.inc.php'))
+{
+	$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
+}
+/******** end temporarily code **************************************/
+
 			$tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['phpgw_info']['server']['template_set'];
 			$tpldir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default';
 
@@ -1275,7 +1283,7 @@
 
 		function load_preload_images_data()
 		{
-			$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
+			//$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
 			
 			if(@is_array($GLOBALS['phpgw_info']['flags']['preload_images']))
 			{
@@ -1300,6 +1308,11 @@
 
 		function load_phpgw_body_tags()
 		{
+			$GLOBALS['phpgw_info']['flags']['body_tags']['bgcolor'] = $GLOBALS['phpgw_info']['theme']['bg_color'];
+			$GLOBALS['phpgw_info']['flags']['body_tags']['alink'] = $GLOBALS['phpgw_info']['theme']['alink'];
+			$GLOBALS['phpgw_info']['flags']['body_tags']['link'] = $GLOBALS['phpgw_info']['theme']['link'];
+			$GLOBALS['phpgw_info']['flags']['body_tags']['vlink'] = $GLOBALS['phpgw_info']['theme']['vlink'];
+
 			$GLOBALS['phpgw_info']['flags']['body_tags']['marginwidth']='0';
 			$GLOBALS['phpgw_info']['flags']['body_tags']['marginheight']='0';
 			$GLOBALS['phpgw_info']['flags']['body_tags']['topmargin']='0';
@@ -1318,7 +1331,10 @@
 				reset($GLOBALS['phpgw_info']['flags']['body_tags']);
 				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['body_tags']))
 				{
-					$body_tags_string .= " $key=\"$value\"";
+					if($value != '')
+					{
+						$body_tags_string .= " $key=\"$value\"";
+					}
 				}
 				$GLOBALS['phpgw']->template->set_var('phpgw_body_tags',$body_tags_string);
 			}

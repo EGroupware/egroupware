@@ -1,15 +1,5 @@
- marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" border="0" 
- onLoad="MM_preloadImages('{app_images}',
-'{logout_img_hover}',
-'{preferences_img_hover}',
-'{about_img_hover}',
-'{welcome_img_hover}');"
- background="{content_spacer_middle_img}">
-  <!-- the above is the continuation and finishing if the < body > element started in head.tpl
-  the margin items could be merged into head, as head already supplies some
-  the variables for onLoad are set in navbar -->
-
-<table border="0" width="100%" height="%98" cellspacing="0" cellpadding="0">
+<!-- BEGIN top_part -->
+<table border="0" width="100%" height="%100" cellspacing="0" cellpadding="0">
 	<tr>
 		<!-- top row back images are 58px high, but the row may be smaller than that -->
 		<!-- row 2 images are 15 px high, so this table with these 2 rows is 58 plus 15 equals 73px high  -->
@@ -55,6 +45,11 @@
 			</table>
 		</td>
 	</tr>
+</table>
+<!-- END top_part -->
+
+<!-- BEGIN left_part -->
+<table border="0" width="100%" height="%100" cellspacing="0" cellpadding="0">
 	<tr>
 		<td width="154" align="left" valign="top" background="{nav_bar_left_spacer_img}">
 			<!-- left nav table -->
@@ -66,7 +61,17 @@
 				</tr>
 			</table>
 		</td>
-		<td width="100%" align="left" valign="top">
-			<!-- this TD background image moved to body element -->
-			<br>
-<!-- END navbar -->
+	</tr>
+</table>
+<!-- END left_part -->
+
+
+<!-- BEGIN bottom_part -->
+<table border="0" width="100%" height="%100" cellspacing="0" cellpadding="0">
+	<tr>
+		<td align="center" background="{em_bottom_img}">
+			<font color="{power_textcolor}">{powered}</font>
+		</td>
+	</tr>
+</table>
+<!-- END bottom_part -->

@@ -17,7 +17,7 @@
 <!-- BEGIN bottom_part -->
 <TABLE border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="{navbar_bg}">
   <TR>
-    <TD align="CENTER">{msg}<BR></TD>
+		<TD align="CENTER">{msg}<BR></TD>
   </TR>
 </Table>
 <!-- END bottom_part -->
