@@ -19,6 +19,8 @@
 	class setup
 	{
 		var $db;
+		var $config_table = 'phpgw_config';
+		var $applications_table = 'phpgw_applications';
 		var $oProc;
 
 		var $detection = '';
@@ -71,6 +73,8 @@
 			$this->db->Database = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_name'];
 			$this->db->User     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_user'];
 			$this->db->Password = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_pass'];
+			
+			$this->db->set_app('phpgwapi');
 		}
 
 		/**
@@ -388,11 +392,7 @@
 			*/
 			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
-				$appstbl = 'applications';
-			}
-			else
-			{
-				$appstbl = 'phpgw_applications';
+				$this->applications_table = 'applications';
 			}
 
 			if($GLOBALS['DEBUG'])
@@ -409,24 +409,24 @@
 				}
 				if ($setup_info[$appname]['tables_use_prefix'] == True)
 				{
-					echo $setup_info[$appname]['name'] . ' uses tables_use_prefix, storing ' 
-						. $setup_info[$appname]['tables_prefix']
-						. ' as prefix for ' . $setup_info[$appname]['name'] . " tables\n";
-
-					$sql = "INSERT INTO phpgw_config (config_app,config_name,config_value) "
-						."VALUES ('".$setup_info[$appname]['name']."','"
-						.$appname."_tables_prefix','".$setup_info[$appname]['tables_prefix']."')";
-					$this->db->query($sql,__LINE__,__FILE__);
+					if($GLOBALS['DEBUG'])
+					{
+						echo "<br>$appname uses tables_use_prefix, storing ". $setup_info[$appname]['tables_prefix']." as prefix for tables\n";
+					}
+					$this->db->insert($this->config_table,array(
+							'config_app'	=> $appname,
+							'config_name'	=> $appname.'_tables_prefix',
+							'config_value'	=> $setup_info[$appname]['tables_prefix'],
+						),False,__LINE__,__FILE__);
 				}
-				$this->db->query("INSERT INTO $appstbl "
-					. "(app_name,app_enabled,app_order,app_tables,app_version) "
-					. "VALUES ("
-					. "'" . $setup_info[$appname]['name'] . "',"
-					. $enable . ","
-					. (int)$setup_info[$appname]['app_order'] . ","
-					. "'" . $tables . "',"
-					. "'" . $setup_info[$appname]['version'] . "')"
-				);
+				$this->db->insert($this->applications_table,array(
+						'app_name'		=> $appname,
+						'app_enabled'	=> $enable,
+						'app_order'		=> $setup_info[$appname]['app_order'],
+						'app_tables'	=> $tables,
+						'app_version'	=> $setup_info[$appname]['version'],
+					),False,__LINE__,__FILE__);
+
 				$this->clear_session_cache();
 			}
 		}
@@ -448,20 +448,16 @@
 
 			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
-				$appstbl = 'applications';
-			}
-			else
-			{
-				$appstbl = 'phpgw_applications';
+				$this->applications_table = 'applications';
 			}
 
 			if(@$GLOBALS['DEBUG'])
 			{
-				echo '<br>app_registered(): checking ' . $appname . ', table: ' . $appstbl;
+				echo '<br>app_registered(): checking ' . $appname . ', table: ' . $this->applications_table;
 				// _debug_array($setup_info[$appname]);
 			}
 
-			$this->db->query("SELECT COUNT(app_name) FROM $appstbl WHERE app_name='".$appname."'");
+			$this->db->select($this->applications_table,'COUNT(*)',array('app_name' => $appname),__LINE__,__FILE__);
 			$this->db->next_record();
 			if($this->db->f(0))
 			{
@@ -495,22 +491,16 @@
 
 			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
-				$appstbl = 'applications';
-			}
-			else
-			{
-				$appstbl = 'phpgw_applications';
+				$this->applications_table = 'applications';
 			}
 
 			if($GLOBALS['DEBUG'])
 			{
-				echo '<br>update_app(): ' . $appname . ', version: ' . $setup_info[$appname]['currentver'] . ', table: ' . $appstbl . '<br>';
+				echo '<br>update_app(): ' . $appname . ', version: ' . $setup_info[$appname]['currentver'] . ', table: ' . $this->applications_table . '<br>';
 				// _debug_array($setup_info[$appname]);
 			}
 
-			$this->db->query("SELECT COUNT(app_name) FROM $appstbl WHERE app_name='".$appname."'");
-			$this->db->next_record();
-			if(!$this->db->f(0))
+			if(!$this->app_registered($appname))
 			{
 				return False;
 			}
@@ -522,17 +512,12 @@
 				{
 					$tables = implode(',',$setup_info[$appname]['tables']);
 				}
-
-				$sql = "UPDATE $appstbl "
-					. "SET app_name='" . $setup_info[$appname]['name'] . "',"
-					. " app_enabled=" . (int)$setup_info[$appname]['enable'] . ","
-					. " app_order=" . (int)$setup_info[$appname]['app_order'] . ","
-					. " app_tables='" . $tables . "',"
-					. " app_version='" . $setup_info[$appname]['version'] . "'"
-					. " WHERE app_name='" . $appname . "'";
-				//echo $sql; exit;
-
-				$this->db->query($sql);
+				$this->db->update($this->applications_table,array(
+						'app_enabled'	=> $setup_info[$appname]['enable'],
+						'app_order'		=> $setup_info[$appname]['app_order'],
+						'app_tables'	=> $tables,
+						'app_version'	=> $setup_info[$appname]['version'],
+					),array('app_name'=>$appname),__LINE__,__FILE__);
 			}
 		}
 
@@ -552,11 +537,7 @@
 
 			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
-				$appstbl = 'applications';
-			}
-			else
-			{
-				$appstbl = 'phpgw_applications';
+				$this->applications_table = 'applications';
 			}
 
 			if($tableschanged == True)
@@ -565,7 +546,9 @@
 			}
 			if($setup_info[$appname]['currentver'])
 			{
-				$this->db->query("UPDATE $appstbl SET app_version='" . $setup_info[$appname]['currentver'] . "' WHERE app_name='".$appname."'");
+				$this->db->update($this->applications_table,array(
+						'app_version'	=> $setup_info[$appname]['currentver'],
+					),array('app_name'=>$appname),__LINE__,__FILE__);
 			}
 			return $setup_info;
 		}
@@ -585,15 +568,11 @@
 
 			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
-				$appstbl = 'applications';
-			}
-			else
-			{
-				$appstbl = 'phpgw_applications';
+				$this->applications_table = 'applications';
 			}
 
 			//echo 'DELETING application: ' . $appname;
-			$this->db->query("DELETE FROM $appstbl WHERE app_name='". $appname ."'");
+			$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
 			$this->clear_session_cache();
 		}
 
