@@ -84,7 +84,7 @@
 // This is a fix for NT
   if (!isset($phpgw_info["flags"]["noapi"]) || 
       !$phpgw_info["flags"]["noapi"] == True){
-    include($phpgw_info["server"]["api_dir"] . "/phpgw.inc.php");
+    include($phpgw_info["server"]["api_inc"] . "/phpgw.inc.php");
   }
 
   // Leave off the final php closing tag, some editors will add
