@@ -313,7 +313,7 @@
 				{
 					//echo '<br>zip_entry_name==' . zip_entry_name($dirent);
 					/* If an allowed extenstion based on conversion type */
-					if(ereg($ext,zip_entry_name($dirent)))
+					if(strstr(zip_entry_name($dirent),$ext))
 					{
 						/* Write the data to our temp file */
 						$data = zip_entry_read($dirent,zip_entry_filesize($dirent));
@@ -349,8 +349,8 @@
 			{
 				if(substr($col,0,6) == 'extra_')
 				{
-					$field = ereg_replace('extra_','',$col);
-					$field = ereg_replace(' ','_',$field);
+					$field = str_replace('extra_','',$col);
+					$field = str_replace(' ','_',$field);
 					$customfields[$field] = ucfirst($field);
 				}
 			}
