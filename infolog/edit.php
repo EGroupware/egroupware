@@ -150,6 +150,7 @@
 	$pri_selected[$phpgw->infolog->data['info_pri']] = ' selected';
 	$status_selected[$phpgw->infolog->data['info_status']] = ' selected';
 
+	$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
 	$phpgw->template->set_file(array('info_edit' => 'form.tpl'));
      
 	// ====================================================================

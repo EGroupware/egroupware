@@ -24,7 +24,7 @@
 	$db = $phpgw->db;
 	$db2 = $phpgw->db;
 
-	$phpgw->template = new Template($phpgw->common->get_tpl_dir('infolog'));
+	$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
 	$phpgw->template->set_file(array( 'info_list_t' => 'list.tpl' ));
 	$phpgw->template->set_block('info_list_t','info_list','list');
 

@@ -18,7 +18,7 @@
 
 	$phpgw->infolog = createobject('infolog.infolog');
 
-	$t = new Template($phpgw_info['server']['app_tpl']); // $t->unknows = 'keep'; $t->debug = 1;
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); // $t->unknows = 'keep'; $t->debug = 1;
 	$t->set_file(array('import' => 'csv_import.tpl'));
 	$t->set_block('import','filename','filenamehandle');
 	$t->set_block('import','fheader','fheaderhandle');

@@ -49,7 +49,7 @@
 		. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
 		. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
-		$phpgw->template = new Template($phpgw->common->get_tpl_dir('info'));
+		$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
 		$phpgw->template->set_file(array( 'info_delete' => 'delete.tpl' ));
 		$phpgw->template->set_var( $phpgw->infolog->setStyleSheet( ));
 		$phpgw->template->set_var( $phpgw->infolog->infoHeaders(  ));
