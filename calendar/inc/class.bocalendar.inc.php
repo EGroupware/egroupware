@@ -764,7 +764,7 @@
 			@reset($event['participants']);
 			$uim = False;
 			$security_equals = $GLOBALS['phpgw']->accounts->membership($user);
-			while(!$uim && $security_equals && list($participant,$status) = each($event['participants']))
+			while(!$uim && $event['participants'] && $security_equals && list($participant,$status) = each($event['participants']))
 			{
 				if($GLOBALS['phpgw']->accounts->get_type($participant) == 'g')
 				{
