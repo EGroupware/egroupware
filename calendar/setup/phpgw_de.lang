@@ -78,7 +78,7 @@ you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbes
 you have not entered a\nvalid time of day	calendar	de	Sie haben keine a\ngültige Tageszeit eingegeben.
 you must enter one or more search keywords	calendar	de	Sie müssen einen oder mehrere Suchbegriffe angeben
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	de	Der von Ihnen gewählte Zeitraum <B> %1 - %2 </B> führt zu Konflikten mit folgenden bereits existierenden Kalendereinträgen:
-Calendar Holiday Management	calendar	de	Feiertage verwalten
+Calendar Holiday Management	admin	de	Feiertage verwalten
 Countries	calendar	de	Länder
 Holidays	calendar	de	Feiertage
 Back	calendar	de	zurück
