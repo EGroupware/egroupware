@@ -250,6 +250,8 @@
 		*/
 		function set_cell_attribute($name,$attr,$val)
 		{
+			//echo "<p>set_cell_attribute(tpl->name=$this->name, name='$name', attr='$attr',val='$val')</p>\n";
+
 			reset($this->data);
 			$n = 0;
          while(list($row,$cols) = each($this->data))
@@ -261,32 +263,13 @@
 						$this->data[$row][$col][$attr] = $val;
 						++$n;
 					}
-				}
-			}
-			reset($this->data);
-
-			return $n;
-		}
-
-		/*!
-		@function set_cell_attribute
-		@syntax set_cell_attribute( $name,$attr,$val )
-		@author ralfbecker
-		@abstract set an attribute in a named cell
-		@result the number of changed cells
-		*/
-		function set_cell_attribute($name,$attr,$val)
-		{
-			reset($this->data);
-			$n = 0;
-         while(list($row,$cols) = each($this->data))
-			{
-				while(list($col,$cell) = each($cols))
-				{
-					if ($cell['name'] == $name)
+					if ($cell['type'] == 'template' && (is_object($cell['name']) || $cell['name'][0] != '@'))
 					{
-						$this->data[$row][$col][$attr] = $val;
-						++$n;
+						if (!is_object($cell['name']))
+						{
+							$this->data[$row][$col]['name'] = CreateObject('etemplate.etemplate',$cell['name']);
+						}
+						$n += $this->data[$row][$col]['name']->set_cell_attribute($name,$attr,$val);
 					}
 				}
 			}
