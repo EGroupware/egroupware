@@ -93,7 +93,7 @@
 				}
 				return $this->charsets[$lang];
 			}
-			return $this->system_charset ? $this->system_charset : strtolower($this->translate('charset'));
+			return $this->system_charset || !is_array($GLOBALS['lang']) ? $this->system_charset : strtolower($this->translate('charset'));
 		}
 
 		function init()
