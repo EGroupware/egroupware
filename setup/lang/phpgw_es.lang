@@ -116,6 +116,7 @@ download	setup	es	Descargar
 edit current configuration	setup	es	Editar configuración actual
 edit your existing header.inc.php	setup	es	Editar el fichero header.inc.php existente
 edit your header.inc.php	setup	es	Editar el fichero header.inc.php
+egroupware administration manual	setup	es	Manual de Administración de eGroupWare
 enable for extra debug-messages	setup	es	activar los mensajes de depuración extra
 enable ldap version 3	setup	es	Activar LDAP versión 3
 enable mcrypt	setup	es	Activar MCrypt
@@ -133,6 +134,7 @@ enter your http proxy server	setup	es	Introduzca el servidor proxy HTTP
 enter your http proxy server password	setup	es	Introduzca la contraseña del servidor proxy HTTP
 enter your http proxy server port	setup	es	Introduzca el puerto del servidor proxy HTTP
 enter your http proxy server username	setup	es	Introduzca el usuario del servidor proxy HTTP
+export egroupware accounts from sql to ldap	setup	es	Exportar cuentas de eGroupWare de SQL a LDAP
 export has been completed!  you will need to set the user passwords manually.	setup	es	Se ha completado la exportación. Necesitará poner la contraseña del usuario manualmente.
 export phpgroupware accounts from sql to ldap	setup	es	Exportar las cuentas de eGroupWare de SQL a LDAP
 export sql users to ldap	setup	es	Exportar usuarios SQL a LDAP
@@ -160,6 +162,7 @@ if you did not receive any errors, your applications have been	setup	es	Si no ha
 if you did not receive any errors, your tables have been	setup	es	Si no ha recibido ningún error, sus tablas han sido
 if you running this the first time, don't forget to manualy %1 !!!	setup	es	¡¡Si está ejecutando la aplicación por primera vez, no olvide %1 manualmente!!
 image type selection order	setup	es	Orden de selección del tipo de imagen
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	es	Importar cuentas de LDAP a la tabla da cuentas de eGroupWare (para una nueva instalación usando cuentas SQL)
 import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	es	Importar cuentas de LDAP a la tabla de cuentas de eGroupWare (para una instalación nueva que usa cuentas SQL)
 import has been completed!	setup	es	Se ha completado la importación
 import ldap users/groups	setup	es	Importar usuarios/grupos LDAP
@@ -206,10 +209,12 @@ mcrypt version	setup	es	Versión MCrypt
 minimum account id (e.g. 500 or 100, etc.)	setup	es	Id mínimo para la cuenta (p. ej. 500 o 100, etc)
 modifications have been completed!	setup	es	¡Se han completado las modificaciones!
 modify	setup	es	Modificar
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	es	Modificar una cuenta existente LDAP almacenada para usar con eGroupWare (para una nueva instalación usando cuentas LDAP)
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	es	Modificar un almacén de cuentas LDAP existente para usar con wGroupWare (para una nueva instalación que use cuentas LDAP)
 multi-language support setup	setup	es	Configuración del soporte Multi-Idioma
 mysqlinstr	setup	es	Instrucciones para crear la base de datos en MySQL:<br>Autentifiquese en mysql -<br><i>[usuario@servidor usuario]# mysql -u root -p</i><br>Cree la base de datos vacia y conceda permisos al usuario -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 name of database	setup	es	Nombre de la base de datos
+name of db user egroupware uses to connect	setup	es	Nombre del usuario de la base de datos que usa eGroupWare para conectar
 name of db user phpgroupware uses to connect	setup	es	Nombre del usuario de la base de datos que usa eGroupWare para conectar
 never	setup	es	nunca
 new	setup	es	Nueva
@@ -247,11 +252,13 @@ pgsqlinstr	setup	es	Instrucciones para cræar la base de datos en PostgreSQL:<br>
 phpgroupware administration manual	setup	es	Manual de administración de eGroupWare
 please check for sql scripts within the application's directory	setup	es	Por favor, compruebe los scripts sql en el directorio de la aplicación
 please check read/write permissions on directories, or back up and use another option.	setup	es	Por favor, compruebe los permisos de lectura y escritura en los directorios, o vuelva y use otra opción
+please configure egroupware for your environment	setup	es	Por favor, configure eGroupWare para su entorno
 please configure phpgroupware for your environment	setup	es	Por favor, configure eGroupware para su entorno
 please consult the %1.	setup	es	Por favor, consulte el %1
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	es	Por favor, corrija los errores (%1) y advertencias (%2) de encima y %3continúe con el Administrador de encabezados%4
 please install	setup	es	Por favor, instale
 please login	setup	es	Por favor, inicie la sesión
+please login to egroupware and run the admin application for additional site configuration	setup	es	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para conifguración adicional del sitio
 please login to phpgroupware and run the admin application for additional site configuration	setup	es	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para la configuración adicional del sitio
 please wait...	setup	es	Por favor, espere...
 possible reasons	setup	es	Posibles razones
@@ -333,9 +340,13 @@ there was a problem trying to connect to your ldap server. <br>	setup	es	Hubo un
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	es	Hubo un problema intentando conecar al servidor LDAP.<br>Por favor, compruebe la configuración del servidor LDAP
 this has to be outside the webservers document-root!!!	setup	es	¡Tiene que estar fuera de la raíz de documentos del servidor web!
 this program will convert your database to a new system-charset.	setup	es	Este programa convertirá la base de datos a un nuevo juego de caracteres del sistema.
+this program will help you upgrade or install different languages for egroupware	setup	es	Este programa le ayudará a actualizar o instalar los distintos idiomas para eGroupWare
 this program will help you upgrade or install different languages for phpgroupware	setup	es	Este programa le ayudará a actualizar o instalar diferentes idiomas para eGroupWare
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	es	Esta sección intentará exportar los usuarios y grupos de la cuenta de las tablas de eGroupWare en el árbol LDAP
 this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	es	Esta sección le ayudará a exportar usuarios y grupos de las tablas de cuentas de eGroupWare en su árbol LDAP.
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	es	Esta sección le ayudará a importar usuarios y grupos del árbol LDAP en las tablas de las cuentas eGroupWare
 this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	es	Esta sección le ayudará a importar usuarios y grupos desde su arbol LDAP a las tablas de cuentas de usuarios/grupos de phpGroupWare
+this section will help you setup your ldap accounts for use with egroupware	setup	es	Esta sección le ayudará a configurar sus cuentas LDAP para usar con eGroupWare
 this section will help you setup your ldap accounts for use with phpgroupware	setup	es	Esta sección le ayudará a configurar sus cuentas LDAP para usarlas con eGroupWare
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	es	Debe ser una cadena de unos 30 caracteres.<br>Nota: la predeterminada se ha generado aleatoriamente.
 this stage is completed<br>	setup	es	Esta fase está completada<br>
@@ -346,6 +357,7 @@ top	setup	es	parte superior
 translations added	setup	es	Traducciones añadidas
 translations removed	setup	es	Traducciones eliminadas
 translations upgraded	setup	es	Traducciones actualizadas
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	es	Intente configurar php para soportar uno de los mencionados SGBD, o instale eGroupWare a mano.
 try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	es	Intente configurar su php para soportar uno de los SGBD mencionados arriba, o instale eGroupWare manualmente.
 two weeks	setup	es	dos semanas
 uninstall	setup	es	desinstalar
@@ -365,16 +377,23 @@ warning!	setup	es	¡Aviso!
 we can proceed	setup	es	Podemos proceder
 we will automatically update your tables/records to %1	setup	es	Actualizaremos automáticamente sus tablas/registros a %1
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	es	¿Qué tipo de gestión de sesiones prefiere? (PHP4 puede dar mejor rendimiento)
+which database type do you want to use with egroupware?	setup	es	¿Qué tipo de base de datos quiere usar con eGroupWare?
 which database type do you want to use with phpgroupware?	setup	es	¿Qué tipo de base de datos quiere usar con eGroupWare?
+would you like egroupware to cache the phpgw info array ?	setup	es	Desea que eGroupWare cachee el array de información phpgw?
+would you like egroupware to check for a new version<br>when admins login ?	setup	es	¿Desea que eGroupWare compruebe una nueva versión<br>cuando un administrador inicie la sesión?
 would you like phpgroupware to cache the phpgw info array ?	setup	es	¿Desea que eGrouWare tenga en caché el array de información phpgw?
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	es	¿Desea que eGroupWare compruebe si hay una versión nueva<b>cuando un administrador inicie la sesión?
 would you like to show each application's upgrade status ?	setup	es	¿Desea mostrar el estado de la actualización de cada aplicación?
 write config	setup	es	Escribir configuración
 yes	setup	es	Sí
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es	Parece que está ejecutando una versión pre-beta de eGroupWare.<br>Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas en la instalación.<br>Puede que desee actualizar primero a la 0.9.10 (la última versión con soporte de actualizaciones pre-beta)<br>y luego actualizar desde ahí a la versión actual.
 you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es	Parece que está ejecutando una versión pre-beta de eGroupWare.<br>Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas enla configuración.<br>Puede actualizar primero a la 0.9.10 (la última versión con soporte para actualizar pre-betas)<br>y luego actualizar desde ahí a la versión actual.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	es	Parece que está ejecutando una versión antigua de PHP<br>Se recomienda que actualice a una nueva versión.<br>Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en eGroupWare.<br><br>Por favor, actualice al menos a la versión %1
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	es	Parece que tiene una versión antigua de PHP<br>Se recomienda que se actualice a una versión nueva.<br>La versión anterior de PHP puede no ejecutarse correctamente en eGroupWare.<br><br>Por favor, actualice como mínimo a la versión %1
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup es	es	
+you appear to be running version %1 of egroupware	setup	es	Parece que está ejecutando la versión %1 de eGroupWare
 you appear to be running version %1 of phpgroupware	setup	es	Parece que está ejecutando la versión %1 de eGroupWare
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	es	Parece que está usando una versión de PHP anterior a la 4.1.0. Necesita tener 4.1.0 o superior.
 you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	es	Parece que está usando una versión de PHP anterior a a 4.1.0. eGroupWare necesita 4.1.0 o superior
 you appear to be using php3. disabling php4 sessions support	setup	es	Parece que está usando PHP3. Desactivando el soporte de sesiones PHP
 you appear to be using php4. enabling php4 sessions support	setup	es	Parece que está usando PHP4. Activando el soporte de sesiones PHP4.
