@@ -304,7 +304,7 @@
 		{
 			$account_data = array(
 				'account_lid'			=> $account_info['account_lid'],
-				'account_pwd'			=> $account_info['account_passwd'],
+				'account_pwd'			=> $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd'],True),
 				'account_firstname'		=> $account_info['account_firstname'],
 				'account_lastname'		=> $account_info['account_lastname'],
 				'account_status'		=> $account_info['status'],
