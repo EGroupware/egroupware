@@ -29,7 +29,8 @@
 	@discussion Author: none yet
 	*/
 	class preferences
-	{	/*! @var account_id */
+	{
+		/*! @var account_id */
 		var $account_id;
 		/*! @var account_type */
 		var $account_type;
@@ -56,30 +57,30 @@
 		/**************************************************************************\
 		* These are the standard $this->account_id specific functions              *
 		\**************************************************************************/
-		
+
 		/*! 
 		@function read_repository
 		@abstract private - read preferences from the repository
 		@discussion private function should only be called from within this class
 		*/
-		
 		function read_repository()
 		{
-			$this->db->lock("phpgw_preferences");
+			$this->db->lock('phpgw_preferences');
 			$this->db->query("SELECT preference_value FROM phpgw_preferences WHERE preference_owner='".$this->account_id."'",__LINE__,__FILE__);
 			$this->db->next_record();
 			$pref_info = $this->db->f("preference_value");
-//echo "Pref_Info = ".$pref_info."<br>\n";
+			/* echo "Pref_Info = ".$pref_info."<br>\n"; */
 			$this->data = Array();
 			$this->data = unserialize($pref_info);
 			$this->db->unlock();
-			// This is to supress warnings durring login
-			if (gettype($this->data) == "array") {
+			/* This is to supress warnings during login */
+			if (gettype($this->data) == 'array')
+			{
 				 reset ($this->data);
 			}
 			return $this->data;
 		}
-		
+
 		/*!
 		@function read
 		@abstract public - read preferences from repository and stores in an array
@@ -87,14 +88,16 @@
 		Example1: preferences->read();
 		@result $data array containing user preferences
 		*/
-		
 		function read()
 		{
-			if (count($this->data) == 0){ $this->read_repository(); }
+			if (count($this->data) == 0)
+			{
+				$this->read_repository();
+			}
 			reset ($this->data);
 			return $this->data;
 		}
-		
+
 		/*!
 		@function add
 		@abstract add preference to $app_name a particular app
@@ -103,10 +106,10 @@
 		@param $var name of preference to be stored
 		@param $value value of the preference
 		*/
-		
-		function add($app_name,$var,$value = "")
+		function add($app_name,$var,$value = '')
 		{
-			if (! $value) {
+			if (! $value)
+			{
 				global $$var;
 				$value = $$var;
 			}
@@ -115,7 +118,7 @@
 			reset($this->data);
 			return $this->data;
 		}
-		
+
 		/*! 
 		@function delete
 		@abstract delete preference from $app_name
@@ -123,24 +126,25 @@
 		@param $app_name name of app
 		@param $var variable to be deleted
 		*/
-		
-		function delete($app_name, $var = "")
+		function delete($app_name, $var = '')
 		{
-			if ($var == "") {
+			if ($var == '')
+			{
 				$this->data[$app_name] = array();
-			} else {
+			}
+			else
+			{
 				unset($this->data[$app_name][$var]);
 			}
 			reset ($this->data);
 			return $this->data;
 		}
-		
+
 		/*!
 		@function save_repository
 		@abstract save the the preferences to the repository
 		@discussion
 		*/
-		
 		function save_repository($update_session_info = False)
 		{
 			global $phpgw, $phpgw_info;
@@ -178,15 +182,15 @@
 			
 			return $temp_data;
 		}
-		
+
 		/*!
 		@function update_data
 		@abstract update the preferences array
 		@discussion 
 		@param $data array of preferences
 		*/
-		
-		function update_data($data) {
+		function update_data($data)
+		{
 			reset($data);
 			$this->data = Array();
 			$this->data = $data;
@@ -207,51 +211,58 @@
 		/**************************************************************************\
 		* These are the non-standard $this->account_id specific functions          *
 		\**************************************************************************/
-		
+
 		/*!
 		@function verify_basic_settings
 		@abstract verify basic settings
 		@discussion
 		*/
-		
 		function verify_basic_settings()
 		{
 			global $phpgw, $phpgw_info;
-			if (gettype($phpgw_info["user"]["preferences"]) != "array") {
-				 $phpgw_info["user"]["preferences"] = array();
+			if (gettype($phpgw_info['user']['preferences']) != 'array')
+			{
+				 $phpgw_info['user']['preferences'] = array();
 			}
 			/* This takes care of new users who dont have proper default prefs setup */
 			if (!isset($phpgw_info['flags']['nocommon_preferences']) || 
-			    !$phpgw_info["flags"]["nocommon_preferences"]) {
+				!$phpgw_info['flags']['nocommon_preferences'])
+			{
 				$preferences_update = False;
 				if (!isset($phpgw_info['user']['preferences']['common']['maxmatchs']) || 
-				    !$phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
-					$this->add("common","maxmatchs",15);
+					!$phpgw_info['user']['preferences']['common']['maxmatchs'])
+				{
+					$this->add('common','maxmatchs',15);
 					$preferences_update = True;
 				}
 				if (!isset($phpgw_info['user']['preferences']['common']['theme']) || 
-				    !$phpgw_info["user"]["preferences"]["common"]["theme"]) {
-					$this->add("common","theme","default");
+					!$phpgw_info['user']['preferences']['common']['theme'])
+				{
+					$this->add('common','theme','default');
 					$preferences_update = True;
 				}
 				if (!isset($phpgw_info['user']['preferences']['common']['template_set']) || 
-				    !$phpgw_info["user"]["preferences"]["common"]["template_set"]) {
-					$this->add("common","template_set","default");
+					!$phpgw_info['user']['preferences']['common']['template_set'])
+				{
+					$this->add('common','template_set','default');
 					$preferences_update = True;
 				}
 				if (!isset($phpgw_info['user']['preferences']['common']['dateformat']) || 
-				    !$phpgw_info["user"]["preferences"]["common"]["dateformat"]) {
-					$this->add("common","dateformat","m/d/Y");
+					!$phpgw_info['user']['preferences']['common']['dateformat'])
+				{
+					$this->add('common','dateformat','m/d/Y');
 					$preferences_update = True;
 				}
 				if (!isset($phpgw_info['user']['preferences']['common']['timeformat']) || 
-				    !$phpgw_info["user"]["preferences"]["common"]["timeformat"]) {
-					$this->add("common","timeformat",12);
+					!$phpgw_info['user']['preferences']['common']['timeformat'])
+				{
+					$this->add('common','timeformat',12);
 					$preferences_update = True;
 				}
 				if (!isset($phpgw_info['user']['preferences']['common']['lang']) || 
-				    !$phpgw_info["user"]["preferences"]["common"]["lang"]) {
-					$this->add("common","lang",$phpgw->common->getPreferredLanguage());
+					!$phpgw_info['user']['preferences']['common']['lang'])
+				{
+					$this->add('common','lang',$phpgw->common->getPreferredLanguage());
 					$preferences_update = True;
 				}
 				if ($preferences_update)
@@ -261,5 +272,5 @@
 				unset($preferences_update);
 			}
 		}
-	} //end of preferences class
+	} /* end of preferences class */
 ?>
