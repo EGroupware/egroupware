@@ -34,7 +34,7 @@
 	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 
 	$p->set_file(array(
-		'accounts'   => 'accounts.tpl',
+		'accounts'   => 'accounts.tpl'
 	));
 	$p->set_block('accounts','list','list');
 	$p->set_block('accounts','row','row');

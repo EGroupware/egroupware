@@ -80,9 +80,10 @@
 		@param $filter_obj ?
 		@param $showsearch ?
 		*/
-		function show_tpl($sn,$start,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0)
+		function show_tpl($sn,$localstart,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0)
 		{
 			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
+			$start = $localstart;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 			$tpl->set_file(array(
 				'nextmatchs' => 'nextmatchs.tpl'

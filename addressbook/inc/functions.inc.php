@@ -205,9 +205,10 @@
 		}
 	}
 
-	function addressbook_strip_html($dirty=array())
+	function addressbook_strip_html($dirty = "")
 	{
 		global $phpgw;
+		if ($dirty == ""){$dirty = array();}
 		for($i=0;$i<count($dirty);$i++)
 		{
 			while (list($name,$value) = each($dirty[$i])) {

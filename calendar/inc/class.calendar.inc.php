@@ -209,7 +209,7 @@ class calendar extends calendar_
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('remove');
 		$templates = Array(
-			'link_picture'		=>	'link_pict.tpl',
+			'link_picture'		=>	'link_pict.tpl'
 		);
 		$p->set_file($templates);
 		$p->set_block('link_picture','link_pict','link_pict');

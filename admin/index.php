@@ -19,7 +19,7 @@
 
 	$admin_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$admin_tpl->set_file(array(
-		'admin' => 'index.tpl',
+		'admin' => 'index.tpl'
 	));
 
 	$admin_tpl->set_block('admin','list');

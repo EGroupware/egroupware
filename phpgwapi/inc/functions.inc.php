@@ -259,8 +259,8 @@
 	$phpgw->common       = CreateObject('phpgwapi.common');
 	$phpgw->hooks        = CreateObject('phpgwapi.hooks');
 	$phpgw->auth         = CreateObject('phpgwapi.auth');
-	$phpgw->acl          = CreateObject('phpgwapi.acl');
 	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
+	$phpgw->acl          = CreateObject('phpgwapi.acl');
 	$phpgw->session      = CreateObject('phpgwapi.sessions');
 	$phpgw->preferences  = CreateObject('phpgwapi.preferences');
 	$phpgw->applications = CreateObject('phpgwapi.applications');
@@ -332,7 +332,7 @@
 
 		/* This will make sure that a user has the basic default prefs. If not it will add them */
 		$phpgw->preferences->verify_basic_settings();
-	
+
 		/********* Optional classes, which can be disabled for performance increases *********/
 		while ($phpgw_class_name = each($phpgw_info['flags']))
 		{

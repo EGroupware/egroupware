@@ -34,7 +34,6 @@
 		* This constructor sets the account id, if string is sent, converts to id  *
 		* I might move this to the accounts_shared if it stays around              *
 		\**************************************************************************/
-
 		function accounts($account_id = '')
 		{
 			global $phpgw, $phpgw_info;
@@ -110,7 +109,7 @@
 			for ($idx=0; $idx<count($security_equals); $idx++)
 			{
 				$name = $this->id2name(intval($security_equals[$idx]));
-				$this->members[] = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $name);
+				$this->members = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $name);
 			}
 
 			return $this->members;
