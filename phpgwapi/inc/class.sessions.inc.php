@@ -127,6 +127,8 @@
 			$this->read_repositories($phpgw_info['server']['cache_phpgw_info']);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
+				$phpgw->log->message('W-VerifySession, account loginid %1 is expired',$this->account_lid);
+				$phpgw->log->commit();
 				return False;
 			}
 
@@ -138,6 +140,9 @@
 
 			if ($userid_array[1] != $phpgw_info['user']['domain'])
 			{
+				$phpgw->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$phpgw_info['user']['domain']);
+				$phpgw->log->commit();
+
 				return False;
 			}
 
@@ -145,6 +150,10 @@
 			{
 				if (PHP_OS != 'Windows' && (! $phpgw_info['user']['session_ip'] || $phpgw_info['user']['session_ip'] != $this->getuser_ip()))
 				{
+					// This needs some better wording
+					$phpgw->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$phpgw_info['user']['session_ip']);
+					$phpgw->log->commit();
+
 					return False;
 				}
 			}
@@ -156,6 +165,10 @@
 
 			if (! $this->account_lid)
 			{
+				// This needs some better wording
+				$phpgw->log->message('W-VerifySession, account_id is empty');
+				$phpgw->log->commit();
+
 				return False;
 			}
 			else
@@ -251,6 +264,9 @@
 			$this->read_repositories(False);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
+				$phpgw->log->message('W-LoginFailure, account loginid %1 is expired',$this->account_lid);
+				$phpgw->log->commit();
+
 				return False;
 			}
 

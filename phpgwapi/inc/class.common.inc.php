@@ -196,7 +196,7 @@
 		*/
 		function ldapConnect($host = '', $dn = '', $passwd = '')
 		{
-			global $phpgw_info;
+			global $phpgw_info, $phpgw;
 
 			if (! $host)
 			{
@@ -216,6 +216,9 @@
 			// connect to ldap server
 			if (! $ds = ldap_connect($host))
 			{
+				$phpgw->log->message('F-Abort, Failed connecting to LDAP server');
+				$phpgw->log->commit();
+
 				printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
 				return False;
 			}
@@ -223,6 +226,9 @@
 			// bind as admin, we not to able to do everything
 			if (! ldap_bind($ds,$dn,$passwd))
 			{
+				$phpgw->log->message('F-Abort, Failed binding to LDAP server');
+				$phpgw->log->commit();
+
 				printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
 				return False;
 			}

@@ -38,6 +38,11 @@
 			error_reporting(0); 
 
 			$ldap = ldap_connect($phpgw_info['server']['ldap_host']);
+			if (! $ldap)
+			{
+				$phpgw->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
+				$phpgw->log->commit();
+			}
 
 			/* find the dn for this uid, the uid is not always in the dn */
 			$sri = ldap_search($ldap, $phpgw_info['server']['ldap_context'], 'uid='.$username);
