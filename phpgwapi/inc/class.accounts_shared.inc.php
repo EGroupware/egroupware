@@ -350,7 +350,7 @@
 				$lname = $account_name[$account_id]['lname'];
 				return $account_name[$account_id] !== False;
 			}
-			$Ok = accounts_::get_account_name($accountid,&$lid,&$fname,&$lname);
+			$Ok = accounts_::get_account_name($accountid,$lid,$fname,$lname);
 
 			$account_name[$account_id] = array(
 				'lid' => $lid,
