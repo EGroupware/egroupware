@@ -40,6 +40,7 @@
 	$setup_info['addressbook']['hooks'][] = 'editaccount';
 	$setup_info['addressbook']['hooks'][] = 'deleteaccount';
 	$setup_info['addressbook']['hooks'][] = 'notifywindow';
+	$setup_info['addressbook']['hooks'][] = 'sidebox_menu';
 	$setup_info['addressbook']['hooks'][] = 'preferences';
 
 	/* Dependencies for this app to work */
