@@ -1435,7 +1435,7 @@
 		*/
 		function symlink($from,$to,$relatives = '')
 		{
-			if ($this->file_exists ($to, array ($relatives[1])))
+			// echo "<p>vfs->symlink('$from','$to')</p>\n";
 
 			return $this->cp ($from, $to, $relatives, True);
 		}
