@@ -19,23 +19,23 @@
   $phpgw->template->set_file(array("form"	=> "application_form.tpl"));
 
   if ($submit) {
-     $phpgw->templateotalerrors = 0;
+     $totalerrors = 0;
   
      $phpgw->db->query("select count(*) from applications where app_name='"
      				. addslashes($n_app_name) . "'",__LINE__,__FILE__);
      $phpgw->db->next_record();
      
      if ($phpgw->db->f(0) != 0) {
-        $error[$phpgw->templateotalerrors++] = lang("That application name already exsists.");
+        $error[$totalerrors++] = lang("That application name already exsists.");
      }
   
      if (! $n_app_name)
-        $error[$phpgw->templateotalerrors++] = lang("You must enter an application name.");
+        $error[$totalerrors++] = lang("You must enter an application name.");
 
      if (! $n_app_title)
-        $error[$phpgw->templateotalerrors++] = lang("You must enter an application title.");
+        $error[$totalerrors++] = lang("You must enter an application title.");
      
-     if (! $phpgw->templateotalerrors) {
+     if (! $totalerrors) {
         $phpgw->db->query("insert into applications (app_name,app_title,app_enabled) values('"
 			            . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "',"
 			            . "$n_app_status)",__LINE__,__FILE__);
