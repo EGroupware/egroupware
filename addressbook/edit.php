@@ -56,7 +56,7 @@
 
   } else {
     $bday = $bday_month . "/" . $bday_day . "/" . $bday_year;
-    $access = $phpgw->groups->array_to_string($access,$n_groups);
+    $access = $phpgw->accounts->array_to_string($access,$n_groups);
 
     $sql = "UPDATE addressbook set email='" . addslashes($email)
 	 . "', firstname='"	. addslashes($firstname)

@@ -156,7 +156,7 @@
        </td>
        <td valign=top width=5%>
         <font face=Arial, Helvetica, sans-serif size=2>
-         <?php echo check_owner($phpgw->db->f("owner"),$phpgw->db->f("con")); ?>
+         <?php echo $phpgw->common->check_owner($phpgw->db->f("owner"),"edit.php",lang_common("edit"),"con=" . $phpgw->db->f("con")); ?>
         </font>
        </td>
       </tr>

@@ -23,7 +23,7 @@
 	      "/addressbook/?sessionid=" . $phpgw_info["user"]["sessionid"]);
 
   if ($filter != "private")
-     $filtermethod = " or access='public' " . $phpgw->groups->sql_search();
+     $filtermethod = " or access='public' " . $phpgw->accounts->sql_search("access");
 
   $phpgw->db->query("SELECT * FROM addressbook WHERE con='$con' AND (owner='"
 	             . $phpgw_info["user"]["userid"] . "' $filtermethod)");
@@ -65,7 +65,7 @@
             <TR> 
               <TD align=left> 
                <?php
-                 echo check_owner($owner,$con);
+                 echo $phpgw->common->check_owner($con,$owner,"Edit");
                ?>
               </TD>
               <TD align=left>
