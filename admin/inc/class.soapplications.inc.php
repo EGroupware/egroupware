@@ -95,9 +95,9 @@
 
 		function app_order()
 		{
-			$this->db->query('SELECT (MAX(app_order)+1) AS max FROM phpgw_applications',__LINE__,__FILE__);
+			$this->db->query('SELECT (MAX(app_order)+1) FROM phpgw_applications',__LINE__,__FILE__);
 			$this->db->next_record();
-			return $this->db->f('max');
+			return $this->db->f(0);
 		}
 
 		function delete($app_name)
