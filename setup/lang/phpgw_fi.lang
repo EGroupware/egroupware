@@ -1,0 +1,235 @@
+(account deletion in SQL Only)	setup	fi	(tunnuksen poisto vain SQL:ssä)
+actions	setup	fi	Toimenpiteet
+Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	fi	Lisää automaattisesti luodut käyttäjät tähän ryhmään (yritetään ryhmää 'Default' jos ryhmää ei ole annettu.)
+admin first name	setup	fi	Ylläpitäjän etunimi
+admin last name	setup	fi	Ylläpitäjän sukunimi
+admin password	setup	fi	Ylläpitäjän salasana
+Admins	setup	fi	Ylläpitäjät
+admin username	setup	fi	Ylläpitäjän käyttäjätunnus
+all applications	setup	fi	kaikki sovellukset
+All Users	setup	fi	Kaikki käyttäjät
+app details	setup	fi	Sovelluksen tiedot
+app install/remove/upgrade	setup	fi	Sovelluksen asennus/poisto/päivitys
+application data	setup	fi	Sovelluksen data
+application management	setup	fi	Sovellusten hallinta
+application name and status information	setup	fi	Sovelluksen nimi ja tilatiedot
+application name and status	setup	fi	Sovelluksen nimi ja tila
+application title	setup	fi	Sovelluksen nimi ja tila
+are you sure?	setup	fi	OLETKO VARMA?
+Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	fi	Yritä käytä oikeaa mime-tyyppiä FTP siirrossa oletuksen'application/octet-stream' sijasta
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	fi	Tämä skripti yrittää luoda tietokannan ja asettaa sen käyttöoikeudet
+at your request, this script is going to attempt to install all the applications for you	setup	fi	Tämä skripti yrittää asentaa kaikki sovellukset
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	fi	Tämä skripti yrittää päivittää kaikki vanhat sovellukset viimeisimpiin versioihin
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	fi	Tämä skripti yrittää päivittää vanhat tietokannan taulut uusiin muotoihinsa
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	fi	Tämä skripti tuhoaa vanhat taulut tietokannasta ja luo uudet, tyhjät taulut
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fi	Tämä skripti poistaa kaikki asennetut sovellukset, joka poistaa kaikki tietokannan taulut tietoineen
+Authentication / Accounts	setup	fi	Käyttäjäntunnistus / Käyttäjätunnukset
+Auto create account records for authenticated users	setup	fi	Luo tunnus automaattisesti tunnistetuille käyttäjille
+auto-created user accounts expire	setup	fi	Automaattisesti luodut tunnukset vanhenevat
+available version	setup	fi	Käytettävissä oleva versio
+backupwarn	setup	fi	mutta <u>suosittelemme vahvasti</u> varmuuskopioiden tekemistä.<br><strong>Nämä skriptit saattavat tuhota tietoja.</strong><br><em>Tee varmuuskopiot ennen kuin jatkat!</em>
+because it depends upon	setup	fi	on riippuvainen
+because it is not a user application, or access is controlled via acl	setup	fi	koska se ei ole käyttäjäsovellus tai käyttöoikeus hallitaan acl:n kautta
+because it requires manual table installation, <br>or the table definition was incorrect	setup	fi	koska se vaatii taulun lisäämisen käsin<br>tai taulun määritelmä oli väärin
+because it was manually disabled	setup	fi	koska se oli poistettu käytöstä
+because of a failed upgrade or install	setup	fi	koska päivitys tai asennus epäonnistui
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	fi	koska päivitys epäonnistui tai tietokanta on uudempi kuin asennettu sovellusversio
+because the enable flag for this app is set to 0, or is undefined	setup	fi	koska käytettävyyslippu on 0 tai tyhjä
+bottom	setup	fi	alas
+<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	fi	<br><center>Tuonti valmis!  Napsauta <a href="index.php">tästä</a> palataksesi asennukseen </center>
+cancel	setup	fi	Peruuta
+charset	setup	fi	ISO-8859-1
+check ip address of all sessions	setup	fi	tarkista IP-osoite kaikille istunnoille
+click here	setup	fi	Napsauta tästä
+configuration completed	setup	fi	Asetukset tehty
+configuration	setup	fi	Asetukset
+configure now	setup	fi	Tee asetukset nyt
+Country Selection	setup	fi	Maan valinta
+create database	setup	fi	Luo tietokanta
+create one now	setup	fi	Luo nyt
+create	setup	fi	Luo
+creating tables	setup	fi	Luon tauluja
+currently installed languages: x <br>	setup	fi	Asennetut kielet: %1 <br>
+current version	setup	fi	Käytettävä versio
+db root password	setup	fi	DB root salasana
+db root username	setup	fi	DB root tunnus
+Default file system space per user/group ?	setup	fi	Käytettävä levytila käyttäjää/ryhmää kohti?
+delete all my tables and data	setup	fi	Poista kaikki taulut ja tiedot
+delete all old languages and install new ones	setup	fi	Poista kaikki vanhat kielet ja asenna uudet
+deleting tables	setup	fi	Poistan tauluja
+demo server setup	setup	fi	Esittelypalvelimen asennus
+deny access	setup	fi	Kiellä pääsy
+Deny all users access to grant other users access to their entries ?	setup	fi	Estä kaikilta käyttäjiltä tietojensa julkistaminen?
+deregistered	setup	fi	rekisteröinti purettu
+details for admin account	setup	fi	Ylläpitotunnuksen tiedot
+domain	setup	fi	Toimialue
+dont touch my data	setup	fi	Säilytä tiedot
+edit current configuration	setup	fi	Muokkaa asetuksia
+Enter some random text for app_session <br>encryption (requires mcrypt)	setup	fi	Anna hieman satunnaisia merkkejä alustaaksesi app_session <br>salauksen (vaatii mcrypt)
+enter some random text for app session encryption	setup	fi	Anna hieman satunnaisia merkkejä alustaaksesi sovellusistunnon salauksen
+Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
+Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
+Enter the hostname of the machine on which this server is running	setup	fi	Anna palvelimen isäntänimi (hostname)
+Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	fi	Anna phpGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/phpgroupware &nbsp; tai &nbsp; /phpgroupware<br><b>Ei kauttaviivaa loppuun</b>
+Enter the site password for peer servers	setup	fi	Anna salasana rinnakkaispalvelimille
+Enter the site username for peer servers	setup	fi	Anna käyttäjätunnus rinnakkaispalvelimille
+Enter the title for your site	setup	fi	Anna palvelun nimi
+Enter your default FTP server	setup	fi	Anna oletuksena käytettävä FTP-palvelin
+Enter your HTTP proxy server port	setup	fi	Anna HTTP-välityspalvelimen portti
+Enter your HTTP proxy server	setup	fi	Anna HTTP-välityspalvelin
+export phpgroupware accounts from sql to ldap	setup	fi	Vie phpGroupWare käyttäjätunnukset SQL => LDAP
+export sql users to ldap	setup	fi	Vie SQL => LDAP
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	fi	Uutta asennusta varten valitse Tuo. Valitse Vie muuntaaksesi vanhat SQL-tunnukset LDAP-tunnuksiksi.
+force selectbox	setup	fi	Pakota -valintalisto
+go back	setup	fi	Takaisin
+go to	setup	fi	Mene
+grant access	setup	fi	Anna oikeus
+has a version mismatch	setup	fi	on epäyhteensopiva versio
+hooks deregistered	setup	fi	koukujen rekisteröinti purettu
+hooks registered	setup	fi	koukut rekisteröity
+Host information	setup	fi	Palvelimen tiedot
+however, the application is otherwise installed	setup	fi	Sovellus on muilta osin asennettu
+If no ACL records for user or any group the user is a member of	setup	fi	Jos käyttäjälle tai ryhmälle ei ole ACL -tietueita, kuuluu käyttäjä ryhmään
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	fi	Jos sovelluksella ei ole tauluja, valinnan päivitä pitäisi korjata tilanne
+If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	fi	Jos käytät LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellejä?
+if you did not receive any errors, your applications have been	setup	fi	Jos virheilmoituksia ei tullut, sovellukset on nyt
+if you did not receive any errors, your tables have been	setup	fi	Jos virheilmoituksia ei tullut, taulut on nyt
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	fi	Tuo tunnukset LDAP => phpGroupWare tunnustaulu (uusi asennus ja käytetään SQL käyttäjätunnuksia)
+import ldap users/groups	setup	fi	Tuo LDAP käyttäjät/ryhmät
+insanity	setup	fi	Sulaa hulluutta
+install Applications	setup	fi	Asenna sovellukset
+installed	setup	fi	asennettu
+install language	setup	fi	Asenna kieli
+install	setup	fi	Asenna
+is broken	setup	fi	on rikki
+is disabled	setup	fi	on poistettu käytöstä
+ldap account import/export	setup	fi	LDAP -tunnusten tuonti/vienti
+LDAP accounts context	setup	fi	LDAP -tunnusten konteksti
+LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	fi	LDAP kotihakemistojen etuliite (esim. /home jos hakemisto on /home/username)
+LDAP Default shell (e.g. /bin/bash)	setup	fi	LDAP oletus-shell (esim. /bin/bash)
+LDAP encryption type	setup	fi	LDAP salaustapa
+ldap export users	setup	fi	LDAP vie käyttäjät
+LDAP groups context	setup	fi	LDAP ryhmien konteksti
+LDAP host	setup	fi	LDAP palvelin
+ldap import users	setup	fi	LDAP tuo käyttäjät
+LDAP rootdn	setup	fi	LDAP rootdn
+LDAP root password	setup	fi	LDAP root salasana
+logout	setup	fi	Poistu
+makesure	setup	fi	Varmista että tietokanta on luotu ja käyttöoikeudet asetettu
+manage applications	setup	fi	Sovellusten hallinta
+manage languages	setup	fi	Kielten hallinta
+Maximum account id (e.g. 65535 or 1000000)	setup	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
+mcrypt algorithm (default tripledes)	setup	fi	Mcrypt salaustapa (oletus TRIPLEDES)
+mcrypt mode (default cbc)	setup	fi	Mcrypt moodi (oletus CBC)
+mcrypt settings (requires mcrypt php extension)	setup	fi	Mcrypt -asetukset (vaatii mcrypt PHP laajennuksen)
+Minimum account id (e.g. 500 or 100, etc.)	setup	fi	Pienin tunnus-id (esim. 500 tai 100, jne)
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	fi	Muuunna vanha LDAP tunnusvaranto phpGroupWare -kelpoiseksi (uusi asennus ja käytetään LDAP käyttäjätunnuksia)
+multi-language support setup	setup	fi	Useiden kielien tuen asennus
+mysqlinstr	setup	fi	 Ohjeet MYSQL-tietokannan luomiseen:<br>Kirjaudu mysql:ään -<br><i>[user@server user]# mysql -u root -p</i><br>Luo tyhjä tietokanta ja anna käyttöoikeudet -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'salasana';</i>
+never	setup	fi	ei koskaan
+no algorithms available	setup	fi	ei algoritmeja
+no modes available	setup	fi	ei moodeja
+no	setup	fi	Ei
+not complete	setup	fi	ei ole valmis
+note: you will be able to customize this later	setup	fi	Huomaa: Voit muuttaa tätä myöhemmin
+not ready for this stage yet	setup	fi	Ei vielä valmis tähän vaiheeseen
+ok	setup	fi	OK
+once the database is setup correctly	setup	fi	Kun tietokanta on luotu oikein
+one month	setup	fi	kuukausi
+one week	setup	fi	viikko
+only add languages that are not in the database already	setup	fi	Lisää vain kielet joita ei ole tietokannassa
+only add new phrases	setup	fi	Lisää vain uudet fraasit
+passwords did not match, please re-enter	setup	fi	Salasanat eivät täsmää, anna uudelleen
+Path information	setup	fi	Tiedostopolut
+pgsqlinstr	setup	fi	Ohjeet PostgreSQL-tietokannan luomiseen:<br>Käynnistä postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Luo tyhjä tietokanta -<br><i>[user@server user]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	fi	Tarkista onko sovelluksen hakemistossa sql-skriptejä
+please configure phpGroupWare for your environment	setup	fi	Tee phpGroupWare -asetukset ympäristöäsi varten
+please install	setup	fi	Asenna
+please login to phpgroupware and run the admin application for additional site configuration	setup	fi	Kirjaudu phpgroupware:een ja suorita admin-sovellus tehdäksesi palvelun asetukset
+possible solutions	setup	fi	Mahdollisia ratkaisuja
+potential problem	setup	fi	Mahdollinen ongelma
+Preferences	setup	fi	Asetukset
+problem resolution	setup	fi	Ongelman ratkaisu
+process	setup	fi	Muunna
+really uninstall all applications	setup	fi	TODELLA poista kaikki sovellukset
+re-check my database	setup	fi	Tarkista tietokanta
+re-check my installation	setup	fi	Tarkista asennus
+re-enter password	setup	fi	Salasana uudelleen
+registered	setup	fi	rekisteröity
+remove	setup	fi	Poista
+requires reinstall or manual repair	setup	fi	Vaatii uudelleenasennuksen tai korjauksen käsin
+requires upgrade	setup	fi	Vaatii päivityksen
+resolve	setup	fi	Ratkaise
+Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	fi	Valitse sovellus, anna kohdeversio ja käynnistä muunnos.<br>Jos et anna versiota, asennetaan vain perustaulut.<br><blink>TÄMÄ POISTAA SOVELLUKSEN KAIKKI TAULUT!</blink>
+Selectbox	setup	fi	Valintalista
+select the default applications to which your users will have access	setup	fi	Valitse sovellukset, joihin käyttäjillä on oletuksena käyttöoikeus
+select the desired action(s) from the available choices	setup	fi	Valitse vaihtoehdoista halutut toimenpiteet
+select to download file	setup	fi	Valitse ladataksesi tiedoston
+Select where you want to store/retrieve filesystem information	setup	fi	Valitse minne haluat tallentaa/noutaa tiedostojärjestelmän tiedot
+Select where you want to store/retrieve user accounts	setup	fi	Valitse minne haluat tallentaa/noutaa käyttäjätunnukset
+select which group(s) will be exported (group membership will be maintained)	setup	fi	Valitse vietävät ryhmät (ryhmän jäsenyys säilytetään)
+select which group(s) will be imported (group membership will be maintained)	setup	fi	Valitse tuotavat ryhmät (ryhmän jäsenyys säilytetään)
+select which languages you would like to use	setup	fi	Valitse käytettävät kielet
+select which method of upgrade you would like to do	setup	fi	Valitse käytettävä päivitystapa
+select which type of authentication you are using	setup	fi	Valitse käytettävä käyttäjäntunnistuksen tapa
+select which user(s) will be exported	setup	fi	Valitse vietävät käyttäjät
+select which user(s) will be imported	setup	fi	Valitse tuotavat käyttäjät
+select which user(s) will have admin privileges	setup	fi	Valitse käyttäjät joille annetaan ylläpito-oikeudet
+select your old version	setup	fi	Valitse entinen versio
+setup demo accounts in ldap	setup	fi	Luo LDAP esittelytunnukset
+setup	setup	fi	Asennus
+Show 'powered by' logo on	setup	fi	Näytä 'powered by' logo
+some or all of its tables are missing	setup	fi	Ainakin osa tauluista puuttuu
+status	setup	fi	Tila
+step 1 - simple application management	setup	fi	Vaihe 1 - Sovellusten hallinta
+step 2 - configuration	setup	fi	Vaihe 2 - Asetukset
+step 3 - language management	setup	fi	Vaihe 3 - Kielten hallinta
+step 4 - advanced application management	setup	fi	Vaihe 4 - Sovellusten hallinta (yksityiskohdat)
+submit	setup	fi	Lähetä
+table change messages	setup	fi	Taulujen muutokset
+tables dropped	setup	fi	taulua poistettu
+tables installed, unless there are errors printed above	setup	fi	taulua luotu, ellei yläpuolella ole virheviestejä
+tables upgraded	setup	fi	taulua päivitetty
+target version	setup	fi	Kohdeversio
+Text Entry	setup	fi	Tekstille
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	fi	LDAP-palvelimeen yhdistäminen epäonnistui. <br>Tarkista LDAP-asetukset
+the table definition was correct, and the tables were installed	setup	fi	Taulun määrittely oli oikein ja taulut asennettiin
+the tables	setup	fi	taulut
+this program will help you upgrade or install different languages for phpGroupWare	setup	fi	Tämä sovellus avustaa eri phpGroupWare:n käyttökielten asennuksessa ja päivityksessä
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	fi	Tämä avustaa käyttäjien ja ryhmien viemisessä phpGroupWare:sta LDAP -hakemistoon
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	fi	Tämä avustaa käyttäjien ja ryhmien tuomisessa LDAP -hakemistosta phpGroupWareen
+this stage is completed<br>	setup	fi	Tämä vaihe on valmis<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	fi	Luodaan 1 ylläpito- ja 3 esittelytunnusta<br>Käyttäjätunnukset/salasanat ovat: demo/guest, demo2/guest ja demo3/guest.<br><b>!!!KAIKKI MUUT KÄYTTÄJÄTUNNUKSET POISTETAAN!!!</b><br>
+top	setup	fi	ylös
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	fi	luodaksesi 1 ylläpito- ja 3 esittelytunnusta.<br><b>Kaikki muut käyttäjätunnukset poistetaan</b>
+translations added	setup	fi	Käännökset lisätty
+translations removed	setup	fi	Käännökset poistettu
+translations upgraded	setup	fi	Käännökset päivitetty
+two weeks	setup	fi	kaksi viikkoa
+uninstall all applications	setup	fi	Poista kaikki sovellukset
+uninstalled	setup	fi	poistettu
+upgraded	setup	fi	päivitetty
+upgrade	setup	fi	Päivitys
+upgrading tables	setup	fi	Päivitän tauluja
+Use cookies to pass sessionid	setup	fi	Käytä evästeitä (cookie) istuntotunnuksen välitykseen
+Use pure HTML compliant code (not fully working yet)	setup	fi	Käytä HTML yhteensopivuustilaa (ei toimi vielä täysin)
+Users Choice	setup	fi	Käyttäjä valitsee
+version mismatch	setup	fi	Epäyhteensopiva versio
+we will automatically update your tables/records to x	setup	fi	Taulut/tietueet päivitetään automaattisesti versioon %1
+Would you like phpGroupWare to cache the phpgw info array ?	setup	fi	Säilytetäänkö phpgw info -rakenne välimuistissa?
+Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	fi	Tarkistetaanko, onko phpGroupWare:sta uutta versiota<br>kun pääkäyttäjä kirjautuu järjestelmään?
+Would you like to show each application's upgrade status ?	setup	fi	Näytetäänkö kunkin sovelluksen päivitystilanne?
+yes	setup	fi	Kyllä
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	fi	Käytössä on PHP:n vanha versio<br>Suosittelemme päivittämään uudempaan versioon. <br>phpGroupWare ei ehkä toimi oikein (tai ollenkaan) vanhoilla PHP:n versioilla. <br><br>Päivitä versioon 3.0.16 tai uudempi
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fi	Käytössä on esi-beta versio phpGroupWare:sta.<br>Sitä ei enää tueta ja tämä asennus ei osaa tehdä päivitystä siitä.<br> Voit päivittää ensin versioon 0.9.10 (viimeinen versio joka tuki esi-beta päivityksiä) <br>ja päivittää edelleen sitä nykyiseen versioon.
+you appear to be running version x of phpGroupWare	setup	fi	Käytössä on phpGroupWare:n versio %1
+you are ready for this stage, but this stage is not yet written.<br>	setup	fi	Olet valmis tähän vaiheeseen, mutta vaihetta ei ole vielä kirjoitettu.<br>
+you do not have any languages installed. please install one now <br>	setup	fi	Ei asennettuja kieliä. Asenna ensin ainakin yksi kieli <br>
+you must enter a username for the admin	setup	fi	Anna pääkäyttäjän käyttäjätunnus
+your applications are current	setup	fi	Sovellukset ovat ajan tasalla
+your database does not exist	setup	fi	Tietokantaa ei ole
+your database is working, but you dont have any applications installed	setup	fi	Tietokanta toimii, mutta yhtään sovellusta ei ole asennettu
+your tables are current	setup	fi	Taulut ovat ajan tasalla
+your tables may be altered and you may lose data	setup	fi	Tauluja saatetaan muuttaa ja tietoja voi kadota.
+your tables will be dropped and you will lose data	setup	fi	Tauluja poistetaan ja niiden tiedot menetetään !!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	fi	Poista ja asenna sovellus uudelleen tai yritä korjausta käsin
