@@ -60,12 +60,12 @@
 		{
 			$this->query($query);
 
-			if(ereg('xmlrpc.php',$GLOBALS['PHP_SELF']))
+			if (ereg('xmlrpc.php',$_SERVER['PHP_SELF']))
 			{
 				$this->xmlrpc = True;
 			}
 
-			if(ereg('soap.php',$GLOBALS['PHP_SELF']))
+			if (ereg('soap.php',$_SERVER['PHP_SELF']))
 			{
 				$this->soap = True;
 			}
