@@ -62,6 +62,8 @@ class matrixview {
 	*/
 	function matrixview ($month_int = 0, $year_int = 0)
 	{
+	    global $phpgw;
+
 		for($i;$i<32;$i++)
 		{
 			if(checkdate($month_int,$i,$year_int)) $days++;
@@ -69,6 +71,7 @@ class matrixview {
 		
 		$this->month = $month_int;
 		$this->year = $year_int;
+		$this->set1PixelGif($phpgw->common->get_image_path('todo').'/pix.gif');
 	}
 	
 	/**
