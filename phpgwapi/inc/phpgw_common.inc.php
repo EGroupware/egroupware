@@ -356,8 +356,11 @@
       if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
       if ($appname == "home" || $appname == "logout" || $appname == "login"){$appname = "phpgwapi";}
 
-      if ($phpgw_info["server"]["template_set"] == "user_choice" && isset($phpgw_info["user"]["preferences"]["template_set"])){
-        $phpgw_info["server"]["template_set"] = $phpgw_info["user"]["preferences"]["template_set"];
+      // Setting this for display of template choices in user preferences
+      if ($phpgw_info["server"]["template_set"] == "user_choice" ){$phpgw_info["server"]["usrtplchoice"] = "user_choice"; }
+
+      if ($phpgw_info["server"]["template_set"] == "user_choice" && isset($phpgw_info["user"]["preferences"]["common"]["template_set"])){
+        $phpgw_info["server"]["template_set"] = $phpgw_info["user"]["preferences"]["common"]["template_set"];
       }elseif ($phpgw_info["server"]["template_set"] == "user_choice" || !isset($phpgw_info["server"]["template_set"])){
         $phpgw_info["server"]["template_set"] = "default";
       }

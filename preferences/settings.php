@@ -34,8 +34,7 @@
         </td>
        </tr>
 
-      
-       <?php if ($phpgw_info["server"]["template_set"] == "user_choice"){ ?>
+       <?php if ($phpgw_info["server"]["usrtplchoice"] == "user_choice"){ ?>
        <tr>
          <?php $selected[$phpgw_info["user"]["preferences"]["common"]["template_set"]] = " selected"; ?>
         <td>Interface/Template Selection:<br></td>
