@@ -106,7 +106,7 @@
   $t->set_var("lang_ok",lang("ok"));
   $t->set_var("lang_clear",lang("clear"));
   $t->set_var("lang_cancel",lang("cancel"));
-  $t->set_var("cancel_url",$phpgw->link("index.php"));
+  $t->set_var("cancel_url",$phpgw->link("index.php?sort=$sort&order=$order&filter=$filter&start=$start"));
   $t->parse("out","add");
   $t->pparse("out","add");
 
