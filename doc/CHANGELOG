@@ -35,6 +35,7 @@
         - Merged in patch for Danish translation
           Thanks again zaphod
         - Fixed birthday reminders not showing up
+	- Fixed changing of users password through admin.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account

@@ -116,6 +116,8 @@
      if ($account_info["old_loginid"] != $account_info["loginid"]) {
         $phpgw->db->query("update accounts set account_lid='" . $account_info["loginid"]
                         . "' where account_lid='" . $account_info["old_loginid"] . "'");
+        $phpgw->db->query("update phpgw_sessions set session_lid='" . $account_info["loginid"]
+                        . "' where session_lid='" . $account_info["old_loginid"] . "'");
 
 //        $account_info["loginid"] = $account_info["n_loginid"];
      }
@@ -125,7 +127,7 @@
 		               . "account_lastpwd_change='" . time() . "' where account_lid='"
 		               . $account_info["loginid"] . "'");
         $phpgw->db->query("update phpgw_sessions set session_pwd='" . addslashes($account_info["passwd"])
-                        . "' where session_lid='" . $lid . "'");
+                        . "' where session_lid='" . $account_info["loginid"] . "'");
       }
 
       while ($permission = each($account_info["permissions"])) {
