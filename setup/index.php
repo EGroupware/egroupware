@@ -55,7 +55,8 @@
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>You appear to be running a pre-beta version of phpGroupWare<br>\n";
-      echo "    We are not providing an upgrade path at this time, please backup your tables and drop them, so that this script can recreate them.</td>\n";
+      echo "    We are providing an automated upgrade system, but we highly recommend backing up your tables incase the script causes damage to your data.<br>\n";
+      echo "    <td>These automated scripts can easily destroy your data. Please backup before gonig any further!</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
 ?>
@@ -131,7 +132,7 @@
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Status</b></font></td>\n";
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>If you did not recieve any errors, your tables have been updated.<br>\n";
+      echo "    <td>If you did not recieve any errors, your tables *should* have been updated (no warranty on data integrity).<br>\n";
       echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
