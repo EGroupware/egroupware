@@ -32,7 +32,7 @@
     var $memberships = Array();
     var $members;
 
-    function accounts()
+    function accounts_()
     {
        global $phpgw;
 
@@ -41,7 +41,7 @@
    
     function read_repository()
     {
-       global $phpgw;
+       global $phpgw, $phpgw_info;
 
        // get a ldap connection handle
        $ds = $phpgw->common->ldapConnect();
@@ -57,8 +57,8 @@
        $this->data["firstname"]   	= $allValues[0]["givenname"][0];
        $this->data["lastname"]    	= $allValues[0]["sn"][0];
        $this->data["fullname"]    	= $allValues[0]["cn"][0];
-      
-       $this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+
+       $this->db->query("select * from phpgw_accounts where account_id='" . $this->data["account_id"] . "'",__LINE__,__FILE__);
        $this->db->next_record();
       
        $this->data["lastlogin"]         = $this->db->f("account_lastlogin");
@@ -198,7 +198,7 @@
        global $phpgw, $phpgw_info;
        $accountid = mt_rand (100, 600000);
        if ($defaultprefs =="") {
-          $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+          $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
        }
        $sql = "insert into phpgw_accounts";
        $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_type)";
