@@ -506,7 +506,6 @@
 					'adr_two_locality' =>    array('type' => 'varchar', 'precision' => 32),
 					'adr_two_region' =>      array('type' => 'varchar', 'precision' => 32),
 					'adr_two_postalcode' =>  array('type' => 'varchar', 'precision' => 32),
-					'adr_two_countryname' => array('type' => 'varchar', 'precision' => 32),
 					'adr_two_type' =>        array('type' => 'varchar', 'precision' => 64),
 					'tel_work' =>            array('type' => 'varchar', 'precision' => 40, 'default' => '+1 (000) 000-0000', 'nullable' => False),
 					'tel_home' =>            array('type' => 'varchar', 'precision' => 40, 'default' => '+1 (000) 000-0000', 'nullable' => False),
@@ -609,6 +608,9 @@
 	function addressbook_upgrade0_9_10pre17()
 	{
 		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->AddColumn('phpgw_addressbook','pubkey', array('type' => 'text'));
+		$phpgw_setup->oProc->AddColumn('phpgw_addressbook','adr_two_countryname', array('type' => 'varchar', 'precision' => 32));
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre18';
 		return $setup_info['addressbook']['currentver'];
