@@ -100,7 +100,15 @@
 
 		/* Group perms for the default group */
 		$GLOBALS['phpgw_setup']->add_acl(array('addressbook','calendar','infolog','email','preferences'),'run',$defaultgroupid);
-		$GLOBALS['phpgw_setup']->add_acl('admin','run',$admingroupid);
+
+		// give admin access to all apps, to save us some support requests
+		$all_apps = array();
+		$GLOBALS['phpgw_setup']->db->query('SELECT app_name FROM phpgw_applications WHERE app_enabled<3');
+		while ($GLOBALS['phpgw_setup']->db->next_record())
+		{
+			$all_apps[] = $GLOBALS['phpgw_setup']->db->f('app_name');
+		}
+		$GLOBALS['phpgw_setup']->add_acl($all_apps,'run',$admingroupid);
 
 		function insert_default_prefs($accountid)
 		{
