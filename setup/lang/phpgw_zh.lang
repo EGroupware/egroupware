@@ -123,7 +123,7 @@ enter some random text for app_session <br>encryption (requires mcrypt)	setup	zh
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	zh	存放临时文件目录的完整路径.<br>例如: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	zh	存放用户和组文件的目录的完整路径.<br>例如: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	zh	运行该服务器的机器主机名
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	setup	zh	输入phpGroupWare的网址.<br>例如: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>末尾不加上"/"</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	zh	输入eGroupWare的网址.<br>例如: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>末尾不加上"/"</b>
 enter the site password for peer servers	setup	zh	对等服务器的站点密码
 enter the site username for peer servers	setup	zh	对等服务器的站点用户名
 enter the title for your site	setup	zh	站点标题
@@ -363,9 +363,9 @@ would you like to show each application's upgrade status ?	setup	zh	您希望显
 write config	setup	zh	保存配置
 yes	setup	zh	Yes
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zh	您目前运行的是测试版本的 eGroupWare。<br>目前已经不再支持这个版本，建议您先升级到 0.9.10 版（最后一个测试版） <br>再升级到现在的版本.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	zh	您目前运行的PHP版本太旧 <br>建议您升级到较新版本. <br>因为老版本的 PHP 可能会造成 phpGroupWare 运行不正常. <br><br>建议您升级到至少 %1
-you appear to be running version %1 of phpgroupware	setup	zh	您目前运行的eGroupWare版本为 %1  
-you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	zh	您的 PHP 版本号低于 4.1.0 . phpGroupWare 要求4.1.0版或更高版本
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	zh	您目前运行的PHP版本太旧 <br>建议您升级到较新版本. <br>因为老版本的 PHP 可能会造成 eGroupWare 运行不正常. <br><br>建议您升级到至少 %1
+you appear to be running version %1 of egroupware	setup	zh	您目前运行的eGroupWare版本为 %1  
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	zh	您的 PHP 版本号低于 4.1.0 . eGroupWare 要求4.1.0版或更高版本
 you appear to be using php3. disabling php4 sessions support	setup	zh	您目前运行的是PHP3. PHP4会话支持已禁用
 you appear to be using php4. enabling php4 sessions support	setup	zh	您目前运行的是PHP4. PHP4会话支持已启用
 you appear to have microsoft sql server support enabled	setup	zh	已经启用Microsoft SQL Server
