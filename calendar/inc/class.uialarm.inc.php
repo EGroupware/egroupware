@@ -112,17 +112,20 @@
 			$this->template->set_var('hr_text','<hr>');
 			$this->template->parse('row','hr',True);
 
-			@reset($this->event['alarm']);
-			while(list($key,$alarm) = each($this->event['alarm']))
+			if($this->event['alarm'])
 			{
-				$var = Array(
-					'edit_box'	=> '<input type="checkbox" name="alarm[id]" value="'.$alarm['id'].'">',
-					'field'	=> $icon.$GLOBALS['phpgw']->common->show_date($alarm['time']),
-					'data'	=> $alarm['text'],
-					'alarm_enabled'	=> ($alarm['enabled']?'<img src="'.$GLOBALS['phpgw']->common->image('calendar','enabled.gif').'" width="13" height="13" alt="enabled">':'&nbsp;'),
-					'alarm_disabled'	=> (!$alarm['enabled']?'<img src="'.$GLOBALS['phpgw']->common->image('calendar','disabled.gif').'" width="13" height="13" alt="disabled">':'&nbsp;')
-				);
-				$this->output_template_array('row','list',$var);
+				@reset($this->event['alarm']);
+				while(list($key,$alarm) = each($this->event['alarm']))
+				{
+					$var = Array(
+						'edit_box'	=> '<input type="checkbox" name="alarm[id]" value="'.$alarm['id'].'">',
+						'field'	=> $icon.$GLOBALS['phpgw']->common->show_date($alarm['time']),
+						'data'	=> $alarm['text'],
+						'alarm_enabled'	=> ($alarm['enabled']?'<img src="'.$GLOBALS['phpgw']->common->image('calendar','enabled.gif').'" width="13" height="13" alt="enabled">':'&nbsp;'),
+						'alarm_disabled'	=> (!$alarm['enabled']?'<img src="'.$GLOBALS['phpgw']->common->image('calendar','disabled.gif').'" width="13" height="13" alt="disabled">':'&nbsp;')
+					);
+					$this->output_template_array('row','list',$var);
+				}
 			}
 			$this->template->set_var('hr_text','<hr>');
 			$this->template->parse('row','hr',True);
