@@ -101,6 +101,7 @@
 			$cat_id    = get_var('cat_id','POST');
 			$fcat_id   = get_var('fcat_id','POST');
 			$private   = get_var('private','POST');
+			$download  = get_var('download','POST');
 
 			if($convert)
 			{
@@ -115,11 +116,11 @@
 					$GLOBALS['phpgw']->common->phpgw_footer();
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
-				$buffer = $this->bo->import($tsvfile['tmp_name'],$conv_type,$private,$fcat_id);
+				$buffer = $this->bo->import($tsvfile,$conv_type,$private,$fcat_id);
 
 				if($download == '')
 				{
-					if($conv_type == 'Debug LDAP' || $conv_type == 'Debug SQL' )
+					if($conv_type == 'Debug LDAP' || $conv_type == 'Debug SQL')
 					{
 						// filename, default application/octet-stream, length of file, default nocache True
 						$GLOBALS['phpgw']->browser->content_header($tsvfilename,'',strlen($buffer));
@@ -189,6 +190,19 @@
 				$this->template->set_var('filter',$this->filter);
 				$this->template->set_var('query',$this->query);
 				$this->template->set_var('cat_id',$this->cat_id);
+				$this->template->set_var('lang_import_instructions',lang('import_instructions'));
+				if(extension_loaded('zip'))
+				{
+					$this->template->set_var('zip_note',lang('zip_note'));
+				}
+				else
+				{
+					$this->template->set_var('zip_note','');
+				}
+				$this->template->set_var('lang_exported_file',lang('enter the path to the exported file here'));
+				$this->template->set_var('lang_conv_type',lang('select the type of conversion'));
+				$this->template->set_var('lang_mark_priv',lang('Mark records as private'));
+				$this->template->set_var('lang_debug',lang('Debug output in browser'));
 				$this->template->pparse('out','import');
 			}
 //			$GLOBALS['phpgw']->common->phpgw_footer();

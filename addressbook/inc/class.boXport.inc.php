@@ -133,7 +133,15 @@
 			$contacts = new import_conv;
 
 			$buffer = $contacts->import_start_file($buffer);
-			$fp = fopen($tsvfile,'r');
+
+			if($tsvfile['type'] == 'application/zip')
+			{
+				$fp = $this->unzip($tsvfile['tmp_name'],$contacts->type);
+			}
+			else
+			{
+				$fp = fopen($tsvfile['tmp_name'],'r');
+			}
 			if($contacts->type == 'csv')
 			{
 				while($data = fgetcsv($fp,8000,','))
@@ -267,6 +275,56 @@
 			fclose($fp);
 			$buffer = $contacts->import_end_file($buffer,$private,$fcat_id);
 			return $buffer;
+		}
+
+		/* Use the Zip extension to open a zip file, hopefully containing multiple .vcf files
+		 * Return a pointer to a temporary file that will then contain all files concatenated.
+		 */
+		function unzip($filename,$type)
+		{
+			$ext = '';
+			switch($type)
+			{
+				case 'vcard':
+					$ext = '.vcf';
+					break;
+				case 'csv':
+					$ext = '.csv';
+					break;
+				case 'ldif':
+					$ext = '.ldif';
+					break;
+				default:
+					return False;
+			}
+
+			/* Open the (uploaded) zip file */
+			$zip  = zip_open($filename);
+
+			$temp = tempnam('/tmp','zip2vcf');
+			/* Open a temp file for read/write */
+			$fp   = fopen($temp, 'w+');
+
+			$out = '';
+			/* Now read each entry in the zip file */
+			while($dirent = zip_read($zip))
+			{
+				if(zip_entry_open($zip,$dirent,'r'))
+				{
+					//echo '<br>zip_entry_name==' . zip_entry_name($dirent);
+					/* If an allowed extenstion based on conversion type */
+					if(ereg($ext,zip_entry_name($dirent)))
+					{
+						/* Write the data to our temp file */
+						$data = zip_entry_read($dirent,zip_entry_filesize($dirent));
+						//echo $data;
+						fwrite($fp,$data);
+					}
+					zip_entry_close($dirent);
+				}
+			}
+			rewind($fp);
+			return $fp;
 		}
 
 		function export($conv_type,$cat_id='')

@@ -147,3 +147,9 @@ work phone	addressbook	en	Work Phone
 you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
 zip code	common	en	ZIP Code
+import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
+zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files.  However, do not mix file types per import.
+enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
+select the type of conversion	addressbook	en	Select the type of conversion
+mark records as private	addressbook	en	Mark records as private
+debug output in browser	addressbook	en	Debug output in browser
