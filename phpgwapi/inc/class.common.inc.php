@@ -319,14 +319,14 @@
 		@abstract This is used for reporting errors in a nice format.
 		@param $error - array of errors
 		*/
-		function error_list($errors)
+		function error_list($errors,$text='Error')
 		{
 			if (! is_array($errors))
 			{
 				return False;
 			}
 
-			$html_error = '<table border="0" width="50%"><tr><td align="right"><b>' . lang('error')
+			$html_error = '<table border="0" width="100%"><tr><td align="right"><b>' . lang($text)
 							. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
 			for ($i=1; $i<count($errors); $i++)
 			{
