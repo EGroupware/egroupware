@@ -255,7 +255,21 @@
 								break;
 							case "EMAIL":
 								switch ($field[1]) {
+									case "WORK":
+										$buffer[$i]["email"] = $values[0];
+										$buffer[$i]["email_type"] = $field[2];
+										break;
+									case "HOME":
+										$buffer[$i]["email_home"] = $values[0];
+										$buffer[$i]["email_home_type"] = $field[2];
+										break;
 									default:
+										if($buffer[$i]["email"]) {
+											$buffer[$i]["email_type"] = $field[2];
+										} elseif (!$buffer[$i]["email"]) {
+											$buffer[$i]["email"] = $values[0];
+											$buffer[$i]["email_type"] = $field[1];
+										}
 										break;
 								}
 							default:
