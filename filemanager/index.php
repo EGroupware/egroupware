@@ -83,9 +83,6 @@ $now = date ("Y-m-d");
 //This will hopefully be replaced by a session management working_id
 //if (!$phpgw->vfs->working_id = preg_replace ("/\$fakebase\/(.*)\/(.*)$/U", "\\1", $path))
 
-$userinfo["working_id"] = $phpgw->vfs->working_id;
-$userinfo["working_lid"] = $phpgw->accounts->id2name ($userinfo["working_id"]);
-
 if ($phpwh_debug)
 {
 	echo "<b>PHPWebHosting debug:</b><br>
@@ -102,7 +99,56 @@ if ($phpwh_debug)
 }
 
 ###
+# Get their memberships to be used throughout the script
+###
+
+$memberships = $phpgw->accounts->memberships ($userinfo["username"]);
+
+###
+# We determine if they're in their home directory or a group's directory
+# If they request a group's directory, we ensure they have access to the group,
+# and the group has access to the app
+###
+
+if ((preg_match ("+^$fakebase\/(.*)(\/|$)+U", $path, $matches)) && $matches[1] != $userinfo["account_lid"])
+{
+	$phpgw->vfs->working_id = $phpgw->accounts->name2id ($matches[1]);
+
+	reset ($memberships);
+	while (list ($num, $group_array) = each ($memberships))
+	{
+		if ($matches[1] == $group_array["account_name"])
+		{
+			$group_ok = 1;
+			break;
+		}
+	}
+	if (!$group_ok)
+	{
+		echo $phpgw->common->error_list (array ("You do not have access to group/directory $matches[1]"));
+		html_page_close ();
+	}
+
+/* WIP - how are we actually supposed to use the API to determine if a group has access to an app?
+	$group_acl = CreateObject('phpgwapi.acl', $phpgw->accounts->name2id ($matches[1]));
+	if ($group_acl->get_specific_rights () == False)
+	{
+		echo $phpgw->common->error_list (array ("The group $matches[1] does not have access to $appname"));
+		html_page_close ();
+	}
+*/
+}
+else
+{
+	$phpgw->vfs->working_id = $userinfo["username"];
+}
+
+$userinfo["working_id"] = $phpgw->vfs->working_id;
+$userinfo["working_lid"] = $phpgw->accounts->id2name ($userinfo["working_id"]);
+
+###
 # If their home directory doesn't exist, we create it
+# Same for group directories
 ###
 
 if (($path == $homedir) && !$phpgw->vfs->file_exists ($homedir, array (RELATIVE_NONE)))
@@ -153,9 +199,8 @@ if ($path == $fakebase)
 	$files_array[] = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), False, False, True);
 	$numoffiles++;
 
-	$groups = $phpgw->accounts->memberships ($userinfo["username"]);
-
-	while (list ($num, $group_array) = each ($groups))
+	reset ($memberships);
+	while (list ($num, $group_array) = each ($memberships))
 	{
 		if (!$phpgw->vfs->file_exists ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE)))
 		{
@@ -334,7 +379,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 			html_table_col_begin ("right");
 
-			if (!$rename && !$edit_comments)
+			if (!$rename && !$edit_comments && $path != $fakebase && $path != "/")
 			{
 				html_form_input ("checkbox", "fileman[$i]", "$files[name]");
 			}
@@ -576,25 +621,53 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_form_input ("submit", "move", "Move to:");
 		html_form_select_begin ("todir");
 
-		$query3 = db_query ("SELECT name, directory FROM phpgw_vfs WHERE owner_id = '$userinfo[username]' AND mime_type = 'Directory' ORDER BY name");
-		while ($dirs = db_fetch_array ($query3))
+		###
+		# First we get the directories in their home directory
+		###
+
+		$dirs[] = array ("directory" => $fakebase, "name" => $userinfo["account_lid"]);
+
+		$ls_array = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), True, "Directory");
+		while (list ($num, $dir) = each ($ls_array))
+		{
+			$dirs[] = $dir;
+		}
+
+		###
+		# Then we get the directories in their membership's home directories
+		###
+
+		reset ($memberships);
+		while (list ($num, $group_array) = each ($memberships))
+		{
+			$dirs[] = array ("directory" => $fakebase, "name" => $group_array["account_name"]);
+
+			$ls_array = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), True, "Directory");
+			while (list ($num, $dir) = each ($ls_array))
+			{
+				$dirs[] = $dir;
+			}
+		}
+
+		reset ($dirs);
+		while (list ($num, $dir) = each ($dirs))
 		{
 			###
 			# So we don't display //
 			###
 
-			if ($dirs["directory"] != '/')
+			if ($dir["directory"] != '/')
 			{
-				$dirs["directory"] .= '/';
+				$dir["directory"] .= '/';
 			}
 
 			###
 			# No point in displaying the current directory
 			###
 			
-			if (($dirs["directory"] . $dirs["name"]) != $path)
+			if (($dir["directory"] . $dir["name"]) != $path)
 			{
-				html_form_option ($dirs["directory"] . $dirs["name"]);
+				html_form_option ($dir["directory"] . $dir["name"]);
 			}
 		}
 
