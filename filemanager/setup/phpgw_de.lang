@@ -1,6 +1,6 @@
 %1 already exists as a file	filemanager	de	Es gibt bereits eine Datei %1
 application	filemanager	de	Anwendung
-back to file manager	filemanager	de	Zurück zum FileManager
+back to file manager	filemanager	de	Zurück zum File Manager
 cannot create directory because it begins or ends in a space	filemanager	de	Kann Verzeichnis nicht anlegen, da der Name mit einem Leerzeichen endet
 cannot replace %1 because it is a directory	filemanager	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
 command sucessfully run	filemanager	de	Kommando erfolgreich ausgeführt
