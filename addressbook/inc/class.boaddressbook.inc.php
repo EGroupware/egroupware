@@ -48,7 +48,11 @@
 			'update_entry' => array(
 				'in'  => array('int','struct'),
 				'out' => array()
-			)
+			),
+			'categories' => array(
+				'in'  => array('int'),
+				'out' => array('struct')
+			),
 		);
 
 		var $debug = False;
@@ -81,6 +85,9 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
+			// are we called via xmlrpc?
+			$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
+
 			/* _debug_array($_POST); */
 			$_start   = get_var('start',array('POST','GET'));
 			$_query   = get_var('query',array('POST','GET'),'_UNSET_');
@@ -227,22 +234,109 @@
 			return $cleaned;
 		}
 
+		// return array with all addressbook categories (for xmlrpc)
+		function categories($complete = False)
+		{
+			return $this->xmlrpc ? $GLOBALS['server']->categories($complete) : False;
+		}
+
+		// translate array of internal datas to xmlrpc, eg. format bday as iso8601
+		function data2xmlrpc($datas)
+		{
+			if (is_array($datas))
+			{
+				foreach($datas as $n => $data)
+				{
+					// translate birthday to a iso8601 date
+					if (isset($data['bday']))
+					{
+						if (strlen($data['bday']) > 2)
+						{
+							list($m,$d,$y) = explode('/',$data['bday']);
+						}
+						else
+						{
+							$y = $m = $d = 0;
+						}
+						$datas[$n]['bday'] = $GLOBALS['server']->date2iso8601(array('year'=>$y,'month'=>$m,'mday'=>$d));
+					}
+					// translate modification time
+					if (isset($data['last_mod']))
+					{
+						$datas[$n]['last_mod'] = $GLOBALS['server']->date2iso8601($data['last_mod']);
+					}
+					// translate categories-id-list to array with id-name pairs
+					if (isset($data['cat_id']))
+					{
+						$datas[$n]['cat_id'] = $GLOBALS['server']->cats2xmlrpc(explode(',',$data['cat_id']));
+					}
+				}
+			}
+			return $datas;
+		}
+
+		// retranslate from xmlrpc / iso8601 to internal format
+		function xmlrpc2data($data)
+		{
+			if (isset($data['bday']))
+			{
+				$arr = $GLOBALS['server']->iso86012date($data['bday']);
+				$data['bday'] = $y && $m && $d ? sprintf('%d/%02d/%04d',$arr['month'],$arr['mday'],$arr['year']) : '';
+			}
+			if (isset($data['last_mod']))
+			{
+				$data['last_mod']  = $GLOBALS['server']->iso86012date($data['last_mod'],True);
+			}
+			if (isset($data['cat_id']))
+			{
+				$cats = $GLOBALS['server']->xmlrpc2cats($data['cat_id']);
+				$data['cat_id'] = count($cats) > 1 ? ','.implode(',',$cats).',' : (int)$cats[0];
+			}
+			return $data;
+		}
+
 		function read_entries($data)
 		{
+			if ($this->xmlrpc && !isset($data['fields']))
+			{
+				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields));
+			}
 			$entries = $this->so->read_entries($data);
 			$this->total = $this->so->contacts->total_records;
+			if (!is_array($entries))
+			{
+				$entries = array();
+			}
+			$entries = $this->strip_html($entries);
+			if ($this->xmlrpc)
+			{
+				$entries = $this->data2xmlrpc($entries);
+			}
 			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
-			return(is_array($entries) ? $this->strip_html($entries) : array());
+			return $entries;
 		}
 
 		function read_entry($data)
 		{
+			if ($this->xmlrpc && !isset($data['fields']))
+			{
+				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields));
+			}
 			if($this->check_perms($data,PHPGW_ACL_READ))
 			{
 				$entry = $this->so->read_entry($data['id'],$data['fields']);
-				return $this->strip_html($entry);
+				$entry = $this->strip_html($entry);
+				if ($this->xmlrpc)
+				{
+					$entry = $this->data2xmlrpc($entry);
+				}
+				return $entry;
 			}
-			return array(0 => array('No access' => 'No access'));
+			if ($this->xmlrpc)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
+			return False;
 		}
 
 		function read_last_entry($fields)
@@ -250,9 +344,18 @@
 			if($this->check_perms($fields,PHPGW_ACL_READ))
 			{
 				$entry = $this->so->read_last_entry($fields);
-				return $this->strip_html($entry);
+				$entry = $this->strip_html($entry);
+				if ($this->xmlrpc)
+				{
+					$entry = $this->data2xmlrpc($entry);
+				}
+				return $entry;
 			}
-			return array(0 => array('No access' => 'No access'));
+			if ($this->xmlrpc)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
+			return False;
 		}
 
 		function add_vcard($uploadedfile='')
@@ -323,7 +426,17 @@
 			{
 				$fields['access'] = 'public';
 			}
-			return $this->so->add_entry($fields);
+			if ($this->xmlrpc)
+			{
+				$fields = $this->xmlrpc2data($fields);
+			}
+			$id = $this->so->add_entry($fields);
+
+			if ($this->xmlrpc && !$id)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
+			return $id;
 		}
 
 		function get_lastid()
@@ -333,11 +446,24 @@
 
 		function update_entry($fields)
 		{
+			if (!$fields['id'] && !$fields['ab_id'])
+			{
+				$this->add_entry($fields);
+			}
+			$ok = False;
 			if($this->check_perms($fields,PHPGW_ACL_EDIT))
 			{
-				return $this->so->update_entry($fields);
+				if ($this->xmlrpc)
+				{
+					$fields = $this->xmlrpc2data($fields);
+				}
+				$ok = $this->so->update_entry($fields);
 			}
-			return False;
+			if ($this->xmlrpc && !$ok)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
+			return $ok;
 		}
 
 		function delete_entry($addr)
@@ -357,12 +483,14 @@
 					$id = isset($addr['id']) ? $addr['id'] : $addr['ab_id'];
 				}
 			}
-
 			if($this->check_perms($id,PHPGW_ACL_DELETE))
 			{
-				return $this->so->delete_entry($id);
+				$this->so->delete_entry($id);
 			}
-			return False;
+			elseif ($this->xmlrpc)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
 		}
 
 		/*!
@@ -375,6 +503,16 @@
 		*/
 		function check_perms($addr,$rights)
 		{
+			if (!is_array($addr) || !isset($addr['rights']) && !isset($addr['owner']))
+			{
+				$id = (int) (!is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']));
+				$addr = $this->so->read_entry($id,array('owner'));
+				if (!$addr && $this->xmlrpc)
+				{
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
+				}
+				$addr = $addr[0];
+			}
 			$ret = $this->so->contacts->check_perms(False,$rights,$addr);
 			//echo "<p>boaddressbook::check_perms(".print_r($addr,True).",$rights) = ".($ret?'True':'False')."</p>\n";
 			return $ret;
@@ -456,6 +594,11 @@
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Update a single entry by passing the fields.')
 						),
+						'write' => array(	// alias for consistent nameing
+							'function'  => 'update_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Write (update or add) a single entry by passing the fields.')
+						),
 						'delete' => array(
 							'function'  => 'delete_entry',
 							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
@@ -464,7 +607,17 @@
 						'read_list' => array(
 							'function'  => 'read_entries',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-							'docstring' => lang('Read a list of entries.')
+							'docstring' => lang('Read a list / search for entries.')
+						),
+						'search' => array(	// alias for consitent nameing
+							'function'  => 'read_entries',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read a list / search for entries.')
+						),
+						'categories' => array(
+							'function'  => 'categories',
+							'signature' => array(array(xmlrpcBool,xmlrpcStruct)),
+							'docstring' => lang('List all categories')
 						),
 						'list_methods' => array(
 							'function'  => 'list_methods',
