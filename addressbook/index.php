@@ -138,7 +138,7 @@
      if (isset($phpgw_info["apps"]["timetrack"]["enabled"]) &&
 	 $phpgw_info["apps"]["timetrack"]["enabled"]) {
         $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
-                        . "a.ab_email,a.ab_wphone,c.company_name "
+                        . "a.ab_email,a.ab_wphone,c.company_name,a.ab_hphone,a.ab_fax,a.ab_mphone "
                         . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
                         . "AND $filtermethod AND (a.ab_lastname like '"
                         . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
@@ -146,10 +146,7 @@
                         . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
                         . "'%$query%' OR c.company_name like '%$query%') $ordermethod limit $limit",__LINE__,__FILE__);
      } else {
-       $phpgw->db->query("SELECT ab_id,ab_owner,ab_firstname,ab_lastname,"
-                       . "ab_email,ab_wphone,ab_company "
-                       . "from addressbook "
-                       . "WHERE $filtermethod AND (ab_lastname like '"
+       $phpgw->db->query("SELECT * from addressbook WHERE $filtermethod AND (ab_lastname like '"
                        . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
                        . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
                        . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
