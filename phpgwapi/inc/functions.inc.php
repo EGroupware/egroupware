@@ -586,14 +586,14 @@
 				/* Make sure user is keeping his password in order */
 				/* Maybe we should create a common function in the phpgw_accounts_shared.inc.php file */
 				/* to get rid of duplicate code. */
-				if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
+				if (isset($GLOBALS['phpgw_info']['user']['lastpasswd_change']) && $GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
 				{
 					$message = lang('You are required to change your password during your first login')
 						. '<br> Click this image on the navbar: <img src="'
 						. $GLOBALS['phpgw']->common->image('preferences','navbar').'">';
 					$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
 				}
-				elseif ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
+				elseif (isset($GLOBALS['phpgw_info']['user']['lastpasswd_change']) && $GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
 				{
 					$message = lang('it has been more then x days since you changed your password',30);
 					$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
