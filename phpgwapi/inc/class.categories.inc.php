@@ -53,7 +53,7 @@
 			}
 
 			$this->account_id	= $account_id;
-			$this->app_name		= $app_name;
+			$this->app_name		= $GLOBALS['phpgw']->db->db_addslashes($app_name);
 			$this->db			= $GLOBALS['phpgw']->db;
 			$this->db2			= $this->db;
 			$this->grants		= $GLOBALS['phpgw']->acl->get_grants($app_name);
@@ -69,12 +69,12 @@
 		{
 			switch ($type)
 			{
-				case 'subs':		$s = " AND cat_parent != '0'"; break;
-				case 'mains':		$s = " AND cat_parent = '0'"; break;
-				case 'appandmains':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
-				case 'appandsubs':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
+				case 'subs':		$s = ' AND cat_parent != 0'; break;
+				case 'mains':		$s = ' AND cat_parent = 0'; break;
+				case 'appandmains':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent =0"; break;
+				case 'appandsubs':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !=0"; break;
 				case 'noglobal':	$s = " AND cat_appname != '" . $this->app_name . "'"; break;
-				case 'noglobalapp':	$s = " AND cat_appname = '" . $this->app_name . "' AND cat_owner != '" . $this->account_id . "'"; break;
+				case 'noglobalapp':	$s = " AND cat_appname = '" . $this->app_name . "' AND cat_owner != " . $this->account_id; break;
 				default:			return False;
 			}
 			return $s;
@@ -91,10 +91,10 @@
 			switch($for)
 			{
 				case 'app':			$w = " WHERE cat_appname='" . $this->app_name . "'"; break;
-				case 'appandmains':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
-				case 'appandsubs':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
-				case 'subs':		$w = " WHERE cat_parent != '0'"; break;
-				case 'mains':		$w = " WHERE cat_parent = '0'"; break;
+				case 'appandmains':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent =0"; break;
+				case 'appandsubs':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !=0"; break;
+				case 'subs':		$w = " WHERE cat_parent != 0"; break;
+				case 'mains':		$w = " WHERE cat_parent = 0"; break;
 				default:			return False;
 			}
 
@@ -119,7 +119,8 @@
 					'parent'	=> $this->db->f('cat_parent'),
 					'name'		=> $this->db->f('cat_name'),
 					'descr'		=> $this->db->f('cat_description'),
-					'data'		=> $this->db->f('cat_data')
+					'data'		=> $this->db->f('cat_data'),
+					'last_mod'	=> $this->db->f('last_mod')
 				);
 			}
 			return $cats;
@@ -137,8 +138,13 @@
 		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $cats array
 		*/
-		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
+		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '',$lastmod = -1)
 		{
+			$start = intval($start);
+			$query = $this->db->db_addslashes($query);
+			$sort  = $this->db->db_addslashes($sort);
+			$order = $this->db->db_addslashes($order);
+
 			if ($globals)
 			{
 				$global_cats = " OR cat_appname='phpgw'";
@@ -184,12 +190,18 @@
 
 			if (strlen($parent_id) != 0)
 			{
-				$parent_filter = " AND cat_parent='$parent_id'";
+				$parent_id		= (int) $parent_id;
+				$parent_filter	= ' AND cat_parent=' . $parent_id;
 			}
 
 			if ($query)
 			{
-				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
+				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%')";
+			}
+
+			if($lastmod >= 0)
+			{
+				$querymethod .= ' AND lastmod > ' . $lastmod;
 			}
 
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
@@ -212,6 +224,12 @@
 
 		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
 		{
+			$start		= intval($start);
+			$query		= $this->db->db_addslashes($query);
+			$sort		= $this->db->db_addslashes($sort);
+			$order		= $this->db->db_addslashes($order);
+			$parent_id	= intval($parent_id);
+
 			if ($globals)
 			{
 				$global_cats = " OR cat_appname='phpgw'";
@@ -233,7 +251,7 @@
 
 			if ($this->account_id == '-1')
 			{
-				$grant_cats = " cat_owner='-1' ";
+				$grant_cats = ' cat_owner=-1 ';
 			}
 			else
 			{
@@ -253,14 +271,7 @@
 				}
 			}
 
-			if ($parent_id)
-			{
-				$parent_select = " AND cat_parent='$parent_id'";
-			}
-			else 
-			{
-				$parent_select = " AND cat_parent='0'";
-			}
+			$parent_select = ' AND cat_parent=' . $parent_id;
 
 			if ($query)
 			{
@@ -288,7 +299,7 @@
 			$num_cats = count($cats);
 			for ($i=0;$i < $num_cats;$i++)
 			{
-				$sub_select = " AND cat_parent='" . $cats[$i]['cat_id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
+				$sub_select = ' AND cat_parent=' . $cats[$i]['cat_id'] . ' AND cat_level=' . ($cats[$i]['level']+1);
 
 				/*$this->db2->query($sql . $sub_select,__LINE__,__FILE__);
 				$total_subs += $this->db2->num_rows();
@@ -541,16 +552,15 @@
 				$id_val = $values['cat_id'].',';
 			}
 			$this->db->query("INSERT INTO phpgw_categories (${id_col}cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
-				. "cat_main,cat_level) VALUES ($id_val'" . intval($values['parent']) . "','" . $this->account_id . "','" . $values['access']
+				. "cat_main,cat_level,last_mod) VALUES ($id_val" . intval($values['parent']) . "," . $this->account_id . ",'" . $values['access']
 				. "','" . $this->app_name . "','" . $values['name'] . "','" . $values['descr'] . "','" . $values['data']
-				. "','" . $values['main'] . "','" . $values['level'] . "')",__LINE__,__FILE__);
+				. "'," . $values['main'] . "," . $values['level'] . "," . time() . ")",__LINE__,__FILE__);
 
 			$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
 
 			if (!$values['parent'] || $values['parent'] == 0)
 			{
-				$this->db->query("UPDATE phpgw_categories SET cat_main='" . $max . "' WHERE cat_id='"
-								. $max . "'",__LINE__,__FILE__);
+				$this->db->query("UPDATE phpgw_categories SET cat_main=" . $max . " WHERE cat_id=" . $max,__LINE__,__FILE__);
 			}
 			return $max;
 		}
@@ -586,8 +596,8 @@
 					{
 						if ($cats[$i]['level'] == 1)
 						{
-							$this->db->query("UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main='" . intval($cats[$i]['cat_id'])
-										. "' WHERE cat_id='" . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+							$this->db->query('UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main=' . intval($cats[$i]['cat_id'])
+										. ' WHERE cat_id=' . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 							$new_main = $cats[$i]['cat_id'];
 						}
 						else
@@ -602,13 +612,13 @@
 								$update_parent = ',cat_parent=' . $new_parent;
 							}
 
-							$this->db->query("UPDATE phpgw_categories set cat_level='" . ($cats[$i]['level']-1) . "'" . $update_main . $update_parent 
-											. " WHERE cat_id='" . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+							$this->db->query('UPDATE phpgw_categories set cat_level=' . ($cats[$i]['level']-1) . $update_main . $update_parent 
+											. ' WHERE cat_id=' . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 						}
 					}
 				}
 
-				$this->db->query("DELETE FROM phpgw_categories WHERE cat_id='" . $cat_id . $subdelete . "'AND cat_appname='"
+				$this->db->query('DELETE FROM phpgw_categories WHERE cat_id=' . $cat_id . $subdelete . "' AND cat_appname='"
 								. $this->app_name . "'",__LINE__,__FILE__);
 			}
 		}
@@ -617,7 +627,7 @@
 		{
 			if (!is_array($main))
 			{
-				$this->db->query("SELECT * from phpgw_categories WHERE cat_main = $main",__LINE__,__FILE__);
+				$this->db->query('SELECT * from phpgw_categories WHERE cat_main=' . $main,__LINE__,__FILE__);
 				$main = $this->db2cats();
 				//echo "main: "; _debug_array($main);
 			}
@@ -713,7 +723,7 @@
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $values['name'] . "', cat_description='" . $values['descr']
 					. "', cat_data='" . $values['data'] . "', cat_parent=" . intval($values['parent']) . ", cat_access='"
-					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . $values['level']
+					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . $values['level'] . ", last_mod=" . time()
 					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($values['cat_id']);
 			$this->db->query($sql,__LINE__,__FILE__);
 			return intval($values['cat_id']);
@@ -762,7 +772,7 @@
 				case 'parent':	$value = 'cat_parent'; break;
 			}
 
-			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id='" . $cat_id . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id=" . $cat_id,__LINE__,__FILE__);
 			$this->db->next_record();
 
 			if ($this->db->f($value))
@@ -806,12 +816,12 @@
 
 			if ($cat_id)
 			{
-				$cat_exists = " cat_parent='$cat_id' ";
+				$cat_exists = ' cat_parent=' . $cat_id;
 			}
 
 			if ($cat_name && $cat_id)
 			{
-				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' AND cat_id != '$cat_id' ";
+				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' AND cat_id != " . $cat_id;
 			}
 
 			$this->db->query("SELECT COUNT(cat_id) FROM phpgw_categories WHERE $cat_exists $filter",__LINE__,__FILE__);
