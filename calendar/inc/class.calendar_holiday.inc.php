@@ -93,20 +93,23 @@ class calendar_holiday
 //		echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale)."<br>\n";
 		$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale));
 		if (!$lines) return false;
-		$c_lines = count($lines) - 4;
-		for($i=10;$i=$c_lines;$i++)
+		$c_lines = count($lines);
+		for($i=10;$i<$c_lines;$i++)
 		{
 //			echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
 			$holiday = explode("\t",$lines[$i]);
-			$loc = $holiday[0];
-			$name = addslashes($holiday[1]);
-			$day = intval($holiday[2]);
-			$month = intval($holiday[3]);
-			$occurence = intval($holiday[4]);
-			$dow = intval($holiday[5]);
-//			echo "Inserting LOCALE='".$loc."' NAME='".$name."' DATE='".$date."'<br>\n";
-			$sql = "INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow) VALUES('$loc','$name',$day,$month,$occurence,$dow)";
-			$this->db->query($sql,__LINE__,__FILE__);
+			if(count($holiday) == 6)
+			{
+				$loc = $holiday[0];
+				$name = addslashes($holiday[1]);
+				$day = intval($holiday[2]);
+				$month = intval($holiday[3]);
+				$occurence = intval($holiday[4]);
+				$dow = intval($holiday[5]);
+//				echo "Inserting LOCALE='".$loc."' NAME='".$name."' extra=(".$day.'/'.$month.'/'.$occurence.'/'.$dow.'/'.")<br>\n";
+				$sql = "INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow) VALUES('$loc','$name',$day,$month,$occurence,$dow)";
+				$this->db->query($sql,__LINE__,__FILE__);
+			}
 		}
 	}
 
