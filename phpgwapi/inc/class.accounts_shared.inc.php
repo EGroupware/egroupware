@@ -31,18 +31,11 @@
 		* I might move this to the accounts_shared if it stays around              *
 		\**************************************************************************/
 
-		function accounts($account_id = False, $db = '')
+		function accounts($account_id = False)
 		{
 			global $phpgw, $phpgw_info;
 
-			if (! is_object($db))
-			{
-		      $this->db = $phpgw->db;
-			}
-			else
-			{
-	 	     $this->db = $db;
-			}
+	      $this->db = $phpgw->db;
 
 			if (! isset($account_id))
 			{
