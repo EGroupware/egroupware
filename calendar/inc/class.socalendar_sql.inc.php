@@ -387,13 +387,17 @@ class socalendar_ extends socalendar__
 				$id_suffix = $GLOBALS['phpgw']->common->randomstring(3).'local';
 			}
 			$parts = Array(
-				'title',
-				'description'
+				0 => 'title',
+				1 => 'description'
 			);
 			@reset($parts);
 			while(list($key,$field) = each($parts))
 			{
 				$part[$key] = substr($GLOBALS['phpgw']->crypto->encrypt($event[$field]),0,20);
+				if(!$GLOBALS['phpgw']->crypto->enabled)
+				{
+					$part[$key] = GLOBALS['phpgw']->crypto->bin2hex($part[$key]);
+				}
 			}
 			$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
 			$temp_name = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],'cal');
