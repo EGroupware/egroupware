@@ -314,8 +314,8 @@
 			}
 
 			/* Since 0.9.10pre6 config table is named as phpgw_config */
-			$config_table = 'config';
 			$ver = explode('.',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$config_table = $ver[0] > 0 || (int)$ver[2] > 10 ? 'phpgw_config' : 'config';
 
 			if(ereg("([0-9]+)(pre)([0-9]+)",$ver[2],$regs))
 			{
