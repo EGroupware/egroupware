@@ -26,15 +26,12 @@
 
 
 	/**
-	* Base class
-	* Dan Kuykendall dan@kuykendall.org\n
-	* Base class. Has a few functions but is more importantly used as a parent class for everything else.\n
-	* Written by: Seek3r\n
-	* Order: short description - detailed description - doc tags.
+	* Parent class for the phpgwAPI
+	* Parent class. Has a few functions but is more importantly used as a parent class for everything else.
+  * @author	Dan Kuykendall <dan@kuykendall.org>
+	* @copyright LGPL
 	* @package phpgwapi
-	* @param  string  A string which identifies the desired class - app.class
-	* Syntax: CreateObject('phpgwapi.phpgw'); <br>
-	* Example1: $phpgw = CreateObject('phpgwapi.acl'); 
+  * @access	public
 	*/
 
 	class phpgw
@@ -43,8 +40,12 @@
 		var $applications;
 		var $acl;
 		var $auth;
-		 /*! @var db */
 		var $db; 
+  	/**
+	  * Turn on debug mode. Will output additional data for debugging purposes.
+	  * @var	string	$debug
+	  * @access	public
+	  */	
 		var $debug = 0;		// This will turn on debugging information.
 		var $crypto;
 		var $categories;
@@ -68,45 +69,54 @@
 		* Core functions                                                           *
 		\**************************************************************************/
 
-		/*!
-		@function strip_html
-		@abstract strips out html chars
-		@discussion Author: Seek3r. <br>
-		Description: Used as a shortcut for stripping out html special chars. 
-		<br>  Example1: $reg_string = strip_html($urlencode_string);
-		@param urlencode_string string-the string to be stripped of html special chars.
-		@result Object - the string with html special characters removed
-		*/
+  	/**
+	  * Strips out html chars
+		*
+	  * Used as a shortcut for stripping out html special chars. 
+		*
+	  * @access	public
+  	*	@param $s string  The string to have its html special chars stripped out.
+	  * @return string  The string with html special characters removed
+		* @syntax strip_html($string)
+		* @example $reg_string = strip_html($urlencode_string);
+	  */
+
     function strip_html($s)
     {
        return htmlspecialchars(stripslashes($s));
     }
 
-		/*!
-		@function link
-		@abstract wrapper to session->link()
-		@discussion Used for backwards compatibility and as a shortcut. If not url is passed, it will use PHP_SELF <br>
-		*/
+  	/**
+	  * Link url generator
+		*
+	  * Used for backwards compatibility and as a shortcut. If no url is passed, it will use PHP_SELF. Wrapper to session->link()
+		*
+	  * @access	public
+  	*	@param	string	$string	The url the link is for
+  	*	@param  string	$extravars	Extra params to be passed to the url
+	  * @return string	The full url after processing
+	  * @see	session->link()
+		* @syntax link($string, $extravars)
+		* @example None yet
+	  */
 		function link($url = "", $extravars = "")
 		{
 			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
 			return $this->session->link($url, $extravars);
 		}
 
-		/*!
-		@function redirect
-		@abstract Handles redirects under iis and apache
-		@discussion Author: Seek3r <br>
-		Title: Handles redirects under iis and apache <br>
-		Description: This function handles redirects under iis and apache 
-		it assumes that $phpgw->link() has already been called <br>
-		Syntax: string redirect(url as string) <br>
-		Example1: None yet
-		@param url 
-		*/
+  	/**
+	  * Handles redirects under iis and apache
+		*
+	  * This function handles redirects under iis and apache it assumes that $phpgw->link() has already been called
+		*
+	  * @access	public
+  	*	@param  string The url ro redirect to
+		* @syntax redirect(key as string)
+		* @example None yet
+	  */
 		function redirect($url = "")
 		{
-
 			global $HTTP_ENV_VARS;
 
 			$iis = strpos($HTTP_ENV_VARS["SERVER_SOFTWARE"], "IIS", 0);
@@ -128,15 +138,19 @@
 			}
 		}
 
-		/*!
-		 @function lang
-		 @abstract Shortcut to tranlation class
-		 @discussion Author: Jengo <br>
-		 Title: Shortcut to translation class <br>
-		 Description: This function is a basic wrapper to translation->translate() <br>
-		 Syntax: string redirect(key as string) <br>
-		 Example1: None yet
-		*/
+  	/**
+	  * Shortcut to tranlation class
+		*
+	  * This function is a basic wrapper to translation->translate()
+		*
+	  * @access	public
+  	*	@param  string	The key for the phrase
+  	*	@param  string	the first additional param
+  	*	@param  string	the second additional param
+  	*	@param  string	the thrid additional param
+  	*	@param  string	the fourth additional param
+	  * @see	translation->translate()
+	  */
 		function lang($key, $m1 = "", $m2 = "", $m3 = "", $m4 = "") 
 		{
 			global $phpgw;
