@@ -265,28 +265,40 @@
 		{
 			//echo "<p>soinfolog.readIdArray(action='$action',action_id='$action_id')</p>\n";
 			$action2app = array(
-				'addr' => 'addressbook',
-				'proj' => 'projects',
-				'event' => 'calendar'
+				'addr'        => 'addressbook',
+				'addressbook' => 'addressbook',
+				'proj'        => 'projects',
+				'projects'    => 'projects',
+				'event'       => 'calendar',
+				'calendar'    => 'calendar'
 			);
-			if ($action != '' && $action2app[$action] != '')
+			if ($action != '' && isset($action2app[$action]))
 			{
 				$links = $this->links->get_links($action2app[$action],$action_id);
-				$ids = array();
-				while (list($nul,$link) = each($links))
+				$total = count($links);
+				if ($start > $total)
 				{
-					$ids[''.$link['id']] = 0;
+					$start = 0;
+				}
+				$ids = array();
+				while (list($n,$link) = each($links) && 
+					$n < $start+$GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'])
+				{
+					if ($n >= $start)
+					{
+						$ids[''.$link['id']] = 0;
+					}
 				}
 				//echo "<p>soinfolog.readIdArray($action,$action_id) ids ="; _debug_array($ids);
 				return $ids;
 			}
 			if ($order)
 			{
-			  $ordermethod = 'order by ' . $order . ' ' . $sort;
+			  $ordermethod = 'ORDER BY ' . $order . ' ' . $sort;
 			}
 			else
 			{
-			  $ordermethod = 'order by info_datemodified desc';   // newest first
+			  $ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 			}
 			$filtermethod = $this->aclFilter($filter);
 			$filtermethod .= $this->statusFilter($filter);
@@ -297,6 +309,7 @@
 			{
 			  $filtermethod .= " AND info_cat='$cat_id' ";
 			}
+			/* not longer used
 			switch ($action)
 			{
 				case 'addr':	$filtermethod .= " AND info_addr_id=$action_id ";
@@ -306,10 +319,11 @@
 				case 'event':	$filtermethod .= " AND info_event_id=$action_id ";
 									break;
 			}
+			*/
 			if ($query)			  // we search in _from, _subject and _des for $query
 			{
 				$sql_query = "AND (info_from like '%$query%' OR info_subject ".
-								 "like '%$query%' OR info_des like '%$query%') ";
+								 "LIKE '%$query%' OR info_des LIKE '%$query%') ";
 			}
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $action_id : 0);
 
@@ -327,8 +341,8 @@
 			{
 				$start = 0;
 			}
-			$this->db->limit_query("SELECT info_id,info_id_parent FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod",$start,__LINE__,__FILE__);
-
+			$this->db->limit_query($sql="SELECT info_id,info_id_parent FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod",$start,__LINE__,__FILE__);
+			
 			$ids = array( );
 			while ($this->db->next_record())
 			{

@@ -173,6 +173,7 @@ class html
 			$vars = implode('&',$v);
 		}
 		list($url,$v) = explode('?',$url);	// url may contain additional vars
+		if ($url == '') $url = '/index.php';
 		if ($v)
 			$vars .= ($vars ? '&' : '') . $v;
 
@@ -274,7 +275,12 @@ class html
 	{
 		if (!strstr($url,'/') && count(explode('.',$url)) == 3)
 			$url = "/index.php?menuaction=$url";
-
+		
+		if (is_array($url))
+		{
+			$vars = $url;
+			$url = '/index.php';
+		}
 		return '<a href="'.$this->link($url,$vars).'" '.$options.'>'.$content.'</a>';
 	}
 

@@ -43,7 +43,7 @@
 			'html'	=> 'Html',			// Raw html in $content[$cell['name']]
 			'file'	=> 'FileUpload',	// show an input type='file', set the local name as ${name}_path
 			'vbox'	=> 'VBox',			// a (vertical) box to contain widgets in rows, size = # of rows
-			'hbox'	=> 'HBox'			// a (horizontal) box to contain widgets in cols, size = # of cols
+			'hbox'	=> 'HBox'			// a (horizontal) box to contain widgets in cols, size = # of cols 
 		);
 		/*!
 		@function boetemplate
@@ -106,6 +106,10 @@
 		*/
 		function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 		{
+			if (strstr($name,'$') === False)
+			{
+				return $name;
+			}
 			if (!$cont)
 			{
 				$cont = array();
@@ -564,9 +568,21 @@
 		*/
 		function read($name,$template='default',$lang='default',$group=0,$version='',$load_via='')
 		{
-			if (is_array($name) && empty($name['name']) || empty($name))
+			if (is_array($name)) {
+				$pname = &$name['name'];
+			}
+			else
+			{
+				$pname = &$name;
+			}	
+			if (empty($pname))
 			{
 				return False;
+			}
+			$parent = is_array($load_via) ? $load_via['name'] : $load_via;
+         if (strstr($pname,'.') === False && !empty($parent))
+			{
+				$pname = $parent . '.' . $pname;
 			}
 			if (!$this->read_from_cache($name,$template,$lang,$group,$version))
 			{

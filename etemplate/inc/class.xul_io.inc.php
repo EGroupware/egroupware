@@ -121,21 +121,12 @@
 			}
 		}
 
-		function cell2widget($cell,&$spanned,$etempl,&$root,$embeded_too=True)
+		function cell2widget($cell,&$spanned,$etempl,&$root,&$embeded_too)
 		{
 			$type = $cell['type'];
 			if (is_array($type))
 			{
 				list(,$type) = each($type);
-			}
-			if ($type == 'template' && $cell['name'][0] != '@' && $embeded_too)
-			{
-				$embeded = new etemplate();
-				if ($embeded->read($embeded->expand_name($cell['name'],0,0),'default','default',0,'',$etempl->as_array()))
-				{
-					$this->etempl2grid($embeded,&$root,$embeded_too);
-				}
-				unset($embeded);
 			}
 			if (substr($type,0,6) == 'select')
 			{
@@ -168,7 +159,11 @@
 			{
 			case 'nextmatch':
 				$embeded = new etemplate($cell['size'],$etempl->as_array());
-				$this->etempl2grid($embeded,&$root,$embeded_too);
+				if ($embeded_too)
+				{
+					$this->etempl2grid($embeded,&$root,$embeded_too);
+				}
+				$cell['size'] = $embeded->name;
 				unset($embeded);
 				break;
 			case 'tabbox':
@@ -183,7 +178,10 @@
 					$child->add_node($tab);
 
 					$embeded = new etemplate($names[$n],$etempl->as_array());
-					$this->etempl2grid($embeded,&$root,$embeded_too);
+					if ($embeded_too)
+					{
+						$this->etempl2grid($embeded,&$root,$embeded_too);
+					}
 					$grid = new xmlnode('grid');
 					$grid->set_attribute('id',$embeded->name);
 					$child2->add_node($grid);
@@ -205,12 +203,26 @@
 				break; 
 			case 'vbox':
 			case 'hbox':
-				for ($n = 1; $n <= $cell['size']; ++$n)
+				list($anz,$options) = split(',',$cell['size'],2);
+				for ($n = 1; $n <= $anz; ++$n)
 				{
 					$widget->add_node($this->cell2widget($cell[$n],$no_span,$etempl,$root,$embeded_too));
 					unset($cell[$n]);
 				}
-				unset($cell['size']);
+				$cell['size'] = $options;
+				break;
+
+			case 'grid':
+				if ($cell['name'][0] != '@' && $embeded_too)
+				{
+					$embeded = new etemplate();
+					if ($embeded->read($name=$embeded->expand_name($cell['name'],0,0),'default','default',0,'',$etempl->as_array()))
+					{
+						$this->etempl2grid($embeded,&$root,$embeded_too);
+					}
+					$cell['name'] = $embeded->name;
+					unset($embeded);
+				}
 				break;
 			}
 			while (list($attr,$val) = each($cell))
@@ -240,8 +252,21 @@
 			return $widget;
 		}
 
-		function etempl2grid($etempl,&$root,$embeded_too=True)
+		function etempl2grid($etempl,&$root,&$embeded_too)
 		{
+			if (is_array($embeded_too))
+			{
+				if (isset($embeded_too[$etempl->name]))
+				{
+					return;	// allready embeded 
+				}
+			}
+			else
+			{
+				$embeded_too = array();
+			}
+			$embeded_too[$etempl->name] = True;
+			
 			$xul_grid = new xmlnode('grid');
 			$xul_grid->set_attribute('id',$etempl->name);
 			$xul_grid->set_attribute('template',$etempl->template);
@@ -304,7 +329,8 @@
 
 			$xul_overlay = new xmlnode('overlay');
 
-			$this->etempl2grid($etempl,&$xul_overlay);
+			$embeded_too = True;
+			$this->etempl2grid($etempl,&$xul_overlay,$embeded_too);
 
 			$doc->add_root($xul_overlay);
 			$xml = $doc->export_xml();
@@ -337,7 +363,7 @@
 			else
 			{
 				$pcell = &$box[$node_level-1];
-				$pcell[++$pcell['size']] = $cell;
+				$pcell[++$pcell['anz']] = $cell;
 			}
 		}
 
@@ -506,7 +532,10 @@
 						}
 						else
 						{
-							$this->add_cell($etempl,$box[$node['level']],&$box,&$col,$node['level']);
+							$cell = &$box[$node['level']];
+							$cell['size'] = $cell['anz'] . ($cell['size'] != '' ? ','.$cell['size'] : '');
+							unset($cell['anz']);
+							$this->add_cell($etempl,$cell,&$box,&$col,$node['level']);
 							unset($box[$node['level']]);
 						}
 						break;

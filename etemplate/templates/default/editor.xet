@@ -17,8 +17,10 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.editor.options" template="" lang="" group="0" version="0.9.15.001">
+	<grid id="etemplate.editor.edit-buttons" template="" lang="" group="0" version="0.9.15.002">
 		<columns>
+			<column/>
+			<column/>
 			<column/>
 			<column/>
 			<column/>
@@ -29,15 +31,15 @@
 		</columns>
 		<rows>
 			<row>
-				<textbox size="8" label="Width" id="width" statustext="Width of the table in % or pixels for the table-tag and (optional) div"/>
-				<textbox size="8" label="Height" id="height" statustext="Height of the table in % or pixels for the table-tag and (optional) div"/>
-				<menulist>
-					<menupopup label="Overflow" no_lang="1" id="overflow" statustext="what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)"/>
-				</menulist>
-				<int label="Border" id="border" statustext="Border-line-thickness for the table-tag"/>
-				<textbox size="12" label="Class" id="class" statustext="CSS class for the table-tag"/>
-				<int label="Spacing" id="spacing" statustext="Cellspacing for the table-tag"/>
-				<int label="Padding" id="padding" statustext="Cellpadding for the table-tag"/>
+				<button label="Read" id="read" statustext="read eTemplate from database (for the keys above)"/>
+				<button label="Show (no save)" id="show" statustext="shows/displays eTemplate for testing, does NOT save it before"/>
+				<button label="Save" id="save" statustext="save the eTemplate under the above keys (name, ...), change them for a SaveAs"/>
+				<button label="Delete" id="delete" statustext="deletes the eTemplate spez. above"/>
+				<button label="Dump4Setup" id="dump" statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app"/>
+				<button label="Write Langfile" id="langfile" statustext="creates an english ('en') langfile from label and helptexts (for application in Name)"/>
+				<button label="Export XML" id="export_xml" statustext="export the loaded eTemplate into a xml-file"/>
+				<button label="Import XML" id="import_xml" statustext="import an eTemplate from a xml-file"/>
+				<file id="file" statustext="xml-file to import"/>
 			</row>
 		</rows>
 	</grid>
@@ -55,7 +57,7 @@
 				<button label="+" no_lang="1" id="insert_col[0]" statustext="insert new column in front of all"/>
 				<button label="&gt;|&lt;" no_lang="1" id="exchange_col[$c_]" statustext="exchange this two columns"/>
 				<description options="b" no_lang="1" align="center" id=".col"/>
-				<textbox size="5" label="Width, Disabled" align="right" id="width[$col_]" statustext="width of col (in % or pixel), disable col: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disable col if content of data is empty"/>
+				<textbox size="8" label="Width, Disabled" align="right" id="width[$col_]" statustext="width of col (in % or pixel), disable col: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disable col if content of data is empty"/>
 				<button label="-" no_lang="1" align="right" id="delete_col[$c_]" statustext="delete whole column (can NOT be undone!!!)"/>
 				<button label="+" no_lang="1" align="right" id="insert_col[$c_]" statustext="insert new column behind this one"/>
 			</row>
@@ -121,7 +123,7 @@
 				<description value="Name"/>
 				<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
 				<hbox span="4">
-					<checkbox label="%s needed" align="right" id="needed" statustext="check if field has to be filled by user"/>
+					<checkbox label="%s needed" align="center" id="needed" statustext="check if field has to be filled by user"/>
 					<checkbox label="%s readonly" align="center" id="readonly" statustext="check if content should only be displayed but not altered (the content is not send back then!)"/>
 					<checkbox label="%s disabled" align="center" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell"/>
 					<checkbox label="%s onChange" align="center" id="onchange" statustext="enable JavaScript onChange submit"/>
@@ -145,14 +147,14 @@
 			</row>
 			<row>
 				<grid content="Row$row," class="th" id="etemplate.editor.row_header"/>
-				<grid content="$col$row" id="etemplate.editor.cell$col_row_cont[cell_tpl]"/>
+				<grid content="$col$row" id="etemplate.editor.cell"/>
 			</row>
 		</rows>
 		<styles>
 			.editorEdit { border-color: black }
 		</styles>
 	</grid>
-	<grid id="etemplate.editor" template="" lang="" group="" version="0.9.15.004" width="100%" height="100%">
+	<grid id="etemplate.editor" template="" lang="" group="" version="0.9.15.002" width="100%">
 		<columns>
 			<column/>
 			<column/>
@@ -169,20 +171,10 @@
 				<grid span="all" id="etemplate.editor.keys"/>
 			</row>
 			<row>
-				<hbox span="all">
-					<button label="Read" id="read" statustext="read eTemplate from database (for the keys above)"/>
-					<button label="Show (no save)" id="show" statustext="shows/displays eTemplate for testing, does NOT save it before"/>
-					<button label="Save" id="save" statustext="save the eTemplate under the above keys (name, ...), change them for a SaveAs"/>
-					<button label="Delete" id="delete" statustext="deletes the eTemplate spez. above"/>
-					<button label="Dump4Setup" id="dump" statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app"/>
-					<button label="Write Langfile" id="langfile" statustext="creates an english ('en') langfile from label and helptexts (for application in Name)"/>
-					<button label="Export XML" id="export_xml" statustext="export the loaded eTemplate into a xml-file"/>
-					<button label="Import XML" id="import_xml" statustext="import an eTemplate from a xml-file"/>
-					<file id="file" statustext="xml-file to import"/>
-				</hbox>
+				<grid span="all" id="etemplate.editor.edit-buttons"/>
 			</row>
 			<row>
-				<grid content="options" span="all" id="etemplate.editor.options"/>
+				<textbox span="all" label="Width, Height, Border, class, Spacing, Padding" id="size" statustext="width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag)"/>
 			</row>
 			<row>
 				<grid span="all" id="etemplate.editor.edit"/>

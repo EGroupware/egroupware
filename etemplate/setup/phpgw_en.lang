@@ -12,9 +12,11 @@ add column	etemplate	en	Add Column
 add table	etemplate	en	Add Table
 align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
+alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table-cell
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
 application name needed to write a langfile !!!	etemplate	en	Application name needed to write a langfile !!!
+array	etemplate	en	Array
 border	etemplate	en	Border
 border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
 can have special sql-value null	etemplate	en	can have special SQL-value NULL
@@ -37,7 +39,6 @@ creates an english ('en') langfile from label and helptexts (for application in 
 css class for the table-tag	etemplate	en	CSS class for the table-tag
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	en	CSS-styles
-datefield	etemplate	en	DateField
 day	etemplate	en	Day
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
 db-tools	etemplate	en	DB-Tools
@@ -148,6 +149,7 @@ nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows in a vbox or cols in a hbox	etemplate	en	number of rows in a VBox or cols in a HBox
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
 only an other version found !!!	etemplate	en	only an other Version found !!!
 optional note about the link	etemplate	en	optional note about the Link
@@ -239,7 +241,7 @@ width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Heigh
 width, height, border, class, spacing, padding	etemplate	en	Width, Height, Border, class, Spacing, Padding
 width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
 width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag)	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag)
-width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag),	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag),
+width, height, border-line-thickness, css-class name, celspacing, cellpadding (for table tag)	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspacing, Cellpadding (for TABLE tag)
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
 write langfile	etemplate	en	Write Langfile
 write tables	etemplate	en	Write Tables

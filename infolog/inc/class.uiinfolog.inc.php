@@ -17,14 +17,15 @@
 	{
 		var $public_functions = array
 		(
-			'get_list'    => True,
+			//'get_list'    => True,
 			'index'       => True,
 			'edit'        => True,
 			'delete'      => True,
 			'get_file'    => True,
 			'add_file'    => True,
 			'admin'       => True,
-			'preferences' => True
+			'preferences' => True,
+			'writeLangFile' => True
 		);
 		var $icons;
 
@@ -71,14 +72,292 @@
 			$this->messages = array(
 				'edit'    => 'InfoLog - Edit',
 				'add'     => 'InfoLog - New',
-				'add_sub' => 'InfoLog - New Subproject'
+				'add_sub' => 'InfoLog - New Subproject',
+				'sp'      => '- Subprojects from',
+				're'      => 'Re:'
 			);
-			$this->html = CreateObject('etemplate.html');
-			$this->categories = CreateObject('phpgwapi.categories');
-			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			//$this->html = CreateObject('etemplate.html');
+			//$this->categories = CreateObject('phpgwapi.categories');
+			//$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->link = CreateObject('infolog.uilink');
 			
 			$this->tmpl = CreateObject('etemplate.etemplate');
+			$this->html = &$this->tmpl->html;
+		}
+
+		function get_info($id,&$readonlys,$action='',$action_id='')
+		{
+			$info = $this->bo->read($id);
+			$info['anzSubs'] = $this->bo->anzSubs($id);
+			$info += $this->formatInfo($info,$action,$action_id);
+
+			$readonlys["edit[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_EDIT);
+			$readonlys["delete[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_DELETE);
+			$readonlys["sp[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_ADD);
+			$readonlys["view[$id]"] = $info['anzSubs'] < 1;
+			$readonlys['view[0]'] = True;	// no parent
+
+			return $info;
+		}
+
+		function get_rows($query,&$rows,&$readonlys)
+		{
+			//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]')</p>\n";
+
+			$ids = $this->bo->readIdArray($query['order'],$query['sort'],$query['filter'],$query['cat_id'],
+				$query['search'],$query['action'],$query['action_id'],$query['ordermethod'],
+				$query['start'],$total);
+
+			if (!is_array($ids))
+			{
+				$ids = array( );
+			}
+			$rows = array( $total );
+			$readonlys = array();
+			while (list($id,$parent) = each($ids))
+			{
+				$rows[] = $this->get_info($id,$readonlys,$query['action'],$query['action_id']);
+			}
+			//echo "<p>readonlys = "; _debug_array($readonlys);
+			reset($rows);
+
+			return $total;
+		}
+
+		function delete($values=0,$referer='')
+		{
+			$info_id = is_array($values) ? $values['info_id'] : $values;
+			$referer = is_array($values) ? $values['referer'] : $referer;
+
+			if (is_array($values) || $info_id <= 0)
+			{
+				if ($values['delete'] && $info_id > 0 && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
+				{
+					$this->bo->delete($info_id);
+				}
+				return $referer ? $this->tmpl->header($referer) : $this->index();
+			}
+			$readonlys = $values = array();
+			$values['main'][1] = $this->get_info($info_id,&$readonlys['main']);
+			
+			$this->tmpl->read('infolog.delete');
+
+			$values['main']['no_actions'] = True;
+			$persist['info_id'] = $info_id;
+			$persist['referer'] = $referer;
+
+			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist);
+		}
+
+		function index($values = 0,$action='',$action_id='',$referer=0)
+		{
+			$referer = is_array($values) ? $values['referer'] : $referer;
+			if (!is_array($values))
+			{
+				$values = array('nm' => $GLOBALS['phpgw']->session->appsession('session_data','infolog'));
+			}
+			$action = $action ? $action : $values['nm']['action'];
+			$action_id = $action_id ? $action_id : $values['nm']['action_id'];
+
+			if ($values['add'] || $values['cancel'] || isset($values['nm']['rows']) || isset($values['main']))
+			{
+				$data = $values['nm'];
+				unset($data['rows']);
+				$GLOBALS['phpgw']->session->appsession('session_data','infolog',$data);
+
+				if ($values['add'])
+				{
+					list($type) = each($values['add']);
+					return $this->edit(0,$values['nm']['action'],$values['nm']['action_id'],$type,$referer);
+				}
+				else
+				{
+					list($action,$action_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
+					list($action_id) = @each($action_id);
+					//echo "<p>infolog::index: action='$action', id='$action_id'</p>\n";
+					switch($action)
+					{
+						case 'edit':
+							return $this->edit($action_id,'','','',$referer);
+						case 'delete':
+							return $this->delete($action_id,$referer);
+						case 'sp':
+							return $this->edit(0,$action,$action_id,'',$referer);
+						case 'view':
+							$value = array();
+							$action = 'sp';
+							break;
+						default:
+							$value = array();
+							$action = '';
+							$action_id = 0;
+							break;
+					}
+				}
+			}
+			switch ($action)
+			{
+				case 'sp':
+					if (!$this->bo->read($action_id))
+					{
+						$action = ''; 
+						$action_id = 0;
+						break;
+					}
+					$values['main'][1] = $this->get_info($action_id,&$readonlys['main']);
+					$values['appheader'] = $this->messages['sp'];
+					break;
+			}
+			$readonlys['cancel'] = $action != 'sp'; 
+
+			$this->tmpl->read('infolog.index');
+
+			$values['nm']['options-filter'] = $this->filters;
+			$values['nm']['get_rows'] = 'infolog.uiinfolog.get_rows';
+			$values['nm']['no_filter2'] = True;
+			$persist['nm']['action'] = $values['nm']['action'] = $action;
+			$persist['nm']['action_id'] = $values['nm']['action_id'] = $action_id;
+			$persist['referer'] = $referer;
+			
+			$GLOBALS['phpgw']->session->appsession('session_data','infolog',$values['nm']);
+
+			$this->tmpl->exec('infolog.uiinfolog.index',$values,'',$readonlys,$persist);
+		}
+
+		/*!
+		@function edit
+		@syntax edit( $content=0,$action='',$action_id=0,$type='' )
+		@author ralfbecker
+		@abstract Edit/Create an InfoLog Entry
+		@param $content   Content from the eTemplate Exec call or info_id on inital call
+		@param $action    Name of an app of 'sp' for a infolog-sub
+		@param $action_id Id of app-entry to which a link is created
+		@param $type      Type of log-entry: note,todo,task
+		*/
+		function edit($content = 0,$action = '',$action_id=0,$type='',$referer='')
+		{
+			$referer = is_array($content) ? $content['referer'] : $referer;
+
+			if (is_array($values) || $info_id < 0)
+			{
+				if ($values['delete'] && $info_id > 0 && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
+				{
+					$this->bo->delete($info_id);
+				}
+				return $referer ? $this->tmpl->header($referer) : $this->index();
+			}
+			if (is_array($content))
+			{
+				$info_id   = $content['info_id'];
+				$action    = $content['action'];
+				$action_id = $content['action_id'];
+
+				if ($content['save'] || $content['delete'] || $content['cancel'])
+				{
+					if ($content['save'] && (!$info_id || $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
+					{
+						$this->bo->write($content);
+
+						if (!$info_id && is_array($content['link_to']['to_id']))
+						{
+							$this->link->link('infolog',$this->bo->so->data['info_id'],$content['link_to']['to_id']);
+						}
+					}
+					elseif ($content['delete'] && $info_id > 0)
+					{
+						return $this->delete($info_id,$referer);	// checks ACL first
+					}
+					return $referer ? $this->tmpl->header($referer) : $this->index();
+				}
+			}
+			else
+			{
+				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
+				$action    = $action    ? $action    : get_var('action',   array('POST','GET'));
+				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
+				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
+				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
+				$referer   = ''.$referer != '' ? $referer : get_var('HTTP_REFERER','SERVER');
+				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
+
+				if (!isset($this->bo->enums['type'][$type]))
+				{
+					$type = 'note';
+				}
+				$this->bo->read( $action == 'sp' && $action_id > 0 ? $action_id : $info_id );
+				$content = $this->bo->so->data;
+
+				if ($action_id && $action == 'sp')    // new SubProject
+				{
+					if (!$this->bo->check_access($action_id,PHPGW_ACL_ADD))
+					{
+						return $referer ? $this->tmpl->header($referer) : $this->index();
+					}
+					$parent = $this->bo->so->data;
+					$content['info_id'] = $info_id = 0;
+					$content['info_owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+					$content['info_id_parent'] = $parent['info_id'];
+					/*
+					if ($parent['info_type']=='task' && $parent['info_status']=='offer')
+					{
+						$content['info_type'] = 'confirm';   // confirmation to parent
+						$content['info_responsible'] = $parent['info_owner'];
+					}
+					*/
+					$content['info_status'] = 'ongoing';
+					$content['info_confirm'] = 'not';
+					$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
+					$content['info_des'] = '';
+					$content['info_lastmodified'] = '';
+				}
+				else
+				{
+					if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
+					{
+						return $referer ? $this->tmpl->header($referer) : $this->index();
+					}
+				}
+				$content['links'] = $content['link_to'] = array(
+					'to_id' => $info_id,
+					'to_app' => 'infolog'
+				);
+				switch ($action)
+				{
+					case 'sp':
+						break;
+					case 'addressbook':
+					case 'projects':
+					case 'calendar':
+                  $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
+					case 'new':
+						$content['info_type'] = $type;
+						break;
+					default:
+						$action = '';
+						break;
+				}
+				if (!isset($this->bo->enums['type'][$content['info_type']]))
+				{
+					$content['info_type'] = 'note';
+				}
+			}
+			$readonlys['delete'] = $action != '';
+			$content['appheader'] = $this->messages[$action ? ($action == 'sp' ? 'add_sub' : 'add') : 'edit'];
+
+			//echo "<p>uiinfolog.edit(info_id=$info_id,mode=$mode) content = "; _debug_array($content);
+			$this->tmpl->read('infolog.edit');
+			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
+				'info_type'     => $this->bo->enums['type'],
+				'info_pri'      => $this->bo->enums['priority'],
+				'info_confirm'  => $this->bo->enums['confirm'],
+				'info_status'   => $this->bo->status[$content['info_type']]
+			),$readonlys,array(
+				'info_id'   => $info_id,
+				'info_id_parent' => $content['info_id_parent'],
+				'action'    => $action,
+				'action_id' => $action_id,
+				'referer'   => $referer
+			));
 		}
 
 		function menuaction($action = 'get_list',$app='infolog')
@@ -131,7 +410,7 @@
 
 			$css_class = $info['info_pri'].($done ? '_done' : '');
 			$subject = "<span class=$css_class>";
-
+/*
 			if (($action_id != ($proj_id = $info['info_proj_id']) || $action != 'proj') &&
 			    $proj = $this->bo->readProj($proj_id))
 			{
@@ -184,7 +463,7 @@
 										'action_id' => $event_id
 									)
 								));
-			}
+			} */
 			if (($from = $info['info_from']) && (!$addr || !strstr($addr,$from)))
 			{
 				if ($addr || $event) $subject .= '<br>';
@@ -232,7 +511,7 @@
 			{
 				$owner = "<span class=private>$owner</span>";
 			}
-
+/*
 			// add the links to the files which corrospond to this entry
 			$attachments = $this->bo->list_attached($info['info_id']);
 			while (list($name,$comment) = @each($attachments))
@@ -245,7 +524,7 @@
 					),'target=_blank');
 				if ($comment) $links .= ' (' . $comment . ')';
 			}
-
+*/
 			return array(
 				'type'        => $this->icon('type',$info['info_type']),
 				'status'      => $this->icon('status',$info['info_status']),
@@ -695,135 +974,6 @@
 			$GLOBALS['phpgw']->template->fp('phpgw_body','info_add_file');
 		}
 
-		function index()
-		{
-			$this->get_list();
-		}
-
-		/*!
-		@function edit
-		@syntax edit( $content=0,$action='',$action_id=0,$type='' )
-		@author ralfbecker
-		@abstract Edit/Create an InfoLog Entry
-		@param $content   Content from the eTemplate Exec call or info_id on inital call
-		@param $action    Name of an app of 'sp' for a infolog-sub
-		@param $action_id Id of app-entry to which a link is created
-		@param $type      Type of log-entry: note,todo,task
-		*/
-		function edit($content = 0,$action = '',$action_id=0,$type='')
-		{
-			if (is_array($content))
-			{
-				$info_id   = $content['info_id'];
-				$action    = $content['action'];
-				$action_id = $content['action_id'];
-			
-				if ($content['save'] || $content['delete'] || $content['cancel'])
-				{
-					if ($content['save'] && (!$info_id || $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
-					{
-						$this->bo->write($content);
-
-						if (!$info_id && is_array($content['link_to']['to_id']))
-						{
-							$this->link->link('infolog',$this->bo->so->data['info_id'],$content['link_to']['to_id']);
-						}
-					}
-					elseif ($content['delete'] && $info_id > 0 && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
-					{
-						return $this->delete($info_id);
-					}
-					return $this->index();
-				}
-			}
-			else
-			{
-				$action    = $action    ? $action    : get_var('action',   array('POST','GET'));
-				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
-				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
-				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
-				if (!isset($this->bo->enums['type'][$type]))
-				{
-					$type = 'note';
-				}
-				$this->bo->read( $info_id );
-				$content = $this->bo->so->data;
-
-				if ($info_id && $action == 'sp')    // new SubProject
-				{
-					if (!$this->bo->check_access($info_id,PHPGW_ACL_ADD))
-					{
-						return $this->index();
-						Header('Location: ' .  $this->html->link($referer));
-						$GLOBALS['phpgw']->common->phpgw_exit();
-					}
-					$parent = $this->bo->so->data;
-					$content['info_id'] = $info_id = 0;
-					$content['info_owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
-					$content['info_id_parent'] = $parent['info_id'];
-					/*
-					if ($parent['info_type']=='task' && $parent['info_status']=='offer')
-					{
-						$content['info_type'] = 'confirm';   // confirmation to parent
-						$content['info_responsible'] = $parent['info_owner'];
-					}
-					*/
-					$content['info_status'] = 'ongoing';
-					$content['info_confirm'] = 'not';
-					$content['info_subject']=lang('Re:').' '.$parent['info_subject'];
-					$content['info_des'] = '';
-					$content['info_lastmodified'] = '';
-				}
-				else
-				{
-					if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
-					{
-						return $this->index();
-						Header('Location: ' .  $this->html->link($referer));
-						$GLOBALS['phpgw']->common->phpgw_exit();
-					}
-				}
-				$content['links'] = $content['link_to'] = array(
-					'to_id' => $info_id,
-					'to_app' => 'infolog'
-				);
-				switch ($action)
-				{
-					case 'sp':
-						break;
-					case 'addressbook':
-					case 'projects':
-					case 'calendar':
-                  $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
-					case 'new':
-						$content['info_type'] = $type;
-						break;
-					default:
-						$action = '';
-						break;
-				}
-				if (!isset($this->bo->enums['type'][$content['info_type']]))
-				{
-					$content['info_type'] = 'note';
-				}
-			}
-			$readonlys['delete'] = $action != '';
-			$content['appheader'] = $this->messages[$action ? ($action == 'sp' ? 'add_sub' : 'add') : 'edit'];
-			
-			//echo "<p>uiinfolog.edit(info_id=$info_id,mode=$mode) content = "; _debug_array($content);
-			$this->tmpl->read('infolog.edit');
-			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
-				'info_type'     => $this->bo->enums['type'],
-				'info_pri'      => $this->bo->enums['priority'],
-				'info_confirm'  => $this->bo->enums['confirm'],
-				'info_status'   => $this->bo->status[$content['info_type']]
-			),$readonlys,array(
-				'info_id'   => $info_id,
-				'action'    => $action,
-				'action_id' => $action_id
-			));
-		}
-
 		function old_edit( )
 		{
 			global $action,$info_id,$save,$add,$query_addr,$query_project;
@@ -1154,7 +1304,7 @@
 			$GLOBALS['phpgw']->template->fp('phpgw_body','info_edit');
 		}
 
-		function delete( $id=0 )
+		function old_delete( $id=0 )
 		{
 			global $info_id,$confirm,$to_del;
 			//echo "<p>delete(id=$id): info_id='$info_id', confirm='$confirm', to_del='$to_del'</p>\n";
@@ -1361,8 +1511,6 @@
 		*/
 		function writeLangFile()
 		{
-			$il = new uiinfolog(False);	// no lang on messages
-
-			$this->tmpl->writeLangFile('et_media','en',$il->messages);
+			$this->tmpl->writeLangFile('infolog','en',$this->messages);
 		}
 	}

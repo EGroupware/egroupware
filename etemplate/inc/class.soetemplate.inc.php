@@ -707,7 +707,10 @@
 			$solangfile = CreateObject('developer_tools.solangfile');
 
 			$langarr = $solangfile->load_app($app,$lang);
-
+			if (!is_array($langarr))
+			{
+				$langarr = array();
+			}
 			$to_trans = $this->getToTranslateApp($app);
 			if (is_array($additional))
 			{
@@ -721,13 +724,12 @@
 			unset($to_trans['']);
 
 			for ($new = $n = 0; list($message_id,$content) = each($to_trans); ++$n) {
-				if (!isset($langarr[$content]) && !isset($langarr[$message_id]))
-				{	// caused by not lowercased-message_id's
-					$langarr[$message_id] = $langarr[$content];
-					unset($langarr[$content]);
-				}
 				if (!isset($langarr[$message_id]))
 				{
+					if (isset($langarr[$content]))	// caused by not lowercased-message_id's
+					{
+						unset($langarr[$content]);
+					}
 					$langarr[$message_id] = array(
 						'message_id' => $message_id,
 						'app_name' => $app,

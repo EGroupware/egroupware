@@ -59,6 +59,20 @@
 		}
 
 		/*!
+		@function header
+		@abstract Abstracts a html-header call
+		@discussion In other UI's than html this needs to call the methode, defined by menuaction or
+		@discussion open a browser-window for any other links.
+		*/
+		function header($vars='')
+		{
+			Header('Location: ' . $this->html->link(is_array($vars) ? '/index.php' : $vars,
+				is_array($vars) ? $vars : ''));      
+
+			$GLOBALS['phpgw']->common->phpgw_exit();
+		}
+
+		/*!
 		@function exec
 		@abstract Generats a Dialog from an eTemplate - abstract the UI-layer
 		@discussion This is the only function an application should use, all other are INTERNAL and
@@ -204,7 +218,7 @@
 			}
 			$result = count($vals) == 1 ? $val != '' : $val == $check_val;
 			if ($not) $result = !$result;
-			echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
+			//echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
 			return $result;
 		}
 
@@ -339,6 +353,10 @@
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align'],'ALIGN');
 					list(,$cl) = explode(',',$cell['span']);
 					$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
+					if (strstr($cl,'$') !== False)
+					{
+						$cl = $this->expand_name($cl,$c,$r,'','',$content);
+					}
 					$row_data[".$col"] .= $this->html->formatOptions($cl,'CLASS');
 				}
 				$rows[$row] = $row_data;
@@ -449,15 +467,17 @@
 			list($type,$sub_type) = explode('-',$cell['type']);
 			switch ($type)
 			{
-				case 'label':		//  size: [[b]old][[i]talic]
+				case 'label':		//  size: [[b]old][[i]talic][,link]
 					if (is_array($value))
 						break;
+					list($style,$extra_link) = explode(',',$cell['size']);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
-					if ($value != '' && strstr($cell['size'],'b')) $value = $this->html->bold($value);
-					if ($value != '' && strstr($cell['size'],'i')) $value = $this->html->italic($value);
+					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
+					if ($value != '' && strstr($style,'i')) $value = $this->html->italic($value);
 					$html .= $value;
 					break;
 				case 'html':
+					$extra_link = $cell['size'];
 					$html .= $value;
 					break;
 				case 'int':		// size: [min][,[max][,len]]
@@ -663,7 +683,8 @@
 					$image = $value != '' ? $value : $name;
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
 						$image,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'BORDER="0"');
-					$html .= $cell['size'] == '' ? $image : $this->html->a_href($image,$cell['size']);
+					$html .= $image;
+					$extra_link = $cell['size'];
 					$extra_label = False;
 					break;
 				case 'file':
@@ -703,7 +724,10 @@
 					}
 					if ($box_anz > 1)	// a single cell is NOT placed into a table
 					{
-						$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".$this->html->table($rows)."\n\n<!-- END $cell[type] -->\n\n";
+						$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".
+							$this->html->table($rows,$this->html->formatOptions($cell['size'],',CELLPADDING,CELLSPACING').
+							($cell['align'] ? ' WIDTH="100%"' : '')).	// alignment only works if table has full width
+							"\n\n<!-- END $cell[type] -->\n\n";
 					}
 					break;
 				default:
@@ -741,6 +765,14 @@
 				{
 					$html = '&nbsp;';
 				}
+			}
+			if ($extra_link)
+			{
+				if ($extra_link[0] == '@')
+				{
+					$extra_link = $this->get_array($content,substr($extra_link,1));
+				}
+				return $this->html->a_href($html,$extra_link,'',$help != '' ? 'TITLE="'.lang($help).'"' : '');
 			}
 			return $html;
 		}

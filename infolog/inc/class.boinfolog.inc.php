@@ -26,6 +26,7 @@
 			'readAddr'       => True,
 			'anzSubs'        => True,
 			'readIdArray'    => True,
+			'get_rows'       => True,
 			'accountInfo'    => True,	// in class boinfolog (this class)
 			'addr2name'      => True,
 			'attach_file'    => True,
@@ -229,7 +230,7 @@
 
 		function read($info_id)
 		{
-			$this->so->read($info_id);
+			$err = $this->so->read($info_id) === False;
 				
 			if ($this->so->data['info_subject'] ==
 				 (substr($this->so->data['info_des'],0,60).' ...'))
@@ -241,7 +242,7 @@
 			{
 				$this->so->data['info_from'] = '';
 			}
-			return $this->so->data;
+			return $err ? False : $this->so->data;
 		}
 
 		function delete($info_id)

@@ -34,7 +34,7 @@
 				<description value="Name"/>
 				<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
 				<hbox span="4">
-					<checkbox label="%s needed" align="right" id="needed" statustext="check if field has to be filled by user"/>
+					<checkbox label="%s needed" align="center" id="needed" statustext="check if field has to be filled by user"/>
 					<checkbox label="%s readonly" align="center" id="readonly" statustext="check if content should only be displayed but not altered (the content is not send back then!)"/>
 					<checkbox label="%s disabled" align="center" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell"/>
 					<checkbox label="%s onChange" align="center" id="onchange" statustext="enable JavaScript onChange submit"/>
@@ -46,7 +46,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.editor.cell.vbox" template="" lang="" group="" version="0.9.15.002" height="100%" border="1">
+	<grid id="etemplate.editor.cell.vbox" template="" lang="" group="" version="0.9.15.003" height="100%" border="1">
 		<columns>
 			<column/>
 		</columns>
@@ -58,9 +58,13 @@
 						<menupopup id="type" statustext="type of the field (select Label if field should be empty)"/>
 					</menulist>
 					<description value="Cells" align="center"/>
-					<textbox size="3" id="size" statustext="number of rows in a VBox or cols in a HBox"/>
+					<textbox size="5" id="size" statustext="number of rows/cols in a V/HBox, Cellpadding, Cellspacing"/>
 					<description value="Span, Class" align="center"/>
 					<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)"/>
+					<description value="Align"/>
+					<menulist>
+						<menupopup id="align" statustext="Alignment of the V/HBox containing table-cell"/>
+					</menulist>
 				</hbox>
 			</row>
 			<row>
