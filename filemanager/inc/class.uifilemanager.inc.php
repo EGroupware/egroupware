@@ -985,8 +985,8 @@
 					$toolbar.='
 					<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
-					// go up icon when we're not at the top
-					if($this->path != '/')
+					// go up icon when we're not at the top, dont allow to go outside /home = fakebase
+					if($this->path != '/' && $this->path != $this->bo->fakebase)
 					{
 						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->lesspath);
 						$toolbar.=$this->buttonImage($link,'up',lang('go up'));
