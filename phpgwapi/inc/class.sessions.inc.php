@@ -430,7 +430,8 @@
 		*/
 		function phpgw_set_cookiedomain()
 		{
-			$this->cookie_domain = $_SERVER['HTTP_HOST'];
+			// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
+			$this->cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
 
 			// remove port from HTTP_HOST
 			if (preg_match("/^(.*):(.*)$/",$this->cookie_domain,$arr))
@@ -1149,11 +1150,23 @@
 			/* We do this to help prevent any duplicates from being sent. */
 			if (!is_array($extravars) && $extravars != '')
 			{
+				$new_extravars = Array();
+
 				$a = explode('&', $extravars);
 				$i = 0;
 				while ($i < count($a))
 				{
 					$b = split('=', $a[$i],2);
+					// Check if this value doesn't already exist in new_extravars
+					if(array_key_exists($b[0], $new_extravars))
+					{
+						// print "Debug::Error !!! " . $b[0] . " ($i) already exists<br>";
+						if( eregi("\[\]", $b[0]) )
+						{
+							$b[0] = eregi_replace("\[\]", "[$i]", $b[0]);
+						}
+					}
+
 					$new_extravars[$b[0]] = $b[1];
 					$i++;
 				}
