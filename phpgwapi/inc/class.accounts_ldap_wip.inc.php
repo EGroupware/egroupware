@@ -29,83 +29,34 @@
 	// This is where it ended up (milosch)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
 	$phpgw_info["server"]["global_denied_users"] = array(
-		'root'     => True,
-		'bin'      => True,
-		'daemon'   => True,
-		'adm'      => True,
-		'lp'       => True,
-		'sync'     => True,
-		'shutdown' => True,
-		'halt'     => True,
-		'ldap'     => True,
-		'mail'     => True,
-		'news'     => True,
-		'uucp'     => True,
-		'operator' => True,
-		'games'    => True,
-		'gopher'   => True,
-		'nobody'   => True,
-		'xfs'      => True,
-		'pgsql'    => True,
-		'mysql'    => True,
-		'postgres' => True,
-		'oracle'   => True,
-		'ftp'      => True,
-		'gdm'      => True,
-		'named'    => True,
-		'alias'    => True,
-		'web'      => True,
-		'sweep'    => True,
-		'cvs'      => True,
-		'qmaild'   => True,
-		'qmaill'   => True,
-		'qmaillog' => True,
-		'qmailp'   => True,
-		'qmailq'   => True,
-		'qmailr'   => True,
-		'qmails'   => True
+		'root'     => True, 'bin'      => True, 'daemon'   => True,
+		'adm'      => True, 'lp'       => True, 'sync'     => True,
+		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
+		'mail'     => True, 'news'     => True, 'uucp'     => True,
+		'operator' => True, 'games'    => True, 'gopher'   => True,
+		'nobody'   => True, 'xfs'      => True, 'pgsql'    => True,
+		'mysql'    => True, 'postgres' => True, 'oracle'   => True,
+		'ftp'      => True, 'gdm'      => True, 'named'    => True,
+		'alias'    => True, 'web'      => True, 'sweep'    => True,
+		'cvs'      => True, 'qmaild'   => True, 'qmaill'   => True,
+		'qmaillog' => True, 'qmailp'   => True, 'qmailq'   => True,
+		'qmailr'   => True, 'qmails'   => True
 	);
 
 	$phpgw_info["server"]["global_excluded_groups"] = array(
-		'root'      => True,
-		'bin'       => True,
-		'daemon'    => True,
-		'sys'       => True,
-		'adm'       => True,
-		'tty'       => True,
-		'disk'      => True,
-		'lp'        => True,
-		'mem'       => True,
-		'kmem'      => True,
-		'wheel'     => True,
-		'mail'      => True,
-		'uucp'      => True,
-		'man'       => True,
-		'games'     => True,
-		'dip'       => True,
-		'ftp'       => True,
-		'nobody'    => True,
-		'floppy'    => True,
-		'xfs'       => True,
-		'console'   => True,
-		'utmp'      => True,
-		'pppusers'  => True,
-		'popusers'  => True,
-		'slipusers' => True,
-		'slocate'   => True,
-		'mysql'     => True,
-		'dnstools'  => True,
-		'web'       => True,
-		'named'     => True,
-		'dba'       => True,
-		'oinstall'  => True,
-		'oracle'    => True,
-		'gdm'       => True,
-		'sweep'     => True,
-		'cvs'       => True,
-		'postgres'  => True,
-		'qmail'     => True,
-		'nofiles'   => True,
+		'root'      => True, 'bin'       => True, 'daemon'    => True,
+		'sys'       => True, 'adm'       => True, 'tty'       => True,
+		'disk'      => True, 'lp'        => True, 'mem'       => True,
+		'kmem'      => True, 'wheel'     => True, 'mail'      => True,
+		'uucp'      => True, 'man'       => True, 'games'     => True,
+		'dip'       => True, 'ftp'       => True, 'nobody'    => True,
+		'floppy'    => True, 'xfs'       => True, 'console'   => True,
+		'utmp'      => True, 'pppusers'  => True, 'popusers'  => True,
+		'slipusers' => True, 'slocate'   => True, 'mysql'     => True,
+		'dnstools'  => True, 'web'       => True, 'named'     => True,
+		'dba'       => True, 'oinstall'  => True, 'oracle'    => True,
+		'gdm'       => True, 'sweep'     => True, 'cvs'       => True,
+		'postgres'  => True, 'qmail'     => True, 'nofiles'   => True,
 		'ldap'      => True
 	);
 
@@ -792,15 +743,33 @@
 			$sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_type)";
 			$sql .= "values (".$accountid.", '".$accountname."', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A','u')";
 			$this->db->query($sql);
-			$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('filemanager', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('email', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('notes', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_preferences (preference_owner, preference_value)
+				values ('".$accountid."', '$defaultprefs')");
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('preferences', 'changepassword', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('filemanager', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('calendar', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('email', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('notes', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+			$this->db->query("
+				insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)
+				values('todo', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
 			return $accountid;
 		}
 
@@ -809,7 +778,6 @@
 			global $phpgw;
 
 			$_account_id = get_account_id($_accountid);
-
 			$ds = $phpgw->common->ldapConnect();
 
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=$_account_id");
