@@ -1462,6 +1462,13 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre28';
 	}
 
+	$test[] = '0.9.10pre28';
+	function upgrade0_9_10pre28()
+	{
+		global $phpgw_info;
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
