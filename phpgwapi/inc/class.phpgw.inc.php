@@ -53,10 +53,9 @@
 		var $addressbook;
 		var $todo;
 
-		// This is here so you can decied what the best way to handle bad sessions
-		// You could redirect them to login.php with code 2 or use the default
-		// I recommend using the default until all of the bugs are worked out.
-
+		/************************************************************************\
+		* Load up the main instance of the db class.                             *
+		\************************************************************************/
 		function phpgw() {
 			global $phpgw_info;
 			$this->db           = CreateObject("phpgwapi.db");
