@@ -22,3 +22,6 @@ theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schrift
 this server is located in the x timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 time format	preferences	de	Zeitformat
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
+Select one	preferences	de	Bitte wählen
+Language	preferences	de	Sprache
+Max matches per page	preferences	de	maximale Treffer pro Seite
