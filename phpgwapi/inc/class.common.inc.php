@@ -579,7 +579,7 @@
 			$d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
 			while ($entry=$d->read())
 			{
-				if ($entry != 'CVS' && $entry != '.' && $entry != '..')
+				if ($entry != 'CVS' && $entry != '.' && $entry != '..' && is_dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry))
 				{
 					$list[$entry]['name'] = $entry;
 					$f = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
