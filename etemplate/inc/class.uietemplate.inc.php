@@ -1081,8 +1081,10 @@
 					$attr = array();
 				}
 				$value = $this->get_array($content_in,$form_name,True);
+				
+				if ($value && get_magic_quotes_gpc()) $value = stripslashes($value);
 
-				if (isset($attr['blur']) && $attr['blur'] == stripslashes($value))
+				if (isset($attr['blur']) && $attr['blur'] == $value)
 				{
 					$value = '';	// blur-values is equal to emtpy
 				}
@@ -1105,20 +1107,12 @@
 						}
 						break;
 					case 'htmlarea':
-						if (isset($value))
-						{
-							$value = stripslashes($value);
-						}
 						$this->set_array($content,$form_name,$value);
 						break;
 					case 'int':
 					case 'float':
 					case 'text':
 					case 'textarea':
-						if (isset($value))
-						{
-							$value = stripslashes($value);
-						}
 						if ($value === '' && $attr['needed'])
 						{
 							$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang('Field must not be empty !!!',$value);
