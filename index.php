@@ -38,7 +38,7 @@
            }
         }
      }
-     $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . $phpgw_forward,$extra_vars));
+     $phpgw->redirect($phpgw->link($phpgw_forward,$extra_vars));
   }
 
   if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
@@ -54,7 +54,7 @@
                                ));
            $tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True&cd=yes"));
            if ($forward) {
-              $tpl->set_var("body_link",$phpgw->link($phpgw_info["server"]["webserver_url"] . $forward));
+              $tpl->set_var("body_link",$phpgw->link($forward));
            } else {
               $tpl->set_var("body_link",$phpgw->link("index.php","framebody=True&cd=yes"));
            }
@@ -77,15 +77,12 @@
     }
   } elseif ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
       && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]]) {
-     $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
-		  . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/"
-		  . "index.php"));
+     $phpgw->redirect($phpgw->link('/' . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/" . "index.php"));
      $phpgw->common->phpgw_exit();
   } else {
      $phpgw->common->phpgw_header();
      echo parse_navbar();  
   }
-
   
 
   //$phpgw->hooks->proccess("location","mainscreen");
@@ -156,7 +153,7 @@
      include($phpgw_info["server"]["server_root"] . "/stocks/inc/functions.inc.php");
      echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
   }  
-  $phpgw->common->hook("",array("email","calendar"));
+  $phpgw->common->hook('',array('email','calendar','news'));
   if ($phpgw_info["user"]["apps"]["addressbook"]
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
