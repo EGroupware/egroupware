@@ -18,6 +18,12 @@
 	$setup_info['admin']['tables']    = '';
 	$setup_info['admin']['enable']    = 1;
 
+	$setup_info['admin']['author']    = 'phpGW Core';
+	$setup_info['admin']['description'] = 
+		'phpGroupWare administration application';
+	$setup_info['admin']['maintainer'] = 'phpGW Core';
+	$setup_info['admin']['maintainer_email'] = 'ceb@phpgwroupware.org<br>jengo@phpgroupware.org<br>milosch@phpgroupware.org<br>seek3r@phpgroupware.org<br>skeeter@phpgroupware.org';
+
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['admin']['hooks'][] = 'acl_manager';
 	$setup_info['admin']['hooks'][] = 'add_def_pref';
