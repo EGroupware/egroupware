@@ -31,6 +31,7 @@
 		$phpgw->preferences->add('calendar','workdayends');
 		$phpgw->preferences->add('calendar','defaultcalendar');
 		$phpgw->preferences->add('calendar','defaultfilter');
+		$phpgw->preferences->add('calendar','locale');
 		if ($mainscreen_showevents == True)
 		{
 			$phpgw->preferences->add('calendar','mainscreen_showevents');
@@ -181,6 +182,9 @@
 
 	$str = '<input type="checkbox" name="default_private" value="True"'.($phpgw_info['user']['preferences']['calendar']['default_private'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['default_private'] == True?' checked':'').'>';
 	display_item(lang('when creating new events default set to private'),$str);
+
+	$country = CreateObject('phpgwapi.country');
+	display_item(lang('Select country for including holidays'),$country->form_select($phpgw_info['user']['preferences']['calendar']['locale'],'locale'));
 	
 	$p->pparse('out','pref');
 	$phpgw->common->phpgw_footer();

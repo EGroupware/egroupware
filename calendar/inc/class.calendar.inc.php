@@ -98,7 +98,8 @@ class calendar extends calendar_
 		{
 			$this->users_timeformat = 'H:i';
 		}
-
+		$cal = CreateObject('calendar.calendar_holiday',$this->owner);
+		$cal->read_holiday();
 	}
 
 // Generic functions that are derived from mcal functions.
