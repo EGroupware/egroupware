@@ -185,7 +185,7 @@ objectclass	( 1.3.6.1.4.1.9554.200
 		phpgwAdrOneType $ phpgwAddressLabel $
 		phpgwAdrTwoStreet $ phpgwAdrTwoLocality $ phpgwAdrTwoRegion $
 		phpgwAdrTwoPostalCode $ phpgwAdrTwoCountryName $ phpgwAdrTwoType $
-		telephonenumber $ homephone $ phpgwVoiceTelephoneNumber $
+		telephonenumber $ homephone $ phpgwVoiceTelephoneNumber $ facsimiletelephonenumber $
 		phpgwMsgTelephoneNumber $ phpgwCellTelephoneNumber $ phpgwPagerTelephoneNumber $
 		phpgwBbsTelephoneNumber $ phpgwModemTelephoneNumber $
 		phpgwMobileTelephoneNumber $ phpgwIsdnphoneNumber $
