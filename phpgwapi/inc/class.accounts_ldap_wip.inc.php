@@ -294,8 +294,12 @@
 			}
 		}
 
-		function isin_array($needle,$haystack=array()) 
-		{ 
+		function isin_array($needle,$haystack='') 
+		{
+			if(gettype($haystack) != 'array')
+			{
+				return False;
+			}
 			for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++); 
 				return ($i!=count($haystack)); 
 		}
@@ -489,7 +493,7 @@
 			}
 
 			$ds = $phpgw->common->ldapConnect();
-			$acct_type = $this->acct_type;
+			$acct_type = $this->get_type($account_id);
 
 			if ($acct_type == 'g' && $phpgw_info['server']['ldap_group_context'])
 			{
@@ -537,16 +541,16 @@
 			$this->acct_type = $account_type;
 
 			/* echo '<br>in create for account_lid: "'.$account_lid.'"'; */
-			if (empty($account_info['id']) || !$account_info['id'])
+			if (empty($account_info['account_id']) || !$account_info['account_id'])
 			{
 				$account_id = $this->get_nextid($account_info['account_type']);
 				/* echo '<br>using'.$account_id;exit; */
 			}
+			else
+			{
+				$account_id = $account_info['account_id'];
+			}
 			$entry['userpassword']              = $account_info['account_passwd'];
-//			$entry['phpgwaccountlastlogin']     = $account_info['lastlogin'];
-//			$entry['phpgwaccountlastloginfrom'] = $account_info['lastloginfrom'];
-//			$entry['phpgwlastpasswdchange']     = $account_info['lastpasswd_change'];
-//			$entry['phpgwaccountstatus']        = $account_info['account_status'];
 			$entry['phpgwaccounttype']          = $account_info['account_type'];
 			$entry['phpgwaccountexpires']       = $account_info['account_expires'];
 
@@ -673,6 +677,11 @@
 					$entry['objectclass'][5] = 'shadowAccount';
 					$entry['objectclass'][5] = 'phpgwAccount';
 				}
+				/*
+				echo '<pre>';
+				var_dump($entry);
+				echo '</pre>';
+				*/
 
 				ldap_add($ds, $dn, $entry);
 			}

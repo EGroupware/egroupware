@@ -254,7 +254,7 @@
 
 		function create($account_info)
 		{
-			if (empty($account_info['id']) || !$account_info['id'])
+			if (empty($account_info['account_id']) || !$account_info['account_id'])
 			{
 				$account_id = $this->get_nextid($account_info['account_type']);
 				/* echo '<br>using'.$account_id;exit; */
