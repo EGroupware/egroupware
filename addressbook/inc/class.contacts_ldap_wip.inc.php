@@ -482,7 +482,7 @@
 				if ($i<$this->total_records && $ldap_fields[$i]['uid'][0])
 				{
 					//echo '<br>j:'.$j;
-					echo '<br>i:'.$i;
+					//echo '<br>i:'.$i;
 					// unique id, lid for group/account records,
 					// type id (g/u) for groups/accounts, and
 					// id of owner/parent for the record
