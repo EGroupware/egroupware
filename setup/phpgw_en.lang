@@ -354,6 +354,7 @@ please x by hand	common	en	Please %1 by hand
 please, select a new theme	preferences	en	Please, select a new theme
 postal	addressbook	en	Postal
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+pref	common	en	pref
 prefer	common	en	Prefer
 preferences	common	en	Preferences
 prefix	addressbook	en	Prefix
