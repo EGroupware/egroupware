@@ -132,7 +132,7 @@
 		*/
 		function add($app_name,$var,$value = '')
 		{
-			if (! $value)
+			if ($value == '')
 			{
 				global $$var;
 				$value = $$var;
