@@ -6,6 +6,11 @@ body
 	margin-bottom: 0em;
 }
 
+table
+{
+	border-width: 0;
+}
+
 td
 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
