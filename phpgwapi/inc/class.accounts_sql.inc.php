@@ -351,9 +351,14 @@
 					$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 				}
 			}
+			$default_group_id  = $this->name2id($GLOBALS['phpgw_info']['server']['default_group_lid']);
+			if (!$default_group_id)
+			{
+				$default_group_id = (int) $this->name2id('Default');
+			}
 			$primary_group = $GLOBALS['auto_create_acct']['primary_group'] &&
 				$this->get_type((int)$GLOBALS['auto_create_acct']['primary_group']) == 'g' ?
-				(int) $GLOBALS['auto_create_acct']['primary_group'] : 0;
+				(int) $GLOBALS['auto_create_acct']['primary_group'] : $default_group_id;
 
 			$acct_info = array(
 				'account_id'        => (int) $GLOBALS['auto_create_acct']['id'],
@@ -388,13 +393,10 @@
 			}
 			if ($default_acls == False)
 			{
-				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
-				$default_group_id  = $this->name2id($default_group_lid);
-				$defaultgroupid = $default_group_id ? $default_group_id : $this->name2id('Default');
-				if ($defaultgroupid)
+				if ($default_group_id)
 				{
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
-						. $defaultgroupid . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
+						. $default_group_id . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', " . $accountid . ', 1)',__LINE__,__FILE__);
 				}
 				else
