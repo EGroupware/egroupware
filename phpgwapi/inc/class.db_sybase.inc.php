@@ -1,17 +1,16 @@
 <?php
-/*
- * Session Management for PHP3
- *
- * Copyright (c) 1998,1999 SH Online Dienst GmbH
- *                    Boris Erdmann, Kristian Koehntopp
- *
- * Adapted from db_mysql.inc by Sascha Schumann <sascha@schumann.cx>
- *
- * metadata() contributed by Adelino Monteiro <adelino@infologia.pt>
- *
- * $Id$
- *
- */ 
+  /**************************************************************************\
+  * phpGroupWare API - Sybase DB support                                     *
+  * http://www.phpgroupware.org/api                                          *
+  * Copyright (c) 1998,1999 SH Online Dienst GmbH Boris Erdmann,             *
+  * Kristian Koehntopp                                                       *
+  * Adapted from db_mysql.inc by Sascha Schumann <sascha@schumann.cx>        *
+  * metadata() contributed by Adelino Monteiro <adelino@infologia.pt>        *
+  * -------------------------------------------------------------------------*
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  \**************************************************************************/
+
+  /* $Id$ */
 
 class db {
   var $Host     = "";

@@ -1,15 +1,14 @@
 <?php
-/*
- * Session Management for PHP3
- *
- * Copyright (c) 1998,1999 SH Online Dienst GmbH
- *                    Boris Erdmann, Kristian Koehntopp
- *
- * Derived from db_mysql.inc by Sascha Schumann <sascha@schumann.cx>
- *
- * $Id$
- *
- */ 
+  /**************************************************************************\
+  * phpGroupWare API -                                                       *
+  * http://www.phpgroupware.org/api                                          *
+  * Copyright (c) 1998,1999 SH Online Dienst GmbH Boris Erdmann,             *
+  * Kristian Koehntopp                                                       *
+  * -------------------------------------------------------------------------*
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  \**************************************************************************/
+
+  /* $Id$ */
 
 class db {
   var $Host     = "";

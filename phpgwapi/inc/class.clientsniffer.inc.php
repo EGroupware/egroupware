@@ -1,49 +1,56 @@
 <?php
-/******************************************
-** Description   : PHPClientSniffer
-** Version       : 1.0.0
-** File Name     : PHPClientSniffer.php3
-** Author        : Roger Raymond for PHyX8 studios
-** Author Email  : roger.raymond@asphyxia.com
-** Created       : Wednesday, August 23, 2000
-** Last Modified : 
-** Modified By   : 
-*'
-   INFO:
-   Returns client information based on HTTP_USER_AGENT
+  /**************************************************************************\
+  * phpGroupWare API - Client browser detection                              *
+  * http://www.phpgroupware.org/api                                          *
+  * -------------------------------------------------------------------------*
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  \**************************************************************************/
 
-   BASED ON WORKS AND IDEAS BY:   
-   Tim Perdue of PHPBuilder.com 
-   http://www.phpbuilder.com/columns/tim20000821.php3
-   
-   The Ultimate JavaScript Client Sniffer by Netscape.
-   http://developer.netscape.com/docs/examples/javascript/NAME_type.html
-   
-   ========================================================================   
-   USAGE:
-   ========================================================================
-   include("PHPClientSniffer.php3");
-   $is = new sniffer;
-   ========================================================================
-   VARIABLE NAMES    VALUES
-   ========================================================================
-   $is->UA           The HTTP USER AGENT String
-   $is->NAME         Browser Name (Netscape, IE, Opera, iCab, Unknown)
-   $is->VERSION      Browser Full Version
-   $is->MAJORVER     Browser Major Version 
-   $is->MINORVER     Browser Minor Version
-   $is->AOL          True/False
-   $is->WEBTV        True/False
-   $is->JS           Assumed JavaScript Version Supported by Browser
-   $is->PLATFORM     System Platform (Win16,Win32,Mac,OS2,Unix)
-   $is->OS           System OS (Win98,OS2,Mac68k,linux,bsd,etc...) see code
-   $is->IP           REMOTE_ADDR
-   
-   ========================================================================
+  /******************************************
+  ** Description   : PHPClientSniffer
+  ** Version       : 1.0.0
+  ** File Name     : PHPClientSniffer.php3
+  ** Author        : Roger Raymond for PHyX8 studios
+  ** Author Email  : roger.raymond@asphyxia.com
+  ** Created       : Wednesday, August 23, 2000
+  ** Last Modified : 
+  ** Modified By   : 
+  *'
+     INFO:
+     Returns client information based on HTTP_USER_AGENT
+  
+     BASED ON WORKS AND IDEAS BY:   
+     Tim Perdue of PHPBuilder.com 
+     http://www.phpbuilder.com/columns/tim20000821.php3
+     
+     The Ultimate JavaScript Client Sniffer by Netscape.
+     http://developer.netscape.com/docs/examples/javascript/NAME_type.html
+     
+     ========================================================================   
+     USAGE:
+     ========================================================================
+     include("PHPClientSniffer.php3");
+     $is = new sniffer;
+     ========================================================================
+     VARIABLE NAMES    VALUES
+     ========================================================================
+     $is->UA           The HTTP USER AGENT String
+     $is->NAME         Browser Name (Netscape, IE, Opera, iCab, Unknown)
+     $is->VERSION      Browser Full Version
+     $is->MAJORVER     Browser Major Version 
+     $is->MINORVER     Browser Minor Version
+     $is->AOL          True/False
+     $is->WEBTV        True/False
+     $is->JS           Assumed JavaScript Version Supported by Browser
+     $is->PLATFORM     System Platform (Win16,Win32,Mac,OS2,Unix)
+     $is->OS           System OS (Win98,OS2,Mac68k,linux,bsd,etc...) see code
+     $is->IP           REMOTE_ADDR
+     
+     ========================================================================
+  
+   '****************************************/
 
- '****************************************/
  /* $Id$ */
- 
 class clientsniffer
 {  var $UA         =  "";
    var $NAME       =  "Unknown";

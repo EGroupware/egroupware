@@ -1,13 +1,16 @@
 <?php
-/*
- * Session Management for PHP3
- *
- * (C) Copyright 1998 Cameron Taggart (cameront@wolfenet.com)
- *        Modified by Guarneri carmelo (carmelo@melting-soft.com)
- *	  Modified by Cameron Just     (C.Just@its.uq.edu.au)	 
- *
- * $Id$
- */ 
+  /**************************************************************************\
+  * phpGroupWare API -                                                       *
+  * http://www.phpgroupware.org/api                                          *
+  * (C) Copyright 1998 Cameron Taggart (cameront@wolfenet.com)               *
+  *  Modified by Guarneri carmelo (carmelo@melting-soft.com)                 *
+  *	 Modified by Cameron Just     (C.Just@its.uq.edu.au)                     *
+  * -------------------------------------------------------------------------*
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  \**************************************************************************/
+
+  /* $Id$ */
+
 # echo "<BR>This is using the MSSQL class<BR>";
 
 class db {

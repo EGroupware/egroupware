@@ -1,10 +1,12 @@
 <?
-/*
- * http.php
- *
- *
- $Id$
- */
+  /**************************************************************************\
+  * phpGroupWare API - HTTP protocol class                                   *
+  * http://www.phpgroupware.org/api                                          *
+  * -------------------------------------------------------------------------*
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  \**************************************************************************/
+
+  /* $Id$ */
 
 class http
 {

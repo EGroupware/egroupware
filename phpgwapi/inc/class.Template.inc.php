@@ -1,13 +1,13 @@
 <?php
-/*
- * Session Management for PHP3
- *
- * (C) Copyright 1999-2000 NetUSE GmbH
- *                    Kristian Koehntopp
- *
- * $Id$
- *
- */ 
+  /**************************************************************************\
+  * phpGroupWare API -                                                       *
+  * http://www.phpgroupware.org/api                                          *
+  * (C) Copyright 1999-2000 NetUSE GmbH Kristian Koehntopp                   *
+  * -------------------------------------------------------------------------*
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  \**************************************************************************/
+
+  /* $Id$ */
 
 class Template {
   var $classname = "Template";

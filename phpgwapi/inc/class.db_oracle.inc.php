@@ -1,12 +1,14 @@
 <?php
-/*
- * Oracle accessor based on Session Management for PHP3
- *
- * Copyright (c) 1998-2000 Luis Francisco Gonzalez Hernandez
- *
- * $Id$
- *
- */ 
+  /**************************************************************************\
+  * phpGroupWare API -                                                       *
+  * http://www.phpgroupware.org/api                                          *
+  * Copyright (c) 1998-2000 Luis Francisco Gonzalez Hernandez                *
+  * Oracle accessor based on Session Management for PHP3                     *
+  * -------------------------------------------------------------------------*
+  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
+  \**************************************************************************/
+
+  /* $Id$ */
 
 class db {
   var $Debug    =  false;

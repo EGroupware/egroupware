@@ -1,19 +1,33 @@
-<?PHP
-/**
-*
-* class for creating matrix like timeframes for items
-*
-* this matrix is having the days of actual month in
-* the x-axis and the items, which could be projects,
-* in the y-axis.
-* You will see a top-down view of all items and their
-* associated timeframes. You probably saw this in 
-* projectmanagement apps
-*
-* @author		Marc Logemann [loge@mail.com]
-* @version	0.9
-* 
-*/
+<?php
+  /**************************************************************************\
+  * phpGroupWare API - Matrix View Generator                                 *
+  * http://www.phpgroupware.org/api                                          *
+  * This file written by Marc Logemann <loge@phpgroupware.org>               *
+  * class for creating matrix like timeframes for items                      *
+  *                                                                          *
+  * this matrix is having the days of actual month in the x-axis and the     *
+  * items, which could be projects, in the y-axis.                           *
+  * You will see a top-down view of all items and their associated           *
+  * timeframes. You probably saw this in projectmanagement apps              *
+  *                                                                          *
+  * Copyright (C) 2000, 2001 Marc Logemann                                   *
+  * -------------------------------------------------------------------------*
+  * This library is part of phpGroupWare (http://www.phpgroupware.org)       * 
+  * This library is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published by *
+  * the Free Software Foundation; either version 2.1 of the License,         *
+  * or any later version.                                                    *
+  * This library is distributed in the hope that it will be useful, but      *
+  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+  * See the GNU Lesser General Public License for more details.              *
+  * You should have received a copy of the GNU Lesser General Public License *
+  * along with this library; if not, write to the Free Software Foundation,  *
+  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  \**************************************************************************/
+
+  /* $Id$ */
+
 class matrixview {
 
 	var $sumdays = 0;
