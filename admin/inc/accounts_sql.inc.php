@@ -72,23 +72,6 @@
   
      $phpgw->db->lock(array("accounts","preferences"));
 
-     $phpgw->common->preferences_add($account_info["loginid"],"maxmatchs","common","15");
-     $phpgw->common->preferences_add($account_info["loginid"],"theme","common","default");
-     $phpgw->common->preferences_add($account_info["loginid"],"tz_offset","common","0");
-     $phpgw->common->preferences_add($account_info["loginid"],"dateformat","common","m/d/Y");
-     $phpgw->common->preferences_add($account_info["loginid"],"timeformat","common","12");
-     $phpgw->common->preferences_add($account_info["loginid"],"lang","common","en");
-     $phpgw->common->preferences_add($account_info["loginid"],"company","addressbook","True");
-     $phpgw->common->preferences_add($account_info["loginid"],"lastname","addressbook","True");
-     $phpgw->common->preferences_add($account_info["loginid"],"firstname","addressbook","True");
-
-     // Even if they don't have access to the calendar, we will add these.
-     // Its better then the calendar being all messed up, they will be deleted
-     // the next time the update there preferences.
-     $phpgw->common->preferences_add($account_info["loginid"],"weekstarts","calendar","Monday");
-     $phpgw->common->preferences_add($account_info["loginid"],"workdaystarts","calendar","9");
-     $phpgw->common->preferences_add($account_info["loginid"],"workdayends","calendar","17");
-
      while ($permission = each($account_info["permissions"])) {
        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
           $phpgw->accounts->add_app($permission[0]);
@@ -102,6 +85,12 @@
           . "','" . $phpgw->accounts->add_app("",True) . "','" . $account_info["groups"] . "','A',0)";
 
      $phpgw->db->query($sql);
+
+     $phpgw->db->query("select account_id from accounts where account_lid='"
+                     . $account_info["loginid"] . "'");
+     $phpgw->db->next_record();
+     add_default_preferences($phpgw->db->f("account_id"));
+
      $phpgw->db->unlock();
 
      $sep = $phpgw->common->filesystem_separator();
@@ -206,7 +195,7 @@
      $phpgw->db->query("delete from addressbook where ab_owner='$account_id'");
      $phpgw->db->query("delete from accounts where account_lid='$account_id'");
      
-     $phpgw->common->preferences_delete("all",$lid);
+     $phpgw->common->preferences_delete("all",$account_id);
 
      $phpgw->db->unlock();
 

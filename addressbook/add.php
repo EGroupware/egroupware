@@ -12,15 +12,20 @@
 
   /* $Id$ */
 
-  if ($submit) {
+  if ($submit || $AddVcard) {
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
   $phpgw_info["flags"]["currentapp"] = "addressbook";
   include("../header.inc.php");
-  
-  if ($add_email) {
-     list($fields["lastname"],$fields["firstname"]) = explode(" ", $name);
+
+
+  if ($AddVcard){
+       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] .
+              "/addressbook/vcardin.php"));
+  }
+  else if ($add_email) {
+     list($fields["firstname"],$fields["lastname"]) = explode(" ", $name);
      $fields["email"] = $add_email;
      form("","add.php","Add",$fields);
   } else if (! $submit && ! $add_email) {

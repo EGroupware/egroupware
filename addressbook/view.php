@@ -23,8 +23,7 @@
     Header("Location: " . $phpgw->link("index.php"));
   }
 
-  if ($filter != "private")
- {
+  if ($filter != "private") {
      $filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
   }
 
@@ -78,18 +77,21 @@
   if ($access != "private" && $access != "public") {
 	 echo lang("Group access") . " - " . $phpgw->accounts->convert_string_to_names_access($access);
   } else {
-     
      echo $access;
   }
      
   echo "</td></tr></table>";
 ?>
+
  <TABLE border="0" cellpadding="1" cellspacing="1">
   <TR> 
    <TD align="left">
     <?php
       echo $phpgw->common->check_owner($owner,"edit.php","Edit","ab_id=$ab_id");
     ?>
+   </TD>
+   <TD align=left>
+     <a href="<?php echo $phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort");?>">Vcard</a>
    </TD>
    <TD align="left">
     <a href="<?php echo $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>">Done</a>
