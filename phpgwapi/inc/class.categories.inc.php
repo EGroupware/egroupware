@@ -566,10 +566,21 @@
 			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
 			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
 
-			$this->db->query("INSERT INTO phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
-				. "cat_main,cat_level) VALUES ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access']
+			if (isset($cat_values['id']))
+			{
+				$id_col = 'cat_id,';
+				$id_val = $cat_values['id'].',';
+			}
+
+			$this->db->query("INSERT INTO phpgw_categories (${id_col}cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
+				. "cat_main,cat_level) VALUES ($id_val'" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access']
 				. "','" . $this->app_name . "','" . $cat_values['name'] . "','" . $cat_values['descr'] . "','" . $cat_values['data']
 				. "','" . $cat_values['main'] . "','" . $cat_values['level'] . "')",__LINE__,__FILE__);
+
+			if (isset($cat_values['id']))
+			{
+				$max = $cat_values['id'];
+			}
 
 			$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
 
@@ -649,7 +660,7 @@
 		*/
 		function edit($cat_values)
 		{
-			if (intval($cat_values['old_parent']) != $cat_values['parent'])
+			if (isset($cat_values['old_parent']) && intval($cat_values['old_parent']) != $cat_values['parent'])
 			{
 				$this->delete(array('cat_id' => $cat_values['id'],'drop_subs' => False,'modify_subs' => True));
 				return $this->add($cat_values);
