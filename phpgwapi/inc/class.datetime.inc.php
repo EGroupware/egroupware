@@ -116,7 +116,7 @@
 			}
 			else
 			{
-				return (int)($server_time - $this->gmtnow / 3600);
+				return (int)(($server_time - $this->gmtnow) / 3600);
 			}
 		}
 
