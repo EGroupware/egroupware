@@ -11,10 +11,10 @@ account has been updated	all	fr	Le compte a &eacute;t&eacute; mis &agrave; jour
 account preferences	all	fr	Pref&eacute;rences de compte
 active	all	fr	Actif
 add	all	fr	Ajouter
-add a single pharse	all	fr	Ajouter une seule ligne
+add a single phrase	all	fr	Ajouter une seule ligne
 add new account	all	fr	Ajouter un nouveau compte
 add new application	all	fr	Ajouter une nouvelle application
-add new pharse	all	fr	Ajouter une nouvelle phrase
+add new phrase	all	fr	Ajouter une nouvelle phrase
 add to addressbook	all	fr	Ajouter au carnet d'adresses
 address book	all	fr	Carnet d'adresse
 address book - view	all	fr	Carnet d'adresses - voir
@@ -74,7 +74,7 @@ copy_as	all	fr	Copier vers
 create	all	fr	Cr&eacute;er
 create group	all	fr	Cr&eacute;er un groupe
 create lang.sql file	all	fr	Cr&eacute;er le fichier lang.sql
-create new langague set	all	fr	Cr&eacute;er nouvelle table de langue
+create new language set	all	fr	Cr&eacute;er nouvelle table de langue
 created by	all	fr	Cr&eacute;&eacute; Par
 current users	all	fr	Utilisateurs courants
 current_file	all	fr	Fichier courant
@@ -91,7 +91,7 @@ delete	all	fr	Supprimer
 description	all	fr	Description
 disabled	all	fr	D&eacute;sactiv&eacute;
 display	all	fr	Afficher
-display missing pharases in lang set	all	fr	Afficher les phrases manquantes dans la table de langage
+display missing phrases in lang set	all	fr	Afficher les phrases manquantes dans la table de langage
 done	all	fr	Fait
 download	all	fr	T&eacutel&eacute;charger
 do_delete	all	fr	Supprimer
@@ -213,7 +213,7 @@ new group name	all	fr	Nouveau nom de groupe
 new message	all	fr	Nouveau message
 new password [ leave blank for no change	all	fr	Nouveau mot de passe [ Laissez vide pour ne rien changer ]
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laissez vide pour ne rien changer ]
-new pharse has been added	all	fr	Une nouvelle phrase a &eacute;t&eacute; rajoutée
+new phrase has been added	all	fr	Une nouvelle phrase a &eacute;t&eacute; rajoutée
 news file	all	fr	Fichier de News
 news headlines	all	fr	News headlines
 news reader	all	fr	Lecteur de News
@@ -247,8 +247,8 @@ percent of users that logged out	all	fr	Pourcentage d'utilisateurs qui se sont d
 permissions	all	fr	Permissions
 permissions this group has	all	fr	Permissions de ce groupe
 permissions to the files/users directory	all	fr	Permissions pour le repertoire fichiers/utilisateurs
-pharse in english	all	fr	Phrase en anglais
-pharse in new langague	all	fr	Phrase dans une nouvelle langue
+phrase in english	all	fr	Phrase en anglais
+phrase in new language	all	fr	Phrase dans une nouvelle langue
 phpgroupware login	all	fr	login phpGroupWare
 please select a message first	all	fr	Veuillez d'abord selectionner un message
 please x by hand	all	fr	veuillez %1 a la main
@@ -288,11 +288,11 @@ section	all	fr	Section
 select application	all	fr	selectionner l'apllication
 select different theme	all	fr	Choisissez un theme diff&eacute;rent
 select headline news sites	all	fr	Choisissez les site d'Headlines
-select langague to generate for	all	fr	Selectionner la langue a utiliser
+select language to generate for	all	fr	Selectionner la langue a utiliser
 select permissions this group will have	all	fr	Selectionner les permissions qu'aura ce groupe
 select users for inclusion	all	fr	Selectionner les utilisateurs pour inclusion
-select which application for this pharse	all	fr	Selectionner l'application pour cette phrase
-select which langauge for this pharse	all	fr	Selectionner la langue pour cette phrase
+select which application for this phrase	all	fr	Selectionner l'application pour cette phrase
+select which language for this phrase	all	fr	Selectionner la langue pour cette phrase
 send	all	fr	Envoyer
 send deleted messages to the trash	all	fr	Messages a effacer envoyés a la corbeille
 september	all	fr	Septembre
@@ -380,7 +380,7 @@ view	all	fr	Voir
 view access log	all	fr	Voir les log d'acc&egrave;s
 view sessions	all	fr	Voir les sessions
 view this entry	all	fr	Voir cette entr&eacute;e
-view/edit/delete all pharses	all	fr	Voir/editer/effacer toutes les phrases
+view/edit/delete all phrases	all	fr	Voir/editer/effacer toutes les phrases
 we	all	fr	Me
 wed	all	fr	Mer
 wednesday	all	fr	Mercredi

@@ -12,10 +12,10 @@ account has been updated	common	es	Cuenta actualizada
 account preferences	common	es	Preferencias de la Cuenta
 active	admin	es	Activo
 add	common	es	Agregar
-add a single pharse	transy	es	Agregar una sola frase
+add a single phrase	transy	es	Agregar una sola frase
 add new account	admin	es	Agregar una nueva cuenta
 add new application	admin	es	Agregar nueva aplicación
-add new pharse	transy	es	Agregar nueva frase
+add new phrase	transy	es	Agregar nueva frase
 add to addressbook	email	es	Agregar a la libreta de direcciones
 address book	common	es	Libreta de Direcciones
 address book	addressbook	es	Libreta de direcciones
@@ -80,7 +80,7 @@ create	common	es	Crear
 create	filemanager	es	Crear
 create group	admin	es	Crear Grupo
 create lang.sql file	transy	es	Crear archivo lang.sql
-create new langague set	transy	es	Crear nuevo set de lenguaje
+create new language set	transy	es	Crear nuevo set de lenguaje
 created by	common	es	Creado por
 created by	todo	es	Creado por
 current users	common	es	Usuarios conectados
@@ -102,7 +102,7 @@ delete	filemanager	es	Borrar
 description	calendar	es	Descripción
 disabled	admin	es	Deshabilitado
 display	admin	es	Mostrar
-display missing pharases in lang set	transy	es	Mostrar frases perdidas es el set de lenguaje
+display missing phrases in lang set	transy	es	Mostrar frases perdidas es el set de lenguaje
 done	common	es	Hecho
 download	filemanager	es	Bajar
 do_delete	filemanager	es	Borrar
@@ -233,8 +233,8 @@ new entry added sucessfully	common	es	Nueva entrada agregada exitosamente
 new group name	admin	es	Nuevo nombre de grupo
 new message	email	es	Nuevo mensaje
 new password [ leave blank for no change ]	admin	es	Nueva contraseña [ Deje es blanco para NO cambiar ]
-new pharse has been added	common	es	Nueva frase agregada
-new pharse has been added	transy	es	Nueva frase agregada
+new phrase has been added	common	es	Nueva frase agregada
+new phrase has been added	transy	es	Nueva frase agregada
 news file	admin	es	Archivo Noticias
 news headlines	common	es	Encabezados de Noticias
 news reader	common	es	Lector de Noticias
@@ -271,8 +271,8 @@ percent of users that logged out	admin	es	Porcentaje de usuarios que se deslogue
 permissions	admin	es	Permisos
 permissions this group has	admin	es	Permisos que tiene este grupo
 permissions to the files/users directory	common	es	permisos a los archivos/directorios de usuario
-pharse in english	transy	es	Frase es Ingles
-pharse in new langague	transy	es	Frase es el nuevo lenguaje
+phrase in english	transy	es	Frase es Ingles
+phrase in new language	transy	es	Frase es el nuevo lenguaje
 phpgroupware login	login	es	phpGroupWare login
 please select a message first	email	es	Por favor seleccione un mensaje primero
 please x by hand	common	es	Por favor %1 manualmente
@@ -313,11 +313,11 @@ section	email	es	Sección
 select application	transy	es	Seleccione aplicación
 select different theme	preferences	es	Seleccione un tema diferente
 select headline news sites	preferences	es	Seleccione sites de Encabezados de Noticias
-select langague to generate for	transy	es	Seleccionar lenguaje para el cual generar
+select language to generate for	transy	es	Seleccionar lenguaje para el cual generar
 select permissions this group will have	admin	es	Selecciones los permisos que tendra este grupo
 select users for inclusion	admin	es	Seleccionar usuarios para inclución
-select which application for this pharse	transy	es	seleccione que aplicación para esta frase
-select which langauge for this pharse	transy	es	seleccione que lenguaje para esta frase
+select which application for this phrase	transy	es	seleccione que aplicación para esta frase
+select which language for this phrase	transy	es	seleccione que lenguaje para esta frase
 send	email	es	Enviar
 send deleted messages to the trash	email	es	Enviar mensaje borrados a el Trash
 september	common	es	Setiembre
@@ -410,7 +410,7 @@ view	common	es	Ver
 view access log	admin	es	Ver log de acceso
 view sessions	admin	es	Ver sesiones
 view this entry	calendar	es	Ver esta entrada
-view/edit/delete all pharses	transy	es	Ver/editar/borrar todas las frases
+view/edit/delete all phrases	transy	es	Ver/editar/borrar todas las frases
 we	calendar	es	Mi
 wed	calendar	es	Mie
 wednesday	common	es	Miercoles

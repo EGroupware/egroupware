@@ -309,7 +309,7 @@ select application	transy	de	Anwendung auswählen
 select different theme	preferences	de	anderes Schema wählen
 select headline news sites	preferences	de	Sites für Schlagzeilen auswählen
 select headline news sites	headlines	de	verfügbare News Sites für Schlagzeilen
-select langague to generate for	transy	de	Sprache auswählen
+select language to generate for	transy	de	Sprache auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
