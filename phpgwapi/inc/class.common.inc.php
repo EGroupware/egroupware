@@ -1692,7 +1692,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$link_data[] = array
 					(
 						'pref_link'	=> $url,
-						'pref_text'	=> $text
+						'pref_text'	=> lang($text)
 					);
 				}
 
