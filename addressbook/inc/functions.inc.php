@@ -12,62 +12,79 @@
 
 /* $Id$ */
 
-	$abc = array(
-		"fn"				=> "full name",        //'firstname lastname'
-		"sound"				=> "",
-		"org_name"			=> "company name",  //company
-		"org_unit"			=> "department",  //division
-		"title"				=> "title",
-		"n_given"			=> "first name",   //firstname
-		"n_family"			=> "last name",  //lastname
-		"n_middle"			=> "middle",
-		"n_prefix"			=> "prefix",
-		"n_suffix"			=> "suffix",
-		"label"				=> "label",
-		"adr_street"		=> "street",
-		"adr_locality"		=> "city",   //city
-		"adr_region"		=> "state",     //state
-		"adr_postalcode"	=> "zip", //zip
-		"adr_countryname"	=> "country",
-		"adr_work"			=> "",   //yn
-		"adr_home"			=> "",   //yn
-		"adr_parcel"		=> "", //yn
-		"adr_postal"		=> "", //yn
-		"tz"				=> "timezone",
-		"geo"				=> "geo",
-		"a_tel"				=> "home phone",
-		"a_tel_work"		=> "",   //yn
-		"a_tel_home"		=> "",   //yn
-		"a_tel_voice"		=> "",  //yn
-		"a_tel_msg"			=> "",    //yn
-		"a_tel_fax"			=> "",    //yn
-		"a_tel_prefer"		=> "", //yn
-		"b_tel"				=> "work phone",
-		"b_tel_work"		=> "",   //yn
-		"b_tel_home"		=> "",   //yn
-		"b_tel_voice"		=> "",  //yn
-		"b_tel_msg"			=> "",    //yn
-		"b_tel_fax"			=> "",    //yn
-		"b_tel_prefer"		=> "", //yn
-		"c_tel"				=> "fax",
-		"c_tel_work"		=> "",   //yn
-		"c_tel_home"		=> "",   //yn
-		"c_tel_voice"		=> "",  //yn
-		"c_tel_msg"			=> "",    //yn
-		"c_tel_fax"			=> "",    //yn
-		"c_tel_prefer"		=> "", //yn
-		"d_email"			=> "email",
-		"d_emailtype"		=> "email type",   //'INTERNET','CompuServe',etc...
-		"d_email_work"		=> "",  //yn
-		"d_email_home"		=> "",  //yn
-		"bday"				=> "birthday",
-		"url"				=> "URL",
-		//"access"			=> "access"
-	);
+	// Perform acl check, set $rights
+	if(!isset($owner)) { $owner = 0; } 
 
-	// this cleans up the fieldnames for display (so we don't see adr_postalcode, etc..)
+	$grants = $phpgw->acl->get_grants('addressbook');
+  
+	if(!isset($owner) || !$owner) {
+		$owner = $phpgw_info['user']['account_id'];
+		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+	} else {
+		if($grants[$owner]) {
+			$rights = $grants[$owner];
+			if (!($rights & PHPGW_ACL_READ)) {
+				$owner = $phpgw_info['user']['account_id'];
+				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+			}
+		}
+	}
+
+	// this cleans up the fieldnames for display
 	function display_name($column) {
-		global $abc;
+		$abc = array(
+			"fn"				=> "full name",        //'firstname lastname'
+			"sound"				=> "",
+			"org_name"			=> "company name",  //company
+			"org_unit"			=> "department",  //division
+			"title"				=> "title",
+			"n_given"			=> "first name",   //firstname
+			"n_family"			=> "last name",  //lastname
+			"n_middle"			=> "middle",
+			"n_prefix"			=> "prefix",
+			"n_suffix"			=> "suffix",
+			"label"				=> "label",
+			"adr_street"		=> "street",
+			"adr_locality"		=> "city",   //city
+			"adr_region"		=> "state",     //state
+			"adr_postalcode"	=> "zip", //zip
+			"adr_countryname"	=> "country",
+			"adr_work"			=> "",   //yn
+			"adr_home"			=> "",   //yn
+			"adr_parcel"		=> "", //yn
+			"adr_postal"		=> "", //yn
+			"tz"				=> "timezone",
+			"geo"				=> "geo",
+			"a_tel"				=> "home phone",
+			"a_tel_work"		=> "",   //yn
+			"a_tel_home"		=> "",   //yn
+			"a_tel_voice"		=> "",  //yn
+			"a_tel_msg"			=> "",    //yn
+			"a_tel_fax"			=> "",    //yn
+			"a_tel_prefer"		=> "", //yn
+			"b_tel"				=> "work phone",
+			"b_tel_work"		=> "",   //yn
+			"b_tel_home"		=> "",   //yn
+			"b_tel_voice"		=> "",  //yn
+			"b_tel_msg"			=> "",    //yn
+			"b_tel_fax"			=> "",    //yn
+			"b_tel_prefer"		=> "", //yn
+			"c_tel"				=> "fax",
+			"c_tel_work"		=> "",   //yn
+			"c_tel_home"		=> "",   //yn
+			"c_tel_voice"		=> "",  //yn
+			"c_tel_msg"			=> "",    //yn
+			"c_tel_fax"			=> "",    //yn
+			"c_tel_prefer"		=> "", //yn
+			"d_email"			=> "email",
+			"d_emailtype"		=> "email type",   //'INTERNET','CompuServe',etc...
+			"d_email_work"		=> "",  //yn
+			"d_email_home"		=> "",  //yn
+			"bday"				=> "birthday",
+			"url"				=> "URL",
+			//"access"			=> "access"
+		);
+
 		while($name = each($abc) ) {
 			if ($column == $name[0]) { return lang($name[1]); }
 		}
