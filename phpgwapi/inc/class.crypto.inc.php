@@ -268,6 +268,10 @@
 				$data = $encrypteddata;
 			}
 
+			// Fix strange bug
+			// Without this, somes ^@^@^@^@ appears in data
+			$data = chop($data);
+
 			$newdata = @unserialize($data);
 			if($newdata)
 			{
