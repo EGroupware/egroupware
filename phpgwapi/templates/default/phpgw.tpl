@@ -8,8 +8,8 @@
 	<META NAME="keywords" CONTENT="{phpgw_head_keywords}">
 	<META name="robots" content="none">
 	<BASE target="{phpgw_head_target}">
-	<LINK REL="ICON" href="{phpgw_head_browser_ico}" type="image/x-ico">
-	<LINK REL="SHORTCUT ICON" href="{phpgw_head_browser_ico}">
+	<LINK REL="ICON" href="favicon.ico" type="image/x-ico">
+	<LINK REL="SHORTCUT ICON" href="favicon.ico">
 	<TITLE>{phpgw_head_website_title}</TITLE>
 	{phpgw_head_javascript}
 	{phpgw_css}
