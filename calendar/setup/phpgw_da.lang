@@ -12,6 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 add a single entry by passing the fields.	calendar	da	
 add alarm	calendar	da	Tilføj Alarm
 add contact	calendar	da	Tilføj Kontakt
+add or update a single entry by passing the fields.	calendar	da	
 added	calendar	da	Tilføjet
 address book	calendar	da	Adressebog
 alarm	calendar	da	Alarm
@@ -76,6 +77,7 @@ disabled	calendar	da	deaktiveret
 display interval in day view	calendar	da	Vis interval i Dags Fremvisning
 display mini calendars when printing	calendar	da	Vis mini kalender når der printes
 display status of events	calendar	da	Vis status på aftaler
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	da	Viser din standart kalender på startsiden (siden der vises når du logger på eGroupware eller trykker på hjem ikonet)?
 displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	da	Viser din standart kalender visning på startsiden (siden der vises når du logger på eGroupware eller trykker på hjem knappen)
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	da	Du du påmindes om nye eller ændrede aftaler? Vil du påmindes omkring ændringer du selv har lavet.<br>Du kan begrænse påmindelser til bestemte ændringer. Hver punkt indeholder alle påmindelser listet ovenfor. Alle ændringer inkludere ændringer af titel, beskrivelse, deltagere, men ikke deltagernes svar. Hvis ejeren af en hændelse har anmodet om påmindelse, vil han også altid modtage deltagerens svar, som accepteret og ikke accepteret.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	da	Vil du modtage en reglmæssigt opsummering af dine aftaler via e-mail?<br>Opsummeringen bliver sendt til din standart e-mail addresse om morgenen på dagen eller mandag for ugenligt opsummering.<br>Den bliver kun sendt hvis du har aftaler på dagen eller ugen.
@@ -106,11 +108,13 @@ firstname of person to notify	calendar	da	Fornavn på personen at påminde
 format of event updates	calendar	da	formatet på hændelses opdateringer
 fr	calendar	da	Fr
 free/busy	calendar	da	Fri/optaget
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	da	fri/optaget: Ukendt bruger ´%1´, forkert adgangskode eller ikke tilgængelig for bruger der ikke er logget ind!!!
 frequency	calendar	da	Frekvens
 fri	calendar	da	Fre
 full description	calendar	da	Fuld beskrivelse
 fullname of person to notify	calendar	da	Det fulde navn på personen at påminde
 generate printer-friendly version	calendar	da	Lav en printer venlig version
+global categories	calendar	da	Globale Kategorier
 global public and group public	calendar	da	Global offentlig og gruppe offentlig
 global public only	calendar	da	Kun globalt offentlig
 go!	calendar	da	Udfør!
@@ -129,22 +133,25 @@ hours	calendar	da	timer
 i participate	calendar	da	Jeg deltager
 ical / rfc2445	calendar	da	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	da	Hvis valgt, vil helligdage i weekender bliver vis den efterfølgende mandag.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	da	Hvis du ikke indtaster en adgangskode her, så vil informationen være tilgængelig for alle, som kender addressen!!!
 ignore conflict	calendar	da	Ignorér konflikt
 import	calendar	da	Importer
 import csv-file	common	da	Importer CSV-fil
 interval	calendar	da	Interval
 intervals in day view	calendar	da	Intervaller i dags visning
 intervals per day in planner view	calendar	da	Intervaller pr. dag i planlægger visning
-invalid entry id.	calendar	da	
+invalid entry id.	calendar	da	Ugyldigt ID.
 last	calendar	da	sidste
 lastname of person to notify	calendar	da	Efternavn på person der skal påmindes
 length shown<br>(emtpy for full length)	calendar	da	Vist længde<br>(tom for fuld længde)
 length<br>(<= 255)	calendar	da	Længde<br>(<= 255)
+list all categories.	calendar	da	Vis alle kategorier
 load [iv	calendar	da	Hent [iv]Cal
 load [iv]cal	calendar	da	Indlæs [iv]Cal
 location	calendar	da	Sted
 location to autoload from	admin	da	Sted der automatisk skal hentes fra
-matrixview	calendar	da	
+make freebusy information availible to not loged in persons?	calendar	da	Gør fri/optaget information tilgængelig for personen der ikke er logget ind?
+matrixview	calendar	da	Matrice visning
 minutes	calendar	da	Minutter
 mo	calendar	da	Ma
 modified	calendar	da	Modificeret
@@ -168,30 +175,31 @@ notification messages for your responses	calendar	da	Påmindelses besked for dine
 number of intervals per day in planner view	calendar	da	Antal intervaller pr. dag i planlægger visning
 number of months	calendar	da	Antal måneder
 number of records to read (%1)	calendar	da	Antal posteringer at læse (%1)
-observance rule	calendar	da	
+observance rule	calendar	da	Iagtag Regl
 occurence	calendar	da	Hændelse
 old startdate	calendar	da	Gamel Start Dato
 olddate	calendar	da	GamelDato
-on %1 %2 %3 your meeting request for %4	calendar	da	
-on all changes	calendar	da	på alle ændringer
-on all modification, but responses	calendar	da	
-on any time change too	calendar	da	
-on invitation / cancelation only	calendar	da	
-on participant responses too	calendar	da	
-on time change of more than 4 hours too	calendar	da	
+on %1 %2 %3 your meeting request for %4	calendar	da	Ved %1 %2 %3 dit møde efterspørgelse for %4
+on all changes	calendar	da	ved alle ændringer
+on all modification, but responses	calendar	da	ved alle ændringer, undtaget svar
+on any time change too	calendar	da	også ved ændringen af tidspunktet
+on invitation / cancelation only	calendar	da	kun ved invitation / annullering
+on participant responses too	calendar	da	også ved deltager svar
+on time change of more than 4 hours too	calendar	da	også når tiden ændres mere end 4 timer
 open todo's:	calendar	da	Åben ToDo:
 order	calendar	da	Orden
 overlap holiday	calendar	da	Overlap helligdag
 participant	calendar	da	Deltager
 participants	calendar	da	Deltagere
 participates	calendar	da	Deltager
+password for not loged in users to your freebusy information?	calendar	da	Adgangskode for brugere der ikke er logget ind, der skal kunne se din fri/optaget, information?
 people holiday	calendar	da	
 permission denied	calendar	da	Adgang nægtet
 planner	calendar	da	Planlægger
 planner by category	calendar	da	Planlægger soteret efter kategori
 planner by user	calendar	da	Planlægger soteret efter bruger
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	da	Bekræft venligst, accepter, afvis eller undersøg ændringer tilsvarende i din kalender
-preselected group for entering the planner	calendar	da	
+preselected group for entering the planner	calendar	da	Forud valgte grupper valgt i planlæggeren
 print calendars in black & white	calendar	da	Print kalendre i sort/hvid
 print the mini calendars	calendar	da	print mini kalenderen
 printer friendly	calendar	da	Udskriftsvenlig
@@ -216,7 +224,7 @@ repeat end date	calendar	da	Gentagelse slut dato
 repeat type	calendar	da	Gentagelsestype
 repeating event information	calendar	da	Gentagelse af aftale
 repetition	calendar	da	Gentagelse
-repetitiondetails (or empty)	calendar	da	
+repetitiondetails (or empty)	calendar	da	Gentagelse detaljer (eller tom)
 reset	calendar	da	Nulstil
 rule	calendar	da	Regel
 sa	calendar	da	Lø
@@ -226,13 +234,14 @@ search results	calendar	da	Søgeresultater
 selected contacts (%1)	calendar	da	Valgte kontakter (%1)
 send updates via email	common	da	Send opdateringer via Email
 send/receive updates via email	calendar	da	Send/Modtag opdateringer via Email
-set a year only for one-time / non-regular holidays.	calendar	da	
+set a year only for one-time / non-regular holidays.	calendar	da	Set et årstal, kun for enegangs/ikke standart helligedage
 set new events to private	calendar	da	Marker nye aftaler som private
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	da	Skal invitationer du har afvist stadig være vist i din kalender?<br>Du kan kun acceptere dem senere (f.eks når din aftalekonflikt er fjernet), hvis de stadig vises i din kalender!
 should new events created as private by default ?	calendar	da	Skal nye aftaler der oprettes markeres private som standart?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	da	Skal personer der ikke er logget ind, have mulighed for at se din fri/optaget information? Du kan sætte en ekstra adgangskode, forskellig fra din standart, for at skjule denne information. Fri/Optager informationen er i iCal formatet og inkludere tiderne hvor du er fri eller optaget. Det inkluderer ikke navnet på aftalen, beskrivelse eller stedet der på. Stien til din Fri/Optaget information er %1
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	da	Skal minikalenderen printes/vises i en printer venlig version?
 should the printer friendly view be in black & white or in color (as in normal view)?	calendar	da	Skal den printer venlige visning, vises i sort/hvid eller i farve (som normal visning)?
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	da	
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	da	Skal status for deltagere (accepteret, afslået...) vises i parentes efter hver deltagers navn?
 show day view on main screen	calendar	da	Vis dagsoversigt på forsiden
 show default view on main screen	calendar	da	Vis standart visning på forsiden
 show high priority events on main screen	calendar	da	Vis begivenheder med høj prioritet på forsiden
@@ -243,20 +252,20 @@ sorry, the owner has just deleted this event	calendar	da	Beklager, ejeren har sl
 sorry, this event does not exist	calendar	da	Beklager, denne aftale eksistere ikke
 sorry, this event does not have exceptions defined	calendar	da	Beklager, denne aftale har ikke undtagelser defineret
 sort by	calendar	da	Sorter ved
-specifies the the number of intervals shown in the planner view.	calendar	da	
+specifies the the number of intervals shown in the planner view.	calendar	da	Indtast intervallet af tider vist i planlæggeren.
 start date/time	calendar	da	Start Dato/Tid
-start- and enddates	calendar	da	
+start- and enddates	calendar	da	Start- og slut dato
 startdate	calendar	da	Start dato
 startrecord	calendar	da	
 su	calendar	da	Sø
 submit to repository	calendar	da	
 sun	calendar	da	Søn
 tentative	calendar	da	Prøve
-test import (show importable records <u>only</u> in browser)	calendar	da	
-text	calendar	da	
+test import (show importable records <u>only</u> in browser)	calendar	da	Test inportering (vis importeret date <u>kun</u> i browseren)
+text	calendar	da	Tekst
 th	calendar	da	To
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	da	Det følgende er i konflikt med den ønskede tid:<ul>%1</ul>
-the user %1 is not participating in this event!	calendar	da	
+the user %1 is not participating in this event!	calendar	da	Brugeren %1 deltager ikke i denne aftale!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	da	Der skete en fejl ved forsøg på at skabe forbindelse til din nyhedsserver.<br>Kontakt venligst administratoren for at tjekke nyhedsservernavn, brugernavn og kodeord.
 this day is shown as first day in the week or month view.	calendar	da	Denne dag bliver vist som den første dag i uge eller måned visning.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	da	Dette definere dagens slutning, i dags visning. Aftaler efter dette tidspunkt vil blive vist under alle andre aftaler.
@@ -275,7 +284,7 @@ thu	calendar	da	Tor
 title	calendar	da	Titel
 title of the event	calendar	da	Titellen på handlingen
 title-row	calendar	da	Titel-række
-to many might exceed your execution-time-limit	calendar	da	
+to many might exceed your execution-time-limit	calendar	da	for mange vil måske overstige din eksekvere tid begrænsning
 to-firstname	calendar	da	Til-Fornavn
 to-fullname	calendar	da	Til-Fuldenavn
 to-lastname	calendar	da	Til-Efternavn
@@ -298,12 +307,12 @@ which events do you want to see when you enter the calendar.	calendar	da	Hvilke 
 which of calendar view do you want to see, when you start calendar ?	calendar	da	Hvilken måde vil du se kalenderen på når den startes?
 work day ends on	calendar	da	Arbejdsdage slutter om
 work day starts on	calendar	da	Arbejdsdage begynder om
-workdayends	calendar	da	
+workdayends	calendar	da	arbejdsdage slutter
 year	calendar	da	År
 yearly	calendar	da	Årlig
 yearview	calendar	da	Årlig visning
-you can either set a year or a occurence, not both !!!	calendar	da	
-you can only set a year or a occurence !!!	calendar	da	
+you can either set a year or a occurence, not both !!!	calendar	da	Du kan enten sætte den til År eller hændelse ikke begge!!!
+you can only set a year or a occurence !!!	calendar	da	Du kan kun sætte et år eller hændelse!!!
 you do not have permission to add alarms to this event !!!	calendar	da	Du har ikke rettigheder til at tilføje en alarm til denne aftale!!!
 you do not have permission to delete this alarm !!!	calendar	da	Du har ikke rettigheder til at slette denne alarm!!!
 you do not have permission to enable/disable this alarm !!!	calendar	da	Du har ikke rettigheder til at aktivere/deaktivere denne alarm!!!
@@ -319,10 +328,10 @@ you have not entered a\nbrief description	calendar	da	Du har ikke skrevet\nen ko
 you have not entered a\nvalid time of day.	calendar	da	Du har ikke skrevet\n et gyldigt klokkeslæt
 you have not entered participants	calendar	da	Du har ikke valgt deltagere
 you must enter one or more search keywords	calendar	da	Du skal indtaste et eller flere søgeord
-you must select a [iv]cal. (*.[iv]cs)	calendar	da	
-you need to set either a day or a occurence !!!	calendar	da	
+you must select a [iv]cal. (*.[iv]cs)	calendar	da	Du skal vælge et [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	da	Du skal vælge en dag eller en hændelse !!!!
 your meeting scheduled for	calendar	da	Dit møde er sat til
-your meeting scheduled for %1 has been canceled	calendar	da	
+your meeting scheduled for %1 has been canceled	calendar	da	Dit møde planlagt til %1 er blevet annulleret
 your meeting that had been scheduled for	calendar	da	Dit møde der skulle have været sat til
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	da	Dit møde der var planlagt d. %1 er blevet flyttet til %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	da	Den foreslåede tid (<b>%1 - %2</b>) er i konflikt med følgende kalender punkter:
