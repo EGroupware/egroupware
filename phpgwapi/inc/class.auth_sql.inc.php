@@ -246,7 +246,7 @@
 					$pwd_check = '';
 					if(!$admin)
 					{
-						$pwd_check = " AND account_pwd='" . $GLOBALS['phpgw']->common->sql_encrypt_password($old_passwd) . "'";
+						$pwd_check = " AND account_pwd='" . $GLOBALS['phpgw']->common->encrypt_sql($old_passwd) . "'";
 					}
 					$this->db->query("UPDATE phpgw_accounts SET account_pwd='" . $encrypted_passwd . "',"
 						. "account_lastpwd_change='" . time() . "' WHERE account_id='" . $account_id . "'" . $pwd_check,__LINE__,__FILE__);
