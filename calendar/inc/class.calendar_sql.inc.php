@@ -960,7 +960,7 @@ class calendar_ extends calendar__
 		return $temp;
 	}
 
-	function splittime($time)
+	function splittime($time,$follow_24_rule=True)
 	{
 		global $phpgw_info;
 
@@ -974,23 +974,25 @@ class calendar_ extends calendar__
 		$temp['minute'] = $minute;
 		$temp['hour']   = $hour;
 		$temp['ampm']   = '  ';
-		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '24')
+		if($follow_24_rule == True)
 		{
-			return $temp;
+			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '24')
+			{
+				return $temp;
+			}
+		
+			$temp['ampm'] = 'am';
+		
+			if ((int)$temp['hour'] > 12)
+			{
+				$temp['hour'] = (int)((int)$temp['hour'] - 12);
+				$temp['ampm'] = 'pm';
+   	   }
+      	elseif ((int)$temp['hour'] == 12)
+	      {
+				$temp['ampm'] = 'pm';
+			}
 		}
-		
-		$temp['ampm'] = 'am';
-		
-		if ((int)$temp['hour'] > 12)
-		{
-			$temp['hour'] = (int)((int)$temp['hour'] - 12);
-			$temp['ampm'] = 'pm';
-      }
-      elseif ((int)$temp['hour'] == 12)
-      {
-			$temp['ampm'] = 'pm';
-		}
-		
 		return $temp;
 	}
 

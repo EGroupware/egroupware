@@ -66,7 +66,7 @@
 	{
 		case 'free/busy':
 			$freetime = $phpgw->calendar->makegmttime(0,0,0,$thismonth,$thisday,$thisyear);
-			echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000'),0,$participants);
+			echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000',False),0,$participants);
 			break;
 		case 'weekly':
 			echo $phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true,$participants);

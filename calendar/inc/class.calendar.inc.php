@@ -1421,7 +1421,7 @@ class calendar extends calendar_
 					$eventstart = $this->localdates($event->datetime);
 					$eventend = $this->localdates($event->edatetime);
 					$start = ($eventstart['hour'] * 10000) + ($eventstart['minute'] * 100);
-					$starttemp = $this->splittime("$start");
+					$starttemp = $this->splittime("$start",False);
 					$subminute = 0;
 					for($m=0;$m<$interval;$m++)
 					{
@@ -1433,7 +1433,7 @@ class calendar extends calendar_
 					}
 					$start -= $subminute;
 					$end =  ($eventend['hour'] * 10000) + ($eventend['minute'] * 100);
-					$endtemp = $this->splittime("$end");
+					$endtemp = $this->splittime("$end",False);
 					$addminute = 0;
 					for($m=0;$m<$interval;$m++)
 					{
@@ -1444,8 +1444,8 @@ class calendar extends calendar_
 						}
 					}
 					$end += $addminute;
-					$starttemp = $this->splittime("$start");
-					$endtemp = $this->splittime("$end");
+					$starttemp = $this->splittime("$start",False);
+					$endtemp = $this->splittime("$end",False);
 // Do not display All-Day events in this free/busy time
 					if((($starttemp['hour'] == 0) && ($starttemp['minute'] == 0)) && (($endtemp['hour'] == 23) && ($endtemp['minute'] == 59)))
 					{
