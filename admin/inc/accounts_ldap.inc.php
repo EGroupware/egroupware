@@ -73,9 +73,11 @@
     $info = ldap_get_entries($ldap, $sr);
   
     for ($i=0; $i<count($info); $i++) {
-       $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
-       $account_info[$i]["account_firstname"] = $info[$i]["givenname"][0];
-       $account_info[$i]["account_lastname"]  = $info[$i]["sn"][0];
+       if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
+          $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
+          $account_info[$i]["account_firstname"] = $info[$i]["givenname"][0];
+          $account_info[$i]["account_lastname"]  = $info[$i]["sn"][0];
+       }
     }
 
     return $account_info;

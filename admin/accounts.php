@@ -19,9 +19,9 @@
         . $phpgw_info["server"]["auth_type"] . ".inc.php");
 
   $t = new Template($phpgw_info["server"]["template_dir"]);
-  $t->set_file(array( "header"	=> "accounts.tpl",
-			       "row"		=> "accounts.tpl",
-			       "footer"	=> "accounts.tpl" ));
+  $t->set_file(array("header" => "accounts.tpl",
+			         "row"	=> "accounts.tpl",
+			         "footer" => "accounts.tpl"));
 
   $t->set_block("header","row","footer");
 
