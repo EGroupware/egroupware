@@ -228,9 +228,9 @@
 			if($r = $soap->send($soap_message,$method_name))
 			{
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
-				/* _debug_array($soap); */
-				/* echo $soap->debug_str; */
-				return $r;
+				$v = $r->decode();
+				$this->result = $v['return'];
+				return $v;
 			}
 			else
 			{
@@ -255,9 +255,9 @@
 			if($r = $soap->send($soap_message,$method_name))
 			{
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
-				/* _debug_array($soap); */
-				/* echo $soap->debug_str; */
-				return $r;
+				$v = $r->decode();
+				$this->result = $v['return'];
+				return $v;
 			}
 			else
 			{

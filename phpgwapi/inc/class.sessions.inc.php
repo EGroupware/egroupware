@@ -353,7 +353,7 @@
 
 			$phpgw_info['user']['account_id'] = $this->account_id;
 			
-			//$this->read_repositories(@$phpgw_info['server']['cache_phpgw_info']);
+			$this->read_repositories(@$phpgw_info['server']['cache_phpgw_info']);
 
 			$phpgw_info['user']  = $this->user;
 			$phpgw_info['hooks'] = $this->hooks;

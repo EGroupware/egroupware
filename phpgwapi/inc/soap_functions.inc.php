@@ -85,13 +85,15 @@
 		}
 		else
 		{
-			$rtrn = array(CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO'));
+			$rtrn = array(
+				CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO')
+			);
 		}
-		$r = CreateObject('phpgwapi.soapmsg','system_authResponse',$rtrn);
-		return $r;
+		//$r = CreateObject('phpgwapi.soapmsg','system_authResponse',$rtrn);
+		return $rtrn;
 	}
 
-	function _soap_auth_verify($m1,$m2,$m3)
+	function system_auth_verify($m1,$m2,$m3)
 	{
 		$server_name = $m1;
 		$sessionid   = $m2;
@@ -102,14 +104,16 @@
 		if($verified)
 		{
 			$rtrn = array(
-				CreateObject('phpgwapi.xmlrpcval','HELO','string',$sessionid)
+				CreateObject('phpgwapi.soapval','HELO','string',$sessionid)
 			);
 		}
 		else
 		{
-			$rtrn = array(CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO'));
+			$rtrn = array(
+				CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO')
+			);
 		}
-		$r = CreateObject('phpgwapi.soapmsg','system_auth_verifyResponse',$rtrn);
-		return $r;
+		//$r = CreateObject('phpgwapi.soapmsg','system_auth_verifyResponse',$rtrn);
+		return $rtrn;
 	}
 ?>
