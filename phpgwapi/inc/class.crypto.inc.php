@@ -25,6 +25,8 @@
 
 	class crypto
 	{
+		var $enabled = False;
+		var $mcrypt_version = '';
 		var $td = False;		// Handle for mcrypt
 		var $iv = '';
 		var $key = '';
@@ -36,7 +38,9 @@
 			$iv = $vars[1];
 			if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
 			{
-				if ($phpgw_info['server']['versions']['mcrypt'] == 'old')
+				$this->enabled = True;
+				$this->mcrypt_version = $phpgw_info['server']['versions']['mcrypt'];
+				if ($this->mcrypt_version == 'old')
 				{
 					$this->td = false;
 					if (phpversion() > '4.0.2pl1')
@@ -73,10 +77,6 @@
 				{
 					$this->key .= $key[$i % $x];
 				}
-				if ($phpgw_info['server']['versions']['mcrypt'] != 'old')
-				{
-					mcrypt_generic_init ($this->td, $this->key, $this->iv);
-				} 
 			}
 			// If mcrypt isn't loaded key and iv are not needed
 		}
@@ -85,9 +85,9 @@
 		{
 			global $phpgw_info;
 
-			if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
+			if ($this->enabled)
 			{
-				if ($phpgw_info['server']['versions']['mcrypt'] != 'old')
+				if ($this->mcrypt_version != 'old')
 				{
 					mcrypt_generic_end ($this->td);
 				}
@@ -97,7 +97,7 @@
 		function hex2bin($data)
 		{
 			$len = strlen($data);
-			return pack('H' . $len, $data);
+			return pack('H'.$len, $data);
 		}
 
 		function encrypt($data)
@@ -105,11 +105,12 @@
 			global $phpgw_info;
 
 			$data = serialize($data);
+			$data = addslashes($data);
 
 			// Disable all encryption if the admin didn't set it up
-			if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
+			if ($this->enabled)
 			{
-				switch ($phpgw_info['server']['versions']['mcrypt'])
+				switch ($this->mcrypt_version)
 				{
 					// The old code, only works with mcrypt <= 2.2.x
 					case 'old':
@@ -119,7 +120,9 @@
 					}
 					default:
 					{ // Handle 2.4 and newer API
+						mcrypt_generic_init ($this->td, $this->key, $this->iv);
 						$encrypteddata = mcrypt_generic($this->td, $data);
+						break;
 					}
 				}
 				$encrypteddata = bin2hex($encrypteddata);
@@ -136,28 +139,34 @@
 			global $phpgw_info;
 
 			// Disable all encryption if the admin didn't set it up
-			if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
+			if ($this->enabled)
 			{
 				$data = $this->hex2bin($encrypteddata);
-
-				switch ($phpgw_info['server']['versions']['mcrypt'])
+				switch ($this->mcrypt_version)
 				{
 					// The old code, only works with mcrypt <= 2.2.x
 					case 'old':
-					{
 						$data = mcrypt_cbc(MCRYPT_TripleDES, $this->key, $data, MCRYPT_DECRYPT);
 						break;
-					}
+					// Handle 2.4 and newer API
 					default:
-					{ // Handle 2.4 and newer API
+						mcrypt_generic_init ($this->td, $this->key, $this->iv);
 						$data = mdecrypt_generic($this->td, $data);
-					}
+						break;
 				}
+			}
+			else
+			{
+				$data = $encrypteddata;
+			}
+			$data = stripslashes($data);
+			if(!strpos(' '.$data,'O:8:"stdClass"'))
+			{
 				return unserialize($data);
 			}
 			else
 			{
-				return unserialize($encrypteddata);
+				return $data;
 			}
 		}
 	}  // class crypto
