@@ -1,0 +1,178 @@
+/* $Id$ */
+
+Perl interfacing to phpgroupware:
+
+The Frontier::RPC module available at CPAN is capable of logging into a
+phpgroupware server.  To authenticate your session after the initial login,
+however, requires a patch to Frontier.  This patch causes Frontier to create
+an Authentication header using username/password values.  We use the assigned
+sessionid and kp3 for this.
+
+NOTE: sessionid/kp3 values in this file are not valid.
+
+TODO:
+
+1. Apply the patch at the end of this file to Frontier-RPC-0.06.
+2. Install Frontier.
+3. Try the following method using rpc-client.pl in the examples subdirectory for
+  the Frontier source:
+
+	rpc-client.pl \
+	http://www.phpgroupware.org/cvsdemo/xmlrpc.php \
+	system.login \
+	"{domain => '',username => 'demo', password => 'guest'}"
+
+4. Take the returned sessionid and kp3, e.g.:
+
+$result = HASH(0x826d4b0)
+   'domain' => 'default'
+   'kp3' => 'e0219714614769x25bc92286016c60c2'
+   'sessionid' => '36f9ec1e4ad78bxd8bc902b1c38d3e14'
+
+5. Place these on the commandline for a new request:
+
+	rpc-client.pl \
+	http://www.phpgroupware.org/cvsdemo/xmlrpc.php \
+	./rpc-client.pl http://www.phpgroupware.org/cvsdemo/xmlrpc.php \
+	--username 36f9ec1e4ad78bxd8bc902b1c38d3e14 \
+	--password e0219714614769x25bc92286016c60c2 \
+	service.contacts.read \
+	"{ id => '4'}"
+
+6. This should return record #4 from the addressbook application.
+
+
+Here is the patch:
+
+----CUT HERE----
+--- Frontier-RPC-0.06/lib/Frontier/Client.pm	Sat Nov 20 18:13:21 1999
++++ Frontier-RPC-0.06-me/lib/Frontier/Client.pm	Wed Aug 22 15:25:36 2001
+@@ -24,22 +24,27 @@
+     bless $self, $class;
+ 
+     die "Frontier::RPC::new: no url defined\n"
+-	if !defined $self->{'url'};
++    if !defined $self->{'url'};
+ 
+     $self->{'ua'} = LWP::UserAgent->new;
+     $self->{'ua'}->proxy('http', $self->{'proxy'})
+-	if(defined $self->{'proxy'});
++    if(defined $self->{'proxy'});
+     $self->{'rq'} = HTTP::Request->new (POST => $self->{'url'});
++    if(defined $self->{'username'} and defined $self->{'password'})
++    {
++        use MIME::Base64;
++        $self->{'rq'}->header('Authorization: Basic', encode_base64($self->{'username'} . ":" . $self->{'password'}));
++    }
+     $self->{'rq'}->header('Content-Type' => 'text/xml');
+ 
+     my @options;
+ 
+     if(defined $self->{'encoding'}) {
+-	push @options, 'encoding' => $self->{'encoding'};
++        push @options, 'encoding' => $self->{'encoding'};
+     }
+ 
+     if (defined $self->{'use_objects'} && $self->{'use_objects'}) {
+-	push @options, 'use_objects' => $self->{'use_objects'};
++        push @options, 'use_objects' => $self->{'use_objects'};
+     }
+ 
+     $self->{'enc'} = Frontier::RPC2->new(@options);
+@@ -53,8 +58,8 @@
+     my $text = $self->{'enc'}->encode_call(@_);
+ 
+     if ($self->{'debug'}) {
+-	print "---- request ----\n";
+-	print $text;
++        print "---- request ----\n";
++        print $text;
+     }
+ 
+     $self->{'rq'}->content($text);
+@@ -62,21 +67,21 @@
+     my $response = $self->{'ua'}->request($self->{'rq'});
+ 
+     if (substr($response->code, 0, 1) ne '2') {
+-	die $response->status_line . "\n";
++        die $response->status_line . "\n";
+     }
+ 
+     my $content = $response->content;
+ 
+     if ($self->{'debug'}) {
+-	print "---- response ----\n";
+-	print $content;
++        print "---- response ----\n";
++        print $content;
+     }
+ 
+     my $result = $self->{'enc'}->decode($content);
+ 
+     if ($result->{'type'} eq 'fault') {
+-	die "Fault returned from XML RPC Server, fault code " . $result->{'value'}[0]{'faultCode'} . ": "
+-	    . $result->{'value'}[0]{'faultString'} . "\n";
++        die "Fault returned from XML RPC Server, fault code " . $result->{'value'}[0]{'faultCode'} . ": "
++        . $result->{'value'}[0]{'faultString'} . "\n";
+     }
+ 
+     return $result->{'value'}[0];
+--- Frontier-RPC-0.06/examples/rpc-client.pl	Thu Sep  2 15:16:49 1999
++++ Frontier-RPC-0.06-me/examples/rpc-client.pl	Wed Aug 22 15:32:07 2001
+@@ -1,3 +1,4 @@
++#!/usr/bin/perl
+ #
+ # Copyright (C) 1998 Ken MacLeod
+ # See the file COPYING for distribution terms.
+@@ -11,7 +12,7 @@
+ 
+ =head1 SYNOPSIS
+ 
+- rpc-client [--debug] [--encoding ENCODING] [--proxy PROXY] \
++ rpc-client [--debug] [--username] [--password] [--encoding ENCODING] [--proxy PROXY] \
+      URL METHOD ["ARGLIST"]
+ 
+ =head1 DESCRIPTION
+@@ -31,6 +32,12 @@
+ The `C<--debug>' option will cause the client to print the XML request
+ sent to and XML response received from the server.
+ 
++The `C<--username>' option will force an Authorization:Basic header
++to be generated, if used in conjunction with the `C<--password>' option
++
++The `C<--password>' option will force an Authorization:Basic header
++to be generated, if used in conjunction with the `C<--username>' option
++
+ The `C<--encoding>' option will supply an alternate encoding for the
+ XML request.  The default is none, which uses XML 1.0's default of
+ UTF-8.
+@@ -57,9 +64,11 @@
+ my $encoding = undef;
+ my $proxy = undef;
+ 
+-GetOptions( 'debug' => \$debug,
++GetOptions( 'debug'      => \$debug,
+             'encoding=s' => \$encoding,
+-            'proxy=s' => \$proxy );
++            'proxy=s'    => \$proxy,
++            'username=s' => \$username,
++            'password=s' => \$password);
+ 
+ die "usage: rpc-client URL METHOD [\"ARGLIST\"]\n"
+     if ($#ARGV != 1 && $#ARGV != 2);
+@@ -68,10 +77,12 @@
+ my $method = shift @ARGV;
+ my $arglist = shift @ARGV;
+ 
+-$server = Frontier::Client->new( 'url' => $url,
+-                                 'debug' => $debug,
++$server = Frontier::Client->new( 'url'      => $url,
++                                 'debug'    => $debug,
+                                  'encoding' => $encoding,
+-                                 'proxy' => $proxy );
++                                 'proxy'    => $proxy,
++                                 'username' => $username,
++                                 'password' => $password);
+ 
+ my @arglist;
+ eval "\@arglist = ($arglist)";
