@@ -78,7 +78,6 @@ display interval in day view	calendar	es-es	Mostrar intervalo en vista diaria
 display mini calendars when printing	calendar	es-es	Mostrar minicalendarios al imprimir
 display status of events	calendar	es-es	Mostrar estado de los eventos
 displayed view	calendar	es-es	Vista mostrada
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	es-es	Muestra la vista predeterminada del calendario en la página de inicio de eGroupWare
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	es-es	¿Mostrar la vista predeterminada en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio)?
 do you want a weekview with or without weekend?	calendar	es-es	¿Desea una vista de la semana con o sin fin de semana?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	es-es	¿Desea que se le notifiquen citas nuevas o modificadas? Se le notificará de los cambios que haga usted mismo.<br>Puede limitar las notificaciones para sólo ciertos cambios. Cada elemento incluye toda la notificación listada encima. Todas las modificaciones incluyen cambios de título, participantes, pero no las respuestas de los participantes. Si el dueño de un evento solicitó alguna notificación, siempre obtendrá las respuestas de aceptación o rechazo del participante.
@@ -86,6 +85,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	es-es	¿Desea cargar automáticamente en el calendario los ficheros de fiestas?
 download	calendar	es-es	Descargar
 duration	calendar	es-es	Duración
+duration of the meeting	calendar	es-es	Duración de la reunión
 edit series	calendar	es-es	Editar series
 edit single	calendar	es-es	Editar sencillo
 email notification	calendar	es-es	Notificación por correo
@@ -95,6 +95,7 @@ enable	calendar	es-es	Activar
 enabled	calendar	es-es	activado
 end date/time	calendar	es-es	Fecha/Hora final
 enddate	calendar	es-es	Fecha final
+enddate / -time of the meeting, eg. for more then one day	calendar	es-es	Fecha final / -hora de la reunión, p. ej. para más de un día
 ends	calendar	es-es	acaba
 enter output filename: ( .vcs appended )	calendar	es-es	Introduzca el nombre del fichero de salida (añadir .vcs)
 event details follow	calendar	es-es	A continuación, los detalles del evento
@@ -111,6 +112,7 @@ format of event updates	calendar	es-es	Formato de las actualizaciones de eventos
 fr	calendar	es-es	V
 free/busy	calendar	es-es	Libre/Ocupado
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	es-es	libre-ocupado: Usuario desconocido "%1", contraseña incorrecta o no está disponible
+freetime search	calendar	es-es	Buscar en el tiempo libre
 frequency	calendar	es-es	Frecuencia
 fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
@@ -130,9 +132,11 @@ holiday management	calendar	es-es	Gestión de festivos
 holiday-management	calendar	es-es	Gestión de festivos
 holidays	calendar	es-es	Festivos
 hours	calendar	es-es	horas
+how far to search (from startdate)	calendar	es-es	cuánto buscar (desde la fecha de inicio)
 i participate	calendar	es-es	Participo
 ical / rfc2445	calendar	es-es	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	es-es	Si los festivos marcados caen en fin de semana, se toman el lunes siguiente.
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	es-es	¡Si no pone aquí una contraseña, la información está disponible para todos los que conozcan la URL!
 if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	es-es	Si no indica una contraseña aquí, ¡la información está disponible para todos los que conozcan la URL!
 ignore conflict	calendar	es-es	Ignorar conflicto
 import	calendar	es-es	Importar
@@ -151,6 +155,7 @@ list all categories.	calendar	es-es	Listar todas las categorías
 load [iv]cal	calendar	es-es	Cargar [iv]Cal
 location	calendar	es-es	Lugar
 location to autoload from	admin	es-es	Lugar desde donde cargar automáticamente
+make freebusy information available to not loged in persons?	calendar	es-es	¿Poner la información del tiempo disponible a las personas que no inicien sesión?
 make freebusy information availible to not loged in persons?	calendar	es-es	¿Hacer la información libre-ocupado disponible para personas que no inicien sesión?
 matrixview	calendar	es-es	Vista matricial
 minutes	calendar	es-es	minutos
@@ -166,6 +171,7 @@ monthview	calendar	es-es	Vista mensual
 needs javascript to be enabled !!!	calendar	es-es	¡Necesita tener javascript activado!
 new entry	calendar	es-es	Nueva entrada
 new name must not exist and not be empty!!!	calendar	es-es	El nuevo nombre no debe existir previamente ni estar en blanco
+new search with the above parameters	calendar	es-es	nueva búsqueda con los parámetros de arriba
 next day	calendar	es-es	dia siguiente
 no filter	calendar	es-es	Sin filtro
 no matches found	calendar	es-es	No se encontraron coincidencias
@@ -190,7 +196,12 @@ on any time change too	calendar	es-es	también en cualquier cambio de hora
 on invitation / cancelation only	calendar	es-es	sólo en invitación o cancelación
 on participant responses too	calendar	es-es	también en las respuestas de los participantes
 on time change of more than 4 hours too	calendar	es-es	también en un cambio de hora superior a 4 horas
+one month	calendar	es-es	un mes
+one week	calendar	es-es	una semana
+one year	calendar	es-es	un año
+only the initial date of that recuring event is checked!	calendar	es-es	¡Sólo está marcada la fecha inicial del evento recurrente!
 open todo's:	calendar	es-es	Abrir tareas pendientes
+or enddate / -time	calendar	es-es	or fecha de final / -hora
 order	calendar	es-es	Orden
 overlap holiday	calendar	es-es	solapar festivo
 participant	calendar	es-es	Participante
@@ -237,6 +248,7 @@ sat	calendar	es-es	Sáb
 scheduling conflict	calendar	es-es	Conflicto de calendario
 search results	calendar	es-es	Resultados de la búsqueda
 select a %1	calendar	es-es	Seleccionar un %1
+select a time	calendar	es-es	seleccionar una hora
 selected contacts (%1)	calendar	es-es	Contactos seleccionados (%1)
 send updates via email	common	es-es	Enviar actualizaciones por correo electrónico
 send/receive updates via email	calendar	es-es	Enviar y recibir actualizaciones por correo electrónico
@@ -267,6 +279,8 @@ specifies the the number of intervals shown in the planner view.	calendar	es-es	
 start date/time	calendar	es-es	Fecha/Hora inicio
 start- and enddates	calendar	es-es	Fechas de inicio y fin
 startdate	calendar	es-es	Fecha de inicio
+startdate / -time	calendar	es-es	Fecha de incio / -hora
+startdate and -time of the search	calendar	es-es	Fecha de inicio y -hora de la búsqueda
 startrecord	calendar	es-es	Registro inicial
 su	calendar	es-es	Do
 submit to repository	calendar	es-es	Enviar al repositorio
@@ -291,7 +305,11 @@ this message is sent when you set an alarm for a certain event. include all info
 this month	calendar	es-es	Este mes
 this week	calendar	es-es	Esta semana
 this year	calendar	es-es	Este año
+three month	calendar	es-es	tres meses
 thu	calendar	es-es	Jue
+til	calendar	es-es	hasta
+timeframe	calendar	es-es	Margen de tiempo
+timeframe to search	calendar	es-es	Margen de tiempo para buscar
 title	calendar	es-es	TITULO
 title of the event	calendar	es-es	Título del evento
 title-row	calendar	es-es	Fila del título
@@ -304,14 +322,18 @@ translation	calendar	es-es	Traducción
 tu	calendar	es-es	M
 tue	calendar	es-es	Mar
 two dayview	calendar	es-es	Dos vistas del día
+two weeks	calendar	es-es	dos semanas
 update a single entry by passing the fields.	calendar	es-es	Actualizar una entrada simple pasando los campos.
 updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
+use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana
 view this entry	calendar	es-es	Ver esta entrada
 we	calendar	es-es	Mi
 wed	calendar	es-es	Mie
 week	calendar	es-es	Semana
 weekday starts on	calendar	es-es	La semana empieza en
+weekdays	calendar	es-es	Días laborales
+weekdays to use in search	calendar	es-es	Días laborales a usar en la búsqueda
 weekly	calendar	es-es	Semanal
 weekview	calendar	es-es	Vista semanal
 weekview including weekend	calendar	es-es	Vista semanal incluyendo el fin de semana

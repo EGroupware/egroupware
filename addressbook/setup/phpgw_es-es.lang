@@ -90,9 +90,11 @@ import	addressbook	es-es	Importar
 import contacts	addressbook	es-es	Importar contactos
 import csv-file into addressbook	addressbook	es-es	Importar archivo CSV en la Libreta de direcciones
 import file	addressbook	es-es	Importar fichero
+import from	addressbook	es-es	Importar desde
 import from ldif, csv, or vcard	addressbook	es-es	Importar desde LDIF, CSV o VCard
 import from netscape	addressbook	es-es	Importar desde Netscape
 import from outlook	addressbook	es-es	Importar desde Outlook
+import multiple vcard	addressbook	es-es	Importar múltiples VCards
 import next set	addressbook	es-es	Importar siguiente registro
 import_instructions	addressbook	es-es	Si usa Mozilla o Netscape, abra la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato LDIF.<p>O, en Outlook, seleccione su carpeta de contactos, luego, en el menú<b>Fichero</b>, <b>Importar y Exportar</b> para guardarlos en un fichero separado por comas (CSV).<p>O, en Palm Desktop 4.0 o superior, visite la libreta de direcciones y selecciones <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato VCard.
 international	addressbook	es-es	Internacional
@@ -107,12 +109,14 @@ ldif	addressbook	es-es	LDIF
 line 2	addressbook	es-es	Línea 2
 list all categories	addressbook	es-es	Lista de todas las categorías
 list all customfields	addressbook	es-es	Lista de todos los campos personalizados
+load vcard	addressbook	es-es	Cargar VCard
 mark records as private	addressbook	es-es	Marcar registros como privados
 message phone	addressbook	es-es	Teléfono de mensajes
 middle name	addressbook	es-es	Segundo nombre
 mobile	addressbook	es-es	Tel.móvil
 mobile phone	addressbook	es-es	Teléfono móvil
 modem phone	addressbook	es-es	Teléfono módem
+multiple vcard	addressbook	es-es	VCard múltiple
 no vcard	addressbook	es-es	Sin VCard
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
 number of records to read (<=200)	addressbook	es-es	Registros a leer (menos de 200)

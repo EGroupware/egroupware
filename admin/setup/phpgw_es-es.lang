@@ -40,11 +40,14 @@ admin name	admin	es-es	Nombre del administrador
 admin options	admin	es-es	Opciones de Administración
 administration	admin	es-es	Administración
 admins	admin	es-es	Administradores
+advanced options	admin	es-es	opciones avanzadas
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una cuenta? (por defecto, 3)
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una IP? (por defecto, 3)
+aliases	admin	es-es	Alias
 all records and account information will be lost!	admin	es-es	¡Se perderán todos los registros y la información de las cuentas!
 all users	admin	es-es	Todos los usuarios
 allow anonymous access to this app	admin	es-es	Permitir acceso anónimo a esta aplicación
+alternate email address	admin	es-es	dirección de correo alternativa
 anonymous user	admin	es-es	Usuario anónimo
 anonymous user (not shown in list sessions)	admin	es-es	Usuario anónimo (no se muestra en la lista de sesiones)
 appearance	admin	es-es	Apariencia
@@ -67,6 +70,10 @@ async services last executed	admin	es-es	Últimos servicios asíncronos ejecutados
 asynchronous timed services	admin	es-es	Servicios asíncronos programados
 asyncservices not yet installed or other error (%1) !!!	admin	es-es	Los servicios asíncronos todavía no están instalados, u otro error (%1)
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	es-es	Intentar usar el tipo MIME correcto para FTP en vez de 'application/octet-stream'
+attribute accountstatus explained	admin	es-es	Esto maneja el atributo <b><i>-accountStatus-</i></b> del esquema de QMAIL.
+attribute mail explained	admin	es-es	Esto maneja el atributo <b><i>-mail-</i></b> del esquema de QMAIL y no debe estar vacío. También es el campo para correo electrónico interno de eGW.
+attribute mailalternateaddress explained	admin	es-es	Esto maneja el atributo <b><i>-mailAlternateAddress-</i></b> del esquema de QMAIL y puede manejarse como mapas virtuales o alias.
+attribute mailforwardingaddress explained	admin	es-es	Esto maneja el atributo <b><i>-mailForwardingAddress-</i></b> del esquema de QMAIL y no debe estar vacío si está asignado.
 authentication / accounts	admin	es-es	Identificación / Cuentas
 auto create account records for authenticated users	admin	es-es	Crear cuentas automáticamente para usuarios identificados
 back to the list	admin	es-es	volver a la lista
@@ -92,9 +99,11 @@ configuration	admin	es-es	Configuración
 country selection	admin	es-es	Selección de país
 create group	admin	es-es	Crear grupo
 crontab only (recomended)	admin	es-es	Sólo mediante crontab (recomendado)
+cyrus imap server	admin	es-es	Servidor IMAP Cyrus
 data	admin	es-es	Datos
 day	admin	es-es	Día
 day of week<br>(0-6, 0=sun)	admin	es-es	Día de la semana<br>(0-6, 0=Dom)
+db backup and restore	admin	es-es	Copia de seguridad y restauracion de la base de datos
 default	admin	es-es	Predeterminado
 default file system space per user	admin	es-es	Espacio predetermiado en el sistema de archivos por usuario
 default file system space per user/group ?	admin	es-es	Espacio predetermiado en el sistema de archivos por usuario/grupo
@@ -110,11 +119,13 @@ delete the group	admin	es-es	borrar el grupo
 delete this category	admin	es-es	borrar esta categoría
 delete this group	admin	es-es	borrar este grupo
 delete this user	admin	es-es	borrar este usuario
+deliver extern	admin	es-es	entrega externa
 deny access to access log	admin	es-es	Denegar acceso al registro de accesos
 deny access to application registery	admin	es-es	Denegar acceso al registro de aplicaciones
 deny access to applications	admin	es-es	Denegar acceso a aplicaciones
 deny access to asynchronous timed services	admin	es-es	Denegar acceso a los servicios asíncronos programados
 deny access to current sessions	admin	es-es	Denegar acceso a las sesiones actuales
+deny access to db backup and restore	admin	es-es	Denegar acceso a copia y restauracion de la base de datos
 deny access to error log	admin	es-es	Denegar acceso al registro de errores
 deny access to global categories	admin	es-es	Denegar acceso a las categorias globales
 deny access to groups	admin	es-es	Denegar acceso a grupos
@@ -138,6 +149,7 @@ do you want to move all global subcategories one level down ?	admin	es-es	¿Desea
 edit account	admin	es-es	Editar cuenta
 edit application	admin	es-es	Editar aplicación
 edit cvs repository list	admin	es-es	Editar Lista de Sitios CVS
+edit email settings	admin	es-es	editar configuracion de correo
 edit global category	admin	es-es	Editar categoria global
 edit global category for %1	admin	es-es	Editar categoría global para %1
 edit group	admin	es-es	Editar Grupo
@@ -154,6 +166,8 @@ edit this user	admin	es-es	editar este usuario
 edit user	admin	es-es	editar usuario
 edit user account	admin	es-es	Editar cuenta de usuario
 edit work catagory table	admin	es-es	Editar Tabla de Categorias de Trabajos
+email account active	admin	es-es	cuenta de correo activa
+email address	admin	es-es	direccion de correo electronico
 enable debug-messages	admin	es-es	Activar mensajes de depuración
 enabled	admin	es-es	Habilitado
 enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación
@@ -184,6 +198,7 @@ error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar 
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	es-es	Error al configurar el temporizador. La sintaxis es incorrecta o puede que haya uno que ya se esté ejecutándo.
 error: %1 not found or other error !!!	admin	es-es	Error: no se encontró %1 u otro error
 expires	admin	es-es	Expira
+explanation of ldapman	admin	es-es	Este modulo ha sido probado en POSTFIX,LDAP,Courier-IMAP y necesita los esquemas CORE y QMAIL (OID7914). Más detalles sobre el uso y configuracion de este sistema puede encontrarse en el fichero README.ldapman en el directorio doc de ADMIN.
 fallback (after each pageview)	admin	es-es	retardo (después de ver cada página)
 file space	admin	es-es	Espacio del fichero
 file space must be an integer	admin	es-es	El espacio del fichero debe ser un entero
@@ -191,9 +206,12 @@ find and register all aplication hooks	admin	es-es	Encontrar y registrar todos l
 find and register all application hooks	admin	es-es	Encontrar y registrar todos los "hooks" de las aplicaciones
 for the times above	admin	es-es	durante las horas indicadas arriba
 for the times below (empty values count as '*', all empty = every minute)	admin	es-es	para las horas indicadas debajo (valores vacíos cuentan como '*', todos vacío = cada minuto)
-force selectbox	admin	es-es	Forzar cuadro de seleccion
+force selectbox	admin	es-es	Forzar cuadro de selección
 forum administration	admin	es-es	Administracion de Foros
-global categories	common	es-es	Categorias globales
+forward also to	admin	es-es	reenviar también a
+forward email's to	admin	es-es	reenviar correos a
+forward only	admin	es-es	reenviar solamente
+global categories	common	es-es	Categorías globales
 global options	admin	es-es	Opciones Globales
 group ?	admin	es-es	¿Grupo?
 group has been added	common	es-es	El grupo ha sido añadido
@@ -212,6 +230,7 @@ icon	admin	es-es	Icono
 idle	admin	es-es	inactivo
 if no acl records for user or any group the user is a member of	admin	es-es	Si no se encuentran registros ACL del usuario y grupo, entonces el usuario es miembro de
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	es-es	Si se usa LDAP, ¿desea manejar los atributos del directorio de inicio y la cuenta?
+in mbyte	admin	es-es	en Mbytes
 inbound	admin	es-es	entrantes
 install crontab	admin	es-es	Instalar crontab
 installed applications	common	es-es	Aplicaciones instaladas
@@ -234,6 +253,7 @@ ldap groups context	admin	es-es	Contexto de grupos LDAP
 ldap host	admin	es-es	Servidor LDAP
 ldap root password	admin	es-es	Clave de superusuario LDAP
 ldap rootdn	admin	es-es	LDAP rootdn
+leave empty for no quota	admin	es-es	dejar en blanco si no hay cuota
 leave the category untouched and return back to the list	admin	es-es	dejar la categoría intacta y volver a la lista
 leave the group untouched and return back to the list	admin	es-es	Dejar el grupo intacto y volver a la lista
 list config settings	admin	es-es	Lista de las opciones de configuración
@@ -246,6 +266,7 @@ login shell	admin	es-es	Shell de inicio de sesión
 login time	admin	es-es	Hora de acceso
 loginid	admin	es-es	LoginID
 mail settings	admin	es-es	Seteos del E-mail
+main email-address	admin	es-es	Direccion de correo principal
 main screen message	admin	es-es	Mensaje de la pantalla principal
 manage fields	admin	es-es	Manejar Campos
 manager	admin	es-es	Manager
@@ -263,6 +284,7 @@ new password [ leave blank for no change ]	admin	es-es	Nueva contraseña [ Dejar 
 news	admin	es-es	Noticias
 next run	admin	es-es	Siguiente ejecución
 no algorithms available	admin	es-es	no hay algoritmos disponibles
+no alternate email address	admin	es-es	no hay dirección de correo alternativa
 no jobs in the database !!!	admin	es-es	¡No hay trabajos en la base de datos!
 no login history exists for this user	admin	es-es	No existen registros de acceso para este usuario
 no matches found	admin	es-es	No se encontraron resultados
@@ -288,15 +310,19 @@ please enter a name	admin	es-es	Por favor introduzca un nombre
 please enter a name for that server !	admin	es-es	Por favor. introduzca un nombre para  ese sevidor
 please run setup to become current	admin	es-es	Por favor ejecute setup para estar al día
 please select	admin	es-es	Por favor, seleccione
+postfix with ldap	admin	es-es	Postfix con LDAP
 preferences	admin	es-es	Preferencias
 primary group	admin	es-es	Grupo principal
+quota settings	admin	es-es	configuración de la cuota
 re-enter password	admin	es-es	Confirmar contraseña
 read this list of methods.	admin	es-es	Leer esta lista de métodos
 register application hooks	admin	es-es	Registrar "hooks" de la aplicación
+remove	admin	es-es	borrar
 remove all users from this group	admin	es-es	Borrar todos los usuarios de este grupo
 remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de este grupo?
 return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
 return to view account	admin	es-es	Volver a ver cuenta
+route all mails to	admin	es-es	dirigir todos los correos a
 run asynchronous services	admin	es-es	Ejecutar servicios asíncronos
 save the category	admin	es-es	guardar la categoría
 save the category and return back to the list	admin	es-es	guardar la categoría y volver a la lista
@@ -339,6 +365,9 @@ sorry, the follow users are still a member of the group %1	admin	es-es	Los sigui
 sort the entries	admin	es-es	ordenar las entradas
 ssl	admin	es-es	ssl
 standard	admin	es-es	estándar
+standard imap server	admin	es-es	servidor IMAP estándar
+standard pop3 server	admin	es-es	servidor POP3 estándar
+standard smtp-server	admin	es-es	servidor SMTP estándar
 start testjob!	admin	es-es	Iniciar el trabajo de prueba
 status	admin	es-es	Estado
 submit changes	admin	es-es	Enviar cambios
@@ -375,6 +404,7 @@ total records	admin	es-es	Total de registros
 trust level	admin	es-es	Nivel de confianza
 trust relationship	admin	es-es	Relaciones de confianza
 under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	es-es	Bajo windows, sólo puede usar el modo de protección contra fallos de momento. Esto quiere decir que los trabajos sólo se comprueban después de que la página ya se ha visto.
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	es-es	En windows, se necesita instalar asyncservice %1manualmente%2 o usar el modo de fallos. El modo de fallos sólo comprueba los trabajos después de ver cada página. ¡Cuidado!
 use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)
 use theme	admin	es-es	Usar tema
@@ -393,9 +423,8 @@ view system informations	admin	es-es	Ver Informacion del Sistema
 view this user	admin	es-es	ver este usuario
 view user account	admin	es-es	ver cuenta de usuario
 who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
-would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión<br>cuando inicien la sesión los administradores?
-would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión de las aplicaciones cuando inicien la sesión los administradores?
 would you like egroupware to cache the egw info array ?	admin	es-es	¿Desea que eGroupWare almacene en memoria el array egw info?
+would you like egroupware to cache the phpgw info array ?	admin	es-es	¿Desea que eGroupWare guarde en la caché el array phpgw info?
 would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
 would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	es-es	¿Desea cargar automáticamente nuevos ficheros de idioma (al iniciar la sesión)?

@@ -13,6 +13,7 @@
 3 number of chars for day-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del día
 3 number of chars for month-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del mes
 80 (http)	admin	es-es	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	es-es	\n Limpiando el código HTML. Por favor, espere...
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
 about the calendar	jscalendar	es-es	Acerca del calendario
@@ -39,9 +40,12 @@ administration	common	es-es	Administración
 afghanistan	common	es-es	AFGHANISTAN
 albania	common	es-es	ALBANIA
 algeria	common	es-es	ARGELIA
+align	htmlarea-TableOperations	es-es	Alinear
 all	common	es-es	Todos
 all fields	common	es-es	todos los campos
+all four sides	htmlarea-TableOperations	es-es	Los cuatro lados
 alphabet	common	es-es	a,b,c,ch,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	es-es	Hoja de estilo alternativa
 american samoa	common	es-es	AMERICAN SAMOA
 andorra	common	es-es	ANDORRA
 angola	common	es-es	ANGOLA
@@ -66,12 +70,15 @@ autosave default category	common	es-es	Autograbar Categoria Predeterminada
 azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
 back to user login	common	es-es	Volver al inicio de sesión del usuario
+background	htmlarea-TableOperations	es-es	Fondo
 background color	htmlarea	es-es	Color de fondo
+background color:	common	es-es	Color de fondo:
 bad login or password	common	es-es	Nombre de usuario o contraseña incorrectas
 bahamas	common	es-es	BAHAMAS
 bahrain	common	es-es	BAHRAIN
 bangladesh	common	es-es	BANGLADESH
 barbados	common	es-es	BARBADOS
+baseline	htmlarea-TableOperations	es-es	Línea base
 bcc	common	es-es	CCo
 belarus	common	es-es	BELARUS
 belgium	common	es-es	BELGIUM
@@ -83,8 +90,11 @@ blocked, too many attempts	common	es-es	Bloqueado, demasiados intentos
 bold	htmlarea	es-es	Negrita
 bolivia	common	es-es	BOLIVIA
 bookkeeping	common	es-es	Contabilidad
+border	htmlarea-TableOperations	es-es	Borde
+borders	htmlarea-TableOperations	es-es	Bordes
 bosnia and herzegovina	common	es-es	BOSNIA AND HERZEGOVINA
 botswana	common	es-es	BOTSWANA
+bottom	htmlarea-TableOperations	es-es	Parte inferior
 bouvet island	common	es-es	BOUVET ISLAND
 brazil	common	es-es	BRASIL
 british indian ocean territory	common	es-es	BRITISH INDIAN OCEAN TERRITORY
@@ -99,6 +109,7 @@ cameroon	common	es-es	CAMEROON
 canada	common	es-es	CANADA
 cancel	common	es-es	Cancelar
 cape verde	common	es-es	CAPE VERDE
+caption	htmlarea-TableOperations	es-es	Título
 categories	common	es-es	Categorías
 categories for	common	es-es	categorias para
 category	common	es-es	Categoria
@@ -106,13 +117,17 @@ category %1 has been added !	common	es-es	La Categoria %1 ha sido agregada !
 category %1 has been updated !	common	es-es	La Categoria %1 ha sido actualizada !
 cayman islands	common	es-es	CAYMAN ISLANDS
 cc	common	es-es	CC
+cell properties	htmlarea-TableOperations	es-es	Propiedades de la celda
+center	htmlarea-TableOperations	es-es	Centrar
 central african republic	common	es-es	CENTRAL AFRICAN REPUBLIC
 chad	common	es-es	CHAD
 change	common	es-es	Cambiar
-charset	common	es-es	iso-8859-1
+charset	common	es-es	juego de caracteres
 check installation	common	es-es	Comprobar instalación
+check now	common	es-es	Comprobar ahora
 chile	common	es-es	CHILE
 china	common	es-es	CHINA
+choose list style type (for ordered lists)	htmlarea-ListType	es-es	Elegir tipo de estilo de lista (para listas ordenadas)
 choose the category	common	es-es	Elija la categoría
 choose the parent category	common	es-es	Elija la categoría superior
 christmas island	common	es-es	CHRISTMAS ISLAND
@@ -123,7 +138,9 @@ click or mouse over to show menus	common	es-es	Pulse o mueva el ratón por encima
 click or mouse over to show menus?	common	es-es	¿Pulsar o mover el ratón por encima para mostrar menús?
 close	common	es-es	Cerrar
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
+collapsed borders	htmlarea-TableOperations	es-es	Bordes colapsados
 colombia	common	es-es	COLOMBIA
+color	htmlarea-TableOperations	es-es	Color
 comoros	common	es-es	COMOROS
 company	common	es-es	Compañía
 company directory	common	es-es	Directorio de la Organizacion
@@ -137,13 +154,16 @@ copy selection	htmlarea	es-es	Copiar selección
 costa rica	common	es-es	COSTA RICA
 cote d ivoire	common	es-es	COTE D IVOIRE
 create	common	es-es	Crear
+create a link	htmlarea-ContextMenu	es-es	Crear un enlace
 created by	common	es-es	Creado por
 croatia	common	es-es	CROATIA
 cuba	common	es-es	CUBA
 currency	common	es-es	Cambio
 current	common	es-es	Actual
 current style	htmlarea	es-es	Estilo actual
+current url is	htmlarea-ContextMenu	es-es	La URL actual es
 current users	common	es-es	Usuarios actuales
+cut	htmlarea-ContextMenu	es-es	Cortar
 cut selection	htmlarea	es-es	Cortar selección
 cyprus	common	es-es	CYPRUS
 czech republic	common	es-es	CZECH REPUBLIC
@@ -151,15 +171,23 @@ date	common	es-es	Fecha
 date due	common	es-es	Fecha límite
 date selection:	jscalendar	es-es	Seleccionar fecha:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-es	Puerto de fecha.<br>Si usa el puerto 13, por favor, configure adecuadamente las reglas del cortafuegos antes de enviar esta página.<br>
+de_lete column	htmlarea-ContextMenu	es-es	Borrar columna
 december	common	es-es	Diciembre
+decimal numbers	htmlarea-ListType	es-es	Números decimales
 decrease indent	htmlarea	es-es	Reducir sangría
 default category	common	es-es	Categoría predeterminada
 delete	common	es-es	Eliminar
+delete cell	htmlarea-TableOperations	es-es	Borrar celda
+delete column	htmlarea-TableOperations	es-es	Borrar columna
+delete row	htmlarea-TableOperations	es-es	Borrar fila
+delete the current column	htmlarea-ContextMenu	es-es	Borrar la columna actual
+delete the current row	htmlarea-ContextMenu	es-es	Borrar la fila actual
 denmark	common	es-es	DENMARK
 description	common	es-es	Descripción
 detail	common	es-es	Detalle
 details	common	es-es	Detalles
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del script que arregla el bug de IE 5.5 y superiores para mostrar transparencias en imágenes PNG?
+dictionary	htmlarea-SpellChecker	es-es	Diccionario
 disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de IE para ver imágenes PNG
 disable slider effects	common	es-es	Desactivar efectos deslizantes
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
@@ -169,6 +197,8 @@ display monday first	jscalendar	es-es	Mostrar el lunes primero
 display sunday first	jscalendar	es-es	Mostar el domingo primero
 djibouti	common	es-es	DJIBOUTI
 do you also want to delete all subcategories ?	common	es-es	¿También desea eliminar todas las subcategorías?
+document properties	common	es-es	Propiedades del documento
+document title:	common	es-es	Título del documento:
 domain	common	es-es	Dominio
 domain name for mail-address, eg. "%1"	common	es-es	Nombre del dominio para la dirección de correo, ej. "%1"
 domestic	common	es-es	Doméstico
@@ -188,6 +218,7 @@ egroupware api version %1	common	es-es	eGroupWare API versión %1
 egroupware: login blocked for user '%1', ip %2	common	es-es	eGroupWare: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGYPT
 el salvador	common	es-es	EL SALVADOR
+element...	htmlarea-ContextMenu	es-es	Elemento...
 email	common	es-es	Correo electrónico
 email settings	common	es-es	Seteos del Email
 email-address of the user, eg. "%1"	common	es-es	Direcciones de correo electrónico para el usuario, ej. '%1'
@@ -213,10 +244,12 @@ falkland islands (malvinas)	common	es-es	MALVINAS
 faroe islands	common	es-es	FAROE ISLANDS
 fax number	common	es-es	Fax
 february	common	es-es	Febrero
+fg color	htmlarea-TableOperations	es-es	Color de primer plano
 fields	common	es-es	Campos
 fiji	common	es-es	FIJI
 files	common	es-es	Archivos
 filter	common	es-es	Filtro
+finished list of mispelled words	htmlarea-SpellChecker	es-es	Fin de la lista de palabras mal escritas
 finland	common	es-es	FINLAND
 first name	common	es-es	Primer Nombre
 first name of the user, eg. "%1"	common	es-es	Primer nombre del usuario, ej "%1"
@@ -225,6 +258,7 @@ firstname	common	es-es	Nombre de pila
 fixme!	common	es-es	¡Corríjame!
 font color	htmlarea	es-es	Color de la letra
 force selectbox	common	es-es	Forzar cuadro de selección
+frames	htmlarea-TableOperations	es-es	Marcos
 france	common	es-es	FRANCIA
 french guiana	common	es-es	FRENCH GUIANA
 french polynesia	common	es-es	FRENCH POLYNESIA
@@ -267,6 +301,7 @@ header admin login	common	es-es	Usuario administrador del encabezado
 header password	common	es-es	Contraseña del encabezado
 header username	common	es-es	Usuario del encabezado
 heard island and mcdonald islands	common	es-es	HEARD ISLAND AND MCDONALD ISLANDS
+height	htmlarea-TableOperations	es-es	Altura
 help	common	es-es	Ayuda
 help using editor	htmlarea	es-es	Ayuda usando el editor
 high	common	es-es	Alta
@@ -277,13 +312,26 @@ home email	common	es-es	correo electrónico privado
 honduras	common	es-es	HONDURAS
 hong kong	common	es-es	HONG KONG
 horizontal rule	htmlarea	es-es	Regla horizontal
+how did you get here? (please report!)	htmlarea-ContextMenu	es-es	¿Como ha llegado aquí? Por favor, digalo
+how many columns would you like to merge?	htmlarea-TableOperations	es-es	¿Cuántas columnas desea mezclar?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
-hungary	common	es-es	HUNGARY
-iceland	common	es-es	ICELAND
+how many rows would you like to merge?	htmlarea-TableOperations	es-es	¿Cuántas filas desea mezclar?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	es-es	HTMLArea, cobardemente, no quiere borrar la última celda de la fila.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	es-es	HTMLArea, cobardemente, no quiere borrar la última columan de la tabla.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	es-es	HTMLArea, cobardemente, no quiere borrar la última fila de la tabla.
+hungary	common	es-es	HUNGRIA
+i will open it in a new page.	htmlarea-SpellChecker	es-es	Lo abriré en una página nueva
+i_nsert row before	htmlarea-ContextMenu	es-es	I_nsertar fila antes
+iceland	common	es-es	ISLANDIA
+ignore	htmlarea-SpellChecker	es-es	Ignorar
+ignore all	htmlarea-SpellChecker	es-es	Ignorar todo
+image url	htmlarea-TableOperations	es-es	URL de la imagen
+in_sert row after	htmlarea-ContextMenu	es-es	In_sertar fila después
 increase indent	htmlarea	es-es	Aumentar sangría
 india	common	es-es	INDIA
 indonesia	common	es-es	INDONESIA
 info log	common	es-es	Info Log
+insert _column before	htmlarea-ContextMenu	es-es	Insertar _Columna antes
 insert all %1 addresses of the %2 contacts in %3	common	es-es	Inserte todas las direcciones %1 de los contactos de %2 en %3
 insert image	htmlarea	es-es	Insertar imagen
 insert table	htmlarea	es-es	Insertar tabla
@@ -306,10 +354,10 @@ jordan	common	es-es	JORDAN
 july	common	es-es	Julio
 jun	common	es-es	Jun
 june	common	es-es	Junio
-justify center	htmlarea	es-es	Centrar
-justify full	htmlarea	es-es	Justificado
-justify left	htmlarea	es-es	Alinear a la izquierda
-justify right	htmlarea	es-es	Alinear a la derecha
+justify center	common	es-es	Centrar
+justify full	common	es-es	Justificado
+justify left	common	es-es	Alinear a la izquierda
+justify right	common	es-es	Alinear a la derecha
 kazakstan	common	es-es	KAZAKSTAN
 kenya	common	es-es	KENYA
 keywords	common	es-es	Palabras clave
