@@ -40,6 +40,14 @@ class network
     $this->addcrlf = $value;
   }
 
+  function add_crlf($str)
+  {
+    if($this->addcrlf) {
+      $str .= "\r\n";
+    }
+    return $str;
+  }
+
   function set_error($code,$msg,$desc)
   {
     $this->error = array("code","msg","desc");
@@ -93,9 +101,7 @@ class network
 
   function write_port($str)
   {
-    if (isset($this->addcrlf) && $this->addcrlf == True) $str .= "\r\n";
-
-    $ok = fputs($this->socket,$str);
+    $ok = fputs($this->socket,$this->add_crlf($str));
     if (!$ok)
     {
       return $this->set_error("Error","Connection Lost","lost connection to server");
@@ -106,12 +112,10 @@ class network
 
   function bs_write_port($str,$bytes=0)
   {
-    if (isset($this->addcrlf) && $this->addcrlf == True) $str .= "\r\n";
-
     if ($bytes)
-      $ok = fwrite($this->socket,$str,$bytes);
+      $ok = fwrite($this->socket,$this->add_crlf($str),$bytes);
     else
-      $ok = fwrite($this->socket,$str);
+      $ok = fwrite($this->socket,$this->add_crlf($str));
 
     if (!$ok)
     {

@@ -2,9 +2,9 @@
   /**************************************************************************\
   * phpGroupWare API - Link box generator                                    *
   * http://www.phpgroupware.org/api                                          *
-  * This file written by Joseph Engo <jengo@phpgroupware.org>                *
+  * This file written by Mark Peters <skeeter@phpgroupware.org>              *
   * Creates linkboxes using templates                                        *
-  * Copyright (C) 2000, 2001 Joseph Engo                                     *
+  * Copyright (C) 2000, 2001 Mark Peters                                     *
   * -------------------------------------------------------------------------*
   * This library is part of phpGroupWare (http://www.phpgroupware.org)       * 
   * This library is free software; you can redistribute it and/or modify it  *
