@@ -43,6 +43,12 @@
 	{
 		var $debug_info; // An array with debugging info from the API
 		var $found_files;
+		var $output;
+
+		function common()
+		{
+			$this->output = array();
+		}
 
 		/*!
 		@function cmp_version
@@ -1058,16 +1064,17 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		{
 			$this->navbar();
 			
-			$app_title = isset($GLOBALS['phpgw_info']['flags']['currentapp']) ? ' ['.$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title'].']' : '';
+			$cur_app	= $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$app_title	= isset($cur_app) ? ' [' . $GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title'] . ']' : '';
 			$css = $this->get_css_url();
 			$var = array
 			(
 				'charset'			=> lang('charset'),
-				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'].$app_title,
+				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'] . $app_title,
 				'webserver_url'		=> $GLOBALS['phpgw_info']['server']['webserver_url'],
 				'phpgw_css_file'	=> $css[0],
 				'theme_css_file'	=> $css[1],
-				'app_tpl'			=> $app_tpl
+				'current_app'		=> $cur_app
 			);
 
 			if ($GLOBALS['phpgw_info']['flags']['headonly'] == True)
@@ -1078,8 +1085,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
 			}
-
-			$cur_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
 			switch ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'])
 			{
@@ -1161,12 +1166,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					break; 
 				
 				case 'verdilak':
-					$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 					$var['logo_img']	= $this->image('phpgwapi','logo');
-					$var['home_img']	= $this->image('phpgwapi','welcome-'.($app=='home' ? 'red' : 'grey'));
-					$var['prefs_img']	= $this->image('preferences','preferences-'.($app=='preferences' ? 'red' : 'grey'));
+					$var['home_img']	= $this->image('phpgwapi','welcome-'.($cur_app=='home' ? 'red' : 'grey'));
+					$var['prefs_img']	= $this->image('preferences','preferences-'.($cur_app=='preferences' ? 'red' : 'grey'));
 					$var['logout_img']	= $this->image('phpgwapi','logout');
-					$var['about_img']	= $this->image('phpgwapi','about-'.($app=='about' ? 'red' : 'grey'));
+					$var['about_img']	= $this->image('phpgwapi','about-'.($cur_app=='about' ? 'red' : 'grey'));
 					$var['help_img']	= $this->image('phpgwapi','help');
 					$var['greybar']		= $this->image('phpgwapi','greybar');
 					break;
@@ -1313,7 +1317,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			$var['app_tpl'] = '';
-			$var['current_app'] = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
 			$menuaction	= get_var('menuaction',Array('GET'));
 
@@ -1638,6 +1641,49 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$GLOBALS['debug_timer_stop'] = perfgetmicrotime();
 					echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
 				}
+			}
+		}
+
+		/**************************************************************************\
+		* function to display the applications preferences and admin links         *
+		\**************************************************************************/
+
+		function display_mainscreen($appname,$file,$file2=False)
+		{
+			if ($file2)
+			{
+				$file = $file2;
+			}
+
+			if(is_array($file))
+			{
+				$icon = $GLOBALS['phpgw']->common->image($appname,'navbar','',True);
+
+				while(is_array($file) && list($text,$url) = each($file))
+				{
+					$link_data[] = array
+					(
+						'pref_link'	=> $url,
+						'pref_text'	=> $text
+					);
+				}
+
+				if ($icon)
+				{
+					$pref = 'app_row_icon';
+				}
+				else
+				{
+					$pref = 'app_row_noicon';
+				}
+
+				$this->output[$pref][] = array
+				(
+					'app_title' => $GLOBALS['phpgw_info']['apps'][$appname]['title'],
+					'app_name'	=> $appname,
+					'app_icon'	=> $icon,
+					'link_row'	=> $link_data
+				);
 			}
 		}
 

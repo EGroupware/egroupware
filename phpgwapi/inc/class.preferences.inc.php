@@ -4,10 +4,10 @@
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	* and Mark Peters <skeeter@phpgroupware.org>                               *
 	* Manages user preferences                                                 *
-	* Copyright (C) 2000, 2001 Joseph Engo                                     *
+	* Copyright (C) 2000 - 2003 Joseph Engo                                    *
 	* -------------------------------------------------------------------------*
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          *
+	* http://www.phpgroupware.org                                              *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -21,7 +21,6 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	/*!
@@ -55,8 +54,8 @@
 		*/
 		function preferences($account_id = '')
 		{
-			$this->db         = $GLOBALS['phpgw']->db;
-			$this->account_id = get_account_id($account_id);
+			$this->db			= $GLOBALS['phpgw']->db;
+			$this->account_id	= get_account_id($account_id);
 		}
 
 		/**************************************************************************\
