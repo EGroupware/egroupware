@@ -38,6 +38,9 @@
         - Added in an about link on the navbar, it will return information about phpGroupWare
           (version, credits, etc) and it can also return information about an app.
         - Fixed changing of users password through admin.
+        - Changed navbar() to return an array for use in different template sets.
+        - Each template set can now have its own custom navbar
+        - Moved all mainscreen areas to use hooks.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
