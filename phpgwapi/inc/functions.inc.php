@@ -72,8 +72,12 @@
 	*/
 	function print_debug($message,$var = 'messageonly',$part = 'app', $level = 3)
 	{
-		if (($part == 'app' && DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
+		if (($part == 'app' && EXP_DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
 		{
+			if (!defined('DEBUG_OUTPUT'))
+			{
+				define('DEBUG_OUTPUT', 1);
+			}
 			if ($level >= DEBUG_LEVEL)
 			{
 				if (!is_array($var))
@@ -82,27 +86,54 @@
 					{
 						if (!DEBUG_DATATYPES)
 						{
-							echo "$message\n$var<br>\n";
+							$output = "$message\n$var";
 						}
 						else
 						{
-							echo "$message\n$var is a ".gettype($var)."<br>\n";
+							$output = "$message\n$var is a ".gettype($var);
 						}
 					}
 					else
 					{
-						echo "$message<br>\n";
+						$output = $message;
 					}
+
+					/* Bit 1 means to output to screen */
+					if (!!(DEBUG_OUTPUT & 1))
+					{
+						echo "$output<br>\n";
+					}
+					/* Bit 2 means to output to sql */
+					if (!!(DEBUG_OUTPUT & 2))
+					{
+						/* Need to flesh this out still. I dont have a table to dump this in yet.*/
+						/* So the SQL statement will go here*/
+					}
+
+					/* Example of how this can be extended to output to other locations as well. This example uses a COM object */
+					/*
+					if (!!(DEBUG_OUTPUT & 32))
+					{
+						$obj_debug = new COM('Some_COM_App.Class','localhost');
+						if (is_object($obj_debug))
+						{
+							$DebugMessage_return = $obj_debug->DebugMessage($output);
+						}
+					}
+					*/
 				}
 				else
 				{
+					if (floor(phpversion()) > 3 && !!(DEBUG_OUTPUT & 2))
+					{
+						ob_start();
+					}
 					echo "<pre>\n$message\n";
 					print_r($var);
 					if (DEBUG_DATATYPES)
 					{
 						while(list($key, $value) = each($var))
 						{
-							//echo 'Array['.$key.'] is a '.gettype($var[$key])."\n";
 							if (is_array($value))
 							{
 								$vartypes[$key] = print_debug_subarray($value);
@@ -116,6 +147,17 @@
 						print_r($vartypes);
 					}
 					echo "\n<pre>\n";
+					if (floor(phpversion()) > 3 && !!(DEBUG_OUTPUT & 2))
+					{
+						$output .= ob_get_contents();
+						ob_end_clean();
+						/* Need to flesh this out still. I dont have a table to dump this in yet.*/
+						/* So the SQL statement will go here*/
+						if (!!(DEBUG_OUTPUT & 1))
+						{
+							echo "$output<br>\n";
+						}
+					}
 				}
 			}
 		}
