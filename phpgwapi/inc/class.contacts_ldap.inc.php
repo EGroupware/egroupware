@@ -192,7 +192,7 @@
 			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
 			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
-			if (gettype($stock_fieldnames) == 'array')
+			if(@is_array($stock_fieldnames))
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
@@ -259,7 +259,7 @@
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
 			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
 
-			if (gettype($stock_fieldnames) == 'array')
+			if(@is_array($stock_fieldnames))
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
@@ -350,13 +350,13 @@
 			need some way of using the lastmod arg in the filter like this:
 			if($lastmod >= 0)
 			{
-				$filterfields += array('last_mod'	=> (int) $lastmod);
+				$filterfields += array('last_mod'	=> (int)$lastmod;
 			}
 			or maybe not like this - i am not sure what i am doing :)
 		*/
 	
 
-			if (is_array($this->grants))
+			if(@is_array($this->grants))
 			{
 				/* this was not listing private entries when show all was selected */
 				/* $filterfields += array('phpgwcontactaccess' => 'public'); */
@@ -474,7 +474,7 @@
 					$return_fields[$j]['access'] = $ldap_fields[$i]['phpgwcontactaccess'][0];
 					$return_fields[$j]['cat_id'] = $ldap_fields[$i]['phpgwcontactcatid'][0];
 
-					if (gettype($stock_fieldnames) == 'array')
+					if(@is_array($stock_fieldnames))
 					{
 						reset($stock_fieldnames);
 						while (list($f_name,$f_value) = each($stock_fieldnames))
@@ -484,7 +484,7 @@
 						reset($stock_fieldnames);
 					}
 					$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
-						. intval($ldap_fields[$i]['uidnumber']) . "'",__LINE__,__FILE__);
+						. (int)$ldap_fields[$i]['uidnumber'] . "'",__LINE__,__FILE__);
 					while ($this->db->next_record())
 					{
 						if ($extra_fields[$this->db->f('contact_name')])
@@ -501,12 +501,12 @@
 		/* Used by read() above to build the ldap filter string */
 		function makefilter($qarray,$extra='',$query='', $DEBUG=False)
 		{
-			if(!is_array($qarray))
+			if(!@is_array($qarray))
 			{
 				return $qarray;
 			}
 
-			if(is_array($extra))
+			if(@is_array($extra))
 			{
 				if($DEBUG) { echo '<br>Searching...'; }
 				reset($extra);
@@ -529,7 +529,7 @@
 
 			while(list($name,$value) = @each($qarray))
 			{
-				if(is_array($value))
+				if(@is_array($value))
 				{
 					while(list($x,$y) = each($value))
 					{
@@ -538,7 +538,7 @@
 							$oquery .= '(' . $x . '=*)';
 							$hasor = True;
 						}
-						elseif(is_array($y))
+						elseif(@is_array($y))
 						{
 							/* This was most likely created from acl grants in read() above */
 							while(list($a,$b) = each($y))
@@ -644,7 +644,7 @@
 			}
 
 			$ldap_fields = '';
-			if (gettype($stock_fieldnames) == 'array')
+			if(@is_array($stock_fieldnames))
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
@@ -722,7 +722,7 @@
 			{
 				$dn = $ldap_fields[0]['dn'];
 				list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-				if (gettype($stock_fieldnames) == 'array')
+				if(@is_array($stock_fieldnames))
 				{
 					/*
 					Check each value, add our extra attributes if they are missing, and

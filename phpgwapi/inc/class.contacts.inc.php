@@ -50,7 +50,7 @@
 			//echo "<p>contacts::check_perms($rights,$needed,".print_r($addr,True).")";
 			if ($addr !== False)	// addr-record or id given
 			{
-				if (is_array($addr))
+				if(@is_array($addr))
 				{
 					if (isset($addr['rights']))
 					{
@@ -62,12 +62,12 @@
 					}
 					else
 					{
-						$id = intval(isset($addr['id']) ? $addr['id'] : $addr['ab_id']);
+						$id = (int)(isset($addr['id']) ? $addr['id'] : $addr['ab_id']);
 					}
 				}
 				else
 				{
-					$id = intval($addr);
+					$id = (int)$addr;
 				}
 				if (isset($id))
 				{
@@ -76,7 +76,7 @@
 					//echo "addr($id)=<pre>".print_r($addr[0],True)."</pre>\n";
 				}
 			}
-			$ret = !!(intval($rights) & $needed);
+			$ret = !!((int)$rights & $needed);
 			//echo " rights=$rights, id=$id => ".($ret?'True':'False')."</p>\n";
 			//echo "grants=<pre>".print_r($this->grants,True)."</pre>\n";
 
@@ -92,13 +92,13 @@
 		*/
 		function read_single_entry($id,$fields='')
 		{
-			if (is_array($fields))
+			if(@is_array($fields))
 			{
 				$fields['owner'] = 'owner';	// we need the owner to set the rights
 			}
 			if ($entry = contacts_::read_single_entry($id,$fields))
 			{
-				$entry[0]['rights'] = intval($this->grants[$entry[0]['owner']]);
+				$entry[0]['rights'] = (int)$this->grants[$entry[0]['owner']];
 			}
 			return $entry;
 		}
@@ -118,7 +118,7 @@
 		*/
 		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1)
 		{
-			if (is_array($fields))
+			if(@is_array($fields))
 			{
 				$fields['owner'] = 'owner';	// we need the owner to set the rights
 			}
@@ -126,7 +126,7 @@
 			{
 				foreach($entrys as $nr => $entry)
 				{
-					$entrys[$nr]['rights'] = intval($this->grants[$entry['owner']]);
+					$entrys[$nr]['rights'] = (int)$this->grants[$entry['owner']];
 				}
 			}
 			return $entrys;
@@ -137,7 +137,7 @@
 			while (list($field,$value) = @each($fields))
 			{
 				/* Depending on how the array was built, this is needed. */
-				if (gettype($value) == 'integer')
+				if(@is_int($value))
 				{
 					$value = $field;
 				}
@@ -168,7 +168,7 @@
 		/* This will take an array or integer */
 		function delete($id)
 		{
-			if (gettype($id) == 'array')
+			if(@is_array($id))
 			{
 				while (list($null,$t_id) = each($id))
 				{
@@ -207,17 +207,17 @@
 			*/
 			$order = 1;
 
-			if ( (strlen($s1) == 0) )
+			if((strlen($s1) == 0))
 			{
 				return 0;
 			}
 
-			if ( (strlen($s2) == 0) )
+			if((strlen($s2) == 0))
 			{
 				return 1;
 			}
 
-			if (strlen ($s1) > strlen ($s2))
+			if(strlen ($s1) > strlen ($s2))
 			{
 				$temp = $s1;
 				$s1 = $s2;
@@ -331,7 +331,7 @@
 									if($DEBUG) { echo ', but number '.$ldap_fields[$i]['uidnumber'][0].' did not match.'.'&nbsp;&nbsp;'; }
 									$yes &= False;
 									$match--;
-								}							
+								}
 							}
 						}
 						else
@@ -384,23 +384,22 @@
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
 
-			$fields = array
-			(
-				'n_given'				=> 'n_given',
-				'n_family'				=> 'n_family',
-				'title'					=> 'title',
-				'org_name'				=> 'org_name',
-				'org_unit'				=> 'org_unit',
-				'adr_one_street'		=> 'adr_one_street',
-				'adr_one_locality'		=> 'adr_one_locality',
-				'adr_one_postalcode'	=> 'adr_one_postalcode',
-				'adr_one_region'		=> 'adr_one_region',
-				'adr_one_countryname'	=> 'adr_one_countryname',
-				'adr_two_street'		=> 'adr_two_street',
-				'adr_two_locality'		=> 'adr_two_locality',
-				'adr_two_postalcode'	=> 'adr_two_postalcode',
-				'adr_two_region'		=> 'adr_two_region',
-				'adr_two_countryname'	=> 'adr_two_countryname'
+			$fields = array(
+				'n_given'  => 'n_given',
+				'n_family' => 'n_family',
+				'title'    => 'title',
+				'org_name' => 'org_name',
+				'org_unit' => 'org_unit',
+				'adr_one_street'      => 'adr_one_street',
+				'adr_one_locality'    => 'adr_one_locality',
+				'adr_one_postalcode'  => 'adr_one_postalcode',
+				'adr_one_region'      => 'adr_one_region',
+				'adr_one_countryname' => 'adr_one_countryname',
+				'adr_two_street'      => 'adr_two_street',
+				'adr_two_locality'    => 'adr_two_locality',
+				'adr_two_postalcode'  => 'adr_two_postalcode',
+				'adr_two_region'      => 'adr_two_region',
+				'adr_two_countryname' => 'adr_two_countryname'
 			);
 
 			list($address) = $this->read_single_entry($id,$fields);

@@ -177,7 +177,7 @@
 				}
 			}
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='". intval($id) . "'");
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='". (int)$id . "'");
 			$this->db->next_record();
 
 			$return_fields[0]['id']     = $this->db->f('id');
@@ -187,7 +187,7 @@
 			$return_fields[0]['access'] = $this->db->f('access');
 			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
 
-			if (gettype($stock_fieldnames) == 'array')
+			if(@is_array($stock_fieldnames))
 			{
 				while (list($f_name) = each($stock_fieldnames))
 				{
@@ -215,7 +215,7 @@
 				}
 			}
 
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . intval($this->db->f('id')) . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . (int)$this->db->f('id') . "'",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				if ($extra_fields[$this->db->f('contact_name')])
@@ -246,7 +246,7 @@
 
 			$id = $this->db->f(0);
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='" . intval($id) . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='" . (int)$id . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]['id']     = $this->db->f('id');
@@ -256,7 +256,7 @@
 			$return_fields[0]['access'] = $this->db->f('access');
 			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
 
-			if (gettype($stock_fieldnames) == 'array')
+			if (@is_array($stock_fieldnames))
 			{
 				while (list($f_name) = each($stock_fieldnames))
 				{
@@ -376,7 +376,7 @@
 								{
 									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."='".$value."');";
 								}
-								elseif (gettype($value) == "integer")
+								elseif(@is_int($value))
 								{
 									$filterlist .= $name."=".$value.";";
 								}
@@ -395,7 +395,7 @@
 					$i++;
 				}
 				$filterlist = substr($filterlist,0,-1);
-				$filterlist = ereg_replace(';',' AND ',$filterlist);
+				$filterlist = str_replace(';',' AND ',$filterlist);
 				
 				if ($DEBUG)
 				{
@@ -436,7 +436,7 @@
 				}
 			}
 
-			if (is_array($this->grants))
+			if(@is_array($this->grants))
 			{
 				$grants = $this->grants;
 				while (list($user) = each($grants))
@@ -491,8 +491,8 @@
 
 			if($query)
 			{
-				$query  = ereg_replace("'",'',$query);
-				$query  = ereg_replace('"','',$query);
+				$query  = str_replace("'",'',$query);
+				$query  = str_replace('"','',$query);
 
 				$sql = "SELECT * FROM $this->std_table WHERE (";
 				$sqlcount = "SELECT COUNT(id) FROM $this->std_table WHERE (";
@@ -583,7 +583,7 @@
 
 		function add($owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
-			$owner = intval($owner);
+			$owner = (int)$owner;
 			// access, cat_id and tid can be in $fields now or as extra params
 			foreach(array('access','cat_id','tid') as $extra)
 			{
@@ -646,8 +646,8 @@
 
 		function update($id,$owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
-			$owner = intval($owner);
-			$id    = intval($id);
+			$owner = (int)$owner;
+			$id    = (int)$id;
 			/* First make sure that id number exists */
 			$this->db->query("SELECT COUNT(*) FROM $this->std_table WHERE id=$id",__LINE__,__FILE__);
 			$this->db->next_record();
