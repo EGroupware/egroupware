@@ -266,5 +266,66 @@
 
 			return $new_ldap;
 		}
+
+		function formatted_address($id = '',$fields = '',$business = True)
+		{
+			global $phpgw,$phpgw_info;
+
+			$font = $phpgw_info['theme']['font'];
+
+			$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));
+
+			$address = $this->read_single_entry($id,$fields);
+
+			if ($address[0]['title'])
+			{
+				$title = $address[0]['title'] . '&nbsp;';
+			}
+
+			if ($business)
+			{
+				$street = $address[0]['adr_one_street'];
+				$city = $address[0]['adr_one_locality'];
+				$zip = $address[0]['adr_one_postalcode'];
+				$state = $address[0]['adr_one_region'];
+				$country = $address[0]['adr_one_countryname'];
+			}
+			else
+			{
+				$street = $address[0]['adr_two_street'];
+				$city = $address[0]['adr_two_locality'];
+				$zip = $address[0]['adr_two_postalcode'];
+				$state = $address[0]['adr_two_region'];
+				$country = $address[0]['adr_two_countryname'];
+			}
+
+			if (! $country)
+			{
+				$country = $phpgw_info['user']['preferences']['common']['country'];
+			}
+
+			if ($country == 'DE')
+			{
+				$t->set_file(array('address_format' => 'format_de.tpl'));
+			}
+				elseif ($country == 'US')
+			{
+				$t->set_file(array('address_format' => 'format_us.tpl'));
+			}
+
+			$t->set_var('font',$font);
+			$t->set_var('title',$title);
+			$t->set_var('firstname',$address[0]['n_given']);
+			$t->set_var('lastname',$address[0]['n_family']);
+			$t->set_var('company',$address[0]['org_name']);
+			$t->set_var('department',$address[0]['org_unit']);
+			$t->set_var('street',$street);
+			$t->set_var('city',$city);
+			$t->set_var('zip',$zip);
+			$t->set_var('state',$state);
+			$t->set_var('country',$country);
+
+			$t->pparse('out','address_format');
+		}
 	}
 ?>
