@@ -611,14 +611,22 @@ class bocal
 		if (is_array($event) && $needed == PHPGW_ACL_READ)
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
+			// in that case he has an implicite READ grant for that event
 			//
 			foreach($event['participants'] as $uid => $accept)
 			{
-				if ($this->grants[$uid] & PHPGW_ACL_READ || $uid == $user)
+				if ($uid == $user) 
 				{
-					$grants |= PHPGW_ACL_READ;
+					// if we are a participant, we have an implicite READ and PRIVAT grant
+					$grants |= PHPGW_ACL_READ | PHPGW_ACL_PRIVATE;
 					break;
 				}
+				elseif ($this->grants[$uid] & PHPGW_ACL_READ)
+				{
+					// if we have a READ grant from a participant, we dont give an implicit privat grant too
+					$grants |= PHPGW_ACL_READ;
+					// we cant break here, as we might be a participant too, and would miss the privat grant 
+				}	
 			}
 		}
 
