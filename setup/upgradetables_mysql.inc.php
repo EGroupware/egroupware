@@ -310,7 +310,7 @@
       }
 
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.2 to 0.9.3pre6 is completed.</td>\n";
+      echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
       echo "  </tr>\n";
     }
   }
@@ -326,7 +326,7 @@
   v9052000to9072000();
   v9072000to0_9_1();
   v0_9_1to0_9_2();
-  v0_9_2to0_9_3pre4();
+  v0_9_2to0_9_3pre6();
 
   $db->query("update applications set app_version='".$phpgw_info["server"]["version"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
