@@ -145,6 +145,11 @@
 		}
 	}
 
+	function _debug_array($array)
+	{
+		echo '<pre>'; print_r($array); echo '</pre>';
+	}
+
 	function print_debug($text='')
 	{
 		global $debugme;
