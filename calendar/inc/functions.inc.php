@@ -1052,9 +1052,12 @@
 		$days = array(0 => "Sunday", 1 => "Monday", 2 => "Tuesday", 3 => "Wednesday", 4 => "Thursday", 5 => "Friday", 6 => "Saturday");
       }
 	  $p = new Template($phpgw->common->get_tpl_dir('calendar'));
-      $p->set_file(array('mini_cal' => 'mini_cal.tpl'));
-      $p->set_block('mini_cal',"month_week");
-      $p->set_block('mini_cal','day');
+      $p->set_file(array('mini_cal' => 'mini_cal.tpl',
+      					 'mini_day' => 'mini_day.tpl',
+      					 'mini_week' => 'mini_week.tpl'));
+      $p->set_block('mini_cal','mini_week','mini_day');
+//      $p->set_block('mini_cal',"mini_week");
+//      $p->set_block('mini_cal','mini_day');
       $p->set_var('bgcolor',$phpgw_info["theme"]["bg_text"]);
       $p->set_var('bgcolor1',$phpgw_info["theme"]["bg_color"]);
       $p->set_var('month',lang($phpgw->common->show_date($date["raw"],"F")).' '.$year);
@@ -1064,7 +1067,7 @@
       $p->set_var('bgcolor2',$phpgw_info["theme"]["cal_dayview"]);
       for($i=0;$i<7;$i++) {
 		$p->set_var('dayname',substr(lang($days[$i]),0,2));
-		$p->parse('daynames','day',True);
+		$p->parse('daynames','mini_day',True);
       }
       for($i=$weekstarttime;date("Ymd",$i)<=$monthend;$i += (24 * 3600 * 7)) {
 		for($j=0;$j<7;$j++) {
@@ -1086,13 +1089,13 @@
 	    	$p->set_var('bgcolor2','#FEFEFE');
 	    	$p->set_var('dayname',$cal["day"]);
 	  	  }
-	  	  $p->parse('monthweek_day','day',True);
+	  	  $p->parse('monthweek_day','mini_day',True);
 		}
-		$p->parse('display_monthweek','month_week',True);
+		$p->parse('display_monthweek','mini_week',True);
 		$p->set_var('dayname','');
 		$p->set_var('monthweek_day','');
       }
-      $p->pparse('out','mini_cal');
+      return $p->parse('out','mini_cal');
     }
 
     function html_for_event_day_at_a_glance ($event) {

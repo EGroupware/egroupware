@@ -70,12 +70,12 @@
 
   $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
 
-  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->pretty_small_calendar($thisday,$prev["month"],$prev["year"],"day.php"));
+  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->mini_calendar($thisday,$prev["month"],$prev["year"],"day.php"));
 
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
   $phpgw->template->set_var("month_identifier",lang(strftime("%B",$m)) . " " . $thisyear);
   $phpgw->template->set_var("username",$phpgw->common->grab_owner_name($owner));
-  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->pretty_small_calendar($thisday,$next["month"],$next["year"],"day.php"));
+  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->mini_calendar($thisday,$next["month"],$next["year"],"day.php"));
   $phpgw->template->set_var("large_month",$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
   if (!$friendly) {
     $param = "year=".$now["year"]."&month=".$now["month"]."&friendly=1&filter=".$filter;

@@ -101,5 +101,5 @@
    </table>
   </form>
 <?php
-  include($phpgw_info["server"]["api_inc"] . "/footer.inc.php");
+  $phpgw->common->phpgw_footer();
 ?>

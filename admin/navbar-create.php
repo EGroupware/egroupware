@@ -28,5 +28,5 @@ The instructions are as follows:
     echo $phpgw_info["apps"][$key]["title"]."</A><BR>";
   }
 
-  include($phpgw_info["server"]["api_inc"] . "/footer.inc.php");
+  $phpgw->common->phpgw_footer();
 ?>
