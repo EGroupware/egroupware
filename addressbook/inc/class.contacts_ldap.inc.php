@@ -594,7 +594,7 @@
 					if (empty($ldap_fields[0]['phpgwowner'])) {
 						$stock_fields['phpgwowner']          = $owner;
 						$err = ldap_modify($this->ldap,$dn,array('phpgwowner' => $stock_fields['phpgwowner']));
-					} elseif (!$ldap_fields[0]['owner']) {
+					} elseif (!$ldap_fields[0]['phpgwowner']) {
 						$stock_fields['phpgwowner']          = $owner;
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwowner' => $stock_fields['phpgwowner']));
 					}
@@ -626,7 +626,7 @@
 					// OK, just add the data already
 					while ( list($fname,$fvalue) = each($stock_fieldnames) ) {
 						if ($ldap_fields[0][$fvalue]) {
-							//echo "<br>".$fname." was there";
+							//echo "<br>".$fname." => ".$fvalue." was there";
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						} elseif (!$ldap_fields[0][$fvalue]) {
 							//echo "<br>".$fname." not there";
