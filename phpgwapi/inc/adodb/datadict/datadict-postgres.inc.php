@@ -113,6 +113,33 @@ class ADODB2_postgres extends ADODB_DataDict {
 	}
 	
 	/**
+	 * Adding a new Column 
+	 *
+	 * reimplementation of the default function as postgres does NOT allow to set the default in the same statement
+	 *
+	 * @param string $tabname table-name
+	 * @param string $flds column-names and types for the changed columns
+	 * @return array with SQL strings
+	 */
+	function AddColumnSQL($tabname, $flds)
+	{
+		$tabname = $this->TableName ($tabname);
+		$sql = array();
+		list($lines,$pkey) = $this->_GenFields($flds);
+		$alter = 'ALTER TABLE ' . $tabname . $this->addCol . ' ';
+		foreach($lines as $v) {
+			if (preg_match('/^([^ ]+) .*(DEFAULT [^ ]+)/',$v,$matches)) {
+				list(,$colname,$default) = $matches;
+				$sql[] = $alter . str_replace($default,'',$v);
+				$sql[] = 'ALTER TABLE '.$tabname.' ALTER COLUMN '.$colname.' SET ' . $default;
+			} else {				
+				$sql[] = $alter . $v;
+			}
+		}
+		return $sql;
+	}
+	
+	/**
 	 * Change the definition of one column
 	 *
 	 * Postgres can't do that on it's own, you need to supply the complete defintion of the new table,
