@@ -155,8 +155,9 @@
 
 	while (list($p,$fn) = each($files))
 	{
-		$matches = $elements = $data = $class = $startstop = array();
+		$matches = $elements = $data = $startstop = array();
 		$string = $t = $out = $xkey = $new = '';
+		//$matches = $elements = $data = $class = $startstop = array();
 		//$string = $t = $out = $class = $xkey = $new = '';
 		$file = '../'.$app.'/inc/' . $fn;
 		echo '<br>Looking at: ' . $file . "\n";
@@ -228,7 +229,7 @@
 			$returndata = parseobject($data[1][0]);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
 			{
-				$class[$returndata['name']] = $returndata['value'];
+				$class['file '.$fn][$returndata['name']] = $returndata['value'];
 			}
 			else
 			{
@@ -244,13 +245,13 @@
 			}
 		}
 
-		if(isset($GLOBALS['HTTP_GET_VARS']['object']))
-		{
-			$class = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
-		}
-		echo '<br><pre>';
-		print_r($class);
-		//        var_dump($elements);
-		echo '</pre>' . "\n";
 	}
+	if(isset($GLOBALS['HTTP_GET_VARS']['object']))
+	{
+		$class = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
+	}
+	echo '<br><pre>';
+	print_r($class);
+	//        var_dump($elements);
+	echo '</pre>' . "\n";
 ?>
