@@ -42,6 +42,11 @@
 		$submit              = True;
 	}
 
+	if (!defined('MAX_MESSAGE_ID_LENGTH'))
+	{
+		define('MAX_MESSAGE_ID_LENGTH',230);
+	}
+
 	if (@$GLOBALS['HTTP_POST_VARS']['submit'])
 	{
 		$lang_selected = @$GLOBALS['HTTP_POST_VARS']['lang_selected'];
@@ -66,7 +71,7 @@
 				//echo '<br>Test: dumpold';
 				$GLOBALS['phpgw_info']['server']['lang_ctimes'] = array();
 			}
-			while (list($null,$lang) = each($lang_selected))
+			foreach($lang_selected as $lang)
 			{
 				//echo '<br>Working on: ' . $lang;
 				$addlang = False;
@@ -87,8 +92,8 @@
 					//echo '<br>Test: loop above file()';
 					$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
 					$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
-					$raw = $raw_file = array();
-					// Visit each app/setup dir, look for a lang file
+					$raw = array();
+					// Visit each app/setup dir, look for a phpgw_lang file
 					while (list($key,$app) = each($setup_info))
 					{
 						$appfile = PHPGW_SERVER_ROOT . SEP . $app['name'] . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
@@ -96,27 +101,29 @@
 						if($GLOBALS['phpgw_setup']->app_registered($app['name']) && file_exists($appfile))
 						{
 							//echo '<br>Including: ' . $appfile;
-							$raw[] = file($appfile);
-							
+							$lines = file($appfile);
+							foreach($lines as $line)
+							{
+								list($message_id,$app_name,,$content) = explode("\t",$line);
+								$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(substr(chop($message_id),0,MAX_MESSAGE_ID_LENGTH));
+								$app_name = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
+								$content = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
+								
+								$raw[$app_name][$message_id] = $content;
+							}
 							$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app['name']] = filectime($appfile);
 						}
 					}
-					@reset($raw);
-					while (list($a,$raw_file) = @each($raw))
+					foreach($raw as $app_name => $ids)
 					{
-						while (list($_null,$line) = @each($raw_file))
+						foreach($ids as $message_id => $content)
 						{
 							$addit = False;
-							list($message_id,$app_name,$GLOBALS['phpgw_setup']->db_lang,$content) = explode("\t",$line);
-							$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($message_id));
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
-							$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
-							$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
-							$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
-								$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='".$message_id."' and lang='".$GLOBALS['phpgw_setup']->db_lang."' and (app_name='".$app_name."' or app_name='common')",__LINE__,__FILE__);
+								$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='$message_id' and lang='$lang' and (app_name='$app_name' or app_name='common')",__LINE__,__FILE__);
 								$GLOBALS['phpgw_setup']->db->next_record();
 
 								if ($GLOBALS['phpgw_setup']->db->f(0) == 0)
@@ -130,11 +137,11 @@
 							{
 								if($message_id && $content)
 								{
-									//echo "<br>adding - insert into lang values ('".$message_id."','".$app_name."','".$GLOBALS['phpgw_setup']->db_lang."','".$content."')";
-									$result = $GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_lang(message_id,app_name,lang,content) VALUES('".$message_id."','".$app_name."','".$GLOBALS['phpgw_setup']->db_lang."','".$content."')",__LINE__,__FILE__);
+									//echo "<br>adding - insert into phpgw_lang values ('$message_id','$app_name','$lang','$content')";
+									$result = $GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_lang (message_id,app_name,lang,content) VALUES('$message_id','$app_name','$lang','$content')",__LINE__,__FILE__);
 									if (intval($result) <= 0)
 									{
-										echo "<br>Error inserting record: phpgw_lang values ('".$message_id."','".$app_name."','".$GLOBALS['phpgw_setup']->db_lang."','".$content."')";
+										echo "<br>Error inserting record: phpgw_lang values ('$message_id','$app_name','$lang','$content')";
 									}
 								}
 							}
@@ -148,7 +155,6 @@
 			$GLOBALS['phpgw_setup']->db->query($query="INSERT INTO phpgw_config(config_app,config_name,config_value) VALUES ('phpgwapi','lang_ctimes','".
 				addslashes(serialize($GLOBALS['phpgw_info']['server']['lang_ctimes']))."')",__LINE__,__FILE__);
 		}
-
 		if(!$included)
 		{
 			Header('Location: index.php');
@@ -189,7 +195,7 @@
 			}
 			$select_box_desc = lang('Select which languages you would like to use');
 			$select_box = '';
-			$GLOBALS['phpgw_setup']->db->query("select lang_id,lang_name from phpgw_languages where available='Yes'");
+			$GLOBALS['phpgw_setup']->db->query($q="select lang_id,lang_name from phpgw_languages where available='Yes'");
 			while ($GLOBALS['phpgw_setup']->db->next_record())
 			{
 				$id = $GLOBALS['phpgw_setup']->db->f('lang_id');

@@ -25,6 +25,13 @@
 
   /* $Id$ */
 
+	// define the maximal length of a message_id, all message_ids have to be unique 
+	// in this length, our column is varchar 255, but addslashes might add some length
+	if (!defined('MAX_MESSAGE_ID_LENGTH'))
+	{
+		define('MAX_MESSAGE_ID_LENGTH',230);	
+	}
+
 	class translation
 	{
 		var $lang = array();
@@ -103,7 +110,7 @@
 				$vars = array();
 			}
 			$ret  = $key;
-			$_key = strtolower($key);
+			$_key = substr(strtolower($key),0,MAX_MESSAGE_ID_LENGTH);
 
 			if(!@isset($this->lang[$_key]) && !$this->loaded)
 			{
@@ -139,5 +146,23 @@
 				$this->lang[strtolower($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
 				$GLOBALS['phpgw']->db->next_record();
 			}
+		}
+		
+		/*!
+		 @function get_installed_langs
+		 @returns array of installed langs, in the form eg. 'de' => 'German'
+		*/
+		function get_installed_langs()
+		{
+			$GLOBALS['phpgw']->db->query("SELECT DISTINCT l.lang,ln.lang_name FROM phpgw_lang l,phpgw_languages ln WHERE l.lang = ln.lang_id",__LINE__,__FILE__);
+			if (!$GLOBALS['phpgw']->db->num_rows())
+			{
+				return False;
+			}
+			while ($GLOBALS['phpgw']->db->next_record())
+			{
+				$langs[$GLOBALS['phpgw']->db->f('lang')] = $GLOBALS['phpgw']->db->f('lang_name');
+			}
+			return $langs;
 		}
 	}

@@ -161,8 +161,15 @@
 							{
 								$setup_info['depends'][$depkey]['status'] = True;
 							}
-							else
+							else	// check if majors are equal and minors greater or equal
 							{
+								$major_depsvalue = $GLOBALS['phpgw_setup']->get_major($depsvalue);
+								list(,,,$minor_depsvalue) = explode('.',$depsvalue);
+								list(,,,$minor) = explode('.',$setup_info[$value['depends'][$depkey]['appname']]['currentver']);
+								if ($major == $major_depsvalue && $minor <= $minor_depsvalue)
+								{
+									$setup_info['depends'][$depkey]['status'] = True;
+								}
 							}
 						}
 					}
@@ -330,18 +337,18 @@
 			{
 				$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->get_db_versions($GLOBALS['setup_info']);
 			}
-			if($GLOBALS['phpgw_setup']->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.15.002'))
+			if($GLOBALS['phpgw_setup']->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.14.501') ||
+			   ereg('0\.9\.15\.00[01]{1,1}',$GLOBALS['setup_info']['phpgwapi']['currentver']))
 			{
 				$langtbl  = 'lang';
-				$langstbl = 'languages';
+				$languagestbl = 'languages';
 			}
 			else
 			{
 				$langtbl  = 'phpgw_lang';
-				$langstbl = 'phpgw_languages';
+				$languagestbl = 'phpgw_languages';
 			}
-
-			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT lang FROM $langtbl",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->db->query($q = "SELECT DISTINCT lang FROM $langtbl",__LINE__,__FILE__);
 			if($GLOBALS['phpgw_setup']->db->num_rows() == 0)
 			{
 				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 3 (No languages installed)';
@@ -356,7 +363,7 @@
 				reset($GLOBALS['phpgw_info']['setup']['installed_langs']);
 				while(list($key, $value) = each($GLOBALS['phpgw_info']['setup']['installed_langs']))
 				{
-					$sql = "SELECT lang_name FROM $langstbl WHERE lang_id = '".$value."'";
+					$sql = "SELECT lang_name FROM $languagestbl WHERE lang_id = '".$value."'";
 					$GLOBALS['phpgw_setup']->db->query($sql);
 					$GLOBALS['phpgw_setup']->db->next_record();
 					$GLOBALS['phpgw_info']['setup']['installed_langs'][$value] = $GLOBALS['phpgw_setup']->db->f('lang_name');

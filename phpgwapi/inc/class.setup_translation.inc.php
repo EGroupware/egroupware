@@ -23,10 +23,14 @@
 
   /* $Id$ */
 
+	if (!defined('MAX_MESSAGE_ID_LENGTH'))
+	{
+		define('MAX_MESSAGE_ID_LENGTH',230);
+	}
+
 	class setup_translation
 	{
 		var $langarray;
-		var $langtbl = 'phpgw_lang';
 
 		/*!
 		@function setup_lang
@@ -36,14 +40,6 @@
 		function setup_translation()
 		{
 			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
-
-			/* TODO */
-			/*
-			if(@$GLOBALS['phpgw_setup']->alessthanb(@$GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.15.002'))
-			{
-				$this->langtbl = 'lang';
-			}
-			*/
 
 			if(!$ConfigLang)
 			{
@@ -77,7 +73,7 @@
 				fclose($fp);
 			}
 		}
-
+		
 		/*!
 		@function translate
 		@abstract Translate phrase to user selected lang
@@ -128,7 +124,7 @@
 			{
 				echo '<br>get_langs(): checking db...' . "\n";
 			}
-			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT(lang) FROM $this->langtbl",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT(lang) FROM phpgw_lang",__LINE__,__FILE__);
 			$langs = array();
 
 			while($GLOBALS['phpgw_setup']->db->next_record())
@@ -153,11 +149,11 @@
 			{
 				echo '<br>drop_langs(): Working on: ' . $appname;
 			}
-			$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(message_id) FROM $this->langtbl WHERE app_name='$appname'",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(message_id) FROM phpgw_lang WHERE app_name='$appname'",__LINE__,__FILE__);
 			$GLOBALS['phpgw_setup']->db->next_record();
 			if($GLOBALS['phpgw_setup']->db->f(0))
 			{
-				$GLOBALS['phpgw_setup']->db->query("DELETE FROM $this->langtbl WHERE app_name='$appname'",__LINE__,__FILE__);
+				$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_lang WHERE app_name='$appname'",__LINE__,__FILE__);
 				return True;
 			}
 			return False;
@@ -202,13 +198,13 @@
 					while (list($null,$line) = @each($raw_file))
 					{
 						list($message_id,$app_name,$GLOBALS['phpgw_setup']->db_lang,$content) = explode("\t",$line);
-						$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($message_id));
+						$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(chop(substr($message_id,0,MAX_MESSAGE_ID_LENGTH)));
 						/* echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id; */
 						$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
 						$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
 						$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
 
-						$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM $this->langtbl WHERE message_id='$message_id' and lang='"
+						$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='$message_id' and lang='"
 							. $GLOBALS['phpgw_setup']->db_lang . "'",__LINE__,__FILE__);
 						$GLOBALS['phpgw_setup']->db->next_record();
 
@@ -218,10 +214,10 @@
 							{
 								if($DEBUG)
 								{
-									echo "<br>add_langs(): adding - INSERT INTO $this->langtbl VALUES ('$message_id','$app_name','"
+									echo "<br>add_langs(): adding - INSERT INTO phpgw_lang VALUES ('$message_id','$app_name','"
 										. $GLOBALS['phpgw_setup']->db_lang . "','$content')";
 								}
-								$GLOBALS['phpgw_setup']->db->query("INSERT INTO $this->langtbl VALUES ('$message_id','$app_name','"
+								$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_lang VALUES ('$message_id','$app_name','"
 									. $GLOBALS['phpgw_setup']->db_lang . "','$content')",__LINE__,__FILE__);
 							}
 						}
