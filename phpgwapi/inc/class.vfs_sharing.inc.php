@@ -215,8 +215,8 @@
 							   sh.acl_rights  as acl_rights,
 							   fls.directory  as directory,
 							   fls.name       as name
-						FROM   phpgw_vfs2_shares sh,
-							   phpgw_vfs2_files  fls
+						FROM   phpgw_vfs2_shares as sh,
+							   phpgw_vfs2_files  as fls
 						WHERE  sh.file_id = fls.file_id
 						  AND  fls.shared = 'Y' 
 						  AND  fls.owner_id = $account_id";
@@ -237,8 +237,8 @@
 							   sh.acl_rights  as acl_rights,
 							   fls.directory  as directory,
 							   fls.name       as name
-						FROM   phpgw_vfs2_shares sh,
-							   phpgw_vfs2_files  fls
+						FROM   phpgw_vfs2_shares as sh,
+							   phpgw_vfs2_files  as fls
 						WHERE  sh.file_id = fls.file_id
 						  AND  sh.account_id IN (".implode(',',$accounts).")
 						  AND  fls.shared = 'Y' 
@@ -288,8 +288,8 @@
 						   sh.acl_rights  as acl_rights,
 						   fls.directory  as directory,
 						   fls.name       as name
-					FROM   phpgw_vfs2_shares sh,
-						   phpgw_vfs2_files  fls
+					FROM   phpgw_vfs2_shares as sh,
+						   phpgw_vfs2_files  as fls
 					WHERE  sh.file_id = fls.file_id
 					  AND  sh.account_id IN (".implode(',',$accounts).")
 					  AND  (  fls.directory LIKE '%$keyword%' 
@@ -375,8 +375,8 @@
 								   fls.directory  as directory,
 								   fls.name       as name,
 								   fls.owner_id   as owner_id
-							FROM   phpgw_vfs2_shares sh,
-								   phpgw_vfs2_files  fls
+							FROM   phpgw_vfs2_shares as sh,
+								   phpgw_vfs2_files  as fls
 							WHERE  sh.file_id = fls.file_id
 							  AND  (sh.account_id IN ($accounts)
 							       OR fls.owner_id = $account_id)

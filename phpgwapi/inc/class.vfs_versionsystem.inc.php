@@ -340,8 +340,8 @@
 					               vers.backup_file_id  as backup_file_id,
 					               files.directory      as directory, 
 					               files.name           as name 
-					        FROM   phpgw_vfs2_versioning  vers,
-					               phpgw_vfs2_files       files
+					        FROM   phpgw_vfs2_versioning  as vers,
+					               phpgw_vfs2_files       as files
 					        WHERE  vers.file_id=$file_id 
 					          AND  vers.backup_file_id = files.file_id 
 					        ORDER BY vers.modified";

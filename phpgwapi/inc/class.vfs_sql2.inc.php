@@ -3201,7 +3201,7 @@
 
 				if($mime_type)
 				{
-					$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs2_files file, phpgw_vfs2_mimetypes mime SET mime.mime_id=file.mime_id WHERE mime.mime='".$mime_type."' AND file.directory='".
+					$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs2_files as file, phpgw_vfs2_mimetypes as mime SET mime.mime_id=file.mime_id WHERE mime.mime='".$mime_type."' AND file.directory='".
 						$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND file.name='".
 						$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" .
 						$this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);

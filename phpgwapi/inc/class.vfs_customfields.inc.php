@@ -37,8 +37,8 @@
 
 			$sql = "SELECT cf.customfield_name as name, 
 			               cfd.data as data
-			        FROM   phpgw_vfs2_customfields cf,
-					       phpgw_vfs2_customfields_data cfd
+			        FROM   phpgw_vfs2_customfields as cf,
+					       phpgw_vfs2_customfields_data as cfd
 					WHERE  cf.customfield_id = cfd.customfield_id
 					  AND  cf.customfield_active = 'Y'
 					  AND  cfd.file_id = $file_id";
