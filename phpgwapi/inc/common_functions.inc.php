@@ -176,20 +176,20 @@
 					return True;
 				}
 				break;
-			case "isprint":
+			case 'isprint':
 				$length = strlen($string);
 				$position = 0;
 				while ($length > $position)
 				{
 					$char = substr($string, $position, 1);
-			 		if ($char < ' ' || $char > '~')
+					if ($char < ' ' || $char > '~')
 					{
 						return False;
 					}
 					$position = $position + 1;
 				}
 				return True;
-	     	break;
+				break;
 			case 'alpha':
 				if (preg_match("/^[a-z]+$/i", $string))
 				{
@@ -241,7 +241,7 @@
 					return True;
 				}
 				break;
-			case "password":
+			case 'password':
 				$password_length = strlen($string);
 				$password_numbers = Array('0','1','2','3','4','5','6','7','8','9');
 				$password_special_chars = Array(' ','~','`','!','@','#','$','%','^','&','*','(',')','_','+','-','=','{','}','|','[',']',"\\",':','"',';',"'",'<','>','?',',','.','/');
@@ -300,7 +300,7 @@
 							}
 						}
 					}
-				
+
 					if ($pass_verify_num == False)
 					{
 						$GLOBALS['phpgw_info']['flags']['msgbox_data']['Password requires at least one non-alpha character']=False;
