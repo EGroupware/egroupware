@@ -111,7 +111,7 @@
 		*/
 	}
 
-	if (! $GLOBALS['phpgw_info']['nofooter'])
+	if (!isset($GLOBALS['phpgw_info']['nofooter']))
 	{
 		$GLOBALS['phpgw']->common->phpgw_footer();
 	}
