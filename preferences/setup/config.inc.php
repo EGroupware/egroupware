@@ -101,8 +101,3 @@
     <td>Would like like phpGroupWare to check for new version<br>when admins login ?:</td>
     <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"<?php echo ($current_config["checkfornewversion"]?" checked":""); ?>></td>
    </tr>
-
-   <tr bgcolor="e6e6e6">
-    <td>Would like like phpGroupWare to cache the phpgw_info array ?:</td>
-    <td><input type="checkbox" name="newsettings[cache_phpgw_info]" value="True"<?php echo ($current_config["cache_phpgw_info"]?" checked":""); ?>></td>
-   </tr>
