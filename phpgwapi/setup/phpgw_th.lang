@@ -435,7 +435,7 @@ please wait...	common	th	รอสักครู่
 poland	common	th	
 portugal	common	th	
 postal	common	th	ทางไปรษณีย
-powered by phpgroupware version %1	common	th	
+powered by egroupware version %1	common	th	
 preferences	common	th	ค่านิยม
 preferences for the idots template set	common	th	
 prev. month (hold for menu)	jscalendar	th	
@@ -612,7 +612,7 @@ yemen	common	th
 yes	common	th	ใช่
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	th	
 you are required to change your password during your first login	common	th	
-you are running a newer version of phpgroupware than your database is setup for	common	th	
+you are running a newer version of egroupware than your database is setup for	common	th	
 you have been successfully logged out	login	th	
 you have not entered a title	common	th	
 you have not entered a valid date	common	th	

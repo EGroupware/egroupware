@@ -79,7 +79,7 @@ display mini calendars when printing	calendar	zt	列印時顯示小行事曆
 display status of events	calendar	zt	顯示事件的狀態
 displayed view	calendar	zt	已顯示模式
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	在歡迎畫面顯示您的預設行事曆瀏覽模式？
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入phpGroupWare第一個看到或是按下您的首頁按鈕的頁面)
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入egroupWare第一個看到或是按下您的首頁按鈕的頁面)
 do you want a weekview with or without weekend?	calendar	zt	您是否希望週曆包含週末？
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zt	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。<br>您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zt	您希望定期透過電子郵件收到系統自動寄出的約會通知概要嗎？<br>這個概要會在每天早上寄出每日概要或是每個星期一寄出每週概要。<br>它只會在那一天或是那一週有約會時寄出。

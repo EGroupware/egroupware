@@ -69,6 +69,7 @@ this server is located in the %1 timezone	preferences	es-es	Este servidor se enc
 time format	preferences	es-es	Formato de la hora
 use default	preferences	es-es	Usar predeterminado
 users choice	preferences	es-es	Elegido por el usuario
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
 which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar eGroupWare
 you can show the applications as icons only, icons with app-name or both.	preferences	es-es	Puede ver las aplicaciones como iconos sólo, iconos con el nombre, o ambos.
 you do not have permission to set acl's in this mode!	preferences	es-es	Usted no tiene permisos para poner ACLs en este modo

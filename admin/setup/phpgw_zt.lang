@@ -164,8 +164,7 @@ enter the file name of your logo	admin	zt	請輸入商標的檔案名稱
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
 enter the hostname of the machine on which this server is running	admin	zt	輸入這個伺服器主機的主機名稱
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	輸入 eGroupWare 的網址<br>例如： http://www.domain.com/egroupware &nbsp; 或 &nbsp; /egroupware<br><b>最後不需要加斜線</b>
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zt	輸入 phpGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>結尾無斜線</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	輸入 egroupWare 的網頁位址 URL：<br>如：http://www.domain.com/egroupware &nbsp;或&nbsp; /egroupware<br><b>結尾無斜線</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zt	輸入搜尋的字串，如果要顯示所有事件，保持空白並且再次按下送出
 enter the site password for peer servers	admin	zt	輸入對接伺服器的主機密碼
 enter the site username for peer servers	admin	zt	輸入對接伺服器的主機名稱
@@ -395,12 +394,9 @@ view this user	admin	zt	查看該使用者
 view user account	admin	zt	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zt	您希望將被移除使用者的資料轉移給誰？
 would you like egroupware to cache the egw info array ?	admin	zt	您希望 eGroupWare 暫存 egw 資訊陣列嗎？
-would you like egroupware to cache the phpgw info array ?	admin	zt	您希望 eGroupWare 暫存 phpgw 資訊陣列嗎？
-would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查系統最新版本嗎？
-would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查應用程式最新版本嗎？
-would you like phpgroupware to cache the phpgw info array ?	admin	zt	您希望 phpGroupWare 將系統資訊存到存取緩衝區內嗎？
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	zt	您希望 phpGroupWare 自動於管理者登入時檢查是否有最新版本？
-would you like phpgroupware to check for new application versions when admins login ?	admin	zt	您希望phpGroupWare在每次管理者登入時檢查新版的應用程式嗎？
+would you like egroupware to cache the phpgw info array ?	admin	zt	您希望 egroupWare 將系統資訊存到存取緩衝區內嗎？
+would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望 egroupWare 自動於管理者登入時檢查是否有最新版本？
+would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望egroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zt	您想要自動讀取新的語言檔案嗎(登入時)？
 would you like to show each application's upgrade status ?	admin	zt	您希望顯示每一個應用程式升級的資訊嗎？
 xml-rpc	admin	zt	XML-RPC

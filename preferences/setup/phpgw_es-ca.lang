@@ -3,7 +3,7 @@
 12 hour	preferences	es-ca	12 hores
 24 hour	preferences	es-ca	24 hores
 a template defines the layout of egroupware and it contains icons for each application.	preferences	es-ca	Una plantilla defineix l'aparença d'eGroupWare i conté icones per a cada aplicació.
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	es-ca	Una plantilla defineix l'aparença d'eGroupWare i conté icones per a cada aplicació.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	es-ca	Una plantilla defineix l'aparença d'eGroupWare i conté icones per a cada aplicació.
 a theme defines the colors and fonts used by the template.	preferences	es-ca	Un tema defineix els colors i les fonts tipogràfiques que fa servir la plantilla.
 acl grants have been updated	preferences	es-ca	Permisos de LCA actualitzats
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-ca	Qualsevol llistat en eGroupWare mostrarà aquest número d'entrades o línies per plana.<br>Una quantitat elevada ralentitza la plana, massa poques poden no ser prou informació.
@@ -34,7 +34,7 @@ how do you like to select accounts	preferences	es-ca	Com voleu seleccionar els c
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-ca	Quantes hores de diferència teniu respecte a la zona horària del servidor.<br>Si esteu a la mateixa zona horària, seleccioneu 0 hores; si no seleccioneu el valor respecte la vostra hora i data local.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	es-ca	Quantes icones es poden mostrar a la barra de navegació a la part superior de la plana. Les   icones restants es disposaràn en un menu emergent, que s'activa amb la darrera icona de la dreta de la barra de navegació.
 how should egroupware display dates for you.	preferences	es-ca	Com voleu que eGroupWare mostri les dates.
-how should phpgroupware display dates for you.	preferences	es-ca	Com voleu que eGroupWare mostri les dates.
+how should egroupware display dates for you.	preferences	es-ca	Com voleu que eGroupWare mostri les dates.
 icon	preferences	es-ca	Icona
 icons and text	preferences	es-ca	Icones i text
 icons only	preferences	es-ca	Només icones
@@ -52,7 +52,7 @@ re-enter your password	preferences	es-ca	Torneu a entrar la vostra contrasenya
 select different theme	preferences	es-ca	Trieu un Tema diferent
 select one	preferences	es-ca	Trieu-ne un
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-ca	Trieu l'idioma de missatges i text a eGroupWare.<br>Alguns idiomes potser no tenen tots els missatges traduïts, en aquest cas la resta la podeu veure en Anglès.
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-ca	Trieu l'idioma de missatges i text a eGroupWare.<br>Alguns idiomes potser no tenen tots els missatges traduits, en aquest cas la resta la podeu veure en Anglès.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-ca	Trieu l'idioma de missatges i text a eGroupWare.<br>Alguns idiomes potser no tenen tots els missatges traduits, en aquest cas la resta la podeu veure en Anglès.
 selectbox	preferences	es-ca	Llista desplegable
 selectbox with primary group and search	preferences	es-ca	Llista desplegable amb grup primari i cerca
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	es-ca	Establiu el valor per el vostre enllaç. Per raons de seguretat, potser no voleu mostrar el vostre Nom d'Usurari en public.
@@ -65,7 +65,7 @@ show text on navigation icons	preferences	es-ca	Mostrar text en les icones de na
 show_more_apps	common	es-ca	Mostrar més Aplicacions
 text only	preferences	es-ca	Només Text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-ca	L'aplicació per defecte s'inicia en entrar a eGroupWare o prement l'icona de la plana d'inici.<br>Podeu tenir més d'una aplicació mostrant-se a la plana d'inici, si no escolliu una aplicació específica aquí (aleshores s'ha de configurar a les preferències de cada aplicació).
-the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-ca	L'aplicació per defecte s'inicia en entrar a eGroupWare o prement la icona de la plana d'inici.<br>Podeu tenir més d'una aplicació mostrant-se a la plana d'inici, si no escolliu una aplicació específica aquí (aleshores s'ha de configurar a les preferències de cada aplicació).
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-ca	L'aplicació per defecte s'inicia en entrar a eGroupWare o prement la icona de la plana d'inici.<br>Podeu tenir més d'una aplicació mostrant-se a la plana d'inici, si no escolliu una aplicació específica aquí (aleshores s'ha de configurar a les preferències de cada aplicació).
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	es-ca	La llista desplegable mostra tots els usuaris disponibles (pot ser molt lent a grans instal·lacions amb molts usuaris). La finestra desplegable pot cercar usuaris per nom o grup.
 the two passwords are not the same	preferences	es-ca	Les dues contrasenyes no són iguals
 theme (colors/fonts) selection	preferences	es-ca	Selecció  de Tema (colors/fonts)
@@ -75,7 +75,7 @@ use default	preferences	es-ca	Utilitza el valor per defecte
 users choice	preferences	es-ca	Tria de l'usuari
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-ca	Quan dieu que sí els botons d'inici i tancar sessió es presenten com a plicacions a la barra superior principal.
 which currency symbol or name should be used in egroupware.	preferences	es-ca	Quin simbol o nom de moneda s'ha d'utilitzar a eGroupWare ?
-which currency symbol or name should be used in phpgroupware.	preferences	es-ca	Quin símbol o nom de moneda s'ha d'utilitzar a eGroupWare ?
+which currency symbol or name should be used in egroupware.	preferences	es-ca	Quin símbol o nom de moneda s'ha d'utilitzar a eGroupWare ?
 you can show the applications as icons only, icons with app-name or both.	preferences	es-ca	Podeu mostrar les aplicacions com: només icones, només nom o bé ambdós.
 you do not have permission to set acl's in this mode!	preferences	es-ca	No teniu permís per establir LCA's en aquest mode!
 you must enter a password	preferences	es-ca	Heu d'entrar una contrasenya
