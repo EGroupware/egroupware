@@ -12,8 +12,8 @@
 	/* $Id$ */
 
 	$phpgw_flags = Array(
-		'currentapp'	=> 'manual'
-		'admin_header'	=> True,
+		'currentapp'	=> 'manual',
+		'admin_header'	=> True
 	);
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../../header.inc.php');
