@@ -1,6 +1,6 @@
 p,td { font-face: "Arial, Helvetica, sans-serif"; font-size:12pt; }
 .list { font-size:9pt; }
-.action { font-size:16pt; margin-bottom:0px; }
+.action { font-size:14pt; margin-bottom:0px; }
 .low,.pri_low_done { color:#606060; }
 .normal,.pri_normal_done { color:black }
 .high { color:#cc0000; } .high_done { color:#800000; }

@@ -492,6 +492,10 @@
 
 			// ---------- end nextmatch template --------------------
 
+			if ($for_include == 2)
+			{
+				$t->set_block('info_list_t','info_headers','headershandle');
+			}
 			while (list($id,$parent) = each($ids))
 			{
 				$subproact = $this->bo->anzSubs($id);
@@ -570,7 +574,14 @@
 						'/index.php',$this->menuaction()+array('filter'=>$filter)));
 			}
 
-			$t->pfp('out','info_list_t',true);
+			if ($for_include == 2)
+			{
+				return $t->fp('out','info_list_t',true);
+			}
+			else
+			{
+				$t->pfp('out','info_list_t',true);
+			}
 		}
 
 		/*

@@ -44,6 +44,7 @@
  <!-- next_matchs Ende -->
 
  <table width=95% border=0 cellspacing=1 cellpadding=3>
+<!-- BEGIN info_headers -->
   <tr bgcolor="{th_bg}">
    <td width="2%" class=list>{lang_type}</td>
    <td width="4%" class=list>{lang_status}</td>
@@ -54,6 +55,7 @@
    <td width="3%" class=list>{h_lang_sub}</td>
    <td width="3%" class=list>{h_lang_action}</td>
   </tr>
+<!-- END info_headers -->
 
 <!-- BEGIN info_list -->
   <tr bgcolor="{tr_color}" valign="top">

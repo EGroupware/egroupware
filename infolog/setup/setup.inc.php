@@ -29,6 +29,7 @@
 	$setup_info['infolog']['hooks'][] = 'preferences';
 	$setup_info['infolog']['hooks'][] = 'admin';
 	$setup_info['infolog']['hooks'][] = 'about';
+	$setup_info['infolog']['hooks'][] = 'home';
 	$setup_info['infolog']['hooks'][] = 'addressbook_view';
 	$setup_info['infolog']['hooks'][] = 'projects_view';
 	$setup_info['infolog']['hooks'][] = 'calendar_view';

@@ -13,15 +13,47 @@
 
 	if ($GLOBALS['phpgw_info']['user']['preferences']['infolog']['homeShowEvents'])
 	{
-		$save_app = $GLOBALS['phpgw_info']['flags']['currentapp']; 
-		$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog'; 
+		$save_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+		$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog';
 
 		$GLOBALS['phpgw']->translation->add_app('infolog');
 
-		global $filter;
-		$filter = 'own-open-today';
-		$infolog = CreateObject('infolog.uiinfolog');
-		$infolog->get_list(True);
+		$portalbox = CreateObject('phpgwapi.listbox',
+			Array(
+				'title'	=> '<font color="#FFFFFF">'.lang('Infolog').'</font>',
+				'primary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'secondary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'width'	=> '100%',
+				'outerborderwidth'	=> '0',
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler')
+			)
+		);
 
-		$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app; 
+		$app_id = $GLOBALS['phpgw']->applications->name2id('infolog');
+		$GLOBALS['portal_order'][] = $app_id;
+		$var = Array(
+			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id)
+		);
+
+		while(list($key,$value) = each($var))
+		{
+			$portalbox->set_controls($key,$value);
+		}
+
+		$portalbox->data = Array();
+
+		$GLOBALS['HTTP_POST_VARS']['filter'] = $GLOBALS['filter'] = 'own-open-today';
+		$infolog = CreateObject('infolog.uiinfolog');
+
+		echo "\n".'<!-- BEGIN infolog info -->'."\n".
+		     $portalbox->draw($infolog->get_list(2))."\n".
+			  '<!-- END infolog info -->'."\n";
+
+		unset($infolog);
+		$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
 	}
