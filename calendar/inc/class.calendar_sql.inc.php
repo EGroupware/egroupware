@@ -101,7 +101,7 @@ class calendar_ extends calendar__
 		{
 			return False;
 		}
-	  
+
 		$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats'));
 
 		$this->stream->query('SELECT * FROM phpgw_cal WHERE cal_id='.$event_id,__LINE__,__FILE__);
@@ -117,31 +117,23 @@ class calendar_ extends calendar__
 			$this->stream->next_record();
 			// Load the calendar event data from the db into $event structure
 			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
-			
-			$this->event->owner = $this->stream->f('owner');
-			$this->event->id = intval($this->stream->f('cal_id'));
-			$this->event->public = intval($this->stream->f('is_public'));
-			$this->event->category = intval($this->stream->f('category'));
-			$this->event->title = $phpgw->strip_html($this->stream->f('title'));
-			$this->event->description = $phpgw->strip_html($this->stream->f('description'));
+			$this->add_attribute('owner',intval($this->stream->f('owner')));
+			$this->add_attribute('id',intval($this->stream->f('cal_id')));
+			$this->set_class(intval($this->stream->f('is_public')));
+			$this->set_category(intval($this->stream->f('category')));
+			$this->set_title($phpgw->strip_html($this->stream->f('title')));
+			$this->set_description($phpgw->strip_html($this->stream->f('description')));
 			
 			// This is the preferred method once everything is normalized...
 			//$this->event->alarm = intval($this->stream->f('alarm'));
 			// But until then, do it this way...
 		//Legacy Support (New)
 			$this->event->alarm = 0;
-			
-			$this->event->datetime = $this->stream->f('datetime');
-			$datetime = $this->datetime->localdates($this->stream->f('datetime'));
-			$this->event->start->year	= $datetime['year'];
-			$this->event->start->month	= $datetime['month'];
-			$this->event->start->mday	= $datetime['day'];
-			$this->event->start->hour	= $datetime['hour'];
-			$this->event->start->min	= $datetime['minute'];
-			$this->event->start->sec	= $datetime['second'];
-			$this->event->start->alarm	= 0;
 
-			$this->event->mdatetime = $this->stream->f('mdatetime');
+			$this->add_attribute('datetime',intval($this->stream->f('datetime')));
+			$datetime = $this->datetime->localdates($this->stream->f('datetime'));
+			$this->set_start($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
+
 			$datetime = $this->datetime->localdates($this->stream->f('mdatetime'));
 			$this->event->mod->year	= $datetime['year'];
 			$this->event->mod->month	= $datetime['month'];
@@ -151,18 +143,12 @@ class calendar_ extends calendar__
 			$this->event->mod->sec	= $datetime['second'];
 			$this->event->mod->alarm	= 0;
 
-			$this->event->edatetime = $this->stream->f('edatetime');
+			$this->add_attribute('edatetime',intval($this->stream->f('edatetime')));
 			$datetime = $this->datetime->localdates($this->stream->f('edatetime'));
-			$this->event->end->year	= $datetime['year'];
-			$this->event->end->month	= $datetime['month'];
-			$this->event->end->mday	= $datetime['day'];
-			$this->event->end->hour	= $datetime['hour'];
-			$this->event->end->min	= $datetime['minute'];
-			$this->event->end->sec	= $datetime['second'];
-			$this->event->end->alarm	= 0;
+			$this->set_end($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
 		//Legacy Support
-			$this->event->priority = intval($this->stream->f('priority'));
+			$this->add_attribute('priority',intval($this->stream->f('priority')));
 			if($this->stream->f('cal_group') || $this->stream->f('groups') != 'NULL')
 			{
 				$groups = explode(',',$this->stream->f('groups'));
@@ -171,7 +157,7 @@ class calendar_ extends calendar__
 					$this->event->groups[] = $groups[$j];
 				}
 			}
-
+			
 			$this->stream->query('SELECT * FROM phpgw_cal_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
 			if($this->stream->num_rows())
 			{
@@ -297,129 +283,11 @@ class calendar_ extends calendar__
 	//Returns an array of event ID's
 	}
 
-	function event_init()
-	{
-		$this->event = CreateObject('calendar.calendar_item');
-		$this->event->owner = $this->user;
-		return True;
-	}
-
-	function set_category($stream,$category='')
-	{
-		$this->event->category = $category;
-		return True;
-	}
-
-	function set_title($title='')
-	{
-		$this->event->title = $title;
-		return True;
-	}
-
-	function set_description($description='')
-	{
-		$this->event->description = $description;
-		return True;
-	}
-
-	function set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
-	{
-		$this->event->start->year = intval($year);
-		$this->event->start->month = intval($month);
-		$this->event->start->mday = intval($day);
-		$this->event->start->hour = intval($hour);
-		$this->event->start->min = intval($min);
-		$this->event->start->sec = intval($sec);
-		$this->event->start->alarm = 0;
-		return True;
-	}
-
-	function set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
-	{
-		$this->event->end->year = intval($year);
-		$this->event->end->month = intval($month);
-		$this->event->end->mday = intval($day);
-		$this->event->end->hour = intval($hour);
-		$this->event->end->min = intval($min);
-		$this->event->end->sec = intval($sec);
-		$this->event->end->alarm = 0;
-		return True;
-	}
-
-	function set_alarm($alarm)
-	{
-		$this->event->alarm = intval($alarm);
-		return True;
-	}
-
-	function set_class($class)
-	{
-		$this->event->public = $class;
-		return True;
-	}
-
 	// The function definition doesn't look correct...
 	// Need more information for this function
-	function next_recurrence($stream,$weekstart,$next)
+	function next_recurrence($weekstart,$next)
 	{
 //		return next_recurrence (int stream, int weekstart, array next);
-	}
-
-	function event_set_recur_none($stream)
-	{
-		$this->event->recur_type = RECUR_NONE;
-		$this->event->recur_interval = 0;
-		$this->event->recur_enddate->year = 0;
-		$this->event->recur_enddate->month = 0;
-		$this->event->recur_enddate->mday = 0;
-		$this->event->recur_enddate->hour = 0;
-		$this->event->recur_enddate->min = 0;
-		$this->event->recur_enddate->sec = 0;
-		$this->event->recur_enddate->alarm = 0;
-		$this->event->recur_data = 0;
-		
-		return True;
-	}
-
-	function event_set_recur_daily($stream,$year,$month,$day,$interval)
-	{
-		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_DAILY;
-	}
-
-	function event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays)
-	{
-		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_WEEKLY;
-		$this->event->recur_data = intval($weekdays);
-	}
-
-	function event_set_recur_monthly_mday($stream,$year,$month,$day,$interval)
-	{
-		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_MONTHLY_MDAY;
-	}
-	
-	function event_set_recur_monthly_wday($stream,$year,$month,$day,$interval)
-	{
-		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_MONTHLY_WDAY;
-	}
-	
-	function event_set_recur_yearly($stream,$year,$month,$day,$interval)
-	{
-		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-		$this->event->recur_type = RECUR_YEARLY;
-	}
-
-	function fetch_current_stream_event($stream)
-	{
-		return $this->fetch_event($stream,$this->event->id);
-	}
-	
-	function event_add_attribute($stream,$attribute,$value)
-	{
-		$this->event->$attribute = $value;
 	}
 
 	function expunge($stream)

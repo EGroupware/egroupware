@@ -50,8 +50,8 @@
 
 	if ($id > 0)
 	{
-		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
-		$event = $phpgw->calendar->fetch_event($cal_stream,intval($id));
+		$phpgw->calendar->open('INBOX',intval($owner),'');
+		$event = $phpgw->calendar->fetch_event(intval($id));
 
 		$can_edit = False;
 		
@@ -59,7 +59,7 @@
 		{
 			if($event->public != True)
 			{
-				if($phpgw->calendar->check_perms(16) == True)
+				if($phpgw->calendar->check_perms(PHPGW_ACL_PRIVATE) == True)
 				{
 					$can_edit = True;
 				}
@@ -81,7 +81,7 @@
 		
 		if($event->owner == 0)
 		{
-			$event->owner = $owner;
+			$phpgw->calendar->add_attribute('owner',$owner);
 		}
 		
 		$can_edit = True;
@@ -93,9 +93,9 @@
 			header('Location: '.$phpgw->link('/calendar/view.php','id='.$id.'&owner='.$owner));
 		}
 
-		$cal_stream = $phpgw->calendar->open('INBOX',intval($cal_info->owner),'');
-		$phpgw->calendar->event_init($cal_stream);
-		$phpgw->calendar->event->id = 0;
+		$phpgw->calendar->open('INBOX',intval($cal_info->owner),'');
+		$phpgw->calendar->event_init();
+		$phpgw->calendar->add_attribute('id',0);
 
 		$can_edit = True;
 
@@ -117,27 +117,26 @@
 			$thisminute = (int)$minute;
 		}
 
-		$phpgw->calendar->event_set_start($cal_stream,$thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
-		$phpgw->calendar->event_set_end($cal_stream,$thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
-		$phpgw->calendar->event_set_title($cal_stream,'');
-		$phpgw->calendar->event_set_description($cal_stream,'');
-		$phpgw->calendar->event->priority = 2;
+		$phpgw->calendar->set_start($thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
+		$phpgw->calendar->set_end($thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
+		$phpgw->calendar->set_title('');
+		$phpgw->calendar->set_description('');
+		$phpgw->calendar->add_attribute('priority',2);
 		if($phpgw_info['user']['preferences']['calendar']['default_private'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['default_private'] == True)
 		{
-			$phpgw->calendar->event_set_class($cal_stream,False);
+			$phpgw->calendar->set_class(False);
 		}
 		else
 		{
-			$phpgw->calendar->event_set_class($cal_stream,True);
+			$phpgw->calendar->set_class(True);
 		}
 
-		$phpgw->calendar->event_set_recur_none($cal_stream);
+		$phpgw->calendar->set_recur_none();
 		$event = $phpgw->calendar->event;
 	}
 
-	$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-	$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
-	$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
+	$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->datetime->tz_offset;
+	$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $phpgw->calendar->datetime->tz_offset;
 
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
@@ -366,8 +365,6 @@
 	}
 	
 	$str .= '>'.lang('Use End Date').'  ';
-
-	
 
 	$day_html = $sb->getDays('recur_enddate[mday]',intval($phpgw->common->show_date($recur_end,'d')));
 	$month_html = $sb->getMonthText('recur_enddate[month]',intval($phpgw->common->show_date($recur_end,'n')));

@@ -282,6 +282,59 @@ class calendar__
 		}
 	}
 
+	function event_init()
+	{
+		$this->event = CreateObject('calendar.calendar_item');
+		$this->add_attribute('owner',intval($this->user));
+	}
+
+	function set_category($category='')
+	{
+		$this->event->category = $category;
+	}
+
+	function set_title($title='')
+	{
+		$this->event->title = $title;
+	}
+
+	function set_description($description='')
+	{
+		$this->event->description = $description;
+	}
+
+	function set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	{
+		$this->event->start->year = intval($year);
+		$this->event->start->month = intval($month);
+		$this->event->start->mday = intval($day);
+		$this->event->start->hour = intval($hour);
+		$this->event->start->min = intval($min);
+		$this->event->start->sec = intval($sec);
+		$this->event->start->alarm = 0;
+	}
+
+	function set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	{
+		$this->event->end->year = intval($year);
+		$this->event->end->month = intval($month);
+		$this->event->end->mday = intval($day);
+		$this->event->end->hour = intval($hour);
+		$this->event->end->min = intval($min);
+		$this->event->end->sec = intval($sec);
+		$this->event->end->alarm = 0;
+	}
+
+	function set_alarm($alarm)
+	{
+		$this->event->alarm = intval($alarm);
+	}
+
+	function set_class($class)
+	{
+		$this->event->public = $class;
+	}
+
 	function set_common_recur($year,$month,$day,$interval)
 	{
 		$this->event->recur_interval = intval($interval);
@@ -302,5 +355,56 @@ class calendar__
 		$this->event->recur_enddate->sec = 0;
 		$this->event->recur_enddate->alarm = 0;
 		$this->event->recur_data = 0;
+	}
+
+	function set_recur_none()
+	{
+		$this->set_common_recur(0,0,0,0);
+		$this->event->recur_type = RECUR_NONE;
+	}
+
+	function set_recur_daily($year,$month,$day,$interval)
+	{
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_DAILY;
+	}
+
+	function set_recur_weekly($year,$month,$day,$interval,$weekdays)
+	{
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_WEEKLY;
+		$this->event->recur_data = intval($weekdays);
+	}
+
+	function set_recur_monthly_mday($year,$month,$day,$interval)
+	{
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_MONTHLY_MDAY;
+	}
+	
+	function set_recur_monthly_wday($year,$month,$day,$interval)
+	{
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_MONTHLY_WDAY;
+	}
+	
+	function set_recur_yearly($year,$month,$day,$interval)
+	{
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_YEARLY;
+	}
+
+	function fetch_current_stream_event()
+	{
+		return $this->fetch_event($this->event->id);
+	}
+	
+	function add_attribute($attribute,&$value)
+	{
+		if(is_array($value))
+		{
+			reset($value);
+		}
+		$this->event->$attribute = $value;
 	}
 }

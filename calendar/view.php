@@ -35,8 +35,8 @@
 		$phpgw->common->phpgw_exit();    
 	}
 
-	$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
-	$event = $phpgw->calendar->fetch_event($cal_stream,$id);
+	$phpgw->calendar->open('INBOX',$owner,'');
+	$event = $phpgw->calendar->fetch_event($id);
 
 	echo $phpgw->calendar->view_event($event);
 

@@ -226,168 +226,46 @@ class calendar_ extends calendar__
 		return mcal_event_init($this->stream);
 	}
 
-	function event_set_category($category='')
+	function set_category($category='')
 	{
-		$this->event->category = $category;
-		return mcal_event_set_category($this->stream,$this->event->category);
+		calendar__::set_category($category);
+		return mcal_event_set_category($this->stream,$category);
 	}
 	
-	function event_set_title($title='')
+	function set_title($title='')
 	{
-		$this->event->title = $title;
-		return mcal_event_set_title($this->stream,$this->event->title);
+		calendar__::set_title($title);
+		return mcal_event_set_title($this->stream,$title);
 	}
 
-	function event_set_description($description='')
+	function set_description($description='')
 	{
-		$this->event->description = $description;
-		return mcal_event_set_description($this->stream,$this->event->description);
+		calendar__::set_description($description);
+		return mcal_event_set_description($this->stream,$description);
 	}
 
-	function event_set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	function set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-	// Legacy Support
-		$this->event->year = $year;
-		$this->event->month = $month;
-		$this->event->day = $day;
-		$this->event->hour = $hour;
-		$this->event->minute = $min;
-		$this->event->datetime = mktime($hour,$min,$sec,$month,$day,$year);
-
-	// Legacy Support (New)
-		$this->event->start->year = $year;
-		$this->event->start->month = $month;
-		$this->event->start->mday = $day;
-		$this->event->start->hour = $hour;
-		$this->event->start->min = $min;
-		$this->event->start->sec = $sec;
-
-		if($sec == 0)
-		{
-			if($min == 0)
-			{
-				if($hour == 0)
-				{
-					if($day == 0)
-					{
-						return mcal_event_set_start($this->stream,$year,$month);
-					}
-					else
-					{
-						return mcal_event_set_start($this->stream,$year,$month,$day);
-					}
-				}
-				else
-				{
-					return mcal_event_set_start($this->stream,$year,$month,$day,$hour);
-				}
-			}
-			else
-			{
-				return mcal_event_set_start($this->stream,$year,$month,$day,$hour,$min);
-			}
-		}
-		else
-		{
-			return mcal_event_set_start($this->stream,$year,$month,$day,$hour,$min,$sec);
-		}
+		calendar__::set_start($year,$month,$day,$hour,$min,$sec);
+		return mcal_event_set_start($this->stream,$year,$month,$day,$hour,$min,$sec);
 	}
 
-	function event_set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	function set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-	// Legacy Support
-		$this->event->end_year = $year;
-		$this->event->end_month = $month;
-		$this->event->end_day = $day;
-		$this->event->end_hour = $hour;
-		$this->event->end_minute = $min;
-		$this->event->end_second = $sec;
-		$this->event->edatetime = mktime($hour,$min,$sec,$month,$day,$year);
-
-	// Legacy Support (New)
-		$this->event->end->year = $year;
-		$this->event->end->month = $month;
-		$this->event->end->mday = $day;
-		$this->event->end->hour = $hour;
-		$this->event->end->min = $min;
-		$this->event->end->sec = $sec;
-		$this->event->edatetime = mktime($hour,$min,$sec,$month,$day,$year);
-		
-		if($sec == 0)
-		{
-			if($min == 0)
-			{
-				if($hour == 0)
-				{
-					if($day == 0)
-					{
-						return mcal_event_set_end($this->stream,$year,$month);
-					}
-					else
-					{
-						return mcal_event_set_end($this->stream,$year,$month,$day);
-					}
-				}
-				else
-				{
-					return mcal_event_set_end($this->stream,$year,$month,$day,$hour);
-				}
-			}
-			else
-			{
-				return mcal_event_set_end($this->stream,$year,$month,$day,$hour,$min);
-			}
-		}
-		else
-		{
-			return mcal_event_set_end($this->stream,$year,$month,$day,$hour,$min,$sec);
-		}
+		calendar__::set_end($year,$month,$day,$hour,$min,$sec);
+		return mcal_event_set_end($this->stream,$year,$month,$day,$hour,$min,$sec);
 	}
 
-	function event_set_alarm($alarm)
+	function set_alarm($alarm)
 	{
+		calendar__::set_alarm($alarm);
 		return mcal_event_set_alarm ($this->stream,$alarm);
 	}
 
-	function event_set_class($class)
+	function set_class($class)
 	{
-		$this->event->public = $class;
+		calendar__::set_class($class);
 		return mcal_event_set_class($this->stream,$class);
-	}
-
-	function is_leap_year($year)
-	{
-		return mcal_is_leap_year($year);
-	}
-
-	function days_in_month($month,$year)
-	{
-		return mcal_days_in_month($month,$year);
-	}
-
-	function date_valid($year,$month,$day)
-	{
-		return mcal_date_valid($year,$month,$day);
-	}
-
-	function time_valid($hour,$minutes,$seconds)
-	{
-		return mcal_time_valid($hour,$minutes,$seconds);
-	}
-
-	function day_of_week($year,$month,$day)
-	{
-		return mcal_day_of_week($year,$month,$day);
-	}
-
-	function day_of_year($year,$month,$day)
-	{
-		return mcal_day_of_year($year,$month,$day);
-	}
-
-	function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
-	{
-		return mcal_date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day);
 	}
 
 	// The function definition doesn't look correct...
@@ -397,44 +275,52 @@ class calendar_ extends calendar__
 		return mcal_next_recurrence($this->stream,$weekstart,$next);
 	}
 
-	function event_set_recur_none()
+	function set_recur_none()
 	{
+		calendar__::set_recur_none();
 		return mcal_event_set_recur_none($this->stream);
 	}
 
-	function event_set_recur_daily($year,$month,$day,$interval)
+	function set_recur_daily($year,$month,$day,$interval)
 	{
+		calendar__::set_recur_daily($year,$month,$day,$interval);
 		return mcal_event_set_recur_daily($this->stream,$year,$month,$day,$interval);
 	}
 	
-	function event_set_recur_weekly($year,$month,$day,$interval,$weekdays)
+	function set_recur_weekly($year,$month,$day,$interval,$weekdays)
 	{
+		calendar__::set_recur_weekly($year,$month,$day,$interval,$weekdays);
 		return mcal_event_set_recur_weekly($this->stream,$year,$month,$day,$interval,$weekdays);
 	}
 
-	function event_set_recur_monthly_mday($year,$month,$day,$interval)
+	function set_recur_monthly_mday($year,$month,$day,$interval)
 	{
+		calendar__::set_recur_monthly_mday($year,$month,$day,$interval);
 		return mcal_event_set_recur_monthly_mday($this->stream,$year,$month,$day,$interval);
 	}
 	
-	function event_set_recur_monthly_wday($year,$month,$day,$interval)
+	function set_recur_monthly_wday($year,$month,$day,$interval)
 	{
+		calendar__::set_recur_monthly_wday($year,$month,$day,$interval);
 		return mcal_event_set_recur_monthly_wday($this->stream,$year,$month,$day,$interval);
 	}
 
-	function event_set_recur_yearly($year,$month,$day,$interval)
+	function set_recur_yearly($year,$month,$day,$interval)
 	{
+		calendar__::set_recur_yearly($year,$month,$day,$interval);
 		return mcal_event_set_recur_yearly($this->stream,$year,$month,$day,$interval);
 	}
 
 	function fetch_current_stream_event()
 	{
-		return mcal_fetch_current_stream_event($this->stream);
+		$this->event = mcal_fetch_current_stream_event($this->stream);
+		return $this->event
 	}
 
-	function event_add_attribute($attribute,$value)
+	function add_attribute($attribute,$value)
 	{
-		mcal_event_add_attribute($this->stream,$attribute,$value);
+		calendar__::add_attribute($attribute,$value);
+		return mcal_event_add_attribute($this->stream,$attribute,$value);
 	}
 
 	function expunge()
@@ -443,14 +329,6 @@ class calendar_ extends calendar__
 	}
 
 	/**************** Local functions for ICAL based Calendar *****************/
-	
-	function event_set_participants($participants)
-	{
-		$this->event->participants = Array();
-		reset($participants);
-		$this->event->participants = $participants;
-		return True;
-	}
 	
 	function set_status($id,$owner,$status)
 	{

@@ -226,7 +226,7 @@ class calendar extends calendar_
 		$nextday = mktime(0,0,0,$month,$day + 1,$year) - $this->datetime->tz_offset;
 		if (intval($phpgw->common->show_date($starttime,'Hi')) && $starttime == $endtime)
 		{
-			$time = $phpgw->common->show_date($starttime,'Hi');
+			$time = $phpgw->common->show_date($starttime,'H:i');
 		}
 		elseif ($starttime <= $rawdate_offset && $endtime >= $nextday - 60)
 		{

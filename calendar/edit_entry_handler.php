@@ -39,17 +39,17 @@
 		{
 			$error = 40;
 		}
-		elseif (($phpgw->calendar->time_valid($event->start->hour,$event->start->min,0) == False) || ($phpgw->calendar->time_valid($event->end->hour,$event->end->min,0) == False))
+		elseif (($phpgw->calendar->datetime->time_valid($event->start->hour,$event->start->min,0) == False) || ($phpgw->calendar->datetime->time_valid($event->end->hour,$event->end->min,0) == False))
 		{
 			$error = 41;
 		}
-		elseif (($phpgw->calendar->date_valid($event->start->year,$event->start->month,$event->start->mday) == False) || ($phpgw->calendar->date_valid($event->end->year,$event->end->month,$event->end->mday) == False) || ($phpgw->calendar->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 1))
+		elseif (($phpgw->calendar->datetime->date_valid($event->start->year,$event->start->month,$event->start->mday) == False) || ($phpgw->calendar->datetime->date_valid($event->end->year,$event->end->month,$event->end->mday) == False) || ($phpgw->calendar->datetime->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 1))
 		{
 			$error = 42;
 		}
-		elseif ($phpgw->calendar->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 0)
+		elseif ($phpgw->calendar->datetime->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 0)
 		{
-			if ($phpgw->calendar->time_compare($event->start->hour,$event->start->min,0,$event->end->hour,$event->end->min,0) == 1)
+			if ($phpgw->calendar->datetime->time_compare($event->start->hour,$event->start->min,0,$event->end->hour,$event->end->min,0) == 1)
 			{
 				$error = 42;
 			}
@@ -109,18 +109,18 @@
 		}
 
 		$is_public = ($private == 'public'?1:0);
-		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
-		$phpgw->calendar->event_init($cal_stream);
-		$phpgw->calendar->event_set_category($cal_stream,$category);
-		$phpgw->calendar->event_set_title($cal_stream,$title);
-		$phpgw->calendar->event_set_description($cal_stream,$description);
-		$phpgw->calendar->event_set_start($cal_stream,$start[year],$start[month],$start[mday],$start[hour],$start[min],0);
-		$phpgw->calendar->event_set_end($cal_stream,$end[year],$end[month],$end[mday],$end[hour],$end[min],0);
-		$phpgw->calendar->event_set_class($cal_stream,$is_public);
+		$phpgw->calendar->open('INBOX',intval($owner),'');
+		$phpgw->calendar->event_init();
+		$phpgw->calendar->set_category($category);
+		$phpgw->calendar->set_title($title);
+		$phpgw->calendar->set_description($description);
+		$phpgw->calendar->set_start($start[year],$start[month],$start[mday],$start[hour],$start[min],0);
+		$phpgw->calendar->set_end($end[year],$end[month],$end[mday],$end[hour],$end[min],0);
+		$phpgw->calendar->set_class($is_public);
 
 		if($id != 0)
 		{
-			$phpgw->calendar->event->id = $id;
+			$phpgw->calendar->add_attribute('id',$id);
 		}
 
 		if($rpt_use_end != 'y')
@@ -135,22 +135,22 @@
 		switch($recur_type)
 		{
 			case RECUR_NONE:
-				$phpgw->calendar->event_set_recur_none($cal_stream);
+				$phpgw->calendar->set_recur_none();
 				break;
 			case RECUR_DAILY:
-				$phpgw->calendar->event_set_recur_daily($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
+				$phpgw->calendar->set_recur_daily($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
 			case RECUR_WEEKLY:
-				$phpgw->calendar->event_set_recur_weekly($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval,$recur_data);
+				$phpgw->calendar->set_recur_weekly($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval,$recur_data);
 				break;
 			case RECUR_MONTHLY_MDAY:
-				$phpgw->calendar->event_set_recur_monthly_mday($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
+				$phpgw->calendar->set_recur_monthly_mday($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
 			case RECUR_MONTHLY_WDAY:
-				$phpgw->calendar->event_set_recur_monthly_wday($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
+				$phpgw->calendar->set_recur_monthly_wday($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
 			case RECUR_YEARLY:
-				$phpgw->calendar->event_set_recur_yearly($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
+				$phpgw->calendar->set_recur_yearly($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
 		}
 
@@ -186,25 +186,23 @@
 		}
 
 		reset($participants);
-		$phpgw->calendar->event_set_participants($cal_stream,$participants);
-
-		$phpgw->calendar->event->priority = intval($priority);
+		$phpgw->calendar->add_attribute('participants',$participants);
+		$phpgw->calendar->add_attribute('priority',$priority);
 		$event = $phpgw->calendar->event;
 
 		$phpgw->session->appsession('entry','calendar',$event);
 		
 		$datetime_check = validate($event);
 		
-		$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-		$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
-		$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
+		$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->datetime->tz_offset;
+		$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $phpgw->calendar->datetime->tz_offset;
 
 		$overlapping_events = $phpgw->calendar->overlap($start,$end,$event->participants,$event->owner,$event->id);
 	}
 	else
 	{
-		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
-		$phpgw->calendar->event_init($cal_stream);
+		$phpgw->calendar->open('INBOX',intval($owner),'');
+		$phpgw->calendar->event_init();
 		
 		$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
 		$phpgw->calendar->event = $event;
@@ -283,8 +281,7 @@
 	}
 	else
 	{
-		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
-		$phpgw->calendar->store_event($cal_stream);
+		$phpgw->calendar->store_event();
 		Header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php','year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday.'&cd=14&owner='.$owner));
 	}
 ?>
