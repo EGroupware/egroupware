@@ -172,7 +172,18 @@
       /**************************************************************************\
       * Continue adding the classes                                              *
       \**************************************************************************/
-      if ($phpgw_info["flags"]["currentapp"] != "login" && $phpgw_info["flags"]["currentapp"] != "logout") {
+      if ($phpgw_info["flags"]["currentapp"] == "login") {
+        /* Load selected authentication class */
+        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
+        /* Load selected accounts class */
+        if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
+    
+        $this->auth          = new auth;
+        $this->session       = new sessions;
+      }else{
         $this->session       = new sessions;
         if (! $this->session->verify()) {
           Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
@@ -187,19 +198,7 @@
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
         $this->auth          = new auth;
-
-      }else{
-        $this->auth          = new auth;
-        $this->session       = new sessions;
-        /* Load selected authentication class */
-        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
-     
-        /* Load selected accounts class */
-        if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
-      }
+     }
       $this->translation   = new translation;
       $this->common        = new common;
       $this->accounts      = new accounts;
