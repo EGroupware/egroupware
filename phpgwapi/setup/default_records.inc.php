@@ -139,7 +139,7 @@
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('ts','Tsonga','No')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('tt','Tatar','No')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('tw','Twi','No')");
-	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('uk','Ukrainian','No')");
+	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('uk','Ukrainian','Yes')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('ur','Urdu','No')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('uz','Uzbek','No')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('vi','Vietnamese','No')");

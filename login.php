@@ -218,7 +218,9 @@
 			}
 			if(!$GLOBALS['phpgw_info']['server']['disable_autoload_langfiles'])
 			{
-				$GLOBALS['phpgw']->translation->autoload_changed_langfiles();
+				// this need to be fixed
+				// lkneschke 20.01.2004
+				#$GLOBALS['phpgw']->translation->autoload_changed_langfiles();
 			}
 			$extra_vars['cd'] = 'yes';
 			

@@ -977,4 +977,14 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.010';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.99.010';
+	function phpgwapi_upgrade0_9_99_010()
+	{
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET available='Yes' WHERE lang_id='uk'");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.011';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 ?>
