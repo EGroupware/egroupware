@@ -16,7 +16,7 @@
 	$title = $appname;
 	$file = Array(
 		'Site Configuration' => $phpgw->link('/admin/config.php','appname=' . $appname),
-		'Calendar Holiday Management'		=> $phpgw->link('/calendar/holiday_admin.php')
+		'Calendar Holiday Management'		=> $phpgw->link('/index.php','menuaction=calendar.uiholiday.admin')
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);
