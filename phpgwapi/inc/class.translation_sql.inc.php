@@ -322,6 +322,12 @@
 			}
 			if(function_exists('iconv'))
 			{
+			if($from=='EUC-CN') $from='gb18030';
+			// the above is to workaround patch #962307
+			// if using EUC-CN, for iconv it strickly follow GB2312 and fail 
+			// in an email on the first Traditional/Japanese/Korean character, 
+			// but in reality when people send mails in GB2312, UMA mostly use 
+			// extended GB13000/GB18030 which allow T/Jap/Korean characters.
 				if (($data = iconv($from,$to,$data)))
 				{
 					return $data;
