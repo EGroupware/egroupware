@@ -239,7 +239,7 @@
 			\****************************************************************************/
 	} else {
 		if (! $phpgw->session->verify()) {
-				Header("Location: " . $phpgw->redirect($phpgw->session->link($phpgw_info["server"]["webserver_url"]."/login.php","cd=10")));
+				Header("Location: " . $phpgw->redirect($phpgw->session->link('/login.php','cd=10')));
 				exit;
 		}
 
