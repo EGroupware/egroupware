@@ -185,10 +185,10 @@
 			$this->db->query("select id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'");
 			$this->db->next_record();
 			
-			$return_fields[0]["id"]		= $this->db->f("id"); // unique id
-			$return_fields[0]["lid"]    = $this->db->f("lid"); // lid for group/account records
-			$return_fields[0]["tid"]    = $this->db->f("tid"); // type id (g/u) for groups/accounts
-			$return_fields[0]["owner"]  = $this->db->f("owner"); // id of owner/parent for the record
+			$return_fields[0]["id"]		= $this->db->f("id");
+			$return_fields[0]["lid"]    = $this->db->f("lid");
+			$return_fields[0]["tid"]    = $this->db->f("tid");
+			$return_fields[0]["owner"]  = $this->db->f("owner");
 			if (gettype($stock_fieldnames) == "array") {
 				while (list($f_name) = each($stock_fieldnames)) {
 					$return_fields[0][$f_name] = $this->db->f($f_name);
@@ -207,12 +207,12 @@
 
 
 		// send this the range, query, sort, order and whatever fields you want to see
-		// 'rights' and 'query' are unused at this time
+		// 'rights' is unused at this time
 		function read($start,$offset,$fields="",$query="",$filter="",$sort="",$order="",$rights="")
 		{
 			global $phpgw,$phpgw_info;
 
-			$tmp_table="phpgw_addressbook_user".$phpgw_info["user"]["account_id"]."_cache";
+			$tmp_table="phpgw_addressbook_user".$phpgw_info["user"]["account_id"];
 
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			$DEBUG = 0;
@@ -414,7 +414,7 @@
 					. "'%$query%' OR adr_countryname like '%$query%' OR "
 					. "org_name like '%$query%')";
 			}
-			
+
 			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.id,'
 				. $qfields . ' FROM '.$this->std_table.' AS a, '
 				. $tmp_table .' AS b WHERE a.id=b.id ' . $filtertemp
@@ -526,7 +526,7 @@
 			}
 		}
 
-		// This is where the real work of delete() is done
+		// This is where the real work of delete() is done, shared class file contains calling function
 		function delete_($id)
 		{
 			$this->db->query("delete from $this->std_table where owner='" . $this->account_id . "' and "
