@@ -169,29 +169,21 @@
     	}
     }
 
-    function exists($accountname)
+    function exists($account_id)
     {
-    	global $phpgw, $phpgw_info;
-    	
-    	if (gettype($account_id) == "string") 
-    	{
-    		$sql = "SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_id."'";
-    	}
-    	else
-    	{
-    		$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id='".$account_id."'";
-    	}
-    	$this->db->query($sql,__LINE__,__FILE__);
-    	if ($this->db->num_rows()) 
-    	{
-    		return True;
-    	} 
-    	else 
-    	{
-    		return False;
-    	}    	
-    }
-
+      global $phpgw, $phpgw_info;
+      if (gettype($account_id) == "string") {
+        $account_id = $this->name2id($account_id);
+      }
+      $sql = "SELECT account_id FROM phpgw_accounts WHERE account_id='".$account_id."'";
+      $this->db->query($sql,__LINE__,__FILE__);
+      if ($this->db->num_rows()) {
+         return True;
+      } else {
+         return False;
+      }
+    }                                                    
+                                                                                     
     function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
     {
        print "not done until now auto_generate class.accounts_ldap.inc.php<br>";
