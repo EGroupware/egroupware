@@ -263,7 +263,7 @@ class socalendar_ extends socalendar__
 		}
 		$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
 		@reset($member_groups);
-		while(list($key,$group_info) = each($member_groups))
+		while($member_groups != False && list($key,$group_info) = each($member_groups))
 		{
 			$member[] = $group_info['account_id'];
 		}
