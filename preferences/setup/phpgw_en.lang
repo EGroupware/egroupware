@@ -24,6 +24,7 @@ error: there was a problem finding the preference file for %1 in %2	preferences	
 forced preferences	preferences	en	Forced Preferences
 help off	preferences	en	Help off
 hours	preferences	en	hours
+how do you like to display accounts	preferences	en	How do you like to display accounts
 how do you like to select accounts	preferences	en	How do you like to select accounts
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
 how should phpgroupware display dates for you.	preferences	en	How should phpGroupWare display dates for you.
@@ -42,6 +43,7 @@ select different theme	preferences	en	Select different Theme
 select one	preferences	en	Select one
 select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	en	Select the language of texts and messages within phpGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.
 selectbox	preferences	en	Selectbox
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	en	Set this to your convenience. For security reasons, you might not want to show your Loginname in public.
 should the number of active sessions be displayed for you all the time.	preferences	en	Should the number of active sessions be displayed for you all the time.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Should this help messages shown up always, when you enter the preferences or only on request.
 show helpmessages by default	preferences	en	Show helpmessages by default

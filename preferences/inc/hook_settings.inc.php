@@ -124,5 +124,14 @@
 	create_select_box('How do you like to select accounts','account_selection',$account_sels,
 		'The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.');
 
+	$account_display = array(
+		'firstname' => lang('Firstname'). ' '.lang('Lastname'),
+		'lastname'  => lang('Lastname').', '.lang('Firstname'),
+		'username'  => lang('username'),
+		'all'       => '&lt;'.lang('username').'&gt; '.lang('Lastname').', '.lang('Firstname')
+	);
+	create_select_box('How do you like to display accounts','account_display',$account_display,
+		'Set this to your convenience. For security reasons, you might not want to show your Loginname in public.');
+
 	create_check_box('Show helpmessages by default','show_help',
 		'Should this help messages shown up always, when you enter the preferences or only on request.');

@@ -24,6 +24,7 @@ error: there was a problem finding the preference file for %1 in %2	preferences	
 forced preferences	preferences	de	Erzwungene Einstellungen
 help off	preferences	de	Keine Hilfe
 hours	preferences	de	Stunden
+how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt werden
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wieviele Stunden sind sie vor der Zeitzone des Servers.<br>Wenn sie in der gleichen Zeitzone wie der Server sind, wählen sie 0 Stunden, ansonsten wählen sie ihr lokales Datum und die Uhrzeit.
 how should phpgroupware display dates for you.	preferences	de	Wie soll phpGroupWare das Datum für sie anzeigen?
@@ -43,6 +44,7 @@ select different theme	preferences	de	anderes Schema wählen
 select one	preferences	de	Bitte wählen
 select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der phpGroupWare.<br>Machne Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der Englische Text angezeigt.
 selectbox	preferences	de	Auswahlfeld
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	de	Stellen sie das nach ihren Vorlieben ein. Aus Sicherheitsgründen sollte der Benutzername nicht in der Öffentlichkeit gezeigt werden.
 should the number of active sessions be displayed for you all the time.	preferences	de	Soll die Anzahl aktiver Sitzungen permanent für sie angezeigt werden.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn sie die Einstellungen aufrufen oder nur auf Anforderung.
 show helpmessages by default	preferences	de	Hilfetexte standardmässig anzeigen
