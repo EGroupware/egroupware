@@ -12,7 +12,7 @@
 	/* $Id$ */
 	
 	// Delete all records for a user
-	if (floor($PHP_VERSION ) == 4)
+	if (floor(phpversion()) == 4)
 	{
 		global $account_id, $new_owner;
 	}

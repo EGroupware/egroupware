@@ -35,7 +35,7 @@
       if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt')) {
       	if ($phpgw_info['server']['versions']['mcrypt'] == 'old') {
           $this->td = false;
-          if (PHP_VERSION > '4.0.2pl1') {
+          if (phpversion() > '4.0.2pl1') {
             $keysize = mcrypt_get_key_size(MCRYPT_TRIPLEDES);
             $ivsize  = mcrypt_get_iv_size(MCRYPT_TRIPLEDES,MCRYPT_MODE_CBC);
           } else {

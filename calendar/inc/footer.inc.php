@@ -19,7 +19,7 @@
 		$phpgw->common->phpgw_exit();
 	}
 
-	if(floor($PHP_VERSION) == 4)
+	if(floor(phpversion()) == 4)
 	{
 		global $phpgw_info, $thisday, $thismonth, $thisyear;
 	}
