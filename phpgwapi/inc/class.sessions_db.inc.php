@@ -1,27 +1,38 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - Session management                                      *
-  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-  * and Joseph Engo <jengo@phpgroupware.org>                                 *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - Session management                                      *
+	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	* and Joseph Engo <jengo@phpgroupware.org>                                 *
+	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	* -------------------------------------------------------------------------*
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
 	/* $Id$ */
+
+	/**
+	* Session Management via database (based on phplib sessions)
+	*
+	* @package api
+	* @subpackage sessions
+	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp <br> hacked on by phpGW
+	* @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> &copy; 2003 FreeSoftware Foundation
+	* @license LGPL
+	* @link http://www.sanisoft.com/phplib/manual/DB_sql.php
+	*/
 
 	class sessions extends sessions_
 	{
@@ -44,24 +55,24 @@
 			// If you plan on using the cron apps, please remove the following lines.
 			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
 
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_dla <= '" . (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout'])
+			$GLOBALS['egw']->db->query("DELETE FROM phpgw_sessions WHERE session_dla <= '" . (time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
 				. "' AND session_flags !='A'",__LINE__,__FILE__);
 
 			// This is set a little higher, we don't want to kill session data for anonymous sessions.
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout'])
+			$GLOBALS['egw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
 				. "'",__LINE__,__FILE__);
 		}
 
 		function new_session_id()
 		{
-			return md5($GLOBALS['phpgw']->common->randomstring(15));
+			return md5($GLOBALS['egw']->common->randomstring(15));
 		}
 
 		function register_session($login,$user_ip,$now,$session_flags)
 		{
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='$this->sessionid'",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='$this->sessionid'",__LINE__,__FILE__);
 
-			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
+			$GLOBALS['egw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
 				. "','".$login."','" . $user_ip . "','"
 				. $now . "','" . $now . "','" . $_SERVER['PHP_SELF'] . "','" . $session_flags
 				. "')",__LINE__,__FILE__);
@@ -86,10 +97,10 @@
 				$action = $this->xmlrpc_method_called;
 			}
 
-			$GLOBALS['phpgw']->db->query("UPDATE phpgw_sessions SET session_dla='" . time() . "', session_action='$action' "
+			$GLOBALS['egw']->db->query("UPDATE phpgw_sessions SET session_dla='" . time() . "', session_action='$action' "
 				. "WHERE session_id='" . $this->sessionid."'",__LINE__,__FILE__);
 
-			$GLOBALS['phpgw']->db->query("UPDATE phpgw_app_sessions SET session_dla='" . time() . "' "
+			$GLOBALS['egw']->db->query("UPDATE phpgw_app_sessions SET session_dla='" . time() . "' "
 				. "WHERE sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
 			return True;
 		}
@@ -101,19 +112,19 @@
 				return False;
 			}
 
-			$GLOBALS['phpgw']->db->transaction_begin();
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='"
+			$GLOBALS['egw']->db->transaction_begin();
+			$GLOBALS['egw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='"
 				. $sessionid . "'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid='"
+			$GLOBALS['egw']->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid='"
 				. $sessionid . "'",__LINE__,__FILE__);
 			$this->log_access($this->sessionid);	// log logout-time
 
 			// Only do the following, if where working with the current user
-			if ($sessionid == $GLOBALS['phpgw_info']['user']['sessionid'])
+			if ($sessionid == $GLOBALS['egw_info']['user']['sessionid'])
 			{
 				$this->clean_sessions();
 			}
-			$GLOBALS['phpgw']->db->transaction_commit();
+			$GLOBALS['egw']->db->transaction_commit();
 
 			return True;
 		}
@@ -129,7 +140,7 @@
 			$query = "DELETE FROM phpgw_app_sessions WHERE loginid = '".$account_id."'"
 				." AND app = 'phpgwapi' AND location = 'phpgw_info_cache'";
 
-			$GLOBALS['phpgw']->db->query($query);
+			$GLOBALS['egw']->db->query($query);
 		}
 
 		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
@@ -140,7 +151,7 @@
 			}
 			if (! $appname)
 			{
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 			
 			/* This allows the user to put '' as the value. */
@@ -150,14 +161,14 @@
 					." sessionid='".$this->sessionid."' AND loginid='".$this->account_id."'"
 					." AND app = '".$appname."' AND location='".$location."'";
 	
-				$GLOBALS['phpgw']->db->query($query,__LINE__,__FILE__);
-				$GLOBALS['phpgw']->db->next_record();
+				$GLOBALS['egw']->db->query($query,__LINE__,__FILE__);
+				$GLOBALS['egw']->db->next_record();
 
 				// I added these into seperate steps for easier debugging
-				$data = $GLOBALS['phpgw']->db->f('content');
+				$data = $GLOBALS['egw']->db->f('content');
 				// Changed by Skeeter 2001 Mar 04 0400Z
 				// This was not properly decoding structures saved into session data properly
-//				$data = $GLOBALS['phpgw']->common->decrypt($data);
+//				$data = $GLOBALS['egw']->common->decrypt($data);
 //				return stripslashes($data);
 				// Changed by milosch 2001 Dec 20
 				// do not stripslashes here unless this proves to be a problem.
@@ -165,29 +176,29 @@
 				/* do not decrypt and return if no data (decrypt returning garbage) */
 				if($data)
 				{
-					$data = $GLOBALS['phpgw']->crypto->decrypt($data);
+					$data = $GLOBALS['egw']->crypto->decrypt($data);
 //					echo 'appsession returning: '; _debug_array($data);
 					return $data;
 				}
 			}
 			else
 			{
-				$GLOBALS['phpgw']->db->query("SELECT content FROM phpgw_app_sessions WHERE "
+				$GLOBALS['egw']->db->query("SELECT content FROM phpgw_app_sessions WHERE "
 					. "sessionid = '".$this->sessionid."' AND loginid = '".$this->account_id."'"
 					. " AND app = '".$appname."' AND location = '".$location."'",__LINE__,__FILE__);
 
-				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
-				$encrypteddata = $GLOBALS['phpgw']->db->db_addslashes($encrypteddata);
+				$encrypteddata = $GLOBALS['egw']->crypto->encrypt($data);
+				$encrypteddata = $GLOBALS['egw']->db->db_addslashes($encrypteddata);
 
-				if ($GLOBALS['phpgw']->db->num_rows()==0)
+				if ($GLOBALS['egw']->db->num_rows()==0)
 				{
-					$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
+					$GLOBALS['egw']->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
 						. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
 						. "','".$location."','".$encrypteddata."','" . time() . "')",__LINE__,__FILE__);
 				}
 				else
 				{
-					$GLOBALS['phpgw']->db->query("UPDATE phpgw_app_sessions SET content='".$encrypteddata."'"
+					$GLOBALS['egw']->db->query("UPDATE phpgw_app_sessions SET content='".$encrypteddata."'"
 						. "WHERE sessionid = '".$this->sessionid."'"
 						. "AND loginid = '".$this->account_id."' AND app = '".$appname."'"
 						. "AND location = '".$location."'",__LINE__,__FILE__);
