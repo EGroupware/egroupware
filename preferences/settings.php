@@ -24,6 +24,7 @@
      $phpgw->common->navbar();
   }
 
+  // This function is not going to be needed when email is moved into its own preferences section.
   function display_option($text,$check,$option,$indent) {
     global $phpgw, $phpgw_info;
     if ($phpgw_info["user"]["apps"][$check]) {
@@ -37,7 +38,7 @@
          ?>
        </td>
        <td>
-        <input type="checkbox" name="<?php echo $option; ?>" value="True"<?php if ($phpgw_info["user"]["preferences"]["common"][$option]) echo " checked"; ?>>
+        <input type="checkbox" name="<?php echo $option; ?>" value="True"<?php if ($phpgw_info["user"]["preferences"][$check][$option]) echo " checked"; ?>>
        </td>
       </tr>
 <?php
@@ -48,7 +49,7 @@
         <?php echo lang("email signature"); ?>
        </td>
        <td>
-        <textarea name="email_sig" rows="3" cols="30"><?php echo $phpgw_info["user"]["preferences"]["common"]["email_sig"]; ?></textarea>
+        <textarea name="email_sig" rows="3" cols="30"><?php echo $phpgw_info["user"]["preferences"]["email"]["email_sig"]; ?></textarea>
        </td>
       </tr>
 <?php
@@ -148,10 +149,17 @@
           </select>
          </td>
        </tr>
-<?php
-  display_option("show current users on navigation bar","admin","show_currentusers",0);
-  display_option("show new messages on main screen","email","mainscreen_showmail",0);
-//  display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays",0);
+       <?php
+         if ($phpgw_info["user"]["apps"]["admin"]) {
+            echo '<tr><td>' . lang("show current users on navigation bar") . '</td><td>'
+               . '<input type="checkbox" name="<?php echo $option; ?>" value="True"';
+            if ($phpgw_info["user"]["preferences"]["common"]["show_currentusers"]) {
+               echo " checked";
+            }
+            echo "></td></tr>";
+         }
+
+         display_option("show new messages on main screen","email","mainscreen_showmail",0);
 ?>        
        <tr>
         <td><?php echo lang("Default application"); ?></td>
