@@ -229,6 +229,7 @@ high	common	en	High
 home	common	en	Home
 home city	addressbook	en	Home City
 home country	addressbook	en	Home Country
+home directory	admin	en	Home directory
 home email	addressbook	en	Home EMail
 home email type	addressbook	en	Home EMail Type
 home phone	addressbook	en	Home Phone
@@ -274,6 +275,7 @@ list of current users	admin	en	list of current users
 listings displayed	admin	en	Listings Displayed
 login	common	en	Login
 login screen	admin	en	Login screen
+login shell	admin	en	Login shell
 login time	admin	en	Login Time
 loginid	admin	en	LoginID
 logout	common	en	Logout
