@@ -510,9 +510,21 @@
 						$value = $GLOBALS[$meth][$varname];
 						$i = $cnt+1;
 					}
-					if(get_magic_quotes_gpc() && !@is_array($value))
+					if(get_magic_quotes_gpc())
 					{
-						$value = stripslashes($value);
+						if(@is_array($value))
+						{
+							/* stripslashes on the first level of array values */
+							foreach($value as $name => $val)
+							{
+								$value[$name] = stripslashes($val);
+							}
+						}
+						else
+						{
+							/* stripslashes on this (string) */
+							$value = stripslashes($value);
+						}
 					}
 					break;
 				case 'FILES':
