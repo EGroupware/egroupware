@@ -161,6 +161,10 @@
 				$value['start'] = 0;
 				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			}
+			if (is_array($value['rows'][0]))	// fixed 0 based arrays
+			{
+				array_unshift($value['rows'],false);
+			}
 			list($template,$options) = explode(',',$cell['size']);
 			if ($template)	// template name can be supplied either in $value['template'] or the options-field
 			{
