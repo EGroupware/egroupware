@@ -59,9 +59,9 @@
 				$this->maxmatches = 15;
 			}
 
-			if(isset($GLOBALS['menuaction']))
+			if(isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 			{
-				$this->action = $GLOBALS['menuaction'];
+				$this->action = $GLOBALS['HTTP_GET_VARS']['menuaction'];
 			}
 		}
 
@@ -109,7 +109,10 @@
 				@reset($extravars);
 				while(list($var,$value) = each($extravars))
 				{
-					$t_extras[] = $var.'='.$value;
+					if($var != 'menuaction')
+					{
+						$t_extras[] = $var.'='.$value;
+					}
 				}
 				$extras = implode($t_extras,'&');
 			}
