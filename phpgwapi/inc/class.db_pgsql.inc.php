@@ -41,6 +41,9 @@
 		/* Set this to 1 for automatic pg_freeresult on last record. */
 		var $Auto_Free = 0;
 
+		// PostgreSQL changed somethings from 6.x -> 7.x
+		var $db_version;
+
 		function ifadd($add, $me)
 		{
 			if('' != $add) return ' ' . $me . $add;
@@ -54,7 +57,7 @@
 
 		function connect()
 		{
-			if ( 0 == $this->Link_ID )
+			if (0 == $this->Link_ID)
 			{
 				$cstr = 'dbname=' . $this->Database
 					. $this->ifadd($this->Host, 'host=')
@@ -69,12 +72,76 @@
 				{
 					$this->Link_ID=pg_connect($cstr);
 				}
-				if (!$this->Link_ID)
+
+				if (! $this->Link_ID)
 				{
 					$this->halt('Link-ID == false, pconnect failed');
 				}
+				else
+				{
+					$this->query("select version()",__LINE__,__FILE__);
+					$this->next_record();
+
+					$version          = $this->f('version');
+					$parts            = explode(' ',$version);
+					$this->db_version = $parts[1];
+				}
 			}
 		}
+
+		function to_timestamp($epoch)
+		{
+			$db_version = $this->db_version;
+			if (floor($db_version) == 6)
+			{
+				return $this->to_timestamp_6($epoch);
+			}
+			else
+			{
+				return $this->to_timestamp_7($epoch);
+			}
+		}
+
+		function from_timestamp($timestamp)
+		{
+			if (floor($this->db_version) == 6)
+			{
+				return $this->from_timestamp_6($epoch);
+			}
+			else
+			{
+				return $this->from_timestamp_7($epoch);
+			}
+		}
+
+		// For PostgreSQL 6.x
+		function to_timestamp_6($epoch)
+		{
+
+		}
+
+		// For PostgreSQL 6.x
+		function from_timestamp_6($timestamp)
+		{
+
+		}
+
+		// For PostgreSQL 7.x
+		function to_timestamp_7($epoch)
+		{
+			// This needs the GMT offset!
+			return date('Y-m-d H:i:s-00',$epoch);
+		}
+
+		// For PostgreSQL 7.x
+		function from_timestamp_7($timestamp)
+		{
+			ereg('([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})',$timestamp,$parts);
+	
+			return mktime($parts[4],$parts[5],$parts[6],$parts[2],$parts[3],$parts[1]);
+		}
+
+
 
 		function limit($start)
 		{
