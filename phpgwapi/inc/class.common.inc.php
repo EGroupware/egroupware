@@ -464,42 +464,37 @@
 
 			$display = $GLOBALS['phpgw_info']['user']['preferences']['common']['account_display'];
 
-			if (!$firstname && !$lastname || $display == 'username')
+			if ($firstname && $lastname)
 			{
-				return $lid;
+				$delimiter = ', ';
 			}
-			if ($lastname)
+			else
 			{
-				$a[] = $lastname;
+				$delimiter = '';
 			}
-
-			if ($firstname)
-			{
-				$a[] = $firstname;
-			}
-
+			
 			$name = '';
 			switch($display)
 			{
-				case 'all':
-					if ($lid)
-					{
-						$name = '['.$lid.'] ';
-					}
-					// fall-through
+				case 'firstname':
+					$name = $firstname . ' ' . $lastname;
+					break;
 				case 'lastname':
-					$name .= implode(', ',$a);
+					$name = $lastname . $delimiter . $firstname;
+					break;
+				case 'username':
+					$name = $lid;
 					break;
 				case 'firstall':
-					if ($lid)
-					{
-						$name = ' ['.$lid.']';
-					}
-					// fall-through
-				case 'firstname':
-				default:
-					$name = $firstname . ' ' . $lastname . $name;
+					$name = $firstname . ' ' . $lastname . ' ['.$lid.']';
 					break;
+				case 'lastall':
+					$name = $lastname . $delimiter . $firstname . ' ['.$lid.']';
+					break;
+				case 'all':
+					/* fall through */
+				default:
+					$name = '['.$lid.'] ' . $firstname . ' ' . $lastname;
 			}
 			return $name;
 		}
