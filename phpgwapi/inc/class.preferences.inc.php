@@ -40,7 +40,7 @@
 		/*! @var db */
 		var $db;
 		/*! @var debug_init_prefs */
-		var $debug_init_prefs = 0;
+		var $debug_init_preys = 0;
 		//var $debug_init_prefs = 1;
 		//var $debug_init_prefs = 2;
 		//var $debug_init_prefs = 3;
@@ -71,8 +71,8 @@
 		function read_repository()
 		{
 			$this->db->query("SELECT * FROM phpgw_preferences WHERE "
-				. "preference_owner='" . $this->account_id . "' or "
-				. "preference_owner='-1' order by preference_owner desc",__LINE__,__FILE__);
+				. "preference_owner='" . $this->account_id . "' OR "
+				. "preference_owner='-1' ORDER BY preference_owner DESC",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$pref_info  = $this->db->f('preference_value');
@@ -215,7 +215,7 @@
 			if (! $GLOBALS['phpgw']->acl->check('session_only_preferences',1,'preferences'))
 			{
 				$this->db->transaction_begin();
-				$this->db->query("delete from phpgw_preferences where preference_owner='" . $this->account_id
+				$this->db->query("DELETE FROM phpgw_preferences WHERE preference_owner='" . $this->account_id
 					. "'",__LINE__,__FILE__);
 
 				if (floor(phpversion()) < 4)
@@ -226,8 +226,8 @@
 				{
 					$pref_info = serialize($this->data);
 				}
-				$this->db->query("insert into phpgw_preferences (preference_owner,preference_value) values ('"
-					. $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
+				$this->db->query("INSERT INTO phpgw_preferences (preference_owner,preference_value) VALUES ("
+					. intval($this->account_id) . ",'" . $pref_info . "')",__LINE__,__FILE__);
 
 				$this->db->transaction_commit();
 			}
@@ -254,12 +254,12 @@
 		*/
 		function create_defaults($account_id)
 		{
-			$this->db->query("select * from phpgw_preferences where preference_owner='-2'",__LINE__,__FILE__);
+			$this->db->query("SELECT * FROM phpgw_preferences WHERE preference_owner='-2'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			if($this->db->f('preference_value'))
 			{
-				$this->db->query("insert into phpgw_preferences values ('$account_id','"
+				$this->db->query("INSERT INTO phpgw_preferences VALUES (" . intval($account_id) . ",'"
 					. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
 			}
 			
@@ -267,7 +267,6 @@
 			{
 				$GLOBALS['phpgw']->session->read_repositories(False);
 			}
-
 		}
 
 		/*!
