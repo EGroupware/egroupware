@@ -5,8 +5,8 @@
 			<xsl:when test="account_list">
 				<xsl:apply-templates select="account_list"/>
 			</xsl:when>
-			<xsl:when test="group_edit">
-				<xsl:apply-templates select="user_edit"/>
+			<xsl:when test="account_edit">
+				<xsl:apply-templates select="account_edit"/>
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
@@ -133,10 +133,10 @@
 
 <!-- END user_list -->
 
-<!-- BEGIN group_edit -->
+<!-- BEGIN account_edit -->
 
-	<xsl:template match="group_edit">
-		<table border="0" cellpadding="2" cellspacing="2" align="center" width="79%">
+	<xsl:template match="account_edit">
+		<table border="0" cellpadding="2" cellspacing="2" align="center" width="95%">
 			<tr>
 				<td><xsl:value-of select="error"/></td>
 			</tr>
@@ -148,47 +148,87 @@
 					<table border="0" width="100%">
 						<xsl:variable name="edit_url"><xsl:value-of select="edit_url"/></xsl:variable>
 						<xsl:variable name="account_id" select="account_id"/>
-						<xsl:variable name="select_size" select="select_size"/>
+						<xsl:variable name="account_lid" select="account_lid"/>
+						<xsl:variable name="account_firstname" select="account_firstname"/>
+						<xsl:variable name="account_lastname" select="account_lastname"/>
+						<xsl:variable name="account_passwd" select="account_passwd"/>
+						<xsl:variable name="account_passwd_2" select="account_passwd_2"/>
 						<form action="{$edit_url}" method="POST">
 						<input type="hidden" name="values[account_id]" value="{$account_id}"/>
-						<tr>
-							<td><xsl:value-of select="lang_account_name"/></td>
-							<td><input name="values[account_name]">
-								<xsl:attribute name="value">
-									<xsl:value-of select="value_account_name"/>
-								</xsl:attribute>
-								</input>
+						<tr class="row_on">
+							<td width="25%"><xsl:value-of select="lang_lid"/></td>
+							<td width="25%"><input type="text" name="values[account_lid]" value="{$account_lid}"/></td>
+							<td width="25%"><xsl:value-of select="lang_account_active"/></td>
+							<td width="25%">
+								<xsl:choose>
+									<xsl:when test="account_status = 'yes'">
+										<input type="checkbox" name="values[account_status]" value="A" checked="checked"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<input type="checkbox" name="values[account_status]" value="A"/>
+									</xsl:otherwise>
+								</xsl:choose>
 							</td>
 						</tr>
-						<tr>
-							<td><xsl:value-of select="lang_include_user"/></td>
-							<td>
-								<select name="account_user[]" multiple="multiple" size="{$select_size}">
-									<xsl:apply-templates select="user_list"/>
+						<tr class="row_off">
+							<td><xsl:value-of select="lang_firstname"/></td>
+							<td><input type="text" name="values[account_firstname]" value="{$account_firstname}"/></td>
+							<td><xsl:value-of select="lang_lastname"/></td>
+							<td><input type="text" name="values[account_lastname]" value="{$account_lastname}"/></td>
+						</tr>
+
+<!-- BEGIN form_passwordinfo -->
+
+						<tr class="row_on">
+							<td><xsl:value-of select="lang_password"/></td>
+							<td><input type="password" name="values[account_passwd]" value="{$account_passwd}"/></td>
+							<td><xsl:value-of select="lang_reenter_password"/></td>
+							<td><input type="password" name="values[account_passwd_2]" value="{$account_passwd_2}"/></td>
+						</tr>
+
+<!-- END form_passwordinfo -->
+
+						<tr class="row_off">
+							<td><xsl:value-of select="lang_groups"/></td>
+							<td colspan="3">
+								<select name="account_groups[]" multiple="multiple">
+									<xsl:apply-templates select="group_list"/>
 								</select>
 							</td>
 						</tr>
-						<tr>
-							<td><xsl:value-of select="lang_file_space"/></td>
+
+						<tr class="row_on">
+							<td><xsl:value-of select="lang_expires"/></td>
+							<td><xsl:value-of disable-output-escaping="yes" select="select_expires"/></td>
+							<td><xsl:value-of select="lang_never"/></td>
 							<td>
-<!-- {account_file_space}{account_file_space_select} -->
+								<xsl:choose>
+									<xsl:when test="never_expires = 'yes'">
+										<input type="checkbox" name="values[never_expires]" value="True" checked="checked"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<input type="checkbox" name="values[never_expires]" value="True"/>
+									</xsl:otherwise>
+								</xsl:choose>
 							</td>
 						</tr>
 						<tr>
-							<td valign="top"><xsl:value-of select="lang_permissions"/></td>
-							<td>
+							<td colspan="4" height="5"></td>
+						</tr>
+						<tr>
+							<td colspan="4">
 								<table width="100%" border="0" cellpadding="2" cellspacing="2">
 									<tr class="th">
-										<td><xsl:value-of select="lang_application"/></td>
-										<td>&nbsp;</td>
-										<td><xsl:value-of select="lang_acl"/></td>
+										<td><xsl:value-of select="lang_applications"/></td>
+										<td></td>
 									</tr>
 										<xsl:apply-templates select="app_list"/>
 								</table>
 							</td>
 						</tr>
+
 						<tr>
-							<td colspan="2" align="left">
+							<td colspan="2">
 							<xsl:variable name="lang_save"><xsl:value-of select="lang_save"/></xsl:variable>
 								<input type="submit" name="values[save]" value="{$lang_save}"/>
 							</td>
@@ -196,10 +236,10 @@
  						</form>
 						<tr>
 						<xsl:variable name="done_url"><xsl:value-of select="done_url"/></xsl:variable>
-						<xsl:variable name="lang_done"><xsl:value-of select="lang_done"/></xsl:variable>
+						<xsl:variable name="lang_cancel_done"><xsl:value-of select="lang_cancel_done"/></xsl:variable>
 						<form method="POST" action="{$done_url}">
-							<td align="left">
-								<input type="submit" name="done" value="{$lang_done}"/>
+							<td>
+								<input type="submit" name="done" value="{$lang_cancel_done}"/>
 							</td>
 						</form>
 						</tr>
@@ -209,7 +249,9 @@
 		</table>
 	</xsl:template>
 
-	<xsl:template match="user_list">
+<!-- BEGIN group_list -->
+
+	<xsl:template match="group_list">
 		<xsl:variable name="account_id" select="account_id"/>
 		<xsl:choose>
 			<xsl:when test="selected != ''">
@@ -220,6 +262,8 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+
+<!-- BEGIN app_list -->
 
 	<xsl:template match="app_list">
 		<xsl:variable name="checkbox_name" select="checkbox_name"/>
@@ -237,7 +281,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:attribute>
-			<td width="40%"><xsl:value-of select="app_name"/></td>
+			<td width="40%"><xsl:value-of select="app_title"/></td>
 			<td width="5%" align="center">
 				<xsl:choose>
 					<xsl:when test="checked != ''">
@@ -246,16 +290,6 @@
 					<xsl:otherwise>
 						<input type="checkbox" name="{$checkbox_name}" value="True"/>
 					</xsl:otherwise>
-				</xsl:choose>
-			</td>
-			<td width="5%" align="center">
-				<xsl:choose>
-					<xsl:when test="acl_url != ''">
-						<xsl:variable name="acl_url" select="acl_url"/>
-						<xsl:variable name="acl_img" select="acl_img"/>
-						<xsl:variable name="img_name" select="img_name"/>
-						<a href="{$acl_url}"><img src="{$acl_img}" border="0" hspace="3" align="absmiddle" alt="{$img_name}" name="{$img_name}"/></a>
-					</xsl:when>
 				</xsl:choose>
 			</td>
 		</tr>

@@ -20,6 +20,9 @@
 			<xsl:when test="account_list">
 				<xsl:call-template name="users"/>
 			</xsl:when>
+			<xsl:when test="account_edit">
+				<xsl:call-template name="users"/>
+			</xsl:when>
 			<xsl:when test="delete">
 				<xsl:call-template name="app_delete"/>
 			</xsl:when>
