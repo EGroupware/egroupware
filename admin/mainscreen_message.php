@@ -93,7 +93,7 @@
 
 		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 		$p->set_var("tr_color",$tr_color);
-		$p->set_var("value",'<textarea name="message" cols="50" rows="10" wrap="hard">' . stripslashes($current_message) . '</textarea>');
+		$p->set_var("value",'<textarea name="message" cols="50" rows="10" wrap="virtual">' . stripslashes($current_message) . '</textarea>');
 		$p->parse("rows","row_2",True);
 
 		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
