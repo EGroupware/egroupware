@@ -321,7 +321,8 @@ function php_ini_check($name,$args)
 			$result = !!($ini_value & $args['value']);
 			break;
 		case '>=':
-			$result = $ini_value && intval($ini_value) >= intval($args['value']) &&
+			$result = !$ini_value ||	// value not used, eg. no memory limit
+				intval($ini_value) >= intval($args['value']) &&
 				($args['value'] == intval($args['value']) ||
 				substr($args['value'],-1) == substr($ini_value,-1));
 			break;
