@@ -32,8 +32,8 @@
 		// Translate Message into Language
 		function langmsg()
 		{
-			return lang($this->msg,$this->parms);		
-		}		
+			return lang($this->msg,$this->parms);
+		}
 
 		function error($parms)
 		{
@@ -56,13 +56,13 @@
 				$this->msg = trim($etext);
 			}
 			$this->timestamp = time();
-			$this->parms     = $parray;
-			$this->ismsg     = $parms['ismsg'];
-			$this->fname     = $fname;
-			$this->line		 = $line;
-			$this->app 		 = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$this->parms = $parray;
+			$this->ismsg = $parms['ismsg'];
+			$this->fname = $fname;
+			$this->line  = $line;
+			$this->app   = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
- 			if (!$this->fname or !$this->line)
+			if (!$this->fname or !$this->line)
 			{
 				$GLOBALS['phpgw']->log->error(array(
 					'text'=>'W-PGMERR, Programmer failed to pass __FILE__ and/or __LINE__ in next log message',

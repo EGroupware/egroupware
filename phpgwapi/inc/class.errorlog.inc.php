@@ -17,7 +17,7 @@
 		/***************************\
 		*	Instance Variables...   *
 		\***************************/
-		var $errorstack = array();	
+		var $errorstack = array();
 		var $public_functions = array(
 			'message',
 			'error',
@@ -106,13 +106,14 @@
 		{
 			$db = $GLOBALS['phpgw']->db;
 //			$db->lock('phpgw_log');
-			$db->query	("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
-						."('". $GLOBALS['phpgw']->db->to_timestamp(time())
-						."','".$GLOBALS['phpgw']->session->account_id
-						."','".$GLOBALS['phpgw_info']['flags']['currentapp']."'"
-						.",'".$this->severity()."'"
-						.")"
-						,__LINE__,__FILE__);
+			$db->query("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
+				."('". $GLOBALS['phpgw']->db->to_timestamp(time())
+				."','".$GLOBALS['phpgw']->session->account_id
+				."','".$GLOBALS['phpgw_info']['flags']['currentapp']."'"
+				.",'".$this->severity()."'"
+				.")"
+				,__LINE__,__FILE__
+			);
 
 			$log_id = $db->get_last_insert_id('phpgw_log','log_id');
 //			$db->query('select max(log_id) as lid from phpgw_log');
@@ -124,21 +125,22 @@
 			for ($i = 0; $i < count($errorstack); $i++)
 			{
 				$err = $errorstack[$i];
-				$db->query	("insert into phpgw_log_msg "
-							."(Log_msg_log_id, log_msg_seq_no, log_msg_date, log_msg_severity, "
-							."log_msg_code, log_msg_msg, log_msg_parms, log_msg_file, log_msg_line) values "
-							."(" . $log_id
-							."," . $i
-							.", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp)
-							."', '". $err->severity . "'"
-							.", '". $err->code . "'"
-							.", '". $db->db_addslashes($err->msg) . "'"
-							.", '". $db->db_addslashes(implode('|',$err->parms)). "'"
-							.", '". $err->fname . "'"
-							.", " . intval($err->line)
-							.")" 
-							,__LINE__,__FILE__);
-			};
+				$db->query("insert into phpgw_log_msg "
+					."(Log_msg_log_id, log_msg_seq_no, log_msg_date, log_msg_severity, "
+					."log_msg_code, log_msg_msg, log_msg_parms, log_msg_file, log_msg_line) values "
+					."(" . $log_id
+					."," . $i
+					.", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp)
+					."', '". $err->severity . "'"
+					.", '". $err->code . "'"
+					.", '". $db->db_addslashes($err->msg) . "'"
+					.", '". $db->db_addslashes(implode('|',$err->parms)). "'"
+					.", '". $err->fname . "'"
+					.", " . intval($err->line)
+					.")" 
+					,__LINE__,__FILE__
+				);
+			}
 			unset ($errorstack);
 			unset ($this->errorstack);
 			$this->errorstack = array();
@@ -160,7 +162,7 @@
 			unset ($this->errorstack);
 			$this->errorstack = $new;
 			return true;
-		}		
+		}
 
 		function astable()
 		{
@@ -200,7 +202,7 @@
 				$html .= "\t\t<td>".$err->fname."</td>\n";
 				$html .= "\t\t<td>".$err->line."</td>\n";
 				$html .= "\t</tr>\n";
-			};			
+			}
 			$html .= "</table>\n";
 			$html .= "</center>\n";
 
