@@ -289,7 +289,7 @@ class uiviews extends uical
 		elseif ($this->wd_end < 24*60 && $time > $this->wd_end+2*$this->granularity_m)
 		{
 			$pos = $this->time2pos($this->wd_end+2*$this->granularity_m) +
-				round(($time - ($this->wd_end+2*$this->granularity_m)) / $this->px_m /
+				@round(($time - ($this->wd_end+2*$this->granularity_m)) / $this->px_m /
 				(24*60 - ($this->wd_end+2*$this->granularity_m)));
 		}
 		// time during the workday => 2. row on (= + granularity)
@@ -705,8 +705,37 @@ class uiviews extends uical
 		{
 			$GLOBALS['phpgw_info']['flags']['java_script'] = '
 <script type="text/javascript">
+	    
+function MM_findObj(n, d) { //v4.0
+
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+  
+      d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+      
+        if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+	
+	  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+	  
+	    if(!x && document.getElementById) x=document.getElementById(n); return x;
+	    
+	    }
+function MM_showHideLayers() { //v3.0
+
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  
+    for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    
+        if (obj.style) { obj=obj.style; v=(v==\'show\')?\'visible\':(v=\'hide\')?\'hidden\':v; }
+	
+	    obj.visibility=v; }
+	    
+	    }
+
 function reload_inner_width() {
 	var width = window.innerWidth ? window.innerWidth : document.body.clientWidth;
+
+	MM_showHideLayers(\'processing\',\'\',\'show\') ;	
+	
 	if (location.search.indexOf("windowInnerWidth=") < 0)
 	{
 		location = location+(location.search.length ? "&" : "?")+"windowInnerWidth="+width;
@@ -716,6 +745,7 @@ function reload_inner_width() {
 		var loc = location.toString();
 		location = loc.replace(/^(.*windowInnerWidth=)[0-9]*(.*)$/,"$1"+width+"$2");
 	}
+	
 }
 </script>
 ';
@@ -742,6 +772,7 @@ function reload_inner_width() {
 		{
 			$width = 1000;	// default, if the browser does not report it
 		}
+//		print $width ;
 		return $width - 250;	// 180 for sidebox-menu, TODO: this need to come from the template
 	}
 }
