@@ -104,7 +104,7 @@
 		if ( ($download == "on") || ($o->type == 'pdb') ) {
 			header("Content-disposition: attachment; filename=\"".$tsvfilename."\"");
 			header("Content-type: application/octetstream");
-			header("Content-length: ".strlen($buffer);
+			header("Content-length: ".strlen($buffer));
 			header("Pragma: no-cache");
 			header("Expires: 0");
 			echo $buffer;

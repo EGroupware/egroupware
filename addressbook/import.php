@@ -73,31 +73,31 @@
 		if ($private=="") { $private="public"; }
 		$row=0;
 		$buffer=array();
-		$o = new import_conv;
-		$buffer = $o->import_start_file($buffer,$basedn,$context);
+		$this = new import_conv;
+		$buffer = $this->import_start_file($buffer,$basedn,$context);
 		$fp=fopen($tsvfile,"r");
-		if ($o->type == 'csv') {
+		if ($this->type == 'csv') {
 			while ($data = fgetcsv($fp,8000,",")) {
 				$num = count($data);
 				$row++;
 				if ($row == 1) {
 					$header = $data;
 				} else {
-					$buffer = $o->import_start_record($buffer);
+					$buffer = $this->import_start_record($buffer);
 					for ($c=0; $c<$num; $c++ ) {
 						//Send name/value pairs along with the buffer
-						if ($o->import[$header[$c]]!="" && $data[$c]!="") {
-							$buffer = $o->import_new_attrib($buffer, $o->import[$header[$c]],$data[$c]);
+						if ($this->import[$header[$c]]!="" && $data[$c]!="") {
+							$buffer = $this->import_new_attrib($buffer, $this->import[$header[$c]],$data[$c]);
 						}
 					}
-					$buffer = $o->import_end_record($buffer,$private);
+					$buffer = $this->import_end_record($buffer,$private);
 				}
 			}
-		} elseif ($o->type == 'ldif') {
+		} elseif ($this->type == 'ldif') {
 			while ($data = fgets($fp,8000)) {
 				list($name,$value,$url) = split(':', $data);
 				if (substr($name,0,2) == 'dn') {
-					$buffer = $o->import_start_record($buffer);
+					$buffer = $this->import_start_record($buffer);
 				}
 				if ($name && $value) {
 					$test = split(',mail=',$value);
@@ -110,26 +110,34 @@
 						$value = $value . ':' . $url;
 					}
 					//echo '<br>'.$j.': '.$name.' => '.$value;
-					if ($o->import[$name] != "" && $value != "") {
-						$buffer = $o->import_new_attrib($buffer, $o->import[$name],$value);
+					if ($this->import[$name] != "" && $value != "") {
+						$buffer = $this->import_new_attrib($buffer, $this->import[$name],$value);
 					}
 				} else {
-					$buffer = $o->import_end_record($buffer,$private);
+					$buffer = $this->import_end_record($buffer,$private);
 				}
 			}
 		} else {
-			$buffer = $o->import_start_record($buffer);
 			while ($data = fgets($fp,8000)) {
 				list($name,$value) = split(':', $data);
-				if ($o->import[$name] != "" && $value != "") {
-					$buffer = $o->import_new_attrib($buffer, $o->import[$name],$value);
+				if (strtolower(substr($name,0,5)) == 'begin') {
+					$buffer = $this->import_start_record($buffer);
+				}
+				if ($name && $value) {
+					reset($this->import);
+					while ( list($fname,$fvalue) = each($this->import) ) {
+						if ( strstr(strtolower($name), $this->import[$fname]) ) {
+							$buffer = $this->import_new_attrib($buffer,$name,$value);
+						}
+					}
+				} else {
+					$buffer = $this->import_end_record($buffer,$private);
 				}
 			}
-			$buffer = $o->import_end_record($buffer,$private);
 		}
 
 		fclose($fp);
-		$buffer = $o->import_end_file($buffer);
+		$buffer = $this->import_end_file($buffer);
 
 		if ($download == "") {
 			if($conv_type=="Debug LDAP" || $conv_type=="Debug SQL" ) {
