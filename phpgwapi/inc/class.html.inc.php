@@ -201,10 +201,8 @@
 
 			if ($image != '')
 			{
-				if (strpos($image,'.'))
-				{
-					$image = substr($image,0,strpos($image,'.'));
-				}
+				$image = str_replace(array('.gif','.GIF','.png','.PNG'),'',$image);
+
 				if (!($path = $GLOBALS['phpgw']->common->image($app,$image)))
 				{
 					$path = $image;		// name may already contain absolut path
@@ -351,10 +349,8 @@
 
 		function image( $app,$name,$title='',$options='' )
 		{
-			if (strpos($name,'.'))
-			{
-				$name = substr($name,0,strpos($name,'.'));
-			}
+			$name = str_replace(array('.gif','.GIF','.png','.PNG'),'',$name);
+
 			if (!($path = $GLOBALS['phpgw']->common->image($app,$name)))
 			{
 				$path = $name;		// name may already contain absolut path
