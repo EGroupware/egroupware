@@ -1,0 +1,244 @@
+  /**************************************************************************\
+  * phpGroupWare API - Contacts class documentation                          *
+  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * -------------------------------------------------------------------------*
+  * This library is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published by *
+  * the Free Software Foundation; either version 2.1 of the License,         *
+  * or any later version.                                                    *
+  * This library is distributed in the hope that it will be useful, but      *
+  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+  * See the GNU Lesser General Public License for more details.              *
+  * You should have received a copy of the GNU Lesser General Public License *
+  * along with this library; if not, write to the Free Software Foundation,  *
+  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  \**************************************************************************/
+
+  /* $Id$ */
+
+
+Starting with the most cumbersome function:
+
+function read($start,$offset,$fields,$query="",$filter="",$sort="",$order="")
+
+	Purpose:
+		Returns a list of contacts based on limits, query, and filter,
+		in an array of name/values, e.g.:
+
+			$fields[0]["id"]    => "354",
+			$fields[0]["email"] => "name@domain.com", ...
+
+			$fields[1]["id"]    => "355",
+			$fields[1]["email"] => "othername@otherdomain.com", ...
+
+	Inputs:
+
+		$start = start of list, e.g. 1,16,31
+		$offset = numrows, e.g. 15,30,etc. from nextmatchs, usually
+		$fields = simple array of fields to return:
+
+			$qfields = array(
+				'id' => 'id',
+				'n_given' => 'n_given
+			);
+
+		$query = simple string to search for, e.g. "milosch" or "555"
+
+		$filter = for 'accounting' fields other than id (use read_single_entry for
+		that):
+
+			owner  = account_id of record owner
+			access = public/private
+			cat_id = category id for the record
+			lid    = account_lid for account records stored here, if any
+			tid    = type id:
+				n = normal contact - almost always use this
+				p = profiles for hr, tied to account records
+				u = user account, if stored in contacts class
+				g = group account, ""
+		
+			Filters should be in the format:
+
+				example 1: 'tid=n'				filter for normal contacts
+				example 2: 'tid=u,lid=milosch'	filter user accounts for lid
+												'milosch'
+				etc...
+
+		$sort = ASC, DESC, or "" (defaults to ASC)
+
+		$order = sort on this field, e.g. n_given
+
+
+function read_single_entry($id,$fields)
+
+	Purpose:
+		returns a single array of name/value based on id
+		and field selection, e.g.:
+
+			$fields[0]["email"]   => "name@domain.com"
+			$fields[0]["n_given"] => "Bob"
+
+	Inputs:
+
+		$id = id of entry you want to return
+	
+		$fields = simple array of fields to return
+
+			$qfields = array(
+				'id' => 'id',
+				'n_given' => 'n_given
+			);
+
+
+function add($owner,$fields,$access='',$cat_id='',$tid='n')
+
+	Purpose:
+
+		Add a new contact record of the type, category and access sent
+		with a field list.
+
+	Inputs:
+
+		$owner  =	id of user adding this data
+
+		$fields =	simple array of fields to write into the new record
+
+		$access =	public/private
+
+		$cat_id =	category id for the record, if desired
+
+		$tid    =	type id ( see read() above ), defaults to 'n'
+
+
+function update($id,$owner,$fields,$access='',$cat_id='',$tid='')
+
+	Purpose:
+
+		Update an entry already in the contacts list
+
+	Inputs:
+
+		$id     =	id of entry you want to update
+		
+		$owner  =	id of user modifying this data
+		
+		$fields =	simple array of fields to update in the record
+					(see examples above)
+
+		$access =	public/private
+
+		$cat_id =	category id for the record, if desired
+
+
+		$tid    =	type id ( see read() above ), defaults to 'n'
+
+
+function delete_($id)
+
+	Purpose:
+
+		Delete an entry already in the contacts list
+
+	Inputs:
+
+		$id = id of entry you want to delete
+
+
+Stock contact fields, other than accounting fields mentioned above:
+
+    	    $this->stock_contact_fields = array(
+				"fn"                     => "fn",        // 'prefix given middle family suffix'
+				"n_given"                => "n_given",   // firstname
+				"n_family"               => "n_family",  // lastname
+				"n_middle"               => "n_middle",
+				"n_prefix"               => "n_prefix",
+				"n_suffix"               => "n_suffix",
+				"sound"                  => "sound",
+				"bday"                   => "bday",		// Birthday (12/31/1969)
+				"note"                   => "note",		// Note, description, etc.
+				"tz"                     => "tz",		// Hours offset from phpgw install
+				"geo"                    => "geo",		// Not used
+				"url"                    => "url",
+				"pubkey"                 => "pubkey",	// Similar to note, but for public encryption key
+
+				"org_name"               => "org_name",  // company
+				"org_unit"               => "org_unit",  // division
+				"title"                  => "title",
+
+				"adr_one_street"         => "adr_one_street",	// Business address entry
+				"adr_one_locality"       => "adr_one_locality", 
+				"adr_one_region"         => "adr_one_region", 
+				"adr_one_postalcode"     => "adr_one_postalcode",
+				"adr_one_countryname"    => "adr_one_countryname",
+				"adr_one_type"           => "adr_one_type", // address is domestic/intl/postal/parcel/work/home
+				"label"                  => "label", // address label
+
+				"adr_two_street"         => "adr_two_street",	// Home address entry
+				"adr_two_locality"       => "adr_two_locality",
+				"adr_two_region"         => "adr_two_region",
+				"adr_two_postalcode"     => "adr_two_postalcode",
+				"adr_two_countryname"    => "adr_two_countryname",
+				"adr_two_type"           => "adr_two_type", // address is domestic/intl/postal/parcel/work/home
+
+				"tel_work"               => "tel_work",
+				"tel_home"               => "tel_home",
+				"tel_voice"              => "tel_voice",
+				"tel_fax"                => "tel_fax", 
+				"tel_msg"                => "tel_msg",
+				"tel_cell"               => "tel_cell",
+				"tel_pager"              => "tel_pager",
+				"tel_bbs"                => "tel_bbs",
+				"tel_modem"              => "tel_modem",
+				"tel_car"                => "tel_car",
+				"tel_isdn"               => "tel_isdn",
+				"tel_video"              => "tel_video",
+				"tel_prefer"             => "tel_prefer", // home;work;voice
+				"email"                  => "email",
+				"email_type"             => "email_type", //'INTERNET','CompuServe',etc...
+				"email_home"             => "email_home",
+				"email_home_type"        => "email_home_type" //'INTERNET','CompuServe',etc...
+			);
+
+Other useful arrays for setting option dialogs, etc.
+
+			// Used to set adr_one_type/adr_two_type, e.g. 'intl;work'
+			$this->adr_types = array(
+				"dom"    => lang("Domestic"),
+				"intl"   => lang("International"),
+				"parcel" => lang("Parcel"),
+				"postal" => lang("Postal")
+			);
+
+			// Used to set preferred number field, e.g. 'cell' or 'work'
+			$this->tel_types = array(
+				"work"  => "work",
+				"home"  => "home",
+				"voice" => "voice",
+				"fax"   => "fax",
+				"msg"   => "msg",
+				"cell"  => "cell",
+				"pager" => "pager",
+				"bbs"   => "bbs",
+				"modem" => "modem",
+				"car"   => "car",
+				"isdn"  => "isdn",
+				"video" => "video"
+			);
+
+	        $this->email_types = array(
+				"INTERNET"   => "INTERNET",
+				"CompuServe" => "CompuServe",
+				"AOL"        => "AOL",
+				"Prodigy"    => "Prodigy",
+				"eWorld"     => "eWorld",
+				"AppleLink"  => "AppleLink",
+				"AppleTalk"  => "AppleTalk",
+				"PowerShare" => "PowerShare",
+				"IBMMail"    => "IBMMail",
+				"ATTMail"    => "ATTMail",
+				"MCIMail"    => "MCIMail",
+				"X.400"      => "X.400",
+				"TLX"        => "TLX"
+			);
+
