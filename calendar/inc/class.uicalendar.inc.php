@@ -332,7 +332,7 @@
 				$new_body = '<html>'."\n"
 					.'<head>'."\n"
 					.'<STYLE type="text/css">'."\n"
-					.'<!--'."\n"
+					.'<!-- '."\n"
 					.'  body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: "'.$GLOBALS['phpgw_info']['theme']['font'].'" }'."\n"
 					.'  .tablink { color: #000000; }'."\n"
 					.' '.$this->css()."\n"
@@ -2629,10 +2629,12 @@
 				$time_width = ((int)($this->bo->prefs['common']['time_format']) == 12?10:7);
 			}
 
-			return 'A.minicalendar { color: #000000; font: x-small '.$this->theme['font'].' }'."\n"
+// moved to app.css in templates/default for future separation of code and style [NDEE 10.03.04]
+/*
+			 return 'A.minicalendar { color: #000000; font-size: 72%; font-family: '.$this->theme['font'].' }'."\n"
 				. '  A.bminicalendar { color: #336699; font: italic bold x-small '.$this->theme['font'].' }'."\n"
-				. '  A.minicalendargrey { color: #999999; font: x-small '.$this->theme['font'].' }'."\n"
-				. '  A.bminicalendargrey { color: #336699; font: italic bold x-small '.$this->theme['font'].' }'."\n"
+				. '  A.minicalendargrey { color: #999999; font-size: 8px; font-family: '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalendargrey { color: #336699; font-style: italic; font-size:8px; font-family '.$this->theme['font'].' }'."\n"
 				. '  A.minicalhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #000000; font: x-small '.$this->theme['font'].' }'."\n"
 				. '  A.bminicalhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #336699; font: italic bold x-small '.$this->theme['font'].' }'."\n"
 				. '  A.minicalgreyhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #999999; font: x-small '.$this->theme['font'].' }'."\n"
@@ -2643,6 +2645,7 @@
 				. '  .time { background: '.$this->theme['th_bg'].'; color: '.$this->theme['bg_text'].'; font: bold 100% '.$this->theme['font'].'; width: '.$time_width.'%; vertical-align: middle; text-align: right; }'."\n"
 				. '  .tablecell { width: 80px; height: 80px }'."\n"
 				. '  .planner-cell { cursor:pointer; cursor:hand; border: thin solid black; }';
+*/
 		}
 
 		function no_edit()
