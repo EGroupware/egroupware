@@ -23,7 +23,7 @@
 	$phpgw_info['theme']['row_on']= '#dddddd';
 	$phpgw_info['theme']['row_off']= '#eeeeee';
 	$phpgw_info['theme']['row_text']= '#000000';
-	$phpgw_info['theme']['th_bg']= '#d3dce3';
+	$phpgw_info['theme']['th_bg']= '#adadad';
 	$phpgw_info['theme']['th_text']= '#000000';
 	$phpgw_info['theme']['navbar_bg']= '#adadad';
 	$phpgw_info['theme']['navbar_text']= '#ffffff';
