@@ -398,7 +398,7 @@
 			}
 			if (!is_writeable($dir))
 			{
-				return sprintf($this->messages['not_writable'],$dir);
+				return sprintf($this->messages['not_writeable'],$dir);
 			}
 			if ($create)
 			{
