@@ -405,11 +405,10 @@
 							$lines = file($appfile);
 							foreach($lines as $line)
 							{
-								list($message_id,$app_name,,$content) = explode("\t",$line);
-								$message_id = $this->db->db_addslashes(substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH));
-								$app_name = $this->db->db_addslashes(chop($app_name));
-								$content = $this->db->db_addslashes(chop($content));
-
+								// we realy need to split with tab+cr, as only this works with mbstring.overload=7 !!!
+								list($message_id,$app_name,,$content) = split("[\t\n]",$line);
+								$message_id = substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH);
+								$app_name = chop($app_name);
 								$raw[$app_name][$message_id] = $content;
 							}
 							$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app] = filectime($appfile);
@@ -420,12 +419,17 @@
 					//echo "<p>raw($lang)=<pre>".print_r($raw,True)."</pre>\n";
 					foreach($raw as $app_name => $ids)
 					{
+						$app_name = $this->db->db_addslashes($app_name);
+
 						foreach($ids as $message_id => $content)
 						{
 							if ($this->system_charset)
 							{
 								$content = $this->convert($content,$charset,$this->system_charset);
 							}
+							$message_id = $this->db->db_addslashes($message_id);
+							$content = $this->db->db_addslashes($content);
+
 							$addit = False;
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
 							if ($upgrademethod == 'addmissing')
