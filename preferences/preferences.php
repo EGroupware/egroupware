@@ -30,18 +30,6 @@
 	}
 
 	// Make things a little easier to follow
-	function is_admin()
-	{
-		if (HAS_ADMIN_RIGHTS == 1)
-		{
-			return True;
-		}
-		else
-		{
-			return False;
-		}
-	}
-
 	// Some places we will need to change this if there in common
 	function check_app($appname)
 	{
@@ -188,6 +176,18 @@
 
 		$dp = createobject('phpgwapi.preferences',-2);
 		$dp->read_repository();
+	}
+
+	function is_admin()
+	{
+		if (HAS_ADMIN_RIGHTS == 1)
+		{
+			return True;
+		}
+		else
+		{
+			return False;
+		}
 	}
 
 	$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('preferences'));
