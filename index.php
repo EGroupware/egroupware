@@ -34,7 +34,7 @@
   $phpgw->common->read_preferences("email");
   $phpgw->common->read_preferences("calendar");
   
-  $phpgw->db->query("select app_version from applications where app_name='admin'");
+  $phpgw->db->query("select app_version from applications where app_name='admin'",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
   if ($phpgw_info["server"]["version"] > $phpgw->db->f("app_version")) {
@@ -107,7 +107,7 @@
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
     $phpgw->db->query("select DISTINCT ab_firstname,ab_lastname from addressbook where "
-      . "ab_bday like '" . $phpgw->common->show_date(time(),"n/d")
+      . "ab_bday like '" . $phpgw->common->show_date(time(),"n/d",__LINE__,__FILE__)
       . "/%' and (ab_owner='" . $phpgw_info["user"]["userid"] . "' or ab_access='"
       . "ab_public')");
       while ($phpgw->db->next_record()) {
@@ -120,7 +120,7 @@
       $phpgw->common->show_date(time(),"Y")),"n/d" );
       $phpgw->db->query("select ab_firstname,ab_lastname from addressbook where "
                       . "ab_bday like '$tommorow/%' and (ab_owner='"
-                      . $phpgw_info["user"]["userid"] . "' or ab_access='public')");
+                      . $phpgw_info["user"]["userid"] . "' or ab_access='public')",__LINE__,__FILE__);
       while ($phpgw->db->next_record()) {
         echo "<tr><td>" . lang("Tommorow is x's birthday.", $phpgw->db->f("ab_firstname") . " "
 	  . $phpgw->db->f("ab_lastname")) . "</td></tr>\n";
@@ -142,7 +142,7 @@
       . " where cal_date='" . $phpgw->common->show_date(time(),"Ymd")
       . "' and (webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"]
       . "' and webcal_entry.cal_id = webcal_entry_user.cal_id) and "
-      . "(cal_priority='3')");
+      . "(cal_priority='3')",__LINE__,__FILE__);
     $phpgw->db->next_record();
     $check = $phpgw->db->f(0);
     if ($check == 1) { 
