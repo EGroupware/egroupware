@@ -46,8 +46,8 @@ under the name Clear River Technologies, LLC.
 Netscape/iPlanet:
 
 The following are for use with Netscape/iPlanet Directory Server:
-	iplanet/phpgwaccount.at.conf	defines our special attributes for accounts
-	iplanet/phpgwaccount.oc.conf	defines the phpgwAccount objectclass
+	iplanet/phpgw.at.conf	defines our special attributes for accounts
+	iplanet/phpgw.oc.conf	defines the phpgwAccount objectclass
 	iplanet/phpgwcontact.at.conf	defines our special attributes for contacts
 	iplanet/phpgwcontact.oc.conf	defines the phpgwContact objectclass
 
