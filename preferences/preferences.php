@@ -208,29 +208,30 @@
 			$phpgw->session->appsession('session_data','preferences',$session_data);
 		}
 
-		if (! $GLOBALS['type'])
+		if (!isset($GLOBALS['HTTP_GET_VARS']['type']))
 		{
 			$type = $session_data['type'];
 		}
 		else
 		{
+			$type = $GLOBALS['HTTP_GET_VARS']['type'];
 			$session_data = array(
-				'type' => $GLOBALS['type']
+				'type' => $type
 			);
 			$phpgw->session->appsession('session_data','preferences',$session_data);
 		}
 
 		$tabs[] = array(
 			'label' => 'Your preferences',
-			'link'  => $phpgw->link('/preferences/preferences.php','appname=' . $appname . '&type=user')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname . '&type=user')
 		);
 		$tabs[] = array(
 			'label' => 'Default preferences',
-			'link'  => $phpgw->link('/preferences/preferences.php','appname=' . $appname . '&type=default')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname . '&type=default')
 		);
 		$tabs[] = array(
 			'label' => 'Forced preferences',
-			'link'  => $phpgw->link('/preferences/preferences.php','appname=' . $appname . '&type=forced')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname . '&type=forced')
 		);
 
 		switch($type)
@@ -239,11 +240,11 @@
 			case 'default':	$selected = 1; break;
 			case 'forced':		$selected = 2; break;
 		}
-		$t->set_var('tabs',$phpgw->common->create_tabs($tabs,$selected));
+		$t->set_var('tabs',$GLOBALS['phpgw']->common->create_tabs($tabs,$selected));
 	}
 	else
 	{
-		$GLOBALS['type'] = 'user';
+		$type = 'user';
 	}
 
 	/* Only load if there working on the default preferences */
@@ -258,17 +259,17 @@
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($type == 'user')
 		{
-			process_array(&$p, $user);
+			process_array($p, $user);
 		}
 
 		if ($type == 'default' && is_admin())
 		{
-			process_array(&$dp, $default);		
+			process_array($dp, $default);		
 		}
 
 		if ($type == 'forced' && is_admin())
 		{
-			process_array(&$gp, $forced);
+			process_array($gp, $forced);
 		}
 
 		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php'));

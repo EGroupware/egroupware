@@ -28,43 +28,44 @@
 	$pref_tpl->set_block('pref','link_row');
 	$pref_tpl->set_block('pref','spacer_row');
 
-	if ($phpgw->acl->check('run',1,'admin'))
+	if ($GLOBALS['phpgw']->acl->check('run',1,'admin'))
 	{
 		// This is where we will keep track of our postion.
 		// Developers won't have to pass around a variable then
-		$session_data = $phpgw->session->appsession('session_data','preferences');
+		$session_data = $GLOBALS['phpgw']->session->appsession('session_data','preferences');
 
 		if (! is_array($session_data))
 		{
 			$session_data = array(
 				'type' => 'user'
 			);
-			$phpgw->session->appsession('session_data','preferences',$session_data);
+			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
-		if (! $GLOBALS['type'])
+		if (! $GLOBALS['HTTP_GET_VARS']['type'])
 		{
 			$type = $session_data['type'];
 		}
 		else
 		{
+			$type = $GLOBALS['HTTP_GET_VARS']['type'];
 			$session_data = array(
-				'type' => $GLOBALS['type']
+				'type' => $type
 			);
-			$phpgw->session->appsession('session_data','preferences',$session_data);
+			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
 		}
 
 		$tabs[] = array(
 			'label' => 'Your preferences',
-			'link'  => $phpgw->link('/preferences/index.php','type=user')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=user')
 		);
 		$tabs[] = array(
 			'label' => 'Default preferences',
-			'link'  => $phpgw->link('/preferences/index.php','type=default')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=default')
 		);
 		$tabs[] = array(
 			'label' => 'Forced preferences',
-			'link'  => $phpgw->link('/preferences/index.php','type=forced')
+			'link'  => $GLOBALS['phpgw']->link('/preferences/index.php','type=forced')
 		);
 
 		switch($type)
@@ -73,7 +74,7 @@
 			case 'default':	$selected = 1; break;
 			case 'forced':		$selected = 2; break;
 		}
-		$pref_tpl->set_var('tabs',$phpgw->common->create_tabs($tabs,$selected));
+		$pref_tpl->set_var('tabs',$GLOBALS['phpgw']->common->create_tabs($tabs,$selected));
 	}
 
 	// This func called by the includes to dump a row header
@@ -123,8 +124,7 @@
 
 	function display_section($appname,$title,$file)
 	{
-		global $phpgw;
-		section_start($title,$phpgw->common->image($appname,Array('navbar.gif',$appname.'.gif')),$appname);
+		section_start($title,$GLOBALS['phpgw']->common->image($appname,Array('navbar.gif',$appname.'.gif')),$appname);
 
 		while(list($text,$url) = each($file))
 		{
