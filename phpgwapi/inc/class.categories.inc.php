@@ -125,7 +125,11 @@
          $this->db->query("select cat_name from phpgw_categories where cat_id='"
                         . "$cat_id'",__LINE__,__FILE__);
          $this->db->next_record();
-         return $this->db->f("cat_name");
+         if ($this->db->f("cat_name")) {
+            return $this->db->f("cat_name");
+         } else {
+            return "--";
+         }
      }
 
      function exists($type,$cat_name)

@@ -203,11 +203,10 @@
         return $out;
      }
      
-     function getGroups($groups, $selected="", $name="")
+     function getGroups($groups, $selected="", $name="n_groups[]")
      {
         global $phpgw;
-  
-        if(!$name) $name = "n_groups[]";
+
     	$out = '<select name="' . $name . '" multiple>';
         while (list($null,$group) = each($groups)) {
            $out .= '<option value="' . $group[0] . '"';
