@@ -22,6 +22,9 @@
 		*/
 		function generate_header()
 		{
+			// PHP will automatically replace any dots in incoming
+			// variable names with underscores.
+
 			$GLOBALS['header_template']->set_file(array('header' => 'header.inc.php.template'));
 			$GLOBALS['header_template']->set_block('header','domain','domain');
 			$var = Array();
@@ -35,7 +38,8 @@
 				{
 					continue;
 				}
-				$dom = get_var('setting_'.$k,Array('POST'));
+				$variableName = str_replace('.','_',$k);
+				$dom = get_var('setting_'.$variableName,Array('POST'));
 				$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
 				while(list($x,$y) = @each($dom))
 				{
