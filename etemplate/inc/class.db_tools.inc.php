@@ -43,7 +43,7 @@
 		);
 		var $setup_header = '<?php
   /**************************************************************************\\
-  * phpGroupWare - Setup                                                     *
+  * eGroupWare - Setup                                                       *
   * http://www.eGroupWare.org                                                *
   * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
   * --------------------------------------------                             *
@@ -940,7 +940,7 @@
 					foreach($table_def['fd'] as $col => $col_def)
 					{
 						if (($add = !isset($old[$name]['fd'][$col])) ||	// column $col added
-							 serialize($old_norm['fd'][$col]) != serialize($new_norm['fd'][$col])) // column definition altered
+							 serialize($old_norm_fd[$col]) != serialize($new_norm_fd[$col])) // column definition altered
 						{
 							$update .= "\t\t".($do_refresh ? "/* done by RefreshTable() anyway\n\t\t" : '').
 								"\$GLOBALS['phpgw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
@@ -1039,7 +1039,7 @@
 
 			return $a == $b;
 		}
-	};
+	}
 
 
 
