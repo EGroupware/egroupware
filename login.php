@@ -75,12 +75,7 @@
       Header("Location: " . $phpgw->link("", "cd=5"));
     }
 
-    $phpgw->db->query("SELECT * FROM accounts WHERE loginid = '$login' AND "
-                 . "passwd='" . md5($passwd) . "' AND status ='A'");
-
-    $phpgw->db->next_record();
-
-    if (! $phpgw->db->f("loginid")) {
+    if (!($phpgw->auth->authenticate($login, $passwd))) {
       Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=5");
     } else {
       // Make sure the server allows us to use cookies
@@ -101,7 +96,6 @@
 //                                                           . "/", $usecookies));
       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                            . "/", "cd=yes"));
-
       exit;
     }
   } else {
