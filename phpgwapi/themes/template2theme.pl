@@ -8,7 +8,7 @@
 $wrap='$phpgw_info['theme']['_KEY_']= '_VAL_'';
 print '<?\n';
 print << 'EOF';
-# phpGroupWare Theme file
+# eGroupWare Theme file
 EOF
 
 while( $_ = <STDIN> ) {

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare                                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare                                                               *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *

@@ -8,7 +8,7 @@
 
 $t=localtime;
 print << 'EOF';
-# template file for making phpGroupWare themes using template2theme.pl
+# template file for making eGroupWare themes using template2theme.pl
 
 EOF
 while( $_ = <STDIN> ) {
