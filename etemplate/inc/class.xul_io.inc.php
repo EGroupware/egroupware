@@ -165,9 +165,11 @@
 					$type = isset($widgetattr2xul['.name']) ? $widgetattr2xul['.name'] : $type;
 					list($parent,$child,$child2) = explode(',',$type);
 					$widget = new xmlnode($parent);
+					$attr_widget = &$widget;
 					if ($child)
 					{
 						$child = new xmlnode($child);
+						$attr_widget = &$child;
 					}
 					if ($child2)
 					{
@@ -185,10 +187,10 @@
 					switch ($parent)
 					{
 					case 'nextmatch':
-							$embeded = new etemplate($cell['size']);
-							$this->etempl2grid($embeded,&$root,$embeded_too);
-							unset($embeded);
-							break;
+						$embeded = new etemplate($cell['size']);
+						$this->etempl2grid($embeded,&$root,$embeded_too);
+						unset($embeded);
+						break;
 					case 'tabbox':
 						$labels = explode('|',$cell['label']);  unset($cell['label']);
 						$helps  = explode('|',$cell['help']);   unset($cell['help']);
@@ -209,20 +211,16 @@
 						}
 						break;
 					case 'menulist':	// id,options belongs to the 'menupopup' child
-						$child->set_attribute('id',$cell['name']); unset($cell['name']);
-						if (isset($cell['size']) && $cell['size'] != '')
+						if ($cell['span'])
 						{
-							$child->set_attribute('options',$cell['size']); unset($cell['size']);
+							$widget->set_attribute('span',$cell['span']);
+							unset($cell['span']);
 						}
-						if ($cell['type'] != 'select')	// one of the sub-types
-						{
-							$child->set_attribute('type',$cell['type']);
-						}
-						break;
+						// fall-trought
 					case 'listbox':
 						if ($cell['type'] != 'select')	// one of the sub-types
 						{
-							$widget->set_attribute('type',$cell['type']);
+							$attr_widget->set_attribute('type',$cell['type']);
 						}
 						break;
 					}
@@ -240,7 +238,7 @@
 						{
 							$attr = $this->attr2xul[$attr];
 						}
-						$this->set_attributes($widget,$attr,$val,&$spanned);
+						$this->set_attributes($attr_widget,$attr,$val,&$spanned);
 					}
 					if ($child)
 					{
@@ -275,7 +273,7 @@
 				echo "<p>etempl->data = "; _debug_array($etempl->data);
 			}
 			$doc = new xmldoc();
-			$doc->add_comment('$Id$');
+			$doc->add_comment('$'.'Id$');
 
 			$xul_overlay = new xmlnode('overlay');
 
