@@ -65,6 +65,55 @@
 			$this->db->Password = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_pass'];
 		}
 
+		/**
+		* Set the domain used for cookies
+		*
+		* @return string domain
+		*/
+		function set_cookiedomain()
+		{
+			$dom = $_SERVER['HTTP_HOST'];
+			if(preg_match("/^(.*):(.*)$/",$dom,$arr))
+			{
+				$dom = $arr[1];
+			}
+			$parts = explode('.',$dom);
+			if(count($parts) > 2)
+			{
+				if(!ereg('[0-9]+',$parts[1]))
+				{
+					for($i=1;$i<count($parts);$i++)
+					{
+						$this->cookie_domain .= '.'.$parts[$i];
+					}
+				}
+				else
+				{
+					$this->cookie_domain = '';
+				}
+			}
+			else
+			{
+				$this->cookie_domain = '';
+			}
+		}
+
+		/**
+		* Set a cookie
+		*
+		* @param string $cookiename name of cookie to be set
+		* @param string $cookievalue value to be used, if unset cookie is cleared (optional)
+		* @param int $cookietime when cookie should expire, 0 for session only (optional)
+		*/
+		function set_cookie($cookiename,$cookievalue='',$cookietime=0)
+		{
+			if(!$this->cookie_domain)
+			{
+				$this->set_cookiedomain();
+			}
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain); 
+		}
+
 		/*!
 		@function auth
 		@abstract authenticate the setup user
@@ -109,8 +158,8 @@
 				/* header admin login */
 				if($FormPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
 				{
-					setcookie('HeaderPW',"$FormPW","$expire");
-					setcookie('ConfigLang',"$ConfigLang","$expire");
+					$this->set_cookie('HeaderPW',"$FormPW","$expire");
+					$this->set_cookie('ConfigLang',"$ConfigLang","$expire");
 					return True;
 				}
 				else
@@ -125,9 +174,9 @@
 				/* config login */
 				if(isset($GLOBALS['phpgw_domain'][$FormDomain]) && $FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
 				{
-					setcookie('ConfigPW',"$FormPW","$expire");
-					setcookie('ConfigDomain',"$FormDomain","$expire");
-					setcookie('ConfigLang',"$ConfigLang","$expire");
+					$this->set_cookie('ConfigPW',"$FormPW","$expire");
+					$this->set_cookie('ConfigDomain',"$FormDomain","$expire");
+					$this->set_cookie('ConfigLang',"$ConfigLang","$expire");
 					return True;
 				}
 				else
@@ -143,11 +192,11 @@
 				if($FormLogout == 'config')
 				{
 					/* config logout */
-					setcookie('ConfigPW','');
+					$this->set_cookie('ConfigPW','');
 					$GLOBALS['phpgw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
-					setcookie('ConfigDomain','');
+					$this->set_cookie('ConfigDomain','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
-					setcookie('ConfigLang','');
+					$this->set_cookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 
 					return False;
@@ -155,9 +204,9 @@
 				elseif($FormLogout == 'header')
 				{
 					/* header admin logout */
-					setcookie('HeaderPW','');
+					$this->set_cookie('HeaderPW','');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
-					setcookie('ConfigLang','');
+					$this->set_cookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 
 					return False;
@@ -168,9 +217,9 @@
 				/* Returning after login to config */
 				if($ConfigPW == stripslashes($GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd']))
 				{
-					setcookie('ConfigPW',"$ConfigPW","$expire");
-					setcookie('ConfigDomain',"$ConfigDomain","$expire");
-					setcookie('ConfigLang',"$ConfigLang","$expire");
+					$this->set_cookie('ConfigPW',"$ConfigPW","$expire");
+					$this->set_cookie('ConfigDomain',"$ConfigDomain","$expire");
+					$this->set_cookie('ConfigLang',"$ConfigLang","$expire");
 					return True;
 				}
 				else
@@ -185,8 +234,8 @@
 				/* Returning after login to header admin */
 				if($HeaderPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
 				{
-					setcookie('HeaderPW',"$HeaderPW","$expire");
-					setcookie('ConfigLang',"$ConfigLang","$expire");
+					$this->set_cookie('HeaderPW',"$HeaderPW","$expire");
+					$this->set_cookie('ConfigLang',"$ConfigLang","$expire");
 					return True;
 				}
 				else
