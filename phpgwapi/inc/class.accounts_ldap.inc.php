@@ -29,6 +29,13 @@
     var $groups;
     var $group_names;
     var $apps;
+    var $db;
+
+    function accounts_()
+    {
+       global $phpgw;
+       $this->db = $phpgw->db;
+    }
 
     function fill_user_array()
     {
@@ -36,7 +43,6 @@
 
       // get a ldap connection handle
       $ds = $phpgw->common->ldapConnect();
-	
       // search the dn for the given uid
       $sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$phpgw_info["user"]["userid"]);
       $allValues = ldap_get_entries($ds, $sri);
@@ -44,41 +50,21 @@
       /* Now dump it into the array; take first entry found */
       $phpgw_info["user"]["account_id"]  = $allValues[0]["uidnumber"][0];
       $phpgw_info["user"]["account_dn"]  = $allValues[0]["dn"];
-      $phpgw_info["user"]["account_lid"] = $allValues[0]["uid"][0];
+#      $phpgw_info["user"]["account_lid"] = $allValues[0]["uid"][0];
       $phpgw_info["user"]["firstname"]   = $allValues[0]["givenname"][0];
       $phpgw_info["user"]["lastname"]    = $allValues[0]["sn"][0];
       $phpgw_info["user"]["fullname"]    = $allValues[0]["cn"][0];
       
-/*
-      // Please don't remove this code. Lars Kneschke
-      // remove the "count" value
-      for ($i=0; $i < $allValues[0]["phpgw_groups"]["count"]; $i++)
-      {
-      	$phpgw_info["user"]["groups"][] = $allValues[0]["phpgw_groups"][$i];
-      }
+      $this->db->query("select * from accounts where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
+      $this->db->next_record();
       
-      // remove the "count" value
-      for ($i=0; $i < $allValues[0]["phpgw_account_perms"]["count"]; $i++)
-      {
-      	$phpgw_info["user"]["app_perms"][] = $allValues[0]["phpgw_account_perms"][$i];
-      }
-
-      $phpgw_info["user"]["lastlogin"]         = $allValues[0]["phpgw_lastlogin"][0];
-      $phpgw_info["user"]["lastloginfrom"]     = $allValues[0]["phpgw_lastfrom"][0];
-      $phpgw_info["user"]["lastpasswd_change"] = $allValues[0]["phpgw_lastpasswd_change"][0];
-      $phpgw_info["user"]["status"]            = $allValues[0]["phpgw_status"][0];
-*/
-      $db = $phpgw->db;
-      $db->query("select * from accounts where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
-      $db->next_record();
-      
-      $phpgw_info["user"]["groups"]            = explode (",",$db->f("account_groups"));
-      $apps = CreateObject('phpgwapi.applications',array(intval($phpgw_info["user"]["account_id"]),'u'));
-      $phpgw_info["user"]["app_perms"]         = $apps->app_perms;
-      $phpgw_info["user"]["lastlogin"]         = $db->f("account_lastlogin");
-      $phpgw_info["user"]["lastloginfrom"]     = $db->f("account_lastloginfrom");
-      $phpgw_info["user"]["lastpasswd_change"] = $db->f("account_lastpwd_change");
-      $phpgw_info["user"]["status"]            = $db->f("account_status");                                                                   
+      $phpgw_info["user"]["groups"]            = explode (",",$this->db->f("account_groups"));
+#      $apps = CreateObject('phpgwapi.applications',array(intval($phpgw_info["user"]["account_id"]),'u'));
+#      $phpgw_info["user"]["app_perms"]         = $apps->app_perms;
+      $phpgw_info["user"]["lastlogin"]         = $this->db->f("account_lastlogin");
+      $phpgw_info["user"]["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
+      $phpgw_info["user"]["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
+      $phpgw_info["user"]["status"]            = $this->db->f("account_status");                                                                   
     }
 
     function read_userData($dn)
@@ -258,5 +244,10 @@
       }else{
         return False;
       }
+    }
+    
+    function exists($accountname)
+    {
+    	return True;
     }
   }

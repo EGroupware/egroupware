@@ -29,7 +29,6 @@
     function accounts_const()
     {
        global $phpgw, $phpgw_info;
-      
        $phpgw->accounts->fill_user_array();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
     }
