@@ -141,7 +141,7 @@
 				return False;
 			}
 
-			if ($phpgw_info['server']['sessions_checkip'])
+			if (@$phpgw_info['server']['sessions_checkip'])
 			{
 				if (PHP_OS != 'Windows' && (! $phpgw_info['user']['session_ip'] || $phpgw_info['user']['session_ip'] != $this->getuser_ip()))
 				{
@@ -351,6 +351,11 @@
 				if(!empty($this->user))
 				{
 					$phpgw->preferences->data = $this->user['preferences'];
+					if (!isset($phpgw_info['apps']) ||
+				    gettype($phpgw_info['apps']) != 'array')
+					{
+						$phpgw->applications->read_installed_apps();
+					}
 				}
 				else
 				{
