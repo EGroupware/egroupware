@@ -62,7 +62,7 @@ end date/time	calendar	de	Enddatum/-zeit
 ends	calendar	de	endet
 enter output filename: ( .vcs appended )	calendar	de	Namen der Ausgabedatei (.vcs angehangen)
 event details follow	calendar	de	Details zum Termin folgen
-execptions	calendar	de	Ausnahmen
+exceptions	calendar	de	Ausnahmen
 export	calendar	de	Exportieren
 export a list of entries in ical format.	calendar	de	Eine Liste von Einträgen im iCal Format exportieren.
 fieldseparator	calendar	de	Feldtrenner
