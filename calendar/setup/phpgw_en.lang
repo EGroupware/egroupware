@@ -46,6 +46,7 @@ click %1here%2 to return to the calendar.	calendar	en	Click %1here%2 to return t
 configuration	calendar	en	Configuration
 countries	calendar	en	Countries
 country	calendar	en	Country
+created by	calendar	en	Created by
 csv-fieldname	calendar	en	CSV-Fieldname
 csv-filename	calendar	en	CSV-Filename
 custom fields	calendar	en	Custom Fields

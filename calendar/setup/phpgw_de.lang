@@ -48,6 +48,7 @@ click %1here%2 to return to the calendar.	calendar	de	%1Hier%2 klicken um zum Ka
 configuration	calendar	de	Konfiguration
 countries	calendar	de	Länder
 country	calendar	de	Land
+created by	calendar	de	Angelegt von
 csv-fieldname	calendar	de	CSV-Feldname
 csv-filename	calendar	de	CSV-Dateiname
 custom fields	calendar	de	Benutzerdefinierte Felder
