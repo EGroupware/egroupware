@@ -204,7 +204,7 @@ mcrypt version	setup	zh	MCrypt 版本
 minimum account id (e.g. 500 or 100, etc.)	setup	zh	最小帐户数目 (如： 500 or 100, etc.)
 modifications have been completed!	setup	zh	修改完成!
 modify	setup	zh	修改
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	zh	修改现有 LDAP 帐号的保存，以便使用 phpGroupWare (第一次安装使用 LDAP 帐户)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	zh	修改现有 LDAP 帐号的保存，以便使用 eGroupWare (第一次安装使用 LDAP 帐户)
 multi-language support setup	setup	zh	多语言安装支持
 name of database	setup	zh	数据库名
 name of db user phpgroupware uses to connect	setup	zh	phpGroupWare 连接的数据库用户名

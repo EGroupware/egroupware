@@ -243,7 +243,6 @@ minimum account id (e.g. 500 or 100, etc.)	setup	es-es	Id mínimo para la cuenta 
 modifications have been completed!	setup	es-es	¡Se han completado las modificaciones!
 modify	setup	es-es	Modificar
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	es-es	Modificar una cuenta existente LDAP almacenada para usar con eGroupWare (para una nueva instalación usando cuentas LDAP)
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	es-es	Modificar un almacén de cuentas LDAP existente para usar con wGroupWare (para una nueva instalación que use cuentas LDAP)
 multi-language support setup	setup	es-es	Configuración del soporte Multi-Idioma
 mysqlinstr	setup	es-es	Instrucciones para crear la base de datos en MySQL:<br>Autentifiquese en mysql -<br><i>[usuario@servidor usuario]# mysql -u root -p</i><br>Cree la base de datos vacia y conceda permisos al usuario -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 name of database	setup	es-es	Nombre de la base de datos
