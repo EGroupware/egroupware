@@ -1033,7 +1033,7 @@
 						$this->bo->send_file_ips[$val] = stripslashes($GLOBALS['HTTP_POST_VARS']['ip'][$key]);
 					}
 				}
-				$this->config->config_data = array(
+				$this->bo->config->config_data = array(
 					'link_pathes' => serialize($this->bo->link_pathes),
 					'send_file_ips' => serialize($this->bo->send_file_ips)
 				);
