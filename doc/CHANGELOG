@@ -18,6 +18,9 @@
 	     need to edit it to add themes
 	   - Fixed a problem with the default sorting order messing up the next matchs
 	     while viewing a message
+	   - Added feature to check for new releases of phpGW
+	   - Added feature to filter out entrys only within a certain group.
+	     This is for the todo list and addressbook.
 
 [08152000] - Fixed a problem with the calendar not showing the months in the users
 	     langague preference.

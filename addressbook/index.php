@@ -28,16 +28,27 @@
   else
      $ordermethod = "order by lastname,firstname,email asc";
 
-  if ($filter != "private")
-     $filtermethod = " or access='public' " . $phpgw->groups->sql_search();
+  if (! $filter) {
+     $filter = "none";
+  }
+
+  if ($filter != "private") {
+     if ($filter != "none") {
+        $filtermethod = " access like '%,$filter,%' ";
+     } else {
+        $filtermethod = " (owner='" . $phpgw->session->loginid ."' OR access='public' "
+		      . $phpgw->groups->sql_search() . " ) ";
+     }
+  } else {
+     $filtermethod = " owner='" . $phpgw->session->loginid . "' ";
+  }
 
   if ($query) {
-     $phpgw->db->query("select count(*) from addressbook where ( owner='"
-			. $phpgw->session->loginid
-                    . "' $filtermethod ) AND (lastname like '%$query%' OR firstname like "
-                    . "'%$query%' OR email like '%$query%' OR street like '%$query%' OR "
-                    . "city like '%$query%' OR state like '%$query%' OR zip like '%$query%'"
-                    . " OR notes like '%$query%' OR company like '%$query%')");
+     $phpgw->db->query("select count(*) from addressbook where $filtermethod AND (lastname "
+			. "like '%$query%' OR firstname like '%$query%' OR email like '%$query%"
+			. "' OR street like '%$query%' OR city like '%$query%' OR state like '"
+			. "%$query%' OR zip like '%$query%' OR notes like '%$query%' OR company"
+			. " like '%$query%')");
 
     $phpgw->db->next_record();
 
@@ -46,8 +57,7 @@
      else
         echo "<br>" . lang_common("your search returned x matchs",$phpgw->db->f(0));
   } else {
-     $phpgw->db->query("select count(*) from addressbook where owner='"
-	         . $phpgw->session->loginid . "' $filtermethod");
+     $phpgw->db->query("select count(*) from addressbook where $filtermethod");
   }
 
   $phpgw->db->next_record();
@@ -96,15 +106,14 @@
 
 <?php
   if ($query) {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE (owner='" . $phpgw->session->loginid
-	            . "' $filtermethod ) AND (lastname like '%$query%' OR "
-	            . "firstname like '%$query%' OR email like '%$query%' OR "
+     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod AND (lastname like '"
+			. "%$query%' OR firstname like '%$query%' OR email like '%$query%' OR "
 	            . "street like '%$query%' OR city like '%$query%' OR state "
 	            . "like '%$query%' OR zip like '%$query%' OR notes like "
 	            . "'%$query%') $ordermethod limit $limit");
   } else {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE owner='" . $phpgw->session->loginid
-	            . "' $filtermethod $ordermethod limit $limit");
+     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod $ordermethod limit "
+			 . $limit);
   }
 
   while ($phpgw->db->next_record()) {
