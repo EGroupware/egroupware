@@ -17,6 +17,7 @@
 	   - Pop3: when a header line started with cc:, from:, ..., but
 	     no information followed the colon, a bunch of error messages were
 	     displayed ("xxx not an object"). Fixed.
+	   - Inventory program now supports changeable status fields.
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly
