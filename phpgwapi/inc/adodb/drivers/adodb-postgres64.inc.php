@@ -803,7 +803,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 		// cache types for blob decode check
 		for ($i=0, $max = $this->_numOfFields; $i < $max; $i++) {  
 			if (pg_fieldtype($qid,$i) == 'bytea') {
-				$this->_blobArr[$i] = pg_fieldname($qid,$off);
+				$this->_blobArr[$i] = pg_fieldname($qid,$i);
 			}
 		}		
 	}
