@@ -216,10 +216,13 @@
 		{
 			/* Start with the first char after {SMD5} */
 			$hash = base64_decode(substr($db_val,6));
-			$new_hash = mhash(MHASH_MD5,$form_val);
+			$orig_hash = substr($hash, 0, 16);
+			$salt = substr($hash, 16);
+
+			$new_hash = mhash(MHASH_MD5,$form_val . $salt);
 			//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
 
-			if(strcmp($hash,$new_hash) == 0)
+			if(strcmp($orig_hash,$new_hash) == 0)
 			{
 				return True;
 			}
