@@ -95,7 +95,10 @@ class ui_resources
 	*/
 	function edit($content='',$msg='')
 	{
-		$sel_options = array('cat_id' => $this->bo->acl->get_cats(PHPGW_ACL_ADD));
+		$sel_options = array(
+				'cat_id' => $this->bo->acl->get_cats(PHPGW_ACL_ADD),
+				'gen_src_list' => $this->bo->get_genpicturelist()
+		);
 		$no_button = array();
 		
 		if (is_array($content))
@@ -128,6 +131,8 @@ class ui_resources
 		{
 			$preserv = array('id' => $content);
 			$content = $this->bo->read($content);
+			$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
+			$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
 		}
 		else
 		{

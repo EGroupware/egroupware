@@ -48,8 +48,7 @@ class bo_resources
 						'useable'		=> '',
 						'bookable'		=> '',
 						'cat_id'		=> '',
-						'location'		=> '',
-						'picture_src'		=> ''
+						'location'		=> ''
 					));
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
@@ -69,7 +68,7 @@ class bo_resources
 			{
 				$readonlys["bookable[$resource[id]]"] = true;
 			}
-			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id'],$resource['picture_src']);
+			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id']);
 		}
 		return $nr;
 	}
@@ -129,6 +128,7 @@ class bo_resources
 			case 'cat_src':
 				break;
 			case 'gen_src':
+				$resource['picture_src'] = $resource['gen_src_list'];
 				break;
 			default:
 				if($resource['own_file']['size'] > 0)
@@ -265,12 +265,16 @@ class bo_resources
 		@abstact get resource picture either from vfs or from symlink
 		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param int $id id of resource
-		@param string $src can be: own_src, gen_src, cat_scr
 		@param bool $size false = thumb, true = full pic
 		@return string url of picture
 	*/
-	function get_picture($id,$src,$size=false)
+	function get_picture($id,$size=false)
 	{
+		if ($id > 0)
+		{
+			$src = $this->so->get_value('picture_src',$id);
+		}
+		
 		switch($src)
 		{
 			case 'own_src':
@@ -288,7 +292,7 @@ class bo_resources
 			case 'gen_src':
 			default :
 				$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->resource_icons;
-				$picture .= strstr($scr,'.') ? $scr : 'generic.png';
+				$picture .= strstr($src,'.') ? $src : 'generic.png';
 		}
 		return $picture;
 	}
@@ -312,6 +316,25 @@ class bo_resources
 		}
 		$this->vfs->override_acl = 0;
 	}
+
+	/*!
+		@fuction get_genpicturelist
+		@abstract gets all pictures from 'generic picutres dir' in selectbox style for eTemplate
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
+		@return array directory contens in eTemplates selectbox style
+	*/
+	function get_genpicturelist()
+	{
+		$icons['generic.png'] = lang('gernal resource');
+		$dir = dir(PHPGW_SERVER_ROOT.$this->resource_icons);
+		while($file = $dir->read())
+		{
+			if (preg_match('/\\.(png|gif|jpe?g)$/i',$file) && $file != 'generic.png')
+			{
+				$icons[$file] = substr($file,0,strpos($file,'.'));
+			}
+		}
+		$dir->close();
+		return $icons;
+	}
 }
-
-
