@@ -1070,8 +1070,10 @@
 			{
 				$app = $this->app ? $this->app : $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			$app_data = &$GLOBALS['phpgw_info']['apps'][$app];
-
+			if (isset($GLOBALS['phpgw_info']['apps']))	// this happens during the eGW startup, dont set it then !!!
+			{
+				$app_data = &$GLOBALS['phpgw_info']['apps'][$app];
+			}
 			if (!isset($app_data['table_defs']))
 			{
 				$tables_current = PHPGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
