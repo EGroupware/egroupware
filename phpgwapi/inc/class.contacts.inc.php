@@ -74,7 +74,7 @@
         $this->db2 = $this->db;        // Create new result object before our query
 
         $this->db->query("select ab_id,ab_owner,ab_access $t_fields from addressbook "
-                       . $this->db->limit($start,$offset),__LINE__,__FILE__);
+                       . $filters . $this->db->limit($start,$offset),__LINE__,__FILE__);
         while ($this->db->next_record()) {
            $return_fields[$i]["id"]     = $this->db->f("ab_id");
            $return_fields[$i]["owner"]  = $this->db->f("ab_owner");
