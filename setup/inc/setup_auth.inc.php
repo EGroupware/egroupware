@@ -27,7 +27,7 @@
 
   function loginForm($err="")
   {
- 	global $phpgw_info, $domain, $PHP_SELF;
+ 	global $phpgw_info, $domains, $SetupDomain, $SetupCookie, $FormDomain, $PHP_SELF;
  	
  	setup_header("Please login");
 
@@ -42,7 +42,7 @@
     echo "  <tr bgcolor=\"e6e6e6\">\n";
     echo "    <td><form action='".$PHP_SELF."' method='POST'>\n";
     if ($phpgw_info["multiable_domains"] == True){
-      echo "      <table><tr><td>Domain: </td><td><input type='text' name='domain' value=''></td></tr>\n";
+      echo "      <table><tr><td>Domain: </td><td><input type='text' name='FormDomain' value=''></td></tr>\n";
       echo "      <tr><td>Password: </td><td><input type='password' name='FormPW' value=''></td></tr></table>\n";
     }else{
       echo "      <input type='password' name='FormPW' value=''>\n";
@@ -56,7 +56,7 @@
 
   if (isset($FormPW)) {
     if ($phpgw_info["multiable_domains"] == True){
-      if ($FormPW != $domains[$domain]["config_passwd"]) {
+      if ($FormPW != $domains[$FormDomain]["config_passwd"]) {
         loginForm("Invalid password.");
         exit;
       }
@@ -91,6 +91,6 @@
   // Auth ok.
   setcookie("SetupCookie","$SetupCookie");
   if ($phpgw_info["multiable_domains"] == True){
-    setcookie("SetupDomain","$domain");
+    setcookie("SetupDomain","$FormDomain");
   }
 ?>
