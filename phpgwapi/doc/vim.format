@@ -12,6 +12,8 @@ filetype indent on
 set sw=4 
 set smarttab
 
+You can adjust the ts and sw variables to use your preferred tabstop.
+
 
 Place the following into, e.g., /usr/share/vim/vim60/indent/php.vim.
 This is not a vim syntax file, so don't overwrite your syntax/php.vim
@@ -93,6 +95,6 @@ HINT:  To reformat an already-coded file using the above:
 
 5. Visually inspect this section to make sure the formatting is correct.
    Using the above method is nearly perfect, but depends on the proper
-   use of brackets for if statements, etc, as outlined in coding_format.txt.
+   use of brackets for if statements, etc, as outlined in coding_standard.txt.
 
 FIN
