@@ -99,10 +99,20 @@
                                             "D_EMAIL_Home"    => "D.EMAIL.Home",  //yn
                                             );
 
-        $this->email_types = array("INTERNET","CompuServe","AOL","Prodigy",
-                                   "eWorld","AppleLink","AppleTalk","PowerShare",
-                                   "IBMMail","ATTMail","MCIMail","X.400","TLX"
-                                  );
+        $this->email_types = array("INTERNET" => "INTERNET",
+                                   "CompuServe" => "CompuServe",
+                                   "AOL" => "AOL",
+                                   "Prodigy" => "Prodigy",
+                                   "eWorld" => "eWorld",
+                                   "AppleLink" => "AppleLink",
+                                   "AppleTalk" => "AppleTalk",
+                                   "PowerShare" => "PowerShare",
+                                   "IBMMail" => "IBMMail",
+                                   "ATTMail" => "ATTMail",
+                                   "MCIMail" => "MCIMail",
+                                   "X.400" => "X.400",
+                                   "TLX" => "TLX"
+                                   );
      }
 
      function read_single_entry($id,$fields)
