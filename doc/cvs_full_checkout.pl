@@ -59,7 +59,7 @@
 		unlink($tmp_dir . '/createrelease.exp');
 	}
 
-	chdir($co_dir);
+	chdir($co_dir) || die "cannot chdir into $co_dir";
 	if ($cvs_anonymous)
 	{
 		&docvscommand('cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware login',True);
