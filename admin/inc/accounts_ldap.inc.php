@@ -22,7 +22,26 @@
      exit;
   }
 
+  function descryptpass($userpass, $random)
+  {
+    $lcrypt = "{crypt}";
+    $password = crypt($userpass);
+    $ldappassword = sprintf("%s%s", $lcrypt, $password);
+ 
+    return $ldappassword;
+  }
+
+  function md5cryptpass($userpass, $random)
+  {
+    $bsalt = "$1$";
+    $lcrypt = "{crypt}";
+    $modsalt = sprintf("%s%s", $bsalt, $random);
+    $password = crypt($userpass, $modsalt);
+    $ldappassword = sprintf("%s%s", $lcrypt, $password);
   
+    return $ldappassword;
+  }
+
   function account_read($method,$start,$sort,$order)
   {
   
@@ -30,50 +49,58 @@
   
   function account_add($account_info)
   {
-     global $phpgw_info, $ldap;
+     global $phpgw_info, $phpgw, $ldap;
 
      if ($phpgw_info["server"]["ldap_encryption_type"] == "DES") {
-        $salt = randomstring(2);
-        $userpassword = descryptpass($account_info["passwd"], $salt);
+        $salt = $phpgw->common->randomstring(2);
+        $account_info["passwd"] = descryptpass($account_info["passwd"], $salt);
      }
 
      if ($phpgw_info["server"]["ldap_encryption_type"] == "MD5") {
-        $salt = randomstring(9);
-        $userpassword = md5cryptpass($account_info["passwd"], $salt);
+        $salt = $phpgw->common->randomstring(9);
+        $account_info["passwd"] = md5cryptpass($account_info["passwd"], $salt);
      }
 
-     // Create our entry
-     $entry["uid"]              = $uid;
-     $entry["uidNumber"]        = $uidnumber;
-     $entry["gidNumber"]		= $gidnumber;
-     $entry["userpassword"]	 = $userpassword;
-     $entry["loginShell"]	   = $ushell;
-     $entry["homeDirectory"]	= $homedir;
-     $entry["cn"]			   = sprintf("%s %s", $givenname, $sn);
-     $entry["sn"]			   = $sn;
-     $entry["givenname"]		= $givenname;
-     $entry["company"]		  = $company;
-     $entry["title"] 		   = $title;
-     $entry["mail"]			 = $mail;
-     $entry["telephonenumber"]  = $telephonenumber;
-     $entry["homephone"]		= $homephone;
-     $entry["pagerphone"]	   = $pagerphone;
-     $entry["cellphone"]		= $cellphone;
-     $entry["streetaddress"]	= $streetaddress;
-     $entry["locality"]		 = $locality;
-     $entry["st"] 			  = $st;
-     $entry["postalcode"]	   = $postalcode;
-     $entry["countryname"] 	 = $countryname;
-     $entry["homeurl"]		  = $homeurl;
-     $entry["description"]	  = $description;
+     // This method is only temp.  We need to figure out the best way to assign uidnumbers and
+     // guidnumbers.
+     
+     $phpgw->db->query("select (max(account_id)+1) from accounts");
+     $phpgw->db->next_record();
+     
+     $account_info["account_id"] = $phpgw->db->f(0);
+
+     // Much of this is going to be guess work for now, until we get things planned out.
+     $entry["uid"]              = $account_info["loginid"];
+     $entry["uidNumber"]        = $account_info["account_id"];
+     $entry["gidNumber"]		= $account_info["account_id"];
+     $entry["userpassword"]	 = $account_info["passwd"];
+     $entry["loginShell"]	   = "/bin/bash";
+     $entry["homeDirectory"]	= "/home/" . $account_info["loginid"];
+     $entry["cn"]			   = sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
+     $entry["sn"]			   = $account_info["lastname"];
+     $entry["givenname"]		= $account_info["firstname"];
+     //$entry["company"]		  = $company;
+     //$entry["title"] 		   = $title;
+     $entry["mail"]			 = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
+     //$entry["telephonenumber"]  = $telephonenumber;
+     //$entry["homephone"]		= $homephone;
+     //$entry["pagerphone"]	   = $pagerphone;
+     //$entry["cellphone"]		= $cellphone;
+     //$entry["streetaddress"]	= $streetaddress;
+     //$entry["locality"]		 = $locality;
+     //$entry["st"] 			  = $st;
+     //$entry["postalcode"]	   = $postalcode;
+     //$entry["countryname"] 	 = $countryname;
+     //$entry["homeurl"]		  = $homeurl;
+     //$entry["description"]	  = $description;
      $entry["objectclass"][0]   = "account";
      $entry["objectclass"][1]   = "posixAccount";
      $entry["objectclass"][2]   = "shadowAccount";
      $entry["objectclass"][3]   = "inetOrgperson";
-     $entry["objectclass"][4]   = "person;
+     $entry["objectclass"][4]   = "person";
      $entry["objectclass"][5]   = "top";
      /* $dn=sprintf("cn=%s %s, %s", $givenname, $sn, $BASEDN);*/
-     $dn=sprintf("uid=%s, %s", $uid, $BASEDN); 
+     $dn=sprintf("uid=%s, %s", $account_info["loginid"], $phpgw_info["server"]["ldap_context"]);
       
      // add the entries
      if (ldap_add($ldap, $dn, $entry)) {
@@ -83,6 +110,51 @@
      }
   
      @ldap_close($ldap);
+     
+     $phpgw->db->lock(array("accounts","preferences"));
+
+     $phpgw->common->preferences_add($account_info["loginid"],"maxmatchs","common","15");
+     $phpgw->common->preferences_add($account_info["loginid"],"theme","common","default");
+     $phpgw->common->preferences_add($account_info["loginid"],"tz_offset","common","0");
+     $phpgw->common->preferences_add($account_info["loginid"],"dateformat","common","m/d/Y");
+     $phpgw->common->preferences_add($account_info["loginid"],"timeformat","common","12");
+     $phpgw->common->preferences_add($account_info["loginid"],"lang","common","en");
+     $phpgw->common->preferences_add($account_info["loginid"],"company","addressbook","True");
+     $phpgw->common->preferences_add($account_info["loginid"],"lastname","addressbook","True");
+     $phpgw->common->preferences_add($account_info["loginid"],"firstname","addressbook","True");
+
+     // Even if they don't have access to the calendar, we will add these.
+     // Its better then the calendar being all messed up, they will be deleted
+     // the next time the update there preferences.
+     $phpgw->common->preferences_add($account_info["loginid"],"weekstarts","calendar","Monday");
+     $phpgw->common->preferences_add($account_info["loginid"],"workdaystarts","calendar","9");
+     $phpgw->common->preferences_add($account_info["loginid"],"workdayends","calendar","17");
+
+     while ($permission = each($account_info["permissions"])) {
+       if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+          $phpgw->accounts->add_app($permission[0]);
+       }
+     }
+
+     $sql = "insert into accounts (account_id,account_lid,account_pwd,account_firstname,"
+          . "account_lastname,account_permissions,account_groups,account_status,"
+          . "account_lastpwd_change) values ('" . $account_info["account_id"] . "','"
+          . $account_info["loginid"] . "','x','". addslashes($account_info["firstname"]) . "','"
+          . addslashes($account_info["lastname"]) . "','" . $phpgw->accounts->add_app("",True)
+          . "','" . $account_info["groups"] . "','A',0)";
+
+     $phpgw->db->query($sql);
+     $phpgw->db->unlock();
+
+     $sep = $phpgw->common->filesystem_separator();
+
+     $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
+
+     if (! @mkdir($basedir . $n_loginid, 0707)) {
+        $cd = 36;
+     } else {
+        $cd = 28;
+     }
 
      return $cd;
   }
