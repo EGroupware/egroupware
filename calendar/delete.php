@@ -21,16 +21,16 @@
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 
-	if ($id > 0) && ($cal_info->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
+	$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
+	$event = $phpgw->calendar->fetch_event($cal_stream,intval($id));
+	if(($id > 0) && ($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_DELETE) == True))
 	{
-		$phpgw->db->query('SELECT cal_datetime FROM calendar_entry WHERE cal_id='.$id,__LINE__,__FILE__);
-		$phpgw->db->next_record();
+		$thisyear = $event->start->year;
+		$thismonth = $event->start->month;
 
-		$thisyear = intval($phpgw->common->show_date($phpgw->db->f('cal_datetime'),'Y'));
-		$thismonth = intval($phpgw->common->show_date($phpgw->db->f('cal_datetime'),'n'));
-
-		$phpgw->calendar->delete(intval($id));
+		$phpgw->calendar->delete_event($cal_stream,intval($id));
+		$phpgw->calendar->expunge($cal_stream);
 	}
 
-	Header('Location: ' . $phpgw->link('index.php','year='.$thisyear.'&month='.$thismonth));
+	Header('Location: ' . $phpgw->link('index.php','year='.$thisyear.'&month='.$thismonth.'&owner='.$owner));
 ?>
