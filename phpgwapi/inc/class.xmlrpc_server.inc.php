@@ -173,39 +173,26 @@
 
 		function build_resp($_res,$recursed=False)
 		{
-			switch(gettype($_res))
+			if(is_array($_res))
 			{
-				case 'array':
-					@reset($_res);
-					$ele = array();
-					while(list($key,$val) = @each($_res))
-					{
-						$ele[$key] = $this->build_resp($val,True);
-					}
-					$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
-					break;
-				case 'string':
-					if($recursed)
-					{
-						return CreateObject('phpgwapi.xmlrpcval',$_res,'string');
-					}
-					else
-					{
-						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,'string');
-					}
-					break;
-				case 'integer':
-					if($recursed)
-					{
-						return CreateObject('phpgwapi.xmlrpcval',$_res,'int');
-					}
-					else
-					{
-						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,'int');
-					}
-					break;
-				default:
-					break;
+				@reset($_res);
+				while(list($key,$val) = @each($_res))
+				{
+					$ele[$key] = $this->build_resp($val,True);
+				}
+				$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+			}
+			else
+			{
+				$_type = (is_long($_res)?'int':gettype($_res));
+				if($recursed)
+				{
+					return CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
+				}
+				else
+				{
+					$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
+				}
 			}
 		}
 
@@ -324,7 +311,7 @@
 								$this->resp_struct = array();
 								$this->build_resp($res);
 								/*_debug_array($this->resp_struct); */
-
+								@reset($this->resp_struct);
 								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
 								/* _debug_array($r); */
 							}
