@@ -301,39 +301,37 @@
 
 			/* $qfields = $contacts->stock_contact_fields + $extrafields + $customfields; */
 			/* create column list and the top row of the table based on user prefs */
-//			while($column = each($this->bo->stock_contact_fields))
-			foreach($this->bo->stock_contact_fields as $column => $nul)
+			foreach($this->bo->stock_contact_fields as $column)
 			{
-				$test = strtolower($column[0]);
+				$test = strtolower($column);
 				if(isset($this->prefs[$test]) && $this->prefs[$test])
 				{
-					$showcol = $this->display_name($column[0]);
+					$showcol = $this->display_name($column);
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 					$cols .= $GLOBALS['phpgw']->nextmatchs->show_sort_order($this->sort,
-						$column[0],$this->order,'/index.php',$showcol,'&menuaction=addressbook.uiaddressbook.index'
+						$column,$this->order,'/index.php',$showcol,'&menuaction=addressbook.uiaddressbook.index'
 					);
 					$cols .= "</font>\n  </td>";
 					$cols .= "\n";
 
 					/* To be used when displaying the rows */
-					$columns_to_display[$column[0]] = True;
+					$columns_to_display[$column] = True;
 				}
 			}
 			/* Setup the columns for non-standard fields, since we don't allow sorting */
 			$nonstd = $this->extrafields + $customfields;
-//			while($column = @each($nonstd))
-			foreach($nonstd as $column => $nul)
+			foreach($nonstd as $column)
 			{
-				$test = strtolower($column[1]);
+				$test = strtolower($column);
 				if(isset($this->prefs[$test]) && $this->prefs[$test])
 				{
 					$showcol = $this->display_name($column[0]);
 					/* This must be a custom field */
 					if(!$showcol)
 					{
-						//						$showcol = $column[1];
-						$showcol = $namedfields[$column[1]];
+//						$showcol = $column;
+						$showcol = $namedfields[$column];
 					}
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
@@ -342,7 +340,7 @@
 					$cols .= "\n";
 
 					/* To be used when displaying the rows */
-					$columns_to_display[$column[0]] = True;
+					$columns_to_display[$column] = True;
 				}
 			}
 
