@@ -2932,6 +2932,9 @@ class boicalendar
 				's'	=> 'sec'
 			);
 
+			// time limit should be controlled elsewhere
+			@set_time_limit(0);
+
 			$GLOBALS['phpgw']->common->create_emailpreferences();
 			$users_email = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
 			$cats = CreateObject('phpgwapi.categories');
