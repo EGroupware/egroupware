@@ -127,14 +127,14 @@ class Template {
     if (!is_array($varname)) {
       if (!empty($varname))
         if ($this->debug) print "scalar: set *$varname* to *$value*<br>\n";
-        $this->varkeys[$varname] = "/".$this->varname($varname)."/";
+        $this->varkeys[$varname] = $this->varname($varname);
         $this->varvals[$varname] = $value;
     } else {
       reset($varname);
       while(list($k, $v) = each($varname)) {
         if (!empty($k))
           if ($this->debug) print "array: set *$k* to *$v*<br>\n";
-          $this->varkeys[$k] = "/".$this->varname($k)."/";
+          $this->varkeys[$k] = $this->varname($k);
           $this->varvals[$k] = $v;
       }
     }
@@ -150,7 +150,11 @@ class Template {
     }
 
     $str = $this->get_var($handle);
-    $str = @preg_replace($this->varkeys, $this->varvals, $str);
+    reset($this->varkeys);
+    while (list($k, $v) = each($this->varkeys))
+    {
+    	$str = str_replace($v, $this->varvals[$k], $str);
+    }
     return $str;
   }
   
@@ -330,7 +334,7 @@ class Template {
    * varname: name of a replacement variable to be protected.
    */
   function varname($varname) {
-    return preg_quote("{".$varname."}");
+    return "{".$varname."}";
   }
 
   /* private: loadfile(string $handle)
