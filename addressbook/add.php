@@ -46,7 +46,8 @@
 		$fields["email"] = $add_email;
 		addressbook_form("","add.php","Add",$fields);
 	} else if (! $submit && ! $add_email) {
-		addressbook_form("","add.php","Add","");
+		// Default
+		addressbook_form("","add.php","Add","",$customfields);
 	} elseif ($submit && $fields) {
 		// This came from the view form, Copy entry
 		$extrafields = array(
