@@ -132,7 +132,10 @@
 				{
 					$value[$row] = $link;
 					$value[$row]['title'] = $this->link->title($link['app'],$link['id'],$link);
-					$value[$row]['view']  = $this->link->view($link['app'],$link['id'],$link);
+					if (!is_array($link['id']))
+					{
+						$value[$row]['view']  = $this->link->view($link['app'],$link['id'],$link);
+					}
 				}
 				break;
 			}
@@ -193,7 +196,10 @@
 					{
 						$link_id = $this->link->link($value['to_app'],$value['to_id'],
 							$this->link->vfs_appname,$value['file'],$value['remark']);
-						unlink($value['file']['tmp_name']);
+						if (!is_array($value['to_id']))
+						{
+							unlink($value['file']['tmp_name']);
+						}
 						unset($value['file']);
 					}
 					$extension_data = $value;
