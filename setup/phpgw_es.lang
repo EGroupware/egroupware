@@ -78,7 +78,7 @@ copy	filemanager	es	Copiar
 copy_as	filemanager	es	Copiar como
 create	common	es	Crear
 create	filemanager	es	Crear
-create group	admin	es	Crear Groupo
+create group	admin	es	Crear Grupo
 create lang.sql file	transy	es	Crear archivo lang.sql
 create new langague set	transy	es	Crear nuevo set de lenguaje
 created by	common	es	Creado por
@@ -156,13 +156,13 @@ generate new lang.sql file	transy	es	Generar nuevo archivo lang.sql
 generate printer-friendly version	calendar	es	Generar versión para impresion
 global public	common	es	Global Publico
 go!	calendar	es	Ir!
-group access	common	es	Groupo Acceso
-group has been added	common	es	Groupo agregado
-group has been deleted	common	es	Groupo borrado
-group has been updated	common	es	Groupo actualizado
-group name	admin	es	Nombre Groupo
-group public	common	es	Groupo Publico
-groups	common	es	Groupos
+group access	common	es	Grupo Acceso
+group has been added	common	es	Grupo agregado
+group has been deleted	common	es	Grupo borrado
+group has been updated	common	es	Grupo actualizado
+group name	admin	es	Nombre Grupo
+group public	common	es	Grupo Publico
+groups	common	es	Grupos
 groupsfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> es sistemas unix use: chmod 707
 group_files	filemanager	es	grupo de archivos
 headline sites	admin	es	Sitios encabezados de noticias
@@ -179,7 +179,7 @@ image	email	es	Imagen
 imap server type	email	es	Tipo de servidor IMAP
 import lang set	transy	es	Importar set de lenguaje
 installed applications	admin	es	Aplicaciones Instaladas
-inventory	common	es	Inventorario
+inventory	common	es	Inventario
 ip	admin	es	IP
 it has been more then x days since you changed your password	common	es	Han pasado mas de %1 dias desde que ud. cambio su contraseña
 january	common	es	Enero
@@ -456,3 +456,15 @@ your session could not be verified.	login	es	Su sesión no pudo ser verificada.
 your settings have been updated	common	es	Sus paramatros han sido actualizados
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	es	Sus horas sugeridas de <B> %1 - %2 </B> estan es conflicto con las siguientes entradas es el calendario:
 zip code	addressbook	es	Codigo Postal
+change main screen message	admin	es	Cambiar mensaje de la pantalla principal
+edit headline sites	admin	es	Editar los sitios de encabezados
+edit headlines shown by default	admin	es	Editar los encabezados mostrados por defecto
+notes	admin	es	Notas
+weather	admin	es	Tiempo Metereológico
+manual	admin	es	Manual
+company	addressbook	es	Compañia
+newsgroups	preferences	es	Grupos de noticias
+notes	preferences	es	Notas
+notes preferences	preferences	es	Preferencias de las notas
+select headlines to display	preferences	es	Seleccione los encabezados a mostrar
+weather center	preferences	es	Centro metereológico
