@@ -42,7 +42,7 @@
 	$GLOBALS['phpgw_info']['server']['sessions_type'] = '{SESSIONS_TYPE}';
 
 	/* Select which login template set you want, most people will use default */
-	$GLOBALS['phpgw_info']['login_template_set'] = 'default';
+	$GLOBALS['phpgw_info']['login_template_set'] = 'idots';
 
 	/* This is used to control mcrypt's use */
 	$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
