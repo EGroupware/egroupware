@@ -58,7 +58,6 @@ own open	infolog	de	eigene offen
 own overdue	infolog	de	eigene überfällig
 own upcoming	infolog	de	eigene zukünftig
 owner	infolog	de	Erstellt von
-phone/email	infolog	de	Telefon/Email
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
 pattern for search in projects	infolog	de	Muster für Suche des Projekts
 phone	infolog	de	Anruf
