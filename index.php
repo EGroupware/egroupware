@@ -125,7 +125,7 @@
      include($phpgw_info["server"]["server_root"] . "/stocks/inc/functions.inc.php");
      echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
   }  
-  $phpgw->common->hook();
+  $phpgw->common->hook("",array("email","calendar"));
   if ($phpgw_info["user"]["apps"]["addressbook"]
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
@@ -150,20 +150,6 @@
       }
       echo "<!-- Birthday info -->\n";
   }
-
-  if ($phpgw_info["user"]["apps"]["calendar"]
-  && $phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"]) {
-    include($phpgw_info["server"]["server_root"]."/calendar/inc/functions.inc.php");
-    echo "<!-- Calendar info -->\n";
-    $now = $phpgw->calendar->splitdate(mktime (0, 0, 0, $phpgw->calendar->today["month"], $phpgw->calendar->today["day"], $phpgw->calendar->today["year"]) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]));
-
-    echo "<table border=\"0\" width=\"70%\" cellspacing=\"0\" cellpadding=\"0\"><tr><td align=\"center\">"
-	. lang(date("F",$phpgw->calendar->today["raw"])) . " " .$phpgw->calendar->today["day"] . ", " . $phpgw->calendar->today["year"] ."</tr></td>"
-        . "<tr><td bgcolor=\"".$phpgw_info["theme"]["bg_text"]."\" valign=\"top\">"
-	. $phpgw->calendar->print_day_at_a_glance($now)."</td></tr></table>\n";
-    echo "<!-- Calendar info -->\n";
-  } 
-
   //$phpgw->common->debug_phpgw_info();
   //$phpgw->common->debug_list_core_functions();
 ?>
