@@ -509,15 +509,20 @@
 				$sqlcount = "SELECT COUNT(id) FROM $this->std_table " . $fwhere
 					. $filtermethod . ' ' . $ordermethod;
 			}
-			if($DEBUG) { echo '<br>' . $sql; }
+			if($DEBUG)
+			{
+				echo '<br>COUNT QUERY' . $sqlcount;
+				echo '<br>FULL  QUERY' . $sql;
+			}
 
 //			$db2 = $this->db;
 			copyobj($this->db,$db2);
 
 			/* Perhaps it is more efficient to count records for this query, which is all we need here */
 			$this->db->query($sqlcount,__LINE__,__FILE__);
+			$this->db->next_record();
 			unset($sqlcount);
-			$this->total_records = $this->db->num_rows();
+			$this->total_records = $this->db->f(0);
 
 			if($start && $limit)
 			{
