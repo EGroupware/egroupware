@@ -23,5 +23,9 @@
         return False;
       }
     }
+    function change_password($old_passwd, $new_passwd) {
+      global $phpgw_info, $phpgw;
+      return $old_passwd;
+    }
   }
 ?>

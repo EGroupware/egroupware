@@ -35,5 +35,16 @@
         return False;
       }
     }
+
+    function change_password($old_passwd, $new_passwd) {
+      global $phpgw_info, $phpgw;
+      $encrypted_passwd = md5($new_passwd);
+      $phpgw->db->query("update accounts set account_pwd='" . md5($new_passwd) . "' "
+	                  . "where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
+      $phpgw->db->query("update accounts set account_lastpwd_change='" . time() . "' where account_id='"
+   			    	. $phpgw_info["user"]["account_id"] . "'",__LINE__,__FILE__);
+
+      return $encrypted_passwd;
+    }
   }
 ?>

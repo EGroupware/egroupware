@@ -73,31 +73,9 @@
       $phpgw->common->phpgw_exit();
    }
 
-   if ($phpgw_info["server"]["auth_type"] == "sql") {
-      $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "' "
-	                  . "where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
-   }
-
-   if ($phpgw_info["server"]["auth_type"] == "ldap") {
-      $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
-
-      if (! @ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
-         echo "<p><b>Error binding to LDAP server.  Check your config</b>";
-         $phpgw->common->phpgw_exit();
-      }
-
-      $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
-      $entry["phpgw_lastpasswd_change"] = time();
-
-      $dn = $phpgw_info["user"]["account_dn"];
-      @ldap_modify($ldap, $dn, $entry);
-   }
-
-   // Update there last password change
-   $phpgw->db->query("update accounts set account_lastpwd_change='" . time() . "' where account_id='"
-   			    	. $phpgw_info["user"]["account_id"] . "'",__LINE__,__FILE__);
-
-   $phpgw_info["user"]["passwd"] = $n_passwd;
+   $o_passwd = $phpgw_info["user"]["passwd"];
+   $phpgw_info["user"]["passwd"] = $phpgw->auth->change_password($o_passwd, $n_passwd);
+   
    $phpgw->accounts->sync();
 
    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/","cd=18"));

@@ -43,5 +43,23 @@
       // dn not found or password wrong
       return False;
     } 
+    
+    function change_password($old_passwd, $new_passwd) {
+      global $phpgw_info, $phpgw;
+      $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
+
+      if (! @ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
+         echo "<p><b>Error binding to LDAP server.  Check your config</b>";
+         $phpgw->common->phpgw_exit();
+      }
+
+      $encrypted_passwd = $phpgw->common->encrypt_password($new_passwd);
+      $entry["userpassword"] = $encrypted_passwd
+      $entry["phpgw_lastpasswd_change"] = time();
+
+      $dn = $phpgw_info["user"]["account_dn"];
+      @ldap_modify($ldap, $dn, $entry);
+      return $encrypted_passwd;
+    }
   }
 ?>
