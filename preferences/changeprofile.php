@@ -70,7 +70,7 @@
      <td>Title:</td>
      <td><input name="title" value="<?php echo $phpgw->db->f("title"); ?>"></td>
      <td rowspan="2">
-      <img src="<?php echo $phpgw->link($phpgw_info["server"]["webserver_url"] . "/hr/view_image.php","con=" . $phpgw->session->con); ?> width="100" height="120">
+      <img src="<?php echo $phpgw->link($phpgw_info["server"]["webserver_url"] . "/hr/view_image.php","con=" . $phpgw_info["user"]["con"]); ?> width="100" height="120">
      </td>
     </tr>
 

@@ -65,8 +65,8 @@
      }
 
      $table_locks = array('preferences','todo','addressbook','accounts','users_headlines',
-                                  'webcal_entry','webcal_entry_user','webcal_entry_repeats',
-                                  'webcal_entry_groups');
+                          'webcal_entry','webcal_entry_user','webcal_entry_repeats',
+                          'webcal_entry_groups');
      $phpgw->db->lock($table_locks);
 
      for ($i=0; $i<count($cal_id); $i++) {
