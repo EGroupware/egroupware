@@ -124,7 +124,7 @@
         $phpgw->db->query("update accounts set account_pwd='" . md5($account_info["passwd"]) . "', "
 		               . "account_lastpwd_change='" . time() . "' where account_lid='"
 		               . $account_info["loginid"] . "'");
-        $phpgw->db->query("update sessions set session_pwd='" . addslashes($account_info["passwd"])
+        $phpgw->db->query("update phpgw_sessions set session_pwd='" . addslashes($account_info["passwd"])
                         . "' where session_lid='" . $lid . "'");
       }
 
