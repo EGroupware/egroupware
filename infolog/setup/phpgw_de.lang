@@ -77,3 +77,6 @@ You have entered an invalid starting date	infolog	de	Sie haben ein ungültiges St
 You have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum eingegeben
 Ending date can not be before start date	infolog	de	Das Enddatum kann nicht vor dem Startdatum liegen
 no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
+Show open Events: Tasks/Calls/Notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
+List no Subs/Childs	infolog	de	Teilprojekte/Antwortdokumente nicht anzeigen
+Show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
