@@ -130,15 +130,137 @@
 					if ($field[1]) {
 						//echo $field[0];
 						switch ($field[0]) {
+							case "LABEL":
+								$buffer[$i]["label"] = ereg_replace("=0D=0A","\n",$values[0]);
+								break;
+							case "NOTE":
+								$buffer[$i]["note"] = ereg_replace("=0D=0A","\n",$values[0]);
+								break;
 							case "ADR":
 								switch ($field[1]) {
 									case "INTL":
+										switch ($field[2]) {
+											case "WORK":
+												if ( !stristr($buffer[$i]["adr_one_type"],$field[1])) {
+													$buffer[$i]["adr_one_type"] .= "intl;";
+												}
+												if (!$buffer[$i]["adr_one_street"]) {
+													$buffer[$i]["address2"]            = $values[1];
+													$buffer[$i]["adr_one_street"]      = $values[2];
+													$buffer[$i]["adr_one_locality"]    = $values[3];
+													$buffer[$i]["adr_one_region"]      = $values[4];
+													$buffer[$i]["adr_one_postalcode"]  = $values[5];
+													$buffer[$i]["adr_one_countryname"] = $values[6];
+												}
+												break;
+											case "HOME":
+												if ( !stristr($buffer[$i]["adr_two_type"],$field[1]) ) {
+													$buffer[$i]["adr_two_type"] .= "intl;";
+												}
+												if (!$buffer[$i]["adr_two_street"]) {
+													$buffer[$i]["adr_two_street"]      = $values[2];
+													$buffer[$i]["adr_two_locality"]    = $values[3];
+													$buffer[$i]["adr_two_region"]      = $values[4];
+													$buffer[$i]["adr_two_postalcode"]  = $values[5];
+													$buffer[$i]["adr_two_countryname"] = $values[6];
+												}
+												break;
+											default:
+												break;
+										}
 										break;
 									case "DOM":
+										switch ($field[2]) {
+											case "WORK":
+												if ( !stristr($buffer[$i]["adr_one_type"],$field[1])) {
+													$buffer[$i]["adr_one_type"] .= "dom;";
+												}
+												if (!$buffer[$i]["adr_one_street"]) {
+													$buffer[$i]["address2"]            = $values[1];
+													$buffer[$i]["adr_one_street"]      = $values[2];
+													$buffer[$i]["adr_one_locality"]    = $values[3];
+													$buffer[$i]["adr_one_region"]      = $values[4];
+													$buffer[$i]["adr_one_postalcode"]  = $values[5];
+													$buffer[$i]["adr_one_countryname"] = $values[6];
+												}
+												break;
+											case "HOME":
+												if ( !stristr($buffer[$i]["adr_two_type"],$field[1]) ) {
+													$buffer[$i]["adr_two_type"] .= "dom;";
+												}
+												if (!$buffer[$i]["adr_two_street"]) {
+													$buffer[$i]["adr_two_street"]      = $values[2];
+													$buffer[$i]["adr_two_locality"]    = $values[3];
+													$buffer[$i]["adr_two_region"]      = $values[4];
+													$buffer[$i]["adr_two_postalcode"]  = $values[5];
+													$buffer[$i]["adr_two_countryname"] = $values[6];
+												}
+												break;
+											default:
+												break;
+										}
 										break;
 									case "PARCEL":
+										switch ($field[2]) {
+											case "WORK":
+												if ( !stristr($buffer[$i]["adr_one_type"],$field[1])) {
+													$buffer[$i]["adr_one_type"] .= "parcel;";
+												}
+												if (!$buffer[$i]["adr_one_street"]) {
+													$buffer[$i]["address2"]            = $values[1];
+													$buffer[$i]["adr_one_street"]      = $values[2];
+													$buffer[$i]["adr_one_locality"]    = $values[3];
+													$buffer[$i]["adr_one_region"]      = $values[4];
+													$buffer[$i]["adr_one_postalcode"]  = $values[5];
+													$buffer[$i]["adr_one_countryname"] = $values[6];
+												}
+												break;
+											case "HOME":
+												if ( !stristr($buffer[$i]["adr_two_type"],$field[1]) ) {
+													$buffer[$i]["adr_two_type"] .= "parcel;";
+												}
+												if (!$buffer[$i]["adr_two_street"]) {
+													$buffer[$i]["adr_two_street"]      = $values[2];
+													$buffer[$i]["adr_two_locality"]    = $values[3];
+													$buffer[$i]["adr_two_region"]      = $values[4];
+													$buffer[$i]["adr_two_postalcode"]  = $values[5];
+													$buffer[$i]["adr_two_countryname"] = $values[6];
+												}
+												break;
+											default:
+												break;
+										}
 										break;
 									case "POSTAL":
+										switch ($field[2]) {
+											case "WORK":
+												if ( !stristr($buffer[$i]["adr_one_type"],$field[1])) {
+													$buffer[$i]["adr_one_type"] .= "postal;";
+												}
+												if (!$buffer[$i]["adr_one_street"]) {
+													$buffer[$i]["address2"]            = $values[1];
+													$buffer[$i]["adr_one_street"]      = $values[2];
+													$buffer[$i]["adr_one_locality"]    = $values[3];
+													$buffer[$i]["adr_one_region"]      = $values[4];
+													$buffer[$i]["adr_one_postalcode"]  = $values[5];
+													$buffer[$i]["adr_one_countryname"] = $values[6];
+												}
+												break;
+											case "HOME":
+												if ( !stristr($buffer[$i]["adr_two_type"],$field[1]) ) {
+													$buffer[$i]["adr_two_type"] .= "postal;";
+												}
+												if (!$buffer[$i]["adr_two_street"]) {
+													$buffer[$i]["adr_two_street"]      = $values[2];
+													$buffer[$i]["adr_two_locality"]    = $values[3];
+													$buffer[$i]["adr_two_region"]      = $values[4];
+													$buffer[$i]["adr_two_postalcode"]  = $values[5];
+													$buffer[$i]["adr_two_countryname"] = $values[6];
+												}
+												break;
+											default:
+												break;
+										}
 										break;
 									case "WORK":
 										if (!$buffer[$i]["adr_one_street"]) {
@@ -172,7 +294,7 @@
 							case "TEL":
 								switch ($field[1]) {
 									case "PREF":
-										echo $field[2]." is preferred";
+										//echo $field[2]." is preferred";
 										if ($field[2]) {
 											$buffer[$i]["tel_prefer"] .= strtolower($field[2]) . ";";
 										}
@@ -310,22 +432,30 @@
 							case "LABEL":
 								$buffer[$i]["label"] = ereg_replace("=0D=0A","\n",$values[0]);
 								break;
+							case "BDAY": #1969-12-31
+								$tmp = split("-",$values[0]);
+								if ($tmp[0]) {
+									$buffer[$i]["bday"] = $tmp[1]."/".$tmp[2]."/".$tmp[0];
+								}
+								break;
 						}
 					}
 				}
 				$buffer[$i]["tel_prefer"]   = substr($buffer[$i]["tel_prefer"],0,-1);
 				$buffer[$i]["adr_one_type"] = substr($buffer[$i]["adr_one_type"],0,-1);
 				$buffer[$i]["adr_two_type"] = substr($buffer[$i]["adr_two_type"],0,-1);
+/*
 				echo '<br>';
 				reset($contacts->stock_contact_fields);
 				while (list($fname,$fvalue) = each($contacts->stock_contact_fields)) {
 					echo '<br>'.$i.': '.$fname.' => '.$buffer[$i][$fvalue];
 				}
 				echo '<br>';
-				//$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
+*/
+				$contacts->add($phpgw_info["user"]["account_id"],$buffer[$i]);
 			}
-			//$num = $i - 1;
-			//return "Successfully imported $num records into your addressbook.";
+			$num = $i - 1;
+			return "Successfully imported $num records into your addressbook.";
 		}
 	}
 ?>
