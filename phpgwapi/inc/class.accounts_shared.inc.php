@@ -25,21 +25,23 @@
 
 	class accounts extends accounts_
 	{
+
+		var $memberships = Array();
+		var $members = Array();
+
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
 		* This constructor sets the account id, if string is sent, converts to id  *
 		* I might move this to the accounts_shared if it stays around              *
 		\**************************************************************************/
 
-		function accounts($account_id = False)
+		function accounts($account_id = '')
 		{
 			global $phpgw, $phpgw_info;
 
 			$this->db = $phpgw->db;
 
-			if ($account_id != False) {
-				$this->account_id = $account_id;
-			}
+			$this->account_id = get_account_id($account_id);
 		}
 
 		function read()
@@ -63,20 +65,13 @@
 			return $this->data;
 		}
 
-		function memberships($account_id = False)
+		function memberships($accountid = '')
 		{
 			global $phpgw_info, $phpgw;
-			if ($account_id == False)
-			{
-				$account_id = $phpgw_info['user']['account_id'];
-			}
-			elseif (gettype($account_id) == 'string')
-			{
-				$account_id = $this->name2id($account_id);
-			}
+			$account_id = get_account_id($accountid);
 
 			$security_equals = Array();
-			$security_equals = $phpgw->acl->get_location_list_for_id('phpgw_group', 1, intval($account_id));
+			$security_equals = $phpgw->acl->get_location_list_for_id('phpgw_group', 1, $account_id);
 
 			if ($security_equals == False)
 			{
@@ -93,21 +88,14 @@
 			return $this->memberships;
 		}
 
-		function members ($account_id = False)
+		function members ($accountid = '')
 		{
 			global $phpgw_info, $phpgw;
-			if ($account_id == False)
-			{
-				$account_id = $phpgw_info['user']['account_id'];
-			}
-			elseif (gettype($account_id) == 'string')
-			{
-				$account_id = $this->name2id($account_id);
-			}
+			$account_id = get_account_id($accountid);
 
 			$security_equals = Array();
 			$acl = CreateObject('phpgwapi.acl');
-			$security_equals = $acl->get_ids_for_location(intval($account_id), 1, 'phpgw_group');
+			$security_equals = $acl->get_ids_for_location($account_id, 1, 'phpgw_group');
 			unset($acl);
 
 			if ($security_equals == False)

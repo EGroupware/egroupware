@@ -46,11 +46,11 @@
 		@abstract Standard constructor for setting $this->account_id
 		@discussion Author:
 		*/
-		function preferences($account_id = False)
+		function preferences($account_id = '')
 		{
 			global $phpgw, $phpgw_info;
 			$this->db = $phpgw->db;
-			if ($account_id != False){ $this->account_id = $account_id; }
+			$this->account_id = get_account_id($account_id);
 		}
 
 		/**************************************************************************\

@@ -43,15 +43,12 @@
        }
     }
 
-    function change_password($old_passwd, $new_passwd, $_account_id="")
+    function change_password($old_passwd, $new_passwd, $_accountid="")
     {
        global $phpgw_info, $phpgw;
 
        $encrypted_passwd = md5($new_passwd);
-	if ("" == $_account_id)
-	{
-		$_account_id = $phpgw_info["user"]["account_id"];
-	}
+       $_account_id = get_account_id($_accountid);
 
        $phpgw->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "' "
  	                  . "where account_id='" . $_account_id . "'",__LINE__,__FILE__);

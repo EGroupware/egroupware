@@ -54,11 +54,11 @@
 		Example1: acl->acl(5); // 5 is the user id  <br>
 		@param account_id int-the user id
 		*/
-    function acl($account_id = False)
+    function acl($account_id = '')
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id != False){ $this->account_id = $account_id; }
+      $this->account_id = get_account_id($account_id);
     }
 
     /**************************************************************************\
@@ -358,6 +358,7 @@ It should use the values in the $this->data
       $this->db->query($sql ,__LINE__,__FILE__);
       return True;
     }
+
 		/*!
 		@function delete_repository
 		@abstract delete repository information for an app
@@ -365,7 +366,8 @@ It should use the values in the $this->data
 		@param $location location
 		@param $account_id account id
 		*/
-    function delete_repository($app, $location, $account_id){
+    function delete_repository($app, $location, $accountid = ''){
+      $account_id = get_account_type($accountid,$this->account_id);
       $sql = "delete from phpgw_acl where acl_appname like '".$app."'"
            . " and acl_location like '".$location."' and "
            . " acl_account = ".$account_id;
@@ -380,9 +382,9 @@ It should use the values in the $this->data
 		@param $required ?
 		@param $account_id account id defaults to $phpgw_info['user']['account_id'];
 		*/
-    function get_app_list_for_id($location, $required, $account_id = False){
+    function get_app_list_for_id($location, $required, $accountid = ''){
       global $phpgw, $phpgw_info;
-      if ($account_id == False){ $account_id = $this->account_id; }
+      $account_id = get_account_id($accountid,$this->account_id);
       $sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = '$location' and ";
       $sql .= 'acl_account = '.$account_id;
       $this->db->query($sql ,__LINE__,__FILE__);
@@ -397,6 +399,7 @@ It should use the values in the $this->data
       }
       return $apps;
     }
+
 		/*!
 		@function get_location_list_for_id
 		@abstract get location list for id
@@ -405,11 +408,11 @@ It should use the values in the $this->data
 		@param $required required
 		@param $account_id optional defaults to $phpgw_info['user']['account_id'];
 		*/
-    function get_location_list_for_id($app, $required, $account_id = False){
+    function get_location_list_for_id($app, $required, $accountid = ''){
       global $phpgw, $phpgw_info;
-      if ($account_id == False){ $account_id = $phpgw_info['user']['account_id']; }
+      $account_id = get_account_id($accountid);
       $sql = "select acl_location, acl_rights from phpgw_acl where acl_appname = '$app' and ";
-      $sql .= "acl_account = '".$account_id."'";
+      $sql .= "acl_account = ".$account_id;
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
@@ -449,21 +452,20 @@ It should use the values in the $this->data
       }
       return $accounts;
     }
+
 		/*!
 		@function get_user_applications
 		@abstract get a list of applications a user has rights to
 		@param $account_id optional defaults to $phpgw_info['user']['account_id'];
 		@result $apps array containing list of apps
 		*/
-	function get_user_applications($account_id = False)
+	function get_user_applications($accountid = '')
 	{
       global $phpgw, $phpgw_info;
 
 		$db2 = $this->db;
 
-		if ($account_id == False){
-			$account_id = $phpgw_info['user']['account_id'];
-		}
+		$account_id = get_account_id($accountid);
 		$memberships = $phpgw->accounts->memberships($account_id);
 		$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
 			. 'acl_account in ';

@@ -126,14 +126,11 @@
 			return $cats;
 		}
 
-		function categories($account_id = '',$app_name = '')
+		function categories($accountid = '',$app_name = '')
 		{
 			global $phpgw, $phpgw_info;
 
-			if (! $account_id)
-			{
-				$account_id = $phpgw_info['user']['account_id'];
-			}
+			$account_id = get_account_id($accountid);
 
 			if (! $app_name)
 			{

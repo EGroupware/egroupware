@@ -58,10 +58,8 @@
 		var $db;
 		var $account_id;
 		var $data;
-		var $memberships = Array();
-		var $members;
 
-		function accounts()
+		function accounts_()
 		{
 			global $phpgw;
 			$this->db = $phpgw->db;
@@ -120,11 +118,11 @@
 			$this->create($account_name, $account_type, $first_name, $last_name, $passwd);
 		}
 
-		function delete($account_id)
+		function delete($account_id = '')
 		{
 			global $phpgw, $phpgw_info;
 
-			$account_lid = $this->id2name($account_id);
+			$account_lid = $this->id2name(get_account_id($account_id));
 			$ds = $phpgw->common->ldapConnect();
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
@@ -212,10 +210,11 @@
 			}
 		}
 
-		function get_type($account_id)
+		function get_type($accountid = '')
 		{
 			global $phpgw, $phpgw_info;
-	    	
+
+	    	$account_id = get_account_type($accountid);
 			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
 			if ($this->db->num_rows()) {
 				$this->db->next_record();
@@ -335,9 +334,11 @@
 			return $accountid;
 		}
 
-		function getDNforID($_account_id)
+		function getDNforID($_accountid = '')
 		{
 			global $phpgw;
+
+			$_account_id = get_account_id($_accountid);
 
 			$ds = $phpgw->common->ldapConnect();
 

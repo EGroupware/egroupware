@@ -31,15 +31,12 @@
     var $db;
     var $account_id;
     var $data;
-    var $memberships;
-    var $members;
 
-    function accounts()
-    {
-       global $phpgw;
-
-       $this->db = $phpgw->db;
-    }
+		function accounts_()
+		{
+			global $phpgw;
+			$this->db = $phpgw->db;
+		}
 
     function read_repository()
     {
@@ -166,14 +163,15 @@
       }
     }
 
-    function get_type($account_id)
+    function get_type($accountid)
     {
       global $phpgw, $phpgw_info;
- 
+
+ 		$account_id = get_account_id($accountid);
       $this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
       if ($this->db->num_rows()) {
          $this->db->next_record();
-         return $this->db->f("account_type");
+         return $this->db->f('account_type');
       } else {
          return False;
       }

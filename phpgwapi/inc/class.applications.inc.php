@@ -40,11 +40,11 @@
     	@abstract standard constructor for setting $this->account_id
     	@param $account_id account id
     	*/
-    function applications($account_id = False)
+    function applications($account_id = '')
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id != False){ $this->account_id = $account_id; }
+      $this->account_id = get_account_id($account_id);
     }
 
     /**************************************************************************\

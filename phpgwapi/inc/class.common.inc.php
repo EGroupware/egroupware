@@ -329,12 +329,13 @@
 		@abstract grab the owner name
 		@param $id account id
 		*/
-    function grab_owner_name($id)
+    function grab_owner_name($accountid = '')
     {
       global $phpgw;
 
+		$account_id = get_account_id($accountid);
       $db = $phpgw->db;
-      $db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$id,__LINE__,__FILE__);
+      $db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$account_id,__LINE__,__FILE__);
       $db->next_record();
 
       return $phpgw->common->display_fullname($db->f('account_lid'),$db->f('account_firstname'),$db->f('account_lastname'));
@@ -995,14 +996,11 @@
 		@param $prefs
 		@param $account_id -optional defaults to : phpgw_info['user']['account_id']	
 		*/	
-		function create_emailpreferences($prefs,$account_id=0)
+		function create_emailpreferences($prefs,$accountid='')
 		{
 			global $phpgw, $phpgw_info;
 
-			if($account_id==0)
-			{
-				$account_id = $phpgw_info['user']['account_id'];
-			}
+			$account_id = get_account_id($accountid);
 			
 			/* Add default preferences info */
 			if (!isset($prefs['email']['userid']))
