@@ -807,6 +807,9 @@
     <para>
      This limits the maximum length for a tablename to 27 characters. Based on the tablename standard in phpgw of 'phpgw_tablename', you are further limited to 21 characters in which to describe your table. You will need to be less descriptive in some cases, e.g. use 'phpgw_widget_cats' instead of 'phpgw_widget_info_categories'.
     </para>
+    <para>
+     To maintain compatibility with MySQL 3.22.X, please always add &ldquo;'nullable' =&gt; False&rdquo; to your field spec for an auto field. This and probably older versions of MySQL require that specification within the SQL for a field that will also be an index or unique field, which for our uses should typically be true for an auto field. MySQL 3.23.X and PostgreSQL do not have this issue.
+    </para>
     </sect3>
     <sect3>
      <title>

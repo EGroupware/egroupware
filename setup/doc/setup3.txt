@@ -882,6 +882,14 @@ you are further limited to 21 characters in which to describe
 your table. You will need to be less descriptive in some
 cases, e.g. use 'phpgw_widget_cats' instead of 'phpgw_widget_info_categories'.
 
+To maintain compatibility with MySQL 3.22.X, please always
+add "'nullable' => False" to
+your field spec for an auto field. This and probably older
+versions of MySQL require that specification within the
+SQL for a field that will also be an index or unique field,
+which for our uses should typically be true for an auto
+field. MySQL 3.23.X and PostgreSQL do not have this issue.
+
 5.1.2 Default 0
 
 For int fields, a default of 0 is not assumed. Only some
