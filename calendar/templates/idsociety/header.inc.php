@@ -25,12 +25,13 @@
 	$tpl = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 	$tpl->set_unknowns('remove');
 	$templates = Array(
-		'head'		=> 'head.tpl',
-		'head_col'	=> 'head_col.tpl',
+		'head_tpl'	=> 'head.tpl',
 		'form_button_dropdown'	=> 'form_button_dropdown.tpl',
 		'form_button_script'	=> 'form_button_script.tpl'
 	);
 	$tpl->set_file($templates);
+	$tpl->set_block('head_tpl','head','head');
+	$tpl->set_block('head_tpl','head_col','head_col');
 	$tpl->set_block('form_button_script','form_button');
 	$tpl->set_var('cols',$cols);
 
