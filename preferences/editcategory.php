@@ -13,8 +13,8 @@
 
 	if (! $cat_id)
 	{
-		Header('Location: ' . $phpgw->link('/preferences/categories.php',"sort=$sort&order=$order&query=$query&start=$start"
-							. "&filter=$filter&cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
+		Header('Location: ' . $phpgw->link('/preferences/categories.php','sort=' . $sort . '&order=' . $order . '&query=' . $query . '&start=' . $start
+							. '&filter=' . $filter . '&cats_app=' . $cats_app . '&extra=' . $extra . '&cats_level=' . $cats_level . '&global_cats=' . $global_cats));
 	}
 
 	$phpgw_info['flags']['currentapp'] = $cats_app;
@@ -108,30 +108,27 @@
 
 	$cats = $c->return_single($cat_id);
 
-	$cat_main = $cats[0]['main'];
 	$t->set_var('lang_main',lang('Main category'));
 	$t->set_var('lang_new_main',lang('New main category'));
 
 	if ($global_cats)
 	{
-		$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main,True));
+		$t->set_var('main_category_list',$c->formated_list('select','mains',$cats[0]['main'],True));
 	}
 	else
 	{
-		$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
+		$t->set_var('main_category_list',$c->formated_list('select','mains',$cats[0]['main']));
 	}
 
 	if ($cats_level) 
 	{
-		$cat_parent = $cats[0]['parent'];
-
 		if ($global_cats)
 		{
-			$category_list = $c->formated_list('select','all',$cat_parent,True);
+			$category_list = $c->formated_list('select','all',$cats[0]['parent'],True);
 		}
 		else
 		{
-			$category_list = $c->formated_list('select','all',$cat_parent);
+			$category_list = $c->formated_list('select','all',$cats[0]['parent']);
 		}
 
 		$t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Select parent category') . '</option>' . $category_list .'</select>');
