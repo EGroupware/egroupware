@@ -3375,7 +3375,7 @@
 			$ical = $this->new_ical();
 
 			$this->set_var($ical['prodid'],'value','-//eGroupWare//eGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
-			$this->set_var($ical['version'],'value','2.0');
+			$this->set_var($ical['version'],'value','1.0');
 			$this->set_var($ical['method'],'value',strtoupper($method));
 
 			if(!$GLOBALS['phpgw_info']['flags']['included_classes']['uicalendar'])
@@ -3419,10 +3419,10 @@
 					}
 				}
 
-				// use system's date info for caluculating local timezone's offset in minutes
-				//
-				$gmt_offset = date('O',$GLOBALS['phpgw']->datetime->users_localtime);  // offset to GMT
-				$offset = (int)(substr($gmt_offset, 0, 3)) * 60 + (int)(substr($gmt_offset, 3, 2));
+				// $event has times in user's time zone, so have to adjust them to GMT, which is used by ical
+				// To do that one must substract the users time zone difference with the server and then substract the server's time zone difference with GMT
+				$gmt_offset = date('O');  // server's offset to GMT
+				$offset = ((int)(substr($gmt_offset, 0, 3)) + $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']) * 60 + (int)(substr($gmt_offset, 3, 2));
 				$event['start']['min']   -= $offset;
 				$event['end']['min']     -= $offset;
 				$event['modtime']['min'] -= $offset;
