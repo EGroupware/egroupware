@@ -18,21 +18,15 @@
 	{
 		var $template;
 		var $template_dir;
-		var $printer_friendly;
 
-		var $owner;
-		
-//		var $contacts;
 		var $bo;
 		var $cat;
-		var $prefs;
 
 		var $holidays;
 		var $holiday_color;
 		
 		var $debug = False;
 
-		var $filter;
 		var $cat_id;
 
 		var $public_functions = array(
@@ -44,52 +38,32 @@
 			'view' => True,
 			'add'  => True,
 			'edit' => True,
-			'delete' => True
+			'update' => True,
+			'delete' => True,
+			'preferences' => True,
+			'day' => True
 		);
 
 		function uicalendar()
 		{
-			global $phpgw, $phpgw_info, $friendly;
+			global $phpgw, $phpgw_info;
 
 			$phpgw->browser    = CreateObject('phpgwapi.browser');
 
-			if($friendly == 1)
-			{
-				$this->printer_friendly = True;
-			}
-			else
-			{
-				$this->printer_friendly = False;
-			}
+			$this->bo = CreateObject('calendar.bocalendar',1);
 
-			$this->bo       = CreateObject('calendar.bocalendar',True);
-			if(!isset($this->bo->year))
-			{
-				$this->bo->year = date('Y',time());
-			}
-			if(!isset($this->bo->month))
-			{
-				$this->bo->month = date('m',time());
-			}
-			if(!isset($this->bo->day))
-			{
-				$this->bo->day = date('d',time());
-			}
-
-			$this->owner    = $this->bo->owner;
 			$this->template = $phpgw->template;
 			$this->template_dir = $phpgw->common->get_tpl_dir('calendar');
 			$this->cat      = CreateObject('phpgwapi.categories');
-			$this->prefs    = $phpgw_info['user']['preferences']['calendar'];
 
 			$this->holiday_color = (substr($phpgw_info['theme']['bg07'],0,1)=='#'?'':'#').$phpgw_info['theme']['bg07'];
 			
-			$this->filter   = $this->bo->filter;
 			$this->cat_id   = $this->bo->cat_id;
 
-			$this->users_timeformat = $this->bo->users_timeformat;
-
-			$this->save_sessiondata();
+			if($this->bo->use_session)
+			{
+				$this->save_sessiondata();
+			}
 
 			if($this->debug)
 			{
@@ -103,7 +77,7 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			$this->bo->read_holiday();
+			$this->bo->read_holidays();
 
 			$date = $this->bo->datetime->makegmttime(0,0,0,$month,$day,$year);
 			$month_ago = intval(date('Ymd',mktime(0,0,0,$month - 1,$day,$year)));
@@ -124,7 +98,7 @@
 			$p->set_block('mini_calendar','mini_week','mini_week');
 			$p->set_block('mini_calendar','mini_day','mini_day');
 
-			if($this->printer_friendly == False)
+			if($this->bo->printer_friendly == False)
 			{
 				$month = '<a href="' . $this->page('month','&month='.$phpgw->common->show_date($date['raw'],'m').'&year='.$phpgw->common->show_date($date['raw'],'Y')). '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$phpgw->common->show_date($date['raw'],'Y').'</a>';
 			}
@@ -193,7 +167,7 @@
 					$str = '';
 					if(($date >= $monthstart && $date <= $monthend) || $outside_month == True)
 					{
-						if(!$this->printer_friendly)
+						if(!$this->bo->printer_friendly)
 						{
 							$str = '<a href="'.$this->page($link,'&date='.$date).'" class="'.$day_params['class'].'">'.$day.'</a>';
 						}
@@ -232,26 +206,29 @@
 
 		function month()
 		{
-			global $phpgw, $thismonth, $thisday, $thisyear;
+			global $phpgw;
 			
-			$this->bo->read_holiday();
+			$this->bo->read_holidays();
+
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_unknowns('remove');
 
 			$templates = Array(
 				'index_t'	=>	'index.tpl'
 			);
 	
-			$this->template->set_file($templates);
+			$p->set_file($templates);
 
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
-			if ($this->printer_friendly == False)
+			if (!$this->bo->printer_friendly)
 			{
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
 				$this->header();
 
 				$printer = '';
-				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&friendly=1&filter='.$filter;
+				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&friendly=1';
 				$print = '<a href="'.$this->page('month'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 				$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day');
 				$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day');
@@ -260,7 +237,7 @@
 			{
 				$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 				$print =	'';
-				if($this->preferences['display_minicals'] == 'Y' || $this->preferences['display_minicals'])
+				if($this->bo->prefs['calendar']['display_minicals'] == 'Y' || $this->bo->prefs['calendar']['display_minicals'])
 				{
 					$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day');
 					$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day');
@@ -277,19 +254,15 @@
 				'bg_text'					=> $phpgw_info['theme']['bg_text'],
 				'small_calendar_prev'	=>	$minical_prev,
 				'month_identifier'		=>	lang(strftime("%B",$m)) . ' ' . $this->bo->year,
-				'username'					=>	$phpgw->common->grab_owner_name($this->owner),
+				'username'					=>	$phpgw->common->grab_owner_name($this->bo->owner),
 				'small_calendar_next'	=>	$minical_next,
-				'large_month'				=>	$this->display_month($this->bo->month,$this->bo->year,True,$this->owner),
+				'large_month'				=>	$this->display_month($this->bo->month,$this->bo->year,True,$this->bo->owner),
 				'print'						=>	$print
 			);
 
-			$this->template->set_var($var);
-			$this->template->pparse('out','index_t');
-			if($this->printer_friendly)
-			{
-				$phpgw->common->phpgw_exit();
-			}
-			else
+			$p->set_var($var);
+			$p->pparse('out','index_t');
+			if(!$this->bo->printer_friendly)
 			{
 				$this->footer();
 			}
@@ -299,6 +272,8 @@
 		{
 
 			global $phpgw, $phpgw_info;
+
+			$this->bo->read_holidays();
 
 			$next = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day + 7,$this->bo->year);
 			$prev = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day - 7,$this->bo->year);
@@ -329,27 +304,27 @@
 	
 			$p->set_file($templates);
 
-			if (!$this->printer_friendly)
+			if (!$this->bo->printer_friendly)
 			{
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
 				$this->header();
-				$printer_header = '';
+				$printer = '';
 				$prev_week_link = '<a href="'.$this->page('week','&year='.$prev['year'].'&month='.$prev['month'].'&day='.$prev['day']).'">&lt;&lt;</a>';
 				$next_week_link = '<a href="'.$this->page('week','&year='.$next['year'].'&month='.$next['month'].'&day='.$next['day']).'">&gt;&gt;</a>';
 				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&day='.$this->bo->day.'&friendly=1';
-				$printer_friendly = '<a href="'.$this->page('week',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
-				$minical_this = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day');
-				$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day');
-				$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day');
+				$print = '<a href="'.$this->page('week',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+				$minical_this = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day','none',False);
+				$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day','left',False);
+				$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day','right',False);
 			}
 			else
 			{
-				$printer_header = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
+				$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 				$prev_week_link = '&lt;&lt;';
 				$next_week_link = '&gt;&gt;';
-				$printer_friendly =	'';
-				if($this->prefs['display_minicals'] == 'Y' || $this->prefs['display_minicals'])
+				$print =	'';
+				if($this->bo->prefs['calendar']['display_minicals'] == 'Y' || $this->bo->prefs['calendar']['display_minicals'])
 				{
 					$minical_this = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day');
 					$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day');
@@ -364,23 +339,23 @@
 			}
 
 			$var = Array(
-				'printer_header'			=>	$printer_header,
+				'printer_friendly'		=>	$printer,
 				'bg_text'					=> $phpgw_info['themem']['bg_text'],
 				'small_calendar_prev'	=>	$minical_prev,
 				'prev_week_link'			=>	$prev_week_link,
 				'small_calendar_this'	=>	$minical_this,
 				'week_identifier'			=>	$week_id,
 				'next_week_link'			=>	$next_week_link,
-				'username'					=>	$phpgw->common->grab_owner_name($this->owner),
+				'username'					=>	$phpgw->common->grab_owner_name($this->bo->owner),
 				'small_calendar_next'	=>	$minical_next,
-				'week_display'				=>	$this->display_weekly($this->bo->day,$this->bo->month,$this->bo->year,true,$this->owner),
-				'printer_friendly'		=>	$printer_friendly
+				'week_display'				=>	$this->display_weekly($this->bo->day,$this->bo->month,$this->bo->year,true,$this->bo->owner),
+				'print'						=>	$print
 			);
 
 			$p->set_var($var);
 			$p->pparse('out','week_t');
 			flush();
-			if($this->printer_friendly)
+			if($this->bo->printer_friendly)
 			{
 				$phpgw->common->phpgw_exit();
 			}
@@ -394,7 +369,7 @@
 		{
 			global $phpgw, $phpgw_info;
 			
-			if ($this->printer_friendly)
+			if ($this->bo->printer_friendly)
 			{
 				echo '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 			}
@@ -410,7 +385,7 @@
 <table border="0" cellspacing="3" cellpadding="4" cols=4>
  <tr>
 <?php
-			if(!$this->printer_friendly)
+			if(!$this->bo->printer_friendly)
 			{
 				echo '<td align="left"><a href="'.$this->page('year','&year='.($this->bo->year - 1)).'">&lt;&lt;</a>';
 			}
@@ -421,7 +396,7 @@
    <font face=\"".$phpgw_info["theme"][font]."\" size="+1"><?php echo $this->bo->year; ?></font>
   </td>
 <?php
-			if(!$this->printer_friendly)
+			if(!$this->bo->printer_friendly)
 			{
 				echo '<td align="right"><a href="'.$this->page('year','&year='.($this->bo->year + 1)).'">&gt;&gt;</a>';
 			}
@@ -430,7 +405,7 @@
  </tr>
  <tr valign="top">
 <?php
-			if(!$this->printer_friendly)
+			if(!$this->bo->printer_friendly)
 			{
 				$link = 'day.php';
 			}
@@ -452,7 +427,7 @@
 </table>
 </center>
 <?php
-			if($this->printer_friendly)
+			if($this->bo->printer_friendly)
 			{
 				$phpgw->common->phpgw_exit();
 			}
@@ -507,7 +482,7 @@
 				);
 				$p->set_file($templates);
 
-				if ($this->owner == $event->owner && $this->bo->check_perms(PHPGW_ACL_EDIT) == True)
+				if ($this->bo->owner == $event->owner && $this->bo->check_perms(PHPGW_ACL_EDIT) == True)
 				{
 					$var = Array(
 						'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
@@ -519,7 +494,7 @@
 					echo $p->fp('out','form_button');
 				}
 
-				if ($this->owner == $event->owner && $this->bo->check_perms(PHPGW_ACL_DELETE) == True)
+				if ($this->bo->owner == $event->owner && $this->bo->check_perms(PHPGW_ACL_DELETE) == True)
 				{
 					$var = Array(
 						'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
@@ -544,7 +519,7 @@
 			global $phpgw, $phpgw_info, $cal_id, $readsess, $hour, $minute, $cd;
 			
 			$sb = CreateObject('phpgwapi.sbox');
-			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+			if ($this->bo->prefs['common']['timeformat'] == '12')
 			{
 				$hourformat = 'h';
 			}
@@ -556,24 +531,9 @@
 			if ($cal_id > 0)
 			{
 				$event = $this->bo->read_entry(intval($cal_id));
-
-				$can_edit = False;
-		
-				if(($event->owner == $this->owner) && ($this->bo->check_perms(PHPGW_ACL_EDIT) == True))
-				{
-					if($event->public != True)
-					{
-						if($this->bo->check_perms(PHPGW_ACL_PRIVATE) == True)
-						{
-							$can_edit = True;
-						}
-					}
-					else
-					{
-						$can_edit = True;
-					}
-				}
-
+				
+				$can_edit = $this->bo->can_user_edit($event);
+				
 				if($can_edit == False)
 				{
 					header('Location: '.$this->page('view','&cal_id='.$cal_id));
@@ -581,24 +541,24 @@
 			}
 			elseif(isset($readsess))
 			{
-				$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
+				$event = $this->bo->restore_from_appsession;
 		
 				if($event->owner == 0)
 				{
-					$this->so->add_attribute('owner',$this->owner);
+					$this->bo->add_attribute('owner',$this->bo->owner);
 				}
 		
 				$can_edit = True;
 			}
 			else
 			{
-				if($this->bo->check_perms(PHPGW_ACL_ADD) == False)
+				if(!$this->bo->check_perms(PHPGW_ACL_ADD))
 				{
 					header('Location: '.$this->page('view','&cal_id='.$cal_id));
 				}
 
-				$this->so->event_init();
-				$this->so->add_attribute('id',0);
+				$this->bo->event_init();
+				$this->bo->add_attribute('id',0);
 
 				$can_edit = True;
 
@@ -620,22 +580,22 @@
 					$thisminute = (int)$minute;
 				}
 
-				$this->so->set_start($this->bo->year,$this->bo->month,$this->bo->day,$thishour,$thisminute,0);
-				$this->so->set_end($this->bo->year,$this->bo->month,$this->bo->day,$thishour,$thisminute,0);
-				$this->so->set_title('');
-				$this->so->set_description('');
-				$this->so->add_attribute('priority',2);
-				if($this->preferences['default_private'] == 'Y' || $this->prefs['default_private'] == True)
+				$this->bo->set_start($this->bo->year,$this->bo->month,$this->bo->day,$thishour,$thisminute,0);
+				$this->bo->set_end($this->bo->year,$this->bo->month,$this->bo->day,$thishour,$thisminute,0);
+				$this->bo->set_title('');
+				$this->bo->set_description('');
+				$this->bo->add_attribute('priority',2);
+				if($this->bo->prefs['calendar']['default_private'] == 'Y' || $this->bo->prefs['calendar']['default_private'] == True)
 				{
-					$this->so->set_class(False);
+					$this->bo->set_class(False);
 				}
 				else
 				{
-					$this->so->set_class(True);
+					$this->bo->set_class(True);
 				}
 
-				$this->so->set_recur_none();
-				$event = $this->so->get_cached_event();
+				$this->bo->set_recur_none();
+				$event = $this->bo->get_cached_event();
 			}
 
 			$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->bo->datetime->tz_offset;
@@ -672,8 +632,8 @@
 				$errormsg = '';
 			}
 
-			$common_hidden = '<input type="hidden" name="cal_id" value="'.$event->id.'">'."\n"
-								. '<input type="hidden" name="owner" value="'.$owner.'">'."\n";
+			$common_hidden = '<input type="hidden" name="cal[id]" value="'.$event->id.'">'."\n"
+								. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n";
 						
 			$vars = Array(
 				'font'				=>	$phpgw_info['theme']['font'],
@@ -689,19 +649,19 @@
 // Brief Description
 			$var[] = Array(
 				'field'	=> lang('Title'),
-				'data'	=> '<input name="title" size="25" maxlength="80" value="'.$event->title.'">'
+				'data'	=> '<input name="cal[title]" size="25" maxlength="80" value="'.$event->title.'">'
 			);
 
 // Full Description
 			$var[] = Array(
 				'field'	=> lang('Full Description'),
-				'data'	=> '<textarea name="description" rows="5" cols="40" wrap="virtual" maxlength="2048">'.$event->description.'</textarea>'
+				'data'	=> '<textarea name="cal[description]" rows="5" cols="40" wrap="virtual" maxlength="2048">'.$event->description.'</textarea>'
 			);
 
 // Display Categories
 			$var[] = Array(
 				'field'	=> lang('Category'),
-				'data'	=> '<select name="category"><option value="">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',$event->category,True).'</select>'
+				'data'	=> '<select name="cal[category]"><option value="">'.lang('Choose the category').'</option>'.$this->cat->formated_list('select','all',$event->category,True).'</select>'
 			);
 
 // Date
@@ -715,7 +675,7 @@
 
 // Time
 			$amsel = ' checked'; $pmsel = '';
-			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+			if ($this->bo->prefs['common']['timeformat'] == '12')
 			{
 				if ($event->start->hour >= 12)
 				{
@@ -723,7 +683,7 @@
 				}
 			}
 			$str = '<input name="start[hour]" size="2" VALUE="'.$phpgw->common->show_date($start,$hourformat).'" maxlength="2">:<input name="start[min]" size="2" value="'.$phpgw->common->show_date($start,'i').'" maxlength="2">';
-			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+			if ($this->bo->prefs['common']['timeformat'] == '12')
 			{
 				$str .= '<input type="radio" name="start[ampm]" value="am"'.$amsel.'>am';
 				$str .= '<input type="radio" name="start[ampm]" value="pm"'.$pmsel.'>pm';
@@ -744,7 +704,7 @@
 
 // End Time
 			$amsel = ' checked'; $pmsel = '';
-			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+			if ($this->bo->prefs['common']['timeformat'] == '12')
 			{
 				if ($event->end->hour >= 12)
 				{
@@ -753,7 +713,7 @@
 			}
 
 			$str = '<input name="end[hour]" size="2" VALUE="'.$phpgw->common->show_date($end,$hourformat).'" maxlength="2">:<input name="end[min]" size="2" value="'.$phpgw->common->show_date($end,'i').'" maxlength="2">';
-			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+			if ($this->bo->prefs['common']['timeformat'] == '12')
 			{
 				$str .= '<input type="radio" name="end[ampm]" value="am"'.$amsel.'>am';
 				$str .= '<input type="radio" name="end[ampm]" value="pm"'.$pmsel.'>pm';
@@ -766,11 +726,11 @@
 // Priority
 			$var[] = Array(
 				'field'	=> lang('Priority'),
-				'data'	=> $sb->getPriority('priority',$event->priority)
+				'data'	=> $sb->getPriority('cal[priority]',$event->priority)
 			);
 
 // Access
-			$str = '<input type="checkbox" name="private" value="private"';
+			$str = '<input type="checkbox" name="cal[private]" value="private"';
 			if($event->public != True)
 			{
 				$str .= ' checked';
@@ -862,7 +822,6 @@
 			$p->parse('row','hr',True);
 			$p->set_var('hr_text','<center><b>'.lang('Repeating Event Information').'</b></center><br>');
 			$p->parse('row','hr',True);
-			$str = '<select name="recur_type">';
 			$rpt_type = Array(
 				MCAL_RECUR_NONE,
 				MCAL_RECUR_DAILY,
@@ -879,6 +838,7 @@
 				MCAL_RECUR_MONTHLY_MDAY => 'Monthly (by date)',
 				MCAL_RECUR_YEARLY => 'Yearly'
 			);
+			$str = '<select name="cal[recur_type]">';
 			for($l=0;$l<count($rpt_type);$l++)
 			{
 				$str .= '<option value="'.$rpt_type[$l].'"';
@@ -894,7 +854,7 @@
 				'data'	=> $str
 			);
 
-			$str = '<input type="checkbox" name="rpt_use_end" value="y"';
+			$str = '<input type="checkbox" name="cal[rpt_use_end]" value="y"';
 
 			if($event->recur_enddate->year != 0 && $event->recur_enddate->month != 0 && $event->recur_enddate->mday != 0)
 			{
@@ -933,7 +893,7 @@
 
 			$var[] = Array(
 				'field'	=> lang('Frequency'),
-				'data'	=> '<input name="recur_interval" size="4" maxlength="4" value="'.$event->recur_interval.'">'
+				'data'	=> '<input name="cal[recur_interval]" size="4" maxlength="4" value="'.$event->recur_interval.'">'
 			);
 
 			for($i=0;$i<count($var);$i++)
@@ -965,14 +925,504 @@
 			$this->footer();
 		}
 
-		/* Private functions */
+		function update()
+		{
+			global $phpgw, $phpgw_info, $readsess, $cal, $participants, $start, $end, $recur_enddate;
 
+			if(!isset($readsess))
+			{
+				$this->bo->fix_update_time($start);
+				$this->bo->fix_update_time($end);
+
+				if(!isset($cal[private]))
+				{
+					$cal[private] = 'public';
+				}
+
+				$is_public = ($private == 'public'?1:0);
+				$this->bo->event_init();
+				$this->bo->set_category($cal[category]);
+				$this->bo->set_title($cal[title]);
+				$this->bo->set_description($cal[description]);
+				$this->bo->set_start($start[year],$start[month],$start[mday],$start[hour],$start[min],0);
+				$this->bo->set_end($end[year],$end[month],$end[mday],$end[hour],$end[min],0);
+				$this->bo->set_class($is_public);
+				if($cal[id] != 0)
+				{
+					$this->bo->add_attribute('id',$cal[id]);
+				}
+
+				if($cal[rpt_use_end] != 'y')
+				{
+					$recur_enddate[year] = 0;
+					$recur_enddate[month] = 0;
+					$recur_enddate[mday] = 0;
+				}
+				$cal[recur_data] = $cal[rpt_sun] + $cal[rpt_mon] + $cal[rpt_tue] + $cal[rpt_wed] + $cal[rpt_thu] + $cal[rpt_fri] + $cal[rpt_sat];
+		
+				switch($cal[recur_type])
+				{
+					case MCAL_RECUR_NONE:
+						$this->bo->set_recur_none();
+						break;
+					case MCAL_RECUR_DAILY:
+						$this->bo->set_recur_daily($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$cal[recur_interval]);
+						break;
+					case MCAL_RECUR_WEEKLY:
+						$this->bo->set_recur_weekly($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$cal[recur_interval],$cal[recur_data]);
+						break;
+					case MCAL_RECUR_MONTHLY_MDAY:
+						$this->bo->set_recur_monthly_mday($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$cal[recur_interval]);
+						break;
+					case MCAL_RECUR_MONTHLY_WDAY:
+						$this->bo->set_recur_monthly_wday($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$cal[recur_interval]);
+						break;
+					case MCAL_RECUR_YEARLY:
+						$this->bo->set_recur_yearly($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$cal[recur_interval]);
+						break;
+				}
+
+				$parts = $participants;
+				$minparts = min($participants);
+				$part = Array();
+				for($i=0;$i<count($parts);$i++)
+				{
+					$acct_type = $phpgw->accounts->get_type(intval($parts[$i]));
+					if($acct_type == 'u')
+					{
+						$part[$parts[$i]] = 1;
+					}
+					elseif($acct_type == 'g')
+					{
+						/* This pulls ALL users of a group and makes them as participants to the event */
+						/* I would like to turn this back into a group thing. */
+						$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
+						$members = $acct->members(intval($parts[$i]));
+						unset($acct);
+						if($members == False)
+						{
+							continue;
+						}
+						while($member = each($members))
+						{
+							$part[$member[1]['account_id']] = 1;
+						}
+					}
+				}
+
+				@reset($part);
+				while(list($key,$value) = each($part))
+				{
+					$this->bo->add_attribute('participants['.$key.']','U');
+				}
+
+				reset($participants);
+				if(!@$phpgw->calendar->event->participants[$cal[owner]])
+				{
+					$this->bo->add_attribute('owner',$minparts);
+				}
+				$this->bo->add_attribute('priority',$cal[priority]);
+				$event = $this->bo->get_cached_event();
+
+				$this->bo->store_to_appsession($event);
+				$datetime_check = $this->bo->validate_update($event);
+				if($datetime_check)
+				{
+					Header('Location: '.$this->page('edit','&readsess='.$event->id.'&cd='.$datetime_check));
+				}
+
+				$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->bo->datetime->tz_offset;
+				$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->bo->datetime->tz_offset;
+
+				$overlapping_events = $this->bo->overlap($start,$end,$event->participants,$event->owner,$event->id);
+			}
+			else
+			{
+				$event = $this->bo->restore_from_appsession();
+				$datetime_check = $this->bo->validate_update($event);
+				$overlapping_events = False;
+				if($datetime_check)
+				{
+					Header('Location: '.$this->page('edit','&readsess='.$event->id.'&cd='.$datetime_check));
+				}
+			}
+
+			if(count($overlapping_events) > 0 && $overlapping_events != False)
+			{	
+				$phpgw->common->phpgw_header();
+				echo parse_navbar();
+
+				$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+				$templates = Array(
+					'overlap'		=>	'overlap.tpl',
+					'form_button'	=>	'form_button_script.tpl'
+				);
+				$p->set_file($templates);
+
+				$p->set_var('color',$phpgw_info['theme']['bg_text']);
+				$p->set_var('overlap_title',lang('Scheduling Conflict'));
+
+				$overlap = '';
+				for($i=0;$i<count($overlapping_events);$i++)
+				{
+					$over = $this->bo->read_entry($overlapping_events[$i]);
+					$overlap .= '<li>'.$this->link_to_entry($over,$event->start->month,$event->start->mday,$event->start->year);
+				}
+				if(strlen($overlap) > 0)
+				{
+					$var = Array(
+						'overlap_text'	=>	lang('Your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:',$phpgw->common->show_date($start),$phpgw->common->show_date($end)),
+						'overlap_list'	=>	$overlap
+					);
+				}
+				else
+				{
+					$var = Array(
+						'overlap_text'	=>	'',
+						'overlap_list'	=>	''
+					);
+				}
+
+				$p->set_var($var);
+//				$phpgw->calendar->event = $event;
+
+				$var = Array(
+					'action_url_button'	=> $this->page('update','&readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
+					'action_text_button'	=> lang('Ignore Conflict'),
+					'action_confirm_button'	=> '',
+					'action_extra_field'	=> ''
+				);
+				$p->set_var($var);
+
+				$p->parse('resubmit_button','form_button');
+
+				$var = Array(
+					'action_url_button'	=> $this->page('update','&readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
+					'action_text_button'	=> lang('Re-Edit Event'),
+					'action_confirm_button'	=> '',
+					'action_extra_field'	=> ''
+				);
+				$p->set_var($var);
+
+				$p->parse('reedit_button','form_button');
+
+				$p->pparse('out','overlap');
+//				$phpgw_info['flags']['nofooter'] = False;
+//				$phpgw->common->phpgw_footer();
+				$this->footer();		
+			}
+			else
+			{
+				if(!$event->id)
+				{
+					$this->bo->add_entry($event);
+				}
+				elseif($event->id)
+				{
+					$this->bo->update_entry($event);
+				}
+
+				Header('Location: '.$this->page('','&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday.'&cd=14&owner='.$this->bo->owner));
+			}
+		}
+
+		function delete()
+		{
+			global $cal_id;
+			$event = $this->bo->read_entry(intval($cal_id));
+			if(($cal_id > 0) && ($event->owner == $this->bo->owner) && ($this->bo->check_perms(PHPGW_ACL_DELETE) == True))
+			{
+				$date = sprintf("%04d%02d%02d",$event->start->year,$event->start->month,$event->start->mday);
+
+				$this->bo->delete_entry(intval($cal_id));
+				$this->bo->expunge();
+			}
+			else
+			{
+				$date = sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day);
+			}
+			Header('Location: '.$this->page('','&date='.$date));
+		}
+
+		function preferences()
+		{
+			global $phpgw, $phpgw_info, $submit, $prefs;
+			if ($submit)
+			{
+				$phpgw->preferences->read_repository();
+				$phpgw->preferences->add('calendar','weekdaystarts',$prefs[weekdaystarts]);
+				$phpgw->preferences->add('calendar','workdaystarts',$prefs[workdaystarts]);
+				$phpgw->preferences->add('calendar','workdayends',$prefs[workdayends]);
+				$phpgw->preferences->add('calendar','defaultcalendar',$prefs[defaultcalendar]);
+				$phpgw->preferences->add('calendar','defaultfilter',$prefs[defaultfilter]);
+				$phpgw->preferences->add('calendar','interval',$prefs[interval]);
+				if ($prefs[mainscreen_showevents] == True)
+				{
+					$phpgw->preferences->add('calendar','mainscreen_showevents',$prefs[mainscreen_showevents]);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','mainscreen_showevents');
+				}
+				if ($prefs[send_updates] == True)
+				{
+					$phpgw->preferences->add('calendar','send_updates',$prefs[send_updates]);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','send_updates');
+				}
+		
+				if ($prefs[display_status] == True)
+				{
+					$phpgw->preferences->add('calendar','display_status',$prefs[display_status]);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','display_status');
+				}
+
+				if ($prefs[default_private] == True)
+				{
+					$phpgw->preferences->add('calendar','default_private',$prefs[default_private]);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','default_private');
+				}
+
+				if ($prefs[display_minicals] == True)
+				{
+					$phpgw->preferences->add('calendar','display_minicals',$prefs[display_minicals]);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','display_minicals');
+				}
+
+				if ($prefs[print_black_white] == True)
+				{
+					$phpgw->preferences->add('calendar','print_black_white',$prefs[print_black_white]);
+				}
+				else
+				{
+					$phpgw->preferences->delete('calendar','print_black_white');
+				}
+
+				$phpgw->preferences->save_repository(True);
+     
+				Header('Location: '.$phpgw->link('/preferences/index.php'));
+				$phpgw->common->phpgw_exit();
+			}
+
+			$phpgw->common->phpgw_header();
+			echo parse_navbar();
+
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$templates = Array(
+				'pref'		=>	'pref.tpl',
+				'pref_colspan'	=>	'pref_colspan.tpl',
+				'pref_list'	=>	'pref_list.tpl'
+			);
+			$p->set_file($templates);
+
+			$var = Array(
+				'title'		=>	lang('Calendar preferences'),
+				'action_url'	=>	$this->page('preferences'),
+				'bg_color'	=>	$phpgw_info['theme']['th_bg'],
+				'submit_lang'	=>	lang('submit'),
+				'text'		=> '&nbsp;'
+			);
+	
+			$this->output_template_array($p,'row','pref_colspan',$var);
+
+//	if ($totalerrors)
+//	{
+//		echo '<p><center>' . $phpgw->common->error_list($errors) . '</center>';
+//	}
+
+			$str = '<input type="checkbox" name="prefs[mainscreen_showevents]" value="True"'.($this->bo->prefs['calendar']['mainscreen_showevents'] == 'Y' || $this->bo->prefs['calendar']['mainscreen_showevents'] == True?' checked':'').'>';
+			$this->display_item($p,lang('show day view on main screen'),$str);
+
+			$t_weekday[$this->bo->prefs['calendar']['weekdaystarts']] = ' selected';
+			$str = '<select name="prefs[weekdaystarts]">'
+				. '<option value="Monday"'.$t_weekday['Monday'].'>'.lang('Monday').'</option>'
+				. '<option value="Sunday"'.$t_weekday['Sunday'].'>'.lang('Sunday').'</option>'
+// The following is for Arabic support.....
+				. '<option value="Saturday"'.$t_weekday['Saturday'].'>'.lang('Saturday').'</option>'
+				. '</select>';
+			$this->display_item($p,lang('weekday starts on'),$str);
+
+			$t_workdaystarts[$this->bo->prefs['calendar']['workdaystarts']] = ' selected';
+			$str = '<select name="prefs[workdaystarts]">';
+			for ($i=0; $i<24; $i++)
+			{
+				$str .= '<option value="'.$i.'"'.$t_workdaystarts[$i].'>'
+					. $phpgw->common->formattime($i,'00') . '</option>';
+			}
+			$str .= '</select>';
+			$this->display_item($p,lang('work day starts on'),$str);
+  
+			$t_workdayends[$this->bo->prefs['calendar']['workdayends']] = ' selected';
+			$str = '<select name="prefs[workdayends]">';
+			for ($i=0; $i<24; $i++)
+			{
+				$str .= '<option value="'.$i.'"'.$t_workdayends[$i].'>'
+					. $phpgw->common->formattime($i,'00') . '</option>';
+			}
+			$str .= '</select>';
+			$this->display_item($p,lang('work day ends on'),$str);
+
+			if(strpos('.',$this->bo->prefs['calendar']['defaultcalendar']))
+			{
+				$temp = explode('.',$this->bo->prefs['calendar']['defaultcalendar']);
+				$this->bo->prefs['calendar']['defaultcalendar'] = $temp[0];
+			}
+			$selected[$this->bo->prefs['calendar']['defaultcalendar']] = ' selected';
+			if (!isset($this->bo->prefs['calendar']['defaultcalendar']))
+			{
+				$selected['month'] = ' selected';
+			}
+			$str = '<select name="prefs[defaultcalendar]">'
+				. '<option value="year"'.$selected['year'].'>'.lang('Yearly').'</option>'
+				. '<option value="month"'.$selected['month'].'>'.lang('Monthly').'</option>'
+				. '<option value="week"'.$selected['week'].'>'.lang('Weekly').'</option>'
+				. '<option value="day"'.$selected['day'].'>'.lang('Daily').'</option>'
+				. '</select>';
+			$this->display_item($p,lang('default calendar view'),$str);
+
+			$selected = array();
+			$selected[$this->bo->prefs['calendar']['defaultfilter']] = ' selected';
+			if (! isset($this->bo->prefs['calendar']['defaultfilter']) || $this->bo->prefs['calendar']['defaultfilter'] == 'private')
+			{
+				$selected['private'] = ' selected';
+			}
+			$str = '<select name="prefs[defaultfilter]">'
+				. '<option value="all"'.$selected['all'].'>'.lang('all').'</option>'
+				. '<option value="private"'.$selected['private'].'>'.lang('private only').'</option>'
+//				. '<option value="public"'.$selected['public'].'>'.lang('global public only').'</option>'
+//				. '<option value="group"'.$selected['group'].'>'.lang('group public only').'</option>'
+//				. '<option value="private+public"'.$selected['private+public'].'>'.lang('private and global public').'</option>'
+//				. '<option value="private+group"'.$selected['private+group'].'>'.lang('private and group public').'</option>'
+//				. '<option value="public+group"'.$selected['public+group'].'>'.lang('global public and group public').'</option>'
+				. '</select>';
+			$this->display_item($p,lang('Default calendar filter'),$str);
+
+			$selected = array();
+			$selected[intval($this->bo->prefs['calendar']['interval'])] = ' selected';
+			if (! isset($this->bo->prefs['calendar']['interval']))
+			{
+				$selected[60] = ' selected';
+			}
+			$var = Array(
+				5	=> '5',
+				10	=> '10',
+				15	=> '15',
+				20	=> '20',
+				30	=> '30',
+				45	=> '45',
+				60	=> '60'
+			);
+	
+			$str = '<select name="prefs[interval]">';
+			while(list($key,$value) = each($var))
+			{
+				$str .= '<option value="'.$key.'"'.$selected[$key].'>'.$value.'</option>';
+			}
+			$str .= '</select>';
+			$this->display_item($p,lang('Display interval in Day View'),$str);
+
+			$str = '<input type="checkbox" name="prefs[send_updates]" value="True"'.($this->bo->prefs['calendar']['send_updates'] == 'Y' || $this->bo->prefs['calendar']['send_updates'] == True?' checked':'').'>';
+			$this->display_item($p,lang('Send/receive updates via email'),$str);
+
+			$str = '<input type="checkbox" name="prefs[display_status]" value="True"'.($this->bo->prefs['calendar']['display_status'] == 'Y' || $this->bo->prefs['calendar']['display_status'] == True?' checked':'').'>';
+			$this->display_item($p,lang('Display status of events'),$str);
+
+			$str = '<input type="checkbox" name="prefs[default_private]" value="True"'.($this->bo->prefs['calendar']['default_private'] == 'Y' || $this->bo->prefs['calendar']['default_private'] == True?' checked':'').'>';
+			$this->display_item($p,lang('When creating new events default set to private'),$str);
+
+			$str = '<input type="checkbox" name="prefs[display_minicals]" value="True"'.($this->bo->prefs['calendar']['display_minicals'] == 'Y' || $this->bo->prefs['calendar']['display_minicals'] == True?' checked':'').'>';
+			$this->display_item($p,lang('Display mini calendars when printing'),$str);
+
+			$str = '<input type="checkbox" name="prefs[print_black_white]" value="True"'.($this->bo->prefs['calendar']['print_black_white'] == 'Y' || $this->bo->prefs['calendar']['print_black_white'] == True?' checked':'').'>';
+			$this->display_item($p,lang('Print calendars in black & white'),$str);
+
+			$p->pparse('out','pref');
+			$phpgw->common->phpgw_footer();
+		}
+
+		function day()
+		{
+			global $phpgw;
+			
+			$this->bo->read_holidays();
+			
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+	
+			$template = Array(
+				'day_t' => 'day.tpl'
+			);
+
+			$p->set_file($template);
+
+			if (!$this->bo->printer_friendly)
+			{
+				$phpgw->common->phpgw_header();
+				echo parse_navbar();
+				$printer = '';
+				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&day='.$this->bo->day.'&friendly=1';
+				$print = '<a href="'.$this->page('day'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+				$minical = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day');
+			}
+			else
+			{
+				$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
+				$print =	'';
+				if($this->bo->prefs['calendar']['display_minicals'] == 'Y' || $this->bo->prefs['calendar']['display_minicals'])
+				{
+					$minical = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day');
+				}
+				else
+				{
+					$minical = '';
+				}
+			}
+
+
+			$now	= $this->bo->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
+			$now['raw'] += $this->bo->datetime->tz_offset;
+			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
+	
+			$var = Array(
+				'printer_friendly'		=>	$printer,
+				'bg_text'					=> $phpgw_info['themem']['bg_text'],
+				'daily_events'				=>	$this->print_day($this->bo->year,$this->bo->month,$this->bo->day),
+				'small_calendar'			=>	$minical,
+				'date'						=>	lang(date('F',$m)).' '.sprintf("%02d",$this->bo->day).', '.$this->bo->year,
+				'username'					=>	$phpgw->common->grab_owner_name($owner),
+				'print'						=>	$print
+			);
+
+			$p->set_var($var);
+
+			$p->pparse('out','day_t');
+			if(!$this->so->printer_friendly)
+			{
+				$phpgw->common->phpgw_footer();
+			}
+			else
+			{
+				$phpgw->common->phpgw_exit();
+			}
+		}
+		
+		/* Private functions */
 		function _debug_sqsof()
 		{
 			$data = array(
-				'filter' => $this->filter,
-				'cat_id' => $this->cat_id,
-				'owner'	=> $this->owner,
+				'filter' => $this->bo->filter,
+				'cat_id' => $this->bo->cat_id,
+				'owner'	=> $this->bo->owner,
 				'year'	=> $this->bo->year,
 				'month'	=> $this->bo->month,
 				'day'		=> $this->bo->day
@@ -985,9 +1435,9 @@
 		function save_sessiondata()
 		{
 			$data = array(
-				'filter' => $this->filter,
-				'cat_id' => $this->cat_id,
-				'owner'	=> $this->owner,
+				'filter' => $this->bo->filter,
+				'cat_id' => $this->bo->cat_id,
+				'owner'	=> $this->bo->owner,
 				'year'	=> $this->bo->year,
 				'month'	=> $this->bo->month,
 				'day'		=> $this->bo->day
@@ -1001,13 +1451,25 @@
 			$p->parse($row,$list,True);
 		}
 
+		function display_item(&$p,$field,$data)
+		{
+			global $phpgw, $tr_color;
+			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+			$var = Array(
+				'bg_color'	=>	$tr_color,
+				'field'		=>	$field,
+				'data'		=>	$data
+			);
+			$this->output_template_array($p,'row','pref_list',$var);
+		}
+
 		function page($page='',$params='')
 		{
 			global $phpgw, $phpgw_info;
 
 			if($page == '')
 			{
-				$page_ = explode('.',$this->prefs['defaultcalendar']);
+				$page_ = explode('.',$this->bo->prefs['calendar']['defaultcalendar']);
 				$page = $page_[0];
 				if ($page=='index' || ($page != 'day' && $page != 'week' && $page != 'month' && $page != 'year'))
 				{
@@ -1023,8 +1485,7 @@
 		{
 			if (floor(phpversion()) == 4)
 			{
-				global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
-				global $matrixtype, $participants, $owner, $phpgw, $grants, $rights, $SCRIPT_FILENAME, $remainder, $tpl;
+				global $phpgw, $cal_id, $date, $keywords, $matrixtype, $participants, $remainder, $tpl, $menuaction;
 			}
 
 			$cols = 8;
@@ -1044,7 +1505,7 @@
 		{
 			global $phpgw;
 		
-			if (@$this->printer_friendly)
+			if (@$this->bo->printer_friendly)
 			{
 				$phpgw->common->phpgw_footer();
 				$phpgw->common->phpgw_exit();
@@ -1168,8 +1629,8 @@
 			global $phpgw, $phpgw_info, $grants;
 
 			$str = '';
-			$is_private = $this->bo->is_private($event,$this->owner);
-			$editable = ((!$this->printer_friendly) && (($is_private && $this->bo->check_perms(PHPGW_ACL_PRIVATE)) || !$is_private));
+			$is_private = $this->bo->is_private($event,$this->bo->owner);
+			$editable = ((!$this->bo->printer_friendly) && (($is_private && $this->bo->check_perms(PHPGW_ACL_PRIVATE)) || !$is_private));
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
 			$templates = Array(
@@ -1190,7 +1651,7 @@
 			$nextday = mktime(0,0,0,$month,$day + 1,$year) - $this->bo->datetime->tz_offset;
 			if (intval($phpgw->common->show_date($starttime,'Hi')) && $starttime == $endtime)
 			{
-				$time = $phpgw->common->show_date($starttime,$this->users_timeformat);
+				$time = $phpgw->common->show_date($starttime,$this->bo->users_timeformat);
 			}
 			elseif ($starttime <= $rawdate_offset && $endtime >= $nextday - 60)
 			{
@@ -1200,20 +1661,20 @@
 			{
 				if($starttime < $rawdate_offset && $event->recur_type==MCAL_RECUR_NONE)
 				{
-					$start_time = $phpgw->common->show_date($rawdate_offset,$this->users_timeformat);
+					$start_time = $phpgw->common->show_date($rawdate_offset,$this->bo->users_timeformat);
 				}
 				else
 				{
-					$start_time = $phpgw->common->show_date($starttime,$this->users_timeformat);
+					$start_time = $phpgw->common->show_date($starttime,$this->bo->users_timeformat);
 				}
 
 				if($endtime >= ($rawdate_offset + 86400))
 				{
-					$end_time = $phpgw->common->show_date(mktime(23,59,59,$month,$day,$year) - $this->bo->datetime->tz_offset,$this->users_timeformat);
+					$end_time = $phpgw->common->show_date(mktime(23,59,59,$month,$day,$year) - $this->bo->datetime->tz_offset,$this->bo->users_timeformat);
 				}
 				else
 				{
-					$end_time = $phpgw->common->show_date($endtime,$this->users_timeformat);
+					$end_time = $phpgw->common->show_date($endtime,$this->bo->users_timeformat);
 				}
 				$time = $start_time.'-'.$end_time;
 			}
@@ -1323,7 +1784,7 @@
 				'bgcolor'		=> $phpgw_info['theme']['th_bg'],
 				'font_color'	=> $phpgw_info['theme']['th_text']
 			);
-			if($this->printer_friendly && @$this->preferences['print_black_white'])
+			if($this->bo->printer_friendly && @$this->bo->prefs['calendar']['print_black_white'])
 			{
 				$var = Array(
 					'bgcolor'		=> '',
@@ -1354,8 +1815,8 @@
 
 			if($owner == 0) { $owner= $phpgw_info['user']['account_id']; }
 
-			$temp_owner = $this->owner;
-			$this->owner = $owner;
+			$temp_owner = $this->bo->owner;
+			$this->bo->owner = $owner;
 
 			$str = '';
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -1454,7 +1915,7 @@
 					$p->set_var('events','');
 					if($day_params['week'])
 					{
-						if(!$this->printer_friendly)
+						if(!$this->bo->printer_friendly)
 						{
 							$str = '<a href="'.$this->page('week','&date='.$date).'">' .$day_params['week'].'</a>';
 						}
@@ -1473,18 +1934,13 @@
 				$p->parse('column_header','month_column',True);
 				$p->set_var('column_data','');
 			}
-			$this->owner = $temp_owner;
+			$this->bo->owner = $temp_owner;
 			return $p->fp('out','monthly_header');
 		}
 		
 		function display_month($month,$year,$showyear,$owner=0)
 		{
 			global $phpgw, $phpgw_info;
-
-//			if($owner == $phpgw_info['user']['account_id'])
-//			{
-//				$owner = 0;
-//			}
 
 			$this->bo->store_to_cache($year,$month,1);
 
@@ -1538,7 +1994,7 @@
 
 			$cellcolor = $phpgw_info['theme']['row_off'];
 
-			$true_printer_friendly = $this->printer_friendly;
+			$true_printer_friendly = $this->bo->printer_friendly;
 
 			if(is_array($owners))
 			{
@@ -1557,7 +2013,7 @@
 			$p->set_var('day_events',$this->week_header($month,$year,$display_name));
 			$p->parse('row','event',True);
 
-			$original_owner = $this->so->owner;
+			$original_owner = $this->bo->owner;
 			for($i=0;$i<$counter;$i++)
 			{
 				$this->so->owner = $owners_array[$i];
@@ -1565,8 +2021,8 @@
 				$p->set_var('day_events',$this->display_week($start,True,$cellcolor,$display_name,$owners_array[$i]));
 				$p->parse('row','event',True);
 			}
-			$this->so->owner = $original_owner;
-			$this->printer_friendly = $true_printer_friendly;
+			$this->bo->owner = $original_owner;
+			$this->bo->printer_friendly = $true_printer_friendly;
 			return $p->fp('out','m_w_table');
 		}
 
@@ -1618,7 +2074,7 @@
 
 			if ($event->category)
 			{
-				$this->cat->categories($this->owner,'calendar');
+				$this->cat->categories($this->bo->owner,'calendar');
 				$cat = $this->cat->return_single($event->category);
 				$var[] = Array(
 					'field'	=>	lang('Category'),
@@ -1732,7 +2188,7 @@
 				if($event->recur_type == MCAL_RECUR_WEEKLY || $event->recur_type == MCAL_RECUR_DAILY)
 				{
 					$repeat_days = '';
-					if($this->prefs['weekdaystarts'] == 'Sunday')
+					if($this->bo->prefs['calendar']['weekdaystarts'] == 'Sunday')
 					{
 						if (!!($event->recur_data & MCAL_M_SUNDAY) == True)
 						{
@@ -1763,7 +2219,7 @@
 					{
 						$this->view_add_day(lang('Saturday'),$repeat_days);
 					}
-					if($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
+					if($this->bo->prefs['calendar']['weekdaystarts'] == 'Monday')
 					{
 						if (!!($event->recur_data & MCAL_M_SUNDAY) == True)
 						{
@@ -1798,5 +2254,280 @@
 
 			return $p->fp('out','view_event');
 		}
+
+		function html_for_day($event,$first_hour,$last_hour,&$time,$month,$day,$year,&$rowspan,&$rowspan_arr)
+		{
+			$ind = intval($event->start->hour);
+
+			if($ind<$first_hour || $ind>$last_hour)
+			{
+				$ind = 99;
+			}
+
+			if(!isset($time[$ind]) || !$time[$ind])
+			{
+				$time[$ind] = '';
+			}
+
+			$time[$ind] .= $this->link_to_entry($event,$month,$day,$year);
+
+			$starttime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year);
+			$endtime = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year);
+
+			if ($starttime <> $endtime)
+			{
+				$rowspan = (int)(($endtime - $starttime) / 3600);
+				$mins = (int)((($endtime - $starttime) / 60) % 60);
+			
+				if ($mins <> 0)
+				{
+					$rowspan += 1;
+				}
+			
+				if ($rowspan > $rowspan_arr[$ind] && $rowspan > 1)
+				{
+					$rowspan_arr[$ind] = $rowspan;
+				}
+			}
+		}
+
+		function print_day($year,$month,$day)
+		{
+			global $phpgw, $phpgw_info;
+
+			$this->bo->store_to_cache($year,$month,$day);
+
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_unknowns('keep');
+
+			$templates = Array(
+				'day_cal'			=>	'day_cal.tpl'
+			);
+   	   $p->set_file($templates);
+			$p->set_block('day_cal','day','day');
+			$p->set_block('day_cal','day_row','day_row');
+			$p->set_block('day_cal','day_event','day_event');
+			$p->set_block('day_cal','day_time','day_time');
+
+			if (! $this->bo->prefs['calendar']['workdaystarts'] &&
+				 ! $this->bo->prefs['calendar']['workdayends'])
+			{
+				
+				$phpgw->preferences->add('calendar','workdaystarts',8);
+				$phpgw->preferences->add('calendar','workdayends',16);
+				$phpgw->preferences->save_repository();
+				$this->bo->prefs['calendar']['workdaystarts'] = 8;
+				$this->bo->prefs['calendar']['workdayends'] = 16;
+			}
+
+			$t_format = $this->bo->prefs['common']['time_format'];
+			$phpgw->browser->browser();
+			$browser_agent = $phpgw->browser->get_agent();
+			if($browser_agent == 'MOZILLA')
+			{
+				if($t_format == '12')
+				{
+					$time_width=12;
+				}
+				else
+				{
+					$time_width=8;
+				}
+			}
+			else
+			{
+				if($t_format == '12')
+				{
+					$time_width=10;
+				}
+				else
+				{
+					$time_width=7;
+				}
+			}
+			$var = Array(
+				'time_width'		=> $time_width,
+				'time_bgcolor'		=>	$phpgw_info['theme']['navbar_bg'],
+				'font_color'		=>	$phpgw_info['theme']['bg_text'],
+				'time_border_color'	=> $phpgw_info['theme']['navbar_text'],
+				'font'				=>	$phpgw_info['theme']['font']
+			);
+
+			$p->set_var($var);
+
+			$first_hour = (int)$this->bo->prefs['calendar']['workdaystarts'];
+			$last_hour  = (int)$this->bo->prefs['calendar']['workdayends'];
+
+			for ($i=0;$i<24;$i++)
+			{
+				$this->rowspan_arr[$i] = 0;
+			}
+
+			$events = Array(
+				CreateObject('calendar.calendar_item')
+			);
+			$date_to_eval = sprintf("%04d%02d%02d",$year,$month,$day);
+	echo "DATE TO EVAL : $date_to_eval<br>\n";
+	echo "ITEMS FOUND : ".count($this->bo->cached_events[$date_to_eval])."<br>\n";
+
+	while(list($cached_date,$event) = each($this->bo->cached_events))
+	{
+		echo "Cached Events for : $cached_date : ".count($event)."<br>\n";
+	}
+	
+			$time = Array();
+
+			$cellcolor = $phpgw_info['theme']['row_on'];
+			$daily = $this->bo->set_week_array($this->bo->datetime->get_weekday_start($year, $month, $day),$cellcolor,True);
+
+//			$events = $this->bo->cached_events[$date_to_eval];
+
+	echo "Extra params for $date_to_eval : ".$daily[$date_to_eval]['extra']."<br>\n";
+
+			if($this->bo->cached_events[$date_to_eval])
+      	{
+				$events = $this->bo->cached_events[$date_to_eval];
+				$c_events = count($events);
+	echo "Looping $c_events times<br>\n";
+				for($i=0;$i<$c_events;$i++)
+				{
+					$this->html_for_day($events[$i],$first_hour,$last_hour,$time,$month,$day,$year,$rowspan,$rowspan_arr);
+				}
+			}
+
+			// squish events that use the same cell into the same cell.
+			// For example, an event from 8:00-9:15 and another from 9:30-9:45 both
+			// want to show up in the 8:00-9:59 cell.
+			$rowspan = 0;
+			$last_row = -1;
+			for ($i=0;$i<24;$i++)
+			{
+				if ($rowspan > 1)
+				{
+					if (isset($time[$i]) && strlen($time[$i]) > 0)
+					{
+						$rowspan_arr[$last_row] += $rowspan_arr[$i];
+						if ($rowspan_arr[$i] <> 0)
+						{
+							$rowspan_arr[$last_row] -= 1;
+						}
+						$time[$last_row] .= $time[$i];
+						$time[$i] = '';
+						$rowspan_arr[$i] = 0;
+					}
+					$rowspan--;
+				}
+				elseif ($rowspan_arr[$i] > 1)
+				{
+					$rowspan = $rowspan_arr[$i];
+					$last_row = $i;
+				}
+			}
+
+			$holiday_names = $daily[$date_to_eval]['holidays'];
+			if(!$holiday_names)
+			{
+				$bgcolor = $phpgw->nextmatchs->alternate_row_color();
+			}
+			else
+			{
+				$bgcolor = $phpgw_info['theme']['bg04'];
+				while(list($index,$name) = each($holiday_names))
+				{
+					$time[99] = '<center>'.$name.'</center>'.$time[99];
+				}
+			}
+
+			if (isset($time[99]) && strlen($time[99]) > 0)
+			{
+				$var = Array(
+					'event'		=>	$time[99],
+					'bgcolor'	=>	$bgcolor
+				);
+				$p->set_var($var);
+				$p->parse('item','day_event',False);
+
+				$var = Array(
+					'open_link'		=>	'',
+					'time'			=>	'&nbsp;',
+					'close_link'	=>	''
+				);
+				$p->set_var($var);
+			
+				$p->parse('item','day_time',True);
+				$p->parse('row','day_row',True);
+				$p->set_var('item','');
+			}
+			$rowspan = 0;
+			for ($i=$first_hour;$i<=$last_hour;$i++)
+			{
+				$dtime = $this->bo->build_time_for_display($i * 10000);
+				$p->set_var('extras','');
+				$p->set_var('event','&nbsp');
+				if ($rowspan > 1)
+				{
+					// this might mean there's an overlap, or it could mean one event
+					// ends at 11:15 and another starts at 11:30.
+					if (isset($time[$i]) && strlen($time[$i]))
+					{
+						$p->set_var('event',$time[$i]);
+						$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
+						$p->parse('item','day_event',False);
+					}
+					$rowspan--;
+				}
+				elseif (!isset($time[$i]) || !strlen($time[$i]))
+				{
+					$p->set_var('event','&nbsp;');
+					$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
+					$p->parse('item','day_event',False);
+				}
+				else
+				{
+					$rowspan = intval($rowspan_arr[$i]);
+					if ($rowspan > 1)
+					{
+						$p->set_var('extras',' rowspan="'.$rowspan.'"');
+					}
+					$p->set_var('event',$time[$i]);
+					$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
+					$p->parse('item','day_event',False);
+				}
+			
+				$open_link = ' - ';
+				$close_link = '';
+			
+				if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
+				{
+					$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
+					if ($this->bo->prefs['common']['timeformat'] == '12' && $i >= 12)
+					{
+						$new_hour += 12;
+					}
+				
+					$new_minute = substr($dtime,strpos($dtime,':')+1,2);
+	
+					$open_link .= '<a href="'.$this->page('edit',
+									  '&date='.$date_to_eval.'&hour='.$new_hour
+									. '&minute='.$new_minute).'">';
+								
+					$close_link = '</a>';
+				}
+
+				$var = Array(
+					'open_link'		=>	$open_link,
+					'time'			=>	(intval(substr($dtime,0,strpos($dtime,':'))) < 10 ? '0'.$dtime : $dtime),
+					'close_link'	=>	$close_link
+				);
+	
+				$p->set_var($var);
+			
+				$p->parse('item','day_time',True);
+				$p->parse('row','day_row',True);
+				$p->set_var('event','');
+				$p->set_var('item','');
+			}	// end for
+			return $p->fp('out','day');
+		}	// end function
 	}
 ?>

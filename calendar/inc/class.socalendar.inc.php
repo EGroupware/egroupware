@@ -1,8 +1,10 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - addressbook                                               *
+  * phpGroupWare - Calendar                                                  *
   * http://www.phpgroupware.org                                              *
-  * Written by Joseph Engo <jengo@mail.com>                                  *
+  * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
+  *          http://www.radix.net/~cknudsen                                  *
+  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -14,22 +16,43 @@
 
 	class socalendar
 	{
+		var $debug = False;
 		var $cal;
-		var $rights;
-
 		var $db;
-		
 		var $owner;
 		var $datetime;
+		var $filter;
+		var $cat_id;
 
-		function socalendar()
+		function socalendar($owner=0,$filter='',$cat_id='')
 		{
-			global $phpgw, $rights, $owner;
+			global $phpgw;
 
 			$this->db = $phpgw->db;
-			$this->rights = $rights;
-			if(isset($owner)) { $this->owner = $owner; }
 			$this->datetime = CreateObject('phpgwapi.datetime');
+			if($owner == 0)
+			{
+				$this->owner = $phpgw_info['user']['account_id'];
+			}
+			else
+			{
+				$this->owner = $owner;
+			}
+
+			if($filter != '')
+			{
+				$this->filter = $filter;
+			}
+
+			if($cat_id != '')
+			{
+				$this->cat_id = $cat_id;
+			}
+			if($this->debug)
+			{
+				echo 'SO Filter : '.$this->filter."<br>\n";
+				echo 'SO cat_id : '.$this->cat_id."<br>\n";
+			}
 		}
 
 		function makeobj()
@@ -45,21 +68,24 @@
 		function read_entry($id)
 		{
 			$this->makeobj();
-			if ($this->rights & PHPGW_ACL_READ)
-			{
-				return $this->cal->fetch_event($id);
-			}
-			else
-			{
-				$rtrn = array('No access' => 'No access');
-				return $rtrn;
-			}
+			return $this->cal->fetch_event($id);
 		}
 
 		function list_events($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endDay='')
 		{
 			$this->makeobj();
-			return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$this->datetime->tz_offset);
+
+			$extra = '';
+			if(strpos($this->filter,'private'))
+			{
+				$extra .= 'AND phpgw_cal.is_public=0 ';
+			}
+
+			if($this->cat_id)
+			{
+				$extra .= 'AND phpgw_cal.category = '.$this->cat_id.' ';
+			}
+			return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset);
 		}
 
 		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday)
@@ -76,8 +102,24 @@
 			$sql = "AND (phpgw_cal.cal_type='M') "
 				. 'AND (phpgw_cal_user.cal_login='.$this->owner.' '
 				. 'AND (phpgw_cal.datetime >= '.$starttime.') '
-				. 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
-				. 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+				. 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) ';
+
+			if(strpos($this->filter,'private'))
+			{
+				$sql .= 'AND phpgw_cal.is_public=0 ';
+			}
+
+			if($this->cat_id)
+			{
+				$sql .= 'AND phpgw_cal.category = '.$this->cat_id.' ';
+			}
+
+			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+
+			if($this->debug)
+			{
+				echo "SO list_repeated_events : SQL : ".$sql."<br>\n";
+			}
 
 			$events = $this->get_event_ids(True,$sql);
 
@@ -101,15 +143,24 @@
 			return $this->cal->get_event_ids($include_repeats,$sql);
 		}
 
-		function add_entry($userid,$fields)
+		function add_entry($event)
 		{
 			$this->makeobj();
-			if ($this->rights & PHPGW_ACL_ADD)
-			{
-				$this->cal->add($userid,$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
-			}
-			return;
+			$this->cal->store_event($event);
 		}
+
+		function delete_entry($id)
+		{
+			$this->makeobj();
+			$this->cal->delete_event($id);
+		}
+
+		function expunge()
+		{
+			$this->makeobj();
+			$this->cal->expunge();
+		}
+
 
 		function get_lastid()
 		{
@@ -128,67 +179,6 @@
 			}
 			return;
 		}
-
-		function delete_entry($ab_id)
-		{
-			$this->makeobj();
-			if ($this->rights & PHPGW_ACL_DELETE)
-			{
-				$this->cal->delete($ab_id);
-			}
-			return;
-		}
-
-		/* Begin Holiday functions */
-		function save_holiday($holiday)
-		{
-			if(isset($holiday['hol_id']) && $holiday['hol_id'])
-			{
-//				echo "Updating LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
-				$sql = "UPDATE phpgw_cal_holidays SET name='".$holiday['name']."', mday=".$holiday['mday'].', month_num='.$holiday['month_num'].', occurence='.$holiday['occurence'].', dow='.$holiday['dow'].', observance_rule='.intval($holiday['observance_rule']).' WHERE hol_id='.$holiday['hol_id'];
-			}
-			else
-			{
-//				echo "Inserting LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
-				$sql = 'INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow,observance_rule) '
-						. "VALUES('".strtoupper($holiday['locale'])."','".$holiday['name']."',".$holiday['mday'].','.$holiday['month_num'].','.$holiday['occurence'].','.$holiday['dow'].','.intval($holiday['observance_rule']).")";
-			}
-			$this->db->query($sql,__LINE__,__FILE__);
-		}
-
-		function read_holidays($sql)
-		{
-			global $phpgw;
-			
-			$this->db->query($sql,__LINE__,__FILE__);
-			$holidays = Array();
-			while($this->db->next_record())
-			{
-				$holidays[] = Array(
-					'index'				=> $this->db->f('hol_id'),
-					'locale'				=> $this->db->f('locale'),
-					'name'				=> $phpgw->strip_html($this->db->f('name')),
-					'day'					=> intval($this->db->f('mday')),
-					'month'				=> intval($this->db->f('month_num')),
-					'occurence'			=> intval($this->db->f('occurence')),
-					'dow'					=> intval($this->db->f('dow')),
-					'observance_rule'	=> $this->db->f('observance_rule')
-				);
-			}
-
-			return $holidays;
-		}
-
-		/* Private functions */
-		/* Holiday */
-		function count_of_holidays($locale)
-		{
-			$sql = "SELECT count(*) FROM phpgw_cal_holidays WHERE locale='".$locale."'";
-			$this->db->query($sql,__LINE__,__FILE__);
-			$this->db->next_record();
-			return $this->db->f(0);
-		}
-		/* End Holiday functions */
 
 		/* Begin mcal equiv functions */
 		function get_cached_event()

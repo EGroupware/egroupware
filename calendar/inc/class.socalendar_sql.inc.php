@@ -213,7 +213,7 @@ class socalendar_ extends socalendar__
 		return $this->event;
 	}
 
-	function list_events($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endDay='',$tz_offset)
+	function list_events($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endDay='',$extra='',$tz_offset=0)
 	{
 		if(!isset($this->stream))
 		{
@@ -235,7 +235,7 @@ class socalendar_ extends socalendar__
 		}
 
 		$order_by = 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
-		return $this->get_event_ids(False,$user_where.$startDate.$endDate.$order_by);
+		return $this->get_event_ids(False,$user_where.$startDate.$endDate.$extra.$order_by);
 	}
 
 	function append_event()
@@ -508,20 +508,6 @@ class socalendar_ extends socalendar__
 		}
 	}
 
-	function normalizeminutes(&$minutes)
-	{
-		$hour = 0;
-		$min = intval($minutes);
-		if($min >= 60)
-		{
-			$hour += $min / 60;
-			$min %= 60;
-		}
-		settype($minutes,'integer');
-		$minutes = $min;
-		return $hour;
-	}
-
 	function splittime_($time)
 	{
 		global $phpgw_info;
@@ -539,61 +525,9 @@ class socalendar_ extends socalendar__
 		return $temp;
 	}
 
-	function splittime($time,$follow_24_rule=True)
-	{
-		global $phpgw_info;
-
-		$temp = array('hour','minute','second','ampm');
-		$time = strrev($time);
-		$second = intval(strrev(substr($time,0,2)));
-		$minute = intval(strrev(substr($time,2,2)));
-		$hour   = intval(strrev(substr($time,4)));
-		$hour += $this->normalizeminutes(&$minute);
-		$temp['second'] = $second;
-		$temp['minute'] = $minute;
-		$temp['hour']   = $hour;
-		$temp['ampm']   = '  ';
-		if($follow_24_rule == True)
-		{
-			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '24')
-			{
-				return $temp;
-			}
-		
-			$temp['ampm'] = 'am';
-		
-			if ((int)$temp['hour'] > 12)
-			{
-				$temp['hour'] = (int)((int)$temp['hour'] - 12);
-				$temp['ampm'] = 'pm';
-   	   }
-      	elseif ((int)$temp['hour'] == 12)
-	      {
-				$temp['ampm'] = 'pm';
-			}
-		}
-		return $temp;
-	}
-
 	function date_to_epoch($d)
 	{
 		return $this->localdates(mktime(0,0,0,intval(substr($d,4,2)),intval(substr($d,6,2)),intval(substr($d,0,4))));
-	}
-
-	function build_time_for_display($fixed_time)
-	{
-		global $phpgw_info;
-		
-		$time = $this->splittime($fixed_time);
-		$str = '';
-		$str .= $time['hour'].':'.((int)$time['minute']<=9?'0':'').$time['minute'];
-		
-		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-		{
-			$str .= ' ' . $time['ampm'];
-		}
-		
-		return $str;
 	}
 }
 ?>

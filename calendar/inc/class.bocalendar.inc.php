@@ -20,6 +20,7 @@
 			'read_entries'	=> True,
 			'read_entry'	=> True,
 			'add_entry'	=> True,
+			'delete_entry' => True,
 			'update_entry'	=> True
 		);
 
@@ -32,13 +33,12 @@
 		var $day;
 		var $month;
 		var $year;
+		var $prefs;
 
 		var $owner;
 		var $holiday_color;
 		var $printer_friendly = False;
 
-		var $holiday_locales;
-		var $holidays;
 		var $cached_holidays;
 		
 		var $filter;
@@ -47,16 +47,18 @@
 		
 		var $use_session = False;
 
-		function bocalendar($session=False)
+		function bocalendar($session=0)
 		{
-			global $phpgw, $phpgw_info, $date, $year, $month, $day;
+//			if(floor(phpversion()) == 4)
+//			{
+				global $phpgw, $phpgw_info, $date, $year, $month, $day, $owner, $filter, $fcat_id, $friendly;
+//			}
 
 			$phpgw->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
-			$this->so = CreateObject('calendar.socalendar');
-			$this->datetime = $this->so->datetime;
+			$this->grants = $phpgw->acl->get_grants('calendar');
 
-			$this->filter = ' '.$phpgw_info['user']['preferences']['calendar']['defaultfilter'].' ';
+			if($this->debug) { echo "Read Use_Session : (".$session.")<br>\n"; }
 
 			if($session)
 			{
@@ -64,16 +66,21 @@
 				$this->use_session = True;
 			}
 
-			if(isset($this->so->owner))
+			if($this->debug) { echo "BO Filter : (".$this->filter.")<br>\n"; }
+			if(isset($owner))
 			{
-				$this->owner = $this->so->owner;
+				$this->owner = $owner;
 			}
-			else
+			elseif(!$this->owner)
 			{
-				$this->so->owner = $this->owner;
+				$this->owner = $phpgw_info['user']['account_id'];
 			}
-				
-			if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+
+			$this->prefs['common']    = $phpgw_info['user']['preferences']['common'];
+			$this->prefs['calendar']    = $phpgw_info['user']['preferences']['calendar'];
+
+
+			if ($this->prefs['common']['timeformat'] == '12')
 			{
 				$this->users_timeformat = 'h:i a';
 			}
@@ -84,15 +91,18 @@
 
 			$this->holiday_color = (substr($phpgw_info['theme']['bg07'],0,1)=='#'?'':'#').$phpgw_info['theme']['bg07'];
 
-			global $filter, $fcat_id, $owner, $month, $day, $year, $friendly;
-
 			if($friendly == 1)
 			{
 				$this->printer_friendly = True;
 			}
 
-			if(isset($filter))   { $this->filter = ' '.chop($filter).' '; }
-			if(isset($fcat_id))  { $this->cat_id = $fcat_id; }
+			if(isset($filter))   { $this->filter = $filter; }
+			if(isset($cat_id))  { $this->cat_id = $cat_id; }
+
+			if(!isset($this->filter))
+			{
+				$this->filter = ' '.$this->prefs['calendar']['defaultfilter'].' ';
+			}
 
 			if(isset($date))
 			{
@@ -106,15 +116,32 @@
 				{
 					$this->year = $year;
 				}
+				elseif($this->year == 0)
+				{
+					$this->year = date('Y',time());
+				}
 				if(isset($month))
 				{
 					$this->month = $month;
+				}
+				elseif($this->month == 0)
+				{
+					$this->month = date('m',time());
 				}
 				if(isset($day))
 				{
 					$this->day = $day;
 				}
+				elseif($this->day == 0)
+				{
+					$this->day = date('d',time());
+				}
 			}
+			
+			$this->so = CreateObject('calendar.socalendar',$this->owner,$this->filter,$this->cat_id);
+			$this->datetime = $this->so->datetime;
+			
+			if($this->debug) { echo "BO Filter : (".$this->filter.")<br>\n"; }
 		}
 
 		function save_sessiondata($data)
@@ -140,233 +167,221 @@
 			$this->year   = $data['year'];
 			$this->month  = $data['month'];
 			$this->day    = $data['day'];
-
-		}
-
-		function strip_html($dirty = '')
-		{
-
-			if ($dirty == '')
-			{
-				$dirty = array();
-				return $dirty;
-			}
-			else
-			{
-				global $phpgw;
-				for($i=0;$i<count($dirty);$i++)
-				{
-					while (list($name,$value) = each($dirty[$i]))
-					{
-						$cleaned[$i][$name] = $phpgw->strip_html($dirty[$i][$name]);
-					}
-				}
-				return $cleaned;
-			}
 		}
 
 		function read_entry($id)
 		{
-			return $this->so->read_entry($id);
+			if($this->check_perms(PHPGW_ACL_READ))
+			{
+				return $this->so->read_entry($id);
+			}
 		}
 
+		function add_entry($event)
+		{
+			if($this->check_perms(PHPGW_ACL_ADD))
+			{
+				$this->so->add_entry($event);
+			}
+		}
+
+		function update_entry($event)
+		{
+			if($this->check_perms(PHPGW_ACL_EDIT))
+			{
+				$this->so->add_entry($event);
+			}
+		}
+
+		function delete_entry($id)
+		{
+			if($this->check_perms(PHPGW_ACL_DELETE))
+			{
+				$this->so->delete_entry($id);
+			}
+		}
+
+		function expunge()
+		{
+			if($this->check_perms(PHPGW_ACL_DELETE))
+			{
+				$this->so->expunge();
+			}
+		}
 		/* Private functions */
 
-		/* Begin Calendar functions */
-		function auto_load_holidays($locale)
+		function read_holidays()
 		{
-			if($this->so->count_of_holidays($locale) == 0)
-			{
-				global $phpgw_info, $HTTP_HOST, $SERVER_PORT;
-		
-				@set_time_limit(0);
+			$holiday = CreateObject('calendar.boholiday',$this->year,$this->owner);
+			$this->cached_holidays = $holiday->read_holiday();
+			unset($holiday);
+		}
 
-				/* get the file that contains the calendar events for your locale */
-				/* "http://www.phpgroupware.org/cal/holidays.US";                 */
-				$network = CreateObject('phpgwapi.network');
-				if(isset($phpgw_info['server']['holidays_url_path']) && $phpgw_info['server']['holidays_url_path'] != 'localhost')
+		function can_user_edit($event)
+		{
+			$can_edit = False;
+		
+			if(($event->owner == $this->owner) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
+			{
+				if($event->public != True)
 				{
-					$load_from = $phpgw_info['server']['holidays_url_path'];
+					if($this->check_perms(PHPGW_ACL_PRIVATE) == True)
+					{
+						$can_edit = True;
+					}
 				}
 				else
 				{
-					$pos = strpos(' '.$phpgw_info['server']['webserver_url'],$HTTP_HOST);
-					if($pos == 0)
-					{
-						switch($SERVER_PORT)
-						{
-							case 80:
-								$http_protocol = 'http://';
-								break;
-							case 443:
-								$http_protocol = 'https://';
-								break;
-						}
-						$server_host = $http_protocol.$HTTP_HOST.$phpgw_info['server']['webserver_url'];
-					}
-					else
-					{
-						$server_host = $phpgw_info['server']['webserver_url'];
-					}
-					$load_from = $server_host.'/calendar/setup';
-				}
-//				echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale)."<br>\n";
-				$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale));
-				if (!$lines)
-				{
-					return false;
-				}
-				$c_lines = count($lines);
-				for($i=0;$i<$c_lines;$i++)
-				{
-//					echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
-					$holiday = explode("\t",$lines[$i]);
-					if(count($holiday) == 7)
-					{
-						$holiday['locale'] = $holiday[0];
-						$holiday['name'] = addslashes($holiday[1]);
-						$holiday['mday'] = intval($holiday[2]);
-						$holiday['month_num'] = intval($holiday[3]);
-						$holiday['occurence'] = intval($holiday[4]);
-						$holiday['dow'] = intval($holiday[5]);
-						$holiday['observance_rule'] = intval($holiday[6]);
-						$holiday['hol_id'] = 0;
-						$this->so->save_holiday($holiday);
-					}
+					$can_edit = True;
 				}
 			}
+			return $can_edit;
 		}
 
-		function build_holiday_query()
+		function fix_update_time(&$time_param)
 		{
-			@reset($this->holiday_locales);
-			if(count(@$this->holiday_locales) == 0)
+			global $phpgw_info;
+			
+			if ($this->prefs['common']['timeformat'] == '12')
 			{
-				return False;
-			}
-			$sql = 'SELECT * FROM phpgw_cal_holidays WHERE locale in (';
-			$find_it = '';
-			while(list($key,$value) = each($this->holiday_locales))
-			{
-				if($find_it)
+				if ($time_param[ampm] == 'pm')
 				{
-					$find_it .= ',';
-				}
-				$find_it .= "'".$value."'";
-			}
-			$sql .= $find_it.')';
-
-			return $sql;
-		}
-
-		function sort_holidays_by_date($holidays)
-		{
-			$c_holidays = count($holidays);
-			for($outer_loop=0;$outer_loop<($c_holidays - 1);$outer_loop++)
-			{
-				for($inner_loop=$outer_loop;$inner_loop<$c_holidays;$inner_loop++)
-				{
-					if($holidays[$outer_loop]['date'] > $holidays[$inner_loop]['date'])
+					if ($time_param[hour] <> 12)
 					{
-						$temp = $holidays[$inner_loop];
-						$holidays[$inner_loop] = $holidays[$outer_loop];
-						$holidays[$outer_loop] = $temp;
+						$time_param[hour] += 12;
 					}
 				}
+				elseif ($time_param[ampm] == 'am')
+				{
+					if ($time_param[hour] == 12)
+					{
+						$time_param[hour] -= 12;
+					}
+				}
+		
+				if($time_param[hour] > 24)
+				{
+					$time_param[hour] -= 12;
+				}
 			}
-			return $holidays;
 		}
 
-		function set_holidays_to_date($holidays)
+		function validate_update($event)
 		{
-			$new_holidays = Array();
-			for($i=0;$i<count($holidays);$i++)
+			$error = 0;
+			// do a little form verifying
+			if ($event->title == '')
 			{
-//	echo "Setting Holidays Date : ".date('Ymd',$holidays[$i]['date'])."<br>\n";
-				$new_holidays[date('Ymd',$holidays[$i]['date'])][] = $holidays[$i];
+				$error = 40;
 			}
-			return $new_holidays;
+			elseif (($this->datetime->time_valid($event->start->hour,$event->start->min,0) == False) || ($this->datetime->time_valid($event->end->hour,$event->end->min,0) == False))
+			{
+				$error = 41;
+			}
+			elseif (($this->datetime->date_valid($event->start->year,$event->start->month,$event->start->mday) == False) || ($this->datetime->date_valid($event->end->year,$event->end->month,$event->end->mday) == False) || ($this->datetime->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 1))
+			{
+				$error = 42;
+			}
+			elseif ($this->datetime->date_compare($event->start->year,$event->start->month,$event->start->mday,$event->end->year,$event->end->month,$event->end->mday) == 0)
+			{
+				if ($this->datetime->time_compare($event->start->hour,$event->start->min,0,$event->end->hour,$event->end->min,0) == 1)
+				{
+					$error = 42;
+				}
+			}
+			return $error;
 		}
 
-		function read_holiday()
+		function overlap($starttime,$endtime,$participants,$owner=0,$id=0)
 		{
 			global $phpgw, $phpgw_info;
 
-			if(isset($this->cached_holidays))
+			$retval = Array();
+			$ok = False;
+
+			if($starttime == $endtime && $phpgw->common->show_date($starttime,'Hi') == 0)
 			{
-				return $this->cached_holidays;
+				$endtime = mktime(23,59,59,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->datetime->tz_offset;
 			}
 
-			if(@$phpgw_info['user']['preferences']['common']['country'])
-			{
-				$this->holiday_locales[] = $phpgw_info['user']['preferences']['common']['country'];
-			}
-			elseif(@$phpgw_info['user']['preferences']['calendar']['locale'])
-			{
-				$this->holiday_locales[] = $phpgw_info['user']['preferences']['calendar']['locale'];
-			}
-			
-			if($this->owner != $phpgw_info['user']['account_id'])
-			{
-				$owner_pref = CreateObject('phpgwapi.preferences',$owner);
-				$owner_prefs = $owner_pref->read_repository();
-				if(@$owner_prefs['common']['country'])
-				{
-					$this->holiday_locales[] = $owner_prefs['common']['country'];
-				}
-				elseif(@$owner_prefs['calendar']['locale'])
-				{
-					$this->holiday_locales[] = $owner_prefs['calendar']['locale'];
-				}
-				unset($owner_pref);
-			}
+			$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
+					.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$starttime.' < phpgw_cal.edatetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
+					.  'OR (('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
+					.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime))) ';
 
-			@reset($this->holiday_locales);
-			if($phpgw_info['server']['auto_load_holidays'] == True)
+			if(count($participants) > 0)
 			{
-				while(list($key,$value) = each($this->holiday_locales))
+				$p_g = '';
+				if(count($participants))
 				{
-					$this->auto_load_holidays($value);
+					$users = Array();
+					while(list($user,$status) = each($participants))
+					{
+						$users[] = $user;
+					}
+					if($users)
+					{
+						$p_g .= 'phpgw_cal_user.cal_login in ('.implode(',',$users).')';
+					}
+				}
+				if($p_g)
+				{
+					$sql .= ' AND (' . $p_g . ')';
 				}
 			}
-
-			$sql = $this->build_holiday_query();
-			if($sql == False)
+      
+			if($id)
 			{
-				return array();
+				$sql .= ' AND phpgw_cal.cal_id <> '.$id;
 			}
-			$holidays = $this->so->read_holidays($sql);
-			$temp_locale = $phpgw_info['user']['preferences']['common']['country'];
-			for($i=0;$i<count($holidays);$i++)
+
+			$sql .= ' ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+
+			$events = $this->so->get_event_ids(False,$sql);
+			if($events == False)
 			{
-				$c = $i;
-				$phpgw_info['user']['preferences']['common']['country'] = $holidays[$i]['locale'];
-				$holidaycalc = CreateObject('calendar.holidaycalc');
-				$holidays[$i]['date'] = $holidaycalc->calculate_date($holidays[$i], $holidays, $this->year, $this->datetime, $c);
-				unset($holidaycalc);
-				if($c != $i)
+				return false;
+			}
+		
+			$db2 = $phpgw->db;
+
+			for($i=0;$i<count($events);$i++)
+			{
+				$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE cal_id='.$events[$i],__LINE__,__FILE__);
+				if($db2->num_rows() == 0)
 				{
-					$i = $c;
+					$retval[] = $events[$i];
+					$ok = True;
+				}
+				else
+				{
+					$db2->next_record();
+					if($db2->f('recur_type') <> MCAL_RECUR_MONTHLY_MDAY)
+					{
+						$retval[] = $events[$i];
+						$ok = True;
+					}
 				}
 			}
-			$this->holidays = $this->sort_holidays_by_date($holidays);
-			$this->cached_holidays = $this->set_holidays_to_date($this->holidays);
-			$phpgw_info['user']['preferences']['common']['country'] = $temp_locale;
-			return $this->holidays;
-		}
-		/* End Calendar functions */
-
-
-		function check_perms($needed,$user=0)
-		{
-			global $grants;
-			if($user == 0)
+			if($ok == True)
 			{
-				return ($this->so->rights & $needed);
+				return $retval;
 			}
 			else
 			{
-				return ($grants[$user] & $needed);
+				return False;
+			}
+		}
+
+		function check_perms($needed,$user=0)
+		{
+			if($user == 0)
+			{
+				return ($this->grants[$this->owner] & $needed);
+			}
+			else
+			{
+				return ($this->grants[$user] & $needed);
 			}
 		}
 
@@ -374,7 +389,7 @@
 		{
 			global $phpgw_info;
 		
-			if(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True)
+			if(isset($this->prefs['calendar']['display_status']) && $this->prefs['calendar']['display_status'] == True)
 			{
 				return ' ('.$user_status.')';
 			}
@@ -406,10 +421,10 @@
 
 		function is_private($event,$owner,$field='')
 		{
-			global $phpgw, $phpgw_info, $grants;
+			global $phpgw, $phpgw_info;
 
-			if($owner == 0) { $owner = $phpgw_info['user']['account_id']; }
-			if ($owner == $phpgw_info['user']['account_id'] || ($grants[$owner] & PHPGW_ACL_PRIVATE) || ($event->public == 1))
+			if($owner == 0) { $owner = $this->owner; }
+			if ($owner == $phpgw_info['user']['account_id'] || $this->check_perms(PHPGW_ACL_PRIVATE,$owner) || ($event->public == 1))
 			{
 				$is_private  = False;
 			}
@@ -455,6 +470,72 @@
 			return $str;
 		}
 
+		function normalizeminutes(&$minutes)
+		{
+			$hour = 0;
+			$min = intval($minutes);
+			if($min >= 60)
+			{
+				$hour += $min / 60;
+				$min %= 60;
+			}
+			settype($minutes,'integer');
+			$minutes = $min;
+			return $hour;
+		}
+
+		function splittime($time,$follow_24_rule=True)
+		{
+			global $phpgw_info;
+
+			$temp = array('hour','minute','second','ampm');
+			$time = strrev($time);
+			$second = intval(strrev(substr($time,0,2)));
+			$minute = intval(strrev(substr($time,2,2)));
+			$hour   = intval(strrev(substr($time,4)));
+			$hour += $this->normalizeminutes(&$minute);
+			$temp['second'] = $second;
+			$temp['minute'] = $minute;
+			$temp['hour']   = $hour;
+			$temp['ampm']   = '  ';
+			if($follow_24_rule == True)
+			{
+				if ($this->prefs['common']['timeformat'] == '24')
+				{
+					return $temp;
+				}
+		
+				$temp['ampm'] = 'am';
+		
+				if ((int)$temp['hour'] > 12)
+				{
+					$temp['hour'] = (int)((int)$temp['hour'] - 12);
+					$temp['ampm'] = 'pm';
+   		   }
+      		elseif ((int)$temp['hour'] == 12)
+	      	{
+					$temp['ampm'] = 'pm';
+				}
+			}
+			return $temp;
+		}
+
+		function build_time_for_display($fixed_time)
+		{
+			global $phpgw_info;
+		
+			$time = $this->splittime($fixed_time);
+			$str = '';
+			$str .= $time['hour'].':'.((int)$time['minute']<=9?'0':'').$time['minute'];
+		
+			if ($this->prefs['common']['timeformat'] == '12')
+			{
+				$str .= ' ' . $time['ampm'];
+			}
+		
+			return $str;
+		}
+	
 		function sort_event($event,$date)
 		{
 			$inserted = False;
@@ -619,14 +700,36 @@
 			}	// end for loop
 		}	// end function
 
-		function store_to_cache($syear,$smonth,$sday)
+		function store_to_cache($syear,$smonth,$sday,$eyear=0,$emonth=0,$eday=0)
 		{
 			global $phpgw, $phpgw_info;
 
-			$edate = mktime(23,59,59,$smonth + 1,$sday + 1,$syear);
-			$eyear = date('Y',$edate);
-			$emonth = date('m',$edate);
-			$eday = date('d',$edate);
+	echo "Start Date : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+
+			if(!$eyear && !$emonth && !$eday)
+			{
+				$edate = mktime(23,59,59,$smonth + 1,$sday + 1,$syear);
+				$eyear = date('Y',$edate);
+				$emonth = date('m',$edate);
+				$eday = date('d',$edate);
+			}
+			else
+			{
+				if(!$eyear)
+				{
+					$eyear = $syear;
+				}
+				if(!$emonth)
+				{
+					$emonth = $smonth + 1;
+				}
+				if(!$eday)
+				{
+					$eday = $sday + 1;
+				}
+				$edate = mktime(23,59,59,$emonth,$eday,$eyear);
+			}
+			
 			$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
 			$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
 
@@ -646,10 +749,10 @@
 				for($i=0;$i<$c_cached_ids;$i++)
 				{
 					$event = $this->so->read_entry($cached_event_ids[$i]);
-					$starttime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset;
-					$endtime = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
+					$starttime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year);
+					$endtime = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year);
 					$this->cached_events[date('Ymd',$starttime)][] = $event;
-					if($this->cached_events[date('Ymd',$endtime)][count($this->cached_events[date('Ymd',$endtime)]) - 1] != $event)
+					if($this->cached_events[date('Ymd',$endtime)][count($this->cached_events[date('Ymd',$starttime)]) - 1] != $event)
 					{
 						$this->cached_events[date('Ymd',$endtime)][] = $event;
 					}
@@ -670,6 +773,105 @@
 				}
 			}
 		}
+
+		/* Begin Appsession Data */
+		function store_to_appsession($event)
+		{
+			global $phpgw;
+			$phpgw->session->appsession('entry','calendar',$event);
+		}
+
+		function restore_from_appsession()
+		{
+			global $phpgw;
+			$this->event_init();
+			$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
+			$this->so->cal->event = $event;
+			return $event;
+		}
+		/* End Appsession Data */
+
+		/* Begin of SO functions */
+		function get_cached_event()
+		{
+			return $this->so->get_cached_event();
+		}
+		
+		function add_attribute($var,$value)
+		{
+			$this->so->add_attribute($var,$value);
+		}
+
+		function event_init()
+		{
+			$this->so->event_init();
+		}
+
+		function set_start($year,$month,$day=0,$hour=0,$min=0,$sec=0)
+		{
+			$this->so->set_start($year,$month,$day,$hour,$min,$sec);
+		}
+
+		function set_end($year,$month,$day=0,$hour=0,$min=0,$sec=0)
+		{
+			$this->so->set_end($year,$month,$day,$hour,$min,$sec);
+		}
+
+		function set_title($title='')
+		{
+			$this->so->set_title($title);
+		}
+
+		function set_description($description='')
+		{
+			$this->so->set_description($description);
+		}
+
+		function set_class($class)
+		{
+			$this->so->set_class($class);
+		}
+
+		function set_category($category='')
+		{
+			$this->so->set_category($category);
+		}
+
+		function set_alarm($alarm)
+		{
+			$this->so->set_alarm($alarm);
+		}
+
+		function set_recur_none()
+		{
+			$this->so->set_recur_none();
+		}
+
+		function set_recur_daily($year,$month,$day,$interval)
+		{
+			$this->so->set_recur_daily($year,$month,$day,$interval);
+		}
+
+		function set_recur_weekly($year,$month,$day,$interval,$weekdays)
+		{
+			$this->so->set_recur_weekly($year,$month,$day,$interval,$weekdays);
+		}
+
+		function set_recur_monthly_mday($year,$month,$day,$interval)
+		{
+			$this->so->set_recur_monthly_mday($year,$month,$day,$interval);
+		}
+
+		function set_recur_monthly_wday($year,$month,$day,$interval)
+		{
+			$this->so->set_recur_monthly_wday($year,$month,$day,$interval);
+		}
+
+		function set_recur_yearly($year,$month,$day,$interval)
+		{
+			$this->so->set_recur_yearly($year,$month,$day,$interval);
+		}
+		/* End of SO functions */
 
 		function set_week_array($startdate,$cellcolor,$weekly)
 		{
@@ -708,7 +910,7 @@
 					$day_image = ' background="'.$phpgw->common->image('calendar','mini_day_block.gif').'"';
 				}
 
-				if($this->printer_friendly && @$phpgw_info['user']['preferences']['calendar']['print_black_white'])
+				if($this->printer_friendly && @$this->prefs['calendar']['print_black_white'])
 				{
 					$extra = '';
 				}
@@ -743,7 +945,7 @@
 					'holidays'	=> $holiday_name,
 					'appts'		=> $appts,
 					'week'		=> $week,
-					'day_image'=> $day_image,
+					'day_image'	=> $day_image,
 					'class'		=> $class
 				);
 			}
