@@ -69,6 +69,10 @@ class bo_resources
 			{
 				$readonlys["bookable[$resource[id]]"] = true;
 			}
+			if (!$resource['buyable'])
+			{
+				$readonlys["buyable[$resource[id]]"] = true;
+			}
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id']);
 		}
 		return $nr;
