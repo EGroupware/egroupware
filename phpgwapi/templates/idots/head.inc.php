@@ -11,19 +11,17 @@
 
 	/* $Id$ */
 
-	
 	if($GLOBALS['phpgw_info']['user']['preferences']['common']['show_generation_time'])
 	{
 		$mtime = microtime(); 
-		$mtime = explode(" ",$mtime); 
+		$mtime = explode(' ',$mtime); 
 		$mtime = $mtime[1] + $mtime[0]; 
 		$GLOBALS['page_start_time'] = $mtime; 
 	}
-	
-	// get used language code
-	$lang_code='en';
 
-	
+	// get used language code
+	$lang_code = 'en';
+
 	$bodyheader = ' bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '" alink="'
 		. $GLOBALS['phpgw_info']['theme']['alink'] . '" link="' . $GLOBALS['phpgw_info']['theme']['link'] . '" vlink="'
 		. $GLOBALS['phpgw_info']['theme']['vlink'] . '"';
@@ -50,21 +48,20 @@
 		</script>
 		<![endif]-->';
 	}
-	
-		if(!$GLOBALS['phpgw_info']['user']['preferences']['common']['disable_slider_effects'])
-		{
-			$slider_effects_src=$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/slidereffects.js';
-			$slider_effects='<script src="'.$slider_effects_src.'" type=text/javascript>
-			</script>';
-		}
-		else
-		{
-			$simple_show_hide_src=$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/simple_show_hide.js';
-			$simple_show_hide='<script src="'.$simple_show_hide_src.'" type=text/javascript>
-			</script>';
-		}
 
-	
+	if(!$GLOBALS['phpgw_info']['user']['preferences']['common']['disable_slider_effects'])
+	{
+		$slider_effects_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/slidereffects.js';
+		$slider_effects = '<script src="'.$slider_effects_src.'" type=text/javascript>
+		</script>';
+	}
+	else
+	{
+		$simple_show_hide_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/simple_show_hide.js';
+		$simple_show_hide = '<script src="'.$simple_show_hide_src.'" type=text/javascript>
+		</script>';
+	}
+
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));

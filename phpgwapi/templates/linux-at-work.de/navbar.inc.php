@@ -53,14 +53,14 @@
 
 		$var['applications'] = $applications;
      
-		$var['home_link'] 	= $GLOBALS['phpgw_info']['navbar']['home']['url'];
+		$var['home_link']    = $GLOBALS['phpgw_info']['navbar']['home']['url'];
 		$var['preferences_link'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
-		$var['logout_link'] 	= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
-		$var['help_link'] 	= $GLOBALS['phpgw_info']['navbar']['about']['url'];
-		$var['lang_welcome']	= lang('welcome');
-		$var['lang_preferences']	= lang('preferences');
-		$var['lang_logout']	= lang('logout');
-		$var['lang_help']	= lang('help');
+		$var['logout_link']  = $GLOBALS['phpgw_info']['navbar']['logout']['url'];
+		$var['help_link']    = $GLOBALS['phpgw_info']['navbar']['about']['url'];
+		$var['lang_welcome'] = lang('welcome');
+		$var['lang_preferences'] = lang('preferences');
+		$var['lang_logout']  = lang('logout');
+		$var['lang_help']    = lang('help');
 
 		// "powered_by_color" and "_size" are is also used by number of current users thing
 		$var['powered_by_size'] = '2';
@@ -82,7 +82,7 @@
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 		{
 			$var['current_users'] = '<a class="main_menu_bottom" href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
-			 	. '">' . lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
+				. '">' . lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
 			$tpl->set_var($var);
 		}
 		else
@@ -93,9 +93,9 @@
 
 		$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
 		$var['user_info_date'] =
-				  lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
-				. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
-				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
+			lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
+			. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
+			. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 		$var['user_info_size'] = '2';
 		$var['user_info_color'] = '#000000';
@@ -145,9 +145,9 @@
 		}
 		$tpl->pfp('out','navbar');
 		// If the application has a header include, we now include it
-		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
 		{
-			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+			list($app,$class,$method) = explode('.',$_GET['menuaction']);
 			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
 			{
 				$GLOBALS[$class]->header();

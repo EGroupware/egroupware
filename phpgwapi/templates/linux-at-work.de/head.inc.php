@@ -19,13 +19,13 @@
 		fclose($fp);
 	}
 
-        $p = createobject('phpgwapi.preferences');
-        $preferences = $p->read_repository();
+	$p = createobject('phpgwapi.preferences');
+	$preferences = $p->read_repository();
 	if(isset($preferences[$GLOBALS['phpgw_info']['flags']['currentapp']]['refreshTime']))
 	{ 
 		$refreshTime = $preferences[$GLOBALS['phpgw_info']['flags']['currentapp']]['refreshTime']*60;
 	}
-	
+
 	$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 	$app = $app ? ' ['.(isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app)).']':'';
 
@@ -36,13 +36,13 @@
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'charset'       => $GLOBALS['phpgw']->translation->charset(),
-		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
-		'app_name'	=> $app,
-		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
-		'bg_color'	=> $GLOBALS['phpgw_info']['theme']['bg_color'],
-		'refreshTime'	=> $refreshTime,
-		'css'		=> $GLOBALS['phpgw']->common->get_css(),
-		'java_script'	=> $GLOBALS['phpgw']->common->get_java_script(),
+		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'],
+		'app_name'      => $app,
+		'body_tags'     => $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
+		'bg_color'      => $GLOBALS['phpgw_info']['theme']['bg_color'],
+		'refreshTime'   => $refreshTime,
+		'css'           => $GLOBALS['phpgw']->common->get_css(),
+		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');
