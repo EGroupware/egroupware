@@ -347,9 +347,16 @@
 			$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
 		}
 
-		if ($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences' && $user['show_help'] != '')
+		if ($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences')	// changes for the admin itself
 		{
-			$show_help = $user['show_help'];	// use it, if admin changes his help-prefs
+			if ($user['show_help'] != '')
+			{
+				$show_help = $user['show_help'];	// use it, if admin changes his help-prefs
+			}
+			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] != $user['lang'])
+			{
+				$GLOBALS['phpgw']->redirect_link('/preferences/preferences.php','appname='.$_GET['appname']);
+			}
 		}
 	}
 	$GLOBALS['phpgw']->session->appsession('session_data','preferences',array(
