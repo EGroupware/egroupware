@@ -9,17 +9,27 @@ account active	admin	es	Cuenta activa
 account has been created	common	es	Cuenta creada
 account has been deleted	common	es	Cuenta borrada
 account has been updated	common	es	Cuenta actualizada
+account preferences	common	es	Preferencias de la Cuenta
 active	admin	es	Activo
 add	common	es	Agregar
+add a single pharse	transy	es	Agregar una sola frase
+add new account	admin	es	Agregar una nueva cuenta
 add new application	admin	es	Agregar nueva aplicación
+add new pharse	transy	es	Agregar nueva frase
 add to addressbook	email	es	Agregar a la libreta de direcciones
 address book	common	es	Libreta de Direcciones
 address book	addressbook	es	Libreta de direcciones
+address book - view	addressbook	es	Libreta de direcciones - ver
 addressbook	common	es	Libreta de direcciones
+addressbook preferences	common	es	Preferencias - Libreta de direcciones
+addsub	todo	es	Agregar Sub
 admin	common	es	Admin
 administration	common	es	Administración
+all	transy	es	Todo
 all records and account information will be lost!	admin	es	Se perderan todos los registros e informacion de cuentas!
 anonymous user	admin	es	Usuario anonimo
+any	transy	es	Cualquiera
+application	transy	es	Aplicación
 application name	admin	es	Nombre de la aplicación
 application title	admin	es	Titulo de la aplicación
 applications	admin	es	Aplicaciones
@@ -44,7 +54,8 @@ bookmarks	common	es	Bookmarks
 brief description	calendar	es	Descripción breve
 calendar	common	es	Calendario
 calendar - add	calendar	es	Calendario - Agregar
-calendar - edit	calendar	es	Calendario - Edicion
+calendar - edit	calendar	es	Calendario - Editar
+calendar preferences	common	es	Preferencias - Calendario
 cancel	common	es	Cancelar
 cancel	filemanager	es	Cancelar
 cc	email	es	CC
@@ -68,6 +79,8 @@ copy_as	filemanager	es	Copiar como
 create	common	es	Crear
 create	filemanager	es	Crear
 create group	admin	es	Crear Groupo
+create lang.sql file	transy	es	Crear archivo lang.sql
+create new langague set	transy	es	Crear nuevo set de lenguaje
 created by	common	es	Creado por
 created by	todo	es	Creado por
 current users	common	es	Usuarios conectados
@@ -78,6 +91,7 @@ date	email	es	Fecha
 date	nntp	es	Fecha
 date due	todo	es	Fecha pautada
 date format	preferences	es	Formato fecha
+days datedue	todo	es	days Fecha pautada
 days repeated	calendar	es	días repetidos
 december	common	es	Diciembre
 default application	preferences	es	Aplicación por defecto
@@ -88,19 +102,26 @@ delete	filemanager	es	Borrar
 description	calendar	es	Descripción
 disabled	admin	es	Deshabilitado
 display	admin	es	Mostrar
+display missing pharases in lang set	transy	es	Mostrar frases perdidas es el set de lenguaje
 done	common	es	Hecho
 download	filemanager	es	Bajar
 do_delete	filemanager	es	Borrar
 duration	calendar	es	Duración
 e-mail	common	es	E-Mail
 e-mail	addressbook	es	E-Mail
+e-mail preferences	common	es	Preferencias - E-Mail
 edit	common	es	Editar
 edit	filemanager	es	Editar
 edit application	admin	es	Editar aplicatión
 edit group	admin	es	Editar Grupo
+email	email	es	E-Mail
 email	common	es	E-Mail
+email account name	email	es	Nombre de cuenta de Email
+email address	email	es	Dirección de Email
+email password	email	es	Contraseña de Email
 email signature	preferences	es	Firma de E-Mail
 enabled	admin	es	Habilitado
+enabled - hidden from navbar	admin	es	Habilitado - Esconder es la Barra
 enter your new password	preferences	es	Entre su nueva contraseña
 entry has been deleted sucessfully	common	es	Entrada borrada exitosamente
 entry updated sucessfully	common	es	Entrada actualizada exitosamente
@@ -131,6 +152,7 @@ friday	common	es	Viernes
 from	email	es	De
 ftp	common	es	FTP
 full description	calendar	es	Descripción completa
+generate new lang.sql file	transy	es	Generar nuevo archivo lang.sql
 generate printer-friendly version	calendar	es	Generar versión para impresion
 global public	common	es	Global Publico
 go!	calendar	es	Ir!
@@ -141,7 +163,7 @@ group has been updated	common	es	Groupo actualizado
 group name	admin	es	Nombre Groupo
 group public	common	es	Groupo Publico
 groups	common	es	Groupos
-groupsfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> En sistemas unix use: chmod 707
+groupsfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> es sistemas unix use: chmod 707
 group_files	filemanager	es	grupo de archivos
 headline sites	admin	es	Sitios encabezados de noticias
 headlines	common	es	Encabezados
@@ -151,7 +173,10 @@ home	common	es	Principal
 home phone	addressbook	es	Tel.Particular
 human resources	common	es	Recursos Humanos
 idle	admin	es	idle
+if applicable	email	es	Si es aplicable
 image	email	es	Imagen
+imap server type	email	es	Tipo de servidor IMAP
+import lang set	transy	es	Importar set de lenguaje
 installed applications	admin	es	Aplicaciones Instaladas
 inventory	common	es	Inventorario
 ip	admin	es	IP
@@ -167,6 +192,7 @@ last page	common	es	ultima pagina
 last time read	admin	es	Ultima lectura
 last updated	todo	es	Ultima Actualización
 last x logins	admin	es	Ultimos %1 logins
+line 2	addressbook	es	Linea 2
 list of current users	admin	es	Lista de usuarios presentes
 listings displayed	admin	es	Listings Mostrados
 login	common	es	Login
@@ -175,12 +201,15 @@ login time	admin	es	Hora de LogOn
 loginid	admin	es	LoginID
 logout	common	es	Logout
 low	common	es	Baja
+mail server	email	es	Servidor de Mail
+mail server type	email	es	Tipo de servidor de Mail
 manager	admin	es	Manager
 march	common	es	Marzo
 max matchs per page	preferences	es	Maximo de coincidencias por pagina
 may	common	es	Mayo
 medium	common	es	Media
 message	email	es	Mensaje
+message	transy	es	Mensaje
 message x	nntp	es	Mensaje %1
 messages	email	es	Mensajes
 minutes	calendar	es	minutos
@@ -202,7 +231,9 @@ new entry	calendar	es	Nueva Entrada
 new entry added sucessfully	common	es	Nueva entrada agregada exitosamente
 new group name	admin	es	Nuevo nombre de grupo
 new message	email	es	Nuevo mensaje
-new password [ leave blank for no change ]	admin	es	Nueva contraseña [ Deje en blanco para NO cambiar ]
+new password [ leave blank for no change ]	admin	es	Nueva contraseña [ Deje es blanco para NO cambiar ]
+new pharse has been added	common	es	Nueva frase agregada
+new pharse has been added	transy	es	Nueva frase agregada
 news file	admin	es	Archivo Noticias
 news headlines	common	es	Encabezados de Noticias
 news reader	common	es	Lector de Noticias
@@ -217,6 +248,7 @@ no	common	es	No
 no	filemanager	es	No
 no matches found.	calendar	es	No se encontraron coincidencias.
 no subject	email	es	Sin Asunto
+non-standard	email	es	No-Estandar
 none	calendar	es	Ninguno
 normal	common	es	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	es	Nota: Esta opcion no cambia la contraseña de su email. Esto deberá ser hecho manualmente.
@@ -225,8 +257,9 @@ november	common	es	Noviembre
 no_file_name	filemanager	es	No se especificó un nombre de archivo
 october	common	es	Octubre
 ok	common	es	OK
-on *nix systems please type: x	common	es	En sistemas *nix por favor escriba: %1
+on *nix systems please type: x	common	es	es sistemas *nix por favor escriba: %1
 only yours	common	es	solamente los suyos
+original	transy	es	Original
 other number	addressbook	es	Otro Numero
 pager	addressbook	es	Pager
 participants	calendar	es	Participantes
@@ -237,9 +270,12 @@ percent of users that logged out	admin	es	Porcentaje de usuarios que se deslogue
 permissions	admin	es	Permisos
 permissions this group has	admin	es	Permisos que tiene este grupo
 permissions to the files/users directory	common	es	permisos a los archivos/directorios de usuario
+pharse in english	transy	es	Frase es Ingles
+pharse in new langague	transy	es	Frase es el nuevo lenguaje
+phpgroupware login	login	es	phpGroupWare login
 please select a message first	email	es	Por favor seleccione un mensaje primero
 please x by hand	common	es	Por favor %1 manualmente
-please, select a new theme	preferences	es	Por favor, seleccione un nuevo tema
+"please, select a new theme"	preferences	es	"Por favor, seleccione un nuevo tema"
 powered by phpgroupware version x	common	es	Potenciado por <a href=http://www.phpgroupware.org>phpGroupWare</a> versión %1
 preferences	common	es	Preferencias
 previous	email	es	Previo
@@ -249,8 +285,11 @@ printer friendly	calendar	es	Versión impresión
 priority	common	es	Prioridad
 private	common	es	Privado
 private_files	filemanager	es	Archivos privados
-re-enter password	admin	es	Re-ingresar contraseña
-re-enter your password	preferences	es	Re-Entre su contraseña
+project description	todo	es	Descripción del proyecto
+re-enter password	admin	es	Re-Ingresar contraseña
+re-enter your password	preferences	es	Re-Ingrese su contraseña
+record access	addressbook	es	Acceso al registro
+record owner	addressbook	es	Dueño del registro
 remove all users from this group	admin	es	Borrar todos los usuarios de este grupo
 rename	common	es	Renombrar
 rename	filemanager	es	Renombrar
@@ -269,32 +308,39 @@ save	filemanager	es	Grabar
 search	common	es	Buscar
 search results	calendar	es	Resultados de la busqueda
 section	email	es	Sección
+select application	transy	es	Seleccione aplicación
 select different theme	preferences	es	Seleccione un tema diferente
 select headline news sites	preferences	es	Seleccione sites de Encabezados de Noticias
+select langague to generate for	transy	es	Seleccionar lenguaje para el cual generar
 select permissions this group will have	admin	es	Selecciones los permisos que tendra este grupo
 select users for inclusion	admin	es	Seleccionar usuarios para inclución
+select which application for this pharse	transy	es	seleccione que aplicación para esta frase
+select which langauge for this pharse	transy	es	seleccione que lenguaje para esta frase
 send	email	es	Enviar
+send deleted messages to the trash	email	es	Enviar mensaje borrados a el Trash
 september	common	es	Setiembre
 session has been killed	common	es	Sesion terminada
 show all	common	es	mostrar todos
 show all groups	nntp	es	Mostrar todos los grupos
-show birthday reminders on main screen	preferences	es	Mostrar recordatorios de cumpleaños en pantalla principal
-show current users on navigation bar	preferences	es	Mostrar usuarios conectados en la barra de navegación
+show birthday reminders on main screen	preferences	es	Mostrar recordatorios de cumpleaños es pantalla principal
+show current users on navigation bar	preferences	es	Mostrar usuarios conectados es la barra de navegación
 show groups containing	nntp	es	Mostrar grupos conteniendo
-show high priority events on main screen	preferences	es	Mostar eventos de alta prioridad en pantalla principal
-show new messages on main screen	preferences	es	Mostar nuevos mensajes en pantalla principal
+show high priority events on main screen	preferences	es	Mostar eventos de alta prioridad es pantalla principal
+show new messages on main screen	preferences	es	Mostar nuevos mensajes es pantalla principal
 show text on navigation icons	preferences	es	Mostrar descripción sobre los iconos
 showing x	common	es	Mostrando %1
 showing x - x of x	common	es	showing %1 - %2 of %3
 site	admin	es	Sitios
 size	email	es	Tamaño
-sorry, that group name has already been taking.	admin	es	Este nombre de grupo ya esta siendo utilizado.
-sorry, the follow users are still a member of the group x	admin	es	Los siguientes usuarios aun son miembros del grupo %1
-sorry, there was a problem proccesing your request.	common	es	Hubo un problema al procesar su pedido.
-sorry, your login has expired	login	es	Su login a caducado.
+"sorry, that group name has already been taking."	admin	es	Este nombre de grupo ya esta siendo utilizado.
+"sorry, the follow users are still a member of the group x"	admin	es	Los siguientes usuarios aun son miembros del grupo %1
+"sorry, there was a problem proccesing your request."	common	es	Hubo un problema al procesar su pedido.
+"sorry, your login has expired"	login	es	Su login a caducado.
+source language	transy	es	Lenguaje Origen
 specify_file_name	filemanager	es	Debe especificar un nombre para el archivo que desea crear
 state	addressbook	es	Estado
-status	todo	es	Estado
+status	todo	es	Estatus
+status	admin	es	Estatus
 street	addressbook	es	Calle
 su	calendar	es	Do
 subject	email	es	Asunto
@@ -304,6 +350,7 @@ submit changes	admin	es	Enviar Cambios
 sun	calendar	es	Dom
 sunday	common	es	Domingo
 switch current folder to	email	es	Cambiar la presente carpeta a
+target language	transy	es	Lenguaje Destino
 th	calendar	es	J
 that loginid has already been taken	admin	es	Ese login ID ya esta siendo utilizado
 that site has already been entered	admin	es	Este sitio ya fue entrado
@@ -314,7 +361,7 @@ the two passwords are not the same	preferences	es	Las dos contraseñas son distin
 they must be removed before you can continue	admin	es	Estos deben ser removidos para poder continuar
 this folder is empty	email	es	Esta carpeta esta vacia
 this month	calendar	es	Este mes
-this server is located in the x timezone	preferences	es	Este servidor se encuentra en la zona horaria 
+this server is located in the x timezone	preferences	es	Este servidor se encuentra es la zona horaria
 this week	calendar	es	Esta semana
 threads	nntp	es	Threads
 thu	calendar	es	Jue
@@ -323,6 +370,7 @@ time	common	es	Hora
 time format	preferences	es	Formato hora
 time zone offset	preferences	es	Zona horaria
 title	admin	es	Titulo
+title	addressbook	es	Titulo
 to	email	es	Para
 to correct this error for the future you will need to properly set the	common	es	Para corregir este error para el futuro necesitara setear apropiadamente el
 today	calendar	es	Hoy
@@ -335,6 +383,8 @@ todo list - edit	todo	es	Lista de tareas - editar
 tommorow is x's birthday.	common	es	Mañana es el cumpleaños de %1.
 total	common	es	Total
 total records	admin	es	Total de registros
+translation	transy	es	Traducción
+translation management	common	es	Manejador de Traducción
 trouble ticket system	common	es	Sistema de Ticket de problemas
 tu	calendar	es	M
 tue	calendar	es	Mar
@@ -345,17 +395,20 @@ update	nntp	es	Actualizar
 updated	common	es	Actualizado
 upload	filemanager	es	Subir
 urgency	todo	es	Urgencia
+url	addressbook	es	URL
 use cookies	login	es	utilizar cookies
+use custom settings	email	es	Usar seteos personalizados
 use end date	calendar	es	Usar fecha final
 user accounts	admin	es	Cuentas de usuario
 user groups	admin	es	Grupos de usuarios
 username	login	es	Usuario
 users	common	es	usuarios
-usersfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> En sistemas unix use: chmod 707
+usersfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> es sistemas unix use: chmod 707
 view	common	es	Ver
 view access log	admin	es	Ver log de acceso
 view sessions	admin	es	Ver sesiones
 view this entry	calendar	es	Ver esta entrada
+view/edit/delete all pharses	transy	es	Ver/editar/borrar todas las frases
 we	calendar	es	Mi
 wed	calendar	es	Mie
 wednesday	common	es	Miercoles
@@ -374,13 +427,13 @@ yearly	calendar	es	Anual
 yes	common	es	Si
 yes	filemanager	es	Si
 you are required to change your password durring your first login	common	es	Se requiere que cambie la contraseña durante su primer login.
-you have 1 high priority event on your calendar today.	common	es	Ud. tiene 1 evento de alta prioridad en su calendario para hoy.
+you have 1 high priority event on your calendar today.	common	es	Ud. tiene 1 evento de alta prioridad es su calendario para hoy.
 you have 1 new message!	common	es	Ud. tiene 1 nuevo mensaje!
 you have been successfully logged out	login	es	Ud. se ha deslogueado exitosamente.
 you have entered an invailed date	todo	es	ha entrado una fecha no valida
 you have not entered a\nbrief description	calendar	es	Ud. no ha ingresado una\nBrief descripción
 you have not entered a\nvalid time of day.	calendar	es	Ud. no ha ingresado una\nvalid hora valida.
-you have x high priority events on your calendar today.	common	es	Ud. tiene %1 eventos de alta prioridad en su calendario para hoy.
+you have x high priority events on your calendar today.	common	es	Ud. tiene %1 eventos de alta prioridad es su calendario para hoy.
 you have x new messages!	common	es	Ud. tiene %1 nuevos mensajes!
 you must add at least 1 permission to this account	admin	es	Debe agregar por lo menos 1 permiso para esta cuenta.
 you must enter a base url	admin	es	Debe entrar una dirección url base
@@ -393,11 +446,11 @@ you must enter one or more search keywords	calendar	es	Ud. debe entrar una o mas
 you must enter the number of listings display	admin	es	Debe entrar el numero de elementos listados a mostrar
 you must enter the number of minutes between reload	admin	es	Debe entrar el numero de minutos entre recargas
 you must select a file type	admin	es	Debe seleccionar un tipo de archivo
-your current theme is: x	preferences	es	Su actual tema es: 
+your current theme is: x	preferences	es	Su actual tema es:
 your message as been sent	common	es	Su mensaje fue enviado
 your search returned 1 match	common	es	su busqueda retorno 1 coincidencia
 your search returned x matchs	common	es	su busqueda retorno %1 coincidencias
 your session could not be verified.	login	es	Su sesión no pudo ser verificada.
 your settings have been updated	common	es	Sus paramatros han sido actualizados
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	es	Sus horas sugeridas de <B> %1 - %2 </B> estan en conflicto con las siguientes entradas en el calendario:
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	es	Sus horas sugeridas de <B> %1 - %2 </B> estan es conflicto con las siguientes entradas es el calendario:
 zip code	addressbook	es	Codigo Postal
