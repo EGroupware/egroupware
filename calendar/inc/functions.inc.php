@@ -103,9 +103,10 @@
   // LC: links back to an entry view for $id using $pic
   function link_to_entry($id, $pic, $description)
   {
-    global $phpgw, $phpgw_info, $friendly;
+    global $phpgw, $phpgw_info, $phpgw_flags, $friendly, $appname;
     if (! $friendly)
-       echo "<A HREF=\"".$phpgw->link("view.php","id=$id")."\"><img src=\""
+       echo "<A HREF=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]
+			."/".$phpgw_flags["currentapp"]."/view.php","id=$id")."\"><img src=\""
 	   . $phpgw_info["server"]["app_images"]."/$pic\" "
 	   . "border=\"0\" alt=\"".htmlentities($description)."\"></a>";
   }
