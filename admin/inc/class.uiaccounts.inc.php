@@ -1197,10 +1197,9 @@
 			$groups_select		= '';
 			$primary_group_select	= '';
 			reset($allGroups);
-			while (list($key,$value) = each($allGroups)) 
-			{
 
-			// new way of multiple select from Mauro Donadello - NDEE
+			while (list($key,$value) = each($allGroups))
+			{
 				$groups_select .= '<input type="checkbox"  name="account_groups[]" value="' . $value['account_id'] . '"';
 				for ($i=0; $i<count($userGroups); $i++)
 				{
@@ -1212,20 +1211,10 @@
 					{
 						$groups_select .= ' checked';
 					}
-
-// replaced by checkboxes above
-//				$groups_select .= '<option value="' . $value['account_id'] . '"';
-//				for ($i=0; $i<count($userGroups); $i++) 
-//				{
-//					/* print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>"; */
-//					if (@$userGroups[$i]['account_id'] == $value['account_id'])
-//					{
-//						$groups_select .= ' selected';
-//					}
-//				}
-
-				$groups_select .= '>' . $value['account_lid'] . '</option>'."\n";
+				}
+				$groups_select .= '>' . $value['account_lid'] . "<br/>\n";
 			}
+
 
 			if (!$userData['account_primary_group'])
 			{
@@ -1278,10 +1267,9 @@
 				$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color(), $part[0], $part[1]);
 			}
 
-// new version for multiple select from Mauro Donadello - NDEE
 			$var = Array(
 				'groups_select'
-				=> '<div style="overflow:auto; height:120px;width:150px>"' .  
+				=> '<div style="overflow:auto; height:100px;width:150px>"' .  
 				"\n".$groups_select. '</div>' . "\n",
 				'primary_group_select'
 				=> '<select  
@@ -1294,7 +1282,6 @@
 				);
 
 /*
-replaced with checkboxes
 			$var = Array(
 				'groups_select'
 					=> '<select name="account_groups[]" multiple>'."\n".$groups_select.'</select>'."\n",
@@ -1305,8 +1292,8 @@ replaced with checkboxes
 				'lang_app' => lang('application'),
 				'lang_acl' => lang('enabled').' / '.lang('ACL'),
 			);
-*/
 
+*/
 			$t->set_var($var);
 
 			// create the menu on the left, if needed
