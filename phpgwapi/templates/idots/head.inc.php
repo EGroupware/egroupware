@@ -89,7 +89,7 @@
 		'theme_css'     => $theme_css,
 		'css'           => $GLOBALS['phpgw']->common->get_css(),
 		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
-		'js_foldertree'	=> $js_foldertree,
+		'js_foldertree'	=> $js_foldertree
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');
