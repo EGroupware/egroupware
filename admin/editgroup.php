@@ -46,11 +46,20 @@
      }
 
      if (! $error) {
-//        $phpgw->db->lock(array("accounts","groups","preferences","config","applications","phpgw_hooks","phpgw_sessions"));
-        $apps = CreateObject('phpgwapi.applications');
-        $app_string = $apps->add_group($group_id,$n_group_permissions);
-        $apps->save_group($group_id);
-        $apps_after = explode(":",$app_string);
+        $phpgw->db->lock(array("accounts","groups","preferences","config","applications","phpgw_hooks","phpgw_sessions","phpgw_acl"));
+        $apps = CreateObject('phpgwapi.applications',array(intval($group_id),'g'));
+        $apps->read_installed_apps();
+        $apps_before = $apps->read_account_specific();
+        $apps->account_apps = Array(Array());
+        while($app = each($n_group_permissions)) {
+          if($app[1]) {
+            $apps->add_app($app[0]);
+            if(!$apps_before[$app[0]]) {
+              $apps_after[] = $app[0];
+            }
+          }
+        }
+        $apps->save_apps();
 
         if($old_group_name <> $n_group) {
           $phpgw->db->query("update groups set group_name='$n_group' where group_id=$group_id");
@@ -104,7 +113,7 @@
           $cd = 33;
         }
 
-//        $phpgw->db->unlock();
+        $phpgw->db->unlock();
 
         Header("Location: " . $phpgw->link("groups.php","cd=$cd"));
         $phpgw->common->phpgw_exit();
@@ -140,8 +149,9 @@
      }
 
      $apps = CreateObject('phpgwapi.applications');
-     $apps->read_group_apps($group_id);
-     $db_perms = $apps->get_group_array($group_id);
+     $apps->account_id = $group_id;
+     $apps->account_type = 'g';
+     $db_perms = $apps->enabled_apps();
   }
 
   $phpgw->db->query("select * from groups where group_id=$group_id");
@@ -180,7 +190,7 @@
   $sorted_apps = $phpgw_info["apps"];
   @asort($sorted_apps);
   @reset($sorted_apps);
-  while ($permission = each($phpgw_info["apps"])) {
+  while ($permission = each($sorted_apps)) {
      if ($permission[1]["enabled"]) {
         $perm_display[$i][0] = $permission[0];
         $perm_display[$i][1] = $permission[1]["title"];
