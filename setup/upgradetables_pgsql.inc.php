@@ -305,6 +305,7 @@
 
     if ($currentver == "0.9.3pre6") {
        $db->query("alter table addressbook add ab_url varchar(255)");
+       $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
        $currentver = "0.9.3pre7";
     }
       
