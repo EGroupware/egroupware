@@ -63,40 +63,29 @@ et_media				<span>that has to be identical to our app-name</span>
 			+ images	<span>here goes our images / icons</span>
 </pre>
 
-<h2>2. registering the app manualy</h2>
-<p>To be able to see the app in the navbar and call it we need to do the following steps (later this can be done via setup)</p>
-<ol>
-	<li>login to phpgw as an admin
-	<li>call the admin app (the first icon with the tower)
-	<li>start Admin/Applications
-	<li>click on Add
-	<li>type in 'et_media' for the app-name and eg. 'eT-Media' for the titel, leave the rest alone and hit Add
-	<li>start Admin/User accounts and enable the new app for your account
-</ol>
-
-<h2>3. creating <b>et_media/setup/setup.inc.php</b></h2>
+<h2>2. creating <b>et_media/setup/setup.inc.php</b></h2>
 <p>That files contains the necessary information for setup to install the app. </p>
 <pre>
 &lt;?php
-	$GLOBALS['setup_info']['et_media']['name']      = 'et_media';
-	$GLOBALS['setup_info']['et_media']['title']     = 'eT-Media';
-	$GLOBALS['setup_info']['et_media']['version']   = '0.9.15.001';
-	$GLOBALS['setup_info']['et_media']['app_order'] = 100;		<span>// at the end</span>
-	$GLOBALS['setup_info']['et_media']['tables']    = array('phpgw_et_media');
-	$GLOBALS['setup_info']['et_media']['enable']    = 1;
+	$setup_info['et_media']['name']      = 'et_media';
+	$setup_info['et_media']['title']     = 'eT-Media';
+	$setup_info['et_media']['version']   = '0.9.15.001';
+	$setup_info['et_media']['app_order'] = 100;		<span>// at the end</span>
+	$setup_info['et_media']['tables']    = array('phpgw_et_media');
+	$setup_info['et_media']['enable']    = 1;
 
 	<span>/* Dependencies for this app to work */</span>
-	$GLOBALS['setup_info']['et_media']['depends'][] = array(
+	setup_info['et_media']['depends'][] = array(
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.13','0.9.14','0.9.15')
 	);
-	$GLOBALS['setup_info']['et_media']['depends'][] = array(	<span>// this is only necessary as long the etemplate-class is not in the api</span>
+	$setup_info['et_media']['depends'][] = array(	<span>// this is only necessary as long the etemplate-class is not in the api</span>
 		 'appname' => 'etemplate',
 		 'versions' => Array('0.9.13','0.9.14','0.9.15')
 	);
 </pre>
 
-<h2>4. setting up the db-table with the db_tools and setup</h2>
+<h2>3. setting up the db-table with the db_tools and setup</h2>
 <p>To enable setup to create a db-table for us and to supply the <b>so_sql</b>-class with the necessary information, we need to define
 the type and size of the fields / columns in our db-table.<br>
 We can use the db-Tools from the etemplate app to create the file for us:</p>
@@ -110,14 +99,12 @@ We can use the db-Tools from the etemplate app to create the file for us:</p>
 	<li>now use [Add Column] to create the necessary fields as shown on the screenshot
 	<li>Click on [Write Table] (If you get the error-message like in the screenshot, you need to give the webserver write-permission
 	to the setup-dir of et_media, leave the write-permission as it is necessary later on too, click on write again)
-	<li>log out and log into setup again and start manage applications
-	<li>eT-Media is shown now as installed but need upgrade, don't select upgrade, check remove and submit
-	<li>the next page should tell you everythings allright so click on go back (or if u use konqueror reload)
-	<li>now for eT-Media only install is offerd, check it and submit
-	<li>you can now log out of setup, out db-table is now created
+	<li>log out and log into setup and start manage applications
+	<li>eT-Media is shown as not installed and only install is offerd, check it and submit
+	<li>you can now log out from setup, the db-table is now created
 </ol>
 
-<h2>5. creating an eTemplates for the edit-dialog</h2>
+<h2>4. creating an eTemplates for the edit-dialog</h2>
 <p>Now we need a nice edit dialog and use the eTemplate editor to set it up:</p>
 
 <img src="editor.gif">
@@ -133,7 +120,7 @@ We can use the db-Tools from the etemplate app to create the file for us:</p>
 <img src="show.gif">
 <p>As you see above i added an application titel, a horizontal rule after it and some space (empty label's). Do so if you want.</p>
 
-<h2>6. setting up the index page</h2>
+<h2>5. setting up the index page</h2>
 <p>The index page is only used if someone clicks on the navbar icon (or on the black cross as we haven't supplied one so far).<br>
 Create the file <b>/et_media/index.php</b> with the following content:</p>
 
@@ -151,7 +138,7 @@ Create the file <b>/et_media/index.php</b> with the following content:</p>
 	exit;
 </pre>
 
-<h2>7. the code of class.et_media.inc.php</h2>
+<h2>6. the code of class.et_media.inc.php</h2>
 <p>As a first step, we only save new entries. The code of the app is in <b>/et_media/inc/class.et_media.inc.php</b>:</p>
 
 <pre>
@@ -321,7 +308,7 @@ with the content the user put into the fields of the dialog.</p>
 <p>Now we are able to store entries in the db and retrive them by searching the database for patterns in the different fields.<br>
 We are only lacking some way to show if we get more than one match on a search, that's what we are going to implement next:</p>
 
-<h2>8. adding a list-dialog for the search-function</h2>
+<h2>7. adding a list-dialog for the search-function</h2>
 <p>First we need to create an other eTemplate to show the list: <b>'et_media.show'</b></p>
 
 <img src="list.gif">
@@ -438,7 +425,7 @@ We are only lacking some way to show if we get more than one match on a search, 
 <p>Of course we have to add this buttons to the template 'et_media.edit'. I trust you can add 2 Submitbuttons with the names
 'cancel' and 'delete', a Label and a nice helpmessages by now without looking at a screenshot ;-).</p>
 
-<h2>9. creating the english lang-file</h2>
+<h2>8. creating the english lang-file</h2>
 <p>To get rid of the stars '*' behind each Label and to be able to translate the app in other languages we need to create a lang-file<br>
 There are 2 possibilties to create it automaticaly:</p>
 <ol>
@@ -465,13 +452,13 @@ There are 2 possibilties to create it automaticaly:</p>
 	}
 </pre>
 
-<h2>10. dumping the eTemplate to a file for distribution</h2>
+<h2>9. dumping the eTemplate to a file for distribution</h2>
 <p>To be able to put the eTemplates in CVS and to ship them with your app, you need to dump them in a file first.
 <p>This is done in the eTemplate editor by putting the app-name or an template-name in the Name field and clicking on the button
 [Dump4Setup]. This creates the file <b>et_media/setup/etemplates.inc.php</b>. The etemplate-class loads this file whenever it finds
 a new version automaticaly.</p>
 
-<h2>11. further information</h2>
+<h2>10. further information</h2>
 <ol>
 	<li>the <a href="referenz.html">referenz-documentation</a> of the eTemplates
 	<li>for all functions and parameters of the <b>etemplate</b>-class look in the comments (yes there are comments) of the files:
