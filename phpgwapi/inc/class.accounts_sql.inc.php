@@ -49,14 +49,12 @@
 			$this->data['account_lid']       = $this->db->f('account_lid');
 			$this->data['firstname']         = $this->db->f('account_firstname');
 			$this->data['lastname']          = $this->db->f('account_lastname');
-			$this->data['fullname']          = $this->db->f('account_firstname') . ' '
-														. $this->db->f('account_lastname');
+			$this->data['fullname']          = $this->db->f('account_firstname') . ' ' . $this->db->f('account_lastname');
 			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
 			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
 			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires']           = $this->db->f('account_expires');
-			$this->data['file_space']           = $this->db->f('account_file_space');
 			return $this->data;
 		}
 
@@ -65,7 +63,7 @@
 			$this->db->query("UPDATE phpgw_accounts SET account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
 				. $this->data['status'] . "', account_expires='" . $this->data['expires']
-				. "', account_file_space='" . $this->data['file_space'] . "' WHERE account_id='"
+				. "' WHERE account_id='"
 				. $this->account_id . "'",__LINE__,__FILE__);
 		}
 
@@ -75,7 +73,7 @@
 
 			$account_id = get_account_id($accountid);
 
-			// Do this last since we are depending upon this record to get the account_lid above
+			/* Do this last since we are depending upon this record to get the account_lid above */
 			$tables_array = Array('phpgw_accounts');
 			$this->db->lock($tables_array);
 			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
@@ -109,7 +107,7 @@
 					$whereclause = "WHERE account_type = 'g'";
 					break;
 				default:
-					$whereclause = "";
+					$whereclause = '';
 			}
 
 			if ($query)
@@ -136,7 +134,7 @@
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
 			}
-			elseif ($start == 0 || $start && !$offset)
+			elseif ($start)
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
 			}
@@ -145,7 +143,8 @@
 				$this->db->query($sql,__LINE__,__FILE__);
 			}
 
-			while ($this->db->next_record()) {
+			while ($this->db->next_record())
+			{
 				$accounts[] = Array(
 					'account_id'        => $this->db->f('account_id'),
 					'account_lid'       => $this->db->f('account_lid'),
@@ -153,8 +152,7 @@
 					'account_firstname' => $this->db->f('account_firstname'),
 					'account_lastname'  => $this->db->f('account_lastname'),
 					'account_status'    => $this->db->f('account_status'),
-					'account_expires'   => $this->db->f('account_expires'),
-					'account_file_space'	=> $this->db->f('account_file_space')
+					'account_expires'   => $this->db->f('account_expires')
 				);
 			}
 			return $accounts;
@@ -226,19 +224,19 @@
 		function create($account_info)
 		{
 			$this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status, account_expires, account_file_space) values ('" . $account_info['account_lid']
+				. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_info['account_lid']
 				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
-				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "','" . $account_info['account_expires'] . "','" . $account_info['account_file_space']
+				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "','" . $account_info['account_expires']
 				. "')",__LINE__,__FILE__);
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
-			global $phpgw, $phpgw_info;
+			global $phpgw;
 
-			if (! $expiredate)
+			if (!$expiredate)
 			{
-				// expire in 30 days by default
+				/* expire in 30 days by default */
 				$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
 			}
 
@@ -249,8 +247,7 @@
 				'account_firstname' => '',
 				'account_lastname'  => '',
 				'account_status'    => $account_status,
-				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate)),
-				'account_file_space'   => $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type']
+				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
 			);
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
@@ -259,7 +256,7 @@
 			if ($default_prefs == False)
 			{
 				$default_prefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
-//				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+/*				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}'; */
 				$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
 			}
 

@@ -25,7 +25,6 @@
 
 	class accounts extends accounts_
 	{
-
 		var $memberships = Array();
 		var $members = Array();
 

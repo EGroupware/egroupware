@@ -24,10 +24,11 @@
 
   /* $Id$ */
 
-  	// Dont know where to put this (seek3r)
-	// This is where it belongs (jengo)
-	// This is where it ended up (milosch) 
-	/* Since LDAP will return system accounts, there are a few we don't want to login. */
+  	/* Dont know where to put this (seek3r)
+	 This is where it belongs (jengo)
+	 This is where it ended up (milosch) 
+	 Since LDAP will return system accounts, there are a few we don't want to login.
+	*/
 	$phpgw_info['server']['global_denied_users'] = array(
 		'root'     => True, 'bin'      => True, 'daemon'   => True,
 		'adm'      => True, 'lp'       => True, 'sync'     => True,
@@ -43,7 +44,7 @@
 		'qmailr'   => True, 'qmails'   => True, 'rpc'      => True,
 		'rpcuser'  => True, 'amanda'   => True, 'apache'   => True,
 		'pvm'      => True, 'squid'    => True, 'ident'    => True,
-		'nscd'     => True, 'mailnull' => True, 'cyrus'	   => True
+		'nscd'     => True, 'mailnull' => True, 'cyrus'    => True
 	);
 
 	class accounts_
@@ -62,7 +63,7 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			// get a ldap connection handle
+			/* get an ldap connection handle */
 			$ds = $phpgw->common->ldapConnect();
 
 			// search the dn for the given uid
@@ -70,12 +71,12 @@
 			$allValues = ldap_get_entries($ds, $sri);
 
 			/* Now dump it into the array; take first entry found */
-			$this->data['account_id']	= $allValues[0]['uidnumber'][0];
-			$this->data['account_lid'] 	= $allValues[0]['uid'][0];
-			$this->data['account_dn']  	= $allValues[0]['dn'];
-			$this->data['firstname']   	= $allValues[0]['givenname'][0];
-			$this->data['lastname']    	= $allValues[0]['sn'][0];
-			$this->data['fullname']    	= $allValues[0]['cn'][0];
+			$this->data['account_id']  = $allValues[0]['uidnumber'][0];
+			$this->data['account_lid'] = $allValues[0]['uid'][0];
+			$this->data['account_dn']  = $allValues[0]['dn'];
+			$this->data['firstname']   = $allValues[0]['givenname'][0];
+			$this->data['lastname']    = $allValues[0]['sn'][0];
+			$this->data['fullname']    = $allValues[0]['cn'][0];
 			if ($phpgw_info['server']['ldap_extra_attributes'])
 			{
 				$this->data['homedirectory']  = $allValues[0]['homedirectory'][0];
@@ -89,7 +90,6 @@
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
 			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires'] = -1;
-			$this->data['file_space']	 = $this->db->f('account_file_space');
 
 			return $this->data;
 		}
@@ -100,13 +100,13 @@
 
 			$ds = $phpgw->common->ldapConnect();
 
-			// search the dn for the given uid
+			/* search the dn for the given uid */
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uidnumber='.$this->account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry['cn']		    = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
-			$entry['sn']		    = $this->data['lastname'];
-			$entry['givenname']		= $this->data['firstname'];
+			$entry['cn']        = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+			$entry['sn']        = $this->data['lastname'];
+			$entry['givenname'] = $this->data['firstname'];
 
 			if ($phpgw_info['server']['ldap_extra_attributes'])
 			{
@@ -117,19 +117,19 @@
 			while (list($key,$val) = each($entry))
 			{
 				$tmpentry = '';
-				$tmpentry[$key] = trim($val); // must trim!
-				//echo '<br>'.$key.' '.$val;
+				$tmpentry[$key] = trim($val); /* must trim! */
+				/* echo '<br>'.$key.' '.$val; */
 				if ($tmpentry[$key] && $key)
 				{
 					if (!$allValues[0][$key][0])
 					{
-						// attribute was not in LDAP, add it
+						/* attribute was not in LDAP, add it */
 						ldap_mod_add($ds, $allValues[0]['dn'], $tmpentry);
 					}
 					else
 					{
-						// attribute was in LDAP, modify it
-						//echo $val.' ';
+						/* attribute was in LDAP, modify it */
+						/* echo $val.' '; */
 						ldap_modify($ds, $allValues[0]['dn'], $tmpentry);
 					}
 				}
@@ -137,7 +137,7 @@
 
 			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "', account_file_space='" . $this->data['file_space']
+				. $this->data['status']
 				. "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 		}
 
@@ -156,7 +156,7 @@
 				$del = ldap_delete($ds, $allValues[0]['dn']);
 			}
 
-			// Do this last since we are depending upon this record to get the account_lid above
+			/* Do this last since we are depending upon this record to get the account_lid above */
 			$tables_array = Array('phpgw_accounts');
 			$this->db->lock($tables_array);
 			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
@@ -219,8 +219,7 @@
 						'account_type' => $this->db->f('account_type'),
 						'account_firstname' => $allValues[0]['givenname'][0],
 						'account_lastname' => $allValues[0]['sn'][0],
-						'account_status' => $this->db->f('account_status'),
-						'account_file_space' => $this->db->f('account_file_space'),
+						'account_status' => $this->db->f('account_status')
 					);
 				}
 				else
@@ -231,8 +230,7 @@
 						'account_type' => $this->db->f('account_type'),
 						'account_firstname' => $this->db->f('account_firstname'),
 						'account_lastname' => $this->db->f('account_lastname'),
-						'account_status' => $this->db->f('account_status'),
-						'account_file_space' => $this->db->f('account_file_space'),
+						'account_status' => $this->db->f('account_status')
 					);
 				}
 			}
@@ -303,7 +301,7 @@
 				$ldap_name = 'uidnumber';
 			}
 			else
-			{						
+			{
 				$sql_name  = 'account_lid';
 				$ldap_name = 'uid';
 			}
@@ -322,7 +320,7 @@
 			{
 				$in += 2;
 			}
-			// echo "<p>class_accounts_ldap->exists('$account') == $in</p>";
+			/* echo "<p>class_accounts_ldap->exists('$account') == $in</p>"; */
 			
 			return $in;
 		}
@@ -340,7 +338,7 @@
 
 				$nextid = $phpgw->common->last_id('accounts_ldap',$min,$max);
 
-				// Loop until we find a free id
+				/* Loop until we find a free id */
 				$free = 0;
 				while (!$free)
 				{
@@ -362,13 +360,13 @@
 					return False;
 				}
 				$account_id = $nextid;
-				//echo $account_id;exit;
+				/* echo $account_id;exit; */
 			}
 
 			$this->db->query("INSERT INTO phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status, account_expires, account_file_space) VALUES ('" . $account_id . "','" . $account_info['account_lid']
+				. "account_firstname, account_lastname, account_status, account_expires) VALUES ('" . $account_id . "','" . $account_info['account_lid']
 				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
-				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "'," . $account_info['account_expires'] . ",'" . $account_info['account_file_space'] . "')",__LINE__,__FILE__);
+				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "'," . $account_info['account_expires'] . ")",__LINE__,__FILE__);
 
 
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'],'uid=' . $account_info['account_lid']);
@@ -404,35 +402,36 @@
 
 			if ($allValues[0]['dn'])
 			{
-				// This should keep the password from being overwritten here ?
+				/* This should keep the password from being overwritten here ? */
 				unset($entry['userpassword']);
 
 				while (list($key,$val) = each($entry))
 				{
 					$tmpentry = '';
-					$tmpentry[$key] = trim($val); // must trim!
-					//echo '<br>'.$key.' '.$val;
+					$tmpentry[$key] = trim($val); /* must trim! */
+					/* echo '<br>'.$key.' '.$val; */
 					if ($tmpentry[$key])
 					{
 						if (!$allValues[0][$key][0])
 						{
-							// attribute was not in LDAP, add it
+							/* attribute was not in LDAP, add it */
 							ldap_mod_add($ds, $allValues[0]['dn'], $tmpentry);
 						}
 						else
 						{
-							// attribute was in LDAP, modify it
+							/* attribute was in LDAP, modify it */
 							ldap_modify($ds, $allValues[0]['dn'], $tmpentry);
 						}
 					}
 				}
-
-//				if ($account_type == 'g')
-//				{
-//					$tmpentry['objectclass'][0] = 'top';
-//					$tmpentry['objectclass'][1] = 'posixGroup';
-//				}
-//				else
+				/*
+				if ($account_type == 'g')
+				{
+					$tmpentry['objectclass'][0] = 'top';
+					$tmpentry['objectclass'][1] = 'posixGroup';
+				}
+				else
+				*/
 				if ($account_info['account_type'] == 'u')
 				{
 					$tmpentry['objectclass'][0] = 'top';
@@ -448,12 +447,14 @@
 			}
 			else
 			{
-//				if ($account_type == 'g')
-//				{
-//					$entry['objectclass'][0] = 'top';
-//					$entry['objectclass'][1] = 'posixGroup';
-//				}
-//				else
+				/*
+				if ($account_type == 'g')
+				{
+					$entry['objectclass'][0] = 'top';
+					$entry['objectclass'][1] = 'posixGroup';
+				}
+				else
+				*/
 				if ($account_info['account_type'] == 'u')
 				{
 					$dn = 'uid=' . $account_info['account_lid'] . ',' . $phpgw_info['server']['ldap_context'];
@@ -467,9 +468,9 @@
 
 					ldap_add($ds, $dn, $entry);
 				}
-				//ldap_add($ds, $dn, $entry);
+				/* ldap_add($ds, $dn, $entry); */
 			}
-			//print ldap_error($ds);
+			/* print ldap_error($ds); */
 		}
 
 		function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
@@ -481,7 +482,7 @@
 			if ($defaultprefs =='')
 			{
 				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
-//				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+				/* $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}'; */
 			}
 			$sql = "insert into phpgw_accounts";
 			$sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status, account_type, account_file_space)";
