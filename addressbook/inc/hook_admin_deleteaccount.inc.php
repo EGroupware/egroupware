@@ -9,10 +9,13 @@
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
-  /* $Id$ */
-{
+	/* $Id$ */
 	// Delete all records for a user
+	if (floor($PHP_VERSION ) == 4)
+	{
+		global $accountid;
+	}
+
 	$contacts = CreateObject('phpgwapi.contacts');
 	$contacts->delete_all($accountid);
-}
 ?>
