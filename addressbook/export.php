@@ -84,7 +84,9 @@
 			"address2" => "address2",
 			"address3" => "address3"
 		);
-		$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
+		if ($this->type != 'vcard') {
+			$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
+		}
 
 		$buffer = $this->export_start_file($buffer);
 		

@@ -24,7 +24,7 @@
 	//	$access = $n_groups;
 	//echo $access . "<BR>";
 
-	parsevcard($filename,$access);
+	//parsevcard($filename,$access);
 	// Delete the temp file.
 	unlink($filename);
 	unlink($filename . '.info');

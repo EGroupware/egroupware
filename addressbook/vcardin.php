@@ -30,6 +30,7 @@
   
 	// Some of the methods where borrowed from
 	// Squirrelmail <Luke Ehresman> http://www.squirrelmail.org
+	// (only the uploaddir naming anymore)
 	$sep = SEP;
 
 	$uploaddir = $phpgw_info["server"]["temp_dir"] . $sep;
@@ -48,7 +49,6 @@
 			fputs($ftp,"$uploadedfile_type\n$uploadedfile_name\n");
 			fclose($ftp);
 
-			// This has to be non-interactive in case of a multi-entry vcard.
 			$filename = $uploaddir . $newfilename;
 
 			$contacts = CreateObject("phpgwapi.contacts");
@@ -78,7 +78,6 @@
 			$entry = $vcard->in($buffer);
 			$contacts->add($phpgw_info["user"]["account_id"],$entry);
 
-			//parsevcard($filename,$access);
 			// Delete the temp file.
 			unlink($filename);
 			unlink($filename . ".info");
