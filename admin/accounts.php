@@ -57,7 +57,7 @@
 	$p->set_var('lang_delete',lang('Delete'));
 	$p->set_var('lang_view',lang('View'));
 
-	$account_info = $phpgw->accounts->get_list('accounts',$start,$sort, $order, $query, $total);
+	$account_info = $phpgw->accounts->get_list('accounts',$start,$sort,$order,$query);
 
 	if (! count($account_info))
 	{

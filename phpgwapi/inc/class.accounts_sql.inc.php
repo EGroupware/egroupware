@@ -86,15 +86,6 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			if ($offset)
-			{
-				$limitclause = $phpgw->db->limit($start,$offset);
-			}
-			elseif ($start && !$offset)
-			{
-				$limitclause = $phpgw->db->limit($start);
-			}
-
 			if (! $sort)
 			{
 				$sort = "DESC";
@@ -106,7 +97,7 @@
 			}
 			else
 			{
-				$orderclause = "ORDER BY account_lid,account_lastname,account_firstname ASC";
+				$orderclause = "ORDER BY account_lid ASC";
 			}
 
 			switch($_type)
@@ -140,8 +131,20 @@
 				}
 			}
 
-			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause $limitclause";
-			$this->db->query($sql,__LINE__,__FILE__);
+			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause";
+			if ($offset)
+			{
+				$this->db->limit_query($sql,array($start,$offset),__LINE__,__FILE__);
+			}
+			elseif ($start == 0 || $start && !$offset)
+			{
+				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
+			}
+			else
+			{
+				$this->db->query($sql,__LINE__,__FILE__);
+			}
+
 			while ($this->db->next_record()) {
 				$accounts[] = Array(
 					'account_id'        => $this->db->f('account_id'),
