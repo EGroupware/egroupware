@@ -18,8 +18,7 @@ function check_all(which)
   }
 }
 </script>
-
-<center>
+<div align="center">
 {lang_showing}
 <br>{searchreturn}
 {search_filter}
@@ -50,14 +49,19 @@ function check_all(which)
 <!-- BEGIN addressbook_footer -->{delete_button}
  </form>
  </table>
- <table width="95%" border="0" cellspacing="0" cellpadding="4">
-   <tr bgcolor="{th_bg}"> 
-     <form action="{add_url}"    method="post"><td width="16%"><input type="submit" name="Add"      value="{lang_add}"></td></form>
-     <form action="{vcard_url}"  method="post"><td width="16%"><input type="submit" name="AddVcard" value="{lang_addvcard}"></td></form>
-     <form action="{import_url}" method="post"><td width="16%"><input type="submit" name="Import"   value="{lang_import}"></td></form>
-     <form action="{import_alt_url}" method="post"><td width="16%"><input type="submit" name="Import" value="{lang_import_alt}"></td></form>
-     <form action="{export_url}" method="post"><td width="16%"><input type="submit" name="Export"   value="{lang_export}"></td></form>
+ <table border="0" cellspacing="0" cellpadding="2">
+	 <tr bgcolor="{th_bg}"> 
+     <form action="{add_url}" method="post"><td><input type="submit" name="Add" value="{lang_add}" /></td></form>
+     <form action="{vcard_url}"  method="post"><td><input type="submit" name="AddVcard" value="{lang_addvcard}" /></td></form>
+     <form action="{import_url}" method="post"><td><input type="submit" name="Import" value="{lang_import}" /></td></form>
+</tr>
+ </table>
+<table  border="0" cellspacing="0" cellpadding="2">
+	<tr bgcolor="{th_bg}"> 
+
+<form action="{import_alt_url}" method="post"><td><input type="submit" name="Import" value="{lang_import_alt}" /></td></form>
+     <form action="{export_url}" method="post"><td><input type="submit" name="Export" value="{lang_export}" /></td></form>
    </tr>
  </table>
-</center>
+ </div>
 <!-- END addressbook_footer -->
