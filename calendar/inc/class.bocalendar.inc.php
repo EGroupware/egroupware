@@ -2548,7 +2548,13 @@
 		*/
 		function send_update($msg_type,$to_notify,$old_event,$new_event=False,$user=False)
 		{
-			//echo "<p>bocalendar::send_update(type=$msg_type,to_notify="; print_r($to_notify); echo ", old_event="; print_r($old_event); echo ", new_event="; print_r($new_event); echo ", user=$user)</p>\n";
+			print_debug('bocalendar::send_update()');
+			print_debug('type',$msg_type);
+			print_debug('to_notify',$to_notify);
+			print_debug('old_event',$old_event);
+			print_debug('new_event',$new_event);
+			print_debug('user',$user);
+
 			if (!is_array($to_notify))
 			{
 				$to_notify = array();
@@ -2699,12 +2705,6 @@
 					$details['to-fullname'] = $GLOBALS['phpgw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
 
 					$to = $GLOBALS['phpgw']->accounts->id2name($userid,'account_email');
-					if (empty($to) || $to[0] == '@' || $to[0] == '$')	// we have no valid email-address
-					{
-						//echo "<p>bocalendar::send_update: Empty email adress for user '".$details['to-fullname']."' ==> ignored !!!</p>\n";
-						continue;
-					}
-					print_debug('Email being sent to',$to);
 
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
@@ -2721,6 +2721,7 @@
 
 					list($subject,$body) = split("\n",$GLOBALS['phpgw']->preferences->parse_notify($notify_msg,$details),2);
 					$subject = $send->encode_subject($subject);
+
 					switch($part_prefs['calendar']['update_format'])
  					{
 						case  'extended':
@@ -2732,36 +2733,43 @@
 									$body .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
 								}
 							}
+							$send->ClearAddresses();
+							$send->ClearAttachments();
+							$send->IsHTML(False);
+							$send->AddAddress($to);
+							$send->Body = $body;
+							$send->From = $sender;
+							$send->FromName = $GLOBALS['phpgw_info']['user']['fullname'];
+							$send->Subject = $subject;
+							$returncode = $send->Send();
 							break;
 
-						case 'ical':
-							$content_type = "calendar; method=$method; name=calendar.ics";
-/* would be nice, need to get it working
-							if ($body != '')
-							{
-								$boundary = '----Message-Boundary';
-								$body .= "\n\n\n$boundary\nContent-type: text/$content_type\n".
-									"Content-Disposition: inline\nContent-transfer-encoding: 7BIT\n\n";
-								$content_type = '';
-							}
-*/
-							$body = ExecMethod('calendar.boicalendar.export',array(
+						case  'ical':
+							$ics = ExecMethod('calendar.boicalendar.export',array(
 								'l_event_id'  => $event['id'],
 								'method'      => $method,
 								'chunk_split' => False
 							));
+							$send->ClearAddresses();
+							$send->ClearAttachments();
+							$send->IsHTML(False);
+							$send->AddAddress($to);
+							$send->Body = $body;
+						        if ($method == "request") {
+                                                            $send->AddStringAttachment($ics, "cal.ics", "8bit", "text/calendar; method=$method");
+                                                        }
+							$send->From = $sender;
+							$send->FromName = $GLOBALS['phpgw_info']['user']['fullname'];
+							$send->Subject = $subject;
+							$returncode = $send->Send();
 							break;
 					}
-					$returncode = $send->msg('email',$to,$subject,$body,''/*$msgtype*/,'','','',$sender, $content_type/*,$boundary*/);
-					//echo "<p>send(to='$to', sender='$sender'<br>subject='$subject') returncode=$returncode<br>".nl2br($body)."</p>\n";
-
-					if (!$returncode)	// not nice, but better than failing silently
-					{
-						echo '<p><b>bocalendar::send_update</b>: '.lang("Failed sending message to '%1' #%2 subject='%3', sender='%4' !!!",$to,$userid,htmlspecialchars($subject), $sender)."<br>\n";
-						echo '<i>'.$send->err['desc']."</i><br>\n";
-						echo lang('This is mostly caused by a not or wrongly configured SMTP server. Notify your administrator.')."</p>\n";
-						echo '<p>'.lang('Click %1here%2 to return to the calendar.','<a href="'.$GLOBALS['phpgw']->link('/calendar/').'">','</a>')."</p>\n";
-					}
+					print_debug('update_format',$part_prefs['calendar']['update_format']);
+					print_debug('to',$to);
+					print_debug('sender',$sender);
+					print_debug('subject',$subject);
+					print_debug('returncode',$returncode);
+					print_debug('body',$body);
 				}
 			}
 			unset($send);
@@ -3252,7 +3260,7 @@
 				'mainscreen_showevents' => '0',
 				'summary'         => 'no',
 				'receive_updates' => 'no',
-				'update_format'   => 'extended',	// leave it to extended for now, as iCal kills the message-body
+				'update_format'   => 'extended',
 				'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
 				'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
 				'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
