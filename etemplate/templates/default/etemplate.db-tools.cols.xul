@@ -1,49 +1,51 @@
 <?xml version="1.0"?>
-<grid id="etemplate.db-tools.cols" template="" lang="" group="" version="0.9.13.001">
-  <columns>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-    <column/>
-  </columns>
-  <rows>
-    <row class="nmh">
-      <label value="#" no_lang="1" align="center"/>
-      <label value="ColumnName"/>
-      <label value="Type"/>
-      <label value="Precision"/>
-      <label value="Scale"/>
-      <label value="Nullable"/>
-      <label value="Unique"/>
-      <label value="Primary Key"/>
-      <label value="Indexed"/>
-      <label value="Foreign Key"/>
-      <label value="Default"/>
-      <button label="Add Column" align="center" id="add_column"/>
-    </row>
-    <row class="nmr">
-      <label no_lang="1" align="center" id="Row${row}[n]"/>
-      <textbox size="20" no_lang="1" id="Row${row}[name]" statustext="need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'"/>
-      <menulist>
-        <menupopup no_lang="1" id="Row${row}[type]" statustext="type of the column"/>
-      </menulist>
-      <int align="center" id="Row${row}[precision]" statustext="length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8"/>
-      <int id="Row${row}[scale]" statustext="scale for float"/>
-      <checkbox align="center" id="Row${row}[nullable]" statustext="can have special SQL-value NULL"/>
-      <checkbox align="center" id="Row${row}[uc]" statustext="DB ensures that every row has a unique value in that column"/>
-      <checkbox align="center" id="Row${row}[pk]" statustext="Primary key for the table, gets automaticaly indexed"/>
-      <checkbox align="center" id="Row${row}[ix]" statustext="an indexed column speeds up querys using that column (cost space on the disk !!!)"/>
-      <textbox size="20" align="center" id="Row${row}[fk]" statustext="name of other table where column is a key from"/>
-      <textbox size="20" id="Row${row}[default]" statustext="enter '' for an empty default, nothing mean no default"/>
-      <button label="Delete Column" align="center" id="delete[$row]"/>
-    </row>
-  </rows>
-</grid>
+<overlay>
+  <grid id="etemplate.db-tools.cols" template="" lang="" group="" version="0.9.13.001">
+    <columns>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+    </columns>
+    <rows>
+      <row class="nmh">
+        <label value="#" no_lang="1" align="center"/>
+        <label value="ColumnName"/>
+        <label value="Type"/>
+        <label value="Precision"/>
+        <label value="Scale"/>
+        <label value="Nullable"/>
+        <label value="Unique"/>
+        <label value="Primary Key"/>
+        <label value="Indexed"/>
+        <label value="Foreign Key"/>
+        <label value="Default"/>
+        <button label="Add Column" align="center" id="add_column"/>
+      </row>
+      <row class="nmr">
+        <label no_lang="1" align="center" id="Row${row}[n]"/>
+        <textbox size="20" no_lang="1" id="Row${row}[name]" statustext="need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'"/>
+        <menulist>
+          <menupopup no_lang="1" id="Row${row}[type]" statustext="type of the column"/>
+        </menulist>
+        <int align="center" id="Row${row}[precision]" statustext="length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8"/>
+        <int id="Row${row}[scale]" statustext="scale for float"/>
+        <checkbox align="center" id="Row${row}[nullable]" statustext="can have special SQL-value NULL"/>
+        <checkbox align="center" id="Row${row}[uc]" statustext="DB ensures that every row has a unique value in that column"/>
+        <checkbox align="center" id="Row${row}[pk]" statustext="Primary key for the table, gets automaticaly indexed"/>
+        <checkbox align="center" id="Row${row}[ix]" statustext="an indexed column speeds up querys using that column (cost space on the disk !!!)"/>
+        <textbox size="20" align="center" id="Row${row}[fk]" statustext="name of other table where column is a key from"/>
+        <textbox size="20" id="Row${row}[default]" statustext="enter '' for an empty default, nothing mean no default"/>
+        <button label="Delete Column" align="center" id="delete[$row]"/>
+      </row>
+    </rows>
+  </grid>
+</overlay>
