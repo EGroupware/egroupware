@@ -114,8 +114,6 @@
 		function auth($auth_type='Config')
 		{
 			#phpinfo();
-			#$remoteip   = $_SERVER['REMOTE_ADDR'];
-
 			$FormLogout = get_var('FormLogout',  array('GET','POST'));
 			if(!$FormLogout)
 			{
@@ -145,7 +143,8 @@
 				}
 			}
 
-			/* if(!empty($remoteip) && !$this->checkip($remoteip)) { return False; } */
+			$remoteip   = $_SERVER['REMOTE_ADDR'];
+			if(!empty($remoteip) && !$this->checkip($remoteip)) { return False; }
 
 			/* If FormLogout is set, simply invalidate the cookies (LOGOUT) */
 			switch(strtolower($FormLogout))
@@ -285,11 +284,15 @@
 		function checkip($remoteip='')
 		{
 			$allowed_ips = split(',',$GLOBALS['phpgw_info']['server']['setup_acl']);
-			if(is_array($allowed_ips))
+			if(!empty($GLOBALS['phpgw_info']['server']['setup_acl']) && is_array($allowed_ips) && count($allowed_ips) > 0)
 			{
 				$foundip = False;
-				while(list(,$value) = @each($allowed_ips))
+				foreach($allowed_ips as $value)
 				{
+					if (!preg_match('/^[0-9.]$/',$value))
+					{
+						$value = gethostbyname($value);		// resolve domain-name, eg. a dyndns account
+					}
 					$test = split("\.",$value);
 					if(count($test) < 3)
 					{

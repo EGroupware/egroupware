@@ -40,7 +40,9 @@
   <tr>
     <td colspan="2"><b>{lang_adminpass}</b><br><input type="password" name="setting[HEADER_ADMIN_PASSWORD]" size="30" value="{header_admin_password}"><input type="hidden" name="setting[HEADER_ADMIN_PASS]" value="{header_admin_pass}"></td>
   </tr>
-  <br><br>
+  <tr>
+    <td colspan="2"><b>{lang_setup_acl}</b><br><input type="text" name="setting[setup_acl]" size="30" value="{setup_acl}"></td>
+  </tr>
   <tr>
     <td><b>{lang_persist}</b><br>
       <select type="checkbox" name="setting[db_persistent]">

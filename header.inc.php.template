@@ -22,6 +22,7 @@
 	define('PHPGW_INCLUDE_ROOT','{INCLUDE_ROOT}');
 	$GLOBALS['phpgw_info']['server']['header_admin_user'] = '{HEADER_ADMIN_USER}';
 	$GLOBALS['phpgw_info']['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
+	$GLOBALS['phpgw_info']['server']['setup_acl'] = '{SETUP_ACL}';
 
 	/* eGroupWare domain-specific db settings */{domains}
 	/*
