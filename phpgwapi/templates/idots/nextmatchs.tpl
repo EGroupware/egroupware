@@ -24,7 +24,7 @@
 	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
 	<tr>
 		<td align="{align}">
-			<input type="image" src="{img}" border="{border}" alt="{label}" name="start" value="{start}">
+			<input type="image" src="{img}" border="{border}" title="{label}" name="start" value="{start}">
 		</td>
 	</tr>
 	</table>
@@ -42,7 +42,7 @@
 <td width="2%" align="{align}" valign="top">
 	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
 	<tr>
-		<td align="{align}"><img src="{img}" border="{border}" alt="{label}" hspace="2" /></td>
+		<td align="{align}"><img src="{img}" border="{border}" title="{label}" hspace="2" /></td>
 	</tr>
 	</table>
 </td>
@@ -66,12 +66,7 @@
 <!-- BEGIN search_filter -->
     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
      <form method="POST" action="{form_action}" name="filter">
-      <input type="hidden" name="filter" value="{filter_value}">
-      <input type="hidden" name="qfield" value="{qfield_value}">
-      <input type="hidden" name="start" value="{start_value}">
-      <input type="hidden" name="order" value="{order_value}">
-      <input type="hidden" name="sort" value="{sort_value}">
-      <input type="hidden" name="query" value="{query_value}">
+      {hidden}
       <tr>
       		<td>{search}</td>
       		<td>&nbsp;</td>
@@ -84,12 +79,7 @@
 <!-- BEGIN cats_search_filter -->
     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
      <form method="POST" action="{form_action}" name="filter">
-      <input type="hidden" name="filter" value="{filter_value}">
-      <input type="hidden" name="qfield" value="{qfield_value}">
-      <input type="hidden" name="start" value="{start_value}">
-      <input type="hidden" name="order" value="{order_value}">
-      <input type="hidden" name="sort" value="{sort_value}">
-      <input type="hidden" name="query" value="{query_value}">
+      {hidden}
       <tr>
       		{cats}
       		<td>&nbsp;</td>
