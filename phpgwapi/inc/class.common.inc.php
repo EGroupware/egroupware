@@ -1156,6 +1156,15 @@
 
 			return $ldappassword;
 		}
+
+		function sha_cryptpasswd($userpass)
+		{
+			$hash = base64_encode(mhash(MHASH_SHA1, $userpass));
+			$ldappassword = sprintf('%s%s', '{SHA}', $hash);
+
+			return $ldappassword;
+		}
+
 		/*!
 		@function encrypt_password
 		@abstract encrypt password
@@ -1164,15 +1173,28 @@
 		*/
 		function encrypt_password($password)
 		{
-			if ($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'DES')
+			if($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'DES')
 			{
 				$salt       = $this->randomstring(2);
 				$e_password = $this->des_cryptpasswd($password, $salt);
 			}
-			if ($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'MD5')
+			if($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'MD5')
 			{
 				$salt       = $this->randomstring(8);
 				$e_password = $this->md5_cryptpasswd($password, $salt);
+			}
+			if($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'SHA')
+			{
+				if(@function_exists('mhash'))
+				{
+					$e_password = $this->sha_cryptpasswd($password);
+				}
+				else
+				{
+					/* this should error instead... */
+					$salt       = $this->randomstring(8);
+					$e_password = $this->md5_cryptpasswd($password, $salt);
+				}
 			}
 			return $e_password;
 		}

@@ -144,8 +144,7 @@
     <td>{lang_LDAP_encryption_type}:</td>
     <td>
      <select name="newsettings[ldap_encryption_type]">
-      <option value="DES"{selected_ldap_encryption_type_DES}>DES</option>
-      <option value="MD5"{selected_ldap_encryption_type_MD5}>MD5</option>
+{hook_passwdhashes}
      </select>
     </td>
    </tr>

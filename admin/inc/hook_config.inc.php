@@ -24,13 +24,13 @@
 			$algos = @mcrypt_list_algorithms();
 			$found = False;
 
-			while (list ($key, $value) = each ($algos))
+			while(list($key, $value) = each($algos))
 			{
 				$found = True;
 				/* Only show each once - seems this is a problem in some installs */
 				if(!in_array($value,$listed))
 				{
-					if ($config['mcrypt_algo'] == $value)
+					if($config['mcrypt_algo'] == $value)
 					{
 						$selected = ' selected';
 					}
@@ -39,7 +39,7 @@
 						$selected = '';
 					}
 					$descr = strtoupper($value);
-	
+
 					$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
 					$listed[] = $value;
 				}
@@ -69,13 +69,13 @@
 			$modes = @mcrypt_list_modes();
 			$found = False;
 
-			while (list ($key, $value) = each ($modes))
+			while(list($key, $value) = each($modes))
 			{
 				$found = True;
 				/* Only show each once - seems this is a problem in some installs */
 				if(!in_array($value,$listed))
 				{
-					if ($config['mcrypt_mode'] == $value)
+					if($config['mcrypt_mode'] == $value)
 					{
 						$selected = ' selected';
 					}
@@ -84,7 +84,7 @@
 						$selected = '';
 					}
 					$descr = strtoupper($value);
-	
+
 					$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
 					$listed[] = $value;
 				}
@@ -98,6 +98,34 @@
 		else
 		{
 			$out = '<option value="cbc" selected>CBC</option>' . "\n";
+		}
+		return $out;
+	}
+
+	function passwdhashes($config)
+	{
+		$hashes = array(
+			'des' => 'des',
+			'md5' => 'md5'
+		);
+		if(@function_exists('mhash'))
+		{
+			$hashes += array('sha' => 'sha');
+		}
+
+		while(list($key, $value) = each($hashes))
+		{
+			if($config['ldap_encryption_type'] == $value)
+			{
+				$selected = ' selected';
+			}
+			else
+			{
+				$selected = '';
+			}
+			$descr = strtoupper($value);
+
+			$out .= '<option value="' . $value . '"' . $selected . '>' . $descr . '</option>' . "\n";
 		}
 		return $out;
 	}
