@@ -2546,7 +2546,11 @@
 			{
 				$user = $this->owner;
 			}
-			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->create_email_preferences($user);
+			if ($GLOBALS['phpgw']->preferences->account_id != $user)
+			{
+				$GLOBALS['phpgw']->preferences->preferences($user);
+				$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->read_repository();
+			}
 
 			$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
 			if($old_event != False)
