@@ -91,13 +91,13 @@
 
   $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
 
-  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->pretty_small_calendar($thisday,$prevmonth["month"],$prevmonth["year"],"day.php"));
+  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->mini_calendar($thisday,$prevmonth["month"],$prevmonth["year"],"day.php"));
   if (!$friendly) {
     $phpgw->template->set_var("prev_week_link","<a href=\"".$phpgw->link("week.php","year=".$prev["year"]."&month=".$prev["month"]."&day=".$prev["day"])."\">&lt;&lt;</a>");
   } else {
     $phpgw->template->set_var("prev_week_link","&lt;&lt;");
   }
-  $phpgw->template->set_var("small_calendar_this",$phpgw->calendar->pretty_small_calendar($thisday,$thismonth,$thisyear,"day.php"));
+  $phpgw->template->set_var("small_calendar_this",$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,"day.php"));
 
   $week_id = lang(strftime("%B",$first["raw"]))." ".$first["day"];
   if($first["month"] <> $last["month"] && $first["year"] <> $last["year"]) $week_id .= ", ".$first["year"];
@@ -113,7 +113,7 @@
   } else {
     $phpgw->template->set_var("next_week_link","&gt;&gt;");
   }
-  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->pretty_small_calendar($thisday,$nextmonth["month"],$nextmonth["year"],"day.php"));
+  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->mini_calendar($thisday,$nextmonth["month"],$nextmonth["year"],"day.php"));
   $phpgw->template->set_var("week_display",$phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true,$owner));
 
   if (!$friendly) {

@@ -18,8 +18,8 @@
 
 <table border="0" cellspacing="0" cellpadding="0" valign="top" bgcolor="{bgcolor}" width="46%">
  <tr valign="center" bgcolor="{bgcolor}">
-  <td align="left" colspan="5"><font size="-1">&nbsp;&nbsp;&nbsp;&nbsp;<b>{month}</b></font></td>
-  <td align="right" colspan="2"><a href="{prevmonth}"><img src="{img_root}/images/left.gif" border="0"></a>&nbsp;&nbsp;<a href="{nextmonth}"><img src="{img_root}/images/right.gif" border="0"></a></td>
+  <td align="left" colspan="5"><font size="-2">&nbsp;&nbsp;&nbsp;&nbsp;<b>{month}</b></font></td>
+  <td align="right" colspan="2"><a href="{prevmonth}"><img src="{img_root}/left.gif" border="0"></a>&nbsp;&nbsp;<a href="{nextmonth}"><img src="{img_root}/right.gif" border="0"></a></td>
  </tr>
  <tr>
   <td bgcolor="{bgcolor}"  align="center" colspan="7"><img src="{cal_img_root}/mini-calendar-bar.gif" width="90%" height="5"></td>

@@ -56,11 +56,9 @@
   for($i=1;$i<13;$i++) {
     echo "<td valign=\"top\">";
     if(!$friendly)
-      echo $phpgw->calendar->pretty_small_calendar($i,$i,$year,"day.php");
-//      echo $phpgw->calendar->display_small_month($i,$year,False,"day.php");
+      echo $phpgw->calendar->mini_calendar($i,$i,$year,"day.php");
     else
-      echo $phpgw->calendar->pretty_small_calendar($i,$i,$year);
-//      echo $phpgw->calendar->display_small_month($i,$year,False);
+      echo $phpgw->calendar->mini_calendar($i,$i,$year);
     echo "</td>";
     if($i==6) echo "</tr><tr valign=\"top\">";
   }

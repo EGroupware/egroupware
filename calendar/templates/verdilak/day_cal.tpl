@@ -1,7 +1,5 @@
 <!-- $Id$ -->
 
-<!-- background-color: #{time_bgcolor}; -->
-
  <style type="text/css">
   <!--
     .event

@@ -87,7 +87,7 @@
   $phpgw->template->set_var("date",lang(date("F",$m))." ".$thisday.", ".$thisyear);
   $phpgw->template->set_var("username",$phpgw->common->display_fullname($id,$fn,$ln));
   $phpgw->template->set_var("daily_events",$phpgw->calendar->print_day_at_a_glance($now,$owner));
-  $phpgw->template->set_var("small_calendar",$phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php"));
+  $phpgw->template->set_var("small_calendar",$phpgw->calendar->mini_calendar($now["day"],$now["month"],$now["year"],"day.php"));
 
   if (!$friendly) {
     $param = 'year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&friendly=1&filter='.$filter;

@@ -480,11 +480,18 @@
       global $phpgw_info;
 
       $str = "";
-      if (!$this->printer_friendly)
-	$str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/view.php","id=".$id)."\" onMouseOver=\"window.status='"
-	      . lang("View this entry") . "'; return true;\"><img src=\"".$phpgw_info["server"]["app_images"]."/"
-	      . $pic."\" width=\"5\" height=\"7\" alt=\"".$description."\" border=\"0\"></a>";
-
+      if (!$this->printer_friendly) {
+        $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+        $p->set_unknowns("remove");
+        $p->set_file(array('link_pict' => 'link_pict.tpl'));
+        $p->set_block('link_pict','link_pict');
+        $p->set_var('link_link',$phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/view.php','id='.$id));
+        $p->set_var('lang_view',lang('View this entry'));
+        $p->set_var('pic_image',$phpgw->common->get_image_path('calendar').'/'.$pic);
+        $p->set_var('description',$description);
+        $str = $p->finish($p->parse('out','link_pict'));
+      }
+      echo $str;
       return $str;
     }
 
@@ -669,17 +676,27 @@
          $this->days = array(0 => "Sun", 1 => "Mon", 2 => "Tue", 3 => "Wed", 4 => "Thu", 5 => "Fri", 6 => "Sat");
       }
       $this->daysinweek = 7;
-      $str = "<table width=\"100%\" border=\"0\" bordercolor=\"#FFFFFF\" cellspacing=\"2\" cellpadding=\"2\">\n";
-      $str .= "<tr>\n";
 
-      if($display_name)
-	$str .= "<th width=\"11%\" bgcolor=\"".$phpgw_info["theme"]["th_bg"]."\"><font color=\"".$phpgw_info["theme"]["th_text"]."\">".lang("name")."</font></th>\n";
+	  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+//	  $p->halt_on_error("report");
+	  $p->set_unknowns("remove");
+      $p->set_file(array('month_header' => 'month_header.tpl',
+      				     'column_title' => 'column_title.tpl'));
+      $p->set_block('month_header','month_header');
+      $p->set_block('column_title','column_title');
 
-      for($i=0;$i<$this->daysinweek;$i++)
-	$str .= "<th width=\"11%\" bgcolor=\"".$phpgw_info["theme"]["th_bg"]."\"><font color=\"".$phpgw_info["theme"]["th_text"]."\">".lang($this->days[$i])."</font></th>\n";
-      $str .= "</tr>\n";
+      $p->set_var(array('bgcolor' => $phpgw_info["theme"]["th_bg"],
+                        'font_color' => $phpgw_info["theme"]["th_text"]));
+      if($display_name) {
+        $p->set_var('col_title',lang("name"));
+        $p->parse('column_header','column_title',True);
+      }
 
-      return $str;
+      for($i=0;$i<$this->daysinweek;$i++) {
+        $p->set_var('col_title',lang($this->days[$i]));
+        $p->parse('column_header','column_title',True);
+      }
+      return $p->finish($p->parse('out','month_header'));
     }
 
     function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0) {
@@ -689,77 +706,97 @@
       $str = "";
       $gr_events = CreateObject('calendar.calendar_item');
       $lr_events = CreateObject('calendar.calendar_item');
+
+	  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	  $p->set_unknowns("remove");
+      $p->set_file(array('month_header' => 'month_header.tpl',
+      				     'month_column' => 'month_column.tpl',
+      				     'month_day' => 'month_day.tpl',
+      				     'week_day_event' => 'week_day_event.tpl',
+      				     'week_day_events' => 'week_day_events.tpl'));
+      $p->set_block('month_header','month_header');
+      $p->set_block('month_column','month_column');
+      $p->set_block('month_day','month_day');
+      $p->set_block('week_day_event','week_day_event');
+      $p->set_block('week_day_events','week_day_events');
+
+      $p->set_var('extra','');
       if($display_name) {
-	$str .= "<td valign=\"top\" width=\"75\" height=\"75\">".$phpgw->common->grab_owner_name($owner)."</td>";
+        $p->set_var('column_data',$phpgw->common->grab_owner_name($owner));
+        $p->parse('column_header','month_column',True);
       }
       for ($j=0;$j<$this->daysinweek;$j++) {
-	$date = $this->localdates($startdate + ($j * 24 * 3600));
+        $date = $this->localdates($startdate + ($j * 24 * 3600));
+        $p->set_var('column_data','');
         if ($weekly || ($date["full"] >= $monthstart && $date["full"] <= $monthend)) {
-	  if($weekly) $cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
-	  $str .= "<td valign=\"top\" width=\"75\" height=\"75\"";
-	  if ($date["full"] == $this->today["full"]) {
-            $str .= " bgcolor=\"".$phpgw_info["theme"]["cal_today"]."\">";
-	  } else {
-            $str .= " bgcolor=\"$cellcolor\">";
-	  }
+          if($weekly) $cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
+          if ($date["full"] == $this->today["full"]) {
+            $p->set_var('extra',' bgcolor="'.$phpgw_info["theme"]["cal_today"].'"');
+          } else {
+            $p->set_var('extra',' bgcolor="'.$cellcolor.'"');
+          }
 
-	  if (!$this->printer_friendly) {
-	    $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$date_year."&month=".$date["month"]."&day=".$date["day"])."\">"
-		 .  "<img src=\"".$phpgw_info["server"]["app_images"]."/new.gif\" width=\"10\" height=\"10\" alt=\"".lang("New Entry")."\" border=\"0\" align=\"right\"></a>";
-	    $str .= "[ <a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/day.php","month=".$date["month"]."&day=".$date["day"]."&year=".$date["year"])."\">".$date["day"]."</a> ]<br>\n";
-	  } else {
-	    $str .= "[ ".$date["day"]." ]<br>\n";
-	  }
-	  $str .= "<font size=\"2\">";
+          if (!$this->printer_friendly) {
+            $str = '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date["month"].'&day='.$date["day"]).'">'
+                 . '<img src="'.$phpgw->common->get_image_path('calendar').'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="right"></a>';
+            $p->set_var('new_event_link',$str);
+            $str = '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/day.php','month='.$date["month"].'&day='.$date["day"].'&year='.$date["year"]).'">'.$date["day"].'</a>';
+            $p->set_var('day_number',$str);
+          } else {
+            $p->set_var('new_event_link','');
+            $p->set_var('day_number',$date["day"]);
+          }
+          $p->parse('column_data','month_day',True);
 
-	  $rep_events = $this->get_sorted_by_date($date["raw"],$owner);
+          $rep_events = $this->get_sorted_by_date($date["raw"],$owner);
 
-	  if ($this->sorted_re) {
-	    $lr_events = CreateObject('calendar.calendar_item');
- 	    for ($k=0;$k<$this->sorted_re;$k++) {
-  	      $lr_events = $rep_events[$k];
-	      $str .= "<nobr>";
-	      $pict = "circle.gif";
-	      for ($outer_loop=0;$outer_loop<$this->re;$outer_loop++) {
+          if ($this->sorted_re) {
+            $lr_events = CreateObject('calendar.calendar_item');
+            $p->set_var('week_day_font_size','2');
+            $p->set_var('events','');
+            for ($k=0;$k<$this->sorted_re;$k++) {
+              $lr_events = $rep_events[$k];
+              $pict = "circle.gif";
+              for ($outer_loop=0;$outer_loop<$this->re;$outer_loop++) {
                 $gr_events = $this->repeated_events[$outer_loop];
-                 if ($gr_events->id == $lr_events->id) {
-                   $pict = "rpt.gif";
-                 }
-  	      }
-	      $str .= $this->link_to_entry($lr_events->id, $pict, $lr_events->description);
-//	      echo "<br>hour:" . $lr_events->hour . " minute: " . $lr_events->minute . " ap: " . $lr_events->ampm;
-//            echo "<br>fixed_time: $fixed_time";
-	      if (intval($phpgw->common->show_date($lr_events->datetime,"Hi"))) {
-		if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-		  $format = "h:i a";
-		} else {
-		  $format = "H:i";
-		}
-		$str .= "<font size=\"-2\">".$phpgw->common->show_date($lr_events->datetime,$format)."-".$phpgw->common->show_date($lr_events->edatetime,$format)."</font>&nbsp;";
-	      }
-              $str .= "</nobr>";
-        
-	      $str .= "<font size=\"-1\">";
-    	      $str .= $this->is_private($lr_events,$owner);
-	      $str .= "<br>";
-	      $str .= "</font>";
-	    }
-	  }
-	  $str .= "</font>";
-
-	  if (!$j) {
-	    if(!$this->printer_friendly) {
-	      $str .= "<font size=\"-2\"><a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/week.php","date=".$date["full"])."\">week " .(int)((date("z",($startdate+(24*3600*4)))+7)/7)."</a></font>";
-	    } else {
-	      $str .= "<font size=\"-2\">week " .(int)((date("z",($startdate+(24*3600*4)))+7)/7)."</font>";
-	    }
-	  }
-	  $str .= "</td>\n";
-	} else {
-	  $str .= "<td></td>\n";
-	}
+                if ($gr_events->id == $lr_events->id) {
+                  $pict = "rpt.gif";
+                }
+              }
+              $p->set_var('link_entry',$this->link_to_entry($lr_events->id, $pict, $lr_events->description));
+              if (intval($phpgw->common->show_date($lr_events->datetime,"Hi"))) {
+                if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+                  $format = "h:i a";
+                } else {
+                  $format = "H:i";
+                }
+                $p->set_var('start_time',$phpgw->common->show_date($lr_events->datetime,$format));
+                $p->set_var('end_time',$phpgw->common->show_date($lr_events->edatetime,$format));
+              } else {
+                $p->set_var('start_time','');
+                $p->set_var('end_time','');
+              }
+              $p->set_var('name',$this->is_private($lr_events,$owner));
+              $p->parse('events','week_day_event',True);
+            }
+          }
+          $p->parse('column_data','week_day_events',True);
+          if (!$j) {
+            $p->set_var('week_day_font_size','-2');
+            if(!$this->printer_friendly) {
+              $str = "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/week.php","date=".$date["full"])."\">week " .(int)((date("z",($startdate+(24*3600*4)))+7)/7)."</a>";
+            } else {
+              $str = "week " .(int)((date("z",($startdate+(24*3600*4)))+7)/7);
+            }
+            $p->set_var('events',$str);
+            $p->parse('column_data','week_day_events',True);
+            $p->set_var('events','');
+          }
+        $p->parse('column_header','month_column',True);
+        $p->set_var('column_data','');
+        }
       }
-      return $str;
+      return $p->finish($p->parse('out','month_header'));
     }
 
     function display_large_month($month,$year,$showyear,$owner=0) {
@@ -768,8 +805,17 @@
       if($owner == $phpgw_info["user"]["account_id"]) $owner = 0;
       $this->read_repeated_events($owner);
 
-      $str  = "";
-      $str .= $this->large_month_header($month,$year,False);
+	  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	  $p->set_unknowns("remove");
+      $p->set_file(array('month' => 'month.tpl',
+                         'month_filler' => 'month_filler.tpl',
+                         'month_header' => 'month_header.tpl'));
+      $p->set_block('month','month');
+      $p->set_block('month_filler','month_filler');
+      $p->set_block('month_header','month_header');
+
+      $p->set_var('month_filler_text',$this->large_month_header($month,$year,False));
+      $p->parse('row','month_filler',True);
 
       $monthstart = intval(date("Ymd",mktime(0,0,0,$month    ,1,$year)));
       $monthend   = intval(date("Ymd",mktime(0,0,0,$month + 1,0,$year)));
@@ -780,18 +826,24 @@
 
       for ($i=$this->weekstarttime;intval(date("Ymd",$i))<=$monthend;$i += (24 * 3600 * 7)) {
          $cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
-
-         $str .= "<tr>\n";
-         $str .= $this->display_week($i,False,$cellcolor,False,$owner,$monthstart,$monthend);
+         $p->set_var('month_filler_text',$this->display_week($i,False,$cellcolor,False,$owner,$monthstart,$monthend));
+         $p->parse('row','month_filler',True);
       }
-      $str .= "</tr></table>\n";
-
-      return $str;
+      return $p->finish($p->parse('out','month'));
     }
 
     function display_large_week($day,$month,$year,$showyear,$owners=0) {
       global $phpgw;
       global $phpgw_info;
+
+	  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	  $p->set_unknowns("remove");
+      $p->set_file(array('month' => 'month.tpl',
+                         'month_filler' => 'month_filler.tpl',
+                         'month_header' => 'month_header.tpl'));
+      $p->set_block('month','month');
+      $p->set_block('month_filler','month_filler');
+      $p->set_block('month_header','month_header');
 
       $start = $this->get_sunday_before($year, $month, $day);
 
@@ -806,30 +858,31 @@
       $true_printer_friendly = $this->printer_friendly;
 
       if(is_array($owners)) {
-	$display_name = True;
-	$counter = count($owners);
-	$owners_array = $owners;
+        $display_name = True;
+        $counter = count($owners);
+        $owners_array = $owners;
       } else {
-	$display_name = False;
-	$counter = 1;
-	$owners_array[0] = $owners;
+        $display_name = False;
+        $counter = 1;
+        $owners_array[0] = $owners;
       }
-      $str .= $this->large_month_header($month,$year,$display_name);
+      $p->set_var('month_filler_text',$this->large_month_header($month,$year,$display_name));
+      $p->parse('row','month_filler',True);
 
       for($i=0;$i<$counter;$i++) {
-	$this->repeated_events = Null;
-	$owner = $owners_array[$i];
-	if($owner <> $phpgw_info["user"]["account_id"] && $owner <> 0)
-	  $this->printer_friendly = True;
-	else
-	  $this->printer_friendly = $true_printer_friendly;
-	$this->read_repeated_events($owner);
-	$str .= "<tr>";
-	$str .= $this->display_week($start,True,$cellcolor,$display_name,$owner);
+        $this->repeated_events = Null;
+        $owner = $owners_array[$i];
+        if($owner <> $phpgw_info["user"]["account_id"] && $owner <> 0) {
+          $this->printer_friendly = True;
+        } else {
+          $this->printer_friendly = $true_printer_friendly;
+        }
+        $this->read_repeated_events($owner);
+        $p->set_var('month_filler_text',$this->display_week($start,True,$cellcolor,$display_name,$owner));
+        $p->parse('row','month_filler',True);
       }
       $this->printer_friendly = $true_printer_friendly;
-      $str .= "</td></tr></table>";
-      return $str;
+      return $p->finish($p->parse('out','month'));
     }
 
     function pretty_small_calendar($day,$month,$year,$link="") {
@@ -1013,16 +1066,14 @@
       } else {
 		$days = array(0 => "Sunday", 1 => "Monday", 2 => "Tuesday", 3 => "Wednesday", 4 => "Thursday", 5 => "Friday", 6 => "Saturday");
       }
-	  $p = new Template($phpgw->common->get_tpl_dir('calendar'));
+	  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 	  $p->set_unknowns("remove");
       $p->set_file(array('mini_cal' => 'mini_cal.tpl',
       					 'mini_day' => 'mini_day.tpl',
       					 'mini_week' => 'mini_week.tpl'));
       $p->set_block('mini_cal','mini_week','mini_day');
-      $p->set_var('img_root',$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
-                           . $phpgw_info["server"]["template_set"]);
-      $p->set_var("cal_img_root",$phpgw_info["server"]["webserver_url"] . "/calendar/templates/"
-                               . $phpgw_info["server"]["template_set"] . "/images/");
+      $p->set_var('img_root',$phpgw->common->get_image_path('phpgwapi'));
+      $p->set_var("cal_img_root",$phpgw->common->get_image_path('calendar'));
       $p->set_var('bgcolor',$phpgw_info["theme"]["bg_color"]);
       $p->set_var('bgcolor1',$phpgw_info["theme"]["bg_color"]);
       $p->set_var('month','<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/index.php','month=' . date('m',$date["raw"]).'&year=' . date('Y',$date["raw"])) . '" class="minicalendar">' . lang($phpgw->common->show_date($date["raw"],'F')).' '.$year) . '</a>';
