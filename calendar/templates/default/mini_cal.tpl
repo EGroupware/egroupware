@@ -1,3 +1,5 @@
+<!-- $Id$ -->
+<!-- BEGIN mini_cal -->
 <table border="0" cellspacing="0" cellpadding="0" valign="top" bgcolor="{bgcolor}" cols="7">
  <tr valign="center" bgcolor="{bgcolor1}" bordercolor="{bgcolor1}">
   <td align="left" colspan="4"><font size="-2">{month}</font></td>
@@ -6,21 +8,11 @@
  <tr valign="top">
   <td bgcolor="{bgcolor}" colspan="7">
    <table border="0" width="100%" cellspacing="1" cellpadding="2" valign="top" cols="7">
-    <tr>
-     {daynames}
-    </tr>
-    {display_monthweek}
+    <tr>{daynames}
+    </tr>{display_monthweek}
    </table>
   </td>
  </tr>
 </table>
+<!-- END mini_cal -->
 
-<!-- BEGIN day -->
-     <td bgcolor="{bgcolor2}" align="center"><font size="-2"><b>{dayname}</b></font></td>
-<!-- END day -->
-
-<!-- BEGIN month_week -->
-    <tr>
-     {monthweek_day}
-    </tr>
-<!-- END month_week -->
