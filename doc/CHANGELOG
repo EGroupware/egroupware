@@ -2,6 +2,7 @@
 		- Cleaned up error reporting and form in newaccount.php
 		- Fixed viewaccounts.php not updated to the new accounts table.
 		- Fixed access_log not being updated durring logouts.
+		- Fixed email/folders.php not showing the number of messages in the INBOX.
 
 [0.9.1] - Fixed a few missing variables with templates.
 	    - editing a product in the inventory program now forwards you back to the category
