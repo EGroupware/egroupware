@@ -85,7 +85,7 @@
   }
 
   function loaddb(){
-    global $phpgw_domain, $FormLogout, $FormDomain, $SetupPW, $SetupDomain, $db, $PHP_SELF, $HTTP_POST_VARS;
+    global $phpgw_domain, $phpgw_info, $FormLogout, $FormDomain, $SetupPW, $SetupDomain, $db, $PHP_SELF, $HTTP_POST_VARS;
 
     /* This code makes sure the newer multi-domain supporting header.inc.php is being used */
     if (!isset($phpgw_domain)) {
@@ -125,7 +125,8 @@
       loginForm();
       exit;
     }
-  
+
+
     /* Database setup */
     include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_domain[$SetupDomain]["db_type"].".inc.php");
     $db	          = new db;
