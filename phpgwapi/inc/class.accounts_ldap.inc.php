@@ -79,7 +79,7 @@
 				$this->data['lastname']    = $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
 				if(isset($allValues[0]['email'][0]))
 				{
-					$this->data['mailaddress'] = $allValues[0]['email'][0]);
+					$this->data['mailaddress'] = $allValues[0]['email'][0];
 				}
 			}
 			$this->data['account_dn']  = $allValues[0]['dn'];
