@@ -512,7 +512,7 @@ It should use the values in the $this->data
       $sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and "
            . "acl_location in ";
       $security = "('". $phpgw_info['user']['account_id'] ."'";
-      $my_memberships = $phpgw->accounts->memberships(intval($phpgw_info['user']['account_id']));
+      $my_memberships = $phpgw->accounts->memberships();
       while($my_memberships && $groups = each($my_memberships))
       {
         $group = each($groups);
