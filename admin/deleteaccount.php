@@ -57,7 +57,7 @@
 	}
 	if($submit=='Delete')
 	{
-		$accountid = $account_id
+		$accountid = $account_id;
 		settype($account_id,'integer');
 		$account_id = get_account_id($accountid);
 		$lid = $phpgw->accounts->id2name($account_id);
