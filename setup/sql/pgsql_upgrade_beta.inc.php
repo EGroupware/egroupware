@@ -325,6 +325,11 @@
         $currentver = "0.9.4pre2";
         update_version_table();
       }
+      if ($currentver == "0.9.4pre2") {
+	$db->query("alter table webcal_entry change cal_create_by cal_owner int NOT NULL");
+        $currentver = "0.9.4pre3";
+        update_version_table();
+      }
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 0.9.3 to $currentver is completed.</td>\n";
       echo "  </tr>\n";

@@ -14,13 +14,15 @@
 
   /* $Id$ */
 
-  if (isset($friendly) && $friendly){
+  if (isset($friendly) && $friendly==1){
      $phpgw_info["flags"]["noheader"] = True;
+     $phpgw_info["flags"]["nonavbar"] = True;
+     $phpgw_info["flags"]["nocalendarheader"] = True;
   } else {
      $friendly = 0;
   }
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True, "enable_template_class" => True);
   include("../header.inc.php");
 
   $view = "day";
@@ -46,62 +48,38 @@
 
   $now	= $phpgw->calendar->splitdate(mktime (2, 0, 0, $thismonth, $thisday, $thisyear));
 
+  $phpgw->template->set_file(array("day" => "day.tpl"));
+
+  $phpgw->template->set_block("day");
+
   if ($friendly) {
-     echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
+    $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
+  } else {
+    $phpgw->template->set_var("printer_friendly","");
   }
 
-?>
-<table border="0" width="100%">
- <tr>
-  <td valign="top" width="70%">
-   <tr>
-    <td>
-     <table border="0" width=100%>
-      <tr>
-       <td align="middle">
-        <font size="+2" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
-         <b>
-<?php
-  $m = mktime(2,0,0,$thismonth,1,$thisyear);
-  echo lang(strftime("%B",$m)) . " " .$thisday . ", " . $thisyear;
-?>
-         </b>
-        </font>
-        <font size="+1" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>"><br>
-<?php
-  echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
-?>
-        </font>
-       </td>
-      </tr>
-     </table>
-     <table border="0" width="100%" cellspacing="0" cellpadding="0">
-      <tr>
-       <td bgcolor="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
-        <table border="0" width="100%" cellspacing="1" cellpadding="2" border="0">
-           <?php echo $phpgw->calendar->print_day_at_a_glance($now); ?>
-          </td>
-         </tr>
-        </table>
-       </td>
-      </tr>
-    </table>
-   </td>
- <td valign="top" align="right">
-<?php echo $phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php"); ?>
-  </td>
- </tr>
-</table>
-<?php
-  if (! $friendly) {
-     $param = "";
-//     if ($thisyear)
-        $param .= "year=".$now["year"]."&month=".$now["month"]."&day=".$now["day"]."&";
+  $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
 
-     $param .= "friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
-	. "status = '" . lang("Generate printer-friendly version"). "'";
-     echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\">";
-     echo "[". lang("Printer Friendly") . "]</A>";
-     $phpgw->common->phpgw_footer();
+  $m = mktime(2,0,0,$thismonth,1,$thisyear);
+  $phpgw->template->set_var("date",lang(strftime("%B",$m))." ".$thisday.", ".$thisyear);
+  $phpgw->template->set_var("username",$phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]));
+  $phpgw->template->set_var("daily_events",$phpgw->calendar->print_day_at_a_glance($now));
+  $cal = $phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php");
+  $phpgw->template->set_var("small_calendar",$cal);
+
+  if (!$friendly) {
+    $param = "";
+    $param .= "year=".$now["year"]."&month=".$now["month"]."&day=".$now["day"]."&";
+
+    $param .= "friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+	    . "status = '" . lang("Generate printer-friendly version"). "'";
+    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\">[". lang("Printer Friendly") . "]</A>");
+    $phpgw->template->parse("out","day");
+    $phpgw->template->pparse("out","day");
+    $phpgw->common->phpgw_footer();
+  } else {
+    $phpgw->template->set_var("print","");
+    $phpgw->template->parse("out","day");
+    $phpgw->template->pparse("out","day");
   }
 ?>

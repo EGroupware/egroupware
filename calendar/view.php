@@ -49,15 +49,15 @@
   if ($phpgw->db->f(0) == $id)
      $is_my_event = true;
 
-  $phpgw->db->query("SELECT cal_create_by, cal_date, cal_time, cal_mod_date, "
+  $phpgw->db->query("SELECT cal_owner, cal_date, cal_time, cal_mod_date, "
 	      . "cal_mod_time,cal_duration,cal_priority,cal_type,cal_access, "
 	      . "cal_name,cal_description,account_firstname, account_lastname "
               . " FROM webcal_entry, accounts WHERE cal_id=$id "
-              . " and webcal_entry.cal_create_by = accounts.account_id");
+              . " and webcal_entry.cal_owner = accounts.account_id");
 
   $phpgw->db->next_record();
 
-  $create_by	= $phpgw->db->f(0);
+  $owner	= $phpgw->db->f(0);
   $name 	= $phpgw->db->f(9);
   $description 	= $phpgw->db->f(10);
 
@@ -197,7 +197,7 @@
 <P>
 
 <?php
-  if ($phpgw_info["user"]["account_id"] == $create_by) {
+  if ($phpgw_info["user"]["account_id"] == $owner) {
      echo "<A HREF=\"" . $phpgw->link("edit_entry.php","id=$id") . "\">"
 	. lang("Edit") . "</A><BR>\n<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
 	. lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.") . "');\">" . lang("Delete") . "</A><BR>\n";

@@ -166,7 +166,7 @@
   $sql = "CREATE TABLE webcal_entry (
     cal_id	int(11) DEFAULT '0' NOT NULL auto_increment,
     cal_group_id	int(11),
-    cal_create_by varchar(25) NOT NULL,
+    cal_owner int(11) NOT NULL,
     cal_date	int(11) DEFAULT '0' NOT NULL,
     cal_time	int(11),
     cal_mod_date int(11),

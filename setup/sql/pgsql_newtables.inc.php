@@ -144,7 +144,7 @@
   $sql = "CREATE TABLE webcal_entry (
     cal_id	serial,
     cal_group_id	int NULL,
-    cal_create_by	varchar(25) NOT NULL,
+    cal_owner	int NOT NULL,
     cal_date	int NOT NULL,
     cal_time	int NULL,
     cal_mod_date	int,

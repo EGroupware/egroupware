@@ -15,7 +15,7 @@
   /* $Id$ */
 
   $phpgw_info["flags"]["noheader"]="True";
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
   // Input time format "2359"
   function add_duration($time, $duration)
@@ -123,7 +123,7 @@ if (! $error) {
     $phpgw->db->query("DELETE FROM webcal_entry_groups WHERE cal_id = $id");
   }
 
-  $sql = "INSERT INTO webcal_entry (cal_create_by, cal_date, " .
+  $sql = "INSERT INTO webcal_entry (cal_owner, cal_date, " .
     "cal_time, cal_mod_date, cal_mod_time, cal_duration, cal_priority, " .
     "cal_access, cal_type, cal_name, cal_description ) " .
     "VALUES ('" . $phpgw_info["user"]["account_id"] . "', ";
@@ -230,3 +230,4 @@ $phpgw->common->phpgw_header();
 
   $phpgw->db->unlock();
   $phpgw->common->phpgw_footer();
+?>

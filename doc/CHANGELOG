@@ -9,6 +9,7 @@
 		- Fixed problem with deletion of accounts.
 		- Fixed a few problems with error reporting in the accounts section.
 		  Thanks mdean <mdean@kcnet.com>
+		- Renamed the webcal_entry.cal_create_by field to webcal_entry.cal_owner.
 
 [0.9.3] - Fixed the new user account form not returning the users firstname or last name when an
 	      error is reported.
