@@ -84,9 +84,9 @@
 			$var['current_users'] = '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
 				. '">&nbsp;' . lang('Current users') . ': ' . $db->f(0) . '</a>';
 		}
-		$var['user_info'] = $GLOBALS['phpgw']->common->display_fullname() . " - "
-				. lang($GLOBALS['phpgw']->common->show_date(time(),"l")) . " "
-				. lang($GLOBALS['phpgw']->common->show_date(time(),"F")) . " "
+		$var['user_info'] = $GLOBALS['phpgw']->common->display_fullname() . ' - '
+				. lang($GLOBALS['phpgw']->common->show_date(time(),"l")) . ' '
+				. lang($GLOBALS['phpgw']->common->show_date(time(),"F")) . ' '
 				. $GLOBALS['phpgw']->common->show_date(time(),"d, Y");
 
 		// Maybe we should create a common function in the phpgw_accounts_shared.inc.php file
@@ -107,7 +107,7 @@
 		{
 			$var['messages'] = $api_messages . '<br>' . checkcode($cd);
 		}
-		$tpl->set_Var($var);
+		$tpl->set_var($var);
 		$tpl->pfp('out','navbar');
 		// If the application has a header include, we now include it
 		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && $GLOBALS['menuaction'])
@@ -125,8 +125,6 @@
 	{
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
 		{
-			$msg = "<P><P>\n" . lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
- 
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 			$tpl->set_unknowns('remove');
    
@@ -137,7 +135,7 @@
 			);
 			$var = Array(
 				'table_bg_color'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'msg'			=> $msg,
+				'msg'			=> "<p><p>\n".lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
 				'version'		=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);
 			$tpl->set_var($var);
