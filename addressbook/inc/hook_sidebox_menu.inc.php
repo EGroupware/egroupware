@@ -35,7 +35,7 @@
 	{
 		$menu_title = lang('Preferences');
 		$file = Array(
-			'Addressbook preferences'=>$GLOBALS['phpgw']->link('index.php','menuaction=addressbook.uiaddressbook.preferences'),
+			'Addressbook preferences'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'),
 			'Grant Access'=>$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=addressbook'),
 			'Edit Categories' =>$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True')
 		);
