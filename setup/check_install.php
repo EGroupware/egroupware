@@ -34,8 +34,16 @@ if ($run_by_webserver)
 			exit;
 		}
 	}
+	$passed_icon = '<img src="templates/default/images/completed.png" title="Passed" align="middle"> ';
+	$error_icon = '<img src="templates/default/images/incomplete.png" title="Error" align="middle"> ';
+	$warning_icon = '<img src="templates/default/images/dep.png" title="Warning" align="middle"> ';
 }
-
+else
+{
+	$passed_icon = ' Passed';
+	$error_icon = '*** Error: ';
+	$warning_icon = '!!! Warning: ';
+}
 $checks = array(
 	'safe_mode' => array(
 		'func' => 'php_ini_check',
@@ -44,7 +52,8 @@ $checks = array(
 		'warning' => 'safe_mode is turned on, which is generaly a good thing as it makes your install more secure.
 If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 *** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!
-*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!'
+*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time,
+    which leaves your DB in an unrecoverable state (your data is lost) !!!'
 	),
 	'error_reporting' => array(
 		'func' => 'php_ini_check',
@@ -69,14 +78,14 @@ If safe_mode is turned on, eGW is not able to change certain settings on runtime
 		'func' => 'php_ini_check',
 		'value' => '16M',
 		'check' => '>=',
-		'warning' => 'memory_limit is set to less then 16M: some applications of eGroupWare need more then the recommend 8M, expect ocasional failures',
+		'error' => 'memory_limit is set to less then 16M: some applications of eGroupWare need more then the recommend 8M, expect ocasional failures',
 		'safe_mode' => 'memory_limit = 16M'
 	),
 	'max_execution_time' => array(
 		'func' => 'php_ini_check',
 		'value' => 30,
 		'check' => '>=',
-		'warning' => 'max_execution_time is set to less then 30 (seconds): eGroupWare sometimes need a higher execution_time, expect ocasional failures',
+		'error' => 'max_execution_time is set to less then 30 (seconds): eGroupWare sometimes need a higher execution_time, expect ocasional failures',
 		'safe_mode' => 'max_execution_time = 30'
 	),
 	'mysql' => array(
@@ -114,6 +123,11 @@ If safe_mode is turned on, eGW is not able to change certain settings on runtime
 		'func' => 'permission_check',
 		'is_writable' => True
 	),
+	'fudforum' => array(
+		'func' => 'permission_check',
+		'is_writable' => True,
+		'only_if_exists' => True
+	),
 );
 
 // some constanst for pre php4.3
@@ -128,6 +142,8 @@ if (!defined('PHP_SHLIB_PREFIX'))
 
 function extension_check($name,$args)
 {
+	global $passed_icon, $error_icon, $warning_icon;
+
 	$is_win = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
 	if (isset($args['win_only']) && $args['win_only'] && !$is_win)
@@ -140,7 +156,11 @@ function extension_check($name,$args)
 
 	if (!$availible)
 	{
-		echo $args['warning']."\n";
+		echo $warning_icon.$args['warning']."\n";
+	}
+	else
+	{
+		echo $passed_icon."\n";
 	}
 	return $availible;
 }
@@ -188,6 +208,7 @@ function verbosePerms( $in_Perms )
 
 function permission_check($name,$args,$verbose=True)
 {
+	global $passed_icon, $error_icon, $warning_icon;
 	//echo "<p>permision_check('$name',".print_r($args,True).",'$verbose')</p>\n";
 
 	if (substr($name,0,3) != '../')
@@ -204,48 +225,59 @@ function permission_check($name,$args,$verbose=True)
 
 	if ($verbose)
 	{
-		$owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($name)) : 'not availible';
-		$group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($name)) : 'not availible';
+		echo "Checking file-permissions of $rel_name for $checks: ";
 
-		$checks = array();
-		if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').'writable by webserver';
-		if (isset($args['is_world_readable'])) $checks[] = (!$args['is_world_readable']?'not ':'').'world readable';
-		if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?'not ':'').'world writable';
-		$checks = implode(', ',$checks);
+		if (file_exists($name))
+		{
+			$owner = function_exists('posix_getpwuid') ? posix_getpwuid(@fileowner($name)) : array('name' => 'nn');
+			$group = function_exists('posix_getgrgid') ? posix_getgrgid(@filegroup($name)) : array('name' => 'nn');
 
-		echo "Checking file-permissions of $rel_name for $checks: $owner[name]/$group[name] ".verbosePerms(fileperms($name))."\n";
+			$checks = array();
+			if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').'writable by webserver';
+			if (isset($args['is_world_readable'])) $checks[] = (!$args['is_world_readable']?'not ':'').'world readable';
+			if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?'not ':'').'world writable';
+			$checks = implode(', ',$checks);
+
+			echo "$owner[name]/$group[name] ".verbosePerms(@fileperms($name));
+		}
+		echo "\n";
 	}
 	if (!file_exists($name))
 	{
-		echo "*** $rel_name does not exist !!!\n";
+		echo "$error_icon$rel_name does not exist !!!\n";
 		return False;
 	}
 	if (!$GLOBALS['run_by_webserver'] && ($args['is_readable'] || $args['is_writable']))
 	{
-		echo "*** check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.\n";
+		echo "$warning_icon check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.\n";
 		unset($args['is_readable']);
 		unset($args['is_writable']);
+		$warning = True;
 	}
 	$Ok = True;
 	if (isset($args['is_writable']) && is_writable($name) != $args['is_writable'])
 	{
-		echo "*** $rel_name ".($args['is_writable']?'not ':'')."writable by the webserver !!!\n";
+		echo "$error_icon$rel_name ".($args['is_writable']?'not ':'')."writable by the webserver !!!\n";
 		$Ok = False;
 	}
 	if (isset($args['is_readable']) && is_readable($name) != $args['is_readable'])
 	{
-		echo "*** $rel_name ".($args['is_readable']?'not ':'')."readable by the webserver !!!\n";
+		echo "$error_icon$rel_name ".($args['is_readable']?'not ':'')."readable by the webserver !!!\n";
 		$Ok = False;
 	}
 	if (isset($args['is_world_readable']) && !(fileperms($name) & 04) == $args['is_world_readable'])
 	{
-		echo "*** $rel_name ".($args['is_world_readable']?'not ':'')."world-readable !!!\n";
+		echo "$error_icon$rel_name ".($args['is_world_readable']?'not ':'')."world-readable !!!\n";
 		$Ok = False;
 	}
 	if (isset($args['is_world_writable']) && !(fileperms($name) & 02) == $args['is_world_writable'])
 	{
-		echo "*** $rel_name ".($args['is_world_writable']?'not ':'')."world-writable !!!\n";
+		echo "$error_icon$rel_name ".($args['is_world_writable']?'not ':'')."world-writable !!!\n";
 		$Ok = False;
+	}
+	if ($Ok && !$warning && $verbose)
+	{
+		echo "$passed_icon\n";
 	}
 	if ($Ok && $args['recursiv'] && is_dir($name))
 	{
@@ -264,6 +296,8 @@ function permission_check($name,$args,$verbose=True)
 
 function php_ini_check($name,$args)
 {
+	global $passed_icon, $error_icon, $warning_icon;
+
 	$safe_mode = ini_get('safe_mode');
 
 	$ini_value = ini_get($name);
@@ -296,14 +330,20 @@ function php_ini_check($name,$args)
 	{
 		if (isset($args['warning']))
 		{
-			echo $args['warning']."\n";
+			echo $warning_icon.$args['warning']."\n";
+		}
+		if (isset($args['error']))
+		{
+			echo $error_icon.$args['error']."\n";
 		}
 		if (isset($args['safe_mode']) && $safe_mode)
 		{
-			echo "*** Please make the following change in your php.ini:\n$args[safe_mode]\n";
+			echo $warning_icon."Please make the following change in your php.ini:\n$args[safe_mode]\n";
 		}
 		return False;
 	}
+	echo "$passed_icon\n";
+
 	return True;
 }
 
@@ -323,13 +363,15 @@ if ($run_by_webserver)
 }
 else
 {
-	echo "Checking the eGroupWare Installation\n\n";
+	echo "Checking the eGroupWare Installation\n";
+	echo "====================================\n\n";
 }
 
 $Ok = True;
 foreach ($checks as $name => $args)
 {
 	$check_ok = $args['func']($name,$args);
+	echo "\n";
 	$Ok = $Ok && $check_ok;
 }
 
@@ -341,7 +383,7 @@ if ($run_by_webserver)
 	{
 		if (!$Ok)
 		{
-			echo '<h3>'.lang('Please fix the above errors (***) and %1continue to the Header Admin%2','<a href="manageheader.php">','</a>')."</h3>\n";
+			echo '<h3>'.lang('Please fix the above errors (%1) and warnings(%2) and %3continue to the Header Admin%4',$error_icon,$warning_icon,'<a href="manageheader.php">','</a>')."</h3>\n";
 		}
 		else
 		{
@@ -350,7 +392,7 @@ if ($run_by_webserver)
 	}
 	else
 	{
-		echo '<h3><a href="'.$_SERVER['HTTP_REFERER'].'">'.lang('Return to Setup')."</a></h3>\n";
+		echo '<h3><a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
 	}
 	$setup_tpl->pparse('out','T_footer');
 	//echo "</body>\n</html>\n";
