@@ -16,7 +16,7 @@
 
 		var $public_functions = array
 		(
-			'read_log'		=> True
+			'read_log' => True
 		);
 
 		function bolog($session=False)
@@ -53,17 +53,17 @@
 			// should remove the accounts_pwd
 			return $rows;
 		}
-		
+
 		function get_no_errors()
 		{
 			$rows = $this->so->get_no_errors();
 			return $rows;
 		}
-		
+
 		function get_error_e($values='')
 		{
 			$rows = $this->so->get_error_e($values);
-			
+
 			// Enhance the fields
 			reset($rows);
 			while(list($rno,$r)=each($rows))

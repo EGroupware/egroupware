@@ -20,12 +20,12 @@
 		var $owner;
 		var $error_cols = '';
 		var $error_cols_e = '';
-		var $public_functions = array
-		        ('get_error_cols'	=> True
-		        ,'get_error_cols_e'=> True
-		        ,'get_error'     	=> True
-		        ,'get_error_e'		=> True
-				);
+		var $public_functions = array(
+			'get_error_cols'   => True,
+			'get_error_cols_e' => True,
+			'get_error'        => True,
+			'get_error_e'      => True
+		);
 
 		function solog()
 		{
@@ -39,7 +39,7 @@
 			{
 				$this->error_cols = array();
 
-				// fields from phpgw_log table
+				/* fields from phpgw_log table */
 				$clist = $this->db->metadata('phpgw_log');
 				for ($i=0; $i<count($clist); $i++)
 				{
@@ -47,7 +47,7 @@
 					$this->error_cols[$name] = array();
 				}
 
-				// fields from phpgw_log_msg table
+				/* fields from phpgw_log_msg table */
 				$clist = $this->db->metadata('phpgw_log_msg');
 				for ($i=0; $i<count($clist); $i++)
 				{
@@ -62,10 +62,10 @@
 		{
 			if ($this->task_cols_e == '')
 			{
-				// Get Columns for Errors
+				/* Get Columns for Errors */
 				$this->error_cols_e = $this->get_error_cols();
 
-				// Enhance with Columns for phpgw_accounts
+				/* Enhance with Columns for phpgw_accounts */
 				$clist = $this->db->metadata('phpgw_accounts');
 				for ($i=0; $i<count($clist); $i++)
 				{
@@ -77,8 +77,8 @@
 		}
 
 		function get_error_e($parms)
-		{	
-			// Fixed From
+		{
+			/* Fixed From */
 			if (!isset($parms['from']))
 			{
 				$parms['from'] = array('phpgw_accounts');
@@ -88,7 +88,7 @@
 				$parms['from'][] = 'phpgw_accounts';
 			} 
 
-			// Fix Where
+			/* Fix Where */
 			if (!isset($parms['where']))
 			{
 				$parms['where'] = array('phpgw_log.log_user = phpgw_accounts.account_id');
@@ -98,7 +98,7 @@
 				$parms['where'][] = 'phpgw_log.log_id = phpgw_accounts.account_id';
 			}
 			
-			// Fix Default Fields
+			/* Fix Default Fields */
 			if (!isset($parms['fields']))
 			{
 				$parms['fields'] = $this->get_error_cols_e();
@@ -108,20 +108,20 @@
 		}
 
 		function get_no_errors()
-		{	// Get max ErrorId
+		{	/* Get max ErrorId */
 			$this->db->query("select count(*) as max_id from phpgw_log, phpgw_log_msg WHERE phpgw_log.log_id = phpgw_log_msg.log_msg_log_id",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f('max_id');
 		}
 
 		function get_error($parms)
-		{	// Get paramenter values
+		{	/* Get parameter values */
 			$from    = $parms['from'];
 			$where   = $parms['where'];
 			$orderby = $parms['orderby'];
 			$fields  = $parms['fields'];
 			
-			// Build From_Clause
+			/* Build From_Clause */
 			$from_clause = 'FROM phpgw_log, phpgw_log_msg ';
 			if (isset($from))
 			{
@@ -129,32 +129,39 @@
 				$from[] = 'phpgw_log_msg';
 				$from_clause = 'FROM '.implode(', ' , $from).' ';
 			}
-		    
-			// Build Where_Clause
+
+			/* Build Where_Clause */
 			$where_clause = 'WHERE phpgw_log.log_id = phpgw_log_msg.log_msg_log_id ';
 			if (isset($where))
 			{
 				$where[] = 'phpgw_log.log_id = phpgw_log_msg.log_msg_log_id';
 				$where_clause = 'WHERE ' . implode(' AND ',$where) . ' ';
 			}
-		
-			// Build Order_By_Clause
-			$orderby_clause = 'Order By phpgw_log.log_id, phpgw_log_msg.log_msg_seq_no ';
+
+			/* Build Order_By_Clause */
+			$orderby_clause = 'ORDER BY phpgw_log.log_id, phpgw_log_msg.log_msg_seq_no ';
 			if (isset($orderby))
 			{
-				$orderby_clause = 'Order By ' . implode(', ',$orderby);
+				$orderby_clause = 'ORDER BY ' . implode(', ',$orderby);
 			}
-			
-			// If no Fields specified default to *
+
+			/* If no Fields specified default to * */
 			if (!isset($fields))
 			{
 				$fields = $this->error_cols();
 			}
-			
+
 			$rows = array();
-			
-			// Do Select 
-			$select = "select ". implode(', ',array_keys($fields)).' '.$from_clause.$where_clause.$orderby_clause;
+
+			/* Do Select  */
+			@reset($fields);
+			while(list($key,$val) = @each($fields))
+			{
+				$fkeys .= $key . ',';
+			}
+			$fkeys = substr($fkeys,0,-1);
+
+			$select = 'SELECT ' . $fkeys . ' ' . $from_clause . $where_clause . $orderby_clause;
 			$this->db->query($select,__LINE__,__FILE__);
 			while($this->db->next_record())
 			{
@@ -162,9 +169,9 @@
 				while(list($fname,$fopt) = each($fields))
 				{
 					$this_row[$fname]['value'] = $this->db->f($fname);
-				};
+				}
 				$rows[] = $this_row;
-			};
+			}
 			return $rows;
 		}
 	}
