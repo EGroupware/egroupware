@@ -365,14 +365,16 @@
 			}
 
 			reset($stock_fields);
-			reset($extra_fields);
+			if ($extra_fields) { reset($extra_fields); }
 			// create strings for insertion into crosstable query below
 			while(list($name,$value)=each($stock_fields)) {
 				$std .= "a.".$name.",";
 			}
 			//$std = substr($std,0,-1);
-			while(list($name,$value)=each($extra_fields)) {
-				$ext .= "b.".$name.",";
+			if ($extra_fields) {
+				while(list($name,$value)=each($extra_fields)) {
+					$ext .= "b.".$name.",";
+				}
 			}
 			//$ext = substr($ext,0,-1);
 			if (!empty($fieldlist2)) {
