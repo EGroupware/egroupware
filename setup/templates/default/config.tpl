@@ -27,7 +27,7 @@
    </tr>
    
    <tr class="row_off">
-    <td>{lang_Enter_the_location_of_phpGroupWare's_URL.<br>Example:_http://www.domain.com/phpgroupware_&nbsp;_or_&nbsp;_/phpgroupware<br><b>No_trailing_slash</b>}:</td>
+    <td>{lang_Enter_the_location_of_eGroupWare's_URL.<br>Example:_http://www.domain.com/egroupware_&nbsp;_or_&nbsp;_/egroupware<br><b>No_trailing_slash</b>}:</td>
     <td><input name="newsettings[webserver_url]" value="{value_webserver_url}" size="40"></td>
    </tr>
 
