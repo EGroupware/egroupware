@@ -46,7 +46,7 @@ Windows is supported, but there is no documentation for it currently.
 <LI>MySQL 3.22.25 or PostgreSQL 7.0.x</LI>
 <LI>Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access</LI>
 </UL>
-<P>We have reports of it working on Windows NT and OS/2, and using Oracle as the database.
+<P>We have reports of phpGroupWare working on Windows NT and OS/2, and using Oracle as the database.
 <H2>2.3 Obtaining phpGroupWare</H2>
 
 <P>While we are still in the Beta phase of phpGroupWare, you may
@@ -73,7 +73,14 @@ have the most recent development copy of phpGroupWare in no time.
 
 <P>After you have met the system requirements, unpack the tarball in the html 
 directory of your webserver. (eg, /home/httpd/html)
-<H2>2.5 Configure phpGroupWare</H2>
+<H2>2.5 Create a database and user for phpGroupWare</H2>
+
+<P>You must create a database for phpGroupWare to use,
+and we strongly recommend adding a user that only
+has permission to this new database for phpGroupWare's
+exclusive use (for security).
+<P>Note the host the database engine is on, user, password and database name, you will need them soon.
+<H2>2.6 Configure phpGroupWare</H2>
 
 <P>Copy the <CODE>header.inc.php.sample</CODE> file to 
 <CODE>header.inc.php</CODE> and edit the file, following the
@@ -134,7 +141,7 @@ files that come with the new application first, as most require you
 to create additional tables in the database, and add additional
 translation data to the lang table (typically a file called <CODE>lang.sql</CODE>)
 <P>You install the new application within the phpGroupWare install tree by
-copying the application directory into the phpGroupWare install location,
+placing the application directory under the root phpGroupWare directory,
 and enabling the application through the Administration page. 
 <P>For example, this is the process to install the
 Headlines application (see 

@@ -21,7 +21,8 @@
         2.3.1 Released Versions
         2.3.2 Developer's version from CVS
      2.4 Installing on Tested Systems
-     2.5 Configure phpGroupWare
+     2.5 Create a database and user for phpGroupWare
+     2.6 Configure phpGroupWare
 
   3. Testing the install
 
@@ -63,7 +64,6 @@
   integrated features such as email, calendar, todo list, address book,
   file manager, headline news, and a trouble ticket system.
 
-
   You should use it if:
 
   You would like a powerful groupware system that can be access from
@@ -95,8 +95,8 @@
 
   +o  Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access
 
-  We have reports of it working on Windows NT and OS/2, and using Oracle
-  as the database.
+  We have reports of phpGroupWare working on Windows NT and OS/2, and
+  using Oracle as the database.
 
   22..33..  OObbttaaiinniinngg pphhppGGrroouuppWWaarree
 
@@ -126,10 +126,20 @@
   After you have met the system requirements, unpack the tarball in the
   html directory of your webserver. (eg, /home/httpd/html)
 
-  22..55..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
+  22..55..  CCrreeaattee aa ddaattaabbaassee aanndd uusseerr ffoorr pphhppGGrroouuppWWaarree
+
+  You must create a database for phpGroupWare to use, and we strongly
+  recommend adding a user that only has permission to this new database
+  for phpGroupWare's exclusive use (for security).
+
+  Note the host the database engine is on, user, password and database
+  name, you will need them soon.
+
+  22..66..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
 
   Copy the header.inc.php.sample file to header.inc.php and edit the
   file, following the directions in the comments.
+
   Then point your browser to phpgroupware/setup/ which will create (or
   upgrade) the database tables.  You wil be asked to login, using the
   password set in header.inc.php. Setup will attempt to determine what
@@ -185,6 +195,7 @@
   directory for any stale uploads and delete them.  But, once again, it
   becomes a performance issue.
 
+
   33..  TTeessttiinngg tthhee iinnssttaallll
 
   If your config is setup properly you can now login.  Point your
@@ -192,9 +203,6 @@
   the password is 1234
   At this point it would be a good idea to create a new user with
   administrative privileges and delete the old one.
-
-
-
 
   44..  IInnssttaalllliinngg aaddddiittiioonnaall aapppplliiccaattiioonnss
 
@@ -207,8 +215,8 @@
   (typically a file called lang.sql)
 
   You install the new application within the phpGroupWare install tree
-  by copying the application directory into the phpGroupWare install
-  location, and enabling the application through the Administration
+  by placing the application directory under the root phpGroupWare
+  directory, and enabling the application through the Administration
   page.
 
   For example, this is the process to install the Headlines application
@@ -317,6 +325,9 @@
   IMAP if you expect to have more than a few hundred messages in your
   mailbox.
 
+
+
+
   55..33..  WWhheenn II lloogg iinn II sseeee tthhee ddiirreeccttoorryy lliissttiinngg iinnsstteeaadd ooff aa wweebb ppaaggee
 
   If you are using Apache, this often means you need to add .php to the
@@ -327,6 +338,8 @@
   ______________________________________________________________________
   DirectoryIndex index.php index.php3 index.html index.htm index.cgi
   ______________________________________________________________________
+
+
 
   55..44..  II ggeett ggaarrbbaaggee tthhaatt llooookkss lliikkee ccooddee wwhheenn II ggoo ttoo tthhee pphhppGGrroouuppWWaarree
   UURRLL
@@ -380,6 +393,7 @@
   v1.0 (July 6, 2000)
 
 
+
   +o  Built proper SGML version.
 
   +o  Included the FAQ.
@@ -392,7 +406,6 @@
   +o  Added Testing Install section
 
   +o  Added Trouble-shooting section
-
 
   +o  Added description of application installation
 
@@ -413,19 +426,6 @@
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro) and the core of this HOWTO.  Thanks to all the developers
   and users who contribute to making phpGroupWare such a success.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

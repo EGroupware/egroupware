@@ -53,7 +53,7 @@
     <item>Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access
   </itemize>
 
-  We have reports of it working on Windows NT and OS/2, and using Oracle as the database.
+  We have reports of phpGroupWare working on Windows NT and OS/2, and using Oracle as the database.
 </p>
 <sect1>Obtaining phpGroupWare
 <p>
@@ -83,6 +83,14 @@ have the most recent development copy of phpGroupWare in no time.
   After you have met the system requirements, unpack the tarball in the html 
   directory of your webserver. (eg, /home/httpd/html)
 </p>
+<sect1>Create a database and user for phpGroupWare
+<p>
+  You must create a database for phpGroupWare to use,
+  and we strongly recommend adding a user that only
+  has permission to this new database for phpGroupWare's
+  exclusive use (for security).
+
+  Note the host the database engine is on, user, password and database name, you will need them soon.
 <sect1>Configure phpGroupWare
 <p>
   Copy the <tt>header.inc.php.sample</tt> file to 
@@ -156,7 +164,7 @@ to create additional tables in the database, and add additional
 translation data to the lang table (typically a file called <tt>lang.sql</tt>)
 
 You install the new application within the phpGroupWare install tree by
-copying the application directory into the phpGroupWare install location,
+placing the application directory under the root phpGroupWare directory,
 and enabling the application through the Administration page. 
 
 For example, this is the process to install the
