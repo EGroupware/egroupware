@@ -12,11 +12,7 @@
 
 	/* $Id$ */
 
-	if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['solink']))
-	{
-		include(PHPGW_API_INC . '/../../infolog/inc/class.solink.inc.php');
-		$GLOBALS['phpgw_info']['flags']['included_classes']['solink'] = True;
-	}
+	include_once(PHPGW_API_INC . '/../../infolog/inc/class.solink.inc.php');
 
 	/*!
 	@class bolink
