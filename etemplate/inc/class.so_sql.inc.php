@@ -56,18 +56,39 @@ class so_sql
 	 * @var string $empty_on_write string to be written to db if a col-value is '', eg. "''" or 'NULL' (default)
 	 */
 	var $empty_on_write = 'NULL';
-	var $public_functions = array(
-		'init'	=> True,
-		'data_merge' => True,
-		'read'	=> True,
-		'save'	=> True,
-		'delete'	=> True,
-		'search'	=> True,
-	);
+	/**
+	 * @var int/boolean $total total number of entries of last search with start != false
+	 */
+	var $total = false;
+	/**
+	 * @var db-object $db privat instance of the db-object
+	 */
 	var $db;
+	/**
+	 * @var array $db_uni_cols unique keys/index, set by derived class or via so_sql($app,$table)
+	 */
 	var $db_uni_cols = array();
-	var $db_cols;	// = $db_key_cols + $db_data_cols
-	var $data;		// holds the content of all db_cols
+	/**
+	 * @var array $db_key_cols db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table) 
+	 */
+	var $db_key_cols = array();
+	/**
+	 * @var array $db_data_cols db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table) 
+	 */
+	var $db_data_cols = array();
+	/**
+	 * @var array $db_cols all columns = $db_key_cols + $db_data_cols, set in the constructor
+	 */
+	var $db_cols = array();
+	/**
+	 * @var array $data holds the content of all columns
+	 */
+	var $data = array();
+	/**
+	 * @deprecated  a SO class dont need to and should NOT export functions (make them callable via menuaction)
+	 * @var array $public_functions
+	 */
+	var $public_functions = array();
 
 	/**
 	 * constructor of the class
@@ -79,12 +100,14 @@ class so_sql
 	 */
 	function so_sql($app='',$table='')
 	{
-		$this->db = $GLOBALS['phpgw']->db;
+		$this->db = clone($GLOBALS['phpgw']->db);
 		$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
-		if ($app && $table)
+		if ($app)
 		{
-			$this->setup_table($app,$table);
+			$this->db->set_app($app);
+
+			if ($table) $this->setup_table($app,$table);
 		}
 		$this->init();
 
@@ -96,23 +119,14 @@ class so_sql
 	}
 
 	/**
-	 * reads table-definition from <app>/setup/tables_current.inc.php
+	 * sets up the class for an app and table (by using the table-definition of $app/setup/tables_current.inc.php
 	 *
-	 * Does NOT set a different internal-data-name. If you want this, you have to do so
-	 * in a derifed class !!!
+	 * Does NOT set a different internal-data-name. If you want this, you have to do so in a derifed class !!!
 	 */
 	function setup_table($app,$table)
 	{
-		include(PHPGW_SERVER_ROOT . "/$app/setup/tables_current.inc.php");
-
-		if (!isset($phpgw_baseline[$table]))
-		{
-			echo "<p>Can't find table-definitions for App. '$app', Table '$table' !!!</p>\n";
-			exit();
-		}
 		$this->table_name = $table;
-
-		$table_def = $phpgw_baseline[$table];
+		$table_def = $this->db->get_table_definitions($app,$table);
 		$this->db_key_cols = $this->db_data_cols = $this->db_cols = array();
 		$this->autoinc_id = '';
 		foreach($table_def['fd'] as $name => $def)
@@ -234,11 +248,12 @@ class so_sql
 		$this->init($keys);
 
 		$this->data2db();
+		$query = false;
 		foreach ($this->db_key_cols as $db_col => $col)
 		{
 			if ($this->data[$col] != '')
 			{
-				$query .= ($query ? ' AND ':'')."$db_col='".addslashes($this->data[$col])."'";
+				$query[$db_col] = $this->data[$col];
 			}
 		}
 		if (!$query)	// no primary key in keys, lets try the data_cols for a unique key
@@ -247,7 +262,7 @@ class so_sql
 			{
 				if ($this->data[$col] != '')
 				{
-					$query .= ($query ? ' AND ':'')."$db_col='".addslashes($this->data[$col])."'";
+					$query[$db_col] = $this->data[$col];
 				}
 			}
 		}
@@ -257,12 +272,8 @@ class so_sql
 
 			return False;
 		}
-		$this->db->query($sql = "SELECT * FROM $this->table_name WHERE $query",__LINE__,__FILE__);
+		$this->db->select($this->table_name,'*',$query,__LINE__,__FILE__);
 
-		if ($this->debug)
-		{
-			echo "<p>read(): sql = '$sql': ";
-		}
 		if (!$this->db->next_record())
 		{
 			if ($this->autoinc_id)
@@ -298,30 +309,18 @@ class so_sql
 	{
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
-		if (!$this->autoinc_id)	// no autoincrement id, so we need to find out with read if key already in db
-		{
-			$data = $this->data;
-			$new = !$this->read($data);
-			$this->data = $data;
-		}
-		else
-		{
-			$new = !$this->data[$this->db_key_cols[$this->autoinc_id]];	// autoincrement idx is 0 => new
-		}
 		$this->data2db();
 
-		if ($new)	// prepare an insert
+		if ($this->autoinc_id && !$this->data[$this->db_key_cols[$this->autoinc_id]])	// insert
 		{
 			foreach($this->db_cols as $db_col => $col)
 			{
 				if (!$this->autoinc_id || $db_col != $this->autoinc_id)	// not write auto-inc-id
 				{
-					$cols .= ($cols ? ',' : '') . $db_col;
-					$vals .= ($vals ? ',' : '') . ($this->data[$col] == '' ?
-						$this->empty_on_write : "'".addslashes($this->data[$col])."'");
+					$data[$db_col] = $this->data[$col] == '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 				}
 			}
-			$this->db->query($sql = "INSERT INTO $this->table_name ($cols) VALUES ($vals)",__LINE__,__FILE__);
+			$this->db->insert($this->table_name,$data,false,__LINE__,__FILE__);
 
 			if ($this->autoinc_id)
 			{
@@ -332,19 +331,14 @@ class so_sql
 		{
 			foreach($this->db_data_cols as $db_col => $col)
 			{
-				$vals .= ($vals ? ',':'') . "$db_col=".($this->data[$col] == '' ?
-						$this->empty_on_write : "'".addslashes($this->data[$col])."'");
+				$data[$db_col] = $this->data[$col] == '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 			}
 			$keys = '';
 			foreach($this->db_key_cols as $db_col => $col)
 			{
-				$keys .= ($keys ? ' AND ':'') . "$db_col='".addslashes($this->data[$col])."'";
+				$keys[$db_col] = $this->data[$col];
 			}
-			$this->db->query($sql = "UPDATE $this->table_name SET $vals WHERE $keys",__LINE__,__FILE__);
-		}
-		if ($this->debug)
-		{
-			echo "<p>save(): sql = '$sql'</p>\n";
+			$this->db->update($this->table_name,$data,$keys,__LINE__,__FILE__);
 		}
 		$this->db2data();
 
@@ -379,14 +373,10 @@ class so_sql
 
 		foreach($keys as $db_col => $col)
 		{
-			$query .= ($query ? ' AND ' : '') . $db_col . "='" . addslashes($data[$col]) . "'";
+			$query[$db_col] = $data[$col];
 		}
-		$this->db->query($sql = "DELETE FROM $this->table_name WHERE $query",__LINE__,__FILE__);
+		$this->db->delete($this->table_name,$query,__LINE__,__FILE__);
 
-		if ($this->debug)
-		{
-			echo "<p>delete(): sql = '$sql'</p>\n";
-		}
 		return $this->db->affected_rows();
 	}
 
@@ -402,42 +392,62 @@ class so_sql
 	 * @param string $wildcard appended befor and after each criteria
 	 * @param boolean $empty False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param int/boolean $start if != false, return only maxmatch rows begining with start
+	 * @param array $filter if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND')
+	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null)
 	{
 		if (!is_array($criteria))
 		{
-			$query = $criteria ? ' WHERE '.$criteria : '';
+			$query = $criteria;
 		}
 		else
 		{
 			$criteria = $this->data2db($criteria);
+
 			foreach($this->db_cols as $db_col => $col)
 			{	//echo "testing col='$col', criteria[$col]='".$criteria[$col]."'<br>";
-				if (array_key_exists($col,$criteria) && ($empty || $criteria[$col] != ''))
+				if (isset($filter[$col])) continue;	// added later
+
+				if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
 				{
 					if ($criteria[$col] === NULL)
 					{
-						$query .= ($query ? " $op " : ' WHERE ') . "$db_col IS NULL";
+						$query .= ($query ? " $op " : '') . "$db_col IS NULL";
 					}	
 					else
 					{
-						$query .= ($query ? " $op " : ' WHERE ') . $db_col .
+						$query .= ($query ? " $op " : '') . $db_col .
 						($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') ?
-						" LIKE '$wildcard".strtr(str_replace('_','\\_',addslashes($criteria[$col])),'*?','%_')."$wildcard'" :
-						"='".addslashes($criteria[$col])."'");
+						' LIKE '.$this->db->quote($wildcard.strtr(str_replace('_','\\_',$criteria[$col]),'*?','%_').$wildcard) :
+						"=".$this->db->quote($criteria[$col]));
 					}
 				}
 			}
 		}
-		$this->db->query($sql = 'SELECT '.($only_keys ? implode(',',$this->db_key_cols) : '*').
-		   ($extra_cols != '' ? ",$extra_cols" : '')." FROM $this->table_name $query" .
-			($order_by != '' ? " ORDER BY $order_by" : ''),__LINE__,__FILE__);
+		if (is_array($filter))
+		{
+			$db_filter = array();
+			foreach($this->data2db($filter) as $col => $val)
+			{
+				if ($val !== '') $db_filter[array_search($col,$this->db_cols)] = $val;
+			}
+			if ($query) $db_filter[] = '('.$query.')';
+			$query = $db_filter;
+		}
+		if ($start !== false)	// need to get the total too, saved in $this->total
+		{
+			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
+			$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
+		}
+		$this->db->select($this->table_name,($only_keys ? $this->db_key_cols : '*').
+			($extra_cols != '' ? ','.$extra_cols : ''),$query,__LINE__,__FILE__,$start,
+			($order_by ? 'ORDER BY '.$order_by : ''));
 
 		if ($this->debug)
 		{
-			echo "<p>search(only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty)<br>sql = '$sql'</p>\n";
+			echo "<p>so_sql::search(,only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty,$op,start='$start',".print_r($filter,true).") query=".print_r($query,true).", total='$this->total'</p>\n";
 			echo "<br>criteria = "; _debug_array($criteria);
 		}
 		$arr = array();
@@ -454,6 +464,34 @@ class so_sql
 		return $n ? $arr : False;
 	}
 
+	/**
+	 * query rows for the nextmatch widget
+	 *
+	 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter'
+	 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
+	 * @param array &$rows returned rows/competitions
+	 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
+	 */
+	function get_rows($query,&$rows,&$readonlys)
+	{
+		if ($this->debug)
+		{
+			echo "<p>so_sql::get_rows(".print_r($query,true).",,)</p>\n";
+		}
+		$criteria = array();
+		if ($query['search'])
+		{
+			foreach($this->db_cols as $col)	// we search all cols
+			{
+				$criteria[$col] = $query['search'];
+			}
+		}
+		$rows = (array) $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
+			'','%',false,'OR',(int)$query['start'],$query['col_filter']);
+
+		return $this->total;
+	}
+		
 	/**
 	 * Check if values for unique keys are unique
 	 *
