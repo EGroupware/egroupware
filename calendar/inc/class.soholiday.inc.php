@@ -20,6 +20,9 @@
 		function soholiday()
 		{
 			$this->db = $GLOBALS['phpgw']->db;
+			$this->table = 'phpgw_cal_holidays';
+			$this->table_definition = $this->db->get_table_definitions('calendar',$this->table);
+			$this->db->set_column_definitions($this->table_definition['fd']);
 		}
 
 		/* Begin Holiday functions */
@@ -31,7 +34,7 @@
 				{
 					echo "Updating LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
 				}
-				$sql = "UPDATE phpgw_cal_holidays SET name='".$holiday['name']."', mday=".$holiday['mday'].', month_num='.$holiday['month_num'].', occurence='.$holiday['occurence'].', dow='.$holiday['dow'].', observance_rule='.(int)$holiday['observance_rule'].' WHERE hol_id='.$holiday['hol_id'];
+				$sql = "UPDATE $this->table SET ".$this->db->column_data_implode(',',$holiday,True,True).' WHERE hol_id='.(int)$holiday['hol_id'];
 			}
 			else
 			{
@@ -39,8 +42,9 @@
 				{
 					echo "Inserting LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
 				}
-				$sql = 'INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow,observance_rule) '
-					. "VALUES('".strtoupper($holiday['locale'])."','".$holiday['name']."',".$holiday['mday'].','.$holiday['month_num'].','.$holiday['occurence'].','.$holiday['dow'].','.(int)$holiday['observance_rule'].")";
+				unset($holiday['hol_id']);	// in case its 0
+				$holiday['locale'] = strtoupper($holiday['locale']);
+				$sql = "INSERT INTO $this->table ".$this->db->column_data_implode(',',$holiday,'VALUES',True);
 			}
 			$this->db->query($sql,__LINE__,__FILE__);
 		}
@@ -94,7 +98,7 @@
 			{
 				echo 'Reading Holiday ID : '.$id.'<br>'."\n";
 			}
-			$this->db->query('SELECT * FROM phpgw_cal_holidays WHERE hol_id='.$id,__LINE__,__FILE__);
+			$this->db->query("SELECT * FROM $this->table WHERE hol_id=".(int)$id,__LINE__,__FILE__);
 			$this->store_to_array($holidays);
 			@reset($holidays);
 			return $holidays[0];
@@ -102,47 +106,37 @@
 
 		function delete_holiday($id)
 		{
-			$this->db->query('DELETE FROM phpgw_cal_holidays WHERE hol_id='.$id,__LINE__,__FILE__);
+			$this->db->query("DELETE FROM $this->table WHERE hol_id=".(int)$id,__LINE__,__FILE__);
 		}
 
 		function delete_locale($locale)
 		{
-			$this->db->query("DELETE FROM phpgw_cal_holidays WHERE locale='".$locale."'",__LINE__,__FILE__);
+			$this->db->query("DELETE FROM $this->table WHERE locale=".$this->db->quote($locale),__LINE__,__FILE__);
 		}
 		
 		/* Private functions */
 		function build_query($locales,$query='',$order='',$year=0)
 		{
-
-			if(is_string($locales))
+			$querymethod = 'locale';
+			if (is_array($locales))
 			{
-				$find = "'".$locales."'";
+				$querymethod .= ' IN ('.$this->db->column_data_implode(',',$locales,False).')';
 			}
-			elseif(is_array($locales))
+			else
 			{
-				$find = '';
-				while(list($key,$value) = each($locales))
-				{
-					if($find)
-					{
-						$find .= ',';
-					}
-					$find .= "'".$value."'";
-				}
+				$querymethod .= '='.$this->db->quote($locales);
 			}
-
-			$querymethod = '';
 			if($query)
 			{
-				$querymethod = " AND name like '%".$query."%'";
+				$querymethod = " AND name LIKE ".$this->db->quote('%'.$query.'%');
 			}
-			if ((int)$year > 1900)
+			if ($year > 1900)
 			{
-				$querymethod .= " AND (occurence < 1900 OR occurence = $year)";
+				$querymethod .= " AND (occurence < 1900 OR occurence = ".(int)$year.")";
 			}
-			$querymethod .= ' ORDER BY '.($order ? $order : 'month_num,mday');
+			$querymethod .= ' ORDER BY '.(preg_match('/[a-zA-Z0-9_,]+/',$order) ? $order : 'month_num,mday');
 
-			return 'SELECT * FROM phpgw_cal_holidays WHERE locale in ('.$find.')'.$querymethod;
+			return "SELECT * FROM $this->table WHERE ".$querymethod;
 		}
 
 		function get_locale_list($sort='', $order='', $query='')
@@ -150,14 +144,14 @@
 			$querymethod = '';
 			if($query)
 			{
-				$querymethod .= " WHERE locale like '%".$query."%'";
+				$querymethod .= " WHERE locale LIKE ".$this->db->quote('%'.$query.'%');
 			}
 		
-			if($order)
+			if(preg_match('/[a-zA-Z0-9_,]+/',$order))
 			{
 				$querymethod .= ' ORDER BY '.$order;
 			}
-			$this->db->query("SELECT DISTINCT locale FROM phpgw_cal_holidays".$querymethod,__LINE__,__FILE__);
+			$this->db->query("SELECT DISTINCT locale FROM $this->table".$querymethod,__LINE__,__FILE__);
 			while($this->db->next_record())
 			{
 				$locale[] = $this->db->f('locale');
@@ -170,13 +164,13 @@
 			$querymethod='';
 			if($query)
 			{
-				$querymethod = " AND name like '%".$query."%'";
+				$querymethod = ' AND name LIKE '.$this->db->quote('%'.$query.'%');
 			}
-			if ((int)$year >= 1900)
+			if ($year >= 1900)
 			{
-				$querymethod .= " AND (occurence < 1900 OR occurence = $year)";
+				$querymethod .= ' AND (occurence < 1900 OR occurence = '.(int)$year.")";
 			}
-			$sql = "SELECT count(*) FROM phpgw_cal_holidays WHERE locale='".$locale."'".$querymethod;
+			$sql = "SELECT count(*) FROM $this->table WHERE locale=".$this->db->quote($locale).$querymethod;
 
 			if($this->debug)
 			{
