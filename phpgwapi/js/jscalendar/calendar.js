@@ -83,6 +83,8 @@ Calendar.is_ie = ( /msie/i.test(navigator.userAgent) &&
 
 Calendar.is_ie5 = ( Calendar.is_ie && /msie 5\.0/i.test(navigator.userAgent) );
 
+Calendar.is_ie5_mac = ( Calendar.is_ie && /Mac/i.test(navigator.userAgent) ); // IE 5.0 & 5.2 on Mac
+
 /// detect Opera browser
 Calendar.is_opera = /opera/i.test(navigator.userAgent);
 
@@ -91,6 +93,14 @@ Calendar.is_khtml = /Konqueror|Safari|KHTML/i.test(navigator.userAgent);
 
 // BEGIN: UTILITY FUNCTIONS; beware that these might be moved into a separate
 //        library, at some point.
+
+// Fills the indicated table cell with the given text. Fixes a bug on IE 5 Mac.
+Calendar._setCellText=function(cell,text){
+	if(cell.firstChild) 
+		cell.firstChild.data=text;
+	else 
+		cell.innerText=text;
+};
 
 Calendar.getAbsolutePos = function(el) {
 	var SL = 0, ST = 0;
@@ -109,6 +119,7 @@ Calendar.getAbsolutePos = function(el) {
 };
 
 Calendar.isRelated = function (el, evt) {
+	if(!evt) evt=event;	// IE 5 Mac evt is null
 	var related = evt.relatedTarget;
 	if (!related) {
 		var type = evt.type;
@@ -273,6 +284,7 @@ Calendar.showMonthsCombo = function () {
 		s.left = (cd.offsetLeft + cd.offsetWidth - mcw) + "px";
 	}
 	s.top = (cd.offsetTop + cd.offsetHeight) + "px";
+alert('showMonthCombo()'+s.left+','+s.top);
 };
 
 Calendar.showYearsCombo = function (fwd) {
@@ -295,7 +307,7 @@ Calendar.showYearsCombo = function (fwd) {
 	var show = false;
 	for (var i = 12; i > 0; --i) {
 		if (Y >= cal.minYear && Y <= cal.maxYear) {
-			yr.firstChild.data = Y;
+			Calendar._setCellText(yr,Y);
 			yr.year = Y;
 			yr.style.display = "block";
 			show = true;
@@ -416,7 +428,7 @@ Calendar.tableMouseOver = function (ev) {
 			} else if ( ++i >= range.length )
 				i = 0;
 		var newval = range[i];
-		el.firstChild.data = newval;
+		Calendar._setCellText(el,newval);
 
 		cal.onUpdateTime();
 	}
@@ -541,7 +553,7 @@ Calendar.dayMouseOver = function(ev) {
 		if (el.ttip.substr(0, 1) == "_") {
 			el.ttip = el.caldate.print(el.calendar.ttDateFormat) + el.ttip.substr(1);
 		}
-		el.calendar.tooltips.firstChild.data = el.ttip;
+		Calendar._setCellText(el.calendar.tooltips,el.ttip);
 	}
 	if (el.navtype != 300) {
 		Calendar.addClass(el, "hilite");
@@ -562,7 +574,7 @@ Calendar.dayMouseOut = function(ev) {
 		if (el.caldate) {
 			removeClass(el.parentNode, "rowhilite");
 		}
-		el.calendar.tooltips.firstChild.data = _TT["SEL_DATE"];
+		_setCellText(el.calendar.tooltips,_TT["SEL_DATE"]);
 		return stopEvent(ev);
 	}
 };
@@ -675,7 +687,7 @@ Calendar.cellClick = function(el, ev) {
 			} else if ( ++i >= range.length )
 				i = 0;
 			var newval = range[i];
-			el.firstChild.data = newval;
+			Calendar._setCellText(el,newval);
 			cal.onUpdateTime();
 			return;
 		    case 0:
@@ -903,10 +915,10 @@ Calendar.prototype.create = function (_par) {
 				var mins = this.date.getMinutes();
 				var pm = (hrs > 12);
 				if (pm && t12) hrs -= 12;
-				H.firstChild.data = (hrs < 10) ? ("0" + hrs) : hrs;
-				M.firstChild.data = (mins < 10) ? ("0" + mins) : mins;
+				Calendar._setCellText(H,(hrs < 10) ? ("0" + hrs) : hrs);
+				Calendar._setCellText(M,(mins < 10) ? ("0" + mins) : mins);
 				if (t12)
-					AP.firstChild.data = pm ? "pm" : "am";
+					Calendar._setCellText(AP,pm ? "pm" : "am");
 			};
 
 			cal.onUpdateTime = function() {
@@ -1096,7 +1108,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 		var cell = row.firstChild;
 		if (this.weekNumbers) {
 			cell.className = "day wn";
-			cell.firstChild.data = date.getWeekNumber();
+			Calendar._setCellText(cell,date.getWeekNumber());
 			if (this.hasWeekHandler) cell.caldate = new Date(date);
 			cell = cell.nextSibling;
 		}
@@ -1122,7 +1134,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 				hasdays = true;
 			}
 			cell.disabled = false;
-			cell.firstChild.data = iday;
+			Calendar._setCellText(cell,iday);
 			if (typeof this.getDateStatus == "function") {
 				var status = this.getDateStatus(date, year, month, iday);
 				if (status === true) {
@@ -1157,12 +1169,11 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 			row.className = "emptyrow";
 	}
 	this.ar_days = ar_days;
-//	this.title.firstChild.data = Calendar._MN[month] + ", " + year;
-	this.title.firstChild.data = this.params ? this.date.print(this.params.titleFormat) : Calendar._MN[month] + ", " + year;
+	Calendar._setCellText(this.title,this.params ? this.date.print(this.params.titleFormat) : Calendar._MN[month] + ", " + year);
 	this.onSetTime();
 	this.table.style.visibility = "visible";
 	// PROFILE
-	// this.tooltips.firstChild.data = "Generated in " + ((new Date()) - today) + " ms";
+	// Calendar._setCellText(this.tooltips,"Generated in " + ((new Date()) - today) + " ms");
 };
 
 /**
@@ -1302,6 +1313,9 @@ Calendar.prototype.show = function () {
 		Calendar.addEvent(document, "mousedown", Calendar._checkCalendar);
 	}
 	this.hideShowCovered();
+
+	if (Calendar.is_ie5_mac && !this.isPopup)
+		this.refresh();		// else the layout is broken
 };
 
 /**
@@ -1344,13 +1358,19 @@ Calendar.prototype.showAtElement = function (el, opts) {
 			box.x = 0;
 		if (box.y < 0)
 			box.y = 0;
-		var cp = document.createElement("div");
-		var s = cp.style;
-		s.position = "absolute";
-		s.right = s.bottom = s.width = s.height = "0px";
-		document.body.appendChild(cp);
-		var br = Calendar.getAbsolutePos(cp);
-		document.body.removeChild(cp);
+		if (Calendar.is_ie5_mac) {	// the other approach gives negative values for ie5 mac
+			var br = Calendar.getAbsolutePos(el);
+			br.x = document.body.offsetWidth;
+			br.y = document.body.offsetHeight;
+		} else {
+			var cp = document.createElement("div");
+			var s = cp.style;
+			s.position = "absolute";
+			s.right = s.bottom = s.width = s.height = "0px";
+			document.body.appendChild(cp);
+			var br = Calendar.getAbsolutePos(cp);
+			document.body.removeChild(cp);
+		}
 		if (Calendar.is_ie) {
 			br.y += document.body.scrollTop;
 			br.x += document.body.scrollLeft;
@@ -1592,7 +1612,7 @@ Calendar.prototype._displayWeekdays = function () {
 		if (weekend.indexOf(realday.toString()) != -1) {
 			Calendar.addClass(cell, "weekend");
 		}
-		cell.firstChild.data = Calendar._SDN[(i + fdow) % 7];
+		Calendar._setCellText(cell,Calendar._SDN[(i + fdow) % 7]);
 		cell = cell.nextSibling;
 	}
 };
