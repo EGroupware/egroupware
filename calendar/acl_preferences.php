@@ -92,6 +92,10 @@
 		// Group records
 		$group_variable = 'g_'.$phpgw_info['flags']['currentapp'];
 
+		if (!$$group_variable)
+		{
+			$$group_variable = array();
+		}
 		@reset($$group_variable);
 		while(list($group_id,$acllist) = each($$group_variable))
 		{
@@ -105,7 +109,11 @@
 
 		// User records
 		$user_variable = 'u_'.$phpgw_info['flags']['currentapp'];
-    
+
+		if (!$$user_variable)
+		{
+			$$user_variable = array();
+		}
 		@reset($$user_variable);
 		while(list($user_id,$acllist) = each($$user_variable))
 		{
