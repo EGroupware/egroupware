@@ -88,7 +88,7 @@ class send {
             $header .= "Content-Disposition: inline\n"
                     . "Content-description: Mail message body\n";
           }
-          if ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"] == "imap" && $phpgw_info["user"]["apps"]["email"]){
+          if ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"] == "imap" && $phpgw_info["user"]["apps"]["email"] && is_object($phpgw->msg)){
             $stream = $phpgw->msg->login("Sent");
             $phpgw->msg->append($stream, "Sent", $header, $body);
             $phpgw->msg->close($stream);
