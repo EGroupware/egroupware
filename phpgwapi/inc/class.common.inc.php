@@ -44,6 +44,29 @@
 		var $key = '';
 		var $crypto;
 		var $debug_info;		// An array with debugging info from the API
+		
+		// Compares two Version strings
+		/*!
+		@functionn cmp_version
+		@@abstract Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
+		@@param $str1
+		@@param $str2
+		*/
+		function cmp_version($str1,$str2)
+		{
+			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
+			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
+			//echo "$regs[0] - $regs2[0]";
+			for($i=1;$i<5;$i++) {
+				if($regs2[$i] == $regs[$i])
+					continue;
+				if($regs2[$i] > $regs[$i])
+					return 1;
+				else
+					if($regs2[$i] < $regs[$i])
+				return 0;
+			}
+		}
 
 		// Convert an array into the format needed for the access column.
 		/*!
