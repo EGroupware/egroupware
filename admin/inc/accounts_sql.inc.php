@@ -109,7 +109,7 @@
   {
      global $phpgw_info, $phpgw;
   
-     $phpgw->db->lock(array('accounts','preferences','sessions'));
+     $phpgw->db->lock(array("accounts","preferences","phpgw_sessions"));
      
 //     $lid = $account_info["loginid"];
 
