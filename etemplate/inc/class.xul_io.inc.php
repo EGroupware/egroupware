@@ -31,7 +31,7 @@
 				'disabled' => 'disabled=true',
 				'readonly' => 'readonly=true'
 			);
-			$this->widget2xul = array(	// how to translate widget-names ( 0 => ) and widget-spec. attr.
+			$this->widget2xul = array(	// how to translate widget-names and widget-spec. attr.
 				'label' => array(
 					'.name' => 'label',
 					'label' => 'value'
@@ -199,17 +199,26 @@
 
 		function import(&$etempl,$data)
 		{
-			//if ($this->debug)
+			if ($this->debug)
 			{
 				echo "<pre>\n" . htmlentities($data) . "\n</pre><p>\n";
 			}
 			$parser = xml_parser_create();
 			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 			xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE,   1);
+			$vals = $index = '';
 			xml_parse_into_struct($parser, $data, $vals, $index);
 
+			if (!is_array($vals))
+			{
+				$err = xml_error_string(xml_get_error_code($parser));
+			}
 			xml_parser_free($parser);
 
+			if ($err != '')
+			{
+				return $err;
+			}
 			while (list($n,$node) = each($vals))
 			{
 				$type = $node['type'];
@@ -313,7 +322,7 @@
 						break;
 				}
 			}
-			//if ($this->debug)
+			if ($this->debug)
 			{
 				_debug_array($etempl->data);
 			}

@@ -24,7 +24,11 @@
 			'error_writing' => 'Error: while saveing !!!',
 			'other_version' => 'only an other Version found !!!',
 			'ext_loaded' => 'Extensions loaded:',
-			'x_found'    => '%d eTemplates found'
+			'x_found'    => '%d eTemplates found',
+			'imported'   => "eTemplate '%s' imported, use Save to put it in the database",
+			'no_filename'=> 'no filename given or selected via Browse...',
+			'not_writeable' => "Error: webserver is not allowed to write into '%s' !!!",
+			'exported'   => "eTemplate '%s' written to '%s'"
 		);
 		var $aligns = array(
 			'' => 'Left',
@@ -355,6 +359,10 @@
 			{
 				$msg = $this->export_xml();
 			}
+			elseif ($content['import_xml'])
+			{
+				$msg = $this->import_xml($content['file']);
+			}
 			elseif ($content['db_tools'])
 			{
 				ExecMethod('etemplate.db_tools.edit');
@@ -377,7 +385,7 @@
 			}
 			if (!is_writeable($dir))
 			{
-				return "Error: webserver is not allowed to write into '$dir' !!!";
+				return sprintf($this->messages['not_writable'],$dir);
 			}
 			if ($create)
 			{
@@ -405,8 +413,26 @@
 			fwrite($f,$xul);
 			fclose($f);
 
-			return $xul_io->import(&$this->etemplate,$xul);
-			return "eTemplate '$name' written to '$file'";
+			return sprintf($this->messages['exported'],$name,$file);
+		}
+
+		function import_xml($file)
+		{
+			if ($file == 'none' || $file == '' || !($f = fopen($file,'r')))
+			{
+				return $this->messages['no_filename'];
+			}
+			$xul = fread ($f, filesize ($file));
+			fclose($f);
+
+			$xul_io = CreateObject('etemplate.xul_io');
+			$msg = $xul_io->import(&$this->etemplate,$xul);
+
+			if (!$msg)
+			{
+				$msg = sprintf($this->messages['imported'],$this->etemplate->name);
+			}
+			return $msg;
 		}
 
 		function delete($post_vars='',$back = 'edit')

@@ -67,7 +67,10 @@ enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
 error: template not found !!!	etemplate	en	Error: Template not found !!!
+error: webserver is not allowed to write into '%s' !!!	etemplate	en	Error: webserver is not allowed to write into '%s' !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
+etemplate '%s' imported, use save to put it in the database	etemplate	en	eTemplate '%s' imported, use Save to put it in the database
+etemplate '%s' written to '%s'	etemplate	en	eTemplate '%s' written to '%s'
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
@@ -77,6 +80,7 @@ extensions loaded:	etemplate	en	Extensions loaded:
 familyname	etemplate	en	Familyname
 fax	etemplate	en	Fax
 faxnumber	etemplate	en	Faxnumber
+fileupload	etemplate	en	FileUpload
 floating point	etemplate	en	Floating Point
 foreign key	etemplate	en	Foreign Key
 founded	etemplate	en	Founded
@@ -90,7 +94,9 @@ horizontal rule	etemplate	en	Horizontal Rule
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	en	Image
 import	etemplate	en	Import
+import an etemplate from a xml-file	etemplate	en	import an eTemplate from a xml-file
 import table-definitions from existing db-table	etemplate	en	Import table-definitions from existing db-table
+import xml	etemplate	en	Import XML
 index/name of returned content (name of the template, link / method for image)	etemplate	en	index/name of returned content (name of the Template, Link / Method for Image)
 indexed	etemplate	en	Indexed
 insert new column behind this one	etemplate	en	insert new column behind this one
@@ -119,6 +125,7 @@ name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 no	etemplate	en	No
+no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
 note	etemplate	en	Note
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
@@ -191,6 +198,7 @@ type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
 unique	etemplate	en	Unique
 update from version '%s' to	etemplate	en	Update from Version '%s' to
+upload	etemplate	en	Upload
 value	etemplate	en	Value
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
@@ -202,6 +210,7 @@ width, height, border	etemplate	en	Width, Height, Border
 width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Height, Border, class, Cellspacing, Cellpadding
 width, height, border, class, spacing, padding	etemplate	en	Width, Height, Border, class, Spacing, Padding
 width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
+width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag)	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag)
 width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag),	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag),
 width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag), 	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag), 
 work	etemplate	en	Work
@@ -210,6 +219,7 @@ write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_c
 write langfile	etemplate	en	Write Langfile
 write tables	etemplate	en	Write Tables
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
+xml-file to import	etemplate	en	xml-file to import
 year	etemplate	en	Year
 yes	etemplate	en	Yes
 you can enter some free text here.	etemplate	en	You can enter some free text here.
