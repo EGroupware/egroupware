@@ -343,8 +343,8 @@
 				$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
 					. "'0','0','phpgwapi','config','".addslashes(serialize($phpgw_info['server']))."')";
 			}
+			$phpgw->db->query($cache_query,__LINE__,__FILE__);
 		}
-		$phpgw->db->query($cache_query,__LINE__,__FILE__);
 	}
 	unset($cache_query);
 	unset($server_info_cache);
