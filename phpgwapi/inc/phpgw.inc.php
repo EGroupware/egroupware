@@ -169,7 +169,6 @@
         $this->session       = new sessions;
 	$log = explode("@",$login);
 	$this->preferences   = new preferences($log[0]);
-//	$this->preferences->preferences_($log[0]);
       }else{
         /* Load selected authentication class */
         if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
@@ -356,6 +355,7 @@
       }
       if ($preferences_update) {
          $phpgw->preferences->commit(__LINE__,__FILE__);
+	 $phpgw_info["user"]["preferences"]["common"] = $phpgw->preferences->preferences["common"];
       }
       unset($preferences_update);
     }
