@@ -10,9 +10,10 @@
 {
 
 	$file = Array(
-			lang('Preferences')		=> $GLOBALS['phpgw']->link('/preferences/preferences.php',array(
+			'Preferences' => $GLOBALS['phpgw']->link('/preferences/preferences.php',array(
 				'appname' =>$appname,
-				'type' => 'user'))
+				'type' => 'user')
+			)
 	);
 //Do not modify below this line
 	display_section($appname,$file);
