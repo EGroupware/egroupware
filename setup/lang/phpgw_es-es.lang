@@ -61,9 +61,7 @@ charset to convert to	setup	es-es	Juego de caracteres al que convertir
 check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
-click <a href="index.php"?sessionid=69211c0c32aa5581c5d69abdbcac4d64>here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
-click <a href="index.php"?sessionid=7fe5595a67d8747e64c2b92411ceaf31>here</a> to return to setup.	setup	es-es	
-click <a href="index.php"?sessionid=c0878fba5e3f2f6230f04199a7af15c6>here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
+click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
 completed	setup	es-es	Completado
 configuration	setup	es-es	Configuración
