@@ -28,7 +28,7 @@ function html_form_input ($type = NULL, $name = NULL, $value = NULL, $maxlength 
 		$type = "type=$type";
 	}
 	if ($name != NULL && $name)
-		$name = "name=$name";
+		$name = "name=\"$name\"";
 	if ($value != NULL && $value)
 	{
 		$value = "value=\"$value\"";
@@ -46,7 +46,7 @@ function html_form_input ($type = NULL, $name = NULL, $value = NULL, $maxlength 
 function html_form_textarea ($name = NULL, $rows = NULL, $cols = NULL, $value = NULL, $string = HTML_FORM_TEXTAREA_STRING, $return = 0)
 {
 	if ($name != NULL && $name)
-		$name = "name=$name";
+		$name = "name=\"$name\"";
 	if (is_int ($rows) && $rows >= 0)
 		$rows = "rows=$rows";
 	if (is_int ($cols) && $cols >= 0)
