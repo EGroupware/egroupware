@@ -527,17 +527,8 @@
 				// Loop until we find a free id
 				$free = 0;
 				while (!$free) {
-					$ldap_fields = "";
-					if ($account_type == "g")
+					if ($this->exists($nextid))
 					{
-						$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "gidnumber=$nextid");
-					}
-					else
-					{
-						$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=$nextid");
-					}
-					$ldap_test = ldap_get_entries($ds, $sri);
-					if ($ldap_test[0]['dn'][0]) {
 						$nextid = $phpgw->common->next_id("accounts_ldap",$min,$max);
 					} else {
 						$free = True;
@@ -663,10 +654,31 @@
 
 		function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
 		{
-			print "not done until now auto_generate class.accounts_ldap.inc.php<br>";
+			print "not done yet auto_generate class.accounts_ldap.inc.php<br>";
 			exit();
 			global $phpgw, $phpgw_info;
-			$accountid = mt_rand (100, 600000);
+
+			if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
+			if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
+
+			$nextid = $phpgw->common->last_id("accounts_ldap",$min,$max);
+
+			// Loop until we find a free id
+			$free = 0;
+			while (!$free) {
+				if ($this->exists($nextid))
+				{
+					$nextid = $phpgw->common->next_id("accounts_ldap",$min,$max);
+				} else {
+					$free = True;
+				}
+			}
+			if ($phpgw_info["server"]["account_max_id"] && ($nextid > $phpgw_info["server"]["account_max_id"])) {
+				return False;
+			}
+			$account_id = $nextid;
+			//echo $account_id;exit;
+
 			if ($defaultprefs =="") {
 				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
 //				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
