@@ -102,8 +102,8 @@
 		{
 			$rtrn = array(CreateObject('phpgwapi.soapval','GOAWAY','string',$username));
 		}
-		//$r = CreateObject('phpgwapi.soapmsg','system_authResponse',$rtrn);
-		return $rtrn;
+		$r = CreateObject('phpgwapi.soapmsg','system_loginResponse',$rtrn);
+		return $r;
 	}
 
 	function system_logout($m1,$m2)
@@ -126,7 +126,7 @@
 				CreateObject('phpgwapi.soapval','OOPS','string','WHAT?')
 			);
 		}
-		//$r = CreateObject('phpgwapi.soapmsg','system_auth_verifyResponse',$rtrn);
-		return $rtrn;
+		$r = CreateObject('phpgwapi.soapmsg','system_logoutResponse',$rtrn);
+		return $r;
 	}
 ?>
