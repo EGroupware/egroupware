@@ -253,7 +253,7 @@
 			$this->template->set_var('title_categories',lang('Add global category'));
 			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.add'));
 			$this->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index'));
-			$this->template->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $cat_id . '">');
+			$this->template->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $this->cat_id . '">');
 			$this->template->set_var('lang_parent',lang('Parent category'));
 			$this->template->set_var('lang_none',lang('None'));
 			$this->template->set_var('category_list',$this->bo->formatted_list(array('select' => 'select','all' => 'all','cat_parent' => $cat_parent)));
