@@ -329,7 +329,7 @@
 		$userData = array(
 			'account_lid'    => $account_lid,     	'firstname'   => $n_firstname,
 			'lastname'       => $n_lastname,       	'passwd'    => $n_passwd,
-			'status' 	 => $n_status, 		'old_loginid' => rawurldecode($old_loginid),
+			'status' 	 => $n_account_status, 		'old_loginid' => rawurldecode($old_loginid),
 			'account_id'     => $account_id,	'passwd_2'  => $n_passwd_2,
 			'n_groups' 	 => $n_groups,		'new_permissions' => $new_permissions
 		);
