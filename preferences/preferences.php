@@ -269,27 +269,17 @@
 		/* Developers won't have to pass around a variable then */
 		$session_data = $GLOBALS['phpgw']->session->appsession('session_data','preferences');
 
-		if (! is_array($session_data))
+		if (!($GLOBALS['type'] = get_var('type',Array('GET','POST'))))
 		{
-			$session_data = array(
-				'type' => 'user'
-			);
-			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
+			$GLOBALS['type'] = is_array($session_data) ? $session_data['type'] : 'user';
 		}
-
-		$type = get_var('type',Array('GET','POST'));
-		if (!isset($type))
+		if (empty($GLOBALS['type']))
 		{
-			$GLOBALS['type'] = $session_data['type'];
+			$GLOBALS['type'] = 'user';
 		}
-		else
-		{
-			$GLOBALS['type'] = $type;
-			$session_data = array(
-				'type' => $GLOBALS['type']
-			);
-			$GLOBALS['phpgw']->session->appsession('session_data','preferences',$session_data);
-		}
+		$GLOBALS['phpgw']->session->appsession('session_data','preferences',array(
+			'type' => $GLOBALS['type']
+		));
 
 		$tabs[] = array(
 			'label' => lang('Your preferences'),
