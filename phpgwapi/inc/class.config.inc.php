@@ -55,7 +55,7 @@
 
 			if ($config_data)
 			{
-				$this->db->lock('phpgw_config');
+				$this->db->lock(array('phpgw_config','phpgw_app_sessions'));
 				$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 				if($this->appname == 'phpgwapi')
 				{
