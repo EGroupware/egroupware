@@ -62,6 +62,7 @@
 
 			$this->db           = CreateObject('phpgwapi.db');
 			$this->db->Host     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_host'];
+			$this->db->Port     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_port'];
 			$this->db->Type     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_type'];
 			$this->db->Database = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_name'];
 			$this->db->User     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_user'];
