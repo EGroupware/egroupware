@@ -23,24 +23,24 @@
     $c->categories($phpgw_info['user']['account_id'],'phpgw');
 
     if ($submit) {
-    $errorcount = 0;
+	$errorcount = 0;
 
-    $exists = $c->exists('main',$cat_name);
+        if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
+	if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
+	else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
 	if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
 
-     if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
+	if (! $error) {
+	    $cat_name = addslashes($cat_name);
+	    $cat_description = addslashes($cat_description);
+	    $cat_access = 'public';
 
-    if (! $error) {
-	$cat_name = addslashes($cat_name);
-	$cat_description = addslashes($cat_description);
-	$cat_access = 'public';
-
-	$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
+	    $c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
 	}
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Category x has been added !', $cat_name)); }
+    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category x has been added !", $cat_name)); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
     $t->set_var('title_categories',lang('Add global category'));

@@ -40,24 +40,18 @@
     $c->app_name = $cats_app;
 
     if ($submit) {
-    $errorcount = 0;
-    if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
-    $phpgw->db->query("SELECT count(*) from phpgw_categories WHERE cat_name='$cat_name' AND cat_id !='$cat_id' AND cat_appname='"
-		     . $phpgw_info["flags"]["currentapp"] ."' AND cat_parent='0'");
-    $phpgw->db->next_record();
-    if ($phpgw->db->f(0) != 0) { $error[$errorcount++] = lang('That main category name has been used already !'); }
+	$errorcount = 0;
+	if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
+        if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id); }
+        else { $exists = $c->exists('subs',$cat_name,$cat_id); }
+        if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
 
-    $phpgw->db->query("SELECT count(*) from phpgw_categories WHERE cat_name='$cat_name' AND cat_id !='$cat_id' AND cat_appname='"
-		     . $phpgw_info["flags"]["currentapp"] ."' AND cat_parent != '0'");
-    $phpgw->db->next_record();
-    if ($phpgw->db->f(0) != 0) { $error[$errorcount++] = lang('That sub category name has been used already !'); }
+	$cat_name = addslashes($cat_name);
+	$cat_description = addslashes($cat_description);
+	if ($access) { $cat_access = 'private'; }
+	else { $cat_access = 'public'; }
 
-    $cat_name = addslashes($cat_name);
-    $cat_description = addslashes($cat_description);
-    if ($access) { $cat_access = 'private'; }
-    else { $cat_access = 'public'; }
-
-    if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access); }
+	if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access); }
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }

@@ -263,10 +263,16 @@
 		@abstract delete category
 		@param $cat_id int - category id
 		*/
-		function delete($cat_id)
+		function delete($cat_id,$subs = 'False')
 		{
-			$this->db->query("delete from phpgw_categories where cat_id='$cat_id' and cat_appname='"
-                  . $this->app_name . "'",__LINE__,__FILE__);
+
+		    if ($subs == 'True')
+		    {
+		    $subdelete = " OR cat_parent='$cat_id'"; 
+		    }
+
+		    $this->db->query("delete from phpgw_categories where cat_id='$cat_id' $subdelete and cat_appname='"
+				    . $this->app_name . "'",__LINE__,__FILE__);
 		}
 		/*!
 		@function edit
@@ -311,23 +317,37 @@
 		@param $cat_name category name
 		@result boolean true or false
 		*/
-		function exists($type,$cat_name)
+		function exists($type,$cat_name,$cat_id)
 		{
-			$filter = $this->filter($type);
+		    $filter = $this->filter($type);
 
-			$this->db->query("select count(*) from phpgw_categories where cat_name='"
-                       . addslashes($cat_name) . "' and cat_appname='"
+		    if ($cat_name) 
+		    {
+			$cat_exists = " cat_name='" . addslashes($cat_name) . "' "; 
+		    }
+		    if ($cat_id)
+		    {
+                        $cat_exists = " cat_parent='$cat_id' ";
+		    }
+		    if ($cat_name && $cat_id)
+		    {
+			$cat_exists = " cat_name='" . addslashes($cat_name) . "' and cat_id != '$cat_id' ";
+		    }
+
+                    $this->db->query("select count(*) from phpgw_categories where $cat_exists and cat_appname='"
                        . $this->app_name . "' $filter",__LINE__,__FILE__);
-			$this->db->next_record();
 
-			if ($this->db->f(0))
-			{
-				return True;
-			}
-			else
-			{
-				return False;
-			}
+		    $this->db->next_record();
+
+		    if ($this->db->f(0))
+		    {
+			return True;
+		    }
+		    else
+		    {
+			return False;
+		    }
 		}
+
 	}
 ?>

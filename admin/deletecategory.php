@@ -27,8 +27,9 @@
     }
 
     if ($confirm) {
-    $c->delete($cat_id);    
-    Header('Location: ' . $phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+	if ($subs) { $c->delete($cat_id,'True'); }
+	else { $c->delete($cat_id); }    
+	Header('Location: ' . $phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
     }
     else {
     $hidden_vars = "<input type=\"hidden\" name=\"sort\" value=\"$sort\">\n"
@@ -39,25 +40,26 @@
                         . "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n";
 
     $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
-    $t->set_file(array('category_delete' => 'delete_common.tpl'));
+    $t->set_file(array('category_delete' => 'delete_cat.tpl'));
     $t->set_var('messages',lang('Are you sure you want to delete this category ?'));
+    $t->set_var('hidden_vars',$hidden_vars);
+    
+    $exists = $c->exists('subs',$cat_name='',$cat_id);
+    
+    if ($exists==True) {
+	$t->set_var('lang_subs',lang('Do you want to delete also all subcategories ?'));
+	$t->set_var('subs','<input type="checkbox" name="subs" value="True">');
+    }
+    else {
+        $t->set_var('lang_subs','');
+        $t->set_var('subs', '');
+    }
 
-    $nolinkf = $phpgw->link('/admin/categories.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter");
-    $nolink = "<a href=\"$nolinkf\">" . lang('No') ."</a>";
-    $t->set_var('no',$nolink);
+    $t->set_var('nolink',$phpgw->link('/admin/categories.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+    $t->set_var('lang_no',lang('No'));
 
-    $yeslinkf = $phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id&confirm=True");
-    $yeslinkf = "<FORM method=\"POST\" name=yesbutton action=\"".$phpgw->link('/admin/deletecategory.php') . "\">"
-                 . $hidden_vars
-                 . "<input type=hidden name=cat_id value=$cat_id>"
-		 . "<input type=hidden name=confirm value=True>"
-                 . "<input type=submit name=yesbutton value=Yes>"
-                 . "</FORM><SCRIPT>document.yesbutton.yesbutton.focus()</SCRIPT>";
-
-    $yeslink = "<a href=\"$yeslinkf\">" . lang('Yes') ."</a>";
-    $yeslink = $yeslinkf;
-
-    $t->set_var('yes',$yeslink);
+    $t->set_var('action_url',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id"));
+    $t->set_var('lang_yes',lang('Yes'));
 
     $t->pparse('out','category_delete');
     }

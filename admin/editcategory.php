@@ -35,17 +35,18 @@
                         . "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n";
 
     if ($submit) {
-    $errorcount = 0;
-    if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
-    $phpgw->db->query("SELECT count(*) from phpgw_categories WHERE cat_name='$cat_name' AND cat_id !='$cat_id' AND cat_appname='phpgw'");
-    $phpgw->db->next_record();
-    if ($phpgw->db->f(0) != 0) { $error[$errorcount++] = lang('That category name has been used already !'); }
+	$errorcount = 0;
+	if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
 
-    $cat_name = addslashes($cat_name);
-    $cat_description = addslashes($cat_description);
-    $cat_access = 'public';
+        if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id); }	    
+        else { $exists = $c->exists('subs',$cat_name,$cat_id); }
+	if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
 
-    if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access);	}
+	$cat_name = addslashes($cat_name);
+	$cat_description = addslashes($cat_description);
+	$cat_access = 'public';
+
+	if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access);	}
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }

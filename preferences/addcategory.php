@@ -39,8 +39,8 @@
     $errorcount = 0;
 
     if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
-    if (!$cat_parent) { $exists = $c->exists('mains',$cat_name); }
-    else { $exists = $c->exists('subs',$cat_name); }
+    if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id=''); }
+    else { $exists = $c->exists('subs',$cat_name,$cat_id=''); }
     if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
 
     if (! $error) {
@@ -70,7 +70,7 @@
     $t->set_var('lang_access',lang('Private'));
 
     if ($access) { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
-    else { $t->set_var('access', '<input type="checkbox" name="access" value="True"'); }
+    else { $t->set_var('access', '<input type="checkbox" name="access" value="True">'); }
     $t->set_var('lang_name',lang('Name'));
     $t->set_var('lang_descr',lang('Description'));
     $t->set_var('cat_name',$cat_name);
