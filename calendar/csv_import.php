@@ -171,8 +171,8 @@
 			'title'		=> 'Title varchar(80)',
 			'description' => 'Description text',
 			'location'	=> 'Location varchar(255)',
-			'start'	=> 'Start Date: start: Timestamp or eg. YYYY-MM-DD hh:mm',
-			'end'	=> 'End Date: start',
+			'start'	=> 'Start Date: Timestamp or eg. YYYY-MM-DD hh:mm',
+			'end'	=> 'End Date: Timestamp or eg. YYYY-MM-DD hh:mm',
 			'participants' => 'Participants: comma separated user-id\'s or -names',
 			'category'	=> 'Categories: id\'s or names, comma separated (new ones got created)',
 			'priority'  => 'Priority: 1=Low, 2=Normal, 3=High',
@@ -257,7 +257,7 @@
 			"<i>NFamily</i> AND (<i>NGiven</i> OR <i>Company</i>). This is necessary to link your imported calendar-entrys ".
 			"with the addressbook.<br>".
 			"<b>@cat_id(Cat1,...,CatN)</b> returns a (','-separated) list with the cat_id's. If a category isn't found, it ".
-			"will be automaticaly added.<p>".
+			"will be automaticaly added. This function is automaticaly called if the category is not numerical!<p>".
 			"I hope that helped to understand the features, if not <a href='mailto:RalfBecker@outdoor-training.de'>ask</a>.";
 
 		$GLOBALS['phpgw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
@@ -360,10 +360,9 @@
 			{
 				//echo "<p>$csv: $info".($trans[$csv] ? ': '.$trans[$csv] : '')."</p>";
 				$val = $fields[$csv_idx];
-				if (isset($trans[$csv_idx]))
+				if (isset($trans[$csv_idx]) && is_array($trans[$csv_idx]))
 				{
-					$trans_csv = $trans[$csv_idx];
-					while (list($pattern,$replace) = each($trans_csv))
+					foreach($trans[$csv_idx] as $pattern => $replace)
 					{
 						if (ereg((string) $pattern,$val))
 						{
@@ -464,20 +463,25 @@
 						$datearr['hour'],$datearr['minute'],$datearr['second']);
 				}
 				// convert participants-names to user-id's
-				$parts = isset($values['participants']) ? split('[,;]',$values['participants']) : array($values['owner'].'=A');
-				foreach($parts as $part_status)
+				$participants = 0;
+				foreach(split('[,;]',$values['participants']) as $part_status)
 				{
 					list($part,$status) = explode('=',$part_status);
 					$valid_status = array('U'=>'U','u'=>'U','A'=>'A','a'=>'A','R'=>'R','r'=>'R','T'=>'T','t'=>'T');
 					$status = isset($valid_status[$status]) ? $valid_status[$status] : 'U';
-					if (!$GLOBALS['phpgw']->accounts->exists($part))
+					if ($GLOBALS['phpgw']->accounts->exists($part))
 					{
 						$part = $GLOBALS['phpgw']->accounts->name2id($part);
 					}
-					if ($part)
+					if ($part && is_numeric($part))
 					{
 						$calendar->add_attribute('participants',$status,$part);
+						$participants++;
 					}
+				}
+				if (!$participants)		// no valid participants so far --> add the importing user/owner
+				{
+					$calendar->add_attribute('participants','A',$values['owner']);
 				}
 				//echo "add_entry(<pre>".print_r($calendar->cal->event,True).")</pre>\n";
 				$calendar->add_entry( $calendar->cal->event );
