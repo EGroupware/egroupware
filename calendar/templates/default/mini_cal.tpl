@@ -1,32 +1,5 @@
 <!-- $Id$ -->
 <!-- BEGIN mini_cal -->
- <style type="text/css">
-  <!--
-    .minicalendar
-    {
-      color: #000000;
-    }
-
-    .minicalendargrey
-    {
-      color: #999999;
-    }
-
-    .minicalhol
-    {
-      color: #000000;
-      background-color: {holiday_color};
-    }
-
-    .minicalgreyhol
-    {
-      color: #999999;
-      background-color: {holiday_color};
-    }
-
-  -->
- </style>
-
 <table border="0" cellspacing="0" cellpadding="0" valign="top" width="80" cols="7">
  <tr valign="center">
   <td align="left" colspan=4><font size="-2">&nbsp;&nbsp;&nbsp;&nbsp;<b>{month}</b></font></td>
