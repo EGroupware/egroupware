@@ -918,7 +918,7 @@
 
 		function load_group_apps($account_id)
 		{
-			$apps = CreateObject('phpgwapi.applications',(int)$account_id;
+			$apps = CreateObject('phpgwapi.applications',(int)$account_id);
 			$app_list = $apps->read_account_specific();
 			$account_apps = Array();
 			while(list($key,$app) = each($app_list))
