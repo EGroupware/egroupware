@@ -1331,7 +1331,7 @@
 			}
 			$fields['adr_two_type'] = substr($typeb,0,-1);
 
-			$custom = $this->read_custom_fields();
+			$custom = $this->fields->read_custom_fields();
 			while(list($name,$val) = @each($custom))
 			{
 				$fields[$name] = $entry[$val];
