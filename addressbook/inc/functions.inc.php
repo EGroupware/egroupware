@@ -61,11 +61,10 @@
     $access       = $fields->access;
     $ab_company   = $fields->company;
     $company_id   = $fields->company_id;
-    $company_name = $fields->company_name;
+    $company_name = $fields->company;
     $url          = $fields->url;
 
     if ($format != "view") {
-      $encurl    = ($url);
       $email 	 = "<input name=\"email\" value=\"$email\">";
       $firstname = "<input name=\"firstname\" value=\"$firstname\">";
       $lastname  = "<input name=\"lastname\" value=\"$lastname\">";
@@ -81,20 +80,24 @@
       $city	 = "<input name=\"city\" value=\"$city\">";
       $state	 = "<input name=\"state\" value=\"$state\">";
       $zip	 = "<input name=\"zip\" value=\"$zip\">";
-//      $url	 = "<input name=\"url\" value=\"$encurl\">";
-              
+
       if($phpgw_info["apps"]["timetrack"]["enabled"]) {
-        $company = '<select name="company">';
+        $company  = '<select name="company">';
+	if (!$ab_company) {
+          $company .= '<option value="0" SELECTED>'. lang("none").'</option>';
+        } else {
+          $company .= '<option value="0">'. lang("none").'</option>';
+        }
         $phpgw->db->query("select company_id,company_name from customers order by company_name");
         while ($phpgw->db->next_record()) {
           $ncust = $phpgw->db->f("company_id");
-          $company = $company . '<option value="' . $ncust . '"';
+          $company .= '<option value="' . $ncust . '"';
           if ( $company_id == $ncust ) {
-            $company = $company . " selected";
+            $company .= " selected";
           }
-            $company = $company . ">" . $phpgw->db->f("company_name") . "</option>";
-          }
-        $company = $company . "</select>";
+          $company .= ">" . $phpgw->db->f("company_name") . "</option>";
+        }
+        $company .=  "</select>";
       } else {
         $company = "<input name=\"company\" value=\"$ab_company\">";
       }

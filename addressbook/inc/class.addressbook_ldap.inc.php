@@ -15,13 +15,13 @@
   class addressbook_
   {
     var $id;
-    var $company;
+    var $owner;
+    var $access;
     var $firstname;
     var $lastname;
     var $email;
     var $wphone;
     var $hphone;
-    var $company;
     var $fax;
     var $pager;
     var $mphone;
@@ -31,9 +31,11 @@
     var $state;
     var $zip;
     var $bday;
+    var $company;
+    var $company_id;
     var $url;
     var $notes;
-    var $access;
+
     var $searchreturn;
     var $search_filter;
     var $lang_showing;
@@ -65,8 +67,11 @@
       $this->state       = stripslashes($phpgw->db->f("ab_state"));
       $this->zip         = stripslashes($phpgw->db->f("ab_zip"));
       $this->bday        = stripslashes($phpgw->db->f("ab_bday"));
-      $this->company     = stripslashes($phpgw->db->f("ab_company"));
-      $this->company_id  = stripslashes($phpgw->db->f("ab_company_id"));
+      if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
+        $this->company   = stripslashes($phpgw->db->f("ab_company_id"));
+      } else {
+        $this->company   = stripslashes($phpgw->db->f("ab_company"));
+      }
       $this->notes       = stripslashes($phpgw->db->f("ab_notes"));
       $this->url         = stripslashes($phpgw->db->f("ab_url"));
       $this->access      = stripslashes($phpgw->db->f("ab_access"));
@@ -321,7 +326,7 @@
         if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
           $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
                      . "a.ab_email,a.ab_wphone,c.company_name "
-                     . "from addressbook as a, customers as c where a.ab_company_id = c.company_id OR a.ab_company_id = '' OR a.ab_company_id = '0' "
+                     . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
                      . "AND $filtermethod $ordermethod limit $limit",__LINE__,__FILE__);
         } else {
           $phpgw->db->query("SELECT * from addressbook WHERE $filtermethod $ordermethod limit $limit",__LINE__,__FILE__);
@@ -350,9 +355,9 @@
         $this->zip[$i]         = htmlentities(stripslashes($phpgw->db->f("ab_zip")));
         $this->bday[$i]        = htmlentities(stripslashes($phpgw->db->f("ab_bday")));
         if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
-          $this->company[$i]   = htmlentities(stripslashes($phpgw->db->f("ab_company")));
-        } else {
           $this->company[$i]   = htmlentities(stripslashes($phpgw->db->f("company_name")));
+        } else {
+          $this->company[$i]   = htmlentities(stripslashes($phpgw->db->f("ab_company")));
         }
         $this->company_id[$i]  = htmlentities(stripslashes($phpgw->db->f("ab_company_id")));
         $this->notes[$i]       = htmlentities(stripslashes($phpgw->db->f("ab_notes")));
