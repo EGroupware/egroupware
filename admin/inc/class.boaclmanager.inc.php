@@ -16,7 +16,7 @@
 		var $ui;
 		var $so;
 		var $public_functions = array(
-			'submit' => True,
+			'submit' => True
 		);
 
 		function boaclmanager()

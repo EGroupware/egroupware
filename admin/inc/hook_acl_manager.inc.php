@@ -27,7 +27,7 @@
 			'Add account'     => 4,
 			'View account'    => 8,
 			'Edit account'    => 16,
-			'Delete account'  => 32,
+			'Delete account'  => 32
 		)
 	);
 
