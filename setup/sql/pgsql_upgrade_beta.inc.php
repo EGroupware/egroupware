@@ -257,7 +257,7 @@
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SS','Siswati','No')");     
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ST','Sesotho','No')");     
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SU','Sudanese','No')");    
-  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SV','Swedish','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SV','Swedish','Yes')");     
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SW','Swahili','No')");     
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TA','Tamil','No')");       
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TE','Tegulu','No')");      
