@@ -313,7 +313,7 @@
 			global $phpgw,$phpgw_info;
 
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			$DEBUG = 0;
+			$DEBUG = 1;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 			if (count($stock_fieldnames))
@@ -390,13 +390,18 @@
 						{
 							if ($fvalue==$name)
 							{
-								if (gettype($value) == "integer")
+								if ($name == 'cat_id')
 								{
-									$filterlist .= $name."=".$value.",";
+									// This is the alternative to CONCAT, since it is mysql-only
+									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."=".$value.");";
+								}
+								elseif (gettype($value) == "integer")
+								{
+									$filterlist .= $name."=".$value.";";
 								}
 								else
 								{
-									$filterlist .= $name."='".$value."',";
+									$filterlist .= $name."='".$value."';";
 								}
 								break;
 							}
@@ -405,11 +410,12 @@
 					$i++;
 				}
 				$filterlist  = substr($filterlist,0,-1);
-				$filterlist  = ereg_replace(","," AND ",$filterlist);
+				$filterlist  = ereg_replace(";"," AND ",$filterlist);
 				
 				// echo "<p>contacts->read(): filterlist=\"$filterlist\" -->";	// allow multiple (','-separated) cat's per address
-				$filterlist = ereg_replace('cat_id=[\']*([0-9]+)[\']*',"CONCAT(',',cat_id,',') LIKE '%,\\1,%'",$filterlist);
+				//$filterlist = ereg_replace('cat_id=[\']*([0-9]+)[\']*',"CONCAT(',',cat_id,',') LIKE '%,\\1,%'",$filterlist);
 				// echo "\"$filterlist\"</p>\n";
+				// Oops, CONCAT is mysql-only, this is now handled explicitly above for cat_id
 
 				if ($DEBUG)
 				{
@@ -534,6 +540,8 @@
 				$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 				. $filtermethod . " " . $ordermethod . " " . $limit,__LINE__,__FILE__);
 			}
+
+			if ($DEBUG) { echo "<br>SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere . $filtermethod; }
 
 			$i=0;
 			while ($this->db->next_record())
