@@ -1346,7 +1346,10 @@
 				$event_time = mktime($event['start']['hour'],$event['start']['min'],0,intval(substr($date,4,2)),intval(substr($date,6,2)),intval(substr($date,0,4))) - $this->datetime->tz_offset;
 				while($inserted == False && list($key,$exception_time) = each($event['recur_exception']))
 				{
-					echo '<!-- checking exception datetime '.$exception_time.' to event datetime '.$event_time.' -->'."\n";
+					if($this->debug)
+					{
+						echo '<!-- checking exception datetime '.$exception_time.' to event datetime '.$event_time.' -->'."\n";
+					}
 					if($exception_time == $event_time)
 					{
 						$inserted = True;
