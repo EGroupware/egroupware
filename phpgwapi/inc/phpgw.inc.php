@@ -429,7 +429,7 @@
         include($phpgw_info["server"]["app_inc"]."/functions.inc.php");
      }
 
-     if (! $phpgw_info["flags"]["noheader"] && $phpgw_info["flags"]["noappheader"] && file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
+     if (! $phpgw_info["flags"]["noheader"] && !$phpgw_info["flags"]["noappheader"] && file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
         include($phpgw_info["server"]["app_inc"]."/header.inc.php");
      }
   }
