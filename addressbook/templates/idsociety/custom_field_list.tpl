@@ -1,4 +1,5 @@
-
+<br>
+<center>{title}</center><p>
 <center>{message}</center><p>
 <table border="0" align="center" width="60%">
  <tr bgcolor="{th_bg}">

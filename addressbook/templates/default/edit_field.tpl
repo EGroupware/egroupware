@@ -1,6 +1,7 @@
 <!-- BEGIN form -->
 <br><br>
 <center>
+   {title}<br>
    {message}<br>
    <form action="{actionurl}" method="POST">
    {hidden_vars}

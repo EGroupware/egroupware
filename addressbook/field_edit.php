@@ -29,6 +29,7 @@
 	$field = ereg_replace(' ','_',$field);
 	$ofield = ereg_replace(' ','_',$ofield);
 
+	$t->set_var('title',lang('addressbook').' '.lang('custom fields'));
 	$t->set_var('font',$font);
 	$t->set_var('note',$note);
 	$t->set_var('lang_add',lang('Add'));

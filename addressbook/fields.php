@@ -30,7 +30,8 @@
 		"row"	=> "custom_field_list_row.tpl"
 	));
 
-	$phpgw->template->set_var("message",$message);
+	$phpgw->template->set_var("title",lang('addressbook').' '.lang('custom fields'));
+	$phpgw->template->set_var("message",'');
 	$phpgw->template->set_var("sort_name",lang("Name"));
 	$phpgw->template->set_var("lang_edit",lang("Edit"));
 	$phpgw->template->set_var("lang_delete",lang("Delete"));
@@ -38,20 +39,26 @@
 
 	$phpgw->preferences->read_repository();
 
-	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
-		if ( substr($col,0,6) == 'extra_' ) {
+	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"]))
+	{
+		if ( substr($col,0,6) == 'extra_' )
+		{
 			$fields[$i] = ereg_replace('extra_','',$col);
 			$fields[$i] = ereg_replace(' ','_',$fields[$i]);
-			echo "<br>".$i.": '".$fields[$i]."'";
-		} else {
+			//echo "<br>".$i.": '".$fields[$i]."'";
+		}
+		else
+		{
 			$fields[$i] = '';
 		}
 		$i++;
 	}
 
 	reset($fields);
-	for($i=0;$i<count($fields);$i++) {
-		if ($fields[$i]) {
+	for($i=0;$i<count($fields);$i++)
+	{
+		if ($fields[$i])
+		{
 			$found = True;
 			$phpgw->nextmatchs->template_alternate_row_color(&$phpgw->template);
 
@@ -70,7 +77,8 @@
 			$phpgw->template->parse("rows","row",True);
 		}
 	}
-	if (!$found) {
+	if (!$found)
+	{
 		$phpgw->nextmatchs->template_alternate_row_color(&$phpgw->template);
 		$phpgw->template->set_var("field_name",'&nbsp;');
 		$phpgw->template->set_var("field_edit",'&nbsp;');
@@ -82,7 +90,6 @@
 		. $phpgw->link("/addressbook/field_edit.php","method=add")
 		. '">' . lang("Add") . '</a>');
 
-	$phpgw->template->pparse("out","row");
 	$phpgw->template->pparse("out","body");
 	$phpgw->common->phpgw_footer();
 ?>
