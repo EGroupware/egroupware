@@ -18,8 +18,7 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
-  $t = new Template($phpgw_info["server"]["template_dir"]);
-  $t->set_file(array("form"	=> "groups_form.tpl"));
+  $phpgw->template->set_file(array("form"	=> "groups_form.tpl"));
 
   if ($submit) {
      $phpgw->db->query("select count(*) from groups where group_name='" . $n_group . "'");
@@ -71,26 +70,26 @@
   if ($error) {
      $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
-     $t->set_var("error","<p><center>$error</center>");
+     $phpgw->template->set_var("error","<p><center>$error</center>");
   } else {
-     $t->set_var("error","");
+     $phpgw->template->set_var("error","");
   }
 
-  $t->set_var("form_action",$phpgw->link("newgroup.php"));
-  $t->set_var("hidden_vars","");
-  $t->set_var("lang_group_name",lang("New group name"));
-  $t->set_var("group_name_value","");
+  $phpgw->template->set_var("form_action",$phpgw->link("newgroup.php"));
+  $phpgw->template->set_var("hidden_vars","");
+  $phpgw->template->set_var("lang_group_name",lang("New group name"));
+  $phpgw->template->set_var("group_name_value","");
 
   $phpgw->db->query("select count(*) from accounts where account_status !='L'");
   $phpgw->db->next_record();
 
   if ($phpgw->db->f(0) < 5) {
-     $t->set_var("select_size",$phpgw->db->f(0));
+     $phpgw->template->set_var("select_size",$phpgw->db->f(0));
   } else {
-     $t->set_var("select_size","5");
+     $phpgw->template->set_var("select_size","5");
   }
 
-  $t->set_var("lang_include_user",lang("Select users for inclusion"));
+  $phpgw->template->set_var("lang_include_user",lang("Select users for inclusion"));
   for ($i=0; $i<count($n_users); $i++) {
      $selected_users[$n_users[$i]] = " selected";
   }
@@ -104,9 +103,9 @@
 								   	    $phpgw->db->f("account_firstname"),
 								   	    $phpgw->db->f("account_lastname")) . "</option>";
   }
-  $t->set_var("user_list",$user_list);
+  $phpgw->template->set_var("user_list",$user_list);
 
-  $t->set_var("lang_permissions",lang("Select permissions this group will have"));
+  $phpgw->template->set_var("lang_permissions",lang("Select permissions this group will have"));
   for ($i=0; $i<count($n_group_permissions); $i++) {
      $selected_permissions[$n_group_permissions[$i]] = " selected";
   }
@@ -118,10 +117,10 @@
 	   			   . $permission[1]["title"] . "</option>";
      }
   }
-  $t->set_var("permissions_list",$permissions_list);
-  $t->set_var("lang_submit_button",lang("Create Group"));
+  $phpgw->template->set_var("permissions_list",$permissions_list);
+  $phpgw->template->set_var("lang_submit_button",lang("Create Group"));
 
-  $t->pparse("out","form");
+  $phpgw->template->pparse("out","form");
 
   $phpgw->common->phpgw_footer();
 ?>

@@ -61,13 +61,13 @@
         $error[$totalerrors++] = lang("The two passwords are not the same");
 
      if (count($new_permissions) == 0)
-        $error[$totalerrors++] = lang("You must add at least 1 permission to this account");
+        $error[$phpgw->templateotalerrors++] = lang("You must add at least 1 permission to this account");
         
      if (count($n_groups) == 0)
-        $error[$totalerrors++] = lang("Account must belong to at least 1 group");
+        $error[$phpgw->templateotalerrors++] = lang("Account must belong to at least 1 group");
 
      if (account_exsists($n_loginid)) {
-        $error[$totalerrors++] = lang("That loginid has already been taken");
+        $error[$phpgw->templateotalerrors++] = lang("That loginid has already been taken");
      }
 
      if (! $error) {
@@ -80,38 +80,37 @@
         exit;
      }
   }
-  
-  $t = new Template($phpgw_info["server"]["template_dir"]);
-  $t->set_file(array("form"	=> "account_form.tpl"));
+
+  $phpgw->template->set_file(array("form"	=> "account_form.tpl"));
 
   $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
 
-  $t->set_var("lang_action",lang("Add new account"));
+  $phpgw->template->set_var("lang_action",lang("Add new account"));
 
-  if ($totalerrors) {
-     $t->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
+  if ($phpgw->templateotalerrors) {
+     $phpgw->template->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
   } else {
-     $t->set_var("error_messages","");
+     $phpgw->template->set_var("error_messages","");
   }
   
-  $t->set_var("form_action",$phpgw->link("newaccount.php"));
-  $t->set_var("lang_loginid",lang("LoginID"));
-  $t->set_var("n_loginid_value",$n_loginid);
+  $phpgw->template->set_var("form_action",$phpgw->link("newaccount.php"));
+  $phpgw->template->set_var("lang_loginid",lang("LoginID"));
+  $phpgw->template->set_var("n_loginid_value",$n_loginid);
 
-  $t->set_var("lang_password",lang("Password"));
-  $t->set_var("n_passwd_value",$n_passwd);
+  $phpgw->template->set_var("lang_password",lang("Password"));
+  $phpgw->template->set_var("n_passwd_value",$n_passwd);
   
-  $t->set_var("lang_reenter_password",lang("Re-Enter Password"));
-  $t->set_var("n_passwd_2_value",$n_passwd_2);
+  $phpgw->template->set_var("lang_reenter_password",lang("Re-Enter Password"));
+  $phpgw->template->set_var("n_passwd_2_value",$n_passwd_2);
 
-  $t->set_var("lang_firstname",lang("First Name"));
-  $t->set_var("n_firstname_value",$n_firstname);
+  $phpgw->template->set_var("lang_firstname",lang("First Name"));
+  $phpgw->template->set_var("n_firstname_value",$n_firstname);
 
-  $t->set_var("lang_lastname",lang("Last Name"));
-  $t->set_var("n_lastname_value",$n_lastname);
+  $phpgw->template->set_var("lang_lastname",lang("Last Name"));
+  $phpgw->template->set_var("n_lastname_value",$n_lastname);
 
-  $t->set_var("lang_groups",lang("Groups"));
+  $phpgw->template->set_var("lang_groups",lang("Groups"));
   $group_select = '<select name="n_groups[]" multiple>';
   $phpgw->db->query("select * from groups");
   while ($phpgw->db->next_record()) {
@@ -122,9 +121,9 @@
     $group_select .= ">" . $phpgw->db->f("group_name") . "</option>";
   }
   $group_select .= "</select>";
-  $t->set_var("groups_select",$group_select);
+  $phpgw->template->set_var("groups_select",$group_select);
 
-  $t->set_var("","");
+  $phpgw->template->set_var("","");
   $i = 0;
   while ($permission = each($phpgw_info["apps"])) {
     if ($permission[1]["enabled"]) {
@@ -159,10 +158,10 @@
 
      $i++;
   }
-  $t->set_var("permissions_list",$perms_html);
+  $phpgw->template->set_var("permissions_list",$perms_html);
 
-  $t->set_var("lang_button",Lang("Add"));
-  $t->pparse("out","form");
+  $phpgw->template->set_var("lang_button",Lang("Add"));
+  $phpgw->template->pparse("out","form");
   
   account_close();
   $phpgw->common->phpgw_footer();

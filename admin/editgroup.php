@@ -24,9 +24,7 @@
      Header("Location: " . $phpgw->link("groups.php"));
   }
 
-
-  $t = new Template($phpgw_info["server"]["template_dir"]);
-  $t->set_file(array("form"	=> "groups_form.tpl"));
+  $phpgw->template->set_file(array("form"	=> "groups_form.tpl"));
 
   if ($submit) {
      $phpgw->db->query("select group_name from groups where group_id=$group_id");
@@ -85,13 +83,13 @@
   if ($error) {
      $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
-     $t->set_var("error","<p><center>$error</center>");
+     $phpgw->template->set_var("error","<p><center>$error</center>");
   } else {
-     $t->set_var("error","");
+     $phpgw->template->set_var("error","");
   }
 
   if ($submit) {
-     $t->set_var("group_name_value",$n_group_name);
+     $phpgw->template->set_var("group_name_value",$n_group_name);
 
      for ($i=0; $i<count($n_users); $i++) {
         $selected_users[$n_user[$i]] = " selected";
@@ -104,7 +102,7 @@
      $phpgw->db->query("select group_name from groups where group_id=$group_id");
      $phpgw->db->next_record();
 
-     $t->set_var("group_name_value",$phpgw->db->f("group_name"));
+     $phpgw->template->set_var("group_name_value",$phpgw->db->f("group_name"));
 
      $phpgw->db->query("select account_id from accounts where account_groups like '%,$group_id:%'");
 
@@ -122,22 +120,22 @@
   $phpgw->db->query("select * from groups where group_id=$group_id");
   $phpgw->db->next_record();
 
-  $t->set_var("form_action",$phpgw->link("editgroup.php"));
-  $t->set_var("hidden_vars","<input type=\"hidden\" name=\"group_id\" value=\"" . $group_id . "\">");
+  $phpgw->template->set_var("form_action",$phpgw->link("editgroup.php"));
+  $phpgw->template->set_var("hidden_vars","<input type=\"hidden\" name=\"group_id\" value=\"" . $group_id . "\">");
 
-  $t->set_var("lang_group_name",lang("group name"));
-  $t->set_var("group_name_value",$phpgw->db->f("group_name"));
+  $phpgw->template->set_var("lang_group_name",lang("group name"));
+  $phpgw->template->set_var("group_name_value",$phpgw->db->f("group_name"));
 
   $phpgw->db->query("select count(*) from accounts where account_status !='L'");
   $phpgw->db->next_record();
 
   if ($phpgw->db->f(0) < 5) {
-     $t->set_var("select_size",$phpgw->db->f(0));
+     $phpgw->template->set_var("select_size",$phpgw->db->f(0));
   } else {
-     $t->set_var("select_size","5");
+     $phpgw->template->set_var("select_size","5");
   }
 
-  $t->set_var("lang_include_user",lang("Select users for inclusion"));
+  $phpgw->template->set_var("lang_include_user",lang("Select users for inclusion"));
   $phpgw->db->query("SELECT account_id,account_firstname,account_lastname,account_lid FROM accounts where "
 	  	        . "account_status != 'L' ORDER BY account_lastname,account_firstname,account_lid asc");
   while ($phpgw->db->next_record()) {
@@ -147,9 +145,9 @@
 						       $phpgw->db->f("account_firstname"),
 						       $phpgw->db->f("account_lastname")) . "</option>";
   }
-  $t->set_var("user_list",$user_list);
+  $phpgw->template->set_var("user_list",$user_list);
 
-  $t->set_var("lang_permissions",lang("Permissions this group has"));
+  $phpgw->template->set_var("lang_permissions",lang("Permissions this group has"));
   while ($permission = each($phpgw_info["apps"])) {
      if ($permission[1]["enabled"]) {
         $permissions_list .= "<option value=\"" . $permission[0] . "\""
@@ -157,10 +155,10 @@
 	   			   . $permission[1]["title"] . "</option>";
      }
   }
-  $t->set_var("permissions_list",$permissions_list);
-  $t->set_var("lang_submit_button",lang("submit changes"));
+  $phpgw->template->set_var("permissions_list",$permissions_list);
+  $phpgw->template->set_var("lang_submit_button",lang("submit changes"));
 
-  $t->pparse("out","form");
+  $phpgw->template->pparse("out","form");
 
   $phpgw->common->phpgw_footer();
 ?>
