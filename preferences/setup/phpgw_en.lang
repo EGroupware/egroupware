@@ -5,7 +5,7 @@
 a template defines the layout of phpgroupware and it contains icons for each application.	preferences	en	A template defines the layout of eGroupWare and it contains icons for each application.
 a theme defines the colors and fonts used by the template.	preferences	en	A theme defines the colors and fonts used by the template.
 acl grants have been updated	preferences	en	ACL grants have been updated
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in phpGW will show you this number of entries or lines per page.<br>Too many slow down the page display, too less will cost you the overview.
+any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in eGroupWare will show you this number of entries or lines per page.<br>Too many slow down the page display, too less will cost you the overview.
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
 change your password	preferences	en	Change your Password
 change your profile	preferences	en	Change your profile
