@@ -47,9 +47,9 @@
   $db->Halt_On_Error = "no";
 
   if (!isset($oldversion)){
-    $db->query("select app_version from applications where app_name='admin'");
-    $db->next_record();
-    $oldversion = $db->f("app_version");
+     @$db->query("select app_version from applications where app_name='admin'");
+     @$db->next_record();
+     $oldversion = $db->f("app_version");
   }
 
 
