@@ -15,133 +15,155 @@
 
   /* $Id$ */
 
-class db {
-  var $Host     = "";
-  var $Database = "";
+	class db
+	{
+		var $Host     = '';
+		var $Database = '';
 
-  var $Link_ID  = 0;
-  var $Query_ID = 0;
-  var $Record   = array();
-  var $Row;
+		var $Link_ID  = 0;
+		var $Query_ID = 0;
+		var $Record   = array();
+		var $Row;
 
-  var $Error    = "";
-  
-  var $Auto_Free = 0;     ## Set this to 1 for automatic msql_free_result()
+		var $Error    = '';
 
-  function connect() {
-    // Not connected? Then connect?
-    if ( 0 == $this->Link_ID ) {
-      // Check for local connect
-      $this->Link_ID = empty($this->Host)? 
-                         $this->Link_ID=msql_pconnect():
-                         $this->Link_ID=msql_pconnect($this->Host);
-    }
-    
-    // Still not connected? Raise error.
-    if ( 0 == $this->Link_ID ) {
-      $this->halt("Link-ID == false, pconnect failed");
-    }
+		var $Auto_Free = 0;     ## Set this to 1 for automatic msql_free_result()
 
-    // Select current database
-	  if (!msql_select_db($this->Database, $this->Link_ID)) {
-      $this->halt("cannot use database ".$this->Database);
-    }
-  }
-  
-  function query($Query_String) {
-    $this->connect();
+		function connect()
+		{
+			// Not connected? Then connect?
+			if ( 0 == $this->Link_ID )
+			{
+				// Check for local connect
+				$this->Link_ID = empty($this->Host)? 
+				$this->Link_ID=msql_pconnect():
+				$this->Link_ID=msql_pconnect($this->Host);
+			}
 
-#   printf("Debug: query = %s<br>\n", $Query_String);
+			// Still not connected? Raise error.
+			if ( 0 == $this->Link_ID )
+			{
+				$this->halt('Link-ID == false, pconnect failed');
+			}
 
-    $this->Query_ID = msql_query($Query_String,$this->Link_ID);
-    $this->Row   = 0;
-    $this->Error = msql_error();
-    if (!$this->Query_ID) {
-      $this->halt("Invalid SQL: ".$Query_String);
-    }
+			// Select current database
+			if (!msql_select_db($this->Database, $this->Link_ID))
+			{
+				$this->halt('cannot use database '.$this->Database);
+			}
+		}
 
-    return $this->Query_ID;
-  }
+		function query($Query_String)
+		{
+			$this->connect();
 
-  function next_record() {
-    $this->Record = msql_fetch_array($this->Query_ID);
-    $this->Row   += 1;
-    $this->Error = msql_error();
+			#   printf("Debug: query = %s<br>\n", $Query_String);
 
-    $stat = is_array($this->Record);
-    if (!$stat && $this->Auto_Free) {
-      msql_free_result($this->Query_ID);
-      $this->Query_ID = 0;
-    }
-    return $stat;
-  }
+			$this->Query_ID = msql_query($Query_String,$this->Link_ID);
+			$this->Row   = 0;
+			$this->Error = msql_error();
+			if (!$this->Query_ID)
+			{
+				$this->halt('Invalid SQL: '.$Query_String);
+			}
+			return $this->Query_ID;
+		}
 
-  function seek($pos) {
-    $status = msql_data_seek($this->Query_ID, $pos);
-    if ($status)
-      $this->Row = $pos;
-    return;
-  }
+		function next_record()
+		{
+			$this->Record = msql_fetch_array($this->Query_ID);
+			$this->Row   += 1;
+			$this->Error = msql_error();
 
-  function metadata($table) {
-    $count = 0;
-    $id    = 0;
-    $res   = array();
+			$stat = is_array($this->Record);
+			if (!$stat && $this->Auto_Free)
+			{
+				msql_free_result($this->Query_ID);
+				$this->Query_ID = 0;
+			}
+			return $stat;
+		}
 
-    $this->connect();
-    $id = @msql_list_fields($this->Database, $table);
-    if ($id < 0) {
-      $this->Error = msql_error();
-      $this->halt("Metadata query failed.");
-    }
-    $count = msql_num_fields($id);
-    
-    for ($i=0; $i<$count; $i++) {
-      $res[$i]["table"] = msql_fieldtable ($id, $i);
-      $res[$i]["name"]  = msql_fieldname  ($id, $i);
-      $res[$i]["type"]  = msql_fieldtype  ($id, $i);
-      $res[$i]["len"]   = msql_fieldlen   ($id, $i);
-      $res[$i]["flags"] = msql_fieldflags ($id, $i);
-      $res["meta"][$res[$i]["name"]] = $i;
-      $res["num_fields"]= $count;
-    }
-    
-    msql_free_result($id);
-    return $res;
-  }
+		function seek($pos)
+		{
+			$status = msql_data_seek($this->Query_ID, $pos);
+			if ($status)
+			{
+				$this->Row = $pos;
+			}
+			return;
+		}
 
-  function affected_rows() {
-	  return msql_affected_rows($this->Query_ID);
-  }
+		function metadata($table)
+		{
+			$count = 0;
+			$id    = 0;
+			$res   = array();
 
-  function num_rows() {
-    return msql_num_rows($this->Query_ID);
-  }
+			$this->connect();
+			$id = @msql_list_fields($this->Database, $table);
+			if ($id < 0)
+			{
+				$this->Error = msql_error();
+				$this->halt('Metadata query failed.');
+			}
+			$count = msql_num_fields($id);
 
-  function num_fields() {
-    return msql_num_fields($this->Query_ID);
-  }
+			for ($i=0; $i<$count; $i++)
+			{
+				$res[$i]['table'] = msql_fieldtable ($id, $i);
+				$res[$i]['name']  = msql_fieldname  ($id, $i);
+				$res[$i]['type']  = msql_fieldtype  ($id, $i);
+				$res[$i]['len']   = msql_fieldlen   ($id, $i);
+				$res[$i]['flags'] = msql_fieldflags ($id, $i);
+				$res['meta'][$res[$i]['name']] = $i;
+				$res['num_fields']= $count;
+			}
 
-  function nf() {
-    return $this->num_rows();
-  }
+			msql_free_result($id);
+			return $res;
+		}
 
-  function np() {
-    print $this->num_rows();
-  }
+		function affected_rows()
+		{
+			return msql_affected_rows($this->Query_ID);
+		}
 
-  function f($Name) {
-    return $this->Record[$Name];
-  }
+		function num_rows()
+		{
+			return msql_num_rows($this->Query_ID);
+		}
 
-  function p($Name) {
-    print $this->Record[$Name];
-  }
-  
-  function halt($msg) {
-    printf("<b>Database error:</b> %s<br>\n", $msg);
-    printf("<b>MSQL Error</b>: %s<br>\n", $this->Error);
-    die("Session halted.");
-  }
-}
+		function num_fields()
+		{
+			return msql_num_fields($this->Query_ID);
+		}
+
+		function nf()
+		{
+			return $this->num_rows();
+		}
+
+		function np()
+		{
+			print $this->num_rows();
+		}
+
+		function f($Name)
+		{
+			return $this->Record[$Name];
+		}
+
+		function p($Name)
+		{
+			print $this->Record[$Name];
+		}
+
+		function halt($msg)
+		{
+			printf("<b>Database error:</b> %s<br>\n", $msg);
+			printf("<b>MSQL Error</b>: %s<br>\n", $this->Error);
+			die('Session halted.');
+		}
+	}
 ?>
