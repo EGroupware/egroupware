@@ -43,8 +43,8 @@ antarctica	common	it	ANTARTICO
 antigua and barbuda	common	it	ANTIGUA E BARBUDA
 apply	common	it	Applica
 april	common	it	Aprile
-are you sure you want to delete these entries ?	common	it	Sei sicuro di voler cancellare queste note ?
-are you sure you want to delete this entry ?	common	it	Sei sicuro di voler cancellare questa nota?
+are you sure you want to delete these entries ?	common	it	Sei sicuro di voler cancellare queste voci ?
+are you sure you want to delete this entry ?	common	it	Sei sicuro di voler cancellare questa voce?
 argentina	common	it	ARGENTINA
 armenia	common	it	ARMENIA
 aruba	common	it	ARUBA
@@ -181,8 +181,8 @@ end date	common	it	Data Fine
 end time	common	it	Ora Fine
 enlarge editor	htmlarea	it	Ingrandisci l'Editor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>Senza la barra finale</b>
-entry has been deleted sucessfully	common	it	L'annotazione è stata cancellata correttamente
-entry updated sucessfully	common	it	L'annotazione è stata aggiornata correttamente
+entry has been deleted sucessfully	common	it	La voce è stata cancellata correttamente
+entry updated sucessfully	common	it	La voce è stata aggiornata correttamente
 equatorial guinea	common	it	GUINEA EQUATORIALE
 eritrea	common	it	ERITREA
 error	common	it	Errore
@@ -252,7 +252,7 @@ high	common	it	Alta
 highest	common	it	Più Alta
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITT&Agrave; DEL VATICANO)
 home	common	it	Home
-home email	common	it	email di casa
+home email	common	it	email abitazione
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
 horizontal rule	htmlarea	it	Linea Orrizzontale
@@ -360,7 +360,7 @@ netherlands	common	it	OLANDA
 netherlands antilles	common	it	ANTILLE OLANDESI
 never	common	it	Mai
 new caledonia	common	it	NUOVA CALEDONIA
-new entry added sucessfully	common	it	Nuovo appuntamento aggiunto con successo
+new entry added sucessfully	common	it	Nuova voce aggiunto con successo
 new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
@@ -478,10 +478,10 @@ select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select category	common	it	Selezione categoria
 select date	jscalendar	it	Selezione data
 select group	common	it	Selezione gruppo
-select home email address	common	it	Selezione indirizzo email di casa
+select home email address	common	it	Selezione indirizzo email abitazione
 select one	common	it	Seleziona uno
 select user	common	it	Selezione utente
-select work email address	common	it	Selezione indirizzio email del lavoro
+select work email address	common	it	Selezione indirizzio email ufficio
 send	common	it	Invia
 senegal	common	it	SENEGAL
 september	common	it	Settembre
@@ -598,7 +598,7 @@ welcome	common	it	Benvenuto
 western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
 wk	jscalendar	it	wk
-work email	common	it	email di lavoro
+work email	common	it	email ufficio
 written by:	common	it	Scritto da:
 year	common	it	Anno
 yemen	common	it	YEMEN
