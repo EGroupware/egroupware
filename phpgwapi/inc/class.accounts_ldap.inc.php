@@ -31,7 +31,14 @@
     var $data;
     var $memberships;
     var $members;
-    
+
+    function accounts()
+    {
+       global $phpgw;
+
+       $this->db = $phpgw->db;
+    }
+   
     function read_repository()
     {
        global $phpgw;
