@@ -1,292 +1,284 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - next                                                  *
-  * This file written by Joseph Engo <jengo@phpgroupware.org>                *
-  * Handles limiting number of rows displayed                                *
-  * Copyright (C) 2000, 2001 Joseph Engo                                     *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare API - next                                                  *
+	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
+	* Handles limiting number of rows displayed                                *
+	* Copyright (C) 2000, 2001 Joseph Engo                                     *
+	* -------------------------------------------------------------------------*
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
-class nextmatchs
-{
+	/* $Id$ */
 
-  // I split this up so it can be used in differant layouts.
-  function show($sn,$start,$total,$extra, $twidth, $bgtheme,
-                    $search_obj=0,$filter_obj=1,$showsearch=1)
-  {
-    echo $this->tablestart($sn,$twidth, $bgtheme);
-    echo $this->left($sn,$start,$total,$extra);
-    if ($showsearch == 1)
-    {
-        echo $this->search($search_obj);
-    }
-    echo $this->filter($filter_obj);
-    echo $this->right($sn,$start,$total,$extra);
-    echo $this->tableend();
-  }
+	class nextmatchs
+	{
 
-  // --------------------------------------------------------------------
-  // same as show, only without direct output for use within templates
-  // *** the show function can be removed as soon as every program using
-  //     nextmatch is converted to use template and show_tpl (loge)
-  // --------------------------------------------------------------------
-  function show_tpl($sn,$start,$total,$extra, $twidth, $bgtheme,
-                    $search_obj=0,$filter_obj=1,$showsearch=1)
-  {
-    $var  = $this->tablestart($sn,$twidth, $bgtheme);
-    $var .= $this->left($sn,$start,$total,$extra);
-    if ($showsearch == 1)
-    {
-        $var .= $this->search($search_obj);
-    }
-    $var .= $this->filter($filter_obj);
-    $var .= $this->right($sn,$start,$total,$extra);
-    $var .= $this->tableend();
-    return $var;
-  }
+		function set_icon(&$tpl,$align,$img_src,$label)
+		{
+			$tpl->set_var('align',$align);
+			$tpl->set_var('img_src',PHPGW_IMAGES_DIR . $img_src);
+			$tpl->set_var('label',lang($label));
+			$tpl->parse('out','link',True);
+		}
 
-    function tablestart($scriptname, $twidth="75%", $bgtheme="D3DCE3")
-    {
-    	global $filter, $qfield, $start, $order, $sort, $query, $phpgw;
-    	
-    	$str = "<form method=\"POST\" action=\"" . $phpgw->link($scriptname) . "\">
-    	        <input type=\"hidden\" name=\"filter\" value=\"$filter\">
-   		   <input type=\"hidden\" name=\"qfield\" value=\"$qfield\">
-   		   <input type=\"hidden\" name=\"start\" value=\"$start\">
-   		   <input type=\"hidden\" name=\"order\" value=\"$order\">
-   		   <input type=\"hidden\" name=\"sort\" value=\"$sort\">
-   		   <input type=\"hidden\" name=\"query\" value=\"$query\">";
-   		
-    	$str .= "<table width=\"$twidth\" height=\"50\" border=\"0\" bgcolor=\"$bgtheme\" cellspacing=\"0\" cellpadding=\"0\">\n<tr>\n";
-    	return $str;
-    }
+		function set_link(&$tpl,$align,$img_src,$label,$link,$extravars)
+		{
+			global $phpgw;
 
-    function tableend()
-    {
-    	$str = "</tr>\n</table>\n<br>";
-    	$str .= "</form>";
-    	return $str;
-    }    	
-    
+			$tpl->set_var('align',$align);
+			if ($link)
+			{
+				$tpl->set_var('a_open','<a href="' . $phpgw->link($link,$extravars) . '">');
+				$tpl->set_var('a_closed','</a>');
+			}
+			$tpl->set_var('img_src',PHPGW_IMAGES_DIR . $img_src);
+			$tpl->set_var('label',lang($label));
+			$tpl->parse('out','link',True);		
+		}
+
+		function show_tpl($sn,$start,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1)
+		{
+			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
+			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(array(
+				'nextmatchs' => 'nextmatchs.tpl'
+			));
+
+			$tpl->set_var('form_action',$phpgw->link($sn));
+			$tpl->set_var('filter_value',$filter);
+			$tpl->set_var('qfield_value',$qfield);
+			$tpl->set_var('start_value',$start);
+			$tpl->set_var('order_value',$order);
+			$tpl->set_var('sort_value',$sort);
+			$tpl->set_var('query_value',$query);
+			$tpl->set_var('table_width',$twidth);
+			$tpl->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+
+			$tpl->set_var('left',$this->left($sn,$start,$total,$extra));
+
+			if ($showsearch == 1)
+			{
+				$tpl->set_var(search,$this->search($search_obj));
+			}
+
+			$tpl->set_var('filter',$this->filter($filter_obj));
+			$tpl->set_var('right',$this->right($sn,$start,$total,$extra));
+
+			return $tpl->fp('out','nextmatchs');
+		} 
   
-  function left($scriptname,$start,$total,$extradata = "")
-  {
-    global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
+		function left($scriptname,$start,$total,$extradata = '')
+		{
+			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
+			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(array(
+				'link'       => 'nextmatchs_link.tpl'
+			));
 
-    $str = "";
-    $maxmatchs = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+			$maxmatchs = $phpgw_info['user']['preferences']['common']['maxmatchs'];
 
-    if (( $start != 0 ) && ( $start > $maxmatchs ))
-      $str .= "<td width=\"2%\" align=\"left\">&nbsp;<a href=\""
-	   . $phpgw->link($scriptname,"start=0"
-           . "&order=$order&filter=$filter&qfield=$qfield"
-           . "&sort=$sort&query=$query".$extradata)
-	   . "\"><img src=\"".$phpgw_info["server"]["images_dir"]
-	   . "/first.gif\" border=0 width=\"12\" height=\"12\" alt=\""
-           . lang("First Page") . "\"></a></td>\n";
-    else 
-      $str .= "<td width=\"2%\" align=\"left\">"
-           . "&nbsp;<img src=\"".$phpgw_info["server"]["images_dir"]
-	   . "/first-grey.gif\" "."width=\"12\" height=\"12\" alt=\""
-	   . lang("First Page")."\"></td>\n";
+			if (($start != 0) && ($start > $maxmatchs))
+			{
+				$this->set_link(&$tpl,'left','/first.gif','First page',$scriptname,'start=0&order=' . $order . '&filter='
+						. $filter . '&qfield=' . $qfield . '&sort=' . $sort . '&query=' . $query . $extradata);
+			}
+			else
+			{
+				$this->set_icon(&$tpl,'left','/first-grey.gif','First page');
+			}
 
-    if ($start != 0) {
-       // Changing the sorting order screaws up the starting number
-       if ( ($start - $maxmatchs) < 0)
-          $t_start = 0;
-       else
-          $t_start = ($start - $maxmatchs);
+			if ($start != 0)
+			{
+				// Changing the sorting order screaws up the starting number
+				if (($start - $maxmatchs) < 0)
+				{
+					$t_start = 0;
+				}
+				else
+				{
+					$t_start = ($start - $maxmatchs);
+				}
 
-       $str .= "<td width=\"2%\" align=\"left\"><a href=\""
-	    . $phpgw->link($scriptname,"start=$t_start"
-	    . "&order=$order&filter=$filter&qfield=$qfield"
-            . "&sort=$sort&query=$query".$extradata)
-	    . "\"><img src=\"".$phpgw_info["server"]["images_dir"]
-	    . "/left.gif\" border=0 width=\"12\" height=\"12\" alt=\""
-            . lang("Previous Page") . "\"></a></td>\n";
-    } else
-      $str .= "<td width=\"2%\" align=\"left\">"
-           . "<img src=\"" . $phpgw_info["server"]["images_dir"]
-	   . "/left-grey.gif\" width=\"12\" height=\"12\" alt=\""
-           . lang("Previous Page") . "\"></td>\n";
+				$this->set_link(&$tpl,'left','/left.gif','Previous page',$scriptname,'start=' . $t_start
+					. '&order=' . $order . '&filter=' . $filter . '&qfield=' . $qfield . '&sort=' . $sort
+					. '&query=' . $query . $extradata);
+			}
+			else
+			{
+				$this->set_icon(&$tpl,'left','/left-grey.gif','Previous page');
+			}
 
-    return $str;
-  } /* left() */
+			return $tpl->fp('out_','out');
+		} /* left() */
 
-  function search($search_obj=0)
-  {
-     global $query;
+		function right($scriptname,$start,$total,$extradata = '')
+		{
+			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
+			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(array(
+				'link'       => 'nextmatchs_link.tpl'
+			));
+			$maxmatchs = $phpgw_info['user']['preferences']['common']['maxmatchs'];
 
-     $str = "<td width=\"40%\">"
-         . "<div align=\"center\">"
-         . "<input type=\"text\" name=\"query\" value=\"".urldecode($query)."\">&nbsp;"
-         . $this->searchby($search_obj)
-         . "<input type=\"submit\" name=\"Search\" value=\"" . lang("Search") ."\">"
-         . "</div>"
-         . "</td>";
+			if (($total > $maxmatchs) && ($total > $start + $maxmatchs))
+			{
+				$this->set_link(&$tpl,'right','/right.gif','Next page',$scriptname,'start='
+					. ($start+$maxmatchs) . '&order=' . $order . '&filter=' . $filter . '&qfield=' . $qfield
+					. '&sort=' . $sort . '&query=' . $query . $extradata);
+			}
+			else
+			{
+				$this->set_icon(&$tpl,'right','/right-grey.gif','Next page');
+			}
+
+			if (($start != $total - $maxmatchs) && (($total - $maxmatchs) > ($start + $maxmatchs)))
+			{
+				$this->set_link(&$tpl,'right','/last.gif','Last page',$scriptname,'start='
+					. ($total-$maxmatchs) . '&order=' . $order . '&filter=' . $filter . '&qfield=' .$qfield
+					. '&sort=' . $sort . '&query=' . $query . $extradata);
+			}
+			else
+			{
+				$this->set_icon(&$tpl,'right','/last-grey.gif','Last page');
+			}
+
+			return $tpl->fp('out_','out');
+		} /* right() */
+
+		function search($search_obj=0)
+		{
+			global $query;
+			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(array(
+				'search'       => 'nextmatchs_search.tpl'
+			));
+			$tpl->set_var('query_value',$query);
+			$tpl->set_var('searchby',$this->searchby($search_obj));
+			$tpl->set_var('lang_search',lang('Search'));
       
-  	return $str;
-  } /* search() */
+			return $tpl->fp('out','search');
+		} /* search() */
 
-  function filterobj($filtertable, $idxfieldname, $strfieldname)
-  {
-      global $phpgw;
+		function filterobj($filtertable, $idxfieldname, $strfieldname)
+		{
+			global $phpgw;
+
+			$filter_obj = array(array('none','show all'));
+			$index = 0;
+
+			$phpgw->db->query("SELECT $idxfieldname, $strfieldname from $filtertable",__LINE__,__FILE__);
+			while($phpgw->db->next_record())
+			{
+				$index++;
+				$filter_obj[$index][0] = $phpgw->db->f($idxfieldname);
+				$filter_obj[$index][1] = $phpgw->db->f($strfieldname);
+			}
       
-      $filter_obj = array(array("none","show all"));
-      $index = 0;
-      
-      $phpgw->db->query("SELECT $idxfieldname, $strfieldname from $filtertable",__LINE__,__FILE__);
-      while($phpgw->db->next_record())
-      {
-          $index++;
-          $filter_obj[$index][0] = $phpgw->db->f("$idxfieldname");
-          $filter_obj[$index][1] = $phpgw->db->f("$strfieldname");
-      }
-      
-      return $filter_obj;
-  } /* filterobj() */
+			return $filter_obj;
+		} /* filterobj() */
   
-  function searchby($search_obj)
-  {
-      global $qfield, $phpgw, $phpgw_info;
+		function searchby($search_obj)
+		{
+			global $qfield, $phpgw, $phpgw_info;
 
-      $str = "";
-      if (is_array($search_obj))
-      {
-          $str .= "<select name=\"qfield\">";
+			if (is_array($search_obj))
+			{
+				$str = '<select name="qfield">';
           
-          $indexlimit = count($search_obj);
-          for ($index=0; $index<$indexlimit; $index++)
-          {
-              if ($qfield == "")
-              {
-                  $qfield = $search_obj[$index][0];
-              }
+				$indexlimit = count($search_obj);
+				for ($index=0; $index<$indexlimit; $index++)
+				{
+					if ($qfield == '')
+					{
+						$qfield = $search_obj[$index][0];
+					}
               
-              $str .= "<option value=\"".$search_obj[$index][0]."\"";
-              if ($qfield == $search_obj[$index][0])
-              {
-                  $str .= " selected";
-              }
-              $str .= ">" . lang($search_obj[$index][1]) . "</option>";
-          }
+					$str .= '<option value="' . $search_obj[$index][0] . '"';
+
+					if ($qfield == $search_obj[$index][0])
+					{
+						$str .= ' selected';
+					}
+
+					$str .= '>' . lang($search_obj[$index][1]) . '</option>';
+				}
+				$str .= '</select>' . "\n";
+			}
+			return $str;
+		} /* searchby() */
+  
+		function filter($filter_obj)
+		{
+			global $filter, $phpgw, $phpgw_info;
+			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(array(
+				'filter' => 'nextmatchs_filter.tpl'
+			));
+
+			if (is_long($filter_obj))
+			{
+				if ($filter_obj == 1)
+				{
+					$user_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
+					$indexlimit = count($user_groups);
+              
+					$filter_obj = array(array('none',lang('Show all')),
+                                  array('private',lang('Only yours')));
+					for ($index=0; $index<$indexlimit; $index++)
+					{
+						$filter_obj[2+$index][0] = $user_groups[$index][0];
+						$filter_obj[2+$index][1] = 'Group - ' . $user_groups[$index][1];
+					}
+				}
+			}
+      
+			if (is_array($filter_obj))
+			{
+				$str .= '<select name="filter">';
           
-          $str .= "</select>\n";
-      }
+				$indexlimit = count($filter_obj);
+
+				for ($index=0; $index<$indexlimit; $index++)
+				{
+					if ($filter == '')
+					{
+						$filter = $filter_obj[$index][0];
+					}
+              
+					$str .= '<option value="' . $filter_obj[$index][0] . '"';
+
+					if ($filter == $filter_obj[$index][0])
+					{
+						$str .= ' selected';
+					}
+
+					$str .= '>' . $filter_obj[$index][1] . '</option>';
+				}
+          
+				$str .= '</select>';
+				$tpl->set_var('lang_filter',lang('Filter'));
+			}
      
-      return $str;
-      
-  } /* searchby() */
-  
-  function filter($filter_obj)
-  {
-      global $filter, $phpgw, $phpgw_info;
-
-      $str = "";
-      if (is_long($filter_obj))
-      {
-          if ($filter_obj == 1)
-          {
-              $user_groups =
-                  $phpgw->accounts->memberships($phpgw_info["user"]["account_id"]);
-              $indexlimit = count($user_groups);
-              
-              $filter_obj = array(array("none",lang("show all")),
-                                  array("private",lang("only yours")));
-              for ($index=0; $index<$indexlimit; $index++)
-              {
-                  $filter_obj[2+$index][0] = $user_groups[$index][0];
-                  $filter_obj[2+$index][1] = "Group - " . $user_groups[$index][1];
-              }
-          }
-      }
-      
-      if (is_array($filter_obj))
-      {
-          $str .= "<td width=\"14%\">"
-              .  "<select name=\"filter\">";
-          
-          $indexlimit = count($filter_obj);
-          for ($index=0; $index<$indexlimit; $index++)
-          {
-              if ($filter == "")
-              {
-                  $filter = $filter_obj[$index][0];
-              }
-              
-              $str .= "<option value=\"".$filter_obj[$index][0]."\"";
-              if ($filter == $filter_obj[$index][0])
-              {
-                  $str .= " selected";
-              }
-              $str .= ">" . $filter_obj[$index][1] . "</option>";
-          }
-          
-          $str .= "</select>\n";
-          $str .= "<input type=\"submit\" value=\"" . lang("filter") . "\">\n";
-          $str .= "</td>\n";
-      }
-     
-      return $str;
-      
-  } /* filter() */
-  
-  function right($scriptname,$start,$total,$extradata = "")
-  {
-    global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
-    $maxmatchs = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
-
-    $str = "";
-    if (($total > $maxmatchs) && ($total > $start + $maxmatchs))
-      $str .= "<td width=\"2%\" align=\"right\"><a href=\""
-	   . $phpgw->link($scriptname,"start=".($start+$maxmatchs)
-	   . "&order=$order&filter=$filter&qfield=$qfield"
-           . "&sort=$sort&query=$query".$extradata)
-	   . "\"><img src=\"".$phpgw_info["server"]["images_dir"]
-	   . "/right.gif\" width=\"12\" height=\"12\" border=\"0\" alt=\""
-	   . lang("Next Page")."\"></a></td>\n";
-    else
-      $str .= "<td width=\"2%\" align=\"right\"><img src=\""
-	   . $phpgw_info["server"]["images_dir"]."/right-grey.gif\" "
-           . "width=\"12\" height=\"12\" alt=\"".lang("Next Page")
-           . "\"></td>\n";
-
-   if (($start != $total - $maxmatchs)
-      && ( ($total - $maxmatchs) > ($start + $maxmatchs) ))
-      $str .= "<td width=\"2%\" align=\"right\"><a href=\""
-	   . $phpgw->link($scriptname,"start=".($total-$maxmatchs)
-	   . "&order=$order&filter=$filter&qfield=$qfield"
-           . "&sort=$sort&query=$query".$extradata)
-	   . "\"><img src=\"".$phpgw_info["server"]["images_dir"]
-	   . "/last.gif\" border=\"0\" width=\"12\" height=\"12\" alt=\""
-	   . lang("Last Page")."\"></a>&nbsp;</td>\n";
-   else
-     $str .= "<td width=\"2%\" align=\"right\"><img src=\""
-	  . $phpgw_info["server"]["images_dir"]."/last-grey.gif\" "
-	  . "width=\"12\" height=\"12\" alt=\"".lang("Last Page")
-	  . "\">&nbsp;</td>";
-
-    return $str;
-  } /* right() */
+			return $tpl->fp('out','filter');
+		} /* filter() */
 
 		function alternate_row_color($currentcolor = '')
 		{
 			global $phpgw_info;
+
 			if (! $currentcolor)
 			{
 				global $tr_color;
@@ -315,21 +307,23 @@ class nextmatchs
 		function show_sort_order($sort,$var,$order,$program,$text,$extra='')
 		{
 			global $phpgw, $filter, $qfield, $start, $query;
-			if (($order == $var) && ($sort == "ASC"))
+
+			if (($order == $var) && ($sort == 'ASC'))
 			{
-				$sort = "DESC";
+				$sort = 'DESC';
 			}
-			else if (($order == $var) && ($sort == "DESC"))
+			else if (($order == $var) && ($sort == 'DESC'))
 			{
-				$sort = "ASC";
+				$sort = 'ASC';
 			}
 			else
 			{
-				$sort = "ASC";
+				$sort = 'ASC';
 			}
 
 			return '<a href="' . $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
 				. "qfield=$qfield&start=$start&query=$query" . $extra) . '">' . $text . '</a>';
 		}
 
-}
+	}		// End of nextmatchs class
+?>
