@@ -12,7 +12,8 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"]["currentapp"] = "addressbook";
+  $phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_addressbook_class" => True, "enable_nextmatchs_class" => True,
+                                 "noheader" => True, "nonavbar" => True);
 
   include("../header.inc.php");
 

@@ -18,6 +18,7 @@
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
+  $phpgw_info["flags"]["enable_addressbook_class"] = True;
   $phpgw_info["flags"]["currentapp"] = "addressbook";
   include("../header.inc.php");
 

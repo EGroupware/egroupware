@@ -17,7 +17,10 @@
      exit;
   }
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home");
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home",
+                               "enable_message_class" => True, "enable_calendar_class" => True, 
+                               "enable_todo_class" => True, "enable_addressbook_class" => True
+                               );
   include("header.inc.php");
   // Note: I need to add checks to make sure these apps are installed.
 

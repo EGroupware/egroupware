@@ -17,6 +17,7 @@
   }
 
   $phpgw_info["flags"]["currentapp"] = "addressbook";
+  $phpgw_info["flags"]["enable_addressbook_class"] = True;
   include("../header.inc.php");
 
 

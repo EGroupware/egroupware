@@ -14,10 +14,10 @@
 
 
 if ($action == "Load Vcard"){
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "addressbook");
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "addressbook", "enable_addressbook_class" => True);
   include("../header.inc.php");
 }else{
-  $phpgw_info["flags"]["currentapp"]="addressbook";
+  $phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_addressbook_class" => True);
   include("../header.inc.php");
   echo '<body bgcolor="' . $phpgw_info["theme"]["bg_color"] . '">';
 }

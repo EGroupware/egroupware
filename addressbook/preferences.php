@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "addressbook");
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "addressbook", "enable_addressbook_class" => True);
   include("../header.inc.php");
 
   if ($submit) {
