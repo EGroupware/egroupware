@@ -201,7 +201,7 @@
 				}
 				while ($this->db->next_record())
 				{
-					$this->langs[$this->db->f('lang')] = $this->db->f('lang_name');
+					$this->langs[$this->db->f('lang')] = $this->translate($this->db->f('lang_name'),False,'');
 				}
 			}
 			return $this->langs;
