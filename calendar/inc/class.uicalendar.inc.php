@@ -696,6 +696,12 @@
 			{
 			   $this->no_edit();
 			}
+			
+			if($this->debug)
+			{
+				echo '<!-- params[readsess] = '.$params['readsess'].' -->'."\n";
+				echo '<!-- params[cd] = '.$params['cd'].' -->'."\n";
+			}
 
 			if(isset($GLOBALS['HTTP_GET_VARS']['readsess']))
 			{
@@ -703,13 +709,18 @@
 				$params['cd'] = 0;
 			}
 
-			if($params != '' && @isset($params['readsess']))
+			if($this->debug)
 			{
-				$event = $this->bo->restore_from_appsession;
+				echo '<!-- params[readsess] = '.$params['readsess'].' -->'."\n";
+				echo '<!-- params[cd] = '.$params['cd'].' -->'."\n";
+			}
+
+			if($params != '' && @is_array($params) && @isset($params['readsess']))
+			{
 				$can_edit = True;
 				$this->edit_form(
 					Array(
-						'event' => $event,
+						'event' => $this->bo->restore_from_appsession(),
 						'cd' => $params['cd']
 					)
 				);
@@ -3110,7 +3121,7 @@
          							. '<input type="hidden" name="cal[uid]" value="'.$event['uid'].'">'."\n"
          							. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="cal[reference]" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":
          							  (@isset($event['reference'])?'<input type="hidden" name="cal[reference]" value="'.$event['reference'].'">'."\n":'')),
-				'errormsg'		=> ($params['cd']?$GLOBALS['phpgw']->common->check_code($params['cd']):'')
+				'errormsg'		=> ($param['cd']?$GLOBALS['phpgw']->common->check_code($param['cd']):'')
 			);
 			$p->set_var($vars);
 

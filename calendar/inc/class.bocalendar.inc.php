@@ -507,6 +507,10 @@
 			$l_recur_enddate = (@isset($params['recur_enddate']) && $params['recur_enddate']?$params['recur_enddate']:$GLOBALS['HTTP_POST_VARS']['recur_enddate']);
 
 			$send_to_ui = True;
+			if($this->debug)
+			{
+				$send_to_ui = True;
+			}
 			if($p_cal || $p_participants || $p_start || $p_end || $p_recur_enddata)
 			{
 				$send_to_ui = False;
@@ -662,6 +666,10 @@
 				}
 
 				$event = $this->get_cached_event();
+				if(!is_int($minparts))
+				{
+					$minparts = $this->owner;
+				}
 				if(!@isset($event['participants'][$l_cal['owner']]))
 				{
 					$this->so->add_attribute('owner',$minparts);
@@ -677,6 +685,10 @@
 				$event['description'] = $GLOBALS['phpgw']->db->db_addslashes($event['description']);
 				$this->store_to_appsession($event);
 				$datetime_check = $this->validate_update($event);
+				if($this->debug)
+				{
+					echo '<!-- bo->validate_update() returned : '.$datetime_check.' -->'."\n";
+				}
 				if($datetime_check)
 				{
 				   ExecMethod('calendar.uicalendar.edit',
@@ -1948,7 +1960,7 @@
 				$new_event_datetime = $this->maketime($new_event['start']) - $this->datetime->tz_offset;
 			}
 
-			while(list($userid,$statusid) = each($participants))
+			while($participants && list($userid,$statusid) = each($participants))
 			{
 				if((intval($userid) != $GLOBALS['phpgw_info']['user']['account_id']) &&
 				   (
