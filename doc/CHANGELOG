@@ -23,6 +23,8 @@
         - Applied patch to fix md5 en/decryption.
           Thanks milosch
         - Fixed login message not showing up.
+        - Added in feature for frames.  This can be a user preference, or a global option
+          for the admin to disable, allow, or force.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account

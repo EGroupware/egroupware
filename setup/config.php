@@ -287,6 +287,19 @@
    </tr>
    <?php $selected = array(); ?>
 
+   <?php $selected[$current_config["useframes"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Frame support:</td>
+    <td>
+     <select name="newsettings[useframes]">
+      <option value="allowed"<?php echo $selected["allowed"]; ?>>Allow frames</option>
+      <option value="always"<?php echo $selected["always"]; ?>>Force frames</option>
+      <option value="never"<?php echo $selected["never"]; ?>>Disable frames</option>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
    <?php $selected[$current_config["htmlcompliant"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Use pure HTML compliant code (not fully working yet):</td>

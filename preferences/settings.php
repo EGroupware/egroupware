@@ -20,9 +20,11 @@
   include("../header.inc.php");
 
   if (! $submit) {
-  
+     if ($phpgw_info["server"]["useframes"] == "allowed") {
+        $target = ' target="_top"';
+     }
      ?>
-      <form method="POST" action="<?php echo $phpgw->link("settings.php"); ?>">
+      <form method="POST" action="<?php echo $phpgw->link("settings.php"); ?>"<?php echo $target; ?>>
        <table border=0>
        <tr>
         <td><?php echo lang("max matchs per page"); ?>: </td>
@@ -42,6 +44,20 @@
          </select>
         </td>
        </tr>
+
+       <?php
+         if ($phpgw_info["server"]["useframes"] == "allowed") {
+       ?>
+       <tr>
+        <td><?php echo lang("Show navigation bar in a frame"); ?>: </td>
+        <td>
+         <input type="checkbox" name="settings[useframes]" value="True"<?php echo ($phpgw_info["user"]["preferences"]["common"]["useframes"]?" checked":""); ?>>
+        </td>
+       </tr>
+       <?php
+         }
+       ?>
+
        <tr>
         <td><?php echo lang("time zone offset"); ?>: </td>
         <td>
@@ -178,6 +194,7 @@
      </form>
 
  <?php
+     $phpgw->common->phpgw_footer();
   } else {
      $phpgw->preferences->preferences_delete("byappnotheme",$phpgw_info["user"]["account_id"],"common");
 
@@ -196,7 +213,11 @@
 
      $phpgw->db->unlock();
 
+     if ($settings["useframes"]) {
+        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php"));
+        exit;
+     }
+
      Header("Location: " . $phpgw->link("index.php"));
   }
-  $phpgw->common->phpgw_footer();
 ?>
