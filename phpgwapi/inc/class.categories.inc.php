@@ -293,14 +293,14 @@
 				$this->db2->query($sql . $sub_select,__LINE__,__FILE__);
 				$total_subs += $this->db2->num_rows();
 
-				if ($limit)
+				/*if ($limit)
 				{
 					$this->db->limit_query($sql . $sub_select . $ordermethod,$start,__LINE__,__FILE__);
 				}
 				else
-				{
+				{*/
 					$this->db->query($sql . $sub_select . $ordermethod,__LINE__,__FILE__);
-				}
+				//}
 
 				$subcats = $this->db2cats();
 
