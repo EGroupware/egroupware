@@ -1,5 +1,8 @@
 [0.9.4] - Fixed calendar week view.
 		- Displays calendar items in day view without start times.
+		- You now have to specify which API classes need to be loaded.
+		- Preformance is much better.
+		- Fixed a calendar SQL error with stock setups using the demo user.
 
 [0.9.3] - Fixed the new user account form not returning the users firstname or last name when an
 	      error is reported.
