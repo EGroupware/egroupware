@@ -279,6 +279,6 @@
   )";
   $db->query($sql);
   
-  $currentver = "0.9.3pre10";
+  $currentver = "0.9.3";
   update_version_table();
 ?>

@@ -291,6 +291,11 @@
          update_version_table();
       }
 
+      if ($currentver == "0.9.3pre10") {
+         $currentver = "0.9.3";
+         update_version_table();
+      }
+
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
       echo "  </tr>\n";

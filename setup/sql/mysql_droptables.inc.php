@@ -27,7 +27,9 @@
   $db->query("DROP TABLE webcal_entry_user");
   $db->query("DROP TABLE webcal_entry_groups");
   $db->query("DROP TABLE newsgroups");
+  $db->query("DROP TABLE news_msg");
   $db->query("DROP TABLE lang");
+  $db->query("DROP TABLE languages");
   $db->query("DROP TABLE customers");
   $db->query("DROP TABLE categories");
 ?>

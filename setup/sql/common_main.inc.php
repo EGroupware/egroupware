@@ -24,7 +24,6 @@
   if ($currentver == "new") {
     include("./sql/".$phpgw_info["server"]["db_type"]."_newtables.inc.php");
     include("./sql/common_default_records.inc.php");
-    include("./sql/common_lang_records.inc.php");
   }
   echo "<table border=\"0\" align=\"center\">\n";
   echo "  <tr bgcolor=\"486591\">\n";
