@@ -71,7 +71,7 @@
 			$FormPW       = $HTTP_POST_VARS['FormPW'];
 			$ConfigDomain = $HTTP_POST_VARS['ConfigDomain'] ? $HTTP_POST_VARS['ConfigDomain'] : $HTTP_COOKIE_VARS['ConfigDomain'];
 			$ConfigPW     = $HTTP_POST_VARS['ConfigPW']     ? $HTTP_POST_VARS['ConfigPW']     : $HTTP_COOKIE_VARS['ConfigPW'];
-			$HeaderPW     = $HTTP_POST_VARS['HeaderPW'];
+			$HeaderPW     = $HTTP_POST_VARS['HeaderPW'] ? $HTTP_POST_VARS['HeaderPW'] : $HTTP_COOKIE_VARS['HeaderPW'];
 			$ConfigLang   = $HTTP_POST_VARS['ConfigLang']   ? $HTTP_POST_VARS['ConfigLang']   : $HTTP_COOKIE_VARS['ConfigLang'];
 
 			if (isset($FormLogout))
