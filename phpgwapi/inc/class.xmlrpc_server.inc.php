@@ -81,7 +81,7 @@
 			$cats = array();
 			foreach($xcats as $cat => $name)
 			{
-				if ($id = $GLOBALS['phpgw']->categories->id2name($name))
+				if ($id = $GLOBALS['phpgw']->categories->name2id($name))
 				{
 					// existing cat-name use the id
 					$cat = $id;
