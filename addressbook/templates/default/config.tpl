@@ -39,7 +39,7 @@
    </tr>
   <tr bgcolor="{row_off}">
    <td>{lang_LDAP_root_dn_for_contacts}:</td>
-   <td><input name="newsettings[ldap_contact_dn]" value="{value_ldap_contact_dn}"></td>
+   <td><input name="newsettings[ldap_contact_dn]" value="{value_ldap_contact_dn}" size="40"></td>
   </tr>
   <tr bgcolor="{row_on}">
    <td>{lang_LDAP_root_pw_for_contacts}:</td>
