@@ -77,7 +77,7 @@
 		var $members        = array();
 		var $xmlrpc_methods = array();
 		// enables the session-cache
-		var $use_session_cache = True;
+		var $use_session_cache = False;
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
@@ -87,7 +87,8 @@
 		function accounts($account_id = '', $account_type='')
 		{
 			// enable the caching in the session onyl for ldap
-			$this->user_session_cache = $GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap';
+			#$this->user_session_cache = $GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap';
+			#$this->use_session_cache = $GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap';
 
 			$this->db = $GLOBALS['phpgw']->db;
 
