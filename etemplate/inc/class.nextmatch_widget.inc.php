@@ -118,12 +118,12 @@
 
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			$loop = False;
-			$is_array_value = is_array($value);
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 
-			if ($is_array_value && ($value['start_search'] || $value['cat_id'] != $old_value['cat_id'] ||
-			    $old_value['filter'] != '' && $value['filter'] != $old_value['filter'] ||
-			    $old_value['filter2'] != '' && $value['filter2'] != $old_value['filter2']))
+			if ($value['start_search'] ||
+			    isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
+			    $old_value['filter'] != '' && isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
+			    $old_value['filter2'] != '' && isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
 			{
 				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
 				//echo "new filter --> loop</p>";
