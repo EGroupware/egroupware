@@ -33,7 +33,7 @@
 	$t->set_var('lang_action',lang('Custom Fields'));
 	$t->set_var('add_action',$phpgw->link('/addressbook/addfield.php'));
 	$t->set_var('lang_add',lang('Add'));
-	$t->set_var('title_fields',lang('Custom Fields'));
+	$t->set_var('title_fields',lang('addressbook').' - '.lang('Custom Fields'));
 	$t->set_var('lang_search',lang('Search'));
 	$t->set_var('actionurl',$phpgw->link('/addressbook/fields.php'));
 	$t->set_var('lang_done',lang('Done'));
