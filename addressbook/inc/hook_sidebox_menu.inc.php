@@ -27,7 +27,7 @@
 	$file = Array(
 		'Add'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
 		'_NewLine_', // give a newline
-		'Import_Contacts'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import')
+		'import contacts'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import')
 	);
 	display_sidebox($appname,$menu_title,$file);
 
