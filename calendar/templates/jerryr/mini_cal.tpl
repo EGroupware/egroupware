@@ -1,20 +1,32 @@
 <!-- $Id$ -->
 <!-- BEGIN mini_cal -->
-<table border="0" cellspacing="0" cellpadding="0" valign="top" width=100% cols="7">
- <tr valign="middle">
-  <td align="center" colspan=4><font size="-2">&nbsp;&nbsp;&nbsp;&nbsp;<b>{month}</b></font></td>
-  <td align="right" colspan=3>{prevmonth}&nbsp;&nbsp;{nextmonth}</td>
- </tr>
- <tr>
-  <td align="center" colspan=7><img src="{cal_img_root}" width="90%" height="5"></td>
- </tr>
- <tr valign="top">
-  <td colspan="7">
-   <table border="0" width="100%" cellspacing="7" cellpadding="0" valign="top" cols="7">
-    <tr>{daynames}    </tr>{display_monthweek}   </table>
-  </td>
- </tr>
-</table>
+<table width=100%><tr>
+						<td>
+							<table border=0 width="100%" cellpadding=0 cellspacing=0>
+								<tr>
+									<td width=8 class="calLtLtTitleBlue"></td>
+									<td width=8 class="calLtMidTitleBlue"></td>
+									<td  nowrap class="calDayTitleBlue" >{month}</td>
+									<td width=8 class="calRtMidTitleBlue" ></td>
+									<td width=8 class="calRtRtTitleBlue" ></td>
+								</tr>
+								<tr>
+									<td width=8 class="calLeftShadow"></td>
+									<td valign="top" colspan=3 ><table border="0" width="100%" cellspacing="7" cellpadding="0" valign="top" cols="7">
+    <tr>{daynames}    </tr>{display_monthweek}   </table></td>
+									<td width=8 class="calRightShadow"></td>
+								</tr>
+								
+								<tr class="calRowBottomShadow">
+									<td class="calLtLtFoot"></td>
+									<td class="calLtMidFoot"></td>
+									<td></td>
+									<td class="calRtMidFoot"></td>
+									<td class="calRtRtFoot"></td>
+								</tr>	
+							</table>
+						</td>
+</tr></table>
 <!-- END mini_cal -->
 <!-- BEGIN mini_week -->
     <tr>{monthweek_day}

@@ -3,39 +3,66 @@
 {printer_friendly}
 <table border="0" width="100%" class="calDayViewShadowBox">
 	<tr>
-		<td valign="top" width="70%" class="calDayViewSideBoxes">
-   			<table border="0" width=100%>
-    				<tr>
-     					<td class="calDayView">{date}&nbsp;&nbsp;{username}&nbsp;</td>
-				</tr>{day_events}
-			</table>
-  			<p align="center">{print}</p>
-		</td>
-		<td width=5></td>
-		<td align="center" valign="top" >
-			<table class="calDayViewSideBoxes" width="100%"><tr><td>
-				<table width="100%" cellpadding=0 cellspacing=0>
+		<td valign="top" width="70%">
+   			<table border="0" cellpadding=0 cellspacing=0 width=100%>
 					<tr>
-						<td align="center" class="calDayView">{date}</td>
+						<td width=8 class="calLtLtTitleBlue"></td>
+						<td width=8 class="calLtMidTitleBlue"></td>
+						<td  nowrap class="calDayTitleBlue" >{date}&nbsp;&nbsp;{username}&nbsp;</td>
+						<td width=8 class="calRtMidTitleBlue" ></td>
+						<td width=8 class="calRtRtTitleBlue" ></td>
 					</tr>
 					<tr>
-						<td align="center">{small_calendar}</td>
+						<td width=8 class="calLeftShadow"></td>
+						<td valign="top" colspan=3 >
+							<table width=100% cellpadding=0 cellspacing=0>{day_events}</table>
+						</td>
+						<td width=8 class="calRightShadow"></td>
 					</tr>
-				
+					<tr class="calRowBottomShadow">
+						<td class="calLtLtFoot"></td>
+						<td class="calLtMidFoot"></td>
+						<td></td>
+						<td class="calRtMidFoot"></td>
+						<td class="calRtRtFoot"></td>
+					</tr>	
+				</table><p align="center">{print}</p>
+			</td>
+			<td width=5></td>
+			<td align="center" valign="top" >
+				<table cellpadding=0 cellspacing=0 width="100%">
+					<tr>
+						<td>{small_calendar}</td>
+					</tr>
 				</table>
-			</td></tr></table>
-			<table height="5"><tr><td></td></tr></table>
-			
-			<table class="calDayViewSideBoxes" width=100%><tr><td>
-				<table width="100%" cellpadding=0 cellspacing=0>
+				<table height="5" border=0><tr><td></td></tr></table>
+				<table width=100% cellspacing=0 cellpadding=0>
 					<tr>
-						<td align="center" class="calDayView">{lang_todos}</td>
-					</tr>
-					<tr>
-						<td>{todos}</td>
+						<td>
+							<table border=0 width="100%" cellpadding=0 cellspacing=0>
+								<tr>
+									<td width=8 class="calLtLtTitleRed"></td>
+									<td width=8 class="calLtMidTitleRed"></td>
+									<td  nowrap class="calDayTitleRed" >{lang_todos}</td>
+									<td width=8 class="calRtMidTitleRed" ></td>
+									<td width=8 class="calRtRtTitleRed" ></td>
+								</tr>
+								<tr>
+									<td width=8 class="calLeftShadow"></td>
+									<td valign="top" colspan=3 >	{todos}</td>
+									<td width=8 class="calRightShadow"></td>
+								</tr>
+								<tr class="calRowBottomShadow">
+									<td class="calLtLtFoot"></td>
+									<td class="calLtMidFoot"></td>
+									<td></td>
+									<td class="calRtMidFoot"></td>
+									<td class="calRtRtFoot"></td>
+								</tr>	
+							</table>
+						</td>
 					</tr>
 				</table>
-			</td></tr></table>
 			</td>
 		</tr>
 	</table>
