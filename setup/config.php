@@ -87,15 +87,17 @@
     <td><input name="newsettings[webserver_url]" value="<?php echo $current_config["webserver_url"]; ?>"></td>
    </tr>
 
+   <?php $selected[$current_config["auth_type"]] = " selected"; ?>
    <tr>
     <td>Select which type of authentication you are using.<br>SQL is only support currently</td>
     <td>
      <select name="newsettings[auth_type]">
-      <option value="sql">SQL</option>
-      <option value="ldap">LDAP</option>
+      <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
+      <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
      </select>
     </td>
    </tr>
+   <?php $selected = array(); ?>
 
    <tr>
     <td>LDAP host:</td>
@@ -109,7 +111,7 @@
 
    <tr>
     <td>Use cookies to pass sessionid:</td>
-    <td><input type="checkbox" name="newsettings[usecookies]" value="True"></td>
+    <td><input type="checkbox" name="newsettings[usecookies]" value="True"<?php echo ($current_config["usecookies"]?" checked":""); ?>></td>
    </tr>
 
    <tr>
@@ -117,40 +119,46 @@
     <td><input name="newsettings[mail_server]" value="<?php echo $current_config["mail_server"]; ?>"></td>
    </tr>
 
+   <?php $selected[$current_config["mail_server_type"]] = " selected"; ?>
    <tr>
     <td>Select your mail server type:</td>
     <td>
      <select name="newsettings[mail_server_type]">
-      <option value="imap">IMAP</option>
-      <option value="pop3">POP-3</option>
+      <option value="imap"<?php echo $selected["imap"]; ?>>IMAP</option>
+      <option value="pop3"<?php echo $selected["pop3"]; ?>>POP-3</option>
      </select>
     </td>
    </tr>
+   <?php $selected = array(); ?>
 
+   <?php $selected[$current_config["imap_server_type"]] = " selected"; ?>
    <tr>
     <td>IMAP server type:</td>
     <td>
      <select name="newsettings[imap_server_type]">
-      <option value="Cyrus">Cyrus</option>
-      <option value="UWash">UWash</option>
+      <option value="Cyrus"<?php echo $selected["Cyrus"]; ?>>Cyrus</option>
+      <option value="UWash"<?php echo $selected["UWash"]; ?>>UWash</option>
      </select>
     </td>
    </tr>
+   <?php $selected = array(); ?>
 
    <tr>
     <td>Enter your mail sufix:</td>
     <td><input name="newsettings[mail_suffix]" value="<?php echo $current_config["mail_suffix"]; ?>"></td>
    </tr>
 
+   <?php $selected[$current_config["mail_login_type"]] = " selected"; ?>
    <tr>
     <td>Mail server login type:</td>
     <td>
      <select name="newsettings[mail_login_type]">
-      <option value="standard">standard</option>
-      <option value="vmailmgr">vmailmgr</option>
+      <option value="standard"<?php echo $selected["standard"]; ?>>standard</option>
+      <option value="vmailmgr"<?php echo $selected["vmailmgr"]; ?>>vmailmgr</option>
      </select>
     </td>
    </tr>
+   <?php $selected = array(); ?>
 
    <tr>
     <td>Enter your SMTP server hostname:</td>
@@ -217,19 +225,21 @@
     <td><input name="newsettings[httpproxy_port]" value="<?php echo $current_config["httpproxy_port"]; ?>"></td>
    </tr>
 
+   <?php $selected[$current_config["showpoweredbyon"]] = " selected"; ?>
    <tr>
     <td>Showed powered by logo on:</td>
     <td>
      <select name="newsettings[showpoweredbyon]">
-      <option value="bottom">bottom</option>
-      <option value="top">top</option>
+      <option value="bottom"<?php echo $selected["bottom"]; ?>>bottom</option>
+      <option value="top"<?php echo $selected["top"]; ?>>top</option>
      </select>
     </td>
    </tr>
+   <?php $selected = array(); ?>
 
    <tr>
     <td>Would like like phpGroupWare to check for new version<br>when admins login ?:</td>
-    <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"></td>
+    <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"<?php echo ($current_config["checkfornewversion"]?" checked":""); ?>></td>
    </tr>
   
    <tr>
