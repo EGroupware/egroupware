@@ -338,8 +338,8 @@
 				$cat_values['level'] = $this->id2name($cat_values['parent'],'level')+1;
 			}
 
-			$cat_values[descr] = addslashes($cat_values['descr']);
-			$cat_values['name'] = addslashes($cat_values['name']);
+			$cat_values['descr'] = addslashes($cat_values['descr']);
+			$cat_values['name']  = addslashes($cat_values['name']);
 
 			$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
 							. "cat_description,cat_data,cat_main,cat_level) values ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access'] . "','"
