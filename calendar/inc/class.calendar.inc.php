@@ -27,7 +27,7 @@
     var $last_hour;
     var $rowspan;
     var $weekstarttime;
-    var $daysinweek;
+    var $daysinweek = 7;
     var $filter;
     var $tempyear;
     var $tempmonth;
@@ -69,15 +69,25 @@
       }
     }
 
-    function get_sunday_before($year,$month,$day) {
+    function get_weekday_start($year,$month,$day) {
       global $phpgw;
       global $phpgw_info;
-      $weekday = date("w", mktime(0,0,0,$month,$day,$year));
-      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday" && $weekday == 0) {
-	$day -= 7;
-	$weekday = date("w", mktime(0,0,0,$month,$day,$year) );
+
+      $weekday = date("w",mktime(0,0,0,$month,$day,$year));
+      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
+        $this->days = array(0 => "Mon", 1 => "Tue", 2 => "Wed", 3 => "Thu", 4 => "Fri", 5 => "Sat", 6 => "Sun");
+        if ($weekday == 0)
+          $sb = mktime(0,0,0,$month,$day - 6,$year);
+        if ($weekday == 1)
+          $sb = mktime(0,0,0,$month,$day,$year);
+        $sb = mktime(0,0,0,$month,$day - ($weekday - 1),$year);
+      } else {
+         $this->days = array(0 => "Sun", 1 => "Mon", 2 => "Tue", 3 => "Wed", 4 => "Thu", 5 => "Fri", 6 => "Sat");
+         $sb = mktime(0,0,0,$month,$day - $weekday,$year);
       }
-      return mktime(0,0,0,$month,$day - $weekday,$year) - (3600 * intval($phpgw_info["user"]["preferences"]["common"]["tz_offset"]));
+
+      return $sb;
+//       - ((60 * 60) * intval($phpgw_info["user"]["preferences"]["common"]["tz_offset"]));
     }
 
     function normalizeminutes(&$minutes) {
@@ -159,13 +169,7 @@
       global $phpgw;
       global $phpgw_info;
 
-      $date = Array("raw","day","month","year","full");
-      $date["raw"] = mktime($hour, $minute, $second, $month, $day, $year) - ((60 * 60) * intval($phpgw_info["user"]["preferences"]["common"]["tz_offset"]));
-      $date["year"] = intval($phpgw->common->show_date($date["raw"],"Y"));
-      $date["month"] = intval($phpgw->common->show_date($date["raw"],"m"));
-      $date["day"] = intval($phpgw->common->show_date($date["raw"],"d"));
-      $date["full"] = intval($phpgw->common->show_date($date["raw"],"Ymd"));
-      return $date;
+      return $this->gmtdate(mktime($hour, $minute, $second, $month, $day, $year));
     }
 
     function localdates($localtime) {
@@ -491,7 +495,6 @@
         $p->set_var('description',$description);
         $str = $p->finish($p->parse('out','link_pict'));
       }
-      echo $str;
       return $str;
     }
 
@@ -668,14 +671,7 @@
       global $phpgw;
       global $phpgw_info;
 
-      $this->weekstarttime = $this->get_sunday_before($year,$month,1);
-      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
-         $this->days = array(0 => "Mon", 1 => "Tue", 2 => "Wed", 3 => "Thu", 4 => "Fri", 5 => "Sat", 6 => "Sun");
-         $this->weekstarttime += 86400;
-      } else {
-         $this->days = array(0 => "Sun", 1 => "Mon", 2 => "Tue", 3 => "Wed", 4 => "Thu", 5 => "Fri", 6 => "Sat");
-      }
-      $this->daysinweek = 7;
+      $this->weekstarttime = $this->get_weekday_start($year,$month,1);
 
 	  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 //	  $p->halt_on_error("report");
@@ -726,8 +722,9 @@
         $p->parse('column_header','month_column',True);
       }
       for ($j=0;$j<$this->daysinweek;$j++) {
-        $date = $this->localdates($startdate + ($j * 24 * 3600));
+        $date = $this->gmtdate($startdate + ($j * 24 * 3600));
         $p->set_var('column_data','');
+        $p->set_var('extra','');
         if ($weekly || ($date["full"] >= $monthstart && $date["full"] <= $monthend)) {
           if($weekly) $cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
           if ($date["full"] == $this->today["full"]) {
@@ -781,7 +778,8 @@
             }
           }
           $p->parse('column_data','week_day_events',True);
-          if (!$j) {
+          $p->set_var('events','');
+          if (!$j || ($j && $date["full"] == $monthstart)) {
             $p->set_var('week_day_font_size','-2');
             if(!$this->printer_friendly) {
               $str = "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/week.php","date=".$date["full"])."\">week " .(int)((date("z",($startdate+(24*3600*4)))+7)/7)."</a>";
@@ -792,9 +790,9 @@
             $p->parse('column_data','week_day_events',True);
             $p->set_var('events','');
           }
+        }
         $p->parse('column_header','month_column',True);
         $p->set_var('column_data','');
-        }
       }
       return $p->finish($p->parse('out','month_header'));
     }
@@ -845,15 +843,15 @@
       $p->set_block('month_filler','month_filler');
       $p->set_block('month_header','month_header');
 
-      $start = $this->get_sunday_before($year, $month, $day);
+      $start = $this->get_weekday_start($year, $month, $day);
 
       $cellcolor = $phpgw_info["theme"]["row_off"];
 
-      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
-         $start += 86400;
-      }
+//      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
+//         $start += 86400;
+//      }
 
-      $str  = "";
+//      $str  = "";
 
       $true_printer_friendly = $this->printer_friendly;
 
@@ -895,13 +893,8 @@
       $monthstart = intval(date("Ymd",mktime(0,0,0,$month,1,$year)));
       $monthend = intval(date("Ymd",mktime(0,0,0,$month + 1,0,$year)));
 
-      $weekstarttime = $this->get_sunday_before($year,$month,1);
-      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
-	$days = array(0 => "Monday", 1 => "Tuesday", 2 => "Wednesday", 3 => "Thursday", 4 => "Friday", 5 => "Saturday", 6 => "Sunday");
-	$weekstarttime += (3600 * 25);
-      } else {
-	$days = array(0 => "Sunday", 1 => "Monday", 2 => "Tuesday", 3 => "Wednesday", 4 => "Thursday", 5 => "Friday", 6 => "Saturday");
-      }
+      $weekstarttime = $this->get_weekday_start($year,$month,1);
+
       $str  = "";
       $str .= "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" valign=\"top\">";
       $str .= "<tr valign=\"top\">";
@@ -990,14 +983,7 @@
       global $phpgw;
       global $phpgw_info;
 
-      if($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
-	$days = array(0 => "Mo", 1 => "Tu", 2 => "We", 3 => "Th", 4 => "Fr", 5 => "Sa", 6 => "Su");
-	$weekstarttime = $this->get_sunday_before($year,$month,1) + 86400;
-      } else {
-	$days = array(0 => "Su", 1 => "Mo", 2 => "Tu", 3 => "We", 4 => "Th", 5 => "Fr", 6 => "Sa");
-	$weekstarttime = $this->get_sunday_before($year,$month,1);
-      }
-      $daysinweek = 7;
+      $weekstarttime = $this->get_weekday_start($year,$month,1);
 
       $str  = "";
       $str .= "<table border=\"0\" bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
@@ -1059,13 +1045,8 @@
       $monthstart = intval(date("Ymd",mktime(0,0,0,$month,1,$year)));
       $monthend = intval(date("Ymd",mktime(0,0,0,$month + 1,0,$year)));
 
-      $weekstarttime = $this->get_sunday_before($year,$month,1);
-      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
-		$days = array(0 => "Monday", 1 => "Tuesday", 2 => "Wednesday", 3 => "Thursday", 4 => "Friday", 5 => "Saturday", 6 => "Sunday");
-		$weekstarttime += (3600 * 25);
-      } else {
-		$days = array(0 => "Sunday", 1 => "Monday", 2 => "Tuesday", 3 => "Wednesday", 4 => "Thursday", 5 => "Friday", 6 => "Saturday");
-      }
+      $weekstarttime = $this->get_weekday_start($year,$month,1);
+
 	  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 	  $p->set_unknowns("remove");
       $p->set_file(array('mini_cal' => 'mini_cal.tpl',
@@ -1082,7 +1063,7 @@
 
       $p->set_var('bgcolor2',$phpgw_info["theme"]["cal_dayview"]);
       for($i=0;$i<7;$i++) {
-		$p->set_var('dayname',"<b>" . substr(lang($days[$i]),0,2) . "</b>");
+		$p->set_var('dayname',"<b>" . substr(lang($this->days[$i]),0,2) . "</b>");
 		$p->parse('daynames','mini_day',True);
       }
       for($i=$weekstarttime;date("Ymd",$i)<=$monthend;$i += (24 * 3600 * 7)) {
@@ -1112,13 +1093,13 @@
 	  	  } else {
             $p->set_var('bgcolor2','#FEFEFE');
             $str = "";
-            if(!$this->printer_friendly) {
-              $str .= '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
-                    . '/calendar/'.$link,'year='.$cal["year"].'&month='.$cal["month"].'&day='
-                    . $cal["day"]).'" class="minicalendargrey">';
-            }
-            $str .= $cal["day"];
-	    	if (!$this->printer_friendly) $str .= '</a>';
+//            if(!$this->printer_friendly) {
+//              $str .= '<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
+//                    . '/calendar/'.$link,'year='.$cal["year"].'&month='.$cal["month"].'&day='
+//                    . $cal["day"]).'" class="minicalendargrey">';
+//            }
+//            $str .= $cal["day"];
+//	    	if (!$this->printer_friendly) $str .= '</a>';
             $p->set_var('dayname',$str);
 	  	  }
 	  	  $p->parse('monthweek_day','mini_day',True);
