@@ -149,7 +149,7 @@
 		while (list($type,$val) = each($this->adr_types))
 		{
 			$ftype = 'one_'.$type;
-			eval("if (\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
+			eval("if (\$\$ftype=='on') { \$typed .= \$type . ';'; }");
 		}	
 		$fields['adr_one_type'] = substr($typed,0,-1);
 
@@ -167,7 +167,7 @@
 		while (list($type,$val) = each($this->adr_types))
 		{
 			$ftype = 'two_'.$type;
-			eval("if \(\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
+			eval("if (\$\$ftype=='on') { \$typed \.= \$type . ';'; }");
 		}
 		$fields['adr_two_type'] = substr($typed,0,-1);
 
