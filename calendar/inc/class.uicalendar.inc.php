@@ -1263,6 +1263,7 @@
 				// If we reach this, it is because they didn't search for anything,
 				// attempt to send them back to where they where.
 				Header('Location: ' . $phpgw->link($from));
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -1719,8 +1720,18 @@
 			return $str;
 		}
 
-		function overlap($overlapping_events,$event)
+		function overlap($params)
 		{
+
+			if(!is_array($params))
+			{
+			}
+			else
+			{
+				$overlapping_events = $params['o_events'];
+				$event = $params['this_event'];
+			}
+
          $month = $event['start']['month'];
          $mday = $event['start']['mday'];
          $year = $event['start']['year'];

@@ -400,8 +400,6 @@
 				echo "ID : ".$l_cal['id']."<br>\n";
 			}
 
-  			$ui = CreateObject('calendar.uicalendar');
-
          if(isset($GLOBALS['HTTP_GET_VARS']['readsess']))
          {
 				$event = $this->restore_from_appsession();
@@ -410,12 +408,13 @@
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
 				{
-					$ui->edit(
+					ExecMethod('calendar.uicalendar.edit',
 						Array(
 							'cd'		=> $datetime_check,
 							'readsess'	=> 1
 						)
 					);
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 				$overlapping_events = False;
          }
@@ -423,11 +422,13 @@
 			{
    			if(!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD))
 	   		{
-	   		   $ui->index();
+	   		   ExecMethod('calendar.uicalendar.index');
+					$GLOBALS['phpgw']->common->phpgw_exit();
 	   		}
 	   		elseif($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT))
 	   		{
-	   		   $ui->index();
+	   		   ExecMethod('calendar.uicalendar.index');
+					$GLOBALS['phpgw']->common->phpgw_exit();
 	   		}
 
 				$this->fix_update_time($l_start);
@@ -558,7 +559,7 @@
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
 				{
-				   $ui->edit(
+				   $ExecMethod('calendar.uicalendar.edit',
 				   	Array(
 				   		'cd'		=> $datetime_check,
 				   		'readsess'	=> 1
@@ -591,9 +592,13 @@
             {
 					unset($GLOBALS['phpgw_info']['flags']['noheader']);
 					unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				   $ui->overlap($overlapping_events,$event);
-					$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
-				   return;
+				   ExecMethod('calendar.uicalendar.overlap',
+				   	Array(
+				   		'o_events'	=> $overlapping_events,
+				   		'this_event'	=> $event
+				   	)
+				   );
+					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 				else
 				{
@@ -618,7 +623,8 @@
             $date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
             if($send_to_ui)
             {
-				   $ui->index();
+				   Execmethod('calendar.uicalendar.index');
+					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 			}
 		}
