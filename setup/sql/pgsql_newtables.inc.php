@@ -195,7 +195,7 @@
 		edatetime	int4,
 		priority		int DEFAULT 2 NOT NULL,
 		type		varchar(10),
-		public	int DEFAULT 1 NOT NULL,
+		is_public	int DEFAULT 1 NOT NULL,
 		title		varchar(80) NOT NULL,
 		desription	text
 	)";

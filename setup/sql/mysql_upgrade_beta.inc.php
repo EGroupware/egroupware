@@ -1516,7 +1516,7 @@
 		$phpgw_setup->db->query("alter table calendar_entry change cal_edatetime edatetime int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_priority priority int(11) DEFAULT '2' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_type type varchar(10)",__LINE__,__FILE__);
-		$phpgw_setup->db->query("alter table calendar_entry change cal_access public int DEFAULT '1' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_access is_public int DEFAULT '1' NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_name title varchar(80) NOT NULL",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry change cal_description description text",__LINE__,__FILE__);
 		$phpgw_setup->db->query("alter table calendar_entry rename phpgw_cal",__LINE__,__FILE__);

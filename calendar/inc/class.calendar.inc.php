@@ -344,7 +344,7 @@ class calendar extends calendar_
 // Private
 		if(strpos($this->filter,'private'))
 		{
-			$sql .= " AND phpgw_cal.public=0";
+			$sql .= " AND phpgw_cal.is_public=0";
 		}
 		
 		$sql .= ') ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
@@ -528,7 +528,7 @@ class calendar extends calendar_
 // Private
 		if(strpos($this->filter,'private'))
 		{
-			$sql .= " AND endar_entry.cal.public=0";
+			$sql .= " AND phpgw_cal.is_public=0";
 		}
 		
 		$sql .= ') ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';

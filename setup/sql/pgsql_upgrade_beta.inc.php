@@ -1906,7 +1906,7 @@
 			edatetime	int4,
 			priority		int DEFAULT 2 NOT NULL,
 			type		varchar(10),
-			public	int DEFAULT 1 NOT NULL,
+			is_public	int DEFAULT 1 NOT NULL,
 			title		varchar(80) NOT NULL,
 			desription	text
 		)";
@@ -1930,7 +1930,7 @@
 			$public = $phpgw_setup->db->f('cal_access');
 			$title = $phpgw_setup->db->f('cal_name');
 			$description = $phpgw_setup->db->f('cal_description');
-			$temp_db->query("INSERT INTO phpgw_cal(id,owner,category,groups,datetime,mdatetime,edatetime,priority,type,public,title,description)
+			$temp_db->query("INSERT INTO phpgw_cal(id,owner,category,groups,datetime,mdatetime,edatetime,priority,type,is_public,title,description)
 				values($id,$owner,0,'$groups',$datetime,$mdatetime,$edatetime,$priority,'$type',$public,'$title','$description')",__LINE__,__FILE__);
 		}
 

@@ -120,7 +120,7 @@ class calendar_ extends calendar__
 			
 			$this->event->owner = $this->stream->f('owner');
 			$this->event->id = intval($this->stream->f('id'));
-			$this->event->public = intval($this->stream->f('public'));
+			$this->event->public = intval($this->stream->f('is_public'));
 			$this->event->category = intval($this->stream->f('category'));
 			$this->event->title = $phpgw->strip_html($this->stream->f('title'));
 			$this->event->description = $phpgw->strip_html($this->stream->f('description'));
@@ -601,7 +601,7 @@ class calendar_ extends calendar__
 		if($event->id == 0)
 		{
 			$temp_name = tempnam($phpgw_info['server']['temp_dir'],'cal');
-			$this->stream->query('INSERT INTO phpgw_cal(title,owner,category,priority,public) '
+			$this->stream->query('INSERT INTO phpgw_cal(title,owner,category,priority,is_public) '
 				. "values('".$temp_name."',".$event->owner.",'".$category."',".$event->priority.",".$event->public.")");
 			$this->stream->query("SELECT id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
@@ -629,7 +629,7 @@ class calendar_ extends calendar__
 				. 'edatetime='.$enddate.', '
 				. 'priority='.$event->priority.', '
 				. "type='".$type."', "
-				. 'public='.$event->access.', '
+				. 'is_public='.$event->access.', '
 				. "title='".addslashes($event->name)."', "
 				. "description='".addslashes($event->description)."' "
 				. 'WHERE id='.$event->id;
@@ -724,7 +724,7 @@ class calendar_ extends calendar__
 		}
 		else
 		{
-			return "(phpgw_cal.public=2 AND (". $groups .')) ';
+			return "(phpgw_cal.is_public=2 AND (". $groups .')) ';
 		}
 	}
 
