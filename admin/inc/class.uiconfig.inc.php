@@ -36,6 +36,10 @@
 					$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
 					$config_appname = 'phpgwapi';
 					break;
+				case '':
+					/* This keeps the admin from getting into what is a setup-only config */
+					Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+					break;
 				default:
 					$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
 					$config_appname = $appname;
