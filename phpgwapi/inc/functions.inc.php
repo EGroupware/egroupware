@@ -24,14 +24,6 @@
 
   /* $Id$ */
   
-  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
-  $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
-  $d3 = strtolower(substr($phpgw_info["server"]["app_inc"],0,3));
-  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp" || $d3 == "htt" || $d3 == "ftp") {
-    echo "Failed attempt to break in via an old Security Hole!<br>\n";
-    exit;
-  } unset($d1);unset($d2);unset($d3);
-
   /****************************************************************************\
   * Direct functions, which are not part of the API class                      *
   * because they are require to be availble at the lowest level.               *
@@ -43,7 +35,7 @@
     $classname = $classpart[1];
     if (!$phpgw_info["flags"]["included_classes"][$classname]){
       $phpgw_info["flags"]["included_classes"][$classname] = True;   
-      include($phpgw_info["server"]["include_root"]."/".$appname."/inc/class.".$classname.".inc.php");
+      include(PHPGW_INCLUDE_ROOT."/".$appname."/inc/class.".$classname.".inc.php");
     }
     if ($constructor_param == ""){ $obj = new $classname; }else{$obj = new $classname($constructor_param); }
     return $obj;
@@ -203,14 +195,24 @@
   function phpgw_fillarray()
   {
     global $phpgw, $phpgw_info, $cd, $colspan;
-    $phpgw_info["server"]["template_dir"] = $phpgw->common->get_tpl_dir("phpgwapi");
-    $phpgw_info["server"]["images_dir"]   = $phpgw->common->get_image_path("phpgwapi");
-    $phpgw_info["server"]["images_filedir"]   = $phpgw->common->get_image_dir("phpgwapi");
-    $phpgw_info["server"]["app_root"]   = $phpgw->common->get_app_dir();
-    $phpgw_info["server"]["app_inc"]    = $phpgw->common->get_inc_dir();
-    $phpgw_info["server"]["app_tpl"]    = $phpgw->common->get_tpl_dir();
-    $phpgw_info["server"]["app_images"] = $phpgw->common->get_image_path();
-    $phpgw_info["server"]["app_images_dir"] = $phpgw->common->get_image_dir();
+    define("PHPGW_TEMPLATE_DIR",$phpgw->common->get_tpl_dir("phpgwapi"));
+    define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_path("phpgwapi"));
+    define("PHPGW_IMAGES_FILEDIR", $phpgw->common->get_image_dir("phpgwapi"));
+    define("PHPGW_APP_ROOT", $phpgw->common->get_app_dir());
+    define("PHPGW_APP_INC", $phpgw->common->get_inc_dir());
+    define("PHPGW_APP_TPL", $phpgw->common->get_tpl_dir());
+    define("PHPGW_IMAGES", $phpgw->common->get_image_path());
+    define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_dir());
+
+    /* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
+    $phpgw_info["server"]["template_dir"] = PHPGW_TEMPLATE_DIR;
+    $phpgw_info["server"]["images_dir"]   = PHPGW_IMAGES_DIR;
+    $phpgw_info["server"]["images_filedir"]   = PHPGW_IMAGES_FILEDIR;
+    $phpgw_info["server"]["app_root"]   = PHPGW_APP_ROOT;
+    $phpgw_info["server"]["app_inc"]    = PHPGW_APP_INC;
+    $phpgw_info["server"]["app_tpl"]    = PHPGW_APP_TPL;
+    $phpgw_info["server"]["app_images"] = PHPGW_IMAGES;
+    $phpgw_info["server"]["app_images_dir"] = PHPGW_IMAGES_DIR;
   
     /* ********This sets the user variables******** */
     $phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"] . "/users/"
@@ -277,13 +279,13 @@
      /*************************************************************************\
      * These lines load up the themes                                          *
      \*************************************************************************/
-     include($phpgw_info["server"]["server_root"] . "/phpgwapi/themes/" .
+     include(PHPGW_SERVER_ROOT . "/phpgwapi/themes/" .
 	     $phpgw_info["user"]["preferences"]["common"]["theme"] . ".theme");
 
      if ($phpgw_info["theme"]["bg_color"] == "") {
         /* Looks like there was a problem finding that theme. Try the default */
         echo "Warning: error locating selected theme";
-        include ($phpgw_info["server"]["server_root"] . "/phpgwapi/themes/default.theme");
+        include (PHPGW_SERVER_ROOT . "/phpgwapi/themes/default.theme");
         if ($phpgw_info["theme"]["bg_color"] == "") {
            // Hope we don't get to this point.  Better then the user seeing a 
            // complety back screen and not know whats going on
@@ -326,12 +328,12 @@
      \*************************************************************************/
      /* Then the include file */
      if (!preg_match ("/phpgwapi/i", $phpgw_info["server"]["app_inc"]) && file_exists ($phpgw_info["server"]["app_inc"]."/functions.inc.php")){
-        include($phpgw_info["server"]["app_inc"]."/functions.inc.php");
+        include(PHPGW_API_INC."/functions.inc.php");
      }
      if (!$phpgw_info["flags"]["noheader"] &&
 	    !$phpgw_info["flags"]["noappheader"] &&
   	    file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
-        include($phpgw_info["server"]["app_inc"]."/header.inc.php");
+        include(PHPGW_API_INC."/header.inc.php");
       }
   }
   error_reporting(7);

@@ -152,7 +152,10 @@
           $phpgw_info["server"]["db_type"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_type"];
           $phpgw_info["server"]["config_passwd"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["config_passwd"];
         }
-        if (!isset($phpgw_info["server"]["include_root"]) && $phpgw_info["server"]["header_version"] <= 1.6) {
+        if (defined("PHPGW_SERVER_ROOT")) {
+          $phpgw_info["server"]["server_root"] = PHPGW_SERVER_ROOT;
+          $phpgw_info["server"]["include_root"] = PHPGW_INCLUDE_ROOT; 
+        }elseif (!isset($phpgw_info["server"]["include_root"]) && $phpgw_info["server"]["header_version"] <= 1.6) {
           $phpgw_info["server"]["include_root"] = $phpgw_info["server"]["server_root"];
         }elseif (!isset($phpgw_info["server"]["header_version"]) && $phpgw_info["server"]["header_version"] <= 1.6) {
           $phpgw_info["server"]["include_root"] = $phpgw_info["server"]["server_root"];

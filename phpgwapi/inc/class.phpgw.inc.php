@@ -25,13 +25,6 @@
   /* $Id$ */
   
   /****************************************************************************\
-  * Required classes                                                           *
-  \****************************************************************************/
-  /* Load selected database class */
-  if (empty($phpgw_info["server"]["db_type"])){$phpgw_info["server"]["db_type"] = "mysql";}
-  if (empty($phpgw_info["server"]["translation_system"])){$phpgw_info["server"]["translation_system"] = "sql";}
-
-  /****************************************************************************\
   * Our API class starts here                                                  *
   \****************************************************************************/
   class phpgw
@@ -105,12 +98,7 @@
       $this->common = CreateObject("phpgwapi.common");
       $this->hooks = CreateObject("phpgwapi.hooks");
 
-      /* Load selected authentication class */
-      if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
       $this->auth = CreateObject("phpgwapi.auth");
-
-      /* Load selected accounts class */
-      if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
       $this->acl = CreateObject("phpgwapi.acl");
       $this->accounts = CreateObject("phpgwapi.accounts");
       $this->session = CreateObject("phpgwapi.sessions");
