@@ -38,4 +38,42 @@
 		$GLOBALS['setup_info']['etemplate']['currentver'] = '0.9.15.001';
 		return $GLOBALS['setup_info']['etemplate']['currentver'];
 	}
+
+
+	$test[] = '0.9.15.001';
+	function etemplate_upgrade0_9_15_001()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_name',array(
+			'type' => 'varchar',
+			'precision' => '80',
+			'nullable' => False
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_template',array(
+			'type' => 'varchar',
+			'precision' => '20',
+			'nullable' => False,
+			'default' => ''
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_lang',array(
+			'type' => 'varchar',
+			'precision' => '5',
+			'nullable' => False,
+			'default' => ''
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_version',array(
+			'type' => 'varchar',
+			'precision' => '20',
+			'nullable' => False,
+			'default' => ''
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_size',array(
+			'type' => 'varchar',
+			'precision' => '128',
+			'nullable' => True
+		));
+
+
+		$GLOBALS['setup_info']['etemplate']['currentver'] = '0.9.15.002';
+		return $GLOBALS['setup_info']['etemplate']['currentver'];
+	}
 ?>
