@@ -91,22 +91,23 @@
 					
 					
 					<div class="divSidebox">
-						<div class="divSideboxHeader"><span>setup main menu</span></div>
+						<div class="divSideboxHeader"><span>{main_menu}</span></div>
 						<div>
 							<table width="100%" cellspacing="0" cellpadding="0">
 					
 								<tr class="divSideboxEntry">
-									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home.php">back to user login</a></td>
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home.php">{user_login}</a></td>
+								</tr>
+<!-- BEGIN loged_in -->
+								<tr class="divSideboxEntry">
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{check_install}</td>
 								</tr>
 
 								<tr class="divSideboxEntry">
-					<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="check_install.php">check installation</a></td>
-				</tr>
-
-								<tr class="divSideboxEntry">
-							<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><!--<a class="textsidebox" href="check_install.php">check installation</a>-->{logoutbutton}</td>
-						</tr>
-									</table>	
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
+								</tr>
+<!-- END loged_in -->
+							</table>
 						</div>
 					</div>
 					<div class="sideboxSpace"></div>

@@ -39,6 +39,7 @@ auto create account records for authenticated users	setup	en	Auto create account
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
 back to the previous screen	setup	en	Back to the previous screen
+back to user login	setup	en	Back to user login
 backupwarn	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
 because an application it depends upon was upgraded	setup	en	because an application it depends upon was upgraded
 because it depends upon	setup	en	because it depends upon
@@ -54,7 +55,9 @@ cannot create the header.inc.php due to file permission restrictions.<br> instea
 change system-charset	setup	en	Change system-charset
 charset	setup	en	ISO-8859-1
 charset to convert to	setup	en	Charset to convert to
+check installation	setup	en	Check installation
 check ip address of all sessions	setup	en	check ip address of all sessions
+checking the egroupware installation	setup	en	Checking the eGroupWare Installation
 click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="index.php">here</a> to return to setup.
 click here	setup	en	Click Here
 completed	setup	en	Completed
@@ -63,6 +66,7 @@ configuration completed	setup	en	Configuration completed
 configuration password	setup	en	Configuration Password
 configure now	setup	en	Configure Now
 continue	setup	en	Continue
+continue to the header admin	setup	en	Continue to the Header Admin
 convert	setup	en	Convert
 could not open header.inc.php for writing!	setup	en	Could not open header.inc.php for writing!
 country selection	setup	en	Country Selection
@@ -240,6 +244,7 @@ please check for sql scripts within the application's directory	setup	en	Please 
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure phpgroupware for your environment	setup	en	Please configure phpGroupWare for your environment
 please consult the %1.	setup	en	Please consult the %1.
+please fix the above errors (***) and %1continue to the header admin%2	setup	en	Please fix the above errors (***) and %1continue to the Header Admin%2
 please install	setup	en	Please install
 please login	setup	en	Please login
 please login to phpgroupware and run the admin application for additional site configuration	setup	en	Please login to phpgroupware and run the admin application for additional site configuration
@@ -263,6 +268,7 @@ remove all	setup	en	Remove All
 requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
 requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve
+return to setup	setup	en	Return to Setup
 sample configuration not found. using built in defaults	setup	en	Sample configuration not found. using built in defaults
 save	setup	en	Save
 save this text as contents of your header.inc.php	setup	en	Save this text as contents of your header.inc.php
@@ -293,6 +299,7 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 settings	setup	en	Settings
 setup	setup	en	Setup
 setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
+setup main menu	setup	en	Setup Main Menu
 setup the database	setup	en	Setup the database
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
@@ -373,8 +380,8 @@ you do not have any languages installed. please install one now <br>	setup	en	Yo
 you have not created your header.inc.php yet!<br> you can create it now.	setup	en	You have not created your header.inc.php yet!<br> You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out
 you must enter a username for the admin	setup	en	You must enter a username for the admin
-you need to select your current charset!	setup	en	You need to select your current charset!
 you need to add some domains to your header.inc.php.	setup	en	You need to add some domains to your header.inc.php.
+you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...

@@ -41,6 +41,7 @@ auto create account records for authenticated users	setup	de	Benutzerkonten für 
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab am
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
+back to user login	setup	de	Zurück zur Benutzer Anmeldung
 backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, da&szlig; dieses Script Ihre bestehenden Daten besch&auml;digt !<br><strong>Diese automatisierten Scripts k&ouml;nnen leicht Ihre Daten besch&auml;digen !.</strong><br
 because an application it depends upon was upgraded	setup	de	da eine Applikation von der sie abhängt upgeradet wurde
 because it depends upon	setup	de	weil es abhängt von
@@ -56,7 +57,9 @@ cannot create the header.inc.php due to file permission restrictions.<br> instea
 change system-charset	setup	de	Systemzeichensatz wechseln
 charset	setup	de	ISO-8859-1
 charset to convert to	setup	de	Zeichensatz in den konvertiert werden soll
+check installation	setup	de	Installation überprüfen
 check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüfen
+checking the egroupware installation	setup	de	Überprüfe die eGroupWare Installation
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier clicken</a> um zum Setup zurück zu kommen.
 click here	setup	de	Hier clicken
 completed	setup	de	Abgeschlossen
@@ -65,6 +68,7 @@ configuration completed	setup	de	Konfiguration abgeschlossen
 configuration password	setup	de	Konfigurationspasswort
 configure now	setup	de	Jetzt konfigurieren
 continue	setup	de	Weiter
+continue to the header admin	setup	de	Weiter zum Header Admin
 convert	setup	de	Konvertieren
 could not open header.inc.php for writing!	setup	de	Konnte die Datei header.inc.php nicht zum schreiben öffen!
 country selection	setup	de	Länderauswahl
@@ -242,6 +246,7 @@ please check for sql scripts within the application's directory	setup	de	Bitte s
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen sie die lese/schreib Rechte der Verzeichnisse oder gehen sie zurück und benutzen eine andere Option.
 please configure phpgroupware for your environment	setup	de	Bitte konfigurieren Sie phpGroupWare für Ihre Umgebung
 please consult the %1.	setup	de	Bitte konsultieren sie das %1.
+please fix the above errors (***) and %1continue to the header admin%2	setup	de	Bitte beheben sie die obigen Fehler (***) und machen Sie %1weiter mit dem Header Admin%2
 please install	setup	de	Bitte installieren
 please login	setup	de	Bitte einlogen
 please login to phpgroupware and run the admin application for additional site configuration	setup	de	Bitte in phpGroupWare einloggen und die Administration für weitere Konfigurationen aufrufen.
@@ -265,6 +270,7 @@ remove all	setup	de	Alle Entfernen
 requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	Lösen
+return to setup	setup	de	Zurück zum Setup
 sample configuration not found. using built in defaults	setup	de	Beispiel Konfiguration nicht gefunden, benutze eingebaute Voreinstellungen
 save	setup	de	Speichern
 save this text as contents of your header.inc.php	setup	de	Sichern sie diesen Text als Datei header.inc.php
@@ -295,6 +301,7 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
 setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
+setup main menu	setup	de	Setup Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 show 'powered by' logo on	setup	de	Zeige 'powered by' Logo
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
@@ -376,6 +383,7 @@ you do not have any languages installed. please install one now <br>	setup	de	si
 you have not created your header.inc.php yet!<br> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br>Sie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	sie müssen einen Benutzernamen für den Administrator eingeben !
+you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu ihrer header.inc.php zufügen.
 you need to select your current charset!	setup	de	Sie müssen ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationdatei ...

@@ -28,7 +28,7 @@ if ($run_by_webserver)
 	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == '10')
 	{
 		// Check header and authentication
-		if (!$GLOBALS['phpgw_setup']->auth('Config'))
+		if (!$GLOBALS['phpgw_setup']->auth('Config') && !$GLOBALS['phpgw_setup']->auth('Header'))
 		{
 			Header('Location: index.php');
 			exit;
@@ -350,7 +350,7 @@ if ($run_by_webserver)
 	}
 	else
 	{
-		echo '<h3><a href="index.php">'.lang('Return to Setup')."</a></h3>\n";
+		echo '<h3><a href="'.$_SERVER['HTTP_REFERER'].'">'.lang('Return to Setup')."</a></h3>\n";
 	}
 	$setup_tpl->pparse('out','T_footer');
 	//echo "</body>\n</html>\n";

@@ -74,7 +74,7 @@
 
 		function show_header($title='',$nologoutbutton=False, $logoutfrom='config', $configdomain='')
 		{
-			$GLOBALS['setup_tpl']->set_var('lang_charset',lang('charset'));
+			$GLOBALS['setup_tpl']->set_var('charset',lang('charset'));
 			$style = array(
 				'th_bg'		=> '#486591',
 				'th_text'	=> '#FFFFFF',
@@ -86,13 +86,13 @@
 			$GLOBALS['setup_tpl']->set_var($style);
 			if ($nologoutbutton)
 			{
-				$icon_logout='&nbsp;';
-				$btn_logout = '&nbsp;';
+				$GLOBALS['setup_tpl']->set_block('T_head','loged_in');
+				$GLOBALS['setup_tpl']->set_var('loged_in','');
 			}
 			else
 			{
 				$btn_logout = '<a href="index.php?FormLogout=' . $logoutfrom . '" class="link">' . lang('Logout').'</a>';
-				$icon_logout='*';
+				$check_install = '<a class="textsidebox" href="check_install.php">'.lang('Check installation').'</a>';
 			}
 
 			$GLOBALS['setup_tpl']->set_var('lang_setup', lang('setup'));
@@ -106,8 +106,12 @@
 				$GLOBALS['setup_tpl']->set_var('configdomain',' - ' . lang('Domain') . ': ' . $configdomain);
 			}
 			$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-			$GLOBALS['setup_tpl']->set_var('logouticon',$icon_logout);
-			$GLOBALS['setup_tpl']->set_var('logoutbutton',$btn_logout);
+			$GLOBALS['setup_tpl']->set_var(array(
+				'logoutbutton' => $btn_logout,
+				'check_install' => $check_install,
+				'main_menu'     => lang('Setup Main Menu'),
+				'user_login'    => lang('Back to user login')
+			));
 			$GLOBALS['setup_tpl']->pparse('out','T_head');
 			/* $setup_tpl->set_var('T_head',''); */
 		}
