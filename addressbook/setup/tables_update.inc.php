@@ -16,7 +16,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->AlterColumn('addressbook', 'ab_id', array('type' => 'auto', 'nullable' => false));
+		//$phpgw_setup->oProc->AlterColumn('addressbook', 'ab_id', array('type' => 'auto', 'nullable' => false));
 		$phpgw_setup->oProc->AddColumn('addressbook', 'ab_company_id', array('type' => 'int', 'precision' => 4));
 		$phpgw_setup->oProc->AddColumn('addressbook', 'ab_title', array('type' => 'varchar', 'precision' => 60));
 		$phpgw_setup->oProc->AddColumn('addressbook', 'ab_address2', array('type' => 'varchar', 'precision' => 60));
@@ -28,7 +28,7 @@
 
 	function addressbook_v0_9_2to0_9_3update_owner($table, $field)
 	{
-		global $phpgw_setup, $phpgw_setup;
+		global $phpgw_setup, $phpgw_setup,$setup_info;
 
 		$phpgw_setup->oProc->query("select distinct($field) from $table");
 		if ($phpgw_setup->oProc->num_rows())
@@ -49,7 +49,15 @@
 			{
 				$phpgw_setup->oProc->query("SELECT account_id FROM $acctstbl WHERE account_lid='".$owner[$i]."'");
 				$phpgw_setup->oProc->next_record();
-				$phpgw_setup->oProc->query("UPDATE $table SET $field=".$phpgw_setup->oProc->f("account_id")." WHERE $field='".$owner[$i]."'");
+				if ($phpgw_setup->oProc->f('account_id'))
+				{
+					$acctid = $phpgw_setup->oProc->f('account_id');
+				}
+				else
+				{
+					$acctid = 1;
+				}
+				$phpgw_setup->oProc->query("UPDATE $table SET $field=" . $acctid . " WHERE $field='" . $owner[$i] . "'");
 			}
 		}
 		$phpgw_setup->oProc->AlterColumn($table, $field, array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0));
@@ -223,7 +231,7 @@
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_addressbook', array(
 				'fd' => array(
-					'id'           => array('type' => 'auto', 'default' => '0', 'nullable' => False),
+					'id'           => array('type' => 'auto', 'nullable' => False),
 					'lid'          => array('type' => 'varchar', 'precision' => 32),
 					'tid'          => array('type' => 'char', 'precision' => 1),
 					'owner'        => array('type' => 'int', 'precision' => 4),
@@ -362,7 +370,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$db1 = $phpgw_setup->oProc;
+		$db1 = $phpgw_setup->db;
 
 		$phpgw_setup->oProc->AddColumn('phpgw_addressbook', 'url',  array('type' => 'varchar', 'precision' => 128));
 		$phpgw_setup->oProc->AddColumn('phpgw_addressbook', 'bday', array('type' => 'varchar', 'precision' => 32));
@@ -378,10 +386,10 @@
 			$cvalu = $phpgw_setup->oProc->f('contact_value');
 			if ($cid && $cvalu)
 			{
-				$update = "UPDATE phpgw_addressbook set url='" . $cvalu . "' WHERE id=" . $cid;
-				$phpgw_setup->oProc->query($update);
+				$update = "UPDATE phpgw_addressbook SET url='" . $cvalu . "' WHERE id=" . $cid;
+				$db1->query($update);
 				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='url'";
-				$phpgw_setup->oProc->query($delete);
+				$db1->query($delete);
 			}
 		}
 
@@ -395,9 +403,9 @@
 			if ($cid && $cvalu)
 			{
 				$update = "UPDATE phpgw_addressbook set bday='" . $cvalu . "' WHERE id=" . $cid;
-				$phpgw_setup->oProc->query($update);
+				$db1->query($update);
 				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='bday'";
-				$phpgw_setup->oProc->query($delete);
+				$db1->query($delete);
 			}
 		}
 
@@ -411,9 +419,9 @@
 			if ($cvalu)
 			{
 				$update = "UPDATE phpgw_addressbook set note='" . $cvalu . "' WHERE id=" . $cid;
-				$phpgw_setup->oProc->query($update);
+				$db1->query($update);
 				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='notes'";
-				$phpgw_setup->oProc->query($delete);
+				$db1->query($delete);
 			}
 		}
 		$setup_info['addressbook']['currentver'] = '0.9.10pre14';
@@ -435,30 +443,30 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_work', 'char',     array('precision' => 1, 'default' => 'n', 'nullable' => False));
-		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_home', 'char',     array('precision' => 1, 'default' => 'n', 'nullable' => False));
-		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_parcel', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
-		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_postal', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_work', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_home', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_voice', 'char',  array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_msg', 'char',    array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_fax', 'char',    array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_prefer', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_work', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_home', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_voice', 'char',  array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_msg', 'char',    array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_fax', 'char',    array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_prefer', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_work', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_home', 'char',   array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_voice', 'char',  array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_msg', 'char',    array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_fax', 'char',    array('precision' => 1, 'default' => 'n', 'nullable' => False));
- 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_prefer', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
-		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'd_email_work', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
-		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'd_email_home', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
+		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_work',      array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_home',      array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_parcel',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'adr_postal',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_work',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_home',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_voice',   array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_msg',     array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_fax',     array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'a_tel_prefer',  array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_work',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_home',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_voice',   array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_msg',     array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_fax',     array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'b_tel_prefer',  array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_work',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_home',    array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_voice',   array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_msg',     array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_fax',     array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+ 		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'c_tel_prefer',  array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'd_email_work',  array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
+		$phpgw_setup->oProc->AlterColumn('phpgw_addressbook', 'd_email_home',  array('type' => 'char', 'precision' => 1, 'default' => 'n', 'nullable' => False));
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre16';
 		return $setup_info['addressbook']['currentver'];
@@ -476,7 +484,7 @@
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_addressbook', array(
 				'fd' => array(
-					'id' =>                  array('type' => 'auto'),
+					'id' =>                  array('type' => 'auto', 'nullable' => False),
 					'lid' =>                 array('type' => 'varchar', 'precision' => 32),
 					'tid' =>                 array('type' => 'char', 'precision' => 1),
 					'owner' =>               array('type' => 'int', 'precision' => 4),
@@ -570,19 +578,19 @@
  
 		$phpgw_setup->oProc->query("DROP TABLE phpgw_addressbook_old");
  
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_home=''   where tel_home='n'   OR tel_home='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_work=''   where tel_work='n'   OR tel_work='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_cell=''   where tel_cell='n'   OR tel_cell='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_voice=''  where tel_voice='n'  OR tel_voice='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_fax=''    where tel_fax='n'    OR tel_fax='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_car=''    where tel_car='n'    OR tel_car='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_pager=''  where tel_pager='n'  OR tel_pager='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_msg=''    where tel_msg='n'    OR tel_msg='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_bbs=''    where tel_bbs='n'    OR tel_bbs='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_modem=''  where tel_modem='n'  OR tel_modem='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_prefer='' where tel_prefer='n' OR tel_prefer='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_video=''  where tel_video='n'  OR tel_video='y'");
-		$phpgw_setup->oProc->query("update phpgw_addressbook set tel_isdn=''   where tel_isdn='n'   OR tel_isdn='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_home=''   WHERE tel_home='n'   OR tel_home='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_work=''   WHERE tel_work='n'   OR tel_work='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_cell=''   WHERE tel_cell='n'   OR tel_cell='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_voice=''  WHERE tel_voice='n'  OR tel_voice='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_fax=''    WHERE tel_fax='n'    OR tel_fax='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_car=''    WHERE tel_car='n'    OR tel_car='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_pager=''  WHERE tel_pager='n'  OR tel_pager='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_msg=''    WHERE tel_msg='n'    OR tel_msg='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_bbs=''    WHERE tel_bbs='n'    OR tel_bbs='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_modem=''  WHERE tel_modem='n'  OR tel_modem='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_prefer='' WHERE tel_prefer='n' OR tel_prefer='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_video=''  WHERE tel_video='n'  OR tel_video='y'");
+		$phpgw_setup->oProc->query("UPDATE phpgw_addressbook SET tel_isdn=''   WHERE tel_isdn='n'   OR tel_isdn='y'");
 
 		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='mphone'";
 		$phpgw_setup->oProc->query($sql,__LINE__,__FILE__);
@@ -593,7 +601,7 @@
 			$cvalu = $phpgw_setup->oProc->f('contact_value');
 			if ($cvalu)
 			{
-				$update = "UPDATE phpgw_addressbook set tel_cell='" . $cvalu . "' WHERE id=" . $cid;
+				$update = "UPDATE phpgw_addressbook SET tel_cell='" . $cvalu . "' WHERE id=" . $cid;
 				$db1->query($update);
 				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='mphone'";
 				$db1->query($delete);
