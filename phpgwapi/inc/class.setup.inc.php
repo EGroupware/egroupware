@@ -103,7 +103,7 @@
 			{
 				$this->set_cookiedomain();
 			}
-			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain); 
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
 		}
 
 		/*!
@@ -284,7 +284,7 @@
 		function checkip($remoteip='')
 		{
 			//echo "<p>setup::checkip($remoteip) against setup_acl='".$GLOBALS['phpgw_info']['server']['setup_acl']."'</p>\n";
-			$allowed_ips = explode(',',$GLOBALS['phpgw_info']['server']['setup_acl']);
+			$allowed_ips = explode(',',@$GLOBALS['phpgw_info']['server']['setup_acl']);
 			if(empty($GLOBALS['phpgw_info']['server']['setup_acl']) || !is_array($allowed_ips))
 			{
 				return True;	// no test
