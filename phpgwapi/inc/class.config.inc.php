@@ -57,6 +57,10 @@
 			{
 				$this->db->lock('phpgw_config');
 				$this->db->query("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
+				if($this->appname == 'phpgwapi')
+				{
+					$this->db->query("delete from phpgw_app_sessions where sessionid = '0' and loginid = '0' and app = '".$this->appname."' and location = 'config'",__LINE__,__FILE__);
+				}
 				while (list($name,$value) = each($config_data))
 				{
 					$name  = addslashes($name);
