@@ -35,77 +35,16 @@
 
 	$this = CreateObject("phpgwapi.contacts");
 
- 	$extrafields = array(
-		"ophone"   => "ophone",
-		"address2" => "address2",
-		"address3" => "address3"
-	);
+ 	$extrafields = array("address2" => "address2");
 	$qfields = $this->stock_contact_fields + $extrafields;
 
 	$fieldlist = addressbook_read_entry($ab_id,$qfields);
 	$fields = $fieldlist[0];
 
-	$email        = $fields["email"];
-	$emailtype    = $fields["email_type"]; if (!$emailtype) { $emailtype = 'INTERNET'; }
-	$hemail       = $fields["email_home"]; if (!$hemail) { $hemail = 'none'; }
-	$hemailtype   = $fields["email_home_type"]; if (!$hemailtype) { $hemailtype = 'INTERNET'; }
-	$fullname     = $fields["fn"];
-	$prefix       = $fields["n_prefix"];
+	$emailtype    = $fields["email_type"]; if (!$emailtype) { $fields["email_type"] = 'INTERNET'; }
+	$hemailtype   = $fields["email_home_type"]; if (!$hemailtype) { $fields["email_home_type"] = 'INTERNET'; }
 	$firstname    = $fields["n_given"];
-	$middle       = $fields["n_middle"];
 	$lastname     = $fields["n_family"];
-	$suffix       = $fields["n_suffix"];
-	$title        = $fields["title"];
-	$aphone       = $fields["tel_work"];
-	$bphone       = $fields["tel_home"];
-	$afax         = $fields["tel_fax"];
-	$apager       = $fields["tel_pager"];
-	$amphone      = $fields["tel_cell"];
-	$aisdnphone   = $fields["tel_isdn"];
-	$acarphone    = $fields["tel_car"];
-	$avidphone    = $fields["tel_video"];
-	$amsgphone    = $fields["tel_msg"];
-	$abbsphone    = $fields["tel_bbs"];
-	$amodem       = $fields["tel_modem"];
-	$preferred    = $fields["tel_prefer"];
-	$aophone      = $fields["ophone"];
-
-	// Setup array for display of preferred phone number below
-	while (list($name,$val) = each($this->tel_types)) {
-		if ($name == $preferred) {
-			$pref[$name] .= ';PREF';
-		}
-	}
-
-	$aophone      = $fields["ophone"];
-	$astreet      = $fields["adr_one_street"];
-	$address2     = $fields["address2"];
-	$acity        = $fields["adr_one_locality"];
-	$astate       = $fields["adr_one_region"];
-	$azip         = $fields["adr_one_postalcode"];
-	$acountry     = $fields["adr_one_countryname"];
-	$atype        = strtoupper($fields["adr_one_type"]); if (!empty($atype)) { $atype = ';'.$atype; }
-	$label        = $fields["label"];
-
-	$bstreet      = $fields["adr_two_street"];
-	$bcity        = $fields["adr_two_locality"];
-	$bstate       = $fields["adr_two_region"];
-	$bzip         = $fields["adr_two_postalcode"];
-	$bcountry     = $fields["adr_two_countryname"];
-	$btype        = strtoupper($fields["adr_two_type"]); if (!empty($btype)) { $btype = ';'.$btype; }
-
-	$company      = $fields["org_name"];
-	$dept         = $fields["org_unit"];
-	
-	$bday         = $fields["bday"];
-	$tmp = split("/",$bday); # 12/31/1969 -> 1969-12-31
-	if ($tmp[0]) {
-		$bday = $tmp[2]."-".$tmp[0]."-".$tmp[1];
-	}
-
-	$notes        = ereg_replace("\r\n","=0A",$fields["note"]);
-	$access       = $fields["access"];
-	$url          = $fields["url"];
 
 	if(!$nolname && !$nofname) {
 		/* First name and last must be in the vcard. */
@@ -123,87 +62,23 @@
 
 		header("Content-Disposition: attachment; filename=$filename");
 
-		printf("BEGIN:VCARD\r\n");
-		printf("X-PHPGROUPWARE-FILE-AS:phpGroupWare.org\r\n");
-		printf("N:%s;%s\r\n", $lastname, $firstname);
-		if (!$fullname) { printf("FN:%s %s\r\n", $firstname, $lastname); }
-		else            { printf("FN:%s\r\n", $fullname); }
-
-		
-		if($title != "") /* Title */
-			printf("TITLE:%s\r\n",$title);
-
-		// 'A' grouping - work stuff
-		if($email != "") /* E-mail */
-			printf("A.EMAIL;%s:%s\r\n", $emailtype,$email);
-
-		if($aphone != "")     printf("A.TEL%s;WORK:%s\r\n",  $pref['work'],  $aphone);
-		if($amphone != "")    printf("A.TEL%s;CELL:%s\r\n",  $pref['cell'],  $amphone);
-		if($afax != "")       printf("A.TEL%s;FAX:%s\r\n",   $pref['fax'],   $afax);
-		if($apager != "")     printf("A.TEL%s;PAGER:%s\r\n", $pref['pager'], $apager);
-		if($amsgphone != "")  printf("A.TEL%s;MSG:%s\r\n",   $pref['msg'],   $amsgphone);
-		if($acarphone != "")  printf("A.TEL%s;CAR:%s\r\n",   $pref['car'],   $acarphone);
-		if($abbs != "")       printf("A.TEL%s;BBS:%s\r\n",   $pref['fax'],   $afax);
-		if($amodem != "")     printf("A.TEL%s;MODEM:%s\r\n", $pref['modem'], $amodem);
-		if($aisdnphone != "") printf("A.TEL%s;ISDN:%s\r\n",  $pref['isdn'],  $aisdnphone);
-		if($avidphone != "")  printf("A.TEL%s;VIDEO:%s\r\n", $pref['video'], $avidphone);
-
-		if($ophone != "") $NOTES .= "Other Phone: " .  $ophone . "\r\n";
-
-		if($astreet != "" || /* Business Street Line 1 */
-			$address2 != "" || /* Business Street Line 2 */
-			$acity != "" || /* Business City */
-			$astate != "" || /* Business State */
-			$azip != "") {    /* Business Zip */
-			printf("A.ADR%s;WORK:;%s;%s;%s;%s;%s;%s\r\n", $atype,$address2,
-				$astreet,$acity,$astate,$azip,$acountry);
-		}
-		if ($label) {
-			$label = ereg_replace("\r\n","=0D=0A",$label);
-			$label = ereg_replace("\n","=0D=0A",$label);
-			printf("LABEL;WORK;QUOTED-PRINTABLE:%s\n",$label);
-		} else {
-			if ($address2 && $astreet && $acity && $astate && $azip && $acountry) {
-				printf("LABEL;WORK;QUOTED-PRINTABLE:%s=0D=0A%s=0D=0A%s,%s  %s=0D=0A%s\r\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
+		// create vcard object
+		$vcard = CreateObject("phpgwapi.vcard");
+		// set translation variable
+		$myexport = $vcard->export;
+		// check that each $fields exists in the export array and
+		// set a new array to equal the translation and original value
+		while( list($name,$value) = each($fields) ) {
+			if ($myexport[$name] && ($value != "") ) {
+				//echo '<br>'.$name."=".$fields[$name]."\n";
+				$buffer[$myexport[$name]] = $value;
 			}
 		}
-		// end 'A' grouping
-
-		// 'B' Grouping - home stuff
-		if($hemail != "") /* Home E-mail */
-			printf("B.EMAIL;%s:%s\r\n", $hemailtype,$hemail);
-		if($bphone != "") /* Home Phone */
-			printf("B.TEL%s;HOME:%s\r\n", $pref['home'],$bphone);
-
-		if(	$bstreet != "" || /* Home Street */
-			$bcity != "" || /* Home City */
-			$bstate != "" || /* Home State */
-			$bzip != "") {    /* Home Zip */
-			printf("B.ADR%s;HOME:;;%s;%s;%s;%s;%s\r\n", $btype,$bstreet,
-				$bcity,$bstate,$bzip,$bcountry);
-		}
-		if ($bstreet && $bcity && $bstate && $bzip && $bcountry) {
-			printf("LABEL;HOME;QUOTED-PRINTABLE:%s=0D=0A%s=0D=0A%s=0D=0A%s=0D=0A%s\n",$bstreet,$bcity,$bstate,$bzip,$bcountry);
-		}
-
-		if ($url) {
-			printf("URL:%s\r\n",$url);
-		}
-		// end 'B' grouping
-
-		if($bday != "" && $bday != "//") /* Birthday */
-			printf("BDAY:%s\r\n", $bday); /* This is not the right format. */
-		if($company != "") /* Company Name (Really isn't company_name?) */
-			printf("ORG:%s %s\r\n", $company, $dept);
-		if($notes != "") /* Notes */
-			$notes = ereg_replace("\n","=0D=0A",$notes);
-			$NOTES .= $notes;
-
-		if($NOTES != "") /* All of the notes. */
-			printf("NOTE;QUOTED-PRINTABLE:%s\n", $NOTES);
-		/* End of Stuff. */
-		printf("VERSION:2.1\r\n");
-		printf("END:VCARD\r\n");
+		// create a vcard from this translated array
+	    $entry = $vcard->out($buffer);
+		// print it
+		echo $entry;
+		$phpgw->common->exit;
 	} /* !nolname && !nofname */
 
 	if($nofname) {
