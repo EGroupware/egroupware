@@ -86,6 +86,8 @@
 	{
 		global $t,$prefs;
 
+		$charSet = $GLOBALS['phpgw']->translation->charset();
+
 		$_appname = check_app();
 		if (is_forced_value($_appname,$name))
 		{
@@ -120,7 +122,8 @@
 			}
 			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$def_text.'</font></i>' : '';
 		}
-		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\" value=\"".htmlentities($default)."\"$options>$def_text");
+		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\"value=\"".
+			htmlentities($default,ENT_COMPAT,$charSet)."\"$options>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
@@ -279,6 +282,8 @@
 	function create_text_area($label,$name,$rows,$cols,$help='',$default='',$run_lang=True)
 	{
 		global $t,$prefs,$notifys;
+		
+		$charSet = $GLOBALS['phpgw']->translation->charset();
 
 		$_appname = check_app();
 		if (is_forced_value($_appname,$name))
@@ -301,7 +306,8 @@
 			}
 			$def_text = $def_text != '' ? '<br><i><font size="-1"><b>'.lang('default').'</b>:<br>'.nl2br($def_text).'</font></i>' : '';
 		}
-		$t->set_var('row_value',"<textarea rows=\"$rows\" cols=\"$cols\" name=\"${GLOBALS[type]}[$name]\">".htmlentities($default)."</textarea>$def_text");
+		$t->set_var('row_value',"<textarea rows=\"$rows\" cols=\"$cols\" name=\"${GLOBALS[type]}[$name]\">".
+			htmlentities($default,ENT_COMPAT,$charSet)."</textarea>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
@@ -489,7 +495,7 @@
 			$prefs = &$GLOBALS['phpgw']->preferences->forced[check_app()]; 
 			break;
 		case 'default': 
-			$prefs = &$GLOBALS['phpgw']->preferences->default[check_app()]; 
+			$prefs = &$GLOBALS['phpgw']->preferences->default[check_app()];
 			break;
 		default:
 			$prefs = &$GLOBALS['phpgw']->preferences->user[check_app()];
