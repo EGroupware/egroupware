@@ -23,6 +23,7 @@ address book - view	addressbook	en	Address book - view
 addressbook	common	en	Addressbook
 addressbook preferences	common	en	Addressbook preferences
 addsub	todo	en	AddSub
+addvcard	common	en	Add VCard
 admin	common	en	Admin
 administration	common	en	Administration
 all	transy	en	All
@@ -420,6 +421,7 @@ user groups	admin	en	User groups
 username	login	en	Username
 users	common	en	users
 usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
+vcard	common	en	VCard
 view	common	en	View
 view access log	admin	en	View Access Log
 view sessions	admin	en	View sessions
