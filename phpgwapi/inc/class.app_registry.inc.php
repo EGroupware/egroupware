@@ -218,7 +218,42 @@
 		{
 			if(is_object($this->is))
 			{
-				return $this->is->send('system.package_app_byid',$app_id,$this->is->server['server_url']);
+				$application = $this->is->send('system.package_app_byid',$app_id,$this->is->server['server_url']);
+
+// comment from here down to stop the actual install
+				// This is where I need to install the application
+				$sep = filesystem_separator();
+				@reset($application);
+				list($appid,$app_info) = each($application);
+				$app_name = $app_info['name'];
+
+				$basedir = PHPGW_SERVER_ROOT.$sep.$app_name;
+				@mkdir($basedir);
+
+				while($application && list($filename,$file_content) = each($application))
+				{
+					$long_filename = $basedir.$sep.$filename;
+					// This will be dangerous to do
+					$directory = dirname($long_filename);
+					if(!is_dir($directory))
+					{
+						$long_dir = $long_filename;
+						$pos_slash = pos(' '.$long_dir,$sep)
+						while($pos_slash)
+						{
+							$short_dir = substr($long_dir,0,$pos_slash - 1);
+							$long_dir = str_replace($short_dir.$sep,'',$long_dir);
+							@mkdir($short_dir,770);
+							$pos_slash = pos(' '.$long_dir,$sep)
+						}
+					}
+					$fp=fopen($long_filename,'wb');
+					fwrite($fp,base64_decode($file_content));
+					fclose($fp);
+				}
+// Comment above to stop the actual install
+				@reset($application);
+				return $application;
 			}
 			else
 			{
@@ -314,8 +349,8 @@
 
 		function package_file($filename)
 		{
-			$fp=fopen($filename,'rt');
-			$packed_file = CreateObject('phpgwapi.xmlrpcval',fread($fp,filesize($filename)),'base64');
+			$fp=fopen($filename,'rb');
+			$packed_file = CreateObject('phpgwapi.xmlrpcval',base64_encode(fread($fp,filesize($filename))),'base64');
 			fclose($fp);
 			return $packed_file;
 		}
@@ -354,14 +389,29 @@
 
 		function package_app_byid($appid)
 		{
-			$this->db->query('SELECT app_name FROM phpgw_applications WHERE app_id='.$appid,__LINE__,__FILE__);
+			// Need to find a way to validate that the value in this string is an
+			// app_id, if not, then it is an app_name
+			if(is_int($appid) && $appid)
+			{
+			}
+			$this->db->query('SELECT * FROM phpgw_applications WHERE app_id='.$appid,__LINE__,__FILE__);
 			if(!$this->db->num_rows())
 			{
 				return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',False,'boolean'),'boolean');
 			}
-			$this->db->next_record();
-			$path_prefix = PHPGW_SERVER_ROOT.filesystem_separator().$this->db->f('app_name');
 			$this->dir_file = Array();
+			$this->db->next_record();
+			$this->dir_file[$appid] = CreateObject('phpgwapi.xmlrpcval',
+				Array(
+					'id'      => CreateObject('phpgwapi.xmlrpcval',$appid,'int'),
+					'name'    => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_name'),'string'),
+					'title'   => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_title'),'string'),
+					'version' => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_version'),'string'),
+					'tables'  => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_tables'),'string')
+				),
+				'struct'
+			);
+			$path_prefix = PHPGW_SERVER_ROOT.filesystem_separator().$this->db->f('app_name');
 			$this->pack_dir($path_prefix,$this->db->f('app_name'));
 			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->dir_file,'struct'));
 		}
