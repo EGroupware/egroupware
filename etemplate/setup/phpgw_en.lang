@@ -1,11 +1,13 @@
-%s disabled	etemplate	en	%s disabled
+	etemplate	en
+%s disabled	etemplate	en	%s Disabled
 %s needed	etemplate	en	%s needed
 %s no transl.	etemplate	en	%s No Transl.
-%s notranslation	etemplate	en	%s noTranslation
+%s notranslation	etemplate	en	%s NoTranslation
 %s onchange	etemplate	en	%s onChange
-%s readonly	etemplate	en	%s readonly
+%s readonly	etemplate	en	%s Readonly
 ../../developer_tools/templates/default/images/navbar.gif	etemplate	en	../../developer_tools/templates/default/images/navbar.gif
->|<	etemplate	en	>|<
+@help	etemplate	en	@help
+@label	etemplate	en	@label
 add column	etemplate	en	Add Column
 add table	etemplate	en	Add Table
 align	etemplate	en	Align
@@ -18,12 +20,15 @@ check if content should only be displayed but not altered (the content is not se
 check if field has to be filled by user	etemplate	en	check if field has to be filled by user
 checkbox	etemplate	en	Checkbox
 class	etemplate	en	class
+class, valign	etemplate	en	class, Valign
 columnname	etemplate	en	ColumnName
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	en	CSS-styles
 date	etemplate	en	Date
+datefield	etemplate	en	Datefield
+day	etemplate	en	Day
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
 db-tools	etemplate	en	DB-Tools
 default	etemplate	en	Default
@@ -54,17 +59,16 @@ enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
-error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error: writing file (no write-permission for the webserver) !!!
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
-file writen	etemplate	en	File writen
 floating point	etemplate	en	Floating Point
 foreign key	etemplate	en	Foreign Key
 group/-user	etemplate	en	Group/-User
 height	etemplate	en	Height
 height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
 help	etemplate	en	Help
+hier kommt text rein	etemplate	en	Hier kommt text rein
 horizontal rule	etemplate	en	Horizontal Rule
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	en	Image
@@ -89,24 +93,24 @@ language-short (eg. 'en' for english) for language-dependent template ('' reads 
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
+month	etemplate	en	Month
 name	etemplate	en	Name
 name of other table where column is a key from	etemplate	en	name of other table where column is a key from
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	en	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
 name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
-navbar.gif	etemplate	en	navbar.gif
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
-new table created	etemplate	en	New table created
 no	etemplate	en	No
-not found !!!	etemplate	en	Not found !!!
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 only an other version found !!!	etemplate	en	only an other Version found !!!
-please enter table-name first !!!	etemplate	en	Please enter table-name first !!!
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
+prozente	etemplate	en	Prozente
+put a date in here	etemplate	en	Put a date in here
+put a percentage here	etemplate	en	put a percentage here
 radiobutton	etemplate	en	Radiobutton
 raw	etemplate	en	Raw
 read	etemplate	en	Read
@@ -124,7 +128,6 @@ scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
-select an app first !!!	etemplate	en	Select an app first !!!
 select an application	etemplate	en	Select an application
 select an table of the application	etemplate	en	Select an table of the application
 select cathegory	etemplate	en	Select Cathegory
@@ -132,7 +135,6 @@ select country	etemplate	en	Select Country
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
 select if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	select if content should only be displayed but not altered (the content is not send back then!)
 select if label and other content (depending on fieldtype) should not be translated	etemplate	en	select if label and other content (depending on fieldtype) should not be translated
-select one ...	etemplate	en	Select one ...
 select percentage	etemplate	en	Select Percentage
 select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
@@ -150,9 +152,10 @@ tablename	etemplate	en	TableName
 template	etemplate	en	Template
 template deleted	etemplate	en	Template deleted
 template saved	etemplate	en	Template saved
-test.gif	etemplate	en	test.gif
 text	etemplate	en	Text
 textarea	etemplate	en	Textarea
+textfeld: 	etemplate	en	Textfeld: 
+this is a datefield	etemplate	en	This is a DateField
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
 type	etemplate	en	Type
@@ -167,10 +170,13 @@ width	etemplate	en	Width
 width of column (in percent or pixel)	etemplate	en	width of column (in percent or pixel)
 width, height and border-line-thickness of the table / template	etemplate	en	width, height and border-line-thickness of the table / template
 width, height, border	etemplate	en	Width, Height, Border
-width, height, border, class	etemplate	en	Width, Height, Border, class
+width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Height, Border, class, Cellspacing, Cellpadding
+width, height, border, class, spacing, padding	etemplate	en	Width, Height, Border, class, Spacing, Padding
 width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
+width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag), 	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag), 
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
 write langfile	etemplate	en	Write Langfile
 write tables	etemplate	en	Write Tables
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
+year	etemplate	en	Year
 yes	etemplate	en	Yes
