@@ -1,13 +1,15 @@
 <?php
 	/**************************************************************************\
 	* phpGroupWare API - Accounts manager for LDAP                             *
-	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
-	* and Lars Kneschke <lkneschke@phpgw.de>                                   *
+	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
+	*        and Lars Kneschke <lkneschke@phpgw.de>                            *
+	*        and Bettina Gille <ceb@phpgroupware.org>                          *
 	* View and manipulate account records using LDAP                           *
-	* Copyright (C) 2000 - 2002 Joseph Engo                                    *
+	* Copyright (C) 2000 - 2002 Joseph Engo, Lars Kneschke                     *
+	* Copyright (C) 2003 Lars Kneschke, Bettina Gille                          *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* http://www.phpgroupware.org                                              * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

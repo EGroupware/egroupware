@@ -2,14 +2,15 @@
 	/**************************************************************************\
 	* phpGroupWare API - Commononly used functions                             *
 	* Written by Dan Kuykendall <seek3r@phpgroupware.org>                      *
-	* and Joseph Engo <jengo@phpgroupware.org>                                 *
-	* and Mark Peters <skeeter@phpgroupware.org>                               *
-	* and Bettina Gille [ceb@phpgroupware.org]                                 * 
+	*        and Joseph Engo <jengo@phpgroupware.org>                          *
+	*        and Mark Peters <skeeter@phpgroupware.org>                        *
+	*        and Bettina Gille [ceb@phpgroupware.org]                          *
 	* Commononly used functions by phpGroupWare developers                     *
-	* Copyright (C) 2000 - 2003 Dan Kuykendall                                 *
+	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	* Copyright (C) 2002, 2003 Dan Kuykendall, Bettina Gille                   *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* http://www.phpgroupware.org                                              * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
