@@ -111,6 +111,11 @@
 
 			ldap_modify($ds, $allValues[0]["dn"], $entry);
 			#print ldap_error($ds);
+			
+			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
+				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
+				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+
 		}
 
 		function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
