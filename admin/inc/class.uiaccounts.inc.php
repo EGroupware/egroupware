@@ -916,8 +916,8 @@
 			$p->set_file(Array('edit' => 'group_form.tpl'));
 			$p->set_block('edit','select');
 			$p->set_block('edit','popwin');
-
-			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id'],'u');
+//fix from Maanus 280105			
+			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 
 			if (!is_object($GLOBALS['phpgw']->uiaccountsel))
 			{
@@ -1020,6 +1020,7 @@
 				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
 			}
 			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
+			
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -1038,6 +1039,9 @@
 			$t->set_block('account','form_buttons_','form_buttons_');
 			$t->set_block('account','link_row','link_row');
 
+			$theme = $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'];			
+			$t->set_var('icon_create_edit', '<img src="'. $GLOBALS['phpgw_info']['server']['webserver_url'] .'/admin/templates/'.$theme.'/images/useradm.gif">');
+			
 			print_debug('Type : '.gettype($_userData).'<br>_userData(size) = "'.$_userData.'"('.strlen($_userData).')');
 			if (is_array($_userData))
 			{
@@ -1086,26 +1090,26 @@
 			}
 
 			$var = Array(
-				'form_action'    => $GLOBALS['phpgw']->link('/index.php',$page_params),
-				'error_messages' => (!$_errors?'':'<center>'.$GLOBALS['phpgw']->common->error_list($_errors).'</center>'),
-				'th_bg'          => $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'tr_color1'      => $GLOBALS['phpgw_info']['theme']['row_on'],
-				'tr_color2'      => $GLOBALS['phpgw_info']['theme']['row_off'],
-				'lang_action'    => ($_account_id?lang('Edit user account'):lang('Add new account')),
-				'lang_loginid'   => lang('LoginID'),
-				'lang_account_active' => lang('Account active'),
-				'lang_email'     => lang('email'),
-				'lang_password'  => lang('Password'),
+				'form_action'    		=> $GLOBALS['phpgw']->link('/index.php',$page_params),
+				'error_messages' 		=> (!$_errors?'':'<center>'.$GLOBALS['phpgw']->common->error_list($_errors).'</center>'),
+				'th_bg'          		=> $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'tr_color1'      		=> $GLOBALS['phpgw_info']['theme']['row_on'],
+				'tr_color2'      		=> $GLOBALS['phpgw_info']['theme']['row_off'],
+				'lang_action'    		=> ($_account_id?lang('Edit user account'):lang('Add new account')),
+				'lang_loginid'   		=> lang('LoginID'),
+				'lang_account_active' 	=> lang('Account active'),
+				'lang_email'     		=> lang('email'),
+				'lang_password'  		=> lang('Password'),
 				'lang_reenter_password' => lang('Re-Enter Password'),
-				'lang_lastname'  => lang('Last Name'),
-				'lang_groups'    => lang('Groups'),
+				'lang_lastname'  		=> lang('Last Name'),
+				'lang_groups'    		=> lang('Groups'),
 				'lang_primary_group'    => lang('primary Group'),
-				'lang_expires'   => lang('Expires'),
-				'lang_firstname' => lang('First Name'),
-				'lang_anonymous' => lang('Anonymous User (not shown in list sessions)'),
-				'lang_changepassword' => lang('Can change password'),
-				'lang_button'    => ($_account_id?lang('Save'):lang('Add'))
-			/* 'lang_file_space' => lang('File Space') */
+				'lang_expires'   		=> lang('Expires'),
+				'lang_firstname' 		=> lang('First Name'),
+				'lang_anonymous' 		=> lang('Anonymous User (not shown in list sessions)'),
+				'lang_changepassword' 	=> lang('Can change password'),
+				'lang_button'    		=> ($_account_id?lang('Save'):lang('Add'))
+			/* 'lang_file_space' 		=> lang('File Space') */
 			);
 			$t->set_var($var);
 			$t->parse('form_buttons','form_buttons_',True);
@@ -1113,9 +1117,7 @@
 			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes']) {
 				$lang_homedir = lang('home directory');
 				$lang_shell = lang('login shell');
-				$homedirectory = '<input name="homedirectory" value="'
-					. ($_account_id?$userData['homedirectory']:$GLOBALS['phpgw_info']['server']['ldap_account_home'].$account_lid)
-					. '">';
+				$homedirectory = '<input name="homedirectory" value="'. ($_account_id?$userData['homedirectory']:$GLOBALS['phpgw_info']['server']['ldap_account_home'].$account_lid).'">';
 				$loginshell = '<input name="loginshell" value="'
 					. ($_account_id?$userData['loginshell']:$GLOBALS['phpgw_info']['server']['ldap_account_shell'])
 					. '">';
@@ -1164,15 +1166,15 @@
 				}
 			}
 			$var = Array(
-				'input_expires' => $jscal->input('expires',$userData['expires']<0?'':($userData['expires']?$userData['expires']:time()+(60*60*24*7))),
-				'lang_never'    => lang('Never'),
-				'account_lid'   => $accountPrefix.'<input name="account_lid" value="' . $userData['account_lid'] . '">',
-				'lang_homedir'  => $lang_homedir,
-				'lang_shell'    => $lang_shell,
-				'homedirectory' => $homedirectory,
-				'loginshell'    => $loginshell,
-				'anonymous'     => '<input type="checkbox" name="anonymous" value="1"'.($userData['anonymous'] ? ' checked' : '').'>',
-				'changepassword'=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
+				'input_expires' 	=> $jscal->input('expires',$userData['expires']<0?'':($userData['expires']?$userData['expires']:time()+(60*60*24*7))),
+				'lang_never'    	=> lang('Never'),
+				'account_lid'   	=> $accountPrefix.'<input name="account_lid" value="' . $userData['account_lid'] . '">',
+				'lang_homedir'  	=> $lang_homedir,
+				'lang_shell'    	=> $lang_shell,
+				'homedirectory' 	=> $homedirectory,
+				'loginshell'    	=> $loginshell,
+				'anonymous'     	=> '<input type="checkbox" name="anonymous" value="1"'.($userData['anonymous'] ? ' checked' : '').'>',
+				'changepassword'	=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
 				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
 				'account_firstname' => '<input name="account_firstname" value="' . $userData['firstname'] . '">',
 				'account_lastname'  => '<input name="account_lastname" value="' . $userData['lastname'] . '">',
@@ -1206,8 +1208,7 @@
 					/* print  
 					"Los1:".$userData["account_id"].$userGroups[$i]['account_id']." :  
 					".$value['account_id']."<br>"; */
-					if (@$userGroups[$i]['account_id'] ==  
-					$value['account_id'])
+					if (@$userGroups[$i]['account_id'] ==  $value['account_id'])
 					{
 						$groups_select .= ' checked';
 					}
@@ -1269,7 +1270,7 @@
 
 			$var = Array(
 				'groups_select'
-				=> '<div style="overflow:auto; height:100px;width:150px>"' .  
+				=> '<div id="groupselector">' .  
 				"\n".$groups_select. '</div>' . "\n",
 				'primary_group_select'
 				=> '<select  
