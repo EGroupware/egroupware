@@ -1,4 +1,3 @@
-<!-- $Id$ -->
 <center>
 <table border="0" cellspacing="2" cellpadding="2">
  <tr>
@@ -21,36 +20,32 @@
  <input type="text" name="query">&nbsp;<input type="submit" name="search" value="{lang_search}"></form></td>
  </tr>
   <tr bgcolor="{th_bg}">
-   <td width=16% bgcolor="{th_bg}">{sort_field}</td>
-   <td width=8% bgcolor="{th_bg}" align="center">{lang_edit}</td>
-   <td width=8% bgcolor="{th_bg}" align="center">{lang_delete}</td>
+   <td width="16%" bgcolor="{th_bg}">{sort_field}</td>
+   <td width="8%"  bgcolor="{th_bg}" align="center">{lang_edit}</td>
+   <td width="8%"  bgcolor="{th_bg}" align="center">{lang_delete}</td>
   </tr>
 
 <!-- BEGIN field_list -->
-
   <tr bgcolor="{tr_color}">
    <td>{cfield}</td>
    <td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
-   <td align="center"><a href="{delete}">{lang_delete_entry}</td>  
+   <td align="center"><a href="{delete}">{lang_delete_entry}</a></td>  
 </tr>
-
 <!-- END field_list -->  
 
-<!-- BEGINN add   -->
-
+<!-- BEGIN add   -->
 <tr valign="bottom">
   <td>
      <form method="POST" action="{add_action}">
       <input type="submit" name="add" value="{lang_add}"></form>
-    </td>
-    </tr>
+  </td>
+</tr>
 <tr valign="bottom">
   <td>
      <form method="POST" action="{doneurl}">
       <input type="submit" name="done" value="{lang_done}"></form>
-    </td>
-   </tr>
-
+  </td>
+</tr>
 <!-- END add -->
 
 </table>
