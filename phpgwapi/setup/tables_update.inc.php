@@ -48,10 +48,32 @@
 	$test[] = '0.9.14.002';
 	function phpgwapi_upgrade0_9_14_002()
 	{
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.001';
+		// this is the 0.9.15.001 update
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('lang','phpgw_lang');
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('languages','phpgw_languages');
+
+		// 0.9.15.002 are already included in 0.9.14.002
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.003';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.14.500';
+	function phpgwapi_upgrade0_9_14_500()
+	{
+		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
+		// as 0.9.15.xxx are already used in HEAD
+		
+		// this is the 0.9.15.001 update
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('lang','phpgw_lang');
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('languages','phpgw_languages');
+
+		// 0.9.15.002/3/4 are already included in 0.9.14.500
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.005';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+	
 	$test[] = '0.9.15.001';
 	function phpgwapi_upgrade0_9_15_001()
 	{
@@ -127,8 +149,6 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
-
-
 	$test[] = '0.9.15.006';
 	function phpgwapi_upgrade0_9_15_006()
 	{
@@ -179,7 +199,6 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.007';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-
 
 	$test[] = '0.9.15.007';
 	function phpgwapi_upgrade0_9_15_007()
