@@ -38,9 +38,9 @@
 	Syntax: CreateObject('app.class', 'constructor_params'); <br>
 	Example1: $phpgw->acl = CreateObject('phpgwapi.acl');
 	@param $classname name of class
-	@param $constructor_param constructor parameter
+	@param $p1-$p16 class parameters (all optional)
 	*/
-	function CreateObject($classname, $constructor_param = '')
+	function CreateObject($classname, $p1='',$p2='',$p3='',$p4='',$p5='',$p6='',$p7='',$p8='',$p9='',$p10='',$p11='',$p12='',$p13='',$p14='',$p15='',$p16='')
 	{
 		global $phpgw, $phpgw_info, $phpgw_domain;
 		$classpart = explode (".", $classname);
@@ -52,20 +52,20 @@
 			$phpgw_info['flags']['included_classes'][$classname] = True;   
 			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
-		if ($constructor_param == '')
+		if ($p1 == '')
 		{
 			$obj = new $classname;
 		}
 		else
 		{
-			$obj = new $classname($constructor_param);
+			$obj = new $classname($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
 		}
 		return $obj;
 	}
-		/*!
-		@function lang
-		@abstract function to deal with multilanguage support
-		*/
+	/*!
+	@function lang
+	@abstract function to deal with multilanguage support
+	*/
 	function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
 	{
 		global $phpgw;
