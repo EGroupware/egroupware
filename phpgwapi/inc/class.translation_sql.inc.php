@@ -63,7 +63,7 @@
 			// load multi-byte-string-extension if needed, and set its internal encodeing to your system_charset
 			if ($this->system_charset && substr($this->system_charset,0,3) != 'iso')
 			{
-				if ($this->mbstring = extension_loaded('mbstring') || dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX))
+				if ($this->mbstring = extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX))
 				{
 					ini_set('mbstring.internal_encoding',$this->system_charset);
 					if (ini_get('mbstring.func_overload') < 4)
@@ -427,7 +427,11 @@
 			{
 				echo '<br>get_langs(): checking db...' . "\n";
 			}
-			return array_keys($this->get_installed_langs());
+			if (!$this->langs)
+			{
+				$this->get_installed_langs();
+			}
+			return $this->langs ? array_keys($this->langs) : array();
 		}
 
 		/*!
