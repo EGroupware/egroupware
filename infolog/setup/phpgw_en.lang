@@ -60,3 +60,4 @@ startdate	infolog	en	Startdate
 enddate	infolog	en	Enddate
 no - cancel	infolog	de	No - Cancel
 yes - delete	infolog	de	Yes - Delete
+no entries found, try again ...	infolog	de	no entries found, try again ...

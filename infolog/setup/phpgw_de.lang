@@ -50,7 +50,6 @@ datecreated	infolog	de	Erstellt am
 you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum angegeben
 you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
 owner	infolog	de	Erstellt von
-no entrys found for %1, try again ...	infolog	de	Keine Einträge für %1 gefunden, nochmal versuchen ...
 search for:	infolog	de	Suchen nach:
 project	infolog	de	Projekt
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
@@ -72,3 +71,9 @@ download	infolog	de	Datei laden
 csv-import	infolog	de	CSV-Import
 use Button to search for Address	infolog	de	Button zum Suchen der Adresse verwenden
 use Button to search for Project	infolog	de	Button zum Suchen des Projekts verwenden
+Description can not exceed 8000 characters in length	infolog	de	Beschreibung darf nicht länger als 8000 Zeichen sein
+You must enter a subject or a description	infolog	de	Sie müssen einen Titel oder eine Beschreibung eingeben
+You have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
+You have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum eingegeben
+Ending date can not be before start date	infolog	de	Das Enddatum kann nicht vor dem Startdatum liegen
+no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
