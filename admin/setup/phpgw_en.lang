@@ -135,4 +135,4 @@ would you like to show each application's upgrade status ?	admin	en	Would you li
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
 you must enter an application name and title.	admin	en	You must enter an application name and title.
 you must select a file type	admin	en	You must select a file type
-you will need to remove the subcategories before you can delete the parent category	admin	en	You will need to remove the subcategories before you can delete the parent category !
+you will need to remove the subcategories before you can delete this category	admin	en	You will need to remove the subcategories before you can delete this category !

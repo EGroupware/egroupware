@@ -69,7 +69,7 @@ the login and password can not be the same	admin	de	Login und Passwort dürfen ni
 the two passwords are not the same	admin	de	Die beiden Pa&szlig;w&ouml;rter stimmen nicht &uuml;berein
 they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
 This category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig als &uuml;bergeordnete Kategorie benutzt.
-You will need to remove the subcategories before you can delete the parent category	admin	de	Sie m&uuml;ssen erst die Unterkategorien l&ouml;schen befor Sie die &Uuml;bergeordnete Kategorie l&ouml;schen k&ouml;nnen !
+You will need to remove the subcategories before you can delete this category	admin	de	Sie m&uuml;ssen erst die Unterkategorien l&ouml;schen befor Sie diese Kategorie l&ouml;schen k&ouml;nnen !
 total records	admin	de	Anzahl Datensätze insgesamt
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
