@@ -40,14 +40,6 @@
 			'date'	=> '', 			// Datefield, size='' timestamp or size=format like 'm/d/Y'
 			'select'	=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
 												// if size > 1 then multiple selections, size lines showed
-			'select-percent' => 'Select Percentage',
-			'select-priority' => 'Select Priority',
-			'select-access' => 'Select Access',
-			'select-country' => 'Select Country',
-			'select-state' => 'Select State',		// US-states
-			'select-cat' => 'Select Category',		// Category-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
-			'select-account' => 'Select Account',	// label=accounts(default),groups,both
-																// size: -1=Single+not assigned, 0=Single, >0=Multiple
 			'raw'		=> 'Raw',	// Raw html in $content[$cell['name']]
 			'file' => 'FileUpload'	// show an input type='file', set the local name as ${name}_path
 		);

@@ -26,13 +26,13 @@
 	@example if the user submitts the form. Vor the complete param's see the description of exec.
 	@param $debug enables debug messages: 0=no, 1=calls to show and process_show, 2=content of process_show
 	@param                                3=calls to show_cell OR template- or cell-type name
-	@param $html,$sbox instances of html and sbox2 class used to generate the html
+	@param $html instances of html class used to generate the html
 	*/
 	class etemplate extends boetemplate
 	{
 		var $debug; // 1=calls to show and process_show, 2=content after process_show,
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
-		var $html,$sbox;	// instance of html / sbox2-class
+		var $html;	// instance of html-class
 		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
 
 		/*!
@@ -50,7 +50,6 @@
 				'process_show'	=> True,
 			);
 			$this->html = CreateObject('etemplate.html');	// should  be in the api (older version in infolog)
-			$this->sbox = CreateObject('etemplate.sbox2');	// older version is in the api
 
 			$this->boetemplate($name,$load_via);
 
@@ -342,11 +341,7 @@
 			}
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
-			/*if (strstr($name,'|'))	// extension which uses whole content array
-			{
-				$value = $content;
-			}
-			else*/if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
+			if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
 			{
 				$form_name = $cname == '' ? $name : $cname.'['.$regs[1].']'.$regs[2];
 				eval(str_replace(']',"']",str_replace('[',"['",'$value = $content['.$regs[1].']'.$regs[2].';')));
@@ -372,16 +367,13 @@
 			}
 			$extra_label = True;
 
-			if (!$this->types[$cell['type']] && $this->haveExtension($cell['type'],'pre_process'))
+			list($type,$sub_type) = explode('-',$cell['type']);
+			if ((!$this->types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
 			{
-				$ext_type = $cell['type'];
+				$ext_type = $type;
 				$extra_label = $this->extensionPreProcess($ext_type,$form_name,$value,$cell,$readonlys[$name]);
 
-				/*if (strstr($name,'|'))
-				{
-					$content = $this->complete_array_merge($content,$value);
-				}
-				else*/if (!$regs)
+				if (!$regs)
 				{
 					$content[$name] = $value;	// set result for template
 				}
@@ -417,7 +409,8 @@
 					$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
 				}
 			}
-			switch ($cell['type'])
+			list($type,$sub_type) = explode('-',$cell['type']);
+			switch ($type)
 			{
 				case 'label':		//  size: [[b]old][[i]talic]
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
@@ -455,22 +448,47 @@
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'checkbox':
+					if (!empty($cell['size']))
+					{
+						list($true_val,$false_val,$ro_true,$ro_false) = explode(',',$cell['size']);
+						$value = $value == $true_val;
+					}
+					else
+					{
+						$ro_true = 'x';
+						$ro_false = '';
+					}
 					if ($value)
 					{
 						$options .= ' CHECKED';
 					}
-					$html .= $this->html->input($form_name,'1','CHECKBOX',$options);
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					if ($readonly)
+					{
+						$html .= $value ? $this->html->bold($ro_true) : $ro_false;
+					}
+					else
+					{
+						$html .= $this->html->input($form_name,'1','CHECKBOX',$options);
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = array(
+							'type' => $cell['type'],
+							'values' => $cell['size']
+						);
+					}
 					break;
 				case 'radio':		// size: value if checked
 					if ($value == $cell['size'])
 					{
 						$options .= ' CHECKED';
 					}
-					$html .= $this->html->input($form_name,$cell['size'],'RADIO',$options);
-					if (!$readonly)
+					if ($readonly)
+					{
+						$html .= $value == $cell['size'] ? $this->html->bold('x') : '';
+					}
+					else
+					{
+						$html .= $this->html->input($form_name,$cell['size'],'RADIO',$options);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					}
 					break;
 				case 'button':
 					if ($this->java_script() && $cell['onchange'])
@@ -548,62 +566,47 @@
 					$html .= $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
-					if (isset($sel_options[$name]))
+					if (!empty($cell['sel_options']))
+					{
+						if (!is_array($cell))
+						{
+							$sel_options = array();
+							$opts = explode(',',$cell['sel_options']);
+							while (list(,$opt) = each($opts))
+							{
+								list($k,$v) = explode('=',$opt);
+								$sel_options[$k] = $v;
+							}
+						}
+						else
+						{
+							$sel_options = $cell['sel_options'];
+						}
+					}
+					elseif (isset($sel_options[$name]))
 					{
 						$sel_options = $sel_options[$name];
 					}
 					elseif (isset($sel_options[$org_name]))
 					{
 						$sel_options = $sel_options[$org_name];
-					} elseif (isset($content["options-$name"]))
+					}
+					elseif (isset($content["options-$name"]))
 					{
 						$sel_options = $content["options-$name"];
 					}
-					$html .= $this->sbox->getArrayItem($form_name.'[]',$value,$sel_options,$cell['no_lang'],
-						$options,$cell['size']);
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					break;
-				case 'select-percent':
-					$html .= $this->sbox->getPercentage($form_name,$value,$options);
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					break;
-				case 'select-priority':
-					$html .= $this->sbox->getPriority($form_name,$value,$options);
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					break;
-				case 'select-access':
-					$html .= $this->sbox->getAccessList($form_name,$value,$options);
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					break;
-				case 'select-country':
-					$html .= $this->sbox->getCountry($form_name,$value,$options);
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					break;
-				case 'select-state':
-					$html .= $this->sbox->list_states($form_name,$value);  // no helptext - old Function!!!
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					break;
-				case 'select-cat':
-					$html .= $this->sbox->getCategory($form_name.'[]',$value,$cell['size'] >= 0,
-						False,$cell['size'],$options);
-					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					break;
-				case 'select-account':
-					$type = substr(strstr($cell['size'],','),1);
-					if ($type == '')
+					list($multiple) = explode(',',$cell['size']);
+
+					if ($readonly)
 					{
-						$type = 'accounts';	// default is accounts
+						$html .= $cell['no_lang'] ? $sel_options[$value] : lang($sel_options[$value]);
 					}
-					$html .= $this->sbox->getAccount($form_name.'[]',$value,2,$type,0+$cell['size'],$options);
-					if (!$readonly)
+					else
+					{
+						$html .= $this->html->select($form_name.($multiple > 1 ? '[]' : ''),$value,$sel_options,
+							$cell['no_lang'],$options,$multiple);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					}
 					break;
 				case 'image':
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
@@ -630,7 +633,8 @@
 					}
 					break;
 			}
-			if ($ext_type && !$readonly)	// extension-processing need to be after all other
+			if ($ext_type && !$readonly && // extension-processing need to be after all other and only with diff. name
+				 !isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
 			{
 				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'ext-'.$ext_type;
 			}
@@ -677,14 +681,24 @@
 			}
 			if ($this->debug >= 1 || $this->debug == $this->name && $this->name)
 			{
-				echo "<p>process_show($this->name) start: content ="; _debug_array($GLOBALS['HTTP_POST_VARS']/*$content*/);
+				echo "<p>process_show($this->name) start: content ="; _debug_array($content);
 			}
 			$content_in = $cname ? array($cname => $content) : $content;
 			$content = array();
 			reset($to_process);
 			while (list($form_name,$type) = each($to_process))
 			{
+				if (is_array($type))
+				{
+					$attr = $type;
+					$type = $attr['type'];
+				}
+				else
+				{
+					$attr = array();
+				}
 				$value = $this->get_array($content_in,$form_name);
+				//echo "<p>process_show($this->name) $type: $form_name = '$value'</p>\n";
 				list($type,$sub) = explode('-',$type);
 				switch ($type)
 				{
@@ -712,6 +726,11 @@
 						if (!isset($value))	// checkbox was not checked
 						{
 							$value = 0;			// need to be reported too
+						}
+						if (!empty($attr['values']))
+						{
+							list($true_val,$false_val) = explode(',',$attr['values']);
+							$value = $value ? $true_val : $false_val;
 						}
 						$this->set_array($content,$form_name,$value);
 						break;

@@ -410,7 +410,7 @@
 				if (substr($content['name'],0,9) == 'etemplate')
 				{
 					$m = new editor(False);
-					$additional = $m->messages + $this->etemplate->types + $this->aligns;
+					$additional = $m->messages + $this->etemplate->types + $this->extensions + $this->aligns;
 				}
 				$msg = $this->etemplate->writeLangFile($content['name'],'en',$additional);
 			}
@@ -708,7 +708,21 @@
 				if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
 					 ($ext = $this->etemplate->loadExtension($regs[1].'.'.$app,$this->etemplate)))
 				{
-					$extensions[$regs[1]] = $ext;
+					if (is_array($ext))
+					{
+						if (!is_array($extensions))
+						{
+							$extensions = $ext;
+						}
+						else
+						{
+							$extensions += $ext;
+						}
+					}
+					else
+					{
+						$extensions[$regs[1]] = $ext;
+					}
 				}
 			}
 			return $extensions;

@@ -27,6 +27,51 @@ class html
 		//echo "<p>HTTP_USER_AGENT='$GLOBALS[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
 	}
 
+	/*
+	* Function:		Allows to show and select one item from an array
+	*	Parameters:		$name		string with name of the submitted var which holds the key of the selected item form array
+	*						$key		key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
+	*						$arr		array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
+	*						$no_lang	if !$no_lang send items through lang()
+	*						$options	additional options (e.g. 'multiple')
+	* On submit		$XXX		is the key of the selected item (XXX is the content of $name)
+	* Returns:			string to set for a template or to echo into html page
+	*/
+	function select($name, $key, $arr=0,$no_lang=0,$options='',$multiple=0)
+	{
+		// should be in class common.sbox
+		if (!is_array($arr))
+		{
+			$arr = array('no','yes');
+		}
+		if (0+$multiple > 0)
+		{
+			$options .= ' MULTIPLE SIZE='.(0+$multiple);
+			if (substr($name,-2) != '[]')
+			{
+				$name .= '[]';
+			}
+		}
+		$out = "<select name=\"$name\" $options>\n";
+
+		if (is_array($key))
+		{
+			$key = implode(',',$key);
+		}
+		while (list($k,$text) = each($arr))
+		{
+			$out .= '<option value="'.$k.'"';
+			if($k == $key || strstr(",$key,",",$k,"))
+			{
+				$out .= " SELECTED";
+			}
+			$out .= ">" . ($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
+		}
+		$out .= "</select>\n";
+
+		return $out;
+	}
+
 	function div($content,$options='')
 	{
 		return "<DIV $options>\n$content</DIV>\n";
