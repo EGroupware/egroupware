@@ -51,6 +51,7 @@
 		array('soapstruct'),
 		array('soapstruct')
 	);
+
 	$GLOBALS['server']->add_to_map(
 		'system_logout',
 		array('soapstruct'),
