@@ -51,7 +51,6 @@ main screen message	admin	en	Main screen message
 manager	admin	en	Manager
 metar	admin	en	Metar
 minutes between reloads	admin	en	Minutes between Reloads
-network news	admin	en	Network News
 new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 no matchs found	admin	en	No matchs found

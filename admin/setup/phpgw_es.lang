@@ -10,9 +10,7 @@ applications	admin	es	Aplicaciones
 are you sure you want to delete this account ?	admin	es	Esta seguro de querer borrar esta cuenta ?
 are you sure you want to delete this application ?	admin	es	Seguro de querer borrar esta aplicación ?
 are you sure you want to delete this group ?	admin	es	Esta seguro de querer borrar este grupo ?
-are you sure you want to delete this news site ?	admin	es	Esta seguro de querer borrar este sitio de noticias ?
 are you sure you want to kill this session ?	admin	es	Esta seguro de querer matar esta sesion ?
-base url	admin	es	URL Base
 create group	admin	es	Crear Grupo
 disabled	admin	es	Deshabilitado
 display	admin	es	Mostrar
@@ -28,16 +26,11 @@ kill	admin	es	Matar
 last time read	admin	es	Ultima lectura
 last x logins	admin	es	Ultimos %1 logins
 list of current users	admin	es	Lista de usuarios presentes
-listings displayed	admin	es	Listings Mostrados
 login time	admin	es	Hora de LogOn
 loginid	admin	es	LoginID
 manager	admin	es	Manager
-minutes between reloads	admin	es	Minutos entre recargas
-network news	admin	es	Red de noticias
 new group name	admin	es	Nuevo nombre de grupo
 new password [ leave blank for no change ]	admin	es	Nueva contraseña [ Deje es blanco para NO cambiar ]
-news file	admin	es	Archivo Noticias
-news type	admin	es	Tipo de Noticias
 percent of users that logged out	admin	es	Porcentaje de usuarios que se desloguearon
 permissions	admin	es	Permisos
 permissions this group has	admin	es	Permisos que tiene este grupo
@@ -51,7 +44,6 @@ sorry, the follow users are still a member of the group x	admin	es	Los siguiente
 status	admin	es	Estatus
 submit changes	admin	es	Enviar Cambios
 that loginid has already been taken	admin	es	Ese login ID ya esta siendo utilizado
-that site has already been entered	admin	es	Este sitio ya fue entrado
 the login and password can not be the same	admin	es	El login y la contraseña NO pueden ser iguales
 the two passwords are not the same	admin	es	Las dos contraseñas no son iguales
 they must be removed before you can continue	admin	es	Estos deben ser removidos para poder continuar
@@ -62,12 +54,8 @@ user groups	admin	es	Grupos de usuarios
 view access log	admin	es	Ver log de acceso
 view sessions	admin	es	Ver sesiones
 you must add at least 1 permission to this account	admin	es	Debe agregar por lo menos 1 permiso para esta cuenta.
-you must enter a base url	admin	es	Debe entrar una dirección url base
-you must enter a news url	admin	es	Debe entrar una dirección url de noticias
 you must enter a password	admin	es	Debe entrar una contraseña
 you must enter an application name and title.	admin	es	Debe entrar un nombre y titulo para la aplicación.
-you must enter the number of listings display	admin	es	Debe entrar el numero de elementos listados a mostrar
-you must enter the number of minutes between reload	admin	es	Debe entrar el numero de minutos entre recargas
 you must select a file type	admin	es	Debe seleccionar un tipo de archivo
 change main screen message	admin	es	Cambiar mensaje de la pantalla principal
 notes	admin	es	Notas

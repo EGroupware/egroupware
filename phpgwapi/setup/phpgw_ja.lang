@@ -126,8 +126,6 @@ group has been deleted	common	ja	グループを削除しました。
 group has been updated	common	ja	グループを訂正しました。
 group public	common	ja	所属グループ
 groups	common	ja	グループ
-headline preferences	common	ja	ヘッドライン
-headlines	common	ja	ヘッドライン
 help	common	ja	ヘルプ
 high	common	ja	高
 home	common	ja	ホーム
@@ -160,12 +158,8 @@ monitor	common	ja	監視
 name	common	ja	名前
 new entry added sucessfully	common	ja	新しい項目を追加しました。
 new main category	common	ja	新規メインカテゴリ
-news headlines	common	ja	ニュースヘッドライン
-news reader	common	ja	ニュースリーダー
-newsgroups	common	ja	ニュースグループ
 next	common	ja	次
 next page	common	ja	次ページ
-nntp	common	ja	ネットニュース
 no	common	ja	いいえ
 none	common	ja	なし
 normal	common	ja	標準

@@ -13,9 +13,7 @@ applications	admin	ja	アプリケーション
 are you sure you want to delete this account ?	admin	ja	このアカウントを削除してもよろしいですか。
 are you sure you want to delete this application ?	admin	ja	このアプリケーションを削除してもよろしいですか。
 are you sure you want to delete this group ?	admin	ja	このグループを削除してもよろしいですか。
-are you sure you want to delete this news site ?	admin	ja	このニュースサイトを削除してもよろしいですか。
 are you sure you want to kill this session ?	admin	ja	このセッションを切断してもよろしいですか。
-base url	admin	ja	Base URL
 category description	admin	ja	カテゴリ詳細
 category name	admin	ja	カテゴリ名
 change main screen message	admin	ja	メイン画面メッセージ変更
@@ -38,7 +36,6 @@ forecast zone	admin	ja	天気予報
 fzone	admin	ja	fzone
 global categories	admin	ja	グローバルカテゴリ
 group name	admin	ja	グループ名
-headline sites	admin	ja	ヘッドラインサイト
 hide php information	admin	ja	PHPインフォメーションを閉じる
 home directory	admin	ja	home directory	
 id	admin	ja	ID
@@ -52,7 +49,6 @@ last login from	admin	ja	最終ログインIP
 last time read	admin	ja	Last Time Read
 last x logins	admin	ja	過去 %1 のログイン
 list of current users	admin	ja	ログイン中ユーザ一覧
-listings displayed	admin	ja	一覧表示
 login screen	admin	ja	ログイン画面
 login shell	admin	ja	ログインシェル
 login time	admin	ja	ログイン時間
@@ -61,13 +57,9 @@ main screen message	admin	ja	メイン画面メッセージ
 manager	admin	ja	管理者
 message has been updated	admin	ja	メッセージを変更しました。
 metar	admin	ja	M
-minutes between reloads	admin	ja	更新時間
-network news	admin	ja	購読設定
 never	admin	ja	未
 new group name	admin	ja	新グループ名
 new password [ leave blank for no change ]	admin	ja	新パスワード [ Leave blank for no change ]
-news file	admin	ja	ニュースファイル
-news type	admin	ja	ニュースタイプ
 no matchs found	admin	ja	見つかりません。
 percent of users that logged out	admin	ja	ユーザのログアウト率
 permissions	admin	ja	パーミッション
@@ -91,7 +83,6 @@ status	admin	ja	状態
 submit changes	admin	ja	変更
 table	admin	ja	テーブル
 that loginid has already been taken	admin	ja	ログインIDは既に登録済みです。
-that site has already been entered	admin	ja	サイトは既に存在しています。
 the login and password can not be the same	admin	ja	ログインIDとパスワードが同じです。
 they must be removed before you can continue	admin	ja	削除できません。
 total records	admin	ja	合計
@@ -105,14 +96,9 @@ weather center	admin	ja	お天気センター
 who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの記録を転送するユーザを選択してください。
 you must add at least 1 permission or group to this account	admin	ja	少なくとも１つの権限かグループを指定してください。
 you must add at least 1 permission to this account	admin	ja	利用可能アプリケーションを指定してください。
-you must enter a base url	admin	ja	base URL を入力して下さい。 
-you must enter a display	admin	ja	表示項目を入力して下さい。
 you must enter a group name.	admin	ja	グループ名を入力して下さい。
-you must enter a news url	admin	ja	新しい URL を入力して下さい。
 You must enter an application name.	admin	ja	アプリケーション名を入力して下さい。
 you must enter an application name and title.	admin	ja	アプリケーション名とタイトルを入力して下さい。
 You must enter an application title.	admin	ja	アプリケーションタイトルを入力して下さい。
-you must enter the number of listings display	admin	ja	表示数を入力して下さい。
-you must enter the number of minutes between reload	admin	ja	更新間隔を入力して下さい。
 you must select a file type	admin	ja	ファイルタイプを選択してください。
 zone	admin	ja	地域

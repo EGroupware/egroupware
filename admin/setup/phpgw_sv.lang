@@ -11,9 +11,7 @@ applications	admin	sv	Applikationer
 are you sure you want to delete this account ?	admin	sv	Är du säker på att du vill ta bort detta account?
 are you sure you want to delete this application ?	admin	sv	Är det säkert du vill ta bort denna applikation ?
 are you sure you want to delete this group ?	admin	sv	Är det säkert du vill ta bort denna gruppen?
-are you sure you want to delete this news site ?	admin	sv	Är du säker på att du vill ta bort denna nyhets siten?
 are you sure you want to kill this session ?	admin	sv	Är du säker på att du vill avsluta denna sessionen?
-base url	admin	sv	Bas URL
 change main screen message	admin	sv	Ändra huvudskärms meddelande
 create group	admin	sv	Skapa Grupp
 disabled	admin	sv	Deaktivera
@@ -30,17 +28,12 @@ kill	admin	sv	Avsluta
 last time read	admin	sv	Läst sista gång
 last x logins	admin	sv	Sista %1 logins
 list of current users	admin	sv	lista över nuvarande användare
-listings displayed	admin	sv	Visade lister
 login time	admin	sv	Login Tid
 loginid	admin	sv	LoginID
 manager	admin	sv	Manager
-minutes between reloads	admin	sv	Minuter mellan uppdatering
-network news	admin	sv	Network News
 new group name	admin	sv	Nytt grupp namn
 new password [ leave blank for no change	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
 new password [ leave blank for no change ]	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
-news file	admin	sv	Nyhets Fil
-news type	admin	sv	Nyhets Typ
 percent of users that logged out	admin	sv	Procent av användare som loggat ut
 permissions	admin	sv	Rättigheter
 permissions this group has	admin	sv	Tillåtna applicationer för denna gruppen
@@ -54,7 +47,6 @@ sorry, the follow users are still a member of the group x	admin	sv	Ursäkta men f
 status	admin	sv	Status
 submit changes	admin	sv	Verkställ ändring
 that loginid has already been taken	admin	sv	Den loginID är upptagen
-that site has already been entered	admin	sv	Den siten har redan blivit inlaggd
 the login and password can not be the same	admin	sv	Login och lösenord kan inte vara lika
 the two passwords are not the same	admin	sv	Lösenorden är inte identiska
 they must be removed before you can continue	admin	sv	De måste tas bort innan du kan fortsätta
@@ -65,11 +57,6 @@ user groups	admin	sv	Användar Grupper
 view access log	admin	sv	Visa Access Log
 view sessions	admin	sv	Visa sessions
 you must add at least 1 permission to this account	admin	sv	Du måste ge minst 1 rättighet till detta konto
-you must enter a base url	admin	sv	Du måste skriva in en bas url
-you must enter a display	admin	sv	Du måste skriva in en display
-you must enter a news url	admin	sv	Du måste skriva in en nyhets url
 you must enter a password	admin	sv	Du måste skriva in ett lösenord
 you must enter an application name and title.	admin	sv	Du måste skriva in namn och titel för applikation
-you must enter the number of listings display	admin	sv	Du måste skriva in antalet rader att visa
-you must enter the number of minutes between reload	admin	sv	Du måste skriva in antalet minuter mellan uppdatering
 you must select a file type	admin	sv	Du måste välja en filtype

@@ -8,7 +8,6 @@ email signature	preferences	es	Firma de E-Mail
 enter your new password	preferences	es	Entre su nueva contraseña
 language	preferences	es	Lenguaje
 max matchs per page	preferences	es	Maximo de coincidencias por pagina
-monitor newsgroups	preferences	es	Monitor Grupos de Noticias
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	es	Nota: Esta opcion no cambia la contraseña de su email. Esto deberá ser hecho manualmente.
 please, select a new theme	preferences	es	Por favor, seleccione un nuevo tema
 re-enter your password	preferences	es	Re-Ingrese su contraseña
@@ -27,5 +26,4 @@ work day ends on	preferences	es	Final día laboral
 work day starts on	preferences	es	Comienzo día laboral
 you must enter a password	preferences	es	Debe entrar una contraseña
 your current theme is: x	preferences	es	Su actual tema es:
-newsgroups	preferences	es	Grupos de noticias
 weather center	preferences	es	Centro metereológico

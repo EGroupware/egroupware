@@ -52,7 +52,6 @@ group has been deleted	common	ko	그룹이 삭제되었습니다.
 group has been updated	common	ko	그룹이 변경되었습니다.
 group public	common	ko	그룹내 공개
 groups	common	ko	그룹
-headlines	common	ko	헤드라인
 help	common	ko	도움말
 high	common	ko	높음
 home	common	ko	홈으로
@@ -71,10 +70,7 @@ medium	common	ko	중간
 monday	common	ko	월요일
 name	common	ko	이름
 new entry added sucessfully	common	ko	새로운 데이터가 추가되었습니다.
-news headlines	common	ko	새 표제어
-news reader	common	ko	뉴스 읽기
 next page	common	ko	다음 페이지로
-nntp	common	ko	NNTP
 no	common	ko	아니오
 none	common	ko	없음
 normal	common	ko	보통

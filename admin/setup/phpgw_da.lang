@@ -29,7 +29,6 @@ list of current users	admin	da	Liste over nuværende brugere
 login time	admin	da	Log ind tid
 loginid	admin	da	Login ID
 manager	admin	da	Manager
-network news	admin	da	Netværk nyheder
 new group name	admin	da	Nyt gruppe navn
 new password [ leave blank for no change ]	admin	da	Nyt password [efterlad tom for ikke at ændre]
 percent of users that logged out	admin	da	Procent af brugere som er logget ud
@@ -45,7 +44,6 @@ sorry, the follow users are still a member of the group x	admin	da	Kan ikke, føl
 status	admin	da	Status
 submit changes	admin	da	Postér ændringer
 that loginid has already been taken	admin	da	Dette log ind ID er allerede brugt
-that site has already been entered	admin	da	Den site er allerede valgt
 the login and password can not be the same	admin	da	Log ind navn og password må ikke være ens
 the two passwords are not the same	admin	da	De to passwords stemmer ikke overens
 they must be removed before you can continue	admin	da	De skal fjernes før Du kan fortsætte
@@ -59,6 +57,4 @@ view sessions	admin	da	Se sessioner
 you must add at least 1 permission to this account	admin	da	Du skal angive mindst 1 rettighed til denne bruger
 you must enter a password	admin	da	Du skal angive et password
 you must enter an application name and title.	admin	da	Du skal angive en applikations navn og titel
-you must enter the number of listings display	admin	da	Du må angive antallet af linier der skal vises
-you must enter the number of minutes between reload	admin	da	Du må angive antallet af minutter mellem opdateringer
 you must select a file type	admin	da	Du skal vælge en filtype

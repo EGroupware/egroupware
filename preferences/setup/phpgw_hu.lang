@@ -6,7 +6,6 @@ default application	preferences	hu	Alapértelmezett alkalmazás
 enter your new password	preferences	hu	Új jelszó megadása
 language	preferences	hu	Nyelv
 max matchs per page	preferences	hu	Max. találatok oldalanként
-monitor newsgroups	preferences	hu	Híroldalak követése
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg.
 please, select a new theme	preferences	hu	Válasszon új designt
 re-enter your password	preferences	hu	Új jelszó mégegyszer
