@@ -111,7 +111,7 @@
 			}
 			else
 			{
-				$ordermethod = " order by cat_main asc";
+				$ordermethod = " order by cat_main, cat_level, cat_name asc";
 			}
 
 			if (is_array($this->grants))
