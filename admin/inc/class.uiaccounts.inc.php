@@ -901,7 +901,7 @@
 			$p->set_block('edit','select');
 			$p->set_block('edit','popwin');
 
-			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id'],'u');
+			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 
 			if (!is_object($GLOBALS['phpgw']->uiaccountsel))
 			{
