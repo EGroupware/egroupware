@@ -83,7 +83,11 @@
 			$GLOBALS['hook_values']['account_id'] = $GLOBALS['phpgw_info']['user']['account_id'];
 			$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
 			$GLOBALS['hook_values']['new_passwd'] = $n_passwd;
-			$GLOBALS['phpgw']->hooks->process('changepassword');
+			
+			// called for every app now, not only for the ones enabled for the user
+			$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+				'location' => 'changepassword',
+			),False,True);
 			$GLOBALS['phpgw']->redirect_link('/preferences/index.php','cd=18');
 		}
 	}
