@@ -419,7 +419,7 @@
 			}
 			if($new)
 			{
-				$tmp = strtolower(ereg_replace(' ','_',$new));
+				$tmp = strtolower(str_replace(' ','_',$new));
 				$this->config->config_data['custom_fields'][$tmp] = $new;
 			}
 

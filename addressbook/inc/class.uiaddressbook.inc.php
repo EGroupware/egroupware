@@ -982,7 +982,7 @@
 				{
 					if($contactscat)
 					{
-						$catinfo = $this->cat->return_single(intval($contactscat));
+						$catinfo = $this->cat->return_single((int)$contactscat);
 						$catname .= $catinfo[0]['name'] . '; ';
 					}
 				}
@@ -993,8 +993,8 @@
 			}
 			else
 			{
-				$fields[0]['cat_id'] = ereg_replace(',','',$fields[0]['cat_id']);
-				$catinfo = $this->cat->return_single(intval($fields[0]['cat_id']));
+				$fields[0]['cat_id'] = str_replace(',','',$fields[0]['cat_id']);
+				$catinfo = $this->cat->return_single((int)$fields[0]['cat_id']);
 				$catname = $catinfo[0]['name'];
 				if(!$this->cat_id)
 				{
@@ -1077,7 +1077,7 @@
 		{
 			$prefs   = $_POST['prefs'];
 			$other   = $_POST['other'];
-			$fcat_id = intval($_POST['fcat_id']);
+			$fcat_id = (int)$_POST['fcat_id'];
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
@@ -1469,7 +1469,7 @@
 			{
 				while(list($name,$value) = each($customfields))
 				{
-					$value = ereg_replace('_',' ',$value);
+					$value = str_replace('_',' ',$value);
 					$custom .= '
   <tr bgcolor="' . $GLOBALS['phpgw_info']['theme']['row_off'] . '">
     <td>&nbsp;</td>
