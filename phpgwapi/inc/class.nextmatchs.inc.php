@@ -608,14 +608,14 @@
 
 			if($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
 			{
-				$tr_color = $GLOBALS['phpgw_info']['theme']['row_off'];
+				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
 			}
 			else
 			{
-				$tr_color = $GLOBALS['phpgw_info']['theme']['row_on'];
+				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_on'];
 			}
 
-			return $tr_color;
+			return $GLOBALS['tr_color'];
 		}
 
 		// If you are using the common bgcolor="{tr_color}"
