@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - HTML creation class                                       *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - HTML creation class                                         *
+	* http://www.eGroupWare.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -27,7 +27,7 @@
 			list(,$this->user_agent,$this->ua_version) = $parts;
 			$this->user_agent = strtolower($this->user_agent);
 
-			$this->prefered_img_title = $this->user_agent == 'mozilla' && $this->ua_version < 5 ? 'ALT' : 'TITLE';
+			$this->prefered_img_title = $this->user_agent == 'mozilla' && $this->ua_version < 5 ? 'alt' : 'title';
 			//echo "<p>HTTP_USER_AGENT='$GLOBALS[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
 
 			$this->document_root = $_SERVER['DOCUMENT_ROOT'];
@@ -37,6 +37,16 @@
 				$this->document_root = '/' . $this->document_root;
 			}
 			//echo "<p>_SERVER[DOCUMENT_ROOT]='$_SERVER[DOCUMENT_ROOT]', this->document_root='$this->document_root'</p>\n";
+
+			if ($GLOBALS['phpgw']->translation)
+			{
+				$this->charset = $GLOBALS['phpgw']->translation->charset();
+			}
+		}
+
+		function htmlspecialchars($str)
+		{
+			return htmlspecialchars($str,ENT_COMPAT,$this->charset);
 		}
 
 		/*
@@ -58,7 +68,7 @@
 			}
 			if ((int)$multiple > 0)
 			{
-				$options .= ' MULTIPLE SIZE="'.(int)$multiple.'"';
+				$options .= ' multiple size="'.(int)$multiple.'"';
 				if (substr($name,-2) != '[]')
 				{
 					$name .= '[]';
@@ -72,11 +82,11 @@
 			}
 			foreach($arr as $k => $text)
 			{
-				$out .= '<option value="'.htmlspecialchars($k).'"';
+				$out .= '<option value="'.$this->htmlspecialchars($k).'"';
 
 				if("$k" == "$key" || strstr(",$key,",",$k,"))
 				{
-					$out .= " SELECTED";
+					$out .= " selected";
 				}
 				$out .= ">" . ($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
 			}
@@ -87,7 +97,7 @@
 
 		function div($content,$options='')
 		{
-			return "<DIV $options>\n$content</DIV>\n";
+			return "<div $options>\n$content</div>\n";
 		}
 
 		function input_hidden($vars,$value='',$ignore_empty=True)
@@ -104,7 +114,7 @@
 				}
 				if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 				{
-					$html .= "<INPUT TYPE=\"HIDDEN\" NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\">\n";
+					$html .= "<input type=\"hidden\" name=\"$name\" value=\"".$this->htmlspecialchars($value)."\" />\n";
 				}
 			}
 			return $html;
@@ -112,32 +122,32 @@
 
 		function textarea($name,$value='',$options='' )
 		{
-			return "<TEXTAREA name=\"$name\" $options>".htmlspecialchars($value)."</TEXTAREA>\n";
+			return "<textarea name=\"$name\" $options>".$this->htmlspecialchars($value)."</textarea>\n";
 		}
 
 		function input($name,$value='',$type='',$options='' )
 		{
 			if ($type)
 			{
-				$type = 'TYPE="'.$type.'"';
+				$type = 'type="'.$type.'"';
 			}
-			return "<INPUT $type NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\" $options>\n";
+			return "<input $type name=\"$name\" value=\"".$this->htmlspecialchars($value)."\" $options />\n";
 		}
 
 		function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='',$app='')
 		{
 			if ($image != '')
 			{
-				if (strpos($image,'.')) 
+				if (strpos($image,'.'))
 				{
 					$image = substr($image,0,strpos($image,'.'));
 				}
 				if (!($path = $GLOBALS['phpgw']->common->image($app,$image)) &&
-				!($path = $GLOBALS['phpgw']->common->image('phpgwapi',$image)))
+				    !($path = $GLOBALS['phpgw']->common->image('phpgwapi',$image)))
 				{
-					$path = $image;		// name may already contain absolut path 
+					$path = $image;		// name may already contain absolut path
 				}
-				$image = ' SRC="'.$path.'"';
+				$image = ' src="'.$path.'"';
 			}
 			if (!$no_lang)
 			{
@@ -148,20 +158,20 @@
 			{
 				$lang_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$lang);
 				$lang = str_replace('&','',$lang);
-				$options = 'ACCESSKEY="'.$accesskey[1].'" '.$options;
+				$options = 'accesskey="'.$accesskey[1].'" '.$options;
 			}
 			else
 			{
 				$accesskey = '';
 				$lang_u = $lang;
 			}
-			if ($onClick) $options .= " onClick=\"$onClick\"";
+			if ($onClick) $options .= " onclick=\"$onClick\"";
 
 			// <button> is not working in all cases if ($this->user_agent == 'mozilla' && $this->ua_version < 5 || $image)
 			{
-				return $this->input($name,$lang,$image != '' ? 'IMAGE' : 'SUBMIT',$options.$image);
+				return $this->input($name,$lang,$image != '' ? 'image' : 'submit',$options.$image);
 			}
-			return '<button TYPE="submit" NAME="'.$name.'" VALUE="'.$lang.'" '.$options.'>'.
+			return '<button type="submit" name="'.$name.'" value="'.$lang.'" '.$options.' />'.
 			($image != '' ? "<img$image $this->prefered_img_title=\"$lang\"> " : '').
 			($image == '' || $accesskey ? $lang_u : '').'</button>';
 		}
@@ -193,7 +203,7 @@
 
 		function checkbox($name,$value='')
 		{
-			return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . ">\n";
+			return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . " />\n";
 		}
 
 		function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
@@ -201,7 +211,7 @@
 			$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\" $options>\n";
 			$html .= $this->input_hidden($hidden_vars);
 
-			if ($content) 
+			if ($content)
 			{
 				$html .= $content;
 				$html .= "</form>\n";
@@ -211,8 +221,7 @@
 
 		function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',$form_name='',$method='POST')
 		{
-			return $this->form($this->submit_button($name,$lang),
-			$hidden_vars,$url,$url_vars,$form_name,'',$method);
+			return $this->form($this->submit_button($name,$lang),$hidden_vars,$url,$url_vars,$form_name,'',$method);
 		}
 
 		/*!
@@ -229,7 +238,7 @@
 		*/
 		function table($rows,$options = '',$no_table_tr=False)
 		{
-			$html = $no_table_tr ? '' : "<TABLE $options>\n";
+			$html = $no_table_tr ? '' : "<table $options>\n";
 
 			foreach($rows as $key => $row)
 			{
@@ -237,7 +246,7 @@
 				{
 					continue;					// parameter
 				}
-				$html .= $no_table_tr && $key == 1 ? '' : "\t<TR ".$rows['.'.$key].">\n";
+				$html .= $no_table_tr && $key == 1 ? '' : "\t<tr ".$rows['.'.$key].">\n";
 
 				foreach($row as $key => $cell)
 				{
@@ -245,20 +254,20 @@
 					{
 						continue;				// parameter
 					}
-					$table_pos = strpos($cell,'<TABLE');
-					$td_pos = strpos($cell,'<TD');
+					$table_pos = strpos($cell,'<table');
+					$td_pos = strpos($cell,'<td');
 					if ($td_pos !== False && ($table_pos === False || $td_pos < $table_pos))
 					{
 						$html .= $cell;
 					}
 					else
 					{
-						$html .= "\t\t<TD ".$row['.'.$key].">$cell</TD>\n";
+						$html .= "\t\t<td ".$row['.'.$key].">$cell</td>\n";
 					}
 				}
-				$html .= "\t</TR>\n";
+				$html .= "\t</tr>\n";
 			}
-			$html .= "</TABLE>\n";
+			$html .= "</table>\n";
 
 			if ($no_table_tr)
 			{
@@ -269,7 +278,7 @@
 
 		function sbox_submit( $sbox,$no_script=0 )
 		{
-			$html = str_replace('<select','<select onChange="this.form.submit()" ',
+			$html = str_replace('<select','<select onchange="this.form.submit()" ',
 			$sbox);
 			if ($no_script)
 			{
@@ -290,9 +299,9 @@
 			}
 			if ($title)
 			{
-				$options .= " $this->prefered_img_title=\"".htmlspecialchars($title).'"';
+				$options .= " $this->prefered_img_title=\"".$this->htmlspecialchars($title).'"';
 			}
-			return "<IMG SRC=\"$path\" $options>";
+			return "<img src=\"$path\" $options />";
 		}
 
 		function a_href( $content,$url,$vars='',$options='')
@@ -321,9 +330,8 @@
 
 		function hr($width,$options='')
 		{
-			if ($width)
-			$options .= " WIDTH=$width";
-			return "<hr $options>\n";
+			if ($width) $options .= " width=\"$width\"";
+			return "<hr $options />\n";
 		}
 
 		/*!
@@ -339,10 +347,13 @@
 			if (!is_array($options)) $options = explode(',',$options);
 			if (!is_array($names))   $names   = explode(',',$names);
 
-			while (list($n,$val) = each($options))
-			if ($val != '' && $names[$n] != '')
-			$html .= ' '.$names[$n].'="'.$val.'"';
-
+			foreach($options as $n => $val)
+			{
+				if ($val != '' && $names[$n] != '')
+				{
+					$html .= ' '.strtolower($names[$n]).'="'.$val.'"';
+				}
+			}
 			return $html;
 		}
 
@@ -363,7 +374,7 @@
 		*/
 		function theme2css()
 		{
-			return 
+			return
 			".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
 			".row_on,.th_bright { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
 			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n";
@@ -371,19 +382,19 @@
 
 		function style($styles)
 		{
-			return $styles ? "<STYLE type=\"text/css\">\n<!--\n$styles\n-->\n</STYLE>" : '';
+			return $styles ? "<style type=\"text/css\">\n<!--\n$styles\n-->\n</style>" : '';
 		}
 
 		function label($content,$id='',$accesskey='',$options='')
 		{
 			if ($id != '')
 			{
-				$id = " FOR=\"$id\"";
+				$id = " for=\"$id\"";
 			}
 			if ($accesskey != '')
 			{
-				$accesskey = " ACCESSKEY=\"$accesskey\"";
+				$accesskey = " accesskey=\"$accesskey\"";
 			}
-			return "<LABEL$id$accesskey $options>$content</LABEL>";
+			return "<label$id$accesskey $options>$content</label>";
 		}
 	}
