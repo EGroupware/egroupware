@@ -32,7 +32,7 @@
           </tr>
           <tr>
             <td>{create_demo_accounts}</td>
-            <td><input type="checkbox" name="create_demo" checked></td>
+            <td><input type="checkbox" name="create_demo"></td>
           </tr>
           <tr>
             <td><input type="submit" name="submit" value="{lang_submit}"> </td>
