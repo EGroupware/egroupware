@@ -1107,7 +1107,7 @@
 				for ($i=0; $i<count($userGroups); $i++) 
 				{
 					/* print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>"; */
-					if (@$userGroups[$i]['account_id'] == $value['account_id']) 
+					if (@$userGroups[$i]['account_id'] == $value['account_id'])
 					{
 						$groups_select .= ' selected';
 					}
@@ -1115,13 +1115,17 @@
 				$groups_select .= '>' . $value['account_lid'] . '</option>'."\n";
 			}
 
+			if (!$userData['account_primary_group'])
+			{
+				$userData['account_primary_group'] = @$userGroups[0]['account_id'] ? @$userGroups[0]['account_id'] : $account->name2id('Default');
+			}
 			foreach($allGroups as $key => $value)
 			{
 #				print "<br>$key =>";
 #				_debug_array($userGroups);
 				$primary_group_select .= '<option value="' . $value['account_id'] . '"';
 				#print $value['account_id'].''.$value['account_primary_group']
-				if ($value['account_id'] == $userData['account_primary_group']) 
+				if ($value['account_id'] == $userData['account_primary_group'])
 				{
 					$primary_group_select .= ' selected';
 				}
