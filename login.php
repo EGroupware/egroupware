@@ -48,18 +48,26 @@
 	// This is used for system downtime, to prevent new logins.
 	if($GLOBALS['phpgw_info']['server']['deny_all_logins'])
 	{
-		$tmpl->set_file(array(
-			'login_form' => 'login_denylogin.tpl'
-		));
-		$tmpl->set_var('template_set','default');
-		$tmpl->pfp('loginout','login_form');
-		exit;
+		$deny_msg=lang('Opps! You caught us in the middle of a system maintainance.<br/>
+		Please, check back with us shortly.');
+	
+	$tmpl->set_file(array
+	(
+		'login_form' => 'login_denylogin.tpl'
+	));
+	
+	$tmpl->set_var('template_set','default');
+	$tmpl->set_var('deny_msg',$deny_msg);
+	$tmpl->pfp('loginout','login_form');
+	exit;
 	}
 	$tmpl->set_file(array('login_form' => 'login.tpl'));
 
 	// !! NOTE !!
 	// Do NOT and I repeat, do NOT touch ANYTHING to do with lang in this file.
 	// If there is a problem, tell me and I will fix it. (jengo)
+
+	// whoooo scaring
 
 /*
 	if($_GET['cd'] != 10 && $GLOBALS['phpgw_info']['server']['usecookies'] == False)
@@ -299,9 +307,26 @@
 	{
 		$extra_vars = '?' . substr($extra_vars,1,strlen($extra_vars));
 	}
+
+	/********************************************************\
+	* Check is the registration app is installed, activated  *
+	* And if the register link must be placed                *
+	\********************************************************/
+	
+	$cnf_reg = createobject('phpgwapi.config','registration');
+	$cnf_reg->read_repository();
+	$config_reg = $cnf_reg->config_data;
+
+	if($config_reg[enable_registration]=='True' && $config_reg[register_link]=='True')
+	{
+		$reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
+	}
+	
+
 	
 	$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
 
+	$tmpl->set_var('register_link',$reg_link);
 	$tmpl->set_var('charset',$GLOBALS['phpgw']->translation->charset());
 	$tmpl->set_var('login_url', $GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
 	$tmpl->set_var('registration_url',$GLOBALS['phpgw_info']['server']['webserver_url'] . '/registration/');
@@ -319,7 +344,7 @@
 	$tmpl->set_var('bg_color_title',($GLOBALS['phpgw_info']['server']['login_bg_color_title']?$GLOBALS['phpgw_info']['server']['login_bg_color_title']:'486591'));
 	$tmpl->set_var('logo_url',($GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'www.egroupware.org'));
 	$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo'));
-	$tmpl->set_var('logo_title',($GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'EGroupWare --&gt; home'));
+	$tmpl->set_var('logo_title',($GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'eGroupWare --&gt; home'));
 	$tmpl->set_var('autocomplete', ($GLOBALS['phpgw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
 	$tmpl->pfp('loginout','login_form');
