@@ -237,23 +237,23 @@
 					{
 						$val = addslashes($val);
 					}
-					if ($query) $query .= ',';
-					$query .= "$key='$val'";
+					$cols .= ($cols ? ',' : '').$key;
+					$vals .= ($vals ? ',' : '')."'$val'";
+					$query .= ($query ? ',' : '')."$key='$val'";
 				}
 			}
 			if ($values['info_id'])
 			{
-				$query = 'update phpgw_infolog set '.$query.' where info_id=\'' .
-							$values['info_id'] .'\'';
+				$query = "UPDATE phpgw_infolog SET $query where info_id='".$values['info_id']."'";
 			}
 			else
 			{
-				$query = 'insert INTO phpgw_infolog set '.$query;
+				$query = "INSERT INTO phpgw_infolog ($cols) VALUES ($vals)";
 				/*
 				 * need to set $this->data['info_id'] with assigned autoincrement id
 				 * now data will be rereaded
 				 */
-			}                  
+			}
 			$this->db->query($query,__LINE__,__FILE__);         
 		}
 
