@@ -1443,7 +1443,6 @@
 			$fields['adr_two_type'] = substr($typeb,0,-1);
 
 			$custom = $this->fields->read_custom_fields();
-//			while(list($name,$val) = @each($custom))
 			foreach($custom as $name => $val)
 			{
 				$fields[$val['name']] = $entry[$val['name']];
@@ -1455,7 +1454,7 @@
 			$fields['note']		= $entry['notes'];
 			$fields['label']	= $entry['label'];
 
-			if($entry['access'] == True)
+			if($entry['access'] == 'True')
 			{
 				$fields['access'] = 'private';
 			}
