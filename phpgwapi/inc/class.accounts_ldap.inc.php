@@ -80,7 +80,7 @@
 			$this->data['lastlogin']         = $allValues[0]['phpgwaccountlastlogin'][0];
 			$this->data['lastloginfrom']     = $allValues[0]['phpgwaccountlastloginfrom'][0];
 			$this->data['lastpasswd_change'] = $allValues[0]['phpgwlastpasswdchange'][0];
-			$this->data['status']            = $allValues[0]['phpgwaccountstatus'][0];
+			$this->data['status']            = trim($allValues[0]['phpgwaccountstatus'][0]);
 			$this->data['type']              = $allValues[0]['phpgwaccounttype'][0];
 			$this->data['expires']           = $allValues[0]['phpgwaccountexpires'][0];
 
@@ -266,6 +266,20 @@
 							/* attribute was in LDAP, modify it */
 							ldap_modify($this->ds, $allValues[0]['dn'], $tmpentry);
 						}
+					}
+				}
+				/* If status is to be set inactive, insert a space here.  This is trimmed in read_repository. */
+				if (!$entry['phpgwaccountstatus'])
+				{
+					if (!$allValues[0]['phpgwaccountstatus'][0])
+					{
+						/* attribute was not in LDAP, add it */
+						ldap_mod_add($this->ds, $allValues[0]['dn'], array('phpgwaccountstatus' => ' '));
+					}
+					else
+					{
+						/* attribute was in LDAP, modify it */
+						ldap_modify($this->ds, $allValues[0]['dn'], array('phpgwaccountstatus' => ' '));
 					}
 				}
 			}
