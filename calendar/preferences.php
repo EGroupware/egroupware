@@ -81,7 +81,7 @@
 
 	$var = Array(
 		'title'			=>	lang('Calendar preferences'),
-		'action_url'	=>	$phpgw->link(''),
+		'action_url'	=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/preferences.php'),
 		'bg_color'		=>	$phpgw_info['theme']['th_bg'],
 		'submit_lang'	=>	lang('submit')
 	);
