@@ -7,7 +7,7 @@ function html_form_begin ($action, $method = "post", $enctype = NULL, $string = 
 
 	$action = string_encode ($action, 1);
 	$action = $sep . $action;
-	$action = $phpgw->link ($action);
+	$action = html_link ($action, NULL, 1, 0, 1);
 
 	if ($method != NULL && $method)
 		$method = "method=$method";
@@ -22,7 +22,9 @@ function html_form_input ($type = NULL, $name = NULL, $value = NULL, $maxlength 
 	if ($type != NULL && $type)
 	{
 		if ($type == "checkbox")
+		{
 			$value = string_encode ($value, 1);
+		}
 		$type = "type=$type";
 	}
 	if ($name != NULL && $name)
@@ -262,7 +264,7 @@ function html_page_error ($errorwas = NULL, $title = "Error", $return = 0)
 		return ($rstring);
 }
 
-function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1)
+function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linkonly = 0)
 {
 	global $phpgw;
 	global $sep;
@@ -270,6 +272,7 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1)
 
 	if ($encode)
 		$href = string_encode ($href, 1);
+
 	###
 	# This decodes / back to normal
 	###
@@ -280,13 +283,26 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1)
 	if (!preg_match ("|^http(.{0,1})://|", $href))
 	{
 		$href = $sep . $href;
-		$address = $phpgw->link ($href);
+
+		/* $phpgw->link requires that the extra vars be passed separately */
+		$link_parts = explode ("?", $href, 2);
+		$address = $phpgw->link ($link_parts[0], $link_parts[1]);
 	}
 	else
 	{
 		$address = $href;
 	}
-	$rstring = "<a href=$address>$text</a>";
+
+	/* If $linkonly is set, don't add any HTML */
+	if ($linkonly)
+	{
+		$rstring = $address;
+	}
+	else
+	{
+		$rstring = "<a href=$address>$text</a>";
+	}
+
 	return (eor ($rstring, $return));
 }
 
