@@ -1456,7 +1456,7 @@
 		   id    serial,
 		   lid   varchar(32),
 		   tid   char(1),
-		   owner int(8),
+		   owner int,
 		   fn       varchar(64),
 		   n_family varchar(64),
 		   n_given  varchar(64),
@@ -1503,7 +1503,6 @@
 		   email_type varchar(32) DEFAULT 'INTERNET',
 		   email_home varchar(64),
 		   email_home_type varchar(32) DEFAULT 'INTERNET',
-		   PRIMARY KEY (id),
 		   UNIQUE id (id)
 		)";
 

@@ -101,12 +101,11 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "CREATE TABLE phpgw_addressbook (
+  $sql = "CREATE TABLE phpgw_addressbook(
      id    serial,
      lid   varchar(32),
-     tid   char(1),
-     owner int(8),
-
+     tid   varchar(1),
+     owner int,
      fn       varchar(64),
      n_family varchar(64),
      n_given  varchar(64),
@@ -120,11 +119,9 @@
      geo      varchar(32),
      url      varchar(128),
      pubkey   text,
-
      org_name varchar(64),
      org_unit varchar(64),
      title    varchar(64),
-
      adr_one_street      varchar(64),
      adr_one_locality    varchar(32),
      adr_one_region      varchar(32),
@@ -132,14 +129,12 @@
      adr_one_countryname varchar(32),
      adr_one_type        varchar(64),
      label text,
-
      adr_two_street      varchar(64),
      adr_two_locality    varchar(32),
      adr_two_region      varchar(32),
      adr_two_postalcode  varchar(32),
      adr_two_countryname varchar(32),
      adr_two_type        varchar(64),
-
      tel_work   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
      tel_home   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
      tel_voice  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
@@ -153,13 +148,11 @@
      tel_isdn   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
      tel_video  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
      tel_prefer varchar(32),
-
      email varchar(64),
      email_type varchar(32) DEFAULT 'INTERNET',
      email_home varchar(64),
-     email_home_type varchar(32) DEFAULT 'INTERNET',
-     PRIMARY KEY (id),
-     UNIQUE id (id)
+     email_home_type varchar(32) DEFAULT 'INTERNET'
+     unique(id)
    )";
 
   $phpgw_setup->db->query($sql);
