@@ -287,6 +287,7 @@
 			$GLOBALS['phpgw']->db->disconnect();
 			exit;
 		}
+
 		/*!
 		@function randomstring
 		@abstract return a random string of size $size
@@ -327,7 +328,7 @@
 			}
 
 			$html_error = '<table border="0" width="100%"><tr><td align="right"><b>' . lang($text)
-							. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
+				. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
 			for ($i=1; $i<count($errors); $i++)
 			{
 				$html_error .= '<tr><td>&nbsp;</td><td align="left">' . $errors[$i] . '</td></tr>';
@@ -515,6 +516,7 @@
 			$output_text .= "</table>\n";
 			return $output_text;
 		}
+
 		/*!
 		@function get_app_dir
 		@abstract get directory of application
@@ -767,7 +769,6 @@
 
 		function find_image($appname,$image)
 		{
-
 			if (!is_array($this->found_files[$appname]))
 			{
 				$imagedir_olddefault = '/'.$appname.'/images';
@@ -786,7 +787,7 @@
 					}
 					$d->close();
 				}
-	
+
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
 				{
 					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_default);
@@ -799,7 +800,7 @@
 					}
 					$d->close();
 				}
-	
+
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir))
 				{
 					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir);
@@ -891,7 +892,7 @@
 			$GLOBALS['phpgw_info']['navbar']['home']['icon']  = $this->image('phpgwapi','home.gif');
 
 			reset($GLOBALS['phpgw_info']['user']['apps']);
-			asort($GLOBALS['phpgw_info']['user']['apps']);
+			ksort($GLOBALS['phpgw_info']['user']['apps']);
 
 			if(is_array($GLOBALS['phpgw_info']['user']['apps']['admin']))
 			{
