@@ -713,7 +713,7 @@
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwtypeid'  => $stock_fields['tid']));
 					}
-					elseif (!$ldap_fields[0]['uid'])
+					elseif (!$ldap_fields[0]['phpgwtypeid'])
 					{
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwtypeid' => $stock_fields['tid']));
 					}
