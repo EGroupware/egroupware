@@ -11,29 +11,41 @@
 
   /* $Id$ */
 
-	$bodyheader = 'BGCOLOR="'.$phpgw_info['theme']['bg_color'].'"';
-	if ($phpgw_info['server']['htmlcompliant'])
+	if($GLOBALS['menuaction'] && is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['css'])
 	{
-		$bodyheader .= ' BGCOLOR="'.$phpgw_info['theme']['bg_color'].'" ALINK="'.$phpgw_info['theme']['alink'].'" LINK="'.$phpgw_info['theme']['link'].'" VLINK="'.$phpgw_info['theme']['vlink'].'"';
+		eval("\$app_css = \$GLOBALS['obj']->css();");
+	}
+	else
+	{
+		$app_css = '';
+	}
+
+	$bodyheader = 'BGCOLOR="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'"';
+	if ($GLOBALS['phpgw_info']['server']['htmlcompliant'])
+	{
+		$bodyheader .= ' BGCOLOR="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'" ALINK="'.$GLOBALS['phpgw_info']['theme']['alink'].'" LINK="'.$GLOBALS['phpgw_info']['theme']['link'].'" VLINK="'.$GLOBALS['phpgw_info']['theme']['vlink'].'"';
 	}
 
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
 
-	$tpl->set_var('webserver_url', $phpgw_info['server']['webserver_url']);
-	$tpl->set_var('home',$phpgw->link('/'));
-	$tpl->set_var('appt',$phpgw->link('/calendar/day.php'));
-	$tpl->set_var('todo',$phpgw->link('/todo/add.php'));
-	$tpl->set_var('prefs',$phpgw->link('/preferences'));
-	$tpl->set_var('email',$phpgw->link('/email/preferences.php'));
-	$tpl->set_var('calendar',$phpgw->link('/calendar/preferences.php'));
-	$tpl->set_var('addressbook',$phpgw->link('/addressbook/preferences.php'));
-
-	$tpl->set_var('charset',lang('charset'));
-	$tpl->set_var('font_family',$phpgw_info['theme']['font']);
-	$tpl->set_var('website_title', $phpgw_info['server']['site_title']);
-	$tpl->set_var('body_tags',$bodyheader);
+	$var = Array (
+		'webserver_url'	=> $GLOBALS['phpgw_info']['server']['sebserver_url'],
+		'home'		=> $GLOBALS['phpgw']->link('/index.php'),
+		'appt'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uicalendar.day')),
+		'todo'		=> $GLOBALS['phpgw']->link('/index.php,Array('menuaction'=>'todo/uitodo.add')),
+		'prefs'		=> $GLOBALS['phpgw']->link('/preferences/index.php'),
+		'email'		=> $GLOBALS['phpgw']->link('/email/preferences.php'),
+		'calendar'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calender.uicalendar.preferences')),
+		'addressbook'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'addressbook.uiaddressbook.preferences')),
+		'charset'		=> lang('charset'),
+		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
+		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
+		'body_tags'		=> $bodyheader,
+		'app_css'		=> $app_css
+	);
+	$tpl->set_var($var);
 	$tpl->pfp('out','head');
 	unset($tpl);
 ?>

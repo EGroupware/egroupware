@@ -12,18 +12,27 @@
   /* $Id$ */
 
 	// needed until hovlink is specified in all theme files
-	if (isset($phpgw_info['theme']['hovlink'])
-	 && ($phpgw_info['theme']['hovlink'] != ''))
+	if (isset($GLOBALS['phpgw_info']['theme']['hovlink'])
+	 && ($GLOBALS['phpgw_info']['theme']['hovlink'] != ''))
 	{
-		$csshover = 'A:hover{ text-decoration:none; color: ' .$phpgw_info['theme']['hovlink'] .'; }';
+		$csshover = 'A:hover{ text-decoration:none; color: ' .$GLOBALS['phpgw_info']['theme']['hovlink'] .'; }';
 	}
 	else
 	{
 		$csshover = '';
-	};
+	}
 
-	$bodyheader = 'bgcolor="'.$phpgw_info['theme']['bg_color'].'" alink="'.$phpgw_info['theme']['alink'].'" link="'.$phpgw_info['theme']['link'].'" vlink="'.$phpgw_info['theme']['vlink'].'"';
-	if (!$phpgw_info['server']['htmlcompliant'])
+	if($GLOBALS['menuaction'] && is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['css'])
+	{
+		eval("\$app_css = \$GLOBALS['obj']->css();");
+	}
+	else
+	{
+		$app_css = '';
+	}
+
+	$bodyheader = 'bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'" alink="'.$GLOBALS['phpgw_info']['theme']['alink'].'" link="'.$GLOBALS['phpgw_info']['theme']['link'].'" vlink="'.$GLOBALS['phpgw_info']['theme']['vlink'].'"';
+	if (!$GLOBALS['phpgw_info']['server']['htmlcompliant'])
 	{
 		$bodyheader .= ' topmargin="0" marginheight="0" marginwidth="0" leftmargin="0"';
 	}
@@ -31,14 +40,18 @@
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
-	$tpl->set_var('charset',lang('charset'));
-	$tpl->set_var('font_family',$phpgw_info['theme']['font']);
-	$tpl->set_var('website_title',$phpgw_info['server']['site_title']);
-	$tpl->set_var('body_tags',$bodyheader);
-	$tpl->set_var('css_link',$phpgw_info['theme']['link']);
-	$tpl->set_var('css_alink',$phpgw_info['theme']['alink']);
-	$tpl->set_var('css_vlink',$phpgw_info['theme']['vlink']);
-	$tpl->set_var('css_hovlink',$csshover);
+	$var = Array (
+		'charset'		=> lang('charset'),
+		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
+		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
+		'body_tags'		=> $bodyheader,
+		'css_link'		=> $GLOBALS['phpgw_info']['theme']['link'],
+		'css_alink'		=> $GLOBALS['phpgw_info']['theme']['alink'],
+		'css_vlink'		=> $GLOBALS['phpgw_info']['theme']['vlink'],
+		'css_hovlink'	=> $csshover,
+		'app_css'		=> $app_css
+	);
+	$tpl->set_var($var);
 	$tpl->pfp('out','head');
 	unset($tpl);
 ?>

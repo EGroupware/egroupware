@@ -15,6 +15,7 @@
   A:active{ text-decoration:none }
   body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: {font_family} }
   .tablink { color: #000000; }
+  {app_css}
 -->
 </STYLE>
 <TITLE>{website_title}</TITLE>

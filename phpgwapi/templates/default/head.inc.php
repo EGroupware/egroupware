@@ -11,18 +11,32 @@
 
   /* $Id$ */
 
-	$bodyheader = 'BGCOLOR="'.$phpgw_info['theme']['bg_color'].'"';
-	if ($phpgw_info['server']['htmlcompliant']) {
-		$bodyheader .= ' ALINK="'.$phpgw_info['theme']['alink'].'" LINK="'.$phpgw_info['theme']['link'].'" VLINK="'.$phpgw_info['theme']['vlink'].'"';
+	if($GLOBALS['menuaction'] && is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['css'])
+	{
+		eval("\$app_css = \$GLOBALS['obj']->css();");
+	}
+	else
+	{
+		$app_css = '';
+	}
+
+	$bodyheader = 'BGCOLOR="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'"';
+	if ($GLOBALS['phpgw_info']['server']['htmlcompliant']) {
+		$bodyheader .= ' ALINK="'.$GLOBALS['phpgw_info']['theme']['alink'].'" LINK="'.$GLOBALS['phpgw_info']['theme']['link'].'" VLINK="'.$GLOBALS['phpgw_info']['theme']['vlink'].'"';
 	}
 
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
-	$tpl->set_var('font_family',$phpgw_info['theme']['font']);
-	$tpl->set_var('charset',lang('charset'));
-	$tpl->set_var('website_title',$phpgw_info['server']['site_title']);
-	$tpl->set_var('body_tags',$bodyheader);
-	echo $tpl->finish($tpl->parse('out','head'));
+
+	$var = Array (
+		'charset'		=> lang('charset'),
+		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
+		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
+		'body_tags'		=> $bodyheader,
+		'app_css'		=> $app_css
+	);
+	$tpl->set_var($var);
+	$tpl->pfp('out','head');
 	unset($tpl);
 ?>
