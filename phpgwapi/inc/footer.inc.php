@@ -38,8 +38,7 @@
 		$phpgw_info['flags']['currentapp'] != 'home' &&
 		$phpgw_info['flags']['currentapp'] != 'login' &&
 		$phpgw_info['flags']['currentapp'] != 'logout' &&
-		(!isset($phpgw_info['flags']['noappfooter']) ||
-		!$phpgw_info['flags']['noappfooter']))
+		!@$phpgw_info['flags']['noappfooter'])
 	{
 		if ($menuaction)
 		{

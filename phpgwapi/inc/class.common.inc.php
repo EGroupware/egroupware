@@ -872,7 +872,7 @@
 
 		function phpgw_footer()
 		{
-			global $phpgw, $phpgw_info, $HTMLCOMPLIANT;
+			global $phpgw, $phpgw_info, $HTMLCOMPLIANT, $menuaction;
 
 			if (!isset($phpgw_info['flags']['nofooter']) || !$phpgw_info['flags']['nofooter'])
 			{
