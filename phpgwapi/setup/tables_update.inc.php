@@ -94,4 +94,14 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.004';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.15.004';
+	function phpgwapi_upgrade0_9_15_004()
+	{
+		$GLOBALS['phpgw_setup']->db->query("UPDATE phpgw_languages set available='Yes' WHERE lang_id='pl'");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.005';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 ?>
