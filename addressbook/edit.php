@@ -33,14 +33,15 @@
 	
 	if (!$submit) {
 		// merge in extra fields
-		$extrafields = array ("pager" => "pager",
-							"mphone" => "mphone",
-							"ophone" => "ophone",
-							"access" => "access",
-							"address2" => "address2",
-							"bday" => "bday",
-							"url" => "url",
-							"notes" => "notes");
+		$extrafields = array(
+			"pager" => "pager",
+			"mphone" => "mphone",
+			"ophone" => "ophone",
+			"address2" => "address2",
+			"bday" => "bday",
+			"url" => "url",
+			"notes" => "notes"
+		);
 		$qfields = $this->stock_contact_fields + $extrafields;
 		$fields = $this->read_single_entry($ab_id,$qfields);
 		form("","edit.php","Edit",$fields[0]);
@@ -52,9 +53,6 @@
 			$bday = "";
 		} else {
 			$bday = "$bday_month/$bday_day/$bday_year";
-		}
-		if ($access != "private" && $access != "public") {
-			$access = $phpgw->accounts->array_to_string($access,$n_groups);
 		}
 
 		$fields["org_name"]			= $company;
@@ -87,7 +85,6 @@
 		$fields["bday"]				= $bday;
 		$fields["url"]				= $url;
 		$fields["notes"]			= $notes;
-		$fields["access"]			= $access;
 
 		$this->update($ab_id,$phpgw_info["user"]["account_id"],$fields);
     

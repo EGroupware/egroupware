@@ -41,9 +41,7 @@
 		} else {
 			$bday = "$bday_month/$bday_day/$bday_year";
 		}
-		if ($access != "private" && $access != "public") {
-			$access = $phpgw->accounts->array_to_string($access,$n_groups);
-		}
+
 		if ($url == "http://") {
 			$url = "";
 		}
@@ -78,7 +76,6 @@
 		$fields["bday"]				= $bday;
 		$fields["url"]				= $url;
 		$fields["notes"]			= $notes;
-		$fields["access"]			= $access;
 	
 		$this->add($phpgw_info["user"]["account_id"],$fields);
 		

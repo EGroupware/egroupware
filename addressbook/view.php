@@ -22,7 +22,6 @@
 
 	include("../header.inc.php");
 
-	#$t = new Template($phpgw_info["server"]["app_tpl"]);
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 	$t->set_file(array( "view"	=> "view.tpl"));
 	
@@ -40,19 +39,19 @@
 		}
 	}
 	// merge in extra fields
-	$extrafields = array ("pager"    => "pager",
-						"mphone"   => "mphone",
-						"ophone"   => "ophone",
-						"address2" => "address2",
-						"bday"     => "bday",
-						"url"      => "url",
-						"notes"    => "notes",
-						"access"   => "access");
+	$extrafields = array (
+		"pager"    => "pager",
+		"mphone"   => "mphone",
+		"ophone"   => "ophone",
+		"address2" => "address2",
+		"bday"     => "bday",
+		"url"      => "url",
+		"notes"    => "notes",
+	);
 	$qfields = $this->stock_contact_fields + $extrafields;
 	$fields  = $this->read_single_entry($ab_id,$qfields);
 	
 	$owner  = $fields[0]["owner"];
-	$access = $fields[0]["access"];
 	
 	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
 	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
@@ -79,6 +78,7 @@
 		$columns_html .= "<td>" . $ref . $data . "</td>";
 	}
 
+/*
 	if ($access == "private") {
 		$access_link .= lang("Record Access") . " -  " . $access;
 	} elseif ($access != "private" && $access != "public") {
@@ -86,12 +86,12 @@
 	} else {
 		$access_link ="";
 	}
-
+*/
 	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
 	. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
-	. $phpgw->common->grab_owner_name($owner) . '</td><td><b>'
+	. $phpgw->common->grab_owner_name($owner) . '</td><td><b>' 
 	. $access_link . '</b></td><td></table>';
-	   
+
 	$editlink  = $phpgw->common->check_owner($owner,"edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
 	$vcardlink = '<form action="'.$phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 	$donelink  = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';

@@ -61,7 +61,7 @@
 				"d_email_home"		=> "",  //yn
 				"bday"				=> "birthday",
 				"url"				=> "URL",
-				"access"			=> "access"
+				//"access"			=> "access"
 				);
 
 	function display_name($column) {
@@ -104,7 +104,7 @@
 		$company      = $fields["org_name"];
 		$department   = $fields["org_unit"];
 		$url          = $fields["url"];
-		$access       = $fields["access"];
+		//$access       = $fields["access"];
 
 		if ($format != "view") {
 			$email 	 = "<input name=\"email\" value=\"$email\">";
@@ -239,7 +239,8 @@
 
 		$birthday = $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
 					. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
-
+/*
+		// This is now handled by acl code, and should go away
 		if ($format == "Edit") {
 			if ($access != "private" && $access != "public") {
 				$access_link .= '<td><font size="-1">'.lang("Group access").':</font></td>'
@@ -298,7 +299,7 @@
 			$access_link = '';
 			$t->set_var("lang_access",'');
 		}
-
+*/
 		if ($format == "view")
 			$create .= '<tr><td><font size="-1">'.lang("Created by").':</font></td>'
 					. '<td colspan="3"><font size="-1">'

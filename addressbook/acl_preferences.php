@@ -85,6 +85,7 @@
       }
       $acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$totalacl);
     }
+	$acl->save_repository();
   }
 
   $processed = Array();

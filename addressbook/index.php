@@ -105,12 +105,14 @@
 	$t->set_var("cols",$cols);
 	
 	$t->pparse("out","addressbook_header");
-	
+
 	// Show the entries
 	for ($i=0;$i<count($entries);$i++) { // each entry
-		if ( ($entries[$i]["access"] == $filter) ||
-			($entries[$i]["access"] == "," . $filter . ",") ||
-			($filter == "") || ($filter == "none")) {
+		$rights = $phpgw->acl->get_rights('u_'.$entries[$i]["owner"],$phpgw_info["flags"]["currentapp"]);
+		if ( ($rights & PHPGW_ACL_READ) || ($entries[$i]["owner"] == $account_id) ) {
+		//if ( ($entries[$i]["access"] == $filter) ||
+		//	($entries[$i]["access"] == "," . $filter . ",") ||
+		//	($filter == "") || ($filter == "none")) {
 			$t->set_var(columns,"");
 			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 			$t->set_var(row_tr_color,$tr_color);
