@@ -278,7 +278,7 @@
 			return $new_ldap;
 		}
 
-		function formatted_address($id, $business = True)
+		function formatted_address($id, $business = True, $afont = '', $asize = '2')
 		{
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
@@ -350,7 +350,13 @@
 				$a = $t->set_file(array('address_format' => 'format_us.tpl'));
 			}
 
-			$a .= $t->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
+			if (!$afont)
+			{
+				$afont = $GLOBALS['phpgw_info']['theme']['font'];
+			}
+
+			$a .= $t->set_var('font',$afont);
+			$a .= $t->set_var('fontsize',$asize);
 			$a .= $t->set_var('company',$company);
 			$a .= $t->set_var('department',$address[0]['org_unit']);
 			$a .= $t->set_var('street',$street);
@@ -368,7 +374,7 @@
 			return $a;
 		}
 
-		function formatted_address_full($id, $business = True, $fontsize = '2')
+		function formatted_address_full($id, $business = True, $afont = '', $asize = '2')
 		{
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
@@ -450,8 +456,13 @@
 				$a = $t->set_file(array('address_format' => 'full_format_us.tpl'));
 			}
 
-			$a .= $t->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
-			$a .= $t->set_var('fontsize',$fontsize);
+			if (!$afont)
+			{
+				$afont = $GLOBALS['phpgw_info']['theme']['font'];
+			}
+
+			$a .= $t->set_var('font',$afont);
+			$a .= $t->set_var('fontsize',$asize);
 			$a .= $t->set_var('lang_url',lang('url'));
 			$a .= $t->set_var('lang_email',lang('email'));
 			$a .= $t->set_var('lang_fax',lang('fax number'));
@@ -477,7 +488,7 @@
 			return $a;
 		}
 
-		function formatted_address_line($id, $business = True, $fontsize = '2')
+		function formatted_address_line($id, $business = True, $afont = '', $asize = '2')
 		{
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
@@ -548,8 +559,13 @@
 				$a = $t->set_file(array('address_format' => 'line_format_us.tpl'));
 			}
 
-			$a .= $t->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
-			$a .= $t->set_var('fontsize',$fontsize);
+			if (!$afont)
+			{
+				$afont = $GLOBALS['phpgw_info']['theme']['font'];
+			}
+
+			$a .= $t->set_var('font',$afont);
+			$a .= $t->set_var('fontsize',$asize);
 			$a .= $t->set_var('company',$company);
 			$a .= $t->set_var('street',$street);
 			$a .= $t->set_var('city',$city);
