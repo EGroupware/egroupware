@@ -1,5 +1,5 @@
 <?php
-	/*
+/*
 
 	SOAPx4
 	by Dietrich Ayala (C) 2001 dietrich@ganx4.com
@@ -13,7 +13,7 @@
 	SOAP for PHP
 	by Victor Zou (C) 2000-2001 <victor@gigaideas.com.cn>
 
-	*/
+*/
 
 	/*  changelog:
 	2001-07-04
@@ -30,6 +30,9 @@
 
 	// $path can be a complete endpoint url, with the other parameters left blank:
 	// $soap_client = new soap_client("http://path/to/soap/server");
+
+  /* $Id$ */
+
 	class soap_client
 	{
 		 function soap_client($path,$server=False,$port=False)
@@ -40,30 +43,30 @@
 			$this->errno;
 			$this->errstring;
 			$this->debug_flag = False;
-			$this->debug_str = "";
-			$this->username = "";
-			$this->password = "";
-			$this->action = "";
-			$this->incoming_payload = "";
-			$this->outgoing_payload = "";
-			$this->response = "";
-			$this->action = "";
+			$this->debug_str = '';
+			$this->username = '';
+			$this->password = '';
+			$this->action = '';
+			$this->incoming_payload = '';
+			$this->outgoing_payload = '';
+			$this->response = '';
+			$this->action = '';
 
 			// endpoint mangling
 			if(ereg("^http://",$path))
 			{
-				$path = str_replace("http://","",$path);
-				$this->path = strstr($path,"/");
+				$path = str_replace('http://','',$path);
+				$this->path = strstr($path,'/');
 				$this->debug("path = $this->path");
-				if(ereg(":",$path))
+				if(ereg(':',$path))
 				{
-					$this->server = substr($path,0,strpos($path,":"));
-					$this->port = substr(strstr($path,":"),1);
-					$this->port = substr($this->port,0,strpos($this->port,"/"));
+					$this->server = substr($path,0,strpos($path,':'));
+					$this->port = substr(strstr($path,':'),1);
+					$this->port = substr($this->port,0,strpos($this->port,'/'));
 				}
 				else
 				{
-					$this->server = substr($path,0,strpos($path,"/"));
+					$this->server = substr($path,0,strpos($path,'/'));
 				}
 			}
 			if($port)
@@ -132,19 +135,21 @@
 			}
 
 			$soap_data = $msg->serialize();
-			$this->outgoing_payload = "POST ".
-				$this->path.
-				" HTTP/1.0\r\n".
-				"User-Agent: SOAPx4 v0.13492\r\n".
-				"Host: ".$this->server . "\r\n".
-				$credentials. 
-				"Content-Type: text/xml\r\nContent-Length: ".strlen($soap_data)."\r\n".
-				"SOAPAction: \"$this->action\""."\r\n\r\n".
-				$soap_data;
+			$this->outgoing_payload = 'POST '
+				. $this->path
+				. " HTTP/1.0\r\n"
+				. 'User-Agent: phpGroupware/' . $cliversion . '(PHP) ' . "\r\n"
+				. 'X-PHPGW-Server: ' . $this->server . "\r\n"
+				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. 'Host: '.$this->server . "\r\n"
+				. $credentials
+				. "Content-Type: text/xml\r\nContent-Length: " . strlen($soap_data) . "\r\n"
+				. 'SOAPAction: "' . $this->action . '"' . "\r\n\r\n"
+				. $soap_data;
 			// send
 			if(!fputs($fp, $this->outgoing_payload, strlen($this->outgoing_payload)))
 			{
-				$this->debug("Write error");
+				$this->debug('Write error');
 			}
 
 			// get reponse
@@ -181,15 +186,17 @@
 			}
 
 			$soap_data = $msg->serialize();
-			$this->outgoing_payload = "POST ".
-				$this->path.
-				" HTTP/1.0\r\n".
-				"User-Agent: SOAPx4 v0.13492\r\n".
-				"Host: ".$this->server . "\r\n".
-				$credentials. 
-				"Content-Type: text/xml\r\nContent-Length: ".strlen($soap_data)."\r\n".
-				"SOAPAction: \"$this->action\""."\r\n\r\n".
-				$soap_data;
+			$this->outgoing_payload = 'POST '
+				. $this->path
+				. " HTTP/1.0\r\n"
+				. 'User-Agent: phpGroupware/' . $cliversion . '(PHP) ' . "\r\n"
+				. 'X-PHPGW-Server: ' . $this->server . "\r\n"
+				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. 'Host: ' . $this->server . "\r\n"
+				. $credentials
+				. "Content-Type: text/xml\r\nContent-Length: " . strlen($soap_data) . "\r\n"
+				. 'SOAPAction: "' . $this->action . '"' . "\r\n\r\n"
+				. $soap_data;
 
 			// send
 			$ch = curl_init();
