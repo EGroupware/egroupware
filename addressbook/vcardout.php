@@ -30,7 +30,7 @@
 	$this = CreateObject("phpgwapi.contacts");
 
 	if ($filter != "private")
-		$filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
+		//$filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
 	
 		$fields = $this->read_single_entry($ab_id,$this->stock_contact_fields);
 		
