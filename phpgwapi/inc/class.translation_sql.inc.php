@@ -124,7 +124,7 @@
 		@abstract translates a phrase and evtl. substitute some variables
 		@returns the translation
 		*/
-		function translate($key, $vars=false )
+		function translate($key, $vars=false, $not_found='*' )
 		{
 			if (!$vars)
 			{
@@ -134,7 +134,7 @@
 			{
 				$this->init();
 			}
-			$ret = $key.'*';	// save key if we dont find a translation
+			$ret = $key.$not_found;	// save key if we dont find a translation
 
 			$key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
 
