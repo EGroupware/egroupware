@@ -21,6 +21,29 @@
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
         . $phpgw_info["server"]["auth_type"] . ".inc.php");
+
+  // I didn't active this code until all tables are up to date using the owner field
+  // The calendar isn't update to date.  (jengo)
+  function delete_users_records($account_id, $permissions)
+  {
+     global $phpgw;
+     
+     $db2 = $phpgw->db;
+
+     while ($permission = each($permissions)) {
+       $db2->query("select app_tables from applications where app_name='$permission[0]'");
+       $db2->next_record();
+
+       if ($db2->f("app_tables")) {
+          $tables = explode(",",$db2->f("app_tables"));
+          while (list($null,$table) = each($tables)) {
+            $db2->query("delete from $table where owner='$account_id'");
+          }
+       }
+     }        // end while
+  }           // end function
+
+
   
   // Make sure they are not attempting to delete there own account.
   // If they are, they should not reach this point anyway.
