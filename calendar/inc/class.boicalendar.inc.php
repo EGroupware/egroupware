@@ -2936,6 +2936,16 @@ class boicalendar
 			$users_email = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
 			$cats = CreateObject('phpgwapi.categories');
 			$ical = $this->parse($mime_msg);
+			switch($ical['version']['value'])
+			{
+				case '1.0':
+					$cat_sep = ';';
+					break;
+				case '2.0':
+				default:
+					$cat_sep = ',';
+					break;
+			}
 			$c_events = count($ical['event']);
 			for($i=0;$i<$c_events;$i++)
 			{
@@ -3008,9 +3018,9 @@ class boicalendar
 					else
 					{
 						$ical_cats = Array();
-						if(strpos($ical['event'][$i]['categories']['value'],','))
+						if(strpos($ical['event'][$i]['categories']['value'],$cat_sep))
 						{
-							$ical_cats = explode(',',$ical['event'][$i]['categories']['value']);
+							$ical_cats = explode($cat_sep,$ical['event'][$i]['categories']['value']);
 						}
 						else
 						{
