@@ -114,15 +114,28 @@
 	if ($_POST['delete'])
 	{
 		list($file) = each($_POST['delete']);
-		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
+		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 		
 		if (unlink($file)) $setup_tpl->set_var('error_msg',lang("backup '%1' deleted",$file));
+	}
+	// rename a backup
+	if ($_POST['rename'])
+	{
+		list($file) = each($_POST['rename']);
+		$new_name = $_POST['new_name'][$file];
+		if (!empty($new_name))
+		{
+			$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
+			$ext = preg_match('/(\.gz|\.bz2)+$/i',$file,$matches) ? $matches[1] : '';
+			$new_file = $db_backup->backup_dir.'/'.preg_replace('/(\.gz|\.bz2)+$/i','',basename($new_name)).$ext;
+			if (rename($file,$new_file)) $setup_tpl->set_var('error_msg',lang("backup '%1' renamed to '%2'",basename($file),basename($new_file)));
+		}
 	}
 	// restore a backup
 	if ($_POST['restore'])
 	{
 		list($file) = each($_POST['restore']);
-		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
+		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 		
 		if (is_resource($f = $db_backup->fopen_backup($file,true)))
 		{
@@ -189,9 +202,10 @@
 			'filename'	=> $file,
 			'date'		=> date('Y-m-d H:i',$ctime),
 			'size'		=> sprintf('%3.1lf MB (%d)',$size/(1024*1024),$size),
-			'actions'	=> '<input type="submit" name="download['.$file.']" value="'.htmlspecialchars(lang('download')).'" /> &nbsp;'.
+			'actions'	=> '<input type="submit" name="download['.$file.']" value="'.htmlspecialchars(lang('download')).'" />&nbsp;'."\n".
 				'<input type="submit" name="delete['.$file.']" value="'.htmlspecialchars(lang('delete')).'" onclick="return confirm(\''.
-					htmlspecialchars(lang('Confirm to delete this backup?')).'\');" /> &nbsp;'.
+					htmlspecialchars(lang('Confirm to delete this backup?')).'\');" />&nbsp;'."\n".
+				'<input name="new_name['.$file.']" value="" size="15" /><input type="submit" name="rename['.$file.']" value="'.htmlspecialchars(lang('rename')).'" />&nbsp;'."\n".
 				'<input type="submit" name="restore['.$file.']" value="'.htmlspecialchars(lang('restore')).'" onclick="return confirm(\''.
 					htmlspecialchars(lang('Restoring a backup will delete/replace all content in your database. Are you sure?')).'\');" />',
 		));

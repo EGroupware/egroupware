@@ -55,6 +55,7 @@ back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
 back to user login	setup	de	Zurück zur Benutzeranmeldung
 back's up your db now, this might take a view minutes	setup	de	Sichert Ihre DB jetzt direkt, das kann einige Minuten dauern
 backup '%1' deleted	setup	de	Datensicherung '%1' gelöscht
+backup '%1' renamed to '%2'	setup	de	Datensicherung '%1' nach '%2' umbenannt
 backup '%1' restored	setup	de	Datensicherung '%1' zurückgesichert
 backup and restore	setup	de	Datensicherung und Wiederherstellung
 backup failed	setup	de	Datensicherung fehlgeschlagen
@@ -342,6 +343,7 @@ registered	setup	de	registriert
 rejected lines	setup	de	Zurückgewiesende Zeilen
 remove	setup	de	Entfernen
 remove all	setup	de	Alle Entfernen
+rename	setup	de	Umbenennen
 requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	Lösen

@@ -54,6 +54,7 @@ back to the previous screen	setup	en	Back to the previous screen
 back to user login	setup	en	Back to user login
 back's up your db now, this might take a view minutes	setup	en	back's up your DB now, this might take a view minutes
 backup '%1' deleted	setup	en	backup '%1' deleted
+backup '%1' renamed to '%2'	setup	en	backup '%1' renamed to '%2'
 backup '%1' restored	setup	en	backup '%1' restored
 backup and restore	setup	en	backup and restore
 backup failed	setup	en	Backup failed
@@ -339,6 +340,7 @@ registered	setup	en	registered
 rejected lines	setup	en	Rejected lines
 remove	setup	en	Remove
 remove all	setup	en	Remove All
+rename	setup	en	rename
 requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
 requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve

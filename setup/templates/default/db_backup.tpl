@@ -2,7 +2,7 @@
 <p align="center"><font color="red">{error_msg}</font></p>
 
 <form method="POST" action="{self}" enctype="multipart/form-data">
-<table border="0" align="center" width="90%" cellpadding="5">
+<table border="0" align="center" width="98%" cellpadding="5">
 <!-- BEGIN setup_header -->
 	<tr bgcolor="#486591">
 		<td colspan="2">
