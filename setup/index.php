@@ -44,10 +44,12 @@
           $db->query("select app_version from applications where app_name='admin'");
           $db->next_record();
           $oldversion = $db->f("app_version");
+echo "oldversion: $oldversion<br>\n";
+
           $db->free();
           if (isset($oldversion)){
             if ($oldversion == $phpgw_info["server"]["version"]){
-              $stage = 2.5;
+              $stage = 2.6;
               $header_msg = "Stage 2 (Tables are Current)";
             }else{
               $stage = 2.4;
@@ -83,6 +85,5 @@
   } /* From header.inc.php not existing */
   show_header($header_msg);
   show_steps($stage);
+  echo "</body></html>";
 ?>
-</body>
-</html>

@@ -11,14 +11,17 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader"   => True,   "nonavbar" => True,
-  							 "currentapp" => "home", "noapi"    => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
+  include("./inc/functions.inc.php");
   include("../header.inc.php");
 
   // Authorize the user to use setup app and load the database
-  include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
-
+  if (!auth()){
+    Header("Location: index.php");
+    exit;
+  }
+  loaddb();
   if ($newsettings["auth_type"] != "ldap") {
      setup_header();
   }

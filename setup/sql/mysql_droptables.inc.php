@@ -23,10 +23,9 @@
   $db->query("DROP TABLE profiles");
   $db->query("DROP TABLE addressbook");
   $db->query("DROP TABLE todo");
-  $db->query("DROP TABLE webcal_entry");
-  $db->query("DROP TABLE webcal_entry_repeats");
-  $db->query("DROP TABLE webcal_entry_user");
-  $db->query("DROP TABLE webcal_entry_groups");
+  $db->query("DROP TABLE calendar_entry");
+  $db->query("DROP TABLE calendar_entry_repeats");
+  $db->query("DROP TABLE calendar_entry_user");
   $db->query("DROP TABLE newsgroups");
   $db->query("DROP TABLE news_msg");
   $db->query("DROP TABLE lang");

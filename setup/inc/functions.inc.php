@@ -25,6 +25,7 @@
   function show_header($title = "",$nologoutbutton = False) {
     global $phpgw_info, $PHP_SELF;
     ?>
+    <html>
     <head>
      <title>phpGroupWare Setup
      <?php
@@ -126,8 +127,7 @@
   }
 
   function show_steps($stage, $note = False) {
-    global $phpgw_info, $phpgw_domain, $SetupDomain, $PHP_SELF;
-
+    global $phpgw_info, $phpgw_domain, $SetupDomain, $oldversion, $currentver, $db, $subtitle, $submsg, $subaction;
     /* The stages are as follows:
       Stage 1.1 = header does not exists yet
       Stage 1.2 = header exists, but is the wrong version
@@ -136,7 +136,8 @@
       Stage 2.2 = database exists pre-beta tables
       Stage 2.3 = database exists but no tables
       Stage 2.4 = database and tables exists but need upgrading
-      Stage 2.5 = database and tables exists and are current
+      Stage 2.5 = tables being modified in some way
+      Stage 2.6 = database and tables exists and are current
       Stage 3 = 
       Stage 4 = 
       Stage 5 = 
@@ -158,10 +159,31 @@
     }elseif ($stage == 2.1) {
       echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database does not exist.<br> <input type=submit value="Create one now"></form></td></tr>';
     }elseif ($stage == 2.2) {
-      echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist but your pre-beta tables need upgrading.<br> <input type=submit value="Create one now"></form></td></tr>';
+      echo '<tr><td align="center">O</td><td>';
+      echo '
+        You appear to be running a pre-beta version of phpGroupWare<br>
+        We are providing an automated upgrade system, but we highly recommend backing up your tables incase the script causes damage to your data.<br>
+        These automated scripts can easily destroy your data. Please backup before going any further!<br>
+        <form method="post" action="tables.php">
+        Select your old version: 
+        <select name="oldversion">
+           <option value="7122000">7122000</option>
+           <option value="8032000">8032000</option>
+           <option value="8072000">8072000</option>
+           <option value="8212000">8212000</option>
+           <option value="9052000">9052000</option>
+           <option value="9072000">9072000</option>
+           <option value="9262000">9262000</option>
+           <option value="0_9_1">0.9.1</option>
+           <option value="0_9_2">0.9.2</option>
+         </select>
+         <input type="submit" name="action" value="Upgrade">
+         <input type="submit" name="action" value="Delete my old tables">
+        </form>';
+      echo '</td></tr>';
     }elseif ($stage == 2.3) {
-/* commented out because I cannot accuratly figure out if the DB exists */
-//      echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist, would you like to create your tables now?<br> <input type=submit value="Create tables"></form></td></tr>';
+      /* commented out because I cannot accuratly figure out if the DB exists */
+      //echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist, would you like to create your tables now?<br> <input type=submit value="Create tables"></form></td></tr>';
       echo '<tr><td align="center">O</td><td>Make sure that your database is created and the account permissions are set.<br>';
       if ($phpgw_domain[$SetupDomain]["db_type"] == "mysql"){
         echo "
@@ -181,13 +203,48 @@
         <i>[user@server user]# createdb phpgroupware</i><br>
         ";
       }
-      echo '<form action="./tables.php" method=post>Once the database is setup correctly <br><input type=submit value="Create the tables"></form></td></tr>';
+      echo '<form action="./tables.php" method=post>';
+      echo "<input type=\"hidden\" name=\"oldversion\" value=\"new\">\n";
+      echo 'Once the database is setup correctly <br><input type=submit name="action" value="Create"> the tables</form></td></tr>';
     }elseif ($stage == 2.4) {
-      echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist but your tables need upgrading.<br> <input type=submit value="upgrade now"></form></td></tr>';
+      echo '<tr><td align="center">O</td><td>';
+      echo "You appear to be running version $oldversion of phpGroupWare.<br>\n";
+      echo "We will automaticly update your tables/records to ".$phpgw_info["server"]["version"].", but we highly recommend backing up your tables in case the script causes damage to your data.\n";
+      echo "These automated scripts can easily destroy your data. Please backup before going any further!\n";
+      echo "<form method=\"POST\" action=\"$PHP_SELF\">\n";
+      echo "<input type=\"hidden\" name=\"oldversion\" value=\"".$oldversion."\">\n";
+      echo "<input type=\"hidden\" name=\"useglobalconfigsettings\">\n";
+      echo "<input type=\"submit\" name=\"action\" value=\"Upgrade\">\n";
+      echo "<input type=\"submit\" name=\"action\" value=\"Delete my old tables\">\n";
+      echo "</form>\n";
+      echo "<form method=\"POST\" action=\"config.php\">\n";
+      echo "<input type=\"submit\" name=\"action\" value=\"Dont touch my data\">\n";
+      echo "</form>\n";
+      echo '</td></tr>';
     }elseif ($stage == 2.5) {
-      echo '<tr><td align="center">X</td><td>Your tables are current.</td></tr>';
+      echo '<tr><td align="center">O</td><td>';
+      echo "<table width=\"100%\">\n";
+      echo "  <tr bgcolor=\"486591\"><td><font color=\"fefefe\">&nbsp;<b>$subtitle</b></font></td></tr>\n";
+      echo "  <tr bgcolor=\"e6e6e6\"><td>$submsg</td></tr>\n";
+      echo "  <tr bgcolor=\"486591\"><td><font color=\"fefefe\">&nbsp;<b>Table Change Messages</b></font></td></tr>\n";
+      $db->Halt_On_Error = "report";
+      include ("./sql/common_main.inc.php");
+      $db->Halt_On_Error = "no";
+      echo "  <tr bgcolor=\"486591\"><td><font color=\"fefefe\">&nbsp;<b>Status</b></font></td></tr>\n";
+      echo "  <tr bgcolor=\"e6e6e6\"><td>If you did not recieve any errors, your tables have been $subaction.<br></tr>\n";
+      echo "</table>\n";
+      echo "<form method=\"POST\" action=\"tables.php\">\n";
+      echo "<br><input type=\"submit\" value=\"Re-Check My Installation\">\n";
+      echo '</form>';
+      echo '</td></tr>';
+    }elseif ($stage == 2.6) {
+      echo '<tr><td align="center">X</td><td>Your tables are current.';
+      echo "<form method=\"POST\" action=\"tables.php\">\n";
+      echo "<input type=\"hidden\" name=\"oldversion\" value=\"new\">\n";
+      echo "<br>Insanity: <input type=\"submit\" name=\"action\" value=\"Delete all my tables and data\">, then re-create the tables.\n";
+      echo '</form>';
+      echo '</td></tr>';
     }
-
     echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
     if ($stage < 3.1) {
       echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
@@ -196,7 +253,6 @@
     }elseif ($stage == 3.2) {
       echo '<tr><td align="center">O</td><td>stage 3.2.<br></td></tr>';
     }
-
     echo '</table>';
   }
 

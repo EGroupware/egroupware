@@ -18,30 +18,25 @@
   }
 
   if ($currentver == "drop"){
+
     include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_droptables.inc.php");
-    $currentver = "new";
+//    $currentver = "new";
   }
   if ($currentver == "new") {
     include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_newtables.inc.php");
     include("./sql/common_default_records.inc.php");
     $included = True;
     include($phpgw_info["server"]["server_root"] . "/setup/lang.php");
+
+    if ($currentver == "7122000" || $currentver == "8032000" || $currentver == "8072000" || $currentver == "8212000" || $currentver == "9052000" || $currentver == "9072000") {
+      include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_upgrade_prebeta.inc.php");
+    }
+    include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_upgrade_beta.inc.php");
   }
-  echo "<table border=\"0\" align=\"center\">\n";
-  echo "  <tr bgcolor=\"486591\">\n";
-  echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Table Changes</b></font></td>\n";
-  echo "  </tr>\n";
-  
-  if ($currentver == "7122000" || $currentver == "8032000" || $currentver == "8072000" || $currentver == "8212000" || $currentver == "9052000" || $currentver == "9072000") {
-    include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_upgrade_prebeta.inc.php");
-  }
-  
-  include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_upgrade_beta.inc.php");
-  
+
   if (!$tablechanges == True){
     echo "  <tr bgcolor=\"e6e6e6\">\n";
     echo "    <td>No table changes were needed. The script only updated your version setting.</td>\n";
     echo "  </tr>\n";
   }
-  echo "</table>\n";
 ?>
