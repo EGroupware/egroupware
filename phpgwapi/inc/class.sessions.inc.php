@@ -437,6 +437,11 @@
 			{
 				$this->cookie_domain = $arr[1];
 			}
+			if (count(explode('.',$this->cookie_domain)) <= 1)
+			{
+				// setcookie dont likes domains without dots, leaving it empty, gets setcookie to fill the domain in
+				$this->cookie_domain = '';
+			}
 			print_debug('COOKIE_DOMAIN',$this->cookie_domain,'api');
 
 			$this->set_cookie_params($this->cookie_domain);	// for php4 sessions necessary
