@@ -542,7 +542,7 @@
 			if ($ldap_fields[0]['dn']) {
 				$dn = $ldap_fields[0]['dn'];
 				list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-				if (count($stock_fields)) {
+				if (gettype($stock_fieldnames) == "array") {
 					$stock_fields['phpgwowner'] = $owner;
 					// Check each value, add our extra attributes if they are missing, and
 					// otherwise fix the entry while we can
@@ -590,10 +590,13 @@
 						$err = ldap_mod_add($this->ldap,$dn,array('objectclass'  => $stock_fields['objectclass']));
 					}
 
-					while ( list($fname,$fvalue) = each($this->stock_contact_fields) ) {
-						if (empty($ldap_fields[0][$fvalue])) {
+					// OK, just add the data already
+					while ( list($fname,$fvalue) = each($stock_fieldnames) ) {
+						if ($ldap_fields[0][$fvalue]) {
+							//echo "<br>".$fname." was there";
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						} elseif (!$ldap_fields[0][$fvalue]) {
+							//echo "<br>".$fname." not there";
 							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
 					}
