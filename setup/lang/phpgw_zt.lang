@@ -1,6 +1,7 @@
 %1 does not exist !!!	setup	zt	%1不存在
 %1 is %2%3 !!!	setup	zt	%1 是 %2%3！
 (account deletion in sql only)	setup	zt	(您只能在使用SQL時刪除帳號)
+(searching accounts and changing passwords)	setup	zt	(搜尋帳號並且修改密碼)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	zt	***請不要透過安裝程式更新您的資料庫，因為執行過程可能超過系統預設允許的時間而遭到中斷，這可能會造成資料的遺失！
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	zt	***您必須手動修改php.ini的設定來讓eGroupWare順利執行所有功能！
 00 (disable)	setup	zt	00 (關閉 / 建議)
@@ -67,6 +68,7 @@ cannot create the header.inc.php due to file permission restrictions.<br> instea
 change system-charset	setup	zt	修改系統字元設定
 charset	setup	zt	utf-8
 charset to convert to	setup	zt	字元轉換成
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	zt	當網頁伺服器使用者編號/名稱是未知的，透過網頁伺服器呼叫就只能執行檢查
 check installation	setup	zt	檢查系統安裝狀態
 check ip address of all sessions	setup	zt	檢查所有連線的網路位址
 checking extension %1 is loaded or loadable	setup	zt	檢查%1是否以讀取或可讀取
@@ -100,7 +102,7 @@ create the empty database -	setup	zt	建立空的資料庫 -
 create the empty database and grant user permissions -	setup	zt	建立空的資料庫並且取得使用者權限 -
 create your header.inc.php	setup	zt	建立您的header.inc.php
 created	setup	zt	建立日期
-created header.inc.php!	setup	zt	已經建立header.inc.php!
+created header.inc.php!	setup	zt	已建立header.inc.php!
 creating tables	setup	zt	正在建立資料表
 current system-charset	setup	zt	目前系統字元編碼
 current system-charset is %1, click %2here%3 to change it.	setup	zt	目前系統字元編碼是%1，點選 %2這裡%3 來改變。
@@ -225,6 +227,7 @@ ldap import users	setup	zt	LDAP 匯入使用者
 ldap modify	setup	zt	LDAP 修改
 ldap root password	setup	zt	LDAP 管理者密碼
 ldap rootdn	setup	zt	LDAP 主要端點﹝rootdn﹞
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	zt	LDAP帳號搜尋規則，預設："(uid=%user)", %domain=eGW-domain
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	zt	限制安裝設定的網路位址(例如10.1.1, 127.0.0.1)
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	zt	限制下面位址、網域或是主機存取安裝設定(例如：127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	zt	登入到MYSQL -
@@ -246,6 +249,7 @@ modifications have been completed!	setup	zt	修改已經完成！
 modify	setup	zt	修改
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	zt	修改一個已經存在的LDAP帳號讓eGroupWare使用(全新安裝且使用LDAP帳號)
 multi-language support setup	setup	zt	多國語言設定
+mysqlinstr	setup	zt	在 MySQL 中建立資料庫的方法：<br>登入 MySQL 系統 -<br><i>[user@server user]# mysql -u root -p</i><br>建立空的資料庫並授權使用者使用 -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 name of database	setup	zt	資料庫名稱
 name of db user egroupware uses to connect	setup	zt	eGroupWare用來與資料庫連結的帳號
 never	setup	zt	從未
@@ -284,6 +288,7 @@ passwords did not match, please re-enter	setup	zt	密碼不符，請重新輸入
 path information	setup	zt	路徑資訊
 path to user and group files has to be outside of the webservers document-root!!!	setup	zt	使用者與群組的檔案路徑必須在網站伺服器的網頁根目錄以外！
 persistent connections	setup	zt	持續連線
+pgsqlinstr	setup	zt	在 PostgreSQL 中建立資料庫的方法：<br>起用 PostgreSQL 系統<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>建立空的資料庫 -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	zt	請檢查應用程式目錄下的 SQL 命令檔
 please check read/write permissions on directories, or back up and use another option.	setup	zt	請檢查資料夾讀取/寫入的權限或是備份後使用其他選項。
 please configure egroupware for your environment	setup	zt	請為您現在的環境設定 eGroupWare 的相關組態
@@ -312,6 +317,7 @@ really uninstall all applications	setup	zt	確定要移除所有的應用程式
 recommended: filesystem	setup	zt	建議：檔案系統
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zt	register_globals開啟中，eGroupWare不需要這個設定，而且關閉它通常會比較安全
 registered	setup	zt	註冊
+rejected lines	setup	zt	拒絕的行數
 remove	setup	zt	移除
 remove all	setup	zt	全部移除
 requires reinstall or manual repair	setup	zt	需要重新安裝或是手動修復
@@ -381,8 +387,10 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	zt	如果您
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	zt	這個伺服器不支援預設的資料庫(%1)，使用第一個使用的種類。
 the file	setup	zt	檔案
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	zt	安裝eGroupWare的第一步是確定您的安裝環境是否需要進一步設定來執行應用程式
+the following applications need to be upgraded:	setup	zt	下面這些應用程式需要升級：
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	zt	兩個電子郵件的應用程式需要imap外掛(即使您只有使用POP3的郵件協定)。
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zt	如果您希望系統完全支援多國語言編碼(utf-8)，您會需要mbstring外掛
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zt	要完全支援萬國字元(UTF-8)或是其他雙位元組編碼，您必須設定mbstring.func_overload = 7
 the table definition was correct, and the tables were installed	setup	zt	資料表定義正確且資料表已正確安裝
 the tables	setup	zt	資料表
 there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	zt	無法正確連結到 LDAP 伺服器主機。<br>請檢查 LDAP 伺服器主機的設定。
@@ -475,7 +483,7 @@ your database is working, but you dont have any applications installed	setup	zt	
 your header admin password is not set. please set it now!	setup	zt	您沒有設定標頭(header)管理密碼，請現在設定！
 your header.inc.php needs upgrading.	setup	zt	您的header.inc.php需要更新。
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	zt	您的header.inc.php需要更新。<br><blink><b class="msg">警告！</b></blink><br><b>記得先做備份！</b>
-your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	zt	您的PHP沒有支援GD函式，您需要安裝gd函式庫1.8版或是更新的版本才能夠在專案管理中瀏覽甘特圖。
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	zt	您的PHP不支援GD，您需要安裝1.8或是更新的版本才能夠在專案管理中順利瀏覽甘特圖
 your tables are current	setup	zt	您的資料表目前狀態
 your tables may be altered and you may lose data	setup	zt	您的資料表已經被更動過並有可能遺失部份資料
 your tables will be dropped and you will lose data	setup	zt	您的資料表將會被完全移除，您也將會遺失所有的資料。

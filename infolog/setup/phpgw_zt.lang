@@ -222,6 +222,8 @@ sub	infolog	zt	附屬
 subject	infolog	zt	主題
 task	infolog	zt	待辦事項
 test import (show importable records <u>only</u> in browser)	infolog	zt	測試匯入(<u>只在</u>瀏覽器中顯示可以匯入的資料)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	zt	內部名稱(小於10個字元)，修改它將造成目前的資料無法瀏覽
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	zt	內部名稱(小於20個字元)，修改它將造成目前的資料無法瀏覽
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	zt	內部使用名稱(<=32字元)，改變它將造成已經存在的資料無法使用
 the text displayed to the user	infolog	zt	給使用者的訊息
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	zt	這是事件紀錄簿在您進入這個應用程式時使用的過濾方式，過濾方式將會限制實際瀏覽的事件。過濾方式可以決定您自己或是所有使用者"已經完成的"，"進行中"或是"未來的事件"

@@ -41,6 +41,7 @@ edit comments	filemanager	zt	編輯備註
 error running command	filemanager	zt	指令執行錯誤
 execute	filemanager	zt	執行
 failed to create directory	filemanager	zt	建立資料夾失敗
+fake base dir did not exist, egroupware created a new one.	filemanager	zt	初始化資料夾不存在，eGroupWare建立了一個新的
 file	filemanager	zt	檔案
 file %1 already exists. please edit it or delete it first.	filemanager	zt	檔案 %1已經存在，請先編輯或刪除它。
 file %1 could not be created.	filemanager	zt	檔案 %1 無法建立。

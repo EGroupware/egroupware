@@ -13,6 +13,12 @@
 3 number of chars for day-shortcut	jscalendar	zt	日期的三個字元簡寫
 3 number of chars for month-shortcut	jscalendar	zt	月份的三個字元簡寫
 80 (http)	admin	zt	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	zt	\n 整理 HTML 原始碼中，請稍候...
+_delete row	htmlarea-ContextMenu	zt	_刪除列
+_image properties...	htmlarea-ContextMenu	zt	_圖片屬性...
+_modify link...	htmlarea-ContextMenu	zt	_修改連結...
+_remove link...	htmlarea-ContextMenu	zt	_移除連結...
+_table properties...	htmlarea-ContextMenu	zt	_表格屬性...
 about	common	zt	關於
 about %1	common	zt	關於 %1
 about the calendar	jscalendar	zt	關於這個行事曆
@@ -36,9 +42,12 @@ administration	common	zt	系統管理
 afghanistan	common	zt	AFGHANISTAN
 albania	common	zt	ALBANIA
 algeria	common	zt	ALGERIA
+align	htmlarea-TableOperations	zt	對齊
 all	common	zt	所有
 all fields	common	zt	所有欄位
+all four sides	htmlarea-TableOperations	zt	所有四邊
 alphabet	common	zt	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	zt	替換的樣式表：
 american samoa	common	zt	AMERICAN SAMOA
 andorra	common	zt	ANDORRA
 angola	common	zt	ANGOLA
@@ -62,12 +71,15 @@ autosave default category	common	zt	自動儲存預設分類目錄
 azerbaijan	common	zt	AZERBAIJAN
 back	common	zt	上一頁
 back to user login	common	zt	回到首頁
+background	htmlarea-TableOperations	zt	背景
 background color	htmlarea	zt	背景顏色
+background color:	common	zt	背景顏色：
 bad login or password	common	zt	錯誤的使用者代碼或密碼
 bahamas	common	zt	BAHAMAS
 bahrain	common	zt	BAHRAIN
 bangladesh	common	zt	BANGLADESH
 barbados	common	zt	BARBADOS
+baseline	htmlarea-TableOperations	zt	基線
 bcc	common	zt	密件副本
 belarus	common	zt	BELARUS
 belgium	common	zt	BELGIUM
@@ -78,8 +90,11 @@ bhutan	common	zt	BHUTAN
 blocked, too many attempts	common	zt	被鎖定了，嘗試太多次
 bold	htmlarea	zt	粗體
 bolivia	common	zt	BOLIVIA
+border	htmlarea-TableOperations	zt	框線
+borders	htmlarea-TableOperations	zt	框線
 bosnia and herzegovina	common	zt	BOSNIA AND HERZEGOVINA
 botswana	common	zt	BOTSWANA
+bottom	htmlarea-TableOperations	zt	底部
 bouvet island	common	zt	BOUVET ISLAND
 brazil	common	zt	BRAZIL
 british indian ocean territory	common	zt	BRITISH INDIAN OCEAN TERRITORY
@@ -88,12 +103,14 @@ bulgaria	common	zt	BULGARIA
 bulleted list	htmlarea	zt	核選清單
 burkina faso	common	zt	BURKINA FASO
 burundi	common	zt	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	zt	欄位設定...
 calendar	common	zt	行事曆
 cambodia	common	zt	CAMBODIA
 cameroon	common	zt	CAMEROON
 canada	common	zt	CANADA
 cancel	common	zt	取消
 cape verde	common	zt	CAPE VERDE
+caption	htmlarea-TableOperations	zt	標題
 categories	common	zt	分類
 categories for	common	zt	類別
 category	common	zt	類別
@@ -101,13 +118,19 @@ category %1 has been added !	common	zt	已新增分類 %1 ！
 category %1 has been updated !	common	zt	已更新分類 %1 ！
 cayman islands	common	zt	CAYMAN ISLANDS
 cc	common	zt	副本
+cell properties	htmlarea-TableOperations	zt	欄位屬性
+center	htmlarea-TableOperations	zt	置中
 central african republic	common	zt	CENTRAL AFRICAN REPUBLIC
 chad	common	zt	CHAD
 change	common	zt	更換
+char	htmlarea-TableOperations	zt	字元
 charset	common	zt	utf-8
+chec_k link...	htmlarea-ContextMenu	zt	檢查連結...
 check installation	common	zt	檢查系統安裝狀態
+check now	common	zt	立刻檢查
 chile	common	zt	CHILE
 china	common	zt	CHINA
+choose list style type (for ordered lists)	htmlarea-ListType	zt	選擇清單樣式類型(排序的清單)
 choose the category	common	zt	選擇分類
 choose the parent category	common	zt	選擇上一層分類
 christmas island	common	zt	CHRISTMAS ISLAND
@@ -118,7 +141,9 @@ click or mouse over to show menus	common	zt	點選或是移動滑鼠來顯示選
 click or mouse over to show menus?	common	zt	點選或是移動滑鼠來顯示選單？
 close	common	zt	關閉
 cocos (keeling) islands	common	zt	COCOS (KEELING) ISLANDS
+collapsed borders	htmlarea-TableOperations	zt	展開的框線
 colombia	common	zt	COLOMBIA
+color	htmlarea-TableOperations	zt	顏色
 comoros	common	zt	COMOROS
 company	common	zt	公司
 config password	common	zt	設定管理員密碼
@@ -131,13 +156,16 @@ copy selection	htmlarea	zt	複製選取的
 costa rica	common	zt	COSTA RICA
 cote d ivoire	common	zt	COTE D IVOIRE
 create	common	zt	建立
+create a link	htmlarea-ContextMenu	zt	建立一個連結
 created by	common	zt	建立者
 croatia	common	zt	CROATIA
 cuba	common	zt	CUBA
 currency	common	zt	貨幣
 current	common	zt	現在
 current style	htmlarea	zt	目前樣式
+current url is	htmlarea-ContextMenu	zt	目前網址是
 current users	common	zt	線上使用者
+cut	htmlarea-ContextMenu	zt	減下
 cut selection	htmlarea	zt	剪下選取的
 cyprus	common	zt	CYPRUS
 czech republic	common	zt	CZECH REPUBLIC
@@ -145,15 +173,23 @@ date	common	zt	日期
 date due	common	zt	到期日期
 date selection:	jscalendar	zt	選擇日期：
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zt	時間服務埠。<br>如果使用13埠，在送出之前記得檢查您的防火牆設定。<br>(Port: 13 / Host: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	zt	刪除欄位
 december	common	zt	十二月
+decimal numbers	htmlarea-ListType	zt	十進位數字
 decrease indent	htmlarea	zt	減少邊緣
 default category	common	zt	預設分類
 delete	common	zt	移除
+delete cell	htmlarea-TableOperations	zt	刪除儲存格
+delete column	htmlarea-TableOperations	zt	刪除欄位
+delete row	htmlarea-TableOperations	zt	刪除列
+delete the current column	htmlarea-ContextMenu	zt	刪除目前欄位
+delete the current row	htmlarea-ContextMenu	zt	刪除目前列
 denmark	common	zt	DENMARK
 description	common	zt	說明
 detail	common	zt	詳細
 details	common	zt	詳細
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zt	在PNG圖檔中停用IE 5.5或更新版本的修正來顯示透明效果
+dictionary	htmlarea-SpellChecker	zt	字典
 disable internet explorer png-image-bugfix	common	zt	停用 IE png-image-bugfix
 disable slider effects	common	zt	停用切換效果
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zt	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
@@ -163,6 +199,9 @@ display monday first	jscalendar	zt	星期一在首
 display sunday first	jscalendar	zt	星期日在首
 djibouti	common	zt	DJIBOUTI
 do you also want to delete all subcategories ?	common	zt	您確定要刪除所有的子分類？
+doctype:	common	zt	文件類型：
+document properties	common	zt	文件屬性
+document title:	common	zt	文件標題：
 domain	common	zt	網址
 domain name for mail-address, eg. "%1"	common	zt	電子郵件信箱的網址, 例如： "%1"
 domestic	common	zt	國內的
@@ -181,6 +220,7 @@ egroupware api version %1	common	zt	eGroupWare API 版本 %1
 egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare: 使用者鎖定 '%1', IP %2
 egypt	common	zt	EGYPT
 el salvador	common	zt	EL SALVADOR
+element...	htmlarea-ContextMenu	zt	元件...
 email	common	zt	E-Mail
 email-address of the user, eg. "%1"	common	zt	使用者的電子郵件, 例： "%1"
 enabled	common	zt	啟用
@@ -198,23 +238,27 @@ error deleting %1 %2 directory	common	zt	無法移除目錄 %1 %2
 error renaming %1 %2 directory	common	zt	無法更名目錄 %1 %2
 estonia	common	zt	ESTONIA
 ethiopia	common	zt	ETHIOPIA
-exact	common	zt	正確的
+exact	common	zt	解開
 falkland islands (malvinas)	common	zt	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	zt	FAROE ISLANDS
 fax number	common	zt	傳真號碼
 february	common	zt	二月
+fg color	htmlarea-TableOperations	zt	前端顏色
 fields	common	zt	欄位
 fiji	common	zt	FIJI
 files	common	zt	檔案
 filter	common	zt	篩選
+finished list of mispelled words	htmlarea-SpellChecker	zt	完成列出拼錯的字
 finland	common	zt	FINLAND
 first name	common	zt	名
 first name of the user, eg. "%1"	common	zt	使用者的名, 例如： "%1"
 first page	common	zt	第一頁
 firstname	common	zt	名
 fixme!	common	zt	修正！
+float	htmlarea-TableOperations	zt	浮點數
 font color	htmlarea	zt	字型顏色
 force selectbox	common	zt	強制使用選取方塊
+frames	htmlarea-TableOperations	zt	框架
 france	common	zt	FRANCE
 french guiana	common	zt	FRENCH GUIANA
 french polynesia	common	zt	FRENCH POLYNESIA
@@ -257,6 +301,7 @@ header admin login	common	zt	頁首管理員登入
 header password	common	zt	密碼
 header username	common	zt	帳號
 heard island and mcdonald islands	common	zt	HEARD ISLAND AND MCDONALD ISLANDS
+height	htmlarea-TableOperations	zt	高度
 help	common	zt	協助
 help using editor	htmlarea	zt	協助使用編輯器
 high	common	zt	高
@@ -267,14 +312,39 @@ home email	common	zt	主要信箱
 honduras	common	zt	HONDURAS
 hong kong	common	zt	香港
 horizontal rule	htmlarea	zt	合併規則
+how did you get here? (please report!)	htmlarea-ContextMenu	zt	您從哪裡連到這兒(請回報)？
+how many columns would you like to merge?	htmlarea-TableOperations	zt	您想要合併多少欄位？
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zt	在導覽列要顯示多少圖示(每頁的最上方)，多出的圖示會顯示在另外一個導覽列最右方的下拉式選單
+how many rows would you like to merge?	htmlarea-TableOperations	zt	您想要合併多少列？
+html tidy	htmlarea-HtmlTidy	zt	HTML整理
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	zt	HTMLArea無法刪除這一列的最後一個儲存格
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	zt	HTMLArea無法刪除這個資料表的最後一個欄位
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	zt	HTMLArea無法刪除這個資料表的最後一列
 hungary	common	zt	HUNGARY
+i will open it in a new page.	htmlarea-SpellChecker	zt	在新視窗開啟
+i_nsert row before	htmlarea-ContextMenu	zt	在插入列之前
 iceland	common	zt	ICELAND
+ignore	htmlarea-SpellChecker	zt	忽略
+ignore all	htmlarea-SpellChecker	zt	全部忽略
+image url	htmlarea-TableOperations	zt	圖片網址
+in_sert row after	htmlarea-ContextMenu	zt	在插入列之後
 increase indent	htmlarea	zt	增加邊緣
 india	common	zt	INDIA
 indonesia	common	zt	INDONESIA
+insert _column before	htmlarea-ContextMenu	zt	在插入欄位之前
+insert a new column after the current one	htmlarea-ContextMenu	zt	在這一欄之後新增一個
+insert a new column before the current one	htmlarea-ContextMenu	zt	在這一欄之前新增一個
+insert a new row after the current one	htmlarea-ContextMenu	zt	在這一列之後新增一個
+insert a new row before the current one	htmlarea-ContextMenu	zt	在這一列之前新增一個
 insert all %1 addresses of the %2 contacts in %3	common	zt	在 %3 插入 %1 的 %2 筆聯絡人位址
+insert c_olumn after	htmlarea-ContextMenu	zt	在插入欄位之後
+insert cell after	htmlarea-TableOperations	zt	儲存格插在後面
+insert cell before	htmlarea-TableOperations	zt	儲存格插在前面
+insert column after	htmlarea-TableOperations	zt	欄位插在後面
+insert column before	htmlarea-TableOperations	zt	欄位插在前面
 insert image	htmlarea	zt	插入圖片
+insert row after	htmlarea-TableOperations	zt	列插在後面
+insert row before	htmlarea-TableOperations	zt	列插在前面
 insert table	htmlarea	zt	插入表格
 insert web link	htmlarea	zt	插入連結
 international	common	zt	國際
@@ -295,10 +365,11 @@ jordan	common	zt	JORDAN
 july	common	zt	七月
 jun	common	zt	六月
 june	common	zt	六月
-justify center	htmlarea	zt	置中
-justify full	htmlarea	zt	全螢幕
-justify left	htmlarea	zt	靠左
-justify right	htmlarea	zt	靠右
+justify	htmlarea-TableOperations	zt	分散對齊
+justify center	common	zt	置中
+justify full	common	zt	全螢幕
+justify left	common	zt	靠左
+justify right	common	zt	靠右
 kazakstan	common	zt	KAZAKSTAN
 kenya	common	zt	KENYA
 keywords	common	zt	關鍵字
@@ -314,12 +385,16 @@ last name of the user, eg. "%1"	common	zt	使用者的姓，例： "%1"
 last page	common	zt	最後一頁
 lastname	common	zt	姓
 latvia	common	zt	LATVIA
-lebanon	common	zt	LEBANON
+layout	htmlarea-TableOperations	zt	版面
+ldap-mgr	common	zt	LDAP管理員
+lebanon	common	zt	黎巴嫩
+left	htmlarea-TableOperations	zt	左
 lesotho	common	zt	LESOTHO
-liberia	common	zt	LIBERIA
+liberia	common	zt	賴比瑞亞
 libyan arab jamahiriya	common	zt	LIBYAN ARAB JAMAHIRIYA
 license	common	zt	版權
 liechtenstein	common	zt	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	zt	連結點：
 list	common	zt	列表
 list members	common	zt	列出會員
 lithuania	common	zt	LITHUANIA
@@ -328,6 +403,9 @@ login	common	zt	登入
 loginid	common	zt	登入帳號
 logout	common	zt	登出
 low	common	zt	低
+lower greek letters	htmlarea-ListType	zt	小寫希臘字母
+lower latin letters	htmlarea-ListType	zt	小寫拉丁字母
+lower roman numbers	htmlarea-ListType	zt	小寫羅馬字母
 lowest	common	zt	最低
 luxembourg	common	zt	LUXEMBOURG
 macau	common	zt	MACAU
@@ -337,12 +415,14 @@ mail domain, eg. "%1"	common	zt	郵件網址, 例： "%1"
 main category	common	zt	主要分類
 main screen	common	zt	主畫面
 maintainer	common	zt	維護者
+make lin_k...	htmlarea-ContextMenu	zt	建立連結...
 malawi	common	zt	MALAWI
 malaysia	common	zt	MALAYSIA
 maldives	common	zt	MALDIVES
 mali	common	zt	MALI
 malta	common	zt	MALTA
 march	common	zt	三月
+margin	htmlarea-TableOperations	zt	邊緣
 marshall islands	common	zt	MARSHALL ISLANDS
 martinique	common	zt	MARTINIQUE
 mauritania	common	zt	MAURITANIA
@@ -352,9 +432,12 @@ may	common	zt	五月
 mayotte	common	zt	MAYOTTE
 medium	common	zt	中等
 menu	common	zt	選單
+merge cells	htmlarea-TableOperations	zt	合併
 message	common	zt	訊息
 mexico	common	zt	MEXICO
 micronesia, federated states of	common	zt	MICRONESIA, FEDERATED STATES OF
+middle	htmlarea-TableOperations	zt	中間
+modify url	htmlarea-ContextMenu	zt	修改網址
 moldova, republic of	common	zt	MOLDOVA, REPUBLIC OF
 monaco	common	zt	MONACO
 monday	common	zt	星期一
@@ -387,6 +470,9 @@ niue	common	zt	NIUE
 no	common	zt	否
 no entries found, try again ...	common	zt	找不到任何資料，請重試
 no history for this record	common	zt	這筆紀錄沒有歷史資料
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	zt	透過選擇的字典查詢不到拼錯的字
+no rules	htmlarea-TableOperations	zt	沒有規則
+no sides	htmlarea-TableOperations	zt	沒有邊
 no subject	common	zt	無主題
 none	common	zt	無
 norfolk island	common	zt	NORFOLK ISLAND
@@ -408,11 +494,14 @@ only private	common	zt	只有私人的
 only yours	common	zt	屬於您的資料
 open notify window	common	zt	開啟警示視窗
 open popup window	common	zt	開啟彈出式視窗
+opens this link in a new window	htmlarea-ContextMenu	zt	在新視窗中開啟連結
 ordered list	htmlarea	zt	已排序清單
 original	common	zt	原本的
+original word	htmlarea-SpellChecker	zt	原本的字
 other	common	zt	其它
 overview	common	zt	總覽
 owner	common	zt	擁有者
+padding	htmlarea-TableOperations	zt	間隔
 page	common	zt	頁
 page was generated in %1 seconds	common	zt	網頁花費 %1 秒產生
 pakistan	common	zt	PAKISTAN
@@ -426,35 +515,47 @@ parent category	common	zt	上一層分類
 password	common	zt	密碼
 password could not be changed	common	zt	無法修改密碼
 password has been updated	common	zt	已成功更新密碼
+paste	htmlarea-ContextMenu	zt	貼上
 paste from clipboard	htmlarea	zt	從剪貼簿貼上
 path	htmlarea	zt	路徑
 path to user and group files has to be outside of the webservers document-root!!!	common	zt	使用者與群組的檔案路徑必須要在網站伺服器的網頁跟目錄之外！
 pattern for search in addressbook	common	zt	在通訊錄的搜尋模式
 pattern for search in calendar	common	zt	在行事曆的搜尋模式
 pattern for search in projects	common	zt	在專案管理的搜尋模式
+percent	htmlarea-TableOperations	zt	百分比
 permissions to the files/users directory	common	zt	檔案/使用者資料夾的權限
 personal	common	zt	個人
 peru	common	zt	PERU
 philippines	common	zt	PHILIPPINES
 phone number	common	zt	電話
-egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
+phpgroupware: login blocked for user '%1', ip %2	common	zt	phpGroupWare：'%1'帳號鎖定了, IP %2
 pitcairn	common	zt	PITCAIRN
+pixels	htmlarea-TableOperations	zt	畫素
 please %1 by hand	common	zt	請手動 %1
+please click into some cell	htmlarea-TableOperations	zt	請點選一些儲存格
+please confirm that you want to open this link	htmlarea-SpellChecker	zt	請確認您要開啟這個連結
+please confirm that you want to remove this element:	htmlarea-ContextMenu	zt	請確認您要移除這個元件
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	zt	請確認您要移除這個元件
 please enter a name	common	zt	請輸入名稱！
 please run setup to become current	common	zt	請執行設定程式以到目前的
 please select	common	zt	請選擇
 please set your global preferences	common	zt	請設定您的全域設定
 please set your preferences for this application	common	zt	請設定這個應用程式的個人喜好設定
+please wait.  calling spell checker.	htmlarea-SpellChecker	zt	檢查中，請等待
 please wait...	common	zt	請等待...
+please wait: changing dictionary to	htmlarea-SpellChecker	zt	切換字典中，請等待
+pliz weit ;-)	htmlarea-SpellChecker	zt	請等待
 poland	common	zt	POLAND
 portugal	common	zt	PORTUGAL
 postal	common	zt	郵遞區號
-powered by egroupware version %1	common	zt	此軟體為 <a href="http://www.egroupware.org">eGroupWare</a> %1 版。
+powered by egroupware version %1	common	zt	系統為 <a href="http://www.egroupware.org">eGroupWare</a> 版本 %1
+powered by phpgroupware version %1	common	zt	此軟體為 <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 版。
 preferences	common	zt	喜好設定
 preferences for the idots template set	common	zt	idots樣板的設定
 prev. month (hold for menu)	jscalendar	zt	上一個月(在選單中)
 prev. year (hold for menu)	jscalendar	zt	上一年(在選單中)
 previous page	common	zt	上一頁
+primary style-sheet:	common	zt	主要樣式表：
 print	common	zt	列印
 priority	common	zt	優先權
 private	common	zt	私人
@@ -462,17 +563,31 @@ project	common	zt	專案
 public	common	zt	共用
 puerto rico	common	zt	PUERTO RICO
 qatar	common	zt	QATAR
+re-check	htmlarea-SpellChecker	zt	重新檢查
 read	common	zt	讀取
 read this list of methods.	common	zt	讀取這個方法的列表
 redoes your last action	htmlarea	zt	重新執行最後一個動作
 reject	common	zt	拒絕
 remove selected accounts	common	zt	移除選取的帳號
+remove the	htmlarea-ContextMenu	zt	移除
+remove this node from the document	htmlarea-ContextMenu	zt	從文件中移除這個節點
 rename	common	zt	更名
+replace	htmlarea-SpellChecker	zt	取代
+replace all	htmlarea-SpellChecker	zt	全部取代
+replace with	htmlarea-SpellChecker	zt	取代於
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zt	傳回系統的完整帳號清單。注意：傳回的資料量可能非常多
 returns an array of todo items	common	zt	傳回待辦事項所有項目成為陣列
 returns struct of users application access	common	zt	傳回使用者應用程式存取架構
 reunion	common	zt	REUNION
+revert	htmlarea-SpellChecker	zt	反轉
+right	htmlarea-TableOperations	zt	右
+ro_w properties...	htmlarea-ContextMenu	zt	列屬性...
 romania	common	zt	ROMANIA
+row properties	htmlarea-TableOperations	zt	列屬性
+rules	htmlarea-TableOperations	zt	規則
+rules will appear between all rows and columns	htmlarea-TableOperations	zt	規則會在所有列與欄中顯示
+rules will appear between columns only	htmlarea-TableOperations	zt	規則只會在所有欄中顯示
+rules will appear between rows only	htmlarea-TableOperations	zt	規則只會在所有列中顯示
 russian federation	common	zt	RUSSIAN FEDERATION
 rwanda	common	zt	RWANDA
 saint helena	common	zt	SAINT HELENA
@@ -488,7 +603,7 @@ saudi arabia	common	zt	SAUDI ARABIA
 save	common	zt	儲存
 search	common	zt	搜尋
 search %1 '%2'	common	zt	搜尋 %1 '%2'
-search or select accounts	common	zt	搜尋或是選取帳號
+search or select accounts	common	zt	搜尋或是選擇帳號
 section	common	zt	選擇
 select	common	zt	選擇
 select all %1 %2 for %3	common	zt	選擇 %3 的所有 %1 %2
@@ -499,7 +614,7 @@ select home email address	common	zt	選擇家用信箱
 select one	common	zt	選擇一個
 select user	common	zt	選擇使用者
 select work email address	common	zt	選擇工作用信箱
-selection	common	zt	選取
+selection	common	zt	選擇
 send	common	zt	送出
 senegal	common	zt	SENEGAL
 september	common	zt	九月
@@ -515,6 +630,10 @@ show all categorys	common	zt	顯示全部類別
 show menu	common	zt	顯示選單
 show page generation time	common	zt	顯示網頁產生時間
 show page generation time on the bottom of the page?	common	zt	將網頁產生時間顯示在頁尾？
+show the image properties dialog	htmlarea-ContextMenu	zt	顯示圖片屬性對話框
+show the table cell properties dialog	htmlarea-ContextMenu	zt	顯示表單儲存格屬性對話框
+show the table properties dialog	htmlarea-ContextMenu	zt	顯示表格屬性對話框
+show the table row properties dialog	htmlarea-ContextMenu	zt	顯示表格列屬性對話框
 show_more_apps	common	zt	show_more_apps
 showing %1	common	zt	顯示 %1
 showing %1 - %2 of %3	common	zt	顯示 %1 - %2 之 %3
@@ -527,18 +646,28 @@ somalia	common	zt	SOMALIA
 sorry, your login has expired	login	zt	抱歉，您的帳號已經過期
 south africa	common	zt	SOUTH AFRICA
 south georgia and the south sandwich islands	common	zt	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	htmlarea-TableOperations	zt	空間
+spacing and padding	htmlarea-TableOperations	zt	空間與間隔
 spain	common	zt	SPAIN
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	zt	文法檢查完成，沒有發現任何錯誤，正在關閉...
+spell-check	htmlarea-SpellChecker	zt	文法檢查
+split cell	htmlarea-TableOperations	zt	切割儲存格
+split column	htmlarea-TableOperations	zt	切割欄
+split row	htmlarea-TableOperations	zt	切割列
 sri lanka	common	zt	SRI LANKA
 start date	common	zt	開始日期
 start time	common	zt	開始時間
 start with	common	zt	開始於
 status	common	zt	狀態
 strikethrough	htmlarea	zt	突破
+style [css]	htmlarea-TableOperations	zt	樣式[CSS]
 subject	common	zt	主題
 submit	common	zt	送出
 subscript	htmlarea	zt	下標
 substitutions and their meanings:	common	zt	替代項目與他們的意義：
 sudan	common	zt	SUDAN
+suggestions	htmlarea-SpellChecker	zt	建議
+summary	htmlarea-TableOperations	zt	摘要
 sunday	common	zt	星期日
 superscript	htmlarea	zt	上標
 suriname	common	zt	SURINAME
@@ -547,17 +676,27 @@ swaziland	common	zt	SWAZILAND
 sweden	common	zt	SWEDEN
 switzerland	common	zt	SWITZERLAND
 syrian arab republic	common	zt	SYRIAN ARAB REPUBLIC
-taiwan	common	zt	TAIWAN/TAIPEI
+table properties	htmlarea-TableOperations	zt	表格屬性
+taiwan	common	zt	台灣/台北
 tajikistan	common	zt	TAJIKISTAN
 tanzania, united republic of	common	zt	TANZANIA, UNITED REPUBLIC OF
+text align	htmlarea-TableOperations	zt	文字對齊
+text color:	common	zt	文字顏色：
 thailand	common	zt	THAILAND
 the api is current	common	zt	應用程式介面是最新的
 the api requires an upgrade	common	zt	應用程式介面需要升級
+the bottom side only	htmlarea-TableOperations	zt	只顯示在下方
 the following applications require upgrades	common	zt	下列應用程式需要升級
+the left-hand side only	htmlarea-TableOperations	zt	只顯示在左方
 the mail server returned	common	zt	郵件伺服器傳回
+the right and left sides only	htmlarea-TableOperations	zt	只顯示在左右方
+the right-hand side only	htmlarea-TableOperations	zt	只顯示在右方
+the top and bottom sides only	htmlarea-TableOperations	zt	只顯示在上下方
+the top side only	htmlarea-TableOperations	zt	只顯示在上方
 this application is current	common	zt	這個應用程式是最新的
 this application requires an upgrade	common	zt	這個應用程式需要升級
 this name has been used already	common	zt	這個名字已被使用！
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	zt	這會移除所有異動並且關閉文法檢查，請確認
 thursday	common	zt	星期四
 time	common	zt	時間
 time selection:	jscalendar	zt	選取的時間：
@@ -575,6 +714,7 @@ togo	common	zt	TOGO
 tokelau	common	zt	TOKELAU
 tonga	common	zt	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zt	太多錯誤的登入：%1 使用者 '%2', %3 IP %4
+top	htmlarea-TableOperations	zt	頂部
 total	common	zt	總計
 trinidad and tobago	common	zt	TRINIDAD AND TOBAGO
 tuesday	common	zt	星期二
@@ -592,7 +732,12 @@ united kingdom	common	zt	UNITED KINGDOM
 united states	common	zt	UNITED STATES
 united states minor outlying islands	common	zt	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	zt	未知
+unlink the current element	htmlarea-ContextMenu	zt	移除目前元件
+unset color	htmlarea-TableOperations	zt	重設顏色
 update	common	zt	更新
+upload image	htmlarea-UploadImage	zt	上傳圖片
+upper latin letters	htmlarea-ListType	zt	大寫拉丁字母
+upper roman numbers	htmlarea-ListType	zt	大寫羅馬字母
 url	common	zt	網址
 uruguay	common	zt	URUGUAY
 use button to search for	common	zt	使用按鈕搜尋
@@ -609,6 +754,7 @@ uzbekistan	common	zt	UZBEKISTAN
 vanuatu	common	zt	VANUATU
 venezuela	common	zt	VENEZUELA
 version	common	zt	版本
+vertical align	htmlarea-TableOperations	zt	垂直對齊
 viet nam	common	zt	VIET NAM
 view	common	zt	檢視
 virgin islands, british	common	zt	VIRGIN ISLANDS, BRITISH
@@ -618,6 +764,7 @@ wednesday	common	zt	星期三
 welcome	common	zt	歡迎光臨
 western sahara	common	zt	WESTERN SAHARA
 which groups	common	zt	哪個群組
+width	htmlarea-TableOperations	zt	寬度
 wk	jscalendar	zt	星期
 work email	common	zt	工作信箱
 written by:	common	zt	作者：
@@ -626,6 +773,7 @@ yemen	common	zt	YEMEN
 yes	common	zt	是
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zt	您目前在文字模式，使用[<>]按鈕來切換所見即所得編輯器。
 you are required to change your password during your first login	common	zt	您必須在第一次登入時修改您的密碼
+you are running a newer version of phpgroupware than your database is setup for	common	zt	您現在所使用的 phpGroupWare 版本比您的資料庫設定的版本還新。
 you have been successfully logged out	login	zt	您已經成功登出。
 you have not entered a title	common	zt	您尚未輸入標題
 you have not entered a valid date	common	zt	您尚未輸入正確的日期
