@@ -141,6 +141,7 @@
 		function contacts_($useacl=True)
 		{
 			$this->db = $GLOBALS['phpgw']->db;
+			$this->db2 = $GLOBALS['phpgw']->db;
 			if($useacl)
 			{
 				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
@@ -502,7 +503,6 @@
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
 			}
-			$this->db2 = $this->db;
 
 			$i = 0;
 			while ($this->db->next_record())
