@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - API jsCalendar wrapper-class                              *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - API jsCalendar wrapper-class                                *
+  * http://www.eGroupWare.org                                                *
   * Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
