@@ -93,7 +93,7 @@
 		*/
 		function aclFilter($filter = False)
 		{
-			ereg('.*(own|privat|all|none|user)([0-9]*).*',$filter_was=$filter,$vars);
+			preg_match('/(own|privat|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
 			$filter = $vars[1];
 			$f_user   = intval($vars[2]);
 
@@ -161,7 +161,7 @@
 		*/
 		function statusFilter($filter = '')
 		{
-			ereg('.*(done|open|offer).*',$filter,$vars);
+			preg_match('/(done|open|offer)/',$filter,$vars);
 			$filter = $vars[1];
 
 			switch ($filter)
@@ -185,7 +185,7 @@
 		*/
 		function dateFilter($filter = '')
 		{
-			ereg('.*(upcoming|today|overdue|date)([-/.0-9]*).*',$filter,$vars);
+			preg_match('/(upcoming|today|overdue|date)([-\\/.0-9]*)/',$filter,$vars);
 			$filter = $vars[1];
 
 			if (isset($vars[2]) && !empty($vars[2]) && ($date = split('[-/.]',$vars[2])))
