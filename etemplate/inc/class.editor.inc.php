@@ -1009,7 +1009,7 @@
 				($old_type == 'grid') == ($widget['type'] == 'grid'))
 			{
 				if ($this->etemplate->widgets_with_children[$widget['type']] == 'box')	// box
-				{echo "fix2box";
+				{
 					if ((int) $widget['size'] < 1)	// min. 1 child
 					{
 						list(,$options) = explode(',',$widget['size'],2);
