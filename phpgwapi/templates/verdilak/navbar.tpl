@@ -29,4 +29,5 @@
    <table border="0" cellpadding="5" width="100%">
     <tr>
      <td>
+<center>{messages}</center>
 <!-- END navbar -->
