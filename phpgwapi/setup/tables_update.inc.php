@@ -1017,4 +1017,14 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.013';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-?>
+
+	$test[] = '0.9.99.013';
+	function phpgwapi_upgrade0_9_99_013()
+	{
+		// this update fixes the problem that some users cant change their password
+		// it was caused be 0 acl_rights values in groups (inserted by setup::add_acl which is fixed too)
+		$GLOBALS['phpgw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_appname='preferences' AND acl_location='changepassword' AND acl_rights=0");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.014';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}

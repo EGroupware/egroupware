@@ -1004,7 +1004,14 @@
 			}
 			foreach($apps as $app)
 			{
-				$this->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('$app','$location',$account,$rights)");
+				if ($rights)
+				{
+					$this->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('$app','$location',$account,$rights)");
+				}
+				else
+				{
+					$this->db->query("DELETE FROM phpgw_acl WHERE acl_appname='$app' AND acl_location='$location' AND acl_account=$account");
+				}
 			}
 		}
 	}
