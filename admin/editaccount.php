@@ -154,7 +154,7 @@
 
 		// create apps output
 		@reset($db_perms);
-		for ($i=0;$i<=count($perm_display);$i++) 
+		for ($i=0;$i<count($perm_display);$i++) 
 		{
 			$checked = '';
 			if ($_userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
