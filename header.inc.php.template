@@ -16,7 +16,7 @@
   * !!!!!!! DONT TOUCH THESE LINES !!!!!!!!                                   *
   * This flushes out any vars from the url for security reason               *
   \**************************************************************************/
-  $sec_clean = $phpgw_info["flags"]
+  $sec_clean = $phpgw_info["flags"];
   $phpgw_info = array();
   $phpgw_info["flags"] = $sec_clean;
   unset ($sec_clean);
