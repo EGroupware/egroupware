@@ -42,17 +42,20 @@
 		var $pdb_record_header_size	= 8;	// Size of a text record header (don't touch either!)
 
 		/**
-		 * Convert a integer value to a two bytes value string
-		 */
-		function int2($value) {
+		* Convert a integer value to a two bytes value string
+		*/
+		function int2($value)
+		{
 			return sprintf("%c%c", $value / 256, $value % 256);	
 		}
 
 		/**
-		 * Convert a integer value to a four bytes value string
-		 */
-		function int4($value) {
-			for ($i=0; $i<4; $i++) {
+		* Convert a integer value to a four bytes value string
+		*/
+		function int4($value)
+		{
+			for ($i=0; $i<4; $i++)
+			{
 				$b[$i] = $value % 256;
 				$value = (int)(($value - $b[$i]) / 256);
 			}
@@ -60,20 +63,25 @@
 		}
 
 		/**
-		 * Writes the header of the pdb file containing the title of the document
-		 * and different parameters including its size
-		 */
-		function write_header($fd, $title, $content_length) {
+		* Writes the header of the pdb file containing the title of the document
+		* and different parameters including its size
+		*/
+		function write_header($fd, $title, $content_length)
+		{
 			// ============ File header =========================================
 			// Title of the document, it's limited to 31 characters
 			if (strlen($title) > 31)
+			{
 				$title = substr($title, 0, 31);
+			}
 			fwrite($fd, $title);
 
 			// Completion with null '\0' characters
 			for ($i=0; $i<32-strlen($title); $i++)
+			{
 				fwrite($fd, sprintf("%c", 0), 1);
-		
+			}
+
 			// attributes & version fields
 			fwrite($fd, $this->int2(0));
 			fwrite($fd, $this->int2(0));
@@ -101,7 +109,9 @@
 			$notfull_tr	= $content_length % $this->record_size;
 			$num_records = $full_tr;
 			if ($notfull_tr != 0)
+			{
 				$num_records++;
+			}
 
 			// + 1 cause of record 0
 			fwrite($fd, $this->int2($num_records + 1));
@@ -115,7 +125,8 @@
 			fwrite($fd, $this->int4($index++));
 
 			$val	= 110 + ($num_offsets - 2) * 8;
-			while (--$num_offsets != 0) {
+			while (--$num_offsets != 0)
+			{
 				fwrite($fd, $this->int4($val));
 				$val += 4096;
 				fwrite($fd, $this->int4($index++));
@@ -130,15 +141,16 @@
 			fwrite($fd, $this->int2($num_records));	// num records
 			fwrite($fd, $this->int2($this->record_size));	// record size
 			fwrite($fd, $this->int4(0));				// Reserved2
-		
+
 		}
 
 		/**
-		 * Writes the given text, title on the given file descriptor
-		 * Note: It's saved as uncompressed doc
-		 * Note2: File descriptor is not closed at the end of the function
-		 */
-		function write($fd, $content, $title) {
+		* Writes the given text, title on the given file descriptor
+		* Note: It's saved as uncompressed doc
+		* Note2: File descriptor is not closed at the end of the function
+		*/
+		function write($fd, $content, $title)
+		{
 			// Write header
 			$this->write_header($fd, $title, strlen($content));
 
@@ -150,18 +162,21 @@
 		}
 
 		/**
-		 * Reads the header of the pdb file
-		 * and different parameters including its size
-		 */
-		function read_header($fd) {
+		* Reads the header of the pdb file
+		* and different parameters including its size
+		*/
+		function read_header($fd)
+		{
 			// ============ File header =========================================
 			// Title of the document, it's limited to 31 characters
 			$title = fread(31,$fd);
 
 			// Completion with null '\0' characters
 			for ($i=0; $i<32-strlen($title); $i++)
+			{
 				fwrite($fd, sprintf("%c", 0), 1);
-		
+			}
+
 			// attributes & version fields
 			fwrite($fd, $this->int2(0));
 			fwrite($fd, $this->int2(0));
@@ -189,7 +204,9 @@
 			$notfull_tr	= $content_length % $this->record_size;
 			$num_records = $full_tr;
 			if ($notfull_tr != 0)
+			{
 				$num_records++;
+			}
 
 			// + 1 cause of record 0
 			fwrite($fd, $this->int2($num_records + 1));
@@ -203,7 +220,8 @@
 			fwrite($fd, $this->int4($index++));
 
 			$val	= 110 + ($num_offsets - 2) * 8;
-			while (--$num_offsets != 0) {
+			while (--$num_offsets != 0)
+			{
 				fwrite($fd, $this->int4($val));
 				$val += 4096;
 				fwrite($fd, $this->int4($index++));
@@ -218,15 +236,14 @@
 			fwrite($fd, $this->int2($num_records));	// num records
 			fwrite($fd, $this->int2($this->record_size));	// record size
 			fwrite($fd, $this->int4(0));				// Reserved2
-		
 		}
 
-
 		/**
-		 * Reads a pdb from the given file descriptor
-		 * Note2: File descriptor is not closed at the end of the function
-		 */
-		function read($fd) {
+		* Reads a pdb from the given file descriptor
+		* Note2: File descriptor is not closed at the end of the function
+		*/
+		function read($fd)
+		{
 			// Read header
 			$header = $this->read_header($fd);
 
@@ -237,11 +254,11 @@
 			flush($fd);
 		}
 
-
 		/**
-		 * Creates a palmdoc and force the user to download it
-		 */
-		function fetch($content, $title, $document) {
+		* Creates a palmdoc and force the user to download it
+		*/
+		function fetch($content, $title, $document)
+		{
 			// Creates a temp file to put the current doc
 			$tempfile = tempnam(".", "palm");
 
@@ -253,7 +270,7 @@
 			// Forces the download
 			header("Content-Type: application/force-download");
 			header("Content-Disposition: attachment; filename=\"$document\"");
-	
+
 			// And writes the file content on stdout
 			$fd = fopen("$tempfile", 'r');
 			$content = fread($fd, filesize($tempfile));
