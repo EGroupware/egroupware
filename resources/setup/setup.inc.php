@@ -29,7 +29,10 @@
 		'email' => 'egw@von-und-zu-weiss.de' 
 		); 
 		
-	$setup_info['resources']['hooks'][]	= 'admin';
+	$setup_info['resources']['hooks']['preferences']	= 'resources.admin_prefs_sidebox_hooks.all_hooks';
+	$setup_info['resources']['hooks']['admin']		= 'resources.admin_prefs_sidebox_hooks.all_hooks';
+	$setup_info['resources']['hooks']['sidebox_menu']	= 'resources.admin_prefs_sidebox_hooks.all_hooks';
+// 	$setup_info['resources']['hooks'][]	= 'admin';
 //	$setup_info['resources']['hooks'][]	= 'home';
 //	$setup_info['resources']['hooks'][]	= 'sidebox_menu';
 //	$setup_info['resources']['hooks'][]	= 'settings';

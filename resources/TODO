@@ -17,7 +17,6 @@ TODO:
 -edit / add
 	add accessories functionality
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
-	use eTemplates input validation
 	if only one cat is present --> chose it (eTemplate patch sent!)
 	make some returnmessages js dialogs
 	
