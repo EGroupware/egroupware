@@ -57,7 +57,6 @@
 			$this->app_name   = $app_name;
 			$this->db         = $GLOBALS['phpgw']->db;
 			$this->grants     = $GLOBALS['phpgw']->acl->get_grants($app_name);
-			$this->cats       = $this->return_array($type,$start,$limit,$query,$sort,$order,$globals,$parent_id);
 		}
 
 		/*!
@@ -204,7 +203,6 @@
 			return $cats;
 		}
 
-
 		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
 		{
 			if ($globals)
@@ -264,8 +262,6 @@
 
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 					. $querymethod;
-
-			//$mainselect = ' AND cat_level=0';
 
 			if ($limit)
 			{
@@ -344,7 +340,6 @@
 				}
 			}
 			$this->total_records = count($cats);
-
 			return $cats;
 		}
 
@@ -482,6 +477,76 @@
 			}
 		}
 
+		function formatted_xslt_list($data)
+		{
+			if(is_array($data))
+			{
+				$format = (isset($data['format'])?$data['format']:'select');
+				$type = (isset($data['type'])?$data['type']:'all');
+				$selected = (isset($data['selected'])?$data['selected']:'');
+				$globals = (isset($data['globals'])?$data['globals']:False);
+				$site_link = (isset($data['site_link'])?$data['site_link']:'site');
+			}
+
+			if (!is_array($selected))
+			{
+				$selected = explode(',',$selected);
+			}
+
+			if ($type != 'all')
+			{
+				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$globals);
+			}
+			else
+			{
+				$cats = $this->return_sorted_array($start,False,$query,$sort,$order,$globals);
+			}
+
+			if ($format == 'select')
+			{
+				while (is_array($cats) && list(,$cat) = each($cats))
+				{
+					$sel_cat = '';
+					if (in_array($cat['id'],$selected))
+					{
+						$sel_cat = 'selected';
+					}
+
+					$name = '';
+					for ($i=0;$i<$cat['level'];$i++)
+					{
+						$name .= '-';
+					}
+					$name .= $GLOBALS['phpgw']->strip_html($cat['name']);
+
+					if ($cat['app_name'] == 'phpgw')
+					{
+						$name .= ' <' . lang('Global') . '>';
+					}
+					if ($cat['owner'] == '-1')
+					{
+						$name .= ' <' . lang('Global') . ' ' . lang($this->app_name) . '>';
+					}
+
+					$cat_list[] = array
+					(
+						'id'		=> $cat['id'],
+						'name'		=> $name,
+						'selected_cat' => $sel_cat
+					);
+				}
+
+				for ($i=0;$i<count($cat_list);$i++)
+				{
+					if ($cat_list[$i]['selected_cat'] != 'selected')
+					{
+						unset($cat_list[$i]['selected_cat']);
+					}
+				}
+				return $cat_list;
+			}
+		}
+
 		/*!
 		@function add
 		@abstract add categories
@@ -521,47 +586,57 @@
 		@abstract delete category
 		@param $cat_id int - category id
 		*/
-		function delete($cat_id, $drop_subs = False, $modify_subs = False)
+		function delete($data)
 		{
-			if ($drop_subs)
+			if(is_array($data))
 			{
-				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
+				$cat_id			= $data['cat_id'];
+				$drop_subs		= (isset($data['drop_subs'])?$data['drop_subs']:False);
+				$modify_subs	= (isset($data['modify_subs'])?$data['modify_subs']:False);
 			}
 
-			if ($modify_subs)
+			if ($cat_id > 0)
 			{
-				$cats = $this->return_sorted_array('',False,'','','',False, $cat_id);
-
-				$new_parent = $this->id2name($cat_id,'parent');
-
-				for ($i=0;$i<count($cats);$i++)
+				if ($drop_subs)
 				{
-					if ($cats[$i]['level'] == 1)
+					$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
+				}
+
+				if ($modify_subs)
+				{
+					$cats = $this->return_sorted_array('',False,'','','',False, $cat_id);
+
+					$new_parent = $this->id2name($cat_id,'parent');
+
+					for ($i=0;$i<count($cats);$i++)
 					{
-						$this->db->query("UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main='" . intval($cats[$i]['id'])
+						if ($cats[$i]['level'] == 1)
+						{
+							$this->db->query("UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main='" . intval($cats[$i]['id'])
 										. "' WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
-						$new_main = $cats[$i]['id'];
-					}
-					else
-					{
-						if ($new_main)
-						{
-							$update_main = ',cat_main=' . $new_main;
+							$new_main = $cats[$i]['id'];
 						}
-
-						if ($cats[$i]['parent'] == $cat_id)
+						else
 						{
-							$update_parent = ',cat_parent=' . $new_parent;
-						}
+							if ($new_main)
+							{
+								$update_main = ',cat_main=' . $new_main;
+							}
 
-						$this->db->query("UPDATE phpgw_categories set cat_level='" . ($cats[$i]['level']-1) . "'" . $update_main . $update_parent 
-										. " WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+							if ($cats[$i]['parent'] == $cat_id)
+							{
+								$update_parent = ',cat_parent=' . $new_parent;
+							}
+
+							$this->db->query("UPDATE phpgw_categories set cat_level='" . ($cats[$i]['level']-1) . "'" . $update_main . $update_parent 
+											. " WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+						}
 					}
 				}
-			}
 
-			$this->db->query("DELETE FROM phpgw_categories WHERE cat_id='" . $cat_id . $subdelete . "'AND cat_appname='"
-							. $this->app_name . "'",__LINE__,__FILE__);
+				$this->db->query("DELETE FROM phpgw_categories WHERE cat_id='" . $cat_id . $subdelete . "'AND cat_appname='"
+								. $this->app_name . "'",__LINE__,__FILE__);
+			}
 		}
 
 		/*!
