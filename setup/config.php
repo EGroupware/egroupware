@@ -34,7 +34,7 @@
   if ($submit) {
      @$phpgw_setup->db->query("delete from phpgw_config");
      // This is only temp.
-     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('useframes','never')");
+     $phpgw_setup->db->query("insert into phpgw_config (config_app,config_name, config_value) values ('phpgwapi','useframes','never')");
      while ($newsetting = each($newsettings)) {
         if ($newsetting[0] == "nntp_server") {
  	      $phpgw_setup->db->query("select config_value FROM phpgw_config WHERE config_name='nntp_server'");
@@ -46,7 +46,7 @@
               }
            }
         }
-        $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('" . addslashes($newsetting[0])
+        $phpgw_setup->db->query("insert into phpgw_config (config_app,config_name, config_value) values ('phpgwapi','" . addslashes($newsetting[0])
                               . "','" . addslashes($newsetting[1]) . "')");
     }
     if ($newsettings["auth_type"] == "ldap") {

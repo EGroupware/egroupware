@@ -2034,6 +2034,29 @@
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.11.004";
 	}
 
+	$test[] = '0.9.11.004';
+	function upgrade0_9_11_004()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("create table phpgw_config_temp as select * from phpgw_config",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_config",__LINE__,__FILE__);
+
+      $sql = "CREATE TABLE phpgw_config (
+        config_app      varchar(50),
+        config_name     varchar(255) NOT NULL UNIQUE,
+        config_value    varchar(100) NOT NULL
+      )";
+      $phpgw_setup->db->query($sql,__LINE,__FILE__);
+
+		$phpgw_setup->db->query("insert into phpgw_config select * from phpgw_config_temp",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_config_temp",__LINE__,__FILE__);
+		$phpgw_setup->db->query("update phpgw_config set config_app='phpgwapi'",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.005';
+	}
+
+
     reset ($test);
     while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

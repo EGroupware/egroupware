@@ -49,6 +49,9 @@
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('htmlcompliant', 'False')");
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('checkfornewversion', 'False')");
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('freshinstall', 'True')");
+
+		// I didn't want to change all of these becuase of setup2 (jengo)
+		$phpgw_setup->db->query("update phpgw_config set config_app='phpgwapi'",__LINE__,__FILE__);
   }
 
   if ($useglobalconfigsettings == "on"){
@@ -85,6 +88,10 @@
       $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('httpproxy_port', '".$phpgw_info["server"]["httpproxy_port"]."')");
       $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('showpoweredbyon', '".$phpgw_info["server"]["showpoweredbyon"]."')");
       $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('checkfornewversion', '".$phpgw_info["server"]["checkfornewversion"]."')");
+
+		// I didn't want to change all of these becuase of setup2 (jengo)
+		$phpgw_setup->db->query("update phpgw_config set config_app='phpgwapi'",__LINE__,__FILE__);
+
     }else{
       echo "<table border=\"0\" align=\"center\">\n";
       echo "  <tr bgcolor=\"486591\">\n";

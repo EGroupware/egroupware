@@ -14,6 +14,7 @@
   // NOTE: Please use spaces to seperate the field names.  It makes copy and pasting easier.
 
   $sql = "CREATE TABLE phpgw_config (
+    config_app      varchar(50),
     config_name     varchar(255) NOT NULL UNIQUE,
     config_value    varchar(100) NOT NULL
   )";
@@ -328,7 +329,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.003';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.005';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>
