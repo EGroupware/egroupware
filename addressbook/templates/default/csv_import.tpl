@@ -1,10 +1,3 @@
-<p class=action>{lang_addr_action}<br>
-<hr noshade width="98%" align="center" size="1">
-<center>
-
-  <FORM {enctype} action="{action_url}" method="post">
-      <TABLE>
-
 <!-- BEGIN filename -->
      <TR>
        <TD>{lang_csvfile}</td>
@@ -59,7 +52,17 @@
    </TR>
 <!-- END imported -->
 
-</TABLE>
-{hiddenvars}</form>
+<!-- BEGIN import -->
+<p class=action>{lang_addr_action}<br>
+<hr noshade width="98%" align="center" size="1">
+<center>
+
+	<FORM {enctype} action="{action_url}" method="post">
+      <TABLE>
+			{rows}
+		</TABLE>
+		{hiddenvars}
+	</form>
 
 </CENTER>
+<!-- END import -->

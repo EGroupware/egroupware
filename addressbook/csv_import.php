@@ -19,12 +19,13 @@
 
 	$GLOBALS['phpgw']->contacts = createobject('phpgwapi.contacts');
 
-	$GLOBALS['phpgw']->template->set_file(array('import' => 'csv_import.tpl'));
-	$GLOBALS['phpgw']->template->set_block('import','filename','filenamehandle');
-	$GLOBALS['phpgw']->template->set_block('import','fheader','fheaderhandle');
-	$GLOBALS['phpgw']->template->set_block('import','fields','fieldshandle');
-	$GLOBALS['phpgw']->template->set_block('import','ffooter','ffooterhandle');
-	$GLOBALS['phpgw']->template->set_block('import','imported','importedhandle');
+	$GLOBALS['phpgw']->template->set_file(array('import_t' => 'csv_import.tpl'));
+	$GLOBALS['phpgw']->template->set_block('import_t','filename');
+	$GLOBALS['phpgw']->template->set_block('import_t','fheader');
+	$GLOBALS['phpgw']->template->set_block('import_t','fields');
+	$GLOBALS['phpgw']->template->set_block('import_t','ffooter');
+	$GLOBALS['phpgw']->template->set_block('import_t','imported');
+	$GLOBALS['phpgw']->template->set_block('import_t','import');
 
 	if($action == 'download' && (!$fieldsep || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 	{
@@ -135,7 +136,7 @@
 			$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
 			$hiddenvars .= '<input type="hidden" name="action" value="download">'."\n";
 
-			$GLOBALS['phpgw']->template->parse('filenamehandle','filename');
+			$GLOBALS['phpgw']->template->parse('rows','filename');
 			break;
 
 		case 'download':
@@ -150,7 +151,7 @@
 			$GLOBALS['phpgw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
 			$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
 			$GLOBALS['phpgw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-			$GLOBALS['phpgw']->template->parse('fheaderhandle','fheader');
+			$GLOBALS['phpgw']->template->parse('rows','fheader');
 			$hiddenvars .= '<input type="hidden" name="action" value="import">'."\n"
 				. '<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n";
 
@@ -192,17 +193,18 @@
 					$GLOBALS['phpgw']->template->set_var('trans','');
 					$GLOBALS['phpgw']->template->set_var('addr_fields',$addr_name_options);
 				}
-				$GLOBALS['phpgw']->template->parse('fieldshandle','fields',True); 
+				$GLOBALS['phpgw']->template->parse('rows','fields',True); 
 			}
 			$GLOBALS['phpgw']->template->set_var('lang_start',lang('Startrecord'));
 			$GLOBALS['phpgw']->template->set_var('start',$start);
 			$GLOBALS['phpgw']->template->set_var('lang_max',lang('Number of records to read (<=200)'));
 			$GLOBALS['phpgw']->template->set_var('max',200);
-			$GLOBALS['phpgw']->template->parse('ffooterhandle','ffooter'); 
+			$GLOBALS['phpgw']->template->parse('rows','ffooter',True); 
 			fclose($fp);
 			$old = $csvfile; $csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/addrbook_import_'.basename($csvfile);
 			rename($old,$csvfile); 
 			$hiddenvars .= '<input type="hidden" name="csvfile" value="'.$csvfile.'">';
+			$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
 			$help_on_trans = "<a name='help'><b>How to use Translation's</b><p>".
 				"Translations enable you to change / adapt the content of each CSV field for your needs. <br>".
 				"General syntax is: <b>pattern1 ${ASep} replacement1 ${PSep} ... ${PSep} patternN ${ASep} replacementN</b><br>".
@@ -370,11 +372,11 @@
 				$anz,'<a href="javascript:history.back()">','</a>') :
 				lang('%1 records imported',$anz));
 			$GLOBALS['phpgw']->template->set_var('log',$log);
-			$GLOBALS['phpgw']->template->parse('importedhandle','imported');
+			$GLOBALS['phpgw']->template->parse('rows','imported');
 			break;
 	}
 
 	$GLOBALS['phpgw']->template->set_var('hiddenvars',$hiddenvars);
-	$GLOBALS['phpgw']->template->pfp('out','import',True);
+	$GLOBALS['phpgw']->template->pfp('out','import');
 	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
