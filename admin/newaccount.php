@@ -16,29 +16,6 @@
   include("../header.inc.php");
   include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
-  function add_default_preferences($account_id)
-  {
-     global $phpgw;
-
-/*     $phpgw->common->preferences_add($account_id,"maxmatchs","common","15");
-     $phpgw->common->preferences_add($account_id,"theme","common","default");
-     $phpgw->common->preferences_add($account_id,"tz_offset","common","0");
-     $phpgw->common->preferences_add($account_id,"dateformat","common","m/d/Y");
-     $phpgw->common->preferences_add($account_id,"timeformat","common","12");
-     $phpgw->common->preferences_add($account_id,"lang","common","en");
-     $phpgw->common->preferences_add($account_id,"company","addressbook","True");
-     $phpgw->common->preferences_add($account_id,"lastname","addressbook","True");
-      $phpgw->common->preferences_add($account_id,"firstname","addressbook","True"); */
-
-     // Even if they don't have access to the calendar, we will add these.
-     // Its better then the calendar being all messed up, they will be deleted
-     // the next time the update there preferences.
-/*     $phpgw->common->preferences_add($account_id,"weekstarts","calendar","Monday");
-     $phpgw->common->preferences_add($account_id,"workdaystarts","calendar","9");
-     $phpgw->common->preferences_add($account_id,"workdayends","calendar","17");   */
-  }
-
-  
   if ($submit) {
      $totalerrors = 0;
 
@@ -75,7 +52,15 @@
             				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
             				        "passwd"    => $n_passwd,
             				        "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
-        
+        $phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_lid='$n_loginid'");
+	$phpgw->db->next_record();
+	$apps = explode(":",$phpgw->db->f("account_permissions"));
+	$phpgw->common->hook_single("add_def_pref", "admin");
+ 	for($i=1;$i<=sizeof($apps);$i++) {
+	  $appname = $apps[$i];
+	  $phpgw->common->hook_single("add_def_pref", $appname);
+	}
+	$phpgw->preferences->commit_newuser($n_loginid);
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
         exit;
      }

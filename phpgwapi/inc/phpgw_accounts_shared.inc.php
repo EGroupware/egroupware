@@ -230,6 +230,50 @@
       global $phpgw_info;
       $phpgw_info["user"]["preferences"][$app_name] = array();
     }
+
+    // This will commit preferences for a new user
+    function commit_newuser($n_loginid) {
+       global $phpgw;
+     
+       $db = $phpgw->db;
+       $db->lock(array("accounts"));
+       $db->query("SELECT account_id FROM accounts WHERE account_lid='".$n_loginid."'");
+       $db->next_record();
+       $id = $db->f("account_id");
+       $db->unlock();
+       $this->commit_user($id);
+    }
+
+    // This will commit preferences for a new user
+    function commit_user($id) {
+       global $phpgw_newuser, $phpgw;
+     
+       $db = $phpgw->db;
+       $db->lock(array("preferences"));
+       $db->query("SELECT * FROM preferences WHERE preference_owner=".$id);
+       if($db->num_rows()) {
+	 $db->query("UPDATE preferences SET preference_value = '"
+		. serialize($phpgw_newuser["user"]["preferences"])
+		. "' WHERE preference_owner=".$id,__LINE__,__FILE__);
+       } else {
+	 $db->query("insert into preferences (preference_owner,preference_value) values ("
+		. $id.",'".serialize($phpgw_newuser["user"]["preferences"])."')",__LINE__,__FILE__);
+       }
+       $db->unlock();
+       unset($phpgw_newuser);
+    }
+
+    // This will add all preferences within a certain app for a new user
+    function add_newuser($app_name,$var,$value="") {
+       global $phpgw_newuser;
+     
+       if (! $value) {
+          global $$var;
+          $value = $$var;
+       }
+ 
+       $phpgw_newuser["user"]["preferences"][$app_name][$var] = $value;
+    }
   } //end of preferences class
 
 

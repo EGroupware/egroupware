@@ -85,12 +85,6 @@
           . "','" . $phpgw->accounts->add_app("",True) . "','" . $account_info["groups"] . "','A',0)";
 
      $phpgw->db->query($sql);
-
-     $phpgw->db->query("select account_id from accounts where account_lid='"
-                     . $account_info["loginid"] . "'");
-     $phpgw->db->next_record();
-     add_default_preferences($phpgw->db->f("account_id"));
-
      $phpgw->db->unlock();
 
      $sep = $phpgw->common->filesystem_separator();
@@ -167,6 +161,8 @@
   function account_delete($account_id)
   {
      global $phpgw;
+     global $phpgw_info;
+
      
      $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
      $phpgw->db->next_record();

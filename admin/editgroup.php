@@ -40,10 +40,22 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","groups"));
 
-        $phpgw->accounts->add_app($n_group_permissions);        
-        $phpgw->db->query("update groups set group_name='$n_group', group_apps='"
-				    . $phpgw->accounts->add_app("",True)
-				    . "' where group_id=$group_id");
+	$phpgw->db->query("SELECT group_apps FROM groups WHERE group_id=".$group_id,__FILE__,__LINE__);
+	$phpgw->db->next_record();
+	$apps_before = $phpgw->db->f("group_apps")
+        $phpgw->accounts->add_app($n_group_permissions);
+	$apps_after = $phpgw->accounts->add_app("",True);
+
+	if($apps_before <> $apps_after) {
+	  $after_apps = explode(":",$apps_after);
+	  for ($i=1;$i<=count($after_apps);$i++) {
+	    if (!strpos(" ".$apps_before." ",$after_apps) {
+	      $new_apps[] = $after_apps;
+	    }
+	  }
+	}
+        $phpgw->db->query("update groups set group_name='$n_group', group_apps='" . $apps_after
+			 . "' where group_id=$group_id");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
 	$phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
@@ -55,6 +67,35 @@
 
            $user_groups = ereg_replace(",,",",",$user_groups);
            $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
+
+// The following sets any default preferences needed for new applications..
+// This is smart enough to know if previous preferences were selected, use them.
+	   if (count($new_apps)) {
+	     if ($n_users[$i] <> $phpgw_info["user"]["account_id"]) {
+	       if(is_array($phpgw_newuser)) unset($phpgw_newuser);
+	       $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$n_users[$i],__FILE__,__LINE__);
+	       $phpgw->db->next_record();
+	       $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value");
+	     } else {
+	       $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"]
+	     }
+	     $docommit = False;
+	     for ($j=0;$j<count($new_apps);$j++) {
+	       if (!$phpgw_newuser["user"]["preferences"][$new_apps[$j]]) {
+		 $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
+		 $docommit = True;
+	       }
+	     }
+	     if ($docommit) {
+	       if ($n_users[$i] <> $phpgw_info["user"]["account_id"]) {
+		 $phpgw->preferences->commit_user($n_users[$i]);
+	       } else {
+		 $phpgw_info["user"]["preferences"] = $phpgw_newuser["user"]["preferences"];
+		 unset($phpgw_newuser);
+		 $phpgw->preferences->commit();
+	       }
+	     }
+	   }
         }
 
         $sep = $phpgw->common->filesystem_separator();

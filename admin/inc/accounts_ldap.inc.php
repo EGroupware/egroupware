@@ -182,8 +182,7 @@
   
      @ldap_close($ldap);
      
-     add_default_preferences($account_info["account_id"]);
-     $phpgw->db->lock(array("accounts","preferences"));
+     $phpgw->db->lock(array("accounts"));
 
      while ($permission = each($account_info["permissions"])) {
        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
