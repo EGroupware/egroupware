@@ -40,7 +40,27 @@
 
 		$t->set_var("form_action",$phpgw->link("editaccount.php",
 			"account_id=$_account_id&old_loginid=".rawurlencode($userData['account_lid'])));
-		
+/*
+		// groups list
+		$groups_select = '<select name="n_groups[]" multiple>';
+		$accounts =  $account->get_list();
+
+		for($i=0;$i<count($accounts);$i++) {
+			//echo $account->get_type($accounts[$i]["account_id"]);
+			if ($account->get_type($accounts[$i]["account_id"] == "g")) {
+				$groups_select .= '<option value="' . $accounts[$i]["account_id"] . '"';
+				for ($j=0; $j<count($user_groups); $j++) {
+					if ($user_groups[$j][0] == $accounts[$i]["account_id"]) {
+						$groups_select .= " selected";
+					}
+				}
+			}
+			$groups_select .= ">" . $accounts[$i]["account_lid"] . "</option>\n";
+		}
+		$groups_select .= "</select>";
+		$t->set_var("groups_select",$groups_select);
+		// end groups list
+*/
 		if ($_errors) 
 		{
 			$t->set_var("error_messages","<center>" . $phpgw->common->error_list($_errors) . "</center>");
