@@ -1,6 +1,7 @@
 1 match found	calendar	en	1 match found
 1 message has been deleted	email	en	1 message has been deleted
 a	calendar	en	a
+accept	calendar	en	Accept
 accepted	calendar	en	Accepted
 access	common	en	Access
 access not permitted	common	en	Access not permitted
@@ -398,7 +399,9 @@ none	common	en	None
 non-standard	email	en	Non-Standard
 normal	common	en	Normal
 no subject	common	en	No Subject
+no response	calendar	en	No Response
 not applicable	weather	en	Not Applicable
+note has been added for x	notes	en	Note has been added for %1
 notes	common	en	Notes
 notes categories	common	en	Notes categories
 notes list	notes	en	Notes list
@@ -461,6 +464,7 @@ private only	calendar	en	Private Only
 proceed	bookkeeping	en	Proceed.
 project description	todo	en	Project Description
 public	common	en	public
+public key	addressbook	en	Public Key
 read	common	en	Read
 recent	weather	en	Recent
 record access	addressbook	en	Record Access
@@ -473,6 +477,7 @@ region	admin	en	Region
 regions	admin	en	Regions
 regions	weather	en	Regions
 region	weather	en	Region
+reject	calendar	en	Reject
 rejected	calendar	en	Rejected
 remove all users from this group	admin	en	Remove all users from this group
 rename	common	en	Rename
