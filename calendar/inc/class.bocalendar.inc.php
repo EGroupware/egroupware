@@ -1338,6 +1338,42 @@
 			}
 			return False;
 		}
+		
+		/**
+		 * Checks if two timespans overlap, starting at the exact time where the other span ends is Ok
+		 *
+		 * @param int $start1 start 1. timespan
+		 * @param int $end1 end 1. timespan
+		 * @param int $start2 start 2. timespan
+		 * @param int $end2 end 2. timespan
+		 * @param int > 0 if there is an overlap, 0 otherwise
+		 */
+		function overlaps($start1,$end1,$start2,$end2)
+		{
+			//echo "bocalendar::overlaps($start1=".date('Y-m-d H:i:s',$start1).", $end1=".date('Y-m-d H:i:s',$end1).", $start2=".date('Y-m-d H:i:s',$start2).", $end2=".date('Y-m-d H:i:s',$end2).")<br>\n";
+			
+			if ($start1 <= $start2 && $end2 <= $end1)	// 1 contains 2 complete
+			{
+				//echo "==> 1 contains 2 complete<br>\n";
+				return 1;
+			}
+			if ($start2 <= $start1 && $end1 <= $end2)	// 2 contains 1 complete
+			{
+				//echo "==> 2 contains 1 complete<br>\n";
+				return 2;
+			}
+			if ($start1 < $start2 && $start2 < $end1)	// start of 2 is in 1
+			{
+				//echo "==> start of 2 is in 1<br>\n";
+				return 3;
+			}
+			if ($start1 < $end2 && $end2 < $end1)			// end of 2 is in 1
+			{
+				//echo "==> end of 2 is in 1<br>\n";
+				return 4;
+			}
+			return 0;
+		}
 
 		function overlap($starttime,$endtime,$participants,$owner=0,$ids=0,$restore_cache=False)
 		{
@@ -1349,9 +1385,7 @@
 			}
 
 			$temp_start = (int)(date('Ymd',$starttime));
-			$temp_start_time = (int)(date('Hi',$starttime));
 			$temp_end = (int)(date('Ymd',$endtime));
-			$temp_end_time = (int)(date('Hi',$endtime));
 			if($this->debug)
 			{
 				echo '<!-- Temp_Start: '.$temp_start.' -->'."\n";
@@ -1411,42 +1445,32 @@
 								}
 							}
 						}
-						if($this->debug)
+						if (!$found)
 						{
-							echo '<!-- conflict with a different event: '.($found?'No':'Yes').' -->'."<br>\n";
-						}
-						if(!$found)
-						{
+							if($this->debug)
+							{
+								echo '<!-- conflict with a different event: '.($found?'No':'Yes').' -->'."<br>\n";
+							}
 							if($this->debug)
 							{
 								echo '<!-- Checking event id #'.$event['id'];
 							}
-							$temp_event_start = sprintf("%d%02d",$event['start']['hour'],$event['start']['min']);
-							$temp_event_end = sprintf("%d%02d",$event['end']['hour'],$event['end']['min']);
-//							if((($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
-							if(($temp_start_time <= $temp_event_start &&
-								$temp_end_time > $temp_event_start &&
-								$temp_end_time <= $temp_event_end ||
-								$temp_start_time >= $temp_event_start &&
-								$temp_start_time < $temp_event_end &&
-								$temp_end_time >= $temp_event_end ||
-								$temp_start_time <= $temp_event_start &&
-								$temp_end_time >= $temp_event_end ||
-								$temp_start_time >= $temp_event_start &&
-								$temp_end_time <= $temp_event_end) &&
+							$event_start = $this->maketime($event['start']);
+							$event_end   = $this->maketime($event['end']);
+							if ($this->overlaps($starttime,$endtime,$event_start,$event_end) &&
 								$this->participants_not_rejected($participants,$event))
 							{
 								if($this->debug)
 								{
 									echo ' Conflicts';
 								}
-								$retval[] = $event['id'];
+								if (!is_array($retval) || !in_array($event['id'],$retval)) $retval[] = $event['id'];
 							}
 							if($this->debug)
 							{
 								echo ' -->'."\n";
 							}
-						}
+						}					
 					}
 				}
 			}
