@@ -1,0 +1,413 @@
+#LyX 1.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 218
+\textclass docbook
+\language english
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 0
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Title
+
+phpGroupWare admin/config.php
+\layout Abstract
+
+A brief introduction to writing hooks and templates for any application
+ to use this admin interface, by
+\layout Abstract
+
+Miles Lott <milosch@phpgroupware.org> Dec 22, 2001.
+\layout Section
+
+Files
+\layout Subsection
+
+config.tpl (required)
+\layout Standard
+
+In your application/templates/default directory, create a new template file
+ named 'config.tpl'.
+ This will be included by config.php and used to draw the page.
+ This template should include a POST method form.
+ The following template tags may be used:
+\layout Enumerate
+
+{action_url} - A phpgw->link to config.php will be inserted.
+\layout Enumerate
+
+{title} - This will be parsed to display 'Site Configuration'.
+\layout Enumerate
+
+{th_bg},{th_text},{row_on},{row_off} - Replaced with the current theme colors.
+\layout Standard
+
+and the following special types:
+\layout Enumerate
+
+{lang_XXX} - Filled with lang('XXX').
+\layout Enumerate
+
+{value_XXX} - Filled with the current value of config item 'XXX'.
+\layout Enumerate
+
+{selected_XXX} - set to '', or ' selected' if an option value is current.
+\layout Enumerate
+
+{hook_XXX} - Calls a function named XXX (will be discussed later).
+\layout Standard
+
+Following is an example from the addressbook application:
+\layout Code
+
+<form method="POST" action="{action_url}">
+\layout Code
+
+<table border="0" align="center">
+\layout Code
+
+ <tr bgcolor="{th_bg}">
+\layout Code
+
+  <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
+\layout Code
+
+ </tr> <tr bgcolor="{th_err}">
+\layout Code
+
+  <td colspan="2">&nbsp;<b>{error}</b></font></td>
+\layout Code
+
+ </tr>
+\layout Code
+
+<!-- END header -->
+\layout Code
+
+<!-- BEGIN body -->
+\layout Code
+
+ <tr bgcolor="{row_on}">
+\layout Code
+
+  <td colspan="2">&nbsp;</td>
+\layout Code
+
+ </tr>
+\layout Code
+
+ <tr bgcolor="{row_off}">
+\layout Code
+
+  <td colspan="2">&nbsp;<b>{lang_Addressbook}/{lang_Contact_Settings}</b></font>
+\layout Code
+
+</td>
+\layout Code
+
+ </tr>
+\layout Code
+
+ <tr bgcolor="{row_on}">
+\layout Code
+
+  <td>{lang_Contact_application}:</td>
+\layout Code
+
+  <td><input name="newsettings[contact_application]" value="{value_contact_appli
+cation}"></td>
+\layout Code
+
+ </tr>
+\layout Code
+
+...
+\layout Standard
+
+Note the fieldname, newsettings[contact_application].
+ This array name must be used for the form values.
+ Next, note the value setting for this form element, {value_contact_application}.
+ This indicates that we want the current value of the config setting, 'contact_a
+pplication', to be set and displayed on the form.
+ Lastly, look at the template element, {lang_Contact_application}.
+ Here, the value from the lang db table will be inserted if available.
+\layout Standard
+
+Let's take a look at part of the preferences/default/config.tpl:
+\layout Code
+
+ <tr bgcolor="{row_on}">
+\layout Code
+
+  <td>{lang_Country_Selection} ({lang_Text_Entry}/{lang_SelectBox}):</td>
+\layout Code
+
+  <td>
+\layout Code
+
+   <select name="newsettings[countrylist]">
+\layout Code
+
+{hook_country_set}
+\layout Code
+
+   </select>
+\layout Code
+
+  </td>
+\layout Code
+
+ </tr>
+\layout Standard
+
+Here, we are adding a new element, {hook_country_set}.
+ This brings up the next file we will need to parse this value...
+\layout Subsection
+
+hook_config.inc.php (optional)
+\layout Standard
+
+At each invocation of config.php, a call to the common class function hook_single
+() is made.
+ It attempts to include a file, hook_config.inc.php as a set of code for config.php
+ to use.
+ In the case of the preferences example above, using hook_country_set, here
+ is the corresponding function in preferences/inc/hook_config.inc.php:
+\layout Code
+
+function country_set($config)
+\layout Code
+
+{
+\layout Code
+
+    $country = array( 'user_choice' => 'Users Choice', 'force_select' =>
+ 'Force Selectbox' );
+\layout Code
+
+    while (list ($key, $value) = each ($country))
+\layout Code
+
+    {
+\layout Code
+
+        if ($config['countrylist'] == $key)
+\layout Code
+
+        {
+\layout Code
+
+            $selected = ' selected';
+\layout Code
+
+        } 
+\layout Code
+
+        else
+\layout Code
+
+        {
+\layout Code
+
+            $selected = '';
+\layout Code
+
+        }
+\layout Code
+
+        $descr = lang($value);
+\layout Code
+
+        $out .= '<option value="' .
+ $key .
+ '"' .
+ $selected .
+ '>' .
+ $descr .
+ '</option>' .
+ "
+\backslash 
+n";
+\layout Code
+
+    }
+\layout Code
+
+    return $out;
+\layout Code
+
+}
+\layout Standard
+
+Note again the template value we used earlier, {hook_country_set}.
+ This causes config.php to look for a function named country_set().
+ Since we included the file with this function via the hook_single() call,
+ this function is executed.
+ It's return is a string, and the function prints nothing itself.
+\layout Subsection
+
+hook_config_validate.inc.php (optional)
+\layout Standard
+
+Once the admin clicks the submit button to post the form, we can optionally
+ validate their input using one or many different functions.
+ This is done by first making another call to hook_single() in the API common
+ class.
+ This time, the name config_validate is used, so common tries to include
+ 'application/inc/hook_config_validate.inc.php'.
+\layout Standard
+
+If this file exists, it sets a var to tell config.php it was found.
+ Following then are functions named after each config we want to validate.
+ The following example is for addressbook:
+\layout Code
+
+    $GLOBALS['phpgw_info']['server']['found_validation_hook'] = True;
+\layout Code
+
+\layout Code
+
+    /* Check a specific setting.
+ Name must match the setting.
+ */
+\layout Code
+
+    function ldap_contact_context($value='')
+\layout Code
+
+    {
+\layout Code
+
+        if($value == $GLOBALS['phpgw_info']['server']['ldap_context'])
+\layout Code
+
+        {
+\layout Code
+
+            $GLOBALS['config_error'] = 'Contact context for ldap must be
+ different from the context used for accounts';
+\layout Code
+
+        }
+\layout Code
+
+        elseif($value == $GLOBALS['phpgw_info']['server']['ldap_group_context'])
+\layout Code
+
+        {
+\layout Code
+
+            $GLOBALS['config_error'] = 'Contact context for ldap must be
+ different from the context used for groups';
+\layout Code
+
+        }
+\layout Code
+
+        else
+\layout Code
+
+        {
+\layout Code
+
+            $GLOBALS['config_error'] = '';
+\layout Code
+
+        }
+\layout Code
+
+    }
+\layout Standard
+
+Here we created a function to check the entered value for the config item,
+ ldap_contact_context.
+ We want to make sure the admin did not set this value to one which would
+ conflict with another config item, used for accounts or groups in phpGroupWare.
+\layout Standard
+
+config.php calls this function, sending it the POSTed value.
+ config.php continues, adding all other config items from the POSTed values.
+\layout Standard
+
+The variable $GLOBALS['config_error'] is parsed through lang(), then appended
+ to the local variable, $error.
+ If this has any value after the POSTed variables are checked, the form
+ then has its {error} tag filled with this result.
+ The form is displayed again, with the error.
+ If $error has no value, config.php redirects to admin/index.php.
+\layout Standard
+
+However, there is one more function that may be included in hook_config_validate.
+inc.php:
+\layout Code
+
+    /* Check all settings to validate input.
+ Name must be 'final_validation' */
+\layout Code
+
+    function final_validation($value='') 
+\layout Code
+
+    {
+\layout Code
+
+        if($value['contact_repository'] == 'ldap' && !$value['ldap_contact_dn'])
+\layout Code
+
+        {
+\layout Code
+
+            $GLOBALS['config_error'] = 'Contact dn must be set';
+\layout Code
+
+        }
+\layout Code
+
+        elseif($value['contact_repository'] == 'ldap' && !$value['ldap_contact_c
+ontext'])
+\layout Code
+
+        {
+\layout Code
+
+            $GLOBALS['config_error'] = 'Contact context must be set';
+\layout Code
+
+        }
+\layout Code
+
+        else
+\layout Code
+
+        {
+\layout Code
+
+            $GLOBALS['config_error'] = '';
+\layout Code
+
+        }
+\layout Code
+
+    }
+\layout Standard
+
+config.php checks for the existence of the function 'final_validation()'.
+ This function can be used to check all form values at once.
+ It gets sent the entire $newsettings array POSTed from the form.
+ As with the other functions in this file, final_validation() should set
+ $GLOBALS['config_error'] if there is a problem.
+\the_end
