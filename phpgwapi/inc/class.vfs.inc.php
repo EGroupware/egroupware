@@ -22,17 +22,28 @@
   \**************************************************************************/
 
   /* $Id$ */
-
+		/*!
+		@class vfs
+		@abstract virtual file system
+		@discription Author: Seek3r
+		*/
   class vfs
   {
   var $basedir;
-  
+ 		/*!
+ 		@function sanitize
+ 		@abstract ?
+ 		*/
     function sanitize($string) {
       global $phpgw, $phpgw_info;
       $sep = $phpgw_info["server"]["dir_separator"];
       return(ereg_replace( "^\.+", "",str_replace($sep, "",strrchr($string,$sep))));
     }
-
+		/*!
+		@function securitycheck
+		@abstract security check function
+		@discussion need detail here ?
+		*/
     function securitycheck($string) {
       if(substr($string,0,1) ==  "." || substr($string,0,1) ==  "\\" || strstr($string, "..") || strstr($string, "\\..") || strstr($string, ".\\.")) {
         return False;
@@ -40,7 +51,12 @@
         return True;
       }
     }
-    
+		/*!
+		@functino rawname2array
+		@abstract take raw filename including path and return file name
+		@param $string raw filename
+		@result $file filename
+		*/
     function rawname2array($string) {
       global $phpgw, $phpgw_info;
       $sep = $phpgw_info["server"]["dir_separator"];
@@ -66,7 +82,11 @@
       }
       return(array( "basedir" => $basedir,  "file" => $file));
     }
-      
+		/*!
+		@function getabsolutepath
+		@abstract get the absolute path
+		@param $target defaults to False
+		*/      
     function getabsolutepath($target = False) {
       global $phpgw, $phpgw_info;
       $sep = $phpgw_info["server"]["dir_separator"];
@@ -90,7 +110,13 @@
         return $basedir = ereg_replace ($phpgw_info["server"]["files_dir"].$sep."groups".$sep."home", $phpgw_info["server"]["files_dir"].$sep."users".$sep.$phpgw_info["user"]["userid"], $basedir);
       }
     }
-
+		/*!
+		@function ls
+		@abstract get directory listing
+		@param $target Default False
+		@param $checksubdirs "Yes" or "No" defaults to "No"
+		@result array
+		*/
     function ls($target = False, $checksubdirs = "No") {
       global $phpgw, $phpgw_info;
       $sep = $phpgw_info["server"]["dir_separator"];
@@ -180,11 +206,21 @@
         }
       }
     }
-
+		/*!
+		@function dir
+		@abstract a shortcut to ls
+		@param $target target default False
+		@param $checksubdirs default "No"
+		*/
     function dir($target, $checksubdirs) {
       return $this->ls($target, $checksubdirs);
     }
-    
+		/*!
+		@function cd
+		@abstract change directory
+		@param $target default "/"
+		@param $targettype default "relative" 
+		*/ 	   
     function cd ($target = "/", $targettype = "relative"){
       global $phpgw, $phpgw_info;
       $sep = $phpgw_info["server"]["dir_separator"];
@@ -213,14 +249,23 @@
         }
       }
     }
-
+		/*!
+		@function pwd
+		@abstract current working dir
+		@result $currentdir currentdir
+		*/
     function pwd() {
       global $phpgw;
       $currentdir = $phpgw->common->appsession();
       if ($currentdir == ""){$currentdir = "/";}
       return $currentdir;
     }
-
+		/*!
+		@function read
+		@abstract read file
+		@param $file filename
+		@result $contents contents
+		*/
     function read($file) {
       global $phpgw_info;
       $path = $this->getabsolutepath($file);
@@ -232,7 +277,13 @@
 	      return False;
 	    }
     }
-
+		/*!
+		@function write
+		@abstract write to a file
+		@param $file file name
+		@param $contents contents
+		@result int 1 for success 0 if not
+		*/		
     function write($file, $contents) {
       global $phpgw_info;
       $path = $this->getabsolutepath($file);
@@ -245,7 +296,14 @@
 	      return 0;
       }
     }
-
+		/*!
+		@function cp
+		@abstract copy
+		@param $fromfile from filename
+		@param $tofile to filename
+		@param $from_absolute default ""
+		@result boolean based on success
+		*/
     function cp($fromfile, $tofile, $from_absolute = "") {
       global $phpgw_info;
       if ($from_absolute){
@@ -266,7 +324,14 @@
       umask(000);
       return $this->cp($fromfile, $tofile);
     }
-
+		/*!
+		@function mv
+		@abstract movie file
+		@param $fromfile from filename
+		@param $tofile to filename
+		@param $from_absolute default False
+		@result boolean True if it was successfull
+		*/
     function mv($fromfile, $tofile, $from_absolute = False) {
       global $phpgw_info;
       if ($from_absolute){
@@ -286,12 +351,20 @@
         }
       }
     }
-
+		/*!
+		@function move
+		@abstract shortcut to mv
+		*/
     function move($fromfile, $tofile, $from_absolute) {
       umask(000);
       return $this->mv($fromfile, $tofile, $from_absolute);
     }
-
+		/*!
+		@function rm
+		@abstract remove or delete a file
+		@param $file filename
+		@result boolean true on success
+		*/
     function rm($file) {
       global $phpgw_info;
       $path = $this->getabsolutepath($file);
@@ -301,11 +374,19 @@
         return True;
       }
     }
-
+		/*!
+		@function delete
+		@abstract shortcut to rm
+		*/
     function delete($file) {
       return $this->rm($file);
     }
-
+		/*!
+		@function rmdir
+		@abstract remvoe a dir
+		@param $dir dirname
+		@result boolean true for sucdess
+		*/
     function rmdir($dir) {
       global $phpgw_info;
       $path = $this->getabsolutepath($dir);
@@ -315,7 +396,12 @@
         return True;
       }
     }
-
+		/*!
+		@function mkdir
+		@abstract make a new directory
+		@param $dir
+		@result boolean True on success
+		*/
     function mkdir($dir) {
       global $phpgw_info;
       $path = $this->getabsolutepath($dir);
@@ -326,7 +412,13 @@
         return True;
       }
     }
-
+		/*!
+		@function verifydir
+		@abstract verify directories have correct permissions
+		@param $type default "user"
+		@param $account default False
+		*/
+		
     function verifydir($type = "user", $account = False) {
       global $phpgw_info;
 
