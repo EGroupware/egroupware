@@ -1,7 +1,4 @@
 <!-- BEGIN list -->
-<b>{title}</b>
-<hr><p>
-
 <table width="75%" border="0" cellspacing="0" cellpadding="0">
  {rows}
 </table>
