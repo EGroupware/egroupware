@@ -1133,48 +1133,34 @@
 			}
 
 			/* create list of available apps */
-			$i = 0;
-
 			$apps = CreateObject('phpgwapi.applications',$_account_id);
 			$db_perms = $apps->read_account_specific();
 
-			@reset($GLOBALS['phpgw_info']['apps']);
 			$availableApps = $GLOBALS['phpgw_info']['apps'];
-			@asort($availableApps);
-			@reset($availableApps);
-			while (list($key,$application) = each($availableApps)) 
-			{
-				if ($application['enabled'] && $application['status'] != 3) 
-				{
-					$perm_display[$i]['appName']        = $key;
-					$perm_display[$i]['title'] = $application['title'];
-					$i++;
-				}
-			}
+			uasort($availableApps,create_function('$a,$b','return strcasecmp($a["title"],$b["title"]);'));
 
-			/* create apps output */
 			$appRightsOutput = '';
-//			@reset($perm_display);
-			for ($i=0;$i<=count($perm_display);$i++) 
+			$i = 0;
+			foreach($availableApps as $app => $data)
 			{
-				$checked = ((($userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) && $_account_id)?' checked':'');
-
-				if ($perm_display[$i]['title'])
+				if (!$data['enabled'] || $data['status'] == 3)
 				{
-					$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
-						$perm_display[$i]['title'],
-						$perm_display[$i]['appName'],
-						$checked);
+					continue;
 				}
-				else
-				{
-					$part[1] = '<td colspan="2">&nbsp;</td>';
-				}
+				$checked = (@$userData['account_permissions'][$app] || @$db_perms[$app]) && $_account_id ? ' checked' : '';
+				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
+					$data['title'],$app,$checked);
 
 				if ($i & 1)
 				{
-					$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color()/*$GLOBALS['phpgw_info']['theme']['row_on']*/, $part[0], $part[1]);
+					$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color(), $part[0], $part[1]);
 				}
+				++$i;
+			}
+			if ($i & 1)
+			{
+				$part[1] = '<td colspan="2">&nbsp;</td>';
+				$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color(), $part[0], $part[1]);
 			}
 
 			$var = Array(
