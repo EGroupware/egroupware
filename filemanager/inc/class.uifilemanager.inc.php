@@ -434,7 +434,7 @@
 
 			/* Update if they request it, or one out of 20 page loads */
 			srand((double) microtime() * 1000000);
-			if($update || rand(0, 19) == 4)
+			if($_GET['update'] || rand(0, 19) == 4)
 			{
 				$this->bo->vfs->update_real(array(
 					'string' => $this->path,
@@ -1001,7 +1001,7 @@
 					}
 
 					// reload button with this url
-					$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->path);
+					$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index&update=1','path='.$this->path);
 					$toolbar.=$this->buttonImage($link,'reload',lang('reload'));
 
 					$toolbar.='<td>'.lang('Location').':&nbsp;';
