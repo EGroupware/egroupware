@@ -350,7 +350,7 @@
 							$accounts[] = Array(
 								'account_id'        => $allVals['uidnumber'][0],
 								'account_lid'       => $allVals['uid'][0],
-								'account_type'      => $allVals['phpgwaccounttype'],
+								'account_type'      => $allVals['phpgwaccounttype'][0],
 								'account_firstname' => $allVals['givenname'][0],
 								'account_lastname'  => $allVals['sn'][0],
 								'account_status'    => $allVals['phpgwaccountstatus'][0]
@@ -377,7 +377,7 @@
 							$accounts[] = Array(
 								'account_id'        => $allVals['gidnumber'][0],
 								'account_lid'       => $allVals['cn'][0],
-								'account_type'      => $allVals['phpgwaccounttype'],
+								'account_type'      => $allVals['phpgwaccounttype'][0],
 								'account_firstname' => $allVals['givenname'][0],
 								'account_lastname'  => $allVals['sn'][0],
 								'account_status'    => $allVals['phpgwaccountstatus'][0]
