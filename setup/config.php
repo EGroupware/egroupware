@@ -20,9 +20,7 @@
   // Authorize the user to use setup app
   include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
-  echo "<html><head><title>phpGroupWare Setup</title></head>\n";
-  echo "<body bgcolor='#ffffff'>\n";
-
+  
   /* Database setup */
   include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
@@ -33,9 +31,11 @@
   $db->User	    = $phpgw_info["server"]["db_user"];
   $db->Password    = $phpgw_info["server"]["db_pass"];
 
-  echo "<title>phpGroupWare - setup</title>";
-  echo '<body bgcolor="FFFFFF">';
-  echo "<center>phpGroupWare version " . $phpgw_info["server"]["version"] . " setup</center><p>";
+  if ($newsettings["auth_type"] != "ldap") {
+     echo "<title>phpGroupWare - setup</title>";
+     echo '<body bgcolor="FFFFFF">';
+     echo "<center>phpGroupWare version " . $phpgw_info["server"]["version"] . " setup</center><p>";
+  }
 
   if ($submit) {
      @$db->query("delete from config");
@@ -53,7 +53,7 @@
        $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
     	  	  . "','" . addslashes($newsetting[1]) . "')");
      }
-     if ($newsettings["authtype"] == "ldap") {
+     if ($newsettings["auth_type"] == "ldap") {
         Header("Location: ldap.php");
         exit;
      } else {
