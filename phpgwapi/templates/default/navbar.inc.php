@@ -15,7 +15,7 @@
   {
      global $phpgw_info, $phpgw;
 
-     $tpl = new Template($phpgw_info["server"]["template_dir"]);
+     $tpl = createobject("phpgwapi.Template",PHPGW_TEMPLATE_DIR);
      $tpl->set_unknowns("remove");
 
      $tpl->set_file(array("navbar"        => "navbar.tpl",

@@ -63,7 +63,7 @@
       /************************************************************************\
       * Required classes                                                       *
       \************************************************************************/
-      $this->db = CreateObject("phpgwapi.db");
+      $this->db           = CreateObject("phpgwapi.db");
       $this->db->Host     = $phpgw_info["server"]["db_host"];
       $this->db->Type     = $phpgw_info["server"]["db_type"];
       $this->db->Database = $phpgw_info["server"]["db_name"];
@@ -76,47 +76,61 @@
 
       if ($phpgw_info["flags"]["currentapp"] == "login") {
          $this->db->query("select * from config",__LINE__,__FILE__);
-         while($this->db->next_record()) {
-           $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
+         while ($this->db->next_record()) {
+            $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
          }
       } else {
-      	 $config_var = array("encryptkey","auth_type","account_repository");
-      	 $c= "";
-      	 for ($i=0;$i<count($config_var);$i++) {
-      	   if($i) $c .= " OR ";
-      	   $c .= "config_name='".$config_var[$i]."'";
-      	 }
+    	 $config_var = array("encryptkey","auth_type","account_repository");
+         $c = "";
+    	 for ($i=0;$i<count($config_var);$i++) {
+     	   if ($i) {
+     	      $c .= " OR ";
+     	   }
+   	     $c .= "config_name='".$config_var[$i]."'";
+    	 }
          $this->db->query("select * from config where $c",__LINE__,__FILE__);
-         while($this->db->next_record()) {
-           $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
+         while ($this->db->next_record()) {
+            $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
          }
       }
 
       /************************************************************************\
       * Continue adding the classes                                            *
       \************************************************************************/
-      $this->common = CreateObject("phpgwapi.common");
-      $this->hooks = CreateObject("phpgwapi.hooks");
+      $this->common       = CreateObject("phpgwapi.common");
+      $this->hooks        = CreateObject("phpgwapi.hooks");
 
-      $this->auth = CreateObject("phpgwapi.auth");
-      $this->acl = CreateObject("phpgwapi.acl");
-      $this->accounts = CreateObject("phpgwapi.accounts");
-      $this->session = CreateObject("phpgwapi.sessions");
-      $this->preferences = CreateObject("phpgwapi.preferences");
+      if (! $phpgw_info["server"]["auth_type"]) {
+         $phpgw_info["server"]["auth_type"] = "sql";
+      }
+      $this->auth         = create_specialobject("phpgwapi.auth",$phpgw_info["server"]["auth_type"]);
+      $this->acl          = CreateObject("phpgwapi.acl");
+
+      if (! $phpgw_info["server"]["account_repository"]) {
+         if ($phpgw_info["server"]["auth_type"]) {
+            $phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];
+         } else {
+            $phpgw_info["server"]["account_repository"] = "sql";
+         }
+      }
+      $this->accounts     = create_specialobject("phpgwapi.accounts",$phpgw_info["server"]["auth_type"]);
+
+      $this->session      = CreateObject("phpgwapi.sessions");
+      $this->preferences  = CreateObject("phpgwapi.preferences");
       $this->applications = CreateObject("phpgwapi.applications");
       
       if ($phpgw_info["flags"]["currentapp"] == "login") {
-        if ($login != ""){
-          $login_array = explode("@",$login);
-          $login_id = $this->accounts->name2id($login_array[0]);
-          $this->accounts->accounts($login_id);
-          $this->preferences->preferences($login_id);
-        }
-      }elseif (! $this->session->verify()) {
-        $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
-        $this->db->next_record();
-        Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
-        exit;
+         if ($login != ""){
+            $login_array = explode("@",$login);
+            $login_id = $this->accounts->name2id($login_array[0]);
+            $this->accounts->accounts($login_id);
+            $this->preferences->preferences($login_id);
+         }
+      } elseif (! $this->session->verify()) {
+         $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
+         $this->db->next_record();
+         Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
+         exit;
       }
       $this->translation = CreateObject("phpgwapi.translation");
 
@@ -124,7 +138,7 @@
       $template_root = $this->common->get_tpl_dir();
 
       if (is_dir($template_root)) {
-        $this->template = CreateObject("phpgwapi.Template", $template_root);
+         $this->template = CreateObject("phpgwapi.Template", $template_root);
       }
     } 
 
@@ -229,12 +243,5 @@
       
       return $phpgw->translation->translate($key);
     }
-
-    // Some people might prefear to use this one
-    function _L($key, $m1 = "", $m2 = "", $m3 = "", $m4 = "") 
-    {
-      global $phpgw;
-      
-      return $phpgw->translation->translate($key);
-    }
-  }//end phpgw class
+    
+  }          //end phpgw class

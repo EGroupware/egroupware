@@ -61,8 +61,8 @@
        global $phpgw, $phpgw_info, $sessionid, $kp3;
        $db  = $phpgw->db;
        $db2 = $phpgw->db;
-       $this->sessionid .= $sessionid;
-       $this->kp3 .= $kp3;
+       $this->sessionid = $sessionid;
+       $this->kp3       = $kp3;
 
        // PHP 3 complains that these are not defined when the already are defined.
        $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
@@ -74,7 +74,7 @@
        $cryptovars[1] = $phpgw->common->iv;      
        $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
 
-       $db->query("select * from phpgw_sessions where session_id='$this->sessionid'",__LINE__,__FILE__);
+       $db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
        $db->next_record();
        
        if ($db->f("session_info") == "" || $db->f("session_info") == "NULL") {
@@ -171,23 +171,25 @@
       $login_array = explode("@", $login);
       $this->account_lid = $login_array[0];
 
-      if ($login_array[1]!=""){
-        $this->account_domain = $login_array[1];
-      }else{
-        $this->account_domain = $phpgw_info["server"]["default_domain"];
+      if ($login_array[1]!="") {
+         $this->account_domain = $login_array[1];
+      } else {
+         $this->account_domain = $phpgw_info["server"]["default_domain"];
       }
 
-      if ($phpgw_info["server"]["global_denied_users"][$this->account_lid]) { return False; }
+      if ($phpgw_info["server"]["global_denied_users"][$this->account_lid]) {
+         return False;
+      }
  
       if (! $phpgw->auth->authenticate($this->account_lid, $passwd)) {
-        return False;
-        exit;
+         return False;
+         exit;
       }
 
       if (!$phpgw->accounts->exists($this->account_lid) && $phpgw_info["server"]["auto_create_acct"] == True) {
-        $this->account_id = $accts->auto_add($this->account_lid, $passwd);
-      }else{
-        $this->account_id = $phpgw->accounts->name2id($this->account_lid);
+         $this->account_id = $accts->auto_add($this->account_lid, $passwd);
+      } else {
+         $this->account_id = $phpgw->accounts->name2id($this->account_lid);
       }
       $phpgw->accounts->account_id = $this->account_id;
 
@@ -233,7 +235,7 @@
                       . "$login','" . $this->getuser_ip() . "','" . time()
                       . "','') ",__LINE__,__FILE__);
 
-      //$phpgw->auth->update_lastlogin($login,$this->getuser_ip());
+      $phpgw->auth->update_lastlogin($login,$this->getuser_ip());
 
       return $this->sessionid;
     }

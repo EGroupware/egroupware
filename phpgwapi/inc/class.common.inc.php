@@ -379,30 +379,38 @@
       return $list;
     }
 
-    function get_tpl_dir($appname = ""){
-      global $phpgw_info;
-      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
-      if ($appname == "home" || $appname == "logout" || $appname == "login"){$appname = "phpgwapi";}
+    function get_tpl_dir($appname = "")
+    {
+       global $phpgw_info;
+       if (! $appname) {
+          $appname = $phpgw_info["flags"]["currentapp"];
+        }
+        if ($appname == "home" || $appname == "logout" || $appname == "login") {
+           $appname = "phpgwapi";
+        }
 
-      // Setting this for display of template choices in user preferences
-      if ($phpgw_info["server"]["template_set"] == "user_choice" ){$phpgw_info["server"]["usrtplchoice"] = "user_choice"; }
+        // Setting this for display of template choices in user preferences
+        if ($phpgw_info["server"]["template_set"] == "user_choice") {
+           $phpgw_info["server"]["usrtplchoice"] = "user_choice";
+        }
 
-      if ($phpgw_info["server"]["template_set"] == "user_choice" && isset($phpgw_info["user"]["preferences"]["common"]["template_set"])){
-        $phpgw_info["server"]["template_set"] = $phpgw_info["user"]["preferences"]["common"]["template_set"];
-      }elseif ($phpgw_info["server"]["template_set"] == "user_choice" || !isset($phpgw_info["server"]["template_set"])){
-        $phpgw_info["server"]["template_set"] = "default";
-      }
+        if ($phpgw_info["server"]["template_set"] == "user_choice" && isset($phpgw_info["user"]["preferences"]["common"]["template_set"])) {
+           $phpgw_info["server"]["template_set"] = $phpgw_info["user"]["preferences"]["common"]["template_set"];
+        } elseif ($phpgw_info["server"]["template_set"] == "user_choice" || !isset($phpgw_info["server"]["template_set"])) {
+           $phpgw_info["server"]["template_set"] = "default";
+        }
 
-      $tpldir = $phpgw_info["server"]["server_root"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"];
-      $tpldir_default = $phpgw_info["server"]["server_root"]."/".$appname."/templates/default";
+        $tpldir         = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/"
+                        . $phpgw_info["server"]["template_set"];
+        $tpldir_default = PHPGW_SERVER_ROOT . "/".$appname . "/templates/default";
 
-      if (is_dir ($tpldir)){
-        return $tpldir;
-      }elseif (is_dir ($tpldir_default)){
-        return $tpldir_default;
-      }else{
-        return False;
-      }      
+        if (is_dir ($tpldir)) {
+           return $tpldir;
+        } elseif (is_dir ($tpldir_default)) {
+           return $tpldir_default;
+        } else {
+           return False;
+        }      
     }
 
     function get_image_dir($appname = ""){
@@ -506,11 +514,11 @@
     function phpgw_header() {
       global $phpgw, $phpgw_info;
 
-      include($phpgw_info["server"]["include_root"] . "/phpgwapi/templates/"
-            . $phpgw_info["server"]["template_set"] . "/head.inc.php");
+      include(PHPGW_INCLUDE_ROOT . "/phpgwapi/templates/" . $phpgw_info["server"]["template_set"]
+                                 . "/head.inc.php");
       $this->navbar(False);
-      include($phpgw_info["server"]["include_root"] . "/phpgwapi/templates/"
-            . $phpgw_info["server"]["template_set"] . "/navbar.inc.php");
+      include(PHPGW_INCLUDE_ROOT . "/phpgwapi/templates/" . $phpgw_info["server"]["template_set"]
+                                 . "/navbar.inc.php");
       if ((! isset($phpgw_info["flags"]["nonavbar"]) || ! $phpgw_info["flags"]["nonavbar"]) && ! $phpgw_info["flags"]["navbar_target"]) {
          echo parse_navbar();
       }

@@ -24,13 +24,20 @@
 
   /* $Id$ */
 
-  class accounts_
+  class accounts
   {
     var $db;
     var $account_id;
     var $data;
     var $memberships;
     var $members;
+    
+    function accounts()
+    {
+       global $phpgw;
+
+       $this->db = $phpgw->db;
+    }
 
     function read_repository()
     {
