@@ -12,15 +12,14 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info']        = array();
+	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
-		'disable_template_class' => True,
+		'disable_Template_class' => True,
 		'currentapp'             => 'logout',
 		'noheader'               => True,
 		'nofooter'               => True,
 		'nonavbar'               => True
 	);
-
 	include('./header.inc.php');
 
 	$GLOBALS['sessionid'] = get_var('sessionid',array('GET','COOKIE'));
