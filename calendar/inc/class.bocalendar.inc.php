@@ -377,20 +377,20 @@
 						$this->so->set_recur_none();
 						break;
 					case MCAL_RECUR_DAILY:
-						$this->so->set_recur_daily($l_recur_enddate['year'],$l_recur_enddate['month'],$l_recur_enddate['mday'],$l_cal['recur_interval']);
+						$this->so->set_recur_daily($l_recur_enddate['year'],$l_recur_enddate['month'],$l_recur_enddate['mday'],intval($l_cal['recur_interval']));
 						break;
 					case MCAL_RECUR_WEEKLY:
-						$cal['recur_data'] = $l_cal['rpt_sun'] + $l_cal['rpt_mon'] + $l_cal['rpt_tue'] + $l_cal['rpt_wed'] + $l_cal['rpt_thu'] + $l_cal['rpt_fri'] + $l_cal['rpt_sat'];
-						$this->so->set_recur_weekly($l_recur_enddate['year'],$l_recur_enddate['month'],$l_recur_enddate['mday'],$cal['recur_interval'],$cal['recur_data']);
+						$cal['recur_data'] = intval($l_cal['rpt_sun']) + intval($l_cal['rpt_mon']) + intval($l_cal['rpt_tue']) + intval($l_cal['rpt_wed']) + intval($l_cal['rpt_thu']) + intval($l_cal['rpt_fri']) + intval($l_cal['rpt_sat']);
+						$this->so->set_recur_weekly(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']),$l_cal['recur_data']);
 						break;
 					case MCAL_RECUR_MONTHLY_MDAY:
-						$this->so->set_recur_monthly_mday($l_recur_enddate['year'],$l_recur_enddate['month'],$l_recur_enddate['mday'],$l_cal['recur_interval']);
+						$this->so->set_recur_monthly_mday(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
 						break;
 					case MCAL_RECUR_MONTHLY_WDAY:
-						$this->so->set_recur_monthly_wday($l_recur_enddate['year'],$l_recur_enddate['month'],$l_recur_enddate['mday'],$l_cal['recur_interval']);
+						$this->so->set_recur_monthly_wday(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
 						break;
 					case MCAL_RECUR_YEARLY:
-						$this->so->set_recur_yearly($l_recur_enddate['year'],$l_recur_enddate['month'],$l_recur_enddate['mday'],$l_cal['recur_interval']);
+						$this->so->set_recur_yearly(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
 						break;
 				}
 

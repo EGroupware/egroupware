@@ -2863,7 +2863,7 @@
 			);
 
 			$var[] = Array(
-				'field'	=> lang('Frequency'),
+				'field'	=> lang('Interval'),
 				'data'	=> '<input name="cal[recur_interval]" size="4" maxlength="4" value="'.$event['recur_interval'].'">'
 			);
 
