@@ -79,7 +79,7 @@
 			return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
 <script type="text/javascript">
-	document.writeln(\'<img id="'.$name.'-trigger" src="'.$this->jscalendar_url.'/img.gif" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
+	document.writeln(\'<img id="'.$name.'-trigger" src="'.$GLOBALS['phpgw']->common->find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
 	Calendar.setup(
 	{
 		inputField  : "'.$name.'",
@@ -122,12 +122,12 @@
   Calendar.setup(
     {
       flat         : "'.$id.'",
-      flatCallback : dateChanged,
-'.($weekUrl ? '      flatWeekCallback : weekClicked,
-' : '').($weekTTip ? '      flatWeekTTip : "'.addslashes($weekTTip).'",
-' : '').($monthUrl ? '      flatMonthCallback : monthClicked,
-' : '').($monthTTip ? '      flatMonthTTip : "'.addslashes($monthTTip).'",
-' : '').($date ? '      date : "'.$date.'",
+      flatCallback : dateChanged'.($weekUrl ? ',
+      flatWeekCallback : weekClicked' : '').($weekTTip ? ',
+      flatWeekTTip : "'.addslashes($weekTTip).'"' : '').($monthUrl ? ',
+      flatMonthCallback : monthClicked' : '').($monthTTip ? ',
+      flatMonthTTip : "'.addslashes($monthTTip).'"' : '').($date ? ',
+      date : "'.$date.'"
 ' : '').'    }
   );
 </script>';
