@@ -157,7 +157,7 @@
 		@param $content string of the htmlarea (will be run through htmlspecialchars !!!), default ''
 		@param $style string inline styles, eg. dimension of textarea element
 		*/
-		function htmlarea($name,$content='',$style='')
+		function htmlarea($name,$content='',$style='',$base_href='')
 		{
 			if (!$style) $style = 'width:100%; min-width:500px; height:300px;';
 
@@ -187,7 +187,14 @@
                 //	var htmlareaConfig = new HTMLArea.Config();
 				//  htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
 				</script>\n";
-				
+
+				// set a base href to get relative image-pathes working
+				if ($base_href)
+				{
+					$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .= '<base href="'.
+						($base_href[0] != '/' && substr($base_href,0,4) != 'http' ? $GLOBALS['phpgw_info']['server']['webserver_url'].'/' : '').
+						$base_href.'" />'."\n";
+				}
 				$GLOBALS['phpgw_info']['flags']['java_script'] .=
 				'<script type="text/javascript">
 				var htmlareaConfig = new HTMLArea.Config();
