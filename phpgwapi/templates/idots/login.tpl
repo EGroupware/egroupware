@@ -102,13 +102,13 @@
 			</tr>
 <!-- END domain_selection -->
 			<tr>
-			<td align="right" tablindex="1">{lang_username}&nbsp;</td>
-			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
+			<td align="right" tablindex="1">{lang_username}:&nbsp;</td>
+			<td align="left"><input name="login" value="{cookie}" style="width: 150px; border: 1px solid silver;"></td>
 			<td align="left"><!--{select_domain}--></td>
 		</tr>
 		<tr>
-			<td align="right">{lang_password}&nbsp;</td>
-			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
+			<td align="right">{lang_password}:&nbsp;</td>
+			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 150px; border: 1px solid silver;"></td>
 		</tr>
 		<tr>
 			<td align="right">&nbsp;</td>
