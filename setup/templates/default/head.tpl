@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 
@@ -16,7 +17,7 @@
   <title>phpGroupWare {lang_setup} III {page_title}</title>
 </head>
 
-<body bgcolor="#FFFFFF" margintop="0" marginleft="0" marginright="0" marginbottom="0">
+<body bgcolor="#FFFFFF">
 
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
 <tr>
