@@ -32,6 +32,10 @@
        $db  = $phpgw->db;
        $db2 = $phpgw->db;
 
+       $phpgw->common->key  = $kp3;
+       $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
+       $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
+
        $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
        $db->next_record();
        
@@ -53,7 +57,7 @@
        $phpgw_info["user"]["kp3"] = $kp3;
 
        $phpgw_info_flags    = $phpgw_info["flags"];
-       $phpgw_info          = unserialize($db->f("session_info"));
+       $phpgw_info          = $phpgw->crypto->decrypt($db->f("session_info"));
 
        $phpgw_info["flags"] = $phpgw_info_flags;
 
@@ -113,11 +117,11 @@
        $phpgw_info["user"]["sessionid"] = md5($phpgw->common->randomstring(10));
        $phpgw_info["user"]["kp3"]       = md5($phpgw->common->randomstring(15));
 
-       $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
+       $phpgw->common->key  = $phpgw_info["user"]["kp3"];
        $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
        $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
 
-       $phpgw_info["user"]["passwd"]    = $phpgw->common->encrypt($passwd);
+       //$phpgw_info["user"]["passwd"]    = $phpgw->common->encrypt($passwd);
  
        if ($phpgw_info["server"]["usecookies"]) {
           Setcookie("sessionid",$phpgw_info["user"]["sessionid"]);
