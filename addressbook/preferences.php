@@ -61,34 +61,38 @@
     <?php
       // I need to create a common function to handle displaying multiable columns
     
-      echo '<tr bgcolor="' . $phpgw_info["theme"]["th_bg"] . '"><td colspan="3">&nbsp;</td></tr>';
+      echo "<tr bgcolor=\"" . $phpgw_info["theme"]["th_bg"] . "\"><td colspan=\"3\">&nbsp;</td></tr>\n";
       $i = 0; $j = 0;
       $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-      echo '<tr bgcolor="' . $tr_color . '">';
+      echo "<tr bgcolor=\"" . $tr_color . "\">\n";
       while (list($col, $descr) = each($this->stock_contact_fields)) {
 //       echo "<br>test: $col - $i $j - " . count($abc);
          $i++; $j++;
-
-         echo '<td><input type="checkbox" name="ab_selected[' . $col . ']" value="True"'
-            . ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . lang($descr)
-            . '</option></td>';
-
+         $showcol = display_name($descr);
+	 if ($showcol) {
+           echo "\t<td><input type=\"checkbox\" name=\"ab_selected[" . $col . "]\" value=\"True\""
+            . ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . lang($showcol)
+            . "</option></td>\n";
+         } else {
+	   $i--;
+	   next;
+	 }
          if ($i == 3) {
-            echo "</tr>";
+            echo "</tr>\n";
             $i = 0;
          }
-         if ($i == 0) {
+         if ($i == 0 && $showcol) {
             $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-            echo '<tr bgcolor="' . $tr_color . '">';
+            echo "<tr bgcolor=\"" . $tr_color . "\">\n";
          }
          if ($j == count($this->stock_contact_fields)) {
             if ($i == 1) {
-               echo "<td>&nbsp;</td><td>&nbsp;</td>";
+               echo "\t<td>&nbsp;</td><td>&nbsp;</td>\n";
             }
             if ($i == 2) {
-               echo "<td>&nbsp;</td>";
+               echo "\t<td>&nbsp;</td>\n";
             }
-            echo "</tr>";
+            echo "</tr>\n";
          }
       }
       $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
