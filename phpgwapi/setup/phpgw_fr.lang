@@ -1,11 +1,12 @@
-about %1	common	fr	A propos de %1
+about %1	phpgwapi	fr	A propos de %1
 access	common	fr	Accès
 access not permitted	common	fr	Accès non permis
 acl	common	fr	Liste de Contrôle d'accès
+action	common	fr	Action
 active	common	fr	Actif
 add	common	fr	Ajouter
+add %1 category for	common	fr	Ajouter la catégorie %1 pour
 add category	common	fr	Ajouter catégorie
-add %1 category for	common	fr	Ajouter %1 catégorie pour
 add sub	common	fr	Ajouter sous
 admin	common	fr	Admin
 administration	common	fr	Administration
@@ -62,7 +63,7 @@ categories	common	fr	Catégories
 categories for	common	fr	catégories pour
 category	common	fr	Catégorie
 category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
-category %1 has been updated !	common	fr	La catégorie %1 a été modifiée !
+category %1 has been updated !	common	fr	La catégorie %1 a été mise à jour !
 cayman islands	common	fr	ILES CAIMAN
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
@@ -78,6 +79,7 @@ clear form	common	fr	Effacer le formulaire
 cocos (keeling) islands	common	fr	COCOS (KEELING) ISLANDS
 colombia	common	fr	COLOMBIE
 comoros	common	fr	COMORRES
+compare an array of apps/versions against the repository and return new/updated list of apps.	phpgwapi	fr	compare un champ d'apps/versions avec le dépôt et retourne une liste d'apps nouvelle/mise à jour.
 congo	common	fr	CONGO
 congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE DU
 cook islands	common	fr	ILES COOK
@@ -104,9 +106,11 @@ detail	common	fr	Détail
 details	common	fr	Détails
 disabled	common	fr	Désactivé
 djibouti	common	fr	DJIBOUTI
-do you really want to delete this entry	common	fr	Voulez-vous réellement effacer cette entrée ?
-do you want to delete all subcategories ?	common	fr	Voulez-vous effacer toutes les sous-catégories ?
-do you want to move all subcategories one level down ?	common	fr	VOulez-vous déplacer toutes les sous-catégories d'un niveau vers le bas ?
+do you really want to delete this entry	common	fr	Voulez-vous réellement supprimer cette entrée ?
+do you want to delete all subcategories ?	common	fr	Voulez vous supprimer toutes les sous-catégories ?
+do you want to move all subcategories one level down ?	common	fr	Voulez-vous déplacer toutes les sous-catégories à un niveau inférieur ?
+domain	phpgwapi	fr	domaine
+domestic	common	fr	Intérieur
 dominica	common	fr	DOMINIQUE
 dominican republic	common	fr	REPUBLIQUE DOMINICAINE
 done	common	fr	Fait
@@ -114,9 +118,9 @@ e-mail	common	fr	EMail
 east timor	common	fr	TIMOR EST
 ecuador	common	fr	ECUADOR
 edit	common	fr	Modifier
+edit %1 category for	common	fr	Modifier la catégorie %1 pour
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
-edit %1 category for	common	fr	Modifier %1 catégorie pour
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 email	common	fr	EMail
@@ -128,9 +132,9 @@ entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	GUINEE EQUATORIALE
 eritrea	common	fr	ERYTHREE
 error	common	fr	Erreur
-error creating %1 %2 directory	common	fr	Erreur pendant la création du répertoire %1 %2
-error deleting %1 %2 directory	common	fr	Erreur pendant la suppression du répertoire %1 %2
-error renaming %1 %2 directory	common	fr	Erreur pendant le renommage du répertoire %1 %2
+error creating %1 %2 directory	common	fr	Erreur à la création du répertoire %1 %2
+error deleting %1 %2 directory	common	fr	Erreur à l'effacement du répertoire %1 %2
+error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 estonia	common	fr	ESTONIE
 ethiopia	common	fr	ETHIOPIE
 falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
@@ -142,6 +146,7 @@ files	common	fr	Fichiers
 filter	common	fr	Filtrer
 finland	common	fr	FINLANDE
 first name	common	fr	Prénom
+First page	common	fr	Première page
 firstname	common	fr	Prénom
 force selectbox	common	fr	Forcer la boîte de sélection
 france	common	fr	FRANCE
@@ -185,11 +190,15 @@ hungary	common	fr	HONGRIE
 iceland	common	fr	ISLANDE
 india	common	fr	INDE
 indonesia	common	fr	INDONESIE
+international	common	fr	International
+invalid IP address	phpgwapi	fr	Adresse IP invalide
+invalid password	phpgwapi	fr	Mot de passe invalide
 iran, islamic republic of	common	fr	IRAN, REPUBLIQUE ISLAMIQUE D'
 iraq	common	fr	IRAK
 ireland	common	fr	IRLANDE
+is a multi-user, web-based groupware suite written in PHP	about	fr	est une suite collaborative multi-utilisateur, basée sur une interface Web et écrite en PHP
 israel	common	fr	ISRAEL
-it has been more then %1 days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifié votre mot de passe
+it has been more then %1 days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas changé votre mot de passe
 it is recommended that you run setup to upgrade your tables to the current version	common	fr	Il vous est recommandé d'exécuter "setup" pour mettre à jour vos tables vers la version courante.
 italy	common	fr	ITALIE
 jamaica	common	fr	JAMAIQUE
@@ -209,6 +218,7 @@ kyrgyzstan	common	fr	KYRGYZSTAN
 language	common	fr	Langue
 lao peoples democratic republic	common	fr	LAOS, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DU
 last name	common	fr	Nom
+Last page	common	fr	Dernière page
 lastname	common	fr	Nom
 latvia	common	fr	LATVIA
 lebanon	common	fr	LIBAN
@@ -219,6 +229,7 @@ license	about	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
 list	common	fr	Liste
 lithuania	common	fr	LITHUANIE
+local	common	fr	Local
 login	common	fr	Login
 logout	common	fr	Déconnexion
 low	common	fr	Bas
@@ -268,12 +279,14 @@ new main category	common	fr	Nouvelle catégorie principale
 new value	common	fr	Nouvelle valeur
 new zealand	common	fr	NOUVELLE ZELANDE
 next	common	fr	Suivant
+next page	common	fr	Page suivante
 nicaragua	common	fr	NICARAGUA
 niger	common	fr	NIGER
 nigeria	common	fr	NIGERIA
 niue	common	fr	NIUE
 no	common	fr	Non
-no category	common	fr	Pas de catégorie
+no category	common	fr	pas de catégorie
+no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no subject	common	fr	Sans Sujet
 none	common	fr	Aucun
@@ -281,6 +294,7 @@ norfolk island	common	fr	NORFOLK ISLAND
 normal	common	fr	Normal
 northern mariana islands	common	fr	NORTHERN MARIANA ISLANDS
 norway	common	fr	NORVEGE
+not assigned	common	fr	Non assigné
 note	common	fr	Note
 notes	common	fr	Notes
 notify window	common	fr	Fenêtre de notification
@@ -289,45 +303,61 @@ october	common	fr	Octobre
 ok	common	fr	OK
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
-only private	common	fr	Seulement privé
+only private	common	fr	seulement privés
 only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
 original	common	fr	Original
 other	common	fr	Autre
 overview	common	fr	Vue d'ensemble
 owner	common	fr	Propriétaire
+package an application for transport back to the calling client.	phpgwapi	fr	packager une application pour la renvoyer au client appelant.
 pakistan	common	fr	PAKISTAN
 palau	common	fr	PALAU
 palestinian territory, occupied	common	fr	PALESTINE, TERRITOIRE OCCUPE
 panama	common	fr	PANAMA
 papua new guinea	common	fr	PAPOUASIE NOUVELLE GUINEE
 paraguay	common	fr	PARAGUAY
+parcel	common	fr	Colis
 parent category	common	fr	Catégorie Parente
 password	common	fr	Mot de passe
+password could not be changed	common	fr	Le mot de passe n'a pas pu être changé
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
+pattern for search in addressbook	common	fr	Chaîne à rechercher dans le carnet d'adresses
+pattern for search in calendar	common	fr	Chaîne à rechercher dans le calendrier
+pattern for search in projects	common	fr	Chaîne à rechercher dans les projets
 personal	common	fr	Personnel
 peru	common	fr	PERU
 philippines	common	fr	PHILIPPINES
-is a multi-user, web-based groupware suite written in PHP	about	fr	est une suite de travail de groupe multi-utilisateur et à interface web écrite en PHP.
+phpgroupware --> homepage	phpgwapi	fr	phpGroupWare --> Page racine
 phpgwapi	common	fr	phpGroupWare API
 pitcairn	common	fr	PITCAIRN
+please %1 by hand	phpgwapi	fr	SVP %1 à la main
 please enter a name	common	fr	Veuillez saisir un nom !
 please run setup to become current	common	fr	SVP exécutez setup pour vous mettre à jour
 please set your global preferences	common	fr	SVP réglez vos préférences globales !
 please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
+please wait...	phpgwapi	fr	SVP patientez...
 poland	common	fr	POLOGNE
 portugal	common	fr	PORTUGAL
-powered by	common	fr	Actionné par
+powered by	common	fr	Motorisé par
+powered by phpgroupware version %1	common	fr	Motorisé par <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	fr	Préférences
+previous page	common	fr	Page précédente
 print	common	fr	Imprimer
 priority	common	fr	Priorité
 private	common	fr	Privé
+project	common	fr	Projet
 public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
 read	common	fr	Lire
+read a single app by id.	phpgwapi	fr	Lire une seule app par son id.
+read a single app by name.	phpgwapi	fr	Lire une seule app par son nom.
+read this list of methods.	common	fr	Lire cette liste de méthodes.
 reject	common	fr	Rejetter
 rename	common	fr	Renommer
+returns an array of todo items	common	fr	Retourne une matrice d'objets à faire
+returns struct of users application access	common	fr	Retourne une structure d'accès aux applications des utilisateurs
 reunion	common	fr	REUNION
 romania	common	fr	ROUMANIE
 russian federation	common	fr	FEDERATION DE RUSSIE
@@ -345,17 +375,20 @@ saudi arabia	common	fr	ARABIE SAOUDITE
 save	common	fr	Sauver
 search	common	fr	Chercher
 section	common	fr	Section
+select	common	fr	Sélectionner
 select category	common	fr	Sélectionner la catégorie
+select one	common	fr	Sélectionner un
 send	common	fr	Envoyer
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
 server %1 has been added	common	fr	Le serveur %1 a été ajouté
 server name	common	fr	Nom du serveur
 session has been killed	common	fr	La session a été tuée
+setup	phpgwapi	fr	setup
 seychelles	common	fr	SEYCHELLES
 show all	common	fr	Tous les éléments
-showing %1	common	fr	%1 éléments
-showing %1 - %2 of %3	common	fr	éléments %1 - %2 de %3
+showing %1	common	fr	Montre %1
+showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
 sierra leone	common	fr	SIERRA LEONE
 singapore	common	fr	SINGAPOUR
 slovakia	common	fr	SLOVAQUIE
@@ -386,8 +419,11 @@ tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE OF
 thailand	common	fr	THAILANDE
 the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
-The core of phpGroupWare, the API itself	about	fr	La base de phpGroupWare, l'API elle-même.
+The core of phpGroupWare, the API itself	about	fr	Le coeur de phpGroupWare, l'API en elle-même.
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
+the mail server returned	common	fr	Le serveur de mail a renvoyé
+there was an error trying to connect to your imap server.<br>please contact your admin to check the servername, username or password.	phpgwapi	fr	Il y a eu une erreur en essayant de se connecter à votre serveur IMAP.<br>SVP contactez votre administrateur pour vérifier le nom du serveur, le nom d'utilisateur ou le mot de passe.
+there was an error trying to connect to your pop3 server.<br>please contact your admin to check the servername, username or password.	phpgwapi	fr	Il y a eu une erreur en essayant de se connecter à votre serveur POP.<br>SVP contactez votre administrateur pour vérifier le nom du serveur, le nom d'utilisateur ou le mot de passe.
 this application is current	common	fr	Cette application est à jour
 this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
 this name has been used already	common	fr	Ce nom est déjà utilisé !
@@ -418,6 +454,9 @@ unknown	common	fr	Inconnu
 update	common	fr	Mettre à jour
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
+use button to search for	common	fr	Utilisez le bouton pour rechercher
+use button to search for Address	common	fr	Utilisez le bouton pour rechercher une adresse
+use button to search for Project	common	fr	Utilisez le bouton pour rechercher un projet
 user	common	fr	Utilisateur
 username	common	fr	Nom d'utilisateur
 users	common	fr	Utilisateurs
@@ -425,7 +464,7 @@ users choice	common	fr	Choix d'utilisateurs
 uzbekistan	common	fr	UZBEKISTAN
 vanuatu	common	fr	VANUATU
 venezuela	common	fr	VENEZUELA
-version	common	fr	Version
+version	phpgwapi	fr	version
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 virgin islands, british	common	fr	ILES VIERGES ANGLAISES
@@ -439,12 +478,19 @@ written by	common	fr	Ecrit par
 year	common	fr	Année
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
+you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
 you are running a newer version of phpGroupWare than your database is setup for	common	fr	Vous utilisez une version de phpGroupWare plus récente que celle définie pour la base de données.
 you have been successfully logged out	login	fr	Déconnexion réussie
+you have not entered a title	common	fr	Vous n'avez pas entré un titre
+you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide
+you have not entered a valid time of day	common	fr	Vous n'avez pas entré une heure du jour valide
+you have not entered participants	common	fr	Vous n'avez pas entré de participants
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
-your search returned 1 match	common	fr	Votre recherche a retourné un résultat
+you have successfully logged out	phpgwapi	fr	Vous vous êtes correctement déconnecté
+your message has been sent	phpgwapi	fr	Votre message a été envoyé
 your search returned %1 matchs	common	fr	Votre recherche a retourné %1 résultats
+your search returned 1 match	common	fr	Votre recherche a retourné un résultat
 your session could not be verified.	login	fr	Votre session n'est pas valide.
 your settings have been updated	common	fr	Vos préférences ont été mises à jour
 yugoslavia	common	fr	YOUGOSLAVIE
