@@ -18,7 +18,7 @@
 	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - DB layer
 	@discussion This class is to access the links in the DB
-	@discussion Links have to ends each pointing to an entry, an entry is a double:
+	@discussion Links have to ends each pointing two an entry, each entry is a double:
 	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'
 	@discussion id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
 	*/
@@ -35,7 +35,7 @@
 		var $db;
 		var $user;
 		var $db_name = 'phpgw_links';
-		var $debug = 0;
+		var $debug;
 
 		/*!
 		@function solink
