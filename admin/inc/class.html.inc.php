@@ -16,13 +16,13 @@
 	{
 		function hash_table($rows,$head='',$obj, $frtn)
 		{
-			$start = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
+			$start = $_POST['start'] ? $_POST['start'] : $_GET['start'];
 
 			$html = '';
-			$edittable =$head['_edittable'];
-			if (isset($edittable))
+			$edittable = $head['_edittable'];
+			if(isset($edittable))
 			{
-				if ($edittable)
+				if($edittable)
 				{
 					// Generate the customization table...
 					return $this->edit_table($rows,$head,$obj,$frtn);
@@ -33,21 +33,21 @@
 					#	 . $GLOBALS['phpgw']->link('/index.php')
 					#	 . '">' . "\n";
 					$bo = CreateObject('admin.bolog',True);
-					if (!isset($start))
+					if(!isset($start))
 					{
 						$start = 0;
 					}
 					$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 					$stop = $start + $num_rows;
-					if ($stop > count($rows))
+					if($stop > count($rows))
 					{
 						$stop = count($rows);
 					}
-					$nextmatchs	= CreateObject('phpgwapi.nextmatchs');
+					$nextmatchs = CreateObject('phpgwapi.nextmatchs');
 					$total_records = $bo->get_no_errors();
 					$left = $nextmatchs->left('/index.php',$start,$total_records,'menuaction=admin.uilog.list_log');
 					$right = $nextmatchs->right('/index.php',$start,$total_records,'menuaction=admin.uilog.list_log');
-					$hits =	$nextmatchs->show_hits($total_records,$start);
+					$hits = $nextmatchs->show_hits($total_records,$start);
 
 					$html .= '<table width="98%"><tr>';
 					$html .= $left;
@@ -58,7 +58,7 @@
 				}
 			}
 
-			if ($head == '')
+			if($head == '')
 			{
 				$frow = $rows[0];
 				$cnam = $this->arr_keys($frow);
@@ -68,7 +68,6 @@
 				}
 			}
 
-//			if(gettype($head['_cols'])=="NULL")
 			if(@is_null($head['_cols']))
 			{
 				$cols = $this->arr_keys($rows[0]);
@@ -82,12 +81,12 @@
 
 			// First Get the layout arrays...
 			$layout = $head['#layout'];
-			if (!is_array($layout))
+			if(!is_array($layout))
 			{
 				$layout = $this->arr_keys($cols);
-			} 
+			}
 
-			// printlist, a list of all columns in a logical row, 
+			// printlist, a list of all columns in a logical row,
 			// with Row/ColSpawn values, in print order...
 
 			$printlist = $this->make_printlist($layout,$cols);
@@ -95,7 +94,7 @@
 			// $table contains data for header row....
 			$table = $this->make_tblhead($printlist,$head);
 
-			// get GroupBy 
+			// get GroupBy
 			$groupby = $head['_groupby'];
 			$supres = $head['_supres'];
 			$lastgroup = '';
@@ -103,14 +102,14 @@
 			// build actual Rows...
 			$rparms = array();
 			$mrow = $stop;
-			for ($rno=0;$rno<$mrow;$rno++)
+			for($rno=0;$rno<$mrow;$rno++)
 			{
 				// Build GroupKey
-				if (isset($groupby))
+				if(isset($groupby))
 				{
 					$gkey = '';
 					reset($groupby);
-					while (list($gname,)=each($groupby))
+					while(list($gname,)=each($groupby))
 					{
 						$gkey .= $rows[$rno][$gname]['value'];
 					}
@@ -128,28 +127,28 @@
 
 			// Grouping Suppression
 
-			if (isset($groupby))
+			if(isset($groupby))
 			{
 				$grno = $start;
 				$gkey = $rows[$start]['#gkey'];
-				for ($rno=$start+1;$rno<$stop;$rno++)
+				for($rno=$start+1;$rno<$stop;$rno++)
 				{
 					$rowspan = 1;
 					$rkey = $rows[$rno]['#gkey'];
 
-					while ( $gkey == $rkey)
+					while( $gkey == $rkey)
 					{
 						//echo "<p>grno:$grno ($gkey) rno:$rno ($rkey) are equal</p>";
 						$rowspan = $rowspan + 1;
 						$row = $rows[$rno];
 
-						for ($pc=0;$pc<count($row);$pc++)
+						for($pc=0;$pc<count($row);$pc++)
 						{
 							$c = $row[$cols[$pc]];
 							$cno = $c['#colno'];
 							$cname = $c['#name'];
 
-							if ($supres[$cname])
+							if($supres[$cname])
 							{
 								$rows[$rno][$cname]['#supres']='yes';
 								$rows[$rno][$cname]['value']='&nbsp ';
@@ -171,10 +170,10 @@
 
 			$html .= $this->html_head($head,$table,$printlist);
 			/*
-			** Now (finaly) Generate the Html For the Table
+			** Now (finally) Generate the Html For the Table
 			*/
 			//print_r($rows);
-			for ($rno=$start;$rno<$stop;$rno++)
+			for($rno=$start;$rno<$stop;$rno++)
 			{
 				// let user have a hack at the row...
 				$row = $obj->$frtn($rno,$rows[$rno]);
@@ -210,7 +209,7 @@
 		{
 			$html = '';
 			$comma = ' ';
-			if (!is_array($parmlist))
+			if(!is_array($parmlist))
 			{
 				return '';
 			}
@@ -223,7 +222,7 @@
 						break;
 					case 'colspan':
 					case 'rowspan':
-						if ($pvalue != 1)
+						if($pvalue != 1)
 						{
 							$html .= $comma . $pname . '="' . $pvalue . '"';
 							#$comma = ', ';
@@ -231,7 +230,7 @@
 						};
 						break;
 					default:
-						if (substr($pname,0,1) != '#')
+						if(substr($pname,0,1) != '#')
 						{
 							$html .= $comma . $pname . '="' . $pvalue . '"';
 							#$comma = ', ';
@@ -244,11 +243,11 @@
 
 		function edit_table($rows,$head='',$obj, $frtn)
 		{
-			$nocols = $GLOBALS['HTTP_POST_VARS']['nocols'];
-			$noflds = $GLOBALS['HTTP_POST_VARS']['noflds'];
-			$norows = $GLOBALS['HTTP_POST_VARS']['norows'];
-			$layout = $GLOBALS['HTTP_POST_VARS']['layout'];
-			$_cols  = $GLOBALS['HTTP_POST_VARS']['_cols'];
+			$nocols = $_POST['nocols'];
+			$noflds = $_POST['noflds'];
+			$norows = $_POST['norows'];
+			$layout = $_POST['layout'];
+			$_cols  = $_POST['_cols'];
 
 			$html = '';
 			$html .= '<form method="post" action="'
@@ -258,7 +257,7 @@
 			$params = $head['_table_parms'];
 			$frow = $rows[0];
 			$cnam = $this->arr_keys($frow);
-			if ($head == '')
+			if($head == '')
 			{
 				while(list(,$fn)=each($cnam))
 				{
@@ -266,13 +265,12 @@
 				}
 			}
 
-			if (isset($_cols))
+			if(isset($_cols))
 			{
 				$cols = $_cols;
 			}
 			else
 			{
-//				if(gettype($head['_cols'])=="NULL")
 				if(@is_null($head['_cols']))
 				{
 					$cols = $this->arr_keys($rows[0]);
@@ -283,19 +281,19 @@
 				}
 			}
 
-			if (!isset($noflds))
+			if(!isset($noflds))
 			{
 				$noflds = count($cols);
 			}
-			if (!isset($layout))
+			if(!isset($layout))
 			{
 				$layout = $head['#layout'];
 			}
-			if (!isset($norows))
+			if(!isset($norows))
 			{
 				$norows = count($layout);
 			}
-			if (!isset($nocols))
+			if(!isset($nocols))
 			{
 				$nocols = count($layout[0]);
 			}
@@ -315,22 +313,22 @@
 			// Column Defintions...
 			$html .= "<h2>Column Definition</h2>";
 			$html .= "<table width=\"98%\" bgcolor=\"#000000\">\n";
-			$f	= array();
-			for ($fno=0;$fno<$noflds;$fno++)
+			$f = array();
+			for($fno=0;$fno<$noflds;$fno++)
 			{
 				$f[]=$fno;
 			}
 			// Column Headings
 			$html .= "\t<tr bgcolor=\"#D3DCFF\">\n";
-			for ($cno=0;$cno<$nocols;$cno++)
+			for($cno=0;$cno<$nocols;$cno++)
 			{
 				$html .= "\t\t<td align=\"center\">$cno</td>\n";
 			}
 			$html .= "\t</tr >\n";
-			for ($rno=0;$rno<$norows;$rno++)
+			for($rno=0;$rno<$norows;$rno++)
 			{
 				$html .= "\t<tr bgcolor=\"#D3DCFF\">\n";
-				for ($cno=0;$cno<$nocols;$cno++)
+				for($cno=0;$cno<$nocols;$cno++)
 				{
 					$c = $layout[$rno][$cno];
 					$tname = "layout[$rno][]";
@@ -360,13 +358,13 @@
 
 			// Add Table Rows...
 			reset($cols);
-	//		while (list($cno,$name) = each($cols))
-			for ($fno=0;$fno<$noflds;$fno++)
+	//		while(list($cno,$name) = each($cols))
+			for($fno=0;$fno<$noflds;$fno++)
 			{
 				$name = $cols[$fno];
 				$values = $head[$name];
 				$title = $values['title'];
-				if ($title == '')
+				if($title == '')
 				{
 					$title = $name;
 				}
@@ -388,16 +386,16 @@
 		{
 			$items = $opts;
 			$html = '<select ';
-			if ($name != '')
+			if($name != '')
 			{
 				$html .= 'name="'.$name.'"';
 			}
 			$html .= ">\n";
 
-			while (list(,$itm)=each($opts))
+			while(list(,$itm)=each($opts))
 			{
 				$html .= '<option value="'.$itm.'" ';
-				if ($itm == $sel)
+				if($itm == $sel)
 				{
 					$html .= 'selected ';
 				}
@@ -418,7 +416,7 @@
 			{
 				for($pc=0;$pc<$mcols;$pc++)
 				{
-					if (isset($tlayout[$pr][$pc]))
+					if(isset($tlayout[$pr][$pc]))
 					{
 						$cno = $tlayout[$pr][$pc];
 						$cname = $cols[$cno];
@@ -434,7 +432,7 @@
 							unset($tlayout[$pr][$pc+$colspan]);
 							$colspan++;
 						}
-						if ($colspan > 1 && $rowspan > 1)
+						if($colspan > 1 && $rowspan > 1)
 						{
 							for($r=$pr+1;$r<$pr+$rowspan;$r++)
 							{
@@ -469,7 +467,7 @@
 				$cname = $pcol['#name'];
 				$values = $head[$cname];
 				$title = $values['#title'];
-				if ($title == '')
+				if($title == '')
 				{
 					$title = $cname;
 				}
@@ -494,7 +492,7 @@
 			$intr = true;
 			while(list(,$col)=each($row))
 			{
-				if (!$intr)
+				if(!$intr)
 				{
 					$html .= "\t<tr $rp>\n";
 					$intr = true;
