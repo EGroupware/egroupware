@@ -10,8 +10,6 @@
   \**************************************************************************/
 
   /* $Id$ */
-  
-  $current_version = "0.9.1";
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("../header.inc.php");
@@ -36,7 +34,7 @@
 
   echo "<title>phpGroupWare - setup</title>";
   echo '<body bgcolor="FFFFFF">';
-  echo "<center>phpGroupWare version " . $current_version . " setup</center><p>";
+  echo "<center>phpGroupWare version " . $phpgw_info["server"]["version"] . " setup</center><p>";
 
   if ($submit) {
      $db->query("delete from config");
