@@ -73,7 +73,7 @@
        <?php if ($phpgw_info["server"]["usrtplchoice"] == "user_choice"){ ?>
        <tr>
          <?php $selected_template[$phpgw_info["user"]["preferences"]["common"]["template_set"]] = " selected"; ?>
-        <td>Interface/Template Selection:<br></td>
+        <td><?php echo lang("Interface/Template Selection") . ":"; ?><br></td>
         <td>
          <select name="settings[template_set]">
         <?php
@@ -89,7 +89,7 @@
 
        <tr>
          <?php $selected_theme[$phpgw_info["user"]["preferences"]["common"]["theme"]] = " selected"; ?>
-        <td>Theme (colors/fonts) Selection:<br></td>
+        <td><?php echo lang("Theme (colors/fonts) Selection") . ":"; ?><br></td>
         <td>
          <select name="settings[theme]">
         <?php

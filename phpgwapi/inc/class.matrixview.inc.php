@@ -251,7 +251,7 @@ function out_header ()
 	echo "<td height=\"1\" colspan=\""; echo $this->sumdays+1; echo "\" bgcolor=black><img src=\"" . $this->image1pix . "\"></td>\n";
 	echo "</tr>\n";
 	echo "<tr>\n";
-	echo "<td>Projectname</td>\n";
+	echo "<td>" . lang("Projectname") . "</td>\n";
 	for($i=1;$i<$this->sumdays+1;$i++)
 	{
 		echo "<td bgcolor=\""; echo $this->color_headerfield; echo "\">" . sprintf("%02d",$i) . "</td>\n";
@@ -293,24 +293,24 @@ function out_monthyear($form_link)
 	echo "<form action=\"" . $form_link . "\" method=\"post\">\n";
 	echo "<table border=0 width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">";
 	echo "<tr>\n";
-	echo "<td align=\"center\"><h2>"; echo $this->monthname; echo " "; echo $this->year; echo "</h2></td>\n";
+	echo "<td align=\"center\"><h2>"; echo lang($this->monthname); echo " "; echo $this->year; echo "</h2></td>\n";
 	
 	if($this->selection==1)
 	{
-		echo "<td align=\"right\">Month: <select name=\"month\""; 
+		echo "<td align=\"right\">" . lang("Month") . ": <select name=\"month\""; 
 			for($i=0;$i<13;$i++) 
 			{
 				if($this->month==$i) $sel = " selected"; else unset($sel);
 				echo "<option value=\"$i\"$sel>$i</option>"; }
 		echo "</select>";
-		echo "Year: <select name=\"year\"";
+		echo lang("Year") . ": <select name=\"year\"";
 			for($i = date("Y") -2;$i<date("Y")+5;$i++)
 			{ 
 				if($this->year==$i) $sel = " selected"; else unset($sel);
 				echo "<option value=\"$i\"$sel>$i</option>"; 
 			}
 		echo "</select>";
-		echo "&nbsp;<input type=\"submit\" name=\"selection\" value=\"Select\">&nbsp;";
+		echo "&nbsp;<input type=\"submit\" name=\"selection\" value=\"" . lang("Select") . "\">&nbsp;";
 		echo "</td>\n";
 	}
 	
