@@ -387,7 +387,18 @@
 
 			$this->db->query("SELECT * FROM $this->db_name WHERE et_name LIKE '$app%'");
 
-			if (!($f = fopen($path = PHPGW_SERVER_ROOT.'/'.$app.'/setup/etemplates.inc.php','w')))
+			$dir = PHPGW_SERVER_ROOT . "/$app/setup";
+			if (!is_writeable($dir))
+			{
+				return "Error: webserver is not allowed to write into '$dir' !!!";
+			}
+			$file = "$dir/etemplates.inc.php";
+			if (file_exists($file))
+			{
+				rename($file,"$dir/etemplates.old.inc.php");
+			}
+
+			if (!($f = fopen($file,'w')))
 			{
 				return 0;
 			}
@@ -404,7 +415,7 @@
 			}
 			fclose($f);
 
-			return "$n eTemplates for Application '$app' dumped to '$path'";
+			return "$n eTemplates for Application '$app' dumped to '$file'";
 		}
 
 		/*!
