@@ -128,6 +128,7 @@
   function phpgw_fillarray()
   {
     global $phpgw, $phpgw_info, $cd, $colspan;
+
     define("PHPGW_TEMPLATE_DIR",$phpgw->common->get_tpl_dir("phpgwapi"));
     define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_path("phpgwapi"));
     define("PHPGW_IMAGES_FILEDIR", $phpgw->common->get_image_dir("phpgwapi"));

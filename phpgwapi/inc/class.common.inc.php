@@ -314,11 +314,15 @@
 
     function get_app_dir($appname = ""){
       global $phpgw_info;
-      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
-      if ($appname == "home" || $appname == "logout" || $appname == "login"){$appname = "phpgwapi";}
+      if ($appname == "") { 
+         $appname = $phpgw_info["flags"]["currentapp"];
+      }
+      if ($appname == "home" || $appname == "logout" || $appname == "login") {
+         $appname = "phpgwapi";
+      }
 
-      $appdir = $phpgw_info["server"]["include_root"]."/".$appname;
-      $appdir_default = $phpgw_info["server"]["server_root"]."/".$appname;
+      $appdir         = PHPGW_INCLUDE_ROOT . "/".$appname;
+      $appdir_default = PHPGW_SERVER_ROOT . "/".$appname;
 
       if (is_dir ($appdir)){
         return $appdir;
@@ -331,11 +335,15 @@
 
     function get_inc_dir($appname = ""){
       global $phpgw_info;
-      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
-      if ($appname == "home" || $appname == "logout" || $appname == "login"){$appname = "phpgwapi";}
+      if (! $appname){
+         $appname = $phpgw_info["flags"]["currentapp"];
+      }
+      if ($appname == "home" || $appname == "logout" || $appname == "login") {
+         $appname = "phpgwapi";
+      }
 
-      $incdir = $phpgw_info["server"]["include_root"]."/".$appname."/inc";
-      $incdir_default = $phpgw_info["server"]["server_root"]."/".$appname."/inc";
+      $incdir         = PHPGW_INCLUDE_ROOT . "/" . $appname . "/inc";
+      $incdir_default = PHPGW_SERVER_ROOT . "/" . $appname . "/inc";
 
       if (is_dir ($incdir)){
         return $incdir;
@@ -346,33 +354,33 @@
       }      
     }
 
-    function list_themes(){
-      global $phpgw_info;
-      $dh = opendir($phpgw_info["server"]["server_root"] . "/phpgwapi/themes");
-      while ($file = readdir($dh)) {
-        if (eregi("\.theme$", $file)) {
-           $list[] = substr($file,0,strpos($file,"."));
-        }
-      }
-      //$dh->close();
-      reset ($list);
-      return $list;
+    function list_themes()
+    {
+       $dh = opendir(PHPGW_SERVER_ROOT . "/phpgwapi/themes");
+       while ($file = readdir($dh)) {
+         if (eregi("\.theme$", $file)) {
+            $list[] = substr($file,0,strpos($file,"."));
+         }
+       }
+       //$dh->close();
+       reset ($list);
+       return $list;
     }
 
     function list_templates(){
       global $phpgw_info;
-      $d = dir($phpgw_info["server"]["server_root"]."/phpgwapi/templates");
-      while($entry=$d->read()) {
-        if ($entry != "CVS" && $entry != "." && $entry != ".."){
-          $list[$entry]["name"] = $entry;
-          $f = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/".$entry."/details.inc.php";
-          if (file_exists ($f)){
-            include($f);
-            $list[$entry]["title"] = "Use ".$phpgw_info["template"][$entry]["title"]."interface";
-          }else{
-            $list[$entry]["title"] = $entry;
-          }
-        }
+      $d = dir(PHPGW_SERVER_ROOT . "/phpgwapi/templates");
+      while ($entry=$d->read()) {
+         if ($entry != "CVS" && $entry != "." && $entry != ".."){
+            $list[$entry]["name"] = $entry;
+            $f = PHPGW_SERVER_ROOT . "/phpgwapi/templates/" . $entry . "/details.inc.php";
+            if (file_exists ($f)){
+               include($f);
+               $list[$entry]["title"] = "Use ".$phpgw_info["template"][$entry]["title"]."interface";
+            } else {
+               $list[$entry]["title"] = $entry;
+            }
+         }
       }
       $d->close();
       reset ($list);
@@ -415,32 +423,41 @@
 
     function get_image_dir($appname = ""){
       global $phpgw_info;
-      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
-      if (empty($phpgw_info["server"]["template_set"])){$phpgw_info["server"]["template_set"] = "default";}
+      if ($appname == "") {
+         $appname = $phpgw_info["flags"]["currentapp"];
+      }
+      if (empty($phpgw_info["server"]["template_set"])) {
+         $phpgw_info["server"]["template_set"] = "default";
+      }
 
-      $imagedir = $phpgw_info["server"]["server_root"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
-      $imagedir_default = $phpgw_info["server"]["server_root"]."/".$appname."/templates/default/images";
-      $imagedir_olddefault = $phpgw_info["server"]["server_root"]."/".$appname."/images";
+      $imagedir            = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/"
+                           . $phpgw_info["server"]["template_set"] . "/images";
+      $imagedir_default    = PHPGW_SERVER_ROOT . "/" . $appname . "/templates/default/images";
+      $imagedir_olddefault = PHPGW_SERVER_ROOT . "/" . $appname . "/images";
 
       if (is_dir ($imagedir)){
-        return $imagedir;
-      }elseif (is_dir ($imagedir_default)){
-        return $imagedir_default;
-      }elseif (is_dir ($imagedir_olddefault)){
-        return $imagedir_olddefault;
-      }else{
-        return False;
+         return $imagedir;
+      } elseif (is_dir ($imagedir_default)) {
+         return $imagedir_default;
+      } elseif (is_dir ($imagedir_olddefault)) {
+         return $imagedir_olddefault;
+      } else {
+         return False;
       }      
     }
 
     function get_image_path($appname = ""){
       global $phpgw_info;
-      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
-      if (empty($phpgw_info["server"]["template_set"])){$phpgw_info["server"]["template_set"] = "default";}
+      if ($appname == "") {
+         $appname = $phpgw_info["flags"]["currentapp"];
+      }
+      if (empty($phpgw_info["server"]["template_set"])) { 
+         $phpgw_info["server"]["template_set"] = "default";
+      }
 
-      $imagedir = $phpgw_info["server"]["server_root"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
-      $imagedir_default = $phpgw_info["server"]["server_root"]."/".$appname."/templates/default/images";
-      $imagedir_olddefault = $phpgw_info["server"]["server_root"]."/".$appname."/images";
+      $imagedir            = PHPGW_SERVER_ROOT . "/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
+      $imagedir_default    = PHPGW_SERVER_ROOT . "/".$appname."/templates/default/images";
+      $imagedir_olddefault = PHPGW_SERVER_ROOT . "/".$appname."/images";
 
       if (is_dir ($imagedir)){
         return $phpgw_info["server"]["webserver_url"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
@@ -505,10 +522,11 @@
     }
 
 
-    function app_header() {
-      if (file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
-        include($phpgw_info["server"]["app_inc"]."/header.inc.php");
-      }
+    function app_header()
+    {
+       if (file_exists(PHPGW_APP_INC . "/header.inc.php")) {
+          include(PHPGW_APP_INC . "/header.inc.php");
+       }
     }
 
     function phpgw_header() {
