@@ -13,7 +13,10 @@
 	/* $Id$ */
 
 	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'preferences';
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'currentapp' => 'preferences',
+		'disable_Template_class' => True
+	);
 	include('../header.inc.php');
 
 	$pref_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -91,7 +94,7 @@
 		else
 		{
 			$pref_tpl->parse('rows','app_row_noicon',True);
-		} 
+		}
 	}
 
 	function section_item($pref_link='',$pref_text='')
@@ -110,7 +113,7 @@
 		}
 
 		$pref_tpl->parse('rows','link_row',True);
-	} 
+	}
 
 	function section_end()
 	{
@@ -131,7 +134,7 @@
 		{
 			section_item($url,lang($text));
 		}
-		section_end(); 
+		section_end();
 	}
 
 	$GLOBALS['phpgw']->hooks->process('preferences',array('preferences'));
