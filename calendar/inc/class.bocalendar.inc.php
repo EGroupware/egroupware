@@ -603,6 +603,7 @@
 			if($this->check_perms(PHPGW_ACL_DELETE,$id))
 			{
 				$this->so->delete_entry($id);
+				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('calendar', $id, 'delete', time());
 
 				if ($this->xmlrpc)
 				{
@@ -1095,6 +1096,7 @@
 				{
 					$this->so->add_entry($event);
 					$this->send_update(MSG_ADDED,$event['participants'],'',$this->get_cached_event());
+					$GLOBALS['phpgw']->contenthistory->updateTimeStamp('calendar', $event['id'], 'add', time());
 					print_debug('New Event ID',$event['id']);
 				}
 				else
@@ -1117,6 +1119,7 @@
 					}
 					$this->so->cal->event = $event;
 					$this->so->add_entry($event);
+					$GLOBALS['phpgw']->contenthistory->updateTimeStamp('calendar', $event['id'], 'modify', time());
 					$this->prepare_recipients($new_event,$old_event);
 				}
 

@@ -562,6 +562,11 @@
 				$fields = $this->xmlrpc2data($fields);
 			}
 			$id = $this->so->add_entry($fields);
+			
+			if(id)
+			{
+				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $id, 'add', time());
+			}
 
 			if ($this->xmlrpc && !$id)
 			{
@@ -589,6 +594,11 @@
 					$fields = $this->xmlrpc2data($fields);
 				}
 				$ok = $this->so->update_entry($fields);
+				if(ok)
+				{
+					$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $fields['ab_id'], 'modify', time());
+				}
+
 			}
 			if ($this->xmlrpc && !$ok)
 			{
@@ -617,6 +627,7 @@
 			if($this->check_perms($id,PHPGW_ACL_DELETE))
 			{
 				$this->so->delete_entry($id);
+				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 			}
 			elseif ($this->xmlrpc)
 			{

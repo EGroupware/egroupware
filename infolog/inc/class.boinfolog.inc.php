@@ -279,7 +279,11 @@
 
 			$this->link->unlink(0,'infolog',$info_id);
 
+			$info = $this->read($info_id);
+
 			$this->so->delete($info_id,$delete_children,$new_parent);
+			
+			$GLOBALS['phpgw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
 		}
 
 		/**
@@ -379,7 +383,27 @@
 			{
 				if ($values[$time]) $values[$time] -= $this->tz_offset_s;
 			}
-			return $this->so->write($values);
+			if($infoID = $this->so->write($values))
+			{
+				if($values['info_id'])
+				{
+					// update
+					$GLOBALS['phpgw']->contenthistory->updateTimeStamp(
+						'infolog_'.$values['info_type'], 
+						$infoID, 'modify', time()
+					);
+				}
+				else
+				{
+					// add
+					$GLOBALS['phpgw']->contenthistory->updateTimeStamp(
+						'infolog_'.$values['info_type'], 
+						$infoID, 'add', time()
+					);
+				}
+			}
+			
+			return $infoID;
 		}
 
 		function anzSubs( $info_id )
