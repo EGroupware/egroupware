@@ -54,7 +54,7 @@
 	$owner  = $fields[0]["owner"];
 
 	$rights = $phpgw->acl->get_rights('u_'.$owner,$phpgw_info["flags"]["currentapp"]);
-	if ( ($rights & PHPGW_ACL_READ) || ($owner == $account_id) ) {
+	if ( ($rights & PHPGW_ACL_READ) || ($owner == $phpgw_info["user"]["account_id"]) ) {
 
 		$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
 		$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';

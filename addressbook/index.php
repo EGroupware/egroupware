@@ -109,7 +109,7 @@
 	// Show the entries
 	for ($i=0;$i<count($entries);$i++) { // each entry
 		$rights = $phpgw->acl->get_rights('u_'.$entries[$i]["owner"],$phpgw_info["flags"]["currentapp"]);
-		if ( ($rights & PHPGW_ACL_READ) || ($entries[$i]["owner"] == $account_id) ) {
+		if ( ($rights & PHPGW_ACL_READ) || ($entries[$i]["owner"] == $phpgw_info["user"]["account_id"]) ) {
 		//if ( ($entries[$i]["access"] == $filter) ||
 		//	($entries[$i]["access"] == "," . $filter . ",") ||
 		//	($filter == "") || ($filter == "none")) {

@@ -48,7 +48,7 @@
 	} else {
 		//verify edit capabilities
 		$rights = $phpgw->acl->get_rights('u_'.$owner,$phpgw_info["flags"]["currentapp"]);
-		if ( ($rights & PHPGW_ACL_EDIT) || ($owner == $account_id) ) {
+		if ( ($rights & PHPGW_ACL_EDIT) || ($owner == $phpgw_info["user"]["account_id"]) ) {
 			if ($url == "http://") {
 				$url = "";
 			}
