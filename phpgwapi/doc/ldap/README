@@ -61,6 +61,13 @@ rely on core.schema and cosine.schema at least:
 include		/etc/openldap/schema/phpgwaccount.schema
 include		/etc/openldap/schema/phpgwcontact.schema
 
+You may need to adjust your indexes to the following:
+
+index default eq
+index objectClass eq
+index phpgwContactOwner pres,eq,sub
+index uidNumber pres,eq
+
 The Private Enterprise Code/OID for phpgroupware is 1.3.6.1.4.1.9554,
 registered via IANA and assigned on May 16 2001.  This is registered
 under the name Clear River Technologies, LLC.
