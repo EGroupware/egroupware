@@ -61,7 +61,7 @@
 
 			$this->t->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 
-			if(strpos($_userdata[0]['description'],'User'))
+			if(strpos($_menuData[0]['extradata'],'user'))
 			{
 				$destination = 'users';
 			}
