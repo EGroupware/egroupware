@@ -35,8 +35,7 @@
      }
   
      $phpgw->db->query("select account_id,account_firstname,account_lastname,account_lid "
-     				. "from accounts $querymethod $ordermethod limit "
-     				. $phpgw->nextmatchs->sql_limit($start));
+     				. "from accounts $querymethod $ordermethod " . $phpgw->db->limit($start));
 
      $i = 0;
      while ($phpgw->db->next_record()) {
