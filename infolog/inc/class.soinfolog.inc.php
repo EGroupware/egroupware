@@ -320,7 +320,7 @@
 			$ids = array( );
 			while ($this->db->next_record())
 			{
-				$ids[$this->db->f('info_id')] = $this->db->f('info_parent_id');
+				$ids[$this->db->f('info_id')] = $this->db->f('info_id_parent');
 			}
 			return $ids;
 		}
