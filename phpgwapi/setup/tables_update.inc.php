@@ -18,14 +18,14 @@
 
 		$oProc = $phpgw_setup->oProc;
 		$oProc->AlterColumn("access_log", "lo", array("type" => "varchar", "precision" => 255));
-		
+
 		$oProc->m_odb->query("update lang set lang='da' where lang='dk'");
 		$oProc->m_odb->query("update lang set lang='ko' where lang='kr'");
-		
+
 		$oProc->m_odb->query("update preferences set preference_name='da' where preference_name='dk'");
 		$oProc->m_odb->query("update preferences set preference_name='ko' where preference_name='kr'");
-		
-		  	//install weather support
+
+	  	//install weather support
 		$oProc->m_odb->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
 		$oProc->m_odb->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
 
@@ -33,7 +33,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	
+
 	function phpgwapi_v0_9_2to0_9_3update_owner($table, $field)
 	{
 		global $phpgw_setup;
@@ -50,7 +50,7 @@
 				$oProc->m_odb->query("update $table set $field=".$oProc->m_odb->f("account_id")." where $field='".$owner[$i]."'");
 			}
 		}
-		
+
 		$oProc->AlterColumn($table, $field, array("type" => "int", "precision" => 4, "nullable" => false, "default" => 0));
 	}
 
@@ -58,7 +58,7 @@
 	function phpgwapi_upgrade0_9_2()
 	{
 		global $setup_info;
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre4';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
@@ -71,12 +71,12 @@
 
 		$oProc = $phpgw_setup->oProc;
 		$oProc->AlterColumn("config", "config_name", array("type" => "varchar", "precision" => 255, "nullable" => false));
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre5';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	
+
 	$test[] = "0.9.3pre5";
 	function phpgwapi_upgrade0_9_3pre5()
 	{
@@ -98,12 +98,12 @@
 				'uc' => array()
 			)
 		);
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre6';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	
+
 	$test[] = "0.9.3pre6";
 	function phpgwapi_upgrade0_9_3pre6()
 	{
@@ -111,12 +111,12 @@
 
 		$oProc = $phpgw_setup->oProc;
 		$oProc->m_odb->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$setup_info['phpgwapi']['version']."')");
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre7';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	
+
 	$test[] = "0.9.3pre7";
 	function phpgwapi_upgrade0_9_3pre7()
 	{
@@ -272,7 +272,7 @@
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('YO','Yoruba','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZH','Chinese','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZU','Zulu','No')");
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre8';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
@@ -294,7 +294,7 @@
 
 		$oProc = $phpgw_setup->oProc;
 		$oProc->AlterColumn("sessions", "session_lid", array("type" => "varchar", "precision" => 255));
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.4pre5';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
@@ -452,12 +452,12 @@
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('yo','Yoruba','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('zh','Chinese','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('zu','Zulu','No')");
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.5pre1';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	
+
 	$test[] = "0.9.5pre1";
 	function phpgwapi_upgrade0_9_5pre1()
 	{
@@ -479,7 +479,7 @@
 				"fk" => array(),
 				"uc" => array("session_id")
 			));
-		
+
 		$oProc->CreateTable("phpgw_acl", array(
 				"fd" => array(
 					"acl_appname" => array("type" => "varchar", "precision" => 50),
@@ -493,7 +493,7 @@
 				"fk" => array(),
 				"uc" => array()
 			));
-		
+
 		$oProc->DropTable("app_sessions");
 		$oProc->CreateTable("phpgw_app_sessions", array(
 				"fd" => array(
@@ -507,7 +507,7 @@
 				"fk" => array(),
 				"uc" => array()
 			));
-		
+
 		$oProc->DropTable("access_log");
 		$oProc->CreateTable("phpgw_access_log", array(
 				"fd" => array(
@@ -590,10 +590,11 @@
 		$oProc = $phpgw_setup->oProc;
 		$oProc->m_odb->query("select * from preferences order by preference_owner");
 		$t = array();
-		while ($oProc->m_odb->next_record()) {
+		while ($oProc->m_odb->next_record())
+		{
 			$t[$oProc->m_odb->f("preference_owner")][$phpgw_setup->db->f("preference_appname")][$phpgw_setup->db->f("preference_var")] = $phpgw_setup->db->f("preference_value");
 		}
-		
+
 		$oProc->DropTable("preferences");
 		$oProc->CreateTable("preferences", array(
 				"fd" => array(
@@ -605,12 +606,12 @@
 				"fk" => array(),
 				"uc" => array()
 			));
-		
+
 		while ($tt = each($t))
 		{
 			$oProc->m_odb->query("insert into preferences values ('$tt[0]','" . serialize($tt[1]) . "')");
 		}
-		
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.8pre2';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
