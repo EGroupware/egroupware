@@ -76,20 +76,21 @@
   $thismonth	= (int)$cal_info->month;
   $thisday 	= (int)$cal_info->day;
 
+  if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+    $format = "h:i:s a";
+  } else {
+    $format = "H:i:s";
+  }
+
   if(intval($phpgw->common->show_date($cal_info->datetime,"H")) || intval($phpgw->common->show_date($cal_info->datetime,"i"))) {
     $phpgw->template->set_var("field",lang("Time"));
-    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-      $format .= "h:i:s a";
-    } else {
-      $format .= "H:i:s";
-    }
     $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->datetime,$format));
     $phpgw->template->parse("output","list",True);
   }
 
-  if ($cal_info->duration > 0) {
-    $phpgw->template->set_var("field",lang("Duration"));
-    $phpgw->template->set_var("data",$cal_info->duration." ".lang("minutes"));
+  if(($cal_info->datetime <> $cal_info->edatetime) && (intval($phpgw->common->show_date($cal_info->datetime,"Hi")) <> 0 && intval($phpgw->common->show_date($cal_info->edatetime,"Hi")) <> 2359)) {
+    $phpgw->template->set_var("field",lang("End Time"));
+    $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->edatetime,$format));
     $phpgw->template->parse("output","list",True);
   }
 

@@ -33,7 +33,7 @@
       $cal_info->owner = $cal_info->participants[0];
     }
     $phpgw->common->appsession($cal_info);
-    $overlapping_events = $phpgw->calendar->overlap($cal_info->month,$cal_info->day,$cal_info->year,$cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->duration,$cal_info->participants,$cal_info->id);
+    $overlapping_events = $phpgw->calendar->overlap($cal_info->month,$cal_info->day,$cal_info->year,$cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->end_month,$cal_info->end_day,$cal_info->end_year,$cal_info->end_hour,$cal_info->end_minute,$cal_info->end_ampm,$cal_info->participants,$cal_info->id);
   } else {
     $cal_info = $phpgw->common->appsession();
   }
@@ -50,6 +50,12 @@
     $time = $phpgw->calendar->fixtime($cal_info->hour,$cal_info->minute,$cal_info->ampm);
     $calendar_overlaps = $phpgw->calendar->getevent($overlapping_events);
 
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+      $format = "h:i:s a";
+    } else {
+      $format = "H:i:s";
+    }
+
     $overlap = "";
     for($i=0;$i<count($calendar_overlaps);$i++) {
       $cal_over = $calendar_overlaps[$i];
@@ -59,9 +65,7 @@
 	  $overlap .= "(PRIVATE)";
 	else
 	  $overlap .= $phpgw->calendar->link_to_entry($cal_over->id,"circle.gif",$cal_over->name);
-	$disp_start_time = $phpgw->calendar->build_time_for_display($phpgw->calendar->fixtime($cal_over->hour,$cal_over->minute,$cal_over->ampm));
-	$disp_stop_time = $phpgw->calendar->build_time_for_display($phpgw->calendar->addduration($cal_over->hour,$cal_over->minute,$cal_over->ampm,$cal_over->duration));
-	$overlap .= " (".$disp_start_time." - ".$disp_stop_time.")<br>";
+	$overlap .= " (".$phpgw->common->show_date($cal_over->datetime,$format)." - ".$phpgw->common->show_date($cal_over->edatetime,$format).")<br>";
       }
     }
     if(strlen($overlap)) {

@@ -34,6 +34,8 @@
 	- Fix possible problem connecting to LDAP server.
 	- Fix home page display of calendar events.
 	- Added ability to set users defaut calendar view of top icon.
+	- Changed calednar duration to a true date/time.
+	- Added ability to filter calendar events based on access.
         
 [0.9.6] - Fix user permissions where not being checked properly.
 

@@ -225,7 +225,8 @@
       echo "<input type=\"submit\" name=\"action\" value=\"Dont touch my data\">\n";
       echo "</form>\n";
       echo '</td></tr>';
-    }elseif ($stage == 2.5) {
+    }
+    if ($stage == 2.5) {
       echo '<tr><td align="center">O</td><td>';
       echo "<table width=\"100%\">\n";
       echo "  <tr bgcolor=\"486591\"><td><font color=\"fefefe\">&nbsp;<b>$subtitle</b></font></td></tr>\n";

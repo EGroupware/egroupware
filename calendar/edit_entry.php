@@ -101,7 +101,7 @@
     $phpgw->template->parse("output","list",True);
 
 // Date
-    $phpgw->template->set_var("field",lang("Date"));
+    $phpgw->template->set_var("field",lang("Start Date"));
 
     $day_html = "<select name=\"day\">";
     for ($i = 1; $i <= 31; $i++)
@@ -125,7 +125,7 @@
     $phpgw->template->parse("output","list",True);
 
 // Time
-    $phpgw->template->set_var("field",lang("Time"));
+    $phpgw->template->set_var("field",lang("End Time"));
 
     $amsel = "checked"; $pmsel = "";
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
@@ -141,12 +141,51 @@
       $str .= "<input type=\"radio\" name=\"ampm\" value=\"pm\" $pmsel>pm";
     }
 
+// End Date
     $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
-// Duration
-    $phpgw->template->set_var("field",lang("Duration"));
-    $phpgw->template->set_var("data","<input name=\"duration\" size=\"3\" value=\"".(!$cal_info->duration?0:$cal_info->duration)."\"> ".lang("minutes"));
+    $phpgw->template->set_var("field",lang("End Date"));
+
+    $day_html = "<select name=\"end_day\">";
+    for ($i = 1; $i <= 31; $i++)
+      $day_html .= "<option value=\"$i\"" . ($i == intval($phpgw->common->show_date($cal_info->edatetime,"d")) ? " selected" : "") . ">$i</option>\n";
+    $day_html .= "</select>";
+
+    $month_html = "<select name=\"end_month\">";
+    for ($i = 1; $i <= 12; $i++) {
+      $m = lang(date("F",mktime(0,0,0,$i,1,2000)));
+      $month_html .= "<option value=\"$i\"" . ($i == intval($phpgw->common->show_date($cal_info->edatetime,"n")) ? " selected" : "") . ">$m</option>\n";
+    }
+    $month_html .= "</select>";
+
+    $year_html = "<select name=\"end_year\">";
+    for ($i = (intval($phpgw->common->show_date($cal_info->edatetime,"Y")) - 1); $i < (intval($phpgw->common->show_date($cal_info->edatetime,"Y")) + 5); $i++) {
+      $year_html .= "<option value=\"$i\"" . ($i == intval($phpgw->common->show_date($cal_info->edatetime,"Y")) ? " selected" : "") . ">$i</option>\n";
+    }
+    $year_html .= "</select>";
+
+    $phpgw->template->set_var("data",$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
+    $phpgw->template->parse("output","list",True);
+
+// End Time
+    $phpgw->template->set_var("field",lang("End Time"));
+
+    $amsel = "checked"; $pmsel = "";
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+      if ($cal_info->end_ampm == "pm") {
+	$amsel = ""; $pmsel = "checked";
+      } else {
+	$amsel = "checked"; $pmsel = "";
+      }
+    }
+    $str = "<input name=\"end_hour\" size=\"2\" VALUE=\"".$phpgw->common->show_date($cal_info->edatetime,"H")."\" maxlength=\"2\">:<input name=\"end_minute\" size=\"2\" value=\"".$phpgw->common->show_date($cal_info->edatetime,"i")."\" maxlength=\"2\">";
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+      $str .= "<input type=\"radio\" name=\"end_ampm\" value=\"am\" $amsel>am";
+      $str .= "<input type=\"radio\" name=\"end_ampm\" value=\"pm\" $pmsel>pm";
+    }
+
+    $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
 // Priority

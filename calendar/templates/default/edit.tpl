@@ -23,6 +23,20 @@ function validate_and_submit() {
     document.addform.minute.focus();
     return false;
   }
+  h = parseInt(document.addform.end_hour.value);
+  m = parseInt(document.addform.end_minute.value);
+  if (h < 0 || h > 23) {
+    alert ("{time_error}");
+    document.addform.end_hour.select();
+    document.addform.end_hour.focus();
+    return false;
+  }
+  if (m < 0 || m > 59) {
+    alert ("{time_error}");
+    document.addform.end_minute.select();
+    document.addform.end_minute.focus();
+    return false;
+  }
   // would be nice to also check date to not allow Feb 31, etc...
   document.addform.submit();
 //  return true;

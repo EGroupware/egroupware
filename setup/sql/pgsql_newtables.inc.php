@@ -157,7 +157,7 @@
     cal_group		varchar(255),
     cal_datetime	int4,
     cal_mdatetime	int4,
-    cal_duration	int DEFAULT 0 NOT NULL,
+    cal_edatetime	int4,
     cal_priority	int DEFAULT 2,
     cal_type		varchar(10),
     cal_access		varchar(10),

@@ -83,7 +83,7 @@
   $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
 
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
-  $phpgw->template->set_var("date",lang(strftime("%B",$m))." ".$thisday.", ".$thisyear);
+  $phpgw->template->set_var("date",lang(date("F",$m))." ".$thisday.", ".$thisyear);
   $phpgw->template->set_var("username",$phpgw->common->display_fullname($id,$fn,$ln));
   $phpgw->template->set_var("daily_events",$phpgw->calendar->print_day_at_a_glance($now,$owner));
   $phpgw->template->set_var("small_calendar",$phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php"));

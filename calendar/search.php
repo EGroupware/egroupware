@@ -17,7 +17,7 @@
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
 
   if (! $keywords) {
-     // If we reach this it becuase they didn't search for anything,
+     // If we reach this, it is because they didn't search for anything,
      // attempt to send them back to where they where.
      Header("Location: " . $phpgw->link($from,"date=$datemonth=$month&day=$day&year=$year"));
   }
@@ -46,14 +46,33 @@
 	 . "WHERE "
 	 . "(UPPER(calendar_entry.cal_name) LIKE UPPER('%".$words[$i]."%') OR "
 	 . " UPPER(calendar_entry.cal_description) LIKE UPPER('%".$words[$i]."%')) AND "
-	 . "calendar_entry_user.cal_id=calendar_entry.cal_id AND "
-	 . "(((calendar_entry_user.cal_login=".$phpgw_info["user"]["account_id"].") AND "
-	 . "(calendar_entry.cal_access='private')) "
-	 . $phpgw->calendar->group_search()
-	 . "OR calendar_entry.cal_access='public') "
-	 . "ORDER BY cal_datetime";
+	 . "calendar_entry_user.cal_id=calendar_entry.cal_id AND ";
 
-    $phpgw->db->query($sql);
+    $sqlfilter = "";
+// Private
+    if($phpgw->calendar->filter==" all " || strpos($phpgw->calendar->filter,"private")) {
+      $sqlfilter .= "(calendar_entry_user.cal_login = ".$phpgw_info["user"]["account_id"]." AND calendar_entry.cal_access='private') ";
+    }
+
+// Group Public
+    if($phpgw->calendar->filter==" all " || strpos($phpgw->calendar->filter,"group")) {
+      if($sqlfilter)
+	$sqlfilter .= "OR ";
+      $sqlfilter .= $phpgw->calendar->group_search($phpgw_info["user"]["account_id"])." ";
+    }
+
+// Global Public
+    if($phpgw->calendar->filter==" all " || strpos($phpgw->calendar->filter,"public")) {
+      if($sqlfilter)
+	$sqlfilter .= "OR ";
+      $sqlfilter .= "calendar_entry.cal_access='public' ";
+    }
+    $orderby = " ORDER BY calendar_entry.cal_datetime ASC";
+
+    if($sqlfilter) $sql .= "(".$sqlfilter.") ";
+    $sql .= $orderby;
+
+    $phpgw->db->query($sql,__LINE__,__FILE__);
     while ($phpgw->db->next_record()) {
       $matches++;
       $ids[strval( $phpgw->db->f(0) )]++;

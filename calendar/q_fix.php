@@ -19,11 +19,14 @@
 
   $db2 = $phpgw->db;
 
-  $phpgw->db->query("SELECT cal_datetime, cal_mdatetime, cal_id FROM calendar_entry ORDER BY cal_id",__LINE__,__FILE__);
+  $phpgw->db->query("SELECT cal_datetime, cal_mdatetime, cal_id, cal_owner FROM calendar_entry ORDER BY cal_id",__LINE__,__FILE__);
   if($phpgw->db->num_rows()) {
     while($phpgw->db->next_record()) {
-      $datetime = $phpgw->db->f("cal_datetime") - ((60*60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
-      $mdatetime = $phpgw->db->f("cal_mdatetime") - ((60*60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
+      $db2->query("SELECT preference_value FROM preferences WHERE preference_name='tz_offset' AND preference_appname='common' AND preference_owner=".$db->("cal_owner"),__LINE__,__FILE__);
+      $db2->next_record();
+      $tz = $db2->f("preference_value");
+      $datetime = $phpgw->db->f("cal_datetime") + ((60*60) * $tz);
+      $mdatetime = $phpgw->db->f("cal_mdatetime") + ((60*60) * $tz);
       $db2->query("UPDATE calendar_entry SET cal_datetime=".$datetime.", cal_mdatetime=".$mdatetime." WHERE cal_id=".$phpgw->db->f("cal_id"),__LINE__,__FILE__);
     }
   }

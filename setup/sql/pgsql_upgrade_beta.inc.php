@@ -679,6 +679,54 @@
         update_version_table();	
       }
 
+      if ($currentver == "0.9.7pre2") {
+      	$db2 = $db;
+	$sql = "CREATE TABLE TEMP AS SELECT * FROM calendar_entry";
+	$db->query($sql,__LINE__,__FILE__);
+
+	$sql = "DROP TABLE calendar_entry";
+	$db->query($sql,__LINE__,__FILE__);
+
+	$sql = "CREATE TABLE calendar_entry (
+			cal_id		serial,
+			cal_owner	int DEFAULT 0 NOT NULL,
+			cal_group	varchar(255) NULL,
+			cal_datetime	int4,
+			cal_mdatetime	int4,
+			cal_edatetime	int4,
+			cal_priority	int DEFAULT 2,
+			cal_type	varchar(10),
+			cal_access	varchar(10),
+			cal_name	varchar(80) NOT NULL,
+			cal_description	text)";
+	$db->query($sql,__LINE__,__FILE__);
+	$db->query("SELECT cal_id,cal_owner,cal_group,cal_datetime,cal_mdatetime,cal_duration,cal_priority,cal_type,cal_access,cal_name,cal_description FROM TEMP ORDER BY cal_id",__LINE__,__FILE__);
+	  while($db->next_record()) {
+	    $db2->query("SELECT preference_value FROM preferences WHERE preference_name='tz_offset' AND preference_appname='common' AND preference_owner=".$db->f("cal_owner"),__LINE__,__FILE__);
+	    $db2->next_record();
+	    $tz = $db2->f("preference_value");
+	    $cal_id = $db->f("cal_id");
+	    $cal_owner = $db->f("cal_owner");
+	    $cal_group = $db->f("cal_group");
+	    $cal_datetime = $db->f("cal_datetime") - ((60 * 60) * $tz);
+	    $cal_mdatetime = $db->f("cal_mdatetime") - ((60 * 60) * $tz);
+	    $cal_edatetime = $cal_datetime + (60 * $db->f("cal_duration"));
+	    $cal_priority = $db->f("cal_priority");
+	    $cal_type = $db->f("cal_type");
+	    $cal_access = $db->f("cal_access");
+	    $cal_name = $db->f("cal_name");
+	    $cal_description = $db->f("cal_description");
+	    $db2->query("INSERT INTO calendar_entry(cal_id,cal_owner,cal_group,cal_datetime,cal_mdatetime,cal_edatetime,cal_priority,cal_type,cal_access,cal_name,cal_description) VALUES(".$cal_id.",".$cal_owner.",'".$cal_group."',".cal_datetime.",".$cal_mdatetime.",".$cal_edatetime.",".$cal_priority.",'".$cal_type."','".$cal_access."','".$cal_name."','".$cal_description."')",__LINE__,__FILE__);
+	  }
+	}
+
+	$sql = "DROP TABLE TEMP";
+	$db->query($sql,__LINE__,__FILE__);
+
+        $currentver = "0.9.7pre3";
+        update_version_table();	
+      }
+
       if ($oldversion != $currentver){
         echo "  </tr><td>\n";
         echo "  <tr bgcolor=\"e6e6e6\">\n";
