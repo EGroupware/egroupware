@@ -25,12 +25,6 @@
 			'anzSubs'        => True,
 			'search'         => True,
 			'get_rows'       => True,
-			'attach_file'    => True,
-			'delete_attached'=> True,
-			'info_attached'  => True,
-			'list_attached'  => True,
-			'read_attached'  => True,
-			'attached_local' => True,
 			'link_title'     => True,
 			'link_query'     => True,
 			'link_id2from'   => True
@@ -154,7 +148,6 @@
 
 		function delete($info_id)
 		{
-			$this->delete_attached($info_id);
 			$this->link->unlink(0,'infolog',$info_id);
 
 			$this->so->delete($info_id);
