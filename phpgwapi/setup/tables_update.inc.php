@@ -737,6 +737,14 @@
 	}
 
 	// TODO see next function
+/*
+		$tables = Array('addressbook','calendar_entry','f_forums','todo');
+		$fields["addressbook"] = Array('ab_access','ab_id');
+		$fields["calendar_entry"] = Array('cal_group','cal_id');
+		$fields["f_forums"] = Array('groups','id');
+		$fields["phpgw_categories"] = Array('cat_access','cat_id');
+		$fields["todo"] = Array('todo_access','todo_id');
+*/
 	function change_groups($table,$field,$old_id,$new_id,$db2,$db3)
 	{
 		$sql = $field[0];
@@ -757,30 +765,40 @@
 		}
 	}
 
-	// TODO this and the function above may affect all apps
 	$test[] = "0.9.10pre4";
 	function phpgwapi_upgrade0_9_10pre4()
 	{
-		global $phpgw_info, $phpgw_setup;
+		global $phpgw_info, $oProc;
 
-		$db2 = $phpgw_setup->db;
-		$db3 = $phpgw_setup->db;
-		$phpgw_setup->db->query("SELECT MAX(group_id) FROM groups",__LINE__,__FILE__);
-		$phpgw_setup->db->next_record();
-		$max_group_id = $phpgw_setup->db->f(0);
+		$db2 = $oProc->m_odb;
+		$db3 = $oProc->m_odb;
 
-		$tables = Array('addressbook','calendar_entry','f_forums','phpgw_categories','todo');
-		$fields["addressbook"] = Array('ab_access','ab_id');
-		$fields["calendar_entry"] = Array('cal_group','cal_id');
-		$fields["f_forums"] = Array('groups','id');
-		$fields["phpgw_categories"] = Array('cat_access','cat_id');
-		$fields["todo"] = Array('todo_access','todo_id');
+		$oProc->m_odb->query("SELECT MAX(group_id) FROM groups",__LINE__,__FILE__);
+		$oProc->m_odb->next_record();
+		$max_group_id = $oProc->m_odb->f(0);
 
-		$phpgw_setup->db->query("SELECT group_id, group_name FROM groups",__LINE__,__FILE__);
-		while($phpgw_setup->db->next_record())
+		// This is for use by former CORE apps to use in this version number's upgrade locally
+		$oProc->CreateTable(
+			'phpgw_temp_groupmap', array(
+				'fd' => array(
+					'oldid'  => array('type' => 'int', 'precision' => 4, 'nullable' => True),
+					'oldlid' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+					'newid'  => array('type' => 'int', 'precision' => 4, 'nullable' => True),
+					'newlid' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True)
+				),
+				'pk' => array('oldid'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array()
+			)
+		);
+
+		$oProc->m_odb->query("SELECT group_id, group_name FROM groups",__LINE__,__FILE__);
+		while($oProc->m_odb->next_record())
 		{
-			$old_group_id = $phpgw_setup->db->f("group_id");
-			$group_name = $phpgw_setup->db->f("group_name");
+			$old_group_id = $oProc->m_odb->f("group_id");
+			$old_group_name = $oProc->m_odb->f("group_name");
+			$group_name = $oProc->m_odb->f("group_name");
 			while(1)
 			{
 				$new_group_id = mt_rand ($max_group_id, 60000);
@@ -798,19 +816,32 @@
 				."account_status, account_type) "
 				."VALUES ($new_group_id,'$group_name','x','','',$old_group_id,NULL,NULL,'A','g')");
 
-			for($i=0;$i<count($tables);$i++)
-			{
-				change_groups($tables[$i],$fields[$tables[$i]],$old_group_id,$new_group_id,$db2,$db3);
-			}
+			// insert oldid/newid into temp table (for use by other apps in this version upgrade
+			$db2->query("INSERT INTO temp_groupmap (oldid,oldlid,newid,newlid) VALUES ($old_group_id,'$old_group_name',$new_group_id,'$group_name')",__LINE__,__FILE__;
+
 			$db2->query("UPDATE phpgw_acl SET acl_location='$new_group_id' "
 				."WHERE acl_appname='phpgw_group' AND acl_account_type='u' "
 				."AND acl_location='$old_group_id'");
-				$db2->query("UPDATE phpgw_acl SET acl_account=$new_group_id "
+			$db2->query("UPDATE phpgw_acl SET acl_account=$new_group_id "
 				."WHERE acl_location='run' AND acl_account_type='g' "
 				."AND acl_account=$old_group_id");
+
+			$db2->query("SELECT cat_access,cat_id FROM phpgw_categories WHERE cat_access LIKE '%,".$old_group_id.",%'",__LINE__,__FILE__);
+			if($db2->num_rows())
+			{
+				while($db2->next_record())
+				{
+					$access = $db2->f('cat_access');
+					$id     = $db2->f('cat_id');
+					$access = str_replace(','.$old_group_id.',' , ','.$new_group_id.',' , $access);
+					$db3->query("UPDATE phpgw_categories SET cat_access='".$access."' WHERE cat_id=".$id,__LINE__,__FILE__);
+				}
+			}
 		}
-		$phpgw_setup->db->query("DROP TABLE groups",__LINE__,__FILE__);
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre5";
+
+		$oProc->DropTable('groups');
+		$setup_info["phpgwapi"]["currentver"] = "0.9.10pre5";
+		return True;
 	}
  
 	$test[] = "0.9.10pre5";
