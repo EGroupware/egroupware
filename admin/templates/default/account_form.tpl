@@ -33,7 +33,7 @@
 
     <tr bgcolor="{tr_color1}">
      <td>{lang_expires}</td>
-     <td colspan=3>{expires_list}&nbsp;</td>
+     <td colspan=3>{input_expires}&nbsp;</td>
     </tr>
 
     {permissions_list}
