@@ -42,10 +42,15 @@
     exit;
   }
 
-  function show_cookie($code,$lastloginid,$new_loginid)
+  function show_cookie()
   {
-    if ($code != 5)
-    return $lastloginid;
+    global $phpgw_info, $code, $lastloginid, $login;
+    if ($code != 5){    
+      if ($phpgw_info["server"]["usecookies"]) {
+        SetCookie("lastloginid",$login, time() + (24 * 3600 * 14),"/");
+        return $lastloginid;
+      }
+    }
   }
 
   function check_logoutcode($code)
@@ -103,8 +108,7 @@
   }
   $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
   $tmpl->set_var("cd",check_logoutcode($cd));
-  $tmpl->set_var("cookie",show_cookie($cd,$last_loginid,$login));
-
+  $tmpl->set_var("cookie",show_cookie());
   $tmpl->set_var("lang_username",lang_login("username"));
   $tmpl->set_var("lang_password",lang_login("password"));
   $tmpl->set_var("lang_login",lang_login("login"));
