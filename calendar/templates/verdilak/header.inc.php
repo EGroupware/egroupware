@@ -175,7 +175,4 @@
 	$button = $tpl->fp('out','form_button');
 	$tpl->set_var('str','<td align="right" valign="bottom">'.$button.'</td>');
 	$tpl->parse('header_column','head_col',True);
-
-	echo $tpl->fp('out','head');
-	unset($tpl);
 ?>

@@ -26,7 +26,7 @@
 
 		function socalendar($owner=0,$filter='',$cat_id='')
 		{
-			global $phpgw;
+			global $phpgw, $phpgw_info;
 
 			$this->db = $phpgw->db;
 			$this->datetime = CreateObject('phpgwapi.datetime');
@@ -71,7 +71,7 @@
 			return $this->cal->fetch_event($id);
 		}
 
-		function list_events($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endDay='')
+		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0)
 		{
 			$this->makeobj();
 
@@ -97,11 +97,14 @@
 				return Array();
 			}
 
-			$starttime = mktime(0,0,0,$smonth,$sday,$syear);
-			$endtime = mktime(23,59,59,$emonth,$eday,$eyear);
+			$this->makeobj();
+			$starttime = mktime(0,0,0,$smonth,$sday,$syear) - $this->datetime->tz_offset;
+			$endtime = mktime(23,59,59,$emonth,$eday,$eyear) - $this->datetime->tz_offset;
+//			$starttime = mktime(0,0,0,$smonth,$sday,$syear);
+//			$endtime = mktime(23,59,59,$emonth,$eday,$eyear);
 			$sql = "AND (phpgw_cal.cal_type='M') "
 				. 'AND (phpgw_cal_user.cal_login='.$this->owner.' '
-				. 'AND (phpgw_cal.datetime >= '.$starttime.') '
+//				. 'AND (phpgw_cal.datetime <= '.$starttime.') '
 				. 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) ';
 
 			if(strpos($this->filter,'private'))
@@ -143,7 +146,7 @@
 			return $this->cal->get_event_ids($include_repeats,$sql);
 		}
 
-		function add_entry($event)
+		function add_entry(&$event)
 		{
 			$this->makeobj();
 			$this->cal->store_event($event);
@@ -161,6 +164,11 @@
 			$this->cal->expunge();
 		}
 
+		function set_status($id,$status)
+		{
+			$this->makeobj();
+			$this->cal->set_status($id,$this->owner,$status);
+		}
 
 		function get_lastid()
 		{

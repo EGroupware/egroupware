@@ -213,7 +213,7 @@ class socalendar_ extends socalendar__
 		return $this->event;
 	}
 
-	function list_events($startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endDay='',$extra='',$tz_offset=0)
+	function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0,$extra='',$tz_offset=0)
 	{
 		if(!isset($this->stream))
 		{
@@ -224,7 +224,7 @@ class socalendar_ extends socalendar__
 		$user_where = ' AND (phpgw_cal_user.cal_login = '.$this->user.') ';
 		$startDate = 'AND (phpgw_cal.datetime >= '.$datetime.') ';
 	  
-		if($endYear != '' && $endMonth != '' && $endDay != '')
+		if($endYear != 0 && $endMonth != 0 && $endDay != 0)
 		{
 			$edatetime = mktime(23,59,59,intval($endMonth),intval($endDay),intval($endYear)) - $tz_offset;
 			$endDate = 'AND (phpgw_cal.edatetime <= '.$edatetime.') ';
@@ -247,21 +247,6 @@ class socalendar_ extends socalendar__
 
 	function store_event()
 	{
-		if($this->event->id != 0)
-		{
-			$new_event = $this->event;
-			$old_event = $this->fetch_event($new_event->id);
-			$this->prepare_recipients($new_event,$old_event);
-			$this->event = $new_event;
-		}
-		else
-		{
-			while(list($key,$value) = each($this->event->participants))
-			{
-				$this->add_attribute('participants['.intval($key).']','U');
-			}
-			$this->send_update(MSG_ADDED,$this->event->participants,'',$this->event);
-		}
 		return $this->save_event($this->event);
 	}
 
@@ -304,14 +289,9 @@ class socalendar_ extends socalendar__
 		$this->stream->lock($locks);
 		for($i=0;$i<count($this->deleted_events);$i++)
 		{
-			$event_id = $this->deleted_events[$i];
-
-			$event = $this->fetch_event($event_id);
-			$this->send_update(MSG_DELETED,$event->participants,$event);
-
 			for($k=0;$k<count($locks);$k++)
 			{
-				$this->stream->query('DELETE FROM '.$locks[$k].' WHERE cal_id='.$event_id,__LINE__,__FILE__);
+				$this->stream->query('DELETE FROM '.$locks[$k].' WHERE cal_id='.$this->deleted_events[$i],__LINE__,__FILE__);
 			}
 		}
 		$this->stream->unlock();
@@ -469,24 +449,8 @@ class socalendar_ extends socalendar__
 			TENTATIVE	=>	'T',
 			ACCEPTED	=>	'A'
 		);
-		$temp_event = $this->event;
-		$old_event = $this->fetch_event($id);
-		switch($status)
-		{
-			case REJECTED:
-				$this->send_update(MSG_REJECTED,$old_event->participants,$old_event);
-				$this->stream->query("DELETE FROM phpgw_cal_user WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
-				break;
-			case TENTATIVE:
-				$this->send_update(MSG_TENTATIVE,$old_event->participants,$old_event);
-				$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
-				break;
-			case ACCEPTED:
-				$this->send_update(MSG_ACCEPTED,$old_event->participants,$old_event);
-				$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
-				break;
-		}
-		$this->event = $temp_event;
+		
+		$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
 		return True;
 	}
 	

@@ -45,14 +45,15 @@
 		var $cat_id;
 		var $users_timeformat;
 		
+		var $modified;
+		var $deleted;
+		var $added;
+		
 		var $use_session = False;
 
 		function bocalendar($session=0)
 		{
-//			if(floor(phpversion()) == 4)
-//			{
-				global $phpgw, $phpgw_info, $date, $year, $month, $day, $owner, $filter, $fcat_id, $friendly;
-//			}
+			global $phpgw, $phpgw_info, $date, $year, $month, $day, $owner, $filter, $fcat_id, $friendly;
 
 			$phpgw->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
@@ -66,19 +67,23 @@
 				$this->use_session = True;
 			}
 
-			if($this->debug) { echo "BO Filter : (".$this->filter.")<br>\n"; }
+			if($this->debug)
+			{
+				echo "BO Filter : (".$this->filter.")<br>\n";
+				echo "Owner : ".$this->owner."<br>\n";
+			}
+			
 			if(isset($owner))
 			{
-				$this->owner = $owner;
+				$this->owner = intval($owner);
 			}
-			elseif(!$this->owner)
+			elseif(!isset($this->owner) || !$this->owner)
 			{
 				$this->owner = $phpgw_info['user']['account_id'];
 			}
 
 			$this->prefs['common']    = $phpgw_info['user']['preferences']['common'];
 			$this->prefs['calendar']    = $phpgw_info['user']['preferences']['calendar'];
-
 
 			if ($this->prefs['common']['timeformat'] == '12')
 			{
@@ -141,7 +146,11 @@
 			$this->so = CreateObject('calendar.socalendar',$this->owner,$this->filter,$this->cat_id);
 			$this->datetime = $this->so->datetime;
 			
-			if($this->debug) { echo "BO Filter : (".$this->filter.")<br>\n"; }
+			if($this->debug)
+			{
+				echo "BO Filter : (".$this->filter.")<br>\n";
+				echo "Owner : ".$this->owner."<br>\n";
+			}
 		}
 
 		function save_sessiondata($data)
@@ -163,10 +172,10 @@
 
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
-			$this->owner  = $data['owner'];
-			$this->year   = $data['year'];
-			$this->month  = $data['month'];
-			$this->day    = $data['day'];
+			$this->owner  = intval($data['owner']);
+			$this->year   = intval($data['year']);
+			$this->month  = intval($data['month']);
+			$this->day    = intval($data['day']);
 		}
 
 		function read_entry($id)
@@ -182,6 +191,7 @@
 			if($this->check_perms(PHPGW_ACL_ADD))
 			{
 				$this->so->add_entry($event);
+				$this->send_update(MSG_ADDED,$event->participants,'',$this->get_cached_event());
 			}
 		}
 
@@ -189,6 +199,12 @@
 		{
 			if($this->check_perms(PHPGW_ACL_EDIT))
 			{
+				if($event->id != 0)
+				{
+					$new_event = $event;
+					$old_event = $this->read_entry($new_event->id);
+					$this->prepare_recipients($new_event,$old_event);
+				}
 				$this->so->add_entry($event);
 			}
 		}
@@ -205,6 +221,12 @@
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE))
 			{
+				for($i=0;$i<count($this->so->cal->deleted_events);$i++)
+				{
+					$event_id = $this->so->cal->deleted_events[$i];
+					$event = $this->so->read_entry($event_id);
+					$this->send_update(MSG_DELETED,$event->participants,$event);
+				}
 				$this->so->expunge();
 			}
 		}
@@ -385,11 +407,38 @@
 			}
 		}
 
+		function get_fullname($accountid)
+		{
+			global $phpgw;
+
+			$account_id = get_account_id($accountid);
+			if($phpgw->accounts->exists($account_id) == False)
+			{
+				return False;
+			}
+			$db = $phpgw->db;
+			$db->query('SELECT account_lid,account_lastname,account_firstname FROM phpgw_accounts WHERE account_id='.$account_id,__LINE__,__FILE__);
+			if($db->num_rows())
+			{
+				$db->next_record();
+				$fullname = $db->f('account_lid');
+				$lname = $db->f('account_lastname');
+				$fname = $db->f('account_firstname');
+				if($lname && $fname)
+				{
+					$fullname = $lname.', '.$fname;
+				}
+				return $fullname;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		function display_status($user_status)
 		{
-			global $phpgw_info;
-		
-			if(isset($this->prefs['calendar']['display_status']) && $this->prefs['calendar']['display_status'] == True)
+			if(@$this->prefs['calendar']['display_status'])
 			{
 				return ' ('.$user_status.')';
 			}
@@ -419,12 +468,12 @@
 			return $status;
 		}
 
-		function is_private($event,$owner,$field='')
+		function is_private($event,$owner)
 		{
 			global $phpgw, $phpgw_info;
 
 			if($owner == 0) { $owner = $this->owner; }
-			if ($owner == $phpgw_info['user']['account_id'] || $this->check_perms(PHPGW_ACL_PRIVATE,$owner) || ($event->public == 1))
+			if ($owner == $phpgw_info['user']['account_id'] || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event->public==0) || ($event->public == 1))
 			{
 				$is_private  = False;
 			}
@@ -446,7 +495,7 @@
 			}
 			else
 			{
-				$is_private  = False;
+				$is_private = False;
 			}
 
 			return $is_private;
@@ -704,7 +753,10 @@
 		{
 			global $phpgw, $phpgw_info;
 
-	echo "Start Date : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+			if($this->debug)
+			{
+				echo "Start Date : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+			}
 
 			if(!$eyear && !$emonth && !$eday)
 			{
@@ -735,6 +787,12 @@
 
 			$c_cached_ids = count($cached_event_ids);
 			$c_cached_ids_repeating = count($cached_event_ids_repeating);
+
+			if($this->debug)
+			{
+				echo "events cached : $c_cached_ids : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+				echo "repeating events cached : $c_cached_ids_repeating : for : ".sprintf("%04d%02d%02d",$syear,$smonth,$sday)."<br>\n";
+			}
 
 			$this->cached_events = Array();
 			
@@ -949,9 +1007,322 @@
 					'class'		=> $class
 				);
 			}
-//			$this->_debug_array($daily);
+
+			if($this->debug)
+			{
+				$this->_debug_array($daily);
+			}
+			
 			return $daily;
 		}
+
+		function prepare_matrix($interval,$increment,$part,$status,$fulldate)
+		{
+			global $phpgw;
+			for($h=0;$h<24;$h++)
+			{
+				for($m=0;$m<$interval;$m++)
+				{
+					$index = (($h * 10000) + (($m * $increment) * 100));
+					$time_slice[$index]['marker'] = '&nbsp';
+					$time_slice[$index]['description'] = '';
+				}
+			}
+			for($k=0;$k<count($this->cached_events[$fulldate]);$k++)
+			{
+				$event = $this->cached_events[$fulldate][$k];
+				$eventstart = $this->datetime->localdates($event->datetime);
+				$eventend = $this->datetime->localdates($event->edatetime);
+				$start = ($eventstart['hour'] * 10000) + ($eventstart['minute'] * 100);
+				$starttemp = $this->splittime("$start",False);
+				$subminute = 0;
+				for($m=0;$m<$interval;$m++)
+				{
+					$minutes = $increment * $m;
+					if(intval($starttemp['minute']) > $minutes && intval($starttemp['minute']) < ($minutes + $increment))
+					{
+						$subminute = ($starttemp['minute'] - $minutes) * 100;
+					}
+				}
+				$start -= $subminute;
+				$end =  ($eventend['hour'] * 10000) + ($eventend['minute'] * 100);
+				$endtemp = $this->splittime("$end",False);
+				$addminute = 0;
+				for($m=0;$m<$interval;$m++)
+				{
+					$minutes = ($increment * $m);
+					if($endtemp['minute'] < ($minutes + $increment) && $endtemp['minute'] > $minutes)
+					{
+						$addminute = ($minutes + $increment - $endtemp['minute']) * 100;
+					}
+				}
+				$end += $addminute;
+				$starttemp = $this->splittime("$start",False);
+				$endtemp = $this->splittime("$end",False);
+// Do not display All-Day events in this free/busy time
+				if((($starttemp['hour'] == 0) && ($starttemp['minute'] == 0)) && (($endtemp['hour'] == 23) && ($endtemp['minute'] == 59)))
+				{
+				}
+				else
+				{
+					for($h=$starttemp['hour'];$h<=$endtemp['hour'];$h++)
+					{
+						$startminute = 0;
+						$endminute = $interval;
+						$hour = $h * 10000;
+						if($h == intval($starttemp['hour']))
+						{
+							$startminute = ($starttemp['minute'] / $increment);
+						}
+						if($h == intval($endtemp['hour']))
+						{
+							$endminute = ($endtemp['minute'] / $increment);
+						}
+						$private = $this->is_private($event,$part);
+						$time_display = $phpgw->common->show_date($eventstart['raw'],$this->users_timeformat).'-'.$phpgw->common->show_date($eventend['raw'],$this->users_timeformat);
+						$time_description = '('.$time_display.') '.$this->get_short_field($event,$private,'title').$this->display_status($event->participants[$part]);
+						for($m=$startminute;$m<=$endminute;$m++)
+						{
+							$index = ($hour + (($m * $increment) * 100));
+							$time_slice[$index]['marker'] = '-';
+							$time_slice[$index]['description'] = $time_description;
+						}
+					}
+				}
+			}
+			return $time_slice;
+		}
+
+		function set_status($cal_id,$status)
+		{
+			$old_event = $this->so->read_entry($cal_id);
+			switch($status)
+			{
+				case REJECTED:
+					$this->send_update(MSG_REJECTED,$old_event->participants,$old_event);
+					$this->so->set_status($cal_id,$status);
+					break;
+				case TENTATIVE:
+					$this->send_update(MSG_TENTATIVE,$old_event->participants,$old_event);
+					$this->so->set_status($cal_id,$status);
+					break;
+				case ACCEPTED:
+					$this->send_update(MSG_ACCEPTED,$old_event->participants,$old_event);
+					$this->so->set_status($cal_id,$status);
+					break;
+			}
+			return True;
+		}
+
+		function send_update($msg_type,$participants,$old_event=False,$new_event=False)
+		{
+
+			global $phpgw, $phpgw_info;
+
+			$db = $phpgw->db;
+			$db->query("SELECT app_version FROM phpgw_applications WHERE app_name='calendar'",__LINE__,__FILE__);
+			$db->next_record();
+			$version = $db->f('app_version');
+			unset($db);
+
+			$phpgw_info['user']['preferences'] = $phpgw->common->create_emailpreferences($phpgw_info['user']['preferences']);
+			$sender = $phpgw_info['user']['preferences']['email']['address'];
+
+			$temp_tz_offset = $this->prefs['common']['tz_offset'];
+			$temp_timeformat = $this->prefs['common']['timeformat'];
+			$temp_dateformat = $this->prefs['common']['dateformat'];
+
+			$tz_offset = ((60 * 60) * intval($temp_tz_offset));
+
+			if($old_event != False)
+			{
+				$t_old_start_time = mktime($old_event->start->hour,$old_event->start->min,$old_event->start->sec,$old_event->start->month,$old_event->start->mday,$old_event->start->year);
+				if($t_old_start_time < (time() - 86400))
+				{
+					return False;
+				}
+			}
+
+			$temp_user = $phpgw_info['user'];
+
+			if($this->owner != $temp_user['account_id'])
+			{
+				$user = $this->owner;
+		
+				$accounts = CreateObject('phpgwapi.accounts',$user);
+				$phpgw_info['user'] = $accounts->read_repository();
+
+				$pref = CreateObject('phpgwapi.preferences',$user);
+				$phpgw_info['user']['preferences'] = $pref->read_repository();
+			}
+			else
+			{
+				$user = $phpgw_info['user']['account_id'];
+			}
+
+			$phpgw_info['user']['preferences'] = $phpgw->common->create_emailpreferences($phpgw_info['user']['preferences'],$user);
+
+			$send = CreateObject('phpgwapi.send');
+
+			switch($msg_type)
+			{
+				case MSG_DELETED:
+					$action = 'Deleted';
+					$event_id = $old_event->id;
+					$msgtype = '"calendar";';
+					break;
+				case MSG_MODIFIED:
+					$action = 'Modified';
+					$event_id = $old_event->id;
+					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event->id.'"';
+					break;
+				case MSG_ADDED:
+					$action = 'Added';
+					$event_id = $new_event->id;
+					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event->id.'"';
+					break;
+				case MSG_REJECTED:
+					$action = 'Rejected';
+					$event_id = $old_event->id;
+					$msgtype = '"calendar";';
+					break;
+				case MSG_TENTATIVE:
+					$action = 'Tentative';
+					$event_id = $old_event->id;
+					$msgtype = '"calendar";';
+					break;
+				case MSG_ACCEPTED:
+					$action = 'Tentative';
+					$event_id = $old_event->id;
+					$msgtype = '"calendar";';
+					break;
+			}
+
+			if($old_event != False)
+			{
+				$old_event_datetime = $t_old_start_time - $this->datetime->tz_offset;
+			}
+		
+			if($new_event != False)
+			{
+				$new_event_datetime = mktime($new_event->start->hour,$new_event->start->min,$new_event->start->sec,$new_event->start->month,$new_event->start->mday,$new_event->start->year) - $this->datetime->tz_offset;
+			}
+
+			while(list($userid,$statusid) = each($participants))
+			{
+				if(intval($userid) != $phpgw_info['user']['account_id'])
+				{
+//					echo "Msg Type = ".$msg_type."<br>\n";
+//					echo "userid = ".$userid."<br>\n";
+					$preferences = CreateObject('phpgwapi.preferences',intval($userid));
+					$part_prefs = $preferences->read_repository();
+					if(!isset($part_prefs['calendar']['send_updates']) || !$part_prefs['calendar']['send_updates'])
+					{
+						continue;
+					}
+					$part_prefs = $phpgw->common->create_emailpreferences($part_prefs,intval($userid));
+					$to = $part_prefs['email']['address'];
+//					echo "Email being sent to: ".$to."<br>\n";
+
+					$phpgw_info['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
+					$phpgw_info['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
+					$phpgw_info['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
+				
+					$new_tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+
+					if($old_event != False)
+					{
+						$old_event_date = $phpgw->common->show_date($old_event_datetime);
+					}
+				
+					if($new_event != False)
+					{
+						$new_event_date = $phpgw->common->show_date($new_event_datetime);
+					}
+				
+					switch($msg_type)
+					{
+						case MSG_DELETED:
+							$action_date = $old_event_date;
+							$body = 'Your meeting scehduled for '.$old_event_date.' has been canceled';
+							break;
+						case MSG_MODIFIED:
+							$action_date = $new_event_date;
+							$body = 'Your meeting that had been scheduled for '.$old_event_date.' has been rescheduled to '.$new_event_date;
+							break;
+						case MSG_ADDED:
+							$action_date = $new_event_date;
+							$body = 'You have a meeting scheduled for '.$new_event_date;
+							break;
+						case MSG_REJECTED:
+						case MSG_TENTATIVE:
+						case MSG_ACCEPTED:
+							$action_date = $old_event_date;
+							$body = 'On '.$phpgw->common->show_date(time() - $new_tz_offset).' '.$phpgw->common->grab_owner_name($phpgw_info['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
+							break;
+					}
+					$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';
+					$returncode = $send->msg('email',$to,$subject,$body,$msgtype,'','','',$sender);
+				}
+			}
+			unset($send);
+		
+			if((is_int($this->user) && $this->user != $temp_user['account_id']) ||
+				(is_string($this->user) && $this->user != $temp_user['account_lid']))
+			{
+				$phpgw_info['user'] = $temp_user;
+			}
+
+			$phpgw_info['user']['preferences']['common']['tz_offset'] = $temp_tz_offset;
+			$phpgw_info['user']['preferences']['common']['timeformat'] = $temp_timeformat;
+			$phpgw_info['user']['preferences']['common']['dateformat'] = $temp_dateformat;
+		}
+
+		function prepare_recipients(&$new_event,$old_event)
+		{
+			// Find modified and deleted users.....
+			while(list($old_userid,$old_status) = each($old_event->participants))
+			{
+				if(isset($new_event->participants[$old_userid]))
+				{
+//					echo "Modifying event for user ".$old_userid."<br>\n";
+					$this->modified[intval($old_userid)] = $new_status;
+				}
+				else
+				{
+//					echo "Deleting user ".$old_userid." from the event<br>\n";
+					$this->deleted[intval($old_userid)] = $old_status;
+				}
+			}
+			// Find new users.....
+			while(list($new_userid,$new_status) = each($new_event->participants))
+			{
+				if(!isset($old_event->participants[$new_userid]))
+				{
+//					echo "Adding event for user ".$new_userid."<br>\n";
+					$this->added[$new_userid] = 'U';
+					$new_event->participants[$new_userid] = 'U';
+				}
+			}
+		
+	      if(count($this->added) > 0 || count($this->modified) > 0 || count($this->deleted) > 0)
+   	   {
+				if(count($this->added) > 0)
+				{
+					$this->send_update(MSG_ADDED,$this->added,'',$new_event);
+				}
+				if(count($this->modified) > 0)
+				{
+					$this->send_update(MSG_MODIFIED,$this->modified,$old_event,$new_event);
+				}
+				if(count($this->deleted) > 0)
+				{
+					$this->send_update(MSG_DELETED,$this->deleted,$old_event);
+				}
+			}
+		}
+
+
 
 		function _debug_array($data)
 		{
