@@ -857,7 +857,8 @@
 				'bookmarks'   => True,
 				'img'         => True,
 				'netsaint'    => True,
-				'inv'         => True
+				'inv'         => True,
+				'phpbrain'    =>True
 			);
 
 			$sbox = createobject('phpgwapi.sbox');
