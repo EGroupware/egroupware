@@ -53,7 +53,6 @@
 
 		var $so;
 		var $start;
-		var $limit;
 		var $query;
 		var $sort;
 		var $order;
@@ -74,56 +73,22 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
-			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
-			/* Might change this to '' at the end---> */
-			$_start   = $GLOBALS['HTTP_POST_VARS']['start']   ? $GLOBALS['HTTP_POST_VARS']['start']   : $GLOBALS['HTTP_GET_VARS']['start'];
-			$_query   = $GLOBALS['HTTP_POST_VARS']['query']   ? $GLOBALS['HTTP_POST_VARS']['query']   : $GLOBALS['HTTP_GET_VARS']['query'];
-			$_sort    = $GLOBALS['HTTP_POST_VARS']['sort']    ? $GLOBALS['HTTP_POST_VARS']['sort']    : $GLOBALS['HTTP_GET_VARS']['sort'];
-			$_order   = $GLOBALS['HTTP_POST_VARS']['order']   ? $GLOBALS['HTTP_POST_VARS']['order']   : $GLOBALS['HTTP_GET_VARS']['order'];
-			$_filter  = $GLOBALS['HTTP_POST_VARS']['filter']  ? $GLOBALS['HTTP_POST_VARS']['filter']  : $GLOBALS['HTTP_GET_VARS']['filter'];
-			$_cat_id  = $GLOBALS['HTTP_POST_VARS']['cat_id']  ? $GLOBALS['HTTP_POST_VARS']['cat_id']  : $GLOBALS['HTTP_GET_VARS']['cat_id'];
-			$_fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'] ? $GLOBALS['HTTP_POST_VARS']['fcat_id'] : $GLOBALS['HTTP_GET_VARS']['fcat_id'];
 
-			if(!empty($_start) || ($_start == '0') || ($_start == 0))
-			{
-				if($this->debug) { echo '<br>overriding $start: "' . $this->start . '" now "' . $_start . '"'; }
-				$this->start = $_start;
-			}
-			if($_limit)
-			{
-				$this->limit  = $_limit;
-			}
-			if((empty($_query) && !empty($this->query)) || !empty($_query))
-			{
-				$this->query  = $_query;
-			}
+			$start  = get_var('start',   array('POST','GET'));
+			$query  = get_var('query',   array('POST','GET'));
+			$sort   = get_var('sort',    array('POST','GET'));
+			$order  = get_var('order',   array('POST','GET'));
+			$filter = get_var('filter',  array('POST','GET'));
+			$cat_id = get_var('fcat_id', array('POST'));
 
-			if(isset($_fcat_id) && !empty($_fcat_id))
-			{
-				$this->cat_id = $_fcat_id;
-			}
-			if($_fcat_id == '0' || $_fcat_id == 0 || $_fcat_id == '')
-			{
-				$this->cat_id = 0;
-			}
+			$this->start  = (!empty($start) || ($start == '0')) ? $start : $this->start;
+			$this->query  = (empty($query) && !empty($this->query)) || !empty($query) ? $query : $this->query;
+			$this->sort   = (!empty($sort)) ? $sort : $this->sort;
+			$this->order  = (!empty($order)) ? $order : $this->order;
+			$this->filter = (!empty($filter) || ($filter == '0')) ? $filter : $this->filter;
 
-			if(isset($_sort)   && !empty($_sort))
-			{
-				if($this->debug) { echo '<br>overriding $sort: "' . $this->sort . '" now "' . $_sort . '"'; }
-				$this->sort   = $_sort;
-			}
-
-			if(isset($_order)  && !empty($_order))
-			{
-				if($this->debug) { echo '<br>overriding $order: "' . $this->order . '" now "' . $_order . '"'; }
-				$this->order  = $_order;
-			}
-
-			if(isset($_filter) && !empty($_filter))
-			{
-				if($this->debug) { echo '<br>overriding $filter: "' . $this->filter . '" now "' . $_filter . '"'; }
-				$this->filter = $_filter;
-			}
+			$this->cat_id = (isset($cat_id) && !empty($cat_id)) ? $cat_id : $this->cat_id;
+			$this->cat_id = ($cat_id == '0' || $cat_id == 0 || $cat_id == '') ? $cat_id : $this->cat_id;
 
 			if($this->debug)
 			{
@@ -135,7 +100,6 @@
 		{
 			$data = array(
 				'start'  => $this->start,
-				'limit'  => $this->limit,
 				'query'  => $this->query,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
@@ -224,7 +188,6 @@
 			}
 
 			$this->start  = $data['start'];
-			$this->limit  = $data['limit'];
 			$this->query  = $data['query'];
 			$this->sort   = $data['sort'];
 			$this->order  = $data['order'];
@@ -241,7 +204,7 @@
 			}
 			for($i=0;$i<count($dirty);$i++)
 			{
-				if(gettype($dirty[$i]) == 'array')
+				if(is_array($dirty[$i]))
 				{
 					while(list($name,$value) = @each($dirty[$i]))
 					{
@@ -281,7 +244,7 @@
 
 		function add_vcard()
 		{
-			global $uploadedfile;
+			$uploadedfile = $GLOBALS['HTTP_POST_VARS']['uploadedfile'];
 
 			if($uploadedfile == 'none' || $uploadedfile == '')
 			{
@@ -322,7 +285,8 @@
 
 		function add_email()
 		{
-			global $name,$referer;
+			$name    = $GLOBALS['HTTP_GET_VARS']['name'];
+			$referer = $GLOBALS['HTTP_GET_VARS']['referer'];
 
 			$named = explode(' ', $name);
 			for($i=count($named);$i>=0;$i--)
@@ -393,19 +357,19 @@
 			if(is_array($other))
 			{
 				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
-	 			if($other['mainscreen_showbirthdays'])
+				if($other['mainscreen_showbirthdays'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
-	 			if($other['default_filter'])
+				if($other['default_filter'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
-	 			if($other['autosave_category'])
+				if($other['autosave_category'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','autosave_category',True);
 				}

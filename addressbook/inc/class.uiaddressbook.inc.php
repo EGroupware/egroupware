@@ -25,7 +25,6 @@
 		var $debug = False;
 
 		var $start;
-		var $limit;
 		var $query;
 		var $sort;
 		var $order;
@@ -69,7 +68,6 @@
 		function _set_sessiondata()
 		{
 			$this->start    = $this->bo->start;
-			$this->limit    = $this->bo->limit;
 			$this->query    = $this->bo->query;
 			$this->sort     = $this->bo->sort;
 			$this->order    = $this->bo->order;
@@ -85,7 +83,6 @@
 		{
 			$data = array(
 				'start'  => $this->start,
-				'limit'  => $this->limit,
 				'query'  => $this->query,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
@@ -101,7 +98,6 @@
 		{
 			$data = array(
 				'start'  => $this->start,
-				'limit'  => $this->limit,
 				'query'  => $this->query,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
@@ -364,11 +360,11 @@
 			if($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'] &&
 				$GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'] > 0)
 			{
-				$this->limit = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+				$limit = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 			else
 			{
-				$this->limit = 30;
+				$limit = 30;
 			}
 
 			/*global $filter; */
@@ -425,7 +421,7 @@
 				/* read the entry list */
 				$entries = $this->bo->read_entries(array(
 					'start'  => $this->start,
-					'limit'  => $this->limit,
+					'limit'  => $limit,
 					'fields' => $columns_to_display,
 					'filter' => $qfilter,
 					'query'  => $this->query,
@@ -436,13 +432,13 @@
 			}
 
 			/* global here so nextmatchs accepts our setting of $query and $filter */
-			$GLOBALS['query']  = $this->query;
-			$GLOBALS['filter'] = $this->filter;
+//			$GLOBALS['query']  = $this->query;
+//			$GLOBALS['filter'] = $this->filter;
 
 			$search_filter = $GLOBALS['phpgw']->nextmatchs->show_tpl('/index.php',
 				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.index&fcat_id='.$this->cat_id,'75%',
 				$GLOBALS['phpgw_info']['theme']['th_bg'],1,1,1,1,$this->cat_id);
-			$query = $filter = '';
+//			$query = $filter = '';
 
 			$lang_showing = $GLOBALS['phpgw']->nextmatchs->show_hits($total_records,$this->start);
 
