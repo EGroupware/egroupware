@@ -24,7 +24,7 @@
 /* $Id$ */
 
   	/*!
-	 @class acl
+	 @class contacts
 	 @abstract Contact List System
 	 @discussion Author: jengo/Milosch <br>
 	 This class provides a contact database scheme. <br>
@@ -41,7 +41,8 @@
 		var $ext_table="phpgw_addressbook_extra";
 
 		var $account_id;
-		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,access,lid,tid
+		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table
+		var $non_contact_fields;    // Here are the rest: d,owner,access,lid,tid,cat_id
 		var $email_types;			// VCard email type array
 		var $total_records;			// This will contain numrows for data retrieved
 		var $grants;                // This holds all of the users that have granted access to there entrys
@@ -453,7 +454,7 @@
 			return $return_fields;
 		}
 
-		function add($owner,$fields,$access='',$cat_id='',$tid='n')
+		function add($owner,$fields,$access='private',$cat_id='0',$tid='n')
 		{
 			global $phpgw,$phpgw_info;
 
@@ -535,9 +536,10 @@
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields,$access='',$cat_id='',$tid='n')
+		function update($id,$owner,$fields,$access='private',$cat_id='0',$tid='n')
 		{
 			global $phpgw_info;
+			$nonfields = $this->non_contact_fields;
 
 			if (!$phpgw_info["server"]["ldap_contact_context"]) {
 				return False;
@@ -547,79 +549,49 @@
 			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
-			if ($ldap_fields[0]['dn']) {
+			if ($ldap_fields[0]['dn'])
+			{
 				$dn = $ldap_fields[0]['dn'];
 				list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-				if (gettype($stock_fieldnames) == "array") {
-					$stock_fields['phpgwowner']  = $owner;
-					$stock_fields['phpgwaccess'] = $access;
+				if (gettype($stock_fieldnames) == "array")
+				{
 					// Check each value, add our extra attributes if they are missing, and
 					// otherwise fix the entry while we can.
 					//
 					// Verify uidnumber
-					if (empty($ldap_fields[0]['uidnumber'])) {
-						$stock_fields['uidnumber']      = $id;
+					$stock_fields['id']   = $id;
+					if (empty($ldap_fields[0]['uidnumber']))
+					{
 						$err = ldap_modify($this->ldap,$dn,array('uidnumber'  => $stock_fields['uidnumber']));
-					} elseif (!$ldap_fields[0]['uidnumber']) {
-						$stock_fields['uidnumber']      = $id;
+					}
+					elseif (!$ldap_fields[0]['uidnumber'])
+					{
 						$err = ldap_mod_add($this->ldap,$dn,array('uidnumber' => $stock_fields['uidnumber']));
 					}
 
-					// Verify tid
-					if (empty($ldap_fields[0]['phpgwtypeid'])) {
-						$stock_fields['phpgwtypeid'] = $tid;
-						$err = ldap_modify($this->ldap,$dn,array('phpgwtypeid'  => $stock_fields['phpgwtypeid']));
-					} elseif (!$ldap_fields[0]['uid']) {
-						$stock_fields[''] = $tids;
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwtypeid' => $stock_fields['phpgwtypeid']));
-					}
-
 					// Verify uid
-					if (empty($ldap_fields[0]['uid'])) {
-						$uids = split(',',$dn);
-						$stock_fields['uid'] = $uids[0];
-						$err = ldap_modify($this->ldap,$dn,array('uid'  => $stock_fields['uid']));
-					} elseif (!$ldap_fields[0]['uid']) {
-						$uids = split(',',$dn);
-						$stock_fields['uid'] = $uids[0];
-						$err = ldap_mod_add($this->ldap,$dn,array('uid' => $stock_fields['uid']));
+					$uids = split(',',$dn);
+					$stock_fields['lid'] = $uids[0];
+					if (empty($ldap_fields[0]['uid']))
+					{
+						$err = ldap_modify($this->ldap,$dn,array('uid'  => $stock_fields['lid']));
 					}
-
-					// Verify owner
-					if (empty($ldap_fields[0]['phpgwowner'])) {
-						$stock_fields['phpgwowner']          = $owner;
-						$err = ldap_modify($this->ldap,$dn,array('phpgwowner'  => $stock_fields['phpgwowner']));
-					} elseif (!$ldap_fields[0]['phpgwowner']) {
-						$stock_fields['phpgwowner']          = $owner;
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwowner' => $stock_fields['phpgwowner']));
-					}
-
-					// Verify access
-					if (empty($ldap_fields[0]['phpgwaccess'])) {
-						$stock_fields['phpgwaccess']         = $access;
-						$err = ldap_modify($this->ldap,$dn,array('phpgwaccess'  => $stock_fields['phpgwaccess']));
-					} elseif (!$ldap_fields[0]['phpgwaccess']) {
-						$stock_fields['phpgwaccess']         = $access;
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwaccess' => $stock_fields['phpgwaccess']));
-					}
-
-					// Verify cat_id
-					if (empty($ldap_fields[0]['phpgwcatid'])) {
-						$stock_fields['phpgwcatid']         = $cat_id;
-						$err = ldap_modify($this->ldap,$dn,array('phpgwcatid'  => $stock_fields['phpgwcatid']));
-					} elseif (!$ldap_fields[0]['phpgwcatid']) {
-						$stock_fields['phpgwcatid']         = $cat_id;
-						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcatid' => $stock_fields['phpgwcatid']));
+					elseif (!$ldap_fields[0]['uid'])
+					{
+						$err = ldap_mod_add($this->ldap,$dn,array('uid' => $stock_fields['lid']));
 					}
 
 					// Verify objectclasses are there
-					if (empty($ldap_fields[0]['objectclass'])) {
+					if (empty($ldap_fields[0]['objectclass']))
+					{
 						$stock_fields['objectclass'][0] = 'person';
 						$stock_fields['objectclass'][1] = 'organizationalPerson';
 						$stock_fields['objectclass'][2] = 'inetOrgPerson';
 						$stock_fields['objectclass'][3] = 'phpgwContact';
 						$err = ldap_modify($this->ldap,$dn,array('objectclass'  => $stock_fields['objectclass']));
-					} elseif (!$ldap_fields[0]['objectclass']) {
+					}
+					elseif (!$ldap_fields[0]['objectclass'])
+					{
 						$stock_fields['objectclass'][0] = 'person';
 						$stock_fields['objectclass'][1] = 'organizationalPerson';
 						$stock_fields['objectclass'][2] = 'inetOrgPerson';
@@ -627,32 +599,90 @@
 						$err = ldap_mod_add($this->ldap,$dn,array('objectclass'  => $stock_fields['objectclass']));
 					}
 
-					// OK, just add the data already
-					while ( list($fname,$fvalue) = each($stock_fieldnames) ) {
-						if ($ldap_fields[0][$fvalue]) {
+					// Verify owner
+					$stock_fields['owner']  = $owner;
+					if (empty($ldap_fields[0]['phpgwowner']))
+					{
+						$err = ldap_modify($this->ldap,$dn,array('phpgwowner'  => $stock_fields['owner']));
+					}
+					elseif (!$ldap_fields[0]['phpgwowner'])
+					{
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwowner' => $stock_fields['owner']));
+					}
+
+					// Verify access
+					$stock_fields['access'] = $access;
+					if (empty($ldap_fields[0]['phpgwaccess']))
+					{
+						$err = ldap_modify($this->ldap,$dn,array('phpgwaccess'  => $stock_fields['access']));
+					}
+					elseif (!$ldap_fields[0]['phpgwaccess'])
+					{
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwaccess' => $stock_fields['access']));
+					}
+
+					// Verify cat_id
+					$stock_fields['cat_id']  = $cat_id;
+					if (empty($ldap_fields[0]['phpgwcatid']))
+					{
+						$err = ldap_modify($this->ldap,$dn,array('phpgwcatid'  => $stock_fields['cat_id']));
+					}
+					elseif (!$ldap_fields[0]['phpgwcatid'])
+					{
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcatid' => $stock_fields['cat_id']));
+					}
+
+					// Verify tid
+					$stock_fields['tid'] = $tid;
+					if (empty($ldap_fields[0]['phpgwtypeid']))
+					{
+						$err = ldap_modify($this->ldap,$dn,array('phpgwtypeid'  => $stock_fields['tid']));
+					}
+					elseif (!$ldap_fields[0]['uid'])
+					{
+						$err = ldap_mod_add($this->ldap,$dn,array('phpgwtypeid' => $stock_fields['tid']));
+					}
+
+					// OK, just mod the data already
+					$allfields = $stock_fieldnames + $nonfields;
+					while ( list($fname,$fvalue) = each($allfields) )
+					{
+						if ($ldap_fields[0][$fvalue])
+						{
 							//echo "<br>".$fname." => ".$fvalue." was there";
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
-						} elseif (!$ldap_fields[0][$fvalue]) {
+						}
+						elseif (!$ldap_fields[0][$fvalue])
+						{
 							//echo "<br>".$fname." not there";
 							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
 					}
 				}
 
-				while (list($x_name,$x_value) = each($extra_fields)) {
-					if ($this->field_exists($id,$x_name)) {
-						if (! $x_value) {
+				while (list($x_name,$x_value) = each($extra_fields))
+				{
+					if ($this->field_exists($id,$x_name))
+					{
+						if (! $x_value)
+						{
 							$this->delete_single_extra_field($id,$x_name);
-						} else {
+						}
+						else
+						{
 							$this->db->query("update $this->ext_table set contact_value='" . addslashes($x_value)
 							. "',contact_owner='$owner' where contact_name='" . addslashes($x_name)
 							. "' and contact_id='$id'",__LINE__,__FILE__);
 						}
-					} else {
+					}
+					else
+					{
 						$this->add_single_extra_field($id,$owner,$x_name,$x_value);
 					}
 				}
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
