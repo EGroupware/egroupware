@@ -227,7 +227,7 @@
 	{
 		global $phpgw_info, $phpgw;
 
-		if (is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
+		if(is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
 		{
 			//$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
 		}
@@ -235,10 +235,10 @@
 		/* error_reporting(0); */
 		list($appname,$classname) = explode(".", $class);
 
-		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
+		if(!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 		{
-			if(@file_exists(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
+			if(@file_exists(PHPGW_INCLUDE_ROOT . '/' . $appname . '/inc/class.' . $classname . '.inc.php'))
 			{
 				include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 				$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
@@ -250,7 +250,7 @@
 		}
 		if($GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 		{
-			if ($p1 == '_UNDEF_' && $p1 != 1)
+			if($p1 == '_UNDEF_' && $p1 != 1 && $p1 != '0')
 			{
 				eval('$obj = new ' . $classname . ';');
 			}
@@ -259,9 +259,9 @@
 				$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
 				$i = 1;
 				$code = '$obj = new ' . $classname . '(';
-				while (list($x,$test) = each($input))
+				while(list($x,$test) = each($input))
 				{
-					if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
+					if(($test == '_UNDEF_' && $test != 1 && $test != '0') || $i == 17)
 					{
 						break;
 					}
@@ -420,7 +420,7 @@
 	*/
 	function get_account_id($account_id = '',$default_id = '')
 	{
-		if (gettype($account_id) == 'integer')
+		if (is_int($account_id))
 		{
 			return $account_id;
 		}

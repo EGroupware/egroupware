@@ -489,7 +489,7 @@ text is a string, it contains the body of the message.
 				'ctApostrophes'        => CreateObject('phpgwapi.xmlrpcval',$ap, 'int'),
 				'ctQuotes'             => CreateObject('phpgwapi.xmlrpcval',$qu, 'int')
 			),
-   		     'struct'
+			'struct'
 		));
 	}
 

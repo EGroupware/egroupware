@@ -195,27 +195,11 @@
 				$_type = (is_integer($_res)?'int':gettype($_res));
 				if ($recursed)
 				{
-					// Passing an integer of 0 to the xmlrpcval constructor results in the value being lost. (jengo)
-					if ($_type == 'int' && $_res == 0)
-					{
-						return CreateObject('phpgwapi.xmlrpcval','0',$_type);
-					}
-					else
-					{
-						return CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
-					}
+					return CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
 				}
 				else
 				{
-					// Passing an integer of 0 to the xmlrpcval constructor results in the value being lost. (jengo)
-					if ($_type == 'int' && $_res == 0)
-					{
-						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval','0',$_type);
-					}
-					else
-					{
-						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
-					}
+					$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
 				}
 			}
 		}
@@ -381,7 +365,7 @@
 								/* _debug_array($res);exit; */
 								$this->resp_struct = array();
 								$this->build_resp($res);
-								/*_debug_array($this->resp_struct); */
+								/* _debug_array($this->resp_struct); */
 								@reset($this->resp_struct);
 								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
 								/* _debug_array($r); */
