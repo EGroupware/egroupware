@@ -139,29 +139,29 @@
 
 	function parse_navbar_end()
 	{
-		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-		$tpl->set_unknowns('remove');
-
-		$tpl->set_file(array('footer' => 'footer.tpl'));
-		$tpl->set_block('footer','B_powered_bottom','V_powered_bottom');
-
-		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
-		{
-			$var = Array(
-				'powered'	=> lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
-				'img_root'	=> PHPGW_IMAGES_DIR,
-				'power_backcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'power_textcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_text']
+#		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+#		$tpl->set_unknowns('remove');
+#
+#		$tpl->set_file(array('footer' => 'footer.tpl'));
+#		$tpl->set_block('footer','B_powered_bottom','V_powered_bottom');
+#
+#		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
+#		{
+#			$var = Array(
+#				'powered'	=> lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
+#				'img_root'	=> PHPGW_IMAGES_DIR,
+#				'power_backcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+#				'power_textcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_text']
 //				'version'	=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
-			);
-			$tpl->set_var($var);
- 			$tpl->parse('V_powered_bottom','B_powered_bottom');
-		}
-		else
-		{
-			$tpl->set_var('V_powered_bottom','');
-		}
-
-		$GLOBALS['phpgw']->hooks->process('navbar_end');
-		$tpl->pfp('out','footer');
+#			);
+#			$tpl->set_var($var);
+# 			$tpl->parse('V_powered_bottom','B_powered_bottom');
+#		}
+##		else
+#		{
+#			$tpl->set_var('V_powered_bottom','');
+#		}
+#
+#		$GLOBALS['phpgw']->hooks->process('navbar_end');
+#		$tpl->pfp('out','footer');
 	}

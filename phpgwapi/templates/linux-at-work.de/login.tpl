@@ -7,47 +7,23 @@
 <META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
 <META NAME="description" CONTENT="phpGroupWare login screen">
 <META NAME="keywords" CONTENT="phpGroupWare login screen">
-<LINK rel="stylesheet" href="/copy.css">
-<script language="JavaScript">
-<!--
-function launchphpgroupware()
-{
-if (window.screen) {
-    var aw = screen.availWidth;
-    var ah = screen.availHeight;
-    window.moveTo(0, 0);
-    window.resizeTo(aw, ah);
-    if(window.name != "phpGroupware") 
-    {
-	Neufenster = window.open("login.php", "phpGroupware","width="+aw+",height="+ah+",location=no,menubar=yes,toolbar=no,resizable=yes");
-	Neufenster.focus();
-	window.close();
-    }
-    
-  }
-}
-//-->
-</script>
-
+<LINK rel="stylesheet" href="/phpgroupware_devel/phpgwapi/templates/linux-at-work.de/copy.css">
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>
 
-<BODY bgcolor="#1559a9"  text="#FFFFFF" topmargin="0" marginheight="0" marginwidth="0" leftmargin="0" 
-onLoad="launchphpgroupware('')">
+<BODY bgcolor="#1559a9"  text="#FFFFFF" topmargin="0" marginheight="0" marginwidth="0" leftmargin="0">
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
 
 <center>
-<img src=vater_logo.gif border=0>
+<iimg src="/phpgroupware/phpgwapi/templates/linux-at-work.de/images/vater_logo.gif" border="0">
 
 <br>
 
 Support: <a href="http://linux-at-work.de/index.php"
 target="_lawde">http://linux-at-work.de</a>
 
-<br><br><br>
-
-      <FORM method="post" action="{login_url}">
+      <FORM name="login_form" method="post" action="{login_url}">
 	<input type="hidden" name="passwd_type" value="text">
        <TABLE border="0" align="CENTER" bgcolor="#1559a9" cellpadding="0" cellspacing="0">
         <TR bgcolor="#1559a9">
@@ -92,6 +68,12 @@ target="_lawde">http://linux-at-work.de</a>
       </FORM>
 
 </center>
+<script language="javascript1.2">
+<!--
+// position cursor in top form field
+document.login_form.login.focus();
+//-->
+</script>
      
 <!-- END login_form -->
 </HTML>
