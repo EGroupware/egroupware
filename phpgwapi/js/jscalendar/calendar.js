@@ -1751,9 +1751,6 @@ Date.prototype.print = function (str) {
 	s["%%"] = "%";		// a literal '%' character
 
 	var re = /%./g;
-	if (!Calendar.is_ie5 && !Calendar.is_opera && !Calendar.is_khtml)
-		return str.replace(re, function (par) { return s[par] || par; });
-
 	var a = str.match(re);
 	for (var i = 0; i < a.length; i++) {
 		var tmp = s[a[i]];
