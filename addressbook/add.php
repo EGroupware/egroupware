@@ -88,9 +88,8 @@
 
 		$fields = addressbook_read_last_entry($qfields);
 		$newid = $fields[0]['id'];
-		$tid = $fields[0]['tid'];
 		Header("Location: "
-			. $phpgw->link('/addressbook/edit.php',"ab_id=$newid&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id&tid=$tid"));
+			. $phpgw->link('/addressbook/edit.php',"ab_id=$newid&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	}
 	else
 	{
