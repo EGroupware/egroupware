@@ -130,7 +130,6 @@
 		function bocalendar($session=0)
 		{
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('calendar');
-
 			@reset($this->grants);
 			if($this->debug)
 			{
@@ -205,7 +204,6 @@
 				)
 			);
 			$this->datetime = $this->so->datetime;
-			
 			$localtime = $this->datetime->gmtnow + $this->datetime->tz_offset;
 
 			$date = get_var('date',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
@@ -374,7 +372,7 @@
 			{
 				echo '<!-- '."\n".'Read:'."\n"._debug_array($data,False)."\n".' -->'."\n";
 			}
-			
+
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
 			$this->owner  = intval($data['owner']);
@@ -1235,11 +1233,11 @@
 
 		function get_short_field($event,$is_private=True,$field='')
 		{
-			if ($is_private)
+			if($is_private)
 			{
 				return 'private';
 			}
-			elseif (strlen($event[$field]) > 19)
+			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly)
 			{
 				return substr($event[$field], 0 , 19) . '...';
 			}

@@ -1947,7 +1947,7 @@
 				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
 				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
 				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
-				. '  .time { background: '.$this->theme['navbar_bg'].'; color: '.$this->theme['bg_text'].'; font: 65%/100% '.$this->theme['font'].'; width: '.$time_width.'%; border: 1px '.$this->theme['navbar_text'].'; vertical-align: middle; }'."\n"
+				. '  .time { background: '.$this->theme['navbar_bg'].'; color: '.$this->theme['bg_text'].'; font: 65%/100% '.$this->theme['font'].'; width: '.$time_width.'%; border: 1px '.$this->theme['navbar_text'].'; vertical-align: middle }'."\n"
 				. '  .tablecell { width: 80px; height: 80px }';
 		}
 
@@ -2021,13 +2021,13 @@
 			{
 				$time = '';
 			}
-			$text = '';;
+			$text = '';
 			if(!$is_private)
 			{
 				$text .= $this->bo->display_status($event['users_status']);
 			}
 			$text = '<font size="-2" face="'.$this->theme['font'].'"><nobr>'.$time.'</nobr>&nbsp;'.$this->bo->get_short_field($event,$is_private,'title').$text.'</font>'.$GLOBALS['phpgw']->browser->br;
-		
+
 			if ($editable)
 			{
 				$date = sprintf('%04d%02d%02d',$year,$month,$day);
@@ -2098,6 +2098,10 @@
 					);
 					$this->output_template_array($p,'picture','pict',$var);
 				}
+			}
+			else
+			{
+				$text .= '<font size="-2" face="'.$this->theme['font'].'">'.nl2br($this->bo->get_short_field($event,$is_private,'description')).'</font>'.$GLOBALS['phpgw']->browser->br;
 			}
 			if ($text)
 			{
@@ -2563,7 +2567,7 @@
 
 		function view_event($event,$alarms=False)
 		{
-			if(!$event['participants'][$this->bo->owner] && !$this->bo->member_of_group())
+			if((!$event['participants'][$this->bo->owner] && !$this->bo->member_of_group()) || (!$event['public'] && !$this->bo->check_perms(PHPGW_ACL_PRIVATE)))
 			{
 				return '<center>'.lang('You do not have permission to read this record!').'</center>';
 			}
