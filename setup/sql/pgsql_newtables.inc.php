@@ -171,7 +171,7 @@
   )";
   $db->query($sql);
 
-  $sql = "create table webcal_entry_repeats ( 
+  $sql = "create table calendar_entry_repeats ( 
     cal_id		int DEFAULT 0 NOT NULL,
     cal_type		varchar(20),
     cal_use_end		int default 0,
