@@ -356,6 +356,12 @@
 			if($this->check_perms(PHPGW_ACL_READ))
 			{
 				$event = $this->so->read_entry($id);
+				if(!isset($event['participants'][$this->owner]) && $this->user_is_a_member($event,$this->owner))
+				{
+					$this->add_attribute('participants','U',intval($this->owner));
+					$this->so->add_entry($event);
+					$event = $this->get_cached_event();
+				}
 				return $event;
 			}
 		}
@@ -545,6 +551,8 @@
 						}
 						elseif($acct_type == 'g')
 						{
+							$part[$parts[$i]] = 1;
+							$groups[] = $parts[$i];
 							/* This pulls ALL users of a group and makes them as participants to the event */
 							/* I would like to turn this back into a group thing. */
 							$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
@@ -573,6 +581,12 @@
 					{
 						$this->so->add_attribute('participants','U',intval($key));
 					}
+				}
+
+				if($groups)
+				{
+					@reset($groups);
+					$this->so->add_attribute('groups',intval($group_id));
 				}
 
 				$event = $this->get_cached_event();
@@ -670,6 +684,29 @@
 			$holiday->prepare_read_holidays($this->year,$this->owner);
 			$this->cached_holidays = $holiday->read_holiday();
 			unset($holiday);
+		}
+
+		function user_is_a_member($event,$user)
+		{
+			@reset($event['participants']);
+			$uim = False;
+			$security_equals = $GLOBALS['phpgw']->accounts->membership($user);
+			while(!$uim && $security_equals && list($participant,$status) = each($event['participants']))
+			{
+				if($GLOBALS['phpgw']->accounts->get_type($participant) == 'g')
+				{
+					@reset($security_equals);
+					while(list($key,$group_info) = each($security_equals))
+					{
+						if($group_info['account_id'] == $participant)
+						{
+							return True;
+							$uim = True;
+						}
+					}
+				}
+			}
+			return $uim;
 		}
 
 		function maketime($time)
@@ -1372,9 +1409,9 @@
 			return $this->so->get_cached_event();
 		}
 		
-		function add_attribute($var,$value)
+		function add_attribute($var,$value,$index='')
 		{
-			$this->so->add_attribute($var,$value);
+			$this->so->add_attribute($var,$value,$index);
 		}
 
 		function event_init()

@@ -84,16 +84,27 @@
 			$endtime = mktime(23,59,59,$emonth,$eday,$eyear) - $this->datetime->tz_offset;
 //			$starttime = mktime(0,0,0,$smonth,$sday,$syear);
 //			$endtime = mktime(23,59,59,$emonth,$eday,$eyear);
-			$sql = "AND (phpgw_cal.cal_type='M') ";
+			$sql = "AND (phpgw_cal.cal_type='M') "
+				. 'AND (phpgw_cal_user.cal_login in (';
 			if($owner_id)
 			{
-				$sql .= 'AND (phpgw_cal_user.cal_login in ('.implode(',',$owner_id).') ';
+				$sql .= implode(',',$owner_id);
 			}
 			else
 			{
-				$sql .= 'AND (phpgw_cal_user.cal_login'.(!$this->is_group?' = '.$this->owner:' in ('.implode(',',$this->g_owner).')').' ';
+				$sql .= (!$this->is_group?$this->owner:implode(',',$this->g_owner));
 			}
-			
+
+			$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
+			@reset($member_groups);
+			while(list($key,$group_info) = each($member_groups))
+			{
+				$member[] = $group_info['account_id'];
+			}
+			@reset($member);
+			$sql .= ','.implode(',',$member);
+
+			$sql .= ') ';
 //			$sql .= 'AND (phpgw_cal.datetime <= '.$starttime.') '
 			$sql .= 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
 				. (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'')
