@@ -161,7 +161,6 @@ create	filemanager	ja	作成
 create group	admin	ja	グループ作成
 create lang.sql file	transy	ja	lang.sql ファイル作成
 create new language set	transy	ja	Create new language set
-create new language set	transy	ja	Create new language set
 created by	common	ja	作成者
 cron	common	ja	Cron
 currency	common	ja	通貨
@@ -500,8 +499,6 @@ phrase in new language	transy	ja	フレーズ（新言語）
 phone numbers	addressbook	ja	電話番号
 php information	admin	ja	PHPインフォメーション
 phpgroupware login	login	ja	phpGroupWare login
-phrase in english	transy	ja	フレーズ（英語）
-phrase in new language	transy	ja	フレーズ（新言語）
 please enter a name for that category !	admin	ja	カテゴリ名を入力して下さい。
 please select a message first	email	ja	メッセージを選択してください。
 please set your preferences for this app	common	ja	このアプリケーションのユーザ設定を行って下さい。
@@ -573,7 +570,6 @@ select category	common	ja	カテゴリ選択
 select different theme	preferences	ja	異なるテーマを選択してください。
 select email address	email	ja	電子メールアドレス
 select headline news sites	common	ja	ヘッドラインニュースサイトの選択
-select language to generate for	transy	ja	作成する言語
 select language to generate for	transy	ja	作成する言語
 select parent category	common	ja	親カテゴリ選択
 select permissions this group will have	admin	ja	利用可能アプリケーション
