@@ -138,9 +138,11 @@
       Stage 2.4 = database and tables exists but need upgrading
       Stage 2.5 = tables being modified in some way
       Stage 2.6 = database and tables exists and are current
-      Stage 3 = 
-      Stage 4 = 
-      Stage 5 = 
+      Stage 3.1 = configuration has not been done
+      Stage 3.2 = configuration has been completed
+      Stage 4.1 = install new language
+      Stage 5.1 = something to do with the add-on applications
+      Stage 5.2 = 
     */
 
     echo '<table border="1" width="100%" cellspacing="0" cellpadding="2">';
@@ -261,10 +263,19 @@
     if ($stage < 4.1) {
       echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
     }elseif ($stage == 4.1) {
-      echo '<tr><td align="center">O</td><td>stage 3.1.<br></td></tr>';
+      echo '<tr><td align="center">O</td><td>stage 4.1.<br></td></tr>';
     }elseif ($stage == 4.2) {
-      echo '<tr><td align="center">O</td><td>stage 3.2.<br></td></tr>';
+      echo '<tr><td align="center">O</td><td>stage 4.2.<br></td></tr>';
     }
+    echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 5 - Add-on Application Installation</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+    if ($stage < 5.1) {
+      echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
+    }elseif ($stage == 5.1) {
+      echo '<tr><td align="center">O</td><td>stage 5.1.<br></td></tr>';
+    }elseif ($stage == 5.2) {
+      echo '<tr><td align="center">O</td><td>stage 5.2.<br></td></tr>';
+    }
+
     echo '</table>';
   }
 
