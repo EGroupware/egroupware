@@ -25,6 +25,7 @@
 	
 	if(file_exists('./header.inc.php'))
 	{
+		include('./header.inc.php');
 		if(function_exists('CreateObject'))
 		{
 			$GLOBALS['phpgw']->sessions = CreateObject('phpgwapi.sessions');
