@@ -1,0 +1,188 @@
+body
+{
+	margin-right: 0em;
+	margin-left: 0em;
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+
+td
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:link
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #336699;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:visited
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #333366;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:active
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #336699;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:hover
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #cc0000;
+	font-style: bold;
+	font-weight: bold;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+.navbar
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 10pt;
+    color: #000000;
+}
+
+.bodytext
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #000000;
+}
+
+.whitetext
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #ffffff;
+}
+
+.headertext
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 11pt;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.inputtext
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #ffffff;
+}
+
+.buttontext
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	background-color: #c0c0c0;
+}
+
+.linktext
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 10pt;
+    color: #000000;
+    background-color: #c0c0c0;
+}
+
+.row_on
+{
+	background-color: #DDDDDD;
+}
+
+.row_off
+{
+	background-color: #EEEEEE;
+}
+
+.th
+{
+	background-color: #ADADAD;
+}
+
+.th_text
+{
+	font-style: bold;
+	font-weight: bold;
+}
+
+.appheader
+{
+	font-style: bold;
+	font-weight: bold;
+	background-color: #DDDDDD;
+}
+
+.functionmsg
+{
+	font-style: bold;
+	font-weight: bold;
+}
+
+.forms
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+.calendar:today
+{
+	background-color: #ffffcc;
+}
+
+.calendar:dayview
+{
+	background-color: #c0c0c0;
+}
+
+.email:folder
+{
+	background-color: #adadad;
+	color: #ffffff;
+}
