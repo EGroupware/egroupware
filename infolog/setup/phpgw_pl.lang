@@ -1,0 +1,111 @@
+%1 records imported	infolog	pl	% 1 rekord zaimportowano
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	pl	
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	pl	
+accept	infolog	pl	Akceptuj
+action	infolog	pl	Czynno¶æ
+add	infolog	pl	Dodaj
+add a file	infolog	pl	Dodaj plik
+add sub	infolog	pl	
+all	infolog	pl	Wszystko
+are you sure you want to delete this entry	infolog	pl	Na pewno usun±æ ten wpis?
+attach file	infolog	pl	Do³±cz plik
+back to projectlist	infolog	pl	
+billed	infolog	pl	
+both	infolog	pl	Oba
+call	infolog	pl	
+category	infolog	pl	Kategoria
+close	infolog	pl	Zamknij
+comment	infolog	pl	Komentarz
+configuration	infolog	pl	Konfiguracja
+confirm	infolog	pl	Potwierdzenie
+csv-fieldname	infolog	pl	Nazwa pola CVS
+csv-filename	infolog	pl	Nazwa pliku CVS
+csv-import	common	pl	Import CVS
+datecreated	infolog	pl	Data utworzenia
+days	infolog	pl	
+default filter for infolog	infolog	pl	Domy¶lny filtr dziennika
+description	infolog	pl	Opis
+description can not exceed 8000 characters in length	infolog	pl	Opis nie mo¿e przekroczyæ 8000 znaków
+done	infolog	pl	Gotowe
+download	infolog	pl	Pobierz
+duration	infolog	pl	Czas trwania
+enddate	infolog	pl	Koniec
+enddate can not be before startdate	infolog	pl	Data zakoñczenia nie mo¿e byæ wcze¶niejsza od daty rozpoczêcia
+entry and all files	infolog	pl	
+fax	infolog	pl	Fax
+fieldseparator	infolog	pl	Separator pól
+finish	infolog	pl	Koniec
+from	infolog	pl	Od
+import	infolog	pl	Import
+info log	common	pl	Dziennik
+infolog	common	pl	Dziennik
+infolog - delete	infolog	pl	Dziennik - Usuwanie
+infolog - edit	infolog	pl	Dziennik - Edycja
+infolog - import csv-file	infolog	pl	Dziennik - Import pliku CSV
+infolog - new	infolog	pl	Dziennik - Nowy
+infolog - new subproject	infolog	pl	Dziennik - Nowy podprojekt
+infolog - subprojects from	infolog	pl	Dziennik - Podprojekt z
+infolog preferences	common	pl	ustawienia dziennika
+infolog-fieldname	infolog	pl	Dziennik - Nazwa pola
+invalid filename	infolog	pl	Niepoprawna nazwa pliku
+last changed	infolog	pl	ostatnia zmiana
+list no subs/childs	infolog	pl	
+no - cancel	infolog	pl	Nie - Anuluj
+no entries found, try again ...	infolog	pl	Nie znaleziono wpisów, spróbuj jeszcze raz
+no filter	infolog	pl	Bez filtra
+none	infolog	pl	Brak
+not	infolog	pl	Nie
+not assigned	infolog	pl	Nie przypisano
+note	infolog	pl	Notatka
+number of records to read (<=200)	infolog	pl	
+offer	infolog	pl	
+ongoing	infolog	pl	W toku
+open	infolog	pl	Otwarte
+overdue	infolog	pl	Przeterminowane
+own	infolog	pl	W³asne
+own open	infolog	pl	W³asne otwarte
+own overdue	infolog	pl	W³asne przeterminowane
+own upcoming	infolog	pl	
+owner	infolog	pl	W³a¶ciciel
+path on (web-)serverside<br>eg. /var/samba/share	infolog	pl	
+pattern for search in addressbook	infolog	pl	Wzorzec poszukiwania w ksi±¿ce adresowej
+pattern for search in projects	infolog	pl	Wzorzec poszukiwania w projektach
+phone	infolog	pl	Telefon
+phone/email	infolog	pl	Telefon/Email
+phonecall	infolog	pl	Telefon
+priority	infolog	pl	Priorytet
+private	infolog	pl	Prywatne
+project	infolog	pl	Projekt
+re:	infolog	pl	Odp:
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pl	
+reject	infolog	pl	odrzuæ
+responsible	infolog	pl	Osoba odpowiedzialna
+search for:	infolog	pl	Szukaj dla
+select	infolog	pl	Wybór
+show full usernames	infolog	pl	Wy¶wietlaj pe³n± nazwê u¿ytkownika
+show open events: tasks/calls/notes on main screen	infolog	pl	Wy¶wietlaj otwarte zdarzenia na stronie g³ównej
+showing x	infolog	pl	Wy¶wietlono %1
+showing x - x of x	infolog	pl	Wy¶wietlono %1 - %2 z %3
+startdate	infolog	pl	Pocz±tek
+startrecord	infolog	pl	
+status	infolog	pl	Status
+sub	infolog	pl	Podrz.
+subject	infolog	pl	Temat
+task	infolog	pl	Zadanie
+test import (show importable records <u>only</u> in browser)	infolog	pl	
+today	infolog	pl	Dzisiaj
+translation	infolog	pl	T³umaczenie
+type	infolog	pl	Typ
+upcoming	infolog	pl	
+urgency	infolog	pl	
+urgent	infolog	pl	Pilne
+use button to search for address	infolog	pl	Naci¶nij przycisk aby przeszukaæ Ksi±¿kê adresow±
+use button to search for project	infolog	pl	Naci¶nij przycisk aby przeszukaæ Projekty
+valid path on clientside<br>eg. \\server\share or e:\	infolog	pl	
+view other subs	infolog	pl	
+view subs	infolog	pl	
+will-call	infolog	pl	
+yes - delete	infolog	pl	Tak - Usuñ
+you have entered an invalid ending date	infolog	pl	Poda³e¶ niepoprawn± datê zakoñczenia
+you have entered an invalid starting date	infolog	pl	Poda³e¶ niepoprawna datê rozpoczêcia
+you must enter a subject or a description	infolog	pl	Musisz podaæ temat lub opis
