@@ -271,7 +271,6 @@
 	while ($user = each($users))
 	{
 		$userid = intval($user[0]);
-		echo '<!-- USERID = '.$userid.' -->'."\n";
 		if($userid != $owner && $phpgw->accounts->exists($userid) == True)
 		{
 			$str .= '    <option value="' . $userid . '"'.$parts[$userid].'>('.$phpgw->accounts->get_type($userid).') '.$user[1].'</option>'."\n";
@@ -299,6 +298,18 @@
 	}
 	$str .= '>';
 	display_item($phpgw->common->grab_owner_name($owner).' '.lang('Participates'),$str);
+
+// Categories
+	$c = CreateObject('phpgwapi.categories',Array($owner,'calendar'));
+	if($c->total('calendar') > 0)
+	{
+		$str = "\n".'   <select name="category" size="5">'."\n";
+
+		$str .= $c->formated_list('select','all',$event->category);
+		$str .= '   </select>';
+		display_item(lang('Categories'),$str);
+	}
+	unset($c);
 
 // Repeat Type
 	$p->set_var('hr_text','<hr>');

@@ -109,7 +109,7 @@
 
 		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
 		$phpgw->calendar->event_init($cal_stream);
-		$phpgw->calendar->event_set_category($cal_stream,'');
+		$phpgw->calendar->event_set_category($cal_stream,$category);
 		$phpgw->calendar->event_set_title($cal_stream,$title);
 		$phpgw->calendar->event_set_description($cal_stream,$description);
 		$phpgw->calendar->event_set_start($cal_stream,$start[year],$start[month],$start[mday],$start[hour],$start[min],0);
