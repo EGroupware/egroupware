@@ -422,6 +422,7 @@ permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
+personalized notes for	notes	en	Personalized notes for
 phone numbers	addressbook	en	Phone Numbers
 phpgroupware login	login	en	phpGroupWare login
 php information	admin	en	PHP Information
@@ -443,7 +444,6 @@ previous page	common	en	Previous page
 print	common	en	Print
 printer friendly	calendar	en	Printer Friendly
 priority	common	en	Priority
-private	common	en	private
 private and global public	calendar	en	Private and Global Public
 private and group public	calendar	en	Private and Group Public
 private	common	en	Private
