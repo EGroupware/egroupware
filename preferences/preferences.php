@@ -179,6 +179,20 @@
 		define('HAS_ADMIN_RIGHTS',1);
 	}
 
+	// Makes the ifs a little nicer, plus ... this will change once the ACL manager is in place
+	// and is able to create less powerfull admins.  This will handle the ACL checks for that (jengo)
+	function is_admin()
+	{
+		if (HAS_ADMIN_RIGHTS == 1)
+		{
+			return True;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
 	if (is_admin())
 	{
 		// This is where we will keep track of our postion.
@@ -236,20 +250,6 @@
 	{
 		$dp = createobject('phpgwapi.preferences',-2);
 		$dp->read_repository();
-	}
-
-	// Makes the ifs a little nicer, plus ... this will change once the ACL manager is in place
-	// and is able to create less powerfull admins.  This will handle the ACL checks for that (jengo)
-	function is_admin()
-	{
-		if (HAS_ADMIN_RIGHTS == 1)
-		{
-			return True;
-		}
-		else
-		{
-			return False;
-		}
 	}
 
 	if ($GLOBALS['HTTP_POST_VARS']['submit'])
