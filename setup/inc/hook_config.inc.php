@@ -112,7 +112,10 @@
 		);
 		if(@function_exists('mhash'))
 		{
-			$hashes += array('sha' => 'sha');
+			$hashes += array(
+				'sha'  => 'sha',
+				'ssha' => 'ssha'
+			);
 		}
 
 		while(list($key, $value) = each($hashes))

@@ -1303,7 +1303,7 @@
 		@param $userpass user password
 		@param $random random seed
 		*/ 
-		function md5_cryptpasswd($userpass, $random)
+		function old_md5_cryptpasswd($userpass, $random)
 		{
 			$bsalt = '$1$';
 			$esalt = '$';
@@ -1315,6 +1315,38 @@
 			return $ldappassword;
 		}
 
+		/* New method taken from the openldap-software list as recommended by
+		 * Kervin L. Pierre" <kervin@blueprint-tech.com>
+		 */
+		function md5_cryptpasswd($userpass, $random)
+		{
+			$ldappassword = '{md5}' . base64_encode(pack("H*",md5($userpass)));
+			return $ldappassword;
+		}
+
+		/* http://www.thomas-alfeld.de/frank/index.php?file=CodeSnippets%2FPHP%2Fldap_passwd.php */
+		function sha_cryptpasswd($userpass, $random)
+		{
+			if(!function_exists('mhash'))
+			{
+				return False;
+			}
+			$ldappassword = '{SHA}' . base64_encode(mhash(MHASH_SHA1, $userpass));
+			return $ldappassword;
+		}
+
+		/* http://www.thomas-alfeld.de/frank/index.php?file=CodeSnippets%2FPHP%2Fldap_passwd.php */
+		function ssha_cryptpasswd($userpass,$random)
+		{
+			if(!function_exists('mhash'))
+			{
+				return False;
+			}
+			$hash = mhash(MHASH_SHA1, $password . $random);
+			$ldappassword = '{SSHA}' . base64_encode($hash . $random);
+			return $ldappassword;
+		}
+
 		/*!
 		@function encrypt_password
 		@abstract encrypt password
@@ -1323,22 +1355,28 @@
 		*/
 		function encrypt_password($password)
 		{
-			if (strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'des')
+			$type = strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']);
+			$salt = '';
+			switch($type)
 			{
-				$salt       = $this->randomstring(2);
-				$e_password = $this->des_cryptpasswd($password, $salt);
-
-				return $e_password;
+				case 'des':
+					$salt       = $this->randomstring(2);
+					$e_password = $this->des_cryptpasswd($password, $salt);
+					break;
+				case 'md5':
+					$e_password = $this->md5_cryptpasswd($password,$salt);
+					break;
+				case 'sha':
+					$e_password = $this->sha_cryptpasswd($password,$salt);
+					break;
+				case 'ssha':
+					$salt       = $this->randomstring(8);
+					$e_password = $this->ssha_cryptpasswd($password, $salt);
+					break;
+				default:
+					return False;
 			}
-			elseif (strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'md5')
-			{
-				$salt       = $this->randomstring(8);
-				$e_password = $this->md5_cryptpasswd($password, $salt);
-
-				return $e_password;
-			}
-
-			return false;
+			return $e_password;
 		}
 
 		/*!
