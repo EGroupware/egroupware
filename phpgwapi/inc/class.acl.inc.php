@@ -99,7 +99,6 @@
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ 
-//        echo "rows: ".$this->db->num_rows()."<br>";
         return True; 
       }
       while ($this->db->next_record()) {
@@ -112,6 +111,7 @@
     function check_specific($location, $required, $appname = False, $id = "", $id_type = "u"){
       global $phpgw, $phpgw_info;
       $rights = $this->get_specific_rights($location,$appname, $id, $id_type);
+      
       return !!($rights & $required);
     }
 

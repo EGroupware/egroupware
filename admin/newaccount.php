@@ -48,40 +48,106 @@
      if ($n_passwd != $n_passwd_2)
         $error[$totalerrors++] = lang("The two passwords are not the same");
 
-     if (count($new_permissions) == 0)
-        $error[$totalerrors++] = lang("You must add at least 1 permission to this account");
-        
-     if (count($n_groups) == 0)
-        $error[$totalerrors++] = lang("Account must belong to at least 1 group");
+     if (!count($new_permissions) || !count($n_groups)) {
+        $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission or group to this account");
+     }
 
      if (account_exsists($n_loginid)) {
         $error[$totalerrors++] = lang("That loginid has already been taken");
      }
 
      if (! $error) {
-        $cd = account_add(array("loginid"   => $n_loginid,   "permissions" => $new_permissions,
-            				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
-            				        "passwd"    => $n_passwd, "groups"    => $n_groups));
+       $phpgw->db->lock(array("accounts","preferences","phpgw_sessions","phpgw_acl","applications"));
+       
+       $cd = account_add(array("loginid"  => $n_loginid,  "firstname" => $n_firstname,
+                               "lastname" => $n_lastname, "passwd"    => $n_passwd));
             				        
-        $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
-        $phpgw->db->next_record();
-        $pref = CreateObject('phpgwapi.preferences',intval($phpgw->db->f("account_id")));
-        $apps_object = CreateObject('phpgwapi.applications',intval($phpgw->db->f("account_id")));
-        $apps_array = $apps_object->apps_enabled();
-        $phpgw->common->hook_single("add_def_pref", "admin");
-        while($apps = each($apps_array)) {
-          if($apps[0]<>"admin")
-            $phpgw->common->hook_single("add_def_pref", $apps[0]);
-        }
-        $pref->commit();
+       $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
+       $phpgw->db->next_record();
+       $account_id = intval($phpgw->db->f("account_id"));
+       $apps = CreateObject('phpgwapi.applications',array($account_id,'u'));
+       $apps->read_installed_apps();
+
+       // Read Group Apps
+       if ($n_groups) {
+         $apps->account_type = 'g';
+         reset($n_groups);
+         while($groups = each($n_groups)) {
+           $apps->account_id = $groups[0];
+           $old_app_groups = $apps->read_account_specific();
+           @reset($old_app_groups);
+           while($old_group_app = each($old_app_groups)) {
+             if(!$apps_after[$old_group_app[0]]) {
+               $apps_after[$old_group_app[0]] = $old_app_groups[$old_group_app[0]];
+             }
+           }
+         }
+       }
+        
+       $apps->account_type = 'u';
+       $apps->account_id = $account_id;
+       $apps->account_apps = Array(Array());
+       @reset($new_permissions);
+       while($app = each($new_permissions)) {
+         if($app[1]) {
+           $apps->add_app($app[0]);
+           if(!$apps_after[$app[0]]) {
+             $apps_after[] = $app[0];
+           }
+         }
+       }
+       $apps->save_apps();
+
+       // Assign user to groups
+       for($i=0;$i<count($n_groups);$i++) {
+         $phpgw->acl->add("phpgw_group",$n_groups[$i],$account_id,'u',1);
+       }
+
+       $pref = CreateObject('phpgwapi.preferences',$account_id);
+       $phpgw->common->hook_single("add_def_pref", "admin");
+       while($apps = each($apps_after)) {
+         if($apps[0]<>"admin")
+           $phpgw->common->hook_single("add_def_pref", $apps[0]);
+       }
+       $pref->commit();
+
+       $apps->account_apps = Array(Array());
+       $apps_after = Array(Array());
+
+       // Read new Group ID's
+       $new_groups = $phpgw->accounts->read_groups($account_id);
+       // Read new Group Apps
+       if ($new_groups) {
+         $apps->account_type = 'g';
+         reset($new_groups);
+         while($groups = each($new_groups)) {
+           $apps->account_id = intval($groups[0]);
+           $new_app_groups = $apps->read_account_specific();
+           @reset($new_app_groups);
+           while($new_group_app = each($new_app_groups)) {
+             if(!$apps_after[$new_group_app[0]]) {
+               $apps_after[$new_group_app[0]] = $new_app_groups[$new_group_app[0]];
+             }
+           }
+         }
+       }
+
+       $apps->account_type = 'u';
+       $apps->account_id = $account_id;
+       $new_app_user = $apps->read_account_specific();
+       while($new_user_app = each($new_app_user)) {
+         if(!$apps_after[$new_user_app[0]]) {
+           $apps_after[$new_user_app[0]] = $new_app_user[$new_user_app[0]];
+         }
+       }
 
        // start inlcuding other admin tools
-       while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+       while($app = each($apps_after))
        {
-         $phpgw->common->hook_single("add_user_data", $value);
+         $phpgw->common->hook_single('add_user_data', $value);
        }       
 
-        Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
+        Header('Location: ' . $phpgw->link('accounts.php','cd='.$cd));
         $phpgw->common->phpgw_exit();
      }
   }
@@ -178,13 +244,16 @@
   }
   $phpgw->template->set_var("permissions_list",$perms_html);
 
+  $includedSomething = False;
+// Skeeter: I don't see this as a player, if creating new accounts...
+
   // start inlcuding other admin tools
-  while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
-  {
+//  while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+//  {
 	// check if we have something included, when not ne need to set
 	// {gui_hooks} to ""
-  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
-  }       
+//  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
+//  }       
   if (!$includedSomething) $phpgw->template->set_var("gui_hooks","");
 
   $phpgw->template->set_var("lang_button",Lang("Add"));

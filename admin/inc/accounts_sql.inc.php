@@ -69,20 +69,13 @@
   {
      global $phpgw, $phpgw_info;
   
-     $phpgw->db->lock(array("accounts","preferences"));
-
      $sql = "insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,"
-          . "account_groups,account_status,account_lastpwd_change) values ('"
+          . "account_status,account_lastpwd_change) values ('"
           . $account_info["loginid"] . "','" . md5($account_info["passwd"]) . "','"
           . addslashes($account_info["firstname"]) . "','". addslashes($account_info["lastname"])
-          . "','" . $phpgw->accounts->groups_array_to_string($account_info["groups"]) . "','A',0)";
+          . "','A',0)";
 
      $phpgw->db->query($sql,__LINE__,__FILE__);
-     $phpgw->db->unlock();
-
-     $apps = CreateObject('phpgwapi.applications',$account_info["loginid"]);
-     $apps->add_user($account_info["permissions"]);
-     $apps->save_user();
 
      $sep = $phpgw->common->filesystem_separator();
 

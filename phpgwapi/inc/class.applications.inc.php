@@ -54,7 +54,6 @@
         $this->account_id = $phpgw_info["user"]["account_id"]; 
         $this->account_type = "u";
       }
-//echo "Account ID (Initializing applications) = ".$this->account_id."<br>\n";
     }
 
     function enabled_apps()

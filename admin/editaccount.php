@@ -60,14 +60,14 @@
      }
 
      if (!count($new_permissions) || !count($n_groups)) {
-        $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission to this account");
+        $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission or group to this account");
      }
      
      if (! $totalerrors) {
-       $phpgw->db->lock(array("accounts","preferences","phpgw_sessions","phpgw_acl","applications"));
+       $phpgw->db->lock(array('accounts','preferences','phpgw_sessions','phpgw_acl','applications'));
        $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
        $phpgw->db->next_record();
-       $account_id = $phpgw->db->f("account_id");
+       $account_id = intval($phpgw->db->f("account_id"));
 
        $apps = CreateObject('phpgwapi.applications',array(intval($account_id),'u'));
        $apps->read_installed_apps();
@@ -89,12 +89,12 @@
              }
            }
            // delete old groups user was associated to
-           $phpgw->acl->delete("phpgw_group",$groups[0],$account_id,'u');
+           $phpgw->acl->delete('phpgw_group',$groups[0],$account_id,'u');
          }
        }
-        
+
        $apps->account_type = 'u';
-       $apps->account_id = intval($account_id);
+       $apps->account_id = $account_id;
        $apps->account_apps = Array(Array());
        while($app = each($new_permissions)) {
          if($app[1]) {
@@ -106,17 +106,17 @@
        }
        $apps->save_apps();
 
-       $cd = account_edit(array("loginid"        => $n_loginid,        "firstname"   => $n_firstname,
-                                "lastname"       => $n_lastname,       "passwd"      => $n_passwd,
-                                "account_status" => $n_account_status, "old_loginid" => $old_loginid,
-                                "account_id"     => rawurldecode($account_id)));
+       $cd = account_edit(array('loginid'        => $n_loginid,        'firstname'   => $n_firstname,
+                                'lastname'       => $n_lastname,       'passwd'      => $n_passwd,
+                                'account_status' => $n_account_status, 'old_loginid' => $old_loginid,
+                                'account_id'     => rawurldecode($account_id)));
 
        // If the user is logged in, it will force a refresh of the session_info
        //$phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
        // Add new groups user is associated to
        for($i=0;$i<count($n_groups);$i++) {
-         $phpgw->acl->add("phpgw_group",$n_groups[$i],$account_id,'u',1);
+         $phpgw->acl->add('phpgw_group',$n_groups[$i],$account_id,'u',1);
        }
        
        // The following sets any default preferences needed for new applications..
@@ -128,13 +128,13 @@
        $docommit = False;
        $after_apps = explode(':',$apps_after);
        for($i=1;$i<count($after_apps) - 1;$i++) {
-         if($after_apps[$i]=="admin") {
-           $check = "common";
+         if($after_apps[$i]=='admin') {
+           $check = 'common';
          } else {
            $check = $after_apps[$i];
 		 }
          if (!$t["$check"]) {
-           $phpgw->common->hook_single("add_def_pref", $after_apps[$i]);
+           $phpgw->common->hook_single('add_def_pref', $after_apps[$i]);
            $docommit = True;
          }
        }
@@ -142,16 +142,46 @@
        if ($docommit) {
 		 $pref->commit();
 	   }
-	   
+
+       $apps->account_apps = Array(Array());
+       $apps_after = Array(Array());
+
+       // Read new Group ID's
+       $new_groups = $phpgw->accounts->read_groups($account_id);
+       // Read new Group Apps
+       if ($new_groups) {
+         $apps->account_type = 'g';
+         reset($new_groups);
+         while($groups = each($new_groups)) {
+           $apps->account_id = intval($groups[0]);
+           $new_app_groups = $apps->read_account_specific();
+           @reset($new_app_groups);
+           while($new_group_app = each($new_app_groups)) {
+             if(!$apps_after[$new_group_app[0]]) {
+               $apps_after[$new_group_app[0]] = $new_app_groups[$new_group_app[0]];
+             }
+           }
+         }
+       }
+
+       $apps->account_type = 'u';
+       $apps->account_id = $account_id;
+       $new_app_user = $apps->read_account_specific();
+       while($new_user_app = each($new_app_user)) {
+         if(!$apps_after[$new_user_app[0]]) {
+           $apps_after[$new_user_app[0]] = $new_app_user[$new_user_app[0]];
+         }
+       }
+
        // start including other admin tools
-       while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+       while($app = each($apps_after))
        {
-         $phpgw->common->hook_single("update_user_data", $value);
+         $phpgw->common->hook_single('update_user_data', $app[0]);
        }       
 
        $phpgw->db->unlock();
        
-       Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
+       Header('Location: ' . $phpgw->link('accounts.php', 'cd='.$cd));
        $phpgw->common->phpgw_exit();
      }
 
@@ -174,7 +204,8 @@
      $n_loginid   = $userData["account_lid"];
      $n_firstname = $userData["firstname"];
      $n_lastname  = $userData["lastname"];
-     $apps = CreateObject('phpgwapi.applications',intval($userData["account_id"]));
+     $apps = CreateObject('phpgwapi.applications',array(intval($userData["account_id"]),'u'));
+     $apps->read_installed_apps();
      $db_perms = $apps->read_account_specific();
   }
 
@@ -241,6 +272,7 @@
      }
   }
 
+  @reset($db_perms);
   for ($i=0;$i<200;) {     // The $i<200 is only used for a brake
      if (! $perm_display[$i][1]) break;
      $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
@@ -269,17 +301,48 @@
 
   $phpgw->template->set_var("permissions_list",$perm_html);	
   
+  $apps->account_apps = Array(Array());
+
+  // Read new Group ID's
+  $new_groups = $phpgw->accounts->read_groups($account_id);
+  $apps_after = Array(Array());
+  // Read new Group Apps
+  if ($new_groups) {
+    $apps->account_type = 'g';
+    reset($new_groups);
+    while($groups = each($new_groups)) {
+      $apps->account_id = intval($groups[0]);
+      $new_app_groups = $apps->read_account_specific();
+      @reset($new_app_groups);
+      while($new_group_app = each($new_app_groups)) {
+        if(!$apps_after[$new_group_app[0]]) {
+          $apps_after[$new_group_app[0]] = $new_app_groups[$new_group_app[0]];
+        }
+      }
+    }
+  }
+
+  $apps->account_type = 'u';
+  $apps->account_id = intval($userData["account_id"]);
+  $new_app_user = $apps->read_account_specific();
+  while($new_user_app = each($new_app_user)) {
+    if(!$apps_after[$new_user_app[0]]) {
+      $apps_after[$new_user_app[0]] = $new_app_user[$new_user_app[0]];
+    }
+  }
+
+  $includedSomething = False;
   // start inlcuding other admin tools
-  while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+  while($app = each($apps_after))
   {
 	// check if we have something included, when not ne need to set
 	// {gui_hooks} to ""
-  	if ($phpgw->common->hook_single("show_user_data", $value)) $includedSomething="true";
+  	if ($phpgw->common->hook_single('show_user_data', $app[0])) $includedSomething=True;
   }       
-  if (!$includedSomething) $phpgw->template->set_var("gui_hooks","");
+  if (!$includedSomething) $phpgw->template->set_var('gui_hooks','');
 
-  $phpgw->template->set_var("lang_button",lang("Save"));
-  $phpgw->template->pparse("out","form");
+  $phpgw->template->set_var("lang_button",lang('Save'));
+  $phpgw->template->pparse('out','form');
 
   account_close();
   $phpgw->common->phpgw_footer();
