@@ -21,7 +21,7 @@
 	$setup_info['infolog']['author'] = 'Ralf Becker';
 	$setup_info['infolog']['license']  = 'GPL';
 	$setup_info['infolog']['description'] =
-		'CRM type app using Addressbook, Notes, Phonelog.';
+		'CRM type app using Addressbook providing Todo List, Notes and Phonelog.';
 	$setup_info['infolog']['maintainer'] = 'Ralf Becker';
 	$setup_info['infolog']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
 
