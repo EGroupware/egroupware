@@ -180,7 +180,7 @@
 				{
 					if ($apps[0] != 'admin')
 					{
-						$phpgw->common->hook_single('add_def_pref', $apps[0]);
+						$phpgw->common->hook_single('add_def_pref', $apps[1]);
 					}
 				}
 				$pref->save_repository(False);
