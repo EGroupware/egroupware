@@ -23,23 +23,15 @@
 		</columns>
 		<rows>
 			<row class="th">
-				<description span="all" value="Custom regarding"/>
-			</row>
-			<row class="row">
-				<description value="Contact"/>
-				<textbox size="64" maxlength="64" id="info_from" statustext="enter a custom contact, leave empty if linked entry should be used"/>
-			</row>
-			<row class="row">
-				<description value="Phone/Email"/>
-				<textbox size="64" maxlength="64" id="info_addr" statustext="enter a custom phone/email, leave empty if linked entry should be used"/>
-			</row>
-			<row class="th">
-				<description span="all" value="Links"/>
+				<description span="all" value="Create new links"/>
 			</row>
 			<row class="row">
 				<link-to span="all" id="link_to"/>
 			</row>
-			<row class="row_off" valign="top" height="112">
+			<row class="th">
+				<description span="all" value="Existing links"/>
+			</row>
+			<row class="row_off" valign="top" height="164">
 				<link-list span="all" id="link_to"/>
 			</row>
 		</rows>
@@ -56,7 +48,7 @@
 			<row class="row">
 				<description value="Priority"/>
 				<menulist>
-					<menupopup id="info_priority" statustext="select a priority for this task"/>
+					<menupopup id="info_pri" statustext="select a priority for this task"/>
 				</menulist>
 			</row>
 			<row class="th">
@@ -65,11 +57,11 @@
 			<row class="row">
 				<description value="Responsible"/>
 				<menulist>
-					<menupopup type="select-account" options="Self" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
+					<menupopup type="select-account" options="Owner" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
 				</menulist>
 			</row>
 			<row class="row">
-				<description value="Confirmation"/>
+				<description value="Confirm"/>
 				<menulist>
 					<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both"/>
 				</menulist>
@@ -111,8 +103,10 @@
 				<description/>
 			</row>
 			<row class="row">
-				<description value="Regarding"/>
-				<description span="all"/>
+				<description value="Contact"/>
+				<textbox size="40" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link"/>
+				<description value="Phone/Email"/>
+				<textbox size="40" maxlength="64" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
 			</row>
 			<row class="row">
 				<description value="Subject"/>

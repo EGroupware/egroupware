@@ -360,7 +360,10 @@
 			$GLOBALS['phpgw']->template->set_root($GLOBALS['phpgw']->common->get_tpl_dir('infolog'));	// necessary for hooks
 
 			$GLOBALS['phpgw']->template->set_file(array( 'info_list_t' => 'list.tpl' ));
-			$GLOBALS['phpgw']->template->set_block('info_list_t','projdetails','projdetailshandle');
+			if ($action == 'sp')
+			{
+				$GLOBALS['phpgw']->template->set_block('info_list_t','projdetails','projdetailshandle');
+			}
 			$GLOBALS['phpgw']->template->set_block('info_list_t','info_headers');
 			$GLOBALS['phpgw']->template->set_block('info_list_t','info_list','list');
 			$GLOBALS['phpgw']->template->set_block('info_list_t','get_list');
@@ -697,6 +700,16 @@
 			$this->get_list();
 		}
 
+		/*!
+		@function edit
+		@syntax edit( $content=0,$action='',$action_id=0,$type='' )
+		@author ralfbecker
+		@abstract Edit/Create an InfoLog Entry
+		@param $content   Content from the eTemplate Exec call or info_id on inital call
+		@param $action    Name of an app of 'sp' for a infolog-sub
+		@param $action_id Id of app-entry to which a link is created
+		@param $type      Type of log-entry: note,todo,task
+		*/
 		function edit($content = 0,$action = '',$action_id=0,$type='')
 		{
 			if (is_array($content))
@@ -759,6 +772,7 @@
 					$content['info_confirm'] = 'not';
 					$content['info_subject']=lang('Re:').' '.$parent['info_subject'];
 					$content['info_des'] = '';
+					$content['info_lastmodified'] = '';
 				}
 				else
 				{
@@ -800,7 +814,7 @@
 			$this->tmpl->read('infolog.edit');
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
 				'info_type'     => $this->bo->enums['type'],
-				'info_priority' => $this->bo->enums['priority'],
+				'info_pri'      => $this->bo->enums['priority'],
 				'info_confirm'  => $this->bo->enums['confirm'],
 				'info_status'   => $this->bo->status[$content['info_type']]
 			),$readonlys,array(
