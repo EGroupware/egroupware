@@ -65,7 +65,7 @@
   <form action="<?php echo $phpgw->link('/calendar/'.basename($SCRIPT_FILENAME),'owner='.$owner); ?>" method="POST" name="filtermethod">
    <td width="30%" align="center" valign="center">
     <b><?php echo lang('Filter'); ?>:</b>
-    <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
+    <input type="hidden" name="from" value="<?php echo '/calendar/'.basename($SCRIPT_FILENAME); ?>">
 <?php if(isset($date) && $date) { ?>
     <input type="hidden" name="date" value="<?php echo $date; ?>">
 <?php } ?>
@@ -105,7 +105,7 @@
   <form action="<?php echo $phpgw->link('/calendar/'.basename($SCRIPT_FILENAME)); ?>" method="POST" name="setowner">
    <td width="<?php echo $remainder; ?>%" align="center" valign="center">
     <b><?php echo lang('User'); ?>:</b>
-    <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
+    <input type="hidden" name="from" value="<?php echo '/calendar/'.basename($SCRIPT_FILENAME)); ?>">
 <?php if(isset($date) && $date) { ?>
     <input type="hidden" name="date" value="<?php echo $date; ?>">
 <?php } ?>
@@ -136,7 +136,7 @@
 ?>
   <form action="<?php echo $phpgw->link('/calendar/search.php','owner='.$owner); ?>" method="POST">
    <td align="right" valign="center">
-    <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
+    <input type="hidden" name="from" value="<?php echo '/calendar/'.basename($SCRIPT_FILENAME); ?>">
     <?php if(isset($date) && $date) { ?>
     <input type="hidden" name="date" value="<?php echo $date; ?>">
     <?php } ?>
