@@ -29,9 +29,6 @@
     exit;
   } unset($d1);
 
-  // Note: We should add a way to force the developer to say which ones to use. (jengo)
-  include("/home/httpd/html/phpgroupware/phpgwapi/inc/class.sbox.inc.php");
-
   class utilities
   {
     var $rssparser;
@@ -48,8 +45,7 @@
 //      $phpgw->http = CreateObject("phpgwapi.http");
  //     $phpgw->matrixview = CreateObject("phpgwapi.matrixview");
  //     $phpgw->menutree = CreateObject("phpgwapi.menutree");
-      $this->sbox = new sbox;
-//      $phpgw->sbox = CreateObject("phpgwapi.portalbox");
+      $phpgw->sbox = CreateObject("phpgwapi.portalbox");
     }
   }
 ?>
