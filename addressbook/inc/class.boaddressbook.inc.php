@@ -448,7 +448,7 @@
 		{
 			if (!$fields['id'] && !$fields['ab_id'])
 			{
-				$this->add_entry($fields);
+				return $this->add_entry($fields);
 			}
 			$ok = False;
 			if($this->check_perms($fields,PHPGW_ACL_EDIT))
