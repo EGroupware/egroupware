@@ -84,7 +84,7 @@
 			/* Might change this to '' at the end---> */
 			$_start   = get_var('start',array('POST','GET'));
 			$_query   = get_var('query',array('POST','GET'));
-			$_cquery  = get_var('cquery',  array('GET'));
+			$_cquery  = get_var('cquery', array('GET','POST'));
 			$_sort    = get_var('sort',array('POST','GET'));
 			$_order   = get_var('order',array('POST','GET'));
 			$_filter  = get_var('filter',array('POST','GET'));

@@ -310,7 +310,8 @@
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 					$cols .= $GLOBALS['phpgw']->nextmatchs->show_sort_order($this->sort,
-					$column[0],$this->order,'/index.php',$showcol,'&menuaction=addressbook.uiaddressbook.index');
+						$column[0],$this->order,'/index.php',$showcol,'&menuaction=addressbook.uiaddressbook.index'
+					);
 					$cols .= "</font>\n  </td>";
 					$cols .= "\n";
 
@@ -362,8 +363,11 @@
 					$showcol = $this->display_name($col);
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-					$cols .= $GLOBALS['phpgw']->nextmatchs->show_sort_order($this->sort,
-					$col,$this->order,"/index.php",$showcol,'&menuaction=addressbook.uiaddressbook.index&cat_id='.$this->cat_id);
+					$cols .= $GLOBALS['phpgw']->nextmatchs->show_sort_order(
+						$this->sort,$col,$this->order,
+						"/index.php",$showcol,
+						'&menuaction=addressbook.uiaddressbook.index&cat_id=' . $this->cat_id . '&cquery=' . $this->cquery
+					);
 					$cols .= "</font>\n  </td>";
 					$cols .= "\n";
 
@@ -457,9 +461,11 @@
 			$GLOBALS['filter'] = $this->filter;
 
 			$search_filter = $GLOBALS['phpgw']->nextmatchs->show_tpl('/index.php',
-			$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.index&fcat_id='.$this->cat_id,'75%',
-			$GLOBALS['phpgw_info']['theme']['th_bg'],1,1,1,array('filter'=>$this->filter,'yours'=>1),
-			$this->cat_id);
+				$this->start, $total_records,
+				'&menuaction=addressbook.uiaddressbook.index&fcat_id=' . $this->cat_id . '&cquery=' . $this->cquery,'95%',
+				$GLOBALS['phpgw_info']['theme']['th_bg'],1,1,1,array('filter' => $this->filter,'yours' => 1),
+				$this->cat_id
+			);
 			$query = $filter = '';
 
 			$lang_showing = $GLOBALS['phpgw']->nextmatchs->show_hits($total_records,$this->start);
