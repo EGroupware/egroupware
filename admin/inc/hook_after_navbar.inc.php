@@ -1,8 +1,8 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Admin                                                     *
-	* http://www.phpgroupware.org                                              *
-	* This application written by Miles Lott <milosch@phpgroupware.org>        *
+	* eGroupWare - Admin                                                       *
+	* http://www.egroupware.org                                                *
+	* This application written by Miles Lott <milosch@phpwhere.org>            *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *

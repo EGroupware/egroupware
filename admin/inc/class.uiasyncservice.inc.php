@@ -1,11 +1,11 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare Admin - Timed Asynchron Services for phpGroupWare           *
+	* eGroupWare Admin - Timed Asynchron Services for eGroupWare               *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* Class to admin cron-job like timed calls of phpGroupWare methods         *
+	* Class to admin cron-job like timed calls of eGroupWare methods           *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/                                             *
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/                                               *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

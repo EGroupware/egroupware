@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - solog                                                     *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - solog                                                       *
+	* http://www.egroupware.org                                                *
 	* This application written by Jerry Westrick <jerry@westrick.com>          *
 	* --------------------------------------------                             *
 	* Funding for this program was provided by http://www.checkwithmom.com     *

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - html                                                      *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - html                                                        *
+	* http://www.egroupware.org                                                *
 	* Written by Jerry Westrick <jerry@westrick.com>                           *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Admin - Global categories                                 *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Admin - Global categories                                   *
+	* http://www.egroupware.org                                                *
 	* Written by Bettina Gille [ceb@phpgroupware.org]                          *
 	* -----------------------------------------------                          *
 	* Copyright 2000 - 2003 Free Software Foundation, Inc                      *

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - configuration administration                              *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - configuration administration                                *
+	* http://www.egroupware.org                                                *
 	* Copyright (C) 2001 Loic Dachary                                          *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
