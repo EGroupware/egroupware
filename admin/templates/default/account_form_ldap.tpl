@@ -59,7 +59,14 @@
 			     <td>{lang_primary_group}</td>
 			     <td>{primary_group_select}&nbsp;</td>
 			    </tr>
-			
+		    
+			    <tr class="th">
+			     <td>{lang_app}</td>
+			     <td>{lang_acl}</td>
+			     <td>{lang_app}</td>
+			     <td>{lang_acl}</td>
+			    </tr>
+
 				{permissions_list}
 			    
 				 {form_buttons}

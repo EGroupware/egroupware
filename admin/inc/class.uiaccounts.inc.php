@@ -30,6 +30,22 @@
 
 		var $bo;
 		var $nextmatchs;
+		var $apps_with_acl = array(
+			'addressbook' => True,
+			'todo'        => True,
+			'calendar'    => True,
+			'notes'       => True,
+			'projects'    => True,
+			'phonelog'    => True,
+			'infolog'     => True,
+			'filemanager' => True,
+			'tts'         => True,
+			'bookmarks'   => True,
+			'img'         => True,
+			'netsaint'    => True,
+			'inv'         => True,
+			'phpbrain'    => True,
+		);
 
 		function uiaccounts()
 		{
@@ -885,25 +901,6 @@
 
 		function create_edit_group($group_info,$_errors='')
 		{
-			// Maybe we should list this in setup/setup.inc.php and put it into the
-			// phpgw_applications table ? (jengo)
-			$apps_with_acl = array(
-				'addressbook' => True,
-				'todo'        => True,
-				'calendar'    => True,
-				'notes'       => True,
-				'projects'    => True,
-				'phonelog'    => True,
-				'infolog'     => True,
-				'filemanager' => True,
-				'tts'         => True,
-				'bookmarks'   => True,
-				'img'         => True,
-				'netsaint'    => True,
-				'inv'         => True,
-				'phpbrain'    =>True
-			);
-
 			$sbox = createobject('phpgwapi.sbox');
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -971,8 +968,8 @@
 				}
 			}
 
-			$perm_html = '<td>'.lang('Application').'</td><td>&nbsp;</td><td>'.lang('ACL').'</td>';
-			$perm_html = '<tr bgcolor="'.$GLOBALS['phpgw_info']['theme']['th_bg'].'">'.
+			$perm_html = '<td width="35%">'.lang('Application').'</td><td width="15%">'.lang('enabled').' / '.lang('ACL').'</td>';
+			$perm_html = '<tr class="th">'.
 				$perm_html.$perm_html."</tr>\n";
 			
 			$tr_color = $GLOBALS['phpgw_info']['theme']['row_off'];
@@ -984,10 +981,10 @@
 					$tr_color = $this->nextmatchs->alternate_row_color();
 					$perm_html .= '<tr bgcolor="'.$tr_color.'">';
 				}
-				$perm_html .= '<td width="40%">' . $perm_display[$i][1] . '</td>'
-					. '<td width="5%"><input type="checkbox" name="account_apps['
-					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'></td><td width="5%" align="center">'
-					. ($apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$group_info['account_id'])
+				$perm_html .= '<td>' . $perm_display[$i][1] . '</td>'
+					. '<td><input type="checkbox" name="account_apps['
+					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'> '
+					. ($this->apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$group_info['account_id'])
 					. '"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
 					. lang('Grant Access').': '.lang("edit group ACL's").'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
 			}
@@ -1226,7 +1223,7 @@
 				#print $value['account_id'].''.$value['account_primary_group']
 				if ($value['account_id'] == $userData['account_primary_group'])
 				{
-					$primary_group_select .= ' selected';
+					$primary_group_select .= ' selected="1"';
 				}
 				$primary_group_select .= '>' . $value['account_lid'] . '</option>'."\n";
 			}
@@ -1246,9 +1243,12 @@
 				{
 					continue;
 				}
-				$checked = (@$userData['account_permissions'][$app] || @$db_perms[$app]) && $_account_id ? ' checked' : '';
-				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
-					$data['title'],$app,$checked);
+				$checked = (@$userData['account_permissions'][$app] || @$db_perms[$app]) && $_account_id ? ' checked="1"' : '';
+				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s>',
+					$data['title'],$app,$checked).	
+					($this->apps_with_acl[$app]?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$_account_id)
+					. '"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
+					. lang('Grant Access').'"></a>':'&nbsp;').'</td>';
 
 				if ($i & 1)
 				{
@@ -1258,7 +1258,7 @@
 			}
 			if ($i & 1)
 			{
-				$part[1] = '<td colspan="2">&nbsp;</td>';
+				$part[1] = '<td colspan="3">&nbsp;</td>';
 				$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color(), $part[0], $part[1]);
 			}
 
@@ -1268,7 +1268,9 @@
 				'primary_group_select'    
 					=> '<select name="account_primary_group">'."\n".$primary_group_select.'</select>'."\n",
 				'permissions_list' 
-					=> $appRightsOutput
+					=> $appRightsOutput,
+				'lang_app' => lang('application'),
+				'lang_acl' => lang('enabled').' / '.lang('ACL'),
 			);
 			$t->set_var($var);
 
