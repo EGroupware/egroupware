@@ -11,18 +11,15 @@
 
 	/* $Id$ */
 
-	global $phpgw_info,$phpgw;
-	$save_app = $phpgw_info['flags']['currentapp']; 
-	$phpgw_info['flags']['currentapp'] = 'infolog'; 
+	$save_app = $GLOBALS['phpgw_info']['flags']['currentapp']; 
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog'; 
 
-	$phpgw->translation->add_app('infolog');
+	$GLOBALS['phpgw']->translation->add_app('infolog');
 
-	global $ab_id;
-	//echo "<p>hook_addressbook_view(ab_id=$ab_id)</p>";
+	/* echo "<p>hook_addressbook_view(ab_id=$ab_id)</p>"; */
 
-	global $addr_id,$action;
-	$addr_id = $ab_id; $action='addr';
+	$GLOBALS['addr_id'] = $GLOBALS['ab_id']; $GLOBALS['action'] = 'addr';
 	$infolog = CreateObject('infolog.uiinfolog');
 	$infolog->get_list(True);
 
-	$phpgw_info['flags']['currentapp'] = $save_app; 
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app; 
