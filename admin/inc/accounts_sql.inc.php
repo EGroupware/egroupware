@@ -121,7 +121,7 @@
 		               . "account_lastpwd_change='" . time() . "' where account_lid='"
 		               . $account_info["loginid"] . "'");
 		if ($account_info["account_id"] == $phpgw_info["user"]["account_id"]) {
-		  $phpgw_info["user"]["passwd"] = $phpgw->common->encrypt($account_info["passwd"];
+ 		  $phpgw_info["user"]["passwd"] = $phpgw->common->encrypt($account_info["passwd"]);
 		}
 //        $phpgw->db->query("update phpgw_sessions set session_pwd='" . addslashes($account_info["passwd"])
 //                        . "' where session_lid='" . $account_info["loginid"] . "'");

@@ -28,17 +28,34 @@
         $target = ' target="' . $phpgw_info["flags"]["navbar_target"] . '"';
      }
 
+     $i = 1;
      while ($app = each($phpgw_info["navbar"])) {
-        $title = '<img src="' . $app[1]["icon"] . '" alt="' . $app[1]["title"] . '" title="'
-                . $app[1]["title"] . '" border="0">';
-        if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] == "icons_and_text") {
-           $title .= "<br>" . $app[1]["title"];
-           $tpl->set_var("width","7%");
+        if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] == "text") {
+           $tabs[$i]["label"] = $app[1]["title"];
+           $tabs[$i]["link"]  = $app[1]["url"];
+           if (ereg($phpgw_info["navbar"][$app[0]],$PHP_SELF)) {                                                                           
+              $selected = $i;                                                                       
+           }
+           $i++;
         } else {
-           $tpl->set_var("width","3%");
+           $title = '<img src="' . $app[1]["icon"] . '" alt="' . $app[1]["title"] . '" title="'
+                   . $app[1]["title"] . '" border="0">';
+           if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] == "icons_and_text") {
+              $title .= "<br>" . $app[1]["title"];
+              $tpl->set_var("width","7%");
+           } else {
+              $tpl->set_var("width","3%");
+           }
+   
+           $tpl->set_var("value",'<a href="' . $app[1]["url"] . '"' . $target . '>' . $title . '</a>');
+           $tpl->set_var("align","center");
+           $tpl->parse("applications","navbar_app",True);
         }
-
-        $tpl->set_var("value",'<a href="' . $app[1]["url"] . '"' . $target . '>' . $title . '</a>');
+     }
+     if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] == "text") {
+        $tpl->set_var("navbar_color",$phpgw_info["theme"]["bg_color"]);
+        $tpl->set_var("align","right");
+        $tpl->set_var("value",$phpgw->common->create_tabs($tabs,$selected,-1));
         $tpl->parse("applications","navbar_app",True);
      }
 

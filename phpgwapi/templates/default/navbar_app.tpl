@@ -1,1 +1,1 @@
-<td align="center" width="{width}">{value}</td>
+<td align="{align}" width="{width}">{value}</td>
