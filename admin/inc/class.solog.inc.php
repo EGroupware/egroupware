@@ -29,8 +29,7 @@
 
 		function solog()
 		{
-			global $phpgw;
-			$this->db = $phpgw->db;
+			$this->db = $GLOBALS['phpgw']->db;
 		}
 
 		function get_error_cols()
@@ -108,14 +107,16 @@
 		}
 
 		function get_no_errors()
-		{	/* Get max ErrorId */
+		{
+			/* Get max ErrorId */
 			$this->db->query("select count(*) as max_id from phpgw_log, phpgw_log_msg WHERE phpgw_log.log_id = phpgw_log_msg.log_msg_log_id",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f('max_id');
 		}
 
 		function get_error($parms)
-		{	/* Get parameter values */
+		{
+			/* Get parameter values */
 			$from    = $parms['from'];
 			$where   = $parms['where'];
 			$orderby = $parms['orderby'];

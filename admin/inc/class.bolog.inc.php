@@ -9,11 +9,11 @@
 	* Free Software Foundation; either version 2 of the License, or (at your    *
 	* option) any later version.                                                *
 	\***************************************************************************/
+
 	/* $Id$ */
 
 	class bolog
 	{
-
 		var $public_functions = array
 		(
 			'read_log' => True
@@ -21,7 +21,6 @@
 
 		function bolog($session=False)
 		{
-			global $phpgw;
 			$this->so = CreateObject('admin.solog');
 		}
 
@@ -36,13 +35,13 @@
 		function get_error_cols_e()
 		{
 			$fields = $this->so->get_error_cols_e();
-			$fields['log_date_e'] 		= array();
-			$fields['log_msg_date_e'] 	= array();
-			$fields['log_full_name'] 	= array(); 
+			$fields['log_date_e']     = array();
+			$fields['log_msg_date_e'] = array();
+			$fields['log_full_name']  = array(); 
 			// boAccounts
-			$fields['account_pwd']['include']	= false; 
-			$fields['account_lastlogin_e'] 		= array(); 
-			$fields['account_lastloginfrom_e'] 	= array(); 
+			$fields['account_pwd']['include']   = false; 
+			$fields['account_lastlogin_e']      = array(); 
+			$fields['account_lastloginfrom_e']  = array(); 
 			$fields['account_lastpwd_change_e'] = array(); 
 			return $fields;
 		}

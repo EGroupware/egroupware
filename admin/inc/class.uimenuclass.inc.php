@@ -1,53 +1,51 @@
 <?php
-        /**************************************************************************\
-        * phpGroupWare - Administration                                            *
-        * http://www.phpgroupware.org                                              *
-        * --------------------------------------------                             *
-        *  This program is free software; you can redistribute it and/or modify it *
-        *  under the terms of the GNU General Public License as published by the   *
-        *  Free Software Foundation; either version 2 of the License, or (at your  *
-        *  option) any later version.                                              *
-        \**************************************************************************/
+  /**************************************************************************\
+  * phpGroupWare - Administration                                            *
+  * http://www.phpgroupware.org                                              *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
  
-        /* $Id$ */
+  /* $Id$ */
 
 	class uimenuclass
 	{
 		function uimenuclass()
 		{
-			global $phpgw, $phpgw_info;
-		
-			$this->t	= CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+			$this->t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
 
 			$this->t->set_file(array('menurow' => 'menurow.tpl'));
 			$this->t->set_block('menurow','menu_links','menu_links');
 			$this->t->set_block('menurow','link_row','link_row');
-			
-			$this->rowColor[0]	= $phpgw_info["theme"]["row_on"];
-			$this->rowColor[1]	= $phpgw_info["theme"]["row_off"];
+
+			$this->rowColor[0] = $phpgw_info["theme"]["row_on"];
+			$this->rowColor[1] = $phpgw_info["theme"]["row_off"];
 		}
-		
+
 		function section_item($pref_link='',$pref_text='', $bgcolor)
 		{
-			global $phpgw, $phpgw_info, $t;
-			
+			global $t;
+
 			$this->t->set_var('row_link',$pref_link);
 			$this->t->set_var('row_text',$pref_text);
 			$this->t->set_var('tr_color',$bgcolor);
 			$this->t->parse('all_rows','link_row',True);
 		}
-		
+
 		// $file must be in the following format:
 		// $file = array(
-		// 	'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list')
+		//  'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list')
 		// );
 		// This allows extra data to be sent along
 		function display_section($_menuData)
 		{
-			global $phpgw, $phpgw_info, $account_id;
-			
+			global $account_id;
+
 			$i=0;
-			
+
 			while(list($key,$value) = each($_menuData))
 			{
 				if (!empty($value['extradata']))
@@ -89,7 +87,7 @@
 				case 'view_user':
 					$GLOBALS['menuData'][] = array(
 						'description' => 'User Data',
-						'url'	        => '/index.php',
+						'url'         => '/index.php',
 						'extradata'   => 'menuaction=admin.uiaccounts.view_user'
 					);
 					break;
