@@ -543,6 +543,7 @@ size	email	en	Size
 small	notes	en	Small
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
+sorry, the owner has just deleted this event	calendar	en	Sorry, the owner has just deleted this event
 sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
 sorry, your login has expired	login	en	Sorry, your login has expired
 source language	transy	en	Source Language

@@ -16,8 +16,8 @@
 	$phpgw_info['flags']['currentapp'] = 'calendar';
 	include('../header.inc.php');
 
-	$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
-	$event = $phpgw->calendar->fetch_event($cal_stream,$id);
+	$phpgw->calendar->open('INBOX',$owner,'');
+	$event = $phpgw->calendar->fetch_event($id);
 
 	reset($event->participants);
 	$participating = False;
@@ -45,8 +45,7 @@
 
 	reset($event->participants);
 
-	$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-	$freetime = $phpgw->calendar->localdates(mktime(0,0,0,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset);
+	$freetime = $phpgw->calendar->datetime->localdates(mktime(0,0,0,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->datetime->tz_offset);
 	echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000',False),0,$event->participants);
 
 	echo $phpgw->calendar->view_event($event);

@@ -38,45 +38,51 @@
 	$phpgw->calendar->open('INBOX',$owner,'');
 	$event = $phpgw->calendar->fetch_event($id);
 
-	echo $phpgw->calendar->view_event($event);
-
-	$thisyear	= $event->start->year;
-	$thismonth	= $event->start->month;
-	$thisday 	= $event->start->mday;
-	
-	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
-
-	$templates = Array(
-		'form_button'	=> 'form_button_script.tpl'
-	);
-	$p->set_file($templates);
-
 	echo '<center>';
-
-	if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
+	
+	if($event != False)
 	{
-		$var = Array(
-			'action_url_button'	=> $phpgw->link('/calendar/edit_entry.php','id='.$id.'&owner='.$owner),
-			'action_text_button'	=> lang('Edit'),
-			'action_confirm_button'	=> '',
-			'action_extra_field'	=> ''
-		);
-		$p->set_var($var);
-		echo $p->finish($p->parse('out','form_button'));
-	}
+		echo $phpgw->calendar->view_event($event);
 
-	if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_DELETE) == True))
+		$thisyear	= $event->start->year;
+		$thismonth	= $event->start->month;
+		$thisday 	= $event->start->mday;
+	
+		$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
+
+		$templates = Array(
+			'form_button'	=> 'form_button_script.tpl'
+		);
+		$p->set_file($templates);
+
+		if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
+		{
+			$var = Array(
+				'action_url_button'	=> $phpgw->link('/calendar/edit_entry.php','id='.$id.'&owner='.$owner),
+				'action_text_button'	=> lang('Edit'),
+				'action_confirm_button'	=> '',
+				'action_extra_field'	=> ''
+			);
+			$p->set_var($var);
+			echo $p->finish($p->parse('out','form_button'));
+		}
+
+		if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_DELETE) == True))
+		{
+			$var = Array(
+				'action_url_button'	=> $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner),
+				'action_text_button'	=> lang('Delete'),
+				'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+				'action_extra_field'	=> ''
+			);
+			$p->set_var($var);
+			echo $p->finish($p->parse('out','form_button'));
+		}
+	}
+	else
 	{
-		$var = Array(
-			'action_url_button'	=> $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner),
-			'action_text_button'	=> lang('Delete'),
-			'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
-			'action_extra_field'	=> ''
-		);
-		$p->set_var($var);
-		echo $p->finish($p->parse('out','form_button'));
+		echo lang("Sorry, the owner has just deleted this event").'.';
 	}
-
 	echo '</center>';
 	
 	$phpgw->common->phpgw_footer();

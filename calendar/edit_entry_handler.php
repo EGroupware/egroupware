@@ -228,11 +228,11 @@
 		$p->set_var('color',$phpgw_info['theme']['bg_text']);
 		$p->set_var('overlap_title',lang('Scheduling Conflict'));
 
-		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
+		$phpgw->calendar->open('INBOX',intval($owner),'');
 		$overlap = '';
 		for($i=0;$i<count($overlapping_events);$i++)
 		{
-			$over = $phpgw->calendar->fetch_event($cal_stream,$overlapping_events[$i]);
+			$over = $phpgw->calendar->fetch_event($overlapping_events[$i]);
 			$overlap .= '<li>'.$phpgw->calendar->link_to_entry($over,$event->start->month,$event->start->mday,$event->start->year);
 		}
 		if(strlen($overlap) > 0)

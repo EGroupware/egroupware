@@ -1766,7 +1766,7 @@ class calendar extends calendar_
 	function get_response()
 	{
 		global $phpgw;
-		
+
 		$str = '<table width="100%" cols="4"><tr align="center">';
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);

@@ -196,7 +196,7 @@ class calendar_ extends calendar__
 			{
 				while($this->stream->next_record())
 				{
-					if($this->stream->f('cal_login') == $this->user)
+					if(intval($this->stream->f('cal_login')) == intval($this->user))
 					{
 						$this->event->users_status = $this->stream->f('cal_status');
 					}
@@ -486,7 +486,7 @@ class calendar_ extends calendar__
 			ACCEPTED	=>	'A'
 		);
 		$temp_event = $this->event;
-		$old_event = $this->fetch_event($this->stream,$id);
+		$old_event = $this->fetch_event($id);
 		switch($status)
 		{
 			case REJECTED:
