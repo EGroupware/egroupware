@@ -508,7 +508,7 @@
 				);
 				$minical_prev = $this->mini_calendar(
 					Array(
-						'day'	=> $this->bo->day,
+						'day'	=> 15, /* the 15th of the month is not a boundy condition */
 						'month'	=> $this->bo->month - 1,
 						'year'	=> $this->bo->year,
 						'link'	=> 'day',
@@ -518,7 +518,7 @@
 				);
 				$minical_next = $this->mini_calendar(
 					Array(
-						'day'	=> $this->bo->day,
+						'day'	=> 15, /* the 15th of the month is not a boundy condition */
 						'month'	=> $this->bo->month + 1,
 						'year'	=> $this->bo->year,
 						'link'	=> 'day',
