@@ -152,8 +152,7 @@
      email_type varchar(32) DEFAULT 'INTERNET',
      email_home varchar(64),
      email_home_type varchar(32) DEFAULT 'INTERNET',
-	 primary key (id),
-     unique(id)
+	 primary key (id)
    )";
 
   $phpgw_setup->db->query($sql);
