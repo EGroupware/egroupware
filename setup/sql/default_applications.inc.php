@@ -39,7 +39,7 @@
 			}
 			else
 			{
-				$setup_info[$dir] = array('name' => $dir, 'app_order' => $i++, 'version' => '0.0.0');
+				$setup_info[$dir] = array('name' => $dir, 'app_order' => '99', 'version' => '0.0.0');
 			}
 		}
 	}
