@@ -482,15 +482,16 @@
 					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']+$this->tz_offset_sec),date('i',$info['info_startdate']+$this->tz_offset_sec)).' ':'').
 						$info['info_subject'];
 					$view = $this->link->view('infolog',$info['info_id']);
-					$content = '';
+					$content=array();
 					foreach($icons = array(
 						$info['info_type']   => 'infolog',
 						$info['info_status'] => 'infolog'
 					) as $name => $app)
 					{
-						$content .= $GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
+						$content[] = $GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
 					}
-					$content = $GLOBALS['phpgw']->html->a_href($content.'&nbsp;'.$title,$view).'<br>';
+					$content[] = $GLOBALS['phpgw']->html->a_href($title,$view);
+					$content = $GLOBALS['phpgw']->html->table(array(1 => $content));
 
 					$to_include[] = array(
 						'starttime' => $info['info_startdate']+$this->tz_offset_sec,
