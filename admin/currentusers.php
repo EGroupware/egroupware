@@ -14,18 +14,18 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
-  $phpgw->template = new Template($phpgw_info["server"]["template_dir"]);
-  $phpgw->template->set_file(array( "header"	=> "currentusers.tpl",
-			  "row"		=> "currentusers.tpl",
-			  "footer"	=> "currentusers.tpl" ));
+  $phpgw->template->set_file(array("header"     => "currentusers.tpl",
+                                   "row"        => "currentusers.tpl",
+                                   "footer"     => "currentusers.tpl"));
 
   $phpgw->template->set_block("header","row","footer","output");
 
-  if (! $start)
+  if (! $start) {
      $start = 0;
+  }
 
   $limit = $phpgw->nextmatchs->sql_limit($start);
-  $phpgw->db->query("select count(*) from sessions");
+  $phpgw->db->query("select count(*) from sessions",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
   $phpgw->templateotal = $phpgw->db->f(0);
@@ -38,13 +38,13 @@
   $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
   $phpgw->template->set_var("sort_loginid",$phpgw->nextmatchs->show_sort_order($sort,"session_lid",$order,
-					 "currentusers.php",lang("LoginID")));
+       					 "currentusers.php",lang("LoginID")));
   $phpgw->template->set_var("sort_ip",$phpgw->nextmatchs->show_sort_order($sort,"session_ip",$order,
-				"currentusers.php",lang("IP")));
+                            "currentusers.php",lang("IP")));
   $phpgw->template->set_var("sort_login_time",$phpgw->nextmatchs->show_sort_order($sort,"session_logintime",$order,
-						"currentusers.php",lang("Login Time")));
+                            "currentusers.php",lang("Login Time")));
   $phpgw->template->set_var("sort_idle",$phpgw->nextmatchs->show_sort_order($sort,"session_dla",$order,
-				  "currentusers.php",lang("idle")));
+                            "currentusers.php",lang("idle")));
   $phpgw->template->set_var("lang_kill",lang("Kill"));
 
   $phpgw->template->parse("out","header");
@@ -56,7 +56,7 @@
      $ordermethod = "order by session_dla asc";
   }
 
-  $phpgw->db->query("select * from sessions $ordermethod limit $limit");
+  $phpgw->db->query("select * from sessions $ordermethod limit $limit",__LINE__,__FILE__);
 
   $i = 0;
   while ($phpgw->db->next_record()) {
@@ -70,9 +70,9 @@
 
      if ($phpgw->db->f("session_id") != $phpgw_info["user"]["sessionid"]) {
         $phpgw->template->set_var("row_kill",'<a href="' . $phpgw->link("killsession.php","ksession="
-		  . $phpgw->db->f("session_id") . "&kill=true\">" . lang("Kill")).'</a>');
+		                        . $phpgw->db->f("session_id") . "&kill=true\">" . lang("Kill")).'</a>');
      } else {
-	$phpgw->template->set_var("row_kill","&nbsp;");
+    	$phpgw->template->set_var("row_kill","&nbsp;");
      }
 
      if ($phpgw->db->num_rows() == 1) {
