@@ -96,6 +96,7 @@ do_delete	filemanager	de	L&ouml;sche
 duration	calendar	de	Dauer
 e-mail	addressbook	de	E-Mail
 e-mail	common	de	E-Mail
+e-mail preferences	common	de	EMail Einstellungen
 edit	filemanager	de	Editieren
 edit	common	de	Editieren
 edit application	admin	de	Anwendung editieren
