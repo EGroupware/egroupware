@@ -14,6 +14,9 @@
         - Merged in patch for filemanager to fix upload in SAFE_MODE
           Thanks s837008
         - Cleaned up mainscreen message section, you can also have a login screen message now.
+        - Merged in update for french
+        - Merged in update for Spanish
+          Thanks gmartine
         
 [0.9.6] - Fix user permissions where not being checked properly.
 

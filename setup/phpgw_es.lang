@@ -174,6 +174,7 @@ home phone	addressbook	es	Tel.Particular
 human resources	common	es	Recursos Humanos
 idle	admin	es	idle
 if applicable	email	es	Si es aplicable
+ignore conflict	calendar	es	Ignorar Conflicto
 image	email	es	Imagen
 imap server type	email	es	Tipo de servidor IMAP
 import lang set	transy	es	Importar set de lenguaje
@@ -286,6 +287,7 @@ priority	common	es	Prioridad
 private	common	es	Privado
 private_files	filemanager	es	Archivos privados
 project description	todo	es	Descripción del proyecto
+re-edit event	calendar	es	Re-Editar Evento
 re-enter password	admin	es	Re-Ingresar contraseña
 re-enter your password	preferences	es	Re-Ingrese su contraseña
 record access	addressbook	es	Acceso al registro
@@ -389,8 +391,8 @@ trouble ticket system	common	es	Sistema de Ticket de problemas
 tu	calendar	es	M
 tue	calendar	es	Mar
 tuesday	common	es	Martes
-undisclosed recipients	email	es	Undisclosed Recipients
-undisclosed sender	email	es	Undisclosed Sender
+undisclosed recipients	email	es	Destinatarios Ocultos
+undisclosed sender	email	es	Remitente Oculto
 update	nntp	es	Actualizar
 updated	common	es	Actualizado
 upload	filemanager	es	Subir
