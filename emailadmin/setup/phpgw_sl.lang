@@ -1,70 +1,70 @@
 add profile	emailadmin	sl	dodaj profil
-admin dn	emailadmin	sl	Upravljalčev dn
-admin password	emailadmin	sl	Upravljalčevo geslo
-admin passwort	emailadmin	sl	Upravljalčevo geslo
-admin username	emailadmin	sl	Upravljalčevo uporabni�ko ime
-advanced options	emailadmin	sl	Napredne nastavitve
-alternate email address	emailadmin	sl	Alternativen enaslov
-cyrus imap server	emailadmin	sl	Cyrus IMAP stre�nik
+admin dn	emailadmin	sl	Oskrbnikov dn
+admin password	emailadmin	sl	Oskrbnikovo geslo
+admin passwort	emailadmin	sl	Oskrbnikovo geslo
+admin username	emailadmin	sl	Oskrbnikovo uporabniško ime
+advanced options	emailadmin	sl	Napredne izbire
+alternate email address	emailadmin	sl	Alternativen E-naslov
+cyrus imap server	emailadmin	sl	Cyrus IMAP strežnik
 cyrus imap server administration	emailadmin	sl	Upravljanje Cyrus IMAP strežnika
 cyrus imap server administratione	mailadmin	sl	Upravljanje Cyrus IMAP stre�nika
 default	emailadmin	sl	privzeto
 deliver extern	emailadmin	sl	zunanja dostava
-do you really want to delete this profile	emailadmin	sl	Ali res �elite izbrisati ta profil?
+do you really want to delete this profile	emailadmin	sl	Ali res želite izbrisati ta profil?
 domainname	emailadmin	sl	ime domene
-edit email settings	emailadmin	sl	uredi nastavitve epo�te
-email account active	emailadmin	sl	nabiralnik epo�te je aktiven
+edit email settings	emailadmin	sl	uredi nastavitve E-pošte
+email account active	emailadmin	sl	nabiralnik E-pošte je aktiven
 email address	emailadmin	sl	enaslov
-enable cyrus imap server administration	emailadmin	sl	omogoči upravljanje Cyrus IMAP stre�nika
-enable sieve	emailadmin	sl	omogoči sita
+enable cyrus imap server administration	emailadmin	sl	omogoči upravljanje Cyrus IMAP strežnika
+enable sieve	emailadmin	sl	omogoči sita (Sieve)
 enter your default mail domain (from: user@domain)	emailadmin	sl	vnesi privzeto domeno (oblika: uporabnik@domena)
 forward also to	emailadmin	sl	posreduj tudi
 forward email's to	emailadmin	sl	posreduj sporočila k
 forward only	emailadmin	sl	samo posreduj
-imap admin password	admin	sl	Geslo upravljalca IMAPa
-imap admin user	admin	sl	sl
+imap admin password	admin	sl	Geslo oskrbnika IMAPa
+imap admin user	admin	sl	Uporabniško ime oskrbnika IMAP-a
 imap c-client version < 2001	emailadmin	sl	IMAP C-klient različica pred 2001
-imap server hostname or ip address	emailadmin	sl	Ime ali IP IMAP stre�nika
-imap server logintyp	emailadmin	sl	Način prijave na IMAP stre�nik
-imap server port	emailadmin	sl	Vrata IMAP stre�nika
-imap/pop3 server name	emailadmin	sl	Ime IMAP/POP3 stre�nika
+imap server hostname or ip address	emailadmin	sl	Ime ali IP IMAP strežnika
+imap server logintyp	emailadmin	sl	Način prijave na IMAP strežnik
+imap server port	emailadmin	sl	Vrata IMAP strežnika
+imap/pop3 server name	emailadmin	sl	Ime IMAP/POP3 strežnika
 in mbyte	emailadmin	sl	v MB
-ldap basedn	emailadmin	sl	Osnovni dn LDAP
-ldap server	emailadmin	sl	LDAP stre�nik
-ldap server accounts dn	emailadmin	sl	DN računov LDAP stre�nika
-ldap server admin dn	emailadmin	sl	DN upravljalcev LDAP stre�nika
-ldap server admin password	emailadmin	sl	Geslo upravljalca LDAP stre�nika
-ldap server hostname or ip address	emailadmin	sl	Ime ali IP LDAP stre�nika
+ldap basedn	emailadmin	sl	Osnovni DN LDAP
+ldap server	emailadmin	sl	LDAP strežnik
+ldap server accounts dn	emailadmin	sl	DN računov LDAP strežnika
+ldap server admin dn	emailadmin	sl	Oskrbnikov DN LDAP strežnika
+ldap server admin password	emailadmin	sl	Geslo oskrbnika LDAP strežnika
+ldap server hostname or ip address	emailadmin	sl	Ime ali IP LDAP strežnika
 ldap settings	emailadmin	sl	LDAP nastavitve
-leave empty for no quota	emailadmin	sl	pusti prazno za brez omejitve
-mail settings	admin	sl	Nastavitve epo�te
+leave empty for no quota	emailadmin	sl	prazno za neomejeno
+mail settings	admin	sl	Nastavitve E-pošte
 name of organisation	emailadmin	sl	ime organizacije
-no alternate email address	emailadmin	sl	ni alternativnega enaslova
-no forwarding email address	emailadmin	sl	ni enaslova za posredovanje
-pop3 server hostname or ip address	emailadmin	sl	Ime ali IP POP3 stre�nika
-pop3 server port	emailadmin	sl	Vrata POP3 stre�nika
+no alternate email address	emailadmin	sl	ni alternativnega E-naslova
+no forwarding email address	emailadmin	sl	ni E-naslova za posredovanje
+pop3 server hostname or ip address	emailadmin	sl	Ime ali IP POP3 stre�žnika
+pop3 server port	emailadmin	sl	Vrata POP3 strežnika
 postfix with ldap	emailadmin	sl	Končnica pri LDAP
-profile list	emailadmin	sl	seznam profilov
+profile list	emailadmin	sl	Seznam profilov
 profile name	emailadmin	sl	ime profila
-qmaildotmode	emailadmin	sl	način qmaildot
-qouta size in mbyte	emailadmin	sl	Omejitev v MB
-quota settings	emailadmin	sl	Nastavitve omejitev
+qmaildotmode	emailadmin	sl	način za qmaildot
+qouta size in mbyte	emailadmin	sl	Kvota v MB
+quota settings	emailadmin	sl	Nastavitvev kvote
 remove	emailadmin	sl	odstrani
-select type of imap/pop3 server	emailadmin	sl	Izberite tip IMAP/POP3 stre�nika
-select type of smtp server	emailadmin	sl	Izberite tip SMTP stre�nika
-sieve server hostname or ip address	emailadmin	sl	IP ali naslov stre�nika za sito
-sieve server port	emailadmin	sl	Vrata stre�nika za sito
-sieve settings	emailadmin	sl	Nastavitve sita
-smtp server name	emailadmin	sl	ime SMTP stre�nika
-smtp-server hostname or ip address	emailadmin	sl	Ime ali IP SMTP stre�nika
-smtp-server port	emailadmin	sl	Vrata SMTP stre�nika
+select type of imap/pop3 server	emailadmin	sl	Izberite tip IMAP/POP3 strežnika
+select type of smtp server	emailadmin	sl	Izberite tip SMTP strežnika
+sieve server hostname or ip address	emailadmin	sl	IP ali naslov strežnika za sito (Sieve)
+sieve server port	emailadmin	sl	Vrata strežnika za sito (Sieve)
+sieve settings	emailadmin	sl	Nastavitve sita (Sieve)
+smtp server name	emailadmin	sl	ime SMTP strežnika
+smtp-server hostname or ip address	emailadmin	sl	Ime ali IP SMTP strežnika
+smtp-server port	emailadmin	sl	Vrata SMTP strežnika
 standard	emailadmin	sl	standarden
-standard imap server	emailadmin	sl	standardni IMAP stre�nik
-standard pop3 server	emailadmin	sl	standardni POP3 stre�nik
-standard smtp-server	emailadmin	sl	standardni SMTP stre�nik
+standard imap server	emailadmin	sl	standardni IMAP strežnik
+standard pop3 server	emailadmin	sl	standardni POP3 strežnik
+standard smtp-server	emailadmin	sl	standardni SMTP strežnik
 use ldap defaults	emailadmin	sl	uporabi privzeto za LDAP
 use smtp auth	emailadmin	sl	Uporabi SMTP avtentikacijo
 use tls authentication	emailadmin	sl	Uporabi TLS avtentikacijo
 use tls encryption	emailadmin	sl	Uporabi TLS enkripcijo
-users can define their own emailaccounts	emailadmin	sl	Uporabniki lahko definirajo lastne epo�tne predale
-virtual mail manager	emailadmin	sl	Virtualni upravljalec epo�te
+users can define their own emailaccounts	emailadmin	sl	Uporabniki lahko določajo lastne E-poštne predale
+virtual mail manager	emailadmin	sl	Virtualni upravljalec E-pošte
