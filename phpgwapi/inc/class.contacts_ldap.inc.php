@@ -543,7 +543,7 @@
 			$ldap_fields['phpgwcontacttypeid']    = $tid;
 			$ldap_fields['phpgwcontactowner']     = $owner;
 			$ldap_fields['phpgwcontactaccess']    = $access;
-			$ldap_fields['phpgwcontactcatid']     = $cat_id;
+			$ldap_fields['phpgwcontactcatid']     = $cat_id ? $cat_id : '0';
 			$ldap_fields['uidnumber']      = $this->nextid;
 			/* $ldap_fields['objectclass'][0] = 'person'; */
 			$ldap_fields['objectclass'][0] = 'organizationalPerson';
