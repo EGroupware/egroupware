@@ -172,8 +172,8 @@
 		}
 
 	if (isset($GLOBALS['phpgw_info']['user']['apps']['notifywindow']) &&
-		 $GLOBALS['phpgw_info']['user']['apps']['notifywindow'])
-   {
+		$GLOBALS['phpgw_info']['user']['apps']['notifywindow'])
+	{
 ?>
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
 	var NotifyWindow;
@@ -212,9 +212,8 @@
 			{
 				$GLOBALS['phpgw']->preferences->add('portal_order',$order++,$p['id']);
 			}
-				
 		}
-		$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();		
+		$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();
 	}
 
 	if(is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
@@ -253,7 +252,7 @@
 		}
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
-	
+
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();
 	$GLOBALS['phpgw']->common->phpgw_footer();
