@@ -49,7 +49,7 @@
   //$extra = 1; // filtering to be done on extra fields
   //"access='$filter'"
 
-  $entries = $this->read($start,$offset,$columns_to_display,$query,$extra,$sort,$order);
+  $entries = $this->read($start,$offset,$columns_to_display,$query,$sort,$order);
 
   $search_filter = $phpgw->nextmatchs->show_tpl("index.php",
                    $start, $this->total_records,
