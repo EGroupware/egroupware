@@ -32,7 +32,7 @@
 	// Squirrelmail <Luke Ehresman> http://www.squirrelmail.org
 	$sep = SEP;
 
-	$uploaddir = $phpgw_info["server"]["temp_dir"] . $sep . $phpgw_info["user"]["sessionid"] . $sep;
+	$uploaddir = $phpgw_info["server"]["temp_dir"] . $sep;
 
 	if ($action == "Load Vcard") {
 		if($uploadedfile == "none" || $uploadedfile == "") {
@@ -40,7 +40,7 @@
 		} else {
 			srand((double)microtime()*1000000);
 			$random_number = rand(100000000,999999999);
-			$newfilename = md5("$uploadedfile, $uploadedfile_name, " . $phpgw_info["user"]["sessionid"]
+			$newfilename = md5("$uploadedfile, $uploadedfile_name, "
 						. time() . getenv("REMOTE_ADDR") . $random_number );
 
 			copy($uploadedfile, $uploaddir . $newfilename);
@@ -58,9 +58,6 @@
 			Header("Location: " . $phpgw->link("/addressbook/", "cd=14"));
 		}
 	}
-
-	if (! file_exists($phpgw_info["server"]["temp_dir"] . $sep . $phpgw_info["user"]["sessionid"]))
-		mkdir($phpgw_info["server"]["temp_dir"] . $sep . $phpgw_info["user"]["sessionid"],0700);
 
 	if ($action == "GetFile"){
 		echo "<B><CENTER>You must select a vcard. (*.vcf)</B></CENTER><BR><BR>";
