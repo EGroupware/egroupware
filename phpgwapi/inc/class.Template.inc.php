@@ -73,11 +73,12 @@
 			$this->set_root($root);
 			$this->set_unknowns($unknowns);
 		}
-		
+
 		function update_css()
 		{
 			if(@is_array($GLOBALS['phpgw_info']['theme']['css']))
 			{
+				$css_string = '';
 				reset($GLOBALS['phpgw_info']['theme']['css']);
 				//$css_string = '<STYLE type="text/css">'."\n";
 				while(list($key,$value) = each($GLOBALS['phpgw_info']['theme']['css']))
@@ -89,7 +90,7 @@
 				$this->set_var('phpgw_css',$css_string);
 			}
 		}
-		
+
 		/* public: setroot(pathname $root)
 		 * root:   new template directory.
 		 */
