@@ -31,22 +31,22 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$templ,$do_get_rows=True)
+		function pre_process(&$cell,&$value,&$templ,&$readonlys)
 		{
 			//echo "<p>nextmatch_widget.pre_process: value = "; _debug_array($value);
-			// save selected tab in persistent extension_data to use it in post_process
+			// save values in persistent extension_data to be able use it in post_process
 			$GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']] = $value;
 
-			if ($do_get_rows)
+			list($app,$class,$method) = explode('.',$value['get_rows']);
+			$obj = CreateObject($app.'.'.$class);
+			$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+			if ($value['start'] > $total)
 			{
-				$value['rows'] = ExecMethod($value['get_rows'],$value);
-				if ($value['start'] > $value['rows'][0])
-				{
-					$value['start'] = 0;
-					$value['rows'] = ExecMethod($value['get_rows'],$value);
-				}
-				$GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']]['total'] = $value['rows'][0];
+				$value['start'] = 0;
+				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			}
+			$GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']]['total'] = $total;
+
 			if ($cell['size'])
 			{
 				$value['template'] = $cell['size'];
@@ -64,7 +64,6 @@
 			{
 				$nextmatch->disable_cells('filter2');
 			}
-			$total = $value['rows'][0];
 			$start = $value['start'];
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			$end   = $start+$max > $total ? $total : $start+$max;
@@ -87,8 +86,6 @@
 			//echo "<p>nextmatch_widget.post_process: value = "; _debug_array($value);
 
 			$old_value = $GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']];
-
-			//$this->pre_process($cell,$value,$templ);
 
 			list($value['cat_id']) = $value['cat_id'];
 			list($value['filter']) = $value['filter'];

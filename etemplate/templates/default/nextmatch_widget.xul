@@ -14,7 +14,7 @@
         <button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
         <button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
         <description value="showing" no_lang="1" align="right" id="range"/>
-        <description value="of" no_lang="1" id="rows[0]"/>
+        <description value="of" no_lang="1" id="total"/>
         <button image="right.gif" ro_image="right-grey.gif" label="Right" id="right" statustext="go to the next page of entries"/>
         <button image="last.gif" ro_image="last-grey.gif" label="Last" id="last" statustext="go to the last entry"/>
       </row>

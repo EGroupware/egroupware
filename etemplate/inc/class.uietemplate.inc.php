@@ -364,7 +364,7 @@
 			if (!$this->types[$cell['type']] &&
 			    (isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)))
 			{
-				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,$this);
+				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,$this,$readonlys[$name]);
 				if (strstr($name,'|'))
 				{
 					$content = $this->complete_array_merge($content,$value);

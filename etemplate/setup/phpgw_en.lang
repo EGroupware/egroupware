@@ -80,6 +80,7 @@ embeded css styles, eg. '.red { background: red; }' (note the '.' before the cla
 enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
+entries	etemplate	en	entries
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%s' !!!	etemplate	en	Error: webserver is not allowed to write into '%s' !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
@@ -152,6 +153,7 @@ note	etemplate	en	Note
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
+of	etemplate	en	of
 only an other version found !!!	etemplate	en	only an other Version found !!!
 options	etemplate	en	Options
 precision	etemplate	en	Precision
@@ -196,6 +198,7 @@ select state	etemplate	en	Select State
 selectbox	etemplate	en	Selectbox
 show (no save)	etemplate	en	Show (no save)
 show values	etemplate	en	Show Values
+showing	etemplate	en	showing
 shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
 shows/displays the template for testing, does not save it before	etemplate	en	shows/displays the template for testing, does NOT save it before
