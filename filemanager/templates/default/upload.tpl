@@ -1,16 +1,16 @@
 <!-- BEGIN upload_header -->
 <form method="post" action="{form_action}" enctype="multipart/form-data">
 <div>
-<table>
+<table cellspacing="0" cellpadding="2">
 <tbody>
-	<tr bgcolor="{row_tr_color}">
+	<tr bgcolor="#dedede">
 		<td><strong>{lang_file}</strong></td>
 		<td><strong>{lang_comment}</strong></td>
 	</tr>
 <!-- END upload_header -->
 
 <!-- BEGIN row -->
-	<tr bgcolor="{row_tr_color}">
+	<tr >
 	<td><input maxlength="255" name="upload_file[]" type="file"></td>
 	<td><input name="upload_comment[]" type="text"></td>
 	</tr>

@@ -1,25 +1,23 @@
 <!-- BEGIN filemanager_header -->
-<form method="post" action="{form_action}">
-<br/>
-{messages}
-<br/>
+<form name="formfm" method="post" action="{form_action}">
+
 
 {toolbar0}
 <div id="fmMenu">
 {toolbar1}
 </div>
 <div id="fmFileWindow">
-			<table>
+{messages}			<table cellspacing="0" cellpadding="2">
 				<tbody>
 <!-- END filemanager_header -->
 
 <!-- BEGIN column -->
-  <td valign="top">{col_data}&nbsp;</td>
+  <td valign="top" style="padding-left:2px;padding-right:2px;">{col_data}&nbsp;</td>
 <!-- END column -->
 
 <!-- BEGIN row -->
 	<tr bgcolor="{row_tr_color}">
-		<td>{actions}</td>
+		<td style="padding-left:2px;padding-right:2px;">{actions}</td>
 		{columns}
 	</tr>
 <!-- END row -->

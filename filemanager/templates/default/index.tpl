@@ -1,11 +1,11 @@
 <!-- BEGIN index -->
 <table width="100%" border="1" cols="{colspan}">
- <tr>
+ <!--<tr>
   <td align="center" colspan="{colspan}">{error}
   </td>
- </tr>
+ </tr>-->
  <tr>
-  <td align="center" colspan="{colspan}">
+  <td align="center" colspan="{colspan}">{error}
    <form action="{form_action}" method="post">
    <table width="100%" border="1">
     <tr{tr_extras}>

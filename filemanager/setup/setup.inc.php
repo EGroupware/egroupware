@@ -24,6 +24,7 @@
 		'admin',
 		'deleteaccount',
 		'settings',
+		'sidebox_menu',
 		'preferences'
 	);
 
