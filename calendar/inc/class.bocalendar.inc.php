@@ -82,8 +82,8 @@
 			)
 		);
 
-//		var $debug = False;
-		var $debug = True;
+		var $debug = False;
+//		var $debug = True;
 
 		var $so;
 		var $cached_events;
