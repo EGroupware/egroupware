@@ -541,15 +541,15 @@
 			}
 			echo $this->view_event($event);
 
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_file(
+				Array(
+					'form_button'	=> 'form_button_script.tpl'
+				)
+			);
+
 			if($this->bo->owner == $event['owner'])
 			{
-				$p = CreateObject('phpgwapi.Template',$this->template_dir);
-				$p->set_file(
-					Array(
-						'form_button'	=> 'form_button_script.tpl'
-					)
-				);
-
 				if ($this->bo->check_perms(PHPGW_ACL_EDIT))
 				{
 					if($event['recur_type'] != MCAL_RECUR_NONE)
@@ -616,9 +616,7 @@
 				'action_extra_field'	=> ''
 			);
 			$p->set_var($var);
-			echo $p->fp('out','form_button');
-			
-   		echo '</center>';
+			echo $p->fp('out','form_button').'</center>';
 		}
 
 		function edit($params='')
