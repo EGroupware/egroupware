@@ -227,7 +227,6 @@
 			$this->db->next_record();
 
 			$id = $this->db->f(0);
-			echo $id;exit;
 
 			$this->db->query("SELECT id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
