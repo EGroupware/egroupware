@@ -1,6 +1,7 @@
 <?php
 	require_once('class.xmltool.inc.php');
-	class template
+
+	class xslttemplates
 	{
 		var $rootdir = '';
 		var $prev_rootdir = '';
@@ -16,7 +17,7 @@
 		var $xmlvars = Array();
 		var $xmldata = '';
 		
-		function template($root = '.')
+		function xslttemplates($root = '.')
 		{
 			if(@isset($GLOBALS['phpgw_info']['flags']['printview']) && $GLOBALS['phpgw_info']['flags']['printview'] == True)
 			{
@@ -24,7 +25,7 @@
 			}
 			$this->set_root($root);
 		}
-	
+
 		function set_root($rootdir)
 		{
 			if (!is_dir($rootdir))
@@ -151,7 +152,7 @@
 				$this->xsldata .= '<!ENTITY nbsp "&#160;">'."\n";
 				$this->xsldata .= ']>'."\n";
 				$this->xsldata .= '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'."\n";
-//				$this->xsldata .= '<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" doctype-public="-//W3C/DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" standalone="yes" media-type="text/html"/>'."\n";
+				$this->xsldata .= '<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" doctype-public="-//W3C/DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" standalone="yes" media-type="text/html"/>'."\n";
 				$this->xsldata .= '<xsl:template match="/">'."\n";
 				$this->xsldata .= "\t".'<xsl:apply-templates select="PHPGW"/>'."\n";
 				$this->xsldata .= '</xsl:template>'."\n";
