@@ -16,8 +16,6 @@ TODO:
 	
 -edit / add
 	add accessories functionality
-	add prize functionality
-	add location functionality
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
 	use eTemplates input validation
 	if only one cat is present --> chose it (eTemplate patch sent!)
@@ -26,3 +24,9 @@ TODO:
 
 ----
 if basics are working --> make it scheudable (meeting with ralf)
+
+
+Long Term todo's:
+---------------------------
+add prize functionality
+add location functionality
