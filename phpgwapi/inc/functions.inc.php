@@ -33,7 +33,7 @@
 	 @function CreateObject
 	 @abstract Load a class and include the class file if not done so already.
 	 @discussion Author: mdean, milosch (thanks to jengo and ralf)<br>
-	 This function is used to create an instance of a class,  
+	 This function is used to create an instance of a class,
 	 and if the class file has not been included it will do so. <br>
 	 Syntax: CreateObject('app.class', 'constructor_params'); <br>
 	 Example1: $phpgw->acl = CreateObject('phpgwapi.acl');
@@ -59,7 +59,7 @@
 		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 		{
-			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;   
+			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
 			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
 		if ($p1 == '_UNDEF_' && $p1 != 1)
@@ -94,7 +94,7 @@
 	 @function ExecObject
 	 @abstract Execute a function, and load a class and include the class file if not done so already.
 	 @discussion Author: seek3r<br>
-	 This function is used to create an instance of a class,  
+	 This function is used to create an instance of a class,
 	 and if the class file has not been included it will do so. <br>
 	 Syntax: ExecObject('app.class', 'constructor_params'); <br>
 	 Example1: ExecObject('phpgwapi.acl.read');
@@ -106,7 +106,7 @@
 	function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 	{
 		/* Need to make sure this is working against a single dimensional object */
-		$partscount = substr_count($method, '.');
+		$partscount = count(explode('.',$method)) - 1;
 		if ($partscount == 2)
 		{
 			list($appname,$classname,$functionname) = explode(".", $method);
@@ -159,7 +159,8 @@
 				}
 			}
 			unset($GLOBALS['methodparts']);
-			eval ('$isobject = is_object('.$parentobject.'->'.$classname.');');
+			$code = '$isobject = is_object('.$parentobject.'->'.$classname.');';
+			eval ($code);
 			if (!$isobject)
 			{
 				if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
