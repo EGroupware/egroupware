@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  if ($confirm) {
+  if ($confirm || ! $account_id) {
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
@@ -21,12 +21,12 @@
   include("../header.inc.php");
   // Make sure they are not attempting to delete there own account.
   // If they are, they should not reach this point anyway.
-  if ($phpgw_info["user"]["con"] == $con) {
+  if ($phpgw_info["user"]["account_id"] == $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));
      exit;
   }
 
-  if (($con) && (! $confirm)) {
+  if (($account_id) && (! $confirm)) {
      ?>
      <center>
       <table border=0 with=65%>
@@ -45,7 +45,7 @@
            <a href="<?php echo $phpgw->link("accounts.php") . "\">" . lang("No"); ?></a>
          </td>
          <td>
-           <a href="<?php echo $phpgw->link("deleteaccount.php","con=$con&confirm=true") . "\">" . lang("Yes"); ?></a>
+           <a href="<?php echo $phpgw->link("deleteaccount.php","account_id=$account_id&confirm=true") . "\">" . lang("Yes"); ?></a>
          </td>
        </tr>
       </table>
@@ -55,7 +55,7 @@
   }
 
   if ($confirm) {
-     $phpgw->db->query("select loginid from accounts where con=$con");
+     $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
      $phpgw->db->next_record();
      $lid = $phpgw->db->f(0);
 
@@ -82,7 +82,7 @@
      $phpgw->db->query("delete from preferences where owner='$lid'");
      $phpgw->db->query("delete from todo where todo_owner='$lid'");
      $phpgw->db->query("delete from addressbook where ab_owner='$lid'");
-     $phpgw->db->query("delete from accounts where loginid='$lid'");
+     $phpgw->db->query("delete from accounts where account_lid='$lid'");
      //$phpgw->db->query("delete from users_headlines where owner='$lid'");
      //$phpgw->db->query("delete from profiles where owner='$lid'");
 

@@ -17,7 +17,7 @@
   $phpgw_info["flags"]["disable_message_class"] = True;
   $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
-  if (! $con)
+  if (! $account_id)
      Header("Location: " . $phpgw->link("accounts.php"));
 
   function change_owner($app,$table,$field,$new,$old)
@@ -30,9 +30,9 @@
   }
 
   if ($submit) {
-    $phpgw->db->query("select loginid from accounts where con=$con");
+    $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
     $phpgw->db->next_record();
-    $lid = $phpgw->db->f("loginid");
+    $lid = $phpgw->db->f("account_lid");
 
     if ($n_passwd || $n_passwd_2) {
       if ($n_passwd != $n_passwd_2){
@@ -44,7 +44,7 @@
     } 
 
     if ($lid != $n_loginid) {
-      $phpgw->db->query("select loginid from accounts where loginid='$n_loginid'");
+      $phpgw->db->query("select account_lid from accounts where account_lid='$n_loginid'");
       if ($phpgw->db->num_rows() != 0) {
         $error .= "<br>" . lang("That loginid has already been taken");
       }
@@ -56,10 +56,10 @@
     if (! $error) {
       $phpgw->db->lock(array('accounts','preferences','sessions'));
 	    if ($n_passwd) {
-        $phpgw->db->query("update accounts set passwd='" . md5($n_passwd) . "', "
-		      . "lastpasswd_change='" . time() . "' where loginid='" . "$lid'");
+        $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "', "
+		              . "account_lastpwd_change='" . time() . "' where account_lid='" . "$lid'");
         $phpgw->db->query("update sessions set passwd='" . addslashes($n_passwd)
-          . "' where loginid='$lid'");
+                        . "' where loginid='$lid'");
       }
       while ($permission = each($new_permissions)) {
         if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
@@ -99,12 +99,12 @@
         }
       }
 
-      $phpgw->db->query("update accounts set firstname='" . addslashes($n_firstname) . "',"
-			  . " lastname='" . addslashes($n_lastname) . "', permissions='"
-	  		. $phpgw->accounts->add_app("",True) . "', status='"
-			  . "$n_account_status', groups='"
-			  . $phpgw->accounts->array_to_string("none",$n_groups)
-			  . "' where loginid='$n_loginid'");
+      $phpgw->db->query("update accounts set account_firstname='" . addslashes($n_firstname) . "',"
+			       . " account_lastname='" . addslashes($n_lastname) . "', account_permissions='"
+	  		       . $phpgw->accounts->add_app("",True) . "', account_status='"
+			       . "$n_account_status', account_groups='"
+  			       . $phpgw->accounts->array_to_string("none",$n_groups)
+			       . "' where account_lid='$n_loginid'");
 
         $phpgw->db->unlock();
         Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
@@ -115,16 +115,16 @@
   $phpgw->common->header();
   $phpgw->common->navbar();
   
-  $phpgw->db->query("select loginid from accounts where con=$con");
+  $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
   $phpgw->db->next_record();
-  $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("loginid"));
+  $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("account_lid"));
 
-  $phpgw->db->query("select * from accounts where con=$con");
+  $phpgw->db->query("select * from accounts where account_id=$account_id");
   $phpgw->db->next_record();
-  $account_status = $phpgw->db->f("status");
+  $account_status = $phpgw->db->f("account_status");
 ?>
     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
-      <input type="hidden" name="con" value="<? echo $con; ?>">
+      <input type="hidden" name="account_id" value="<? echo $account_id; ?>">
 <?php
   if ($error) {
     echo "<center>" . lang("Error") . ":$error</center>";
@@ -134,21 +134,21 @@
        <table border=0 width=65%>
         <tr>
          <td><?php echo lang("LoginID"); ?></td>
-         <td><input name="n_loginid" value="<? echo $phpgw->db->f("loginid"); ?>"></td>
+         <td><input name="n_loginid" value="<? echo $phpgw->db->f("account_lid"); ?>"></td>
         </tr>
         <tr>
          <td><?php echo lang("First Name"); ?></td>
-         <td><input name="n_firstname" value="<?echo $phpgw->db->f("firstname"); ?>"></td>
+         <td><input name="n_firstname" value="<?echo $phpgw->db->f("account_firstname"); ?>"></td>
         </tr>
         <tr>
          <td><?php echo lang("Last Name"); ?></td>
-         <td><input name="n_lastname" value="<? echo $phpgw->db->f("lastname"); ?>"></td>
+         <td><input name="n_lastname" value="<? echo $phpgw->db->f("account_lastname"); ?>"></td>
         </tr>
         <tr>
            <td><?php echo lang("Groups"); ?></td>
            <td><select name="n_groups[]" multiple size="5">
 <?php
-            $user_groups = $phpgw->accounts->read_group_names($phpgw->db->f("loginid"));
+            $user_groups = $phpgw->accounts->read_group_names($phpgw->db->f("account_lid"));
 
             $phpgw->db->query("select * from groups");
             while ($phpgw->db->next_record()) {

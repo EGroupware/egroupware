@@ -33,7 +33,7 @@
      if (count($new_permissions) == 0)
         $error .= "<br>" . lang("You must add at least 1 permission to this account");
 
-     $phpgw->db->query("select loginid from accounts where loginid='$n_loginid'");
+     $phpgw->db->query("select account_lid from accounts where account_lid='$n_loginid'");
      $phpgw->db->next_record();
      if ($phpgw->db->f("loginid"))
         $error .= "<br>" . lang("That loginid has already been taken");
@@ -68,11 +68,11 @@
         if ($n_anonymous && ! $n_admin)
 	   $phpgwpermissions->add("anonymous");
 
-          $sql = "insert into accounts (loginid,passwd,firstname,lastname,"
-	       . "permissions,groups,status,lastpasswd_change) values ('$n_loginid'"
-	       . ",'" . md5($n_passwd) . "','" . addslashes($n_firstname) . "','"
-	       . addslashes($n_lastname) . "','" . $phpgw->accounts->add_app("",True)
-	       . "','" . $phpgw->accounts->array_to_string("none",$n_groups) . "','A',0)";
+          $sql = "insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,"
+ 	          . "account_permissions,account_groups,account_status,account_lastpwd_change) values ('$n_loginid'"
+	          . ",'" . md5($n_passwd) . "','" . addslashes($n_firstname) . "','"
+	          . addslashes($n_lastname) . "','" . $phpgw->accounts->add_app("",True)
+	          . "','" . $phpgw->accounts->array_to_string("none",$n_groups) . "','A',0)";
 
           $phpgw->db->query($sql);
           $phpgw->db->unlock();

@@ -27,13 +27,13 @@
   if ($order)
       $ordermethod = "order by $order $sort";
    else
-      $ordermethod = "order by lastname,firstname,loginid asc";
+      $ordermethod = "order by account_lastname,account_firstname,account_lid asc";
 
   if (! $sort)
      $sort = "desc";
 
   if ($query) {
-     $querymethod = " where firstname like '%$query%' OR lastname like '%$query%' OR loginid "
+     $querymethod = " where account_firstname like '%$query%' OR account_lastname like '%$query%' OR account_lid "
 		        . "like '%$query%' ";
   }
 
@@ -50,8 +50,8 @@
   $t->set_var("lang_user_accounts",lang("user accounts"));
   $t->set_var("right_next_matchs",$phpgw->nextmatchs->right("accounts.php",$start,$total));
 
-  $t->set_var("lang_lastname",$phpgw->nextmatchs->show_sort_order($sort,"lastname",$order,"accounts.php",lang("last name")));
-  $t->set_var("lang_firstname",$phpgw->nextmatchs->show_sort_order($sort,"firstname",$order,"accounts.php",lang("first name")));
+  $t->set_var("lang_lastname",$phpgw->nextmatchs->show_sort_order($sort,"account_lastname",$order,"accounts.php",lang("last name")));
+  $t->set_var("lang_firstname",$phpgw->nextmatchs->show_sort_order($sort,"account_firstname",$order,"accounts.php",lang("first name")));
 
   $t->set_var("lang_edit",lang("Edit"));
   $t->set_var("lang_delete",lang("Delete"));
@@ -59,33 +59,33 @@
 
   $t->parse("out","header");
 
-  $phpgw->db->query("select con,firstname,lastname,loginid from accounts $querymethod "
+  $phpgw->db->query("select account_id,account_firstname,account_lastname,account_lid from accounts $querymethod "
 	             . "$ordermethod limit $limit");
 
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var("tr_color",$tr_color);
 
-    $lastname  = $phpgw->db->f("lastname");
-    $firstname = $phpgw->db->f("firstname");
+    $lastname  = $phpgw->db->f("account_lastname");
+    $firstname = $phpgw->db->f("account_firstname");
 
     if (! $lastname)  $lastname  = '&nbsp;';
     if (! $firstname) $firstname = '&nbsp;';
 
     $t->set_var("row_firstname",$firstname);
     $t->set_var("row_lastname",$lastname);
-    $t->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","con="
-				  . $phpgw->db->f("con")) . '"> ' . lang("Edit") . ' </a>');
+    $t->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","account_id="
+				     . $phpgw->db->f("account_id")) . '"> ' . lang("Edit") . ' </a>');
 
     if ($phpgw_info["user"]["userid"] != $phpgw->db->f("loginid")) {
-       $t->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'con='
-						. $phpgw->db->f("con")) . '"> '.lang("Delete").' </a>');
+       $t->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'account_id='
+						. $phpgw->db->f("account_id")) . '"> '.lang("Delete").' </a>');
     } else {
        $t->set_var("row_delete","&nbsp;");
     }
 
-    $t->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "con="
-				 . $phpgw->db->f("con")) . '"> ' . lang("View") . ' </a>');
+    $t->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
+				     . $phpgw->db->f("account_id")) . '"> ' . lang("View") . ' </a>');
 
     if ($phpgw->db->num_rows() == 1) {
        $t->set_var("output","");
