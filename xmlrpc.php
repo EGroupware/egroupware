@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
 	* eGroupWare xmlrpc server                                                 *
-	* http://www.phpgroupware.org                                              *
+	* http://www.egroupware.org                                                *
 	* This file written by Miles Lott <milos@groupwhere.org>                   *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -34,8 +34,8 @@
 	if(ereg('Basic',$headers['Authorization']))
 	{
 		$tmp = $headers['Authorization'];
-		$tmp = ereg_replace(' ','',$tmp);
-		$tmp = ereg_replace('Basic','',$tmp);
+		$tmp = str_replace(' ','',$tmp);
+		$tmp = str_replace('Basic','',$tmp);
 		$auth = base64_decode(trim($tmp));
 		list($sessionid,$kp3) = split(':',$auth);
 

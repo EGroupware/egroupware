@@ -1,8 +1,8 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - SOAP Server                                               *
-	* http://www.phpgroupware.org                                              *
-	* Written by Miles Lott <milosch@phpgroupware.org>                         *
+	* eGroupWare - SOAP Server                                                 *
+	* http://www.egroupware.org                                                *
+	* Written by Miles Lott <milos@groupwhere.org>                             *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -12,27 +12,27 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info'] = array();
+	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'disable_Template_class' => True,
 		'currentapp' => 'login',
 		'noheader'   => True,
 		'disable_Template_class' => True
 	);
-
 	include('./header.inc.php');
 
 	$GLOBALS['server'] = CreateObject('phpgwapi.soap_server');
 	/* _debug_array($GLOBALS['server']);exit; */
 	/* include(PHPGW_API_INC . '/soaplib.soapinterop.php'); */
 
+	/* Note: this command only available under Apache */
 	$headers = getallheaders();
 
 	if(ereg('Basic',$headers['Authorization']))
 	{
 		$tmp = $headers['Authorization'];
-		$tmp = ereg_replace(' ','',$tmp);
-		$tmp = ereg_replace('Basic','',$tmp);
+		$tmp = str_replace(' ','',$tmp);
+		$tmp = str_replace('Basic','',$tmp);
 		$auth = base64_decode(trim($tmp));
 		list($sessionid,$kp3) = split(':',$auth);
 
