@@ -102,6 +102,16 @@
    </tr>
 
    <tr class="row_off">
+    <td>{lang_Enter_your_HTTP_proxy_server_username}:</td>
+    <td><input name="newsettings[httpproxy_server_username]" value="{value_httpproxy_server_username}"></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Enter_your_HTTP_proxy_server_password}:</td>
+    <td><input name="newsettings[httpproxy_port_password]" value="{value_httpproxy_port_password}"></td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_Enter_the_site_username_for_peer_servers}.</td>
     <td><input name="newsettings[site_username]" value="{value_site_username}"></td>
    </tr>
