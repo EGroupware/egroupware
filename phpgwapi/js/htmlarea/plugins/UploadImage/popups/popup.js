@@ -4,13 +4,15 @@ function __dlg_onclose() {
 	}
 };
 
-function __dlg_init() {
+function __dlg_init() 
+{
 
 	if (!document.all) {
 		// init dialogArguments, as IE gets it
 		window.dialogArguments = opener.Dialog._arguments;
 		window.sizeToContent();
-		window.sizeToContent();	// for reasons beyond understanding,
+		window.sizeToContent();	
+		// for reasons beyond understanding,
 					// only if we call it twice we get the
 					// correct size.
 		window.addEventListener("unload", __dlg_onclose, true);
@@ -33,16 +35,20 @@ function __dlg_init() {
 		window.innerHeight = body.offsetHeight;
 		window.innerWidth = body.offsetWidth;
 	} else {
-		var body = document.body;
-		window.dialogHeight = body.offsetHeight + 50 + "px";
-		window.dialogWidth = body.offsetWidth + "px";
+		//var body = document.body;
+		window.resizeBy(500, 350)
+		//window.dialogHeight = body.offsetHeight + 50 + "px";
+		//window.dialogWidth = body.offsetWidth + "px";
 	}
 };
 
 // closes the dialog and passes the return info upper.
 function __dlg_close(val) {
-	if (document.all) {	// IE
-		window.returnValue = val;
+	if (document.all) 
+	{	// IE
+		//alert(val);
+		opener.Dialog._return(val);
+		//window.returnValue = val;
 	} else {
 		opener.Dialog._return(val);
 	}

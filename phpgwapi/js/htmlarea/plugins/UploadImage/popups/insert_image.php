@@ -59,8 +59,6 @@
 	  <script type="text/javascript">
 		 var preview_window = null;
 
-
-
 		 function Init() {
 
 			   __dlg_init();
