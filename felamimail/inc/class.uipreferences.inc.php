@@ -188,7 +188,7 @@
 				$this->selectedFolder, 
 				'folderList',
 				'mailboxName',
-				'IMAP Server', 
+				lang('IMAP Server'), 
 				$mailPrefs['username'].'@'.$mailPrefs['imapServerAddress']
 			);
 			$this->t->set_var('folder_tree',$folderTree);
