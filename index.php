@@ -109,11 +109,11 @@
 
   	$mailbox_status = $phpgw->msg->status($mbox,"{" . $phpgw_info["server"]["mail_server"] . ":" . $phpgw_info["server"]["mail_port"] . "}INBOX",SA_UNSEEN);
     if ($mailbox_status->unseen == 1) {
-      echo "<tr><td><A href=\"" . $phpgw->link("email/") . "\"> "
+      echo "<tr><td><A href=\"" . $phpgw->link("email/index.php") . "\"> "
 	 . lang("You have 1 new message!") . "</A></td></tr>\n";
     }
     if ($mailbox_status->unseen > 1) {
-      echo "<tr><td><A href=\"" . $phpgw->link("email/") . "\"> "
+      echo "<tr><td><A href=\"" . $phpgw->link("email/index.php") . "\"> "
 	 . lang("You have x new messages!",$mailbox_status->unseen) . "</A></td></tr>";
     }
     echo "<!-- Mailox info -->\n";
@@ -152,23 +152,11 @@
   if ($phpgw_info["user"]["apps"]["calendar"]
   && $phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"]) {
     echo "<!-- Calendar info -->\n";
-    include($phpgw_info["server"]["server_root"] . "/calendar/inc/functions.inc.php");
-    $repeated_events = read_repeated_events($phpgw_info["user"]["userid"]);
-    $phpgw->db->query("select count(*) from webcal_entry,webcal_entry_user"
-      . " where cal_date='" . $phpgw->common->show_date(time(),"Ymd")
-      . "' and (webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"]
-      . "' and webcal_entry.cal_id = webcal_entry_user.cal_id) and "
-      . "(cal_priority='3')",__LINE__,__FILE__);
-    $phpgw->db->next_record();
-    $check = $phpgw->db->f(0);
-    if ($check == 1) { 
-        $key = "You have 1 high priority event on your calendar today.";
-    }
-    if ($check > 1) {
-      $key = "You have x high priority events on your calendar today.";
-    }
-    if ($check > 0) echo "<tr><td>" . lang($key,$check) . "</td></tr>";
-
+    echo "<table border=\"0\" width=\"70%\" cellspacing=\"0\" cellpadding=\"0\"><tr><td align=\"center\">"
+	. lang(strftime("%B",$phpgw->calendar->today["full"])) . " " .$phpgw->calendar->today["day"] . ", " . $phpgw->calendar->today["year"] ."</tr></td>"
+        . "<tr><td bgcolor=\"".$phpgw_info["theme"]["bg_text"]."\" valign=\"top\">";
+    echo "<table border=\"0\" width=\"100%\" cellspacing=\"1\" cellpadding=\"2\" border=\"0\">"
+        . $phpgw->calendar->print_day_at_a_glance($phpgw->calendar->today)."</td></tr></table></td></tr></table>\n";
     echo "<!-- Calendar info -->\n";
   } 
 

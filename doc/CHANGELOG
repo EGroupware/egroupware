@@ -5,6 +5,7 @@
 		- Fixed a calendar SQL error with stock setups using the demo user.
 		- Fixed a problem with the email folders only reporting back the number of messages
 		  in the INBOX regardless of which folder it is in.
+		- Added calendar day view to home page.
 
 [0.9.3] - Fixed the new user account form not returning the users firstname or last name when an
 	      error is reported.
