@@ -316,7 +316,7 @@
 
      if ($phpgw_info["user"]["permissions"]["headlines"]) {
         include($phpgw_info["server"]["server_root"] . "/headlines/inc/functions.inc.php");
-	headlines_update($phpgw_info["user"]["userid"],$headlines);
+	   headlines_update($phpgw_info["user"]["userid"],$headlines);
      }
 
      $phpgw->db->unlock();
@@ -326,4 +326,4 @@
   }
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
 
-
+?>
