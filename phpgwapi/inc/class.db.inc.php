@@ -281,7 +281,7 @@
 				return False;
 			}
 			// the substring is needed as the string is already in quotes
-			return substr($this->Link_ID->quote($str),1,-1);
+			return $this->Link_ID->addq($str);
 		}
 
 		/**
@@ -969,7 +969,7 @@
 				case 'timestamp':
 					return $this->Link_ID->DBTimeStamp($value);
 			}
-			return $this->Link_ID->quote($value);
+			return $this->Link_ID->qstr($value);
 		}
 
 		/**
