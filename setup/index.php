@@ -397,7 +397,10 @@
 			}
 			if(@strlen($langs_list))
 			{
-				$langs_list = substr($langs_list,0,-2);
+				if(substr($langs_list,0,-2) == ', ')
+				{
+					$langs_list = substr($langs_list,0,-2);
+				}
 			}
 
 			$setup_tpl->set_var('lang_status_img',$completed);
