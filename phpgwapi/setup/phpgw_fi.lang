@@ -27,9 +27,9 @@ acl	common	fi	ACL
 action	common	fi	Toimenpide
 active	common	fi	Aktiivinen
 add	common	fi	Lis‰‰
-add %1 category for	common	fi	Lis‰‰ %1 kategoria kohteelle
-add category	common	fi	Lis‰‰ kategoria
-add sub	common	fi	Lis‰‰ alikategoria
+add %1 category for	common	fi	Lis‰‰ %1 luokkaa kohteelle
+add category	common	fi	Lis‰‰ luokka
+add sub	common	fi	Lis‰‰ aliluokka
 addressbook	common	fi	Osoitekirja
 admin	common	fi	Yll‰pito
 administration	common	fi	Yll‰pito
@@ -91,7 +91,7 @@ calendar	common	fi	Kalenteri
 cambodia	common	fi	KAMPUTSEA
 cameroon	common	fi	KAMERUN
 canada	common	fi	KANADA
-cancel	common	fi	Cancel
+cancel	common	fi	Peruuta
 cape verde	common	fi	CAP VERDE
 categories	common	fi	Luokat
 categories for	common	fi	luokat kohteelle
@@ -157,7 +157,7 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disabled	common	fi	Ei k‰ytˆss‰
 display %s first	jscalendar	fi	N‰yt‰ %s ensimm‰ist‰
 djibouti	common	fi	DJIBOUTI
-do you also want to delete all subcategories ?	common	fi	Haluatko poistaa myˆs alikategoriat?
+do you also want to delete all subcategories ?	common	fi	Haluatko poistaa myˆs aliluokat?
 domain	common	fi	Toimialue
 domain name for mail-address, eg. "%1"	common	fi	s‰hkˆpostiosoitteen toimialue, esim. "%1"
 domestic	common	fi	Kotimainen
@@ -495,7 +495,7 @@ setup	common	fi	Asennus
 setup main menu	common	fi	Asennuksen p‰‰valikko
 seychelles	common	fi	SEYCHELLIT
 show all	common	fi	n‰yt‰ kaikki
-show all categorys	common	fi	N‰yt‰ kaikki kategoriat
+show all categorys	common	fi	N‰yt‰ kaikki luokat
 show menu	common	fi	n‰yt‰ valikko
 show page generation time	common	fi	N‰yt‰ sivun tekemiseen kulunut aika
 show page generation time on the bottom of the page?	common	fi	N‰yt‰ sivun tekemiseen kulunut aika sivun alareunassa?
@@ -605,7 +605,7 @@ wk	jscalendar	fi	vk
 work email	common	fi	tyˆs‰hkˆposti
 written by:	common	fi	Kirjoittanut:
 year	common	fi	Vuosi
-yemen	common	fi	Jemen
+yemen	common	fi	JEMEN
 yes	common	fi	Kyll‰
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	fi	Olet tekstitilassa. K‰yt‰ [<>]-painiketta siirty‰ksesi WYSIWIG-tilaan.
 you are required to change your password during your first login	common	fi	Salasanasi on vaihdettava ensimm‰isen sis‰‰nkirjautumisen yhteydess‰.
@@ -616,7 +616,7 @@ you have not entered a valid date	common	fi	Olet m‰‰ritellyt virheellisen p‰iv‰m
 you have not entered a valid time of day	common	fi	Olet m‰‰ritellyt virheellisen kellonajan
 you have not entered participants	common	fi	Et ole m‰‰ritellyt osallistujia
 you have selected an invalid date	common	fi	Olet valinnut virheellisen p‰iv‰m‰‰r‰n!
-you have selected an invalid main category	common	fi	Olet valinnut virheellisen p‰‰kategorian!
+you have selected an invalid main category	common	fi	Olet valinnut virheellisen p‰‰luokan!
 you have successfully logged out	common	fi	Olet kirjautunut ulos
 you need to add the webserver user '%1' to the group '%2'.	common	fi	Lis‰‰ www-palvelimen k‰ytt‰j‰ '%1' ryhm‰‰n '%2'.
 your message could <b>not</b> be sent!<br>	common	fi	Viesti‰ <b>ei</b> voitu l‰hett‰‰!<br>
