@@ -17,64 +17,56 @@
 	$phpgw_info['flags']['currentapp'] = 'admin';
 	include('../header.inc.php');
 
-	check_code($cd);
+	$admin_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$admin_tpl->set_file(array(
+		'admin' => 'index.tpl',
+	));
+
+	$admin_tpl->set_block('admin','list');
+	$admin_tpl->set_block('admin','app_row');
+	$admin_tpl->set_block('admin','app_row_noicon');
+	$admin_tpl->set_block('admin','link_row');
+	$admin_tpl->set_block('admin','spacer_row');
+
+	$admin_tpl->set_var('title',lang('Administration'));
 
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='')
 	{
-		global $phpgw,$phpgw_info;
-		echo '<table width="75%" border="0" cellspacing="0" cellpadding="0"><tr>';
+		global $phpgw, $phpgw_info, $admin_tpl;
+
+		$admin_tpl->set_var('icon_backcolor',$phpgw_info['theme']['row_off']);
+		$admin_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
+		$admin_tpl->set_var('app_name',lang($name));
+		$admin_tpl->set_var('app_icon',$icon);
 		if ($icon)
 		{
-			echo '<td width="5%"><img src="' . $icon . '" alt="[Icon]" align="middle"></td>';
-			echo '<td><fontsize="+2">' . lang($name) . '</font></td>';
+			$admin_tpl->parse('rows','app_row',True);
 		}
 		else
 		{
-			echo '<td colspan="2"><font size="+2">' . $name . '</font></td>';
-		}
-		echo '</tr>';
-		echo '<tr><td colspan="2">';
+			$admin_tpl->parse('rows','app_row_noicon',True);
+		} 
 	}
+
+	function section_item($pref_link='',$pref_text='')
+	{
+		global $phpgw, $phpgw_info, $admin_tpl;
+
+		$admin_tpl->set_var('pref_link',$pref_link);
+		$admin_tpl->set_var('pref_text',$pref_text);		
+		$admin_tpl->parse('rows','link_row',True);
+	} 
 
 	function section_end()
 	{
-		echo '</td></tr></table>';
+		global $phpgw, $phpgw_info, $admin_tpl;
+
+		$admin_tpl->parse('rows','spacer_row',True);
 	}
 
-	// We only want to list applications that are enabled, even if hidden from navbar, plus the common stuff
-	// (if they can get to the admin page, the admin app is enabled, hence it is shown)
+	$phpgw->common->hook();
+	$admin_tpl->pparse('out','list');
 
-	$phpgw->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled=1 OR app_enabled=2 ORDER BY app_title",__LINE__,__FILE__);
-
-	// Stuff it in an array in the off chance the admin includes need the db
-	while ($phpgw->db->next_record())
-	{
-		$apps[] = $phpgw->db->f('app_name');
-	}
-
-	for ($i =0; $i < sizeof($apps); $i++)
-	{
-		$appname = $apps[$i];
-		$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_admin.inc.php';
-
-		if (file_exists($f))
-		{
-			include($f);
-			echo "<p>\n";
-		}
-	}
-
-	if ($SHOW_INFO > 0)
-	{
-		echo '<p><a href="' . $phpgw->link('/admin/index.php', 'SHOW_INFO=0'). '">' . lang('Hide PHP Information') . '</a>';
-		echo "<hr>\n";
-		phpinfo();
-		echo "<hr>\n";
-	}
-	else
-	{
-		echo '<p><a href="' . $phpgw->link('/admin/index.php', 'SHOW_INFO=1'). '">' . lang('PHP Information') . '</a>';
-	}
 	$phpgw->common->phpgw_footer();
 ?>
