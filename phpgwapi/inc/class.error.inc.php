@@ -37,7 +37,6 @@
 
 		function error($parms)
 		{
-			global $phpgw;
 			if ($parms == '')
 			{
 				return;
@@ -61,17 +60,17 @@
 			$this->ismsg     = $parms['ismsg'];
 			$this->fname     = $fname;
 			$this->line		 = $line;
-			$this->app 		 = $phpgw_info['flags']['currentapp'];
+			$this->app 		 = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
  			if (!$this->fname or !$this->line)
 			{
-				$phpgw->log->error(array(
+				$GLOBALS['phpgw']->log->error(array(
 					'text'=>'W-PGMERR, Programmer failed to pass __FILE__ and/or __LINE__ in next log message',
 					'file'=>__FILE__,'line'=>__LINE__
 				));
 			}
 
-			$phpgw->log->errorstack[] = $this;
+			$GLOBALS['phpgw']->log->errorstack[] = $this;
 			if ($this->severity == 'F')
 			{
 				// This is it...  Don't return
@@ -81,11 +80,11 @@
 				echo "<Center>";
 				echo "<h1>Fatal Error</h1>";
 				echo "<h2>Error Stack</h2>";
-				echo $phpgw->log->astable();
+				echo $GLOBALS['phpgw']->log->astable();
 				echo "</center>";
 				// Commit stack to log
-				$phpgw->log->commit();
-				$phpgw->common->phpgw_exit(True);
+				$GLOBALS['phpgw']->log->commit();
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 		}
 	}

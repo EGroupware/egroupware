@@ -104,14 +104,13 @@
 
 		function commit()
 		{
-			global $phpgw, $phpgw_info;
-			$db = $phpgw->db;
+			$db = $GLOBALS['phpgw']->db;
 //			$db->lock('phpgw_log');
 			$db->query	("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
-						."('". $phpgw->db->to_timestamp(time()
+						."('". $GLOBALS['phpgw']->db->to_timestamp(time()
 )
-						."','".$phpgw->session->account_id
-						."','".$phpgw_info['flags']['currentapp']."'"
+						."','".$GLOBALS['phpgw']->session->account_id
+						."','".$GLOBALS['phpgw_info']['flags']['currentapp']."'"
 						.",'".$this->severity()."'"
 						.")"
 						,__LINE__,__FILE__);
@@ -131,7 +130,7 @@
 							."log_msg_code, log_msg_msg, log_msg_parms, log_msg_file, log_msg_line) values "
 							."(" . $log_id
 							."," . $i
-							.", '" . $phpgw->db->to_timestamp($err->timestamp
+							.", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp
 )
 							."', '". $err->severity . "'"
 							.", '". $err->code . "'"
@@ -167,8 +166,6 @@
 
 		function astable()
 		{
-			global $phpgw;
-
 			$html  = "<center>\n";
 			$html .= "<table width=\"98%\">\n";
 			$html .= "\t<tr bgcolor=\"D3DCFF\">\n";
@@ -197,7 +194,7 @@
 
 				$html .= "\t<tr bgcolor=".'"'.$color.'"'.">\n";
 				$html .= "\t\t<td align=center>".$i."</td>\n";
-				$html .= "\t\t<td>".$phpgw->common->show_date($err->timestamp)."</td>\n";
+				$html .= "\t\t<td>".$GLOBALS['phpgw']->common->show_date($err->timestamp)."</td>\n";
 				$html .= "\t\t<td>".$err->app."&nbsp </td>\n";
 				$html .= "\t\t<td align=center>".$err->severity."</td>\n";
 				$html .= "\t\t<td>".$err->code."</td>\n";
