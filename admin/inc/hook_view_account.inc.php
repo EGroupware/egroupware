@@ -22,4 +22,9 @@
 		'url'         => '/index.php',
 		'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
 	);
+
+	//Do not modify below this line
+//	global $menuData;
+
+//	$GLOBALS['menuData'][] = $data;
 ?>

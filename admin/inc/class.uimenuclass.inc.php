@@ -38,8 +38,8 @@
 		}
 		
 		// $file must be in the following format:
-		// $file = Array(
-		//              'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list')
+		// $file = array(
+		// 	'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list')
 		// );
 		// This allows extra data to be sent along
 		function display_section($_menuData)
@@ -65,7 +65,8 @@
 			$this->t->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 
 			$this->t->set_var('link_done',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
-			$this->t->set_var('lang_done',lang('back'));
+			$this->t->set_var('lang_done',lang('Back'));
+
 			$this->t->set_var('row_on',$this->rowColor[0]);
 
 			$this->t->parse('out','menu_links');
@@ -79,23 +80,21 @@
 			switch ($_hookname)
 			{
 				case 'edit_user':
-					$GLOBALS['menuData'][] = Array
-					(
-						'description'	=> 'userdata',
-						'url'		=> '/index.php',
-						'extradata'	=> 'menuaction=admin.uiaccounts.edit_user'
+					$GLOBALS['menuData'][] = array(
+						'description' => 'User Data',
+						'url'         => '/index.php',
+						'extradata'   => 'menuaction=admin.uiaccounts.edit_user'
 					);
 					break;
 				case 'view_user':
-					$GLOBALS['menuData'][] = Array
-					(
-						'description'	=> 'userdata',
-						'url'		=> '/index.php',
-						'extradata'	=> 'menuaction=admin.uiaccounts.view_user'
+					$GLOBALS['menuData'][] = array(
+						'description' => 'User Data',
+						'url'	        => '/index.php',
+						'extradata'   => 'menuaction=admin.uiaccounts.view_user'
 					);
 					break;
 			}
-			
+
 			$GLOBALS['phpgw']->common->hook($_hookname);
 
 			if (count($GLOBALS['menuData']) > 1) 

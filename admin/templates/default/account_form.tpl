@@ -5,8 +5,10 @@
   <center>
 	<table border="0" width="95%">
 		<tr>
-			{rows}
-			<td>
+			<td valign="top">
+				{rows}
+			</td>
+			<td valign="top">
 
 			   <table border=0 width=100%>
 			    <tr bgcolor="{th_bg}">
@@ -32,9 +34,7 @@
 			 
 			    <tr bgcolor="{tr_color2}">
 			     <td>{lang_groups}</td>
-			     <td>{groups_select}&nbsp;</td>
-			     <td>{lang_file_space}</td>
-			     <td>{account_file_space}{account_file_space_select}</td>
+			     <td colspan="3">{groups_select}&nbsp;</td>
 			    </tr>
 			
 			    <tr bgcolor="{tr_color1}">

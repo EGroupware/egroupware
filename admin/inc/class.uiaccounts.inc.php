@@ -113,6 +113,11 @@
 
 		function list_users($param_cd='')
 		{
+			if ($GLOBALS['phpgw']->acl->check('account_access',1,'admin'))
+			{
+				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/admin/index.php'));
+			}
+
 			if(!$param_cd)
 			{
 				$cd = $param_cd;
@@ -151,10 +156,19 @@
 				'lang_view'		=> lang('view'),
 				'actionurl'		=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user'),
 				'accounts_url'		=> $url,
-				'lang_add'		=> lang('add'),
 				'lang_search'		=> lang('search')
 			);
 			$p->set_var($var);
+
+			if (! $GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
+			{
+				$p->set_var('input_add','<input type="submit" value="' . lang('Add') . '">');
+			}
+
+			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
+			{
+				$p->set_var('input_search',lang('Search') . '&nbsp;<input name="query">');
+			}
 
 			$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query);
 
@@ -165,23 +179,62 @@
 			}
 			else
 			{
+				if (! $GLOBALS['phpgw']->acl->check('account_access',8,'admin'))
+				{
+					$can_view = True;
+				}
+
+				if (! $GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
+				{
+					$can_edit = True;
+				}
+
+				if (! $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
+				{
+					$can_delete = True;
+				}
+
 				while (list($null,$account) = each($account_info))
 				{
 					$this->nextmatchs->template_alternate_row_color($p);
 
-					$var = Array(
-						'row_loginid'	=> $account['account_lid'],
-						'row_firstname'	=> (!$account['account_firstname']?'&nbsp':$account['account_firstname']),
-						'row_lastname'	=> (!$account['account_lastname']?'&nbsp':$account['account_lastname']),
-						'row_edit'	=> $this->row_action('edit','user',$account['account_id']),
-						'row_delete'	=> ($GLOBALS['phpgw_info']['user']['userid'] != $account['account_lid']?$this->row_action('delete','user',$account['account_id']):'&nbsp'),
-						'row_view'	=> $this->row_action('view','user',$account['account_id'])
+					$var = array(
+						'row_loginid'   => $account['account_lid'],
+						'row_firstname' => (!$account['account_firstname']?'&nbsp':$account['account_firstname']),
+						'row_lastname'  => (!$account['account_lastname']?'&nbsp':$account['account_lastname'])
 					);
 					$p->set_var($var);
+
+					if ($can_edit)
+					{
+						$p->set_var('row_edit',$this->row_action('edit','user',$account['account_id']));
+					}
+					else
+					{
+						$p->set_var('row_edit','&nbsp;');
+					}
+
+					if ($can_delete)
+					{
+						$p->set_var('row_delete',($GLOBALS['phpgw_info']['user']['userid'] != $account['account_lid']?$this->row_action('delete','user',$account['account_id']):'&nbsp'));
+					}
+					else
+					{
+						$p->set_var('row_delete','&nbsp;');
+					}
+
+					if ($can_view)
+					{
+						$p->set_var('row_view',$this->row_action('view','user',$account['account_id']));
+					}
+					else
+					{
+						$p->set_var('row_view','&nbsp;');
+					}
 					$p->parse('rows','row',True);
 				}
 			}		// End else
-			$p->pparse('out','list');
+			$p->pfp('out','list');
 		}
 
 		function add_group()
@@ -197,7 +250,14 @@
 
 		function add_user()
 		{
-			$this->create_edit_user(0);
+			if ($GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
+			{
+				$this->list_users();
+			}
+			else
+			{
+				$this->create_edit_user(0);
+			}
 		}
 
 		function delete_group()
@@ -276,11 +336,10 @@
 
 		function delete_user()
 		{
-
-			if($GLOBALS['phpgw_info']['user']['account_id'] == $GLOBALS['HTTP_GET_VARS']['account_id'])
+			if ($GLOBALS['phpgw']->acl->check('account_access',32,'admin') || $GLOBALS['phpgw_info']['user']['account_id'] == $GLOBALS['HTTP_GET_VARS']['account_id'])
 			{
-				Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$this->list_users();
+				return False;
 			}
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -348,6 +407,12 @@
 
 		function edit_user($cd='',$account_id='')
 		{
+			if ($GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
+			{
+				$this->list_users();
+				return False;
+			}
+
 			$cdid = $cd;
 			settype($cd,'integer');
 			$cd = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:intval($cdid));
@@ -358,9 +423,10 @@
 			
 			// todo
 			// not needed if i use the same file for new users too
-			if (!$account_id)
+			if (! $account_id)
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
+				$this->list_users();
+				return False;
 			}
 			else
 			{
@@ -370,9 +436,10 @@
 
 		function view_user()
 		{
-			if (!$GLOBALS['HTTP_GET_VARS']['account_id'])
+			if ($GLOBALS['phpgw']->acl->check('account_access',8,'admin') || ! $GLOBALS['HTTP_GET_VARS']['account_id'])
 			{
-				Header('Location: ' . $phpgw->link('/index.php','menuaction=admin.uiaccounts.list_users'));
+				$this->list_users();
+				return False;
 			}
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);

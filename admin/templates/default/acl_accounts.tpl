@@ -1,9 +1,11 @@
 <!-- BEGIN list -->
-<p>
+<b>{lang_header}</b>
+<hr><p>
+
  <table border="0" width="70%" align="center">
   <tr>
    <td align="left">{left_next_matchs}</td>
-   <td align="center">{lang_user_accounts}</td>
+   <td width="95%" align="center">&nbsp;</td>
    <td align="right">{right_next_matchs}</td>
   </tr>
  </table>
@@ -14,9 +16,7 @@
     <td>{lang_loginid}</td>
     <td>{lang_lastname}</td>
     <td>{lang_firstname}</td>
-    <td>{lang_edit}</td>
-    <td>{lang_delete}</td>
-    <td>{lang_view}</td>
+    <td>{lang_access}</td>
    </tr>
 
    {rows}
@@ -27,13 +27,9 @@
  <form method="POST" action="{actionurl}">
   <table border="0" width="70%" align="center">
    <tr>
-    <td align="left">
-     {input_add}
-     </form>
-    </td>
     <td align="right">
      <form method="POST" action="{accounts_url}">
-      {input_search}
+      <input name="query" value="{lang_search}">
      </form>
     </td>
    </tr>
@@ -46,9 +42,7 @@
     <td>{row_loginid}</td>
     <td>{row_lastname}</td>
     <td>{row_firstname}</td>
-    <td width="5%">{row_edit}</td>
-    <td width="5%">{row_delete}</td>
-    <td width="5%">{row_view}</td>
+    <td width="5%">{row_access}</td>
    </tr>
 <!-- END row -->
 
