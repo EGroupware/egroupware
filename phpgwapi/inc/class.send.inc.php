@@ -37,74 +37,99 @@ class send {
       $this->err["desc"] = " ";
     }
 
-    function msg($service, $to, $subject, $body, $msgtype="", $cc="", $bcc="", $from="", $sender='') {
-      global $phpgw_info, $phpgw, $attach_sig;
-      if ($from ==""){ $from = $phpgw_info["user"]["fullname"]." <".$phpgw_info["user"]["preferences"]["email"]["address"].">"; }
-      if ($sender ==""){ $sender = $phpgw_info["user"]["fullname"]." <".$phpgw_info["user"]["preferences"]["email"]["address"].">"; }
+	function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='')
+	{
+		global $phpgw_info, $phpgw, $attach_sig;
+		if ($from == '')
+      {
+      	$from = $phpgw_info['user']['fullname'].' <'.$phpgw_info['user']['preferences']['email']['address'].'>';
+      }
+      if ($sender == '')
+      {
+      	$sender = $phpgw_info['user']['fullname'].' <'.$phpgw_info['user']['preferences']['email']['address'].'>';
+      }
 
-      if ($service == "email") {
-          $now = getdate();
-          $header  = "Date: " . gmdate("D, d M Y H:i:s") . " +0000\n";
-          $header .= "From: ".$from."\n";
-          if($from != $sender) {
-          	$header .= "Sender: ".$sender."\n";
-          }
-          $header .= "Reply-To: ".$phpgw_info["user"]["preferences"]["email"]["address"]."\n";
-          $header .= "To: $to\n";
-          if (!empty($cc)) {
-            $header .= "Cc: $cc\n";
-          }
-          if (!empty($bcc)) {
-            $header .= "Bcc: $bcc\n";
-          }
-          if (!empty($msgtype)) {
-            $header .= "X-phpGW-Type: $msgtype\n";
-          }
-          $header .= "X-Mailer: phpGroupWare (http://www.phpgroupware.org)\n";
+		if ($service == "email")
+		{
+			$now = getdate();
+			$header  = 'Date: '.gmdate('D, d M Y H:i:s').' +0000'."\n";
+			$header .= 'From: '.$from."\n";
+			if($from != $sender)
+			{
+				$header .= 'Sender: '.$sender."\n";
+			}
+			$header .= 'Reply-To: '.$phpgw_info['user']['preferences']['email']['address']."\n";
+			$header .= 'To: '.$to."\n";
+			if (!empty($cc))
+			{
+				$header .= 'Cc: '.$cc."\n";
+			}
+			if (!empty($bcc))
+			{
+				$header .= 'Bcc: '.$bcc."\n";
+			}
+			if (!empty($msgtype))
+			{
+				$header .= 'X-phpGW-Type: '.$msgtype."\n";
+			}
+			$header .= 'X-Mailer: phpGroupWare (http://www.phpgroupware.org)'."\n";
 
-          if ($phpgw_info["user"]["preferences"]["email"]["email_sig"] && $attach_sig) {
-             $body .= "\n-----\n" . $phpgw_info["user"]["preferences"]["email"]["email_sig"];
-          }
+			if ($phpgw_info['user']['preferences']['email']['email_sig'] && $attach_sig)
+			{
+				$body .= "\n-----\n".$phpgw_info['user']['preferences']['email']['email_sig'];
+			}
 
-          if (ereg("Message-Boundary", $body)) 
-          {
-            $header .= "Subject: " . stripslashes($subject) . "\n"
-                    . "MIME-Version: 1.0\n"
-                    . "Content-Type: multipart/mixed;\n"
-                    . " boundary=\"Message-Boundary\"\n\n"
-                    . "--Message-Boundary\n"
-                    . "Content-type: text/plain; charset=US-ASCII\n";
+			if (ereg('Message-Boundary', $body)) 
+			{
+				$header .= 'Subject: ' . stripslashes($subject) . "\n"
+					. 'MIME-Version: 1.0'."\n"
+					. 'Content-Type: multipart/mixed;'."\n"
+					. ' boundary="Message-Boundary"'."\n\n"
+					. '--Message-Boundary'."\n"
+					. 'Content-type: text/plain; charset=US-ASCII'."\n";
 //            if (!empty($msgtype)) {
 //              $header .= "Content-type: text/plain; phpgw-type=".$msgtype."\n";
 //            }
 
-            $header .= "Content-Disposition: inline\n"
-                    . "Content-transfer-encoding: 7BIT\n\n"
-                    . $body;
-            $body = "";
-          } else {
-            $header .= "Subject: " . stripslashes($subject) . "\n"
-                    . "MIME-version: 1.0\n"
-                    . "Content-type: text/plain; charset=\"".lang("charset")."\"\n";
-            if (!empty($msgtype)) {
-              $header .= "Content-type: text/plain; phpgw-type=".$msgtype."\n";
-            }
-            $header .= "Content-Disposition: inline\n"
-                    . "Content-description: Mail message body\n";
-          }
-          if ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"] == "imap" && $phpgw_info["user"]["apps"]["email"] && is_object($phpgw->msg)){
-            $stream = $phpgw->msg->login("Sent");
-            $phpgw->msg->append($stream, "Sent", $header, $body, "\\Seen");
-            $phpgw->msg->close($stream);
-          }
-          if (strlen($cc)>1) $to .= ",".$cc;
+				$header .= 'Content-Disposition: inline'."\n"
+					. 'Content-transfer-encoding: 7BIT'."\n\n"
+					. $body;
+				$body = "";
+			}
+			else
+			{
+				$header .= 'Subject: '.stripslashes($subject)."\n"
+					. 'MIME-version: 1.0'."\n"
+					. 'Content-type: text/plain; charset="'.lang('charset').'"'."\n";
+				if (!empty($msgtype))
+				{
+					$header .= 'Content-type: text/plain; phpgw-type='.$msgtype."\n";
+				}
+				$header .= 'Content-Disposition: inline'."\n"
+					. 'Content-description: Mail message body'."\n";
+			}
+			if ($phpgw_info['user']['preferences']['email']['mail_server_type'] == 'imap' && $phpgw_info['user']['apps']['email'] && is_object($phpgw->msg))
+			{
+				$stream = $phpgw->msg->login('Sent');
+				$phpgw->msg->append($stream, 'Sent', $header, $body, "\\Seen");
+				$phpgw->msg->close($stream);
+			}
+			if (strlen($cc)>1)
+			{
+				$to .= ','.$cc;
+			}
 
-          if (strlen($bcc)>1) $to .= ",".$bcc;
+			if (strlen($bcc)>1)
+			{
+				$to .= ','.$bcc;
+			}
 
-          $returnccode = $this->smail($to, "", $body, $header);
+			$returnccode = $this->smail($to, '', $body, $header);
 
-          return $returnccode;
-      } elseif ($type == "nntp") {
+			return $returnccode;
+		}
+		elseif ($type == 'nntp')
+		{
       }
     }
 
