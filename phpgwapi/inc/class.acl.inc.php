@@ -379,9 +379,10 @@ It should use the values in the $this->data
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
       while ($this->db->next_record()) {
+	     $rights = 0;
         $rights |= $this->db->f('acl_rights');
         if (!!($rights & $required) == True){
-          $accounts[] = $this->db->f('acl_account');
+          $accounts[] = intval($this->db->f('acl_account'));
         }
       }
       return $accounts;
@@ -438,7 +439,7 @@ It should use the values in the $this->data
       $sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and "
            . "acl_location in ";
       $security = "('". $phpgw_info['user']['account_id'] ."'";
-      $my_memberships = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
+      $my_memberships = $phpgw->accounts->memberships(intval($phpgw_info['user']['account_id']));
       while($groups = each($my_memberships))
       {
         $group = each($groups);

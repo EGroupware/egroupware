@@ -83,10 +83,11 @@
 				return False;
 			}
 
+			$this->memberships = Array();
+
 			for ($idx=0; $idx<count($security_equals); $idx++)
 			{
-				$name = $this->id2name(intval($security_equals[$idx]));
-				$this->memberships[] = Array('account_id' => $security_equals[$idx], 'account_name' => $name);
+				$this->memberships[] = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $this->id2name(intval($security_equals[$idx])));
 			}
 
 			return $this->memberships;
