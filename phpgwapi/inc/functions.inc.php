@@ -436,39 +436,29 @@
 
 		if ($phpgw_info['server']['force_theme'] == 'user_choice')
 		{
-			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['user']['preferences']['common']['theme'] . '.theme');
-
-			if ($phpgw_info['theme']['bg_color'] == '')
-			{
-				/* Looks like there was a problem finding that theme. Try the default */
-				echo 'Warning: error locating selected theme';
-				include (PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
-				if ($phpgw_info['theme']['bg_color'] == '')
-				{
-					/* Hope we don't get to this point.  Better then the user seeing a */
-					/* complety back screen and not know whats going on                */
-					echo '<body bgcolor="FFFFFF"><b>Fatal error: no themes found</b>';
-					exit;
-				}
-			}
+			$theme_to_load = $phpgw_info['user']['preferences']['common']['theme'];
 		}
 		else
 		{
-			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $phpgw_info['server']['force_theme'] . '.theme');
-			if ($phpgw_info['theme']['bg_color'] == '')
-			{
-				/* Looks like there was a problem finding that theme. Try the default */
-				echo 'Warning: error locating selected theme';
-				include (PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
-				if ($phpgw_info['theme']['bg_color'] == '')
-				{
-					/* Hope we don't get to this point.  Better then the user seeing a */
-					/* complety back screen and not know whats going on                */
-					echo '<body bgcolor="FFFFFF"><b>Fatal error: no themes found</b>';
-					exit;
-				}
-			}			
+			$theme_to_load = $phpgw_info['server']['force_theme'];
 		}
+
+		if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $theme_to_load . '.theme'))
+		{
+			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $theme_to_load . '.theme');
+		}
+		elseif(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme'))
+		{
+			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
+		}
+		else
+		{
+			/* Hope we don't get to this point.  Better then the user seeing a */
+			/* complety back screen and not know whats going on                */
+			echo '<body bgcolor="FFFFFF"><b>Fatal error: no themes found</b>';
+			exit;
+		}
+		unset($theme_to_load);
 
 		/*************************************************************************\
 		* If they are using frames, we need to set some variables                 *
