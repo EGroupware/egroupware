@@ -62,7 +62,7 @@
 		$phpgw_setup->show_footer();
 
 		/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
-		$tablenames = $phpgw_setup->db->table_names();
+		$tablenames = @$phpgw_setup->db->table_names();
 		while(list($key,$val) = @each($tablenames))
 		{
 			$tables[] = $val['table_name'];
