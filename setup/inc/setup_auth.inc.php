@@ -41,7 +41,12 @@
      }
      echo "  <tr bgcolor=\"e6e6e6\">\n";
      echo "    <td><form action='".$PHP_SELF."' method='POST'>\n";
-     echo "      <input type='password' name='FormPW' value=''>\n";
+     if ($phpgw_info["multiable_domains"] == True){
+      echo "      <input type='text' name='domain' value=''><br>\n";
+      echo "      <input type='password' name='FormPW' value=''><br>\n";
+     }else{
+      echo "      <input type='password' name='FormPW' value=''>\n";
+     }
      echo "      <input type='submit' name='Login' value='Login'>\n";
      echo "    </form></td>\n";
      echo "  </tr>\n";
