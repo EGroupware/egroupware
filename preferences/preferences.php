@@ -113,6 +113,11 @@
 		if ($GLOBALS['type'] == 'user')
 		{
 			$def_text = !$GLOBALS['phpgw']->preferences->user[$_appname][$name] ? $GLOBALS['phpgw']->preferences->data[$_appname][$name] : $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+
+			if (isset($notifys[$name]))	// translate the substitution names
+			{
+				$def_text = $GLOBALS['phpgw']->preferences->lang_notify($def_text,$notifys[$name]);
+			}
 			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$def_text.'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\" value=\"".htmlentities($default)."\"$options>$def_text");
@@ -261,7 +266,7 @@
 
 	function create_text_area($label,$name,$rows,$cols,$help='',$default='',$run_lang=True)
 	{
-		global $t,$prefs;
+		global $t,$prefs,$notifys;
 
 		$_appname = check_app();
 		if (is_forced_value($_appname,$name))
@@ -277,6 +282,11 @@
 		if ($GLOBALS['type'] == 'user')
 		{
 			$def_text = !$GLOBALS['phpgw']->preferences->user[$_appname][$name] ? $GLOBALS['phpgw']->preferences->data[$_appname][$name] : $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+
+			if (isset($notifys[$name]))	// translate the substitution names
+			{
+				$def_text = $GLOBALS['phpgw']->preferences->lang_notify($def_text,$notifys[$name]);
+			}
 			$def_text = $def_text != '' ? '<br><i><font size="-1"><b>'.lang('default').'</b>:<br>'.nl2br($def_text).'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<textarea rows=\"$rows\" cols=\"$cols\" name=\"${GLOBALS[type]}[$name]\">".htmlentities($default)."</textarea>$def_text");
