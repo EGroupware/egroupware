@@ -912,7 +912,14 @@
       }
       return date($format,$t);
     }
-
+		/*!
+		@function dateformatorder
+		@abstract 
+		@param $yearstr year - string
+		@param $monthstr month - string
+		@param $day day - string
+		@param $add_seperator boolean defaults to false
+		*/
     function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
     {
       global $phpgw_info;
@@ -930,7 +937,13 @@
          return (implode(' ',$dlarr));      
       }
     } 
-
+		/*!
+		@function formattime
+		@abstract format the time takes settings from user preferences
+		@param $hour hour
+		@param $min minutes
+		@param $sec defaults to ''
+		*/
     function formattime($hour,$min,$sec='')
     {
       global $phpgw_info;
@@ -957,6 +970,13 @@
 
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
+		/*!
+		@function create_emailpreferences
+		@abstract create email preferences
+		@discussion This is not the best place for it, but it needs to be shared between Aeromail and SM
+		@param $prefs
+		@param $account_id -optional defaults to : phpgw_info['user']['account_id']	
+		*/	
 		function create_emailpreferences($prefs,$account_id=0)
 		{
 			global $phpgw, $phpgw_info;
@@ -1032,6 +1052,11 @@
 
 
     // This will be moved into the applications area.
+		/*!
+		@function check_code
+		@abstract ?
+		@discussion This will be moved into the applications area
+		*/
     function check_code($code)
     {
       $s = '<br>';
@@ -1116,7 +1141,13 @@
     }
     return $s;
   }
-    
+		/*!
+		@fucntion phpgw_error
+		@abstract process error message
+		@param $error error 
+		@param $line line
+		@param $file file
+		*/  
     function phpgw_error($error,$line = '', $file = '') 
     {
        echo '<p><b>phpGroupWare internal error:</b><p>'.$error;
@@ -1130,7 +1161,11 @@
        exit;
     }
 
-
+		/*!
+		@function create_phpcode_from_array
+		@abstract create phpcode from array
+		@param $array - array
+		*/
     function create_phpcode_from_array($array)
     {
        while (list($key, $val) = each($array)) {
@@ -1162,7 +1197,12 @@
     }   
 
 
-    // This will return the full phpgw_info array, used for debugging    
+    // This will return the full phpgw_info array, used for debugging  
+		/*!
+		@function debug_list_array_contents
+		@abstract return the full phpgw_info array for debugging
+		@param array - array
+		*/  
     function debug_list_array_contents($array)
     {
        while (list($key, $val) = each($array)) {
@@ -1189,6 +1229,11 @@
     }
     
     // This will return a list of functions in the API
+		/*!
+		@function debug_list_core_functions
+		@abstract return a list of functionsin the API
+		*/
+		
     function debug_list_core_functions()
     {
        echo '<br><b>core functions</b><br>';
