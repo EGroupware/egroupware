@@ -204,6 +204,7 @@ class socalendar_ extends socalendar__
 				while($this->stream->next_record())
 				{
 					$this->event['alarm'][] = Array(
+						'id'		=> intval($this->stream->f('alarm_id')),
 						'time'	=> intval($this->stream->f('cal_time')),
 						'text'	=> $this->stream->f('cal_text'),
 						'enabled'	=> intval($this->stream->f('alarm_enabled'))
@@ -229,16 +230,28 @@ class socalendar_ extends socalendar__
 		}
 
 		$datetime = mktime(0,0,0,$startMonth,$startDay,$startYear) - $tz_offset;
+		
+		$user_where = ' AND (phpgw_cal_user.cal_login in (';
 		if($owner_id)
 		{
-			$user_where = ' AND (phpgw_cal_user.cal_login in ('.implode(',',$owner_id).')) ';
-
-			echo '<!-- owner_id in ('.implode(',',$owner_id).') -->'."\n";
+			$user_where .= implode(',',$owner_id);
 		}
 		else
 		{
-			$user_where = ' AND (phpgw_cal_user.cal_login = '.$this->user.') ';
+			$user_where .= $this->user;
 		}
+		$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
+		@reset($member_groups);
+		while(list($key,$group_info) = each($member_groups))
+		{
+			$member[] = $group_info['account_id'];
+		}
+		@reset($member);
+		$user_where .= ','.implode(',',$member);
+		$user_where .= ')) ';
+
+		echo '<!-- '.$user_where.' -->'."\n";
+
 		$startDate = 'AND ( ( (phpgw_cal.datetime >= '.$datetime.') ';
 
 		$enddate = '';
@@ -447,6 +460,7 @@ class socalendar_ extends socalendar__
 				. "title='".$this->stream->db_addslashes($event['title'])."', "
 				. "description='".$this->stream->db_addslashes($event['description'])."', "
 				. "location='".$event['location']."', "
+				. ($event['groups']?"groups='".(count($event['groups'])>1?implode(',',$event['groups']):','.$event['groups'][0].',')."', ":'')
 				. 'reference='.$event['reference'].' '
 				. 'WHERE cal_id='.$event['id'];
 				

@@ -500,123 +500,136 @@
 			$date = $date?$date:intval($GLOBALS['HTTP_GET_VARS']['date']);
 	   	
 			// First, make sure they have permission to this entry
+			$continue_ok = True;
 			if ($cal_id < 1)
 			{
-				echo lang('Invalid entry id.').'</center>';
-				return;
+				echo lang('Invalid entry id.').'</center>'."\n";
+				$continue_ok = False;
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 
 			if(!$this->bo->check_perms(PHPGW_ACL_READ))
 			{
-				echo lang('You do not have permission to read this record!').'</center>';
-				return;
+				echo lang('You do not have permission to read this record!').'</center>'."\n";
+				$continue_ok = False;
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 
 			$event = $this->bo->read_entry($cal_id);
 
 			if(!isset($event['id']))
 			{
-				echo lang("Sorry, this event does not exist").'.'.'</center>';
-				return;
+				echo lang("Sorry, this event does not exist").'.'.'</center>'."\n";
+				$continue_ok = False;
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 
-			$this->bo->repeating_events = Array();
-			$this->bo->cached_events = Array();
-			$this->bo->repeating_events[0] = $event;
-			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
-			$this->bo->check_repeating_events($datetime);
-			$check_date = $GLOBALS['phpgw']->common->show_date($datetime,'Ymd');
-			if(is_array($this->bo->cached_events[$check_date][0]) &&
-				$this->bo->cached_events[$check_date][0]['id'] == $event['id'])
+			if($continue_ok)
 			{
-				$starttime = $this->bo->maketime($event['start']);
-				$endtime = $this->bo->maketime($event['end']);
-				$event['start']['month'] = $this->bo->month;
-				$event['start']['mday'] = $this->bo->day;
-				$event['start']['year'] = $this->bo->year;
-				$temp_end =  $this->bo->maketime($event['start']) + ($endtime - $starttime);
-				$event['end']['month'] = date('m',$temp_end);
-				$event['end']['mday'] = date('d',$temp_end);
-				$event['end']['year'] = date('Y',$temp_end);
-			}
-			echo $this->view_event($event);
-
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$p->set_file(
-				Array(
-					'form_button'	=> 'form_button_script.tpl'
-				)
-			);
-
-			if($this->bo->owner == $event['owner'])
-			{
-				if ($this->bo->check_perms(PHPGW_ACL_EDIT))
+				$this->bo->repeating_events = Array();
+				$this->bo->cached_events = Array();
+				$this->bo->repeating_events[0] = $event;
+				$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
+				$this->bo->check_repeating_events($datetime);
+				$check_date = $GLOBALS['phpgw']->common->show_date($datetime,'Ymd');
+				if(is_array($this->bo->cached_events[$check_date][0]) &&
+					$this->bo->cached_events[$check_date][0]['id'] == $event['id'])
 				{
-					if($event['recur_type'] != MCAL_RECUR_NONE)
+					$starttime = $this->bo->maketime($event['start']);
+					$endtime = $this->bo->maketime($event['end']);
+					$event['start']['month'] = $this->bo->month;
+					$event['start']['mday'] = $this->bo->day;
+					$event['start']['year'] = $this->bo->year;
+					$temp_end =  $this->bo->maketime($event['start']) + ($endtime - $starttime);
+					$event['end']['month'] = date('m',$temp_end);
+					$event['end']['mday'] = date('d',$temp_end);
+					$event['end']['year'] = date('Y',$temp_end);
+				}
+
+				$ret_value = $this->view_event($event,True);
+				echo $ret_value;
+
+				if($ret_value == '<center>'.lang('You do not have permission to read this record!').'</center>')
+				{
+					$GLOBALS['phpgw']->common->phpgw_exit(True);
+				}
+
+				$p = CreateObject('phpgwapi.Template',$this->template_dir);
+				$p->set_file(
+					Array(
+						'form_button'	=> 'form_button_script.tpl'
+					)
+				);
+
+				if($this->bo->owner == $event['owner'])
+				{
+					if ($this->bo->check_perms(PHPGW_ACL_EDIT))
 					{
-						$var = Array(
-							'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
-							'action_text_button'	=> lang('Edit Single'),
-							'action_confirm_button'	=> '',
-							'action_extra_field'	=> '<input type="hidden" name="edit_type" value="single">'."\n"
-								. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
-							
-						);
-						$p->set_var($var);
-						echo $p->fp('out','form_button');
+						if($event['recur_type'] != MCAL_RECUR_NONE)
+						{
+							$var = Array(
+								'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
+								'action_text_button'	=> lang('Edit Single'),
+								'action_confirm_button'	=> '',
+								'action_extra_field'	=> '<input type="hidden" name="edit_type" value="single">'."\n"
+									. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
+							);
+							$p->set_var($var);
+							echo $p->fp('out','form_button');
+
+							$var = Array(
+								'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
+								'action_text_button'	=> lang('Edit Series'),
+								'action_confirm_button'	=> '',
+								'action_extra_field'	=> '<input type="hidden" name="edit_type" value="series">'
+							);
+							$p->set_var($var);
+							echo $p->fp('out','form_button');
+						}
+						else
+						{
+							$var = Array(
+								'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
+								'action_text_button'	=> lang('Edit'),
+								'action_confirm_button'	=> '',
+								'action_extra_field'	=> ''
+							);
+							$p->set_var($var);
+							echo $p->fp('out','form_button');
+						}
 
 						$var = Array(
-							'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
-							'action_text_button'	=> lang('Edit Series'),
+							'action_url_button'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uialarm.manager'),
+							'action_text_button'	=> lang('Alarm Management'),
 							'action_confirm_button'	=> '',
-							'action_extra_field'	=> '<input type="hidden" name="edit_type" value="series">'
+							'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
 						);
 						$p->set_var($var);
 						echo $p->fp('out','form_button');
 					}
-					else
+
+					if ($this->bo->check_perms(PHPGW_ACL_DELETE))
 					{
 						$var = Array(
-							'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
-							'action_text_button'	=> lang('Edit'),
-							'action_confirm_button'	=> '',
+							'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
+							'action_text_button'	=> lang('Delete'),
+							'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
 							'action_extra_field'	=> ''
 						);
 						$p->set_var($var);
 						echo $p->fp('out','form_button');
 					}
-					
-					$var = Array(
-						'action_url_button'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uialarm.manager'),
-						'action_text_button'	=> lang('Alarm Management'),
-						'action_confirm_button'	=> '',
-						'action_extra_field'	=> '<input type="hidden" name="cal_id" value="'.$cal_id.'">'
-					);
-					$p->set_var($var);
-					echo $p->fp('out','form_button');
 				}
 
-				if ($this->bo->check_perms(PHPGW_ACL_DELETE))
-				{
-					$var = Array(
-						'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
-						'action_text_button'	=> lang('Delete'),
-						'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
-						'action_extra_field'	=> ''
-					);
-					$p->set_var($var);
-					echo $p->fp('out','form_button');
-				}
+				$var = Array(
+					'action_url_button'	=> $this->page('export','&cal_id='.$cal_id),
+					'action_text_button'	=> lang('Export'),
+					'action_confirm_button'	=> '',
+					'action_extra_field'	=> ''
+				);
+				$p->set_var($var);
+				echo $p->fp('out','form_button').'</center>';
 			}
-			
-			$var = Array(
-				'action_url_button'	=> $this->page('export','&cal_id='.$cal_id),
-				'action_text_button'	=> lang('Export'),
-				'action_confirm_button'	=> '',
-				'action_extra_field'	=> ''
-			);
-			$p->set_var($var);
-			echo $p->fp('out','form_button').'</center>';
 		}
 
 		function edit($params='')
@@ -2146,7 +2159,7 @@
 			$repeat_days .= $day.' ';
 		}
 
-		function view_event($event)
+		function view_event($event,$alarms=False)
 		{
 			if(!$event['participants'][$this->bo->owner])
 			{
@@ -2370,7 +2383,7 @@
 				$this->output_template_array($p,'row','list',$var[$i]);
 			}
 
-			if(@isset($event['alarm']))
+			if($alarms && @isset($event['alarm']))
 			{
 				$p->set_var('hr_text','<hr>');
 				$p->parse('row','hr',True);
