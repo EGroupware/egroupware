@@ -681,29 +681,32 @@
 	{
 		list($appname,$classname) = explode('.',$class);
 
-		include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+		include_once($file=EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 
-		$args = func_get_args();
-		if(count($args) == 1)
+		if (class_exists($classname))
 		{
-			$obj =& new $classname;
-		}
-		else
-		{
-			$code = '$obj =& new ' . $classname . '(';
-			foreach($args as $n => $arg)
+			$args = func_get_args();
+			if(count($args) == 1)
 			{
-				if ($n)
-				{
-					$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
-				}
+				$obj =& new $classname;
 			}
-			$code .= ');';
-			eval($code);
+			else
+			{
+				$code = '$obj =& new ' . $classname . '(';
+				foreach($args as $n => $arg)
+				{
+					if ($n)
+					{
+						$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
+					}
+				}
+				$code .= ');';
+				eval($code);
+			}
 		}
 		if (!is_object($obj))
 		{
-			echo function_backtrace(1);
+			echo "<p>CreateObject('$class'): Cant instanciate class!!!<br />\n".function_backtrace(1)."</p>\n";
 		}
 		return $obj;
 	}
@@ -1151,9 +1154,10 @@
 				}
 				else
 				{
-					if (preg_match('/<\/?[^>]*(script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
+					if (preg_match('/<\/?[^>]*(iframe|script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 					{
-						//echo "<p>*** _check_script_tag($name): unset($name [$key]) ***</p>\n";
+						//echo "<p>*** _check_script_tag($name): unset(${name}[$key]) ***</p>\n";
+						$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] =& $var[$key];
 						unset($var[$key]);
 					}
 				}
@@ -1163,7 +1167,7 @@
 		}
 	}
 		
-	foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS','HTTP_REQUEST_VARS') as $where)
+	foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS') as $n => $where)
 	{
 		$pregs = array(
 			'order' => '/^[a-zA-Z0-9_]*$/',
@@ -1176,12 +1180,15 @@
 				$GLOBALS[$where][$name] = '';
 			}
 		}
-		if (is_array($GLOBALS[$where]))
+		// do the check for script-tags only for _GET and _POST or if we found something in _GET and _POST
+		// speeds up the execusion a bit
+		if (is_array($GLOBALS[$where]) && ($n < 2 || is_array($GLOBALS['egw_unset_vars'])))
 		{
 			_check_script_tag($GLOBALS[$where],$where);
 		}
 	}
-	
+	//if (is_array($GLOBALS['egw_unset_vars'])) { echo "egw_unset_vars=<pre>".htmlspecialchars(print_r($GLOBALS['egw_unset_vars'],true))."</pre>"; exit; }
+
 	if(floor(phpversion()) <= 4)
 	{
 		/**
