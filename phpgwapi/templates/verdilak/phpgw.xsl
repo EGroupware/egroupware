@@ -9,21 +9,22 @@
 	<xsl:variable name="prefs_link" select="prefs_link"/>
 	<xsl:variable name="logout_link" select="logout_link"/>
 	<xsl:variable name="about_link" select="about_link"/>
-	<xsl:variable name="manual_link" select="manual_link"/>
+	<xsl:variable name="help_link" select="help_link"/>
 	<xsl:variable name="home_img" select="home_img"/>
 	<xsl:variable name="prefs_img" select="prefs_img"/>
 	<xsl:variable name="logout_img" select="logout_img"/>
 	<xsl:variable name="about_img" select="about_img"/>
-	<xsl:variable name="manual_img" select="manual_img"/>
+	<xsl:variable name="help_img" select="help_img"/>
 	<xsl:variable name="home_title" select="home_title"/>
 	<xsl:variable name="prefs_title" select="prefs_title"/>
 	<xsl:variable name="logout_title" select="logout_title"/>
 	<xsl:variable name="about_title" select="about_title"/>
-	<xsl:variable name="manual_title" select="manual_title"/>
+	<xsl:variable name="help_title" select="help_title"/>
 	<xsl:variable name="phpgw_body" select="phpgw_body"/>
 	<xsl:variable name="greybar" select="greybar"/>
 	<xsl:variable name="phpgw_statustext" select="lang_phpgw_statustext"/>
 	<xsl:variable name="app_tpl" select="app_tpl"/>
+	<xsl:variable name="current_app" select="current_app"/>
 		<html>
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
@@ -58,7 +59,7 @@
 												<td><a href="{$prefs_link}"><img src="{$prefs_img}" border="0" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
 												<td><a href="{$logout_link}"><img src="{$logout_img}" border="0" alt="{$logout_title}" title="{$logout_title}"/></a></td>
 												<td><a href="{$about_link}"><img src="{$about_img}" border="0" alt="{$about_title}" title="{$about_title}"/></a></td>
-												<td><a href="{$manual_link}"><img src="{$manual_img}" border="0" alt="{$manual_title}" title="{$manual_title}"/></a></td>			
+												<td><a href="{$help_link}" target="_blank"><img src="{$help_img}" border="0" alt="{$help_title}" title="{$help_title}"/></a></td>			
 											</tr>
 										</table>
 									</td>
@@ -103,10 +104,10 @@
 								</xsl:when>
 							</xsl:choose>
 							<xsl:choose>
-								<xsl:when test="home">
+								<xsl:when test="$current_app = 'home'">
 									<xsl:call-template name="portal"/>
 								</xsl:when>
-								<xsl:when test="about">
+								<xsl:when test="$current_app = 'about'">
 									<xsl:call-template name="about"/>
 								</xsl:when>
 							</xsl:choose>

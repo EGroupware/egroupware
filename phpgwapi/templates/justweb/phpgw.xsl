@@ -12,18 +12,19 @@
 	<xsl:variable name="prefs_link"><xsl:value-of select="prefs_link"/></xsl:variable>
 	<xsl:variable name="logout_link"><xsl:value-of select="logout_link"/></xsl:variable>
 	<xsl:variable name="about_link"><xsl:value-of select="about_link"/></xsl:variable>
-	<xsl:variable name="manual_link"><xsl:value-of select="manual_link"/></xsl:variable>
+	<xsl:variable name="help_link"><xsl:value-of select="help_link"/></xsl:variable>
 	<xsl:variable name="home_img"><xsl:value-of select="home_img"/></xsl:variable>
 	<xsl:variable name="prefs_img"><xsl:value-of select="prefs_img"/></xsl:variable>
 	<xsl:variable name="logout_img"><xsl:value-of select="logout_img"/></xsl:variable>
 	<xsl:variable name="about_img"><xsl:value-of select="about_img"/></xsl:variable>
-	<xsl:variable name="manual_img"><xsl:value-of select="manual_img"/></xsl:variable>
+	<xsl:variable name="help_img"><xsl:value-of select="help_img"/></xsl:variable>
 	<xsl:variable name="home_title"><xsl:value-of select="home_title"/></xsl:variable>
 	<xsl:variable name="prefs_title"><xsl:value-of select="prefs_title"/></xsl:variable>
 	<xsl:variable name="logout_title"><xsl:value-of select="logout_title"/></xsl:variable>
 	<xsl:variable name="about_title"><xsl:value-of select="about_title"/></xsl:variable>
-	<xsl:variable name="manual_title"><xsl:value-of select="manual_title"/></xsl:variable>
+	<xsl:variable name="help_title"><xsl:value-of select="help_title"/></xsl:variable>
 	<xsl:variable name="app_tpl"><xsl:value-of select="app_tpl"/></xsl:variable>
+	<xsl:variable name="current_app" select="current_app"/>
 		<html>
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
@@ -52,7 +53,7 @@
 									<td valign="bottom" width="85" class="top"><a href="{$prefs_link}"><img src="{$prefs_img}" width="85" height="23" border="0" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
 									<td valign="bottom" width="56" class="top"><a href="{$logout_link}"><img src="{$logout_img}" width="56" height="23" border="0" alt="{$logout_title}" title="{$logout_title}"/></a></td>
 									<td valign="bottom" width="39" class="top"><a href="{$about_link}"><img src="{$about_img}" width="39" height="23" border="0" alt="{$about_title}" title="{$about_title}"/></a></td>
-									<td valign="bottom" width="39" class="top"><a href="{$manual_link}"><img src="{$manual_img}" width="39" height="23" border="0" alt="{$manual_title}" title="{$manual_title}"/></a></td>
+									<td valign="bottom" width="39" class="top"><a href="{$help_link}" target="_blank"><img src="{$help_img}" width="39" height="23" border="0" alt="{$help_title}" title="{$help_title}"/></a></td>
 								</tr>
 							</table>
 						</td>
@@ -111,10 +112,10 @@
 								</xsl:when>
 							</xsl:choose>
 							<xsl:choose>
-								<xsl:when test="home">
+								<xsl:when test="$current_app = 'home'">
 									<xsl:call-template name="portal"/>
 								</xsl:when>
-								<xsl:when test="about">
+								<xsl:when test="$current_app = 'about'">
 									<xsl:call-template name="about"/>
 								</xsl:when>
 							</xsl:choose>

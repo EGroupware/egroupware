@@ -10,20 +10,21 @@
 	<xsl:variable name="prefs_link"><xsl:value-of select="prefs_link"/></xsl:variable>
 	<xsl:variable name="logout_link"><xsl:value-of select="logout_link"/></xsl:variable>
 	<xsl:variable name="about_link"><xsl:value-of select="about_link"/></xsl:variable>
-	<xsl:variable name="manual_link"><xsl:value-of select="manual_link"/></xsl:variable>
+	<xsl:variable name="help_link"><xsl:value-of select="help_link"/></xsl:variable>
 	<xsl:variable name="about_img"><xsl:value-of select="about_img"/></xsl:variable>
-	<xsl:variable name="manual_img"><xsl:value-of select="manual_img"/></xsl:variable>
+	<xsl:variable name="help_img"><xsl:value-of select="help_img"/></xsl:variable>
 	<xsl:variable name="home_statustext"><xsl:value-of select="home_statustext"/></xsl:variable>
 	<xsl:variable name="prefs_statustext"><xsl:value-of select="prefs_statustext"/></xsl:variable>
 	<xsl:variable name="logout_statustext"><xsl:value-of select="logout_statustext"/></xsl:variable>
 	<xsl:variable name="about_statustext"><xsl:value-of select="about_statustext"/></xsl:variable>
-	<xsl:variable name="manual_statustext"><xsl:value-of select="manual_statustext"/></xsl:variable>
+	<xsl:variable name="help_statustext"><xsl:value-of select="help_statustext"/></xsl:variable>
 	<xsl:variable name="top_css_home"><xsl:value-of select="top_css_home"/></xsl:variable>
 	<xsl:variable name="top_css_prefs"><xsl:value-of select="top_css_prefs"/></xsl:variable>
 	<xsl:variable name="top_css_about"><xsl:value-of select="top_css_about"/></xsl:variable>
-	<xsl:variable name="top_css_manual"><xsl:value-of select="top_css_manual"/></xsl:variable>
+	<xsl:variable name="top_css_help"><xsl:value-of select="top_css_help"/></xsl:variable>
 	<xsl:variable name="top_css"><xsl:value-of select="top_css"/></xsl:variable>
 	<xsl:variable name="app_tpl"><xsl:value-of select="app_tpl"/></xsl:variable>
+	<xsl:variable name="current_app" select="current_app"/>
 		<html>
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
@@ -62,7 +63,7 @@
 									<td class="top_menu"><a href="{$prefs_link}" onMouseOver="window.status='{$prefs_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_prefs}">[<xsl:value-of select="prefs_title"/>]</a></td>
 									<td class="top_menu"><a href="{$logout_link}" onMouseOver="window.status='{$logout_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css}">[<xsl:value-of select="logout_title"/>]</a></td>
 									<td class="top_menu"><a href="{$about_link}" onMouseOver="window.status='{$about_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_about}">[<xsl:value-of select="about_img"/>]</a></td>
-									<td class="top_menu"><a href="{$manual_link}" onMouseOver="window.status='{$manual_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_manual}">[<xsl:value-of select="manual_img"/>]</a></td>
+									<td class="top_menu"><a href="{$help_link}" onMouseOver="window.status='{$help_statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$top_css_help}" target="_blank">[<xsl:value-of select="help_img"/>]</a></td>
 								</tr>
 							</table>
 						</td>
@@ -88,10 +89,10 @@
 								</xsl:when>
 							</xsl:choose>
 							<xsl:choose>
-								<xsl:when test="home">
+								<xsl:when test="$current_app = 'home'">
 									<xsl:call-template name="portal"/>
 								</xsl:when>
-								<xsl:when test="about">
+								<xsl:when test="$current_app = 'about'">
 									<xsl:call-template name="about"/>
 								</xsl:when>
 							</xsl:choose>
