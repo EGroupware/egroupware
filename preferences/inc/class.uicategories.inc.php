@@ -177,7 +177,7 @@
 					$appendix = '';
 				}
 
-				$level = $cats[$i]['level'];
+				$level	= $cats[$i]['level'];
 
 				if ($level > 0)
 				{
@@ -219,8 +219,10 @@
 
 				if ($cats_level || ($level == 0))
 				{
-					if ($cats[$i]['owner'] == $this->account || $cats[$i]['app_name'] == 'phpgw')
+					if ($cats[$i]['owner'] == $this->account || $cats[$i]['app_name'] == 'phpgw'
+						|| ($cats[$i]['owner'] == -1 && $cats[$i]['app_name'] == $cats_app))
 					{
+						$link_data['parent'] = '';
 						$link_data['menuaction'] = 'preferences.uicategories.add';
 						$link_data['parent'] = $cats[$i]['cat_id'];
 						$GLOBALS['phpgw']->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
@@ -233,6 +235,7 @@
 					$GLOBALS['phpgw']->template->set_var('lang_sub_entry','&nbsp;');
 				}
 
+				$link_data['cat_id'] = '';
 				$link_data['cat_id'] = $cats[$i]['cat_id'];
 				if ($cats[$i]['owner'] == $this->account && $cats[$i]['app_name'] != 'phpgw')
 				{
