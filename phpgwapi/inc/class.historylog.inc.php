@@ -48,7 +48,7 @@
 
 		function delete($record_id)
 		{
-			$this->db->query("delete from phpgw_history_log where history_record_id='$record_id' and "
+			$this->db->query("delete from phpgw_history_log where history_record_id='".intval($record_id)."' and "
 				. "history_appname='" . $this->appname . "'",__LINE__,__FILE__);
 		}
 
@@ -56,7 +56,7 @@
 		{
 			$this->db->query("insert into phpgw_history_log (history_record_id,"
 				. "history_appname,history_owner,history_status,history_new_value,history_timestamp) "
-				. "values ('$record_id','" . $this->appname . "','"
+				. "values ('".intval($record_id)."','" . $this->appname . "','"
 				. $GLOBALS['phpgw_info']['user']['account_id'] . "','$status','"
 				. addslashes($new_value) . "','" . $this->db->to_timestamp(time())
 				. "')",__LINE__,__FILE__);
@@ -96,7 +96,7 @@
 			}
 
 			$this->db->query("select * from phpgw_history_log where history_appname='"
-				. $this->appname . "' and history_record_id='$record_id' $filter $only_show_filter "
+				. $this->appname . "' and history_record_id='".intval($record_id)."' $filter $only_show_filter "
 				. "$orderby",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
