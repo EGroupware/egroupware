@@ -435,4 +435,7 @@ you must enter an application title.	admin	pl	Musisz podaæ tytu³ aplikacji
 you must enter the number of listings display	admin	pl	Musisz podaæ liczbê wy¶wietlanych wierszy
 you must select a file type	admin	pl	Musisz wybraæ typ pliku
 you will need to remove the subcategories before you can delete this category	admin	pl	Nale¿y usun±æ podkategorie przed skasowaniem tej kategorii !
-zone	admin	pl	Strefa
+zone	admin	pl	Strefaenter your default mail domain ( from: user@domain )	admin	pl	Podaj nazwê swojej domeny (u¿ytkownik@domena)
+enter your smtp server hostname or ip address	admin	pl	Podaj nazwê hosta serwera SMTP lub adres IP
+enter your smtp server port	admin	pl	Podaj port serwera SMTP
+mail settings	admin	pl	Ustawienia email

@@ -347,3 +347,7 @@ you must enter an application name.	admin	da	Du skal indtaste et applikations na
 you must enter an application title.	admin	da	Du skal indtaste en applikations titel
 you must select a file type	admin	da	Du skal vælge en type
 you will need to remove the subcategories before you can delete this category	admin	da	Du blive nød til at fjerne underkategorierne for du kan slette denne kategori!
+enter your default mail domain ( from: user@domain )	admin	da	Indtast dit standard domæne navn (fra: bruger@domæne)
+enter your smtp server hostname or ip address	admin	da	Indtast SMTP-server navn
+enter your smtp server port	admin	da	Indtast SMTP-server port
+mail settings	admin	da	Post indstillinger

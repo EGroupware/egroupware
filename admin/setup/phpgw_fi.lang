@@ -205,3 +205,6 @@ you must enter an application name and title.	admin	fi	Anna sovelluksen nimi ja 
 you must enter an application title.	admin	fi	Anna sovelluksen otsikko.
 you must select a file type	admin	fi	Anna tiedostotyyppi
 you will need to remove the subcategories before you can delete this category	admin	fi	Aliluokat on poistettava ennen kuin voit poistaa luokan!
+enter your smtp server hostname or ip address	admin	fi	Anna SMTP -palvelimen nimi tai IP-osoite
+enter your smtp server port	admin	fi	Anna SMTP -palvelimen portti
+mail settings	admin	fi	Asetukset

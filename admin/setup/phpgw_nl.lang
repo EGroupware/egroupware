@@ -371,3 +371,7 @@ you must enter an application name.	admin	nl	U moet een toepassingsnaam invoeren
 you must enter an application title.	admin	nl	U moet een toepassingstitel invoeren.
 you must select a file type	admin	nl	U moet een bestandstype invoeren
 you will need to remove the subcategories before you can delete this category	admin	nl	U moet eerst de subcategorieën verwijderen voor dat u deze bovenliggende categorie kunt verwijderen!
+enter your default mail domain ( from: user@domain )	admin	nl	Geef uw huidige mail domein (Van: gebruiker@domein)
+enter your smtp server hostname or ip address	admin	nl	Uw SMTP server host of IP
+enter your smtp server port	admin	nl	Uw SMTP port
+mail settings	admin	nl	Mail instellingen

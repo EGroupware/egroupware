@@ -384,3 +384,7 @@ you must enter an application name.	admin	pt-br	Você deve digitar um nome para a
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
 you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as sub-categorias antes de remover esta categoria !
+enter your default mail domain ( from: user@domain )	admin	pt-br	Digite seu domínio padrão de correio eletrônico (usuario@dominio)
+enter your smtp server hostname or ip address	admin	pt-br	Digite o endereço de seu servidor SMTP
+enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
+mail settings	admin	pt-br	Configurações de Correio Eletronico

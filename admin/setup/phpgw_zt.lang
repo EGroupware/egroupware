@@ -371,3 +371,7 @@ you must enter an application title.	admin	zt	您必須輸入應用程式標題
 you must select a file type	admin	zt	您必須選擇一種檔案型態。
 you will need to remove the subcategories before you can delete the parent category	admin	zt	您需要將所有子分類移除後才可以移除上一層之分類！
 you will need to remove the subcategories before you can delete this category	admin	zt	您必須在刪除這個類別前刪除所有的子類別！
+enter your default mail domain ( from: user@domain )	admin	zt	輸入您的預設郵件網域
+enter your smtp server hostname or ip address	admin	zt	輸入您的SMTP伺服器主機名稱或IP位址
+enter your smtp server port	admin	zt	輸入您的SMTP伺服器連接埠
+mail settings	admin	zt	郵件設定

@@ -405,3 +405,7 @@ you must enter an application title	admin	es-es	Debe entrar un titulo para la ap
 you must enter an application title.	admin	es-es	Debe introducir un título para la aplicación
 you must select a file type	admin	es-es	Debe seleccionar un tipo de archivo
 you will need to remove the subcategories before you can delete this category	admin	es-es	Debera eliminar las subcategorías antes de poder borrar esta categoría
+enter your default mail domain ( from: user@domain )	admin	es-es	Introduzca su dominio de correo predeterminado ( De: usuario@dominio )
+enter your smtp server hostname or ip address	admin	es-es	Introduzca su servidor SMTP (nombre o IP)
+enter your smtp server port	admin	es-es	Introduzca el puerto del servidor SMTP
+mail settings	admin	es-es	Seteos del E-mail

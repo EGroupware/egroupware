@@ -14,7 +14,7 @@ account preferences	admin	en	Account Preferences
 acl manager	admin	en	ACL Manager
 acl rights	admin	en	ACL Rights
 action	admin	en	Action
-activate wsiwyg-editor	admin	en	activate WSIWYG-editor
+activate wysiwyg-editor	admin	en	activate WYSIWYG-editor
 add a category	admin	en	add a category
 add a group	admin	en	add a group
 add a new account.	admin	en	Add a new account.
@@ -115,7 +115,7 @@ deny access to user accounts	admin	en	Deny access to user accounts
 deny all users access to grant other users access to their entries ?	admin	en	Deny all users access to grant other users access to their entries ?
 description can not exceed 255 characters in length !	admin	en	Description can not exceed 255 characters in length !
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
-disable wsiwyg-editor	admin	en	disable WSIWYG-editor
+disable wysiwyg-editor	admin	en	disable WYSIWYG-editor
 disabled (not recomended)	admin	en	disabled (not recomended)
 display	admin	en	Display
 do not delete the category and return back to the list	admin	en	do NOT delete the category and return back to the list
@@ -156,8 +156,11 @@ enter the title of your logo	admin	en	Enter the title of your logo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	en	Enter the URL or filename (in phpgwapi/templates/default/images) of your logo
 enter the url where your logo should link to	admin	en	Enter the url where your logo should link to
 enter your default ftp server	admin	en	Enter your default FTP server
+enter your default mail domain ( from: user@domain )	admin	en	Enter your default mail domain ( From: user@domain )
 enter your http proxy server	admin	en	Enter your HTTP proxy server
 enter your http proxy server port	admin	en	Enter your HTTP proxy server port
+enter your smtp server hostname or ip address	admin	en	Enter your SMTP server hostname or IP address
+enter your smtp server port	admin	en	Enter your SMTP server port
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running !!!
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error !!!
@@ -219,6 +222,7 @@ login screen	admin	en	Login screen
 login shell	admin	en	Login shell
 login time	admin	en	Login Time
 loginid	admin	en	LoginID
+mail settings	admin	en	Mail settings
 main screen message	admin	en	Main screen message
 manager	admin	en	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id (e.g. 65535 or 1000000)
@@ -243,6 +247,7 @@ no permission to create groups	admin	en	no permission to create groups
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support
 outbound	admin	en	outbound
 passthrough	admin	en	passthrough
+password for smtp-authentication	admin	en	Password for SMTP-authentication
 path information	admin	en	Path information
 peer server list	admin	en	Peer server list
 peer servers	admin	en	Peer servers
@@ -339,6 +344,7 @@ use pure html compliant code (not fully working yet)	admin	en	Use pure HTML comp
 use theme	admin	en	Use theme
 user accounts	admin	en	User accounts
 user data	admin	en	User Data
+user for smtp-authentication (leave it empty if no auth required)	admin	en	User for SMTP-authentication (leave it empty if no auth required)
 user groups	admin	en	User groups
 userdata	admin	en	userdata
 users choice	admin	en	Users Choice

@@ -56,6 +56,9 @@ class send extends PHPMailer
 		$this->IsSmtp();
 		$this->Host = $GLOBALS['phpgw_info']['server']['smtp_server']?$GLOBALS['phpgw_info']['server']['smtp_server']:'localhost';
 		$this->Port = $GLOBALS['phpgw_info']['server']['smtp_port']?$GLOBALS['phpgw_info']['server']['smtp_port']:25;
+		$this->SMPTAuth = !empty($GLOBALS['phpgw_info']['server']['smtp_auth_user']);
+		$this->Username = $GLOBALS['phpgw_info']['server']['smtp_auth_user'];
+		$this->Password = $GLOBALS['phpgw_info']['server']['smtp_auth_passwd'];
 		
 		$this->Hostname = $GLOBALS['phpgw_info']['server']['hostname'];
 	}

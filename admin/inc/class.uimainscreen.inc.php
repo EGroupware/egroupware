@@ -141,15 +141,15 @@
 				
 				$current_message = $GLOBALS['phpgw']->db->f('content');
 				
-				if($_POST[htmlarea])
+				if($_POST['htmlarea'])
 				{
 				   $text_or_htmlarea=$html->htmlarea('message',stripslashes($current_message),'','','TableOperations,ContextMenu,SpellChecker');
-				   $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WSIWYG-editor').'">';
+				   $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WYSIWYG-editor').'">';
 				}
 				else
 				{
 				   $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' . stripslashes($current_message) . '</textarea>';
-				   $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('activate WSIWYG-editor').'">';
+				   $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('activate WYSIWYG-editor').'">';
 
 				}			   
 

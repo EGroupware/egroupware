@@ -228,6 +228,16 @@
     <td>{lang_Enter_your_SMTP_server_port}:</td>
     <td><input name="newsettings[smtp_port]" value="{value_smtp_port}"></td>
    </tr>
+
+   <tr class="row_off">
+    <td>{lang_User_for_SMTP-authentication_(leave_it_empty_if_no_auth_required)}:</td>
+    <td><input name="newsettings[smtp_auth_user]" value="{value_smtp_auth_user}"></td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Password_for_SMTP-authentication}:</td>
+    <td><input name="newsettings[smtp_auth_passwd]" value="{value_smtp_auth_passwd}"></td>
+   </tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->

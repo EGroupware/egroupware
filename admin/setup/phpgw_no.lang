@@ -33,3 +33,7 @@ view access log	admin	no	Vis Access Log
 view sessions	admin	no	Vis sessions
 you must enter a password	admin	no	Du må skrive inn et passord
 you must select a file type	admin	no	Du må velge en filtype
+enter your default mail domain ( from: user@domain )	admin	no	Skriv inn ditt standard epost domene ( Fra: bruker@domene )
+enter your smtp server hostname or ip address	admin	no	Skriv inn din SMTP tjeners navn eller IP adresse
+enter your smtp server port	admin	no	Skriv inn din SMTP tjeners portnummer
+mail settings	admin	no	Epost innstillinger

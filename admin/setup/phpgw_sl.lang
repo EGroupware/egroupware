@@ -358,3 +358,7 @@ you must enter an application name.	admin	sl	Vnesti morate ime aplikacije.
 you must enter an application title.	admin	sl	Vnesti morate naslov aplikacije.
 you must select a file type	admin	sl	Izbrati morate tip datoteke.
 you will need to remove the subcategories before you can delete this category	admin	sl	Preden lahko izbri¹ete to kategorijo, morate izbrisati vse podkategorije!
+enter your default mail domain ( from: user@domain )	admin	sl	Vnesite privzeto po¹tno domeno (oblika: uporabnik@domena)
+enter your smtp server hostname or ip address	admin	sl	Vnesite ime ali IP SMTP stre¾nika
+enter your smtp server port	admin	sl	Vnesite vrata SMTP stre¾nika
+mail settings	admin	sl	Nastavitve po¹te

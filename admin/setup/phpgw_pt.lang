@@ -209,3 +209,6 @@ you must enter an application name and title.	admin	pt	Você deve digitar um nome
 you must enter an application title.	admin	pt	Você deve digitar um título para a aplicação.
 you must select a file type	admin	pt	Você deve selecionar um tipo de arquivo
 you will need to remove the subcategories before you can delete this category	admin	pt	Você deverá remover as sub-categorias antes de remover esta categoria !
+enter your smtp server hostname or ip address	admin	pt	Digite o endereço de seu servidor SMTP
+enter your smtp server port	admin	pt	Digite a porta de seu servidor SMTP
+mail settings	admin	pt	Configurações de correio

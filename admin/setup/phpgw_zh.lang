@@ -371,3 +371,7 @@ you must enter an application title.	admin	zh	必须为应用程序指定标题.
 you must select a file type	admin	zh	必须选择文件类型
 you will need to remove the subcategories before you can delete the parent category	admin	zt	您需要將所有子分類移除後才可以移除上一層之分類！
 you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别!
+enter your default mail domain ( from: user@domain )	admin	zh	输入默认邮件域名（即邮件地址中"@"号后面的内容）
+enter your smtp server hostname or ip address	admin	zh	输入SMTP服务器的主机名或IP地址
+enter your smtp server port	admin	zh	输入SMTP服务器的端口号
+mail settings	admin	zh	邮件配置

@@ -362,3 +362,7 @@ you must enter an application name.	admin	it	Devi inserire un nome per l'applica
 you must enter an application title.	admin	it	Devi inserire un titolo per l'applicazione
 you must select a file type	admin	it	Devi selezionare un tipo di file
 you will need to remove the subcategories before you can delete this category	admin	it	E' necessario rimuovere le sotto-categorie prima di cancellare questa categoria
+enter your default mail domain ( from: user@domain )	admin	it	Inserisci il dominio predefinito per l'email ( Da: utente@dominio )
+enter your smtp server hostname or ip address	admin	it	Inserisci l'host o l'IP del server SMTP
+enter your smtp server port	admin	it	Inserisci la porta del server SMTP
+mail settings	admin	it	Impostazioni Mail

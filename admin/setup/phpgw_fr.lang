@@ -282,3 +282,6 @@ you must enter an application name.	admin	fr	Vous devez entrer un nom d'applicat
 you must enter an application title.	admin	fr	Vous devez entrer un titre d'application.
 you must select a file type	admin	fr	Vous devez choisir un type de fichier
 you will need to remove the subcategories before you can delete this category	admin	fr	Vous allez devoir enlever les sous-catégories avant de pouvoir effacer cette catégorie !
+enter your smtp server hostname or ip address	admin	fr	Entrez votre nom de serveur SMTP ou adresse IP
+enter your smtp server port	admin	fr	Entrez le port de votre serveur SMTP
+mail settings	admin	fr	Réglages mail

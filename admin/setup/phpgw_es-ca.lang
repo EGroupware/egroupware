@@ -401,3 +401,7 @@ you must enter an application title	admin	es-ca	Debe entrar un titulo para la ap
 you must enter an application title.	admin	es-ca	Heu d'introduïr un títol per a l'aplicació.
 you must select a file type	admin	es-ca	Heu de sel.leccionar un tipus d'arxiu
 you will need to remove the subcategories before you can delete this category	admin	es-ca	Heu d'esborrar les subcategoríes abans de poder esborrar aquesta categoría !
+enter your default mail domain ( from: user@domain )	admin	es-ca	Entreu el vostre domini de correu per defecte ( De: usuari@domini )
+enter your smtp server hostname or ip address	admin	es-ca	Entreu el nom o l'adreça IP del servidor SMTP
+enter your smtp server port	admin	es-ca	Entreu el port del servidor SMTP
+mail settings	admin	es-ca	Configuracions de Correu

@@ -358,3 +358,7 @@ you must enter an application name.	admin	el	Πρέπει να εισάγεις ένα όνομα εφαρμο
 you must enter an application title.	admin	el	Πρέπει να εισάγεις έναν τίτλο εφαρμογής
 you must select a file type	admin	el	Πρέπει να επιλέξεις έναν τύπο αρχείου
 you will need to remove the subcategories before you can delete this category	admin	el	Θα πρέπει να διαγραφούν οι υποκατηγορίες πρίν διαγράψεις αυτή την κατηγορία !
+enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκαθορισμένου ονόματος τομέα αλληλογραφίας (Από:user@domain)
+enter your smtp server hostname or ip address	admin	el	Εισάγωγή του ονόματος ή του IP του SMTP server
+enter your smtp server port	admin	el	Εισάγωγή του SMTP server port
+mail settings	admin	el	

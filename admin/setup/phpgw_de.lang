@@ -15,7 +15,7 @@ account preferences	admin	de	Einstellungen der Benutzerkonten
 acl manager	admin	de	ACL-Manager
 acl rights	admin	de	ACL-Rechte
 action	admin	de	Aktion
-activate wsiwyg-editor	admin	de	WYSIWYG (formatierter Text) Editor aktivieren
+activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 add a category	admin	de	Eine Kategorie hinzufügen
 add a group	admin	de	Eine Gruppe hinzufügen
 add a new account.	admin	de	Neues Benutzerkonto anlegen
@@ -116,6 +116,7 @@ deny access to user accounts	admin	de	Zugriff auf Benutzerkonten verbieten
 deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten anderen Benutzern Zugriff zu ihren Daten zu gewähren?
 description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein!
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
+disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	Anzeigen
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
@@ -158,8 +159,11 @@ enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	de	URL oder Dateiname (in phpgwapi/templates/default/images) Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
 enter your default ftp server	admin	de	Standard-FTP-Server
+enter your default mail domain ( from: user@domain )	admin	de	Standard EMail-Domain (Von: benutzer@domain)
 enter your http proxy server	admin	de	HTTP-Proxy-Server
 enter your http proxy server port	admin	de	HTTP-Proxy-Server-Port
+enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
+enter your smtp server port	admin	de	SMTP-Server Port
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Testjobs, eventuell läuft gar keiner!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Testjobs, falsche Syntax oder es läuft schon einer!!!
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!!!
@@ -222,6 +226,7 @@ login screen	admin	de	Login-Seite
 login shell	admin	de	Login-Komandointerpreter (Login-Shell)
 login time	admin	de	Login-Zeit
 loginid	admin	de	Login-ID
+mail settings	admin	de	EMail Einstellungen
 main screen message	admin	de	Nachricht der Startseite
 manager	admin	de	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
@@ -247,6 +252,7 @@ no permission to create groups	admin	de	Sie haben keine ausreichenden Rechte um 
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
 outbound	admin	de	ausgehend
 passthrough	admin	de	durchgehend
+password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
 path information	admin	de	Pfad-Information
 peer server list	admin	de	Liste der Server im Verbund
 peer servers	admin	de	Server-Verbund
@@ -344,6 +350,7 @@ use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML k
 use theme	admin	de	Benutztes Farbschema
 user accounts	admin	de	Benutzerkonten
 user data	admin	de	Benutzerdaten
+user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP Authentifizierung (leer lassen falls keine Authentifizierung nötig)
 user groups	admin	de	Benutzergruppen
 userdata	admin	de	Benutzerkonto
 users choice	admin	de	Benutzerauswahl

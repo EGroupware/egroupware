@@ -1,0 +1,4 @@
+enter your default mail domain ( from: user@domain )	admin	ru	Введите Ваш почтовый домен по умолчанию  ( From: user@domain )
+enter your smtp server hostname or ip address	admin	ru	Введите IP-адрес или имя Вашего SMTP-сервера
+enter your smtp server port	admin	ru	Введите порт Вашего SMTP-сервера
+mail settings	admin	ru	Установки почты

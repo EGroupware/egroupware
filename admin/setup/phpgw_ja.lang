@@ -199,3 +199,7 @@ You must enter an application title.	admin	ja	アプリケーションタイトルを入力して
 you must select a file type	admin	ja	ファイルタイプを選択してください。
 zone	admin	ja	地域
 (Stored password will not be shown here)	admin	ja	(登録されているパスワードは表示されません)
+enter your default mail domain ( from: user@domain )	admin	ja	メールドメイン名 ( 書式 user@domain の domain部分 )
+enter your smtp server hostname or ip address	admin	ja	SMTP サーバ名または IP アドレス
+enter your smtp server port	admin	ja	SMTP ポート番号
+mail settings	admin	ja	電子メール設定
