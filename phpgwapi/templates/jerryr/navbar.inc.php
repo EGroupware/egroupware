@@ -139,7 +139,7 @@
 			{
 				$app_extra_icons_div = '
 				<script language="javascript">
-				new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,\'right\')
+				new ypSlideOutMenu("menu1", "down", 10, 90, 160, 200,\'right\')
 				</script>
 				<div id="menu1Container">
 				<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
@@ -155,8 +155,8 @@
 				';
 
 				$var['app_extra_icons_div']= $app_extra_icons_div;
-				//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
-				$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+				//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:30px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+				$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:30px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
 			}
 
 			if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='icons')

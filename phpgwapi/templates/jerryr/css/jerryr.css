@@ -22,6 +22,7 @@ body
 	font-size: 11px; 
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	padding:0px;
+	margin-top: 5px;
 }
 
 img
@@ -69,7 +70,7 @@ input,button
 input[type=submit],input[type=button],button
 {
 	margin:1px;
-	padding:1px;
+	padding:0px;
 	cursor: pointer; 
 	cursor: hand;
 }
@@ -92,7 +93,7 @@ td
 {
 	font-size: 11px;
 	/*	padding-top:1px;
-	padding-bottom:1px;*/
+	padding-bottom:0px;*/
 }
 
 .divLoginbox 
@@ -117,10 +118,10 @@ td
 {
 	position:relative;
 	width: 147px; 
-	border-right: #006699 groove; 
-	border-top: #006699 groove; 
-	border-left: #006699 groove; 
-	border-bottom: #006699 groove;
+	border-right: #9c9c9c 1px solid; 
+	border-top: #9c9c9c 1px solid; 
+	border-left: #9c9c9c 1px solid; 
+	border-bottom: #9c9c9c 1px solid
 }
 
 .divSideboxHeader 
@@ -129,8 +130,8 @@ td
 	background-image:url(../images/divSideboxHeader-background.png);
 	height:18px;
 	background-color:#ffffff;
-	padding-top:2px;
-	border-bottom: #006699 groove;
+	padding-top:1px;
+	border-bottom: #9c9c9c 1px solid
 	font-size:10px;
 	font-weight:bold;
 	color:#ffffff;
@@ -147,8 +148,8 @@ a.appTitles,.appTitles
 {
 	font-size: 10px; 
 	height:16px;
-	padding-top:1px;
-	padding-bottom:1px;
+	padding-top:0px;
+	padding-bottom:0px;
 }
 
 a.textSidebox
@@ -164,7 +165,7 @@ a.textSidebox
 	font-size: 10px; 
 	height:16px;
 	padding-top:1px;
-	padding-bottom:2px;
+	padding-bottom:1px;
 	
 }
 
@@ -217,14 +218,15 @@ a.textSidebox
 #divLogo
 {
 	position:absolute;
-	left:10px;
-	top:10px;
+	left:15px;
+	top:13px;
 	z-index:51;
 }
 
 #divAppIconBar
 {
 	background-color:white;
+	padding=0px;
 	border-top-color:#9c9c9c;
 	border-top-width:1px;
 	border-top-style:solid;
@@ -242,7 +244,7 @@ a.textSidebox
 	background-color:white;
 	height:15px;
 	padding-left:175px;
-	margin-top: 5px;
+	margin-top: 1px;
 	/*	margin-bottom: 2px;*/
 }
 
@@ -262,8 +264,8 @@ a.textSidebox
 {
 	background-color:white;
 	padding-left:5px;
-	padding-right:5px;
-	padding-bottom:5px;
+	padding-right:0px;
+	padding-bottom:2px;
 	width: 100%;
 }
 #divSideboxContainer
@@ -298,25 +300,26 @@ a.textSidebox
 	border-left-width:1px;
 	border-left-style:solid;
 	border-right-color:#9c9c9c;
-	border-right-width:2px;
+	border-right-width:1px;
 	border-right-style:solid;
 	border-bottom-color:#9c9c9c;
-	border-bottom-style:groove;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
 }
 
 #divAppbox
 {
 /*	width:100%;*/
-	background-color:#faf8f3;
+	background-color:#f4f2ed;
 	padding:5px;
 	border-bottom-color:#9c9c9c;
-	border-bottom-width:2px;
+	border-bottom-width:1px;
 	border-bottom-style:solid;
 	border-left-color:#9c9c9c;
 	border-left-width:1px;
 	border-left-style:solid;
 	border-right-color:#9c9c9c;
-	border-right-width:2px;
+	border-right-width:1px;
 	border-right-style:solid;
 }
 
@@ -360,10 +363,10 @@ a.textSidebox
 	margin-left:4px;
 	padding:5px;
 	position:relative;
-	border-right: #cccccc 1px solid; 
+	border-right: #9c9c9c 1px solid; 
 	border-top: #9c9c9c 2px solid; 
 	border-left: #9c9c9c 2px solid; 
-	border-bottom: #cccccc 1px solid
+	border-bottom: #9c9c9c 1px solid
 }
 
 #user_info
@@ -396,6 +399,13 @@ a.textSidebox
 	width:99%;
 }
 
+.calRowBottomShadow
+{
+	background-image: url(../images/mid-foot.png); 
+	background-repeat: repeat-x;
+}
+
+
 .titleBarBackGround
 {
 	background-image: url(../images/appbox-header-background.png); 
@@ -414,6 +424,126 @@ a.textSidebox
 	border-bottom-color:#9c9c9c;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
+}
+
+.calDayTitleBlue
+{
+	background-image: url(../images/mid-title.png); 
+	background-repeat: repeat-x;
+	height:28px;
+	text-align:center;
+	padding-bottom:0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#ffffff;
+}
+
+.calDayTitleRed
+{
+	background-image: url(../images/mid-title-red.png); 
+	background-repeat: repeat-x;
+	height:28px;
+	text-align:center;
+	padding-bottom:0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#ffffff;
+}
+
+.calLeftShadow
+{
+	background-image: url(../images/lt-body.png); 
+	padding-bottom:0px;
+}
+
+.calRightShadow
+{
+	background-image: url(../images/rt-body.png); 
+	padding-bottom:0px;
+}
+
+.calLtLtTitleBlue
+{
+	background-image: url(../images/lt-lt-title.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calLtMidTitleBlue
+{
+	background-image: url(../images/lt-mid-title.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calRtMidTitleBlue
+{
+	background-image: url(../images/rt-mid-title.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calRtRtTitleBlue
+{
+	background-image: url(../images/rt-rt-title.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calLtLtTitleRed
+{
+	background-image: url(../images/lt-lt-title-red.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calLtMidTitleRed
+{
+	background-image: url(../images/lt-mid-title-red.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calRtMidTitleRed
+{
+	background-image: url(../images/rt-mid-title-red.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calRtRtTitleRed
+{
+	background-image: url(../images/rt-rt-title-red.png); 
+	padding-bottom:0px;
+	height:28px;
+}
+
+.calLtLtFoot
+{
+	background-image: url(../images/lt-lt-foot.png); 
+	padding-bottom:0px;
+	height:17px;
+}
+
+.calLtMidFoot
+{
+	background-image: url(../images/lt-mid-foot.png); 
+	padding-bottom:0px;
+	height:17px;
+}
+
+.calRtMidFoot
+{
+	background-image: url(../images/rt-mid-foot.png); 
+	padding-bottom:0px;
+	height:17px;
+}
+
+.calRtRtFoot
+{
+	background-image: url(../images/rt-rt-foot.png); 
+	padding-bottom:0px;
+	height:17px;
 }
 
 .calDayView
@@ -449,10 +579,10 @@ a.textSidebox
 	border-left-width:1px;
 	border-left-style:solid;
 	border-right-color:#9c9c9c;
-	border-right-width:2px;
+	border-right-width:1px;
 	border-right-style:solid;
 	border-bottom-color:#9c9c9c;
-	border-bottom-width:2px;
+	border-bottom-width:1px;
 	border-bottom-style:solid;
 	background-color:#faf8f3;
 }
@@ -460,10 +590,10 @@ a.textSidebox
 .calDayViewShadowBox
 {
 	border-top-color:#9c9c9c;
-	border-top-width:2px;
+	border-top-width:1px;
 	border-top-style:solid;
 	border-left-color:#9c9c9c;
-	border-left-width:2px;
+	border-left-width:1px;
 	border-left-style:solid;
 	border-right-color:#9c9c9c;
 	border-right-width:1px;
@@ -472,7 +602,7 @@ a.textSidebox
 	border-bottom-width:1px;
 	border-bottom-style:solid;
 	background-color:#ffffff;
-	padding:5px;
+	padding:2px;
 }
 
 .addBookAlphaLinks
