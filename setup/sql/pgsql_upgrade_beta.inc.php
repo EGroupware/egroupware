@@ -578,13 +578,16 @@
 
     if ($currentver == "0.9.6" || ereg ("^0\.9\.7pre", $currentver)){
       if ($currentver == "0.9.6") {
-      // upgrade code starts here
+        // upgrade code starts here
 
-      // upgrade code ends here
+        // upgrade code ends here
         $currentver = "0.9.7pre1";
         update_version_table();
       }
       if ($currentver == "0.9.7pre1") {
+        // upgrade code starts here
+
+        // upgrade code ends here
         $currentver = "0.9.7pre2";
         update_version_table();
       }
@@ -600,5 +603,5 @@
   v0_9_3to0_9_4();
   v0_9_4to0_9_5();
   v0_9_5to0_9_6();
-  //v0_9_6to0_9_7();
+  v0_9_6to0_9_7();
 ?>
