@@ -16,205 +16,68 @@
   $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  if($REQUEST_METHOD == "POST") {
-  }
-
   $cal_info = new calendar_item;
 
-  for(reset($HTTP_POST_VARS);$key=key($HTTP_POST_VARS);next($HTTP_POST_VARS)) {
-    $data = $HTTP_POST_VARS[$key];
-    $cal_info->set($key,$data);
+  if(!isset($readsess)) {
+    for(reset($HTTP_POST_VARS);$key=key($HTTP_POST_VARS);next($HTTP_POST_VARS)) {
+      $data = $HTTP_POST_VARS[$key];
+      $cal_info->set($key,$data);
+    }
+    $phpgw->common->appsession($cal_info);
+    $overlapping_events = $phpgw->calendar->overlap($cal_info->month,$cal_info->day,$cal_info->year,$cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->duration,$cal_info->participants,$cal_info->id);
+  } else {
+    $cal_info = $phpgw->common->appsession();
   }
+  if(count($overlapping_events)) {
+    $phpgw->common->phpgw_header();
+    $phpgw->common->navbar();
+    $phpgw->template->set_file(array("overlap" => "overlap.tpl",
+				   "form_button"     => "form_button_script.tpl"));
 
-  $phpgw->calendar->add($cal_info,$cal_info->id);
+    $phpgw->template->set_block("overlap","form_button");
 
-  // Input time format "2359"
-//  function add_duration($time, $duration)
-//  {
-//    $hour = (int)($time / 10000);
-//    $min = $time % 100;
-//    $minutes = $hour * 60 + $min + $duration;
-//    $h = $minutes / 60;
-//    $m = $minutes % 60;
-//    $ret = sprintf ("%d%02d",$h,$m);
-//    //echo "add_duration ( $time, $duration ) = $ret <BR>";
-//    return $ret;
-//  }
+    $phpgw->template->set_var("color",$phpgw_info["theme"]["bg_text"]);
 
-//  // check to see if two events overlap
-//  function times_overlap($time1, $duration1, $time2, $duration2)
-//  {
-//    //echo "times_overlap ( $time1, $duration1, $time2, $duration2 )<BR>";
-//    $hour1 = (int) ($time1 / 100);
-//    $min1 = $time1 % 100;
-//    $hour2 = (int) ($time2 / 100);
-//    $min2 = $time2 % 100;
-//    // convert to minutes since midnight
-//    $tmins1start = $hour1 * 60 + $min1;
-//    $tmins1end = $tmins1start + $duration1;
-//    $tmins2start = $hour2 * 60 + $min2;
-//    $tmins2end = $tmins2start + $duration2;
-//    //echo "tmins1start=$tmins1start, tmins1end=$tmins1end, tmins2start="
-//    //	 . "$tmins2start, tmins2end=$tmins2end<BR>";
-//
-//    if ($tmins1start >= $tmins2start && $tmins1start <= $tmins2end)
-//       return true;
-//    if ($tmins1end >= $tmins2start && $tmins1end <= $tmins2end)
-//       return true;
-//    if ($tmins2start >= $tmins1start && $tmins2start <= $tmins1end)
-//       return true;
-//    if ($tmins2end >= $tmins1start && $tmins2end <= $tmins1end)
-//       return true;
-//    return false;
-//  }
-//
-//  $phpgw->db->lock(array('webcal_entry','webcal_entry_user','webcal_entry_groups',
-//		         'webcal_entry_repeats'));
-//
-//  // first check for any schedule conflicts
-//  if (strlen($hour) > 0) {
-//    $date = mktime(0,0,0,$month,$day,$year);
-//    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-//      $hour %= 12;
-//      if ($ampm == "pm")
-//	$hour += 12;
-//  }
-//
-//  $sql = "SELECT webcal_entry_user.cal_login, webcal_entry.cal_time," .
-//    "webcal_entry.cal_duration, webcal_entry.cal_name, " .
-//    "webcal_entry.cal_id, webcal_entry.cal_access " .
-//    "FROM webcal_entry, webcal_entry_user " .
-//    "WHERE webcal_entry.cal_id = webcal_entry_user.cal_id " .
-//    "AND webcal_entry.cal_date = " . date("Ymd", $date) . " AND ( ";
-//
-//  for ($i = 0; $i < count($participants); $i++) {
-//    if ($i) $sql .= " OR ";
-//    $sql .= " webcal_entry_user.cal_login = '" . $participants[$i] . "'";
-//  }
-//  $sql .= " )";
-//
-//  $phpgw->db->query($sql);
-//  $time1 = sprintf("%d:%02d", $hour, $minute);
-//  $duration1 = sprintf("%d", $duration);
-//
-//  while ($phpgw->db->next_record()) {
-//    // see if either event overlaps one another
-//    if ($phpgw->db->f(4) != $id) {
-//       $time2 = $phpgw->db->f(1);
-//       $duration2 = $phpgw->db->f(2);
-//       if (times_overlap($time1, $duration1, $time2, $duration2)) {
-//          $overlap .= "<LI>";
-//          if ($phpgw->db->f(5) == 'R' && $phpgw->db->f(0) != $login)
-//             $overlap .=  "(PRIVATE)";
-//          else {
-//            $overlap .=  "<A HREF=\"".$phpgw->link("view.php",
-//				"id=".$phpgw->db->f(4))."\">"
-//		     . $phpgw->db->f(3) . "</A>";
-//          }
-//          $overlap .= " (" . display_time($time2);
-//          if ($duration2 > 0)
-//             $overlap .= "-" . display_time(add_duration($time2,$duration2))
-//		       . ")";
-//        }
-//      }
-//    }
-//  }
-//
-//if ($overlap)
-//  $error = lang("The following conflicts with the suggested time:<ul>x</ul>",
-//				 $overlap);
-//
-//if (! $error) {
-//  // now add the entries
-//
-//  if ($id != 0) {
-//    $phpgw->db->query("DELETE FROM webcal_entry WHERE cal_id = $id");
-//    $phpgw->db->query("DELETE FROM webcal_entry_user WHERE cal_id = $id");
-//    $phpgw->db->query("DELETE FROM webcal_entry_repeats WHERE cal_id = $id");
-//    $phpgw->db->query("DELETE FROM webcal_entry_groups WHERE cal_id = $id");
-//  }
-//
-//  $sql = "INSERT INTO webcal_entry (cal_owner, cal_date, " .
-//    "cal_time, cal_mod_date, cal_mod_time, cal_duration, cal_priority, " .
-//    "cal_access, cal_type, cal_name, cal_description ) " .
-//    "VALUES ('" . $phpgw_info["user"]["account_id"] . "', ";
-//
-//  $date = mktime(0,0,0,$month,$day,$year);
-//  $sql .= date("Ymd", $date) . ", ";
-//  if (strlen($hour) > 0) {
-//    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-//      $hour %= 12;
-//      if ($ampm == "pm")
-//       $hour += 12;
-//    }
-//    $sql .= sprintf("%02d%02d00, ",$hour,$minute);
-//  } else
-//    $sql .= "'-1', ";
-//
-//  $sql .= date("Ymd") . ", " . date("Gis") . ", ";
-//  $sql .= sprintf("%d, ",$duration);
-//  $sql .= sprintf("%d, ",$priority);
-//  $sql .= "'$access', ";
-//
-//  if ($rpt_type != 'none')
-//     $sql .= "'M', ";
-//  else
-//     $sql .= "'E', ";
-//     
-//  if (strlen($name) == 0)
-//     $name = "Unnamed Event";
-//
-//  $sql .= "'" . addslashes($name) .  "', ";
-//  if (! $description)
-//     $sql .= "'" . addslashes($name) . "')";
-//  else
-//     $sql .= "'" . addslashes($description) . "' )";
-//  
-//  $error = "";
-//  $phpgw->db->query($sql);
-//
-//  $phpgw->db->query("SELECT MAX(cal_id) FROM webcal_entry");
-//  $phpgw->db->next_record();
-//  $id = $phpgw->db->f(0);
-//  
-//  while ($participant = each($participants)) {
-//      $phpgw->db->query("INSERT INTO webcal_entry_user (cal_id,cal_login,cal_status ) "
-//	                  . "VALUES ($id, '" . $participant[1] . "', 'A')");
-//  }
-//  
-//  if (strlen($rpt_type) || ! strcmp($rpt_type,'none') == 0) {
-//     // clearly, we want to delete the old repeats, before inserting new...
-//     $phpgw->db->query("delete from webcal_entry_repeats where cal_id='$id'");
-//     $freq = ($rpt_freq?$rpt_freq:1);
-//
-//     if ($rpt_end_use) {
-//	$end = "'" . date("Ymd",mktime(0,0,0,$rpt_month,$rpt_day,$rpt_year))
-//	     . "'";
-//     } else
-//	$end = 0;
-//
-//     if ($rpt_type == 'weekly') {
-//	$days = ($rpt_sun?'y':'n')
-//	      . ($rpt_mon?'y':'n')
-//	      . ($rpt_tue?'y':'n')
-//	      . ($rpt_wed?'y':'n')
-//	      . ($rpt_thu?'y':'n')
-//	      . ($rpt_fri?'y':'n')
-//	      . ($rpt_sat?'y':'n');
-//     } else {
-//	$days = "nnnnnnn";
-//     }
-//
-//     $phpgw->db->query("insert into webcal_entry_repeats (cal_id,cal_type,"
-//	                 . "cal_end,cal_days,cal_frequency) values($id,'$rpt_type',"
-//	                 . "$end,'$days',$freq)");
-//  }
-//  $phpgw->db->query("insert into webcal_entry_groups values ($id,'"
-//	              . $phpgw->accounts->array_to_string($access,$n_groups) . "') ");
-//
-//  
-  Header("Location: ".$phpgw->link("index.php","year=$year&month=$month&cd=14"));
+    $time = $phpgw->calendar->fixtime($cal_info->hour,$cal_info->minute,$cal_info->ampm);
+    $calendar_overlaps = $phpgw->calendar->getevent($overlapping_events);
 
-$phpgw->common->phpgw_footer();
+    $overlap = "";
+    for($i=0;$i<count($calendar_overlaps);$i++) {
+      $cal_over = $calendar_overlaps[$i];
+      if($cal_over) {
+	$overlap .= "<li>";
+	if(strtoupper($cal_over->access) == "PRIVATE")
+	  $overlap .= "(PRIVATE)";
+	else
+	  $overlap .= $phpgw->calendar->link_to_entry($cal_over->id,"circle.gif",$cal_over->name);
+	$disp_start_time = $phpgw->calendar->build_time_for_display($phpgw->calendar->fixtime($cal_over->hour,$cal_over->minute,$cal_over->ampm));
+	$disp_stop_time = $phpgw->calendar->build_time_for_display($phpgw->calendar->addduration($cal_over->hour,$cal_over->minute,$cal_over->ampm,$cal_over->duration));
+	$overlap .= " (".$disp_start_time." - ".$disp_stop_time.")<br>";
+      }
+    }
+    if(strlen($overlap)) {
+      $phpgw->template->set_var("overlap_text",lang("Your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:",$phpgw->calendar->build_time_for_display($time),$phpgw->calendar->build_time_for_display($phpgw->calendar->addduration($cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->duration))));
+      $phpgw->template->set_var("overlap_list",$overlap);
+    } else {
+      $phpgw->template->set_var("overlap_text","");
+      $phpgw->template->set_var("overlap_list","");
+    }
+
+    $phpgw->template->set_var("action_url_button",$phpgw->link("","readsess=".$cal_info->id));
+    $phpgw->template->set_var("action_text_button",lang("Ignore Conflict"));
+    $phpgw->template->set_var("action_confirm_button","");
+    $phpgw->template->parse("resubmit_button","form_button");
+
+    $phpgw->template->set_var("action_url_button",$phpgw->link("edit_entry.php","readsess=".$cal_info->id));
+    $phpgw->template->set_var("action_text_button",lang("Re-Edit New Event"));
+    $phpgw->template->set_var("action_confirm_button","");
+    $phpgw->template->parse("reedit_button","form_button");
+
+    $phpgw->template->pparse("out","overlap");
+  } else {
+    $phpgw->calendar->add($cal_info,$cal_info->id);
+    Header("Location: ".$phpgw->link("index.php","year=$year&month=$month&cd=14"));
+  }
+  $phpgw->common->phpgw_footer();
 ?>
 

@@ -165,9 +165,6 @@
     $phpgw->template->set_var("action_text_button",lang("Delete"));
     $phpgw->template->set_var("action_confirm_button","onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"");
     $phpgw->template->parse("delete_button","form_button");
-
-//    $phpgw->template->set_var("edit","<a href=\"".$phpgw->link("edit_entry.php","id=$id")."\">".lang("Edit")."</a>");
-//    $phpgw->template->set_var("delete","<a href=\"".$phpgw->link("delete.php","id=$id")."\" onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."');\">".lang("Delete")."</a>");
   } else {
     $phpgw->template->set_var("edit_button","");
     $phpgw->template->set_var("delete_button","");

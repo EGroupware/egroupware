@@ -34,6 +34,9 @@
       $cal_info->rpt_month = $rpt_date["month"];
       $cal_info->rpt_day = $rpt_date["day"];
     }
+  } else if(isset($readsess)) {
+    $cal_info = $phpgw->common->appsession();
+    $can_edit = true;
   } else {
     $can_edit = true;
 
@@ -99,7 +102,7 @@
   if($can_edit) {
     $phpgw->template->set_var("action_url",$phpgw->link("edit_entry_handler.php"));
 
-    $common_hidden = "<input type=\"hidden\" name=\"id\" value=\"".$id."\">\n";
+    $common_hidden = "<input type=\"hidden\" name=\"id\" value=\"".$cal_info->id."\">\n";
 
     $phpgw->template->set_var("common_hidden",$common_hidden);
 
