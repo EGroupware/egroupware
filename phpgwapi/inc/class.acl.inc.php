@@ -367,7 +367,7 @@ It should use the values in the $this->data
 		@param $account_id account id
 		*/
     function delete_repository($app, $location, $accountid = ''){
-      $account_id = get_account_type($accountid,$this->account_id);
+      $account_id = get_account_id($accountid,$this->account_id);
       $sql = "delete from phpgw_acl where acl_appname like '".$app."'"
            . " and acl_location like '".$location."' and "
            . " acl_account = ".$account_id;
