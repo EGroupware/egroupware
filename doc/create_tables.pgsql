@@ -39,8 +39,9 @@ create table accounts (
   unique(account_lid)
 );
 
-insert into accounts (account_ld,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,
-status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1,','A');
+insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,
+account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',
+':admin:email:todo:addressbook:calendar:',',1,','A');
 
 create table groups (
   group_id     serial,
