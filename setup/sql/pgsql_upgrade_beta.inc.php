@@ -2169,6 +2169,17 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.008';
 	}
 
+	$test[] = '0.9.11.008';
+	function upgrade0_9_11_008()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("drop table profiles",__LINE__,__TABLE__);
+		$phpgw_setup->db->query("drop sequence profiles_con_seq",__LINE__,__TABLE__);
+		
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.009';
+	}
+
     reset ($test);
     while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

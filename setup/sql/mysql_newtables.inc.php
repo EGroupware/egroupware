@@ -94,19 +94,6 @@
   )";
   $phpgw_setup->db->query($sql);  
 
-	// Note: This table will be removed durring 0.9.11
-  $sql = "CREATE TABLE profiles (
-    con int(11) DEFAULT '0' NOT NULL auto_increment,
-    owner varchar(20),
-    title varchar(255),
-    phone_number varchar(255),
-    comments text,
-    picture_format varchar(255),
-    picture blob,
-    PRIMARY KEY (con)
-  )";
-  $phpgw_setup->db->query($sql);  
-
   $sql = "CREATE TABLE phpgw_addressbook (
      id    int(8) NOT NULL auto_increment,
      lid   varchar(32),
