@@ -172,9 +172,10 @@
 
   $i = 0;
   $sorted_apps = $phpgw_info["apps"];
-  @asort($sorted_apps);
-  @reset($sorted_apps);
-  while ($permission = each($sorted_apps)) {
+  echo "TEST: " . gettype($phpgw_info);
+//  @asort($sorted_apps);
+//  @reset($sorted_apps);
+  while ($permission = each($phpgw_info["apps"])) {
      if ($permission[1]["enabled"]) {
         $perm_display[$i][0] = $permission[0];
         $perm_display[$i][1] = $permission[1]["title"];

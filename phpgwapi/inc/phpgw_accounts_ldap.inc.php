@@ -210,7 +210,7 @@
        return $return_apps;  
     }
 */
-    // This works a little odd, but it is required for apps to be listed in the correct order.
+   // This works a little odd, but it is required for apps to be listed in the correct order.
     // We first take an array of apps in the correct order and give it a value of 1.  Which local means false.
     // After the app is verified, it is giving the value of 2, meaning true.
     function read_apps($lid)
@@ -218,12 +218,17 @@
        global $phpgw, $phpgw_info;
        
        $db2 = $phpgw->db;
-       
-       $db2->query("select app_name,app_enabled from applications where app_enabled != 0 order by app_order",__LINE__,__FILE__);
+
+       $db2->query("select * from applications where app_enabled != '0'",__LINE__,__FILE__);
        while ($db2->next_record()) {
-         $enabled_apps[$db2->f("app_name")] = 1;
-         $app_status[$db2->f("app_name")]   = $db2->f("app_status");
-       }
+          $name   = $db2->f("app_name");
+          $title  = $db2->f("app_title");
+          $status = $db2->f("app_enabled");
+          $phpgw_info["apps"][$name] = array("title" => $title, "enabled" => True, "status" => $status);
+ 
+          $enabled_apps[$db2->f("app_name")] = 1;
+          $app_status[$db2->f("app_name")]   = $db2->f("app_status");
+       } 
 
        if (gettype($lid) == "integer") {
           $db2->query("select account_permissions from accounts where account_id=$lid",__LINE__,__FILE__);
@@ -297,10 +302,14 @@
        return $accounts;
     }
 
-    function accounts_const()
+    function accounts_const($line,$file)
     {
        global $phpgw, $phpgw_info;
-    
+       
+       //echo "accounts_const called<br>line: $line<br>$file";
+
+       $phpgw->accounts->phpgw_fillarray();
+       $phpgw->preferences->read_preferences();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
        $this->apps   = $this->read_apps($phpgw_info["user"]["userid"]);
        
