@@ -33,19 +33,20 @@
 		return $phpgw->db->f(0);
 	}
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$p = new Template(PHPGW_APP_TPL);
 	$p->set_file(array(
-		'list'      => 'groups.tpl',
-		'row'       => 'groups_row.tpl',
-		'empty_row' => 'accounts_row_empty.tpl'
+		'groups'   => 'groups.tpl',
 	));
+	$p->set_block('groups','list','list');
+	$p->set_block('groups','row','row');
+	$p->set_block('groups','row_empty','row_empty');
 
 	$total = account_total($query);
  
 	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
-	$p->set_var('left_nextmatchs',$phpgw->nextmatchs->left('/admin/groups.php',$start,$total));
-	$p->set_var('right_nextmatchs',$phpgw->nextmatchs->right('/admin/groups.php',$start,$total));
+	$p->set_var('left_next_matchs',$phpgw->nextmatchs->left('/admin/groups.php',$start,$total));
+	$p->set_var('right_next_matchs',$phpgw->nextmatchs->right('/admin/groups.php',$start,$total));
 	$p->set_var('lang_groups',lang('user groups'));
 
 	$p->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"/admin/groups.php",lang("name")));
