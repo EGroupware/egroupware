@@ -25,12 +25,9 @@
 	{
 		$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql';
 	}
-	if (!isset($GLOBALS['phpgw_info']['server']['use_adodb']) || $GLOBALS['phpgw_info']['server']['use_adodb'])
-	{
-		include_once(PHPGW_API_INC.'/adodb/adodb.inc.php');
-	}
+	include_once(PHPGW_API_INC.'/adodb/adodb.inc.php');
 
-	class db_
+	class db
 	{
 		/**
 		* @var string $type database type
@@ -264,12 +261,6 @@
 			if (!isset($str) || $str == '')
 			{
 				return '';
-			}
-			// REMOVE-IF-ONLY-ADODB
-			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
-			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
-			{
-				return addslashes($str);
 			}
 			if (!$this->Link_ID && !$this->connect())
 			{
@@ -817,12 +808,6 @@
 			{
 				return False;
 			}
-			// REMOVE-IF-ONLY-ADODB
-			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
-			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
-			{
-				return array();
-			}
 			return $this->Link_ID->MetaPrimaryKeys($tablename);
 		}
 
@@ -884,12 +869,6 @@
 		{
 			$args = func_get_args();
 
-			// REMOVE-IF-ONLY-ADODB
-			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
-			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
-			{
-				return $this->Type == 'mysql' ? 'concat('.implode(',',$args).')' : implode('||',$args);
-			}
 			if (!$this->Link_ID && !$this->connect())
 			{
 				return False;
@@ -951,12 +930,6 @@
 				case 'int':
 				case 'auto':
 					return (int) $value;
-			}
-			// REMOVE-IF-ONLY-ADODB
-			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
-			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
-			{
-				return "'" . (!isset($value) || $value == '' ? '' : addslashes($value)) . "'";
 			}
 			if (!$this->Link_ID && !$this->connect())
 			{
@@ -1251,14 +1224,3 @@
 			return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : 0);
 		}
 	}
-
-	// REMOVE-IF-ONLY-ADODB
-	if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) && !$GLOBALS['phpgw_info']['server']['use_adodb'])
-	{
-		include(PHPGW_API_INC.'/class.db_'.$GLOBALS['phpgw_info']['server']['db_type'].'.inc.php');
-	}
-	else
-	{
-		class db extends db_{}
-	}
-?>
