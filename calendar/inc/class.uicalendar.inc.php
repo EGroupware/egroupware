@@ -1641,7 +1641,7 @@
 			{
 				// If we reach this, it is because they didn't search for anything,
 				// attempt to send them back to where they where.
-				Header('Location: ' . $GLBOALS['phpgw']->link($from));
+				Header('Location: ' . $GLOBALS['phpgw']->link($from));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
