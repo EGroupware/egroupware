@@ -8,7 +8,5 @@
 	);
 
 	//Do not modify below this line
-	global $menuData;
-
-	$menuData[] = $data;
+	$GLOBALS['menuData'][] = $data;
 ?>

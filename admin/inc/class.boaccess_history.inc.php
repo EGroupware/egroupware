@@ -20,8 +20,6 @@
 
 		function list_history($account_id,$start,$order,$sort)
 		{
-			global $phpgw;
-
 			$records = $this->so->list_history($account_id,$start,$order,$sort);
 			while (is_array($records) && list(,$record) = each($records))
 			{
@@ -44,12 +42,12 @@
 
 				if ($record['li'])
 				{
-					$record['li'] = $phpgw->common->show_date($record['li']);
+					$record['li'] = $GLOBALS['phpgw']->common->show_date($record['li']);
 				}
 
 				if ($record['lo'] != '')
 				{
-					$record['lo'] = $phpgw->common->show_date($record['lo']);
+					$record['lo'] = $GLOBALS['phpgw']->common->show_date($record['lo']);
 				}
 
 				if (ereg('@',$record['loginid']))
@@ -72,10 +70,9 @@
 
 		function grab_fullname($account_id)
 		{
-			global $phpgw;
 			$acct = createobject('phpgwapi.accounts',$account_id);
 			$acct->read_repository();
-			return $phpgw->common->display_fullname($acct->data['account_lid'],$acct->data['firstname'],$acct->data['lastname']);
+			return $GLOBALS['phpgw']->common->display_fullname($acct->data['account_lid'],$acct->data['firstname'],$acct->data['lastname']);
 		}
 
 		function total($account_id)

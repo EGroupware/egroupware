@@ -52,23 +52,23 @@
 			{
 				if (!empty($value['extradata']))
 				{
-					$link = $phpgw->link($value['url'],'account_id=' . $account_id . '&' . $value['extradata']);
+					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $account_id . '&' . $value['extradata']);
 				}
 				else
 				{
-					$link = $phpgw->link($value['url'],'account_id=' . $account_id);
+					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $account_id);
 				}
 				$this->section_item($link,lang($value['description']),$this->rowColor[$i%2]);
 				$i++;
 			}
 
-			$this->t->set_var('th_bg',$phpgw_info["theme"]["th_bg"]);
+			$this->t->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 
-			$this->t->set_var('link_done',$phpgw->link('/admin/accounts.php'));
+			$this->t->set_var('link_done',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
 			$this->t->set_var('lang_done',lang('back'));
 			$this->t->set_var('row_on',$this->rowColor[0]);
 
-			$this->t->parse("out","menu_links");
+			$this->t->parse('out','menu_links');
 			
 			return $this->t->get('out','menu_links');
 		}
@@ -76,41 +76,39 @@
 		// create the html code for the menu
 		function createHTMLCode($_hookname)
 		{
-			global $phpgw, $menuData;
-			
 			switch ($_hookname)
 			{
-				case 'edit_account':
-					$menuData[] = Array
+				case 'edit_user':
+					$GLOBALS['menuData'][] = Array
 					(
 						'description'	=> 'userdata',
-						'url'		=> '/admin/editaccount.php',
-						'extradata'	=> ''
+						'url'		=> '/index.php',
+						'extradata'	=> 'menuaction=admin.uiaccounts.edit_user'
 					);
 					break;
-				case 'view_account':
-					$menuData[] = Array
+				case 'view_user':
+					$GLOBALS['menuData'][] = Array
 					(
 						'description'	=> 'userdata',
-						'url'		=> '/admin/viewaccount.php',
-						'extradata'	=> ''
+						'url'		=> '/index.php',
+						'extradata'	=> 'menuaction=admin.uiaccounts.view_user'
 					);
 					break;
 			}
 			
-			$phpgw->common->hook($_hookname);
+			$GLOBALS['phpgw']->common->hook($_hookname);
 
-			if (count($menuData) > 1) 
+			if (count($GLOBALS['menuData']) > 1) 
 			{
-				$result = $this->display_section($menuData);
+				$result = $this->display_section($GLOBALS['menuData']);
 				//clear $menuData
-				$menuData = '';
+				$GLOBALS['menuData'] = '';
 				return $result;
 			}
 			else
 			{
 				// clear $menuData
-				$menuData = '';
+				$GLOBALS['menuData'] = '';
 				return '';
 			}
 		}
