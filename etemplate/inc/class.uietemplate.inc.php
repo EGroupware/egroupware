@@ -933,6 +933,10 @@
 					}
 					if ($cell['type'] == 'groupbox')
 					{
+						if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label || (int)$cell['no_lang'] == 2))
+						{
+							$label = lang($label);
+						}
 						$html = $this->html->fieldset($html,$label);
 					}
 					if ($box_anz > 1)	// a single cell is NOT placed into a table
