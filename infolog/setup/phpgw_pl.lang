@@ -103,6 +103,7 @@ enter a custom contact, leave empty if linked entry should be used	infolog	pl	wp
 enter a custom phone/email, leave empty if linked entry should be used	infolog	pl	wprowad¼ telefon/email; zostaw puste, je¿eli maj± byæ u¿yte dane podlinkowanego kontaktu
 enter a textual description of the log-entry	infolog	pl	wprowadx tekstowy opis lugu wpisu
 enter the query pattern	infolog	pl	Wprowad¼ wzorzec zapytania
+entry and all files	infolog	pl	Wej¶cie i wszystkie pliki
 existing links	infolog	pl	Istniej±ce linki
 fax	infolog	pl	Fax
 fieldseparator	infolog	pl	Separator pól
@@ -181,6 +182,7 @@ private	infolog	pl	Prywatne
 project	infolog	pl	Projekt
 re:	infolog	pl	Odp:
 read one record by passing its id.	infolog	pl	Odczytaj jeden rekord przekazuj±c jego id.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pl	reg. expr. dla lokalnych IP<br>eg. ^192\.168\.1\.
 reject	infolog	pl	odrzuæ
 remark	infolog	pl	Przypomnienie
 remove this link (not the entry itself)	infolog	pl	Usuñ ten link (ale nie wpis)
@@ -211,14 +213,18 @@ show list of upcoming entries	infolog	pl	poka¿ listê wpisów, które maj± mieæ mie
 show open entries: tasks/calls/notes on main screen	infolog	pl	Pokazuje otwarte wpisy: Zadania/Rozmowy/Notatki na stronie g³ównej
 show open events: tasks/calls/notes on main screen	infolog	pl	Wy¶wietlaj otwarte zdarzenia na stronie g³ównej
 small view	infolog	pl	widok uproszczony
+start a new search, cancel this link	infolog	pl	zacznij nowe wyszukiwanie, anuluj ten link
 startdate	infolog	pl	Pocz±tek
 startdate enddate	infolog	pl	Data pocz±tku, data zakoñczenia
+startrecord	infolog	pl	Pocz±tkowy rekord
 status	infolog	pl	Status
 status ...	infolog	pl	Status ...
 sub	infolog	pl	Podrz.
 subject	infolog	pl	Temat
 task	infolog	pl	Zadanie
 test import (show importable records <u>only</u> in browser)	infolog	pl	Import testowy (pokazuje importowane rekordy <u>tylko</u> w przegl±darce!)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pl	nazwa u¿yta wewntêtrznie (<= 10 znaków), zmiana spowoduje niedostêpno¶æ istniej±cych danych
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pl	nazwa u¿yta wewntêtrznie (<= 20 znaków), zmiana spowoduje niedostêpno¶æ istniej±cych danych
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	pl	nazwa u¿yta wewnêtrznie (<= 32 znaków), jej zmiana spowoduje, ¿e wprowadzone dane bêda niedostepne
 the text displayed to the user	infolog	pl	tekst wy¶wietlany u¿ytkownikowi
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pl	Ten filtr jest domy¶lnie u¿ywany przez CRM Dziennik po wej¶ciu do aplikacji. Filtry ograniczaj± ilo¶æ wpisów w bie¿±cym widoku. Dostepne filtry pokazuj± tylko zakoñczone, wci±¿ otwarte lub nadchodz±ce wydarzenia, Twoje lub wszystkich u¿ytkowników.
@@ -246,9 +252,12 @@ view parent	infolog	pl	Zobacz rodzica
 view subs	infolog	pl	zobacz podrzêdne
 view the parent of this entry and all his subs	infolog	pl	Zoabcz rodzica tego wpisu i wszystkie wpisy podrzêdne
 view this linked entry in its application	infolog	pl	zoabcz podlinkowany wpis w jego aplikacji (np. w Ksi±¿ce Adresowej dla kontaktu)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	kiedy zadanie lub telefon powinno wystartowaæ, to pokazuje z tej daty w filtrze otwartym lub  jego otwartym (strona startowa)
 will-call	infolog	pl	zadzwoni
+write (add or update) a record by passing its fields.	infolog	pl	Zapisz (dodaj lub uaktualnij) zapis przez przechodzenie po jego polach
 yes - delete	infolog	pl	Tak - Usuñ
+you can't delete one of the stock types !!!	infolog	pl	Nie mo¿esz usun±æ jesdnego z typów!!!
 you have entered an invalid ending date	infolog	pl	Poda³e¶ niepoprawn± datê zakoñczenia
 you have entered an invalid starting date	infolog	pl	Poda³e¶ niepoprawn± datê rozpoczêcia
-you have to enter a name, to create a new typ!!!	infolog	pl	Aby stworzyæ nowy typ, musisz podaæ nazwê!!!!
+you have to enter a name, to create a new typ!!!	infolog	pl	Aby stworzyæ nowy typ, musisz podaæ nazwê!!!
 you must enter a subject or a description	infolog	pl	Musisz podaæ temat lub opis
