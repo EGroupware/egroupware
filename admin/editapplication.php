@@ -12,8 +12,9 @@
   /* $Id$ */
 
   if ($submit) {
-     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
+  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
   $phpgw->template->set_file(array("form"	=> "application_form.tpl"));

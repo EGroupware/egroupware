@@ -21,8 +21,8 @@
      . lang("select different theme") . "</a>";
   echo "<br><a href=\"" . $phpgw->link("settings.php") . "\">"
      . lang("change your settings") . "</a>";
-  echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"
-     . lang("change your profile") . "</a>";
+//  echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"
+//     . lang("change your profile") . "</a>";
 
 
   section_end(); 
