@@ -12,10 +12,9 @@
 
 <!-- BEGIN body -->
    <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_Path_information}</b></td>
+    <td colspan="2"><b>{lang_Path_information}</b></td>
    </tr>
    
-   </tr>
    <tr class="row_off">
     <td>{lang_Enter_the_full_path_for_temporary_files.<br>Examples:_/tmp,_C:\TEMP}:</td>
     <td><input name="newsettings[temp_dir]" value="{value_temp_dir}" size="40"></td>
@@ -57,20 +56,20 @@
    </tr>
 
    <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_Host_information}</b></td>
+    <td colspan="2"><b>{lang_Host_information}</b></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Enter_the_hostname_of_the_machine_on_which_this_server_is_running}:</td>
     <td><input name="newsettings[hostname]" value="{value_hostname}"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enter_your_default_FTP_server}:</td>
     <td><input name="newsettings[default_ftp_server]" value="{value_default_ftp_server}"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Attempt_to_use_correct_mimetype_for_FTP_instead_of_default_'application/octet-stream'}:</td>
     <td>
      <select name="newsettings[ftp_use_mime]">
@@ -80,7 +79,7 @@
     </td>
    </tr>
 <!-- this is not working correct
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Datetime_port.<br>If_using_port_13,_please_set_firewall_rules_appropriately_before_submitting_this_page.<br>(Port:_13_/_Host:_129.6.15.28)}</td>
     <td>
       <select name="newsettings[daytime_port]">
@@ -91,22 +90,22 @@
     </td>
    </tr>
 -->
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enter_your_HTTP_proxy_server}:</td>
     <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Enter_your_HTTP_proxy_server_port}:</td>
     <td><input name="newsettings[httpproxy_port]" value="{value_httpproxy_port}"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enter_your_HTTP_proxy_server_username}:</td>
     <td><input name="newsettings[httpproxy_server_username]" value="{value_httpproxy_server_username}"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Enter_your_HTTP_proxy_server_password}:</td>
     <td><input name="newsettings[httpproxy_server_password]" value="{value_httpproxy_server_password}"></td>
    </tr>
@@ -336,7 +335,7 @@
     </td>
    </tr>
 
-  <tr class="row_off">
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
    <tr class="th">
@@ -367,6 +366,9 @@
       <option value="sql"{selected_file_store_contents_sql}>SQL</option>
      </select>
     </td>
+   </tr>
+   <tr class="row_on">
+    <td colspan="2">&nbsp;</td>
    </tr>
 
 <!-- end from admin -->
