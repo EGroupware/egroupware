@@ -16,6 +16,7 @@ TODO:
 	2 rows each entry
 	don't translate cats in header (eTemplate bug --> Ralf)
 	handle cats and general pics (waiting for cats picures in api)
+	handle select all button --> add actions for selected
 	
 -edit / add
 	handle cats and general pics (waiting for cats picures in api)
@@ -25,6 +26,13 @@ TODO:
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
 	use eTemplates input validation
 	
+	
+acl : the acl realy sucks! it was copied from news_admin and persumaly needs to be rewritten...
+	use of class.db / or even better no dirct access to tables!
+	use of class.acl
+	use of class.eTemplate
+	define admin for each used cat
+	add right 'direct book'
 	
 ----
 if basics are working --> make it scheudable (meeting with ralf)

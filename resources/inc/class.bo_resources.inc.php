@@ -11,6 +11,8 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	
+	/* $Id$ */
+	
 class bo_resources
 {
 	/*var $public_functions = array
@@ -29,6 +31,8 @@ class bo_resources
 		$this->vfs = CreateObject('phpgwapi.vfs');
 		
 // 		print_r($this->cats->return_single(33)); die(); 
+		list($cat) = $this->cats->return_single(33);
+		$cat['data'] = unserialize($cat['data']);
 	}
 
 	/*!
