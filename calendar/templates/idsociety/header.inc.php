@@ -99,7 +99,7 @@
 			'button_value'	=> lang('Go!')
 		);
 		$tpl->set_var($var);
-		$tpl->fp('header_column','form_button_dropdown',True);
+		$tpl->parse('header_column','form_button_dropdown',True);
 	}
 
 	if(count($grants) > 0)

@@ -158,18 +158,21 @@ class calendar__
 			$new_event_datetime = mktime($new_event->start->hour,$new_event->start->min,$new_event->start->sec,$new_event->start->month,$new_event->start->mday,$new_event->start->year) - $this->datetime->tz_offset;
 		}
 
-		for($i=0;$i<count($participants);$i++)
+		while(list($userid,$statusid) = each($participants))
 		{
-			if($participants[$i] != $phpgw_info['user']['account_id'])
+			if(intval($userid) != $phpgw_info['user']['account_id'])
 			{
-				$preferences = CreateObject('phpgwapi.preferences',$participants[$i]);
+//				echo "Msg Type = ".$msg_type."<br>\n";
+//				echo "userid = ".$userid."<br>\n";
+				$preferences = CreateObject('phpgwapi.preferences',intval($userid));
 				$part_prefs = $preferences->read_repository();
 				if(!isset($part_prefs['calendar']['send_updates']) || !$part_prefs['calendar']['send_updates'])
 				{
 					continue;
 				}
-				$part_prefs = $phpgw->common->create_emailpreferences($part_prefs,$participants[$i]);
+				$part_prefs = $phpgw->common->create_emailpreferences($part_prefs,intval($userid));
 				$to = $part_prefs['email']['address'];
+//				echo "Email being sent to: ".$to."<br>\n";
 
 				$phpgw_info['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
 				$phpgw_info['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
@@ -227,41 +230,28 @@ class calendar__
 
 	function prepare_recipients(&$new_event,$old_event)
 	{
-		$old_part_count = count($old_event->participants);
-		for($i=0;$i<$old_part_count;$i++)
+		// Find modified and deleted users.....
+		while(list($old_userid,$old_status) = each($old_event->participants))
 		{
-			$delete = True;
-			$new_part_count = count($new_event->participants);
-			for($k=0;$k<$new_part_count;$k++)
+			if(isset($new_event->participants[$old_userid]))
 			{
-				if($new_event->participants[$k] == $old_event->participants[$i])
-				{
-					$delete = False;
-					$this->modified[] = $new_event->participants[$k];
-					$new_event->status[$k] = $old_event->status[$i];
-				}
+//				echo "Modifying event for user ".$old_userid."<br>\n";
+				$this->modified[intval($old_userid)] = $new_status;
 			}
-			if($delete == True)
+			else
 			{
-				$this->deleted[] = $old_event->participants[$i];
+//				echo "Deleting user ".$old_userid." from the event<br>\n";
+				$this->deleted[intval($old_userid)] = $old_status;
 			}
 		}
-		$new_part_count = count($new_event->participants);
-		for($i=0;$i<$new_part_count;$i++)
+		// Find new users.....
+		while(list($new_userid,$new_status) = each($new_event->participants))
 		{
-			$add = True;
-			$old_part_count = count($old_event->participants);
-			for($k=0;$k<$old_part_count;$k++)
+			if(!isset($old_event->participants[$new_userid]))
 			{
-				if($new_event->participants[$i] == $old_event->participants[$k])
-				{
-					$add = False;
-				}
-			}
-			if($add == True)
-			{
-				$this->added[] = $new_event->participants[$i];
-				$new_event->status[$i] = 'U';
+//				echo "Adding event for user ".$new_userid."<br>\n";
+				$this->added[$new_userid] = 'U';
+				$new_event->participants[$new_userid] = 'U';
 			}
 		}
 		
@@ -399,12 +389,12 @@ class calendar__
 		return $this->fetch_event($this->event->id);
 	}
 	
-	function add_attribute($attribute,$value)
+	function add_attribute($attribute,$value,$element='')
 	{
 		if(is_array($value))
 		{
 			reset($value);
 		}
-		$this->event->$attribute = $value;
+		eval("\$this->event->".$attribute." = ".$value.";"); 
 	}
 }

@@ -200,8 +200,9 @@ class calendar_ extends calendar__
 					{
 						$this->event->users_status = $this->stream->f('cal_status');
 					}
-					$this->event->participants[] = $this->stream->f('cal_login');
-					$this->event->status[] = $this->stream->f('cal_status');
+//					$this->event->participants[$this->stream->f('cal_login')] = $this->stream->f('cal_status');
+//					$this->add_attribute('participants',$this->stream->f('cal_status'),intval($this->stream->f('cal_login')));
+					$this->add_attribute('participants['.intval($this->stream->f('cal_login')).']',$this->stream->f('cal_status'));
 				}
 			}
 		}
@@ -256,10 +257,9 @@ class calendar_ extends calendar__
 		}
 		else
 		{
-			$part_count = count($this->event->participants);
-			for($i=0;$i<$part_count;$i++)
+			while(list($key,$value) = each($this->event->participants))
 			{
-				$this->event->status[$i] = 'U';
+				$this->add_attribute('participants['.intval($key).']','U');
 			}
 			$this->send_update(MSG_ADDED,$this->event->participants,'',$this->event);
 		}
@@ -290,7 +290,7 @@ class calendar_ extends calendar__
 //		return next_recurrence (int stream, int weekstart, array next);
 	}
 
-	function expunge($stream)
+	function expunge()
 	{
 		if(count($this->deleted_events) <= 0)
 		{
@@ -307,7 +307,7 @@ class calendar_ extends calendar__
 		{
 			$event_id = $this->deleted_events[$i];
 
-			$event = $this->fetch_event($stream,$event_id);
+			$event = $this->fetch_event($event_id);
 			$this->send_update(MSG_DELETED,$event->participants,$event);
 
 			for($k=0;$k<count($locks);$k++)
@@ -420,16 +420,12 @@ class calendar_ extends calendar__
 		reset($event->participants);
 		while (list($key,$value) = each($event->participants))
 		{
-			if(intval($value) == intval($this->user))
+			if(intval($key) == intval($this->user))
 			{
-				$status = 'A';
-			}
-			else
-			{
-				$status = $event->status[$key];
+				$value = 'A';
 			}
 			$this->stream->query('INSERT INTO phpgw_cal_user(cal_id,cal_login,cal_status) '
-				. 'VALUES('.$event->id.','.$value.",'".$status."')",__LINE__,__FILE__);
+				. 'VALUES('.$event->id.','.intval($key).",'".$value."')",__LINE__,__FILE__);
 		}
 
 		if($event->recur_type != RECUR_NONE)
@@ -466,14 +462,6 @@ class calendar_ extends calendar__
 		}
 		
 		$this->stream->unlock();
-		return True;
-	}
-
-	function event_set_participants($stream,$participants)
-	{
-		$this->event->participants = Array();
-		reset($participants);
-		$this->event->participants = $participants;
 		return True;
 	}
 

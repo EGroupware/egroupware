@@ -338,6 +338,7 @@ class calendar_ extends calendar__
 			TENTATIVE	=>	'T',
 			ACCEPTED	=>	'A'
 		);
+		$this->add_attribute('status['.$owner.']',$status_code_short[$status]);
 //		$this->stream->query("UPDATE calendar_entry_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
 		return True;
 	}

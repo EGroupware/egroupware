@@ -253,65 +253,62 @@
 	$str .= '>';
 	display_item($p,lang('Private'),$str);
 
-// Participants
-	$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
-	$users = Array();
-	for($i=0;$i<count($accounts);$i++)
+	function build_part_list(&$users,$accounts,$owner)
 	{
-		if(intval($accounts[$i]) != $owner && !isset($users[$accounts[$i]]))
+		global $phpgw;
+		if($accounts == False)
 		{
-			$users[intval($accounts[$i])] = $phpgw->common->grab_owner_name(intval($accounts[$i]));
-			if($phpgw->accounts->get_type(intval($accounts[$i])) == 'g')
+			return;
+		}
+		while(list($index,$id) = each($accounts))
+		{
+			if(intval($id) == $owner)
 			{
-				$group_members = $phpgw->acl->get_ids_for_location(intval($accounts[$i]),1,'phpgw_group');
-				if($group_members != False)
+				continue;
+			}
+			if(!isset($users[intval($id)]))
+			{
+				$users[intval($id)] = $phpgw->common->grab_owner_name(intval($id));
+				if($phpgw->accounts->get_type(intval($id)) == 'g')
 				{
-					for($j=0;$j<count($group_members);$j++)
-					{
-						if($group_members[$j] != $owner && !isset($users[$group_members[$j]]))
-						{
-							$users[$group_members[$j]] = $phpgw->common->grab_owner_name($group_members[$j]);
-						}
-					}
+					build_part_list($users,$phpgw->acl->get_ids_for_location(intval($id),1,'phpgw_group'),$owner);
 				}
 			}
 		}
 	}
 
-	$str = "\n".'   <select name="participants[]" multiple size="5">'."\n";
-	for ($l=0;$l<count($event->participants);$l++)
+// Participants
+	$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
+	$users = Array();
+	build_part_list($users,$accounts,$owner);
+//	unset($users[$owner]);
+echo "Owner = ".$users[$owner]."<br>\n";
+	while(list($key,$status) = each($event->participants))
 	{
-		$parts[$event->participants[$l]] = ' selected';
+		$parts[$key] = ' selected';
 	}
     
+	$str = "\n".'   <select name="participants[]" multiple size="5">'."\n";
 	@asort($users);
 	@reset($users);
 	$user = Array();
-	while ($user = each($users))
+	while (list($id,$name) = each($users))
 	{
-		$userid = intval($user[0]);
-		if($userid != $owner && $phpgw->accounts->exists($userid) == True)
+		if(intval($id) == intval($owner))
 		{
-			$str .= '    <option value="' . $userid . '"'.$parts[$userid].'>('.$phpgw->accounts->get_type($userid).') '.$user[1].'</option>'."\n";
+			continue;
+		}
+		elseif($phpgw->accounts->exists($id) == True)
+		{
+			$str .= '    <option value="' . $id . '"'.$parts[$id].'>('.$phpgw->accounts->get_type($id).') '.$name.'</option>'."\n";
 		}
 	}
 	$str .= '   </select>';
 	display_item($p,lang('Participants'),$str);
 
 // I Participate
-	$participate = False;
-	if($id)
-	{
-		for($i=0;$i<count($event->participants);$i++)
-		{
-			if($event->participants[$i] == $owner)
-			{
-				$participate = True;
-			}
-		}
-	}
 	$str = '<input type="checkbox" name="participants[]" value="'.$owner.'"';
-	if((($id > 0) && ($participate == True)) || !isset($id))
+	if((($id > 0) && isset($event->participants[$owner])) || !isset($id))
 	{
 		$str .= ' checked';
 	}

@@ -179,14 +179,14 @@
 			}
 		}
 
-		$participants = Array();
-		while($parts = each($part))
+//		$participants = Array();
+		while(list($key,$value) = each($part))
 		{
-			$participants[] = $parts[0];
+			$phpgw->calendar->add_attribute('participants['.$key.']','U');
 		}
 
-		reset($participants);
-		$phpgw->calendar->add_attribute('participants',$participants);
+//		reset($participants);
+//		$phpgw->calendar->add_attribute('participants',$participants);
 		$phpgw->calendar->add_attribute('priority',$priority);
 		$event = $phpgw->calendar->event;
 

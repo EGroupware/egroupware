@@ -640,37 +640,41 @@ class calendar extends calendar_
 		for($outer_loop=0;$outer_loop<($this->sorted_events_matching - 1);$outer_loop++)
 		{
 			$outer = $events[$outer_loop];
-			$outer_time = $phpgw->common->show_date($outer->datetime,'Hi');
-			$outer_etime = $phpgw->common->show_date($outer->edatetime,'Hi');
+			$outer_stime = mktime($outer->start->hour,$outer->start->min,$outer->start->sec,$outer->start->month,$outer->start->mday,$outer->start->year) - $this->datetime->tz_offset;
+			$outer_etime = mktime($outer->end->hour,$outer->end->min,$outer->end->sec,$outer->end->month,$outer->end->mday,$outer->end->year) - $this->datetime->tz_offset;
+			$ostime = $phpgw->common->show_date($outer_stime,'Hi');
+			$oetime = $phpgw->common->show_date($outer_etime,'Hi');
 			
-			if($outer->datetime < $datetime)
+			if($outer_stime < $datetime)
 			{
-				$outer_time = 0;
+				$ostime = 0;
 			}
 			
-			if($outer->edatetime > $eod)
+			if($outer_etime > $eod)
 			{
-				$outer_etime = 2359;
+				$oetime = 2359;
 			}
 			
 			for($inner_loop=$outer_loop;$inner_loop<$this->sorted_events_matching;$inner_loop++)
 			{
 				$inner = $events[$inner_loop];
-				$inner_time = $phpgw->common->show_date($inner->datetime,'Hi');
-				$inner_etime = $phpgw->common->show_date($inner->edatetime,'Hi');
+				$inner_stime = mktime($inner->start->hour,$inner->start->min,$inner->start->sec,$inner->start->month,$inner->start->mday,$inner->start->year) - $this->datetime->tz_offset;
+				$inner_etime = mktime($inner->end->hour,$inner->end->min,$inner->end->sec,$inner->end->month,$inner->end->mday,$inner->end->year) - $this->datetime->tz_offset;
+				$istime = $phpgw->common->show_date($inner_stime,'Hi');
+				$ietime = $phpgw->common->show_date($inner_etime,'Hi');
 				
-				if($inner->datetime < $datetime)
+				if($inner_stime < $datetime)
 				{
-					$inner_time = 0;
+					$istime = 0;
 				}
 				
-				if($inner->edatetime > ($datetime + 86399))
+				if($inner_etime > ($datetime + 86399))
 				{
-					$inner_etime = 2359;
+					$ietime = 2359;
 				}
 				
-				if(($outer_time > $inner_time) ||
-					(($outer_time == $inner_time) && ($outer_etime > $inner_etime)))
+				if(($ostime > $istime) ||
+					(($ostime == $istime) && ($oetime > $ietime)))
 				{
 					$temp = $events[$inner_loop];
 					$events[$inner_loop] = $events[$outer_loop];
@@ -714,11 +718,11 @@ class calendar extends calendar_
 
 		if($this->printer_friendly == False)
 		{
-			$month = '<a href="' . $phpgw->link('/calendar/month.php','month='.date('m',$date['raw']).'&year='.date('Y',$date['raw']).'&owner='.$this->owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year . '</a>';
+			$month = '<a href="' . $phpgw->link('/calendar/month.php','month='.$phpgw->common->show_date($date['raw'],'m').'&year='.$phpgw->common->show_date($date['raw'],'Y').'&owner='.$this->owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$phpgw->common->show_date($date['raw'],'Y').'</a>';
 		}
 		else
 		{
-			$month = lang($phpgw->common->show_date($date['raw'],'F')).' '.$year;
+			$month = lang($phpgw->common->show_date($date['raw'],'F')).' '.$phpgw->common->show_date($date['raw'],'Y');
 		}
 
 		$var = Array(
@@ -887,13 +891,13 @@ class calendar extends calendar_
 			$p_g = '';
 			if(count($participants))
 			{
-				for($i=0;$i<count($participants);$i++)
+				while(list($user,) = each($participants))
 				{
-					if($i > 0)
+					if($p_g)
 					{
 						$p_g .= ' OR ';
 					}
-					$p_g .= 'phpgw_cal_user.cal_login='.$participants[$i];
+					$p_g .= 'phpgw_cal_user.cal_login='.$user;
 				}
 			}
 			if($p_g)
@@ -1160,7 +1164,7 @@ class calendar extends calendar_
 		
 		$start = $this->datetime->get_weekday_start($year, $month, $day);
 
-		$this->end_repeat_day = $start + 604800;
+		$this->end_repeat_day = intval(date('Ymd',$start + 604800));
 
 		$cellcolor = $phpgw_info['theme']['row_off'];
 
@@ -1527,14 +1531,19 @@ class calendar extends calendar_
 
 		reset($event->participants);
 		$participating = False;
-		for($j=0;$j<count($event->participants);$j++)
+		$participate = False;
+		while(list($part,$status) = each($event->participants))
 		{
-			if($event->participants[$j] == $this->owner)
+			if($part == $this->owner)
 			{
 				$participating = True;
 			}
+			if($part == $phpgw_info['user']['account_id'])
+			{
+				$participate = True;
+			}
 		}
-  
+
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 
 		$p->set_unknowns('keep');
@@ -1597,14 +1606,6 @@ class calendar extends calendar_
 		$p->set_var($var);
 		$p->parse('row','list',True);
 
-		$participate = False;
-		for($i=0;$i<count($event->participants);$i++)
-		{
-			if($event->participants[$i] == $phpgw_info['user']['account_id'])
-			{
-				$participate = True;
-			}
-		}
 		$var = Array(
 			'field'	=>	lang('Created By'),
 			'data'	=>	$phpgw->common->grab_owner_name($event->owner)
@@ -1648,24 +1649,24 @@ class calendar extends calendar_
 
 		$str = '';
 		reset($event->participants);
-		while (list($key,$value) = each($event->participants))
+		while (list($user,$short_status) = each($event->participants))
 		{
 			if($str)
 			{
 				$str .= '<br>';
 			}
 
-			$status = $this->get_long_status($event->status[$key]);
+			$long_status = $this->get_long_status($short_status);
 			
-			$str .= $phpgw->common->grab_owner_name($event->participants[$key]).' (';
+			$str .= $phpgw->common->grab_owner_name($user).' (';
 			
-			if($event->participants[$key] == $this->owner && $this->check_perms(PHPGW_ACL_EDIT) == True)
+			if($user == $this->owner && $this->check_perms(PHPGW_ACL_EDIT) == True)
 			{
-				$str .= '<a href="'.$phpgw->link('/calendar/edit_status.php','owner='.$this->owner.'&id='.$event->id).'">'.$status.'</a>';
+				$str .= '<a href="'.$phpgw->link('/calendar/edit_status.php','owner='.$this->owner.'&id='.$event->id).'">'.$long_status.'</a>';
 			}
 			else
 			{
-				$str .= $status;
+				$str .= $long_status;
 			}
 			$str .= ')'."\n";
 		}
