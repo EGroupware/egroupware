@@ -731,6 +731,7 @@
 				}
 			}
 			$GLOBALS['phpgw_info']['cal_new_event_id'] = $event['id'];
+			$this->event = $event;
 			return True;
 		}
 
