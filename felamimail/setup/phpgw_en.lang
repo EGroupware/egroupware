@@ -343,6 +343,7 @@ use a signature	felamimail	en	Use a signature
 use a signature?	felamimail	en	Use a signature?
 use addresses	felamimail	en	Use Addresses
 use custom settings	felamimail	en	Use Custom Settings
+use <a href="%1">EmailAdmin</a> to create profiles	felamimail	en	use <a href="%1">EmailAdmin</a> to create profiles
 use javascript or html addressbook?	felamimail	en	Use Javascript or HTML addressbook?
 use smtp auth	admin	en	Use SMTP auth
 users can define their own emailaccounts	admin	en	Users can define their own emailaccounts
