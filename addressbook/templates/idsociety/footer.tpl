@@ -24,9 +24,7 @@
      </td>
      <td width="64%">&nbsp;</td>
      <td width="4%">&nbsp;</td>
-   </tr>
    </form>
-   <tr>
      <td width="16%">
        <div align="left">
          <form action="{import_url}" method="post">
