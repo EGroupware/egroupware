@@ -1,13 +1,13 @@
 Name: eGroupWare
 Version: 0.9.99
-Release: 0.fdr.1.rc5
+Release: 0.fdr.1.rc6
 Epoch: 0
 Summary: eGroupWare is a web-based groupware suite written in php. 
 
 Group: Web/Database
 License: GPL/LGPL
 URL: http://www.egroupware.org/
-Source0: http://download.sourceforge.net/egroupware/eGroupWare-0.9.99.0.fdr.1.rc5.tar.gz
+Source0: http://download.sourceforge.net/egroupware/eGroupWare-0.9.99.0.fdr.1.rc6.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires: php php-mysql php-imap php-xmlrpc
 
@@ -52,7 +52,7 @@ cp -aRf * $RPM_BUILD_ROOT/var/www/html/egroupware
     echo "* the follow lines to you httpd.conf              *"
     echo "*                                                 *"
     echo "* <Directory /var/www/html/egroupware>            *"
-    echo "*   <Files ~ "\.inc\.php$|.tpl$">                 *"
+    echo "*   <Files ~ "\.\(inc.php\|tpl\)$">               *"
     echo "*      Order allow,deny                           *"
     echo "*      Deny from all                              *"
     echo "*    </Files>                                     *"
@@ -67,6 +67,16 @@ cp -aRf * $RPM_BUILD_ROOT/var/www/html/egroupware
 /var/www/html/egroupware/*
 
 %changelog
+* Thu Jun 29 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.00.fdr.1.rc6
+- JiNN extended.
+- projects updated
+- new knowledge base available
+- new language available Catalan
+- many languages updated
+- bug fixes in all applications
+- extend the usage of indexes for DB tables
+
+
 * Thu Apr 27 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.00.fdr.1.rc5
 - rewrite of projects added.
 - Wiki with WYSIWYG editor added

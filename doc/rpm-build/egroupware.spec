@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 0.9.99.025
+%define version 0.9.99.026
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -351,7 +351,7 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
     echo "* the follow lines to you httpd.conf              *"
     echo "*                                                 *"
     echo "* <Directory /var/www/html/egroupware>            *"
-    echo "*   <Files ~ "\.inc\.php$ \| \.tpl$">             *"
+    echo "*   <Files ~ "\.\(inc.php\|tpl\)$">               *"
     echo "*      Order allow,deny                           *"
     echo "*      Deny from all                              *"
     echo "*    </Files>                                     *"
@@ -504,12 +504,14 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
-* Thu May 21 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.025-1
+* Thu Jun 29 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.026-1
 - JiNN extended. 
 - projects updated
 - new knowledge base available
 - new language available Catalan
-- languages updated
+- many languages updated
+- bug fixes in all applications
+- extend the usage of indexes for DB tables
 
 * Thu Apr 27 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.015-1
 - rewrite of projects added. 

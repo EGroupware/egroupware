@@ -56,6 +56,7 @@ VIRUSSCANFEDORA=$SPECDIR/clamav_scan-$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGIN
 MD5SUM=$SRCDIR/md5sum-$PACKAGENAME-$VERSION-$PACKAGING.txt
 MD5SUMFEDORA=$SRCDIR/md5sum-$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.txt
 
+
 echo "Start Build Process of - $PACKAGENAME $VERSION"                           	 > $LOGFILE
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 date                                                        				>> $LOGFILE 2>&1
@@ -148,9 +149,11 @@ echo "---------------------------------------"                                  
 date                                                                                    >> $LOGFILEFEDORA 2>&1
 cd $ANONCVSDIRFEDORA
 cvs -z3 -d:ext:reinerj@cvs.sourceforge.net:/cvsroot/egroupware co egroupware		>> $LOGFILEFEDORA 2>&1
-cd $ANONCVSDIRFEDORABUILD                                                               >> $LOGFILEFEDORA 2>&1
-cvs co  all                                                                             >> $LOGFILEFEDORA 2>&1
-cvs update -Pd
+echo "must wait to finish this job"
+cd $ANONCVSDIRFEDORABUILD	                                                        >> $LOGFILEFEDORA 2>&1
+cvs co all                                                                              >> $LOGFILEFEDORA 2>&1
+echo "first files are updated and now we must delete the old ones"  			>> $LOGFILEFEDORA 2>&1
+cvs -z9 update -dP 									>> $LOGFILEFEDORA 2>&1
 find . -type d -name CVS | xargs rm -rf
 find . -type d -exec chmod 775 {} \;
 find . -type f -exec chmod 644 {} \;
@@ -174,10 +177,6 @@ rpmbuild -ba --sign $SPECFILEFEDORA                                             
 echo "End Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"        >> $LOGFILEFEDORA 2>&1
 echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
                                                                                                                              
-#cd $ANONCVSDIRFEDORA
-#rm -rf egroupware
-#echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEDORA 2>&1
-#echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
 
 
 ##############################################################################################################
@@ -187,20 +186,16 @@ echo "---------------------------------------"                                  
 ##############################################################################################################
 
 
-echo "Start CVS checkout Bitrock files"                                                  > $LOGFILEBIT
-echo "---------------------------------------"                                          >> $LOGFILEBIT 2>&1
-date                                                                                    >> $LOGFILEBIT 2>&1
+echo "Start build Bitrock packages"	                                                 > $LOGFILEFEBIT
+echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
+date                                                                                    >> $LOGFILEFEBIT 2>&1
 
 cd $ANONCVSDIRFEDORA
-                                                                                                                             
-echo "Start build Bitrock package"                                                       > $LOGFILEBIT
-echo "---------------------------------------"                                          >> $LOGFILEBIT 2>&1
-
+                                                                                                                            
 /opt/installbuilder-1.0.2/bin/builder build /opt/installbuilder-1.0.2/projects/egroupware.xml
 
 rm -rf egroupware
-echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEDORA 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-
+echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1
+echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
 
 
