@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog Admin-, Preferences- and SideboxMenu-Hooks        *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - InfoLog Admin-, Preferences- and SideboxMenu-Hooks          *
+	* http://www.eGroupWare.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* -------------------------------------------------------                  *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -23,7 +23,7 @@ class admin_prefs_sidebox_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$file = array(
-				'infolog index' => $GLOBALS['phpgw']->link('/index.php',array(
+				'infolog list' => $GLOBALS['phpgw']->link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.index' )),
 				'add' => $GLOBALS['phpgw']->link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.edit' ))

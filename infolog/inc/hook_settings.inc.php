@@ -1,7 +1,8 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog Preferences                                               *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - InfoLog Preferences                                         *
+	* http://www.eGroupWare.org                                                *
+	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -21,7 +22,7 @@
 	unset($show_entries);
 
 	create_input_box('Max number of entries to display on the main screen','mainscreen_maxshow',
-					'The maximum number of entries to display on the main screen.','10',3);
+					'Only up to this number of entries are displayed on the main screen.','10',3);
 
 	$ui = CreateObject('infolog.uiinfolog');	// need some labels from
 	foreach($ui->filters as $key => $label)

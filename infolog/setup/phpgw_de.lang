@@ -117,6 +117,7 @@ infolog - import csv-file	infolog	de	InfoLog - Import CSV-Datei
 infolog - new	infolog	de	InfoLog - Anlegen
 infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
 infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
+infolog list	infolog	de	InfoLog Liste
 infolog preferences	common	de	InfoLog Einstellungen
 infolog-fieldname	infolog	de	InfoLog-Feldname
 invalid filename	infolog	de	Ungültiger Dateiname
@@ -133,6 +134,7 @@ list no subs/childs	infolog	de	Untereinträge nicht anzeigen
 longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
+max number of entries to display on the main screen	infolog	de	Wieviele Einträge sollen maximal auf der Startseite angezeigt werden
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
 name of new type to create	infolog	de	Name des neu anzulegenden Types
 new name	infolog	de	neuer name
@@ -152,6 +154,7 @@ offer	infolog	de	Angebot
 ongoing	infolog	de	in Arbeit
 only the attachments	infolog	de	nur die Anhänge
 only the links	infolog	de	nur die Verknüpfungen
+only up to this number of entries are displayed on the main screen.	infolog	de	Nur bis zu dieser Anzahl Einträge wird auf der Startseite angezeigt.
 open	infolog	de	offen
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüfung
 order	infolog	de	Reihenfolge
@@ -196,12 +199,15 @@ should infolog use full names (surname and familyname) or just the loginnames.	i
 should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
 show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
+show list of upcoming entries	infolog	de	Liste zukünftiger Einträge anzeigen
 show open entries: tasks/calls/notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
+small view	infolog	de	schmale Ansicht
 start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Endedatum
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
+status ...	infolog	de	Status ...
 sub	infolog	de	Unter-<br>einträge
 subject	infolog	de	Titel
 task	infolog	de	Auftrag
@@ -217,6 +223,7 @@ translation	infolog	de	Translation
 typ	infolog	de	Typ
 typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
 type	infolog	de	Typ
+type ...	infolog	de	Typ ...
 type of the log-entry: note, phonecall or todo	infolog	de	Typ des Eintrags: Notiz, Anruf oder Auftrag
 unlink	infolog	de	Verküpfung lösen
 upcoming	infolog	de	zukünftig

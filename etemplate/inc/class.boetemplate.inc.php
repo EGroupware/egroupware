@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - EditableTemplates - Buiseness Objects                     *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - EditableTemplates - Buiseness Objects                       *
+	* http://www.eGroupWare.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -605,9 +605,11 @@
 
 		/*!
 		@function set_array
-		@syntax set_array( &$arr,$idx,$val )
-		@author ralfbecker
 		@abstract sets $arr[$idx] = $val
+		@author ralfbecker
+		@syntax set_array( &$arr,$idx,$val )
+		@param $arr array the array to search, referenz as a referenz gets returned
+		@param $idx string the index, may contain sub-indices like a[b], see example below
 		@discussion This works for non-trival indexes like 'a[b][c]' too: $arr['a']['b']['c'] = $val;
 		@author ralfbecker
 		*/
@@ -628,14 +630,16 @@
 
 		/*!
 		@function get_array
-		@syntax get_array( &$arr,$idx )
-		@author ralfbecker
 		@abstract return a var-param to $arr[$idx]
+		@author ralfbecker
+		@syntax get_array( &$arr,$idx,$referenz_into=False )
+		@param $arr array the array to search, referenz as a referenz gets returned
+		@param $idx string the index, may contain sub-indices like a[b], see example below
+		@param $referenz_into boolean default False, if True none-existing sub-arrays/-indices get created to be returned as referenz, else False is returned
 		@example $sub = get_array($arr,'a[b]'); $sub = 'c'; is equivalent to $arr['a']['b'] = 'c';
 		@discussion This works for non-trival indexes like 'a[b][c]' too: it returns &$arr[a][b][c]
-		@author ralfbecker
 		*/
-		function &get_array(&$arr,$idx)
+		function &get_array(&$arr,$idx,$referenz_into=False)
 		{
 			if (!is_array($arr))
 			{
@@ -645,6 +649,10 @@
 			$pos = &$arr;
 			foreach($idxs as $idx)
 			{
+				if (!is_array($pos) && !$referenz_info)
+				{
+					return False;
+				}
 				$pos = &$pos[$idx];
 			}
 			return $pos;
@@ -652,12 +660,13 @@
 
 		/*!
 		@function unset_array
-		@syntax unset_array( &$arr,$idx )
-		@author ralfbecker
 		@abstract unsets $arr[$idx]
+		@author ralfbecker
+		@syntax unset_array( &$arr,$idx )
+		@param $arr array the array to search, referenz as a referenz gets returned
+		@param $idx string the index, may contain sub-indices like a[b], see example below
 		@example unset_array($arr,'a[b]'); is equivalent to unset($arr['a']['b']);
 		@discussion This works for non-trival indexes like 'a[b][c]' too
-		@author ralfbecker
 		*/
 		function unset_array(&$arr,$idx)
 		{

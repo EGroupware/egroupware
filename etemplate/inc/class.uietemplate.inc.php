@@ -329,6 +329,7 @@
 				if (!(list($r_key) = each($this->data)))	// no further row
 				{
 					if (!(($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) ||
+					    (substr($cols['A']['type'],1) == 'box' && $this->autorepeat_idx($cols['A'][1],0,$r,$idx,$idx_cname) && $idx_cname) ||
 						($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname)) ||
 						!$this->isset_array($content,$idx_cname))
 					{
@@ -821,7 +822,7 @@
 					$box_row = 1;
 					$box_col = 'A';
 					$box_anz = 0;
-					for ($n = 1; $n <= $cell_options; ++$n)
+					for ($n = 1; $n <= intval($cell_options); ++$n)
 					{
 						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl);
 						if ($h != '' && $h != '&nbsp;')
@@ -983,7 +984,7 @@
 				{
 					$attr = array();
 				}
-				$value = $this->get_array($content_in,$form_name);
+				$value = $this->get_array($content_in,$form_name,True);
 
 				if (isset($attr['blur']) && $attr['blur'] == stripslashes($value))
 				{
@@ -994,7 +995,7 @@
 				switch ($type)
 				{
 					case 'ext':
-						if (!$this->extensionPostProcess($sub,$form_name,$this->get_array($content,$form_name),$value))
+						if (!$this->extensionPostProcess($sub,$form_name,$this->get_array($content,$form_name,True),$value))
 						{
 							$this->unset_array($content,$form_name);
 						}

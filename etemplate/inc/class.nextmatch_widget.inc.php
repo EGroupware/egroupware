@@ -44,8 +44,8 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
-			//echo "<p>nextmatch_widget.pre_process(name='$name'): value = "; _debug_array($value);
-			//echo "<p>nextmatch_widget.pre_process(name='$name'): nm_global = "; _debug_array($nm_global);
+			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): value = "; _debug_array($value);
+			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): nm_global = "; _debug_array($nm_global);
 
 			$extension_data = array(
 				'type' => $cell['type']
@@ -62,15 +62,15 @@
 					if ($this->last_part($name) == $nm_global['order'])	// we're the active column
 					{
 						$cell[1] = $cell;
-						$cell[1]['span'] = ',activ_sortcolumn';
-						$cell[2] = $tmpl->empty_cell('image',$nm_global['sort']!='DESC'?'down':'up');
+						$cell[1]['span'] .= ',activ_sortcolumn';
+						$cell[2] = $tmpl->empty_cell('image',$nm_global['sort'] != 'DESC' ? 'down' : 'up');
 						$cell['type'] = 'hbox';
 						$cell['size'] = '2,0,0';
 						$cell['name'] = $cell['label'] = '';
 					}
 					else
 					{
-						$cell['span'] = ',inactiv_sortcolumn';
+						$cell['span'] .= ',inactiv_sortcolumn';
 					}
 					return True;
 

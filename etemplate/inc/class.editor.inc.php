@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - eTemplates - Editor                                       *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - eTemplates - Editor                                         *
+	* http://www.eGroupWare.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -646,7 +646,7 @@
 			{
 				return $this->edit('error');
 			}
-         if (!isset($cont['result']) || isset($cont['search']))
+			if (!isset($cont['result']) || isset($cont['search']))
 			{
 				$cont['result'] = $this->etemplate->search($cont);
 			}
