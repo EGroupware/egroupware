@@ -15,8 +15,7 @@
   {
      global $phpgw_info, $phpgw, $PHP_SELF;
 
-     $tpl = new Template($phpgw_info["server"]["template_dir"]);
-     $tpl->set_unknowns("remove");
+		$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 
      $tpl->set_file(array("navbar" => "navbar.tpl"));
 
@@ -88,29 +87,26 @@
         $tpl->set_var("messages",$api_messages . "<br>" . checkcode($cd));
      } */
 
-     // If the application has a header include, we now include it
-     if ($phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"]) {
+		$tpl->pfp('out','navbar');
+		$phpgw->common->hook('after_navbar');
+		return;
+	}
 
-     }
-	$tpl->pfp('out','navbar');
-	$phpgw->common->hook('after_navbar');
-	return;
-  }
+	function parse_navbar_end()
+	{
+		global $phpgw_info, $phpgw;
+		$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 
-  function parse_navbar_end()
-  {
-    global $phpgw_info, $phpgw;
-    $tpl = new Template($phpgw_info["server"]["template_dir"]);
-    $tpl->set_unknowns("remove");
-  
-    $tpl->set_file(array("footer" => "footer.tpl"));
-    $tpl->set_var("img_root",$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/justweb/images");
-    $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
-    $tpl->set_var("version",$phpgw_info["server"]["versions"]["phpgwapi"]);
-    $tpl->set_var("user_info",$phpgw->common->display_fullname() . " - "
-		. lang($phpgw->common->show_date(time(),"l")) . " "
-		. lang($phpgw->common->show_date(time(),"F")) . " "     
-		. $phpgw->common->show_date(time(),"d, Y"));
-	$phpgw->common->hook('navbar_end');
-    echo $tpl->finish($tpl->parse("out","footer"));
-  }
+		$tpl->set_file(array(
+			'footer' => 'footer.tpl'
+		));
+		$tpl->set_var('img_root',$phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/justweb/images');
+		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
+		$tpl->set_var('version',$phpgw_info['server']['versions']['phpgwapi']);
+		$tpl->set_var('user_info',$phpgw->common->display_fullname() . " - "
+			. lang($phpgw->common->show_date(time(),'l')) . " "
+			. lang($phpgw->common->show_date(time(),'F')) . " "     
+			. $phpgw->common->show_date(time(),'d, Y'));
+		$phpgw->common->hook('navbar_end');
+		echo $tpl->pfp('out','footer');
+	}

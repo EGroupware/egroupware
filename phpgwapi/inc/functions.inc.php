@@ -334,10 +334,7 @@
 	* This is a global constant that should be used                              *
 	* instead of / or \ in file paths                                            *
 	\****************************************************************************/
-	define("SEP",filesystem_separator());
-	/* Legacy vars that can be delete after 0.9.11 is release (Seek3r) */
-	$sep = SEP;
-	$phpgw_info['server']['dir_separator'] = SEP;
+	define('SEP',filesystem_separator());
 
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
@@ -376,23 +373,12 @@
 		define('PHPGW_APP_TPL', $phpgw->common->get_tpl_dir());
 		define('PHPGW_IMAGES', $phpgw->common->get_image_path());
 		define('PHPGW_APP_IMAGES_DIR', $phpgw->common->get_image_dir());
+
 		define('PHPGW_ACL_READ',1);
 		define('PHPGW_ACL_ADD',2);
 		define('PHPGW_ACL_EDIT',4);
 		define('PHPGW_ACL_DELETE',8);
 		define('PHPGW_ACL_PRIVATE',16);
-
-		/********* Load up additional phpgw_info["server"] values *********/
-		/* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
-		$phpgw_info['server']['template_dir']     = PHPGW_TEMPLATE_DIR;
-		$phpgw_info['server']['images_dir']       = PHPGW_IMAGES_DIR;
-		$phpgw_info['server']['images_filedir']   = PHPGW_IMAGES_FILEDIR;
-		$phpgw_info['server']['app_root']         = PHPGW_APP_ROOT;
-		$phpgw_info['server']['app_inc']          = PHPGW_APP_INC;
-		$phpgw_info['server']['app_tpl']          = PHPGW_APP_TPL;
-		$phpgw_info['server']['app_images']       = PHPGW_IMAGES;
-		$phpgw_info['server']['app_images_dir']   = PHPGW_IMAGES_DIR;
-		/* END LEGACY SUPPORT!!!*/
 
 		/********* This sets the user variables *********/
 		$phpgw_info['user']['private_dir'] = $phpgw_info['server']['files_dir']

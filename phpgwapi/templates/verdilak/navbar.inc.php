@@ -15,7 +15,7 @@
 	{
 		global $phpgw_info, $phpgw, $PHP_SELF;
 
-		$tpl = createobject('phpgwapi.Template',$phpgw_info['server']['template_dir']);
+		$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 
 		$tpl->set_file(array(
 			'navbar' => 'navbar.tpl'
@@ -125,7 +125,7 @@
 	function parse_navbar_end()
 	{
 		global $phpgw_info, $phpgw;
-		$tpl = createobject('phpgwapi.Template',$phpgw_info['server']['template_dir']);
+		$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
   
 		$tpl->set_file(array(
 			'footer' => 'footer.tpl'
