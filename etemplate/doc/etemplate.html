@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <html>
 <head>
-  <title>phpGroupware: eTemplates - Templates and Dialog-Editor</title>
+  <title>eGroupWare: eTemplates - Templates and Dialog-Editor</title>
 <STYLE type="text/css">
 <!--
 pre { font-family: monospace; background-color: #e0e0e0; padding: 2mm; border-width: thin; border-style: solid; border-color: black; white-space: pre; }
@@ -13,7 +13,7 @@ body { background-color: white; color: black; }
 </STYLE>
 </head>
 <body>
-<h1>eTemplate - Templates and Dialog-Editor for phpGroupware</h1>
+<h1>eTemplate - Templates and Dialog-Editor for eGroupWare</h1>
 <h3>by Ralf Becker <a href="#" onClick="document.location='mai'+'lto:RalfBecker'+unescape('%40')+'outdoor-training'+unescape('%2E')+'de'; return false;">RalfBecker AT outdoor-training DOT de</a></h3>
 <p>A developers tutorial how to write an application with the new eTemplates.<br>
 It is also an introduction how to write a phpgw- and setup(3)-compatible app.</p>
@@ -53,7 +53,7 @@ to edit records and search for them.</p>
 enable your account for using the app (Admin/User account: check eTemplates).</p>
 
 <h2>1. Creating a new phpgw app directory</h2>
-<p>Each app need a name, eg. 'et_media'. We now need to create the following directory structur above the phpgroupware dir:
+<p>Each app need a name, eg. 'et_media'. We now need to create the following directory structur above the eGroupWare dir:
 <pre>
 et_media				<span>that has to be identical to our app-name</span>
 	+ setup				<span>files necessary for the setup Programm, give the webserver write-permission to that dir</span>
@@ -75,7 +75,7 @@ et_media				<span>that has to be identical to our app-name</span>
 	$setup_info['et_media']['enable']    = 1;
 
 	<span>/* Dependencies for this app to work */</span>
-	setup_info['et_media']['depends'][] = array(
+	$setup_info['et_media']['depends'][] = array(
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.14','0.9.15','0.9.16')
 	);
@@ -144,8 +144,8 @@ Create the file <b>/et_media/index.php</b> with the following content:</p>
 <pre>
 &lt;?php
 <span>/**************************************************************************\
-* phpGroupWare - eTemplates - Tutoria Example - a simple MediaDB           *
-* http://www.phpgroupware.org                                              *
+* eGroupWare - eTemplates - Tutoria Example - a simple MediaDB           *
+* http://www.eGroupWare.org                                              *
 * Written by Ralf Becker &lt;RalfBecker AT outdoor-training DOT de>           *
 * --------------------------------------------                             *
 *  This program is free software; you can redistribute it and/or modify it *
@@ -419,7 +419,7 @@ There are 2 possibilties to create it automaticaly:</p>
 	That will omitt our own messages in the class!!!
 <li>We use a function in our class to call etemplate::writeLangFile('et_media','en',$extra) and can so supply some extra strings.<br>
 	If we add this function to the public_functions-array in our class, we can just call this function via the browser:<br>
-	http://ourDomain/phpgroupware/index.php?menuaction=et_media.et_media.writeLangFile (the errormsg can be savely ignored)<br>
+	http://ourDomain/eGroupWare/index.php?menuaction=et_media.et_media.writeLangFile (the errormsg can be savely ignored)<br>
 	This is the function (don't forget to add it like the edit-function to public_functions):
 </ol>
 <p>Anyway we have to use the TranslationTools to find and write the lang()-messages of our code!</p>
