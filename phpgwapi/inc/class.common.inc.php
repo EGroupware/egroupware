@@ -669,6 +669,8 @@
 				{
 					$phpgw_info['navbar'][$permission[0]]['title'] = $phpgw_info['apps'][$permission[0]]['title'];
 					$phpgw_info['navbar'][$permission[0]]['url']   = $phpgw->link('/' . $permission[0] . '/index.php');
+					$phpgw_info['navbar'][$permission[0]]['name']  = $permission[0];
+
 					$icon_file    = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/'. $phpgw_info['server']['template_set']. '/images/navbar.gif';
 					$icon_default = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/default/images/navbar.gif';
 
