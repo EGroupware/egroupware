@@ -100,10 +100,7 @@
 		elseif ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
 			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
 		{
-#			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
-#			$GLOBALS['phpgw']->common->phpgw_exit();
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
 		}
 		else
 		{
