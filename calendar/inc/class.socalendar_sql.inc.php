@@ -268,7 +268,7 @@ class socalendar_ extends socalendar__
 			$member[] = $group_info['account_id'];
 		}
 		@reset($member);
-		$user_where .= ','.implode(',',$member);
+//		$user_where .= ','.implode(',',$member);
 		$user_where .= ')) ';
 
 		if($this->debug)

@@ -82,8 +82,8 @@
 			)
 		);
 
-		var $debug = False;
-//		var $debug = True;
+//		var $debug = False;
+		var $debug = True;
 
 		var $so;
 		var $cached_events;
@@ -121,6 +121,16 @@
 		function bocalendar($session=0)
 		{
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('calendar');
+
+			@reset($this->grants);
+			if($this->debug)
+			{
+				while(list($grantor,$rights) = each($this->grants))
+				{
+					echo '<!-- Grantor: '.$grantor.' Rights: '.$rights.' -->'."\n";
+				}
+				@reset($this->grantor);
+			}
 
 			if($this->debug) { echo '<!-- Read Use_Session : ('.$session.') -->'."\n"; }
 
@@ -328,6 +338,19 @@
 			{
 				$this->g_owner[] = $group_info['account_id'];
 			}
+		}
+
+		function member_of_group()
+		{
+			$group_owners = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
+			while($group_owners && list($index,$group_info) = each($group_owners))
+			{
+				if($this->owner = $group_info['account_id'])
+				{
+					return True;
+				}
+			}
+			return False;
 		}
 
 		function save_sessiondata($data)
@@ -1098,7 +1121,13 @@
 		{
 			if($user == 0)
 			{
-				return !!($this->grants[$this->owner] & $needed);
+				$allowed = !!($this->grants[$this->owner] & $needed);
+				if($this->debug)
+				{
+					echo '<!-- Grantor: '.$this->owner.' Rights: '.$this->grants[$this->owner].' Allowed: '.$allowed.'-->'."\n";
+				}
+				
+				return $allowed;
 			}
 			else
 			{

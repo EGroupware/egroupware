@@ -110,10 +110,10 @@
 				$member[] = $group_info['account_id'];
 			}
 			@reset($member);
-			$sql .= ','.implode(',',$member).') ';
+//			$sql .= ','.implode(',',$member).') ';
 //			$sql .= 'AND (phpgw_cal.datetime <= '.$starttime.') ';
 //			$sql .= 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
-			$sql .= 'AND ((phpgw_cal_repeats.recur_enddate >= '.$starttime.') OR (phpgw_cal_repeats.recur_enddate=0))) '
+			$sql .= ') AND ((phpgw_cal_repeats.recur_enddate >= '.$starttime.') OR (phpgw_cal_repeats.recur_enddate=0))) '
 				. (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'')
 				. ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'')
 				. 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
