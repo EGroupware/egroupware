@@ -340,15 +340,14 @@
 			return $this->so->list_events_keyword($keywords);
 		}
 
-		function update($p_cal=0,$p_participants=0,$p_start=0,$p_end=0,$p_recur_enddata=0)
+		function update($params)
 		{
-			global $HTTP_POST_VARS, $HTTP_GET_VARS;
-			
-			$l_cal = ($p_cal?$p_cal:$HTTP_POST_VARS['cal']);
-			$l_participants = ($p_participants?$p_participants:$HTTP_POST_VARS['participants']);
-			$l_start = ($p_start?$p_start:$HTTP_POST_VARS['start']);
-			$l_end = ($p_end?$p_end:$HTTP_POST_VARS['end']);
-			$l_recur_enddate = ($p_recur_enddate?$p_recur_enddate:$HTTP_POST_VARS['recur_enddate']);
+			$l_cal = ($params['cal']?$params['cal']:$GLOBALS['HTTP_POST_VARS']['cal']);
+			$l_participants = ($params['participants']?$params['participants']:$GLOBALS['HTTP_POST_VARS']['participants']);
+			$l_start = ($params['start']?$params['start']:$GLOBALS['HTTP_POST_VARS']['start']);
+			$l_end = ($params['end']?$params['end']:$GLOBALS['HTTP_POST_VARS']['end']);
+			$l_recur_enddate = ($params['recur_enddate']?$params['recur_enddate']:$GLOBALS['HTTP_POST_VARS']['recur_enddate']);
+			$l_reference = ($params['reference']?$params['reference']:$GLOBALS['HTTP_POST_VARS']['reference']);
 
 			$send_to_ui = True;
 			if($p_cal || $p_participants || $p_start || $p_end || $p_recur_enddata)
@@ -405,6 +404,7 @@
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
 				$this->so->set_end($l_end['year'],$l_end['month'],$l_end['mday'],$l_end['hour'],$l_end['min'],0);
 				$this->so->set_class($is_public);
+				$this->so->add_attribute('reference',($l_reference?$l_reference:0));
 				if($l_cal['id'])
 				{
 					$this->so->add_attribute('id',$l_cal['id']);
@@ -508,12 +508,22 @@
 				   );
 				}
 
+				$event_ids = Array();
+				if($event['id'])
+				{
+					$event_ids[] = $event['id'];
+				}
+				if($event['reference'])
+				{
+					$event_ids[] = $event['reference'];
+				}
+
 				$overlapping_events = $this->overlap(
 												$this->maketime($event['start']) - $this->datetime->tz_offset,
 												$this->maketime($event['end']) - $this->datetime->tz_offset,
 												$event['participants'],
 												$event['owner'],
-												$event['id']
+												$event_ids
 				);
 			}
 
@@ -651,6 +661,7 @@
 			$retval = Array();
 			$ok = False;
 
+/* This needs some attention.. by commenting this chunk of code it will fix bug #444265 */
 			if($starttime == $endtime && $GLOBALS['phpgw']->common->show_date($starttime,'Hi') == 0)
 			{
 				$endtime = mktime(23,59,59,$GLOBALS['phpgw']->common->show_date($starttime,'m'),$GLOBALS['phpgw']->common->show_date($starttime,'d') + 1,$GLOBALS['phpgw']->common->show_date($starttime,'Y')) - $this->datetime->tz_offset;
@@ -673,7 +684,7 @@
 					}
 					if($users)
 					{
-						$p_g .= 'phpgw_cal_user.cal_login in ('.implode(',',$users).')';
+						$p_g .= 'phpgw_cal_user.cal_login IN ('.implode(',',$users).')';
 					}
 				}
 				if($p_g)
@@ -684,7 +695,8 @@
       
 			if($id)
 			{
-				$sql .= ' AND phpgw_cal.cal_id <> '.$id;
+				@reset($id);
+				$sql .= ' AND phpgw_cal.cal_id NOT IN ('.(count($id)==1?$id[0]:implode(',',$id)).')';
 			}
 
 			$sql .= ' ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
@@ -945,7 +957,7 @@
 				for($i=0;$i<count($this->cached_events[$date]);$i++)
 				{
 					$events = $this->cached_events[$date][$i];
-					if($this->cached_events[$date][$i]['id'] == $event['id'])
+					if($this->cached_events[$date][$i]['id'] == $event['id'] || $this->cached_events[$date][$i]['reference'] == $event['id'])
 					{
 						if($this->debug)
 						{
@@ -1195,16 +1207,16 @@
 							{
 								$c_evt_day = 0;
 							}
-//							if($this->debug)
-//							{
-//								echo "Date: ".$j." Count : ".$c_evt_day."<br>\n";
-//							}
+							if($this->debug)
+							{
+								echo "Date: ".$j." Count : ".$c_evt_day."<br>\n";
+							}
 							if($this->cached_events[$j][$c_evt_day]['id'] != $event['id'])
 							{
-//								if($this->debug)
-//								{
-//									echo "Adding Event for Date: ".$j."<br>\n";
-//								}
+								if($this->debug)
+								{
+									echo "Adding Event for Date: ".$j."<br>\n";
+								}
 								$this->cached_events[$j][] = $event;
 							}
 						}
@@ -1228,7 +1240,10 @@
 			$retval = Array();
 			for($j=date('Ymd',mktime(0,0,0,$smonth,$sday,$syear)),$k=0;$j<=date('Ymd',mktime(0,0,0,$emonth,$eday,$eyear));$k++,$j=date('Ymd',mktime(0,0,0,$smonth,$sday + $k,$syear)))
 			{
-				$retval[$j] = $this->cached_events[$j];
+				if(is_array($this->cached_events[$j]))
+				{
+					$retval[$j] = $this->cached_events[$j];
+				}
 			}
 			return $retval;
 //			return $this->cached_events;

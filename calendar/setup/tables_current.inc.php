@@ -25,7 +25,8 @@
 				'cal_type' => array('type' => 'varchar', 'precision' => 10,'nullable' => True),
 				'is_public' => array('type' => 'int', 'precision' => 8,'nullable' => False,'default' => 1),
 				'title' => array('type' => 'varchar', 'precision' => 80,'nullable' => False,'default' => '1'),
-				'description' => array('type' => 'text','nullable' => True)
+				'description' => array('type' => 'text','nullable' => True),
+				'reference' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => 0)
 			),
 			'pk' => array('cal_id'),
 			'fk' => array(),

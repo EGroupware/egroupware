@@ -115,6 +115,7 @@ class socalendar_ extends socalendar__
 			$this->set_category(intval($this->stream->f('category')));
 			$this->set_title($GLOBALS['phpgw']->strip_html($this->stream->f('title')));
 			$this->set_description($GLOBALS['phpgw']->strip_html($this->stream->f('description')));
+			$this->add_attribute('reference',intval($this->stream->f('reference')));
 			
 			// This is the preferred method once everything is normalized...
 			//$this->event->alarm = intval($this->stream->f('alarm'));
@@ -392,7 +393,8 @@ class socalendar_ extends socalendar__
 				. "cal_type='".$type."', "
 				. 'is_public='.$event['public'].', '
 				. "title='".addslashes($event['title'])."', "
-				. "description='".addslashes($event['description'])."' "
+				. "description='".addslashes($event['description'])."', "
+				. 'reference='.$event['reference'].' '
 				. 'WHERE cal_id='.$event['id'];
 				
 		$this->stream->query($sql,__LINE__,__FILE__);

@@ -512,14 +512,37 @@
 
 				if ($this->bo->check_perms(PHPGW_ACL_EDIT))
 				{
-					$var = Array(
-						'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
-						'action_text_button'	=> lang('Edit'),
-						'action_confirm_button'	=> '',
-						'action_extra_field'	=> ''
-					);
-					$p->set_var($var);
-					echo $p->fp('out','form_button');
+					if($event['recur_type'] != MCAL_RECUR_NONE)
+					{
+						$var = Array(
+							'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
+							'action_text_button'	=> lang('Edit Single'),
+							'action_confirm_button'	=> '',
+							'action_extra_field'	=> '<input type="hidden" name="edit_type" value="single">'
+						);
+						$p->set_var($var);
+						echo $p->fp('out','form_button');
+
+						$var = Array(
+							'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
+							'action_text_button'	=> lang('Edit Series'),
+							'action_confirm_button'	=> '',
+							'action_extra_field'	=> '<input type="hidden" name="edit_type" value="series">'
+						);
+						$p->set_var($var);
+						echo $p->fp('out','form_button');
+					}
+					else
+					{
+						$var = Array(
+							'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
+							'action_text_button'	=> lang('Edit'),
+							'action_confirm_button'	=> '',
+							'action_extra_field'	=> ''
+						);
+						$p->set_var($var);
+						echo $p->fp('out','form_button');
+					}
 				}
 
 				if ($this->bo->check_perms(PHPGW_ACL_DELETE))
@@ -539,8 +562,6 @@
 
 		function edit($params='')
 		{
-			global $HTTP_GET_VARS;
-			
 			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
 			{
 			   $this->no_edit();
@@ -557,16 +578,32 @@
 					)
 				);
 			}
-			elseif(isset($HTTP_GET_VARS['cal_id']))
+			elseif(isset($GLOBALS['HTTP_GET_VARS']['cal_id']))
 			{
-				$cal_id = $HTTP_GET_VARS['cal_id'];
-				$event = $this->bo->read_entry(intval($HTTP_GET_VARS['cal_id']));
+				$cal_id = $GLOBALS['HTTP_GET_VARS']['cal_id'];
+				$event = $this->bo->read_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
 				
 				$can_edit = $this->bo->can_user_edit($event);
 				
 				if(!$can_edit)
 				{
-					$this->view(intval($HTTP_GET_VAR['cal_id']));
+					$this->view(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
+				}
+				if(@isset($GLOBALS['HTTP_POST_VARS']['edit_type']) && $GLOBALS['HTTP_POST_VARS']['edit_type'] == 'single')
+				{
+					$event['id'] = 0;
+					$event['start']['month'] = $this->bo->month;
+					$event['start']['mday'] = $this->bo->day;
+					$event['start']['year'] = $this->bo->year;
+					$event['end']['month'] = $this->bo->month;
+					$event['end']['mday'] = $this->bo->day;
+					$event['end']['year'] = $this->bo->year;
+					$event['recur_type'] = MCAL_RECUR_NONE;
+					$event['recur_interval'] = 0;
+					$event['recur_data'] = 0;
+					$event['recur_enddate']['month'] = 0;
+					$event['recur_enddate']['mday'] = 0;
+					$event['recur_enddate']['year'] = 0;
 				}
 				$this->edit_form(
 					Array(
@@ -1521,7 +1558,8 @@
 		
 			if ($editable)
 			{
-				$p->set_var('link_link',$this->page('view','&cal_id='.$event['id']));
+				$date = sprintf('%04d%02d%02d',$year,$month,$day);
+				$p->set_var('link_link',$this->page('view','&cal_id='.$event['id'].'&date='.$date));
 				$p->set_var('lang_view',lang('View this entry'));
 				$p->parse('picture','link_open',True);
 			
@@ -2681,7 +2719,8 @@
 				'calendar_action'	=>	($event['id']?lang('Calendar - Edit'):lang('Calendar - Add')),
 				'action_url'		=>	$GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.bocalendar.update')),
 				'common_hidden'	=>	'<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
-         							. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n",
+         							. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n"
+         							. ($GLOBALS['HTTP_GET_VARS']['cal_id'] && $event['id'] == 0?'<input type="hidden" name="reference" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n":''),
 				'errormsg'			=>	($params['cd']?$GLOBALS['phpgw']->common->check_code($params['cd']):'')
 			);
 			$p->set_var($vars);

@@ -892,6 +892,7 @@
 		$setup_info['calendar']['currentver'] = '0.9.11.011';
 		return $setup_info['calendar']['currentver'];
 	}
+
 	$test[] = '0.9.11.011';
 	function calendar_upgrade0_9_11_011()
 	{
@@ -906,4 +907,16 @@
 		$setup_info['calendar']['currentver'] = '0.9.13.002';
 		return $setup_info['calendar']['currentver'];
 	}
+
+	$test[] = '0.9.13.002';
+	function calendar_upgrade0_9_13_002()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->AddColumn('phpgw_cal','reference',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
+
+		$setup_info['calendar']['currentver'] = '0.9.13.003';
+		return $setup_info['calendar']['currentver'];
+	}
+
 ?>
