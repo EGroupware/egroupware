@@ -42,6 +42,8 @@
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_search',lang('Search'));
     $t->set_var('actionurl',$phpgw->link("/addressbook/categories.php"));
+    $t->set_var('lang_done',lang('Done'));
+    $t->set_var('doneurl',$phpgw->link('/preferences/'));
 
     if (! $start) { $start = 0; }
 

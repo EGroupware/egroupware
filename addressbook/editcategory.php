@@ -50,6 +50,7 @@
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('title_categories',lang('Edit category for'));
     $t->set_var('lang_action',lang('Edit category'));
+    $t->set_var('doneurl',$phpgw->link('/addressbook/categories.php'));
     $t->set_var('actionurl',$phpgw->link('/addressbook/editcategory.php'));
     $t->set_var('deleteurl',$phpgw->link('/addressbook/deletecategory.php'));
     $hidden_vars = "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n";
@@ -64,6 +65,7 @@
 
     $t->set_var('lang_edit',lang('Edit'));
     $t->set_var('lang_delete',lang('Delete'));
+	$t->set_var('lang_done',lang('Done'));
 
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');

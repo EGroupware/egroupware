@@ -43,6 +43,7 @@
 
     $t->set_var('font',$font);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
+    $t->set_var('doneurl',$phpgw->link('/addressbook/categories.php'));
     $t->set_var('title_categories',lang('Add category for'));
     $t->set_var('actionurl',$phpgw->link('/addressbook/addcategory.php'));
     $t->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $cat_id . '">');
@@ -56,6 +57,7 @@
     $t->set_var('cat_description',$cat_description);
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_reset',lang('Clear Form'));
+	$t->set_var('lang_done',lang('Done'));
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');
     $t->pparse('out','form');
