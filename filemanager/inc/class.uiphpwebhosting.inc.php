@@ -298,7 +298,7 @@
 		{
 			return $this->link(
 				Array(
-					'menuaction'	=> $GLOBALS['HTTP_GET_VARS']['menuaction'],
+					'menuaction'	=> get_var('menuaction',Array('GET')),
 					'path'	=> $this->bo->path,
 					'show_upload_boxes'	=> $number
 				),

@@ -242,8 +242,7 @@
 
 		function initialize_vars($name)
 		{
-			$var = ($GLOBALS['HTTP_GET_VARS'][$name]?$GLOBALS['HTTP_GET_VARS'][$name]:'');
-			$var = ($GLOBALS['HTTP_POST_VARS'][$name]?$GLOBALS['HTTP_POST_VARS'][$name]:$var);
+			$var = get_var($name,Array('GET','POST'));
 			if($this->debug)
 			{
 				echo '<!-- '.$name.' = '.$var.' -->'."\n";
