@@ -73,7 +73,7 @@ function html_form_select_end ($return = 0)
 function html_form_option ($value = NULL, $displayed = NULL, $selected = NULL, $return = 0)
 {
 	if ($value != NULL && $value)
-		$value = "value=$value";
+		$value = "value=\"$value\"";
 	if ($selected != NULL && $selected)
 		$selected = "selected";
 	$rstring = "<option $value $selected>$displayed</option>";

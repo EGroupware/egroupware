@@ -83,7 +83,7 @@ include ("../header.inc.php");
 
 if ($execute && $command_line)
 {
-	if ($result = $phpgw->vfs->command_line ($command_line))
+	if ($result = $phpgw->vfs->command_line (stripslashes ($command_line)))
 	{
 		$messages = html_text_bold ("Command sucessfully run", 1);
 		if ($result != 1 && strlen ($result) > 0)
@@ -503,7 +503,9 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		while (list ($num, $name) = each ($settings))
 		{
 			if ($name)
+			{
 				$columns++;
+			}
 		}
 		$columns++;
 		html_table_begin ();
@@ -525,12 +527,18 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		if ($cwd)
 		{
 			if ($path == $homedir)
+			{
 				html_image ("images/folder-home.gif", "Folder", "center");
+			}
 			else
+			{
 				html_image ("images/folder.gif", "Folder", "center");
+			}
 		}
 		else
+		{
 			html_image ("images/folder-home.gif", "Home");
+		}
 		
 		html_font_set (4, HTML_TABLE_FILES_HEADER_TEXT_COLOR);
                 html_text_bold (strtoupper ($disppath));
@@ -625,9 +633,13 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
         			}
 
 				if ($rename && $this_selected)
+				{
 					$renamethis = 1;
+				}
 				elseif ($edit_comments && $this_selected)
+				{
 					$edit_this_comment = 1;
+				}
 			}
 
 			if (!$settings["dotfiles"] && ereg ("^\.", $files["name"]))
@@ -669,7 +681,9 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 				if ($renamethis)
 				{
 					if ($files["mime_type"] == "Directory")
+					{
 						html_image ("images/folder.gif", "Folder");
+					}
 					html_form_input ("text", "renamefiles[" . base64_encode ($files[name]) . "]", $files["name"], 255);
 				}
 				else
@@ -745,7 +759,9 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			{
 				html_table_col_begin ();
 				if ($files["modified"] != "0000-00-00")
+				{
 					html_text ($files["modified"]);
+				}
 				html_table_col_end ();
 			}
 
@@ -1009,6 +1025,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_nbsp (3);
 			html_form_input ("text", "createfile", NULL, 255, 15);
 			html_form_input ("submit", "newfile", "Create File");
+			html_help_link ("create_file");
 		}
 
 		if ($settings["show_command_line"])
