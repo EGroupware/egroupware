@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Admin                                                     *
+  * phpGroupWare - Admin - Global categories                                 *
   * http://www.phpgroupware.org                                              *
   * Written by Bettina Gille [ceb@phpgroupware.org]                          *
   * -----------------------------------------------                          *
@@ -46,7 +46,7 @@
 
     $c = CreateObject('phpgwapi.categories');
     $c->categories($phpgw_info['user']['account_id'],'phpgw');
-    $categories = $c->return_array($type,$start,$limit,$query,$sort,$order);
+    $categories = $c->return_array('False','all',$start,$limit,$query,$sort,$order);
 
 //--------------------------------- nextmatch --------------------------------------------
 

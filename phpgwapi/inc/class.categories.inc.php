@@ -82,11 +82,16 @@
 		@param $order order by
 		@result $cats array
 		*/
-		function return_array($type = 'all',$start,$limit,$query = '',$sort = '',$order = '')
+		function return_array($public = 'False',$type = 'all',$start,$limit,$query = '',$sort = '',$order = '')
 		{
 			global $phpgw, $phpgw_info;
 
 			$this->db2 = $this->db;
+			
+			if ($public == 'True') 
+			{
+			$public_cats = " OR cat_appname='phpgw' ";
+			}
 
 			$filter = $this->filter($type);
 			if (!$sort)
@@ -105,13 +110,13 @@
 
 			if ($query)
 			{
-				$sql = "select * from phpgw_categories where cat_appname='" . $this->app_name . "' and "
+				$sql = "select * from phpgw_categories where cat_appname='" . $this->app_name . "' $public_cats and "
 		 		   . "(cat_name like '%$query%' or cat_description like '%$query%') $filter $ordermethod";
 			}
 			else
 			{
 				$sql = "select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
-					. "$filter $ordermethod";
+					. "$public_cats $filter $ordermethod";
 			}
 
 			$this->db2->query($sql,__LINE__,__FILE__);
@@ -123,6 +128,7 @@
 			{
 				$cats[$i]['id']          = $this->db->f('cat_id');
 				$cats[$i]['owner']       = $this->db->f('cat_owner');
+				$cats[$i]['app_name']    = $this->db->f('cat_appname');
 				$cats[$i]['parent']      = $this->db->f('cat_parent');
 				$cats[$i]['name']        = $this->db->f('cat_name');
 				$cats[$i]['description'] = $this->db->f('cat_description');
@@ -145,14 +151,14 @@
 				. "cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 	    
 			while ($this->db->next_record()) {
-            $cats[0]['id']          = $this->db->f('cat_id');
-            $cats[0]['owner']       = $this->db->f('cat_owner');
-            $cats[0]['parent']      = $this->db->f('cat_parent');
-            $cats[0]['name']        = $this->db->f('cat_name');
-            $cats[0]['description'] = $this->db->f('cat_description');
-            $cats[0]['data']        = $this->db->f('cat_data');
-			}
-			return $cats;
+			    $cats[0]['id']          = $this->db->f('cat_id');
+        		    $cats[0]['owner']       = $this->db->f('cat_owner');
+        		    $cats[0]['parent']      = $this->db->f('cat_parent');
+        		    $cats[0]['name']        = $this->db->f('cat_name');
+        		    $cats[0]['description'] = $this->db->f('cat_description');
+        		    $cats[0]['data']        = $this->db->f('cat_data');
+			    }
+		    return $cats;
 		}
 		/*!
 		@function categories
@@ -171,11 +177,11 @@
 				$app_name   = $phpgw_info['flags']['currentapp'];
 			}
 
-			$this->account_id    = $account_id;
-			$this->app_name      = $app_name;
-			$this->db            = $phpgw->db;
+			$this->account_id	= $account_id;
+			$this->app_name		= $app_name;
+			$this->db		= $phpgw->db;
 			$this->total_records	= $this->db->num_rows();
-			$this->cats          = $this->return_array($type,$start,$limit,$query,$sort,$order);
+			$this->cats		= $this->return_array($public,$type,$start,$limit,$query,$sort,$order);
 		}
 
 		// Return into a select box, list or other formats
@@ -187,15 +193,20 @@
 		@param $selected ?
 		@result $s array - populated with categories
 		*/
-		function formated_list($format,$type,$selected = "")
+		function formated_list($format,$public = 'False',$type,$selected = "")
 		{
 			global $phpgw;
 			$filter = $this->filter($type);
 
+			if ($public == 'True')
+			{
+			$public_cats = " OR cat_appname='phpgw' ";
+			}
+
 			if ($format == 'select')
 			{
 				$this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name
-					. "' $filter",__LINE__,__FILE__);
+					. "' $public_cats $filter",__LINE__,__FILE__);
 				while ($this->db->next_record())
 				{
 					$s .= '<option value="' . $this->db->f('cat_id') . '"';
