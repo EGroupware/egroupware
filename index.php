@@ -17,7 +17,7 @@
 		exit;
 	}
 
-	$GLOBALS['sessionid'] = get_var('sessionid',array('GET','COOKIE'));
+	$GLOBALS['sessionid'] = isset($_GET['sessionid']) ? $_GET['sessionid'] : $_COOKIE['sessionid'];
 	if (! $GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
