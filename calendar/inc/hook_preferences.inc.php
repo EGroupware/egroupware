@@ -36,8 +36,8 @@
 	echo '<a href="' . $phpgw->link('/calendar/preferences.php') . '">' . lang('Calendar preferences')
 		. '</a><br>';
 
-	echo '<a href="' . $phpgw->link('/calendar/categories.php') . '">'
-		. lang('Edit Categories') . '</a><br>';
+//	echo '<a href="' . $phpgw->link('/calendar/categories.php') . '">'
+//		. lang('Edit Categories') . '</a><br>';
 
 	echo '<a href="' . $phpgw->link('/calendar/acl_preferences.php') . '">'
 		. lang('Grant Calendar Access') . '</a>';
