@@ -277,6 +277,27 @@
 			return mcal_event_set_recur_none($this->stream);
 		}
 
+		function set_recur_secondly($year,$month,$day,$interval)
+		{
+			calendar__::set_recur_secondly($year,$month,$day,$interval);
+			//return mcal_event_set_recur_secondly($this->stream,$year,$month,$day,$interval);
+			return 0; // stub - mcal_event_set_recur_secondly() does not exist
+		}
+
+		function set_recur_minutely($year,$month,$day,$interval)
+		{
+			calendar__::set_recur_minutely($year,$month,$day,$interval);
+			//return mcal_event_set_recur_minutely($this->stream,$year,$month,$day,$interval);
+			return 0; // stub - mcal_event_set_recur_minutely() does not exist
+		}
+
+		function set_recur_hourly($year,$month,$day,$interval)
+		{
+			calendar__::set_recur_hourly($year,$month,$day,$interval);
+			//return mcal_event_set_recur_hourly($this->stream,$year,$month,$day,$interval);
+			return 0; // stub - mcal_event_set_recur_hourly() does not exist
+		}
+
 		function set_recur_daily($year,$month,$day,$interval)
 		{
 			calendar__::set_recur_daily($year,$month,$day,$interval);

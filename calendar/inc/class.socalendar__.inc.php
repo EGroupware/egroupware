@@ -32,6 +32,9 @@
 		define('MCAL_RECUR_MONTHLY_MDAY',3);
 		define('MCAL_RECUR_MONTHLY_WDAY',4);
 		define('MCAL_RECUR_YEARLY',5);
+		define('MCAL_RECUR_SECONDLY',6);
+		define('MCAL_RECUR_MINUTELY',7);
+		define('MCAL_RECUR_HOURLY',8);
 		
 		define('MCAL_M_SUNDAY',1);
 		define('MCAL_M_MONDAY',2);
@@ -145,6 +148,24 @@
 		{
 			$this->set_common_recur(0,0,0,0);
 			$this->add_attribute('recur_type',MCAL_RECUR_NONE);
+		}
+
+		function set_recur_secondly($year,$month,$day,$interval)
+		{
+			$this->set_common_recur((int)$year,(int)$month,(int)$day,$interval);
+			$this->add_attribute('recur_type',MCAL_RECUR_SECONDLY);
+		}
+
+		function set_recur_minutely($year,$month,$day,$interval)
+		{
+			$this->set_common_recur((int)$year,(int)$month,(int)$day,$interval);
+			$this->add_attribute('recur_type',MCAL_RECUR_MINUTELY);
+		}
+
+		function set_recur_hourly($year,$month,$day,$interval)
+		{
+			$this->set_common_recur((int)$year,(int)$month,(int)$day,$interval);
+			$this->add_attribute('recur_type',MCAL_RECUR_HOURLY);
 		}
 
 		function set_recur_daily($year,$month,$day,$interval)

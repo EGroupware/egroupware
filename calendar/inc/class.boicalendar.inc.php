@@ -2572,7 +2572,7 @@
 					list($_f_['day_raw'], $_f_['time_raw']) = split('T', substr($value, 1, strlen($value)-1));
 
 					/* Datecode */
-					if(isset($_f_['day_raw']) OR $_f_['day_raw'])
+					if(isset($_f_['day_raw']) || $_f_['day_raw'])
 					{
 						/* Days */
 						if(strstr($_f_['day_raw'],'D'))
@@ -2588,7 +2588,7 @@
 					}
 
 					/* Timecode */
-					if(isset($_f_['time_raw']) OR $_f_['time_raw'])
+					if(isset($_f_['time_raw']) || $_f_['time_raw'])
 					{
 						/* Hours */
 						if(strstr($_f_['time_raw'],'H'))
@@ -3249,22 +3249,41 @@
 						{
 							$interval = (int)$ical['event'][$i]['rrule']['interval'];
 						}
-// recur_type
+
+						/* recur_type */
 						switch($ical['event'][$i]['rrule']['freq'])
 						{
+							case SECONDLY:
+								$so_event->set_recur_secondly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
+								break;
+							case MINUTELY:
+								$so_event->set_recur_minutely($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
+								break;
+							case HOURLY:
+								$so_event->set_recur_hourly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
+								break;
 							case DAILY:
-								$recur_type = MCAL_RECUR_DAILY;
+								$so_event->set_recur_daily($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
 								break;
 							case WEEKLY:
 								$so_event->set_recur_weekly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval,$recur_data);
 								break;
 							case MONTHLY:
-// Still need to determine if this is by day or by week for the month..
-//								$recur_type = MCAL_RECUR_M??????;
+								$so_event->set_recur_monthly_mday($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
 								break;
 							case YEARLY:
 								$so_event->set_recur_yearly($recur_enddate['year'],$recur_enddate['month'],$recur_enddate['mday'],$interval);
 								break;
+						}
+
+						if(isset($ical['event'][$i]['rrule']['until']))
+						{
+							$so_event->add_attribute('recur_enddate',$ical['event'][$i]['rrule']['until']['year'],'year');
+							$so_event->add_attribute('recur_enddate',$ical['event'][$i]['rrule']['until']['month'],'month');
+							$so_event->add_attribute('recur_enddate',$ical['event'][$i]['rrule']['until']['mday'],'mday');
+							$so_event->add_attribute('recur_enddate',$ical['event'][$i]['rrule']['until']['hour'],'hour');
+							$so_event->add_attribute('recur_enddate',$ical['event'][$i]['rrule']['until']['minute'],'min');
+							$so_event->add_attribute('recur_enddate',$ical['event'][$i]['rrule']['until']['second'],'sec');
 						}
 					}
 					else
@@ -3449,6 +3468,15 @@
 					$str = '';
 					switch($event['recur_type'])
 					{
+						case MCAL_RECUR_SECONDLY:
+							$str .= 'FREQ=SECONDLY';
+							break;
+						case MCAL_RECUR_MINUTELY:
+							$str .= 'FREQ=MINUTELY';
+							break;
+						case MCAL_RECUR_HOURLY:
+							$str .= 'FREQ=HOURLY';
+							break;
 						case MCAL_RECUR_DAILY:
 							$str .= 'FREQ=DAILY';
 							break;

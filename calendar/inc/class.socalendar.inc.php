@@ -417,6 +417,21 @@
 			$this->cal->set_recur_none();
 		}
 
+		function set_recur_secondly($year,$month,$day,$interval)
+		{
+			$this->cal->set_recur_secondly($year,$month,$day,$interval);
+		}
+
+		function set_recur_minutely($year,$month,$day,$interval)
+		{
+			$this->cal->set_recur_minutely($year,$month,$day,$interval);
+		}
+
+		function set_recur_hourly($year,$month,$day,$interval)
+		{
+			$this->cal->set_recur_hourly($year,$month,$day,$interval);
+		}
+
 		function set_recur_daily($year,$month,$day,$interval)
 		{
 			$this->cal->set_recur_daily($year,$month,$day,$interval);

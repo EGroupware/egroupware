@@ -294,6 +294,9 @@
 			}
 			$this->rpt_type = Array(
 				MCAL_RECUR_NONE		=> 'None',
+				MCAL_RECUR_SECONDLY	=> 'Secondly',
+				MCAL_RECUR_MINUTELY	=> 'Minutely',
+				MCAL_RECUR_HOURLY	=> 'Hourly',
 				MCAL_RECUR_DAILY	=> 'Daily',
 				MCAL_RECUR_WEEKLY	=> 'Weekly',
 				MCAL_RECUR_MONTHLY_WDAY	=> 'Monthly (by day)',
@@ -872,6 +875,15 @@
 				{
 					case MCAL_RECUR_NONE:
 						$this->so->set_recur_none();
+						break;
+					case MCAL_RECUR_SECONDLY:
+						$this->so->set_recur_secondly((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
+						break;
+					case MCAL_RECUR_MINUTELY:
+						$this->so->set_recur_minutely((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
+						break;
+					case MCAL_RECUR_HOURLY:
+						$this->so->set_recur_hourly((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
 						break;
 					case MCAL_RECUR_DAILY:
 						$this->so->set_recur_daily((int)$l_recur_enddate['year'],(int)$l_recur_enddate['month'],(int)$l_recur_enddate['mday'],(int)$l_cal['recur_interval']);
@@ -1913,7 +1925,7 @@
 					$freq = $rep_events['recur_interval'];
 					$type = $rep_events['recur_type'];
 					switch($type)
-					{
+					{	// FIXME: need to add secondly, minutely, and hourly
 						case MCAL_RECUR_DAILY:
 							if($this->debug)
 							{
