@@ -28,6 +28,11 @@ class socalendar_ extends socalendar__
 	var $cal_event;
 	var $today = Array('raw','day','month','year','full','dow','dm','bd');
 
+	function socalendar_()
+	{
+		$this->socalendar__();
+	}
+
 	function open($calendar='',$user='',$passwd='',$options='')
 	{
 		if($user=='')

@@ -26,4 +26,5 @@
 	}
 	include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.socalendar__.inc.php');
 	include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.socalendar_'.$GLOBALS['phpgw_info']['server']['calendar_type'].'.inc.php');
+	return new socalendar_;
 ?>
