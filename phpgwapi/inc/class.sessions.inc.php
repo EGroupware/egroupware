@@ -161,7 +161,6 @@
        }
 
        $phpgw->accounts->accounts_const();
-       print "hallo<br>";
 
        $phpgw_info["user"]["session_ip"] = $this->getuser_ip();
 
