@@ -172,7 +172,7 @@
       global $phpgw_info, $phpgw_domain, $ConfigDomain;
       /* Database setup */
       if (!isset($phpgw_info["server"]["api_inc"])) {
-        $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["server_root"]."/phpgwapi/inc";
+        $phpgw_info["server"]["api_inc"] = PHPGW_SERVER_ROOT . "/phpgwapi/inc";
       }
       include($phpgw_info["server"]["api_inc"] . "/class.db_".$phpgw_domain[$ConfigDomain]["db_type"].".inc.php");
       $this->db	          = new db;
