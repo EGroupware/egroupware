@@ -28,3 +28,6 @@ include		/etc/openldap/schema/phpgwaccount.schema
 Other files:
 
 	phpgwcontact.schema		VERY new and unfinished contacts schema
+
+This now has what appears to be a proper definition for the attributes
+and the objectclass, but they are not official yet.
