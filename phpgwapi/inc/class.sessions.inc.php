@@ -148,7 +148,7 @@
 			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
 
 			$userid_array = explode('@',$db->f('session_lid'));
-// Thinking this might solve auth_http	problems
+// Thinking this might solve auth_http problems
 			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
 			$this->account_lid = $userid_array[0];
 			$this->update_dla();
@@ -177,8 +177,8 @@
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
-			$GLOBALS['phpgw_info']['user']['session_ip']  = $db->f('session_ip');
-			$GLOBALS['phpgw_info']['user']['passwd']		  = base64_decode($this->appsession('password','phpgwapi'));
+			$GLOBALS['phpgw_info']['user']['session_ip'] = $db->f('session_ip');
+			$GLOBALS['phpgw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
 			{
@@ -241,12 +241,12 @@
 			// If you plan on using the cron apps, please remove the following lines.
 			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
 
-			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
-								 . "' and session_flags !='A'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_dla <= '" . (time() - 7200)
+				. "' and session_flags !='A'",__LINE__,__FILE__);
 
 			// This is set a little higher, we don't want to kill session data for anonymous sessions.
-			$GLOBALS['phpgw']->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() -  86400)
-									 . "'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() - 86400)
+				. "'",__LINE__,__FILE__);
 		}
 
 		function create($login,$passwd = '',$passwd_type = '')
@@ -358,9 +358,9 @@
 
 			$GLOBALS['phpgw']->db->transaction_begin();
 			$GLOBALS['phpgw']->db->query("insert into phpgw_sessions values ('" . $this->sessionid
-								. "','".$login."','" . $user_ip . "','"
-								. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
-								. "')",__LINE__,__FILE__);
+				. "','".$login."','" . $user_ip . "','"
+				. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
+				. "')",__LINE__,__FILE__);
 
 			$GLOBALS['phpgw']->db->query('insert into phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
 				." values ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
@@ -409,7 +409,7 @@
 
 			$GLOBALS['phpgw_info']['flags'] = $phpgw_info_flags;
 			$userid_array = explode('@',$db->f('session_lid'));
-// Thinking this might solve auth_http	problems
+// Thinking this might solve auth_http problems
 			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
 			$this->account_lid = $userid_array[1];
 			$this->update_dla();
@@ -543,12 +543,12 @@
 
 			$GLOBALS['phpgw']->db->transaction_begin();
 			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
-								. "','".$login."','" . $user_ip . "','"
-								. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
-								. "')",__LINE__,__FILE__);
+				. "','".$login."','" . $user_ip . "','"
+				. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
+				. "')",__LINE__,__FILE__);
 
 			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
-								. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
+				. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
 
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
@@ -563,7 +563,7 @@
 			global $PHP_SELF;
 			if (@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 			{
-				$action = $GLOBALS['HTTP_GET_VARS']['menuaction'];			
+				$action = $GLOBALS['HTTP_GET_VARS']['menuaction'];
 			}
 			else
 			{
@@ -571,10 +571,10 @@
 			}
 
 			$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$action' "
-								. "where session_id='" . $this->sessionid."'",__LINE__,__FILE__);
+				. "where session_id='" . $this->sessionid."'",__LINE__,__FILE__);
 
 			$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
-								. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
+				. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
 			return True;
 		}
 
@@ -587,11 +587,11 @@
 
 			$GLOBALS['phpgw']->db->transaction_begin();
 			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_id='"
-								. $sessionid . "'",__LINE__,__FILE__);
+				. $sessionid . "'",__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->query("delete from phpgw_app_sessions where sessionid='"
-								. $sessionid . "'",__LINE__,__FILE__);
+				. $sessionid . "'",__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->query("update phpgw_access_log set lo='" . time() . "' where sessionid='"
-								. $sessionid . "'",__LINE__,__FILE__);
+				. $sessionid . "'",__LINE__,__FILE__);
 
 			// Only do the following, if where working with the current user
 			if ($sessionid == $GLOBALS['phpgw_info']['user']['sessionid'])
@@ -666,7 +666,7 @@
 			$query = "DELETE FROM phpgw_app_sessions WHERE loginid = '".$account_id."'"
 				." AND app = 'phpgwapi' and location = 'phpgw_info_cache'";
 
-			$GLOBALS['phpgw']->db->query($query);			
+			$GLOBALS['phpgw']->db->query($query);
 		}
 	
 		function save_repositories()
@@ -688,11 +688,12 @@
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 			
-			/* This allows the user to put "" as the value. */
-			if ($data == '##NOTHING##') {
+			/* This allows the user to put '' as the value. */
+			if ($data == '##NOTHING##')
+			{
 				$query = "select content from phpgw_app_sessions where"
-				." sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
-				." and app = '".$appname."' and location = '".$location."'";
+					." sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
+					." and app = '".$appname."' and location = '".$location."'";
 	
 				$GLOBALS['phpgw']->db->query($query,__LINE__,__FILE__);
 				$GLOBALS['phpgw']->db->next_record();
@@ -705,29 +706,34 @@
 //				return stripslashes($data);
 				return $GLOBALS['phpgw']->crypto->decrypt($data);
 
-			} else {
+			}
+			else
+			{
 				$GLOBALS['phpgw']->db->query("select content from phpgw_app_sessions where "
-				. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
-				. " and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
-				
+					. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
+					. " and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
+
 				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
-				if ($GLOBALS['phpgw']->db->num_rows()==0) {
+				if ($GLOBALS['phpgw']->db->num_rows()==0)
+				{
 					$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
-					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
-					. "','".$location."','".$encrypteddata."','" . time() . "')",__LINE__,__FILE__);
-				} else {
+						. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
+						. "','".$location."','".$encrypteddata."','" . time() . "')",__LINE__,__FILE__);
+				}
+				else
+				{
 					$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set content = '".$encrypteddata."'"
-					. "where sessionid = '".$this->sessionid."'"
-					. "and loginid = '".$this->account_id."' and app = '".$appname."'"
-					. "and location = '".$location."'",__LINE__,__FILE__);
+						. "where sessionid = '".$this->sessionid."'"
+						. "and loginid = '".$this->account_id."' and app = '".$appname."'"
+						. "and location = '".$location."'",__LINE__,__FILE__);
 				}
 				return $data;
 			}
 		}
-		
+
 		function restore()
 		{
-			$sessionData = $this->appsession("sessiondata");
+			$sessionData = $this->appsession('sessiondata');
 			
 			if (is_array($sessionData))
 			{
@@ -737,11 +743,11 @@
 					global $$key;
 					$$key = $value;
 					$this->variableNames[$key] = 'registered';
-					#print "restored: ".$key.", $value<br>";
+					// echo 'restored: '.$key.', ' . $value . '<br>';
 				}
 			}
 		}
-			
+
 		// save the current values of the variables
 		function save()
 		{
@@ -756,24 +762,24 @@
 						$sessionData[$key] = $$key;
 					}
 				}
-				$this->appsession("sessiondata",'',$sessionData);
+				$this->appsession('sessiondata','',$sessionData);
 			}
 		}
-			
+
 		// create a list a variable names, wich data need's to be restored
 		function register($_variableName)
 		{
 			$this->variableNames[$_variableName]='registered';
 			#print 'registered '.$_variableName.'<br>';
 		}
-			
+
 		// mark variable as unregistered
 		function unregister($_variableName)
 		{
 			$this->variableNames[$_variableName]='unregistered';
 			#print 'unregistered '.$_variableName.'<br>';
 		}
-	
+
 		// check if we have a variable registred already
 		function is_registered($_variableName)
 		{
@@ -805,7 +811,7 @@
 			// please let us know if this doesn't work for you!
 
 			// I am not sure how my changes will affect the following.
-			// Could someone with access to a Windows install check it ?  (jengo)
+			// Could someone with access to a Windows install check it ? (jengo)
 
 /*			if (! $url && (PHP_OS == 'Windows' || PHP_OS == 'OS/2' || PHP_OS == 'WIN32' || PHP_OS == 'WIN16'))
 			{
@@ -842,7 +848,10 @@
 			{
 				while(list($key,$value) = each($extravars))
 				{
-					if (!empty($new_extravars)) $new_extravars .= '&';
+					if (!empty($new_extravars))
+					{
+						$new_extravars .= '&';
+					}
 					$new_extravars .= "$key=$value";
 				}
 				// This needs to be explictly reset to a string variable type for PHP3
@@ -903,6 +912,6 @@
 			} */
 			//echo "$url\n";
 			return $url;
-		}  
+		}
 	}
 ?>
