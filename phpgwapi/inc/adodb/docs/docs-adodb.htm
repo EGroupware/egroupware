@@ -2,11 +2,16 @@
 <head>
 <title>ADODB Manual</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<XSTYLE
-	body,td {font-family:Arial,Helvetica,sans-serif;font-size:11pt}
-	pre {font-size:9pt}
-	.toplink {font-size:8pt}
-	/>
+
+	
+<style>
+pre {
+  background-color: #eee;
+  padding: 0.75em 1.5em;
+  font-size: 12px;
+  border: 1px solid #ddd;
+}
+</style>
 </head>	
 <body bgcolor="#FFFFFF">
 
@@ -26,10 +31,9 @@
 	<a href="#bugs">Feature Requests and Bug Reports</a><br>
 	</b><b><a href="#install">Installation</a><br>
 	<a href="#mininstall">Minimum Install</a><br>
-	<a href="#coding">Initializing Code and Connection Examples</a><br>
-	<font size="2"><a href=#adonewconnection>ADONewConnection</a></font> 
-	<font size="2"><a href=#adonewconnection>NewADOConnection</a></font><br>
-	<a href="#speed">High Speed ADOdb - tuning tips</a></b><br>
+	<a href="#coding">Initializing Code and Connectioning to Databases</a><br>
+	</b><font size="2"> &nbsp; <a href=#dsnsupport>Data Source Name (DSN) Support</a></font>  &nbsp;  <a href=#connect_ex>Connection Examples</a></font> <br>
+	<b><a href="#speed">High Speed ADOdb - tuning tips</a></b><br>
 	<b><a href="#hack">Hacking and Modifying ADOdb Safely</a><br>
 	<a href="#php5">PHP5 Features</a></b><br>
 	<font size="2"><a href=#php5iterators>foreach iterators</a> <a href=#php5exceptions>exceptions</a></font><br>
@@ -232,22 +236,73 @@ $conn = &amp;ADONewConnection('mysql');
   using the <b>ADONewConnection</b>($driver) function. 
   <b>NewADOConnection</b>($driver) is an alternative name for the same function.</p>
 
-<p>At this point, you are not connected to the database. You will first need to decide
+<p>At this point, you are not connected to the database (no longer true if you pass in a <a href=#dsnsupport>dsn</a>). You will first need to decide
 whether to use <i>persistent</i> or <i>non-persistent</i> connections. The advantage of <i>persistent</i>
 connections is that they are faster, as the database connection is never closed (even 
 when you call Close()). <i>Non-persistent </i>connections take up much fewer resources though,
 reducing the risk of your database and your web-server becoming overloaded. 
 <p>For persistent connections,
-use $conn-&gt;<a href="reference.functions.pconnect.html">PConnect()</a>,
- or $conn-&gt;<a href="reference.functions.connect.html">Connect()</a> for non-persistent connections.
-Some database drivers also support <a href="reference.functions.nconnect.html">NConnect()</a>, which forces 
+use $conn-&gt;<a href="#pconnect">PConnect()</a>,
+ or $conn-&gt;<a href="#connect">Connect()</a> for non-persistent connections.
+Some database drivers also support <a href="#nconnect">NConnect()</a>, which forces 
 the creation of a new connection. 
+
 <a name=connection_gotcha></a>
-<p><i>Connection Gotcha</i>:  If you create two connections, but both use the same userid and password,
+<p><b>Connection Gotcha</b>:  If you create two connections, but both use the same userid and password,
 PHP will share the same connection. This can cause problems if the connections are meant to 
 different databases. The solution is to always use different userid's for different databases,
  or use NConnect().
 
+ <a name=dsnsupport></a>
+ <h3>Data Source Name (DSN) Support</h3> 
+ <p> Since ADOdb 4.51, you can connect to a database by passing a dsn to NewADOConnection() (or ADONewConnection, which is
+ the same function). The dsn format is:
+<pre>
+	$driver://$username:$password@hostname/$database?options[=value]
+</pre><p>
+NewADOConnection() calls Connect() or PConnect() internally for you. If the connection fails, false is returned.
+<pre>
+	<font color=#008000># non-persistent connection</font>
+	$dsn = 'mysql://root:pwd@localhost/mydb'; 
+	$db = NewADOConnection($dsn);
+	if (!$db) die("Connection failed");   
+	
+	<font color=#008000># no need to call connect/pconnect!</font>
+	$arr = $db->GetArray("select * from table");
+	
+	<font color=#008000># persistent connection</font>
+	$dsn2 = 'mysql://root:pwd@localhost/mydb?persist'; 
+</pre>
+<p>
+If you have special characters such as /:? in your dsn, then you need to rawurlencode them first:
+<pre>
+	$pwd = rawurlencode($pwd);
+	$dsn = "mysql://root:$pwd@localhost/mydb";
+</pre>
+<p>
+Legal options are:
+<p>
+<table align=center border=1><tr><td>For all drivers<td>
+	'persist', 'persistent', 'debug', 'fetchmode'
+	<tr><td>Interbase/Firebird
+	<td>
+					 'dialect',
+					 'charset',
+					'buffers'
+	<tr><td>M'soft ADO<td>
+					 'charpage'
+					
+		<tr><td>MySQL<td>
+					'clientflags'
+<tr><td>MySQLi<td>
+	'port', 'socket', 'clientflags'
+</table>
+<p>
+For all drivers, when the options <i>persist</i> or <i>persistent</i> are set,  a persistent connection is forced.
+The <i>debug</i> option enables debugging. The <i>fetchmode</i> calls <a href=#setfetchmode>SetFetchMode()</a>.
+If no value is defined for an option, then the value is set to 1.
+<p>
+ADOdb DSN's are compatible with version 1.0 of PEAR DB's DSN format.
 <a name=connect_ex>
 <h3>Examples of Connecting to Databases</h3>
 <h4>MySQL and Most Other Database Drivers</h4>
@@ -256,8 +311,23 @@ different databases. The solution is to always use different userid's for differ
 <pre>
 	$conn = &amp;ADONewConnection('mysql'); 
 	$conn-&gt;PConnect('localhost','userid','password','database');
+	
+	<font color=#008000># or dsn </font>
+	$dsn = 'mysql://user:pwd@localhost/mydb'; 
+	$conn = ADONewConnection($dsn);  # no need for Connect()
+	
+	<font color=#008000># or persistent dsn</font>
+	$dsn = 'mysql://user:pwd@localhost/mydb?persist'; 
+	$conn = ADONewConnection($dsn);  # no need for PConnect()
+	
+	<font color=#008000># a more complex example:</font>
+	$pwd = urlencode($pwd);
+	$flags =  MYSQL_CLIENT_COMPRESS;
+	$dsn = "mysql://user:$pwd@localhost/mydb?persist&clientflags=$flags";
+	$conn = ADONewConnection($dsn);  # no need for PConnect()
  </pre>
-<p> Most other database drivers use a similar convention: Connect($server, $user, $password, $database). Exceptions are listed below.
+<p> For most drivers, you can use the standard function: Connect($server, $user, $password, $database), or
+a <a href=dsnsupport>DSN</a> since ADOdb 4.51. Exceptions to this are listed below.
 <h4>PostgreSQL</h4>
 <p>PostgreSQL accepts connections using: </p>
 <p>a. the standard connection string:</p>
@@ -267,7 +337,14 @@ different databases. The solution is to always use different userid's for differ
 <p> b. the classical 4 parameters:</p>
  <pre>
 	$conn-&gt;PConnect('localhost','userid','password','database');
- </pre><a name=ldap></a>
+ </pre>
+<p>c. dsn:
+<pre>
+	$dsn = 'postgres7://user:pwd@localhost/mydb?persist';  # persist is optional
+	$conn = ADONewConnection($dsn);  # no need for Connect/PConnect
+</pre>
+<a name=ldap></a>
+
  <h4>LDAP</h4>
   <p>Here is an example of querying a LDAP server. Thanks to Josh Eldridge for the driver and this example:
 <pre>
@@ -313,11 +390,21 @@ You define the database in the $host parameter:
 	$conn = &ADONewConnection('ibase'); 
 	$conn->PConnect('localhost:c:\ibase\employee.gdb','sysdba','masterkey');
 </pre>
+<p>Or dsn:
+<pre>
+	$dsn = 'firebird://user:pwd@localhost/mydb?persist&dialect=3';  # persist is optional
+	$conn = ADONewConnection($dsn);  # no need for Connect/PConnect
+</pre>
 <h4>SQLite</h4>
 Sqlite will create the database file if it does not exist.
 <pre>
 	$conn = &ADONewConnection('sqlite'); 
 	$conn->PConnect('c:\path\to\sqlite.db'); # sqlite will create if does not exist
+</pre>
+<p>Or dsn:
+<pre>
+	$dsn = 'sqlite://user:pwd@localhost/mydb?persist';  # persist is optional
+	$conn = ADONewConnection($dsn);  # no need for Connect/PConnect
 </pre>
 <h4>Oracle (oci8)</h4>
 <p>With oci8, you can connect in multiple ways. Note that oci8 works fine with 
@@ -336,6 +423,17 @@ newer versions of the Oracle, eg. 9i and 10g.</p>
 <pre>	$cstr = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$host)(PORT=$port))
 			(CONNECT_DATA=(SID=$sid)))";
 	$conn-&gt;Connect($cstr, 'scott', 'tiger');
+</pre>
+<p>f. ADOdb dsn:
+<pre>
+	$dsn = 'oci8://user:pwd@tnsname?persist';  # persist is optional
+	$conn = ADONewConnection($dsn);  # no need for Connect/PConnect
+	
+	$dsn = 'oci8://user:pwd@host/sid';
+	$conn = ADONewConnection($dsn);
+	
+	$dsn = 'oci8://user:pwd@/';   # oracle on local machine
+	$conn = ADONewConnection($dsn);
 </pre>
 <a name=dsnless></a>
 <h4>DSN-less ODBC (access and mssql examples)</h4>
@@ -395,16 +493,27 @@ using the ADOdb library and Microsoft's ADO:
 		qstr, Affected_Rows, Insert_ID</p></td>
   </tr>
 </table>
-<p>The fastest way to access the fields is by accessing the array $recordset->fields 
+<p>The fastest way to access the field data is by accessing the array $recordset->fields 
   directly. Also set the global variables <a href="#adodb_fetch_mode">$ADODB_FETCH_MODE</a> 
   = ADODB_FETCH_NUM, and (for oci8, ibase/firebird and odbc) <a href="#adodb_countrecs">$ADODB_COUNTRECS</a> = false 
   before you connect to your database.</p>
 <p>Consider using bind parameters if your database supports it, as it improves 
   query plan reuse. Use ADOdb's performance tuning system to identify bottlenecks 
   quickly. At the time of writing (Dec 2003), this means oci8 and odbc drivers.</p>
-<p>Lastly make sure you have a PHP accelerator cache installed such as APC, Turck 
+ <p>Lastly make sure you have a PHP accelerator cache installed such as APC, Turck 
   MMCache, Zend Accelerator or ionCube.</p>
- <p>Informix tips: Disable scrollable cursors with $db->cursorType = 0.
+ <p><b>Advanced Tips</b>
+ <p>If you have the <a href=http://adodb.sourceforge.net/#extension>ADOdb C extension</a> installed, 
+ you can replace your calls to $rs->MoveNext() with adodb_movenext($rs). 
+ This doubles the speed of this operation. For retrieving entire recordsets at once,
+use GetArray(), which uses the high speed extension function adodb_getall($rs) internally.
+ <p>Execute() is the default way to run queries. You can use the low-level functions _Execute() and _query()
+to reduce query overhead.  Both these functions share the same parameters as Execute().
+<p>If you do not have any bind parameters or your database supports binding (without emulation),
+then you can call _Execute() directly. Calling this function bypasses bind emulation. Debugging is still supported in _Execute().
+<p>If you do not require debugging facilities nor emulated binding, and do not require a recordset to be returned, then you can call _query. This is great for inserts, updates and deletes. Calling this function
+bypasses emulated binding, debugging, and recordset handling. Either the resultid, true or false are returned by _query().
+ <p>For Informix, you can disable scrollable cursors with $db->cursorType = 0.
 <p><a name=hack></a> </p>
 <h2>Hacking ADOdb Safely</h2>
 <p>You might want to modify ADOdb for your own purposes. Luckily you can
@@ -416,7 +525,7 @@ the function-name stored in this variable if it is defined.
 is placed in the <i>hack_mysql</i> and <i>hack_postgres7</i> classes. The recordset class naming convention
 can be controlled using $rsPrefix. Here we set it to 'hack_rs_', which will make ADOdb use
 <i>hack_rs_mysql</i> and <i>hack_rs_postgres7</i> as the recordset classes.
-If you want to use the default ADOdb drivers return false.
+
 
 <pre>
 class hack_mysql extends adodb_mysql {
@@ -425,7 +534,7 @@ var $rsPrefix = 'hack_rs_';
 }
 
 class hack_rs_mysql extends ADORecordSet_mysql {
- /* Your mods here */
+	 /* Your mods here */
 }
 
 class hack_postgres7 extends adodb_postgres7 {
@@ -449,9 +558,8 @@ function& hack_factory($driver)
 }
 
 include_once('adodb.inc.php');
-
 </pre>
-<p>Don't forget to call the constructor of the parent class.
+<p><p>Don't forget to call the constructor of the parent class in your constructor. If you want to use the default ADOdb drivers return false in the above hack_factory() function.
 <a name="php5"></a>
 <h2>PHP5 Features</h2>
  ADOdb 4.02 or later will transparently determine which version of PHP you are using.
@@ -481,6 +589,7 @@ catch exceptions on errors as they occur.
 	} 
 </pre>
 <p>Note that reaching EOF is <b>not</b> considered an error nor an exception.
+If you want to use the default ADOdb drivers return false.
 </ul> 
 <h3><a name="drivers"></a>Databases Supported</h3>
 The <i>name</i> below is the value you pass to NewADOConnection($name) to create a  connection object for that database.
@@ -1391,20 +1500,24 @@ PEAR::setErrorHandling('PEAR_ERROR_DIE');
 <p>We now support connecting using PEAR style DSN's. A DSN is a connection string 
   of the form:</p>
 <p>$dsn = <i>&quot;$driver://$username:$password@$hostname/$databasename&quot;</i>;</p>
-<p>You pass the DSN to the static class function DB::Connect. An example:</p>
-<pre>   include_once('../adodb/adodb-pear.inc.php');
+<p>An example:</p>
+<pre>
    $username = 'root';
    $password = '';
    $hostname = 'localhost';
    $databasename = 'xphplens';
    $driver = 'mysql';
-   $dsn = &quot;$driver://$username:$password@$hostname/$databasename&quot;;</pre>
-<pre>   $db = DB::Connect($dsn);<br>   $rs = $db-&gt;query('select firstname,lastname from adoxyz');
+   $dsn = &quot;$driver://$username:$password@$hostname/$databasename&quot;
+   $db = NewADOConnection(); 
+   # DB::Connect($dsn) also works if you include 'adodb/adodb-pear.inc.php' at the top
+   $rs = $db-&gt;query('select firstname,lastname from adoxyz');
    $cnt = 0;
    while ($arr = $rs-&gt;fetchRow()) {
 		print_r($arr); print &quot;&lt;br&gt;&quot;;
    }</pre>
-<p>This requires PEAR to be installed and in the default include path in php.ini.</p>
+   </p>
+<p>   <a href="#dsnsupport">More info and connection examples</a> on the DSN format.
+
  <h2><a name="pear"></a>PEAR Compatibility</h2>
   We support DSN's (see above), and the following functions:
  <pre>
@@ -1465,7 +1578,7 @@ $<font color="#663300">rs</font> = $<font color="#663300">conn</font>->CacheExec
 </font> <p><font color="#000000">Since ADOdb 2.30, we support the generation of 
 SQL to create pivot tables, also known as cross-tabulations. For further explanation 
 read this DevShed <a href=http://www.devshed.com/Server_Side/MySQL/MySQLWiz/>Cross-Tabulation 
-tutorial. We assume that your database supports the SQL case-when expression. </font></p> 
+tutorial</a>. We assume that your database supports the SQL case-when expression. </font></p> 
 <font color="#000000"> 
 <p>In this example, we will use the Northwind database from Microsoft. In the 
   database, we have a products table, and we want to analyze this table by <i>suppliers 
@@ -1892,9 +2005,30 @@ only with SELECT statements.
     # $rs is now just like any other ADOdb recordset object<br>    rs2html($rs);</pre>
 <p>ExecuteCursor() is a helper function that does the following internally: 
 <pre>
-	$stmt = $db->Prepare("BEGIN :RS := SP_FOO(); END;", true); 
-	$db->Parameter($stmt, $cur, 'RS', false, -1, OCI_B_CURSOR);
-	$rs = $db->Execute($stmt);</pre>
+	$stmt = $db->Prepare("begin :cursorvar := getdata(:param1); end;", true); 
+	$db->Parameter($stmt, $cur, 'cursorvar', false, -1, OCI_B_CURSOR);
+	$rs = $db->Execute($stmt,$bindarr);
+</pre>
+<p>ExecuteCursor only accepts 1 out parameter. So if you have 2 out parameters, use:
+<pre>
+	$vv = 'A%';
+	$stmt = $db->PrepareSP("BEGIN list_tabs(:crsr,:tt); END;");
+	$db->OutParameter($stmt, $cur, 'crsr', -1, OCI_B_CURSOR);
+	$db->OutParameter($stmt, $vv, 'tt', 32); # return varchar(32)
+	$arr = $db->GetArray($stmt);
+	print_r($arr);
+	echo " val = $vv"; ## outputs 'TEST'
+</pre>
+for the following PL/SQL:
+<pre>
+	TYPE TabType IS REF CURSOR RETURN TAB%ROWTYPE;
+
+	PROCEDURE list_tabs(tabcursor IN OUT TabType,tablenames IN OUT VARCHAR) IS
+	BEGIN
+		OPEN tabcursor FOR SELECT * FROM TAB WHERE tname LIKE tablenames;
+		tablenames := 'TEST';
+	END list_tabs;
+</pre>
 <p><b>SelectLimit<a name="selectlimit"></a>($sql,$numrows=-1,$offset=-1,$inputarr=false)</b></p>
 <p>Returns a recordset if successful. Returns false otherwise. Performs a select 
 	statement, simulating PostgreSQL's SELECT statement, LIMIT $numrows OFFSET 
@@ -3144,8 +3278,32 @@ $<font color="#663300">rs</font>   = $<font color="#663300">conn</font>->Execute
   PHP</a>. </p>
 </font>
 <h2>Change Log<a name="Changes"></a><a name="changes"></a><a name="changelog"></a></h2>
+<p><a name=4.51></a><b>4.51  29 July  2004</b>
+<p>Added adodb-xmlschema 1.0.2. Thx dan and richard.
+<p>Added new adorecordset_ext_* classes. If ADOdb extension installed for mysql, mysqlt and oci8 
+(but not oci8po),  we use the superfast ADOdb extension code for movenext.
+<p>Added schema support to mssql and odbc_mssql MetaPrimaryKeys().
+<p>Patched MSSQL driver to support PHP NULL and Boolean values 
+while binding the input array parameters in the _query() function. By Stephen Farmer.
+<p>Added support for clob's for mssql,  UpdateBlob(). Thx to gfran#directa.com.br
+<p>Added normalize support for postgresql (true=lowercase table name, or false=case-sensitive table names) 
+to MetaColumns($table, $normalize=true).
+<p>PHP5 variant dates in ADO not working. Fixed in adodb-ado.inc.php.
+<p>Constant ADODB_FORCE_NULLS was not working properly for many releases (for GetUpdateSQL). Fixed. 
+Also GetUpdateSQL strips off ORDER BY now - thx Elieser Leão.
+<p>Perf Monitor for oci8 now dynamically highlights optimizer_* params if too high/low.
+<p>Added dsn support to NewADOConnection/ADONewConnection.
+<p>Fixed out of page bounds bug in _adodb_pageexecute_all_rows() Thx to "Sergio Strampelli" sergio#rir.it
+<p>Speedup of movenext for mysql and oci8 drivers.
+<p>Moved debugging code _adodb_debug_execute() to adodb-lib.inc.php.
+<p>Fixed postgresql bytea detection bug. See http://phplens.com/lens/lensforum/msgs.php?id=9849.
+<p>Fixed ibase datetimestamp typo in PHP5. Thx stefan.
+<p>Removed whitespace at end of odbtp drivers.
+<p>Added db2 metaprimarykeys fix.
+<p>Optimizations to MoveNext() for mysql and oci8. Misc speedups to Get* functions.
 <p><a name=4.50></a><b>4.50  6 July  2004</b>
 <p>Bumped it to 4.50 to avoid confusion with PHP 4.3.x series.
+<p>Added db2 metatables and metacolumns extensions.
 <p>Added alpha PDO driver. Very buggy, only works with odbc.
 <p>Tested mysqli. Set poorAffectedRows = true. Cleaned up movenext() and _fetch().
 <p>PageExecute does not work properly with php5 (return val not a variable). Reported Dmytro Sychevsky sych#php.com.ua.  Fixed.
