@@ -27,19 +27,18 @@
 	{
 		var $enabled = False;
 		var $mcrypt_version = '';
-		var $td = False;		// Handle for mcrypt
+		var $td = False; // Handle for mcrypt
 		var $iv = '';
 		var $key = '';
 
 		function crypto($vars)
 		{
-			global $phpgw, $phpgw_info;
 			$key = $vars[0];
-			$iv = $vars[1];
-			if ($phpgw_info['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
+			$iv  = $vars[1];
+			if ($GLOBALS['phpgw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
 			{
 				$this->enabled = True;
-				$this->mcrypt_version = $phpgw_info['server']['versions']['mcrypt'];
+				$this->mcrypt_version = $GLOBALS['phpgw_info']['server']['versions']['mcrypt'];
 				if ($this->mcrypt_version == 'old')
 				{
 					$this->td = false;
@@ -51,7 +50,7 @@
 					else
 					{
 						$keysize = 8;
-						$ivsize = 8;
+						$ivsize  = 8;
 					}
 				}
 				else
@@ -83,8 +82,6 @@
 
 		function cleanup()
 		{
-			global $phpgw_info;
-
 			if ($this->enabled)
 			{
 				if ($this->mcrypt_version != 'old')
@@ -102,8 +99,6 @@
 
 		function encrypt($data)
 		{
-			global $phpgw_info;
-
 			$data = serialize($data);
 			$data = addslashes($data);
 
@@ -129,15 +124,13 @@
 				return $encrypteddata;
 			}
 			else
-			{  // No mcrypt == insecure !
+			{ // No mcrypt == insecure !
 				return $data;
 			}
 		}
 
 		function decrypt($encrypteddata)
 		{
-			global $phpgw_info;
-
 			// Disable all encryption if the admin didn't set it up
 			if ($this->enabled)
 			{
@@ -170,5 +163,5 @@
 				return $data;
 			}
 		}
-	}  // class crypto
+	} // class crypto
 ?>

@@ -100,7 +100,7 @@
 		 */
 		function link($url = '', $extravars = '')
 		{
-			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
+			/* global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF; */
 			return $this->session->link($url, $extravars);
 		}
 
@@ -116,9 +116,9 @@
 		 */
 		function redirect($url = '')
 		{
-			global $HTTP_ENV_VARS;
+			/* global $HTTP_ENV_VARS; */
 
-			$iis = @strpos($HTTP_ENV_VARS['SERVER_SOFTWARE'], 'IIS', 0);
+			$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
 			
 			if ( !$url )
 			{
@@ -142,7 +142,7 @@
 		}
 
 		/**
-		 * Shortcut to tranlation class
+		 * Shortcut to translation class
 		 *
 		 * This function is a basic wrapper to translation->translate()
 		 *
@@ -156,9 +156,8 @@
 		 */
 		function lang($key, $m1 = '', $m2 = '', $m3 = '', $m4 = '') 
 		{
-			global $phpgw;
+			/* global $phpgw; */
 			return $this->translation->translate($key);
 		}
-	/* end of class */
-	}
+	} /* end of class */
 ?>
