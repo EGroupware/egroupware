@@ -267,7 +267,7 @@ function html_page_error ($errorwas = NULL, $title = "Error", $return = 0)
 		return ($rstring);
 }
 
-function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linkonly = 0)
+function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linkonly = 0, $target = NULL)
 {
 	global $phpgw;
 	global $sep;
@@ -303,7 +303,10 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linko
 	}
 	else
 	{
-		$rstring = "<a href=$address>$text</a>";
+		if ($target)
+			$target = "target=$target";
+
+		$rstring = "<a href=$address $target>$text</a>";
 	}
 
 	return (eor ($rstring, $return));
