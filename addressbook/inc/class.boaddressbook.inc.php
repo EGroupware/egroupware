@@ -23,6 +23,9 @@
 			'add_email'       => True,
 			'update_entry'    => True
 		);
+
+		var $xml_functions = array();
+
 		var $soap_functions = array(
 			'read_entries' => array(
 				'in' => array(
@@ -109,6 +112,20 @@
 			if(isset($order))   { $this->order  = $order;  }
 			if(isset($filter))  { $this->filter = $filter; }
 			if(isset($fcat_id)) { $this->cat_id = $fcat_id; }
+
+			/* Preliminary xml function exposure */
+			$this->xml_functions = array(
+				'read_entry' => array(
+					'function'  => 'read_entry',
+					'signature' => array(array($xmlrpcStruct)),
+					'docstring' => lang('Read a single entry by passing the id and fieldlist.')
+				),
+				'read_entries' => array(
+					'function'  => 'read_entries',
+					'signature' => array(array($xmlrpcStruct)),
+					'docstring' => lang('Read a list of entries.')
+				)
+			);
 		}
 
 		function save_sessiondata($data)
@@ -162,17 +179,25 @@
 			return $cleaned;
 		}
 
-		function read_entries($start,$limit,$qcols,$qfilter)
+		function read_entries($data)
 		{
-			$entries = $this->so->read_entries($start,$limit,$qcols,$this->query,$qfilter,$this->sort,$this->order);
+			$entries = $this->so->read_entries(
+				$data['start'],
+				$data['limit'],
+				$data['fields'],
+				$this->query,
+				$data['filter'],
+				$this->sort,
+				$this->order
+			);
 			$this->total = $this->so->contacts->total_records;
 			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
 			return $this->strip_html($entries);
 		}
 
-		function read_entry($id,$fields)
+		function read_entry($data)
 		{
-			$entry = $this->so->read_entry($id,$fields);
+			$entry = $this->so->read_entry($data['id'],$data['fields']);
 			return $this->strip_html($entry);
 		}
 

@@ -88,7 +88,7 @@
 			}
 
 			// First, make sure they have permission to this entry
-			$check = $this->bo->read_entry($ab_id,array('owner' => 'owner'));
+			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner')));
 			$perms = $this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
 			if ( (!$perms) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
@@ -100,7 +100,7 @@
 		 	$extrafields = array('address2' => 'address2');
 			$qfields = $this->contacts->stock_contact_fields + $extrafields;
 
-			$fieldlist = $this->bo->read_entry($ab_id,$qfields);
+			$fieldlist = $this->bo->read_entry(array('id' => $ab_id, 'fields' => $qfields));
 			$fields = $fieldlist[0];
 
 			$email        = $fields['email'];

@@ -416,7 +416,12 @@
 			else
 			{
 				/* read the entry list */
-				$entries = $this->bo->read_entries($this->start,$this->limit,$columns_to_display,$qfilter);
+				$entries = $this->bo->read_entries(array(
+					'start'  => $this->start,
+					'limit'  => $this->limit,
+					'fields' => $columns_to_display,
+					'filter' => $qfilter
+				));
 				$total_records = $this->bo->total;
 			}
 
@@ -574,7 +579,8 @@
 			$fields['tid']      = 'n';
 			$referer = urlencode($referer);
 
-			$this->bo->add_entry($phpgw_info['user']['account_id'],$fields);
+			$fields['owner'] = $phpgw_info['user']['account_id'];
+			$this->bo->add_entry($fields);
 			$ab_id = $this->bo->get_lastid();
 
 			Header('Location: '
@@ -592,7 +598,7 @@
 			$addnew[0]['id']    = '';
 			$fields = $addnew[0];
 
-			$this->bo->add_entry($fields['owner'],$fields);
+			$this->bo->add_entry($fields);
 			$ab_id = $this->bo->get_lastid();
 
 			Header("Location: " . $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.edit&ab_id=$ab_id"));
@@ -643,7 +649,7 @@
 			{
 				$fields = $this->get_form();
 				/* _debug_array($fields);exit; */
-				$check = $this->bo->read_entry($fields['ab_id'],array('owner' => 'owner', 'tid' => 'tid'));
+				$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
 				if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 				{
@@ -653,6 +659,7 @@
 				{
 					$userid = $phpgw_info['user']['account_id'];
 				}
+				$fields['owner'] = $userid;
 				$referer = urlencode($fields['referer']);
 				unset($fields['referer']);
 	
@@ -664,7 +671,7 @@
 			}
 
 			/* First, make sure they have permission to this entry */
-			$check = $this->bo->read_entry($ab_id,array('owner' => 'owner', 'tid' => 'tid'));
+			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
 			if ( !$this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_EDIT) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
 			{
@@ -680,7 +687,7 @@
 
 			/* merge in extra fields */
 			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
-			$fields = $this->bo->read_entry($ab_id,$qfields);
+			$fields = $this->bo->read_entry(array('id' => $ab_id, 'fields' => $qfields));
 			$this->addressbook_form('edit','menuaction=addressbook.uiaddressbook.edit',lang('Edit'),$fields[0],$customfields);
 
 			$this->template->set_file(array('edit' => 'edit.tpl'));
@@ -719,7 +726,7 @@
 				Header('Location: ' . $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 			}
 
-			$check = $this->bo->read_entry($ab_id,array('owner' => 'owner', 'tid' => 'tid'));
+			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
 			if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 			{
@@ -745,7 +752,7 @@
 			}
 			else
 			{
-				$this->bo->delete_entry($ab_id);
+				$this->bo->delete_entry(array('id' => $ab_id));
 	
 				@Header('Location: ' . $phpgw->link('/addressbook/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 			}
@@ -756,7 +763,7 @@
 			global $phpgw,$phpgw_info,$ab_id,$submit,$referer;
 
 			/* First, make sure they have permission to this entry */
-			$check = $this->bo->read_entry($ab_id,array('owner' => 'owner'));
+			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
 			$perms = $this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
@@ -816,7 +823,7 @@
 			/* merge in extra fields */
 			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
 
-			$fields = $this->bo->read_entry($ab_id,$qfields);
+			$fields = $this->bo->read_entry(array('id' => $ab_id, 'fields' => $qfields));
 
 			$record_owner = $fields[0]['owner'];
 
