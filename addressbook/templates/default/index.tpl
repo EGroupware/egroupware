@@ -1,8 +1,7 @@
 <!-- BEGIN addressbook_header -->
 <center>{lang_addressbook}
 <br>{lang_showing}
-<br>{searchreturn}
-{search_filter}
+<br>{searchreturn}{search_filter}{remotesearch}
 <table width="75%" border="0" cellspacing="1" cellpadding="3">
 <tr bgcolor="{th_bg}">{cols}
   <td width="3%" height="21"><font face="Arial, Helvetica, sans-serif" size="-1">{lang_view}</font></td>
@@ -24,6 +23,22 @@
   <td valign="top" width="5%"><font face="{font}" size="2">{row_owner}</font></td>
 </tr>
 <!-- END row -->
+
+<!-- BEGIN remsearch -->
+<table width="75%" border="0" cellspacing="1" cellpadding="3">
+ <form method="POST" action="{remote_search}">
+  <tr bgcolor="{row_on}">
+    <td colspan="3">{lang_remote_search}:
+     <select name="serverid">
+{search_remote}
+     </select>
+    </td>
+    <td><input size="30" name="remote_query" value="{remote_query}"></td>
+    <td><input type="submit" name="submit" value="{lang_go}"></td>
+  </tr>
+</form>
+</table>
+<!-- END remsearch -->
 
 <!-- BEGIN addressbook_footer -->
  </table>

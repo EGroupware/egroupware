@@ -1,6 +1,7 @@
 
 <!-- BEGIN addressbook entry form -->
 <table width="75%" border="0" align="center">
+{search}
   <tr bgcolor="{th_bg}">
     <td colspan="5"><font color="{th_text}" face="">{lang_personal}:</font></td>
   </tr>

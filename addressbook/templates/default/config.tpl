@@ -2,7 +2,7 @@
 <form method="POST" action="{action_url}">
 <table border="0" align="center">
    <tr bgcolor="{th_bg}">
-	   <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
+    <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
    </tr>
    <tr bgcolor="{th_err}">
     <td colspan="2">&nbsp;<b>{error}</b></font></td>
@@ -43,6 +43,15 @@
   <tr bgcolor="{row_off}">
    <td>{lang_LDAP_root_pw_for_contacts}:</td>
    <td><input name="newsettings[ldap_contact_pw]" type="password" value=""></td>
+  </tr>
+  <tr bgcolor="{row_on}">
+    <td>{lang_Enable_remote_search}:</td>
+    <td>
+     <select name="newsettings[enable_remote_addressbook]">
+      <option value="">{lang_no}</option>
+	  <option value="True"{selected_enable_remote_addressbook_True}>{lang_yes}</option>
+     </select>
+    </td>
   </tr>
 <!-- END body -->
 <!-- BEGIN footer -->

@@ -40,6 +40,7 @@ department	common	en	Department
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
+enable remote search	admin	en	Enable remote search
 enter the path to the export file here	addressbook	en	Enter the path to the exported file here
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name

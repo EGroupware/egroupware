@@ -296,6 +296,7 @@
 			$this->template->set_block('addressbook_list_t','addressbook_header','addressbook_header');
 			$this->template->set_block('addressbook_list_t','column','column');
 			$this->template->set_block('addressbook_list_t','row','row');
+			$this->template->set_block('addressbook_list_t','remsearch','remsearch');
 			$this->template->set_block('addressbook_list_t','addressbook_footer','addressbook_footer');
 
 			$customfields = $this->read_custom_fields();
@@ -472,8 +473,6 @@
 				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.index&fcat_id='.$this->cat_id,'75%',
 				$GLOBALS['phpgw_info']['theme']['th_bg'],1,1,1,1,$this->cat_id);
 
-			$search_remote = $this->remote_search_option();
-
 			$lang_showing = $GLOBALS['phpgw']->nextmatchs->show_hits($total_records,$this->start);
 
 			/* set basic vars and parse the header */
@@ -486,12 +485,8 @@
 			$this->template->set_var('lang_go',lang('Go'));
 
 			$this->template->set_var('searchreturn',$noprefs . ' ' . $searchreturn);
-			$this->template->set_var('remote_search',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.remote_search'));
-			$this->template->set_var('remote_query',$GLOBALS['HTTP_POST_VARS']['remote_query']);
-			$this->template->set_var('lang_remote_search',lang('Remote Search'));
 			$this->template->set_var('lang_showing',$lang_showing);
 			$this->template->set_var('search_filter',$search_filter);
-			$this->template->set_var('search_remote',$search_remote);
 			$this->template->set_var('cats',lang('Category'));
 			$this->template->set_var('cats_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 			/* $this->template->set_var('cats_link',$this->cat_option($this->cat_id)); */
@@ -521,6 +516,18 @@
 			$this->template->set_var('qfield',$qfield);
 			$this->template->set_var('cols',$cols);
 
+			if(@isset($GLOBALS['phpgw_info']['server']['enable_remote_addressbook']))
+			{
+				$this->template->set_var('remote_search',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.remote_search'));
+				$this->template->set_var('remote_query',$GLOBALS['HTTP_POST_VARS']['remote_query']);
+				$this->template->set_var('lang_remote_search',lang('Remote Search'));
+				$this->template->set_var('search_remote',$this->remote_search_option());
+				$this->template->fp('remotesearch','remsearch');
+			}
+			else
+			{
+				$this->template->set_var('remotesearch','');
+			}
 			$this->template->pparse('out','addressbook_header');
 
 			/* Show the entries */
