@@ -7,6 +7,9 @@
   * Copyright (C) 1999-2000 Dan Wilson <phpPgAdmin@acucore.com>              *
   * Copyright (C) 1998-1999 Tobias Ratschiller <tobias@dnet.it>              *
   * --------------------------------------------                             *
+  * This file written by Michael Dean<mdean@users.sourceforge.net>           *
+  *  and Miles Lott<milosch@phpgroupware.org>                                *
+  * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
