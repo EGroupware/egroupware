@@ -14,6 +14,20 @@
   class accounts extends accounts_
   {
   
+    function accounts_const($line,$file)
+    {
+       global $phpgw, $phpgw_info;
+       
+       //echo "accounts_const called<br>line: $line<br>$file";
+
+       $phpgw->accounts->phpgw_fillarray();
+       $phpgw->preferences->read_preferences();
+       $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
+       $this->apps   = $this->read_apps($phpgw_info["user"]["userid"]);
+       
+       $phpgw_info["user"]["apps"] = $this->apps;
+    }
+  
     // use this if you make any changes to phpgw_info, including preferences, config table changes, etc
     function sync($line="",$file="")
     {
