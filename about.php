@@ -65,7 +65,7 @@
 		'about_app'				=> $app_data + array
 		(
 			'title'				=> lang($app),
-			'icon'				=> $GLOBALS['phpgw']->common->image($app,'navbar'),
+			'icon'				=> $GLOBALS['phpgw']->common->image($app,'navbar','',True),
 			'lang_version'		=> lang('version'),
 			'lang_author'		=> lang('author'),
 			'lang_based_on'		=> lang('based on'),

@@ -33,7 +33,7 @@
 
 <!-- BEGIN app_row_noicon -->
  <tr class="row_off">
-  <td colspan="2" width="95%" valign="middle"><b>&nbsp;&nbsp;{app_title}</b> <a name="{app_name}"></a></td>
+  <td height="25" colspan="2" width="95%" valign="bottom"><b>&nbsp;{app_title}</b> <a name="{app_name}"></a></td>
  </tr>
 <!-- END app_row_noicon -->
 

@@ -47,6 +47,7 @@ td.left
 
 .bottom
 {
+	color: #FFFFFF;
 	background-color: #FF3300;
 }
 
@@ -55,42 +56,13 @@ a:link,a:active,a:visited,a:hover
 	color: #0000A0;
 }
 
-a:link.top_menu,a:active.top_menu,a:visited.top_menu
+a:link.bottom,a:active.bottom,a:visited.bottom,a:hover.bottom,a:link.top_menu,a:active.top_menu,a:visited.top_menu,a:link.left,a:active.left,a:visited.left
 {
 	color: #FFFFFF;
-	font-weight: bold;
 }
 
-a:hover.top_menu
+a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.top_menu_selected,a:hover.top_menu_selected,a:hover.left,a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left_selected
 {
-	font-weight: bold;
-	color: #660000;
-	background-color: #FFE000;
-}
-
-a:link.top_menu_selected,a:active.top_menu_selected,a:visited.top_menu_selected,a:hover.top_menu_selected
-{
-	font-weight: bold;
-	color: #660000;
-	background-color: #FFE000;
-}
-
-a:link.left,a:active.left,a:visited.left
-{
-	color: #FFFFFF;
-	font-weight: bold;
-}
-
-a:hover.left
-{
-	font-weight: bold;
-	color: #660000;
-	background-color: #FFE000;
-}
-
-a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left_selected
-{
-	font-weight: bold;
 	color: #660000;
 	background-color: #FFE000;
 }
@@ -108,7 +80,7 @@ a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left
 
 .row_on,.th_bright,.app_header
 {
-	background-color: #999999;
+	background-color: #ADADAD;
 }
 
 .msgbox

@@ -41,7 +41,7 @@
 				<!-- BEGIN top_part -->
 				<table width="100%" height="100%" cellspacing="2" cellpadding="2" valign="top">
 					<tr>
-						<td width="131" height="30" valign="bottom" class="top_top"><a href="" target="blank" onMouseover="window.status='phpGroupWare --> home'; return true;" onMouseout="window.status=''; return true;" class="left">[phpGroupWare]</a></td>
+						<td width="131" height="30" valign="bottom" class="top_top"><a href="" target="blank" onMouseover="window.status='phpGroupWare --> home'; return true;" onMouseout="window.status=''; return true;" class="bottom">[phpGroupWare]</a></td>
 						<td height="30" width="19%" valign="bottom" class="user_info">[<xsl:value-of select="user_info_name"/>]</td>
 						<xsl:choose>
 							<xsl:when test="current_users">
@@ -116,8 +116,8 @@
 					<tr valign="top">
 						<td colspan="3" align="center" valign="top" class="bottom">
 						<!-- BEGIN bottom_part -->
-							<xsl:value-of select="lang_powered_by"/>
-							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;">
+							[<xsl:value-of select="lang_powered_by"/>
+							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;" class="bottom">
 								<xsl:attribute name="onMouseover">
 									<xsl:text>window.status='</xsl:text>
 									<xsl:value-of select="lang_phpgw_statustext"/>
@@ -125,7 +125,7 @@
 								</xsl:attribute>
 								<xsl:text> phpGroupWare </xsl:text>
 							</a>
-							<xsl:text> </xsl:text><xsl:value-of select="lang_version"/><xsl:text> </xsl:text><xsl:value-of select="phpgw_version"/>
+							<xsl:text> </xsl:text><xsl:value-of select="lang_version"/><xsl:text> </xsl:text><xsl:value-of select="phpgw_version"/>]
 						<!-- END bottom_part -->
 						</td>
 					</tr>

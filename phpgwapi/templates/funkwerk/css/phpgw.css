@@ -36,6 +36,17 @@ a:hover
 a:hover.left,a:hover.top_link
 {
 	text-decoration: none;
+	font-weight: bold;
+}
+
+a:link.bottom,a:active.bottom,a:visited.bottom,a:hover.bottom,a:link.top_menu,a:active.top_menu,a:visited.top_menu,a:link.left,a:active.left,a:visited.left
+{
+	font-weight: bold;
+}
+
+a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.top_menu_selected,a:hover.top_menu_selected,a:hover.left,a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left_selected
+{
+	font-weight: bold;
 }
 
 a.th,a.th_text
@@ -53,14 +64,10 @@ a.th,a.th_text
 	height: 30;
 }
 
-.info
-{
-	font-size: 85%;
-}
-
 td.left
 {
 	height: 30;
+	width: 131;
 }
 
 .bottom
@@ -98,16 +105,9 @@ table.login
 	background: url(../../default/images/bg_filler.png);
 }
 
-
-.user_info,.admin_info
+.user_info,.admin_info,.small_text
 {
-	font-size: 80%;
-	font-weight: bold;
-}
-
-.small_text
-{
-	font-size: 80%;
+	font-size: 85%;
 }
 
 .header_text
