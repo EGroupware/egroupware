@@ -1,0 +1,294 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sv	%1 (%2 nya) Meddelanden skrivna för applikation '%3' och språken '%4'
+%1 (%2 new) messages writsv for application '%3' and languages '%4'	etemplate	sv	%1 (%2 nya) Meddelanden skrivna för applikation '%3' och språk '%4'
+%1 etemplates deleted	etemplate	sv	%1 eTemplate raderade
+%1 etemplates for application '%2' dumped to '%3'	etemplate	sv	%1 eTemplate för applikation '%2' skrivna till '%3'
+%1 etemplates found	etemplate	sv	%1 eTemplate funna
+%1 matches on search criteria	etemplate	sv	%1 resultat hittade på sökning
+%1 new etemplates imported for application '%2'	etemplate	sv	%1 nya eTemplate importerade för applikation '%2'
+%s disabled	etemplate	sv	%s Inaktiverad
+%s needed	etemplate	sv	%s Krävs
+%s notranslation	etemplate	sv	%s InteÖversatt
+%s onchange	etemplate	sv	%s PåÄndring
+%s readonly	etemplate	sv	%s Skrivskyddad
+'%1' has an invalid format !!!	etemplate	sv	'%1' har ett ogiltigt format
+'%1' is not a valid floatingpoint number !!!	etemplate	sv	'%1' är inte ett giltigt floatingpoint nummer
+'%1' is not a valid integer !!!	etemplate	sv	'%1' är inte ett giltig integer
+a pattern to be searched for	etemplate	sv	Sökord att söka efter
+add a new column (after the existing ones)	etemplate	sv	Skapa kolumn (efter existerande)
+add a new multi-column index	etemplate	sv	Skapa multi-kolumn index
+add column	etemplate	sv	Skapa kolumn
+add index	etemplate	sv	Skapa index
+add table	etemplate	sv	Skapa tabell
+align	etemplate	sv	Passa
+alignment of label and input-field in table-cell	etemplate	sv	Passning av etikett och input fält i tabell cell
+alignment of the v/hbox containing table-cell	etemplate	sv	Passning av V/HBox innehållande tabell cell
+am	etemplate	sv	fm
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sv	En kolumn med index går fortare att sök i (på bekostnad av filsystems utrymme)
+application	etemplate	sv	Applikation
+application name needed to write a langfile or dump the etemplates !!!	etemplate	sv	Namnet på applikationen behövs för att skriva en språkfil eller dumpa eTemplate
+attach	etemplate	sv	Bifoga
+attach file	etemplate	sv	Bifoga fil
+blurtext	etemplate	sv	Oskarptext
+border	etemplate	sv	Kantlinje
+border-line-thickness for the table-tag	etemplate	sv	Kantlinjes tjocklek för tabell-tag
+can not have special sql-value null	etemplate	sv	Kan inte ha SQL reserverat värde NULL
+cancel	etemplate	sv	Avbryt
+category	etemplate	sv	Kategori
+cellpadding for the table-tag	etemplate	sv	Cell fyllnad för tabell-tag
+cells	etemplate	sv	Celler
+cellspacing for the table-tag	etemplate	sv	Cell utrymme för tabell-tag
+center	etemplate	sv	Centrera
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sv	Kontrollera om innehållet bara ska visas men inte förändras (innehållet skickas då inte tillbaks)
+check if field has to be filled by user	etemplate	sv	Kontrollera om fältet ska fyllas i av användare
+checkbox	etemplate	sv	Kryssruta
+class	etemplate	sv	Class
+class, valign	etemplate	sv	class, Valign
+click here to attach the file	etemplate	sv	Bifoga fil
+click here to create the link	etemplate	sv	Skapa länk
+click here to start the search	etemplate	sv	Sök
+click here to upload the file	etemplate	sv	Ladda upp fil
+click to order after that criteria	etemplate	sv	Sortera enl. kriteria
+columnname	etemplate	sv	Kolumn namn
+comment	etemplate	sv	Kommentar
+create a new table for the application	etemplate	sv	Skapa ny tabell för applikationen
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sv	Skapa engelsk ('en') språkfil från etikett och hjälptexter (för applikation i Namn)
+css class for the table-tag	etemplate	sv	CSS class för tabell-tag
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	sv	CSS-class namn för denna rad, förinställd: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-styles	etemplate	sv	CSS-styles
+date+time	etemplate	sv	Date+Time
+datum	etemplate	sv	Datum
+day	etemplate	sv	Dag
+db ensures that every row has a unique value in that column	etemplate	sv	DB försäkrar att varje rad har ett unikt värde i kolumnen
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	sv	DB specifika index alternativ (komma sep.), ex. mysql(FULLTEXT) eller mysql(100) för indexerad längd på kolumn
+db-tools	etemplate	sv	DB Verktyg
+deck	etemplate	sv	Deck (international)
+default	etemplate	sv	Standard
+delete	etemplate	sv	Radera
+delete a single entry by passing the id.	etemplate	sv	Ange ID för att radera post
+delete all selected etemplates, without further inquiry	etemplate	sv	Radera ALLA valda eTemplate, UTAN vidare frågor
+delete column	etemplate	sv	Radera kolumn
+delete index	etemplate	sv	Radera index
+delete this etemplate	etemplate	sv	Radera detta eTemplate
+delete whole column (can not be undone!!!)	etemplate	sv	Radera kolumnen (kan INTE ångras)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	sv	Radera ovanstående eTemplate i databasen (kan INTE ångras)
+deletes the etemplate spez. above	etemplate	sv	Raderar ovanstående eTemplate
+deletes this column	etemplate	sv	Raderar kolumnen
+deletes this index	etemplate	sv	Raderar indexet
+discard changes	etemplate	sv	Ångra ändringar
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	sv	Visas framför indata eller indata skrivs för en '%s' i etiketten (etikett på Sparaknapp eller bild fil)
+displayed in statusline of browser if input-field gets focus	etemplate	sv	Visas i status raden i webbläsaren om indata fält fokuseras
+do you want to save the changes you made in table %s?	etemplate	sv	Spara ändringar i tabell %s?
+documentation	etemplate	sv	Dokumentation
+drop a table - this can not be undone	etemplate	sv	Radera en tabell (kan INTE ångras)
+drop table	etemplate	sv	Radera tabell
+dump4setup	etemplate	sv	Dump4Setup
+edit	etemplate	sv	Redigera
+edit the etemplate spez. above	etemplate	sv	Redigera ovanstående eTemplate
+editable templates - db-tools	etemplate	sv	Redigerbar Template - DB Vertyg
+editable templates - delete template	etemplate	sv	Redigerbar Template - Radera Template
+editable templates - editor	etemplate	sv	Redigerbar Template - Editor
+editable templates - search	etemplate	sv	Redigerbar Template - Sök
+editable templates - show template	etemplate	sv	Redigerbar Template - Visa Template
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	sv	Inbäddade CSS stilar, ex. '.red { background: red; }' (notera '.' före class namnet) eller '@import url(...)' (class namn är globala för hela sidan!)
+enable javascript onchange submit	etemplate	sv	Aktivera JavaScript OnChange submit
+enter '' for an empty default, nothing mean no default	etemplate	sv	Ange '' för tom default, ingenting menar ingen default
+enter a search pattern	etemplate	sv	Ange sökord
+enter filename to upload and attach, use [browse...] to search for it	etemplate	sv	Använd [Bläddra...] för att söka efter fil att bifoga
+enter the new version number here (> old_version), empty for no update-file	etemplate	sv	Ange nytt högre versions nummer, tom för ingen uppdateringsfil
+enter the new version number here (has to be > old_version)	etemplate	sv	Ange nytt högre versions nummer
+entry saved	etemplate	sv	Post sparad
+error: template not found !!!	etemplate	sv	Fel: Template kunde inte hittas
+error: webserver is not allowed to write into '%1' !!!	etemplate	sv	Fel: Webbserver har inte rättighet att skriva till '%1'
+error: while saveing !!!	etemplate	sv	Fel: Kunde inte spara
+error: writeing !!!	etemplate	sv	Fel: Kunde inte skriva
+error: writing file (no write-permission for the webserver) !!!	etemplate	sv	Fel: Kunde inte skriva fil (inga skrivrättigheter på webbservern)
+etemplate	common	sv	eTemplate
+etemplate '%1' imported, use save to put it in the database	etemplate	sv	eTemplate '%1' importerad, använd Spara för att skriva i databasen
+etemplate '%1' written to '%2'	etemplate	sv	eTemplate '%1' skriven till '%2'
+etemplate editor	etemplate	sv	eTemplate Editor
+etemplate referenz	etemplate	sv	eTemplate Referens
+etemplate tutorial	etemplate	sv	eTemplate Hjälpinnehåll
+exchange this row with the one above	etemplate	sv	Byt denna rad mot den ovan
+exchange this two columns	etemplate	sv	Byt dessa två kolumner
+export the loaded etemplate into a xml-file	etemplate	sv	Exportera den laddade eTemplate till XML fil
+export xml	etemplate	sv	Exportera XML
+extensions loaded:	etemplate	sv	Laddade utökningar:
+field must not be empty !!!	etemplate	sv	Fältet kan inte vara tomt
+file	etemplate	sv	Fil
+file contains more than one etemplate, last one is shown !!!	etemplate	sv	Filen innehåller mer änn ett eTemplate, visar sista
+file writen	etemplate	sv	Filen skriven
+fileupload	etemplate	sv	Ladda upp fil
+first	etemplate	sv	Första
+floating point	etemplate	sv	Floating Point
+foreign key	etemplate	sv	Foreign Key
+formatted text (html)	etemplate	sv	Formaterad Text (HTML)
+go to the first entry	etemplate	sv	Gå till första posten
+go to the last entry	etemplate	sv	Gå till sista posten
+go to the next page of entries	etemplate	sv	Gå till nästa sida
+go to the previous page of entries	etemplate	sv	Gå till föregående sida
+hbox	etemplate	sv	HBox
+height	etemplate	sv	Höjd
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	sv	Rad höjd (i % eller pixel), inaktivera rad: [! = not]<value>[=<check>] ex: '!@data' inaktiverar rad om innehåll saknas
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	sv	Tabell höjd (i %  eller pixel) för tabell-tag och (frivillig) div
+height, disabled	etemplate	sv	Höjd, inaktiverad
+help	etemplate	sv	Hjälp
+horizontal rule	etemplate	sv	Horisontell linje
+hour	etemplate	sv	Timme
+html	etemplate	sv	Html
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sv	Om fält är inaktiverat visas en tom tabell-cell, för (temporär) borttagning av ett fält/cell
+image	etemplate	sv	Bild
+import	etemplate	sv	Import
+import an etemplate from a xml-file	etemplate	sv	Importera eTemplate från XML fil
+import table-definitions from existing db-table	etemplate	sv	Importera tabell definitioner från existerande DB tabell
+import xml	etemplate	sv	Importera XML
+index/name of returned content (name of the template, link / method for image)	etemplate	sv	Index/namn på returnerat innehåll (namn på Template, Länk / Metod för bild)
+indexed	etemplate	sv	Indexerad
+indexoptions	etemplate	sv	Index alternativ
+insert new column behind this one	etemplate	sv	Skapa kolumn efter denna
+insert new column in front of all	etemplate	sv	Skapa kolumn före alla
+insert new row after this one	etemplate	sv	Skapa rad efter denna
+insert new row in front of first line	etemplate	sv	Skapa rad före första raden
+integer	etemplate	sv	Integer
+key	etemplate	sv	Key
+label	etemplate	sv	Etikett
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	sv	Etikett:[bold][italic] Text:[len][,max] Nummer:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Välj:[multiselect] Datum:[värde: ex. 'Y-m-d']
+lang	etemplate	sv	Språk
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	sv	Språk förkortning (ex. 'en' för Engelsk) för språk oberoende template ('' läser ditt pref. språk eller standard, us 'standard' att läsa standard template '')
+last	etemplate	sv	Sista
+left	etemplate	sv	Vänster
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	sv	Längd för char+varchar, precisions int: 2, 4, 8 och float: 4, 8
+link	etemplate	sv	Länk
+linklist	etemplate	sv	Länklista
+linkstring	etemplate	sv	Länksträng
+linkto	etemplate	sv	LänkaTill
+load this template into the editor	etemplate	sv	Ladda Template i editorn
+minute	etemplate	sv	Minut
+month	etemplate	sv	Månad
+multicolumn indices	etemplate	sv	Multi-kolumn Index
+name	etemplate	sv	Namn
+name of other table where column is a key from	etemplate	sv	Namnet på den andra tabellen kolumnen är en nyckel från
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	sv	namnet på phpgw-template set (ex. verdilak): '' = standard (läser pref. template, använd 'standard' för att läsa standard template '')
+name of table to add	etemplate	sv	Namnet på tabell
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sv	Namn på eTemplate, ska vara i formatet applikation.funktion[.subTemplate]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sv	måste vara unikt för tabellen och inte ett reserverat SQL ord. Rekomenderas att använda 2 tecken prefix för aplikations namnet, ex. 'et_'
+new search	etemplate	sv	Ny sökning
+new table created	etemplate	sv	Tabell skapad
+newer version '%1' exists !!!	etemplate	sv	Nyare version '%1' existerar
+nextmatch	etemplate	sv	Nästa matchande
+nextmatch filterheader	etemplate	sv	Nästa matchande Filterheader
+nextmatch sortheader	etemplate	sv	Nästa matchande Sortheader
+no file	etemplate	sv	Ingen fil
+no filename given or selected via browse...	etemplate	sv	Ingen fil angiven eller vald
+not null	etemplate	sv	NOT NULL
+nothing found - try again !!!	etemplate	sv	Inga träffar - försök igen
+nothing matched search criteria !!!	etemplate	sv	Inga träffar på sökord
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	sv	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	sv	Antal rader/kolumner i en V/HBox, Cellpadding, Cellspacing
+of	etemplate	sv	of
+only an other version found !!!	etemplate	sv	Kunde bara hitta annan version
+optional note about the link	etemplate	sv	Frivillig anteckning om länken
+options	etemplate	sv	Alternativ
+overflow	etemplate	sv	Overflow
+padding	etemplate	sv	Fyllnad
+please enter table-name first !!!	etemplate	sv	Var god och ange tabell namnet först
+pm	etemplate	sv	em
+precision	etemplate	sv	Precision
+primary key	etemplate	sv	Primary Key
+primary key for the table, gets automaticaly indexed	etemplate	sv	För primary key i tabell skapas automatiskt ett index
+radiobutton	etemplate	sv	Radioknapp
+read	etemplate	sv	Läs
+read a list of entries.	etemplate	sv	Läs lista av poster
+read a single entry by passing the id and fieldlist.	etemplate	sv	Ange ID och fältlista för att läsa post
+read etemplate from database (for the keys above)	etemplate	sv	Läs eTemplate från databas (för ovanstående nycklar)
+remove row (can not be undone!!!)	etemplate	sv	Radera rad (kan INTE återskapas)
+remove this link (not the entry itself)	etemplate	sv	Radera länk (inte posten i sig)
+returns savely, without deleting	etemplate	sv	Återgår UTAN att radera
+right	etemplate	sv	Höger
+save	etemplate	sv	Spara
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sv	Spara eTemplate under ovanstående nycklar (namn, ....), ändra för att Spara Som.
+saves changes to tables_current.inc.php	etemplate	sv	Spara ändringar i tables_current.inc.php
+scale	etemplate	sv	Scale
+scale for float	etemplate	sv	scale for float
+search	etemplate	sv	Sök
+select a category	etemplate	sv	Välj kategori
+select a primary contact, to show in the list	etemplate	sv	Välj primär kontakt att visa i lista
+select access	etemplate	sv	Välj åtkomst
+select account	etemplate	sv	Välj konto
+select an app first !!!	etemplate	sv	Välj en applikaiton
+select an app to search in	etemplate	sv	Välj en applikaiton att söka i
+select an application	etemplate	sv	Välj en applikation
+select an application, (*) = uninstalled	etemplate	sv	Välj en applikation, (*) = avinstallerad
+select an entry to link with	etemplate	sv	Välj en post att länka till
+select an table of the application	etemplate	sv	Välj en tabell för applikationen
+select application	etemplate	sv	Välj applikation
+select category	etemplate	sv	Välj kategori
+select country	etemplate	sv	Välj land
+select day	etemplate	sv	Välj dag
+select if content of field should not be translated (label gets always translated)	etemplate	sv	Välj om innehållet i fälten ska översättas (etikett översätts alltid)
+select month	etemplate	sv	Välj månad
+select number	etemplate	sv	Välj nummer
+select one ...	etemplate	sv	Välj en ...
+select percentage	etemplate	sv	Välj procent
+select priority	etemplate	sv	Välj prioritet
+select state	etemplate	sv	Välj läge
+select the indexed columns in their desired order	etemplate	sv	Välj indexerade kolumner i önskad ordning
+select this etemplate to delete it	etemplate	sv	Välj detta eTemplate för att radera det
+select which values to show	etemplate	sv	Välj vilka värden att visa
+select year	etemplate	sv	Välj år
+selectbox	etemplate	sv	Selectbox
+sets today as date	etemplate	sv	Sätt idag som datum
+show	etemplate	sv	Visa
+show (no save)	etemplate	sv	Visa (spara inte)
+show values	etemplate	sv	Visa värden
+showing	etemplate	sv	Visar
+shows / allows you to enter values into the etemplate for testing	etemplate	sv	visar / låter dig ange värden till eTemplate för testning
+shows/displays etemplate for testing, does not save it before	etemplate	sv	visar eTemplate för testning, spara INTE före
+spacing	etemplate	sv	Utrymme
+span, class	etemplate	sv	Span, Class
+stack	etemplate	sv	Stack
+start a new search, cancel this link	etemplate	sv	Gör ny sökning och avbryt denna länk
+start new search for the above pattern	etemplate	sv	Gör ny sökning med ovanstående mönster
+submitbutton	etemplate	sv	Sparaknapp
+table unchanged, no write necessary !!!	etemplate	sv	Tabell oförändrad, ingen skrivning nödvändig
+tablename	etemplate	sv	Tabellnamn
+tabs	etemplate	sv	Tabs
+template	etemplate	sv	Template
+template deleted	etemplate	sv	Template raderad
+template saved	etemplate	sv	Template sparad
+text	etemplate	sv	Text
+textarea	etemplate	sv	Textruta
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	sv	Denna text visas om input-fältet är tomt eller inte har fokus (oskärpa)
+time	etemplate	sv	Tid
+to start the db-tools	etemplate	sv	för att starta DB Verktyg
+to start the etemplate editor	etemplate	sv	för att starta eTemplate editor
+to start the search	etemplate	sv	för att påbörja sökning
+today	etemplate	sv	Idag
+type	etemplate	sv	Typ
+type of the column	etemplate	sv	Typ av kolumn
+type of the field (select label if field should be empty)	etemplate	sv	Typ av fält (välj Etikett om fält ska vara tomt)
+unique	etemplate	sv	Unique
+unlink	etemplate	sv	Länka av
+update a single entry by passing the fields.	etemplate	sv	Fyll i fälten för att uppdatera post
+update from version '%s' to	etemplate	sv	Uppdatera från version '%s' till
+upload	etemplate	sv	Ladda upp
+value	etemplate	sv	Värde
+value has to be at least '%1' !!!	etemplate	sv	Värdet måste vara minst '%1'
+value has to be at maximum '%1' !!!	etemplate	sv	Värdet får högst vara '%1'
+vbox	etemplate	sv	VBox
+version	etemplate	sv	Version
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	sv	Versions nummer, ska vara i formatet: major.minor.revision.nummer (ex. 0.9.13.001 alla nummer fylls ut med 0)
+view this linked entry in its application	etemplate	sv	Visa länkad post i dess applikation
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	sv	Vad händer med innehålls "overflow": synligt (default), göms, skroll, auto (browser bestämmer)
+width	etemplate	sv	Bredd
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	sv	Kol bredd (i % eller pixel), inaktivera kol: [! = not]<value>[=<check>] ex. '!@data' inaktivera kol om innehåll saknas
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	sv	Tabell bredd (i % eller pixel) för tabell-tag och (frivillig) div
+width, disabled	etemplate	sv	Bredd, inaktiverad
+write <app>/setup/tables_current.inc.php	etemplate	sv	Skriv <app>/setup/tables_current.inc.php
+write langfile	etemplate	sv	Skriv språkfil
+write tables	etemplate	sv	Skriv tabeller
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	sv	Skriver en 'etemplates.inc.php' fil (för applikationen i Namn) i setup katalogen för applikationen
+xml-file to import	etemplate	sv	Importera XML fil
+xslt template	etemplate	sv	XSLT Template
+year	etemplate	sv	År
+1	etemplate	sv	1
+2	etemplate	sv	2
