@@ -39,7 +39,7 @@
 			$this->err['desc'] = ' ';
 		}
 
-		function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='')
+		function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='')
 		{
 			if ($from == '')
 			{
@@ -84,6 +84,11 @@
 				}
 				*/
 
+				if (empty($content_type))
+				{
+					$content_type ='plain';
+				}
+
 				if (ereg('Message-Boundary', $body)) 
 				{
 					$header .= 'Subject: ' . stripslashes($subject) . "\n"
@@ -91,10 +96,10 @@
 						. 'Content-Type: multipart/mixed;'."\n"
 						. ' boundary="Message-Boundary"'."\n\n"
 						. '--Message-Boundary'."\n"
-						. 'Content-type: text/plain; charset=US-ASCII'."\n";
+						. 'Content-type: text/' .$content_type . '; charset=US-ASCII'."\n";
 //					if (!empty($msgtype))
 //					{
-//						$header .= "Content-type: text/plain; phpgw-type=".$msgtype."\n";
+//						$header .= "Content-type: text/' .$content_type . '; phpgw-type=".$msgtype."\n";
 //					}
 
 					$header .= 'Content-Disposition: inline'."\n"
@@ -106,10 +111,10 @@
 				{
 					$header .= 'Subject: '.stripslashes($subject)."\n"
 						. 'MIME-version: 1.0'."\n"
-						. 'Content-type: text/plain; charset="'.lang('charset').'"'."\n";
+						. 'Content-type: text/' .$content_type . '; charset="'.lang('charset').'"'."\n";
 					if (!empty($msgtype))
 					{
-						$header .= 'Content-type: text/plain; phpgw-type='.$msgtype."\n";
+						$header .= 'Content-type: text/' .$content_type . '; phpgw-type='.$msgtype."\n";
 					}
 					$header .= 'Content-Disposition: inline'."\n"
 						. 'Content-description: Mail message body'."\n";
