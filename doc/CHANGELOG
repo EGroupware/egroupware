@@ -1,5 +1,8 @@
 [0.9.8] - Merged in patch for UW-Maildir IMAP server support
           Thanks milosch
+	- Fixed repeating entries being saved properly.
+	- Added ability for admin to edit any calendar event.
+	- Fixed entries showing improperly on wrong date.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
