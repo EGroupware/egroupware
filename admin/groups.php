@@ -15,6 +15,9 @@
   $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
+  $phpgw->template->set_file(array("list"   => "groups.tpl",
+              			         "row"    => "groups_row.tpl"));
+
   if (! $start)
      $start = 0;
 
@@ -35,42 +38,40 @@
 
   $total = $phpgw->db->f(0);
   $limit = $phpgw->nextmatchs->sql_limit($start);
+  
+  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+  $phpgw->template->set_var("left_nextmatchs",$phpgw->nextmatchs->left("groups.php",$start,$total));
+  $phpgw->template->set_var("right_nextmatchs",$phpgw->nextmatchs->right("groups.php",$start,$total));
+  $phpgw->template->set_var("lang_groups",lang("user groups"));
 
-  echo '<p><table border="0" width="45%" align="center"><tr bgcolor="'
-     . $phpgw_info["theme"][bg_color] . '">'
-     . '<td align="left">' . $phpgw->nextmatchs->left("groups.php",$start,$total)  . '</td>'
-     . '<td align="center">' . lang("user groups") . '</td>'
-     . '<td align="right">' . $phpgw->nextmatchs->right("groups.php",$start,$total) . '</td>'
-     . '</tr></table>';
-
-  echo "<table border=0 width=45% align=center>"
-     . "<tr bgcolor=" . $phpgw_info["theme"]["th_bg"] . "><td>"
-     . $phpgw->nextmatchs->show_sort_order($sort,"group_name",$order,"groups.php",
-				 lang("name")) . "</td>"
-     . "<td> " . lang("Edit") . " </td> <td> " . lang("Delete")
-     . " </td> </tr>";
+  $phpgw->template->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"group_name",$order,"groups.php",lang("name")));
+  $phpgw->template->set_var("header_edit",lang("Edit"));
+  $phpgw->template->set_var("header_delete",lang("Delete"));
 
   $phpgw->db->query("select * from groups $querymethod $ordermethod limit $limit");
   while ($phpgw->db->next_record()) {
-    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+ 
+     $phpgw->template->set_var("tr_color",$tr_color);
+ 
+     $group_name = $phpgw->db->f("group_name");
+ 
+     if (! $group_name)  $group_name  = '&nbsp;';
 
-    $group_name = $phpgw->db->f("group_name");
-
-    if (! $group_name)  $group_name  = '&nbsp;';
-
-    echo "<tr bgcolor=$tr_color><td>$group_name</td>"
-       . "<td width=5%><a href=\"" . $phpgw->link("editgroup.php","group_id=" . $phpgw->db->f("group_id"))
-       . "\"> " . lang("Edit") . " </a></td>" . "<td width=5%><a href=\""
-       . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("group_id"))
-       . "\"> " . lang("Delete") . " </a></td>";
+     $phpgw->template->set_var("group_name",$group_name); 
+     $phpgw->template->set_var("edit_link",'<a href="' . $phpgw->link("editgroup.php","group_id=" . $phpgw->db->f("group_id")) . '"> ' . lang("Edit") . ' </a>');
+     $phpgw->template->set_var("delete_link",'<a href="' . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("group_id")) . '"> ' . lang("Delete") . ' </a>');
+ 
+     $phpgw->template->parse("rows","row",True);
   }
 
-  echo "\n<form method=POST action=\"".$phpgw->link("newgroup.php")."\">"
-     . "</table></center>"
-     . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
-     . "value=\"" . lang("Add") . "\"></form><form action=\"".$phpgw->link("groups.php")."\"></td>"
-     . "<td align=right>" . lang("search") . "&nbsp;"
-     . "<input name=\"query\"></td></tr></form></table>";
+  $phpgw->template->set_var("new_action",$phpgw->link("newgroup.php"));
+  $phpgw->template->set_var("lang_add",lang("add"));
+
+  $phpgw->template->set_var("search_action",$phpgw->link("groups.php"));
+  $phpgw->template->set_var("lang_search",lang("search"));
+
+  $phpgw->template->pparse("out","list");
 
   $phpgw->common->phpgw_footer();
 ?>
