@@ -35,11 +35,14 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	it	Nome Amministratore
 administration	admin	it	Amministrazione
 admins	admin	it	Amministratori
+advanced options	admin	it	opzioni avanzate
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di login, un account deve essere bloccato (predefinito 3) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di login, un IP deve essere bloccato (predefinito 3) ?
+aliases	admin	it	Alias
 all records and account information will be lost!	admin	it	Tutte le registrazioni e le informazioni dell'account andranno perse!
 all users	admin	it	Tutti gli utenti
 allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa applicazione
+alternate email address	admin	it	indirizzo email alternativo
 anonymous user	admin	it	Utente anonimo
 anonymous user (not shown in list sessions)	admin	it	Utente Anonimo (non visualizzato nella lista delle sessioni)
 appearance	admin	it	Aspetto
@@ -61,6 +64,10 @@ async services last executed	admin	it	Ultima esecuzione dello Schedulatore
 asynchronous timed services	admin	it	Schedulatore
 asyncservices not yet installed or other error (%1) !!!	admin	it	Schedulatore non ancora installato o altro errore (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	it	Cerca di usare il mimetype corretto per l'FTP invece di quello di predefinito 'application/octet-stream'
+attribute accountstatus explained	admin	it	Questo gestisce l'attributo <b><i>-accountStatus-</i></b> dallo schema QMAIL.
+attribute mail explained	admin	it	Questo gestisce l'attributo <b><i>-mail-</i></b> dallo schema QMAIL e non deve mai essere vuoto. Esso è anche il campo interno di email di eGW.
+attribute mailalternateaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailAlternateAddress-</i></b> dallo schema QMAIL e può essere gestito come mappe virtuali o alias.
+attribute mailforwardingaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailForwardingAddress-</i></b> dallo schema QMAIL e non deve essere vuoto se assegnato.
 authentication / accounts	admin	it	Autenticazione / Account
 auto create account records for authenticated users	admin	it	Crea automaticamente gli account per gli utenti autenticati
 back to the list	admin	it	torna alla lista
@@ -83,6 +90,7 @@ color	admin	it	Colore
 country selection	admin	it	Selezione Nazione
 create group	admin	it	Crea gruppo
 crontab only (recomended)	admin	it	solo crontab (raccomandato)
+cyrus imap server	admin	it	Server IMAP Cyrus
 data	admin	it	Data
 day	admin	it	Giorno
 day of week<br>(0-6, 0=sun)	admin	it	Giorno della settimana<br>(0-6, 0=Dom)
@@ -101,6 +109,7 @@ delete the group	admin	it	cancella il gruppo
 delete this category	admin	it	cancella questa categoria
 delete this group	admin	it	cancella questo gruppo
 delete this user	admin	it	cancella questo utente
+deliver extern	admin	it	invia esterno
 deny access to access log	admin	it	Nega l'accesso ai log di accesso
 deny access to application registery	admin	it	Nega l'accesso alla registrazione applicazioni
 deny access to applications	admin	it	Nega l'accesso alle applicazioni
@@ -126,6 +135,7 @@ do you want to delete all global subcategories ?	admin	it	Vuoi cancellare tutte 
 do you want to move all global subcategories one level down ?	admin	it	Vuoi spostare tutte le sotto-categorie globali sotto di un livello ?
 edit account	admin	it	Modifica account
 edit application	admin	it	Modifica Applicazione
+edit email settings	admin	it	Modifica impostazioni email
 edit global category	admin	it	Modifica la categoria globale
 edit global category for %1	admin	it	Modifica la categoria globale per %1
 edit group	admin	it	Modifica Gruppo
@@ -139,11 +149,13 @@ edit this group	admin	it	modifica questo gruppo
 edit this user	admin	it	modifica questo utente
 edit user	admin	it	modifica utente
 edit user account	admin	it	Modifica account dell'utente
+email account active	admin	it	account email attivo
+email address	admin	it	indirizzo email
 enable debug-messages	admin	it	Attiva i messaggi di debug
 enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
 enabled - popup window	admin	it	Attivo - Finestra Popup
 enter a description for the category	admin	it	inserisci una descrizione per la categoria
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	it	Inserisci del testo casuale per las cifratura di app_session (richiede mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	it	Inserisci del testo casuale per la cifratura di app_session (richiede mcrypt)
 enter the background color for the login page	admin	it	Inserisci il colore di background per la pagina di login
 enter the background color for the site title	admin	it	Inserisci il colore di background per il titolo del sito
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
@@ -167,6 +179,7 @@ error canceling timer, maybe there's none set !!!	admin	it	Errore cancellando il
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	it	Errore impostando il timer, sintassi sbagliata o forse uno è già in esecuzione !!!
 error: %1 not found or other error !!!	admin	it	Errore: %1 non trovato o altro errore !!!
 expires	admin	it	Scade
+explanation of ldapman	admin	it	Questo modulo è stato testato fino ad oggi per POSTFIX, LDAP, Courier-IMAP e necessita degli schemi CORE e QMAIL(OID7914). Ulteriori dettagli riguardo l'uso e la configurazione di questo sistema possono essere trovati in README.ldap nella cartella documenti di ADMIN.
 fallback (after each pageview)	admin	it	fallback (dopo ogni cambio pagina)
 file space	admin	it	Spazio per i file
 file space must be an integer	admin	it	Lo spazio per i file deve essere un intero
@@ -174,6 +187,9 @@ find and register all application hooks	admin	it	Trova e registra tutti gli gli 
 for the times above	admin	it	per il tempo sovrastante
 for the times below (empty values count as '*', all empty = every minute)	admin	it	per i tempi sottostanti (un valore vuoto equivale a '*', tutti vuoti = ogni minuto)
 force selectbox	admin	it	Forza elenco a discesa
+forward also to	admin	it	inoltra anche a
+forward email's to	admin	it	inoltra email a
+forward only	admin	it	inoltra solo
 global categories	common	it	Categorie Globali
 group ?	admin	it	gruppo ?
 group has been added	common	it	Il gruppo è stato aggiunto
@@ -192,6 +208,7 @@ icon	admin	it	Icona
 idle	admin	it	inattivo
 if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	it	Nel caso si utilizzi LDAP, vuoi gestire gli attributi di homedirectory e shell di login?
+in mbyte	admin	it	in MByte
 inbound	admin	it	in ingresso
 install crontab	admin	it	Installa crontab
 installed applications	common	it	Applicazioni Installate
@@ -214,6 +231,7 @@ ldap groups context	admin	it	contesto gruppi LDAP
 ldap host	admin	it	host LDAP
 ldap root password	admin	it	password di root LDAP
 ldap rootdn	admin	it	LDAP rootdn
+leave empty for no quota	admin	it	lascia vuoto per nessuna quota
 leave the category untouched and return back to the list	admin	it	lascia le categorie inalterate e ritorna alla lista
 leave the group untouched and return back to the list	admin	it	Lascia i gruppi inalterati e ritorna alla lista
 list config settings	admin	it	Lista impostazioni di configurazione
@@ -226,6 +244,7 @@ login shell	admin	it	Shell di login
 login time	admin	it	Ora Login
 loginid	admin	it	LoginID
 mail settings	admin	it	Impostazioni Mail
+main email-address	admin	it	Indirizzo email Principale
 main screen message	admin	it	Messaggio nella schermata principale
 manager	admin	it	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	it	ID massimo per l'account (es. 65535 or 100000, etc.)
@@ -240,6 +259,7 @@ new group name	admin	it	Nome nuovo gruppo
 new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in bianco per non cambiarla ]
 next run	admin	it	Prossima esecuzione
 no algorithms available	admin	it	nessun algoritmo disponibile
+no alternate email address	admin	it	nessun indirizzo email alternativo
 no jobs in the database !!!	admin	it	Nessun job nel database !!!
 no login history exists for this user	admin	it	Non esiste una cronologia di login per questo utente
 no matches found	admin	it	Nessuna corrispondenza trovata.
@@ -263,15 +283,21 @@ please enter a name	admin	it	Per favore inserisci un nome
 please enter a name for that server !	admin	it	Per favore inserisci un nome per quel server
 please run setup to become current	admin	it	Per favore lancia il setup
 please select	admin	it	Per favore selezionare
+postfix with ldap	admin	it	Postfix con LDAP
 preferences	admin	it	Preferenze
 primary group	admin	it	Gruppo principale
+qmaildotmode	admin	it	qmaildotmode
+qouta size in mbyte	admin	it	dimensione quota in MByte
+quota settings	admin	it	impostazioni quota
 re-enter password	admin	it	Reinserisci la password
 read this list of methods.	admin	it	Leggi questa lista dei metodi
 register application hooks	admin	it	Registra gli agganci alle chiamate dell'applicazione
+remove	admin	it	Rimuovi
 remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gruppo
 remove all users from this group ?	admin	it	Rimuovi tutti gli utenti da questo gruppo ?
 return to admin mainscreen	admin	it	ritorna alla pagina principale di amministrazione
 return to view account	admin	it	Ritorna alla visualizzazone dell'account
+route all mails to	admin	it	Indirizza tutte le mail a
 run asynchronous services	admin	it	Esegui lo Schedulatore
 save the category	admin	it	salva la categoria
 save the category and return back to the list	admin	it	salva la categoria e ritorna alla lista
@@ -311,6 +337,9 @@ sorry, the follow users are still a member of the group %1	admin	it	Spiacente, i
 sort the entries	admin	it	ordina le voci
 ssl	admin	it	ssl
 standard	admin	it	standard
+standard imap server	admin	it	Server IMAP standard
+standard pop3 server	admin	it	Server POP3 standard
+standard smtp-server	admin	it	Server SMTP standard
 start testjob!	admin	it	Inizia il Lavoro di Test
 submit changes	admin	it	Invia Modifiche
 submit the search string	admin	it	Invia la stringa di ricerca
@@ -342,6 +371,7 @@ total records	admin	it	Inserimenti totali
 trust level	admin	it	Livello di Fiducia
 trust relationship	admin	it	Relazioni Fidate
 under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	it	Sotto windows al momento puoi utilizzare solo il metodo fallback. Nella modalità fallback i lavori saranno controllati solo dopo ogni cambio pagina !!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	it	Sotto windows devi installare lo schedulatore %1manualmente%2 o usare la modalità fallback. Fallback significa che i lavori vengono controllati solo dopo ogni vista pagina !!!
 use cookies to pass sessionid	admin	it	utilizza i cookie per passare l'id di sessione
 use pure html compliant code (not fully working yet)	admin	it	Usa codice HTML compliant (non ancora completamente implementato)
 use theme	admin	it	Utilizza il tema
@@ -359,9 +389,10 @@ view sessions	admin	it	Visualizza sessioni
 view this user	admin	it	visualizza questo utente
 view user account	admin	it	Visualizza account utente
 who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
+would you like egroupware to cache the egw info array ?	admin	it	Vuoi che eGroupWare utilizzi la cache per l'array egw info?
+would you like egroupware to cache the phpgw info array ?	admin	it	Vuoi che eGroupWare usi cache per info array phpgw ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che eGroupWare controlli se c'è una nuova versione<br>quando un amministratore effettua il login ?
 would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che eGroupWare controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login ?
-would you like egroupware to cache the egw info array ?	admin	it	Vuoi che eGroupWare utilizzi la cache per l'array egw info?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuoi caricare automaticamente i nuovi file di traduzione (al momento del login) ?
 would you like to show each application's upgrade status ?	admin	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
 xml-rpc	admin	it	XML-RPC

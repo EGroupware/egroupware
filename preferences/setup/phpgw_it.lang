@@ -22,7 +22,7 @@ description can not exceed 255 characters in length !	preferences	it	La descrizi
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	it	Preferisci il formato a 24 ore, o a 12 ore con l'aggiunta di am/pm?
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
-error: there was a problem finding the preference file for %1 in %2	preferences	it	Errore: c'è stato un errore nel trovare il file delle preferenze per %1 in %2
+error: there was a problem finding the preference file for %1 in %2	preferences	it	Errore: c'è stato un problema nel trovare il file delle preferenze per %1 in %2
 failed to change password.  please contact your administrator.	preferences	it	Impossibile cambiare la password. Prego contatta l'amministratore.
 forced preferences	preferences	it	Preferenze Forzate
 help off	preferences	it	Nessun Aiuto
@@ -67,6 +67,7 @@ this server is located in the %1 timezone	preferences	it	Questo server è situato
 time format	preferences	it	Formato ora
 use default	preferences	it	Usa il predefinito
 users choice	preferences	it	Scelta dell'utente
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	it	Quando dici sì i pulsanti Home e Uscita sono presentati come applicazioni nella barra principale superiore.
 which currency symbol or name should be used in egroupware.	preferences	it	Quale simbolo monetario o nome deve essere usato in eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	it	Puoi visualizzare le applicazioni come icone, icone con nome o entrambi.
 you do not have permission to set acl's in this mode!	preferences	it	Non hai il permesso di stabilire i permessi ACL in questa modo!

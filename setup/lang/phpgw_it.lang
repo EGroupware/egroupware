@@ -1,10 +1,12 @@
 %1 does not exist !!!	setup	it	%1 non esiste !!!
 %1 is %2%3 !!!	setup	it	%1 è %2%3 !!!
+(searching accounts and changing passwords)	setup	it	(ricerca di account e variazione password)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	it	*** NON aggiornare il tuo database tramite setup, perché l'aggiornamento potrebbe essere interrotto dal max_execution_time, che lascerebbe il tuo DB in uno stato irrecuperabile (dati persi) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	it	*** Devi effettuare manualmente le modifiche al tuo php.ini (di solito in /etc su linux) perché eGW sia completamente funzionante !!!
 00 (disable)	setup	it	00 (disabilitato/ consigliato)
 13 (ntp)	setup	it	13 (ntp)
 80 (http)	setup	it	80 (http)
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	it	<b>Questo creerà 1 account admin e 3 account demo</b>I nome utente/password sono: demo/guest, demo2/guest e demo3/guest.
 <br><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	it	<br><center>L'importazione &egrave; stata completata! Cliccare <a href="index.php">qui</a> per titornare al setup </center>
 accounts existing	setup	it	Esistono Account
 actions	setup	it	Azioni
@@ -18,6 +20,7 @@ admin password to header manager	setup	it	Password amministratore per Header man
 admin user for header manager	setup	it	User amministratore per Header manager
 admin username	setup	it	Username amministratore
 admins	setup	it	Amministratori
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	it	Dopo aver recuperato il file, mettilo al suo posto come header.inc.php. Poi, clicca "continua".
 all applications	setup	it	tutte le applicazioni
 all users	setup	it	Tutti gli utenti
 analysis	setup	it	Analisi

@@ -8,23 +8,28 @@
 - or shift-click to decrease it	jscalendar	es-ca	- o Maj+clic per disminuir
 - use the %1, %2 buttons to select month	jscalendar	es-ca	- Useu els botons %1, %2 per a seleccionar el mes
 - use the %1, %2 buttons to select year	jscalendar	es-ca	- Useu els botons %1, %2 per a seleccionar l'any
+/workflow directory does not exist and could not be created, please ask adminstrator to check the global configuration	common	es-ca	el directori /workflow no existeix i no s'ha pogut crear. Si us plau, demaneu a l'administrador que comprovi la configuració global
 00 (disable)	admin	es-ca	00 (desactiva)
 13 (ntp)	admin	es-ca	13 (ntp)
-3 number of chars for day-shortcut	common	es-ca	3 caràcters per a l'abreviatura del dia
-3 number of chars for month-shortcut	common	es-ca	3 caràcters per a l'abreviatura del mes
+3 number of chars for day-shortcut	jscalendar	es-ca	3 caràcters per a l'abreviatura del dia
+3 number of chars for month-shortcut	jscalendar	es-ca	3 caràcters per a l'abreviatura del mes
 80 (http)	admin	es-ca	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	es-ca	\n Ordenant el codi HTML, espereu si us plau...
+_delete row	htmlarea-ContextMenu	es-ca	_Esborra Fila
+_image properties...	htmlarea-ContextMenu	es-ca	_Propietats de la Imatge...
+_modify link...	htmlarea-ContextMenu	es-ca	_Modifica Enllaç...
+_remove link...	htmlarea-ContextMenu	es-ca	_Esborra enllaç...
+_table properties...	htmlarea-ContextMenu	es-ca	_Propietats de la Taula...
 about	common	es-ca	Quant a
 about %1	common	es-ca	Quant a %1
 about the calendar	jscalendar	es-ca	Quant al calendari
 about this editor	htmlarea	es-ca	Quant a aquest editor
 access	common	es-ca	Accés
 access not permitted	common	es-ca	Accés no permès
-access type	common	es-ca	Tipo Acceso
 account has been created	common	es-ca	Compte creat
 account has been deleted	common	es-ca	Compte esborrat
 account has been updated	common	es-ca	Compte actualitzat
 account is expired	common	es-ca	Compte caducat
-account preferences	common	es-ca	Preferencias de la Cuenta
 acl	common	es-ca	LCA
 action	common	es-ca	Acció
 active	common	es-ca	Actiu
@@ -33,14 +38,17 @@ add %1 category for	common	es-ca	Afegir %1 categoria per a
 add category	common	es-ca	Afegir categoria
 add sub	common	es-ca	Afegir sub
 addressbook	common	es-ca	Llibreta d'adreces
-addressbook preferences	common	es-ca	Preferencias de Libreta de Direcciones
 admin	common	es-ca	Administració
 administration	common	es-ca	Administració
 afghanistan	common	es-ca	AFGANISTAN
 albania	common	es-ca	ALBÀNIA
 algeria	common	es-ca	ALGÈRIA
+align	htmlarea-TableOperations	es-ca	Alinea
 all	common	es-ca	Tot
+all fields	common	es-ca	tots els camps
+all four sides	htmlarea-TableOperations	es-ca	Els quatre costats
 alphabet	common	es-ca	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	es-ca	Fulla d'estils alternativa:
 american samoa	common	es-ca	SAMOA AMERICANA
 andorra	common	es-ca	ANDORRA
 angola	common	es-ca	ANGOLA
@@ -59,18 +67,21 @@ australia	common	es-ca	AUSTRÀLIA
 austria	common	es-ca	ÀUSTRIA
 author	common	es-ca	Autor
 autohide sidebox menus	common	es-ca	Ocultar automàticament els menús laterals
-automacally hide the sidebox menus?	common	es-ca	¿Ocultar automáticamente los recuadros laterales?
 automatically hide the sidebox menus?	common	es-ca	Ocultar automàticament els menùs laterals?
 autosave default category	common	es-ca	Desar automàticament la Categoria Predeterminada
 azerbaijan	common	es-ca	AZERBAIJÀN
 back	common	es-ca	Enrere
 back to user login	common	es-ca	Tornar a identificació d'usuari
+background	htmlarea-TableOperations	es-ca	Fons
 background color	htmlarea	es-ca	Color de fons
+background color:	common	es-ca	Color de fons:
 bad login or password	common	es-ca	Nom d'usuari o contrasenya incorrectes
 bahamas	common	es-ca	BAHAMES
 bahrain	common	es-ca	BAHREIN
 bangladesh	common	es-ca	BANGLADESH
 barbados	common	es-ca	BARBADOS
+base directory does not exist, please ask adminstrator to check the global configuration	common	es-ca	El directori base no existeix. Si us plau, demaneu a l'administrador que comprovi la configuració global
+baseline	htmlarea-TableOperations	es-ca	Línia zero
 bcc	common	es-ca	CCo
 belarus	common	es-ca	BIELORÚSSIA
 belgium	common	es-ca	BÈLGICA
@@ -81,9 +92,11 @@ bhutan	common	es-ca	BHUTAN
 blocked, too many attempts	common	es-ca	Bloquejat, massa intents
 bold	htmlarea	es-ca	Negreta
 bolivia	common	es-ca	BOLIVIA
-bookkeeping	common	es-ca	Contabilidad
+border	htmlarea-TableOperations	es-ca	Vorera
+borders	htmlarea-TableOperations	es-ca	Voreres
 bosnia and herzegovina	common	es-ca	BOSNIA I HERZEGOVINA
 botswana	common	es-ca	BOTSWANA
+bottom	htmlarea-TableOperations	es-ca	Part inferior
 bouvet island	common	es-ca	ILLA BOUVET
 brazil	common	es-ca	BRASIL
 british indian ocean territory	common	es-ca	TERRITORI OCEÀNIC DE LES INDIES BRITÀNIQUES
@@ -92,12 +105,14 @@ bulgaria	common	es-ca	BULGÀRIA
 bulleted list	htmlarea	es-ca	Llista d'esquema
 burkina faso	common	es-ca	BURKINA FASO
 burundi	common	es-ca	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	es-ca	Propietats de Cel·la...
 calendar	common	es-ca	Calendari
 cambodia	common	es-ca	CAMBODJA
 cameroon	common	es-ca	CAMERUN
 canada	common	es-ca	CANADA
 cancel	common	es-ca	Cancel·lar
 cape verde	common	es-ca	CAP VERD
+caption	htmlarea-TableOperations	es-ca	Contingut
 categories	common	es-ca	Categories
 categories for	common	es-ca	categories per
 category	common	es-ca	Categoria
@@ -105,13 +120,19 @@ category %1 has been added !	common	es-ca	Categoria %1 afegida !
 category %1 has been updated !	common	es-ca	Categoria %1 actualitzada !
 cayman islands	common	es-ca	ILLES CAIMAN
 cc	common	es-ca	Cc
+cell properties	htmlarea-TableOperations	es-ca	Propietats de Cel·la
+center	htmlarea-TableOperations	es-ca	Centre
 central african republic	common	es-ca	REPÚBLICA CENTREAFRICANA
 chad	common	es-ca	TXAD
 change	common	es-ca	Canvi
+char	htmlarea-TableOperations	es-ca	Caràcter
 charset	common	es-ca	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	es-ca	Comprova Enllaç...
 check installation	common	es-ca	Comprovar instal·lació
+check now	common	es-ca	Comprova-ho Ara
 chile	common	es-ca	XILE
 china	common	es-ca	XINA
+choose list style type (for ordered lists)	htmlarea-ListType	es-ca	Trieu el tipus d'estil de la llista (per a llistes ordenades)
 choose the category	common	es-ca	Trieu la categoria
 choose the parent category	common	es-ca	Trieu la categoria superior
 christmas island	common	es-ca	ILLA CHRISTMAS
@@ -122,10 +143,11 @@ click or mouse over to show menus	common	es-ca	Premeu o moveu el ratolí per sobr
 click or mouse over to show menus?	common	es-ca	Prèmer o moure el ratolí per sobre per veure menús?
 close	common	es-ca	Tancar
 cocos (keeling) islands	common	es-ca	ILLES COCOS (KEELING)
+collapsed borders	htmlarea-TableOperations	es-ca	Voreres col·lapsades
 colombia	common	es-ca	COLÒMBIA
+color	htmlarea-TableOperations	es-ca	Color
 comoros	common	es-ca	COMORES
 company	common	es-ca	Empresa
-company directory	common	es-ca	Directorio de la Organizacion
 config password	common	es-ca	Configura Contrasenya
 config username	common	es-ca	Configura Nom d'Usuari
 congo	common	es-ca	CONGO
@@ -136,38 +158,50 @@ copy selection	htmlarea	es-ca	Copiar selecció
 costa rica	common	es-ca	COSTA RICA
 cote d ivoire	common	es-ca	COSTA D'IVORI
 create	common	es-ca	Crear
+create a link	htmlarea-ContextMenu	es-ca	Crea un enllaç
 created by	common	es-ca	Creat per
 croatia	common	es-ca	CROÀCIA
 cuba	common	es-ca	CUBA
 currency	common	es-ca	Moneda
 current	common	es-ca	Actual
 current style	htmlarea	es-ca	Estil actual
+current url is	htmlarea-ContextMenu	es-ca	La URL actual és
 current users	common	es-ca	Usuaris actuals
-cut selection	htmlarea	es-ca	Retallar selecció
+cut	htmlarea-ContextMenu	es-ca	Retalla
+cut selection	htmlarea	es-ca	Retalla la selecció
 cyprus	common	es-ca	XIPRE
 czech republic	common	es-ca	REPÚBLICA TXECA
 date	common	es-ca	Data
 date due	common	es-ca	Data límit
 date selection:	jscalendar	es-ca	Selecció de data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-ca	Port de data.<br>Si useu el port 13, si us plau, configureu acuradament les regles del tallafocs abans d'enviar aquesta plana.<br>
+de_lete column	htmlarea-ContextMenu	es-ca	Esborra Columna
 december	common	es-ca	Desembre
+decimal numbers	htmlarea-ListType	es-ca	Números decimals
 decrease indent	htmlarea	es-ca	Reduir sangria
 default category	common	es-ca	Categoria predeterminada
 delete	common	es-ca	Esborrar
+delete cell	htmlarea-TableOperations	es-ca	Esborra cel·la
+delete column	htmlarea-TableOperations	es-ca	Esborra columna
+delete row	htmlarea-TableOperations	es-ca	Esborra fila
+delete the current column	htmlarea-ContextMenu	es-ca	Esborra la columna actual
+delete the current row	htmlarea-ContextMenu	es-ca	Esborra la fila actual
 denmark	common	es-ca	DINAMARCA
 description	common	es-ca	Descripció
 detail	common	es-ca	Detall
 details	common	es-ca	Detalls
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-ca	Desactivar l'execució del pegat d'IE 5.5 i superiors per mostrar transparències en imatges PNG?
+dictionary	htmlarea-SpellChecker	es-ca	Diccionari
 disable internet explorer png-image-bugfix	common	es-ca	Desactivar el pegat d'IE per veure imatges PNG
 disable slider effects	common	es-ca	Desactivar efectes lliscants
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-ca	Desactivar efectes lliscants animats en mostrar o amagar menús a la plana? Opera i Konqueror probablement ho necessiten.
 disabled	common	es-ca	Desactivat
-display %s first	common	es-ca	Mostra %s primer
-display monday first	jscalendar	es-ca	Mostrar Dilluns primer
-display sunday first	jscalendar	es-ca	Mostar Diumenge primer
+display %s first	jscalendar	es-ca	Mostra %s primer
 djibouti	common	es-ca	DJIBOUTI
 do you also want to delete all subcategories ?	common	es-ca	També voleu esborrar totes les subcategories?
+doctype:	common	es-ca	TIPUS DE DOCUMENT:
+document properties	common	es-ca	Propietats del document
+document title:	common	es-ca	Títol del document:
 domain	common	es-ca	Domini
 domain name for mail-address, eg. "%1"	common	es-ca	Nom de domini per adreça de correu, ex. "%1"
 domestic	common	es-ca	Domèstic
@@ -182,17 +216,16 @@ edit	common	es-ca	Editar
 edit %1 category for	common	es-ca	Editar %1 categoria per
 edit categories	common	es-ca	Editar categories
 edit category	common	es-ca	Editar categoria
-edit user account	common	es-ca	Editar Cuenta de Usuario
 egroupware api version %1	common	es-ca	eGroupWare API versió %1
 egroupware: login blocked for user '%1', ip %2	common	es-ca	eGroupWare: inici de sessió bloquejat per a l'usuari '%1', IP %2
 egypt	common	es-ca	EGIPTE
 el salvador	common	es-ca	EL SALVADOR
+element...	htmlarea-ContextMenu	es-ca	Element...
 email	common	es-ca	Correu electrònic
-email settings	common	es-ca	Seteos del Email
 email-address of the user, eg. "%1"	common	es-ca	Adreces de correu electrònic del usuari, ex. '%1'
 enabled	common	es-ca	Activat
 end date	common	es-ca	Data de finalització
-end time	common	es-ca	Hora de finalizació
+end time	common	es-ca	Hora de finalització
 enlarge editor	htmlarea	es-ca	Agrandar editor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-ca	Entreu l'adreça URL d'eGroupWare.<br>Exemple: http://www.domini.com/egroupware &nbsp; o bé &nbsp; /egroupware<br><b>Sense barra final!!</b>
 entry has been deleted sucessfully	common	es-ca	Entrada esborrada correctament
@@ -205,24 +238,27 @@ error deleting %1 %2 directory	common	es-ca	Error esborrant el directori %1 %2
 error renaming %1 %2 directory	common	es-ca	Error reanomenant el directori %1 %2
 estonia	common	es-ca	ESTÒNIA
 ethiopia	common	es-ca	ETIÒPIA
-exit	common	es-ca	Salir
-expires	common	es-ca	Expira
+exact	common	es-ca	exacte
 falkland islands (malvinas)	common	es-ca	ILLES MALVINES (FALKLAND)
 faroe islands	common	es-ca	ILLES FEROE
 fax number	common	es-ca	Fax
 february	common	es-ca	Febrer
+fg color	htmlarea-TableOperations	es-ca	Color de Primer Pla
 fields	common	es-ca	Camps
 fiji	common	es-ca	FIDJI
 files	common	es-ca	Arxius
 filter	common	es-ca	Filtre
+finished list of mispelled words	htmlarea-SpellChecker	es-ca	Llista acabada de paraules mal escrites
 finland	common	es-ca	FINLÀNDIA
 first name	common	es-ca	Nom de pila
 first name of the user, eg. "%1"	common	es-ca	Nom de pila de l'usuari, ex "%1"
 first page	common	es-ca	Primera plana
 firstname	common	es-ca	Nom de pila
 fixme!	common	es-ca	ARREGLEU-ME!
+float	htmlarea-TableOperations	es-ca	Punt Flotant
 font color	htmlarea	es-ca	Color de la lletra
 force selectbox	common	es-ca	Forçar quadre de selecció
+frames	htmlarea-TableOperations	es-ca	Marcs
 france	common	es-ca	FRANÇA
 french guiana	common	es-ca	GUAIANA FRANCESA
 french polynesia	common	es-ca	POLINÈSIA FRANCESA
@@ -265,6 +301,7 @@ header admin login	common	es-ca	Entrada per Administrar la Capçalera
 header password	common	es-ca	Contrasenya de la Capçalera
 header username	common	es-ca	Nom d'usuari de la Capçalera
 heard island and mcdonald islands	common	es-ca	ILLA HEARD I ILLES MCDONALD
+height	htmlarea-TableOperations	es-ca	Alçada
 help	common	es-ca	Ajuda
 help using editor	htmlarea	es-ca	Ajuda usant editor
 high	common	es-ca	Alta
@@ -275,15 +312,39 @@ home email	common	es-ca	correu electrònic privat
 honduras	common	es-ca	HONDURAS
 hong kong	common	es-ca	HONG KONG
 horizontal rule	htmlarea	es-ca	Regla horitzontal
+how did you get here? (please report!)	htmlarea-ContextMenu	es-ca	Com has arribat aquí? (Si us plau envia'ns una notificació!)
+how many columns would you like to merge?	htmlarea-TableOperations	es-ca	Quantes columnes t'agradaria combinar?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-ca	Quantitat d'icones que es mostren a la barra de navegació (a la part superior de la plana). Les icones addicionals apareixen en una mena de menú emergent, activable clicant a la darrera icona, a la dreta de la barra.
+how many rows would you like to merge?	htmlarea-TableOperations	es-ca	Quantes files t'agradaria combinar?
+html tidy	htmlarea-HtmlTidy	es-ca	HTML Ordenat
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	es-ca	L'àrea HTML no permet esborrar la darrera cel·la d'una fila.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	es-ca	L'àrea HTML no permet esborrar la darrera columna d'una taula.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	es-ca	L'àrea HTML no permet esborrar la darrera fila d'una taula.
 hungary	common	es-ca	HUNGRIA
+i will open it in a new page.	htmlarea-SpellChecker	es-ca	S'obrirà a una nova pàgina.
+i_nsert row before	htmlarea-ContextMenu	es-ca	I_nsereix Fila Abans
 iceland	common	es-ca	ISLÀNDIA
+ignore	htmlarea-SpellChecker	es-ca	Ignora
+ignore all	htmlarea-SpellChecker	es-ca	Ignora-ho tot
+image url	htmlarea-TableOperations	es-ca	Imatge URL
+in_sert row after	htmlarea-ContextMenu	es-ca	In_sereix Fila Després
 increase indent	htmlarea	es-ca	Augmentar sangria
 india	common	es-ca	INDIA
 indonesia	common	es-ca	INDONÈSIA
-info log	common	es-ca	Info Log
+insert _column before	htmlarea-ContextMenu	es-ca	Insereix _Columna Abans
+insert a new column after the current one	htmlarea-ContextMenu	es-ca	Insereix una nova columna després de l'actual
+insert a new column before the current one	htmlarea-ContextMenu	es-ca	Insereix una nova columna abans de l'actual
+insert a new row after the current one	htmlarea-ContextMenu	es-ca	Insereix una nova fila després de l'actual
+insert a new row before the current one	htmlarea-ContextMenu	es-ca	Insereix una nova fila abans de l'actual
 insert all %1 addresses of the %2 contacts in %3	common	es-ca	Inseriu totes les adreces %1 del contactes de %2 en %3
+insert c_olumn after	htmlarea-ContextMenu	es-ca	Insereix C_olumna Després
+insert cell after	htmlarea-TableOperations	es-ca	Insereix cel·la després
+insert cell before	htmlarea-TableOperations	es-ca	Insereix cel·la abans
+insert column after	htmlarea-TableOperations	es-ca	Insereix columna després
+insert column before	htmlarea-TableOperations	es-ca	Insereix columna abans
 insert image	htmlarea	es-ca	Inserir imatge
+insert row after	htmlarea-TableOperations	es-ca	Insereix fila després
+insert row before	htmlarea-TableOperations	es-ca	Insereix fila abans
 insert table	htmlarea	es-ca	Inserir taula
 insert web link	htmlarea	es-ca	Inserir enllaç web
 international	common	es-ca	Internacional
@@ -302,11 +363,13 @@ january	common	es-ca	Gener
 japan	common	es-ca	JAPÓ
 jordan	common	es-ca	JORDÀNIA
 july	common	es-ca	Juliol
+jun	common	es-ca	Juny
 june	common	es-ca	Juny
-justify center	htmlarea	es-ca	Justificar centrat
-justify full	htmlarea	es-ca	Justificat total
-justify left	htmlarea	es-ca	Justificat esquerra
-justify right	htmlarea	es-ca	Justificat dreta
+justify	htmlarea-TableOperations	es-ca	Justificar
+justify center	common	es-ca	Justificar centrat
+justify full	common	es-ca	Justificat total
+justify left	common	es-ca	Justificat esquerra
+justify right	common	es-ca	Justificat dreta
 kazakstan	common	es-ca	KAZAKSTAN
 kenya	common	es-ca	KENYA
 keywords	common	es-ca	Paraules clau
@@ -322,12 +385,16 @@ last name of the user, eg. "%1"	common	es-ca	Cognom de l'usuari, ex "%1"
 last page	common	es-ca	Darrera plana
 lastname	common	es-ca	Cognom
 latvia	common	es-ca	LETÒNIA
+layout	htmlarea-TableOperations	es-ca	Format
+ldap-mgr	common	es-ca	Gestor-LDAP
 lebanon	common	es-ca	LIBAN
+left	htmlarea-TableOperations	es-ca	Esquerra
 lesotho	common	es-ca	LESOTHO
 liberia	common	es-ca	LIBÈRIA
 libyan arab jamahiriya	common	es-ca	LIBIA (LYBIAN ARAB JAMAHIRIYA)
 license	common	es-ca	Llicència
 liechtenstein	common	es-ca	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	es-ca	Punts d'enllaç a:
 list	common	es-ca	Llista
 list members	common	es-ca	Llista de membres
 lithuania	common	es-ca	LITUÀNIA
@@ -336,6 +403,9 @@ login	common	es-ca	Entrar
 loginid	common	es-ca	ID d'usuari
 logout	common	es-ca	Sortir
 low	common	es-ca	Baixa
+lower greek letters	htmlarea-ListType	es-ca	Lletres gregues minúscules
+lower latin letters	htmlarea-ListType	es-ca	Lletres llatines minúscules
+lower roman numbers	htmlarea-ListType	es-ca	Números romans en minúscules
 lowest	common	es-ca	La més baixa
 luxembourg	common	es-ca	LUXEMBURG
 macau	common	es-ca	MACAU
@@ -345,12 +415,14 @@ mail domain, eg. "%1"	common	es-ca	domini de correu, ej. "%1"
 main category	common	es-ca	Categoria Principal
 main screen	common	es-ca	Pantalla Principal
 maintainer	common	es-ca	Mantingut per
+make lin_k...	htmlarea-ContextMenu	es-ca	Fes enllaç...
 malawi	common	es-ca	MALAWI
 malaysia	common	es-ca	MALÀSIA
 maldives	common	es-ca	MALDIVES
 mali	common	es-ca	MALI
 malta	common	es-ca	MALTA
 march	common	es-ca	Març
+margin	htmlarea-TableOperations	es-ca	Marge
 marshall islands	common	es-ca	ILLES MARSHALL
 martinique	common	es-ca	MARTINICA
 mauritania	common	es-ca	MAURITÀNIA
@@ -360,9 +432,12 @@ may	common	es-ca	Maig
 mayotte	common	es-ca	MAYOTTE
 medium	common	es-ca	Mig
 menu	common	es-ca	Menú
+merge cells	htmlarea-TableOperations	es-ca	Combina cel·les
 message	common	es-ca	Missatge
 mexico	common	es-ca	MÈXIC
 micronesia, federated states of	common	es-ca	MICRONESIA, ESTATS FEDERATS DE
+middle	htmlarea-TableOperations	es-ca	Enmig
+modify url	htmlarea-ContextMenu	es-ca	Modifica URL
 moldova, republic of	common	es-ca	MOLDÀViA, REPÚBLICA DE
 monaco	common	es-ca	MONACO
 monday	common	es-ca	Dilluns
@@ -370,6 +445,7 @@ mongolia	common	es-ca	MONGOLIA
 montserrat	common	es-ca	MONTSERRAT
 morocco	common	es-ca	MARROC
 mozambique	common	es-ca	MOÇAMBIC
+multiple	common	es-ca	múltiple
 myanmar	common	es-ca	MYANMAR
 name	common	es-ca	Nom
 name of the user, eg. "%1"	common	es-ca	Nom de l'usuari, ex. "%1"
@@ -382,7 +458,6 @@ never	common	es-ca	Mai
 new caledonia	common	es-ca	NOVA CALEDÒNIA
 new entry added sucessfully	common	es-ca	Nova entrada afegida correctament
 new main category	common	es-ca	Nova categoria principal
-new phrase has been added	common	es-ca	Nueva frase agregada
 new value	common	es-ca	Nou valor
 new zealand	common	es-ca	NOVA ZELANDA
 next	common	es-ca	Següent
@@ -396,6 +471,9 @@ niue	common	es-ca	NIUE
 no	common	es-ca	No
 no entries found, try again ...	common	es-ca	No s'han trobat entrades, proveu un altre cop...
 no history for this record	common	es-ca	Sense historial per aquest registre
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	es-ca	No s'han trobat paraules mal escrites utilitzant el diccionari seleccionat.
+no rules	htmlarea-TableOperations	es-ca	Sense regles
+no sides	htmlarea-TableOperations	es-ca	Sense costats
 no subject	common	es-ca	Sense assumpte
 none	common	es-ca	Cap
 norfolk island	common	es-ca	ILLA NORFOLK
@@ -417,11 +495,14 @@ only private	common	es-ca	només privat
 only yours	common	es-ca	només els vostres
 open notify window	common	es-ca	Obrir finestra de notificació
 open popup window	common	es-ca	Obrir finestra emergent
+opens this link in a new window	htmlarea-ContextMenu	es-ca	Obre aquest enllaç en una nova finestra
 ordered list	htmlarea	es-ca	Llista ordenada
 original	common	es-ca	Original
+original word	htmlarea-SpellChecker	es-ca	Paraula original
 other	common	es-ca	Altres
 overview	common	es-ca	Resum
 owner	common	es-ca	Propietari
+padding	htmlarea-TableOperations	es-ca	Marge interior
 page	common	es-ca	Pàgina
 page was generated in %1 seconds	common	es-ca	Plana generada en %1 segons
 pakistan	common	es-ca	PAKISTAN
@@ -435,37 +516,46 @@ parent category	common	es-ca	Categoria superior
 password	common	es-ca	Contrasenya
 password could not be changed	common	es-ca	No s'ha pogut canviar la contrasenya
 password has been updated	common	es-ca	Contrasenya actualitzada
+paste	htmlarea-ContextMenu	es-ca	Aferra
 paste from clipboard	htmlarea	es-ca	Enganxar des del portapapers
 path	htmlarea	es-ca	Camí
 path to user and group files has to be outside of the webservers document-root!!!	common	es-ca	El camí als arxius d'usuari i grups HA D'ESTAR FORA del directori arrel de documents dels servidors web!!
 pattern for search in addressbook	common	es-ca	Patró de recerca a la Llibreta d'adreces
 pattern for search in calendar	common	es-ca	Patró de recerca al Calendari
 pattern for search in projects	common	es-ca	Patró de recerca als Projectes
+percent	htmlarea-TableOperations	es-ca	Percentatge
 permissions to the files/users directory	common	es-ca	permissos als directoris d'arxius/usuaris
 personal	common	es-ca	Personal
 peru	common	es-ca	PERU
 philippines	common	es-ca	FILIPINES
 phone number	common	es-ca	Número de telèfon
-wgroupware login	login	es-ca	Ingreso al Sistema de Groupware
-phpinfo	common	es-ca	PhpInfo
-phpwebhostin	common	es-ca	Manejo Avanzado de Archivos
 pitcairn	common	es-ca	PITCAIRN
+pixels	htmlarea-TableOperations	es-ca	píxels
 please %1 by hand	common	es-ca	Si us plau, %1 manualment
+please click into some cell	htmlarea-TableOperations	es-ca	Si us plau, pitjeu dins alguna cel·la
+please confirm that you want to open this link	htmlarea-SpellChecker	es-ca	Si us plau, confirmeu que voleu obrir aquest enllaç
+please confirm that you want to remove this element:	htmlarea-ContextMenu	es-ca	Si us plau, confirmeu que voleu esborrar aquest element:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	es-ca	Si us plau, confirmeu que voleu desvincular aquest element.
 please enter a name	common	es-ca	Si us plau, introduïu un nom !
 please run setup to become current	common	es-ca	Si us plau, executeu la instal·lació per posar-vos al dia
 please select	common	es-ca	Si us plau, Trieu
 please set your global preferences	common	es-ca	Si us plau, establiu les vostres preferències globals !
 please set your preferences for this application	common	es-ca	Si us plau, establiu les vostres preferències per aquesta aplicació
+please wait.  calling spell checker.	htmlarea-SpellChecker	es-ca	Si us plau, espereu. Executant el corrector ortogràfic.
 please wait...	common	es-ca	Si us plau, espereu...
+please wait: changing dictionary to	htmlarea-SpellChecker	es-ca	Si us plau, espereu. Canviant el disccionari a
+pliz weit ;-)	htmlarea-SpellChecker	es-ca	Sis plau, espereuuu ;-)
 poland	common	es-ca	POLÒNIA
 portugal	common	es-ca	PORTUGAL
 postal	common	es-ca	Postal
 powered by egroupware version %1	common	es-ca	Versió %1
+powered by phpgroupware version %1	common	es-ca	<a href="http://www.egroupware.org">eGroupWare</a> versió %1
 preferences	common	es-ca	Preferències
 preferences for the idots template set	common	es-ca	Preferències per al joc de plantilles "idot"
 prev. month (hold for menu)	jscalendar	es-ca	Mes anterior (mantenir clicat per menú)
 prev. year (hold for menu)	jscalendar	es-ca	Any anterior (mantenir clicat per menú)
 previous page	common	es-ca	Plana anterior
+primary style-sheet:	common	es-ca	Full d'estils primari:
 print	common	es-ca	Imprimir
 priority	common	es-ca	Prioritat
 private	common	es-ca	Privat
@@ -473,18 +563,31 @@ project	common	es-ca	Projecte
 public	common	es-ca	públic
 puerto rico	common	es-ca	PUERTO RICO
 qatar	common	es-ca	QATAR
+re-check	htmlarea-SpellChecker	es-ca	Recomprova
 read	common	es-ca	Llegir
 read this list of methods.	common	es-ca	Llegir aquesta llista de mètodes
 redoes your last action	htmlarea	es-ca	Repeteix la darrera acció
-registration	common	es-ca	Registracion
 reject	common	es-ca	Rebutjar
 remove selected accounts	common	es-ca	esborra els comptes seleccionats
+remove the	htmlarea-ContextMenu	es-ca	Esborra el/la
+remove this node from the document	htmlarea-ContextMenu	es-ca	Esborra aquest node del document
 rename	common	es-ca	Reanomena
+replace	htmlarea-SpellChecker	es-ca	Reemplaça
+replace all	htmlarea-SpellChecker	es-ca	Reemplaça-ho tot
+replace with	htmlarea-SpellChecker	es-ca	Reemplaça per
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-ca	Torna una llista completa dels comptes del sistema. Atenció: pot ser molt llarg
 returns an array of todo items	common	es-ca	Torna una matriu de tasques pendents
 returns struct of users application access	common	es-ca	Torna una estructura de l'accés dels usuaris a l'aplicació
 reunion	common	es-ca	REUNION
+revert	htmlarea-SpellChecker	es-ca	Desfer canvis
+right	htmlarea-TableOperations	es-ca	Dreta
+ro_w properties...	htmlarea-ContextMenu	es-ca	Propietats de la fila...
 romania	common	es-ca	ROMANIA
+row properties	htmlarea-TableOperations	es-ca	Propietats de la fila
+rules	htmlarea-TableOperations	es-ca	Regles
+rules will appear between all rows and columns	htmlarea-TableOperations	es-ca	Les regles s'aplicaran a totes les files i columnes
+rules will appear between columns only	htmlarea-TableOperations	es-ca	Les regles s'aplicaran només a les columnes
+rules will appear between rows only	htmlarea-TableOperations	es-ca	Les regles s'aplicaran només a les files
 russian federation	common	es-ca	FEDERACIÓ RUSSA
 rwanda	common	es-ca	RUANDA
 saint helena	common	es-ca	SANTA HELENA
@@ -501,6 +604,7 @@ save	common	es-ca	Desar
 search	common	es-ca	Cercar
 search %1 '%2'	common	es-ca	Cercar %1 '%2'
 search or select accounts	common	es-ca	Cercar o seleccionar comptes
+search or select multiple accounts	common	es-ca	cerca o selecciona múltiples comptes
 section	common	es-ca	Secció
 select	common	es-ca	Triar
 select all %1 %2 for %3	common	es-ca	Triar tots els %1 %2 per %3
@@ -508,6 +612,7 @@ select category	common	es-ca	Triar categoria
 select date	common	es-ca	Triar data
 select group	common	es-ca	Triar grup
 select home email address	common	es-ca	Triar adreça de correu particular
+select multiple accounts	common	es-ca	selecciona múltiples comptes
 select one	common	es-ca	Triar un
 select user	common	es-ca	Triar usuari
 select work email address	common	es-ca	Triar adreça de correu del treball
@@ -527,6 +632,10 @@ show all categorys	common	es-ca	Mostrar totes les categories
 show menu	common	es-ca	mostrar menu
 show page generation time	common	es-ca	Mostrar temps de generació de la plana
 show page generation time on the bottom of the page?	common	es-ca	Mostrar el temps de generació de la plana a la part inferior?
+show the image properties dialog	htmlarea-ContextMenu	es-ca	Mostra el quadre de diàleg de les propietats de imatge
+show the table cell properties dialog	htmlarea-ContextMenu	es-ca	Mostra el quadre de diàleg de les Propietats de Cel·la de la Taula
+show the table properties dialog	htmlarea-ContextMenu	es-ca	Mostra el quadre de diàleg de les Propietats de la Taula
+show the table row properties dialog	htmlarea-ContextMenu	es-ca	Mostra el quadre de diàleg de les Propietats de Fila de la Taula
 show_more_apps	common	es-ca	mostrar més aplicacions
 showing %1	common	es-ca	mostrant %1
 showing %1 - %2 of %3	common	es-ca	mostrant %1 - %2 de %3
@@ -536,50 +645,73 @@ slovakia	common	es-ca	ESLOVÀQUIA
 slovenia	common	es-ca	ESLOVÈNIA
 solomon islands	common	es-ca	ILLES SALOMÓ
 somalia	common	es-ca	SOMÀLIA
-sorry, there was a problem proccesing your request.	common	es-ca	Hubo un problema al procesar su pedido.
 sorry, your login has expired	login	es-ca	La seva sessió ha caducat
 south africa	common	es-ca	SUDÀFRICA
 south georgia and the south sandwich islands	common	es-ca	ILLES GEORGIA I SANDWICH MERIDIONALS
+spacing	htmlarea-TableOperations	es-ca	Espai entre cel·les
+spacing and padding	htmlarea-TableOperations	es-ca	Espai entre cel·les i marges dins les cel·les
 spain	common	es-ca	ESPANYA
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	es-ca	S'ha completat la correcció ortogràfica, sense que s'hagin trobat paraules mal escrites. Tancant ara...
+spell-check	htmlarea-SpellChecker	es-ca	Corregeix ortografia
+split cell	htmlarea-TableOperations	es-ca	Divideix cel·la
+split column	htmlarea-TableOperations	es-ca	Divideix columna
+split row	htmlarea-TableOperations	es-ca	Divideix fila
 sri lanka	common	es-ca	SRI LANKA
 start date	common	es-ca	Data d'inici
 start time	common	es-ca	Hora d'inici
+start with	common	es-ca	començar amb
 status	common	es-ca	Estat
 strikethrough	htmlarea	es-ca	Tatxat
+style [css]	htmlarea-TableOperations	es-ca	Estil [CSS]
 subject	common	es-ca	Assumpte
 submit	common	es-ca	Enviar
 subscript	htmlarea	es-ca	Subíndex
 substitutions and their meanings:	common	es-ca	Substitucions i els seus significats
 sudan	common	es-ca	SUDAN
+suggestions	htmlarea-SpellChecker	es-ca	Suggerències
+summary	htmlarea-TableOperations	es-ca	Sumari
 sunday	common	es-ca	Diumenge
 superscript	htmlarea	es-ca	Superíndex
 suriname	common	es-ca	SURINAM
 svalbard and jan mayen	common	es-ca	SVALBARD I JAN MAYEN
 swaziland	common	es-ca	SWAZILANDIA
-sweden	common	es-ca	SUÊCIA
+sweden	common	es-ca	SUÈCIA
 switzerland	common	es-ca	SUISSA
 syrian arab republic	common	es-ca	SIRIA, REPÚBLICA ÀRAB DE
+table properties	htmlarea-TableOperations	es-ca	Propietats de la taula
 taiwan	common	es-ca	TAIWAN/TAIPEI
 tajikistan	common	es-ca	TAJIKISTAN
 tanzania, united republic of	common	es-ca	TANZANIA, REPÚBLICA UNIDA DE
+text align	htmlarea-TableOperations	es-ca	Alineació del text
+text color:	common	es-ca	Color del text:
 thailand	common	es-ca	TAILÀNDIA
 the api is current	common	es-ca	La API esta al dia
 the api requires an upgrade	common	es-ca	La API necessita actualització
+the bottom side only	htmlarea-TableOperations	es-ca	Només la part inferior
 the following applications require upgrades	common	es-ca	Les següents aplicacions necessiten actualització
+the left-hand side only	htmlarea-TableOperations	es-ca	Només la part de l'esquerra
 the mail server returned	common	es-ca	El servidor de correu ha tornat
+the right and left sides only	htmlarea-TableOperations	es-ca	Només la part de la dreta i de l'esquerra
+the right-hand side only	htmlarea-TableOperations	es-ca	Només la part de la dreta
+the top and bottom sides only	htmlarea-TableOperations	es-ca	Només la part superior i la inferior
+the top side only	htmlarea-TableOperations	es-ca	Només la part superior
 this application is current	common	es-ca	Aquesta aplicació està al dia
 this application requires an upgrade	common	es-ca	Aquesta aplicació necessita actualitzar-se
 this name has been used already	common	es-ca	Aquest nom ja és en ús !
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	es-ca	Això desferà els canvis i tancarà el corrector ortogràfic. Si us plau, confirmeu.
 thursday	common	es-ca	Dijous
 time	common	es-ca	Hora
 time selection:	jscalendar	es-ca	Seleccionar hora:
 time zone	common	es-ca	Zona horària
 time zone offset	common	es-ca	Diferència de zona horària
-timetrack	preferences	es-ca	Seguimiento del Tiempo
 title	common	es-ca	Títol
 to	common	es-ca	Per
 to correct this error for the future you will need to properly set the	common	es-ca	Per a corregir aquest error per al futur necessitareu configurar acuradament el
 to go back to the msg list, click <a href= %1 >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
+to go back to the msg list, click <a href= %1?sessionid=1802f5efbe33b7c1ece252dad7f7f09e >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
+to go back to the msg list, click <a href= %1?sessionid=27092e3085d386d95dba6834fad0944c >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
+to go back to the msg list, click <a href= %1?sessionid=27092e3085d386d95dba6834fad0944c&sessionid=27092e3085d386d95dba6834fad0944c >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
+to go back to the msg list, click <a href= %1?sessionid=27092e3085d386d95dba6834fad0944c&sessionid=27092e3085d386d95dba6834fad0944c&sessionid=27092e3085d386d95dba6834fad0944c >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
 today	common	es-ca	Avui
 todays date, eg. "%1"	common	es-ca	data d'avui, ex. "%1"
 toggle first day of week	jscalendar	es-ca	Canviar el primer dia de la setmana
@@ -588,6 +720,7 @@ togo	common	es-ca	TOGO
 tokelau	common	es-ca	TOKELAU
 tonga	common	es-ca	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	es-ca	Massa intents erronis d'inici de sessió: %1 per a l'usuari '%2', %3 per la IP %4
+top	htmlarea-TableOperations	es-ca	Su
 total	common	es-ca	Total
 trinidad and tobago	common	es-ca	TRINIDAD I TOBAGO
 tuesday	common	es-ca	Dimarts
@@ -605,18 +738,20 @@ united kingdom	common	es-ca	REGNE UNIT
 united states	common	es-ca	ESTATS UNITS
 united states minor outlying islands	common	es-ca	ILLES MENORS OUTLYING DELS ESTATS UNITS
 unknown	common	es-ca	Desconegut
+unlink the current element	htmlarea-ContextMenu	es-ca	Desvincula l'element actual
+unset color	htmlarea-TableOperations	es-ca	Lleva el color
 update	common	es-ca	Actualitzar
-updated	common	es-ca	Actualizado
+upload image	htmlarea-UploadImage	es-ca	Penja la Imatge
+upper latin letters	htmlarea-ListType	es-ca	Lletres llatines majúscules
+upper roman numbers	htmlarea-ListType	es-ca	Números romans en majúscules
 url	common	es-ca	URL
 uruguay	common	es-ca	URUGUAI
 use button to search for	common	es-ca	useu el Botó per cercar per
 use button to search for address	common	es-ca	useu el Botó per cercar per adreça
 use button to search for calendarevent	common	es-ca	useu el Botó per cercar per entrada de calendari
 use button to search for project	common	es-ca	useu el Botó per cercar per projecte
-use cookies	login	es-ca	utilizar cookies
 user	common	es-ca	Usuari
 user accounts	common	es-ca	Comptes d'usuari
-user data	common	es-ca	Datos de los Usuarios
 user groups	common	es-ca	Grups d'usuari
 username	common	es-ca	Nom d'usuari
 users	common	es-ca	usuaris
@@ -625,6 +760,7 @@ uzbekistan	common	es-ca	UZBEKISTAN
 vanuatu	common	es-ca	VANUATU
 venezuela	common	es-ca	VENEÇUELA
 version	common	es-ca	Versió
+vertical align	htmlarea-TableOperations	es-ca	Alineació vertical
 viet nam	common	es-ca	VIETNAM
 view	common	es-ca	Veure
 virgin islands, british	common	es-ca	ILLES VERGES BRITÀNIQUES
@@ -634,6 +770,7 @@ wednesday	common	es-ca	Dimecres
 welcome	common	es-ca	Benvingut
 western sahara	common	es-ca	SAHARA OCCIDENTAL
 which groups	common	es-ca	Quins grups
+width	htmlarea-TableOperations	es-ca	Amplada
 wk	jscalendar	es-ca	st
 work email	common	es-ca	correu del treball
 written by:	common	es-ca	Escrit per:
@@ -642,8 +779,7 @@ yemen	common	es-ca	IEMEN
 yes	common	es-ca	Sí
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	es-ca	Esteu en MODUS TEXT. Useu el botó [<>] per tornar a la vista WYSIWIG.
 you are required to change your password during your first login	common	es-ca	Heu de canviar la vostra contrasenya a la vostra primera connexió.
-you have %1 new messages!	common	es-ca	Ud. tiene %1 nuevos mensajes!
-you have 1 new message!	common	es-ca	Ud. tiene 1 nuevo mensaje!
+you are running a newer version of phpgroupware than your database is setup for	common	es-ca	Esteu fent feina amb una versió d'eGroupware més nova de la versió per a la que està preparada la base de dades.
 you have been successfully logged out	login	es-ca	Desconnexió correcta
 you have not entered a title	common	es-ca	No heu entrat un títol
 you have not entered a valid date	common	es-ca	No heu entrat una data correcta
@@ -653,7 +789,6 @@ you have selected an invalid date	common	es-ca	Heu triat una data incorrecta !
 you have selected an invalid main category	common	es-ca	Heu triat una categoria principal incorrecta !
 you have successfully logged out	common	es-ca	Desconnexió correcta
 you need to add the webserver user '%1' to the group '%2'.	common	es-ca	Necessiteu afegir l'usuari '%1' del servidor web al grup '%2'.
-your message as been sent	common	es-ca	Su mensaje fue enviado
 your message could <b>not</b> be sent!<br>	common	es-ca	El missatge <b>no</b> s'ha pogut enviar!<br>
 your message has been sent	common	es-ca	Missatge enviat
 your search returned %1 matchs	common	es-ca	la recerca ha tornat %1 resultats

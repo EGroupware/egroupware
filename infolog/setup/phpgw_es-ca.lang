@@ -154,7 +154,7 @@ not	infolog	es-ca	no
 not assigned	infolog	es-ca	sense assignar
 note	infolog	es-ca	Nota
 number of records to read (%1)	infolog	es-ca	Nombre de registres a llegir (%1)
-number of records to read (<=200)	infolog	es-ca	Numero de registros a leer (<=200)
+number of records to read (<=200)	infolog	es-ca	Nombre de registres a llegir (<=200)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	es-ca	Número de fila per a un quadre de text multilínia o llista desplegable multiselecció
 offer	infolog	es-ca	suggerit
 ongoing	infolog	es-ca	en curs
@@ -217,8 +217,10 @@ status	infolog	es-ca	Estat
 status ...	infolog	es-ca	Estat...
 sub	infolog	es-ca	Sub
 subject	infolog	es-ca	Assumpte
-task	infolog	es-ca	Tasques Pendents
+task	infolog	es-ca	Tasca
 test import (show importable records <u>only</u> in browser)	infolog	es-ca	Prova d'Importació (mostrar registres importables <u>només</u> al navegador)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	es-ca	nom utilitzat internament (<= 10 caràcters). Si es canvia algunes dades seran inaccessibles
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	es-ca	nom utilitzat internament (<= 20 caràcters). Si es canvia algunes dades seran inaccessibles
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	es-ca	el nom usat internament (<= 32 caràcters), canviar-ho fa que les dades siguin inaccessibles.
 the text displayed to the user	infolog	es-ca	el text mostrat a l'usuari
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	es-ca	Aquest és el filtre que Tasques i Notes usa quan entreu a l'aplicació. Els filtres limiten les entrades que es mostren a la vista actual. Hi ha filtres per mostrar només les acabades, encara obertes o entrades futures vostres o de tots els usuaris.

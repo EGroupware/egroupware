@@ -52,11 +52,10 @@ custom fields	addressbook	es-ca	Camps personalitzats
 debug output in browser	addressbook	es-ca	Depurar sortida al navegador
 default filter	addressbook	es-ca	Filtre predeterminat
 delete a single entry by passing the id.	addressbook	es-ca	Esborrar una entrada senzilla passant l'id
-department	common	es-ca	Department
+department	common	es-ca	Departament
 domestic	addressbook	es-ca	Domèstic
 download	addressbook	es-ca	Descarregar
 download export file (uncheck to debug output in browser)	addressbook	es-ca	Descarregar arxiu exportat (desmarcar per a depurar la sortida al navegador)
-e-mail	addressbook	es-ca	E-Mail
 edit custom field	addressbook	es-ca	Editar camp personalitzat
 edit custom fields	admin	es-ca	Editar camps personalitzats
 empty for all	addressbook	es-ca	buit per a tot
@@ -72,15 +71,13 @@ field %1 has been updated !	addressbook	es-ca	Camp %1 actualitzat !
 field name	addressbook	es-ca	Nom del camp
 fields to show in address list	addressbook	es-ca	Camps a mostrar a la llista d'adreces
 fieldseparator	addressbook	es-ca	Separador de camps
-first name	addressbook	es-ca	Nombre
 full name	addressbook	es-ca	Nom complet
 geo	addressbook	es-ca	GEO
 global categories	addressbook	es-ca	Categories globals
 grant addressbook access	common	es-ca	Atorgar accés a la llibreta
-home	addressbook	es-ca	Particular
 home address type	addressbook	es-ca	Tipus d'adreça particular
 home city	addressbook	es-ca	Ciutat de residència
-home country	addressbook	es-ca	Pais de residència
+home country	addressbook	es-ca	País de residència
 home email	addressbook	es-ca	Correu electrònic personal
 home email type	addressbook	es-ca	Tipus de correu electrònic personal
 home phone	addressbook	es-ca	Telèfon particular
@@ -92,20 +89,18 @@ import contacts	addressbook	es-ca	Importar contactes
 import csv-file into addressbook	addressbook	es-ca	Importar arxiu CSV a la Llibreta d'adreces
 import file	addressbook	es-ca	Importar arxiu
 import from ldif, csv, or vcard	addressbook	es-ca	Importar des de LDIF, CSV o VCard
-import from netscape	addressbook	es-ca	Importar desde Netscape
-import from outlook	addressbook	es-ca	Importar des de Outlook
+import from outlook	addressbook	es-ca	Importar des d'Outlook
 import next set	addressbook	es-ca	Importar següent registre
 import_instructions	addressbook	es-ca	Si useu Mozilla o Netscape, obriu la llibreta d'adreces i seleccioneu <b>Exportar</b> des del menú <b>Arxiu</b>. L'arxiu exportat estarà en format LDIF.<p>O bé, en Outlook, seleccioneu la vostra carpeta de contactes, després, al menú <b>Arxiu</b>, <b>Importar i Exportar...</b> per desar-los en un arxiu separat per comes (CSV).<p>O també, en Palm Desktop 4.0 o superior, visiteu la vostra llibreta d'adreces i seleccioneu <b>Exportar</b> al menú <b>Arxiu</b>. L'arxiu exportat estarà en format VCard.
 international	addressbook	es-ca	Internacional
 isdn phone	addressbook	es-ca	Telèfon XDSI
 label	addressbook	es-ca	Etiqueta
-last name	addressbook	es-ca	Apellido
 ldap context for contacts	admin	es-ca	Context LDAP per contactes
 ldap host for contacts	admin	es-ca	Servidor LDAP per contactes
 ldap root dn for contacts	admin	es-ca	Arrel LDAP dn per contactes
 ldap root pw for contacts	admin	es-ca	Arrel LDAP pw per contactes
 ldif	addressbook	es-ca	LDIF
-line 2	addressbook	es-ca	Linia 2
+line 2	addressbook	es-ca	Línia 2
 list all categories	addressbook	es-ca	Llista totes les categories
 list all customfields	addressbook	es-ca	Llista tots els camps personalitzats
 mark records as private	addressbook	es-ca	Marcar registres com a privats
@@ -116,16 +111,13 @@ mobile phone	addressbook	es-ca	Telèfon mòbil
 modem phone	addressbook	es-ca	Telèfon de módem
 no vcard	addressbook	es-ca	Sense VCard
 number of records to read (%1)	addressbook	es-ca	Número de registres a llegir (%1)
-number of records to read (<=200)	addressbook	es-ca	Registros a leer (menos de 200)
 other number	addressbook	es-ca	Un altre número
 other phone	addressbook	es-ca	Un altre telèfon
-owner	addressbook	es-ca	Due&ntilde;o
 pager	common	es-ca	Buscapersones
 parcel	addressbook	es-ca	Paquet
 phone number	common	es-ca	Número de telèfon
 phone numbers	common	es-ca	Números de telèfon
 please enter a name for that field !	addressbook	es-ca	Si us plau, entreu un nom per aquest camp !
-please set your preferences for this app	addressbook	es-ca	Por favor, revise las preferencias de esta aplicacion
 postal	common	es-ca	Postal
 pref	addressbook	es-ca	pref
 prefix	addressbook	es-ca	Prefix
@@ -135,12 +127,11 @@ read a list of entries.	addressbook	es-ca	Llegir una llista d'entrades
 read a single entry by passing the id and fieldlist.	addressbook	es-ca	Llegir una sola entrada passant l'identificador i la llista de camps
 record access	addressbook	es-ca	Accés al registre
 record owner	addressbook	es-ca	Propietari del registre
-records read (not yet imported, you may go back and uncheck test import)	addressbook	es-ca	registros leidos (aun no importados, usted puede volver y desmarcar Testear)
 retrieve contacts	admin	es-ca	Recuperar contactes
 select all	addressbook	es-ca	Seleccionar tot
 select the type of conversion	addressbook	es-ca	Seleccioneu el tipus de conversió
 select the type of conversion:	addressbook	es-ca	Seleccioneu el tipus de conversió:
-select where you want to store	admin	es-ca	Seleccioneu ón voleu desar
+select where you want to store	admin	es-ca	Seleccioneu on voleu desar
 show	addressbook	es-ca	Mostra
 show birthday reminders on main screen	addressbook	es-ca	Mostrar recordatoris d'aniversaris a la pantalla principal
 startrecord	addressbook	es-ca	Registre inicial
@@ -152,19 +143,18 @@ test import (show importable records <u>only</u> in browser)	addressbook	es-ca	P
 that field name has been used already !	addressbook	es-ca	Aquest nom de camp ja s'ha usat !
 this person's first name was not in the address book.	addressbook	es-ca	El nom de pila d'aquesta persona no hi era a la llibreta d'adreces.
 this person's last name was not in the address book.	addressbook	es-ca	El cognom d'aquesta persona no hi era a la llibreta d'adreces.
-title	addressbook	es-ca	Titulo
 to many might exceed your execution-time-limit	addressbook	es-ca	quant pot excedir el temps límit d'execució
 today is %1's birthday!	common	es-ca	Avui és l'aniversari de %1!
 tomorrow is %1's birthday.	common	es-ca	Demà és l'aniversari de %1.
 translation	addressbook	es-ca	Traducció
 update a single entry by passing the fields.	addressbook	es-ca	Actualitzar una sola entrada passant els camps
-use country list	addressbook	es-ca	Utilitzar llista de paisos
+use country list	addressbook	es-ca	Utilitzar llista de països
 vcard	common	es-ca	Targeta de visita (VCard)
 vcards require a first name entry.	addressbook	es-ca	VCard necessita el nom.
 vcards require a last name entry.	addressbook	es-ca	VCard necessita el cognom.
 video phone	addressbook	es-ca	Telèfon de videoconferència
 voice phone	addressbook	es-ca	Telèfon de veu
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-ca	ATENCIÓ!! LDAP es vàlid només si NO feu servir contactes per enmagatzemar comptes!
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-ca	ATENCIÓ!! LDAP és vàlid només si NO feu servir contactes per enmagatzemar comptes!
 work phone	addressbook	es-ca	Telèfon del treball
 write (update or add) a single entry by passing the fields.	addressbook	es-ca	Escriu (actualitza o afegeix) una entrada simple donant els camps.
 you must select a vcard. (*.vcf)	addressbook	es-ca	Heu de seleccionar una targeta vcard (*.vcf)
