@@ -1622,17 +1622,18 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		*/
 		function show_date($t = '', $format = '')
 		{
-			if (!$t)
+			if(!is_object($GLOBALS['phpgw']->datetime))
 			{
-				if(!is_object($GLOBALS['phpgw']->datetime))
-				{
-					$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
-				}
+				$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
+			}
+			
+			if (!$t || intval($t) <= 0)
+			{
 				$t = $GLOBALS['phpgw']->datetime->gmtnow;
 			}
 
 			//  + (date('I') == 1?3600:0)
-			$t += (3600 * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+			$t += $GLOBALS['phpgw']->datetime->tz_offset;
 			
 			if (! $format)
 			{
