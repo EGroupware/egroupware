@@ -22,10 +22,10 @@ change main screen message	admin	de	Nachricht der Startseite ändern
 create group	admin	de	Erstelle Gruppe
 display	admin	de	Bezeichnung
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
-edit application	admin	de	Anwendung editieren
-edit global category	admin	de	Globale Kategorie editieren
-edit group	admin	de	Gruppe editieren
-edit user account	admin	de	Benutzerkonto editieren
+edit application	admin	de	Anwendung bearbeiten
+edit global category	admin	de	Globale Kategorie bearbeiten
+edit group	admin	de	Gruppe bearbeiten
+edit user account	admin	de	Benutzerkonto bearbeiten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 group name	admin	de	Gruppenname
 group has been added	common	de	Gruppe wurde hinzugef&uuml;gt
@@ -78,4 +78,4 @@ view sessions	admin	de	Sitzungen anzeigen
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Filetyp auswählen
-userdata	admin	de	Benutzerdaten
+userdata	admin	de	Benutzerkonto

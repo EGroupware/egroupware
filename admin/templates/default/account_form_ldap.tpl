@@ -1,5 +1,4 @@
 <!-- BEGIN form -->
-<p><b>{lang_action}</b><hr><br>
 {error_messages}
 
  <form method="POST" action="{form_action}">
@@ -17,7 +16,7 @@
 			<td>
    <table border="0" width="100%">
     <tr bgcolor="{th_bg}">
-      <td colspan="4">&nbsp;</td>
+      <td colspan="4"><b>{lang_action}</b></td>
     </tr>
 
     <tr bgcolor="{tr_color1}">
