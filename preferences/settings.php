@@ -232,18 +232,6 @@
              </tr>
 <?php
          }
-         if ($phpgw_info["user"]["apps"]["addressbook"]) {
-             echo "<tr><td>Addressbook columns :</td><tr>";
-             $abc = get_abc();		# AddressBook Columns
-             while (list($col, $descr) = each($abc)) {
-                 display_option($descr,"addressbook","addressbook_view_".$col,1);
-             }
-         }
-
-         if ($phpgw_info["user"]["apps"]["headlines"]) {
-?>
-<?php
-          }
 ?>
 
        <tr>
