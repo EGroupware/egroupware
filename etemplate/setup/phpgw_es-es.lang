@@ -21,6 +21,7 @@ add table	etemplate	es-es	Añadir tabla
 align	etemplate	es-es	Alinear
 alignment of label and input-field in table-cell	etemplate	es-es	posición de la etiqueta y campo de entrada en la celda de la tabla
 alignment of the v/hbox containing table-cell	etemplate	es-es	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
+all days	etemplate	es-es	todos los días
 am	etemplate	es-es	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	es-es	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
 application	etemplate	es-es	Aplicación
@@ -225,6 +226,7 @@ select application	etemplate	es-es	Seleccione aplicación
 select category	etemplate	es-es	Seleccione categoría
 select country	etemplate	es-es	Seleccione país
 select day	etemplate	es-es	Seleccione día
+select day of week	etemplate	es-es	seleccione día de la semana
 select if content of field should not be translated (label gets always translated)	etemplate	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
 select month	etemplate	es-es	Seleccionar mes
 select number	etemplate	es-es	Seleccionar número
@@ -279,11 +281,13 @@ vbox	etemplate	es-es	VBox
 version	etemplate	es-es	Versión
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	es-es	número de la versión, en formato mayor.menor.revisión.número (por ej. 0.9.13.001, con todos los números rellenos con ceros)
 view this linked entry in its application	etemplate	es-es	ver esta entrada enlazada en su aplicación
+weekend	etemplate	es-es	fin de semana
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	es-es	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
 width	etemplate	es-es	Ancho
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	es-es	ancho de la columna (in % o píxeles), desactivar columna: [!= no]<valor>[=comprobar] ej: '!@data' desactiva la columna si el contenido de los datos está vacío
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Ancho de la tabla en % o píxeles para la etiqueta y, opcionalmente, elemento div
 width, disabled	etemplate	es-es	Ancho, desactivado
+working days	etemplate	es-es	días laborales
 write <app>/setup/tables_current.inc.php	etemplate	es-es	Escribir <app>/setup/tables_current.inc.php
 write langfile	etemplate	es-es	Escribir fichero de idioma
 write tables	etemplate	es-es	Escribir tablas

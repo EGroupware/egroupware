@@ -3,10 +3,10 @@ application	filemanager	es-es	Aplicación
 back to file manager	filemanager	es-es	Volver al Administrador de ficheros
 cancel editing %1 without saving	filemanager	es-es	Cancelar la edición de %1 sin guardar
 cannot create directory because it begins or ends in a space	filemanager	es-es	No se puede crear el directorio porque empieza o acaba con un espacio
-cannot replace %1 because it is a directory	filemanager	es-es	No puedo reemplazar %1 porque está en un directorio
+cannot replace %1 because it is a directory	filemanager	es-es	No se puede reemplazar %1 porque es un directorio
 command sucessfully run	filemanager	es-es	Comando ejecutado correctamente
 comment	filemanager	es-es	Comentario
-comments cannot contain "%1"	filemanager	es-es	Los comentarios no pueden tener "%1"
+comments cannot contain "%1"	filemanager	es-es	Los comentarios no pueden contener "%1"
 copied %1 to %2	filemanager	es-es	Copiado %1 a %2
 copy to	filemanager	es-es	Copiar A
 copy to:	filemanager	es-es	Copiar a:
@@ -17,7 +17,7 @@ could not create directory %1	filemanager	es-es	No se pudo crear el directorio %
 could not delete %1	filemanager	es-es	No se pudo borrar %1
 could not move %1 to %2	filemanager	es-es	No se pudo mover %1 a %2
 could not move file because no destination directory is given	filemanager	es-es	No se puedo mover el fichero porque no se indicó el directorio de destino
-could not rename %1 to %2	filemanager	es-es	No se pudo renombre %1 a %2
+could not rename %1 to %2	filemanager	es-es	No se pudo renombrar %1 a %2
 could not save %1	filemanager	es-es	No se pudo guardar %1
 create file	filemanager	es-es	Crear fichero
 create folder	filemanager	es-es	Crear carpeta
@@ -41,14 +41,13 @@ edit comments	filemanager	es-es	Editar comentarios
 error running command	filemanager	es-es	Error al ejecutar el comando
 execute	filemanager	es-es	Ejecutar
 failed to create directory	filemanager	es-es	fallo al crear el directorio
-fake base dir did not exist, egroupware created a new one.	filemanager	es-es	El directorio base ficticio no existía, y eGroupWare ha creado una nueva
+fake base dir did not exist, egroupware created a new one.	filemanager	es-es	El directorio base ficticio no existía, y eGroupWare ha creado uno nuevo.
 file	filemanager	es-es	Fichero
 file %1 already exists. please edit it or delete it first.	filemanager	es-es	El fichero %1 ya existe. Por favor, edítelo o bórrelo antes.
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1.
 file name	filemanager	es-es	Nombre del fichero
-file names cannot contain  or /	filemanager	es-es	
 file names cannot contain "%1"	filemanager	es-es	Los nombres de fichero no pueden contener "%1"
-file names cannot contain \ or /	filemanager	es-es	Los nombres de fichero no pueden contener  o /
+file names cannot contain \ or /	filemanager	es-es	Los nombres de fichero no pueden contener \ o /
 filemanager	common	es-es	Administrador de archivos
 filemanager preferences	filemanager	es-es	Preferencias del Administrador de archivos
 files	filemanager	es-es	Ficheros

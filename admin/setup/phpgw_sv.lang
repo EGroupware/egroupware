@@ -37,11 +37,14 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	sv	Admins namn
 administration	admin	sv	Administration
 admins	admin	sv	Administratörer
+advanced options	admin	sv	Avancerade inställningar
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sv	Efter hur många misslyckade försök att logga in skall ett konto blockeras (default 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sv	Efter hur många misslyckade försök att logga in skall en ip-adress blockeras (default 3)?
+aliases	admin	sv	Alias
 all records and account information will be lost!	admin	sv	Alla förteckningar och användarinformation kommer att försvinna!
 all users	admin	sv	Alla användare
 allow anonymous access to this app	admin	sv	Tillåt anonym åtkomst till denna applikation
+alternate email address	admin	sv	Alternativ epostadress
 anonymous user	admin	sv	Anonym användare
 anonymous user (not shown in list sessions)	admin	sv	Anonym användare
 appearance	admin	sv	Utseende
@@ -63,6 +66,10 @@ async services last executed	admin	sv	Asynkrona tjänster senast körda
 asynchronous timed services	admin	sv	Asynkrona tidsbundna tjänster
 asyncservices not yet installed or other error (%1) !!!	admin	sv	Asynkrona tjänster är inte installerade ännu eller annat fel (%1)!!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sv	Försök att använda korrekt mime-type istället för default 'application/octet-stream'
+attribute accountstatus explained	admin	sv	Detta hanterar attributet <b><i>-accountStatus-</i></b> från QMAIL schemat
+attribute mail explained	admin	sv	Detta hanterar attributet <b><i>-mail-</i></b> från QMAIL schemat och bör aldrig vara tomt. Det är också eGW's intern epostfält
+attribute mailalternateaddress explained	admin	sv	Detta hanterar attributet<b><i>-mailAlternateAddress-</i></b> från QMAIL schemat och kan hanteras som virtuella kopplingar eller alias.
+attribute mailforwardingaddress explained	admin	sv	Detta hanterar attributet <b><i>-mailForwardingAddress-</i></b> från QMAIL schemat och får inte vara tomt om vidarebefodran används.
 authentication / accounts	admin	sv	Autenticering / Konton
 auto create account records for authenticated users	admin	sv	Skapa konto poster automatiskt för autenticerade användare
 back to the list	admin	sv	tillbaka till listan
@@ -88,6 +95,7 @@ crontab only (recomended)	admin	sv	enbart crontab (rekommenderas)
 data	admin	sv	Data
 day	admin	sv	Dag
 day of week<br>(0-6, 0=sun)	admin	sv	Veckodag<br>(0-6, 0=Sön)
+db backup and restore	admin	sv	Backup och restore av databas
 default	admin	sv	Standard
 default file system space per user	admin	sv	Standardstorlek på lagringsutrymme per användare
 default file system space per user/group ?	admin	sv	Standardstorlek på lagringsutrymme per användare/grupp
@@ -103,11 +111,13 @@ delete the group	admin	sv	Radera gruppen
 delete this category	admin	sv	Radera denna kategori
 delete this group	admin	sv	Radera denna grupp
 delete this user	admin	sv	Radera denna användare
+deliver extern	admin	sv	Leverera externt
 deny access to access log	admin	sv	Neka åtkomst till accesslogg
 deny access to application registery	admin	sv	Neka åtkomst till applikations-registry
 deny access to applications	admin	sv	Neka åtkomst till applikationer
 deny access to asynchronous timed services	admin	sv	Neka åtkomst till asynkrona tidsbundna tjänster
 deny access to current sessions	admin	sv	Neka åtkomst till aktiva sessioner
+deny access to db backup and restore	admin	sv	Neka åtkomst till Backup och Restore av databas
 deny access to error log	admin	sv	Neka åtkomst till felloggen
 deny access to global categories	admin	sv	Neka åtkomst till globala kategorier
 deny access to groups	admin	sv	Neka åtkomst till grupper
@@ -129,6 +139,7 @@ do you want to delete all global subcategories ?	admin	sv	Vill du radera alla gl
 do you want to move all global subcategories one level down ?	admin	sv	Vill du flytta alla globala underkategorier en nivå nedåt?
 edit account	admin	sv	Redigera konto
 edit application	admin	sv	Redigera applikation
+edit email settings	admin	sv	Redigera epostinställningar
 edit global category	admin	sv	Redigera global kategori
 edit global category for %1	admin	sv	Redigera global kategori för %1
 edit group	admin	sv	Redigera Grupp
@@ -142,6 +153,8 @@ edit this group	admin	sv	Redigera denna grupp
 edit this user	admin	sv	Redigera denna användare
 edit user	admin	sv	Redigera användare
 edit user account	admin	sv	Redigera användarkonto
+email account active	admin	sv	Epostkonto aktivt
+email address	admin	sv	Epostadress
 enable debug-messages	admin	sv	Aktivera debugmeddelanden
 enabled	admin	sv	Aktiv
 enabled - hidden from navbar	admin	sv	Aktiv - Gömd på navigationsraden
@@ -153,7 +166,7 @@ enter the background color for the site title	admin	sv	Ange bakgrundsfärg för we
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sv	Ange fullständig sökväg för temporära filer <br> t ex: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sv	Ange fullständig sökväg för användar- och gruppfiler <br> t ex: /files, D:\FILES
 enter the hostname of the machine on which this server is running	admin	sv	Ange HOSTNAME för datorn som kör denna tjänst
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange URL för eGroupWare<br> t ex: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>ingen avslutande slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange URL för eGroupWare<br> t ex: http://www.domain.com/egroupware   or   /egroupware<br><b>ingen avslutande slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sv	Ange söksträng. För att visa alla poster, töm fältet och tryck på SUBMIT
 enter the site password for peer servers	admin	sv	Ange lösenord för peer servers
 enter the site username for peer servers	admin	sv	Ange användarnamn för peer servers
@@ -171,6 +184,7 @@ error canceling timer, maybe there's none set !!!	admin	sv	Fel vid avbrytande av
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sv	Fel vid inställning av timer, fel syntax eller det kanske redan körs en?
 error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!!
 expires	admin	sv	Utgår
+explanation of ldapman	admin	sv	Denna modul har hittils testats för POSTFIX, LDAP, Courier-IMAP och behöver schema för Core och QMAIL (OID7914). Ytterligare detaljer gällande användning och konfiguration av detta system kan du finna i README.ldapman i doc katalogen under ADMIN.
 fallback (after each pageview)	admin	sv	fallback (efter varje sida)
 file space	admin	sv	Filutrymmes-storlek
 file space must be an integer	admin	sv	Filutrymmes-storlek måste anges som heltal
@@ -178,6 +192,9 @@ find and register all application hooks	admin	sv	Hitta och registrera alla appli
 for the times above	admin	sv	för tider ovan
 for the times below (empty values count as '*', all empty = every minute)	admin	sv	för tider nedan (tomma värden räknas som '*', alla tomma = varje minut)
 force selectbox	admin	sv	Kräv listruta
+forward also to	admin	sv	Vidarebefodra även till
+forward email's to	admin	sv	Vidarebefodra epost till
+forward only	admin	sv	Vidarebefodra enbart
 global categories	common	sv	Globala Kategorier
 group ?	admin	sv	grupp?
 group has been added	common	sv	Grupp har lagts till
@@ -196,6 +213,7 @@ icon	admin	sv	Ikon
 idle	admin	sv	idle
 if no acl records for user or any group the user is a member of	admin	sv	Om inga ACL-poster för användare eller någon grupp användare är medlem av
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sv	Im LDAP används, vill du hantera hemkatalog och skal-egenskaper?
+in mbyte	admin	sv	i MegaByte
 inbound	admin	sv	inkommande
 install crontab	admin	sv	Installera crontab
 installed applications	common	sv	Installerade applicationer
@@ -218,6 +236,7 @@ ldap groups context	admin	sv	Gruppkontext för LDAP
 ldap host	admin	sv	LDAP host
 ldap root password	admin	sv	rootlösenord för LDAP
 ldap rootdn	admin	sv	LDAP rootdn (distinguished name för root-konto)
+leave empty for no quota	admin	sv	Lämna tomt om du inte vill sätta kvot
 leave the category untouched and return back to the list	admin	sv	Lämna kategorin orörd och återgå till listan
 leave the group untouched and return back to the list	admin	sv	Lämna gruppen orörd ocgh återgår till listan
 list config settings	admin	sv	Lista konfigurationsinställningar
@@ -230,6 +249,7 @@ login shell	admin	sv	Loginskal
 login time	admin	sv	Login Tid
 loginid	admin	sv	LoginID
 mail settings	admin	sv	Mailinställningar
+main email-address	admin	sv	Huvudepostadress
 main screen message	admin	sv	Meddelande på huvudsidan
 manager	admin	sv	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	sv	Maximalt kontoID (t ex 65535 eller 1000000)
@@ -245,6 +265,7 @@ new password [ leave blank for no change	admin	sv	Nytt lösenord [ Låt fältet var
 new password [ leave blank for no change ]	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
 next run	admin	sv	Nästa körning
 no algorithms available	admin	sv	inga algoritmer tillgängliga
+no alternate email address	admin	sv	Ingen alternativ epostadress
 no jobs in the database !!!	admin	sv	Inga jobb i databasen!!!
 no login history exists for this user	admin	sv	Inloggningshistorik saknas för denna användare
 no matches found	admin	sv	Inga träffar
@@ -268,15 +289,20 @@ please enter a name	admin	sv	Vänligen ange ett namn
 please enter a name for that server !	admin	sv	Vänligen ange ett namn för den servern
 please run setup to become current	admin	sv	Var vänlig kör Setup för att uppdatera
 please select	admin	sv	Vänligen välj
+postfix with ldap	admin	sv	Postfix med LDAP
 preferences	admin	sv	Preferenser
 primary group	admin	sv	primärgrupp
+qouta size in mbyte	admin	sv	Kvotstorlek i MegaByte
+quota settings	admin	sv	Kvotinställningar
 re-enter password	admin	sv	Skriv in lösenord igen
 read this list of methods.	admin	sv	Läst denna lista över metoder
 register application hooks	admin	sv	Registera applikationskopplingar
+remove	admin	sv	ta bort
 remove all users from this group	admin	sv	Ta bort alla användare från denna grupp
 remove all users from this group ?	admin	sv	Ta bort alla användare från denna grupp
 return to admin mainscreen	admin	sv	återgå till huvudsida för administration
 return to view account	admin	sv	Återgå för att titta på kontot
+route all mails to	admin	sv	Routa alla mail till
 run asynchronous services	admin	sv	Kör asynkrona tjänster
 save the category	admin	sv	spara kategorin
 save the category and return back to the list	admin	sv	Spara kategorin och återgå till listan
@@ -317,6 +343,9 @@ sorry, the follow users are still a member of the group %1	admin	sv	Beklagar, fö
 sort the entries	admin	sv	sortera posterna
 ssl	admin	sv	ssl
 standard	admin	sv	standard
+standard imap server	admin	sv	standard IMAP server
+standard pop3 server	admin	sv	standard POP3 server
+standard smtp-server	admin	sv	standard SMTP-Server
 start testjob!	admin	sv	Starta testjobb!
 status	admin	sv	Status
 submit changes	admin	sv	Verkställ förändring
@@ -368,6 +397,7 @@ view this user	admin	sv	visa denna användare
 view user account	admin	sv	Visa användarkontot
 who would you like to transfer all records owned by the deleted user to?	admin	sv	Till vem vill du föra över SAMTLIGA poster som ägs av den raderade användaren?
 would you like egroupware to cache the egw info array ?	admin	sv	Vill du att eGroupWare skall cacha egw info array?
+would you like egroupware to cache the phpgw info array ?	admin	sv	Vill du att eGroupWare skall cacha phpgw info array?
 would you like egroupware to check for a new version<br>when admins login ?	admin	sv	Vill du att eGroupWare skall kontrollera om det finns en ny version när administratörer loggar in?
 would you like egroupware to check for new application versions when admins login ?	admin	sv	Vill du att eGroupWare skall kontrollera om applikationerna finns i ny version när administratörer loggar in?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sv	Vill du automatiskt ladda nya språkfiler (vid login)?
