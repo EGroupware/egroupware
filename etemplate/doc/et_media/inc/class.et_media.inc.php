@@ -17,12 +17,6 @@
 
 	class et_media extends so_sql
 	{
-		var $messages = array(
-			'nothing_found' => 'Nothing matched search criteria !!!',
-			'anz_found' => '%1 matches on search criteria',
-			'saved' => 'Entry saved',
-			'error_writeing' => 'Error: writeing !!!'
-		);
 		var $types = array(
 			'' => 'Select one ...',
 			'cd' => 'Compact Disc',
@@ -31,7 +25,7 @@
 			'video' => 'Video Tape'
 		);
 
-		function et_media($lang_on_messages = True)
+		function et_media()
 		{
 			$this->tmpl = CreateObject('etemplate.etemplate','et_media.edit');
 
@@ -42,13 +36,6 @@
 				'edit' => True,
 				'writeLangFile' => True
 			);
-
-			if ($lang_on_messages)
-			{
-				reset($this->messages);
-				while (list($key,$msg) = each($this->messages))
-					$this->messages[$key] = lang($msg);
-			}
 		}
 
 		function edit($content='',$msg = '')
@@ -65,7 +52,7 @@
 
 				if (isset($content['save']))
 				{
-					$msg .= $this->messages[!$this->save() ? 'saved' : 'error_writeing'];
+					$msg .= !$this->save() ? lang('Entry saved') : lang('Error: writeing !!!');
 				}
 				elseif (isset($content['read']))
 				{
@@ -74,7 +61,7 @@
 
 					if (!$found)
 					{
-						$msg .= $this->messages['nothing_found'];
+						$msg .= lang('Nothing matched search criteria !!!');
 					}
 					elseif (count($found) == 1)
 					{
@@ -134,7 +121,7 @@
 				$entry[$row] = $data;
 			}
 			$content = array(
-				'msg' => sprintf($this->messages['anz_found'],count($found)),
+				'msg' => lang('%1 matches on search criteria',count($found)),
 				'entry' => $entry
 			);
 			$this->tmpl->read('et_media.show');
@@ -144,15 +131,13 @@
 
 		/*!
 		@function writeLangFile
-		@abstract writes langfile with all templates and messages registered here
+		@abstract writes langfile with all templates and types here
 		@discussion can be called via [write Langfile] in the eTemplate editor or
 		@discussion http://domain/phpgroupware/index.php?et_media.et_media.writeLangFile
 		*/
 		function writeLangFile()
 		{
-			$etm = new et_media(False);	// no lang on messages
-
-			return $this->tmpl->writeLangFile('et_media','en',$etm->messages+$etm->types);
+			return $this->tmpl->writeLangFile('et_media','en',$this->types);
 		}
 	};
 
