@@ -142,6 +142,7 @@ re-enter password	admin	en	Re-enter password
 remove all users from this group	admin	en	Remove all users from this group
 security	admin	en	Security
 selectbox	admin	en	Selectbox
+select group managers	admin	en	Select Group Managers
 select permissions this group will have	admin	en	Select permissions this group will have
 select users for inclusion	admin	en	Select users for inclusion
 select where you want to store/retrieve filesystem information	admin	en	Select where you want to store/retrieve filesystem information
