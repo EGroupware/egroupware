@@ -141,14 +141,15 @@
 
      $phpgw->template->set_var("group_name_value",$phpgw->db->f("group_name"));
 
-     $phpgw->db->query("select account_id from accounts where account_groups like '%,$group_id:%'");
+     $group_user = $phpgw->acl->get_ids_for_location($group_id,1,'phpgw_group','u');
 
-     while ($phpgw->db->next_record()) {
-        $selected_users[$phpgw->db->f("account_id")] = " selected";
+     while ($user = each($group_user)) {
+        $selected_users[$user[1]] = " selected";
      }
 
      $apps = CreateObject('phpgwapi.applications',array(intval($group_id),'g'));
-     $db_perms = $apps->enabled_apps();
+     $apps->read_installed_apps();
+     $db_perms = $apps->read_account_specific();
   }
 
   $phpgw->db->query("select * from groups where group_id=$group_id");
