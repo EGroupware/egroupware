@@ -60,7 +60,7 @@
 			{
 				$this->data['account_id']   = $allValues[0]['gidnumber'][0];
 				$this->data['account_lid']  = $allValues[0]['cn'][0];
-				$this->data['firstname']    = utf8_decode($allValues[0]['cn'][0]);
+				$this->data['firstname']    = $GLOBALS['phpgw']->translation->convert($allValues[0]['cn'][0],'utf-8');
 				$this->data['lastname']     = 'Group';
 			}
 			else
@@ -68,8 +68,8 @@
 				$this->data['account_id']   		= $allValues[0]['uidnumber'][0];
 				$this->data['account_primary_group']	= $allValues[0]['gidnumber'][0];
 				$this->data['account_lid']  		= $allValues[0]['uid'][0];
-				$this->data['firstname']    		= utf8_decode($allValues[0]['givenname'][0]);
-				$this->data['lastname']     		= utf8_decode($allValues[0]['sn'][0]);
+				$this->data['firstname']    		= $GLOBALS['phpgw']->translation->convert($allValues[0]['givenname'][0],'uft-8');
+				$this->data['lastname']     		= $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
 			}
 			$this->data['account_dn']  = $allValues[0]['dn'];
 			$this->data['fullname']    = $allValues[0]['cn'][0];
@@ -111,14 +111,21 @@
 			if($acct_type == 'u')
 			{
 				// data for posixaccount
-				$newData['cn']				= utf8_encode(sprintf("%s %s", 
+				$newData['cn']				= $GLOBALS['phpgw']->translation->convert(sprintf("%s %s", 
 										$this->data['firstname'], 
-										$this->data['lastname']));
-				$newData['uid']				= utf8_encode($this->data['account_lid']);
+										$this->data['lastname']),$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
+				$newData['uid']				= $GLOBALS['phpgw']->translation->convert(
+										$this->data['account_lid'],
+										$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
 				if($this->data['lastname'])
-					$newData['sn']			= utf8_encode($this->data['lastname']);
+					$newData['sn']			= $GLOBALS['phpgw']->translation->convert(
+										$this->data['lastname'],
+										$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
+
 				if($this->data['firstname'])
-					$newData['givenname']		= utf8_encode($this->data['firstname']);
+					$newData['givenname']		= $GLOBALS['phpgw']->translation->convert(
+										$this->data['firstname'],
+										$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
 				if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'])
 				{
 					$newData['homedirectory'] 	= $this->data['homedirectory'];
@@ -151,7 +158,9 @@
 			else
 			{
 				// data for posixgroup
-				$newData['cn']				= utf8_encode($this->data['account_lid']);
+				$newData['cn']				= $GLOBALS['phpgw']->translation->convert(
+										$this->data['account_lid'],
+										$GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
 				$newData['gidnumber']			= $this->data['account_id'];
 				$newGroupID				= $newData['cn'];
 				$oldGroupID				= $newData['cn'];
@@ -173,7 +182,7 @@
 			{
 				$test = $allValues[0]['uid'][0];
 			}
-			if (utf8_decode($test) != $this->data['account_lid'])
+			if ($GLOBALS['phpgw']->translation->convert($test,'utf-8') != $this->data['account_lid'])
 			{
 				$oldData 	= $allValues[0];
 				$oldDN		= $oldData['dn'];
@@ -457,8 +466,8 @@
 							'account_id'        => $allVals['uidnumber'][0],
 							'account_lid'       => $allVals['uid'][0],
 							'account_type'      => $allVals['phpgwaccounttype'][0],
-							'account_firstname' => utf8_decode($allVals['givenname'][0]),
-							'account_lastname'  => utf8_decode($allVals['sn'][0]),
+							'account_firstname' => $GLOBALS['phpgw']->translation->convert($allVals['givenname'][0],'utf-8'),
+							'account_lastname'  => $GLOBALS['phpgw']->translation->convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => $allVals['phpgwaccountstatus'][0]
 						);
 					}
@@ -486,8 +495,8 @@
 							'account_id'        => $allVals['gidnumber'][0],
 							'account_lid'       => $allVals['cn'][0],
 							'account_type'      => $allVals['phpgwaccounttype'][0],
-							'account_firstname' => utf8_decode($allVals['givenname'][0]),
-							'account_lastname'  => utf8_decode($allVals['sn'][0]),
+							'account_firstname' => $GLOBALS['phpgw']->translation->convert($allVals['givenname'][0],'utf-8'),
+							'account_lastname'  => $GLOBALS['phpgw']->translation->convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => $allVals['phpgwaccountstatus'][0]
 						);
 					}
@@ -823,7 +832,7 @@
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'posixGroup';
 					$entry['objectclass'][2] = 'phpgwAccount';
-					$entry['cn']             = utf8_encode($account_info['account_lid']);
+					$entry['cn']             = $GLOBALS['phpgw']->translation->convert($account_info['account_lid'],$GLOBALS['phpgw_info']['server']['system_charset'],'utf-8');
 					$entry['gidnumber']      = $account_id;
 					#$entry['userpassword']   = $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd']);
 					$entry['description']    = 'phpgw-created group';
@@ -832,15 +841,19 @@
 				{
 					$dn = 'uid=' . $account_info['account_lid'] . ',' . $this->user_context;
 					
-					$entry['cn']	= utf8_encode(sprintf("%s %s",
+					$entry['cn']	= $GLOBALS['phpgw']->translation->convert(sprintf("%s %s",
 						$account_info['account_firstname'],
 						$account_info['account_lastname']
-					));
+					), $GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
 								
-					$entry['sn']	= utf8_encode($account_info['account_lastname']);
+					$entry['sn']	= $GLOBALS['phpgw']->translation->convert(
+								$account_info['account_lastname'],
+								$GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
 						
 					if($account_info['account_firstname'])
-						$entry['givenname']	= utf8_encode($account_info['account_firstname']);
+						$entry['givenname']	= $GLOBALS['phpgw']->translation->convert(
+										$account_info['account_firstname'],
+										$GLOBALS['phpgw_info']['server']['system_charset'], 'utf-8');
 						
 					$entry['uid']       	= $account_info['account_lid'];
 					$entry['uidnumber'] 	= $account_id;
