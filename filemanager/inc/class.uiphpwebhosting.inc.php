@@ -78,8 +78,8 @@
 
 			$p->set_var('error','<br><br>Go to your <a href="'.$GLOBALS['phpgw']->link('/index.php',
 					Array(
-						'menuaction'	=> 'phpwebhosting.uiphpwebhosting.index',
-						'path'	=> $this->bo->homedir
+						'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+						'path'	=> urlencode($this->bo->homedir)
 					)
 				).'">Home</a> directory'
 			);
@@ -147,7 +147,7 @@
 				$this->bo->path != $this->bo->fakebase &&
 				!$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)))
 			{
-				$this->no_access_exists(lang('Directory '.$this->bo->path.' does not exist'));
+				$this->no_access_exists(lang('Directory X does not exist',$this->bo->path));
 			}
 		}
 

@@ -115,7 +115,7 @@
 			$this->userinfo['username'] = $GLOBALS['phpgw_info']['user']['account_id'];
 			$this->userinfo['account_lid'] = $GLOBALS['phpgw']->accounts->id2name($this->userinfo['username']);
 			$this->userinfo['hdspace'] = 10000000000;
-			$this->homedir = $this->fakebase.'/'.$this->userinfo['account_lid'];
+			$this->homedir = $this->fakebase.SEP.$this->userinfo['account_lid'];
 
 			if(!defined('NULL'))
 			{
