@@ -58,7 +58,7 @@
 	}
 
 	/* Make sure the header.inc.php is current. */
-	if ($GLOBALS['egw_info']['server']['versions']['header'] < $GLOBALS['egw_info']['server']['versions']['current_header'])
+	if (!isset($GLOBALS['egw_info']) || $GLOBALS['egw_info']['server']['versions']['header'] < $GLOBALS['egw_info']['server']['versions']['current_header'])
 	{
 		echo '<center><b>You need to port your settings to the new header.inc.php version by running <a href="setup/manageheader.php">setup/headeradmin</a>.</b></center>';
 		exit;
