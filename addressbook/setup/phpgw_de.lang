@@ -55,6 +55,7 @@ delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen E
 department	common	de	Abteilung
 domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen
+download export file (uncheck to debug output in browser)	addressbook	de	
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 empty for all	addressbook	de	leer für alle
@@ -73,6 +74,7 @@ fields to show in address list	addressbook	de	Felder, die in der Adressliste ang
 fieldseparator	addressbook	de	Feldtrenner
 full name	addressbook	de	vollständiger Name
 geo	addressbook	de	GEO
+global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
 home address type	addressbook	de	Typ der Privatadresse
 home city	addressbook	de	Stadt (priv)
@@ -130,7 +132,9 @@ record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatz Eigentümer
 retrieve contacts	admin	de	Kontakte laden
 select	addressbook	de	Auswählen
+select all	addressbook	de	Alles auswählen
 select the type of conversion	addressbook	de	
+select the type of conversion:	addressbook	de	
 select where you want to store	admin	de	Auswählen wo Sie speichern wollen
 show birthday reminders on main screen	addressbook	de	Geburtstags-Mahner auf der Startseite anzeigen
 startrecord	addressbook	de	Startdatensatz
