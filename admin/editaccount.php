@@ -11,10 +11,11 @@
 	/* $Id$ */
   	
 	$phpgw_info['flags'] = array(
-		'noheader'    => True,
-		'nonavbar'    => True,
-		'currentapp'  => 'admin',
-		'parent_page' => 'accounts.php'
+		'noheader'          => True,
+		'nonavbar'          => True,
+		'currentapp'        => 'admin',
+		'parent_page'       => 'accounts.php',
+		'enable_sbox_class' => True
 	);
  
 	include('../header.inc.php');
@@ -61,6 +62,19 @@
 			$userData = $account->read_repository();
 			$userGroups = $account->memberships($_account_id);
 			$allGroups = $account->get_list('groups');
+
+			if ($userData['expires'] == -1)
+			{
+				$userData['account_expires_month'] = 0;
+				$userData['account_expires_day']   = 0;
+				$userData['account_expires_year']  = 0;
+			}
+			else
+			{
+				$userData['account_expires_month'] = date('m',$userData['expires']);
+				$userData['account_expires_day']   = date('d',$userData['expires']);
+				$userData['account_expires_year']  = date('Y',$userData['expires']);
+			}
 		}
 
 		$t->set_var('form_action',$phpgw->link('/admin/editaccount.php',
@@ -82,9 +96,15 @@
 		$t->set_var('lang_reenter_password',lang('Re-Enter Password'));
 		$t->set_var('lang_lastname',lang('Last Name'));
 		$t->set_var('lang_groups',lang('Groups'));
+		$t->set_var('lang_expires',lang('Expires'));
 		$t->set_var('lang_firstname',lang('First Name'));
 		$t->set_var('lang_button',lang('Save'));
 		$t->parse('form_buttons','form_buttons_',True);
+
+		$_y = $phpgw->sbox->getyears('account_expires_year',$userData['account_expires_year'],date('Y'),date('Y')+10);
+		$_m = $phpgw->sbox->getmonthtext('account_expires_month',$userData['account_expires_month']);
+		$_d = $phpgw->sbox->getdays('account_expires_day',$userData['account_expires_day']);
+		$t->set_var('input_expires',$phpgw->common->dateformatorder($_y,$_m,$_d,True));
 
 		$t->set_var('account_lid','<input name="account_lid" value="' . $userData['account_lid'] . '">');
 
@@ -268,7 +288,7 @@
 	// otherwise the error array
 	function userDataInvalid($_userData)
 	{
-		global $phpgw,$phpgw_info;
+		global $phpgw,$phpgw_info,$userData;
 
 		$totalerrors = 0;
 
@@ -305,6 +325,22 @@
 			$totalerrors++;
 		}
 
+		if ($_userData['account_expires_month'] || $_userData['account_expires_day'] || $_userData['account_expires_year'])
+		{
+			if (! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
+			{
+				$error[$totalerrors] = lang('You have entered an invalid expiration date');
+			}
+			else
+			{
+				$userData['expires'] = mktime(2,0,0,$_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']);
+			}
+		}
+		else
+		{
+			$userData['expires'] = -1;
+		}
+
 		if ($totalerrors == 0)
 		{
 			return FALSE;
@@ -325,18 +361,21 @@
 	if ($submit)
 	{
 		$userData = array(
-			'account_lid'         => $account_lid,
-			'firstname'           => $account_firstname,
-			'lastname'            => $account_lastname,
-			'account_passwd'      => $account_passwd,
-			'status'              => $account_status,
-			'old_loginid'         => rawurldecode($old_loginid),
-			'account_id'          => $account_id,
-			'account_passwd_2'    => $account_passwd_2,
-			'account_groups'      => $account_groups,
-			'account_permissions' => $account_permissions,
-			'homedirectory'       => $homedirectory,
-			'loginshell'          => $loginshell
+			'account_lid'           => $account_lid,
+			'firstname'             => $account_firstname,
+			'lastname'              => $account_lastname,
+			'account_passwd'        => $account_passwd,
+			'status'                => $account_status,
+			'old_loginid'           => rawurldecode($old_loginid),
+			'account_id'            => $account_id,
+			'account_passwd_2'      => $account_passwd_2,
+			'account_groups'        => $account_groups,
+			'account_permissions'   => $account_permissions,
+			'homedirectory'         => $homedirectory,
+			'loginshell'            => $loginshell,
+			'account_expires_month' => $account_expires_month,
+			'account_expires_day'   => $account_expires_day,
+			'account_expires_year'  => $account_expires_year
 		);
 		
 		if (!$errors = userDataInvalid($userData)) 

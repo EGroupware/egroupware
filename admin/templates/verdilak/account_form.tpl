@@ -8,7 +8,7 @@
       <td colspan="4">&nbsp;</td>
     </tr>
 
-    <tr bgcolor="{tr_color1}">
+    <tr bgcolor="{tr_color2}">
      <td width="25%">{lang_loginid}</td>
      <td width="25%">{account_lid}&nbsp;</td>
 
@@ -16,7 +16,7 @@
      <td width="25%">{account_status}</td>
     </tr>
 
-    <tr bgcolor="{tr_color2}">
+    <tr bgcolor="{tr_color1}">
      <td>{lang_firstname}</td>
      <td>{account_firstname}&nbsp;</td>
      <td>{lang_lastname}</td>
@@ -25,9 +25,14 @@
 
     {password_fields}
  
-    <tr bgcolor="{tr_color2}">
+    <tr bgcolor="{tr_color1}">
      <td>{lang_groups}</td>
-     <td colspan=3>{groups_select}&nbsp;</td>
+     <td colspan="3">{groups_select}&nbsp;</td>
+    </tr>
+
+    <tr bgcolor="{tr_color2}">
+     <td>{lang_expires}</td>
+     <td colspan="3">{input_expires}&nbsp;</td>
     </tr>
 
     {permissions_list}

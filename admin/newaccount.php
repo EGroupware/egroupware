@@ -12,10 +12,11 @@
 	/* $Id$ */
 
 	$phpgw_info['flags'] = array(
-		'currentapp'  => 'admin',
-		'noheader'    => True,
-		'nonavbar'    => True,
-		'parent_page' => 'accounts.php'
+		'currentapp'        => 'admin',
+		'noheader'          => True,
+		'nonavbar'          => True,
+		'parent_page'       => 'accounts.php',
+		'enable_sbox_class' => True
 	);
 	include('../header.inc.php');
 
@@ -74,6 +75,22 @@
 			$error[$totalerrors++] = lang('That loginid has already been taken');
 		}
 
+		if ($account_expires_month || $account_expires_day || $account_expires_year)
+		{
+			if (! checkdate($account_expires_month,$account_expires_day,$account_expires_year))
+			{
+				$error[] = lang('You have entered an invalid expiration date');
+			}
+			else
+			{
+				$account_expires = mktime(2,0,0,$account_expires_month,$account_expires_day,$account_expires_year);
+			}
+		}
+		else
+		{
+			$account_expires = -1;
+		}
+
 		if (! $error)
 		{
 			$phpgw->db->lock(array(
@@ -84,7 +101,17 @@
 				'phpgw_acl',
 				'phpgw_applications'
 			));
-			$phpgw->accounts->create('u', $account_lid, $account_passwd, $account_firstname, $account_lastname, $account_status, '', $homedirectory,$loginshell);
+
+			$account_info = array(
+				'type'      => 'u',
+				'lid'       => $account_lid,
+				'passwd'    => $account_passwd,
+				'firstname' => $account_firstname,
+				'lastname'  => $account_lastname,
+				'status'    => $account_status,
+				'expires'   => $account_expires
+			);
+			$phpgw->accounts->create($account_info);
        
 			$account_id = $phpgw->accounts->name2id($account_lid);
 
@@ -245,6 +272,12 @@
 	$phpgw->template->set_var('account_lastname','<input name="account_lastname" value="' . $account_lastname . '">');
 
 	$phpgw->template->set_var('lang_groups',lang('Groups'));
+
+	$phpgw->template->set_var('lang_expires',lang('Expires'));
+	$_y = $phpgw->sbox->getyears('account_expires_year',$account_expires_year,date('Y'),date('Y')+10);
+	$_m = $phpgw->sbox->getmonthtext('account_expires_month',$account_expires_month);
+	$_d = $phpgw->sbox->getdays('account_expires_day',$account_expires_day);
+	$phpgw->template->set_var('input_expires',$phpgw->common->dateformatorder($_y,$_m,$_d,True));
 
 	$phpgw->template->parse('form_buttons','form_buttons_',True);
 

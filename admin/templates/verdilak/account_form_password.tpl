@@ -1,5 +1,5 @@
 
-    <tr bgcolor="{tr_color1}">
+    <tr bgcolor="{tr_color2}">
      <td>{lang_password}</td>
      <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
      <td>{lang_reenter_password}</td>

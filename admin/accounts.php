@@ -30,7 +30,7 @@
 		return $phpgw->db->f(0);
 	}
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 
 	$p->set_file(array(
 		'list'       => 'accounts.tpl',

@@ -51,6 +51,7 @@
 	$t->set_var('lang_firstname',lang('First Name'));
 	$t->set_var('lang_lastlogin',lang('Last login'));
 	$t->set_var('lang_lastloginfrom',lang('Last login from'));
+	$t->set_var('lang_expires',lang('Expires'));
 
 	$account = CreateObject('phpgwapi.accounts',$account_id);
 	$userData = $account->read_repository();
@@ -90,6 +91,15 @@
 	}
 	$t->parse('password_fields','form_logininfo',True);
 
+	// Account expires
+	if ($userData['expires'] != -1)
+	{
+		$t->set_var('input_expires',$phpgw->common->show_date($userData['expires']));
+	}
+	else
+	{
+		$t->set_var('input_expires',lang('Never'));
+	}
 
 	// Find out which groups they are members of
 	$usergroups = $account->memberships(intval($account_id));
