@@ -1,3 +1,4 @@
+about x	common	fr	A propos de %1
 access	common	fr	Accès
 access not permitted	common	fr	Accès non permis
 acl	common	fr	Liste de Contrôle d'accès
@@ -35,6 +36,7 @@ bahamas	common	fr	BAHAMAS
 bahrain	common	fr	BAHRAIN
 bangladesh	common	fr	BANGLADESH
 barbados	common	fr	BARBADE
+based on	common	fr	Basé sur
 belarus	common	fr	BIELORUSSIE
 belgium	common	fr	BELGIQUE
 belize	common	fr	BELIZE
@@ -102,7 +104,9 @@ detail	common	fr	Détail
 details	common	fr	Détails
 disabled	common	fr	Désactivé
 djibouti	common	fr	DJIBOUTI
-do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
+do you really want to delete this entry	common	fr	Voulez-vous réellement effacer cette entrée ?
+do you want to delete all subcategories ?	common	fr	Voulez-vous effacer toutes les sous-catégories ?
+do you want to move all subcategories one level down ?	common	fr	VOulez-vous déplacer toutes les sous-catégories d'un niveau vers le bas ?
 dominica	common	fr	DOMINIQUE
 dominican republic	common	fr	REPUBLIQUE DOMINICAINE
 done	common	fr	Fait
@@ -211,6 +215,7 @@ lebanon	common	fr	LIBAN
 lesotho	common	fr	LESOTHO
 liberia	common	fr	LIBERIA
 libyan arab jamahiriya	common	fr	LIBYE
+license	about	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
 list	common	fr	Liste
 lithuania	common	fr	LITHUANIE
@@ -224,6 +229,7 @@ macedonia, the former yugoslav republic of	common	fr	MACEDONIE, PRECEDEMMENT REP
 madagascar	common	fr	MADAGASCAR
 main category	common	fr	Catégorie principale
 main screen	common	fr	Ecran principal
+maintainer	about	fr	Mainteneur
 malawi	common	fr	MALAWI
 malaysia	common	fr	MALAYSIE
 maldives	common	fr	MALDIVES
@@ -267,6 +273,7 @@ niger	common	fr	NIGER
 nigeria	common	fr	NIGERIA
 niue	common	fr	NIUE
 no	common	fr	Non
+no category	common	fr	Pas de catégorie
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no subject	common	fr	Sans Sujet
 none	common	fr	Aucun
@@ -282,6 +289,7 @@ october	common	fr	Octobre
 ok	common	fr	OK
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
+only private	common	fr	Seulement privé
 only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
 original	common	fr	Original
@@ -300,6 +308,8 @@ password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
 personal	common	fr	Personnel
 peru	common	fr	PERU
 philippines	common	fr	PHILIPPINES
+is a multi-user, web-based groupware suite written in PHP	about	fr	est une suite de travail de groupe multi-utilisateur et à interface web écrite en PHP.
+phpgwapi	common	fr	phpGroupWare API
 pitcairn	common	fr	PITCAIRN
 please enter a name	common	fr	Veuillez saisir un nom !
 please run setup to become current	common	fr	SVP exécutez setup pour vous mettre à jour
@@ -307,7 +317,7 @@ please set your global preferences	common	fr	SVP réglez vos préférences globales
 please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
 poland	common	fr	POLOGNE
 portugal	common	fr	PORTUGAL
-powered by phpgroupware version x	common	fr	Utilise <a href="http://www.phpgroupware.org:>phpGroupWare</a> version %1
+powered by	common	fr	Actionné par
 preferences	common	fr	Préférences
 print	common	fr	Imprimer
 priority	common	fr	Priorité
@@ -376,7 +386,7 @@ tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE OF
 thailand	common	fr	THAILANDE
 the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
-the mail server returned	common	fr	Le serveur de mail a renvoyé
+The core of phpGroupWare, the API itself	about	fr	La base de phpGroupWare, l'API elle-même.
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
 this application is current	common	fr	Cette application est à jour
 this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
@@ -415,6 +425,7 @@ users choice	common	fr	Choix d'utilisateurs
 uzbekistan	common	fr	UZBEKISTAN
 vanuatu	common	fr	VANUATU
 venezuela	common	fr	VENEZUELA
+version	common	fr	Version
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 virgin islands, british	common	fr	ILES VIERGES ANGLAISES
@@ -424,7 +435,7 @@ wednesday	common	fr	Mercredi
 welcome	common	fr	Bienvenue
 western sahara	common	fr	SAHARA OUEST
 which groups	common	fr	Quels groupes
-written by:	common	fr	Ecrit par:
+written by	common	fr	Ecrit par
 year	common	fr	Année
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
@@ -432,7 +443,6 @@ you are running a newer version of phpGroupWare than your database is setup for	
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
-your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>
 your search returned 1 match	common	fr	Votre recherche a retourné un résultat
 your search returned x matchs	common	fr	Votre recherche a retourné %1 résultats
 your session could not be verified.	login	fr	Votre session n'est pas valide.

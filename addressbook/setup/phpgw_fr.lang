@@ -7,6 +7,7 @@ address line 2	addressbook	fr	Adresse ligne 2
 address line 3	addressbook	fr	Adresse ligne 3
 address type	addressbook	fr	Type d'adresse
 addvcard	addressbook	fr	Ajouter VCard
+alphabet	addressbook	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt. csv import	addressbook	fr	Import Alt. CSV
 are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ?
 bbs phone	addressbook	fr	Téléphone BBS
@@ -35,15 +36,19 @@ contact settings	admin	fr	Paramètres du contact
 country	common	fr	Pays
 custom	addressbook	fr	Personnalisé
 custom fields	addressbook	fr	Champs personnalisés
+debug output in browser	addressbook	fr	Debogage des informations dans le navigateur
 default filter	addressbook	fr	Filtre par défaut
 department	common	fr	Département
 domestic	addressbook	fr	Domestique
+download export file (uncheck to debug output in browser)	addressbook	fr	Downloader le fichier d'export (décocher pour deboguer les informations dans le navigateur)
 edit custom field	addressbook	fr	Editer le champ personnalisé
 edit custom fields	admin	fr	Editer les champs personnalisés
+enable remote search	admin	fr	Activer la recherche à distance
+enter the path to the export file here	addressbook	fr	Entrez le chemin vers le fichier exporté ici
 export contacts	addressbook	fr	Exporter les contacts
 export file name	addressbook	fr	Nom du fichier d'export
 extra	addressbook	fr	Extra
-fax	addressbook	fr	Fax
+fax	addresbook	fr	Fax
 fax number	common	fr	Numéro de Fax
 field name	addressbook	fr	Nom du champ
 field x has been added !	addressbook	fr	Le champ x a été ajouté !
@@ -63,7 +68,9 @@ home zip code	addressbook	fr	Code postal (domicile)
 import contacts	addressbook	fr	Importer les contacts
 import file	addressbook	fr	Importer le fichier
 import from outlook	addressbook	fr	Importer depuis Outlook
+In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from	addressbook	fr	Dans Netscape, ouvrez le carnet d'adresses et choisissez <b>Exporter</b> dans le menu <b>Fichier</b>.<br>Le fichier exporté sera dans le format LDIF.<P>Ou, dans Outlook, choisissez votre dossier de contacts, choisissez <b>Importer et Exporter...</b> dans
 international	addressbook	fr	International
+the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.       <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	fr	le menu <b>Fichier</b> et exportez vos contacts dans un fichier dont les champs sont séparés par une virgule (CSV). <P>Ou, dans Palm Desktop 4.0 ou plus, allez dans votre carnet d'adresses et choisissez <b>Exporter</b> dans le menu <b>Fichier</b>. Le fihcier exporté sera dans le format VCard.<P>
 isdn phone	addressbook	fr	Téléphone RNIS
 label	addressbook	fr	Label
 ldap context for contacts	admin	fr	Contexte LDAP pour les contacts
@@ -71,12 +78,14 @@ ldap host for contacts	admin	fr	Hôte LDAP pour les contacts
 ldap root dn for contacts	admin	fr	Racine LDAP dn pour les contacts
 ldap root pw for contacts	admin	fr	Racine LDAP pw pour les contacts
 line 2	addressbook	fr	Ligne 2
+mark records as private	addressbook	fr	Marquer les enregistrements comme privés
 message phone	addressbook	fr	Téléphone de message
 middle name	addressbook	fr	Deuxième prénom
 mobile	addressbook	fr	Portable
 mobile phone	addressbook	fr	Téléphone portable
 modem phone	addressbook	fr	Téléphone modem
 no vcard	addressbook	fr	Pas de VCard
+none	addressbook	fr	Aucun
 other number	addressbook	fr	Autre numéro
 other phone	addressbook	fr	Autre téléphone
 pager	common	fr	Pager
@@ -89,6 +98,7 @@ public key	addressbook	fr	Clé publique
 record access	addressbook	fr	Enregistrer l'accès
 record owner	addressbook	fr	Enregistrer le propriétaire
 retrieve contacts	admin	fr	Récupérer les contacts
+select the type of conversion	addressbook	fr	Choisissez le type de conversion
 select where you want to store	admin	fr	Choisissez où vous voulez stocker
 show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
 state	common	fr	Région
