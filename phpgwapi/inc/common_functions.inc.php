@@ -32,6 +32,7 @@
 	 @collection_start direct functions
 	 @abstract Direct functions which are not part of the API classes because they are required to be available at the lowest level.
 	*/
+
 	/*!
 	 @function print_debug_subarray
 	 @abstract Not to be used directly. Should only be used by print_debug()
@@ -730,6 +731,17 @@
 				}
 			}
 
+			if (!method_exists($GLOBALS[$classname],$functionname))
+			{
+				$module = $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
+
+				echo "<p><b>$module</b>: no methode '$functionname' in class '$classname'</p>\n";
+				if (function_exists('debug_backtrace'))
+				{
+					echo '<p><b>Debug-backtrace</b><pre style="text-align: left">'.print_r(debug_backtrace(),True).'</pre>';
+				}
+				return False;
+			}
 			if ((is_array($functionparams) || $functionparams != '_UNDEF_') && ($functionparams || $functionparams != 'True'))
 			{
 				return $GLOBALS[$classname]->$functionname($functionparams);
@@ -1094,7 +1106,7 @@
 	 @param	$tables	and array of tables to have the prefix prepended to
 	 @return array of table names with the prefix prepended
 	*/
-							
+
 	function prepend_tables_prefix($prefix,$tables)
 	{
 		foreach($tables as $key => $value)
@@ -1103,4 +1115,29 @@
 		}
 		return $tables;
 	}
+
+
+	/*!
+	 @function function_backtrace
+	 @abstract returns the backtrace of the calling functions
+	 @param	$default default to return if the function debug_backtrace is not availible (php<4.3)
+	 @author ralfbecker
+	 @return function-names separated by slashes (beginning with the calling function not this one)
+	*/
+	function function_backtrace($default='')
+	{
+		if (function_exists('debug_backtrace'))
+		{
+			$backtrace = debug_backtrace();
+			//echo "<pre>".print_r($backtrace,True)."</pre>\n";
+			array_shift($backtrace);	// remove ourself
+			foreach($backtrace as $level)
+			{
+				$ret[] = $level['function'];
+			}
+			return implode('/',$ret);
+		}
+		return $default;
+	}
+
 ?>
