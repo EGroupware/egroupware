@@ -151,6 +151,15 @@
 			ExecMethod($method,array_merge($this->result,$preserv));
 		}
 
+		/*!
+		@function process_show
+		@abstract this is only an empty function for the GTK ui
+		@returns the adjusted content (in the simplest case that would be $content)
+		*/
+		function process_show(&$content,$readonlys='')
+		{
+		}
+
 		/*
 		* Called when delete-event happens. Returns false to indicate that the event
 		* should proceed.
