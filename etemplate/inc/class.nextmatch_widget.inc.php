@@ -92,8 +92,7 @@
 			$obj = CreateObject($app.'.'.$class);
 			if (!is_object($obj) || !method_exists($obj,$method))
 			{
-				echo "<p>nextmatch_widget::pre_process($name): '$value[get_rows]' is no valid method !!!</p>\n";
-				//return;
+				$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
 			}
 			else
 			{
