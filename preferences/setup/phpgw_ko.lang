@@ -65,7 +65,7 @@ show number of current users	preferences	ko	현재 사용자 수
 show text on navigation icons	preferences	ko	툴팁보기
 show_more_apps	common	ko	더 많은 응용프로그램 보기
 text only	preferences	ko	글자만
-the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ko	** eGroupWare를 시작하면 기본 응용프로그램이 시작되고 홈페이지 아이콘을 클릭해도 마찬가지입니다.<br>여기서 응용프로그램을 직접 선택하지 않고 각 응용프로그램의 구성에서 설정하지 않을 경우 하나 이상의 응용프로그램을 홈페이지에 보이게 환경설정할수 있습니다
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ko	** eGroupWare를 시작하면 기본 응용프로그램이 시작되고 홈페이지 아이콘을 클릭해도 마찬가지입니다.<br>여기서 응용프로그램을 직접 선택하지 않고 각 응용프로그램의 구성에서 설정하지 않을 경우 하나 이상의 응용프로그램을 홈페이지에 보이게 환경설정할수 있습니다
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ko	선택상자가 모든 사용자에 보입니다 (만약 사용자가 많다면 느려질수 있습니다) 팝업창은 사용자의 이름이나 그룹으로 검색할 수 있습니다.
 the two passwords are not the same	preferences	ko	두 암호가 서로 다릅니다
 theme (colors/fonts) selection	preferences	ko	테마 (컬러/폰트) 선택

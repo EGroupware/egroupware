@@ -66,7 +66,7 @@ show number of current users	preferences	cs	Zobrazit poèet pøihlá¹ených u¾ivatel
 show text on navigation icons	preferences	cs	Ukázat text na navigaèních ikonách
 show_more_apps	common	cs	Zobrazit dal¹í aplikace
 text only	preferences	cs	Jen text
-the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	cs	Výchozí aplikace bude spu¹tìna po pøihlá¹ení do eGroupWare nebo po výbìru ikony domovské stránky.<br>Na domovské stánce mù¾e být i více apliakcí, pokud zde ¾ádnou nezvolíte (v takovém pøípadì je tøeba upravit nastavení ka¾dé aplikace zvlá¹»).
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	cs	Výchozí aplikace bude spu¹tìna po pøihlá¹ení do eGroupWare nebo po výbìru ikony domovské stránky.<br>Na domovské stánce mù¾e být i více apliakcí, pokud zde ¾ádnou nezvolíte (v takovém pøípadì je tøeba upravit nastavení ka¾dé aplikace zvlá¹»).
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	cs	Výbìr zobrazí v¹echny dostupné u¾ivatele (mù¾e být pomalé pokud je mnoho u¾ivatelù). Vyhledávání umo¾ní dohledat u¾ivatele podle jména èi skupiny.
 the two passwords are not the same	preferences	cs	Hesla nejsou shodná
 theme (colors/fonts) selection	preferences	cs	Téma (barvy a písma)

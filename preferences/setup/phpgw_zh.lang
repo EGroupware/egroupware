@@ -58,7 +58,7 @@ show number of current users	preferences	zh	显示当前用户数
 show text on navigation icons	preferences	zh	在工具栏显示图标的文字说明
 show_more_apps	common	zt	更多應用程式
 text only	preferences	zh	只显示文字
-the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	zh	登录phpGroupWare或点击主页面图标时, 将运行此处指定的默认应用程序.<br>您也可以不设置该选项, 而分别设置应用程序的个性化配置, 籍此在主页面上运行多个应用程序.
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	zh	登录eGroupWare或点击主页面图标时, 将运行此处指定的默认应用程序.<br>您也可以不设置该选项, 而分别设置应用程序的个性化配置, 籍此在主页面上运行多个应用程序.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	zh	该选择框显示所有有效用户(用户数过多将导致显示时间长), 您可以在弹出窗口中按用户名或组名查找用户.
 the two passwords are not the same	preferences	zh	两次输入的密码不一致
 theme (colors/fonts) selection	preferences	zh	选择界面主题(颜色及字体)

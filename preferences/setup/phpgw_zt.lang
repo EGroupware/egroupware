@@ -58,7 +58,7 @@ show number of current users	preferences	zt	顯示目前的使用者人數
 show text on navigation icons	preferences	zt	在功能列圖示上顯示文字說明
 show_more_apps	common	zt	更多應用程式
 text only	preferences	zt	只顯示文字
-the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	zt	預設的應用程式會在您進入eGroupWare時或是點選首頁圖示顯示<br>如果您並未指定特別的應用程式，您可以選擇一個以上的應用程式(必須在各個應用程式的偏好中設定)。
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	zt	預設的應用程式會在您進入eGroupWare時或是點選首頁圖示顯示<br>如果您並未指定特別的應用程式，您可以選擇一個以上的應用程式(必須在各個應用程式的偏好中設定)。
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	zt	下拉式選單列出所有使用者(如果有很多筆資料會影響速度)，跳出式視窗可以透過名稱或群組蒐尋使用者。
 the two passwords are not the same	preferences	zt	兩次輸入的密碼不一致
 theme (colors/fonts) selection	preferences	zt	選擇畫面配置（顏色及字型）

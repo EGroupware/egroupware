@@ -56,7 +56,7 @@ show number of current users	preferences	hu	Aktuáis felhasználók számának mutatá
 show text on navigation icons	preferences	hu	Szöveg a navigációs ikonokon
 show_more_apps	common	hu	Mutass több programot
 text only	preferences	hu	Szöveg csupán
-the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett program lesz indítva amikor belépsz az eGroupWare-be vagy kattints a kezdö lap ikonon. <br>Több program is megjeleníthetö a kezdö lapon, ha Te nem akarsz választani egy programot itt.
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett program lesz indítva amikor belépsz az eGroupWare-be vagy kattints a kezdö lap ikonon. <br>Több program is megjeleníthetö a kezdö lapon, ha Te nem akarsz választani egy programot itt.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	hu	A kiválasztó doboz megmutat minden elérhetö felhasználót(nagyon le tud lassulni sok felhasználónál). A listában lehet keresni a felhasználókat név vagy csoport szerint.
 the two passwords are not the same	preferences	hu	A két jelszó nem egyezik
 theme (colors/fonts) selection	preferences	hu	Téma (színek/betütipusok) Kiválasztása
