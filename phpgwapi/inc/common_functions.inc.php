@@ -494,7 +494,7 @@
 				case 'GET':
 				case 'COOKIE':
 				case 'SERVER':
-					if(phpversion() >= '4.2.0')
+					if(phpversion() >= '4.1.0')
 					{
 						$meth = '_'.strtoupper($method[$i]);
 					}
