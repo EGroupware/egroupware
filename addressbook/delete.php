@@ -32,7 +32,7 @@
 
 
   if ($confirm != "true") {
-    $fields = $this->read($ab_id, array("owner" => $owner), array("owner" => $owner));
+    $fields = $this->read($ab_id, array("owner" => $owner));
 
     if ($fielfs["owner"] != $phpgw_info["user"]["account_id"]) {
        @Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
