@@ -82,6 +82,12 @@ class vCalendar_time
 	var $allday = False;
 }
 
+class class_geo
+{
+	var $lat;
+	var $lon;
+}
+
 class rrule
 {
 	var $freq;
@@ -98,6 +104,7 @@ class class_text
 	var $fmttype;
 	var $encoding;
 	var $altrep;
+	var $language;
 	var $value;
 }
 
@@ -108,17 +115,31 @@ class vCalendar_item
 	var $organizer;
 	var $dtstart;
 	var $dtend;
-	var $location;
-	var $transp = OPAQUE;
-	var $sequence;
-	var $attach;
-	var $uid;
 	var $dtstamp;
+	var $due;
+	var $created;
+	var $last_modified;
+	var $completed;
+	var $duration;
+	var $freebusy;
+	var $location;
+	var $categories;
+	var $transp;
+	var $sequence;
+	var $percent_complete;
+	var $attach;
+	var $calscale;
+	var $tzid;
+	var $uid;
 	var $description;
+	var $comment;
 	var $summary;
+	var $status;
 	var $priority;
-	var $class = PUBLIC;
+	var $class;
 	var $rrule;
+	var $resources;
+	var $request_status;
 }
 
 class vCal
@@ -127,6 +148,7 @@ class vCal
 	var $version;
 	var $method;
 	var $event = Array();
+	var $todo = Array();
 }	
 
 class vCalendar
@@ -134,62 +156,289 @@ class vCalendar
 	var $vcal;
 	var $event = Array();
 	var $todo = Array();
-	
-	function splitdate($value)
-	{
-		$dtime = new vCalendar_time;
-		if(strpos($value,':'))
-		{
-			$pos = explode(':',$value);
-			$value = $pos[1];
-		}
-		$dtime->year = intval(substr($value,0,4));
-		$dtime->month = intval(substr($value,4,2));
-		$dtime->mday = intval(substr($value,6,2));
-		if(substr($value,8,1) == 'T')
-		{
-			$dtime->hour = intval(substr($value,9,2));
-			$dtime->min = intval(substr($value,11,2));
-			$dtime->sec = intval(substr($value,13,2));
-		}
-		else
-		{
-			$dtime->hour = 0;
-			$dtime->min = 0;
-			$dtime->sec = 0;
-		}
-		return $dtime;		
-	}
+	var $property;
 
-	function split_address($address)
+	/*
+	 * Base Functions
+	 */
+
+	function vCalendar()
 	{
-		if(strpos(' '.$address,':'))
-		{
-			$parts = explode(':',$address);
-			$address = $parts[1];
-		}
-		
-		$parts = explode('@',$address);
-		if(count($parts) == 2)
-		{
-			$temp_address = new mailto;
-			$temp_address->user = $parts[0];
-			$temp_address->host = $parts[1];
-			return $temp_address;
-		}
-		else
-		{
-			return False;
-		}
+		$this->property = Array(
+			'dtstart'		=> Array(
+				'type'  => 'date-time',
+				'mangle'=> False,
+				'state' => Array(
+					'vevent'   => 'required',
+					'vtodo'    => 'optional',
+					'vfreebusy'=> 'optional',
+					'vtimezone'=> 'required'
+				)
+			),
+			'dtend'		=> Array(
+				'type'  => 'date-time',
+				'mangle'=> False,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vfreebusy'=> 'optional'
+				)
+			),
+			'dtstamp'		=> Array(
+				'type'  => 'date-time',
+				'mangle'=> False,
+				'state' => Array(
+					'vevent'   => 'required',
+					'vtodo'    => 'required',
+					'vjournal' => 'required',
+					'vfreebusy'=> 'required'
+				)
+			),			
+			'due'		=> Array(
+				'type'  => 'date-time',
+				'mangle'=> False,
+				'state' => Array(
+					'vtodo'    => 'optional'
+				)
+			),
+			'completed'		=> Array(
+				'type'  => 'date-time',
+				'mangle'=> False,
+				'state' => Array(
+					'vtodo'    => 'optional'
+				)
+			),
+			'created'		=> Array(
+				'type'  => 'date-time',
+				'mangle'=> False,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional'
+				)
+			),
+			'last_modified'	=> Array(
+				'type'  => 'date-time',
+				'mangle'=> False,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'vtimezone'=> 'optional'
+				)
+			),
+			'duration'		=> Array(
+				'type'  => 'duration',
+				'mangle'=> False,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vfreebusy'=> 'optional',
+					'valarm'   => 'optional'
+				)
+			),
+			'freebusy'		=> Array(
+				'type'  => 'freebusy',
+				'mangle'=> False,
+				'state' => Array(
+					'vfreebusy'=> 'optional'
+				)
+			),
+			'attendee'		=> Array(
+				'type'  => 'cal-address',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional'
+				)
+			),			
+			'organizer'		=> Array(
+				'type'  => 'cal-address',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'vfreebusy'=> 'optional'
+				)
+			),			
+			'rrule'		=> Array(
+				'type'  => 'recur',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'vtimezone'=> 'optional'
+				)
+			),
+			'comment'		=> Array(
+				'type'  => 'uri',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'vtimezone'=> 'optional',
+					'vfreebusy'=> 'optional'
+				)
+			),
+			'summary'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'valarm'   => 'optional'
+				)
+			),
+			'resources'		=> Array(
+				'type'  => 'text',
+				'mangle'=> False,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional'
+				)
+			),
+			'description'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'valarm'   => 'optional'
+				)
+			),
+			'location'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional'
+				)
+			),
+			'priority'		=> Array(
+				'type'  => 'integer',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional'
+				)
+			),
+			'calscale'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'valarm'   => 'optional'
+				)
+			),
+			'transp'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional'
+				)
+			),
+			'tzid'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vtimezone' => 'required'
+				)
+			),
+			'geo'		=> Array(
+				'type'  => 'float',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional'
+				)
+			),
+			'uid'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'vfreebusy'=> 'optional'
+				)
+			),
+			'percent_complete'	=> Array(
+				'type'  => 'integer',
+				'mangle'=> True,
+				'state' => Array(
+					'vtodo'    => 'optional'
+				)
+			),
+			'sequence'		=> Array(
+				'type'  => 'integer',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional'
+				)
+			),
+			'status'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional'
+				)
+			),
+			'class'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional'
+				)
+			),
+			'categories'		=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional'
+				)
+			),
+			'request_status'	=> Array(
+				'type'  => 'text',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'vfreebusy'=> 'optional'
+				)
+			),
+			'attach'		=> Array(
+				'type'  => 'uri',
+				'mangle'=> True,
+				'state' => Array(
+					'vevent'   => 'optional',
+					'vtodo'    => 'optional',
+					'vjournal' => 'optional',
+					'valarm'   => 'optional'
+				)
+			)
+		);
 	}
 
 	function set_var(&$event,$type,$value)
 	{
-//		if($value != False)
-//		{
-			$type = strtolower(str_replace('-','_',$type));
-			$event->$type = $value;
-//		}
+		$type = strtolower(str_replace('-','_',$type));
+		$event->$type = $value;
 	}
 
 	function unfold(&$vcal_text,$current_line)
@@ -206,7 +455,7 @@ class vCalendar
 				$vcal_text[$i] = $vcal_text[$i + 1];
 				$i++;
 			}
-			$next_line++;
+//			$next_line++;
 		}
 	}
 
@@ -218,19 +467,6 @@ class vCalendar
 	function strip_quotes($str)
 	{
 		return str_replace('"','',$str);
-	}
-
-	function strip_param($str)
-	{
-		$extra_param = explode(':',$str);
-		if(count($extra_param) == 1)
-		{
-			return $str;
-		}
-		else
-		{
-			return $extra_param[1];
-		}
 	}
 
 	function split_param(&$return_value,$str,$check_equal)
@@ -297,6 +533,92 @@ class vCalendar
 		return $return_value;
 	}
 
+	function from_text($str)
+	{
+		$str = str_replace("\\,",",",$str);
+		$str = str_replace("\\;",";",$str);
+		$str = str_replace("\\N","\n",$str);
+		$str = str_replace("\\n","\n",$str);
+		$str = str_replace("\\\\","\\",$str);
+		return $str;
+	}
+
+	function to_text($str)
+	{
+		$str = str_replace("\\","\\\\",$str);
+		$str = str_replace(",","\\,",$str);
+		$str = str_replace(";","\\;",$str);
+		$str = str_replace("\n","\\n",$str);
+		return $str;
+	}
+
+	function new_vcal()
+	{
+		return new vCal;
+	}
+
+	/*
+	 * Parse Functions
+	 */
+
+	function parse_date($value)
+	{
+		$dtime = new vCalendar_time;
+		if(strpos($value,':'))
+		{
+			$pos = explode(':',$value);
+			$value = $pos[1];
+		}
+		$dtime->year = intval(substr($value,0,4));
+		$dtime->month = intval(substr($value,4,2));
+		$dtime->mday = intval(substr($value,6,2));
+		if(substr($value,8,1) == 'T')
+		{
+			$dtime->hour = intval(substr($value,9,2));
+			$dtime->min = intval(substr($value,11,2));
+			$dtime->sec = intval(substr($value,13,2));
+		}
+		else
+		{
+			$dtime->hour = 0;
+			$dtime->min = 0;
+			$dtime->sec = 0;
+		}
+		return $dtime;		
+	}
+
+	function parse_address($address)
+	{
+		if(strpos(' '.$address,':'))
+		{
+			$parts = explode(':',$address);
+			$address = $parts[1];
+		}
+		
+		$parts = explode('@',$address);
+		if(count($parts) == 2)
+		{
+			$temp_address = new mailto;
+			$temp_address->user = $parts[0];
+			$temp_address->host = $parts[1];
+			return $temp_address;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
+	function parse_geo(&$event,$value)
+	{
+		$return_value = $this->explode_param($value,'"',True);
+		if(count($return_value) == 2)
+		{
+			$event->lat = $return_value[0];
+			$event->lon = $return_value[1];
+		}
+	}
+
 	function parse_text(&$event,$value)
 	{
 		$return_value = $this->explode_param($value,'"',True);
@@ -311,6 +633,7 @@ class vCalendar
 					case 'altrep':
 					case 'fmttype':
 					case 'cid':
+					case 'language':
 						$this->set_var($event,strtolower($type[0]),$type[1]);
 						break;
 					case 'encoding':
@@ -319,16 +642,247 @@ class vCalendar
 					case 'value':
 						break;
 					default:
-						$this->set_var($event,'value',$type[0]);
+						if($type[0] <> "\\n")
+						{
+							$this->set_var($event,'value',$type[0]);
+						}
 						break;
 				}
 			}				
 		}
-		elseif($value <> '\n')
+		elseif($value <> "\\n")
 		{
 			$this->set_var($event,'value',$value);
 		}
 	}
+
+	function parse_attendee(&$event,$value)
+	{
+		$param = $this->explode_param($value,'"',True);
+
+		for($j=0;$j<count($param);$j += 2)
+		{
+			$type[0] = strtolower($param[$j]);
+			$type[1] = $this->strip_quotes($param[$j+1]);
+			switch($type[0])
+			{
+				case 'role':
+					$val = $this->switch_role($type[1]);
+					break;
+				case 'partstat':
+					$val = $this->switch_partstat($type[1]);
+					break;
+				case 'rsvp':
+					$val = $this->switch_rsvp($type[1]);
+					break;
+				case 'delegated-from':
+				case 'delegated-to':
+				case 'mailto':
+					$type[0] = str_replace('-','_',$type[0]);
+					$val = $this->parse_address($type[1]);
+					break;
+				case 'dir':
+					$val = $type[1];
+					break;
+				default:
+					$val = $type[1];
+					break;
+			}
+			$this->set_var($event,$type[0],$val);
+		}
+	}
+
+	function parse_recurrence(&$event,$value)
+	{
+		$return_value = $this->explode_param($value,'"',True);
+		if(count($return_value) > 0)
+		{
+			for($i=0;$i<count($return_value);$i=$i + 2)
+			{
+				$type[0] = $return_value[$i];
+				$type[1] = $this->strip_quotes($return_value[$i+1]);
+				$this->set_var($event,$type[0],$type[1]);
+			}
+		}
+	}
+
+	/*
+	 * Build-Card Functions
+	 */
+
+	function out_organizer_attendee($event)
+	{
+		$str = '';
+		if(!empty($event->cn) && $event->cn <> 'Unknown')
+		{
+			$str .= ';CN="'.$event->cn.'"';
+		}
+		if(!empty($event->dir))
+		{
+			$str .= ';DIR="'.str_replace('=','=3D',str_replace(' ','%20',$event->dir)).'"';
+		}
+		if(!empty($event->role))
+		{
+			$str .= ';ROLE='.$this->switch_role($event->role);
+		}
+		if(!empty($event->rsvp))
+		{
+			$str .= ';RSVP='.$this->switch_rsvp($event->rsvp);
+		}
+		if(!empty($event->delegated_from->user) && !empty($event->delegated_from->host))
+		{
+			$str .= ';DELEGATED-FROM="MAILTO:'.$event->delegated_from->user.'@'.$event->delegated_from->host.'"';
+		}
+		if(!empty($event->delegated_to->user) && !empty($event->delegated_to->host))
+		{
+			$str .= ';DELEGATED-TO="MAILTO:'.$event->delegated_to->user.'@'.$event->delegated_to->host.'"';
+		}
+		if(!empty($event->mailto->user) && !empty($event->mailto->host))
+		{
+			$str .= ':MAILTO:'.$event->mailto->user.'@'.$event->mailto->host;
+		}
+		return $str;
+	}
+
+	function build_text($event,$mangle)
+	{
+		$str = '';
+		if(!empty($event->cid))
+		{
+			$str .= ';CID="'.$event->cid.'"';
+		}
+		if(!empty($event->altrep))
+		{
+			$str .= ';ALTREP="'.$event->altrep.'"';
+		}
+		if(!empty($event->fmttype))
+		{
+			$str .= ';FMTTYPE='.$event->fmttype;
+		}
+		if(!empty($event->encoding))
+		{
+			$str .= ';ENCODING='.$this->switch_encoding($event->encoding);
+		}		
+		if(!empty($event->value))
+		{
+			if($mangle)
+			{
+				$event->value = $this->to_text($event->value);
+			}
+			$str .= ':'.$event->value;
+		}
+//		else
+//		{
+//			$str .= ':\n';
+//		}
+
+		return $str;
+	}
+
+	function build_rrule($event)
+	{
+		$var = Array(
+			'freq',
+			'count',
+			'wkst',
+			'byday'
+		);
+		for($i=0;$i<count($var);$i++)
+		{
+			iF(!empty($event->{$var[$i]}))
+			{
+				$str[] = strtoupper($var[$i]).'='.$event->{$var[$i]};
+			}
+		}
+		return implode($str,';');
+	}
+
+	function build_time($event)
+	{
+		return ':'.date('Ymd\THms\Z',mktime($event->year,$event->month,$event->mday,$event->hour,$event->min,$event->sec));
+	}
+
+	function build_card_internals($ical_item,$event)
+	{
+		reset($this->property);
+		while(list($key,$varray) = each($this->property))
+		{
+			$value  = $key;
+			$type   = $varray['type'];
+			$mangle = $varray['mangle'];
+			$state  = $varray['state'][$ical_item];
+			if(@$state == 'optional' || @$state == 'required')
+			{
+				switch($type)
+				{
+					case 'date-time':
+						switch($value)
+						{
+							case 'last_modified':
+								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).':'.gmdate('Ymd\THms\Z'));
+								break;
+							default:
+								if(!empty($event->$value))
+								{
+									$str .= $this->fold(strtoupper($value).$this->build_time($event->$value));
+								}
+								elseif($value == 'dtstamp' || $value == 'created')
+								{
+									$str .= $this->fold(strtoupper($value).':'.gmdate('Ymd\THms\Z'));
+								}								
+								break;
+						}
+						break;
+					case 'uri':
+						if(!empty($event->$value))
+						{
+							for($i=0;$i<count($event->$value);$i++)
+							{
+								$str .= $this->fold(strtoupper($value).$this->build_text($event->{$value}[$i],$mangle));
+							}
+						}
+						break;
+					case 'recur':
+						if(!empty($event->$value))
+						{
+							$str .= $this->fold(strtoupper($value).':'.$this->build_rrule($event->$value));
+						}
+						break;
+					case 'integer':
+						if(!empty($event->$value))
+						{
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).':'.$event->$value);
+						}
+						elseif($value == 'sequence' || $value == 'percent_complete')
+						{
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).':0');
+						}
+						break;
+					case 'float':
+						if(!empty($event->$value))
+						{
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).':'.$event->$value->lat.';'.$event->$value->lon);
+						}
+						break;
+					case 'text':
+						if(empty($event->$value) && $state == 'required')
+						{
+							return '';
+						}
+						if(!empty($event->$value))
+						{
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_text($event->$value,$mangle));
+						}
+						break;
+				}
+			}
+		}
+		return $str;
+	}
+
+	/*
+	 * Switching Functions
+	 */
 
 	function switch_encoding($var)
 	{
@@ -586,84 +1140,14 @@ class vCalendar
 		}
 	}
 
-	function parse_attendee(&$event,$value)
-	{
-		$param = $this->explode_param($value,'"',True);
-
-		for($j=0;$j<count($param);$j += 2)
-		{
-			$type[0] = strtolower($param[$j]);
-			$type[1] = $this->strip_quotes($param[$j+1]);
-			switch($type[0])
-			{
-				case 'role':
-					$val = $this->switch_role($type[1]);
-					break;
-				case 'partstat':
-					$val = $this->switch_partstat($type[1]);
-					break;
-				case 'rsvp':
-					$val = $this->switch_rsvp($type[1]);
-					break;
-				case 'delegated-from':
-				case 'delegated-to':
-				case 'mailto':
-					$type[0] = str_replace('-','_',$type[0]);
-					$val = $this->split_address($type[1]);
-					break;
-				case 'dir':
-					$val = $type[1];
-					break;
-				default:
-					$val = $type[1];
-					break;
-			}
-			$this->set_var($event,$type[0],$val);
-		}
-	}
-
-	function parse_recurrence(&$event,$value)
-	{
-		$param = explode(';',$value);
-		for($j=0;$j<count($param);$j++)
-		{
-			if(strpos($param[$j],'='))
-			{
-				$type = explode('=',$param[$j]);
-				$type[0] = strtolower($type[0]);
-				$type[1] = $this->strip_quotes($type[1]);
-				$this->set_var($event,$type[0],$type[1]);
-			}
-		}
-	}
-
-	function from_text($str)
-	{
-		$str = str_replace("\\,",",",$str);
-		$str = str_replace("\\;",";",$str);
-		$str = str_replace("\\N","\n",$str);
-		$str = str_replace("\\n","\n",$str);
-		$str = str_replace("\\\\","\\",$str);
-		return $str;
-	}
-
-	function to_text($str)
-	{
-		$str = str_replace("\\","\\\\",$str);
-		$str = str_replace(",","\\,",$str);
-		$str = str_replace(";","\\;",$str);
-		$str = str_replace("\n","\\n",$str);
-		return $str;
-	}
-
-	function new_vcal()
-	{
-		return new vCal;
-	}
+	/*
+	 * The brunt of the class
+	 */	
 
 	function read($vcal_text)
 	{
 		$i = 0;
+		$mode = 'none';
 		while(chop($vcal_text[$i]) != '')
 		{
 //			if(strlen($vcal_text[$i]) > 75)
@@ -674,6 +1158,8 @@ class vCalendar
 			$this->unfold($vcal_text,$i);
 
 			$vcal_text[$i] = str_replace("\r\n",'',$vcal_text[$i]);
+
+//	echo "TEXT : ".$vcal_text[$i]."<br>\n";
 
 			// Example #1
 			//vcal_text[$i] = 'BEGIN:VCALENDAR'
@@ -721,218 +1207,150 @@ class vCalendar
 				$value = $vcal_text[$i];
 			}
 
-			switch($majortype)
+			$mtype = str_replace('-','_',$majortype);
+			
+			if($mtype == 'begin' || $mtype == 'end')
 			{
-				case 'begin':
-					switch(strtolower($value))
-					{
-						case 'vcalendar':
-							$vcal = $this->new_vcal();
-							break;
-						case 'vevent':
-						case 'vtodo':
-							$event = new vCalendar_item;
-							$event->type = strtolower($value);
-							break;
-					}
-					break;
-				case 'prodid':
-				case 'version':
-				case 'method':
-					$this->set_var($vcal,$majortype,$value);
-					break;
-				case 'description':
-					$event->$majortype = new class_text;
-					$this->parse_text($event->$majortype,$this->from_text($value));
-					break;
-				case 'location':
-					$this->set_var($event,$majortype,$this->from_text($value));
-					break;
-				case 'attach':
-					$attach = new class_text;
-					$this->parse_text($attach,$value);
-					$event->attach[] = $attach;
-					unset($attach);
-					break;
-				case 'attendee':
-					$attendee = new attendee;
-					$this->parse_attendee($attendee,$value);
-					$event->attendee[] = $attendee;
-					unset($attendee);
-					break;
-				case 'organizer':
-					$event->$majortype = new attendee;
-					$this->parse_attendee($event->$majortype,$value);
-					break;
-				case 'end':
-					switch(strtolower($value))
-					{
-						case 'vevent':
-							$this->event[] = $event;
-							unset($event);
-							break;
-						case 'vtodo':
-							$this->todo[] = $event;
-							unset($event);
-							break;
-						case 'vcalendar':
-							$this->vcal = $vcal;
-							$this->vcal->event = $this->event;
-							$this->vcal->todo = $this->todo;
-							break 2;
-					}
-					break;
-				case 'dtstart':
-				case 'dtend':
-				case 'dtstamp':
-					$this->set_var($event,$majortype,$this->splitdate($value));
-					break;
-				case 'class':
-					$this->set_var($event,$majortype,$this->switch_class($value));
-					break;
-				case 'transp':
-					$this->set_var($event,$majortype,$this->switch_transp($value));
-					break;
-				case 'rrule':
-					$event->$majortype = new $majortype;
-					$this->parse_recurrence($event->$majortype,$value);
-					break;
-				default:
-					$this->set_var($event,$majortype,$value);
-					break;
+				$mode = 'none';
+			}
+
+			if($mode != 'none')
+			{
+				if(isset($this->property[$mtype]))
+				{
+					$state = @$this->property[$mtype]['state']["$mode"];
+				}
+				else
+				{
+					$state = '';
+				}
+			}
+			else
+			{
+				$state = 'required';
+			}
+
+			if($state == 'optional' || $state == 'required')
+			{
+				switch($mtype)
+				{
+					case 'begin':
+						switch(strtolower($value))
+						{
+							case 'vcalendar':
+								$vcal = $this->new_vcal();
+								break;
+							case 'vevent':
+								$mode = 'vevent';
+								$event = new vCalendar_item;
+								$event->type = strtolower($value);
+								break;
+							case 'vtodo':
+								$mode = 'vtodo';
+								$event = new vCalendar_item;
+								$event->type = strtolower($value);
+								break;
+						}
+						break;
+					case 'prodid':
+					case 'version':
+					case 'method':
+						$this->parse_text($vcal->$majortype,$this->from_text($value));
+						break;
+					case 'geo':
+						$event->$majortype = new class_geo;
+						$this->parse_geo($event->$majortype,$value);
+						break;
+					case 'description':
+					case 'location':
+					case 'summary':
+					case 'calscale':
+					case 'tzid':
+					case 'transp':
+					case 'uid':
+					case 'class':
+					case 'status':
+					case 'categories':
+					case 'resources':
+					case 'request_status':
+						$event->$majortype = new class_text;
+						$this->parse_text($event->$majortype,$this->from_text($value));
+						break;
+					case 'attach':
+						$attach = new class_text;
+						$this->parse_text($attach,$this->from_text($value));
+						$event->attach[] = $attach;
+						unset($attach);
+						break;
+					case 'comment':
+						$comment = new class_text;
+						$this->parse_text($comment,$this->from_text($value));
+						$event->comment[] = $comment;
+						unset($comment);
+						break;
+					case 'percent_complete':
+						$this->set_var($event,str_replace('-','_',$majortype),$value);
+						break;
+					case 'attendee':
+						$attendee = new attendee;
+						$this->parse_attendee($attendee,$value);
+						$event->attendee[] = $attendee;
+						unset($attendee);
+						break;
+					case 'organizer':
+						$event->$majortype = new attendee;
+						$this->parse_attendee($event->$majortype,$value);
+						break;
+					case 'due':
+					case 'completed':
+					case 'duration':
+					case 'freebusy':
+					case 'dtstart':
+					case 'dtend':
+					case 'dtstamp':
+					case 'created':
+					case 'last_modified':
+						$this->set_var($event,$majortype,$this->parse_date($value));
+						break;
+					case 'rrule':
+						$event->$majortype = new $majortype;
+						$this->parse_recurrence($event->$majortype,$value);
+						break;
+					case 'end':
+						$mode = 'none';
+						switch(strtolower($value))
+						{
+							case 'vevent':
+								$this->event[] = $event;
+								unset($event);
+								break;
+							case 'vtodo':
+								$this->todo[] = $event;
+								unset($event);
+								break;
+							case 'vcalendar':
+								$this->vcal = $vcal;
+								$this->vcal->event = $this->event;
+								$this->vcal->todo = $this->todo;
+								break 2;
+						}
+						break;
+					default:
+						$this->set_var($event,$majortype,$value);
+						break;
+				}
 			}
 			$i++;
 		}
 		return $this->vcal;
 	}
 
-	function out_organizer_attendee($event)
-	{
-		$str = '';
-		if(!empty($event->cn) && $event->cn <> 'Unknown')
-		{
-			$str .= ';CN="'.$event->cn.'"';
-		}
-		if(!empty($event->dir))
-		{
-			$str .= ';DIR="'.str_replace('=','=3D',str_replace(' ','%20',$event->dir)).'"';
-		}
-		if(!empty($event->role))
-		{
-			$str .= ';ROLE='.$this->switch_role($event->role);
-		}
-		if(!empty($event->rsvp))
-		{
-			$str .= ';RSVP='.$this->switch_rsvp($event->rsvp);
-		}
-		if(!empty($event->delegated_from->user) && !empty($event->delegated_from->host))
-		{
-			$str .= ';DELEGATED-FROM="MAILTO:'.$event->delegated_from->user.'@'.$event->delegated_from->host.'"';
-		}
-		if(!empty($event->delegated_to->user) && !empty($event->delegated_to->host))
-		{
-			$str .= ';DELEGATED-TO="MAILTO:'.$event->delegated_to->user.'@'.$event->delegated_to->host.'"';
-		}
-		if(!empty($event->mailto->user) && !empty($event->mailto->host))
-		{
-			$str .= ':MAILTO:'.$event->mailto->user.'@'.$event->mailto->host;
-		}
-		return $str;
-	}
-
-	function build_text($event)
-	{
-		$str = '';
-		if(!empty($event->cid))
-		{
-			$str .= ';CID="'.$event->cid.'"';
-		}
-		if(!empty($event->altrep))
-		{
-			$str .= ';ALTREP="'.$event->altrep.'"';
-		}
-		if(!empty($event->fmttype))
-		{
-			$str .= ';FMTTYPE='.$event->fmttype;
-		}
-		if(!empty($event->encoding))
-		{
-			$str .= ';ENCODING='.$this->switch_encoding($event->encoding);
-		}		
-		if(!empty($event->value))
-		{
-			$str .= ':'.$this->to_text($event->value);
-		}
-		else
-		{
-			$str .= ':\n';
-		}
-
-		return $str;
-	}
-
-	function build_card_internals($event)
-	{
-		$str = 'DTSART:'.sprintf("%4d%02d%02dT%02d%02d%02dZ",$event->dtstart->year,$event->dtstart->month,$event->dtstart->mday,$event->dtstart->hour,$event->dtstart->min,$event->dtstart->sec)."\r\n";
-		$str .= 'DTEND:'.sprintf("%4d%02d%02dT%02d%02d%02dZ",$event->dtend->year,$event->dtend->month,$event->dtend->mday,$event->dtend->hour,$event->dtend->min,$event->dtend->sec)."\r\n";
-// Still need to build recurrence portion......
-		iF(!empty($event->location))
-		{
-			$str .= $this->fold('LOCATION:'.$this->to_text($event->location));
-		}
-		else
-		{
-			$str .= 'LOCATION:\n'."\r\n";
-		}
-		$str .= 'TRANSP:'.$this->switch_transp($event->transp)."\r\n";
-		if(!empty($event->sequence))
-		{
-			$str .= 'SEQUENCE:'.$event->sequence."\r\n";
-		}
-		if(!empty($event->uid))
-		{
-			$str .= $this->fold('UID:'.$event->uid);
-		}
-		$str .= 'DTSTAMP:'.gmdate('Ymd\THms\Z')."\r\n";
-		if(!empty($event->description))
-		{
-			$str .= $this->fold('DESCRIPTION'.$this->build_text($event->description));
-		}
-		else
-		{
-			$str .= 'DESCRIPTION:\n'."\r\n";
-		}
-		if(!empty($event->summary))
-		{
-			$str .= $this->fold('SUMMARY:'.$event->summary);
-		}
-		else
-		{
-			$str .= 'SUMMARY:\n'."\r\n";
-		}
-		if(!empty($event->priority))
-		{
-			$str .= 'PRIORITY:'.$event->priority."\r\n";
-		}
-		$str .= 'CLASS:'.$this->switch_class($event->class)."\r\n";
-
-		if(!empty($event->attach))
-		{
-			for($i=0;$i<count($event->attach);$i++)
-			{
-				$str .= $this->fold('ATTACH'.$this->build_text($event->atttach[$i]));
-			}
-		}
-
-		return $str;
-	}
-
 	function build_vcal($vcal)
 	{
 		$str = 'BEGIN:VCALENDAR'."\r\n";
-		$str .= 'PRODID:'.$vcal->prodid."\r\n";
-		$str .= 'VERSION:'.$vcal->version."\r\n";
-		$str .= 'METHOD:'.$vcal->method."\r\n";
+		$str .= $this->fold('PRODID'.$this->build_text($vcal->prodid));
+		$str .= $this->fold('VERSION'.$this->build_text($vcal->version));
+		$str .= $this->fold('METHOD'.$this->build_text($vcal->method));
 		if($vcal->event)
 		{
 			for($i=0;$i<count($vcal->event);$i++)
@@ -951,7 +1369,7 @@ class vCalendar
 				{
 					$str .= $this->fold('ORGANIZER'.$this->out_organizer_attendee($vcal->event[$i]->organizer));
 				}
-				$str .= $this->build_card_internals($vcal->event[$i]);
+				$str .= $this->build_card_internals('vevent',$vcal->event[$i]);
 				$str .= 'END:VEVENT'."\r\n";
 			}
 		}
@@ -960,7 +1378,7 @@ class vCalendar
 			for($i=0;$i<count($vcal->todo);$i++)
 			{
 				$str .= 'BEGIN:VTODO'."\r\n";
-				$str .= $this->build_card_internals($vcal->todo[$i]);
+				$str .= $this->build_card_internals('vtodo',$vcal->todo[$i]);
 				$str .= 'END:VTODO'."\r\n";
 			}
 		}

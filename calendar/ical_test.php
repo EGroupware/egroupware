@@ -25,14 +25,17 @@
 
 	$vcalendar = $vcal->read($contents);
 
-	echo "Product ID = ".$vcalendar->prodid."<br>\n";
-	echo "Method = ".$vcalendar->method."<br>\n";
-	echo "Version = ".$vcalendar->version."<br>\n";
+	echo "Product ID = ".$vcalendar->prodid->value."<br>\n";
+	echo "Method = ".$vcalendar->method->value."<br>\n";
+	echo "Version = ".$vcalendar->version->value."<br>\n";
 
 	for($i=0;$i<count($vcalendar->event);$i++)
 	{
 		echo "<br>\nEVENT<br>\n";
-		echo "Summary = ".$vcalendar->event[$i]->summary."<br>\n";
+		if($vcalendar->event[$i]->calscale->value)
+		{
+			echo "Calscale = ".$vcalendar->event[$i]->calscale->value."<br>\n";
+		}
 		if($vcalendar->event[$i]->description->value)
 		{
 			echo "Description (Value) = ".$vcalendar->event[$i]->description->value."<br>\n";
@@ -41,10 +44,28 @@
 		{
 			echo "Description (Alt Rep) = ".$vcalendar->event[$i]->description->altrep."<br>\n";
 		}
-		echo "Location = ".$vcalendar->event[$i]->location."<br>\n";
+		if($vcalendar->event[$i]->summary->value)
+		{
+			echo "Summary = ".$vcalendar->event[$i]->summary->value."<br>\n";
+		}
+		if(!empty($vcalendar->event[$i]->comment))
+		{
+			for($j=0;$j<count($vcalendar->event[$i]->comment);$j++)
+			{
+				echo "Comment = ".$vcalendar->event[$i]->comment[$j]->value."<br>\n";
+			}
+		}		
+		if($vcalendar->event[$i]->location->value)
+		{
+			echo "Location = ".$vcalendar->event[$i]->location->value."<br>\n";
+		}
 		echo "Sequence = ".$vcalendar->event[$i]->sequence."<br>\n";
 		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->event[$i]->dtstart->hour,$vcalendar->event[$i]->dtstart->min,$vcalendar->event[$i]->dtstart->sec,$vcalendar->event[$i]->dtstart->month,$vcalendar->event[$i]->dtstart->mday,$vcalendar->event[$i]->dtstart->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
-		echo "Class = ".$vcal->switch_class($vcalendar->event[$i]->class)."<br>\n";
+		if($vcalendar->event[$i]->rrule)
+		{
+			echo "Recurrence : Frequency = ".$vcalendar->event[$i]->rrule->freq." Count = ".$vcalendar->event[$i]->rrule->count."<br>\n";
+		}
+		echo "Class = ".$vcalendar->event[$i]->class->value."<br>\n";
 		echo "Organizer = ".$vcalendar->event[$i]->organizer->mailto->user.'@'.$vcalendar->event[$i]->organizer->mailto->host."<br>\n";
 		if($vcalendar->event[$i]->organizer->dir)
 		{
@@ -70,7 +91,10 @@
 	for($i=0;$i<count($vcalendar->todo);$i++)
 	{
 		echo "<br>\nTODO<br>\n";
-		echo "Summary = ".$vcalendar->todo[$i]->summary."<br>\n";
+		if($vcalendar->todo[$i]->summary->value)
+		{
+			echo "Summary = ".$vcalendar->todo[$i]->summary->value."<br>\n";
+		}
 		if($vcalendar->todo[$i]->description->value)
 		{
 			echo "Description (Value) = ".$vcalendar->todo[$i]->description->value."<br>\n";
@@ -79,15 +103,18 @@
 		{
 			echo "Description (Alt Rep) = ".$vcalendar->todo[$i]->description->altrep."<br>\n";
 		}
-		echo "Location = ".$vcalendar->todo[$i]->location."<br>\n";
+		if($vcalendar->event[$i]->location->value)
+		{
+			echo "Location = ".$vcalendar->todo[$i]->location->value."<br>\n";
+		}
 		echo "Sequence = ".$vcalendar->todo[$i]->sequence."<br>\n";	
 		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->todo[$i]->dtstart->hour,$vcalendar->todo[$i]->dtstart->min,$vcalendar->todo[$i]->dtstart->sec,$vcalendar->todo[$i]->dtstart->month,$vcalendar->todo[$i]->dtstart->mday,$vcalendar->todo[$i]->dtstart->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
-		echo "Class = ".$vcal->switch_class($vcalendar->todo[$i]->class)."<br>\n";
+		echo "Class = ".$vcalendar->todo[$i]->class->value."<br>\n";
 	}
 
 	include(PHPGW_APP_INC.'/../setup/setup.inc.php');
 
-	$vcal->set_var($vcalendar,'prodid','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($phpgw_info['user']['preferences']['common']['lang']));
+	$vcal->set_var($vcalendar->prodid,'value','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($phpgw_info['user']['preferences']['common']['lang']));
 	echo "<br><br><br>\n";
 	echo nl2br($vcal->build_vcal($vcalendar));
 	$phpgw->common->phpgw_footer();
