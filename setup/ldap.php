@@ -91,6 +91,7 @@
 
 		if (! $error) {
 			// Create the 'Default' group
+			mt_srand((double)microtime()*1000000);
  			$defaultgroupid = mt_rand (100, 65535);
 
 			$acct = CreateObject('phpgwapi.accounts',$defaultgroupid);
@@ -107,6 +108,7 @@
 			if(!$id_exist) {
 				$acct->create('g','Default',$passwd,'Default','Group','A',$defaultgroupid);
 			} else {
+				// Delete first, so ldap does not return an error, then recreate
 				$acct->delete($defaultgroupid);
 				$acct->create('g','Default',$passwd,'Default','Group','A',$defaultgroupid);
 			}
