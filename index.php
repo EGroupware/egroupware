@@ -72,15 +72,17 @@
 	}
 	else
 	{
-		Header('Location: ' . $GLOBALS['phpgw']->link('/home.php'));
-		$GLOBALS['phpgw']->log->message(array(
-			'text' => 'W-BadmenuactionVariable, menuaction missing or corrupt: %1',
-			'p1'   => $menuaction,
-			'line' => __LINE__,
-			'file' => __FILE__
+		if (! $app || ! $class || ! $method)
+		{
+			$GLOBALS['phpgw']->log->message(array(
+				'text' => 'W-BadmenuactionVariable, menuaction missing or corrupt: %1',
+				'p1'   => $menuaction,
+				'line' => __LINE__,
+				'file' => __FILE__
+			));
+		}
 
-		));
-		if (! is_array($obj->public_functions) || ! $obj->public_functions[$method])
+		if (! is_array($obj->public_functions) || ! $obj->public_functions[$method] && $method)
 		{
 			$GLOBALS['phpgw']->log->message(array(
 				'text' => 'W-BadmenuactionVariable, attempted to access private method: %1',
@@ -91,6 +93,7 @@
 		}
 		$GLOBALS['phpgw']->log->commit();
 
+		$phpgw->redirect($GLOBALS['phpgw']->link('/home.php'));
 		/*
 		$_obj = CreateObject('home.home');
 		$_obj->get_list();
