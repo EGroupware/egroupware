@@ -106,26 +106,6 @@
 
 		function redirect_link($url = '',$extravars='')
 		{
-			if(@defined('PHPGW_PHPSESSID') &&
-				@defined('SID'))//add support for non cookie based php4 sessions
-			{
-				if(is_array($extravars))
-				{
-					list($ignore, $id) =explode('=',SID);
-					$extravars[PHPGW_PHPSESSID] = $id;
-				}
-				else
-				{
-					if($extravars)
-					{
-						$extravars .= SID;
-					}
-					else
-					{
-						$extravars = SID;
-					}
-				}
-			}
 			$this->redirect($this->session->link($url, $extravars));
 		}
 		
@@ -146,7 +126,7 @@
 		{
 			return $this->session->is_repost($display_error);
 		}
-		
+
 		/**
 		 * Handles redirects under iis and apache
 		 *

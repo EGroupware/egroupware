@@ -31,9 +31,9 @@
 			$this->sessions_();
 			//controls the time out for php4 sessions - skwashd 18-May-2003
 			ini_set('session.gc_maxlifetime', $GLOBALS['phpgw_info']['server']['sessions_timeout']);
-			@define('PHPGW_PHPSESSID', ini_get('session.name'));
+			session_name('sessionid');
 		}
-		
+
 		function read_session()
 		{
 			session_id($this->sessionid);
@@ -83,6 +83,13 @@
 				$action = $_SERVER['PHP_SELF'];
 			}
 
+			// This way XML-RPC users aren't always listed as
+			// xmlrpc.php
+			if ($this->xmlrpc_method_called)
+			{
+				$action = $this->xmlrpc_method_called;
+			}
+
 			$GLOBALS['phpgw_session']['session_dla'] = time();
 			$GLOBALS['phpgw_session']['session_action'] = $action;
 		
@@ -107,7 +114,10 @@
 				$this->clean_sessions();
 				session_unset();
 				session_destroy();
-				$this->phpgw_setcookie(session_name());
+				if ($GLOBALS['phpgw_info']['server']['use_cookies'])
+				{
+					$this->phpgw_setcookie(session_name());
+				}
 			}
 			else
 			{
@@ -116,7 +126,7 @@
 				if (isset($sessions[$sessionid]))
 				{
 					//echo "<p>session_php4::destroy($session_id): unlink('".$sessions[$sessionid]['php_session_file'].")</p>\n";
-					unlink($sessions[$sessionid]['php_session_file']);
+					@unlink($sessions[$sessionid]['php_session_file']);
 				}
 			}
 
@@ -215,6 +225,10 @@
 				}
 				if (!isset($session_cache[$file]))	// not in cache, read and cache it
 				{
+					if (!is_readable($path. '/' . $file))
+					{
+						continue;	// happens if webserver runs multiple user-ids
+					}
 					$fd = fopen ($path . '/' . $file,'r');
 					$session = fread ($fd, filesize ($path . '/' . $file));
 					fclose ($fd);

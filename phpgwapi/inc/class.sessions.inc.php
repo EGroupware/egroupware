@@ -141,8 +141,10 @@
 
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
-			$this->phpgw_set_cookiedomain();
-
+			if ($GLOBALS['phpgw_info']['server']['use_cookies'])
+			{
+				$this->phpgw_set_cookiedomain();
+			}
 			// verfiy and if necessary create and save our config settings
 			//
 			$save_rep = False;
@@ -1101,6 +1103,7 @@
 		*/
 		function link($url, $extravars = '')
 		{
+			//echo "<p>session::link(url='".print_r($url,True)."',extravars='".print_r($extravars,True)."')";
 			/* first we process the $url to build the full scriptname */
 			$full_scriptname = True;
 
@@ -1182,7 +1185,6 @@
 //			$extravars['click_history'] = $this->generate_click_history();
 
 			/* if we end up with any extravars then we generate the url friendly string */
-			/* and return the result */
 			if (is_array($extravars))
 			{
 				$new_extravars = '';
@@ -1194,9 +1196,9 @@
 					}
 					$new_extravars .= $key.'='.urlencode($value);
 				}
-				return $url .= '?' . $new_extravars;
+				$url .= '?' . $new_extravars;
 			}
-			/* if no extravars then we return the cleaned up url/scriptname */
+			//echo " = '$url'</p>\n";
 			return $url;
 		}
 
