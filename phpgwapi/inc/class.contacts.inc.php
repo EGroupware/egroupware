@@ -97,7 +97,7 @@
         return $return_fields;
      }
 
-     function read($start,$offset,$access,$filters,$fields)
+     function read($start,$offset,$access,$filters,$fields,$query="")
      {
         list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
         if (count($ab_fieldnames)) {
@@ -107,15 +107,32 @@
            }
         }
 
-        $this->db->query("select ab_id,ab_owner,ab_access $t_fields from addressbook "
-                       . $filters,__LINE__,__FILE__);
-        $this->total_records = $this->db->num_rows();
-	
         $i = 0;
-        $this->db2 = $this->db;        // Create new result object before our query
+        $this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
-        $this->db->query("select ab_id,ab_owner,ab_access $t_fields from addressbook "
+        if ($query) {
+            $this->db3->query("SELECT * from addressbook $filters AND (ab_lastname like '"
+                     . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
+                     . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
+                     . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
+                     . "'%$query%' OR ab_company like '%$query%')",__LINE__,__FILE__);
+            $this->total_records = $this->db3->num_rows();
+
+            $this->db->query("SELECT * from addressbook $filters AND (ab_lastname like '"
+                     . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
+                     . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
+                     . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
+                     . "'%$query%' OR ab_company like '%$query%') " . $order . " "
+		     . $this->db->limit($start,$offset),__LINE__,__FILE__);
+        } else {
+          $this->db3->query("select ab_id,ab_owner,ab_access $t_fields from addressbook "
+                       . $filters,__LINE__,__FILE__);
+          $this->total_records = $this->db3->num_rows();
+	
+          $this->db->query("select ab_id,ab_owner,ab_access $t_fields from addressbook "
                        . $filters . $this->db->limit($start,$offset),__LINE__,__FILE__);
+        }
+
         while ($this->db->next_record()) {
            $return_fields[$i]["id"]     = $this->db->f("ab_id");
            $return_fields[$i]["owner"]  = $this->db->f("ab_owner");
