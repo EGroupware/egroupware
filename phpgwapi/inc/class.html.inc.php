@@ -93,7 +93,7 @@ class html
 		}
 		if ($text === False) return ' onmouseover="'.$opt_out.'return escape(this.innerHTML);"';
 
-		return ' onmouseover="'.$opt_out.'return escape(\''.addslashes(@htmlentities(str_replace(array("\n","\r"),' ',$text),ENT_COMPAT,$this->charset)).'\')"';
+		return ' onmouseover="'.$opt_out.'return escape(\''.str_replace(array("\n","\r","'",'"'),array('<br />','',"\\'",'&quot;'),$text).'\')"';
 	}
 
 	function activate_links($content)
