@@ -26,7 +26,7 @@
 		var $holiday_color;
 		
 		var $debug = False;
-//		var $debug = True;
+		var $debug = True;
 
 		var $cat_id;
 		var $tz_offset;
@@ -275,27 +275,24 @@
 					.'-->'."\n"
 					.'</STYLE>'."\n"
 					.'</head>'."\n"
-					.$body
+					.$this->bo->debug_string.$body
 					.'</body>'."\n"
 					.'</html>'."\n";
 			}
 			else
-			{
-				$new_body = $body;
-			}
-			return $new_body;
-		}
-
-		function month()
-		{
-			if (!$this->bo->printer_friendly)
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 				unset($GLOBALS['phpgw_info']['flags']['noappheader']);
 				unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
 				$GLOBALS['phpgw']->common->phpgw_header();
+				$new_body = $this->bo->debug_string.$body;
 			}
+			return $new_body;
+		}
+
+		function month()
+		{
 			echo $this->printer_friendly($this->get_month());
 		}
 
@@ -1959,7 +1956,8 @@
 				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
 				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
 				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
-				. '  .time { background: '.$this->theme['navbar_bg'].'; color: '.$this->theme['bg_text'].'; font: 65%/100% '.$this->theme['font'].'; width: '.$time_width.'%; border: 1px '.$this->theme['navbar_text'].'; vertical-align: middle; }'."\n";
+				. '  .time { background: '.$this->theme['navbar_bg'].'; color: '.$this->theme['bg_text'].'; font: 65%/100% '.$this->theme['font'].'; width: '.$time_width.'%; border: 1px '.$this->theme['navbar_text'].'; vertical-align: middle; }'."\n"
+				. '  .tablecell { width: 80px; height: 80px }'."\n";
 		}
 
 		function no_edit()
