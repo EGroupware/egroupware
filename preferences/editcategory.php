@@ -42,6 +42,11 @@
 	$c = CreateObject('phpgwapi.categories');
 	$c->app_name = $cats_app;
 
+	if ($new_parent)
+	{
+		$cat_parent = $new_parent;
+	}
+
 	if ($submit)
 	{
 		$errorcount = 0;
