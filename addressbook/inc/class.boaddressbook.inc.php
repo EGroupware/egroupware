@@ -118,27 +118,27 @@
 			{
 				case 'xmlrpc':
 					$xml_functions = array(
-						'read_entry' => array(
+						'read' => array(
 							'function'  => 'read_entry',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Read a single entry by passing the id and fieldlist.')
 						),
-						'add_entry' => array(
+						'add' => array(
 							'function'  => 'add_entry',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Add a single entry by passing the fields.')
 						),
-						'update_entry' => array(
+						'save' => array(
 							'function'  => 'update_entry',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Update a single entry by passing the fields.')
 						),
-						'delete_entry' => array(
+						'delete' => array(
 							'function'  => 'delete_entry',
 							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
 							'docstring' => lang('Delete a single entry by passing the id.')
 						),
-						'read_entries' => array(
+						'read_list' => array(
 							'function'  => 'read_entries',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Read a list of entries.')
