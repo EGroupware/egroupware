@@ -17,8 +17,8 @@
 <script LANGUAGE="JavaScript">
 	function ExchangeAccountText(thisform)
 	{
-		opener.document.app_form.accountid.value = thisform.elements[0].value;
-		opener.document.app_form.accountname.value = thisform.elements[1].value;
+		opener.document.app_form.accountid.value = thisform.elements['accountid'].value;
+		opener.document.app_form.accountname.value = thisform.elements['accountdisplay'].value;
 	}
 </script>
 <link rel="stylesheet" type="text/css" href="{css_file}">
