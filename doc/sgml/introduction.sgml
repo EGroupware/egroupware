@@ -1,55 +1,46 @@
 <part label="I">
-  <title>Introduction</title>
+	<title>Introduction</title>
 <partintro>
-  <para>
-		Do yo have questions on using phpGroupWare , like What? Why? What for? What's in for me?
-	</para>
-  <para>
-		Then you should seriously read this doc :-).
+	<para>
+		do yo have questions on using phpGroupWare , like What? Why? What for? What's in for me?
+		then you should seriously read this doc :-).
 	</para>
 </partintro>
 <chapter id="what">
-  <title>What is phpGroupWare</title>
-  <para>
+		<title>What is phpGroupWare</title>
+		<para>
 		phpGroupWare is a web based groupware application that includes integrated features such as
-    email, calendar, todo list, address book, file manager, headline news, and a trouble ticket system.
-    It should run on all systems where PHP is installed and has access to a SQL server (MySQL ,PostgreSQL or Oracle).
-  </para>
+                email, calendar, todo list, address book, file manager, headline news, and a trouble ticket system.
+                It should run on all systems where PHP is available and currently supports MySQL ,PostgreSQL and
+                also for oracle.
+                </para>
 </chapter>
 <chapter id="why">
-  <title>Why should you use it</title>
-  <para>
-    You should use it if you would like a powerful groupware system that can be access from anywhere on the Internet.
-  </para>
-  <para>
+        	<title>Why should u use it</title>
+        	<para>
+        	You should use it if you would like a powerful groupware system that can be access from anywhere on the Internet.
 		For companies with a distributed user base, it's an ideal solution. Oh, and did I mention that its FREE?
-	</para>
+		</para>
 </chapter>
-<chapter id="apphis">
-  <title>A short History</title>
-  <para>
-		phpGroupWare started by Jengo (Joseph Engo) as an application to satisfy his girlfriends need for a webbased calendar/todo_list/email. 
-		At the time it was called webdistro when Seek3r (Dan Kuykendall) discovered this promising project.
-		The two joined up together and between Seek3r's API design and Jengo's programming skills they renamed the project phpGroupWare and started building the application around the phpgwAPI.
-	</para>
-	<para>
-		During this period Seek3r took over project management to free Jengo up to do more development. 
-		This duo worked hard to build a sucessful community around the project. Their efforts paid off, and the project is what it is today due to the efforts of the developers who have joined this community.
-	</para>
+<chapter id="dochis">
+		<title>A short History</title>
+		<para>
+		This document was started by Joseph Engo and reworked by Dan Kuykendall and converted to do
+		DocBook By Powell Molleti.
+		</para>
+		<simplesect>
+			<title>Copyright</title>
+			<para>
+				Copyright (c) Dan Kuykendall.
+				Permission is granted to copy, distribute and/or modify this document
+				under the terms of the GNU Free Documentation License, Version 1.1
+				or any later version published by the Free Software Foundation
+				A copy of the license is available at
+				<ulink url="http://www.gnu.org/copyleft/fdl.txt">
+				<citetitle>GNU Free Documentation License Making TeXWork</citetitle>
+				</ulink>
+			</para>
+	</simplesect>
 </chapter>
-<chapter id="copyright">
-  <title>Copyright</title>
-	<para>
-	  Copyright (c) Dan Kuykendall.
-	</para>
-	<para>
-		  Permission is granted to copy, distribute and/or modify this document
-  		under the terms of the GNU Free Documentation License, Version 1.1
-  		or any later version published by the Free Software Foundation
-  		A copy of the license is available at
-  	<ulink url="http://www.gnu.org/copyleft/fdl.txt">
-  		<citetitle>GNU Free Documentation License Making TeXWork</citetitle>
-  	</ulink>
-  </para>
-</chapter>
+
 </part>

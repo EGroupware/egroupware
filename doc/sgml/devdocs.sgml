@@ -2,38 +2,21 @@
 	<title>Developers Documentation</title>
 <partintro>
 	<para>
-		This documentation is for developers who want to hack into the core of the
-		phpGroupWare.  Please follow this documentation carefully before u take a jump into
-		the code :)
+		Dan Kuykendall &lt;dan@kuykendall.org&gt;
+	</para>
+	<para>
+		This document explains phpGroupWare's infrastructure and API, along with
+		what is required to integrate applications into it.
 	</para>
 </partintro>
-<chapter id="devaddapp">
-	<title>Developing Add-On Apps</title>
-	<para>text for developin add on apps (seek its your area)</para>
-	
-	<sect1 id="requirdev">
-		<title>Requirements</title>
-		<para>
-			text for requirements
-		</para>
-	</sect1
-	<sect1 id="etc">
-		<title>add your topic seek</title>
-		<para>
-			text for the appropriate topic
-		</para>
-	</sect1>
-</chapter>
-<chapter id="apidocs">
-	<title> API documentation</title>
-	<para>	
-		text for the API documentation chapter
-	</para>
-	<sect1 id="function1">
-		<title>function1(or what ever)</title>
-		<para>
-			the function you want to include seek.
-		</para>
-	</sect1>
-</chapter>
+
+&devintro;
+&devguid;
+&devinst;
+&devinfra;
+&devapi;
+&devconfvar;
+&devlangsup;
+&devtemp;
+&devabout;
 </part>

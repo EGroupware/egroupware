@@ -1,11 +1,18 @@
 <part label="VII">
-	<title>About this document</title>
+	<title>About</title>
 <partintro>
+	<para></para>
+</partintro>
+<chapter id="about">
+	<title>About this document</title>
+	<simplesect>
+		<title>New versions</title>
 		<para>
 			The newest version of this document can be found on our website <ulink url="http://www.phpgroupware.org">
 			<citetitle>www.phpgroupware.org</citetitle></ulink>
 			 as SGML source, HTML, or TEXT.
 		</para>
+	</simplesect>
 	<simplesect>
 		<title>Comments</title>
 		<para>
@@ -69,6 +76,5 @@
 			apps too :-).
 		</para>
 	</simplesect>	
-</partintro>
-
+</chapter>
 </part>

@@ -1,38 +1,47 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" [
 <!ENTITY introduction SYSTEM "introduction.sgml">
 <!ENTITY installation SYSTEM "installation.sgml">
-  <!ENTITY installing   SYSTEM "install.sgml">
-  <!ENTITY troubleshoot SYSTEM "trouble.sgml">
 <!ENTITY using        SYSTEM "using.sgml">
 <!ENTITY admins       SYSTEM "admins.sgml">
-<!ENTITY devdocs      SYSTEM "devdocs.sgml">
 <!ENTITY about        SYSTEM "about.sgml">
+<!ENTITY installing   SYSTEM "install.sgml">
+<!ENTITY trobshoot    SYSTEM "trouble.sgml">
+<!ENTITY devdocs      SYSTEM "devdocs.sgml">
+<!ENTITY devintro     SYSTEM "devintro.sgml">
+<!ENTITY devguid      SYSTEM "devguid.sgml">
+<!ENTITY devinst      SYSTEM "devinst.sgml">
+<!ENTITY devinfra     SYSTEM "devinfra.sgml">
+<!ENTITY devapi       SYSTEM "devapi.sgml">
+<!ENTITY devconfvar   SYSTEM "devconfvar.sgml">
+<!ENTITY devlangsup   SYSTEM "devlangsup.sgml">
+<!ENTITY devtemp      SYSTEM "devtemp.sgml">
+<!ENTITY devabout     SYSTEM "devabout.sgml">  	
 ]>
 <book>
 	<title>phpGroupWare Docs V0.05</title>
 	<bookinfo>
 	<authorgroup>
-    <author>
-		  <firstname>Dan</firstname><surname>Kuykendall</surname>
-			<authorblurb>
-			  <para>&lt;dan@kuykendall.org&gt</para>
-			</authorblurb>
-			<contrib><comment>the active developer of phpGroupWare</comment></contrib>
-			</author>
 		<author>
 			<firstname>Joseph</firstname><surname>Engo</surname>
 			<authorblurb>
 				<para>jengo@phpgroupware.org</para>
 			</authorblurb>
-		  <contrib><comment>the founder and active of phpgroupware</comment></contrib>
-		</author>
+				<contrib><comment>the founder and active of phpgroupware</comment></contrib>
+				</author>
+			<author>
+				<firstname>Dan</firstname><surname>Kuykendall</surname>
+				<authorblurb>
+					<para>&lt;dan@kuykendall.org&gt</para>
+				</authorblurb>
+				<contrib><comment>the active developer of phpGroupWare</comment></contrib>
+			</author>
 	</authorgroup>
 	</bookinfo>
 <dedication>
 	<para>
 		Thanks to Joesph Engo for starting phpGroupWare (at the time called webdistro) and the core of this HOWTO.
-  	Thanks to all the developers and users who contribute to making phpGroupWare such a success.
-  </para>
+  		Thanks to all the developers and users who contribute to making phpGroupWare such a success.
+        </para>
 </dedication>
 
 &introduction;
@@ -42,3 +51,4 @@
 &devdocs;
 &about;
 </book>
+
