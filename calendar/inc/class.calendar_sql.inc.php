@@ -77,7 +77,7 @@ class calendar_ extends calendar__
     
 	function delete_calendar($stream='',$calendar='')
 	{
-		$this->stream->query('SELECT cal_id FROM phpgw_cal WHERE owner='.$calendar,__LINE__,__FILE__);
+		$this->stream->query('SELECT cal_id FROM phpgw_cal WHERE owner='.intval($calendar),__LINE__,__FILE__);
 		if($this->stream->num_rows())
 		{
 			while($this->stream->next_record())
@@ -87,7 +87,7 @@ class calendar_ extends calendar__
 			$this->expunge($stream);
 		}
 		$this->stream->lock(array('phpgw_cal_user'));
-		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_login='.$calendar,__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_login='.intval($calendar),__LINE__,__FILE__);
 		$this->stream->unlock();
 			
 		return $calendar;
