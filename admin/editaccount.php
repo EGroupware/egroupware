@@ -48,7 +48,7 @@
 		{
 			$account = CreateObject('phpgwapi.accounts',$_account_id);
 			$userData = $account->read_repository();
-			$userGroups = $account->memberships(intval($_account_id));
+			$userGroups = $account->memberships($_account_id);
 			$allGroups = $account->get_list('groups');
 		}
 
@@ -118,7 +118,7 @@
 		// create list of available apps
 		$i = 0;
 
-		$apps = CreateObject('phpgwapi.applications',intval($_account_id));
+		$apps = CreateObject('phpgwapi.applications',$_account_id);
 		$db_perms = $apps->read_account_specific();
 
 		@reset($phpgw_info['apps']);
