@@ -64,7 +64,7 @@
        $i++;
      }
 
-     $table_locks = array('preferences','todo','addressbook','accounts','users_headlines',
+     $table_locks = array('preferences','todo','addressbook','accounts',
                           'webcal_entry','webcal_entry_user','webcal_entry_repeats',
                           'webcal_entry_groups');
      $phpgw->db->lock($table_locks);
@@ -81,7 +81,7 @@
      $phpgw->db->query("delete from todo where owner='$lid'");
      $phpgw->db->query("delete from addressbook where owner='$lid'");
      $phpgw->db->query("delete from accounts where loginid='$lid'");
-     $phpgw->db->query("delete from users_headlines where owner='$lid'");
+     //$phpgw->db->query("delete from users_headlines where owner='$lid'");
      //$phpgw->db->query("delete from profiles where owner='$lid'");
 
      $phpgw->db->unlock();

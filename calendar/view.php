@@ -126,7 +126,7 @@
 </TR>
 
 <?php
-  $cal_groups_temp = $phpgw->accounts->read_group_names($id);
+  $cal_groups_temp = $phpgw->accounts->read_group_names();
   for($i = 0; $i < count($cal_groups_temp); $i++) {
     $cal_groups .= $cal_groups_temp[$i][1] . "<br>\n";
   }
