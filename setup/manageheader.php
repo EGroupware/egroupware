@@ -277,6 +277,7 @@
 			{
 				$detected .= lang('No Microsoft SQL Server support found. Disabling') . '<br>' . "\n";
 			}
+/*
 			if(extension_loaded('oci8'))
 			{
 				$detected .= lang('You appear to have Oracle V8 (OCI) support enabled') . '<br>' . "\n";
@@ -294,6 +295,7 @@
 					$detected .= lang('No Oracle-DB support found. Disabling') . '<br>' . "\n";
 				}
 			}
+*/
 			if(!count($supported_db))
 			{
 				$detected .= '<b><p align="center" class="msg">'
@@ -316,8 +318,8 @@
 			else
 			{
 				$detected .= lang('You appear to be using PHP4. Enabling PHP4 sessions support') . '<br>' . "\n";
+				$supported_sessions_type[] = 'php4';	// makeing php4 sessions the default
 				$supported_sessions_type[] = 'db';
-				$supported_sessions_type[] = 'php4';
 			}
 
 			@reset($default_db_ports);
