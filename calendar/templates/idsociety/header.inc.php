@@ -11,8 +11,9 @@
 
   /* $Id$ */
 
-	function add_col($str,&$tpl)
+	function add_col($str)
 	{
+		global $tpl;
 		$tpl->set_var('str',$str);
 		$tpl->parse('header_column','head_col',True);
 	}
@@ -22,8 +23,6 @@
 		return '<a href="'.$link.'"><img src="'.PHPGW_IMAGES.'/'.$image.'" alt="'.$alt.'" border="0"></a>';
 	}
 
-	$tpl = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
-	$tpl->set_unknowns('remove');
 	$templates = Array(
 		'head_tpl'	=> 'head.tpl',
 		'form_button_dropdown'	=> 'form_button_dropdown.tpl',
@@ -36,27 +35,27 @@
 	$tpl->set_var('cols',$cols);
 
 	$str = '  <td width="2%">&nbsp;</td>';
-	add_col($str,$tpl);
+	add_col($str);
 
 	$link = $phpgw->link('/calendar/day.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
 	$str = '  <td width="2%">'.add_image_ahref($link,'today.gif',lang('Today')).'</td>';
-	add_col($str,$tpl);
+	add_col($str);
 
 	$link = $phpgw->link('/calendar/week.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'week.gif',lang('This week')).'</td>';
-	add_col($str,$tpl);
+	add_col($str);
 
 	$link = $phpgw->link('/calendar/month.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'month.gif',lang('This month')).'</td>';
-	add_col($str,$tpl);
+	add_col($str);
 
 	$link = $phpgw->link('/calendar/year.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'year.gif',lang('This Year')).'</td>';
-	add_col($str,$tpl);
+	add_col($str);
 
 	$link = $phpgw->link('/calendar/matrixselect.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'view.gif',lang('Daily Matrix View')).'</td>';
-	add_col($str,$tpl);
+	add_col($str);
 
 	$base_url = '/calendar/'.basename($SCRIPT_FILENAME);
 	$remainder = 65;
@@ -99,7 +98,8 @@
 			'button_value'	=> lang('Go!')
 		);
 		$tpl->set_var($var);
-		$tpl->parse('header_column','form_button_dropdown',True);
+		$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
+		$tpl->parse('header_column','head_col',True);
 	}
 
 	if(count($grants) > 0)
@@ -121,6 +121,7 @@
 			$hidden_vars .= '    <input type="hidden" name="id" value="'.$id.'">'."\n";
 		}
 		$form_options = '';
+		reset($grants);
 		while(list($grantor,$temp_rights) = each($grants))
 		{
 			$form_options .= '    <option value="'.$grantor.'"'.($grantor==$owner?' selected':'').'>'.$phpgw->common->grab_owner_name($grantor).'</option>'."\n";
@@ -137,7 +138,8 @@
 			'button_value'	=> lang('Go!')
 		);
 		$tpl->set_var($var);
-		$tpl->parse('header_column','form_button_dropdown',True);
+		$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
+		$tpl->parse('header_column','head_col',True);
 	}
 
 	$hidden_vars = '    <input type="hidden" name="from" value="'.$base_url.'">'."\n";
