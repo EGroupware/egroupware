@@ -20,6 +20,7 @@
 
 	$setup_info['addressbook']['author'] = 'Joseph Engo, Miles Lott';
 	$setup_info['addressbook']['note']   = 'The phpgwapi manages contact data.  Addressbook manages servers for its remote capability.';
+	$setup_info['addressbook']['license']  = 'GPL';
 	$setup_info['addressbook']['description'] =
 		'Contact manager with Vcard support.';
 	$setup_info['addressbook']['maintainer'] = 'Miles Lott';

@@ -19,6 +19,7 @@
 	$setup_info['admin']['enable']    = 1;
 
 	$setup_info['admin']['author']    = 'phpGW Core';
+	$setup_info['admin']['license']  = 'GPL';
 	$setup_info['admin']['description'] = 
 		'phpGroupWare administration application';
 	$setup_info['admin']['maintainer'] = 'phpGW Core';

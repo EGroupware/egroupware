@@ -18,6 +18,7 @@
 	$setup_info['calendar']['enable']  = 1;
 
 	$setup_info['calendar']['author'] = 'Mark Peters';
+	$setup_info['calendar']['license']  = 'GPL';
 	$setup_info['calendar']['description'] =
 		'Powerful calendar with meeting request system and ACL security.';
 	$setup_info['calendar']['maintainer'] = 'Mark Peters';
