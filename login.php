@@ -71,12 +71,12 @@
 	// If there is a problem, tell me and I will fix it. (jengo)
 
 	// whoooo scaring
-
+/*
 	if($GLOBALS['phpgw_info']['server']['usecookies'] == True)
 	{
 		$GLOBALS['phpgw']->sessions->phpgw_setcookie('eGroupWareLoginTime', time());
 	}
-
+*/
 /*
 	if($_GET['cd'] != 10 && $GLOBALS['phpgw_info']['server']['usecookies'] == False)
 	{
@@ -235,6 +235,11 @@
 				$extra_vars['cd'] = 'yes';
 				$forward = '/home.php';
 			}
+			else
+			{
+				list($forward,$extra_vars) = explode('?',$forward,2);
+			}
+			//echo "redirecting to ".$GLOBALS['phpgw']->link($forward,$extra_vars);
 			$GLOBALS['phpgw']->redirect_link($forward,$extra_vars);
 		}
 	}
