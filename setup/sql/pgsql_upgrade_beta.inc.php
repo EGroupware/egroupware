@@ -1518,7 +1518,7 @@
                     $fields['n_given']             = $phpgw_setup->db->f("firstname");
                     $fields['n_family']            = $phpgw_setup->db->f("lastname");
                     $fields['email']               = $phpgw_setup->db->f("d_email");
-					$fields['email_type']          = $phpgw_setup->db->f("d_email_type");
+					$fields['email_type']          = $phpgw_setup->db->f("d_emailtype");
                     $fields['tel_home']            = $phpgw_setup->db->f("hphone");
                     $fields['tel_work']            = $phpgw_setup->db->f("wphone");
                     $fields['tel_fax']             = $phpgw_setup->db->f("fax");
