@@ -15,12 +15,14 @@
 // FIXME: clean up code
 
 function UploadImage(editor) {
-	this.editor = editor;
+   
+   var self = this;
+   this.editor = editor;
 
 	var cfg = editor.config;
 	//	cfg.fullPage = true;
 	var tt = UploadImage.I18N;
-	var self = this;
+
 
 	/*	cfg.registerButton("UploadImage", tt["Upload Image"], editor.imgURL("up_image.gif", "UploadImage"), false,
 		function(editor, id) {
@@ -105,9 +107,9 @@ self.setDocProp(params);
 // there, it will just modify it's properties.
 UploadImage.prototype.buttonPress = function(image) 
 {
-	//var doc = editor._doc;
-	//var editor = this;	// for nested functions
+	var editor = this.editor;	// for nested functions
 	var outparam = null;
+	//var doc = editor._doc;
 
 /*	var init = 
 	{
@@ -131,28 +133,44 @@ UploadImage.prototype.buttonPress = function(image)
 				return false;
 			}
 
-			var img = image;
-			if (!img) {
-			var sel = editor._getSelection();
-			var range = editor._createRange(sel);
-			editor._doc.execCommand("insertimage", false, param.f_url);
+				var img = image;
+				if (!img) 
+				{
+				var sel = editor._getSelection();
+				var range = editor._createRange(sel);
+				editor._doc.execCommand("insertimage", false, param.f_url);
+			
+				if (HTMLArea.is_ie) 
+				{
+					// ie gives errors
+					/*		img = range.parentElement();
 
-			if (HTMLArea.is_ie) {
-			img = range.parentElement();
 
-			// wonder if this works...
-			if (img.tagName.toLowerCase() != "img") {
-			img = img.previousSibling;
-			}
-			} else {
-			img = range.startContainer.previousSibling;
-			}
-			} else {
+					// wonder if this works...
+					if (img.tagName.toLowerCase() != "img") {
+						img = img.previousSibling;
+					}
+	
+					*/
+				} 
+				else 
+				{
+					img = range.startContainer.previousSibling;
+				}
+			
+			} 
+			else 
+			{
 				img.src = param.f_url;
 			}
-			for (field in param) {
+			
+		
+/*			// FIXME setting img parameters is broken and thus deactivated atm
+			for (field in param) 
+			{
 				var value = param[field];
-				switch (field) {
+				switch (field) 
+				{
 					case "f_alt"    : img.alt	 = value; break;
 					case "f_border" : img.border = parseInt(value || "0"); break;
 					case "f_align"  : img.align	 = value; break;
@@ -160,7 +178,7 @@ UploadImage.prototype.buttonPress = function(image)
 					case "f_horiz"  : img.hspace = parseInt(value || "0"); break;
 				}
 			}
-//		alert('');
+			*/
 
 	}, outparam);
 };
