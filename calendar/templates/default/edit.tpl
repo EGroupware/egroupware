@@ -5,17 +5,27 @@
 function validate_and_submit() {
   if (document.addform.name.value == "") {
     alert("{name_error}");
+    document.addform.name.select();
+    document.addform.name.focus();
     return false;
   }
   h = parseInt(document.addform.hour.value);
   m = parseInt(document.addform.minute.value);
-  if (h > 23 || m > 59) {
-     alert ("{time_error}");
-     return false;
+  if (h > 23) {
+    alert ("{time_error}");
+    document.addform.hour.select();
+    document.addform.hour.focus();
+    return false;
+  }
+  if (m > 59) {
+    alert ("{time_error}");
+    document.addform.minute.select();
+    document.addform.minute.focus();
+    return false;
   }
   // would be nice to also check date to not allow Feb 31, etc...
   document.addform.submit();
-  return true;
+//  return true;
 }
 </script>
 </head>
@@ -33,7 +43,7 @@ function validate_and_submit() {
 <!-- BEGIN edit_entry_end -->
 </table>
 <!-- <input type="hidden" name="participant_list" value=""> -->
-<input type="submit" value="{submit_button}" onClick="validate_and_submit()">
+<input type="button" value="{submit_button}" onClick="validate_and_submit()">
 </form>
 
 {delete_button}

@@ -28,7 +28,7 @@
   } else {
     $cal_info = $phpgw->common->appsession();
   }
-  if(count($overlapping_events)) {
+  if($overlapping_events) {
     $phpgw->common->phpgw_header();
     $phpgw->common->navbar();
     $phpgw->template->set_file(array("overlap" => "overlap.tpl",
@@ -69,7 +69,7 @@
     $phpgw->template->parse("resubmit_button","form_button");
 
     $phpgw->template->set_var("action_url_button",$phpgw->link("edit_entry.php","readsess=".$cal_info->id));
-    $phpgw->template->set_var("action_text_button",lang("Re-Edit New Event"));
+    $phpgw->template->set_var("action_text_button",lang("Re-Edit Event"));
     $phpgw->template->set_var("action_confirm_button","");
     $phpgw->template->parse("reedit_button","form_button");
 
