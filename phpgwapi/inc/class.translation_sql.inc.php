@@ -78,17 +78,19 @@
 			return $ret;
 		}
 
-		function add_app($app)
+		function add_app($app,$lang=False)
 		{
-			if (!isset($this->loaded_apps[$app]))
+			$lang = $lang ? $lang : $this->userlang;
+
+			if (!isset($this->loaded_apps[$app]) || $this->loaded_apps[$app] != $lang)
 			{
-				$sql = "select message_id,content from phpgw_lang where lang='".$this->userlang."' and app_name='".$app."'";
+				$sql = "select message_id,content from phpgw_lang where lang='".$lang."' and app_name='".$app."'";
 				$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
 				while ($GLOBALS['phpgw']->db->next_record())
 				{
 					$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
 				}
-				$this->loaded_apps[$app] = $this->userlang;
+				$this->loaded_apps[$app] = $lang;
 			}
 		}
 
