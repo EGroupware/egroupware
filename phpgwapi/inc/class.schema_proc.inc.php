@@ -265,7 +265,7 @@
 
 			$Ok = $this->RenameTable($sTableName,$tmp_name) &&
 				$this->CreateTable($sTableName,$aTableDef) &&
-				$this->m_odb->query("INSERT INTO $sTableName SELECT $select FROM $tmp_name",__LINE__,__FILE__);
+				$this->m_odb->query("INSERT INTO $sTableName SELECT DISTINCT $select FROM $tmp_name",__LINE__,__FILE__);
 
 			if (!$Ok)
 			{
