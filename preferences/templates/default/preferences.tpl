@@ -27,8 +27,7 @@
 
 <!-- BEGIN list -->
  <tr bgcolor="{th_bg}">
-  <td>&nbsp;</td>
-  <td>{list_label}</td>
+  <td colspan="2">&nbsp;</td>
  </tr>
 {rows}
 <!-- END list -->
