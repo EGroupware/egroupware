@@ -1,38 +1,13 @@
 <!-- $Id$ -->
 <script type="text/javascript">
-	function ExchangeTo(thisform)
+	function Exchange(thisform,field)
 	{
-		if (opener.document.doit.to.value =='')
+		if (opener.document.doit[field].value != '')
 		{
-			opener.document.doit.to.value = thisform.elements[0].value;
+			opener.document.doit[field].value += ',';
 		}
-		else
-		{
-			opener.document.doit.to.value +=","+thisform.elements[0].value;
-		}
+		opener.document.doit[field].value += thisform.elements.email.value;
 	}
-	function ExchangeCc(thisform)
-	{
-		if (opener.document.doit.cc.value=='')
-		{
-			opener.document.doit.cc.value=thisform.elements[0].value;
-		}
-		else
-		{
-			opener.document.doit.cc.value+=","+thisform.elements[0].value;
-		}
-	}
-	function ExchangeBcc(thisform)
-	{
-		if (opener.document.doit.bcc.value=='')
-		{
-			opener.document.doit.bcc.value=thisform.elements[0].value;
-		}
-		else
-		{
-			opener.document.doit.bcc.value+=","+thisform.elements[0].value;
-		}
-	}	
 </script>
 <div id="divMain">
 <p align="center">{message}</p>
@@ -89,17 +64,17 @@
 <form>
 		<td align="center" rowspan="2">
 			<input type="text" style="width: 100%" name="email" value="{email}"><br>
-			<input type="button" name="to" value="{to}" onClick="ExchangeTo(this.form);">
-			<input type="button" name="cc" value="{cc}" onClick="ExchangeCc(this.form);">
-			<input type="button" name="bcc" value="{bcc}" onClick="ExchangeBcc(this.form);">
+			<input type="button" name="to" value="{to}" onClick="Exchange(this.form,'to');">
+			<input type="button" name="cc" value="{cc}" onClick="Exchange(this.form,'cc');">
+			<input type="button" name="bcc" value="{bcc}" onClick="Exchange(this.form,'bcc');">
 		</td>
 </form>
 <form>
 		<td align="center" rowspan="2">
-			<input type="text" style="width: 100%" name="hemail" value="{hemail}"><br>
-			<input type="button" name="hto" value="{to}" onClick="ExchangeTo(this.form);">
-			<input type="button" name="hcc" value="{cc}" onClick="ExchangeCc(this.form);">
-			<input type="button" name="hbcc" value="{bcc}" onClick="ExchangeBcc(this.form);">
+			<input type="text" style="width: 100%" name="email" value="{hemail}"><br>
+			<input type="button" name="to" value="{to}" onClick="Exchange(this.form,'to');">
+			<input type="button" name="cc" value="{cc}" onClick="Exchange(this.form,'cc');">
+			<input type="button" name="bcc" value="{bcc}" onClick="Exchange(this.form,'bcc');">
 		</td>
 </form>
 	</tr>
