@@ -1555,7 +1555,7 @@
 			$cid   = $phpgw_setup->db->f("contact_id");
 			$cvalu = $phpgw_setup->db->f("contact_value");
 			if ($cvalu) {
-				$update = "UPDATE phpgw_addressbook set tel_cell=" . $cvalu . " WHERE id=" . $cid;
+				$update = "UPDATE phpgw_addressbook set tel_cell='" . $cvalu . "' WHERE id=" . $cid;
 				$db1->query($update);
 				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='url'";
 				$db1->query($delete);
