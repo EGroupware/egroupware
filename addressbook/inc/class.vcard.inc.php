@@ -530,6 +530,8 @@
 						} elseif ($value=="BDAY") {
 							$tmp = split("/",$buffer[$value]); # 12/31/1969 -> 1969-12-31
 							if ($tmp[0]) {
+								if (strlen($tmp[0]) == 1) { $tmp[0] = '0'.$tmp[0]; }
+								if (strlen($tmp[0]) == 1) { $tmp[1] = '0'.$tmp[1]; }
 								$entry .= "BDAY:". $tmp[2]."-".$tmp[0]."-".$tmp[1]."\n";
 							}
 						} else {
