@@ -61,6 +61,11 @@
 		$start = 0;
 		$limit = $offset;
 	}
+
+	if ($limit > $total)
+	{
+		$limit = $total;
+	}
 /*
 	echo 'START: ' . $start;
 	echo 'LIMIT: ' . $limit;
@@ -127,7 +132,7 @@
 
 	if (($start + $limit) > $total)
 	{
-		$lang_showing = lang('showing x - x of x',($start + 1),$total,$total);
+		$lang_showing = lang('showing x - x of x',($start + 1),$limit,$total);
 	}
 	elseif ($total > $limit)
 	{
@@ -135,7 +140,7 @@
 	}
 	else
 	{
-		$lang_showing=lang('showing x',$c->total_records);
+		$lang_showing=lang('showing x',$total);
 	}
 	$p->set_var('lang_showing',$lang_showing);
 
