@@ -35,7 +35,7 @@
 
 		function setup_process()
 		{
-			$this->translation = CreateObject('phpgwapi.setup_translation');
+			$this->translation = CreateObject('setup.setup_translation');
 		}
 
 		/*!
@@ -45,7 +45,7 @@
 		*/
 		function init_process()
 		{
-			$GLOBALS['phpgw_setup']->oProc = CreateObject('phpgwapi.schema_proc');
+			$GLOBALS['egw_setup']->oProc = CreateObject('phpgwapi.schema_proc');
 		}
 
 		/*!
@@ -67,7 +67,7 @@
 			$pass['admin']    = $setup_info['admin'];
 			$pass['preferences'] = $setup_info['preferences'];
 			@reset($setup_info);
-			$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions($setup_info);
+			$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
 			@reset($setup_info);
 
 			$i = 1;
@@ -81,18 +81,18 @@
 				$passing = array();
 				if($DEBUG) { echo '<br>process->pass(): #' . $i . ' for ' . $method . ' processing' . "\n"; }
 				/* Check current versions and dependencies */
-				$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
-				$setup_info = $GLOBALS['phpgw_setup']->detection->compare_versions($setup_info);
+				$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
+				$setup_info = $GLOBALS['egw_setup']->detection->compare_versions($setup_info);
 				//_debug_array($setup_info);exit;
-				$setup_info = $GLOBALS['phpgw_setup']->detection->check_depends($setup_info);
+				$setup_info = $GLOBALS['egw_setup']->detection->check_depends($setup_info);
 				//if($i==2) { _debug_array($passed);exit; }
 
 				/* stuff the rest of the apps, but only those with available upgrades */
 				while(list($key,$value) = @each($setup_info))
 				{
 					if (isset($value['only_db']) && (
-						is_array($value['only_db']) && !in_array($GLOBALS['phpgw_setup']->db->Type,$value['only_db']) ||
-						!is_array($value['only_db']) && $GLOBALS['phpgw_setup']->db->Type != $value['only_db']))
+						is_array($value['only_db']) && !in_array($GLOBALS['egw_setup']->db->Type,$value['only_db']) ||
+						!is_array($value['only_db']) && $GLOBALS['egw_setup']->db->Type != $value['only_db']))
 					{
 						continue;	// app does not support this db-type, dont try installing it
 					}
@@ -225,18 +225,18 @@
 			if ($system_charset)
 			{
 				$GLOBALS['current_config']['system_charset'] = $system_charset;
-				if (is_object($GLOBALS['phpgw_setup']->translation->sql))
+				if (is_object($GLOBALS['egw_setup']->translation->sql))
 				{
-					$GLOBALS['phpgw_setup']->translation->sql->system_charset = $system_charset;
+					$GLOBALS['egw_setup']->translation->sql->system_charset = $system_charset;
 				}
 			}
 
 			foreach($GLOBALS['current_config'] as $setting => $value)
 			{
-				$setting = $GLOBALS['phpgw_setup']->db->db_addslashes($setting);
-				$value   = $GLOBALS['phpgw_setup']->db->db_addslashes($value);
-				@$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='$setting'",__LINE__,__FILE__);
-				$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name, config_value) VALUES ('phpgwapi','$setting','$value')");
+				$setting = $GLOBALS['egw_setup']->db->db_addslashes($setting);
+				$value   = $GLOBALS['egw_setup']->db->db_addslashes($value);
+				@$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='$setting'",__LINE__,__FILE__);
+				$GLOBALS['egw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name, config_value) VALUES ('phpgwapi','$setting','$value')");
 			}
 		}
 
@@ -247,12 +247,12 @@
 		*/
 		function droptables($setup_info,$DEBUG=False)
 		{
-			if(!@$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['egw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 			/* The following is built so below we won't try to drop a table that isn't there. */
-			$tablenames = $GLOBALS['phpgw_setup']->db->table_names();
+			$tablenames = $GLOBALS['egw_setup']->db->table_names();
 			if (!is_array($setup_info) || !is_array($tablenames))
 			{
 				return $setup_info;	// nothing to do
@@ -277,7 +277,7 @@
 						if(in_array($table,$tables))
 						{
 							if($DEBUG){ echo '<br>process->droptables(): Dropping :'. $app_name . ' table: ' . $table; }
-							$GLOBALS['phpgw_setup']->oProc->DropTable($table);
+							$GLOBALS['egw_setup']->oProc->DropTable($table);
 							// Update the array values for return below
 							$setup_info[$app_name]['status'] = 'U';
 						}
@@ -297,7 +297,7 @@
 		*/
 		function current($setup_info,$DEBUG=False)
 		{
-			if(!@$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['egw_setup']->oProc)
 			{
 				$this->init_process();
 			}
@@ -319,15 +319,15 @@
 					$ret = $this->post_process($phpgw_baseline,$DEBUG);
 					if($ret)
 					{
-						if($GLOBALS['phpgw_setup']->app_registered($appname))
+						if($GLOBALS['egw_setup']->app_registered($appname))
 						{
-							$GLOBALS['phpgw_setup']->update_app($appname);
-							$GLOBALS['phpgw_setup']->update_hooks($appname);
+							$GLOBALS['egw_setup']->update_app($appname);
+							$GLOBALS['egw_setup']->update_hooks($appname);
 						}
 						else
 						{
-							$GLOBALS['phpgw_setup']->register_app($appname);
-							$GLOBALS['phpgw_setup']->register_hooks($appname);
+							$GLOBALS['egw_setup']->register_app($appname);
+							$GLOBALS['egw_setup']->register_hooks($appname);
 						}
 						// Update the array values for return below
 						$setup_info[$key]['status'] = 'C';
@@ -351,15 +351,15 @@
 					{
 						$enabled = False;
 					}
-					if($GLOBALS['phpgw_setup']->app_registered($appname))
+					if($GLOBALS['egw_setup']->app_registered($appname))
 					{
-						$GLOBALS['phpgw_setup']->update_app($appname);
-						$GLOBALS['phpgw_setup']->update_hooks($appname);
+						$GLOBALS['egw_setup']->update_app($appname);
+						$GLOBALS['egw_setup']->update_hooks($appname);
 					}
 					else
 					{
-						$GLOBALS['phpgw_setup']->register_app($appname,$enabled);
-						$GLOBALS['phpgw_setup']->register_hooks($appname);
+						$GLOBALS['egw_setup']->register_app($appname,$enabled);
+						$GLOBALS['egw_setup']->register_hooks($appname);
 					}
 					$setup_info[$key]['status'] = 'C';
 				}
@@ -377,7 +377,7 @@
 		*/
 		function default_records($setup_info,$DEBUG=False)
 		{
-			if(!@$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['egw_setup']->oProc)
 			{
 				$this->init_process();
 			}
@@ -393,10 +393,10 @@
 					{
 						echo '<br>process->default_records(): Including default records for ' . $appname . "\n";
 					}
-					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_begin();
-					$oProc = &$GLOBALS['phpgw_setup']->oProc;	// to be compatible with old apps
+					$GLOBALS['egw_setup']->oProc->m_odb->transaction_begin();
+					$oProc = &$GLOBALS['egw_setup']->oProc;	// to be compatible with old apps
 					include ($appdir.'default_records.inc.php');
-					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_commit();
+					$GLOBALS['egw_setup']->oProc->m_odb->transaction_commit();
 				}
 				/* $setup_info[$key]['status'] = 'C'; */
 			}
@@ -413,7 +413,7 @@
 		*/
 		function test_data($setup_info,$DEBUG=False)
 		{
-			if(!@$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['egw_setup']->oProc)
 			{
 				$this->init_process();
 			}
@@ -429,9 +429,9 @@
 					{
 						echo '<br>process->test_data(): Including baseline test data for ' . $appname . "\n";
 					}
-					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_begin();
+					$GLOBALS['egw_setup']->oProc->m_odb->transaction_begin();
 					include ($appdir.'test_data.inc.php');
-					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_commit();
+					$GLOBALS['egw_setup']->oProc->m_odb->transaction_commit();
 				}
 			}
 
@@ -446,7 +446,7 @@
 		*/
 		function baseline($setup_info,$DEBUG=False)
 		{
-			if(!@$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['egw_setup']->oProc)
 			{
 				$this->init_process();
 			}
@@ -464,7 +464,7 @@
 						echo '<br>process->baseline(): Including baseline tables for ' . $appname . "\n";
 					}
 					include ($appdir.'tables_baseline.inc.php');
-					$GLOBALS['phpgw_setup']->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
+					$GLOBALS['egw_setup']->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
 					$this->post_process($phpgw_baseline,$DEBUG);
 
 					/* Update the array values for return below */
@@ -491,17 +491,17 @@
 		*/
 		function upgrade($setup_info,$DEBUG=False)
 		{
-			if(!@$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['egw_setup']->oProc)
 			{
 				$this->init_process();
 			}
-			$GLOBALS['phpgw_setup']->oProc->m_odb->HaltOnError = 'yes';
+			$GLOBALS['egw_setup']->oProc->m_odb->HaltOnError = 'yes';
 
 			foreach($setup_info as $key => $appdata)
 			{
 				$appname = $appdata['name'];
 				/* Don't try to upgrade an app that is not installed */
-				if(!$GLOBALS['phpgw_setup']->app_registered($appname))
+				if(!$GLOBALS['egw_setup']->app_registered($appname))
 				{
 					if($DEBUG)
 					{
@@ -580,15 +580,15 @@
 					{
 						$setup_info[$key]['currentver'] = $targetver;
 
-						if($GLOBALS['phpgw_setup']->app_registered($appname))
+						if($GLOBALS['egw_setup']->app_registered($appname))
 						{
-							$GLOBALS['phpgw_setup']->update_app($appname);
-							$GLOBALS['phpgw_setup']->update_hooks($appname);
+							$GLOBALS['egw_setup']->update_app($appname);
+							$GLOBALS['egw_setup']->update_hooks($appname);
 						}
 						else
 						{
-							$GLOBALS['phpgw_setup']->register_app($appname);
-							$GLOBALS['phpgw_setup']->register_hooks($appname);
+							$GLOBALS['egw_setup']->register_app($appname);
+							$GLOBALS['egw_setup']->register_hooks($appname);
 						}
 					}
 					
@@ -624,10 +624,10 @@
 				return False;
 			}
 
-			$ret = $GLOBALS['phpgw_setup']->oProc->GenerateScripts($tables,$DEBUG);
+			$ret = $GLOBALS['egw_setup']->oProc->GenerateScripts($tables,$DEBUG);
 			if($ret)
 			{
-				$oret = $GLOBALS['phpgw_setup']->oProc->ExecuteScripts($tables,$DEBUG);
+				$oret = $GLOBALS['egw_setup']->oProc->ExecuteScripts($tables,$DEBUG);
 				if($oret)
 				{
 					return True;
@@ -655,21 +655,21 @@
 				return False;
 			}
 
-			if(!$GLOBALS['phpgw_setup']->oProc)
+			if(!$GLOBALS['egw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 
-			$GLOBALS['phpgw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['phpgw_setup']->oProc, $tablename, $sColumns, $sColumnName);
+			$GLOBALS['egw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['egw_setup']->oProc, $tablename, $sColumns, $sColumnName);
 
-			while(list($key,$tbldata) = each($GLOBALS['phpgw_setup']->oProc->m_oTranslator->sCol))
+			while(list($key,$tbldata) = each($GLOBALS['egw_setup']->oProc->m_oTranslator->sCol))
 			{
 				$arr .= $tbldata;
 			}
-			$pk = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->pk;
-			$fk = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->fk;
-			$ix = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->ix;
-			$uc = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->uc;
+			$pk = $GLOBALS['egw_setup']->oProc->m_oTranslator->pk;
+			$fk = $GLOBALS['egw_setup']->oProc->m_oTranslator->fk;
+			$ix = $GLOBALS['egw_setup']->oProc->m_oTranslator->ix;
+			$uc = $GLOBALS['egw_setup']->oProc->m_oTranslator->uc;
 
 			return array($arr,$pk,$fk,$ix,$uc);
 		}
