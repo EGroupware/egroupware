@@ -1,12 +1,5 @@
 <!-- $Id$ -->
 <!-- BEGIN edit_entry -->
-<script language="JavaScript">
-	self.name="first_Window";
-	function accounts_popup()
-	{
-		Window1=window.open('{accounts_link}',"Search","width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes");
-	}
-</script>
 <center>
 <font color="#000000" face="{font}">
 
