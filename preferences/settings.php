@@ -20,7 +20,7 @@
   include("../header.inc.php");
 
   if (! $submit) {
-     if ($phpgw_info["server"]["useframes"] == "allowed") {
+     if ($phpgw_info["server"]["useframes"] != "never") {
         $target = ' target="_top"';
      }
      ?>
@@ -56,7 +56,7 @@
        </tr>
        <?php
          }
-         if ($phpgw_info["server"]["useframes"] == "always") {
+         if ($phpgw_info["server"]["useframes"] != "never") {
        ?>
        <tr>
         <td><?php echo lang("Navigation bar frame location"); ?>: </td>
@@ -202,6 +202,7 @@
      $phpgw->common->phpgw_footer();
   } else {
 
+     $phpgw->preferences->reset("common");
      while ($setting = each($settings)) {
         $phpgw->preferences->change("common",$setting[0],$setting[1]);
      }

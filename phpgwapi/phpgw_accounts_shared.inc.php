@@ -221,8 +221,14 @@
     function delete($app_name,$var)
     {
       global $phpgw_info;
-      unset($phpgw_info["user"]["preferences"][$app_name][$var]);
-    
+      unset($phpgw_info["user"]["preferences"][$app_name][$var]);    
+    }
+
+    // This will kill all preferences within a certain app
+    function reset($app_name)
+    {
+      global $phpgw_info;
+      $phpgw_info["user"]["preferences"][$app_name] = array();
     }
   } //end of preferences class
 

@@ -34,8 +34,8 @@
                              "frame_navbar" => "frames_navbar.tpl"
                             ));
 
-        $tpl->set_var("navbar_link",$phpgw->link("index.php?navbarframe=True"));
-        $tpl->set_var("body_link",$phpgw->link("index.php?framebody=True"));
+        $tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True"));
+        $tpl->set_var("body_link",$phpgw->link("index.php","framebody=True"));
 
         if ($phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"] == "bottom") {
            $tpl->set_var("frame_size","*,60");
