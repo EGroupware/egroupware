@@ -67,7 +67,10 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$portalbox->data[] = array('text'=>lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),'link'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']));
+			$portalbox->data[] = array(
+				'text' => lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
+				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id'])
+			);
 //			$tmp = '<a href="'
 //				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
 //				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
@@ -80,7 +83,10 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$portalbox->data[] = array('text'=>lang("Tommorow is x's birthday!",$val['n_given'].' '.$val['n_family']),'link'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id']));
+			$portalbox->data[] = array(
+				'text' => lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
+				'link' = >$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
+			);
 //			$tmp = '<a href="'
 //				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
 //				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
