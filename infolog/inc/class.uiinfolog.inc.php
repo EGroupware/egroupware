@@ -167,7 +167,7 @@
 				{
 					list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 					list($do_id) = @each($do_id);
-					echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
+					//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
 					switch($do)
 					{
 						case 'edit':
