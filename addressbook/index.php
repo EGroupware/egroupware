@@ -80,8 +80,8 @@
 		);
 		$noprefs=lang("Please set your preferences for this app");
 	}
-	$qcols = $columns_to_display;# + array("access");
-  
+	$qcols = $columns_to_display;
+ 
 	// read the entry list
 	if (!$userid) { $userid = $phpgw_info["user"]["account_id"]; }
 	$entries = addressbook_read_entries($start,$offset,$qcols,$query,$filter,$sort,$order,$userid);
@@ -154,7 +154,7 @@
 					$ref='<a href="mailto:'.$coldata.'">';
 				}
 				$data=$coldata."</a>";
-   	    	} else { // But these do not
+			} else { // But these do not
 				$ref=""; $data=$coldata;
 			}
 			$t->set_var(col_data,$ref.$data);
