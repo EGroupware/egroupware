@@ -1230,7 +1230,7 @@
 				$checked = (@$userData['account_permissions'][$app] || @$db_perms[$app]) && $_account_id ? ' checked="1"' : '';
 				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s>',
 					$data['title'],$app,$checked).	
-					($this->apps_with_acl[$app]?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$_account_id)
+					($this->apps_with_acl[$app] && $_account_id?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$_account_id)
 					. '"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
 					. lang('Grant Access').'"></a>':'&nbsp;').'</td>';
 
