@@ -1,20 +1,19 @@
 <?php
 
+if ($download || $op == "view")
+{
+	$noheader = True;
+}
+
 $phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
-				"noheader" => False,
+				"noheader" => $noheader,
 				"noappheader" => False,
 				"enable_vfs_class" => True,
 				"enable_browser_class" => True);
+
 include ("../header.inc.php");
 
 error_reporting (4);
-
-if ($download && $fileman[0])
-{
-	$phpgw->browser->content_header ($fileman[0]);
-	echo $phpgw->vfs->read ($path/$fileman[0]);
-	$phpgw->common->phpgw_exit ();
-}
 
 ###
 # Page to process users
@@ -158,6 +157,27 @@ else
 
 $userinfo["working_id"] = $phpgw->vfs->working_id;
 $userinfo["working_lid"] = $phpgw->accounts->id2name ($userinfo["working_id"]);
+
+// WIP - make this work - replace 4 with $numoffiles, but get $numoffiles first - probably move the whole thing down below $numoffiles
+if ($download)
+{
+	for ($i = 0; $i != 4; $i++)
+	{
+		if (!$fileman[$i])
+			continue;
+
+		$download_browser = CreateObject ('phpgwapi.browser');
+		$download_browser->content_header (string_decode ($fileman[0], 1));
+		echo $phpgw->vfs->read ("$path/$fileman[0]");
+		$phpgw->common->phpgw_exit ();
+	}
+}
+
+if ($op == "view" && $file)
+{
+	echo $phpgw->vfs->read ($file);
+	$phpgw->common->phpgw_exit ();
+}
 
 ###
 # If their home directory doesn't exist, we create it
@@ -443,7 +463,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 					}
 					else
 					{
-						html_text ($files["name"]);
+						html_link ("$appname/index.php?op=view&file=$files[name]&path=$path", $files["name"], 0, 1, 0, "_new");
 					}
 	                        }
 
@@ -719,10 +739,8 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		{
 			html_break (1);
 
-/* WIP - make download work
 			html_form_input ("submit", "download", "Download");
 			html_nbsp (3);
-*/
 
 			html_form_input ("text", "createdir", NULL, 255, 15);
 			html_form_input ("submit", "newdir", "Create Folder");
