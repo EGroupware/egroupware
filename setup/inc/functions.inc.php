@@ -111,7 +111,7 @@
 		}
 		$select = '<select name="ConfigLang"'.($onChange ? ' onChange="this.form.submit();"' : '').'>' . "\n";
 		$languages = get_langs();
-		usort($languages,create_function('$a,$b','return strcmp($a[\'descr\'],$b[\'descr\']);'));
+		usort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
 		foreach($languages as $data)
 		{
 			if($data['available'] && !empty($data['lang']))
