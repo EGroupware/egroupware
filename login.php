@@ -84,19 +84,18 @@
      deny_login();
   }
   
+
+  if (isset($PHP_AUTH_USER)) {
+    $submit = True;
+    $login = $PHP_AUTH_USER;
+    $passwd = $PHP_AUTH_PW;
+  }
+
   if (isset($submit) && $submit) {
-    if (getenv(REQUEST_METHOD) != "POST") {
+    if (getenv(REQUEST_METHOD) != "POST" && !isset($PHP_AUTH_USER)) {
        $phpgw->redirect($phpgw->link("","code=5"));
     }
-
     $sessionid = $phpgw->session->create($login,$passwd);
-    if (!isset($sessionid) || !$sessionid) {
-       $phpgw->redirect($phpgw_info["server"]["webserver_url"]."/login.php?cd=5");
-    } else {
-       $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
-    }
-  }elseif (isset($PHP_AUTH_USER)) {
-    $sessionid = $phpgw->session->create($PHP_AUTH_USER,$PHP_AUTH_PW);
     if (!isset($sessionid) || !$sessionid) {
        $phpgw->redirect($phpgw_info["server"]["webserver_url"]."/login.php?cd=5");
     } else {
