@@ -352,9 +352,9 @@
 			
 			/* This allows the user to put "" as the value. */
 			if ($data == '##NOTHING##') {
-				$query = 'select content from phpgw_app_sessions where'
-				.' sessionid = "'.$this->sessionid.'" and loginid = "'.$this->account_id.'"'
-				.' and app = "'.$appname.'" and location = "'.$location.'"';
+				$query = "select content from phpgw_app_sessions where"
+				." sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
+				." and app = '".$appname."' and location = '".$location."'";
 	
 				$phpgw->db->query($query,__LINE__,__FILE__);
 				
@@ -363,25 +363,25 @@
 				#$data = $phpgw->common->decrypt($data);
 				return $data;
 			} else {
-				$phpgw->db->query('select content from phpgw_app_sessions where '
-				. 'sessionid = "'.$this->sessionid.'" and loginid = "'.$this->account_id.'" '
-				. 'and app = "'.$appname.'" and location = "'.$location.'"',__LINE__,__FILE__);
+				$phpgw->db->query("select content from phpgw_app_sessions where "
+				. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
+				. "and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
 				
 				if ($phpgw->db->num_rows()==0) {
 	#				some how the next line is not working correctly! knecke
 	#				$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
 					$data = addslashes(serialize($data));
-					$phpgw->db->query('INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) '
-					. 'VALUES ("'.$this->sessionid.'","'.$this->account_id.'","'.$appname
-					. '","'.$location.'","'.$data.'")',__LINE__,__FILE__);
+					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) "
+					. "VALUES ('".$this->sessionid."',".$this->account_id."','".$appname
+					. "','".$location."','".$data."')",__LINE__,__FILE__);
 				} else {
-	#				some how the next line is not working correctly! knecke
-	#				$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
+	# 				some how the next line is not working correctly! knecke
+	# 				$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
 					$data = addslashes(serialize($data));
-					$phpgw->db->query('update phpgw_app_sessions set content = "'.$data.'" '
-					. 'where sessionid = "'.$this->sessionid.'" '
-					. 'and loginid = "'.$this->account_id.'" and app = "'.$appname.'" '
-					. 'and location = "'.$location.'"',__LINE__,__FILE__);
+					$phpgw->db->query("update phpgw_app_sessions set content = '".$data."'"
+					. "where sessionid = '".$this->sessionid."'"
+					. "and loginid = '".$this->account_id."' and app = '".$appname."'"
+					. "and location = '".$location."'",__LINE__,__FILE__);
 				}
 	
 				return $data;
