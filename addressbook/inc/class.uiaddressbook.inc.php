@@ -1115,8 +1115,10 @@
 			$this->output .= $GLOBALS['phpgw']->template->fp('out','view_t');
 			$this->totpl();
 
-			$GLOBALS['ab_id'] = $ab_id;
-			$GLOBALS['phpgw']->hooks->process('addressbook_view');
+			$GLOBALS['phpgw']->hooks->process(array(
+				'location' => 'addressbook_view',
+				'ab_id'    => $ab_id
+			));
 		}
 
 		function html_1button_form($name,$lang,$link)
