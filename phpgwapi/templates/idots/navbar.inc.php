@@ -342,7 +342,7 @@ href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBAL
 					if(isset($item_link['icon']))
 					{
 						$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
-						$var['icon_or_star'] = '<img style="margin:0px 0px 0px 2px" src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>';
+						$var['icon_or_star'] = '<img style="margin:0px 2px 0px 2px" src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>';
 					}
 					$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 					$var['item_link'] = $item_link['link'];
