@@ -984,8 +984,7 @@
 				return;
 			}
 			$GLOBALS['phpgw']->template->set_block('common','msgbox_start');
-			$GLOBALS['phpgw']->template->set_block('common','msgbox_row_good');
-			$GLOBALS['phpgw']->template->set_block('common','msgbox_row_bad');
+			$GLOBALS['phpgw']->template->set_block('common','msgbox_row');
 			$GLOBALS['phpgw']->template->set_block('common','msgbox_end');
 			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_start');
 			
@@ -1009,12 +1008,15 @@
 					$GLOBALS['phpgw']->template->set_var('msgbox_text',$key);
 					if ($value == True)
 					{
-						$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_good',True);
+						$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_good'));
+						$GLOBALS['phpgw']->template->set_var('msgbox_img_alt','OK');
 					}
 					else
 					{
-						$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_bad',True);
+						$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_bad'));
+						$GLOBALS['phpgw']->template->set_var('msgbox_img_alt','ERROR');
 					}
+					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
 				}
 			}
 			else
@@ -1023,12 +1025,15 @@
 				$GLOBALS['phpgw']->template->set_var('msgbox_text',$text);
 				if ($type == True)
 				{
-					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_good',True);
+					$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_good'));
+					$GLOBALS['phpgw']->template->set_var('msgbox_img_alt','OK');
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row_bad',True);
+					$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_bad'));
+					$GLOBALS['phpgw']->template->set_var('msgbox_img_alt','ERROR');
 				}
+				$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
 			}
 			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_end',True);
 
