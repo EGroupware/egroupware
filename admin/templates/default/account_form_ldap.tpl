@@ -4,7 +4,18 @@
 
  <form method="POST" action="{form_action}">
   <center>
-   <table border="0" width="85%">
+	<table border="0" width="95%">
+		<tr>
+			<td valign="top">
+				<table border="0" width="100%">
+					<tr bgcolor="{th_bg}">
+						<td colspan="4">&nbsp;</td>
+					</tr>
+				{rows}
+				</table>
+			</td>
+			<td>
+   <table border="0" width="100%">
     <tr bgcolor="{th_bg}">
       <td colspan="4">&nbsp;</td>
     </tr>
@@ -39,11 +50,12 @@
 
     {permissions_list}
     
-    {gui_hooks}
-
-	 {form_buttons}
+	{form_buttons}
 
    </table>
+   			</td>
+   		</tr>
+   	</table>
   </center>
  </form>
 <!-- END form -->
