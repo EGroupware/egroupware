@@ -116,8 +116,7 @@ function validate_and_submit() {
 <?php
   if ($can_edit) {
 ?>
-<FORM ACTION="edit_entry_handler.php" METHOD="GET" name="addform">
-<? echo $phpgw->session->hidden_var(); ?>
+<FORM ACTION="<?php echo $phpgw->link("edit_entry_handler.php"); ?>" METHOD="GET" name="addform">
 
 <?php if ($id) echo "<INPUT TYPE=\"hidden\" NAME=\"id\" VALUE=\"$id\">\n"; ?>
 

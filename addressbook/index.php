@@ -166,8 +166,7 @@
 ?>
   </table>
 
-  <form method="POST" action="add.php">
-   <?php echo $phpgw->session->hidden_var(); ?>
+  <form method="POST" action="<?php echo $phpgw->link("add.php"); ?>">
    <input type="hidden" name="sort" value="<?php echo $sort; ?>">
    <input type="hidden" name="order" value="<?php echo $order; ?>">
    <input type="hidden" name="query" value="<?php echo $query; ?>">

@@ -103,8 +103,7 @@
   }
 
   if ($action) {
-     echo "<FORM action=\"$action\" method=\"post\">\n"
-        . $phpgw->session->hidden_var();
+     echo "<FORM action=\"".$phpgw->link($action)."\" method=\"post\">\n";
   }
 
   ?>

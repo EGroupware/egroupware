@@ -22,8 +22,7 @@
 <HR CLEAR="all">
 <FONT SIZE="-1">
 <TABLE BORDER=0 WIDTH=100% CELLPADDING=0 CELLSPACING=0>
-<FORM ACTION="index.php" METHOD="GET" NAME="SelectMonth">
-<?php echo $phpgw->session->hidden_var(); ?>
+<FORM ACTION="<?php echo $phpgw->link("index.php"); ?>" METHOD="GET" NAME="SelectMonth">
 
 <TR><TD VALIGN="top" WIDTH=33%><FONT SIZE="-1">
 <B><?php echo lang_calendar("Month"); ?>:</B>
@@ -59,8 +58,7 @@
 </FONT></TD>
 </FORM>
 
-<FORM ACTION="week.php" METHOD="GET" NAME="SelectWeek">
-<?php echo $phpgw->session->hidden_var(); ?>
+<FORM ACTION="<?php echo $phpgw->link("week.php"); ?>" METHOD="GET" NAME="SelectWeek">
 
 <TD VALIGN="top" align="center" WIDTH=33%><FONT SIZE="-1">
 <B><?php echo lang_calendar("Week"); ?>:</B>
@@ -103,8 +101,7 @@
 
 <FONT SIZE="-1">
 
-<FORM ACTION="year.php" METHOD="GET" NAME="SelectYear">
-<?php echo $phpgw->session->hidden_var(); ?>
+<FORM ACTION="<?php echo $phpgw->link("year.php"); ?>" METHOD="GET" NAME="SelectYear">
 
 <TD VALIGN="top" align="right" WIDTH=33%><FONT SIZE="-1">
 <B><?php echo lang_calendar("Year"); ?>:</B>
