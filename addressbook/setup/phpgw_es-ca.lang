@@ -88,8 +88,10 @@ import	addressbook	es-ca	Importar
 import contacts	addressbook	es-ca	Importar contactes
 import csv-file into addressbook	addressbook	es-ca	Importar arxiu CSV a la Llibreta d'adreces
 import file	addressbook	es-ca	Importar arxiu
+import from	addressbook	es-ca	Importa de
 import from ldif, csv, or vcard	addressbook	es-ca	Importar des de LDIF, CSV o VCard
 import from outlook	addressbook	es-ca	Importar des d'Outlook
+import multiple vcard	addressbook	es-ca	Importa VCard Múltiple
 import next set	addressbook	es-ca	Importar següent registre
 import_instructions	addressbook	es-ca	Si useu Mozilla o Netscape, obriu la llibreta d'adreces i seleccioneu <b>Exportar</b> des del menú <b>Arxiu</b>. L'arxiu exportat estarà en format LDIF.<p>O bé, en Outlook, seleccioneu la vostra carpeta de contactes, després, al menú <b>Arxiu</b>, <b>Importar i Exportar...</b> per desar-los en un arxiu separat per comes (CSV).<p>O també, en Palm Desktop 4.0 o superior, visiteu la vostra llibreta d'adreces i seleccioneu <b>Exportar</b> al menú <b>Arxiu</b>. L'arxiu exportat estarà en format VCard.
 international	addressbook	es-ca	Internacional
@@ -103,12 +105,14 @@ ldif	addressbook	es-ca	LDIF
 line 2	addressbook	es-ca	Línia 2
 list all categories	addressbook	es-ca	Llista totes les categories
 list all customfields	addressbook	es-ca	Llista tots els camps personalitzats
+load vcard	addressbook	es-ca	Carrega VCard
 mark records as private	addressbook	es-ca	Marcar registres com a privats
 message phone	addressbook	es-ca	Telèfon de missatges
 middle name	addressbook	es-ca	Segon nom
 mobile	addressbook	es-ca	Mòbil
 mobile phone	addressbook	es-ca	Telèfon mòbil
 modem phone	addressbook	es-ca	Telèfon de módem
+multiple vcard	addressbook	es-ca	VCard Múltiple
 no vcard	addressbook	es-ca	Sense VCard
 number of records to read (%1)	addressbook	es-ca	Número de registres a llegir (%1)
 other number	addressbook	es-ca	Un altre número

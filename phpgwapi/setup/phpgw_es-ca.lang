@@ -47,6 +47,7 @@ align	htmlarea-TableOperations	es-ca	Alinea
 all	common	es-ca	Tot
 all fields	common	es-ca	tots els camps
 all four sides	htmlarea-TableOperations	es-ca	Els quatre costats
+all languages (incl. not listed ones)	common	es-ca	tots els idiomes (inclosos els que no surten a la llista)
 alphabet	common	es-ca	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	es-ca	Fulla d'estils alternativa:
 american samoa	common	es-ca	SAMOA AMERICANA
@@ -75,6 +76,7 @@ back to user login	common	es-ca	Tornar a identificació d'usuari
 background	htmlarea-TableOperations	es-ca	Fons
 background color	htmlarea	es-ca	Color de fons
 background color:	common	es-ca	Color de fons:
+backupdir '%1' is not writeable by the webserver	common	es-ca	el servidor web no té permís d'escriptura dins el directori de còpies de seguretat '%1'
 bad login or password	common	es-ca	Nom d'usuari o contrasenya incorrectes
 bahamas	common	es-ca	BAHAMES
 bahrain	common	es-ca	BAHREIN
@@ -111,6 +113,8 @@ cambodia	common	es-ca	CAMBODJA
 cameroon	common	es-ca	CAMERUN
 canada	common	es-ca	CANADA
 cancel	common	es-ca	Cancel·lar
+cannot replace %1 because it is a directory	common	es-ca	No es pot reemplaçar %1 perquè és un directori
+cant open '%1' for %2	common	es-ca	No es pot obrir '%1' per %2
 cape verde	common	es-ca	CAP VERD
 caption	htmlarea-TableOperations	es-ca	Contingut
 categories	common	es-ca	Categories
@@ -158,7 +162,7 @@ copy selection	htmlarea	es-ca	Copiar selecció
 costa rica	common	es-ca	COSTA RICA
 cote d ivoire	common	es-ca	COSTA D'IVORI
 create	common	es-ca	Crear
-create a link	htmlarea-ContextMenu	es-ca	Crea un enllaç
+create a link	preferences	es-ca	Crea un enllaç
 created by	common	es-ca	Creat per
 croatia	common	es-ca	CROÀCIA
 cuba	common	es-ca	CUBA
@@ -394,6 +398,7 @@ liberia	common	es-ca	LIBÈRIA
 libyan arab jamahiriya	common	es-ca	LIBIA (LYBIAN ARAB JAMAHIRIYA)
 license	common	es-ca	Llicència
 liechtenstein	common	es-ca	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	es-ca	Línia %1: '%2'<br><b>les dades csv no coincideixen amb el número de columnes de la taula %3 ==> ignorat</b>
 link points to:	htmlarea-ContextMenu	es-ca	Punts d'enllaç a:
 list	common	es-ca	Llista
 list members	common	es-ca	Llista de membres
@@ -549,7 +554,6 @@ poland	common	es-ca	POLÒNIA
 portugal	common	es-ca	PORTUGAL
 postal	common	es-ca	Postal
 powered by egroupware version %1	common	es-ca	Versió %1
-powered by phpgroupware version %1	common	es-ca	<a href="http://www.egroupware.org">eGroupWare</a> versió %1
 preferences	common	es-ca	Preferències
 preferences for the idots template set	common	es-ca	Preferències per al joc de plantilles "idot"
 prev. month (hold for menu)	jscalendar	es-ca	Mes anterior (mantenir clicat per menú)
@@ -566,6 +570,7 @@ qatar	common	es-ca	QATAR
 re-check	htmlarea-SpellChecker	es-ca	Recomprova
 read	common	es-ca	Llegir
 read this list of methods.	common	es-ca	Llegir aquesta llista de mètodes
+reading	common	es-ca	llegint
 redoes your last action	htmlarea	es-ca	Repeteix la darrera acció
 reject	common	es-ca	Rebutjar
 remove selected accounts	common	es-ca	esborra els comptes seleccionats
@@ -708,10 +713,6 @@ title	common	es-ca	Títol
 to	common	es-ca	Per
 to correct this error for the future you will need to properly set the	common	es-ca	Per a corregir aquest error per al futur necessitareu configurar acuradament el
 to go back to the msg list, click <a href= %1 >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
-to go back to the msg list, click <a href= %1?sessionid=1802f5efbe33b7c1ece252dad7f7f09e >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
-to go back to the msg list, click <a href= %1?sessionid=27092e3085d386d95dba6834fad0944c >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
-to go back to the msg list, click <a href= %1?sessionid=27092e3085d386d95dba6834fad0944c&sessionid=27092e3085d386d95dba6834fad0944c >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
-to go back to the msg list, click <a href= %1?sessionid=27092e3085d386d95dba6834fad0944c&sessionid=27092e3085d386d95dba6834fad0944c&sessionid=27092e3085d386d95dba6834fad0944c >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
 today	common	es-ca	Avui
 todays date, eg. "%1"	common	es-ca	data d'avui, ex. "%1"
 toggle first day of week	jscalendar	es-ca	Canviar el primer dia de la setmana
@@ -773,13 +774,13 @@ which groups	common	es-ca	Quins grups
 width	htmlarea-TableOperations	es-ca	Amplada
 wk	jscalendar	es-ca	st
 work email	common	es-ca	correu del treball
+writing	common	es-ca	escrivint
 written by:	common	es-ca	Escrit per:
 year	common	es-ca	Any
 yemen	common	es-ca	IEMEN
 yes	common	es-ca	Sí
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	es-ca	Esteu en MODUS TEXT. Useu el botó [<>] per tornar a la vista WYSIWIG.
 you are required to change your password during your first login	common	es-ca	Heu de canviar la vostra contrasenya a la vostra primera connexió.
-you are running a newer version of phpgroupware than your database is setup for	common	es-ca	Esteu fent feina amb una versió d'eGroupware més nova de la versió per a la que està preparada la base de dades.
 you have been successfully logged out	login	es-ca	Desconnexió correcta
 you have not entered a title	common	es-ca	No heu entrat un títol
 you have not entered a valid date	common	es-ca	No heu entrat una data correcta

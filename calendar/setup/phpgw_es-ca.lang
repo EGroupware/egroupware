@@ -67,6 +67,7 @@ defines the size in minutes of the lines in the day view.	calendar	es-ca	Definei
 delete a single entry by passing the id.	calendar	es-ca	Esborrar una entrada simple passant l'id.
 delete an entire users calendar.	calendar	es-ca	Esborrar un calendari d'usuari sencer.
 delete selected contacts	calendar	es-ca	Esborrar contactes seleccionats
+delete selected participants	calendar	es-ca	Esborra els participants seleccionats
 delete series	calendar	es-ca	Esborrar sèries
 delete single	calendar	es-ca	Esborrar individual
 deleted	calendar	es-ca	Esborrat
@@ -84,7 +85,8 @@ do you want to be notified about new or changed appointments? you be notified ab
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	es-ca	Voleu rebre regularment per correu un resum de les vostres cites?<br>El resum s'enviarà al vostre correu electrònic habitual el mateix dia al matí o el dilluns per a resums setmanals.<br>Només s'envia si hi ha cites en aquest dia o setmana.
 do you wish to autoload calendar holidays files dynamically?	admin	es-ca	Voleu carregar automàticament al calendari els arxius de festes?
 download	calendar	es-ca	Descarregar
-duration	calendar	es-ca	Duració
+duration	calendar	es-ca	Durada
+duration of the meeting	calendar	es-ca	Durada de la trobada
 edit series	calendar	es-ca	Editar sèries
 edit single	calendar	es-ca	Editar Individual
 email notification	calendar	es-ca	Notificació per correu
@@ -94,6 +96,7 @@ enable	calendar	es-ca	Activar
 enabled	calendar	es-ca	activat
 end date/time	calendar	es-ca	Data/Hora final
 enddate	calendar	es-ca	Data final
+enddate / -time of the meeting, eg. for more then one day	calendar	es-ca	Data/Hora final de la trobada, p.ex. si és llarga, aleshores un dia
 ends	calendar	es-ca	acaba
 enter output filename: ( .vcs appended )	calendar	es-ca	Entreu el nom d'arxiu de sortida (s'afegeix .vcs)
 event details follow	calendar	es-ca	Segueixen els detalls de la cita
@@ -105,11 +108,13 @@ extended updates always include the complete event-details. ical's can be import
 external participants	calendar	es-ca	Participants externs
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	es-ca	Errada en enviar missatge a '%1' num.%2 assumpte='%3', remitent='%4'
 fieldseparator	calendar	es-ca	Separador de camps
+find free timeslots where the marked participants are availible for the given timespan	calendar	es-ca	Trobar intérvals de temps en que els participants seleccionats tenguin lliure per al període de temps indicat
 firstname of person to notify	calendar	es-ca	Nom de pila de la persona a notificar
 format of event updates	calendar	es-ca	Format de les actualitzacions de cites
 fr	calendar	es-ca	Dv
 free/busy	calendar	es-ca	Lliure/Ocupat
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	es-ca	lliure/ocupat: Usuari desconegut '%1', contrasenya incorrecta o no disponible als usuaris no registrats !!!
+freetime search	calendar	es-ca	Cerca d'hores lliures
 frequency	calendar	es-ca	Freqüència
 fri	calendar	es-ca	Dv
 full description	calendar	es-ca	Descripció completa
@@ -129,11 +134,11 @@ holiday management	calendar	es-ca	Gestió de festius
 holiday-management	calendar	es-ca	Gestió de festius
 holidays	calendar	es-ca	Festius
 hours	calendar	es-ca	hores
+how far to search (from startdate)	calendar	es-ca	fins quan s'ha de cercar (a partir de la data d'inici)
 i participate	calendar	es-ca	Participo
 ical / rfc2445	calendar	es-ca	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	es-ca	Si els festius marcats cauen en cap de setmana, passen al dilluns següent.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	es-ca	Si no poses una contrasenya aquí, la informació estarà disponible per a qualsevol que conegui la URL!!!
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	es-ca	Si no poses una contrasenya aquí, la informació és accessible per a qualsevol que conegui la  URL!!!
 ignore conflict	calendar	es-ca	Ignorar conflicte
 import	calendar	es-ca	Importar
 import csv-file	common	es-ca	Importar arxiu CSV
@@ -152,7 +157,6 @@ load [iv]cal	calendar	es-ca	Carregar [iv]Cal
 location	calendar	es-ca	Lloc
 location to autoload from	admin	es-ca	Lloc des d'on carregar automàticament
 make freebusy information available to not loged in persons?	calendar	es-ca	Fer que la informació lliure/ocupat estigui disponible per a les persones no registrades?
-make freebusy information availible to not loged in persons?	calendar	es-ca	Fer que la informació lliure/ocupat estigui disponible per a les persones no registrades?
 matrixview	calendar	es-ca	Vista matricial
 minutes	calendar	es-ca	minuts
 mo	calendar	es-ca	Dl
@@ -167,6 +171,7 @@ monthview	calendar	es-ca	Vista mensual
 needs javascript to be enabled !!!	calendar	es-ca	Necessita javascript per activar-lo !!!
 new entry	calendar	es-ca	Nova entrada
 new name must not exist and not be empty!!!	calendar	es-ca	El nou nom no pot existir ja i tampoc pot quedar en blanc !!
+new search with the above parameters	calendar	es-ca	nova cerca amb els paràmetres de dalt
 next day	calendar	es-ca	pròxim dia
 no filter	calendar	es-ca	Sense filtre
 no matches found	calendar	es-ca	No s'han trobat resultats
@@ -190,7 +195,12 @@ on any time change too	calendar	es-ca	també en qualsevol canvi d'hora
 on invitation / cancelation only	calendar	es-ca	només en invitació / cancel·lació
 on participant responses too	calendar	es-ca	també en respostes dels participants
 on time change of more than 4 hours too	calendar	es-ca	també en un canvi d'hora superior a 4 hores
+one month	calendar	es-ca	un mes
+one week	calendar	es-ca	una setmana
+one year	calendar	es-ca	un any
+only the initial date of that recuring event is checked!	calendar	es-ca	Només s'ha comprovat la data inicial d'aquesta cita recursiva!
 open todo's:	calendar	es-ca	Tasques pendents
+or enddate / -time	calendar	es-ca	o data/hora final
 order	calendar	es-ca	Ordre
 overlap holiday	calendar	es-ca	encavalcar festiu
 participant	calendar	es-ca	Participant
@@ -237,6 +247,7 @@ sat	calendar	es-ca	Ds
 scheduling conflict	calendar	es-ca	Conflicte de calendari
 search results	calendar	es-ca	Resultats de la recerca
 select a %1	calendar	es-ca	Selecciona un %1
+select a time	calendar	es-ca	tria una hora
 selected contacts (%1)	calendar	es-ca	Contactes seleccionats (%1)
 send updates via email	common	es-ca	Enviar actualitzacions per correu electrònic
 send/receive updates via email	calendar	es-ca	Enviar i rebre actualitzacions per correu electrònic
@@ -267,6 +278,8 @@ specifies the the number of intervals shown in the planner view.	calendar	es-ca	
 start date/time	calendar	es-ca	Data/Hora d'inici
 start- and enddates	calendar	es-ca	Dates d'inici i fi
 startdate	calendar	es-ca	Data d'inici
+startdate / -time	calendar	es-ca	Data/hora d'inici
+startdate and -time of the search	calendar	es-ca	Data i hora d'inici de la cerca
 startrecord	calendar	es-ca	Registre inicial
 su	calendar	es-ca	Dg
 submit to repository	calendar	es-ca	Enviar al repositori
@@ -291,7 +304,11 @@ this message is sent when you set an alarm for a certain event. include all info
 this month	calendar	es-ca	Aquest mes
 this week	calendar	es-ca	Aquesta setmana
 this year	calendar	es-ca	Aquest any
+three month	calendar	es-ca	tres mesos
 thu	calendar	es-ca	Dj
+til	calendar	es-ca	fins
+timeframe	calendar	es-ca	Període de temps
+timeframe to search	calendar	es-ca	Període de temps a cercar
 title	calendar	es-ca	Títol
 title of the event	calendar	es-ca	Títol de la cita
 title-row	calendar	es-ca	Fila del títol
@@ -304,14 +321,18 @@ translation	calendar	es-ca	Traducció
 tu	calendar	es-ca	Dt
 tue	calendar	es-ca	Dt
 two dayview	calendar	es-ca	dues vistes diàries
+two weeks	calendar	es-ca	dues setmanes
 update a single entry by passing the fields.	calendar	es-ca	Actualitzar una entrada individual passant els camps.
 updated	calendar	es-ca	Actualitzat
 use end date	calendar	es-ca	Utilitzar data final
+use the selected time and close the popup	calendar	es-ca	utilitza el temps seleccionat i tanca la finestra emergent
 view this entry	calendar	es-ca	Veure aquesta entrada
 we	calendar	es-ca	Dc
 wed	calendar	es-ca	Dc
 week	calendar	es-ca	Setmana
 weekday starts on	calendar	es-ca	La setmana comença en
+weekdays	calendar	es-ca	Dies de la setmana
+weekdays to use in search	calendar	es-ca	Dies de la setmana a utilitzar en la cerca
 weekly	calendar	es-ca	Setmanal
 weekview	calendar	es-ca	Vista setmanal
 weekview including weekend	calendar	es-ca	Vista setmanal incloent caps de setmana
