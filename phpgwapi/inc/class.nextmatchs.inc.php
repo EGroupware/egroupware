@@ -133,7 +133,7 @@
 				'link'       => 'nextmatchs_link.tpl'
 			));
 
-			$maxmatchs = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
 
 			if (($start != 0) && ($start > $maxmatchs))
 			{
@@ -184,7 +184,7 @@
 			$tpl->set_file(array(
 				'link'       => 'nextmatchs_link.tpl'
 			));
-			$maxmatchs = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
 
 			if (($total > $maxmatchs) && ($total > $start + $maxmatchs))
 			{
