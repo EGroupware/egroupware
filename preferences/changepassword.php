@@ -56,7 +56,7 @@ if (! $submit) {
             		   . "need to be done manually."); ?>
    </pre>
 <?php
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+  $phpgw->common->phpgw_footer();
 } else {
    if ($n_passwd != $n_passwd_2)
       $error = lang("the two passwords are not the same");

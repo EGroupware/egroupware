@@ -19,8 +19,6 @@
   // Authorize the user to use setup app
   include("setup_auth.inc.php");
   // Does not return unless user is authorized
-  echo "<html><head><title>phpGroupWare Setup</title></head>\n";
-  echo "<body bgcolor='#ffffff'>\n"; 
 
   /* Database setup */
   switch($phpgw_info["server"]["db_type"]){
@@ -55,6 +53,8 @@
   /* Database setup */
   switch($action){
     case "askforupgrade":
+      echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+      echo "<body bgcolor='#ffffff'>\n"; 
       echo "<table border=\"0\" align=\"center\">\n";
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
@@ -100,6 +100,8 @@
 <?php
       break;
     case "Dump my old tables":
+      echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+      echo "<body bgcolor='#ffffff'>\n"; 
       echo "<table border=\"0\" align=\"center\">\n";
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Information</b></font></td>\n";
@@ -121,6 +123,8 @@
       echo "</table>\n";
       break;
     case "Upgrade":
+      echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+      echo "<body bgcolor='#ffffff'>\n"; 
       echo "<table border=\"0\" align=\"center\">\n";
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Information</b></font></td>\n";
@@ -148,6 +152,8 @@
       if ($db->num_rows() == 0){
         $db->query("select * from accounts");
         if ($db->num_rows() == 0){
+          echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+          echo "<body bgcolor='#ffffff'>\n"; 
           echo "<table border=\"0\" align=\"center\">\n";
           echo "  <tr bgcolor=\"486591\">\n";
           echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
@@ -170,6 +176,8 @@
           Header("Location: $PHP_SELF?action=askforupgrade");
         }
       }else{
+        echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+        echo "<body bgcolor='#ffffff'>\n"; 
         echo "<table border=\"0\" align=\"center\">\n";
         echo "  <tr bgcolor=\"486591\">\n";
         echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";

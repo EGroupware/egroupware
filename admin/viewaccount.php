@@ -99,5 +99,5 @@
    </center>
 
 <?php
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-
+        $phpgw->common->phpgw_footer();
+?>

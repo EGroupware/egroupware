@@ -313,6 +313,5 @@
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
 	  . "/preferences/"));
   }
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-
+  $phpgw->common->phpgw_footer();
 ?>

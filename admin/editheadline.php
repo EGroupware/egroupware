@@ -72,7 +72,7 @@
       </center>
      </form>
      <?php
-     include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+     $phpgw->common->phpgw_footer();
 
   } else {
      $phpgw->db->lock("news_site");

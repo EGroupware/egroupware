@@ -166,6 +166,6 @@
 	. "status = '" . lang("Generate printer-friendly version"). "'";
      echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\">";
      echo "[". lang("Printer Friendly") . "]</A>";
-     include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+     $phpgw->common->phpgw_footer();
   }
 ?>

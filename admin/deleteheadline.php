@@ -49,7 +49,7 @@
       </table>
      </center>
 <?php
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+        $phpgw->common->phpgw_footer();
   }
   else {
    $table_locks = array('news_site','news_headlines','users_headlines');

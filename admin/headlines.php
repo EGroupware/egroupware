@@ -42,5 +42,5 @@
      . "<tr><td colspan=\"5\"><input type=\"submit\" value=\"".lang("Add")
      . "\"></td></tr></form></table></center>";
 
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+  $phpgw->common->phpgw_footer();
 ?>

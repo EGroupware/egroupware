@@ -1,6 +1,6 @@
   phpGroupWare Application Development
   Dan Kuykendall <dan@kuykendall.org>
-  v0.5, 09 September 2000
+  v0.9 29 September 2000
 
   This document explains phpGroupWare's infrastructure and API, along
   with what is required to integrate applications into it.
@@ -98,7 +98,9 @@
      5.2 Basic functions
         5.2.1 $phpgw->link
      5.3 Application Functions
-        5.3.1 $phpgw->common->appsession
+        5.3.1 $phpgw->common->phpgw_header
+        5.3.2 $phpgw->common->phpgw_footer
+        5.3.3 $phpgw->common->appsession
      5.4 File functions
         5.4.1 $phpgw->vfs->read_file
         5.4.2 $phpgw->vfs->write_file
@@ -128,8 +130,8 @@
            7.2.2.1 The lang table
            7.2.2.2 lang.sql
      7.3 Common return codes
-
   8. Using Templates
+
      8.1 Overview
      8.2 How to use templates
 
@@ -192,9 +194,9 @@
   If you need help converting your application to templates and our lang
   support, we will try to connect you with someone to help.
 
+
+
   22..22..  WWrriittiinngg//ppoorrttiinngg yyoouurr aapppplliiccaattiioonn
-
-
 
   22..22..11..  IInncclluuddee ffiilleess
 
@@ -249,13 +251,16 @@
   +o  appname/inc/functions.inc.php - This file should include all your
      application specific functions.
 
-  +o  appname/inc/header.inc.php - This file is loaded just after the
-     system header/navbar, and allows developers to use it for whatever
-     they need to load.
+  +o  appname/inc/header.inc.php - This file is loaded by
+     $phpgw->common->header just after the system header/navbar, and
+     allows developers to use it for whatever they need to load.
 
-  +o  appname/inc/footer.inc.php - This file is loaded just before the
-     system footer, allowing developers to close connections and
-     whatever else they need.
+  +o  appname/inc/footer.inc.php - This file is loaded by
+     $phpgw->common->footer just before the system footer, allowing
+     developers to close connections and whatever else they need.
+
+
+
 
   33..33..  AAddddiinngg ffiilleess,, ddiirreeccttoorriieess aanndd iiccoonnss..
 
@@ -326,8 +331,6 @@
   There are 2 functions to coordinate the display of each application's
   links, section_start() and section_end()
 
-
-
   33..55..11..  sseeccttiioonn__ssttaarrtt
 
   section_start($title,$icon_url) starts the section for your
@@ -359,9 +362,6 @@
   applications and functions.
 
   44..22..  DDiirreeccttoorryy ttrreeee
-
-
-
 
 
 
@@ -538,7 +538,18 @@
   55..33..  AApppplliiccaattiioonn FFuunnccttiioonnss
 
 
-  55..33..11..  $$pphhppggww-->>ccoommmmoonn-->>aappppsseessssiioonn
+  55..33..11..  $$pphhppggww-->>ccoommmmoonn-->>pphhppggww__hheeaaddeerr
+
+  $phpgw->phpgw_header()
+  Print out the start of the HTML page, including the navigation bar and
+  includes appname/inc/header.php
+
+  55..33..22..  $$pphhppggww-->>ccoommmmoonn-->>pphhppggww__ffooootteerr
+
+  $phpgw->phpgw_footer()
+  Prints the system footer, and includes appname/inc/footer.php
+
+  55..33..33..  $$pphhppggww-->>ccoommmmoonn-->>aappppsseessssiioonn
 
   $phpgw->common->appsession($data)
   Store important information session information that your application
@@ -580,6 +591,7 @@
   You must send the complete path to the file.
   Example:
 
+
   ______________________________________________________________________
   $data = $phpgw->vfs->write_file("/some/dir/to/file.txt");
   ______________________________________________________________________
@@ -592,6 +604,7 @@
   $phpgw->vfs->read_userfile($file)
   Returns the data from $file, which resides in the users private dir.
   Example:
+
   ______________________________________________________________________
   $data = $phpgw->vfs->read_userfile("file.txt");
   ______________________________________________________________________
@@ -641,6 +654,7 @@
   $body = "Give me a call\n Been wondering what your up to.";
   $errors = $phpgw->msg->send("email", $to, $subject, $body);
   ______________________________________________________________________
+
 
 
 
@@ -711,6 +725,8 @@
   directory.
   $phpgw_info["server"]["temp_dir"] = Directory that can be used for
   temporarily storing files
+  $phpgw_info["server"]["files_dir"] = Directory er and group files are
+  stored
   $phpgw_info["server"]["common_include_dir"] = Location of the
   core/shared include files.
   $phpgw_info["server"]["template_dir"] = Active template files
@@ -718,12 +734,16 @@
   user.
   $phpgw_info["server"]["dir_separator"] = Allows compatibility with
   WindowsNT directory format,
-  $phpgw_info["server"]["encrpytkey"] =
+  $phpgw_info["server"]["encrpytkey"] = Key used for encryption
+  functions
   $phpgw_info["server"]["site_title"] = Site Title will show in the
   title bar of each webpage.
   $phpgw_info["server"]["webserver_url"] = URL to phpGroupWare
   installation.
-  $phpgw_info["server"]["charset"]      = Unknown
+  $phpgw_info["server"]["hostname"] = Name of the server phpGroupWare is
+  installed upon.
+  $phpgw_info["server"]["charset"]      = default charset,
+  default:iso-8859-1
   $phpgw_info["server"]["version"] = phpGroupWare version.
 
   66..55..  DDaattaabbaassee iinnffoorrmmaattiioonn
@@ -835,6 +855,7 @@
   77..22..11..  TThhee llaanngg ffuunnccttiioonn
 
 
+
   lang($key, $m1="", $m2="", $m3="", $m4="", $m5="",
                $m6="", $m7="", $m8="", $m9="", $m10="")
 
@@ -898,6 +919,9 @@
   application name in for app_name otherwise use the name common. The
   message_id should be in lower case for a small increase in speed.
 
+
+
+
   77..33..  CCoommmmoonn rreettuurrnn ccooddeess
 
   If you browse through the phpGroupWare sources, you may notice a
@@ -919,7 +943,6 @@
   Would print
 
   Your message has been sent
-
 
 
   translated into the current language.
@@ -958,6 +981,9 @@
 
   This document was written by Dan Kuykendall.
 
+  2000-09-25 documentation on lang(), codes, administration and
+  preferences extension added by Steve Brown.
+
   99..44..  CCooppyyrriigghhttss aanndd TTrraaddeemmaarrkkss
 
   Copyright (c)  Dan Kuykendall.  Permission is granted to copy,
@@ -973,6 +999,46 @@
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro).  Thanks to all the developers and users who contribute to
   making phpGroupWare such a success.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

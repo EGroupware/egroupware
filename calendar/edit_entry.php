@@ -414,5 +414,5 @@ function validate_and_submit() {
   } // ***** This might be out of place.  I was getting tons of parse errors
     // from if ($can_edit) {   This needs to be rewritten, because if you do
     // not own the entry.  You should not get into this portion of the program.
-    include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+    $phpgw->common->phpgw_footer();
 ?>

@@ -96,8 +96,8 @@
 </B></FONT>
 <FONT SIZE="+1" COLOR="<?php echo $H2COLOR;?>">
 <?php
-  $phpgw->db->query("SELECT lastname, firstname FROM accounts WHERE loginid='"
-	      . $phpgw_info["user"]["userid"]. "'");
+  $phpgw->db->query("SELECT account_lastname, account_firstname FROM accounts WHERE account_lid='"
+	      . $phpgw_info["user"]["account_lid"]. "'");
   echo "<BR>\n";
   if ($phpgw->db->next_record()) {
      if (strlen($phpgw->db->f(0)) || strlen($phpgw->db->f(1))) {
@@ -170,4 +170,5 @@
 onMouseOver="window.status = '<?php echo lang("Generate printer-friendly version"); ?>'">[<?php echo lang("Printer Friendly"); ?>]</A>
 
 <?php
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+  $phpgw->common->phpgw_footer();
+?>

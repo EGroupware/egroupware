@@ -3,10 +3,12 @@
 <!-- LinuxDoc file was created by hand by <Dan Kuykendall> 7 July 2000 -->
 <!--
 $Log$
-Revision 1.5  2000/09/26 15:56:24  sjb4891
-Added documentation on hook facility for preferences and admin pages.
-Added docs on the DB based lang() function, and the standard return codes.
-Ran the whole thing through aspell to clean up typos.
+Revision 1.6  2000/09/29 05:24:17  sjb4891
+Added $phpgw->common->phpgw_footer() function, and changed all
+places that were including the footer.inc.php to use the function.
+
+Re-arrange phpgw.inc.php to include optional classes after reading the DB config
+misc bugfixes.
 
 -->
 <article>
@@ -17,7 +19,7 @@ Ran the whole thing through aspell to clean up typos.
   Dan Kuykendall &lt;dan@kuykendall.org&gt;
 </author>
 <date>
-  v0.5, 09 September 2000
+  v0.9 29 September 2000
 </date>
 <abstract>
   This document explains phpGroupWare's infrastructure and API, along with what is required to integrate applications into it.
@@ -92,8 +94,8 @@ Ran the whole thing through aspell to clean up typos.
   To make things easy for developers we go ahead and load the following files.
   <itemize>
   <item> appname/inc/functions.inc.php - This file should include all your application specific functions.
-  <item> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.
-  <item> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whatever else they need.
+  <item> appname/inc/header.inc.php - This file is loaded by <tt>$phpgw->common->header</tt> just after the system header/navbar, and allows developers to use it for whatever they need to load.
+  <item> appname/inc/footer.inc.php - This file is loaded by <tt>$phpgw->common->footer</tt> just before the system footer, allowing developers to close connections and whatever else they need.
   </itemize>
 </p>
 <sect1>Adding files, directories and icons.
@@ -299,6 +301,17 @@ Example:
 </p>
 <sect1>Application Functions
 <p>
+<sect2>$phpgw->common->phpgw_header
+<p>
+<tt>$phpgw->phpgw_header()</tt><newline>
+Print out the start of the HTML page, including the navigation bar
+and includes <tt>appname/inc/header.php</tt>
+</p>
+<sect2>$phpgw->common->phpgw_footer
+<p>
+<tt>$phpgw->phpgw_footer()</tt><newline>
+Prints the system footer, and includes <tt>appname/inc/footer.php</tt>
+</p>
 <sect2>$phpgw->common->appsession
 <p>
 <tt>$phpgw->common->appsession($data)</tt><newline>
@@ -428,13 +441,15 @@ $errors = $phpgw->msg->send("email", $to, $subject, $body);
   <tt>$phpgw_info["server"]["server_root"] = </tt>Main installation directory<newline>
   <tt>$phpgw_info["server"]["include_root"] = </tt>Location of the '<tt>inc</tt>' directory.<newline>
   <tt>$phpgw_info["server"]["temp_dir"] = </tt>Directory that can be used for temporarily storing files<newline>
+  <tt>$phpgw_info["server"]["files_dir"] = </tt>Directory er and group files are stored<newline>
   <tt>$phpgw_info["server"]["common_include_dir"] = </tt>Location of the core/shared include files.<newline>
   <tt>$phpgw_info["server"]["template_dir"] = </tt>Active template files directory. This is defaulted by the server, and changeable by the user.<newline>
   <tt>$phpgw_info["server"]["dir_separator"] = </tt>Allows compatibility with WindowsNT directory format,<newline>
-  <tt>$phpgw_info["server"]["encrpytkey"] = </tt><newline>
+  <tt>$phpgw_info["server"]["encrpytkey"] = </tt>Key used for encryption functions<newline>
   <tt>$phpgw_info["server"]["site_title"] = </tt>Site Title will show in the title bar of each webpage.<newline>
   <tt>$phpgw_info["server"]["webserver_url"] = </tt>URL to phpGroupWare installation.<newline>
-  <tt>$phpgw_info["server"]["charset"]	 = </tt>Unknown<newline>
+  <tt>$phpgw_info["server"]["hostname"] = </tt>Name of the server phpGroupWare is installed upon.<newline>
+  <tt>$phpgw_info["server"]["charset"]	 = </tt>default charset, default:<tt>iso-8859-1</tt><newline>
   <tt>$phpgw_info["server"]["version"] = </tt>phpGroupWare version.<newline>
 </p>
 <sect1>Database information

@@ -62,4 +62,4 @@
      . "<table border=0 width=45% align=center><tr><td align=left><input type=\"submit\" "
      . "value=\"" . lang("Add") . "\"></td></tr></table></form>";
 
-  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+  $phpgw->common->phpgw_footer();
