@@ -200,6 +200,7 @@ select state	etemplate	de	US-State auswählen
 select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen auswählen
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
+sets today as date	etemplate	de	setzt heutiges Datum
 show	etemplate	de	Anzeigen
 show (no save)	etemplate	de	Anzeigen (nicht speichern)
 show values	etemplate	de	Werte anzeigen
@@ -224,6 +225,7 @@ time	etemplate	de	Uhrzeit
 to start the db-tools	etemplate	de	startet die DB-Tools
 to start the etemplate editor	etemplate	de	startet den eTemplate Editor
 to start the search	etemplate	de	startet die Suche
+today	etemplate	de	Heute
 type	etemplate	de	Typ
 type of the column	etemplate	de	Typ der Spalte
 type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)

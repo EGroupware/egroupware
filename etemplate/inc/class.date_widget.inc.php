@@ -121,7 +121,7 @@
 				'H' => 'select-number',
 				'i' => 'select-number'
 			);
-			$options = array(
+			$opts = array(
 				'H' => $this->timeformat == '12' ? ',0,12' : ',0,23',
 				'i' => ',0,59,5'
 			);
@@ -137,22 +137,26 @@
 			{
 				$dcell = $tpl->empty_cell();
 				$dcell['type'] = $types[$format[$n]];
-				$dcell['size'] = $options[$format[$n]];
+				$dcell['size'] = $opts[$format[$n]];
 				$dcell['name'] = $format[$n];
 				$dcell['help'] = lang($help[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
 				$dcell['no_lang'] = True;
 				$row[$tpl->num2chrs($i)] = &$dcell;
 				unset($dcell);
-
-				if ($n == 2 && $options & 2)	// Today button
+				
+				if ($n == 2 && ($options & 2))	// Today button
 				{
 					$dcell = $tpl->empty_cell();
-					$dcell['type'] = 'button';
 					$dcell['name'] = 'today';
-					$dcell['label'] = $type == 'Today';
+					$dcell['label'] = 'Today';
 					$dcell['help'] = 'sets today as date';
-					$dcell['onchange'] = "this.form.elements['$name"."[Y]'].value='".date('Y')."'; this.form.elements['$name"."[m]'].value='".date('n')."';this.form.elements['$name"."[d]'].value='".(0+date('d'))."'; return false;";
-					$row[$tpl->num2chrs(3)] = &$dcell;
+					if (($js = $tmpl->java_script()))
+					{
+						$dcell['needed'] = True;	// to get a button
+						$dcell['onchange'] = "this.form.elements['$name"."[Y]'].value='".date('Y')."'; this.form.elements['$name"."[m]'].value='".date('n')."';this.form.elements['$name"."[d]'].value='".(0+date('d'))."'; return false;";
+					}
+					$dcell['type'] = $js ? 'button' : 'checkbox';
+					$row[$tpl->num2chrs(++$i)] = &$dcell;
 					unset($dcell);
 				}
 				if ($n == 2 && $type == 'date-time')	// insert some space between date+time
@@ -193,11 +197,21 @@
 
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
 		{
+			//echo "date_widget::post_process('$name','$extension_data') value=<pre>"; print_r($value); echo "</pre>\n";
 			if (!isset($value))
 			{
 				return False;
 			}
-			if ($value['d'] || $value['H'] !== '' || $value['i'] !== '')
+			if ($value['today'])
+			{
+				$set = array('Y','m','d');
+				foreach($set as $d)
+				{
+					$value[$d] = date($d);
+				}
+			}
+			if ($value['d'] || isset($value['H']) && $value['H'] !== '' || 
+			                   isset($value['i']) && $value['i'] !== '')
 			{
 				if ($value['d'])
 				{

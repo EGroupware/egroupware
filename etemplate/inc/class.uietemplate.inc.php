@@ -604,7 +604,7 @@
 					break;
 				case 'button':
 					list($app) = explode('.',$this->name);
-					if ($this->java_script() && $cell['onchange'] != '') // use a link instead of a button
+					if ($this->java_script() && $cell['onchange'] != '' && !$cell['needed']) // use a link instead of a button
 					{
 						if ($cell['onchange'] == 1)
 						{
@@ -856,7 +856,7 @@
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 					$label = $this->html->label($label,$form_name,$accesskey[1]);
 				}
-				if ($type == 'radio' || strstr($label,'%s'))	// default for radio is label after the button
+				if ($type == 'radio' || $type == 'checkbox' || strstr($label,'%s'))	// default for radio is label after the button
 				{
 					$html = strstr($label,'%s') ? str_replace('%s',$html,$label) : $html.' '.$label;
 				}
@@ -998,6 +998,11 @@
 		*/
 		function java_script($consider_not_tested_as_enabled = True)
 		{
+			$ret = !!$GLOBALS['phpgw_info']['etemplate']['java_script'] ||
+				$consider_not_tested_as_enabled && !isset($GLOBALS['phpgw_info']['etemplate']['java_script']);
+			//echo "<p>java_script($consider_not_tested_as_enabled)='$ret', java_script='".$GLOBALS['phpgw_info']['etemplate']['java_script']."', isset(java_script)=".isset($GLOBALS['phpgw_info']['etemplate']['java_script'])."</p>\n";
+			
+			return $ret;
 			return !!$GLOBALS['phpgw_info']['etemplate']['java_script'] ||
 				$consider_not_tested_as_enabled &&
 				(!isset($GLOBALS['phpgw_info']['etemplate']['java_script']) ||

@@ -200,6 +200,7 @@ select state	etemplate	en	Select State
 select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox
+sets today as date	etemplate	en	sets today as date
 show	etemplate	en	Show
 show (no save)	etemplate	en	Show (no save)
 show values	etemplate	en	Show Values
@@ -224,6 +225,7 @@ time	etemplate	en	Time
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
 to start the search	etemplate	en	to start the search
+today	etemplate	en	Today
 type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
