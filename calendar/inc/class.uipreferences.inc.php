@@ -103,6 +103,7 @@
 				$selected['month'] = ' selected';
 			}
 			$str = '<select name="prefs[defaultcalendar]">'
+				. '<option value="planner"'.$selected['planner'].'>'.lang('Planner').'</option>'
 				. '<option value="year"'.$selected['year'].'>'.lang('Yearly').'</option>'
 				. '<option value="month"'.$selected['month'].'>'.lang('Monthly').'</option>'
 				. '<option value="week"'.$selected['week'].'>'.lang('Weekly').'</option>'
@@ -143,6 +144,20 @@
 				$str .= '<option value="'.$key.'"'.(intval($this->bo->prefs['calendar']['interval'])==$key?' selected':'').'>'.$value.'</option>'."\n";
 			}
 			$this->display_item(lang('Display interval in Day View'),'<select name="prefs[interval]">'."\n".$str.'</select>'."\n");
+
+			$var = Array(
+				1	=> '1',
+				2	=> '2',
+				3	=> '3',
+				4	=> '4',
+			);
+
+			$str = '';
+			while(list($key,$value) = each($var))
+			{
+				$str .= '<option value="'.$key.'"'.(intval($this->bo->prefs['calendar']['planner_intervals_per_day'])==$key?' selected':'').'>'.$value.'</option>'."\n";
+			}
+			$this->display_item(lang('Number of Intervals per Day in Planner View'),'<select name="prefs[planner_intervals_per_day]">'."\n".$str.'</select>'."\n");
 
 			$checkboxes = Array(
 				'send_updates'	=> lang('Send/receive updates via email'),

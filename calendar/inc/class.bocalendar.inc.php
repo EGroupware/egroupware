@@ -191,7 +191,12 @@
 			$this->printer_friendly = (intval(get_var('friendly',Array('HTTP_GET_VARS','HTTP_POST_VARS','DEFAULT'),0)) == 1?True:False);
 
 			$this->filter = get_var('filter',Array('HTTP_POST_VARS','DEFAULT'),' '.$this->prefs['calendar']['defaultfilter'].' ');
-			$this->sortby = get_var('sortby',Array('HTTP_POST_VARS'));
+			if($GLOBALS['phpgw']->accounts->get_type($this->owner)=='g')
+			{
+				$this->filter = ' all ';
+			}
+
+			$this->sortby = get_var('sortby',Array('HTTP_POST_VARS','DEFAULT'),'category');
 			$this->cat_id = get_var('cat_id',Array('HTTP_POST_VARS'));
 
 			$this->so = CreateObject('calendar.socalendar',
@@ -388,7 +393,7 @@
 
 		function read_entry($id)
 		{
-			if($this->check_perms(PHPGW_ACL_READ))
+			if($this->check_perms(PHPGW_ACL_READ,$id))
 			{
 				$event = $this->so->read_entry($id);
 				if(!isset($event['participants'][$this->owner]) && $this->user_is_a_member($event,$this->owner))
@@ -403,8 +408,7 @@
 
 		function delete_single($param)
 		{
-			
-			if($this->check_perms(PHPGW_ACL_DELETE))
+			if($this->check_perms(PHPGW_ACL_DELETE,intval($param['id'])))
 			{
 				$temp_event = $this->get_cached_event();
 				$event = $this->read_entry(intval($param['id']));
@@ -430,7 +434,7 @@
 
 		function delete_entry($id)
 		{
-			if($this->check_perms(PHPGW_ACL_DELETE))
+			if($this->check_perms(PHPGW_ACL_DELETE,$id))
 			{
 				$temp_event = $this->read_entry($id);
 //				if($this->owner == $temp_event['owner'])
@@ -448,7 +452,7 @@
 
 		function reinstate($params='')
 		{
-			if($this->check_perms(PHPGW_ACL_EDIT) && isset($params['cal_id']) && isset($params['reinstate_index']))
+			if($this->check_perms(PHPGW_ACL_EDIT,$params['cal_id']) && isset($params['reinstate_index']))
 			{
 				$event = $this->so->read_entry($params['cal_id']);
 				@reset($params['reinstate_index']);
@@ -538,13 +542,10 @@
 				$send_to_ui = False;
 			}
 
-			if($this->debug)
-			{
-				echo '<!-- ID : '.$l_cal['id'].' -->'."\n";
-			}
+			print_debug('ID',$l_cal['id']);
 
-         if(isset($GLOBALS['HTTP_GET_VARS']['readsess']))
-         {
+			if(get_var('readsess',Array('GET')))
+			{
 				$event = $this->restore_from_appsession();
 				$event['title'] = stripslashes($event['title']);
 				$event['description'] = stripslashes($event['description']);
@@ -557,22 +558,19 @@
 							'readsess'	=> 1
 						)
 					);
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 				$overlapping_events = False;
-         }
-         else
+			}
+			else
 			{
-   			if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT)))
-	   		{
-	   		   ExecMethod('calendar.uicalendar.index');
-					$GLOBALS['phpgw']->common->phpgw_exit();
-	   		}
-
-				if($this->debug)
+				if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT,$l_cal['id'])))
 				{
-					echo '<!-- Prior to fix_update_time() -->'."\n";
+					ExecMethod('calendar.uicalendar.index');
+					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
+
+				print_debug('prior to fix_update_time()');
 				$this->fix_update_time($l_start);
 				$this->fix_update_time($l_end);
 
@@ -653,12 +651,10 @@
 						$acct_type = $GLOBALS['phpgw']->accounts->get_type(intval($parts[$i]));
 						if($acct_type == 'u')
 						{
-//							$part[$parts[$i]] = 1;
 							$part[intval($parts[$i])] = $accept_type;
 						}
 						elseif($acct_type == 'g')
 						{
-//							$part[$parts[$i]] = 1;
 							$part[intval($parts[$i])] = $accept_type;
 							$groups[] = $parts[$i];
 							/* This pulls ALL users of a group and makes them as participants to the event */
@@ -672,8 +668,7 @@
 							}
 							while($member = each($members))
 							{
-//								$part[$member[1]['account_id']] = 1;
-+								$part[$member[1]['account_id']] = $accept_type;
+								$part[$member[1]['account_id']] = $accept_type;
 							}
 						}
 					}
@@ -850,23 +845,7 @@
 
 		function can_user_edit($event)
 		{
-			$can_edit = False;
-		
-			if(($event['owner'] == $this->owner) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
-			{
-				if($event['public'] == False || $event['public'] == 0)
-				{
-					if($this->check_perms(PHPGW_ACL_PRIVATE) == True)
-					{
-						$can_edit = True;
-					}
-				}
-				else
-				{
-					$can_edit = True;
-				}
-			}
-			return $can_edit;
+			return $this->check_perms(PHPGW_ACL_EDIT,$event);
 		}
 
 		function fix_update_time(&$time_param)
@@ -1129,22 +1108,49 @@
 //			}
 		}
 
-		function check_perms($needed,$user=0)
+//		function check_perms($needed,$user=0)
+//		{
+//			if($user == 0)
+//			{
+//				$allowed = !!($this->grants[$this->owner] & $needed);
+//				if($this->debug)
+//				{
+//					echo '<!-- Grantor: '.$this->owner.' Rights: '.$this->grants[$this->owner].' Allowed: '.$allowed.'-->'."\n";
+//				}
+//				return $allowed;
+//			}
+//			else
+//			{
+//				return !!($this->grants[intval($user)] & $needed);
+//			}
+//		}
+
+		function check_perms($needed,$event=0)
 		{
-			if($user == 0)
+			if (is_int($event) && $event == 0)
 			{
-				$allowed = !!($this->grants[$this->owner] & $needed);
-				if($this->debug)
-				{
-					echo '<!-- Grantor: '.$this->owner.' Rights: '.$this->grants[$this->owner].' Allowed: '.$allowed.'-->'."\n";
-				}
-				
-				return $allowed;
+				$owner = $this->owner;
 			}
 			else
 			{
-				return !!($this->grants[intval($user)] & $needed);
+				if (!is_array($event))
+				{
+					$event = $this->so->read_entry((int) $event);
+				}
+				if (!is_array($event))
+				{
+					return False;
+				}
+				$owner = $event['owner'];
+				$private = $event['public'] == False || $event['public'] == 0;
 			}
+			$user = $GLOBALS['phpgw_info']['user']['account_id'];
+			$grants = $this->grants[$owner];
+
+			$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
+			//echo "<p>rb_check_perms for user $user and needed_acl $needed: event=$event[title]: owner=$owner, privat=$privat, grants=$grants ==> access=$access</p>\n";
+
+			return $access;
 		}
 
 		function get_fullname($accountid)
@@ -1235,7 +1241,8 @@
 			{
 				return 'private';
 			}
-			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly)
+//			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly)
+			elseif(strlen($event[$field]) > 19 && $this->printer_friendly)
 			{
 				return substr($event[$field], 0 , 19) . '...';
 			}
@@ -2031,11 +2038,8 @@
 				   )
 				  )
 				{
-					if($this->debug)
-					{
-						echo '<!-- Msg Type = '.$msg_type.' -->'."\n";
-						echo '<!-- userid = '.$userid.' -->'."\n";
-					}
+					print_debug('Msg Type',$msg_type);
+					print_debug('UserID',$userid);
 					if(!is_object($send))
 					{
 						$send = CreateObject('phpgwapi.send');
@@ -2049,11 +2053,8 @@
 					}
 					$part_prefs = $preferences->create_email_preferences(intval($userid));
 					$to = $part_prefs['email']['address'];
-					
-					if($this->debug)
-					{
-						echo '<!-- Email being sent to: '.$to.' -->'."\n";
-					}
+
+					print_debug('Email being sent to',$to);
 
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
@@ -2128,26 +2129,17 @@
 			$t_time = $this->maketime($t_appt) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$y_time = $t_time - 86400;
 			$tt_time = $t_time + 86399;
-			if($this->debug)
-			{
-				echo '<!-- T_TIME : '.$t_time.' : '.$GLOBALS['phpgw']->common->show_date($t_time).' -->'."\n";
-				echo '<!-- Y_TIME : '.$y_time.' : '.$GLOBALS['phpgw']->common->show_date($y_time).'-->'."\n";
-				echo '<!-- TT_TIME : '.$tt_time.' : '.$GLOBALS['phpgw']->common->show_date($tt_time).'-->'."\n";
-			}
+			print_debug('T_TIME',$t_time.' : '.$GLOBALS['phpgw']->common->show_date($t_time));
+			print_debug('Y_TIME',$y_time.' : '.$GLOBALS['phpgw']->common->show_date($y_time));
+			print_debug('TT_TIME',$tt_time.' : '.$GLOBALS['phpgw']->common->show_date($tt_time));
 			while(list($key,$alarm) = each($event['alarm']))
 			{
 				if($alarm['enabled'])
 				{
-					if($this->debug)
-					{
-						echo '<!-- TIME : '.$alarm['time'].' : '.$GLOBALS['phpgw']->common->show_date($alarm['time']).' ('.$event['id'].') -->'."\n";
-					}
+					print_debug('TIME',$alarm['time'].' : '.$GLOBALS['phpgw']->common->show_date($alarm['time']).' ('.$event['id'].')');
 					if($event['recur_type'] != MCAL_RECUR_NONE)   /* Recurring Event */
 					{
-						if($this->debug)
-						{
-							echo '<!-- Recurring Event -->'."\n";
-						}
+						print_debug('Recurring Event');
 						if($alarm['time'] > $y_time && $GLOBALS['phpgw']->common->show_date($alarm['time'],'Hi') < $starttime_hi && $alarm['time'] < $t_time)
 						{
 							$found = True;
@@ -2159,10 +2151,7 @@
 					}
 				}
 			}
-			if($this->debug)
-			{
-				echo '<!-- Found: '.$found.' -->'."\n";
-			}
+			print_debug('Found',$found);
 			return $found;
 		}
 		
@@ -2173,18 +2162,12 @@
 			{
 				if(isset($new_event['participants'][$old_userid]))
 				{
-					if($this->debug)
-					{
-						echo '<!-- Modifying event for user '.$old_userid.' -->'."\n";
-					}
+					print_debug('Modifying event for user',$old_userid);
 					$this->modified[intval($old_userid)] = $new_status;
 				}
 				else
 				{
-					if($this->debug)
-					{
-						echo '<!-- Deleting user '.$old_userid.' from the event -->'."\n";
-					}
+					print_debug('Deleting user from the event',$old_userid);
 					$this->deleted[intval($old_userid)] = $old_status;
 				}
 			}
@@ -2193,17 +2176,14 @@
 			{
 				if(!isset($old_event['participants'][$new_userid]))
 				{
-					if($this->debug)
-					{
-						echo '<!-- Adding event for user '.$new_userid.' -->'."\n";
-					}
+					print_debug('Adding event for user',$new_userid);
 					$this->added[$new_userid] = 'U';
 					$new_event['participants'][$new_userid] = 'U';
 				}
 			}
-		
-	      if(count($this->added) > 0 || count($this->modified) > 0 || count($this->deleted) > 0)
-   	   {
+
+			if(count($this->added) > 0 || count($this->modified) > 0 || count($this->deleted) > 0)
+			{
 				if(count($this->added) > 0)
 				{
 					$this->send_update(MSG_ADDED,$this->added,'',$new_event);
@@ -2222,6 +2202,7 @@
 		function remove_doubles_in_cache($firstday,$lastday)
 		{
 			$already_moved = Array();
+			$has_category  = Array(); // remove only multiple occurences of a category per event/day
 			for($v=$firstday;$v<=$lastday;$v++)
 			{
 				if (!$this->cached_events[$v])
@@ -2231,10 +2212,13 @@
 				while (list($g,$event) = each($this->cached_events[$v]))
 				{
 					$start = sprintf('%04d%02d%02d',$event['start']['year'],$event['start']['month'],$event['start']['mday']);
-					if($this->debug)
+					print_debug('EVENT',print_r($event,False));
+					print_debug('start',$start);
+					print_debug('v',$v);
+
+					if($start < $firstday)
 					{
-						echo "<p>Event:<br>"; print_r($event); echo "</p>";
-						echo '<!-- start='.$start.', v='.$v.' ';
+						$start = $firstday; // event continues into current month/year
 					}
 
 //					if ($start != $v && $event['recur_type'] == MCAL_RECUR_NONE)							// this is an enddate-entry --> remove it
@@ -2243,11 +2227,16 @@
 						unset($this->cached_events[$v][$g]);
 						if($g != count($this->cached_events[$v]))
 						{
+							if ($has_category[$event['id']]['category'] != True)
+							{
+								continue; // we need at least one evidence for this category
+							}
 							for($h=$g + 1;$h<$c_daily;$h++)
 							{
 								$this->cached_events[$v][$h - 1] = $this->cached_events[$v][$h];
 							}
 							unset($this->cached_events[$v][$h]);
+							$has_category[$event['id']]['category'] = True;
 						}
 
 //						if ($start < $firstday && $event['recur_type'] == MCAL_RECUR_NONE)				// start before period --> move it to the beginning
@@ -2267,28 +2256,22 @@
 							{
 								$this->cached_events[$firstday][] = $event;
 								$already_moved[$event['id']] = 1;
-								if($this->debug)
-								{
-									echo 'moved --> '."\n";
-								}
+								print_debug('Event moved');
 							}
 							else
 							{
 								$already_moved[$event['id']] = 2;
-								if($this->debug)
-								{
-									echo 'removed (not moved) -->'."\n";
-								}
+								print_debug('Event removed (not moved)');
 							}
-       				}
-						elseif($this->debug)
+						}
+						else
 						{
-							echo 'removed -->'."\n";
+							print_debug('Event removed');
 						}
 					}
-					elseif($this->debug)
+					else
 					{
-						echo 'ok -->'."\n";
+						print_debug('Event OK');
 					}
 				}
 				flush();

@@ -135,7 +135,26 @@
 
 		function list_events_keyword($keywords)
 		{
-			$sql = 'AND (phpgw_cal_user.cal_login='.$this->owner.') ';
+//			$sql = 'AND (phpgw_cal_user.cal_login='.$this->owner.') ';
+			$o = $this->owner;
+			$type = $GLOBALS['phpgw']->accounts->get_type($o);
+
+			if($type == 'g') 
+			{
+			   $members = $GLOBALS['phpgw']->acl->get_ids_for_location($o, 1, 'phpgw_group');
+			}
+			else
+			{
+			  $members[0] = $o;
+			}
+
+			$sql = 'AND (phpgw_cal_user.cal_login='.$members[0];
+
+			for($i=1; $i<count($members); $i++)
+			{
+			  $sql .= ' OR phpgw_cal_user.cal_login='.$members[$i];
+			}
+			$sql .= ') ';
 
 			$words = split(' ',$keywords);
 			for ($i=0;$i<count($words);$i++)
@@ -212,8 +231,22 @@
 		{
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
 			{
+				$db2 = $this->cal->stream;
+				$this->cal->stream->query('SELECT cal_id FROM phpgw_cal_user WHERE cal_login='.$account_id,__LINE__,__FILE__)
+				while($this->cal->stream->next_record())
+				{
+					$id = $this->cal->stream->f('cal_id');
+					$db2->query('SELECT count(*) FROM phpgw_cal_user WHERE cal_id='.$id.' AND cal_login='.$new_owner,__LINE__,__FILE__);
+					if($db2->f(0) == 0)
+					{
+						$db2->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_id='.$id.' AND cal_login='.$account_id,__LINE__,__FILE__);
+					}
+					else
+					{
+						$db2->query('DELETE FROM phpgw_cal_user WHERE cal_id='.$id.' AND cal_login='.$account_id,__LINE__,__FILE__);
+					}
+				}
 				$this->cal->stream->query('UPDATE phpgw_cal SET owner='.$new_owner.' WHERE owner='.$account_id,__LINE__,__FILE__);
-				$this->cal->stream->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);
 			}
 		}
 

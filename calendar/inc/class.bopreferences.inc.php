@@ -41,7 +41,8 @@
 					'workdayends',
 					'defaultcalendar',
 					'defaultfilter',
-					'interval'
+					'interval',
+					'planner_intervals_per_day'
 				);
 
 				for($i=0;$i<count($pref_list);$i++)
