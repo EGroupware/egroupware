@@ -2,8 +2,9 @@
 	/**************************************************************************\
 	* phpGroupWare API - Categories                                            *
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
+	*                  and Bettina Gille [ceb@phpgroupware.org]                *
 	* Category manager                                                         *
-	* Copyright (C) 2000, 2001 Joseph Engo                                     *
+	* Copyright (C) 2000,2001,2002 Joseph Engo                                 *
 	* -------------------------------------------------------------------------*
 	* This library is part of the phpGroupWare API                             *
 	* http://www.phpgroupware.org/api                                          * 
@@ -239,7 +240,14 @@
 
 			$mainselect = ' AND cat_level=0';
 
-			$this->db->query($sql . $mainselect . $ordermethod,__LINE__,__FILE__);
+			if ($limit)
+			{
+				$this->db->limit_query($sql . $mainselect . $ordermethod,$start,__LINE__,__FILE__);
+			}
+			else
+			{
+				$this->db->query($sql . $mainselect . $ordermethod,__LINE__,__FILE__);
+			}
 
 			$i = 0;
 			while ($this->db->next_record())
@@ -262,7 +270,14 @@
 			{
 				$subselect = " AND cat_parent='" . $cats[$i]['id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
 
-				$this->db->query($sql . $subselect . $ordermethod,__LINE__,__FILE__);
+				if ($limit)
+				{
+					$this->db->limit_query($sql . $subselect . $ordermethod,$start,__LINE__,__FILE__);
+				}
+				else
+				{
+					$this->db->query($sql . $subselect . $ordermethod,__LINE__,__FILE__);
+				}
 
 				$subcats = array();
 				$j = 0;
@@ -451,7 +466,6 @@
 
 			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
 			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
-			$cat_values['data'] = $this->db->db_addslashes($cat_values['data']);
 
 			$this->db->query("INSERT INTO phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
 				. "cat_main,cat_level) VALUES ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access']
@@ -507,7 +521,6 @@
 
 			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
 			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
-			$cat_values['data'] = $this->db->db_addslashes($cat_values['data']);
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $cat_values['name'] . "', cat_description='" . $cat_values['descr']
 				. "', cat_data='" . $cat_values['data'] . "', cat_parent='" . $cat_values['parent'] . "', cat_access='"
