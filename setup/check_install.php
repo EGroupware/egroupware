@@ -492,7 +492,7 @@
 			{
 				echo lang('Please fix the above errors (%1) and warnings(%2)',$error_icon,$warning_icon).'. ';
 			}
-			echo '<a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
+			echo '<br><a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
 		}
 		$setup_tpl->pparse('out','T_footer');
 		//echo "</body>\n</html>\n";
