@@ -429,7 +429,7 @@
 
 			if ($allValues[0]['gidnumber'][0])
 			{
-				$name_list[$account_lid] = False
+				$name_list[$account_lid] = False;
 			}
 
 			return $name_list[$account_lid];
