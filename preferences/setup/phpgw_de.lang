@@ -1,30 +1,32 @@
-change your password 	preferences	de	Passwort ändern
+change your password	preferences	de	Passwort ändern
 change your profile	preferences	de	Profil ändern
 change your settings	preferences	de	Einstellungen ändern
 date format	preferences	de	Datumsformat
 default application	preferences	de	Standard-Anwendung
+default preferences	preferences	de	Voreinstellungen
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 enter your new password	preferences	de	Neues Passwort eingeben
+forced preferences	preferences	de	Feststehende Einstellungen
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
+language	preferences	de	Sprache
+max matches per page	preferences	de	maximale Treffer pro Seite
 max matchs per page	preferences	de	Maximale Treffer pro Seite
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail server. Dies müssen sie separat tun.
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
 re-enter your password	preferences	de	Neues Passwort wiederholen
 select different theme	preferences	de	anderes Schema wählen
+select one	preferences	de	Bitte wählen
 show current users on navigation bar	preferences	de	Anzahl gegenwärtiger Benutzer in der Navigationsleiste anzeigen
 show high priority events on main screen	preferences	de	Ereignisse mit hoher Priorität auf der Startseite anzeigen
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 text only	preferences	de	nur Text
+the two passwords are not the same	preferences	de	Die beiden Passworte sind nicht identisch
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
 this server is located in the x timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 time format	preferences	de	Zeitformat
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
-Select one	preferences	de	Bitte wählen
-Language	preferences	de	Sprache
-Max matches per page	preferences	de	maximale Treffer pro Seite
+your current theme is: x	preferences	de	Ihr aktuelles Farbschema ist: %1
 your preferences	preferences	de	Pers&ouml;nliche Einstellungen
-default preferences	preferences	de	Voreinstellungen
-forced preferences	preferences	de	Feststehende Einstellungen
