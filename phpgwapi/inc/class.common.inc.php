@@ -1388,7 +1388,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 				if ($GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
 				{
-					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= $data['title'];
+					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= lang($data['title']);
 					$GLOBALS['phpgw_info']['navbar'][$app]['url']	= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
 					$GLOBALS['phpgw_info']['navbar'][$app]['name']	= $app;
 

@@ -1,31 +1,36 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Applications manager functions                        *
-  * This file written by Mark Peters <skeeter@phpgroupware.org>              *
-  * Copyright (C) 2001 Mark Peters                                           *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare API - Applications manager functions                        *
+	* Written by Mark Peters <skeeter@phpgroupware.org>                        *
+	* Copyright (C) 2001 - 2002 Mark Peters                                    *
+	* ------------------------------------------------------------------------ *
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
+	/* $Id$ */
 	/*!
 	@class applicatons
 	@abstract functions for managing and installing apps
 	@discussion Author: skeeter
 	*/
+
+	/*
+		we should remove app_title from this class and always use the lang function 
+		to to translate app_name for in functions, where it is needed (ceb)
+	*/
+
 	class applications
 	{
 		var $account_id;
@@ -154,7 +159,8 @@
 			{
 				while($app = each($apps))
 				{
-					$this->data[$app[1]] = array(
+					$this->data[$app[1]] = array
+					(
 						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
 						'name'		=> $app[1],
 						'enabled'	=> True,
@@ -166,7 +172,8 @@
 			}
 			elseif(gettype($apps))
 			{
-				$this->data[$apps] = array(
+				$this->data[$apps] = array
+				(
 					'title'		=> $GLOBALS['phpgw_info']['apps'][$apps]['title'],
 					'name'		=> $apps,
 					'enabled'	=> True,
@@ -263,7 +270,8 @@
 			{
 				if ($this->is_system_enabled($app[1]))
 				{
-					$this->data[$app[1]] = array(
+					$this->data[$app[1]] = array
+					(
 						'title'		=> $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
 						'name'		=> $app[1],
 						'enabled'	=> True,
@@ -294,8 +302,7 @@
 				{
 					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array
 					(
-						//'title'	=> str_replace('- ','-',ucwords(str_replace('_','- ',$this->db->f('app_name')))),
-						'title'		=> lang($this->db->f('app_name')),
+						'title'		=> $this->db->f('app_name'),
 						'name'		=> $this->db->f('app_name'),
 						'enabled'	=> True,
 						'status'	=> $this->db->f('app_enabled'),
