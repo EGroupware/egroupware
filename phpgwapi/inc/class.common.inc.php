@@ -1157,8 +1157,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['logo_img']	= $this->image('phpgwapi','logo');
 					$var['home_img']	= $this->image('phpgwapi','welcome-'.($app=='home' ? 'red' : 'grey'));
 					$var['prefs_img']	= $this->image('preferences','preferences-'.($app=='preferences' ? 'red' : 'grey'));
-					$var['logout_img']	= $this->image('phpgwapi','logout-grey');
-					$var['about_img']	= $this->image('phpgwapi','about');
+					$var['logout_img']	= $this->image('phpgwapi','logout');
+					$var['about_img']	= $this->image('phpgwapi','about-'.($app=='about' ? 'red' : 'grey'));
 					$var['manual_img']	= $this->image('manual','help');
 					$var['greybar']		= $this->image('phpgwapi','greybar');
 					break;
