@@ -3,7 +3,6 @@
 Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 Admins	setup	en	Admins
 All Users	setup	en	All Users
-are you sure?	setup	en	ARE YOU SURE?
 Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 Authentication / Accounts	setup	en	Authentication / Accounts
 Auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
@@ -62,6 +61,7 @@ application management	setup	en	Application Management
 application name and status	setup	en	Application Name and Status
 application name and status information	setup	en	Application Name and Status Information
 application title	setup	en	Application Title
+are you sure?	setup	en	ARE YOU SURE?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	en	At your request, this script is going to attempt to create the database and assign the db user rights to it
 at your request, this script is going to attempt to install all the applications for you	setup	en	At your request, this script is going to attempt to install all the applications for you
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	en	At your request, this script is going to attempt to upgrade your old applications to the current versions
@@ -101,6 +101,7 @@ details for admin account	setup	en	Details for Admin account
 domain	setup	en	Domain
 dont touch my data	setup	en	Dont touch my data
 edit current configuration	setup	en	Edit Current Configuration
+enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
 export phpgroupware accounts from sql to ldap	setup	en	Export phpGroupWare accounts from SQL to LDAP
 export sql users to ldap	setup	en	Export SQL users to LDAP
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
@@ -129,6 +130,9 @@ logout	setup	en	Logout
 makesure	setup	en	Make sure that your database is created and the account permissions are set
 manage applications	setup	en	Manage Applications
 manage languages	setup	en	Manage Languages
+mcrypt algorithm (default tripledes)	setup	en	Mcrypt algorithm (default TRIPLEDES)
+mcrypt mode (default cbc)	setup	en	Mcrypt mode (default CBC)
+mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requires mcrypt PHP extension)
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	en	Multi-Language support setup
 mysqlinstr	setup	en	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
@@ -165,6 +169,7 @@ select which group(s) will be exported (group membership will be maintained)	set
 select which group(s) will be imported (group membership will be maintained)	setup	en	Select which group(s) will be imported (group membership will be maintained)
 select which languages you would like to use	setup	en	Select which languages you would like to use
 select which method of upgrade you would like to do	setup	en	Select which method of upgrade you would like to do
+select which type of authentication you are using	setup	en	Select which type of authentication you are using
 select which user(s) will be exported	setup	en	Select which user(s) will be exported
 select which user(s) will be imported	setup	en	Select which user(s) will be imported
 select which user(s) will have admin privileges	setup	en	Select which user(s) will have admin privileges
