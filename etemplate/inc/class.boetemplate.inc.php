@@ -31,6 +31,7 @@
 			'int'		=> 'Integer',		// like text, but only numbers (size = [min][,max])
 			'float'	=> 'Floating Point', // --------------- " --------------------------
 			'textarea'=> 'Textarea',	// Multiline Text Input (size = [rows][,cols])
+			'htmlarea' => 'Formatted Text (HTML)',
 			'checkbox'=> 'Checkbox',
 			'radio'	=> 'Radiobutton',	// Radiobutton (size = value if checked)
 			'button'	=> 'Submitbutton',

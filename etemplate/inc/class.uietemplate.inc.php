@@ -625,6 +625,17 @@
 					if (!$readonly)
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
+				case 'htmlarea':	// Multiline formatted Text Input, size: [inline styles for the widget]
+					if (!$readonly)
+					{
+						$html .= $this->html->htmlarea($form_name,$value,$cell_options);
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					}
+					else
+					{
+						$html .= $this->html->div($this->html->activate_links($value),'style="overflow: auto; border: thin inset black;'.$cell_options.'"');
+					}
+					break;
 				case 'checkbox':
 					if (!empty($cell_options))
 					{
@@ -1008,6 +1019,13 @@
 						{
 							$this->unset_array($content,$form_name);
 						}
+						break;
+					case 'htmlarea':
+						if (isset($value))
+						{
+							$value = stripslashes($value);
+						}
+						$this->set_array($content,$form_name,$value);
 						break;
 					case 'text':
 					case 'textarea':

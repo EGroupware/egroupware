@@ -116,6 +116,7 @@ fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
 floating point	etemplate	de	Gleitkommawert
 foreign key	etemplate	de	Foreign Key
+formatted text (html)	etemplate	de	Formatierter Text (HTML)
 go to the first entry	etemplate	de	gehe zum ersten Eintrag
 go to the last entry	etemplate	de	gege zum letzten Eintrag
 go to the next page of entries	etemplate	de	gehe zur nächsten Seite
@@ -169,6 +170,8 @@ new search	etemplate	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
+nextmatch filterheader	etemplate	de	Nextmatch Filterkopf
+nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 not null	etemplate	de	NOT NULL
