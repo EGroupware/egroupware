@@ -130,15 +130,11 @@
 				}
 				else
 				{
-					$whereclause .= ' WHERE ';
+					$whereclause .= ' WHERE ( ';
 				}
 
 				$whereclause .= " account_firstname LIKE '%$query%' OR account_lastname LIKE "
-					. "'%$query%' OR account_lid LIKE '%$query%' ";
-				if($whereclause)
-				{
-					$whereclause .= ' ) ';
-				}
+					. "'%$query%' OR account_lid LIKE '%$query%' )";
 			}
 
 			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause";
