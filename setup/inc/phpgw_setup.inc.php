@@ -22,23 +22,26 @@
       echo '
         <html>
         <head>
-          <title>phpGroupWare Setup';
-          if ($title != ""){echo " - ".$title;}
-          echo'</title>
-          <style type="text/css"><!-- .link { color: #FFFFFF; } --></style>
+          <title>phpGroupWare Setup
+      ';
+      if ($title != ""){echo " - ".$title;}
+      echo'
+        </title>
+        <style type="text/css"><!-- .link { color: #FFFFFF; } --></style>
         </head>
         <BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" marginright="0" marginbottom="0">
         <table border="0" width="100%" cellspacing="0" cellpadding="2">
         <tr>
           <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '.$phpgw_info["server"]["versions"]["phpgwapi"].' setup</font>
         </td>
-        <td align="right" bgcolor="486591">';
-        if ($nologoutbutton) {
-          echo "&nbsp;";
-        } else {
-          echo '<a href="' . $PHP_SELF . '?FormLogout='.$logoutfrom.'" class="link">Logout</a>&nbsp;';
-        }
-        echo "</td></tr></table>";
+        <td align="right" bgcolor="486591">
+      ';
+      if ($nologoutbutton) {
+        echo "&nbsp;";
+      } else {
+        echo '<a href="' . $PHP_SELF . '?FormLogout='.$logoutfrom.'" class="link">Logout</a>&nbsp;';
+      }
+      echo "</td></tr></table>";
     }
     function login_form()
     {
@@ -109,7 +112,7 @@
       
       $phpgw_setup->template->set_file(array("header" => "header.inc.php.template"));
       while(list($k,$v) = each($setting)) {
-         $phpgw_setup->template->set_var(strtoupper($k),$v);
+        $phpgw_setup->template->set_var(strtoupper($k),$v);
       }
       return $phpgw_setup->template->parse("out","header");
     }
@@ -325,8 +328,7 @@
       }
   
       $phpgw_info["setup"]["dontshowtheheaderagain"] = True;
-      ?>
-      
+?>
       <head>
        <title>phpGroupWare setup <?php echo $title; ?></title>
         <style type="text/css">
@@ -345,14 +347,13 @@
          echo $phpgw_info["server"]["versions"]["phpgwapi"]; ?> setup</font>
         </td>
         <td align="right" bgcolor="486591">
-         <?php
-           if ($nologoutbutton) {
-              echo "&nbsp;";
-           } else {
-              echo '<a href="' . $PHP_SELF . '?FormLogout=True" class="link">Logout</a>&nbsp;';
-           }
-         
-           echo "</td></tr></table>";
+<?php
+      if ($nologoutbutton) {
+        echo "&nbsp;";
+      } else {
+        echo '<a href="' . $PHP_SELF . '?FormLogout=True" class="link">Logout</a>&nbsp;';
+      }
+      echo "</td></tr></table>";
     }
   }
 ?>
