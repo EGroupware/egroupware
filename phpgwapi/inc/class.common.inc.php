@@ -737,7 +737,7 @@
 					$f .= '.inc.php';
 				}
 
-				if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
+				if (file_exists($f) && ($phpgw_info['user']['apps'][$appname] || $appname == 'preferences'))
 				{
 					include($f);
 				}
@@ -761,7 +761,7 @@
 						$f .= '.inc.php';
 					}
 
-					if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
+					if (file_exists($f) && ($phpgw_info['user']['apps'][$appname] || $appname == 'preferences'))
 					{
 						include($f);
 					}
