@@ -17,7 +17,7 @@
 	$submit = False;			// set to some initial value
 
 	$GLOBALS['phpgw_info']['flags'] = array(
-		'disable_template_class' => True,
+		'disable_Template_class' => True,
 		'login'                  => True,
 		'currentapp'             => 'login',
 		'noheader'               => True
