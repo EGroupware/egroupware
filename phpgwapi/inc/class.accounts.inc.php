@@ -274,7 +274,7 @@
 					foreach ($account_search[$serial2]['data'] as $id => $data)
 					{
 						if (!in_array($id,$valid))
-						{ echo "<p>Id $id not in valid scipping !!!</p>\n";
+						{
 							$this->total--;
 							continue;
 						}
