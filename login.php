@@ -10,12 +10,11 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
-//		'disable_template_class' => True,
+	$GLOBALS['phpgw_info']['flags'] = array
+	(
 		'login'                  => True,
 		'currentapp'             => 'login',
 		'noheader'               => True
@@ -30,26 +29,34 @@
 		Header('Location: setup/index.php');
 		exit;
 	}
-		
+	
 	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
-	$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
+
 	$GLOBALS['phpgw']->xslttpl = CreateObject('phpgwapi.xslttemplates',$GLOBALS['phpgw_info']['server']['template_dir']);
-	$GLOBALS['phpgw']->template->set_file('phpgw', 'phpgw.tpl');
-	$GLOBALS['phpgw']->template->set_file('login','login.tpl');
+	$GLOBALS['phpgw']->xslttpl->add_file(array('login'));
+
+	$data = array
+	(
+		'login_theme'				=> 'phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'] . '/css/submarine.css',
+		'phpgw_head_charset'		=> lang('charset'),
+		'phpgw_head_website_title'	=> $GLOBALS['phpgw_info']['server']['site_title']
+	);
+
+	$data['login_standard'] = array
+	(
+		'login_layout'			=> $GLOBALS['phpgw_info']['login_template_set'],
+		'lang_phpgw_statustext'	=> lang('phpGroupWare --> homepage')
+	);
 
 	// This is used for system downtime, to prevent new logins.
 	if ($GLOBALS['phpgw_info']['server']['deny_all_logins'])
 	{
-		$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_start','phpgw_main_start');
-		$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_end','phpgw_main_end');
-		$GLOBALS['phpgw']->template->set_block('login','login_form_deny','login_form');
-		$GLOBALS['phpgw']->template->set_var('template_set','default');
-		$GLOBALS['phpgw']->template->set_var('phpgw_head_tags','<script><!-- if (window!= top) top.location.href=location.href// --></script>');
-		$GLOBALS['phpgw']->template->fp('phpgw_body','login_form');
-		$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
-		$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
+		$GLOBALS['phpgw']->xslttpl->set_var('login',$data);
+		$GLOBALS['phpgw']->xslttpl->pp();
 		exit;
 	}
+
+	$data['login_standard']['loginscreen'] = True;
 
 	function show_cookie()
 	{
@@ -62,7 +69,6 @@
 
 	function check_logoutcode()
 	{
-		//$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template');
 		$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
 		switch($GLOBALS['HTTP_GET_VARS']['code'])
 		{
@@ -181,7 +187,7 @@
 			$GLOBALS['phpgw']->translation->add_app('loginscreen');
 			if (lang('loginscreen_message') != 'loginscreen_message*')
 			{
-				$GLOBALS['phpgw']->template->set_var('phpgw_loginscreen_message',stripslashes(lang('loginscreen_message')));
+				$data['login_standard']['phpgw_loginscreen_message'] = stripslashes(lang('loginscreen_message'));
 			}
 		}
 		else
@@ -193,7 +199,7 @@
 			$GLOBALS['phpgw']->translation->add_app('loginscreen');
 			if (lang('loginscreen_message') != 'loginscreen_message*')
 			{
-				$GLOBALS['phpgw']->template->set_var('phpgw_loginscreen_message',stripslashes(lang('loginscreen_message')));
+				$data['login_standard']['phpgw_loginscreen_message'] = stripslashes(lang('loginscreen_message'));
 			}
 		}
 	}
@@ -205,7 +211,7 @@
 
 	if ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
-		$GLOBALS['phpgw']->template->set_block('login','login_form_select_domain','login_form');
+		$data['login_standard']['domain_select'] = True;
 		reset($phpgw_domain);
 		unset($domain_select);      // For security ... just in case
 		while ($domain = each($phpgw_domain))
@@ -217,11 +223,6 @@
 			}
 			$domain_select .= '>' . $domain[0] . '</option>';
 		}
-		$GLOBALS['phpgw']->template->set_var('select_domain',$domain_select);
-	}
-	else
-	{
-		$GLOBALS['phpgw']->template->set_block('login','login_form_standard','login_form');
 	}
 
 	while (list($name,$value) = each($GLOBALS['HTTP_GET_VARS']))
@@ -238,29 +239,17 @@
 	}
 	check_logoutcode();
 
-	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_start','phpgw_main_start');
-	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_end','phpgw_main_end');
+	/*$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
+	$GLOBALS['phpgw']->template->set_var('registration_url','registration/');*/
 
-	$GLOBALS['phpgw']->template->set_var('phpgw_login_msgbox',$GLOBALS['phpgw']->common->msgbox('',False));
+	$data['login_standard']['msgbox']			= $GLOBALS['phpgw']->common->msgbox('',False);
+	$data['login_standard']['login_url']		= 'login.php' . $extra_vars;
+	$data['login_standard']['cookie']			= show_cookie();
+	$data['login_standard']['lang_username']	= lang('username');
+	$data['login_standard']['phpgw_version']	= $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
+	$data['login_standard']['lang_password']	= lang('password');
+	$data['login_standard']['lang_login']		= lang('login');
 
-	$GLOBALS['phpgw']->template->set_var('phpgw_head_charset',lang('charset'));
-	$GLOBALS['phpgw']->template->set_var('phpgw_head_description','phpGroupWare - Login Page');
-	$GLOBALS['phpgw']->template->set_var('phpgw_head_keywords','phpGroupWare');
-	$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
-	$GLOBALS['phpgw']->template->set_var('phpgw_head_target','_self');
-	$GLOBALS['phpgw']->template->set_var('phpgw_head_browser_ico','favicon.ico');
-	$GLOBALS['phpgw']->template->set_var('phpgw_head_website_title', $GLOBALS['phpgw_info']['server']['site_title']);
-	$GLOBALS['phpgw']->template->set_var('phpgw_body_tags','bgcolor="#FFFFFF"');
-	$GLOBALS['phpgw']->template->set_var('login_url', 'login.php' . $extra_vars);
-	$GLOBALS['phpgw']->template->set_var('registration_url','registration/');
-	$GLOBALS['phpgw']->template->set_var('cookie',show_cookie());
-	$GLOBALS['phpgw']->template->set_var('lang_username',lang('username'));
-	$GLOBALS['phpgw']->template->set_var('lang_phpgw_login',lang('phpGroupWare login'));
-	$GLOBALS['phpgw']->template->set_var('version',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-	$GLOBALS['phpgw']->template->set_var('lang_password',lang('password'));
-	$GLOBALS['phpgw']->template->set_var('lang_login',lang('login'));
-	$GLOBALS['phpgw']->template->set_var('template_set',$GLOBALS['phpgw_info']['login_template_set']);
-	$GLOBALS['phpgw']->template->fp('phpgw_body','login_form');
-	$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
-	$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
+	$GLOBALS['phpgw']->xslttpl->set_var('login',$data);
+	$GLOBALS['phpgw']->xslttpl->pp();
 ?>
