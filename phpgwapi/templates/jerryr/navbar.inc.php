@@ -43,7 +43,7 @@
 			$show_menu_event = 'onClick';
 		}
 
-		
+
 		$applications = '';
 
 		//	== 'icons_and_text')
@@ -56,7 +56,8 @@
 
 		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
-			if($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
+			//if($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
+			if($app != 'preferences' && $app != 'about')
 			{
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
 				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" title="'. $title . '" border="0" />';
@@ -64,7 +65,7 @@
 				if($i<$max_icons)
 				{
 					$app_icons .= '<td height="40" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
-					
+
 					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
 					{
 						$app_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
@@ -81,257 +82,281 @@
 
 					$app_titles .= '>' . $title . '</a></td>';
 				}
-				else // generate extra icon layer | always shows icons and text
+				//				else // generate extra icon layer | always shows icons and text
+				else // generate extra icon layer shows icons and/or text
 				{
-					$app_extra_icons .= '<tr><td><a href="' . $app_data['url'] . '"';
+					// check for small icon version else use default and let the browser resize
+					$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" width="16" title="'. $title . '" border="0" />';
 					
-					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+					$app_extra_icons .= '<tr>';
+
+					if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='text')
 					{
-						$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+						$app_extra_icons .= '<td class="extraIconsRow"><a href="' . $app_data['url'] . '"';
+
+						if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+						{
+							$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+						}
+
+						$app_extra_icons .= ' >' . $icon . '</a></td>';
 					}
 
-					$app_extra_icons .= '>' . $icon . '</a></td>';
 
-					$app_extra_icons .= '<td align="left" class="extraIconsRow"><a href="'.$app_data['url'] . '"';
 
-					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
-					{
-						$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+					//					$app_extra_icons .= '<tr><td><a href="' . $app_data['url'] . '"';
+
+					//					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+					//					{
+						//						$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+						//					}
+
+						//					$app_extra_icons .= '>' . $icon . '</a></td>';
+
+						$app_extra_icons .= '<td align="left" class="extraIconsRow" style=""><a href="'.$app_data['url'] . '"';
+
+						if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+						{
+							$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+						}
+
+						$app_extra_icons .= '>' . $title . '</a></td></tr>';
 					}
 
-					$app_extra_icons .= '>' . $title . '</a></td></tr>';
+					unset($icon);
+					unset($title);
+					$i++;
 				}
-
-				unset($icon);
-				unset($title);
-				$i++;
 			}
+
+//			$var['app_icons'] = $app_icons;
+		if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='text')
+		{
+			$var['app_icons'] = $app_icons;
 		}
 
-		$var['app_icons'] = $app_icons;
-
-		if($i > $max_icons)
-		{
-			$app_extra_icons_div = '
-			<script language="javascript">
-			new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,\'right\')
-			</script>
+			if($i > $max_icons)
+			{
+				$app_extra_icons_div = '
+				<script language="javascript">
+				new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,\'right\')
+				</script>
 				<div id="menu1Container">
 				<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
-				
-					<div id="extraIcons">
-					<table>
-						<tr><td>&nbsp;</td><td nowrap="nowrap" align="right"><a href="#" '.$show_menu_event.'="ypSlideOutMenu.hide(\'menu1\')" title="'.lang('close').'"><img style="margin:4px;" border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
-'.$app_extra_icons.'					</table>
+
+				<div id="extraIcons">
+				<table cellspacing="0" cellpadding="0">
+				<tr><td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd;padding:1px;"><a href="#" '.$show_menu_event.'="ypSlideOutMenu.hide(\'menu1\')" title="'.lang('close').'"><img style="" border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
+				'.$app_extra_icons.'					</table>
 				</div>
 
 				</div>
 				</div>
 				';
 
-			$var['app_extra_icons_div']= $app_extra_icons_div;
-//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
-			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
-		}
-
-		if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='icons')
-		{
-			$var['app_titles'] = $app_titles;
-		}
-		else
-		{
-			$var['app_titles'] = '<td colspan="'.$max_icons.'">&nbsp;</td>'; 
-		}
-		if(isset($GLOBALS['phpgw_info']['flags']['app_header']))
-		{
-			$var['current_app_title'] = $GLOBALS['phpgw_info']['flags']['app_header'];
-		}
-		else
-		{
-			$var['current_app_title']=$GLOBALS['phpgw_info']['navbar'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title'];
-		}
-
-		if(isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
-		{
-			$var['current_users'] = '<a href="'
-				. $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">'
-				. lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
-		}
-		$now = time();
-		$var['user_info'] = '<b>'.$GLOBALS['phpgw']->common->display_fullname() .'</b>'. ' - '
-			. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
-			. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
-
-		if($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
-		{
-			$api_messages = lang('You are required to change your password during your first login')
-				. '<br> Click this image on the navbar: <img src="'
-				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
-		}
-		elseif($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
-		{
-			$api_messages = lang('it has been more then %1 days since you changed your password',30);
-		}
-
-		// This is gonna change
-		if(isset($cd))
-		{
-			$var['messages'] = $api_messages . '<br>' . checkcode($cd);
-		}
-
-		$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo');
-		$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
-		$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
-
-		$GLOBALS['jerryr_tpl']->set_var($var);
-		$GLOBALS['jerryr_tpl']->pfp('out','navbar_header');
-
-		/******************************************************\
-		* The sidebox menu's                                   *
-		\******************************************************/
-
-		$menu_title = lang('General Menu');
-
-		$file['Home'] = $GLOBALS['phpgw_info']['navbar']['home']['url'];
-		if($GLOBALS['phpgw_info']['user']['apps']['preferences'])
-		{
-			$file['Preferences'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
-		}
-		$file += array(
-			array(
-				'text'    => lang('About %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
-				'no_lang' => True,
-				'link'    => $GLOBALS['phpgw_info']['navbar']['about']['url']
-			),
-			'Logout'=>$GLOBALS['phpgw_info']['navbar']['logout']['url']
-		);
-
-		if($GLOBALS['phpgw_info']['user']['preferences']['common']['auto_hide_sidebox']==1)
-		{
-			$GLOBALS['jerryr_tpl']->set_var('show_menu_event',$show_menu_event);
-			$GLOBALS['jerryr_tpl']->pparse('out','sidebox_hide_header');
-
-			display_sidebox('',$menu_title,$file);
-			$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
-
-			$GLOBALS['jerryr_tpl']->pparse('out','sidebox_hide_footer');
-
-			$var['sideboxcolstart']='';
-
-			$GLOBALS['jerryr_tpl']->set_var($var);
-			$GLOBALS['jerryr_tpl']->pparse('out','appbox');
-			$var['remove_padding'] = 'style="padding-left:0px;"';
-			$var['sideboxcolend'] = '';
-		}
-		else
-		{
-			$var['menu_link'] = '';
-			$var['sideboxcolstart'] = '<td id="tdSidebox" valign="top">';
-			$var['remove_padding'] = '';
-			$GLOBALS['jerryr_tpl']->set_var($var);
-			$GLOBALS['jerryr_tpl']->pparse('out','appbox');
-
-			display_sidebox('',$menu_title,$file);
-			$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
-
-			$var['sideboxcolend'] = '</td>';
-		}
-
-		$GLOBALS['jerryr_tpl']->set_var($var);
-		$GLOBALS['jerryr_tpl']->pparse('out','navbar_footer');
-
-		// If the application has a header include, we now include it
-		if(!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
-		{
-			list($app,$class,$method) = explode('.',$_GET['menuaction']);
-			if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
-			{
-				$GLOBALS[$class]->header();
-			}
-		}
-		$GLOBALS['phpgw']->hooks->process('after_navbar');
-		return;
-	}
-
-	function display_sidebox($appname,$menu_title,$file)
-	{
-		if(!$appname || ($appname==$GLOBALS['phpgw_info']['flags']['currentapp'] && $file))
-		{
-			$var['lang_title']=$menu_title;//$appname.' '.lang('Menu');
-			$GLOBALS['jerryr_tpl']->set_var($var);
-			$GLOBALS['jerryr_tpl']->pfp('out','extra_blocks_header');
-
-			foreach($file as $text => $url)
-			{
-				sidebox_menu_item($url,$text);
+				$var['app_extra_icons_div']= $app_extra_icons_div;
+				//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+				$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
 			}
 
-			$GLOBALS['jerryr_tpl']->pparse('out','extra_blocks_footer');
-		}
-	}
-
-	function sidebox_menu_item($item_link='',$item_text='')
-	{
-		if($item_text === '_NewLine_' || $item_link === '_NewLine_')
-		{
-			$GLOBALS['jerryr_tpl']->pparse('out','extra_block_spacer');
-		}
-		else
-		{
-			$var['icon_or_star']='<img src="'.$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images'.'/menu_icon.png" width="9" height="9" alt="Menu Icon"/>';
-			$var['target'] = '';
-			if(is_array($item_link))
+			if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='icons')
 			{
-				if(isset($item_link['icon']))
-				{
-					$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
-					$var['icon_or_star'] = '<img src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>';
-				}
-				$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
-				$var['item_link'] = $item_link['link'];
-				if ($item_link['target'])
-				{
-					$var['target'] = ' target="' . $item_link['target'] . '"';
-				}
+				$var['app_titles'] = $app_titles;
 			}
 			else
 			{
-				$var['lang_item'] = lang($item_text);
-				$var['item_link'] = $item_link;
+				$var['app_titles'] = '<td colspan="'.$max_icons.'">&nbsp;</td>'; 
 			}
+			if(isset($GLOBALS['phpgw_info']['flags']['app_header']))
+			{
+				$var['current_app_title'] = $GLOBALS['phpgw_info']['flags']['app_header'];
+			}
+			else
+			{
+				$var['current_app_title']=$GLOBALS['phpgw_info']['navbar'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title'];
+			}
+
+			if(isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
+			{
+				$var['current_users'] = '<a href="'
+				. $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">'
+				. lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
+			}
+			$now = time();
+			$var['user_info'] = '<b>'.$GLOBALS['phpgw']->common->display_fullname() .'</b>'. ' - '
+			. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
+			. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+
+			if($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
+			{
+				$api_messages = lang('You are required to change your password during your first login')
+				. '<br> Click this image on the navbar: <img src="'
+				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
+			}
+			elseif($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
+			{
+				$api_messages = lang('it has been more then %1 days since you changed your password',30);
+			}
+
+			// This is gonna change
+			if(isset($cd))
+			{
+				$var['messages'] = $api_messages . '<br>' . checkcode($cd);
+			}
+
+			$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo');
+			$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+			$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+
 			$GLOBALS['jerryr_tpl']->set_var($var);
-			$GLOBALS['jerryr_tpl']->pparse('out','extra_block_row');
+			$GLOBALS['jerryr_tpl']->pfp('out','navbar_header');
+
+			/******************************************************\
+			* The sidebox menu's                                   *
+			\******************************************************/
+
+			$menu_title = lang('General Menu');
+
+			$file['Home'] = $GLOBALS['phpgw_info']['navbar']['home']['url'];
+			if($GLOBALS['phpgw_info']['user']['apps']['preferences'])
+			{
+				$file['Preferences'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
+			}
+			$file += array(
+				array(
+					'text'    => lang('About %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title']),
+					'no_lang' => True,
+					'link'    => $GLOBALS['phpgw_info']['navbar']['about']['url']
+				),
+				'Logout'=>$GLOBALS['phpgw_info']['navbar']['logout']['url']
+			);
+
+			if($GLOBALS['phpgw_info']['user']['preferences']['common']['auto_hide_sidebox']==1)
+			{
+				$GLOBALS['jerryr_tpl']->set_var('show_menu_event',$show_menu_event);
+				$GLOBALS['jerryr_tpl']->pparse('out','sidebox_hide_header');
+
+				display_sidebox('',$menu_title,$file);
+				$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
+
+				$GLOBALS['jerryr_tpl']->pparse('out','sidebox_hide_footer');
+
+				$var['sideboxcolstart']='';
+
+				$GLOBALS['jerryr_tpl']->set_var($var);
+				$GLOBALS['jerryr_tpl']->pparse('out','appbox');
+				$var['remove_padding'] = 'style="padding-left:0px;"';
+				$var['sideboxcolend'] = '';
+			}
+			else
+			{
+				$var['menu_link'] = '';
+				$var['sideboxcolstart'] = '<td id="tdSidebox" valign="top">';
+				$var['remove_padding'] = '';
+				$GLOBALS['jerryr_tpl']->set_var($var);
+				$GLOBALS['jerryr_tpl']->pparse('out','appbox');
+
+				display_sidebox('',$menu_title,$file);
+				$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
+
+				$var['sideboxcolend'] = '</td>';
+			}
+
+			$GLOBALS['jerryr_tpl']->set_var($var);
+			$GLOBALS['jerryr_tpl']->pparse('out','navbar_footer');
+
+			// If the application has a header include, we now include it
+			if(!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
+			{
+				list($app,$class,$method) = explode('.',$_GET['menuaction']);
+				if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
+				{
+					$GLOBALS[$class]->header();
+				}
+			}
+			$GLOBALS['phpgw']->hooks->process('after_navbar');
+			return;
 		}
-	}
 
-	function parse_navbar_end()
-	{
-		$GLOBALS['jerryr_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-
-		$GLOBALS['jerryr_tpl']->set_file(
-			array(
-				'footer' => 'footer.tpl'
-			)
-		);
-		$var = Array(
-			'img_root'       => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images',
-			'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-			'version'        => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
-		);
-		$GLOBALS['phpgw']->hooks->process('navbar_end');
-
-		if($GLOBALS['phpgw_info']['user']['preferences']['common']['show_generation_time'])
+		function display_sidebox($appname,$menu_title,$file)
 		{
-			$mtime = microtime(); 
-			$mtime = explode(' ',$mtime); 
-			$mtime = $mtime[1] + $mtime[0]; 
-			$tend = $mtime; 
-			$totaltime = ($tend - $GLOBALS['page_start_time']); 
+			if(!$appname || ($appname==$GLOBALS['phpgw_info']['flags']['currentapp'] && $file))
+			{
+				$var['lang_title']=$menu_title;//$appname.' '.lang('Menu');
+				$GLOBALS['jerryr_tpl']->set_var($var);
+				$GLOBALS['jerryr_tpl']->pfp('out','extra_blocks_header');
 
-			$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime).'</span></div>';
+				foreach($file as $text => $url)
+				{
+					sidebox_menu_item($url,$text);
+				}
+
+				$GLOBALS['jerryr_tpl']->pparse('out','extra_blocks_footer');
+			}
 		}
 
-		$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-		$GLOBALS['jerryr_tpl']->set_var($var);
-		$GLOBALS['jerryr_tpl']->pfp('out','footer');
-	}
+		function sidebox_menu_item($item_link='',$item_text='')
+		{
+			if($item_text === '_NewLine_' || $item_link === '_NewLine_')
+			{
+				$GLOBALS['jerryr_tpl']->pparse('out','extra_block_spacer');
+			}
+			else
+			{
+				$var['icon_or_star']='<img src="'.$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
+				$var['target'] = '';
+				if(is_array($item_link))
+				{
+					if(isset($item_link['icon']))
+					{
+						$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
+						$var['icon_or_star'] = '<img src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>';
+					}
+					$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
+					$var['item_link'] = $item_link['link'];
+					if ($item_link['target'])
+					{
+						$var['target'] = ' target="' . $item_link['target'] . '"';
+					}
+				}
+				else
+				{
+					$var['lang_item'] = lang($item_text);
+					$var['item_link'] = $item_link;
+				}
+				$GLOBALS['jerryr_tpl']->set_var($var);
+				$GLOBALS['jerryr_tpl']->pparse('out','extra_block_row');
+			}
+		}
+
+		function parse_navbar_end()
+		{
+			$GLOBALS['jerryr_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+
+			$GLOBALS['jerryr_tpl']->set_file(
+				array(
+					'footer' => 'footer.tpl'
+				)
+			);
+			$var = Array(
+				'img_root'       => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images',
+				'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'version'        => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
+			);
+			$GLOBALS['phpgw']->hooks->process('navbar_end');
+
+			if($GLOBALS['phpgw_info']['user']['preferences']['common']['show_generation_time'])
+			{
+				$mtime = microtime(); 
+				$mtime = explode(' ',$mtime); 
+				$mtime = $mtime[1] + $mtime[0]; 
+				$tend = $mtime; 
+				$totaltime = ($tend - $GLOBALS['page_start_time']); 
+
+				$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime).'</span></div>';
+			}
+
+			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$GLOBALS['jerryr_tpl']->set_var($var);
+			$GLOBALS['jerryr_tpl']->pfp('out','footer');
+		}

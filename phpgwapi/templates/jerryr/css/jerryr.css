@@ -218,8 +218,8 @@ a.textSidebox
 #divLogo
 {
 	position:absolute;
-	left:2px;
-	top:5px;
+	left:10px;
+	top:10px;
 	z-index:51;
 }
 
@@ -229,7 +229,6 @@ a.textSidebox
 	border-top-color:#9c9c9c;
 	border-top-width:1px;
 	border-top-style:solid;
-	
 	background-image: url(../images/background-icon-bar.png); 
 	background-repeat: repeat-x
 }
@@ -264,6 +263,8 @@ a.textSidebox
 {
 	background-color:white;
 	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:5px;
 	width: 100%;
 }
 #divSideboxContainer
@@ -298,8 +299,11 @@ a.textSidebox
 	border-left-width:1px;
 	border-left-style:solid;
 	border-right-color:#9c9c9c;
-	border-right-width:1px;
+	border-right-width:2px;
 	border-right-style:solid;
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
 }
 
 #divAppbox
@@ -308,13 +312,13 @@ a.textSidebox
 	background-color:#faf8f3;
 	padding:5px;
 	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
+	border-bottom-width:2px;
 	border-bottom-style:solid;
 	border-left-color:#9c9c9c;
 	border-left-width:1px;
 	border-left-style:solid;
 	border-right-color:#9c9c9c;
-	border-right-width:1px;
+	border-right-width:2px;
 	border-right-style:solid;
 }
 
@@ -394,3 +398,97 @@ a.textSidebox
 	width:99%;
 }
 
+.titleBarBackGround
+{
+	background-image: url(../images/appbox-header-background.png); 
+	height:22px;
+	background-repeat: repeat-x;
+	text-align:center;
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+}
+
+.calDayView
+{
+	background-image: url(../images/appbox-header-background.png); 
+	height:22px;
+	background-repeat: repeat-x;
+	text-align:center;
+	padding-bottom:0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#666666;
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+}
+
+.calDayViewSideBoxes
+{
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:2px;
+	border-right-style:solid;
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:2px;
+	border-bottom-style:solid;
+	background-color:#faf8f3;
+}
+
+.calDayViewShadowBox
+{
+	border-top-color:#9c9c9c;
+	border-top-width:2px;
+	border-top-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:2px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	background-color:#ffffff;
+	padding:5px;
+}
+
+.addBookAlphaLinks
+{
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+}
