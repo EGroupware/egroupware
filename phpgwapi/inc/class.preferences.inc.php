@@ -62,7 +62,7 @@
 		*/
 		function preferences($account_id = '')
 		{
-			$this->db         = $GLOBALS['phpgw']->db;
+			$this->db         = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			$this->account_id = get_account_id($account_id);
 		}
 
