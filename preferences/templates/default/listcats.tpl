@@ -42,7 +42,7 @@
 			{td_data}
 			<td align="center"><font face="{font}"><a href="{app_url}">{lang_app}</a></font></td>
 			<td align="center"><font face="{font}"><a href="{edit}">{lang_edit_entry}</a></font></td>
-			<td align="center"><font face="{font}"><a href="{delete}">{lang_delete_entry}</font></td>
+			<td align="center"><font face="{font}"><a href="{delete}">{lang_delete_entry}</a></font></td>
 		</tr>
 
 <!-- END cat_list -->  
