@@ -184,22 +184,11 @@ class socalendar__
 		}
 		if($element!='False')
 		{
-			if(is_int($element))
-			{
-				eval("\$this->event['".$attribute."'][".$element."] = ".$value.";");
-			}
-			else
-			{
-				eval("\$this->event['".$attribute."']['".$element."'] = ".$value.";");
-			}
+			$this->event[$attribute][$element] = $value;
 		}
-		elseif(is_int($value))
+		else
 		{
-			eval("\$this->event['".$attribute."'] = ".$value.";");
-		}
-		elseif(is_string($value))
-		{
-			eval("\$this->event['".$attribute."'] = '".$value."';");
+			$this->event[$attribute] = $value;
 		}
 	}
 }

@@ -103,10 +103,11 @@
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
 
-			$templates = Array(
-				'mini_calendar'	=> 'mini_cal.tpl'
+			$p->set_file(
+				Array(
+					'mini_calendar'	=> 'mini_cal.tpl'
+				)
 			);
-			$p->set_file($templates);
 			$p->set_block('mini_calendar','mini_cal','mini_cal');
 			$p->set_block('mini_calendar','mini_week','mini_week');
 			$p->set_block('mini_calendar','mini_day','mini_day');
@@ -161,8 +162,11 @@
 
 			for($i=0;$i<7;$i++)
 			{
-				$p->set_var('dayname','<b>' . substr(lang($this->bo->datetime->days[$i]),0,2) . '</b>');
-				$p->parse('daynames','mini_day',True);
+				$var = Array(
+					'dayname'	=> '<b>' . substr(lang($this->bo->datetime->days[$i]),0,2) . '</b>',
+					'day_image'	=> ''
+				);
+				$this->output_template_array($p,'daynames','mini_day',$var);
 			}
 			$today = date('Ymd',time());
 			unset($date);
@@ -270,10 +274,11 @@
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
-			$templates = Array(
-				'index_t'	=>	'index.tpl'
+			$p->set_file(
+				Array(
+					'index_t'	=>	'index.tpl'
+				)
 			);
-			$p->set_file($templates);
 			$p->set_var($var);
 			$p->pparse('out','index_t');
 		}
@@ -337,11 +342,11 @@
 			);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$templates = Array(
-				'week_t' => 'week.tpl'
+			$p->set_file(
+				Array(
+					'week_t' => 'week.tpl'
+				)
 			);
-	
-			$p->set_file($templates);
 			$p->set_var($var);
 			$p->pparse('out','week_t');
 		}
@@ -381,10 +386,11 @@
 			);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$templates = Array(
-				'year_t' => 'year.tpl'
+			$p->set_file(
+				Array(
+					'year_t' => 'year.tpl'
+				)
 			);
-			$p->set_file($templates);
 			$p->set_block('year_t','year','year');
 			$p->set_block('year_t','month','month');
 			$p->set_block('year_t','month_sep','month_sep');
@@ -413,7 +419,7 @@
 	   	
 	   	echo '<center>';
 
-	   	if(!@$cal_id && $vcal_id)
+	   	if(!isset($cal_id) && $vcal_id)
 	   	{
 	   		$cal_id = $vcal_id;
 	   	}
@@ -445,10 +451,11 @@
 			if($this->bo->owner == $event['owner'])
 			{
       		$p = CreateObject('phpgwapi.Template',$this->template_dir);
-   			$templates = Array(
-	   			'form_button'	=> 'form_button_script.tpl'
+			   $p->set_file(
+			   	Array(
+	   				'form_button'	=> 'form_button_script.tpl'
+		   		)
 		   	);
-			   $p->set_file($templates);
 
 				if ($this->bo->check_perms(PHPGW_ACL_EDIT))
 				{
@@ -502,10 +509,10 @@
 					$this->view($cal_id);
 				}
 			}
-         $this->edit_form($event);
+         $this->edit_form($event,$cd);
 		}
 
-		function add($cd,$readsess)
+		function add($cd=0,$readsess=0)
 		{
 			global $phpgw, $phpgw_info, $cal_id, $hour, $minute;
 			
@@ -514,7 +521,7 @@
 				$this->index();
 			}
 			
-			if(isset($readsess))
+			if($readsess)
 			{
 				$event = $this->bo->restore_from_appsession;
 				if(!$event['owner'])
@@ -549,14 +556,15 @@
 				$this->bo->set_recur_none();
 				$event = $this->bo->get_cached_event();
 			}
-         $this->edit_form($event);
+         $this->edit_form($event,$cd);
 		}
 
 		function delete()
 		{
 			global $cal_id;
+			
 			$event = $this->bo->read_entry(intval($cal_id));
-			if(($cal_id > 0) && ($event['owner'] == $this->bo->owner) && !$this->bo->check_perms(PHPGW_ACL_DELETE))
+			if(($cal_id > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
 			{
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 
@@ -837,7 +845,7 @@
 			{
 				$dayname = substr(lang(date('D',mktime(0,0,0,$this->bo->month,$d,$this->bo->year))),0,2);
 
-				$header['.'.$d] = "colspan=$intervals_per_day align=center";
+				$header['.'.$d] = 'colspan="'.$intervals_per_day.'" align="center"';
 				$header[$d] = '<a href="'.$html->link('/index.php',
 										array(
 											'menuaction' => 'calendar.uicalendar.add',
@@ -904,7 +912,7 @@
 							if ($i > 1)				// further line - no name
 							{
 								$rows[$k] = array();
-								$rows[$c.'_1']['._name'] = "rowspan=$i";
+								$rows[$c.'_1']['._name'] = 'rowspan="'.$i.'"';
 							}
 							else
 							{
@@ -919,7 +927,7 @@
 					if ($akt_cell < $start_cell)
 					{
 						$row[$event->id.'_1'] = '&nbsp;';
-						$row['.'.$event['id'].'_1'] = 'colspan='.($start_cell-$akt_cell);
+						$row['.'.$event['id'].'_1'] = 'colspan="'.($start_cell-$akt_cell).'"';
 					}
 
 					$opt = &$row['.'.$event['id'].'_2'];
@@ -962,7 +970,7 @@
 						if ($akt_cell <= $last_cell)
 						{
 							$row['3'] = '&nbsp';
-							$row['.3'] = 'colspan='.(1+$last_cell-$akt_cell);
+							$row['.3'] = 'colspan="'.(1+$last_cell-$akt_cell).'"';
 						}
 					}
 				}
@@ -973,7 +981,7 @@
 					'_h' => $header,
 					'._h' => $bgcolor
 				)+$rows,
-				'width="100%" cols='.(1+$days*$intervals_per_day)
+				'width="100%" cols="'.(1+$days*$intervals_per_day).'"'
 			);
 		}
 
@@ -1368,11 +1376,11 @@
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 	
-			$templates = Array(
-				'footer'	=>	'footer.tpl'
+			$p->set_file(
+				Array(
+					'footer'	=>	'footer.tpl'
+				)
 			);
-
-			$p->set_file($templates);
 			$p->set_block('footer','footer_table','footer_table');
 			$p->set_block('footer','footer_row','footer_row');
 
@@ -1618,11 +1626,11 @@
 		{
          global $phpgw, $phpgw_info;
 
-         $month = $event->start->month;
-         $mday = $event->start->mday;
-         $year = $event->start->year;
+         $month = $event['start']['month'];
+         $mday = $event['start']['mday'];
+         $year = $event['start']['year'];
 
-         $start = mktime($event->start->hour,$event->start->min,$event->start->sec,$month,$mday,$year) - $this->bo->datetime->tz_offset;
+         $start = mktime($event['start']['hour'],$event['start']['min'],$event['start']['sec'],$month,$mday,$year) - $this->bo->datetime->tz_offset;
          $end = $this->bo->maketime($event['end']) - $this->bo->datetime->tz_offset;
 
 			$overlap = '';
@@ -1633,9 +1641,10 @@
 
 			unset($phpgw_info['flags']['noheader']);
 			unset($phpgw_info['flags']['nonavbar']);
+			$phpgw_info['flags']['nofooter'] = True;
 			$phpgw->common->phpgw_header();
 
-			$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(
 			   Array(
 				   'overlap'		=>	'overlap.tpl',
@@ -1666,7 +1675,7 @@
 				'action_confirm_button'	=> '',
 				'action_extra_field'	=> ''
 			);
-			$this->output_template_array($p,'resubmit_button','form_button',$var);
+			$this->output_template_array($p,'reedit_button','form_button',$var);
 			$p->pparse('out','overlap');
 		}
 
@@ -1804,7 +1813,7 @@
 				{
 					if ($day_params['new_event'])
 					{
-						$new_event_link = '<a href="'.$this->page('add','&date'.$date).'">'
+						$new_event_link = '<a href="'.$this->page('add','&date='.$date).'">'
 							. '<img src="'.$phpgw->common->image('calendar','new.gif').'" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">'
 							. '</a>';
 						$day_number = '<a href="'.$this->page('day','&month='.$month.'&day='.$day.'&year='.$year).'">'.$day.'</a>';
@@ -2066,11 +2075,10 @@
 				$cal_grps = '';
 				for($i=0;$i<count($event['groups']);$i++)
 				{
-					if($i>0)
+					if($phpgw->accounts->exists($event['groups'][$i]))
 					{
-						$cal_grps .= '<br>';
+						$cal_grps .= ($i>0?'<br>':'').$phpgw->accounts->id2name($event['groups'][$i]);
 					}
-					$cal_grps .= $phpgw->accounts->id2name($event['groups'][$i]);
 				}
 	
 				$var[] = Array(
@@ -2085,14 +2093,7 @@
 			{
 				if($phpgw->accounts->exists($user))
 				{
-					if($str)
-					{
-						$str .= '<br>';
-					}
-
-					$long_status = $this->bo->get_long_status($short_status);
-		
-					$str .= $phpgw->common->grab_owner_name($user).' ('.($this->bo->check_perms(PHPGW_ACL_EDIT,$user)?'<a href="'.$this->page('edit_status','&cal_id='.$event->id.'&owner='.$user).'">'.$long_status.'</a>':$long_status).')'."\n";
+					$str .= ($str?'<br>':'').$phpgw->common->grab_owner_name($user).' ('.($this->bo->check_perms(PHPGW_ACL_EDIT,$user)?'<a href="'.$this->page('edit_status','&cal_id='.$event['id'].'&owner='.$user).'">'.$this->bo->get_long_status($short_status).'</a>':$this->bo->get_long_status($short_status)).')'."\n";
 				}
 			}
 			$var[] = Array(
@@ -2566,16 +2567,13 @@
 			return '<table width="100%" cols="4"><tr align="center">'."\n".$str.'</tr></table>'."\n";
 		}
 
-		function edit_form($event)
+		function edit_form($event,$cd)
 		{
 			global $phpgw, $phpgw_info;
 			
 			$hourformat = substr($this->bo->users_timeformat,0,1);
 			
 			$sb = CreateObject('phpgwapi.sbox');
-
-			$start = $this->bo->maketime($event['start']) - $this->bo->datetime->tz_offset;
-			$end = $this->bo->maketime($event['end']) - $this->bo->datetime->tz_offset;
 
 			unset($phpgw_info['flags']['noheader']);
 			unset($phpgw_info['flags']['nonavbar']);
@@ -2625,6 +2623,7 @@
 			);
 
 // Date
+			$start = $this->bo->maketime($event['start']) - $this->bo->datetime->tz_offset;
 			$var[] = Array(
 				'field'	=> lang('Start Date'),
 				'data'	=> $phpgw->common->dateformatorder(
@@ -2637,8 +2636,8 @@
 // Time
 			if ($this->bo->prefs['common']['timeformat'] == '12')
 			{
-				$str .= '<input type="radio" name="start[ampm]" value="am"'.($event->start->hour >= 12?'':' checked').'>am'."\n"
-					. '<input type="radio" name="start[ampm]" value="pm"'.($event->start->hour >= 12?' checked':'').'>pm'."\n";
+				$str .= '<input type="radio" name="start[ampm]" value="am"'.($event['start']['hour'] >= 12?'':' checked').'>am'."\n"
+					. '<input type="radio" name="start[ampm]" value="pm"'.($event['start']['hour'] >= 12?' checked':'').'>pm'."\n";
 			}
 			$var[] = Array(
 				'field'	=> lang('Start Time'),
@@ -2646,6 +2645,7 @@
 			);
 
 // End Date
+			$end = $this->bo->maketime($event['end']) - $this->bo->datetime->tz_offset;
 			$var[] = Array(
 				'field'	=> lang('End Date'),
 				'data'	=> $phpgw->common->dateformatorder(
@@ -2658,8 +2658,8 @@
 // End Time
 			if ($this->bo->prefs['common']['timeformat'] == '12')
 			{
-				$str = '<input type="radio" name="end[ampm]" value="am"'.($event->end->hour >= 12?'':' checked').'>am'."\n"
-					. '<input type="radio" name="end[ampm]" value="pm"'.($event->end->hour >= 12?' checked':'').'>pm'."\n";
+				$str = '<input type="radio" name="end[ampm]" value="am"'.($event['end']['hour'] >= 12?'':' checked').'>am'."\n"
+					. '<input type="radio" name="end[ampm]" value="pm"'.($event['end']['hour'] >= 12?' checked':'').'>pm'."\n";
 			}
 			$var[] = Array(
 				'field'	=> lang("End Time"),
@@ -2681,7 +2681,7 @@
 // Participants
 			$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
 			$users = Array();
-			$this->build_part_list($users,$accounts,$owner);
+			$this->build_part_list($users,$accounts,$event['owner']);
     
 			$str = '';
 			@asort($users);
@@ -2699,7 +2699,7 @@
 			);
 
 // I Participate
-			if((($cal_id > 0) && isset($event['participants'][$this->bo->owner])) || !isset($cal_id))
+			if((($event['id'] > 0) && isset($event['participants'][$this->bo->owner])) || !$event['id'])
 			{
 				$checked = ' checked';
 			}

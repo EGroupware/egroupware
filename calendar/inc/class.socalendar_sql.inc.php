@@ -35,7 +35,7 @@ class socalendar_ extends socalendar__
 		if($user=='')
 		{
 			settype($user,'integer');
-			$user = $phpgw_info['user']['account_id'];
+			$this->user = $phpgw_info['user']['account_id'];
 		}
 		elseif(is_int($user)) 
 		{
@@ -270,6 +270,7 @@ class socalendar_ extends socalendar__
 
 	function expunge()
 	{
+		reset($this->deleted_events);
 		if(count($this->deleted_events) <= 0)
 		{
 			return 1;

@@ -237,7 +237,7 @@
 			if($this->check_perms(PHPGW_ACL_DELETE))
 			{
 			   $temp_event = $this->read_entry($id);
-			   if($this->owner == $temp_event->owner)
+			   if($this->owner == $temp_event['owner'])
 			   {
    				$this->so->delete_entry($id);
    				$cd = 16;
@@ -272,6 +272,7 @@
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE))
 			{
+				reset($this->so->cal->delete_events);
 				for($i=0;$i<count($this->so->cal->deleted_events);$i++)
 				{
 					$event_id = $this->so->cal->deleted_events[$i];
@@ -298,12 +299,15 @@
 			$recur_enddate = ($p_recur_enddate?$p_recur_enddate:$recur_enddate);
 
 			$send_to_ui = True;
-			if($p_cal && $p_participants && $p_start && $p_end && $p_recur_enddata)
+			if($p_cal || $p_participants || $p_start || $p_end || $p_recur_enddata)
 			{
 				$send_to_ui = False;
 			}
 
-			$overlapping_events = False;
+			if($this->debug)
+			{
+				echo "ID : ".$cal['id']."<br>\n";
+			}
 
   			$ui = CreateObject('calendar.uicalendar');
   			
@@ -313,12 +317,12 @@
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
 				{
-					$ui->edit($datetime_check,True);
+					$ui->edit($datetime_check,1);
 				}
+				$overlapping_events = False;
          }
          else
 			{
-
    			if(!$cal['id'] && !$this->check_perms(PHPGW_ACL_ADD))
 	   		{
 	   		   $ui->index();
@@ -410,14 +414,19 @@
 				@reset($part);
 				while(list($key,$value) = each($part))
 				{
-					$this->so->add_attribute('participants','U',$key);
+					$this->so->add_attribute('participants','U',intval($key));
 				}
 
-				reset($participants);
+//				reset($participants);
 				$event = $this->get_cached_event();
+
 				if(!@$event['participants'][$cal['owner']])
 				{
 					$this->so->add_attribute('owner',$minparts);
+				}
+				else
+				{
+					$this->so->add_attribute('owner',$cal['owner']);
 				}
 				$this->so->add_attribute('priority',$cal['priority']);
 				$event = $this->get_cached_event();
@@ -426,23 +435,27 @@
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
 				{
-				   $ui = CreateObject('calendar.uicalendar');
-				   $ui->edit($datetime_check,True);
+				   $ui->edit($datetime_check,1);
 				}
 
-            settype($start,'integer');
-            settype($end,'integer');
-				$start = $this->maketime($event['start']) - $this->datetime->tz_offset;
-				$end = $this->maketime($event['end']) - $this->datetime->tz_offset;
-
-				$overlapping_events = $this->overlap($start,$end,$event['participants'],$event->owner,$event->id);
+				$overlapping_events = $this->overlap(
+												$this->maketime($event['start']) - $this->datetime->tz_offset,
+												$this->maketime($event['end']) - $this->datetime->tz_offset,
+												$event['participants'],
+												$event['owner'],
+												$event['id']
+				);
 			}
 
 			if($overlapping_events)
 			{
             if($send_to_ui)
             {
+					unset($phpgw_info['flags']['noheader']);
+					unset($phpgw_info['flags']['nonavbar']);
 				   $ui->overlap($overlapping_events,$event);
+					$phpgw_info['flags']['nofooter'] = True;
+				   return;
 				}
 				else
 				{
@@ -459,8 +472,9 @@
 				else
 				{
 					$new_event = $event;
-					$old_event = $this->read_entry($new_event['id']);
+					$old_event = $this->read_entry($event['id']);
 					$this->prepare_recipients($new_event,$old_event);
+					$this->so->cal->event = $event;
    				$this->so->add_entry($event);
 				}
             $date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
@@ -561,9 +575,9 @@
 		{
 			$can_edit = False;
 		
-			if(($event->owner == $this->owner) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
+			if(($event['owner'] == $this->owner) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
-				if($event->public != True)
+				if($event['public'] != True)
 				{
 					if($this->check_perms(PHPGW_ACL_PRIVATE) == True)
 					{
@@ -608,7 +622,7 @@
 		{
 			$error = 0;
 			// do a little form verifying
-			if ($event->title == '')
+			if ($event['title'] == '')
 			{
 				$error = 40;
 			}
@@ -1144,12 +1158,21 @@
 				for($i=0;$i<$c_cached_ids;$i++)
 				{
 					$event = $this->so->read_entry($cached_event_ids[$i]);
-					$starttime = $this->maketime($event['start']);
-					$endtime = $this->maketime($event['end']);
-					$this->cached_events[date('Ymd',$starttime)][] = $event;
-					if($this->cached_events[date('Ymd',$endtime)][count($this->cached_events[date('Ymd',$starttime)]) - 1] != $event)
-					{
-						$this->cached_events[date('Ymd',$endtime)][] = $event;
+					$startdate = intval(date('Ymd',$this->maketime($event['start'])));
+					$enddate= intval(date('Ymd',$this->maketime($event['end'])));
+					$this->cached_events[$startdate][] = $event;
+//					if($startdate != $enddate)
+//					{
+						$start['year'] = intval(substr($startdate,0,4));
+						$start['month'] = intval(substr($startdate,4,2));
+						$start['day'] = intval(substr($startdate,6,2));
+						for($j=$startdate,$k=0;$j<=$enddate;$k++,$j=intval(date('Ymd',mktime(0,0,0,$start['month'],$start['day'] + $k,$start['year']))))
+						{
+							if($this->cached_events[$j][count($this->cached_events[$j]) - 1] != $event)
+							{
+								$this->cached_events[$j][] = $event;
+							}
+//						}
 					}
 				}
 			}
@@ -1181,7 +1204,8 @@
 		{
 			global $phpgw;
 			$this->event_init();
-			$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
+//			$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
+			$event = $phpgw->session->appsession('entry','calendar');
 			$this->so->cal->event = $event;
 			return $event;
 		}
@@ -1500,8 +1524,6 @@
 
 			$phpgw_info['user']['preferences'] = $phpgw->common->create_emailpreferences($phpgw_info['user']['preferences'],$user);
 
-			$send = CreateObject('phpgwapi.send');
-
 			switch($msg_type)
 			{
 				case MSG_DELETED:
@@ -1552,6 +1574,11 @@
 				{
 //					echo "Msg Type = ".$msg_type."<br>\n";
 //					echo "userid = ".$userid."<br>\n";
+					if(!is_object($send))
+					{
+						$send = CreateObject('phpgwapi.send');
+					}
+
 					$preferences = CreateObject('phpgwapi.preferences',intval($userid));
 					$part_prefs = $preferences->read_repository();
 					if(!isset($part_prefs['calendar']['send_updates']) || !$part_prefs['calendar']['send_updates'])

@@ -230,9 +230,9 @@
 			return $this->cal->event;
 		}
 		
-		function add_attribute($var,$value)
+		function add_attribute($var,$value,$element='False')
 		{
-			$this->cal->add_attribute($var,$value);
+			$this->cal->add_attribute($var,$value,$element);
 		}
 
 		function event_init()
