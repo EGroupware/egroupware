@@ -131,15 +131,25 @@
        return $group_names;
     }
 
-    function listusers($groups="")
+    function listusers($group="")
     {
        global $phpgw;
 
        $db2 = $phpgw->db;
 
-       if ($groups) {
-          $db2->query("select account_lid,account_firstname,account_lastname from accounts where account_groups"
-				        . "like '%,$groups,%'",__LINE__,__FILE__);
+       if ($group) {
+          $users = $phpgw->acl->get_ids_for_location($group, 1, "phpgw_group", "u");
+          reset ($users);
+          $sql = "select account_lid,account_firstname,account_lastname from accounts where account_id in (";
+          for ($idx=0; $idx<count($num); ++$idx){
+            if ($idx == 1){
+              $sql .= $users[$idx];
+            }else{
+              $sql .= ",".$users[$idx];
+            }
+          }
+          $sql .= ")";
+          $db2->query($sql,__LINE__,__FILE__);
        } else {
           $db2->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
        }

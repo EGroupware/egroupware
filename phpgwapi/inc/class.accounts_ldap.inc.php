@@ -174,30 +174,40 @@
        return $group_names;
     }
 
-    function listusers($groups="")
+    function listusers($group="")
     {
        global $phpgw;
 
-       $db = $phpgw->db;
+       $db2 = $phpgw->db;
 
-       if ($groups) {
-          $db->query("select account_lid,account_firstname,account_lastname from accounts where account_groups"
-    				      . "like '%,$groups,%'",__LINE__,__FILE__);
+       if ($group) {
+          $users = $phpgw->acl->get_ids_for_location($group, 1, "phpgw_group", "u");
+          reset ($users);
+          $sql = "select account_lid,account_firstname,account_lastname from accounts where account_id in (";
+          for ($idx=0; $idx<count($num); ++$idx){
+            if ($idx == 1){
+              $sql .= $users[$idx];
+            }else{
+              $sql .= ",".$users[$idx];
+            }
+          }
+          $sql .= ")";
+          $db2->query($sql,__LINE__,__FILE__);
        } else {
-          $db->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
+          $db2->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
        }
        $i = 0;
-       while ($db->next_record()) {
-          $accounts["account_lid"][$i]       = $db->f("account_lid");
-          $accounts["account_firstname"][$i] = $db->f("account_firstname");
-          $accounts["account_lastname"][$i]  = $db->f("account_lastname");
+       while ($db2->next_record()) {
+          $accounts["account_lid"][$i]       = $db2->f("account_lid");
+          $accounts["account_firstname"][$i] = $db2->f("account_firstname");
+          $accounts["account_lastname"][$i]  = $db2->f("account_lastname");
     	  $i++;
        }
        return $accounts;
     }
 
 
-  function username2userid($user_name)
+    function username2userid($user_name)
     {
       global $phpgw, $phpgw_info;
       $db2 = $phpgw->db;
