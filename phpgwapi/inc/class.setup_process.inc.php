@@ -244,32 +244,40 @@
 
 			/* The following is built so below we won't try to drop a table that isn't there. */
 			$tablenames = $GLOBALS['phpgw_setup']->db->table_names();
-			while(list($key,$val) = @each($tablenames))
+			if (!is_array($setup_info) || !is_array($tablenames))
 			{
-				$tables[] = $val['table_name'];
+				return $setup_info;	// nothing to do
+			}
+			$tables = array();
+			foreach($tablenames as $data)
+			{
+				$tables[] = $data['table_name'];
 			}
 
-			@reset($setup_info);
-			while(list($key,$null) = @each($setup_info))
+			if (!is_array($setup_info))
 			{
-				if($setup_info[$key]['tables'])
+				return $setup_info;
+			}
+			foreach($setup_info as $app_name => $data)
+			{
+				if(is_array($data['tables']))
 				{
-					while(list($a,$table) = @each($setup_info[$key]['tables']))
+					foreach($data['tables'] as $table)
 					{
 						//echo $table;
 						if(in_array($table,$tables))
 						{
-							if($DEBUG){ echo '<br>process->droptables(): Dropping :'. $setup_info[$key]['name'] . ' table: ' . $table; }
+							if($DEBUG){ echo '<br>process->droptables(): Dropping :'. $app_name . ' table: ' . $table; }
 							$GLOBALS['phpgw_setup']->oProc->DropTable($table);
 							// Update the array values for return below
-							$setup_info[$key]['status'] = 'U';
+							$setup_info[$app_name]['status'] = 'U';
 						}
 					}
 				}
 			}
 
 			/* Done, return current status */
-			return ($setup_info);
+			return $setup_info;
 		}
 
 		/*!
