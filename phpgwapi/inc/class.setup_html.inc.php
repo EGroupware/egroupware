@@ -43,7 +43,7 @@
 				$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
 				while(list($x,$y) = @each($dom))
 				{
-					if(strtoupper($x) == 'CONFIG_PASS' || strtoupper($x) == 'CONFIG_PASSWORD')
+					if(strtoupper($x) == 'CONFIG_PASS')
 					{
 						$GLOBALS['header_template']->set_var(strtoupper($x),md5($y));
 					}
@@ -51,6 +51,14 @@
 					{
 						$GLOBALS['header_template']->set_var(strtoupper($x),$y);
 					}
+				}
+				/* Admin did not type a new password, so use the old one from the hidden field,
+				 * which is already md5 encoded.
+				 */
+				if($dom['config_password'] && !$dom['config_pass'])
+				{
+					/* Real == hidden */
+					$GLOBALS['header_template']->set_var('CONFIG_PASS',$dom['config_password']);
 				}
 				/* If the admin didn't select a db_port, set to the default */
 				if(!$dom['db_port'])
@@ -65,8 +73,7 @@
 			$setting = get_var('setting',Array('POST'));
 			while($setting && list($k,$v) = @each($setting))
 			{
-				if(strtoupper($k) == 'HEADER_ADMIN_PASSWORD' ||
-					strtoupper($k) == 'HEADER_PASSWORD')
+				if(strtoupper($k) == 'HEADER_ADMIN_PASSWORD')
 				{
 					$var[strtoupper($k)] = md5($v);
 				}
@@ -74,6 +81,14 @@
 				{
 					$var[strtoupper($k)] = $v;
 				}
+			}
+			/* Admin did not type a new header password, so use the old one from the hidden field,
+			 * which is already md5 encoded.
+			 */
+			if($var['HEADER_ADMIN_PASS'] && !$var['HEADER_ADMIN_PASSWORD'])
+			{
+				/* Real == hidden */
+				$var['HEADER_ADMIN_PASSWORD'] = $var['HEADER_ADMIN_PASS'];
 			}
 			$GLOBALS['header_template']->set_var($var);
 			return $GLOBALS['header_template']->parse('out','header');
