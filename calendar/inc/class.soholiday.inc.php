@@ -143,7 +143,7 @@
 			}
 			if($query)
 			{
-				$querymethod = " AND hol_name LIKE ".$this->db->quote('%'.$query.'%');
+				$querymethod .= " AND hol_name LIKE ".$this->db->quote('%'.$query.'%');
 			}
 			if ($year > 1900)
 			{
