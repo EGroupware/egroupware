@@ -1,0 +1,1 @@
+<?php include($phpgw_info["server"]["include_root"]."/phpgwapi/inc/class.translation_".$phpgw_info["server"]["translation_system"].".inc.php"); ?>

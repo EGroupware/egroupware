@@ -1,0 +1,1 @@
+<?php include($phpgw_info["server"]["include_root"]."/phpgwapi/inc/class.db_".$phpgw_info["server"]["db_type"].".inc.php"); ?>
