@@ -31,13 +31,14 @@
 	$admin_tpl->set_var('title',lang('Administration'));
 
 	// This func called by the includes to dump a row header
-	function section_start($name='',$icon='')
+	function section_start($name='',$icon='',$appname='')
 	{
 		global $phpgw, $phpgw_info, $admin_tpl;
 
 		$admin_tpl->set_var('icon_backcolor',$phpgw_info['theme']['row_off']);
 		$admin_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
 		$admin_tpl->set_var('app_name',lang($name));
+		$admin_tpl->set_var('a_name',$appname);
 		$admin_tpl->set_var('app_icon',$icon);
 		if ($icon)
 		{
@@ -68,7 +69,7 @@
 	function display_section($appname,$title,$file)
 	{
 		global $phpgw;
-		section_start($title,$phpgw->common->image($appname,Array('navbar.gif',$appname.'.gif')));
+		section_start($title,$phpgw->common->image($appname,Array('navbar.gif',$appname.'.gif')),$appname);
 
 		while(list($text,$url) = each($file))
 		{
