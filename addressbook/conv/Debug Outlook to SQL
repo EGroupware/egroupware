@@ -58,13 +58,13 @@
 			"Other Country" => "",
 			"Assistant's Phone" => "",
 			"Business Fax" => "c_tel",
-			"Business Phone" => "b_tel",
+			"Business Phone" => "a_tel",
 			"Business Phone 2" => "ophone",
 			"Callback" => "",
 			"Car Phone" => "",
 			"Company Main Phone" => "",
 			"Home Fax" => "",
-			"Home Phone" => "a.tel",
+			"Home Phone" => "b_tel",
 			"Home Phone 2" => "", //This will make another homePhone entry
 			"ISDN" => "",
 			"Mobile Phone" => "mphone", //newPilotPerson
