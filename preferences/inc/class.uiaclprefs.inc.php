@@ -25,17 +25,17 @@
 
 		function index()
 		{
-			$acl_app		= get_var('acl_app',Array('GET','POST'));
-			$start			= get_var('start',Array('GET','POST'));
-			$query			= get_var('query',Array('GET','POST'));
-			$s_groups		= get_var('s_groups',Array('GET','POST'));
-			$s_users		= get_var('s_users',Array('GET','POST'));
-			$owner			= $GLOBALS['owner'];
+			$acl_app  = get_var('acl_app',Array('GET','POST'));
+			$start    = get_var('start',Array('GET','POST'));
+			$query    = get_var('query',Array('GET','POST'));
+			$s_groups = get_var('s_groups',Array('GET','POST'));
+			$s_users  = get_var('s_users',Array('GET','POST'));
+			$owner    = $GLOBALS['owner'];
 
 			if (! $acl_app)
 			{
-				$acl_app			= 'preferences';
-				$acl_app_not_passed	= True;
+				$acl_app = 'preferences';
+				$acl_app_not_passed = True;
 			}
 
 			$GLOBALS['phpgw_info']['flags']['currentapp'] = $acl_app;

@@ -32,15 +32,15 @@
 
 		function uicategories()
 		{
-			$this->bo			= CreateObject('preferences.bocategories',$cats_app);
-			$this->nextmatchs	= CreateObject('phpgwapi.nextmatchs');
-			$this->account		= $GLOBALS['phpgw_info']['user']['account_id'];
-			$this->user			= $GLOBALS['phpgw_info']['user']['fullname'];
+			$this->bo         = CreateObject('preferences.bocategories',$cats_app);
+			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$this->account    = $GLOBALS['phpgw_info']['user']['account_id'];
+			$this->user       = $GLOBALS['phpgw_info']['user']['fullname'];
 
-			$this->start		= $this->bo->start;
-			$this->query		= $this->bo->query;
-			$this->sort			= $this->bo->sort;
-			$this->order		= $this->bo->order;
+			$this->start = $this->bo->start;
+			$this->query = $this->bo->query;
+			$this->sort  = $this->bo->sort;
+			$this->order = $this->bo->order;
 		}
 
 		function save_sessiondata($cats_app)
@@ -89,11 +89,11 @@
 
 			$link_data = array
 			(
-				'menuaction'	=> 'preferences.uicategories.index',
-				'cats_app'		=> $cats_app,
-				'extra'			=> $extra,
-				'global_cats'	=> $global_cats,
-				'cats_level'	=> $cats_level
+				'menuaction'  => 'preferences.uicategories.index',
+				'cats_app'    => $cats_app,
+				'extra'       => $extra,
+				'global_cats' => $global_cats,
+				'cats_level'  => $cats_level
 			);
 
 			if ($extra)
@@ -103,7 +103,7 @@
 
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			$GLOBALS['phpgw']->template->set_file(array('cat_list_t'	=> 'listcats.tpl'));
+			$GLOBALS['phpgw']->template->set_file(array('cat_list_t' => 'listcats.tpl'));
 			$GLOBALS['phpgw']->template->set_block('cat_list_t','cat_list');
 			$GLOBALS['phpgw']->template->set_block('cat_list_t','cat_row');
 
@@ -205,8 +205,10 @@
 					$descr = '<font color="FF0000"><b>' . $descr . '</b></font>';
 				}
 
-				$GLOBALS['phpgw']->template->set_var(array('name' => $name,
-										'descr' => $descr));
+				$GLOBALS['phpgw']->template->set_var(array(
+					'name' => $name,
+					'descr' => $descr
+				));
 
 				$GLOBALS['phpgw']->template->set_var('app_url',$GLOBALS['phpgw']->link('/' . $cats_app . '/index.php','cat_id=' . $cats[$i]['id']));
 
@@ -214,8 +216,8 @@
 				{
 					if ($cats[$i]['owner'] == $this->account || $cats[$i]['app_name'] == 'phpgw')
 					{
-						$link_data['menuaction']	= 'preferences.uicategories.add';
-						$link_data['cat_parent']	= $cats[$i]['id'];
+						$link_data['menuaction'] = 'preferences.uicategories.add';
+						$link_data['cat_parent'] = $cats[$i]['id'];
 						$GLOBALS['phpgw']->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
 						$GLOBALS['phpgw']->template->set_var('lang_sub_entry',lang('Add sub'));
 					}
@@ -260,11 +262,11 @@
 
 			$link_data = array
 			(
-				'menuaction'	=> 'preferences.uicategories.add',
-				'cats_app'		=> $cats_app,
-				'extra'			=> $extra,
-				'global_cats'	=> $global_cats,
-				'cats_level'	=> $cats_level
+				'menuaction'  => 'preferences.uicategories.add',
+				'cats_app'    => $cats_app,
+				'extra'       => $extra,
+				'global_cats' => $global_cats,
+				'cats_level'  => $cats_level
 			);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -303,11 +305,11 @@
 
 				$values = array
 				(
-					'parent'	=> $cat_parent,
-					'descr'		=> $cat_description,
-					'name'		=> $cat_name,
-					'access'	=> $cat_access,
-					'data'		=> $data
+					'parent' => $cat_parent,
+					'descr'  => $cat_description,
+					'name'   => $cat_name,
+					'access' => $cat_access,
+					'data'   => $data
 				);
 
 				$error = $this->bo->check_values($values);
@@ -340,7 +342,7 @@
 			$GLOBALS['phpgw']->template->set_var('cat_description',$cat_description);
 
 			$GLOBALS['phpgw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
-										. ($cat_access == True ?' checked':'') . '>');
+				. ($cat_access == True ?' checked':'') . '>');
 
 			if ($extra)
 			{
@@ -353,7 +355,7 @@
 				}
 			}
 
-			$link_data['menuaction']	= 'preferences.uicategories.index';
+			$link_data['menuaction'] = 'preferences.uicategories.index';
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$GLOBALS['phpgw']->template->parse('buttons','add');
@@ -366,12 +368,12 @@
 
 			$link_data = array
 			(
-				'menuaction'	=> 'preferences.uicategories.index',
-				'cats_app'		=> $cats_app,
-				'extra'			=> $extra,
-				'global_cats'	=> $global_cats,
-				'cats_level'	=> $cats_level,
-				'cat_id'		=> $cat_id
+				'menuaction'  => 'preferences.uicategories.index',
+				'cats_app'    => $cats_app,
+				'extra'       => $extra,
+				'global_cats' => $global_cats,
+				'cats_level'  => $cats_level,
+				'cat_id'      => $cat_id
 			);
 
 			if (!$cat_id)
@@ -415,12 +417,12 @@
 
 				$values = array
 				(
-					'id'		=> $cat_id,
-					'parent'	=> $cat_parent,
-					'descr'		=> $cat_description,
-					'name'		=> $cat_name,
-					'access'	=> $cat_access,
-					'data'		=> $data
+					'id'     => $cat_id,
+					'parent' => $cat_parent,
+					'descr'  => $cat_description,
+					'name'   => $cat_name,
+					'access' => $cat_access,
+					'data'   => $data
 				);
 
 				$error = $this->bo->check_values($values);
@@ -439,7 +441,7 @@
 
 			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit x category for',lang($cats_app)));
 			$GLOBALS['phpgw']->template->set_var('lang_app',lang($cats_app));
-			$link_data['menuaction']	= 'preferences.uicategories.edit';
+			$link_data['menuaction'] = 'preferences.uicategories.edit';
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats[0]['name']));
@@ -457,7 +459,7 @@
 			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cats[0]['parent'],$global_cats));
 
 			$GLOBALS['phpgw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
-										. ($cats[0]['access'] == private ?' checked':'') . '>');
+				. ($cats[0]['access'] == private ?' checked':'') . '>');
 
 			if ($extra)
 			{
@@ -474,9 +476,9 @@
 
 			if ($cats[0]['owner'] == $this->account)
 			{
-				$link_data['menuaction']	= 'preferences.uicategories.delete';
+				$link_data['menuaction'] = 'preferences.uicategories.delete';
 				$GLOBALS['phpgw']->template->set_var('delete','<form method="POST" action="' . $GLOBALS['phpgw']->link('/index.php',$link_data)
-											. '"><input type="submit" value="' . lang('Delete') .'"></form>');
+					. '"><input type="submit" value="' . lang('Delete') .'"></form>');
 			}
 			else
 			{
@@ -493,12 +495,12 @@
 
 			$link_data = array
 			(
-				'menuaction'	=> 'preferences.uicategories.index',
-				'cats_app'		=> $cats_app,
-				'extra'			=> $extra,
-				'global_cats'	=> $global_cats,
-				'cats_level'	=> $cats_level,
-				'cat_id'		=> $cat_id
+				'menuaction'  => 'preferences.uicategories.index',
+				'cats_app'    => $cats_app,
+				'extra'       => $extra,
+				'global_cats' => $global_cats,
+				'cats_level'  => $cats_level,
+				'cat_id'      => $cat_id
 			);
 
 			if (!$cat_id)
@@ -550,7 +552,7 @@
 
 				$GLOBALS['phpgw']->template->set_var('nolink',$nolink);
 				$GLOBALS['phpgw']->template->set_var('lang_no',lang('No'));
-				$link_data['menuaction']	= 'preferences.uicategories.delete';
+				$link_data['menuaction'] = 'preferences.uicategories.delete';
 				$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
 				$GLOBALS['phpgw']->template->set_var('lang_yes',lang('Yes'));
 				$GLOBALS['phpgw']->template->fp('phpgw_body','category_delete');
