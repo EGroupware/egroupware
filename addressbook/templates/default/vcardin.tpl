@@ -5,7 +5,7 @@
       <table border=0>
       <tr>
        <td>Vcard: <input type="file" name="uploadedfile"></td>
-       <td><input type="submit" name="action" value="Load Vcard"></td>
+       <td><input type="submit" name="action" value="{lang_load_vcard}"></td>
       </tr>
       </table>
      </form>
