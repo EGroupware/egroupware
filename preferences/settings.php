@@ -19,23 +19,37 @@
 
   include("../header.inc.php");
 
-  function is_user_admin($owner) {
-    global $phpgw;
+	function is_user_admin($owner)
+	{
+		global $phpgw;
     
-    $acl = CreateObject('phpgwapi.acl',intval($owner));
-    $acl_list = $acl->read_repository();
-    for($k=0;$k<count($acl_list);$k++) {
-      if($apps_list[$k]['appname'] == 'admin') return True;
-    }
-    $memberships = $phpgw->accounts->memberships($owner);
-    for($k=0;$k<count($memberships);$k++) {
-      $apps_list = $acl->get_app_list_for_id('run',1,$memberships[$k]['account_id']);
-      while($apps = each($apps_list)) {
-        if($apps[1] == 'admin') return True;
-      }
-    }
-    return False;
-  }
+		$acl = CreateObject('phpgwapi.acl',intval($owner));
+		$acl_list = $acl->read_repository();
+		for ($k=0;$k<count($acl_list);$k++)
+		{
+			if ($apps_list[$k]['appname'] == 'admin')
+			{
+				return True;
+			}
+		}
+		$memberships = $phpgw->accounts->memberships($owner);
+		for ($k=0;$k<count($memberships);$k++)
+		{
+			$apps_list = $acl->get_app_list_for_id('run',1,$memberships[$k]['account_id']);
+
+			if (is_array($apps_list))
+			{
+				while($apps = each($apps_list))
+				{
+					if($apps[1] == 'admin')
+					{
+						return True;
+					}
+				}
+			}
+		}
+		return False;
+	}
 
   if (! $submit) {
      if ($phpgw_info["server"]["useframes"] != "never") {
