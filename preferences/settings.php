@@ -213,7 +213,7 @@
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"dateformat","common");
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"timeformat","common");
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"lang","common");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_sorting","common");
+     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_sorting","email");
      $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"default_app","common");
 
      if ($navbar_text) {
