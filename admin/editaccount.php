@@ -82,7 +82,7 @@
                                  "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
 
        // If the user is logged in, it will force a refresh of the session_info
-       $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
+       //$phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
 
 
