@@ -44,22 +44,22 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","preferences"));
 
-        $phpgw->common->preferences_add($n_loginid,"maxmatchs","15","common");
-        $phpgw->common->preferences_add($n_loginid,"theme","default","common");
-        $phpgw->common->preferences_add($n_loginid,"tz_offset","0","common");
-        $phpgw->common->preferences_add($n_loginid,"dateformat","m/d/Y","common");
-        $phpgw->common->preferences_add($n_loginid,"timeformat","12","common");
-        $phpgw->common->preferences_add($n_loginid,"lang","en","common");
-        $phpgw->common->preferences_add($n_loginid,"company","True","addressbook");
-        $phpgw->common->preferences_add($n_loginid,"lastname","True","addressbook");
-        $phpgw->common->preferences_add($n_loginid,"firstname","True","addressbook");
+        $phpgw->common->preferences_add($n_loginid,"maxmatchs","common","15");
+        $phpgw->common->preferences_add($n_loginid,"theme","common","default");
+        $phpgw->common->preferences_add($n_loginid,"tz_offset","common","0");
+        $phpgw->common->preferences_add($n_loginid,"dateformat","common","m/d/Y");
+        $phpgw->common->preferences_add($n_loginid,"timeformat","common","12");
+        $phpgw->common->preferences_add($n_loginid,"lang","common","en");
+        $phpgw->common->preferences_add($n_loginid,"company","addressbook","True");
+        $phpgw->common->preferences_add($n_loginid,"lastname","addressbook","True");
+        $phpgw->common->preferences_add($n_loginid,"firstname","addressbook","True");
 
         // Even if they don't have access to the calendar, we will add these.
         // Its better then the calendar being all messed up, they will be deleted
         // the next time the update there preferences.
-        $phpgw->common->preferences_add($n_loginid,"weekstarts","Monday","calendar");
-        $phpgw->common->preferences_add($n_loginid,"workdaystarts","9","calendar");
-        $phpgw->common->preferences_add($n_loginid,"workdayends","17","calendar");
+        $phpgw->common->preferences_add($n_loginid,"weekstarts","calendar","Monday");
+        $phpgw->common->preferences_add($n_loginid,"workdaystarts","calendar","9");
+        $phpgw->common->preferences_add($n_loginid,"workdayends","calendar","17");
 
         while ($permission = each($new_permissions)) {
           if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
