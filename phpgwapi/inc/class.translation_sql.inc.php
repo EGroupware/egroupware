@@ -223,10 +223,32 @@
 		/*!
 		@function convert
 		@abstract converts a string $data from charset $from to charset $to
-		@
+		@syntax convert($data,$from=False,$to=False)
+		@param $data string or array of strings to convert
+		@param $from charset $data is in or False if it should be detected
+		@param $to charset to convert to or False for the system-charset
+		@returns the converted string
 		*/
-		function convert($data,$from='iso-8859-1',$to='utf-8')
+		function convert($data,$from=False,$to=False)
 		{
+			if (is_array($data))
+			{
+				foreach($data as $key => $str)
+				{
+					$ret[$key] = $this->convert($str,$from,$to);
+				}
+				return $ret;
+			}
+			if (!$from)
+			{
+				$from = $this->mbstring ? strtolower(mb_detect_encoding($data)) : 'iso-8859-1';
+				if ($from == 'ascii') $from = 'iso-8859-1';
+				//echo "<p>autodetected charset of '$data' = '$from'</p>\n";
+			}
+			if (!$to)
+			{
+				$to = $this->system_charset;
+			}
 			if ($from == $to || !$from || !$to)
 			{
 				return $data;
@@ -295,7 +317,7 @@
 						$addlang = True;
 					}
 				}
-				if (($addlang && $upgrademethod == 'addonlynew') || ($upgrademethod != 'addonlynew'))
+				if ($addlang && $upgrademethod == 'addonlynew' || $upgrademethod != 'addonlynew')
 				{
 					//echo '<br>Test: loop above file()';
 					if (!is_object($GLOBALS['phpgw_setup']))
@@ -335,22 +357,33 @@
 					{
 						foreach($ids as $message_id => $content)
 						{
-							if ($this->system_charset && $charset && $charset != $this->system_charset)
-							{
-								$content = $this->convert($content,$charset,$this->system_charset);
-							}
+							$content = $this->convert($content,$charset,$this->system_charset);
 							$addit = False;
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
-								$this->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND (app_name='$app_name' OR app_name='common') AND content='$content'",__LINE__,__FILE__);
-								$this->db->next_record();
+								$this->db->query("SELECT content,app_name IN ('common') AS in_api FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND (app_name='$app_name' OR app_name='common') ORDER BY in_api DESC",__LINE__,__FILE__);
 
-								if ($this->db->f(0) == 0)
+								if (!($row = $this->db->row(True)))
 								{
-									//echo '<br>Test: addmissing - True - Total: ' . $this->db->f(0);
 									$addit = True;
+								}
+								else
+								{
+									if ($row['in_api'])		// same phrase is in the api
+									{
+										$addit = $row['content'] != $content;	// only add if not identical
+									}
+									$row2 = $this->db->row(True);
+									if (!$row['in_api'] || $app_name=='common' || $row2)	// phrase is alread in the db
+									{
+										$addit = $content != ($row2 ? $row2['content'] : $row['content']);
+										if ($addit)	// if we want to add/update it ==> delete it
+										{
+											$this->db->query($q="DELETE FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND app_name='$app_name'",__LINE__,__FILE__);
+										}
+									}
 								}
 							}
 
