@@ -125,6 +125,8 @@
 				{
 					$this->bo->return_to = $_GET['menuaction'].
 						sprintf('&date=%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day);
+					// reset the matrixview participants
+					$GLOBALS['phpgw']->session->appsession('participants', NULL,'');
 				}
 				$this->bo->save_sessiondata();
 			}
@@ -901,11 +903,13 @@
 				}
 			}
 
+			$export_params['cal_id']        = $cal_id;
+
 			$var = Array(
 				'action_url_button'	=> $this->page('export'),
 				'action_text_button'	=> lang('Export'),
 				'action_confirm_button'	=> '',
-				'action_extra_field'	=> $this->html->input_hidden('cal_id',$cal_id)
+				'action_extra_field'    => $this->html->input_hidden($export_params)
 			);
 			$p->set_var($var);
 			$button_center .= '<td>'.$p->fp('button','form_button').'</td>';
@@ -995,16 +999,13 @@
 			}
  		}
 
-		function export($vcal_id=0)
+		function export()
 		{
-			if(!isset($_POST['cal_id']) || !$_POST['cal_id'])
-			{
-				Header('Location: '.$this->index());
-				$GLOBALS['phpgw']->common->phpgw_exit();
-			}
+			$jscal = CreateObject('phpgwapi.jscalendar');
+			$GLOBALS['phpgw']->browser	= CreateObject('phpgwapi.browser');
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
-			if(!isset($_POST['output_file']) || !$_POST['output_file'])
+			if(!isset($_REQUEST['output_file']) || !$_REQUEST['output_file'])
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -1017,54 +1018,91 @@
 						'form_button'	=> 'form_button_script.tpl'
 					)
 				);
+
+				$extra_field_text = '';
+				$extra_field_text = "\n".lang('Enter Output Filename: ( .vcs appended )')."\n".'   <input name="output_file" size="25" maxlength="80" value="">'."\n";
+				if (isset($_POST['output_file']))
+				{
+					$extra_field_text .= '<font color="red">'.lang('please enter a filename !!!')."</font>\n";
+				}
+				if(isset($_POST['cal_id']))
+					$extra_field_text .= '   <input type="hidden" name="cal_id" value="'.$_POST['cal_id'].'">'."\n";
+
+				if (!isset($_POST['cal_id']) || !$_POST['cal_id'])
+				{
+					$start_date = '';
+					if(isset($_POST['custom_start']) && $_POST['custom_start'])
+						$start_date = $_POST['custom_start'];
+					else
+						$start_date = $GLOBALS['phpgw']->datetime->gmtnow;
+
+					$stop_date = '';
+					if(isset($_POST['custom_stop']) && $_POST['custom_stop'])
+						$stop_date = $_POST['custom_stop'];
+					else
+						$stop_date = $GLOBALS['phpgw']->datetime->gmtnow;
+
+					$extra_field_text .= "<p>";
+					$extra_field_text .= lang('Start Date');
+					$extra_field_text .= "&nbsp;";
+					$extra_field_text .= $jscal->input('custom_start',$start_date);
+					$extra_field_text .= "</p>\n<p>";
+					$extra_field_text .= lang('End Date');
+					$extra_field_text .= "&nbsp\n";
+					$extra_field_text .= $jscal->input('custom_stop',$stop_date);
+					$extra_field_text .= "</p>\n";
+				}
+
 				$var = Array(
 					'action_url_button'	=> $this->page('export'),
-					'action_text_button'	=> lang('Submit'),
+					'action_text_button'	=> lang('Download'),
 					'action_confirm_button'	=> '',
-					'action_extra_field'	=> "\n".lang('Enter Output Filename: ( .vcs appended )')."\n".'   <input name="output_file" size="25" maxlength="80" value="">'."\n"
-						. '   <input type="hidden" name="cal_id" value="'.$_POST['cal_id'].'">'
+					'action_extra_field'    => $extra_field_text
 				);
 				$p->set_var($var);
 				echo $p->fp('out','form_button');
 			}
 			else
 			{
-				$output_file = $_POST['output_file'].'.vcs';
-				$vfs = CreateObject('phpgwapi.vfs');
-//				if(!$vfs->file_exists('.calendar',array(RELATIVE_USER)))
-//				{
-//					$vfs->mkdir('.calendar',array(RELATIVE_USER));
-//				}
-
-				$content = ExecMethod('calendar.boicalendar.export', Array(
-					'l_event_id' => $_POST['cal_id'],
-					'chunk_split' => False,
-				));
-
-				$vfs->cd(array(
-					'string' => '/',
-					'relatives' => array(RELATIVE_USER)
-				));
-				$vfs->write(array(
-					'string' => $output_file,
-					'relatives' => array (RELATIVE_USER),
-					'content' => $content
-				));
-
-				if($this->debug)
+				unset($cal_ids);
+				$cal_ids        = Array();
+				$output_filename = $_REQUEST['output_file'];
+				if (!preg_match('/\.vcs$/i',$output_filename))
 				{
-					echo '<!-- DEBUG: Output Filename = '.$output_file.' -->'."\n";
-					echo '<!-- DEBUG: Fakebase = '.$vfs->fakebase.' -->'."\n";
-					echo '<!-- DEBUG: Path = '.$vfs->pwd().' -->'."\n";
+					$output_filename .= '.vcs';
 				}
-				if ($this->bo->return_to)
+				if(isset($_REQUEST['custom_start']) && $_REQUEST['custom_start']) 
 				{
-					$GLOBALS['phpgw']->redirect_link('/index.php','menuaction='.$this->bo->return_to);
-				}
-				else
+					$start_date = $jscal->input2date($_REQUEST['custom_start'],False);
+					
+					if(isset($_REQUEST['custom_stop']) && $_REQUEST['custom_stop'])
+					{
+						$stop_date = $jscal->input2date($_REQUEST['custom_stop'],False);
+					} 
+					else 
+					{
+						$stop_date = array('year'=>0,'month'=>'0','day'=>0);
+					}
+					$cal_ids = $this->bo->so->list_events($start_date['year'],$start_date['month'],$start_date['day'],
+						$stop_date['year'],$stop_date['month'],$stop_date['day']);
+				} 
+				elseif(isset($_POST['cal_id']) && $_POST['cal_id'])
 				{
-					$GLOBALS['phpgw']->redirect($this->index());
+					$cal_ids[0]     = $_POST['cal_id'];
 				}
+				$content = "BEGIN:VCALENDAR\n";
+				foreach ($cal_ids as $cal_id)
+				{
+					$mycontent = ExecMethod('calendar.boicalendar.export', Array(
+						'l_event_id' => $cal_id,
+						'chunk_split' => False,
+					));
+					$content .= str_replace(array("\r","METHOD:PUBLISH\n","BEGIN:VCALENDAR\n","END:VCALENDAR\n"), "", $mycontent);
+				}
+				$content .= "END:VCALENDAR\n";
+
+				$GLOBALS['phpgw']->browser->content_header($output_filename,'text/calendar',strlen($content));
+				echo $content;
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 		}
@@ -1241,11 +1279,11 @@
 				{
 					$this->bo->set_class(True);
 				}
-				// Add participants
+				// Add participants from matrixview
 				$participants = explode(";", $GLOBALS['phpgw']->session->appsession("participants") );
 				for($_f_part=0; $_f_part<count($participants); $_f_part++)
 				{
-					$this->bo->add_attribute('participants','A',$participants[$_f_part]);
+					$this->bo->add_attribute('participants','U',$participants[$_f_part]);
 				}
 				// Add misc
 				$this->bo->add_attribute('participants','A',$this->bo->owner);
@@ -2665,6 +2703,42 @@
 			$this->output_template_array($p,'b_row','form_button',$var);
 			$p->parse('table_row','blank_row',True);
 
+			if($menuaction != 'calendar.uicalendar.view')
+			{
+				switch($menuaction)
+				{
+					case 'calendar.uicalendar.year':
+						$start_string                   = mktime(0,0,0,1,1,$this->bo->year);
+						$stop_string                    = mktime(0,0,0,12,31,$this->bo->year);
+						break;
+					case 'calendar.uicalendar.month':
+						$start_string                   = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
+						$stop_string                    = mktime(0,0,0,$this->bo->month+1,0,$this->bo->year);
+						break;
+					case 'calendar.uicalendar.week':
+						$stop_string = $start_string    = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
+						$stop_string += 7*24*60*60-1;
+						break;
+					case 'calendar.uicalendar.day':
+						$stop_string = $start_string    = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
+						break;
+				}
+
+				$extra_field = Array(	
+					'custom_start' => $GLOBALS['phpgw']->common->show_date($start_string,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
+					'custom_stop'  => $GLOBALS['phpgw']->common->show_date($stop_string,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
+				);
+				$var = Array(
+					'submit_button'         => lang('Submit'),
+					'action_url_button'     => $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.export'),
+					'action_text_button'    => lang('Export'),
+					'action_confirm_button' => '',
+					'action_extra_field'    => $this->html->input_hidden($extra_field)
+				);
+				$p->set_var('b_row','');
+				$this->output_template_array($p,'b_row','form_button',$var);
+				$p->parse('table_row','blank_row',True);
+			}
 			$p->pparse('out','footer_table');
 			unset($p);
 		}
@@ -2887,8 +2961,7 @@
 					'title'=> $texttitle,
 					'users_status'=>$textstatus,
 					'desc'=> $textdesc,
-					'location'=> $textlocation,
-					'location-title'=> lang('location')
+					'location'=> $textlocation
 				);
 				$this->output_template_array($this->link_tpl,'picture','link_text',$var);
 			}
@@ -2897,6 +2970,9 @@
 			{
 				$this->link_tpl->parse('picture','link_close',True);
 			}
+
+			//NDEE(160704) for event tooltips
+			$this->link_tpl->set_var('loctitle',lang('location'));
 			$str = $this->link_tpl->fp('out','link_pict');
 			$this->link_tpl->set_var('picture','');
 			$this->link_tpl->set_var('out','');
@@ -3097,7 +3173,7 @@
 					'month_day'	=> 'month_day.tpl'
 				)
 			);
-			$p->set_block('month_header','monthly_header','monthly_header');
+			$p->set_block('month_header','monthly_row','monthly_row');
 			$p->set_block('month_header','month_column','month_column');
 			$p->set_block('month_day','month_daily','month_daily');
 			$p->set_block('month_day','day_event','day_event');
@@ -3199,11 +3275,11 @@
 						$p->set_var('events','');
 					} */
 				}
-				$p->parse('column_header','month_column',True);
+				$p->parse('column_row','month_column',True);
 				$p->set_var('column_data','');
 			}
 			$this->bo->owner = $temp_owner;
-			return $p->fp('out','monthly_header');
+			return $p->fp('out','monthly_row');
 		}
 
 		function display_month($month,$year,$showyear,$owner=0)
@@ -3803,14 +3879,14 @@
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
 			$GLOBALS['phpgw_info']['flags']['app_header'] = $event['id'] ? lang('Calendar - Edit') : lang('Calendar - Add');
 			$GLOBALS['phpgw']->common->phpgw_header();
-			
+
 			$ownerApps = $GLOBALS['phpgw']->acl->get_user_applications($event['owner']);
-			
+
 			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
-					'edit'		=> 'edit.tpl',
-					'form_button'	=> 'form_button_script.tpl'
+					'edit'          => 'edit.tpl',
+					'form_button'   => 'form_button_script.tpl'
 				)
 			);
 			$p->set_block('edit','edit_entry','edit_entry');
