@@ -98,7 +98,7 @@ class calendar_holiday
 		{
 //			echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
 			$holiday = explode("\t",$lines[$i]);
-			if(count($holiday) == 6)
+			if(count($holiday) == 7)
 			{
 				$loc = $holiday[0];
 				$name = addslashes($holiday[1]);
@@ -106,8 +106,9 @@ class calendar_holiday
 				$month = intval($holiday[3]);
 				$occurence = intval($holiday[4]);
 				$dow = intval($holiday[5]);
+				$observ_rule = intval($holidays[6]);
 //				echo "Inserting LOCALE='".$loc."' NAME='".$name."' extra=(".$day.'/'.$month.'/'.$occurence.'/'.$dow.'/'.")<br>\n";
-				$sql = "INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow) VALUES('$loc','$name',$day,$month,$occurence,$dow)";
+				$sql = "INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow,observance_rule) VALUES('$loc','$name',$day,$month,$occurence,$dow,$observ_rule)";
 				$this->db->query($sql,__LINE__,__FILE__);
 			}
 		}
@@ -134,31 +135,36 @@ class calendar_holiday
 		else
 		{
 			$day = $holiday['day'];
-			$dow = $phpgw->calendar->day_of_week($this->year,$holiday['month'],$day);
-			// This now calulates Observed holidays and creates a new entry for them.
-			if($dow == 0)
+			if($holiday['observance_rule'] == True)
 			{
-				$i++;
-				$this->holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
-				$this->holidays[$i]['name'] = $holiday['name'];
-				$this->holidays[$i]['day'] = $holiday['day'] + 1;
-				$this->holidays[$i]['month'] = $holiday['month'];
-				$this->holidays[$i]['occurence'] = $holiday['occurence'];
-				$this->holidays[$i]['dow'] = $holiday['dow'];
-				$this->holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$this->year) - $this->tz_offset;
-//		echo 'Calculating for year('.$this->year.') month('.$this->holidays[$i]['month'].') dow('.$this->holidays[$i]['dow'].') occurence('.$this->holidays[$i]['occurence'].') datetime('.$this->holidays[$i]['date'].') DATE('.date('Y.m.d H:i:s',$this->holidays[$i]['date']).')<br>'."\n";
-			}
-			elseif($dow == 6)
-			{
-				$i++;
-				$this->holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
-				$this->holidays[$i]['name'] = $holiday['name'];
-				$this->holidays[$i]['day'] = $holiday['day'] - 1;
-				$this->holidays[$i]['month'] = $holiday['month'];
-				$this->holidays[$i]['occurence'] = $holiday['occurence'];
-				$this->holidays[$i]['dow'] = $holiday['dow'];
-				$this->holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$this->year) - $this->tz_offset;
-//		echo 'Calculating for year('.$this->year.') month('.$this->holidays[$i]['month'].') dow('.$this->holidays[$i]['dow'].') occurence('.$this->holidays[$i]['occurence'].') datetime('.$this->holidays[$i]['date'].') DATE('.date('Y.m.d H:i:s',$this->holidays[$i]['date']).')<br>'."\n";
+				$dow = $phpgw->calendar->day_of_week($this->year,$holiday['month'],$day);
+				// This now calulates Observed holidays and creates a new entry for them.
+				if($dow == 0)
+				{
+					$i++;
+					$this->holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
+					$this->holidays[$i]['name'] = $holiday['name'];
+					$this->holidays[$i]['day'] = $holiday['day'] + 1;
+					$this->holidays[$i]['month'] = $holiday['month'];
+					$this->holidays[$i]['occurence'] = $holiday['occurence'];
+					$this->holidays[$i]['dow'] = $holiday['dow'];
+					$this->holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$this->year) - $this->tz_offset;
+					$this->holidays[$i]['obervance_rule'] = 0;
+//					echo 'Calculating for year('.$this->year.') month('.$this->holidays[$i]['month'].') dow('.$this->holidays[$i]['dow'].') occurence('.$this->holidays[$i]['occurence'].') datetime('.$this->holidays[$i]['date'].') DATE('.date('Y.m.d H:i:s',$this->holidays[$i]['date']).')<br>'."\n";
+				}
+				elseif($dow == 6)
+				{
+					$i++;
+					$this->holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
+					$this->holidays[$i]['name'] = $holiday['name'];
+					$this->holidays[$i]['day'] = $holiday['day'] - 1;
+					$this->holidays[$i]['month'] = $holiday['month'];
+					$this->holidays[$i]['occurence'] = $holiday['occurence'];
+					$this->holidays[$i]['dow'] = $holiday['dow'];
+					$this->holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$this->year) - $this->tz_offset;
+					$this->holidays[$i]['obervance_rule'] = 0;
+//					echo 'Calculating for year('.$this->year.') month('.$this->holidays[$i]['month'].') dow('.$this->holidays[$i]['dow'].') occurence('.$this->holidays[$i]['occurence'].') datetime('.$this->holidays[$i]['date'].') DATE('.date('Y.m.d H:i:s',$this->holidays[$i]['date']).')<br>'."\n";
+				}
 			}
 		}
 		$datetime = mktime(0,0,0,$holiday['month'],$day,$this->year) - $this->tz_offset;
@@ -186,6 +192,7 @@ class calendar_holiday
 			$this->holidays[$i]['month'] = intval($this->db->f('month_num'));
 			$this->holidays[$i]['occurence'] = intval($this->db->f('occurence'));
 			$this->holidays[$i]['dow'] = intval($this->db->f('dow'));
+			$this->holidays[$i]['observance_rule'] = intval($this->db->f('observance_rule'));
 			if(count($this->users) == 2 && $this->users[0] != $this->users[1])
 			{
 				if($this->holidays[$i]['locale'] == $this->users[1])

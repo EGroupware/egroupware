@@ -215,7 +215,9 @@
     mday		int DEFAULT 0,
     month_num		int DEFAULT 0,
     occurence	int DEFAULT 0,
-    dow		int DEFAULT 0
+    dow		int DEFAULT 0,
+    observance_rule int DEFAULT 0
+
   )";
   $phpgw_setup->db->query($sql);
 

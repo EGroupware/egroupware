@@ -242,6 +242,7 @@
 		month_num	int DEFAULT '0' NOT NULL,
 		occurence	int DEFAULT '0' NOT NULL,
 		dow	int DEFAULT '0' NOT NULL,
+		observance_rule int DEFAULT '0' NOT NULL,
 		PRIMARY KEY (hol_id)
 	)";
 	$phpgw_setup->db->query($sql);
