@@ -146,7 +146,7 @@
 			print_debug('this->gmtnow',$this->gmtnow,'api');
 			print_debug('server time',$server_time,'api');
 			print_debug('server DateTime',date('D, d M Y H:i:s',$server_time),'api');
-			return (int)($server_time - $this->gmtnow / 3600);
+			return (int)(($server_time - $this->gmtnow) / 3600);
 		}
 
 		function getbestguess()
@@ -157,7 +157,7 @@
 			// If DST, add 1 hour...
 			//  - (date('I') == 1?3600:0)
 			$this->gmtnow = $this->convert_rfc_to_epoch(gmdate('D, d M Y H:i:s',$server_time).' GMT');
-			return (int)($server_time - $this->gmtnow / 3600);
+			return (int)(($server_time - $this->gmtnow) / 3600);
 		}
 
 		function convert_rfc_to_epoch($date_str)
