@@ -37,7 +37,7 @@
         $filtermethod = " access like '%,$filter,%' ";
      } else {
         $filtermethod = " (owner='" . $phpgw->session->loginid ."' OR access='public' "
-		      . $phpgw->groups->sql_search() . " ) ";
+		      . $phpgw->accounts->sql_search("access") . " ) ";
      }
   } else {
      $filtermethod = " owner='" . $phpgw->session->loginid . "' ";

@@ -39,6 +39,7 @@
 				 "6" => lang_common("Saturday")
 				);
 
+
   function display_small_month($thismonth,$thisyear,$showyear, $link = "")
   {
     global $phpgw, $phpgw_info, $friendly;
@@ -80,15 +81,12 @@
 
 	for ($j = 0; $j < 7; $j++) {
 	    $date = $i + ($j * 24 * 3600);
-	    if ( date("Ymd",$date) >= date ("Ymd",$monthstart) &&
-		 date("Ymd",$date) <= date ("Ymd",$monthend) ) {
+	    if (date("Ymd",$date) >= date ("Ymd",$monthstart) && date("Ymd",$date) <= date ("Ymd",$monthend)) {
 	       echo "<TD align=right>";
 	       if (! $friendly)
-		  echo "<a href=\"".$phpgw->link($link,
-				"year=".date("Y",$date)
-				."&month=".date("m",$date)
+   		     echo "<a href=\"".$phpgw->link($link,"year=".date("Y",$date)."&month=".date("m",$date)
 				."&day=".date("d",$date)) . "\">";
-	       echo "<FONT SIZE=\"2\">" . date ( "j", $date ) . "</a></FONT>"
+	       echo "<FONT SIZE=\"2\">" . date ("j", $date) . "</a></FONT>"
 		  . "</TD>";
 	    } else
 	       echo "<TD></TD>";
@@ -97,6 +95,98 @@
     } 			// end for $i
     echo "</TABLE>";
   } 			// end function
+/*
+
+
+  function weekday_short_name($w) {
+    switch($w)
+    {
+      case 0: return lang_calendar("Sun");
+      case 1: return lang_calendar("Mon");
+      case 2: return lang_calendar("Tue");
+      case 3: return lang_calendar("Wed");
+      case 4: return lang_calendar("Thu");
+      case 5: return lang_calendar("Fri");
+      case 6: return lang_calendar("Sat");
+      case 7: return lang_calendar("Jul");
+    }
+    return "unknown-weekday($w)";
+  }
+
+function month_name ( $m ) {
+  switch ( $m ) {
+    case 0: return lang_calendar("January");
+    case 1: return lang_calendar("February");
+    case 2: return lang_calendar("March");
+    case 3: return lang_calendar("April");
+    case 4: return lang_calendar("May");
+    case 5: return lang_calendar("June");
+    case 6: return lang_calendar("July");
+    case 7: return lang_calendar("August");
+    case 8: return lang_calendar("September");
+    case 9: return lang_calendar("October");
+    case 10: return lang_calendar("November");
+    case 11: return lang_calendar("December");
+  }
+  return "unknown-month($m)";
+}
+
+
+
+  function display_small_month($thismonth, $thisyear, $showyear)
+  {
+    global $phpgw, $phpgw_info;
+
+    echo "<TABLE BORDER=\"0\" CELLPADDING=\"1\" CELLSPACING=\"2\">";
+    if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "monday") {
+       $wkstart = get_monday_before($thisyear, $thismonth, 1);
+    } else {
+       $wkstart = get_sunday_before($thisyear, $thismonth, 1);
+    }
+
+    $monthstart = mktime(2,0,0,$thismonth,1,$thisyear);
+    $monthend = mktime(2,0,0,$thismonth + 1,0,$thisyear);
+    echo "<TR><TD COLSPAN=7 ALIGN=\"center\">"
+       . "<A HREF=\"month.php?year=$thisyear&month=$thismonth"
+       . $u_url . "\" CLASS=\"monthlink\">";
+    echo month_name ( $thismonth - 1 ) . "</A></TD></TR>";
+    echo "<TR>";
+    if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "sunday")
+       echo "<TD><FONT SIZE=\"-3\">" . weekday_short_name(0) . "</TD>";
+    for ($i = 1; $i < 7; $i++) {
+        echo "<TD><FONT SIZE=\"-3\">" . weekday_short_name ( $i ) . "</TD>";
+    }
+    if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "monday")
+       echo "<TD><FONT SIZE=\"-3\">" .
+
+    weekday_short_name(0) . "</TD>";
+    for ($i = $wkstart; date("Ymd",$i) <= date ("Ymd",$monthend); $i += (24 * 3600 * 7) ) {
+        echo "<TR>";
+        for ($j = 0; $j < 7; $j++) {
+      $date = $i + ($j * 24 * 3600);
+      if ( date("Ymd",$date) >= date ("Ymd",$monthstart) &&
+        date("Ymd",$date) <= date ("Ymd",$monthend) ) {
+        echo "<TD align=right><a href=\"day.php?year=" .
+          date("Y", $date) . "&month=" .
+          date("m", $date) . "&day=" . date("d", $date) . $u_url .
+          "\" CLASS=\"dayofmonthyearview\">";
+        echo "<FONT SIZE=\"-1\">" . date ( "j", $date ) .
+          "</a></FONT></TD>";
+      } else
+        echo "<TD></TD>";
+    }                 // end for $j
+    echo "</TR>";
+  }                         // end for $i
+  echo "</TABLE>";
+}
+
+*/
+
+
+
+
+
+
 
   // LC: links back to an entry view for $id using $pic
   function link_to_entry($id, $pic, $description)
@@ -332,7 +422,7 @@
   function sql_search_calendar()
   {
      global $phpgw;
-     $s .= $phpgw->groups->cal_sql_search();
+     $s .= $phpgw->accounts->sql_search("webcal_entry_groups.groups");
      $s .= " OR webcal_entry.cal_access='public'";
      return $s;
   }
