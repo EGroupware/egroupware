@@ -271,7 +271,8 @@
 					'account_firstname'     => $GLOBALS['HTTP_POST_VARS']['account_firstname'],
 					'account_lastname'      => $GLOBALS['HTTP_POST_VARS']['account_lastname'],
 					'account_passwd'        => $GLOBALS['HTTP_POST_VARS']['account_passwd'],
-					'account_status'        => ($GLOBALS['HTTP_POST_VARS']['account_status']?$GLOBALS['HTTP_POST_VARS']['account_status']:''),
+					'status'                => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
+					'account_status'        => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
 					'old_loginid'           => ($GLOBALS['HTTP_GET_VARS']['old_loginid']?rawurldecode($GLOBALS['HTTP_GET_VARS']['old_loginid']):''),
 					'account_id'            => ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:0),
 					'account_passwd_2'      => $GLOBALS['HTTP_POST_VARS']['account_passwd_2'],
@@ -281,7 +282,8 @@
 					'loginshell'            => $GLOBALS['HTTP_POST_VARS']['loginshell'],
 					'account_expires_month' => $GLOBALS['HTTP_POST_VARS']['account_expires_month'],
 					'account_expires_day'   => $GLOBALS['HTTP_POST_VARS']['account_expires_day'],
-					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year']
+					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year'],
+					'account_expires_never' => $GLOBALS['HTTP_POST_VARS']['never_expires']
 					/* 'file_space'	=> $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
 				);
 
@@ -586,7 +588,8 @@
 					'firstname'             => $GLOBALS['HTTP_POST_VARS']['account_firstname'],
 					'lastname'              => $GLOBALS['HTTP_POST_VARS']['account_lastname'],
 					'account_passwd'        => $GLOBALS['HTTP_POST_VARS']['account_passwd'],
-					'status'                => $GLOBALS['HTTP_POST_VARS']['account_status'],
+					'status'                => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
+					'account_status'        => ($GLOBALS['HTTP_POST_VARS']['account_status'] ? 'A' : ''),
 					'old_loginid'           => ($GLOBALS['HTTP_GET_VARS']['old_loginid']?rawurldecode($GLOBALS['HTTP_GET_VARS']['old_loginid']):''),
 					'account_id'            => ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:0),
 					'account_passwd_2'      => $GLOBALS['HTTP_POST_VARS']['account_passwd_2'],
@@ -596,7 +599,8 @@
 					'loginshell'            => $GLOBALS['HTTP_POST_VARS']['loginshell'],
 					'account_expires_month' => $GLOBALS['HTTP_POST_VARS']['account_expires_month'],
 					'account_expires_day'   => $GLOBALS['HTTP_POST_VARS']['account_expires_day'],
-					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year']
+					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year'],
+					'account_expires_never' => $GLOBALS['HTTP_POST_VARS']['never_expires']
 					/* 'file_space'	=> $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
 				);
 
@@ -707,17 +711,25 @@
 				$totalerrors++;
 			}
 
-			if ($_userData['account_expires_month'] || $_userData['account_expires_day'] || $_userData['account_expires_year'])
+			if ($_userData['account_expires_month'] || $_userData['account_expires_day'] || $_userData['account_expires_year'] || $_userData['account_expires_never'])
 			{
-				if (! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
+				if($_userData['account_expires_never'])
 				{
-					$error[$totalerrors] = lang('You have entered an invalid expiration date');
-					$totalerrors++;
+					$_userData['expires'] = -1;
+					$_userData['account_expires'] = $_userData['expires'];
 				}
 				else
 				{
-					$_userData['expires'] = mktime(2,0,0,$_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']);
-					$_userData['account_expires'] = $_userData['expires'];
+					if (! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
+					{
+						$error[$totalerrors] = lang('You have entered an invalid expiration date');
+						$totalerrors++;
+					}
+					else
+					{
+						$_userData['expires'] = mktime(2,0,0,$_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']);
+						$_userData['account_expires'] = $_userData['expires'];
+					}
 				}
 			}
 			else
