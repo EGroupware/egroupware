@@ -277,6 +277,8 @@
 			{
 				if ($typ != 'defaults') $all_stati += $stati;
 			}
+			$GLOBALS['phpgw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
+
 			return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
 				'info_type'     => $this->bo->enums['type'],
 				'info_status'   => $all_stati
@@ -308,6 +310,7 @@
 			$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
+			$GLOBALS['phpgw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
 
 			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist);
 		}
@@ -529,6 +532,7 @@
 			}
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 				($content['status_only'] ? lang('Edit Status') : lang('Edit'));
+			$GLOBALS['phpgw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
 
 			//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
