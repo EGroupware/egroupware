@@ -184,7 +184,8 @@
 		{
 			$append = True;
 			$ixsql  = '';
-			$index = $sTableName . '_' . $sFields . '_idx';
+			$ixFields = str_replace(',','_',$sFields);
+			$index = $sTableName . '_' . $ixFields . '_idx';
 			return "CREATE INDEX $index ON $sTableName ($sFields);\n";
 		}
 
