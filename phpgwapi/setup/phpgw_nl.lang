@@ -82,7 +82,7 @@ password has been updated	common	nl	Wachtwoord is gewijzigd
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
 phone	common	nl	Telefoon
 please x by hand	common	nl	Gelieve %1 handmatig uit te voeren
-powered by phpgroupware version x	common	nl	Deze site werkt met <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version x	common	nl	Deze site werkt met <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	nl	Voorkeuren
 previous page	common	nl	Vorige pagina
 print	common	nl	Afdrukken

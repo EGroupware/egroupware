@@ -287,7 +287,7 @@ please run setup to become current	common	en	Please run setup to become current
 please set your preferences for this application	common	en	Please set your preferences for this application
 poland	common	en	POLAND
 portugal	common	en	PORTUGAL
-powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version x	common	en	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	en	Preferences
 print	common	en	Print
 priority	common	en	Priority

@@ -284,7 +284,7 @@ please run setup to become current	common	zt	請執行設定程式以到目前的
 please set your preferences for this application	common	zt	請設定這個應用程式的個人喜好設定
 poland	common	zt	POLAND
 portugal	common	zt	PORTUGAL
-powered by phpgroupware version x	common	zt	此軟體為 <a href=http://www.phpgroupware.org>phpGroupWare</a> %1 版，中文化版本由<a href=http://www.dottech.com.tw>達科數位</a>提供。
+powered by phpgroupware version x	common	zt	此軟體為 <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 版，中文化版本由<a href="http://www.dottech.com.tw">達科數位</a>提供。
 preferences	common	zt	喜好設定
 print	common	zt	列印
 priority	common	zt	優先權

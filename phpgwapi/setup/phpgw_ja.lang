@@ -142,7 +142,7 @@ personal	common	ja	個人
 please set your preferences for this application	common	ja	このアプリケーションのユーザ設定を行って下さい。
 please x by hand	common	ja	Please %1 by hand
 please, check your username and password, or contact your admin.	common	ja	ユーザとパスワードをチェックするか、管理者に問い合わせてください。
-powered by phpgroupware version x	common	ja	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version x	common	ja	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 pref	common	ja	優先
 prefer	common	ja	好み
 preferences	common	ja	ユーザ設定

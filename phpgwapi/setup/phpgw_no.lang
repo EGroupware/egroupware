@@ -70,7 +70,7 @@ ok	common	no	OK
 only yours	common	no	kun dine
 password	common	no	Passord
 password has been updated	common	no	Passord har blitt oppdatert
-powered by phpgroupware version	common	no	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version
+powered by phpgroupware version	common	no	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	no	Preferences
 previous page	common	no	Forrige side
 priority	common	no	Prioritet

@@ -72,7 +72,7 @@ password	common	cs	Heslo
 password has been updated	common	cs	Heslo bylo zmìnìno
 permissions to the files/users directory	common	cs	práva k adresáøi pro soubory / u¾ivatele
 please x by hand	common	cs	Prosím %1 ruènì
-powered by phpgroupware version x	common	cs	Aplikace <a href=http://www.phpgroupware.org>phpGroupWare</a> verze 
+powered by phpgroupware version x	common	cs	Aplikace <a href="http://www.phpgroupware.org">phpGroupWare</a> verze 
 preferences	common	cs	Nastavení
 previous page	common	cs	Pøedchozí stránka
 priority	common	cs	Priorita

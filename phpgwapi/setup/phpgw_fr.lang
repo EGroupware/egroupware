@@ -284,7 +284,7 @@ please enter a name	common	fr	Veuillez saisir un nom !
 please set your preferences for this application	common	fr	Veuillez définir vos préferences pour cette application
 poland	common	fr	POLAND
 portugal	common	fr	PORTUGAL
-powered by phpgroupware version x	common	fr	Utilise <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version x	common	fr	Utilise <a href="http://www.phpgroupware.org:>phpGroupWare</a> version %1
 preferences	common	fr	Pr&eacute;f&eacute;rences
 print	common	fr	Imprimer
 priority	common	fr	Priorit&eacute;

@@ -84,7 +84,7 @@ password	common	sv	Lösenord
 password has been updated	common	sv	Lösenord har blivit uppdaterat
 permissions to the files/users directory	common	sv	rättigheter på files/users bibliotek
 please x by hand	common	sv	Var vänlig %1 för hand
-powered by phpgroupware version x	common	sv	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version x	common	sv	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	sv	Inställningar
 previous page	common	sv	Föregående sida
 print	common	sv	Skriv ut

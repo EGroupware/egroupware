@@ -83,7 +83,7 @@ password has been updated	common	da	Password er opdateret
 permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
 phone	common	da	Telefon
 please x by hand	common	da	Udfør venligst %1 manuelt
-powered by phpgroupware version x	common	da	Denne site kører på <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version x	common	da	Denne site kører på <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	da	Preferencer
 previous page	common	da	Forrige side
 print	common	da	Udskriv

@@ -112,7 +112,7 @@ permissions to the files/users directory	common	it	permissi alla cartella file/u
 personal	common	it	Personale
 please set your preferences for this app	common	it	Per favore specifica le tue preferenze per questa applicazione
 please x by hand	common	it	Please %1 by hand
-powered by phpgroupware version x	common	it	Creato con <a href=http://www.phpgroupware.org>phpGroupWare</a> versione %1
+powered by phpgroupware version x	common	it	Creato con <a href="http://www.phpgroupware.org">phpGroupWare</a> versione %1
 pref	common	it	pref
 prefer	common	it	Prefer
 preferences	common	it	Preferenze

@@ -72,12 +72,12 @@ october	common	es	Octubre
 ok	common	es	OK
 on *nix systems please type: x	common	es	es sistemas *nix por favor escriba: %1
 only yours	common	es	solamente los suyos
-original	common	es	Original
 password	common	es	Contraseña
 password has been updated	common	es	Contraseña actualizada
 permissions to the files/users directory	common	es	permisos a los archivos/directorios de usuario
+phpinfo	common	es	PhpInfo
 please x by hand	common	es	Por favor %1 manualmente
-powered by phpgroupware version x	common	es	Potenciado por <a href=http://www.phpgroupware.org>phpGroupWare</a> versión %1
+powered by phpgroupware version x	common	es	Potenciado por <a href="http://www.phpgroupware.org">phpGroupWare</a> versión %1
 preferences	common	es	Preferencias
 previous page	common	es	pagina previa
 print	common	es	Imprimir
@@ -91,7 +91,7 @@ september	common	es	Setiembre
 session has been killed	common	es	Sesion terminada
 show all	common	es	mostrar todos
 showing x	common	es	Mostrando %1
-showing x - x of x	common	es	showing %1 - %2 of %3
+showing x - x of x	common	es	mostrando %1 - %2 de %3
 sorry, there was a problem proccesing your request.	common	es	Hubo un problema al procesar su pedido.
 submit	common	es	Enviar
 sunday	common	es	Domingo
@@ -105,7 +105,8 @@ url	common	es	URL
 users	common	es	usuarios
 view	common	es	Ver
 wednesday	common	es	Miercoles
-which groups	common	es	Que groupos
+welcome	common	es	Pagina Principal
+which groups	common	es	Que grupos
 yes	common	es	Si
 you are required to change your password during your first login	common	es	Se requiere que cambie la contraseña durante su primer login.
 you have 1 new message!	common	es	Ud. tiene 1 nuevo mensaje!
@@ -117,9 +118,431 @@ your settings have been updated	common	es	Sus paramatros han sido actualizados
 bad login or password	login	es	Usuario y/o contraseña incorrecta.
 login	login	es	Login
 password	login	es	Contraseña
-phpgroupware login	login	es	phpGroupWare login
+phpgroupware login	login	es	Ingreso al Sistema de Groupware 
 sorry, your login has expired	login	es	Su login a caducado.
 use cookies	login	es	utilizar cookies
 username	login	es	Usuario
 you have been successfully logged out	login	es	Ud. se ha deslogueado exitosamente.
 your session could not be verified.	login	es	Su sesión no pudo ser verificada.
+access not permitted	common	es	Acceso no permitido
+acl	common	es	LCA
+active	common	es	Activo
+add	common	es	Agregar
+add category	common	es	Agregar Categoria
+add x category for	common	es	Agregar %1 categoria para
+admin	common	en	Admin
+administration	common	es	Administracion
+afghanistan	common	es	AFGHANISTAN
+albania	common	es	ALBANIA
+algeria	common	es	ALGERIA
+all	common	es	Todos
+american samoa	common	es	AMERICAN SAMOA
+andorra	common	es	ANDORRA
+angola	common	es	ANGOLA
+anguilla	common	es	ANGUILLA
+antarctica	common	es	ANTARCTICA
+antigua and barbuda	common	es	ANTIGUA AND BARBUDA
+april	common	es	Abril
+are you sure you want to delete this entry ?	common	es	Esta Ud. Seguro de borrar esta entrada ?
+argentina	common	es	ARGENTINA
+armenia	common	es	ARMENIA
+aruba	common	es	ARUBA
+august	common	es	Agosto
+australia	common	es	AUSTRALIA
+austria	common	es	AUSTRIA
+autosave default category	common	es	Autograbar Categoria Predeterminada
+azerbaijan	common	es	AZERBAIJAN
+bad login or password	login	es	Nombre de Usuario o Clave invalido
+bahamas	common	es	BAHAMAS
+bahrain	common	es	BAHRAIN
+bangladesh	common	es	BANGLADESH
+barbados	common	es	BARBADOS
+belarus	common	es	BELARUS
+belgium	common	es	BELGIUM
+belize	common	es	BELIZE
+benin	common	es	BENIN
+bermuda	common	es	BERMUDA
+bhutan	common	es	BHUTAN
+bolivia	common	es	BOLIVIA
+bosnia and herzegovina	common	es	BOSNIA AND HERZEGOVINA
+botswana	common	es	BOTSWANA
+bouvet island	common	es	BOUVET ISLAND
+brazil	common	es	BRASIL
+british indian ocean territory	common	es	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	es	BRUNEI DARUSSALAM
+bulgaria	common	es	BULGARIA
+burkina faso	common	es	BURKINA FASO
+burundi	common	es	BURUNDI
+cambodia	common	es	CAMBODIA
+cameroon	common	es	CAMEROON
+canada	common	es	CANADA
+cancel	common	es	Cancelar
+cape verde	common	es	CAPE VERDE
+categories	common	es	Categorias
+categories for	common	es	categorias para
+category	common	es	Categoria
+category x has been added !	common	es	La Categoria %1 ha sido agregada !
+category x has been updated !	common	es	La Categoria %1 ha sido actualizada !
+cayman islands	common	es	CAYMAN ISLANDS
+central african republic	common	es	CENTRAL AFRICAN REPUBLIC
+chad	common	es	CHAD
+change	common	es	Cambiar
+charset	common	es	iso-8859-1
+chile	common	es	CHILE
+china	common	es	CHINA
+choose the parent category	common	es	Elija la categoria padre
+christmas island	common	es	CHRISTMAS ISLAND
+clear	common	es	Limpiar
+clear form	common	es	Limpiar Formulario
+cocos (keeling) islands	common	es	COCOS (KEELING) ISLANDS
+colombia	common	es	COLOMBIA
+comoros	common	es	COMOROS
+congo	common	es	CONGO
+congo, the democratic republic of the	common	es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+cook islands	common	es	COOK ISLANDS
+copy	common	es	Copiar
+costa rica	common	es	COSTA RICA
+cote d ivoire	common	es	COTE D IVOIRE
+create	common	es	Crear
+created by	common	es	Creado por
+croatia	common	es	CROATIA
+cuba	common	es	CUBA
+currency	common	es	Cambio
+current users	common	es	Usuarios Actuales
+cyprus	common	es	CYPRUS
+czech republic	common	es	CZECH REPUBLIC
+date	common	es	Fecha
+date due	common	es	Fecha Tope
+december	common	es	Diciembre
+default category	common	es	Categoria Predeterminada
+delete	common	es	Eliminar
+denmark	common	es	DENMARK
+description	common	es	Descripcion
+disabled	common	es	Deshabilitado
+djibouti	common	es	DJIBOUTI
+do you also want to delete all subcategories ?	common	es	Desea Ud. eliminar todas las subcategorias ?
+dominica	common	es	DOMINICA
+dominican republic	common	es	DOMINICAN REPUBLIC
+done	common	es	Hecho
+e-mail	common	es	E-Mail
+east timor	common	es	EAST TIMOR
+ecuador	common	es	ECUADOR
+edit	common	es	Editar
+edit categories	common	es	Editar Categorias
+edit category	common	es	Editar categoria
+edit x category for	common	es	Editar %1 categoria para
+egypt	common	es	EGYPT
+el salvador	common	es	EL SALVADOR
+email	common	es	E-Mail
+enabled	common	es	Habilitado
+end date	common	es	Fecha de finalizacion
+end time	common	es	Horario de finalizacion
+entry has been deleted sucessfully	common	es	La entrada ha sido eliminada exitosamente
+entry updated sucessfully	common	es	La entrada ha sido actualizada exitosamente
+equatorial guinea	common	es	EQUATORIAL GUINEA
+eritrea	common	es	ERITREA
+error	common	es	Error
+error creating x x directory	common	es	Error creando directorio %1%2 
+error deleting x x directory	common	es	Error eliminando directorio %1%2
+error renaming x x directory	common	es	Error renombrando directorio %1%2
+estonia	common	es	ESTONIA
+ethiopia	common	es	ETHIOPIA
+falkland islands (malvinas)	common	es	MALVINAS
+faroe islands	common	es	FAROE ISLANDS
+february	common	es	Febrero
+fields	common	es	Campos
+fiji	common	es	FIJI
+files	common	es	Archivos
+filter	common	es	Filtro
+finland	common	es	FINLAND
+first name	common	es	Primer Nombre
+firstname	common	es	PrimerNombre
+france	common	es	FRANCE
+french guiana	common	es	FRENCH GUIANA
+french polynesia	common	es	FRENCH POLYNESIA
+french southern territories	common	es	FRENCH SOUTHERN TERRITORIES
+friday	common	es	Viernes
+ftp	common	es	FTP
+gabon	common	es	GABON
+gambia	common	es	GAMBIA
+georgia	common	es	GEORGIA
+germany	common	es	GERMANY
+ghana	common	es	GHANA
+gibraltar	common	es	GIBRALTAR
+global	common	es	Global
+global public	common	es	Publico Global
+grant access	common	es	Ceder Acceso
+greece	common	es	GREECE
+greenland	common	es	GREENLAND
+grenada	common	es	GRENADA
+group	common	es	Grupo
+group access	common	es	Acceso Grupal
+group public	common	es	Publico Grupal
+groups	common	es	Grupos
+guadeloupe	common	es	GUADELOUPE
+guam	common	es	GUAM
+guatemala	common	es	GUATEMALA
+guinea	common	es	GUINEA
+guinea-bissau	common	es	GUINEA-BISSAU
+guyana	common	es	GUYANA
+haiti	common	es	HAITI
+heard island and mcdonald islands	common	es	HEARD ISLAND AND MCDONALD ISLANDS
+help	common	es	Ayuda
+holy see (vatican city state)	common	es	HOLY SEE (VATICAN CITY STATE)
+home	common	es	Inicio
+honduras	common	es	HONDURAS
+hong kong	common	es	HONG KONG
+hungary	common	es	HUNGARY
+iceland	common	es	ICELAND
+india	common	es	INDIA
+indonesia	common	es	INDONESIA
+iran, islamic republic of	common	es	IRAN, ISLAMIC REPUBLIC OF
+iraq	common	es	IRAQ
+ireland	common	es	IRELAND
+israel	common	es	ISRAEL
+it has been more then x days since you changed your password	common	es	Hace mas de %1 dias desde que cambio su clave por ultima vez
+it is recommended that you run setup to upgrade your tables to the current version	common	es	Se recomienda que ejecute el setup para actualizar las tablas a la ultima version
+italy	common	es	ITALY
+jamaica	common	es	JAMAICA
+january	common	es	Enero
+japan	common	es	JAPAN
+jordan	common	es	JORDAN
+july	common	es	Julio
+june	common	es	Junio
+kazakstan	common	es	KAZAKSTAN
+kenya	common	es	KENYA
+kiribati	common	es	KIRIBATI
+korea, democratic peoples republic of	common	es	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	es	KOREA, REPUBLIC OF
+kuwait	common	es	KUWAIT
+kyrgyzstan	common	es	KYRGYZSTAN
+lao peoples democratic republic	common	es	LAO PEOPLES DEMOCRATIC REPUBLIC
+last name	common	es	Apellido
+lastname	common	es	Apellido
+latvia	common	es	LATVIA
+lebanon	common	es	LEBANON
+lesotho	common	es	LESOTHO
+liberia	common	es	LIBERIA
+libyan arab jamahiriya	common	es	LIBYAN ARAB JAMAHIRIYA
+liechtenstein	common	es	LIECHTENSTEIN
+lithuania	common	es	LITHUANIA
+login	common	es	Ingresar
+logout	common	es	Salir
+luxembourg	common	es	LUXEMBOURG
+macau	common	es	MACAU
+macedonia, the former yugoslav republic of	common	es	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+madagascar	common	es	MADAGASCAR
+main category	common	es	Categoria Principal
+main screen	common	es	Pantalla Principal
+malawi	common	es	MALAWI
+malaysia	common	es	MALAYSIA
+maldives	common	es	MALDIVES
+mali	common	es	MALI
+malta	common	es	MALTA
+manual	common	es	Manual
+march	common	es	Marzo
+marshall islands	common	es	MARSHALL ISLANDS
+martinique	common	es	MARTINIQUE
+mauritania	common	es	MAURITANIA
+mauritius	common	es	MAURITIUS
+may	common	es	Mayo
+mayotte	common	es	MAYOTTE
+medium	common	es	Medio
+message	common	es	Mensaje
+mexico	common	es	MEXICO
+micronesia, federated states of	common	es	MICRONESIA, FEDERATED STATES OF
+moldova, republic of	common	es	MOLDOVA, REPUBLIC OF
+monaco	common	es	MONACO
+monday	common	es	Lunes
+mongolia	common	es	MONGOLIA
+montserrat	common	es	MONTSERRAT
+morocco	common	es	MOROCCO
+mozambique	common	es	MOZAMBIQUE
+myanmar	common	es	MYANMAR
+name	common	es	Nombre
+namibia	common	es	NAMIBIA
+nauru	common	es	NAURU
+nepal	common	es	NEPAL
+netherlands	common	es	NETHERLANDS
+netherlands antilles	common	es	NETHERLANDS ANTILLES
+new caledonia	common	es	NEW CALEDONIA
+new entry added sucessfully	common	es	Nueva entrada a&ntilde;adida exitosamente
+new main category	common	es	Nueva categoria principal
+new zealand	common	es	NEW ZEALAND
+next	common	es	Siguiente
+nicaragua	common	es	NICARAGUA
+niger	common	es	NIGER
+nigeria	common	es	NIGERIA
+niue	common	es	NIUE
+no	common	es	No
+no subject	common	es	Sin Asunto
+none	common	es	Ninguno
+norfolk island	common	es	NORFOLK ISLAND
+northern mariana islands	common	es	NORTHERN MARIANA ISLANDS
+norway	common	es	NORWAY
+note	common	es	Nota
+notes	common	es	Notas
+november	common	es	Noviembre
+november	calendar	es	Noviembre
+october	common	es	Octubre
+ok	common	es	OK
+oman	common	es	OMAN
+only yours	common	es	solo los suyos
+open notify window	common	es	Abrir Ventana de Notificacion
+other	common	es	Otro
+overview	common	es	Resumen
+owner	common	es	Due&ntilde;o
+pakistan	common	es	PAKISTAN
+palau	common	es	PALAU
+palestinian territory, occupied	common	es	PALESTINIAN TERRITORY, OCCUPIED
+panama	common	es	PANAMA
+papua new guinea	common	es	PAPUA NEW GUINEA
+paraguay	common	es	PARAGUAY
+parent category	common	es	Categoria Padre
+password	common	es	Clave
+password has been updated	common	es	Su clave ha sido actualizada
+personal	common	es	Personal
+peru	common	es	PERU
+philippines	common	es	PHILIPPINES
+pitcairn	common	es	PITCAIRN
+please enter a name	common	es	Por favor ingrese un nombre !
+please run setup to become current	common	es	Por favor ejecute el setup para actualizarse
+please set your preferences for this application	common	es	Por favor elija sus preferencias para esta aplicacion
+poland	common	es	POLAND
+portugal	common	es	PORTUGAL
+powered by phpgroupware version x	common	es	Demo provista por Servicio Tecnico
+preferences	common	es	Preferencias
+print	common	es	Imprimir
+priority	common	es	Prioridad
+private	common	es	Privado
+public	common	es	publico
+puerto rico	common	es	PUERTO RICO
+qatar	common	es	QATAR
+read	common	es	Leer
+rename	common	es	Renombrar
+reunion	common	es	REUNION
+romania	common	es	ROMANIA
+russian federation	common	es	RUSSIAN FEDERATION
+rwanda	common	es	RWANDA
+saint helena	common	es	SAINT HELENA
+saint kitts and nevis	common	es	SAINT KITTS AND NEVIS
+saint lucia	common	es	SAINT LUCIA
+saint pierre and miquelon	common	es	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	es	SAINT VINCENT AND THE GRENADINES
+samoa	common	es	SAMOA
+san marino	common	es	SAN MARINO
+sao tome and principe	common	es	SAO TOME AND PRINCIPE
+saturday	common	es	Sabado
+saudi arabia	common	es	SAUDI ARABIA
+save	common	es	Grabar
+search	common	es	Buscar
+select category	common	es	Seleccionar Categoria
+senegal	common	es	SENEGAL
+september	common	es	Septiembre
+session has been killed	common	es	La Sesion ha sido eliminada
+seychelles	common	es	SEYCHELLES
+show all	common	es	mostrar todo
+showing x	common	es	mostrando %1
+showing x - x of x	common	es	mostrando %1 - %2 de %3
+sierra leone	common	es	SIERRA LEONE
+singapore	common	es	SINGAPORE
+slovakia	common	es	SLOVAKIA
+slovenia	common	es	SLOVENIA
+solomon islands	common	es	SOLOMON ISLANDS
+somalia	common	es	SOMALIA
+sorry, your login has expired	login	es	Lo siento, su ingreso ha expirado
+south africa	common	es	SOUTH AFRICA
+south georgia and the south sandwich islands	common	es	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	es	SPAIN
+sri lanka	common	es	SRI LANKA
+start date	common	es	Fecha de Inicio
+start time	common	es	Horario de Inicio
+status	common	es	Estado
+subject	common	es	Asunto
+submit	common	es	Enviar
+sudan	common	es	SUDAN
+sunday	common	es	Domingo
+suriname	common	es	SURINAME
+svalbard and jan mayen	common	es	SVALBARD AND JAN MAYEN
+swaziland	common	es	SWAZILAND
+sweden	common	es	SWEDEN
+switzerland	common	es	SWITZERLAND
+syrian arab republic	common	es	SYRIAN ARAB REPUBLIC
+taiwan, province of china	common	es	TAIWAN, PROVINCE OF CHINA
+tajikistan	common	es	TAJIKISTAN
+tanzania, united republic of	common	es	TANZANIA, UNITED REPUBLIC OF
+thailand	common	es	THAILAND
+the api is current	common	es	La API esta al dia
+the api requires an upgrade	common	es	La API requiere una actualizacion
+the following applications require upgrades	common	es	Las siguientes aplicaciones requieren actualizaciones
+this application is current	common	es	Esta aplicacion esta actualizada
+this application requires an upgrade	common	es	Esta aplicacion requiere una actualizacion
+this name has been used already	common	es	Este nombre ya ha sido usado !
+thursday	common	es	Jueves
+time	common	es	Horario
+time zone	common	es	Zona Horaria
+time zone offset	common	es	Diferencia de Zona Horaria
+title	common	es	Titulo
+togo	common	es	TOGO
+tokelau	common	es	TOKELAU
+tonga	common	es	TONGA
+total	common	es	Total
+trinidad and tobago	common	es	TRINIDAD AND TOBAGO
+tuesday	common	es	Martes
+tunisia	common	es	TUNISIA
+turkey	common	es	TURKEY
+turkmenistan	common	es	TURKMENISTAN
+turks and caicos islands	common	es	TURKS AND CAICOS ISLANDS
+tuvalu	common	es	TUVALU
+uganda	common	es	UGANDA
+ukraine	common	es	UKRAINE
+united arab emirates	common	es	UNITED ARAB EMIRATES
+united kingdom	common	es	UNITED KINGDOM
+united states	common	es	UNITED STATES
+united states minor outlying islands	common	es	UNITED STATES MINOR OUTLYING ISLANDS
+update	common	es	Actualizar
+url	common	es	URL
+uruguay	common	es	URUGUAY
+user	common	es	Usuario
+username	common	es	Nombre de Usuario
+users	common	es	usuarios
+uzbekistan	common	es	UZBEKISTAN
+vanuatu	common	es	VANUATU
+venezuela	common	es	VENEZUELA
+viet nam	common	es	VIET NAM
+view	common	es	Ver
+virgin islands, british	common	es	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	es	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	es	WALLIS AND FUTUNA
+wednesday	common	es	Miercoles
+western sahara	common	es	WESTERN SAHARA
+which groups	common	es	Que Grupos
+written by:	common	es	Escrito Por:
+yemen	common	es	YEMEN
+yes	common	es	Si
+you are running a newer version of phpGroupWare than your database is setup for	common	es	Usted esta corriendo una version mas nueva de lo que sus bases indican
+you have been successfully logged out	login	es	Usted ha salido exitosamente
+you have selected an invalid date	common	es	Usted ha seleccionado una fecha invalida !
+you have selected an invalid main category	common	es	Usted ha seleccionado una categoria principal invalida !
+your search returned 1 match	common	es	su busqueda devolvio 1 resultado
+your search returned x matchs	common	es	su busqueda devolvio %1 resultados
+your session could not be verified.	login	es	Su sesion no pudo ser verificada.
+your settings have been updated	common	es	Sus preferencias fueron actualizadas
+yugoslavia	common	es	YUGOSLAVIA
+zambia	common	es	ZAMBIA
+zimbabwe	common	es	ZIMBABWE
+select one	common	es	Seleccionar Uno
+expires	common	es	Expira
+user data	common	es	Datos de los Usuarios
+email settings	common	es	Seteos del Email
+edit user account	common	es	Editar Cuenta de Usuario
+bookkeeping	common	es	Contabilidad
+info log	common	es	Info Log
+never	common	es	Nunca
+company directory	common	es	Directorio de la Organizacion
+registration	common	es	Registracion
+notify window	common	es	Ventana de Notificacion
+phpwebhostin	common	es	Manejo Avanzado de Archivos
+addressbook preferences	common	es	Preferencias de Libreta de Direcciones
+timetrack	common	es	Seguimiento del Tiempo
+timetrack	preferences	es	Seguimiento del Tiempo

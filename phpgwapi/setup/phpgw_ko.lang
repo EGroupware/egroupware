@@ -74,7 +74,7 @@ password	common	ko	암호
 password has been updated	common	ko	암호가 변경되었습니다.
 permissions to the files/users directory	common	ko	permissions to the files/users directory
 please x by hand	common	ko	%1을 직접 하시오. 
-powered by phpgroupware version	common	ko	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version
+powered by phpgroupware version	common	ko	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	ko	환경설정
 previous page	common	ko	이전 페이지로
 priority	common	ko	중요도
