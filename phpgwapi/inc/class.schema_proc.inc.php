@@ -48,10 +48,11 @@
 			$this->m_aTables = array();
 			$this->m_bDeltaOnly = False; // Default to false here in case it's just a CreateTable script
 			
+			$this->m_odb = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
+			$this->m_odb->connect();
+			
 			$this->adodb = &$GLOBALS['phpgw']->ADOdb;
 			$this->dict = NewDataDictionary($this->adodb);
-			
-			$this->m_odb = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			
 			// enable the debuging in ADOdb's datadictionary if the debug-level is greater then 1
 			if ($this->debug > 1) $this->dict->debug = True;
@@ -852,6 +853,7 @@
 					case 'decimal':
 						$ado_col = "N($col_data[precision].$col_data[scale])";
 						break;
+					case 'double':
 					case 'float':
 						// ADOdb does not differ between float and double
 						$ado_col = 'F';
@@ -907,12 +909,171 @@
 		}
 		
 		/**
-		 * Get actual columnnames as a comma-separated string, old translator function
+		 * Read the table-definition direct from the database
+		 *
+		 * The definition might not be as accurate, depending on the DB!
+		 *
+		 * @param string $sTableName table-name
+		 * @return array/boolean table-defition, like $phpgw_baseline[$sTableName] after including tables_current, or false on error
+		 */
+		function GetTableDefinition($sTableName)
+		{
+			if (!method_exists($this->dict,'MetaColumns') ||
+				!($columns = $this->dict->MetaColumns($sTableName)))
+			{
+				return False;
+			}
+			$definition = array(
+				'fd' => array(),
+				'pk' => array(),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array(),
+			);
+			foreach($columns as $column)
+			{
+				$name = strtolower($column->name);
+				
+				$type = method_exists($this->dict,'MetaType') ? $this->dict->MetaType($column) : strtoupper($column->type);
+				
+				static $ado_type2egw = array(
+					'C'		=> 'varchar',
+					'C2'	=> 'varchar',
+					'X'		=> 'text',
+					'X2'	=> 'text',
+					'XL'	=> 'longtext',
+					'B'		=> 'blob',
+					'I'		=> 'int',
+					'T'		=> 'timestamp',
+					'D'		=> 'date',
+					'F'		=> 'float',
+					'N'		=> 'decimal',
+				);
+				$definition['fd'][$name]['type'] = $ado_type2egw[$type];
+
+				switch($type)
+				{
+					case 'C': case 'C2':
+						$definition['fd'][$name]['type'] = $column->type == 'char' ? 'char' : 'varchar';
+						$definition['fd'][$name]['precision'] = $column->max_length;
+						break;
+					case 'F':
+						$definition['fd'][$name]['precision'] = $column->max_length;
+						break;
+					case 'N':
+						$definition['fd'][$name]['precision'] = $column->max_length;
+						$definition['fd'][$name]['scale'] = $column->scale;
+						break;
+					case 'R': 						
+					case 'I': case 'I1': case 'I2': case 'I4': case 'I8':
+						if ($column->auto_increment)
+						{
+							$definition['fd'][$name] = array(
+								'type' => 'auto',
+								'nullable' => False,
+							);
+							$column->has_default = False;
+							$definition['pk'][] = $name;
+						}
+						else
+						{
+							$definition['fd'][$name]['type'] = 'int';
+						}
+						switch($type)
+						{
+							case 'I1': case 'I2': case 'I4': case 'I8':
+								$definition['fd'][$name]['precision'] = (int) $type[1];
+								break;
+							default:
+								if ($column->max_length > 11)
+								{
+									$definition['fd'][$name]['precision'] = 8;
+								}
+								elseif ($column->max_length > 6 || !$column->max_length)
+								{
+									$definition['fd'][$name]['precision'] = 4;
+								}
+								elseif ($column->max_length > 2)
+								{
+									$definition['fd'][$name]['precision'] = 2;
+								}
+								else
+								{
+									$definition['fd'][$name]['precision'] = 1;
+								}
+								break;
+						}
+						if ($column->has_default && is_null($colum->default_value))
+						{
+							$definition['fd'][$name]['default'] = (int) $this->default_value;
+							$column->has_default = false;
+						}
+						break;
+				}
+				if ($column->has_default)
+				{
+					$definition['fd'][$name]['default'] = $column->default_value;
+				}
+				if ($column->not_null) 
+				{
+					$definition['fd'][$name]['nullable'] = False;
+				}
+				if ($column->primary_key && !in_array($name,$definition['pk']))
+				{
+					$definition['pk'][] = $name;
+				}
+			}
+			if (method_exists($this->dict,'MetaIndexes') &&
+				count($indexes = $this->dict->MetaIndexes($sTableName)) > 0)
+			{
+				foreach($indexes as $index)
+				{
+					if (count($definition['pk']) && (implode(':',$definition['pk']) == implode(':',$index['columns']) ||
+						$index['unique'] && count(array_intersect($definition['pk'],$index['columns'])) == count($definition['pk'])))
+					{
+						continue;	// is already the primary key => ignore it
+					}
+					$kind = $index['unique'] ? 'uc' : 'ix';
+
+					$definition[$kind][] = count($index['columns']) > 1 ? $index['columns'] : $index['columns'][0];
+				}
+			}
+			if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion('%1') = %2",False,$sTableName,$definition);
+			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaColumns('%1') = %2",False,$sTableName,$columns);
+			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaIndexes('%1') = %2",False,$sTableName,$indexes);
+			
+			return $definition;
+		}
+
+		/**
+		 * Get actual columnnames as a comma-separated string in$sColumns and set table-definition in class-vars
+		 *
+		 * old translator function, use GetTableDefition() instead
 		 * @depricated
 		 */
 		function _GetColumns($oProc,$sTableName,&$sColumns)
 		{
-			return strtolower(implode(',',array_keys($this->dict->MetaColumns($sTableName))));
+			$this->sCol = $this->pk = $this->fk = $this->ix = $this->uc = array();
+
+			$tabledef = $this->GetTableDefinition($sTableName);
+			
+			$sColumns = implode(',',array_keys($tabledef['fd']));
+			
+			foreach($tabledef['fd'] as $column => $data)
+			{
+				$col_def = "'type' => '$data[type]'";
+				unset($data['type']);
+				foreach($data as $key => $val)
+				{
+					$col_def .= ", '$key' => ".(is_bool($val) ? ($val ? 'true' : 'false') : 
+						(is_int($val) ? $val : "'$val'"));
+				}
+				$this->sCol[] = "\t\t\t\t'$column' => array($col_def),\n";
+			}					
+			foreach(array('pk','fk','ix','uc') as $kind)
+			{
+				$this->$kind = $tabledef[$kind];
+			}
 		}
 	}
 ?>
