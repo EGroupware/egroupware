@@ -1023,11 +1023,25 @@
 					$definition['pk'][] = $name;
 				}
 			}
+			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaColumns(%1) = %2",False,$sTableName,$columns);
+			
+			// not all DB's (odbc) return the primary keys via MetaColumns
+			if (!count($definition['pk']) && method_exists($this->dict,'MetaPrimaryKeys') &&
+				count($primary = $this->dict->MetaPrimaryKeys($sTableName)))
+			{
+				array_walk($primary,create_function('&$s','$s = strtolower($s);'));
+				
+				$definition['pk'] = $primary;
+			}
+			if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion: MetaPrimaryKeys(%1) = %2",False,$sTableName,$primary);
+			
 			if (method_exists($this->dict,'MetaIndexes') &&
 				count($indexes = $this->dict->MetaIndexes($sTableName)) > 0)
 			{
 				foreach($indexes as $index)
 				{
+					array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
+
 					if (count($definition['pk']) && (implode(':',$definition['pk']) == implode(':',$index['columns']) ||
 						$index['unique'] && count(array_intersect($definition['pk'],$index['columns'])) == count($definition['pk'])))
 					{
@@ -1038,9 +1052,8 @@
 					$definition[$kind][] = count($index['columns']) > 1 ? $index['columns'] : $index['columns'][0];
 				}
 			}
-			if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion('%1') = %2",False,$sTableName,$definition);
-			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaColumns('%1') = %2",False,$sTableName,$columns);
-			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaIndexes('%1') = %2",False,$sTableName,$indexes);
+			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaIndexes(%1) = %2",False,$sTableName,$indexes);
+			if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion(%1) = %2",False,$sTableName,$definition);
 			
 			return $definition;
 		}
