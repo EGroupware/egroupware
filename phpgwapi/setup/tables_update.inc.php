@@ -78,4 +78,13 @@
 		$setup_info['phpgwapi']['currentver'] = '0.9.15.003';
 		return $setup_info['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.15.003';
+	function phpgwapi_upgrade0_9_15_003()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => False));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.004';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
