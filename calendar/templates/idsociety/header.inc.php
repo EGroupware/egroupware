@@ -39,32 +39,19 @@
 
 	$today = date('Ymd',time());
 
-	$str = '  <td width="2%">&nbsp;</td>';
-	add_col($tpl,$str);
+	add_col($tpl,'  <td width="2%">&nbsp;</td>');
 
-	$link = $this->page('day','&date='.$today);
-	$str = '  <td width="2%">'.add_image_ahref($link,'today.gif',lang('Today')).'</td>';
-	add_col($tpl,$str);
+	add_col($tpl,'  <td width="2%">'.add_image_ahref($this->page('day','&date='.$today),'today.gif',lang('Today')).'</td>');
 
-	$link = $this->page('week','&date='.$today);
-	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'week.gif',lang('This week')).'</td>';
-	add_col($tpl,$str);
+	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('week','&date='.$today),'week.gif',lang('This week')).'</td>');
 
-	$link = $this->page('month','&date='.$today);
-	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'month.gif',lang('This month')).'</td>';
-	add_col($tpl,$str);
+	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('month','&date='.$today),'month.gif',lang('This month')).'</td>');
 
-	$link = $this->page('year','&date='.$today);
-	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'year.gif',lang('This Year')).'</td>';
-	add_col($tpl,$str);
+	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('year','&date='.$today),'year.gif',lang('This Year')).'</td>');
 
-	$link = $this->page('planner','&date='.$today);
-	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'planner.gif',lang('Planner')).'</td>';
-	add_col($tpl,$str);
+	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('planner','&date='.$today),'planner.gif',lang('Planner')).'</td>');
 
-	$link = $this->page('matrixselect');
-	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'view.gif',lang('Daily Matrix View')).'</td>';
-	add_col($tpl,$str);
+	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('matrixselect'),'view.gif',lang('Daily Matrix View')).'</td>');
 
 	$remainder = 63;
 	if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
