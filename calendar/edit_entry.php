@@ -193,7 +193,7 @@
 	display_item(lang('Full Description'),'<textarea name="description" rows="5" cols="40" wrap="virtual" maxlength="2048">'.$event->description.'</textarea>');
 
 // Display Categories
-	display_item(lang('Category'),'<select name="category"><option value="">'.lang('Choose the category').'</option>'.$phpgw->categories->formated_list('select','all',$event->category,'True').'</select>');
+	display_item(lang('Category'),'<select name="category"><option value="">'.lang('Choose the category').'</option>'.$phpgw->categories->formated_list('select','appandmains',$event->category,True).'</select>');
 
 // Date
 	$day_html = $sb->getDays('start[mday]',intval($phpgw->common->show_date($start,'d')));
@@ -320,18 +320,6 @@
 	}
 	$str .= '>';
 	display_item($phpgw->common->grab_owner_name($owner).' '.lang('Participates'),$str);
-
-// Categories
-	$c = CreateObject('phpgwapi.categories',Array($owner,'calendar'));
-	if($c->total('calendar') > 0)
-	{
-		$str = "\n".'   <select name="category" size="5">'."\n";
-
-		$str .= $c->formated_list('select','all',$event->category);
-		$str .= '   </select>';
-		display_item(lang('Categories'),$str);
-	}
-	unset($c);
 
 // Repeat Type
 	$p->set_var('hr_text','<hr>');
