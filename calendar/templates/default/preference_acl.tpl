@@ -5,11 +5,10 @@
   {nml}
   <td width="40%">
    <div align="center">
-    <form method="GET" action="{action_url}">
+    <form method="POST" action="{action_url}">
 {common_hidden_vars}
      <input type="text" name="query" value="{search_value}">
      <input type="submit" name="search" value="{search}">
-     <input type="submit" name="next" value="{next}">
     </form>
    </div>
   </td>

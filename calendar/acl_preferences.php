@@ -109,6 +109,9 @@
     $s_users = 0;
   }
 
+  if(!isset($query)) {
+    $query = "";
+  }
 
   if(!isset($maxm)) {
     $maxm = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
@@ -134,6 +137,18 @@
   $p->set_var('bg_color',$phpgw_info["theme"]["th_bg"]);
   $p->set_var('submit_lang',lang('submit'));
 
+  $common_hidden_vars = '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
+                      . '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
+                      . '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
+                      . '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
+                      . '     <input type="hidden" name="start" value="'.$start.'">'."\n"
+                      . '     <input type="hidden" name="query" value="'.$query.'">'."\n";
+  $p->set_var('common_hidden_vars_form',$common_hidden_vars);
+  
+  if(isset($query_result) && $query_result)
+    $common_hidden_vars .= "<input type=\"hidden\" name=\"query_result\" value=\"".$query_result."\">\n";
+
+  $p->set_var('common_hidden_vars',$common_hidden_vars);
   $p->set_var(array('read_lang' => lang('Read'),
                     'add_lang' => lang('Add'),
                     'edit_lang' => lang('Edit'),
@@ -144,12 +159,20 @@
     $p->parse('row','row_colspan',True);
 
     while(list(,$group) = each($groups)) {
-      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-      display_row($tr_color,'g_',$group[0],$group[1]);
-      $s_groups++;
-      $processed[] = 'g_'.$group[0];
-      $total++;
-      if($total == $maxm) break;
+      $go = True;
+      if($query) {
+        if(!strpos(' '.$group[1].' ',$query)) {
+          $go = False;
+        }
+      }
+      if($go) {
+        $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+        display_row($tr_color,'g_',$group[0],$group[1]);
+        $s_groups++;
+        $processed[] = 'g_'.$group[0];
+        $total++;
+        if($total == $maxm) break;
+      }
     }
   }
 
@@ -158,7 +181,7 @@
       $db = $phpgw->db;
     }
   
-    $db->query("select account_id from accounts ORDER BY account_lastname, account_firstname, account_lid LIMIT ".$phpgw->nextmatchs->sql_limit(intval($s_users)),__LINE__,__FILE__);
+    $db->query("select account_id, account_firstname, account_lastname, account_lid from accounts ORDER BY account_lastname, account_firstname, account_lid ".$db->limit(intval($s_users),$maxm),__LINE__,__FILE__);
     $users = $db->num_rows();
     if($total <> $maxm) {
       if($users) {
@@ -166,13 +189,22 @@
         $p->parse('row','row_colspan',True);
         $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
         while($db->next_record()) {
-          $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-          $id = $db->f("account_id");
-          display_row($tr_color,'u_',$id,$phpgw->common->grab_owner_name($id));
-          $s_users++;
-          $processed[] = 'u_'.$id;
-          $total++;
-          if($total == $maxm) break;
+          $go = True;
+          if($query) {
+            $name = ' '.$db->f("account_firstname").' '.$db->f("account_lastname").' '.$db->f("account_lid").' ';
+            if(!strpos($name,$query)) {
+              $go = False;
+            }
+          }
+          if($go) {
+            $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+            $id = $db->f("account_id");
+            display_row($tr_color,'u_',$id,$phpgw->common->grab_owner_name($id));
+            $s_users++;
+            $processed[] = 'u_'.$id;
+            $total++;
+            if($total == $maxm) break;
+          }
         }
       }
     }
@@ -183,22 +215,8 @@
   $p->set_var("nml",$phpgw->nextmatchs->left("",$start,$totalentries,$extra_parms));
   $p->set_var("nmr",$phpgw->nextmatchs->right("",$start,$totalentries,$extra_parms));
 
-  $start += $total;
-  $common_hidden_vars = '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
-                      . '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
-                      . '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
-                      . '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
-                      . '     <input type="hidden" name="start" value="'.$start.'">'."\n";
-  $p->set_var('common_hidden_vars_form',$common_hidden_vars);
-  
-  if(isset($query_result) && $query_result)
-    $common_hidden_vars .= "<input type=\"hidden\" name=\"query_result\" value=\"".$query_result."\">\n";
-
-  $p->set_var('common_hidden_vars',$common_hidden_vars);
   $p->set_var("search_value",(isset($query) && $query?$query:""));
   $p->set_var("search",lang("search"));
-  $p->set_var("next",lang("next"));
-
 
   $p->set_var('processed',urlencode(serialize($processed)));
   $p->pparse('out','preferences');
