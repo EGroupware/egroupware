@@ -68,7 +68,7 @@
 
   $view = "day";
 
-  $now	= $phpgw->calendar->splitdate(mktime (2, 0, 0, $thismonth, $thisday, $thisyear));
+  $now	= $phpgw->calendar->splitdate(mktime (0, 0, 0, $thismonth, $thisday, $thisyear) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]));
 
   $phpgw->template->set_file(array("day_t" => "day.tpl"));
 
