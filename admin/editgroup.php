@@ -202,7 +202,7 @@
      $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="n_group_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]["enabled"]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td>";
@@ -216,7 +216,7 @@
      $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="n_group_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]["enabled"]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td></tr>\n";
