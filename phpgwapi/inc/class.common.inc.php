@@ -25,18 +25,20 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info['server']['api_inc'],0,3));
-  $d2 = strtolower(substr($phpgw_info['server']['server_root'],0,3));
-  $d3 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
-  if($d1 == 'htt' || $d1 == 'ftp' || $d2 == 'htt' || $d2 == 'ftp' || $d3 == 'htt' || $d3 == 'ftp') {
-    echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
-    exit;
-  } unset($d1);unset($d2);unset($d3);
-		
-		/*!
-		@class common
-		@abstract common class that contains commonly used functions
-		*/
+	$d1 = strtolower(substr($phpgw_info['server']['api_inc'],0,3));
+	$d2 = strtolower(substr($phpgw_info['server']['server_root'],0,3));
+	$d3 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
+	if($d1 == 'htt' || $d1 == 'ftp' || $d2 == 'htt' || $d2 == 'ftp' || $d3 == 'htt' || $d3 == 'ftp')
+	{
+		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
+		exit;
+	}
+	unset($d1);unset($d2);unset($d3);
+
+	/*!
+	@class common
+	@abstract common class that contains commonly used functions
+	*/
 	class common
 	{
 		var $phpgw;
@@ -96,7 +98,6 @@
 			return $s;
 		}
 
-
 		// This is used for searching the access fields
 		/*!
 		@function sql_search
@@ -125,67 +126,67 @@
 			return $s;
 		}
 
-    // return a array of installed languages
+		// return a array of installed languages
 		/*!
 		@function getInstalledLanguages
 		@abstract return an array of installed languages
 		@result $installedLanguages; an array containing the installed languages
 		*/
-    function getInstalledLanguages()
-    {
-    	global $phpgw;
-    	
-    	$phpgw->db->query('select distinct lang from lang');
-    	while (@$phpgw->db->next_record()) 
-    	{
-    		$installedLanguages[$phpgw->db->f('lang')] = $phpgw->db->f('lang');
-    	}   
-    	
-    	return $installedLanguages;
-    }
+		function getInstalledLanguages()
+		{
+			global $phpgw;
 
-    // return the preferred language of the users
-    // it's using HTTP_ACCEPT_LANGUAGE (send from the users browser)
-    // and ...(to find out which languages are installed)
+			$phpgw->db->query('select distinct lang from lang');
+			while (@$phpgw->db->next_record()) 
+			{
+				$installedLanguages[$phpgw->db->f('lang')] = $phpgw->db->f('lang');
+			}
+
+			return $installedLanguages;
+		}
+
+		// return the preferred language of the users
+		// it's using HTTP_ACCEPT_LANGUAGE (send from the users browser)
+		// and ...(to find out which languages are installed)
 		/*!
 		@function getPreferredLanguage
 		@abstract return the preferred langugae of the users
 		@discussion it uses HTTP_ACCEPT_LANGUAGE (from the users browser) <br>
 		and .... to find out which languages are installed
 		*/
-    function getPreferredLanguage()
-    {
-        global $HTTP_ACCEPT_LANGUAGE;
-        
-        // create a array of languages the user is accepting
-        $userLanguages = explode(',',$HTTP_ACCEPT_LANGUAGE);
-        $supportedLanguages = $this->getInstalledLanguages();
+		function getPreferredLanguage()
+		{
+			global $HTTP_ACCEPT_LANGUAGE;
 
-	// find usersupported language
-        while (list($key,$value) = each($userLanguages))
-        {
-        	// remove everything behind '-' example: de-de
-                $value = trim($value);
-                $pieces = explode('-', $value);
-                $value = $pieces[0];
-                # print 'current lang $value<br>';
-                if ($supportedLanguages[$value])
-                {
-                        $retValue=$value;
-                        break;
-                }
-        }
+			// create a array of languages the user is accepting
+			$userLanguages = explode(',',$HTTP_ACCEPT_LANGUAGE);
+			$supportedLanguages = $this->getInstalledLanguages();
 
-	// no usersupported language found -> return english
-        if (empty($retValue))
-        {
-                $retValue='en';
-        }
-        
-        return $retValue;
-    }      
+			// find usersupported language
+			while (list($key,$value) = each($userLanguages))
+			{
+				// remove everything behind '-' example: de-de
+				$value = trim($value);
+				$pieces = explode('-', $value);
+				$value = $pieces[0];
+				# print 'current lang $value<br>';
+				if ($supportedLanguages[$value])
+				{
+					$retValue=$value;
+					break;
+				}
+			}
 
-    // connect to the ldap server and return a handle
+			// no usersupported language found -> return english
+			if (empty($retValue))
+			{
+				$retValue='en';
+			}
+
+			return $retValue;
+		}
+
+		// connect to the ldap server and return a handle
 		/*!
 		@function ldapConnect
 		@abstract connect to the ldap server and return a handle
@@ -193,40 +194,44 @@
 		@param $dn ldap_root_dn
 		@param $passwd ldap_root_pw
 		*/
-    function ldapConnect($host = '', $dn = '', $passwd = '')
-    {
-	   	global $phpgw_info;
-   	
-	   	if (! $host) {
-	   	   $host = $phpgw_info['server']['ldap_host'];
-	   	}
+		function ldapConnect($host = '', $dn = '', $passwd = '')
+		{
+			global $phpgw_info;
 
-	   	if (! $dn) {
-	   	   $dn = $phpgw_info['server']['ldap_root_dn'];
-	   	}
+			if (! $host)
+			{
+				$host = $phpgw_info['server']['ldap_host'];
+			}
 
-	   	if (! $passwd) {
-   		   $passwd = $phpgw_info['server']['ldap_root_pw'];
-   		}
+			if (! $dn)
+			{
+				$dn = $phpgw_info['server']['ldap_root_dn'];
+			}
 
-	
-   		// connect to ldap server
-   		if (! $ds = ldap_connect($host)) {
-  			printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
-			return False;
-	   	}
+			if (! $passwd)
+			{
+				$passwd = $phpgw_info['server']['ldap_root_pw'];
+			}
 
-   		// bind as admin, we not to able to do everything
-   		if (! ldap_bind($ds,$dn,$passwd)) {
-  			printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
-			return False;
-	   	}
+			// connect to ldap server
+			if (! $ds = ldap_connect($host))
+			{
+				printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
+				return False;
+			}
 
-	   	return $ds;
-    }
+			// bind as admin, we not to able to do everything
+			if (! ldap_bind($ds,$dn,$passwd))
+			{
+				printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
+				return False;
+			}
 
-    // This function is used if the developer wants to stop a running app in the middle of execution
-    // We may need to do some clean up before hand
+			return $ds;
+		}
+
+		// This function is used if the developer wants to stop a running app in the middle of execution
+		// We may need to do some clean up before hand
 		/*!
 		@function phpgw_exit
 		@abstract function to stop running an app
@@ -234,35 +239,37 @@
 		There may need to be some cleanup before hand
 		@param $call_footer boolean value to if true then call footer else exit
 		*/
-    function phpgw_exit($call_footer = False)
-    {
-       global $phpgw;
+		function phpgw_exit($call_footer = False)
+		{
+			global $phpgw;
 
-       if ($call_footer) {
-          $this->phpgw_footer();
-       }  
-       $phpgw->db->disconnect();
-       exit;
-    }
+			if ($call_footer)
+			{
+				$this->phpgw_footer();
+			}
+			$phpgw->db->disconnect();
+			exit;
+		}
 		/*!
 		@function randomstring
 		@abstract return a random string of size $size
 		@param $size int-size of random string to return
 		*/
-    function randomstring($size)
-    {
-      $s = '';
-      srand((double)microtime()*1000000);
-      $random_char = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
-                           'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-                           'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
-                           'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+		function randomstring($size)
+		{
+			$s = '';
+			srand((double)microtime()*1000000);
+			$random_char = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
+				'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+				'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
+				'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 
-      for ($i=0; $i<$size; $i++) {
-         $s .= $random_char[rand(1,61)];
-      }
-      return $s;    
-    }
+			for ($i=0; $i<$size; $i++)
+			{
+				$s .= $random_char[rand(1,61)];
+			}
+			return $s;
+		}
 
 		// Look at the note towards the top of this file (jengo)
 		function filesystem_separator()
@@ -299,7 +306,7 @@
 		@param $label ?
 		@param $extravars
 		*/
-      // This is a depreciated function - use ACL instead (jengo)
+		// This is a depreciated function - use ACL instead (jengo)
 		function check_owner($record,$link,$label,$extravars = '')
 		{
 			global $phpgw, $phpgw_info;
@@ -322,7 +329,7 @@
 			}
 
 			return $s;
-		}    
+		}
 
 		/*!
 		@function display_fullname
@@ -345,7 +352,7 @@
 			{
 				$a[] = $lastname;
 			}
-    
+
 			if ($firstname)
 			{
 				$a[] = $firstname;
@@ -377,17 +384,18 @@
 		@abstract grab the owner name
 		@param $id account id
 		*/
-    function grab_owner_name($accountid = '')
-    {
-      global $phpgw;
+		function grab_owner_name($accountid = '')
+		{
+			global $phpgw;
 
-		$account_id = get_account_id($accountid);
-      $db = $phpgw->db;
-      $db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$account_id,__LINE__,__FILE__);
-      $db->next_record();
+			$account_id = get_account_id($accountid);
+			$db = $phpgw->db;
+			$db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$account_id,__LINE__,__FILE__);
+			$db->next_record();
 
-      return $phpgw->common->display_fullname($db->f('account_lid'),$db->f('account_firstname'),$db->f('account_lastname'));
-    }  
+			return $phpgw->common->display_fullname($db->f('account_lid'),$db->f('account_firstname'),$db->f('account_lastname'));
+		}
+
 		/*!
 		@function create_tabs
 		@abstract create tabs
@@ -395,221 +403,294 @@
 		@param $selected ?
 		@param $fontsize optional
 		*/
-    function create_tabs($tabs, $selected, $fontsize = '')
-    {
-       global $phpgw_info;
-       $output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-       $ir = $phpgw_info['server']['images_dir'];
+		function create_tabs($tabs, $selected, $fontsize = '')
+		{
+			global $phpgw_info;
+			$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
+			$ir = $phpgw_info['server']['images_dir'];
 
-       if ($fontsize) {
-          $fs  = '<font size="' . $fontsize . '">';
-          $fse = '</font>';
-       }
+			if ($fontsize)
+			{
+				$fs  = '<font size="' . $fontsize . '">';
+				$fse = '</font>';
+			}
 
-       $i = 1;
-       while ($tab = each($tabs)) {
-         if ($tab[0] == $selected) {
-            if ($i == 1) {
-               $output_text .= '<td align="right"><img src="' . $ir . '/tabs-start1.gif"></td>';
-            }
-     
-            $output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
-                          . $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label']
-                          . $fse . '</a></b>&nbsp;</td>';
-            if ($i == count($tabs)) {
-               $output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
-            } else {
-               $output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
-            }
-         } else {
-            if ($i == 1) {
-               $output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
-            }
-            $output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
-                          . $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label'] . $fse
-                          . '</a></b>&nbsp;</td>';
-            if (($i + 1) == $selected) {
-               $output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
-            } else if ($i == $selected || $i != count($tabs)) {
-               $output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepm.gif"></td>';
-            } else if ($i == count($tabs)) {
-               if ($i == $selected) {
-                  $output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';          
-               } else {
-                  $output_text .= '<td align="left"><img src="' . $ir . '/tabs-end0.gif"></td>';
-               }
-            } else {
-               if ($i != count($tabs)) {
-                  $output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
-               }
-            }
-         }
-         $i++;
-         $output_text .= "\n";
-       }
-       $output_text .= "</table>\n";
-       return $output_text;
-    }
+			$i = 1;
+			while ($tab = each($tabs))
+			{
+				if ($tab[0] == $selected)
+				{
+					if ($i == 1)
+					{
+						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start1.gif"></td>';
+					}
+
+					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
+						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label']
+						. $fse . '</a></b>&nbsp;</td>';
+					if ($i == count($tabs))
+					{
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
+					}
+					else
+					{
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
+					}
+				}
+				else
+				{
+					if ($i == 1)
+					{
+						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
+					}
+					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
+						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label'] . $fse
+						. '</a></b>&nbsp;</td>';
+					if (($i + 1) == $selected)
+					{
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepl.gif"></td>';
+					}
+					else if ($i == $selected || $i != count($tabs))
+					{
+						$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepm.gif"></td>';
+					}
+					else if ($i == count($tabs))
+					{
+						if ($i == $selected)
+						{
+							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end1.gif"></td>';
+						}
+						else
+						{
+							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-end0.gif"></td>';
+						}
+					}
+					else
+					{
+						if ($i != count($tabs))
+						{
+							$output_text .= '<td align="left"><img src="' . $ir . '/tabs-sepr.gif"></td>';
+						}
+					}
+				}
+				$i++;
+				$output_text .= "\n";
+			}
+			$output_text .= "</table>\n";
+			return $output_text;
+		}
 		/*!
 		@function get_app_dir
 		@abstract get directory of application
 		@discussion $appname can either be passed or derived from $phpgw_info['flags']['currentapp'];
 		@param $appname name of application 
 		*/
-    function get_app_dir($appname = ''){
-      global $phpgw_info;
-      if ($appname == '') { 
-         $appname = $phpgw_info['flags']['currentapp'];
-      }
-      if ($appname == 'home' || $appname == 'logout' || $appname == 'login') {
-         $appname = 'phpgwapi';
-      }
+		function get_app_dir($appname = '')
+		{
+			global $phpgw_info;
+			if ($appname == '')
+			{
+				$appname = $phpgw_info['flags']['currentapp'];
+			}
+			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+			{
+				$appname = 'phpgwapi';
+			}
 
-      $appdir         = PHPGW_INCLUDE_ROOT . '/'.$appname;
-      $appdir_default = PHPGW_SERVER_ROOT . '/'.$appname;
+			$appdir         = PHPGW_INCLUDE_ROOT . '/'.$appname;
+			$appdir_default = PHPGW_SERVER_ROOT . '/'.$appname;
 
-      if (is_dir ($appdir)){
-        return $appdir;
-      }elseif (is_dir ($appdir_default)){
-        return $appdir_default;
-      }else{
-        return False;
-      }      
-    }
+			if (is_dir ($appdir))
+			{
+				return $appdir;
+			}
+			elseif (is_dir ($appdir_default))
+			{
+				return $appdir_default;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		/*!
 		@function get_inc_dir
 		@abstract get inc (include dir) of application
 		@discussion $appname can either be passed or derived from $phpgw_info['flags']['currentapp'];
 		@param $appname name of application 
 		*/
-    function get_inc_dir($appname = '')
-    {
-       global $phpgw_info;
-  
-       if (! $appname){
-          $appname = $phpgw_info['flags']['currentapp'];
-       }
-       if ($appname == 'home' || $appname == 'logout' || $appname == 'login') {
-          $appname = 'phpgwapi';
-       }
+		function get_inc_dir($appname = '')
+		{
+			global $phpgw_info;
+
+			if (! $appname)
+			{
+				$appname = $phpgw_info['flags']['currentapp'];
+			}
+			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+			{
+				$appname = 'phpgwapi';
+			}
  
-       $incdir         = PHPGW_INCLUDE_ROOT . '/' . $appname . '/inc';
-       $incdir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/inc';
+			$incdir         = PHPGW_INCLUDE_ROOT . '/' . $appname . '/inc';
+			$incdir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/inc';
  
-       if (is_dir ($incdir)) {
-          return $incdir;
-       } elseif (is_dir ($incdir_default)) {
-          return $incdir_default;
-       } else {
-          return False;
-       }      
-    }
+			if (is_dir ($incdir))
+			{
+				return $incdir;
+			}
+			elseif (is_dir ($incdir_default))
+			{
+				return $incdir_default;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		/*!
 		@function list_themes
 		@abstract list themes available
 		*/
-    function list_themes()
-    {
-       $dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
-       while ($file = readdir($dh)) {
-         if (eregi("\.theme$", $file)) {
-            $list[] = substr($file,0,strpos($file,'.'));
-         }
-       }
-       //$dh->close();
-       reset ($list);
-       return $list;
-    }
+		function list_themes()
+		{
+			$dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
+			while ($file = readdir($dh))
+			{
+				if (eregi("\.theme$", $file))
+				{
+					$list[] = substr($file,0,strpos($file,'.'));
+				}
+			}
+			//$dh->close();
+			reset ($list);
+			return $list;
+		}
+
 		/*!
 		@function list_templates
 		@abstract list available templates
 		*/
-    function list_templates(){
-      global $phpgw_info;
-      $d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
-      while ($entry=$d->read()) {
-         if ($entry != 'CVS' && $entry != '.' && $entry != '..'){
-            $list[$entry]['name'] = $entry;
-            $f = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
-            if (file_exists ($f)){
-               include($f);
-               $list[$entry]['title'] = 'Use '.$phpgw_info['template'][$entry]['title'].'interface';
-            } else {
-               $list[$entry]['title'] = $entry;
-            }
-         }
-      }
-      $d->close();
-      reset ($list);
-      return $list;
-    }
+		function list_templates()
+		{
+			global $phpgw_info;
+			$d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
+			while ($entry=$d->read())
+			{
+				if ($entry != 'CVS' && $entry != '.' && $entry != '..')
+				{
+					$list[$entry]['name'] = $entry;
+					$f = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
+					if (file_exists ($f))
+					{
+						include($f);
+						$list[$entry]['title'] = 'Use '.$phpgw_info['template'][$entry]['title'].'interface';
+					}
+					else
+					{
+						$list[$entry]['title'] = $entry;
+					}
+				}
+			}
+			$d->close();
+			reset ($list);
+			return $list;
+		}
+
 		/*!
 		@function get_tpl_dir
 		@abstract get template dir of an application
 		@param $appname appication name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-    function get_tpl_dir($appname = '')
-    {
-       global $phpgw_info;
-       if (! $appname) {
-          $appname = $phpgw_info['flags']['currentapp'];
-        }
-        if ($appname == 'home' || $appname == 'logout' || $appname == 'login') {
-           $appname = 'phpgwapi';
-        }
+		function get_tpl_dir($appname = '')
+		{
+			global $phpgw_info;
+			if (! $appname)
+			{
+				$appname = $phpgw_info['flags']['currentapp'];
+			}
+			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+			{
+				$appname = 'phpgwapi';
+			}
 
-        // Setting this for display of template choices in user preferences
-        if ($phpgw_info['server']['template_set'] == 'user_choice') {
-           $phpgw_info['server']['usrtplchoice'] = 'user_choice';
-        }
+			// Setting this for display of template choices in user preferences
+			if ($phpgw_info['server']['template_set'] == 'user_choice')
+			{
+				$phpgw_info['server']['usrtplchoice'] = 'user_choice';
+			}
 
-        if ($phpgw_info['server']['template_set'] == 'user_choice' && isset($phpgw_info['user']['preferences']['common']['template_set'])) {
-           $phpgw_info['server']['template_set'] = $phpgw_info['user']['preferences']['common']['template_set'];
-        } elseif ($phpgw_info['server']['template_set'] == 'user_choice' || !isset($phpgw_info['server']['template_set'])) {
-           $phpgw_info['server']['template_set'] = 'default';
-        }
+			if ($phpgw_info['server']['template_set'] == 'user_choice' &&
+				isset($phpgw_info['user']['preferences']['common']['template_set']))
+			{
+				$phpgw_info['server']['template_set'] = $phpgw_info['user']['preferences']['common']['template_set'];
+			}
+			elseif ($phpgw_info['server']['template_set'] == 'user_choice' ||
+				!isset($phpgw_info['server']['template_set']))
+			{
+				$phpgw_info['server']['template_set'] = 'default';
+			}
 
-        $tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
-                        . $phpgw_info['server']['template_set'];
-        $tpldir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default';
+			$tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
+				. $phpgw_info['server']['template_set'];
+			$tpldir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default';
 
-        if (is_dir($tpldir)) {
-           return $tpldir;
-        } elseif (is_dir($tpldir_default)) {
-           return $tpldir_default;
-        } else {
-           return False;
-        }      
-    }
+			if (is_dir($tpldir))
+			{
+				return $tpldir;
+			}
+			elseif (is_dir($tpldir_default))
+			{
+				return $tpldir_default;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		/*!
 		@function get_image_dir
 		@abstract get image dir of an application
 		@param $appname application name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-    function get_image_dir($appname = ''){
-      global $phpgw_info;
-      if ($appname == '') {
-         $appname = $phpgw_info['flags']['currentapp'];
-      }
-      if (empty($phpgw_info['server']['template_set'])) {
-         $phpgw_info['server']['template_set'] = 'default';
-      }
+		function get_image_dir($appname = '')
+		{
+			global $phpgw_info;
+			if ($appname == '')
+			{
+				$appname = $phpgw_info['flags']['currentapp'];
+			}
+			if (empty($phpgw_info['server']['template_set']))
+			{
+				$phpgw_info['server']['template_set'] = 'default';
+			}
 
-      $imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
-                           . $phpgw_info['server']['template_set'] . '/images';
-      $imagedir_default    = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
-      $imagedir_olddefault = PHPGW_SERVER_ROOT . '/' . $appname . '/images';
+			$imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
+				. $phpgw_info['server']['template_set'] . '/images';
+			$imagedir_default    = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
+			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/' . $appname . '/images';
 
-      if (is_dir ($imagedir)){
-         return $imagedir;
-      } elseif (is_dir ($imagedir_default)) {
-         return $imagedir_default;
-      } elseif (is_dir ($imagedir_olddefault)) {
-         return $imagedir_olddefault;
-      } else {
-         return False;
-      }      
-    }
+			if (is_dir ($imagedir))
+			{
+				return $imagedir;
+			}
+			elseif (is_dir ($imagedir_default))
+			{
+				return $imagedir_default;
+			}
+			elseif (is_dir ($imagedir_olddefault))
+			{
+				return $imagedir_olddefault;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		/*!
 		@function get_image_path
 		@abstract get image path of an application
@@ -648,7 +729,7 @@
 			else
 			{
 				return False;
-			}      
+			}
 		}
 
 		function find_image($appname,$image)
@@ -707,7 +788,7 @@
 		@discussion *someone wanna add some detail here*
 		*/
 		function navbar()
-		{    
+		{
 			global $phpgw_info, $phpgw;
 
 			$phpgw_info['navbar']['home']['title'] = 'Home';
@@ -752,7 +833,7 @@
 			$phpgw_info['navbar']['preferences']['title'] = 'preferences';
 			$phpgw_info['navbar']['preferences']['url']   = $phpgw->link('/preferences/index.php');
 			$phpgw_info['navbar']['preferences']['icon']  = $phpgw_info['server']['webserver_url'] . '/preferences/templates/'
-                                                     . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
+				. $phpgw_info['server']['template_set'] . '/images/navbar.gif';
 
 			if ($phpgw_info['flags']['currentapp'] == 'home' || $phpgw_info['flags']['currentapp'] == 'preferences' || $phpgw_info['flags']['currentapp'] == 'about')
 			{
@@ -768,12 +849,12 @@
 
 			$phpgw_info['navbar']['about']['url']   = $phpgw->link('/about.php','app='.$app);
 			$phpgw_info['navbar']['about']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
-                                               . $phpgw_info['server']['template_set'] . '/images/about.gif';
+				. $phpgw_info['server']['template_set'] . '/images/about.gif';
 
 			$phpgw_info['navbar']['logout']['title'] = 'Logout';
 			$phpgw_info['navbar']['logout']['url']   = $phpgw->link('/logout.php');
 			$phpgw_info['navbar']['logout']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
-                                                . $phpgw_info['server']['template_set'] . '/images/logout.gif';
+				. $phpgw_info['server']['template_set'] . '/images/logout.gif';
 		}
 
 		/*!
@@ -796,14 +877,14 @@
 			global $phpgw, $phpgw_info;
 
 			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
-                                 . '/head.inc.php');
+				. '/head.inc.php');
 			$this->navbar(False);
 			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
-                                 . '/navbar.inc.php');
+				. '/navbar.inc.php');
 			if ((!isset($phpgw_info['flags']['nonavbar']) || 
-			     !$phpgw_info['flags']['nonavbar']) && 
-			    (!isset($phpgw_info['flags']['navbar_target']) ||
-			     !$phpgw_info['flags']['navbar_target']))
+				!$phpgw_info['flags']['nonavbar']) && 
+				(!isset($phpgw_info['flags']['navbar_target']) ||
+				!$phpgw_info['flags']['navbar_target']))
 			{
 				echo parse_navbar();
 				$this->hook('after_navbar');
@@ -837,7 +918,7 @@
 		@abstract encrypt data passed to the function
 		@param $data data (string?) to be encrypted
 		*/
-				function encrypt($data)
+		function encrypt($data)
 		{
 			global $phpgw_info, $phpgw;
 
@@ -876,42 +957,44 @@
 		@param $userpass user password
 		@param $random random seed
 		*/ 
-		  function md5_cryptpasswd($userpass, $random)
-  {
-    $bsalt = "$1$";
-    $esalt = "$";						// patch
-    $lcrypt = "{crypt}";
-//    $modsalt = sprintf("%s%s", $bsalt, $random);
-    $modsalt = sprintf("%s%s%s", $bsalt, $random, $esalt);	// patch
-    $password = crypt($userpass, $modsalt);
-    $ldappassword = sprintf("%s%s", $lcrypt, $password);
-  
-    return $ldappassword;
-  }    
+		function md5_cryptpasswd($userpass, $random)
+		{
+			$bsalt = '$1$';
+			$esalt = '$';						// patch
+			$lcrypt = '{crypt}';
+			//    $modsalt = sprintf('%s%s', $bsalt, $random);
+			$modsalt = sprintf('%s%s%s', $bsalt, $random, $esalt);	// patch
+			$password = crypt($userpass, $modsalt);
+			$ldappassword = sprintf('%s%s', $lcrypt, $password);
+
+			return $ldappassword;
+		}
 		/*!
 		@function encrypt_password
 		@abstract encrypt password
 		@abstract uses the encryption type set in setup and calls the appropriate encryption functions
 		@param $password password to encrypt
 		*/
-  function encrypt_password($password)
-  {
-     global $phpgw, $phpgw_info;
-     
-     if ($phpgw_info['server']['ldap_encryption_type'] == 'DES') {
-         $salt       = $this->randomstring(2);
-         $e_password = $this->des_cryptpasswd($password, $salt);
-      }
-      if ($phpgw_info['server']['ldap_encryption_type'] == 'MD5') {
-//         $salt       = $this->randomstring(9);
-         $salt       = $this->randomstring(8);			// patch
-         $e_password = $this->md5_cryptpasswd($password, $salt);
-      }
-      return $e_password;
-  }
+		function encrypt_password($password)
+		{
+			global $phpgw, $phpgw_info;
+
+			if ($phpgw_info['server']['ldap_encryption_type'] == 'DES')
+			{
+				$salt       = $this->randomstring(2);
+				$e_password = $this->des_cryptpasswd($password, $salt);
+			}
+			if ($phpgw_info['server']['ldap_encryption_type'] == 'MD5')
+			{
+				//$salt = $this->randomstring(9);
+				$salt       = $this->randomstring(8);			// patch
+				$e_password = $this->md5_cryptpasswd($password, $salt);
+			}
+			return $e_password;
+		}
 		/*!
 		@function hook
-		@abstract hooking function which allows applications to "hook" into each other
+		@abstract hooking function which allows applications to 'hook' into each other
 		@discussion Someone flesh this out please
 		*/
 		function hook($location, $order = '')
@@ -1018,25 +1101,31 @@
 		@param $t time - optional can be pulled from user preferences
 		@param $format - optional can be pulled from user prefernces
 		*/
-    function show_date($t = '', $format = '')
-    {
-      global $phpgw_info;
+		function show_date($t = '', $format = '')
+		{
+			global $phpgw_info;
 
-      if (! $t)
-         $t = time();
+			if (! $t)
+			{
+				$t = time();
+			}
 
-      $t = $t + ((60*60) * $phpgw_info['user']['preferences']['common']['tz_offset']);
+			$t = $t + ((60*60) * $phpgw_info['user']['preferences']['common']['tz_offset']);
 
-      if (! $format) {
-         $format = $phpgw_info['user']['preferences']['common']['dateformat'] . ' - ';
-         if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12') {
-            $format .= 'h:i:s a';
-         } else {
-            $format .= 'H:i:s';
-         }
-      }
-      return date($format,$t);
-    }
+			if (! $format)
+			{
+				$format = $phpgw_info['user']['preferences']['common']['dateformat'] . ' - ';
+				if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+				{
+					$format .= 'h:i:s a';
+				}
+				else
+				{
+					$format .= 'H:i:s';
+				}
+			}
+			return date($format,$t);
+		}
 		/*!
 		@function dateformatorder
 		@abstract 
@@ -1045,23 +1134,26 @@
 		@param $day day - string
 		@param $add_seperator boolean defaults to false
 		*/
-    function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
-    {
-      global $phpgw_info;
-      $dateformat = strtolower($phpgw_info['user']['preferences']['common']['dateformat']);
-      $sep = substr($phpgw_info['user']['preferences']['common']['dateformat'],1,1);
+		function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
+		{
+			global $phpgw_info;
+			$dateformat = strtolower($phpgw_info['user']['preferences']['common']['dateformat']);
+			$sep = substr($phpgw_info['user']['preferences']['common']['dateformat'],1,1);
 
-      $dlarr[strpos($dateformat,'y')] = $yearstr;
-      $dlarr[strpos($dateformat,'m')] = $monthstr;
-      $dlarr[strpos($dateformat,'d')] = $daystr;
-      ksort($dlarr);
+			$dlarr[strpos($dateformat,'y')] = $yearstr;
+			$dlarr[strpos($dateformat,'m')] = $monthstr;
+			$dlarr[strpos($dateformat,'d')] = $daystr;
+			ksort($dlarr);
 
-      if ($add_seperator) {
-         return (implode($sep,$dlarr));
-      } else {
-         return (implode(' ',$dlarr));      
-      }
-    } 
+			if ($add_seperator)
+			{
+				return (implode($sep,$dlarr));
+			}
+			else
+			{
+				return (implode(' ',$dlarr));
+			}
+		} 
 		/*!
 		@function formattime
 		@abstract format the time takes settings from user preferences
@@ -1165,7 +1257,7 @@
 
 			/* This is going to be used to switch to the nntp class */
 			if (isset($phpgw_info['flags']['newsmode']) &&
-			    $phpgw_info['flags']['newsmode'])
+				$phpgw_info['flags']['newsmode'])
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';
 			}
@@ -1174,262 +1266,312 @@
 
 
 
-    // This will be moved into the applications area.
+		// This will be moved into the applications area.
 		/*!
 		@function check_code
 		@abstract ?
 		@discussion This will be moved into the applications area
 		*/
-    function check_code($code)
-    {
-      $s = '<br>';
-      switch ($code)
-      {
-        case 13:	$s .= lang('Your message has been sent');break;
-        case 14:	$s .= lang('New entry added sucessfully');break;
-        case 15:	$s .= lang('Entry updated sucessfully');	break;
-        case 16:	$s .= lang('Entry has been deleted sucessfully'); break;
-        case 18:	$s .= lang('Password has been updated');	break;
-        case 38:	$s .= lang('Password could not be changed');	break;
-        case 19:	$s .= lang('Session has been killed');	break;
-        case 27:	$s .= lang('Account has been updated');	break;
-        case 28:	$s .= lang('Account has been created');	break;
-        case 29:	$s .= lang('Account has been deleted');	break;
-        case 30:	$s .= lang('Your settings have been updated'); break;
-        case 31:	$s .= lang('Group has been added');	break;
-        case 32:	$s .= lang('Group has been deleted');	break;
-        case 33:	$s .= lang('Group has been updated');	break;
-        case 34:    $s .= lang('Account has been deleted') . '<p>'
-		             .  lang('Error deleting x x directory',lang('users'),' '.lang('private').' ') 
- 		             .  ',<br>' . lang('Please x by hand',lang('delete')) . '<br><br>'
-		             .  lang('To correct this error for the future you will need to properly set the')
-		             .  '<br>' . lang('permissions to the files/users directory')
-	          	   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
-			        . $phpgw_info['server']['files_dir'] . '/users/'); 
-       		break;
-      case 35:	$s .= lang('Account has been updated') . '<p>'
-		   .  lang('Error renaming x x directory',lang('users'),
-		     ' '.lang('private').' ') 
-		   .  ',<br>' . lang('Please x by hand',
-		      lang('rename')) . '<br><br>'
-		   .  lang('To correct this error for the future you will need to properly set the')
-		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
-			. $phpgw_info['server']['files_dir'] . '/users/'); 
-		break;
-      case 36:	$s .= lang('Account has been created') . '<p>'
-		   .  lang('Error creating x x directory',lang('users'),
-		     ' '.lang('private').' ') 
-		   .  ',<br>' . lang('Please x by hand',
-		      lang('create')) . '<br><br>'
-		   .  lang('To correct this error for the future you will need to properly set the')
-		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
-			. $phpgw_info['server']['files_dir'] . '/users/'); 
-		break;
-      case 37:	$s .= lang('Group has been added') . '<p>'
-		   .  lang('Error creating x x directory',lang('groups'),' ')
-		   .  ',<br>' . lang('Please x by hand',
-		      lang('create')) . '<br><br>'
-		   .  lang('To correct this error for the future you will need to properly set the')
-		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
-			. $phpgw_info['server']['files_dir'] . '/groups/'); 
-		break;
-      case 38:	$s .= lang('Group has been deleted') . '<p>'
-		   .  lang('Error deleting x x directory',lang('groups'),' ')
-		   .  ',<br>' . lang('Please x by hand',
-		      lang('delete')) . '<br><br>'
-		   .  lang('To correct this error for the future you will need to properly set the')
-		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
-			. $phpgw_info['server']['files_dir'] . '/groups/'); 
-		break;
-      case 39:	$s .= lang('Group has been updated') . '<p>'
-		   .  lang('Error renaming x x directory',lang('groups'),' ')
-		   .  ',<br>' . lang('Please x by hand',
-		      lang('rename')) . '<br><br>'
-		   .  lang('To correct this error for the future you will need to properly set the')
-		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
-			. $phpgw_info['server']['files_dir'] . '/groups/'); 
-		break;
-      case 40: $s .= lang("You have not entered a title").'.';
-		break;
-      case 41: $s .= lang("You have not entered a valid time of day").'.';
-		break;
-      case 42: $s .= lang("You have not entered a valid date").'.';
-		break;
-      default:	return '';
-    }
-    return $s;
-  }
+		function check_code($code)
+		{
+			$s = '<br>';
+			switch ($code)
+			{
+				case 13:	$s .= lang('Your message has been sent');break;
+				case 14:	$s .= lang('New entry added sucessfully');break;
+				case 15:	$s .= lang('Entry updated sucessfully');	break;
+				case 16:	$s .= lang('Entry has been deleted sucessfully'); break;
+				case 18:	$s .= lang('Password has been updated');	break;
+				case 38:	$s .= lang('Password could not be changed');	break;
+				case 19:	$s .= lang('Session has been killed');	break;
+				case 27:	$s .= lang('Account has been updated');	break;
+				case 28:	$s .= lang('Account has been created');	break;
+				case 29:	$s .= lang('Account has been deleted');	break;
+				case 30:	$s .= lang('Your settings have been updated'); break;
+				case 31:	$s .= lang('Group has been added');	break;
+				case 32:	$s .= lang('Group has been deleted');	break;
+				case 33:	$s .= lang('Group has been updated');	break;
+				case 34:	$s .= lang('Account has been deleted') . '<p>'
+						. lang('Error deleting x x directory',lang('users'),' '.lang('private').' ') 
+						. ',<br>' . lang('Please x by hand',lang('delete')) . '<br><br>'
+						. lang('To correct this error for the future you will need to properly set the')
+						. '<br>' . lang('permissions to the files/users directory')
+						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. $phpgw_info['server']['files_dir'] . '/users/'); 
+					break;
+				case 35:	$s .= lang('Account has been updated') . '<p>'
+						. lang('Error renaming x x directory',lang('users'),
+						' '.lang('private').' ') 
+						. ',<br>' . lang('Please x by hand',
+						lang('rename')) . '<br><br>'
+						. lang('To correct this error for the future you will need to properly set the')
+						. '<br>' . lang('permissions to the files/users directory')
+						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. $phpgw_info['server']['files_dir'] . '/users/'); 
+					break;
+				case 36:	$s .= lang('Account has been created') . '<p>'
+						. lang('Error creating x x directory',lang('users'),
+						' '.lang('private').' ') 
+						. ',<br>' . lang('Please x by hand',
+						lang('create')) . '<br><br>'
+						. lang('To correct this error for the future you will need to properly set the')
+						. '<br>' . lang('permissions to the files/users directory')
+						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. $phpgw_info['server']['files_dir'] . '/users/'); 
+					break;
+				case 37:	$s .= lang('Group has been added') . '<p>'
+						. lang('Error creating x x directory',lang('groups'),' ')
+						. ',<br>' . lang('Please x by hand',
+						lang('create')) . '<br><br>'
+						. lang('To correct this error for the future you will need to properly set the')
+						. '<br>' . lang('permissions to the files/users directory')
+						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. $phpgw_info['server']['files_dir'] . '/groups/'); 
+					break;
+				case 38:	$s .= lang('Group has been deleted') . '<p>'
+						. lang('Error deleting x x directory',lang('groups'),' ')
+						. ',<br>' . lang('Please x by hand',
+						lang('delete')) . '<br><br>'
+						. lang('To correct this error for the future you will need to properly set the')
+						. '<br>' . lang('permissions to the files/users directory')
+						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. $phpgw_info['server']['files_dir'] . '/groups/'); 
+					break;
+				case 39:	$s .= lang('Group has been updated') . '<p>'
+						. lang('Error renaming x x directory',lang('groups'),' ')
+						. ',<br>' . lang('Please x by hand',
+						lang('rename')) . '<br><br>'
+						. lang('To correct this error for the future you will need to properly set the')
+						. '<br>' . lang('permissions to the files/users directory')
+						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
+						. $phpgw_info['server']['files_dir'] . '/groups/'); 
+					break;
+				case 40: $s .= lang('You have not entered a title').'.';
+					break;
+				case 41: $s .= lang('You have not entered a valid time of day').'.';
+					break;
+				case 42: $s .= lang('You have not entered a valid date').'.';
+					break;
+				default:	return '';
+			}
+			return $s;
+		}
 		/*!
-		@fucntion phpgw_error
+		@function phpgw_error
 		@abstract process error message
 		@param $error error 
 		@param $line line
 		@param $file file
-		*/  
-    function phpgw_error($error,$line = '', $file = '') 
-    {
-       echo '<p><b>phpGroupWare internal error:</b><p>'.$error;
-       if ($line) {
-          echo 'Line: '.$line;
-       }
-       if ($file) {
-          echo 'File: '.$file;
-       }
-       echo '<p>Your session has been halted.';
-       exit;
-    }
+		*/
+		function phpgw_error($error,$line = '', $file = '') 
+		{
+			echo '<p><b>phpGroupWare internal error:</b><p>'.$error;
+			if ($line)
+			{
+				echo 'Line: '.$line;
+			}
+			if ($file)
+			{
+				echo 'File: '.$file;
+			}
+			echo '<p>Your session has been halted.';
+			exit;
+		}
 
 		/*!
 		@function create_phpcode_from_array
 		@abstract create phpcode from array
 		@param $array - array
 		*/
-    function create_phpcode_from_array($array)
-    {
-       while (list($key, $val) = each($array)) {
-          if (is_array($val)) {
-             while (list($key2, $val2) = each($val)) {
-                if (is_array($val2)) {
-                   while (list($key3, $val3) = each ($val2)) {
-                      if (is_array($val3)) {
-                         while (list($key4, $val4) = each ($val3)) {
-                            $s .= '$phpgw_info["' . $key . '"]["' . $key2 . '"]["' . $key3 . '"]["' .$key4 . '"]="' . $val4 . '";';
-                            $s .= "\n";
-                         }
-                      } else {
-                         $s .= '$phpgw_info["' . $key . '"]["' . $key2 . '"]["' . $key3 . '"]="' . $val3 . '";';
-                         $s .= "\n";
-                      }
-                   }
-                } else {
-                   $s .= '$phpgw_info["' . $key .'"]["' . $key2 . '"]="' . $val2 . '";';
-                   $s .= "\n";
-                }
-             }
-          } else {
-             $s .= '$phpgw_info["' . $key . '"]="' . $val . '";';
-             $s .= "\n";
-          }
-       }
-       return $s;
-    }   
+		function create_phpcode_from_array($array)
+		{
+			while (list($key, $val) = each($array))
+			{
+				if (is_array($val))
+				{
+					while (list($key2, $val2) = each($val))
+					{
+						if (is_array($val2))
+						{
+							while (list($key3, $val3) = each ($val2))
+							{
+								if (is_array($val3))
+								{
+									while (list($key4, $val4) = each ($val3))
+									{
+										$s .= '$phpgw_info["' . $key . '"]["' . $key2 . '"]["' . $key3 . '"]["' .$key4 . '"]="' . $val4 . '";';
+										$s .= "\n";
+									}
+								}
+								else
+								{
+									$s .= '$phpgw_info["' . $key . '"]["' . $key2 . '"]["' . $key3 . '"]="' . $val3 . '";';
+									$s .= "\n";
+								}
+							}
+						}
+						else
+						{
+							$s .= '$phpgw_info["' . $key .'"]["' . $key2 . '"]="' . $val2 . '";';
+							$s .= "\n";
+						}
+					}
+				}
+				else
+				{
+					$s .= '$phpgw_info["' . $key . '"]="' . $val . '";';
+					$s .= "\n";
+				}
+			}
+			return $s;
+		}
 
-
-    // This will return the full phpgw_info array, used for debugging  
+		// This will return the full phpgw_info array, used for debugging
 		/*!
 		@function debug_list_array_contents
 		@abstract return the full phpgw_info array for debugging
 		@param array - array
-		*/  
-    function debug_list_array_contents($array)
-    {
-       while (list($key, $val) = each($array)) {
-          if (is_array($val)) {
-             while (list($key2, $val2) = each($val)) {
-                if (is_array($val2)) {
-                   while (list($key3, $val3) = each ($val2)) {
-                      if (is_array($val3)) {
-                         while (list($key4, $val4) = each ($val3)) {
-                            echo $$array . "[$key][$key2][$key3][$key4]=$val4<br>";
-                         }
-                      } else {
-                         echo $$array . "[$key][$key2][$key3]=$val3<br>";
-                      }
-                  }
-                } else {
-                  echo $$array . "[$key][$key2]=$val2<br>";
-                }
-             }
-          } else {
-             echo $$array . "[$key]=$val<br>";
-          }
-       }
-    }
-    
-    // This will return a list of functions in the API
+		*/
+		function debug_list_array_contents($array)
+		{
+			while (list($key, $val) = each($array))
+			{
+				if (is_array($val))
+				{
+					while (list($key2, $val2) = each($val))
+					{
+						if (is_array($val2))
+						{
+							while (list($key3, $val3) = each ($val2))
+							{
+								if (is_array($val3))
+								{
+									while (list($key4, $val4) = each ($val3))
+									{
+										echo $$array . "[$key][$key2][$key3][$key4]=$val4<br>";
+									}
+								}
+								else
+								{
+									echo $$array . "[$key][$key2][$key3]=$val3<br>";
+								}
+							}
+						}
+						else
+						{
+							echo $$array . "[$key][$key2]=$val2<br>";
+						}
+					}
+				}
+				else
+				{
+					echo $$array . "[$key]=$val<br>";
+				}
+			}
+		}
+
+		// This will return a list of functions in the API
 		/*!
 		@function debug_list_core_functions
 		@abstract return a list of functionsin the API
 		*/
-		
-    function debug_list_core_functions()
-    {
-       echo '<br><b>core functions</b><br>';
-       echo '<pre>';
-       chdir(PHPGW_INCLUDE_ROOT . '/phpgwapi');
-       system("grep -r '^[ \t]*function' *");
-       echo '</pre>';
-    }    
+		function debug_list_core_functions()
+		{
+			echo '<br><b>core functions</b><br>';
+			echo '<pre>';
+			chdir(PHPGW_INCLUDE_ROOT . '/phpgwapi');
+			system("grep -r '^[ \t]*function' *");
+			echo '</pre>';
+		}
 
-    // This will return a value for the next id an app/class may need to insert values into ldap.
+		// This will return a value for the next id an app/class may need to insert values into ldap.
 		/*!
 		@function next_id
 		@abstract return the next higher value for an integer, and increment it in the db.
 		*/
-	function next_id($appname,$min=0,$max=0)
-	{
-		global $phpgw;
+		function next_id($appname,$min=0,$max=0)
+		{
+			global $phpgw;
 
-		if (!$appname) {
-			return -1;
+			if (!$appname)
+			{
+				return -1;
+			}
+
+			$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
+			while( $phpgw->db->next_record() )
+			{
+				$id = $phpgw->db->f("id");
+			}
+
+			if (empty($id) || !$id)
+			{
+				$id = 1;
+				$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
+			}
+			elseif($id<$min)
+			{
+				$id = $min;
+				$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
+			}
+			elseif ($max && ($id > $max))
+			{
+				return False;
+			}
+			else
+			{
+				$id = $id + 1;
+				$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
+			}
+
+			return intval($id);
 		}
 
-		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
-		while( $phpgw->db->next_record() ) {
-			$id = $phpgw->db->f("id");
-		}
-
-		if (empty($id) || !$id) {
-			$id = 1;
-			$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
-		} elseif($id<$min) {
-			$id = $min;
-			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
-		} elseif ($max && ($id > $max)) {
-			return False;
-		} else {
-			$id = $id + 1;
-			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
-		}
-
-		return intval($id);
-	}
-
-    // This will return a value for the last id entered, which an app may need to check
-	// values for ldap.
+		// This will return a value for the last id entered, which an app may need to check
+		// values for ldap.
 		/*!
 		@function last_id
 		@abstract return the current id in the next_id table for a particular app/class.
 		*/
-	function last_id($appname,$min=0,$max=0)
-	{
-		global $phpgw;
+		function last_id($appname,$min=0,$max=0)
+		{
+			global $phpgw;
 
-		if (!$appname) {
-			return -1;
-		}
+			if (!$appname)
+			{
+				return -1;
+			}
 
-		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
-		while( $phpgw->db->next_record() ) {
-			$id = $phpgw->db->f("id");
-		}
+			$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
+			while( $phpgw->db->next_record() )
+			{
+				$id = $phpgw->db->f("id");
+			}
 
-		if (empty($id) || !$id) {
-			if($min) { $id = $min; }
-			else     { $id = 1; }
-			$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
-		} elseif($id<$min) {
-			$id = $min;
-			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
-		} elseif ($max && ($id > $max)) {
-			return False;
-		} else {
-			return intval($id);
+			if (empty($id) || !$id)
+			{
+				if($min)
+				{
+					$id = $min;
+				}
+				else
+				{
+					$id = 1;
+				}
+				$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
+			}
+			elseif($id<$min)
+			{
+				$id = $min;
+				$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
+			}
+			elseif ($max && ($id > $max))
+			{
+				return False;
+			}
+			else
+			{
+				return intval($id);
+			}
 		}
-	}
-  }//end common class
+	}//end common class
