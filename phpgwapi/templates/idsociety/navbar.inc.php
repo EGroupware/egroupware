@@ -161,7 +161,7 @@
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
 		{
 			$var = Array(
-				'powered'	=> lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+				'powered'	=> lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
 				'img_root'	=> PHPGW_IMAGES_DIR,
 				'power_backcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 				'power_textcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_text']
