@@ -370,7 +370,7 @@
 			accounts_::delete($accountid);
 			
 			// delete all acl_entries belonging to that user or group
-			$GLOBALS['phpgw']->acl->delete($accountid);
+			$GLOBALS['phpgw']->acl->delete_account($accountid);
 		}
 
 		function create($account_info,$default_prefs=True)
