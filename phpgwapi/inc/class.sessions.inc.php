@@ -5,7 +5,7 @@
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * and Ralf Becker <ralfbecker@outdoor-training.de>                         *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * Parts Copyright (C) 2003 Free Software Foundation Inc                    *		
+  * Parts Copyright (C) 2003 Free Software Foundation Inc                    *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
   * http://www.phpgroupware.org/api                                          * 
@@ -25,11 +25,7 @@
 
   /* $Id$ */
 
-	if (empty($GLOBALS['phpgw_info']['server']['sessions_type']))
-	{
-		$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';
-	}
-	include_once(PHPGW_API_INC.'/class.sessions_'.$GLOBALS['phpgw_info']['server']['sessions_type'].'.inc.php');
+	/* sessions_type setup moved after the class below - milosch */
 
 	/**
 	* Session Management Libabray
@@ -1212,8 +1208,8 @@
 		{}
 
 		/**
-        * Remove stale sessions out of the database
-        */
+		* Remove stale sessions out of the database
+		*/
 		function clean_sessions()
 		{}
 
@@ -1301,3 +1297,10 @@
 		function total()
 		{}
 	}
+
+	if(empty($GLOBALS['phpgw_info']['server']['sessions_type']))
+	{
+		$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';
+	}
+	include_once(PHPGW_API_INC.'/class.sessions_'.$GLOBALS['phpgw_info']['server']['sessions_type'].'.inc.php');
+

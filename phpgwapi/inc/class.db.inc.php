@@ -14,11 +14,7 @@
 
 	/* $Id$ */
 
-	if (empty($GLOBALS['phpgw_info']['server']['db_type']))
-	{
-		$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql';
-	}
-	include(PHPGW_API_INC.'/class.db_'.$GLOBALS['phpgw_info']['server']['db_type'].'.inc.php');
+	/* db_type setup moved after the class below - milosch */
 
 	/**
 	* Database abstraction library
@@ -246,7 +242,7 @@
 		*/
 		function transaction_begin()
 		{
-        	return True;
+			return True;
 		}
 
 		/**
@@ -256,7 +252,7 @@
 		*/
 		function transaction_commit()
 		{
-        	return True;
+			return True;
 		}
 
 		/**
@@ -266,7 +262,7 @@
 		*/
 		function transaction_abort()
 		{
-        	return True;
+			return True;
 		}
 
 		/**
@@ -296,7 +292,6 @@
 		*/
 		function unlock()
 		{}
-
 
 		/**
 		* Get the number of rows affected by last update
@@ -462,7 +457,7 @@
 		*/
 		function index_names()
 		{
-        	return array();
+			return array();
 		}
 
 		/**
@@ -552,4 +547,10 @@
 			return $table ? $this->table_definitions[$app][$table] : $this->table_definitions[$app];
 		}
 	}
+
+	if(empty($GLOBALS['phpgw_info']['server']['db_type']))
+	{
+		$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql';
+	}
+	include(PHPGW_API_INC.'/class.db_'.$GLOBALS['phpgw_info']['server']['db_type'].'.inc.php');
 ?>
