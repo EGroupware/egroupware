@@ -592,11 +592,12 @@ title	common	en	Title
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 today	calendar	en	Today
 today is x's birthday!	common	en	Today is %1's birthday!
-todo categories	common	en	todo categories
-todo list - add sub-project	todo	en	todo list - add sub-project
-todo list - add	todo	en	todo list - add
+todo categories	common	en	Todo categories
+todo list - add sub-project	todo	en	Todo list - add sub-project
+todo list - add	todo	en	Todo list - add
 todo list	common	en	Todo List
 todo list - edit	todo	en	Todo list - edit
+todo preferences	common	en	Todo preferences
 todo	common	en	Todo
 to	email	en	To
 tomorrow is x's birthday.	common	en	Tomorrow is %1's birthday.
