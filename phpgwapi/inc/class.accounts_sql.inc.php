@@ -156,6 +156,11 @@
 		{
 			static $name_list;
 
+			if (! $account_lid)
+			{
+				return False;
+			}
+
 			if($name_list[$account_lid] && $name_list[$account_lid] != '')
 			{
 				return $name_list[$account_lid];
@@ -177,6 +182,11 @@
 		function id2name($account_id)
 		{
 			static $id_list;
+
+			if (! $account_id)
+			{
+				return False;
+			}
 
 			if($id_list[$account_id])
 			{
