@@ -1124,7 +1124,7 @@
 				$currentdir = '/';
 			}
 
-			return $currentdir;
+			return trim($currentdir);
 		}
 
 		/*!
@@ -1621,9 +1621,9 @@
 
 			if ($this->file_type ($string, array ($relatives[0])) != 'Directory')
 			{
-				$this->add_journal ($p->fake_full_path, array ($p->mask), VFS_OPERATION_DELETED);
+				$this->add_journal ($string, array ($relatives[0]), VFS_OPERATION_DELETED);
 
-				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_DELETE), __LINE__, __FILE__);
+				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'".$this->extra_sql (VFS_SQL_DELETE), __LINE__, __FILE__);
 				$rr = unlink ($p->real_full_path);
 
 				if ($query || $rr)
@@ -1647,7 +1647,7 @@
 						continue;
 					}
 
-					$this->rm ("$entry[directory]/$entry[name]", array ($p->mask));
+					$this->rm ($entry[directory].SEP.$entry[name], array ($p->mask));
 				}
 
 				/* Now we cycle through again and delete the directories */
