@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'preferences'
@@ -20,28 +20,31 @@
 
 	include('../header.inc.php');
 
-	if (! $phpgw->acl->check('changepassword', 1))
+	$n_passwd   = $GLOBALS['HTTP_POST_VARS']['n_passwd'];
+	$n_passwd_2 = $GLOBALS['HTTP_POST_VARS']['n_passwd_2'];
+
+	if (! $GLOBALS['phpgw']->acl->check('changepassword', 1))
 	{
-		Header('Location: ' . $phpgw->link('/preferences/index.php/'));
-		$phpgw->common->phpgw_exit();
+		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php/'));
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
-	$phpgw->template->set_file(array(
+	$GLOBALS['phpgw']->template->set_file(array(
 		'form' => 'changepassword.tpl'
 	));
-	$phpgw->template->set_var('lang_changepassword',lang('Change your password'));
-	$phpgw->template->set_var('lang_enter_password',lang('Enter your new password'));
-	$phpgw->template->set_var('lang_reenter_password',lang('Re-enter your password'));
-	$phpgw->template->set_var('lang_change',lang('Change'));
-	$phpgw->template->set_var('form_action',$phpgw->link('/preferences/changepassword.php'));
+	$GLOBALS['phpgw']->template->set_var('lang_changepassword',lang('Change your password'));
+	$GLOBALS['phpgw']->template->set_var('lang_enter_password',lang('Enter your new password'));
+	$GLOBALS['phpgw']->template->set_var('lang_reenter_password',lang('Re-enter your password'));
+	$GLOBALS['phpgw']->template->set_var('lang_change',lang('Change'));
+	$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/preferences/changepassword.php'));
 
-	if ($phpgw_info['server']['auth_type'] != 'ldap')
+	if ($GLOBALS['phpgw_info']['server']['auth_type'] != 'ldap')
 	{
-		$phpgw->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
+		$GLOBALS['phpgw']->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
 			. 'need to be done manually.'));
 	}
 
-	if ($submit)
+	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
 		if ($n_passwd != $n_passwd_2)
 		{
@@ -55,33 +58,33 @@
 
 		if (is_array($errors))
 		{
-			$phpgw->common->phpgw_header();
+			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
-			$phpgw->template->set_var('messages',$phpgw->common->error_list($errors));
-			$phpgw->template->pfp('out','form');
-			$phpgw->common->phpgw_exit(True);
+			$GLOBALS['phpgw']->template->set_var('messages',$GLOBALS['phpgw']->common->error_list($errors));
+			$GLOBALS['phpgw']->template->pfp('out','form');
+			$GLOBALS['phpgw']->common->phpgw_exit(True);
 		}
 
-		$o_passwd = $phpgw_info['user']['passwd'];
-		$passwd_changed = $phpgw->auth->change_password($o_passwd, $n_passwd);
+		$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
+		$passwd_changed = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
 		if (! $passwd_changed)
 		{
 			// This need to be changed to show a different message based on the result
-			Header('Location: ' . $phpgw->link('/preferences/index.php','cd=38'));
+			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=38'));
 		}
 		else
 		{
-			$phpgw_info['user']['passwd'] = $phpgw->auth->change_password($o_passwd, $n_passwd);
-			Header('Location: ' . $phpgw->link('/preferences/index.php','cd=18'));
+			$GLOBALS['phpgw_info']['user']['passwd'] = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
+			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=18'));
 		}
 
 	}
 	else
 	{
-		$phpgw->common->phpgw_header();
+		$GLOBALS['phpgw']->common->phpgw_header();
 		echo parse_navbar();
 
-		$phpgw->template->pfp('out','form');
-		$phpgw->common->phpgw_footer();
+		$GLOBALS['phpgw']->template->pfp('out','form');
+		$GLOBALS['phpgw']->common->phpgw_footer();
 	}
 ?>
