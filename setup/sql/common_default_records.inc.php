@@ -98,7 +98,7 @@
     add_default_server_config();
   }
 
-  include($phpgw_info["server"]["server_root"] . "/setup/inc/default_applications.inc.php");
+  include($phpgw_info["server"]["server_root"] . "/setup/sql/default_applications.inc.php");
 
   $db->query("insert into groups (group_name) values ('Default')");  
   $db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1:0,','A')");
