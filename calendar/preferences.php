@@ -18,7 +18,7 @@
      $phpgw->preferences->change("calendar","weekdaystarts");
      $phpgw->preferences->change("calendar","workdaystarts");
      $phpgw->preferences->change("calendar","workdayends");
-     $phpgw->preferences->change("calendar","defaultcalendar");
+     $phpgw->preferences->change("common","defaultcalendar");
      $phpgw->preferences->change("calendar","defaultfilter");
      if ($mainscreen_showevents) {
         $phpgw->preferences->change("calendar","mainscreen_showevents");
