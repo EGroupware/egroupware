@@ -714,7 +714,7 @@
 									}
 									// is the next update the one we need?
 									if ($success && $test[$x+1] != $success &&
-										($num = array_search($success,$test)) !== False)
+										($num = array_search($success,$test)) !== False && $num !== null)
 									{
 										// do we have the needed update somewhere else in the row?
 										// if yes, position the array-pointer just before that update and continue
@@ -744,7 +744,7 @@
 								
 								// is the next update the one we need?
 								if ($success && $test[$x+1] != $success &&
-									($num = array_search($success,$test)) !== False)
+									($num = array_search($success,$test)) !== False && $num !== null)
 								{
 									// do we have the needed update somewhere else in the row?
 									// if yes, position the array-pointer just before that update and continue
