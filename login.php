@@ -129,12 +129,17 @@
 	# Certificate (chain) verification occurs inside mod_ssl
 	if ($phpgw_info['server']['auth_type'] == 'sqlssl' && isset($HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]) && !isset($cd))
 	{
+		# an X.509 subject looks like:
+		# /CN=john.doe/OU=Department/O=Company/C=xx/Email=john@comapy.tld/L=City/
+		# the username is deliberately lowercase, to ease LDAP integration
 		$sslattribs = explode("/",$HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]);
+		# skip the part in front of the first "/" (nothing)
     		while ($sslattrib = next($sslattribs))
 		{
        			list($key,$val) = explode("=",$sslattrib);
        			$sslattributes[$key] = $val;
-     		}                                                             
+     		}
+
                 if (isset($sslattributes["Email"]))
 		{
 			$submit = True;
