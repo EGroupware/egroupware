@@ -279,7 +279,7 @@
 			}
 			if ($this->mbstring)
 			{
-				return mb_convert_encoding($data,$to,$from);
+				return @mb_convert_encoding($data,$to,$from);
 			}
 			if(function_exists('iconv'))
 			{
