@@ -12,6 +12,10 @@
 
 	/* $Id$ */
 
+define('NONE',0);
+define('OPT-PARTICIPANT',1);
+define('REQ-PARTICIPANT',2);
+
 class mailto
 {
 	var $user;
@@ -44,7 +48,7 @@ class vCalendar_time {
 	var $allday = False;
 }
 
-class vCalendar
+class vCalendar_event
 {
 	var $prodid;
 	var $version;
@@ -63,130 +67,116 @@ class vCalendar
 	var $summary;
 	var $priority;
 	var $class;
+}
+
+class vCalendar
+{
+	var $event;
+	
+	function splitdate($value)
+	{
+		$dtime = new vCalendar_time;
+		$dtime->year = intval(substr($value,0,4));
+		$dtime->month = intval(substr($value,5,2));
+		$dtime->mday = intval(substr($value,7,2));
+		$dtime->hour = intval(substr($value,10,2));
+		$dtime->min = intval(substr($value,12,2));
+		$dtime->sec = intval(substr($value,14,2));
+		return $dtime;		
+	}
 
 	function read($vcal_text)
 	{
-		$role = Array(
-			'NONE'					=>	0,
-			'OPT-PARTICIPANT'		=> 1,
-			'REQ-PARTICIPANT'		=>	2
-		);
-		
-		while(strtoupper($text) != 'END:VCALENDAR')
+
+		$c_vcal_text = count($vcal_text);
+		for($i=0;$i<$c_val_text;$i++)
 		{
-			$element = strtolower($this->find_element($text,Array(':',';')));
-			switch($element)
+			if($vcal_text[$i] == 'END:VCALENDAR')
 			{
-				case 'begin':
-					$value = strtolower($this->find_element(substr($text,7,strlen($text)),Array('')));
-					if($value != 'VCALENDAR')
+				continue;
+			}
+			$element = explode(';',$vcal_text[$i]);
+			$c_element = count($element);
+			for($j=0;$j<$c_element;$j++)
+			{
+				$temp_array = explode(':',$element[$j]);
+				$c_temp_array = count($temp_array);
+				if($c_temp_array > 1)
+				{
+					if(strpos($temp_array[0],'=') == 0)
 					{
-						$this->type = $value;
-					}
-					break;
-				case 'prodid':
-					$this->prodid = strtolower($this->find_element(substr($text,7,strlen($text)),Array('')));
-					break;
-				case 'version':
-					$this->version = strtolower($this->find_element(substr($text,8,strlen($text)),Array('')));
-					break;
-				case 'attendee':
-					$attendee = new attendee;
-					$i = 9;
-					while($i < strlen($text))
-					{
-						$value = strtolower($this->find_element(substr($text,$i,strlen($text)),Array('=')));
-						switch($value)
+						$type = $temp_array[0];
+						if(isset($temp_array[1]))
 						{
-							case 'cn':
-								$i += 4;
-								$data = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(';')));
-								if(substr($data,1,1) == '"')
-								{
-									$attendee->$value=substr($data,1,strlen($data) - 2);
-								}
-								else
-								{
-									$attendee->$value=$data;
-								}
-								$i += strlen($data) + 1;
-								break;
-							case 'role':
-								$data = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(';')));
-								$attendee->$value=$role[$data];
-								$i += strlen($data) + 1;
-								break;
-							case 'rsvp':
-								$data = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(':')));
-								$attendee->$value=$data;
-								$i += strlen($data) + 1;
-								$value = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(':')));
-								$i += strlen($value) + 1;
-								$data = strtolower($this->find_element(substr($text,$i,strlen($text)),Array('')));
-								$attendee->$value=$data;
-								$i += strlen($data) + 1;
-								break;
-							case 'sent-by':
-								$data = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(':',';')));
-								$organizer = each('@',$data);
-								$attendee->sent_by->user = $organizer[0];
-								$attendee->sent_by->host = $organizer[1];
-								$i += strlen($data) + 1;
-								break;
+							$value = $temp_array[1];
 						}
 					}
-					$this->attendee[] = $attendee;
-					unset($attendee);
-					break;
-				case 'organizer':
-					$i = 10;
-					$value = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(':')));
-					$i += strlen($value) + 1;
-					switch($value)
+					else
 					{
-						case 'mailto':
-							$data = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(':')));
-							$organizer = each('@',$data);
-							$this->organizer->mailto->user = $organizer[0];
-							$this->organizer->mailto->host = $organizer[1];
-							break;
-						case 'sent-by':
-							$data = strtolower($this->find_element(substr($text,$i,strlen($text)),Array(':',';')));
-							$organizer = each('@',$data);
-							$this->organizer->sent_by->user = $organizer[0];
-							$this->organizer->sent_by->host = $organizer[1];
-							$i += strlen($data) + 1;
-							break;
-						otherwise:
-							$data = $value;
-							if(strpos(' '.$data.' ','@') > 0)
-							{
-								$organizer = each('@',$data);
-								$this->organizer->mailto->user = $organizer[0];
-								$this->organizer->mailto->host = $organizer[1];
-							}
-							break;
+						$parameter = $temp_array[0];
+						$type = $temp_array[1];
+						$value = $temp_array[2];
 					}
-					break;
-				case 'dtstart':
-					break;
+				}
+				else
+				{
+					$type = $element[$j];
+				}
+				switch(strtolower($type))
+				{
+					case 'begin':
+						$event = new vCalendar_event;
+						if($value != 'VCALENDAR')
+						{
+							$event->type = $value;
+						}
+						break;
+/*
+					case 'attendee':
+						$attendee = new attendee;
+						$j++;
+						$att_data = explode(';',substr($vcal_text[$i],9,strlen($vcal_text[$i])));
+						$c_att_data = count($att_data);
+						for($k=0;$k<$c_att_data;$k++)
+						{
+							if(strpos($att_data[$k],':'))
+							{
+							}
+							elseif(strpos($att_data[$k],'='))
+							{
+								$att_att = explode('=',$att_data[$k])
+							}
+						}
+						$event->attendee[] = $attendee;
+						unset($attendee);
+						break;
+					case 'organizer':
+						break;
+*/
+					case 'end':
+						switch(strtolower($value))
+						{
+							case 'vevent':
+								$this->event[] = $event;
+								break;
+							case 'vcalendar':
+								break;
+						}
+						break;
+					default:
+						if(strtolower(substr($type,0,2)) == 'DT')
+						{
+							$this->$type = new vCalendar_time;
+							$this->$type = $this->splitdate($value);
+						}
+						else
+						{
+							$this->$type = $value;
+						}
+						break;
+				}
 			}			
 		}
 	}
-
-	function find_element($text,$stop_chars)
-	{
-		$element = '';
-		$i=0;
-		$char = '';
-		while(!ereg('['.explode($stop_chars,'').']',$char) && ($i<strlen($text)))
-		{
-			$char = substr($text,$i++,1);
-			$element .= $char;
-		}
-		return $element;
-	}
 }
 ?>
-
-

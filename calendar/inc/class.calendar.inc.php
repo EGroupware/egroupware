@@ -255,7 +255,7 @@ class calendar extends calendar_
 		return $sday;
 	}
 
-	function link_to_entry($id, $pic, $description)
+	function link_to_entry($id, $description, $pic1, $size1, $pic2='', $size2='')
 	{
 		global $phpgw, $phpgw_info;
 
@@ -264,13 +264,28 @@ class calendar extends calendar_
 		{
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
-			$p->set_file(array('link_pict' => 'link_pict.tpl'));
+			$templates = Array(
+				'link_pict' => 'link_pict.tpl',
+				'pict'		=> 'pict.tpl'
+			);
+			$p->set_file($templates);
+
+			$p->set_var('description',$description);
+
+			$p->set_var('pic_image',$this->image_dir.'/'.$pic1);
+			$p->set_var('pic_size',$size1);
+			$p->parse('picture','pict',True);
+
+			if($pic2 != '')
+			{
+				$p->set_var('pic_image',$this->image_dir.'/'.$pic2);
+				$p->set_var('pic_size',$size2);
+				$p->parse('picture','pict',True);
+			}
+			
 			$p->set_var('link_link',$phpgw->link('/calendar/view.php','id='.$id.'&owner='.$this->owner));
 			$p->set_var('lang_view',lang('View this entry'));
-			$p->set_var('pic_image',$this->image_dir.'/'.$pic);
-			$p->set_var('pic_size',' width="5" height="7"');
-			$p->set_var('description',$description);
-			$str = $p->finish($p->parse('out','link_pict'));
+			$str = $p->fp('out','link_pict');
 			unset($p);
 		}
 		return $str;
@@ -918,6 +933,7 @@ class calendar extends calendar_
 			'month_day'			=> 'month_day.tpl',
 			'week_day_event'	=> 'week_day_event.tpl',
 			'week_day_events'	=> 'week_day_events.tpl',
+			'pict'				=> 'pict.tpl',
 			'link_pict'			=>	'link_pict.tpl',
 			'month_filler'		=> 'month_filler.tpl'
 		);
@@ -978,7 +994,7 @@ class calendar extends calendar_
 				{
 					if((!!($grants[$owner] & PHPGW_ACL_ADD) == True))
 					{
-						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$owner).'">';
+						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&owner='.$owner).'">';
 						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">';
 						$new_event_link .= '</a>';
 					}
@@ -1021,37 +1037,51 @@ class calendar extends calendar_
 					for ($k=0;$k<$this->sorted_events_matching;$k++)
 					{
 						$lr_events = $rep_events[$k];
-						$pict = 'circle.gif';
-						$pic_size = ' width="5" height="7"';
-						if($lr_events->recur_type != RECUR_NONE)
-						{
-							$pict = 'rpt.gif';
-							$pic_size = ' width="10" height="10"';
-						}
-						if(count($lr_events->participants) > 1)
-						{
-							$pict = 'multi_1.gif';
-							$pic_size = ' width="12" height="16"';
-						}
 						
-						$description = $this->is_private($lr_events,$owner,'description');
-
 						if (($this->printer_friendly == False) &&
 							(($description == 'private' && (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True)) || ($description != 'private'))  &&
 							(!!($grants[$owner] & PHPGW_ACL_EDIT) == True))
 						{
+							$pict = 'circle.gif';
+							$pic_size = ' width="5" height="7"';
+							if($lr_events->recur_type != RECUR_NONE)
+							{
+								$pict = 'rpt.gif';
+								$pic_size = ' width="10" height="10"';
+							}
+
+							$description = $this->is_private($lr_events,$owner,'description');
+
 							$var = Array(
-								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
-								'lang_view'			=>	lang('View this entry'),
 								'pic_image'			=>	$this->image_dir.'/'.$pict,
 								'pic_size'			=> $pic_size,
 								'description'		=>	$description.$this->display_status($lr_events->users_status)
 							);
+
+							$p->set_var($var);
+							$p->parse('picture','pict',True);
+
+							if(count($lr_events->participants) > 1)
+							{
+								$var = Array(
+									'pic_image'			=>	$this->image_dir.'/multi_1.gif',
+									'pic_size'			=> ' width="12" height="16"'
+								);
+								$p->set_var($var);
+								$p->parse('picture','pict',True);					
+							}
+							
+							$var = Array(
+								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
+								'lang_view'			=>	lang('View this entry')
+							);
 							$p->set_var($var);
 							$p->parse('link_entry','link_pict');
+							$p->set_var('picture','');
 						}
 						else
 						{
+							$p->set_var('picture','');
 							$p->set_var('link_entry','');
 						}
 
@@ -1373,7 +1403,7 @@ class calendar extends calendar_
 		{
 			if($t_format == '12')
 			{
-				$time_width=11;
+				$time_width=10;
 			}
 			else
 			{
@@ -1381,7 +1411,6 @@ class calendar extends calendar_
 			}
 		}
 		$var = Array(
-			'event_width'		=> (100 - $time_width),
 			'time_width'		=> $time_width,
 			'time_bgcolor'		=>	$phpgw_info['theme']['cal_dayview'],
 			'bg_time_image'	=>	$this->phpgwapi_template_dir.'/navbar_filler.jpg',
@@ -1558,8 +1587,7 @@ class calendar extends calendar_
 				
 				$open_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php',
 								  'year='.$date['year'].'&month='.$date['month']
-								. '&day='.$date['day']
-								. '&hour='.$new_hour
+								. '&day='.$date['day'].'&hour='.$new_hour
 								. '&minute='.$new_minute.'&owner='.$this->owner).'">';
 								
 				$close_link = '</a>';

@@ -4,7 +4,6 @@
   <!--
     .event
     {
-      width: {event_width}%;
       color: #{font_color};
       font-family: {font};
       font-weight: 100;

@@ -244,7 +244,14 @@
 			}
 			else
 			{
-				$overlap .= $phpgw->calendar->link_to_entry($over->id,'circle.gif',$over->description).$over->title;
+				if($over->rpt_type == RPT_NONE)
+				{
+					$overlap .= $phpgw->calendar->link_to_entry($over->id,$over->description,'circle.gif',' width="5" height="7"').$over->title;
+				}
+				else
+				{
+					$overlap .= $phpgw->calendar->link_to_entry($over->id,$over->description,'circle.gif',' width="5" height="7"','multi_1.gif',' width="5" height="7"').$over->title;
+				}
 			}
 
 			$over_start = mktime($over->start->hour,$over->start->min,$over->start->sec,$over->start->month,$over->start->mday,$over->start->year) - $tz_offset;
