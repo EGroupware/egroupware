@@ -16,7 +16,7 @@
 	class msg_base
 	{
 		var $msg_struct;
-		var $err = array("code","msg","desc");
+		var $err = array('code','msg','desc');
 		var $msg_info = Array(Array());
 
 		var $tempfile;
@@ -32,9 +32,9 @@
 
 		function msg_base()
 		{
-			$this->err["code"] = " ";
-			$this->err["msg"]  = " ";
-			$this->err["desc"] = " ";
+			$this->err['code'] = ' ';
+			$this->err['msg']  = ' ';
+			$this->err['desc'] = ' ';
 			$this->tempfile = $GLOBALS['phpgw_info']['server']['temp_dir'].SEP.$GLOBALS['phpgw_info']['user']['sessionid'].'.mhd';
 			$this->force_check = false;
 			$this->got_structure = false;
@@ -133,13 +133,13 @@
 			$name['translated'] = '';
 			
 			// folder name at this stage is  {SERVER_NAME:PORT}FOLDERNAME
-			// get everything to the right of the bracket "}", INCLUDES the bracket itself
+			// get everything to the right of the bracket '}', INCLUDES the bracket itself
 			$name['folder_before'] = strstr($data_str,'}');
-			// get rid of that 'needle' "}"
+			// get rid of that 'needle' '}'
 			$name['folder_before'] = substr($name['folder_before'], 1);
 			// translate
 			$name['folder_after'] = imap_utf7_decode($name['folder_before']);
-			// "imap_utf7_decode" returns False if no translation occured
+			// 'imap_utf7_decode' returns False if no translation occured
 			if ($name['folder_after'] == False)
 			{
 				// no translation occured
@@ -159,7 +159,7 @@
 			$flag = strtolower($flag);
 			for ($i=0;$i<count($header);$i++)
 			{
-				$pos = strpos($header[$i],":");
+				$pos = strpos($header[$i],':');
 				if (is_int($pos) && $pos)
 				{
 					$keyword = trim(substr($header[$i],0,$pos));
@@ -172,6 +172,5 @@
 			}
 			return false;
 		}
-
 	} // end of class mail
 ?>

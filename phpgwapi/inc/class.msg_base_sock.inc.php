@@ -21,13 +21,15 @@
   * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
   \**************************************************************************/
 
+	/* $Id$ */
+
 	define('SA_MESSAGES',1);
 	define('SA_RECENT',2);
 	define('SA_UNSEEN',4);
 	define('SA_UIDNEXT',8);
 	define('SA_UIDVALIDITY',16);
 	define('SA_ALL',31);
-	
+
 	define('SORTDATE',0);
 	define('SORTARRIVAL',1);
 	define('SORTFROM',2);
@@ -35,7 +37,7 @@
 	define('SORTTO',4);
 	define('SORTCC',5);
 	define('SORTSIZE',6);
-	
+
 	define ('TYPETEXT',0);
 	define ('TYPEMULTIPART',1);
 	define ('TYPEMESSAGE',2);
@@ -54,19 +56,19 @@
 	define ('ENCOTHER',5);
 	//  ENCUU not defined in php 4, but we may use it
 	define ('ENCUU',6);
-	
+
 	define ('FT_UID',1);	// the msgnum is a UID
 	define ('FT_PEEK',2);	// do not set the \Seen flag if not already set
 	define ('FT_NOT',4);	// do not fetch header lines (with IMAP_BODY)
 	define ('FT_INTERNAL',8); // server will not attempt to standardize CRLFs
 	define ('FT_PREFETCHTEXT',16); // grab the header AND its associated RFC822.TEXT
-  
+
 	define ('SE_UID',1); // used with IMAP_SORT, IMAP_SEARCH,
 	define ('SE_FREE',2); // Return the search program to free storage after finishing NOT used by PHP
 	define ('SE_NOPREFETCH',4); // used with IMAP_SORT , don't really understand it though
 		//SE_UID	Return UIDs instead of sequence numbers
 		//SE_NOPREFETCH	Don't prefetch searched messages.
-	
+
 	// This may need to be a reference to the different months in native tongue....
 	$GLOBALS['month_array'] = Array(
 		'jan' => 1,
@@ -106,7 +108,7 @@
 		var $quota = '';
 		var $quota_all = '';
 	}
-	
+
 	/*
 	@class mailbox_msg_info (sockets)
 	@abstract part of mail Data Communications class
@@ -131,7 +133,7 @@
 		var $Unread = '';
 		var $Size = '';
 	}
-	
+
 	/*
 	@class mailbox_status (sockets) discussion VS. class mailbox_msg_info (sockets) 
 	@abstract compare these two similar classes and their functions
@@ -202,7 +204,7 @@
 		var $custom = array();
 		var $parts = array();
 	}
-	
+
 	// gonna have to decide on one of the next two
 	class msg_params
 	{
@@ -220,7 +222,7 @@
 		var $attribute;
 		var $value;
 	}
-	
+
 	class address
 	{
 		var $personal;
@@ -228,7 +230,7 @@
 		var $host;
 		var $adl;
 	}
-	
+
 	/*
 	@class msg_overview (sockets)
 	@abstract part of mail Data Communications class
@@ -329,7 +331,7 @@
 		//var $body_glob = '';
 		//var $body_glob_msgnum = '';
 		var $body_array = array();
-		var $body_array_msgnum = '';	
+		var $body_array_msgnum = '';
 		// structural information from our processing functions
 		//var $mailbox_msg_info = '';  // caching this with POP3 is OK but will cause HAVOC with IMAP or NNTP
 		//var $mailbox_status;
@@ -341,7 +343,7 @@
 		// server data returned to the calling function does NOT include the final OK line
 		// because this line is not actually data, so put this line here for inspection if necessary
 		var $server_last_ok_response = '';
-		
+
 		// future use
 		var $refto_msg_parent;
 		var $mailbox;
@@ -350,15 +352,15 @@
 		var $hsub=array();
 		var $bsub=array();
 		var $folder = '';
-		
+
 		var $imap_builtin=False;
 		var $force_msg_uids = False;
-		
+
 		// DEBUG FLAG: Debug Levels are 0=none, 1=basic, 2=detailed, 3=more detailed
 		var $debug=0;
 		//var $debug=1;
 		//var $debug=2;
-		
+
 		function msg_base()
 		{
 			$this->errorset = 0;
@@ -370,17 +372,17 @@
 			}
 			else
 			{
-				// NEED GENERIC DEFAULT VALUES HERE				
+				// NEED GENERIC DEFAULT VALUES HERE
 			}
 		}
-		
+
 		function error()
 		{
 			echo 'Error: '.$this->error['code'].' : '.$this->error['msg'].' - '.$this->error['desc']."<br>\r\n";
 			$this->close();
 			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
-		
+
 		// REDUNDANT FUNCTION FROM NON-SOCK CLASS
 		function get_flag($stream,$msg_num,$flag)
 		{
@@ -401,7 +403,7 @@
 			}
 			return false;
 		}
-		
+
 		/*!
 		@function distill_fq_folder
 		@abstract break down a php fully qualified folder name into its seperate barts
@@ -432,7 +434,7 @@
 			$svr_data['server'] = '';
 			$svr_data['port_with_junk'] = '';
 			$svr_data['port'] = '';
-			
+
 			// see if we have any data to work with
 			if ((!isset($fq_folder))
 			|| ((trim($fq_folder) == '')))
@@ -442,7 +444,7 @@
 				return $svr_data;
 				// we're out'a here
 			}
-			
+
 			// see if this is indeed a fully qualified folder name
 			if (strstr($fq_folder,'}') == False)
 			{
@@ -451,7 +453,7 @@
 				return $svr_data;
 				// we're out'a here
 			}
-			
+
 			// -- (1) -- get the folder name stripped of the server string
 			// folder name at this stage is  {SERVER_NAME:PORT}FOLDERNAME
 			// ORsome variation like this:
@@ -493,7 +495,7 @@
 			}
 			return $svr_data;
 		}
-		
+
 		/*!
 		@function read_port_glob
 		@abstract used with POP3, reads data from port until we encounted param $end
@@ -520,7 +522,7 @@
 			}
 			return $glob_response;
 		}
-		
+
 		/*!
 		@function glob_to_array
 		@abstract used with POP3, converts raw string server data into an array
@@ -564,7 +566,7 @@
 				&& (strpos(strtolower($new_str),'received:') == 0))
 				{
 					// do noting
-				}			
+				}
 				else
 				{
 					$new_idx = count($return_array) + $idx_offset;
@@ -573,7 +575,7 @@
 			}
 			return $return_array;
 		}
-		
+
 		/*!
 		@function show_crlf
 		@abstract replace actual CRLF sequence with the string "CRLF"
@@ -588,7 +590,7 @@
 		{
 			return str_replace("\r\n", 'CRLF', $data);
 		}
-		
+
 		function create_header($line,$header,$line2='')
 		{
 			$thead = explode(':',$line);
@@ -627,7 +629,7 @@
 			}
 			//echo 'Header[$key] = '.$header[$key].'<br>'."\n";
 		}
-	
+
 		function build_address_structure($key)
 		{
 			$address = array(new address);
@@ -647,7 +649,7 @@
 				return $address;
 			}
 		}
-		
+
 		function convert_date_array($field_list)
 		{
 			$new_list = Array();
@@ -656,16 +658,16 @@
 				//$new_list[$key] = $this->convert_date($value);
 				$new_list[$key] = $this->make_udate($value);
 				if ($this->debug >= 2) { echo 'base_sock: convert_date_array: field_list: "'.$new_list[$key].'" was "'.$value.'"<br>'; }
-	
+
 			}
 			return $new_list;
 		}
-		
+
 		function convert_date($msg_date)
 		{
 			$dta = array();
 			$ta = array();
-			
+
 			// Convert "Sat, 15 Jul 2000 20:50:22 +0200" to unixtime
 			$comma = strpos($msg_date,',');
 			if($comma)
@@ -675,7 +677,7 @@
 			//echo 'Msg Date : '.$msg_date."<br>\n";
 			$dta = explode(' ',$msg_date);
 			$ta = explode(':',$dta[3]);
-			
+
 			if(substr($dta[4],0,3) <> 'GMT')
 			{
 				$tzoffset = substr($dta[4],0,1);
@@ -693,12 +695,12 @@
 						break;
 				}
 			}
-			
+
 			$new_time = mktime($ta[0],$ta[1],$ta[2],$GLOBALS['month_array'][strtolower($dta[1])],$dta[0],$dta[2]) - ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tzoffset']));
 			//echo 'New Time : '.$new_time."<br>\n";
 			return $new_time;
 		}
-		
+
 		function make_udate($msg_date)
 		{
 			$pos = strpos($msg_date,',');
@@ -734,7 +736,7 @@
 			$utime = mktime($hour,$minute,$second,$month,$day,$year);
 			return $utime;
 		}
-		
+
 		function ssort_prep($a)
 		{
 			$a = strtoupper($a);
@@ -750,19 +752,19 @@
 			{
 				$a_mod = $a;
 			}
-			
+
 			while(substr($a_mod,0,1) == ' ')
 			{
 				$a_mod = substr($a_mod,1);
 			}
-	
+
 			//if(strpos(' '.$a_mod,'[') == 1)
 			//{
 			//	$a_mod = substr($a_mod,1);
 			//}
 			return $a_mod;
 		}
-		
+
 		function ssort_ascending($a,$b)
 		{
 			$a_mod = $this->ssort_prep($a);
@@ -773,7 +775,7 @@
 			}
 			return ($a_mod < $b_mod) ? -1 : 1;
 		}
-		
+
 		function ssort_decending($a,$b)
 		{
 			$a_mod = $this->ssort_prep($a);
@@ -784,18 +786,18 @@
 			}
 			return ($a_mod > $b_mod) ? -1 : 1;
 		}
-		
+
 		function msg_header($msgnum)
 		{
 			$this->msg = new msg;
 			// This needs to be pulled back to the actual read header of the mailer type.
 			//$this->msg_fetch_overview($msgnum);
-			
+
 			// From:
 			$this->msg->from = array(new address);
 			$this->msg->from = $this->build_address_structure('From');
 			$this->msg->fromaddress = $this->header['From'];
-			
+
 			// To:
 			$this->msg->to = array(new address);
 			if (strtolower($this->type) == 'nntp')
@@ -816,7 +818,7 @@
 				$this->msg->to = $this->build_address_structure('To');
 				$this->msg->toaddress = $this->header['To'];
 			}
-	
+
 			// Cc:
 			$this->msg->cc = array(new address);
 			if(isset($this->header['Cc']))
@@ -824,7 +826,7 @@
 				$this->msg->cc[] = $this->build_address_structure('Cc');
 				$this->msg->ccaddress = $this->header['Cc'];
 			}
-	    
+
 			// Bcc:
 			$this->msg->bcc = array(new address);
 			if(isset($this->header['bcc']))
@@ -832,7 +834,7 @@
 				$this->msg->bcc = $this->build_address_structure('bcc');
 				$this->msg->bccaddress = $this->header['bcc'];
 			}
-	
+
 			// Reply-To:
 			$this->msg->reply_to = array(new address);
 			if(isset($this->header['Reply-To']))
@@ -840,7 +842,7 @@
 				$this->msg->reply_to = $this->build_address_structure('Reply-To');
 				$this->msg->reply_toaddress = $this->header['Reply-To'];
 			}
-	
+
 			// Sender:
 			$this->msg->sender = array(new address);
 			if(isset($this->header['Sender']))
@@ -848,7 +850,7 @@
 				$this->msg->sender = $this->build_address_structure('Sender');
 				$this->msg->senderaddress = $this->header['Sender'];
 			}
-	
+
 			// Return-Path:
 			$this->msg->return_path = array(new address);
 			if(isset($this->header['Return-Path']))
@@ -856,18 +858,18 @@
 				$this->msg->return_path = $this->build_address_structure('Return-Path');
 				$this->msg->return_pathaddress = $this->header['Return-Path'];
 			}
-	
+
 			// UDate
 			$this->msg->udate = $this->convert_date($this->header['Date']);
-	
+
 			// Subject
 			$this->msg->subject = $this->phpGW_quoted_printable_decode($this->header['Subject']);
-	
+
 			// Lines
 			// This represents the number of lines contained in the body
 			$this->msg->lines = $this->header['Lines'];
 		}
-	
+
 		function msg_headerinfo($msgnum)
 		{
 			$this->msg_header($msgnum);
@@ -894,7 +896,7 @@
 			$string = str_replace('_', ' ', $string);
 			return quoted_printable_decode($string);
 		}
-		
+
 		/*
 		 * Remove '=' at the end of the lines. `quoted_printable_decode` doesn't do it.
 		*/
@@ -903,21 +905,21 @@
 			$string = $this->phpGW_quoted_printable_decode($string);
 			return preg_replace("/\=\n/", '', $string);
 		}
-		
+
 		function decode_base64($string)
 		{
 			$string = ereg_replace("'", "\'", $string);
 			$string = preg_replace("/\=\?(.*?)\?b\?(.*?)\?\=/ieU",base64_decode("\\2"),$string);
 			return $string;
 		}
-		
+
 		function decode_qp($string)
 		{
 			$string = ereg_replace("'", "\'", $string);
 			$string = preg_replace("/\=\?(.*?)\?q\?(.*?)\?\=/ieU",$this->phpGW_quoted_printable_decode2("\\2"),$string);
 			return $string;
 		}
-		
+
 		function decode_header($string)
 		{
 			/* Decode from qp or base64 form */
@@ -968,7 +970,7 @@
 			$name = eregi_replace("^\"(.*)\"$", "\\1", $name);
 			$name = eregi_replace("^\((.*)\)$", "\\1", $name);
 		}
-		
+
 		// OBSOLETED ?
 		function get_mime_type($de_part)
 		{
@@ -981,24 +983,24 @@
 				return $this->type_int_to_str($de_part->type);
 			}
 		}
-	
+
 		function type_int_to_str($type_int)
 		{
 			switch ($type_int)
 			{
-				case TYPETEXT		: $type_str = 'text'; break;
-				case TYPEMULTIPART	: $type_str = 'multipart'; break;
-				case TYPEMESSAGE		: $type_str = 'message'; break;
-				case TYPEAPPLICATION	: $type_str = 'application'; break;
-				case TYPEAUDIO		: $type_str = 'audio'; break;
-				case TYPEIMAGE		: $type_str = 'image'; break;
-				case TYPEVIDEO		: $type_str = 'video'; break;
-				case TYPEOTHER		: $type_str = 'other'; break;
-				default			: $type_str = 'unknown';
+				case TYPETEXT        : $type_str = 'text'; break;
+				case TYPEMULTIPART   : $type_str = 'multipart'; break;
+				case TYPEMESSAGE     : $type_str = 'message'; break;
+				case TYPEAPPLICATION : $type_str = 'application'; break;
+				case TYPEAUDIO       : $type_str = 'audio'; break;
+				case TYPEIMAGE       : $type_str = 'image'; break;
+				case TYPEVIDEO       : $type_str = 'video'; break;
+				case TYPEOTHER       : $type_str = 'other'; break;
+				default              : $type_str = 'unknown';
 			}
 			return $type_str;
 		}
-		
+
 		function get_mime_encoding($de_part)
 		{
 			if (!isset($de_part->encoding))
@@ -1015,23 +1017,23 @@
 				return $encoding_str;
 			}
 		}
-		
+	
 		function encoding_int_to_str($encoding_int)
 		{
 			switch ($encoding_int)
 			{
-				case ENC7BIT	: $encoding_str = '7bit'; break;
-				case ENC8BIT	: $encoding_str = '8bit'; break;
-				case ENCBINARY	: $encoding_str = 'binary';  break;
-				case ENCBASE64	: $encoding_str = 'base64'; break;
+				case ENC7BIT   : $encoding_str = '7bit'; break;
+				case ENC8BIT   : $encoding_str = '8bit'; break;
+				case ENCBINARY : $encoding_str = 'binary';  break;
+				case ENCBASE64 : $encoding_str = 'base64'; break;
 				case ENCQUOTEDPRINTABLE : $encoding_str = 'quoted-printable'; break;
-				case ENCOTHER	: $encoding_str = 'other';  break;
-				case ENCUU	: $encoding_str = 'uu';  break;
-				default		: $encoding_str = 'other';
+				case ENCOTHER  : $encoding_str = 'other';  break;
+				case ENCUU     : $encoding_str = 'uu';  break;
+				default        : $encoding_str = 'other';
 			}
 			return $encoding_str;
 		}
-		
+
 		// OBSOLETED
 		function get_att_name($de_part)
 		{
@@ -1056,7 +1058,7 @@
 			}
 			return $att_name;
 		}
-			
+
 		function uudecode($str)
 		{
 			$file='';
