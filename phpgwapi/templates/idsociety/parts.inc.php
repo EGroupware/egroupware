@@ -40,16 +40,16 @@
 		{
 			if($find_single == $find_double + 1)
 			{
-				$strip_portion = $GLOBALS['phpgw_info']['server']['webserver_url'];
+				$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'];
 			}
 			else
 			{
-				$strip_portion = substr($GLOBALS['phpgw_info']['server']['webserver_url'],0,$find_double + 1);
+				$GLOBALS['strip_portion'] = substr($GLOBALS['phpgw_info']['server']['webserver_url'],0,$find_double + 1);
 			}
 		}
 		else
 		{
-			$strip_portion = $GLOBALS['phpgw_info']['server']['webserver_url'].'/';
+			$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'].'/';
 		}
 
 		$var['home_link'] = $GLOBALS['phpgw_info']['navbar']['home']['url'];
@@ -177,10 +177,10 @@
 			}
 			if($img_src_over != '')
 			{
-				if($strip_portion)
-				{
-					$img_src_over = str_replace($strip_portion,'',$img_src_over);
-				}
+//				if($GLOBALS['strip_portion'])
+//				{
+//					$img_src_over = str_replace($GLOBALS['strip_portion'],'',$img_src_over);
+//				}
 				$GLOBALS['phpgw_info']['flags']['preload_images'][] = $img_src_over;
 			}
 		}
