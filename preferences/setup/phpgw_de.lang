@@ -27,6 +27,7 @@ hours	preferences	de	Stunden
 how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt werden
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wieviele Stunden sind sie vor der Zeitzone des Servers.<br>Wenn sie in der gleichen Zeitzone wie der Server sind, wählen sie 0 Stunden, ansonsten wählen sie ihr lokales Datum und die Uhrzeit.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldownmenü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
 how should phpgroupware display dates for you.	preferences	de	Wie soll phpGroupWare das Datum für sie anzeigen?
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
@@ -35,6 +36,7 @@ interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 language	preferences	de	Sprache
 max matches per page	preferences	de	maximale Treffer pro Seite
 max matchs per page	preferences	de	Maximale Treffer pro Seite
+max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
 no default	preferences	de	Keine Vorgabe
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail server. Dies müssen sie separat tun.
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
@@ -52,6 +54,7 @@ show high priority events on main screen	preferences	de	Ereignisse mit hoher Pri
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
 show number of current users	preferences	de	Anzahl gegenwärtiger Benutzer anzeigen
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
+show_more_apps	common	de	Mehr Anwendungen anzeigen
 text only	preferences	de	nur Text
 the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie phpGroupWare neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei grossen Installationen mit vielen Benutzern). Das Popup ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.
