@@ -39,14 +39,27 @@
 			*/
 			if (ereg( 'MSIE ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
-				$this->BROWSER_VER=$log_version[1];
-				$this->BROWSER_AGENT='IE';
+				$this->BROWSER_VER = $log_version[1];
+				$this->BROWSER_AGENT = 'IE';
 			}
-			elseif (ereg( 'Opera ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			elseif (ereg( 'Opera ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
+				ereg( 'Opera/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
-				$this->BROWSER_VER=$log_version[1];
-				$this->BROWSER_AGENT='OPERA';
+				$this->BROWSER_VER   = $log_version[1];
+				$this->BROWSER_AGENT = 'OPERA';
 			}
+			elseif ( eregi( 'iCab ([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version) ||
+				eregi( 'iCab/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version))
+			{
+				$this->BROWSER_VER   = $log_version[1];
+				$this->BROWSER_AGENT = 'iCab';
+			} 
+			elseif ( eregi( 'Netscape6/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version)) 
+			{
+				$this->BROWSER_VER   = $log_version[1];
+				$this->BROWSER_AGENT = 'Netscape';
+			}
+
 			elseif (ereg( 'Mozilla/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER=$log_version[1];
@@ -204,6 +217,26 @@
 			else
 			{
 				return false;
+			}
+		}
+
+		// Echo content headers for file downloads
+		function content_header($fn="")
+		{
+			if ($fn)
+			{
+				if ($this->get_agent() == "IE") // && browser_get_version() == "5.5")
+				{
+					$attachment = "";
+				}
+					else
+				{
+					$attachment = " attachment;";
+				}
+				header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
+				header('Content-type: application/octetstream');
+				header('Pragma: no-cache');
+				header('Expires: 0');
 			}
 		}
 	}
