@@ -394,7 +394,7 @@
 			}
 			/* Restore original value */
 			$oProc->Halt_On_Error = $tmp;
-			echo "Indices from $sTableName<pre>pk=".print_r($aPk,True)."\nix=".print_r($aIx,True)."\nuc=".print_r($aUc,True)."</pre>\n";
+			#echo "Indices from $sTableName<pre>pk=".print_r($aPk,True)."\nix=".print_r($aIx,True)."\nuc=".print_r($aUc,True)."</pre>\n";
 		}
 
 		function _CopyAlteredTable($oProc, &$aTables, $sSource, $sDest)
