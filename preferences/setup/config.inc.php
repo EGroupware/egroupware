@@ -149,3 +149,19 @@
       </select>
      </td>
     </tr>
+
+   <?php $selected = array(); ?>
+   <tr bgcolor="e6e6e6">
+     <td>Default file system space per user/group ?:</td>
+     <td>
+      <input type="text" name="newsettings[vfs_default_account_size_number]" size=7 value="<?php echo $current_config["vfs_default_account_size_number"]; ?> ">
+	&nbsp;&nbsp;
+   <?php $selected[$current_config['vfs_default_account_size_type']] = ' selected'; ?>
+      <select name="newsettings[vfs_default_account_size_type]">
+       <option value="gb" <?php echo $selected['gb']?>>GB</option>
+       <option value="mb" <?php echo $selected['mb']?>>MB</option>
+       <option value="kb" <?php echo $selected['mb']?>>KB</option>
+       <option value="b" <?php echo $selected['mb']?>>B</option>
+      </select>
+     </td>
+    </tr>
