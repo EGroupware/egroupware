@@ -819,9 +819,15 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 		}
 
-		function find_image($appname,$image,$navbar=False)
+		function find_image($appname,$image,$force_layout=False)
 		{
 			static $imgpref;
+
+			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety' || $GLOBALS['phpgw_info']['server']['template_set'] == 'funkwerk')
+			{
+				$force_layout = True;
+			}
+
 			if(! @$imgpref)
 			{
 				switch(@$GLOBALS['phpgw_info']['server']['image_type'])
@@ -841,7 +847,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
 
-				if (!$navbar)
+				if (!$force_layout)
 				{
 					$imagedir_olddefault = '/'.$appname.'/images';
 					$imagedir_default    = '/'.$appname.'/templates/default/images';
@@ -926,7 +932,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			return $imgfile;
 		}
 
-		function image($appname,$image='',$ext='',$navbar=False,$use_lang=True)
+		function image($appname,$image='',$ext='',$force_layout=False,$use_lang=True)
 		{
 			if (!is_array($image))
 			{
@@ -953,13 +959,13 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 				else
 				{
-					$image_found = $this->find_image($appname,$img.$ext,$navbar);
+					$image_found = $this->find_image($appname,$img.$ext,$force_layout);
 				}
 			}
 			return $image_found;
 		}
 
-		function image_on($appname,$image,$extension='_on',$navbar=False)
+		function image_on($appname,$image,$extension='_on',$force_layout=False)
 		{
 			$with_extension = $this->image($appname,$image,$extension,$navbar);
 			$without_extension = $this->image($appname,$image,'',$navbar);
@@ -1413,15 +1419,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			unset($value);
 			unset($newarray);
 
-			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'idsociety' || $GLOBALS['phpgw_info']['server']['template_set'] == 'funkwerk')
-			{
-				$navbar = True;
-			}
-			else
-			{
-				$navbar = False;
-			}
-
 			foreach($GLOBALS['phpgw_info']['user']['apps'] as $app => $data)
 			{
 				if (is_long($app))
@@ -1437,13 +1434,13 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 					if ($app != $GLOBALS['phpgw_info']['flags']['currentapp'])
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image($app,Array('navbar','nonav'),'',$navbar);
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over',$navbar);
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image($app,Array('navbar','nonav'));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over');
 					}
 					else
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image_on($app,Array('navbar','nonav'),'-over',$navbar);
-						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav'),'',$navbar);
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']			= $this->image_on($app,Array('navbar','nonav'),'-over');
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav'));
 					}
 				}
 			}
@@ -1643,7 +1640,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		{
 			if(is_array($file))
 			{
-				$icon = $GLOBALS['phpgw']->common->image($appname,'navbar','',True);
+				$icon = $this->image($appname,'navbar');
 
 				while(is_array($file) && list($text,$url) = each($file))
 				{

@@ -762,7 +762,7 @@
 		*/
 		function template_alternate_row_color(&$tpl)
 		{
-			$tpl->set_var('tr_color',$this->alternate_row_color());
+			$this->template->set_var('tr_color',$this->alternate_row_color());
 		}
 
 		/*!
