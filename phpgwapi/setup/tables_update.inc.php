@@ -882,4 +882,45 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+
+
+	$test[] = '0.9.99.003';
+	function phpgwapi_upgrade0_9_99_003()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_id',array(
+			'type' => 'auto'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_lid',array(
+			'type' => 'varchar',
+			'precision' => '25'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_firstname',array(
+			'type' => 'varchar',
+			'precision' => '50'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_lastname',array(
+			'type' => 'varchar',
+			'precision' => '50'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_lastlogin',array(
+			'type' => 'int',
+			'precision' => '4'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_lastloginfrom',array(
+			'type' => 'varchar',
+			'precision' => '255'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_lastpwd_change',array(
+			'type' => 'int',
+			'precision' => '4'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_accounts','account_expires',array(
+			'type' => 'int',
+			'precision' => '4'
+		));
+
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.004';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
