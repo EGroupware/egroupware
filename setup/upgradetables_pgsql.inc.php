@@ -212,6 +212,12 @@
         );";
       $db->query($sql);  
 
+      $db->query("update lang set lang='da' where lang='dk'");
+      $db->query("update lang set lang='ko' where lang='kr'");
+
+      $db->query("update preferences set lang='da' where lang='dk'");
+      $db->query("update preferences set lang='ko' where lang='kr'");
+
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 0.9.1 to 0.9.2pre1 is completed.</td>\n";
       echo "  </tr>\n";
