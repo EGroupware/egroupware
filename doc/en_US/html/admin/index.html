@@ -1,0 +1,395 @@
+<HTML
+><HEAD
+><TITLE
+>phpGroupWare Administration Manual</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.72
+"><LINK
+REL="NEXT"
+TITLE="Introduction"
+HREF="introduction.html"></HEAD
+><BODY
+CLASS="BOOK"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="BOOK"
+><A
+NAME="INDEX"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>phpGroupWare Administration Manual</A
+></H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN5"
+>Brandon Neill</A
+></H3
+><DIV
+><DIV
+CLASS="ABSTRACT"
+><A
+NAME="AEN11"
+></A
+><P
+></P
+><P
+>This Manual is for administrators of phpGroupware.</P
+><P
+></P
+></DIV
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="introduction.html"
+>Introduction</A
+></DT
+><DD
+><DL
+><DT
+>1.1. <A
+HREF="x15.html"
+>What is phpGroupWare</A
+></DT
+><DT
+>1.2. <A
+HREF="x18.html"
+>Acknowledgements</A
+></DT
+><DT
+>1.3. <A
+HREF="x21.html"
+>Notes</A
+></DT
+></DL
+></DD
+><DT
+>2. <A
+HREF="installation.html"
+>Installation</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="x29.html"
+>Requirements</A
+></DT
+><DT
+>2.2. <A
+HREF="x49.html"
+>Tested Systems</A
+></DT
+><DT
+>2.3. <A
+HREF="x62.html"
+>Obtaining and Installing phpgroupware</A
+></DT
+><DD
+><DL
+><DT
+>2.3.1. <A
+HREF="x62.html#AEN64"
+>Installing from TarBall</A
+></DT
+><DT
+>2.3.2. <A
+HREF="x62.html#AEN74"
+>Installing from CVS</A
+></DT
+><DD
+><DL
+><DT
+>2.3.2.1. <A
+HREF="x62.html#AEN78"
+>Development Branch in CVS</A
+></DT
+><DT
+>2.3.2.2. <A
+HREF="x62.html#AEN93"
+>Stable Branch in CVS</A
+></DT
+><DT
+>2.3.2.3. <A
+HREF="x62.html#AEN109"
+>Patched Branches in CVS</A
+></DT
+></DL
+></DD
+><DT
+>2.3.3. <A
+HREF="x62.html#AEN115"
+>Setting File Permissions</A
+></DT
+><DT
+>2.3.4. <A
+HREF="x62.html#AEN134"
+>Setup the database</A
+></DT
+><DD
+><DL
+><DT
+>2.3.4.1. <A
+HREF="x62.html#AEN137"
+>MySQL</A
+></DT
+><DT
+>2.3.4.2. <A
+HREF="x62.html#AEN151"
+>PostgreSQL</A
+></DT
+></DL
+></DD
+><DT
+>2.3.5. <A
+HREF="x62.html#AEN164"
+>Setup/Configure phpGroupWare</A
+></DT
+><DD
+><DL
+><DT
+>2.3.5.1. <A
+HREF="x62.html#AEN166"
+>configure header file</A
+></DT
+><DT
+>2.3.5.2. <A
+HREF="x62.html#AEN173"
+>Site Configuration</A
+></DT
+></DL
+></DD
+><DT
+>2.3.6. <A
+HREF="x62.html#AEN278"
+>Testing the install</A
+></DT
+><DT
+>2.3.7. <A
+HREF="x62.html#AEN281"
+>Installing additional applications</A
+></DT
+></DL
+></DD
+><DT
+>2.4. <A
+HREF="x303.html"
+>Troubleshooting</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="upgrading.html"
+>Upgrading</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="x308.html"
+>Upgrading from CVS</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
+HREF="general.html"
+>General</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="x319.html"
+>Categories</A
+></DT
+><DT
+>4.2. <A
+HREF="x321.html"
+>Themes</A
+></DT
+><DT
+>4.3. <A
+HREF="x323.html"
+>Access Control Lists</A
+></DT
+><DT
+>4.4. <A
+HREF="x325.html"
+>Translations</A
+></DT
+></DL
+></DD
+><DT
+>5. <A
+HREF="calendar.html"
+>Calendar</A
+></DT
+><DT
+>6. <A
+HREF="email.html"
+>Email</A
+></DT
+><DT
+>7. <A
+HREF="addressbook.html"
+>Addressbook</A
+></DT
+><DT
+>8. <A
+HREF="notes.html"
+>Notes</A
+></DT
+><DT
+>9. <A
+HREF="todo.html"
+>Todo</A
+></DT
+><DT
+>10. <A
+HREF="project.html"
+>Project</A
+></DT
+><DT
+>11. <A
+HREF="filemanager.html"
+>File Manager</A
+></DT
+><DT
+>12. <A
+HREF="c341.html"
+>Security</A
+></DT
+><DT
+>13. <A
+HREF="c343.html"
+>Performance Tuning</A
+></DT
+><DD
+><DL
+><DT
+>13.1. <A
+HREF="x345.html"
+>Linux</A
+></DT
+><DT
+>13.2. <A
+HREF="x347.html"
+>Apache</A
+></DT
+><DT
+>13.3. <A
+HREF="x349.html"
+>PHP</A
+></DT
+><DT
+>13.4. <A
+HREF="x351.html"
+>Database</A
+></DT
+><DD
+><DL
+><DT
+>13.4.1. <A
+HREF="x351.html#AEN353"
+>When phpgroupware is used by 5+ users, the number of connections to the backend grows very fast toward it's limits.</A
+></DT
+></DL
+></DD
+><DT
+>13.5. <A
+HREF="x357.html"
+>phpGroupWare</A
+></DT
+></DL
+></DD
+></DL
+></DIV
+><DIV
+CLASS="LOT"
+><DL
+CLASS="LOT"
+><DT
+><B
+>List of Tables</B
+></DT
+><DT
+>2-1. <A
+HREF="x62.html#AEN184"
+>Edit Current Configuration</A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="introduction.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Introduction</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

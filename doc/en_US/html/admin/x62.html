@@ -1,0 +1,1114 @@
+<HTML
+><HEAD
+><TITLE
+>Obtaining and Installing phpgroupware</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.72
+"><LINK
+REL="HOME"
+TITLE="phpGroupWare Administration Manual"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Installation"
+HREF="installation.html"><LINK
+REL="PREVIOUS"
+TITLE="Tested Systems"
+HREF="x49.html"><LINK
+REL="NEXT"
+TITLE="Troubleshooting"
+HREF="x303.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare Administration Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x49.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Installation</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x303.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN62"
+>2.3. Obtaining and Installing phpgroupware</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN64"
+>2.3.1. Installing from TarBall</A
+></H2
+><P
+>Installing from a TarBall is very easy. The files should
+be installed in the webserver directory. Example steps (please
+adjust to your servers config):</P
+><A
+NAME="AEN67"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># cp phpgroupware-version.tar.gz /home/httpd/html</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cd /home/httpd/html</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># tar zxf phpgroupware-version.tar.gz</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>You may have to get required permissions to do this. Contact
+your system administrator if you dont have the permission
+to write to your webserver directory.</P
+><P
+>You can get current releases of phpGroupWare at the phpGroupware
+website.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN74"
+>2.3.2. Installing from CVS</A
+></H2
+><P
+>Installing from a CVS is fairly easy. The files should be checked out in the webserver directory.
+You may have to get required permissions to install from CVS. Contact your system administrator if you dont have the permission to write to your webserver directory. </P
+><P
+>To see a list of applications currently available via CVS, go to [http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/phpgroupware/]</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN78"
+>2.3.2.1. Development Branch in CVS</A
+></H3
+>Follow these steps (please adjust to your servers config):
+<A
+NAME="AEN80"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># cd /home/httpd/html</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cd phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs co admin addressbook calendar email phpgwapi preferences setup todo notes infolog</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>or if you prefer using CVSROOT:</P
+><A
+NAME="AEN87"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs co phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cd phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs co admin addressbook calendar email phpgwapi preferences setup todo notes infolog</B
+></TT
+></P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN93"
+>2.3.2.2. Stable Branch in CVS</A
+></H3
+><P
+>Follow these steps (please adjust to your servers config):</P
+><A
+NAME="AEN96"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># cd /home/httpd/html</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co -r Version-0_9_12-branch phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cd phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>or if you prefer using CVSROOT:</P
+><A
+NAME="AEN103"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs co -r Version-0_9_12-branch phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cd phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</B
+></TT
+></P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN109"
+>2.3.2.3. Patched Branches in CVS</A
+></H3
+><P
+>Recently the phpGroupWare developers started a branch for patches to released versions. This is to facilitate bugs being fixed in a released version without having to wait for the next offical release. There is a developer who has been assigned the responsibility for maintaining that branch and applying patches and fixes. To check out this version of the code using 0.9.12 as an example you would do the following:</P
+><A
+NAME="AEN112"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware -r Version-0_9_12-patches phpgroupware</B
+></TT
+></P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN115"
+>2.3.3. Setting File Permissions</A
+></H2
+><P
+>There are a few directories which will need special fie permissions set for phpGroupWare to work properly.</P
+><P
+>Temp Directory (Required) - This can be /tmp for simplicity, but it is required for several apps to function properly.  Simply make sure that the webserver can add/delete files in it.</P
+><P
+>Files Directory (Required) - This can be should be the files dir under the phpgroupware dir. You will need to give the webserver account owndership of this directory.</P
+><A
+NAME="AEN120"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+>(from&nbsp;phpgroupware&nbsp;root)<br>
+<TT
+CLASS="USERINPUT"
+><B
+># mkdir files</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># mkdir files/groups</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># mkdir files/users</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># chown nobody:nobody files</B
+></TT
+>&nbsp;(note:&nbsp;this&nbsp;assumes&nbsp;your&nbsp;webserver&nbsp;runs&nbsp;as&nbsp;user&nbsp;nobody,&nbsp;adjust&nbsp;for&nbsp;your&nbsp;installation)<br>
+<TT
+CLASS="USERINPUT"
+><B
+># chmod 700 files</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>Root Directory (Not recommended) - If you give the webserver account write access to the phpgroupware directory, then the setup program can create the header.inc.php for you.  Otherwise you will need to use the setup program to create it, and then you can manually save it to file.</P
+><P
+>If you want to do it:</P
+><A
+NAME="AEN129"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># chown :nobody phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># chmod 770 phpgroupware</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>You may have to get required permissions to do this. Contact your system administrator if you dont have the permission to write to your webserver directory. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN134"
+>2.3.4. Setup the database</A
+></H2
+><P
+>You need to create empty databases for the setup app to create the tables in.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN137"
+>2.3.4.1. MySQL</A
+></H3
+><P
+>Ensure that you have a working MySQL installation and that MySQL is running.</P
+><A
+NAME="AEN140"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+>Mandrake&nbsp;or&nbsp;Redhat:&nbsp;<br>
+<TT
+CLASS="USERINPUT"
+><B
+>/etc/rc.d/init.d/mysqld start</B
+></TT
+><br>
+other:&nbsp;<br>
+<TT
+CLASS="USERINPUT"
+><B
+>/usr/local/mysql/bin/safe_mysqld &#38;</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>Create the phpgroupware Database and give permissions to the phpgroupware user</P
+><A
+NAME="AEN145"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># mysqladmin -u someuser -p create phpgroupware</B
+></TT
+>&nbsp;(enter&nbsp;password&nbsp;when&nbsp;prompted)<br>
+<TT
+CLASS="USERINPUT"
+><B
+># mysql -u someuser -p</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+>mysql&#62; grant all on phpgroupware.* to phpgroupware@localhost identified by "somepassword";</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>For more detailed user documentation on MySQL see their website: [http://www.mysql.com]</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN151"
+>2.3.4.2. PostgreSQL</A
+></H3
+><P
+>Ensure that you have a working PostgreSQL installation and that PostgreSQL is running.</P
+><A
+NAME="AEN154"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+>Mandrake&nbsp;or&nbsp;Redhat&nbsp;:&nbsp;<br>
+<TT
+CLASS="USERINPUT"
+><B
+>/etc/rc.d/init.d/postgresql start</B
+></TT
+><br>
+Others:&nbsp;<br>
+<TT
+CLASS="USERINPUT"
+><B
+> /usr/bin/postmaster -D /var/lib/pgsql/data or /usr/bin/pg_ctl -D /var/lib/pgsq/data start</B
+></TT
+>&nbsp;(adjust&nbsp;for&nbsp;your&nbsp;install&nbsp;dirs)</P
+></BLOCKQUOTE
+><P
+>Create the phpgroupware database and user</P
+><A
+NAME="AEN159"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+> # /usr/bin/createdb phpgroupware</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+> # /usr/bin/createuser phpgroupware --pwprompt</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>For more detailed user documentation on Postgresql see their website: [http://www.postgresql.org]</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN164"
+>2.3.5. Setup/Configure phpGroupWare</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN166"
+>2.3.5.1. configure header file</A
+></H3
+><P
+>Point your browser to http://yourserverroot/phpgroupware/setup/ which will create (or upgrade) the header.inc.php and database tables. Setup will attempt to determine what version of the phpGroupWare databases and header.inc.php you have installed, and upgrade to the most recent version. </P
+><P
+>Most values for the header setup can be left as the default, be sure to enter a password for header admin, and change the password for your DB, and for configuration.</P
+><P
+>*addme* What is mcrypt for?</P
+><P
+>*addme* Explain what the Domain select box is for</P
+><P
+>Once you have finished your configuration, you can have phpGroupWare write it directly if you changed permissions on the directory, or you can download or view it with your browser, and save it in the directory yourself.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN173"
+>2.3.5.2. Site Configuration</A
+></H3
+><P
+>After header configuration, you will be prompted to enter your Setup/Config Login, or your Header login if you want to go back and change something.</P
+><P
+><DIV
+CLASS="CAUTION"
+><P
+></P
+><TABLE
+CLASS="CAUTION"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/caution.gif"
+HSPACE="5"
+ALT="Caution"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>You are advised to backup your existing database before running the setup script to avoid problems!</TD
+></TR
+></TABLE
+></DIV
+></P
+><P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>You have to press the button, not hit enter on the setup/index.php script</TD
+></TR
+></TABLE
+></DIV
+></P
+><P
+>Your first step is to install all application databases, simply click on the <SPAN
+CLASS="GUIBUTTON"
+>Install</SPAN
+> to have phpGroupWare add all the necessary tables.</P
+><P
+>Next, click on <SPAN
+CLASS="GUIBUTTON"
+>Edit Current Configuration</SPAN
+>.  You will be prompted with a list of configuration options.
+<DIV
+CLASS="TABLE"
+><A
+NAME="AEN184"
+></A
+><P
+><B
+>Table 2-1. Edit Current Configuration</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><THEAD
+><TR
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Prompt</TH
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Notes</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>full path for temporary files</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>usually /tmp</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>full path for user and group files</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>directory must exist and have user and group directories underneath it.</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>location of phpGroupWare URL</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>full domain name or just relative link, no trailing slash</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>hostname of machine</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+> Fully qualified hostname </TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>default ftp server</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+> *addme* what is this for?</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>use correct mimetype for FTP</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+> *addme* what might this affect?</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>HTTP proxy server</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>HTTP proxy port</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Which type of Authentication</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN217"
+HREF="#FTN.AEN217"
+>[a]</A
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Where to store user accounts</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><A
+NAME="AEN222"
+HREF="#FTN.AEN222"
+>[b]</A
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Minimum account ID</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Maximum account ID</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>manage homedirectory and loginshell attributes</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+> *addme* what is this?</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>LDAP home directory prefix</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>LDAP default shell</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Auto create account records?</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>*addme* what is this?</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>if no ACL records...</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>LDAP host</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>LDAP accounts context</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>LDAP root dn</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>LDAP root password</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>LDAP encryption type</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>app_session encryption</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>*addme* what is this?</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>title for your site</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Show powered by logo on</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Country Selection</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>use pure HTML</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Use cookies</TD
+><TD
+>&nbsp;</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>check for new version?</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>*addme* what does this check, stable version or CVS?</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>cache the phpgw_info array</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>*addme* what effect does this have on speed, what tradeoffs?</TD
+></TR
+></TBODY
+><TR
+><TD
+COLSPAN="2"
+>Notes:<BR><P
+CLASS="LITERALLAYOUT"
+>SQL&nbsp;&nbsp;use&nbsp;SQL&nbsp;table&nbsp;(default)<br>
+SQL/SSL&nbsp;&nbsp;use&nbsp;encrypted&nbsp;SQL&nbsp;access<br>
+LDAP&nbsp;&nbsp;use&nbsp;LDAP&nbsp;server<br>
+mail&nbsp;&nbsp;use&nbsp;mail&nbsp;server&nbsp;(IMAP/POP3)<br>
+HTTP&nbsp;&nbsp;use&nbsp;HTTP&nbsp;authentication&nbsp;(.htaccess)<br>
+PAM&nbsp;&nbsp;&nbsp;use&nbsp;PAM&nbsp;authentication&nbsp;(note&nbsp;currently&nbsp;working)</P
+><P
+CLASS="LITERALLAYOUT"
+>SQL&nbsp;&nbsp;store&nbsp;in&nbsp;SQL&nbsp;table<br>
+LDAP&nbsp;store&nbsp;in&nbsp;LDAP&nbsp;server<br>
+Contacts&nbsp;&nbsp;*addme*&nbsp;what&nbsp;is&nbsp;this?</P
+></TD
+></TR
+></TABLE
+></DIV
+></P
+><P
+>Next, select <SPAN
+CLASS="GUIBUTTON"
+>click here</SPAN
+> to add admin account and optionally, three demo accounts.  Fill in the fields on the next screen and uncheck the box at the bottom if you don't want the demo accounts created.  Click on Submit when finished.</P
+><P
+>Click <SPAN
+CLASS="GUIBUTTON"
+>Install Languages</SPAN
+> to add at least one language to the system.  On the next screen, select all the languages you want by single clicking them, then click on <SPAN
+CLASS="GUIBUTTON"
+>Install<SPAN
+CLASS="GUIBUTTON"
+>.</SPAN
+></SPAN
+></P
+><P
+>There shouldn't be anything to do under <SPAN
+CLASS="GUIBUTTON"
+>Manage Applications</SPAN
+> at this time, this is where you will return after an upgrade to update and table differences.</P
+><P
+>after your done, click on logout to complete the install and end the session.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN278"
+>2.3.6. Testing the install</A
+></H2
+><P
+>If your config is setup properly you can now login. Point your browser to the installed location and login with the new admin username and password you created.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN281"
+>2.3.7. Installing additional applications</A
+></H2
+><P
+>Once you have the core phpGroupWare install up and running, you may want to download and install additional applications.</P
+><P
+>You should consult any README or INSTALL files that come with the new application first, as most require you to create additional tables in the database, and add additional translation data to the lang table (typically a file called lang.sql)</P
+><P
+>You install the new application within the phpGroupWare install tree by copying the application directory into the phpGroupWare install location, and enabling the application through the Administration page.</P
+><P
+>For example, this is the process to install the Headlines application: (see [http://www.sourceforge.net/projects/phpgwapps] for more applications)</P
+><P
+>Download the .tar.gz file for the application, or check out the source with cvs with</P
+><A
+NAME="AEN288"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+><TT
+CLASS="USERINPUT"
+><B
+># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'</B
+></TT
+><br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs login</B
+></TT
+>&nbsp;(just&nbsp;hit&nbsp;enter&nbsp;if&nbsp;prompted&nbsp;for&nbsp;a&nbsp;password)<br>
+<TT
+CLASS="USERINPUT"
+><B
+># cvs co headlines</B
+></TT
+></P
+></BLOCKQUOTE
+><P
+>Move the headlines directory into your phpGroupWare install directory.</P
+><P
+>Log into phpGroupWare as an administrative user, and go to the Administration page.</P
+><P
+>In the first section, choose the Applications link.</P
+><P
+>Click on add, and fill in the form.</P
+><P
+>Application name should be identical to the name of the directory you moved into the phpGroupWare install, in this case use headlines</P
+><P
+>Application title is shown in the navigation bar and other places to refer to the new application. Enter Headlines for this example.</P
+><P
+>Enabled can be used to disable an application for all users temporially. You should normal check the box to enable the application.</P
+><P
+>Back in the Administration page, you need to enable the application for specific users or user groups by editing them, and checking the new Headlines box that appears in the middle of the account editing page.</P
+><P
+>Once you have added the Headlines app to your account, you should see a Headlines entry in the Administration and Preferences pages, and there should be an icon for the Headlines application in the navigation bar.</P
+><P
+>Once you enable a few of the Headlines sites through the Administration page link, you should see headlines grabbed from the sites you selected when you click on the Headlines icon in the navigation bar. </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x49.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x303.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Tested Systems</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="installation.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Troubleshooting</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
