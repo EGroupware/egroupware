@@ -88,7 +88,7 @@
 			$applications = array();
 			while(list($app,$data) = @each($apps))
 			{
-				if($i >= $start && $i<= $limit)
+				if($i >= $start && $i< $limit)
 				{
 					$applications[$app] = $data;
 				}
