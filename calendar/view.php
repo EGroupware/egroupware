@@ -43,7 +43,7 @@
 
   $cal_info = $cal[0];
 
-  if ($cal_info->owner == $phpgw_info["user"]["account_id"])
+  if(($cal_info->owner == $phpgw_info["user"]["account_id"]) || $phpgw_info["user"]["apps"]["admin"]) 
      $is_my_event = true;
 
   $description = nl2br($description);

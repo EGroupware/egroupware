@@ -21,9 +21,9 @@
   $cal_info = new calendar_item;
 
   if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-    $hourformat .= "h";
+    $hourformat = "h";
   } else {
-    $hourformat .= "H";
+    $hourformat = "H";
   }
 
   if ($id > 0) {
@@ -31,7 +31,7 @@
     $cal_info = $cal[0];
 
     $can_edit = false;
-    if($cal_info->owner == $phpgw_info["user"]["account_id"]) 
+    if(($cal_info->owner == $phpgw_info["user"]["account_id"]) || $phpgw_info["user"]["apps"]["admin"]) 
       $can_edit = true;
 
     if(!$cal_info->rpt_end_use) {
@@ -65,7 +65,8 @@
     else
       $thisminute = (int)$minute;
 
-    $cal_info->datetime = gmmktime($thishour,$thisminute,0,$thismonth,$thisday,$thisyear);
+    $cal_info->datetime = mktime($thishour,$thisminute,0,$thismonth,$thisday,$thisyear) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
+    $cal_info->edatetime = $cal_info->datetime;
     $cal_info->name = "";
     $cal_info->description = "";
 
@@ -82,6 +83,7 @@
   $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_text"]);
   $phpgw->template->set_var("name_error",lang("You have not entered a\\nBrief Description").".");
   $phpgw->template->set_var("time_error",lang("You have not entered a\\nvalid time of day."));
+  $phpgw->template->set_var("date_error",lang("You have not entered a\\nvalid date."));
   if($id)
     $phpgw->template->set_var("calendar_action",lang("Calendar - Edit"));
   else
