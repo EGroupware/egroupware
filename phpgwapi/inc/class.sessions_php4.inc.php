@@ -306,7 +306,7 @@
 				return False;
 			}
 
-			if (! $GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type))
+			if (! $GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) || $GLOBALS['phpgw']->accounts->get_type($this->account_lid) == 'g')
 			{
 				return False;
 				exit;
