@@ -17,6 +17,16 @@
   }
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
+
+  function is_odd($n)
+  {
+     $ln = substr($n,-1);
+     if ($ln == 1 || $ln == 3 || $ln == 5 || $ln == 7 || $ln == 9) {
+        return True;
+     } else {
+        return False;
+     }
+  }
   
   if (! $group_id) {
      Header("Location: " . $phpgw->link("groups.php"));
