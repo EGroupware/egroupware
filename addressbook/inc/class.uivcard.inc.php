@@ -3,7 +3,7 @@
   * phpGroupWare - Addressbook                                               *
   * http://www.phpgroupware.org                                              *
   * Written by Joseph Engo <jengo@phpgroupware.org> and                      *
-  * Miles Lott <miloschphpgroupware.org>                                     *
+  * Miles Lott <milos@groupwhere.org>                                        *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -26,7 +26,7 @@
 			'out' => True
 		);
 
-	 	var $extrafields = array(
+		var $extrafields = array(
 			'ophone'   => 'ophone',
 			'address2' => 'address2',
 			'address3' => 'address3'
@@ -43,14 +43,14 @@
 
 		function in()
 		{
-			$action = $GLOBALS['HTTP_POST_VARS']['action'] ? $GLOBALS['HTTP_POST_VARS']['action'] : $GLOBALS['HTTP_GET_VARS']['action'];
+			$action = get_var('action',array('POST','GET'));
 
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
 			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
-  
-			if ($action == 'GetFile')
+
+			if($action == 'GetFile')
 			{
 				echo '<b><center>' . lang('You must select a vcard. (*.vcf)') . '</b></center><br><br>';
 			}
@@ -71,9 +71,9 @@
 
 		function out()
 		{
-			$ab_id   = $GLOBALS['HTTP_GET_VARS']['ab_id'] ? $GLOBALS['HTTP_GET_VARS']['ab_id'] : $GLOBALS['HTTP_POST_VARS']['ab_id'];
-			$nolname = $GLOBALS['HTTP_GET_VARS']['nolname'];
-			$nofname = $GLOBALS['HTTP_GET_VARS']['nofname'];
+			$ab_id   = get_var('ab_id',array('GET','POST'));
+			$nolname = get_var('nolname','GET');
+			$nofname = get_var('nofname','GET');
 
 			if($nolname || $nofname)
 			{
@@ -91,13 +91,13 @@
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner')));
 			$perms = $this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
-			if ( (!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']) )
+			if((!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				Header("Location: " . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-		 	$extrafields = array('address2' => 'address2');
+			$extrafields = array('address2' => 'address2');
 			$qfields = $this->contacts->stock_contact_fields + $extrafields;
 
 			$fieldlist = $this->bo->read_entry(array('id' => $ab_id, 'fields' => $qfields));
@@ -105,13 +105,13 @@
 
 			$email        = $fields['email'];
 			$emailtype    = $fields['email_type'];
-			if (!$emailtype)
+			if(!$emailtype)
 			{
 				$fields['email_type'] = 'INTERNET';
 			}
 			$hemail       = $fields['email_home'];
 			$hemailtype   = $fields['email_home_type'];
-			if (!$hemailtype)
+			if(!$hemailtype)
 			{
 				$fields['email_home_type'] = 'INTERNET';
 			}
@@ -131,12 +131,12 @@
 					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uivcard.out&nofname=1&ab_id=$ab_id"));
 				}
 
-				if ($email)
+				if($email)
 				{
 					$fn =  explode('@',$email);
 					$filename = sprintf("%s.vcf", $fn[0]);
 				}
-				elseif ($hemail)
+				elseif($hemail)
 				{
 					$fn =  explode('@',$hemail);
 					$filename = sprintf("%s.vcf", $fn[0]);
@@ -151,9 +151,9 @@
 				$myexport = $this->vcard->export;
 				// check that each $fields exists in the export array and
 				// set a new array to equal the translation and original value
-				while( list($name,$value) = each($fields) )
+				while(list($name,$value) = each($fields))
 				{
-					if ($myexport[$name] && ($value != "") )
+					if($myexport[$name] && ($value != ''))
 					{
 						//echo '<br>'.$name."=".$fields[$name]."\n";
 						$buffer[$myexport[$name]] = $value;
@@ -161,7 +161,7 @@
 				}
 
 				// create a vcard from this translated array
-			    $entry = $this->vcard->out($buffer);
+				$entry = $this->vcard->out($buffer);
 				// print it using browser class for headers
 				// filename, mimetype, no length, default nocache True
 				$this->browser->content_header($filename,'text/x-vcard');
