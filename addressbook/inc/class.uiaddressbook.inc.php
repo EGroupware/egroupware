@@ -1157,6 +1157,7 @@
 				$referer ? $referer : $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index')));
 			$GLOBALS['phpgw']->template->set_var('access_link',$access_link);
 
+			$GLOBALS['phpgw']->template->set_var('view_row','');  // cleanup to avoid showing categories twice
 			$GLOBALS['phpgw']->template->pfp('phpgw_body','view_t');
 
 			$GLOBALS['phpgw']->hooks->process(array(
