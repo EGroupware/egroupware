@@ -18,7 +18,6 @@
 		'login'			=> True,
 		'currentapp'	=> 'login',
 		'noheader'		=> True,
-		'nodisplay'		=> True
 	);
 
 	if(file_exists('./header.inc.php'))
@@ -278,5 +277,4 @@
 	//_debug_array($data);
 
 	$GLOBALS['phpgw']->xslttpl->set_var('login',$data);
-	$GLOBALS['phpgw']->xslttpl->pp();
 ?>

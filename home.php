@@ -212,5 +212,4 @@
 	}
 
 	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output,True);
-	$GLOBALS['phpgw']->xslttpl->pp();
 ?>

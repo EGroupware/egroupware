@@ -270,8 +270,8 @@
 	/****************************************************************************\
 	* Forcing the footer to run when the rest of the script is done.             *
 	\****************************************************************************/
-	//$footer_common = &$GLOBALS['phpgw']->common;
-	//register_shutdown_function(array(&$footer_common, 'phpgw_footer'));
+	$footer_common = &$GLOBALS['phpgw']->common;
+	register_shutdown_function(array(&$footer_common, 'phpgw_footer'));
 	
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
@@ -356,8 +356,6 @@
 		unset($enable_class);
 		reset($GLOBALS['phpgw_info']['flags']);
 
-		//$GLOBALS['phpgw']->common->navbar();
-		$GLOBALS['phpgw']->common->framework();
 		/* Verify that user has rights to the currentapp */
 
 		$continue_app_data = True;
@@ -395,11 +393,7 @@
 				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
 			}
 
-			/* I want to phase this out over time. App apps should put their data into the templates phpgw_body var*/
-			if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
-			{
-				//$GLOBALS['phpgw']->common->framework();
-			}
+			$GLOBALS['phpgw']->common->framework();
 
 			$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
 

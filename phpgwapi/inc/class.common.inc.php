@@ -1084,9 +1084,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				'phpgw_body'		=> $phpgw_body
 			);
 
-			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
-
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'idsociety';
+			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
 
 			switch ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'])
 			{
@@ -1468,19 +1467,15 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			if(!defined('PHPGW_FOOTER_RAN'))
 			{
 				define('PHPGW_FOOTER_RAN',True);
-				if (!isset($GLOBALS['phpgw_info']['flags']['nodisplay']) || !$GLOBALS['phpgw_info']['flags']['nodisplay'])
+
+				if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
+					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
+					!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 				{
-					if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
-						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
-						!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
-					{
-						$this->phpgw_appfooter();
-					}
-					$this->phpgw_header();
-					$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
+					$this->phpgw_appfooter();
 				}
-				
+				$GLOBALS['phpgw']->xslttpl->pp();
 				$GLOBALS['phpgw']->db->disconnect();
 
 				/* Clean up mcrypt */
@@ -1497,6 +1492,41 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 			}
 		}
+
+		/*function phpgw_footer()
+		{
+			if(!defined('PHPGW_FOOTER_RAN'))
+			{
+				define('PHPGW_FOOTER_RAN',True);
+				if (!isset($GLOBALS['phpgw_info']['flags']['nodisplay']) || !$GLOBALS['phpgw_info']['flags']['nodisplay'])
+				{
+					if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
+						!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
+					{
+						$this->phpgw_appfooter();
+					}
+					$this->phpgw_header();
+					$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
+				}
+				
+				$GLOBALS['phpgw']->db->disconnect();
+
+				//Clean up mcrypt
+				if (@is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
+				
+				if (DEBUG_TIMER)
+				{
+					$GLOBALS['debug_timer_stop'] = perfgetmicrotime();
+					echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
+				}
+			}
+		}*/
 
 		function hex2bin($data)
 		{
