@@ -496,12 +496,11 @@
 				while(list($f,$x) = each($this->stock_contact_fields))
 				{
 					$sql .= " UPPER($f) LIKE UPPER('%$query%') OR ";
-					$sqlcount .= $sql;
+					$sqlcount .= " UPPER($f) LIKE UPPER('%$query%') OR ";
 				}
-				$_tmp = $sql;
-				$sql = substr($_tmp,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
-				$sqlcount = substr($_tmp,0,-3) . ') ' . $fand . $filtermethod; 
-				unset($_tmp); unset($f); unset($x);
+				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
+				$sqlcount = substr($sqlcount,0,-3) . ') ' . $fand . $filtermethod; 
+				unset($f); unset($x);
 			}
 			else
 			{
