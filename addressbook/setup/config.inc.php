@@ -37,5 +37,5 @@
   <tr bgcolor="e6e6e6">
    <td>LDAP root pw for contacts:</td>
    <? if (!$current_config["ldap_contact_pw"]) { $current_config["ldap_contact_pw"] = $current_config["ldap_root_pw"]; } ?>
-   <td><input name="newsettings[ldap_contact_pw]" value="<?php echo $current_config["ldap_contact_pw"]; ?>"></td>
+   <td><input name="newsettings[ldap_contact_pw]" type="password" value="<?php echo $current_config["ldap_contact_pw"]; ?>"></td>
   </tr>
