@@ -278,7 +278,7 @@
 			*/
 			if ($session['session_dla'] <= (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout']))
 			{
-				$this->clean_sessions();
+				$this->destroy($sessionid,$kp3);
 				return False;
 			}
 

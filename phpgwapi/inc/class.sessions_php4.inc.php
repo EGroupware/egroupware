@@ -105,7 +105,7 @@
 
 		function destroy($sessionid, $kp3)
 		{
-			if (! $sessionid && $kp3)
+			if (!$sessionid && $kp3)
 			{
 				return False;
 			}
@@ -115,8 +115,8 @@
 			// Only do the following, if where working with the current user
 			if ($sessionid == $GLOBALS['phpgw_info']['user']['sessionid'])
 			{
-				$this->clean_sessions();
 				session_unset();
+				//echo "<p>sessions_php4::destroy: session_destroy() returned ".(session_destroy() ? 'True' : 'False')."</p>\n";
 				session_destroy();
 				if ($GLOBALS['phpgw_info']['server']['usecookies'])
 				{
@@ -235,9 +235,12 @@
 					{
 						continue;	// happens if webserver runs multiple user-ids
 					}
-					$fd = fopen ($path . '/' . $file,'r');
-					$session = fread ($fd, filesize ($path . '/' . $file));
-					fclose ($fd);
+					$session = '';
+					if (($fd = fopen ($path . '/' . $file,'r')))
+					{
+						$session = ($size = filesize ($path . '/' . $file)) ? fread ($fd, $size) : 0;
+						fclose ($fd);
+					}
 					if (substr($session,0,14) != 'phpgw_session|')
 					{
 						continue;
