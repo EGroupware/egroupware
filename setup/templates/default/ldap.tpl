@@ -2,18 +2,12 @@
  <form action="{action_url}" method="POST">
   <table border="0" align="center" width="70%">
    <tr bgcolor="#486591">
-    <td colspan="2">&nbsp;<font color="#fefefe">{ldapimport}</font></td>
-   </tr>
-   <tr bgcolor="#e6e6e6">
-    <td colspan="2">&nbsp;{description}<br>&nbsp;</td>
+     <td colspan="2">&nbsp;<font color="#fefefe">{description}<br>&nbsp;</font></td>
    </tr>
 <!-- END header -->
 
 <!-- BEGIN jump -->
   <table border="0" align="center" width="70%">
-   <tr bgcolor="#486591">
-     <td colspan="2">&nbsp;<font color="#fefefe">{description}</font><br>&nbsp;</td>
-   </tr>
    <tr bgcolor="#e6e6e6">
     <td colspan="2"><a href="{ldapmodify}">{lang_ldapmodify}</a></td>
    </tr>
