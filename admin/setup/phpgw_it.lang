@@ -1,8 +1,8 @@
-%1 - %2 of %3 user accounts	admin	it	%1 - %2 of %3 accounts utenti
+%1 - %2 of %3 user accounts	admin	it	%1 - %2 di %3 accounts utenti
 %1 not found or not executable !!!	admin	it	%1 non trovato o non eseguibile !!!
-(stored password will not be shown here)	admin	it	(Le password memorizzate non verranno mostrate qui)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	it	(Per installare nuove applicazioni utilizzare<br><a href="setup/" target="setup">Setup</a> [Gestionie Applicazioni] !!!)
-accesslog and bruteforce defense	admin	it	Log Accessi e difesa dal BruteForce
+(stored password will not be shown here)	admin	it	(La password memorizzata non verrà mostrata qui)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	it	(Per installare nuove applicazioni utilizzare<br><a href="setup/" target="setup">Setup</a> [Gestione Applicazioni] !!!)
+accesslog and bruteforce defense	admin	it	Log Accessi e difesa BruteForce
 account active	admin	it	Account attivo
 account has been created	common	it	L'account è stato creato
 account has been deleted	common	it	L'account è stato eliminato
@@ -48,18 +48,18 @@ applications	admin	it	Applicazioni
 applications list	admin	it	Lista applicazioni
 apply	admin	it	applica
 are you sure you want to delete the application %1 ?	admin	it	Sei sicuro di voler cancellare l'applicazione %1 ?
-are you sure you want to delete this account ?	admin	it	Sei sicuro di voler cancellare questo account ?
-are you sure you want to delete this application ?	admin	it	Sei sicuro di voler cancellare questa applicazione ?
-are you sure you want to delete this category ?	common	it	Sei sicuro di voler cancellare questa categoria ?
+are you sure you want to delete this account ?	admin	it	Sei sicuro di voler eliminare questo account ?
+are you sure you want to delete this application ?	admin	it	Sei sicuro di voler eliminare questa applicazione ?
+are you sure you want to delete this category ?	common	it	Sei sicuro di voler eliminare questa categoria ?
 are you sure you want to delete this global category ?	admin	it	Sei sicuro di voler cancellare questa categoria globale ?
-are you sure you want to delete this group ?	admin	it	Sei sicuro di voler cancellare questo gruppo ?
-are you sure you want to delete this server?	admin	it	Sei sicuro di voler cancellare questo server ?
+are you sure you want to delete this group ?	admin	it	Sei sicuro di voler eliminare questo gruppo ?
+are you sure you want to delete this server?	admin	it	Sei sicuro di voler eliminare questo server ?
 are you sure you want to kill this session ?	admin	it	Sei sicuro di voler terminare questa sessione ?
 async services last executed	admin	it	Ultima esecuzione dello Schedulatore
 asynchronous timed services	admin	it	Schedulatore
 asyncservices not yet installed or other error (%1) !!!	admin	it	Schedulatore non ancora installato o altro errore (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	it	Cerca di usare il mimetype corretto per l'FTP invece di quello di predefinito 'application/octet-stream'
-authentication / accounts	admin	it	Autenticazion / Account
+authentication / accounts	admin	it	Autenticazione / Account
 auto create account records for authenticated users	admin	it	Crea automaticamente gli account per gli utenti autenticati
 back to the list	admin	it	torna alla lista
 bi-dir passthrough	admin	it	passthrough bidirezionale
@@ -110,13 +110,13 @@ deny access to peer servers	admin	it	Nega l'accesso ai peer servers
 deny access to phpinfo	admin	it	Nega l'accesso al phpinfo
 deny access to site configuration	admin	it	Nega l'accesso alla configurazione del sito
 deny access to user accounts	admin	it	Nega l'accesso alla gestione degli account utente
-deny all users access to grant other users access to their entries ?	admin	it	
-description can not exceed 255 characters in length !	admin	it	La descrizione non può essere più luga di 255 caratteri!
+deny all users access to grant other users access to their entries ?	admin	it	Nega a tutti gli utenti l'accesso ai dati inseriti dagli altri utenti ?
+description can not exceed 255 characters in length !	admin	it	La descrizione non può essere più lunga di 255 caratteri!
 disable "auto completion" of the login form	admin	it	Disabilita l' "auto completamento" del form di login
-disabled (not recomended)	admin	it	disabilitato (non raccomandato)
+disabled (not recomended)	admin	it	disabilitato (non consigliato)
 display	admin	it	Visualizza
-do not delete the category and return back to the list	admin	it	NON cancellare le categorie e torna alla lista
-do you also want to delete all global subcategories ?	admin	it	Vuoi cancellare anche tutte le sotto-categorie globali ?
+do not delete the category and return back to the list	admin	it	NON eliminare la categoria e torna alla lista
+do you also want to delete all global subcategories ?	admin	it	Vuoi eliminare anche tutte le sotto-categorie globali ?
 do you want to delete all global subcategories ?	admin	it	Vuoi cancellare tutte le sotto-categorie globali ?
 do you want to move all global subcategories one level down ?	admin	it	Vuoi spostare tutte le sotto-categorie globali sotto di un livello ?
 edit account	admin	it	Modifica account
@@ -149,7 +149,7 @@ enter the search string. to show all entries, empty this field and press the sub
 enter the site password for peer servers	admin	it	Inserisci la password per i peer server
 enter the site username for peer servers	admin	it	Inserisci il nome utente per i peer server
 enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
-enter the title of your logo	admin	it	Inserisci il titolo per il tuo logo
+enter the title of your logo	admin	it	Inserisci il titolo del tuo logo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	it	Inserisci l'URL o il nome del file (in phpgwapi/templates/default/images) del tuo logo
 enter the url where your logo should link to	admin	it	Inserisci l'url a cui punterà il tuo logo
 enter your default ftp server	admin	it	Inserire il server FTP predefinito
@@ -178,10 +178,10 @@ hide php information	admin	it	nascondi informazioni php
 home directory	admin	it	Cartella Personale
 host information	admin	it	Informazioni host
 hour<br>(0-23)	admin	it	Ore<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ir	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90) ?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30) ?
 idle	admin	it	inattivo
-if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di 
+if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	it	Nel caso si utilizzi LDAP, vuoi gestire gli attributi di homedirectory e shell di login?
 inbound	admin	it	in ingresso
 install crontab	admin	it	Installa crontab
@@ -208,7 +208,7 @@ ldap rootdn	admin	it	LDAP rootdn
 leave the category untouched and return back to the list	admin	it	lascia le categorie inalterate e ritorna alla lista
 leave the group untouched and return back to the list	admin	it	Lascia i gruppi inalterati e ritorna alla lista
 list config settings	admin	it	Lista impostazioni di configurazione
-list current sessions	admin	ir	Lista sessioni currenti
+list current sessions	admin	it	Lista sessioni currenti
 list of current users	admin	it	lista utenti attivi
 login history	admin	it	Cronologia Collegamenti
 login message	admin	it	Messaggio di Login
@@ -236,7 +236,7 @@ no matches found	admin	it	Nessuna corrispondenza trovata.
 no modes available	admin	it	nessuna modalità disponibile
 no permission to add groups	admin	it	nessun permesso di aggiunta gruppi
 no permission to add users	admin	it	nessun permesso di aggiunta utenti
-no permission to create groups	admin	ir	nessun permesso di creazione gruppi
+no permission to create groups	admin	it	nessun permesso di creazione gruppi
 note: ssl available only if php is compiled with curl support	admin	it	Nota: SSL dispobile solo con il PHP compilato con il supporto curl
 outbound	admin	it	in uscita
 passthrough	admin	it	passthrough
@@ -249,7 +249,7 @@ permissions	admin	it	Permessi
 permissions this group has	admin	it	Permessi che questo gruppo ha
 phpinfo	admin	it	phpinfo
 please enter a name	admin	it	Per favore inserisci un nome
-please enter a name for that server !	admin	it	Per favore inserisciun nome per quel server
+please enter a name for that server !	admin	it	Per favore inserisci un nome per quel server
 please run setup to become current	admin	it	Per favore lancia il setup
 please select	admin	it	Per favore selezionare
 preferences	admin	it	Preferenze
@@ -264,7 +264,7 @@ return to view account	admin	it	Ritorna alla visualizzazone dell'account
 run asynchronous services	admin	it	Esegui lo Schedulatore
 save the category	admin	it	salva la categoria
 save the category and return back to the list	admin	it	salva la categoria e ritorna alla lista
-search accounts	admin	it	Cerca accounts
+search accounts	admin	it	Cerca account
 search categories	admin	it	Cerca categorie
 search groups	admin	it	Cerca gruppi
 search peer servers	admin	it	Cerca peer servers
@@ -277,7 +277,7 @@ select where you want to store/retrieve filesystem information	admin	it	selezion
 select where you want to store/retrieve user accounts	admin	it	seleziona il modo per memorizzare/recuperare gli account utente
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	it	Seleziona in quale punto della Barra di Navigazione, dal più basso (sinistra) al più alto (destra), deve apparire questa applicazione
 selectbox	admin	it	Elenco a discesa
-server %1 has been updated	admin	it	il Server %1 è stato aggiornato
+server %1 has been updated	admin	it	Il Server %1 è stato aggiornato
 server list	admin	it	Elenco Server
 server password	admin	it	Password del Server
 server type(mode)	admin	it	Tipo di Server(modo)
@@ -300,12 +300,12 @@ sorry, the follow users are still a member of the group %1	admin	it	Spiacente, i
 sort the entries	admin	it	ordina le voci
 ssl	admin	it	ssl
 standard	admin	it	standard
-start testjob!	admin	it	Inizia TestJob!
+start testjob!	admin	it	Inizia il Lavoro di Test
 submit changes	admin	it	Invia Modifiche
 submit the search string	admin	it	Invia la stringa di ricerca
 template selection	admin	it	Selezione Aspetto
 text entry	admin	it	Inserimento di Testo
-that application name already exists.	admin	it	Quel nome di applicazoine esiste già
+that application name already exists.	admin	it	Quel nome di applicazione esiste già
 that application order must be a number.	admin	it	Quel numero d'ordine deve essere un numero
 that loginid has already been taken	admin	it	Quel nome utente è già stato scelto
 that name has been used already	admin	it	Quel nome è già stato utilizzato
@@ -317,8 +317,8 @@ the login and password can not be the same	admin	it	La login e la pasword non po
 the loginid can not be more then 8 characters	admin	it	La loginid non può essere più lunga di 8 caratteri
 the testjob sends you a mail everytime it is called.	admin	it	Il TestJob invia una e-mail ogni volta che viene richiamato.
 the two passwords are not the same	admin	it	Le due password non coincidono
-the users bellow are still members of group %1	admin	it	l'utente sottostante the users sottostante fa ancora parte del gruppo %1
-they must be removed before you can continue	admin	it	Devono essere rimossi prima di proseguire
+the users bellow are still members of group %1	admin	it	L'utente sottostante fa ancora parte del gruppo %1
+they must be removed before you can continue	admin	it	Devono essere rimossi prima di poter proseguire
 this application is current	admin	it	Questa è l'applicazione corrente
 this application requires an upgrade	admin	it	Questa applicazione ha bisogno di un aggiornamento
 this category is currently being used by applications as a parent category	admin	it	Questa categoria è attualmente utilizzata dalle applicazioni come categoria padre
@@ -356,7 +356,7 @@ you have entered an invalid expiration date	admin	it	Hai inserito una data di sc
 you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
 you must enter a group name.	admin	it	Devi inserire un nome di gruppo
 you must enter a lastname	admin	it	Devi inserire un cognome
-you must enter a loginid	admin	it	Devi inserire un titolo un id di login
+you must enter a loginid	admin	it	Devi inserire un  ID di login
 you must enter an application name and title.	admin	it	Devi inserire un nome e un titolo per l'applicazione.
 you must enter an application name.	admin	it	Devi inserire un nome per l'applicazione
 you must enter an application title.	admin	it	Devi inserire un titolo per l'applicazione
