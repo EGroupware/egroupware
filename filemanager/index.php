@@ -1,4 +1,4 @@
-<?
+<?php
 
 $phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
 				"noheader" => False,
@@ -133,14 +133,16 @@ if ((preg_match ("+^$fakebase\/(.*)(\/|$)+U", $path, $matches)) && $matches[1] !
 		html_page_close ();
 	}
 
-/* WIP - how are we actually supposed to use the API to determine if a group has access to an app?
-	$group_acl = CreateObject('phpgwapi.acl', $phpgw->accounts->name2id ($matches[1]));
-	if ($group_acl->get_specific_rights () == False)
+	$group_applications = CreateObject('phpgwapi.applications', $phpgw->accounts->name2id ($matches[1]));
+
+	$app_array = $group_applications->read_account_specific ();
+	if (!$app_array[$appname]["enabled"])
 	{
 		echo $phpgw->common->error_list (array ("The group $matches[1] does not have access to $appname"));
+		html_break (2);
+		html_link ("$appname/index.php?path=$homedir", "Go to your home directory");
 		html_page_close ();
 	}
-*/
 }
 else
 {

@@ -1,4 +1,4 @@
-<?
+<?php
 
 ### Start Configuration Options ###
 ### These are automatically set in phpGW - do not edit ###

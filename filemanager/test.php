@@ -1,4 +1,4 @@
-<?
+<?php
 
 $phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
                                 "noheader" => False,

@@ -1,4 +1,4 @@
-<?
+<?php
 
 function html_form_begin ($action, $method = "post", $enctype = NULL, $string = HTML_FORM_BEGIN_STRING, $return = 0)
 {
@@ -199,6 +199,9 @@ function html_text_summary ($text = NULL, $size = NULL, $return = 0, $lang = 0)
 	$rstring .= html_nbsp (3, $return);
 	if ($size != NULL && $size >= 0)
 		$rstring .= borkb ($size, 1, $return);
+
+	$rstring = html_encode ($rstring, 1);
+
 	if ($return)
 		return ($rstring);
 }
