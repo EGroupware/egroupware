@@ -15,13 +15,12 @@
 	{
 		global $phpgw_setup, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-		$oProc->query("select distinct($field) from $table");
-		if ($oProc->num_rows())
+		$phpgw_setup->oProc->query("select distinct($field) from $table");
+		if ($phpgw_setup->oProc->num_rows())
 		{
-			while ($oProc->next_record())
+			while ($phpgw_setup->oProc->next_record())
 			{
-				$owner[count($owner)] = $oProc->f($field);
+				$owner[count($owner)] = $phpgw_setup->oProc->f($field);
 			}
 			if($phpgw_setup->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre4'))
 			{
@@ -33,12 +32,12 @@
 			}
 			for($i=0;$i<count($owner);$i++)
 			{
-				$oProc->query("SELECT account_id FROM $acctstbl WHERE account_lid='".$owner[$i]."'");
-				$oProc->next_record();
-				$oProc->query("UPDATE $table SET $field=".$oProc->f("account_id")." WHERE $field='".$owner[$i]."'");
+				$phpgw_setup->oProc->query("SELECT account_id FROM $acctstbl WHERE account_lid='".$owner[$i]."'");
+				$phpgw_setup->oProc->next_record();
+				$phpgw_setup->oProc->query("UPDATE $table SET $field=".$phpgw_setup->oProc->f("account_id")." WHERE $field='".$owner[$i]."'");
 			}
 		}
-		$oProc->AlterColumn($table, $field, array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0));
+		$phpgw_setup->oProc->AlterColumn($table, $field, array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0));
 	}
 
 
@@ -57,10 +56,8 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-
-		$oProc->RenameColumn('webcal_entry', 'cal_create_by', 'cal_owner');
-		$oProc->AlterColumn('webcal_entry', 'cal_owner', array('type' => 'int', 'precision' => 4, 'nullable' => false));
+		$phpgw_setup->oProc->RenameColumn('webcal_entry', 'cal_create_by', 'cal_owner');
+		$phpgw_setup->oProc->AlterColumn('webcal_entry', 'cal_owner', array('type' => 'int', 'precision' => 4, 'nullable' => false));
 		$setup_info['calendar']['currentver'] = '0.9.4pre3';
 		return True;
 	}
@@ -70,10 +67,18 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-		$db2 = $oProc;
+		$db2 = $phpgw_setup->db;
 
-		$oProc->CreateTable('calendar_entry', array(
+		if($phpgw_setup->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8'))
+		{
+			$appstable = 'applications';
+		}
+		else
+		{
+			$appstable = 'phpgw_applications';
+		}
+
+		$phpgw_setup->oProc->CreateTable('calendar_entry', array(
 			'fd' => array(
 				'cal_id' => array('type' => 'auto', 'nullable' => false),
 				'cal_owner' => array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => '0'),
@@ -93,23 +98,23 @@
 			'uc' => array()
 		));
 	
-		$oProc->query('SELECT count(*) FROM webcal_entry',__LINE__,__FILE__);
-		$oProc->next_record();
-		if($oProc->f(0))
+		$phpgw_setup->oProc->query('SELECT count(*) FROM webcal_entry',__LINE__,__FILE__);
+		$phpgw_setup->oProc->next_record();
+		if($phpgw_setup->oProc->f(0))
 		{
-			$oProc->query('SELECT cal_id,cal_owner,cal_duration,cal_priority,cal_type,cal_access,cal_name,cal_description,cal_id,cal_date,cal_time,cal_mod_date,cal_mod_time FROM webcal_entry ORDER BY cal_id',__LINE__,__FILE__);
-			while($oProc->next_record())
+			$phpgw_setup->oProc->query('SELECT cal_id,cal_owner,cal_duration,cal_priority,cal_type,cal_access,cal_name,cal_description,cal_id,cal_date,cal_time,cal_mod_date,cal_mod_time FROM webcal_entry ORDER BY cal_id',__LINE__,__FILE__);
+			while($phpgw_setup->oProc->next_record())
 			{
-				$cal_id = $oProc->f('cal_id');
-				$cal_owner = $oProc->f('cal_owner');
-				$cal_duration = $oProc->f('cal_duration');
-				$cal_priority = $oProc->f('cal_priority');
-				$cal_type = $oProc->f('cal_type');
-				$cal_access = $oProc->f('cal_access');
-				$cal_name = $oProc->f('cal_name');
-				$cal_description = $oProc->f('cal_description');
-				$datetime = mktime(intval(strrev(substr(strrev($oProc->f('cal_time')),4))),intval(strrev(substr(strrev($oProc->f('cal_time')),2,2))),intval(strrev(substr(strrev($oProc->f('cal_time')),0,2))),intval(substr($oProc->f('cal_date'),4,2)),intval(substr($oProc->f('cal_date'),6,2)),intval(substr($oProc->f('cal_date'),0,4)));
-				$moddatetime = mktime(intval(strrev(substr(strrev($oProc->f('cal_mod_time')),4))),intval(strrev(substr(strrev($oProc->f('cal_mod_time')),2,2))),intval(strrev(substr(strrev($oProc->f('cal_mod_time')),0,2))),intval(substr($oProc->f('cal_mod_date'),4,2)),intval(substr($oProc->f('cal_mod_date'),6,2)),intval(substr($oProc->f('cal_mod_date'),0,4)));
+				$cal_id = $phpgw_setup->oProc->f('cal_id');
+				$cal_owner = $phpgw_setup->oProc->f('cal_owner');
+				$cal_duration = $phpgw_setup->oProc->f('cal_duration');
+				$cal_priority = $phpgw_setup->oProc->f('cal_priority');
+				$cal_type = $phpgw_setup->oProc->f('cal_type');
+				$cal_access = $phpgw_setup->oProc->f('cal_access');
+				$cal_name = $phpgw_setup->oProc->f('cal_name');
+				$cal_description = $phpgw_setup->oProc->f('cal_description');
+				$datetime = mktime(intval(strrev(substr(strrev($phpgw_setup->oProc->f('cal_time')),4))),intval(strrev(substr(strrev($phpgw_setup->oProc->f('cal_time')),2,2))),intval(strrev(substr(strrev($phpgw_setup->oProc->f('cal_time')),0,2))),intval(substr($phpgw_setup->oProc->f('cal_date'),4,2)),intval(substr($phpgw_setup->oProc->f('cal_date'),6,2)),intval(substr($phpgw_setup->oProc->f('cal_date'),0,4)));
+				$moddatetime = mktime(intval(strrev(substr(strrev($phpgw_setup->oProc->f('cal_mod_time')),4))),intval(strrev(substr(strrev($phpgw_setup->oProc->f('cal_mod_time')),2,2))),intval(strrev(substr(strrev($phpgw_setup->oProc->f('cal_mod_time')),0,2))),intval(substr($phpgw_setup->oProc->f('cal_mod_date'),4,2)),intval(substr($phpgw_setup->oProc->f('cal_mod_date'),6,2)),intval(substr($phpgw_setup->oProc->f('cal_mod_date'),0,4)));
 				$db2->query('SELECT groups FROM webcal_entry_groups WHERE cal_id='.$cal_id,__LINE__,__FILE__);
 				$db2->next_record();
 				$cal_group = $db2->f('groups');
@@ -118,10 +123,10 @@
 			}
 		}
 	
-		$oProc->DropTable('webcal_entry_groups');
-		$oProc->DropTable('webcal_entry');
+		$phpgw_setup->oProc->DropTable('webcal_entry_groups');
+		$phpgw_setup->oProc->DropTable('webcal_entry');
 	
-		$oProc->CreateTable('calendar_entry_user', array(
+		$phpgw_setup->oProc->CreateTable('calendar_entry_user', array(
 			'fd' => array(
 				'cal_id' => array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => '0'),
 				'cal_login' => array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => '0'),
@@ -133,23 +138,23 @@
 			'uc' => array()
 		));
 	
-		$oProc->query('SELECT count(*) FROM webcal_entry_user',__LINE__,__FILE__);
-		$oProc->next_record();
-		if($oProc->f(0))
+		$phpgw_setup->oProc->query('SELECT count(*) FROM webcal_entry_user',__LINE__,__FILE__);
+		$phpgw_setup->oProc->next_record();
+		if($phpgw_setup->oProc->f(0))
 		{
-			$oProc->query('SELECT cal_id,cal_login,cal_status FROM webcal_entry_user ORDER BY cal_id',__LINE__,__FILE__);
-			while($oProc->next_record())
+			$phpgw_setup->oProc->query('SELECT cal_id,cal_login,cal_status FROM webcal_entry_user ORDER BY cal_id',__LINE__,__FILE__);
+			while($phpgw_setup->oProc->next_record())
 			{
-				$cal_id = $oProc->f('cal_id');
-				$cal_login = $oProc->f('cal_login');
-				$cal_status = $oProc->f('cal_status');
+				$cal_id = $phpgw_setup->oProc->f('cal_id');
+				$cal_login = $phpgw_setup->oProc->f('cal_login');
+				$cal_status = $phpgw_setup->oProc->f('cal_status');
 				$db2->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) VALUES('.$cal_id.','.$cal_login.",'".$cal_status."')",__LINE__,__FILE__);
 			}
 		}
 	
-		$oProc->DropTable('webcal_entry_user');
+		$phpgw_setup->oProc->DropTable('webcal_entry_user');
 	
-		$oProc->CreateTable('calendar_entry_repeats', array(
+		$phpgw_setup->oProc->CreateTable('calendar_entry_repeats', array(
 			'fd' => array(
 				'cal_id' => array('type' => 'int', 'precision' => 4, 'default' => '0', 'nullable' => false),
 				'cal_type' => array('type' => 'varchar', 'precision' => 20, 'default' => 'daily', 'nullable' => false),
@@ -164,18 +169,18 @@
 			'uc' => array()
 		));
 	
-		$oProc->query('SELECT count(*) FROM webcal_entry_repeats',__LINE__,__FILE__);
-		$oProc->next_record();
-		if($oProc->f(0))
+		$phpgw_setup->oProc->query('SELECT count(*) FROM webcal_entry_repeats',__LINE__,__FILE__);
+		$phpgw_setup->oProc->next_record();
+		if($phpgw_setup->oProc->f(0))
 		{
-			$oProc->query('SELECT cal_id,cal_type,cal_end,cal_frequency,cal_days FROM webcal_entry_repeats ORDER BY cal_id',__LINE__,__FILE__);
-			while($oProc->next_record())
+			$phpgw_setup->oProc->query('SELECT cal_id,cal_type,cal_end,cal_frequency,cal_days FROM webcal_entry_repeats ORDER BY cal_id',__LINE__,__FILE__);
+			while($phpgw_setup->oProc->next_record())
 			{
-				$cal_id = $oProc->f('cal_id');
-				$cal_type = $oProc->f('cal_type');
-				if(isset($oProc->Record['cal_end']))
+				$cal_id = $phpgw_setup->oProc->f('cal_id');
+				$cal_type = $phpgw_setup->oProc->f('cal_type');
+				if(isset($phpgw_setup->oProc->Record['cal_end']))
 				{
-					$enddate = mktime(0,0,0,intval(substr($oProc->f('cal_end'),4,2)),intval(substr($oProc->f('cal_end'),6,2)),intval(substr($oProc->f('cal_end'),0,4)));
+					$enddate = mktime(0,0,0,intval(substr($phpgw_setup->oProc->f('cal_end'),4,2)),intval(substr($phpgw_setup->oProc->f('cal_end'),6,2)),intval(substr($phpgw_setup->oProc->f('cal_end'),0,4)));
 					$useend = 1;
 				}
 				else
@@ -183,14 +188,14 @@
 					$enddate = 0;
 					$useend = 0;
 				}
-				$cal_frequency = $oProc->f('cal_frequency');
-				$cal_days = $oProc->f('cal_days');
+				$cal_frequency = $phpgw_setup->oProc->f('cal_frequency');
+				$cal_days = $phpgw_setup->oProc->f('cal_days');
 				$db2->query('INSERT INTO calendar_entry_repeats(cal_id,cal_type,cal_use_end,cal_end,cal_frequency,cal_days) VALUES('.$cal_id.",'".$cal_type."',".$useend.",".$enddate.",".$cal_frequency.",'".$cal_days."')",__LINE__,__FILE__);
 			}
 		}
 	
-		$oProc->DropTable('webcal_entry_repeats');
-		$oProc->query("UPDATE applications SET app_tables='calendar_entry,calendar_entry_user,calendar_entry_repeats' WHERE app_name='calendar'",__LINE__,__FILE__);
+		$phpgw_setup->oProc->DropTable('webcal_entry_repeats');
+		$phpgw_setup->oProc->query("UPDATE $appstable SET app_tables='calendar_entry,calendar_entry_user,calendar_entry_repeats' WHERE app_name='calendar'",__LINE__,__FILE__);
 	
 		$setup_info['calendar']['currentver'] = '0.9.7pre2';
 		return True;
@@ -199,24 +204,23 @@
 	$test[] = "0.9.7pre2";
 	function calendar_upgrade0_9_7pre2()
 	{
-		global $oldversion, $setup_info, $phpgw_setup, $oProc, $oDelta;
+		global $oldversion, $setup_info, $phpgw_setup, $oDelta;
 
-		$oProc = $phpgw_setup->oProc;
-		$db2 = $oProc;
+		$db2 = $phpgw_setup->db;
 	
-		$oProc->RenameColumn('calendar_entry', 'cal_duration', 'cal_edatetime');
-		$oProc->query('SELECT cal_id,cal_datetime,cal_owner,cal_edatetime,cal_mdatetime FROM calendar_entry ORDER BY cal_id',__LINE__,__FILE__);
-		if($oProc->num_rows())
+		$phpgw_setup->oProc->RenameColumn('calendar_entry', 'cal_duration', 'cal_edatetime');
+		$phpgw_setup->oProc->query('SELECT cal_id,cal_datetime,cal_owner,cal_edatetime,cal_mdatetime FROM calendar_entry ORDER BY cal_id',__LINE__,__FILE__);
+		if($phpgw_setup->oProc->num_rows())
 		{
-			while($oProc->next_record())
+			while($phpgw_setup->oProc->next_record())
 			{
 				$db2->query("SELECT preference_value FROM preferences WHERE preference_name='tz_offset' AND preference_appname='common' AND preference_owner=".$phpgw_setup->db->f('cal_owner'),__LINE__,__FILE__);
 				$db2->next_record();
 				$tz = $db2->f('preference_value');
-				$cal_id = $oProc->f('cal_id');
-				$datetime = $oProc->f("cal_datetime") - ((60 * 60) * $tz);
-				$mdatetime = $oProc->f("cal_mdatetime") - ((60 * 60) * $tz);
-				$edatetime = $datetime + (60 * $oProc->f("cal_edatetime"));
+				$cal_id = $phpgw_setup->oProc->f('cal_id');
+				$datetime = $phpgw_setup->oProc->f("cal_datetime") - ((60 * 60) * $tz);
+				$mdatetime = $phpgw_setup->oProc->f("cal_mdatetime") - ((60 * 60) * $tz);
+				$edatetime = $datetime + (60 * $phpgw_setup->oProc->f("cal_edatetime"));
 				$db2->query("UPDATE calendar_entry SET cal_datetime=".$datetime.", cal_edatetime=".$edatetime.", cal_mdatetime=".$mdatetime." WHERE cal_id=".$cal_id,__LINE__,__FILE__);
 			}
 		}
@@ -238,8 +242,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-		$db2 = $oProc;
+		$db2 = $phpgw_setup->db;
 
 		if(extension_loaded('mcal') == False)
 		{
@@ -260,7 +263,7 @@
 		}
 
 // calendar_entry => phpgw_cal
-		$oProc->CreateTable(
+		$phpgw_setup->oProc->CreateTable(
 			'phpgw_cal', array(
 				'fd' => array(
 					'cal_id' => array('type' => 'auto', 'nullable' => False),
@@ -283,12 +286,12 @@
 			)
 		);
 
-		$oProc->query('SELECT * FROM calendar_entry',__LINE__,__FILE__);
-		while($oProc->next_record())
+		$phpgw_setup->oProc->query('SELECT * FROM calendar_entry',__LINE__,__FILE__);
+		while($phpgw_setup->oProc->next_record())
 		{
-			$id = $oProc->f('cal_id');
-			$owner = $oProc->f('cal_owner');
-			$access = $oProc->f('cal_access');
+			$id = $phpgw_setup->oProc->f('cal_id');
+			$owner = $phpgw_setup->oProc->f('cal_owner');
+			$access = $phpgw_setup->oProc->f('cal_access');
 			switch($access)
 			{
 				case 'private':
@@ -301,22 +304,22 @@
 					$is_public = 2;
 					break;
 			}
-			$groups = $oProc->f('cal_group');
-			$datetime = $oProc->f('cal_datetime');
-			$mdatetime = $oProc->f('cal_mdatetime');
-			$edatetime = $oProc->f('cal_edatetime');
-			$priority = $oProc->f('cal_priority');
-			$type = $oProc->f('cal_type');
-			$title = $oProc->f('cal_name');
-			$description = $oProc->f('cal_description');
+			$groups = $phpgw_setup->oProc->f('cal_group');
+			$datetime = $phpgw_setup->oProc->f('cal_datetime');
+			$mdatetime = $phpgw_setup->oProc->f('cal_mdatetime');
+			$edatetime = $phpgw_setup->oProc->f('cal_edatetime');
+			$priority = $phpgw_setup->oProc->f('cal_priority');
+			$type = $phpgw_setup->oProc->f('cal_type');
+			$title = $phpgw_setup->oProc->f('cal_name');
+			$description = $phpgw_setup->oProc->f('cal_description');
 
 			$db2->query("INSERT INTO phpgw_cal(cal_id,owner,groups,datetime,mdatetime,edatetime,priority,cal_type,is_public,title,description) "
 				. "VALUES($id,$owner,'$groups',$datetime,$mdatetime,$edatetime,$priority,'$type',$is_public,'$title','$description')",__LINE__,__FILE__);
 		}
-		$oProc->DropTable('calendar_entry');
+		$phpgw_setup->oProc->DropTable('calendar_entry');
 
 // calendar_entry_repeats => phpgw_cal_repeats
-		$oProc->CreateTable('phpgw_cal_repeats', array(
+		$phpgw_setup->oProc->CreateTable('phpgw_cal_repeats', array(
 			'fd' => array(
 				'cal_id' => array('type' => 'int', 'precision' => 8,'nullable' => False),
 				'recur_type' => array('type' => 'int', 'precision' => 8,'nullable' => False),
@@ -330,11 +333,11 @@
 			'ix' => array(),
 			'uc' => array()
 		));
-		$oProc->query('SELECT * FROM calendar_entry_repeats',__LINE__,__FILE__);
-		while($oProc->next_record())
+		$phpgw_setup->oProc->query('SELECT * FROM calendar_entry_repeats',__LINE__,__FILE__);
+		while($phpgw_setup->oProc->next_record())
 		{
-			$id = $oProc->f('cal_id');
-			$recur_type = $oProc->f('cal_type');
+			$id = $phpgw_setup->oProc->f('cal_id');
+			$recur_type = $phpgw_setup->oProc->f('cal_type');
 			switch($recur_type)
 			{
 				case 'daily':
@@ -353,10 +356,10 @@
 					$recur_type_num = RECUR_YEARLY;
 					break;
 			}
-			$recur_end_use = $oProc->f('cal_use_end');
-			$recur_end = $oProc->f('cal_end');
-			$recur_interval = $oProc->f('cal_frequency');
-			$days = strtoupper($oProc->f('cal_days'));
+			$recur_end_use = $phpgw_setup->oProc->f('cal_use_end');
+			$recur_end = $phpgw_setup->oProc->f('cal_end');
+			$recur_interval = $phpgw_setup->oProc->f('cal_frequency');
+			$days = strtoupper($phpgw_setup->oProc->f('cal_days'));
 			$recur_data = 0;
 			$recur_data += (substr($days,0,1)=='Y'?M_SUNDAY:0);
 			$recur_data += (substr($days,1,1)=='Y'?M_MONDAY:0);
@@ -368,10 +371,10 @@
 			$db2->query("INSERT INTO phpgw_cal_repeats(cal_id,recur_type,recur_use_end,recur_enddate,recur_interval,recur_data) "
 				. "VALUES($id,$recur_type_num,$recur_use_end,$recur_end,$recur_interval,$recur_data)",__LINE__,__FILE__);
 		}
-		$oProc->DropTable('calendar_entry_repeats');
+		$phpgw_setup->oProc->DropTable('calendar_entry_repeats');
 
 // calendar_entry_user => phpgw_cal_user
-		$oProc->RenameTable('calendar_entry_user','phpgw_cal_user');
+		$phpgw_setup->oProc->RenameTable('calendar_entry_user','phpgw_cal_user');
 
 		$setup_info['calendar']['currentver'] = '0.9.11.002';
 		return True;
@@ -390,8 +393,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-		$oProc->CreateTable(
+		$phpgw_setup->oProc->CreateTable(
 			'phpgw_cal_holidays', array(
 				'fd' => array(
 					'locale' => array('type' => 'char', 'precision' => 2,'nullable' => False),
@@ -430,9 +432,8 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-		$oProc->DropTable('phpgw_cal_holidays');
-		$oProc->CreateTable('phpgw_cal_holidays', array(
+		$phpgw_setup->oProc->DropTable('phpgw_cal_holidays');
+		$phpgw_setup->oProc->CreateTable('phpgw_cal_holidays', array(
 			'fd' => array(
 				'hol_id' => array('type' => 'auto','nullable' => False),
 				'locale' => array('type' => 'char', 'precision' => 2,'nullable' => False),
@@ -454,12 +455,11 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-		$oProc->query('DELETE FROM phpgw_cal_holidays');
-		$oProc->AddColumn('phpgw_cal_holidays','mday',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
-		$oProc->AddColumn('phpgw_cal_holidays','month_num',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
-		$oProc->AddColumn('phpgw_cal_holidays','occurence',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
-		$oProc->AddColumn('phpgw_cal_holidays','dow',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
+		$phpgw_setup->oProc->query('DELETE FROM phpgw_cal_holidays');
+		$phpgw_setup->oProc->AddColumn('phpgw_cal_holidays','mday',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
+		$phpgw_setup->oProc->AddColumn('phpgw_cal_holidays','month_num',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
+		$phpgw_setup->oProc->AddColumn('phpgw_cal_holidays','occurence',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
+		$phpgw_setup->oProc->AddColumn('phpgw_cal_holidays','dow',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
 
 		$setup_info['calendar']['currentver'] = '0.9.11.008';
 		return True;
@@ -478,9 +478,8 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$oProc = $phpgw_setup->oProc;
-		$oProc->query('DELETE FROM phpgw_cal_holidays');
-		$oProc->AddColumn('phpgw_cal_holidays','observance_rule',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
+		$phpgw_setup->oProc->query('DELETE FROM phpgw_cal_holidays');
+		$phpgw_setup->oProc->AddColumn('phpgw_cal_holidays','observance_rule',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
 
 		$setup_info['calendar']['currentver'] = '0.9.11.010';
 		return True;
