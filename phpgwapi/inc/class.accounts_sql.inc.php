@@ -76,7 +76,6 @@
       $this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_name."'",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         $this->db->next_record();
-
         return $this->db->f("account_id");
       }else{
         return False;

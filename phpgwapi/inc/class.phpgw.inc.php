@@ -103,12 +103,14 @@
       $this->accounts = CreateObject("phpgwapi.accounts");
       $this->session = CreateObject("phpgwapi.sessions");
       $this->preferences = CreateObject("phpgwapi.preferences");
+      $this->applications = CreateObject("phpgwapi.applications");
       
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         if ($login != ""){
           $login_array = explode("@",$login);
-          $this->accounts->accounts($login_array[0]);
-          $this->preferences->preferences($login_array[0]);
+          $login_id = $phpgw->accounts->name2id($login_array[0]);
+          $this->accounts->accounts($login_id);
+          $this->preferences->preferences($login_id);
         }
       }elseif (! $this->session->verify()) {
         $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);

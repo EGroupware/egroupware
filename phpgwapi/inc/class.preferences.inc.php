@@ -39,10 +39,9 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id == ""){ $account_id = $phpgw_info["user"]["account_id"]; }
-      elseif (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
+//      if ($account_id == ""){ $account_id = $phpgw_info["user"]["account_id"]; }
+//      elseif (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
       $this->account_id = $account_id;
-//echo "prefs loaded for: ".$this->account_id."<br>";
     }
 
     /**************************************************************************\

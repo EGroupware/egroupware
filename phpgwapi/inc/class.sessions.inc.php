@@ -61,44 +61,41 @@
        global $phpgw, $phpgw_info, $sessionid, $kp3;
        $db  = $phpgw->db;
        $db2 = $phpgw->db;
+       $this->sessionid .= $sessionid;
+       $this->kp3 .= $kp3;
 
        // PHP 3 complains that these are not defined when the already are defined.
        $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
-       $phpgw->common->key .= $sessionid;
-       $phpgw->common->key .= $kp3;
+       $phpgw->common->key .= $this->sessionid;
+       $phpgw->common->key .= $this->kp3;
        $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
 
        $cryptovars[0] = $phpgw->common->key;      
        $cryptovars[1] = $phpgw->common->iv;      
        $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
 
-       $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
+       $db->query("select * from phpgw_sessions where session_id='$this->sessionid'",__LINE__,__FILE__);
        $db->next_record();
        
        if ($db->f("session_info") == "" || $db->f("session_info") == "NULL") {
-          $phpgw_info["user"]["account_lid"] = $db->f("session_lid");
-          $phpgw_info["user"]["sessionid"]   = $sessionid;
+          $this->account_lid = $db->f("session_lid");
+          $phpgw_info["user"]["sessionid"]   = $this->sessionid;
           $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
 
           $t = explode("@",$db->f("session_lid"));
-          $phpgw_info["user"]["account_lid"]      = $t[0];
-
-//          $this->read_repositories();
-//          $phpgw->accounts->account_id = $phpgw->accounts->name2id($phpgw_info["user"]["account_lid"]);
-//          $phpgw_info["user"] = $phpgw->accounts->read_repository();
+          $this->account_lid = $t[0];
 
           // Now we need to re-read eveything
-          $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
+          $db->query("select * from phpgw_sessions where session_id='$this->sessionid'",__LINE__,__FILE__);
           $db->next_record();    
        }
 
-       $phpgw_info["user"]["kp3"] = $kp3;
-
+       $phpgw_info["user"]["kp3"] = $this->kp3;
        $phpgw_info_flags    = $phpgw_info["flags"];
        $phpgw_info          = $phpgw->crypto->decrypt($db->f("session_info"));
        $phpgw_info["flags"] = $phpgw_info_flags;
        $userid_array = explode("@",$db->f("session_lid"));
-       $phpgw_info["user"]["account_lid"] = $userid_array[0];
+       $this->account_lid = $userid_array[0];
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
 //          return False;
@@ -108,8 +105,15 @@
        }
 
        $this->update_dla();
+echo "account_lid: ".$this->account_lid."<br>";
+       $this->account_id = $phpgw->accounts->name2id($this->account_lid);
+echo "account_id: ".$this->account_id."<br>";
+       $phpgw->acl->acl($this->account_id);
+       $phpgw->accounts->accounts($this->account_id);
+       $phpgw->preferences->preferences($this->account_id);
+       $phpgw->applications->applications($this->account_id);
 
-       if (! $phpgw_info["user"]["account_lid"] ) {
+       if (! $this->account_lid ) {
           return False;
        } else {
           // PHP 3 complains that these are not defined when the already are defined.
@@ -130,17 +134,16 @@
        }
     }
 
-    function read_repositories($account_id)
+    function read_repositories()
     {
       global $phpgw_info, $phpgw;
-      if (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
-      $this->account_id = $account_id;
-
+//      if (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
+//      $this->account_id = $account_id;
+echo "step 1<br>";
+      $phpgw->acl->acl($this->account_id);
       $phpgw->accounts->accounts($this->account_id);
       $phpgw->preferences->preferences($this->account_id);
       $phpgw->applications->applications($this->account_id);
-      $phpgw->acl->acl($this->account_id);
-
       $phpgw_info["user"] = $phpgw->accounts->read_repository();
       $phpgw_info["user"]["acl"] = $phpgw->acl->read_repository();
       $phpgw_info["user"]["preferences"] = $phpgw->preferences->read_repository();
@@ -169,10 +172,10 @@
     {
       global $phpgw_info, $phpgw;
       $this->login = $login;
-      $this->passwd = $phpgw->common->encrypt($passwd);
       $this->clean_sessions();
       $login_array = explode("@", $login);
       $this->account_lid = $login_array[0];
+
       if ($login_array[1]!=""){
         $this->account_domain = $login_array[1];
       }else{
@@ -219,6 +222,7 @@
          unset ($phpgw_info["server"]["default_domain"]); // we kill this for security reasons
       }
 
+      $this->passwd = $phpgw->common->encrypt($passwd);
       $this->read_repositories($this->account_id);
 
       if ($PHP_VERSION < "4.0.0") {
@@ -234,7 +238,7 @@
                       . "$login','" . $this->getuser_ip() . "','" . time()
                       . "','') ",__LINE__,__FILE__);
 
-      $phpgw->auth->update_lastlogin($login,$this->getuser_ip());
+      //$phpgw->auth->update_lastlogin($login,$this->getuser_ip());
 
       return $this->sessionid;
     }
