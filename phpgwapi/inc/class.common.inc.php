@@ -993,7 +993,83 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@discussion makes it easier and more consistant to generate message boxes
 		*/
 
-		function msgbox($text='',$type=True,$output='return')
+		function msgbox($text='',$type=True)
+		{
+			if ($text=='' && @isset($GLOBALS['phpgw_info']['flags']['msgbox_data']))
+			{
+				$text = $GLOBALS['phpgw_info']['flags']['msgbox_data'];
+				unset($GLOBALS['phpgw_info']['flags']['msgbox_data']);
+			}
+			elseif($text=='')
+			{
+				return;
+			}
+
+		//	$GLOBALS['phpgw']->xslttpl->add_file(array('msgbox'));
+			$GLOBALS['phpgw']->xslttpl->add_file(array($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'msgbox'));
+
+			$prev_helper = $GLOBALS['phpgw']->translation->translator_helper;
+			$GLOBALS['phpgw']->translation->translator_helper = '';
+
+			if (is_array($text))
+			{
+				reset($text);
+
+			//_debug_array($text);
+				while (list($key,$value) = each($text))
+				{
+					if ($value == True)
+					{
+						$img	= $this->image('phpgwapi','msgbox_good');
+						$alt	= lang('OK');
+					}
+					else
+					{
+						$img	= $this->image('phpgwapi','msgbox_bad');
+						$alt	= lang('ERROR');
+					}
+
+					$data['msgbox_data'][] = array
+					(
+						'msgbox_text'				=> lang($key),
+						'msgbox_img'				=> $img,
+						'msgbox_img_alt'			=> $alt,
+						'lang_msgbox_statustext'	=> $alt
+					);
+				}
+
+			//_debug_array($data);
+
+			}
+			else
+			{
+				if ($type == True)
+				{
+					$img	= $this->image('phpgwapi','msgbox_good');
+					$alt	= lang('OK');
+				}
+				else
+				{
+					$img	= $this->image('phpgwapi','msgbox_bad');
+					$alt	= lang('ERROR');
+				}
+
+				$data['msgbox_data'] = array
+				(
+					'msgbox_text'				=> lang($text),
+					'msgbox_img'				=> $img,
+					'msgbox_img_alt'			=> $alt,
+					'lang_msgbox_statustext'	=> $alt
+				);
+			}
+
+			$GLOBALS['phpgw']->translation->translator_helper = $prev_helper;
+
+			$GLOBALS['phpgw']->xslttpl->set_var('msgbox',$data);
+			return $GLOBALS['phpgw']->xslttpl->parse();
+		}
+
+		/*function msgbox($text='',$type=True,$output='return')
 		{
 			if($output != 'return')
 			{
@@ -1013,6 +1089,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				return;
 			}
+
 			$GLOBALS['phpgw']->template->set_block('msgbox','msgbox_start');
 			$GLOBALS['phpgw']->template->set_block('msgbox','msgbox_row');
 			$GLOBALS['phpgw']->template->set_block('msgbox','msgbox_end');
@@ -1076,7 +1153,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				return $GLOBALS['phpgw']->template->varvals[$output];
 			}
-		}
+		}*/
 
 		/*!
 		@function navbar
@@ -1279,9 +1356,9 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			if(!defined('PHPGW_HEADER_RAN'))
 			{
 				define('PHPGW_HEADER_RAN',True);
-				$this->msgbox('',False,'phpgw_msgbox');
 				$this->get_css_url();
 				$this->load_phpgw_body_tags();
+				$GLOBALS['phpgw']->template->set_var('phpgw_msgbox',$this->msgbox());
 				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
 				$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
 			}
