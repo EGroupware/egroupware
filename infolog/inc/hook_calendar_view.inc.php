@@ -16,7 +16,12 @@
 
 	$GLOBALS['phpgw']->translation->add_app('infolog');
 
-	$infolog = CreateObject('infolog.uiinfolog');
-	$infolog->get_list(True,'event',$GLOBALS['cal_id']);
+	$GLOBALS['phpgw_info']['etemplate']['hooked'] = True;
 
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app; 
+	$infolog = CreateObject('infolog.uiinfolog');
+	$infolog->index(0,'calendar',$GLOBALS['cal_id'],array(
+		'menuaction' => 'calendar.uicalendar.view',
+		'cal_id' => $GLOBALS['cal_id']
+	));
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
+	unset($GLOBALS['phpgw_info']['etemplate']['hooked']);

@@ -17,9 +17,12 @@
 
 	$phpgw->translation->add_app('infolog');
 
-	//echo "<p>hook_projects_view($GLOBALS['project_id'])</p>";
+	$GLOBALS['phpgw_info']['etemplate']['hooked'] = True;
 
 	$infolog = CreateObject('infolog.uiinfolog');
-	$infolog->get_list(True,'proj',$GLOBALS['project_id']);
-
-	$phpgw_info['flags']['currentapp'] = $save_app; 
+	$infolog->index(0,'calendar',$GLOBALS['project_id'],array(
+		'menuaction' => 'projects.uiprojects.view',
+		'project_id' => $GLOBALS['project_id']
+	));
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
+	unset($GLOBALS['phpgw_info']['etemplate']['hooked']); 

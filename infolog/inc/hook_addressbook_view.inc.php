@@ -16,15 +16,6 @@
 
 	$GLOBALS['phpgw']->translation->add_app('infolog');
 
-	//echo "<p>hook_addressbook_view(ab_id=$GLOBALS[ab_id])</p>\n";
-/*
-	$link = CreateObject('infolog.uilink');
-	$out = '<table>'.$link->getEntry('entry','addressbook',$GLOBALS['ab_id'])."\n".
-	                 $link->showLinks('links','addressbook',$GLOBALS['ab_id'],'!infolog')."</table>\n";
-	$html = CreateObject('etemplate.html');
-	$out = $html->form($out,'','/index.php',array('menuaction'=>'addressbook.uiaddressbook.view','ab_id'=>$GLOBALS['ab_id']));
-	$GLOBALS['phpgw']->template->set_var('phpgw_body',$out,True);
-*/
 	$GLOBALS['phpgw_info']['etemplate']['hooked'] = True;
 
 	$infolog = CreateObject('infolog.uiinfolog');
@@ -32,6 +23,6 @@
 		'menuaction' => 'addressbook.uiaddressbook.view',
 		'ab_id' => $GLOBALS['ab_id']
 	));
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app; 
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
 	unset($GLOBALS['phpgw_info']['etemplate']['hooked']);
 
