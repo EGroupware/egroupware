@@ -70,7 +70,7 @@ enter some random text for app session encryption	setup	fi	Anna hieman satunnais
 Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
 Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 Enter the hostname of the machine on which this server is running	setup	fi	Anna palvelimen isäntänimi (hostname)
-Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	fi	Anna phpGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/phpgroupware &nbsp; tai &nbsp; /phpgroupware<br><b>Ei kauttaviivaa loppuun</b>
+Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	setup	fi	Anna eGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/egroupware &nbsp; tai &nbsp; /phpgroupware<br><b>Ei kauttaviivaa loppuun</b>
 Enter the site password for peer servers	setup	fi	Anna salasana rinnakkaispalvelimille
 Enter the site username for peer servers	setup	fi	Anna käyttäjätunnus rinnakkaispalvelimille
 Enter the title for your site	setup	fi	Anna palvelun nimi

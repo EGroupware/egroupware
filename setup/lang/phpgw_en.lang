@@ -110,7 +110,7 @@ enter some random text for app_session <br>encryption (requires mcrypt)	setup	en
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	en	Enter the hostname of the machine on which this server is running
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	setup	en	Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 enter the site password for peer servers	setup	en	Enter the site password for peer servers
 enter the site username for peer servers	setup	en	Enter the site username for peer servers
 enter the title for your site	setup	en	Enter the title for your site

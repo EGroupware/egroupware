@@ -64,7 +64,7 @@ Enter some random text for app_session <br>encryption (requires mcrypt)	setup	zt
 Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
 Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
 Enter the hostname of the machine on which this server is running	setup	zt	輸入這個伺服器主機的主機名稱
-Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	zt	輸入 phpGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>結尾無斜線</b>
+Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	setup	zt	輸入 eGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/egroupware &nbsp;或&nbsp; /egroupware<br><b>結尾無斜線</b>
 Enter the site password for peer servers	setup	zt	輸入對接伺服器的主機密碼
 Enter the site username for peer servers	setup	zt	輸入對接伺服器的主機名稱
 Enter the title for your site	setup	zt	輸入網站標題

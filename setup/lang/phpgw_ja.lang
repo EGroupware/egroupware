@@ -65,7 +65,7 @@ enter some random text for app session encryption	setup	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥»¥Ã¥
 enter the full path for temporary files.<br>Examples: /tmp, c:\temp	setup	ja	¥Æ¥ó¥Ý¥é¥ê¥Õ¥¡¥¤¥ë¡Ê¥Õ¥ë¥Ñ¥¹¡Ë<br>Îã¡§/tmp ¤ä C:\TEMP ¤Ê¤É
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	ja	¥Õ¥¡¥¤¥ë¥Þ¥Í¡¼¥¸¥ã¤Î¥Õ¥¡¥¤¥ëÊÝÂ¸Àè¡Ê¥Õ¥ë¥Ñ¥¹¡Ë<br>Îã¡§/files ¤ä E:\FILES ¤Ê¤É
 enter the hostname of the machine on which this server is running	setup	ja	phpGroupWare ¤¬Æ°ºî¤¹¤ë¥Û¥¹¥ÈÌ¾
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	setup	ja	phpGroupWare ¤Î URL<BR>Îã¡§http://www.itheart.com/phpgroupware &nbsp; ¤ä &nbsp; /phpgroupware ¤Ê¤É<BR><b>ºÇ¸å¤Ï¥¹¥é¥Ã¥·¥å¤ò»ØÄê¤·¤Ê¤¤¤³¤È</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	ja	eGroupWare ¤Î URL<BR>Îã¡§http://www.itheart.com/egroupware &nbsp; ¤ä &nbsp; /egroupware ¤Ê¤É<BR><b>ºÇ¸å¤Ï¥¹¥é¥Ã¥·¥å¤ò»ØÄê¤·¤Ê¤¤¤³¤È</b>
 enter the site username for peer servers	setup	ja	Æ±Åù¥µ¡¼¥Ð¤Î¥æ¡¼¥¶Ì¾
 enter the site password for peer servers	setup	ja	Æ±Åù¥µ¡¼¥Ð¤Î¥Ñ¥¹¥ï¡¼¥É
 enter the title for your site	setup	ja	¥¿¥¤¥È¥ëÌ¾

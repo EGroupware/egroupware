@@ -108,7 +108,7 @@ enter some random text for app_session <br>encryption (requires mcrypt)	setup	fr
 enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br>Exemples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
-enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de phpGroupWare.<br>Exemple: http://www.domain.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Pas de / (slash ou division) à la fin</b>
+enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de eGroupWare.<br>Exemple: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br><b>Pas de / (slash ou division) à la fin</b>
 enter the site password for peer servers	setup	fr	Entrez le mot de passe du site pour les serveurs pairs
 enter the site username for peer servers	setup	fr	Entrez le nom d'utilisateur du site pour les serveurs pairs
 enter the title for your site	setup	fr	Entrez le titre pour votre site

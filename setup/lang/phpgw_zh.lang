@@ -64,7 +64,7 @@ Enter some random text for app_session <br>encryption (requires mcrypt)	setup	zh
 Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	zh	输入暂存档案存放的完整路径：<br>［如：/tmp、C:\TEMP］
 Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	zh	输入使用者或群组档案存放的完整路径：<br>［如：/files、E:\FILES］
 Enter the hostname of the machine on which this server is running	setup	zh	输入这个伺服器主机的主机名称
-Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	zh	输入 phpGroupWare 的网页位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>结尾无斜线</b>
+Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	setup	zh	输入 eGroupWare 的网页位址 URL：<br>如：http://www.domain.com/egroupware &nbsp;或&nbsp; /egroupware<br><b>结尾无斜线</b>
 Enter the site password for peer servers	setup	zh	输入对接伺服器的主机密码
 Enter the site username for peer servers	setup	zh	输入对接伺服器的主机名称
 Enter the title for your site	setup	zh	输入网站标题
