@@ -103,22 +103,25 @@
        	$ds = $phpgw->common->ldapConnect();
 
        	// search the dn for the given uid
-       	$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=*kd");
+       	$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=*");
        	$allValues = ldap_get_entries($ds, $sri);
        
-       	for ($i=0, $j=0; $i<$info["count"]; $i++,$j++) 
+       	for ($i=0; $i<$allValues["count"]; $i++) 
        	{
 
        		$this->db->query("select * from phpgw_accounts where account_id='" . $allValues[$i]["uidnumber"][0] . "'",__LINE__,__FILE__);
        		$this->db->next_record();
       
-      		$accounts[] = Array("account_id" => $allValues[$i]["uidnumber"][0],
-      				"account_lid" => $allValues[$i]["uid"][0],
-      				"account_type" => $this->db->f("account_type"),
-      				"account_firstname" => $allValues[$i]["givenname"][0],
-      				"account_lastname" => $allValues[$i]["sn"][0],
-      				"account_status" => $this->db->f("account_status")
-      				);
+      		$accounts[] = Array(
+			"account_id" => $allValues[$i]["uidnumber"][0],
+			"account_lid" => $allValues[$i]["uid"][0],
+      			"account_type" => $this->db->f("account_type"),
+      			"account_firstname" => $allValues[$i]["givenname"][0],
+      			"account_lastname" => $allValues[$i]["sn"][0],
+      			"account_status" => $this->db->f("account_status")
+      		);
+      		
+		#print "data".$allValues[$i]["uid"][0]."<br>";
 	}
 	
 	return $accounts;
