@@ -48,7 +48,15 @@
 				$str = 'p_'.$counter;
 				if(isset($parms[$str]) && !empty($parms[$str]))
 				{
-					$parray[] = $parms[$str];
+					$parray[$counter] = $parms[$str];
+				}
+				else
+				{
+					$str = 'p'.$counter;
+					if(isset($parms[$str]) && !empty($parms[$str]))
+					{
+						$parray[$counter] = $parms[$str];
+					}
 				}
 			}
 			$fname = $parms['file'];
@@ -63,6 +71,14 @@
 			{
 				$this->msg = trim($etext);
 			}
+
+			@reset($parray);
+			while( list($key,$val) = each( $parray ) )
+			{
+				$this->msg = preg_replace( "/%$key/", "'".$val."'", $this->msg );
+			}
+			@reset($parray);
+
 			$this->timestamp = time();
 			$this->parms = $parray;
 			$this->ismsg = $parms['ismsg'];

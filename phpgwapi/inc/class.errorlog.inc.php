@@ -134,7 +134,7 @@
 					."', '". $err->severity . "'"
 					.", '". $err->code . "'"
 					.", '". $db->db_addslashes($err->msg) . "'"
-					.", '". $db->db_addslashes(implode('|',$err->parms)). "'"
+					.", '". $db->db_addslashes((count($err->parms) > 1?implode('|',$err->parms):$err->parms[1])). "'"
 					.", '". $err->fname . "'"
 					.", " . intval($err->line)
 					.")" 
