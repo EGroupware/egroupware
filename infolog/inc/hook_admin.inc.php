@@ -10,11 +10,13 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-
-	$imgpath = $phpgw->common->image($appname,'navbar.gif');
-	section_start($appname,$imgpath);
-
-	section_item($phpgw->link('/infolog/csv_import.php'),lang('CSV-Import'));
-
-	section_end();
+{
+// Only Modify the $file and $title variables.....
+	$title = $appname;
+	$file = Array(
+		'CSV-Import'		=> $phpgw->link('/infolog/csv_import.php')
+	);
+//Do not modify below this line
+	display_section($appname,$title,$file);
+}
 ?>

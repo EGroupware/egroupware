@@ -1,4 +1,5 @@
 INSERT INTO lang VALUES ('infolog','common','de','InfoLog');
+INSERT INTO lang VALUES ('csv-import','admin','de','CSV-Import');
 INSERT INTO lang VALUES ('urgency','infolog','de','Priorität');
 INSERT INTO lang VALUES ('sub','infolog','de','Teil-<br>projekte');
 INSERT INTO lang VALUES ('add sub','infolog','de','neues Teilprojekt anlegen');
