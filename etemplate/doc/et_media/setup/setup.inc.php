@@ -18,7 +18,11 @@
 	$setup_info['et_media']['app_order'] = 100;     // at the end
 	$setup_info['et_media']['tables']    = array('phpgw_et_media');
 	$setup_info['et_media']['enable']    = 1;
-	$setup_info['et_media']['author']    = 'Ralf Becker';
+	$setup_info['infolog']['author'] = 
+ 	$setup_info['infolog']['maintainer'] = array(
+		'name'  => 'Ralf Becker',
+		'email' => 'ralfbecker@outdoor-training.de'
+	);
 	$setup_info['et_media']['license']   = 'GPL';
 	$setup_info['et_media']['description'] =
 		'<b>eTemplates</b> are a new widget-based template system for phpGroupWare.<br>
@@ -26,8 +30,6 @@
 	$setup_info['et_media']['note'] =
 		'For more information check out the <a href="etemplate/doc/etemplate.html" target="_blank">Tutorial</a>
 		and the <a href="etemplate/doc/referenz.html" target="_blank">Referenz Documentation</a>.';
-	$setup_info['et_media']['maintainer'] = 'Ralf Becker';
-	$setup_info['et_media']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
 
 	/* Dependencies for this app to work */
 	$setup_info['et_media']['depends'][] = array(

@@ -17,7 +17,11 @@
 	$setup_info['infolog']['tables']    = array('phpgw_infolog','phpgw_links');
 	$setup_info['infolog']['enable']    = 1;
 
-	$setup_info['infolog']['author'] = 'Ralf Becker';
+	$setup_info['infolog']['author'] = 
+ 	$setup_info['infolog']['maintainer'] = array(
+		'name'  => 'Ralf Becker',
+		'email' => 'ralfbecker@outdoor-training.de'
+	);
 	$setup_info['infolog']['license']  = 'GPL';
 	$setup_info['infolog']['description'] =
 		'<b>CRM</b> (customer-relation-management) type app using Addressbook providing 
@@ -39,8 +43,6 @@
 		It allows to interactivly assign fields, customize the values with regular 
 		expressions and direct calls to php-functions (e.g. to link the phone calls 
 		(again) to the addressbook entrys).';
- 	$setup_info['infolog']['maintainer'] = 'Ralf Becker';
-	$setup_info['infolog']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';

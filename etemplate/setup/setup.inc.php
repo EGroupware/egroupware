@@ -18,7 +18,11 @@
 	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
 	$setup_info['etemplate']['enable']    = 1;
 
-	$setup_info['etemplate']['author']    = 'Ralf Becker';
+	$setup_info['infolog']['author'] = 
+ 	$setup_info['infolog']['maintainer'] = array(
+		'name'  => 'Ralf Becker',
+		'email' => 'ralfbecker@outdoor-training.de'
+	);
 	$setup_info['etemplate']['license']   = 'GPL';
 	$setup_info['etemplate']['description'] =
 		'<b>eTemplates</b> are a new widget-based template system for phpGroupWare with an
@@ -27,8 +31,6 @@
 	$setup_info['etemplate']['note'] =
 		'For more information check out the <a href="etemplate/doc/etemplate.html" target="_blank">Tutorial</a>
 		and the <a href="etemplate/doc/referenz.html" target="_blank">Referenz Documentation</a>.';
-	$setup_info['etemplate']['maintainer'] = 'Ralf Becker';
-	$setup_info['etemplate']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
 
 	/* The hooks this app includes, needed for hooks registration */
 	//$setup_info['etemplate']['hooks'][] = 'preferences';
