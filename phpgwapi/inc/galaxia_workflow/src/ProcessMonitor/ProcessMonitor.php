@@ -18,7 +18,7 @@ class ProcessMonitor extends Base {
     $result = $this->query($query);
     $status = array();
     while($info = $result->fetchRow()) {
-      $status[$info['wf_status']] = $info['wf_num_instances'];
+      $status[$info['wf_status']] = $info['num_instances'];
     }
     $res['active_instances'] = isset($status['active']) ? $status['active'] : 0;
     $res['completed_instances'] = isset($status['completed']) ? $status['completed'] : 0;
