@@ -46,6 +46,10 @@
 			$tab_row = array();	// generate the tab row
 			while (list($k,$name) = each($names))
 			{
+				if (!strstr($name,'.'))
+				{
+					$name = $names[$k] = $tmpl->name . '.' . $name;
+				}
 				$tcell = $tabs->empty_cell();
 				if ($extension_data == $name)
 				{
@@ -60,7 +64,7 @@
 					$tcell['name'] = $tab->name;
 				}
 				$tcell['type'] = 'template';
-				$tcell['size'] = $cell['name']/*form_name*/.'['.$name.']';
+				$tcell['size'] = $cell['name'].'['.$name.']';
 				$value[$name] = array(
 					'name'  => $name,
 					'label' => $labels[$k],

@@ -1,108 +1,49 @@
 <?xml version="1.0"?>
+<!-- $Id$ -->
 <overlay>
-  <grid id="etemplate.tab_widget.test.privat" template="" lang="" group="0" version="" width="100%">
-    <columns>
-      <column width="100"/>
-      <column/>
-    </columns>
-    <rows>
-      <row class="nmr">
-        <description value="Street"/>
-        <textbox size="40" id="p_str" statustext="Street"/>
-      </row>
-      <row class="nmr">
-        <textbox size="8" label="city" id="p_zip" statustext="ZIP Code"/>
-        <textbox size="40" id="p_city" statustext="City"/>
-      </row>
-      <row class="nmr">
-        <description value="Telefon"/>
-        <textbox id="p_telefon" statustext="Telefonnumber"/>
-      </row>
-      <row class="nmr">
-        <description value="Fax"/>
-        <textbox id="p_fax" statustext="Faxnumber"/>
-      </row>
-      <row class="nmr">
-        <description value="Birthday"/>
-        <datefield options="Y-m-d" id="geb_date" statustext="Birtday"/>
-      </row>
-    </rows>
-  </grid>
-  <grid id="etemplate.tab_widget.test.work" template="" lang="" group="0" version="" width="100%">
-    <columns>
-      <column width="100"/>
-      <column/>
-    </columns>
-    <rows>
-      <row class="nmr">
-        <description value="Companyname"/>
-        <textbox size="40" id="company"/>
-      </row>
-      <row class="nmr">
-        <description value="Street"/>
-        <textbox size="40" id="w_str" statustext="Street"/>
-      </row>
-      <row class="nmr">
-        <textbox size="8" label="city" id="w_zip" statustext="ZIP Code"/>
-        <textbox size="40" id="w_city" statustext="City"/>
-      </row>
-      <row class="nmr">
-        <description value="Telefon"/>
-        <textbox id="w_telefon" statustext="Telefonnumber"/>
-      </row>
-      <row class="nmr">
-        <description value="Fax"/>
-        <textbox id="w_fax" statustext="Faxnumber"/>
-      </row>
-      <row class="nmr">
-        <description value="Founded"/>
-        <datefield options="Y-m-d" id="founded" statustext="when was the company founded"/>
-      </row>
-    </rows>
-  </grid>
-  <grid id="etemplate.tab_widget.test.note" template="" lang="" group="0" version="" width="100%">
-    <columns>
-      <column width="100"/>
-      <column/>
-    </columns>
-    <rows>
-      <row class="nmr" valign="top">
-        <description value="Note"/>
-        <textbox multiline="true" rows="10" cols="80" id="note" statustext="You can enter some free text here."/>
-      </row>
-    </rows>
-  </grid>
-  <grid id="etemplate.tab_widget.test" template="" lang="" group="" version="">
-    <columns>
-      <column width="250"/>
-      <column/>
-    </columns>
-    <rows>
-      <row>
-        <textbox label="Surname" id="surname" statustext="Surname"/>
-        <textbox label="Familyname" id="familyname" statustext="Familyname"/>
-      </row>
-      <row>
-        <tabbox span="all">
-          <tabs>
-            <tab label="Privat" statustext="privat address"/>
-            <tab label="Work" statustext="work address"/>
-            <tab label="Note" statustext="free note-text"/>
-          </tabs>
-          <tabpanels>
-            <grid id="etemplate.tab_widget.test.privat"/>
-            <grid id="etemplate.tab_widget.test.work"/>
-            <grid id="etemplate.tab_widget.test.note"/>
-          </tabpanels>
-        </tabbox>
-      </row>
-      <row>
-        <description span="all"/>
-      </row>
-      <row>
-        <button label="Save" id="save" statustext="Save changes"/>
-        <button label="Cancel" id="cancel" statustext="Cancel, discarding changes"/>
-      </row>
-    </rows>
-  </grid>
+	<grid id="privat" template="" lang="" group="0" version="">
+		<columns/>
+		<rows/>
+	</grid>
+	<grid id="work" template="" lang="" group="0" version="">
+		<columns/>
+		<rows/>
+	</grid>
+	<grid id="note" template="" lang="" group="0" version="">
+		<columns/>
+		<rows/>
+	</grid>
+	<grid id="etemplate.tab_widget.test" template="" lang="" group="" version="">
+		<columns>
+			<column width="250"/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<textbox label="Surname" id="surname" statustext="Surname"/>
+				<textbox label="Familyname" id="familyname" statustext="Familyname"/>
+			</row>
+			<row>
+				<tabbox>
+					<tabs span="all">
+						<tab label="Privat" statustext="privat address"/>
+						<tab label="Work" statustext="work address"/>
+						<tab label="Note" statustext="free note-text"/>
+					</tabs>
+					<tabpanels>
+						<grid id="privat"/>
+						<grid id="work"/>
+						<grid id="note"/>
+					</tabpanels>
+				</tabbox>
+			</row>
+			<row>
+				<description span="all"/>
+			</row>
+			<row>
+				<button label="Save" id="save" statustext="Save changes"/>
+				<button label="Cancel" id="cancel" statustext="Cancel, discarding changes"/>
+			</row>
+		</rows>
+	</grid>
 </overlay>
