@@ -12,8 +12,6 @@
 
 	/* $Id$ */
 
-	include(PHPGW_SERVER_ROOT . '/etemplate/inc/xmltools.php');
-
 
 	class xul_io
 	{
@@ -23,7 +21,9 @@
 
 		function xul_io()
 		{
-			$this->attr2xul = array(	// how to translate attr, common to all widgets
+         $this->xmltool = CreateObject('etemplate.xmltool');
+
+         $this->attr2xul = array(	// how to translate attr, common to all widgets
 				'name' => 'id',
 				'help' => 'statustext',
 				'span' => 'span,class',
@@ -252,7 +252,7 @@
 			if ($etempl->style != '')
 			{
 				$styles = new xmlnode('styles');
-				$styles->set_text($etempl->style);
+				$styles->set_value($etempl->style);
 				$xul_grid->add_node($styles);
 			}
 			$root->add_node($xul_grid);
@@ -273,7 +273,7 @@
 			$this->etempl2grid($etempl,&$xul_overlay);
 
 			$doc->add_root($xul_overlay);
-			$xml = $doc->dump_mem();
+			$xml = $doc->export_xml();
 
 			//if ($this->debug)
 			{
@@ -352,6 +352,7 @@
 						{
 							$cname = ($etempl->template == '' ? 'default' : $etempl->template).'/'.$etempl->name.
 							         ($etempl->lang == '' ? '' : '.'.$etempl->lang);
+							$imported[] = $etempl->name;
 							$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $etempl->as_array(1);
 						}
 						$grid_started = True;
@@ -500,7 +501,9 @@
 			{
 				_debug_array($etempl->data);
 			}
-			return '';
+			$imported[] = $etempl->name;
+
+			return $imported;
 		}
 	}
 
