@@ -7,20 +7,21 @@
   // $phpgw and $phpgwinfo are also in scope
  
   // Find the icon to display
-  $img = "/" . $appname . "/images/" . $appname .".gif";
-  if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-    $img = $phpgw_info["server"]["webserver_url"].$img;
+  echo "<p>\n";
+  $imgfile = $phpgw->common->get_image_dir("admin")."/" . $appname .".gif";
+  if (file_exists($imgfile)) {
+    $imgpath = $phpgw->common->get_image_path("admin")."/" . $appname .".gif";
   } else {
-    $img = "/" . $appname . "/images/navbar.gif";
-    if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-      $img=$phpgw_info["server"]["webserver_url"].$img;
+    $imgfile = $phpgw->common->get_image_dir("admin")."/navbar.gif";
+    if (file_exists($imgfile)) {
+      $imgpath = $phpgw->common->get_image_path("admin")."/navbar.gif";
     } else {
-    $img = "";
+      $imgpath = "";
     }
   }
 
   // Show the header for the section
-  section_start("Administration",$img);
+  section_start("Administration",$imgpath);
 
 
   // actual items in this section

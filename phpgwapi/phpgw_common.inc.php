@@ -224,6 +224,64 @@
        return $output_text;
     }
 
+    function get_tpl_dir($appname = ""){
+      global $phpgw_info;
+      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
+      if ($appname == "home" || $appname == "logout" || $appname == "login"){$appname = "phpgwapi";}
+      if (empty($phpgw_info["server"]["template_set"])){$phpgw_info["server"]["template_set"] = "default";}
+
+      $tpldir = $phpgw_info["server"]["server_root"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"];
+      $tpldir_default = $phpgw_info["server"]["server_root"]."/".$appname."/templates/default";
+
+      if (is_dir ($tpldir)){
+        return $tpldir;
+      }elseif (is_dir ($tpldir_default)){
+        return $tpldir_default;
+      }else{
+        return False;
+      }      
+    }
+
+    function get_image_dir($appname = ""){
+      global $phpgw_info;
+      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
+      if (empty($phpgw_info["server"]["template_set"])){$phpgw_info["server"]["template_set"] = "default";}
+
+      $imagedir = $phpgw_info["server"]["server_root"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
+      $imagedir_default = $phpgw_info["server"]["server_root"]."/".$appname."/templates/default/images";
+      $imagedir_olddefault = $phpgw_info["server"]["server_root"]."/".$appname."/images";
+
+      if (is_dir ($imagedir)){
+        return $imagedir;
+      }elseif (is_dir ($imagedir_default)){
+        return $imagedir_default;
+      }elseif (is_dir ($imagedir_olddefault)){
+        return $imagedir_olddefault;
+      }else{
+        return False;
+      }      
+    }
+
+    function get_image_path($appname = ""){
+      global $phpgw_info;
+      if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
+      if (empty($phpgw_info["server"]["template_set"])){$phpgw_info["server"]["template_set"] = "default";}
+
+      $imagedir = $phpgw_info["server"]["server_root"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
+      $imagedir_default = $phpgw_info["server"]["server_root"]."/".$appname."/templates/default/images";
+      $imagedir_olddefault = $phpgw_info["server"]["server_root"]."/".$appname."/images";
+
+      if (is_dir ($imagedir)){
+        return $phpgw_info["server"]["webserver_url"]."/".$appname."/templates/".$phpgw_info["server"]["template_set"]."/images";
+      }elseif (is_dir ($imagedir_default)){
+        return $phpgw_info["server"]["webserver_url"]."/".$appname."/templates/default/images";
+      }elseif (is_dir ($imagedir_olddefault)){
+        return $phpgw_info["server"]["webserver_url"]."/".$appname."/images";
+      }else{
+        return False;
+      }      
+    }
+
     function show_icon(&$tpl, $td_width, $appname, $description = "")
     {
        global $phpgw_info, $colspan, $phpgw;

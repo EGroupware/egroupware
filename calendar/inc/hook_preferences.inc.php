@@ -11,19 +11,21 @@
   \**************************************************************************/
   /* $ Id $ */
 {
+
   echo "<p>\n";
-  $img = "/" . $appname . "/images/" . $appname .".gif";
-  if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-    $img = $phpgw_info["server"]["webserver_url"].$img;
+  $imgfile = $phpgw->common->get_image_dir("calendar")."/" . $appname .".gif";
+  if (file_exists($imgfile)) {
+    $imgpath = $phpgw->common->get_image_path("calendar")."/" . $appname .".gif";
   } else {
-    $img = "/" . $appname . "/images/navbar.gif";
-    if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-      $img=$phpgw_info["server"]["webserver_url"].$img;
+    $imgfile = $phpgw->common->get_image_dir("calendar")."/navbar.gif";
+    if (file_exists($imgfile)) {
+      $imgpath = $phpgw->common->get_image_path("calendar")."/navbar.gif";
     } else {
-    $img = "";
+      $imgpath = "";
     }
   }
-  section_start("Calendar",$img);
+
+  section_start("Calendar",$imgpath);
 
   $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/preferences.php");
   echo "<a href=".$pg.">" . lang("Calendar preferences") . "</a>";

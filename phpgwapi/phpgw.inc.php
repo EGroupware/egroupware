@@ -190,8 +190,8 @@
       $this->hooks         = new hooks;
 
       $sep = filesystem_separator();
-      $template_root = $phpgw_info["server"]["server_root"] . $sep . $phpgw_info["flags"]["currentapp"]
-   	               . $sep . "templates" . $sep . $phpgw_info["server"]["template_set"];
+      $template_root = $this->common->get_tpl_dir();
+
       if (is_dir($template_root)) {          
          $this->template = new Template($template_root);
       }

@@ -12,18 +12,18 @@
   /* $ Id $ */
 {
   echo "<p>\n";
-  $img = "/" . $appname . "/images/" . $appname .".gif";
-  if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-    $img = $phpgw_info["server"]["webserver_url"].$img;
+  $imgfile = $phpgw->common->get_image_dir("preferences")."/" . $appname .".gif";
+  if (file_exists($imgfile)) {
+    $imgpath = $phpgw->common->get_image_path("preferences")."/" . $appname .".gif";
   } else {
-    $img = "/" . $appname . "/images/navbar.gif";
-    if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-      $img=$phpgw_info["server"]["webserver_url"].$img;
+    $imgfile = $phpgw->common->get_image_dir("preferences")."/navbar.gif";
+    if (file_exists($imgfile)) {
+      $imgpath = $phpgw->common->get_image_path("preferences")."/navbar.gif";
     } else {
-    $img = "";
+      $imgpath = "";
     }
   }
-  section_start("Account Preferences",$img);
+  section_start("Account Preferences",$imgpath);
 
 
   // Actual content

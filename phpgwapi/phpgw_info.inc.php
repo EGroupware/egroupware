@@ -31,10 +31,6 @@
     $phpgw_info["server"]["template_set"] = "default";
   }
 
-  if (empty($phpgw_info["server"]["template_dir"])){
-    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"]."/templates/".$phpgw_info["server"]["template_set"];
-  }
-
   if (!isset($phpgw_domain)) { // make them fix their header
     echo "The administration is required to upgrade the header.inc.php file before you can continue.";
     exit;
@@ -93,16 +89,19 @@
   function phpgw_fillarray()
   {
     global $phpgw, $phpgw_info, $cd, $colspan;
-    if (!isset($phpgw_info["server"]["images_dir"])){
-      $phpgw_info["server"]["images_dir"]   = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/".$phpgw_info["server"]["template_set"]."/images";
-    }
-    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"] . "/templates/"
-                                          . $phpgw_info["server"]["template_set"];
-  
+//    if (!isset($phpgw_info["server"]["template_dir"])){
+      $phpgw_info["server"]["template_dir"] = $phpgw->common->get_tpl_dir("phpgwapi");
+
+//    }
+
+//    if (!isset($phpgw_info["server"]["images_dir"])){
+      $phpgw_info["server"]["images_dir"]   = $phpgw->common->get_image_path("phpgwapi");
+//    }
+ 
     $phpgw_info["server"]["app_root"]   = $phpgw_info["server"]["server_root"]."/".$phpgw_info["flags"]["currentapp"];
     $phpgw_info["server"]["app_inc"]    = $phpgw_info["server"]["app_root"]."/inc";
-    $phpgw_info["server"]["app_images"] = $phpgw_info["server"]["webserver_url"]."/".$phpgw_info["flags"]["currentapp"]."/templates/".$phpgw_info["server"]["template_set"]."/images";
-    $phpgw_info["server"]["app_tpl"]    = $phpgw_info["server"]["app_root"]."/templates/".$phpgw_info["server"]["template_set"];
+    $phpgw_info["server"]["app_images"] = $phpgw->common->get_image_path();
+    $phpgw_info["server"]["app_tpl"]    = $phpgw->common->get_tpl_dir();
   
     /* ********This sets the user variables******** */
     $phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"] . "/users/"

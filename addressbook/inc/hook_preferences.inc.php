@@ -12,18 +12,18 @@
   /* $ Id $ */
 {
   echo "<p>\n";
-  $img = "/" . $appname . "/images/" . $appname .".gif";
-  if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-    $img = $phpgw_info["server"]["webserver_url"].$img;
+  $imgfile = $phpgw->common->get_image_dir("addressbook")."/" . $appname .".gif";
+  if (file_exists($imgfile)) {
+    $imgpath = $phpgw->common->get_image_path("addressbook")."/" . $appname .".gif";
   } else {
-    $img = "/" . $appname . "/images/navbar.gif";
-    if (file_exists($phpgw_info["server"]["server_root"].$img)) {
-      $img=$phpgw_info["server"]["webserver_url"].$img;
+    $imgfile = $phpgw->common->get_image_dir("addressbook")."/navbar.gif";
+    if (file_exists($imgfile)) {
+      $imgpath = $phpgw->common->get_image_path("addressbook")."/navbar.gif";
     } else {
-    $img = "";
+      $imgpath = "";
     }
   }
-  section_start("Address Book",$img);
+  section_start("Address Book",$imgpath);
 
   $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/preferences.php");
   echo "<A href=".$pg.">" . lang("Addressbook preferences") . "</A>";
