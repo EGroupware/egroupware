@@ -7,10 +7,13 @@ add a single entry by passing the fields.	calendar	en	Add a single entry by pass
 add alarm	calendar	en	Add Alarm
 added	calendar	en	Added
 alarm management	calendar	en	Alarm Management
+alarms	calendar	en	Alarms
 all day	calendar	en	All Day
+are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this Country ?
+are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this single occurence ?\n\nThis will delete\nthis entry for all users.
 are you sure\nyou want to\ndelete this entry ?	calendar	en	Are you sure\nyou want to\ndelete this entry ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this entry ?\n\nThis will delete\nthis entry for all users.
-are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
 brief description	calendar	en	Brief Description
 calendar	common	en	Calendar
 calendar - [iv]cal importer	calendar	en	Calendar - [iv]Cal Importer
@@ -85,7 +88,7 @@ no matches found	calendar	en	No matches found
 no response	calendar	en	No Response
 number of intervals per day in planner view	calendar	en	Number of Intervals per Day in Planner View
 number of months	calendar	en	Number of months
-observance Rule	calendar	en	Observance Rule
+observance rule	calendar	en	Observance Rule
 occurence	calendar	en	Occurence
 on x x x your meeting request for x	calendar	en	On %1 %2 %3 your meeting request for %4
 overlap holiday	calendar	en	overlap holiday
@@ -120,8 +123,9 @@ sa	calendar	en	Sa
 sat	calendar	en	Sat
 scheduling conflict	calendar	en	Scheduling Conflict
 search results	calendar	en	Search Results
-send/Receive updates via email	calendar	en	Send/Receive updates via EMail
 send updates via email	common	en	Send updates via EMail
+send/receive updates via email	calendar	en	Send/Receive updates via EMail
+show day view on main screen	calendar	en	show day view on main screen
 show default view on main screen	calendar	en	Show default view on main screen
 show high priority events on main screen	calendar	en	Show high priority events on main screen
 sorry, the owner has just deleted this event	calendar	en	Sorry, the owner has just deleted this event

@@ -14,11 +14,11 @@ all day	calendar	de	ganztägig
 are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen wollen ?
 are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Alarm löschen wollen ?
 are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndass Sie diesen\nEintrag löschen wollen ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndass Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	Sind Sie sicher,\ndass Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	de	Sind Sie sicher,\ndass Sie diesen einzelnen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
 back	calendar	de	zurück
 brief description	calendar	de	Kurzbeschreibung
 calendar	common	de	Kalender
-calendar - [iv	calendar	de	Kalendar - [iv]Cal Importieren
 calendar - [iv]cal importer	calendar	de	Kalendar - [iv]Cal Importieren
 calendar - add	calendar	de	Kalendereintrag hinzufügen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
@@ -75,7 +75,6 @@ ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 interval	calendar	de	Interval
 invalid entry id.	calendar	de	ungültige Id des Eintrags.
-load [iv	calendar	de	[iv]Cal Laden
 load [iv]cal	calendar	de	[iv]Cal Laden
 location	calendar	de	Ort
 location to autoload from	admin	de	Von wo sollen sie geladen werden
@@ -127,7 +126,7 @@ repeat day	calendar	de	Wiederholungstag
 repeat end date	calendar	de	Enddatum
 repeat type	calendar	de	Wiederholungstyp
 repeating event information	calendar	de	Informationen zu sich wiederholenden Ereignissen
-repetition	calendar	de	Repetition
+repetition	calendar	de	Wiederholung
 reset	calendar	de	Zurücksetzen
 sa	calendar	de	Sa
 sat	calendar	de	Sa
@@ -138,7 +137,7 @@ send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen
 show day view on main screen	calendar	de	Tagesansicht auf Startseite anzeigen
 show default view on main screen	calendar	de	Standardansicht auf der Startseite anzeigen
 show high priority events on main screen	calendar	de	Termine mit hoher Priorität auf der Startseite anzeigen
-single event	calendar	de	einzelnes Ereigniss
+single event	calendar	de	Einzelner Termin
 sorry, the owner has just deleted this event	calendar	de	Der Eigentümer hat diesen Termin gerade gelöscht
 sorry, this event does not exist	calendar	de	Dieser Termin existiert nicht
 sorry, this event does not have exceptions defined	calendar	de	Dieser Termin hat keine Ausnahmen definiert
