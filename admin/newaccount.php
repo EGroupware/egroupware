@@ -131,6 +131,9 @@
 			}
 			$apps->save_repository();
 
+			// This is not the correct way to do it ... Fix me
+			$phpgw->db->query("insert into phpgw_acl values ('preferences','changepassword','$account_id','1')",__LINE__,__FILE__);
+
 			// Assign user to groups
 			if ($account_groups) {
 				for ($i=0;$i<count($account_groups);$i++)
