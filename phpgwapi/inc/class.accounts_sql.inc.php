@@ -99,7 +99,7 @@
       $groups = Array();
       $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", intval($id));
       if ($group_memberships) {
-        for ($idx=0; $idx<$count($group_memberships); $idx++){
+        for ($idx=0; $idx<count($group_memberships); $idx++){
           $groups[$group_memberships[$idx]] = 1;
         }
         return $groups;
