@@ -283,6 +283,7 @@
 		$apps->account_type = 'u';
 		$apps->account_id = $_userData['account_id'];
 		$apps->account_apps = Array(Array());
+		$apps_before = $apps->read_account_specific();
 		if ($_userData['account_permissions'])
 		{
 			while($app = each($_userData['account_permissions'])) 
@@ -290,7 +291,7 @@
 				if($app[1]) 
 				{
 					$apps->add($app[0]);
-					if(!$apps_before[$app[0]]) 
+					if(!@$apps_before[$app[0]] || @$apps_before == False) 
 					{
 						$apps_after[] = $app[0];
 					}

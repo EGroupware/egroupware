@@ -99,7 +99,7 @@
 					if($app[1])
 					{
 						$apps->add($app[0]);
-						if(!$apps_before[$app[0]])
+						if(!@$apps_before[$app[0]] || @$apps_before == False)
 						{
 							$new_apps[] = $app[0];
 						}
