@@ -35,13 +35,19 @@
  *   eventName     | event that will trigger the calendar, without the "on" prefix (default: "click")
  *   ifFormat      | date format that will be stored in the input field
  *   daFormat      | the date format that will be used to display the date in displayArea
+ *   titleFormat   | the format to show the month in the title, default '%B, %Y'
  *   singleClick   | (true/false) wether the calendar is in single click mode or not (default: true)
  *   firstDay      | numeric: 0 to 6.  "0" means display Sunday first, "1" means display Monday first, etc.
+ *   disableFirstDowChange| (true/false) disables manual change of first day of week
  *   align         | alignment (default: "Br"); if you don't know what's this see the calendar documentation
  *   range         | array with 2 elements.  Default: [1900, 2999] -- the range of years available
  *   weekNumbers   | (true/false) if it's true (default) the calendar will display week numbers
  *   flat          | null or element ID; if not null the calendar will be a flat calendar having the parent with the given ID
  *   flatCallback  | function that receives a JS Date object and returns an URL to point the browser to (for flat calendar)
+ *   flatWeekCallback| gets called if a weeknumber get clicked, params are the cal-object and a date-object representing the start of the week
+ *   flatWeekTTip  | Tooltip for the weeknumber (shown only if flatWeekCallback is set)
+ *   flatMonthCallback| gets called if a month (title) get clicked, params are the cal-object and a date-object representing the start of the month
+ *   flatMonthTTip | Tooltip for the month (shown only if flatMonthCallback is set)
  *   disableFunc   | function that receives a JS Date object and should return true if that date has to be disabled in the calendar
  *   onSelect      | function that gets called when a date is selected.  You don't _have_ to supply this (the default is generally okay)
  *   onClose       | function that gets called when the calendar is closed.  [default]
@@ -68,15 +74,21 @@ Calendar.setup = function (params) {
 	param_default("eventName",      "click");
 	param_default("ifFormat",       "%Y/%m/%d");
 	param_default("daFormat",       "%Y/%m/%d");
+	param_default("titleFormat",    "%B, %Y");
 	param_default("singleClick",    true);
 	param_default("disableFunc",    null);
 	param_default("dateStatusFunc", params["disableFunc"]);	// takes precedence if both are defined
 	param_default("firstDay",       0); // defaults to "Sunday" first
+	param_default("disableFirstDowChange", false);
 	param_default("align",          "Br");
 	param_default("range",          [1900, 2999]);
 	param_default("weekNumbers",    true);
 	param_default("flat",           null);
 	param_default("flatCallback",   null);
+	param_default("flatWeekCallback",null);
+	param_default("flatWeekTTip",   null);
+	param_default("flatmonthCallback",null);
+	param_default("flatmonthTTip",  null);
 	param_default("onSelect",       null);
 	param_default("onClose",        null);
 	param_default("onUpdate",       null);
@@ -137,6 +149,7 @@ Calendar.setup = function (params) {
 		cal.weekNumbers = params.weekNumbers;
 		cal.setRange(params.range[0], params.range[1]);
 		cal.setDateStatusHandler(params.dateStatusFunc);
+		cal.showsOtherMonths = params.showOthers;
 		cal.create(params.flat);
 		cal.show();
 		return false;

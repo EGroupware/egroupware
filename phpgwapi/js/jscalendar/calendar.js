@@ -612,6 +612,12 @@ Calendar.cellClick = function(el, ev) {
 			date.setMonth(m);
 		};
 		switch (el.navtype) {
+			case 500:
+			cal.callWeekHandler(el.caldate);
+			return;
+			case 501:
+			cal.callMonthHandler();
+			return;
 		    case 400:
 			Calendar.removeClass(el, "hilite");
 			var text = Calendar._TT["ABOUT"];
@@ -765,7 +771,12 @@ Calendar.prototype.create = function (_par) {
 	(this.weekNumbers) && ++title_length;
 
 	hh("?", 1, 400).ttip = Calendar._TT["INFO"];
-	this.title = hh("", title_length, 300);
+	if (this.hasMonthHandler()) {
+		this.title = hh("", title_length, 501);
+		if (this.params.flatMonthTTip) this.title.ttip = this.params.flatMonthTTip;
+	} else {
+		this.title = hh("", title_length, 300);
+	}
 	this.title.className = "title";
 	if (this.isPopup) {
 		this.title.ttip = Calendar._TT["DRAG_TO_MOVE"];
@@ -817,8 +828,13 @@ Calendar.prototype.create = function (_par) {
 	for (i = 6; i > 0; --i) {
 		row = Calendar.createElement("tr", tbody);
 		if (this.weekNumbers) {
-			cell = Calendar.createElement("td", row);
-			cell.appendChild(document.createTextNode(""));
+			if (this.hasWeekHandler()) {
+				cell = hh("",1,500);
+				if (this.params.flatWeekTTip) cell.ttip = this.params.flatWeekTTip;
+			} else {
+				cell = Calendar.createElement("td", row);
+				cell.appendChild(document.createTextNode(""));
+			}
 		}
 		for (var j = 7; j > 0; --j) {
 			cell = Calendar.createElement("td", row);
@@ -1081,6 +1097,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 		if (this.weekNumbers) {
 			cell.className = "day wn";
 			cell.firstChild.data = date.getWeekNumber();
+			if (this.hasWeekHandler) cell.caldate = new Date(date);
 			cell = cell.nextSibling;
 		}
 		row.className = "daysrow";
@@ -1140,7 +1157,8 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 			row.className = "emptyrow";
 	}
 	this.ar_days = ar_days;
-	this.title.firstChild.data = Calendar._MN[month] + ", " + year;
+//	this.title.firstChild.data = Calendar._MN[month] + ", " + year;
+	this.title.firstChild.data = this.date.print(this.params.titleFormat);
 	this.onSetTime();
 	this.table.style.visibility = "visible";
 	// PROFILE
@@ -1193,6 +1211,30 @@ Calendar.prototype.setRange = function (a, z) {
 Calendar.prototype.callHandler = function () {
 	if (this.onSelected) {
 		this.onSelected(this, this.date.print(this.dateFormat));
+	}
+};
+
+/** Calls the week-clicked user handler (selectedHandler). */
+Calendar.prototype.hasWeekHandler = function () {
+	return this.params.flat && this.params.flatWeekCallback;
+};
+
+Calendar.prototype.callWeekHandler = function (weekstart) {
+	if (this.hasWeekHandler()) {
+		this.params.flatWeekCallback(this, weekstart);
+	}
+};
+
+/** Calls the week-clicked user handler (selectedHandler). */
+Calendar.prototype.hasMonthHandler = function () {
+	return this.params.flat && this.params.flatMonthCallback;
+};
+
+Calendar.prototype.callMonthHandler = function () {
+	if (this.hasMonthHandler()) {
+		var monthstart = new Date(this.date);
+		monthstart.setDate(1);
+		this.params.flatMonthCallback(this, monthstart);
 	}
 };
 
@@ -1534,7 +1576,7 @@ Calendar.prototype._displayWeekdays = function () {
 	for (var i = 0; i < 7; ++i) {
 		cell.className = "day name";
 		var realday = (i + fdow) % 7;
-		if (i) {
+		if (i && !this.params.disableFirstDowChange) {
 			cell.ttip = Calendar._TT["DAY_FIRST"].replace("%s", Calendar._DN[realday]);
 			cell.navtype = 100;
 			cell.calendar = this;

@@ -27,16 +27,16 @@
 		@abstract constructor of the class
 		@param $do_header if true, necessary javascript and css gets loaded, only needed for input
 		*/
-		function jscalendar($do_header=True)
+		function jscalendar($do_header=True,$path='jscalendar')
 		{
-			$this->phpgwapi_js_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js';
+			$this->jscalendar_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js/'.$path;
 			$this->dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
 
 			if ($do_header && !strstr($GLOBALS['phpgw_info']['flags']['java_script'],'jscalendar'))
 			{
 				$GLOBALS['phpgw_info']['flags']['java_script'] .=
-'<link rel="stylesheet" type="text/css" media="all" href="'.$this->phpgwapi_js_url.'/jscalendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
-<script type="text/javascript" src="'.$this->phpgwapi_js_url.'/jscalendar/calendar.js"></script>
+'<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+<script type="text/javascript" src="'.$this->jscalendar_url.'/calendar.js"></script>
 <script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',$GLOBALS['phpgw']->link('/phpgwapi/inc/jscalendar-setup.php')).'"></script>
 ';
 			}
@@ -79,7 +79,7 @@
 			return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
 <script type="text/javascript">
-	document.writeln(\'<img id="'.$name.'-trigger" src="'.$this->phpgwapi_js_url.'/jscalendar/img.gif" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
+	document.writeln(\'<img id="'.$name.'-trigger" src="'.$this->jscalendar_url.'/img.gif" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
 	Calendar.setup(
 	{
 		inputField  : "'.$name.'",
@@ -88,6 +88,49 @@
 	);
 </script>
 ';
+		}
+
+		function flat($url,$date=False,$weekUrl=False,$weekTTip=False,$monthUrl=False,$monthTTip=False,$id='calendar-container')
+		{
+			if ($date)	// string if format YYYYmmdd or timestamp
+			{
+				$date = is_int($date) ? date('m/d/Y',$date) :
+					substr($date,4,2).'/'.substr($date,6,2).'/'.substr($date,0,4);
+			}
+			return '
+<div id="'.$id.'"></div>
+
+<script type="text/javascript">
+  function dateChanged(calendar) {
+'.  // Beware that this function is called even if the end-user only
+    // changed the month/year.  In order to determine if a date was
+    // clicked you can use the dateClicked property of the calendar:
+    // redirect to $url extended with a &date=YYYYMMDD
+'    if (calendar.dateClicked) {
+     window.location = "'.$url.'&date=" + calendar.date.print("%Y%m%d");
+    }
+  };
+'.($weekUrl ? '
+  function weekClicked(calendar,weekstart) {
+     window.location = "'.$weekUrl.'&date=" + weekstart.print("%Y%m%d");
+  }
+' : '').($monthUrl ? '
+  function monthClicked(calendar,monthstart) {
+     window.location = "'.$monthUrl.'&date=" + monthstart.print("%Y%m%d");
+  }
+' : '').'
+  Calendar.setup(
+    {
+      flat         : "'.$id.'",
+      flatCallback : dateChanged,
+'.($weekUrl ? '      flatWeekCallback : weekClicked,
+' : '').($weekTTip ? '      flatWeekTTip : "'.addslashes($weekTTip).'",
+' : '').($monthUrl ? '      flatMonthCallback : monthClicked,
+' : '').($monthTTip ? '      flatMonthTTip : "'.addslashes($monthTTip).'",
+' : '').($date ? '      date : "'.$date.'",
+' : '').'    }
+  );
+</script>';
 		}
 
 		/*!
