@@ -213,7 +213,7 @@
 	{
 		$phpgw->calendar->open('INBOX',intval($owner),'');
 		$phpgw->calendar->event_init();
-		$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',$phpgw->session->appsession('entry','calendar')));
+		$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
 		$phpgw->calendar->event = $event;
 		$datetime_check = validate($event);
 		if($datetime_check)
