@@ -12,7 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 add a single entry by passing the fields.	calendar	fr	Ajouter une unique entrée en passant les champs.
 add alarm	calendar	fr	Ajouter une alarme
 add contact	calendar	fr	Ajouter un contact
-add or update a single entry by passing the fields.	calendar	fr	Ajouter ou mettre à jour une unique entrée en passant les champs.	
+add or update a single entry by passing the fields.	calendar	fr	Ajouter ou mettre à jour une unique entrée en passant les champs.
 added	calendar	fr	Ajouté
 address book	calendar	fr	Carnet d'adresses
 alarm	calendar	fr	Alarme
