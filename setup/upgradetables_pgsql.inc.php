@@ -276,7 +276,7 @@
         $currentver = "0.9.3pre3";
       }
       if ($currentver == "0.9.3pre3") {
-	$db->query("alter table todo add todo_parent_id int DEFAULT 0 NOT NULL");
+	$db->query("alter table todo add todo_id_parent int DEFAULT 0 NOT NULL");
         $currentver = "0.9.3pre4";
       }
 
