@@ -1150,9 +1150,8 @@
 					}
 					for ($n = 1; $n <= $cell_options; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,$show_row,$path.'/'.$n);
+						$h = $this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
 						$vis = !empty($value) && $value == $cell_options[$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
-						list (,$cl) = explode(',',$cell[$n]['span']);
 						$html .= $this->html->div($h,$this->html->formatOptions(array(
 							$cl.($cl ? ' ':'').'tab_body',
 							"$s_width $s_height position: absolute; left: 0px; top: 0px; visibility: $vis; z-index: 50;",
@@ -1339,13 +1338,16 @@
 						$_cont = &$this->get_array($content,$form_name,True);
 						if (!$this->extensionPostProcess($sub,$form_name,$_cont,$value))
 						{
+							//echo "\n<p><b>unsetting content[$form_name] !!!</b></p>\n";
 							$this->unset_array($content,$form_name);
 						}
 						// this else should NOT be unnecessary as $_cont is a reference to the index 
 						// $form_name of $content, but under some circumstances a set/changed $_cont
 						// does not result in a change in $content -- RalfBecker 2004/09/18
-						elseif ($_cont && !$this->isset_array($content,$form_name))
+						// seems to depend on the number of (not existing) dimensions of the array -- -- RalfBecker 2005/04/06
+						elseif (!$this->isset_array($content,$form_name))
 						{
+							//echo "<p>setting content[$form_name]='$_cont' because is was unset !!!</p>\n";
 							$this->set_array($content,$form_name,$_cont);
 						}
 						if ($_cont === '' && $attr['needed'])
