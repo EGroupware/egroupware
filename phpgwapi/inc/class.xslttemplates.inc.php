@@ -26,6 +26,12 @@
 			$this->set_root($root);
 		}
 
+		function halt($msg)
+		{
+			echo $msg;
+			exit;
+		}
+
 		function set_root($rootdir)
 		{
 			if (!is_dir($rootdir))
