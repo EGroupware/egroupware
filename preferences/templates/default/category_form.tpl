@@ -22,7 +22,7 @@
 		<td colspan="2">{lang_access}</td>
 		<td colspan="2">{access}</td>
 	</tr>
-<!-- BEGINN data_row -->
+<!-- BEGIN data_row -->
 	<tr bgcolor="{tr_color}">
 		<td colspan="2">{lang_data}</td>
 		<td>{td_data}</td>
