@@ -763,14 +763,18 @@
 				}
 				if (!is_array($l_participants) || !count($l_participants))
 				{
-					$l_participants = array($GLOBALS['phpgw_info']['user']['account_id'].'A');
+					$l_participants = array($GLOBALS['phpgw_info']['user']['account_id'] /*.'A'*/);
 				}
 				else
 				{
 					$l_participants = array();
 					foreach($params['participants'] as $user => $data)
 					{
-						$l_participants[] = $user.$data['status'];
+						if (!is_numeric($user))
+						{
+							$user = name2id($user,'account_email');
+						}
+						$l_participants[] = $user /*.$data['status']*/;
 					}
 				}
 				unset($l_cal['participants']);
@@ -2218,7 +2222,7 @@
 				{
 					$user_cache[$user_id] = array(
 						'name'   => $GLOBALS['phpgw']->common->grab_owner_name($user_id),
-						'email'  => $GLOBALS['phpgw']->perferences->email_address($user_id)
+						'email'  => $GLOBALS['phpgw']->accounts->id2name($user_id,'account_email')
 					);
 				}
 				$event['participants'][$user_id] = $user_cache[$user_id] + array(
@@ -2519,8 +2523,7 @@
 			}
 			$version = $GLOBALS['phpgw_info']['apps']['calendar']['version'];
 
-			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->create_email_preferences();
-			$sender = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
+			$sender = $GLOBALS['phpgw_info']['user']['email'];
 
 			$temp_tz_offset = $this->prefs['common']['tz_offset'];
 			$temp_timeformat = $this->prefs['common']['timeformat'];
@@ -2654,7 +2657,7 @@
 					$GLOBALS['phpgw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
 					$details['to-fullname'] = $GLOBALS['phpgw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
 
-					$to = $preferences->email_address($userid);
+					$to = $GLOBALS['phpgw']->accounts->id2name($userid,'account_email');
 					if (empty($to) || $to[0] == '@' || $to[0] == '$')	// we have no valid email-address
 					{
 						//echo "<p>bocalendar::send_update: Empty email adress for user '".$details['to-fullname']."' ==> ignored !!!</p>\n";
