@@ -166,7 +166,7 @@ elseif (preg_match ("|^$fakebase\/(.*)$|U", $path, $matches))
 		$phpgw->vfs->mkdir ($path, array (RELATIVE_NONE));
 
 		$group_id = $phpgw->accounts->name2id ($matches[1]);
-		$phpgw->vfs->set_attributes ($path, array ("owner_id" => $group_id, "createdby_id" => $group_id), array (RELATIVE_NONE));
+		$phpgw->vfs->set_attributes ($path, array (RELATIVE_NONE), array ("owner_id" => $group_id, "createdby_id" => $group_id));
 	}
 }
 
@@ -209,7 +209,7 @@ if ($path == $fakebase)
 		if (!$phpgw->vfs->file_exists ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE)))
 		{
 			$phpgw->vfs->mkdir ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE));
-			$phpgw->vfs->set_attributes ("$fakebase/$group_array[account_name]", array ("owner_id" => $group_array["account_id"], "createdby_id" => $group_array["account_id"]), array (RELATIVE_NONE));
+			$phpgw->vfs->set_attributes ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), array ("owner_id" => $group_array["account_id"], "createdby_id" => $group_array["account_id"]));
 		}
 
 		$files_array[] = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), False, False, True);
@@ -620,12 +620,12 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		###
 		
 		html_break (1);
+		html_form_input ("submit", "go", "Go to:");
+
 		html_form_input ("submit", "copy", "Copy to:");
 
 		html_form_input ("submit", "move", "Move to:");
 		html_form_select_begin ("todir");
-
-		html_form_input ("submit", "go", "Go to:");
 
 		html_break (1);
 
@@ -843,10 +843,12 @@ if ($edit)
 			continue;
 		}
 
-		if ($content = $phpgw->vfs->read ($fileman_decoded))
+		if ($phpgw->vfs->file_exists ($fileman_decoded, array (RELATIVE_ALL)))
 		{
 			if ($edit_file)
 				$content = stripslashes ($$edit_file);
+			else
+				$content = $phpgw->vfs->read ($fileman_decoded);
 
 			html_table_begin ("100%");
 			html_form_begin ("$appname/index.php?path=$path");
@@ -918,7 +920,7 @@ elseif ($op == "upload")
 
 				if ($fileinfo["deleteable"] != "N")
 				{
-					$phpgw->vfs->set_attributes ($file_name[$i], array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $file_size[$i], mime_type => $file_type[$i], "deleteable" => "Y", "comment" => $comment[$i]), array (RELATIVE_ALL));
+					$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $file_size[$i], mime_type => $file_type[$i], "deleteable" => "Y", "comment" => $comment[$i]));
 					$phpgw->vfs->cp ($file[$i], "$file_name[$i]", array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
 
 					html_text_summary ("Replaced $disppath/$file_name[$i]", $file_size[$i]);
@@ -937,10 +939,17 @@ elseif ($op == "upload")
                                 }
 
 				$phpgw->vfs->cp ($file[$i], $file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
-				$phpgw->vfs->set_attributes ($file_name[$i], array ("mime_type" => $file_type[$i], "comment" => $comment[$i]), array (RELATIVE_ALL));
+				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $file_type[$i], "comment" => $comment[$i]));
 
 				html_text_summary ("Created $disppath/$file_name[$i]", $file_size[$i]);
 			}
+		}
+		elseif ($file_name[$i])
+		{
+			$phpgw->vfs->touch ($file_name[$i], array (RELATIVE_ALL));
+			$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $file_type[$i], "comment" => $comment[$i]));
+
+			html_text_summary ("Created $disppath/$file_name[$i]", $file_size[$i]);
 		}
 	}
 
@@ -956,7 +965,7 @@ elseif ($comment_files)
 {
 	while (list ($file) = each ($comment_files))
 	{
-		$phpgw->vfs->set_attributes ($file, array ("comment" => $comment_files[$file]));
+		$phpgw->vfs->set_attributes ($file, array (RELATIVE_ALL), array ("comment" => $comment_files[$file]));
 
 		html_text_summary ("Updated comment for $path/$file");
 	}
