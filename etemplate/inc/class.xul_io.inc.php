@@ -73,6 +73,10 @@
 				),
 				'tab' => array(
 					'.name' => 'tabbox,tabs,tabpanels'
+				),
+				'button' => array(
+					'.name' => 'button',
+					'size'  => 'image,ro_image'
 				)
 			);
 			$this->xul2widget = array(
@@ -443,6 +447,13 @@
 								if (is_array($menulist_attr))
 								{
 									$attr += $menulist_attr;
+								}
+								break;
+							case 'button':
+								if ($attr['image'] || $attr['ro_image'])
+								{
+									$attr['size'] = $attr['image'] . ($attr['ro_image'] ? ','.$attr['ro_image'] : '');
+									unset($attr['image']); unset($attr['ro_image']);
 								}
 								break;
 						}

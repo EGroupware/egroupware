@@ -427,15 +427,20 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Submitbutton</b></td>
-	<td>&lt;button/></td>
+	<td>&lt;button image="img.gif" ro_image="img-grey.gif"/></td>
 	<td>yes</td>
 	<td>button</td>
 	<td>
 		<b>a button to submit the form / end the dialog</b><br>
-		In the html-UI this is rendered as &lt;input type="submit" ...><br>
-		If <b>onchanged</b> is set and the user has JavaScript enabled
+		In the html-UI this is rendered as &lt;input type="submit" ...>.<br>
+		If a button is set readonly (via seting its id in the $readonlys array passed to exec) it is not rendered
+		at all (if no ro_image is given), like it would be diabled.<p>
+		<b>onChange</b> xml: <b>onchange</b>: if set and the user has JavaScript enabled
 		the button is renderd as a link around the label and a hidden
-		input to set if the link is clicked.
+		input to set id if the link is clicked.<br>
+		<b>Options</b> xml: <b>image, ro_image</b>: Image to use instead of a Button with a label. There will
+		be no button around the image. If a ro_image is given (separated by a comma in the editors options)
+		it will be used if the button is set readonly (else the button is no rendered at all) .
 	</td>
 </tr>
 <tr>

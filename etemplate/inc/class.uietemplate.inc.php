@@ -351,7 +351,7 @@
 			{
 				$options .= ' READONLY';
 			}
-			if ($cell['disabled'] || $cell['type'] == 'button' && $readonly)
+			if ($cell['disabled'] || $readonly && $cell['type'] == 'button' && !strstr($cell['size'],','))
 			{
 				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
@@ -462,8 +462,11 @@
 					}
 					else
 					{
-						$html .= $this->html->submit_button($form_name,$label,'',
-							strlen($label) <= 1 || $cell['no_lang'],$options);
+						list($img,$ro_img) = explode(',',$cell['size']);
+
+						$html .= !$readonly ? $this->html->submit_button($form_name,$label,'',
+								strlen($label) <= 1 || $cell['no_lang'],$options,$img) :
+							$this->html->image(substr($this->name,0,strpos($this->name,'.')),$ro_img);
 					}
 					$extra_label = False;
 					break;

@@ -48,16 +48,22 @@ class html
 
 	function input($name,$value='',$type='',$options='' )
 	{
-		if ($type) $type = "TYPE=$type";
+		if ($type) $type = 'TYPE="'.$type.'"';
 
 		return "<INPUT $type NAME=\"$name\" VALUE=\"$value\" $options>\n";
 	}
 
-	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='')
+	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='')
 	{
+		if ($image != '')
+		{
+			if (!($path = $GLOBALS['phpgw']->common->image($app,$image)))
+				$path = $image;		// name may already contain absolut path
+			$options .= ' src="'.$path.'"';
+		}
 		if (!$no_lang) $lang = lang($lang);
 		if ($onClick) $options .= " onClick=\"$onClick\"";
-		return $this->input($name,$lang,'SUBMIT',$options);
+		return $this->input($name,$lang,$image != '' ? 'IMAGE' : 'SUBMIT',$options);
 	}
 
 	/*!
