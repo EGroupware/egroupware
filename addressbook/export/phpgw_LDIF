@@ -22,27 +22,61 @@
 		//list of all id's
 		var $ids = array();
 
-		var $export= array(
-			"title"               => "title", 
-			"n_given"             => "givenname",
-			"n_family"            => "sn",
-			"fn"                  => "cn",
-			"org_name"            => "o",
-			"org_unit"            => "ou",
-			"adr_one_street"      => "streetaddress",
-			"adr_one_locality"    => "locality",
-			"adr_one_state"       => "st",
+		var $export = array(
+			"id"                  => "uidnumber",
+			"lid"                 => "uid",
+			"tid"                 => "phpgwcontacttype",
+			"owner"               => "phpgwowner",
+			"fn"                  => "cn",        // 'prefix given middle family suffix'
+			"n_given"             => "givenname",   // firstname
+			"n_family"            => "sn",  // lastname
+			"n_middle"            => "middlename",
+			"n_prefix"            => "prefix",
+			"n_suffix"            => "suffix",
+			"sound"               => "audio",
+			"bday"                => "birthday",
+			"note"                => "description",
+			"tz"                  => "tz",
+			"geo"                 => "geo",
+			"url"                 => "url",
+			"pubkey"              => "publickey",
+
+			"org_name"            => "o",  // company
+			"org_unit"            => "ou",  // division
+			"title"               => "title",
+
+			"adr_one_street"      => "street",
+			"adr_one_locality"    => "locality", 
+			"adr_one_region"      => "st", 
 			"adr_one_postalcode"  => "postalcode",
 			"adr_one_countryname" => "countryname",
+			"adr_one_type"        => "phpgwadronetype", // address is domestic/intl/postal/parcel/work/home
+			"label"               => "phpgwaddresslabel", // address label
+
+			"adr_two_street"      => "phpgwadrtwostreet",
+			"adr_two_locality"    => "phpgwadrtwolocality", 
+			"adr_two_region"      => "phpgwadrtworegion", 
+			"adr_two_postalcode"  => "phpgwadrtwopostalcode",
+			"adr_two_countryname" => "phpgwadrtwocountryname",
+			"adr_two_type"        => "phpgwadrtwotype", // address is domestic/intl/postal/parcel/work/home
+
 			"tel_work"            => "telephonenumber",
 			"tel_home"            => "homephone",
-			"tel_fax"             => "facsimiletelephonenumber",
-			"ophone"              => "xmozillaanyphone",
+			"tel_voice"           => "voicetelephonenumber",
+			"tel_fax"             => "facsimiletelephonenumber", 
+			"tel_msg"             => "msgtelephonenumber",
 			"tel_cell"            => "cellphone",
-			"note"                => "description",
-			"tel_pager"           => "pagerphone",
+			"tel_pager"           => "pagertelephonenumber",
+			"tel_bbs"             => "bbstelephonenumber",
+			"tel_modem"           => "modemtelephonenumber",
+			"tel_car"             => "mobiletelephonenumber",
+			"tel_isdn"            => "isdnphonenumber",
+			"tel_video"           => "videophonenumber",
+			"tel_prefer"          => "preferphone", // home, work, voice, etc
 			"email"               => "mail",
-			"url"                 => "homeurl",
+			"email_type"          => "mailtype", //'INTERNET','CompuServe',etc...
+			"email_home"          => "mailhome",
+			"email_home_type"     => "mailhometype" //'INTERNET','CompuServe',etc...
 		);
 
 		// This will store the contacts object
@@ -81,10 +115,12 @@
 
 		// Tack on some extra values
 		function export_end_record($buffer) {
-			$buffer[$this->id]["dn"]                          = 'cn='.$buffer[$this->id]["cn"].',mail='.$buffer[$this->id]["mail"];
-			$buffer[$this->id]["xmozillauseconferenceserver"] = "";
-			$buffer[$this->id]["xmozillanickname"]            = "";
-			$buffer[$this->id]["xmozillausehtmlmail"]         = "";
+			global $phpgw_info;
+			if ($phpgw_info['server']['ldap_contact_context']) {
+				$context = $phpgw_info['server']['ldap_contact_context'];
+			}
+			$time = gettimeofday();
+			$buffer[$this->id]["dn"]  = 'uid='.time().$time["usec"].":".$buffer[$this->id]['cn'].','.$context;
 			//echo '<br>'.$this->id.' - '.$buffer[$this->id]['dn'];
 			return $buffer;
 		}
@@ -92,7 +128,7 @@
 		function export_end_file($buffer) {
 			reset($this->ids);
 			for ($i=0;$i<count($this->ids);$i++) {
-				$entries .= 'dn: ' . $buffer[$i]['dn'] . "\n";
+				$entries .= 'dn: '.$buffer[$i]['dn'] . "\n";
 				reset($this->export);
 				while (list($name,$value)=each($this->export)) {
 					if ($value != 'dn') {
