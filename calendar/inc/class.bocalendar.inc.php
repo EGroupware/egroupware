@@ -22,7 +22,8 @@
 			'delete_calendar'	=> True,
 			'update'       => True,
 			'preferences'  => True,
-			'store_to_cache'	=> True
+			'store_to_cache'	=> True,
+			'export_event'	=> True
 		);
 
 		var $soap_functions = Array(
@@ -68,6 +69,14 @@
 				),
 				'out' => Array(
 					'SOAPStruct'
+				)
+			),
+			'store_to_cache'	=> Array(
+				'in' => Array(
+					'array'
+				),
+				'out' => Array(
+					'string'
 				)
 			)
 		);
@@ -256,6 +265,11 @@
 							'function'  => 'store_to_cache',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Read a list of entries.')
+						),
+						'export_event' => array(
+							'function'  => 'export_event',
+							'signature' => array(array(xmlrpcString,xmlrpcStruct)),
+							'docstring' => lang('Export a list of entries in iCal format.')
 						)
 					);
 					return $xml_functions;
@@ -1633,6 +1647,47 @@
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'] = $temp_tz_offset;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $temp_timeformat;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] = $temp_dateformat;
+		}
+
+		function export_event($l_event_id=0)
+		{
+			$event_id = ($l_event_id?$l_event_id:$GLOBALS['HTTP_GET_VARS']['cal_id']);
+			
+			include(PHPGW_APP_INC.'/../setup/setup.inc.php');
+			$icalendar = CreateObject('calendar.boicalendar');
+			if(!is_array($event_id))
+			{
+				$ids[] = $event_id;
+			}
+			else
+			{
+				$ids = $event_id;
+			}
+
+			$ical = $icalendar->new_ical();
+
+			$icalendar->set_var($ical['prodid'],'value','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
+			$icalendar->set_var($ical['version'],'value','2.0');
+			$icalendar->set_var($ical['method'],'value',strtoupper('publish'));
+
+			while(list($key,$value) = each($ids))
+			{
+				$ical_event = Array();
+				$event = $this->so->read_entry($event_id);
+
+				$icalendar->set_var($ical_event['uid'],'value','phpGW/'.$event['id']);
+				$icalendar->set_var($ical_event['description'],'value',$event['title']);
+				$icalendar->set_var($ical_event['summary'],'value',$event['description']);
+				$dtstart_mktime = $this->maketime($event['start']) - $this->datetime->tz_offset;
+				$icalendar->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'event');
+				$dtend_mktime = $this->maketime($event['end']) - $this->datetime->tz_offset;
+				$icalendar->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'event');
+
+				$ical_events[] = $ical_event;
+			}
+
+			$ical['event'] = $ical_events;
+			return $icalendar->build_ical($ical);
 		}
 
 		function prepare_recipients(&$new_event,$old_event)

@@ -40,6 +40,7 @@
 			'year' => True,
 			'view' => True,
 			'edit' => True,
+			'export'	=> True,
 			'add'  => True,
 			'delete' => True,
 			'preferences' => True,
@@ -477,15 +478,13 @@
 		
 		function view($vcal_id=0)
 		{
-			global $HTTP_GET_VARS;
-			
   			unset($GLOBALS['phpgw_info']['flags']['noheader']);
    		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 	   	$GLOBALS['phpgw']->common->phpgw_header();
 	   	
 	   	echo '<center>';
 
-   		$cal_id = $vcal_id?$vcal_id:$HTTP_GET_VARS['cal_id'];
+   		$cal_id = $vcal_id?$vcal_id:$GLOBALS['HTTP_GET_VARS']['cal_id'];
 	   	
 			// First, make sure they have permission to this entry
 			if ($cal_id < 1)
@@ -566,6 +565,16 @@
 					echo $p->fp('out','form_button');
 				}
 			}
+			
+			$var = Array(
+				'action_url_button'	=> $this->page('export','&cal_id='.$cal_id),
+				'action_text_button'	=> lang('Export'),
+				'action_confirm_button'	=> '',
+				'action_extra_field'	=> ''
+			);
+			$p->set_var($var);
+			echo $p->fp('out','form_button');
+			
    		echo '</center>';
 		}
 
@@ -622,6 +631,14 @@
 				);
 			}
  		}
+
+		function export($vcal_id=0)
+		{
+  			unset($GLOBALS['phpgw_info']['flags']['noheader']);
+   		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+	   	$GLOBALS['phpgw']->common->phpgw_header();
+	   	echo nl2br($this->bo->export_event($cal_id));
+	   }
 
 		function add($cd=0,$readsess=0)
 		{
