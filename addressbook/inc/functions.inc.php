@@ -81,7 +81,7 @@
 			"d_email_work"		=> "",  //yn
 			"d_email_home"		=> "",  //yn
 			"bday"				=> "birthday",
-			"url"				=> "URL",
+			"url"				=> "url",
 			//"access"			=> "access"
 		);
 

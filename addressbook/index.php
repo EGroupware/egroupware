@@ -28,9 +28,19 @@
 		"addressbook_footer"	=> "footer.tpl" ));
 
 	$this = CreateObject("phpgwapi.contacts");
+ 	$extrafields = array(
+		"pager"    => "pager",
+		"mphone"   => "mphone",
+		"ophone"   => "ophone",
+		"address2" => "address2",
+		"bday"     => "bday",
+		"url"      => "url",
+		"notes"    => "notes"
+	);
+	$qfields = $this->stock_contact_fields + $extrafields;
 
 	// create column list and the top row of the table based on user prefs
-	while ($column = each($this->stock_contact_fields)) {
+	while ($column = each($qfields)) {
 		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) &&
 			$phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) {
 			$showcol = display_name($column[0]);
@@ -57,7 +67,9 @@
 	// following sets up the filter for read, then restores the filter string for later checking
 	if ($filter == "none") { $filter = ""; }
 	$savefilter = $filter;
-	if ($filter != "" ) { $filter = "access=$filter"; }
+	// Set filter to display entries where tid is blank, else they may be accounts, etc.
+	if ($filter != "" ) { $filter = "tid="; }
+	//if ($filter != "" ) { $filter = "access=$filter"; }
 	
 	$qfilter = $filter;
 	$filter = $savefilter;

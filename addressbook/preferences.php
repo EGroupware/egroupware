@@ -23,13 +23,13 @@
 
 	$this = CreateObject("phpgwapi.contacts");
  	$extrafields = array(
-		"pager" => "pager",
-		"mphone" => "mphone",
-		"ophone" => "ophone",
+		"pager"    => "pager",
+		"mphone"   => "mphone",
+		"ophone"   => "ophone",
 		"address2" => "address2",
-		"bday" => "bday",
-		"url" => "url",
-		"notes" => "notes"
+		"bday"     => "bday",
+		"url"      => "url",
+		"notes"    => "notes"
 	);
 	$qfields = $this->stock_contact_fields + $extrafields;
 
@@ -40,7 +40,7 @@
 		}
 		if (! $totalerrors) {
 			$phpgw->preferences->read_repository();
-			while (list($pref[0]) = each($this->stock_contact_fields)) {
+			while (list($pref[0]) = each($qfields)) {
 				if ($ab_selected["$pref[0]"]) {
 					$phpgw->preferences->change("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
 				} else {
