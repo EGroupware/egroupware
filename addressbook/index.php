@@ -67,7 +67,8 @@
 	$qcols = $columns_to_display + array("access");
   
 	// read the entry list
-	$entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order);
+	if (!$userid) { $userid = $phpgw_info["user"]["account_id"]; }
+	$entries = addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid);
 
 	$search_filter = $phpgw->nextmatchs->show_tpl("index.php",$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query","75%", $phpgw_info["theme"]["th_bg"]);
 
@@ -109,39 +110,32 @@
 
 	// Show the entries
 	for ($i=0;$i<count($entries);$i++) { // each entry
-		$rights = $phpgw->acl->get_rights($entries[$i]["owner"],$phpgw_info["flags"]["currentapp"]);
-		if ( ($rights & PHPGW_ACL_READ) || ($entries[$i]["owner"] == $phpgw_info["user"]["account_id"]) ) {
-		//if ( ($entries[$i]["access"] == $filter) ||
-		//	($entries[$i]["access"] == "," . $filter . ",") ||
-		//	($filter == "") || ($filter == "none")) {
-			$t->set_var(columns,"");
-			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-			$t->set_var(row_tr_color,$tr_color);
-			$myid    = $entries[$i]["id"];
-			$myowner = $entries[$i]["owner"];
+		$t->set_var(columns,"");
+		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+		$t->set_var(row_tr_color,$tr_color);
+		$myid    = $entries[$i]["id"];
+		$myowner = $entries[$i]["owner"];
 
-			while ($column = each($columns_to_display)) { // each entry column
-				$ref=$data="";
-				$coldata = $entries[$i][$column[0]];
-				// Some fields require special formatting.       
-				if ($column[0] == "url") {
-					$ref='<a href="'.$coldata.'" target="_new">';
-					$data=$coldata.'</a>';
-				} elseif ($column[0] == "email") {
-					if ($phpgw_info["user"]["apps"]["email"]) {
-						$ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
-					} else {
-						//changed frmo a patch posted on sf, have not fully tested. Seek3r, Jan 30 2001
-						// $ref='<a href="mailto:"'.$coldata.'">'.$coldata.'</a>';
-						$ref='<a href="mailto:'.$coldata.'">';
-					}
-					$data=$coldata."</a>";
-    	    	} else { // But these do not
-					$ref=""; $data=$coldata;
+		while ($column = each($columns_to_display)) { // each entry column
+			$ref=$data="";
+			$coldata = $entries[$i][$column[0]];
+			// Some fields require special formatting.       
+			if ($column[0] == "url") {
+				$ref='<a href="'.$coldata.'" target="_new">';
+				$data=$coldata.'</a>';
+			} elseif ($column[0] == "email") {
+				if ($phpgw_info["user"]["apps"]["email"]) {
+					$ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+				} else {
+					$ref='<a href="mailto:'.$coldata.'">';
 				}
-				$t->set_var(col_data,$ref.$data);
-				$t->parse("columns","column",True);
+				$data=$coldata."</a>";
+   	    	} else { // But these do not
+				$ref=""; $data=$coldata;
 			}
+			$t->set_var(col_data,$ref.$data);
+			$t->parse("columns","column",True);
+		}
     
 		$t->set_var(row_view_link,$phpgw->link("view.php","ab_id=$myid&start=$start&order=$order&filter="
 			. "$filter&query=$query&sort=$sort"));
@@ -153,7 +147,6 @@
 		$t->parse("rows","row",True);
 		$t->pparse("out","row");
 		reset($columns_to_display); // If we don't reset it, our inside while won't loop
-		}
 	}
 
 	$t->pparse("out","addressbook_footer");

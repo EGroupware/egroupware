@@ -32,9 +32,9 @@
 	} else if ($add_email) {
 		list($fields["firstname"],$fields["lastname"]) = explode(" ", $name);
 		$fields["email"] = $add_email;
-		form("","add.php","Add",$fields);
+		addressbook_form("","add.php","Add",$fields);
 	} else if (! $submit && ! $add_email) {
-		form("","add.php","Add","","","");
+		addressbook_form("","add.php","Add","");
 	} else {
 		if (! $bday_month && ! $bday_day && ! $bday_year) {
 			$bday = "";
@@ -77,7 +77,7 @@
 		$fields["url"]				= $url;
 		$fields["notes"]			= $notes;
 	
-		$this->add($phpgw_info["user"]["account_id"],$fields);
+		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
 
 		Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/","cd=14"));
 	}

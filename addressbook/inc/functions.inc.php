@@ -71,8 +71,35 @@
 			if ($column == $name[0]) { return $name[1]; }
 		}
 	}
-  
-	function form($format,$action,$title,$fields) { // used for add/edit
+
+	function addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid="") {
+		global $this;
+		$entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order);
+		return $entries;
+	}
+
+	function addressbook_read_entry($id,$fields,$userid="") {
+		global $this;
+		$entry = $this->read_single_entry($id,$fields);
+		return $entry;
+	}
+
+	function addressbook_add_entry($userid,$fields) {
+		global $this;
+		$this->add($userid,$fields);
+		return;
+	}
+
+	function addressbook_update_entry($id,$userid,$fields) {
+		global $this;
+		//$rights = $phpgw->acl->get_rights($owner,$phpgw_info["flags"]["currentapp"]);
+		//if ( ($rights & PHPGW_ACL_EDIT) || ($owner == $phpgw_info["user"]["account_id"]) ) {
+
+		$this->update($id,$userid,$fields);
+		return;
+	}
+
+	function addressbook_form($format,$action,$title="",$fields="") { // used for add/edit
 		global $phpgw, $phpgw_info;
      
 		#$t = new Template($phpgw_info["server"]["app_tpl"]);
