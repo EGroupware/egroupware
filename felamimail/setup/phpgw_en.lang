@@ -166,8 +166,8 @@ location of folder list	felamimail	en	Location of folder list
 mail server login type	admin	en	Mail server login type
 mail settings	felamimail	en	Mail Settings
 mainmessage	felamimail	en	mainmessage
-manage folders	felamimail	en	Manage Folders
-manage sieve	felamimail	en	Manage Sieve scripts
+manage folders	common	en	Manage Folders
+manage sieve	common	en	Manage Sieve scripts
 mark as deleted	felamimail	en	Mark as deleted
 mark messages as	felamimail	en	Mark selected messages as
 mark selected as flagged	felamimail	en	Mark selected as flagged
