@@ -2224,4 +2224,15 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.13.016';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.13.016';
+	function phpgwapi_upgrade0_9_13_016()
+	{
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_hooks (hook_appname,hook_location,hook_filename) VALUES ('admin','config','hook_config.inc.php')");
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_hooks (hook_appname,hook_location,hook_filename) VALUES ('preferences','config','hook_config.inc.php')");
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_hooks (hook_appname,hook_location,hook_filename) VALUES ('addressbook','config_validate','hook_config_validate.inc.php')");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.13.017';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
