@@ -14,7 +14,7 @@
 	$test[] = "0.9.1";
 	function phpgwapi_upgrade0_9_1()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		
 		$oProc->AlterColumn("access_log", "lo", array("type" => "varchar", "precision" => 255));
 		
@@ -27,7 +27,9 @@
 		  	//install weather support
 		$oProc->m_odb->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
 		$oProc->m_odb->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.2";
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.2';
+		return True;
 	}
 	
 	function phpgwapi_v0_9_2to0_9_3update_owner($table, $field)
@@ -52,62 +54,68 @@
 	$test[] = "0.9.3pre4";
 	function phpgwapi_upgrade0_9_3pre4()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		
 		$oProc->AlterColumn("config", "config_name", array("type" => "varchar", "precision" => 255, "nullable" => false));
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.3pre5";
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre5';
+		return True;
 	}
 	
 	$test[] = "0.9.3pre5";
 	function phpgwapi_upgrade0_9_3pre5()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		
-		$oProc->CreateTable("categories", array(
-				"fd" => array(
-					"cat_id" => array("type" => "auto", "nullable" => false),
-					"account_id" => array("type" => "int", "precision" => 4, "nullable" => false, "default" => "0"),
-					"app_name" => array("type" => "varchar", "precision" => 25, "nullable" => false),
-					"cat_name" => array("type" => "varchar", "precision" => 150, "nullable" => false),
-					"cat_description" => array("type" => "text", "nullable" => false)
+		$oProc->CreateTable(
+			'categories', array(
+				'fd' => array(
+					'cat_id' => array('type' => 'auto', 'nullable' => false),
+					'account_id' => array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0),
+					'app_name' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
+					'cat_name' => array('type' => 'varchar', 'precision' => 150, 'nullable' => false),
+					'cat_description' => array('type' => 'text', 'nullable' => false)
 				),
-				"pk" => array("cat_id"),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array()
-			));
+				'pk' => array('cat_id'),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
+			)
+		);
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.3pre6";
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre6';
+		return True;
 	}
 	
 	$test[] = "0.9.3pre6";
 	function phpgwapi_upgrade0_9_3pre6()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		
-		$oProc->m_odb->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
+		$oProc->m_odb->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$setup_info['phpgwapi']['version']."')");
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.3pre7";
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre7';
+		return True;
 	}
 	
 	$test[] = "0.9.3pre7";
 	function phpgwapi_upgrade0_9_3pre7()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		
-		$oProc->CreateTable("languages", array(
-				"fd" => array(
-					"lang_id" => array("type" => "varchar", "precision" => 2, "nullable" => false),
-					"lang_name" => array("type" => "varchar", "precision" => 50, "nullable" => false),
-					"available" => array("type" => "char", "precision" => 3, "nullable" => false, "default" => "No")
+		$oProc->CreateTable('languages', array(
+				'fd' => array(
+					'lang_id' =>   array('type' => 'varchar', 'precision' => 2, 'nullable' => false),
+					'lang_name' => array('type' => 'varchar', 'precision' => 50, 'nullable' => false),
+					'available' => array('type' => 'char', 'precision' => 3, 'nullable' => false, 'default' => 'No')
 				),
-				"pk" => array("lang_id"),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array()
-			));
-		
+				'pk' => array('lang_id'),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
+			)
+		);
+
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('AA','Afar','No')");        
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('AB','Abkhazian','No')");   
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('AF','Afrikaans','No')");   
@@ -245,23 +253,26 @@
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZH','Chinese','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZU','Zulu','No')");
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.3pre8";
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre8';
+		return True;
 	}
 	
 	$test[] = "0.9.4pre4";
 	function phpgwapi_upgrade0_9_4pre4()
 	{
-		global $oldversion, $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		
 		$oProc->AlterColumn("sessions", "session_lid", array("type" => "varchar", "precision" => 255));
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.4pre5";
+		$setup_info['phpgwapi']['currentver'] = '0.9.4pre5';
+		return True;
 	}
 	
 	$test[] = "0.9.4";
 	function phpgwapi_upgrade0_9_4()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
+
 		$oProc->m_odb->query("delete from languages");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('aa','Afar','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('ab','Abkhazian','No')");
@@ -400,7 +411,8 @@
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('zh','Chinese','No')");
 		@$oProc->m_odb->query("INSERT INTO languages (lang_id, lang_name, available) values ('zu','Zulu','No')");
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.5pre1";
+		$setup_info['phpgwapi']['currentver'] = '0.9.5pre1';
+		return True;
 	}
 	
 	$test[] = "0.9.5pre1";
@@ -467,37 +479,46 @@
 				"uc" => array()
 			));
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.5pre2";
+		$setup_info['phpgwapi']['currentver'] = '0.9.5pre2';
+		return True;
 	}
 
-  $test[] = "0.9.5";
-  function upgrade0_9_5(){
-    global $phpgw_info, $phpgw_setup;
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.6";
-  }
+	$test[] = "0.9.5";
+	function phpgwapi_upgrade0_9_5()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.6';
+		return True;
+	}
 
-  $test[] = "0.9.6";
-  function upgrade0_9_6(){
-    global $phpgw_info, $phpgw_setup;
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.7pre1";
-  }
+	$test[] = "0.9.6";
+	function phpgwapi_upgrade0_9_6()
+	{
+		global $setup_info;
+		$phpgw_info['phpgwapi']['currentver'] = '0.9.7pre1';
+		return True;
+	}
 
-  $test[] = "0.9.7pre3";
-  function upgrade0_9_7pre3(){
-    global $phpgw_info, $phpgw_setup;
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.7";
-  }
+	$test[] = "0.9.7pre3";
+	function phpgwapi_upgrade0_9_7pre3()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.7';
+		return True;
+	}
 
-  $test[] = "0.9.7";
-  function upgrade0_9_7(){
-    global $phpgw_info, $phpgw_setup;
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre1";
-  }
+	$test[] = "0.9.7";
+	function phpgwapi_upgrade0_9_7()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.8pre1';
+		return True;
+	}
 
 	$test[] = "0.9.8pre1";
 	function phpgwapi_upgrade0_9_8pre1()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		
 		$oProc->m_odb->query("select * from preferences order by preference_owner");
 		$t = array();
@@ -517,20 +538,23 @@
 				"uc" => array()
 			));
 		
-		while ($tt = each($t)) {
+		while ($tt = each($t))
+		{
 			$oProc->m_odb->query("insert into preferences values ('$tt[0]','" . serialize($tt[1]) . "')");
 		}
 		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre2";
+		$setup_info['phpgwapi']['currentver'] = '0.9.8pre2';
+		return True;
 	}
-	
+
 	$test[] = "0.9.8pre3";
 	function phpgwapi_upgrade0_9_8pre3()
 	{
-		global $oldversion, $phpgw_info, $phpgw_setup, $oProc;
-		
+		global $setup_info, $oProc;
+
 		$oProc->DropTable("phpgw_sessions");
-		$oProc->CreateTable("phpgw_sessions", array(
+		$oProc->CreateTable(
+			"phpgw_sessions", array(
 				"fd" => array(
 					"session_id" => array("type" => "varchar", "precision" => 255, "nullable" => false),
 					"session_lid" => array("type" => "varchar", "precision" => 255),
@@ -543,17 +567,20 @@
 				"ix" => array(),
 				"fk" => array(),
 				"uc" => array("session_id")
-			));
-		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre4";
+			)
+		);
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.8pre4';
+		return True;
 	}
-	
+
 	$test[] = "0.9.8pre4";
 	function phpgwapi_upgrade0_9_8pre4()
 	{
-		global $oldversion, $phpgw_info, $phpgw_setup, $oProc;
-		
-		$oProc->CreateTable("phpgw_hooks", array(
+		global $setup_info, $oProc;
+
+		$oProc->CreateTable(
+			"phpgw_hooks", array(
 				"fd" => array(
 					"hook_id" => array("type" => "auto", "nullable" => false),
 					"hook_appname" => array("type" => "varchar", "precision" => 255),
@@ -564,479 +591,598 @@
 				"ix" => array(),
 				"fk" => array(),
 				"uc" => array()
-			));
-		
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre5";
+			)
+		);
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.8pre5';
+		return True;
 	}
 
+	$test[] = "0.9.8pre5";
+	function phpgwapi_upgrade0_9_8pre5()
+	{
+		global $setup_info, $phpgw_setup;
 
-  $test[] = "0.9.8pre5";
-  function upgrade0_9_8pre5(){
-    global $phpgw_info, $phpgw_setup;
+		// Since no applications are using it yet.  I am gonna drop it and create a new one.
+		// This is becuase I never finished the classes
+		$oProc->DropTable('categories');
 
-    // Since no applications are using it yet.  I am gonna drop it and create a new one.
-    // This is becuase I never finished the classes
-    $phpgw_setup->db->query("drop table categories");
-    $sql = "CREATE TABLE phpgw_categories (
-              cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
-              cat_parent      int(9) DEFAULT '0' NOT NULL,
-              cat_owner       int(11) DEFAULT '0' NOT NULL,
-              cat_appname     varchar(50) NOT NULL,
-              cat_name        varchar(150) NOT NULL,
-              cat_description varchar(255) NOT NULL,
-              cat_data        text,
-              PRIMARY KEY (cat_id)
-           )";
-    $phpgw_setup->db->query($sql);
+		$oProc->CreateTable(
+			'phpgw_categories', array(
+			"fd" => array(
+				'cat_id' => array('type' => 'auto', 'default' => '0', 'nullable' => false),
+				'cat_parent' => array('type' => 'int', 'precision' => 4, 'default' => '0', 'nullable' => false),
+				'cat_owner' => array('type' => 'int', 'precision' => 4, 'default' => '0', 'nullable' => false),
+				'cat_appname' => array('type' => 'varchar', 'precision'  => 50, 'nullable' => false),
+				'cat_name' => array('type' => 'varchar', 'precision'  => 150, 'nullable' => false),
+				'cat_description' => array('type' => 'varchar', 'precision'  => 255, 'nullable' => false),
+				'cat_data' => array('type' => 'text')
+			),
+				'pk' => array('cat_id'),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
+		);
 
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9pre1";
-  }
+		$setup_info['phpgwapi']['currentver'] = '0.9.9pre1';
+		return True;
+	}
 
-  $test[] = "0.9.9pre1";
-  function upgrade0_9_9pre1(){
-    global $phpgw_info, $phpgw_setup;
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9";
-  }
+	$test[] = "0.9.9pre1";
+	function phpgwapi_upgrade0_9_9pre1()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.9';
+		return True;
+	}
 
-  $test[] = "0.9.9";
-  function upgrade0_9_9(){
-    global $phpgw_info, $phpgw_setup;
-    $db2 = $phpgw_setup->db;
-    //convert user settings
-    $phpgw_setup->db->query("select account_id, account_permissions from accounts",__LINE__,__FILE__);
-    if($phpgw_setup->db->num_rows()) {
-      while($phpgw_setup->db->next_record()) {
-        $apps_perms = explode(":",$phpgw_setup->db->f("account_permissions"));
-        for($i=1;$i<count($apps_perms)-1;$i++) {
-          if ($apps_perms[$i] != ""){
-            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
-            $sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
-            $db2->query($sql ,__LINE__,__FILE__);
-          }
-        }
-      }
-    }
-    $phpgw_setup->db->query("update accounts set account_permissions = ''",__LINE__,__FILE__);
-    //convert group settings
-    $phpgw_setup->db->query("select group_id, group_apps from groups",__LINE__,__FILE__);
-    if($phpgw_setup->db->num_rows()) {
-      while($phpgw_setup->db->next_record()) {
-        $apps_perms = explode(":",$phpgw_setup->db->f("group_apps"));
-        for($i=1;$i<count($apps_perms)-1;$i++) {
-          if ($apps_perms[$i] != ""){
-            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
-            $sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("group_id").", 'g', 1)";
-            $db2->query($sql ,__LINE__,__FILE__);
-          }
-        }
-      }
-    }
-    $phpgw_setup->db->query("update groups set group_apps = ''",__LINE__,__FILE__);
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre1";
-  }
+	$test[] = "0.9.9";
+	function phpgwapi_upgrade0_9_9()
+	{
+		global $setup_info, $phpgw_setup;
+		$db2 = $phpgw_setup->db;
+		//convert user settings
+		$phpgw_setup->db->query("select account_id, account_permissions from accounts",__LINE__,__FILE__);
+		if($phpgw_setup->db->num_rows())
+		{
+			while($phpgw_setup->db->next_record())
+			{
+				$apps_perms = explode(":",$phpgw_setup->db->f("account_permissions"));
+				for($i=1;$i<count($apps_perms)-1;$i++)
+				{
+					if ($apps_perms[$i] != "")
+					{
+						$sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+						$sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
+						$db2->query($sql ,__LINE__,__FILE__);
+					}
+				}
+			}
+		}
+		$phpgw_setup->db->query("update accounts set account_permissions = ''",__LINE__,__FILE__);
+		//convert group settings
+		$phpgw_setup->db->query("select group_id, group_apps from groups",__LINE__,__FILE__);
+		if($phpgw_setup->db->num_rows())
+		{
+			while($phpgw_setup->db->next_record())
+			{
+				$apps_perms = explode(":",$phpgw_setup->db->f("group_apps"));
+				for($i=1;$i<count($apps_perms)-1;$i++)
+				{
+					if ($apps_perms[$i] != "")
+					{
+						$sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+						$sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("group_id").", 'g', 1)";
+						$db2->query($sql ,__LINE__,__FILE__);
+					}
+				}
+			}
+		}
+		$phpgw_setup->db->query("update groups set group_apps = ''",__LINE__,__FILE__);
 
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre1';
+		return True;
+	}
 
-  $test[] = "0.9.10pre1";                                                                                                                                                    
-  function upgrade0_9_10pre1(){                                                                                                                                              
-    global $phpgw_info, $phpgw_setup;                                                                                                                                   
-    $phpgw_setup->db->query("alter table phpgw_categories add column cat_access varchar(25) after cat_owner");
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre2";
-  }
+	$test[] = "0.9.10pre1";                                                                                                                                                    
+	function phpgwapi_upgrade0_9_10pre1()
+	{
+		global $setup_info, $oProc;                                                                                                                                   
+		$oProc->m_odb->query("alter table phpgw_categories add column cat_access varchar(25) after cat_owner");
 
-  $test[] = "0.9.10pre2";                                                                                                                                                                        
-  function upgrade0_9_10pre2(){                                                                                                                                                                  
-    global $phpgw_info, $phpgw_setup;
-    $db2 = $phpgw_setup->db;
-    $phpgw_setup->db->query("select account_groups,account_id from accounts",__LINE__,__FILE__);
-    if($phpgw_setup->db->num_rows()) {
-      while($phpgw_setup->db->next_record()) {
-        $gl = explode(",",$phpgw_setup->db->f("account_groups"));
-        for ($i=1; $i<(count($gl)-1); $i++) {
-          $ga = explode(":",$gl[$i]);
-          $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
-          $sql .= " values('phpgw_group', '".$ga[0]."', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
-          $db2->query($sql ,__LINE__,__FILE__);
-        }
-      }
-    }
-    $phpgw_setup->db->query("update accounts set account_groups = ''",__LINE__,__FILE__);
-    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre3";
-  }
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre2';
+		return True;
+	}
 
-  $test[] = "0.9.10pre3";
-  function upgrade0_9_10pre3()
-  {
-     global $phpgw_info, $phpgw_setup; 
-     $phpgw_setup->db->query("alter table accounts rename phpgw_accounts",__LINE__,__FILE__);
-     $phpgw_setup->db->query("alter table phpgw_accounts drop column account_permissions",__LINE__,__FILE__);
-     $phpgw_setup->db->query("alter table phpgw_accounts drop column account_groups",__LINE__,__FILE__);
-     $phpgw_setup->db->query("alter table phpgw_accounts add column account_type char(1)",__LINE__,__FILE__);
-     $phpgw_setup->db->query("update phpgw_accounts set account_type='u'",__LINE__,__FILE__);
-     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre4";
-  }
+	$test[] = "0.9.10pre2";
+	function phpgwapi_upgrade0_9_10pre2()
+	{
+		global $phpgw_info, $oProc;
 
+		$db2 = $oProc->m_odb;
+		$oProc->m_odb->query("SELECT account_groups,account_id FROM accounts",__LINE__,__FILE__);
+		if($oProc->m_odb->num_rows())
+		{
+			while($oProc->m_odb->next_record())
+			{
+				$gl = explode(",",$phpgw_setup->db->f("account_groups"));
+				for ($i=1; $i<(count($gl)-1); $i++)
+				{
+					$ga = explode(":",$gl[$i]);
+					$sql = "INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+					$sql .= " VALUES('phpgw_group', '".$ga[0]."', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
+					$db2->query($sql ,__LINE__,__FILE__);
+				}
+			}
+		}
+		$oProc->m_odb->query("UPDATE accounts SET account_groups= ''",__LINE__,__FILE__);
 
-  function change_groups($table,$field,$old_id,$new_id,$db2,$db3)
-  {
-     $sql = $field[0];
-     for($i=1;$i<count($field);$i++) {
-       $sql .= ", ".$field[$i];
-     }
-     $db2->query("SELECT $sql FROM $table WHERE $field[0] like '%,".$old_id.",%'",__LINE__,__FILE__);
-     if($db2->num_rows()) {
-       while($db2->next_record()) {
-         $access = $db2->f($field[0]);
-         $id = $db2->f($field[1]);
-         $access = str_replace(','.$old_id.',' , ','.$new_id.',' , $access);
-         $db3->query("UPDATE $table SET ".$field[0]."='".$access."' WHERE ".$field[1]."=".$id,__LINE__,__FILE__);
-       }
-     }
-   }
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre3';
+		return True;
+	}
 
+	$test[] = "0.9.10pre3";
+	function phpgwapi_upgrade0_9_10pre3()
+	{
+		global $setup_info, $oProc; 
 
-  $test[] = "0.9.10pre4";
-  function upgrade0_9_10pre4()
-  {
-     global $phpgw_info, $phpgw_setup;
-     
-     $db2 = $phpgw_setup->db;
-     $db3 = $phpgw_setup->db;
-     $phpgw_setup->db->query("SELECT MAX(group_id) FROM groups",__LINE__,__FILE__);
-     $phpgw_setup->db->next_record();
-     $max_group_id = $phpgw_setup->db->f(0);
-     
-     $tables = Array('addressbook','calendar_entry','f_forums','phpgw_categories','todo');
-     $fields["addressbook"] = Array('ab_access','ab_id');
-     $fields["calendar_entry"] = Array('cal_group','cal_id');
-     $fields["f_forums"] = Array('groups','id');
-     $fields["phpgw_categories"] = Array('cat_access','cat_id');
-     $fields["todo"] = Array('todo_access','todo_id');
-     
-     $phpgw_setup->db->query("SELECT group_id, group_name FROM groups",__LINE__,__FILE__);
-     while($phpgw_setup->db->next_record()) {
-       $old_group_id = $phpgw_setup->db->f("group_id");
-       $group_name = $phpgw_setup->db->f("group_name");
-       while(1) {
-         $new_group_id = mt_rand ($max_group_id, 60000);
-         $db2->query("SELECT account_id FROM phpgw_accounts WHERE account_id=$new_group_id",__LINE__,__FILE__);
-         if(!$db2->num_rows()) { break; }
-       }
-       $db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_lid='$group_name'",__LINE__,__FILE__);
-       if($db2->num_rows()) {
-         $group_name .= "_group";
-       }
-       $db2->query("INSERT INTO phpgw_accounts(account_id, account_lid, account_pwd, "
-       			  ."account_firstname, account_lastname, account_lastlogin, "
-       			  ."account_lastloginfrom, account_lastpwd_change, "
-       			  ."account_status, account_type) "
-       			  ."VALUES ($new_group_id,'$group_name','x','','',$old_group_id,NULL,NULL,'A','g')");
+		$oProc->m_odb->query("alter table accounts rename phpgw_accounts",__LINE__,__FILE__);
+		$oProc->m_odb->query("alter table phpgw_accounts drop column account_permissions",__LINE__,__FILE__);
+		$oProc->m_odb->query("alter table phpgw_accounts drop column account_groups",__LINE__,__FILE__);
+		$oProc->m_odb->query("alter table phpgw_accounts add column account_type char(1)",__LINE__,__FILE__);
+		$oProc->m_odb->query("update phpgw_accounts set account_type='u'",__LINE__,__FILE__);
 
-       for($i=0;$i<count($tables);$i++) {
-         change_groups($tables[$i],$fields[$tables[$i]],$old_group_id,$new_group_id,$db2,$db3);
-       }
-       $db2->query("UPDATE phpgw_acl SET acl_location='$new_group_id' "
-                  ."WHERE acl_appname='phpgw_group' AND acl_account_type='u' "
-                  ."AND acl_location='$old_group_id'");
-       $db2->query("UPDATE phpgw_acl SET acl_account=$new_group_id "
-                  ."WHERE acl_location='run' AND acl_account_type='g' "
-                  ."AND acl_account=$old_group_id");
-     }
-     $phpgw_setup->db->query("DROP TABLE groups",__LINE__,__FILE__);
-     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre5";
-  }
- 
-  $test[] = "0.9.10pre5";
-  function upgrade0_9_10pre5()
-  {
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre4';
+		return True;
+	}
+
+	// TODO see next function
+	function change_groups($table,$field,$old_id,$new_id,$db2,$db3)
+	{
+		$sql = $field[0];
+		for($i=1;$i<count($field);$i++)
+		{
+			$sql .= ", ".$field[$i];
+		}
+		$db2->query("SELECT $sql FROM $table WHERE $field[0] like '%,".$old_id.",%'",__LINE__,__FILE__);
+		if($db2->num_rows())
+		{
+			while($db2->next_record())
+			{
+				$access = $db2->f($field[0]);
+				$id = $db2->f($field[1]);
+				$access = str_replace(','.$old_id.',' , ','.$new_id.',' , $access);
+				$db3->query("UPDATE $table SET ".$field[0]."='".$access."' WHERE ".$field[1]."=".$id,__LINE__,__FILE__);
+			}
+		}
+	}
+
+	// TODO this and the function above may affect all apps
+	$test[] = "0.9.10pre4";
+	function phpgwapi_upgrade0_9_10pre4()
+	{
 		global $phpgw_info, $phpgw_setup;
+
+		$db2 = $phpgw_setup->db;
+		$db3 = $phpgw_setup->db;
+		$phpgw_setup->db->query("SELECT MAX(group_id) FROM groups",__LINE__,__FILE__);
+		$phpgw_setup->db->next_record();
+		$max_group_id = $phpgw_setup->db->f(0);
+
+		$tables = Array('addressbook','calendar_entry','f_forums','phpgw_categories','todo');
+		$fields["addressbook"] = Array('ab_access','ab_id');
+		$fields["calendar_entry"] = Array('cal_group','cal_id');
+		$fields["f_forums"] = Array('groups','id');
+		$fields["phpgw_categories"] = Array('cat_access','cat_id');
+		$fields["todo"] = Array('todo_access','todo_id');
+
+		$phpgw_setup->db->query("SELECT group_id, group_name FROM groups",__LINE__,__FILE__);
+		while($phpgw_setup->db->next_record())
+		{
+			$old_group_id = $phpgw_setup->db->f("group_id");
+			$group_name = $phpgw_setup->db->f("group_name");
+			while(1)
+			{
+				$new_group_id = mt_rand ($max_group_id, 60000);
+				$db2->query("SELECT account_id FROM phpgw_accounts WHERE account_id=$new_group_id",__LINE__,__FILE__);
+				if(!$db2->num_rows()) { break; }
+			}
+			$db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_lid='$group_name'",__LINE__,__FILE__);
+			if($db2->num_rows())
+			{
+				$group_name .= "_group";
+			}
+			$db2->query("INSERT INTO phpgw_accounts(account_id, account_lid, account_pwd, "
+				."account_firstname, account_lastname, account_lastlogin, "
+				."account_lastloginfrom, account_lastpwd_change, "
+				."account_status, account_type) "
+				."VALUES ($new_group_id,'$group_name','x','','',$old_group_id,NULL,NULL,'A','g')");
+
+			for($i=0;$i<count($tables);$i++)
+			{
+				change_groups($tables[$i],$fields[$tables[$i]],$old_group_id,$new_group_id,$db2,$db3);
+			}
+			$db2->query("UPDATE phpgw_acl SET acl_location='$new_group_id' "
+				."WHERE acl_appname='phpgw_group' AND acl_account_type='u' "
+				."AND acl_location='$old_group_id'");
+				$db2->query("UPDATE phpgw_acl SET acl_account=$new_group_id "
+				."WHERE acl_location='run' AND acl_account_type='g' "
+				."AND acl_account=$old_group_id");
+		}
+		$phpgw_setup->db->query("DROP TABLE groups",__LINE__,__FILE__);
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre5";
+	}
+ 
+	$test[] = "0.9.10pre5";
+	function phpgwapi_upgrade0_9_10pre5()
+	{
+		global $setup_info, $oProc;
 
 		// This is only temp data, so we can kill it.
-		$phpgw_setup->db->query('drop table phpgw_app_sessions',__LINE__,__FILE__);
-    $sql = "CREATE TABLE phpgw_app_sessions (
-      sessionid	   varchar(255) NOT NULL,
-      loginid	     varchar(20),
-      location      varchar(255),
-      app	         varchar(20),
-      content	     text
-    )";
-    $phpgw_setup->db->query($sql);  
-     
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre6";
-  }
+		$oProc->DropTable('phpgw_app_sessions');
+		$oProc->CreateTable(
+			'phpgw_app_sessions', array(
+				'fd' => array(
+					'sessionid' => array('type' => 'varchar', 'precision' => 255, 'nullable' => False),
+					'loginid' => array('type' => 'varchar', 'precision' => 20),
+					'location' => array('type' => 'varchar', 'precision' => 255),
+					'app' => array('type' => 'varchar', 'precision' => 20),
+					'content' => array('type' => 'text')
+				),
+				'pk' => array(),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array()
+			)
+		);
 
-  $test[] = "0.9.10pre6";
-  function upgrade0_9_10pre6()
-  {
-		global $phpgw_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre6';
+		return True;
+	}
 
-    $phpgw_setup->db->query("alter table config rename phpgw_config",__LINE__,__FILE__);
-     
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre7";
-  }
+	$test[] = "0.9.10pre6";
+	function phpgwapi_upgrade0_9_10pre6()
+	{
+		global $setup_info, $oProc;
 
-  $test[] = "0.9.10pre7";
-  function upgrade0_9_10pre7()
-  {
-		global $phpgw_info, $phpgw_setup;
+		$oProc->RenameTable('config','phpgw_config');
 
-    $phpgw_setup->db->query("alter table applications rename phpgw_applications",__LINE__,__FILE__);
-     
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
-  }
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre7';
+		return True;
+	}
 
-  $test[] = "0.9.10pre8";
-  function upgrade0_9_10pre8()
-  {
-		global $phpgw_info, $phpgw_setup;
+	$test[] = "0.9.10pre7";
+	function phpgwapi_upgrade0_9_10pre7()
+	{
+		global $setup_info, $oProc;
 
-    $phpgw_setup->db->query("alter table phpgw_sessions change session_info session_action varchar(255)",__LINE__,__FILE__);
-     
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
-  }
+		$oProc->RenameTable('applications','phpgw_applications');
 
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre8';
+		return True;
+	}
 
-  $test[] = '0.9.10pre9';
-  function upgrade0_9_10pre9()
-  {
-		global $phpgw_info, $phpgw_setup;
+	$test[] = "0.9.10pre8";
+	function phpgwapi_upgrade0_9_10pre8()
+	{
+		global $setup_info, $oProc;
 
-		$phpgw_setup->db->query("alter table preferences rename phpgw_preferences",__LINE__,__FILE__);
-     
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre10';
-  }
+		$oProc->RenameColumn('phpgw_sessions', 'session_info', 'session_action');
+		$oProc->AlterColumn('phpgw_sessions', 'session_action', array('type' => 'varchar', 'precision' => '255'));
 
-  $test[] = '0.9.10pre10';
-  function upgrade0_9_10pre10()
-  {
-		global $phpgw_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre9';
+		return True;
+	}
 
-		$phpgw_setup->db->query("alter table phpgw_acl drop column acl_account_type",__LINE__,__FILE__);
-     
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre11';
-  }
+	$test[] = '0.9.10pre9';
+	function phpgwapi_upgrade0_9_10pre9()
+	{
+		global $setup_info, $oProc;
 
-  $test[] = '0.9.10pre11';
-  function upgrade0_9_10pre11()
-  {
-                global $phpgw_info, $phpgw_setup;
+		$oProc->RenameTable('preferences','phpgw_preferences');
 
-                $phpgw_setup->db->query("alter table notes rename phpgw_notes",__LINE__,__FILE__);
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre10';
+		return True;
+	}
 
-                $phpgw_setup->db->query("alter table phpgw_notes add column note_category int(9) after note_date",__LINE__,__FILE__);
+	$test[] = '0.9.10pre10';
+	function phpgwapi_upgrade0_9_10pre10()
+	{
+		global $setup_info, $oProc;
 
-                $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre12';
-  }
+		$newtbldef = array(
+			"fd" => array(
+				'acl_appname' => array('type' => 'varchar', 'precision' => 50),
+				'acl_location' => array('type' => 'varchar', 'precision' => 255),
+				'acl_account' => array('type' => 'int', 'precision' => 4),
+				'acl_rights' => array('type' => 'int', 'precision' => 4)
+			),
+			'pk' => array(),
+			'ix' => array(),
+			'fk' => array(),
+			'uc' => array()
+		);
 
+		$oProc->DropColumn('phpgw_acl',$newtbldef,'acl_account_type');
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre11';
+		return True;
+	}
+
+	$test[] = '0.9.10pre11';
+	function phpgwapi_upgrade0_9_10pre11()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre12';
+		return True;
+	}
 
     $test[] = '0.9.10pre12';
-    function upgrade0_9_10pre12()
+    function phpgwapi_upgrade0_9_10pre12()
     {
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre13';
+		return True;
 	}
 
+    $test[] = '0.9.10pre13';
+    function phpgwapi_upgrade0_9_10pre13()
+    {
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre14';
+		return True;
+	}
 
 	$test[] = '0.9.10pre14';
-	function upgrade0_9_10pre14()
+	function phpgwapi_upgrade0_9_10pre14()
 	{
-		global $phpgw_info, $phpgw_setup;
+		global $setup_info, $oProc;
 
-		$phpgw_setup->db->query("alter table phpgw_sessions add column session_flags char(2)");
+		$oProc->AddColumn('phpgw_sessions','session_flags', array('type' => 'char', 'precision' => 2));
 
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre15';
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre15';
+		return True;
 	}
 
+	$test[] = '0.9.10pre15';
+	function phpgwapi_upgrade0_9_10pre15()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre16';
+		return True;
+	}
 
-    $test[] = '0.9.10pre18';
-    function upgrade0_9_10pre18() {
-        global $phpgw_info, $phpgw_setup;
+    $test[] = '0.9.10pre16';
+    function phpgwapi_upgrade0_9_10pre16()
+    {
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre17';
+		return True;
+	}
 
-        $sql = "create table phpgw_nextid (
-           appname varchar(25),
-           id      int(8),
-           UNIQUE (appname)
-          )";
+    $test[] = '0.9.10pre17';
+    function phpgwapi_upgrade0_9_10pre17()
+    {
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre18';
+		return True;
+	}
 
-        $phpgw_setup->db->query($sql);
-        $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre19';
-    }
+	$test[] = '0.9.10pre18';
+	function phpgwapi_upgrade0_9_10pre18()
+	{
+		global $setup_info, $oProc;
 
-    $test[] = '0.9.10pre19';
-    function upgrade0_9_10pre19() {
-        global $phpgw_info, $phpgw_setup;
+		$oProc->CreateTable(
+			'phpgw_nextid', array(
+				'fd' => array(
+					'appname' => array('type' => 'varchar', 'precision' => 25),
+					'id' => array('type' => 'int', 'precision' => 4)
+				),
+				'pk' => array(),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array('appname')
+			)
+		);
 
-		@$phpgw_setup->db->query("drop table if exists phpgw_nextid");
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre19';
+		return True;
+	}
 
-        $sql = "create table phpgw_nextid (
-           appname varchar(25) NOT NULL,
-           id      int(8),
-           UNIQUE (appname)
-          )";
+	$test[] = '0.9.10pre19';
+	function phpgwapi_upgrade0_9_10pre19()
+	{
+		global $setup_info, $oProc;
 
-        $phpgw_setup->db->query($sql);
-        $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre20';
-    }
+		$oProc->DropTable('phpgw_nextid');
+
+		$oProc->CreateTable(
+			'phpgw_nextid', array(
+				'fd' => array(
+					'appname' => array('type' => 'varchar', 'precision' => 25, 'nullable' => False),
+					'id' => array('type' => 'int', 'precision' => 4),
+				),
+				'pk' => array(),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array('appname')
+			)
+		);
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre20';
+		return True;
+	}
 
 	$test[] = '0.9.10pre20';
-	function upgrade0_9_10pre20()
+	function phpgwapi_upgrade0_9_10pre20()
 	{
-		global $phpgw_info, $phpgw_setup;
-
-		$phpgw_setup->db->query("alter table phpgw_addressbook add column access char(7) after owner",__LINE__,__FILE__);
-
-		$phpgw_setup->db->query($sql);
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre21';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre21';
+		return True;
 	}
 
-
 	$test[] = '0.9.10pre21';
-	function upgrade0_9_10pre21()
+	function phpgwapi_upgrade0_9_10pre21()
 	{
-		global $phpgw_info, $phpgw_setup;
-
-		$phpgw_setup->db->query("alter table phpgw_addressbook add column cat_id varchar(32) after access",__LINE__,__FILE__);
-
-		$phpgw_setup->db->query($sql);
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre22';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre22';
+		return True;
 	}
 
 	$test[] = '0.9.10pre22';
-	function upgrade0_9_10pre22()
+	function phpgwapi_upgrade0_9_10pre22()
 	{
-		global $phpgw_info, $phpgw_setup;
-
-		$phpgw_setup->db->query("alter table todo rename phpgw_todo",__LINE__,__FILE__);
-
-		$phpgw_setup->db->query($sql);
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre23';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre23';
+		return True;
 	}
 
 	$test[] = '0.9.10pre23';
-	function upgrade0_9_10pre23()
+	function phpgwapi_upgrade0_9_10pre23()
 	{
-		global $phpgw_info, $phpgw_setup;
-
-		$phpgw_setup->db->query("UPDATE phpgw_addressbook SET tid='n' WHERE tid is null",__LINE__,__FILE__);
-
-		$phpgw_setup->db->query($sql);
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre24';
+		return True;
 	}
 
 	$test[] = '0.9.10pre24';
-	function upgrade0_9_10pre24()
+	function phpgwapi_upgrade0_9_10pre24()
 	{
-		global $phpgw_info, $phpgw_setup;
+		global $setup_info, $oProc;
 
-		$sql = "alter table phpgw_categories add column cat_access char(7) after cat_owner";
-		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+		$oProc->AddColumn('phpgw_categories','cat_access', array('type' => 'char', 'precision' => 7));
 
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre25';
+		return True;
 	}
 
 	$test[] = '0.9.10pre25';
-	function upgrade0_9_10pre25()
+	function phpgwapi_upgrade0_9_10pre25()
 	{
-		global $phpgw_info, $phpgw_setup;
+		global $setup_info, $oProc;
 
-		$phpgw_setup->db->query("alter table phpgw_app_sessions add column session_dla int",__LINE__,__FILE__);
+		$oProc->AddColumn('phpgw_app_sessions','session_dla', array('type' => 'int', 'precision' => 4));
 
-		$phpgw_setup->db->query($sql);
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre26';
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre26';
+		return True;
 	}
 
 	$test[] = '0.9.10pre26';
-	function upgrade0_9_10pre26()
+	function phpgwapi_upgrade0_9_10pre26()
 	{
-		global $phpgw_info, $phpgw_setup;
-
-		$phpgw_setup->db->query("alter table phpgw_todo add column todo_cat int after todo_access",__LINE__,__FILE__);
-
-		$phpgw_setup->db->query($sql);
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre27';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre27';
+		return True;
 	}
 
 	$test[] = '0.9.10pre27';
-	function upgrade0_9_10pre27()
+	function phpgwapi_upgrade0_9_10pre27()
 	{
-		global $phpgw_info,$phpgw_setup;
+		global $setup_info, $oProc;
 
-		$phpgw_setup->db->query("alter table phpgw_app_sessions change content content longtext");
+		$oProc->AlterColumn('phpgw_app_sessions', 'content', array('type' => 'longtext'));
 
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre28';
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre28';
+		return True;
 	}
 
 	$test[] = '0.9.10pre28';
-	function upgrade0_9_10pre28()
+	function phpgwapi_upgrade0_9_10pre28()
 	{
-		global $phpgw_info;
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.10';
+		return True;
 	}
 
-
 	$test[] = '0.9.10';
-	function upgrade0_9_10()
+	function phpgwapi_upgrade0_9_10()
 	{
-		global $phpgw_info,$phpgw_setup;
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.001';
+		return True;
+	}
 
-		$phpgw_setup->db->query("alter table phpgw_notes add column note_access char(7) after note_owner");
+	$test[] = '0.9.11.001';
+	function phpgwapi_upgrade0_9_11_001()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.002';
+		return True;
+	}
 
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.001';
+	$test[] = '0.9.11.002';
+	function phpgwapi_upgrade0_9_11_002()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.003';
+		return True;
+	}
+
+	$test[] = '0.9.11.003';
+	function phpgwapi_upgrade0_9_11_003()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.004';
+		return True;
 	}
 
 	$test[] = '0.9.11.004';
-	function upgrade0_9_11_004()
+	function phpgwapi_upgrade0_9_11_004()
 	{
-		global $phpgw_info,$phpgw_setup;
+		global $setup_info, $oProc;
 
-		$phpgw_setup->db->query("alter table phpgw_config add column config_app varchar(50) first",__LINE__,__FILE__);
-		$phpgw_setup->db->query("update phpgw_config set config_app='phpgwapi'",__LINE__,__FILE__);
+		$oProc->AddColumn('phpgw_config','config_app', array('type' => 'varchar', 'precision' => 50));
+		$oProc->m_odb->query("UPDATE phpgw_config SET config_app='phpgwapi'",__LINE__,__FILE__);
 
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.005';
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.005';
+		return True;
 	}
 
 	$test[] = '0.9.11.005';
-	function upgrade0_9_11_005()
+	function phpgwapi_upgrade0_9_11_005()
 	{
-		global $phpgw_info,$phpgw_setup;
+		global $setup_info, $oProc;
 
-		$phpgw_setup->db->query("alter table phpgw_accounts add column account_expires int after account_status",__LINE__,__FILE__);
-		$phpgw_setup->db->query("update phpgw_accounts set account_expires='-1'",__LINE__,__FILE__);
+		$oProc->AddColumn('phpgw_accounts','account_expires', array('type' => 'int', 'precision' => 4));
+		$oProc->m_odb->query("UPDATE phpgw_accounts SET account_expires='-1'",__LINE__,__FILE__);
 
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.006';
+		return True;
 	}
-	
 
 	$test[] = '0.9.11.008';
-	function upgrade0_9_11_008()
+	function phpgwapi_upgrade0_9_11_008()
 	{
-		global $phpgw_info,$phpgw_setup;
+		global $setup_info, $oProc;
 
-		@$phpgw_setup->db->query("drop table profiles",__LINE__,__FILE__);
+		$oProc->DropTable('profiles');
 		
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.009';
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.009';
+		return True;
 	}
 
 	$test[] = '0.9.11.009';
-	function upgrade0_9_11_009()
+	function phpgwapi_upgrade0_9_11_009()
 	{
-		global $phpgw_info,$phpgw_setup;
-
-		$phpgw_setup->db->query("alter table phpgw_cal_holidays add column observance_rule int DEFAULT '0' NOT NULL",__LINE__,__TABLE__);
-		$phpgw_setup->db->query("delete from phpgw_cal_holidays",__LINE__,__FILE__);
-		
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.010';
+		global $setup_info, $oProc;
+		$setup_info['phpgwapi']['currentver'] = '0.9.11.010';
+		return True;
 	}
 
 	$test[] = '0.9.11.010';
-	function upgrade0_9_11_010()
+	function phpgwapi_upgrade0_9_11_010()
 	{
-		global $phpgw_info;
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.001';
+		return True;
 	}
 
-	$test[] = '0.9.11.011';
-	function upgrade0_9_11_011()
+	$test[] = '0.9.13.001';
+	function phpgwapi_upgrade0_9_13_001()
 	{
-		global $phpgw_info;
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.002';
+		return True;
 	}
-
 ?>
