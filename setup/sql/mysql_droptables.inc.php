@@ -25,9 +25,6 @@
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook_extra");
   $phpgw_setup->db->query("DROP TABLE phpgw_todo");
-  $phpgw_setup->db->query("DROP TABLE calendar_entry");
-  $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
-  $phpgw_setup->db->query("DROP TABLE calendar_entry_user");
   $phpgw_setup->db->query("DROP TABLE newsgroups");
   $phpgw_setup->db->query("DROP TABLE news_msg");
   $phpgw_setup->db->query("DROP TABLE lang");
@@ -36,6 +33,16 @@
   $phpgw_setup->db->query("DROP TABLE notes");
   $phpgw_setup->db->query("DROP TABLE phpgw_notes");
   $phpgw_setup->db->query("DROP TABLE phpgw_nextid");
+
+  $phpgw_setup->db->query("DROP TABLE phpgw_cal");
+  $phpgw_setup->db->query("DROP TABLE phpgw_cal_user");
+  $phpgw_setup->db->query("DROP TABLE phpgw_cal_repeats");
+  $phpgw_setup->db->query("DROP TABLE calendar_entry");
+  $phpgw_setup->db->query("DROP TABLE calendar_entry_user");
+  $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
+  $phpgw_setup->db->query("DROP TABLE calendar_entry");
+  $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
+  $phpgw_setup->db->query("DROP TABLE calendar_entry_user");
 
 	/* Legacy tables */
 
