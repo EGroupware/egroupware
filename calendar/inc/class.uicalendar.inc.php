@@ -2338,7 +2338,24 @@
 			{
 				$this->index();
 			}
-			$participants = $_POST['participants'];
+
+                        // Fetch participants
+                        if( get_var("matrix", array("GET", "POST")) == 1 )
+                        {
+                                // fetch participants from session
+                                $participants = explode(";", $GLOBALS['phpgw']->session->appsession("participants_matrix"));
+                        } else {
+                                // fetch participatns from get and post var
+                                $participants = get_var("participants", array("GET", "POST"));
+                                // Defined - into session - who participates
+                                $GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";", $participants));
+                        }
+			$date["year"]   = get_var("year",  array("GET", "POST"));
+                        $date["month"]  = get_var("month", array("GET", "POST"));
+                        $date["day"]    = get_var("day",   array("GET", "POST"));
+
+
+
 			$parts = Array();
 			$acct = CreateObject('phpgwapi.accounts',$this->bo->owner);
 
@@ -2370,10 +2387,6 @@
 				}
 				unset($acct);
 			}
-			$participants = array_keys($parts);	// get id's as values and a numeric index
-
-			// Defined - into session - who participates
-			$GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";", $participants));
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -2409,14 +2422,20 @@
 			echo '  '.$this->html->input_hidden('month',$this->bo->month);
 			echo '  '.$this->html->input_hidden('day',$this->bo->day);
 			echo '  '.$this->html->input_hidden('matrixtype',$_POST['matrixtype']);
-			foreach($participants as $part)
-			{
-				$part = substr($part,0,2) == 'g_' ? 'g_'.(int) substr($part,2) : (int) $part;
-				echo '  '.$this->html->input_hidden('participants[]',$part);
-			}
+			echo '  '.$this->html->input_hidden('matrix', 1);
 			echo '  <input type="submit" name="refresh" value="'.lang('Refresh').'">'."\n";
 			echo ' </td><td>'."\n";
 			echo '  <input type="submit" name="cancel" value="'.lang('Cancel').'">'."\n";
+
+                        // Seven days
+                        if( get_var("matrixtype", array("GET", "POST")) == "free/busy" )
+                        {
+                                if( !get_var("sevendays", array("GET", "POST")) )
+                                        echo '  <input type="submit" name="sevendays" value="'.lang('Show next seven days').'">'."\n";
+                                else
+                                        echo '  <input type="submit" name="oneday" value="'.lang('Show only one day').'">'."\n";
+                        }
+
 			echo ' </td></tr></table>'."\n";
 			echo '</form>'."\n";
 		}
