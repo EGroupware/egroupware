@@ -31,7 +31,7 @@
 			$this->link = CreateObject('infolog.bolink');
 		}
 
-		function pre_process(&$cell,&$value,&$templ)
+		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
 		{
 			$search = $value['search'] ? 1 : 0;
 			$create = $value['create'] ? 1 : 0;
@@ -39,7 +39,7 @@
 
 			if ($search && count($ids = $this->link->query($value['app'],$value['query'])))
 			{
-				$GLOBALS['phpgw_info']['etemplate']['extension_data']['linkto_widget'][$cell['name']]['app'] = $value['app'];
+				$extension_data['app'] = $value['app'];
 
 				$value = array(
 					'app' => $value['app'],
@@ -52,7 +52,7 @@
 			{
 				if (!$create)
 				{
-					$GLOBALS['phpgw_info']['etemplate']['extension_data']['linkto_widget'][$cell['name']] = $value;
+					$extension_data = $value;
 				}
             $value = array(
 					'app' => $value['app'],
@@ -69,7 +69,7 @@
 			return True;	// extra Label is ok
 		}
 
-		function post_process(&$cell,&$value,&$templ)
+		function post_process(&$cell,&$value,&$extension_data,&$loop)
 		{
 			$search = $value['search'] ? 1 : 0;
 			$create = $value['create'] ? 1 : 0;
@@ -79,13 +79,13 @@
 
 			if ($create)
 			{
-				$value = array_merge($value,$GLOBALS['phpgw_info']['etemplate']['extension_data']['linkto_widget'][$cell['name']]);
+				$value = array_merge($value,$extension_data);
 				if ($value['to_app'])						// make the link
 				{
 					$this->link->link($value['to_app'],$value['to_id'],$value['app'],$value['id'],$value['remark']);
 					echo "<p>linkto($value[app],$value[id],'$value[remark]')</p>\n";
 				}
 			}
-			$templ->loop = $search || $create;
+			$loop = $search || $create;
 		}
 	}
