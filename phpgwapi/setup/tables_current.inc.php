@@ -169,12 +169,12 @@
 		),
 		'phpgw_categories' => array(
 			'fd' => array(
-				'cat_id' => array('type' => 'auto', 'precision' => 8, 'default' => 0, 'nullable' => false),
-				'cat_main' => array('type' => 'int', 'precision' => 8, 'default' => 0, 'nullable' => false),
-				'cat_parent' => array('type' => 'int', 'precision' => 8, 'default' => 0, 'nullable' => false),
-				'cat_level' => array('type' => 'int', 'precision' => 4, 'default' =>0, 'nullable' => false),
-				'cat_owner' => array('type' => 'int', 'precision' => 8, 'default' => 0, 'nullable' => false),
-				'cat_access' => array('type' => 'char', 'precision' => 7),
+				'cat_id' => array('type' => 'auto', 'precision' => 4, 'default' => 0, 'nullable' => false),
+				'cat_main' => array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => false),
+				'cat_parent' => array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => false),
+				'cat_level' => array('type' => 'int', 'precision' => 2, 'default' => 0, 'nullable' => false),
+				'cat_owner' => array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => false),
+				'cat_access' => array('type' => 'varchar', 'precision' => 7),
 				'cat_appname' => array('type' => 'varchar', 'precision' => 50, 'nullable' => false),
 				'cat_name' => array('type' => 'varchar', 'precision' => 150, 'nullable' => false),
 				'cat_description' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
