@@ -85,11 +85,13 @@
 			$GLOBALS['setup_tpl']->set_var($style);
 			if ($nologoutbutton)
 			{
+				$icon_logout='&nbsp;';
 				$btn_logout = '&nbsp;';
 			}
 			else
 			{
 				$btn_logout = '<a href="index.php?FormLogout=' . $logoutfrom . '" class="link">' . lang('Logout').'</a>';
+				$icon_logout='*';
 			}
 
 			$GLOBALS['setup_tpl']->set_var('lang_setup', lang('setup'));
@@ -103,6 +105,7 @@
 				$GLOBALS['setup_tpl']->set_var('configdomain',' - ' . lang('Domain') . ': ' . $configdomain);
 			}
 			$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$GLOBALS['setup_tpl']->set_var('logouticon',$icon_logout);
 			$GLOBALS['setup_tpl']->set_var('logoutbutton',$btn_logout);
 			$GLOBALS['setup_tpl']->pparse('out','T_head');
 			/* $setup_tpl->set_var('T_head',''); */
