@@ -23,7 +23,7 @@
 
   /* Database setup */
   switch($phpgw_info["server"]["db_type"]){
-    case "postgresql":
+    case "pgsql":
       include($phpgw_info["server"]["api_dir"] . "/phpgw_db_pgsql.inc.php");
       break;
     case "oracle":
