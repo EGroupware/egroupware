@@ -1,5 +1,48 @@
 # $Id$
 
+CREATE TABLE config (
+  config_name     varchar(25) NOT NULL,
+  config_value    varchar(100),
+  UNIQUE config_name (config_name)
+);
+
+insert into config (config_name, config_value) values ('default_tplset', 'default');
+insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp');
+insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files');
+insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else');
+insert into config (config_name, config_value) values ('site_title', 'phpGroupWare');
+insert into config (config_name, config_value) values ('hostname', 'local.machine.name');
+insert into config (config_name, config_value) values ('webserver_url', '/phpgroupware');
+insert into config (config_name, config_value) values ('db_host', 'localhost');
+insert into config (config_name, config_value) values ('db_name', 'phpGroupWare_dev');
+insert into config (config_name, config_value) values ('db_user', 'phpgroupware');
+insert into config (config_name, config_value) values ('db_pass', 'phpgr0upwar3');
+insert into config (config_name, config_value) values ('db_type', 'mysql');
+insert into config (config_name, config_value) values ('auth_type', 'sql');
+insert into config (config_name, config_value) values ('ldap_host', 'localhost');
+insert into config (config_name, config_value) values ('ldap_context', 'o=phpGroupWare');
+insert into config (config_name, config_value) values ('usecookies', 'True');
+insert into config (config_name, config_value) values ('mail_server', 'localhost');
+insert into config (config_name, config_value) values ('mail_server_type', 'imap');
+insert into config (config_name, config_value) values ('imap_server_type', 'Cyrus');
+insert into config (config_name, config_value) values ('mail_suffix', 'yourdomain.com');         
+insert into config (config_name, config_value) values ('mail_login_type', 'standard');
+insert into config (config_name, config_value) values ('smtp_server', 'localhost');
+insert into config (config_name, config_value) values ('smtp_port', '25');
+insert into config (config_name, config_value) values ('nntp_server', 'yournewsserver.com');
+insert into config (config_name, config_value) values ('nntp_port', '119');
+insert into config (config_name, config_value) values ('nntp_sender', 'complaints@yourserver.com');
+insert into config (config_name, config_value) values ('nntp_organization', 'phpGroupWare');
+insert into config (config_name, config_value) values ('nntp_admin', 'admin@yourserver.com');
+insert into config (config_name, config_value) values ('nntp_login_username', '');
+insert into config (config_name, config_value) values ('nntp_login_password', '');
+insert into config (config_name, config_value) values ('charset', 'iso-8859-1');
+insert into config (config_name, config_value) values ('default_ftp_server', 'localhost');
+insert into config (config_name, config_value) values ('httpproxy_server', '');
+insert into config (config_name, config_value) values ('httpproxy_port', '');
+insert into config (config_name, config_value) values ('showpoweredbyon', 'bottom');
+insert into config (config_name, config_value) values ('checkfornewversion', 'False');
+
 CREATE TABLE applications (
   app_name     varchar(25) NOT NULL,
   app_title    varchar(50),
