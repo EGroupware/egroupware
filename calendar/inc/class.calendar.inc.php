@@ -301,7 +301,6 @@ class calendar extends calendar_
 		{
 			$rep_events = $this->repeating_events[$i];
 			$id = $rep_events->id;
-			$frequency = intval($rep_events->rpt_freq);
 			$start = $this->localdates($rep_events->datetime);
 			if($rep_events->rpt_use_end)
 			{
@@ -311,83 +310,104 @@ class calendar extends calendar_
 			{
 				$enddate   = $this->makegmttime(0,0,0,1,1,2007);
 			}
+			$full_event_date = date('Ymd',mktime(0,0,0,$rep_events->start->month,$rep_events->start->mday,$rep_events->start->year));
 			
 			// only repeat after the beginning, and if there is an rpt_end before the end date
 			if (($rep_events->rpt_use_end && ($date['full'] > $enddate['full'])) ||
-				($date['full'] < $start['full']))
+				($date['full'] < $full_event_date))
 			{
 				continue;
 			}
 
-			if ($date['full'] == $start['full'])
+			if ($date['full'] == $full_event_date)
 			{
 				$link[$this->repeating_event_matches++] = $id;
 			}
-			elseif ($rep_events->rpt_type == 'daily')
-			{
-				if ((floor(($date['bd'] - $start['bd'])/86400) % $frequency))
-				{
-					continue;
-				}
-				else
-				{
-					$link[$this->repeating_event_matches++] = $id;
-				}
-			}
-			elseif ($rep_events->rpt_type == 'weekly')
-			{
-				$isDay = strtoupper(substr($rep_events->rpt_days, $date['dow'], 1));
-				
-				if (floor(($date['bd'] - $start['bd'])/604800) % $frequency)
-				{
-					continue;
-				}
-				
-				if (strcmp($isDay,'Y') == 0)
-				{
-					$link[$this->repeating_event_matches++] = $id;
-				}
-			}
-			elseif ($rep_events->rpt_type == 'monthlybyday')
-			{
-				if ((($date['year'] - $start['year']) * 12 + $date['month'] - $start['month']) % $frequency)
-				{
-					continue;
-				}
-	  
-				if (($start['dow'] == $date['dow']) &&
-					(ceil($start['day']/7) == ceil($date['day']/7)))
-				{
-					$link[$this->repeating_event_matches++] = $id;
-				}
-			}
-			elseif ($rep_events->rpt_type == 'monthlybydate')
-			{
-				if ((($date['year'] - $start['year']) * 12 + $date['month'] - $start['month']) % $frequency)
-				{
-					continue;
-				}
-				
-				if ($date['day'] == $start['day'])
-				{
-					$link[$this->repeating_event_matches++] = $id;
-				}
-			}
-			elseif ($rep_events->rpt_type == 'yearly')
-			{
-				if (($date['year'] - $start['year']) % $frequency)
-				{
-					continue;
-				}
-				
-				if ($date['dm'] == $start['dm'])
-				{
-					$link[$this->repeating_event_matches++] = $id;
-				}
-			}
 			else
 			{
-				// unknown rpt type - because of all our else ifs
+				switch($rep_events->recur_type)
+				{
+					case RECUR_DAILY:
+						if (floor(($date['bd'] - $start['bd'])/86400) % $rep_events->recur_interval)
+						{
+							continue;
+						}
+						else
+						{
+							$link[$this->repeating_event_matches++] = $id;
+						}
+						break;
+					case RECUR_WEEKLY:
+						$check = 0;
+						switch($date['dow'])
+						{
+							case 0:
+								$check = M_SUNDAY;
+								break;
+							case 1:
+								$check = M_MONDAY;
+								break;
+							case 2:
+								$check = M_TUESDAY;
+								break;
+							case 3:
+								$check = M_WEDNESDAY;
+								break;
+							case 4:
+								$check = M_THURSDAY;
+								break;
+							case 5:
+								$check = M_FRIDAY;
+								break;
+							case 6:
+								$check = M_SATURDAY;
+								break;
+						}
+						if (floor(($date['bd'] - $start['bd'])/604800) % $rep_events->recur_interval)
+						{
+							continue;
+						}
+				
+						if ($rep_events->recur_data & $check)
+						{
+							$link[$this->repeating_event_matches++] = $id;
+						}
+						break;
+					case RECUR_MONTHLY_WDAY:
+						if ((($date['year'] - $rep_events->start->year) * 12 + $date['month'] - $rep_events->start->month) % $rep_events->recur_interval)
+						{
+							continue;
+						}
+	  
+						if (($this->day_of_week($rep_events->start->year,$rep_events->start->month,$rep_events->start->mday) == $date['dow']) &&
+							(ceil($rep_events->start->mday/7) == ceil($date['day']/7)))
+						{
+							$link[$this->repeating_event_matches++] = $id;
+						}
+						break;
+					case RECUR_MONTHLY_MDAY:
+						if ((($date['year'] - $rep_events->start->year) * 12 + $date['month'] - $rep_events->start->month) % $rep_events->recur_interval)
+						{
+							continue;
+						}
+				
+						if ($date['day'] == $rep_events->start->mday)
+						{
+							$link[$this->repeating_event_matches++] = $id;
+						}
+						break;
+					case RECUR_YEARLY:
+						if (($date['year'] - $rep_events->start->year) % $rep_events->recur_interval)
+						{
+							continue;
+						}
+				
+						if ($date['dm'] == date('dm',mktime(0,0,0,$rep_events->start->month,$rep_events->start->mday,$rep_events->start->year)))
+						{
+							$link[$this->repeating_event_matches++] = $id;
+						}
+						break;
+				}
 			}
 		}	// end for loop
 
@@ -766,8 +786,11 @@ class calendar extends calendar_
 		for ($j=0;$j<7;$j++)
 		{
 			$date = $this->gmtdate($startdate + ($j * 24 * 3600));
-			$p->set_var('column_data','');
-			$p->set_var('extra','');
+			$var = Array(
+				'column_data'	=>	'',
+				'extra'		=>	''
+			);
+			$p->set_var($var);
 			
 			if ($weekly || ($date['full'] >= $monthstart && $date['full'] <= $monthend))
 			{
@@ -778,35 +801,39 @@ class calendar extends calendar_
 				
 				if ($date['full'] == $this->today['full'])
 				{
-					$p->set_var('extra',' bgcolor="'.$phpgw_info['theme']['cal_today'].'"');
+					$extra = ' bgcolor="'.$phpgw_info['theme']['cal_today'].'"';
 				}
 				else
 				{
-					$p->set_var('extra',' bgcolor="'.$cellcolor.'"');
+					$extra = ' bgcolor="'.$cellcolor.'"';
 				}
 
+				$new_event_link = '';
 				if (!$this->printer_friendly)
 				{
-					$str = '';
 					
 					if($this->check_perms(PHPGW_ACL_ADD) == True)
 					{
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$this->owner).'">';
-						$str .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" ';
-						$str .= 'alt="'.lang('New Entry').'" ';
-						$str .= 'border="0" align="right">';
-						$str .= '</a>';
+						$new_event_link .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$this->owner).'">';
+						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" ';
+						$new_event_link .= 'alt="'.lang('New Entry').'" ';
+						$new_event_link .= 'border="0" align="right">';
+						$new_event_link .= '</a>';
 					}
-            
-					$p->set_var('new_event_link',$str);
-					$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
-					$p->set_var('day_number',$str);
+					$day_number = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
 				}
 				else
 				{
-					$p->set_var('new_event_link','');
-					$p->set_var('day_number',$date['day']);
+					$day_number = $date['day'];
 				}
+
+				$var = Array(
+					'extra'		=>	$extra,
+					'new_event_link'	=> $new_event_link,
+					'day_number'		=>	$day_number
+				);
+
+				$p->set_var($var);
 				
 				$p->parse('column_data','month_day',True);
 
@@ -815,22 +842,24 @@ class calendar extends calendar_
 				if ($this->sorted_events_matching)
 				{
 					$lr_events = CreateObject('calendar.calendar_item');
-					$p->set_var('week_day_font_size','2');
-					$p->set_var('events','');
+					$var = Array(
+						'week_day_font_size'	=>	'2',
+						'events'		=>	''
+					);
+					$p->set_var($var);
 					for ($k=0;$k<$this->sorted_events_matching;$k++)
 					{
 						$lr_events = $rep_events[$k];
 						$pict = 'circle.gif';
-						for ($outer_loop=0;$outer_loop<count($this->repeated_events);$outer_loop++)
+						if($lr_events->recur_type != RECUR_NONE)
 						{
-							$gr_events = $this->repeating_events[$outer_loop];
-							if ($gr_events->id == $lr_events->id)
-							{
-								$pict = 'rpt.gif';
-							}
+							$pict = 'rpt.gif';
 						}
+//						if(count($lr_events->participants) > 1)
+//						{
+//							$pict = 'multi_1.gif';
+//						}
 						
-						$p->set_var('link_entry','');
 						$description = $this->is_private($lr_events,$owner,'description');
 
 						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
@@ -844,6 +873,10 @@ class calendar extends calendar_
 							$p->set_var($var);
 							$p->parse('link_entry','link_pict');
 						}
+						else
+						{
+							$p->set_var('link_entry','');
+						}
 
 						if (intval($phpgw->common->show_date($lr_events->datetime,'Hi')))
 						{
@@ -856,7 +889,7 @@ class calendar extends calendar_
 								$format = 'H:i';
 							}
 							
-							if($lr_events->datetime < $date['raw'] && $lr_events->rpt_type=='none')
+							if($lr_events->datetime < $date['raw'] && $lr_events->recur_type==RECUR_NONE)
 							{
 								$temp_time = $this->makegmttime(0,0,0,$date['month'],$date['day'],$date['year']);
 								$start_time = $phpgw->common->show_date($temp_time['raw'],$format);
@@ -903,7 +936,7 @@ class calendar extends calendar_
 				}
 				$p->parse('column_data','week_day_events',True);
 				$p->set_var('events','');
-				if (!$j || ($j && $date["full"] == $monthstart))
+				if (!$j || ($j && $date['full'] == $monthstart))
 				{
 					if(!$this->printer_friendly)
 					{
