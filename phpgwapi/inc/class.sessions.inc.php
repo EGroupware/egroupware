@@ -392,7 +392,7 @@
 		{
 			global $phpgw;
 			
-			$serializedData = $phpgw->common->appsession();
+			$serializedData = $this->appsession();
 			$sessionData = unserialize($serializedData);
 			
 			if (is_array($sessionData))
@@ -424,7 +424,7 @@
 						$sessionData[$key] = $$key;
 					}
 				}
-				$phpgw->common->appsession($sessionData);
+				$this->appsession($sessionData);
 			}
 		}
 			
