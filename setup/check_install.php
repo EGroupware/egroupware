@@ -122,6 +122,12 @@
 			'func' => 'extension_check',
 			'warning' => '<div id="setup_info">' . lang('The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>"
 		),
+		'mbstring.func_overload' => array(
+			'func' => 'php_ini_check',
+			'value' => 7,
+			'warning' => '<div id="setup_info">' . lang('The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>",
+			'change' => extension_loaded('mbstring')  || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX) ? 'mbstring.func_overload = 7' : '',
+		),
 		'imap' => array(
 			'func' => 'extension_check',
 			'warning' => '<div id="setup_info">' . lang('The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).') . '</div>'
@@ -150,7 +156,7 @@
 		)
 	);
 
-	// some constanst for pre php4.3
+	// some constants for pre php4.3
 	if (!defined('PHP_SHLIB_SUFFIX'))
 	{
 		define('PHP_SHLIB_SUFFIX',$is_windows ? 'dll' : 'so');
@@ -332,6 +338,13 @@
 		return $Ok;
 	}
 
+	function mk_value($value)
+	{
+		if (!preg_match('/^([0-9]+)([mk]+)$/i',$value,$matches)) return $value;
+		
+		return (strtolower($matches[2]) == 'm' ? 1024*1024 : 1024) * (int) $matches[1];
+	}
+		
 	function php_ini_check($name,$args)
 	{
 		global $passed_icon, $error_icon, $warning_icon, $is_windows;
@@ -358,9 +371,7 @@
 				break;
 			case '>=':
 				$result = !$ini_value ||	// value not used, eg. no memory limit
-				intval($ini_value) >= intval($args['value']) &&
-				($args['value'] == intval($args['value']) ||
-				substr($args['value'],-1) == substr($ini_value,-1));
+				(int) mk_value($ini_value) >= (int) mk_value($args['value']);
 				break;
 			case 'contain':
 				$check = lang('contain');
@@ -372,7 +383,7 @@
 				$result = $ini_value == $args['value'];
 				break;
 		}
-		$msg = ' '.lang('Checking php.ini').": <div id='setup_info'>$name $check $verbose_value: ini_get('$name')='$ini_value'$ini_value_verbose</div>\n";
+		$msg = ' '.lang('Checking php.ini').": $name $check $verbose_value: <div id='setup_info'>ini_get('$name')='$ini_value'$ini_value_verbose</div>\n";
 
 		if ($result)
 		{
@@ -394,9 +405,9 @@
 				{
 					echo $error_icon.$msg."<br/></span>";
 				}
-				echo "<span id='setup_error'>\n";
+				echo "<div id='setup_error'>\n";
 				echo '*** '.lang('Please make the following change in your php.ini').' ('.get_php_ini().'): '.(@$args['safe_mode']?$args['safe_mode']:$args['change'])."<br>\n";
-				echo '*** '.lang('AND reload your webserver, so the above changes take effect !!!')."<br></span>\n";
+				echo '*** '.lang('AND reload your webserver, so the above changes take effect !!!')."</div>\n";
 			}
 		}
 		return $result;
@@ -422,7 +433,9 @@
 		if (!$available)
 		{
 			echo lang('Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.')."\n";
+			return false;
 		}
+		return true;
 	}
 	
 	if ($run_by_webserver)
