@@ -29,7 +29,7 @@
 	*/
 	class etemplate extends boetemplate
 	{
-		var $debug;//'test.tabs2';//='etemplate.editor.edit'; // 1=calls to show and process_show, 2=content after process_show,
+		var $debug; // 1=calls to show and process_show, 2=content after process_show,
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html,$sbox;	// instance of html / sbox2-class
 		var $loop = 0;	// set by process_show if an other Exec-ProcessExec loop is needed
@@ -80,6 +80,7 @@
 		*/
 		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$changes='')
 		{
+			//echo "<br>globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', this->java_script() = '".$this->java_script()."'\n";
 			if (!$sel_options)
 			{
 				$sel_options = array();
@@ -99,9 +100,11 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$id = $this->appsession_id();
-			$html = $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
-				$this->html->form($this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),
-					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec');
+
+			$html .= $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
+				$this->html->form($this->include_java_script() .
+					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),
+					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec','','eTemplate');
 
 			$id = $this->save_appsession($this->as_array(1) + array(
 				'readonlys' => $readonlys,
@@ -110,6 +113,7 @@
 				'sel_options' => $sel_options,
 				'preserv' => $preserv,
 				'extension_data' => $GLOBALS['phpgw_info']['etemplate']['extension_data'],
+				'java_script' => $GLOBALS['phpgw_info']['etemplate']['java_script'],
 				'method' => $method
 			),$id);
 
@@ -136,8 +140,9 @@
 		*/
 		function process_exec()
 		{
+			//echo "process_exec: HTTP_POST_VARS ="; _debug_array($GLOBALS['HTTP_POST_VARS']);
 			$session_data = $this->get_appsession($GLOBALS['HTTP_POST_VARS']['etemplate_exec_id']);
-			//echo "<p>process_exec($this->name) session_data ="; _debug_array($session_data);
+			//echo "<p>process_exec: session_data ="; _debug_array($session_data);
 
 			$content = $GLOBALS['HTTP_POST_VARS']['exec'];
 			if (!is_array($content))
@@ -146,7 +151,8 @@
 			}
 			$this->init($session_data);
 			$GLOBALS['phpgw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
-
+			$GLOBALS['phpgw_info']['etemplate']['java_script'] = $session_data['java_script'] || $GLOBALS['HTTP_POST_VARS']['java_script'];
+			//echo "globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', session_data[java_script] = '".$session_data['java_script']."', HTTP_POST_VARS[java_script] = '".$GLOBALS['HTTP_POST_VARS']['java_script']."'\n";
 			//echo "process_exec($this->name) content ="; _debug_array($content);
 			$this->process_show($content,$session_data['readonlys']);
 
@@ -378,19 +384,22 @@
 			{
 				$help = $this->get_array($content,substr($help,1));
 			}
-			if ($help)
+			if ($this->java_script())
 			{
-				$options .= " onFocus=\"self.status='".addslashes(lang($help))."'; return true;\"";
-				$options .= " onBlur=\"self.status=''; return true;\"";
-				if ($cell['type'] == 'button')	// for button additionally when mouse over button
+				if ($help)
 				{
-					$options .= " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
-					$options .= " onMouseOut=\"self.status=''; return true;\"";
+					$options .= " onFocus=\"self.status='".addslashes(lang($help))."'; return true;\"";
+					$options .= " onBlur=\"self.status=''; return true;\"";
+					if ($cell['type'] == 'button')	// for button additionally when mouse over button
+					{
+						$options .= " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
+						$options .= " onMouseOut=\"self.status=''; return true;\"";
+					}
 				}
-			}
-			if ($cell['onchange'])	// values != '1' can only set by a program (not in the editor so far)
-			{
-				$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
+				if ($cell['onchange'] && $cell['type'] != 'button')	// values != '1' can only set by a program (not in the editor so far)
+				{
+					$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
+				}
 			}
 			switch ($cell['type'])
 			{
@@ -441,8 +450,17 @@
 					$html .= $this->html->input($form_name,$cell['size'],'RADIO',$options);
 					break;
 				case 'button':
-					$html .= $this->html->submit_button($form_name,$label,'',
-						strlen($label) <= 1 || $cell['no_lang'],$options);
+					if ($this->java_script() && $cell['onchange'])
+					{
+						$html .= $this->html->input_hidden($form_name,'',False) . "\n";
+						$html .= '<a href="" onClick="set_element(document.eTemplate,\''.$form_name.'\',\'pressed\'); document.eTemplate.submit(); return false;">' .
+							(strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label)) . '</a>';
+					}
+					else
+					{
+						$html .= $this->html->submit_button($form_name,$label,'',
+							strlen($label) <= 1 || $cell['no_lang'],$options);
+					}
 					$extra_label = False;
 					break;
 				case 'hrule':
@@ -790,5 +808,54 @@
 				}
 			}
 			return isset($value);
+		}
+
+		/*!
+		@function java_script($consider_not_tested_as_enabled = True)
+		@abstract is javascript enabled?
+		@discussion this should be tested by the api at login
+		@returns true if javascript is enabled or not yet tested
+		*/
+		function java_script($consider_not_tested_as_enabled = True)
+		{
+			return !!$GLOBALS['phpgw_info']['etemplate']['java_script'] ||
+				$consider_not_tested_as_enabled &&
+				(!isset($GLOBALS['phpgw_info']['etemplate']['java_script']) ||
+				$GLOBALS['phpgw_info']['etemplate']['java_script'].'' == '');
+		}
+
+		/*!
+		@function include_java_script()
+		@abstract returns the javascript to be included by exec
+		*/
+		function include_java_script()
+		{
+			// this is to test if javascript is enabled
+			if (!isset($GLOBALS['phpgw_info']['etemplate']['java_script']))
+			{
+				$js = '<script language="javascript">
+document.write(\''.str_replace("\n",'',$this->html->input_hidden('java_script','1')).'\');
+</script>
+';
+			}
+
+			// here are going all the necesarry functions if javascript is definitve enabled
+			if ($this->java_script(False))
+			{
+				$js .= '<script language="JavaScript">
+function set_element(form,name,value)
+{
+	for (i = 0; i < form.length; i++)
+	{
+		if (form.elements[i].name == name)
+		{
+			form.elements[i].value = value;
+		}
+	}
+}
+</script>
+';
+			}
+			return $js;
 		}
 	};

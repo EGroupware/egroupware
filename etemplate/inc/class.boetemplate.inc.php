@@ -384,8 +384,8 @@
 		*/
 		function complete_array_merge($old,$new)
 		{
-			reset($new);
-			while (list($k,$v) = each($new))
+			@reset($new);
+			while (list($k,$v) = @each($new))
 			{
 				if (!is_array($v) || !isset($old[$k]) || $k[0] == '_')
 				{

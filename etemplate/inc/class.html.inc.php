@@ -23,7 +23,7 @@ class html
 		$this->prefered_img_title = stristr($HTTP_USER_AGENT,'konqueror') ? 'title' : 'alt';
 	}
 
-	function input_hidden($vars,$value='')
+	function input_hidden($vars,$value='',$ignore_empty=True)
 	{
 		if (!is_array($vars))
 		{
@@ -33,7 +33,7 @@ class html
 		{
 			if (is_array($value)) $value = serialize($value);
 			$del = strchr($value,'"') ? "'" : '"';
-			if ($value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
+			if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
 				$html .= "<INPUT TYPE=HIDDEN NAME=\"$name\" VALUE=$del$value$del>\n";
 			}
@@ -95,9 +95,9 @@ class html
 		return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . ">\n";
 	}
 
-	function form($content,$hidden_vars,$url,$url_vars='',$method='POST')
+	function form($content,$hidden_vars,$url,$url_vars='',$name='',$method='POST')
 	{
-		$html = "<form method=\"$method\" action=\"".$this->link($url,$url_vars)."\">\n";
+		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\">\n";
 		$html .= $this->input_hidden($hidden_vars);
 
 		if ($content) {
@@ -108,10 +108,10 @@ class html
 	}
 
 	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',
-								 $method='POST')
+								 $form_name='',$method='POST')
 	{
 		return $this->form($this->submit_button($name,$lang),
-								 $hidden_vars,$url,$url_vars,$method);
+								 $hidden_vars,$url,$url_vars,$form_name,$method);
 	}
 
 	/*!

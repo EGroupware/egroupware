@@ -46,7 +46,7 @@
 			while (list($k,$name) = each($names))
 			{
 				$tcell = $tabs->empty_cell();
-				if (is_array($value['_tab_widget']) && isset($value['_tab_widget'][$name]))
+				if (is_array($value['_tab_widget']) && $value['_tab_widget'][$name][0])
 				{
 					// save selected tab in persistent extension_data to use it in post_process
 					$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] = $selected_tab = $name;
@@ -95,11 +95,21 @@
 		{
 			$old_value = array(
 				'_tab_widget' => array(
-					$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] => True
+					$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] => array(True)
 			));
 			$this->pre_process($cell,$old_value,$templ);
 
-			$templ->loop = is_array($value['_tab_widget']);
+			if (is_array($value['_tab_widget']))
+			{
+				while (list($key,$val) = each($value['_tab_widget']))
+				{
+					if (is_array($val) && $val[0])
+					{
+						$templ->loop = True;
+					}
+				}
+			}
+			//$templ->loop = is_array($value['_tab_widget']);
 
 			return True;
 		}
