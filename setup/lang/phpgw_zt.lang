@@ -35,6 +35,7 @@ application management	setup	zt	應用程式管理
 application name and status	setup	zt	應用程式名稱及狀態
 application name and status information	setup	zt	應用程式名稱及狀態資訊
 application title	setup	zt	應用程式標題
+application: %1, file: %2, line: "%3"	setup	zt	應用程式： %1, 檔案： %2, 行： "%3"
 are you sure you want to delete your existing tables and data?	setup	zt	您確定要刪除已經存在的資料表與資料？
 are you sure?	setup	zt	您確定？
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	zt	跟據您的要求，系統現在將會嘗試建立資料庫以及相關資料庫的使用權組態。
@@ -70,6 +71,7 @@ check installation	setup	zt	檢查系統安裝狀態
 check ip address of all sessions	setup	zt	檢查所有連線的網路位址
 checking extension %1 is loaded or loadable	setup	zt	檢查%1是否以讀取或可讀取
 checking file-permissions of %1 for %2: %3	setup	zt	為%2檢查%1的檔案權限： %3
+checking for gd support...	setup	zt	檢查是否支援GD...
 checking php.ini	setup	zt	檢查php.ini
 checking the egroupware installation	setup	zt	檢查eGroupWare安裝狀態
 click <a href="index.php">here</a> to return to setup.	setup	zt	<a href="index.php">按這裡</a>回到程式安裝。
@@ -98,6 +100,7 @@ create the empty database -	setup	zt	建立空的資料庫 -
 create the empty database and grant user permissions -	setup	zt	建立空的資料庫並且取得使用者權限 -
 create your header.inc.php	setup	zt	建立您的header.inc.php
 created	setup	zt	建立日期
+created header.inc.php!	setup	zt	已經建立header.inc.php!
 creating tables	setup	zt	正在建立資料表
 current system-charset	setup	zt	目前系統字元編碼
 current system-charset is %1, click %2here%3 to change it.	setup	zt	目前系統字元編碼是%1，點選 %2這裡%3 來改變。
@@ -154,6 +157,8 @@ enter your http proxy server	setup	zt	輸入網頁代理伺服器主機名稱
 enter your http proxy server password	setup	zt	輸入網頁代理伺服器主機使用者密碼
 enter your http proxy server port	setup	zt	輸入網頁代理伺服器主機埠
 enter your http proxy server username	setup	zt	輸入網頁代理伺服器主機使用者帳號
+error in admin-creation !!!	setup	zt	建立管理者時發生錯誤！
+error in group-creation !!!	setup	zt	建立群組時發生錯誤！
 export egroupware accounts from sql to ldap	setup	zt	從SQL 輸出eGroupWare帳號到LDAP
 export has been completed!  you will need to set the user passwords manually.	setup	zt	匯出完成！您將需要手動設定使用者密碼。
 export sql users to ldap	setup	zt	將 SQL 使用者資料匯出至 LDAP
@@ -470,6 +475,7 @@ your database is working, but you dont have any applications installed	setup	zt	
 your header admin password is not set. please set it now!	setup	zt	您沒有設定標頭(header)管理密碼，請現在設定！
 your header.inc.php needs upgrading.	setup	zt	您的header.inc.php需要更新。
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	zt	您的header.inc.php需要更新。<br><blink><b class="msg">警告！</b></blink><br><b>記得先做備份！</b>
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	zt	您的PHP沒有支援GD函式，您需要安裝gd函式庫1.8版或是更新的版本才能夠在專案管理中瀏覽甘特圖。
 your tables are current	setup	zt	您的資料表目前狀態
 your tables may be altered and you may lose data	setup	zt	您的資料表已經被更動過並有可能遺失部份資料
 your tables will be dropped and you will lose data	setup	zt	您的資料表將會被完全移除，您也將會遺失所有的資料。
