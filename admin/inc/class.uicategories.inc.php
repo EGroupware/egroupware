@@ -429,7 +429,7 @@
 				if ($apps_cats)
 				{
 					$this->template->set_var('messages',lang('This category is currently being used by applications as a parent category') . '<br>'
-						. lang('You will need to remove the subcategories before you can delete the parent category'));
+						. lang('You will need to remove the subcategories before you can delete this category'));
 					$this->template->set_var('hidden_vars',$hidden_vars);
 					$this->template->set_var('lang_subs','');
 					$this->template->set_var('subs','');
