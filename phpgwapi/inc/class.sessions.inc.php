@@ -440,7 +440,7 @@
 			{
 				if (!ereg('[0-9]+',$parts[1]))
 				{
-					for($i=1;$i<count($parts);$i++)
+					for($i=0;$i<count($parts);$i++)
 					{
 						$this->cookie_domain .= '.'.$parts[$i];
 					}
