@@ -15,6 +15,7 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
+		'Site Configuration'	=> $phpgw->link('/admin/config.php','appname=' . $appname),
 		'Countries'		=> $phpgw->link('/addressbook/admin.php')
 	);
 //Do not modify below this line
