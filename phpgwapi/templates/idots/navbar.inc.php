@@ -169,7 +169,7 @@
 		}
 		else
 		{
-			$var['icon_or_star']='<font color="#ff9933">*</font>';
+			$var['icon_or_star']='<img src="'.$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images'.'/orange-ball.png" alt="ball"/>';
 			if (is_array($item_link))
 			{
 				if (isset($item_link['icon']))

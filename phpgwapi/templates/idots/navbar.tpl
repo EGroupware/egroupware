@@ -63,7 +63,7 @@
 
 <!-- BEGIN extra_block_row -->
 		<tr class="divSideboxEntry">
-<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}<!-- <img src="{image_root}/orange-ball.png" alt="ball"/> --></td><td class="textSidebox"><a class="textSidebox" href="{item_link}">{lang_item}</a></td>
+<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}</td><td class="textSidebox"><a class="textSidebox" href="{item_link}">{lang_item}</a></td>
 </tr>
 <!-- END extra_block_row -->
 
