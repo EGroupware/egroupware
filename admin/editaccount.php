@@ -93,31 +93,39 @@
        // If the user is logged in, it will force a refresh of the session_info
        $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
-// The following sets any default preferences needed for new applications..
-// This is smart enough to know if previous preferences were selected, use them.
-   if (count($new_apps)) {
+       // The following sets any default preferences needed for new applications..
+       // This is smart enough to know if previous preferences were selected, use them.
+       if (count($new_apps)) {
 
-      $pref = new preferences($account_id);
-      $t = $pref->get_preferences();
-
-      $docommit = False;
-      for ($j=0;$j<count($new_apps);$j++) {
-	 if($new_apps[$j]=="admin")
-	    $check = "common";
-	 else
-	    $check = $new_apps[$j];
-	 if (!count($t["$check"])) {
-            $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
-            $docommit = True;
+         $pref = new preferences($account_id);
+         $t = $pref->get_preferences();
+         
+         $docommit = False;
+         
+         for ($j=0;$j<count($new_apps);$j++) {
+           if($new_apps[$j]=="admin")
+             $check = "common";
+           else
+             $check = $new_apps[$j];
+             
+           if (!count($t["$check"])) {
+             $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
+             $docommit = True;
+           }
          }
-      }
-      if ($docommit) {
-	 $pref->commit();
-      }
-   }
+         if ($docommit) {
+	   $pref->commit();
+	 }
+       }
+       
+       // start inlcuding other admin tools
+       while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+       {
+         $phpgw->common->hook_single("update_user_data", $value);
+       }       
 
-   Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
-   $phpgw->common->phpgw_exit();
+       Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
+       $phpgw->common->phpgw_exit();
      }
 
   }                    // if $submit
@@ -231,8 +239,16 @@
      $i++;
   }
 
-  $phpgw->template->set_var("permissions_list",$perm_html);
-
+  $phpgw->template->set_var("permissions_list",$perm_html);	
+  
+  // start inlcuding other admin tools
+  while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+  {
+	// check if we have something included, when not ne need to set
+	// {gui_hooks} to ""
+  	if ($phpgw->common->hook_single("show_user_data", $value)) $includedSomething="true";
+  }       
+  if (!$includedSomething) $phpgw->template->set_var("gui_hooks","");
 
   $phpgw->template->set_var("lang_button",lang("Save"));
   $phpgw->template->pparse("out","form");

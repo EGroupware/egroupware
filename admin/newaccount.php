@@ -73,6 +73,13 @@
               $phpgw->common->hook_single("add_def_pref", $apps[$i]);
         }
         $pref->commit();
+
+       // start inlcuding other admin tools
+       while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+       {
+         $phpgw->common->hook_single("update_user_data", $value);
+       }       
+
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
         $phpgw->common->phpgw_exit();
      }
@@ -169,6 +176,15 @@
       $i++;
   }
   $phpgw->template->set_var("permissions_list",$perms_html);
+
+  // start inlcuding other admin tools
+  while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+  {
+	// check if we have something included, when not ne need to set
+	// {gui_hooks} to ""
+  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
+  }       
+  if (!$includedSomething) $phpgw->template->set_var("gui_hooks","");
 
   $phpgw->template->set_var("lang_button",Lang("Add"));
   $phpgw->template->pparse("out","form");
