@@ -582,7 +582,7 @@
 				$name = 'country';
 			}
 			$str = '<select name="'.$name.'">'."\n"
-				. ' <option value="  ".($selected == '  '?' selected':'').'>Select One</option>'."\n";
+				. ' <option value="  "'.($selected == '  '?' selected':'').'>Select One</option>'."\n";
 			reset($this->country_array);
 			while(list($key,$value) = each($this->country_array))
 			{
