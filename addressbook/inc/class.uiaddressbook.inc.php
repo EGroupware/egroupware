@@ -238,15 +238,12 @@
 			$GLOBALS['phpgw']->template->set_block('addressbook_list_t','addressbook_alpha','addressbook_alpha');
 
 			/* Setup query for 1st char of fullname, company, lastname using user lang */
-			if(lang('alphabet') == 'alphabet*')
+			$chars = lang('alphabet');
+			if($chars == 'alphabet*')
 			{
 				$chars = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
 			}
-			else
-			{
-				$chars = lang('alphabet');
-			}
-			$aar = explode(',',$chars);
+			$aar = explode(',', $chars);
 			$aar[] = 'all';
 			foreach($aar as $char)
 			{
