@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 <!-- BEGIN day -->
 <div class="th">
- <table width="100%" cellpadding="0">
+ <table class="calendar_dayview_maintable" width="100%" cellpadding="0">
 {row}
 </table>
  </div>
