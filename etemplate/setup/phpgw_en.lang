@@ -11,7 +11,9 @@
 %s readonly	etemplate	en	%s readonly
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
+add a new multi-column index	etemplate	en	Add a new multi-column index
 add column	etemplate	en	Add Column
+add index	etemplate	en	Add Index
 add table	etemplate	en	Add Table
 align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
@@ -52,6 +54,7 @@ date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
 day	etemplate	en	Day
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	en	db-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col
 db-tools	etemplate	en	DB-Tools
 deck	etemplate	en	Deck (internal)
 default	etemplate	en	Default
@@ -59,11 +62,13 @@ delete	etemplate	en	Delete
 delete a single entry by passing the id.	etemplate	en	Delete a single entry by passing the id.
 delete all selected etemplates, without further inquiry	etemplate	en	delete ALL selected eTemplates, WITHOUT further inquiry
 delete column	etemplate	en	Delete Column
+delete index	etemplate	en	Delete Index
 delete this etemplate	etemplate	en	delete this eTemplate
 delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
 deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
 deletes this column	etemplate	en	Deletes this column
+deletes this index	etemplate	en	Deletes this index
 discard changes	etemplate	en	discard changes
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
@@ -128,6 +133,7 @@ import table-definitions from existing db-table	etemplate	en	Import table-defini
 import xml	etemplate	en	Import XML
 index/name of returned content (name of the template, link / method for image)	etemplate	en	index/name of returned content (name of the Template, Link / Method for Image)
 indexed	etemplate	en	Indexed
+indexoptions	etemplate	en	Indexoptions
 insert new column behind this one	etemplate	en	insert new column behind this one
 insert new column in front of all	etemplate	en	insert new column in front of all
 insert new row after this one	etemplate	en	insert new row after this one
@@ -148,6 +154,7 @@ linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
 minute	etemplate	en	Minute
 month	etemplate	en	Month
+multicolumn indices	etemplate	en	Multicolumn Indices
 name	etemplate	en	Name
 name of other table where column is a key from	etemplate	en	name of other table where column is a key from
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	en	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
@@ -212,6 +219,7 @@ select one ...	etemplate	en	Select One ...
 select percentage	etemplate	en	Select Percentage
 select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
+select the indexed columns in their desired order	etemplate	en	Select the indexed columns in their desired order
 select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox

@@ -44,13 +44,13 @@
 		var $setup_header = '<?php
   /**************************************************************************\\
   * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
+  * http://www.eGroupWare.org                                                *
   * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
   * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
+  * This program is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU General Public License as published by the    *
+  * Free Software Foundation; either version 2 of the License, or (at your   *
+  * option) any later version.                                               *
   \\**************************************************************************/
 
   /* $Id$ */
@@ -71,6 +71,8 @@
 			{
 				ExecMethod('phpgwapi.applications.read_installed_apps');
 			}
+			$GLOBALS['phpgw_info']['flags']['app_header'] =
+				$GLOBALS['phpgw_info']['apps']['etemplate']['title'].' - '.lang('DB-Tools');
 		}
 
 		/*!
@@ -81,9 +83,9 @@
 		*/
 		function edit($content='',$msg = '')
 		{
-			if (isset($GLOBALS['HTTP_GET_VARS']['app']))
+			if (isset($_GET['app']))
 			{
-				$this->app = $GLOBALS['HTTP_GET_VARS']['app'];
+				$this->app = $_GET['app'];
 			}
 			if (is_array($content))
 			{
@@ -192,6 +194,8 @@
 				ExecMethod('etemplate.editor.edit');
 				return;
 			}
+			$add_index = isset($content['add_index']);
+
 			// from here on, filling new content for eTemplate
 			$content = array(
 				'msg' => $msg,
@@ -208,7 +212,7 @@
 			);
 			if ($this->table != '' && isset($this->data[$this->table]))
 			{
-				$content += $this->table2content($this->data[$this->table]);
+				$content += $this->table2content($this->data[$this->table],$sel_options['Index'],$add_index);
 			}
 			$no_button = array( );
 			if (!$this->app || !$this->table)
@@ -316,6 +320,35 @@
 		}
 
 		/*!
+		@function has_single_index
+		@syntax has_single_index( $col,$index )
+		@author ralfbecker
+		@abstract checks if there is an index (only) on $col (not a multiple index incl. $col)
+		@param $col column name
+		@param $index ix or uc array of table-defintion
+		@result True if $col has a single index
+		*/
+		function has_single_index($col,$index,&$options)
+		{
+			foreach($index as $in)
+			{
+				if ($in == $col || is_array($in) && $in[0] == $col && !isset($in[1]))
+				{
+					if ($in != $col && isset($in['options']))
+					{
+						foreach($in['options'] as $db => $opts)
+						{
+							$options[] = $db.'('.(is_array($opts)?implode(',',$opts):$opts).')';
+						}
+						$options = implode(', ',$options);
+					}
+					return True;
+				}
+			}
+			return False;
+		}
+
+		/*!
 		@function table2content
 		@syntax table2content( $table )
 		@author ralfbecker
@@ -323,15 +356,15 @@
 		@param $table table-definition, eg. $phpgw_baseline[$table_name]
 		@result content-array
 		*/
-		function table2content($table)
+		function table2content($table,&$columns,$extra_index=False)
 		{
-			$content = array();
+			$content = $columns = array();
 			for ($n = 1; list($col_name,$col_defs) = each($table['fd']); ++$n)
 			{
 				$col_defs['name'] = $col_name;
 				$col_defs['pk'] = in_array($col_name,$table['pk']);
-				$col_defs['uc']  = in_array($col_name,$table['uc']);
-				$col_defs['ix'] = in_array($col_name,$table['ix']);
+				$col_defs['uc']  = $this->has_single_index($col_name,$table['uc'],$col_defs['options']);
+				$col_defs['ix'] = $this->has_single_index($col_name,$table['ix'],$col_defs['options']);
 				$col_defs['fk'] = $table['fk'][$col_name];
 				if (isset($col_defs['default']) && $col_defs['default'] == '')
 				{
@@ -342,10 +375,34 @@
 				$col_defs['n'] = $n;
 
 				$content["Row$n"] = $col_defs;
+
+				$columns[$n] = $col_name;
+			}
+			$n = 2;
+			foreach(array('uc','ix') as $type)
+			{
+				foreach($table[$type] as $index)
+				{
+					if (is_array($index) && isset($index[1]))	// multicolum index
+					{
+						$content['Index'][$n]['unique'] = $type == 'uc';
+						$content['Index'][$n]['n'] = $n - 1;
+						foreach($index as $col)
+						{
+							$content['Index'][$n][] = array_search($col,$columns);
+						}
+						++$n;
+					}
+				}
+			}
+			if ($extra_index)
+			{
+				$content['Index'][$n]['n'] = $n-1;
 			}
 			if ($this->debug >= 3)
 			{
-				echo "<p>table2content: content ="; _debug_array($content);
+				echo "<p>table2content(,,'$extra_index'): content ="; _debug_array($content);
+				echo "<p>columns ="; _debug_array($columns);
 			}
 			return $content;
 		}
@@ -392,7 +449,7 @@
 					{
 						switch ($col['type']) // set some defaults for precision, else setup fails
 						{
-							case 'float':   
+							case 'float':
 							case 'int':     $col['precision'] = 4; break;
 							case 'char':    $col['precision'] = 1; break;
 							case 'varchar': $col['precision'] = 255; break;
@@ -423,7 +480,23 @@
 							case 'ix':
 								if ($val)
 								{
-									$table[$prop][] = $name;
+									if ($col['options'])
+									{
+										$opts = array();
+										foreach(explode(',',$col['options']) as $opt)
+										{
+											list($db,$opt) = split('[(:)]',$opt);
+											$opts[$db] = is_numeric($opt) ? intval($opt) : $opt;
+										}
+										$table[$prop][] = array(
+											$name,
+											'options' => $opts
+										);
+									}
+									else
+									{
+										$table[$prop][] = $name;
+									}
 								}
 								break;
 							case 'fk':
@@ -433,6 +506,29 @@
 								}
 								break;
 						}
+					}
+					$num2col[$n] = $col['name'];
+				}
+			}
+			foreach($content['Index'] as $n => $index)
+			{
+				$idx_arr = array();
+				foreach($index as $key => $num)
+				{
+					if (is_numeric($key) && $num && @$num2col[$num])
+					{
+						$idx_arr[] = $num2col[$num];
+					}
+				}
+				if (count($idx_arr) && !isset($content['delete_index'][$n]))
+				{
+					if ($index['unique'])
+					{
+						$table['uc'][] = $idx_arr;
+					}
+					else
+					{
+						$table['ix'][] = $idx_arr;
 					}
 				}
 			}
@@ -480,10 +576,6 @@
 			if (in_array($parent,array('pk','fk','ix','uc')))
 			{
 				$depth = 0;
-				if ($parent != 'fk')
-				{
-					$only_vals = True;
-				}
 			}
 			if ($depth)
 			{
@@ -499,17 +591,17 @@
 			$n = 0;
 			foreach($arr as $key => $val)
 			{
-				if (!$only_vals)
+				if (!is_int($key))
 				{
 					$def .= "'$key' => ";
 				}
 				if (is_array($val))
 				{
-					$def .= $this->write_array($val,$parent == 'fd' ? 0 : $depth,$key,$only_vals);
+					$def .= $this->write_array($val,$parent == 'fd' ? 0 : $depth,$key);
 				}
 				else
 				{
-					if (!$only_vals && $key == 'nullable')
+					if (!$only_vals && $key === 'nullable')
 					{
 						$def .= $val ? 'True' : 'False';
 					}
@@ -858,6 +950,37 @@
 		}
 
 		/*!
+		@function normalize_index
+		@abstract orders the single-colum-indices after the columns and the multicolunm ones bedind
+		@syntax normalize_index( $index,$cols )
+		@param index array with indices
+		@param cols  array with column-defs (col-name in key)
+		@author ralfbecker
+		@result the new array
+		*/
+		function normalize_index($index,$cols)
+		{
+			$normalized = array();
+			foreach($cols as $col => $data)
+			{
+				foreach($index as $n => $idx)
+				{
+					if ($idx == $col || is_array($idx) && $idx[0] == $col && !isset($idx[1]))
+					{
+						$normalized[] = isset($idx['options']) ? $idx : $col;
+						unset($index[$n]);
+						break;
+					}
+				}
+			}
+			foreach($index as $idx)
+			{
+				$normalized[] = $idx;
+			}
+			return $normalized;
+		}
+
+		/*!
 		@function normalize
 		@syntax normalize( $table )
 		@author ralfbecker
@@ -882,8 +1005,8 @@
 				'fd' => $table['fd'],
 				'pk' => $table['pk'],
 				'fk' => $table['fk'],
-				'ix' => $table['ix'],
-				'uc' => $table['uc']
+				'ix' => $this->normalize_index($table['ix'],$table['fd']),
+				'uc' => $this->normalize_index($table['uc'],$table['fd'])
 			);
 		}
 

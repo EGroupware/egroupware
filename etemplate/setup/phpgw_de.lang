@@ -11,7 +11,9 @@
 %s readonly	etemplate	de	%s Schreibschutz
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
 add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
+add a new multi-column index	etemplate	de	Fügt einen mehrspaltigen Index hinzu
 add column	etemplate	de	Spalte zufügen
+add index	etemplate	de	Index zufügen
 add table	etemplate	de	Tabelle zufügen
 align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
@@ -52,6 +54,7 @@ date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
 day	etemplate	de	Tag
 db ensures that every row has a unique value in that column	etemplate	de	die Datenbank stelt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	de	DB-spezifische Index-Optionen (Komma-getrennt), zB. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
 db-tools	etemplate	de	DB-Tools
 deck	etemplate	de	Deck (intern)
 default	etemplate	de	Vorgabe
@@ -59,11 +62,13 @@ delete	etemplate	de	Löschen
 delete a single entry by passing the id.	etemplate	de	Löscht einen einzelnen Eintrag über seine Id.
 delete all selected etemplates, without further inquiry	etemplate	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
 delete column	etemplate	de	Spalte löschen
+delete index	etemplate	de	Index löschen
 delete this etemplate	etemplate	de	dieses eTemplate löschen
 delete whole column (can not be undone!!!)	etemplate	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
 deletes the etemplate spez. above	etemplate	de	löscht das oben spezifizierte eTemplate
 deletes this column	etemplate	de	Löscht diese Spalte
+deletes this index	etemplate	de	Löscht diesen Index
 discard changes	etemplate	de	verwirft Änderungen
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
 displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
@@ -128,6 +133,7 @@ import table-definitions from existing db-table	etemplate	de	Importiert die Tabe
 import xml	etemplate	de	XML Import
 index/name of returned content (name of the template, link / method for image)	etemplate	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
 indexed	etemplate	de	Indiziert
+indexoptions	etemplate	de	Indexoptionen
 insert new column behind this one	etemplate	de	Neue Spalte hinter dieser einfügen
 insert new column in front of all	etemplate	de	Neue Spalte vor dieser einfüben
 insert new row after this one	etemplate	de	Neue Zeile nach dieser einfügen
@@ -148,6 +154,7 @@ linkto	etemplate	de	VerküpfungZu
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
 minute	etemplate	de	Minute
 month	etemplate	de	Monat
+multicolumn indices	etemplate	de	Mehrspaltige Indices
 name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des phpGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
@@ -212,6 +219,7 @@ select one ...	etemplate	de	Eine auswählen ...
 select percentage	etemplate	de	Prozente auswählen
 select priority	etemplate	de	Priorität auswählen
 select state	etemplate	de	US-State auswählen
+select the indexed columns in their desired order	etemplate	de	Zu indizierende Spalten in der gewünchten Reihenfolge auswählen
 select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen auswählen
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
