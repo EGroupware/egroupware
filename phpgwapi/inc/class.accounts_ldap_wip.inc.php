@@ -368,7 +368,8 @@
 				$allValues = ldap_get_entries($ds, $sri);
 				while (list($null,$allVals) = @each($allValues))
 				{
-					$test = $allVals['uid'][0];
+					settype($allVals,'array');
+					$test = @$allVals['uid'][0];
 					if (!$GLOBALS['phpgw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
 					{
 						$accounts[] = Array(
@@ -388,6 +389,7 @@
 				$allValues = ldap_get_entries($ds, $sri);
 				while (list($null,$allVals) = @each($allValues))
 				{
+					settype($allVals,'array');
 					$test = $allVals['cn'][0];
 					if (!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
