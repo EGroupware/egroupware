@@ -11,16 +11,15 @@
 
 	/* $Id$ */
 
-	$phpgw_info["flags"] = array
-	(
-		"currentapp" => "filemanager",
-		"enable_nextmatchs_class" => True,
-		"noheader" => True,
-		"nonavbar" => True
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'currentapp' => 'filemanager',
+		'enable_nextmatchs_class' => True,
+		'noheader' => True,
+		'nonavbar' => True
 	);
 
-	var_dump($file_attributes);
-	include("../header.inc.php");
+	//var_dump($file_attributes);
+	include('../header.inc.php');
 	/*
 	   To add an on/off preference, just add it here.  Key is internal name, value is displayed name
 	*/
@@ -34,38 +33,38 @@
 
 	if ($submit)
 	{
-		$phpgw->preferences->read_repository ();
+		$GLOBALS['phpgw']->preferences->read_repository ();
 
 		reset ($other_checkboxes);
 		while (list ($internal, $displayed) = each ($other_checkboxes))
 		{
-			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
+			$GLOBALS['phpgw']->preferences->add ($GLOBALS['phpgw_info']["flags"]["currentapp"], $internal, $$internal);
 		}
 
 		reset ($other_dropdown);
 		while (list ($internal, $displayed) = each ($other_dropdown))
 		{
-			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
+			$GLOBALS['phpgw']->preferences->add ($GLOBALS['phpgw_info']["flags"]["currentapp"], $internal, $$internal);
 		}
 
 		reset ($file_attributes);
 		while (list ($internal, $displayed) = each ($file_attributes))
 		{
-			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
+			$GLOBALS['phpgw']->preferences->add ($GLOBALS['phpgw_info']["flags"]["currentapp"], $internal, $$internal);
 		}
 
 
-		$phpgw->preferences->save_repository (True);
+		$GLOBALS['phpgw']->preferences->save_repository (True);
      
-		Header('Location: '.$phpgw->link('/preferences/index.php'));
-		$phpgw->common->phpgw_exit();
+		Header('Location: '.$GLOBALS['phpgw']->link('/preferences/index.php'));
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
 	function display_item ($field,$data)
 	{
-		global $phpgw, $p, $tr_color;
+		global $p, $tr_color;
 
-		$tr_color = $phpgw->nextmatchs->alternate_row_color ($tr_color);
+		$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color ($tr_color);
 		$var = array (
 			'bg_color'	=>	$tr_color,
 			'field'		=>	$field,
@@ -75,10 +74,10 @@
 		$p->parse ('row', 'pref_list', True);
 	}
 
-	$phpgw->common->phpgw_header ();
+	$GLOBALS['phpgw']->common->phpgw_header ();
 	echo parse_navbar ();
 
-	$p = CreateObject ('phpgwapi.Template', $phpgw->common->get_tpl_dir ('filemanager'));
+	$p = CreateObject ('phpgwapi.Template', $GLOBALS['phpgw']->common->get_tpl_dir ('filemanager'));
 	$templates = array (
 		'pref'			=> 'pref.tpl',
 		'pref_colspan'	=> 'pref_colspan.tpl',
@@ -88,8 +87,8 @@
 
 	$var = array (
 		'title'			=>	lang ('FileManager preferences'),
-		'action_url'	=>	$phpgw->link ('/' . $phpgw_info['flags']['currentapp'] . '/preferences.php'),
-		'bg_color'		=>	$phpgw_info['theme']['th_bg'],
+		'action_url'	=>	$GLOBALS['phpgw']->link ('/' . $GLOBALS['phpgw_info']['flags']['currentapp'] . '/preferences.php'),
+		'bg_color'		=>	$GLOBALS['phpgw_info']['theme']['th_bg'],
 		'submit_lang'	=>	lang ('submit')
 	);
 	
@@ -99,14 +98,14 @@
 
 	if ($totalerrors)
 	{
-		echo '<p><center>' . $phpgw->common->error_list($errors) . '</center>';
+		echo '<p><center>' . $GLOBALS['phpgw']->common->error_list($errors) . '</center>';
 	}
 
 
 	while (list ($internal, $displayed) = each ($file_attributes))
 	{
 		unset ($checked);
-		if ($phpgw_info["user"]["preferences"]["filemanager"][$internal])
+		if ($GLOBALS['phpgw_info']["user"]["preferences"]["filemanager"][$internal])
 		{
 			$checked = 1;
 		}
@@ -120,7 +119,7 @@
 	while (list ($internal, $displayed) = each ($other_checkboxes))
 	{
 		unset ($checked);
-		if ($phpgw_info["user"]["preferences"]["filemanager"][$internal])
+		if ($GLOBALS['phpgw_info']["user"]["preferences"]["filemanager"][$internal])
 		{
 			$checked = 1;
 		}
@@ -142,7 +141,7 @@
 				continue;
 			}
 
-			$options .= html_form_option ($value, $value, $phpgw_info["user"]["preferences"]["filemanager"][$internal] == $value, True);
+			$options .= html_form_option ($value, $value, $GLOBALS['phpgw_info']["user"]["preferences"]["filemanager"][$internal] == $value, True);
 		}
 
 		$output = html_form_select_begin ($internal, True);
@@ -153,5 +152,5 @@
 	}
 
 	$p->pparse ('out', 'pref');
-	$phpgw->common->phpgw_footer ();
+	$GLOBALS['phpgw']->common->phpgw_footer ();
 ?>
