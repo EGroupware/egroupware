@@ -32,6 +32,7 @@
 	- Fixed matrixview warnings when viewing manual.
 	- Fixed problem with moving to prev/next msg in NNTP.
 	- Fix possible problem connecting to LDAP server.
+	- Fix home page display of calendar events.
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
