@@ -3121,6 +3121,11 @@ class boicalendar
 							}
 						}
 
+						if(!isset($ical['event'][$i]['rrule']['interval']))
+						{
+							$ical['event'][$i]['rrule']['interval'] = 1;
+						}
+
 						switch($ical['event'][$i]['rrule']['freq'])
 						{
 							case DAILY:
@@ -3130,7 +3135,7 @@ class boicalendar
 								$so_event->set_recur_weekly(intval($ical['event'][$i]['rrule']['until']['year']),intval($ical['event'][$i]['rrule']['until']['month']),intval($ical['event'][$i]['rrule']['until']['mday']),intval($ical['event'][$i]['rrule']['interval']),$recur_data);
 								break;
 							case MONTHLY:
-							
+// Still need to determine if this is by day or by week for the month..
 //								$recur_type = MCAL_RECUR_M??????;
 								break;
 							case YEARLY:
