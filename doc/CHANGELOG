@@ -3,6 +3,7 @@
 		   you where in.
 		 - You can now use decimals in the inventory program.
 		 - Added missing tables for tts and fixed problems with postgresql.
+		 - Fixed changing of password not getting set in session table
 
 [09072000] - Added print icon that allows you to print out a page without having
 	        the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
