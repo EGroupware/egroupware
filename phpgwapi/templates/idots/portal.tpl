@@ -1,17 +1,26 @@
 <!-- BEGIN portal_box -->
 <p>
-<table border="0" cellpadding="0" cellspacing="0" width="{outer_width}"  bgcolor="{outer_bgcolor}">
+<div style="border: #9c9c9c 1px solid;">
+<table border="0" cellpadding="0" cellspacing="0" width="{outer_width}"> 
  <tr nowrap align="center">
-  <td align="left">&nbsp;<strong>{title}</strong></td>{portal_controls}
+  <td align="left">
+	<div class="divSideboxHeader" style="height: 15px; padding-top: 0px">
+	<table border="0" cellpadding="1" cellspacing="0" width="{outer_width}">
+	  <tr>
+		<td align="left">&nbsp;<strong>{title}</strong></td>{portal_controls}
+	  </tr>
+	</table>
+	</div>
  </tr>
  <tr>
   <td colspan="2">
-   <table border="0" cellpadding="0" cellspacing="0" width="{inner_width}" bgcolor="#dddddd">
+   <table border="0" cellpadding="0" cellspacing="0" width="{inner_width}" bgcolor="#eeeeee">
     {row}
    </table>
   </td>
  </tr>
 </table>
+</div>
 </p>
 <!-- END portal_box -->
 
@@ -48,8 +57,7 @@
 
 
 <!-- BEGIN portal_control -->
-  <td valign="middle" align="right" nowrap="nowrap">{control_link}
-  </td>
+  <td valign="middle" align="right" nowrap="nowrap">{control_link}</td>
 <!-- END portal_control -->
 
 
