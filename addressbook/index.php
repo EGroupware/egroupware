@@ -24,7 +24,7 @@
 	include('../header.inc.php');
 
 	$obj = CreateObject('addressbook.uiaddressbook');
-	$obj->get_list();
+	$obj->index();
 
 	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
