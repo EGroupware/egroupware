@@ -275,6 +275,7 @@
             cat_id          serial,
             cat_parent      int,
             cat_owner       int,
+	    cat_access	    char(7),
             cat_appname     varchar(50) NOT NULL,
             cat_name        varchar(150) NOT NULL,
             cat_description varchar(255) NOT NULL,
@@ -313,7 +314,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>

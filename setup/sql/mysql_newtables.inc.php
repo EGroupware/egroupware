@@ -303,6 +303,7 @@
             cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
             cat_parent      int(9) DEFAULT '0' NOT NULL,
             cat_owner       int(11) DEFAULT '0' NOT NULL,
+	    cat_access	    char(7),
             cat_appname     varchar(50) NOT NULL,
             cat_name        varchar(150) NOT NULL,
             cat_description varchar(255) NOT NULL,
@@ -345,7 +346,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

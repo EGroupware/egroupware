@@ -1754,8 +1754,39 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
 	}
 
-  reset ($test);
-  while (list ($key, $value) = each ($test)){
+	$test[] = '0.9.10pre24';
+	function upgrade0_9_10pre24()
+	{
+	    global $phpgw_info, $phpgw_setup;
+
+    	    $phpgw_setup->db->query("create table temp as select * from phpgw_categories",__LINE__,FILE__);
+
+    	    $phpgw_setup->db->query("drop sequence phpgw_categories_cat_id_seq",__LINE__,__FILE__);
+
+    	    $phpgw_setup->db->query("drop table phpgw_categories",__LINE__,__FILE__);
+
+    	    $sql = "CREATE TABLE phpgw_categories (
+            cat_id          serial,
+            cat_parent      int,
+            cat_owner       int,
+            cat_access      char(7),
+            cat_appname     varchar(50) NOT NULL,
+            cat_name        varchar(150) NOT NULL,
+            cat_description varchar(255) NOT NULL,
+            cat_data        text
+            )";
+
+	    $phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+	    $phpgw_setup->db->query("insert into phpgw_categories select * from temp",__LINE__,__FILE__);
+
+	    $phpgw_setup->db->query("drop table temp",__LINE__,__FILE__);
+
+	    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre25";
+	}
+
+    reset ($test);
+    while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
       $ver = "upgrade".ereg_replace("\.","_",$value);
       $ver();

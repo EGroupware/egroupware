@@ -1396,6 +1396,18 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
 	}
 
+        $test[] = '0.9.10pre24';
+        function upgrade0_9_10pre24()
+        {
+                global $phpgw_info, $phpgw_setup;
+
+                $sql = "alter table phpgw_categories add column cat_access char(7) after cat_owner";
+
+                $phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+                $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
+        }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
