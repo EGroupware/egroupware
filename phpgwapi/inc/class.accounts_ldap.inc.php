@@ -113,16 +113,16 @@
        		$this->db->next_record();
       
       		$accounts[] = Array(
-			"account_id" => $allValues[$i]["uidnumber"][0],
-			"account_lid" => $allValues[$i]["uid"][0],
-      			"account_type" => $this->db->f("account_type"),
-      			"account_firstname" => $allValues[$i]["givenname"][0],
-      			"account_lastname" => $allValues[$i]["sn"][0],
-      			"account_status" => $this->db->f("account_status")
-      		);
+				"account_id" => $allValues[$i]["uidnumber"][0],
+				"account_lid" => $allValues[$i]["uid"][0],
+				"account_type" => $this->db->f("account_type"),
+				"account_firstname" => $allValues[$i]["givenname"][0],
+				"account_lastname" => $allValues[$i]["sn"][0],
+				"account_status" => $this->db->f("account_status")
+			);
       		
 		#print "data".$allValues[$i]["uid"][0]."<br>";
-	}
+		}
 	
 	return $accounts;
     }
