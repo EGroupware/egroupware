@@ -371,10 +371,9 @@
 			}
 
 			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status) values ('" . $account_id . "','" . $account_info['lid']
+				. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_id . "','" . $account_info['lid']
 				. "','" . $account_info['type'] . "','" . md5($account_info['passwd']) . "', '" . $account_info['firstname']
-				. "','" . $account_info['lastname'] . "','" . $account_info['status'] . "','" . $account_info['expires']
-				. "')",__LINE__,__FILE__);
+				. "','" . $account_info['lastname'] . "','" . $account_info['status'] . "'," . $account_info['expires'] . ")",__LINE__,__FILE__);
 
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'],'uid=' . $account_info['lid']);
 			$allValues = ldap_get_entries($ds, $sri);
