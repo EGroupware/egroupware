@@ -70,7 +70,13 @@
         $fsetup = fopen("../header.inc.php","w");
         fwrite($fsetup,$newheader);
         fclose($fsetup);
-        echo "Created header.inc.php!<br>";
+        $phpgw_setup->show_header("Generated header.inc.php", False, "header");
+        echo "<form action=\"index.php\" method=post>";
+        echo "<br> Created header.inc.php!<br>";
+        echo "<input type=hidden name=\"FormLogout\" value=\"header\">";
+        echo "<input type=submit name=\"junk\" value=\"continue\">";
+        echo "</form>";
+        echo "</body></html>";
       }else{
         $phpgw_setup->show_header("Error generating header.inc.php", False, "header");
         echo "Could not open header.inc.php for writing!<br>\n";
