@@ -882,7 +882,7 @@
 				return False;
 			}
 
-			umask(000);
+			umask(0177);
 
 			/*
 			   If 'string' doesn't exist, touch () creates both the file and the database entry
@@ -975,7 +975,7 @@
 				)
 			);
 
-			umask (000);
+			umask (0177);
 
 			if ($this->file_actions)
 			{
@@ -1138,7 +1138,7 @@
 
 			}
 
-			umask(000);
+			umask(0177);
 
 			if ($this->file_type (array(
 					'string'	=> $f->fake_full_path,
@@ -1388,7 +1388,7 @@
 				}
 			}
 
-			umask (000);
+			umask (0177);
 
 			/* We can't move directories into themselves */
 			if (($this->file_type (array(
@@ -1755,7 +1755,7 @@
 				return False;
 			}
 
-			umask (000);
+			umask (077);
 
 			if ($this->file_actions)
 			{
