@@ -38,8 +38,9 @@
 	include('header.inc.php');
 	$GLOBALS['phpgw_info']['flags']['app_header']=lang('home');
 
-	// anonymous user should never get a home-page
-	if ($GLOBALS['phpgw']->session->session_flags == 'A')
+	// Commented by alpeb: The following prevented anonymous users to get a home page. Perhaps it was done with anonymous users such as the ones
+	// used by  wiki and sitemgr in mind. However, if you mark a normal user as anonymous just to avoid being shown in sessions and access log (like you would for an admin that doesn't want to be noticed), the user won't be able to login anymore. That's why I commented the code.
+	/*if ($GLOBALS['phpgw']->session->session_flags == 'A')
 	{
 		if ($_SERVER['HTTP_REFERER'] && strstr($_SERVER['HTTP_REFERER'],'home.php') === False)
 		{
@@ -51,7 +52,7 @@
 			$GLOBALS['phpgw']->redirect('login.php');
 		}
 		exit;
-	}
+	}*/
 
 	if ($GLOBALS['phpgw_info']['server']['force_default_app'] && $GLOBALS['phpgw_info']['server']['force_default_app'] != 'user_choice')
 	{
