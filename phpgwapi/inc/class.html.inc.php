@@ -89,7 +89,7 @@ class html
 		{
 			foreach($options as $option => $value)
 			{
-				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_numeric($value)?$value:"'$value'").'; ';
+				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_numeric($value)?$value:"'".str_replace("'","\\'",$value)."'").'; ';
 			}
 		}
 		if ($text === False) return ' onmouseover="'.$opt_out.'return escape(this.innerHTML);"';
