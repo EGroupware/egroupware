@@ -542,7 +542,7 @@ pliz weit ;-)	htmlarea-SpellChecker	fr	paaatientez SVP ;-)
 poland	common	fr	POLOGNE
 portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
-powered by phpgroupware version %1	common	fr	Motorisé par <a href="http://www.egroupware.org">eGroupWare</a> version %1
+powered by egroupware version %1	common	fr	Motorisé par <a href="http://www.egroupware.org">eGroupWare</a> version %1
 preferences	common	fr	Préférences
 preferences for the idots template set	common	fr	Préférences pour l´application du template idots
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
@@ -765,7 +765,7 @@ yemen	common	fr	YEMEN
 yes	common	fr	Oui
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	fr	Vous êtes en MODE TEXTE. Utilisez le bouton [<>] pour revenir au mode WYSIWIG.
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
-you are running a newer version of phpgroupware than your database is setup for	common	fr	Vous utilisez une version de eGroupWare plus récente que celle définie pour la base de données.
+you are running a newer version of egroupware than your database is setup for	common	fr	Vous utilisez une version de eGroupWare plus récente que celle définie pour la base de données.
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have not entered a title	common	fr	Vous n'avez pas entré de titre
 you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide
