@@ -134,22 +134,22 @@
 		# the username is deliberately lowercase, to ease LDAP integration
 		$sslattribs = explode("/",$HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]);
 		# skip the part in front of the first "/" (nothing)
-    		while ($sslattrib = next($sslattribs))
+		while ($sslattrib = next($sslattribs))
 		{
-       			list($key,$val) = explode("=",$sslattrib);
-       			$sslattributes[$key] = $val;
-     		}
+			list($key,$val) = explode("=",$sslattrib);
+			$sslattributes[$key] = $val;
+		}
 
-                if (isset($sslattributes["Email"]))
+		if (isset($sslattributes["Email"]))
 		{
 			$submit = True;
 
 			# login will be set here if the user logged out and uses a different username with
 			# the same SSL-certificate.
 			if (!isset($login)&&isset($sslattributes["Email"])) {
-		           $login  = $sslattributes["Email"];
-			   # not checked against the database, but delivered to authentication module
-			   $passwd = $HTTP_SERVER_VARS["SSL_CLIENT_S_DN"];
+				$login = $sslattributes["Email"];
+				# not checked against the database, but delivered to authentication module
+				$passwd = $HTTP_SERVER_VARS["SSL_CLIENT_S_DN"];
 			}
 		}
 		unset ($key,$val,$sslattributes);

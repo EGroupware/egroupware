@@ -103,15 +103,15 @@
 		else
 		{
 			$phpgw->common->phpgw_header();
-			echo parse_navbar();  
+			echo parse_navbar();
 		}
-  
+
 		// $phpgw->hooks->proccess("location","mainscreen");
 		// $phpgw->preferences->read_preferences("addressbook");
 		// $phpgw->preferences->read_preferences("email");
 		// $phpgw->preferences->read_preferences("calendar");
 		// $phpgw->preferences->read_preferences("stocks");
-  
+
 		$phpgw->db->query("select app_version from phpgw_applications where app_name='admin'",__LINE__,__FILE__);
 		$phpgw->db->next_record();
 
@@ -122,7 +122,7 @@
 				. "</b>";
 		}
 
-		$phpgw->translation->add_app("mainscreen");  
+		$phpgw->translation->add_app("mainscreen");
 		if (lang("mainscreen_message") != "mainscreen_message*")
 		{
 			echo "<center>" . stripslashes(lang("mainscreen_message")) . "</center>";
