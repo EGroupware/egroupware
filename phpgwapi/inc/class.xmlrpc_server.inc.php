@@ -43,8 +43,6 @@
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			// dispMap is a despatch array of methods
 			// mapped to function names and signatures
 			// if a method
@@ -74,8 +72,6 @@
 
 		function service()
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			$r = $this->parseRequest();
 			$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
 			Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
@@ -226,11 +222,9 @@
 
 		function parseRequest($data='')
 		{
-			global $HTTP_RAW_POST_DATA;
-	
 			if ($data == '')
 			{
-				$data = $HTTP_RAW_POST_DATA;
+				$data = $GLOBALS['HTTP_RAW_POST_DATA'];
 			}
 			$parser = xml_parser_create($GLOBALS['xmlrpc_defencoding']);
 	
@@ -430,12 +424,10 @@
 
 		function echoInput()
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			// a debugging routine: just echos back the input
 			// packet as a string value
 
-			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '" . $HTTP_RAW_POST_DATA,'string'));
+			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '" . $GLOBALS['HTTP_RAW_POST_DATA'],'string'));
 			echo $r->serialize();
 		}
 	}

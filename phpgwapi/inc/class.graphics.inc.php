@@ -81,11 +81,9 @@
 				return;
 			}
 
-			global $HTTP_POST_VARS;
-
-			if (is_array($HTTP_POST_VARS))
+			if (is_array($GLOBALS['HTTP_POST_VARS']))
 			{
-				while( list($key, $val) = each($HTTP_POST_VARS)) 
+				while( list($key, $val) = each($GLOBALS['HTTP_POST_VARS']))
 				{
 					if (ereg("(.*)_x",$key,$varName) && $HTTP_POST_VARS[$varName[1]."_y"])
 					{

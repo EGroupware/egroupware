@@ -108,7 +108,6 @@
 
 		function addStruct($vals)
 		{
-//			global $xmlrpcTypes;
 			if ($this->mytype!=0)
 			{
 				echo '<B>xmlrpcval</B>: already initialized as a [' . $this->kindOf() . ']<BR>';

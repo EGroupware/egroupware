@@ -35,7 +35,7 @@
 
 		function browser ()
 		{
-			global $HTTP_USER_AGENT;
+			$HTTP_USER_AGENT = $GLOBALS['HTTP_USER_AGENT'];
 			/*
 				Determine browser and version
 			*/

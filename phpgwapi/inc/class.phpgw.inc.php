@@ -100,7 +100,6 @@
 		 */
 		function link($url = '', $extravars = '')
 		{
-			/* global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF; */
 			return $this->session->link($url, $extravars);
 		}
 
@@ -116,8 +115,6 @@
 		 */
 		function redirect($url = '')
 		{
-			/* global $HTTP_ENV_VARS; */
-
 			$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
 			
 			if ( !$url )
@@ -156,7 +153,6 @@
 		 */
 		function lang($key, $m1 = '', $m2 = '', $m3 = '', $m4 = '') 
 		{
-			/* global $phpgw; */
 			return $this->translation->translate($key);
 		}
 	} /* end of class */

@@ -5,9 +5,7 @@
 	{
 		function soap_parser($xml='',$encoding='UTF-8')
 		{
-			global $soapTypes;
-
-			$this->soapTypes = $soapTypes;
+			$this->soapTypes = $GLOBALS['soapTypes'];
 			$this->xml = $xml;
 			$this->xml_encoding = $encoding;
 			$this->root_struct = "";
