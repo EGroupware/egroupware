@@ -432,7 +432,7 @@
 		* Move to position in result set
 		*
 		* @param int $pos required row (optional), default first row
-		* @return int 1 if sucessful or 0 if not found
+		* @return boolean true if sucessful or false if not found
 		*/
 		function seek($pos = 0)
 		{
@@ -449,7 +449,7 @@
 		/**
 		* Begin Transaction
 		*
-		* @return int current transaction id
+		* @return int/boolean current transaction-id, of false if no connection
 		*/
 		function transaction_begin()
 		{
@@ -884,7 +884,7 @@
 		 *
 		 * Example: $db->concat($db->quote('Hallo '),'username') would return
 		 *	for mysql "concat('Hallo ',username)" or "'Hallo ' || username" for postgres
-		 * @param $str1 string already quoted stringliteral or column-name, variable number of arguments
+		 * @param string $str1 already quoted stringliteral or column-name, variable number of arguments
 		 * @return string to be used in a query
 		 */
 		function concat($str1)
@@ -938,17 +938,17 @@
 		*
 		* Please note that the quote function already returns necessary quotes: quote('Hello') === "'Hello'".
 		* Int and Auto types are casted to int: quote('1','int') === 1, quote('','int') === 0, quote('Hello','int') === 0
-		* Unset php-variables and those set to NULL are now returned as SQL NULL! If this is not desired, set them to ''.
 		*
-		* @param $value mixed the value to be escaped
-		* @param $type string the type of the db-column, default False === varchar
+		* @param mixed $value the value to be escaped
+		* @param string/boolean $type string the type of the db-column, default False === varchar
+		* @param boolean $not_null is column NOT NULL, default true, else php null values are written as SQL NULL
 		* @return string escaped sting
 		*/
-		function quote($value,$type=False)
+		function quote($value,$type=False,$not_null=true)
 		{
 			if ($this->Debug) echo "<p>db::quote('$value','$type')</p>\n";
 			
-			if (is_null($value))	// writing unset php-variables and thouse set to NULL now as SQL NULL
+			if (!$not_null && is_null($value))	// writing unset php-variables and thouse set to NULL now as SQL NULL
 			{
 				return 'NULL';
 			}
@@ -984,20 +984,21 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param $glue string in most cases this will be either ',' or ' AND ', depending you your query
-		* @param $array array column-name / value pairs, if the value is an array all its array-values will be quoted
+		* @param string $glue in most cases this will be either ',' or ' AND ', depending you your query
+		* @param array $array column-name / value pairs, if the value is an array all its array-values will be quoted
 		*	according to the type of the column, and the whole array with be formatted like (val1,val2,...)
 		*	If $use_key == True, an ' IN ' instead a '=' is used. Good for category- or user-lists.
 		*	If the key is numerical (no key given in the array-definition) the value is used as is, eg.
 		*	array('visits=visits+1') gives just "visits=visits+1" (no quoting at all !!!)
-		* @param $use_key boolean/string If $use_key===True a "$key=" prefix each value (default), typically set to False
+		* @param boolean/string $use_key If $use_key===True a "$key=" prefix each value (default), typically set to False
 		*	or 'VALUES' for insert querys, on 'VALUES' "(key1,key2,...) VALUES (val1,val2,...)" is returned
-		* @param $only array/boolean if set to an array only colums which are set (as data !!!) are written
+		* @param array/boolean $only if set to an array only colums which are set (as data !!!) are written
 		*	typicaly used to form a WHERE-clause from the primary keys.
 		*	If set to True, only columns from the colum_definitons are written.
-		* @param $column_definitions array/boolean this can be set to the column-definitions-array
+		* @param array/boolean $column_definitions this can be set to the column-definitions-array
 		*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 		*	If its set, the column-type-data determinates if (int) or addslashes is used.
+		* @return string SQL
 		*/
 		function column_data_implode($glue,$array,$use_key=True,$only=False,$column_definitions=False)
 		{
@@ -1024,12 +1025,13 @@
 						$this->halt("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
 					}
 					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
+					$not_null = is_array($column_definitions) && isset($column_definitions[$key]['nullable']) ? !$column_definitions[$key]['nullable'] : True;
 
 					if (is_array($data))
 					{
 						foreach($data as $k => $v)
 						{
-							$data[$k] = $this->quote($v,$column_type);
+							$data[$k] = $this->quote($v,$column_type,$not_null);
 						}
 						$values[] = ($use_key===True ? $key.' IN ' : '') . '('.implode(',',$data).')';
 					}
@@ -1039,7 +1041,7 @@
 					}
 					else
 					{
-						$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type);
+						$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type,$not_null);
 					}
 				}
 			}
@@ -1052,7 +1054,7 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param $column_definitions array/boolean this can be set to the column-definitions-array
+		* @param array/boolean $column_definitions this can be set to the column-definitions-array
 		*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 		*	If its set, the column-type-data determinates if (int) or addslashes is used.
 		*/
@@ -1061,6 +1063,14 @@
 			$this->column_definitions=$column_definitions;
 		}
 
+		/**
+		 * Sets the application in which the db-class looks for table-defintions 
+		 *
+		 * Used by table_definitions, insert, update, select, expression and delete. If the app is not set via set_app, 
+		 * it need to be set for these functions on every call
+		 *
+		 * @param string $app the app-name
+		 */
 		function set_app($app)
 		{
 			$this->app = $app;
@@ -1073,8 +1083,8 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param $app bool/string name of the app or default False to use the app set by db::set_app or the current app
-		* @param $table bool/string if set return only defintions of that table, else return all defintions
+		* @param bool/string $app name of the app or default False to use the app set by db::set_app or the current app
+		* @param bool/string $table if set return only defintions of that table, else return all defintions
 		* @return mixed array with table-defintions or False if file not found
 		*/
 		function get_table_definitions($app=False,$table=False)
@@ -1110,14 +1120,14 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param $table string name of the table
-		* @param $data array with column-name / value pairs
-		* @param $where mixed array with column-name / values pairs to check if a row with that keys already exists,
+		* @param string $table name of the table
+		* @param array $data with column-name / value pairs
+		* @param mixed $where string with where clause or array with column-name / values pairs to check if a row with that keys already exists, or false for an unconditional insert
 		*	if the row exists db::update is called else a new row with $date merged with $where gets inserted (data has precedence)
-		* @param $line int line-number to pass to query
-		* @param $file string file-name to pass to query
-		* @param $app mixed string with name of app or False to use the current-app
-		* @return object/boolean Query_ID of the call to db::query, or True if we had to do an update
+		* @param int $line line-number to pass to query
+		* @param string $file file-name to pass to query
+		* @param string/boolean $app string with name of app or False to use the current-app
+		* @return ADORecordSet or false, if the query fails
 		*/
 		function insert($table,$data,$where,$line,$file,$app=False)
 		{
@@ -1153,13 +1163,13 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param $table string name of the table
-		* @param $data array with column-name / value pairs
-		* @param $where array column-name / values pairs and'ed together for the where clause
-		* @param $line int line-number to pass to query
-		* @param $file string file-name to pass to query
-		* @param $app mixed string with name of app or False to use the current-app
-		* @return the return-value of the call to db::query
+		* @param string $table name of the table
+		* @param array $data with column-name / value pairs
+		* @param array $where column-name / values pairs and'ed together for the where clause
+		* @param int $line line-number to pass to query
+		* @param string $file file-name to pass to query
+		* @param string/boolean $app string with name of app or False to use the current-app
+		* @return ADORecordSet or false, if the query fails
 		*/
 		function update($table,$data,$where,$line,$file,$app=False)
 		{
@@ -1198,12 +1208,12 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param $table string name of the table
-		* @param $where array column-name / values pairs and'ed together for the where clause
-		* @param $line int line-number to pass to query
-		* @param $file string file-name to pass to query
-		* @param $app mixed string with name of app or False to use the current-app
-		* @return the return-value of the call to db::query
+		* @param string $table name of the table
+		* @param array $where column-name / values pairs and'ed together for the where clause
+		* @param int $line line-number to pass to query
+		* @param string $file file-name to pass to query
+		* @param string/boolean $app string with name of app or False to use the current-app
+		* @return ADORecordSet or false, if the query fails
 		*/
 		function delete($table,$where,$line,$file,$app=False)
 		{
@@ -1266,17 +1276,18 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param $table string name of the table
-		* @param $cols mixed string or array of column-names / select-expressions
-		* @param $where array/string string or array with column-name / values pairs AND'ed together for the where clause
-		* @param $line int line-number to pass to query
-		* @param $file string file-name to pass to query
-		* @param $offset int/bool offset for a limited query or False (default)
+		* @param string $table name of the table
+		* @param array/string $cols string or array of column-names / select-expressions
+		* @param array/string $where string or array with column-name / values pairs AND'ed together for the where clause
+		* @param int $line line-number to pass to query
+		* @param string $file file-name to pass to query
+		* @param int/bool $offset offset for a limited query or False (default)
 		* @param string $append string to append to the end of the query, eg. ORDER BY ...
-		* @param $app mixed string with name of app or False to use the current-app
-		* @return the return-value of the call to db::query
+		* @param string/boolean $app string with name of app or False to use the current-app
+		* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
+		* @return ADORecordSet or false, if the query fails
 		*/
-		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False)
+		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0)
 		{
 			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app')</p>\n";
 
@@ -1294,6 +1305,6 @@
 
 			if ($this->Debug) echo "<p>sql='$sql'</p>";
 
-			return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : 0);
+			return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows);
 		}
 	}
