@@ -139,7 +139,7 @@
         return False;
       }
 
-      $db2->query("SELECT * FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='u' AND acl_account=".$account_id,__LINE__,__FILE__);
+      $db2->query("SELECT * FROM phpgw_acl WHERE (acl_location='run' AND acl_account_type='u' AND acl_account=".$account_id.") OR (acl_location='everywhere')",__LINE__,__FILE__);
       if($db2->num_rows()) {
         while($db2->next_record()) {
           $apps[] = $db2->f("acl_appname");
@@ -200,7 +200,7 @@
 
       $db2 = $phpgw->db;
 
-      $db2->query("SELECT * FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='g' AND acl_account=".$group_id,__LINE__,__FILE__);
+      $db2->query("SELECT * FROM phpgw_acl WHERE (acl_location='run' AND acl_account_type='g' AND acl_account=".$group_id.") OR (acl_location='everywhere')",__LINE__,__FILE__);
       if($db2->num_rows()) {
         while($db2->next_record()) {
           $apps[] = $db2->f("acl_appname");
@@ -332,8 +332,8 @@
         $db2->query("UPDATE groups SET group_apps='".$this->group_app_string($group_id)."' WHERE group_id=".$group_id,__LINE__,__FILE__);
         $db2->query("DELETE FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='g' AND acl_account=".$group_id,__LINE__,__FILE__);
         reset($this->group_apps[$group_id]);
-        while($group = each($this->group_apps[$group_id])) {
-          $phpgw->acl->add($group[1],'run',$group_id,'g',1);
+        while($app = each($this->group_apps[$group_id])) {
+          $phpgw->acl->add($app[1],'run',$group_id,'g',1);
         }
       }
     }
@@ -347,8 +347,8 @@
         $db2->query("UPDATE account SET account_permissions = '".$this->user_app_string()."' WHERE account_id=".$this->account_id,__LINE__,__FILE__);
         $db2->query("DELETE FROM phpgw_acl WHERE acl_location='run' AND acl_account_type='u' AND acl_account=".$this->account_id,__LINE__,__FILE__);
         reset($this->user_apps);
-        while($user = each($this->user_apps)) {
-          $phpgw->acl->add($user[1],'run',$this->account_id,'u',1);
+        while($app = each($this->user_apps)) {
+          $phpgw->acl->add($app[1],'run',$this->account_id,'u',1);
         }
       }
     }

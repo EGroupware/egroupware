@@ -62,6 +62,12 @@
                 	     . "app_title='" . addslashes($n_app_title) . "', app_enabled='"
                         . "$n_app_status',app_order='$app_order' where app_name='$old_app_name'",__LINE__,__FILE__);
 
+        if($n_app_anonymous) {
+          $phpgw->acl->add($n_app_name,'everywhere',0,'g',PHPGW_ACL_READ);
+        } else {
+          $phpgw->acl->delete($n_app_name,'everywhere',0,'g');
+        }
+
         Header("Location: " . $phpgw->link("applications.php"));
         $phpgw->common->phpgw_exit();
      }
@@ -82,6 +88,7 @@
      $n_app_status = $phpgw->db->f("app_enabled");
      $old_app_name = $phpgw->db->f("app_name");
      $app_order    = $phpgw->db->f("app_order");
+     $n_app_anonymous = $phpgw->acl->check('', PHPGW_ACL_READ, $n_app_name);
   }
  
   $phpgw->template->set_var("lang_header",lang("Edit application"));
@@ -103,6 +110,14 @@
   display_row(lang("Status"),'<select name="n_app_status">' . $status_html . '</select>');
   display_row(lang("Select which location this app should appear on the navbar, lowest (left) to highest (right)"),'<input name="app_order" value="' . $app_order . '">');
 
+  $str = '<input type="checkbox" name="n_app_anonymous" value="True"';
+  if ($n_app_anonymous) {
+    $str .= " checked";
+  }
+  $str .= ">";
+  
+  display_row(lang("Allow Anonymous access to this app"),$str);
+  
   $phpgw->template->set_var("select_status",$status_html);
 
   $phpgw->template->pparse("out","form");
