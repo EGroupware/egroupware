@@ -100,8 +100,8 @@
 		 @function translate
 		 @abstract Return the translated string from $this->lang, if it exists.  If no translation exists, return the same string with an asterisk.
 		 @discussion This should be called from the global function lang(), not directly.
-		 @syntax translate('translate x',array('replacement'));  OR  translate('translate this');
-		 @example translate('translate this x', array('lang entry'));  returns 'Translate this Lang Entry' or 'translate this lang x*'
+		 @syntax translate('translate %1',array('replacement'));  OR  translate('translate this');
+		 @example translate('translate this %1', array('lang entry'));  returns 'Translate this Lang Entry' or 'translate this lang %1*'
 		*/
 		function translate($key,$vars=False) 
 		{
@@ -110,7 +110,7 @@
 				$vars = array();
 			}
 			$ret  = $key;
-			$_key = substr(strtolower($key),0,MAX_MESSAGE_ID_LENGTH);
+			$_key = trim(substr(strtolower($key),0,MAX_MESSAGE_ID_LENGTH));
 
 			if(!@isset($this->lang[$_key]) && !$this->loaded)
 			{
