@@ -164,6 +164,13 @@
 			 	'ophone'   => 'Other Phone',
 				'ab_id'    => 'Address Id: @addr_id(n_family,n_given,org_name)'
 			);
+			$config = CreateObject('phpgwapi.config','addressbook');
+			$config->read_repository();
+			while(list($name,$descr) = @each($config->config_data['custom_fields']))
+			{
+				$addr_names[$name] = $descr;
+			}
+			unset($config);
 
 			while(list($field,$name) = each($addr_names))
 			{
