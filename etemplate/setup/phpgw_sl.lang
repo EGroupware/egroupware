@@ -7,6 +7,7 @@
 %s disabled	etemplate	sl	%s onemogočenih
 %s needed	etemplate	sl	%s potrebnih
 %s notranslation	etemplate	sl	%s brez prevoda
+%s onchange	etemplate	sl	%s ob spremembi
 %s readonly	etemplate	sl	%s samo za branje
 '%1' has an invalid format !!!	etemplate	sl	'%1' ima nepravilen format
 '%1' is not a valid floatingpoint number !!!	etemplate	sl	'%1' ni pravilno decimalno število
@@ -19,6 +20,9 @@ add index	etemplate	sl	Dodaj kazalo
 add table	etemplate	sl	Dodaj tabelo
 align	etemplate	sl	Poravnaj
 alignment of label and input-field in table-cell	etemplate	sl	poravnava napisov in vnosnih polj v tabeli
+alignment of the v/hbox containing table-cell	etemplate	sl	Poravnava V/H okvirjev s tabelarnimi celicami
+all days	etemplate	sl	vsi dnevi
+am	etemplate	sl	dop
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sl	Oštevilčen stolpec pospeši poizvedbe (zavzame več prostora na disku!)
 application	etemplate	sl	Program
 application name needed to write a langfile or dump the etemplates !!!	etemplate	sl	Ime programa, ki je potreben za zapis jezikovne datoteke ali skladiščenje ePredlog
@@ -30,12 +34,15 @@ border-line-thickness for the table-tag	etemplate	sl	Debelina robov
 can not have special sql-value null	etemplate	sl	Posebna SQL vrednost ne more biti NULL
 cancel	etemplate	sl	Prekliči
 category	etemplate	sl	Kategorija
+cellpadding for the table-tag	etemplate	sl	Odmik od roba celice
 cells	etemplate	sl	Celice
 cellspacing for the table-tag	etemplate	sl	Razmik med celicami
 center	etemplate	sl	Sredina
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sl	preveri, če naj bo vsebina samo prikazana in ne spremenjena (na ta način ni poslana nazaj!)
 check if field has to be filled by user	etemplate	sl	preveri, če naj uporabnik izpolni polja
+checkbox	etemplate	sl	Stikalo
 class	etemplate	sl	Razred
+class, valign	etemplate	sl	razred, vertikalna poravnava
 click here to attach the file	etemplate	sl	kliknite sem, da boste pripeli datoteko
 click here to create the link	etemplate	sl	kliknite sem, da boste ustvarili povezavo
 click here to start the search	etemplate	sl	Kliknite sem, da boste začeli iskanje
@@ -45,12 +52,16 @@ columnname	etemplate	sl	Ime stolpca
 comment	etemplate	sl	Komentar
 create a new table for the application	etemplate	sl	Naredi novo tabelo za program
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sl	naredi angleško ('en') jezikovno datoteko iz napisov in besedila za pomoč (za program v polju Ime)
+css class for the table-tag	etemplate	sl	CSS razred za značko table
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	sl	Ime CSS razreda za to vrstico. Prednastavljeno: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM vrstic
 css-styles	etemplate	sl	CSS - stili
-date+time	etemplate	sl	Datim+Čas
+date+time	etemplate	sl	Datum+Čas
 datum	etemplate	sl	Datum
 day	etemplate	sl	Dan
 db ensures that every row has a unique value in that column	etemplate	sl	Podatkovna baza zagotovi, da ima vsaka vrstica svojo vrednost v tem stolpcu
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	sl	Možnosti indeksiranja (ločene z vejico), specifične za podatkovno bazo. Npr. mysql(FULLTEXT) oziroma mysql (100) za indeksno dolžino stolpcev
 db-tools	etemplate	sl	Orodja podatkovne baze
+deck	etemplate	sl	Kup (interno)
 default	etemplate	sl	Privzeto
 delete	etemplate	sl	Zbriši
 delete a single entry by passing the id.	etemplate	sl	Zbriši en vnos z vnosom idja.
@@ -64,17 +75,22 @@ deletes the etemplate spez. above	etemplate	sl	zbriše ePredloge
 deletes this column	etemplate	sl	Zbriše ta stolpec
 deletes this index	etemplate	sl	Zbriše to kazalo
 discard changes	etemplate	sl	Razveljavi spremembe
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	sl	prikazan pred vnosom ali vstavljen pred izpisom za '%s' oznako (oznaka potrditvenega gumba ali ime datoteke slike)
 displayed in statusline of browser if input-field gets focus	etemplate	sl	prikazano v statusni vrstici brskalnika, če se vnosno polje označi
 do you want to save the changes you made in table %s?	etemplate	sl	Ali želite shraniti spremembe v tabeli %s?
 documentation	etemplate	sl	Dokumentacija
 drop a table - this can not be undone	etemplate	sl	Spusti tabelo - ni mogoče razveljaviti
 drop table	etemplate	sl	Spusti tabelo
+dump4setup	etemplate	sl	Odlagališče za nastavitve
 edit	etemplate	sl	Uredi
+edit the etemplate spez. above	etemplate	sl	Uredi ePredlogo
 editable templates - db-tools	etemplate	sl	Spremenljive predloge - Orodja podatkovne baze
 editable templates - delete template	etemplate	sl	Spremenljive predloge - Zbriši predlogo
 editable templates - editor	etemplate	sl	Spremenljive predloge - Urejevalnik
 editable templates - search	etemplate	sl	Spremenljive predloge - Iskanje
 editable templates - show template	etemplate	sl	Spremenljive predloge - Prikaži predlogo
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	sl	vključen CSS stil
+enable javascript onchange submit	etemplate	sl	omogoči Javascript za pošiljanje ob spremembi
 enter '' for an empty default, nothing mean no default	etemplate	sl	vnesite '' za prazno privzeto vrednost, brez vnosa pomeni, da privzete vrednosti ni
 enter a search pattern	etemplate	sl	Vnesite iskalni niz
 enter filename to upload and attach, use [browse...] to search for it	etemplate	sl	Vnesite ime datoteke za prenos na strežnik in priponko, uporabite [Poišči...] da jo izberete
@@ -110,11 +126,15 @@ go to the first entry	etemplate	sl	pojdi na prvi vnos
 go to the last entry	etemplate	sl	pojdi na zadnji vnos
 go to the next page of entries	etemplate	sl	pojdi na naslednjo stran vnosov
 go to the previous page of entries	etemplate	sl	pojdi na prejšnjo stran vnosov
+hbox	etemplate	sl	horizontalni okvir
 height	etemplate	sl	Širina
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	sl	višina vrstice (v % ali pikslih), onemogoči vrstico: [! = ni]<vrednost>[=<označi>] npr.: '!@podatek' onemogoči vrstico če vsebuje "podatek" ali pa je prazna
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	sl	Višina tabele v % ali pikslih za značko "table" in (neobvezno) "značko" div
 height, disabled	etemplate	sl	Širina, izključeno
 help	etemplate	sl	Pomoč
 horizontal rule	etemplate	sl	Vodoravno ravnilo
 hour	etemplate	sl	Ura
+html	etemplate	sl	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sl	če je polje izključeno, je prikazana prazna celica v tabeli, za začasno odstranitev polja/celice
 image	etemplate	sl	Slika
 import	etemplate	sl	Uvoz
@@ -131,9 +151,12 @@ insert new row in front of first line	etemplate	sl	vstavi novo vrstico pred prvo
 integer	etemplate	sl	Celo število
 key	etemplate	sl	Ključ
 label	etemplate	sl	Napis
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	sl	Oznaka:[krepko][poševno] Besedilo:[dolžina][,maksimum] Števila:[minimum][,[maksimum][,dolžina]] Besedilno polje:[vrstic][,stolpcev] Radijski gumb:vrednost Horizontalna črta:[širina] Predloga:[Kazalo v kontekstu] Izbira:[več hkrati] Datum:[vrednosti: npr. 'L-m-d' (leto-mesec-dan)]
 lang	etemplate	sl	Jezik
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	sl	pkrajšava jezika (npr. 'en' za angleško) za predlogo, odvisno od izbire jezika
 last	etemplate	sl	Zadnji
 left	etemplate	sl	Levi
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	sl	dolžina za char+varchar, natančnosti int: 2, 4, 8 in float: 4, 8
 link	etemplate	sl	Povezava
 linklist	etemplate	sl	Povezava - seznam
 linkstring	etemplate	sl	Povezava - besedilo
@@ -144,44 +167,54 @@ month	etemplate	sl	Mesec
 multicolumn indices	etemplate	sl	Kazala več stolpcev
 name	etemplate	sl	Ime
 name of other table where column is a key from	etemplate	sl	ime druge tabele, kjer je stolpec ključ iz
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	sl	ime phpgw-predloge (npr.: verdilak): "=privzeto(izbrana bo privzeta predloga)"
 name of table to add	etemplate	sl	Ime tabele za dodati
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sl	ime ePredloge mora biti v obliki application.function[.subTemplate]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sl	mora biti enolično in ne sme biti beseda rezervirana za SQL. Najboljše, da vsem dodate predpono aplikacije, dolgo dva znaka, npr.: 'et_'
 new search	etemplate	sl	Novo iskanje
 new table created	etemplate	sl	Nova tabela ustvarjena
-newer version '%1' exists !!!	etemplate	sl	obstaja novejša verzija '%1'
+newer version '%1' exists !!!	etemplate	sl	obstaja novejša različica '%1'
 nextmatch	etemplate	sl	Naslednji zadetek
+nextmatch filterheader	etemplate	sl	Naslednji zadetek, filtriraj glavo
+nextmatch sortheader	etemplate	sl	Naslednji zadetek, razvrsti glave
 no file	etemplate	sl	ni datoteke
 no filename given or selected via browse...	etemplate	sl	nobena datoteka ni bila izbrana prek Poišči...
+not null	etemplate	sl	NOT NULL
 nothing found - try again !!!	etemplate	sl	Ne najdem ničesar - poskusi znova
-nothing matched search criteria !!!	etemplate	sl	Nobenih zadetkov na iskan kriterij
+nothing matched search criteria !!!	etemplate	sl	Nobenih zadetkov za iskan kriterij
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	sl	število stolpcev, ki naj jih polje/celica združi oziroma 'vse' za vse preostale stolpce, CSS ime razreda (za TD značko)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	sl	število vrstic/stolpcev v V/H okvirju, odmik celice, razmik med celicami
 of	etemplate	sl	od
-only an other version found !!!	etemplate	sl	najdena je samo druga verzija
+only an other version found !!!	etemplate	sl	najdena je samo druga različica
 optional note about the link	etemplate	sl	morebitni zapiski o povezavi
 options	etemplate	sl	Nastavitve
 overflow	etemplate	sl	Prenasičenost
-padding	etemplate	sl	Polnenje
-please enter table-name first !!!	etemplate	sl	Prosim, vnesite najprej ime tabele
+padding	etemplate	sl	Odmik
+please enter table-name first !!!	etemplate	sl	Najprej vpišite ime tabele
+pm	etemplate	sl	pop
 precision	etemplate	sl	Natančnost
 primary key	etemplate	sl	Primarni ključ
-primary key for the table, gets automaticaly indexed	etemplate	sl	Primarni ključ za tabelo, je avtomatsko registriran
-radiobutton	etemplate	sl	Izbirno polje
+primary key for the table, gets automaticaly indexed	etemplate	sl	Primarni ključ za tabelo, je samodejno indeksiran
+radiobutton	etemplate	sl	Radijski gumb
 read	etemplate	sl	Beri
 read a list of entries.	etemplate	sl	Beri seznam vnosov.
-read a single entry by passing the id and fieldlist.	etemplate	sl	Bere posamezen vnos z pošiljanjem idja in seznama polj.
-read etemplate from database (for the keys above)	etemplate	sl	bere ePredlogo iz podatkovne baze (za zgornje ključe)
+read a single entry by passing the id and fieldlist.	etemplate	sl	Beri posamezni vnos s podano šifro in seznamom polj.
+read etemplate from database (for the keys above)	etemplate	sl	beri ePredlogo iz podatkovne baze (za zgornje ključe)
 remove row (can not be undone!!!)	etemplate	sl	odstrani vrstico (ni mogoče razveljaviti)
 remove this link (not the entry itself)	etemplate	sl	Odstrani to povezavo (ne samega vnosa)
-returns savely, without deleting	etemplate	sl	Vrne varno, brez brisanja
+returns savely, without deleting	etemplate	sl	Vrne varno, BREZ brisanja
 right	etemplate	sl	Desno
 save	etemplate	sl	Shrani
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sl	shrani ePredlogo pod gornjimi ključi (ime,...), spremeni jih za Shrani kot
 saves changes to tables_current.inc.php	etemplate	sl	shrani spremembe v tables_current.inc.php
-scale	etemplate	sl	Skala
-scale for float	etemplate	sl	Skaza za decimalko
+scale	etemplate	sl	Stopnja
+scale for float	etemplate	sl	Stopnja za decimalko
 search	etemplate	sl	Išči
 select a category	etemplate	sl	izberite kategorijo
 select a primary contact, to show in the list	etemplate	sl	Označite primarni kontakt za prikaz na seznamu
+select access	etemplate	sl	Izberite dostop
 select account	etemplate	sl	Izberite račun
-select an app first !!!	etemplate	sl	Najprej izberite program
+select an app first !!!	etemplate	sl	Najprej izberite program!!!
 select an app to search in	etemplate	sl	Izberite program za iskanje
 select an application	etemplate	sl	Izberite program
 select an application, (*) = uninstalled	etemplate	sl	Izberite program, (*) = odstranjen
@@ -190,18 +223,19 @@ select an table of the application	etemplate	sl	Izberite tabelo programa
 select application	etemplate	sl	Izberite program
 select category	etemplate	sl	Izberite kategorijo
 select country	etemplate	sl	Izberite državo
-select day	etemplate	sl	Vnesite dan
-select if content of field should not be translated (label gets always translated)	etemplate	sl	označite, če naj vsebina polja ne bi bila prevedena (napis je vedno preveden)
+select day	etemplate	sl	Izberite dan
+select day of week	etemplate	sl	izberite dan v tednu
+select if content of field should not be translated (label gets always translated)	etemplate	sl	označite, če naj vsebina polja ne bi bila prevedena (oznaka je vedno prevedena)
 select month	etemplate	sl	Vnesite mesec
 select number	etemplate	sl	Vnesite število
 select one ...	etemplate	sl	Izberite eno ...
 select percentage	etemplate	sl	Izberite odstotek
-select priority	etemplate	sl	Vnesite prioriteto
-select state	etemplate	sl	Označite državo
-select the indexed columns in their desired order	etemplate	sl	Označite stolpce v želenem vrstnem redu
-select this etemplate to delete it	etemplate	sl	označite to ePredlogo da jo boste zbrisali
+select priority	etemplate	sl	Izberite prioriteto
+select state	etemplate	sl	Izberite državo
+select the indexed columns in their desired order	etemplate	sl	Izberite indeksne stolpce v želenem vrstnem redu
+select this etemplate to delete it	etemplate	sl	označite to ePredlogo za brisanje
 select which values to show	etemplate	sl	označite vrednosti za prikaz
-select year	etemplate	sl	Vnesite leto
+select year	etemplate	sl	Izberite leto
 selectbox	etemplate	sl	Izbirno polje
 sets today as date	etemplate	sl	določi današnji datum za trenutni datum
 show	etemplate	sl	Prikaži
@@ -211,17 +245,19 @@ showing	etemplate	sl	prikazujem
 shows / allows you to enter values into the etemplate for testing	etemplate	sl	prikaže / omogoči vnos vrednosti v ePredlogo za testiranje
 shows/displays etemplate for testing, does not save it before	etemplate	sl	prikaže ePredlogo za testiranje, vendar je pred tem ne shrani
 spacing	etemplate	sl	Razmik
+span, class	etemplate	sl	Razpon, razred
 stack	etemplate	sl	Kopičenje
 start a new search, cancel this link	etemplate	sl	začne novo iskanje, prekliče to povezavo
 start new search for the above pattern	etemplate	sl	začne novo iskanje po zgornjem vzorcu
 submitbutton	etemplate	sl	Potrditveni gumb
 table unchanged, no write necessary !!!	etemplate	sl	Tabela je nespremenjena, pisanje ni potrebno.
 tablename	etemplate	sl	Ime tabele
+tabs	etemplate	sl	Zavihki
 template	etemplate	sl	Predloga
 template deleted	etemplate	sl	Predloga zbrisana
 template saved	etemplate	sl	Predloga shranjena
 text	etemplate	sl	Besedilo
-textarea	etemplate	sl	Območje besedila
+textarea	etemplate	sl	Besedilno polje
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	sl	to besedilo je prikazano, če je vnosno polje prazno in neoznačeno (zamegljeno)
 time	etemplate	sl	Čas
 to start the db-tools	etemplate	sl	za zagon orodij podatkovne baze
@@ -231,21 +267,31 @@ today	etemplate	sl	Danes
 type	etemplate	sl	Vpišite
 type of the column	etemplate	sl	tip stolpca
 type of the field (select label if field should be empty)	etemplate	sl	tip polja (označi napis, če naj bo polje prazno)
-unique	etemplate	sl	Edinstven
+unique	etemplate	sl	Enoličen
 unlink	etemplate	sl	Odstrani povezavo
 update a single entry by passing the fields.	etemplate	sl	Posodobi posamezen vnos s pošiljanjem polj
-update from version '%s' to	etemplate	sl	Posodobi z verzije '%s' na
+update from version '%s' to	etemplate	sl	Posodobi z različice '%s' na
 upload	etemplate	sl	Prenesi
 value	etemplate	sl	Vrednost
 value has to be at least '%1' !!!	etemplate	sl	Vrednost mora biti vsaj '%1' !
 value has to be at maximum '%1' !!!	etemplate	sl	Vrednost je lahko največ '%1' !
-version	etemplate	sl	Verzija
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	sl	številka verzije, mora biti oblike: večja.manjša.revizija.številka (npr. 0.9.13.001 , vsa števila zapolnjena z ničlami)
+vbox	etemplate	sl	Vertikalni okvir
+version	etemplate	sl	Različica
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	sl	številka različice, mora biti oblike: večja.manjša.revizija.številka (npr. 0.9.13.001 , vsa števila zapolnjena z ničlami)
 view this linked entry in its application	etemplate	sl	poglej ta povezan vnos v svojem programu
+weekend	etemplate	sl	vikend
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	sl	kaj se zgodi s prenasičeno vsebino: vidna (privzeto), skrij, vklopi pomikanje, samodejno (se odloči brskalnik)
 width	etemplate	sl	Širina
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	sl	širina stolpcev (v % ali pikslih), onemogoči stolpec: [! = ni]<vrednost>[=<označi>] npr.: '!@podatek' onemogoči stolpec če vsebuje "podatek" ali pa je prazna
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	sl	Širina tabele v % ali pikslih za značko "table" in (neobvezno) značko div
 width, disabled	etemplate	sl	Širina, onemogočeno
+working days	etemplate	sl	delovnih dni
+write <app>/setup/tables_current.inc.php	etemplate	sl	Zapiši <app>/setup/tables_current.inc.php
 write langfile	etemplate	sl	Zapiši jezikovno datoteko
 write tables	etemplate	sl	Zapiši tabele
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	sl	zapiši datoteko 'etemplates.inc.php' (za ime aplikacije v namestitveno mapo aplikacije
 xml-file to import	etemplate	sl	xml-datoteka za izvoz
 xslt template	etemplate	sl	XSLT predloga
 year	etemplate	sl	Leto
+1	etemplate	sl	1
+2	etemplate	sl	2
