@@ -36,13 +36,13 @@
         }
      }
   
-     if (! $n_loginid)
+     if (! $account_lid)
         $error[$totalerrors++] = lang("You must enter a loginid");
 
      if (! $n_passwd)
         $error[$totalerrors++] = lang("You must enter a password");
 
-     if ($n_passwd == $n_loginid)
+     if ($n_passwd == $account_lid)
         $error[$totalerrors++] = lang("The login and password can not be the same");
 
      if ($n_passwd != $n_passwd_2)
@@ -52,7 +52,7 @@
         $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission or group to this account");
      }
 
-     if ($phpgw->accounts->exists($n_loginid)) {
+     if ($phpgw->accounts->exists($account_lid)) {
         $error[$totalerrors++] = lang("That loginid has already been taken");
      }
 
@@ -65,9 +65,9 @@
 				'phpgw_acl',
 				'phpgw_applications'
 			));
-			$phpgw->accounts->create('u', $n_loginid, $n_passwd, $n_firstname, $n_lastname, $n_account_status);
+			$phpgw->accounts->create('u', $account_lid, $n_passwd, $n_firstname, $n_lastname, $n_account_status);
        
-			$account_id = $phpgw->accounts->name2id($n_loginid);
+			$account_id = $phpgw->accounts->name2id($account_lid);
 
 			$apps = CreateObject('phpgwapi.applications',array($account_id,'u'));
 			$apps->read_installed_apps();
@@ -112,7 +112,7 @@
 			// Assign user to groups
 			for ($i=0;$i<count($n_groups);$i++)
 			{
-				$phpgw->acl->add_repository('phpgw_group',$n_groups[$i],$account_id,'u',1);
+				$phpgw->acl->add_repository('phpgw_group',$n_groups[$i],$account_id,1);
 			}
 
 			$pref = CreateObject('phpgwapi.preferences',$account_id);
@@ -172,7 +172,7 @@
 		$phpgw->template->set_var('account_status',' checked');
 	}
 
-  $phpgw->template->set_var("n_loginid_value",$n_loginid);
+  $phpgw->template->set_var("n_loginid_value",$account_lid);
 
   $phpgw->template->set_var("lang_account_active",lang("Account active"));
 

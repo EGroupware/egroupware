@@ -25,8 +25,9 @@
   	{
   		global $phpgw,$phpgw_info;
   		
-		$t = new Template($phpgw->common->get_tpl_dir("admin"));
-  		$t->set_file(array("form" => "account_form.tpl"));
+			$t = new Template($phpgw->common->get_tpl_dir("admin"));
+			$t->set_unknowns('remove');
+			$t->set_file(array("form" => "account_form.tpl"));
 		
 		if ($_userData)
 		{
@@ -53,11 +54,11 @@
 
 		// groups list
 		$groups_select = '<select name="n_groups[]" multiple>';
-		$accounts =  $account->get_list();
+		$accounts =  $account->get_list('groups');
 
 		for($i=0;$i<count($accounts);$i++) {
 			//echo $account->get_type($accounts[$i]["account_id"]);
-			if ($account->get_type($accounts[$i]["account_id"]) == "g") {
+//			if ($account->get_type($accounts[$i]["account_id"]) == "g") {
 				$groups_select .= '<option value="' . $accounts[$i]["account_id"] . '"';
 				$members = $account->members($accounts[$i]["account_id"]);
 				if (!$members) { $members = array(); }
@@ -68,7 +69,7 @@
 					}
 				}
 				$groups_select .= ">" . $accounts[$i]["account_lid"] . "</option>\n";
-			}
+//			}
 		}
 		$groups_select .= "</select>";
 		$t->set_var("groups_select",$groups_select);
@@ -103,12 +104,9 @@
 		
 		if ($userData["status"]) 
 		{
-			$t->set_var('account_status','checked');
+			$t->set_var('account_status',' checked');
 		} 
-		else 
-		{
-			$t->set_var('account_status','');
-		}
+
 		$t->set_var("n_firstname_value",$userData["firstname"]);
 		$t->set_var("n_lastname_value",$userData["lastname"]);
 
@@ -199,7 +197,7 @@
 	
 		$t->set_var("permissions_list",$appRightsOutput);
 
-		$t->pparse('out','form');
+		echo $t->finish($t->parse('out','form'));
 	}
 
 	// stores the userdata
@@ -327,9 +325,9 @@
 	if ($submit)
 	{
 		$userData = array(
-			'account_lid'    => $account_lid,     	'firstname'   => $n_firstname,
-			'lastname'       => $n_lastname,       	'passwd'    => $n_passwd,
-			'status' 	 => $n_account_status, 		'old_loginid' => rawurldecode($old_loginid),
+			'account_lid'    => $account_lid,     	'firstname'   => $firstname,
+			'lastname'       => $lastname,       	'passwd'    => $n_passwd,
+			'status' 	 => $account_status, 		'old_loginid' => rawurldecode($old_loginid),
 			'account_id'     => $account_id,	'passwd_2'  => $n_passwd_2,
 			'n_groups' 	 => $n_groups,		'new_permissions' => $new_permissions
 		);
