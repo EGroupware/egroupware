@@ -24,10 +24,10 @@
 		}
 
 		/* Return a type suitable for DDL abstracted array */
-		function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
+		function TranslateType($sType, $iPrecision = 0, $iScale = 0)
 		{
 			$sTranslated = $sType;
-			return (strlen($sTranslated) > 0);
+			return $sTranslated;
 		}
 
 		function TranslateDefault($sDefault)

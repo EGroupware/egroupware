@@ -30,7 +30,7 @@
 		}
 
 		/* Return a type suitable for DDL */
-		function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
+		function TranslateType($sType, $iPrecision = 0, $iScale = 0)
 		{
 			$sTranslated = '';
 			switch($sType)
@@ -102,8 +102,7 @@
 					}
 					break;
 			}
-			
-			return (strlen($sTranslated) > 0);
+			return $sTranslated;
 		}
 
 		function TranslateDefault($sDefault)
@@ -114,12 +113,11 @@
 				case 'current_timestamp':
 					return 'now';
 			}
-
 			return $sDefault;
 		}
 
 		/* Inverse of above, convert sql column types to array info */
-		function rTranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated = '')
+		function rTranslateType($sType, $iPrecision = 0, $iScale = 0)
 		{
 			$sTranslated = '';
 			if ($sType == 'int' || $sType == 'tinyint' ||  $sType == 'smallint' || $sType == 'bigint')
@@ -190,8 +188,7 @@
 					$sTranslated = "'type' => '$sType'";
 					break;
 			}
-
-			return (strlen($sTranslated) > 0);
+			return $sTranslated;
 		}
 
 		function GetPKSQL($sFields)
@@ -245,7 +242,7 @@
 					$prec  = $scales[0];
 					$scale = $scales[1];
 				}
-				$this->rTranslateType($colinfo[0], $prec, $scale, $type);
+				$type = $this->rTranslateType($colinfo[0], $prec, $scale);
 
 				if ($oProc->m_odb->f(2) == 'YES')
 				{

@@ -34,7 +34,7 @@
 		}
 
 		/* Return a type suitable for DDL */
-		function TranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
+		function TranslateType($sType, $iPrecision = 0, $iScale = 0)
 		{
 			switch($sType)
 			{
@@ -92,8 +92,7 @@
 					}
 					break;
 			}
-
-			return (strlen($sTranslated) > 0);
+			return $sTranslated;
 		}
 
 		function TranslateDefault($sDefault)
@@ -104,12 +103,11 @@
 				case 'current_timestamp':
 					return 'now';
 			}
-
 			return $sDefault;
 		}
 
 		/* Inverse of above, convert sql column types to array info */
-		function rTranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated)
+		function rTranslateType($sType, $iPrecision = 0, $iScale = 0)
 		{
 			$sTranslated = '';
 			switch($sType)
@@ -169,8 +167,7 @@
 					$sTranslated = "'type' => '$sType'";
 					break;
 			}
-
-			return (strlen($sTranslated) > 0);
+			return $sTranslated;
 		}
 
 		function GetPKSQL($sFields)
@@ -274,7 +271,7 @@
 					$scale = 0;
 				}
 
-				$this->rTranslateType($sdb->f(2),$prec,$scale,$type);
+				$type = $this->rTranslateType($sdb->f(2), $prec, $scale);
 
 				$sql_get_default = "
 					SELECT d.adsrc AS rowdefault

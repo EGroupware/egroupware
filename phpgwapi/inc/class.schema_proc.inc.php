@@ -377,7 +377,7 @@
 			}
 
 			// Translate the type for the DBMS
-			if($this->m_oTranslator->TranslateType($sType, $iPrecision, $iScale, $sFieldSQL))
+			if($sFieldSQL = $this->m_oTranslator->TranslateType($sType, $iPrecision, $iScale))
 			{
 				if($bNullable == False)
 				{
