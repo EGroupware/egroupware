@@ -13,7 +13,7 @@
   /* $Id$ */
 
   /**************************************************************************\
-  * !!!!!!! EDIT THIS LINE !!!!!!!!                                          *
+  * !!!!!!! EDIT THESE LINES !!!!!!!!                                          *
   * This setting allows you to easily move the include directory             *
   * simply point this to your inc dir and then edit the globalconfig.inc.php *
   * to fit your site, and you should be up and running.                      *
