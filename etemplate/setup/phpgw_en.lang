@@ -6,6 +6,7 @@
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s readonly
 a pattern to be searched for	etemplate	en	a pattern to be searched for
+add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
 add column	etemplate	en	Add Column
 add table	etemplate	en	Add Table
 align	etemplate	en	Align
@@ -51,6 +52,7 @@ delete this etemplate	etemplate	en	delete this eTemplate
 delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
 deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
+deletes this column	etemplate	en	Deletes this column
 discard changes	etemplate	en	discard changes
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
@@ -175,13 +177,14 @@ select country	etemplate	en	Select Country
 select day	etemplate	en	Select Day
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
 select month	etemplate	en	Select Month
+select one ...	etemplate	en	Select One ...
 select percentage	etemplate	en	Select Percentage
 select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
 select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox
-show (no save)	etemplate	en	Show (no save)
+show	etemplate	en	Show
 show values	etemplate	en	Show Values
 showing	etemplate	en	showing
 shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
