@@ -293,7 +293,12 @@
 	{
 		if (! $GLOBALS['phpgw']->session->verify())
 		{
-			$GLOBALS['phpgw']->redirect_link('/login.php','cd=10');
+			list(,$relpath) = explode($GLOBALS['phpgw_info']['server']['webserver_url'],$_SERVER['PHP_SELF'],2);
+			$args = array(
+				'cd' => 10,
+				'phpgw_forward' => urlencode('/'.$relpath.(isset($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : ''))
+			);
+			$GLOBALS['phpgw']->redirect_link('/login.php',$args);
 		}
 
 		$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');

@@ -54,15 +54,15 @@
 		$deny_msg=lang('Oops! You caught us in the middle of system maintainance.<br/>
 		Please, check back with us shortly.');
 
-	$tmpl->set_file(array
-	(
-		'login_form' => 'login_denylogin.tpl'
-	));
+		$tmpl->set_file(array
+		(
+			'login_form' => 'login_denylogin.tpl'
+		));
 
-	$tmpl->set_var('template_set','default');
-	$tmpl->set_var('deny_msg',$deny_msg);
-	$tmpl->pfp('loginout','login_form');
-	exit;
+		$tmpl->set_var('template_set','default');
+		$tmpl->set_var('deny_msg',$deny_msg);
+		$tmpl->pfp('loginout','login_form');
+		exit;
 	}
 	$tmpl->set_file(array('login_form' => 'login.tpl'));
 
@@ -224,25 +224,18 @@
 			{
 				$GLOBALS['phpgw']->preferences->add('common','lang',$_POST['lang'],'session');
 			}
-			$forward = get_var('phpgw_forward', array('GET', 'POST'), 0);
-			if($forward)
-			{
-				$extra_vars['phpgw_forward'] = $forward;
-				foreach($_GET as $name => $value)
-				{
-					if(ereg('phpgw_',$name))
-					{
-						$extra_vars[$name] = urlencode($value);
-					}
-				}
-			}
+
 			if(!$GLOBALS['phpgw_info']['server']['disable_autoload_langfiles'])
 			{
 				$GLOBALS['phpgw']->translation->autoload_changed_langfiles();
 			}
-			$extra_vars['cd'] = 'yes';
-			
-			$GLOBALS['phpgw']->redirect_link('/home.php', $extra_vars);
+			$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
+			if (!$forward)
+			{
+				$extra_vars['cd'] = 'yes';
+				$forward = '/home.php';
+			}
+			$GLOBALS['phpgw']->redirect_link($forward,$extra_vars);
 		}
 	}
 	else
@@ -325,7 +318,7 @@
 
 	if($extra_vars)
 	{
-		$extra_vars = '?' . substr($extra_vars,1,strlen($extra_vars));
+		$extra_vars = '?' . substr($extra_vars,1);
 	}
 
 	/********************************************************\

@@ -38,19 +38,6 @@
 	include('header.inc.php');
 	$GLOBALS['phpgw_info']['flags']['app_header']=lang('home');
 
-	if ($_GET['phpgw_forward'])
-	{
-		foreach($_GET as $name => $value)
-		{
-			if (ereg('phpgw_',$name))
-			{
-				$extra_vars .= '&' . $name . '=' . urlencode($value);
-			}
-		}
-		$GLOBALS['phpgw']->redirect_link($_GET['phpgw_forward'],$extra_vars);
-		exit;
-	}
-
 	// anonymous user should never get a home-page
 	if ($GLOBALS['phpgw']->session->session_flags == 'A')
 	{
