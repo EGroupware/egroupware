@@ -18,7 +18,7 @@
 
 	include('../header.inc.php');
 
-	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 
 	$t->set_file(array(
 		'cat_list_t' => 'listcats.tpl',
