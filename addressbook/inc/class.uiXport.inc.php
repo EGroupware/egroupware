@@ -37,6 +37,11 @@
 			$this->bo       = CreateObject('addressbook.boXport',True);
 			$this->browser  = CreateObject('phpgwapi.browser');
 
+			$this->_set_sessiondata();
+		}
+
+		function _set_sessiondata()
+		{
 			$this->start    = $this->bo->start;
 			$this->limit    = $this->bo->limit;
 			$this->query    = $this->bo->query;
@@ -44,6 +49,22 @@
 			$this->order    = $this->bo->order;
 			$this->filter   = $this->bo->filter;
 			$this->cat_id   = $this->bo->cat_id;
+			if($this->debug) { $this->_debug_sqsof(); }
+		}
+
+		/* Called only by index(), just prior to page footer. */
+		function save_sessiondata()
+		{
+			$data = array(
+				'start'  => $this->start,
+				'limit'  => $this->limit,
+				'query'  => $this->query,
+				'sort'   => $this->sort,
+				'order'  => $this->order,
+				'filter' => $this->filter,
+				'cat_id' => $this->cat_id
+			);
+			$this->bo->save_sessiondata($data);
 		}
 
 		/* Return a select form element with the categories option dialog in it */

@@ -31,8 +31,9 @@
 		var $cat_id;
 
 		var $use_session = False;
+		var $debug = False;
 
-		function boXport ($session=False)
+		function boXport($session=False)
 		{
 			$this->contacts = $GLOBALS['phpgw']->contacts;
 			$this->so = CreateObject('addressbook.soaddressbook');
@@ -41,32 +42,60 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
-			global $start,$limit,$query,$sort,$order,$filter,$cat_id;
+			$_start   = get_var('_start',array('POST','GET'));
+			$_query   = get_var('_query',array('POST','GET'));
+			$_sort    = get_var('_sort',array('POST','GET'));
+			$_order   = get_var('_order',array('POST','GET'));
+			$_filter  = get_var('_filter',array('POST','GET'));
+			$_cat_id  = get_var('_cat_id',array('POST','GET'));
+			$_fcat_id = get_var('_fcat_id',array('POST','GET'));
 
-			if($start || $start == 0)  { $this->start = $start; }
-			if($limit)  { $this->limit  = $limit;  }
-			if($query)  { $this->query  = $query;  }
-			if($sort)   { $this->sort   = $sort;   }
-			if($order)  { $this->order  = $order;  }
-			if($filter) { $this->filter = $filter; }
-			$this->cat_id = $cat_id;
+			if(!empty($_start) || ($_start == '0') || ($_start == 0))
+			{
+				if($this->debug) { echo '<br>overriding $start: "' . $this->start . '" now "' . $_start . '"'; }
+				$this->start = $_start;
+			}
+			if($_limit)
+			{
+				$this->limit  = $_limit;
+			}
+			if((empty($_query) && !empty($this->query)) || !empty($_query))
+			{
+				$this->query  = $_query;
+			}
+
+			if(isset($GLOBALS['HTTP_POST_VARS']['fcat_id']) || isset($GLOBALS['HTTP_POST_VARS']['fcat_id']))
+			{
+				$this->cat_id = $_fcat_id;
+			}
+			else
+			{
+				$this->cat_id = -1;
+			}
+
+			if(isset($_sort)   && !empty($_sort))
+			{
+				if($this->debug) { echo '<br>overriding $sort: "' . $this->sort . '" now "' . $_sort . '"'; }
+				$this->sort   = $_sort;
+			}
+
+			if(isset($_order)  && !empty($_order))
+			{
+				if($this->debug) { echo '<br>overriding $order: "' . $this->order . '" now "' . $_order . '"'; }
+				$this->order  = $_order;
+			}
+
+			if(isset($_filter) && !empty($_filter))
+			{
+				if($this->debug) { echo '<br>overriding $filter: "' . $this->filter . '" now "' . $_filter . '"'; }
+				$this->filter = $_filter;
+			}
 		}
 
-		function save_sessiondata()
+		function save_sessiondata($data)
 		{
-			global $start,$limit,$query,$sort,$order,$filter,$cat_id;
-
-			if ($this->use_session)
+			if($this->use_session)
 			{
-				$data = array(
-					'start'  => $start,
-					'limit'  => $limit,
-					'query'  => $query,
-					'sort'   => $sort,
-					'order'  => $order,
-					'filter' => $filter,
-					'cat_id' => $cat_id
-				);
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
 				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
 			}
@@ -84,26 +113,30 @@
 			$this->order  = $data['order'];
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
+			if($this->debug) { echo '<br>read_sessiondata();'; $this->_debug_sqsof(); }
 		}
 
 		function import($tsvfile,$conv_type,$private,$fcat_id)
 		{
-			include (PHPGW_APP_INC . '/import/' . $conv_type);
+			include(PHPGW_APP_INC . '/import/' . $conv_type);
 
-			if ($private == '') { $private = 'public'; }
+			if($private == '')
+			{
+				$private = 'public';
+			}
 			$row = 0;
 			$buffer = array();
 			$contacts = new import_conv;
 
 			$buffer = $contacts->import_start_file($buffer);
 			$fp = fopen($tsvfile,'r');
-			if ($contacts->type == 'csv')
+			if($contacts->type == 'csv')
 			{
-				while ($data = fgetcsv($fp,8000,','))
+				while($data = fgetcsv($fp,8000,','))
 				{
 					$num = count($data);
 					$row++;
-					if ($row == 1)
+					if($row == 1)
 					{
 						$header = $data;
 						/* Changed here to ignore the header, set to our array
@@ -116,10 +149,10 @@
 					else
 					{
 						$buffer = $contacts->import_start_record($buffer);
-						for ($c=0; $c<$num; $c++ )
+						for($c=0; $c<$num; $c++ )
 						{
 							//Send name/value pairs along with the buffer
-							if ($contacts->import[$header[$c]] != '' && $data[$c] != '')
+							if($contacts->import[$header[$c]] != '' && $data[$c] != '')
 							{
 								$buffer = $contacts->import_new_attrib($buffer, $contacts->import[$header[$c]],$data[$c]);
 							}
@@ -128,25 +161,25 @@
 					}
 				}
 			}
-			elseif ($contacts->type == 'ldif')
+			elseif($contacts->type == 'ldif')
 			{
-				while ($data = fgets($fp,8000))
+				while($data = fgets($fp,8000))
 				{
 					$url = "";
 					list($name,$value,$extra) = split(':', $data);
-					if (substr($name,0,2) == 'dn')
+					if(substr($name,0,2) == 'dn')
 					{
 						$buffer = $contacts->import_start_record($buffer);
 					}
 					
 					$test = trim($value);
-					if ($name && !empty($test) && $extra)
+					if($name && !empty($test) && $extra)
 					{
 						// Probable url string
 						$url = $test;
 						$value = $extra;
 					}
-					elseif ($name && empty($test) && $extra)
+					elseif($name && empty($test) && $extra)
 					{
 						// Probable multiline encoding
 						$newval = base64_decode(trim($extra));
@@ -154,21 +187,21 @@
 						//echo $name.':'.$value;
 					}
 
-					if ($name && $value)
+					if($name && $value)
 					{
 						$test = split(',mail=',$value);
-						if ($test[1])
+						if($test[1])
 						{
-							$name = "mail";
+							$name = 'mail';
 							$value = $test[1];
 						}
-						if ($url)
+						if($url)
 						{
-							$name = "homeurl";
+							$name = 'homeurl';
 							$value = $url. ':' . $value;
 						}
 						//echo '<br>'.$j.': '.$name.' => '.$value;
-						if ($contacts->import[$name] != '' && $value != '')
+						if($contacts->import[$name] != '' && $value != '')
 						{
 							$buffer = $contacts->import_new_attrib($buffer, $contacts->import[$name],$value);
 						}
@@ -182,33 +215,33 @@
 			else
 			{
 				$needToCallEndRecord = 0;
-				while ($data = fgets($fp,8000))
+				while($data = fgets($fp,8000))
 				{
 					$data = trim($data);
 					// RB 2001/05/07 added for Lotus Organizer
-					while (substr($data,-1) == '=')
+					while(substr($data,-1) == '=')
 					{
 						// '=' at end-of-line --> line to be continued with next line
 						$data = substr($data,0,-1) . trim(fgets($fp,8000));
 					}
-					if (strstr($data,';ENCODING=QUOTED-PRINTABLE'))
+					if(strstr($data,';ENCODING=QUOTED-PRINTABLE'))
 					{
 						// RB 2001/05/07 added for Lotus Organizer
 						$data = quoted_printable_decode(str_replace(';ENCODING=QUOTED-PRINTABLE','',$data));
 					}
 					list($name,$value) = explode(':', $data,2); // RB 2001/05/09 to allow ':' in Values (not only in URL's)
 
-					if (strtolower(substr($name,0,5)) == 'begin')
+					if(strtolower(substr($name,0,5)) == 'begin')
 					{
 						$buffer = $contacts->import_start_record($buffer);
 						$needToCallEndRecord = 1;
 					}
-					if ($name && $value)
+					if($name && $value)
 					{
 						reset($contacts->import);
-						while ( list($fname,$fvalue) = each($contacts->import) )
+						while(list($fname,$fvalue) = each($contacts->import))
 						{
-							if ( strstr(strtolower($name), $contacts->import[$fname]) )
+							if(strstr(strtolower($name), $contacts->import[$fname]))
 							{
 								$buffer = $contacts->import_new_attrib($buffer,$name,$value);
 							}
@@ -221,7 +254,9 @@
 					}
 				}
 				if($needToCallEndRecord)
+				{
 					$buffer = $contacts->import_end_record($buffer);
+				}
 			}
 
 			fclose($fp);
@@ -231,18 +266,18 @@
 
 		function export($conv_type,$cat_id='')
 		{
-			include (PHPGW_APP_INC . '/export/' . $conv_type);
-			$buffer=array();
+			include(PHPGW_APP_INC . '/export/' . $conv_type);
+			$buffer = array();
 			$contacts = new export_conv;
 
 			// Read in user custom fields, if any
 			$customfields = array();
-			while (list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
+			while(list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
 			{
-			if ( substr($col,0,6) == 'extra_' )
+				if(substr($col,0,6) == 'extra_')
 				{
 					$field = ereg_replace('extra_','',$col);
-						$field = ereg_replace(' ','_',$field);
+					$field = ereg_replace(' ','_',$field);
 					$customfields[$field] = ucfirst($field);
 				}
 			}
@@ -251,12 +286,13 @@
 				'address2' => 'address2',
 				'address3' => 'address3'
 			);
-			if ($contacts->type != 'vcard')
+
+			if($contacts->type != 'vcard')
 			{
 				$contacts->qfields = $contacts->stock_contact_fields;# + $extrafields;# + $customfields;
 			}
 
-			if (!empty($cat_id))
+			if(!empty($cat_id))
 			{
 				$buffer = $contacts->export_start_file($buffer,$cat_id);
 			}
@@ -265,10 +301,10 @@
 				$buffer = $contacts->export_start_file($buffer);
 			}
 
-			for ($i=0;$i<count($contacts->ids);$i++)
+			for($i=0;$i<count($contacts->ids);$i++)
 			{
 				$buffer = $contacts->export_start_record($buffer);
-				while( list($name,$value) = each($contacts->currentrecord) )
+				while(list($name,$value) = each($contacts->currentrecord))
 				{
 					$buffer = $contacts->export_new_attrib($buffer,$name,$value);
 				}
