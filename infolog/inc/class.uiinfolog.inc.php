@@ -591,7 +591,8 @@
 
 			if ($upload && $attachfile && $attachfile != "none")
 			{
-				$fileerror = $this->bo->attach_file($info_id,$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment,$full_fname);
+				$fileerror = $this->bo->attach_file($info_id,$attachfile,$attachfile_name,$attachfile_size,
+					$attachfile_type,$filecomment,$full_fname,$GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
 				if ($fileerror) $error[]=$fileerror;
 			}
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -752,7 +753,9 @@
 
 						if ($attachfile && $attachfile != "none")	// save the attached file
 						{
-							$fileerror = $this->bo->attach_file($this->bo->so->data['info_id'],$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment,$full_fname);
+							$fileerror = $this->bo->attach_file($this->bo->so->data['info_id'],$attachfile,
+								$attachfile_name,$attachfile_size,$attachfile_type,$filecomment,$full_fname,
+								$GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
 							if ($fileerror) $error[]=$fileerror;
 						}
 					}

@@ -245,9 +245,9 @@
 		**	Put a file to the corrosponding place in the VFS and set the attributes
 		**	ACL check is done by the VFS
 		*/
-		function attach_file($info_id,$filepos,$name,$size,$type,$comment='',$full_fname='')
+		function attach_file($info_id,$filepos,$name,$size,$type,$comment='',$full_fname='',$ip='')
 		{
-			//echo "<p>add_one_file: info_id='$info_id', filepos='$filepos', name='$name', size='$size', type='$type', comment='$comment', full_fname='$full_fname'</p>\n";
+			//echo "<p>attach_file: info_id='$info_id', filepos='$filepos', name='$name', size='$size', type='$type', comment='$comment', full_fname='$full_fname', ip='$ip'</p>\n";
 
 			// create the root for attached files in infolog, if it does not exists
 			if (!($this->vfs->file_exists($this->vfs_basedir,array(RELATIVE_ROOT))))
@@ -274,13 +274,14 @@
 				{  // check case-insensitive for WIN etc.
 					$check = $valid[0] == '\\' || strstr(':',$valid) ? 'eregi' : 'ereg';
 					$valid2 = str_replace('\\','/',$valid);
+					//echo "<p>attach_file: ereg('".$this->send_file_ips[$valid]."', '$ip')=".ereg($this->send_file_ips[$valid],$ip)."</p>\n";
 					if ($check('^('.$valid2.')(.*)$',$full_fname,$parts) &&
 					    ereg($this->send_file_ips[$valid],$ip) &&     // right IP
 					    $this->vfs->file_exists($trans.$parts[2],array(RELATIVE_NONE|VFS_REAL)))
 					{
 						$tfname = $trans.$parts[2];
 					}
-					// echo "<p>add_one_file: full_fname='$full_fname', valid2='$valid2', trans='$trans', check=$check, tfname='$tfname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
+					//echo "<p>attach_file: full_fname='$full_fname', valid2='$valid2', trans='$trans', check=$check, tfname='$tfname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
 				}
 				if ($tfname && !$this->vfs->securitycheck($tfname))
 				{
