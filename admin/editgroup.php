@@ -40,7 +40,7 @@
        $phpgw->db->next_record();
 
        if ($phpgw->db->f(0) == 2) {
-         $error = lang("Sorry, that group name has already been taking.");
+         $error = lang("Sorry, that group name has already been taken.");
        }
      }
 
@@ -76,7 +76,7 @@
         }
 
         for ($i=0; $i<count($n_users);$i++) {
-          $acl->add_repository('phpgw_group',$group_id,$n_users[$i],'u',1);
+          $acl->add_repository('phpgw_group',$group_id,$n_users[$i],1);
 
           // If the user is logged in, it will force a refresh of the session_info
           $phpgw->db->query("update phpgw_sessions set session_action='' "
