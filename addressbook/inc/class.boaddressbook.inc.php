@@ -563,7 +563,7 @@
 			}
 			$id = $this->so->add_entry($fields);
 			
-			if(id)
+			if($id)
 			{
 				$GLOBALS['phpgw']->contenthistory->updateTimeStamp('contacts', $id, 'add', time());
 			}
