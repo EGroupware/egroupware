@@ -12,11 +12,23 @@
   /* $Id$ */
 
   $phpgw_info = array();
-  $phpgw_info["flags"] = array("currentapp" => "admin", "noheader" => True, "nonavbar" => True);
+  $phpgw_info["flags"] = array("currentapp" => "admin", "noheader" => True, "nonavbar" => True,
+                               "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  //$phpgw->template->set_unknowns("remove");
-  $phpgw->template->set_file(array("form"	=> "application_form.tpl"));
+  $phpgw->template->set_file(array("form" => "application_form.tpl",
+                                   "row"  => "application_form_row.tpl"
+                                  ));
+
+  function display_row($label, $value)
+  {
+     global $phpgw;
+     $phpgw->template->set_var("tr_color",$phpgw->nextmatchs->alternate_row_color());
+     $phpgw->template->set_var("label",$label);
+     $phpgw->template->set_var("value",$value);
+
+     $phpgw->template->parse("rows","row",True);
+  }
 
   if ($submit) {
      $totalerrors = 0;
@@ -28,6 +40,10 @@
      if ($phpgw->db->f(0) != 0) {
         $error[$totalerrors++] = lang("That application name already exsists.");
      }
+     
+     if (preg_match("/\D/",$app_order)) {
+        $error[$totalerrors++] = lang("That application order must be a number.");
+     }
   
      if (! $n_app_name)
         $error[$totalerrors++] = lang("You must enter an application name.");
@@ -36,9 +52,9 @@
         $error[$totalerrors++] = lang("You must enter an application title.");
      
      if (! $totalerrors) {
-        $phpgw->db->query("insert into applications (app_name,app_title,app_enabled) values('"
+        $phpgw->db->query("insert into applications (app_name,app_title,app_enabled,app_order) values('"
 			            . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "',"
-			            . "$n_app_status)",__LINE__,__FILE__);
+			            . "$n_app_status,$app_order)",__LINE__,__FILE__);
 
         Header("Location: " . $phpgw->link("applications.php"));
         exit;
@@ -52,24 +68,23 @@
   $phpgw->common->navbar();
 
   $phpgw->template->set_var("lang_header",lang("Add new application"));
+  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
   $phpgw->template->set_var("hidden_vars","");
   $phpgw->template->set_var("form_action",$phpgw->link("newapplication.php"));
-  $phpgw->template->set_var("lang_app_name",lang("application name"));
-  $phpgw->template->set_var("lang_app_title",lang("application title"));
-  $phpgw->template->set_var("lang_status",lang("Status"));
-  $phpgw->template->set_var("lang_submit_button",lang("add"));
 
-  $phpgw->template->set_var("app_name_value",$n_app_name);
-  $phpgw->template->set_var("app_title_value",$n_app_value);
+  display_row(lang("application name"),'<input name="n_app_name" value="' . $n_app_name . '">');
+  display_row(lang("application title"),'<input name="n_app_title" value="' . $n_app_title . '">');
 
   $selected[$n_app_status] = " selected";
   $status_html = '<option value="0"' . $selected[0] . '>' . lang("Disabled") . '</option>'
                . '<option value="1"' . $selected[1] . '>' . lang("Enabled")  . '</option>'
                . '<option value="2"' . $selected[2] . '>' . lang("Enabled - Hidden from navbar")  . '</option>';
-  $phpgw->template->set_var("select_status",$status_html);
+  display_row(lang("Status"),'<select name="n_app_status">' . $status_html . '</select>');
+  display_row(lang("Select which location this app should appear on the navbar, lowest (left) to highest (right)"),'<input name="app_order" value="' . $app_order . '">');
+
+  $phpgw->template->set_var("lang_submit_button",lang("add"));
 
   $phpgw->template->pparse("out","form");
-
   $phpgw->common->phpgw_footer();
 ?>
