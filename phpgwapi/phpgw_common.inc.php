@@ -623,7 +623,6 @@
 
   function hook($location = "", $order = ""){
     global $phpgw, $phpgw_info;
-
     if ($order == ""){$order[] = $phpgw_info["flags"]["currentapp"];}
     /* First include the ordered apps hook file */
     reset ($order);
@@ -631,22 +630,32 @@
       $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
     	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
   	  if (file_exists($f)) {include($f);}
-      $processed .= '|| $appname != "'.$appname.'" ';
+      $completed_hooks[$appname] = True;
     }
-    $processed = 'if ($appname != "" '.$processed.'){';
-//echo "processed: ".$processed."<br>\n";
 
     /* Then add the rest */
     reset ($phpgw_info["user"]["app_perms"]);
     while (list (, $appname) = each ($phpgw_info["user"]["app_perms"])){
-    //eval($processed);
-    if ($appname != "" ){
+      if ($appname != "" && $completed_hooks[$appname] != True){
         $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
       	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
     	  if (file_exists($f)) {include($f);}
       }
     }
   }
+
+  function hook_count($location = ""){
+    global $phpgw, $phpgw_info;
+    reset ($phpgw_info["user"]["app_perms"]);
+    $count = 0;
+    while (list (, $appname) = each ($phpgw_info["user"]["app_perms"])){
+      $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+    	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
+  	  if (file_exists($f)) {++$count;}
+    }
+    return $count;
+  }
+
 
   function appsession($data = "##NOTHING##") {
       global $phpgw_info, $phpgw;
