@@ -16,7 +16,7 @@
 	$file = Array(
 		'Calendar preferences'	=> $phpgw->link('/calendar/preferences.php'),
 		'Grant Access'	=> $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
-		'Edit Categories'		=> $phpgw->link('/preferences/categories.php','cat_app='.$appname.'&global_cats=True')
+		'Edit Categories'		=> $phpgw->link('/preferences/categories.php','cats_app='.$appname.'&global_cats=True')
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);
