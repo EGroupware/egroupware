@@ -359,13 +359,21 @@
 				return False;
 			}
 
-			$html_error = '<table border="0" width="100%"><tr><td align="right"><b>' . lang($text)
-				. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
-			for ($i=1; $i<count($errors); $i++)
+			if ($text == 'Error')
 			{
-				$html_error .= '<tr><td>&nbsp;</td><td align="left">' . $errors[$i] . '</td></tr>';
+				$text = '';
 			}
-			return $html_error . '</table>';
+			else
+			{
+				$text .= ': ';
+			}
+			reset($errors);
+			while(list(,$value) = each($errors))
+			{
+				$msgbox_input[$text.$value] = False;
+				
+			}
+			return $this->msgbox($msgbox_input);
 		}
 
 		/*!
