@@ -72,6 +72,12 @@ class calendar_holiday
 		$this->db->query($sql,__LINE__,__FILE__);
 	}
 
+	function delete_holiday($id)
+	{
+		$sql = 'DELETE FROM phpgw_cal_holidays WHERE hol_id='.$id;
+		$this->db->query($sql,__LINE__,__FILE__);
+	}
+
 	function load_from_network($locale)
 	{
 		global $phpgw_info, $HTTP_HOST, $SERVER_PORT;
