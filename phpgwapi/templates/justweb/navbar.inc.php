@@ -113,20 +113,27 @@
 			$var['messages'] = $api_messages . "<br>" . checkcode($cd);
 		}
 */
+		if (! function_exists('display_section'))
+		{
+//echo 'function was not found<br>';
 
-/*
-function display_section($appname,$title,$file)
-{
-	$GLOBALS['prefs'][$appname]['title'] = $title;
-	$GLOBALS['prefs'][$appname]['file'][] = $file;
-}
-		$temp_common = CreateObject('phpgwapi.common');
+			function display_section($appname,$title,$file)
+			{
+				$GLOBALS['prefs'][$appname]['title'] = $title;
+				$GLOBALS['prefs'][$appname]['file'][] = $file;
+			}
+			$temp_hooks = CreateObject('phpgwapi.hooks');
 
-	$temp_hooks->process('preferences',array('preferences'));
-*/
-//	echo '>prefs<pre>';
-//	print_r($GLOBALS['prefs']);
-//	echo '</pre>';
+			$temp_hooks->process('preferences',array('preferences'));
+//echo 'prefs<pre>';
+//print_r($GLOBALS['prefs']);
+//echo '</pre>';
+
+//echo 'phpgw_info<pre>';
+//print_r($GLOBALS['phpgw_info']);
+//echo '</pre>';
+		}
+//		else {echo 'function was found<br>';}
 
 		$tpl->set_var($var);
 		$tpl->pfp('out','navbar');

@@ -896,6 +896,7 @@
 			$GLOBALS['phpgw_info']['navbar']['home']['title'] = 'Home';
 			$GLOBALS['phpgw_info']['navbar']['home']['url']   = $GLOBALS['phpgw']->link('/index.php');
 			$GLOBALS['phpgw_info']['navbar']['home']['icon']  = $this->image('phpgwapi','home.gif');
+			$GLOBALS['phpgw_info']['navbar']['home']['icon_hover']  = $this->image_on('phpgwapi','home','-over');
 
 			reset($GLOBALS['phpgw_info']['user']['apps']);
 			ksort($GLOBALS['phpgw_info']['user']['apps']);
@@ -950,6 +951,7 @@
 			$GLOBALS['phpgw_info']['navbar']['preferences']['title'] = 'preferences';
 			$GLOBALS['phpgw_info']['navbar']['preferences']['url']   = $GLOBALS['phpgw']->link('/preferences/index.php');
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon']  = $this->image('preferences','navbar.gif');
+			$GLOBALS['phpgw_info']['navbar']['preferences']['icon_hover']  = $this->image_on('preferences','navbar','-over');
 
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'about')
 			{
@@ -964,11 +966,13 @@
 			$GLOBALS['phpgw_info']['navbar']['about']['title'] = lang('About x',$app);
 
 			$GLOBALS['phpgw_info']['navbar']['about']['url']   = $GLOBALS['phpgw']->link('/about.php','app='.$app);
-			$GLOBALS['phpgw_info']['navbar']['about']['icon']  = $this->image('phpgwapi','about.gif');
+			$GLOBALS['phpgw_info']['navbar']['about']['icon']  = $this->image('phpgwapi','about');
+			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']  = $this->image_on('phpgwapi','about','-over');
 
 			$GLOBALS['phpgw_info']['navbar']['logout']['title'] = 'Logout';
 			$GLOBALS['phpgw_info']['navbar']['logout']['url']   = $GLOBALS['phpgw']->link('/logout.php');
-			$GLOBALS['phpgw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi','logout.gif');
+			$GLOBALS['phpgw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi','logout');
+			$GLOBALS['phpgw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi','logout','-over');
 		}
 
 		/*!

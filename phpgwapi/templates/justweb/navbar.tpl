@@ -25,7 +25,7 @@
     </td>
   </tr>
   <tr> 
-    <td height="100%">
+    <td height="100%" valign="top">
       <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
         <tr>
            <td height="7" width="59"><img src="{img_root}/side_bar_top.gif" width="59" height="7"></td>

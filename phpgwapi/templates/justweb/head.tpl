@@ -1,4 +1,3 @@
-<!-- BEGIN head -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -21,8 +20,8 @@
 </STYLE>
 <TITLE>{website_title}</TITLE>
 
-<script language="JavaScript" src="{webserver_url}/phpgwapi/templates/justweb/navcond.js"></script>
-<script language="JavaScript">
+<script type="text/javascript" language="javascript" src="{webserver_url}/phpgwapi/templates/justweb/navcond.js"></script>
+<script type="text/javascript" language="javascript">
 var myNavBar1 = new NavBar(0);
 var dhtmlMenu;
 
@@ -78,5 +77,3 @@ function init() {
 
 </HEAD>
 <BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="init();" {body_tags}>
-<!-- END Head -->
-
