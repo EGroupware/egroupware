@@ -413,7 +413,10 @@
 			{
 				if(!$bNullable)
 				{
-					$sFieldSQL .= ' NOT NULL';
+					if(strpos(strtolower($sFieldSQL),' not null')===false)
+					{
+						$sFieldSQL .= ' NOT NULL';
+					}
 				}
 
 				if(isset($aField['default']))
