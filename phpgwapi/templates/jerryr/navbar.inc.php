@@ -67,6 +67,7 @@
 
 				if($app=='home')
 				{
+					$icon = '<img src="' . $app_data['icon'] . '" alt="' . lang('home') . '" title="' . lang('home') . '" border="0" />';
 					if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']=='no')
 					{
 						continue;
@@ -152,7 +153,7 @@
 			if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']!='no')
 			{
 				$app_icons .= '<td width="'.$tdwidth.'%" height="32" valign="bottom" align="center" style="text-align:center"><a 
-href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['phpgw_info']['navbar']['logout']['icon'].'"></a></td>';
+href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['phpgw_info']['navbar']['logout']['icon'].'" title="'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'" alt="'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'"></a></td>';
 				$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'">'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'</a></td>';
 
 			}
