@@ -35,7 +35,8 @@
 .calTimeRowTime{
 	padding-left: 5px;
 	height: 100%;
-/*	font-size:100%;*/
+	line-height: 14px;
+	font-size:8pt;
 }
 
 /* contains (multiple) dayCol's
@@ -153,14 +154,15 @@
  */
 .calEventHeader,.calEventHeaderSmall{
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 10pt;
 	background-color: #0000ff;
 	color: white;
 	text-align: center;
 	white-space: nowrap;
 }
 .calEventHeaderSmall{
-	font-size: 10px;
+	font-size: 8pt;
+	line-height: 10pt;
 }
 
 /* body of the event
