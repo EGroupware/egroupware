@@ -9,7 +9,7 @@
 <meta name="robots" content="none">
 <link rel="icon" href="{img_icon}" type="image/x-ico">
 <link rel="shortcut icon" href="{img_shortcut}">
-<link href="{theme_css}" type=text/css rel=StyleSheet>
+<link href="{theme_css}" type="text/css" rel="StyleSheet">
 {css}
 <title>{website_title}</title>
 {java_script}
