@@ -46,11 +46,14 @@
 	}
 	else
 	{
-		$GLOBALS['phpgw']->log->write(array(
-			'text' => 'W-VerifySession, could not verify session during logout',
-			'line' => __LINE__,
-			'file' => __FILE__
-		));
+		if(is_object($GLOBALS['phpgw']->log)
+		{
+			$GLOBALS['phpgw']->log->write(array(
+				'text' => 'W-VerifySession, could not verify session during logout',
+				'line' => __LINE__,
+				'file' => __FILE__
+			));
+		}
 	}
 	Setcookie('sessionid');
 	Setcookie('kp3');
