@@ -29,12 +29,14 @@ $homedir = "$fakebase/$userinfo[account_lid]";
 
 $phpwh_debug = 0;
 
+/* This doesn't work yet
 if ($download && $fileman[0])
 {
 	$phpgw->browser->content_header ($fn);
 	echo $phpgw->vfs->read ($path/$fileman[0]);
 	$phpgw->common->phpgw_exit ();
 }
+*/
 
 ###
 # Default is to sort by name
@@ -105,13 +107,7 @@ if ($phpwh_debug)
 
 if ($path != $homedir && $path != "/" && $path != $fakebase)
 {
-	if ($phpwh_debug)
-	{
-		echo "SELECT name FROM phpgw_vfs WHERE owner_id = '$userinfo[username]' AND name = '$cwd' AND mime_type = 'Directory' AND directory = '$lesspath'<br>";
-	}
-
-	$query = db_query ("SELECT name FROM phpgw_vfs WHERE owner_id = '$userinfo[username]' AND name = '$cwd' AND mime_type = 'Directory' AND directory = '$lesspath'");
-	if (!$phpgw->db->next_record ($query))
+	if (!$phpgw->vfs->file_exists ($path, array (RELATIVE_NONE)))
 	{
 		html_text_error ("Directory $dir does not exist", 1);
 		html_break (2);
@@ -127,8 +123,28 @@ if ($path != $homedir && $path != "/" && $path != $fakebase)
 # $files in the loop below uses $query
 ###
 
-$files_query = db_query ("SELECT * FROM phpgw_vfs WHERE owner_id = '$userinfo[username]' AND directory = '$path' AND name != '' ORDER BY $sortby");
-$numoffiles = db_call ("affected_rows", $files_query);
+if ($path == $fakebase)
+{
+	$files_array = array ();
+	$files_array[] = $phpgw->vfs->ls ($homedir, array (RELATIVE_NONE), False, False, True);
+	$numoffiles++;
+
+	$groups = $phpgw->accounts->memberships ($userinfo["username"]);
+
+	while (list ($num, $group_array) = each ($groups))
+	{
+		$files_array[] = $phpgw->vfs->ls ("$fakebase/$group_array[account_name]", array (RELATIVE_NONE), False, False, True);
+		$numoffiles++;
+	}
+}
+else
+{
+	$files_query = db_query ("SELECT * FROM phpgw_vfs WHERE directory = '$path' AND name != '' ORDER BY $sortby");
+	$numoffiles = db_call ("affected_rows", $files_query);
+
+	while ($files_array[] = db_fetch_array ($files_query))
+		;
+}
 
 ###
 # Start Main Page
@@ -248,9 +264,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		# List all of the files, with their attributes
 		###
 
+		reset ($files_array);
 		for ($i = 0; $i != $numoffiles; $i++)
 		{
-			$files = db_fetch_array ($files_query);
+			$files = $files_array[$i];
 
 			if ($rename || $edit_comments)
 			{
