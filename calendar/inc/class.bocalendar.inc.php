@@ -2651,7 +2651,7 @@
 			// if url is only a path, try guessing the rest ;-)
 			if ($GLOBALS['phpgw_info']['server']['webserver_url'][0] == '/')
 			{
-				$details['link'] = ($GLOBALS['phpgw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+				$details['link'] = ($GLOBALS['phpgw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
 					($GLOBALS['phpgw_info']['server']['hostname'] ? $GLOBALS['phpgw_info']['server']['hostname'] : 'localhost').
 					$details['link'];
 			}
