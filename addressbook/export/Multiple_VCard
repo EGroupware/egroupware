@@ -171,19 +171,12 @@
 		function export_end_file($buffer) {
 			reset($this->ids);
 			for ($i=0;$i<count($this->ids);$i++) {
-				$work      = "";
-				$workaddr  = "";
-				$workattr  = "";
-				$home      = "";
-				$homeaddr  = "";
-				$homeattr  = "";
-				$org_name  = "";
-				$org_unit  = "";
-				$firstname = "";
-				$middle    = "";
-				$lastname  = "";
-				$prefix    = "";
-				$suffix    = "";
+				$work      = ""; $workaddr  = ""; $workattr  = ""; $wlabel    = "";
+				$home      = ""; $homeaddr  = ""; $homeattr  = ""; $hlabel    = "";
+				$org_name  = ""; $org_unit  = "";
+				$firstname = ""; $middle    = ""; $lastname  = "";
+				$prefix    = ""; $suffix    = "";
+
 				$entry     = "";
 				$header    = "BEGIN:VCARD\r\n";
 				$header   .= "VERSION:2.1\r\n";
@@ -194,7 +187,12 @@
 					if (!empty($buffer[$i][$value])) {
 						$mult = explode(";",$value);
 						if (!$mult[1]) { // Normal
-							$entry .= $value . ":".$buffer[$i][$value]."\r\n";
+							if (strstr($buffer[$i][$value],"\n")) {
+								$buffer[$i][$value] = ereg_replace("\r\n","=0D=0A",$buffer[$i][$value]);
+								$entry .= $value . ";QUOTED-PRINTABLE:".$buffer[$i][$value]."\r\n";
+							} else {
+								$entry .= $value . ":".$buffer[$i][$value]."\r\n";
+							}
 						} else {
 							switch ($mult[0]) {
 								case "N":
@@ -314,7 +312,7 @@
 
 					if (!$buffer[$i]["FN"]) {
 						if ($lastname || $firstname ) {
-							$entries .= "FN".$firstname." ".$lastname."\r\n";
+							$entries .= "FN:".substr($firstname,1)." ".$lastname."\r\n";
 						}
 					}
 					if ($org_name || $org_unit) {
@@ -324,10 +322,24 @@
 					$workattr = ereg_replace("ADR;","",$workattr);
 					$homeattr = ereg_replace("ADR;","",$homeattr);
 					if (!$buffer[$i]['EXT']) { $buffer[$i]['EXT'] = ";"; }
-					if ($workaddr) {$work = "A.ADR;".$workattr.":;".$buffer[$i]['EXT'].substr($workaddr,0,-1)."\r\n"; }
-					if ($homeaddr) {$home = "B.ADR;".$homeattr.":;;".substr($homeaddr,0,-1)."\r\n"; }
+					if ($workaddr) {
+						$work = "A.ADR;".$workattr.":;".$buffer[$i]['EXT'].substr($workaddr,0,-1)."\r\n";
+						$wlabel = substr($workaddr,0,-1);
+						$wlabel = ereg_replace(";","=0D=0A",$wlabel);
+						//$wlabel = ereg_replace("(",",",$wlabel);
+						//$wlabel = ereg_replace(")",",",$wlabel);
+						$wlabel = "LABEL;WORK;QUOTED-PRINTABLE:".$wlabel."\r\n";
+					}
+					if ($homeaddr) {
+						$home = "B.ADR;".$homeattr.":;;".substr($homeaddr,0,-1)."\r\n";
+						$hlabel = substr($homeaddr,0,-1);
+						$hlabel = ereg_replace(";","=0D=0A",$hlabel);
+						//$hlabel = ereg_replace("(",",",$hlabel);
+						//$hlabel = ereg_replace(")",",",$hlabel);
+						$hlabel = "LABEL;HOME;QUOTED-PRINTABLE:".$hlabel."\r\n";
+					}
 
-					$entries .= $work.$home."END:VCARD\r\n";
+					$entries .= $work.$home.$wlabel.$hlabel."END:VCARD\r\n";
 					$entries .= "\r\n";
 				}
 			}
