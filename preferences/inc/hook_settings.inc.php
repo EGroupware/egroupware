@@ -36,9 +36,9 @@
 
 	for ($i = -23; $i<24; $i++)
 	{
-		$timezone_offset[$i] = $i;
+		$tz_offset[$i] = $i;
 	}
-	create_select_box('Time zone offset','timezone_offset',$timezone_offset);
+	create_select_box('Time zone offset','tz_offset',$tz_offset);
 
 	$date_formats = array(
 		'm/d/Y' => 'm/d/Y',
