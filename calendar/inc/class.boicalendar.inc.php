@@ -2973,9 +2973,6 @@
 			$filename = $uploaddir . $newfilename;
 
 			move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $filename);
-//			$ftp = fopen($uploaddir . $newfilename . '.info','wb');
-//			fputs($ftp,$uploadedfile_type."\n".$uploadedfile_name."\n");
-//			fclose($ftp);
 			return $filename;
 		}
 
@@ -3320,20 +3317,22 @@
 						$so_event->set_recur_none();
 					}
 
-// Owner
-					if(!isset($ical['event'][$i]['organizer']) || (isset($ical['event'][$i]['organizer']) && $this->is_owner($ical['event'][$i]['organizer'])))
+					/* the organizer must be the current user doing the importing */
+					if(!isset($ical['event'][$i]['organizer']) || !$this->is_owner($ical['event'][$i]['organizer']))
 					{
 						$so_event->add_attribute('owner',$GLOBALS['phpgw_info']['user']['account_id']);
-						$so_event->add_attribute('participants','A',(int)$GLOBALS['phpgw_info']['user']['account_id']);
+						$so_event->add_attribute('participants','A',$GLOBALS['phpgw_info']['user']['account_id']);
 					}
-					else
+
+					/* if the original organizer is an egroupware user, add the original user as an event participant */
+					/* NB: ['mailto'] has two parts, ['user'], containing the username, and ['host'], containing the fqdn of the user's email address */
+					if (isset($ical['event'][$i]['organizer']['mailto']['user']) && $GLOBALS['phpgw']->accounts->exists($ical['event'][$i]['organizer']['mailto']['user']) == True)
 					{
-//owner
+						$so_event->add_attribute('participants','A',(int)$GLOBALS['phpgw']->accounts->name2id($ical['event'][$i]['organizer']['mailto']['user']));
 					}
 
 					$event = $so_event->get_cached_event();
 					$so_event->add_entry($event);
-//					$event = $so_event->get_cached_event();
 				}
 			}
 			Header('Location: '.$GLOBALS['phpgw']->link('/index.php',
