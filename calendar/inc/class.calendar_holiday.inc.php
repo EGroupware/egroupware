@@ -28,9 +28,9 @@ class calendar_holiday
 
 		$this->datetime = CreateObject('phpgwapi.datetime');
 		$this->db = $phpgw->db;
-		if(isset($phpgw_info['user']['preferences']['calendar']['locale']) && $phpgw_info['user']['preferences']['calendar']['locale'])
+		if(@$phpgw_info['user']['preferences']['common']['country'])
 		{
-			$this->users['user'] = $phpgw_info['user']['preferences']['calendar']['locale'];
+			$this->users['user'] = $phpgw_info['user']['preferences']['common']['country'];
 		}
 		else
 		{
@@ -41,9 +41,9 @@ class calendar_holiday
 		{
 			$owner_pref = CreateObject('phpgwapi.preferences',$owner_id);
 			$owner_prefs = $owner_pref->read_repository();
-			if(isset($owner_prefs['calendar']['locale']) && $owner_prefs['calendar']['locale'])
+			if(isset($owner_prefs['calendar']['locale']) && $owner_prefs['common']['country'])
 			{
-				$this->users['owner'] = $owner_prefs['calendar']['locale'];
+				$this->users['owner'] = $owner_prefs['common']['country'];
 			}
 			else
 			{
@@ -172,7 +172,7 @@ class calendar_holiday
 		$this->db->query($sql,__LINE__,__FILE__);
 
 		$i = 0;
-		$holidaycalc = CreateObject('calendar.holidaycalc');
+		$temp_locale = $phpgw_info['user']['preferences']['common']['country'];
 		while($this->db->next_record())
 		{
 			$this->index[$this->db->f('hol_id')] = $i;
@@ -199,7 +199,10 @@ class calendar_holiday
 				$this->holidays[$i]['owner'] = 'user';		
 			}
 			$c = $i;
+			$phpgw_info['user']['preferences']['common']['country'] = $this->holidays[$i]['locale'];
+			$holidaycalc = CreateObject('calendar.holidaycalc');
 			$this->holidays[$i]['date'] = $holidaycalc->calculate_date($this->holidays[$i], $this->holidays, $this->year, $this->datetime, $c);
+			unset($holidaycalc);
 			if($c != $i)
 			{
 				$i = $c;
@@ -207,6 +210,7 @@ class calendar_holiday
 			$i++;
 		}
 		$this->holidays = $this->sort_by_date($this->holidays);
+		$phpgw_info['user']['preferences']['common']['country'] = $temp_locale;
 		return $this->holidays;
 	}
 
