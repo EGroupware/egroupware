@@ -71,37 +71,37 @@
 	}
 
 	$cd = account_edit(array("loginid"   => $n_loginid,     "permissions"    => $new_permissions,
-                                 "firstname" => $n_firstname,   "lastname"       => $n_lastname,
-                                 "passwd"    => $n_passwd,      "account_status" => $n_account_status,
-                                 "old_loginid" => $old_loginid, "account_id"     => rawurldecode($account_id),
-                                 "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+                            "firstname" => $n_firstname,   "lastname"       => $n_lastname,
+                            "passwd"    => $n_passwd,      "account_status" => $n_account_status,
+                            "old_loginid" => $old_loginid, "account_id"     => rawurldecode($account_id),
+                            "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
 
 // The following sets any default preferences needed for new applications..
 // This is smart enough to know if previous preferences were selected, use them.
 	if (count($new_apps)) {
-	  if ($account_id <> $phpgw_info["user"]["account_id"]) {
-	    $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$account_id,__FILE__,__LINE__);
-	    $phpgw->db->next_record();
-	    $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
-	  } else {
-	    $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"];
-	  }
-	  $docommit = False;
-	  for ($j=0;$j<count($new_apps);$j++) {
-	    if (!$phpgw_newuser["user"]["preferences"][$new_apps[$j]]) {
-	      $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
-	      $docommit = True;
-	    }
-	  }
-	  if ($docommit) {
-	    if ($account_id <> $phpgw_info["user"]["account_id"]) {
-	      $phpgw->preferences->commit_user($account_id);
-	    } else {
-	      $phpgw_info["user"]["preferences"] = $phpgw_newuser["user"]["preferences"];
-	      unset($phpgw_newuser);
-	      $phpgw->preferences->commit();
-	    }
-	  }
+ 	  if ($account_id <> $phpgw_info["user"]["account_id"]) {
+  	    $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$account_id,__FILE__,__LINE__);
+  	    $phpgw->db->next_record();
+  	    $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
+ 	  } else {
+  	    $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"];
+ 	  }
+ 	  $docommit = False;
+ 	  for ($j=0;$j<count($new_apps);$j++) {
+  	    if (! @$phpgw_newuser["user"]["preferences"][$new_apps[$j]]) {
+ 	        $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
+ 	        $docommit = True;
+  	    }
+ 	  }
+ 	  if ($docommit) {
+  	    if ($account_id <> $phpgw_info["user"]["account_id"]) {
+ 	        $phpgw->preferences->commit_user($account_id);
+  	    } else {
+ 	        $phpgw_info["user"]["preferences"] = $phpgw_newuser["user"]["preferences"];
+ 	        unset($phpgw_newuser);
+ 	        $phpgw->preferences->commit();
+  	    }
+ 	  }
 	}
 
 	Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
@@ -120,7 +120,6 @@
   } else {
      $phpgw->template->set_var("error_messages","");
   }
-
 
   $userData = $phpgw->accounts->read_userData($account_id);
   $db_perms = $phpgw->accounts->read_apps($userData["account_lid"]);
@@ -172,7 +171,10 @@
   $phpgw->template->set_var("groups_select",$groups_select);
 
   $i = 0;
-  while ($permission = each($phpgw_info["apps"])) {
+  $sorted_apps = $phpgw_info["apps"];
+  asort($sorted_apps);
+  reset($sorted_apps);
+  while ($permission = each($sorted_apps)) {
      if ($permission[1]["enabled"]) {
         $perm_display[$i][0] = $permission[0];
         $perm_display[$i][1] = $permission[1]["title"];
@@ -201,10 +203,11 @@
      $perm_html .= "></td></tr>";
      $i++;
   }
+  $perm_html .= '<tr><td colspan="4" align="center">' . lang("Account active") . ':&nbsp;<input type="checkbox" name="n_account_status" value="A"' . ($userData["status"]?" checked":"") . '></td></tr>';
+
   $phpgw->template->set_var("permissions_list",$perm_html);
 
   $phpgw->template->set_var("lang_button",lang("Edit"));
-
   $phpgw->template->pparse("out","form");
 
 /*

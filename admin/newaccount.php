@@ -52,15 +52,15 @@
             				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
             				        "passwd"    => $n_passwd,
             				        "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
-        $phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_lid='$n_loginid'");
-	$phpgw->db->next_record();
-	$apps = explode(":",$phpgw->db->f("account_permissions"));
-	$phpgw->common->hook_single("add_def_pref", "admin");
- 	for($i=1;$i<=sizeof($apps);$i++) {
-	  $appname = $apps[$i];
-	  $phpgw->common->hook_single("add_def_pref", $appname);
-	}
-	$phpgw->preferences->commit_newuser($n_loginid);
+        $phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
+        $phpgw->db->next_record();
+        $apps = explode(":",$phpgw->db->f("account_permissions"));
+        $phpgw->common->hook_single("add_def_pref", "admin");
+        for ($i=1;$i<=sizeof($apps);$i++) {
+           $appname = $apps[$i];
+           $phpgw->common->hook_single("add_def_pref", $appname);
+        }
+        $phpgw->preferences->commit_newuser($n_loginid);
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
         exit;
      }
@@ -110,7 +110,10 @@
 
   $phpgw->template->set_var("","");
   $i = 0;
-  while ($permission = each($phpgw_info["apps"])) {
+  $sorted_apps = $phpgw_info["apps"];
+  asort($sorted_apps);
+  reset($sorted_apps);
+  while ($permission = each($sorted_apps)) {
     if ($permission[1]["enabled"]) {
        $perm_display[$i][0] = $permission[0];
        $perm_display[$i][1] = $permission[1]["title"];

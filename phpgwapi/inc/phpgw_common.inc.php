@@ -468,15 +468,6 @@
           }
           $i++;
 
-       	  if (file_exists($phpgw_info["server"]["app_root"]."/about.php")) {
-            $tabs[$i]["label"] = "about";
-            $tabs[$i]["link"]  = $phpgw->link($phpgw_info["server"]["webserver_url"] . "/".$phpgw_info["flags"]["currentapp"]."/about.php");
-            if ($PHP_SELF == $phpgw_info["server"]["webserver_url"] . "/".$phpgw_info["flags"]["currentapp"]."/index.php") {
-               $selected = $i;
-            }
-            $i++;
-          }
-
           $tabs[$i]["label"] = "logout";
           $tabs[$i]["link"]  = $phpgw->link($phpgw_info["server"]["webserver_url"] . "/logout.php");
 
