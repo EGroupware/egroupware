@@ -125,6 +125,7 @@ edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
 edit global category for %1	admin	de	Globale Kategorie für %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
+edit group acl's	admin	de	Gruppen ACL's bearbeiten
 edit login screen message	admin	de	Nachricht der Login Seite bearbeiten
 edit main screen message	admin	de	Nachricht der Startseite bearbeiten
 edit peer server	admin	de	Server in Serververbund bearbeiten

@@ -935,8 +935,8 @@
 					. '<td width="5%"><input type="checkbox" name="account_apps['
 					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'></td><td width="5%" align="center">'
 					. ($apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$group_info['account_id'])
-					. '"><img src="'.$GLOBALS['phpgw']->common->image('admin','dot').'" border="0" hspace="3" align="absmiddle" alt="'
-					. lang('Grant Access').'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
+					. '"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
+					. lang('Grant Access').': '.lang("edit group ACL's").'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
 			}
 			if($i & 1)
 			{

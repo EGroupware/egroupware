@@ -124,6 +124,7 @@ edit application	admin	en	Edit application
 edit global category	admin	en	Edit global category
 edit global category for %1	admin	en	Edit global category for %1
 edit group	admin	en	Edit Group
+edit group acl's	admin	en	edit group ACL's
 edit login screen message	admin	en	Edit login screen message
 edit main screen message	admin	en	Edit main screen message
 edit peer server	admin	en	Edit Peer Server
