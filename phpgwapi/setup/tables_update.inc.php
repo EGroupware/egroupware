@@ -717,7 +717,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$db2 = $phpgw_setup->oProc;
+		$db2 = $phpgw_setup->db;
 		//convert user settings
 		$phpgw_setup->oProc->query("select account_id, account_permissions from accounts",__LINE__,__FILE__);
 		if($phpgw_setup->oProc->num_rows())
