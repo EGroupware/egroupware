@@ -671,7 +671,7 @@
 					//$hlabel = ereg_replace(")",",",$hlabel);
 					$hlabel = "LABEL;HOME;QUOTED-PRINTABLE:".$hlabel."\n";
 				}
-
+				$entries = ereg_replace("PUBKEY","KEY",$entries);
 				$entries .= $work.$home.$wlabel.$hlabel."END:VCARD\n";
 				$entries .= "\n";
 
