@@ -1,0 +1,9 @@
+This directory contains the (unchanged) Version 0.9.3 of jsCalendar
+
+jsCalendar is called by the jscalendar wrapper-class in the phpGW API
+
+Instead of jscalendar-setup.js and a lang/*.js file it loads jscalendar-setup.php,
+which sets all jscalendar preferences (partly from the users prefs) and read the
+translations from the database for the language the user has spec. in his prefs.
+
+RalfBecker@outdoor-training.de
