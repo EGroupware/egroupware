@@ -133,7 +133,7 @@ ical / rfc2445	calendar	de	iCal / RFC2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
-import csv-file	calendar	de	CSV-Datei importieren
+import csv-file	common	de	CSV-Datei importieren
 interval	calendar	de	Interval
 intervals in day view	calendar	de	Zeitintervalle in der Tagesansicht
 intervals per day in planner view	calendar	de	Zeitintervalle pro Tag in der Planeransicht

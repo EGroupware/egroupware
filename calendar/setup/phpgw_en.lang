@@ -126,7 +126,7 @@ ical / rfc2445	calendar	en	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays falling on a weekend, are taken on the monday after.
 ignore conflict	calendar	en	Ignore Conflict
 import	calendar	en	Import
-import csv-file	calendar	en	Import CSV-File
+import csv-file	common	en	Import CSV-File
 interval	calendar	en	Interval
 intervals in day view	calendar	en	Intervals in day view
 intervals per day in planner view	calendar	en	Intervals per day in planner view
