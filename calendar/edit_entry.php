@@ -21,18 +21,21 @@
   $cal_info = new calendar_item;
 
   if ($id > 0) {
-    $can_edit = false;
-    $phpgw->db->query("SELECT cal_id FROM webcal_entry_user WHERE cal_login="
-		            . $phpgw_info["user"]["account_id"] . " AND cal_id = $id");
-    $phpgw->db->next_record();
-    if ($phpgw->db->f("cal_id") > 0)
-       $can_edit = true;
-
     $cal = $phpgw->calendar->getevent((int)$id);
-
     $cal_info = $cal[0];
 
+    $can_edit = false;
+    if($cal_info->owner == $phpgw_info["user"]["account_id"]) 
+      $can_edit = true;
+
+    if(!$cal_info->rpt_end_use) {
+      $rpt_date = $phpgw->calendar->splitdate(mktime(0,0,0,$cal_info->month,$cal_info->day + 1,$cal_info->year));
+      $cal_info->rpt_year = $rpt_date["year"];
+      $cal_info->rpt_month = $rpt_date["month"];
+      $cal_info->rpt_day = $rpt_date["day"];
+    }
   } else {
+    $can_edit = true;
 
     if (!isset($day) || !$day)
       $thisday = (int)$phpgw->calendar->today["day"];
@@ -76,297 +79,230 @@
       $cal_info["hour"] = $cal_info["hour"] - 12;
       $cal_info["ampm"] = "pm";
     }
-    $can_edit = true;
   }
-?>
 
-<SCRIPT LANGUAGE="JavaScript">
-// do a little form verifying
-function validate_and_submit() {
-  if (document.addform.name.value == "") {
-    alert("<?php echo lang("You have not entered a\\nBrief Description"); ?>.");
-    return false;
-  }
-  h = parseInt(document.addform.hour.value);
-  m = parseInt(document.addform.minute.value);
-  if (h > 23 || m > 59) {
-     alert ("<?php echo lang("You have not entered a\\nvalid time of day."); ?>");
-     return false;
-  }
-  // would be nice to also check date to not allow Feb 31, etc...
-  document.addform.submit();
-  return true;
-}
-</SCRIPT>
-</HEAD>
-<BODY BGCOLOR="#C0C0C0">
+  $phpgw->template->set_file(array("edit_entry_begin" => "edit.tpl",
+				   "list"     	      => "list.tpl",
+				   "edit_entry_end"   => "edit.tpl",
+				   "form_button"      => "form_button_script.tpl"));
 
-<H2><FONT COLOR="#000000"><?php 
-    if ($id)
-       echo lang("Calendar - Edit");
-    else
-       echo lang("Calendar - Add");
+  $phpgw->template->set_block("edit_entry_begin","list","edit_entry_end","form_button");
 
-?></FONT></H2>
+  $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_text"]);
+  $phpgw->template->set_var("name_error",lang("You have not entered a\\nBrief Description").".");
+  $phpgw->template->set_var("time_error",lang("You have not entered a\\nvalid time of day."));
+  if($id)
+    $phpgw->template->set_var("calendar_action",lang("Calendar - Edit"));
+  else
+    $phpgw->template->set_var("calendar_action",lang("Calendar - Add"));
 
-<?php
-  if ($can_edit) {
-?>
-<FORM ACTION="<?php echo $phpgw->link("edit_entry_handler.php"); ?>" METHOD="POST" name="addform">
+  if($can_edit) {
+    $phpgw->template->set_var("action_url",$phpgw->link("edit_entry_handler.php"));
 
-<?php if ($id) echo "<INPUT TYPE=\"hidden\" NAME=\"id\" VALUE=\"$id\">\n"; ?>
+    if($id) {
+      $common_hidden = "<input type=\"hidden\" name=\"id\" value=\"$id\">\n";
+    } else {
+      $common_hidden = "";
+    }
 
-<TABLE BORDER=0>
-<TR>
-  <TD><B><?php echo lang("Brief Description"); ?>:</B></TD>
-  <TD>
-   <INPUT NAME="name" SIZE=25 VALUE="<?php echo ($cal_info->name); ?>">
-  </TD>
-</TR>
+    $phpgw->template->set_var("common_hidden",$common_hidden);
 
-<TR>
-  <TD VALIGN="top"><B><?php echo lang("Full Description"); ?>:</B></TD>
-  <TD>
-   <TEXTAREA NAME="description" ROWS=5 COLS=40 WRAP="virtual"><?php
-    echo ($cal_info->description); ?></TEXTAREA>
-  </TD>
-</TR>
+    $phpgw->template->parse("out","edit_entry_begin");
 
-<TR>
-  <TD><B><?php echo lang("Date"); ?>:</B></TD>
-  <TD>
-<?php
-  $day_html = "<SELECT NAME=\"day\">";
-  for ($i = 1; $i <= 31; $i++)
-      $day_html .= "<OPTION value=\"$i\"" . ($i == $cal_info->day ? " SELECTED" : "") . ">$i"
+    $phpgw->template->set_var("field",lang("Brief Description"));
+    $phpgw->template->set_var("data","<input name=\"name\" size=\"25\" value=\"".$cal_info->name."\">");
+    $phpgw->template->parse("output","list",True);
+    
+    $phpgw->template->set_var("field",lang("Full Description"));
+    $phpgw->template->set_var("data","<textarea name=\"description\" rows=\"5\" cols=\"40\" wrap=\"virtual\">".$cal_info->description."</textarea>");
+    $phpgw->template->parse("output","list",True);
+
+    $phpgw->template->set_var("field",lang("Date"));
+
+    $day_html = "<select name=\"day\">";
+    for ($i = 1; $i <= 31; $i++)
+      $day_html .= "<option value=\"$i\"" . ($i == $cal_info->day ? " selected" : "") . ">$i"
 	 	 . "</option>\n";
-  $day_html .= "</select>";
+    $day_html .= "</select>";
 
-  $month_html = "<SELECT NAME=\"month\">";
-  for ($i = 1; $i <= 12; $i++) {
-    $m = lang(date("F", mktime(0,0,0,$i,1,$cal_info->year)));
-    $month_html .= "<OPTION VALUE=\"$i\"" . ($i == $cal_info->month ? " SELECTED" : "") . ">$m"
-		 . "</option>\n";
-  }
-  $month_html .= "</select>";
+    $month_html = "<select name=\"month\">";
+    for ($i = 1; $i <= 12; $i++) {
+      $m = lang(date("F", mktime(0,0,0,$i,1,$cal_info->year)));
+      $month_html .= "<option value=\"$i\"" . ($i == $cal_info->month ? " selected" : "") . ">$m"
+		   . "</option>\n";
+    }
+    $month_html .= "</select>";
 
-  $year_html = "<SELECT NAME=\"year\">";
-  for ($i = ($cal_info->year - 1); $i < ($cal_info->year + 5); $i++) {
-    $year_html .= "<OPTION VALUE=\"$i\"" . ($i == $cal_info->year ? " SELECTED" : "") . ">$i"
-       		. "</option>\n";
-  }
-  $year_html .= "</select>";
+    $year_html = "<select name=\"year\">";
+    for ($i = ($cal_info->year - 1); $i < ($cal_info->year + 5); $i++) {
+      $year_html .= "<option value=\"$i\"" . ($i == $cal_info->year ? " selected" : "") . ">$i"
+		  . "</option>\n";
+    }
+    $year_html .= "</select>";
 
-  echo $phpgw->common->dateformatorder($year_html,$month_html,$day_html);
-?>
+    $phpgw->template->set_var("data",$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
+    $phpgw->template->parse("output","list",True);
 
- </TD>
-</TR>
+    $phpgw->template->set_var("field",lang("Time"));
 
-<TR>
- <TD><B><?php echo lang("Time"); ?>:</B></TD>
-<?php
-  $amsel = "CHECKED"; $pmsel = "";
-  if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-     if ($cal_info->ampm == "pm") {
-        $amsel = ""; $pmsel = "CHECKED";
-     } else {
-        $amsel = "CHECKED"; $pmsel = "";
-     }
-  }
-?>
-  <TD>
-   <INPUT NAME="hour" SIZE=2 VALUE="<?php
-    echo $cal_info->hour;?>" MAXLENGTH=2>:<INPUT NAME="minute" SIZE=2 VALUE="<?php echo $cal_info->minute>"0" && $cal_info->minute<"9"?"0".$cal_info->minute:$cal_info->minute; ?>" MAXLENGTH=2>
-<?php
-  if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-     echo "<INPUT TYPE=radio NAME=ampm VALUE=\"am\" $amsel>am\n";
-     echo "<INPUT TYPE=radio NAME=ampm VALUE=\"pm\" $pmsel>pm\n";
-  }
-?>
-</TD></TR>
+    $amsel = "checked"; $pmsel = "";
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+      if ($cal_info->ampm == "pm") {
+	$amsel = ""; $pmsel = "checked";
+      } else {
+	$amsel = "checked"; $pmsel = "";
+      }
+    }
+    $str = "<input name=\"hour\" size=\"2\" VALUE=\"".$cal_info->hour."\" maxlength=\"2\">:<input name=\"minute\" size=\"2\" value=\"".((int)$cal_info->minute>=0 && (int)$cal_info->minute<=9?"0".(int)$cal_info->minute:$cal_info->minute)."\" maxlength=\"2\">";
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+      $str .= "<input type=\"radio\" name=\"ampm\" value=\"am\" $amsel>am";
+      $str .= "<input type=\"radio\" name=\"ampm\" value=\"pm\" $pmsel>pm";
+    }
 
-<TR>
- <TD><B><?php echo lang("Duration"); ?>:</B></TD>
-  <TD><INPUT NAME="duration" SIZE=3 VALUE="<?php
-    !$cal_info->duration?0:$cal_info->duration; ?>"> <?php echo lang("minutes"); ?></TD>
-</TR>
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
 
-<TR>
-  <TD><B><?php echo lang("Priority"); ?>:</B></TD>
-  <TD><SELECT NAME="priority">
-    <OPTION VALUE="1"<?php if ($cal_info->priority == 1) echo " SELECTED";?>><?php echo lang("Low"); ?> </option>
-    <OPTION VALUE="2"<?php if ($cal_info->priority == 2 || $cal_info->priority == 0 ) echo " SELECTED";?>><?php echo lang("Medium"); ?></option>
-    <OPTION VALUE="3"<?php if ($cal_info->priority == 3) echo " SELECTED";?>><?php echo lang("High"); ?></option>
-  </SELECT></TD>
-</TR>
+    $phpgw->template->set_var("field",lang("Duration"));
+    $phpgw->template->set_var("data","<input name=\"duration\" size=\"3\" value=\"".(!$cal_info->duration?0:$cal_info->duration)."\"> ".lang("minutes"));
+    $phpgw->template->parse("output","list",True);
 
-<TR>
- <TD><B><?php echo lang("Access"); ?>:</B></TD>
- <TD><SELECT NAME="access">
-  <OPTION VALUE="private"<?php
-   if ($cal_info->access == "private" || ! $id) echo " SELECTED";?>><?php echo lang("Private"); ?></option>
-  <OPTION VALUE="public"<?php
-   if ($cal_info->access == "public") echo " SELECTED"; ?>><?php echo lang("Global Public"); ?></option>
-  <OPTION VALUE="group"<?php
-   if ($cal_info->access == "public" || strlen($cal_info->access)) echo " SELECTED";?>><?php echo lang("Group Public"); ?></option>
-  </SELECT>
- </TD>
- </tr>
- <tr>
+    $phpgw->template->set_var("field",lang("Priority"));
+    $str = "<select name=\"priority\">";
+    $str .= "<option value=\"1\"";
+    if($cal_info->priority == 1) $str .= " selected";
+    $str .= ">".lang("Low")."</option>";
+    $str .= "<option value=\"2\"";
+    if($cal_info->priority == 2 || $cal_info->priority == 0) $str .= " selected";
+    $str .= ">".lang("Medium")."</option>";
+    $str .= "<option value=\"3\"";
+    if($cal_info->priority == 3) $str .= " selected";
+    $str .= ">".lang("High")."</option>";
+    $str .= "</select>";
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
 
- <TD><B><?php echo lang("group access"); ?>:</B></TD>
- <TD><SELECT NAME="n_groups[]" multiple size="5">
-  <?php
+    $phpgw->template->set_var("field",lang("Access"));
+    $str = "<select name=\"access\">";
+    $str .= "<option value=\"private\"";
+    if ($cal_info->access == "private" || ! $id) $str .= " selected";
+    $str .= ">".lang("Private")."</option>";
+    $str .= "<option value=\"public\"";
+    if ($cal_info->access == "public") $str .= " selected";
+    $str .= ">".lang("Global Public")."</option>";
+    $str .= "<option value=\"group\"";
+    if ($cal_info->access == "public" || !strlen($cal_info->access)) $str .= " selected";
+    $str .= ">".lang("Group Public")."</option>";
+    $str .= "</select>";
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
+
+    $phpgw->template->set_var("field",lang("Access"));
+    $str = "<select name=\"n_groups[]\" multiple size=\"5\">";
     $user_groups = $phpgw->accounts->read_group_names();
     for ($i=0;$i<count($user_groups);$i++) {
-	echo "<option value=\"" . $user_groups[$i][0] . "\"";
-	if (ereg(",".$user_groups[$i][0].",",$cal_info->groups))
-	   echo " selected";
-	echo ">" . $user_groups[$i][1] . "</option>\n";
+      $str .= "<option value=\"" . $user_groups[$i][0] . "\"";
+      if (ereg(",".$user_groups[$i][0].",",$cal_info->groups))
+	$str .= " selected";
+      $str .= ">" . $user_groups[$i][1] . "</option>";
     }
-  ?></SELECT></TD>
-</TR>
+    $str .= "</select>";
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
 
+    $phpgw->template->set_var("field",lang("Participants"));
+    $phpgw->db->query("select account_id,account_lastname,account_firstname,account_lid "
+		     . "from accounts where account_status !='L' and "
+		     . "account_id != ".$phpgw_info["user"]["account_id"]." "
+		     . "and account_permissions like '%:calendar:%' "
+  		     . "order by account_lastname,account_firstname,account_lid");
 
-<?php
-  $phpgw->db->query("select account_id,account_lid,account_lastname, account_firstname from "
-  			   . "accounts where account_status !='L' and account_lid != '"
-  			   . $phpgw_info["user"]["userid"] . "' and account_permissions like '%:calendar:%' "
-  			   . "order by account_lastname,account_firstname,account_lid");
+    if ($phpgw->db->num_rows() > 50)
+      $size = 15;
+    else if ($phpgw->db->num_rows() > 5)
+      $size = 5;
+    else
+      $size = $phpgw->db->num_rows();
+    $str = "<select name=\"participants[]\" multiple size=\"5\">";
+    for ($l=0;$l<count($cal_info->participants);$l++)
+      $parts[$cal_info->participants[$l]] = True;
+    while ($phpgw->db->next_record()) {
+      $str .= "<option value=\"" . $phpgw->db->f("account_id") . "\"";  
+      if ($parts[$phpgw->db->f("account_id")])
+	$str .= " selected";
+      $str .= ">".$phpgw->common->grab_owner_name($phpgw->db->f("account_id"))."</option>";
+    }
+    $str .= "</select>";
+    $str .= "<input type=\"hidden\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\">";
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
 
-  if ($phpgw->db->num_rows() > 50)
-     $size = 15;
-  else if ($phpgw->db->num_rows() > 5)
-     $size = 5;
-  else
-     $size = $phpgw->db->num_rows();
+    $phpgw->template->set_var("field",lang("Repeat Type"));
+    $str = "<select name=\"rpt_type\">";
+    $rpt_type_str = Array("none","daily","weekly","monthlybyday","monthlybydate","yearly");
+    $rpt_type_out = Array("none" => "None", "daily" => "Daily", "weekly" => "Weekly", "monthlybyday" => "Monthly (by day)", "monthlybydate" => "Monthly (by date)", "yearly" => "yearly");
+    for($l=0;$l<count($rpt_type_str);$l++) {
+      $str .= "<option value=\"".$rpt_type_str[$l]."\"";
+      if(!strcmp($cal_info->rpt_type,$rpt_type_str[$l])) $str .= " selected";
+      $str .= ">".lang($rpt_type_out[$rpt_type_str[$l]])."</option>";
+    }
+    $str .= "</select>";
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
 
-  echo "<TR><TD VALIGN=\"top\"><B>" . lang("Participants") . ":</B></TD>"
-     . "<TD>\n<SELECT NAME=\"participants[]\" multiple size=\"$size\">\n";
+    $phpgw->template->set_var("field",lang("Repeat End Date"));
+    $str = "<input type=\"checkbox\" name=\"rpt_end_use\" value=\"y\"";
+    if($cal_info->rpt_end_use) $str .= " checked";
+    $str .= ">".lang("Use End Date")."  ";
 
-  while ($phpgw->db->next_record()) {
-    echo "<option value=\"" . $phpgw->db->f("account_id") . "\"";  
-    if ($cal_info->participants[$phpgw->db->f("account_id")])
-       echo " selected";
+    $day_html = "<select name=\"rpt_day\">";
+    for($i=1;$i<=31;$i++) {
+      $day_html .= "<option value=\"$i\"".($i == $cal_info->rpt_day ? " selected" : "").">$i</option>\n";
+    }
+    $day_html .= "</select>";
 
-    echo ">" . $phpgw->common->display_fullname($phpgw->db->f("account_lid"),
-    											$phpgw->db->f("account_firstname"),
-    											$phpgw->db->f("account_lastname"));
-    echo "</option>\n";
-  }
+    $month_html = "<select name=\"rpt_month\">";
+    for($i=1;$i<=12;$i++) {
+      $m = lang(date("F", mktime(0,0,0,$i,1,$cal_info->rpt_year)));
+      $month_html .= "<option value=\"$i\"".($i == $cal_info->rpt_month ? " selected" : "").">$m</option>\n";
+    }
+    $month_html .= "</select>";
 
-  echo "</select><input type=\"hidden\" name=\"participants[]\" value=\""
-     . $phpgw_info["user"]["account_id"] ."\">"
-     . "</td></tr>\n";
+    $year_html = "<select name=\"rpt_year\">";
+    for ($i = ($cal_info->rpt_year - 1); $i < ($cal_info->rpt_year + 5); $i++) {
+      $year_html .= "<option value=\"$i\"".($i == $cal_info->rpt_year ? " selected" : "").">$i</option>\n";
+    }
+    $year_html .= "</select>";
 
-?>
+    $str .= $phpgw->common->dateformatorder($year_html,$month_html,$day_html);
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
 
-<tr>
- <td><b><?php echo lang("Repeat type"); ?>:</b></td>
- <td><select name="rpt_type">
- <?php
-   echo "<option value=\"none\"" . (strcmp($cal_info->rpt_type,'none')==0?"selected":"") . ">"
-      . lang("None") . "</option>";
+    $phpgw->template->set_var("field",lang("Repeat Day")."<br>".lang("for weekly"));
+    $str  = "<input type=\"checkbox\" name=\"rpt_sun\" value=\"y\"".($cal_info->rpt_sun?"checked":"")."> ".lang("Sunday")." ";
+    $str .= "<input type=\"checkbox\" name=\"rpt_mon\" value=\"y\"".($cal_info->rpt_mon?"checked":"")."> ".lang("Monday")." ";
+    $str .= "<input type=\"checkbox\" name=\"rpt_tue\" value=\"y\"".($cal_info->rpt_tue?"checked":"")."> ".lang("Tuesday")." ";
+    $str .= "<input type=\"checkbox\" name=\"rpt_wed\" value=\"y\"".($cal_info->rpt_wed?"checked":"")."> ".lang("Wednesday")." ";
+    $str .= "<input type=\"checkbox\" name=\"rpt_thu\" value=\"y\"".($cal_info->rpt_thu?"checked":"")."> ".lang("Thursday")." ";
+    $str .= "<input type=\"checkbox\" name=\"rpt_fri\" value=\"y\"".($cal_info->rpt_fri?"checked":"")."> ".lang("Friday")." ";
+    $str .= "<input type=\"checkbox\" name=\"rpt_sat\" value=\"y\"".($cal_info->rpt_sat?"checked":"")."> ".lang("Saturday")." ";
+    $phpgw->template->set_var("data",$str);
+    $phpgw->template->parse("output","list",True);
 
-   echo "<option value=\"daily\"" . (strcmp($cal_info->rpt_type,'daily')==0?"selected":"") . ">"
-      . lang("Daily") . "</option>";
+    $phpgw->template->set_var("field",lang("Frequency"));
+    $phpgw->template->set_var("data","<input name=\"rpt_freq\" size=\"4\" maxlength=\"4\" value=\"".$cal_info->rpt_freq."\">");
+    $phpgw->template->parse("output","list",True);
 
-   echo "<option value=\"weekly\"" . (strcmp($cal_info->rpt_type,'weekly')==0?"selected":"") . ">"
-      . lang("Weekly") . "</option>";
+    $phpgw->template->set_var("submit_button",lang("Submit"));
 
-   echo "<option value=\"monthlyByDay\"".(strcmp($cal_info->rpt_type,'monthlyByDay')==0?"selected":"")
-      . ">" . lang("Monthly (by day)") . "</option>";
-
-   echo "<option value=\"monthlyByDate\"".(strcmp($cal_info->rpt_type,'monthlyByDate')==0?"checked":"")
-      . "> " . lang("Monthly (by date)") . "</option>";
-
-   echo "<option value=\"yearly\"" . (strcmp($cal_info->rpt_type,'yearly')==0?"checked":"") . ">"
-      . lang("Yearly") . "</option>";
-?>
-  </select>
- </td>
-<tr>
- <td><b><?php echo lang("Repeat End date"); ?>:</b></td>
- <td><input type=checkbox name=rpt_end_use value=y <?php
-      echo ($cal_info->rpt_end?"checked":""); ?>> <?php echo lang("Use End date"); ?>
-
-<?php
-  $day_html = "<SELECT NAME=\"rpt_day\">";
-  for ($i = 1; $i <= 31; $i++) {
-    $day_html .= "<OPTION value=\"$i\"" . ($i == $cal_info->rpt_day ? " SELECTED" : "")
-	       . ">$i</option>\n";
-  }
-  $day_html .= "</select>";
-
-  $month_html = "<select name=\"rpt_month\">";
-  for ($i = 1; $i <= 12; $i++) {
-    $m = lang(date("F", mktime(0,0,0,$i,1,$cal_info->rpt_year)));
-    $month_html .= "<OPTION VALUE=\"$i\"" . ($i == $cal_info->rpt_month ? " SELECTED" : "")
-		 . ">$m</option>\n";
-  }
-  $month_html .= "</select>";
-
-  $year_html = "<select name=\"rpt_year\">";
-  for ($i = ($cal_info->rpt_year - 1); $i < ($cal_info->rpt_year + 5); $i++) {
-    $year_html .= "<OPTION VALUE=\"$i\"" . ($i == $cal_info->rpt_year ? " SELECTED" : "") . ">$i"
-       		. "</option>\n";
-  }
-  $year_html .= "</select>";
-
-  echo $phpgw->common->dateformatorder($year_html,$month_html,$day_html);
-?>
-
- </td>
-</tr>
-<tr>
-  <td><b><?php echo lang("Repeat day"); ?>: </b><?php echo lang("(for Weekly)"); ?></td>
-  <td><?php
-  echo "<input type=checkbox name=rpt_sun value=y "
-     . ($cal_info->rpt_sun?"checked":"") . "> " . lang("Sunday");
-  echo "<input type=checkbox name=rpt_mon value=y "
-     . ($cal_info->rpt_mon?"checked":"") . "> " . lang("Monday");
-  echo "<input type=checkbox name=rpt_tue value=y "
-     . ($cal_info->rpt_tue?"checked":"") . "> " . lang("Tuesday");
-  echo "<input type=checkbox name=rpt_wed value=y "
-     . ($cal_info->rpt_wed?"checked":"") . "> " . lang("Wednesday");
-  echo "<input type=checkbox name=rpt_thu value=y "
-     . ($cal_info->rpt_thu?"checked":"") . "> " . lang("Thursday");
-  echo "<input type=checkbox name=rpt_fri value=y "
-     . ($cal_info->rpt_fri?"checked":"") . "> " . lang("Friday");
-  echo "<input type=checkbox name=rpt_sat value=y "
-     . ($cal_info->rpt_sat?"checked":"") . "> " . lang("Saturday");
-  ?></td>
-</tr>
-
-<tr>
- <td><b><?php echo lang("Frequency"); ?>: </b></td>
- <td>
-  <input name="rpt_freq" size="4" maxlength="4" value="<?php echo $cal_info->rpt_freq; ?>">
- </td>
-</tr>
-</TABLE>
-
-<SCRIPT LANGUAGE="JavaScript">
-  document.writeln ( '<INPUT TYPE="button" VALUE="<?php echo lang("Submit"); ?>" ONCLICK="validate_and_submit()">' );
-  /* document.writeln ( '<INPUT TYPE="button" VALUE="<?php echo lang("Help"); ?>" ONCLICK="window.open ( \'help_edit_entry.php\', \'cal_help\', \'dependent,menubar,height=365,width=650,innerHeight=365,outerWidth=420,resizable=1\');">' ); */
-</SCRIPT>
-<NOSCRIPT>
-<INPUT TYPE="submit" VALUE="<?php echo lang("Submit"); ?>">
-</NOSCRIPT>
-
-<INPUT TYPE="hidden" NAME="participant_list" VALUE="">
-
-</FORM>
-
-<?php
-  if ($id > 0) {
-     echo "<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
-	. lang("Are you sure\\nyou want to\\ndelete this entry ?") . "');\">"
-	. lang("Delete") . "</A><BR>";
-  } 
-  } // ***** This might be out of place.  I was getting tons of parse errors
-    // from if ($can_edit) {   This needs to be rewritten, because if you do
-    // not own the entry.  You should not get into this portion of the program.
+    if ($id > 0) {
+      $phpgw->template->set_var("action_url",$phpgw->link("delete.php","id=$id"));
+      $phpgw->template->set_var("action_text",lang("Delete"));
+      $phpgw->template->parse("delete_button","form_button");
+      $phpgw->template->pparse("out","edit_entry_end");
+    } else {
+      $phpgw->template->set_var("delete_button","");
+      $phpgw->template->pparse("out","edit_entry_end");
+    }
     $phpgw->common->phpgw_footer();
+  }
 ?>

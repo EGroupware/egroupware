@@ -48,9 +48,10 @@
 
   $phpgw->template->set_file(array("view_begin" => "view.tpl",
 				   "list"       => "list.tpl",
-				   "view_end"   => "view.tpl"));
+				   "view_end"   => "view.tpl",
+				   "form_button"=> "form_button_script.tpl"));
 
-  $phpgw->template->set_block("view_begin","list","view_end");
+  $phpgw->template->set_block("view_begin","list","view_end","form_button");
 
   $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_text"]);
   $phpgw->template->set_var("name",$cal_info->name);
@@ -155,11 +156,21 @@
   }
 
   if ($is_my_event) {
-    $phpgw->template->set_var("edit","<a href=\"".$phpgw->link("edit_entry.php","id=$id")."\">".lang("Edit")."</a>");
-    $phpgw->template->set_var("delete","<a href=\"".$phpgw->link("delete.php","id=$id")."\" onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."');\">".lang("Delete")."</a>");
+    $phpgw->template->set_var("action_url",$phpgw->link("edit_entry.php","id=$id"));
+    $phpgw->template->set_var("action_text","  ".lang("Edit")."  ");
+    $phpgw->template->set_var("action_confirm","");
+    $phpgw->template->parse("edit_button","form_button");
+
+    $phpgw->template->set_var("action_url",$phpgw->link("delete.php","id=$id"));
+    $phpgw->template->set_var("action_text",lang("Delete"));
+    $phpgw->template->set_var("action_confirm","onClick=\"confirm(".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."\")");
+    $phpgw->template->parse("delete_button","form_button");
+
+//    $phpgw->template->set_var("edit","<a href=\"".$phpgw->link("edit_entry.php","id=$id")."\">".lang("Edit")."</a>");
+//    $phpgw->template->set_var("delete","<a href=\"".$phpgw->link("delete.php","id=$id")."\" onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."');\">".lang("Delete")."</a>");
   } else {
-    $phpgw->template->set_var("edit","");
-    $phpgw->template->set_var("delete","");
+    $phpgw->template->set_var("edit_button","");
+    $phpgw->template->set_var("delete_button","");
   }
   $phpgw->template->pparse("out","view_end");
   $phpgw->common->phpgw_footer();

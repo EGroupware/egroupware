@@ -14,7 +14,7 @@
 <!-- BEGIN view_end -->
 </table>
 <p>
-{edit}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{delete}
+{edit_button}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{delete_button}
 </center>
 <!-- END view_end -->
 
