@@ -37,14 +37,24 @@
   $db->User	    = $phpgw_info["server"]["db_user"];
   $db->Password   = $phpgw_info["server"]["db_pass"];
 
+  echo "<title>phpGroupWare - setup</title>";
+  echo "<center>phpGroupWare version " . $current_version . " setup</center><p>";
+
+  if ($submit) {
+     $db->query("delete from config");
+     while ($newsetting = each($newsettings)) {
+        $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
+        		  . "','" . addslashes($newsetting[1]) . "')");
+     }
+     echo '<center>Your config has been updated<br><a href="' . $newsettings[webserver_url]
+        . '">Click here to login</a>';
+  }
+
   $db->query("select * from config");
   while ($db->next_record()) {
     $current_config[$db->f("config_name")] = $db->f("config_value");
   }
-?>
-  <title>phpGroupWare - setup</title>
-  <center>phpGroupWare version <?php echo $current_version; ?> setup</center><p>
-  
+?>  
  <form method="POST" action="config.php">
   <table border="0">
    <tr>
