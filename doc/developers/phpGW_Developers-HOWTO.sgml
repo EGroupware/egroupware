@@ -56,7 +56,7 @@
   This is done by putting this at the top of each PHP page.
 <code>
   <?php
-  $phpgw_flags["currentapp"] = "appname";
+  $phpgw_info["flags"]["currentapp"] = "appname";
   include("../header.inc.php");
   ?>
 </code>

@@ -12,10 +12,10 @@
   /* $Id$ */
 
   if ($submit) {
-     $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
-  $phpgw_flags["currentapp"] = "admin";
+  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   if (! $con)
      Header("Location: " . $phpgw->link("headlines.php"));

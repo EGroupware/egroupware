@@ -14,7 +14,7 @@
 
   /* $Id$ */
 
-  $phpgw_flags["currentapp"] = "calendar";
+  $phpgw_info["flags"]["currentapp"] = "calendar";
 
   if (! $keywords) {
      // If we reach this it becuase they didn't search for anything,

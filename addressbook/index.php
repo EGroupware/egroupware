@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-  $phpgw_flags["currentapp"] = "addressbook";
+  $phpgw_info["flags"]["currentapp"] = "addressbook";
 
   include("../header.inc.php");
 

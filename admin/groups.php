@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_flags["currentapp"] = "admin";
+  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
   if (! $start)

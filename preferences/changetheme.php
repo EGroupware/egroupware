@@ -12,9 +12,9 @@
 
   /* $Id$ */
 
-  $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
 
-  $phpgw_flags["currentapp"] = "preferences";
+  $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
 
   if ($phpgw_info["user"]["permissions"]["anonymous"]) {

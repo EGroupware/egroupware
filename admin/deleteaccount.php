@@ -12,10 +12,10 @@
   /* $Id$ */
 
   if ($confirm) {
-     $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
-  $phpgw_flags["currentapp"] = "admin";
+  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   // Make sure they are not attempting to delete there own account.
   // If they are, they should not reach this point anyway.

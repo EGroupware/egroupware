@@ -13,10 +13,10 @@
   /* $Id$ */
 
   if ($submit && $nntplist) {
-     $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
-  $phpgw_flags["currentapp"] = "preferences";
+  $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
   $phpgw->include_lang("nntp");
   function get_tg()

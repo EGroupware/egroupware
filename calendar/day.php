@@ -15,10 +15,10 @@
   /* $Id$ */
 
   if ($friendly) {
-     $phpgw_flags["noheader"] = True;
+     $phpgw_info["flags"]["noheader"] = True;
   }
 
-  $phpgw_flags["currentapp"] = "calendar";
+  $phpgw_info["flags"]["currentapp"] = "calendar";
   include("../header.inc.php");
 
   $view = "day";

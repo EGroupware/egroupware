@@ -21,7 +21,7 @@
 
   $phpgw_info["server"]["include_root"]	= "/path/to/phpgroupware/inc";
   /* This is the basic include needed on each page for phpGroupWare application compliance */
-  $phpgw_flags["htmlcompliant"] = True;
+  $phpgw_info["flags"]["htmlcompliant"] = True;
 
   /**************************************************************************\
   * Do not edit this line                                                   *

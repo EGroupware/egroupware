@@ -16,7 +16,7 @@
   Header("Pragma: no-cache");
   //Header("Expires: Sat, Jan 01 2000 01:01:01 GMT");
 
-  $phpgw_flags["currentapp"] = "preferences";
+  $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
   if ($phpgw_info["user"]["permissions"]["anonymous"]) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));

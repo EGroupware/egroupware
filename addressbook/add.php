@@ -13,10 +13,10 @@
   /* $Id$ */
 
   if ($submit) {
-     $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
-  $phpgw_flags["currentapp"] = "addressbook";
+  $phpgw_info["flags"]["currentapp"] = "addressbook";
   include("../header.inc.php");
   
   if ($add_email) {

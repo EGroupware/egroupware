@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-  $phpgw_flags = array("disable_message_class"    => True, "disable_send_class"     => True,
+  $phpgw_info["flags"] = array("disable_message_class"    => True, "disable_send_class"     => True,
 			        "disable_nextmatchs_class" => True, "disable_template_class" => True,
 			        "login"				=> True, "currentapp"		    => "login",
 			        "noheader"				=> True

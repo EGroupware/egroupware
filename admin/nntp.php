@@ -13,14 +13,14 @@
   /* $Id$ */
 
   if ($submit && $nntplist) {
-     $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
-  $phpgw_flags["currentapp"] = "admin";
-  $phpgw_flags["disable_network_class"] = True;
-  $phpgw_flags["disable_message_class"] = True;
-  $phpgw_flags["disable_send_class"] = True;
-  $phpgw_flags["disable_vfs_class"] = True;
+  $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"]["disable_network_class"] = True;
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
+  $phpgw_info["flags"]["disable_vfs_class"] = True;
   include("../header.inc.php");
 
   $phpgw->include_lang("nntp");

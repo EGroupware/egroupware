@@ -12,12 +12,12 @@
 
   /* $Id$ */
 
-  $phpgw_flags["disable_message_class"] = True;
-  $phpgw_flags["disable_send_class"] = True;
-  $phpgw_flags["disable_nextmatchs_class"] = True;
-  $phpgw_flags["disable_template_class"] = True;
-  $phpgw_flags["currentapp"] = "logout";
-  $phpgw_flags["noheader"] = True;
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
+  $phpgw_info["flags"]["disable_nextmatchs_class"] = True;
+  $phpgw_info["flags"]["disable_template_class"] = True;
+  $phpgw_info["flags"]["currentapp"] = "logout";
+  $phpgw_info["flags"]["noheader"] = True;
 
   include("header.inc.php");
 

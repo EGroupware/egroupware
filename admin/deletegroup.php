@@ -11,12 +11,12 @@
 
   /* $Id$ */
 
-  $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
 
   if (! $group_id)
      Header("Location: " . $phpgw->link("groups.php"));
 
-  $phpgw_flags["currentapp"] = "admin";
+  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
   if ((($group_id) && ($confirm)) || $removeusers) {

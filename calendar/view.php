@@ -14,7 +14,7 @@
 
   /* $Id$ */
 
-  $phpgw_flags["currentapp"] = "calendar";
+  $phpgw_info["flags"]["currentapp"] = "calendar";
   include("../header.inc.php");
 
   function grab_group($db,$id)

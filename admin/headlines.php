@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-  $phpgw_flags["currentapp"] = "admin";
+  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   echo "<p><center>" . lang_admin("Headline Sites") . "<br><table border=0 width=65%>"
      . "<tr bgcolor=" . $theme["th_bg"] . "><td>" . lang_admin("Site") . "</td>"

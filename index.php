@@ -17,7 +17,7 @@
      exit;
   }
 
-  $phpgw_flags = array("noheader" => True, "nonavbar" => True, "currentapp" => "home");
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home");
   include("header.inc.php");
   // Note: I need to add checks to make sure these apps are installed.
 

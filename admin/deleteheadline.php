@@ -12,15 +12,15 @@
   /* $Id$ */
 
   if ($confirm) {
-     $phpgw_flags = array("noheader" => True, "nonavbar" => True);
+     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
-  $phpgw_flags["currentapp"] = "admin";
+  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
   function remove_account_data($query,$t)
   {
-    global $phpgw->db;
+    global $phpgw;
     $phpgw->db->query("delete from $t where $query");
   }
   
