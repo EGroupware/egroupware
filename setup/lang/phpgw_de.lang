@@ -53,7 +53,7 @@ create database	setup	de	Datenbank erzeugen
 create one now	setup	de	Jetzt erstellen
 creating tables	setup	de	erstelle Tabellen
 current version	setup	de	Gegenw&auml;rtige Version
-currently installed languages: x <br>	setup	de	Gegenw&auml;rtig installierte Sprachen: %1 <br>
+currently installed languages: %1 <br>	setup	de	Gegenw&auml;rtig installierte Sprachen: %1 <br>
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
 db root password	setup	de	Datenbank Root Passwort
 db root username	setup	de	Datenbank Root Benutzername
@@ -223,14 +223,14 @@ use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 users choice	setup	de	Benutzerauswahl
 version mismatch	setup	de	Falsche Versionsanpassung
-we will automatically update your tables/records to x	setup	de	Wir werden Ihre Tabellen/Eintr&auml;ge automatisch zu %1 aktualisieren
+we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Eintr&auml;ge automatisch zu %1 aktualisieren
 would you like phpgroupware to cache the phpgw info array ?	setup	de	Soll phpGroupWare das phpgw info Array cachen ?
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	de	Soll phpGroupWare nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet ?
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 yes	setup	de	Ja
 you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von phpGroupWare benutzen.<br>Diese Versionen werden nicht l&auml;nger unterst&uuml;tzt, und es gibt keinen Aktualisierungs-Pfad f&uuml;r sie im Einrichtung-Programm.<br>Sie m&ouml;chten vieleicht erst auf
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>&Auml;ltere PHP-Versionen k&ouml;nnten phpGroupWare nicht korrekt laufen lassen, wenn &uuml;berhaupt. <br><br>Biite aktualisieren Sie 
-you appear to be running version x of phpgroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von phpGroupWare
+you appear to be running version %1 of phpgroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von phpGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	de	Sie sind bereit f&uuml;r diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br>
 you do not have any languages installed. please install one now <br>	setup	de	sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br>
 you must enter a username for the admin	setup	de	sie m&uuml;ssen einen Benutzernamen f&uuml;r den Admin eingeben !

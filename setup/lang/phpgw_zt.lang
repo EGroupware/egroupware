@@ -46,7 +46,7 @@ create database	setup	zt	建立資料庫
 create one now	setup	zt	馬上建立
 creating tables	setup	zt	正在建立資料表
 current version	setup	zt	目前的版本
-currently installed languages: x <br>	setup	zt	目前已安裝的語言：%1 <br>
+currently installed languages: %1 <br>	setup	zt	目前已安裝的語言：%1 <br>
 db root password	setup	zt	資料庫 ROOT 密碼
 db root username	setup	zt	資料庫 ROOT 帳號
 Default file system space per user/group ?	setup	zt	預設各使用者／群組可使用的檔案空間？
@@ -186,13 +186,13 @@ Use cookies to pass sessionid	setup	zt	使用 COOKIE 傳遞連線代碼
 Use pure HTML compliant code (not fully working yet)	setup	zt	使用標準 HTML 原始碼（尚未完全支援）
 Users Choice	setup	zt	使用者的選擇
 version mismatch	setup	zt	版本不符
-we will automatically update your tables/records to x	setup	zt	我們將自動幫您更新您的資料表及資料到 %1
+we will automatically update your tables/records to %1	setup	zt	我們將自動幫您更新您的資料表及資料到 %1
 Would you like phpGroupWare to cache the phpgw info array ?	setup	zt	您希望 phpGroupWare 將系統資訊存到存取緩衝區內嗎？
 Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	zt	您希望 phpGroupWare 自動於管理者登入時檢查是否有最新版本？
 Would you like to show each application's upgrade status ?	setup	zt	您希望顯示每一個應用程式升級的資訊嗎？
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zt	您目前安裝的為測試版本的 phpGroupWare。<br>目前已經不再支援這個版本，建議您先升級到 0.9.10 版﹝最後一個測試版本﹞ <br>再升級到現在的版本。
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	zt	您目前所使用的 PHP 版本太舊，<br>建議您升級到較新的版本，<br>因為舊版本的 PHP 可能會造成 phpGroupWare 運作不正常。<br><br>建議您至少升級到 3.0.16 版
-you appear to be running version x of phpGroupWare	setup	zt	您目前所使用的 phpGroupWare 版本為 %1
+you appear to be running version %1 of phpGroupWare	setup	zt	您目前所使用的 phpGroupWare 版本為 %1
 you are ready for this stage, but this stage is not yet written.<br>	setup	zt	您已經準備好要使用這個步驟，但這個步驟尚未開發完成。<br>
 you do not have any languages installed. please install one now <br>	setup	zt	您目前沒有安裝任何的語言，請安裝至少一種語言。<br>
 you must enter a username for the admin	setup	zt	您必須輸入管理者的帳號名稱

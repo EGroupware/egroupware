@@ -49,7 +49,7 @@ create database	setup	pt	Criar base de dados
 create one now	setup	pt	Criar uma agora
 create	setup	pt	Criar
 creating tables	setup	pt	Criando tabelas
-currently installed languages: x <br>	setup	pt	Idiomas instalados atualmente: %1 <br>
+currently installed languages: %1 <br>	setup	pt	Idiomas instalados atualmente: %1 <br>
 current version	setup	pt	Versão atual
 db root password	setup	pt	Senha do super-usuário no banco de dados
 db root username	setup	pt	Código do super-usuário no banco de dados
@@ -216,14 +216,14 @@ Use cookies to pass sessionid	setup	pt	Usar cookies para transmitir id de sessão
 Use pure HTML compliant code (not fully working yet)	setup	pt	Usar puro código HTML (não funciona totalmente ainda)
 Users Choice	setup	pt	À escolha dos usuários
 version mismatch	setup	pt	Erro de versão
-we will automatically update your tables/records to x	setup	pt	As tabelas/registros serão automaticamente atualizadas para %1
+we will automatically update your tables/records to %1	setup	pt	As tabelas/registros serão automaticamente atualizadas para %1
 Would you like phpGroupWare to cache the phpgw info array ?	setup	pt	Deseja que o phpGroupWare faça cache do vetor de informações phpgw ?
 Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	pt	Deseja que o phpGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
 Would you like to show each application's upgrade status ?	setup	pt	Deseja exibir se cada aplicação está atualizada ?
 yes	setup	pt	Sim
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	pt	Está sendo usado uma versão antiga de PHP.<br>É recomendado que a versão seja atualizada.<br>Versões antigas do PHP podem não executar o phpGroupWare corretamente. <br><br>Por favor atualize para versões acima de 3.0.16.
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pt	Aparentemente você está usando uma versão pré-beta do phpGroupWare.<br>Estas versões não são mais suportadas, e não há como usar a Configuração para atualizar.<br> Você deve primeiro atualizar para a versão 0.9.10 (a última versão que suporta atualização de pré-betas) <br>e então atualizar a partir desta versão para a versão atual.
-you appear to be running version x of phpGroupWare	setup	pt	Aparentemente esta versão do phpGroupWare é a %1
+you appear to be running version %1 of phpGroupWare	setup	pt	Aparentemente esta versão do phpGroupWare é a %1
 you are ready for this stage, but this stage is not yet written.<br>	setup	pt	Você está pronto para este passo, mas este estágio não está escrito ainda.<br>
 you do not have any languages installed. please install one now <br>	setup	pt	Não há nenhum idioma instalado. Por favor instale algum agora <br>
 you must enter a username for the admin	setup	pt	Deve ser especificado um código de usuário para o Administrador

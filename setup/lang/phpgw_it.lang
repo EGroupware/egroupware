@@ -37,7 +37,7 @@ create demo accounts	setup	it	Crea utenti demo
 create one now	setup	it	Creane una adesso
 create	setup	it	Crea
 creating tables	setup	it	Creazione Tabelle
-currently installed languages: x <br>	setup	it	Lingue attualmente installate: %1 <br>
+currently installed languages: %1 <br>	setup	it	Lingue attualmente installate: %1 <br>
 current version	setup	it	Versione Installata
 db root password	setup	it	DB root password
 db root username	setup	it	DB root username
@@ -141,10 +141,10 @@ upgraded	setup	it	aggiornato
 upgrade	setup	it	Aggiorna
 upgrading tables	setup	it	Aggiornamento Tabelle
 version mismatch	setup	it	Version Mismatch
-we will automatically update your tables/records to x	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
+we will automatically update your tables/records to %1	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	it	Sembra che tu stia usando una vecchia versione di PHP <br>&Egrave raccomandabile che tu esegua un aggiornamento ad una versione recente. <br>Vecchie versioni di PHP potrebbero non far funzionare correttamenterun phpGroupWare, o potrebbero non farlo funzionare per nulla. <br><br>Per favore aggiorna almeno alla versione 3.0.16
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di phpGroupWare.<br>Queste versioni non sono pi&ugrave; supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br>e poi aggiornare da l&igrave; usando questa versione.
-you appear to be running version x of phpGroupWare	setup	it	Sembra che tu sta utilizzando la versione %1 di phpGroupWare
+you appear to be running version %1 of phpGroupWare	setup	it	Sembra che tu sta utilizzando la versione %1 di phpGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	it	Sei pronto per questo passaggio, ma questa procedura non &egrave; ancora stata scritta.<br>
 you do not have any languages installed. please install one now <br>	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br>
 you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore

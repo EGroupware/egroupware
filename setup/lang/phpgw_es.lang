@@ -34,7 +34,7 @@ configure now	setup	es	Configure Ahora
 create one now	setup	es	Cree una ahora
 create	setup	es	Crear
 creating tables	setup	es	Creando Tablas
-currently installed languages: x <br>	setup	es	Idiomas actualmente instalados: %1 <br>
+currently installed languages: %1 <br>	setup	es	Idiomas actualmente instalados: %1 <br>
 current version	setup	es	Version Actual
 delete all my tables and data	setup	es	Elimine todas mis tablas e información 
 delete all old languages and install new ones	setup	es	Elimine todos los idiomas antigüos e instale los nuevos 
@@ -127,10 +127,10 @@ upgraded	setup	es	actualizado
 upgrade	setup	es	Actualizar
 upgrading tables	setup	es	Actualizando Tablas
 version mismatch	setup	es	Dispariad de Versiones
-we will automatically update your tables/records to x	setup	es	Actualizaremos automáticamente sus tablas/registros a %1
+we will automatically update your tables/records to %1	setup	es	Actualizaremos automáticamente sus tablas/registros a %1
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup es	Parece que está ejecutando una versión antigüa de PHP<br>Le recomedamos que actulice a una versión mas nueva.<br>Algunas versiones antigüas de PHP pueden no ejecutar phpGroupWare correctamente, o simplemente no ejecutarlo.  <br><br>Por favor actualize su versión de php por lo menos a la 3.0.16
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es Parece que está usted ejecutando una versión pre-beta de phpGroupware.<br>Esas versiones no dispondran mas de soporte, y no hay forma de actualizarlas con esta utilidad.<br> Puede que usted desee primero actualizar a la versión 0.9.10 (la última versión que soportó actualizaciones desde las versiones pre-beta) <br>y luego actulizar desde esta a la versión actual.
-you appear to be running version x of phpGroupWare	setup	es	Parece que está ejecutando la versión %1 de phpGroupWare
+you appear to be running version %1 of phpGroupWare	setup	es	Parece que está ejecutando la versión %1 de phpGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	es Está preparado para esta fase, pero esta fase no ha sido escrita todabía.<br>
 you do not have any languages installed. please install one now <br>	setup	es No tiene soporte para ningún idioma instalado. Por favor instale uno ahora <br>
 you must enter a username for the admin	setup	es	Debe de introducir una nombre de usuario para el administrador

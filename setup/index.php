@@ -100,7 +100,7 @@
 	{
 		case 'Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
-			$submsg = lang('Are you sure delete your existing tables and data?') . '.';
+			$submsg = lang('Are you sure you want to delete your existing tables and data?') . '.';
 			$subaction = 'uninstall';
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'predrop';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
@@ -198,8 +198,8 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 4:
-			$setup_tpl->set_var('oldver',lang('You appear to be running version x of phpGroupWare',$setup_info['phpgwapi']['currentver']));
-			$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to x',$setup_info['phpgwapi']['version']));
+			$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of phpGroupWare',$setup_info['phpgwapi']['currentver']));
+			$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
 			$setup_tpl->set_var('backupwarn',lang('backupwarn'));
 			$setup_tpl->set_var('upgrade',lang('Upgrade'));
 			$setup_tpl->set_var('goto',lang('Go to'));
@@ -404,7 +404,7 @@
 			$setup_tpl->set_var('lang_status_img',$completed);
 			$setup_tpl->set_var('lang_status_alt','completed');
 			$btn_manage_lang = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
-				lang('This stage is completed<br>') . lang('Currently installed languages: x <br>',$langs_list),
+				lang('This stage is completed<br>') . lang('Currently installed languages: %1 <br>',$langs_list),
 				'POST','lang.php',
 				'submit',lang('Manage Languages'),
 				'');

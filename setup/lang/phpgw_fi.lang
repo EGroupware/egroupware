@@ -49,7 +49,7 @@ create database	setup	fi	Luo tietokanta
 create one now	setup	fi	Luo nyt
 create	setup	fi	Luo
 creating tables	setup	fi	Luon tauluja
-currently installed languages: x <br>	setup	fi	Asennetut kielet: %1 <br>
+currently installed languages: %1 <br>	setup	fi	Asennetut kielet: %1 <br>
 current version	setup	fi	Käytettävä versio
 db root password	setup	fi	DB root salasana
 db root username	setup	fi	DB root tunnus
@@ -215,14 +215,14 @@ Use cookies to pass sessionid	setup	fi	Käytä evästeitä (cookie) istuntotunnuksen
 Use pure HTML compliant code (not fully working yet)	setup	fi	Käytä HTML yhteensopivuustilaa (ei toimi vielä täysin)
 Users Choice	setup	fi	Käyttäjä valitsee
 version mismatch	setup	fi	Epäyhteensopiva versio
-we will automatically update your tables/records to x	setup	fi	Taulut/tietueet päivitetään automaattisesti versioon %1
+we will automatically update your tables/records to %1	setup	fi	Taulut/tietueet päivitetään automaattisesti versioon %1
 Would you like phpGroupWare to cache the phpgw info array ?	setup	fi	Säilytetäänkö phpgw info -rakenne välimuistissa?
 Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	fi	Tarkistetaanko, onko phpGroupWare:sta uutta versiota<br>kun pääkäyttäjä kirjautuu järjestelmään?
 Would you like to show each application's upgrade status ?	setup	fi	Näytetäänkö kunkin sovelluksen päivitystilanne?
 yes	setup	fi	Kyllä
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	fi	Käytössä on PHP:n vanha versio<br>Suosittelemme päivittämään uudempaan versioon. <br>phpGroupWare ei ehkä toimi oikein (tai ollenkaan) vanhoilla PHP:n versioilla. <br><br>Päivitä versioon 3.0.16 tai uudempi
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fi	Käytössä on esi-beta versio phpGroupWare:sta.<br>Sitä ei enää tueta ja tämä asennus ei osaa tehdä päivitystä siitä.<br> Voit päivittää ensin versioon 0.9.10 (viimeinen versio joka tuki esi-beta päivityksiä) <br>ja päivittää edelleen sitä nykyiseen versioon.
-you appear to be running version x of phpGroupWare	setup	fi	Käytössä on phpGroupWare:n versio %1
+you appear to be running version %1 of phpGroupWare	setup	fi	Käytössä on phpGroupWare:n versio %1
 you are ready for this stage, but this stage is not yet written.<br>	setup	fi	Olet valmis tähän vaiheeseen, mutta vaihetta ei ole vielä kirjoitettu.<br>
 you do not have any languages installed. please install one now <br>	setup	fi	Ei asennettuja kieliä. Asenna ensin ainakin yksi kieli <br>
 you must enter a username for the admin	setup	fi	Anna pääkäyttäjän käyttäjätunnus

@@ -48,7 +48,7 @@ create	setup	ja	作成
 create database	setup	ja	データベースを作成しました
 created	setup	ja	作成
 creating tables	setup	ja	テーブルを作成しました。
-currently installed languages: x <br>	setup	ja	現在の言語: %1 <br>
+currently installed languages: %1 <br>	setup	ja	現在の言語: %1 <br>
 current version	setup	ja	現在の<BR>バージョン
 delete all my tables and data	setup	ja	すべてのテーブルとデータを削除します
 delete all old languages and install new ones	setup	ja	現在の言語をすべて削除して、選択した言語をインストールする
@@ -196,14 +196,14 @@ use pure html compliant code (not fully working yet)	setup	ja	純粋なHTMLを利用（
 use cookies to pass sessionid	setup	ja	cookieのセッションidを使用
 users choice	setup	ja	ユーザ選択
 version mismatch	setup	ja	Version Mismatch
-we will automatically update your tables/records to x	setup	ja	セットアップは、%1 用のテーブルやデータに自動アップグレードします。
+we will automatically update your tables/records to %1	setup	ja	セットアップは、%1 用のテーブルやデータに自動アップグレードします。
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	ja	管理者でログイン時、phpGroupWareのバージョンチェックを行う
 would you like phpgroupware to cache the phpgw info array ?	setup	ja	phpGroupWare のキャッシュにphpgw info 配列を利用する
 would you like to show each application's upgrade status ?	setup	ja	アプリケーションのアップグレード状況表示
 yes	setup	ja	はい
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	ja	PHPのバージョンが古いようです。<br>バージョンアップをお勧めします。<br>古いバージョンの PHP では、phpGroupWare のすべての機能が正確に動作しません。<br><br>Ver 3.0.16 以降にバージョンアップしてください。
 You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running version x of phpGroupWare	setup	ja	現在、phpGroupWare Ver. %1 が動作していると思われます。
+you appear to be running version %1 of phpGroupWare	setup	ja	現在、phpGroupWare Ver. %1 が動作していると思われます。
 you are ready for this stage, but this stage is not yet written.<br>	setup	ja	You are ready for this stage, but this stage is not yet written.<br>
 you do not have any languages installed. please install one now <br>	setup	ja	どの言語環境もありません。最低１つの言語環境をインストールして下さい。<br>
 you must enter a username for the admin	setup	ja	ユーザIDを入力して下さい。

@@ -50,7 +50,7 @@ create database	setup	pl	Tworzenie bazy danych
 create one now	setup	pl	Create one now
 creating tables	setup	pl	Tworzenie tabel
 current version	setup	pl	Aktualna wersja
-currently installed languages: x <br>	setup	pl	Zainstalowane wersje jêzykowe: %1 <br>
+currently installed languages: %1 <br>	setup	pl	Zainstalowane wersje jêzykowe: %1 <br>
 db root password	setup	pl	Has³o root do bazy danych
 db root username	setup	pl	nazwa u¿ytkownika root bazy danych
 default file system space per user/group ?	setup	pl	Domy¶lny rozmiar plików na u¿ytkownika/grupê ?
@@ -216,14 +216,14 @@ use cookies to pass sessionid	setup	pl	U¿ywaæ cookie do przechowywania sessionid
 use pure html compliant code (not fully working yet)	setup	pl	Use pure HTML compliant code (not fully working yet)
 users choice	setup	pl	Wybór u¿ytkownika
 version mismatch	setup	pl	Niezgodne wersje
-we will automatically update your tables/records to x	setup	pl	We will automatically update your tables/records to %1
+we will automatically update your tables/records to %1	setup	pl	We will automatically update your tables/records to %1
 would you like phpgroupware to cache the phpgw info array ?	setup	pl	Would you like phpGroupWare to cache the phpgw info array ?
 would you like phpgroupware to check for a new version<br>when admins login ?	setup	pl	Chcesz sprawdzaæ czy jest nowa wersja phpGroupWare<br>gdy loguje siê administrator?
 would you like to show each application's upgrade status ?	setup	pl	Would you like to show each application's upgrade status ?
 yes	setup	pl	Tak
 you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup	pl	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16
-you appear to be running version x of phpgroupware	setup	pl	You appear to be running version %1 of phpGroupWare
+you appear to be running version %1 of phpgroupware	setup	pl	You appear to be running version %1 of phpGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	pl	You are ready for this stage, but this stage is not yet written.<br>
 you do not have any languages installed. please install one now <br>	setup	pl	You do not have any languages installed. Please install one now <br>
 you must enter a username for the admin	setup	pl	Musisz podaæ nazwê administratora

@@ -1,8 +1,11 @@
+(account deletion in SQL Only)	setup	fr	(Effacement de compte dans SQL seulement)
 00 (disable)	setup	fr	00 (désactiver)
 13 (ntp)	setup	fr	13 (ntp)
 80 (http)	setup	fr	80 (http)
-(account deletion in SQL Only)	setup	fr	(effacement de compte dans SQL seulement)
-<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	fr	<br><center>L'import a été complété!  Cliquez <a href="index.php">ici</a> pour retourner au setup </center>
+<br><center>click <a href="index.php">here</a> to return to setup </center>	setup	fr	<br><center>Cliquez <a href="index.php">ici</a> pour retourner au setup </center>
+<br><center>export has been completed!  you will need to set the user passwords manually.</center>	setup	fr	<br><center>L'export a été complété!  Vous allez devoir régler les mots de passe des utilisateurs manuellement.</center>
+<br><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	fr	<br><center>L'import a été complété!  Cliquez <a href="index.php">ici</a> pour retourner au setup </center>
+<br><center>modifications have been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	fr	<br><center>Les modifications ont été complétées!  Cliquez <a href="index.php">ici</a> pour retourner au setup </center>
 actions	setup	fr	Actions
 add a domain	setup	fr	Ajouter un domaine
 add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-crées à ce groupe ('Default' sera tenté si ceci est vide.)
@@ -18,11 +21,14 @@ all users	setup	fr	Tous les utilisateurs
 analysis	setup	fr	Analyse
 app details	setup	fr	Détails de l'app
 app install/remove/upgrade	setup	fr	App install/enlève/maj
+app process	setup	fr	Processus d'application
 application data	setup	fr	Données de l'application
+application list	setup	fr	Liste d'applications
 application management	setup	fr	Gestion de l'application
 application name and status	setup	fr	Nom et statut de l'application
 application name and status information	setup	fr	Informations sur le nom et le statut de l'application
 application title	setup	fr	Titre de l'application
+are you sure you want to delete your existing tables and data?	setup	fr	Etes-vous sûr de vouloir effacer vos tables et données existantes?
 are you sure?	setup	fr	ETES-VOUS SUR?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	fr	Sur votre demande, ce script va tenter de créer la base de données et de lui assigner les droits d'utilisateur
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	fr	A votre demande, ce script va tenter d'installer les tables de base et les applications admin et preferences pour vous
@@ -36,6 +42,7 @@ auto create account records for authenticated users	setup	fr	Créer automatiqueme
 auto-created user accounts expire	setup	fr	Les comptes d'utilisateur auto-crées expirent
 available version	setup	fr	Version disponible
 backupwarn	setup	fr	Mais nous vous <u>recommendons fortement de sauvegarder</u> vos tables pour le cas où le script endommagerait vos données.<br><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong><br><em>SVP faites une sauvegarde avant de continuer!</em>
+because an application it depends upon was upgraded	setup	fr	parce-qu'une application de laquelle il dépend a été mise à jour
 because it depends upon	setup	fr	Parce-que ça dépend de
 because it is not a user application, or access is controlled via acl	setup	fr	Parce-que ce n'est pas une application utilisateur, ou l'accès est contrôlé par ACL
 because it requires manual table installation, <br>or the table definition was incorrect	setup	fr	Parce-que ça nécessite une installation manuelle de table, <br>ou la définition de la table était incorrecte
@@ -45,7 +52,7 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	fr	Parce-que le drapeau activer de cette app est sur 0, ou est indéfini
 bottom	setup	fr	Bas
 cancel	setup	fr	Abandon
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can x the file.	setup	fr	Ne pas pas créer le fichier header.inc.php à cause de restrictions sur les permissions sur le fichier.<br> A la place vous pouvez %1 le fichier.
+cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	fr	Ne peut pas créer le fichier header.inc.php à cause de restrictions sur les permissions sur le fichier.<br> A la place vous pouvez %1 le fichier.
 charset	setup	fr	ISO-8859-1
 check ip address of all sessions	setup	fr	Vérifier l'adresse IP de toutes les sessions
 click here	setup	fr	Cliquez ici
@@ -55,14 +62,15 @@ configuration completed	setup	fr	Configuration complétée
 configuration password	setup	fr	Mot de passe de configuration
 configure now	setup	fr	Configurer maintenant
 could not open header.inc.php for writing!	setup	fr	N'a pas pu ouvrir le fichier header.inc.php puor y écrire!
-country Selection	setup	fr	Choix de pays
+country selection	setup	fr	Choix de pays
 create	setup	fr	Créer
 create database	setup	fr	Créer la base de données
+create demo accounts	setup	fr	Créer les comptes de démo
 create one now	setup	fr	Créer un exemplaire maintenant
 create your header.inc.php	setup	fr	Créer votre fichier header.inc.php
 creating tables	setup	fr	Création de tables en cours
 current version	setup	fr	Version actuelle
-currently installed languages: x <br>	setup	fr	Langues installées actuellement: %1 <br>
+currently installed languages: %1 <br>	setup	fr	Langues installées actuellement: %1 <br>
 datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)	setup	fr	Port Date/heure.<br>Si vous utilisez le port 13, SVP modifiez les règles du firewall avant de modifier cette page.<br>(Port: 13 / Serveur: 129.6.15.28)
 db host	setup	fr	Nom du serveur de base de données
 db name	setup	fr	Nom de la base de données
@@ -71,16 +79,18 @@ db root password	setup	fr	Mot de passe du compte root de la base de données
 db root username	setup	fr	Login du compte root de la base de données
 db type	setup	fr	Type de base de données
 db user	setup	fr	Utilisateur de la base de données
-default file system space per user/group ?	setup	fr	Espace dans le système de fichiers par défaut par utilisateur/groupe ?
+default file system space per user/group ?	setup	fr	Espace disque par utilisateur/groupe par défaut ?
 delete	setup	fr	Effacer
 delete all my tables and data	setup	fr	Supprimer toutes mes tables et données
 delete all old languages and install new ones	setup	fr	Supprimer toutes les anciennes langues et installer les nouvelles
 deleting tables	setup	fr	Suppression de tables en cours
 demo server setup	setup	fr	COnfiguration du Serveur Demo
 deny access	setup	fr	Refuser l'accès
-deny all users access to grant other users access to their entries ?	setup	fr	Refuser à tous les utilisateurs le droit de donner l'accès à leurs données à d'autres utilisateurs ?
+deny all users access to grant other users access to their entries ?	setup	fr	Les utilisateurs ne peuvent permettre aux autres l'accès à leurs données ?
+dependency failure	setup	fr	Erreur de dépendance
 deregistered	setup	fr	Dé-enregistré
 details for admin account	setup	fr	Détails du compte admin
+developers' table schema toy	setup	fr	Jouet pour les schémas de table pour développeurs
 did not find any valid db support!	setup	fr	N'a pas pu trouver de support de base de données valide!
 do you want persistent connections (higher performance, but consumes more resources)	setup	fr	Voulez-vous des connexions persistantes (meilleure performance, mais consomme plus de ressources)
 domain	setup	fr	Domaine
@@ -91,17 +101,17 @@ edit your existing header.inc.php	setup	fr	Modifier votre fichier header.inc.php
 edit your header.inc.php	setup	fr	Modifier votre fichier header.inc.php
 enable mcrypt	setup	fr	Activer MCrypt
 enter some random text for app session encryption	setup	fr	Entrez du texte au hasard pour le cryptage des sessions applicatives
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	fr	Entrez du texte au hasard pour l'encryptage <br>app_session (nécessite mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	fr	Entrez du texte au hasard pour le <br>cryptage app_session (nécessite mcrypt)
 enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	fr	Entrez le chemin complet pour les fichiers des utilisateurs et groupes.<br>Exemples: /files, E:\FILES
+enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br>Exemples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
-enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL phpGroupWare.<br>Exemple: http://www.domain.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Pas de / (division) à la fin</b>
+enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de phpGroupWare.<br>Exemple: http://www.domain.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Pas de / (slash ou division) à la fin</b>
 enter the site password for peer servers	setup	fr	Entrez le mot de passe du site pour les serveurs pairs
 enter the site username for peer servers	setup	fr	Entrez le nom d'utilisateur du site pour les serveurs pairs
 enter the title for your site	setup	fr	Entrez le titre pour votre site
+enter your default FTP server	setup	fr	Entrez votre serveur FTP par défaut
 enter your HTTP proxy server	setup	fr	Entrez votre serveur proxy HTTP
 enter your HTTP proxy server port	setup	fr	Entrez le port de votre serveur proxy HTTP
-enter your default FTP server	setup	fr	Entrez vorte serveur FTP par défaut
 export phpgroupware accounts from sql to ldap	setup	fr	Exporter les comptes phpGroupWare de SQL vers LDAP
 export sql users to ldap	setup	fr	Exporter les utilisateurs SQL vers LDAP
 file	setup	fr	Fichier
@@ -117,7 +127,8 @@ hooks registered	setup	fr	Crochets enregistrés
 host information	setup	fr	Informations d'hôte
 hostname/ip of database server	setup	fr	Nom de machine/IP du serveur de base de données
 however, the application is otherwise installed	setup	fr	De toutes façons, l'application est par ailleurs installée
-if no ACL records for user or any group the user is a member of	setup	fr	Si pas d'enregistrements ACL pour l'utilisateur ou aucun groupe, l'utilisateur est membre de
+however, the application may still work	setup	fr	Malgré tout, l'application peut encore fonctionner
+if no ACL records for user or any group the user is a member of	setup	fr	Si aucun enregistrement d'ACL pour un utilisateur ou groupe l'utilisateur est un membre de
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	fr	Si l'application n'a pas défini de tables, choisir mise à jour devrait résoudre le problème
 if using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire maison (home) et shell de connexion?
 if you did not receive any errors, your applications have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos applications ont été
@@ -129,24 +140,26 @@ importing old settings into the new format....	setup	fr	J'importe les vieux régl
 include root (this should be the same as server root unless you know what you are doing)	setup	fr	Racine d'inclusion (ceci devrait être la même chose de racine du serveur à moins que vous ne sachiez ce que vous faîtes)
 insanity	setup	fr	Grave erreur
 install	setup	fr	Installer
-install Applications	setup	fr	Installer les Applications
+install all	setup	fr	Installer tout
+install applications	setup	fr	Installer les applications
 install language	setup	fr	Installer les Langues
 installed	setup	fr	installé
 invalid ip address	setup	fr	Adresse IP invalide
 invalid password	setup	fr	Mot de passe invalide
 is broken	setup	fr	est cassé
 is disabled	setup	fr	est désactivé
-ldap Default homedirectory prefix (e.g. /home for /home/username)	setup	fr	Préfixe de répertoire maison (home) LDAP par défaut (p.e. /home pour /home/utilisateur)
-ldap Default shell (e.g. /bin/bash)	setup	fr	Shell par défaut LDAP (p.e. /bin/bash)
 ldap account import/export	setup	fr	Import/export de compte LDAP
 ldap accounts configuration	setup	fr	Configuration des comptes LDAP
 ldap accounts context	setup	fr	Contexte des comptes LDAP
 ldap config	setup	fr	Configuration LDAP
-ldap encryption type	setup	fr	Type d'encryptage LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	fr	Préfixe par défaut du répertoire maison LDAP (p.e. /home pour /home/utilisateur)
+ldap default shell (e.g. /bin/bash)	setup	fr	Shell LDAP par défaut (p.e. /bin/bash)
+ldap encryption type	setup	fr	Type de cryptage LDAP
 ldap export users	setup	fr	Export utilisateurs LDAP
 ldap groups context	setup	fr	Contexte des groupes LDAP
 ldap host	setup	fr	Hôte LDAP
 ldap import users	setup	fr	Import utilisateurs LDAP
+ldap modify	setup	fr	Modification LDAP
 ldap root password	setup	fr	Mot de passe root LDAP
 ldap rootdn	setup	fr	Rootdn LDAP
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	fr	Limiter l'accès à setup aux adresses ou plages d'adresses suivants (p.e. 10.1.1,127.0.0.1)
@@ -155,12 +168,14 @@ makesure	setup	fr	Assurez-vous que votre base de données est créé et que les per
 manage applications	setup	fr	Gérer les Applications
 manage languages	setup	fr	Gérer les Langues
 maximum account id (e.g. 65535 or 1000000)	setup	fr	ID de compte maximum (p.e. 65535 ou 1000000)
+may be broken	setup	fr	pourrait être cassée
 mcrypt algorithm (default tripledes)	setup	fr	ALgorythme Mcrypt (défaut TRIPLEDES)
 mcrypt initialization vector	setup	fr	Vecteur d'initialisation MCrypt
 mcrypt mode (default cbc)	setup	fr	Mode Mcrypt (défaut CBC)
 mcrypt settings (requires mcrypt php extension)	setup	fr	Réglages Mcrypt (Nécessite l'extension PHP mcrypt)
 mcrypt version	setup	fr	Versio de MCrypt
 minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 500 ou 100, etc.)
+modify	setup	fr	Modifier
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	fr	Modifier un compte LDAP existant pour stocker et utiliser avec phpGroupWare (pour une nouvelle installation utilisant les comptes LDAP)
 multi-language support setup	setup	fr	Setup pour le support du multi-langues
 mysqlinstr	setup	fr	 Instructions pour créer la base de données dans MySQL:<br>Se connecter à mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Créer la base de données vide et attribuer les permissions utilisateurs -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
@@ -188,6 +203,7 @@ one week	setup	fr	Une semaine
 only add languages that are not in the database already	setup	fr	Ajouter seulement les langues qui ne sont pas déjà dans la base de données
 only add new phrases	setup	fr	Ajouter seulement les nouvelles phrases
 or	setup	fr	ou
+or we can attempt to create the database for you:	setup	fr	Ou nous pouvons tenter de créer la base de données pour vous:
 password needed for configuration	setup	fr	Mot de passe nécessaire pour la configuration
 password of db user	setup	fr	Mot de passe de l'utilisateur de la base de données
 passwords did not match, please re-enter	setup	fr	Les mots de passe ne correspondaient pas, SVP ré-entrez-les
@@ -198,9 +214,12 @@ please check for sql scripts within the application's directory	setup	fr	SVP vér
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
 please configure phpGroupWare for your environment	setup	fr	SVP configurez phpGroupWare pour votre environnement
 please install	setup	fr	SVP installez
+please login	setup	fr	SVP connectez-vous
 please login to phpgroupware and run the admin application for additional site configuration	setup	fr	SVP connectez-vous à phpgroupware et exécutez l'application admin pour les possibilités supplémentaires de configuration du site
 please wait...	setup	fr	Patientez SVP...
+possible reasons	setup	fr	Raisons possibles
 possible solutions	setup	fr	Solutions possibles
+post-install dependency failure	setup	fr	Erreur de dépendance post-installation
 potential problem	setup	fr	Problème potentiel
 preferences	setup	fr	Préférences
 problem resolution	setup	fr	Résolution du problème
@@ -212,24 +231,28 @@ read translations from	setup	fr	Lire les traductions depuis
 really uninstall all applications	setup	fr	Désinstaller VRAIMENT toutes les applications
 registered	setup	fr	Enregistré
 remove	setup	fr	Enlever
+remove all	setup	fr	Enlever tout
 requires reinstall or manual repair	setup	fr	Nécessite une réinstall ou une réparation manuelle
 requires upgrade	setup	fr	Nécessite une mise à jour
 resolve	setup	fr	Résoudre
 sample configuration not found. using built in defaults	setup	fr	Configuration exemple non trouvée. J'utilise les valeurs par défaut définies en interne
 save this text as contents of your header.inc.php	setup	fr	Enregistrer ce texte comme le contenu de votre fichier header.inc.php
-select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	fr	Choisissez une application, entrez une version de destination, puis soumettez pour transformer vers cette version.<br>Si vous n'entrez pas de version, seules les tables de base pour cette application seront installées.<br><blink>CETTE MANIPULATION VA D'ABORD EFFACER TOUTES LES TABLES DE DONNES DES APPLICATIONS!</blink>
+select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	fr	Choisissez une application, entrez une version de destination, puis soumettez pour transformer vers cette version.<br>Si vous n'entrez pas de version, seules les tables de base pour cette application seront installées.<br><blink>CETTE MANIPULATION VA D'ABORD EFFACER TOUTES LES TABLES DE DONNEES DES APPLICATIONS!</blink>
 select the default applications to which your users will have access	setup	fr	Choisissez les applications par défaut auxquelles vos utilisateurs auront accès
 select the desired action(s) from the available choices	setup	fr	Choisissez la(les) action(s) désirée(s) dans les choix possibles
 select to download file	setup	fr	Choisissez pour downloader le fichier
 select where you want to store/retrieve filesystem information	setup	fr	Choisissez où vous voulez stocker/récupérer les informations sur le système de fichiers
-select where you want to store/retrieve user accounts	setup	fr	Choisissez où vous voulez stocker/récupérer les comptes utilisateurs
+select where you want to store/retrieve user accounts	setup	fr	Choisissez où vous voulez stocker/récupérer les informations de comptes utilisateurs
 select which group(s) will be exported (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être exporté(s) (l'appartenance au groupe sera conservée)
 select which group(s) will be imported (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être importé(s) (l'appartenance au groupe sera conservée)
+select which group(s) will be modified (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être modifié(s) (l'appartenance au groupe sera conservée)
 select which languages you would like to use	setup	fr	Choisissez quelles langues vous voudriez utiliser
 select which method of upgrade you would like to do	setup	fr	Choisissez quelle méthode de mise à jour vous voudriez utiliser
 select which type of authentication you are using	setup	fr	Choisissez quel type d'authentification vous utilisez
+select which user(s) will also have admin privileges	setup	fr	Choisissez quel(s) utilisateur(s) aura(auront) aussi les privilèges administrateur
 select which user(s) will be exported	setup	fr	Choisissez quel(s) utilisateur(s) sera(seront) exporté(s)
 select which user(s) will be imported	setup	fr	Choisissez quel(s) utilisateur(s) sera(seront) importé(s)
+select which user(s) will be modified	setup	fr	Choisissez quel(s) utilisateur(s) sera(seront) modifié(s)
 select which user(s) will have admin privileges	setup	fr	Choisissez quel(s) utilisateur(s) aura(auront) les privilèges admin
 select your old version	setup	fr	Choisissez votre vieille version
 selectbox	setup	fr	Boîte de sélection
@@ -239,7 +262,7 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 settings	setup	fr	Réglages
 setup	setup	fr	Setup
 setup demo accounts in ldap	setup	fr	Configurer des comptes de démo dans LDAP
-show 'powered by' logo on	setup	fr	Montrer le logo 'actionné par' sur
+show 'powered by' logo on	setup	fr	Montrer le logo 'propulsé par' sur
 some or all of its tables are missing	setup	fr	Certaines ou toutes ses tables manquent
 status	setup	fr	Etat
 step 1 - simple application management	setup	fr	Etape 1 - Gestion simple d'applications
@@ -252,17 +275,19 @@ tables dropped	setup	fr	Tables supprimées
 tables installed, unless there are errors printed above	setup	fr	Tables installées, à moins qu'il y ait des messages d'erreur imprimés ci-dessous
 tables upgraded	setup	fr	Tables mises à jour
 target version	setup	fr	Version de destination
-text Entry	setup	fr	Entrée texte
-the db_type in defaults (x) is not supported on this server. using first supported type.	setup	fr	Le type de base de données dans les valeurs par défaut (x) n'est pas supporté sur ce server. J'utilise le 1er type supporté.
+text entry	setup	fr	Entrée de texte
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fr	Le type de base de données dans les valeurs par défaut (%1) n'est pas supporté sur ce server. J'utilise le 1er type supporté.
 the table definition was correct, and the tables were installed	setup	fr	La définition de table était correcte, et les tables étaient installées
 the tables	setup	fr	Les tables
-there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	fr	Il y a eu un problème en essayant de se connecter à votre serveur LDAP. <br>SVP vérifiez votre configuration de serveur LDAP
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	fr	Il y a eu un problème en essayant de se connecter à votre serveur LDAP. <br>SVP vérifiez la configuration de votre serveur LDAP
 this program will help you upgrade or install different languages for phpGroupWare	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans phpGroupWare
 this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et groupes des tables de comptes de phpGroupWare vers votre arbre LDAP
 this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	fr	Cette section va vous aider à importer les utilisateurs et groupes de votre arbre LDAP vers les tables de comptes de phpGroupWare
+this section will help you setup your LDAP accounts for use with phpGroupWare	setup	fr	Cette section va vous aider à configurer vos comptes LDAP pour les utiliser dans phpGroupWare
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br>Note: la valeur par défaut a été générée au hasard.
 this stage is completed<br>	setup	fr	Cette étape est complétée<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	fr	Ceci va créer 1 compte admin et 3 comptes demo<br>Les utilisateurs/mots de passe sont: demo/guest, demo2/guest et demo3/guest.<br><b>!!!CECI VA SUPPRIMER TOUS LES COMPTES EXISTANTS!!!</b><br>
+to a version it does not know about	setup	fr	vers une version qu'il ne connaît pas
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	fr	Pour créer 1 compte admin et 3 comptes demo.<br><b>ceci va supprimer tous les comptes existants</b>
 top	setup	fr	top
 translations added	setup	fr	Traductions ajoutées
@@ -273,23 +298,25 @@ two weeks	setup	fr	Deux semaines
 uninstall all applications	setup	fr	Désinstaller toutes les applications
 uninstalled	setup	fr	Désinstallé
 upgrade	setup	fr	MAJ
+upgrade all	setup	fr	Mettre tout à jour
 upgraded	setup	fr	Mis à jour
 upgrading tables	setup	fr	Met à jour les tables
 use cookies to pass sessionid	setup	fr	Utiliser les cookies pour passer l'ID de session
 use pure HTML compliant code (not fully working yet)	setup	fr	Utiliser du code HTML entièrement standard (ne fonctionne pas encore complètement)
-users Choice	setup	fr	Choix des utilisateurs
+users choice	setup	fr	Choix utilisateur
 version mismatch	setup	fr	Différence de version
 warning!	setup	fr	Attention!
-we will automatically update your tables/records to x	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
+we can proceed	setup	fr	Nous pouvons continuer
+we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	fr	Quel type de gestion de sessions voulez-vous utiliser (gestion de session PHP4 devrait être le plus performant)?
 which database type do you want to use with phpgroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec phpGroupWare?
-would you like phpGroupWare to cache the phpgw info array ?	setup	fr	Voulez-vous que phpGroupWare mette en cache le champ phpgw info ?
-would you like phpGroupWare to check for a new version<br>when admins login ?	setup	fr	Voulez-vous que phpGroupWare vérifier la disponibilté d'une nouvelle version<br>quand les administrateurs se connectent ?
-would you like to show each application's upgrade status ?	setup	fr	Voulez-vous voir affiché le statut de mise à jour de chaque application ?
+would you like phpGroupWare to cache the phpgw info array ?	setup	fr	Voudriez-vous que phpGroupWare mette en cache le champ phpgw info ?
+would you like phpGroupWare to check for a new version<br>when admins login ?	setup	fr	Voudriez-vous que phpGroupWare vérifie la disponibilité d'une nouvelle version<br>quand les administrateurs se connectent ?
+would you like to show each application's upgrade status ?	setup	fr	Voudriez-vous montrer le statut de mise à jour de chaque application ?
 yes	setup	fr	Oui
 you appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de phpGroupWare.<br>Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br>puis mettre à jour depuis cette version jusqu'à la version actuelle.
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	fr	Vous semblez utiliser une version ancienne de PHP <br>Il est recommandé que vous mettiez votre système à jour vers une version plus récente. <br>Les anciennes version de PHP pourraient ne pas faire fonctionner correctement phpGroupWare, voire pas du tout. <br><br>SVP, mettez votre système à jour vers au moins la version 3.0.16
-you appear to be running version x of phpGroupWare	setup	fr	Vous semblez utiliser la version %1 de phpGroupWare
+you appear to be running version %1 of phpGroupWare	setup	fr	Vous semblez utiliser la version %1 de phpGroupWare
 you appear to be using php3. disabling php4 sessions support	setup	fr	Vous semblez utiliser PHP3. Je désactive le support des sessions PHP4
 you appear to be using php4. enabling php4 sessions support	setup	fr	Vous semblez utiliser PHP4. J'active le support des sessions PHP4
 you appear to have microsoft sql server support enabled	setup	fr	Vous semblez avoir le support de Microsoft SQL Server activé
@@ -299,7 +326,7 @@ you appear to have oracle v8 (oci) support enabled	setup	fr	Vous semblez avoir l
 you appear to have postgres-db support enabled	setup	fr	Vous semblez avoir le support de Postgres-DB activé
 you appear to have xml support enabled	setup	fr	Vous semblez avoir le support de XML activé
 you are ready for this stage, but this stage is not yet written.<br>	setup	fr	Vous êtes prêt pour cette étape, mais cette étape n'a pas encore été écrite.<br>
-you didn't enter a config password for domain x	setup	fr	Vous n'avez pas entré de mot de passe de configuration pour le domaine %1
+you didn't enter a config password for domain %1	setup	fr	Vous n'avez pas entré de mot de passe de configuration pour le domaine %1
 you didn't enter a header admin password	setup	fr	Vous n'avez pas entré de mot de passe d'administration de l'entête
 you do not have any languages installed. please install one now <br>	setup	fr	Vous n'avez pas de langue installée. SVP installez-en une maintenant<br>
 you have not created your header.inc.php yet!<br> you can create it now.	setup	fr	Vous n'avez pas encore crée votre fichier header.inc.php !<br> Vous pouvez le créer maintenant.
@@ -310,6 +337,7 @@ you're using an old configuration file format...	setup	fr	Vous utilisez un forma
 you're using an old header.inc.php version...	setup	fr	Vous utilisez une ancienne version du fichier header.inc.php...
 your applications are current	setup	fr	Vos applications sont à jour
 your database does not exist	setup	fr	Votre base de données n'existe pas
+your database is not working!	setup	fr	Votre base de données ne fonctionne pas!
 your database is working, but you dont have any applications installed	setup	fr	Votre base de données fonctionne, mais vous n'avez pas d'applications installées
 your header admin password is not set. please set it now!	setup	fr	Votre mot de passe d'administration d'entête n'est PAS configuré. SVP configurez-le maintenant!
 your header.inc.php needs upgrading.	setup	fr	Votre fichier header.inc.php a besoin d'être mis à jour.
