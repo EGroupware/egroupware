@@ -246,16 +246,16 @@
 				$password_numbers = Array('0','1','2','3','4','5','6','7','8','9');
 				$password_special_chars = Array(' ','~','`','!','@','#','$','%','^','&','*','(',')','_','+','-','=','{','}','|','[',']',"\\",':','"',';',"'",'<','>','?',',','.','/');
 
-				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['min_length']))
+				if(@isset($GLOBALS['phpgw_info']['server']['pass_min_length']) && is_int($GLOBALS['phpgw_info']['server']['pass_min_length']) && $GLOBALS['phpgw_info']['server']['pass_min_length'] > 1)
 				{
-					$min_length = $GLOBALS['phpgw_info']['server']['passwd_rules']['min_length'];
+					$min_length = $GLOBALS['phpgw_info']['server']['pass_min_length'];
 				}
 				else
 				{
 					$min_length = 1;
 				}
 
-				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['require_non_alpha']) && $GLOBALS['phpgw_info']['server']['passwd_rules']['require_non_alpha'] == True)
+				if(@isset($GLOBALS['phpgw_info']['server']['pass_require_non_alpha']) && $GLOBALS['phpgw_info']['server']['pass_require_non_alpha'] == True)
 				{
 					$pass_verify_non_alpha = False;
 				}
@@ -264,7 +264,7 @@
 					$pass_verify_non_alpha = True;
 				}
 				
-				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['require_numbers']) && $GLOBALS['phpgw_info']['server']['passwd_rules']['require_numbers'] == True)
+				if(@isset($GLOBALS['phpgw_info']['server']['pass_require_numbers']) && $GLOBALS['phpgw_info']['server']['pass_require_numbers'] == True)
 				{
 					$pass_verify_num = False;
 				}
@@ -273,7 +273,7 @@
 					$pass_verify_num = True;
 				}
 
-				if(@isset($GLOBALS['phpgw_info']['server']['passwd_rules']['require_special_char']) && $GLOBALS['phpgw_info']['server']['passwd_rules']['require_special_char'] == True)
+				if(@isset($GLOBALS['phpgw_info']['server']['pass_require_special_char']) && $GLOBALS['phpgw_info']['server']['pass_require_special_char'] == True)
 				{
 					$pass_verify_special_char = False;
 				}
