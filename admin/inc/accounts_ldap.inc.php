@@ -110,7 +110,7 @@
   function account_add($account_info)
   {
      global $phpgw_info, $phpgw, $ldap;
-   
+
      $account_info["passwd"] = $phpgw->common->encrypt_password($account_info["passwd"]);
 
      // This method is only temp.  We need to figure out the best way to assign uidnumbers and
@@ -180,27 +180,26 @@
      } else {
         $cd = 99;		// Come out with a code for this
      }
-  
+     
+     // create a subtree for the phpgw settings
+     
+     $preferences["objectclass"] = "organizationalunit";
+     $preferences["description"] = "subtree for phpgw preferences";
+     $preferences["ou"]          = "phpgwpreferences";
+     
+     $dn = "ou=phpgwpreferences, $dn";
+     
+     // add the entries
+     if (ldap_add($ldap, $dn, $preferences)) {
+        $cd = 28;
+     } else {
+        $cd = 99;		// Come out with a code for this
+     }
+
+
      @ldap_close($ldap);
      
      add_default_preferences($account_info["account_id"]);
-     #$phpgw->db->lock(array("accounts","preferences"));
-
-     #while ($permission = each($account_info["permissions"])) {
-     #  if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-     #     $phpgw->accounts->add_app($permission[0]);
-     #  }
-     #}
-
-     #$sql = "insert into accounts (account_id,account_lid,account_pwd,account_firstname,"
-     #     . "account_lastname,account_permissions,account_groups,account_status,"
-     #     . "account_lastpwd_change) values ('" . $account_info["account_id"] . "','"
-     #     . $account_info["loginid"] . "','x','". addslashes($account_info["firstname"]) . "','"
-     #     . addslashes($account_info["lastname"]) . "','" . $phpgw->accounts->add_app("",True)
-     #     . "','" . $account_info["groups"] . "','A',0)";
-
-     #$phpgw->db->query($sql);
-     #$phpgw->db->unlock();
 
      $sep = $phpgw->common->filesystem_separator();
 
