@@ -51,7 +51,7 @@
 	// rework the following to be a simple sed style creation
         $this->stock_contact_fields = array("FN"              => "FN",        //'firstname lastname'
                                             "SOUND"           => "SOUND",
-                                            "ORG.Name"        => "ORG.Name",  //company
+                                            "ORG_Name"        => "ORG.Name",  //company
                                             "ORG_Unit"        => "ORG.Unit",  //division
                                             "TITLE"           => "TITLE",
                                             "N_Given"         => "N.Given",   //firstname
@@ -268,7 +268,7 @@
            if ($field_s == ",") {
               unset($field_s);
            }
-           $this->db->query("update contacts set owner='$owner', $fields_s where "
+           $this->db->query("update addressbook set owner='$owner', $fields_s where "
                           . "id='$id'",__LINE__,__FILE__);
         }
 
@@ -277,7 +277,7 @@
               if (! $x_value) {
                  $this->delete_single_extra_field($id,$x_name);
               } else {
-                 $this->db->query("update contacts_extra set contact_value='" . addslashes($x_value)
+                 $this->db->query("update addressbook_extra set contact_value='" . addslashes($x_value)
                                 . "',contact_owner='$owner' where contact_name='" . addslashes($x_name)
                                 . "' and contact_id='$id'",__LINE__,__FILE__);
               }
