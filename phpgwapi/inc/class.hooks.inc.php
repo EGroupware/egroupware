@@ -158,6 +158,40 @@
 		}
 
 		/*!
+		@function single_tpl
+		@abstract call the hooks for a single application, return output from the hook
+		@discussion This is only used so far for the wcm app (website hook) - Milosch.
+		@param $location hook location - required
+		@param $appname application name - optional
+		*/
+		function single_tpl($location, $appname='', $no_permission_check=False)
+		{
+			if(!$appname)
+			{
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			}
+			$SEP = filesystem_separator();
+
+			if(@isset($this->found_hooks[$appname][$location]))
+			{
+				$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $this->found_hooks[$appname][$location];
+				if(@file_exists($f) &&
+					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
+				{
+					return include($f);
+				}
+				else
+				{
+					return '';
+				}
+			}
+			else
+			{
+				return '';
+			}
+		}
+
+		/*!
 		@function count
 		@abstract loop through the applications and count the hooks
 		*/
