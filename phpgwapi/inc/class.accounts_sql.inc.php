@@ -344,15 +344,11 @@
 
 		function create($account_info,$default_prefs=True)
 		{
-			if(!@is_object($GLOBALS['phpgw']->auth))
-			{
-				$GLOBALS['phpgw']->auth = CreateObject('phpgwapi.auth');
-			}
 			$this->db->query('INSERT INTO phpgw_accounts (account_lid,account_type,account_pwd,'
 				. 'account_firstname,account_lastname,account_status,account_expires,person_id,'
 				. "account_primary_group) VALUES ('".$this->db->db_addslashes($account_info['account_lid'])
 				. "','" . $this->db->db_addslashes($account_info['account_type'])
-				. "','" . $GLOBALS['phpgw']->auth->encrypt_password($account_info['account_passwd'], True)
+				. "','" . $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd'], True)
 				. "', '" . $this->db->db_addslashes($account_info['account_firstname'])
 				. "','" . $this->db->db_addslashes($account_info['account_lastname'])
 				. "','" . $this->db->db_addslashes($account_info['account_status'])

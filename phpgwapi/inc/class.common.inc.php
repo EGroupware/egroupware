@@ -1306,6 +1306,10 @@
 		*/
 		function encrypt_password($password)
 		{
+			if(!@is_object($GLOBALS['phpgw']->auth))
+			{
+				$GLOBALS['phpgw']->auth = CreateObject('phpgwapi.auth');
+			}
 			return $GLOBALS['phpgw']->auth->encrypt_password($password);
 		}
 
