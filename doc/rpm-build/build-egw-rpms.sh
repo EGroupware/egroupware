@@ -192,7 +192,7 @@ date                                                                            
 
 cd $ANONCVSDIRFEDORA
                                                                                                                             
-/opt/installbuilder-1.1.0/bin/builder build /opt/installbuilder-1.1.0/projects/egroupware.xml
+/opt/installbuilder-1.2.1/bin/builder build /opt/installbuilder-1.2.1/projects/egroupware.xml
 
 rm -rf egroupware
 echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1

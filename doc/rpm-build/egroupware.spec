@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.0.00.002
-%define packaging 1
+%define version 1.0.00.003
+%define packaging 2
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
@@ -72,7 +72,7 @@ Requires: eGroupWare = %{version}-%{packaging}
 %description %{addressbook}
 Contact manager with Vcard support.
 %{addressbook} is the egroupware default contact application.
-It makes use of the phpgroupware contacts class to store and retrieve 
+It makes use of the egroupware contacts class to store and retrieve 
 contact information via SQL, LDAP or Active Directory.
 
 %package %{backup}
@@ -517,8 +517,12 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
+* Sat Aug 07 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.003-1
+- Final 1.0 release from eGroupWare
+- some bugs fixed
+
 * Sat Jul 31 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.002-1
-- fixing critical bugs in all applications
+- critical bugs fixed
 - MS SQL server support is back
 - language extensions
 
