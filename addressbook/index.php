@@ -30,8 +30,6 @@
 	$this = CreateObject("phpgwapi.contacts");
 	//$this->delete_all($phpgw_info["user"]["account_id"]);
 	//exit;
-	// Read in user custom fields, if any
-	$phpgw->preferences->read_repository();
 	$customfields = array();
 	while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"])) {
 		if ( substr($col,0,6) == 'extra_' ) {

@@ -347,7 +347,7 @@
 	<td><font color="#000000" face="" size="-1">'.$value.':</font></td>
     <td>
 	  <font size="-1">
-	  <INPUT name="' . $name . '" value="' . $fields[$name] . '">
+	  <INPUT size="30" name="' . $name . '" value="' . $fields[$name] . '">
       </font></td>
 	</td>
   </tr>
