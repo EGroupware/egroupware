@@ -245,6 +245,55 @@ class html
 	}
 	
 	/**
+	 * emulating a multiselectbox using checkboxes
+	 *
+	 * Unfortunaly this is not in all aspects like a multi-selectbox, eg. you cant select options via javascript
+	 * in the same way. Therefor I made it an extra function.
+	 *
+	 * @param string $name	string with name of the submitted var which holds the key of the selected item form array
+	 * @param string/array $key key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
+	 * @param array $arr array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
+	 * @param boolean $no_lang NOT run the labels of the options through lang(), default false=use lang()
+	 * @param string $options additional options (e.g. 'width')
+	 * @param int $multiple number of lines for a multiselect, default 3
+	 * @return string to set for a template or to echo into html page
+	 */
+	function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3)
+	{
+		if (!is_array($arr))
+		{
+			$arr = array('no','yes');
+		}
+		if ((int)$multiple <= 0) $multiple = 1;
+
+		if (substr($name,-2) != '[]')
+		{
+			$name .= '[]';
+		}
+		$base_name = substr($name,0,-2);
+		
+		if (!is_array($key))
+		{
+			// explode on ',' only if multiple values expected and the key contains just numbers and commas
+			$key = preg_match('/^[,0-9]+$/',$key) ? explode(',',$key) : array($key);
+		}
+		$html = '';
+		$options_no_id = preg_replace('/id="[^"]+"/i','',$options);
+		foreach($arr as $val => $label)
+		{
+			if ($label && !$no_lang) $label = lang($label);
+			
+			if (strlen($label) > $max_len) $max_len = strlen($label);
+			
+			$html .= $this->label($this->checkbox($name,in_array($val,$key),$val,$options_no_id.' id="'.$base_name.'['.$val.']'.'" ').
+				$this->htmlspecialchars($label),$base_name.'['.$val.']')."<br />\n";
+		}
+		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+0.6*$max_len).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
+		
+		return $this->div($html,$options,'',$style);
+	}
+	
+	/**
 	 * generates an option-tag for a selectbox
 	 *
 	 * @param string $value value
@@ -597,11 +646,12 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 	 * @param string $name name
 	 * @param boolean $checked box checked on display
 	 * @param string $value value the var should be set to, default 'True'
+	 * @param string $options attributes for the tag, default ''=none
 	 * @return string html
 	 */
-	function checkbox($name,$checked=false,$value='True')
+	function checkbox($name,$checked=false,$value='True',$options='')
 	{
-		return '<input type="checkbox" name="'.$name.'" value="'.$this->htmlspecialchars($value).'"' .($checked ? ' checked="1"' : '') . " />\n";
+		return '<input type="checkbox" name="'.$name.'" value="'.$this->htmlspecialchars($value).'"' .($checked ? ' checked="1"' : '') . "$options />\n";
 	}
 	
 	/**
