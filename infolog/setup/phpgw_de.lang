@@ -75,6 +75,7 @@ default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen
 delegation	infolog	de	Delegation
 delete	infolog	de	Löschen
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	de	Alle Untereinträge löschen (wenn nicht werden diese Untereinträge des übergeordneten Eintrags oder sind keine Untereinträge mehr)
+delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id löschen.
 delete the entry	infolog	de	Eintrag löschen
 delete this entry	infolog	de	diesen Eintrag löschen
 deletes the selected typ	infolog	de	löscht den ausgewählten Typ
@@ -133,6 +134,7 @@ length<br>rows	infolog	de	Länge<br>Zeilen
 link	infolog	de	Verknüpfung
 links	infolog	de	Verknüpfungen
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
+list all categories	infolog	de	Alle Kathegorien anzeigen
 list no subs/childs	infolog	de	Untereinträge nicht anzeigen
 longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
@@ -177,12 +179,14 @@ priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
 re:	infolog	de	Re:
+read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id lesen.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 reject	infolog	de	Absage
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
 responsible	infolog	de	Verantwortlich
 responsible user, priority, ...	infolog	de	Verantwortlicher, Prioritäten, ...
+returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
 saves this entry	infolog	de	diesen Eintrag speichern
@@ -215,7 +219,8 @@ sub	infolog	de	Unter-<br>einträge
 subject	infolog	de	Titel
 task	infolog	de	Auftrag
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
-the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 32 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 10 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 20 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
 til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
@@ -244,6 +249,7 @@ view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
 will-call	infolog	de	ruft zurück
+write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
 yes - delete	infolog	de	Ja - Löschen
 you can't delete one of the stock types !!!	infolog	de	Sie können keinen der Standardtypen löschen!!!
 you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum eingegeben

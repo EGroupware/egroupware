@@ -218,7 +218,8 @@ sub	infolog	en	Sub
 subject	infolog	en	Subject
 task	infolog	en	ToDo
 test import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
-the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	en	the name used internaly (<= 32 chars), changeing it makes existing data unavailible
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	the name used internaly (<= 10 chars), changeing it makes existing data unavailible
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
 the text displayed to the user	infolog	en	the text displayed to the user
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
 til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phone call be finished
