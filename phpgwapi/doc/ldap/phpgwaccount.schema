@@ -1,4 +1,4 @@
-# $phpgroupware : admin/phpgwuser.schema,v 1.0 2000/07/29 01:53:16 milosch Exp $
+# $phpgroupware : phpgwaccount.schema,v 1.0 2000/07/29 01:53:16 milosch Exp $
 
 # lastlogin
 attributetype ( 1.3.6.1.4.1.9554.1

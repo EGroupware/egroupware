@@ -1,11 +1,12 @@
-# $phpgroupware : addressbook/phpgwcontact.schema,v 1.0 2000/07/29 01:53:16 milosch Exp $
+# $phpgroupware : phpgwcontact.schema,v 1.0 2000/07/29 01:53:16 milosch Exp $
 
 # REQUIRED
 attributetype ( 1.3.6.1.4.1.9554.100
 	NAME 'phpgwContactTypeId'
-	EQUALITY numericStringMatch
-	SUBSTR numericStringSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16} )
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16}
+	SINGLE-VALUE )
 
 # REQUIRED
 attributetype ( 1.3.6.1.4.1.9554.101
@@ -19,14 +20,16 @@ attributetype ( 1.3.6.1.4.1.9554.102
 	NAME 'phpgwContactAccess'
 	EQUALITY caseIgnoreMatch
 	SUBSTR caseIgnoreSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024}
+	SINGLE-VALUE )
 
 # REQUIRED
 attributetype ( 1.3.6.1.4.1.9554.103
 	NAME 'phpgwContactOwner'
 	EQUALITY numericStringMatch
 	SUBSTR numericStringSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16} )
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16}
+	SINGLE-VALUE )
 
 # BELOW ARE OPTIONAL
 attributetype ( 1.3.6.1.4.1.9554.105
@@ -54,12 +57,14 @@ attributetype ( 1.3.6.1.4.1.9554.109
 attributetype ( 1.3.6.1.4.1.9554.110
 	NAME 'phpgwTz'
 	EQUALITY integerMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+	SINGLE-VALUE )
 
 attributetype ( 1.3.6.1.4.1.9554.111
 	NAME 'phpgwGeo'
  	EQUALITY integerMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+	SINGLE-VALUE )
 
 attributetype ( 1.3.6.1.4.1.9554.112
 	NAME 'phpgwUrl'
