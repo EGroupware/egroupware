@@ -25,7 +25,7 @@
 	$setup_info['infolog']['hooks'][] = 'addressbook_view';
 	$setup_info['infolog']['hooks'][] = 'projects_view';
 
-	/* Dependacies for this app to work */
+	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.13', '0.9.14','0.9.15')
