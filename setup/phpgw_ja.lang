@@ -22,16 +22,14 @@ add	bookkeeping	ja	追加
 add	common	ja	追加
 add a field	addressbook	ja	項目追加
 add a note for	notes	ja	ノート追加
-add a single pharse	transy	ja	Add a single pharse
-add a single phrase	transy	ja	Add a single pharse
+add a single phrase	transy	ja	Add a single phrase
 add addressbook category for	common	ja	アドレス帳カテゴリ追加
 add category	common	ja	カテゴリ追加
 add global category	admin	ja	グローバルカテゴリ追加
 add new account	admin	ja	アカウント追加
 add new application	admin	ja	アプリケーション追加
 add new entry	notes	ja	新規作成
-add new pharse	transy	ja	Add new pharse
-add new phrase	transy	ja	Add new pharse
+add new phrase	transy	ja	Add new phrase
 add new ticket	tts	ja	追加
 add note	notes	ja	追加
 add notes category for	common	ja	ノートカテゴリ追加
@@ -162,8 +160,8 @@ create	common	ja	作成
 create	filemanager	ja	作成
 create group	admin	ja	グループ作成
 create lang.sql file	transy	ja	lang.sql ファイル作成
-create new langague set	transy	ja	Create new langague set
-create new language set	transy	ja	Create new langague set
+create new language set	transy	ja	Create new language set
+create new language set	transy	ja	Create new language set
 created by	common	ja	作成者
 cron	common	ja	Cron
 currency	common	ja	通貨
@@ -197,8 +195,7 @@ description	common	ja	詳細
 detail	tts	ja	明細
 disabled	admin	ja	不可
 display	admin	ja	表示
-display missing pharases in lang set	transy	ja	Display missing pharases in lang set
-display missing phrases in lang set	transy	ja	Display missing pharases in lang set
+display missing phrases in lang set	transy	ja	Display missing phrases in lang set
 display note for	notes	ja	ノート表示
 display status of events	calendar	ja	イベント状況表示
 displaying subprojects of following project	todo	ja	サブプロジェクト一覧
@@ -438,7 +435,6 @@ new file	filemanager	ja	新規ファイル
 new group name	admin	ja	新グループ名
 new message	email	ja	新着メッセージ
 new password [ leave blank for no change ]	admin	ja	新パスワード [ Leave blank for no change ]
-new pharse has been added	common	ja	新しいフレーズを追加しました。
 new phrase has been added	transy	ja	新しいフレーズを追加しました。
 new ticket	tts	ja	新しいチケット
 new_file	filemanager	ja	新しいファイル
@@ -499,8 +495,8 @@ permissions this group has	admin	ja	利用可能アプリケーション
 permissions to the files/users directory	common	ja	permissions to the files/users directory
 personal	common	ja	個人
 personalized notes for	notes	ja	電子ノート
-pharse in english	transy	ja	フレーズ（英語）
-pharse in new langague	transy	ja	フレーズ（新言語）
+phrase in english	transy	ja	フレーズ（英語）
+phrase in new language	transy	ja	フレーズ（新言語）
 phone numbers	addressbook	ja	電話番号
 php information	admin	ja	PHPインフォメーション
 phpgroupware login	login	ja	phpGroupWare login
@@ -577,14 +573,12 @@ select category	common	ja	カテゴリ選択
 select different theme	preferences	ja	異なるテーマを選択してください。
 select email address	email	ja	電子メールアドレス
 select headline news sites	common	ja	ヘッドラインニュースサイトの選択
-select langague to generate for	transy	ja	作成する言語
+select language to generate for	transy	ja	作成する言語
 select language to generate for	transy	ja	作成する言語
 select parent category	common	ja	親カテゴリ選択
 select permissions this group will have	admin	ja	利用可能アプリケーション
 select users for inclusion	admin	ja	所属するユーザ
-select which application for this pharse	transy	ja	フレーズを使用するアプリケーション
 select which application for this phrase	transy	ja	フレーズを使用するアプリケーション
-select which langauge for this pharse	transy	ja	フレーズの言語を選択
 select which language for this phrase	transy	ja	フレーズの言語を選択
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ja	ナビゲーションバーの位置（数が小さいと左に配置）
 select home email address	email	ja	電子メール（個人）
@@ -732,7 +726,6 @@ view notes	notes	ja	ノート表示
 view only open tickets	tts	ja	オープンチケット表示
 view sessions	admin	ja	セッション参照
 view this entry	calendar	ja	項目表示
-view/edit/delete all pharses	transy	ja	表示/訂正/削除　全てのフレーズ
 view/edit/delete all phrases	transy	ja	表示/訂正/削除　全てのフレーズ
 view_expense	bookkeeping	ja	支出表示
 view_income	bookkeeping	ja	収入表示

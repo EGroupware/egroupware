@@ -12,10 +12,10 @@ account has been updated	common	hu	Hozzáférés módosítva
 account preferences	common	hu	Hozzáférés tulajdonságok
 active	admin	hu	Aktív
 add	common	hu	Hozzáad
-add a single pharse	transy	hu	Egy kifejezés hozzáadása
+add a single phrase	transy	hu	Egy kifejezés hozzáadása
 add new account	admin	hu	Hozzáférést hozzáad
 add new application	admin	hu	Alkalmazás hozzáadása
-add new pharse	transy	hu	Új kifejezés hozzáadása
+add new phrase	transy	hu	Új kifejezés hozzáadása
 add to addressbook	email	hu	Hozzáad a címlistához
 address book	common	hu	Címjegyzék
 address book	addressbook	hu	Címlista
@@ -81,7 +81,7 @@ create	common	hu	Létrehoz
 create	filemanager	hu	Létrehozás
 create group	admin	hu	Csoport létrehozása
 create lang.sql file	transy	hu	lang.sql fájl létrehozása
-create new langague set	transy	hu	Új nyelv létrehozása
+create new language set	transy	hu	Új nyelv létrehozása
 created by	common	hu	Készítette
 created by	todo	hu	Illetékes
 current users	common	hu	Aktuális felhasználók
@@ -104,7 +104,7 @@ delete	filemanager	hu	Törlés
 description	calendar	hu	Leírás
 disabled	admin	hu	Tiltott
 display	admin	hu	Megjelenítés
-display missing pharases in lang set	transy	hu	Hiányzó szavak megjelenítése
+display missing phrases in lang set	transy	hu	Hiányzó szavak megjelenítése
 done	common	hu	Kész
 download	filemanager	hu	Letöltés
 do_delete	filemanager	hu	Törlés
@@ -242,8 +242,8 @@ new entry added sucessfully	common	hu	Új bejegyzés hozzáadva
 new group name	admin	hu	Új csoport neve
 new message	email	hu	Új üzenet
 new password [ leave blank for no change ]	admin	hu	Új jelszó [ üresen hagyva nem lesz változás ]
-new pharse has been added	common	hu	Új kifejezés hozzáadva
-new pharse has been added	transy	hu	Új kifejezés hozzáadva
+new phrase has been added	common	hu	Új kifejezés hozzáadva
+new phrase has been added	transy	hu	Új kifejezés hozzáadva
 news file	admin	hu	Hírek fájl
 news headlines	common	hu	Hírek fejlécei
 news reader	common	hu	Hírolvasó
@@ -280,8 +280,8 @@ percent of users that logged out	admin	hu	Rendesen kijelentkezett felhasználók %
 permissions	admin	hu	Jogok
 permissions this group has	admin	hu	A csoport jogosultságai
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
-pharse in english	transy	hu	Kifejezés angolul
-pharse in new langague	transy	hu	Kifejezés az új nyelvben
+phrase in english	transy	hu	Kifejezés angolul
+phrase in new language	transy	hu	Kifejezés az új nyelvben
 phpgroupware login	login	hu	phpGroupWare bejelentkezés
 please select a message first	email	hu	Elõször válasszon ki egy üzenetet
 please x by hand	common	hu	Kérem %1 kézzel
@@ -326,11 +326,11 @@ section	email	hu	Részleg
 select application	transy	hu	Alkalmazás kiválasztása
 select different theme	preferences	hu	Új design kiválasztása
 select headline news sites	preferences	hu	Select Headline News sites
-select langague to generate for	transy	hu	Select langague to generate for
+select language to generate for	transy	hu	Select language to generate for
 select permissions this group will have	admin	hu	Válassza ki milyen jogosultságokkal rendelkezzen a csoport
 select users for inclusion	admin	hu	Felhasználók kiválasztása
-select which application for this pharse	transy	hu	select which application for this pharse
-select which langauge for this pharse	transy	hu	select which langauge for this pharse
+select which application for this phrase	transy	hu	select which application for this phrase
+select which language for this phrase	transy	hu	select which language for this phrase
 send	email	hu	Elküld
 send deleted messages to the trash	email	hu	Törölt üzenet a kukába
 september	common	hu	Szeptember
@@ -424,7 +424,7 @@ view	common	hu	Megtekint
 view access log	admin	hu	Elérési napló megtekintése
 view sessions	admin	hu	Kapcsolatok megtekintése
 view this entry	calendar	hu	Bejegyzés megtekintése
-view/edit/delete all pharses	transy	hu	Kifejezések megtekintése/módosítása/törlése
+view/edit/delete all phrases	transy	hu	Kifejezések megtekintése/módosítása/törlése
 we	calendar	hu	Sz
 wed	calendar	hu	Sz
 wednesday	common	hu	Szerda

@@ -18,12 +18,12 @@ Activity	projects	da	Aktivitet
 Activity ID	projects	da	Aktivitets ID
 actor	mediadb	da	Aktør
 add	common	da	Tilføj
-add a single pharse	transy	da	Tilføj en enkelt sætning
+add a single phrase	transy	da	Tilføj en enkelt sætning
 Add Activity	projects	da	Tilføj aktivitet
 Add hours	projects	da	Tilføj timer
 add new account	admin	da	Tilføj ny konto
 add new application	admin	da	Tilføj ny applikation
-add new pharse	transy	da	Tilføj ny sætning
+add new phrase	transy	da	Tilføj ny sætning
 add new ticket	tts	da	Tilføj ny billet
 Add project	projects	da	Tilføj projekt
 Add project hours	projects	da	Tilføj projekt timer
@@ -134,7 +134,7 @@ Create delivery	projects	da	Opret leverance
 create group	admin	da	Opret gruppe
 Create invoice	projects	da	Opret faktura
 create lang.sql file	transy	da	Lav en lang.sql fil
-create new langague set	transy	da	Opret et nyt sprog sæt
+create new language set	transy	da	Opret et nyt sprog sæt
 created by	common	da	Lavet af
 created by	todo	da	Lavet af
 current users	common	da	Nuværende antal brugere
@@ -172,7 +172,7 @@ details	tts	da	Detaljer
 developer	mediadb	da	Udvikler
 disabled	admin	da	Inaktiveret
 display	admin	da	Visning
-display missing pharases in lang set	transy	da	Vis manglende sætninger i sprog sæt
+display missing phrases in lang set	transy	da	Vis manglende sætninger i sprog sæt
 do_delete	filemanager	da	Slet nu
 done	common	da	Udført
 Done	projects	da	Udført
@@ -352,8 +352,8 @@ new entry added sucessfully	common	da	Nyt punkt succesrigt tilføjet
 new group name	admin	da	Nyt gruppe navn
 new message	email	da	Ny besked
 new password [ leave blank for no change ]	admin	da	Nyt password [efterlad tom for ikke at ændre]
-new pharse has been added	common	da	Ny sætning er tilføjet
-new pharse has been added	transy	da	Ny sætning er tilføjet
+new phrase has been added	common	da	Ny sætning er tilføjet
+new phrase has been added	transy	da	Ny sætning er tilføjet
 New project	projects	da	Nyt projekt
 new ticket	tts	da	Ny billet
 new_file	filemanager	da	Ny fil
@@ -409,8 +409,8 @@ percent of users that logged out	admin	da	Procent af brugere som er logget ud
 permissions	admin	da	Rettigheder
 permissions this group has	admin	da	Denne gruppes rettigheder
 permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
-pharse in english	transy	da	Sætning på engelsk
-pharse in new langague	transy	da	Sætning i det nye sprog
+phrase in english	transy	da	Sætning på engelsk
+phrase in new language	transy	da	Sætning i det nye sprog
 phone	common	da	Telefon
 phpgroupware login	login	da	phpGroupWare log ind
 please select a message first	email	da	Vælg venligst en sætning først
@@ -487,12 +487,12 @@ select application	transy	da	Vælg applikation
 Select customer	projects	da	Vælg kunde
 select different theme	preferences	da	Vælg et andet tema
 select headline news sites	preferences	da	Vælg nyheds overskrifter
-select langague to generate for	transy	da	Vælg sprog at generere oversættelse for
+select language to generate for	transy	da	Vælg sprog at generere oversættelse for
 select permissions this group will have	admin	da	Vælg de rettigheder, denne gruppe får
 Select tax for work hours	projects	da	Vælg afgift for arbejdstimer
 select users for inclusion	admin	da	Vælg brugere som tilføjes
-select which application for this pharse	transy	da	Vælg applikation for denne sætning
-select which langauge for this pharse	transy	da	Vælg sprog for denne sætning
+select which application for this phrase	transy	da	Vælg applikation for denne sætning
+select which language for this phrase	transy	da	Vælg sprog for denne sætning
 Select your address	projects	da	Vælg Din adresse
 send	email	da	Send
 send deleted messages to the trash	email	da	Læg slettede beskeder i skraldespanden
@@ -622,7 +622,7 @@ view job detail	tts	da	Se opgave detaljer
 view only open tickets	tts	da	Se alle åbenstående meldinger
 view sessions	admin	da	Se sessioner
 view this entry	calendar	da	Se denne aftale
-view/edit/delete all pharses	transy	da	Se/rediger/slet alle sætninger
+view/edit/delete all phrases	transy	da	Se/rediger/slet alle sætninger
 we	calendar	da	On
 weather	weather	da	Vejr
 wed	calendar	da	Ons
