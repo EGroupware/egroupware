@@ -673,7 +673,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		}
 		
 		html_font_set (4, HTML_TABLE_FILES_HEADER_TEXT_COLOR);
-                html_text_bold (strtoupper ($disppath));
+		html_text_bold ($disppath);
 		html_font_end ();
 		html_help_link ('directory_name');
 		html_table_col_end ();
