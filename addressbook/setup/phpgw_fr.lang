@@ -13,17 +13,17 @@ bbs phone	addressbook	fr	Téléphone BBS
 birthday	common	fr	Anniversaire
 blank	addressbook	fr	Blanc
 <b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	fr	<b>Aucun  type de conversion &lt;none&gt; n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
-business address type	addressbook	fr	Type d'adresse travail
-business city	addressbook	fr	Ville travail
-business	common	fr	Travail
-business country	addressbook	fr	Pays travail
-business email	addressbook	fr	EMail travail
-business email type	addressbook	fr	Type d'EMail travail
-business fax	addressbook	fr	Fax travail
-business phone	addressbook	fr	Téléphone travail
-business state	addressbook	fr	Région travail
-business street	addressbook	fr	Rue travail
-business zip code	addressbook	fr	Code postal travail
+business address type	addressbook	fr	Type d'adresse (bureau)
+business city	addressbook	fr	Ville (bureau)
+business	common	fr	Bureau
+business country	addressbook	fr	Pays (bureau)
+business email	addressbook	fr	EMail (bureau)
+business email type	addressbook	fr	Type d'EMail (bureau)
+business fax	addressbook	fr	Fax (bureau)
+business phone	addressbook	fr	Téléphone (bureau)
+business state	addressbook	fr	Région (bureau)
+business street	addressbook	fr	Rue (bureau)
+business zip code	addressbook	fr	Code postal (bureau)
 car phone	addressbook	fr	Téléphone voiture
 cell phone	addressbook	fr	Téléphone portable
 city	common	fr	Ville
@@ -51,15 +51,15 @@ fields to show in address list	addressbook	fr	Champs à montrer dans la liste des
 full name	addressbook	fr	Nom complet
 geo	addressbook	fr	GEO
 grant addressbook access	common	fr	Régler les droits d'accès au carnet d'adresses
-home address type	addressbook	fr	Type d'adresse maison
-home city	addressbook	fr	Ville maison
-home country	addressbook	fr	Pays maison
-home email	addressbook	fr	EMail maison
-home email type	addressbook	fr	Type d'EMail maison
-home phone	addressbook	fr	Téléphone maison
-home state	addressbook	fr	Région maison
-home street	addressbook	fr	Rue maison
-home zip code	addressbook	fr	Code postal maison
+home address type	addressbook	fr	Type d'adresse (domicile)
+home city	addressbook	fr	Ville (domicile)
+home country	addressbook	fr	Pays (domicile)
+home email	addressbook	fr	EMail (domicile)
+home email type	addressbook	fr	Type d'EMail (domicile)
+home phone	addressbook	fr	Téléphone (domicile)
+home state	addressbook	fr	Région (domicile)
+home street	addressbook	fr	Rue (domicile)
+home zip code	addressbook	fr	Code postal (domicile)
 import contacts	addressbook	fr	Importer les contacts
 import file	addressbook	fr	Importer le fichier
 import from outlook	addressbook	fr	Importer depuis Outlook
@@ -103,5 +103,5 @@ vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une ent
 video phone	addressbook	fr	Téléphone vidéo
 voice phone	addressbook	fr	Téléphone vocal
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	Attention!! LDAP est valide seulement si vous n'utilisez pas les contacts pour le stockage des comptes!
-work phone	addressbook	fr	Téléphone travail
+work phone	addressbook	fr	Téléphone (bureau)
 zip code	common	fr	Code postal
