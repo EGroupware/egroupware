@@ -94,6 +94,7 @@
 			{
 				$apps = $GLOBALS['phpgw_info']['user']['apps'];
 			}
+			settype($apps,'array');
 			foreach($apps as $app)
 			{
 				$appname = $app['name'];
