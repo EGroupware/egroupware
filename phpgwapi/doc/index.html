@@ -1,52 +1,131 @@
-#This document explains eGroupWare's infrastructure and API,
-#along with what is required to integrate applications into
-#it.
+      This document explains eGroupWare's infrastructure and API,
+      along with what is required to integrate applications into
+      it.
 
 = Contents =
-# ApplicationDevelopmentGuide/Introduction
-## Overview of application writing
-## What does the eGroupWare API provide?
-# ApplicationDevelopmentGuide/Guidelines
-## Requirements
-## Writing/porting your application
-## Installing your application
-## Overview
-## Automatic features
-## Adding files, directories and icons.
-## Making eGroupWare aware of your application
-## Hooking into Administration page
-## Hooking into Preferences page
-# ApplicationDevelopmentGuide/Infrastructure
-## Overview
-## Directory tree
-## Translations
-# ApplicationDevelopmentGuide/The API
-## Introduction
-## Basic functions
-## Application Functions
-## File functions
-## Email/NNTP Functions
-# ApplicationDevelopmentGuide/Configuration Variables
-## Introduction
-## User information
-## Group information
-## Server information
-## Database information
-## Mail information
-## NNTP information
-## Application information
-# ApplicationDevelopmentGuide/Using Language Support
-## Overview
-## How to use lang support
-## Common return codes
-# ApplicationDevelopmentGuide/Using Templates
-#<li style="list-style: none">
-## Overview
-## How to use PHPLIB templates
-## How to use eTemplate templates
-# ApplicationDevelopmentGuide/About this document
-## New versions
-## Comments
-## History
-## Copyrights and Trademarks
-## Acknowledgments and Thanks
+
+      <li><a href="#tth_sEc1">Introduction</a></li>
+
+          <li><a href="#tth_sEc1.1">Overview of application
+          writing</a></li>
+
+          <li><a href="#tth_sEc1.2">What does the eGroupWare API
+          provide?</a></li>
+
+      <li><a href="#tth_sEc2">Guidelines</a></li>
+
+          <li><a href="#tth_sEc2.1">Requirements</a></li>
+
+          <li><a href="#tth_sEc2.2">Writing/porting your
+          application</a></li>
+
+      <li><a href="#tth_sEc3">Installing your application</a></li>
+
+          <li><a href="#tth_sEc3.1">Overview</a></li>
+
+          <li><a href="#tth_sEc3.2">Automatic features</a></li>
+
+          <li><a href="#tth_sEc3.3">Adding files, directories and
+          icons.</a></li>
+
+          <li><a href="#tth_sEc3.4">Making eGroupWare aware of your
+          application</a></li>
+
+          <li><a href="#tth_sEc3.5">Hooking into Administration
+          page</a></li>
+
+          <li><a href="#tth_sEc3.6">Hooking into Preferences
+          page</a></li>
+
+      <li><a href="#tth_sEc4">Infrastructure</a></li>
+
+          <li><a href="#tth_sEc4.1">Overview</a></li>
+
+          <li><a href="#tth_sEc4.2">Directory tree</a></li>
+
+          <li><a href="#tth_sEc4.3">Translations</a></li>
+
+      <li><a href="#tth_sEc5">The API</a></li>
+
+      <li style="list-style: none">
+        <ol>
+          <li><a href="#tth_sEc5.1">Introduction</a></li>
+
+          <li><a href="#tth_sEc5.2">Basic functions</a></li>
+
+          <li><a href="#tth_sEc5.3">Application Functions</a></li>
+
+          <li><a href="#tth_sEc5.4">File functions</a></li>
+
+          <li><a href="#tth_sEc5.5">Email/NNTP Functions</a></li>
+        </ol>
+      </li>
+
+      <li><a href="#tth_sEc6">Configuration Variables</a></li>
+
+      <li style="list-style: none">
+        <ol>
+          <li><a href="#tth_sEc6.1">Introduction</a></li>
+
+          <li><a href="#tth_sEc6.2">User information</a></li>
+
+          <li><a href="#tth_sEc6.3">Group information</a></li>
+
+          <li><a href="#tth_sEc6.4">Server information</a></li>
+
+          <li><a href="#tth_sEc6.5">Database information</a></li>
+
+          <li><a href="#tth_sEc6.6">Mail information</a></li>
+
+          <li><a href="#tth_sEc6.7">NNTP information</a></li>
+
+          <li><a href="#tth_sEc6.8">Application
+          information</a></li>
+        </ol>
+      </li>
+
+      <li><a href="#tth_sEc7">Using Language Support</a></li>
+
+      <li style="list-style: none">
+        <ol>
+          <li><a href="#tth_sEc7.1">Overview</a></li>
+
+          <li><a href="#tth_sEc7.2">How to use lang
+          support</a></li>
+
+          <li><a href="#tth_sEc7.3">Common return codes</a></li>
+        </ol>
+      </li>
+
+      <li><a href="#tth_sEc8">Using Templates</a></li>
+
+      <li style="list-style: none">
+        <ol>
+          <li><a href="#tth_sEc8.1">Overview</a></li>
+
+          <li><a href="#tth_sEc8.2">How to use PHPLIB
+          templates</a></li>
+
+          <li><a href="#tth_sEc8.3">How to use eTemplate
+          templates</a></li>
+        </ol>
+      </li>
+
+      <li><a href="#tth_sEc9">About this document</a></li>
+
+      <li style="list-style: none">
+        <ol>
+          <li><a href="#tth_sEc9.1">New versions</a></li>
+
+          <li><a href="#tth_sEc9.2">Comments</a></li>
+
+          <li><a href="#tth_sEc9.3">History</a></li>
+
+          <li><a href="#tth_sEc9.4">Copyrights and
+          Trademarks</a></li>
+
+          <li><a href="#tth_sEc9.5">Acknowledgments and
+          Thanks</a></li>
+        </ol>
+      </li>
+    </ol>
