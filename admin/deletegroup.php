@@ -21,9 +21,9 @@
 
   if ((($group_id) && ($confirm)) || $removeusers) {
      if ($removeusers) {
-        $phpgw->db->query("select con,groups from accounts where groups like '%$group_id%'");
+        $phpgw->db->query("select account_id,account_groups from accounts where account_groups like '%$group_id%'");
         while ($phpgw->db->next_record()) {
-          $groups[$phpgw->db->f("con")] = $phpgw->db->f("groups");
+          $groups[$phpgw->db->f("account_id")] = $phpgw->db->f("account_groups");
         }
 
         while ($user = each($groups)) {
@@ -31,7 +31,7 @@
           if ($user_[1] == ",") {
              $user_[1] = "";
           }
-          $phpgw->db->query("update accounts set groups='$user_[1]' where con='$user[0]'");
+          $phpgw->db->query("update accounts set account_groups='$user_[1]' where account_id='$user[0]'");
         }
         $confirm = True;
      }
@@ -41,7 +41,7 @@
 
      $group_name = $phpgw->db->f("group_name");
 
-     $phpgw->db->query("select con,loginid from accounts where groups like '%$group_id%'");
+     $phpgw->db->query("select account_id,account_lid from accounts where account_groups like '%$group_id%'");
      if ($phpgw->db->num_rows()) {
         $phpgw->common->header();
         $phpgw->common->navbar();
@@ -54,7 +54,7 @@
         echo '<table border="0"><tr><td>';
 
         while ($phpgw->db->next_record()) {
-          echo '<tr><td><a href="' . $phpgw->link("editaccount.php","con=" . $phpgw->db->f("con")) . '">' . $phpgw->db->f("loginid") . '</a></tr></td>';
+          echo '<tr><td><a href="' . $phpgw->link("editaccount.php","account_=" . $phpgw->db->f("account_id")) . '">' . $phpgw->db->f("loginid") . '</a></tr></td>';
         }
         echo "</table></center>";
         echo "<a href=\"" . $phpgw->link("deletegroup.php","group_id=" . $group_id . "&removeusers=True")

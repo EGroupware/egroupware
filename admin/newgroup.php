@@ -43,12 +43,12 @@
         $group_con = $phpgw->db->f("group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
-           $phpgw->db->query("SELECT groups FROM accounts WHERE con=".$n_users[$i]);
+           $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
 	      $phpgw->db->next_record();
-           $user_groups = $phpgw->db->f("groups") . ",$group_con,";
+           $user_groups = $phpgw->db->f("account_groups") . ",$group_con,";
 
            $user_groups = ereg_replace(",,",",",$user_groups);
-           $phpgw->db->query("UPDATE accounts SET groups='$user_groups' WHERE con='" . $n_users[$i] . "'");
+           $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id='" . $n_users[$i] . "'");
         }
 
         $sep = $phpgw->common->filesystem_separator();
@@ -93,14 +93,14 @@
      $selected_users[$n_users[$i]] = " selected";
   }
 
-  $phpgw->db->query("SELECT con,firstname,lastname, loginid FROM accounts where "
-	  	  . "status != 'L' ORDER BY lastname,firstname,loginid asc");
+  $phpgw->db->query("SELECT account_id,account_firstname,account_lastname,account_lid FROM accounts where "
+	  	        . "account_status != 'L' ORDER BY account_lastname,account_firstname,account_lid asc");
   while ($phpgw->db->next_record()) {
-     $user_list .= "<option value=\"" . $phpgw->db->f("con") . "\""
-    	         . $selected_users[$phpgw->db->f("con")] . ">"
-	         . $phpgw->common->display_fullname($phpgw->db->f("loginid"),
-								   	    $phpgw->db->f("firstname"),
-								   	    $phpgw->db->f("lastname")) . "</option>";
+     $user_list .= "<option value=\"" . $phpgw->db->f("account_id") . "\""
+    	         . $selected_users[$phpgw->db->f("account_id")] . ">"
+	         . $phpgw->common->display_fullname($phpgw->db->f("account_lid"),
+								   	    $phpgw->db->f("account_firstname"),
+								   	    $phpgw->db->f("account_lastname")) . "</option>";
   }
   $t->set_var("user_list",$user_list);
 

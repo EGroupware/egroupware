@@ -70,9 +70,9 @@ if (! $submit) {
       exit;
    }
 
-   $phpgw->db->query("update accounts set passwd='" . md5($n_passwd) . "', "
-	          . "lastpasswd_change='" . time() . "' where loginid='"
-	          . $phpgw_info["user"]["userid"] . "'");
+   $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "', "
+	              . "account_lastpwd_change='" . time() . "' where account_lid='"
+	              . $phpgw_info["user"]["userid"] . "'");
 
    // Since they are logged in, we need to change the password in sessions
    // in case they decied to check there mail.
