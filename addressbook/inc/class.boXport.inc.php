@@ -90,7 +90,7 @@
 			$this->cat_id = $data['cat_id'];
 		}
 
-		function import($tsvfile,$conv_type,$private)
+		function import($tsvfile,$conv_type,$private,$fcat_id)
 		{
 			global $phpgw;
 
@@ -221,7 +221,7 @@
 			}
 
 			fclose($fp);
-			$buffer = $contacts->import_end_file($buffer,$private,$cat_id);
+			$buffer = $contacts->import_end_file($buffer,$private,$fcat_id);
 			return $buffer;
 		}
 

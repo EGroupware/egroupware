@@ -56,7 +56,7 @@
 				$jselect = ' onChange="this.form.submit();"';
 			}
 			/* Setup all and none first */
-			$cats_link  = "\n" .'<select name="cat_id'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
+			$cats_link  = "\n" .'<select name="fcat_id'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
 			if (!$notall)
 			{
 				$cats_link .= '<option value=""';
@@ -75,11 +75,11 @@
 
 		function import()
 		{
-			global $phpgw,$convert,$download,$tsvfile,$private,$conv_type;
+			global $phpgw,$convert,$download,$tsvfile,$private,$conv_type,$fcat_id;
 
 			if ($convert)
 			{
-				$buffer = $this->bo->import($tsvfile,$conv_type,$private);
+				$buffer = $this->bo->import($tsvfile,$conv_type,$private,$fcat_id);
 
 				if ($download == '')
 				{
