@@ -3214,7 +3214,7 @@ class boicalendar
 
 			$cats = CreateObject('phpgwapi.categories');
 			
-			include(PHPGW_APP_INC.'/../setup/setup.inc.php');
+			include(PHPGW_SERVER_ROOT.'/calendar/setup/setup.inc.php');
 			if(!is_array($event_id))
 			{
 				$ids[] = $event_id;
