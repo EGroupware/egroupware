@@ -174,7 +174,7 @@
 				$GLOBALS['phpgw']->template->set_var('message','');
 			}
 
-			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Add'). ' ' . lang('Custom Field'));
+			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Add Custom Field'));
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.add'));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'));
 			$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="field" value="' . $field . '">');
@@ -265,7 +265,7 @@
 				$field  = $GLOBALS['phpgw']->strip_html($fields[0]['name']);
 			}
 
-			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Edit Field'));
+			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Edit Custom Field'));
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.edit'));
 			$GLOBALS['phpgw']->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.delete&field=$field&start=$start&query=$query&sort=$sort"));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
