@@ -86,9 +86,14 @@
 		*/
 		function get_body_attribs()
 		{
-			$js  = ($this->body['onLoad'] ? 'onLoad="' . addslashes($this->body['onLoad']) . '"' : '');
-			$js .= ($this->body['onUnload'] ? 'onUnLoad="' . addslashes($this->body['onUnload']) . '"': '');
-			$js .= ($this->body['onResize'] ? 'onResize="' . addslashes($this->body['onResize']) . '"': '');
+			$js = '';
+			foreach(array('onLoad','onUnload','onResize') as $what)
+			{
+				if (!empty($this->body[$what]))
+				{
+					$js .= ' '.$what.'="' . str_replace(array('"','\\'),array('\\"','\\\\'),$this->body[$what]) . '"';
+				}
+			}
 			return $js;
 		}
 
