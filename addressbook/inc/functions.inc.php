@@ -78,6 +78,7 @@
 			"email_home_type"     => "home email type",
 			"address2"            => "address line 2",
 			"address3"            => "address line 3",
+			"ophone"              => "Other Phone",
 			"bday"                => "birthday",
 			"url"                 => "url",
 			"pubkey"              => "public key",

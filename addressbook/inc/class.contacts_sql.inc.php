@@ -303,44 +303,31 @@
 						while (list($fname,$fvalue)=each($check_stock)) {
 							if ($fvalue==$name) {
 								$filterlist .= $name.' is NULL,';
-								$isstd=1;
 								if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is a stock field"; }
 								break;
 							}
-						}
-						if (!$isstd) {
-							if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is an extra field"; }
-							$filterlist2 .= 'b.'.$name.' is NULL,';
-							$fieldlist2  .= 'b.'.$name.',';
 						}
 					} elseif($name && $value) {
 						reset($stock_fields);
 						while (list($fname,$fvalue)=each($stock_fields)) {
 							if ($fvalue==$name) {
 								$filterlist .= $name.'="'.$value.'",';
-								$isstd=1;
 								break;
 							}
-						}
-						if (!$isstd) {
-							$filterlist2 .= 'b.'.$name.'="'.$value.'",';
-							$fieldlist2  .= 'b.'.$name.',';
 						}
 					}
 					$i++;
 				}
 				$filterlist  = substr($filterlist,0,-1);
 				$filterlist  = ereg_replace(","," AND ",$filterlist);
-				$filterlist2 = substr($filterlist2,0,-1);
-				$fieldlist2  = substr($fieldlist2,0,-1);
 
 				if ($DEBUG) {
-					echo "<br>DEBUG - Filter output string1: #".$filterlist."#";
-					echo "<br>DEBUG - Filter output string2: #".$filterlist2."#";
+					echo "<br>DEBUG - Filter output string: #".$filterlist."#";
 				}
 
 				if ($filterlist) {
-					$filtermethod = ' WHERE ('.$filterlist.') ';
+					$filtermethod = '('.$filterlist.') ';
+					$fwhere = ' WHERE '; $fand = ' AND ';
 				}
 			}
 			if ($DEBUG && $filtermethod) {
@@ -349,18 +336,10 @@
 
 			if (!$sort) { $sort = "ASC";  }
 
-			reset($stock_fields);
 			if ($order) {
-				while (list($name,$value)=each($stock_fields)) {
-					if ($name == $order) {
-						$ordermethod = "order by a.$order $sort ";
-						break;
-					} else {
-						$ordermethod = "order by b.$order $sort ";
-					}
-				}
+				$ordermethod = "order by $order $sort ";
 			}  else {
-				$ordermethod = "order by a.n_family,a.n_given,a.email $sort";
+				$ordermethod = "order by n_family,n_given,email $sort";
 			}
 
 			if ($DEBUG && $ordermethod) {
@@ -369,114 +348,37 @@
 
 			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
-			// start create sql for temp table
-			$tempcreate  = "CREATE TABLE ".$tmp_table." (id int,";
-
-			// construct query and count rows based on filter sent to function
-			$this->db->query("select id from $this->std_table ".$filtermethod,__LINE__,__FILE__);
-			$this->total_records = $this->db->num_rows();
-			
-			$i=0;
-			while ($this->db->next_record()) {
-				$this->db2->query("SELECT contact_name,contact_value FROM ".$this->ext_table." WHERE contact_id='"
-				. $this->db->f("id") . "'",__LINE__,__FILE__);
-
-				$tempinsert[$i] = "INSERT INTO " . $tmp_table . " (id,";
-				while ($this->db2->next_record()) {
-					// If its not in the list to be returned, don't return it.
-					// This is still quicker then 5(+) separate queries
-					if (!strstr($tempcreate,$this->db2->f("contact_name"))) {
-						$tempcreate .= $this->db2->f("contact_name") ." TEXT,";
-					}
-					if ($extra_fields[$this->db2->f("contact_name")]) {
-						$tempinsert[$i] .= $this->db2->f("contact_name").",";
-						$tempvalues[$i] .= '"'.$this->db2->f("contact_value").'",';
-					}
-				}
-				$tempinsert[$i]  = substr($tempinsert[$i],0,-1);
-				$tempvalues[$i]  = substr($tempvalues[$i],0,-1);
-				if ($tempvalues[$i]) {
-					$tempval = $this->db->f("id").','.$tempvalues[$i].',';
-				} else {
-					$tempval = $this->db->f("id").',';
-				}
-				$tempinsert[$i] .= ') VALUES ('.$tempval;
-				$tempinsert[$i]  = substr($tempinsert[$i],0,-1).")";
-				$i++;
-			}
-
-			// fixup strings, create and populate temp table of extra fields
-			// this section adds the extra_fields to the table
-			// if no prior data existed (new application, etc.)
-			if ($extra_fields) {
-				while (list($name,$value) = each($extra_fields)) {
-					if (!strstr($tempcreate,$name)) {
-						$tempcreate .= $name ." TEXT,";
-					}
-				}
-			}
-			$tempcreate = substr($tempcreate,0,-1) . ")";
-			//echo $tempcreate;
-
-			//if ($phpgw_info["server"]["db_type"]=="mysql") {
-			//	$ifexists = "IF EXISTS";
-			//}
-			
-
-			//$this->db->query("DROP TABLE $ifexists $tmp_table");
-			$this->db->query($tempcreate);
-
-			for ($i=0;$i<count($tempinsert);$i++) {
-				$this->db->query($tempinsert[$i]);
-			}
-
-			reset($stock_fields);
-			if ($extra_fields) { reset($extra_fields); }
-			// create strings for insertion into crosstable query below
-			while(list($name,$value)=each($stock_fields)) {
-				$std .= "a.".$name.",";
-			}
-			//$std = substr($std,0,-1);
-			if ($extra_fields) {
-				while(list($name,$value)=each($extra_fields)) {
-					$ext .= "b.".$name.",";
-				}
-			}
-			//$ext = substr($ext,0,-1);
-			if (!empty($fieldlist2)) {
-				$filtertemp = " AND " . $filterlist2 . " ";
-			}
-
-			if ($DEBUG && $filtertemp) {
-				echo "<br>DEBUG - Final SELECT - Filtering with: #" . $filtertemp . "#";
-			}
-
-			$qfields = $std . $ext;
-			$qfields = substr($qfields,0,-1);
-
 			if ($query) {
-				$squery = " AND (n_family like '%$query%' OR n_middle like '"
-					. "%$query%' OR n_given like '%$query%' OR email like '%$query%' OR "
-					. "adr_one_street like '%$query%' OR adr_one_locality like '%$query%' OR adr_one_region "
-					. "like '%$query%' OR adr_one_postalcode like '%$query%' OR org_unit like "
-					. "'%$query%' OR adr_one_countryname like '%$query%' OR "
-					. "org_name like '%$query%')";
+				$this->db3->query("SELECT * FROM $this->std_table WHERE (n_family LIKE '"
+					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
+					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
+					. "adr_one_postalcode LIKE '%$query%' OR adr_one_countryname LIKE '%$query%' OR "
+					. "adr_two_street LIKE '%$query%' OR adr_two_locality LIKE '%$query%' OR adr_two_region LIKE '%$query%' OR "
+					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
+					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod,__LINE__,__FILE__); 
+				$this->total_records = $this->db3->num_rows();
+
+				$this->db->query("SELECT * FROM $this->std_table WHERE (n_family LIKE '"
+					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
+					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
+					. "adr_one_postalcode LIKE '%$query%' OR adr_one_countryname LIKE '%$query%' OR "
+					. "adr_two_street LIKE '%$query%' OR adr_two_locality LIKE '%$query%' OR adr_two_region LIKE '%$query%' OR "
+					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
+					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod . " "
+					. $this->db->limit($start,$offset),__LINE__,__FILE__);
+			}  else  {
+				$this->db3->query("SELECT id,lid,tid,owner $t_fields FROM $this->std_table " . $fwhere
+					. $filtermethod,__LINE__,__FILE__);
+				$this->total_records = $this->db3->num_rows();
+
+				$this->db->query("SELECT id,lid,tid,owner $t_fields FROM $this->std_table " . $fwhere
+				. $filtermethod . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
 			}
-
-			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.id,'
-				. $qfields . ' FROM '.$this->std_table.' AS a, '
-				. $tmp_table .' AS b WHERE a.id=b.id ' . $filtertemp
-				. $squery;
-
- 			$this->db3->query($sql,__LINE__,__FILE__);
-			$this->total_records = $this->db3->num_rows();
-
-			$this->db->query($sql. " " . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
 
 			$i=0;
 			while ($this->db->next_record()) {
 				// unique id, lid for group/account records,
-				// type id (g/u) for groups/accounts/inv records, and
+				// type id (g/u) for groups/accounts, and
 				// id of owner/parent for the record
 				$return_fields[$i]["id"]     = $this->db->f("id");
 				$return_fields[$i]["lid"]    = $this->db->f("lid");
@@ -484,14 +386,22 @@
 				$return_fields[$i]["owner"]  = $this->db->f("owner");
 
 				if (gettype($stock_fieldnames) == "array") {
-					while (list($f_name) = each($fields)) {
+					while (list($f_name) = each($stock_fieldnames)) {
 						$return_fields[$i][$f_name] = $this->db->f($f_name);
 					}
-					reset($fields);
+					reset($stock_fieldnames);
+				}
+				$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
+					. $this->db->f("id") . "'" .$filterextra,__LINE__,__FILE__);
+				while ($this->db2->next_record()) {
+					// If its not in the list to be returned, don't return it.
+					// This is still quicker then 5(+) separate queries
+					if ($extra_fields[$this->db2->f("contact_name")]) {
+						$return_fields[$i][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
+					}
 				}
 				$i++;
 			}
-			$this->db->query("DROP TABLE $tmp_table");
 			return $return_fields;
 		}
 

@@ -48,7 +48,24 @@
 	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 
 	// create column list and the top row of the table based on user prefs
-	while ($column = each($qfields)) {
+	while ($column = each($this->stock_contact_fields)) {
+		$test = strtolower($column[1]);
+		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$test]) &&
+			$phpgw_info["user"]["preferences"]["addressbook"][$test]) {
+			$showcol = display_name($column[0]);
+			$cols .= "  <td height=\"21\">\n";
+			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
+			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol);
+			$cols .= "</font>\n  </td>";
+			$cols .= "\n";
+
+			// To be used when displaying the rows
+			$columns_to_display[$column[0]] = True;
+		}
+	}
+	
+	$nonstd = $extrafields + $customfields;
+	while ($column = each($nonstd)) {
 		$test = strtolower($column[1]);
 		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$test]) &&
 			$phpgw_info["user"]["preferences"]["addressbook"][$test]) {
@@ -57,7 +74,7 @@
 			if (!$showcol) { $showcol = $column[1]; }
 			$cols .= "  <td height=\"21\">\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol);
+			$cols .= $showcol;
 			$cols .= "</font>\n  </td>";
 			$cols .= "\n";
 
