@@ -1,6 +1,6 @@
 <?php
 
-if ($download || $op == "view" || $op == "history" || $op == help)
+if ($noheader || $download || $op == "view" || $op == "history" || $op == help)
 {
 	$noheader = True;
 }
@@ -105,7 +105,7 @@ if ($phpwh_debug)
 # Get their memberships to be used throughout the script
 ###
 
-$memberships = $phpgw->accounts->memberships ($userinfo["username"]);
+$memberships = $phpgw->accounts->membership ($userinfo["username"]);
 
 while (list ($num, $group_array) = each ($memberships))
 {

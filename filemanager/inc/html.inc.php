@@ -9,8 +9,9 @@ function html_form_begin ($action, $method = "post", $enctype = NULL, $string = 
 	$action = $sep . $action;
 	$action = html_link ($action, NULL, 1, 0, 1);
 
-	if ($method != NULL && $method)
-		$method = "method=$method";
+	if ($method == NULL)
+		$method = "post";
+	$method = "method=$method";
 	if ($enctype != NULL && $enctype)
 		$enctype = "enctype=$enctype";
 	$rstring = "<form action=$action $method $enctype $string>";

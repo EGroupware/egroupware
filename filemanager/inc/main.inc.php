@@ -215,7 +215,7 @@ $help_info = array
 		array ("file_stats", "Various statistics on the number and size of the files in the current directory.  In some situations, these reflect different statistics.  For example, when in / and the base directory."),
 		array ("upload_file", "The full path of the local file to upload.  You can type it in or use the Browse.. button to select it.  The file will be uploaded to the current directory."),
 		array ("upload_comment", "The inital comment to use for the newly uploaded file.  Totally optional and completely arbitrary."),
-		array ("update", "Sync the database with the filesystem for the current directory.  This is useful if you use another interface to access the same files.  Any new files or directories in the current directory will be read in, and the attributes for the other files will be updated to reflect any changes to the filesystem.  Update is run automatically every few page loads (currently every 20 page load as of this writing, but that may have changed by now)."),
+		array ("update", "Sync the database with the filesystem for the current directory.  This is useful if you use another interface to access the same files.  Any new files or directories in the current directory will be read in, and the attributes for the other files will be updated to reflect any changes to the filesystem.  Update is run automatically every few page loads (currently every 20 page loads as of this writing, but that may have changed by now)."),
 		array ("upload_files", "This will upload the files listed in the input boxes above, and stored them in the current directory."),
 );
 
