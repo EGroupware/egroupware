@@ -670,10 +670,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			}
 
 			###
-			# No point in displaying the current directory
+			# No point in displaying the current directory, or a directory that doesn't exist
 			###
 			
-			if (($dir["directory"] . $dir["name"]) != $path)
+			if ((($dir["directory"] . $dir["name"]) != $path) && $phpgw->vfs->file_exists ($dir["directory"] . $dir["name"], array (RELATIVE_NONE)))
 			{
 				html_form_option ($dir["directory"] . $dir["name"]);
 			}
