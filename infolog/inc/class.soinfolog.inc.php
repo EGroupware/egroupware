@@ -211,6 +211,7 @@
 			{
 				$query = "UPDATE phpgw_infolog SET $query where info_id='".$values['info_id']."'";
 				$this->db->query($query,__LINE__,__FILE__);         
+				$this->data['info_id'] = $values['info_id'];
 			}
 			else
 			{
