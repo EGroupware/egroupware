@@ -149,9 +149,10 @@
 			var $accounts;
 		}
 		$GLOBALS['phpgw'] = new phpgw;
-		$GLOBALS['phpgw']->db       = $GLOBALS['phpgw_setup']->db;
-		$GLOBALS['phpgw']->common   = CreateObject('phpgwapi.common');
-		$GLOBALS['phpgw']->accounts = CreateObject('phpgwapi.accounts');
+		$GLOBALS['phpgw']->db		= $GLOBALS['phpgw_setup']->db;
+		$GLOBALS['phpgw']->common	= CreateObject('phpgwapi.common');
+		$GLOBALS['phpgw']->accounts	= CreateObject('phpgwapi.accounts');
+		$GLOBALS['phpgw']->translation	= CreateObject('phpgwapi.translation');
 		if(($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap') &&
 			!$GLOBALS['phpgw']->accounts->ds)
 		{
