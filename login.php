@@ -256,7 +256,11 @@
 
 			if (! $prefs->account_id)
 			{
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = 'en';
+				// Default to the first language, the users browser accepts.
+				list($lang) = explode(',',$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+				$lang = substr($lang,0,2);
+				if(strlen($lang) != 2) $lang="en";
+				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = $lang;
 			}
 			else
 			{
