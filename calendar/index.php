@@ -48,8 +48,8 @@
 
   if ($friendly) {
      echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
-     $view = "month";
   }
+  $view = "month";
 ?>
 
 <HEAD>
