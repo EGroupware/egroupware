@@ -581,10 +581,37 @@
 
 		function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)
 		{
+			if (isset($aColumnDef['default']))	// pgsql cant add a colum with a default
+			{
+				$default = $aColumnDef['default'];
+				unset($aColumnDef['default']);
+			}
+			if (isset($aColumnDef['nullable']) && !$aColumnDef['nullable'])	// pgsql cant add a column not nullable
+			{
+				$notnull = !$aColumnDef['nullable'];
+				unset($aColumnDef['nullable']);
+			}
 			$oProc->_GetFieldSQL($aColumnDef, $sFieldSQL);
 			$query = "ALTER TABLE $sTableName ADD COLUMN $sColumnName $sFieldSQL";
 
-			return !!($oProc->m_odb->query($query));
+			if (($Ok = !!($oProc->m_odb->query($query))) && isset($default))
+			{
+				$query = "ALTER TABLE $sTableName ALTER COLUMN $sColumnName SET DEFAULT '$default';\n";
+
+				$query .= "UPDATE $sTableName SET $sColumnName='$default';\n";
+				
+				$Ok = !!($oProc->m_odb->query($query));
+
+				if ($OK && $notnull)
+				{
+					// unfortunally this is pgSQL >= 7.3
+					//$query .= "ALTER TABLE $sTableName ALTER COLUMN $sColumnName SET NOT NULL;\n";
+					//$Ok = !!($oProc->m_odb->query($query));
+					// so we do it the slow way
+					AlterColumn($oProc, $aTables, $sTableName, $sColumnName, $aColumnDef);
+				}
+			}
+			return $Ok;
 		}
 
 		function GetSequenceSQL($sTableName, &$sSequenceSQL)
