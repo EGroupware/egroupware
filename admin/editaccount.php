@@ -201,6 +201,8 @@
 	// stores the userdata
 	function saveUserData($_userData)
 	{
+		global $phpgw;
+
 		$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
 		$account->update_data($_userData);
 		$account->save_repository();
@@ -266,7 +268,7 @@
 	// otherwise the error array
 	function userDataInvalid($_userData)
 	{
-		global $phpgw_info;
+		global $phpgw,$phpgw_info;
 
 		$totalerrors = 0;
 
@@ -281,7 +283,7 @@
 
 		if ($_userData['old_loginid'] != $_userData['account_lid']) 
 		{
-			if (account_exists($_userData['account_loginid']))
+			if ($phpgw->accounts->exists($_userData['account_loginid']))
 			{
 				$error[$totalerrors] = lang('That loginid has already been taken');
 				$totalerrors++;
