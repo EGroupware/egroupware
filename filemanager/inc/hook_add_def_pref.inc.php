@@ -18,5 +18,6 @@ $pref->change ("phpwebhosting", "viewtextplain", True);
 //$pref->change ("phpwebhosting", "dotdot", "False");
 //$pref->change ("phpwebhosting", "dotfiles", "False");
 //$pref->change ("phpwebhosting", "show_help", "False");
+$pref->change ("phpwebhosting", "show_upload_boxes", "5");
 
 ?>

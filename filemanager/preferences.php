@@ -11,13 +11,26 @@
 
 	/* $Id$ */
 
-	$phpgw_info["flags"] = array("currentapp" => "phpwebhosting", "enable_nextmatchs_class" => True, "noheader" => True, "nonavbar" => True);
+	$phpgw_info["flags"] = array
+	(
+		"currentapp" => "phpwebhosting",
+		"enable_nextmatchs_class" => True,
+		"noheader" => True,
+		"nonavbar" => True
+	);
+
 	include("../header.inc.php");
 
 	/*
-	   To add a preference, just add it here.  Key is internal name, value is displayed name
+	   To add an on/off preference, just add it here.  Key is internal name, value is displayed name
 	*/
 	$other_checkboxes = array ("viewinnewwin" => "View documents in new window", "viewonserver" => "View documents on server (if available)", "viewtextplain" => "Unknown MIME-type defaults to text/plain when viewing", "dotdot" => "Show ..", "dotfiles" => "Show .files", "show_help" => "Show help");
+
+	/*
+	   To add a dropdown preferences, add it here.  Key is internal name, value key is
+	   displayed name, value values are choices in the dropdown
+	*/
+	$other_dropdown = array ("show_upload_boxes" => array ("Default number of upload fields to show", "5", "10", "20", "30"));
 
 	if ($submit)
 	{
@@ -31,6 +44,12 @@
 
 		reset ($other_checkboxes);
 		while (list ($internal, $displayed) = each ($other_checkboxes))
+		{
+			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
+		}
+
+		reset ($other_dropdown);
+		while (list ($internal, $displayed) = each ($other_dropdown))
 		{
 			$phpgw->preferences->add ($phpgw_info["flags"]["currentapp"], $internal, $$internal);
 		}
@@ -86,21 +105,49 @@
 	{
 		unset ($checked);
 		if ($phpgw_info["user"]["preferences"]["phpwebhosting"][$internal])
+		{
 			$checked = 1;
+		}
 
 		$str .= html_form_input ("checkbox", $internal, NULL, NULL, NULL, $checked, NULL, 1) . " $displayed" . html_break (1, NULL, 1);
 	}
 
 	display_item (lang ('Display attributes'), $str);
 
+	reset ($other_checkboxes);
 	while (list ($internal, $displayed) = each ($other_checkboxes))
 	{
 		unset ($checked);
 		if ($phpgw_info["user"]["preferences"]["phpwebhosting"][$internal])
+		{
 			$checked = 1;
+		}
 
 		$str = html_form_input ("checkbox", $internal, NULL, NULL, NULL, $checked, NULL, 1);
 		display_item (lang ($displayed), $str);
+	}
+
+	reset ($other_dropdown);
+	while (list ($internal, $value_array) = each ($other_dropdown))
+	{
+		reset ($value_array);
+		unset ($options);
+		while (list ($num, $value) = each ($value_array))
+		{
+			if ($num == 0)
+			{
+				$displayed = $value;
+				continue;
+			}
+
+			$options .= html_form_option ($value, $value, $phpgw_info["user"]["preferences"]["phpwebhosting"][$internal] == $value, True);
+		}
+
+		$output = html_form_select_begin ($internal, True);
+		$output .= $options;
+		$output .= html_form_select_end (True);
+
+		display_item ($displayed, $output);
 	}
 
 	$p->pparse ('out', 'pref');
