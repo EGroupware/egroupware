@@ -106,7 +106,7 @@ class html
 		return "<INPUT $type NAME=\"$name\" VALUE=\"$value\" $options>\n";
 	}
 
-	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='')
+	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='',$app='')
 	{
 		if ($image != '')
 		{
