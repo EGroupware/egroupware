@@ -342,8 +342,7 @@ function validate_and_submit() {
 <tr>
  <td><b><?php echo lang("Frequency"); ?>: </b></td>
  <td>
-  <input name="rpt_freq" size="4" maxlength="4" value="<?php
-							echo $cal_info->rpt_freq; ?>">
+  <input name="rpt_freq" size="4" maxlength="4" value="<?php echo $cal_info->rpt_freq; ?>">
  </td>
 </tr>
 </TABLE>
