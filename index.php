@@ -30,9 +30,9 @@
   $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
 
-  $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"addressbook",True);
-  $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"email",True);
-  $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"calendar",True);
+  $phpgw->common->read_preferences("addressbook");
+  $phpgw->common->read_preferences("email");
+  $phpgw->common->read_preferences("calendar");
   
   $phpgw->db->query("select app_version from applications where app_name='admin'");
   $phpgw->db->next_record();
