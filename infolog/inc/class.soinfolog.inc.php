@@ -504,7 +504,7 @@
 			}
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $action_id : 0);
 
-			if (!$phpgw_info['user']['preferences']['infolog']['listNoSubs'] &&
+			if (!$GLOBALS['phpgw_info']['user']['preferences']['infolog']['listNoSubs'] &&
 				 $action != 'sp')
 			{
 				$pid = '';
