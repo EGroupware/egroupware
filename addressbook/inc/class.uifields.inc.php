@@ -307,7 +307,7 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$field    = $_POST['field'] ? $_POST['field'] : $_GET['field'];
+			$field    = urldecode($_POST['field'] ? $_POST['field'] : $_GET['field']);
 			$field_id = $_POST['field_id'] ? $_POST['field_id'] : $_GET['field_id'];
 			$start    = $_POST['start'] ? $_POST['start'] : $_GET['start'];
 			$query    = $_POST['query'] ? $_POST['query'] : $_GET['query'];
