@@ -22,14 +22,7 @@
 	$test[] = '1.0.0.001';
 	function phpgwapi_upgrade1_0_0_001()
 	{
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','id','async_id');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','next','async_next');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','times','async_times');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','method','async_method');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','data','async_data');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','account_id','async_account_id');
-
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.001';
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0.004';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
@@ -50,10 +43,14 @@
 	$test[] = '1.0.0.004';
 	function phpgwapi_upgrade1_0_0_004()
 	{
-		phpgwapi_upgrade1_0_0_001();
-		
-		// we skip the 1.0.1.001 update as its identitcal to the 1.0.0.003 update, which we already have
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.002';
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','id','async_id');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','next','async_next');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','times','async_times');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','method','async_method');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','data','async_data');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','account_id','async_account_id');
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.001';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
