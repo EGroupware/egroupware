@@ -426,20 +426,27 @@
 				$a[] = $firstname;
 			}
 
+			$name = '';
 			switch($display)
 			{
 				case 'all':
-					$name = '['.$lid.'] ';
+					if ($lid)
+					{
+						$name = '['.$lid.'] ';
+					}
 					// fall-through
 				case 'lastname':
 					$name .= implode(', ',$a);
 					break;
 				case 'firstall':
-					$name = $firstname . ' ' . $lastname . ' ['.$lid.']';
-					break;
+					if ($lid) 
+					{
+						$name = ' ['.$lid.']';
+					}
+					// fall-through
 				case 'firstname':
 				default:
-					$name = $firstname . ' ' . $lastname;
+					$name = $firstname . ' ' . $lastname . $name;
 					break;
 			}
 			return $name;
@@ -1785,17 +1792,17 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		*/
 		function encrypt_password($password)
 		{
-			if($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'DES')
+			if (strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'des')
 			{
 				$salt       = $this->randomstring(2);
 				$e_password = $this->des_cryptpasswd($password, $salt);
 			}
-			if($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'MD5')
+			elseif (strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'md5')
 			{
 				$salt       = $this->randomstring(8);
 				$e_password = $this->md5_cryptpasswd($password, $salt);
 			}
-			if($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'SHA')
+			elseif(strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'sha')
 			{
 				if(@function_exists('mhash'))
 				{
