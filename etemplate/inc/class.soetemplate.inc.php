@@ -107,14 +107,14 @@
 		/*!
 		@function init
 		@abstract initialises all internal data-structures of the eTemplate and sets the keys
-		@param $name name of the eTemplate or array with the keys
+		@param $name name of the eTemplate or array with the keys or all data
 		@param $template,$lang,$group,$version see class
 		@param $rows,$cols initial size of the template
 		*/
 		function init($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
-			reset($this->db_key_cols);
-			while (list($db_col,$col) = each($this->db_key_cols))
+			reset($this->db_cols);
+			while (list($db_col,$col) = each($this->db_cols))
 			{
 				$this->$col = is_array($name) ? $name[$col] : $$col;
 			}
@@ -125,6 +125,10 @@
 			if ($this->lang == 'default')
 			{
 				$this->lang = '';
+			}
+			if (is_array($name) && isset($name['data']))
+			{
+				return;	// data already set
 			}
 			$this->size = $this->style = '';
 			$this->data = array();
