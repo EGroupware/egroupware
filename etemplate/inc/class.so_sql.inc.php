@@ -36,15 +36,6 @@ class so_sql
  	 */
 	var $autoinc_id = '';
 	/**
-	 * @var array $db_key_cols array of all primary-key-columns in form dbName => internalName
-	 *	the save function does NOT touch any other cols in the table!!!
-	 */
-	var $db_key_cols = array();
-	/**
-	 * @var array $db_data_cols array of all data-cols
-	 */
-	var $db_data_cols = array();
-	/**
 	 * @var array $non_db_cols all cols in data which are not (direct)in the db, for data_merge
 	 */
 	var $non_db_cols = array();
@@ -445,7 +436,9 @@ class so_sql
 			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
 			$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
 		}
-		$this->db->select($this->table_name,($only_keys ? implode(',',$this->db_key_cols) : '*').
+		$cols = $only_keys === true ? $this->db_key_cols : (!$only_keys ? $this->db_cols : explode(',',str_replace('DISTINCT ','',$only_keys)));
+
+		$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
 			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
 			$query,__LINE__,__FILE__,$start,$order_by ? 'ORDER BY '.$order_by : '');
 
@@ -455,7 +448,7 @@ class so_sql
 			echo "<br>criteria = "; _debug_array($criteria);
 		}
 		$arr = array();
-		$cols = $only_keys ? $this->db_key_cols : $this->db_cols;
+		$cols = $only_keys === true ? $this->db_key_cols : (!$only_keys ? $this->db_cols : explode(',',str_replace('DISTINCT ','',$only_keys)));
 		if ($extra_cols)
 		{
 			foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
