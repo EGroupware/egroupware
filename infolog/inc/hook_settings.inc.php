@@ -11,9 +11,18 @@
 
 	/* $Id$ */
 
-	create_check_box('Show open entries: Tasks/Calls/Notes on main screen','homeShowEvents',
+	$show_entries = array(
+		0 => lang('No'),
+		1 => lang('Yes'),
+		2 => lang('Yes').' - '.lang('show list of upcoming entries'),
+	);	
+	create_select_box('Show open entries: Tasks/Calls/Notes on main screen','homeShowEvents',$show_entries,
 		'Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).');
-	
+	unset($show_entries);
+
+	create_input_box('Max number of entries to display on the main screen','mainscreen_maxshow',
+					'The maximum number of entries to display on the main screen.','10',3);
+
 	$ui = CreateObject('infolog.uiinfolog');	// need some labels from
 	foreach($ui->filters as $key => $label)
 	{
@@ -38,3 +47,4 @@
 	);
 	create_select_box('Show in the InfoLog list','show_links',$show_links,
 		'Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).');
+	unset($show_links);

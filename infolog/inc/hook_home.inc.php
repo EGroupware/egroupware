@@ -10,7 +10,8 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	if ($GLOBALS['phpgw_info']['user']['preferences']['infolog']['homeShowEvents'])
+	$showevents = intval($GLOBALS['phpgw_info']['user']['preferences']['infolog']['homeShowEvents']);
+	if($showevents > 0)
 	{
 		$save_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 		$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog';
@@ -21,12 +22,20 @@
 		$GLOBALS['portal_order'][] = $app_id;
 
 		$infolog = CreateObject('infolog.uiinfolog');
-		$html = $infolog->index(array('nm' => array('filter' => 'own-open-today')),'','',0,False,True);
+		if($showevents==1)
+		{
+			$html = $infolog->index(array('nm' => array('filter' => 'own-open-today')),'','',0,False,True);
+		}
+		elseif($showevents==2)
+		{
+			#$html = $infolog->index(array('nm' => array('filter' => 'own-upcoming')),'','',0,False,True);
+			$html = ExecMethod('calendar.uicalendar.get_todos', array('', false));
+		}
 		$title = lang('InfoLog').' - '.lang($infolog->filters['own-open-today']);
 		$stable = $infolog->tmpl->stable;
 		unset($infolog);
 
-		if ($stable)	// .14/6
+		if($stable)	// .14/6
 		{
 			$portalbox = CreateObject('phpgwapi.listbox',array(
 				'title'     => $title,
@@ -63,4 +72,5 @@
 		unset($html);
 		$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
 	}
+	unset($showevents);
 ?>
