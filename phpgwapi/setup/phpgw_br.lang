@@ -44,7 +44,7 @@ groups	common	br	Grupos
 help	common	br	Ajuda
 high	common	br	Alta
 home	common	br	Pagina Inicial
-it has been more then x days since you changed your password	common	br	Ja passaram-se mais de %1 dias desde que vc mudou sua senha
+it has been more then %1 days since you changed your password	common	br	Ja passaram-se mais de %1 dias desde que vc mudou sua senha
 january	common	br	Janeiro
 july	common	br	Julho
 june	common	br	Junho
@@ -80,8 +80,8 @@ search	common	br	Procura
 september	common	br	Setembro
 session has been killed	common	br	Sessao foi morta
 show all	common	br	mostra tudo
-showing x	common	br	Visualizando %1
-showing x - x of x	common	br	Visualizando %1 - %2 de %3
+showing %1	common	br	Visualizando %1
+showing %1 - %2 of %3	common	br	Visualizando %1 - %2 de %3
 sorry, there was a problem proccesing your request.	common	br	Desculpe, ocorreu um problema processando sua requisicao.
 submit	common	br	Inserir
 sunday	common	br	Domingo
@@ -95,10 +95,10 @@ wednesday	common	br	Quarta
 which groups	common	br	Qual grupo
 yes	common	br	Sim
 you have 1 new message!	common	br	Voce tem 1 nova mensagem!
-you have x new messages!	common	br	Voce tem %1 novas mensagens!
+you have %1 new messages!	common	br	Voce tem %1 novas mensagens!
 your message as been sent	common	br	Sua mensagem foi enviada
 your search returned 1 match	common	br	sua pesquisa retornou 1 correspondecia
-your search returned x matchs	common	br	Sua pesquisa retornou %1 correspondencias
+your search returned %1 matchs	common	br	Sua pesquisa retornou %1 correspondencias
 your settings have been updated	common	br	suas preferencias foram atualizadas
 bad login or password	login	br	login ou senha incorreta
 login	login	br	Login

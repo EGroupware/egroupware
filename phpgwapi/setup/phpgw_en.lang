@@ -1,11 +1,11 @@
-about x	common	en	about %1
+about %1	common	en	about %1
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 acl	common	en	ACL
 active	common	en	Active
 add	common	en	Add
 add category	common	en	Add category
-add x category for	common	en	Add %1 category for
+add %1 category for	common	en	Add %1 category for
 add sub	common	en	Add sub
 admin	common	en	Admin
 administration	common	en	Administration
@@ -61,8 +61,8 @@ cape verde	common	en	CAPE VERDE
 categories	common	en	Categories
 categories for	common	en	categories for
 category	common	en	Category
-category x has been added !	common	en	Category %1 has been added !
-category x has been updated !	common	en	Category %1 has been updated !
+category %1 has been added !	common	en	Category %1 has been added !
+category %1 has been updated !	common	en	Category %1 has been updated !
 cayman islands	common	en	CAYMAN ISLANDS
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
@@ -116,7 +116,7 @@ ecuador	common	en	ECUADOR
 edit	common	en	Edit
 edit categories	common	en	Edit Categories
 edit category	common	en	Edit category
-edit x category for	common	en	Edit %1 category for
+edit %1 category for	common	en	Edit %1 category for
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
 email	common	en	E-Mail
@@ -128,9 +128,9 @@ entry updated sucessfully	common	en	Entry updated sucessfully
 equatorial guinea	common	en	EQUATORIAL GUINEA
 eritrea	common	en	ERITREA
 error	common	en	Error
-error creating x x directory	common	en	Error creating %1%2 directory
-error deleting x x directory	common	en	Error deleting %1%2 directory
-error renaming x x directory	common	en	Error renaming %1%2 directory
+error creating %1 %2 directory	common	en	Error creating %1 %2 directory
+error deleting %1 %2 directory	common	en	Error deleting %1 %2 directory
+error renaming %1 %2 directory	common	en	Error renaming %1 %2 directory
 estonia	common	en	ESTONIA
 ethiopia	common	en	ETHIOPIA
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
@@ -189,7 +189,7 @@ iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	en	IRAQ
 ireland	common	en	IRELAND
 israel	common	en	ISRAEL
-it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
+it has been more then %1 days since you changed your password	common	en	It has been more then %1 days since you changed your password
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
 italy	common	en	ITALY
 jamaica	common	en	JAMAICA
@@ -311,6 +311,7 @@ philippines	common	en	PHILIPPINES
 is a multi-user, web-based groupware suite written in PHP	about	en	is a multi-user, web-based groupware suite written in PHP.
 phpgwapi	common	en	phpGroupWare API
 pitcairn	common	en	PITCAIRN
+please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Please enter a name !
 please run setup to become current	common	en	Please run setup to become current
 please set your global preferences	common	en	Please set your global preferences !
@@ -349,13 +350,13 @@ select category	common	en	Select Category
 send	common	en	Send
 senegal	common	en	SENEGAL
 september	common	en	September
-server x has been added	common	en	Server %1 has been added
+server %1 has been added	common	en	Server %1 has been added
 server name	common	en	Server Name
 session has been killed	common	en	Session has been killed
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
-showing x	common	en	showing %1
-showing x - x of x	common	en	showing %1 - %2 of %3
+showing %1	common	en	showing %1
+showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 sierra leone	common	en	SIERRA LEONE
 singapore	common	en	SINGAPORE
 slovakia	common	en	SLOVAKIA
@@ -396,7 +397,7 @@ time	common	en	Time
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
-to go back to the msg list, click <a href= x >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
+to go back to the msg list, click <a href="%1">here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
@@ -444,7 +445,7 @@ you have been successfully logged out	login	en	You have been successfully logged
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 your search returned 1 match	common	en	your search returned 1 match
-your search returned x matchs	common	en	your search returned %1 matches
+your search returned %1 matchs	common	en	your search returned %1 matchs
 your session could not be verified.	login	en	Your session could not be verified.
 your settings have been updated	common	en	Your settings have been Updated
 yugoslavia	common	en	YUGOSLAVIA

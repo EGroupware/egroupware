@@ -4,7 +4,7 @@ acl	common	es	LCA
 active	common	es	Activo
 add	common	es	Agregar
 add category	common	es	Agregar Categoria
-add x category for	common	es	Agregar %1 categoria para
+add %1 category for	common	es	Agregar %1 categoria para
 add sub	common	es	Agregar sub
 admin	common	en	Admininstrador
 administration	common	es	Administracion
@@ -59,8 +59,8 @@ cape verde	common	es	CAPE VERDE
 categories	common	es	Categorias
 categories for	common	es	categorias para
 category	common	es	Categoria
-category x has been added !	common	es	La Categoria %1 ha sido agregada !
-category x has been updated !	common	es	La Categoria %1 ha sido actualizada !
+category %1 has been added !	common	es	La Categoria %1 ha sido agregada !
+category %1 has been updated !	common	es	La Categoria %1 ha sido actualizada !
 cayman islands	common	es	CAYMAN ISLANDS
 central african republic	common	es	CENTRAL AFRICAN REPUBLIC
 chad	common	es	CHAD
@@ -112,7 +112,7 @@ ecuador	common	es	ECUADOR
 edit	common	es	Editar
 edit categories	common	es	Editar Categorias
 edit category	common	es	Editar categoria
-edit x category for	common	es	Editar %1 categoria para
+edit %1 category for	common	es	Editar %1 categoria para
 egypt	common	es	EGYPT
 el salvador	common	es	EL SALVADOR
 email	common	es	E-Mail
@@ -124,9 +124,9 @@ entry updated sucessfully	common	es	La entrada ha sido actualizada exitosamente
 equatorial guinea	common	es	EQUATORIAL GUINEA
 eritrea	common	es	ERITREA
 error	common	es	Error
-error creating x x directory	common	es	Error creando directorio %1%2
-error deleting x x directory	common	es	Error eliminando directorio %1%2
-error renaming x x directory	common	es	Error renombrando directorio %1%2
+error creating %1 %2 directory	common	es	Error creando directorio %1 %2
+error deleting %1 %2 directory	common	es	Error eliminando directorio %1 %2
+error renaming %1 %2 directory	common	es	Error renombrando directorio %1 %2
 estonia	common	es	ESTONIA
 ethiopia	common	es	ETHIOPIA
 falkland islands (malvinas)	common	es	MALVINAS
@@ -185,7 +185,7 @@ iran, islamic republic of	common	es	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	es	IRAQ
 ireland	common	es	IRELAND
 israel	common	es	ISRAEL
-it has been more then x days since you changed your password	common	es	Hace mas de %1 dias desde que cambio su clave por ultima vez
+it has been more then %1 days since you changed your password	common	es	Hace mas de %1 dias desde que cambio su clave por ultima vez
 it is recommended that you run setup to upgrade your tables to the current version	common	es	Se recomienda que ejecute el setup para actualizar las tablas a la ultima version
 italy	common	es	ITALY
 jamaica	common	es	JAMAICA
@@ -301,7 +301,7 @@ please run setup to become current	common	es	Por favor ejecute el setup para act
 please set your preferences for this application	common	es	Por favor elija sus preferencias para esta aplicacion
 poland	common	es	POLAND
 portugal	common	es	PORTUGAL
-powered by phpgroupware version x	common	es	Potenciado por phpgroupware version %1
+powered by phpgroupware version %1	common	es	Potenciado por phpgroupware version %1
 preferences	common	es	Preferencias
 print	common	es	Imprimir
 priority	common	es	Prioridad
@@ -334,8 +334,8 @@ september	common	es	Septiembre
 session has been killed	common	es	La Sesion ha sido eliminada
 seychelles	common	es	SEYCHELLES
 show all	common	es	mostrar todo
-showing x	common	es	mostrando %1
-showing x - x of x	common	es	mostrando %1 - %2 de %3
+showing %1	common	es	mostrando %1
+showing %1 - %2 of %3	common	es	mostrando %1 - %2 de %3
 sierra leone	common	es	SIERRA LEONE
 singapore	common	es	SINGAPORE
 slovakia	common	es	SLOVAKIA
@@ -419,7 +419,7 @@ you have been successfully logged out	login	es	Usted ha salido exitosamente
 you have selected an invalid date	common	es	Usted ha seleccionado una fecha invalida !
 you have selected an invalid main category	common	es	Usted ha seleccionado una categoria principal invalida !
 your search returned 1 match	common	es	su busqueda devolvio 1 resultado
-your search returned x matchs	common	es	su busqueda devolvio %1 resultados
+your search returned %1 matchs	common	es	su busqueda devolvio %1 resultados
 your session could not be verified.	login	es	Su sesion no pudo ser verificada.
 your settings have been updated	common	es	Sus preferencias fueron actualizadas
 yugoslavia	common	es	YUGOSLAVIA

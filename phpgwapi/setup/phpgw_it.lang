@@ -4,7 +4,7 @@ acl	common	it	ACL
 active	common	it	Attivo
 add	common	it	Aggiungi
 add category	common	it	Aggiungi una categoria
-add x category for	common	it	Aggiungi categoria %1 per
+add %1 category for	common	it	Aggiungi categoria %1 per
 add sub	common	it	Aggiungi Sub
 admin	common	it	Amministrazione
 administration	common	it	Amministrazione
@@ -60,8 +60,8 @@ cape verde	common	it	CAPO VERDE
 categories	common	it	Categorie
 categories for	common	it	Categorie per
 category	common	it	Categoria
-category x has been added !	common	it	La categoria %1 &egrave; stata aggiunta!
-category x has been updated !	common	it	La categoria %1 &egrave; stata aggiornata!
+category %1 has been added !	common	it	La categoria %1 &egrave; stata aggiunta!
+category %1 has been updated !	common	it	La categoria %1 &egrave; stata aggiornata!
 cayman islands	common	it	ISOLE CAYMAN
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
@@ -113,7 +113,7 @@ ecuador	common	it	EQUADOR
 edit	common	it	Modifica
 edit category	common	it	Modifica Categoria
 edit categories	common	it	Modifica Categorie
-edit x category for	common	it	Modifica %1 categorie per
+edit %1 category for	common	it	Modifica %1 categorie per
 egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
 email	common	it	E-Mail
@@ -125,9 +125,9 @@ entry updated sucessfully	common	it	L'annotazione è stata aggiornata correttamen
 equatorial guinea	common	it	GUINEA EQUATORIALE
 eritrea	common	it	ERITREA
 error	common	it	Errore
-error creating x x directory	common	it	Errore durante la creazione della directory %1%2
-error deleting x x directory	common	it	Errore durante l'eliminazione della directory %1%2
-error renaming x x directory	common	it	Errore durante la rinomina della directory %1%2
+error creating %1 %2 directory	common	it	Errore durante la creazione della directory %1 %2
+error deleting %1 %2 directory	common	it	Errore durante l'eliminazione della directory %1 %2
+error renaming %1 %2 directory	common	it	Errore durante la rinomina della directory %1 %2
 estonia	common	it	ESTONIA
 ethiopia	common	it	ETIOPIA
 falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
@@ -186,7 +186,7 @@ iran, islamic republic of	common	it	IRAN, REPUBBLICA ISLAMICA DELL
 iraq	common	it	IRAQ
 ireland	common	it	IRLANDA
 israel	common	it	ISRAELE
-it has been more then x days since you changed your password	common	it	Sono passati più di %1 da quando hai cambiato la password
+it has been more then %1 days since you changed your password	common	it	Sono passati più di %1 da quando hai cambiato la password
 it is recommended that you run setup to upgrade your tables to the current version	common	it	&Egrave; raccomandato eseguire il setup per aggiornare le tabelle alla versione attuale.
 italy	common	it	ITALIA
 jamaica	common	it	GIAMAICA
@@ -302,7 +302,7 @@ please run setup to become current	common	it	Per favore esegui setup per aggiorn
 please set your preferences for this app	common	it	Per favore specifica le tue preferenze per questa applicazione
 poland	common	it	POLONIA
 portugal	common	it	PORTOGALLO
-powered by phpgroupware version x	common	it	Creato con <a href="http://www.phpgroupware.org">phpGroupWare</a> versione %1
+powered by phpgroupware version %1	common	it	Creato con <a href="http://www.phpgroupware.org">phpGroupWare</a> versione %1
 preferences	common	it	Preferenze
 print	common	it	Stampa
 priority	common	it	Priorità
@@ -335,8 +335,8 @@ september	common	it	Settembre
 session has been killed	common	it	La sessione è stata terminata
 seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
-showing x	common	it	visualizzati %1
-showing x - x of x	common	it	visualizzo %1 - %2 di %3
+showing %1	common	it	visualizzati %1
+showing %1 - %2 of %3	common	it	visualizzo %1 - %2 di %3
 sierra leone	common	it	SIERRA LEONE
 singapore	common	it	SINGAPORE
 slovakia	common	it	SLOVACCHIA
@@ -420,7 +420,7 @@ you have been successfully logged out	login	it	Il logout è stato effettuato corr
 you have selected an invalid date	common	it	Hai selezionato una data non valida!
 you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
 your search returned 1 match	common	it	la tua ricerca ha restituito un risultato
-your search returned x matchs	common	it	la tua ricerca ha resttuito %1 risultati
+your search returned %1 matchs	common	it	la tua ricerca ha resttuito %1 risultati
 your session could not be verified.	login	it	La tua sessione non può essere verificata.
 your settings have been updated	common	it	I tuoi settaggi sono aggiornati
 yugoslavia	common	it	YUGOSLAVIA

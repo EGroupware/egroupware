@@ -4,7 +4,7 @@ acl	common	de	ACL
 active	common	de	Aktiv
 add	common	de	Hinzufügen
 add category	common	de	Kategorie hinzufügen
-add x category for	common	de	%1 Kategorie hinzufügen für
+add %1 category for	common	de	%1 Kategorie hinzufügen für
 add sub	common	de	Untergeordnete hinzufügen
 admin	common	de	Admin
 administration	common	de	Administration
@@ -59,8 +59,8 @@ cape verde	common	de	KAP VERDE
 category	common	de	Kategorie
 categories	common	de	Kategorien
 categories for	common	de	Kategorien für
-category x has been added !	common	de	Kategorie %1 wurde hinzugef&uuml;gt !
-category x has been updated !	common	de	Kategorie %1 wurde &uuml;berarbeitet !
+category %1 has been added !	common	de	Kategorie %1 wurde hinzugef&uuml;gt !
+category %1 has been updated !	common	de	Kategorie %1 wurde &uuml;berarbeitet !
 cayman islands	common	de	KAIMAN INSELN
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
@@ -103,7 +103,7 @@ e-mail	common	de	E-Mail
 edit	common	de	Editieren
 edit category	common	de	Kategorie editieren
 edit categories	common	de	Kategorien editieren
-edit x category for	common	de	%1 Kategorie editieren f&uuml;r
+edit %1 category for	common	de	%1 Kategorie editieren f&uuml;r
 email	common	de	E-Mail
 enabled	common	de	Verf&uuml;gbar
 end date	common	de	Enddatum
@@ -111,9 +111,9 @@ end time	common	de	Endzeit
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gel&ouml;scht
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
 error	common	de	Fehler
-error creating x x directory	common	de	Fehler beim Erstellen des Verzeichnisses %1%2
-error deleting x x directory	common	de	Fehler beim L.schen des Verzeichnisses %1%2
-error renaming x x directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1%2
+error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisses %1 %2
+error deleting %1 %2 directory	common	de	Fehler beim L.schen des Verzeichnisses %1 %2
+error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
 february	common	de	Februar
 files	common	de	Dateien
 filter	common	de	Filter
@@ -131,7 +131,7 @@ group public	common	de	Group Public
 groups	common	de	Gruppen
 help	common	de	Hilfe
 home	common	de	Home
-it has been more then x days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
+it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
 january	common	de	Januar
 july	common	de	Juli
@@ -187,8 +187,8 @@ select category	common	de	Kategorie auswählen
 september 	common	de	September
 session has been killed	common	de	Session wurde gelöscht
 show all	common	de	alle anzeigen
-showing x	common	de	%1 Einträge
-showing x - x of x	common	de	%1 - %2 von %3 Einträgen
+showing %1	common	de	%1 Einträge
+showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 start date	common	de	Startdatum
 start time	common	de	Startzeit
 status	common	de	Status
@@ -220,7 +220,7 @@ you are running a newer version of phpGroupWare than your database is setup for	
 you have selected an invalid date	common	de	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
 you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
-your search returned x matchs	common	de	Ihre Suche ergab %1 Treffer
+your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 you have been successfully logged out	login	de	Abmeldung erfolgreich
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.

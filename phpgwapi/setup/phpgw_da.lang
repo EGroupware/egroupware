@@ -10,7 +10,7 @@ active	common	da	Aktiv
 add	common	da	Tilføj
 add category	common	da	Tilføj kategori
 add sub	common	da	Tilføj underkategori
-add x category for	common	da	Tilføj kategorien %1 for
+add %1 category for	common	da	Tilføj kategorien %1 for
 admin	common	da	Admin
 administration	common	da	Administration
 afghanistan	common	da	Afghanistan
@@ -64,8 +64,8 @@ cape verde	common	da	Cape Verde
 categories	common	da	Kategorier
 categories for	common	da	kategorier for
 category	common	da	Kategori
-category x has been added !	common	da	Kategorien %1 er blevet tilføjet!
-category x has been updated !	common	da	Kategorien %1 er blevet opdateret!
+category %1 has been added !	common	da	Kategorien %1 er blevet tilføjet!
+category %1 has been updated !	common	da	Kategorien %1 er blevet opdateret!
 cayman islands	common	da	Cayman Øerne
 central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
@@ -119,7 +119,7 @@ ecuador	common	da	Ecuador
 edit	common	da	Redigér
 edit categories	common	da	Redigér Kategorier
 edit category	common	da	Redigér kategori
-edit x category for	common	da	Redigér kategorien %1 for
+edit %1 category for	common	da	Redigér kategorien %1 for
 egypt	common	da	Egypten
 el salvador	common	da	El Salvador
 email	common	da	E-mail
@@ -131,9 +131,9 @@ entry updated sucessfully	common	da	Emnet er succesrigt opdateret
 equatorial guinea	common	da	Equatorial Guinea
 eritrea	common	da	Eritrea
 error	common	da	Fejl
-error creating x x directory	common	da	Fejl ved oprettelsen af biblioteket %1%2
-error deleting x x directory	common	da	Fejl ved sletningen af biblioteket %1%2
-error renaming x x directory	common	da	Fejl ved omdøbningen af biblioteket %1%2
+error creating %1 %2 directory	common	da	Fejl ved oprettelsen af biblioteket %1 %2
+error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %2
+error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
 exit	common	da	Afslut
@@ -196,7 +196,7 @@ iran, islamic republic of	common	da	Iran, Den Islamiske Republik
 iraq	common	da	Irak
 ireland	common	da	Irland
 israel	common	da	Israel
-it has been more then x days since you changed your password	common	da	Det er mere end %1 dage siden du sidst ændrede dit password
+it has been more then %1 days since you changed your password	common	da	Det er mere end %1 dage siden du sidst ændrede dit password
 it is recommended that you run setup to upgrade your tables to the current version	common	da	Det anbefales at du kører setup for at opgradere dine tabeller til den nuværende version.
 italy	common	da	Italien
 jamaica	common	da	Jamaica
@@ -297,7 +297,7 @@ october	common	da	Oktober
 ok	common	da	OK
 old value	common	da	Gammel Værdi
 oman	common	da	Oman
-on *nix systems please type: x	common	da	På *nix systemer skriver Du: %1
+on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
 only yours	common	da	Kun Din
 open notify window	common	da	Åben Notificer Vindue
 original	common	da	Original
@@ -324,10 +324,10 @@ pitcairn	common	da	Pitcairn
 please enter a name	common	da	Indtast venligst et navn!
 please run setup to become current	common	da	Kør venligst setup for at blive opdateret
 please set your preferences for this application	common	da	Indtast venligst dine preferencer for denne applikation
-please x by hand	common	da	Udfør venligst %1 manuelt
+please %1 by hand	common	da	Udfør venligst %1 manuelt
 poland	common	da	Polen
 portugal	common	da	Portugal
-powered by phpgroupware version x	common	da	Denne site kører på <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+powered by phpgroupware version %1	common	da	Denne site kører på <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	da	Preferencer
 previous page	common	da	Forrige side
 print	common	da	Udskriv
@@ -361,8 +361,8 @@ september	common	da	September
 session has been killed	common	da	Sessionen er afsluttet
 seychelles	common	da	Seychellerne
 show all	common	da	Vis alt
-showing x	common	da	Viser: %1
-showing x - x of x	common	da	Viser: %1 - %2 ud af %3
+showing %1	common	da	Viser: %1
+showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3
 sierra leone	common	da	Sierra Leone
 singapore	common	da	Singapore
 slovakia	common	da	Slovakiet
@@ -456,10 +456,10 @@ you have 1 new message!	common	da	Du har 1 ny besked!
 you have been successfully logged out	login	da	Du er nu succesrigt logget ud
 you have selected an invalid date	common	da	Du har valgt en ugyldig dato!
 you have selected an invalid main category	common	da	Du har valgt en ugyldig hovedkategori!
-you have x new messages!	common	da	Du har %1 nye beskeder!
+you have %1 new messages!	common	da	Du har %1 nye beskeder!
 your message has been sent	common	da	Din besked er afsendt
 your search returned 1 match	common	da	Søgningen leverede 1 resultat
-your search returned x matchs	common	da	Søgningen leverede %1 resultater
+your search returned %1 matchs	common	da	Søgningen leverede %1 resultater
 your session could not be verified.	login	da	Din session kunne ikke verificeres
 your settings have been updated	common	da	Dine indstillinger er opdateret
 yugoslavia	common	da	Jugoslavien

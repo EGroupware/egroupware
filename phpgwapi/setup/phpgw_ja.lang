@@ -12,7 +12,7 @@ acl	common	ja	許可設定
 active	common	ja	アクティブ
 add	common	ja	追加
 add category	common	ja	カテゴリ追加
-add x category for	common	ja	%1 カテゴリ追加
+add %1 category for	common	ja	%1 カテゴリ追加
 admin	common	ja	環境設定
 administration	common	ja	環境設定
 all	common	ja	全て
@@ -25,8 +25,8 @@ cancel	common	ja	取消
 categories	common	ja	カテゴリ
 category	common	ja	カテゴリ
 categories for	common	ja	カテゴリ
-category x has been added !	common	ja	カテゴリ %1 を追加しました。
-category x has been updated !	common	ja	カテゴリ %1 を訂正しました。
+category %1 has been added !	common	ja	カテゴリ %1 を追加しました。
+category %1 has been updated !	common	ja	カテゴリ %1 を訂正しました。
 cc	common	ja	ＣＣ
 change	common	ja	変更
 charset	common	ja	EUC-JP
@@ -54,7 +54,7 @@ e-mail	common	ja	電子メール
 edit	common	ja	訂正
 edit categories	common	ja	カテゴリ訂正
 edit category	common	ja	カテゴリ訂正
-edit x category for	common	ja	%1 カテゴリ訂正
+edit %1 category for	common	ja	%1 カテゴリ訂正
 email	common	ja	電子メール
 end date	common	ja	終了日
 end time	common	ja	終了時間
@@ -91,7 +91,7 @@ home	common	ja	ホーム
 images	common	ja	Images
 inc	common	ja	Inc
 international	common	ja	国際
-it has been more then x days since you changed your password	common	ja	It has been more then %1 days since you changed your password
+it has been more then %1 days since you changed your password	common	ja	It has been more then %1 days since you changed your password
 january	common	ja	１月
 july	common	ja	７月
 june	common	ja	６月
@@ -126,7 +126,7 @@ notes preferences	common	ja	ノートユーザ設定
 november	common	ja	１１月
 october	common	ja	１０月
 ok	common	ja	OK
-on *nix systems please type: x	common	ja	On *nix systems please type: %1
+on *nix systems please type: %1	common	ja	On *nix systems please type: %1
 only yours	common	ja	所有者
 original	common	ja	オリジナル
 other	common	ja	その他
@@ -140,9 +140,9 @@ password has been updated	common	ja	パスワードを変更しました。
 permissions to the files/users directory	common	ja	permissions to the files/users directory
 personal	common	ja	個人
 please set your preferences for this application	common	ja	このアプリケーションのユーザ設定を行って下さい。
-please x by hand	common	ja	Please %1 by hand
+please %1 by hand	common	ja	Please %1 by hand
 please, check your username and password, or contact your admin.	common	ja	ユーザとパスワードをチェックするか、管理者に問い合わせてください。
-powered by phpgroupware version x	common	ja	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+powered by phpgroupware version %1	common	ja	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 pref	common	ja	優先
 prefer	common	ja	好み
 preferences	common	ja	ユーザ設定
@@ -169,8 +169,8 @@ send updates via email	common	ja	更新情報を電子メールで受取る
 september	common	ja	９月
 session has been killed	common	ja	セッションを削除しました。
 show all	common	ja	全て表示
-showing x	common	ja	表示数 %1
-showing x - x of x	common	ja	表示数 %1 - %2 of %3
+showing %1	common	ja	表示数 %1
+showing %1 - %2 of %3	common	ja	表示数 %1 - %2 of %3
 small	common	ja	小
 sorry, there was a problem processing your request.	common	ja	Sorry, there was a problem processing your request.
 squirrelmail	common	ja	Squirrelmail
@@ -206,12 +206,12 @@ you are required to change your password durring your first login	common	ja	初回
 you have 1 new message!	common	ja	新着メールが１通あります。
 you have messages!	common	ja	メッセージがあります。
 you have no new messages	common	ja	新着メールはありません。
-you have x new messages!	common	ja	新着メールが %1 通あります。
+you have %1 new messages!	common	ja	新着メールが %1 通あります。
 you must enter a password	common	ja	パスワードを入力して下さい。
 your message has been sent	common	ja	メッセージを送信しました。
 your search has returned no matchs !	common	ja	見つかりません。
 your search returned 1 match	common	ja	１件見つかりました。
-your search returned x matchs	common	ja	%1 件見つかりました。
+your search returned %1 matchs	common	ja	%1 件見つかりました。
 your settings have been updated	common	ja	Your settings have been Updated
 bad login or password	login	ja	パスワードが誤っています
 login	login	ja	ログイン

@@ -777,11 +777,11 @@
 				{
 					$end = $start + $this->maxmatches;
 				}
-				return lang('showing x - x of x',($start + 1),$end,$total_records);
+				return lang('showing %1 - %2 of %3',($start + 1),$end,$total_records);
 			}
 			else
 			{
-				return lang('showing x',$total_records);
+				return lang('showing %1',$total_records);
 			}
 		}
 

@@ -5,7 +5,7 @@ active	common	pl	Aktywne
 add	common	pl	Dodaj
 add category	common	pl	Dodaj kategoriê
 add sub	common	pl	Dodaj podrz.
-add x category for	common	pl	Dodaj kategoriê %1 dla
+add %1 category for	common	pl	Dodaj kategoriê %1 dla
 admin	common	pl	Administrator
 administration	common	pl	Administracja
 afghanistan	common	pl	AFGANISTAN
@@ -59,8 +59,8 @@ cape verde	common	pl	REPUBLIKA ZIELONEGO PRZYL¡DKA
 categories	common	pl	Kategorie
 categories for	common	pl	kategorie dla
 category	common	pl	Kategoria
-category x has been added !	common	pl	Kategoria %1 zosta³a dodana !
-category x has been updated !	common	pl	Kategoria %1 zosta³a uaktualniona !
+category %1 has been added !	common	pl	Kategoria %1 zosta³a dodana !
+category %1 has been updated !	common	pl	Kategoria %1 zosta³a uaktualniona !
 cayman islands	common	pl	KAJMANY
 central african republic	common	pl	REPUBLIKA ¦RODKOWOAFRYKANSKA
 chad	common	pl	CZAD
@@ -112,7 +112,7 @@ ecuador	common	pl	EKWADOR
 edit	common	pl	Edytuj
 edit categories	common	pl	Edytuj kategorie
 edit category	common	pl	Edytuj kategoriê
-edit x category for	common	pl	Edytuj kategoriê %1 dla
+edit %1 category for	common	pl	Edytuj kategoriê %1 dla
 egypt	common	pl	EGIPT
 el salvador	common	pl	SALWADOR
 email	common	pl	E-mail
@@ -124,9 +124,9 @@ entry updated sucessfully	common	pl	Dane zosta³y uaktualnione
 equatorial guinea	common	pl	GWINEA RÓWNIKOWA
 eritrea	common	pl	ERYTREA
 error	common	pl	B³±d
-error creating x x directory	common	pl	B³±t podczas tworzenia katalogu %1%2
-error deleting x x directory	common	pl	B³±d podczas usuwania katalogu %1%2
-error renaming x x directory	common	pl	B³±d podczas zmiany nazwy katalogu %1%2
+error creating %1 %2 directory	common	pl	B³±t podczas tworzenia katalogu %1 %2
+error deleting %1 %2 directory	common	pl	B³±d podczas usuwania katalogu %1 %2
+error renaming %1 %2 directory	common	pl	B³±d podczas zmiany nazwy katalogu %1 %2
 estonia	common	pl	ESTONIA
 ethiopia	common	pl	ETIOPIA
 falkland islands (malvinas)	common	pl	FALKLANDY (MALWINY)
@@ -185,7 +185,7 @@ iran, islamic republic of	common	pl	IRAN
 iraq	common	pl	IRAK
 ireland	common	pl	IRLANDIA
 israel	common	pl	IZRAEL
-it has been more then x days since you changed your password	common	pl	Up³ynê³o ponad %1 dni od momentu zmiany has³a
+it has been more then %1 days since you changed your password	common	pl	Up³ynê³o ponad %1 dni od momentu zmiany has³a
 it is recommended that you run setup to upgrade your tables to the current version	common	pl	Zaleca siê uruchomienie instalatora do uaktualnienia tabel do bie¿±cej wersji
 italy	common	pl	W£OCHY
 jamaica	common	pl	JAMAJKA
@@ -307,7 +307,7 @@ please set your global preferences	common	pl	Proszê wprowadziæ swoje globalne pr
 please set your preferences for this application	common	pl	Proszê wprowadziæ ustawienia dla tej aplikacji
 poland	common	pl	POLSKA
 portugal	common	pl	PORTUGALIA
-powered by phpgroupware version x	common	pl	Dzia³a na <a href="http://www.phpgroupware.org">phpGroupWare</a> wersja %1
+powered by phpgroupware version %1	common	pl	Dzia³a na <a href="http://www.phpgroupware.org">phpGroupWare</a> wersja %1
 preferences	common	pl	Ustawienia
 print	common	pl	Drukuj
 priority	common	pl	Priorytet
@@ -340,12 +340,12 @@ send	common	pl	Wy¶lij
 senegal	common	pl	SENEGAL
 september	common	pl	Wrzesieñ
 server name	common	pl	Nazwa serwera
-server x has been added	common	pl	Serwer %1 zosta³ dodany
+server %1 has been added	common	pl	Serwer %1 zosta³ dodany
 session has been killed	common	pl	Sesja zosta³a zamkniêta
 seychelles	common	pl	SESZELE
 show all	common	pl	Poka¿ wszystko
-showing x	common	pl	Wy¶wietlono %1
-showing x - x of x	common	pl	Wy¶wietlanie %1 - %2 z %3
+showing %1	common	pl	Wy¶wietlono %1
+showing %1 - %2 of %3	common	pl	Wy¶wietlanie %1 - %2 z %3
 sierra leone	common	pl	SIERRA LEONE
 singapore	common	pl	SINGAPUR
 slovakia	common	pl	S£OWACJA
@@ -386,7 +386,7 @@ time	common	pl	Czas
 time zone	common	pl	Strefa czasowa
 time zone offset	common	pl	Przesuniêcie strefy czasowej
 title	common	pl	Tytu³
-to go back to the msg list, click <a href= x >here</a>	common	pl	Aby wróciæ do listy wiadomo¶ci, kliknij <a href="%1">tutaj</a>
+to go back to the msg list, click <a href="%1">here</a>	common	pl	Aby wróciæ do listy wiadomo¶ci, kliknij <a href="%1">tutaj</a>
 togo	common	pl	TOGO
 tokelau	common	pl	TOKELAU
 tonga	common	pl	TONGA
@@ -434,7 +434,7 @@ you have selected an invalid date	common	pl	Wybra³e¶ nieprawid³ow± datê
 you have selected an invalid main category	common	pl	Wybra³e¶ niew³a¶ciw± kategoriê g³ówn±
 your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomo¶æ <b>nie</b> zosta³a wys³ana!<br>
 your search returned 1 match	common	pl	wyszukiwanie zwróci³o 1 trafienie
-your search returned x matchs	common	pl	wyszukiwanie zwróci³o %1 trafieñ
+your search returned %1 matchs	common	pl	wyszukiwanie zwróci³o %1 trafieñ
 your session could not be verified.	login	pl	Nie mo¿na zweryfikowaæ sesji.
 your settings have been updated	common	pl	Twoje ustawienia zosta³y uaktualnione
 yugoslavia	common	pl	JUGOS£AWIA

@@ -4,7 +4,7 @@ acl	common	zt	控管權限
 active	common	zt	啟用
 add	common	zt	新增
 add category	common	zt	新增分類
-add x category for	common	zt	新增 %1 子分類給
+add %1 category for	common	zt	新增 %1 子分類給
 admin	common	zt	系統管理
 administration	common	zt	系統管理
 afghanistan	common	zt	AFGHANISTAN
@@ -56,8 +56,8 @@ cape verde	common	zt	CAPE VERDE
 categories	common	zt	Categories
 categories for	common	zt	categories for
 category	common	zt	Category
-category x has been added !	common	zt	已新增分類 %1 ！
-category x has been updated !	common	zt	已更新分類 %1 ！
+category %1 has been added !	common	zt	已新增分類 %1 ！
+category %1 has been updated !	common	zt	已更新分類 %1 ！
 cayman islands	common	zt	CAYMAN ISLANDS
 central african republic	common	zt	CENTRAL AFRICAN REPUBLIC
 chad	common	zt	CHAD
@@ -104,7 +104,7 @@ ecuador	common	zt	ECUADOR
 edit	common	zt	編輯
 edit categories	common	zt	編輯分類
 edit category	common	zt	編輯分類
-edit x category for	common	zt	編輯分類 %1 給
+edit %1 category for	common	zt	編輯分類 %1 給
 egypt	common	zt	EGYPT
 el salvador	common	zt	EL SALVADOR
 email	common	zt	E-Mail
@@ -117,9 +117,9 @@ entry updated sucessfully	common	zt	資料已成功更新
 equatorial guinea	common	zt	EQUATORIAL GUINEA
 eritrea	common	zt	ERITREA
 error	common	zt	錯誤
-error creating x x directory	common	zt	無法建立目錄 %1%2
-error deleting x x directory	common	zt	無法移除目錄 %1%2
-error renaming x x directory	common	zt	無法更名目錄 %1%2
+error creating %1 %2 directory	common	zt	無法建立目錄 %1 %2
+error deleting %1 %2 directory	common	zt	無法移除目錄 %1 %2
+error renaming %1 %2 directory	common	zt	無法更名目錄 %1 %2
 estonia	common	zt	ESTONIA
 ethiopia	common	zt	ETHIOPIA
 falkland islands (malvinas)	common	zt	FALKLAND ISLANDS (MALVINAS)
@@ -175,7 +175,7 @@ iran, islamic republic of	common	zt	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	zt	IRAQ
 ireland	common	zt	IRELAND
 israel	common	zt	ISRAEL
-it has been more then x days since you changed your password	common	zt	距離您上次更改密碼已經 %1 天了
+it has been more then %1 days since you changed your password	common	zt	距離您上次更改密碼已經 %1 天了
 it is recommended that you run setup to upgrade your tables to the current version	common	zt	建議您執行設定程式將資料表升級至目前的版本。
 italy	common	zt	ITALY
 jamaica	common	zt	JAMAICA
@@ -284,7 +284,7 @@ please run setup to become current	common	zt	請執行設定程式以到目前的
 please set your preferences for this application	common	zt	請設定這個應用程式的個人喜好設定
 poland	common	zt	POLAND
 portugal	common	zt	PORTUGAL
-powered by phpgroupware version x	common	zt	此軟體為 <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 版，中文化版本由<a href="http://www.dottech.com.tw">達科數位</a>提供。
+powered by phpgroupware version %1	common	zt	此軟體為 <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 版，中文化版本由<a href="http://www.dottech.com.tw">達科數位</a>提供。
 preferences	common	zt	喜好設定
 print	common	zt	列印
 priority	common	zt	優先權
@@ -316,8 +316,8 @@ september	common	zt	九月
 session has been killed	common	zt	連線已被中斷
 seychelles	common	zt	SEYCHELLES
 show all	common	zt	顯示全部
-showing x	common	zt	顯示 %1
-showing x - x of x	common	zt	顯示 %1 - %2 之 %3
+showing %1	common	zt	顯示 %1
+showing %1 - %2 of %3	common	zt	顯示 %1 - %2 之 %3
 sierra leone	common	zt	SIERRA LEONE
 singapore	common	zt	SINGAPORE
 slovakia	common	zt	SLOVAKIA
@@ -399,7 +399,7 @@ you have been successfully logged out	login	zt	您已經成功登出。
 you have selected an invalid date	common	zt	您選擇了不合法的日期！
 you have selected an invalid main category	common	zt	您選擇了錯誤的分類！
 your search returned 1 match	common	zt	搜尋到 1 筆資料
-your search returned x matchs	common	zt	搜尋到 %s 筆資料
+your search returned %1 matchs	common	zt	搜尋到 %1 筆資料
 your session could not be verified.	login	zt	您的連線不合法。
 your settings have been updated	common	zt	您的設定已經更新。
 yugoslavia	common	zt	YUGOSLAVIA

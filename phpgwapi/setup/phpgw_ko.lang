@@ -45,7 +45,7 @@ groups	common	ko	그룹
 help	common	ko	도움말
 high	common	ko	높음
 home	common	ko	홈으로
-it has been more then x days since you changed your password	common	ko	암호를 변경한지 %1 일이 경과했습니다.
+it has been more then %1 days since you changed your password	common	ko	암호를 변경한지 %1 일이 경과했습니다.
 january	common	ko	 1월
 july	common	ko	 7월
 june	common	ko	 6월
@@ -68,13 +68,13 @@ notes	common	ko	기타
 november	common	ko	11월
 october	common	ko	10월
 ok	common	ko	확인
-on *nix systems please type: x	common	ko	On *nix systems please type: %1
+on *nix systems please type: %1	common	ko	On *nix systems please type: %1
 only yours	common	ko	자신의 것만
 password	common	ko	암호
 password has been updated	common	ko	암호가 변경되었습니다.
 permissions to the files/users directory	common	ko	permissions to the files/users directory
-please x by hand	common	ko	%1을 직접 하시오. 
-powered by phpgroupware version	common	ko	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+please %1 by hand	common	ko	%1을 직접 하시오. 
+powered by phpgroupware version %1	common	ko	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	ko	환경설정
 previous page	common	ko	이전 페이지로
 priority	common	ko	중요도
@@ -86,8 +86,8 @@ search	common	ko	검색
 september	common	ko	 9월
 session has been killed	common	ko	작업이 종료되었습니다.
 show all	common	ko	모두 보기
-showing x	common	ko	현재 %1
-showing x - x of x	common	ko	전체 %3에서 %1 - %2
+showing %1	common	ko	현재 %1
+showing %1 - %2 of %3	common	ko	전체 %3에서 %1 - %2
 sorry, there was a problem processing your request.	common	ko	처리중 에러가 발생했습니다.
 submit	common	ko	전송
 sunday	common	ko	일요일
@@ -103,10 +103,10 @@ wednesday	common	ko	수요일
 which groups	common	ko	그룹선택
 yes	common	ko	예
 you have 1 new message!	common	ko	1 개의 새로운 메시지가 있습니다!
-you have x new messages!	common	ko	%1 개의 새로운 메시지가 있습니다!
+you have %1 new messages!	common	ko	%1 개의 새로운 메시지가 있습니다!
 your message has been sent	common	ko	메시지가 전송되었습니다.
 your search returned 1 match	common	ko	1건의 결과가 검색되었습니다.
-your search returned x matchs	common	ko	%1건의 결과가 검색되었습니다.
+your search returned %1 matchs	common	ko	%1건의 결과가 검색되었습니다.
 your settings have been updated	common	ko	설정이 변경되었습니다.
 bad login or password	login	ko	사용자ID나 패스워드가 틀립니다.
 login	login	ko	로그인

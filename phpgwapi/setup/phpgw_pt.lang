@@ -5,7 +5,7 @@ active	common	pt	Ativo
 add category	common	pt	Adicionar categoria
 add	common	pt	Adicionar
 add sub	common	pt	Adicionar sub-tarefa
-add x category for	common	pt	Adicionar categoria %1 para
+add %1 category for	common	pt	Adicionar categoria %1 para
 admin	common	pt	Administrador
 administration	common	pt	Administração
 afghanistan	common	pt	AFGHANISTAN
@@ -59,8 +59,8 @@ cape verde	common	pt	CAPE VERDE
 categories	common	pt	Categorias
 categories for	common	pt	categorias para
 category	common	pt	Categoria
-category x has been added !	common	pt	Categoria %1 foi adicionada !
-category x has been updated !	common	pt	Categoria %1 foi atualizada !
+category %1 has been added !	common	pt	Categoria %1 foi adicionada !
+category %1 has been updated !	common	pt	Categoria %1 foi atualizada !
 cayman islands	common	pt	CAYMAN ISLANDS
 central african republic	common	pt	CENTRAL AFRICAN REPUBLIC
 chad	common	pt	CHAD
@@ -111,7 +111,7 @@ ecuador	common	pt	ECUADOR
 edit categories	common	pt	Editar categorias
 edit category	common	pt	Editar categoria
 edit	common	pt	Editar
-edit x category for	common	pt	Editar para categoria %1
+edit %1 category for	common	pt	Editar para categoria %1
 egypt	common	pt	EGYPT
 el salvador	common	pt	EL SALVADOR
 e-mail	common	pt	E-mail
@@ -124,9 +124,9 @@ entry updated sucessfully	common	pt	Entrada atualizada com sucesso
 equatorial guinea	common	pt	EQUATORIAL GUINEA
 eritrea	common	pt	ERITREA
 error	common	pt	Erro
-error creating x x directory	common	pt	Erro criando diretório %1%2
-error deleting x x directory	common	pt	Erro removendo diretório %1%2
-error renaming x x directory	common	pt	Erro renomeando diretório %1%2
+error creating %1 %2 directory	common	pt	Erro criando diretório %1 %2
+error deleting %1 %2 directory	common	pt	Erro removendo diretório %1 %2
+error renaming %1 %2 directory	common	pt	Erro renomeando diretório %1 %2
 estonia	common	pt	ESTONIA
 ethiopia	common	pt	ETHIOPIA
 falkland islands (malvinas)	common	pt	FALKLAND ISLANDS (MALVINAS)
@@ -186,7 +186,7 @@ iraq	common	pt	IRAQ
 ireland	common	pt	IRELAND
 israel	common	pt	ISRAEL
 italy	common	pt	ITALY
-it has been more then x days since you changed your password	common	pt	Já passaram mais de %1 dias desde que você mudou sua senha
+it has been more then %1 days since you changed your password	common	pt	Já passaram mais de %1 dias desde que você mudou sua senha
 it is recommended that you run setup to upgrade your tables to the current version	common	pt	É recomendado que seja executada a Configuração para atualizar as tabelas para a versão atual.
 jamaica	common	pt	JAMAICA
 january	common	pt	Janeiro
@@ -304,7 +304,7 @@ please run setup to become current	common	pt	Por favor execute a configuração pa
 please set your preferences for this application	common	pt	Configure suas preferências para este aplicativo
 poland	common	pt	POLAND
 portugal	common	pt	PORTUGAL
-powered by phpgroupware version x	common	pt	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> versão %1
+powered by phpgroupware version %1	common	pt	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> versão %1
 preferences	common	pt	Preferências
 print	common	pt	Imprimir
 priority	common	pt	Prioridade
@@ -337,8 +337,8 @@ september	common	pt	Setembro
 session has been killed	common	pt	Sessão foi terminada
 seychelles	common	pt	SEYCHELLES
 show all	common	pt	Exibir tudo
-showing x	common	pt	Exibindo %1
-showing x - x of x	common	pt	Exibindo %1 - %2 de %3
+showing %1	common	pt	Exibindo %1
+showing %1 - %2 of %3	common	pt	Exibindo %1 - %2 de %3
 sierra leone	common	pt	SIERRA LEONE
 singapore	common	pt	SINGAPORE
 slovakia	common	pt	SLOVAKIA
@@ -379,7 +379,7 @@ time	common	pt	Hora
 time zone	common	pt	Fuso horário
 time zone offset	common	pt	Faixa de fuso horário
 title	common	pt	Título
-to go back to the msg list, click <a href= x >here</a>	common	pt	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
+to go back to the msg list, click <a href="%1">here</a>	common	pt	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
 togo	common	pt	TOGO
 tokelau	common	pt	TOKELAU
 tonga	common	pt	TONGA
@@ -426,7 +426,7 @@ you have selected an invalid date	common	pt	Você selecionou uma data inválida !
 you have selected an invalid main category	common	pt	Você selecionou uma categoria principal inválida !
 your message could <b>not</b> be sent!<br>	common	pt	<b>Não</b> foi possível enviar sua mensagem!<br>
 your search returned 1 match	common	pt	Sua pesquisa retornou 1 ocorrência
-your search returned x matchs	common	pt	Sua pesquisa retornou %1 ocorrências
+your search returned %1 matchs	common	pt	Sua pesquisa retornou %1 ocorrências
 your session could not be verified.	login	pt	Sua sessão expirou
 your settings have been updated	common	pt	Suas preferências foram atualizadas
 yugoslavia	common	pt	YUGOSLAVIA

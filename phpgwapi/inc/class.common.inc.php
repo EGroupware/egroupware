@@ -2181,17 +2181,17 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				case 32:	$s .= lang('Group has been deleted');	break;
 				case 33:	$s .= lang('Group has been updated');	break;
 				case 34:	$s .= lang('Account has been deleted') . '<p>'
-						. lang('Error deleting x x directory',lang('users'),' '.lang('private').' ') 
-						. ',<br>' . lang('Please x by hand',lang('delete')) . '<br><br>'
+						. lang('Error deleting %1 %2 directory',lang('users'),' '.lang('private').' ') 
+						. ',<br>' . lang('Please %1 by hand',lang('delete')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
 						. '<br>' . lang('On *nix systems please type: x','chmod 770 '
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
 					break;
 				case 35:	$s .= lang('Account has been updated') . '<p>'
-						. lang('Error renaming x x directory',lang('users'),
+						. lang('Error renaming %1 %2 directory',lang('users'),
 						' '.lang('private').' ') 
-						. ',<br>' . lang('Please x by hand',
+						. ',<br>' . lang('Please %1 by hand',
 						lang('rename')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
@@ -2199,9 +2199,9 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
 					break;
 				case 36:	$s .= lang('Account has been created') . '<p>'
-						. lang('Error creating x x directory',lang('users'),
+						. lang('Error creating %1 %2 directory',lang('users'),
 						' '.lang('private').' ') 
-						. ',<br>' . lang('Please x by hand',
+						. ',<br>' . lang('Please %1 by hand',
 						lang('create')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
@@ -2209,8 +2209,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/users/'); 
 					break;
 				case 37:	$s .= lang('Group has been added') . '<p>'
-						. lang('Error creating x x directory',lang('groups'),' ')
-						. ',<br>' . lang('Please x by hand',
+						. lang('Error creating %1 %2 directory',lang('groups'),' ')
+						. ',<br>' . lang('Please %1 by hand',
 						lang('create')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
@@ -2218,8 +2218,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
 					break;
 				case 38:	$s .= lang('Group has been deleted') . '<p>'
-						. lang('Error deleting x x directory',lang('groups'),' ')
-						. ',<br>' . lang('Please x by hand',
+						. lang('Error deleting %1 %2 directory',lang('groups'),' ')
+						. ',<br>' . lang('Please %1 by hand',
 						lang('delete')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')
@@ -2227,8 +2227,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						. $GLOBALS['phpgw_info']['server']['files_dir'] . '/groups/'); 
 					break;
 				case 39:	$s .= lang('Group has been updated') . '<p>'
-						. lang('Error renaming x x directory',lang('groups'),' ')
-						. ',<br>' . lang('Please x by hand',
+						. lang('Error renaming %1 %2 directory',lang('groups'),' ')
+						. ',<br>' . lang('Please %1 by hand',
 						lang('rename')) . '<br><br>'
 						. lang('To correct this error for the future you will need to properly set the')
 						. '<br>' . lang('permissions to the files/users directory')

@@ -1,4 +1,4 @@
-about x	common	sv	Om %1
+about %1	common	sv	Om %1
 access	common	sv	Åtkomst
 access type	common	sv	Åtkomst typ
 account has been created	common	sv	Kontot har blivit skapat
@@ -50,7 +50,7 @@ help	common	sv	Hjälp
 high	common	sv	Hög
 home	common	sv	Hem
 home phone	common	sv	Hemma telefon
-it has been more then x days since you changed your password	common	sv	Det er mer än %1 dagar sedan du ändrade ditt lösenord
+it has been more then %1 days since you changed your password	common	sv	Det er mer än %1 dagar sedan du ändrade ditt lösenord
 january	common	sv	Januari
 july	common	sv	Juli
 june	common	sv	Juni
@@ -75,7 +75,7 @@ normal	common	sv	Normal
 november	common	sv	November
 october	common	sv	Oktober
 ok	common	sv	OK
-on *nix systems please type: x	common	sv	Skriv %1 på *nix system
+on *nix systems please type: %1	common	sv	Skriv %1 på *nix system
 only yours	common	sv	endast dina
 original	common	sv	Orginal
 other phone	common	sv	Annat nummer
@@ -83,8 +83,8 @@ pager	common	sv	Personsökare
 password	common	sv	Lösenord
 password has been updated	common	sv	Lösenord har blivit uppdaterat
 permissions to the files/users directory	common	sv	rättigheter på files/users bibliotek
-please x by hand	common	sv	Var vänlig %1 för hand
-powered by phpgroupware version x	common	sv	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+please %1 by hand	common	sv	Var vänlig %1 för hand
+powered by phpgroupware version %1	common	sv	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	sv	Inställningar
 previous page	common	sv	Föregående sida
 print	common	sv	Skriv ut
@@ -97,8 +97,8 @@ search	common	sv	Sök
 september	common	sv	September
 session has been killed	common	sv	Session har blivit avslutad
 show all	common	sv	visa alla
-showing x	common	sv	visar %1
-showing x - x of x	common	sv	visar %1 - %2 av %3
+showing %1	common	sv	visar %1
+showing %1 - %2 of %3	common	sv	visar %1 - %2 av %3
 sorry, there was a problem processing your request.	common	sv	Beklagar, det var problem att utföra din önskan.
 state	common	sv	Stat
 street	common	sv	Gata
@@ -119,10 +119,10 @@ work phone	common	sv	Arbets telefon
 yes	common	sv	Ja
 you are required to change your password during your first login	common	sv	Du måste byta lösenord vid din första inloggning
 you have 1 new message!	common	sv	Du har 1 nytt meddelande!
-you have x new messages!	common	sv	Du har %1 nya meddelanden!
+you have %1 new messages!	common	sv	Du har %1 nya meddelanden!
 your message has been sent	common	sv	Ditt meddelande har blivit sänt
 your search returned 1 match	common	sv	din sökning gav 1 träff
-your search returned x matchs	common	sv	din sökning gav %1 träffar
+your search returned %1 matchs	common	sv	din sökning gav %1 träffar
 your settings have been updated	common	sv	Dina innställningar har blivit uppdaterade
 zip code	common	sv	Postnummer
 bad login or password	login	sv	Ogiltigt login eller lösenord

@@ -45,7 +45,7 @@ groups	common	no	Grupper
 help	common	no	Hjelp
 high	common	no	Høy
 home	common	no	Hjemme
-it has been more then x days since you changed your password	common	no	Det er mer enn %1 dager siden du har endet ditt passord
+it has been more then %1 days since you changed your password	common	no	Det er mer enn %1 dager siden du har endet ditt passord
 january	common	no	Januar
 july	common	no	Juli
 june	common	no	Juni
@@ -70,7 +70,7 @@ ok	common	no	OK
 only yours	common	no	kun dine
 password	common	no	Passord
 password has been updated	common	no	Passord har blitt oppdatert
-powered by phpgroupware version	common	no	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+powered by phpgroupware version %1	common	no	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	no	Preferences
 previous page	common	no	Forrige side
 priority	common	no	Prioritet
@@ -82,8 +82,8 @@ search	common	no	Søk
 september	common	no	September
 session has been killed	common	no	Session har blitt avsluttet
 show all	common	no	vis alle
-showing x	common	no	showing %1
-showing x - x of x	common	no	showing %1 - %2 of %3
+showing %1	common	no	showing %1
+showing %1 - %2 of %3	common	no	showing %1 - %2 of %3
 sorry, there was a problem processing your request.	common	no	Beklager, der var problemer ved din forespørsel.
 submit	common	no	Submit
 sunday	common	no	Søndag
@@ -97,10 +97,10 @@ wednesday	common	no	Onsdag
 which groups	common	no	hvilke grupper
 yes	common	no	Ja
 you have 1 new message!	common	no	Du har 1 ny melding!
-you have x new messages!	common	no	Du har %1 nye meldinger!
+you have %1 new messages!	common	no	Du har %1 nye meldinger!
 your message has been sent	common	no	Din melding har blitt sent
 your search returned 1 match	common	no	ditt søk gav 1 match
-your search returned x matchs	common	no	ditt søk gav %1 match
+your search returned %1 matchs	common	no	ditt søk gav %1 match
 your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
 bad login or password	login	no	Ugyldig login eller passord
 login	login	no	Login

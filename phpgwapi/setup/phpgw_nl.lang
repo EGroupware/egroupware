@@ -48,7 +48,7 @@ groups	common	nl	Groepen
 help	common	nl	Help
 high	common	nl	Hoog
 home	common	nl	Start
-it has been more then x days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd
+it has been more then %1 days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd
 january	common	nl	Januari
 july	common	nl	Juli
 june	common	nl	Juni
@@ -73,7 +73,7 @@ normal	common	nl	Normaal
 november	common	nl	November
 october	common	nl	Oktober
 ok	common	nl	OK
-on *nix systems please type: x	common	nl	Op *nix systemen typt u: %1
+on *nix systems please type: %1	common	nl	Op *nix systemen typt u: %1
 only yours	common	nl	alleen eigen weergeven
 original	common	nl	Origineel
 pager	common	nl	Buzzer
@@ -81,8 +81,8 @@ password	common	nl	Wachtwoord
 password has been updated	common	nl	Wachtwoord is gewijzigd
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
 phone	common	nl	Telefoon
-please x by hand	common	nl	Gelieve %1 handmatig uit te voeren
-powered by phpgroupware version x	common	nl	Deze site werkt met <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
+powered by phpgroupware version %1	common	nl	Deze site werkt met <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	nl	Voorkeuren
 previous page	common	nl	Vorige pagina
 print	common	nl	Afdrukken
@@ -95,8 +95,8 @@ search	common	nl	Zoeken
 september	common	nl	September
 session has been killed	common	nl	Sessie is beëindigd
 show all	common	nl	laat alles zien
-showing x	common	nl	weergegeven: %1
-showing x - x of x	common	nl	weergegeven: %1 - %2 van %3
+showing %1	common	nl	weergegeven: %1
+showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
 sorry, there was a problem processing your request.	common	nl	Sorry, er is een probleem opgetreden met het verwerken van uw verzoek.
 status	common	nl	status
 submit	common	nl	Verzenden
@@ -117,12 +117,12 @@ which groups	common	nl	welke groepen
 yes	common	nl	Ja
 you are required to change your password during your first login	common	nl	U moet na de eerste keer inlogggen uw eerste sessie uw wachtwoord wijzigen
 you have 1 new message!	common	nl	U hebt 1 nieuw bericht!
-you have x new messages!	common	nl	U hebt %1 nieuwe berichten!
+you have %1 new messages!	common	nl	U hebt %1 nieuwe berichten!
 your message has been sent	common	nl	Uw bericht is verzonden
 your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
-your search returned x matchs	common	nl	Uw zoekopdracht leverde %1 items op
+your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
 your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
-powered by phpgroupware version x	all	nl	Deze site werkt met <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+powered by phpgroupware version %1	all	nl	Deze site werkt met <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 bad login or password	login	nl	Onjuiste gebruikersnaam of wachtwoord
 login	login	nl	Aanmelden
 password	login	nl	Wachtwoord

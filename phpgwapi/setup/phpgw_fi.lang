@@ -4,7 +4,7 @@ acl	common	fi	ACL
 active	common	fi	Aktiivinen
 add	common	fi	Lis‰‰
 add category	common	fi	Lis‰‰ luokka
-add x category for	common	fi	Lis‰‰ %1 luokka
+add %1 category for	common	fi	Lis‰‰ %1 luokka
 add sub	common	fi	Lis‰‰ ala
 admin	common	fi	Admin
 administration	common	fi	Yll‰pto
@@ -59,8 +59,8 @@ cape verde	common	fi	CAPE VERDE
 categories	common	fi	Luokat
 categories for	common	fi	luokat kohteelle
 category	common	fi	Luokka
-category x has been added !	common	fi	Luokka %1 lis‰tty !
-category x has been updated !	common	fi	Luokka %1 p‰ivitetty !
+category %1 has been added !	common	fi	Luokka %1 lis‰tty !
+category %1 has been updated !	common	fi	Luokka %1 p‰ivitetty !
 cayman islands	common	fi	CAYMAN SAARET
 central african republic	common	fi	KESKI-AFRIKAN TASAVALTA
 chad	common	fi	CHAD
@@ -112,7 +112,7 @@ ecuador	common	fi	ECUADOR
 edit	common	fi	Muokkaa
 edit categories	common	fi	Muokkaa luokkia
 edit category	common	fi	Muokkaa luokkaa
-edit x category for	common	fi	Muokkaa %1 luokkaa
+edit %1 category for	common	fi	Muokkaa %1 luokkaa
 egypt	common	fi	EGYPTI
 el salvador	common	fi	EL SALVADOR
 email	common	fi	E-Mail
@@ -124,9 +124,9 @@ entry updated sucessfully	common	fi	Kohde p‰ivitetty
 equatorial guinea	common	fi	EQUATORIAL GUINEA
 eritrea	common	fi	ERITREA
 error	common	fi	Virhe
-error creating x x directory	common	fi	Virhe luotaessa hakemistoa %1%2
-error deleting x x directory	common	fi	Virhe poistettaessa hakemistoa %1%2
-error renaming x x directory	common	fi	Virhe vaihdettasessa hakemisto %1%2 nime‰
+error creating %1 %2 directory	common	fi	Virhe luotaessa hakemistoa %1 %2
+error deleting %1 %2 directory	common	fi	Virhe poistettaessa hakemistoa %1 %2
+error renaming %1 %2 directory	common	fi	Virhe vaihdettasessa hakemisto %1 %2 nime‰
 estonia	common	fi	VIRO
 ethiopia	common	fi	ETIOPIA
 falkland islands (malvinas)	common	fi	FALKLAND-SAARET
@@ -185,7 +185,7 @@ iran, islamic republic of	common	fi	IRANIN ISLAMILAINEN TASAVALTA
 iraq	common	fi	IRAQ
 ireland	common	fi	IRLANTI
 israel	common	fi	ISRAEL
-it has been more then x days since you changed your password	common	fi	It has been more then %1 days since you changed your password
+it has been more then %1 days since you changed your password	common	fi	It has been more then %1 days since you changed your password
 it is recommended that you run setup to upgrade your tables to the current version	common	fi	It is recommended that you run setup to upgrade your tables to the current version.
 italy	common	fi	ITALIA
 jamaica	common	fi	JAMAICA
@@ -301,7 +301,7 @@ please run setup to become current	common	fi	Aja setup-sovellus p‰ivitt‰‰ksesi
 please set your preferences for this application	common	fi	Tarkista t‰m‰n sovelluksen asetukset
 poland	common	fi	PUOLA
 portugal	common	fi	PORTUGALI
-powered by phpgroupware version x	common	fi	T‰m‰ on <a href="http://www.phpgroupware.org">phpGroupWare</a> versio %1
+powered by phpgroupware version %1	common	fi	T‰m‰ on <a href="http://www.phpgroupware.org">phpGroupWare</a> versio %1
 preferences	common	fi	Asetukset
 print	common	fi	Tulosta
 priority	common	fi	T‰rkeys
@@ -334,8 +334,8 @@ september	common	fi	Syyskuu
 session has been killed	common	fi	Istunto keskeytetty
 seychelles	common	fi	SEYCHELLES
 show all	common	fi	n‰yt‰ kaikki
-showing x	common	fi	n‰yt‰n %1
-showing x - x of x	common	fi	n‰yt‰n %1 - %2 / %3
+showing %1	common	fi	n‰yt‰n %1
+showing %1 - %2 of %3	common	fi	n‰yt‰n %1 - %2 / %3
 sierra leone	common	fi	SIERRA LEONE
 singapore	common	fi	SINGAPORE
 slovakia	common	fi	SLOVAKIA
@@ -419,7 +419,7 @@ you have been successfully logged out	login	fi	Istuntosi on p‰‰ttynyt
 you have selected an invalid date	common	fi	P‰iv‰ ei kelpaa !
 you have selected an invalid main category	common	fi	P‰‰luokka ei kelpaa !
 your search returned 1 match	common	fi	haku palautti yhden kohteen
-your search returned x matchs	common	fi	haku palautti %1 kohdetta
+your search returned %1 matchs	common	fi	haku palautti %1 kohdetta
 your session could not be verified.	login	fi	Istuntoasi ei voitu varmentaa.
 your settings have been updated	common	fi	Asetukset p‰ivitetty
 yugoslavia	common	fi	JUGOSLAVIA

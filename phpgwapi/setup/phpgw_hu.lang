@@ -46,7 +46,7 @@ groups	common	hu	Csoportok
 help	common	hu	Súgó
 high	common	hu	Sürgõs
 home	common	hu	Kezdõlap
-it has been more then x days since you changed your password	common	hu	Több mint %1 nap telt el az utolsó jelszómódosítás óta
+it has been more then %1 days since you changed your password	common	hu	Több mint %1 nap telt el az utolsó jelszómódosítás óta
 january	common	hu	Január
 july	common	hu	Július
 june	common	hu	Június
@@ -69,14 +69,14 @@ normal	common	hu	Normál
 november	common	hu	November
 october	common	hu	Október
 ok	common	hu	OK
-on *nix systems please type: x	common	hu	*nix rendszereken üsse be: %1
+on *nix systems please type: %1	common	hu	*nix rendszereken üsse be: %1
 only yours	common	hu	csak sajátot
 original	common	hu	Eredeti
 password	common	hu	Jelszó
 password has been updated	common	hu	Jelszó módosítva
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
-please x by hand	common	hu	Kérem %1 kézzel
-powered by phpgroupware version x	common	hu	
+please %1 by hand	common	hu	Kérem %1 kézzel
+powered by phpgroupware version %1	common	hu	
 preferences	common	hu	Tulajdonságok
 previous page	common	hu	Elõzõ oldal
 print	common	hu	Nyomtat
@@ -89,8 +89,8 @@ search	common	hu	Keres
 september	common	hu	Szeptember
 session has been killed	common	hu	Aktív bejelentkezés kitiltva
 show all	common	hu	mindet megmutat
-showing x	common	hu	%1 listázva
-showing x - x of x	common	hu	listázva %1 - %2, össz: %3
+showing %1	common	hu	%1 listázva
+showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
 sorry, there was a problem processing your request.	common	hu	Hiba történt a kérelem feldolgozásakor!
 submit	common	hu	Elküld
 sunday	common	hu	Vasárnap
@@ -107,10 +107,10 @@ which groups	common	hu	melyik csoport
 yes	common	hu	Igen
 you are required to change your password during your first login	common	hu	Elsõ bejelentkezéskor meg kell változtatnia a jelszavát
 you have 1 new message!	common	hu	1 új üzenete van!
-you have x new messages!	common	hu	%1 új üzenete van!
+you have %1 new messages!	common	hu	%1 új üzenete van!
 your message has been sent	common	hu	Üzenet elküldve
 your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
-your search returned x matchs	common	hu	Keresés végeredménye: %1 találat
+your search returned %1 matchs	common	hu	Keresés végeredménye: %1 találat
 your settings have been updated	common	hu	A beállításai módosításra kerültek
 bad login or password	login	hu	Rossz felhasználó vagy jelszó
 login	login	hu	Belépés

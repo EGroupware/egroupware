@@ -1,11 +1,11 @@
-about x	common	fr	A propos de %1
+about %1	common	fr	A propos de %1
 access	common	fr	Accès
 access not permitted	common	fr	Accès non permis
 acl	common	fr	Liste de Contrôle d'accès
 active	common	fr	Actif
 add	common	fr	Ajouter
 add category	common	fr	Ajouter catégorie
-add x category for	common	fr	Ajouter %1 catégorie pour
+add %1 category for	common	fr	Ajouter %1 catégorie pour
 add sub	common	fr	Ajouter sous
 admin	common	fr	Admin
 administration	common	fr	Administration
@@ -61,8 +61,8 @@ cape verde	common	fr	CAP VERT
 categories	common	fr	Catégories
 categories for	common	fr	catégories pour
 category	common	fr	Catégorie
-category x has been added !	common	fr	La catégorie %1 a été ajoutée !
-category x has been updated !	common	fr	La catégorie %1 a été modifiée !
+category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
+category %1 has been updated !	common	fr	La catégorie %1 a été modifiée !
 cayman islands	common	fr	ILES CAIMAN
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
@@ -116,7 +116,7 @@ ecuador	common	fr	ECUADOR
 edit	common	fr	Modifier
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
-edit x category for	common	fr	Modifier %1 catégorie pour
+edit %1 category for	common	fr	Modifier %1 catégorie pour
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 email	common	fr	EMail
@@ -128,9 +128,9 @@ entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	GUINEE EQUATORIALE
 eritrea	common	fr	ERYTHREE
 error	common	fr	Erreur
-error creating x x directory	common	fr	Erreur pendant la création du répertoire %1%2
-error deleting x x directory	common	fr	Erreur pendant la suppression du répertoire %1%2
-error renaming x x directory	common	fr	Erreur pendant le renommage du répertoire %1%2
+error creating %1 %2 directory	common	fr	Erreur pendant la création du répertoire %1 %2
+error deleting %1 %2 directory	common	fr	Erreur pendant la suppression du répertoire %1 %2
+error renaming %1 %2 directory	common	fr	Erreur pendant le renommage du répertoire %1 %2
 estonia	common	fr	ESTONIE
 ethiopia	common	fr	ETHIOPIE
 falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
@@ -189,7 +189,7 @@ iran, islamic republic of	common	fr	IRAN, REPUBLIQUE ISLAMIQUE D'
 iraq	common	fr	IRAK
 ireland	common	fr	IRLANDE
 israel	common	fr	ISRAEL
-it has been more then x days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifié votre mot de passe
+it has been more then %1 days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifié votre mot de passe
 it is recommended that you run setup to upgrade your tables to the current version	common	fr	Il vous est recommandé d'exécuter "setup" pour mettre à jour vos tables vers la version courante.
 italy	common	fr	ITALIE
 jamaica	common	fr	JAMAIQUE
@@ -349,13 +349,13 @@ select category	common	fr	Sélectionner la catégorie
 send	common	fr	Envoyer
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
-server x has been added	common	fr	Le serveur %1 a été ajouté
+server %1 has been added	common	fr	Le serveur %1 a été ajouté
 server name	common	fr	Nom du serveur
 session has been killed	common	fr	La session a été tuée
 seychelles	common	fr	SEYCHELLES
 show all	common	fr	Tous les éléments
-showing x	common	fr	%1 éléments
-showing x - x of x	common	fr	éléments %1 - %2 de %3
+showing %1	common	fr	%1 éléments
+showing %1 - %2 of %3	common	fr	éléments %1 - %2 de %3
 sierra leone	common	fr	SIERRA LEONE
 singapore	common	fr	SINGAPOUR
 slovakia	common	fr	SLOVAQUIE
@@ -396,7 +396,7 @@ time	common	fr	Heure
 time zone	common	fr	Fuseau horaire
 time zone offset	common	fr	Décalage du fuseau horaire
 title	common	fr	Titre
-to go back to the msg list, click <a href= x >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
+to go back to the msg list, click <a href="%1">here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
@@ -444,7 +444,7 @@ you have been successfully logged out	login	fr	Déconnexion réussie
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
 your search returned 1 match	common	fr	Votre recherche a retourné un résultat
-your search returned x matchs	common	fr	Votre recherche a retourné %1 résultats
+your search returned %1 matchs	common	fr	Votre recherche a retourné %1 résultats
 your session could not be verified.	login	fr	Votre session n'est pas valide.
 your settings have been updated	common	fr	Vos préférences ont été mises à jour
 yugoslavia	common	fr	YOUGOSLAVIE

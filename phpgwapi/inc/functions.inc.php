@@ -400,7 +400,7 @@
 			}
 			elseif (isset($GLOBALS['phpgw_info']['user']['lastpasswd_change']) && $GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
 			{
-				$message = lang('it has been more then x days since you changed your password',30);
+				$message = lang('it has been more then %1 days since you changed your password',30);
 				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
 			}
 
