@@ -42,10 +42,10 @@
 	{
 		if ($menuaction)
 		{
-			list($app,$class,$method) = explode('.',$menuaction);
-			if ($app && $class && $method)
-			{
-				$obj = CreateObject(sprintf('%s.%s',$app,$class));
+//			list($app,$class,$method) = explode('.',$menuaction);
+//			if ($app && $class && $method)
+//			{
+//				$obj = CreateObject(sprintf('%s.%s',$app,$class));
 				if (is_array($obj->public_functions) && $obj->public_functions['footer'])
 				{
 					eval("\$obj->footer();");
@@ -54,11 +54,11 @@
 				{
 					include(PHPGW_APP_INC . '/footer.inc.php');
 				}
-			}
-			elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
-			{
-				include(PHPGW_APP_INC . '/footer.inc.php');
-			}
+//			}
+//			elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
+//			{
+//				include(PHPGW_APP_INC . '/footer.inc.php');
+//			}
 		}
 		elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
 		{
