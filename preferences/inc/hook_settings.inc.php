@@ -24,9 +24,9 @@
 	}
 
 	create_input_box('Max matches per page','maxmatchs',
-		'Any listing in phpGW will show you this number or entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.',15,3);
+		'Any listing in phpGW will show you this number of entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.','',3);
 	create_select_box('Interface/Template Selection','template_set',$_templates,
-		'A template defines the layout of phpGroupWare and it contains icons vor each application.');
+		'A template defines the layout of phpGroupWare and it contains icons for each application.');
 	create_select_box('Theme (colors/fonts) Selection','theme',$_themes,
 		'A theme defines the colors and fonts used by the template.');
 
@@ -54,7 +54,7 @@
 		$tz_offset[$i] = $i . ' ' . lang('hours').': ' . date($format,$t);
 	}
 	create_select_box('Time zone offset','tz_offset',$tz_offset,
-		'How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.',0);
+		'How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.');
 
 	$date_formats = array(
 		'm/d/Y' => 'm/d/Y',
@@ -112,7 +112,7 @@
 		}
 	}
 	create_select_box('Default application','default_app',$user_apps,
-		"This is the application which will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one applications showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each applicaton).");
+		"This is the application which will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).");
 
 	create_input_box('Currency','currency',
 		'Which currency symbole or name should be used in phpGroupWare.');

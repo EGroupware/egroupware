@@ -26,7 +26,11 @@
 	/*!
 	@class preferences 
 	@abstract preferences class used for setting application preferences
-	@discussion Author: none yet
+	@discussion the prefs are read into 4 arrays: \
+		$data the effective prefs used everywhere in phpgw, they are merged from the other 3 arrays \
+		$user the stored user prefs, only used for manipulating and storeing the user prefs \
+		$default the default preferences, always used when the user has no own preference set \
+		$forced forced preferences set by the admin, they take precedence over user or default prefs
 	*/
 	class preferences
 	{
@@ -34,8 +38,14 @@
 		var $account_id;
 		/*! @var account_type */
 		var $account_type;
-		/*! @var data */
+		/*! @var data effectiv user prefs, used by all apps */
 		var $data = array();
+		/*! @var user set user prefs for saveing (no defaults/forced prefs merged) */
+		var $user = array();
+		/*! @var default default prefs */
+		var $default = array();
+		/*! @var forced forced prefs */
+		var $forced = array();
 		/*! @var db */
 		var $db;
 		/*! @var debug_init_prefs */
@@ -62,44 +72,119 @@
 		* These are the standard $this->account_id specific functions              *
 		\**************************************************************************/
 
+		/*!
+		@function unquote
+		@abstract unquote (stripslashes) recursivly the whole array
+		@param $arr array to unquote (var-param!)
+		*/
+		function unquote(&$arr)
+		{
+			if (!is_array($arr))
+			{
+				$arr = stripslashes($arr);
+				return;
+			}
+			foreach($arr as $key => $value)
+			{
+				if (is_array($value))
+				{
+					$this->unquote($arr[$key]);
+				}
+				else
+				{
+					$arr[$key] = stripslashes($value);	
+				}
+			}
+		}
+
 		/*! 
 		@function read_repository
 		@abstract private - read preferences from the repository
+		@note the function ready all 3 prefs user/default/forced and merges them to the effective ones
 		@discussion private function should only be called from within this class
 		*/
 		function read_repository()
 		{
-			$this->db->query("SELECT * FROM phpgw_preferences WHERE "
-				. "preference_owner='" . $this->account_id . "' OR "
-				. "preference_owner='-1' ORDER BY preference_owner DESC",__LINE__,__FILE__);
-			$this->db->next_record();
+			$this->db->query("SELECT * FROM phpgw_preferences".
+				" WHERE preference_owner IN (-1,-2,".intval($this->account_id).")",__LINE__,__FILE__);
 
-			$pref_info  = $this->db->f('preference_value');
-			$this->data = unserialize($pref_info);
-
-			if ($this->db->next_record())
+			$this->forced = $this->default = $this->user = array();
+			while($this->db->next_record())
 			{
-				$global_defaults = unserialize($this->db->f('preference_value'));
-
-				while (is_array($global_defaults) && list($appname,$values) = each($global_defaults))
+				$app = $this->db->f('preference_app');
+				$value = unserialize($this->db->f('preference_value'));
+				$this->unquote($value);
+				if (!is_array($value))
 				{
-					while (is_array($values) && list($var,$value) = each($values))
+					$value = array();
+				}
+				switch($this->db->f('preference_owner'))
+				{
+					case -1:	// forced
+						if (empty($app))	// db not updated
+						{
+							$this->forced = $value;
+						}
+						else
+						{
+							$this->forced[$app] = $value;
+						}
+						break;
+					case -2:	// default
+						if (empty($app))	// db not updated
+						{
+							$this->default = $value;
+						}
+						else
+						{
+							$this->default[$app] = $value;
+						}
+						break;
+					default:	// user
+						if (empty($app))	// db not updated
+						{
+							$this->user = $value;
+						}
+						else
+						{
+							$this->user[$app] = $value;
+						}
+						break;
+				}
+			}
+			$this->data = $this->user;
+			
+			// now use defaults if needed (user-value unset or empty)
+			//
+			foreach($this->default as $app => $values)
+			{
+				foreach($values as $var => $value)
+				{
+					if (!isset($this->data[$app][$var]) || $this->data[$app][$var] === '')
 					{
-						$this->data[$appname][$var] = $value;
+						$this->data[$app][$var] = $value;
 					}
 				}
 			}
-
-			/* This is to supress warnings during login */
-			if (is_array($this->data))
+			// now set/force forced values
+			//
+			foreach($this->forced as $app => $values)
 			{
-				 reset ($this->data);
+				foreach($values as $var => $value)
+				{
+					$this->data[$app][$var] = $value;
+				}
 			}
-
 			// This is to supress warnings durring login
 			if (is_array($this->data))
 			{
 				reset($this->data);
+			}
+			if ($this->debug && substr($GLOBALS['phpgw_info']['flags']['currentapp'],0,3) != 'log') {
+				echo "user<pre>";    print_r($this->user); echo "</pre>\n";
+				echo "forced<pre>";  print_r($this->forced); echo "</pre>\n";
+				echo "default<pre>"; print_r($this->default); echo "</pre>\n";
+				echo "effectiv<pre>";print_r($this->data); echo "</pre>\n"; 
 			}
 			return $this->data;
 		}
@@ -128,16 +213,18 @@
 		@param $app_name name of the app
 		@param $var name of preference to be stored
 		@param $value value of the preference
+		@note the function works on user and data, to be able to save the pref and to have imediate effect
 		*/
 		function add($app_name,$var,$value = '')
 		{
+			//echo "<p>add('$app_name','$var','$value')</p>\n";
 			if ($value == '')
 			{
 				global $$var;
 				$value = $$var;
 			}
  
-			$this->data[$app_name][$var] = $value;
+			$this->user[$app_name][$var] = $this->data[$app_name][$var] = $value;
 			reset($this->data);
 			return $this->data;
 		}
@@ -148,17 +235,21 @@
 		@discussion
 		@param $app_name name of app
 		@param $var variable to be deleted
+		@note the function works on user and data, to be able to save the pref and to have imediate effect
 		*/
 		function delete($app_name, $var = '')
 		{
+			//echo "<p>delete('$app_name','$var')</p>\n";
 			if (is_string($var) && $var == '')
 			{
 //				$this->data[$app_name] = array();
 				unset($this->data[$app_name]);
+				unset($this->user[$app_name]);
 			}
 			else
 			{
 				unset($this->data[$app_name][$var]);
+				unset($this->user[$app_name][$var]);
 			}
 			reset ($this->data);
 			return $this->data;
@@ -169,15 +260,27 @@
 		@abstract add complex array data preference to $app_name a particular app
 		@discussion Use for sublevels of prefs, such as email app's extra accounts preferences
 		@param $app_name name of the app
-		@param $var String to be evaled's as an ARRAY structure, name of preference to be stored
+		@param $var array keys separated by '/', eg. 'ex_accounts/1'
 		@param $value value of the preference
+		@note the function works on user and data, to be able to save the pref and to have imediate effect
 		*/
 		function add_struct($app_name,$var,$value = '')
 		{
+			/* eval is slow and dangerous
 			$code = '$this->data[$app_name]'.$var.' = $value;';
 			//echo 'class.preferences: add_struct: $code: '.$code.'<br>';
 			eval($code);
-			//echo 'class.preferences: add_struct: $this->data[$app_name] dump:'; _debug_array($this->data[$app_name]); echo '<br>';
+			*/
+			$parts = explode('/',str_replace(array('][','[',']','"',"'"),array('/','','','',''),$var));
+			$data = &$this->data[$app_name];
+			$user = &$this->user[$app_name];
+			foreach($parts as $name)
+			{
+				$data = &$data[$name];
+				$user = &$user[$name];
+			}
+			$data = $user = $value;
+			print_debug('class.preferences: add_struct: $this->data[$app_name] dump:', $this->data[$app_name],'api');
 			reset($this->data);
 			return $this->data;
 		}
@@ -187,47 +290,104 @@
 		@abstract delete complex array data preference from $app_name
 		@discussion Use for sublevels of prefs, such as email app's extra accounts preferences
 		@param $app_name name of app
-		@param $var String to be evaled's as an ARRAY structure, name of preference to be deleted
+		@param $var array keys separated by '/', eg. 'ex_accounts/1'
+		@note the function works on user and data, to be able to save the pref and to have imediate effect
 		*/
 		function delete_struct($app_name, $var = '')
 		{
+			/* eval is slow and dangerous
 			$code_1 = '$this->data[$app_name]'.$var.' = "";';
 			//echo 'class.preferences: delete_struct: $code_1: '.$code_1.'<br>';
 			eval($code_1);
 			$code_2 = 'unset($this->data[$app_name]'.$var.');' ;
 			//echo 'class.preferences: delete_struct:  $code_2: '.$code_2.'<br>';
 			eval($code_2);
-			//echo ' * $this->data[$app_name] dump:'; _debug_array($this->data[$app_name]); echo '<br>';
+			*/
+			$parts = explode('/',str_replace(array('][','[',']','"',"'"),array('/','','','',''),$var));
+			$last = array_pop($parts);
+			$data = &$this->data[$app_name];
+			$user = &$this->user[$app_name];
+			foreach($parts as $name)
+			{
+				$data = &$data[$name];
+				$user = &$user[$name];
+			}
+			unset($data[$last]);
+			unset($user[$last]);
+			print_debug('* $this->data[$app_name] dump:', $this->data[$app_name],'api');
 			reset ($this->data);
 			return $this->data;
 		}
 
-
 		/*!
-		@function save_repository
-		@abstract save the the preferences to the repository
-		@discussion
+		@function quote
+		@abstract quote (addslashes) recursivly the whole array
+		@param $arr array to unquote (var-param!)
 		*/
-		function save_repository($update_session_info = False)
+		function quote(&$arr)
 		{
-			$temp_data = $this->data;
-			if (! $GLOBALS['phpgw']->acl->check('session_only_preferences',1,'preferences'))
+			if (!is_array($arr))
 			{
-				$this->db->transaction_begin();
-				$this->db->query("DELETE FROM phpgw_preferences WHERE preference_owner=" . intval($this->account_id),
-					__LINE__,__FILE__);
-
-				if (floor(phpversion()) < 4)
+				$arr = addslashes($arr);
+				return;
+			}
+			foreach($arr as $key => $value)
+			{
+				if (is_array($value))
 				{
-					$pref_info = addslashes(serialize($this->data));
+					$this->quote($arr[$key]);
 				}
 				else
 				{
-					$pref_info = serialize($this->data);
+					$arr[$key] = addslashes($value);
 				}
-				$this->db->query("INSERT INTO phpgw_preferences (preference_owner,preference_value) VALUES ("
-					. intval($this->account_id) . ",'" . $pref_info . "')",__LINE__,__FILE__);
+			}
+		}
+		
+		/*!
+		@function save_repository
+		@abstract save the the preferences to the repository
+		@syntax save_repository($update_session_info = False,$type='')
+		@param $update_session_info old param, seems not to be used
+		@param $type which prefs to update: user/default/forced 
+		@note the user prefs for saveing are in $this->user not in $this->data, which are the effectiv prefs only
+		*/
+		function save_repository($update_session_info = False,$type='user')
+		{
+			switch($type)
+			{
+				case 'forced':
+					$account_id = -1;
+					$prefs = &$this->forced;
+					break;
+				case 'default':
+					$account_id = -2;
+					$prefs = &$this->default;
+					break;
+				default:
+					$account_id = intval($this->account_id);
+					$prefs = &$this->user;	// we use the user-array as data contains default values too
+					break;
+			}
+			//echo "<p>preferences::save_repository(,$type): account_id=$account_id, prefs="; print_r($prefs); echo "</p>\n";
 
+			if (! $GLOBALS['phpgw']->acl->check('session_only_preferences',1,'preferences'))
+			{
+				$this->db->transaction_begin();
+				$this->db->query("delete from phpgw_preferences where preference_owner=$account_id",
+					__LINE__,__FILE__);
+
+				foreach($prefs as $app => $value)
+				{
+					if (!is_array($value)) continue;
+					$this->quote($value);
+					$value = $this->db->db_addslashes(serialize($value));	// this addslashes is for the database
+					$app = $this->db->db_addslashes($app);
+					
+					$this->db->query($sql = "INSERT INTO phpgw_preferences".
+						" (preference_owner,preference_app,preference_value)".
+						" VALUES ($account_id,'$app','$value')",__LINE__,__FILE__);
+				}
 				$this->db->transaction_commit();
 			}
 			else
@@ -236,13 +396,13 @@
 				$GLOBALS['phpgw']->session->save_repositories();
 			}
 
-			if ($GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $this->account_id == $GLOBALS['phpgw_info']['user']['account_id'])
+			if (($type == 'user' || !$type) && $GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $this->account_id == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				$GLOBALS['phpgw']->session->delete_cache($this->account_id);
 				$GLOBALS['phpgw']->session->read_repositories(False);
 			}
 			
-			return $temp_data;
+			return $this->data;
 		}
 
 		/*!
@@ -253,7 +413,8 @@
 		*/
 		function create_defaults($account_id)
 		{
-			$this->db->query("SELECT * FROM phpgw_preferences WHERE preference_owner='-2'",__LINE__,__FILE__);
+			return; // not longer needed, as the defaults are merged in on runtime
+			$this->db->query("select * from phpgw_preferences where preference_owner='-2'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			if($this->db->f('preference_value'))

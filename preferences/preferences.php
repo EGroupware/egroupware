@@ -59,7 +59,7 @@
 
 	function is_forced_value($_appname,$preference_name)
 	{
-		if (isset($GLOBALS['gp']->data[$_appname][$preference_name]) && $GLOBALS['type'] != 'forced')
+		if (isset($GLOBALS['phpgw']->preferences->forced[$_appname][$preference_name]) && $GLOBALS['type'] != 'forced')
 		{
 			return True;
 		}
@@ -109,7 +109,12 @@
 			$default = $prefs[$name];
 		}
 		
-		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\" value=\"$default\"$options>");
+		if ($GLOBALS['type'] == 'user')
+		{
+			$def_text = $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$def_text.'</font></i>' : '';
+		}
+		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\" value=\"".htmlentities($default)."\"$options>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
@@ -186,17 +191,22 @@
 		switch ($GLOBALS['type'])
 		{
 			case 'user':
-				$s = '<option value="">' . lang('Select one') . '</option>';
+				$s = '<option value="">' . lang('Use default') . '</option>';
 				break;
 			case 'default':
-				$s = '<option value="">' . lang('Select one') . '</option>';
+				$s = '<option value="">' . lang('No default') . '</option>';
 				break;
 			case 'forced':
 				$s = '<option value="**NULL**">' . lang('Users choice') . '</option>';
 				break;
 		}
 		$s .= create_option_string($default,$values);
-		$t->set_var('row_value',"<select name=\"${GLOBALS[type]}[$name]\">$s</select>");
+		if ($GLOBALS['type'] == 'user')
+		{
+			$def_text = $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$values[$def_text].'</font></i>' : '';
+		}
+		$t->set_var('row_value',"<select name=\"${GLOBALS[type]}[$name]\">$s</select>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
@@ -218,18 +228,23 @@
 			$default = $prefs[$name];
 		}
 
-		$t->set_var('row_value',"<textarea rows=\"$rows\" cols=\"$cols\" name=\"${GLOBALS[type]}[$name]\">$default</textarea>");
+		if ($GLOBALS['type'] == 'user')
+		{
+			$def_text = $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = $def_text != '' ? '<br><i><font size="-1">'.lang('default').':<br>'.$def_text.'</font></i>' : '';
+		}
+		$t->set_var('row_value',"<textarea rows=\"$rows\" cols=\"$cols\" name=\"${GLOBALS[type]}[$name]\">".htmlentities($default)."</textarea>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
 		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
 	}
 
-	function process_array(&$_p,$array,$prefix='')
+	function process_array(&$repository,$array,$prefix='')
 	{
 		$_appname = check_app();
 
-		$prefs = &$_p->data[$_appname];
+		$prefs = &$repository[$_appname];
 
 		if ($prefix != '')
 		{
@@ -239,6 +254,8 @@
 				$prefs = &$prefs[$pre];
 			}
 		}
+		unset($prefs['']);
+//echo "array:<pre>"; print_r($array); echo "</pre>\n";
 		while (is_array($array) && list($var,$value) = each($array))
 		{
 			if (isset($value) && $value != '' && $value != '**NULL**')
@@ -251,22 +268,17 @@
 						continue;	// dont write empty password-fields
 					}
 				}
-				$prefs[$var] = $value;
+				$prefs[$var] = stripslashes($value);
 			}
 			else
 			{
 				unset($prefs[$var]);
 			}
 		}
-		//echo "prefix='$prefix', prefs=<pre>"; print_r($_p->data[$_appname]);
+		//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$_appname]); echo "</pre>\n";
 
-		$_p->save_repository(True);
+		$GLOBALS['phpgw']->preferences->save_repository(True,$GLOBALS['type']);
 	}
-
-	/* So we can check if the admin is allowing users to make there own choices */
-	/* in life. */
-	$GLOBALS['gp'] = createobject('phpgwapi.preferences',-1);
-	$GLOBALS['gp']->read_repository();
 
 	/* Only check this once */
 	if ($GLOBALS['phpgw']->acl->check('run',1,'admin'))
@@ -331,29 +343,22 @@
 	}
 	$has_help = 0;
 
-	/* Only load if there working on the default preferences */
-	if ($GLOBALS['type'] == 'default')
-	{
-		$GLOBALS['dp'] = createobject('phpgwapi.preferences',-2);
-		$GLOBALS['dp']->read_repository();
-	}
-
 	if ($_POST['submit'])
 	{
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 		{
-			process_array($GLOBALS['phpgw']->preferences,$user,$prefix);
+			process_array($GLOBALS['phpgw']->preferences->user,$user,$prefix);
 		}
 
 		if ($GLOBALS['type'] == 'default' && is_admin())
 		{
-			process_array($GLOBALS['dp'], $default);
+			process_array($GLOBALS['phpgw']->preferences->default, $default);
 		}
 
 		if ($GLOBALS['type'] == 'forced' && is_admin())
 		{
-			process_array($GLOBALS['gp'], $forced);
+			process_array($GLOBALS['phpgw']->preferences->forced, $forced);
 		}
 
 		if (!is_admin())
@@ -386,13 +391,13 @@
 	switch ($GLOBALS['type'])	// set up some globals to be used by the hooks
 	{
 		case 'forced':  
-			$prefs = &$GLOBALS['gp']->data[check_app()]; 
+			$prefs = &$GLOBALS['phpgw']->preferences->forced[check_app()]; 
 			break;
 		case 'default': 
-			$prefs = &$GLOBALS['dp']->data[check_app()]; 
+			$prefs = &$GLOBALS['phpgw']->preferences->default[check_app()]; 
 			break;
 		default:
-			$prefs = &$GLOBALS['phpgw']->preferences->data[check_app()];
+			$prefs = &$GLOBALS['phpgw']->preferences->user[check_app()];
 			// use prefix if given in the url, used for email extra-accounts
 			if ($prefix != '')
 			{

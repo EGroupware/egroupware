@@ -1,4 +1,5 @@
 %1 - preferences	preferences	de	%1 - Einstellungen
+%1 hours	preferences	de	%1 Stunden
 12 hour	preferences	de	12 Stunden
 24 hour	preferences	de	24 Stunden
 a template defines the layout of phpgroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definert das Layout von phpGroupWare und enthält die Icons (Symbole) der Andwendungen.
@@ -11,6 +12,7 @@ change your profile	preferences	de	Profil ändern
 change your settings	preferences	de	Einstellungen ändern
 country	preferences	de	Land
 date format	preferences	de	Datumsformat
+default	preferences	de	Vorgabe
 default application	preferences	de	Standard-Anwendung
 default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie Löschen
@@ -31,6 +33,7 @@ interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 language	preferences	de	Sprache
 max matches per page	preferences	de	maximale Treffer pro Seite
 max matchs per page	preferences	de	Maximale Treffer pro Seite
+no default	preferences	de	Keine Vorgabe
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail server. Dies müssen sie separat tun.
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
 re-enter your password	preferences	de	Neues Passwort wiederholen
@@ -50,6 +53,7 @@ theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schrift
 this is the application which will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie phpGroupWare neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 this server is located in the %1 timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 time format	preferences	de	Zeitformat
+use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
 which currency symbole or name should be used in phpgroupware.	preferences	de	Welches Währungssymbol oder Name soll in phpGroupWare verwendet werden.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.

@@ -72,10 +72,11 @@
 		),
 		'phpgw_preferences' => array(
 			'fd' => array(
-				'preference_owner' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
-				'preference_value' => array('type' => 'text')
+				'preference_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'preference_app' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'preference_value' => array('type' => 'text','nullable' => False)
 			),
-			'pk' => array('preference_owner'),
+			'pk' => array('preference_owner','preference_app'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()

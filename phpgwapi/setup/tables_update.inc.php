@@ -105,12 +105,24 @@
 		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
 		// as 0.9.15.xxx are already used in HEAD
 		
-		// 0.9.15.001-10 are already included in 0.9.14.502
+		// 0.9.15.001-9 are already included in 0.9.14.502
 		
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.010';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 	
+	$test[] = '0.9.14.503';
+	function phpgwapi_upgrade0_9_14_503()
+	{
+		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
+		// as 0.9.15.xxx are already used in HEAD
+		
+		// 0.9.15.001-11 are already included in 0.9.14.503
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.011';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 	$test[] = '0.9.15.001';
 	function phpgwapi_upgrade0_9_15_001()
 	{
@@ -292,5 +304,48 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.15.010';
+	function phpgwapi_upgrade0_9_15_010()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_preferences','old_preferences');
+
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_preferences',array(
+			'fd' => array(
+				'preference_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'preference_app' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'preference_value' => array('type' => 'text','nullable' => False)
+			),
+			'pk' => array('preference_owner','preference_app'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+		$db2 = $GLOBALS['phpgw_setup']->db;	// we need a 2. result-set
+		$GLOBALS['phpgw_setup']->oProc->query("SELECT * FROM old_preferences");
+		while ($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			$owner = intval($GLOBALS['phpgw_setup']->oProc->f('preference_owner'));
+			$prefs = unserialize($GLOBALS['phpgw_setup']->oProc->f('preference_value'));
+			
+			if (is_array($prefs))
+			{
+				foreach ($prefs as $app => $pref)
+				{
+					if (!empty($app) && count($pref))
+					{
+						$app = addslashes($app);
+						$pref = serialize($pref);
+						$db2->query("INSERT INTO phpgw_preferences".
+							" (preference_owner,preference_app,preference_value)".
+							" VALUES ($owner,'$app','$pref')");
+					}
+				}
+			}
+		}
+		$GLOBALS['phpgw_setup']->oProc->DropTable('old_preferences');
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.011';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 
 ?>
