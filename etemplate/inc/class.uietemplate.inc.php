@@ -802,7 +802,7 @@
 					if (!empty($multiple) && 0+$multiple <= 0)
 					{
 						$sels[''] = $multiple < 0 ? 'all' : $multiple;
-						if ($cell['no_lang'])
+						if ((int)$cell['no_lang'] < 2)
 						{
 							$sels[''] = lang($sels['']);
 						}
