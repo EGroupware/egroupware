@@ -42,13 +42,18 @@
 		$submit              = True;
 	}
 
+	$setup_info = $phpgw_setup->get_versions();
+	$setup_info = $phpgw_setup->get_db_versions($setup_info);
+
 	if($phpgw_setup->alessthanb($setup_info['phpgwapi']['currentver'], '0.9.15.002'))
 	{
-		$langtbl = 'lang';
+		$langtbl  = 'lang';
+		$langstbl = 'languages';
 	}
 	else
 	{
-		$langtbl = 'phpgw_lang';
+		$langtbl  = 'phpgw_lang';
+		$langstbl = 'phpgw_languages';
 	}
 
 	if ($HTTP_POST_VARS['submit'])
@@ -172,7 +177,7 @@
 
 			$select_box_desc = lang('Select which languages you would like to use');
 			$select_box = '';
-			$phpgw_setup->db->query("select lang_id,lang_name from languages where available='Yes'");
+			$phpgw_setup->db->query("select lang_id,lang_name from $langstbl where available='Yes'");
 			while ($phpgw_setup->db->next_record())
 			{
 				$select_box_langs = 
