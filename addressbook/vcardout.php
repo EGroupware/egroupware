@@ -32,27 +32,28 @@
   if ($filter != "private")
      $filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
   
-  $fields = $this->read_single_entry($ab_id,$this->stock_addressbook_fields);
+  $fields = $this->read_single_entry($ab_id,$this->stock_contact_fields);
 
-  $email        = $fields[0]["email"];
-  $firstname    = $fields[0]["firstname"];
-  $lastname     = $fields[0]["lastname"];
-  $title        = $fields[0]["title"];
-  $hphone       = $fields[0]["hphone"];
-  $wphone       = $fields[0]["wphone"];
-  $fax          = $fields[0]["fax"];
+  $email        = $fields[0]["D_EMAIL"];
+  $firstname    = $fields[0]["N_Given"];
+  $lastname     = $fields[0]["N_Family"];
+  $title        = $fields[0]["TITLE"];
+  $hphone       = $fields[0]["A_TEL"];
+  $wphone       = $fields[0]["B_TEL"];
+  $fax          = $fields[0]["C_TEL"];
   $pager        = $fields[0]["pager"];
   $mphone       = $fields[0]["mphone"];
   $ophone       = $fields[0]["ophone"];
-  $street       = $fields[0]["street"];
+  $street       = $fields[0]["ADR_Street"];
   $address2     = $fields[0]["address2"];
-  $city         = $fields[0]["city"];
-  $state        = $fields[0]["state"];
-  $zip          = $fields[0]["zip"];
+  $city         = $fields[0]["ADR_Locality"];
+  $state        = $fields[0]["ADR_Region"];
+  $zip          = $fields[0]["ADR_PostalCode"];
+  $country      = $fields[0]["ADR_Country"];
+  $company      = $fields[0]["ORG_Name"];
   $bday         = $fields[0]["bday"];
   $notes        = $fields[0]["notes"];
   $access       = $fields[0]["access"];
-  $company      = $fields[0]["company"];
   $url          = $fields[0]["url"];
 
   if(!$nolname && !$nofname)
@@ -102,9 +103,8 @@
       $city != "" || /* City */
       $state != "" || /* State */
       $zip != "")     /* Zip */
-      // Warning Ugly U.S. centric assumption made here.....
       printf("ADR:;%s;%s;%s;%s;%s;%s\r\n", $address2,
-        $street,$city,$state,$zip,"United States"
+        $street,$city,$state,$zip,$country
       );
 
     if($bday != "" && $bday != "//") /* Birthday */
