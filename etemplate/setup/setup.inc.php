@@ -18,10 +18,15 @@
 	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
 	$setup_info['etemplate']['enable']    = 1;
 
-	$setup_info['etemplate']['author'] = 'Ralf Becker';
-	$setup_info['etemplate']['license']  = 'GPL';
+	$setup_info['etemplate']['author']    = 'Ralf Becker';
+	$setup_info['etemplate']['license']   = 'GPL';
 	$setup_info['etemplate']['description'] =
-		'interactive editor for eTemplates (new template type) and database table-editor (creates tables_current.inc.php and updates autom. tables_update.inc.php)';
+		'<b>eTemplates</b> are a new widget-based template system for phpGroupWare with an
+		interactive editor and a database table-editor (creates tables_current.inc.php and
+		updates automaticaly tables_update.inc.php).';
+	$setup_info['etemplate']['note'] =
+		'For more information check out the <a href="etemplate/doc/etemplate.html" target="_blank">Tutorial</a>
+		and the <a href="etemplate/doc/referenz.html" target="_blank">Referenz Documentation</a>.';
 	$setup_info['etemplate']['maintainer'] = 'Ralf Becker';
 	$setup_info['etemplate']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
 
