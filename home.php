@@ -36,6 +36,7 @@
 		'enable_nextmatchs_class' => True
 	);
 	include('header.inc.php');
+	$GLOBALS['phpgw_info']['flags']['app_header']=lang('home');
 
 	if ($_GET['phpgw_forward'])
 	{
