@@ -136,6 +136,8 @@
 				return False;
 			}
 
+			$phpgw_info['user']['account_id'] = $this->account_id;
+			
 			if ($phpgw_info['server']['cache_phpgw_info'])
 			{
 				$t = $this->appsession('phpgw_info_cache','phpgwapi');
