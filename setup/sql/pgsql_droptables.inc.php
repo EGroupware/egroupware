@@ -26,6 +26,7 @@
   $phpgw_setup->db->query("drop sequence phpgw_hooks_hook_id_seq");
   $phpgw_setup->db->query("DROP TABLE phpgw_hooks");
   $phpgw_setup->db->query("DROP TABLE profiles");
+  $phpgw_setup->db->query("DROP TABLE addressbook");
   $phpgw_setup->db->query("drop sequence phpgw_addressbook_id_seq");
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
   $phpgw_setup->db->query("DROP TABLE phpgw_addressbook_extra");
