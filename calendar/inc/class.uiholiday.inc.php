@@ -460,7 +460,7 @@
 			{
 				$locale = $this->bo->locales[0];
 				$browser = CreateObject('phpgwapi.browser');
-				$browser->content_header('holidays.'.$locale,'text/text');
+				$browser->content_header("holidays.$locale.csv",'text/text');
 				unset($browser);
 
 				while (list(,$holiday) = @each($holidays))
