@@ -23,19 +23,19 @@
 
 	/* $Id$ */
 
-	$path_to_phpgroupware = '../..';	//  need to be adapted if this script is moved somewhere else
+	$path_to_egroupware = realpath(dirname(__FILE__).'/../..');	//  need to be adapted if this script is moved somewhere else
 	$_GET['domain'] = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : 'default';
 
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'currentapp' => 'login',
 		'noapi'      => True		// this stops header.inc.php to include phpgwapi/inc/function.inc.php
 	);
-	if (!is_readable($path_to_phpgroupware.'/header.inc.php'))
+	if (!is_readable($path_to_egroupware.'/header.inc.php'))
 	{
-		echo "asyncservice.php: Could not find '$path_to_phpgroupware/header.inc.php', exiting !!!\n";
+		echo "asyncservice.php: Could not find '$path_to_egroupware/header.inc.php', exiting !!!\n";
 		exit(1);
 	}
-	include($path_to_phpgroupware.'/header.inc.php');
+	include($path_to_egroupware.'/header.inc.php');
 	unset($GLOBALS['phpgw_info']['flags']['noapi']);
 
 	$db_type = $GLOBALS['phpgw_domain'][$_GET['domain']]['db_type'];
