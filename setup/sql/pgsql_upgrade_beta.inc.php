@@ -1255,6 +1255,60 @@
     $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
     }
 
+    $test[] = '0.9.10pre13';
+    function upgrade0_9_10pre13() {
+		global $phpgw_info, $phpgw_setup;
+		$db1 = $phpgw_setup->db;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add url varchar(128)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook add bday varchar(32)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook add note text");
+		$phpgw_setup->db->query("alter table phpgw_addressbook_extra change contact_value contact_value text");
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='url'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set url=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='url'";
+				$db1->query($delete);
+			}
+		}
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='bday'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set bday=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='bday'";
+				$db1->query($delete);
+			}
+		}
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='notes'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set note=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='notes'";
+				$db1->query($delete);
+			}
+		}
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre14';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

@@ -1025,17 +1025,17 @@
     $test[] = '0.9.10pre12';
     function upgrade0_9_10pre12()
     {
-	global $phpgw_info, $phpgw_setup;
-	$db1 = $phpgw_setup->db;
-	$db2 = $phpgw_setup->db;
+		global $phpgw_info, $phpgw_setup;
+		$db1 = $phpgw_setup->db;
+		$db2 = $phpgw_setup->db;
 
-	$sql = "DROP TABLE IF EXISTS phpgw_addressbook";
+		$sql = "DROP TABLE IF EXISTS phpgw_addressbook";
         $db1->query($sql,__LINE__,__FILE__);
 
-	$sql = "DROP TABLE IF EXISTS phpgw_addressbook_extra";
-	$db1->query($sql,__LINE__,__FILE__);
+		$sql = "DROP TABLE IF EXISTS phpgw_addressbook_extra";
+		$db1->query($sql,__LINE__,__FILE__);
 
-	$sql = "CREATE TABLE phpgw_addressbook (
+		$sql = "CREATE TABLE phpgw_addressbook (
 
 		    id int(8) PRIMARY KEY DEFAULT '0' NOT NULL auto_increment,
 		    lid varchar(32),
@@ -1093,50 +1093,50 @@
 		    UNIQUE (id)
 		    )";
 
-	$db1->query($sql,__LINE__,__FILE__);
+		$db1->query($sql,__LINE__,__FILE__);
 
-	$sql = "CREATE TABLE phpgw_addressbook_extra (
+		$sql = "CREATE TABLE phpgw_addressbook_extra (
 		    contact_id int(11),
 		    contact_owner int(11),
 		    contact_name varchar(255),
 		    contact_value varchar(255)
                 )";
 
-	$db1->query($sql,__LINE__,__FILE__);
+		$db1->query($sql,__LINE__,__FILE__);
 
-	$db1->query("SELECT * FROM addressbook",__LINE__,__FILE__);               
+		$db1->query("SELECT * FROM addressbook",__LINE__,__FILE__);               
 
 	    $fields = $extra = array();
 
-                while ($db1->next_record()) {
-                    $fields['id']	  = $db1->f("ab_id");
-                    $fields['owner']      = $db1->f("ab_owner");
-                    $fields['n_given']    = $db1->f("ab_firstname");
-                    $fields['n_family']   = $db1->f("ab_lastname");
-                    $fields['d_email']    = $db1->f("ab_email");
-                    $fields['b_tel']      = $db1->f("ab_hphone");
-                    $fields['a_tel']      = $db1->f("ab_wphone");
-                    $fields['c_tel']      = $db1->f("ab_fax");
-                    $fields['fn']         = $db1->f("ab_firstname")." ".$db1->f("ab_lastname");
-                    $fields["a_tel_work"] = "y";
-                    $fields["b_tel_home"] = "y";
-                    $fields["c_tel_fax"]  = "y";
-                    $fields['org_name']   = $db1->f("ab_company");
-                    $fields['title']      = $db1->f("ab_title");
-                    $fields['adr_street'] = $db1->f("ab_street");
-                    $fields['adr_locality']       = $db1->f("ab_city");
-                    $fields['adr_region']         = $db1->f("ab_state");
-                    $fields['adr_postalcode']     = $db1->f("ab_zip");
+		while ($db1->next_record()) {
+			$fields['id']	  = $db1->f("ab_id");
+			$fields['owner']      = $db1->f("ab_owner");
+			$fields['n_given']    = $db1->f("ab_firstname");
+			$fields['n_family']   = $db1->f("ab_lastname");
+			$fields['d_email']    = $db1->f("ab_email");
+			$fields['b_tel']      = $db1->f("ab_hphone");
+			$fields['a_tel']      = $db1->f("ab_wphone");
+			$fields['c_tel']      = $db1->f("ab_fax");
+			$fields['fn']         = $db1->f("ab_firstname")." ".$db1->f("ab_lastname");
+			$fields["a_tel_work"] = "y";
+			$fields["b_tel_home"] = "y";
+			$fields["c_tel_fax"]  = "y";
+			$fields['org_name']   = $db1->f("ab_company");
+			$fields['title']      = $db1->f("ab_title");
+			$fields['adr_street'] = $db1->f("ab_street");
+			$fields['adr_locality']       = $db1->f("ab_city");
+			$fields['adr_region']         = $db1->f("ab_state");
+			$fields['adr_postalcode']     = $db1->f("ab_zip");
 
-                    $extra['pager']       = $db1->f("ab_pager");
-                    $extra['mphone']      = $db1->f("ab_mphone");
-                    $extra['ophone']      = $db1->f("ab_ophone");
-                    $extra['bday']        = $db1->f("ab_bday");
-                    $extra['notes']       = $db1->f("ab_notes");
-                    $extra['address2']    = $db1->f("ab_address2");
-                    $extra['url']         = $db1->f("ab_url");
+			$extra['pager']       = $db1->f("ab_pager");
+			$extra['mphone']      = $db1->f("ab_mphone");
+			$extra['ophone']      = $db1->f("ab_ophone");
+			$extra['bday']        = $db1->f("ab_bday");
+			$extra['notes']       = $db1->f("ab_notes");
+			$extra['address2']    = $db1->f("ab_address2");
+			$extra['url']         = $db1->f("ab_url");
 
-	$sql="INSERT INTO phpgw_addressbook (org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
+			$sql="INSERT INTO phpgw_addressbook (org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
                                 . "b_tel,b_tel_home,c_tel,c_tel_fax,adr_street,adr_locality,adr_region,adr_postalcode,owner)"
                                 . " VALUES ('".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
                                 . $fields["fn"]."','".$fields["d_email"]."','".$fields["title"]."','".$fields["a_tel"]."','"
@@ -1145,20 +1145,71 @@
                                 . $fields["adr_locality"]."','".$fields["adr_region"]."','".$fields["adr_postalcode"]."','"
                                 . $fields["owner"] ."')";
 
-	$db2->query($sql,__LINE__,__FILE__);
+			$db2->query($sql,__LINE__,__FILE__);
 
-		while (list($name,$value) = each($extra)) {
-	                    
-			$sql = "INSERT INTO phpgw_addressbook_extra VALUES ('".$fields["id"]."','" . $$fields["owner"] . "','"
-                                        . addslashes($name) . "','" . addslashes($value) . "')";
-
-
+			while (list($name,$value) = each($extra)) {
+				$sql = "INSERT INTO phpgw_addressbook_extra VALUES ('".$fields["id"]."','" . $$fields["owner"] . "','"
+					. addslashes($name) . "','" . addslashes($value) . "')";
+			}
     		$db2->query($sql,__LINE__,__FILE__);
 		}
-	    }
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
+	}
 
-    $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
-    }
+    $test[] = '0.9.10pre13';
+    function upgrade0_9_10pre13() {
+		global $phpgw_info, $phpgw_setup;
+		$db1 = $phpgw_setup->db;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add url varchar(128)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook add bday varchar(32)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook add note text");
+		$phpgw_setup->db->query("alter table phpgw_addressbook_extra change contact_value contact_value text");
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='url'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set url=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='url'";
+				$db1->query($delete);
+			}
+		}
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='bday'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set bday=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='bday'";
+				$db1->query($delete);
+			}
+		}
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='notes'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set note=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='notes'";
+				$db1->query($delete);
+			}
+		}
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre14';
+	}
 
   reset ($test);
   while (list ($key, $value) = each ($test)){
