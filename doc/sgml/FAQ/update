@@ -1,5 +1,0 @@
-#!/bin/bash
-export SGML_CATALOG_FILES=/usr/local/sgml/dtd/docbook.cat:/usr/local/sgml/dsssl/catalog:/usr/local/sgml/openjade-1.3/dsssl/catalog
-/usr/local/sgml/openjade-1.3/jade/openjade -tsgml -i html -d /usr/local/sgml/dsssl/html/ldp.dsl\#html FAQ.sgml
-rcp *.html colorado:/home/bneill/public_html/FAQ
-rm *.html
