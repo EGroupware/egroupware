@@ -565,7 +565,7 @@
 		{
 			list($app) = explode('.',$app);
 
-			if ($GLOBALS['phpgw_info']['etemplate']['import_tested'][$app])
+			if (!$app || $GLOBALS['phpgw_info']['etemplate']['import_tested'][$app])
 			{
 				return '';	// ensure test is done only once per call and app
 			}
