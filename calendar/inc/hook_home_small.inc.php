@@ -42,7 +42,7 @@
 								'month' => date('m',$day),
 								'day'   => date('d',$day)
 							));
-		$extra_data .= '<font class="event-on" style="font-weight: bold">'.date('l',$day) .'</font><br />' . $dayprint;
+		$extra_data .= '<font class="event-off" style="font-weight: bold">'.date('l',$day) .'</font><br />' . $dayprint;
 	}
 	$extra_data .= '</td></tr></table>'."\n";
 
