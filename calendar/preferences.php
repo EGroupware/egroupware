@@ -60,8 +60,8 @@
    <td><?php echo lang("weekday starts on"); ?></td>
    <td align="center">
     <select name="weekdaystarts">
-	 <option value="Monday"<?php echo $t_weekday["monday"]; ?>><?php echo lang("monday"); ?></option>
-	 <option value="Sunday"<?php echo $t_weekday["sunday"]; ?>><?php echo lang("sunday"); ?></option>
+	 <option value="Monday"<?php echo $t_weekday["Monday"]; ?>><?php echo lang("Monday"); ?></option>
+	 <option value="Sunday"<?php echo $t_weekday["Sunday"]; ?>><?php echo lang("Sunday"); ?></option>
 	</select>
   </td>
 <?php
