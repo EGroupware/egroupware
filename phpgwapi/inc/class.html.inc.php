@@ -127,7 +127,12 @@ class html
 	function htmlspecialchars($str)
 	{
 		// add @ by lkneschke to supress warning about unknown charset
-		return @htmlspecialchars($str,ENT_COMPAT,$this->charset);
+		$str = @htmlspecialchars($str,ENT_COMPAT,$this->charset);
+		
+		// we need '&#' unchanged, so we translate it back
+		$str = str_replace('&amp;#','&#',$str);
+
+		return $str;
 	}
 
 	/*!
