@@ -29,7 +29,7 @@
    <td width="2%" align="{align}" valign="top">
     <form method="POST" action="{action}" name="{form_name}">
 {hidden}
-     <table border="0" cellspacing="0" cellpadding="0">
+     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
       <tr>
        <td align="{align}">
         <input type="image" src="{img}" border="{border}" alt="{label}" width="12" height="12" name="start" value="{start}">
