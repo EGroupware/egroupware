@@ -1,4 +1,5 @@
 (stored password will not be shown here)	admin	de	(Gespeicherte Passwort wird hier nicht angezeigt)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
@@ -40,10 +41,13 @@ auto create account records for authenticated users	admin	de	Automatisch Kontend
 bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 bottom	admin	de	unten
+category list	admin	de	Kategoriliste
 change main screen message	admin	de	Nachricht der Startseite ändern
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
+check items to <b>%1</b> to %2 for %3	admin	de	<b>%1</b> auswählen für %2 und %3
 country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
+default	admin	de	Vorgabe
 default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
 delete all records	admin	de	Alle Einträge löschen
@@ -60,6 +64,7 @@ deny access to session log	admin	de	Zugriff zu Sitzungsprotokoll verbieten
 deny access to site configuration	admin	de	Zugriff zur allg. Konfiguration verbieten
 deny access to user accounts	admin	de	Zugriff zu den Benutzerkonten verbieten
 deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten anderen Benutzern Zugriff zu ihren Daten zu gewähren ?
+description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
 display	admin	de	Anzeigen
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
 edit application	admin	de	Anwendung bearbeiten
@@ -84,6 +89,7 @@ enter your default ftp server	admin	de	Default FTP Server
 enter your http proxy server	admin	de	HTTP Proxy Server
 enter your http proxy server port	admin	de	HTTP Proxy Server Port
 expires	admin	de	abgelaufen
+file space	admin	de	Dateiraum
 find and register all application hooks	admin	de	Registrieren aller Applikation hooks
 force selectbox	admin	de	Auswahl erzwingen
 global categories	admin	de	Globale Kategorien
@@ -104,12 +110,13 @@ installed applications	common	de	Installierte Anwendungen
 interface	admin	de	Schnittstelle
 ip	admin	de	IP
 kill	admin	de	Beenden
+kill session	admin	de	Sitzung beenden
 language	admin	de	Sprache
+last %1 logins	admin	de	Letze %1 Logins
+last %1 logins for %2	admin	de	Letze %1 Logins für %2
 last login	admin	de	Letzter Login
 last login from	admin	de	Letzer Login von
 last time read	admin	de	Zuletzt gelesen
-last x logins	admin	de	Letze %1 Logins
-last x logins for x	admin	de	Letze %1 Logins für %2
 ldap accounts context	admin	de	LDAP Kontext für Benutzerkonten
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	de	LDAP Vorgabewert für Benutzerverzeichnisse (zB. /home für /home/username)
 ldap default shell (e.g. /bin/bash)	admin	de	LDAP Vorgabewert für Komandointerpreter (shell) (zB. /bin/bash)
@@ -135,8 +142,11 @@ new group name	admin	de	Neuer Gruppenname
 new password [ leave blank for no change	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
 new password [ leave blank for no change 	admin	de	
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
+no algorithms available	admin	de	Kein Algorithmus verfügbar
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden
+no modes available	admin	de	Kein Modus verfügbar
+note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung erzeugt wurde
 outbound	admin	de	ausgehend
 passthrough	admin	de	durchgehend
 path information	admin	de	Pfad-Information
@@ -151,7 +161,9 @@ please enter a name for that server !	admin	de	Bitte einen Namen für diesen Serv
 please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
 preferences	admin	de	Einstellungen
 re-enter password	admin	de	Passwort wiederholen
+read this list of methods.	admin	de	Diese Liste der Methoden lesen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
+return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 section	admin	de	Abschnitt
 security	admin	de	Sicherheit
 select group managers	admin	de	Gruppenmanager auswählen
@@ -161,18 +173,19 @@ select where you want to store/retrieve filesystem information	admin	de	Wo wolle
 select where you want to store/retrieve user accounts	admin	de	Wo wollen Sie die Benutzerkonten speichern
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 selectbox	admin	de	Auswahlfeld
+server %1 has been updated	admin	de	Server %1 wurde aktualisiert
 server list	admin	de	Server Liste
 server password	admin	de	Server Passwort
 server type(mode)	admin	de	Server Typ (Modus)
 server url	admin	de	Server URL
 server username	admin	de	Server Benutzername
-server x has been updated	admin	de	Server %1 wurde aktualisiert
 set preference values.	admin	de	Einstellungswert würde geändert
 show 'powered by' logo on	admin	de	Zeige 'powered by' Logo
 site	admin	de	Site
 site configuration	admin	de	Konfiguration der Anwendung
 sorry, that group name has already been taken.	admin	de	Der Gruppenname wird bereits verwendet.
-sorry, the follow users are still a member of the group x	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
+sorry, the above users are still a member of the group %1	admin	de	Der Benutzer ist immer noch Mitglied der Gruppe %1.
+sorry, the follow users are still a member of the group %1	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
 submit changes	admin	de	Änderungen speichern
 template selection	admin	de	Auswahl der Benutzeroberfläche
 text entry	admin	de	Texteingabe
