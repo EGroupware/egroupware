@@ -31,7 +31,7 @@
 	$tpl->set_file(array('head' => 'head.tpl'));
 
 	$var = Array (
-		'webserver_url'	=> $GLOBALS['phpgw_info']['server']['sebserver_url'],
+		'webserver_url'	=> $GLOBALS['phpgw_info']['server']['webserver_url'],
 		'home'		=> $GLOBALS['phpgw']->link('/index.php'),
 		'appt'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uicalendar.day')),
 		'todo'		=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'todo.uitodo.add')),
