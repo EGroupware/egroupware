@@ -1028,6 +1028,7 @@
 						'action_text_button'	=> lang('Delete Single'),
 						'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this single occurence ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
 						'action_extra_field'	=> '<input type="hidden" name="delete_type" value="single">'
+							. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
 					);
 					$p->set_var($var);
 					$p->parse('phpgw_body','form_button',True);
@@ -1093,11 +1094,12 @@
 
 		function edit($params='')
 		{
-			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
-			{
-			   $this->no_edit();
-			}
-			
+// 		No event loaded, so what to check?
+//			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+//			{
+//			   $this->no_edit();
+//			}
+
 			if($this->debug)
 			{
 				echo '<!-- params[readsess] = '.$params['readsess'].' -->'."\n";
@@ -1140,18 +1142,14 @@
 				if(@isset($GLOBALS['HTTP_POST_VARS']['edit_type']) && $GLOBALS['HTTP_POST_VARS']['edit_type'] == 'single')
 				{
 					$event['id'] = 0;
-					$event['start']['month'] = $this->bo->month;
-					$event['start']['mday'] = $this->bo->day;
-					$event['start']['year'] = $this->bo->year;
-					$event['end']['month'] = $this->bo->month;
-					$event['end']['mday'] = $this->bo->day;
-					$event['end']['year'] = $this->bo->year;
+					$this->bo->set_recur_date($event,$GLOBALS['HTTP_POST_VARS']['date']);
 					$event['recur_type'] = MCAL_RECUR_NONE;
 					$event['recur_interval'] = 0;
 					$event['recur_data'] = 0;
 					$event['recur_enddate']['month'] = 0;
 					$event['recur_enddate']['mday'] = 0;
 					$event['recur_enddate']['year'] = 0;
+					$event['recur_execption'] = array();
 				}
 				$this->edit_form(
 					Array(
@@ -1427,12 +1425,13 @@
 				$delete_type = get_var('delete_type',Array('POST'));
 				if($deleted_type && $delete_type == 'single')
 				{
+					$date = $GLOBALS['HTTP_POST_VARS']['date'];
 					$cd = $this->bo->delete_single(
 						Array(
 							'id'	=> intval($cal_id),
-							'year'	=> $this->bo->year,
-							'month'	=> $this->bo->month,
-							'day'	=> $this->bo->day
+							'year'	=> substr($date,0,4),
+							'month'	=> substr($date,4,2),
+							'day'	=> substr($date,6,2)
 						)
 					);
 				}
@@ -1822,7 +1821,7 @@
 		/**
 		 * planner_update_row - update a row of the planner view
 		 *
-		 * parameters are: 
+		 * parameters are:
 		 *   - index (e.g. user id, category id, ...) of the row
 		 *   - name/title of the row (e.g. user name, category name)
 		 *   - the event to be integrated
@@ -1834,11 +1833,12 @@
 			$rows              = &$this->planner_rows;
 			$intervals_per_day = $this->bo->prefs['calendar']['planner_intervals_per_day'];
 			$is_private        = !$this->bo->check_perms(PHPGW_ACL_READ,$event);
-
+			
 			$view = $this->planner_html->link('/index.php',
 				array(
 					'menuaction' => 'calendar.uicalendar.view',
-					'cal_id' => $event['id']
+					'cal_id' => $event['id'],
+					'date' => date('Ymd',$this->bo->maketime($event['start']))
 				)
 			);
 
@@ -1869,13 +1869,14 @@
 				$akt_cell = &$rows[$ka];
 			} while ($akt_cell > $start_cell);
 
+			$id = $event['id'].'-'.date('Ymd',$this->bo->maketime($event['start']));
 			if ($akt_cell < $start_cell)
 			{
-				$row[$event['id'].'_1'] = '&nbsp;';
-				$row['.'.$event['id'].'_1'] = 'colspan="'.($start_cell-$akt_cell).'"';
+				$row[$id.'_1'] = '&nbsp;';
+				$row['.'.$id.'_1'] = 'colspan="'.($start_cell-$akt_cell).'"';
 			}
-			$opt = &$row['.'.$event['id'].'_2'];
-			$cel = &$row[$event['id'].'_2'];
+			$opt = &$row['.'.$id.'_2'];
+			$cel = &$row[$id.'_2'];
 
 			// if possible, display information about event within cells representing it
 			//
@@ -1955,6 +1956,10 @@
 			{
 				$cel .= $this->planner_html->image('calendar','mini-calendar-bar.gif','','border="0"');
 			}
+			if ($event['recur_type'])
+			{
+				$cel .= $this->planner_html->image('calendar','recur.gif','','border="0"');
+			}
 			$cel .= $this->planner_html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border="0"');
 			$cel .= '</a>';
 
@@ -2006,7 +2011,6 @@
 			if ($event_end <= $this->planner_lastday)
 			{
 				$days_between = $GLOBALS['phpgw']->datetime->days_between($this->bo->month,1,$this->bo->year,$event['end']['month'],$event['end']['mday'],$event['end']['year']);
-
 				$end_cell = $intervals_per_day * $days_between + $interval[$event['end']['hour']];
 				if ($end_cell == $start_cell && $end_cell < $last_cell)
 				{
@@ -2017,7 +2021,6 @@
 			{
 				$end_cell = $last_cell;
 			}
-
 			// get the categories associated with event
 			//
 			if ($c = $event['category'])
@@ -2156,8 +2159,12 @@
 
 				// process all events on day $v
 				//
-				while (list($nul,$event) = @each($daily))
+				while (list(,$event) = @each($daily))
 				{
+					if ($event['recur_type'])	// calculate start- + end-datetime for recuring events
+					{
+						$this->bo->set_recur_date($event,$v);
+					}
 					$this->planner_process_event($event);
 				}
 			}
@@ -3719,7 +3726,7 @@
 					if((($ind <> 99) && ($ind <> 0)) && (($starttime <> 0) && ($endtime <> 0)))
 					{
 						print_debug('IND before',$ind);
-						if($ind <= date('H',$last_endtime-1))	// -1 to allow events to end on a full hour, without blocking the next hour-slot
+						if($ind <= date('H',$last_endtime-1) && $last_ind)	// -1 to allow events to end on a full hour, without blocking the next hour-slot
 						{
 							$ind = $last_ind;
 							$interval_start = $last_interval_start;
@@ -4379,7 +4386,7 @@
 				$var = Array(
 					'action_url_button'	=> $this->page('delete','&cal_id='.$event['id']),
 					'action_text_button'	=> lang('Delete'),
-					'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to \\ndelete this entry?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+					'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to \\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
 					'action_extra_field'	=> ''
 				);
 				$p->set_var($var);

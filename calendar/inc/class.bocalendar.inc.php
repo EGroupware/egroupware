@@ -461,13 +461,15 @@
 				print_debug('count event exceptions',count($event['recur_exception']));
 				$this->so->add_entry($event);
 				$cd = 16;
+				
+				$this->so->cal->event = $temp_event;
+				unset($temp_event);
 			}
 			else
 			{
 				$cd = 60;
 			}
-			$this->so->cal->event = $temp_event;
-			unset($temp_event);
+//			}
 			return $cd;
 		}
 
@@ -877,6 +879,45 @@
 		function maketime($time)
 		{
 			return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
+		}
+
+		/*!
+		@function time2array
+		@abstract returns a date-array suitable for the start- or endtime of an event from a timestamp
+		@syntax time2array($time,$alarm=0)
+		@param $time the timestamp for the values of the array
+		@param $alarm (optional) alarm field of the array, defaults to 0
+		@author ralfbecker
+		*/
+		function time2array($time,$alarm = 0)
+		{
+			return array(
+				'year'  => intval(date('Y',$time)),
+				'month' => intval(date('m',$time)),
+				'mday'  => intval(date('d',$time)),
+				'hour'  => intval(date('H',$time)),
+				'min'   => intval(date('i',$time)),
+				'sec'   => intval(date('s',$time)),
+				'alarm' => intval($alarm)
+			);
+		}
+
+		/*!
+		@function set_recur_date
+		@abstract set the start- and enddates of a recuring event for a recur-date
+		@syntax set_recur_date(&$event,$date)
+		@param $event the event which fields to set (has to be the original event for start-/end-times)
+		@param $date  the recuring date in form 'Ymd', eg. 20030226
+		@author ralfbecker
+		*/
+		function set_recur_date(&$event,$date)
+		{
+			$org_start = $this->maketime($event['start']);
+			$org_end   = $this->maketime($event['end']);
+			$start = mktime($event['start']['hour'],$event['start']['min'],0,substr($date,4,2),substr($date,6,2),substr($date,0,4));
+			$end   = $org_end + $start - $org_start;
+			$event['start'] = $this->time2array($start);
+			$event['end']   = $this->time2array($end);
 		}
 
 		function fix_update_time(&$time_param)
@@ -2201,79 +2242,28 @@
 		function remove_doubles_in_cache($firstday,$lastday)
 		{
 			$already_moved = Array();
-			$has_category  = Array(); // remove only multiple occurences of a category per event/day
 			for($v=$firstday;$v<=$lastday;$v++)
 			{
 				if (!$this->cached_events[$v])
 				{
 					continue;
 				}
-				while (list($g,$event) = each($this->cached_events[$v]))
+				$cached = $this->cached_events[$v];
+				$this->cached_events[$v] = array();
+				while (list($g,$event) = each($cached))
 				{
-					$start = sprintf('%04d%02d%02d',$event['start']['year'],$event['start']['month'],$event['start']['mday']);
+					$end = date('Ymd',$this->maketime($event['end']));
 					print_debug('EVENT',_debug_array($event,False));
 					print_debug('start',$start);
 					print_debug('v',$v);
 
-					if($start < $firstday)
+					if (!isset($already_moved[$event['id']]) || $event['recur_type'] && $v > $end)
 					{
-						$start = $firstday; // event continues into current month/year
-					}
-
-//					if ($start != $v && $event['recur_type'] == MCAL_RECUR_NONE)							// this is an enddate-entry --> remove it
-					if ($start != $v)							// this is an enddate-entry --> remove it
-					{
-						unset($this->cached_events[$v][$g]);
-						if($g != count($this->cached_events[$v]))
-						{
-							if ($has_category[$event['id']]['category'] != True)
-							{
-								continue; // we need at least one evidence for this category
-							}
-							for($h=$g + 1;$h<$c_daily;$h++)
-							{
-								$this->cached_events[$v][$h - 1] = $this->cached_events[$v][$h];
-							}
-							unset($this->cached_events[$v][$h]);
-							$has_category[$event['id']]['category'] = True;
-						}
-
-//						if ($start < $firstday && $event['recur_type'] == MCAL_RECUR_NONE)				// start before period --> move it to the beginning
-						if ($start < $firstday)				// start before period --> move it to the beginning
-						{
-							if($already_moved[$event['id']] > 0)
-							{
-								continue;
-							}
-							$add_event = True;
-							$c_events = count($this->cached_events[$firstday]);
-							for($i=0;$i<$c_events;$i++)
-							{
-								$add_event = ($this->cached_events[$firstday][$i]['id'] == $event['id']?False:$add_event);
-							}
-							if($add_event)
-							{
-								$this->cached_events[$firstday][] = $event;
-								$already_moved[$event['id']] = 1;
-								print_debug('Event moved');
-							}
-							else
-							{
-								$already_moved[$event['id']] = 2;
-								print_debug('Event removed (not moved)');
-							}
-						}
-						else
-						{
-							print_debug('Event removed');
-						}
-					}
-					else
-					{
-						print_debug('Event OK');
+						$this->cached_events[$v][] = $event;
+						$already_moved[$event['id']] = 1;
+						print_debug('Event moved');
 					}
 				}
-				flush();
 			}
 		}
 
