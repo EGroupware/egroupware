@@ -565,6 +565,7 @@
     reset ($phpgw_info["user"]["apps"]);
     while ($permission = each($phpgw_info["user"]["apps"])) {
       if ($completed_hooks[$permission[0]] != True){
+        $appname = $permission[0];
         $f = $phpgw_info["server"]["server_root"] . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
       	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
     	  if (file_exists($f)) {include($f);}
