@@ -192,7 +192,10 @@ date                                                                            
 
 cd $ANONCVSDIRFEDORA
                                                                                                                             
-/opt/installbuilder-1.2.1/bin/builder build /opt/installbuilder-1.2.1/projects/egroupware.xml
+echo "build bitrock Linux package" 							>> $LOGFILEFEBIT 2>&1
+/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml linux
+echo "build bitrock Windows package" 							>> $LOGFILEFEBIT 2>&1
+/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml windows
 
 rm -rf egroupware
 echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1
