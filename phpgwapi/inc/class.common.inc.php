@@ -1677,11 +1677,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		function des_cryptpasswd($userpass, $random)
 		{
 			$lcrypt = '{crypt}';
-			$password = crypt($userpass);
+			$password = crypt($userpass, $random);
 			$ldappassword = sprintf('%s%s', $lcrypt, $password);
-
 			return $ldappassword;
 		}
+
 		/*!
 		@function md5_cryptpasswd
 		@abstract md5 encrypt password
