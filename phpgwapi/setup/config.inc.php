@@ -23,7 +23,7 @@
    </tr>
 
    <tr bgcolor="486591">
-    <td colspan="2"><font color="fefefe">&nbsp;<b>Server information</b></font></td>
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Host information</b></font></td>
    </tr>
 
    <tr bgcolor="e6e6e6">
@@ -39,11 +39,6 @@
    <tr bgcolor="e6e6e6">
     <td>Enter your HTTP proxy server port.</td>
     <td><input name="newsettings[httpproxy_port]" value="<?php echo $current_config["httpproxy_port"]; ?>"></td>
-   </tr>
-
-   <tr bgcolor="e6e6e6">
-    <td>Enter the title for your site.</td>
-    <td><input name="newsettings[site_title]" value="<?php echo $current_config["site_title"]; ?>"></td>
    </tr>
 
    <tr bgcolor="e6e6e6">
