@@ -12,32 +12,34 @@
 
   /* $Id$ */
 {
-  echo "<p>\n";
-  $imgfile = $phpgw->common->get_image_dir("preferences")."/" . $appname .".gif";
-  if (file_exists($imgfile)) {
-    $imgpath = $phpgw->common->get_image_path("preferences")."/" . $appname .".gif";
-  } else {
-    $imgfile = $phpgw->common->get_image_dir("preferences")."/navbar.gif";
-    if (file_exists($imgfile)) {
-      $imgpath = $phpgw->common->get_image_path("preferences")."/navbar.gif";
-    } else {
-      $imgpath = "";
-    }
-  }
-  section_start("Account Preferences",$imgpath);
-
-
-  // Actual content
-  if ($phpgw->acl->check('changepassword',1)) {
-			echo "<a href=\"" . $phpgw->link('/preferences/changepassword.php') . "\">"
-     . lang("change your password") . "</a>";
+	echo "<p>\n";
+	$imgfile = $phpgw->common->get_image_dir("preferences")."/" . $appname .".gif";
+	if (file_exists($imgfile))
+	{
+		$imgpath = $phpgw->common->get_image_path("preferences")."/" . $appname .".gif";
+	} else
+	{
+		$imgfile = $phpgw->common->get_image_dir("preferences")."/navbar.gif";
+		if (file_exists($imgfile))
+		{
+			$imgpath = $phpgw->common->get_image_path("preferences")."/navbar.gif";
+		} else
+		{
+			$imgpath = "";
+		}
 	}
-  echo "<br><a href=\"" . $phpgw->link('/preferences/settings.php') . "\">"
-     . lang("change your settings") . "</a>";
-//  echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"
-//     . lang("change your profile") . "</a>";
+
+	section_start("Account Preferences",$imgpath);
 
 
-  section_end(); 
+	// Actual content
+	if ($phpgw->acl->check('changepassword',1))
+	{
+		section_item($phpgw->link('/preferences/changepassword.php'), lang("change your password"));
+	}
+	
+	section_item($phpgw->link('/preferences/settings.php'), lang('change your settings'));
+
+	section_end(); 
 }
 ?>

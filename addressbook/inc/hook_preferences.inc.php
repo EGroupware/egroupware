@@ -27,17 +27,17 @@
 
 	section_start(ucfirst($appname),$imgpath);
 
-	echo '<a href="' . $phpgw->link('/addressbook/preferences.php') . '">'
-		. lang('Preferences') . '</a><br>';
+	section_item($phpgw->link('/addressbook/preferences.php'),
+		lang('Preferences'));
 
-	echo '<a href="' . $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname) . '">'
-		. lang('Grant Access') . '</a><br>';
+	section_item($phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
+		lang('Grant Access'));
 
-	echo '<a href="' . $phpgw->link('/preferences/categories.php','cats_app='.$appname) . '">'
-		. lang('Edit Categories') . '</a><br>';
+	section_item($phpgw->link('/preferences/categories.php','cats_app='.$appname),
+		lang('Edit Categories'));
 
-	echo '<a href="' . $phpgw->link('/addressbook/fields.php') . '">'
-		. lang('Edit custom fields') . '</a>';
+	section_item($phpgw->link('/addressbook/fields.php'),
+		lang('Edit custom fields'));
 
 	section_end(); 
 }

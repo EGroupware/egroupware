@@ -33,14 +33,14 @@
 
 	section_start(ucfirst($appname),$imgpath);
 
-	echo '<a href="' . $phpgw->link('/calendar/preferences.php') . '">' . lang('Calendar preferences')
-		. '</a><br>';
+	section_item($phpgw->link('/calendar/preferences.php'),
+		lang('Calendar preferences'));
 
-	echo '<a href="' . $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname) . '">'
-		. lang('Grant Calendar Access') . '</a><br>';
+	section_item($phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
+		lang('Grant Calendar Access'));
 
-	echo '<a href="' . $phpgw->link('/preferences/categories.php','cats_app='.$appname) . '">'
-		. lang('Edit Categories') . '</a>';
+	section_item($phpgw->link('/preferences/categories.php','cats_app='.$appname),
+		lang('Edit Categories'));
 
 	section_end(); 
 }

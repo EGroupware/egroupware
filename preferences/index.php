@@ -14,33 +14,62 @@
 
 	$phpgw_info['flags']['currentapp'] = 'preferences';
 	include('../header.inc.php');
+	
+	$pref_tpl = new Template($phpgw->common->get_tpl_dir('preferences'));
+	$pref_tpl->set_file(array(
+		'T_icon_cell' => 'index_icon_cell.tpl',
+		'T_link_cell' => 'index_link_cell.tpl',	
+		'index_out' => 'index.tpl',
+	));
+	// initialize
+	
 
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='')
 	{
-		global $phpgw,$phpgw_info;
-		//echo "<TABLE WIDTH=\"75%\" BORDER=\"0\" CELLSPACING=\"0\" CELLPADDING=\"0\" BGCOLOR=\"".$phpgw_info["theme"]["navbar_bg"]."\">\n";
-		echo '<TABLE WIDTH="75%" BORDER="0" CELLSPACING="0" CELLPADDING="0">';
-		//echo "<TR BGCOLOR=\"".$phpgw_info["theme"]["navbar_bg"]."\">";
-		echo '<TR>';
-
+		global $phpgw,$phpgw_info, $loopnum, $pref_tpl;
+		
+		$pref_tpl->set_var('icon_backcolor',$phpgw_info["theme"]["row_off"]);
+		$pref_tpl->set_var('link_backcolor',$phpgw_info["theme"]["row_off"]);
+		$pref_tpl->set_var('app_name',lang($name));
+		$pref_tpl->set_var('app_icon',$icon);
 		if ($icon)
 		{
-			echo '<TD WIDTH="5%"><img src="' . $icon . '" ALT="[Icon]" align="middle"></TD>';
-			echo '<TD><fontsize="+2">' . lang($name) . '</font></TD>';
+			$pref_tpl->parse('V_icon_cell','T_icon_cell');
 		}
 		else
 		{
-			echo '<TD colspan="2"><font size="+2">' . $name . '</font></TD>';
+			$pref_tpl->set_var('V_icon_cell','&nbsp;');
 		} 
-		echo '</TR>';
-		echo '<TR><TD colspan="2">';
+
+		// prepare an iteration variable for section_item to know when to add a <br>
+		$loopnum = 1;
 	}
+
+	function section_item($pref_link='',$pref_text='')
+	{
+		global $phpgw,$phpgw_info, $loopnum, $pref_tpl;
+		if ($loopnum > 1)
+		{
+			$pref_tpl->set_var('insert_br','<br>');
+		}
+		else
+		{
+			$pref_tpl->set_var('insert_br','');
+		}
+
+		$pref_tpl->set_var('pref_link',$pref_link);
+		$pref_tpl->set_var('pref_text',$pref_text);		
+		$pref_tpl->parse('V_link_cell','T_link_cell',True);
+		$loopnum = $loopnum + 1;
+	} 
 
 	function section_end()
 	{
-		echo '</TD></TR></TABLE>';
-		echo "\n\n";
+		global $phpgw,$phpgw_info, $pref_tpl;
+		$pref_tpl->pparse('out','index_out');
+		$pref_tpl->set_var('V_icon_cell','');
+		$pref_tpl->set_var('V_link_cell','');
 	}
 
 	$phpgw->common->hook();
