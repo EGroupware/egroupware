@@ -32,11 +32,11 @@
       $mailbox_status = $phpgw->msg->status($mbox,"{" . $phpgw_info["server"]["mail_server"] . ":" . $phpgw_info["server"]["mail_port"] . "}INBOX",SA_UNSEEN);
       if ($mailbox_status->unseen == 1) {
         echo "<tr><td><A href=\"" . $phpgw->link("email/") . "\" target=\"phpGroupWare\"> "
-          . lang_common("You have 1 new message!") . "</A></td></tr>\n";
+          . lang("You have 1 new message!") . "</A></td></tr>\n";
       }
       if ($mailbox_status->unseen > 1) {
         echo "<tr><td><A href=\"" . $phpgw->link("email/") . "\" target=\"phpGroupWare\"> "
-          . lang_common("You have x new messages!",$mailbox_status->unseen) . "</A></td></tr>";
+          . lang("You have x new messages!",$mailbox_status->unseen) . "</A></td></tr>";
       }
     } else {
 ?>
@@ -52,10 +52,10 @@
 <?php
         $mailbox_status = $phpgw->msg->status($mbox,"{" . $phpgw_info["server"]["mail_server"] . ":" . $phpgw_info["server"]["mail_port"] . "}INBOX",SA_UNSEEN);
         if ($mailbox_status->unseen == 1) {
-          echo "<br><a href=\"javascript:opennotifymsg()\">".lang_common("You have 1 new message!")."</a>";
+          echo "<br><a href=\"javascript:opennotifymsg()\">".lang("You have 1 new message!")."</a>";
         }
         if ($mailbox_status->unseen > 1) {
-          echo "<br><a href=\"javascript:opennotifymsg()\">".lang_common("You have x new messages!",$mailbox_status->unseen)."</a>";
+          echo "<br><a href=\"javascript:opennotifymsg()\">".lang("You have x new messages!",$mailbox_status->unseen)."</a>";
         }
         echo "<a href=\"javascript:opennotifymsg()\"><BR><BR>Open phpGroupWare</a>";
     }
