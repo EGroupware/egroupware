@@ -124,7 +124,7 @@ never	admin	en	Never
 new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 no login history exists for this user	admin	en	No login history exists for this user
-no matchs found	admin	en	No matchs found
+no matches found	admin	en	No matches found
 outbound	admin	en	outbound
 passthrough	admin	en	passthrough
 path information	admin	en	Path information

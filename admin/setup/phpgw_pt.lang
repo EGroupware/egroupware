@@ -103,7 +103,7 @@ mode	admin	pt	Modo
 new group name	admin	pt	Nome do novo Grupo
 new password [ leave blank for no change ]	admin	pt	Nova senha [ Deixe em branco para não alterar ]
 no login history exists for this user	admin	pt	Não existe histórico de conexões para este usuário
-no matchs found	admin	pt	Nenhuma ocorrência encontrada
+no matches found	admin	pt	Nenhuma ocorrência encontrada
 outbound	admin	pt	Saída
 passthrough	admin	pt	Atravessar
 path information	admin	pt	Informação de Path

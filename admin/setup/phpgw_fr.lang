@@ -123,7 +123,7 @@ never	admin	fr	Jamais
 new group name	admin	fr	Nouveau nom de groupe
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
 no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur
-no matchs found	admin	fr	Aucune occurrence trouvée
+no matches found	admin	fr	Aucune occurrence trouvée
 outbound	admin	fr	sortant
 passthrough	admin	fr	passage
 path information	admin	fr	Information sur le chemin

@@ -112,7 +112,7 @@ mode	admin	ja	モード
 never	admin	ja	未
 new group name	admin	ja	新グループ名
 new password [ leave blank for no change ]	admin	ja	新パスワード [ Leave blank for no change ]
-no matchs found	admin	ja	見つかりません。
+no matches found	admin	ja	見つかりません。
 note: ssl available only if php is compiled with curl support	admin	ja	備考:PHPがcurlをサポートするようコンパイルされている場合にSSL利用可
 outbound	admin	ja	外向き
 passthrough	admin	ja	パススルー

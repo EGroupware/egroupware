@@ -121,7 +121,7 @@ never	admin	fi	Ei koskaan
 new group name	admin	fi	Uuden ryhmän nimi
 new password [ leave blank for no change ]	admin	fi	Uusi salasana [ Tyhjä = ei muutosta ]
 no login history exists for this user	admin	fi	Käyttäjällä ei ole kirjautumishistoriaa
-no matchs found	admin	fi	Yhtään kohdetta ei löytynyt
+no matches found	admin	fi	Yhtään kohdetta ei löytynyt
 outbound	admin	fi	lähtevä
 passthrough	admin	fi	läpikulku
 path information	admin	fi	Polut

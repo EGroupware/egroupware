@@ -89,7 +89,7 @@ maximum account id (e.g. 65535 or 1000000)	admin	zt	使用者帳號編碼最大值﹝如：65
 minimum account id (e.g. 500 or 100, etc.)	admin	zt	使用者帳號編碼最小值﹝如：500 或 100﹞
 new group name	admin	zt	新的群組名稱
 new password [ leave blank for no change ]	admin	zt	新的密碼（空白時不更動）
-no matchs found	admin	zt	沒有找到符合的資料
+no matches found	admin	zt	沒有找到符合的資料
 path information	admin	zt	Path information
 peer servers	admin	zt	對接伺服器
 percent of users that logged out	admin	zt	使用者登出比例

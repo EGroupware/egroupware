@@ -134,7 +134,7 @@ new group name	admin	es	Nuevo nombre de grupo
 new password [ leave blank for no change ]	admin	es	Nueva contraseña [ Deje es blanco para NO cambiar ]
 news	admin	es	Noticias
 no login history exists for this user	admin	es	No existen registros de acceso para este usuario
-no matchs found	admin	es	No se encontraron resultados
+no matches found	admin	es	No se encontraron resultados
 outbound	admin	es	Notas
 passthough	admin	es	Pasante
 path information	admin	es	Informacion de Rutas
