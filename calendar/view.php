@@ -37,7 +37,7 @@
 
   // first see who has access to view this entry
   $is_my_event = false;
-  $cal = $phpgw->calendar->getevent((int)$id);
+  $cal = $phpgw->calendar->getevent(intval($id));
 
   $cal_info = $cal[0];
 

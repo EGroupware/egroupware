@@ -21,7 +21,7 @@
   $cal_info = new calendar_item;
 
   if ($id > 0) {
-    $cal = $phpgw->calendar->getevent((int)$id);
+    $cal = $phpgw->calendar->getevent(intval($id));
     $cal_info = $cal[0];
 
     $can_edit = false;
