@@ -34,6 +34,8 @@
   }
   $matches = 0;
 
+  $phpgw->calendar->set_filter();
+
   // There is currently a problem searching in with repeated events.
   // It spits back out the date it was entered.  I would like to to say that
   // it is a repeated event.
