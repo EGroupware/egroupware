@@ -191,6 +191,7 @@
 				$cats[0]['id']				= $this->db->f('cat_id');
 				$cats[0]['owner']			= $this->db->f('cat_owner');
 				$cats[0]['access']			= $this->db->f('cat_access');
+				$cats[0]['app_name']		= $this->db->f('cat_appname');
 				$cats[0]['main']			= $this->db->f('cat_main');
 				$cats[0]['level']			= $this->db->f('cat_level');
 				$cats[0]['parent']			= $this->db->f('cat_parent');
@@ -427,22 +428,19 @@
 
 		function id2name($cat_id, $item = 'name')
 		{
-			if ($item == 'main')
+			if ($item == 'name')
 			{
-				$value = 'cat_main';
+				$value = 'cat_name';
 			}
 			elseif ($item == 'owner')
 			{
 				$value = 'cat_owner';
 			}
-			elseif ($item == 'app')
+			elseif ($item == 'main')
 			{
-				$value = 'cat_appname';
+				$value = 'cat_main';
 			}
-			else
-			{
-				$value = 'cat_name';
-			}
+			endif;
 
 			$this->db->query("select $value from phpgw_categories where cat_id='"
 							. "$cat_id'",__LINE__,__FILE__);
@@ -454,7 +452,10 @@
 			}
 			else
 			{
-				return '--';
+				if ($item == 'name')
+				{
+					return '--';
+				}
 			}
 		}
 
