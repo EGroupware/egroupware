@@ -556,7 +556,7 @@
 				}
 				if ($help)
 				{
-					if ($cell['no_lang'] < 2)
+					if ((int)$cell['no_lang'] < 2)
 					{
 						$help = lang($help);
 					}
@@ -939,7 +939,7 @@
 			}
 			if ($extra_label && ($label != '' || $html == ''))
 			{
-				if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label || $cell['no_lang'] == 2))
+				if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label || (int)$cell['no_lang'] == 2))
 				{
 					$label = lang($label);
 				}
