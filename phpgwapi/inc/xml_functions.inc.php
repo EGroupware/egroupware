@@ -651,6 +651,34 @@
 		return $r;
 	}
 
+	$GLOBALS['_xmlrpcs_auth_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
+	$GLOBALS['_xmlrpcs_auth_doc'] = 'Verify server authentication';
+	function _xmlrpcs_auth($server,$m)
+	{
+		$server_name = $m->getParam(0);
+		$username    = $m->getParam(1);
+		$password    = $m->getParam(2);
+		$serverdata['server_name'] = $server_name->scalarval();
+		$serverdata['username']    = $username->scalarval();
+		$serverdata['password']    = $password->scalarval();
+
+		$is = CreateObject('phpgwapi.interserver');
+		$sessionid = $is->auth($serverdata);
+
+		if($sessionid)
+		{
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','HELO','string');
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval',$sessionid,'string');
+		}
+		else
+		{
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOAWAY','string');
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
+		}
+		$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
+		return $r;
+	}
+
 	$GLOBALS['_xmlrpcs_dmap'] = array(
 		'system.listMethods' => array(
 			'function'  => '_xmlrpcs_listMethods',
@@ -671,6 +699,11 @@
 			'function'  => '_xmlrpcs_listApps',
 			'signature' => $GLOBALS['_xmlrpcs_listApps_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
+		),
+		'system.auth'   => array(
+			'function'  => '_xmlrpcs_auth',
+			'signature' => $GLOBALS['_xmlrpcs_auth_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_auth_doc']
 		)
 	);
 
