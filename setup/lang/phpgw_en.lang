@@ -1,0 +1,157 @@
+<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	en	<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
+actions	setup	en	Actions
+admin first name	setup	en	Admin first name
+admin last name	setup	en	Admin last name
+admin password	setup	en	Admin password
+admin username	setup	en	Admin username
+all applications	setup	en	all applications
+app details	setup	en	App details
+app install/remove/upgrade	setup	en	App install/remove/upgrade
+application data	setup	en	Application Data
+application management	setup	en	Application Management
+application name and status	setup	en	Application Name and Status
+application name and status information	setup	en	Application Name and Status Information
+application title	setup	en	Application Title
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	en	At your request, this script is going to attempt to create the database and assign the db user rights to it
+at your request, this script is going to attempt to install all the applications for you	setup	en	At your request, this script is going to attempt to install all the applications for you
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	en	At your request, this script is going to attempt to upgrade your old applications to the current versions
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	en	At your request, this script is going to attempt to upgrade your old tables to the new format
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	en	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
+at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	en	At your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data
+available version	setup	en	Available Version
+backupwarn	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
+because it depends upon	setup	en	because it depends upon
+because it is not a user application, or access is controlled via acl	setup	en	because it is not a user application, or access is controlled via acl
+because it requires manual table installation, <br>or the table definition was incorrect	setup	en	because it requires manual table installation, <br>or the table definition was incorrect
+because it was manually disabled	setup	en	because it was manually disabled
+because of a failed upgrade or install	setup	en	because of a failed upgrade or install
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	en	because of a failed upgrade, or the database is newer than the installed version of this app
+because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
+cancel	setup	en	Cancel
+charset	setup	en	ISO-8859-1
+click here	setup	en	Click Here
+configuration completed	setup	en	Configuration completed
+configuration	setup	en	Configuration
+configure now	setup	en	Configure Now
+create database	setup	en	Create Database
+create one now	setup	en	Create one now
+create	setup	en	Create
+creating tables	setup	en	Creating Tables
+currently installed languages: x <br>	setup	en	Currently installed languages: %1 <br>
+current version	setup	en	Current Version
+db root password	setup	en	DB root password
+db root username	setup	en	DB root username
+delete all my tables and data	setup	en	Delete all my tables and data
+delete all old languages and install new ones	setup	en	Delete all old languages and install new ones
+deleting tables	setup	en	Deleting Tables
+demo server setup	setup	en	Demo Server Setup
+deregistered	setup	en	deregistered
+details for admin account	setup	en	Details for Admin account
+domain	setup	en	Domain
+dont touch my data	setup	en	Dont touch my data
+edit current configuration	setup	en	Edit Current Configuration
+export sql users to ldap	setup	en	Export SQL users to LDAP
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
+go back	setup	en	Go back
+has a version mismatch	setup	en	has a version mismatch
+hooks deregistered	setup	en	hooks deregistered
+hooks registered	setup	en	hooks registered
+however, the application is otherwise installed	setup	en	However, the application is otherwise installed
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
+if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
+if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
+import ldap users/groups	setup	en	Import LDAP users/groups
+insanity	setup	en	Insanity
+install Applications	setup	en	Install Applications
+install language	setup	en	Install Language
+install	setup	en	Install
+installed	setup	en	installed
+is broken	setup	en	is broken
+is disabled	setup	en	is disabled
+ldap account import/export	setup	en	LDAP account import/export
+ldap export users	setup	en	LDAP export users
+ldap import users	setup	en	LDAP import users
+logout	setup	en	Logout
+makesure	setup	en	Make sure that your database is created and the account permissions are set
+manage applications	setup	en	Manage Applications
+manage languages	setup	en	Manage Languages
+multi-language support setup	setup	en	Multi-Language support setup
+mysqlinstr	setup	en	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+not complete	setup	en	not complete
+note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
+not ready for this stage yet	setup	en	Not ready for this stage yet
+ok	setup	en	OK
+once the database is setup correctly	setup	en	Once the database is setup correctly
+only add languages that are not in the database already	setup	en	Only add languages that are not in the database already
+only add new phrases	setup	en	Only add new phrases
+passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
+pgsqlinstr	setup	en	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
+please configure phpGroupWare for your environment	setup	en	Please configure phpGroupWare for your environment
+please install	setup	en	Please install
+please login to phpgroupware and run the admin application for additional site configuration	setup	en	Please login to phpgroupware and run the admin application for additional site configuration
+possible solutions	setup	en	Possible Solutions
+potential problem	setup	en	Potential Problem
+problem resolution	setup	en	Problem resolution
+process	setup	en	Process
+re-check my database	setup	en	Re-Check my database
+re-check my installation	setup	en	Re-Check My Installation
+re-enter password	setup	en	Re-enter password
+registered	setup	en	registered
+remove	setup	en	Remove
+requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
+requires upgrade	setup	en	Requires upgrade
+resolve	setup	en	Resolve
+select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
+select the desired action(s) from the available choices	setup	en	Select the desired action(s) from the available choices
+select which group(s) will be exported (group membership will be maintained)	setup	en	Select which group(s) will be exported (group membership will be maintained)
+select which group(s) will be imported (group membership will be maintained)	setup	en	Select which group(s) will be imported (group membership will be maintained)
+select which languages you would like to use	setup	en	Select which languages you would like to use
+select which method of upgrade you would like to do	setup	en	Select which method of upgrade you would like to do
+select which user(s) will be exported	setup	en	Select which user(s) will be exported
+select which user(s) will be imported	setup	en	Select which user(s) will be imported
+select which user(s) will have admin privileges	setup	en	Select which user(s) will have admin privileges
+select your old version	setup	en	Select your old version
+setup	setup	en	Setup
+some or all of its tables are missing	setup	en	Some or all of its tables are missing
+status	setup	en	Status
+step 1 - simple application management	setup	en	Step 1 - Simple Application Management
+step 2 - configuration	setup	en	Step 2 - Configuration
+step 3 - language management	setup	en	Step 3 - Language Management
+step 4 - advanced application management	setup	en	Step 4 - Advanced Application Management
+submit	setup	en	Submit
+table change messages	setup	en	Table Change Messages
+tables dropped	setup	en	tables dropped
+tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above
+tables upgraded	setup	en	tables upgraded
+target version	setup	en	Target Version
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	en	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
+the tables	setup	en	the tables
+the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
+this program will help you upgrade or install different languages for phpGroupWare	setup	en	This program will help you upgrade or install different languages for phpGroupWare
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	en	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	en	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
+this stage is completed<br>	setup	en	This stage is completed<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	en	This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
+Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	en	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
+uninstall all applications	setup	en	Uninstall all applications
+uninstalled	setup	en	uninstalled
+upgraded	setup	en	upgraded
+upgrade	setup	en	Upgrade
+upgrading tables	setup	en	Upgrading Tables
+version mismatch	setup	en	Version Mismatch
+we will automatically update your tables/records to x	setup	en	We will automatically update your tables/records to %1
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
+you appear to be running version x of phpGroupWare	setup	en	You appear to be running version %1 of phpGroupWare
+you are ready for this stage, but this stage is not yet written.<br>	setup	en	You are ready for this stage, but this stage is not yet written.<br>
+you do not have any languages installed. please install one now <br>	setup	en	You do not have any languages installed. Please install one now <br>
+you must enter a username for the admin	setup	en	You must enter a username for the admin
+your applications are current	setup	en	Your applications are current
+your database does not exist	setup	en	Your database does not exist
+your database is working, but you dont have any applications installed	setup	en	Your database is working, but you dont have any applications installed
+your tables are current	setup	en	Your tables are current
+your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data
+your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs

@@ -1,0 +1,415 @@
+<HTML
+><HEAD
+><TITLE
+>   The install/upgrade process
+  </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.59"><LINK
+REL="HOME"
+TITLE="   phpGroupWare Setup III
+  "
+HREF="setup3.html"><LINK
+REL="PREVIOUS"
+TITLE="   Developer Tools
+  "
+HREF="setup3-2.html"><LINK
+REL="NEXT"
+TITLE="   Conclusion
+  "
+HREF="setup3-4.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare Setup III</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="setup3-2.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="setup3-4.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN177"
+>The install/upgrade process</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN179"
+>Overview</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN181"
+>Setup internal upgrade functions</A
+></H3
+><P
+>     Setup uses a common set of functions for new installs and upgrades. These are implemented as multi-pass loops. For a single application install or upgrade, a single pass is done. For multiple application installs or upgrades, multiple passes are done automatically. The order of install in a mass install or upgrade is determined by application dependencies. The other determining factor is the order in which the application directories and setup.inc.php files are read from the filesystem.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN184"
+>New installs</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN186"
+>Detection</A
+></H3
+><P
+>     Each run of index.php or applications.php in setup3 first runs a set of detection routines. These read the data from each setup.inc.php file, and from the 'applications' or 'phpgw_applications' table as appropriate, and only if one of these tables exists. This data is parsed into the $setup_info array. In this case, this array contains information about all applications. Based on the information gathered, a status flag is set to one of the following values:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     U - Upgrade required/available
+     </P
+></LI
+><LI
+><P
+>     R - upgrade in pRogress
+     </P
+></LI
+><LI
+><P
+>     C - upgrade Completed successfully
+     </P
+></LI
+><LI
+><P
+>     D - Dependency failure
+     </P
+></LI
+><LI
+><P
+>     F - upgrade Failed
+     </P
+></LI
+><LI
+><P
+>     V - Version mismatch at end of upgrade
+     </P
+></LI
+><LI
+><P
+>     M - Missing files at start of upgrade (Not used, proposed only)
+     </P
+></LI
+></UL
+><P
+>     Using this information, the setup logic in index.php determines what mode we are in. index.php is not capable of being selective about which application it found as being out of sync. It is designed only for 'Simple Application Management', which is Step 1 of the setup process. For more selective application manipulation, use applications.php. index.php then tells the user that 1) their applications are current 2) some of their applications are out of sync 3) no db exists, etc. For a new install, all applications will be out of sync, since there is not even an 'phpgw_applications' table in the database to tell setup what the status is for any application.
+    </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN205"
+>Selection</A
+></H3
+><P
+>     There is no selection for application installs in 'new install' mode. All physically present applications will be installed, or at least attempted.
+    </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN208"
+>Installation</A
+></H3
+><P
+>     Once the setup user clicks the magic button to install all applications, the following occurs:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     The setup_info array is passed to the process_pass() function, using a method='new'
+     </P
+></LI
+><LI
+><P
+>     Applications whose status flag='U' (API on first pass) are then handed off to the process_current() function. This handles inclusion and installation of the application's tables_current.inc.php file.
+     </P
+></LI
+><LI
+><P
+>     The application is registered as a new application in the 'phpgw_applications' table. If for some reason there is old data in this table for this application, it will be updated instead. Its hooks, if any, are registered in the 'phpgw_hooks' table.
+     </P
+></LI
+><LI
+><P
+>     Next, this array is passed to the process_default_records() function. If this file is present in the current application's setup directory, the queries here are run to install the data to the application's table(s).
+     </P
+></LI
+><LI
+><P
+>     The above is repeated until all application status flags equal 'C'. However, if an application install failed for some reason, it will then be skipped on the next pass. This keeps the loop from running away.
+     </P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN222"
+>Upgrades</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN224"
+>Detection</A
+></H3
+><P
+>     Only an API version mismatch will trigger an automated request for the user to upgrade their install. Once the api is current, they can move on to applications.php for more 'Advanced Application Management', which is Step 4 of the setup process. However, if the API is out of sync, clicking 'Upgrade' in index.php will also attempt to upgrade other applications which may be out of sync, as well. As the phpgwapi continues to stabilize, it is felt that this method of upgrading will become less and less common.
+    </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN227"
+>Selection</A
+></H3
+><P
+>     Within applications.php, a color-coded matrix of application status and actions is displayed. Depending on the status flag of each application, certain actions will be either enabled or disabled. These actions include 'install', 'upgrade', 'remove'. If something is very wrong with previous attempts to install or upgrade an application, another column called 'resolution' will then display a link. This link will display additional information which would be helpful for determining how to resolve the problem. Assuming all is well, the user can select applications requiring upgrade from this list. Once selected, they submit the form. This runs the follow three routines in order:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     remove
+     </P
+></LI
+><LI
+><P
+>     install
+     </P
+></LI
+><LI
+><P
+>     upgrade
+     </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN237"
+>Upgrade</A
+></H3
+><P
+>     The idea here is that multiple actions can be selected and run in order in one click. In any case, once they select an application for upgrade, the following occurs:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     A stripped down version of the setup_info array is passed to the process_upgrade() function. This array contains only the information for the selected application
+     </P
+></LI
+><LI
+><P
+>     Within process_upgrade(), the tables_baseline.inc.php file for the application is loaded.
+     </P
+></LI
+><LI
+><P
+>     The tables_update.inc.php file for the application is loaded
+     </P
+></LI
+><LI
+><P
+>     The contents of the test array is used to loop through the entire list of upgrade functions for the application. The application's unique function names are rebuilt, then run.
+     </P
+></LI
+><LI
+><P
+>     When the currentver (installed) matches the version (available), process_upgrade() exits, setting the status flag for the app to 'C'.
+     </P
+></LI
+><LI
+><P
+>     Just prior to exiting, the application and its hooks are updated into the 'phpgw_applications' and 'phpgw_hooks' tables.
+     </P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN253"
+>Uninstallation/Removal</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN255"
+>Selection</A
+></H3
+><P
+>     Selective removal of an application is done via applications.php, in a manner similar to the method above for upgrades.
+    </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN258"
+>Uninstallation</A
+></H3
+><P
+>     Once an application is selected for removal:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     A stripped down version of the setup_info array is passed to the process_droptables() function. This function removes all of the application's defined tables, but only after first checking to see if the tables are there. In this way, we attempt to cut down on the number of errors sent to the browser.
+     </P
+></LI
+><LI
+><P
+>     The application's hooks are deregistered (removed from 'phpgw_hooks').
+     </P
+></LI
+><LI
+><P
+>     The application itself is deregistered (removed from 'phpgw_applications').
+     </P
+></LI
+></UL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="setup3-2.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="setup3.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="setup3-4.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Developer Tools</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Conclusion</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,223 @@
+<HTML
+><HEAD
+><TITLE
+>   Developer Tools
+  </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.59"><LINK
+REL="HOME"
+TITLE="   phpGroupWare Setup III
+  "
+HREF="setup3.html"><LINK
+REL="PREVIOUS"
+TITLE="   Application setup files
+  "
+HREF="setup3-1.html"><LINK
+REL="NEXT"
+TITLE="   The install/upgrade process
+  "
+HREF="setup3-3.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare Setup III</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="setup3-1.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="setup3-3.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN148"
+>Developer Tools</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN150"
+>sqltoarray.php</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN152"
+>Displays the current schema_proc array defining an application's tables.</A
+></H3
+><P
+>     This web application reads the current table status live from the database. It then parses this information into a hopefully correct table definition array for schema_proc. Upon visiting this app, you are shown a list of currently installed applications with defined tables. You may then select one app or all apps, and then submit the form. From this form you may then download a tables_current file, suitable for commission to cvs. Please do check the format to make sure the definitions are correct.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN155"
+>schematoy.php</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN157"
+>Runs the full cycle of upgrades, including optional test_data.</A
+></H3
+><P
+>     This app is not beautiful, may bomb on you, and will definitely drop your application's tables. The display is similar to the user/admin tool, applications.php. You are shown a list of apps with tables. Select one app, and enter a target version. Upon submission of the form:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     All application tables are dropped.
+     </P
+></LI
+><LI
+><P
+>     tables_baseline.inc.php is loaded.
+     </P
+></LI
+><LI
+><P
+>     test_data.inc.php is loaded
+     </P
+></LI
+><LI
+><P
+>     tables_update.inc.php is loaded.
+     </P
+></LI
+><LI
+><P
+>     a full application upgrade test begins.
+     </P
+></LI
+></UL
+><P
+>     This will give a LOT of debugging output. Depending on your database, the process may take quite awhile. This tool should be considered as a destructive test of the full upgrade cycle. If the upgrade process is successful, you can then check the loaded test_data to see that it is still in place as expected after all the table modifications, etc. If not, it should be clear where the error has occurred. Look for the usual INVALID SQL warnings, among others.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN172"
+>tools subdirectory</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN174"
+>some utilities for sql file conversion, etc.</A
+></H3
+><P
+>     In the tools directory under setup3, there should be at least a couple of hopefully handy perl or shell scripts. These are for running on the commandline only, and might apply to converting SQL files into lang files, etc. They are not expected to be perfect, but might offer some assistance or ideas for additional utilities. Use these at your own risk or benefit.
+    </P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="setup3-1.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="setup3.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="setup3-3.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Application setup files</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The install/upgrade process</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

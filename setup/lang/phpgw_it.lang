@@ -1,0 +1,158 @@
+<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	it	<br><center>L'importazione &egrave; stata completata! Cliccare <a href="index.php">qui</a> per titornare al setup </center>
+actions	setup	it	Azioni
+admin first name	setup	it	Nome amministratore
+admin last name	setup	it	Cognome amministratore
+admin password	setup	it	Password amministratore
+admin username	setup	it	Nome-utente amministratore
+all applications	setup	it	tutte le applicazioni
+app details	setup	it	Dettagli applicazione
+app install/remove/upgrade	setup	it	installa/rimuovi/aggiorna applicazione
+application data	setup	it	Dati Applicazione
+application management	setup	it	Gestione Applicazioni
+application name and status	setup	it	Nome Applicazione e Stato
+application name and status information	setup	it	Nome Applicazione e Informazioni di Stato
+application title	setup	it	Titolo Applicazione
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di creare il database e di assegnare i privilegi corretti al suo utente
+at your request, this script is going to attempt to install all the applications for you	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di installare tutte le tue applicazioni
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di aggiornare le tue vecchie applicazioni alla versione corrente
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di aggiornare le tue vecchie tabelle al nuovo formato
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di cancellare le tabelle esistenti e di ricrearle nel nuovo formato
+at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di disinstallare tutte le tue applicazioni, cosa che canceller&agrave; tutte le tue tabelle e dati esistenti
+available version	setup	it	Versione Disponibile
+backupwarn	setup	it	ma noi <u>consigliamo vivamente di salvare</u> le tue tabelle nel caso in cui la procedura causidanni ai tuoi dati.<br><strong>Queste procedure automatizzate possono distruggere molto facilmente i tuoi dati.</strong><br><em>Per favore esegui un salvataggio prima di proseguire oltre!</em>
+because it depends upon	setup	it	poich&acute; dipende da
+because it is not a user application, or access is controlled via acl	setup	it	poich&eacute; non si tratta di un'applicazione dell'utente, o l'accesso &egrave; controlalto tramite acl
+because it requires manual table installation, <br>or the table definition was incorrect	setup	it	poich&eacute; richiede un'installazione manuale delle tabelle, <br>o la definizione delle tabelle &egrave: sbagliata
+because of a failed upgrade or install	setup	it	poich&eacute; &egrave; avvenuto un aggiornamento o installazione non corretti
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	it	poich&eacute; &egrave; avvenuto un aggiornamento non corretto, o il database &egrave; pi&ugrave; recente della versione installata di questa applicazione
+because the enable flag for this app is set to 0, or is undefined	setup	it	poich&eacute; il valore di abilitazione di questa applicazione &egrave; impostato a 0, o &egrave; non definito
+cancel	setup	it	Cancella
+charset	setup	it	ISO-8859-1
+click here	setup	it	Clicca qui
+configuration completed	setup	it	Configurazione completata
+configuration	setup	it	Configurazione
+configure now	setup	it	Configura adesso
+create database	setup	it	crea database
+create one now	setup	it	Creane una adesso
+create	setup	it	Crea
+creating tables	setup	it	Creazione Tabelle
+currently installed languages: x <br>	setup	it	Lingue attualmente installate: %1 <br>
+current version	setup	it	Versione Installata
+db root password	setup	it	DB root password
+db root username	setup	it	DB root username
+delete all my tables and data	setup	it	Cancella tutte le mie tabelle e i dati
+delete all old languages and install new ones	setup	it	Cancella tutte le lingue gi&agrave; presenti e installa quelle nuove
+deleting tables	setup	it	Cancella Tabelle
+demo server setup	setup	it	Setup del server dimostrativo
+deregistered	setup	it	deregistrato
+details for admin account	setup	it	Dettagli per l'utente amministratore
+domain	setup	it	Dominio
+dont touch my data	setup	it	non toccare i miei dati
+edit current configuration	setup	it	Modifica la Configurazione Esistente
+export sql users to ldap	setup	it	Esporta utenti SQL verso LDAP
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	it	Per una nuova installazione, seleziona importa.  Per convertire gli utenti SQL verso utenti LDAP, seleziona esporta
+go back	setup	it	Torna indietro
+has a version mismatch	setup	it	ha un conflitto di versione
+hooks deregistered	setup	it	collegamenti deregistrati
+hooks registered	setup	it	collegamenti registrati
+however, the application is otherwise installed	setup	it	Tuttavia, l'applicazione &egrave; altrimenti installata
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	it	Se l'applicazione non ha tabelle definite, selezionando aggiorna il problema dovrebbe risolversi
+if you did not receive any errors, your applications have been	setup	it	Se non hai ricevuto alcun errore, allora le tue applicazioni sono state
+if you did not receive any errors, your tables have been	setup	it	Se non hai ricevuto alcun errore, allora le tue tabelle sono state
+import ldap users/groups	setup	it	Importa utenti/gruppi LDAP
+insanity	setup	it	Follia
+install Applications	setup	it	Installa Applicazioni
+install language	setup	it	Installa Lingue
+install	setup	it	Installa
+installed	setup	it	installato
+is broken	setup	it	non funziona
+is disabled	setup	it	&egrave; disabilitato
+ldap account import/export	setup	it	importa/esporta utenti LDAP
+ldap export users	setup	it	esporta utenti LDAP
+ldap import users	setup	it	importa utenti LDAP
+logout	setup	it	Esci
+makesure	setup	it	Controlla che il tuo database sia stato creato e che i permessi dell'utente siano corretti
+manage applications	setup	it	Gestione Applicazioni
+manage languages	setup	it	Gestione Lingue
+multi-language support setup	setup	it	Configurazione del supporto multi-lingua
+mysqlinstr	setup	it	Istruzioni per creare il database usando MySQL:<br>Entra in mysql -<br><i>[utente@server utente]# mysql -u root -p</i><br>Crea il database vuoto e assegna i permessi all'utente -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+not complete	setup	it	non completo
+note: you will be able to customize this later	setup	it	Nota: Potrai personalizzarlo dopo
+not ready for this stage yet	setup	it	Non ancora pronto per questo passaggio
+ok	setup	it	OK
+once the database is setup correctly	setup	it	Una volta che il database sar&agrave; impostato correttamente
+only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono gi&agrave; presenti nel database
+only add new phrases	setup	it	Aggiungi solo le nuove frasi
+passwords did not match, please re-enter	setup	it	Le password non corrispondono, per favore reinseriscile
+pgsqlinstr	setup	it	Istruzioni per creare il database in usando PostgreSQL:<br>Fai partire postmaster<br><i>[utente@server utente]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crea il database vuoto -<br><i>[utente@server utente]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	it	Per favore controlla gli script sql nella cartella dell'applicazione
+please configure phpGroupWare for your environment	setup	it	Per favore configura phpGroupWare per il tuo Sistema
+please install	setup	it	Per favore installa
+please login to phpgroupware and run the admin application for additional site configuration	setup	it	Accedi a phpgroupware ed esegui l'applicazione 'admin' per una ulteriore configurazione del sito
+possible solutions	setup	it	Soluzioni possibili
+potential problem	setup	it	Problema Potenziale
+problem resolution	setup	it	Risoluzione del problemq
+process	setup	it	Processo
+re-check my database	setup	it	ricontrolla il mio database
+re-check my installation	setup	it	ricontrolla la mia installazione
+re-enter password	setup	it	Reinserisci la password
+registered	setup	it	registrata
+remove	setup	it	Rimuovi
+requires reinstall or manual repair	setup	it	Richiede reinstallazione o riparazione manuale
+requires upgrade	setup	it	Richiede aggiornamento
+resolve	setup	it	Risolvi
+select the default applications to which your users will have access	setup	it	Seleziona l'applicazione predefinita alla quale i tuoi utenti avranno accesso
+select the desired action(s) from the available choices	setup	it	Seleziona, dalle scelte disponibili, le azioni desiderate
+select which group(s) will be exported (group membership will be maintained)	setup	it	Seleziona quale gruppo/i esportare (le appartenenze ai gruppi rimarranno impostate)
+select which group(s) will be imported (group membership will be maintained)	setup	it	Seleziona quale gruppo/i importare (le appartenenze ai gruppi rimarranno impostate)
+select which languages you would like to use	setup	it	Seleziona quali lingue desideri usare
+select which method of upgrade you would like to do	setup	it	Seleziona quale metodo di aggiornamento desideri usare
+select which user(s) will be exported	setup	it	Seleziona quale utente/i esportare
+select which user(s) will be imported	setup	it	Seleziona quale utente/i importare
+select which user(s) will have admin privileges	setup	it	Seleziona quale utente/i privilegi da amministratore
+select your old version	setup	it	Seleziona la tua vecchia versione
+setup	setup	it	Setup
+some or all of its tables are missing	setup	it	Alcune o tutte delle sue tabelle sono mancanti
+status	setup	it	Stato
+step 1 - simple application management	setup	it	Passaggio 1 - Gestione Applicazioni Semplice
+step 2 - configuration	setup	it	Passaggio 2 - Configurazione
+step 3 - language management	setup	it	Passaggio 3 - Gestione Lingue
+step 4 - advanced application management	setup	it	Passaggio 4 - Gestione Applicazioni Avanzata
+submit	setup	it	Invia
+table change messages	setup	it	Messaggi dalle modifiche alle tabelle
+tables dropped	setup	it	tabelle cancellate
+tables installed, unless there are errors printed above	setup	it	tabelle installate, a meno che non vi siano errori qui sopra
+tables upgraded	setup	it	tabelle aggiornate
+target version	setup	it	Versione di destinazione
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	it	Si &egrave; verificato un problema nel contattare il tuo server LDAP. <br>Per favore controlla la configurazione del tuo server LDAP
+the tables	setup	it	le tabelle
+this program will help you upgrade or install different languages for phpGroupWare	setup	it	Questo programma ti aiuter&agrave; ad aggiornare o ad installare lingue differenti per phpGroupWare
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	it	Questa sezione ti aiuter&agrave; ad esportare utenti e gruppi dalle relative tabelle di phpGroupWare nel tuo LDAP tree
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	it	Questa sezione ti aiuter&agrave; ad importare utenti e gruppi dalle relative tabelle di phpGroupWare nel tuo LDAP tree
+this stage is completed<br>	setup	it	Questo passaggio &egrave; stato completato<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	it	Questo creer&agrave; 1 utente amministratore e 3 utenti di esempio<br>I nome utente/password sono: demo/guest, demo2/guest and demo3/guest.<br><b>!!!QUESTO CANCELLER&Agrave; TUTTI GLI UTENTI PREESISTENTI!!!</b><br>
+select an app, enter a target version, then submit to process to that version.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	it	Seleziona una'applicazione, inserisci una versione di destinazione, quindi invia per processare verso quella versione.<br><blink>QUESTO CANGELLERA' PRIMA TUTTE LE TABELLE DELL'APPLICAZIONE</blink>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	it	per predisporre 1 account amministratore e 3 account dimostrativi.<br><b>Questa operazione canceller&agrave; tutti gli account esistenti</b>
+uninstall all applications	setup	it	disinstalla tutte le applicazioni
+uninstalled	setup	it	disinstallato
+upgraded	setup	it	aggiornato
+upgrade	setup	it	Aggiorna
+upgrading tables	setup	it	Aggiornamento Tabelle
+version mismatch	setup	it	Version Mismatch
+we will automatically update your tables/records to x	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	it	Sembra che tu stia usando una vecchia versione di PHP <br>&Egrave raccomandabile che tu esegua un aggiornamento ad una versione recente. <br>Vecchie versioni di PHP potrebbero non far funzionare correttamenterun phpGroupWare, o potrebbero non farlo funzionare per nulla. <br><br>Per favore aggiorna almeno alla versione 3.0.16
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di phpGroupWare.<br>Queste versioni non sono pi&ugrave; supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br>e poi aggiornare da l&igrave; usando questa versione.
+you appear to be running version x of phpGroupWare	setup	it	Sembra che tu sta utilizzando la versione %1 di phpGroupWare
+you are ready for this stage, but this stage is not yet written.<br>	setup	it	Sei pronto per questo passaggio, ma questa procedura non &egrave; ancora stata scritta.<br>
+you do not have any languages installed. please install one now <br>	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br>
+you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore
+your applications are current	setup	it	Le tue applicazioni sono aggiornate
+your database does not exist	setup	it	Il tuo database non esiste
+your database is working, but you dont have any applications installed	setup	it	Il tuo database funziona correttamente, ma non hai nessuna applicazione installata
+your tables are current	setup	it	Le tue tabelle sono aggiornate
+your tables may be altered and you may lose data	setup	it	Le tue tabelle potranno essere modificate e perdere dati
+your tables will be dropped and you will lose data	setup	it	Le tue tabelle verranno cancellate e perderai tutti i tuoi dati
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	it	Dovresti disinstallare e poi reinstallare, oppure tentare riparazioni manuali
+
+
+

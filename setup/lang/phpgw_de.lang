@@ -1,0 +1,144 @@
+actions	setup	de	Aktionen
+admin first name	setup	de	Admin Vorname
+admin last name	setup	de	Admin Nachname
+admin password	setup	de	Admin Passwort
+admin username	setup	de	Admin Username
+all applications	setup	de	Alle Applikationen
+app details	setup	de	App Details
+app install/remove/upgrade	setup	de	Applikation installierenn/entfernen/aktualisieren
+application data	setup	de	Applikations Daten
+application management	setup	de	Applikation Management
+application name and status	setup	de	Applikation Name und Status
+application name and status information	setup	de	Applikation Name und Status Information
+application title	setup	de	Applikation Titel
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	 Auf Ihre Anforderung hin wird dieses Script nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
+at your request, this script is going to attempt to install all the applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Script nun versuchen, alle Applikationen f&uuml;r Sie zu installieren
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	de	Auf Ihre Anforderung wird dieses Script versuchen, Ihre Applikationen auf die gegenw&auml;rtige Version zu aktualisieren
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	de	Auf Ihre Anforderung wird dieses Script versuchen, Ihre Tabellen auf das neue Format zu aktualisieren
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	de	auf Ihre Anforderung wird dieses Script die &uuml;ble Aktion auf sich nehmen, Ihre existierenden Tabellen zu l&ouml;schen und sie im neuen Format wieder herzustellen !
+at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	de	Auf Ihre Anforderung wird dieses Script die &uuml;ble Aktion auf sich nehmen, alle Ihre Applikationen zu deinstallieren, was ebenfalls Ihre existierenden Tabellen und Daten l&ouml;schen wird !
+available version	setup	de	Verf&uuml;gbare Version
+backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, da&szlig; dieses Script Ihre bestehenden Daten besch&auml;digt !<br><strong>Diese automatisierten Scripts k&ouml;nnen leicht Ihre Daten besch&auml;digen !.</strong><br><em>Bitte legen Sie ein Sicherungskopie an, befor Sie weiters unternehmen !</em>
+because it depends upon	setup	de	weil es abh&auml;ngt von  
+because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Applikation ist, oder der Zugriff &uuml;ber ACL kontrolliert wird
+because it requires manual table installation, <br>or the table definition was incorrect	setup	de	weil es manuelle Installation der Tabelle erfordert, <br>oder die Tabellen-definition war nicht korrekt
+because of a failed upgrade or install	setup	de	weil eine Aktualisierung oder eine Installation fehlgeschlug
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	de	weil eine Aktualisierung fehlschlug, oder die Datenbank ist neuer als die installierte Version dieser Applikation
+because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verf&uuml;gbar-Eintrag f&uuml;r diese Applikation auf 0 gesetzt oder undefiniert ist
+cancel	setup	de	Abbrechen
+charset	setup	de	ISO-8859-1
+click here	setup	de	Hier clicken
+configuration completed	setup	de	Konfiguration abgeschlossen
+configuration	setup	de	Konfiguration
+configure now	setup	de	Jetzt konfigurieren
+create one now	setup	de	Jetzt erstellen
+create	setup	de	erstellen
+creating tables	setup	de	erstelle Tabellen
+currently installed languages: x <br>	setup	de	Gegenw&auml;rtig installierte Sprachen: %1 <br>
+current version	setup	de	Gegenw&auml;rtige Version
+delete all my tables and data	setup	de	Alle meine Tabellen und Daten l&ouml;schen
+delete all old languages and install new ones	setup	de	Alle installierten Sprachen l&ouml;schen und neu installieren
+deleting tables	setup	de	l&ouml;sche Tabellen
+demo server setup	setup	de	Demo Server Setup
+deregistered	setup	de	nicht registriert
+details for admin account	setup	de	Details des Admin Accounts
+domain	setup	de	Domain
+edit current configuration	setup	de	Gegenw&auml;rtige Konfiguration &uuml;berarbeiten
+export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	de	F&uuml;r eine Neuinstallation, w&auml;hlen sie importieren.  Um existierende SQL-Accounts zu LDAP zu konvertieren, w&auml;hlen Sie exportieren.
+go back	setup	de	Zur&uuml;ck gehen
+has a version mismatch	setup	de	hat eine falsche Versionsanpassung
+hooks deregistered	setup	de	Haken nicht mehr aktiv
+hooks registered	setup	de	Haken registriert
+however, the application is otherwise installed	setup	de	Wie auch immer, die Applikation ist ansonsten installiert
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Applikation keine definierten Tabellen hat, w&auml;hlen Sie &uuml;berarbeiten. Das Problem sollte damit behoben werden.
+if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Applikationen
+if you did not receive any errors, your tables have been	setup	de	Wenn sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
+import ldap users/groups	setup	de	LDAP Benutzer/Gruppen importieren
+insanity	setup	de	Irrsinn
+install Applications	setup	de	Applikationen installieren
+install language	setup	de	Sprachen installieren
+install	setup	de	Installieren
+is broken	setup	de	ist kaputt
+is disabled	setup	de	ist nicht aktiv
+ldap account import/export	setup	de	LDAP Account importieren/exportieren
+ldap export users	setup	de	LDAP-Benutzer exportieren
+ldap import users	setup	de	LDAP-Benutzer importieren
+logout	setup	de	Logout
+makesure	setup	de	Stellen Sie sicher, da&szlig; Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
+manage applications	setup	de	Applikationen verwalten
+manage languages	setup	de	Sprachen verwalten
+multi-language support setup	setup	de	Mehr-Sprachen Unterst&uuml;tzung einrichten
+mysqlinstr	setup	de	 Hinweise zum erstellen der Datenbank in MySQL:<br>Login zu mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Erstellen Sie die leere Datenbank und bewilligen Sie Benutzer Erlaubnis -<br><i>mysql&gt; create database phpgroupware;</i><br><i>mysql&gt; grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+not complete	setup	de	nicht komplett
+note: you will be able to customize this later	setup	de	Notiz: Sie k&ouml;nnen dies sp&auml;ter anpassen
+not ready for this stage yet	setup	de	Noch nicht fertig f&uuml;r diesen Schritt
+ok	setup	de	OK
+once the database is setup correctly	setup	de	Wenn die Datenbank einmal korrekt eingerichtet ist
+only add languages that are not in the database already	setup	de	Nur Sprachen hinzuf&uuml;gen, die noch nicht in der Datenbank sind
+only add new phrases	setup	de	Nur neue Begriffe hinzuf&uuml;gen
+passwords did not match, please re-enter	setup	de	Passworte stimmten nicht &uuml;berein, bitte nocheinmal eingeben
+pgsqlinstr	setup	de	Hinweise zum erstellen der Datenbank in PostgreSQL:<br>Starten des postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Erstellen Sie die leere Datenbank -<br><i>[user@server user]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	de	Bitte schauen Sie nach sql-Scripten im Applikations-Ordner
+please configure phpGroupWare for your environment	setup	de	Bitte konfigurieren Sie phpGroupWare f&uuml;r Ihre Umgebung
+please install	setup	de	Bitte installieren
+possible solutions	setup	de	M&ouml;gliche L&ouml;sungen
+potential problem	setup	de	Potentielles Problem
+problem resolution	setup	de	Problem L&ouml;sung
+process	setup	de	Prozess
+re-enter password	setup	de	Passworteingabe wiederholen
+registered	setup	de	registriert
+remove	setup	de	Entfernen
+requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
+requires upgrade	setup	de	Erfordert Aktualisierung
+resolve	setup	de	L&ouml;sen
+select the default applications to which your users will have access	setup	de	W&auml;hlen Sie die voreingestellten Applikationen, zu denen Ihre Benutzer Zugriff haben werden
+select the desired action(s) from the available choices	setup	de	W&auml;hlen Sie die verlangten Aktion(en) aus der verf&uuml;gbaren Auswahl
+select which group(s) will be exported (group membership will be maintained)	setup	de	W&auml;hlen Sie die zu exportierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
+select which group(s) will be imported (group membership will be maintained)	setup	de	W&auml;hlen Sie die zu importierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
+select which languages you would like to use	setup	de	W&auml;hlen Sie die Sprachen, die Sie benutzen m&ouml;chten
+select which method of upgrade you would like to do	setup	de	W&auml;hlen Sie die Methode der Aktualisierung, die Sie durchf&uuml;hren m&ouml;chten
+select which user(s) will be exported	setup	de	W&auml;hlen Sie den/die zu exportierenden Benutzer
+select which user(s) will be imported	setup	de	W&auml;hlen Sie den/die zu importierenden Benutzer
+select which user(s) will have admin privileges	setup	de	W&auml;hlen Sie den/die Benutzer, der/die Administrationsrechte hat/haben
+select your old version	setup	de	W&auml;hlen Sie Ihre alte Version
+setup	setup	de	Einrichtung
+some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen 
+status	setup	de	Status
+step 1 - simple application management	setup	de	Schritt 1 - Einfache Applikations Verwaltung
+step 2 - configuration	setup	de	Schritt 2 - Konfiguration
+step 3 - language management	setup	de	Schritt 3 - Sprach Verwaltung
+step 4 - advanced application management	setup	de	Step 4 - Erweiterte Applikations Verwaltung
+submit	setup	de	erm&ouml;glichen
+table change messages	setup	de	Tabellen &Auml;nderungs Meldungen
+tables dropped	setup	de	Tabellen wurden gel&ouml;scht
+tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig; oben sind Fehlermelungen zu sehen
+tables upgraded	setup	de	Tabellen wurden aktualisiert
+target version	setup	de	Ziel Version
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	de	Es gab ein Problem bei dem Versuch, eine Verbindung mit Ihrem LDAP Server aufzubauen. <br>Bitte &uuml;berpr&uuml;fen Sie die Konfiguration Ihres LDAP Servers.
+the tables	setup	de	die Tabellen
+this program will help you upgrade or install different languages for phpGroupWare	setup	en	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen f&uuml;r phpGroupWare behilflich sein
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	de	 Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus phpGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	de	Dieser Abschnitt wird Ihnen beim importieren von Benutzern/Gruppen aus Ihrem LDAP Baum in phpGroupWare's Account Tabellen behilflich sein
+this stage is completed<br>	setup	de	Dieser Schritt ist abgeschlossen<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	de	Dies wird 1 Admin- und 3 Demo Benutzerkonten erstellen<br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.<br><b>!!!DIES WIRD ALLE EXISTIERENDEN BENUTZERKONTEN L&Ouml;SCHEN!!!</b><br>
+Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	de	W&auml;hlen Sie eine Applikation, geben Sie eine Zielversion ein, dann best&auml;tigen Sie den Vorgang.<br>Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLIKATION L&Ouml;SCHEN!!!</blink>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	de	zum einrichten von 1 Admin- und 3 Demo-Benutzerkonten.<br><b>Dies wird alle existierenden Benutzerkonten l&ouml;schen!</b>
+upgraded	setup	de	Aktualisiert
+upgrade	setup	de	Aktualisieren
+upgrading tables	setup	de	aktualisiere Tabellen
+version mismatch	setup	de	Falsche Versionsanpassung
+we will automatically update your tables/records to x	setup	de	Wir werden Ihre Tabellen/Eintr&auml;ge automatisch zu %1 aktualisieren
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>&Auml;ltere PHP-Versionen k&ouml;nnten phpGroupWare nicht korrekt laufen lassen, wenn &uuml;berhaupt. <br><br>Biite aktualisieren Sie auf mindestens Version 3.0.16
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von phpGroupWare benutzen.<br>Diese Versionen werden nicht l&auml;nger unterst&uuml;tzt, und es gibt keinen Aktualisierungs-Pfad f&uuml;r sie im Einrichtung-Programm.<br>Sie m&ouml;chten vieleicht erst auf 0.9.10 (die letzte Version mit vor-beta Unterst&uuml;tzung) aktualisieren<br>und danach auf die aktuelle Version.
+you appear to be running version x of phpGroupWare	setup	de	Es sieht so aus als benutzen Sie Version %1 von phpGroupWare
+you are ready for this stage, but this stage is not yet written.<br>	setup	de	Sie sind bereit f&uuml;r diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br>
+you do not have any languages installed. please install one now <br>	setup	de	sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br>
+you must enter a username for the admin	setup	de	sie m&uuml;ssen einen Benutzernamen f&uuml;r den Admin eingeben !
+your applications are current	setup	de	Ihre Applikationen sind aktuell
+your database does not exist	setup	de	Ihre Datenbank existiert nicht !
+your database is working, but you dont have any applications installed	setup	de	Ihre Datenbank arbeitet, aber Sie haben keine Applikationen installiert !
+your tables are current	setup	de	Ihre Tabellen sind aktuell
+your tables may be altered and you may lose data	setup	de	Ihre Tabellen k&ouml;nnten ver&auml;ndert werden, und Sie k&ouml;nnten Daten verlieren !
+your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gel&ouml;scht werden, und Sie werden Daten verlieren !
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen

@@ -1,0 +1,804 @@
+<HTML
+><HEAD
+><TITLE
+>   Application setup files
+  </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.59"><LINK
+REL="HOME"
+TITLE="   phpGroupWare Setup III
+  "
+HREF="setup3.html"><LINK
+REL="PREVIOUS"
+TITLE="   phpGroupWare Setup III
+  "
+HREF="setup3.html"><LINK
+REL="NEXT"
+TITLE="   Developer Tools
+  "
+HREF="setup3-2.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare Setup III</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="setup3.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="setup3-2.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN22"
+>Application setup files</A
+></H1
+><P
+>   The files in this section are contained within each application/setup directory. Every app will some of these files in order to operate with setup3.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN25"
+>setup.inc.php (Required)</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN27"
+>Basic information</A
+></H3
+><P
+>     The values in this section must be used by all applications.
+    </P
+><P
+>     The first section of setup.inc.php defines the very basic and yet critical information about the application. Take a look at the following section:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$setup_info['addressbook']['name'] = 'addressbook';
+$setup_info['addressbook']['title'] = 'Addressbook';
+$setup_info['addressbook']['version'] = '0.9.13.002';
+$setup_info['addressbook']['app_order'] = 4;
+$setup_info['addressbook']['enable'] = 1;
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     'name' is used throughout phpgroupware, typically in $phpgw_info flags such as 'currentapp' or as the 'app_name' almost everywhere else.
+    </P
+><P
+>     'title' would be used in the navbar, admin, preferences, as well as in the application itself.
+    </P
+><P
+>     The 'version' string defines the version of the application and table code. This would be incremented whenever you create a new upgrade function, and typically only for table modifications. If the change is significant from the last code update, you could increment this here also. Incrementing this version string is not trivial, so please do read the rest of this document for more information about that.
+    </P
+><P
+>     'app_order' determines the order of applications in the navbar. If the number you set here is the same as is set for another app, the app whose 'name' is first in the English alphabet would appear first. Smaller numbers show closer to the top or left end of the navbar, depending upon the layout.
+    </P
+><P
+>     The 'enable' string is used by the phpgroupware API to determine whether an application is disabled, enabled, or enabled but hidden from the navbar. Most applications will want this set to a value of 1 (enabled). The notifywindow app sets this to 2, which keeps it off the navbar. An enable of 0 would disable the app by default. There is one other special case, 3, which is used primarily by the API itself. From the perspective of setup3, the API is an application just like any other application. By setting the 'enable' flag to 3, the API is still enabled, but will not be assignable to a user as a real application. It will thereby be hidden from the admin for application and user/group editing.
+    </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN37"
+>Table info</A
+></H3
+><DIV
+CLASS="SECT4"
+><H4
+CLASS="SECT4"
+><A
+NAME="AEN39"
+>Only applications with database tables will use entries in this section.</A
+></H4
+><P
+>      The next section of $setup_info values is an array defining all of the application's database tables:
+     </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$setup_info['addressbook']['tables'] = array(
+    'phpgw_addressbook',
+    'phpgw_addressbook_extra'
+);
+     </PRE
+></TD
+></TR
+></TABLE
+><P
+>      This is a simple array, and must list accurately the current table names you are using in your application. This list will match a much more complex array of table specifications, as you will see below.
+     </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN44"
+>Hooks</A
+></H3
+><DIV
+CLASS="SECT4"
+><H4
+CLASS="SECT4"
+><A
+NAME="AEN46"
+>Some applications will use this section.</A
+></H4
+><P
+>      The hooks array part of $setup_info contains a simple list of hooks the application will use:
+     </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$setup_info['addressbook']['hooks'][] = 'preferences';
+$setup_info['addressbook']['hooks'][] = 'admin';
+     </PRE
+></TD
+></TR
+></TABLE
+><P
+>      Here we also note a different method of 'stuffing the array.' In any case, this list of hooks will be required soon in order for your hook_admin.inc.php and other files to work. This is being done to cut down on the manual directory listing and file_exists loops done currently to discover hook files. Other than 'preferences' and 'admin', 'home', 'manual', 'after_navbar' and 'navbar_end' are all valid hook entries.
+     </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN51"
+>Dependencies</A
+></H3
+><DIV
+CLASS="SECT4"
+><H4
+CLASS="SECT4"
+><A
+NAME="AEN53"
+>All applications will have at least one entry here.</A
+></H4
+><P
+>      The final section, or array of data, is a listing of the other applications your application requires in order to function:
+     </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$setup_info['addressbook']['depends'][] = array(
+    'appname' =&#62; 'phpgwapi', 
+    'versions' =&#62; Array(
+        '0.9.10',
+        '0.9.11',
+        '0.9.12',
+        '0.9.13'
+    ) 
+);
+     </PRE
+></TD
+></TR
+></TABLE
+><P
+>      This is the standard dependency array for all phpgroupware applications. It states that this application requires the phpgwapi, and lists the versions with which versions this app is compatible. This list would need to be appended upon each new API release, assuming your application is compatible with this new API version. You may list other applications here, e.g. your app might depend upon 'email' in order to work properly.
+     </P
+><P
+>      Do NOT list applications here without considering this: If you do list an application here, and your app does not really require it, your application will not install unless that other application is already installed. This is handled normally within the install/upgrade process loops, which will install only applications whose dependencies are satisfied. Using a multipass function, the applications are installed in the correct order to ensure that dependencies are resolved. In all cases, the API would be installed first in every new install or upgrade, since all applications depend on the API.
+     </P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN59"
+>tables_baseline.inc.php (Recommended)</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN61"
+>Any application that has at least one upgrade routine will have this file.</A
+></H3
+><P
+>     The tables_baseline file represents the earliest supported version of an application's tables. This file is used only in the upgrade process, and is critical to its success. It contains an array of database-independent table, field, key and index definitions.
+    </P
+><P
+>     This array is formatted for use by the class.schema_proc_array.inc.php file in setup3. See the tables_update section below for more detail about schema_proc, but for now, here is a simple table definition in this format:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$phpgw_baseline = array(
+    'skel' =&#62; array(
+        'fd' =&#62; array(
+            'skel_id' =&#62; array('type' =&#62; 'auto','nullable' =&#62; false),
+            'skel_owner' =&#62; array('type' =&#62; 'varchar','precision' =&#62; 25),
+            'skel_access' =&#62; array('type' =&#62; 'varchar','precision' =&#62; 10),
+            'skel_cat' =&#62; array('type' =&#62; 'int','precision' =&#62; 4),
+            'skel_des' =&#62; array('type' =&#62; 'text'),
+            'skel_pri' =&#62; array('type' =&#62; 'int','precision' =&#62; 4)
+        ),
+        'pk' =&#62; array('skel_id'),
+        'fk' =&#62; array(),
+        'ix' =&#62; array(),
+        'uc' =&#62; array()
+    ) 
+);
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     This multi-dimensional array contains 1 subarray with 5 subs of its own. The first array ('skel' above) defines the table name. Below that are 5 sections, 'fd' for field definitions, 'pk' to define primary keys, 'fk' to define foreign keys, 'ix' to define indexed fields, and 'uc' to define columns that require unique values. In the above example, the table 'skel' has 6 fields (skel_id, skel_owner, skel_access, skel_cat, skel_des, skel_pri), and 'skel_id' is defined also as the primary key for this table. More information on this array is below. But, this format was chosen as an available solution for defining tables and fields without having to maintain seperate files for different databases.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN67"
+>tables_current.inc.php (Recommended)</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN69"
+>All applications with tables will need this file.</A
+></H3
+><P
+>     The tables_current file defines the current table definition that matches the 'version' string in $setup_info as well as the current code. This file is used only for new installs, or whenever the application is removed and reinstalled. The format and name of the array in this file is the same as for the tables_baseline file listed above. In fact, whenever it is required to change your table definitions, you would start by copying the current file over to become the tables_baseline file. After having created your upgrade routines, you would then recreate the current file to match the new table definitions.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN72"
+>tables_update.inc.php (Recommended)</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN74"
+>Any application which requires an upgrade to a previous version's tables will need this file.</A
+></H3
+><P
+>     This file will be the most complex of all setup-oriented files with which you will be working. It will contain all upgrade functions capable of upgrading any possible version of your phpgroupware app. These upgrade routines roughly match the old setup program's upgrade functions, but the use of objects and the methods have changed dramatically. The simplest version upgrade routine would look like:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$test[] = "0.9.3pre10";
+function addressbook_upgrade0_9_3pre10()
+{
+    global $setup_info;
+    $setup_info['addressbook']['currentver'] = '0.9.3';
+    return $setup_info['addressbook']['currentver'];
+}
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     This upgrade function merely updates the current version number. Note that there is not only an upgrade function, but also the setting of a value in the $test array. The name 'test' is a holdover from the old setup program, and is an arbitrary choice. However, this name must be used for the upgrade process to work. Prior to each of your upgrade functions, add the value of the previous version to $test.
+    </P
+><P
+>     Now look at the function name. The name is important and should be structured as the application name and the version from which you are intending to upgrade. The '.'s in the version string are replaced with '_'.
+    </P
+><P
+>     Inside the function, we global the $setup_info array. Next, we alter the version number in that array, for our application. Please be careful to specify YOUR application name here. The very last thing we do is to return this new version to the calling function. The upgrade process relies on the value returned, since it uses this directly to determine the new version. This may appear illogical on some level, but it does work. The reason for returning this value instead of a True or 1, etc. has to do with variable scope and lifetime. In this way, even the globaling of $setup_info inside the function may have little effect on the upgrade process. But, there may be values in this array you would want to use within the function. More on that later.
+    </P
+><P
+>     There is one other variable you would need if doing any database operations here. If you global $phpgw_setup, you will then have access to db and schema_proc objects and functions. The objects of interest here are:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     $phpgw_setup-&gt;oProc
+     </P
+></LI
+><LI
+><P
+>     $phpgw_setup-&gt;db.
+     </P
+></LI
+></UL
+><P
+>     For most database work you should use the oProc object. This also has a db object that should be used for most standard phpgw API db class functions, including $db-&gt;query, next_record, num_rows, and f. The use of these for standard db operations is critical to the upgrade process. Schema_proc has a flag that can be set to determine what mode of upgrade we are in. This flag is set in the setup class during the upgrade process, and should not be altered locally.
+    </P
+><P
+>     This flag is a decision on whether to alter the database or the schema_proc array. The tables_baseline file above is loaded by setup prior to running your upgrade routines. If the current installed version is greater than the current upgrade routine, we don't need to alter the database yet. But schema_proc instead alters the $phpgw_baseline array in memory. The maintenance of this array is done even when we do alter the database. Once our version number in the test array matches the currently installed version of an application, real work on the tables begins.
+    </P
+><P
+>     'Why bother modifying this array at all', you may ask. The array must be maintained in order to keep current table definition status. This is used in some schema_proc functions when altering columns and tables. This is especially critical for pgsql schema_proc functions.
+    </P
+><P
+>     By using the $phpgw_setup-&gt;oProc object for basic inserts and queries, we acheive the ability to run all upgrade functions in every upgrade cycle without actually altering the database until we reach the current version we actually want to upgrade. For example:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='notes'";
+$phpgw_setup-&#62;oProc-&#62;query($sql,__LINE__,__FILE__);
+while($phpgw_setup-&#62;oProc-&#62;next_record()) {
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     We could have used $phpgw_setup-&gt;db or even a copy for the above activity. However, using the above method ensures that an array only upgrade does just that. If the flag was set in setup telling schema_proc to alter the array only, we do not want to touch the tables for inserts or selects yet. In this case, $phpgw_setup-&gt;oProc-&gt;next_record() returns False, and the loop is skipped. The $phpgw_baseline array does not know about table content, only table and field definitions.
+    </P
+><P
+>     If the upgrade function containing this method is actually working on the tables (currentver &lt;= the upgrade function), then next_record() is returned as the expected action of pulling the next row of data. Inside of this while loop, you can safely use $phpgw_setup-&gt;db, or preferably a copy, to do the insert/delete, etc you want to have happen here.
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>    $cid = $phpgw_setup-&#62;oProc-&#62;f('contact_id');
+    $cvalu = $phpgw_setup-&#62;oProc-&#62;f('contact_value');
+    $update = "UPDATE phpgw_addressbook set note='" . $cvalu . "' WHERE id=" . $cid;
+    $db1-&#62;query($update);
+    $delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='notes'";
+    $db1-&#62;query($delete);
+}
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     $db1 is a copy of $phpgw_setup-&gt;db, to avoid potential conflicts with the rest of setup's db activities.
+    </P
+><P
+>     In addition to the basic API db class functions, schema_proc introduces the following special functions:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>function DropTable($sTableName)
+function DropColumn($sTableName, $aTableDef, $sColumnName)
+function RenameTable($sOldTableName, $sNewTableName)
+function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName)
+function AlterColumn($sTableName, $sColumnName, $aColumnDef)
+function AddColumn($sTableName, $sColumnName, $aColumnDef)
+function CreateTable($sTableName, $aTableDef)
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     Please use these functions where appropriate in place of standard SQL CREATE, DROP, and ALTER TABLE commands. This will ensure that your upgrade script works for all supported databases.
+    </P
+><P
+>     Of these functions, DropTable, RenameTable, and RenameColumn are pretty straightforward. Pass these the table names you wish to Drop/Rename, and schema_proc will handle the rest, including indexes and sequences, where applicable.
+    </P
+><P
+>     The remaining functions require some explanation:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     CreateTable:
+     </P
+></LI
+></UL
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$phpgw_setup-&#62;oProc-&#62;CreateTable(
+    'categories', array(
+        'fd' =&#62; array(
+            'cat_id' =&#62; array('type' =&#62; 'auto','nullable' =&#62; false),
+            'account_id' =&#62; array('type' =&#62; 'int','precision' =&#62; 4,'nullable' =&#62; false, 'default' =&#62; 0),
+            'app_name' =&#62; array('type' =&#62; 'varchar','precision' =&#62; 25,'nullable' =&#62; false),
+            'cat_name' =&#62; array('type' =&#62; 'varchar', 'precision' =&#62; 150, 'nullable' =&#62; false),
+            'cat_description' =&#62; array('type' =&#62; 'text', 'nullable' =&#62; false)
+        ),
+        'pk' =&#62; array('cat_id'),
+        'ix' =&#62; array(),
+        'fk' =&#62; array(),
+        'uc' =&#62; array()
+    )
+);
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     Does this look familiar? The array passed to CreateTable is in the format used also in tables_baseline and tables_current. Note a slight difference where the table name is being passed as a seperate argument. The second argument to the function is the table definition array, starting with 'fd'.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     AddColumn:
+     </P
+></LI
+></UL
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$phpgw_setup-&#62;oProc-&#62;AddColumn('phpgw_categories','cat_access',array('type' =&#62; 'varchar', 'precision' =&#62; 25));
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     Here we pass the table name of an existing table, the new column name, and a field definition. This definition is merely a slice of the table arrays found earlier in this document.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     AlterColumn:
+     </P
+></LI
+></UL
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$phpgw_setup-&#62;oProc-&#62;AlterColumn('phpgw_sessions','session_action',array('type' =&#62; 'varchar', 'precision' =&#62; '255'));
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     The format of this function matches AddColumn. It is also a simple case of passing the table name, field name, and field definition.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     DropColumn:
+     </P
+></LI
+></UL
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$newtbldef = array(
+    "fd" =&#62; array(
+        'acl_appname' =&#62; array('type' =&#62; 'varchar', 'precision' =&#62; 50),
+        'acl_location' =&#62; array('type' =&#62; 'varchar', 'precision' =&#62; 255),
+        'acl_account' =&#62; array('type' =&#62; 'int', 'precision' =&#62; 4),
+        'acl_rights' =&#62; array('type' =&#62; 'int', 'precision' =&#62; 4)
+    ),
+    'pk' =&#62; array(),
+    'ix' =&#62; array(),
+    'fk' =&#62; array(),
+    'uc' =&#62; array()
+);
+$phpgw_setup-&#62;oProc-&#62;DropColumn('phpgw_acl',$newtbldef,'acl_account_type');
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     This is the most complicated function in schema_proc, from the user's perspective. Its complexity is necessitated by the requirement of some databases to recreate a table in the case of dropping a column. Note that the table definition array is being used yet again. The array defined here should match the table definition you want after this function has completed. Here, we are dropping the column 'acl_account_type' from the table 'phpgw_acl', and the table definition does not have this column defined. You could copy information from your tables_current file here and edit it to match the desired new table spec, less the column you wish to drop.
+    </P
+><P
+>     There are additional functions within schema_proc, the majority of which are not to be called directly. They are used internally. If you do wish to investigate further, use class.schema_proc.inc.php as your guide. This master file includes the class.schema_proc_DBMS.inc.php and class.schema_proc_array.inc.php files. The DBMS files should not be used as a guide, since their functions are called from the master class, and the parameters are different from what you might expect relative to the master.
+    </P
+><P
+>     PLEASE, DO NOT WRITE TO OR ALTER ANOTHER APPLICATION'S TABLES OR THE API TABLES IN YOUR APPLICATION UPGRADE FUNCTIONS!
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN123"
+>default_records.inc.php (Optional)</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN125"
+>Any application with tables that wants to load some default data will need this file.</A
+></H3
+><P
+>     The default_records file consists of a list of SQL INSERTs using the $oProc object directly:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$oProc-&#62;query("INSERT INTO phpgw_inv_statuslist (status_name) VALUES ('available')");
+$oProc-&#62;query("INSERT INTO phpgw_inv_statuslist (status_name) VALUES ('no longer available')");
+$oProc-&#62;query("INSERT INTO phpgw_inv_statuslist (status_name) VALUES ('back order')");
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     In this case, the developer wanted to insert some status information, which was then used in a select box on an html form. Using the default_records file, every new install will have this data included. This file should consist of queries applicable to the tables defined in setup.inc.php and tables_current.inc.php.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN130"
+>test_data.inc.php (Optional)</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN132"
+>Any developer wanting to test the full list of upgrade routines can use this file.</A
+></H3
+><P
+>     test_data.inc.php is similar to default_records above. It is called only by schematoy.php and is never installed with a new install or upgrade. This is a developer-only file. The INSERTs here should be applicable to the tables_baseline table definitions.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN135"
+>language files (Required)</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN137"
+>All applications should have at least a file of English translations, used for their application lang() calls.</A
+></H3
+><P
+></P
+><UL
+><LI
+><P
+>     Format of a lang file:
+     </P
+></LI
+></UL
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>{phrase}{TAB}{appname}{TAB}{LANG_CODE}{TAB}{translation}
+    e.g:
+first name    common    en    First Name
+first name    common    de    Vorname
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+></P
+><UL
+><LI
+><P
+>     Filenames:
+     </P
+></LI
+></UL
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>phpgw_{LANG_CODE}.lang
+  e.g.
+English: phpgw_en.lang
+German: phpgw_de.lang
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     Please see the contents of the API 'languages' table for the correct setting of the LANG_CODE.
+    </P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="setup3.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="setup3.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="setup3-2.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>phpGroupWare Setup III</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Developer Tools</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
