@@ -148,9 +148,7 @@
         $selected_users[$phpgw->db->f("account_id")] = " selected";
      }
 
-     $apps = CreateObject('phpgwapi.applications');
-     $apps->account_id = $group_id;
-     $apps->account_type = 'g';
+     $apps = CreateObject('phpgwapi.applications',array(intval($group_id),'g'));
      $db_perms = $apps->enabled_apps();
   }
 
