@@ -184,6 +184,11 @@
 					}
 					switch ($parent)
 					{
+					case 'nextmatch':
+							$embeded = new etemplate($cell['size']);
+							$this->etempl2grid($embeded,&$root,$embeded_too);
+							unset($embeded);
+							break;
 					case 'tabbox':
 						$labels = explode('|',$cell['label']);  unset($cell['label']);
 						$helps  = explode('|',$cell['help']);   unset($cell['help']);
@@ -198,6 +203,9 @@
 							$grid = new xmlnode('grid');
 							$grid->set_attribute('id',$names[$n]);
 							$child2->add_node($grid);
+							$embeded = new etemplate($names[$n]);
+							$this->etempl2grid($embeded,&$root,$embeded_too);
+							unset($embeded);
 						}
 						break;
 					case 'menulist':	// id,options belongs to the 'menupopup' child
@@ -212,6 +220,7 @@
 						}
 						break;
 					case 'menulist':
+					case 'listbox':
 						if ($cell['type'] != 'select')	// one of the sub-types
 						{
 							$widget->set_attribute('type',$cell['type']);
