@@ -96,6 +96,8 @@
 	$phpgw->template->set_var('lang_security',lang('Security'));
 	$phpgw->template->set_var('lang_trust',lang('Trust Level'));
 	$phpgw->template->set_var('lang_relationship',lang('Trust Relationship'));
+	$phpgw->template->set_var('lang_username',lang('Server Username'));
+	$phpgw->template->set_var('lang_password',lang('Server Password'));
 	$phpgw->template->set_var('lang_admin_name',lang('Admin Name'));
 	$phpgw->template->set_var('lang_admin_email',lang('Admin Email'));
 	$phpgw->template->set_var('lang_add',lang('Add'));
@@ -105,9 +107,11 @@
 
 	$phpgw->template->set_var('server_name',$server_name);
 	$phpgw->template->set_var('server_url',$server_url);
+	$phpgw->template->set_var('server_username',$server['username']);
 	$phpgw->template->set_var('server_mode',formatted_list('server_mode',$is->server_modes,$server['server_mode']));
 	$phpgw->template->set_var('server_security',formatted_list('server_security',$is->security_types,$server['server_security']));
 	$phpgw->template->set_var('ssl_note',lang('Note: SSL available only if PHP is compiled with curl support'));
+	$phpgw->template->set_var('pass_note',lang('(Stored password will not be shown here)'));
 	$phpgw->template->set_var('trust_level',formatted_list('trust_level',$is->trust_levels,$trust_level));
 	$phpgw->template->set_var('trust_relationship',formatted_list('trust_relationship',$is->trust_relationships,$server['trust_relationship'],True));
 	$phpgw->template->set_var('admin_name',$phpgw->strip_html($admin_name));
