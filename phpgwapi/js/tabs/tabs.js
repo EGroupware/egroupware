@@ -81,7 +81,6 @@ function Tabs(nrTabs,activeCSSclass,inactiveCSSclass,HTMLtabID,HTMLtabcontentID,
       if(document.getElementById(this.HTMLtabcontentID + tabnr))
         document.getElementById(this.HTMLtabcontentID + tabnr).className = this.activeCSSclass;
 
-	
       if(document.getElementById(this.HTMLtabselectorID))
         document.getElementById(this.HTMLtabselectorID).selectedIndex = tabnr-1;
       if(document.getElementById(this.HTMLtabradioID   + tabnr))
@@ -157,8 +156,13 @@ function Tabs(nrTabs,activeCSSclass,inactiveCSSclass,HTMLtabID,HTMLtabcontentID,
    */
   function display(tabnr)
    {
-    this.disableAll(this.nrTabs);
-    this.setActive(tabnr);
+     for (i = 1; i <= this.nrTabs; ++i)
+     {
+      if (i == tabnr)
+       this.setActive(tabnr);
+      else
+       this.setInactive(i);
+     }
    }
 
 
@@ -190,42 +194,39 @@ function Tabs(nrTabs,activeCSSclass,inactiveCSSclass,HTMLtabID,HTMLtabcontentID,
 
 
   /**
-   * Get url parameter for first tab and display it.
+   * Determine active tab from url parameter or selector and display it.
    */
   function init()
    {
     var tab = 0;
-    var url = document.URL;
-    var pos = url.indexOf("?");
-    if (pos > -1)
+    var regexp = new RegExp('(^|&)' + this.tabPageKey + '=[0-9]{1,2}');
+    var urlparams = window.location.search;
+    var urlparamstart = urlparams.search(regexp);
+   
+    // getting the active tab from the tabPageKey (url/get-var) if set
+    if (this.tabPageKey && urlparamstart > -1)
      {
-      var urlparams = url.substr(pos + 1,url.length - (pos + 1));
-      var regexp = new RegExp('(^|&)' + this.tabPageKey + '=[0-9]{1,2}');
-      var urlparamstart = urlparams.search(regexp);
-      if (urlparamstart > -1)
-       {
-        urlparamstart = urlparamstart + ((urlparams[urlparamstart] == '&') ? 1 : 0);
-        var urlparam = urlparams.substr(urlparamstart,urlparams.length - urlparamstart);
-        pos = urlparam.indexOf("&");
-        if (pos > -1)
-         {
-          urlparam = urlparam.substr(0,pos);
-         }
-        pos = urlparam.indexOf("=");
-        if (pos > -1)
-         {
-          var urlparamvalue = urlparam.substr(pos + 1,urlparam.length - (pos + 1));
-          tab = urlparamvalue;
-         }
-       }
-      else
-       {
-        tab = 1;
-       }
+       urlparamstart = urlparamstart + ((urlparams[urlparamstart] == '&') ? 1 : 0);
+       var urlparam = urlparams.substr(urlparamstart,urlparams.length - urlparamstart);
+       var pos = urlparam.indexOf("&");
+       if (pos > -1)
+        {
+         urlparam = urlparam.substr(0,pos);
+        }
+       pos = urlparam.indexOf("=");
+       if (pos > -1)
+        {
+         var urlparamvalue = urlparam.substr(pos + 1,urlparam.length - (pos + 1));
+         tab = urlparamvalue;
+        }
      }
     else
      {
-      tab = 1;
+      // getting the active tab from the selector if set
+      if(document.getElementById(this.HTMLtabselectorID))
+       tab = document.getElementById(this.HTMLtabselectorID).selectedIndex+1;
+      else
+       tab = 1;
      }
     if ((tab <= 0) || (tab > this.nrTabs))
      {
