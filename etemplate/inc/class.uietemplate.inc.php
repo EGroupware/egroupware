@@ -717,7 +717,7 @@
 					}
 					break;
 			}
-			if ($ext_type && !$readonly)	// extension-processing need to be after all other and only with diff. name
+			if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))	// extension-processing need to be after all other and only with diff. name
 			{	// unset it first, if it is already set, to be after the other widgets of the ext.
 				unset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]);
 				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'ext-'.$ext_type;
