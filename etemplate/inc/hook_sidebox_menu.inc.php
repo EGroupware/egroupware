@@ -39,5 +39,11 @@
 			'link'   => $docs.'referenz.html',
 			'target' => 'docs'
 		),
+		array(
+			'text'   => 'eGroupWare '.lang('Documentation'),
+			'no_lang' => True,
+			'link'   => $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/doc/',
+			'target' => 'docs'
+		),
 	);
 	display_sidebox($appname,$menu_title,$file);
