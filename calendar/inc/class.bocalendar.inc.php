@@ -1879,7 +1879,7 @@
 			$version = $db->f('app_version');
 			unset($db);
 
-			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->prefereces->create_email_preferences();
+			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->create_email_preferences();
 			$sender = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
 
 			$temp_tz_offset = $this->prefs['common']['tz_offset'];
