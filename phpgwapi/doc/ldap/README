@@ -1,0 +1,3 @@
+The following are for use with openldap 1.X
+	phpgw.oc.conf	defines the phpgwAccount objectclass
+	phpgw.at.conf	defines our special attributes
