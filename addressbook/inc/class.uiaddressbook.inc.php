@@ -1250,6 +1250,8 @@
 
 			$this->template->pfp('out','view_t');
 
+			$phpgw->common->hook('addressbook_view');
+
 			$phpgw->common->phpgw_footer();
 		}
 
