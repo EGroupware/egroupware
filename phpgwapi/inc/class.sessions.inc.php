@@ -48,12 +48,10 @@
 		\*************************************************************************/
 		function sessions()
 		{
-			global $phpgw, $phpgw_info, $sessionid, $kp3;
-
-			$this->db        = $phpgw->db;
-			$this->db2       = $phpgw->db;
-			$this->sessionid = $sessionid;
-			$this->kp3       = $kp3;
+			$this->db        = $GLOBALS['phpgw']->db;
+			$this->db2       = $GLOBALS['phpgw']->db;
+			$this->sessionid = $GLOBALS['sessionid'];
+			$this->kp3       = $GLOBALS['kp3'];
 		}
 
 		/*************************************************************************\
@@ -400,8 +398,6 @@
 
 		function create_server($login,$passwd)
 		{
-			global $phpgw_info, $phpgw, $PHP_SELF;
-
 			$phpgw->interserver = CreateObject('phpgwapi.interserver');
 			$this->login  = $login;
 			$this->passwd = $passwd;
@@ -416,7 +412,7 @@
 			}
 			else
 			{
-				$this->account_domain = $phpgw_info['server']['default_domain'];
+				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
 			}
 
 			$serverdata = array(
@@ -424,50 +420,50 @@
 				'username'    => $this->account_lid,
 				'password'    => $passwd
 			);
-			if (!$phpgw->interserver->auth($serverdata))
+			if (!$GLOBALS['phpgw']->interserver->auth($serverdata))
 			{
 				return False;
 				exit;
 			}
 
-			if (!$phpgw->interserver->exists($this->account_lid))
+			if (!$GLOBALS['phpgw']->interserver->exists($this->account_lid))
 			{
-				$this->account_id = $phpgw->interserver->name2id($this->account_lid);
+				$this->account_id = $GLOBALS['phpgw']->interserver->name2id($this->account_lid);
 			}
-			$phpgw_info['user']['account_id'] = $this->account_id;
-			$phpgw->interserver->serverid = $this->account_id;
+			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
+			$GLOBALS['phpgw']->interserver->serverid = $this->account_id;
 
-			$this->sessionid    = md5($phpgw->common->randomstring(10));
-			$this->kp3          = md5($phpgw->common->randomstring(15));
+			$this->sessionid    = md5($GLOBALS['phpgw']->common->randomstring(10));
+			$this->kp3          = md5($GLOBALS['phpgw']->common->randomstring(15));
 
-			$phpgw->common->key = md5($this->kp3 . $this->sessionid . $phpgw_info['server']['encryptkey']);
-			$phpgw->common->iv  = $phpgw_info['server']['mcrypt_iv'];
-			$cryptovars[0] = $phpgw->common->key;
-			$cryptovars[1] = $phpgw->common->iv;
+			$GLOBALS['phpgw']->common->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$GLOBALS['phpgw']->common->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$cryptovars[0] = $GLOBALS['phpgw']->common->key;
+			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;
 			$phpgw->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
 
 			//$this->read_repositories(False);
 
-			$phpgw_info['user']  = $this->user;
-			$phpgw_info['hooks'] = $this->hooks;
+			$GLOBALS['phpgw_info']['user']  = $this->user;
+			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
 			$this->appsession('password','phpgwapi',base64_encode($this->passwd));
 			$session_flags = 'S';
 
 			$user_ip  = $this->getuser_ip();
 
-			$phpgw->db->transaction_begin();
-			$phpgw->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
+			$GLOBALS['phpgw']->db->transaction_begin();
+			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
 								. "','".$login."','" . $user_ip . "','"
-								. $now . "','" . $now . "','" . $PHP_SELF . "','" . $session_flags
+								. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
 								. "')",__LINE__,__FILE__);
 
-			$phpgw->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
+			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
 								. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
 
-			$this->appsession('account_previous_login','phpgwapi',$phpgw->auth->previous_login);
-			$phpgw->auth->update_lastlogin($this->account_id,$user_ip);
-			$phpgw->db->transaction_commit();
+			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
+			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
+			$GLOBALS['phpgw']->db->transaction_commit();
 
 			return array($this->sessionid,$this->kp3);
 		}
@@ -475,21 +471,19 @@
 		// This will update the DateLastActive column, so the login does not expire
 		function update_dla()
 		{
-			global $phpgw_info, $phpgw, $PHP_SELF, $menuaction;
-
-			if ($menuaction)
+			if ($GLOBALS['menuaction'])
 			{
-				$action = $menuaction;			
+				$action = $GLOBALS['menuaction'];			
 			}
 			else
 			{
-				$action = $PHP_SELF;
+				$action = $GLOBALS['PHP_SELF'];
 			}
 
-			$phpgw->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$action' "
+			$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$action' "
 								. "where session_id='" . $this->sessionid."'",__LINE__,__FILE__);
 
-			$phpgw->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
+			$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
 								. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
 		}
     
@@ -547,8 +541,7 @@
 				if(!empty($this->user))
 				{
 					$GLOBALS['phpgw']->preferences->data = $this->user['preferences'];
-					if (!isset($GLOBALS['phpgw_info']['apps']) ||
-				    gettype($GLOBALS['phpgw_info']['apps']) != 'array')
+					if (!isset($GLOBALS['phpgw_info']['apps']) || !is_array($GLOBALS['phpgw_info']['apps']))
 					{
 						$GLOBALS['phpgw']->applications->read_installed_apps();
 					}
@@ -567,12 +560,10 @@
 
 		function setup_cache()
 		{
-			global $phpgw, $phpgw_info;
-			
-			$this->user                = $phpgw->accounts->read_repository();
-			$this->user['acl']         = $phpgw->acl->read_repository();
-			$this->user['preferences'] = $phpgw->preferences->read_repository();
-			$this->user['apps']        = $phpgw->applications->read_repository();
+			$this->user                = $GLOBALS['phpgw']->accounts->read_repository();
+			$this->user['acl']         = $GLOBALS['phpgw']->acl->read_repository();
+			$this->user['preferences'] = $GLOBALS['phpgw']->preferences->read_repository();
+			$this->user['apps']        = $GLOBALS['phpgw']->applications->read_repository();
 			//@reset($this->data['user']['apps']);
 
 			$this->user['domain']      = $this->account_domain;
@@ -584,7 +575,7 @@
 			$this->user['account_lid'] = $this->account_lid;
 			$this->user['userid']      = $this->account_lid;
 			$this->user['passwd']      = @$this->passwd;
-			if(@$phpgw_info['server']['cache_phpgw_info'])
+			if(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info'])
 			{
 				$this->appsession('phpgw_info_cache','phpgwapi',$this->user);
 			}
@@ -592,25 +583,21 @@
 
 		function delete_cache($accountid='')
 		{
-			global $phpgw;
-			
 			$account_id = get_account_id($accountid,$this->account_id);
 
 			$query = "DELETE FROM phpgw_app_sessions WHERE loginid = '".$account_id."'"
 				." AND app = 'phpgwapi' and location = 'phpgw_info_cache'";
 
-			$phpgw->db->query($query);			
+			$GLOBALS['phpgw']->db->query($query);			
 		}
 	
 		function save_repositories()
 		{
-			global $phpgw, $phpgw_info;
-			
-			$phpgw_info_temp = $phpgw_info;
+			$phpgw_info_temp = $GLOBALS['phpgw_info'];
 			$phpgw_info_temp['user']['kp3'] = '';
 			$phpgw_info_temp['flags'] = array();
 			
-			if ($phpgw_info['server']['cache_phpgw_info'])
+			if ($GLOBALS['phpgw_info']['server']['cache_phpgw_info'])
 			{
 				$this->appsession('phpgw_info_cache','phpgwapi',$phpgw_info_temp);
 			}
@@ -618,11 +605,9 @@
 	
 		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
 		{
-			global $phpgw_info, $phpgw;
-			
 			if (! $appname)
 			{
-				$appname = $phpgw_info['flags']['currentapp'];
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 			
 			/* This allows the user to put "" as the value. */
@@ -631,29 +616,29 @@
 				." sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
 				." and app = '".$appname."' and location = '".$location."'";
 	
-				$phpgw->db->query($query,__LINE__,__FILE__);
-				$phpgw->db->next_record();
+				$GLOBALS['phpgw']->db->query($query,__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->next_record();
 
 				// I added these into seperate steps for easier debugging
-				$data = $phpgw->db->f('content');
+				$data = $GLOBALS['phpgw']->db->f('content');
 				// Changed by Skeeter 2001 Mar 04 0400Z
 				// This was not properly decoding structures saved into session data properly
-//				$data = $phpgw->common->decrypt($data);
+//				$data = $GLOBALS['phpgw']->common->decrypt($data);
 //				return stripslashes($data);
-				return $phpgw->crypto->decrypt($data);
+				return $GLOBALS['phpgw']->crypto->decrypt($data);
 
 			} else {
-				$phpgw->db->query("select content from phpgw_app_sessions where "
+				$GLOBALS['phpgw']->db->query("select content from phpgw_app_sessions where "
 				. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
-				. "and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
+				. " and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
 				
-				$encrypteddata = $phpgw->crypto->encrypt($data);
-				if ($phpgw->db->num_rows()==0) {
-					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
+				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
+				if ($GLOBALS['phpgw']->db->num_rows()==0) {
+					$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
 					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
 					. "','".$location."','".$encrypteddata."','" . time() . "')",__LINE__,__FILE__);
 				} else {
-					$phpgw->db->query("update phpgw_app_sessions set content = '".$encrypteddata."'"
+					$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set content = '".$encrypteddata."'"
 					. "where sessionid = '".$this->sessionid."'"
 					. "and loginid = '".$this->account_id."' and app = '".$appname."'"
 					. "and location = '".$location."'",__LINE__,__FILE__);
@@ -664,8 +649,6 @@
 		
 		function restore()
 		{
-			global $phpgw;
-			
 			$sessionData = $this->appsession("sessiondata");
 			
 			if (is_array($sessionData))
@@ -684,8 +667,6 @@
 		// save the current values of the variables
 		function save()
 		{
-			global $phpgw;
-				
 			if (is_array($this->variableNames))
 			{
 				reset($this->variableNames);
@@ -824,22 +805,22 @@
 			}
 
 /*			$url = str_replace('/?', '/index.php?', $url);
-			$webserver_url_count = strlen($phpgw_info['server']['webserver_url']);
+			$webserver_url_count = strlen($GLOBALS['phpgw_info']['server']['webserver_url']);
 			$slash_check = strtolower(substr($url ,0,1));
-			if (substr($url ,0,$webserver_url_count) != $phpgw_info['server']['webserver_url'])
+			if (substr($url ,0,$webserver_url_count) != $GLOBALS['phpgw_info']['server']['webserver_url'])
 			{
-				$app = $phpgw_info['flags']['currentapp'];
+				$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 				if ($slash_check == '/')
 				{
-					$url = $phpgw_info['server']['webserver_url'] . $url;
+					$url = $GLOBALS['phpgw_info']['server']['webserver_url'] . $url;
 				}
 				elseif ($app == 'home' || $app == 'logout' || $app == 'login')
 				{
-					$url = $phpgw_info['server']['webserver_url'].'/'.$url; 
+					$url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$url; 
 				}
 				else
 				{
-					$url = $phpgw_info['server']['webserver_url'].'/'.$app.'/'.$url; 
+					$url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$app.'/'.$url; 
 				}
 			} */
 			//echo "$url\n";

@@ -35,9 +35,7 @@
 		\**************************************************************************/
 		function accounts($account_id = '')
 		{
-			global $phpgw, $phpgw_info;
-
-			$this->db = $phpgw->db;
+			$this->db = $GLOBALS['phpgw']->db;
 
 			if($account_id != '')
 			{
@@ -80,11 +78,10 @@
 
 		function membership($accountid = '')
 		{
-			global $phpgw_info, $phpgw;
 			$account_id = get_account_id($accountid);
 
 			$security_equals = Array();
-			$security_equals = $phpgw->acl->get_location_list_for_id('phpgw_group', 1, $account_id);
+			$security_equals = $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $account_id);
 
 			if ($security_equals == False)
 			{
@@ -104,7 +101,6 @@
 
 		function members ($accountid = '')
 		{
-			global $phpgw_info, $phpgw;
 			$account_id = get_account_id($accountid);
 
 			$security_equals = Array();
@@ -133,10 +129,8 @@
 		*/
 		function get_nextid($account_type='u')
 		{
-			global $phpgw,$phpgw_info;
-
-			if ($phpgw_info['server']['account_min_id']) { $min = $phpgw_info['server']['account_min_id']; }
-			if ($phpgw_info['server']['account_max_id']) { $max = $phpgw_info['server']['account_max_id']; }
+			if ($GLOBALS['phpgw_info']['server']['account_min_id']) { $min = $GLOBALS['phpgw_info']['server']['account_min_id']; }
+			if ($GLOBALS['phpgw_info']['server']['account_max_id']) { $max = $GLOBALS['phpgw_info']['server']['account_max_id']; }
 
 			if ($account_type == 'g')
 			{
@@ -146,7 +140,7 @@
 			{
 				$type = 'accounts';
 			}
-			$nextid = $phpgw->common->last_id($type,$min,$max);
+			$nextid = $GLOBALS['phpgw']->common->last_id($type,$min,$max);
 
 			/* Loop until we find a free id */
 			$free = 0;
@@ -155,14 +149,14 @@
 				//echo '<br>calling search for id: '.$nextid;
 				if ($this->exists($nextid))
 				{
-					$nextid = $phpgw->common->next_id($type,$min,$max);
+					$nextid = $GLOBALS['phpgw']->common->next_id($type,$min,$max);
 				}
 				else
 				{
 					/* echo '<br>calling search for lid: '.$account_lid; */
 					if ($this->exists($account_lid))
 					{
-						$nextid = $phpgw->common->next_id($type,$min,$max);
+						$nextid = $GLOBALS['phpgw']->common->next_id($type,$min,$max);
 					}
 					else
 					{
@@ -170,8 +164,8 @@
 					}
 				}
 			}
-			if	($phpgw_info['server']['account_max_id'] &&
-				($nextid > $phpgw_info['server']['account_max_id']))
+			if	($GLOBALS['phpgw_info']['server']['account_max_id'] &&
+				($nextid > $GLOBALS['phpgw_info']['server']['account_max_id']))
 			{
 				return False;
 			}

@@ -43,8 +43,7 @@
 		*/
 		function applications($account_id = '')
 		{
-			global $phpgw, $phpgw_info;
-			$this->db = $phpgw->db;
+			$this->db = $GLOBALS['phpgw']->db;
 			$this->account_id = get_account_id($account_id);
 		}
 
@@ -60,26 +59,26 @@
 		function read_repository()
 		{
 			global $phpgw, $phpgw_info;
-			if (!isset($phpgw_info['apps']) ||
-			    gettype($phpgw_info['apps']) != 'array')
+			if (!isset($GLOBALS['phpgw_info']['apps']) ||
+			    !is_array($GLOBALS['phpgw_info']['apps']))
 			{
 				$this->read_installed_apps();
 			}
 			$this->data = Array();
 			if($this->account_id == False) { return False; }
-			$apps = $phpgw->acl->get_user_applications($this->account_id);
-			reset($phpgw_info['apps']);
-			while ($app = each($phpgw_info['apps']))
+			$apps = $GLOBALS['phpgw']->acl->get_user_applications($this->account_id);
+			reset($GLOBALS['phpgw_info']['apps']);
+			while ($app = each($GLOBALS['phpgw_info']['apps']))
 			{
 //				$check = $phpgw->acl->check('run',1,$app[0]);
 				$check = (isset($apps[$app[0]])?$apps[$app[0]]:False);
 				if ($check)
 				{
 					$this->data[$app[0]] = array(
-						'title'   => $phpgw_info['apps'][$app[0]]['title'],
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app[0]]['title'],
 						'name'    => $app[0],
 						'enabled' => True,
-						'status'  => $phpgw_info['apps'][$app[0]]['status']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[0]]['status']
 					);
 				} 
 			}
@@ -106,26 +105,25 @@
 		*/	
 		function add($apps)
 		{
-			global $phpgw_info;
-			if(gettype($apps) == 'array')
+			if(is_array($apps))
 			{
 				while($app = each($apps))
 				{
 					$this->data[$app[1]] = array(
-						'title'   => $phpgw_info['apps'][$app[1]]['title'],
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
 						'name'    => $app[1],
 						'enabled' => True,
-						'status'  => $phpgw_info['apps'][$app[1]]['status']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status']
 					);
 				}
 			}
 			elseif(gettype($apps))
 			{
 				$this->data[$apps] = array(
-					'title'   => $phpgw_info['apps'][$apps]['title'],
+					'title'   => $GLOBALS['phpgw_info']['apps'][$apps]['title'],
 					'name'    => $apps,
 					'enabled' => True,
-					'status'  => $phpgw_info['apps'][$apps]['status']
+					'status'  => $GLOBALS['phpgw_info']['apps'][$apps]['status']
 				);
 			}
 			reset($this->data);
@@ -167,13 +165,12 @@
 		*/
 		function save_repository()
 		{
-			global $phpgw;
-			$num_rows = $phpgw->acl->delete_repository("%%", 'run', $this->account_id);
+			$num_rows = $GLOBALS['phpgw']->acl->delete_repository("%%", 'run', $this->account_id);
 			reset($this->data);
 			while($app = each($this->data))
 			{
 				if(!$this->is_system_enabled($app[0])) { continue; }
-				$phpgw->acl->add_repository($app[0],'run',$this->account_id,1);
+				$GLOBALS['phpgw']->acl->add_repository($app[0],'run',$this->account_id,1);
 			}
 			reset($this->data);
 			return $this->data;
@@ -185,7 +182,6 @@
 
 		function app_perms()
 		{
-			global $phpgw, $phpgw_info;
 			if (count($this->data) == 0)
 			{
 				$this->read_repository();
@@ -200,12 +196,11 @@
 
 		function read_account_specific()
 		{
-			global $phpgw, $phpgw_info;
-			if (gettype($phpgw_info['apps']) != 'array')
+			if (!is_array($GLOBALS['phpgw_info']['apps']))
 			{
 				$this->read_installed_apps();
 			}
-			$app_list = $phpgw->acl->get_app_list_for_id('run',1,$this->account_id);
+			$app_list = $GLOBALS['phpgw']->acl->get_app_list_for_id('run',1,$this->account_id);
 			if(!$app_list)
 			{
 				reset($this->data);
@@ -217,10 +212,10 @@
 				if ($this->is_system_enabled($app[1]))
 				{
 					$this->data[$app[1]] = array(
-						'title'   => $phpgw_info['apps'][$app[1]]['title'],
+						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
 						'name'    => $app[1],
 						'enabled' => True,
-						'status'  => $phpgw_info['apps'][$app[1]]['status']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status']
 					);
 				}
 			}
@@ -238,8 +233,7 @@
 		*/
 		function read_installed_apps()
 		{
-			global $phpgw_info;
-			$this->db->query("select * from phpgw_applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
+			$this->db->query('select * from phpgw_applications where app_enabled != 0 order by app_order asc',__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				while ($this->db->next_record())
@@ -247,7 +241,7 @@
 					$name = $this->db->f('app_name');
 					$title  = $this->db->f('app_title');
 					$status = $this->db->f('app_enabled');
-					$phpgw_info['apps'][$name] = array(
+					$GLOBALS['phpgw_info']['apps'][$name] = Array(
 						'title'   => $title,
 						'name'    => $name,
 						'enabled' => True,
@@ -263,12 +257,11 @@
 		*/
 		function is_system_enabled($appname)
 		{
-			global $phpgw_info;
-			if(gettype($phpgw_info['apps']) != 'array')
+			if(!is_array($GLOBALS['phpgw_info']['apps']))
 			{
 				$this->read_installed_apps();
 			}
-			if ($phpgw_info['apps'][$appname]['enabled'])
+			if ($GLOBALS['phpgw_info']['apps'][$appname]['enabled'])
 			{
 				return True;
 			}

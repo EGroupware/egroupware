@@ -233,7 +233,7 @@
 		{
 			static $name_list;
 
-			if(@isset($name_list[$account_lid]))
+			if(@isset($name_list[$account_lid]) && $name_list[$account_lid])
 			{
 				return $name_list[$account_lid];
 			}
