@@ -56,14 +56,15 @@
 	{
 		$config[$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
 	}
-	$phpgw_info['server']['ldap_host']          = $config['ldap_host'];
-	$phpgw_info['server']['ldap_context']       = $config['ldap_context'];
-	$phpgw_info['server']['ldap_group_context'] = $config['ldap_group_context'];
-	$phpgw_info['server']['ldap_root_dn']       = $config['ldap_root_dn'];
-	$phpgw_info['server']['ldap_root_pw']       = $config['ldap_root_pw'];
-	$phpgw_info['server']['ldap_account_home']  = $config['ldap_account_home'];
-	$phpgw_info['server']['ldap_account_shell'] = $config['ldap_account_shell'];
-	$phpgw_info['server']['ldap_extra_attributes'] = $config['ldap_extra_attributes'];
+	$phpgw_info['server']['ldap_host']		= $config['ldap_host'];
+	$phpgw_info['server']['ldap_context']		= $config['ldap_context'];
+	$phpgw_info['server']['ldap_group_context']	= $config['ldap_group_context'];
+	$phpgw_info['server']['ldap_root_dn']		= $config['ldap_root_dn'];
+	$phpgw_info['server']['ldap_root_pw']		= $config['ldap_root_pw'];
+	$phpgw_info['server']['ldap_account_home']	= $config['ldap_account_home'];
+	$phpgw_info['server']['ldap_account_shell']	= $config['ldap_account_shell'];
+	$phpgw_info['server']['ldap_extra_attributes']	= $config['ldap_extra_attributes'];
+	$phpgw_info['server']['ldap_version3']		= $config['ldap_version3'];
 
 	$phpgw_info['server']['account_repository'] = 'ldap';
 
