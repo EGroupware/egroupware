@@ -102,6 +102,7 @@ install Applications	setup	en	Install Applications
 installed	setup	en	installed
 install language	setup	en	Install Language
 install	setup	en	Install
+invalid password	setup	en	Invalid password
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
 ldap account import/export	setup	en	LDAP account import/export

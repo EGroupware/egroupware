@@ -115,7 +115,7 @@
 				}
 				else
 				{
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid password';
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
 				}
@@ -154,7 +154,7 @@
 				}
 				else
 				{
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid password';
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
 				}
@@ -168,7 +168,7 @@
 				}
 				else
 				{
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid password';
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
 				}
