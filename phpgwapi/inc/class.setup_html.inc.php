@@ -149,8 +149,9 @@
 			{
 				$index_btn = '<a href="index.php" class="link">' . lang('Setup Main Menu') . '</a>';
 				$index_img = '<img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" />';
-				$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			}
+
+			$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			$GLOBALS['setup_tpl']->set_var(array(
 				'logoutbutton'  => $btn_logout,
 				'indexbutton'   => $index_btn,
