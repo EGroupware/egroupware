@@ -6,6 +6,7 @@
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest.
+accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
 add a domain	setup	de	Eine Domain hinzufügen
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper hinzufügen ("Default" wird versucht wenn nichts angegeben.)
@@ -85,6 +86,7 @@ convert	setup	de	Konvertieren
 could not open header.inc.php for writing!	setup	de	Konnte die Datei header.inc.php nicht zum schreiben öffen!
 country selection	setup	de	Länderauswahl
 create	setup	de	erstellen
+create admin account	setup	de	Administrator-Konto anlegen
 create database	setup	de	Datenbank erzeugen
 create demo accounts	setup	de	Demo-Benutzer anlegen
 create one now	setup	de	Jetzt erstellen
@@ -240,6 +242,7 @@ name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers
 never	setup	de	niemals
 new	setup	de	Neu
 no	setup	de	Nein
+no accounts existing	setup	de	Keine Benutzerkonten gefunden
 no algorithms available	setup	de	Kein Algorithmus verfügbar
 no microsoft sql server support found. disabling	setup	de	Keine Unterstützung für Microsoft SQL Server gefunden. Abgeschaltet
 no modes available	setup	de	kein Modus verfügbar
@@ -342,10 +345,11 @@ some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
 start the postmaster	setup	de	Starten Sie den postmaster
 status	setup	de	Status
-step 1 - simple application management	setup	de	Schritt 1 - Einfache Verwaltung der Anwendungen
-step 2 - configuration	setup	de	Schritt 2 - Konfiguration
-step 3 - language management	setup	de	Schritt 3 - Verwaltung der Sprachen
-step 4 - advanced application management	setup	de	Schritt 4 - Erweiterte Verwaltung der Anwendungen
+step %1 - admin account	setup	de	Schrit %1 - Administrator-Konto
+step %1 - advanced application management	setup	de	Schritt %1 - Erweiterte Verwaltung der Anwendungen
+step %1 - configuration	setup	de	Schritt %1 - Konfiguration
+step %1 - language management	setup	de	Schritt %1 - Verwaltung der Sprachen
+step %1 - simple application management	setup	de	Schritt %1 - Einfache Verwaltung der Anwendungen
 table change messages	setup	de	Tabellen&auml;nderungsmeldungen
 tables dropped	setup	de	Tabellen wurden gelöscht
 tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig; oben sind Fehlermelungen zu sehen

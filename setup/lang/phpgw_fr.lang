@@ -282,10 +282,10 @@ setup the database	setup	fr	Configurer la base de données
 show 'powered by' logo on	setup	fr	Montrer le logo 'propulsé par' sur
 some or all of its tables are missing	setup	fr	Certaines ou toutes ses tables manquent
 status	setup	fr	Etat
-step 1 - simple application management	setup	fr	Etape 1 - Gestion simple d'applications
-step 2 - configuration	setup	fr	Etape 2 - Configuration
-step 3 - language management	setup	fr	Etape 3 - Gestion des langues
-step 4 - advanced application management	setup	fr	Etape 4 - Gestion avancée d'applications
+step %1 - simple application management	setup	fr	Etape %1 - Gestion simple d'applications
+step %1 - configuration	setup	fr	Etape %1 - Configuration
+step %1 - language management	setup	fr	Etape %1 - Gestion des langues
+step %1 - advanced application management	setup	fr	Etape %1 - Gestion avancée d'applications
 table change messages	setup	fr	Messages de changement de table
 tables dropped	setup	fr	Tables supprimées
 tables installed, unless there are errors printed above	setup	fr	Tables installées, à moins qu'il y ait des messages d'erreur imprimés ci-dessous

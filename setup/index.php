@@ -153,7 +153,7 @@
 	$setup_tpl->set_var('img_incomplete',$incomplete);
 	$setup_tpl->set_var('img_completed',$completed);
 
-	$setup_tpl->set_var('db_step_text',lang('Step 1 - Simple Application Management'));
+	$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management',1));
 
 	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{
@@ -292,7 +292,7 @@
 	}
 
 	// Config Section
-	$setup_tpl->set_var('config_step_text',lang('Step 2 - Configuration'));
+	$setup_tpl->set_var('config_step_text',lang('Step %1 - Configuration',2));
 	$GLOBALS['phpgw_info']['setup']['stage']['config'] = $GLOBALS['phpgw_setup']->detection->check_config();
 
 	// begin DEBUG code
@@ -340,6 +340,7 @@
 				{
 					$btn_config_ldap = '';
 				}
+/*
 				$GLOBALS['phpgw_setup']->db->query("select config_value FROM phpgw_config WHERE config_name='webserver_url'");
 				$GLOBALS['phpgw_setup']->db->next_record();
 				if ($GLOBALS['phpgw_setup']->db->f(0))
@@ -366,8 +367,10 @@
 					'<b>'.lang('to setup 1 admin account and 3 demo accounts.').'</b>'
 				);
 			}
-			$config_td = "$btn_edit_config" ."$link_make_accts";
-			$setup_tpl->set_var('config_table_data',$config_td);
+			$config_td = "$btn_edit_config"."$link_make_accts";
+*/
+			}
+			$setup_tpl->set_var('config_table_data',$btn_edit_config);
 			$setup_tpl->set_var('ldap_table_data',$btn_config_ldap);
 			break;
 		default:
@@ -377,9 +380,34 @@
 			$setup_tpl->set_var('ldap_table_data','&nbsp;');
 			break;
 	}
+	// Admin Account Section
+	$setup_tpl->set_var('admin_step_text',lang('Step %1 - Admin Account',3));
+
+	switch($GLOBALS['phpgw_info']['setup']['stage']['config'])
+	{
+		case 10:
+			// check if there is already a user account (not the anonymous account of sitemgr or a group)
+			// Note: this does not check the availiblitly of accounts via other auth-methods then sql !!!
+			$GLOBALS['phpgw_setup']->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='u' AND account_lid!='anonymous'",__LINE__,__FILE__);
+			$no_accounts = !$GLOBALS['phpgw_setup']->db->next_record() || !$GLOBALS['phpgw_setup']->db->f(0);
+			$setup_tpl->set_var('admin_status_img',$no_account ? $incomplete : $completed);
+			$setup_tpl->set_var('admin_status_alt',$no_account ? lang('not completed') : lang('completed'));
+			$setup_tpl->set_var('admin_table_data',$GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+				$no_accounts ? lang('No accounts existing') : lang('Accounts existing'),
+				'POST','setup_demo.php',
+				'submit',lang('Create admin account'),
+				''
+			));
+			break;
+		default:
+			$setup_tpl->set_var('admin_status_img',$incomplete);
+			$setup_tpl->set_var('admin_status_alt',lang('not completed'));
+			$setup_tpl->set_var('admin_table_data',lang('Not ready for this stage yet'));
+			break;
+	}
 
 	// Lang Section
-	$setup_tpl->set_var('lang_step_text',lang('Step 3 - Language Management'));
+	$setup_tpl->set_var('lang_step_text',lang('Step %1 - Language Management',4));
 	$GLOBALS['phpgw_info']['setup']['stage']['lang'] = $GLOBALS['phpgw_setup']->detection->check_lang();
 
 	// begin DEBUG code
@@ -430,7 +458,7 @@
 			break;
 	}
 
-	$setup_tpl->set_var('apps_step_text',lang('Step 4 - Advanced Application Management'));
+	$setup_tpl->set_var('apps_step_text',lang('Step %1 - Advanced Application Management',5));
 //	$GLOBALS['phpgw_info']['setup']['stage']['apps'] = $GLOBALS['phpgw_setup']->check_apps();
 	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{

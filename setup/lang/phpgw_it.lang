@@ -116,10 +116,10 @@ select your old version	setup	it	Seleziona la tua vecchia versione
 setup	setup	it	Setup
 some or all of its tables are missing	setup	it	Alcune o tutte delle sue tabelle sono mancanti
 status	setup	it	Stato
-step 1 - simple application management	setup	it	Passaggio 1 - Gestione Applicazioni Semplice
-step 2 - configuration	setup	it	Passaggio 2 - Configurazione
-step 3 - language management	setup	it	Passaggio 3 - Gestione Lingue
-step 4 - advanced application management	setup	it	Passaggio 4 - Gestione Applicazioni Avanzata
+step %1 - simple application management	setup	it	Passaggio %1 - Gestione Applicazioni Semplice
+step %1 - configuration	setup	it	Passaggio %1 - Configurazione
+step %1 - language management	setup	it	Passaggio %1 - Gestione Lingue
+step %1 - advanced application management	setup	it	Passaggio %1 - Gestione Applicazioni Avanzata
 submit	setup	it	Invia
 table change messages	setup	it	Messaggi dalle modifiche alle tabelle
 tables dropped	setup	it	tabelle cancellate

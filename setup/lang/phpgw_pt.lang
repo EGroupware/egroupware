@@ -182,10 +182,10 @@ setup	setup	pt	Configuração
 Show 'powered by' logo on	setup	pt	Área para exibição da logomarca do eGroupWare
 some or all of its tables are missing	setup	pt	Algumas ou todas tabelas estão faltando
 status	setup	pt	Status
-step 1 - simple application management	setup	pt	Passo 1 - Configuração inicial das aplicações
-step 2 - configuration	setup	pt	Passo 2 - Configuração do sistema
-step 3 - language management	setup	pt	Passo 3 - Configuração de idiomas
-step 4 - advanced application management	setup	pt	Passo 4 - Configuração avançada das aplicações
+step %1 - simple application management	setup	pt	Passo %1 - Configuração inicial das aplicações
+step %1 - configuration	setup	pt	Passo %1 - Configuração do sistema
+step %1 - language management	setup	pt	Passo %1 - Configuração de idiomas
+step %1 - advanced application management	setup	pt	Passo %1 - Configuração avançada das aplicações
 submit	setup	pt	Enviar
 table change messages	setup	pt	Mensagens de alterações nas tabelas
 tables dropped	setup	pt	tabelas removidas

@@ -181,10 +181,10 @@ setup	setup	fi	Asennus
 Show 'powered by' logo on	setup	fi	Näytä 'powered by' logo
 some or all of its tables are missing	setup	fi	Ainakin osa tauluista puuttuu
 status	setup	fi	Tila
-step 1 - simple application management	setup	fi	Vaihe 1 - Sovellusten hallinta
-step 2 - configuration	setup	fi	Vaihe 2 - Asetukset
-step 3 - language management	setup	fi	Vaihe 3 - Kielten hallinta
-step 4 - advanced application management	setup	fi	Vaihe 4 - Sovellusten hallinta (yksityiskohdat)
+step %1 - simple application management	setup	fi	Vaihe %1 - Sovellusten hallinta
+step %1 - configuration	setup	fi	Vaihe %1 - Asetukset
+step %1 - language management	setup	fi	Vaihe %1 - Kielten hallinta
+step %1 - advanced application management	setup	fi	Vaihe %1 - Sovellusten hallinta (yksityiskohdat)
 submit	setup	fi	Lähetä
 table change messages	setup	fi	Taulujen muutokset
 tables dropped	setup	fi	taulua poistettu

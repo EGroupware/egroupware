@@ -167,10 +167,10 @@ setup	setup	ja	セットアップ
 show 'powered by' logo on	setup	ja	powered by ロゴ表示位置
 some or all of its tables are missing	setup	ja	必要なテーブルが存在しません。
 status	setup	ja	状態表示
-step 1 - simple application management	setup	ja	Step 1 - テーブル作成
-step 2 - configuration	setup	ja	Step 2 - 環境設定
-step 3 - language management	setup	ja	Step 3 - 言語環境設定
-step 4 - advanced application management	setup	ja	Step 4 - アプリケーション設定
+step %1 - simple application management	setup	ja	Step %1 - テーブル作成
+step %1 - configuration	setup	ja	Step %1 - 環境設定
+step %1 - language management	setup	ja	Step %1 - 言語環境設定
+step %1 - advanced application management	setup	ja	Step %1 - アプリケーション設定
 submit	setup	ja	実行
 table change messages	setup	ja	テーブル変更メッセージ
 tables dropped	setup	ja	テーブルを削除しました

@@ -355,10 +355,10 @@ some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas 
 sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas (predeterminado - md5)
 start the postmaster	setup	es-es	Iniciar el postmaster
 status	setup	es-es	Estado
-step 1 - simple application management	setup	es-es	Paso 1 - Administración simple de aplicaciones
-step 2 - configuration	setup	es-es	Paso 2 - Configuración
-step 3 - language management	setup	es-es	Paso 3 - Administración de idiomas
-step 4 - advanced application management	setup	es-es	Paso 4 - Administración avanzada de aplicaciones
+step %1 - simple application management	setup	es-es	Paso %1 - Administración simple de aplicaciones
+step %1 - configuration	setup	es-es	Paso %1 - Configuración
+step %1 - language management	setup	es-es	Paso %1 - Administración de idiomas
+step %1 - advanced application management	setup	es-es	Paso %1 - Administración avanzada de aplicaciones
 submit	setup	es-es	Enviar
 table change messages	setup	es-es	Mensajes de cambios en las tablas
 tables dropped	setup	es-es	tablas eliminadas

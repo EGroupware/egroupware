@@ -182,10 +182,10 @@ setup demo accounts in ldap	setup	pl	Setup demo accounts in LDAP
 show 'powered by' logo on	setup	pl	Wy¶wietlaj logo 'powered by'
 some or all of its tables are missing	setup	pl	Some or all of its tables are missing
 status	setup	pl	Status
-step 1 - simple application management	setup	pl	Krok 1 - Proste zarz±dzanie aplikacj±
-step 2 - configuration	setup	pl	Krok 2 - Konfiguracja
-step 3 - language management	setup	pl	Krok 3 - Zarz±dzanie wersjami jêzykowymi
-step 4 - advanced application management	setup	pl	Step 4 - Zaawansowane zarz±dzanie aplikacj±
+step %1 - simple application management	setup	pl	Krok %1 - Proste zarz±dzanie aplikacj±
+step %1 - configuration	setup	pl	Krok %1 - Konfiguracja
+step %1 - language management	setup	pl	Krok %1 - Zarz±dzanie wersjami jêzykowymi
+step %1 - advanced application management	setup	pl	Step %1 - Zaawansowane zarz±dzanie aplikacj±
 submit	setup	pl	OK
 table change messages	setup	pl	Komunikaty zmiany tabel
 tables dropped	setup	pl	Usuniêto tabele

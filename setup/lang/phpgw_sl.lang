@@ -298,10 +298,10 @@ show 'powered by' logo on	setup	sl	Pokaži "te&#269;e na" logotip na
 some or all of its tables are missing	setup	sl	Manjka nekaj ali vse njene tabele
 start the postmaster	setup	sl	Poženi postmaster
 status	setup	sl	Status
-step 1 - simple application management	setup	sl	Korak 1 - preprosto upravljanje aplikacij
-step 2 - configuration	setup	sl	Korak 2 - konfiguracija
-step 3 - language management	setup	sl	Korak 3 - upravljanje z jeziki
-step 4 - advanced application management	setup	sl	Korak 4 - zahtevno upravljanje aplikacij
+step %1 - simple application management	setup	sl	Korak %1 - preprosto upravljanje aplikacij
+step %1 - configuration	setup	sl	Korak %1 - konfiguracija
+step %1 - language management	setup	sl	Korak %1 - upravljanje z jeziki
+step %1 - advanced application management	setup	sl	Korak %1 - zahtevno upravljanje aplikacij
 table change messages	setup	sl	Obvestila o spremembi tabel
 tables dropped	setup	sl	tabele odstranjene
 tables installed, unless there are errors printed above	setup	sl	tabele nameš&#269;ene, razen &#269;e so zgoraj izpisane napake

@@ -6,6 +6,7 @@
 13 (ntp)	setup	en	13 (ntp)
 80 (http)	setup	en	80 (http)
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	<b>This will create 1 admin account and 3 demo accounts</b><br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.
+accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
 add a domain	setup	en	Add a domain
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
@@ -83,6 +84,7 @@ convert	setup	en	Convert
 could not open header.inc.php for writing!	setup	en	Could not open header.inc.php for writing!
 country selection	setup	en	Country Selection
 create	setup	en	Create
+create admin account	setup	en	Create admin account
 create database	setup	en	Create Database
 create demo accounts	setup	en	Create demo accounts
 create one now	setup	en	Create one now
@@ -135,9 +137,7 @@ enable mcrypt	setup	en	Enable MCrypt
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br>encryption (requires mcrypt)
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	setup	en	
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:files	setup	en	
 enter the hostname of the machine on which this server is running	setup	en	Enter the hostname of the machine on which this server is running
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 enter the site password for peer servers	setup	en	Enter the site password for peer servers
@@ -238,6 +238,7 @@ name of db user egroupware uses to connect	setup	en	Name of db user eGroupWare u
 never	setup	en	never
 new	setup	en	New
 no	setup	en	No
+no accounts existing	setup	en	No accounts existing
 no algorithms available	setup	en	no algorithms available
 no microsoft sql server support found. disabling	setup	en	No Microsoft SQL Server support found. Disabling
 no modes available	setup	en	no modes available
@@ -340,10 +341,11 @@ some or all of its tables are missing	setup	en	Some or all of its tables are mis
 sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
 start the postmaster	setup	en	Start the postmaster
 status	setup	en	Status
-step 1 - simple application management	setup	en	Step 1 - Simple Application Management
-step 2 - configuration	setup	en	Step 2 - Configuration
-step 3 - language management	setup	en	Step 3 - Language Management
-step 4 - advanced application management	setup	en	Step 4 - Advanced Application Management
+step %1 - admin account	setup	en	Step %1 - Admin Account
+step %1 - advanced application management	setup	en	Step %1 - Advanced Application Management
+step %1 - configuration	setup	en	Step %1 - Configuration
+step %1 - language management	setup	en	Step %1 - Language Management
+step %1 - simple application management	setup	en	Step %1 - Simple Application Management
 table change messages	setup	en	Table Change Messages
 tables dropped	setup	en	tables dropped
 tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above

@@ -27,6 +27,19 @@
 	</td>
 </tr>
 <!-- end the config section -->
+<!-- begin the admin section -->
+<tr class="th">
+	<td align="left" colspan="2">{admin_step_text}</td>
+</tr>
+<tr>
+	<td align="center" width="30%">
+		<img src="{admin_status_img}" alt="{admin_status_alt}" border="0">
+	</td>
+	<td>
+		{admin_table_data}
+	</td>
+</tr>
+<!-- end the admin section -->
 <!-- begin the lang section -->
 <tr class="th">
 	<td align="left" colspan="2">{lang_step_text}</td>
