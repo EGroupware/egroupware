@@ -180,7 +180,7 @@
 
 			if ($this->prefs['common']['timeformat'] == '12')
 			{
-				$this->users_timeformat = 'h:i a';
+				$this->users_timeformat = 'h:ia';
 			}
 			else
 			{
