@@ -23,7 +23,7 @@
 
 /* $Id$ */
 
-  	/*!
+	/*!
 	 @class contacts
 	 @abstract Contact List System
 	 @discussion Author: jengo/Milosch <br>
@@ -61,7 +61,7 @@
 			$this->grants     = $phpgw->acl->get_grants('addressbook');
 
 			// The left side are the array elements used throughout phpgw, right side are the ldap attributes
-    	    $this->stock_contact_fields = array(
+			this->stock_contact_fields = array(
 				"fn"                  => "cn",        // 'prefix given middle family suffix'
 				"n_given"             => "givenname",   // firstname
 				"n_family"            => "sn",  // lastname
@@ -153,7 +153,7 @@
 			);
 
 			// Used to set mail_type fields
-	        $this->email_types = array(
+			$this->email_types = array(
 				"INTERNET"   => "INTERNET",
 				"CompuServe" => "CompuServe",
 				"AOL"        => "AOL",
@@ -399,7 +399,7 @@
 
 				$this->total_records = count($ldap_fields);
 				//echo '<br>total="'.$this->total_records.'"';
-			}  else  {
+			} else {
 				$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "phpgwowner=*");
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 				$this->total_records = ldap_count_entries($this->ldap, $sri);

@@ -50,7 +50,7 @@
 		$limit = 15;
 	}
 
-	if (!$sort) { $sort = "ASC";  }
+	if (!$sort) { $sort = "ASC"; }
 
 	$fields = read_custom_fields($start,$limit,$query,$sort,$order);
 	$total_records = count($fields);
@@ -87,7 +87,7 @@
 		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 		$t->set_var(tr_color,$tr_color);
 
-		$field    = $fields[$i]['name'];
+		$field = $fields[$i]['name'];
 
 //-------------------------- template declaration for list records ---------------------------
 

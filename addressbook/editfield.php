@@ -40,7 +40,7 @@
 		$errorcount = 0;
 		if (!$field_name) { $error[$errorcount++] = lang('Please enter a name for that field!'); }
 
-		$field_name   = addslashes($field_name);
+		$field_name = addslashes($field_name);
 
 		if (! $error)
 		{

@@ -269,7 +269,7 @@
 	function addressbook_form($format,$action,$title="",$fields="",$customfields="",$cat_id="")
 	{
 		global $phpgw, $phpgw_info,$referer;
-     
+
 		$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 		$t->set_file(array( "form"	=> "form.tpl"));
 		
@@ -432,7 +432,7 @@
 			$email_type .= "</select>";
 
 			reset($this->email_types);
-    		$hemail_type = '<select name=hemail_type>';
+			$hemail_type = '<select name=hemail_type>';
 			while ($type = each($this->email_types)) {
 				$hemail_type .= '<option value="'.$type[0].'"';
 				if ($type[0] == $hemailtype) { $hemail_type .= ' selected'; }

@@ -117,9 +117,9 @@
 		$fields["tel_pager"]			= $pager;
 		$fields["tel_cell"]				= $mphone;
 		$fields["tel_msg"]				= $msgphone;
-		$fields["tel_car"]              = $carphone;
-		$fields["tel_video"]            = $vidphone;
-		$fields["tel_isdn"]             = $isdnphone;
+		$fields["tel_car"] 				= $carphone;
+		$fields["tel_video"]			= $vidphone;
+		$fields["tel_isdn"]				= $isdnphone;
 		$fields["adr_one_street"]		= $bstreet;
 		$fields["adr_one_locality"]		= $bcity;
 		$fields["adr_one_region"]		= $bstate;
@@ -132,7 +132,7 @@
 			$ftype = 'one_'.$type;
 			eval("if (\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
 		}	
-		$fields["adr_one_type"]     = substr($typed,0,-1);
+		$fields["adr_one_type"] = substr($typed,0,-1);
 
 		$fields["address2"]				= $address2;
 		$fields["address3"]				= $address3;
@@ -149,7 +149,7 @@
 			$ftype = 'two_'.$type;
 			eval("if \(\$\$ftype=='on'\) { \$typed \.= \$type\.';'; }");
 		}
-		$fields["adr_two_type"]         = substr($typed,0,-1);
+		$fields["adr_two_type"] = substr($typed,0,-1);
 
 		reset($customfields);
 		while (list($name,$val) = each($customfields)) {
@@ -158,21 +158,21 @@
 			if ($cust) { $fields[$name] = $cust; }
 		}
 
-		$fields["ophone"]               = $ophone;
-		$fields["tz"]					= $timezone;
-		$fields["bday"]					= $bday;
-		$fields["url"]					= $url;
-		$fields["pubkey"]				= $pubkey;
-		$fields["note"]					= $notes;
-		$fields["label"]                = $label;
+		$fields["ophone"]	= $ophone;
+		$fields["tz"]		= $timezone;
+		$fields["bday"]		= $bday;
+		$fields["url"]		= $url;
+		$fields["pubkey"]	= $pubkey;
+		$fields["note"]		= $notes;
+		$fields["label"]	= $label;
 
 		if ($access == True) {
-			$fields["access"]           = 'private';
+			$fields["access"] = 'private';
 		} else {
-			$fields["access"]           = 'public';
+			$fields["access"] = 'public';
 		}
 
-		$fields["cat_id"]               = $cat_id;
+		$fields["cat_id"] = $cat_id;
 
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields,$fields["access"],$fields["cat_id"]);
 		$ab_id = addressbook_get_lastid();

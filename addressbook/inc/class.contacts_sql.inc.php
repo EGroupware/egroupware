@@ -23,7 +23,7 @@
 
 /* $Id$ */
 
-  	/*!
+	/*!
 	 @class acl
 	 @abstract Contact List System
 	 @discussion Author: jengo/Milosch <br>
@@ -57,7 +57,7 @@
 			$this->account_id = $phpgw_info['user']['account_id'];
 
 			// The left side are the array elements used throughout phpgw, right side are the db field names.
-    	    $this->stock_contact_fields = array(
+			$this->stock_contact_fields = array(
 				"fn"                     => "fn",        // 'prefix given middle family suffix'
 				"n_given"                => "n_given",   // firstname
 				"n_family"               => "n_family",  // lastname
@@ -148,7 +148,7 @@
 			);
 
 			// Used to set email_type fields
-	        $this->email_types = array(
+			$this->email_types = array(
 				"INTERNET"   => "INTERNET",
 				"CompuServe" => "CompuServe",
 				"AOL"        => "AOL",
@@ -183,7 +183,7 @@
  
 			$this->db->query("select id,lid,tid,owner,access,cat_id $t_fields from $this->std_table WHERE id='$id'");
 			$this->db->next_record();
-       
+
 			$return_fields[0]["id"]        = $this->db->f("id"); // unique id
 			$return_fields[0]["lid"]       = $this->db->f("lid"); // lid for group/account records
 			$return_fields[0]["tid"]       = $this->db->f("tid"); // type id (g/u) for groups/accounts
@@ -423,11 +423,11 @@
 				echo "<br>DEBUG - Filtering with: #" . $filtermethod . "#";
 			}
 
-			if (!$sort) { $sort = "ASC";  }
+			if (!$sort) { $sort = "ASC"; }
 
 			if ($order) {
 				$ordermethod = "order by $order $sort ";
-			}  else {
+			} else {
 				$ordermethod = "order by n_family,n_given,email $sort";
 			}
 
@@ -471,7 +471,7 @@
 					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
 					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod . " "
 					. $limit,__LINE__,__FILE__);
-			}  else  {
+			} else {
 				$this->db3->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod,__LINE__,__FILE__);
 				$this->total_records = $this->db3->num_rows();
