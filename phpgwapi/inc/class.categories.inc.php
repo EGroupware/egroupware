@@ -275,7 +275,7 @@
 			$cat_level = $this->db2->f('cat_level')+1;
 
 			$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
-                       . "cat_description,cat_data) values ('$cat_parent','" . $this->account_id . "','$cat_access','"
+                       . "cat_description,cat_data,cat_main,cat_level) values ('$cat_parent','" . $this->account_id . "','$cat_access','"
                        . $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
                        . "','$cat_data','$cat_main','$cat_level')",__LINE__,__FILE__);
 		    }
