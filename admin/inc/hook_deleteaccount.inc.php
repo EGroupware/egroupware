@@ -9,13 +9,15 @@
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
+
 	/* $Id$ */
-	
-	if($GLOBALS['account_id'])
+
+	if($GLOBALS['HTTP_POST_VARS']['account_id'])
 	{
-		$GLOBALS['phpgw']->accounts->delete($GLOBALS['account_id']);
+		$GLOBALS['phpgw']->accounts->delete($GLOBALS['HTTP_POST_VARS']['account_id']);
 		$GLOBALS['phpgw']->db->lock(Array('phpgw_acl'));
-		$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_acl WHERE acl_location='".$GLOBALS['account_id']."' OR acl_account=".$GLOBALS['account_id'],__LINE__,__FILE__);
+		$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_acl WHERE acl_location='" . $GLOBALS['HTTP_POST_VARS']['account_id']
+			. "' OR acl_account=".$GLOBALS['HTTP_POST_VARS']['account_id'],__LINE__,__FILE__);
 		$GLOBALS['phpgw']->db->unlock();
 	}
 ?>
