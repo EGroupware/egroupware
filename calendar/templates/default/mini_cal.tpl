@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 <!-- BEGIN mini_cal -->
 <table border="0" cellspacing="0" cellpadding="0" valign="top" width="80" cols="7">
- <tr valign="center">
+ <tr valign="middle">
   <td align="left" colspan=4><font size="-2">&nbsp;&nbsp;&nbsp;&nbsp;<b>{month}</b></font></td>
   <td align="right" colspan=3>{prevmonth}&nbsp;&nbsp;{nextmonth}</td>
  </tr>
