@@ -1028,11 +1028,11 @@ class calendar extends calendar_
 							$pict = 'rpt.gif';
 							$pic_size = ' width="10" height="10"';
 						}
-//						if(count($lr_events->participants) > 1)
-//						{
-//							$pict = 'multi_1.gif';
-//							$pic_size = ' width="10" height="14"';
-//						}
+						if(count($lr_events->participants) > 1)
+						{
+							$pict = 'multi_1.gif';
+							$pic_size = ' width="12" height="16"';
+						}
 						
 						$description = $this->is_private($lr_events,$owner,'description');
 
@@ -1362,7 +1362,7 @@ class calendar extends calendar_
 		{
 			if($t_format == '12')
 			{
-				$time_width=48;
+				$time_width=26;
 			}
 			else
 			{
