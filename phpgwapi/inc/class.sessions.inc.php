@@ -584,7 +584,10 @@
 
 			$GLOBALS['phpgw']->db->transaction_begin();
 			$this->register_session($login,$user_ip,$now,$session_flags);
-			$this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
+			if ($session_flags != 'A')		// dont log anonymous sessions
+			{
+				$this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
+			}
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
 			$GLOBALS['phpgw']->db->transaction_commit();
