@@ -30,8 +30,7 @@
 
 		function authenticate($username, $passwd)
 		{
-			global $phpgw_info, $phpgw;
-			$db = $phpgw->db;
+			$db = $GLOBALS['phpgw']->db;
 
 			$db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
 				. "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
@@ -50,28 +49,24 @@
 
 		function change_password($old_passwd, $new_passwd, $account_id = '')
 		{
-			global $phpgw_info, $phpgw;
-
 			if (! $account_id)
 			{
-				$account_id = $phpgw_info['user']['account_id'];
+				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 
 			$encrypted_passwd = md5($new_passwd);
 
-			$phpgw->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "',"
+			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "',"
 				. "account_lastpwd_change='" . time() . "' where account_id='" . $account_id . "'",__LINE__,__FILE__);
 
-			$phpgw->session->appsession('password','phpgwapi',$new_passwd);
+			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
 
 			return $encrypted_passwd;
 		}
 
 		function update_lastlogin($account_id, $ip)
 		{
-			global $phpgw;
-
-			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
 				. "' where account_id='$account_id'",__LINE__,__FILE__);
 		}
