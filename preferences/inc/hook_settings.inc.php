@@ -11,13 +11,13 @@
 
 	/* $Id$ */
 
-	$templates = $phpgw->common->list_templates();
+	$templates = $GLOBALS['phpgw']->common->list_templates();
 	while (list($var,$value) = each($templates))
 	{
 		$_templates[$var] = $templates[$var]['title'];
 	}
 
-	$themes = $phpgw->common->list_themes();
+	$themes = $GLOBALS['phpgw']->common->list_themes();
 	while (list(,$value) = each($themes))
 	{
 		$_themes[$value] = $value;
@@ -65,21 +65,21 @@
 	$sbox = createobject('phpgwapi.sbox');
 	create_select_box('Country','country',$sbox->country_array);
 
-	$db2 = $phpgw->db;
-	$phpgw->db->query("select distinct lang from lang",__LINE__,__FILE__);
-	while ($phpgw->db->next_record())
+	$db2 = $GLOBALS['phpgw']->db;
+	$GLOBALS['phpgw']->db->query("select distinct lang from lang",__LINE__,__FILE__);
+	while ($GLOBALS['phpgw']->db->next_record())
 	{
 //		$phpgw_info['installed_langs'][$phpgw->db->f('lang')] = $phpgw->db->f('lang');
 
 		$db2->query("select lang_name from languages where lang_id = '"
-			. $phpgw->db->f('lang') . "'",__LINE__,__FILE__);
+			. $GLOBALS['phpgw']->db->f('lang') . "'",__LINE__,__FILE__);
 		$db2->next_record();
 
-		// When its not in the phpgw_langauges table, it will show ??? in the field
+		// When its not in the phpgw_languages table, it will show ??? in the field
 		// otherwise
 		if ($db2->f('lang_name'))
 		{
-			$langs[$phpgw->db->f('lang')] = $db2->f('lang_name');
+			$langs[$GLOBALS['phpgw']->db->f('lang')] = $db2->f('lang_name');
 		}
 	}
 	create_select_box('Language','lang',$langs);
@@ -95,10 +95,10 @@
 		create_select_box('Show current users on navigation bar','show_currentusers',$yes_and_no);
 	}
 
-	reset($phpgw_info['user']['apps']);
-	while (list($permission) = each($phpgw_info['user']['apps']))
+	reset($GLOBALS['phpgw_info']['user']['apps']);
+	while (list($permission) = each($GLOBALS['phpgw_info']['user']['apps']))
 	{
-		if ($phpgw_info['apps'][$permission]['status'] != 2)
+		if ($GLOBALS['phpgw_info']['apps'][$permission]['status'] != 2)
 		{
 			$user_apps[$permission] = $permission;
 		}
