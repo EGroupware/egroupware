@@ -755,7 +755,7 @@
         $db->query($sql);         
 
         while ($tt = each($t)) {
-           $db->query("insert into preferences values ('$tt[0]','" . serialize($tt[1]) . "'");
+           $db->query("insert into preferences values ('$tt[0]','" . serialize($tt[1]) . "')");
         }
 
         // upgrade code ends here
