@@ -23,6 +23,11 @@ class html
 		$this->prefered_img_title = stristr($HTTP_USER_AGENT,'konqueror') ? 'title' : 'alt';
 	}
 
+	function div($content,$options='')
+	{
+		return "<div $options>\n$content</div>\n";
+	}
+
 	function input_hidden($vars,$value='',$ignore_empty=True)
 	{
 		if (!is_array($vars))
