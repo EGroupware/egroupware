@@ -689,7 +689,14 @@
 			if ($this->Halt_On_Error != "report")
 			{
 				echo "<p><b>Session halted.</b>";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				if (is_object($GLOBALS['phpgw']->common))
+				{
+ 					$GLOBALS['phpgw']->common->phpgw_exit(True);
+	 			}
+				else	// happens eg. in setup
+				{
+					exit();
+				}
 			}
 		}
 
@@ -988,6 +995,10 @@
 		*/
 		function column_data_implode($glue,$array,$use_key=True,$only=False,$column_definitions=False)
 		{
+			if (!is_array($array))	// this allows to give an SQL-string for delete or update
+			{
+				return $array;
+			}
 			if (!$column_definitions)
 			{
 				$column_definitions = $this->column_definitions;
@@ -1063,24 +1074,24 @@
 			}
 			if (isset($GLOBALS['phpgw_info']['apps']))	// this happens during the eGW startup, dont set it then !!!
 			{
-				$app_data = &$GLOBALS['phpgw_info']['apps'][$app];
+				$this->app_data = &$GLOBALS['phpgw_info']['apps'][$app];
 			}
-			if (!isset($app_data['table_defs']))
+			if (!isset($this->app_data['table_defs']))
 			{
 				$tables_current = PHPGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
 
 				if (!@file_exists($tables_current))
 				{
-					return $app_data['table_defs'] = False;
+					return $this->app_data['table_defs'] = False;
 				}
 				include($tables_current);
-				$app_data['table_defs'] = $phpgw_baseline;
+				$this->app_data['table_defs'] = $phpgw_baseline;
 			}
-			if ($table && (!$app_data['table_defs'] || !isset($app_data['table_defs'][$table])))
+			if ($table && (!$this->app_data['table_defs'] || !isset($this->app_data['table_defs'][$table])))
 			{
 				return False;
 			}
-			return $table ? $app_data['table_defs'][$table] : $app_data['table_defs'];
+			return $table ? $this->app_data['table_defs'][$table] : $this->app_data['table_defs'];
 		}
 
 		/**
@@ -1095,7 +1106,7 @@
 		* @param $line int line-number to pass to query
 		* @param $file string file-name to pass to query
 		* @param $app mixed string with name of app or False to use the current-app
-		* @return the return-value of the call to db::query
+		* @return object/boolean Query_ID of the call to db::query, or True if we had to do an update
 		*/
 		function insert($table,$data,$where,$line,$file,$app=False)
 		{
@@ -1108,7 +1119,7 @@
 				$this->select($table,'count(*)',$where,$line,$file);
 				if ($this->next_record() && $this->f(0))
 				{
-					return $this->update($table,$data,$where,$line,$file,$app);
+					return !!$this->update($table,$data,$where,$line,$file,$app);
 				}
 				$data = array_merge($where,$data);	// the checked values need to be inserted too, value in data has precedence
 			}
@@ -1200,7 +1211,7 @@
 						$ignore_next += !$arg ? 2 : 0;
 						break;
 					case 'array':
-						$sql .= $this->column_data_implode(' AND ',$arg,True,False,$table_def);
+						$sql .= $this->column_data_implode(' AND ',$arg,True,False,$table_def['fd']);
 						break;
 				}
 			}
@@ -1219,10 +1230,11 @@
 		* @param $line int line-number to pass to query
 		* @param $file string file-name to pass to query
 		* @param $offset int/bool offset for a limited query or False (default)
+		* @param string $append string to append to the end of the query, eg. ORDER BY ...
 		* @param $app mixed string with name of app or False to use the current-app
 		* @return the return-value of the call to db::query
 		*/
-		function select($table,$cols,$where,$line,$file,$offset=False,$app=False)
+		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False)
 		{
 			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app')</p>\n";
 
@@ -1235,7 +1247,8 @@
 			{
 				$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 			}
-			$sql = "SELECT $cols FROM $table WHERE ".($where ? $where : '1=1');
+			$sql = "SELECT $cols FROM $table WHERE ".($where ? $where : '1=1').
+				($append ? ' '.$append : '');
 
 			if ($this->Debug) echo "<p>sql='$sql'</p>";
 
