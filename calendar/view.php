@@ -55,7 +55,7 @@
 		);
 		$p->set_file($templates);
 
-		if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
+		if (($event->owner == $phpgw->calendar->owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
 		{
 			$var = Array(
 				'action_url_button'	=> $phpgw->link('/calendar/edit_entry.php','id='.$id.'&owner='.$owner),
@@ -64,19 +64,19 @@
 				'action_extra_field'	=> ''
 			);
 			$p->set_var($var);
-			echo $p->finish($p->parse('out','form_button'));
+			echo $p->fp('out','form_button');
 		}
 
 		if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_DELETE) == True))
 		{
 			$var = Array(
-				'action_url_button'	=> $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner),
+				'action_url_button'	=> $phpgw->link('/calendar/delete.php','id='.$id.'&owner='.$owner),
 				'action_text_button'	=> lang('Delete'),
 				'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
 				'action_extra_field'	=> ''
 			);
 			$p->set_var($var);
-			echo $p->finish($p->parse('out','form_button'));
+			echo $p->fp('out','form_button');
 		}
 	}
 	else
