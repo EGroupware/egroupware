@@ -37,6 +37,19 @@
 		{
 			$holiday['mday'] = 0;
 		}
+		if(!isset($locale) || $locale=='')
+		{
+			$locale = $holiday['locale'];
+		}
+		elseif(!isset($holiday['locale']) || $holiday['locale']=='')
+		{
+			$holiday['locale'] = $locale;
+		}
+		if(!isset($holiday['hol_id']))
+		{
+			$holiday['hol_id'] = $id;
+		}
+		
 	// Still need to put some validation in here.....
 
 		$ok = True;
@@ -63,7 +76,10 @@
 	}
 	else
 	{
-		$holiday['locale'] = $locale;
+		if(isset($locale) && $locale)
+		{
+			$holiday['locale'] = $locale;
+		}
 		$holiday['name'] = '';
 		$holiday['day'] = 0;
 		$holiday['month'] = 0;
@@ -99,9 +115,7 @@
 	}
 	
 	$actionurl = $phpgw->link('/calendar/editholiday.php');
-	$hidden_vars = '<input type="hidden" name="holiday[locale]" value="'.$locale.'">'."\n"
-					 . '<input type="hidden" name="holiday[hol_id]" value="'.$id.'">'."\n"
-					 . '<input type="hidden" name="locale" value="'.$locale.'">'."\n"
+	$hidden_vars = '<input type="hidden" name="locale" value="'.$locale.'">'."\n"
 					 . '<input type="hidden" name="id" value="'.$id.'">'."\n";
 
 	$var = Array(
@@ -112,6 +126,12 @@
 	);
 
 	$t->set_var($var);
+
+// Locale
+	if(!isset($locale))
+	{
+		display_item($t,lang('Country'),'<input name="holiday[locale]" size="2" maxlength="2" value="">');
+	}
 
 // Title/Name
 	display_item($t,lang('title'),'<input name="holiday[name]" size="25" maxlength="50" value="'.$holiday['name'].'">');
@@ -175,8 +195,19 @@
 
 	$t->set_var('lang_add',lang('Save'));
 	$t->set_var('lang_reset',lang('Reset'));
+
+	
+	if(isset($locale) && $locale)
+	{
+		$action_url_button = $phpgw->link('/calendar/editlocale.php','locale='.$locale);
+	}
+	else
+	{
+		$action_url_button = $phpgw->link('/calendar/holiday_admin.php');
+	}
+	
 	$var = Array(
-		'action_url_button'	=> $phpgw->link('/calendar/editlocale.php','locale='.$locale),
+		'action_url_button'	=> $action_url_button,
 		'action_text_button'	=> lang('Cancel'),
 		'action_confirm_button'	=> '',
 		'action_extra_field'	=> ''
