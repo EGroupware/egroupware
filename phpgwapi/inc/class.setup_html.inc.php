@@ -31,11 +31,11 @@
 			@reset($domains);
 			while($domains && list($k,$v) = @each($domains))
 			{
-				if(isset($deletedomain[$v]))
+				if(isset($deletedomain[$k]))
 				{
 					continue;
 				}
-				$dom = get_var('setting_'.$v,Array('POST'));
+				$dom = get_var('setting_'.$k,Array('POST'));
 				$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
 				while(list($x,$y) = @each($dom))
 				{

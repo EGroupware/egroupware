@@ -38,11 +38,11 @@
 		while(list($k,$v) = @each($domains))
 		{
 			$deletedomain = get_var('deletedomain',Array('POST'));
-			if(isset($deletedomain[$v]))
+			if(isset($deletedomain[$k]))
 			{
 				continue;
 			}
-			$dom = get_var('setting_'.$v,Array('POST'));
+			$dom = get_var('setting_'.$k,Array('POST'));
 			if(!$dom['config_pass'])
 			{
 				$errors .= '<br>' . lang("You didn't enter a config password for domain x",$v);
