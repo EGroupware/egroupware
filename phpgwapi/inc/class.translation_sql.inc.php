@@ -26,21 +26,28 @@
 
 	class translation
 	{
-		function translate($key, $vars=false ) 
+		function translate($key, $vars=False) 
 		{
-			if (!$vars)
+			if(!$vars)
 			{
 				$vars = array();
 			}
 			$ret = $key;
-			// check also if $GLOBALS['lang'] is a array
-			// php-nuke and postnuke are using $GLOBALS['lang'] too
-			// as string
-			// this makes many problems
-			if (!isset($GLOBALS['lang']) || !$GLOBALS['lang'] || !is_array($GLOBALS['lang']))
+			/*
+			 Check also if $GLOBALS['lang'] is a array.
+			 php-nuke and postnuke are using $GLOBALS['lang'], too,
+			 as string.
+			 This makes many problems.
+			*/
+
+			if(isset($GLOBALS['lang'][strtolower($key)]) && $GLOBALS['lang'][strtolower($key)])
+			{
+				$ret = $GLOBALS['lang'][strtolower($key)];
+			}
+			elseif(!isset($GLOBALS['lang']) || !$GLOBALS['lang'] || !is_array($GLOBALS['lang']))
 			{
 				$GLOBALS['lang'] = array();
-				if (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
+				if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 				{
 					$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
@@ -49,37 +56,32 @@
 				{
 					$userlang = 'en';
 				}
-				$sql = "select message_id,content from lang where lang like '".$userlang."' ".
-					"and (app_name like '".$GLOBALS['phpgw_info']['flags']['currentapp']."' or app_name like 'common' or app_name like 'all')";
+				$sql = "SELECT message_id,content FROM lang WHERE lang LIKE '" . $userlang
+					. "' AND (app_name LIKE '" . $GLOBALS['phpgw_info']['flags']['currentapp']
+					. "' OR app_name LIKE 'common' OR app_name LIKE 'all')";
 
 				if (strcasecmp ($GLOBALS['phpgw_info']['flags']['currentapp'], 'common')>0)
 				{
-					$sql .= ' order by app_name asc';
+					$sql .= ' ORDER BY app_name ASC';
 				}
 				else
 				{
-					$sql .= ' order by app_name desc';
+					$sql .= ' ORDER BY app_name DESC';
 				}
 
 				$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
 				$GLOBALS['phpgw']->db->next_record();
 				$count = $GLOBALS['phpgw']->db->num_rows();
-				for ($idx = 0; $idx < $count; ++$idx)
+				for($idx = 0; $idx < $count; ++$idx)
 				{
-					$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
+					$GLOBALS['lang'][strtolower($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
 					$GLOBALS['phpgw']->db->next_record();
 				}
+				$ret = $GLOBALS['lang'][strtolower($key)] ? $GLOBALS['lang'][strtolower($key)] : $key . '*';
 			}
-			if (isset($GLOBALS['lang'][strtolower ($key)]) && $GLOBALS['lang'][strtolower ($key)])
-			{
-				$ret = $GLOBALS['lang'][strtolower ($key)];
-			}
-			else
-			{
-				$ret = $key . '*';
-			}
+
 			$ndx = 1;
-			while( list($key,$val) = each( $vars ) )
+			while(list($key,$val) = each($vars))
 			{
 				$ret = preg_replace( "/%$ndx/", $val, $ret );
 				++$ndx;
@@ -89,15 +91,17 @@
 
 		function add_app($app) 
 		{
-			// post-nuke and php-nuke are using $GLOBALS['lang'] too
-			// but not as array!
-			// this produces very strange results
-			if (!is_array($GLOBALS['lang']))
+			/*
+			 post-nuke and php-nuke are using $GLOBALS['lang'], too.
+			 But not as array!
+			 This produces very strange results.
+			*/
+			if(!is_array($GLOBALS['lang']))
 			{
 				$GLOBALS['lang'] = array();
 			}
 			
-			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+			if($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 			{
 				$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			}
@@ -105,11 +109,11 @@
 			{
 				$userlang = 'en';
 			}
-			$sql = "select message_id,content from lang where lang like '".$userlang."' and app_name like '".$app."'";
+			$sql = "SELECT message_id,content FROM lang WHERE lang LIKE '".$userlang."' AND app_name LIKE '".$app."'";
 			$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->next_record();
 			$count = $GLOBALS['phpgw']->db->num_rows();
-			for ($idx = 0; $idx < $count; ++$idx)
+			for($idx = 0; $idx < $count; ++$idx)
 			{
 				$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
 				$GLOBALS['phpgw']->db->next_record();
