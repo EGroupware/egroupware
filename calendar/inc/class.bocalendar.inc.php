@@ -1849,8 +1849,8 @@
 			for($k=0;$k<count($this->cached_events[$fulldate]);$k++)
 			{
 				$event = $this->cached_events[$fulldate][$k];
-				$eventstart = $this->datetime->localdates($event->datetime);
-				$eventend = $this->datetime->localdates($event->edatetime);
+				$eventstart = $this->datetime->localdates($this->maketime($event['start']) - $this->datetime->tz_offset);
+				$eventend = $this->datetime->localdates($this->maketime($event['end']) - $this->datetime->tz_offset);
 				$start = ($eventstart['hour'] * 10000) + ($eventstart['minute'] * 100);
 				$starttemp = $this->splittime("$start",False);
 				$subminute = 0;

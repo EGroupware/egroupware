@@ -440,23 +440,23 @@
 			}
 
 			$var = Array(
-				'printer_friendly'		=>	$printer,
-				'bg_text'					=> $this->theme['bg_text'],
-				'small_calendar_prev'	=>	$minical_prev,
-				'prev_week_link'			=>	$prev_week_link,
-				'small_calendar_this'	=>	$minical_this,
-				'week_identifier'			=>	$this->bo->get_week_label(),
-				'next_week_link'			=>	$next_week_link,
-				'username'					=>	$GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner),
-				'small_calendar_next'	=>	$minical_next,
-				'week_display'				=>	$this->display_weekly(
+				'printer_friendly'	=> $printer,
+				'bg_text'		=> $this->theme['bg_text'],
+				'small_calendar_prev'	=> $minical_prev,
+				'prev_week_link'	=> $prev_week_link,
+				'small_calendar_this'	=> $minical_this,
+				'week_identifier'	=> $this->bo->get_week_label(),
+				'next_week_link'	=> $next_week_link,
+				'username'		=> $GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner),
+				'small_calendar_next'	=> $minical_next,
+				'week_display'		=> $this->display_weekly(
 					Array(
 						'date'		=> sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day),
 						'showyear'	=> true,
-						'owners'		=> $this->bo->owner
+						'owners'	=> $this->bo->owner
 					)
 				),
-				'print'						=>	$print
+				'print'			=> $print
 			);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -1599,7 +1599,7 @@
 			switch($GLOBALS['HTTP_POST_VARS']['matrixtype'])
 			{
 				case 'free/busy':
-					$freetime = $this->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
+					$freetime = $this->datetime->gmtdate(mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year));
 					echo $this->timematrix(
 						Array(
 							'date'		=> $freetime,
@@ -2316,11 +2316,11 @@
 			$p->set_unknowns('keep');
 		
 			$p->set_file(
-			   Array (
-				'month_header'	=> 'month_header.tpl',
-   				'month_day'	=> 'month_day.tpl'
-	   		)
-	   	);
+				Array (
+					'month_header'	=> 'month_header.tpl',
+   					'month_day'	=> 'month_day.tpl'
+	   			)
+		   	);
 			$p->set_block('month_header','monthly_header','monthly_header');
 			$p->set_block('month_header','month_column','month_column');
 			$p->set_block('month_day','month_daily','month_daily');
@@ -2430,7 +2430,7 @@
 		{
 			if($this->debug)
 			{
-				echo '<!-- datetime:gmtdate = '.$this->datetime->gmtdate.' -->'."\n";
+				echo '<!-- datetime:gmtdate = '.$this->datetime->cv_gmtdate.' -->'."\n";
 			}
 
 			$this->bo->store_to_cache(
@@ -2843,7 +2843,7 @@
 			$templates = Array(
 				'day_cal'	=> 'day_cal.tpl'
 			);
-   	   $p->set_file($templates);
+			$p->set_file($templates);
 			$p->set_block('day_cal','day','day');
 			$p->set_block('day_cal','day_row','day_row');
 			$p->set_block('day_cal','day_event_on','day_event_on');
@@ -2879,7 +2879,7 @@
 				for($j=0;$j<(60 / intval($this->bo->prefs['calendar']['interval']));$j++)
 				{
 					$rowspan_arr[$i][$j] = 0;
-     				$time[$ind][$j] = '';
+ 					$time[$ind][$j] = '';
 				}
 			}
 
@@ -2893,9 +2893,9 @@
 				echo '<!-- Date to Eval : '.$date_to_eval.' -->'."\n";
 			}
 			if($daily[$date_to_eval]['appts'])
-      	{
-      		$starttime = 0;
-      		$endtime = 0;
+ 			{
+				$starttime = 0;
+				$endtime = 0;
 				$events = $this->bo->cached_events[$date_to_eval];
 				$c_events = count($events);
 				if($this->debug)
@@ -3157,11 +3157,11 @@
 				$GLOBALS['phpgw']->preferences->add('calendar','interval',15);
 				$GLOBALS['phpgw']->preferences->save_repository();
 			}
-//			$increment = $this->bo->prefs['calendar']['interval'];
-			$increment = 15;
+			$increment = $this->bo->prefs['calendar']['interval'];
+//			$increment = 15;
 			$interval = (int)(60 / $increment);
 
-			$pix = $GLOBALS['phpgw']->common->image('calendar','pix.gif');
+			$pix = $GLOBALS['phpgw']->common->image('calendar','pix');
 
 			$str = '<center>'.lang($GLOBALS['phpgw']->common->show_date($date['raw'],'l'))
 				. ', '.lang($GLOBALS['phpgw']->common->show_date($date['raw'],'F'))
