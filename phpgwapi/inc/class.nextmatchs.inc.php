@@ -22,10 +22,20 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-
+		/*!
+		@class nextmatchs
+		@abstract
+		*/
 	class nextmatchs
 	{
-
+		/*!
+		@function set_icon
+		@abstract ?
+		@param $tpl ? 
+		@param $align ?
+		@param $img_src ?
+		@param $label ?
+		*/
 		function set_icon(&$tpl,$align,$img_src,$label)
 		{
 			$tpl->set_var('align',$align);
@@ -33,7 +43,15 @@
 			$tpl->set_var('label',lang($label));
 			$tpl->parse('out','link',True);
 		}
-
+		/*!
+		@function set_link
+		@abstract ?
+		@param $tpl ?
+		@param $img_src ?
+		@param $label ?
+		@param $link ?
+		@param $extravars ?
+		*/
 		function set_link(&$tpl,$align,$img_src,$label,$link,$extravars)
 		{
 			global $phpgw;
@@ -49,6 +67,19 @@
 			$tpl->parse('out','link',True);		
 		}
 
+		/*!
+		@function show_tpl
+		@abstract ?
+		@param $sn ?
+		@param $start ?
+		@param $total ?
+		@param $extra ?
+		@param $twidth ?
+		@param $bgtheme ?
+		@param $search_obj ?
+		@param $filter_obj ?
+		@param $showsearch ?
+		*/
 		function show_tpl($sn,$start,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1)
 		{
 			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
@@ -79,7 +110,14 @@
 
 			return $tpl->fp('out','nextmatchs');
 		} 
-  
+		/*!
+		@function left
+		@abstract ?
+		@param $scriptname ?
+		@param $start ?
+		@param $total ?
+		@param $extradate ?
+		*/  
 		function left($scriptname,$start,$total,$extradata = '')
 		{
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
@@ -123,7 +161,15 @@
 
 			return $tpl->fp('out_','out');
 		} /* left() */
-
+		
+		/*!
+		@function right
+		@abstract ?
+		@param $scriptname ?
+		@param $start ?
+		@param $total ?
+		@param $extradate ?
+		*/
 		function right($scriptname,$start,$total,$extradata = '')
 		{
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
@@ -157,7 +203,12 @@
 
 			return $tpl->fp('out_','out');
 		} /* right() */
-
+		
+		/*!
+		@function search
+		@abstract ?
+		@param $search_obj default 0
+		*/
 		function search($search_obj=0)
 		{
 			global $query;
@@ -172,6 +223,13 @@
 			return $tpl->fp('out','search');
 		} /* search() */
 
+		/*!
+		@function filterobj
+		@abstract ?
+		@param $filtertable
+		@param $indxfieldname ?
+		@param $strfieldname ?
+		*/
 		function filterobj($filtertable, $idxfieldname, $strfieldname)
 		{
 			global $phpgw;
@@ -189,7 +247,12 @@
       
 			return $filter_obj;
 		} /* filterobj() */
-  
+
+		/*!
+		@function searchby
+		@abstract ?
+		@param $search_obj ?
+		*/  
 		function searchby($search_obj)
 		{
 			global $qfield, $phpgw, $phpgw_info;
@@ -219,7 +282,12 @@
 			}
 			return $str;
 		} /* searchby() */
-  
+
+		/*!
+		@function filter
+		@abstract ?
+		@param $filter_obj
+		*/  
 		function filter($filter_obj)
 		{
 			global $filter, $phpgw, $phpgw_info;
@@ -275,6 +343,11 @@
 			return $tpl->fp('out','filter');
 		} /* filter() */
 
+		/*!
+		@function alternate_row_color
+		@abstract alternate row colour
+		@param $currentcolor default ''
+		*/
 		function alternate_row_color($currentcolor = '')
 		{
 			global $phpgw_info;
@@ -299,11 +372,26 @@
 
 		// If you are using the common bgcolor="{tr_color}"
 		// This function is a little cleanier approch
+		/*!
+		@function template_alternate_row_color
+		@abstract ?
+		@param $tpl ?
+		*/
 		function template_alternate_row_color(&$tpl)
 		{
 			$tpl->set_var('tr_color',$this->alternate_row_color());
 		}
-
+		
+		/*!
+		@function show_sort_order
+		@abstract ?
+		@param $sort ?
+		@param $var ?
+		@param $order ?
+		@param $program ?
+		@param $text ?
+		@param $extra default ''
+		*/
 		function show_sort_order($sort,$var,$order,$program,$text,$extra='')
 		{
 			global $phpgw, $filter, $qfield, $start, $query;
