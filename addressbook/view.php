@@ -16,94 +16,59 @@
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
-  $phpgw_info["flags"]["currentapp"] = "addressbook";
-  $phpgw_info["flags"]["enable_addressbook_class"] = True;
+  $phpgw_info["flags"] = array("currentapp" => "addressbook",
+			       "enable_contacts_class" => True,
+                               "enable_nextmatchs_class" => True);
+
   include("../header.inc.php");
 
   $t = new Template($phpgw_info["server"]["app_tpl"]);
   $t->set_file(array( "view"	=> "view.tpl"));
 
-  function checkfor_specialformat($field,$data)
-  {
-     global $phpgw_info, $phpgw;
-
-     if ($field == "email") {
-        if ($phpgw_info["user"]["apps"]["email"]) {
-           $s = '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
-                                           "to=" . urlencode($data)) . '" target="_new">' . $data . '</a>';
-        } else {
-           $s = '<a href="mailto:' . $data . '">' . $data . '</a>';
-        }
-     } else if ($field == "URL") {
-        if (! ereg("^http://",$data)) {
-           $data = "http://" . $data;
-        }
-        $s = '<a href="' . $data . '" target="_new">' . $data . '</a>';
-     } else if ($field == "birthday") {
-        $date = explode("/",$data);
-        $s = $phpgw->common->dateformatorder($date[2],$date[1],$date[0],True);
-     } else {
-        $s = $data . "&nbsp;";
-     }     
-     return $s;  
-  }
+  $this = CreateObject("phpgwapi.contacts");
 
   if (! $ab_id) {
     Header("Location: " . $phpgw->link("index.php"));
   }
 
-  if ($filter != "private") {
-     $filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
-  }
-
-  if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
-     $phpgw->db->query("SELECT * FROM addressbook as a, customers as c WHERE a.ab_company_id = c.company_id "
-		             . "AND ab_id=$ab_id AND (ab_owner='"
-	                 . $phpgw_info["user"]["account_id"] . "' $filtermethod)");
-  } else {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE ab_id=$ab_id AND (ab_owner='"
-                     . $phpgw_info["user"]["account_id"] . "' $filtermethod)");
-  }
-  $phpgw->db->next_record();
-
-  $view_header = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
-
-  $i = 0;
+  // Need to replace abc with $this->stock_addressbook_fields
   while ($column = each($abc)) {
-     if ($phpgw->db->f("ab_" . $column[0])) {
-        $columns_to_display[$i]["field_name"]  = $column[1];
-        $columns_to_display[$i]["field_value"] = $phpgw->db->f("ab_" . $column[0]);
-        $i++;
-     }
-  }
-  
-  if ($phpgw->db->f("ab_notes")) {
-     $columns_to_display[$i]["field_name"]  = "Notes";
-     $columns_to_display[$i]["field_value"] = $phpgw->db->f("ab_notes");
+    if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
+      $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
+      $columns_to_display[$column[0]] = True;
+      $colname[$column[0]] = $column[1];
+    }
   }
 
+  $fields = $this->read_single_entry($ab_id,$this->stock_addressbook_fields);
+
+  $access = $fields[0]["access"];
+  $owner  = $fields[0]["owner"];
+ 
+  $view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
   $view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
-  for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
-      if (! $columns_to_display[$i]["field_name"]) break;
-
-      $columns_html .= "<tr><td><b>" . lang($columns_to_display[$i]["field_name"]) . "</b>:</td>"
-                     . "<td>" . checkfor_specialformat($columns_to_display[$i]["field_name"],$columns_to_display[$i]["field_value"])
-                     . "</td>";
-
-      $i++;
-
-      if (! $columns_to_display[$i]["field_name"]) break;
-
-      $columns_html .= "<tr><td><b>" . lang($columns_to_display[$i]["field_name"]) . "</b>:</td>"
-                     . "<td>" . checkfor_specialformat($columns_to_display[$i]["field_name"],$columns_to_display[$i]["field_value"])
-                     . "</td>";
-
-      $i++;
-	  $columns_html .= "</td></tr>";
+ 
+  while ($column = each($columns_to_display)) { // each entry column
+    $columns_html .= "<tr><td><b>" . lang($colname[$column[0]]) . "</b>:</td>";
+    $ref=$data="";
+    $coldata = $fields[0][$column[0]];
+    // Some fields require special formatting.       
+    if ($column[0] == "url") {
+      $ref='<a href="'.$coldata.'" target="_new">';
+      $data=$coldata.'</a>';
+    } elseif ($column[0] == "email") {
+      if ($phpgw_info["user"]["apps"]["email"]) {
+        $ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
+            . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+      } else {
+        $ref='<a href="mailto:'.$coldata.'">';
+      }
+      $data=$coldata."</a>";
+    } else { // But these do not
+      $ref=""; $data=$coldata;
+    }
+    $columns_html .= "<td>" . $ref . $data . "</td>";
   }
-  $access = $phpgw->db->f("ab_access");
-  $owner  = $phpgw->db->f("ab_owner");
-  $ab_id  = $phpgw->db->f("ab_id");
 
   $columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
   . '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
@@ -116,9 +81,9 @@
     $access_link .= $access;
   }
 
-  $editlink .= $phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")."&start=".$start."&sort=".$sort."&order=".$order);
+  $editlink  = $phpgw->common->check_owner($owner,"edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
   $vcardlink = '<form action="'.$phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-  $donelink = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+  $donelink  = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 
   $t->set_var("ab_id",$ab_id);
   $t->set_var("sort",$sort);

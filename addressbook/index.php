@@ -12,14 +12,12 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_addressbook_class" => True,
+  $phpgw_info["flags"] = array("currentapp" => "addressbook",
+			       "enable_contacts_class" => True,
                                "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   //echo "<br>Time track = " . $phpgw_info["apps"]["timetrack"]["enabled"];
-
-  if (! $start)
-     $start = 0;
 
   $t = new Template($phpgw_info["server"]["app_tpl"]);
   $t->set_file(array( "addressbook_header"	=> "header.tpl",
@@ -27,24 +25,53 @@
 		      "row"			=> "row.tpl",
 		      "addressbook_footer"	=> "footer.tpl" ));
 
-  $this = CreateObject("addressbook.addressbook");
-  $entries = $this->get_entries($query,$filter,$sort,$order,$start);
+  $this = CreateObject("phpgwapi.contacts");
 
-  $columns_to_display=$this->columns_to_display;
-  if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] ) {
-    $limit = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
-  } else { // this must be broken, but it works
-    $limit = 15;
+  while ($column = each($this->stock_addressbook_fields)) {
+    if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
+      $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
+      $cols .= "  <td height=\"21\">\n";
+      $cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
+      $cols .= $phpgw->nextmatchs->show_sort_order($sort,"ab_" . $column[0],$order,"index.php",lang($column[1]));
+      $cols .= "</font>\n  </td>";
+      $cols .= "\n";
+             
+      // To be used when displaying the rows
+      $columns_to_display[$column[0]] = True;
+    }
   }
 
+  if (! $start)
+     $start = 0;
+
+  // insert acl stuff here
+
+  $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+
+  $entries = $this->read($start,$offset,$access,$columns_to_display,$query,$filter,$sort,$order);
+
+  $search_filter = $phpgw->nextmatchs->show_tpl("index.php",
+                   $start, $this->total_records,
+                   "&order=$order&filter=$filter&sort=$sort&query=$query",
+                   "75%", $phpgw_info["theme"]["th_bg"]);
+
+  if ($this->total_records > $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
+    $lang_showing=lang("showing x - x of x",($start + 1),
+                  ($start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]),
+                  $this->total_records);
+  } else {
+    $lang_showing=lang("showing x",$this->total_records);
+  }
+
+  // set basic vars and parse the header
   $t->set_var(font,$phpgw_info["theme"]["font"]);
   $t->set_var("lang_view",lang("View"));
   $t->set_var("lang_vcard",lang("VCard"));
   $t->set_var("lang_edit",lang("Edit"));
 
-  $t->set_var(searchreturn,$this->searchreturn);
-  $t->set_var(lang_showing,$this->lang_showing);
-  $t->set_var(search_filter,$this->search_filter);
+  $t->set_var(searchreturn,$searchreturn);
+  $t->set_var(lang_showing,$lang_showing);
+  $t->set_var(search_filter,$search_filter);
   $t->set_var("lang_addressbook",lang("Address book"));
   $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
   $t->set_var("th_font",$phpgw_info["theme"]["font"]);
@@ -62,19 +89,21 @@
   $t->set_var("actionurl",$phpgw->link("add.php","sort=$sort&order=$order&filter=$filter&start=$start"));
   $t->set_var("start",$start);
   $t->set_var("filter",$filter);
-  $t->set_var("cols",$this->cols);
+  $t->set_var("cols",$cols);
 
   $t->pparse("out","addressbook_header");
 
-  for ($i=0;$i<$limit;$i++) { // each entry
+  // Show the entries
+  for ($i=0;$i<count($entries);$i++) { // each entry
     $t->set_var(columns,"");
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var(row_tr_color,$tr_color);
+    $myid    = $entries[$i]["id"];
+    $myowner = $entries[$i]["owner"];
+
     while ($column = each($columns_to_display)) { // each entry column
       $ref=$data="";
-      $coldata = $this->coldata($column[0],$i);
-      $myid = $entries->ab_id[$i];
-      $myowner = $entries->owner[$i];
+      $coldata = $entries[$i][$column[0]];
       // Some fields require special formatting.       
       if ($column[0] == "url") {
         $ref='<a href="'.$coldata.'" target="_new">';
@@ -96,8 +125,6 @@
       $t->parse("columns","column",True);
     }
     
-    reset($columns_to_display); // If we don't reset it, our inside while won't loop
-
     $t->set_var(row_view_link,$phpgw->link("view.php","ab_id=$myid&start=$start&order=$order&filter="
       . "$filter&query=$query&sort=$sort"));
     $t->set_var(row_vcard_link,$phpgw->link("vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
@@ -107,9 +134,10 @@
 
     $t->parse("rows","row",True);
     $t->pparse("out","row");
+
+    reset($columns_to_display); // If we don't reset it, our inside while won't loop
   }
 
   $t->pparse("out","addressbook_footer");
-
   $phpgw->common->phpgw_footer();
 ?>

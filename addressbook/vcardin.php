@@ -22,7 +22,7 @@ if ($action == "Load Vcard"){
   echo '<body bgcolor="' . $phpgw_info["theme"]["bg_color"] . '">';
 }
   
-  // Some on the methods where borrowed from
+  // Some of the methods where borrowed from
   // Squirrelmail <Luke Ehresman> http://www.squirrelmail.org
 
   $sep = $phpgw->common->filesystem_separator();

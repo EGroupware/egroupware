@@ -23,7 +23,7 @@
   $t = new Template($phpgw_info["server"]["app_tpl"]);
   $t->set_file(array( "add"	=> "add.tpl"));
 
-  $this = CreateObject("addressbook.addressbook");
+  $this = CreateObject("phpgwapi.contacts");
 
   if ($AddVcard){
        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] .
@@ -48,30 +48,28 @@
         $url = "";
      }
 
-     $this->id         = $ab_id;
-     $this->company    = $company;
-     //$this->company_id = $company_id;
-     $this->firstname  = $firstname;
-     $this->lastname   = $lastname;
-     $this->email      = $email;
-     $this->title      = $title;
-     $this->wphone     = $wphone;
-     $this->hphone     = $hphone;
-     $this->fax        = $fax;
-     $this->pager      = $pager;
-     $this->mphone     = $mphone;
-     $this->ophone     = $ophone;
-     $this->street     = $street;
-     $this->address2   = $address2;
-     $this->city       = $city;
-     $this->state      = $state;
-     $this->zip        = $zip;
-     $this->bday       = $bday;
-     $this->url        = $url;
-     $this->notes      = $notes;
-     $this->access     = $access;
+     $fields["company"]    = $company;
+     $fields["company_id"] = $company_id;
+     $fields["firstname"]  = $firstname;
+     $fields["lastname"]   = $lastname;
+     $fields["email"]      = $email;
+     $fields["title"]      = $title;
+     $fields["wphone"]     = $wphone;
+     $fields["hphone"]     = $hphone;
+     $fields["fax"]        = $fax;
+     $fields["pager"]      = $pager;
+     $fields["mphone"]     = $mphone;
+     $fields["ophone"]     = $ophone;
+     $fields["street"]     = $street;
+     $fields["address2"]   = $address2;
+     $fields["city"]       = $city;
+     $fields["state"]      = $state;
+     $fields["zip"]        = $zip;
+     $fields["bday"]       = $bday;
+     $fields["url"]        = $url;
+     $fields["notes"]      = $notes;
 
-     $this->add_entry();
+     $this->add($phpgw_info["user"]["account_id"],$access,$fields);
 
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/",
             "cd=14"));

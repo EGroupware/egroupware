@@ -34,35 +34,34 @@
                'url'       => 'URL'
               );
 
-
   function form($format,$action,$title,$fields) { // used for add/edit
     global $phpgw, $phpgw_info;
      
     $t = new Template($phpgw_info["server"]["app_tpl"]);
     $t->set_file(array( "form"	=> "form.tpl"));
 
-    $email        = $fields->email;
-    $firstname    = $fields->firstname;
-    $lastname     = $fields->lastname;
-    $title        = $fields->title;
-    $hphone       = $fields->hphone;
-    $wphone       = $fields->wphone;
-    $fax          = $fields->fax;
-    $pager        = $fields->pager;
-    $mphone       = $fields->mphone;
-    $ophone       = $fields->ophone;
-    $street       = $fields->street;
-    $address2     = $fields->address2;
-    $city         = $fields->city;
-    $state        = $fields->state;
-    $zip          = $fields->zip;
-    $bday         = $fields->bday;
-    $notes        = $fields->notes;
-    $access       = $fields->access;
-    $ab_company   = $fields->company;
-    $company_id   = $fields->company_id;
-    $company_name = $fields->company;
-    $url          = $fields->url;
+    $email        = $fields["email"];
+    $firstname    = $fields["firstname"];
+    $lastname     = $fields["lastname"];
+    $title        = $fields["title"];
+    $hphone       = $fields["hphone"];
+    $wphone       = $fields["wphone"];
+    $fax          = $fields["fax"];
+    $pager        = $fields["pager"];
+    $mphone       = $fields["mphone"];
+    $ophone       = $fields["ophone"];
+    $street       = $fields["street"];
+    $address2     = $fields["address2"];
+    $city         = $fields["city"];
+    $state        = $fields["state"];
+    $zip          = $fields["zip"];
+    $bday         = $fields["bday"];
+    $notes        = $fields["notes"];
+    $access       = $fields["access"];
+    $company      = $fields["company"];
+    $company_id   = $fields["company_id"];
+    $company_name = $fields["company"];
+    $url          = $fields["url"];
 
     if ($format != "view") {
       $email 	 = "<input name=\"email\" value=\"$email\">";
@@ -81,9 +80,10 @@
       $state	 = "<input name=\"state\" value=\"$state\">";
       $zip	 = "<input name=\"zip\" value=\"$zip\">";
 
+/*
       if($phpgw_info["apps"]["timetrack"]["enabled"]) {
         $company  = '<select name="company">';
-	if (!$ab_company) {
+	if (!$company) {
           $company .= '<option value="0" SELECTED>'. lang("none").'</option>';
         } else {
           $company .= '<option value="0">'. lang("none").'</option>';
@@ -98,9 +98,9 @@
           $company .= ">" . $phpgw->db->f("company_name") . "</option>";
         }
         $company .=  "</select>";
-      } else {
-        $company = "<input name=\"company\" value=\"$ab_company\">";
-      }
+      } else { */
+        $company = "<input name=\"company\" value=\"$company\">";
+/*    } */
 
       if (strlen($bday) > 2) {
         list( $month, $day, $year ) = split( '/', $bday );
@@ -149,11 +149,13 @@
 		. $notes . "</TEXTAREA></form>";
       if ($bday == "//")
         $bday = "";
+
+/*
       if($phpgw_info["apps"]["timetrack"]["enabled"]) {
         $company = $company_name;
-      } else {
-        $company = $ab_company;
-      }
+      } else { */
+        $company = $company;
+/*    } */
     }
 
   if ($action) {
@@ -214,7 +216,7 @@
 	    . ':</font></td><td colspan="3"><select name="n_groups[]" '
 	    . 'multiple size="5">';
 
-        $user_groups = $phpgw->accounts->read_group_names($fields["ab_owner"]);
+        $user_groups = $phpgw->accounts->read_group_names($fields["owner"]);
         for ($i=0;$i<count($user_groups);$i++) {
             $access_link .= '<option value="'.$user_groups[$i][0].'"';
             if (ereg(",".$user_groups[$i][0].",",$access))

@@ -29,11 +29,11 @@
      $phpgw->common->phpgw_exit();
   }
 
-  $this = CreateObject("addressbook.addressbook");
+  $this = CreateObject("phpgwapi.contacts");
 
   if (! $submit) {
-    $fields = $this->get_entry($ab_id);
-     form("","edit.php","Edit",$fields);
+    $fields = $this->read_single_entry($ab_id,$this->stock_addressbook_fields);
+    form("","edit.php","Edit",$fields[0]);
   } else {
     if ($url == "http://") {
       $url = "";
@@ -47,30 +47,28 @@
       $access = $phpgw->accounts->array_to_string($access,$n_groups);
     }
 
-    $this->id         = $ab_id;
-    $this->company    = $company;
-    $this->company_id = $company_id;
-    $this->firstname  = $firstname;
-    $this->lastname   = $lastname;
-    $this->email      = $email;
-    $this->title      = $title;
-    $this->wphone     = $wphone;
-    $this->hphone     = $hphone;
-    $this->fax        = $fax;
-    $this->pager      = $pager;
-    $this->mphone     = $mphone;
-    $this->ophone     = $ophone;
-    $this->street     = $street;
-    $this->address2   = $address2;
-    $this->city       = $city;
-    $this->state      = $state;
-    $this->zip        = $zip;
-    $this->bday       = $bday;
-    $this->url        = $url;
-    $this->notes      = $notes;
-    $this->access     = $access;
+    $fields["company"]    = $company;
+    $fields["company_id"] = $company_id;
+    $fields["firstname"]  = $firstname;
+    $fields["lastname"]   = $lastname;
+    $fields["email"]      = $email;
+    $fields["title"]      = $title;
+    $fields["wphone"]     = $wphone;
+    $fields["hphone"]     = $hphone;
+    $fields["fax"]        = $fax;
+    $fields["pager"]      = $pager;
+    $fields["mphone"]     = $mphone;
+    $fields["ophone"]     = $ophone;
+    $fields["street"]     = $street;
+    $fields["address2"]   = $address2;
+    $fields["city"]       = $city;
+    $fields["state"]      = $state;
+    $fields["zip"]        = $zip;
+    $fields["bday"]       = $bday;
+    $fields["url"]        = $url;
+    $fields["notes"]      = $notes;
 
-    $this->update_entry();
+    $this->update($ab_id,$phpgw_info["user"]["account_id"],$access,$fields);
     
     Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter="
       . "$filter&start=$start"));
