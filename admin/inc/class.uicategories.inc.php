@@ -282,23 +282,20 @@
 				else
 				{
 					$this->bo->save_cat($values);
-					$GLOBALS['phpgw']->template->set_var('message',lang('Category x has been added !', $cat_name));
+					$GLOBALS['phpgw']->template->set_var('message',lang('Category x has been added !', $values['name']));
 				}
 			}
 
 			$link_data['menuaction'] = 'admin.uicategories.add';
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array
-			(
-				'select'      => 'select',
-				'all'         => 'all',
-				'cat_parent'  => $cat_parent,
-				'global_cats' => $global_cats
-			)));
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array('select'		=> 'select',
+																								'all'			=> 'all',
+																								'parent'		=> $values['parent'],
+																								'global_cats'	=> $global_cats)));
 
-			$GLOBALS['phpgw']->template->set_var('cat_name',$cat_name);
-			$GLOBALS['phpgw']->template->set_var('cat_description',$cat_description);
+			$GLOBALS['phpgw']->template->set_var('cat_name',$values['name']);
+			$GLOBALS['phpgw']->template->set_var('cat_description',$values['descr']);
 
 			$GLOBALS['phpgw']->template->parse('buttons','add');
 			$GLOBALS['phpgw']->template->fp('phpgw_body','form');

@@ -328,12 +328,11 @@
 				$type = 'mains';
 			}
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cat_parent,$global_cats));
-			$GLOBALS['phpgw']->template->set_var('cat_name',$cat_name);
-			$GLOBALS['phpgw']->template->set_var('cat_description',$cat_description);
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$values['parent'],$global_cats));
+			$GLOBALS['phpgw']->template->set_var('cat_name',$values['name']);
+			$GLOBALS['phpgw']->template->set_var('cat_description',$values['descr']);
 
-			$GLOBALS['phpgw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
-														. ($cat_access == True ?' checked':'') . '>');
+			$GLOBALS['phpgw']->template->set_var('access',$values['access'] == 'private'?' checked':'');
 
 			if ($extra)
 			{
@@ -442,7 +441,7 @@
 
 			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cats['parent'],$global_cats));
 
-			$GLOBALS['phpgw']->template->set_var('access',$cats['access'] == 'private' ?' checked':'');
+			$GLOBALS['phpgw']->template->set_var('access',$cats['access'] == 'private'?' checked':'');
 
 			if ($extra)
 			{
