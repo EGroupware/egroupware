@@ -233,7 +233,7 @@
 
 			$this->printer_friendly = ((int)$friendly == 1?True:False);
 
-			if(isset($_POST['filter']) && ($_POST['filter'] == ' all ' || $_POST['filter'] == ' privat '))
+			if(isset($_POST['filter']) && ($_POST['filter'] == ' all ' || $_POST['filter'] == ' private '))
 			{ 
 				$this->filter = $_POST['filter']; 
 			}
