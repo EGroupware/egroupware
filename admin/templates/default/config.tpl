@@ -15,7 +15,7 @@
    </tr>
 
    <tr bgcolor="{row_off}">
-    <td>Select which type of authentication you are using:</td>
+    <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
       <option value="sql"{selected_auth_type_sql}>SQL</option>

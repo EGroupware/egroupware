@@ -1,10 +1,18 @@
 account active	admin	ja	¥¢¥«¥¦¥ó¥È¥¢¥¯¥Æ¥£¥Ö
 account permissions	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
+acl manager	admin	ja	ÍøÍÑµö²ÄÀßÄê
+acl rights	admin	ja	ÍøÍÑµö²ÄÀßÄê
 action	admin	ja	¥¢¥¯¥·¥ç¥ó
 add global category	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥êÄÉ²Ã
 add new account	admin	ja	¥¢¥«¥¦¥ó¥ÈÄÉ²Ã
 add new application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄÉ²Ã
+add peer server	admin	ja	ÂĞÅù¥µ¡¼¥ĞÄÉ²Ã
+add sub	admin	ja	¥µ¥ÖÄÉ²Ã
+admins	admin	ja	´ÉÍı¼Ô
+admin email	admin	ja	´ÉÍı¼Ô¥á¡¼¥ë¥¢¥É¥ì¥¹
+admin name	admin	ja	´ÉÍı¼ÔÌ¾
 all records and account information will be lost!	admin	ja	¤¹¤Ù¤Æ¤Î¥ì¥³¡¼¥É¤È¥¢¥«¥¦¥ó¥È¾ğÊó¤¬¼º¤ï¤ì¤Ş¤¹¡£
+all users	admin	ja	Á´¤Æ¤Î¥æ¡¼¥¶
 allow anonymous access to this app	admin	ja	Æ¿Ì¾¥æ¡¼¥¶¤Ø¤Îµö²Ä
 anonymous user	admin	ja	Æ¿Ì¾¥æ¡¼¥¶
 application name	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÌ¾
@@ -13,13 +21,27 @@ applications	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 are you sure you want to delete this account ?	admin	ja	¤³¤Î¥¢¥«¥¦¥ó¥È¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this application ?	admin	ja	¤³¤Î¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to delete this group ?	admin	ja	¤³¤Î¥°¥ë¡¼¥×¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
+are you sure you want to delete this server?	admin	ja	¤³¤Î¥µ¡¼¥Ğ¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
 are you sure you want to kill this session ?	admin	ja	¤³¤Î¥»¥Ã¥·¥ç¥ó¤òÀÚÃÇ¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
+back	admin	ja	Ìá¤ë
+bi-directional	admin	ja	ÁĞÊı¸ş
+bi-dir passthrough	admin	ja	ÁĞÊı¸ş¥Ñ¥¹¥¹¥ë¡¼
 change main screen message	admin	ja	¥á¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸ÊÑ¹¹
+check ip address of all sessions	admin	ja	Á´¤Æ¤Î¥»¥Ã¥·¥ç¥ó¤Ç IP ¥¢¥É¥ì¥¹¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
 city	admin	ja	»Ô¶èÄ®Â¼
 country selection	admin	ja	¹ñ¤ÎÁªÂò
 create group	admin	ja	¥°¥ë¡¼¥×ºîÀ®
 default category	admin	ja	´ûÄê¤Î¥«¥Æ¥´¥ê
 delete all records	admin	ja	ºï½ü¤¹¤ë
+deny all users access to grant other users access to their entries ?	admin	ja	Â¾¤Î¥æ¡¼¥¶¾ğÊó¤Ø¤Î¥¢¥¯¥»¥¹¤òÁ´¤Æ¤Î¥æ¡¼¥¶¤Ëµö²Ä¤·¤Ê¤¤
+deny access to user accounts	admin	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥È¤ÎÀ©¸Â
+deny access to groups	admin	ja	¥æ¡¼¥¶¥°¥ë¡¼¥×¤ÎÀ©¸Â
+deny access to peer servers	admin	ja	ÂĞÅù¥µ¡¼¥Ğ¤ÎÀ©¸Â
+deny access to applications	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ÎÀ©¸Â
+deny access to global categories	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥ê¤ÎÀ©¸Â
+deny access to mainscreen message	admin	ja	¥á¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸ÊÑ¹¹¤ÎÀ©¸Â
+deny access to current sessions	admin	ja	¥»¥Ã¥·¥ç¥ó¤ÎÀ©¸Â
+deny to site configuration	admin	ja	¥µ¥¤¥È´Ä¶­ÀßÄê¤ÎÀ©¸Â
 disabled	admin	ja	ÉÔ²Ä
 display	admin	ja	É½¼¨
 edit application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄûÀµ
@@ -27,11 +49,17 @@ edit global category	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥êÄûÀµ
 edit group	admin	ja	¥°¥ë¡¼¥×ÄûÀµ
 edit login screen message	admin	ja	¥í¥°¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸ÄûÀµ
 edit main screen message	admin	ja	¥á¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸ÄûÀµ
+edit peer server	admin	ja	ÂĞÅù¥µ¡¼¥ĞÄûÀµ
+edit table format	admin	ja	¥Æ¡¼¥Ö¥ë¥Õ¥©¡¼¥Ş¥Ã¥ÈÄûÀµ
 edit user account	admin	ja	¥¢¥«¥¦¥ó¥ÈÄûÀµ
 enabled	admin	ja	²ÄÇ½
 enabled - hidden from navbar	admin	ja	²ÄÇ½ - ¥Ê¥Ó¥²¡¼¥·¥ç¥óÈóÉ½¼¨
+enter the site username for peer servers	admin	ja	Æ±Åù¥µ¡¼¥Ğ¤Î¥æ¡¼¥¶Ì¾
+enter the site password for peer servers	admin	ja	Æ±Åù¥µ¡¼¥Ğ¤Î¥Ñ¥¹¥ï¡¼¥É
 enter the title for your site	admin	ja	¥¿¥¤¥È¥ëÌ¾
+email settings	admin	ja	ÅÅ»Ò¥á¡¼¥ëÀßÄê
 expires	admin	ja	Í­¸ú´ü¸Â
+force selectbox	admin	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
 forecast	admin	ja	Å·µ¤Í½Êó
 forecast zone	admin	ja	Å·µ¤Í½Êó
 fzone	admin	ja	fzone
@@ -41,16 +69,19 @@ hide php information	admin	ja	PHP¥¤¥ó¥Õ¥©¥á¡¼¥·¥ç¥ó¤òÊÄ¤¸¤ë
 home directory	admin	ja	home directory	
 id	admin	ja	ID
 idle	admin	ja	¥¢¥¤¥É¥ë
+inbound	admin	ja	Æâ¸ş¤­
 installed applications	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó°ìÍ÷
 interface	admin	ja	¥¤¥ó¥¿¥Õ¥§¡¼¥¹
 ip	admin	ja	IP
 kill	admin	ja	ÀÚÃÇ
+kill session	admin	ja	¥»¥Ã¥·¥ç¥óÀÚÃÇ
 language	admin	ja	¸À¸ì
 last login	admin	ja	ºÇ½ª¥í¥°¥¤¥ó
 last login from	admin	ja	ºÇ½ª¥í¥°¥¤¥óIP
 last time read	admin	ja	Last Time Read
 last x logins	admin	ja	²áµî %1 ¤Î¥í¥°¥¤¥ó
 list of current users	admin	ja	¥í¥°¥¤¥óÃæ¥æ¡¼¥¶°ìÍ÷
+login history	admin	ja	¥í¥°¥¤¥óÍúÎò
 login screen	admin	ja	¥í¥°¥¤¥ó²èÌÌ
 login shell	admin	ja	¥í¥°¥¤¥ó¥·¥§¥ë
 login time	admin	ja	¥í¥°¥¤¥ó»ş´Ö
@@ -59,32 +90,48 @@ main screen message	admin	ja	¥á¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸
 manager	admin	ja	´ÉÍı¼Ô
 message has been updated	admin	ja	¥á¥Ã¥»¡¼¥¸¤òÊÑ¹¹¤·¤Ş¤·¤¿¡£
 metar	admin	ja	M
+mode	admin	ja	¥â¡¼¥É
 never	admin	ja	Ì¤
 new group name	admin	ja	¿·¥°¥ë¡¼¥×Ì¾
 new password [ leave blank for no change ]	admin	ja	¿·¥Ñ¥¹¥ï¡¼¥É [ Leave blank for no change ]
 no matchs found	admin	ja	¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£
+note: ssl available only if php is compiled with curl support	admin	ja	È÷¹Í:PHP¤¬curl¤ò¥µ¥İ¡¼¥È¤¹¤ë¤è¤¦¥³¥ó¥Ñ¥¤¥ë¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤ËSSLÍøÍÑ²Ä
+outbound	admin	ja	³°¸ş¤­
+passthrough	admin	ja	¥Ñ¥¹¥¹¥ë¡¼
+peer servers	admin	ja	ÂĞÅù¥µ¡¼¥Ğ
 percent of users that logged out	admin	ja	¥æ¡¼¥¶¤Î¥í¥°¥¢¥¦¥ÈÎ¨
 permissions	admin	ja	¥Ñ¡¼¥ß¥Ã¥·¥ç¥ó
 permissions this group has	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 php information	admin	ja	PHP¥¤¥ó¥Õ¥©¥á¡¼¥·¥ç¥ó
 phpinfo	admin	ja	PHP¥¤¥ó¥Õ¥©¥á¡¼¥·¥ç¥ó
+please enter a name	admin	ja	Ì¾Á°¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤
+please select	admin	ja	ÁªÂò¤·¤Æ²¼¤µ¤¤
 re-enter password	admin	ja	¥Ñ¥¹¥ï¡¼¥ÉºÆÆşÎÏ
 region	admin	ja	ÃÏ°è
 regions	admin	ja	ÃÏ°è
 remove all users from this group	admin	ja	¤³¤Î¥°¥ë¡¼¥×¤ÎÁ´¤Æ¤Î¥æ¡¼¥¶¤òºï½ü¤·¤Ş¤¹¡£
 section	admin	ja	É½¼¨¾ì½ê
+security	admin	ja	¥»¥­¥å¥ê¥Æ¥£
 selectbox	admin	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
 select permissions this group will have	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 select users for inclusion	admin	ja	½êÂ°¤¹¤ë¥æ¡¼¥¶
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ja	¥Ê¥Ó¥²¡¼¥·¥ç¥ó¥Ğ¡¼¤Î°ÌÃÖ¡Ê¿ô¤¬¾®¤µ¤¤¤Èº¸¤ËÇÛÃÖ¡Ë
+server name	admin	ja	¥µ¡¼¥ĞÌ¾
+server password	admin	ja	¥µ¡¼¥Ğ¥Ñ¥¹¥ï¡¼¥É
+server type(mode)	admin	ja	¥µ¡¼¥Ğ¥¿¥¤¥×(¥â¡¼¥É)
+server url	admin	ja	¥µ¡¼¥ĞURL
+server username	admin	ja	¥µ¡¼¥Ğ¥æ¡¼¥¶Ì¾
 show 'powered by' logo on	admin	ja	powered by ¥í¥´É½¼¨°ÌÃÖ
 site	admin	ja	Site
 site configuration	admin	ja	¥µ¥¤¥È´Ä¶­ÀßÄê
+soap	admin	ja	SOAP
 sorry, that group name has already been taking.	admin	ja	¥°¥ë¡¼¥×Ì¾¤Ï´û¤ËÂ¸ºß¤·¤Ş¤¹¡£
 sorry, the follow users are still a member of the group x	admin	ja	%1 ¤¬¥°¥ë¡¼¥×¤Î¥á¥ó¥Ğ¡¼¤Ë¤Ê¤Ã¤Æ¤¤¤Ş¤¹¡£
+ssl	admin	ja	SSL
 station	admin	ja	°ÌÃÖ
 stations	admin	ja	°ÌÃÖ
 status	admin	ja	¾õÂÖ
+standard	admin	ja	É¸½à
 submit changes	admin	ja	ÊÑ¹¹
 table	admin	ja	¥Æ¡¼¥Ö¥ë
 template selection	admin	ja	¥Æ¥ó¥×¥ì¡¼¥ÈÁªÂò
@@ -92,19 +139,29 @@ text entry	admin	ja	¥Æ¥­¥¹¥ÈÆşÎÏ
 that loginid has already been taken	admin	ja	¥í¥°¥¤¥óID¤Ï´û¤ËÅĞÏ¿ºÑ¤ß¤Ç¤¹¡£
 the login and password can not be the same	admin	ja	¥í¥°¥¤¥óID¤È¥Ñ¥¹¥ï¡¼¥É¤¬Æ±¤¸¤Ç¤¹¡£
 they must be removed before you can continue	admin	ja	ºï½ü¤Ç¤­¤Ş¤»¤ó¡£
+that name has been used already	admin	ja	¤³¤ÎÌ¾Á°¤Ï´û¤Ë»È¤ï¤ì¤Æ¤¤¤Ş¤¹
 total records	admin	ja	¹ç·×
-use pure html compliant code (not fully working yet)	admin	ja	½ã¿è¤ÊHTML¤òÍøÍÑ¡Ê´°Á´¤ËÆ°ºî¤·¤Ş¤»¤ó¡Ë
-use cookies to pass sessionid	admin	ja	¥»¥Ã¥·¥ç¥ó¤Ëcookie¤ò»ÈÍÑ
-use theme	admin	ja	¥Æ¡¼¥ŞÁªÂò
+trust level	admin	ja	¿®Íê¥ì¥Ù¥ë
+trust relationship	admin	ja	¿®Íê´Ø·¸
 update	admin	ja	¹¹¿·
+url	admin	ja	URL
+use pure html compliant code (not fully working yet)	admin	ja	½ã¿è¤ÊHTML¤òÍøÍÑ¡Ê´°Á´¤ËÆ°ºî¤·¤Ş¤»¤ó¡Ë
+use cookies to pass sessionid	admin	ja	cookie¤Î¥»¥Ã¥·¥ç¥óid¤ò»ÈÍÑ
+use theme	admin	ja	¥Æ¡¼¥ŞÁªÂò
 user accounts	admin	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥È
 users choice	admin	ja	¥æ¡¼¥¶ÁªÂò
+user data	admin	ja	¥æ¡¼¥¶¥Ç¡¼¥¿
 user groups	admin	ja	¥æ¡¼¥¶¥°¥ë¡¼¥×
 view access log	admin	ja	¥¢¥¯¥»¥¹¥í¥°»²¾È
+view error log	admin	ja	¥¨¥é¡¼¥í¥°»²¾È
 view sessions	admin	ja	¥»¥Ã¥·¥ç¥ó»²¾È
 view user account	admin	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥ÈÉ½¼¨
 who would you like to transfer all records owned by the deleted user to?	admin	ja	ºï½ü¥æ¡¼¥¶¤Îµ­Ï¿¤òÅ¾Á÷¤¹¤ë¥æ¡¼¥¶¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	ja	´ÉÍı¼Ô¤Ç¥í¥°¥¤¥ó»ş¡¢phpGroupWare¤Î<br>¥Ğ¡¼¥¸¥ç¥ó¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	ja	´ÉÍı¼Ô¤Ç¥í¥°¥¤¥ó»ş¡¢phpGroupWare¤Î¥Ğ¡¼¥¸¥ç¥ó¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+would you like phpgroupware to cache the phpgw info array ?	admin	ja	phpGroupWare ¤Î¥­¥ã¥Ã¥·¥å¤Ëphpgw info ÇÛÎó¤òÍøÍÑ¤¹¤ë
+would you like to show each application's upgrade status ?	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Î¥¢¥Ã¥×¥°¥ì¡¼¥É¾õ¶·É½¼¨
+xml-rpc	admin	ja	XML-RPC
+yes	admin	ja	¤Ï¤¤
 you must add at least 1 permission or group to this account	admin	ja	¾¯¤Ê¤¯¤È¤â£±¤Ä¤Î¸¢¸Â¤«¥°¥ë¡¼¥×¤ò»ØÄê¤·¤Æ¤¯¤À¤µ¤¤¡£
 you must add at least 1 permission to this account	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤ò»ØÄê¤·¤Æ¤¯¤À¤µ¤¤¡£
 you must enter a group name.	admin	ja	¥°¥ë¡¼¥×Ì¾¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
@@ -113,3 +170,4 @@ you must enter an application name and title.	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÌ¾¤È¥¿¥¤¥
 You must enter an application title.	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥¿¥¤¥È¥ë¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
 you must select a file type	admin	ja	¥Õ¥¡¥¤¥ë¥¿¥¤¥×¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
 zone	admin	ja	ÃÏ°è
+(Stored password will not be shown here)	admin	ja	(ÅĞÏ¿¤µ¤ì¤Æ¤¤¤ë¥Ñ¥¹¥ï¡¼¥É¤ÏÉ½¼¨¤µ¤ì¤Ş¤»¤ó)
