@@ -64,12 +64,12 @@
 		{
 			switch($for)
 			{
-				case 'app':		$w = " where cat_appname='" . $this->app_name . "'"; break;
+				case 'app':			$w = " where cat_appname='" . $this->app_name . "'"; break;
 				case 'appandmains':	$w = " where cat_appname='" . $this->app_name . "' and cat_parent ='0'";
 				case 'appandsubs':	$w = " where cat_appname='" . $this->app_name . "' and cat_parent !='0'";
 				case 'subs':		$w = " where cat_parent != '0'"; break;
 				case 'mains':		$w = " where cat_parent = '0'"; break;
-				default:		return False;
+				default:			return False;
 			
 			}
 			$this->db->query("select count(*) from phpgw_categories $w",__LINE__,__FILE__);
@@ -423,20 +423,37 @@
 			return $this->db->f('cat_id');
 		}
 
-		function id2name($cat_id)
+		function id2name($cat_id, $item = 'name')
 		{
-			$this->db->query("select cat_name from phpgw_categories where cat_id='"
-				. "$cat_id'",__LINE__,__FILE__);
+			if ($item == 'main')
+			{
+				$value = 'cat_main';
+			}
+			elseif ($item == 'owner')
+			{
+				$value = 'cat_owner';
+			}
+			elseif ($item == 'app')
+			{
+				$value = 'cat_appname';
+			}
+			else
+			{
+				$value = 'cat_name';
+			}
+
+			$this->db->query("select $value from phpgw_categories where cat_id='"
+							. "$cat_id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			if ($this->db->f('cat_name'))
+			if ($this->db->f($value))
 			{
-				return $this->db->f('cat_name');
+				return $this->db->f($value);
 			}
 			else
 			{
 				return '--';
-			}		
+			}
 		}
 
 		/*!
@@ -489,17 +506,6 @@
 			{
 				return False;
 			}
-		}
-
-		function return_main($cat_id = '')
-		{
-			$this->db->query("select cat_main from phpgw_categories where cat_id='$cat_id'",__LINE__,__FILE__);
-
-			$this->db->next_record();
-
-			$cat_main = $this->db->f('cat_main');
-
-			return $cat_main;
 		}
 	}
 ?>
