@@ -20,6 +20,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 	var $seqPrefix = 'SEQ_';
 	var $addCol = ' ADD COLUMN';
 	var $quote = '"';
+	var $renameTable = 'ALTER TABLE %s RENAME TO %s'; 
 	
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{

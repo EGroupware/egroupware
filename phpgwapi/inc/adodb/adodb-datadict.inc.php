@@ -162,10 +162,12 @@ class ADODB_DataDict {
 	var $connection;
 	var $debug = false;
 	var $dropTable = 'DROP TABLE %s';
+	var $renameTable = 'RENAME TABLE %s TO %s'; 
 	var $dropIndex = 'DROP INDEX %s';
 	var $addCol = ' ADD';
 	var $alterCol = ' ALTER COLUMN';
 	var $dropCol = ' DROP COLUMN';
+	var $renameCol = 'ALTER TABLE %s RENAME COLUMN %s TO %s';	// table, old-column, new-column, column-definitions (not used by default)
 	var $nameRegex = '\w';
 	var $schema = false;
 	var $serverInfo = array();
@@ -350,6 +352,18 @@ class ADODB_DataDict {
 		return $sql;
 	}
 	
+	// $flds is only used for mysql so far
+	function RenameColumnSQL($tabname,$oldcolumn,$newcolumn,$flds='')
+	{
+		$tabname = $this->TableName ($tabname);
+		if ($flds) {
+			list($lines,$pkey) = $this->_GenFields($flds);
+			list(,$first) = each($lines);
+			list(,$column_def) = split("[\t ]+",$first,2);
+		}
+		return array(sprintf($this->renameColumn,$tabname,$this->NameQuote($oldcolumn),$this->NameQuote($newcolumn),$column_def));
+	}
+		
 	function DropColumnSQL($tabname, $flds)
 	{
 		$tabname = $this->TableName ($tabname);
@@ -366,6 +380,11 @@ class ADODB_DataDict {
 	{
 		return array (sprintf($this->dropTable, $this->TableName($tabname)));
 	}
+	
+	function RenameTableSQL($tabname,$newname)
+	{
+		return array (sprintf($this->renameTable, $this->TableName($tabname),$this->TableName($newname)));
+	}	
 	
 	/*
 	 Generate the SQL to create table. Returns an array of sql strings.

@@ -36,9 +36,15 @@ class ADODB_SAPDB extends ADODB_odbc {
 		$this->ADODB_odbc();
 	}
 	
-	// ToDo: retrive column-names and use $primary !!!
  	function &MetaIndexes ($table, $primary = FALSE)
 	{
+		if ($primary) {
+			return array(
+				'SYSPRIMARYKEYINDEX' => array(
+					'unique' => True,	// by definition
+					'columns' => $this->MetaPrimaryKeys($table),
+				));
+		}
 		$table = $this->Quote(strtoupper($table));
 		$sql = "SELECT INDEXNAME,TYPE,COLUMNNAME FROM INDEXCOLUMNS ".
 			" WHERE TABLENAME=$table".

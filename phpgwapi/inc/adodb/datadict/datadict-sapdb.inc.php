@@ -18,6 +18,7 @@ class ADODB2_sapdb extends ADODB_DataDict {
 	
 	var $databaseType = 'sapdb';
 	var $seqField = false;	
+	var $renameCol = 'RENAME COLUMN %s.%s TO %s';
  	
  	function ActualType($meta)
 	{
@@ -48,15 +49,6 @@ class ADODB2_sapdb extends ADODB_DataDict {
 		}
 	}
 	
-	function CreateTableSQL($tabname, $flds, $tableoptions=false)
-	{
-		$sql = ADODB_DataDict::CreateTableSQL($tabname, $flds, $tableoptions);
-		
-		echo "<pre>".print_r($sql,true)."</pre>\n";
-		
-		return $sql;
-	}
-
 	// return string must begin with space
 	function _CreateSuffix($fname,$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
 	{	
@@ -92,7 +84,7 @@ class ADODB2_sapdb extends ADODB_DataDict {
 		foreach($flds as $k => $v) {
 			$flds[$k] = $this->NameQuote($v);
 		}
-		return array( 'ALTER TABLE ' . $tabname . 'DROP (' . implode(',',$flds) . ')' );
+		return array( 'ALTER TABLE ' . $tabname . ' DROP (' . implode(',',$flds) . ')' );
 	}	
 }
 
