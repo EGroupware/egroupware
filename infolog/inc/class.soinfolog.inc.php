@@ -255,7 +255,7 @@
 				return;
 			}
 			$this->db->query("delete FROM phpgw_infolog where info_id=$info_id or info_id_parent=$info_id" .
-				"AND ((info_access='public' and info_owner != '$this->user') OR (info_owner=$this->user))",
+				" AND ((info_access='public' and info_owner != $this->user) OR (info_owner=$this->user))",
 				__LINE__,__FILE__);
 				
 			$this->links->unlink(0,'infolog',$info_id);
