@@ -146,6 +146,7 @@
 					break;
 				case 'bigint':
 					$sTranslated = "'type' => 'int', 'precision' => 8";
+					break;
 				case 'char':
 					if ($iPrecision > 0 && $iPrecision < 256)
 					{
