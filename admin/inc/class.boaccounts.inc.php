@@ -350,7 +350,7 @@
 			$temp_users = ($GLOBALS['HTTP_POST_VARS']['account_user']?$GLOBALS['HTTP_POST_VARS']['account_user']:Array());
 			$account_user = Array();
 			@reset($temp_users);
-			while(list($key,$user_id) = each($temp_users))
+			while($temp_users && list($key,$user_id) = each($temp_users))
 			{
 				$account_user[$user_id] = ' selected';
 			}
@@ -414,7 +414,7 @@
 			$apps->save_repository();
 
 			// Set new account_lid, if needed
-			if($old_group_info['account_lid'] <> $group_info['account_name'])
+			if($group_info['account_name'] && $old_group_info['account_lid'] <> $group_info['account_name'])
 			{
 				$group->data['account_lid'] = $group_info['account_name'];
 
@@ -447,6 +447,7 @@
 					$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_action='' "
 						."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name($user_id)
 						. '@' . $GLOBALS['phpgw_info']['user']['domain'] . "'",__LINE__,__FILE__);
+					$GLOBALS['phpgw']->session->delete_cache($user_id);
 				}
 			}
 
@@ -467,6 +468,8 @@
 					."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name($user_id)
 					. '@' . $GLOBALS['phpgw_info']['user']['domain'] . "'",__LINE__,__FILE__);
 					
+				$GLOBALS['phpgw']->session->delete_cache($user_id);
+				
 				// The following sets any default preferences needed for new applications..
 				// This is smart enough to know if previous preferences were selected, use them.
 				$docommit = False;
