@@ -103,11 +103,11 @@
 		
 		if ($userData["status"]) 
 		{
-			$t->set_var("account_checked","checked");
+			$t->set_var('account_status','checked');
 		} 
 		else 
 		{
-			$t->set_var("account_checked","");
+			$t->set_var('account_status','');
 		}
 		$t->set_var("n_firstname_value",$userData["firstname"]);
 		$t->set_var("n_lastname_value",$userData["lastname"]);

@@ -56,13 +56,19 @@
         $apps = CreateObject('phpgwapi.applications',intval($group_id));
         $apps->update_data(Array());
         @reset($n_group_permissions);
-        while($app = each($n_group_permissions)) {
-          if($app[1]) {
-            $apps->add($app[0]);
-            $new_apps[] = $app[0];
-          }
-        }
-        $apps->save_repository();
+
+			if (count($n_group_permissions))
+			{
+				while($app = each($n_group_permissions))
+				{
+					if ($app[1])
+					{
+						$apps->add($app[0]);
+						$new_apps[] = $app[0];
+					}
+				}
+				$apps->save_repository();
+			}
 
         $acl = CreateObject('phpgwapi.acl',$group_id);
         $acl->read_repository();

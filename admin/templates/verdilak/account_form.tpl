@@ -10,17 +10,17 @@
 
     <tr bgcolor="{tr_color1}">
      <td>{lang_loginid}</td>
-     <td><input name="n_loginid" value="{n_loginid_value}"></td>
+     <td><input name="account_lid" value="{n_loginid_value}"></td>
      <td colspan="2" align="center">
-       {lang_account_active}:&nbsp;<input type="checkbox" name="n_account_status" value="A" {account_checked}>
+       {lang_account_active}:&nbsp;<input type="checkbox" name="status" value="A"{account_status}>
      </td>
     </tr>
 
     <tr bgcolor="{tr_color2}">
      <td>{lang_firstname}</td>
-     <td><input name="n_firstname" value="{n_firstname_value}"></td>
+     <td><input name="firstname" value="{n_firstname_value}"></td>
      <td>{lang_lastname}</td>
-     <td><input name="n_lastname" value="{n_lastname_value}"></td>
+     <td><input name="lastname" value="{n_lastname_value}"></td>
     </tr>
 
     <tr bgcolor="{tr_color1}">

@@ -31,7 +31,7 @@
      <input type="submit" value="{lang_add}"></form>
     </td>
     <td align="right">
-     <form action="accounts.php">
+     <form method="POST" action="{accounts_url}">
       {lang_search}&nbsp;
       <input name="query">
      </form>

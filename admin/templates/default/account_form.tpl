@@ -12,7 +12,7 @@
      <td>{lang_loginid}</td>
      <td><input name="account_lid" value="{n_loginid_value}"></td>
      <td colspan="2" align="center">
-       {lang_account_active}:&nbsp;<input type="checkbox" name="status" value="A" {account_checked}>
+       {lang_account_active}:&nbsp;<input type="checkbox" name="status" value="A"{account_status}>
      </td>
     </tr>
 
