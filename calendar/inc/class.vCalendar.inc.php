@@ -13,8 +13,16 @@
 	/* $Id$ */
 
 define('NONE',0);
-define('OPT-PARTICIPANT',1);
+define('CHAIR',1);
 define('REQ-PARTICIPANT',2);
+define('OPT-PARTICIPANT',3);
+define('NON-PARTICIPANT',4);
+
+define('INDIVIDUAL',1);
+define('GROUP',2);
+define('RESOURCE',4);
+define('ROOM',8);
+define('UNKNOWN',16);
 
 class mailto
 {
@@ -25,14 +33,25 @@ class mailto
 class attendee
 {
 	var $cn = 'Unknown';
-	var $role = 0;
+	var $cutype = 1;
+	var $role = 2;
 	var $rsvp = False;
 	var $mailto;
 	var $sent_by;
+	var $delegated_from;
+	var $delegated_to;
+	var $member;
+	var $partstat;
 }
 
 class organizer
 {
+	var $cn;
+	var $cutype = 1;
+	var $delegated_from;
+	var $delegated_to;
+	var $member;
+	var $partstat;
 	var $mailto;
 	var $sent_by;
 }
@@ -85,97 +104,210 @@ class vCalendar
 		return $dtime;		
 	}
 
+	function split_address($address)
+	{
+		$parts = explode('@',$address);
+		if(count($parts) == 2)
+		{
+			$temp_address = new mailto;
+			$temp_address->user = $parts[0];
+			$temp_address->host = $parts[1];
+			return $temp_address;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
+	function set_var_subtype(&$event,$majortype,$subtype,$value)
+	{
+		if($value != False)
+		{
+			$event->${strtolower($majortype)}->${strtolower($subtype)} = $value;
+		}
+	}
+
+	function unfold(&$vcal_text,$current_line)
+	{
+		$next_line = $current_line;
+
+		while(ereg("^[ \t]",substr($vcal_text[$next_line + 1],0,1)))
+		{
+			$vcal_text[$current_line] = str_replace("\r\n",'',$vcal_text[$current_line]);
+			$vcal_text[$current_line] .= substr($vcal_text[$next_line + 1],1);
+			$next_line++;
+		}
+		if($next_line != $current_line)
+		{
+			for($i=$next_line;$i>$current_line;$i--)
+			{
+				unset($vcal_text[$i]);
+			}
+		}
+	}
+
+	function strip_quotes($str)
+	{
+		if(strpos(' '.$str.' ','"'))
+		{
+			$str = substr($str,1,strlen($str)-2);
+		}
+		return $str;
+	}
+
+	function strip_param($str)
+	{
+		$extra_param = explode(':',$str);
+		if(count($extra_param) == 1)
+		{
+			return $str;
+		}
+		else
+		{
+			return $extra_param[1];
+		}
+	}
+
 	function read($vcal_text)
 	{
-
-		$c_vcal_text = count($vcal_text);
-		for($i=0;$i<$c_val_text;$i++)
+		for($i=0;$i<count($vcal_text);$i++)
 		{
-			if($vcal_text[$i] == 'END:VCALENDAR')
+			if(strlen($vcal_text[$i]) > 75)
 			{
 				continue;
 			}
-			$element = explode(';',$vcal_text[$i]);
-			$c_element = count($element);
-			for($j=0;$j<$c_element;$j++)
+
+			unfold($vcal_text,$i);
+
+			// Example #1
+			//vcal_text[$i] = 'BEGIN:VCALENDAR'
+			
+			// Example #2
+			//vcal_text[$i] = 'METHOD:REQUEST'
+			
+			// Example #3
+			//vcal_text[$i] = 'ATTENDEE;CN="John Doe";ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:john.doe@somewhere.com'
+
+			// Example #4
+			//vcal_text[$i] = 'ORGANIZER:MAILTO:jim.smith@elsewhere.com'
+
+			// Example #5
+			//vcal_text[$i] = 'DTSTART:20010302T150000Z'
+
+			// Example #6
+			//vcal_text[$i] = 'UID:040000008200E00074C5B7101A82E0080000000040A12C0042A2C0010000000000000000100'
+			//vcal_text[$i+1] = ' 000009BDFF7C7650ED5118DD700805FA71291'
+
+			// When unfolded becomes,
+			//vcal_text[$i] = 'UID:040000008200E00074C5B7101A82E0080000000040A12C0042A2C0010000000000000000100000009BDFF7C7650ED5118DD700805FA71291'
+
+			$colon = pos($vcal_text[$i],':');
+			if($colon == 0)
 			{
-				$temp_array = explode(':',$element[$j]);
-				$c_temp_array = count($temp_array);
-				if($c_temp_array > 1)
-				{
-					if(strpos($temp_array[0],'=') == 0)
+				$colon = 65535;
+			}
+
+			$semi_colon = pos($vcal_text[$i],';');
+			if($semi_colon == 0)
+			{
+				$semi_colon = 65535;
+			}
+
+			if($colon == 65535 && $semi_colon == 65535)
+			{
+				continue;
+			}
+			else
+			{
+				$min_value = min($colon,$semi_colon);
+				$majortype = substr($vcal_text[$i],0,$min_value - 1);
+				$vcal_text[$i] = substr($vcal_text[$i],$min_value + 1);
+				$value = $vcal_text[$i];
+			}
+
+			switch(strtolower($majortype))
+			{
+				case 'begin':
+					$event = new vCalendar_event;
+					if($value != 'VCALENDAR')
 					{
-						$type = $temp_array[0];
-						if(isset($temp_array[1]))
-						{
-							$value = $temp_array[1];
-						}
+						$event->type = $value;
 					}
-					else
-					{
-						$parameter = $temp_array[0];
-						$type = $temp_array[1];
-						$value = $temp_array[2];
-					}
-				}
-				else
-				{
-					$type = $element[$j];
-				}
-				switch(strtolower($type))
-				{
-					case 'begin':
-						$event = new vCalendar_event;
-						if($value != 'VCALENDAR')
-						{
-							$event->type = $value;
-						}
-						break;
+					break;
 /*
-					case 'attendee':
-						$attendee = new attendee;
-						$j++;
-						$att_data = explode(';',substr($vcal_text[$i],9,strlen($vcal_text[$i])));
-						$c_att_data = count($att_data);
-						for($k=0;$k<$c_att_data;$k++)
+				case 'attendee':
+					$attendee = new attendee;
+					$att_data = explode(';',substr($vcal_text[$i],9,strlen($vcal_text[$i])));
+					$c_att_data = count($att_data);
+					for($k=0;$k<$c_att_data;$k++)
+					{
+						if(strpos($att_data[$k],':'))
 						{
-							if(strpos($att_data[$k],':'))
-							{
-							}
-							elseif(strpos($att_data[$k],'='))
-							{
-								$att_att = explode('=',$att_data[$k])
-							}
 						}
-						$event->attendee[] = $attendee;
-						unset($attendee);
-						break;
-					case 'organizer':
-						break;
+						elseif(strpos($att_data[$k],'='))
+						{
+							$att_att = explode('=',$att_data[$k])
+						}
+					}
+					$event->attendee[] = $attendee;
+					unset($attendee);
+					break;
 */
-					case 'end':
-						switch(strtolower($value))
+				case 'organizer':
+					$event->${strtolower($majortype)} = new ${strtolower($majortype)};
+					$param = explode(':',$value);
+					for($j=0;$j<count($param);$j++)
+					{
+						if(strpos($param[$j],'='))
 						{
-							case 'vevent':
-								$this->event[] = $event;
-								break;
-							case 'vcalendar':
-								break;
-						}
-						break;
-					default:
-						if(strtolower(substr($type,0,2)) == 'DT')
-						{
-							$this->$type = new vCalendar_time;
-							$this->$type = $this->splitdate($value);
+							$subtype = explode('=',$param[$j]);
+							$this->set_var_subtype($event,$majortype,$subtype[0],$this->strip_quotes($subtype[1]));
 						}
 						else
 						{
-							$this->$type = $value;
+							if(strpos($param[$j],'@'))
+							{
+								$this->set_var_subtype($event,$majortype,'mailto',$this->split_address($param[$j]));
+							}
+							else
+							{
+								switch(strtolower($param[$j]))
+								{
+									case 'mailto':
+										$email_addy = $param[$j + 1];
+										$this->set_var_subtype($event,$majortype,$param[$j++],$this->split_address($email_addy));
+										break;
+									default:
+										$var = $this->strip_param($this->strip_quotes($param[$j + 1]));
+										$this->set_var_subtype($event,$majortype,$param[$j++],$var);
+										break;									
+								}
+							}
 						}
-						break;
-				}
-			}			
+					}
+					break;
+				case 'end':
+					switch(strtolower($value))
+					{
+						case 'vevent':
+							$this->event[] = $event;
+							unset($event);
+							break;
+						case 'vcalendar':
+							break 2;
+					}
+					break;
+				case 'dtstart':
+				case 'dtend':
+				case 'dtstamp':
+					$event->${strtolower($majortype)} = new vCalendar_time;
+					$event->${strtolower($majortype)} = $this->splitdate($value);
+					break;
+				default:
+					$event->${strtolower($majortype)} = $value;
+					break;
+			}
 		}
 	}
 }
