@@ -30,7 +30,7 @@ all	infolog	en	All
 all links and attachments	infolog	en	all links and attachments
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-type)
 applies the changes	infolog	en	applies the changes
-are you shure you want to delete this entry ?	infolog	en	Are you shure you want to delete this entry ?
+are you shure you want to delete this entry ?	infolog	en	Are you sure you want to delete this entry ?
 are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
 attach a file	infolog	en	Attach a file
 attach file	infolog	en	Attach file
