@@ -223,29 +223,62 @@
 		 */
 		function RenameTable($sOldTableName, $sNewTableName)
 		{
-			if ($this->sType == 'pgsql') $this->_PostgresTestDropOldSequence($sTableName);
+			// if we have an old postgres sequence or index (the ones not linked to the table), 
+			// we create a new table, copy the content and drop the old one
+			if ($this->sType == 'pgsql')
+			{
+				$table_def = $this->GetTableDefinition($sOldTableName);
 
+				if ($this->_PostgresHasOldSequence($sOldTableName) || count($table_def['pk']) ||
+					count($table_def['ix']) || count($table_def['uc']))
+				{
+					if ($this->adodb->BeginTrans() &&
+						$this->CreateTable($sNewTableName,$table_def) &&
+						$this->m_odb->query("INSERT INTO $sNewTableName SELECT * FROM $sOldTableName",__LINE__,__FILE__) &&
+						$this->DropTable($sOldTableName))
+					{
+						$this->adodb->CommitTrans();
+						return 2;
+					}
+					$this->adodb->RollbackTrans();
+					return 0;
+				}
+			}
 			$aSql = $this->dict->RenameTableSQL($sOldTableName, $sNewTableName);
 
 			return $this->ExecuteSQLArray($aSql,2,'RenameTableSQL(%1,%2) sql=%3',False,$sOldTableName,$sNewTableName,$aSql);
 		}
 		
 		/**
-		 * Check if we have an old, not automaticaly droped sequence and drop it
+		 * Check if we have an old, not automaticaly droped sequence
 		 *
-		 * 
-		 * @param $sTableName
+		 * @param string $sTableName
+		 * @param boolean/string sequence-name or false
 		 */
-		function _PostgresTestDropOldSequence($sTableName)
+		function _PostgresHasOldSequence($sTableName)
 		{
-			if ($this->sType != 'pgsql') return;
+			if ($this->sType != 'pgsql') return false;
 
 			$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName%' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 			
 			if ($seq && preg_match('/^nextval\(\'(.*)\'/',$seq,$matches))
 			{
 				
-				$this->query('DROP SEQUENCE '.$matches[1],__LINE__,__FILE__);
+				return $matches[1];
+			}
+			return false;
+		}
+
+		/**
+		 * Check if we have an old, not automaticaly droped sequence and drop it
+		 *
+		 * @param $sTableName
+		 */
+		function _PostgresTestDropOldSequence($sTableName)
+		{
+			if ($this->sType == 'pgsql' && ($seq = $this->_PostgresHasOldSequence($sTableName)))
+			{
+				$this->query('DROP SEQUENCE '.$seq,__LINE__,__FILE__);
 			}
 		}
 
@@ -355,7 +388,7 @@
 				}
 				else
 				{
-					foreach($this->dict->MetaIndexes($sTableName) as $idx => $idx_data)
+					foreach($indexes as $idx => $idx_data)
 					{
 						if (strtolower(implode(':',$idx_data['columns'])) == implode(':',$aColumnNames))
 						{
@@ -1014,6 +1047,12 @@
 						else
 						{
 							$definition['fd'][$name]['type'] = 'int';
+							// detect postgres type-spec and remove it
+							if ($this->sType == 'pgsql' && $column->has_default && preg_match('/\(([^)])\)::/',$column->default_value,$matches))
+							{
+								$definition['fd'][$name]['default'] = $matches[1];
+								$column->has_default = False;
+							}
 						}
 						break;
 				}

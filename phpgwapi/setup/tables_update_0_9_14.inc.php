@@ -572,8 +572,17 @@
 	$test[] = '0.9.14.502';
 	function phpgwapi_upgrade0_9_14_502()
 	{
-		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_preferences','old_preferences');
-
+		// because of all the trouble with sequences and indexes in the global namespace, 
+		// we use an additional temp. table for postgres and not rename the existing one, but drop it.
+		if ($GLOBALS['phpgw_setup']->oProc->sType == 'pgsql')	
+		{
+			$GLOBALS['phpgw_setup']->oProc->query("SELEcT * INTO TEMPORARY TABLE old_preferences FROM phpgw_preferences",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_preferences');
+		}
+		else
+		{
+			$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_preferences','old_preferences');
+		}
 		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_preferences',array(
 			'fd' => array(
 				'preference_owner' => array('type' => 'int','precision' => '4','nullable' => False),
@@ -616,12 +625,24 @@
 	$test[] = '0.9.14.503';
 	function phpgwapi_upgrade0_9_14_503()
 	{
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_addressbook','last_mod',array(
-			'type' => 'int',
-			'precision' => '4',
-			'nullable' => False
-		));
-
+		// we create the column for postgres nullable, set all its values to 0 and set it NOT NULL
+		if ($GLOBALS['phpgw_setup']->oProc->sType == 'pgsql')
+		{
+			$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_addressbook','last_mod',array(
+				'type' => 'int',
+				'precision' => '4',
+			));
+			$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_addressbook SET last_mod=0",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->oProc->query("ALTER TABLE phpgw_addressbook ALTER COLUMN last_mod SET NOT NULL",__LINE__,__FILE__);
+		}
+		else
+		{
+			$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_addressbook','last_mod',array(
+				'type' => 'int',
+				'precision' => '4',
+				'nullable' => false,
+			));
+		}
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.504';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -629,12 +650,24 @@
 	$test[] = '0.9.14.504';
 	function phpgwapi_upgrade0_9_14_504()
 	{
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_categories','last_mod',array(
-			'type' => 'int',
-			'precision' => '4',
-			'nullable' => False
-		));
-
+		// we create the column for postgres nullable, set all its values to 0 and set it NOT NULL
+		if ($GLOBALS['phpgw_setup']->oProc->sType == 'pgsql')
+		{
+			$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_categories','last_mod',array(
+				'type' => 'int',
+				'precision' => '4',
+			));
+			$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_categories SET last_mod=0",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->oProc->query("ALTER TABLE phpgw_categories ALTER COLUMN last_mod SET NOT NULL",__LINE__,__FILE__);
+		}
+		else
+		{
+			$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_categories','last_mod',array(
+				'type' => 'int',
+				'precision' => '4',
+				'nullable' => false,
+			));
+		}
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.505';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -642,6 +675,8 @@
 	$test[] = '0.9.14.505';
 	function phpgwapi_upgrade0_9_14_505()
 	{
+		// postgres cant convert a column containing empty strings to int, updating them to '0' first
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_access_log SET lo='0' WHERE lo=''",__LINE__,__FILE__);
 		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_access_log','lo',array(
 			'type' => 'int',
 			'precision' => '4',
@@ -1323,10 +1358,6 @@
 	$test[] = '0.9.99.020';
 	function phpgwapi_upgrade0_9_99_020()
 	{
-		// at least for postgres we need to change the colum-type, else we get an error in RefreshTable
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_app_sessions','loginid',array(
-			'type' => 'int','precision' => '4','nullable' => False
-		));
 		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_app_sessions',array(
 			'fd' => array(
 				'sessionid' => array('type' => 'varchar','precision' => '128','nullable' => False),
