@@ -1,4 +1,3 @@
-		it	
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
 %1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite multiutente, web-based scritta in %3PHP%4.
@@ -131,9 +130,7 @@ click	common	it	Clicca
 click or mouse over to show menu's	common	it	Click o Mouse Over per visualizzare i menu
 click or mouse over to show menu's?	common	it	Click o Mouse Over per visualizzare i menu?
 click or mouse over to show menus	common	it	Clicca o passa sopra con il puntatore per mostrare i menù
-
 click or mouse over to show menus?	common	it	Clicca o passa sopra con il puntatore per mostrare i menù ?
-
 close	common	it	Chiudi
 cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
 collapsed borders	htmlarea-TableOperations	it	Bordi chiusi
@@ -182,11 +179,9 @@ disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bug
 disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	it	Disabilita l'effetto animato degli slider quando visualizzi o nascondi i menu nella pagina? Gli utenti di Opera e Konqueror dovrebbero farlo.
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menu sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
-
 disabled	common	it	Disabilitato
 display %s first	jscalendar	it	Mostra prima %1
 display monday first	jscalendar	it	Visualizza prima Lunedì
-
 display sunday first	jscalendar	it	Visualizza prima Domenica
 djibouti	common	it	DJIBOUTI
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sotto-categorie?
@@ -251,7 +246,6 @@ french guiana	common	it	GUIANA FRANCESE
 french polynesia	common	it	POLINESIA FRANCESE
 french southern territories	common	it	FRENCH SOUTHERN TERRITORIES
 friday	common	it	Venerdì
-
 ftp	common	it	FTP
 fullname	common	it	Nome completo
 gabon	common	it	GABON
@@ -412,7 +406,6 @@ middle	htmlarea-TableOperations	it	Centrale
 moldova, republic of	common	it	MOLDAVIA, REPUBBLICA DELLA
 monaco	common	it	MONACO
 monday	common	it	Lunedì
-
 mongolia	common	it	MONGOLIA
 montserrat	common	it	MONTSERRAT
 morocco	common	it	MAROCCO
@@ -516,7 +509,7 @@ pliz weit ;-)	htmlarea-SpellChecker	it	Attendere Prego ;-)
 poland	common	it	POLONIA
 portugal	common	it	PORTOGALLO
 postal	common	it	Postale
-powered by phpgroupware version %1	common	it	Creato con <a href="http://www.phpgroupware.org">phpGroupWare</a> versione %1
+powered by phpgroupware version %1	common	it	Creato con <a href="http://www.egroupware.org">eGroupWare</a> versione %1
 preferences	common	it	Preferenze
 preferences for the idots template set	common	it	Preferenze per il template idots
 prev. month (hold for menu)	jscalendar	it	Mese precedente (premi per menu)
@@ -524,7 +517,6 @@ prev. year (hold for menu)	jscalendar	it	Anno precedente (premi per menu)
 previous page	common	it	Pagina precedente
 print	common	it	Stampa
 priority	common	it	Priorità
-
 private	common	it	Privato
 project	common	it	Progetto
 public	common	it	pubblico
@@ -656,7 +648,6 @@ this application requires an upgrade	common	it	Questa applicazione richiede un a
 this name has been used already	common	it	Questo nome è già stato usato!
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	it	Questo annullerÃ  le modifiche e chiuderÃ  lo Spell Checker. Conferma.
 thursday	common	it	Giovedì
-
 time	common	it	Ora
 time selection:	jscalendar	it	Selezione Ora:
 time zone	common	it	Fuso orario
@@ -677,7 +668,6 @@ top	htmlarea-TableOperations	it	Alto
 total	common	it	Totale
 trinidad and tobago	common	it	TRINIDAD E TOBAGO
 tuesday	common	it	Martedì
-
 tunisia	common	it	TUNISIA
 turkey	common	it	TURCHIA
 turkmenistan	common	it	TURKMENISTAN
@@ -717,7 +707,6 @@ virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
 virgin islands, u.s.	common	it	ISOLE VERGINI, U.S.
 wallis and futuna	common	it	WALLIS E FUTUNA
 wednesday	common	it	Mercoledì
-
 welcome	common	it	Benvenuto
 western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
@@ -728,10 +717,9 @@ written by:	common	it	Scritto da:
 year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
-
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in MODO TESTO.  Usa il pulsante [<>] per tornare al modo WYSIWIG.
 you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
-you are running a newer version of phpgroupware than your database is setup for	common	it	Stai utilizzando una versione più recente di phpGroupWare rispetto a quella per cui il tuo database è stato installato.
+you are running a newer version of phpgroupware than your database is setup for	common	it	Stai utilizzando una versione più recente di eGroupWare rispetto a quella per cui il tuo database è stato installato.
 you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
 you have not entered a title	common	it	Non hai inserito un titolo
 you have not entered a valid date	common	it	Non hai inserito una data valida

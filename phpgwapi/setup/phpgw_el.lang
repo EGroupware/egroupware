@@ -1,20 +1,13 @@
-		el	
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
-
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1eGroupWare%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 (shift-)click or drag to change value	jscalendar	el	(Shift-)Click ή σύρετε για να αλλάξετε τιμή
 - click on any of the time parts to increase it	jscalendar	el	- Κάντε κλικ σε οποιοδήποτε τμήμα της ώρας για να το αυξήσετε
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	el	- Κάντε κλικ και κρατηστε πατημένο το κουμπί του ποντικιού πάνω από οποιοδήποτε από τα παραπάνω κουμπιά για γρηγορότερη επιλογή
-
 - or click and drag for faster selection.	jscalendar	el	- ή κάντε κλικ και σύρετε για γρηγορότερη επιλογή
-
 - or shift-click to decrease it	jscalendar	el	- ή κάντε shift-click gια να το αυξήσετε
 - use the %1, %2 buttons to select month	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε μήνα
-
 - use the %1, %2 buttons to select year	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε χρόνο
-
 00 (disable)	admin	el	00 (Απενεργοποίηση)
-
 13 (ntp)	admin	el	13 (ntp)
 80 (http)	admin	el	80 (http)
 _delete row	htmlarea-ContextMenu	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚
@@ -23,109 +16,73 @@ _modify link...	htmlarea-ContextMenu	el	Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ
 _remove link...	htmlarea-ContextMenu	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…...
 _table properties...	htmlarea-ContextMenu	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ο€Ξ―Ξ½Ξ±ΞΊΞ±...
 about	common	el	Πληροφορίες
-
 about %1	common	el	Πληροφορίες %1
 about the calendar	jscalendar	el	Για το ημερολόγιο
 about this editor	htmlarea	el	Για αυτό τον επεξεργαστή
-
 access	common	el	Πρόσβαση
 access not permitted	common	el	Απαγορεύεται η πρόσβαση
 account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
-
 account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
-
 account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
 account is expired	common	el	Ο λογαριασμός έχει λήξει
-
 acl	common	el	ACL
 action	common	el	Ενέργεια
-
 active	common	el	Ενεργό
-
 add	common	el	Προσθήκη
-
 add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
 add category	common	el	Προσθήκη κατηγορίας
-
 add sub	common	el	Προσθήκη υπo
-
 addressbook	common	el	Επαφές
-
 admin	common	el	Διαχειριστής
 administration	common	el	Διαχείριση
 afghanistan	common	el	ΑΦΓΑΝΙΣΤΑΝ
 albania	common	el	ΑΛΒΑΝΙΑ
-
 algeria	common	el	ΑΛΓΕΡΙΑ
-
 align	htmlarea-TableOperations	el	Ξ£Ο„ΞΏΞ―Ο‡Ξ·ΟƒΞ·
 all	common	el	Ολα
-
 all four sides	htmlarea-TableOperations	el	ΞΞ±ΞΉ ΞΏΞΉ 4 Ο€Ξ»ΞµΟ…ΟΞ­Ο‚
 alphabet	common	el	α,β,γ,δ,ε,ζ,η,θ,ι,κ,λ,μ,ν,ξ,ο,π,ρ,σ,τ,υ,φ,χ,ψ,ω,
-
 american samoa	common	el	ΑΜΕΡΙΚΑΝΙΚΗ ΣΑΜΟΑ
-
 andorra	common	el	ΑΝΔΟΡΡΑ
-
 angola	common	el	ΑΝΓΚΟΛΑ
-
 anguilla	common	el	ΑΝΓΚΟΥΙΛΛΑ
 antarctica	common	el	ΑΝΤΑΡΚΤΙΚΗ
 antigua and barbuda	common	el	ΑΝΤΙΓΚΟΥΑ & ΜΠΑΡΜΠΟΥΝΤΑ
-
 apply	common	el	Εφαρμογή
 april	common	el	Απρίλιος
-
 are you sure you want to delete these entries ?	common	el	Είστε σίγουροι ότι θέλετε να διαγράψετε αυτές τις καταχωρίσεις;
 are you sure you want to delete this entry ?	common	el	Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την καταχωώριση;
 argentina	common	el	ΑΡΓΕΝΤΙΝΗ
-
 armenia	common	el	ΑΡΜΕΝΙΑ
-
 aruba	common	el	ΑΡΟΥΜΠΑ
-
 august	common	el	Αύγουστος
 australia	common	el	ΑΥΣΤΡΑΛΙΑ
-
 austria	common	el	ΑΥΣΤΡΙΑ
-
 author	common	el	Συγγραφέας
-
 autohide sidebox menus	common	el	Αυτόματη απόκρυψη μενού
-
 automatically hide the sidebox menus?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
 autosave default category	common	el	Αυτόματη αποθήκευση της προεπιλεγμένης κατηγορίας
 azerbaijan	common	el	ΑΖΕΡΜΠΑΪΤΖΑΝ
 back	common	el	Επιστροφή
 back to user login	common	el	Επιστροφή στη σελίδα σύνδεσης
-
 background	htmlarea-TableOperations	el	Ξ¦ΟΞ½Ο„ΞΏ
 background color	htmlarea	el	Χρώμα Φόντου
-
 bad login or password	common	el	Λάθος όνομα χρήστη ή κωδικός
-
 bahamas	common	el	ΜΠΑΧΑΜΕΣ
 bahrain	common	el	ΜΠΑΧΡΕΪΝ
 bangladesh	common	el	ΜΠΑΓΚΛΑΝΤΕΣ
-
 barbados	common	el	ΜΠΑΡΜΠΑΝΤΟΣ
-
 baseline	htmlarea-TableOperations	el	Baseline
 bcc	common	el	Κρυφή Κοινοποίηση
-
 belarus	common	el	ΛΕΥΚΟΡΩΣΙΑ
 belgium	common	el	ΒΕΛΓΙΟ
 belize	common	el	ΜΠΕΛΙΖ
 benin	common	el	ΜΠΕΝΙΝ
 bermuda	common	el	ΒΕΡΜΟΥΔΑ
 bhutan	common	el	ΜΠΟΥΤΑΝ
-
 blocked, too many attempts	common	el	Μπλοκαρισμένο, πάρα πολλές προσπάθειες
 bold	htmlarea	el	Έντονο
-
 bolivia	common	el	ΒΟΛΙΒΙΑ
-
 border	htmlarea-TableOperations	el	Ξ ΞµΟΞ―Ξ³ΟΞ±ΞΌΞΌΞ±
 borders	htmlarea-TableOperations	el	Ξ ΞµΟΞΉΞ³ΟΞ¬ΞΌΞΌΞ±Ο„Ξ±
 bosnia and herzegovina	common	el	ΒΟΣΝΙΑ & ΕΡΖΕΓΟΒΙΝΗ
@@ -134,64 +91,44 @@ bottom	htmlarea-TableOperations	el	ΞΞ¬Ο„Ο‰ ΞΌΞ­ΟΞΏΟ‚
 bouvet island	common	el	ΝΗΣΟΙ ΜΠΟΥΒΕ
 brazil	common	el	ΒΡΑΖΙΛΙΑ
 british indian ocean territory	common	el	ΒΡΕΤΑΝΙΚΕΣ ΚΤΗΣΕΙΣ ΙΝΔΙΚΟΥ ΩΚΕΑΝΟΥ
-
 brunei darussalam	common	el	ΜΠΡΟΥΝΕΪ ΝΤΑΡΟΥΣΑΛΑΜ
-
 bulgaria	common	el	ΒΟΥΛΓΑΡΙΑ
-
 bulleted list	htmlarea	el	Λίστα κουκίδων
-
 burkina faso	common	el	ΜΠΟΥΡΚΙΝΑ ΦΑΣΟ
 burundi	common	el	ΜΠΟΥΡΟΥΝΤΙ
 c_ell properties...	htmlarea-ContextMenu	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ ΞΊΞµΞ»ΞΉΞΏΟ...
 calendar	common	el	Ημερολόγιο
-
 cambodia	common	el	ΚΑΜΠΟΤΖΗ
 cameroon	common	el	ΚΑΜΕΡΟΥΝ
 canada	common	el	ΚΑΝΑΔΑΣ
-
 cancel	common	el	Ακύρωση
-
 cape verde	common	el	ΠΡΑΣΙΝΟ ΑΚΡΩΤΗΡΙ
 caption	htmlarea-TableOperations	el	Ξ›ΞµΞ¶Ξ¬Ξ½Ο„Ξ±
 categories	common	el	Κατηγορίες
 categories for	common	el	Κατηγορίες για
 category	common	el	Κατηγορία
-
 category %1 has been added !	common	el	Η κατηγορία %1 προστέθηκε
-
 category %1 has been updated !	common	el	Η κατηγορία %1 ενημερώθηκε
-
 cayman islands	common	el	ΝΗΣΟΙ ΚΕΪΜΑΝ
 cc	common	el	Κοινοποίηση
-
 cell properties	htmlarea-TableOperations	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ ΞΞµΞ»ΞΉΞΏΟ
 center	htmlarea-TableOperations	el	ΞΞ­Ξ½Ο„ΟΞΏ
 central african republic	common	el	ΔΗΜΟΚΡΑΤΙΑ ΚΕΝΤΡΙΚΗΣ ΑΦΡΙΚΗΣ
-
 chad	common	el	ΤΣΑΝΤ
-
 change	common	el	Αλλαγή
-
 char	htmlarea-TableOperations	el	Ξ§Ξ±ΟΞ±ΞΊΟ„Ξ®ΟΞ±Ο‚
 charset	common	el	ISO-8859-7
 chec_k link...	htmlarea-ContextMenu	el	ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΟ‰Ξ½...
 check installation	common	el	Ελεγχος εγκατάστασης
-
 chile	common	el	ΧΙΛΗ
 china	common	el	ΚΙΝΑ
 choose the category	common	el	Επιλέξτε κατηγορία
-
 choose the parent category	common	el	Επιλέξτε γονική κατηγορία
-
 christmas island	common	el	ΝΗΣΟΙ ΧΡΙΣΤΟΥΓΕΝΝΩΝ
-
 clear	common	el	Εκκαθάριση
 clear form	common	el	Εκκαθάριση Φόρμας
 click	common	el	Κάντε κλικ
-
 click or mouse over to show menus	common	el	Κάντε κλικ ή τοποθετήστε επάνω το ποντίκι για εμφάνιση των μενού
-
 click or mouse over to show menus?	common	el	Κλικ ή mouse over για εμφάνιση των μενού;
 close	common	el	Κλείσιμο
 cocos (keeling) islands	common	el	ΝΗΣΟΙ ΚΟΚΟΣ (ΚΙΛΙΓΚ)
@@ -208,39 +145,27 @@ copy selection	htmlarea	el	Αντιγραφή επιλογής
 costa rica	common	el	ΚΟΣΤΑ ΡΙΚΑ
 cote d ivoire	common	el	ΑΚΤΗ ΕΛΕΦΑΝΤΟΣΤΟΥ
 create	common	el	Δημιουργία
-
 create a link	htmlarea-ContextMenu	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…
 created by	common	el	Δημιουργία από
-
 croatia	common	el	ΚΡΟΑΤΙΑ
-
 cuba	common	el	ΚΟΥΒΑ
-
 currency	common	el	Νόμισμα
-
 current	common	el	Τρέχων
-
 current style	htmlarea	el	Τρέχων στυλ
-
 current url is	htmlarea-ContextMenu	el	Ξ¤ΞΏ Ο„ΟΞ­Ο‡Ο‰Ξ½ URL ΞµΞ―Ξ½Ξ±ΞΉ
 current users	common	el	Τρέχοντες Χρήστες
-
 cut	htmlarea-ContextMenu	el	Ξ‘Ο€ΞΏΞΊΞΏΟ€Ξ®
 cut selection	htmlarea	el	Αποκοπή επιλογής
 cyprus	common	el	ΚΥΠΡΟΣ
 czech republic	common	el	ΤΣΕΧΙΑ
 date	common	el	Ημερομηνία
 date due	common	el	Ημερομηνία ολοκλήρωσης
-
 date selection:	jscalendar	el	Ημερομηνία επιλογής
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.<br> Aν χρησιμοποιείται τη θύρα 13, παρακαλώ ορίστε καταλλήλως τους κανόνες του firewall πριν υποβάλετε αυτή τη σελίδα.<br>(Port: 13 / Host: 129.6.15.28)
 de_lete column	htmlarea-ContextMenu	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΟƒΟ„Ξ®Ξ»Ξ·Ο‚
 december	common	el	Δεκέμβριος
-
 decrease indent	htmlarea	el	Μείωση εσοχής
-
 default category	common	el	Προεπιλεγμένη Κατηγορία
-
 delete	common	el	Διαγραφή
 delete cell	htmlarea-TableOperations	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞΊΞµΞ»ΞΉΞΏΟ
 delete column	htmlarea-TableOperations	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΟƒΟ„Ξ®Ξ»Ξ·Ο‚
@@ -248,40 +173,27 @@ delete row	htmlarea-TableOperations	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚
 delete the current column	htmlarea-ContextMenu	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚ ΟƒΟ„Ξ®Ξ»Ξ·Ο‚
 delete the current row	htmlarea-ContextMenu	el	Ξ”ΞΉΞ±Ξ³ΟΞ±Ο†Ξ® ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·Ο‚ Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚
 denmark	common	el	ΔΑΝΙΑ
-
 description	common	el	Περιγραφή
 detail	common	el	Λεπτομέρεια
 details	common	el	Λεπτομέρειες
-
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	el	Nα απενεργοποιηθεί η εκτέλεση του bugfixscript στον Internet Explorer 5.5 και μεγαλύτερο για να εμφανίζεται η διαφάνεια στις PNG-εικόνες;
-
 disable internet explorer png-image-bugfix	common	el	Απενεργοποίηση του Internet Explorer png-image-bugfix
 disable slider effects	common	el	Aπενεργοποίηση των εφέ της μπάρας κύλισης
-
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	el	Να απενεργοποιθούν τα εφέ της μπάρας κύλισης κατά την εμφάνιση ή απόκρυψη των μενού σ' αυτή τη σελίδα; Αυτό πιθανόν χρειάζεται για τους χρήστες των Opera και Konqueror.
 disabled	common	el	Απενργοποιημένο
-
 display monday first	jscalendar	el	Ξεκίνημα εβδομάδας η Δευτέρα
-
 display sunday first	jscalendar	el	Ξεκίνημα εβδομάδας η Κυριακή
-
 djibouti	common	el	ΤΣΙΜΠΟΥΤΙ
-
 do you also want to delete all subcategories ?	common	el	Θέλετε να διαγράψετε και όλες τις υποκατηγορίες;
-
 domain	common	el	Τομέας
-
 domain name for mail-address, eg. "%1"	common	el	Όνομα Τομέα για διεύθυνση ηλεκτρονικού ταχυδρομείου π.χ. "%1"
 domestic	common	el	Εσωτερικός
 dominica	common	el	ΔΟΜΙΝΙΚΗ
 dominican republic	common	el	ΔΟΜΙΝΙΚΑΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ
 done	common	el	Ολοκληρώθηκε
-
 drag to move	jscalendar	el	Σύρε για μετακίνηση
-
 e-mail	common	el	E-Mail
 east timor	common	el	ΑΝΑΤΟΛΙΚΟ ΤΙΜΟΡ
-
 ecuador	common	el	ΙΣΗΜΕΡΙΝΟΣ
 edit	common	el	Επεξεργασία
 edit %1 category for	common	el	Επεξεργασία της κατηγορίας 1% για
@@ -295,134 +207,88 @@ element...	htmlarea-ContextMenu	el	ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―ΞΏΟ…...
 email	common	el	Ε-Μail
 email-address of the user, eg. "%1"	common	el	e-mail του χρήστη π.χ. "%1"
 enabled	common	el	Ενεργοποιημένο
-
 end date	common	el	Ημερομηνία παράδοσης
-
 end time	common	el	Ώρα παράδοσης
-
 enlarge editor	htmlarea	el	Μεγέθυνση Επεξεργαστή
-
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του eGroupWare URL.<br>Παράδειγμα: http://www.domain.com/egroupware &nbsp; or &nbsp;/egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
 entry has been deleted sucessfully	common	el	Η καταχώρηση διαγράφηκε επιτυχώς
-
 entry updated sucessfully	common	el	Η καταχώρηση ενημερώθηκε επιτυχώς
-
 equatorial guinea	common	el	ΙΣΗΜΕΡΙΝΗ ΓΟΥΪΝΕΑ
-
 eritrea	common	el	ΕΡΥΘΡΑΙΑ
 error	common	el	Σφάλμα
-
 error creating %1 %2 directory	common	el	Σφάλμα κατά τη δημιουργία του καταλόγου %1 %2
 error deleting %1 %2 directory	common	el	Σφάλμα κατά τη διαγραφή του καταλόγου %1 %2
 error renaming %1 %2 directory	common	el	Σφάλμα κατά τη μετονομασία του καταλόγου %1 %2
 estonia	common	el	ΕΣΘΟΝΙΑ
-
 ethiopia	common	el	ΑΙΘΙΟΠΙΑ
 falkland islands (malvinas)	common	el	ΝΗΣΟΙ ΦΩΚΛΑΝΤ (ΜΑΛΒΙΝΑΣ)
 faroe islands	common	el	ΝΗΣΟΙ ΦΕΡΟΕ
-
 fax number	common	el	Αριθμός Fax
 february	common	el	Φεβρουάριος
-
 fg color	htmlarea-TableOperations	el	Ξ§ΟΟΞΌΞ± Ξ±Ξ½Ο„ΞΉΞΊΞµΞΉΞΌΞ­Ξ½Ο‰Ξ½
 fields	common	el	Πεδία
 fiji	common	el	ΦΙΤΖΙ
-
 files	common	el	Αρχεία
 filter	common	el	Φίλτρο
-
 finland	common	el	ΦΙΛΑΝΔΙΑ
 first name	common	el	Ονομα
 first name of the user, eg. "%1"	common	el	Ονομα χρήστη, π.χ. "%1"
 first page	common	el	Αρχική σελίδα
-
 firstname	common	el	Ονομα
 fixme!	common	el	Διόρθωσέ με!
 float	htmlarea-TableOperations	el	Float
 font color	htmlarea	el	Χρώμα γραμματοσειράς
-
 force selectbox	common	el	
 frames	htmlarea-TableOperations	el	Frames
 france	common	el	ΓΑΛΙΑ
-
 french guiana	common	el	ΓΑΛΛΙΚΗ ΓΟΥΪΑΝΑ
-
 french polynesia	common	el	ΓΑΛΛΙΚΗ ΠΟΛΥΝΗΣΙΑ
-
 french southern territories	common	el	ΝΟΤΙΕΣ ΓΑΛΛΙΚΕΣ ΚΤΗΣΕΙΣ
-
 friday	common	el	Παρασκευή
 ftp	common	el	FTP
 fullname	common	el	Ονοματεπώνυμο
-
 gabon	common	el	ΓΚΑΜΠΟΝ
-
 gambia	common	el	ΓΚΑΜΠΙΑ
-
 general menu	common	el	Γενικό Μενού
-
 georgia	common	el	ΓΕΩΡΓΙΑ
-
 germany	common	el	ΓΕΡΜΑΝΙΑ
 ghana	common	el	ΓΚΑΝΑ
-
 gibraltar	common	el	ΓΙΒΡΑΛΤΑΡ
-
 global	common	el	Παγκόσμιο
 global public	common	el	Παγκόσμιο Κοινό
 go today	jscalendar	el	Σήμερα
-
 grant access	common	el	Χορήγηση Πρόσβασης
-
 greece	common	el	ΕΛΛΑΔΑ
 greenland	common	el	ΓΡΟΙΛΑΝΔΙΑ
 grenada	common	el	ΓΡΑΝΑΔΑ
-
 group	common	el	Ομάδα
-
 group access	common	el	Πρόσβαση Ομάδας
-
 group has been added	common	el	Η ομάδα προστέθηκε
-
 group has been deleted	common	el	Η ομάδα διαγράφηκε
 group has been updated	common	el	Η ομάδα ανανεώθηκε
-
 group name	common	el	όνομα ομάδας
 group public	common	el	
 groups	common	el	Ομάδες
-
 groups with permission for %1	common	el	Ομάδες με άδεια για %1
 groups without permission for %1	common	el	Ομάδες χωρίς άδεια για %1
 guadeloupe	common	el	ΓΟΥΑΔΑΛΟΥΠΗ
-
 guam	common	el	ΓΚΟΥΑΜ
 guatemala	common	el	ΓΚΟΥΑΤΕΜΑΛΑ
-
 guinea	common	el	ΓΟΥΪΝΕΑ
-
 guinea-bissau	common	el	ΓΟΥΪΝΕΑ-ΜΠΙΣΩ
-
 guyana	common	el	ΓΟΥΪΑΝΑ
-
 haiti	common	el	ΑΪΤΗ
 heard island and mcdonald islands	common	el	ΝΗΣΟΙ ΧΕΡΝΤ & ΜΑΚΝΤΟΝΑΛΝΤ
-
 height	htmlarea-TableOperations	el	ΞΟΞΏΟ‚
 help	common	el	Βοήθεια
 help using editor	htmlarea	el	Βοήθεια για τον επεξεργαστή
-
 high	common	el	Ψηλά
-
 highest	common	el	Ψηλότερα
 holy see (vatican city state)	common	el	ΒΑΤΙΚΑΝΟ
 home	common	el	Αρχική Σελίδα
-
 home email	common	el	Email οικίας
-
 honduras	common	el	ΟΝΔΟΥΡΑ
-
 hong kong	common	el	ΧΟΝΓΚ ΚΟΝΓΚ
-
 horizontal rule	htmlarea	el	Οριζόντιος χάρακας
 how did you get here? (please report!)	htmlarea-ContextMenu	el	Ξ ΟΟ‚ Ξ®ΟΞΈΞ±Ο„Ξµ ΞΌΞ­Ο‡ΟΞΉ ΞµΞ΄Ο; (Ξ Ξ±ΟΞ±ΞΊΞ±Ξ»ΞΏΟΞΌΞµ Ξ±Ξ½Ξ±Ο†Ξ­ΟΞµΟ„Ξµ Ο„ΞΏ!)
 how many columns would you like to merge?	htmlarea-TableOperations	el	Ξ ΟΟƒΞµΟ‚ ΟƒΟ„Ξ®Ξ»ΞµΟ‚ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± ΞµΞ½ΟΟƒΞµΟ„Ξµ;
@@ -437,11 +303,8 @@ iceland	common	el	ΙΣΛΑΝΔΙΑ
 image url	htmlarea-TableOperations	el	URL ΞµΞΉΞΊΟΞ½Ξ±Ο‚
 in_sert row after	htmlarea-ContextMenu	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚ ΞΌΞµΟ„Ξ¬
 increase indent	htmlarea	el	Αύξηση εσοχής
-
 india	common	el	ΙΝΔΙΑ
-
 indonesia	common	el	ΙΝΔΟΝΗΣΙΑ
-
 insert _column before	htmlarea-ContextMenu	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟƒΟ„Ξ®Ξ»Ξ·Ο‚ Ο€ΟΞΉΞ½
 insert a new column after the current one	htmlarea-ContextMenu	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ½Ξ­Ξ±Ο‚ ΟƒΟ„Ξ®Ξ»Ξ·Ο‚ ΞΌΞµΟ„Ξ¬ Ο„Ξ·Ξ½ ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·
 insert a new column before the current one	htmlarea-ContextMenu	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ½Ξ­Ξ±Ο‚ ΟƒΟ„Ξ®Ξ»Ξ·Ο‚ Ο€ΟΞΉΞ½ Ο„Ξ·Ξ½ ΞµΟ€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½Ξ·
@@ -454,140 +317,90 @@ insert cell before	htmlarea-TableOperations	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΞΊΞµΞ»ΞΉΞΏΟ Ο€Ο
 insert column after	htmlarea-TableOperations	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟƒΟ„Ξ®Ξ»Ξ·Ο‚ ΞΌΞµΟ„Ξ¬
 insert column before	htmlarea-TableOperations	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® ΟƒΟ„Ξ®Ξ»Ξ·Ο‚ Ο€ΟΞΉΞ½
 insert image	htmlarea	el	Εισαγωγή Εικόνας
-
 insert row after	htmlarea-TableOperations	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚ Ο€ΟΞΉΞ½
 insert row before	htmlarea-TableOperations	el	Ξ•ΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚ ΞΌΞµΟ„Ξ¬
 insert table	htmlarea	el	Εισαγωγή Πίνακα
-
 insert web link	htmlarea	el	Εισαγωγή Σύνδεσης Διαδικτυακού Τόπου
-
 international	common	el	Διεθνείς
 invalid ip address	common	el	Ακυρη διεύθυνση ΙΡ
 invalid password	common	el	¶κυρος κωδικός
-
 iran, islamic republic of	common	el	ΙΡΑΝ
 iraq	common	el	ΙΡΑΚ
 ireland	common	el	ΙΡΛΑΝΔΙΑ
 israel	common	el	ΙΣΡΑΗΛ
 it has been more then %1 days since you changed your password	common	el	Πέρασαν πάνω από %1 μέρες από την τελευταία αλλαγή του κωδικού σας
-
 it is recommended that you run setup to upgrade your tables to the current version	common	el	Συνιστάται η εκτέλεση του setup για αναβάθμιση των πινάκων σας στην τρέχουσα έκδοση.
-
 italic	common	el	Πλάγια
-
 italy	common	el	ΙΤΑΛΙΑ
 jamaica	common	el	ΤΖΑΜΑΙΚΑ
 january	common	el	Ιανουάριος
 japan	common	el	ΙΑΠΩΝΙΑ
-
 jordan	common	el	ΙΟΡΔΑΝΙΑ
 july	common	el	Ιούλιος
-
 june	common	el	Ιούνιος
-
 justify	htmlarea-TableOperations	el	Ξ Ξ»Ξ®ΟΞ·Ο‚ ΟƒΟ„ΞΏΞ―Ο‡Ξ·ΟƒΞ·
 justify center	common	el	Στοίχιση στο κέντρο
-
 justify full	common	el	Πλήρης στοίχιση
 justify left	common	el	Στοίχιση αριστερά
-
 justify right	common	el	Στοίχιση δεξιά
-
 kazakstan	common	el	ΚΑΖΑΚΣΤΑΝ
-
 kenya	common	el	ΚΕΝΥΑ
-
 keywords	common	el	Λέξεις κλειδιά
-
 kiribati	common	el	ΚΙΡΙΜΠΑΤΙ
-
 korea, democratic peoples republic of	common	el	ΚΟΡΕΑ, ΒΟΡΕΙΑ
 korea, republic of	common	el	ΚΟΡΕΑ, ΝΟΤΙΑ
-
 kuwait	common	el	ΚΟΥΒΕΪΤ
-
 kyrgyzstan	common	el	ΚΥΡΓΥΣΤΑΝ
-
 language	common	el	Γλώσσα
-
 lao peoples democratic republic	common	el	ΛΑΟΣ
 last name	common	el	Επίθετο
 last name of the user, eg. "%1"	common	el	επίθετο του χρήστη, π.χ. "%1"
 last page	common	el	Τελευταία σελίδα
-
-lastname	common	el	Επίθετο
 latvia	common	el	ΛΕΤΟΝΙΑ
-
 layout	htmlarea-TableOperations	el	Ξ”ΞΉΞ¬Ο„Ξ±ΞΎΞ·
 lebanon	common	el	ΛΙΒΑΝΟΣ
-
 left	htmlarea-TableOperations	el	Ξ‘ΟΞΉΟƒΟ„ΞµΟΞ¬
 lesotho	common	el	ΛΕΣΟΤΟ
 liberia	common	el	ΛΙΒΕΡΙΑ
-
 libyan arab jamahiriya	common	el	ΛΙΒΥΚΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
-
 license	common	el	Αδεια
 liechtenstein	common	el	ΛΙΧΤΕΝΣΤΑΪΝ
-
 link points to:	htmlarea-ContextMenu	el	Ξ ΟƒΟΞ½Ξ΄ΞµΞΌΞΏΟ‚ ΞΏΞ΄Ξ·Ξ³ΞµΞ― ΞµΞ΄Ο:
 list	common	el	Λίστα
-
 lithuania	common	el	ΛΙΘΟΥΑΝΙΑ
-
 local	common	el	Τοπικός
-
 login	common	el	Είσοδος
-
 loginid	common	el	Ταυτότητα εισόδου
-
 logout	common	el	Εξοδος
-
 low	common	el	Χαμηλό
-
 lowest	common	el	Ελάχιστο
-
 luxembourg	common	el	ΛΟΥΞΕΜΒΟΥΡΓΟ
 macau	common	el	ΜΑΚΑΟ
-
 macedonia, the former yugoslav republic of	common	el	Π.Γ.Δ. ΤΗΣ ΜΑΚΕΔΟΝΙΑΣ
 madagascar	common	el	ΜΑΔΑΓΑΣΚΑΡΗ
-
 mail domain, eg. "%1"	common	el	mail domain, π.χ. "%1"
 main category	common	el	Βασική κατηγορία
-
 main screen	common	el	Βασική οθόνη
-
 maintainer	common	el	Συντηρητής
-
 make lin_k...	htmlarea-ContextMenu	el	Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³Ξ―Ξ± ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ…...
 malawi	common	el	ΜΑΛΑΟΥΪ
-
 malaysia	common	el	ΜΑΛΑΙΣΙΑ
 maldives	common	el	ΜΑΛΔΙΒΕΣ
 mali	common	el	ΜΑΛΙ
 malta	common	el	ΜΑΛΤΑ
-
 march	common	el	Μάρτιος
-
 margin	htmlarea-TableOperations	el	Ξ ΞµΟΞΉΞΈΟΟΞΉΞΏ
 marshall islands	common	el	ΝΗΣΟΙ ΜΑΡΣΑΛ
 martinique	common	el	ΜΑΡΤΙΝΙΚΑ
-
 mauritania	common	el	ΜΑΥΡΙΤΑΝΙΑ
 mauritius	common	el	ΜΑΥΡΙΚΙΟΣ
-
 max number of icons in navbar	common	el	Μέγιστος αριθμός εικονιδίων στη μπάρα πλοήγησης
-
 may	common	el	Μάϊος
-
 mayotte	common	el	ΜΑΓΙΟΤΕ
-
 medium	common	el	Μεσαίο
 menu	common	el	Μενού
 merge cells	htmlarea-TableOperations	el	Ξ£Ο…Ξ³Ο‡ΟΞ½ΞµΟ…ΟƒΞ· ΞΊΞµΞ»ΞΉΟΞ½
 message	common	el	Μήνυμα
-
 mexico	common	el	ΜΕΞΙΚΟ
 micronesia, federated states of	common	el	ΜΙΚΡΟΝΗΣΙΑ
 middle	htmlarea-TableOperations	el	ΞΞ­Ξ½Ο„ΟΞΏ
@@ -595,193 +408,127 @@ modify url	htmlarea-ContextMenu	el	Ξ¤ΟΞΏΟ€ΞΏΟ€ΞΏΞ―Ξ·ΟƒΞ· URL
 moldova, republic of	common	el	ΜΟΛΔΑΒΙΑ
 monaco	common	el	ΜΟΝΑΚΟ
 monday	common	el	Δευτέρα
-
 mongolia	common	el	ΜΟΓΓΟΛΙΑ
 montserrat	common	el	ΜΟΝΣΕΡΑ
-
 morocco	common	el	ΜΑΡΟΚΟ
 mozambique	common	el	ΜΟΝΖΑΒΙΚΗ
-
 myanmar	common	el	ΜΥΑΝΜΑΡ
-
 name	common	el	Όνομα
-
 name of the user, eg. "%1"	common	el	Ονομα χρήστη, π.χ. "%1"
 namibia	common	el	ΝΑΜΙΜΠΙΑ
 nauru	common	el	ΝΑΟΥΡΟΥ
-
 nepal	common	el	ΝΕΠΑΛ
-
 netherlands	common	el	ΟΛΛΑΝΔΙΑ
 netherlands antilles	common	el	ΟΛΛΑΝΔΙΚΕΣ ΑΝΤΙΛΛΕΣ
 never	common	el	Ποτέ
-
 new caledonia	common	el	ΝΕΑ ΚΑΛΗΔΟΝΙΑ
-
 new entry added sucessfully	common	el	Επιτυχής προσθήκη νέας εισαγωγής
 new main category	common	el	Νέα βασική κατηγορία
-
-new value	common	el	Νέα τιμή
 new zealand	common	el	ΝΕΑ ΖΗΛΑΝΔΙΑ
 next	common	el	Επόμενο
-
-next month (hold for menu)	jscalendar	el	Επόμενος μήνας (κρατήστε για μενού)
 next page	common	el	Επόμενη σελίδα
-
 next year (hold for menu)	jscalendar	el	Επόμενος χρόνος (κρατήστε για μενού)
 nicaragua	common	el	ΝΙΚΑΡΑΓΟΥΑ
 niger	common	el	ΝΙΓΗΡ
-
 nigeria	common	el	ΝΙΓΗΡΙΑ
-
 niue	common	el	ΝΙΟΥΕ
-
 no	common	el	Όχι
-
 no entries found, try again ...	common	el	δεν βρέθηκαν καταχωρήσεις, ξαναπροσπαθήστε...
 no history for this record	common	el	Δεν υπάρχει ιστορικό γι' αυτή την εγγραφή
 no rules	htmlarea-TableOperations	el	Ξ§Ο‰ΟΞ―Ο‚ Ξ“ΟΞ±ΞΌΞΌΞ­Ο‚
 no sides	htmlarea-TableOperations	el	No sides
 no subject	common	el	Χωρίς θέμα
-
 none	common	el	Κανένα
-
 norfolk island	common	el	ΝΗΣΟΣ ΝΟΡΦΟΛΚ
-
 normal	common	el	Κανονικό
 northern mariana islands	common	el	ΝΗΣΟΙ ΝΟΤΙΑ ΜΑΡΙΑΝΑ
-
 norway	common	el	ΝΟΡΒΗΓΙΑ
 not assigned	common	el	χωρίς ανάθεση
 note	common	el	Σημείωση
-
 notes	common	el	Σημειώσεις
 notify window	common	el	Παράθυρο ειδοποίησης
-
 november	common	el	Νοέμβριος
-
 october	common	el	Οκτώβριος
 ok	common	el	ΟΚ
 old value	common	el	Παλιά Τιμή
-
 oman	common	el	ΟΜΑΝ
 on *nix systems please type: %1	common	el	Σε *nix συστήματα πληκτρολογίστε: %1
 on mouse over	common	el	Με mouse over
 only private	common	el	μόνο ιδιωτικά
 only yours	common	el	μόνο δικά σας
-
 open notify window	common	el	Ανοιξε το παράθυρο ειδοποίησης
-
 open popup window	common	el	Ανοιξε το εκτινασσόμενο παράθυρο
-
 opens this link in a new window	htmlarea-ContextMenu	el	Ξ‘Ξ½ΞΏΞ―Ξ³ΞµΞΉ Ξ±Ο…Ο„Ο Ο„ΞΏΞ½ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏ ΟƒΞµ Ξ­Ξ½Ξ± Ξ½Ξ­ΞΏ Ο€Ξ±ΟΞ¬ΞΈΟ…ΟΞΏ
 ordered list	htmlarea	el	Ταξινομημένη λίστα
-
 original	common	el	Αρχικός
-
 other	common	el	Αλλο
-
 overview	common	el	Επισκόπηση
-
 owner	common	el	Ιδιοκτήτης
-
 padding	htmlarea-TableOperations	el	Ξ•ΟƒΞΏΟ‡Ξ®
 page was generated in %1 seconds	common	el	Η σελίδα δημιουργήθηκε σε %1 δευτερόλεπτα
-
 pakistan	common	el	ΠΑΚΙΣΤΑΝ
 palau	common	el	ΠΑΛΑΟΥ
 palestinian territory, occupied	common	el	ΠΑΛΑΙΣΤΗΝΙΑΚΗ ΚΑΤΕΧΟΜΕΝΗ ΠΕΡΙΟΧΗ
-
 panama	common	el	ΠΑΝΑΜΑΣ
-
 papua new guinea	common	el	ΠΑΠΟΥΑ ΝΕΑ ΓΟΥΪΝΕΑ
-
 paraguay	common	el	ΠΑΡΑΓΟΥΑΗ
-
 parcel	common	el	Πακέτο
-
 parent category	common	el	Γονική Κατηγορία
-
 password	common	el	Κωδικός
-
 password could not be changed	common	el	Ο κωδικός δεν μπόρεσε να αλλαχθεί
 password has been updated	common	el	Ο κωδικός ενημερώθηκε
-
 paste	htmlarea-ContextMenu	el	Ξ•Ο€ΞΉΞΊΟΞ»Ξ»Ξ·ΟƒΞ·
 paste from clipboard	htmlarea	el	Επικόλληση από το τεμάχιο
-
 path	htmlarea	el	Διαδρομή
 path to user and group files has to be outside of the webservers document-root!!!	common	el	Η διαδρομή του χρήστη και των αρχείων ομάδας ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ του webserver document-root!!!
 pattern for search in addressbook	common	el	Σχέδιο για αναζήτηση  στο Βιβλίο διευθύνσεων
 pattern for search in calendar	common	el	Σχέδιο για αναζήτηση στο Ημερολόγιο
-
 pattern for search in projects	common	el	Σχέδιο για αναζήτηση στις Προβολές
 percent	htmlarea-TableOperations	el	Ο„ΞΏΞΉΟ‚ ΞµΞΊΞ±Ο„ΟΞ½
 permissions to the files/users directory	common	el	δικαιώματα για τον κατάλογο αρχείων/χρηστών
-
 personal	common	el	Προσωπικό
 peru	common	el	ΠΕΡΟΥ
-
 philippines	common	el	ΦΙΛΙΠΠΙΝΕΣ
 phone number	common	el	Αριθμός τηλεφώνου
 pitcairn	common	el	ΠΙΤΚΕΡΝ
-
 pixels	htmlarea-TableOperations	el	pixels
 please %1 by hand	common	el	Παρακαλώ %1 με το χέρι
-
 please click into some cell	htmlarea-TableOperations	el	ΞΞ¬Ξ½Ο„Ξµ ΞΊΞ»ΞΉΞΊ ΞΌΞ­ΟƒΞ± ΟƒΞµ ΞΊΞ¬Ο€ΞΏΞΉΞΏ ΞΊΞµΞ»Ξ―
 please confirm that you want to remove this element:	htmlarea-ContextMenu	el	Ξ•Ξ―ΟƒΟ„Ξµ Ξ²Ξ­Ξ²Ξ±ΞΉΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ±Ο†Ξ±ΞΉΟΞ­ΟƒΞµΟ„Ξµ Ο„ΞΏ ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―ΞΏ 
 please confirm that you want to unlink this element.	htmlarea-ContextMenu	el	Ξ•Ξ―ΟƒΟ„Ξµ Ξ²Ξ­Ξ²Ξ±ΞΉΞΏΟ‚ Ο€Ο‰Ο‚ ΞΈΞ­Ξ»ΞµΟ„Ξµ Ξ½Ξ± Ξ±Ο†Ξ±ΞΉΟΞ­ΟƒΞµΟ„Ξµ Ο„ΞΏΞ½ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏ Ξ±Ο€Ο Ξ±Ο…Ο„Ο Ο„ΞΏ ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―ΞΏ:
 please enter a name	common	el	Παρακαλώ εισάγετε όνομα
-
 please run setup to become current	common	el	Παρακαλώ τρέξτε το setup για να γίνετε έγκυρος
-
 please select	common	el	Παρακαλώ επιλέξτε
-
 please set your global preferences	common	el	Παρακαλώ ορίστε τις παγκόσμιες ρυθμίσεις σας!
 please set your preferences for this application	common	el	Παρακαλώ ορίστε τις ρυθμίσεις σας γι' αυτή την εφαρμογή
-
 please wait...	common	el	Παρακαλώ περιμένετε
 poland	common	el	ΠΟΛΩΝΙΑ
-
 portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
 postal	common	el	Ταχυδρομικός
-powered by phpgroupware version %1	common	el	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> έκδοση %1
+powered by phpgroupware version %1	common	el	Powered by <a href="http://www.egroupware.org">eGroupWare</a> έκδοση %1
 preferences	common	el	Επιλογές
 preferences for the idots template set	common	el	Επιλογές συνόλων προτύπων για τα idots
 prev. month (hold for menu)	jscalendar	el	Προηγούμενος μήνας (κρατήστε για μενού)
 prev. year (hold for menu)	jscalendar	el	Προηγούμενος χρόνος (κρατήστε για μενού)
 previous page	common	el	Προηγούμενη σελίδα
-
 print	common	el	Εκτύπωση
-
 priority	common	el	Προτεραιότητα
 private	common	el	Προσωπικό
 project	common	el	Προβολή
-
 public	common	el	κοινόχρηστο
-
 puerto rico	common	el	ΠΟΥΕΡΤΟ ΡΙΚΟ
 qatar	common	el	ΚΑΤΑΡ
-
 read	common	el	Ανάγνωση
-
 read this list of methods.	common	el	Ανάγνωση λίστας μεθόδων
-
 redoes your last action	htmlarea	el	Επανάληψη τελευταίας ενέργειας
-
 reject	common	el	Απόρριψη
 remove the	htmlarea-ContextMenu	el	Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ·
 remove this node from the document	htmlarea-ContextMenu	el	Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· Ξ±Ο…Ο„ΞΏΟ Ο„ΞΏΟ… ΞΊΟΞΌΞ²ΞΏΟ… Ξ±Ο€Ο Ο„ΞΏ Ξ­Ξ³Ξ³ΟΞ±Ο†ΞΏ
 rename	common	el	Μετονομασία
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	el	Επιστρέφει πλήρη λίστα λογαριασμών στο σύστημα. Προειδοποίηση: η λίστα μπορεί να είναι αρκετά μεγάλη
-
 returns an array of todo items	common	el	Επιστρέφει μια σειρά ανειλημμένες εργασίες
-
 returns struct of users application access	common	el	Επιστρέφει τη δομή πρόσβασης των εφαρμογών χρήστη
-
 reunion	common	el	Επανένωση
-
 right	htmlarea-TableOperations	el	Ξ”ΞµΞΎΞΉΞ¬
 ro_w properties...	htmlarea-ContextMenu	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚...
 romania	common	el	ΡΟΥΜΑΝΙΑ
@@ -792,60 +539,40 @@ rules will appear between columns only	htmlarea-TableOperations	el	Ξ“ΟΞ±ΞΌΞΌΞ­Ο
 rules will appear between rows only	htmlarea-TableOperations	el	Ξ“ΟΞ±ΞΌΞΌΞ­Ο‚ ΞΈΞ± ΞµΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΞ½Ο„Ξ±ΞΉ ΞΌΟΞ½ΞΏ ΞΌΞµΟ„Ξ±ΞΎΟ Ξ³ΟΞ±ΞΌΞΌΟΞ½
 russian federation	common	el	ΡΩΣΣΙΑ
 rwanda	common	el	ΡΟΥΑΝΤΑ
-
 saint helena	common	el	ΑΓΙΑ ΕΛΕΝΗ
-
 saint kitts and nevis	common	el	ΑΓΙΟΙ ΚΙΤΣ & ΝΕΒΙΣ
-
 saint lucia	common	el	ΑΓΙΑ ΛΟΥΚΙΑ
 saint pierre and miquelon	common	el	ΑΓΙΟΙ ΠΙΕΡ & ΜΙΚΕΛΟΝ
-
 saint vincent and the grenadines	common	el	ΑΓΙΟΣ ΒΙΝΣΕΝΤ & ΓΡΕΝΑΔΙΝΕΣ
 samoa	common	el	ΣΑΜΟΑ
-
 san marino	common	el	ΣΑΝ ΜΑΡΙΝΟ
 sao tome and principe	common	el	ΣΑΟ ΤΟΜΕ & ΠΡΙΝΣΙΠΕ
 saturday	common	el	Σάββατο
-
 saudi arabia	common	el	ΣΑΟΥΔΙΚΗ ΑΡΑΒΙΑ
 save	common	el	Αποθήκευση
-
 search	common	el	Αναζήτηση
 section	common	el	Τομέας
-
 select	common	el	Επιλογή
-
 select all %1 %2 for %3	common	el	Επιλογή όλων %1 %2 για %3
 select category	common	el	Επιλογή κατηγορίας
 select date	common	el	Επιλογή ημερομηνίας
-
 select group	common	el	Επιλογή ομάδας
 select home email address	common	el	Επιλογή διεύθυνσης email οικίας
-
 select one	common	el	Επιλογή ενός
-
 select user	common	el	Επιλογή χρήστη
-
 select work email address	common	el	Επιλογή διεύθυνσης email eργασίας
-
 send	common	el	Αποστολή
 senegal	common	el	ΣΕΝΕΓΑΛΗ
 september	common	el	Σεπτέμβριος
-
 server %1 has been added	common	el	Προστέθηκε ο διακομιστής %1
 server name	common	el	Ονομα Διακομιστή
-
 session has been killed	common	el	H περίοδος εργασίας διεκόπηκε
 setup	common	el	Εγκατάσταση
 setup main menu	common	el	Βασικό μενού εγκατάστασης
-
 seychelles	common	el	ΣΕΫΧΕΛΛΕΣ
-
 show all	common	el	εμφάνιση όλων
-
 show all categorys	common	el	Εμφάνιση όλων των κατηγοριών
 show menu	common	el	Εμφάνιση του μενού
-
 show page generation time	common	el	Εμφάνιση χρόνου δημιουργίας σελίδας
 show page generation time on the bottom of the page?	common	el	Να εμφανισθεί ο χρόνος δημιουργίας της σελίδας στο τέλος της σελίδας;
 show the image properties dialog	htmlarea-ContextMenu	el	Ξ•ΞΌΟ†Ξ¬Ξ½ΞΉΟƒΞ· Ξ΄ΞΉΞ±Ξ»ΟΞ³ΞΏΟ… ΞΌΞµ Ο„ΞΉΟ‚ Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ ΞµΞΉΞΊΟΞ½Ξ±Ο‚
@@ -856,58 +583,40 @@ show_more_apps	common	el	show_more_apps
 showing %1	common	el	εμφάνιση %1
 showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3
 sierra leone	common	el	ΣΙΕΡΡΑ ΛΕΟΝΕ
-
 singapore	common	el	ΣΙΓΚΑΠΟΥΡΗ
 slovakia	common	el	ΣΛΟΒΑΚΙΑ
 slovenia	common	el	ΣΛΟΒΕΝΙΑ
 solomon islands	common	el	ΝΗΣΟΙ ΣΟΛΟΜΩΝΤΑ
-
 somalia	common	el	ΣΟΜΑΛΙΑ
-
 sorry, your login has expired	login	el	Η σύνδεσή σας έχει λήξει
-
 south africa	common	el	ΝΟΤΙΑ ΑΦΡΙΚΗ
 south georgia and the south sandwich islands	common	el	ΝΟΤΙΑ ΓΕΩΡΓΙΑ & ΝΟΤΙΑ ΝΗΣΙΑ ΣΑΝΤΟΥΪΤΣ
-
 spacing	htmlarea-TableOperations	el	Ξ‘Ο€ΞΏΟƒΟ„Ξ¬ΟƒΞµΞΉΟ‚
 spacing and padding	htmlarea-TableOperations	el	Ξ‘Ο€ΞΏΟƒΟ„Ξ¬ΟƒΞµΞΉΟ‚ ΞΊΞ±ΞΉ ΞµΟƒΞΏΟ‡Ξ­Ο‚
 spain	common	el	ΙΣΠΑΝΙΑ
-
 split cell	htmlarea-TableOperations	el	Ξ”ΞΉΞ±Ξ―ΟΞµΟƒΞ· ΞΊΞµΞ»ΞΉΞΏΟ
 split column	htmlarea-TableOperations	el	Ξ”ΞΉΞ±Ξ―ΟΞµΟƒΞ· ΟƒΟ„Ξ®Ξ»Ξ·Ο‚
 split row	htmlarea-TableOperations	el	Ξ”ΞΉΞ±Ξ―ΟΞµΟƒΞ· Ξ³ΟΞ±ΞΌΞΌΞ®Ο‚
 sri lanka	common	el	ΣΡΙ ΛΑΝΚΑ
-
 start date	common	el	Hμερομηνία έναρξης
-
 start time	common	el	Ωρα έναρξης
 status	common	el	Κατάσταση
 strikethrough	htmlarea	el	Διακριτή διαγραφή
-
 style [css]	htmlarea-TableOperations	el	Ξ£Ο„Ο…Ξ» [CSS]
 subject	common	el	Θέμα
-
 submit	common	el	Υποβολή
-
 subscript	htmlarea	el	Δείκτης
-
 substitutions and their meanings:	common	el	Αντικαταστάσεις και οι έννοιές τους:
 sudan	common	el	ΣΟΥΔΑΝ
 summary	htmlarea-TableOperations	el	Ξ£ΟΞ½ΞΏΟΞ·
 sunday	common	el	Κυριακή
-
 superscript	htmlarea	el	Εκθέτης
-
 suriname	common	el	ΣΟΥΡΙΝΑΜ
 svalbard and jan mayen	common	el	ΣΒΑΛΜΠΑΡΝΤ & ΓΙΑΝ ΜΕΪΓΕΝ
 swaziland	common	el	ΖΟΥΑΖΙΛΑΝΔΗ
-
 sweden	common	el	ΣΟΥΗΔΙΑ
-
 switzerland	common	el	ΕΛΒΕΤΙΑ
-
 syrian arab republic	common	el	ΣΥΡΙΑ
-
 table properties	htmlarea-TableOperations	el	Ξ™Ξ΄ΞΉΟΟ„Ξ·Ο„ΞµΟ‚ Ο€Ξ―Ξ½Ξ±ΞΊΞ±
 taiwan	common	el	ΤΑΪΒΑΝ/ΤΑΪΠΕΪ
 tajikistan	common	el	ΤΑΖΙΚΙΣΤΑΝ
@@ -915,163 +624,105 @@ tanzania, united republic of	common	el	ΤΑΝΖΑΝΙΑ
 text align	htmlarea-TableOperations	el	Ξ£Ο„ΞΏΞ―Ο‡Ξ·ΟƒΞ· ΞΊΞµΞΉΞΌΞ­Ξ½ΞΏΟ…
 thailand	common	el	ΤΑΪΛΑΝΔΗ
 the api is current	common	el	Το ΑΡΙ είναι το τρέχον
-
 the api requires an upgrade	common	el	Το ΑΡΙ χρειάζεται αναβάθμιση
-
 the bottom side only	htmlarea-TableOperations	el	Ξ— ΞΊΞ¬Ο„Ο‰ Ο€Ξ»ΞµΟ…ΟΞ¬ ΞΌΟΞ½ΞΏ
 the following applications require upgrades	common	el	Οι παρακάτω εφαρμογές χρειάζονται αναβάθμιση
-
 the left-hand side only	htmlarea-TableOperations	el	Ξ— Ξ±ΟΞΉΟƒΟ„ΞµΟΞ® Ο€Ξ»ΞµΟ…ΟΞ¬ ΞΌΟΞ½ΞΏ
 the mail server returned	common	el	Ο διακομιστής email επέστρεψε
-
 the right and left sides only	htmlarea-TableOperations	el	ΞΞΉ Ξ΄ΞµΞΎΞΉΞ­Ο‚ ΞΊΞ±ΞΉ Ξ±ΟΞΉΟƒΟ„ΞµΟΞ­Ο‚ Ο€Ξ»ΞµΟ…ΟΞ­Ο‚ ΞΌΟΞ½ΞΏ
 the right-hand side only	htmlarea-TableOperations	el	Ξ— Ξ΄ΞµΞΎΞΉΞ¬ Ο€Ξ»ΞµΟ…ΟΞ¬ ΞΌΟΞ½ΞΏ
 the top and bottom sides only	htmlarea-TableOperations	el	ΞΞΉ Ο€Ξ¬Ξ½Ο‰ ΞΊΞ±ΞΉ ΞΊΞ¬Ο„Ο‰ Ο€Ξ»ΞµΟ…ΟΞ­Ο‚ ΞΌΟΞ½ΞΏ
 the top side only	htmlarea-TableOperations	el	Ξ— Ο€Ξ¬Ξ½Ο‰ Ο€Ξ»ΞµΟ…ΟΞ¬ ΞΌΟΞ½ΞΏ
 this application is current	common	el	Η εφαρμογή είναι η τρέχουσα
-
 this application requires an upgrade	common	el	Η εφαρμογή χρειάζεται αναβάθμιση
-
 this name has been used already	common	el	Το όνομα ήδη χρησιμοποιείται
-
 thursday	common	el	Πέμπτη
-
 time	common	el	Ωρα
-
 time selection:	jscalendar	el	Επιλογή ώρας:
 time zone	common	el	Χρονική Ζώνη
-
 time zone offset	common	el	Μετακίνηση χρονικής ζώνης
-
 title	common	el	Τίτλος
 to	common	el	Προς:
 to correct this error for the future you will need to properly set the	common	el	Για να διορθωθεί αυτό το λάθος πρέπει να ορίσετε το
-
 to go back to the msg list, click <a href= %1 >here</a>	common	el	Για να επιστρέψετε στη λίστα μηνυμάτων, κάντε κλικ <a href="%1">εδώ</a>
 today	common	el	Σήμερα
-
-todays date, eg. "%1"	common	el	σημερινή ημερομηνία, π.χ. "%1"
 toggle first day of week	jscalendar	el	Εναλλαγή πρώτης ημέρας της εβδομάδας
 toggle html source	htmlarea	el	Εναλλαγή ΗTML κώδικα
 togo	common	el	ΤΟΓΚΟ
-
 tokelau	common	el	ΤΟΚΕΛΑΟΥ
 tonga	common	el	ΤΟΝΓΚΑ
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	el	Πολλές αποτυχημένες προσπάθειες για είσοδο: %1 από το χρήστη '%2', %3 με ΙΡ %4
 top	htmlarea-TableOperations	el	Ξ Ξ¬Ξ½Ο‰
 total	common	el	Σύνολο
-
 trinidad and tobago	common	el	ΤΡΙΝΙΤΑΝΤ & ΤΟΜΠΑΚΟ
-
 tuesday	common	el	Τρίτη
-
 tunisia	common	el	ΤΥΝΗΣΙΑ
-
 turkey	common	el	ΤΟΥΡΚΙΑ
-
 turkmenistan	common	el	ΤΟΥΡΚΜΕΝΙΣΤΑΝ
-
 turks and caicos islands	common	el	ΝΗΣΟΙ ΤΕΚΣ & ΚΑΪΚΟΣ
 tuvalu	common	el	ΤΟΥΒΑΛΟΥ
 uganda	common	el	ΟΥΓΚΑΝΤΑ
 ukraine	common	el	ΟΥΚΡΑΝΙΑ
 underline	htmlarea	el	Υπογράμμιση
-
 undoes your last action	htmlarea	el	Αναιρεί την τελευταία ενέργεια
-
 united arab emirates	common	el	ΗΝΩΜΕΝΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
-
 united kingdom	common	el	ΗΝΩΜΕΝΟ ΒΑΣΙΛΕΙΟ
 united states	common	el	ΗΝΩΜΕΝΕΣ ΠΟΛΙΤΕΙΕΣ
-
 united states minor outlying islands	common	el	ΝΗΣΟΙ ΗΝΩΜΕΝΩΝ ΠΟΛΙΤΕΙΩΝ
-
 unknown	common	el	Αγνωστο
-
 unlink the current element	htmlarea-ContextMenu	el	Ξ‘Ο†Ξ±Ξ―ΟΞµΟƒΞ· ΟƒΟ…Ξ½Ξ΄Ξ­ΟƒΞΌΞΏΟ… Ξ±Ο€Ο Ο„ΞΏ Ο€Ξ±ΟΟΞ½ ΟƒΟ„ΞΏΞΉΟ‡ΞµΞ―ΞΏ
 unset color	htmlarea-TableOperations	el	Ξ‘Ξ½Ξ±Ξ―ΟΞµΟƒΞ· Ο‡ΟΟΞΌΞ±Ο„ΞΏΟ‚
 update	common	el	Ανανέωση
-
 url	common	el	URL
 uruguay	common	el	ΟΥΡΟΥΓΟΥΑΗ
 use button to search for	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση
 use button to search for address	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση διευθύνσεων
 use button to search for calendarevent	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση γεγονότων ημερολογίου
-
 use button to search for project	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση προβολής
-
 user	common	el	Χρήστης
-
 user accounts	common	el	λογαριασμοί χρηστών
-
 user groups	common	el	ομάδες χρηστών
-
 username	common	el	Ονομα χρήστη
-
 users	common	el	Χρήστες
-
 users choice	common	el	Επιλογή χρηστών
-
 uzbekistan	common	el	ΟΥΖΜΠΕΚΙΣΤΑΝ
 vanuatu	common	el	ΒΑΝΟΥΑΤΟΥ
-
 venezuela	common	el	ΒΕΝΕΖΟΥΕΛΑ
 version	common	el	Έκδοση
-
 vertical align	htmlarea-TableOperations	el	ΞΞ±Ο„Ξ±ΞΊΟΟΟ…Ο†Ξ· ΟƒΟ„ΞΏΞ―Ο‡Ξ·ΟƒΞ·
 viet nam	common	el	ΒΙΕΤ ΝΑΜ
-
 view	common	el	Προβολή
-
 virgin islands, british	common	el	ΝΗΣΟΙ ΒΕΡΤΖΙΝ, ΒΡΕΤΑΝΙΚΑ
-
 virgin islands, u.s.	common	el	ΝΗΣΟΙ ΒΕΡΤΖΙΝ, Η.Π.Α.
 wallis and futuna	common	el	ΓΟΥΟΛΙΣ & ΦΟΥΤΟΥΝΑ
 wednesday	common	el	Τετάρτη
-
 welcome	common	el	Καλώς ήρθατε
-
 western sahara	common	el	ΔΥΤΙΚΗ ΣΑΧΑΡΑ
 which groups	common	el	Ποιές ομάδες
 width	htmlarea-TableOperations	el	Ξ Ξ»Ξ¬Ο„ΞΏΟ‚
 wk	jscalendar	el	εβ.
 work email	common	el	email εργασίας
-
 written by:	common	el	Γραμμένο από:
-
 year	common	el	Έτος
-
 yemen	common	el	ΥΕΜΕΝΗ
 yes	common	el	Ναι
-
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	el	Βρίσκεστε σε ΤEXT MODE. Χρησιμοποιήστε το κουμπί [<>] για να επιστρέψετε σε WYSIWIG
 you are required to change your password during your first login	common	el	Απαιτείται η αλλαγή του κωδικού σας κατά την πρώτη είσοδο
-you are running a newer version of phpgroupware than your database is setup for	common	el	Εκτελείτε μια νεότερη έκδοση του phpGroupWare από αυτή που έχει ρυθμιστεί η βάση δεδομένων σας
-
+you are running a newer version of phpgroupware than your database is setup for	common	el	Εκτελείτε μια νεότερη έκδοση του eGroupWare από αυτή που έχει ρυθμιστεί η βάση δεδομένων σας
 you have been successfully logged out	login	el	Επιτυχής έξοδος
-
 you have not entered a title	common	el	Δεν έχετε εισάγει τίτλο
-
 you have not entered a valid date	common	el	Δεν έχετε εισάγει έγκυρη ημερομηνία
 you have not entered a valid time of day	common	el	Δεν έχετε εισάγει έγκυρη ώρα της ημέρας
-
 you have not entered participants	common	el	Δεν έχετε εισάγει συμμετέχοντες
-
 you have selected an invalid date	common	el	Επιλέξατε άκυρη ημερομηνία!
 you have selected an invalid main category	common	el	Επιλέξατε άκυρη βασική κατηγορία!
 you have successfully logged out	common	el	Επιτυχής έξοδος
-
 your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b>δεν</b> μπόρεσε να σταλεί!<br>
 your message has been sent	common	el	To μήνυμά σας εστάλει
-
 your search returned %1 matchs	common	el	η αναζήτηση επέστρεψε %1 αποτελέσματα
-
 your search returned 1 match	common	el	η αναζήτηση επέστρεψε 1 αποτέλεσμα
-
 your session could not be verified.	login	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί
 your settings have been updated	common	el	Οι ρυθμίσεις σας έχουν ενημερωθεί
-
 yugoslavia	common	el	ΓΙΟΥΓΚΟΣΛΑΒΙΑ
-
 zambia	common	el	ΖΑΜΠΙΑ
 zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ
