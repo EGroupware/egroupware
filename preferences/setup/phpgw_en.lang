@@ -27,6 +27,7 @@ hours	preferences	en	hours
 how do you like to display accounts	preferences	en	How would you like to display accounts
 how do you like to select accounts	preferences	en	How would you like to select accounts
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
+How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	en	How many icons should be shown in the navigation bar at the top of the page. Additional icons go into a pulldown menu, callable by the icon on the far right side of the navbar.
 how should phpgroupware display dates for you.	preferences	en	How should eGroupWare display dates for you.
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only
@@ -34,6 +35,7 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	en	Interface/Template Selection
 language	preferences	en	Language
 max matches per page	preferences	en	Max matches per page
+Max number of icons in navbar	preferences	en	Max number of icons in navigation bar
 no default	preferences	en	No default
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
 please, select a new theme	preferences	en	Please, select a new theme
@@ -48,6 +50,7 @@ should the number of active sessions be displayed for you all the time.	preferen
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Should these help messages always display when modifying preferences, or only on request.
 show helpmessages by default	preferences	en	Show help messages by default
 show navigation bar as	preferences	en	Show navigation bar as
+show_more_apps	common	en	Show More Applications
 show number of current users	preferences	en	Show number of current users
 show text on navigation icons	preferences	en	Show text on navigation icons
 text only	preferences	en	Text only
