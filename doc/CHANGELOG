@@ -19,6 +19,8 @@
 		- Fixed setting of default preferences of new users.
 		- Updated Spanish translations.  Thanks gmartine <gmartine@users.sourceforge.net>
 		- Default preferences used if not set in DB.
+		- NNTP fixed to use the new account table layout.
+		- NNTP Header problem fixed.
 
 
 [0.9.1] - Fixed a few missing variables with templates.
