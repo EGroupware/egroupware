@@ -17,7 +17,7 @@
 * Ben Woodhead
 * ben@echo-chn.net
 * LGPL
-* @package cPage
+* @package phpgwapi
  */
 class Template {
   /** Internal Use - Array of file names */

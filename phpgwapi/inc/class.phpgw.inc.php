@@ -23,14 +23,20 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-	
-	/*!
-	 @class phpgw
-	 @abstract Main class. Has a few functions but is more importantly used as a parent class for everything else.
-	 @discussion written by: Seek3r <br>
-	 Syntax: CreateObject('phpgwapi.phpgw'); <br>
-	 Example1: $phpgw = CreateObject('phpgwapi.acl'); 
+
+
+	/**
+	* Base class
+	* Dan Kuykendall dan@kuykendall.org\n
+	* Base class. Has a few functions but is more importantly used as a parent class for everything else.\n
+	* Written by: Seek3r\n
+	* Order: short description - detailed description - doc tags.
+	* @package phpgwapi
+	* @param  string  A string which identifies the desired class - app.class
+	* Syntax: CreateObject('phpgwapi.phpgw'); <br>
+	* Example1: $phpgw = CreateObject('phpgwapi.acl'); 
 	*/
+
 	class phpgw
 	{
 		var $accounts;
