@@ -304,20 +304,20 @@
 			{
 				case 'sp':        // Sub-List
 					$action_vars = array('action'=>'sp','info_id'=>$info_id);
-				  $t->set_var(lang_info_action,lang('Info Log - Subprojects from'));
+				  $t->set_var(lang_info_action,lang('InfoLog - Subprojects from'));
 					break;
 			  case 'proj':
 					$action_vars += array( 'id_project' => $proj_id,
 												  'proj_id' => $proj_id);
 					$proj = $this->bo->readProj($proj_id);
-					$t->set_var(lang_info_action,lang('Info Log').' - '. 
+					$t->set_var(lang_info_action,lang('InfoLog').' - '. 
 									$proj['title']);
 					break;
 			  case 'addr':
 					$action_vars += array( 'id_addr' => $addr_id,
 												  'addr_id' => $addr_id );
 					$addr = $this->bo->readAddr($addr_id);
-					$t->set_var(lang_info_action,lang('Info Log').' - '.
+					$t->set_var(lang_info_action,lang('InfoLog').' - '.
 									$this->bo->addr2name($addr));
 					break;
 			  default:
@@ -325,7 +325,7 @@
 					{
 						$filter_name = ': '.$this->filters[ $filter ];
 					}
-					$t->set_var(lang_info_action,lang('Info Log').$filter_name);
+					$t->set_var(lang_info_action,lang('InfoLog').$filter_name);
 					break;
 			}
 			$t->set_var($this->setStyleSheet( ));
@@ -587,7 +587,7 @@
 
 					if (!checkdate($emonth,$eday,$eyear))
 					{
-						$error[] = lang('You have entered an invalid ending date');
+						$error[] = lang('You have entered an invalid enddate');
 					}
 					else
 					{
@@ -612,7 +612,7 @@
 
 				if ($enddate < $startdate && $enddate && $startdate)
 				{
-					$error[] = lang('Ending date can not be before start date');
+					$error[] = lang('Enddate can not be before startdate');
 				}
 
 				$access = $access ? 'private' : 'public';
@@ -706,15 +706,15 @@
 			switch ($action)
 			{
 				case 'sp':
-					$info_action = 'Info Log - New Subproject';
+					$info_action = 'InfoLog - New Subproject';
 					break;
 				case 'new': case 'addr': case 'proj':
-					$info_action = 'Info Log - New';
+					$info_action = 'InfoLog - New';
 					if ($info_type && isset($this->enums['type'][$info_type]))
 						$this->data['info_type'] = $info_type;
 					break;
 				default:
-					$info_action = 'Info Log - Edit'; break;
+					$info_action = 'InfoLog - Edit'; break;
 			}
 			$t->set_var('lang_info_action',lang($info_action) .
 					($query_addr ? ' - '.lang('Search for:')." '$query_addr'" : ''));
@@ -764,12 +764,12 @@
 			if (!isset($des)) $des = $phpgw->strip_html($this->data['info_des']);
 			$t->set_var('descval', $des);
 
-			$t->set_var('lang_start_date',lang('Start Date'));
+			$t->set_var('lang_start_date',lang('Startdate'));
 			if (!isset($startdate)) $startdate = $this->data['info_startdate'];
 			$t->set_var('start_select_date',
 							$sb->getDate('syear','smonth','sday',$startdate));
 
-			$t->set_var('lang_end_date',lang('End Date'));
+			$t->set_var('lang_end_date',lang('Enddate'));
 			if (!isset($enddate)) $enddate = $this->data['info_enddate'];
 			$t->set_var('end_select_date',
 							$sb->getDate('eyear','emonth','eday',$enddate));
@@ -852,7 +852,7 @@
 				$t->set_var( $this->setStyleSheet( ));
 				$t->set_var( $this->infoHeaders(  ));
 				$t->set_var( $this->formatInfo( $info_id ));
-				$t->set_var('lang_info_action',lang('Info Log - Delete'));
+				$t->set_var('lang_info_action',lang('InfoLog - Delete'));
 
 				$t->set_var('deleteheader',
 								lang('Are you sure you want to delete this entry'));

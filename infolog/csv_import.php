@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Info Log: CSV - Import                                    *
+  * phpGroupWare - InfoLog: CSV - Import                                     *
   * http://www.phpgroupware.org                                              *
   * Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
   * --------------------------------------------                             *
@@ -34,7 +34,7 @@
 	}		
 	$t->set_var("action_url",$phpgw->link("/infolog/csv_import.php"));
 	$t->set_var( $phpgw->infolog->setStyleSheet( ));
-	$t->set_var("lang_info_action",lang("Import CSV-File into Info Log"));
+	$t->set_var("lang_info_action",lang("InfoLog - Import CSV-File"));
 
 	$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
 	$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -119,7 +119,7 @@ function cat_id( $cats )
 			$defaults = array();
 		}		
 		$t->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
-		$t->set_var('lang_info_fieldname',lang('Info Log-Fieldname'));
+		$t->set_var('lang_info_fieldname',lang('InfoLog-Fieldname'));
 		$t->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
 		$t->set_var('submit',lang('Import'));
 		$t->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
@@ -215,7 +215,7 @@ function cat_id( $cats )
 								"You can use the 'No CVS #'-fields to assign cvs-values to more than on field, the following example uses the ".
 								"cvs-field 'Note' (which gots already assingned to the description) and construct a short subject: ".
 								"<b>@substr(${CPre}Note$CPos,0,60).' ...'</b><p>".
-								"Their is two important user-function for the Info Log:<br>".
+								"Their is two important user-function for the InfoLog:<br>".
 								"<b>@addr_id(${CPre}NFamily$CPos,${CPre}NGiven$CPos,${CPre}Company$CPos)</b> ".
 								"searches the addressbook for an address and returns the id if it founds an exact match of at least ".
 								"<i>NFamily</i> AND (<i>NGiven</i> OR <i>Company</i>). This is necessary to link your imported InfoLog-entrys ".
