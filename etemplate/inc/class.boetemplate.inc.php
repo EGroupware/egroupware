@@ -20,6 +20,7 @@
 	 * Not so much so far, as the most logic is still in the UI-class
 	 *
 	 * @package etemplate
+	 * @subpackage api
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */
@@ -52,6 +53,7 @@
 			'grid'	=> 'Grid',			// tabular widget containing rows with columns of widgets
 			'deck'	=> 'Deck'			// a container of elements where only one is visible, size = # of elem.
 		);
+		var $garbage_collection_done;
 
 		/**
 		 * constructor of class
@@ -77,6 +79,7 @@
 			{
 				$this->init($name);
 			}
+			$this->garbage_collection_done =& $GLOBALS['phpgw_info']['etemplate']['garbage_collection_done'];
 		}
 
 		/**
@@ -92,6 +95,10 @@
 		 */
 		function check_disabled($disabled,$content)
 		{
+			if ($this->onclick_handler && !$this->no_onclick)
+			{
+				return false;	// we have an onclick handler
+			}
 			//return False;
 			if ($not = $disabled[0] == '!')
 			{
@@ -230,7 +237,8 @@
 		function appsession_id()
 		{
 			list($msec,$sec) = explode(' ',microtime());
-			$id = $GLOBALS['phpgw_info']['flags']['currentapp'] . (intval(1000000 * $msec) + 1000000 * ($sec % 100000));
+			$time = 100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
+			$id = $GLOBALS['phpgw_info']['flags']['currentapp'] .':'. $time;
 			//echo "<p>microtime()=".microtime().", sec=$sec, msec=$msec, id=$id</p>\n";
 			return $id;
 		}
@@ -255,6 +263,10 @@
 			}
 			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
 
+			if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4' && !$this->garbage_collection_done)
+			{
+				return $this->php4_session_garbage_collection();
+			}
 			return $id;
 		}
 
@@ -267,14 +279,58 @@
 		function get_appsession($id)
 		{
 			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
+			//echo "boetemplate::get_appsession('$id')"; _debug_array($data);
 
-			//echo "<p>get_appsession('$id') data="; _debug_array($data);
-
-			// if we delete the returned value here, we cant get back (back-button),
-			// not even to a non-submitted page
-			//$GLOBALS['phpgw']->session->appsession_delete($id,'etemplate');
-
+			if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4')
+			{
+				$this->php4_session_garbage_collection($id);
+			}
 			return $data;
+		}
+		
+		/**
+		 * a little bit of garbage collection for php4 sessions (their size is limited by memory_limit)
+		 *
+		 * With constant eTemplate use it can grow quite big and lead to unusable sessions (php terminates
+		 * before any output with "Allowed memory size of ... exhausted").
+		 * We delete now sessions once used after 10min and sessions never or multiple used after 60min.
+		 *
+		 * @param string $id_used id of session just read by get_appsession to increment the usage counter
+		 */
+		function php4_session_garbage_collection($id_used='')
+		{
+			// now we are on php4 sessions and do a bit of garbage collection
+			$app_sessions =& $_SESSION['egw']['app_sessions']['etemplate'];
+			$session_used =& $app_sessions['session_used'];
+			
+			if ($id_used)
+			{
+				//echo "session_used[$id_used]='".$session_used[$id_used]."'<br/>\n";
+				++$session_used[$id_used];	// count the number of times a session got used
+			}
+			$this->garbage_collection_done = true;
+
+			if (count($sessions) < 50) return $data;	// we dont need to care
+
+			list($msec,$sec) = explode(' ',microtime());
+			$now = 	100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
+
+			foreach($app_sessions as $id => $session_data)
+			{
+				list($app,$time) = explode(':',$id);
+				
+				if (!$time) continue;	// other data, no session
+				
+				//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".strlen($session_data)."<br>\n";
+
+				if ($session_used[$id] == 1 && $time < $now - 10*6000 || // session used and older then 10min
+					$time < $now - 60*6000)	// session not used and older then 1h
+				{
+					//echo "<p>boetemplate::php4_session_garbage_collection('$id_used'): unsetting session '$id' (now=$now)</p>\n";
+					unset($app_sessions[$id]);
+					unset($session_used[$id]);
+				}
+			}
 		}
 
 		/**
@@ -701,6 +757,15 @@
 			$GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
 		}
 
+		/**
+		 * deletes the etemplate in the cache in phpgw_info
+		 */
+		function delete_in_cache()
+		{
+			//echo "<p>delete_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
+			unset($GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()]);
+		}
+
 		/*
 		 * returns true if a given eTemplate is in the cache
 		 *
@@ -822,6 +887,21 @@
 			}
 			return $result;
 		}
+
+		/**
+		 * Deletes the eTemplate from the db, object itself is unchanged
+		 *
+		 * reimplementation of soetemplate::delete to update the cache
+		 *
+		 * @return int number of affected rows, 1 should be ok, 0 somethings wrong
+		 */
+		function delete()
+		{
+			$this->delete_in_cache();
+
+			return soetemplate::delete();
+		}
+
 	}
 
 	if (!function_exists('set_cell_attribute_helper'))

@@ -26,6 +26,7 @@
 	 * if the user submitts the form. Vor the complete param's see the description of exec.
 	 *
 	 * @package etemplate
+	 * @subpackage api
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */
@@ -168,6 +169,7 @@
 				'hooked' => $hooked != '' ? $hooked : $GLOBALS['phpgw_info']['etemplate']['hook_content'],
 				'app_header' => $GLOBALS['phpgw_info']['flags']['app_header'],
 				'output_mode' => $output_mode,
+				'session_used' => 0,
 			),$id);
 
 			if ((int) $output_mode == 1)	// return html
@@ -368,7 +370,8 @@
 			{
 				$readonlys = array();
 			}
-			if (is_int($this->debug) && $this->debug >= 2 || $grid['name'] && $this->debug == $grid['name'])
+			if (is_int($this->debug) && $this->debug >= 2 || $grid['name'] && $this->debug == $grid['name'] ||
+				$this->name && $this->debug == $this->name)
 			{
 				echo "<p>etemplate.show_grid($grid[name]): $cname =\n"; _debug_array($content);
 			}
@@ -508,6 +511,7 @@
 				}
 				$rows[$row] = $row_data;
 			}
+
 			$html = $this->html->table($rows,$this->html->formatOptions($grid['size'],'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING')/*TEST-RB,$no_table_tr*/);
 
 			list($width,$height,,,,,$overflow) = explode(',',$grid['size']);
@@ -660,7 +664,7 @@
 			}
 			if ($form_name != '')
 			{
-				$options = "ID=\"$form_name\" $options";
+				$options = "id=\"$form_name\" $options";
 			}
 			list($type,$sub_type) = explode('-',$cell['type']);
 			switch ($type)
@@ -770,6 +774,9 @@
 					{
 						$options .= ' checked="1"';
 					}
+					// add the set_val to the id to make it unique
+					$options = str_replace('id="'.$form_name,'id="'.$form_name."[$set_val]",$options);
+
 					if ($readonly)
 					{
 						$html .= $value == $set_val ? $this->html->bold('x') : '';
@@ -979,12 +986,14 @@
 					$box_row = 1;
 					$box_col = 'A';
 					$box_anz = 0;
-					for ($n = 1; $n <= (int) $cell_options; ++$n)
+					list($num,$orient) = explode(',',$cell_options);
+					if (!$orient) $orient = $type == 'hbox' ? 'horizontal' : ($type == 'box' ? false : 'vertical');
+					for ($n = 1; $n <= (int) $num; ++$n)
 					{
 						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
 						if ($h != '' && $h != '&nbsp;')
 						{
-							if ($cell['type'] != 'hbox')
+							if ($orient != 'horizontal')
 							{
 								$box_row = $n;
 							}
@@ -992,7 +1001,7 @@
 							{
 								$box_col = $this->num2chrs($n);
 							}
-							if ($cell['type'] == 'box')
+							if (!$orient)
 							{
 								$html .= $h;
 							}
@@ -1010,12 +1019,12 @@
 							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($cl,'CLASS');
 						}
 					}
-					if ($box_anz > 1 && $cell['type'] != 'box')	// a single cell is NOT placed into a table
+					if ($box_anz > 1 && $orient)	// a single cell is NOT placed into a table
 					{
-						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',CELLPADDING,CELLSPACING').
-							($cell['align'] && $type != 'hbox' ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
+						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',,CELLPADDING,CELLSPACING').
+							($cell['align'] && $orient != 'horizontal' ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
 					}
-					if ($cell['type'] == 'groupbox')
+					if ($type == 'groupbox')
 					{
 						if (strlen($label) > 1 && $cell['label'] == $label)
 						{
@@ -1023,7 +1032,7 @@
 						}
 						$html = $this->html->fieldset($html,$label);
 					}
-					elseif ($cell['type'] == 'box')
+					elseif (!$orient)
 					{
 						$html = $this->html->div($html,$this->html->formatOptions(array(
 								$cell['height'],
@@ -1112,10 +1121,10 @@
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 					$accesskey = $accesskey[1];
 				}
-				if ($accesskey || $label_for || $cell['name'])
+				if ($label && ($accesskey || $label_for || $cell['name']))
 				{
 					$label = $this->html->label($label,$label_for ? $this->form_name($cname,$label_for) : 
-						$form_name,$accesskey);
+						$form_name.($set_val?"[$set_val]":''),$accesskey);
 				}
 				if ($type == 'radio' || $type == 'checkbox' || strstr($label,'%s'))	// default for radio is label after the button
 				{

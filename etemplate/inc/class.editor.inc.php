@@ -16,6 +16,7 @@
 	 * template editor of the eTemplate package
 	 *
 	 * @package etemplate
+	 * @subpackage editor
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */
@@ -27,7 +28,13 @@
 		var $aligns = array(
 			'' => 'Left',
 			'right' => 'Right',
-			'center' => 'Center'
+			'center' => 'Center',
+		);
+		var $valigns = array(
+			'' => 'Middle',
+			'top' => 'Top',
+			'bottom' => 'Bottom',
+			'baseline' => 'Baseline',
 		);
 		var $edit_menu = array(
 			'delete' => 'delete',
@@ -36,28 +43,22 @@
 			'paste' => 'paste',
 			'swap' => 'swap',
 		);
-		var $grid_menu = array(
-			'row' => array(
-				'row_delete' => 'delete this row',
-				'row_insert_above' => 'insert a row above',
-				'row_insert_below' => 'insert a row below',
-				'row_swap_next' => 'swap with next row',
-				'row_prefs' => 'preferences of this row',
-			),
-			'column' => array(
-				'colum_delete' => 'delete this row',
-				'colum_insert_before' => 'insert a column before',
-				'column_insert_behind' => 'insert a column behind',
-				'column_swap_next' => 'swap with next column',
-				'column_prefs' => 'preferences of this column',
-			),				
-			'grid_prefs' => 'preferences',
+		var $row_menu = array(
+			'row_delete' => 'delete this row',
+			'row_insert_above' => 'insert a row above',
+			'row_insert_below' => 'insert a row below',
+			'row_swap_next' => 'swap with next row',
+		);
+		var $column_menu = array(
+			'column_delete' => 'delete this column',
+			'column_insert_before' => 'insert a column before',
+			'column_insert_behind' => 'insert a column behind',
+			'column_swap_next' => 'swap with next column',
 		);
 		var $box_menu = array(
 			'box_insert_before' => 'insert a widget before',
 			'box_insert_behind' => 'insert a widget behind',
 			'box_swap_next' => 'swap widget with next one',
-			'box_prefs' => 'preferences',
 		);
 		var $options = array(
 			'width',
@@ -211,12 +212,18 @@
 				$no_button,$cols_spanned);
 		}
 
+		/**
+		 * swap the content of two variables
+		 *
+		 * @param mixed &$a
+		 * @param mixed &$b
+		 */
 		function swap(&$a,&$b)
 		{
 			$t = $a; $a = $b; $b = $t;
 		}
 
-		function process_edit($content)
+		function process_edit($content=null)
 		{
 			if ($this->debug)
 			{
@@ -445,7 +452,7 @@
 				}
 				else
 				{
-					$msg = $this->etemplate->dump2setup($content['name']);
+					$msg = $this->etemplate->dump4setup($content['name']);
 				}
 			}
 			elseif ($content['save'])
@@ -474,7 +481,8 @@
 					$additional = array();
 					if ($name == 'etemplate')
 					{
-						$additional = $this->etemplate->types + $this->extensions + $this->aligns;
+						$additional = $this->etemplate->types + $this->extensions + $this->aligns + $this->valigns +
+							$this->edit_menu + $this->box_menu + $this->row_menu + $this->column_menu;
 					}
 					else	// try to call the writeLangFile function of the app's ui-layer
 					{
@@ -523,8 +531,14 @@
 
 			list($app) = explode('.',$name);
 
+			if (!is_object($this->etemplate->xul_io))
+			{
+				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
+			}
+			$xml = $this->etemplate->xul_io->export($this->etemplate);
+
 			$dir = PHPGW_SERVER_ROOT . "/$app/templates/$template";
-			if ($create_it = !is_dir($dir))
+			if (($create_it = !is_dir($dir)))
 			{
 				$dir = PHPGW_SERVER_ROOT . "/$app/templates";
 			}
@@ -532,7 +546,7 @@
 			{
 				return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
 			}
-			if ($create)
+			if ($create_it)
 			{
 				mkdir($dir .= "/$template");
 			}
@@ -690,7 +704,7 @@
 			}
 			if (isset($cont['delete_selected']))
 			{
-				while (list($row,$sel) = each($cont['selected']))
+				foreach($cont['selected'] as $row => $sel)
 				{
 					if ($sel)
 					{
@@ -853,6 +867,7 @@
 		/**
 		 * initialises the children arrays for the new widget type, converts boxes <--> grids
 		 *
+		 * @internal 
 		 * @param array &$widget reference to the new widget data
 		 * @param array $old the old widget data
 		 */
@@ -920,166 +935,490 @@
 			}
 			//_debug_array($widget);
 		}
+		
+		/**
+		 * returns array with path => type pairs for each parent of $path
+		 *
+		 * @param string $path path to the widget not the parent!
+		 * @return array 
+		 */
+		function path_components($path)
+		{
+			$path_parts = explode('/',$path);
+			array_pop($path_parts);		// removed the widget itself
+			array_shift($path_parts);	// removed the leading empty string
+
+			$components = array();
+			$part_path = '';
+			foreach($path_parts as $part)
+			{
+				$part_path .= '/'.$part;
+				$parent =& $this->etemplate->get_widget_by_path($part_path);
+				$components[$part_path] = $parent['type'];
+			}
+			return $components;
+		}
+
+		/**
+		 * returns array with path => type pairs for each parent of $path
+		 *
+		 * @param array $parent the parent
+		 * @param string $child_id id of child
+		 * @param string $parent_path path of the parent
+		 * @return array with keys left, right, up and down and their pathes set (if applicable)
+		 */
+		function parent_navigation($parent,$parent_path,$child_id,$widget)
+		{
+			if ($parent['type'] == 'grid' && preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches))
+			{
+				list(,$r,$c) = $matches;
+				// find the column-number (base 0) for $c (A, B, C, ...)
+				for($col = 0; soetemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
+				
+				if ($col > 0) $left = $parent_path.'/'.$r.soetemplate::num2chrs($col-1);
+				
+				if ($col < $parent['cols']-1) $right = $parent_path.'/'.$r.soetemplate::num2chrs($col+1);
+				
+				if ($r > 1) $up = $parent_path.'/'.($r-1).$c;
+				
+				if ($r < $parent['rows']) $down = $parent_path.'/'.($r+1).$c;
+			}
+			elseif ($parent['type']) // any box
+			{
+				if ($child_id > 1) $previous = $parent_path.'/'.($child_id-1);
+				
+				if ($child_id < (int) $parent['size'])  $next = $parent_path.'/'.($child_id+1);
+			}
+			else // template
+			{
+				if ($child_id > 0) $previous = '/'.($child_id-1);
+				
+				if ($child_id < count($this->etemplate->children)-1)  $next = '/'.($child_id+1);
+			}
+			if ($widget['type'] == 'grid')
+			{
+				$in = $parent_path.'/'.$child_id.'/1A';
+			}
+			elseif (isset($this->etemplate->widgets_with_children[$widget['type']]) && $widget['type'] != 'template')
+			{
+				if ($widget['type'])	// box
+				{
+					$in = $parent_path.'/'.$child_id.'/1';
+				}
+				else
+				{
+					$in = '/0';
+				}
+			}
+			$navi = array();
+			foreach(array('left'=>'&larr;','up'=>'&nbsp;&uarr;&nbsp;','down'=>'&nbsp;&darr;&nbsp;',
+				'right'=>'&rarr;','previous'=>'&larr;&uarr;','next'=>'&darr;&rarr;','in'=>'&times;') as $var => $dir)
+			{
+				if ($$var) $navi[$$var] = $dir;
+			}
+			return $navi;
+		}
+
+		/**
+		 * functions of the edit-menu: paste, swap, cut, delete, copy
+		 *
+		 * @internal 
+		 * @param string &$action row_delete, row_insert_above, row_insert_below, row_swap, row_prefs
+		 * @param array &$parent referece to the parent
+		 * @param array &$content reference to the content-array
+		 * @param string $child_id id of a cell
+		 * @return string msg to display
+		 */
+		function edit_actions(&$action,&$parent,&$content,$child_id)
+		{
+			switch ($action)
+			{
+				case 'paste':
+				case 'swap':
+					$clipboard = $GLOBALS['phpgw']->session->appsession('clipboard','etemplate');
+					if (!is_array($clipboard))
+					{
+						return lang('nothing in clipboard to paste !!!');
+					}
+					if ($action == 'swap')
+					{
+						$GLOBALS['phpgw']->session->appsession('clipboard','etemplate',$content['cell']);
+					}
+					$content['cell'] = $clipboard;
+					break;
+
+				case 'copy':
+				case 'cut':
+					$GLOBALS['phpgw']->session->appsession('clipboard','etemplate',$content['cell']);
+					if ($action != 'cut')
+					{
+						return lang('widget copied into clipboard');
+					}
+					// fall-through
+				case 'delete':
+					if ($parent['type'] != 'grid')
+					{
+						// delete widget from parent
+						if ($parent['type'])	// box
+						{
+							list($num,$options) = explode('/',$parent['size'],2);
+							if ($num <= 1)	// cant delete last child --> only empty it
+							{
+								$parent[$num=1] = soetemplate::empty_cell();
+							}
+							else
+							{
+								for($n = $child_id; $n < $num; ++$n)
+								{
+									$parent[$n] = $parent[1+$n];
+								}
+								unset($parent[$num--]);
+							}
+							$parent['size'] = $num . ($options ? ','.$options : '');
+						}
+						else	// template itself
+						{
+							if (count($this->etemplate->children) <= 1)	// cat delete last child
+							{
+								$this->etemplate->children[0] = soetemplate::empty_cell();
+							}
+							else
+							{
+								unset($parent[$child_id]);
+								$this->etemplate->children = array_values($this->etemplate->children);
+							}
+						}
+						$action = 'save-no-merge';
+					}
+					else
+					{
+						return lang('cant delete a single widget from a grid !!!');
+					}
+					break;
+			}
+			return '';
+		}
+
+		/**
+		 * functions of the box-menu: insert-before, -behind und swap
+		 *
+		 * @internal 
+		 * @param string &$action row_delete, row_insert_above, row_insert_below, row_swap, row_prefs
+		 * @param array &$parent referece to the parent
+		 * @param array &$content reference to the content-array
+		 * @param string $child_id id of a cell
+		 * @param string $parent_path path of parent
+		 * @return string msg to display
+		 */
+		function box_actions(&$action,&$parent,&$content,$child_id,$parent_path)
+		{
+			switch ($action)
+			{
+				case 'box_insert_before':
+				case 'box_insert_behind':
+					$n = $child_id + (int)($action == 'box_insert_behind');
+					if (!$parent['type'])	// template
+					{
+						$num = count($parent)-1;	// 0..count()-1
+					}
+					else // boxes
+					{
+						list($num,$options) = explode(',',$parent['size'],2);
+					}
+					for($i = $num; $i >= $n; --$i)
+					{
+						$parent[1+$i] = $parent[$i];
+					}
+					$parent[$n] = $content['cell'] = soetemplate::empty_cell();
+					$content['path'] = $parent_path.'/'.$n;
+					if ($parent['type']) $parent['size'] = (1+$num) . ($options ? ','.$options : '');
+					break;
+					
+				case 'box_swap_next':
+					if (!$parent['type'])	// template
+					{
+						$num = count($parent)-1;	// 0..count()-1
+					}
+					else // boxes
+					{
+						list($num) = explode(',',$parent['size'],2);
+					}
+					if ($child_id == $num)	// if on last cell, swap with the one before
+					{
+						--$child_id;
+					}
+					$this->swap($parent[1+$child_id],$parent[$child_id]);
+					break;
+			}
+			$action = 'apply-no-merge';
+
+			return '';
+		}
+						
+		/**
+		 * functions of the row-menu: insert, deleting & swaping of rows
+		 *
+		 * @internal 
+		 * @param string &$action row_delete, row_insert_above, row_insert_below, row_swap_next, row_prefs
+		 * @param array &$grid grid
+		 * @param string $child_id id of a cell
+		 * @return string msg to display
+		 */
+		function row_actions(&$action,&$grid,$child_id)
+		{
+			$data =& $grid['data'];
+			$rows =& $grid['rows'];
+			$cols =& $grid['cols'];
+			$opts =& $data[0];
+
+			if (preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches)) list(,$r,$c) = $matches;
+
+			if (!$c || !$r || $r > $rows) return "wrong child_id='$child_id' => r='$r', c='$c'";
+
+			switch($action)
+			{
+				case 'row_swap_next':
+					if ($r > $rows-1)
+					{
+						if ($r != $rows) return lang('no row to swap with !!!');
+						--$r;	// in last row swap with row above
+					}
+					$this->swap($data[$r],$data[1+$r]);
+					$this->swap($opts['c'.$r],$opts['c'.(1+$r)]);
+					$this->swap($opts['h'.$r],$opts['h'.(1+$r)]);
+					break;
+					
+				case 'row_delete':
+					if ($rows <= 1)	// one row only => delete whole grid
+					{
+						return lang('cant delete the only row in a grid !!!');
+						// todo: delete whole grid instead
+					}
+					for($i = $r; $i < $rows; ++$i)
+					{
+						$opts['c'.$i] = $opts['c'.(1+$i)]; 
+						$opts['h'.$i] = $opts['h'.(1+$i)]; 
+						$data[$i] = $data[1+$i];
+					}
+					unset($opts['c'.$rows]);
+					unset($opts['h'.$rows]);
+					unset($data[$rows--]);
+					break;
+					
+				case 'row_insert_above':
+					--$r;
+					// fall-through
+				case 'row_insert_below':
+					//echo "row_insert_below($r) rows=$rows, cols=$cols"; _debug_array($grid);
+					// move height + class options of rows
+					for($i = $rows; $i > $r; --$i)
+					{
+						echo ($i+1)."=$i<br>\n";
+						$data[1+$i] = $data[$i]; 
+						$opts['c'.(1+$i)] = $opts['c'.$i]; 
+						$opts['h'.(1+$i)] = $opts['h'.$i]; 
+					}
+					for($i = 0; $i < $cols; ++$i)
+					{
+						echo (1+$r).":$i=".soetemplate::num2chrs($i)."=empty_cell()<br>\n";
+						$data[1+$r][soetemplate::num2chrs($i)] = soetemplate::empty_cell();
+					}
+					$opts['c'.(1+$r)] = $opts['h'.(1+$r)] = '';
+					++$rows;
+					//_debug_array($grid); return '';
+					break;
+			}
+			$action = 'save-no-merge';
+
+			return '';
+		}
+
+		/**
+		 * functions of the column-menu: insert, deleting & swaping of columns
+		 *
+		 * @internal 
+		 * @param string &$action column_delete, column_insert_before, column_insert_behind, column_swap_next, column_prefs
+		 * @param array &$grid grid
+		 * @param string $child_id id of a cell
+		 * @return string msg to display
+		 */
+		function column_actions(&$action,&$grid,$child_id)
+		{
+			$data =& $grid['data'];
+			$rows =& $grid['rows'];
+			$cols =& $grid['cols'];
+			$opts =& $data[0];
+			
+			if (preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches)) list(,$r,$c) = $matches;
+			// find the column-number (base 0) for $c (A, B, C, ...)
+			for($col = 0; soetemplate::num2chrs($col) != $c && $col < 100; ++$col) ;
+
+			if (!$c || !$r || $r > $rows || $col >= $cols) return "wrong child_id='$child_id' => r='$r', c='$c', col=$col";
+
+			switch($action)
+			{
+				case 'column_swap_next':
+					if ($col >= $cols-1)
+					{
+						if ($col != $cols-1) return lang('no column to swap with !!!');
+						$c = soetemplate::num2chrs(--$col); // in last column swap with the one before
+					}
+					$c_next = soetemplate::num2chrs(1+$col);
+					for($row = 1; $row <= $rows; ++$row)
+					{
+						$this->swap($data[$row][$c],$data[$row][$c_next]);
+					}
+					$this->swap($opts[$c],$opts[$c_next]);
+					//_debug_array($grid); return '';
+					break;
+					
+				case 'column_insert_behind':
+					++$col;
+				case 'column_insert_before':
+					//echo "<p>column_insert_before: col=$col</p>\n";
+					// $col is where the new column data goes
+					for ($row = 1; $row <= $rows; ++$row)
+					{
+						for ($i = $cols; $i > $col; --$i)
+						{
+							$data[$row][soetemplate::num2chrs($i)] = $data[$row][soetemplate::num2chrs($i-1)];
+						}
+						$data[$row][soetemplate::num2chrs($col)] = soetemplate::empty_cell();
+					}
+					for ($i = $cols; $i > $col; --$i)
+					{
+						$opts[soetemplate::num2chrs($i)] = $opts[soetemplate::num2chrs($i-1)];
+					}
+					unset($opts[soetemplate::num2chrs($col)]);
+					++$cols;
+					//_debug_array($grid); return '';
+					break;
+					
+				case 'column_delete':
+					if ($cols <= 1)
+					{
+						return lang('cant delete the only column of a grid !!!');
+						// todo: delete whole grid instead
+					}
+					for ($row = 1; $row <= $rows; ++$row)
+					{
+						for ($i = $col; $i < $cols-1; ++$i)
+						{
+							$data[$row][soetemplate::num2chrs($i)] = $data[$row][soetemplate::num2chrs($i+1)];
+						}
+						unset($data[$row][soetemplate::num2chrs($cols-1)]);
+					}
+					for ($i = $col; $i < $cols-1; ++$i)
+					{
+						$opts[soetemplate::num2chrs($i)] = $opts[soetemplate::num2chrs($i+1)];
+					}
+					unset($opts[soetemplate::num2chrs(--$cols)]);
+					break;		
+			}
+			$action = 'save-no-merge';
+
+			return '';
+		}
 
 		/**
 		 * edit dialog for a widget
+		 *
+		 * @param array $content the submitted content of the etemplate::exec function, default null
+		 * @param string $msg msg to display, default ''
 		 */
-		function widget($content='',$msg='')
+		function widget($content=null,$msg='')
 		{
 			if (is_array($content))
 			{
-				$this->etemplate->read($content['name'],$content['template'],$content['lang'],$content['old_version']);
-				$widget =& $this->etemplate->get_widget_by_path($content['path']);
-				$path_parts = explode('/',$content['path']);
-				$child_id = array_pop($path_parts);
-				$parent_path = implode('/',$path_parts);
-				//echo "<p>path='$content[path]': child_id='$child_id', parent_path='$parent_path</p>\n";
-				$parent =& $this->etemplate->get_widget_by_path($parent_path);
-				
-				foreach(array('save','apply','cancel','edit','grid','box') as $n => $name)
+				$path = $content['goto'] ? $content['goto'] : ($content['goto2'] ? $content['goto2'] : $content['path']);
+				$Ok = $this->etemplate->read($content['name'],$content['template'],$content['lang'],$content['old_version']);
+			}
+			else
+			{
+				//echo "<p><b>".($_GET['path']).":</b></p>\n";
+				list($name,$path) = explode(':',$_GET['path'],2);	// <name>:<path>
+				$Ok = $this->etemplate->read($name);
+			}
+			if (!$Ok && !$content['cancel'])
+			{
+				$msg .= lang('Error: Template not found !!!');
+			}
+			$path_parts = explode('/',$path);
+			$child_id = array_pop($path_parts);
+			$parent_path = implode('/',$path_parts);
+			//echo "<p>path='$path': child_id='$child_id', parent_path='$parent_path'</p>\n";
+			$parent =& $this->etemplate->get_widget_by_path($parent_path);
+			
+			if (is_array($content))
+			{
+				foreach(array('save','apply','cancel','goto','goto2','edit_menu','box_menu','row_menu','column_menu') as $n => $name)
 				{
-					if (($action = $content[$name] ? ($n < 3 ? $name : $content[$name]) : false)) break;
+					if (($action = $content[$name] ? ($n < 5 ? $name : $content[$name]) : false)) break;
 					$name = '';
 				}
 				unset($content[$name]);
 				
 				//echo "<p>name='$name', parent-type='$parent[type]', action='$action'</p>\n";
-				if ($name == 'grid' && $parent['type'] != 'grid' ||
-					$name == 'box' && $parent['type'] == 'grid' ||
-					substr($action,-4) == 'prefs' && !$parent['type'])
+				if (($name == 'row_menu' || $name == 'column_menu') && $parent['type'] != 'grid' ||
+					$name == 'box_menu' && $parent['type'] == 'grid')
 				{
 					$msg .= lang("parent is a '%1' !!!",lang($parent['type'] ? $parent['type'] : 'template'));
 					$action = false;
+				}
+				switch($name)
+				{
+					case 'edit_menu':
+						$msg .= $this->edit_actions($action,$parent,$content,$child_id);
+						break;
+						
+					case 'box_menu':
+						$msg .= $this->box_actions($action,$parent,$content,$child_id,$parent_path);
+						break;
+
+					case 'row_menu':
+						$msg .= $this->row_actions($action,$parent,$child_id);
+						break;
+						
+					case 'column_menu':
+						$msg .= $this->column_actions($action,$parent,$child_id);
+						break;
+						
+					default: 
+						// all menu's are (only) working on the parent, referencing widget is unnecessary 
+						// and gives unexpected results, if parent is changed (eg. content gets copied)
+						$widget =& $this->etemplate->get_widget_by_path($path);
+						break;
 				}
 				switch ($action)
 				{
 					case '':
 						// initialise the children arrays if type is changed to a widget with children
+						//echo "<p>$content[path]: $widget[type] --> ".$content['cell']['type']."</p>\n";
 						if (isset($this->etemplate->widgets_with_children[$content['cell']['type']]) &&
 							$content['cell']['type'] != $widget['type'])
 						{
 							$this->change_widget_type($content['cell'],$widget);
 						}
 						break;
-						
-					case 'paste':
-					case 'swap':
-						$clipboard = $GLOBALS['phpgw']->session->appsession('clipboard','etemplate');
-						if (!is_array($clipboard))
-						{
-							$msg .= lang('nothing in clipboard to paste !!!');
-						}
-						else
-						{
-							$content['cell'] = $clipboard;
-						}
-						if ($action == 'paste') break;
-						// fall-through
-					case 'copy':
-					case 'cut':
-						$GLOBALS['phpgw']->session->appsession('clipboard','etemplate',$widget);
-						if ($action != 'cut')
-						{
-							$msg .= lang('widget copied into clipboard');
-							break;
-						}
-						// fall-through
-					case 'delete':
-						if ($parent['type'] != 'grid')
-						{
-							// delete widget from parent
-							if ($parent['type'])	// box
-							{
-								list($num,$options) = explode('/',$parent['size'],2);
-								if ($num <= 1)	// cant delete last child --> only empty it
-								{
-									$parent[$num=1] = soetemplate::empty_cell();
-								}
-								else
-								{
-									for($n = $child_id; $n < $num; ++$n)
-									{
-										$parent[$n] = $parent[1+$n];
-									}
-									unset($parent[$num--]);
-								}
-								$parent['size'] = $num . ($options ? ','.$options : '');
-							}
-							else	// template itself
-							{
-								if (count($this->etemplate->children) <= 1)	// cat delete last child
-								{
-									$this->etemplate->children[0] = soetemplate::empty_cell();
-								}
-								else
-								{
-									unset($parent[$child_id]);
-									$this->etemplate->children = array_values($this->etemplate->children);
-								}
-							}
-							$action = 'save-no-merge';
-						}
-						else
-						{
-							$msg .= lang('cant delete a single widget from a grid !!!');
-						}
+
+					case 'goto':
+					case 'goto2':
+						$content['cell'] = $widget;
 						break;
-						
-					case 'box_prefs':
-					case 'grid_prefs':	// to edit the parent, we set it as widget
-						$content['cell'] = $parent;
-						$content['path'] = $parent_path;
-						$parent =& $this->etemplate->get_widget_by_path($parent_path,1);
-						break;
-					
-					case 'box_insert_before':
-					case 'box_insert_behind':
-						$n = $child_id + (int)($action == 'box_insert_behind');
-						if (!$parent['type'])	// template
-						{
-							$num = count($parent)-1;	// 0..count()-1
-						}
-						else // boxes
-						{
-							list($num,$options) = explode(',',$parent['size'],2);
-						}
-						for($i = $num; $i >= $n; --$i)
-						{
-							$parent[1+$i] = $parent[$i];
-						}
-						$parent[$n] = $content['cell'] = soetemplate::empty_cell();
-						$content['path'] = $parent_path.'/'.$n;
-						if ($parent['type']) $parent['size'] = (1+$num) . ($options ? ','.$options : '');
-						$action = 'apply-no-merge';
-						break;
-						
-					case 'box_swap_next':
-						if (!$parent['type'])	// template
-						{
-							$num = count($parent)-1;	// 0..count()-1
-						}
-						else // boxes
-						{
-							list($num) = explode(',',$parent['size'],2);
-						}
-						if ($child_id < $num)
-						{
-							$content['cell'] = $parent[1+$child_id];
-							$parent[1+$child_id] = $parent[$child_id];
-							$parent[$child_id] = $content['cell'];
-							$action = 'apply';
-						}
-						else
-						{
-							$msg .= lang('no further widget !!!');
-						}
-						break;
-						
-				}
-				switch ($action)
-				{
+
 					case 'save': case 'apply':
 						$widget = $content['cell'];
+						// row- and column-attr for a grid
+						if ($parent['type'] == 'grid' && preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches))
+						{
+							list(,$row,$col) = $matches;
+							$parent['data'][0]['h'.$row] = $content['grid_row']['height'].
+								($content['grid_row']['disabled']?','.$content['grid_row']['disabled']:'');
+							$parent['data'][0]['c'.$row] = $content['grid_row']['class'].
+								($content['grid_row']['valign']?','.$content['grid_row']['valign']:'');
+							$parent['data'][0][$col] = $content['grid_column']['width'].
+								($content['grid_column']['disabled']?','.$content['grid_column']['disabled']:'');
+						}
 						// fall-through
 					case 'save-no-merge':
 					case 'apply-no-merge':
@@ -1113,19 +1452,10 @@
 			}
 			else
 			{
-				//echo "<p><b>".($_GET['path']).":</b></p>\n";
-				list($name,$path) = explode(':',$_GET['path'],2);	// <name>:<path>
-				
-				if (!$this->etemplate->read($name))
-				{
-					$msg .= lang('Error: eTemplate not found !!!');
-				}
 				$widget =& $this->etemplate->get_widget_by_path($path);
-				$parent =& $this->etemplate->get_widget_by_path($path,1);
 				
-				$content = $this->etemplate->as_array();
+				$content = $this->etemplate->as_array(-1);
 				$content['cell'] = $widget;
-				$content['path'] = $path;
 				
 				foreach($this->etemplate->db_key_cols as $var)
 				{
@@ -1135,6 +1465,30 @@
 					}
 				}
 			}
+			unset($content['cell']['obj']);	// just in case it contains a template-object
+			
+			if ($parent['type'] == 'grid' && preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches))
+			{
+				list(,$row,$col) = $matches;
+
+				$grid_row =& $content['grid_row'];
+				list($grid_row['height'],$grid_row['disabled']) = explode(',',$parent['data'][0]['h'.$row]);
+				list($grid_row['class'],$grid_row['valign']) = explode(',',$parent['data'][0]['c'.$row]);
+				
+				$grid_column =& $content['grid_column'];
+				list($grid_column['width'],$grid_column['disabled']) = explode(',',$parent['data'][0][$col]);
+				//echo "<p>grid_row($row)=".print_r($grid_row,true).", grid_column($col)=".print_r($grid_column,true)."</p>\n";
+			}
+			else
+			{
+				unset($content['grid_row']);
+				unset($content['grid_column']);
+			}
+			$content['path'] = $path;
+			$content['msg'] = $msg;
+			$content['goto'] = $this->path_components($content['path']);
+			$content['goto2'] = $this->parent_navigation($parent,$parent_path,$child_id,$widget);
+
 			$editor =& new etemplate('etemplate.editor.widget');
 			$type_tmpl =& new etemplate;
 			if ($type_tmpl->read('etemplate.editor.widget.'.$widget['type']))
@@ -1143,25 +1497,31 @@
 			}
 			$editor->set_cell_attribute('cancel','onclick','window.close();');
 			
-			$readonlys['grid'] = $parent['type'] != 'grid';
-			$readonlys['box'] = $parent['type'] == 'grid';
-			
-			$content['msg'] = $msg;
-			$content['parent_type'] = $parent['type'] ? $parent['type'] : 'template';
-			
+			if ($parent['type'] == 'grid')
+			{
+				$editor->disable_cells('box_menu');
+			}
+			else
+			{
+				$editor->disable_cells('row_menu');
+				$editor->disable_cells('column_menu');
+			}
 			$GLOBALS['phpgw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 			$editor->exec('etemplate.editor.widget',$content,array(
-					'type'  => array_merge($this->etemplate->types,$this->extensions),
-					'align' => $this->aligns,
-					'edit'  => $this->edit_menu,
-					'grid' => $this->grid_menu,
-					'box'   => $this->box_menu,
+					'type'       => array_merge($this->etemplate->types,$this->extensions),
+					'align'      => $this->aligns,
+					'grid_row[valign]' => $this->valigns,
+					'edit_menu'  => $this->edit_menu,
+					'box_menu'   => $this->box_menu,
+					'row_menu'   => $this->row_menu,
+					'column_menu'=> $this->column_menu,
 				),'',$this->etemplate->as_array()+array(
 					'path'        => $content['path'],
 					'old_version' => $this->etemplate->version,
 					'opener'      => $content['opener'],
 					'cell'        => $content['cell'],
+					'goto'        => $content['goto'],
 				),2);
 		}
 

@@ -23,18 +23,26 @@ align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
 all days	etemplate	de	alle Tage
+all operations save the template!	etemplate	de	alle Operation speichern das Template!
 am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 application	etemplate	de	Anwendung
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
+applies the changes to the given version of the template	etemplate	de	übernimmt die Änderungen in die angegebene Version des Templates
 attach	etemplate	de	Anhängen
 attach file	etemplate	de	Datei anhängen
+baseline	etemplate	de	Grundlinie
 blurtext	etemplate	de	blurText
 border	etemplate	de	Rand
 border-line-thickness for the table-tag	etemplate	de	Randbreite (border) für die Tabelle
+bottom	etemplate	de	Unten
 box	etemplate	de	Box
+box...	etemplate	de	Box...
 can not have special sql-value null	etemplate	de	darf nicht den speziellen SQL Wert NULL annehmen
 cancel	etemplate	de	Abbruch
+cant delete a single widget from a grid !!!	etemplate	de	Kann kein einzelnes Widget aus einer Tabelle löschen !!!
+cant delete the only column of a grid !!!	etemplate	de	Kann nicht die einzige Spalte einer Tabelle löschen !!!
+cant delete the only row in a grid !!!	etemplate	de	Kann nicht die einzige Zeile einer Tabelle löschen !!!
 category	etemplate	de	Kategorie
 cellpadding for the table-tag	etemplate	de	Innenabstand (cellpadding) der Tabelle
 cells	etemplate	de	Zellen
@@ -50,13 +58,18 @@ click here to create the link	etemplate	de	hier clicken um die Verknüpfung anzul
 click here to start the search	etemplate	de	hier clicken um die Suche zu starten
 click here to upload the file	etemplate	de	hier clicken um die Datei hochzuladen
 click to order after that criteria	etemplate	de	anclicken um nach diesem Kriterium zu sortieren
+clickable path	etemplate	de	anclickbarer Pfad
+closes the window without saving the changes	etemplate	de	schließt das Fenster ohne zu speichern
+column...	etemplate	de	Spalte...
 columnname	etemplate	de	Spaltenname
 comment	etemplate	de	Kommentar
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
 css class for the table-tag	etemplate	de	CSS class der Tabelle
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-styles	etemplate	de	CSS Stile
+cut	etemplate	de	Ausschneiden
 date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
 day	etemplate	de	Tag
@@ -65,12 +78,14 @@ db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for th
 db-tools	etemplate	de	DB-Tools
 deck	etemplate	de	Deck (intern)
 default	etemplate	de	Vorgabe
-delete	etemplate	de	Löschen
 delete a single entry by passing the id.	etemplate	de	Löscht einen einzelnen Eintrag über seine Id.
 delete all selected etemplates, without further inquiry	etemplate	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
+delete and cut save the template!	etemplate	de	Löschen und Ausschneiden speichern das Template!
 delete column	etemplate	de	Spalte löschen
 delete index	etemplate	de	Index löschen
+delete this column	etemplate	de	diese Spalte löschen
 delete this etemplate	etemplate	de	dieses eTemplate löschen
+delete this row	etemplate	de	diese Zeile löschen
 delete whole column (can not be undone!!!)	etemplate	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
 deletes the etemplate spez. above	etemplate	de	löscht das oben spezifizierte eTemplate
@@ -87,6 +102,7 @@ drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
 edit	etemplate	de	Bearbeiten
 edit the etemplate spez. above	etemplate	de	das oben spezifizierte eTemplate bearbeiten
+edit...	etemplate	de	Bearbeiten...
 editable templates - db-tools	etemplate	de	eTemplates - DB-Tools
 editable templates - delete template	etemplate	de	eTemplates - Löschen
 editable templates - editor	etemplate	de	eTemplates - Bearbeiten
@@ -129,9 +145,13 @@ go to the first entry	etemplate	de	gehe zum ersten Eintrag
 go to the last entry	etemplate	de	gege zum letzten Eintrag
 go to the next page of entries	etemplate	de	gehe zur nächsten Seite
 go to the previous page of entries	etemplate	de	gehe zur vorherigen Seite
+grid	etemplate	de	Tabelle
+grid column attributes	etemplate	de	Attribute der Tabellenspalte
+grid row attributes	etemplate	de	Attribute der Tabellenzeile
 groupbox	etemplate	de	Gruppierung
 hbox	etemplate	de	HBox
 height	etemplate	de	Höhe
+height of row (in % or pixel)	etemplate	de	Höhe der Zeile (in % oder Pixel)
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Höhe der Tabelle in % oder Punkten
 height, disabled	etemplate	de	Höhe, Deaktiviert
@@ -145,9 +165,16 @@ import	etemplate	de	Import
 import an etemplate from a xml-file	etemplate	de	Importiert ein eTemplate aus einer XML Datei
 import table-definitions from existing db-table	etemplate	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
 import xml	etemplate	de	XML Import
+increment version to not overwrite the existing template	etemplate	de	Version erhöhen um das existierende Template nicht zu überschreiben
 index/name of returned content (name of the template, link / method for image)	etemplate	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
 indexed	etemplate	de	Indiziert
 indexoptions	etemplate	de	Indexoptionen
+insert a column before	etemplate	de	eine Spalte davor einfügen
+insert a column behind	etemplate	de	eine Spalte dahinter einfügen
+insert a row above	etemplate	de	eine Zeile darüber einfügen
+insert a row below	etemplate	de	eine Zeile darunter einfügen
+insert a widget before	etemplate	de	ein Widget davor einfügen
+insert a widget behind	etemplate	de	ein Widget dahinter einfügen
 insert new column behind this one	etemplate	de	Neue Spalte hinter dieser einfügen
 insert new column in front of all	etemplate	de	Neue Spalte vor dieser einfüben
 insert new row after this one	etemplate	de	Neue Zeile nach dieser einfügen
@@ -166,6 +193,7 @@ linklist	etemplate	de	VerknüpfungListe
 linkstring	etemplate	de	VerküpfungZeichenkette
 linkto	etemplate	de	VerküpfungZu
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
+middle	etemplate	de	Mittig
 minute	etemplate	de	Minute
 month	etemplate	de	Monat
 multicolumn indices	etemplate	de	Mehrspaltige Indices
@@ -181,10 +209,13 @@ newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
 nextmatch filterheader	etemplate	de	Nextmatch Filterkopf
 nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
+no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
+no row to swap with !!!	etemplate	de	Keine Zeile um damit zu tauschen !!!
 not null	etemplate	de	NOT NULL
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
+nothing in clipboard to paste !!!	etemplate	de	Zwischenablage leer - nichts zum einfügen !!!
 nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchkriterium !!!
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
@@ -194,6 +225,9 @@ optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
 options	etemplate	de	Optionen
 overflow	etemplate	de	Überbreite
 padding	etemplate	de	Innenabstand
+parent is a '%1' !!!	etemplate	de	Elternelement is ein '%1' !!!
+paste	etemplate	de	Einfügen
+path	etemplate	de	Pfad
 please enter table-name first !!!	etemplate	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
 pm	etemplate	de	Nachmittag
 precision	etemplate	de	Genauigkeit
@@ -208,9 +242,10 @@ remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgäng
 remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
 returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
 right	etemplate	de	Rechts
-save	etemplate	de	Speichern
+row...	etemplate	de	Zeile...
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
 saves changes to tables_current.inc.php	etemplate	de	Speichert Änderungen in tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	de	speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
 scale	etemplate	de	Scale
 scale for float	etemplate	de	Nachkommastellen für Gleitkommawerte
 search	etemplate	de	Suchen
@@ -254,6 +289,12 @@ stack	etemplate	de	Stapel
 start a new search, cancel this link	etemplate	de	neue Suche Starten, diese Verknüpfung abbrechen
 start new search for the above pattern	etemplate	de	neue Suche für das obige Muster starten
 submitbutton	etemplate	de	Schaltfläche
+swap	etemplate	de	tauschen
+swap widget with next one	etemplate	de	tauscht das Widget mit dem nächsten
+swap with next column	etemplate	de	tauscht Spalte mit der nächsten
+swap with next row	etemplate	de	tauscht Zeile mit der nächsten
+switch to a parent widget	etemplate	de	wechselt zum Elternelement
+switch to an other widgets of that container	etemplate	de	wechselt zu einem anderen Element dieses Containers
 table unchanged, no write necessary !!!	etemplate	de	Tabelle nicht geändert, kein schreiben notwendig !!!
 tablename	etemplate	de	Tabellenname
 tabs	etemplate	de	Karteikarten
@@ -264,10 +305,12 @@ text	etemplate	de	Textfeld
 textarea	etemplate	de	mehrzeiliges Textfeld
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
 time	etemplate	de	Uhrzeit
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	de	zum deaktiviereb: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
 to start the db-tools	etemplate	de	startet die DB-Tools
 to start the etemplate editor	etemplate	de	startet den eTemplate Editor
 to start the search	etemplate	de	startet die Suche
 today	etemplate	de	Heute
+top	etemplate	de	Oben
 type	etemplate	de	Typ
 type of the column	etemplate	de	Typ der Spalte
 type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
@@ -276,17 +319,22 @@ unlink	etemplate	de	Lösen
 update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag über seine Felder.
 update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
+valign	etemplate	de	Valing
 value	etemplate	de	Wert
 value has to be at least '%1' !!!	etemplate	de	Der Wert muss mindestens '%1' betragen !!!
 value has to be at maximum '%1' !!!	etemplate	de	Der Wert darf höchstens '%1' betragen !!!
 vbox	etemplate	de	VBox
 version	etemplate	de	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
+vertical alignment of row	etemplate	de	vertikale Ausrichtung der Zeile
+view this etemplate	etemplate	de	dieses eTemplate anzeigen
 view this linked entry in its application	etemplate	de	Zeige diesen Eintrag in seiner Anwendung an
 weekend	etemplate	de	Wochenende
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatich (der Browser entscheidet)
+widget copied into clipboard	etemplate	de	Widget wurde in die Zwischenablage kopiert
 width	etemplate	de	Breite
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
+width of column (in % or pixel)	etemplate	de	Breite der Spalte (in % oder Punkten)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Breite der Tabelle in % oder Punkten
 width, disabled	etemplate	de	Breite, Deaktiviert
 working days	etemplate	de	Werktage

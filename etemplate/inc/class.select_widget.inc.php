@@ -12,28 +12,40 @@
 
 	/* $Id$ */
 
-	/*!
-	@class select_widget
-	@author ralfbecker
-	@abstract Several select-boxes with predefined phpgw specific content.
-	@discussion This widget replaces the old sbox class
-	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
-	*/
+	/**
+	 * eTemplate Extension: several select-boxes with predefined eGW specific content
+	 *
+	 * This widgets replaces the old phpgwapi.sbox class. The widgets are independent of the UI,
+	 * as they only uses etemplate-widgets and therefor have no render-function.
+	 *
+	 * @package etemplate
+	 * @subpackage extensions
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class select_widget
 	{
+		/** 
+		 * exported methods of this class
+		 * @var array
+		 */
 		var $public_functions = array(
 			'pre_process' => True,
 			'post_process' => True,
 		);
-		var $human_name = array(	// this are the names for the editor
+		/**
+		 * availible extensions and there names for the editor
+		 * @var array
+		 */
+		var $human_name = array(
 			'select-percent'  => 'Select Percentage',
 			'select-priority' => 'Select Priority',
 			'select-access'   => 'Select Access',
 			'select-country'  => 'Select Country',
 			'select-state'    => 'Select State',	// US-states
-			'select-cat'      => 'Select Category',// Category-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
+			'select-cat'      => 'Select Category',	// Category-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
 			'select-account'  => 'Select Account',	// label=accounts(default),groups,both
-																// size: -1=Single+not assigned, 0=Single, >0=Multiple
+													// size: -1=Single+not assigned, 0=Single, >0=Multiple
 			'select-year'     => 'Select Year',
 			'select-month'    => 'Select Month',
 			'select-day'      => 'Select Day',
@@ -41,6 +53,9 @@
 			'select-number'   => 'Select Number',
 			'select-app'      => 'Select Application'
 		);
+		/**
+		 * @var array
+		 */
 		var $monthnames = array(
 			0  => '',
 			1  => 'January',
@@ -56,7 +71,9 @@
 			11 => 'November',
 			12 => 'December'
 		);
-
+		/**
+		 * @var array
+		 */
 		var $states = array(
 			''		=> '',
 			'--'	=> 'non US',
@@ -113,6 +130,11 @@
 			'WY'	=>	'Wyoming'
 		);
 
+		/**
+		 * Constructor of the extension
+		 *
+		 * @param string $ui '' for html
+		 */
 		function select_widget($ui)
 		{
 			foreach($this->monthnames as $k => $name)
@@ -125,6 +147,19 @@
 			$this->ui = $ui;
 		}
 
+		/**
+		 * pre-processing of the extension
+		 *
+		 * This function is called before the extension gets rendered
+		 *
+		 * @param string $name form-name of the control
+		 * @param mixed &$value value / existing content, can be modified
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$readonlys names of widgets as key, to be made readonly
+		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+		 * @param object &$tmpl reference to the template we belong too
+		 * @return boolean true if extra label is allowed, false otherwise
+		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			list($rows,$type,$type2,$type3) = explode(',',$cell['size']);
@@ -415,6 +450,9 @@
 			return True;	// extra Label Ok
 		}
 
+		/**
+		 * internal function to format account-data
+		 */
 		function accountInfo($id,$acc=0,$longnames=0,$show_type=0)
 		{
 			if (!$id)
@@ -453,7 +491,21 @@
 		}
 		
 		/**
-		 * postprocessing only used by select-dow so far
+		 * postprocessing method, called after the submission of the form
+		 *
+		 * It has to copy the allowed/valid data from $value_in to $value, otherwise the widget
+		 * will return no data (if it has a preprocessing method). The framework insures that
+		 * the post-processing of all contained widget has been done before.
+		 *
+		 * Only used by select-dow so far
+		 *
+		 * @param string $name form-name of the widget
+		 * @param mixed &$value the extension returns here it's input, if there's any
+		 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
+		 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
+		 * @param object &$tmpl the eTemplate the widget belongs too
+		 * @param mixed &value_in the posted values (already striped of magic-quotes)
+		 * @return boolean true if $value has valid content, on false no content will be returned!
 		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{

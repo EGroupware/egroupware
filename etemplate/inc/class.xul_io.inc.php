@@ -30,6 +30,7 @@
 	 * used only internaly
 	 *
 	 * @package etemplate
+	 * @subpackage api
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */
@@ -112,6 +113,7 @@
 			$this->xul2widget = array(
 				'menulist' => 'select',
 				'listbox' => 'select',
+				'menupopup' => 'select',
 				'description' => 'label'
 			);
 		}
@@ -159,6 +161,7 @@
 			{
 				list(,$type) = each($type);
 			}
+			if (!$type) $cell['type'] = $type = 'hugo';
 			if (substr($type,0,6) == 'select')
 			{
 				$type = $cell['size'] > 1 ? 'select-multi' : 'select';
@@ -247,12 +250,13 @@
 			case 'hbox':
 			case 'box':
 			case 'deck':
-				list($anz,$options) = split(',',$cell['size'],2);
+				list($anz,$orient,$options) = split(',',$cell['size'],2);
 				for ($n = 1; $n <= $anz; ++$n)
 				{
 					$this->add_widget($widget,$cell[$n],$embeded_too);
 					unset($cell[$n]);
 				}
+				$cell['orient'] = $orient;
 				$cell['size'] = $options;
 				break;
 
@@ -488,7 +492,7 @@
 							$tab_names[] = $attr['name'];
 							break;
 						}
-						if ($tag == 'template' && $node['level'] > 2)	// level 1 is the overlay
+						if ($tag == 'template' && $type != 'complete' && $node['level'] > 2)	// level 1 is the overlay
 						{
 							return "Can't import nested $tag's !!!";
 						}
@@ -631,6 +635,8 @@
 					case 'box':
 						if ($type != 'close')	// open or complete
 						{
+							$attr['size'] = '0'.($attr['orient'] || $attr['size'] ? ','.$attr['orient'].
+								($attr['size'] ? ','.$attr['size'] : '') : '');
 							soetemplate::add_child($parent,$attr);
 							$parents[count($parents)] = &$parent;	// $parents[] does not always the same - strange
 							$parent = &$attr;

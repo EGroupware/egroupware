@@ -23,18 +23,26 @@ align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
 alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table-cell
 all days	etemplate	en	all days
+all operations save the template!	etemplate	en	all operations save the template!
 am	etemplate	en	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
+applies the changes to the given version of the template	etemplate	en	applies the changes to the given version of the template
 attach	etemplate	en	Attach
 attach file	etemplate	en	attach file
+baseline	etemplate	en	Baseline
 blurtext	etemplate	en	blurText
 border	etemplate	en	Border
 border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
+bottom	etemplate	en	Bottom
 box	etemplate	en	Box
+box...	etemplate	en	Box...
 can not have special sql-value null	etemplate	en	can not have special SQL-value NULL
 cancel	etemplate	en	Cancel
+cant delete a single widget from a grid !!!	etemplate	en	cant delete a single widget from a grid !!!
+cant delete the only column of a grid !!!	etemplate	en	cant delete the only column of a grid !!!
+cant delete the only row in a grid !!!	etemplate	en	cant delete the only row in a grid !!!
 category	etemplate	en	Category
 cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
 cells	etemplate	en	Cells
@@ -50,13 +58,18 @@ click here to create the link	etemplate	en	click here to create the Link
 click here to start the search	etemplate	en	Click here to start the search
 click here to upload the file	etemplate	en	Click here to upload the file
 click to order after that criteria	etemplate	en	click to order after that criteria
+clickable path	etemplate	en	clickable path
+closes the window without saving the changes	etemplate	en	closes the window without saving the changes
+column...	etemplate	en	Column...
 columnname	etemplate	en	ColumnName
 comment	etemplate	en	Comment
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	en	CSS class for the table-tag
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	en	CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
 css-styles	etemplate	en	CSS-styles
+cut	etemplate	en	Cut
 date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
 day	etemplate	en	Day
@@ -65,12 +78,14 @@ db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for th
 db-tools	etemplate	en	DB-Tools
 deck	etemplate	en	Deck (internal)
 default	etemplate	en	Default
-delete	etemplate	en	Delete
 delete a single entry by passing the id.	etemplate	en	Delete a single entry by passing the id.
 delete all selected etemplates, without further inquiry	etemplate	en	delete ALL selected eTemplates, WITHOUT further inquiry
+delete and cut save the template!	etemplate	en	delete and cut save the template!
 delete column	etemplate	en	Delete Column
 delete index	etemplate	en	Delete Index
+delete this column	etemplate	en	delete this column
 delete this etemplate	etemplate	en	delete this eTemplate
+delete this row	etemplate	en	delete this row
 delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
 deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
@@ -87,6 +102,7 @@ drop table	etemplate	en	Drop Table
 dump4setup	etemplate	en	Dump4Setup
 edit	etemplate	en	Edit
 edit the etemplate spez. above	etemplate	en	edit the eTemplate spez. above
+edit...	etemplate	en	Edit...
 editable templates - db-tools	etemplate	en	Editable Templates - DB-Tools
 editable templates - delete template	etemplate	en	Editable Templates - Delete Template
 editable templates - editor	etemplate	en	Editable Templates - Editor
@@ -129,9 +145,13 @@ go to the first entry	etemplate	en	go to the first entry
 go to the last entry	etemplate	en	go to the last entry
 go to the next page of entries	etemplate	en	go to the next page of entries
 go to the previous page of entries	etemplate	en	go to the previous page of entries
+grid	etemplate	en	Grid
+grid column attributes	etemplate	en	Grid column attributes
+grid row attributes	etemplate	en	Grid row attributes
 groupbox	etemplate	en	GroupBox
 hbox	etemplate	en	HBox
 height	etemplate	en	Height
+height of row (in % or pixel)	etemplate	en	height of row (in % or pixel)
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	en	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table-tag and (optional) div
 height, disabled	etemplate	en	Height, Disabled
@@ -145,9 +165,16 @@ import	etemplate	en	Import
 import an etemplate from a xml-file	etemplate	en	import an eTemplate from a xml-file
 import table-definitions from existing db-table	etemplate	en	Import table-definitions from existing db-table
 import xml	etemplate	en	Import XML
+increment version to not overwrite the existing template	etemplate	en	increment version to not overwrite the existing template
 index/name of returned content (name of the template, link / method for image)	etemplate	en	index/name of returned content (name of the Template, Link / Method for Image)
 indexed	etemplate	en	Indexed
 indexoptions	etemplate	en	Indexoptions
+insert a column before	etemplate	en	insert a column before
+insert a column behind	etemplate	en	insert a column behind
+insert a row above	etemplate	en	insert a row above
+insert a row below	etemplate	en	insert a row below
+insert a widget before	etemplate	en	insert a widget before
+insert a widget behind	etemplate	en	insert a widget behind
 insert new column behind this one	etemplate	en	insert new column behind this one
 insert new column in front of all	etemplate	en	insert new column in front of all
 insert new row after this one	etemplate	en	insert new row after this one
@@ -166,6 +193,7 @@ linklist	etemplate	en	LinkList
 linkstring	etemplate	en	LinkString
 linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
+middle	etemplate	en	Middle
 minute	etemplate	en	Minute
 month	etemplate	en	Month
 multicolumn indices	etemplate	en	Multicolumn Indices
@@ -181,10 +209,13 @@ newer version '%1' exists !!!	etemplate	en	newer version '%1' exists !!!
 nextmatch	etemplate	en	Nextmatch
 nextmatch filterheader	etemplate	en	Nextmatch Filterheader
 nextmatch sortheader	etemplate	en	Nextmatch Sortheader
+no column to swap with !!!	etemplate	en	no column to swap with !!!
 no file	etemplate	en	no file
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
+no row to swap with !!!	etemplate	en	no row to swap with !!!
 not null	etemplate	en	NOT NULL
 nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
+nothing in clipboard to paste !!!	etemplate	en	nothing in clipboard to paste !!!
 nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria !!!
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
@@ -194,6 +225,9 @@ optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
+parent is a '%1' !!!	etemplate	en	parent is a '%1' !!!
+paste	etemplate	en	Paste
+path	etemplate	en	Path
 please enter table-name first !!!	etemplate	en	Please enter table-name first !!!
 pm	etemplate	en	pm
 precision	etemplate	en	Precision
@@ -208,9 +242,10 @@ remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
-save	etemplate	en	Save
+row...	etemplate	en	Row...
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	en	saves the template with given version number and closes the window
 scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 search	etemplate	en	Search
@@ -254,6 +289,12 @@ stack	etemplate	en	Stack
 start a new search, cancel this link	etemplate	en	start a new search, cancel this link
 start new search for the above pattern	etemplate	en	start new search for the above pattern
 submitbutton	etemplate	en	Submitbutton
+swap	etemplate	en	swap
+swap widget with next one	etemplate	en	swap widget with next one
+swap with next column	etemplate	en	swap with next column
+swap with next row	etemplate	en	swap with next row
+switch to a parent widget	etemplate	en	switch to a parent widget
+switch to an other widgets of that container	etemplate	en	switch to an other widgets of that container
 table unchanged, no write necessary !!!	etemplate	en	Table unchanged, no write necessary !!!
 tablename	etemplate	en	TableName
 tabs	etemplate	en	Tabs
@@ -264,10 +305,12 @@ text	etemplate	en	Text
 textarea	etemplate	en	Textarea
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	en	this text gets displayed if the input-field is empty and has no focus (blur)
 time	etemplate	en	Time
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	en	to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
 to start the search	etemplate	en	to start the search
 today	etemplate	en	Today
+top	etemplate	en	Top
 type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
@@ -276,17 +319,22 @@ unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields.
 update from version '%s' to	etemplate	en	Update from Version '%s' to
 upload	etemplate	en	Upload
+valign	etemplate	en	Valign
 value	etemplate	en	Value
 value has to be at least '%1' !!!	etemplate	en	Value has to be at least '%1' !!!
 value has to be at maximum '%1' !!!	etemplate	en	Value has to be at maximum '%1' !!!
 vbox	etemplate	en	VBox
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
+vertical alignment of row	etemplate	en	vertical alignment of row
+view this etemplate	etemplate	en	view this eTemplate
 view this linked entry in its application	etemplate	en	view this linked entry in its application
 weekend	etemplate	en	weekend
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
+widget copied into clipboard	etemplate	en	widget copied into clipboard
 width	etemplate	en	Width
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	en	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
+width of column (in % or pixel)	etemplate	en	width of column (in % or pixel)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table-tag and (optional) div
 width, disabled	etemplate	en	Width, Disabled
 working days	etemplate	en	working days

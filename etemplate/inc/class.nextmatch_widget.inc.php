@@ -12,35 +12,69 @@
 
 	/* $Id$ */
 
-	/*!
-	@class nextmatch_widget
-	@author ralfbecker
-	@abstract Widget that show only a certain number of data-rows and allows to modifiy the rows shown (scroll).
-	@discussion This widget replaces the old nextmatch-class
-	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
-	*/
+	/**
+	 * eTemplate Extension: Widget that show only a certain number of data-rows and allows to modifiy the rows shown (scroll).
+	 *
+	 * This widget replaces the old nextmatch-class. It is independent of the UI,
+	 * as it only uses etemplate-widgets and has therefor no render-function
+	 *
+	 * @package etemplate
+	 * @subpackage extensions
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class nextmatch_widget
 	{
+		/** 
+		 * exported methods of this class
+		 * @var array
+		 */
 		var $public_functions = array(
 			'pre_process' => True,
 			'post_process' => True
 		);
+		/**
+		 * availible extensions and there names for the editor
+		 * @var array
+		 */
 		var $human_name = array(
 			'nextmatch' => 'Nextmatch',
 			'nextmatch-sortheader' => 'Nextmatch Sortheader',
 			'nextmatch-filterheader' => 'Nextmatch Filterheader'
 		);
 
+		/**
+		 * Constructor of the extension
+		 *
+		 * @param string $ui '' for html
+		 */
 		function nextmatch_widget($ui)
 		{
 		}
 
+		/**
+		 * returns last part of a form-name
+		 * @internal 
+		 */
 		function last_part($name)
 		{
 			$parts = explode('[',str_replace(']','',$name));
 			return $parts[count($parts)-1];
 		}
 
+		/**
+		 * pre-processing of the extension
+		 *
+		 * This function is called before the extension gets rendered
+		 *
+		 * @param string $name form-name of the control
+		 * @param mixed &$value value / existing content, can be modified
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$readonlys names of widgets as key, to be made readonly
+		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
+		 * @param object &$tmpl reference to the template we belong too
+		 * @return boolean true if extra label is allowed, false otherwise
+		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
@@ -181,6 +215,23 @@
 			return False;	// NO extra Label
 		}
 
+		/**
+		 * postprocessing method, called after the submission of the form
+		 *
+		 * It has to copy the allowed/valid data from $value_in to $value, otherwise the widget
+		 * will return no data (if it has a preprocessing method). The framework insures that
+		 * the post-processing of all contained widget has been done before.
+		 *
+		 * Only used by select-dow so far
+		 *
+		 * @param string $name form-name of the widget
+		 * @param mixed &$value the extension returns here it's input, if there's any
+		 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
+		 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
+		 * @param object &$tmpl the eTemplate the widget belongs too
+		 * @param mixed &value_in the posted values (already striped of magic-quotes)
+		 * @return boolean true if $value has valid content, on false no content will be returned!
+		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
