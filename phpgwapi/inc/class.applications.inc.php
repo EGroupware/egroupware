@@ -3,7 +3,7 @@
 	* phpGroupWare API - Applications manager functions                        *
 	* This file written by Mark Peters <skeeter@phpgroupware.org>              *
 	* Copyright (C) 2001 Mark Peters                                           *
-	* -------------------------------------------------------------------------*
+	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
 	* http://www.phpgroupware.org/api                                          *
 	* ------------------------------------------------------------------------ *
@@ -23,7 +23,7 @@
 	/* $Id$ */
 
 	/*!
-	@class applicatons
+	@class applications
 	@abstract functions for managing and installing apps
 	@discussion Author: skeeter
 	*/
@@ -58,7 +58,7 @@
 			);
 		}
 
-		function list_methods($_type='xmlrpc')
+		function NOT_list_methods($_type='xmlrpc')
 		{
 			/*
 			  This handles introspection or discovery by the logged in client,
@@ -107,7 +107,7 @@
 		function read_repository()
 		{
 			if (!isset($GLOBALS['phpgw_info']['apps']) ||
-			    !is_array($GLOBALS['phpgw_info']['apps']))
+				!is_array($GLOBALS['phpgw_info']['apps']))
 			{
 				$this->read_installed_apps();
 			}
@@ -128,7 +128,7 @@
 						'status'  => $GLOBALS['phpgw_info']['apps'][$app]['status'],
 						'id'      => $GLOBALS['phpgw_info']['apps'][$app]['id']
 					);
-				} 
+				}
 			}
 			return $this->data;
 		}
@@ -151,7 +151,7 @@
 		@abstract add an app to a user profile
 		@discussion
 		@param $apps array containing apps to add for a user
-		*/	
+		*/
 		function add($apps)
 		{
 			if(is_array($apps))
@@ -207,7 +207,7 @@
 		/*!
 		@function save_repository()
 		@abstract save the repository
-		@discussion 
+		@discussion
 		*/
 		function save_repository()
 		{
@@ -282,7 +282,7 @@
 				{
 					$title = $app_name = $this->db->f('app_name');
 
-					if (@is_array($GLOBALS['phpgw_info']['user']['preferences']) && 
+					if (@is_array($GLOBALS['phpgw_info']['user']['preferences']) &
 					    ($t = lang($app_name)) != $app_name.'*')
 					{
 						$title = $t;
@@ -331,7 +331,7 @@
 			}
 			return '';
 		}
-		
+
 		function name2id($appname)
 		{
 			if(is_array($GLOBALS['phpgw_info']['apps'][$appname]))
