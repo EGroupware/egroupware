@@ -183,6 +183,7 @@
 			$participants[] = $parts[0];
 		}
 
+		reset($participants);
 		$phpgw->calendar->event_set_participants($cal_stream,$participants);
 
 		$phpgw->calendar->event->priority = intval($priority);

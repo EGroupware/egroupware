@@ -427,6 +427,11 @@ class calendar_ extends calendar__
 		}
 		else
 		{
+			$part_count = count($this->event->participants);
+			for($i=0;$i<$part_count;$i++)
+			{
+				$this->event->status[$i] = 'U';
+			}
 			$this->send_update(MSG_ADDED,$this->event->participants,'',$this->event);
 		}
 		return $this->save_event($this->event);
@@ -878,18 +883,18 @@ class calendar_ extends calendar__
 		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event->id,__LINE__,__FILE__);
 
 		reset($event->participants);
-		while ($participant = each($event->participants))
+		while (list($key,$value) = each($event->participants))
 		{
-			if(intval($participant[1]) == intval($this->user))
+			if(intval($value) == intval($this->user))
 			{
 				$status = 'A';
 			}
 			else
 			{
-				$status = $event->status[$participant[0]];
+				$status = $event->status[$key];
 			}
 			$this->stream->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
-				. 'VALUES('.$event->id.','.$participant[1].",'".$status."')",__LINE__,__FILE__);
+				. 'VALUES('.$event->id.','.$value.",'".$status."')",__LINE__,__FILE__);
 		}
 
 		if($event->recur_type != RECUR_NONE)
