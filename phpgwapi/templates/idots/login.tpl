@@ -29,26 +29,68 @@
 	z-index:9;
 }
 
+#divMain
+{
+	background-color:white;
+	margin-top: 5px;
+	padding:9px;
+	border-color:#7e7e7e;
+	border-width:1px;
+	border-style:none;
+}
+
+
+
 body { background: #ffffff; }
 
 </style>
+
+		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and higher --> 
+		<!--[if gte ie 5.5000]>
+		<script src="./phpgwapi/templates/idots/js/pngfix.js" type=text/javascript>
+		</script>
+		<![endif]-->
+
 </head>
 <body bgcolor="#ffffff">
+<div id="divLogo"><a href="http://{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}"/></a></div>
+
+<div id="divMain">
+	<div id="divAppIconBar">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="180" valign="top" align="left"><img src="./phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+				<td>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="100%"><img src="./phpgwapi/templates/idots/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
+						</tr>
+						<tr>
+							<td width="100%">&nbsp;</td>
+						</tr>
+					</table>
+
+				</td>
+				<td width="1" valign="top" align="right"><img src="./phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+			</tr>
+		</table>
+	</div>
 <br>
-<a href="http://{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
+</div>
 <div id="containerDiv">
 <div id="centerBox">
 <center>{lang_message}</center>
 <p>&nbsp;</p>
 <form name="login_form" method="post" action="{login_url}">
-<table class=sidebox cellspacing=1 cellpadding=0  border=1  align=center>
-<tr> 
-<td class="sideboxtitle" align="center"  height=28>{website_title}</td>
+<!-- <table class=sidebox cellspacing=1 cellpadding=0  border=1  align=center> -->
+<table class=sidebox cellspacing=1 cellpadding=0 border=0 align=center style="border: 1px silver solid">
+<tr style="border: 1px silver solid"> 
+<td class="sideboxtitle" align="center"  height=28 style="border: 1px silver solid">{website_title}</td>
 </tr>
 <tr> 
 <td class="sideboxcontent" bgcolor="#efefef">
 
-<table class="sideboxtext" cellspacing=0 cellpadding=0 width="100%" border="0">
+<table class="sideboxtext" cellspacing=0 cellpadding=0 width="100%" border="0" style="border: 1px silver solid">
 <tr bgcolor="#e6e6e6">
 <td colspan="3" align="center">
 {cd}
@@ -107,6 +149,5 @@ document.login_form.login.focus();
 </div>
 <div style="bottom:10px;right:10px;position:absolute;">
 <a href="http://www.egroupware.org" target="_blank">eGroupWare</a> {version}</div>
-
 </body>
 </html>

@@ -48,12 +48,23 @@ a:active
 	text-decoration: underline;
 }
 
-input 
+input
 {
 	font-size: 11px; 
 	color: #006699; 
 	font-family: Arial, Helvetica, sans-serif;
 	border: 1px #bbbbbb solid;
+}
+
+input[type="image"]
+{
+	border: 1px #bbbbbb none;
+}
+
+input[type=submit],input[type=button],button
+{
+	cursor: pointer; 
+	cursor: hand;
 }
 
 select 
