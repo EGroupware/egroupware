@@ -306,7 +306,7 @@
 					$GLOBALS['phpgw']->crypto->cleanup();
 					unset($GLOBALS['phpgw']->crypto);
 				}
-				echo 'DEBUG: Sessions: account_id is empty!<br>'."\n";
+				//echo 'DEBUG: Sessions: account_id is empty!<br>'."\n";
 				return False;
 			}
 			else
@@ -388,7 +388,7 @@
 				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
 			}
 
-			echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
+			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			$user_ip = $this->getuser_ip();
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
@@ -471,7 +471,7 @@
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
 			$GLOBALS['phpgw']->db->transaction_commit();
 			
-			if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
+			//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 
 			return $this->sessionid;
 		}
