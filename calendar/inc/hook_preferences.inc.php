@@ -14,9 +14,11 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = array(
-		'Calendar preferences' => $GLOBALS['phpgw']->link('/index.php',array(
-				'menuaction'   => 'calendar.uipreferences.preferences'
-		)),
+		'Preferences' => $GLOBALS['phpgw']->link('/index.php',
+				Array(
+					'menuaction'   => 'calendar.uipreferences.preferences'
+				)
+			),
 		'Grant Access' => $GLOBALS['phpgw']->link('/preferences/acl_preferences.php','acl_app='.$appname),
 		'Edit Categories' => $GLOBALS['phpgw']->link('/preferences/categories.php','cats_app='.$appname.'&global_cats=True')
 	);
