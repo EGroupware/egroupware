@@ -289,6 +289,7 @@ server type(mode)	admin	de	Server Typ (Modus)
 server url	admin	de	Server URL
 server username	admin	de	Server Benutzername
 set preference values.	admin	de	Einstellungswert wurde geändert
+should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten (nützlich für Demosites) ?
 show 'powered by' logo on	admin	de	Zeige 'powered by' Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
 show current action	admin	de	aktuelle Aktion anzeigen
@@ -316,6 +317,7 @@ that name has been used already	admin	de	Dieser Name wird bereits verwendet
 that server name has been used already !	admin	de	Dieser Server Name wird bereits verwendet !
 the api is current	admin	de	Die API ist aktuell
 the api requires an upgrade	admin	de	Die API benötigt ein Upgrade
+the groups must include the primary group	admin	de	Die Gruppen müssen die primäre Gruppe beinhalten
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nich länger als 8 Zeichen sein
 the testjob sends you a mail everytime it is called.	admin	de	Der TestJob sendet Ihnen jedesmal eine Mail wenn er aufgerufen wird.

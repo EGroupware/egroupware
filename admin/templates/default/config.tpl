@@ -61,7 +61,17 @@
     </td>
    </tr>
 
-   <tr class="th">
+    <tr class="row_off">
+    <td>{lang_Should_the_login_page_include_a_language_selectbox_(useful_for_demo-sites)_?}:</td>
+    <td>
+     <select name="newsettings[login_show_language_selection]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_login_show_language_selection_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+
+  <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_appearance}</b></td>
    </tr>
 

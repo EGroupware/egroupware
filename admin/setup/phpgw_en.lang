@@ -284,6 +284,7 @@ server type(mode)	admin	en	Server Type(mode)
 server url	admin	en	Server URL
 server username	admin	en	Server Username
 set preference values.	admin	en	Set preference values.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Should the login page include a language selectbox (useful for demo-sites) ?
 show 'powered by' logo on	admin	en	Show 'powered by' logo on
 show access log	admin	en	Show access log
 show current action	admin	en	Show current action
@@ -311,6 +312,7 @@ that name has been used already	admin	en	That name has been used already
 that server name has been used already !	admin	en	That server name has been used already !
 the api is current	admin	en	The API is current
 the api requires an upgrade	admin	en	The API requires an upgrade
+the groups must include the primary group	admin	en	The groups must include the primary group
 the login and password can not be the same	admin	en	The login and password can not be the same
 the loginid can not be more then 8 characters	admin	en	The loginid can not be more then 8 characters
 the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail everytime it is called.
