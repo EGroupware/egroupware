@@ -651,7 +651,7 @@
 		@abstract alternate row colour
 		@param $currentcolor default ''
 		*/
-		function alternate_row_color($currentcolor = '')
+		/*function alternate_row_color($currentcolor = '')
 		{
 			if(!$currentcolor)
 			{
@@ -667,6 +667,24 @@
 				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_on'];
 			}
 
+			return $GLOBALS['tr_color'];
+		}*/
+
+		function alternate_row_color($currentcolor = '')
+		{
+			if(!$currentcolor)
+			{
+				$currentcolor = $GLOBALS['tr_color'];
+			}
+
+			if($currentcolor == 'row_on')
+			{
+				$GLOBALS['tr_color'] = 'row_off';
+			}
+			else
+			{
+				$GLOBALS['tr_color'] = 'row_on';
+			}
 			return $GLOBALS['tr_color'];
 		}
 
