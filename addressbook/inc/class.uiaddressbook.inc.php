@@ -57,7 +57,7 @@
 
 			$this->bo       = CreateObject('addressbook.boaddressbook',True);
 			$this->cat      = CreateObject('phpgwapi.categories');
-			$this->company  = CreateObject('phpgwapi.categories','addressbook_company');
+//			$this->company  = CreateObject('phpgwapi.categories','addressbook_company');
 			$this->prefs    = $GLOBALS['phpgw_info']['user']['preferences']['addressbook'];
 
 			$this->_set_sessiondata();
