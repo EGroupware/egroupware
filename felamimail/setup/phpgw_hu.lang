@@ -1,0 +1,355 @@
+(no subject)	felamimail	hu	(nincs tárgy)
+(only cc/bcc)	felamimail	hu	(Másolat/Bizalmas másolat csupán)
+(unknown sender)	felamimail	hu	(ismeretlen küldö)
+activate	felamimail	hu	Aktívál
+activate script	felamimail	hu	script aktiválása
+add address	felamimail	hu	Cím hozzáadása
+add rule	felamimail	hu	Szabály hozzáadása
+add script	felamimail	hu	Script hozzáadása
+add to %1	felamimail	hu	%1-hez hozzáadás
+add to address book	felamimail	hu	Címjegyzékhez hozzáadás
+add to addressbook	felamimail	hu	címjegyzékhez hozzáadás
+additional info	felamimail	hu	További információ
+address book	felamimail	hu	Címjegyzék
+address book search	felamimail	hu	Keresés a címjegyzékben
+after message body	felamimail	hu	Az üzenet teste után
+all address books	felamimail	hu	Minden címjegyzék
+all folders	felamimail	hu	Minden gyüjtö
+always show html emails	felamimail	hu	Az emailek mindíg HTML formában jelenjenek meg
+anyone	felamimail	hu	valaki
+as a subfolder of	felamimail	hu	mint egy algyüjtö
+attachments	felamimail	hu	Mellékletek
+auto refresh folder list	felamimail	hu	Autómatikusan frissíti a gyüjtö listát
+back to folder	felamimail	hu	Vissza a gyüjtöhöz
+bad reque	felamimail	hu	Rossz kérés
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	hu	A megadott feltétel alapján, a bejövö üzeneteknek az üzenet listában különbözö színük lehet. Ez segít megkülönböztetni hogy az üzenet kitöl érkezett, különösen tekintettel a levelezési listákra.
+bcc	felamimail	hu	Titkos másolat
+before headers	felamimail	hu	Fejlécek elött
+between headers and message body	felamimail	hu	A fejlécek és az üzenet teste között
+body part	felamimail	hu	test rész
+cc	felamimail	hu	Másolat
+change folder	felamimail	hu	Gyüjtö váltás
+checkbox	felamimail	hu	Kiválasztó doboz
+click here to log back in.	felamimail	hu	
+click here to return to %1	felamimail	hu	Kattints ide hogy visszatérj a %1-hez
+close this page	felamimail	hu	zárd be ezt a lapot
+close window	felamimail	hu	Ablak bezárása
+color	felamimail	hu	Szín
+compose	felamimail	hu	Levélírás
+compress folder	felamimail	hu	Gyüjtö sürítése
+configuration	felamimail	hu	Konfiguráció
+contains	felamimail	hu	tartalmaz
+create	felamimail	hu	Létrehoz
+create folder	felamimail	hu	Gyüjtö létrehozása
+create sent	felamimail	hu	Elküldött létrehozása
+create subfolder	felamimail	hu	Algyüjtö létrehozása
+create trash	felamimail	hu	Szemetes létrehozása
+created folder successfully!	felamimail	hu	Gyüjtö sikeresen létrehozva!
+dark blue	felamimail	hu	Sötét kék
+dark cyan	felamimail	hu	Sötés cián
+dark gray	felamimail	hu	Sötét szürke
+dark green	felamimail	hu	Sötét zöld
+dark magenta	felamimail	hu	Sötét lila
+dark yellow	felamimail	hu	Sötét sárga
+date(newest first)	felamimail	hu	Dátum (újabb elöször)
+date(oldest first)	felamimail	hu	Dátum (régebbi elöször)
+deactivate script	felamimail	hu	script deaktiválása
+default sorting order	felamimail	hu	Alapértelmezett rendezés
+delete all	felamimail	hu	minden törlése
+delete folder	felamimail	hu	Gyüjtö törlése
+delete selected	felamimail	hu	Kiválasztott törlése
+delete selected messages	felamimail	hu	Kiválasztott üzenet törlése
+deleted	felamimail	hu	törölt
+deleted folder successfully!	felamimail	hu	Gyüjtö sikeresen törölve!
+disable	felamimail	hu	Letílt
+display message in new window	felamimail	hu	Üzenet megjelenítése egy új ablakban
+display of html emails	felamimail	hu	Emailek HTML formátumban mutatása
+display only when no plain text is available	felamimail	hu	Akkor mutatsd csupán ha nincs egyszerü szöveg
+display preferences	felamimail	hu	Tulajdonságok mutatása
+do it!	felamimail	hu	csináld azt!
+do not use sent	felamimail	hu	Elküldött gyüjtöt ne használjon
+do not use trash	felamimail	hu	Szemetes gyüjtöt ne használjon
+do you really want to delete the '%1' folder?	felamimail	hu	Valóban törölni akarod a '%1' gyüjtöt?
+does not contain	felamimail	hu	nem tartalmaz
+does not match	felamimail	hu	nem egyezik
+does not match regexp	felamimail	hu	nem egyezö kifejezés
+don't use sent	felamimail	hu	Az elküldött gyüjtöt ne használjon
+don't use trash	felamimail	hu	A szemetes gyüjtöt ne használjon
+down	felamimail	hu	le
+download	felamimail	hu	letölt
+download this as a file	felamimail	hu	Letölti ezt mint egy állományt
+e-mail	felamimail	hu	
+e-mail address	felamimail	hu	E-Mail cím
+e-mail folders	felamimail	hu	E-Mail gyüjtök
+edit filter	felamimail	hu	Szürö szerkesztés
+edit rule	felamimail	hu	szabály szerkesztés
+edit selected	felamimail	hu	Kiválasztott szerkesztése
+email address	felamimail	hu	E-Mail Cím
+email signature	felamimail	hu	E-Mail aláírás
+empty trash	felamimail	hu	szemetes ürítése
+enable	felamimail	hu	engedélyez
+enter your default mail domain ( from: user@domain )	admin	hu	Írd be az elepértelmezett levelezési tartományod (Innen: user@domain)
+enter your imap mail server hostname or ip address	admin	hu	Írd be az IMAP levelezö szervered nevét vagy IP címét
+enter your sieve server hostname or ip address	admin	hu	Írd be a SIEVE szervered nevét vagy IP címét
+enter your sieve server port	admin	hu	Írd be a SIEVE szervered portját
+enter your smtp server hostname or ip address	admin	hu	Írd be az SMTP levelezö szervered nevét vagy IP címét
+enter your smtp server port	admin	hu	Írd be a SMTP szervered portját
+error	felamimail	hu	HIBA
+error connecting to imap serv	felamimail	hu	Hiba az IMAP szerverhez kapcsolódáskor
+error opening	felamimail	hu	Megnyitási hiba
+expunge	felamimail	hu	Megsemmisít
+felamimail	common	hu	
+file into	felamimail	hu	állomány ide
+files	felamimail	hu	állományok
+filter active	felamimail	hu	szürö aktiv
+filter name	felamimail	hu	Szürö neve
+first name	felamimail	hu	Kereszt név
+flagged	felamimail	hu	megjelölt
+flags	felamimail	hu	Jelek
+folder acl	felamimail	hu	gyüjtö jogok
+folder name	felamimail	hu	Gyüjtö neve
+folder path	felamimail	hu	Gyüjtö elérési út
+folder preferences	felamimail	hu	Gyüjtö tulajdonságok
+folder settings	felamimail	hu	Gyüjtö beállítások
+folder status	felamimail	hu	Gyüjtö állapot
+folderlist	felamimail	hu	Gyüjtö lista
+foldername	felamimail	hu	Gyüjtö neve
+folders	felamimail	hu	Gyüjtök
+folders created successfully!	felamimail	hu	Gyüjtök sikeresen létrehozva!
+follow	felamimail	hu	követ
+for mail to be send - not functional yet	felamimail	hu	Levél küldés - nem müködik
+for received mail	felamimail	hu	Fogadott levélnek
+forward	felamimail	hu	Továbbküld
+found	felamimail	hu	Talált
+from	felamimail	hu	Innen
+from(a->z)	felamimail	hu	Innen (A->Z)
+from(z->a)	felamimail	hu	Innen (Z->A)
+full name	felamimail	hu	Teljes neve
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	hu	
+hide header	felamimail	hu	fejléc elrejtése
+html	felamimail	hu	
+icons and text	felamimail	hu	Ikonok és szövegek
+icons only	felamimail	hu	Ikonok csupán
+identifying name	felamimail	hu	Azonosító név
+illegal folder name.  please select a different name.	felamimail	hu	Nem megfelelö gyüjtö név. Kérlek válassz más nevet.
+imap	felamimail	hu	
+imap server	felamimail	hu	Identifying szerver
+imap server address	felamimail	hu	Identifying szerver címe
+imap server type	felamimail	hu	Identifying szerver tipusa
+imaps authentication	felamimail	hu	Identifying szerver hitelesítés
+imaps encryption only	felamimail	hu	IMAPS titkosítás csopán
+in	felamimail	hu	ban
+in order for squirrelmail to provide the full set of options you need to create the special folders listed below.  just click the check box and hit the create button.	felamimail	hu	
+in the center	felamimail	hu	középen
+index order	felamimail	hu	Rendezés index
+info	felamimail	hu	Információ
+invalid user name or password	felamimail	hu	Helytelen felhasználói név vagy jelszó
+javascript	felamimail	hu	
+language	felamimail	hu	Nyelv
+last name	felamimail	hu	Vezeték név
+left	felamimail	hu	Bal
+less	felamimail	hu	kisebb
+let this folder contain subfolders	felamimail	hu	Ez a gyüjtö tartalmazzon algyüjtöket
+light blue	felamimail	hu	Világos kék
+light cyan	felamimail	hu	Világos cián
+light gray	felamimail	hu	Világos szürke
+light green	felamimail	hu	Világos zöld
+light magenta	felamimail	hu	Világos lila
+light yellow	felamimail	hu	Világos sárga
+list all	felamimail	hu	Minden lista
+location of buttons when composing	felamimail	hu	Nyomógombok elhelyezkedése levélírásnál
+location of folder list	felamimail	hu	Gyüjtö lista elhelyezkedése
+mail server login type	admin	hu	Levelezö szerver bejelentkezés típusa
+mail settings	felamimail	hu	Levelezés beállítások
+manage folders	felamimail	hu	Gyüjtök kezelése
+manage sieve	felamimail	hu	Sieve scriptek kezelése
+mark as deleted	felamimail	hu	Töröltnek jelölve
+mark messages as	felamimail	hu	Kiválasztott üzenetek megjelölése mint
+mark selected as flagged	felamimail	hu	Kiválasztott jelölése mint megjelölt
+mark selected as read	felamimail	hu	Kiválasztott jelölése mint olvasott
+mark selected as unflagged	felamimail	hu	Kiválasztott jelölése mint meg nem jelölt
+mark selected as unread	felamimail	hu	Kiválasztott jelölése mint nem olvasott
+match	felamimail	hu	Egyezés
+matches	felamimail	hu	egyezések
+matches regexp	felamimail	hu	Egyezö kifejezés
+medium gray	felamimail	hu	Közép szürke
+message highlighting	felamimail	hu	Üzenet kiemelése
+message list	felamimail	hu	Üzenet lista
+messages	felamimail	hu	Üzenetek
+minute	felamimail	hu	Perc
+minutes	felamimail	hu	Percek
+more	felamimail	hu	több
+move	felamimail	hu	mozgat
+move messages	felamimail	hu	üzenetek mozgatása
+move selected to	felamimail	hu	kijelöltek mozgatása
+move to trash	felamimail	hu	Szemetesbe mozgatás
+must be unique	felamimail	hu	Egyedinek kell lenni
+name	felamimail	hu	Neve
+never display html emails	felamimail	hu	Soha ne jelenítsen meg emailt HTML formában
+new	felamimail	hu	Új
+new filter	felamimail	hu	Új szürö
+next	felamimail	hu	Következö
+next message	felamimail	hu	Következö üzenet
+nickname	felamimail	hu	Becenév
+no filter	felamimail	hu	Szürö nélkül
+no folders found	felamimail	hu	Nem találtam gyüjtöket
+no folders were found to subscribe to!	felamimail	hu	
+no folders were found to unsubscribe from!	felamimail	hu	
+no highlighting is defined	felamimail	hu	Nincs kiemelt definiálva
+no messages were selected.	felamimail	hu	Nencs üzenet kiválaszva.
+no next message	felamimail	hu	nincs következö üzenet
+no notification	felamimail	hu	Nincs értesítés
+no personal address book is defined. contact administrator.	felamimail	hu	Nincs szemályes címjegyzék definiálva. Lépj kapcsolatba a rendszergazdával.
+no persons matching your search was found	felamimail	hu	Nem találtam egyezö személy a keresésnél
+no previous message	felamimail	hu	nincs elözö üzenet
+no valid emailprofile selected!!	felamimail	hu	Nincs érvényes Email profil kiválasztva!
+none	felamimail	hu	semmi
+number of messages to index	felamimail	hu	Index üzenetek száma
+on behalf of	felamimail	hu	ennek a nevében
+only inbox	felamimail	hu	Csupán INBOX
+only unseen	felamimail	hu	Csupán a nemlátott
+options	felamimail	hu	Opciók
+organisation	felamimail	hu	szervezet
+organization	felamimail	hu	szervezet
+organization name	admin	hu	Szervezet neve
+oth	felamimail	hu	
+participants	felamimail	hu	Résztvevök
+personal information	felamimail	hu	Személyi információ
+posting	felamimail	hu	postázás
+preference file %1 not found. exiting abnormally	felamimail	hu	A % 1 tulajdonság állomány nem található. Abnormális kilépés.
+preference file, %1, does not exist. log out, and log back in to create a default preference file.	felamimail	hu	A % 1 tulajdonság állomány, nem létezik. Lépj ki és lépj vissza hogy létrejöjjön az állomány.
+previous	felamimail	hu	Elözö
+previous message	felamimail	hu	elözö üzenet
+print it	felamimail	hu	nyomtatsd
+print this page	felamimail	hu	ennek a lapnak a nyomtatása
+purge	felamimail	hu	ürítés
+quicksearch	felamimail	hu	Gyorskeresés
+read	felamimail	hu	olvas
+read da	felamimail	hu	Adat olvasás
+reading	felamimail	hu	olvasás
+reason giv	felamimail	hu	Értelem adva
+recent	felamimail	hu	frissebb
+refresh folder list	felamimail	hu	gyüjtö lista frissítése
+refresh page	felamimail	hu	Lap frissítése
+refresh time in minutes	felamimail	hu	Frissítési idö percben
+remove	felamimail	hu	eltávolít
+remove immediately	felamimail	hu	Azonnal eltávolít
+rename	felamimail	hu	Átnevez
+rename a folder	felamimail	hu	Átnevez egy gyüjtöt
+rename folder	felamimail	hu	Gyüjtöt átnevezés
+renamed successfully!	felamimail	hu	Sikeresen átnevezve!
+replied	felamimail	hu	megválaszolva
+reply	felamimail	hu	Válasz
+reply all	felamimail	hu	Válasz mindenkinek
+reply to	felamimail	hu	
+replyto	felamimail	hu	
+return	felamimail	hu	Visszatér
+return to options page	felamimail	hu	Visszatérés az opciók lapra
+right	felamimail	hu	Jobb
+rule	felamimail	hu	Szabály
+running squirrelmail version %1 (c) 1999-2000.	felamimail	hu	
+same window - not functional yet	felamimail	hu	Egyezö ablak - nem müködik
+save	felamimail	hu	Mentés
+search	felamimail	hu	Keresés
+search for	felamimail	hu	Keresés
+seconds	felamimail	hu	Másodpercek
+select	felamimail	hu	Kiválaszt
+select all	felamimail	hu	Minden kiválasztása
+select emailprofile	felamimail	hu	Email tulajdonságok kiválasztása
+select home email address	felamimail	hu	Válassz otthoni email címet
+select work email address	felamimail	hu	Válassz munkahelyi email címet
+select your mail server type	admin	hu	Válaszd ki a levelezö szerver tipusát
+send	felamimail	hu	Elküld
+sent fold	felamimail	hu	Elküldött gyüjtö
+sent folder	felamimail	hu	Elküldött gyüjtö
+server respond	felamimail	hu	Szerver válasza
+show header	felamimail	hu	fejléc mutatása
+show new messages on main screen	felamimail	hu	Új üzenet mutatása a fö képernyön
+sieve settings	admin	hu	Sieve beállítások
+signature	felamimail	hu	Aláírás
+site configuration	felamimail	hu	honlap konfiguráció
+size	felamimail	hu	Méret
+size of editor window	felamimail	hu	Szerkesztö ablak mérete
+size(...->0)	felamimail	hu	Mérete (...->0)
+size(0->...)	felamimail	hu	Mérete (0->...)
+small view	felamimail	hu	kis nézet
+smtp settings	admin	hu	SMTP beállítások
+some or all of the help documents are not present!	felamimail	hu	Néhány vagy az összes segítség dokumentum nincs jelen!
+source	felamimail	hu	Forrás
+special folder options	felamimail	hu	Különleges gyüjtö opciok
+squirrelmail	felamimail	hu	
+subject	felamimail	hu	Tárgy
+subject(a->z)	felamimail	hu	Tárgy (A->Z)
+subject(z->a)	felamimail	hu	Tárgy (Z->A)
+submit	felamimail	hu	Elküld
+subscribe	felamimail	hu	Aláír
+subscribed	felamimail	hu	Aláírt
+subscribed successfully!	felamimail	hu	Sikeresen aláírva!
+successfully saved display preferences!	felamimail	hu	A kijelzö tulajdonságai sikeresen elmentve!
+successfully saved folder preferences!	felamimail	hu	A gyüjtö tulajdonságai sikeresen elmentve!
+successfully saved personal information!	felamimail	hu	A személyes információ sikeresen elmentve!
+switch current folder to	felamimail	hu	az aktuális gyüjtö váltása
+table of contents	felamimail	hu	Tartalom táblája
+text only	felamimail	hu	Szöveg csupán
+the connection to the imap server failed!!	felamimail	hu	Az SMTP szerverhez csatlakozás nem sikerült!
+the help has not been translated to %1.  it will be displayed in english instead.	felamimail	hu	A segítség nem lett lefordítva %1-ra. Helyette angolul lesz megjelenítve.
+the index order is the order that the columns are arranged in the message index.  you can add, remove, and move columns around to customize them to fit your needs.	felamimail	hu	
+the order of the message index can be rearanged and changed to contain the headers in any order you want.	felamimail	hu	Az index üzenet sorrendjét átrendezheted és megváltoztathatod hogy a hejlécek olyan sorrendben legyenek ahogy akarod.
+theme	felamimail	hu	Téma
+then	felamimail	hu	AKKOR
+these settings change the way your folders are displayed and manipulated.	felamimail	hu	
+this contains personal information about yourself such as your name, your email address, etc.	felamimail	hu	
+this folder is empty	felamimail	hu	EZ A GYÜJTÖ ÜRES
+this php has no imap support compiled in!!	felamimail	hu	
+this port is based on squirrelmail, which is a standalone imap client.<br>	felamimail	hu	
+to	felamimail	hu	Címett
+to the left	felamimail	hu	balra
+to the right	felamimail	hu	jobbra
+top	felamimail	hu	
+translation location	felamimail	hu	Fordítás helyszíne
+translation preferences	felamimail	hu	Fordítás tulajdonságai
+translation server	felamimail	hu	Fordítás szervere
+trash fold	felamimail	hu	Szemetes gyüjtö
+trash folder	felamimail	hu	Szemetes gyüjtö
+type	felamimail	hu	tipus
+unable to list addresses from %1	felamimail	hu	Lehetetlen %1-röl listázni a címeket
+unflagged	felamimail	hu	Nemjelölt
+unknown err	felamimail	hu	Ismeretlen hiba
+unknown error	felamimail	hu	Ismeretlen hiba
+unknown sender	felamimail	hu	Ismeretlen küldö
+unknown user or password incorrect.	felamimail	hu	Ismeretlen felhasználó vagy a jelszó helytelen
+unread	felamimail	hu	nemolvasott
+unseen	felamimail	hu	Nemlátott
+unseen and total	felamimail	hu	Nemlátott és összes
+unseen message notification	felamimail	hu	Nemlátott üzenet értesítés
+unseen message notification type	felamimail	hu	Nemlátott üzenet értesítés tipusa
+unselect all	felamimail	hu	Kijelölés megszüntetése mindnek
+unsubscribe	felamimail	hu	Leiratkozás
+unsubscribed	felamimail	hu	Leiratkozott
+unsubscribed successfully!	felamimail	hu	Sikeresen leiratkozott!
+up	felamimail	hu	fel
+update address	felamimail	hu	Cím frissítés
+use a signature	felamimail	hu	Egy aláírás használata
+use a signature?	felamimail	hu	Használjak egy aláírást?
+use addresses	felamimail	hu	Címek használata
+use custom settings	felamimail	hu	Egyedi beállítások használata
+use javascript or html addressbook?	felamimail	hu	Használjak Javascriptet vagy HTML címjegyzéket?
+use smtp auth	admin	hu	Használjon SMTP hitelesítést
+users can define their own emailaccounts	admin	hu	A felhasználó tudja definiálni a saját email hozzáférését
+view full header	felamimail	hu	Teljes fejléc megnézése
+view message	felamimail	hu	Üzenez megnézése
+viewing full header	felamimail	hu	Teljes fejléc megnézése
+viewing message	felamimail	hu	Üzenet megnézése
+viewing messages	felamimail	hu	Üzenetek megnézése
+welcome to %1's webmail system	felamimail	hu	Üdvüzüllek a %1 WebMail rendszerében
+when deleting messages	felamimail	hu	Amikor üzeneteket törlök
+white	felamimail	hu	Fehér
+width of folder list	felamimail	hu	Gyüjtö lista szélessége
+wrap incoming text at	felamimail	hu	Bejövö szöveg elrejtése
+writing	felamimail	hu	írás
+wrote	felamimail	hu	írta
+you can change the way that squirrelmail looks and displays information to you, such as the colors, the language, and other settings.	felamimail	hu	
+you can only edit one address at the time	felamimail	hu	Egy idöben csak egy címet tudsz szerkeszteni
+you must login first.	felamimail	hu	Be kell lépned elöször.
+you need a valid user and password to access this page!	felamimail	hu	Szükséged van egy érvényes névre és jelszóra ennek a lapnak az eléréséhez!
+your search failed with the following error(s)	felamimail	hu	A keresésed nem sikerült a küvetkezö hiba(ák) miatt
