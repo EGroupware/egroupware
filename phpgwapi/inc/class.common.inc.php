@@ -1442,6 +1442,12 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$GLOBALS['phpgw']->crypto->cleanup();
 					unset($GLOBALS['phpgw']->crypto);
 				}
+				
+				if (DEBUG_TIMER)
+				{
+					$GLOBALS['debug_timer_stop'] = perfgetmicrotime();
+					echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
+				}
 			}
 //			echo 'an app is trying to run the phpgw_footer() more than once<br>';
 		}
