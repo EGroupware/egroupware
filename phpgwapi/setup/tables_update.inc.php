@@ -61,6 +61,13 @@
 		return phpgwapi_upgrade1_0_0_004();
 	}
 	
+	$test[] = '1.0.0.006';
+	function phpgwapi_upgrade1_0_0_006()
+	{
+		// identical to 1.0.0.001, only created to get a new version of the bugfix release
+		return phpgwapi_upgrade1_0_0_004();
+	}
+	
 	$test[] = '1.0.1.001';
 	function phpgwapi_upgrade1_0_1_001()
 	{
