@@ -25,6 +25,9 @@
 	{
 		$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/css/idots.css';
 	}
+
+	$pngfix = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
+	
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
@@ -35,6 +38,7 @@
 	$var = Array (
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
+		'pngfix'		=> $pngfix,
 		'charset'       => $GLOBALS['phpgw']->translation->charset(),
 		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'].$app,

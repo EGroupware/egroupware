@@ -37,7 +37,7 @@
 		{java_script}
 		<!-- This solves the Internet Explorer PNG-transparency bug, but only for IE 5.5 and higher --> 
 		<!--[if gte IE 5.5000]>
-		<SCRIPT src="phpgwapi/templates/idots/js/pngfix.js" type=text/javascript>
+		<SCRIPT src="{pngfix}" type=text/javascript>
 		</SCRIPT>
 		<![endif]-->
 
