@@ -134,6 +134,7 @@
 					'link_name' => $this->db->Record['vfs_link_name'],
 				);
 			}
+			$this->grants = $GLOBALS['egw']->acl->get_grants('filemanager');
 		}
 
 		/*!
@@ -680,6 +681,7 @@
 				else
 				{
 					$p2 = $p;
+					//echo "using parent directory for acl-check, ";
 				}
 
 				/*
@@ -699,6 +701,7 @@
 			{
 				$owner_id = $data['owner_id'];
 			}
+			//echo "owner=$owner_id, ";
 
 			/* This is correct.  The ACL currently doesn't handle undefined values correctly */
 			if (!$owner_id)
@@ -707,14 +710,14 @@
 			}
 
 			$user_id = $GLOBALS['phpgw_info']['user']['account_id'];
-
+			//echo "user=$user_id, ";
 			/* They always have access to their own files */
 			if ($owner_id == $user_id)
 			{
 				return True;
 			}
-
-			/* Check if they're in the group */
+/* RalfBecker 2005/03/07 using ACL standard function acl::get_grants() now
+			// Check if they're in the group
 			$memberships = $GLOBALS['phpgw']->accounts->membership ($user_id);
 
 			if (is_array ($memberships))
@@ -735,7 +738,7 @@
 
 			$rights = $acl->get_rights ($user_id);
 
-			/* Add privileges from the groups this user belongs to */
+			// Add privileges from the groups this user belongs to
 			if (is_array ($memberships))
 			{
 				foreach ($memberships as $group_array)
@@ -743,7 +746,9 @@
 					$rights |= $acl->get_rights ($group_array['account_id']);
 				}
 			}
-
+*/
+			$rights = $this->grants[$owner_id];
+			//echo "rights=$rights, ";
 			if ($rights & $data['operation'])
 			{
 				return True;
@@ -1761,13 +1766,13 @@
 					'operation'	=> PHPGW_ACL_ADD)
 				)
 			)
-			{
+			{//echo "!acl_check('$p->fake_full_path',PHPGW_ACL_ADD)";
 				return False;
 			}
 
 			/* We don't allow /'s in dir names, of course */
 			if (strstr ($p->fake_name,'/'))
-			{
+			{//echo "strstr('$p->fake_name','/')";
 				return False;
 			}
 
@@ -1778,7 +1783,7 @@
 				if (!@is_dir($p->real_leading_dirs))	// eg. /home or /group does not exist
 				{
 					if (!@mkdir($p->real_leading_dirs,0770))	// ==> create it
-					{
+					{//echo "!mkdir('$p->real_leading_dirs')";
 						return False;
 					}
 				}
@@ -1787,7 +1792,7 @@
 					$this->update_real($data,True);		// update its contents
 				}
 				elseif (!@mkdir ($p->real_full_path, 0770))
-				{
+				{//echo "!mkdir('$p->real_full_path')";
 					return False;
 				}
 			}
@@ -1832,10 +1837,9 @@
 				);
 			}
 			else
-			{
+			{//echo"!file_exists('$p->fake_full_path');";
 				return False;
 			}
-
 			return True;
 		}
 
