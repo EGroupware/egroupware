@@ -323,6 +323,31 @@
           )";
   $phpgw_setup->db->query($sql);
 
+  $sql = "CREATE TABLE infolog (
+			info_id				serial,
+			info_type			enum('task','phone','note','confirm','reject','email','fax') NOT NULL,
+			info_addr_id		int DEFAULT '0' NOT NULL,
+			info_proj_id		int DEFAULT '0' NOT NULL,
+			info_from			varchar(64),
+			info_addr			varchar(64),
+			info_subject		varchar(64) NOT NULL,
+			info_des				text,
+			info_owner			int NOT NULL,
+			info_responsible	int DEFAULT '0' NOT NULL,
+			info_access			varchar(10) DEFAULT 'public',
+			info_cat				int DEFAULT '0' NOT NULL,
+			info_datecreated	int DEFAULT '0' NOT NULL,
+			info_startdate		int DEFAULT '0' NOT NULL,
+   		info_enddate   	int DEFAULT '0' NOT NULL,
+			info_id_parent		int DEFAULT '0' NOT NULL,
+			info_pri				enum('urgent','high','normal','low') DEFAULT 'Normal',
+			info_time			int DEFAULT '0' NOT NULL,
+			info_bill_cat		int DEFAULT '0' NOT NULL,
+			info_status			enum('offer','ongoing','call','will-call','done','billed') DEFAULT 'done',
+			info_confirm		enum('not','accept','finish','both') DEFAULT 'not'
+			)";
+  $phpgw_setup->db->query($sql);
+
   $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();

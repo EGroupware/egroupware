@@ -354,6 +354,31 @@
           )";
   $phpgw_setup->db->query($sql);
 
+  $sql = "CREATE TABLE phpgw_infolog (
+			info_id				int(11) unsigned PRIMARY KEY NOT NULL auto_increment,
+			info_type			enum('task','phone','note','confirm','reject','email','fax') NOT NULL,
+			info_addr_id		int(11) DEFAULT '0' NOT NULL,
+			info_proj_id		int(11) DEFAULT '0' NOT NULL,
+			info_from			varchar(64),
+			info_addr			varchar(64),
+			info_subject		varchar(64) NOT NULL,
+			info_des				text,
+			info_owner			int(11) NOT NULL,
+			info_responsible	int(11) DEFAULT '0' NOT NULL,
+			info_access			varchar(10) DEFAULT 'public',
+			info_cat				int(11) DEFAULT '0' NOT NULL,
+			info_datecreated	int(11) DEFAULT '0' NOT NULL,
+			info_startdate		int(11) DEFAULT '0' NOT NULL,
+   		info_enddate   	int(11) DEFAULT '0' NOT NULL,
+			info_id_parent		int(11) DEFAULT '0' NOT NULL,
+			info_pri				enum('urgent','high','normal','low') DEFAULT 'Normal',
+			info_time			int(11) DEFAULT '0' NOT NULL,
+			info_bill_cat		int(11) DEFAULT '0' NOT NULL,
+			info_status			enum('offer','ongoing','call','will-call','done','billed') DEFAULT 'done',
+			info_confirm		enum('not','accept','finish','both') DEFAULT 'not'
+			)";
+  $phpgw_setup->db->query($sql);
+
   $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
