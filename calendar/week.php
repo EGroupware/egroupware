@@ -174,10 +174,9 @@
 
   if (! $friendly) {
      echo "<P>&nbsp;<A HREF=\"" . $phpgw->link("week.php","$yeartext&friendly=1");
+     ?>" TARGET="cal_printer_friendly" onMouseOver="window.status = '<?php echo lang("Generate printer-friendly version"); ?>'">[<?php echo lang("Printer Friendly"); ?>]</A>
+     <?php
   }
-?>" TARGET="cal_printer_friendly"
-onMouseOver="window.status = '<?php echo lang("Generate printer-friendly version"); ?>'">[<?php echo lang("Printer Friendly"); ?>]</A>
 
-<?php
   $phpgw->common->phpgw_footer();
 ?>
