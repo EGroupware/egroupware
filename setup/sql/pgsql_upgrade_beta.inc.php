@@ -76,7 +76,7 @@
     global $currentver, $phpgw_info, $db;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4" || $currentver == "0.9.3pre5" || $currentver == "0.9.3pre6" || $currentver == "0.9.3pre7" || $currentver == "0.9.3pre8" || $currentver == "0.9.3pre9") {
+    if ($currentver == "0.9.2" || $currentver == "0.9.3" || ereg ("^0\.9\.3pre", $currentver)){
        if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
 	      update_owner("addressbook","ab_owner");
       	update_owner("todo","todo_owner");
