@@ -115,7 +115,7 @@
 			$acl->db = $phpgw_setup->db;
 			$acl->read_repository();
 			while ($app = each($s_apps)) {
-				$acl->delete($app[1],'run',1);
+				//$acl->delete($app[1],'run',1);
 				$acl->add($app[1],'run',1);
 			}
 			$acl->save_repository();
@@ -155,7 +155,7 @@
 					//  as a group member.
 					for ($a=0;$a<count($admins);$a++) {
 						if ($admins[$a] == $account[1]['account_id']) {
-							$acl->delete('admin','run',1);
+							//$acl->delete('admin','run',1);
 							$acl->add('admin','run',1);
 						}
 					}
