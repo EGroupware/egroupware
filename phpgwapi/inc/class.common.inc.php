@@ -945,7 +945,8 @@
 		@abstract hooking function which allows applications to 'hook' into each other
 		@discussion Someone flesh this out please
 		*/
-		function hook($location, $order = '')
+		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
+		function hook($location, $order = '', $no_permission_check = False)
 		{
 			global $phpgw, $phpgw_info;
 			if ($order == '')
@@ -960,29 +961,49 @@
 			{
 				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
 				if (file_exists($f) &&
-					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || ( ($location == 'preferences') && $appname) ) )
+					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $appname == 'preferences') && $appname)) )
 				{
-					//echo '<br>including: ' . $f;
 					include($f);
 				}
+
 				$completed_hooks[$appname] = True;
 			}
 
 			/* Then add the rest */
-			reset ($GLOBALS['phpgw_info']['user']['apps']);
-			while (list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
+
+			if ($no_permission_check)
 			{
-				$appname = $p['name'];
-				if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
+				reset($GLOBALS['phpgw_info']['apps']);
+				while (list(,$p) = each($GLOBALS['phpgw_info']['apps']))
 				{
-					$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
-					if (file_exists($f))
+					$appname = $p['name'];
+					if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
 					{
-						include($f);
-					}
-				}
-			}
-		}
+						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
+						if (file_exists($f))
+						{
+							include($f);
+						}
+					}		// if
+				}			// while
+			}				// if
+			else
+			{
+				reset ($GLOBALS['phpgw_info']['user']['apps']);
+				while (list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
+				{
+					$appname = $p['name'];
+					if (! isset($completed_hooks[$appname]) || $completed_hooks[$appname] != True)
+					{
+						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
+						if (file_exists($f))
+						{
+							include($f);
+						}
+					}		// if
+				}			// while
+			}				// if $no_permission_check
+		}					// function
 
 		/*!
 		@function hook_single
@@ -990,7 +1011,8 @@
 		@param $location hook location - required
 		@param $appname application name - optional
 		*/
-		function hook_single($location, $appname = '')
+		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
+		function hook_single($location, $appname = '', $no_permission_check = False)
 		{
 			global $phpgw, $phpgw_info, $PHP_VERSION;
 			if (! $appname)
@@ -1002,7 +1024,7 @@
 			/* First include the ordered apps hook file */
 			$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
 			if (file_exists($f) &&
-				( $GLOBALS['phpgw_info']['user']['apps'][$appname] || ( ($location == 'config') && $appname) ) )
+				( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
 			{
 				include($f);
 				return True;
