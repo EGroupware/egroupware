@@ -48,23 +48,11 @@
 			$this->add_app($appname,$lang);
 		}
 
-		function isin_array($needle,$haystack)
-		{
-			while (list ($k,$v) = each($haystack))
-			{
-				if ($v == $needle)
-				{
-					return True;
-				}
-			}
-			return False;
-		}
-
 		function translate($key, $vars=False) 
 		{
 			global $lang;
 
-			if (!$this->isin_array($GLOBALS['phpgw_info']['flags']['currentapp'],$this->loaded_apps) &&
+			if (!@in_array($GLOBALS['phpgw_info']['flags']['currentapp'],$this->loaded_apps) &&
 				$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
 			{
 				//echo '<br>loading app "' . $GLOBALS['phpgw_info']['flags']['currentapp'] . '" for the first time.';
@@ -79,7 +67,7 @@
 				@ksort($GLOBALS['phpgw_info']['apps']);
 				while(list($x,$app) = each($GLOBALS['phpgw_info']['apps']))
 				{
-					if (!$this->isin_array($app['name'],$this->loaded_apps))
+					if (!@in_array($app['name'],$this->loaded_apps))
 					{
 						//echo '<br>loading app "' . $app['name'] . '" for the first time.';
 						$this->add_app($app['name'],$lang);

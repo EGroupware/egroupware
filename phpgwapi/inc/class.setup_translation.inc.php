@@ -171,7 +171,7 @@
 		function add_langs($appname,$DEBUG=False,$force_en=False)
 		{
 			$langs = $this->get_langs($DEBUG);
-			if($force_en && !isinarray('en',$langs))
+			if($force_en && !@in_array('en',$langs))
 			{
 				$langs[] = 'en';
 			}

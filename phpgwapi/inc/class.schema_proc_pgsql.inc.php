@@ -519,7 +519,7 @@
 			{
 				$indexes[] = $val['index_name'];
 			}
-			if(isinarray($sOldTableName . '_pkey',$indexes))
+			if(!in_array($sOldTableName . '_pkey',$indexes))
 			{
 				$oProc->m_odb->query("DROP INDEX " . $sOldTableName . "_pkey",__LINE__,__FILE__);
 			}
