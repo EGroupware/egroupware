@@ -14,6 +14,8 @@
 
 	$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 
+	$app = $GLOBALS['HTTP_GET_VARS']['app'];
+
 	if($app)
 	{
 		if (!preg_match("/^[a-zA-Z0-9-_]+$/i",$app))
