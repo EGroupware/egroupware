@@ -42,7 +42,6 @@
 			Array(
 				'title'     => $title,
 				'width'     => '100%',
-				'outerborderwidth' => '0',
 				'header_background_image' => $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
 			)
 		);
@@ -65,9 +64,11 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$portalbox->data[] = array(
+			$portalbox->data[] = array
+			(
 				'text' => lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
-				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id'])
+				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']),
+				'lang_link_statustext'	=> lang('show contact')
 			);
 		}
 
@@ -77,9 +78,11 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$portalbox->data[] = array(
+			$portalbox->data[] = array
+			(
 				'text' => lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
-				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
+				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id']),
+				'lang_link_statustext'  => lang('show contact')
 			);
 		}
 		if(count($portalbox->data))
@@ -87,7 +90,7 @@
 			$tmp = $portalbox->draw();
 		}
 		unset($portalbox);
-		$tmp .= "\n<!-- Birthday info -->\n";
+
 		$GLOBALS['phpgw']->template->set_var('phpgw_body',$tmp,True);
 		unset($tmp);
 	}

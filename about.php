@@ -21,8 +21,7 @@
 		$included = $GLOBALS['phpgw']->hooks->single('about',$app);
 	}
 
-	$tpl = CreateObject('phpgwapi.xslttemplates',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default'));
-	$tpl->add_file(array('about'));
+	$GLOBALS['phpgw']->xslttpl->add_file(array('about'));
 
 	if ($included)
 	{
@@ -39,6 +38,6 @@
 		'about_app'				=> $app_data
 	);
 
-	$tpl->set_var('about',$data);
-	$tpl->pparse();
+	$GLOBALS['phpgw']->xslttpl->set_var('about',$data);
+	$GLOBALS['phpgw']->xslttpl->pparse();
 ?>

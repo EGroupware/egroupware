@@ -27,12 +27,10 @@
 		//Set up the Object, reserving memory space for variables
 
 		var $outerwidth;
-		var $outerborderwidth = 1;
 		var $width;
 		var $innerwidth;
 		var $controls;
 		var $header_background_image;
-		var $classname;
 		var $up;
 		var $down;
 		var $close;
@@ -44,9 +42,6 @@
 
 		// Textual variables
 		var $title;
-
-		// Template
-		var $p;
 
 		/*
 		Use these functions to get and set the values of this
@@ -92,7 +87,6 @@
 
 			$this->output = array
 			(
-				'outer_border'				=> $this->getvar('outerborderwidth'),
 				'outer_width'				=> $this->getvar('width'),
 				'title'						=> $this->getvar('title'),
 				'inner_width'				=> $this->getvar('width'),

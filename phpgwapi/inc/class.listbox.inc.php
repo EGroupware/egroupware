@@ -43,7 +43,6 @@
 		*/
 		function listbox($param)
 		{
-			$this->setvar('classname','listbox');
 			$this->setvar('outerwidth',300);
 			$this->setvar('innerwidth',300);
 			$this->setvar('width',300);
