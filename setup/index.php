@@ -137,6 +137,8 @@
 
 	$setup_tpl->set_var('db_step_text',lang('Step 1 - Simple Application Management'));
 
+	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'];
+
 	switch($phpgw_info['setup']['stage']['db'])
 	{
 		case 1:
@@ -400,7 +402,7 @@
 			break;
 	}
 
-	$phpgw_setup->show_header($phpgw_info['setup']['header_msg'],False,"config",$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]["db_type"] . ')');
+	$phpgw_setup->show_header($phpgw_info['setup']['header_msg'],False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 	$setup_tpl->pparse('out','T_setup_main');
 	$phpgw_setup->show_footer();
 ?>
