@@ -17,10 +17,6 @@
     <td><input name="newsettings[contact_application]" value="{value_contact_application}"></td>
    </tr>
    <tr bgcolor="{row_off}">
-    <td>{lang_Select_from_list_instead_of_text_entry_for_country}:</td>
-    <td><input type="checkbox" name="newsettings[countrylist]" value="True" {checked_countrylist}></td>
-   </tr>
-   <tr bgcolor="{row_on}">
     <td>{lang_Select_where_you_want_to_store}/{lang_retrieve_contacts}.</td>
     <td>
      <select name="newsettings[contact_repository]">
@@ -29,19 +25,19 @@
      </select>
     </td>
    </tr>
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_LDAP_host_for_contacts}:</td>
     <td><input name="newsettings[ldap_contact_host]" value="{value_ldap_contact_host}"></td>
    </tr>
-   <tr bgcolor="{row_on}">
+   <tr bgcolor="{row_off}">
     <td>{lang_LDAP_context_for_contacts}:</td>
     <td><input name="newsettings[ldap_contact_context]" value="{value_ldap_contact_context}" size="40"></td>
    </tr>
-  <tr bgcolor="{row_off}">
+  <tr bgcolor="{row_on}">
    <td>{lang_LDAP_root_dn_for_contacts}:</td>
    <td><input name="newsettings[ldap_contact_dn]" value="{value_ldap_contact_dn}" size="40"></td>
   </tr>
-  <tr bgcolor="{row_on}">
+  <tr bgcolor="{row_off}">
    <td>{lang_LDAP_root_pw_for_contacts}:</td>
    <td><input name="newsettings[ldap_contact_pw]" type="password" value=""></td>
   </tr>
