@@ -151,7 +151,7 @@
 			$fields["access"]           = 'public';
 		}
 
-		$fields["cat_id"]               = $ncat_id;
+		$fields["cat_id"]               = $cat_id;
 
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields,$fields["access"],$fields["cat_id"]);
 		$ab_id = addressbook_get_lastid();

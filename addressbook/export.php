@@ -52,7 +52,7 @@
 
 		$t->set_var("lang_cancel",lang("Cancel"));
 		$t->set_var("lang_cat",lang("Select Category"));
-		$t->set_var("cat_link",cat_option($cat_id,'ncat_id',True));
+		$t->set_var("cat_link",cat_option($cat_id,'cat_id',True));
 		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
@@ -95,7 +95,7 @@
 			$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
 		}
 
-		$buffer = $this->export_start_file($buffer,$ncat_id);
+		$buffer = $this->export_start_file($buffer,$cat_id);
 		
 		for ($i=0;$i<count($this->ids);$i++) {
 			$buffer = $this->export_start_record($buffer);
@@ -122,7 +122,7 @@
 			echo $buffer;
 			echo "\n</pre>\n";
 			echo '<a href="'.$phpgw->link("/addressbook/index.php",
-				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&ncat_id=$cat_id")
+				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
 				. '">'.lang("OK").'</a>';
 			$phpgw->common->phpgw_footer();
 		}

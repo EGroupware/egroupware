@@ -27,7 +27,7 @@
 	// First, make sure they have permission to this entry
 	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
 
-	if (! $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_READ) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
+	if (! ($this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_READ) || $check[0]['owner'] != $phpgw_info['user']['account_id']) )
 	{
 		Header("Location: "
 			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));

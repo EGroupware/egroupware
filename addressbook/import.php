@@ -174,14 +174,14 @@
 			} else {
 				echo "<pre>$buffer</pre>";
 				echo '<a href="'.$phpgw->link("/addressbook/index.php",
-					"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&ncat_id=$cat_id")
+					"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
 					. '">'.lang("OK").'</a>';
 				$phpgw->common->phpgw_footer();
 			}
 		} else {
 			echo "<pre>$buffer</pre>";
 			echo '<a href="'.$phpgw->link("/addressbook/index.php",
-				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&ncat_id=$cat_id")
+				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
 				. '">'.lang("OK").'</a>';
 			$phpgw->common->phpgw_footer();
 		}

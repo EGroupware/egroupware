@@ -41,15 +41,12 @@
 		}
 	}
 
-	if($ncat_id || ($ncat_id==0)) {
-		$cat_id = $ncat_id;
-	}
-	if ($cat_id=='') {
+	if (!isset($cat_id)) {
 		$cat_id = $phpgw_info["user"]["preferences"]["addressbook"]["default_category"];
 	} 
 	if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"]) {
 		$phpgw->preferences->delete("addressbook","default_category");
-		$phpgw->preferences->add("addressbook","default_category",$ncat_id);
+		$phpgw->preferences->add("addressbook","default_category",$cat_id);
 	}
 	$phpgw->preferences->save_repository();
 
@@ -119,9 +116,9 @@
 		}
 	} elseif($filter == "private") {
 		if ($cat_id == "all") {
-			$qfilter  = 'tid=n,owner='.$phpgw_info["user"]["account_id"];
+			$qfilter  = 'tid=n,access=private,owner='.$phpgw_info["user"]["account_id"];
 		} else {
-			$qfilter  = 'tid=n,owner='.$phpgw_info["user"]["account_id"].',cat_id='.$cat_id;
+			$qfilter  = 'tid=n,access=private,owner='.$phpgw_info["user"]["account_id"].',cat_id='.$cat_id;
 		}
 	} else {
 		if ($cat_id == "all") {

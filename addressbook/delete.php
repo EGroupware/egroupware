@@ -32,7 +32,7 @@
 	if (! $this->check_perms($this->grants[$fields[0]['owner']],PHPGW_ACL_DELETE) && $fields[0]['owner'] != $phpgw_info['user']['account_id'])
 	{
 		Header('Location: '
-			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&ncat_id=$cat_id"));
+			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -45,7 +45,7 @@
 
 		$t->set_var(lang_sure,lang("Are you sure you want to delete this entry ?"));
 		$t->set_var(no_link,$phpgw->link("/addressbook/index.php",
-			"ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&ncat_id=$cat_id"));
+			"ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$t->set_var(lang_no,lang("NO"));
 		$t->set_var(yes_link,$phpgw->link("/addressbook/delete.php",
 			"ab_id=$ab_id&confirm=true&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
@@ -57,6 +57,6 @@
 		$this->account_id=$phpgw_info["user"]["account_id"];
 		$this->delete($ab_id);
 		@Header("Location: " . $phpgw->link("/addressbook/index.php",
-			"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&ncat_id=$cat_id"));
+			"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	}
 ?>
