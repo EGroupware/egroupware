@@ -29,7 +29,7 @@
 		var $updateincluded = array();
 		var $translation;
 
- 		function setup_process()
+		function setup_process()
 		{
 			$this->translation = CreateObject('phpgwapi.setup_translation');
 		}
@@ -69,9 +69,9 @@
 				return False;
 			}
 			// Place api first
-			$pass['phpgwapi']		= $setup_info['phpgwapi'];
-			$pass['admin']			= $setup_info['admin'];
-			$pass['preferences']	= $setup_info['preferences'];
+			$pass['phpgwapi'] = $setup_info['phpgwapi'];
+			$pass['admin']    = $setup_info['admin'];
+			$pass['preferences'] = $setup_info['preferences'];
 			@reset($setup_info);
 			$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions($setup_info);
 			@reset($setup_info);
@@ -111,7 +111,7 @@
 					*/
 				}
 
-				switch ($method)
+				switch($method)
 				{
 					case 'new':
 						/* Create tables and insert new records for each app in this list */
@@ -623,7 +623,7 @@
 							$currentver = $setup_info[$key]['currentver'];
 
 							/* build upgrade function name */
-							$function = $appname . '_upgrade' . ereg_replace("\.", '_', $value);
+							$function = $appname . '_upgrade' . str_replace("\.", '_', $value);
 
 							if($DEBUG)
 							{
