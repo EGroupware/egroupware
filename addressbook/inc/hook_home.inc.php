@@ -34,7 +34,7 @@
 			"bday"     => "bday"
 		);
 		$now = time() - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-		$today = $phpgw->common->show_date($now,'n/d');
+		$today = $phpgw->common->show_date($now,'n/d/');
 //		echo $today."\n";
 
 		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$phpgw_info["user"]["account_id"]);
@@ -47,7 +47,7 @@
 			echo "<tr><td align=\"left\">" . lang("Today is x's birthday!", $tmp) . "</td></tr>\n";
 		}
 
-		$tomorrow = $phpgw->common->show_date($now + 86400,'n/d');
+		$tomorrow = $phpgw->common->show_date($now + 86400,'n/d/');
 //		echo $tomorrow."\n";
 
 		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$phpgw_info["user"]["account_id"]);
