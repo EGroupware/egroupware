@@ -175,12 +175,6 @@
 	//Uncomment the next line to enable the notify window.  It will not work until a notifywindow app is added.
 	//echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
 
-	if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"])
-	{
-		include(PHPGW_INCLUDE_ROOT . "/stocks/inc/functions.inc.php");
-		echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
-	}
-
 	$phpgw->common->hook('',array('email','calendar','news','addressbook'));
 
 	//$phpgw->common->debug_phpgw_info();
