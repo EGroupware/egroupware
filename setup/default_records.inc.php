@@ -118,4 +118,6 @@
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','dateformat','m/d/Y','common')");
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','theme','default','common')");
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','tz_offset','0','common')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','lang','en','common')");
+
 ?>
