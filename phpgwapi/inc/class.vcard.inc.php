@@ -163,7 +163,11 @@
 			$buffer = $this->_parse_in($buffer);
 
 			$contacts = CreateObject('phpgwapi.contacts');		/* RB 2001/05/08 Lotus Organizer uses/needs extrafields from edit.php */
-			$all_fields = $contacts->stock_contact_fields + array("ophone" => "ophone","address2" => "address2","address3" => "address3");
+			$all_fields = $contacts->stock_contact_fields + array(
+				'ophone'   => 'ophone',
+				'address2' => 'address2',
+				'address3' => 'address3'
+			);
 
 			while (list($fname,$fvalue) = each($all_fields))
 			{
@@ -186,22 +190,22 @@
 			/* Following is a lot of pain and little magic */
 			while ( list($name,$value) = @each($buffer) )
 			{
-				$field  = split(";",$name);
-				$field[0] = ereg_replace("A\.","",$field[0]);
-				$field[0] = ereg_replace("B\.","",$field[0]);
-				$field[0] = ereg_replace("C\.","",$field[0]);
-				$field[0] = ereg_replace("D\.","",$field[0]);
-				$values = split(";",$value);
+				$field  = split(';',$name);
+				$field[0] = ereg_replace("A\.",'',$field[0]);
+				$field[0] = ereg_replace("B\.",'',$field[0]);
+				$field[0] = ereg_replace("C\.",'',$field[0]);
+				$field[0] = ereg_replace("D\.",'',$field[0]);
+				$values = split(';',$value);
 				if ($field[1])
 				{
 					//echo $field[0];
 					switch ($field[0])
 					{
 						case 'LABEL':
-							$entry['label'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['label'] = ereg_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'NOTE':
-							$entry['note'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['note'] = ereg_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'ADR':
 							switch ($field[1])
@@ -390,7 +394,7 @@
 							switch ($field[1])
 							{
 								case 'PREF':
-									//echo $field[2]." is preferred";
+									//echo $field[2].' is preferred';
 									if ($field[2])
 									{
 										$buffer['tel_prefer'] .= strtolower($field[2]) . ';';
@@ -411,8 +415,8 @@
 									}
 									break;
 								case 'VOICE':
-									$entry["tel_voice"] = $values[0];
-									if ($field[2] == "PREF")
+									$entry['tel_voice'] = $values[0];
+									if ($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
@@ -551,13 +555,13 @@
 							$entry['url'] = $values[0];
 							break;
 						case 'NOTE':
-							$entry['note'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['note'] = ereg_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'KEY':
-							$entry['key'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['key'] = ereg_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'LABEL':
-							$entry['label'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['label'] = ereg_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'BDAY': #1969-12-31
 							$tmp = split('-',$values[0]);
@@ -702,24 +706,24 @@
 								switch($mult[1])
 								{
 									case 'PREFER':
-										$prefer = explode(";",$buffer[$value]);
+										$prefer = explode(';',$buffer[$value]);
 										if ($prefer[1])
 										{
 											while ($pref = strtoupper(each($prefer)))
 											{
 												$prefi[$i][$pref] = ';PREF';
 											}
-											//echo "PREF1";
+											//echo 'PREF1';
 										}
 										elseif ($prefer[0])
 										{
 											$prefi[$i][strtoupper($prefer[0])] = ';PREF';
-											//echo "PREF=".strtoupper($prefer[0]);
+											//echo 'PREF='.strtoupper($prefer[0]);
 										}
 										elseif ($buffer[$value])
 										{
 											$prefi[$i][$buffer[$value]] = ';PREF';
-											//echo "PREF3";
+											//echo 'PREF3';
 										}
 										break;
 									case 'WORK':
@@ -766,7 +770,7 @@
 				$entries .= 'N:' . $lastname . $firstname . $middle . $prefix . $suffix . "\n";
 				$entries .= $entry;
 
-				if (!$buffer["FN"])
+				if (!$buffer['FN'])
 				{
 					if ($lastname || $firstname )
 					{
@@ -775,11 +779,11 @@
 				}
 				if ($org_name || $org_unit)
 				{
-					$entries .= "ORG:" . $org_name . $org_unit . "\n";
+					$entries .= 'ORG:' . $org_name . $org_unit . "\n";
 				}
 
-				$workattr = ereg_replace("ADR;",'',$workattr);
-				$homeattr = ereg_replace("ADR;",'',$homeattr);
+				$workattr = ereg_replace('ADR;','',$workattr);
+				$homeattr = ereg_replace('ADR;','',$homeattr);
 				if (!$buffer['EXT']) { $buffer['EXT'] = ';'; }
 				if ($workaddr)
 				{
@@ -787,19 +791,19 @@
 					if (!$buffer['LABEL'])
 					{
 						$wlabel = substr($workaddr,0,-1);
-						$wlabel = ereg_replace(";","=0D=0A",$wlabel);
-						//$wlabel = ereg_replace("(",",",$wlabel);
-						//$wlabel = ereg_replace(")",",",$wlabel);
+						$wlabel = ereg_replace(';','=0D=0A',$wlabel);
+						//$wlabel = ereg_replace('(',',',$wlabel);
+						//$wlabel = ereg_replace(')',',',$wlabel);
 						$wlabel = 'LABEL;WORK;QUOTED-PRINTABLE:' . $wlabel . "\n";
 					}
 				}
 				if ($homeaddr)
 				{
-					$home = "B.ADR;".$homeattr.":;;".substr($homeaddr,0,-1)."\n";
+					$home = 'B.ADR;'.$homeattr.':;;'.substr($homeaddr,0,-1)."\n";
 					$hlabel = substr($homeaddr,0,-1);
-					$hlabel = ereg_replace(";","=0D=0A",$hlabel);
-					//$hlabel = ereg_replace("(",",",$hlabel);
-					//$hlabel = ereg_replace(")",",",$hlabel);
+					$hlabel = ereg_replace(';','=0D=0A',$hlabel);
+					//$hlabel = ereg_replace('(',',',$hlabel);
+					//$hlabel = ereg_replace(')',',',$hlabel);
 					$hlabel = 'LABEL;HOME;QUOTED-PRINTABLE:' . $hlabel . "\n";
 				}
 				$entries = ereg_replace('PUBKEY','KEY',$entries);
