@@ -1,16 +1,4 @@
-<SCRIPT language="JavaScript">
-function doSearch(field,ask)
-{
-	field.value = prompt(ask,"");
-	
-	if (field.value != 'null') {
-		if (field.value.length == 0)
-			field.value = field.value + '%';
-		field.form.submit.click();
-	} else
-		field.value = '';
-}
-</script>
+{doSearchFkt}
 
 {info_css}
       <p class=action>{lang_info_action}<br>
@@ -40,14 +28,14 @@ function doSearch(field,ask)
            <td>{owner_info}</td>
          </tr>
          <tr>
-           <td><input type="hidden" name="projectsearch" value="">
-			  <input type="button" onClick="doSearch(this.form.projectsearch,'{lang_proj_prompt}')" value="{lang_prproject}"></td>
-           <td colspan="3">{project}</td>
+           <td>{project_title}</td>
+           <td colspan="2">{project}</td>
+			  <td>{project_nojs}</td>
          </tr>
          <tr>
-          <td><input type="hidden" name="addrsearch" value="">
-			 <input type="button" onClick="doSearch(this.form.addrsearch,'{lang_addr_prompt}')" value="{lang_praddrbook}"></td>
-           <td colspan="3">{addrbook}</td>
+          <td>{addr_title}</td>
+           <td colspan="2">{addr}</td>
+			  <td>{addr_nojs}</td>
          </tr>
          <tr>
             <td colspan="4"><hr size="1"></td>
