@@ -927,6 +927,74 @@
      $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre4";
   }
 
+  function change_groups($table,$field,$old_id,$new_id,$db2,$db3)
+  {
+     $sql = $field[0];
+     for($i=1;$i<count($field);$i++) {
+       $sql .= ", ".$field[$i];
+     }
+     $db2->query("SELECT $sql FROM $table WHERE $field[0] like '%,".$old_id.",%'",__LINE__,__FILE__);
+     if($db2->num_rows()) {
+       while($db2->next_record()) {
+         $access = $db2->f($field[0]);
+         $id = $db2->f($field[1]);
+         $access = str_replace(','.$old_id.',' , ','.$new_id.',' , $access);
+         $db3->query("UPDATE $table SET ".$field[0]."='".$access."' WHERE ".$field[1]."=".$id,__LINE__,__FILE__);
+       }
+     }
+   }
+
+  $test[] = "0.9.10pre4";
+  function upgrade0_9_10pre4()
+  {
+     global $phpgw_info, $phpgw_setup;
+     
+     $db2 = $phpgw_setup->db;
+     $db3 = $phpgw_setup->db;
+     $phpgw_setup->db->query("SELECT MAX(group_id) FROM groups",__LINE__,__FILE__);
+     $phpgw_setup->db->next_record();
+     $max_group_id = $phpgw_setup->db->f(0);
+     
+     $tables = Array('addressbook','calendar_entry','f_forums','phpgw_categories','todo');
+     $fields["addressbook"] = Array('ab_access','ab_id');
+     $fields["calendar_entry"] = Array('cal_group','cal_id');
+     $fields["f_forums"] = Array('groups','id');
+     $fields["phpgw_categories"] = Array('cat_access','cat_id');
+     $fields["todo"] = Array('todo_access','todo_id');
+     
+     $phpgw_setup->db->query("SELECT group_id, group_name FROM groups",__LINE__,__FILE__);
+     while($phpgw_setup->db->next_record()) {
+       $old_group_id = $phpgw_setup->db->f("group_id");
+       $group_name = $phpgw_setup->db->f("group_name");
+       while(1) {
+         $new_group_id = mt_rand ($max_group_id, 60000);
+         $db2->query("SELECT account_id FROM phpgw_accounts WHERE account_id=$new_group_id",__LINE__,__FILE__);
+         if(!$db2->num_rows()) { break; }
+       }
+       $db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_lid='$group_name'",__LINE__,__FILE__);
+       if($db2->num_rows()) {
+         $group_name .= "_group";
+       }
+       $db2->query("INSERT INTO phpgw_accounts(account_id, account_lid, account_pwd, "
+       			  ."account_firstname, account_lastname, account_lastlogin, "
+       			  ."account_lastloginfrom, account_lastpwd_change, "
+       			  ."account_status, account_type) "
+       			  ."VALUES ($new_group_id,'$group_name','x','','',$old_group_id,NULL,NULL,'A','g')");
+
+       for($i=0;$i<count($tables);$i++) {
+         change_groups($tables[$i],$fields[$tables[$i]],$old_group_id,$new_group_id,$db2,$db3);
+       }
+       $db2->query("UPDATE phpgw_acl SET acl_location='$new_group_id' "
+                  ."WHERE acl_appname='phpgw_group' AND acl_account_type='u' "
+                  ."AND acl_location='$old_group_id'");
+       $db2->query("UPDATE phpgw_acl SET acl_account=$new_group_id "
+                  ."WHERE acl_location='run' AND acl_account_type='g' "
+                  ."AND acl_account=$old_group_id");
+     }
+     $phpgw_setup->db->query("DROP TABLE groups",__LINE__,__FILE__);
+     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre5";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
