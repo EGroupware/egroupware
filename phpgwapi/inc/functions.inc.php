@@ -404,6 +404,8 @@
 				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
 			}
 
+			$GLOBALS['phpgw']->common->framework();
+
 			$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
 
 			$GLOBALS['phpgw']->xslttpl->set_root(PHPGW_APP_TPL);

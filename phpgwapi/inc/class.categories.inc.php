@@ -257,7 +257,7 @@
 			{
 				$parent_select = " AND cat_parent='$parent_id'";
 			}
-			else
+			else 
 			{
 				$parent_select = " AND cat_parent='0'";
 			}
