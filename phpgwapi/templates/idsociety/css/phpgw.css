@@ -51,10 +51,9 @@ a.th,a.th_text
 	height: 15;
 }
 
-.info
+.info,a:link.info,a:active.info,a:visited.info
 {
 	color: #FFFFFF;
-	font-size: 85%;
 }
 
 .left
@@ -106,7 +105,7 @@ table.login
 
 .small_text
 {
-	font-size: 80%;
+	font-size: 85%;
 }
 
 .header_text
@@ -122,6 +121,5 @@ table.login
 
 .app_header
 {
-	padding: 5px;
-	padding-bottom:0px;
+	padding: 4px;
 }

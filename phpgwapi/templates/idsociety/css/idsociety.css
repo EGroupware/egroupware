@@ -13,9 +13,9 @@ a:visited
 	color: #333366;
 }
 
-a:hover
+a:hover,a:hover.info
 {
-	color: #cc0000;
+	color: #000066;
 }
 
 .login,.portal,.about
@@ -47,6 +47,7 @@ a:hover
 .th,.app_header
 {
 	background-color: #ADADAD;
+	color: #FFFFFF;
 }
 
 .cal_today
