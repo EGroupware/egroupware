@@ -23,18 +23,29 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-	
+	/*!
+	@class preferences 
+	@abstract preferences class used for setting application preferences
+	@discussion Author: none yet
+	*/
 	class preferences
-	{
+	{	/*! @var account_id */
 		var $account_id;
+		/*! @var account_type */
 		var $account_type;
+		/*! @var data */
 		var $data = Array();
+		/*! @var db */
 		var $db;
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
 		\**************************************************************************/
-
+		/*! 
+		@function preferences
+		@abstract Standard constructor for setting $this->account_id
+		@discussion Author:
+		*/
 		function preferences($account_id = False)
 		{
 			global $phpgw, $phpgw_info;
@@ -45,7 +56,13 @@
 		/**************************************************************************\
 		* These are the standard $this->account_id specific functions              *
 		\**************************************************************************/
-
+		
+		/*! 
+		@function read_repository
+		@abstract private - read preferences from the repository
+		@discussion private function should only be called from within this class
+		*/
+		
 		function read_repository()
 		{
 			$this->db->lock("phpgw_preferences");
@@ -61,14 +78,31 @@
 			}
 			return $this->data;
 		}
-
+		
+		/*!
+		@function read
+		@abstract public - read preferences from repository and stores in an array
+		@discussion Syntax array read(); <>
+		Example1: preferences->read();
+		@result $data array containing user preferences
+		*/
+		
 		function read()
 		{
 			if (count($this->data) == 0){ $this->read_repository(); }
 			reset ($this->data);
 			return $this->data;
 		}
-
+		
+		/*!
+		@function add
+		@abstract add preference to $app_name a particular app
+		@discussion
+		@param $app_name name of the app
+		@param $var name of preference to be stored
+		@param $value value of the preference
+		*/
+		
 		function add($app_name,$var,$value = "")
 		{
 			if (! $value) {
@@ -81,6 +115,14 @@
 			return $this->data;
 		}
 		
+		/*! 
+		@function delete
+		@abstract delete preference from $app_name
+		@discussion
+		@param $app_name name of app
+		@param $var variable to be deleted
+		*/
+		
 		function delete($app_name, $var = "")
 		{
 			if ($var == "") {
@@ -91,7 +133,13 @@
 			reset ($this->data);
 			return $this->data;
 		}
-
+		
+		/*!
+		@function save_repository
+		@abstract save the the preferences to the repository
+		@discussion
+		*/
+		
 		function save_repository($update_session_info = False)
 		{
 			global $phpgw, $phpgw_info;
@@ -117,7 +165,14 @@
 			}
 			return $this->data;
 		}
-
+		
+		/*!
+		@function update_data
+		@abstract update the preferences array
+		@discussion 
+		@param $data array of preferences
+		*/
+		
 		function update_data($data) {
 			reset($data);
 			$this->data = Array();
@@ -139,6 +194,13 @@
 		/**************************************************************************\
 		* These are the non-standard $this->account_id specific functions          *
 		\**************************************************************************/
+		
+		/*!
+		@function verify_basic_settings
+		@abstract verify basic settings
+		@discussion
+		*/
+		
 		function verify_basic_settings()
 		{
 			global $phpgw, $phpgw_info;
