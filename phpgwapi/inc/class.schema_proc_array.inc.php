@@ -132,6 +132,15 @@
 					}
 				}
 
+				reset($aTables[$sTableName]['ix']);
+				while(list($key,$sColumnName) = each($aTables[$sTableName]['ix']))
+				{
+					if ($sColumnName == $sOldColumnName)
+					{
+						$aTables[$sTableName]['ix'][$key] = $sNewColumnName;
+					}
+				}
+
 				reset($aTables[$sTableName]['uc']);
 				while(list($key, $sColumnName) = each($aTables[$sTableName]['uc']))
 				{
