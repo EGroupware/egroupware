@@ -67,6 +67,9 @@ var $root_level_value;        // This is what the top level name or image will b
 		/* tree[x][2] -> item link                   */
 		/* tree[x][3] -> link target                 */
 		/* tree[x][4] -> last item in subtree        */
+		/* tree[x][5] -> if item 2 is meant to be    */
+		/*               displayed, please list them */
+		/*               here.                       */
 		/*********************************************/
   
 		$maxlevel=0;
@@ -89,6 +92,10 @@ var $root_level_value;        // This is what the top level name or image will b
 				$tree[$cnt][2]=$node[1];
 				$tree[$cnt][3]=$node[2];
 				$tree[$cnt][4]=0;
+				if(count($node) == 5)
+				{
+					$tree[$cnt][5]=$node[4];
+				}
 				if($tree[$cnt][0] > $maxlevel)
 				{
 					$maxlevel=$tree[$cnt][0];
@@ -98,17 +105,28 @@ var $root_level_value;        // This is what the top level name or image will b
 		}
 		else
 		{
-			$ta = explode("\n",$treefile);
+			if(is_array($treefile))
+			{
+				$ta = $treefile;
+			}
+			elseif(gettype($treefile) == 'string')
+			{
+				$ta = explode("\n",$treefile);
+			}
 			while (list($null,$buffer) = each($ta))
 			{
 				$cnt++;
 				$tree[$cnt][0]=strspn($buffer,".");
 				$tmp=rtrim(substr($buffer,$tree[$cnt][0]));
 				$node=explode('|',$tmp); 
-				$tree[$cnt][1]=$node[0];
-				$tree[$cnt][2]=$node[1];
-				$tree[$cnt][3]=$node[2];
+				$tree[$cnt][1]=chop($node[0]);
+				$tree[$cnt][2]=chop($node[1]);
+				$tree[$cnt][3]=chop($node[2]);
 				$tree[$cnt][4]=0;
+				if(count($node) == 5)
+				{
+					$tree[$cnt][5]=$node[4];
+				}
 				if($tree[$cnt][0] > $maxlevel)
 				{
 					$maxlevel=$tree[$cnt][0];
@@ -280,14 +298,15 @@ var $root_level_value;        // This is what the top level name or image will b
         /****************************************/
 			if($cnt==0)
 			{
-				$str = '<table cellspacing="0" cellpadding="0" border="0" cols="'.($maxlevel+3).'" width="'.($maxlevel*16+100).'">'."\n";
+//				$str = '<table cellspacing="0" cellpadding="0" border="0" cols="'.($maxlevel+3).'" width="'.($maxlevel*16+100).'">'."\n";
+				$str = '<table cellspacing="0" cellpadding="0" border="0" cols="'.($maxlevel+3).'" width="'.($maxlevel*16+300).'">'."\n";
 				$str .= '<a href="' . $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php',$params) . '" target="_parent">' . $this->root_level_value . '</a>';
 				$str .= "\n".'<tr>';
 				for ($k=0; $k<$maxlevel; $k++)
 				{
 					$str .= '<td width=16></td>';
 				}
-				$str .= '<td width=100></td></tr>'."\n";
+				$str .= '<td width=300></td></tr>'."\n";
 			}
 
 			/****************************************/
@@ -359,14 +378,23 @@ var $root_level_value;        // This is what the top level name or image will b
 			/****************************************/
 			/* output item text                     */
 			/****************************************/
-			if ($tree[$cnt][2]=='')
+			$str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'"><font face="'.$phpgw_info['theme']['font'].'" size="2">';
+			if ($tree[$cnt][5]=='')
 			{
-				$str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'">'.$tree[$cnt][1].'<font face="'.$phpgw_info['theme']['font'].'" size="2"></td>';
+				if ($tree[$cnt][2]=='')
+				{
+					$str .= $tree[$cnt][1];
+				}
+				else
+				{
+					$str .= '<a href="'.$tree[$cnt][2].$params.'" target="'.$tree[$cnt][3].'">'.$tree[$cnt][1].'</a>';
+				}
 			}
 			else
 			{
-				$str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'"><font face="'.$phpgw_info['theme']['font'].'" size="2"><a href="'.$tree[$cnt][2].$params.'" target="'.$tree[$cnt][3].'">'.$tree[$cnt][1].'</a></td>';
+				$str .= $tree[$cnt][5];
 			}
+			$str .= '</font></td>';
             
 			/****************************************/
 			/* end row                              */
