@@ -19,7 +19,7 @@
 
   /* $Id$ */
 
-	class xmlrpc_server
+	class xmlrpc_server extends xmlrpc_server_shared
 	{
 		var $server = '';
 		var $authed = True;
@@ -333,6 +333,7 @@
 				$error_string . ': ' . $this->last_method
 			);
 			$this->service($r);
+			xmlrpc_server_destroy($GLOBALS['xmlrpc_server']);
 			exit;
 		}
 	}

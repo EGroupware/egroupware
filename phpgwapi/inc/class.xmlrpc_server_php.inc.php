@@ -34,7 +34,7 @@
 	/* $Id$ */
 
 	/* BEGIN server class */
-	class xmlrpc_server
+	class xmlrpc_server extends xmlrpc_server_shared
 	{
 		var $dmap = array();
 		var $authed = False;
@@ -225,15 +225,19 @@
 		{
 			if (is_array($_res))
 			{
+				$i = 0;
+				$is_array = True;
 				foreach($_res as $key => $val)
 				{
 					$ele[$key] = $this->build_resp($val,True);
+					$is_array = $is_array && $i === $key;
+					++$i;
 				}
-				return CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+				return CreateObject('phpgwapi.xmlrpcval',$ele,$is_array ? 'array' : 'struct');
 			}
 			$_type = (is_integer($_res) ? 'int' : gettype($_res));
 
-			if ($_type == string && ereg('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res))
+			if ($_type == 'string' && ereg('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res))
 			{
 				$_type = 'dateTime.iso8601';
 			}
@@ -412,12 +416,11 @@
 									list($s,$c,$m) = explode('.',$_methName);
 									$res = ExecMethod($s . '.' . $c . '.' . $dmap[$methName]['function'],$this->req_array);
 								}
-								/* $res = ExecMethod($method,$params); */
-								/* _debug_array($res);exit; */
-								$this->resp_struct = array($this->build_resp($res,True));
-								/*_debug_array($this->resp_struct); */
-								@reset($this->resp_struct);
-								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
+								//$this->resp_struct = array($this->build_resp($res,True));
+								//@reset($this->resp_struct);
+								//$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
+								// this fixes the unnecessary (and not standard-conform) array/xmlrpc struct around everything
+								$r = CreateObject('phpgwapi.xmlrpcresp',$this->build_resp($res,True));
 								/* _debug_array($r); */
 							}
 						}
