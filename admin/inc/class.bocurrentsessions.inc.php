@@ -48,7 +48,7 @@
 					'session_logintime' => $GLOBALS['phpgw']->common->show_date($value['session_logintime']),
 					'session_action'    => $value['session_action'],
 					'session_dla'       => $value['session_dla'],
-					'session_idle'      => gmdate('G:i:s',(time() - $value['session_dla']))
+					'session_idle'      => str_pad($hours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($mins, 2, '0', STR_PAD_LEFT) . ':' . str_pad($secs, 2, '0', STR_PAD_LEFT)
 				);
 			}
 			return $_values;
