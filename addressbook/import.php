@@ -93,7 +93,7 @@
 			}
 		} else {
 			while ($data = fgets($fp,8000)) {
-				list($name,$value) = split(':', $data);
+				list($name,$value,$url) = split(':', $data);
 				if (substr($name,0,2) == 'dn') {
 					$buffer = $o->import_start_record($buffer);
 				}
@@ -102,6 +102,10 @@
 					if ($test[1]) {
 						$name = "mail";
 						$value = $test[1];
+					}
+					if ($url) {
+						$name = "homeurl";
+						$value = $value . ':' . $url;
 					}
 					//echo '<br>'.$j.': '.$name.' => '.$value;
 					if ($o->import[$name] != "" && $value != "") {
