@@ -51,9 +51,9 @@
 				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/admin/index.php'));
 			}
 
-			$query = (isset($GLOBALS['HTTP_POST_VARS']['query'])?$GLOBALS['HTTP_POST_VARS']['query']:'');
+			$query = (isset($_POST['query'])?$_POST['query']:'');
 
-			$GLOBALS['cd'] = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:0);
+			$GLOBALS['cd'] = ($_GET['cd']?$_GET['cd']:0);
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -182,6 +182,24 @@
 
 			$GLOBALS['query'] = (isset($GLOBALS['HTTP_POST_VARS']['query'])?$GLOBALS['HTTP_POST_VARS']['query']:'');
 			$start = (isset($GLOBALS['HTTP_POST_VARS']['start'])?intval($GLOBALS['HTTP_POST_VARS']['start']):'');
+=======
+			if(isset($_GET['order']))
+			{
+				$order = $_GET['order'];
+			}
+			else
+			{
+				$order = 'account_lid';
+			}
+			
+			if(isset($_GET['sort']))
+			{
+				$sort = $_GET['sort'];
+			}
+			else
+			{
+				$sort = 'ASC';
+			}
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -315,7 +333,7 @@
 			}
 
 			$group_info = Array(
-				'account_id'   => $GLOBALS['HTTP_GET_VARS']['account_id'],
+				'account_id'   => $_GET['account_id'],
 				'account_name' => '',
 				'account_user' => Array(),
 				'account_apps' => Array()
@@ -337,8 +355,12 @@
 
 		function delete_group()
 		{
-			if (!@isset($GLOBALS['HTTP_GET_VARS']['account_id']) || !@$GLOBALS['HTTP_GET_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
+			if ($_POST['no'] || $_POST['yes'] || !@isset($_GET['account_id']) || !@$_GET['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
+				if ($_POST['yes'])
+				{
+					$this->bo->delete_group();
+				}
 				$this->list_groups();
 				return False;
 			}
@@ -359,11 +381,11 @@
 			$p->set_var('message_display',lang('Are you sure you want to delete this group ?'));
 			$p->parse('messages','message_row');
 
-			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location(intval($GLOBALS['HTTP_GET_VARS']['account_id']),1,'phpgw_group');
+			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location(intval($_GET['account_id']),1,'phpgw_group');
 
 			if($old_group_list)
 			{
-				$group_name = $GLOBALS['phpgw']->accounts->id2name($GLOBALS['HTTP_GET_VARS']['account_id']);
+				$group_name = $GLOBALS['phpgw']->accounts->id2name($_GET['account_id']);
 
 				$p->set_var('message_display','<br>');
 				$p->parse('messages','message_row',True);
@@ -387,13 +409,13 @@
 			}
 
 			$var = Array(
-				'submit_button' => lang('Submit'),
-				'action_url_button'  => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boaccounts.delete_group'),
-				'action_text_button' => lang('Yes'),
-				'action_confirm_button' => '',
-				'action_extra_field' => '<input type="hidden" name="account_id" value="'.$GLOBALS['HTTP_GET_VARS']['account_id'].'">'."\n"
+				'form_action' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.delete_group'),
+				'hidden_vars' => '<input type="hidden" name="account_id" value="'.$_GET['account_id'].'">',
+				'yes'         => lang('Yes'),
+				'no'          => lang('No')
 			);
 			$p->set_var($var);
+/*
 			$p->parse('yes','form_button');
 
 
@@ -406,13 +428,13 @@
 			);
 			$p->set_var($var);
 			$p->parse('no','form_button');
-
-			$p->pparse('out','body');
+*/
+			$p->pparse('phpgw_body','body');
 		}
 
 		function delete_user()
 		{
-			if ($GLOBALS['phpgw']->acl->check('account_access',32,'admin') || $GLOBALS['phpgw_info']['user']['account_id'] == $GLOBALS['HTTP_GET_VARS']['account_id'])
+			if ($GLOBALS['phpgw']->acl->check('account_access',32,'admin') || $GLOBALS['phpgw_info']['user']['account_id'] == $_GET['account_id'])
 			{
 				$this->list_users();
 				return False;
@@ -430,11 +452,11 @@
 			);
 			$var = Array(
 				'form_action' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boaccounts.delete_user'),
-				'account_id'  => $GLOBALS['HTTP_GET_VARS']['account_id']
+				'account_id'  => $_GET['account_id']
 			);
 
 			// the account can have special chars/white spaces, if it is a ldap dn
-			$account_id = rawurlencode($GLOBALS['HTTP_GET_VARS']['account_id']);
+			$account_id = rawurlencode($_GET['account_id']);
 
 			// Find out who the new owner is of the deleted users records...
 			$users = $GLOBALS['phpgw']->accounts->get_list('accounts');
@@ -462,11 +484,11 @@
 
 			$cdid = $cd;
 			settype($cd,'integer');
-			$cd = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:intval($cdid));
+			$cd = ($_GET['cd']?$_GET['cd']:intval($cdid));
 
 			$accountid = $account_id;
 			settype($account_id,'integer');
-			$account_id = ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:intval($accountid));
+			$account_id = ($_GET['account_id']?$_GET['account_id']:intval($accountid));
 			
 			// todo
 			// not needed if i use the same file for new groups too
@@ -477,10 +499,10 @@
 			else
 			{
 				$group_info = Array(
-					'account_id'   => intval($GLOBALS['HTTP_GET_VARS']['account_id']),
-					'account_name' => $GLOBALS['phpgw']->accounts->id2name($GLOBALS['HTTP_GET_VARS']['account_id']),
-					'account_user' => $this->bo->load_group_users($GLOBALS['HTTP_GET_VARS']['account_id']),
-					'account_apps' => $this->bo->load_group_apps($GLOBALS['HTTP_GET_VARS']['account_id'])
+					'account_id'   => intval($_GET['account_id']),
+					'account_name' => $GLOBALS['phpgw']->accounts->id2name($_GET['account_id']),
+					'account_user' => $this->bo->load_group_users($_GET['account_id']),
+					'account_apps' => $this->bo->load_group_apps($_GET['account_id'])
 				);
 
 				$this->create_edit_group($group_info);
@@ -497,11 +519,11 @@
 
 			$cdid = $cd;
 			settype($cd,'integer');
-			$cd = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:intval($cdid));
+			$cd = ($_GET['cd']?$_GET['cd']:intval($cdid));
 
 			$accountid = $account_id;
 			settype($account_id,'integer');
-			$account_id = ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:intval($accountid));
+			$account_id = ($_GET['account_id']?$_GET['account_id']:intval($accountid));
 			
 			// todo
 			// not needed if i use the same file for new users too
@@ -518,7 +540,7 @@
 
 		function view_user()
 		{
-			if ($GLOBALS['phpgw']->acl->check('account_access',8,'admin') || ! $GLOBALS['HTTP_GET_VARS']['account_id'])
+			if ($GLOBALS['phpgw']->acl->check('account_access',8,'admin') || ! $_GET['account_id'])
 			{
 				$this->list_users();
 				return False;
@@ -554,7 +576,7 @@
 
 			$t->parse('password_fields','form_logininfo',True);
 
-			$account = CreateObject('phpgwapi.accounts',intval($GLOBALS['HTTP_GET_VARS']['account_id']),'u');
+			$account = CreateObject('phpgwapi.accounts',intval($_GET['account_id']),'u');
 			$userData = $account->read_repository();
 
 			$var['account_lid']       = $userData['account_lid'];
@@ -601,7 +623,7 @@
 			}
 
 			// Find out which groups they are members of
-			$usergroups = $account->membership(intval($GLOBALS['HTTP_GET_VARS']['account_id']));
+			$usergroups = $account->membership(intval($_GET['account_id']));
 			if (gettype($usergroups) != 'array')
 			{
 				$var['groups_select'] = lang('None');
@@ -636,7 +658,7 @@
 			}
 
 			// create apps output
-			$apps = CreateObject('phpgwapi.applications',intval($GLOBALS['HTTP_GET_VARS']['account_id']));
+			$apps = CreateObject('phpgwapi.applications',intval($_GET['account_id']));
 			$db_perms = $apps->read_account_specific();
 
 			@reset($db_perms);
@@ -682,11 +704,11 @@
 
 			$cdid = $cd;
 			settype($cd,'integer');
-			$cd = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:intval($cdid));
+			$cd = ($_GET['cd']?$_GET['cd']:intval($cdid));
 
 			$accountid = $account_id;
 			settype($account_id,'integer');
-			$account_id = ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:intval($accountid));
+			$account_id = ($_GET['account_id']?$_GET['account_id']:intval($accountid));
 			
 			// todo
 			// not needed if i use the same file for new groups too
@@ -697,10 +719,10 @@
 			else
 			{
 				$group_info = Array(
-					'account_id'   => intval($GLOBALS['HTTP_GET_VARS']['account_id']),
-					'account_name' => $GLOBALS['phpgw']->accounts->id2name($GLOBALS['HTTP_GET_VARS']['account_id']),
-					'account_user' => $GLOBALS['phpgw']->accounts->member($GLOBALS['HTTP_GET_VARS']['account_id']),
-					'account_managers' => $this->bo->load_group_managers($GLOBALS['HTTP_GET_VARS']['account_id'])
+					'account_id'   => intval($_GET['account_id']),
+					'account_name' => $GLOBALS['phpgw']->accounts->id2name($_GET['account_id']),
+					'account_user' => $GLOBALS['phpgw']->accounts->member($_GET['account_id']),
+					'account_managers' => $this->bo->load_group_managers($_GET['account_id'])
 				);
 
 				$this->edit_group_managers($group_info);
@@ -717,7 +739,13 @@
 				'projects'    => True,
 				'phonelog'    => True,
 				'infolog'     => True,
-				'filemanager' => True
+				'filemanager' => True,
+				'phpwebhosting' => True,
+				'tts'         => True,
+				'bookmarks'   => True,
+				'img'         => True,
+				'netsaint'    => True,
+				'inv'         => True
 			);
 
 			$sbox = createobject('phpgwapi.sbox');
