@@ -257,17 +257,17 @@
 		}
 
 		// Echo content headers for file downloads
-		function content_header($fn="",$mime="application/octetstream",$length="",$nocache=True)
+		function content_header($fn='',$mime='application/octet-stream',$length='',$nocache=True)
 		{
 			if ($fn)
 			{
-				if ($this->get_agent() == "IE") // && browser_get_version() == "5.5")
+				if ($this->get_agent() == 'IE') // && browser_get_version() == "5.5")
 				{
-					$attachment = "";
+					$attachment = '';
 				}
-					else
+				else
 				{
-					$attachment = " attachment;";
+					$attachment = ' attachment;';
 				}
 
 				// Show this for all
