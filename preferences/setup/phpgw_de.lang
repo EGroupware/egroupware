@@ -24,6 +24,7 @@ error: there was a problem finding the preference file for %1 in %2	preferences	
 forced preferences	preferences	de	Erzwungene Einstellungen
 help off	preferences	de	Keine Hilfe
 hours	preferences	de	Stunden
+how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wieviele Stunden sind sie vor der Zeitzone des Servers.<br>Wenn sie in der gleichen Zeitzone wie der Server sind, wählen sie 0 Stunden, ansonsten wählen sie ihr lokales Datum und die Uhrzeit.
 how should phpgroupware display dates for you.	preferences	de	Wie soll phpGroupWare das Datum für sie anzeigen?
 icons and text	preferences	de	Icons und Text
@@ -36,26 +37,29 @@ max matchs per page	preferences	de	Maximale Treffer pro Seite
 no default	preferences	de	Keine Vorgabe
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail server. Dies müssen sie separat tun.
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
+popup with search	preferences	de	Popup mit Suche
 re-enter your password	preferences	de	Neues Passwort wiederholen
 select different theme	preferences	de	anderes Schema wählen
 select one	preferences	de	Bitte wählen
 select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der phpGroupWare.<br>Machne Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der Englische Text angezeigt.
-should the help messages always be shown when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn sie die Einstellungen aufrufen oder nur auf Anforderung.
+selectbox	preferences	de	Auswahlfeld
 should the number of active sessions be displayed for you all the time.	preferences	de	Soll die Anzahl aktiver Sitzungen permanent für sie angezeigt werden.
-show current users on navigation bar	preferences	de	Anzahl gegenwärtiger Benutzer in der Navigationsleiste anzeigen
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn sie die Einstellungen aufrufen oder nur auf Anforderung.
 show helpmessages by default	preferences	de	Hilfetexte standardmässig anzeigen
 show high priority events on main screen	preferences	de	Ereignisse mit hoher Priorität auf der Startseite anzeigen
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
+show number of current users	preferences	de	Anzahl gegenwärtiger Benutzer anzeigen
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 text only	preferences	de	nur Text
+the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie phpGroupWare neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei grossen Installationen mit vielen Benutzern). Das Popup ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.
 the two passwords are not the same	preferences	de	Die beiden Passworte sind nicht identisch
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
-this is the application which will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie phpGroupWare neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 this server is located in the %1 timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 time format	preferences	de	Zeitformat
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
-which currency symbole or name should be used in phpgroupware.	preferences	de	Welches Währungssymbol oder Name soll in phpGroupWare verwendet werden.
+which currency symbol or name should be used in phpgroupware.	preferences	de	Welches Währungssymbol oder Name soll in phpGroupWare verwendet werden.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesm Modus zu setzen.
 you do not have permission to set acl\'s in this mode!	preferences	de	Sie haben keine Berechtigung ACL's in diesem Modus zu setzen!

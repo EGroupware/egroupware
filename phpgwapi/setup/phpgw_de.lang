@@ -1,11 +1,16 @@
 access	common	de	Zugriff
 access not permitted	common	de	Zugriff verweigert
+account has been created	common	de	Benutzerkennung wurde angelegt
+account has been deleted	common	de	Benutzerkennung wurde gelöscht
+account has been updated	common	de	Benutzerkennung wurde aktualisiert
 acl	common	de	ACL
+action	common	de	Aktion
 active	common	de	Aktiv
-add	common	de	Hinzufügen
-add category	common	de	Kategorie hinzufügen
-add %1 category for	common	de	%1 Kategorie hinzufügen für
-add sub	common	de	Untergeordnete hinzufügen
+add	common	de	Hinzuf&uuml;gen
+add %1 category for	common	de	%1 Kategorie hinzuf&uuml;gen f&uuml;r
+add category	common	de	Kategorie hinzuf&uuml;gen
+add sub	common	de	Untergeordnete hinzuf&uuml;gen
+addressbook	common	de	Adressbuch
 admin	common	de	Admin
 administration	common	de	Administration
 afghanistan	common	de	AFGHANISTAN
@@ -19,6 +24,7 @@ anguilla	common	de	ANGUILLA
 antarctica	common	de	ANTARKTIS
 antigua and barbuda	common	de	ANTIGUA UND BARBUDA
 april	common	de	April
+are you sure you want to delete this entry ?	common	de	Sind Sie sicher, da&szlig; Sie diesen Eintrag l&ouml;schen wollen?
 argentina	common	de	ARGENTIEN
 armenia	common	de	ARMENIEN
 aruba	common	de	ARUBA
@@ -35,7 +41,7 @@ bahrain	common	de	BAHRAIN
 bangladesh	common	de	BANGLADESH
 barbados	common	de	BARBADOS
 based on	common	de	Basierend auf
-belarus	common	de	BELORUSSLAND (WEI&Szlig;RUSSLAND)
+belarus	common	de	BELORUSSLAND (WEISSRUSSLAND)
 belgium	common	de	BELGIEN
 belize	common	de	BELIZE
 benin	common	de	BENIN
@@ -56,9 +62,9 @@ cameroon	common	de	KAMERUN
 canada	common	de	KANADA
 cancel	common	de	Abbruch
 cape verde	common	de	KAP VERDE
-category	common	de	Kategorie
 categories	common	de	Kategorien
-categories for	common	de	Kategorien für
+categories for	common	de	Kategorien f&uuml;r
+category	common	de	Kategorie
 category %1 has been added !	common	de	Kategorie %1 wurde hinzugef&uuml;gt !
 category %1 has been updated !	common	de	Kategorie %1 wurde &uuml;berarbeitet !
 cayman islands	common	de	KAIMAN INSELN
@@ -68,6 +74,7 @@ change	common	de	Ändern
 charset	common	de	iso-8859-1
 chile	common	de	CHILE
 china	common	de	CHINA
+choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	W&auml;hlen der &uuml;bergeordneten Kategorie
 christmas island	common	de	WEIHNACHTS INSEL
 clear	common	de	Zurücksetzen
@@ -81,11 +88,13 @@ cook islands	common	de	COOK INSELN
 copy	common	de	Kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
+create	common	de	Erstellen
 created	common	de	erstellt
 created by	common	de	Erstellt von
 croatia	common	de	KROATIEN
 cuba	common	de	KUBA
-currency	common	de	Währung
+currency	common	de	W&auml;hrung
+current	common	de	derzeit
 current users	common	de	Derzeit angemeldete Benutzer
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
@@ -93,134 +102,414 @@ date	common	de	Datum
 date due	common	de	fällig am
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
-delete	common	de	Löschen
+delete	common	de	L&ouml;schen
+denmark	common	de	DÄNEMARK
 description	common	de	Beschreibung
+detail	common	de	Detail
+details	common	de	Details
 disabled	common	de	Deaktiviert
 do you want to delete all subcategories ?	common	de M&ouml;chten Sie alle Unterkategorien l&ouml;schen ?
 do you want to move all subcategories one level down ?	common	de	M&ouml;chten Sie alle Unterkategorien um einen Level nach unten verschieben ?
+djibouti	common	de	DJIBOUTI
+do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
+domain	common	de	Domain
+domestic	common	de	Inland
+dominica	common	de	DOMINICA
+dominican republic	common	de	DOMÄNIKANISCHE REPUBLIK
 done	common	de	Fertig
 e-mail	common	de	E-Mail
+east timor	common	de	OST TIMOR
+ecuador	common	de	EQUADOR
 edit	common	de	Editieren
-edit category	common	de	Kategorie editieren
-edit categories	common	de	Kategorien editieren
 edit %1 category for	common	de	%1 Kategorie editieren f&uuml;r
+edit categories	common	de	Kategorien editieren
+edit category	common	de	Kategorie editieren
+egypt	common	de	ÄGYPTEN
+el salvador	common	de	EL SALVADOR
 email	common	de	E-Mail
+email-address of the user, eg. "%1"	common	de	E-Mail Adresse des Benutzers, zB. "%1"
 enabled	common	de	Verf&uuml;gbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gel&ouml;scht
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
+equatorial guinea	common	de	EQUATORIAL GUINEA
+eritrea	common	de	ERITREA
 error	common	de	Fehler
 error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisses %1 %2
 error deleting %1 %2 directory	common	de	Fehler beim L.schen des Verzeichnisses %1 %2
 error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
+estonia	common	de	ESTONIEN
+ethiopia	common	de	ETHIOPIEN
+falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
+faroe islands	common	de	FAROE INSELN
+fax number	common	de	Fax Nummer
 february	common	de	Februar
+fields	common	de	Felder
+fiji	common	de	FIJI
 files	common	de	Dateien
 filter	common	de	Filter
+finland	common	de	FINLAND
 first name	common	de	Vorname
+first name of the user, eg. "%1"	common	de	Vorname des Benutzers, zB. "%1"
+first page	common	de	Erste Seite
 firstname	common	de	Vorname
+fixme!	common	de	KOREGIER MICH!
+force selectbox	common	de	Auswahlfeld erzwingen
+france	common	de	FRANKREICH
+french guiana	common	de	FRANZÖSISCH GUIANA
+french polynesia	common	de	FRANZÖSISCH POLYNESIEN
+french southern territories	common	de	FRENCH SOUTHERN TERRITORIES
 friday	common	de	Freitag
 ftp	common	de	FTP
+gabon	common	de	GABON
+gambia	common	de	GAMBIA
+general menu	common	de	Hauptmenü
+georgia	common	de	GEORGIEN
+german	common	de	Deutsch
 germany	common	de	DEUTSCHLAND
+ghana	common	de	GHANA
+gibraltar	common	de	GIBRALTAR
 global	common	de	Global
 global public	common	de	Global Public
 grant access	common	de	Zugriff gew&auml;hren
+greece	common	de	GRIECHENLAND
+greenland	common	de	GRÖNLAND
+grenada	common	de	GRENADA
 group	common	de	Gruppe
-group access 	common	de	Gruppenzugriff
+group access	common	de	Gruppenzugriff
+group has been added	common	de	Gruppe wurde zugefügt
+group has been deleted	common	de	Gruppe wurde  gelöscht
+group has been updated	common	de	Gruppe wurde  aktualisiert
 group public	common	de	Group Public
 groups	common	de	Gruppen
+guadeloupe	common	de	GUADELOUPE
+guam	common	de	GUAM
+guatemala	common	de	GUATEMALA
+guinea	common	de	GUINEA
+guinea-bissau	common	de	GUINEA-BISSAU
+guyana	common	de	GUYANA
+haiti	common	de	HAITI
+heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
 help	common	de	Hilfe
+high	common	de	Hoch
+highest	common	de	Höchste
+holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
-it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
+honduras	common	de	HONDURAS
+hong kong	common	de	HONG KONG
+hungary	common	de	UNGARN
+iceland	common	de	ISLAND
+india	common	de	INDIEN
+indonesia	common	de	INDONESIEN
+international	common	de	International
+invalid ip address	common	de	Ungültige IP Adresse
+invalid password	common	de	Ungültiges Passwort
+iran, islamic republic of	common	de	IRAN, ISLAMISCHE REPUBLIC
+iraq	common	de	IRAQ
+ireland	common	de	IRELAND
+israel	common	de	ISRAEL
+it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht ge&auml;ndert
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
+italy	common	de	ITALIEN
+jamaica	common	de	JAMAICA
 january	common	de	Januar
+japan	common	de	JAPAN
+jordan	common	de	JORDANIEN
 july	common	de	Juli
 june	common	de	Juni
+kazakstan	common	de	KAZAKSTAN
+kenya	common	de	KENIA
+keywords	common	de	Schlüsselwort
+kiribati	common	de	KIRIBATI
+korea, democratic peoples republic of	common	de	KOREA, DEMOKRATISCHE VOLKSREPUBLIK
+korea, republic of	common	de	KOREA, REPUBLIK
+kuwait	common	de	KUWAIT
+kyrgyzstan	common	de	KYRGYZSTAN
+language	common	de	Sprache
+lao peoples democratic republic	common	de	LAOS, VOLKSREPUBLIK
 last name	common	de	Name
+last name of the user, eg. "%1"	common	de	Familienname des Benutzers, zB. "%1"
+last page	common	de	Letzte Seite
 lastname	common	de	Name
+latvia	common	de	LATVIA
+lebanon	common	de	LIBANON
+lesotho	common	de	LESOTHO
+liberia	common	de	LYBIEN
+libyan arab jamahiriya	common	de	LIBYAN ARAB JAMAHIRIYA
+license	about	de	Lizenz
+liechtenstein	common	de	LIECHTENSTEIN
+list	common	de	Liste
+lithuania	common	de	LITAUEN
+local	common	de	lokal
 login	common	de	Anmelden
 logout	common	de	Abmelden
+low	common	de	Niedrig
+lowest	common	de	Niedrigst
+luxembourg	common	de	LUXEMBURG
+macau	common	de	MACAU
+macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
+madagascar	common	de	MADAGASCAR
+mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
+maintainer	about	de	Maintainer
+malawi	common	de	MALAWI
+malaysia	common	de	MALAYSIA
+maldives	common	de	MALDIVEN
+mali	common	de	MALI
+malta	common	de	MALTA
 manual	common	de	Handbuch
-march	common	de	März
+march	common	de	M&auml;rz
+marshall islands	common	de	MARSHALL ISLANDS
+martinique	common	de	MARTINIQUE
+mauritania	common	de	MAURITANIEN
+mauritius	common	de	MAURITIUS
 may	common	de	Mai
+mayotte	common	de	MAYOTTE
 medium	common	de	Mittel
 message	common	de	Nachricht
+mexico	common	de	MEXICO
+micronesia, federated states of	common	de	MICRONESIEN, VEREINIGTE STAATEN VON
+moldova, republic of	common	de	MOLDAVIEN, REPUBLIK
+monaco	common	de	MONACO
 monday	common	de	Montag
+mongolia	common	de	MONGOLEI
+montserrat	common	de	MONTSERRA
+morocco	common	de	MAROCCO
+mozambique	common	de	MOZAMBIQUE
+myanmar	common	de	MYANMAR
 name	common	de	Name
+name of the user, eg. "%1"	common	de	Name des Benutzers, zB. "%1"
+namibia	common	de	NAMIBIEN
+nauru	common	de	NAURU
+nepal	common	de	NEPAL
+netherlands	common	de	NIEDERLANDE
+netherlands antilles	common	de	NIEDERLÄNDISCHE ANTILLEN
+never	common	de	Niemals
+new caledonia	common	de	NEU CALEDONIEN
 new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugef&uuml;gt
 new main category	common	de	neue Hauptkategorie
+new value	common	de	Neuer Wert
+new zealand	common	de	NEUSEELAND
+next	common	de	Nächste
+next page	common	de	Nächste Seite
+nicaragua	common	de	NICARAGUA
+niger	common	de	NIGER
+nigeria	common	de	NIGERIA
+niue	common	de	NIUE
 no	common	de	Nein
 no category	common	de	keine Kategorie
+no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
+no history for this record	common	de	Keine Historie für diesen Datensatz
 no matchs found	common	de	Keine Treffer gefunden.
 no subject	common	de	Kein Betreff
 none	common	de	Keine
-notes	common	de	Notizen
+norfolk island	common	de	NORFOLK INSELN
+normal	common	de	Normal
+northern mariana islands	common	de	NORTHERN MARIANA ISLANDS
+norway	common	de	NORWEGEN
+not assigned	common	de	nicht zugewiesen
 note	common	de	Notiz
+notes	common	de	Notizen
+notify window	common	de	Benachrichtigungsfenster
 november	common	de	November
 october	common	de	Oktober
 ok	common	de	OK
+old value	common	de	Alter Wert
+oman	common	de	OMAN
+on *nix systems please type: %1	common	de	Auf *nix systemen bitte %1 eingeben
 only private	common	de	nur private
 only yours	common	de	nur eigene
 open notify window	common	de	Benachrichtigungsfenster &ouml;ffnen
 original	common	de	Original
+other	common	de	Andere
 overview	common	de	&Uuml;berblick
 owner	common	de	Besitzer
+pakistan	common	de	PAKISTAN
+palau	common	de	PALAU
+palestinian territory, occupied	common	de	PALESTINENSISCHES TERRITORIUM, BESETZT
+panama	common	de	PANAMA
+papua new guinea	common	de	PAPUA NEU GUINEA
+paraguay	common	de	PARAGUAY
+parcel	common	de	Paket
 parent category	common	de	&Uuml;bergeordnete Kategorie
 password	common	de	Passwort
+password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
+pattern for search in addressbook	common	de	Muster für suche im Adressbuch
+pattern for search in projects	common	de	Muster für suche in Projekten
+permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerverzeichnissen
+personal	common	de	persönlich
+peru	common	de	PERU
+philippines	common	de	PHILIPPINEN
+phone number	common	de	Telefonnummer
+pitcairn	common	de	PITCAIRN
+please %1 by hand	common	de	Bitte %1 per Hand
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
-please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
-please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen f&uuml;r diese Applikation !
 powered by	common	de	Powered by	
+please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
+please select	common	de	Bitte wählen
+please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
+please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen f&uuml;r diese Anwendung !
+please wait...	common	de	Bitte warten...
+poland	common	de	POLEN
+portugal	common	de	PORTUGA
+postal	common	de	Postadresse
+powered by phpgroupware version %1	common	de	Powered by <a href="http://www.phpgw.de">phpGroupWare</a> version %1
 preferences	common	de	Einstellungen
+previous page	common	de	Vorherige Seite
 print	common	de	Drucken
 priority	common	de	Priorität
 private	common	de	Privat
 public	common	de	öffentlich
+project	common	de	Projekt
+public	common	de	&ouml;ffentlich
+puerto rico	common	de	PUERTO RICO
+qatar	common	de	QATAR
 read	common	de	Lesen
+read this list of methods.	common	de	Diese Liste der Methoden lesen.
+reject	common	de	Zurückweisen
+rename	common	de	Umbenennen
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
+returns an array of todo items	common	de	Liefert ein array mit ToDo Einträgen
+returns struct of users application access	common	de	Liefert Strucktur mit Benutzerzugriffsrechten auf Anwendungen
+reunion	common	de	REUNION
+romania	common	de	RUMÄNIEN
+russian federation	common	de	RUSSISCHE FÖDERATION
+rwanda	common	de	RWANDA
+saint helena	common	de	SANKT HELENA
+saint kitts and nevis	common	de	SAINT KITTS AND NEVIS
+saint lucia	common	de	SANTA LUCIA
+saint pierre and miquelon	common	de	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	de	SAINT VINCENT AND THE GRENADINES
+samoa	common	de	SAMOA
+san marino	common	de	SAN MARINO
+sao tome and principe	common	de	SAO TOME AND PRINCIPE
 saturday	common	de	Samstag
+saudi arabia	common	de	SAUDIARABIEN
 save	common	de	Speichern
 search	common	de	Suchen
-select category	common	de	Kategorie auswählen
-september 	common	de	September
-session has been killed	common	de	Session wurde gelöscht
+section	common	de	Sektion
+select	common	de	Auswählen
+select category	common	de	Kategorie ausw&auml;hlen
+select one	common	de	Einen auswählen
+send	common	de	Abschicken
+senegal	common	de	SENEGAL
+september	common	de	September
+server %1 has been added	common	de	Server %1 wurde zugefügt
+server name	common	de	Server Name
+session has been killed	common	de	Session wurde gel&ouml;scht
+setup	common	de	Setup
+seychelles	common	de	SEYCHELLEN
 show all	common	de	alle anzeigen
-showing %1	common	de	%1 Einträge
-showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
+showing %1	common	de	%1 Eintr&auml;ge
+showing %1 - %2 of %3	common	de	%1 - %2 von %3 Eintr&auml;gen
+sierra leone	common	de	SIERRA LEONE
+singapore	common	de	SINGAPUR
+slovakia	common	de	SLOVAKEI
+slovenia	common	de	SLOVENIEN
+solomon islands	common	de	SOLOMON INSELN
+somalia	common	de	SOMALIA
+sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
+south africa	common	de	SÜDAFRIKA
+south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	de	SPANIEN
+sri lanka	common	de	SRI LANKA
 start date	common	de	Startdatum
 start time	common	de	Startzeit
 status	common	de	Status
-sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
 subject	common	de	Betreff
 submit	common	de	Absenden
+substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
+sudan	common	de	SUDAN
 sunday	common	de	Sonntag
+suriname	common	de	SURINAME
+svalbard and jan mayen	common	de	SVALBARD AND JAN MAYEN
+swaziland	common	de	SWAZILAND
+sweden	common	de	SCHWEDEN
+switzerland	common	de	SCHWEIZ
+syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
+taiwan, province of china	common	de	TAIWAN, PROVINCE VON CHINA
+tajikistan	common	de	TAJIKISTAN
+tanzania, united republic of	common	de	TANZANIA, VEREINIGTE REPUBLIK
+thailand	common	de	THAILAND
+the api is current	common	de	Die API ist aktuell
+the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
+the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
+the mail server returned	common	de	Der EMailserver liefert zurück
+this application is current	common	de	Diese Anwendung ist aktuell
+this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 thursday	common	de	Donnerstag
 time	common	de	Zeit
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonen Differenz
 title	common	de	Titel
-total	common	de	Total
+to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
+to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
+todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
+togo	common	de	TOGO
+tokelau	common	de	TOKELAU
+tonga	common	de	TONGA
+total	common	de	Gesammt
+trinidad and tobago	common	de	TRINIDAD AND TOBAGO
 tuesday	common	de	Dienstag
+tunisia	common	de	TUNISIEN
+turkey	common	de	TÜRKEI
+turkmenistan	common	de	TURKMENISTAN
+turks and caicos islands	common	de	TURKS AND CAICOS ISLANDS
+tuvalu	common	de	TUVALU
+uganda	common	de	UGANDA
+ukraine	common	de	UKRAINE
+united arab emirates	common	de	VEREINIGTEN ARABISCHEN EMIRATE
+united kingdom	common	de	GROSSBRITANIEN
+united states	common	de	VEREINIGTE STAATEN VON AMERIKA
+united states minor outlying islands	common	de	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	de	Unbekannt
 update	common	de	Aktualisieren
 url	common	de	URL
+uruguay	common	de	URUGUAY
+use button to search for	common	de	benutze Knopf zum suchen nach
+use button to search for address	common	de	benutze Knopf zum suchen nach Adressen
+use button to search for project	common	de	benutze Knopf zum suchen nach Projekten
 user	common	de	Benutzer
 username	common	de	Benutzername
 users	common	de	Benutzer
+users choice	common	de	Benutzerauswahl
+uzbekistan	common	de	UZBEKISTAN
+vanuatu	common	de	VANUATU
+venezuela	common	de	VENEZUELA
 version	common	de	Version
+viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
+virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	de	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	de	WALLIS AND FUTUNA
 wednesday	common	de	Mittwoch
-welcome	common	de	Willkommen
+western sahara	common	de	WEST SAHARA
 which groups	common	de	Welche Gruppen
 written by	common	de	Geschrieben von
+written by:	common	de	Geschrieben von:
+year	common	de	Jahr
+yemen	common	de	YEMEN
 yes	common	de	ja
-you are running a newer version of phpGroupWare than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.  
+you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
+you are running a newer version of phpgroupware than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.
+you have been successfully logged out	login	de	Abmeldung erfolgreich
+you have not entered a title	common	de	Sie haben keinen Titel eingegeben
+you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
+you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben
+you have not entered participants	common	de	Sie haben keine Teilnehmer eingegeben
 you have selected an invalid date	common	de	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
 you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
-your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
+you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
+your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
+your message has been sent	common	de	Ihre Nachricht wurde versandt
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
-your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
-you have been successfully logged out	login	de	Abmeldung erfolgreich
+your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
+your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
+yugoslavia	common	de	JUGOSLAVIEN
+zambia	common	de	ZAMBIA
+zimbabwe	common	de	ZIMBABWE

@@ -81,7 +81,8 @@
 		create_input_box($label_name,$preference_name.'][pw',$help,'',$size,$max_size,'password');
 	}
 	
-	function create_input_box($label,$name,$help='',$default='',$size = '',$max_size = '',$type='')
+	function create_input_box($label,$name,$help='',$default='',$size = '',$max_size = '',$type='',
+		$run_lang=True)
 	{
 		global $t,$prefs;
 
@@ -111,17 +112,17 @@
 		
 		if ($GLOBALS['type'] == 'user')
 		{
-			$def_text = $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = !$GLOBALS['phpgw']->preferences->user[$_appname][$name] ? $GLOBALS['phpgw']->preferences->data[$_appname][$name] : $GLOBALS['phpgw']->preferences->default[$_appname][$name];
 			$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$def_text.'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\" value=\"".htmlentities($default)."\"$options>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
-		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
+		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
 	
-	function process_help($help)
+	function process_help($help,$run_lang=True)
 	{
 		global $t,$show_help,$has_help;
 
@@ -131,7 +132,7 @@
 			
 			if ($show_help)
 			{
-				$t->set_var('help_value',lang($help));
+				$t->set_var('help_value',$run_lang ? lang($help) : $help);
 				
 				return True;
 			}
@@ -213,7 +214,50 @@
 		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
 	}
 	
-	function create_text_area($label,$name,$rows,$cols,$help='',$default='')
+	/*!
+	@function create_notify
+	@abstract creates text-area or inputfield with subtitution-variables
+	@syntax create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='')
+	@param $label untranslated label
+	@param $name name of the pref 
+	@param $rows, $cols of the textarea or input-box ($rows==1)
+	@param $help untranslated help-text
+	@param $default default-value
+	@param $vars2 array with extra substitution-variables of the form key => help-text
+	*/
+	function create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='')
+	{
+		global $t,$prefs,$notifys;
+
+		$vars = $GLOBALS['phpgw']->preferences->vars;
+		if (is_array($vars2))
+		{
+			$vars += $vars2;
+		}
+		$prefs[$name] = $GLOBALS['phpgw']->preferences->lang_notify($prefs[$name],$vars);
+
+		$notifys[$name] = $vars;	// this gets saved in the app_session for re-translation
+
+		$help = $help ? lang($help).'<br>' : '';
+		$help .= '<p><b>'.lang('Substitutions and their meanings:').'</b>';
+		foreach($vars as $var => $var_help)
+		{
+			$lname = ($lname = lang($var)) == $var.'*' ? $var : $lname;
+			$help .= "<br>\n".'<b>$$'.$lname.'$$</b>: '.$var_help;
+		}
+		$help .= "</p>\n";
+		
+		if ($row == 1)
+		{
+			create_input_box($label,$name,$help,$default,$cols,'','',False);
+		}
+		else
+		{
+			create_text_area($label,$name,$rows,$cols,$help,$default,False);
+		}
+	}
+
+	function create_text_area($label,$name,$rows,$cols,$help='',$default='',$run_lang=True)
 	{
 		global $t,$prefs;
 
@@ -230,17 +274,17 @@
 
 		if ($GLOBALS['type'] == 'user')
 		{
-			$def_text = $GLOBALS['phpgw']->preferences->default[$_appname][$name];
-			$def_text = $def_text != '' ? '<br><i><font size="-1">'.lang('default').':<br>'.$def_text.'</font></i>' : '';
+			$def_text = !$GLOBALS['phpgw']->preferences->user[$_appname][$name] ? $GLOBALS['phpgw']->preferences->data[$_appname][$name] : $GLOBALS['phpgw']->preferences->default[$_appname][$name];
+			$def_text = $def_text != '' ? '<br><i><font size="-1"><b>'.lang('default').'</b>:<br>'.nl2br($def_text).'</font></i>' : '';
 		}
 		$t->set_var('row_value',"<textarea rows=\"$rows\" cols=\"$cols\" name=\"${GLOBALS[type]}[$name]\">".htmlentities($default)."</textarea>$def_text");
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
-		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
+		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
 
-	function process_array(&$repository,$array,$prefix='')
+	function process_array(&$repository,$array,$notifys,$prefix='')
 	{
 		$_appname = check_app();
 
@@ -255,7 +299,7 @@
 			}
 		}
 		unset($prefs['']);
-//echo "array:<pre>"; print_r($array); echo "</pre>\n";
+		//echo "array:<pre>"; print_r($array); echo "</pre>\n";
 		while (is_array($array) && list($var,$value) = each($array))
 		{
 			if (isset($value) && $value != '' && $value != '**NULL**')
@@ -269,6 +313,11 @@
 					}
 				}
 				$prefs[$var] = stripslashes($value);
+				
+				if ($notifys[$var])	// need to translate the key-words back
+				{
+					$prefs[$var] = $GLOBALS['phpgw']->preferences->lang_notify($prefs[$var],$notifys[$var],True);
+				}
 			}
 			else
 			{
@@ -348,17 +397,17 @@
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 		{
-			process_array($GLOBALS['phpgw']->preferences->user,$user,$prefix);
+			process_array($GLOBALS['phpgw']->preferences->user,$user,$session_data['notifys'],$prefix);
 		}
 
 		if ($GLOBALS['type'] == 'default' && is_admin())
 		{
-			process_array($GLOBALS['phpgw']->preferences->default, $default);
+			process_array($GLOBALS['phpgw']->preferences->default, $default,$session_data['notifys']);
 		}
 
 		if ($GLOBALS['type'] == 'forced' && is_admin())
 		{
-			process_array($GLOBALS['phpgw']->preferences->forced, $forced);
+			process_array($GLOBALS['phpgw']->preferences->forced, $forced,$session_data['notifys']);
 		}
 
 		if (!is_admin())
@@ -410,22 +459,8 @@
 	}
 	//echo "prefs=<pre>"; print_r($prefs); echo "</pre>\n";
 	
-	if ($_GET['appname'] == 'preferences')
-	{
-		if (! $GLOBALS['phpgw']->hooks->single('settings','preferences',True))
-		{
-			$error = True;
-		}
-	}
-	else
-	{
-		if (! $GLOBALS['phpgw']->hooks->single('settings',$_GET['appname']))
-		{
-			$error = True;
-		}
-	}
-
-	if ($error)
+	$notifys = array();
+	if (!$GLOBALS['phpgw']->hooks->single('settings',$_GET['appname']))
 	{
 		$t->set_block('preferences','form','formhandle');	// skip the form
 		$t->set_var('formhandle','');
@@ -435,6 +470,17 @@
 			. $_GET['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
 	}
 
+	if (count($notifys))	// there have been notifys in the hook, we need to save in the session
+	{
+		$GLOBALS['phpgw']->session->appsession('session_data','preferences',array(
+			'type'      => $GLOBALS['type'],	// save our state in the app-session
+			'show_help' => $show_help,
+			'prefix'    => $prefix,
+			'appname'   => $_GET['appname'],	// we use this to reset prefix on appname-change
+			'notifys'   => $notifys
+		));
+		//echo "notifys:<pre>"; print_r($notifys); echo "</pre>\n";
+	}
 	if (is_admin())
 	{
 		$tabs[] = array(
@@ -469,4 +515,6 @@
 		show_list();
 	}
 	$t->parse('phpgw_body','preferences');
+	
+	//echo '<pre style="text-align: left;">'; print_r($GLOBALS['phpgw']->preferences->data); echo "</pre>\n";
 ?>

@@ -99,7 +99,7 @@
 	// preference.php handles this function
 	if (is_admin())
 	{
-		create_check_box('Show current users on navigation bar','show_currentusers',
+		create_check_box('Show number of current users','show_currentusers',
 			'Should the number of active sessions be displayed for you all the time.');
 	}
 
@@ -112,10 +112,17 @@
 		}
 	}
 	create_select_box('Default application','default_app',$user_apps,
-		"This is the application which will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).");
+		"The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).");
 
 	create_input_box('Currency','currency',
-		'Which currency symbole or name should be used in phpGroupWare.');
+		'Which currency symbol or name should be used in phpGroupWare.');
 		
+	$account_sels = array(
+		'selectbox' => lang('Selectbox'),
+		'popup'     => lang('Popup with search')
+	);
+	create_select_box('How do you like to select accounts','account_selection',$account_sels,
+		'The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.');
+
 	create_check_box('Show helpmessages by default','show_help',
-		'Should the help messages always be shown when you enter the preferences or only on request.');
+		'Should this help messages shown up always, when you enter the preferences or only on request.');

@@ -24,6 +24,7 @@ error: there was a problem finding the preference file for %1 in %2	preferences	
 forced preferences	preferences	en	Forced Preferences
 help off	preferences	en	Help off
 hours	preferences	en	hours
+how do you like to select accounts	preferences	en	How do you like to select accounts
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
 how should phpgroupware display dates for you.	preferences	en	How should phpGroupWare display dates for you.
 icons and text	preferences	en	Icons and text
@@ -35,25 +36,28 @@ max matches per page	preferences	en	Max matches per page
 no default	preferences	en	No default
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
 please, select a new theme	preferences	en	Please, select a new theme
+popup with search	preferences	en	Popup with search
 re-enter your password	preferences	en	Re-Enter your password
 select different theme	preferences	en	Select different Theme
 select one	preferences	en	Select one
 select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	en	Select the language of texts and messages within phpGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.
-should the help messages always be shown when you enter the preferences or only on request.	preferences	en	Should the help messages always be shown when you enter the preferences or only on request.
+selectbox	preferences	en	Selectbox
 should the number of active sessions be displayed for you all the time.	preferences	en	Should the number of active sessions be displayed for you all the time.
-show current users on navigation bar	preferences	en	Show current users on navigation bar
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Should this help messages shown up always, when you enter the preferences or only on request.
 show helpmessages by default	preferences	en	Show helpmessages by default
 show navigation bar as	preferences	en	Show navigation bar as
+show number of current users	preferences	en	Show number of current users
 show text on navigation icons	preferences	en	Show text on navigation icons
 text only	preferences	en	Text only
+the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the two passwords are not the same	preferences	en	The two passwords are not the same
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
-this is the application which will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one applications showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each applicaton).	preferences	en	This is the application which will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one applications showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each applicaton).
 this server is located in the %1 timezone	preferences	en	This server is located in the %1 timezone
 time format	preferences	en	Time format
 use default	preferences	en	Use default
 users choice	preferences	en	Users choice
-which currency symbole or name should be used in phpgroupware.	preferences	en	Which currency symbole or name should be used in phpGroupWare.
+which currency symbol or name should be used in phpgroupware.	preferences	en	Which currency symbol or name should be used in phpGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
 you do not have permission to set acl's in this mode!	preferences	en	You do not have permission to set ACL's in this mode!
 you must enter a password	preferences	en	You must enter a password

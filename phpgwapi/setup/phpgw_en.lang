@@ -1,6 +1,9 @@
 about %1	common	en	About %1
 access	common	en	Access
 access not permitted	common	en	Access not permitted
+account has been created	common	en	Account has been created
+account has been deleted	common	en	Account has been deleted
+account has been updated	common	en	Account has been updated
 acl	common	en	ACL
 action	common	en	Action
 active	common	en	Active
@@ -8,6 +11,7 @@ add	common	en	Add
 add %1 category for	common	en	Add %1 category for
 add category	common	en	Add category
 add sub	common	en	Add sub
+addressbook	common	en	Addressbook
 admin	common	en	Admin
 administration	common	en	Administration
 afghanistan	common	en	AFGHANISTAN
@@ -109,7 +113,8 @@ djibouti	common	en	DJIBOUTI
 do you really want to delete this entry	common	en	Do you really want to delete this entry ?
 do you want to delete all subcategories ?	common	en	Do you want to delete all subcategories ?
 do you want to move all subcategories one level down ?	common	en	Do you want to move all subcategories one level down ?
-domain	phpgwapi	en	Domain
+do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
+domain	common	en	Domain
 domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
@@ -124,6 +129,7 @@ edit category	common	en	Edit category
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
 email	common	en	E-Mail
+email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1"
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
@@ -139,6 +145,7 @@ estonia	common	en	ESTONIA
 ethiopia	common	en	ETHIOPIA
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
+fax number	common	en	fax number
 february	common	en	February
 fields	common	en	Fields
 fiji	common	en	FIJI
@@ -146,8 +153,10 @@ files	common	en	Files
 filter	common	en	Filter
 finland	common	en	FINLAND
 first name	common	en	First name
-first page	phpgwapi	en	First page
+first name of the user, eg. "%1"	common	en	first name of the user, eg. "%1"
+first page	common	en	First page
 firstname	common	en	Firstname
+fixme!	common	en	FIXME!
 force selectbox	common	en	Force SelectBox
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
@@ -169,6 +178,9 @@ greenland	common	en	GREENLAND
 grenada	common	en	GRENADA
 group	common	en	Group
 group access	common	en	Group Access
+group has been added	common	en	Group has been added
+group has been deleted	common	en	Group has been deleted
+group has been updated	common	en	Group has been updated
 group public	common	en	Group Public
 groups	common	en	Groups
 guadeloupe	common	en	GUADELOUPE
@@ -191,8 +203,8 @@ iceland	common	en	ICELAND
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
 international	common	en	International
-invalid ip address	phpgwapi	en	Invalid IP address
-invalid password	phpgwapi	en	Invalid password
+invalid ip address	common	en	Invalid IP address
+invalid password	common	en	Invalid password
 iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	en	IRAQ
 ireland	common	en	IRELAND
@@ -219,6 +231,9 @@ language	common	en	Language
 lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	en	Last name
 last page	common	en	Last page
+last name of the user, eg. "%1"	common	en	last name of the user, eg. "%1"
+last page	common	en	Last page
+>>>>>>> 1.38.2.14.2.5
 lastname	common	en	Lastname
 latvia	common	en	LATVIA
 lebanon	common	en	LEBANON
@@ -238,6 +253,7 @@ luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	en	MADAGASCAR
+mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
 maintainer	about	en	Maintainer
@@ -267,6 +283,7 @@ morocco	common	en	MOROCCO
 mozambique	common	en	MOZAMBIQUE
 myanmar	common	en	MYANMAR
 name	common	en	Name
+name of the user, eg. "%1"	common	en	name of the user, eg. "%1"
 namibia	common	en	NAMIBIA
 nauru	common	en	NAURU
 nepal	common	en	NEPAL
@@ -303,6 +320,7 @@ october	common	en	October
 ok	common	en	OK
 old value	common	en	Old Value
 oman	common	en	OMAN
+on *nix systems please type: %1	common	en	On *nix systems please type: %1
 only private	common	en	only private
 only yours	common	en	only yours
 open notify window	common	en	Open Notify Window
@@ -325,21 +343,25 @@ password has been updated	common	en	Password has been updated
 pattern for search in addressbook	common	en	Pattern for Search in Addressbook
 pattern for search in calendar	common	en	Pattern for Search in Calendar
 pattern for search in projects	common	en	Pattern for Search in Projects
+permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
 phpgroupware --> homepage	phpgwapi	en	phpGroupWare --> homepage
 phpgwapi	common	en	phpGroupWare API
+phone number	common	en	phone number
 pitcairn	common	en	PITCAIRN
-please %1 by hand	phpgwapi	en	Please %1 by hand
+please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Please enter a name !
 please run setup to become current	common	en	Please run setup to become current
+please select	common	en	Please Select
 please set your global preferences	common	en	Please set your global preferences !
 please set your preferences for this application	common	en	Please set your preferences for this application !
-please wait...	phpgwapi	en	Please Wait...
+please wait...	common	en	Please Wait...
 poland	common	en	POLAND
 portugal	common	en	PORTUGAL
 powered by	common	en	Powered by
+postal	common	en	Postal
 powered by phpgroupware version %1	common	en	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
 preferences	common	en	Preferences
 previous page	common	en	Previous page
@@ -356,6 +378,7 @@ read a single app by name.	phpgwapi	en	Read a single app by name.
 read this list of methods.	common	en	Read this list of methods.
 reject	common	en	Reject
 rename	common	en	Rename
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system.  Warning: This is return can be quite large
 returns an array of todo items	common	en	Returns an array of todo items
 returns struct of users application access	common	en	Returns struct of users application access
 reunion	common	en	REUNION
@@ -384,7 +407,7 @@ september	common	en	September
 server %1 has been added	common	en	Server %1 has been added
 server name	common	en	Server Name
 session has been killed	common	en	Session has been killed
-setup	phpgwapi	en	setup
+setup	common	en	Setup
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
 showing %1	common	en	showing %1
@@ -405,6 +428,7 @@ start time	common	en	Start time
 status	common	en	Status
 subject	common	en	Subject
 submit	common	en	Submit
+substitutions and their meanings:	common	en	Substitutions and their meanings:
 sudan	common	en	SUDAN
 sunday	common	en	Sunday
 suriname	common	en	SURINAME
@@ -433,6 +457,8 @@ time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
 to go back to the msg list, click <a href="%1">here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
+to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
+todays date, eg. "%1"	common	en	todays date, eg. "%1"
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
@@ -455,8 +481,8 @@ update	common	en	Update
 url	common	en	URL
 uruguay	common	en	URUGUAY
 use button to search for	common	en	use Button to search for
-use button to search for Address	common	en	use Button to search for Address
-use button to search for Project	common	en	use Button to search for Project
+use button to search for address	common	en	use Button to search for Address
+use button to search for project	common	en	use Button to search for Project
 user	common	en	User
 username	common	en	Username
 users	common	en	users
@@ -479,7 +505,7 @@ year	common	en	Year
 yemen	common	en	YEMEN
 yes	common	en	Yes
 you are required to change your password during your first login	common	en	You are required to change your password during your first login
-you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for.
+you are running a newer version of phpgroupware than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for.
 you have been successfully logged out	login	en	You have been successfully logged out
 you have not entered a title	common	en	You have not entered a title
 you have not entered a valid date	common	en	You have not entered a valid date
@@ -487,9 +513,10 @@ you have not entered a valid time of day	common	en	You have not entered a valid 
 you have not entered participants	common	en	You have not entered participants
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
-you have successfully logged out	phpgwapi	en	You have successfully logged out
-your message has been sent	phpgwapi	en	Your message has been sent
-your search returned %1 matchs	common	en	your search returned %1 matchs
+you have successfully logged out	common	en	You have successfully logged out
+your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
+your message has been sent	common	en	Your message has been sent
+your search returned %1 matchs	common	en	your search returned %1 matches
 your search returned 1 match	common	en	your search returned 1 match
 your session could not be verified.	login	en	Your session could not be verified.
 your settings have been updated	common	en	Your settings have been Updated
