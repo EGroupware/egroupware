@@ -98,36 +98,56 @@
     function view($app, $location, $id, $id_type){
     }
 
-    function view_app_list($location, $required, $id_type = "both", $id = ""){
+    function get_app_list($location, $required){
       global $phpgw, $phpgw_info;
-      if ($id == ""){ $id = $phpgw_info["user"]["account_id"]; }
-      $sql = "select acl_appname, acl_rights from phpgw_acl where (acl_location in ('$location','everywhere')) and ";
-      if ($id_type == "both" || $id_type == "u"){
-        // User piece
-        $sql .= "((acl_account_type = 'u' and acl_account = ".$id.")";
-      }
-      if ($id_type == "g"){
-        $sql .= "(acl_account_type='g' and acl_account in (0"; // group 0 covers all users
-      }elseif ($id_type == "both"){
-        $sql .= " or (acl_account_type='g' and acl_account in (0"; // group 0 covers all users
-      }
-      if ($id_type == "both" || $id_type == "g"){
-        // Group piece
-        if (is_array($id) && count($id) > 0){
-          for ($idx = 0; $idx < count($id); ++$idx){
-            $sql .= ",".$id[$idx];
-          }
-        } else {
-          $sql .= ",".$id;
+      // User piece
+      $sql = "select acl_appname, acl_rights from phpgw_acl where (acl_location in ('$location','everywhere')) ";
+      $sql .= " and ((acl_account_type = 'u' and acl_account = '".$phpgw_info["user"]["account_id"]."')";
+    
+      // Group piece
+      $sql .= " or (acl_account_type='g' and acl_account in (0"; // group 0 covers all users
+      $memberships = $phpgw->accounts->read_group_names();           
+      if (is_array($memberships) && count($memberships) > 0){
+        for ($idx = 0; $idx < count($memberships); ++$idx){
+          $sql .= ",".$memberships[$idx][0];
         }
       }
-      if ($id_type == "both"){
-        $sql .= ")))";
-      }elseif ($id_type == "u"){
-        $sql .= ")";
-      }elseif ($id_type == "g"){
-        $sql .= "))";
+      $sql .= ")))";
+
+      $this->db->query($sql ,__LINE__,__FILE__);
+      $rights = 0;
+      if ($this->db->num_rows() == 0 ){ return False; }
+      while ($this->db->next_record()) {
+        if ($this->db->f("acl_rights") == 0){ return False; }
+        $rights |= $this->db->f("acl_rights");
+        if (!!($rights & $required) == True){
+          $apps[] = $this->db->f("acl_appname");
+        }else{
+          return False;
+        }
       }
+      return $apps;
+    }
+
+
+    function get_app_list_for_id($location, $required, $id_type = "", $id = ""){
+      global $phpgw, $phpgw_info;
+      if ($id == ""){ $id = $phpgw_info["user"]["account_id"]; }
+      if ($id_type == ""){ $id_type = "u"; }
+      $sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = '$location' and ";
+      if ($id_type == "u"){
+        $sql .= "acl_account_type = 'u' and acl_account = ".$id;
+      }elseif($id_type == "g"){
+        $sql .= "acl_account_type='g' and acl_account in (0"; // group 0 covers all users
+        // Group piece
+        if (is_array($memberships) && count($memberships) > 0){
+          for ($idx = 0; $idx < count($memberships); ++$idx){
+            $sql .= ",".$memberships[$idx][0];
+          }
+        }
+        $sql .= ")";
+      }
+
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }

@@ -76,6 +76,25 @@
         }
         if($owner_found) {
           $this->account_id = $owner_id;
+
+          $acl_apps = $phpgw->acl->get_app_list('run', 1);
+          if ($acl_apps != False){
+            reset ($acl_apps);
+            while (list(,$value) = each($acl_apps)){
+              $apps[] = $value;
+            }
+          }
+          if(count($apps)) {
+            for ($i=0;$i<count($apps);$i++) {
+              if ($this->enabled[$apps[$i]] == 1) {
+                $this->enabled[$apps[$i]] = 2;
+                $this->app_perms[] = $apps[$i];
+              }
+            }
+          }
+
+// should be able to delete these two lines soon. 
+// This will breaks backward compatibility, so we need the setup upgrade script ready
           $this->read_user_group_apps($this->account_id);
           $this->read_user_apps($this->account_id);
           if($load_info) {
@@ -141,7 +160,7 @@
         return False;
       }
 
-      $acl_apps = $phpgw->acl->view_app_list('run', 1, 'u');
+      $acl_apps = $phpgw->acl->get_app_list_for_id('run', 1, 'u');
       if ($acl_apps != False){
         reset ($acl_apps);
         while (list(,$value) = each($acl_apps)){
@@ -203,7 +222,7 @@
 
       $db2 = $phpgw->db;
 
-      $acl_apps = $phpgw->acl->view_app_list('run', 1, 'g', $group_id);
+      $acl_apps = $phpgw->acl->get_app_list_for_id('run', 1, 'g', $group_id);
       if ($acl_apps != False){
         reset ($acl_apps);
         while (list(,$value) = each($acl_apps)){
