@@ -104,7 +104,7 @@
        echo "<A HREF=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]
 			."/".$phpgw_info["flags"]["currentapp"]."/view.php","id=$id")."\"><img src=\""
 	   . $phpgw_info["server"]["app_images"]."/$pic\" "
-	   . "border=\"0\" alt=\"".htmlentities($description)."\"></a>";
+	   . "border=\"0\" alt=\"".htmlspecialchars(stripslashes($description))."\"></a>";
   }
 
   // Get all the repeating events for the specified data and return them
@@ -311,18 +311,18 @@
 
     $i = 0;
     while ($phpgw->db->next_record()) {
-       $repeated_events[$i] = array("cal_name"			=> $phpgw->db->f("cal_name"),
-							"cal_date"			=> $phpgw->db->f("cal_date"),
- 							"cal_id"			=> $phpgw->db->f("cal_id"),
-							"cal_type"			=> $phpgw->db->f("cal_type"),
-							"cal_end"			=> $phpgw->db->f("cal_end"),
-							"cal_frequency"		=> $phpgw->db->f("cal_frequency"),
-							"cal_days"			=> $phpgw->db->f("cal_days"),
-							"cal_description"	=> $phpgw->db->f("cal_description"),
-							"cal_time"			=> $phpgw->db->f("cal_time"),
-							"cal_priority"		=> $phpgw->db->f("cal_priority"),
-							"cal_duration"		=> $phpgw->db->f("cal_duration")
-						   );
+       $repeated_events[$i] = array("cal_name"		=> htmlspecialchars(stripslashes($phpgw->db->f("cal_name"))),
+				    "cal_date"		=> $phpgw->db->f("cal_date"),
+ 				    "cal_id"		=> $phpgw->db->f("cal_id"),
+				    "cal_type"		=> $phpgw->db->f("cal_type"),
+				    "cal_end"		=> $phpgw->db->f("cal_end"),
+				    "cal_frequency"	=> $phpgw->db->f("cal_frequency"),
+				    "cal_days"		=> $phpgw->db->f("cal_days"),
+				    "cal_description"	=> $phpgw->db->f("cal_description"),
+				    "cal_time"		=> $phpgw->db->f("cal_time"),
+				    "cal_priority"	=> $phpgw->db->f("cal_priority"),
+				    "cal_duration"	=> $phpgw->db->f("cal_duration"));
+
     $i++;
     }
     return $repeated_events;
