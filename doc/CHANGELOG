@@ -6,6 +6,7 @@
 	- Fixed file uploads through filemanager.
 	- Fixed repeating entries Month select box.
 	- Fixed calendar week selector starting on Monday on footer.
+	- Fixed buggy calendar saving when no groups are selected with group access.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
