@@ -40,12 +40,17 @@ class calendar extends calendar_
 	var $repeated_events = Array();
 	var $repeating_event_matches = 0;
 	var $sorted_events_matching = 0;
+	var $end_repeat_day = 0;
 	var $weekstarttime;
 	var $days = Array();
+	
+	var $tz_offset;
 
 	var $tempyear;
 	var $tempmonth;
 	var $tempday;
+
+	var $users_timeformat;
 
 	var $rowspan_arr = Array();
 	var $rowspan;
@@ -82,8 +87,20 @@ class calendar extends calendar_
 		$this->today = $this->localdates(time());
 
 		$this->open('',intval($this->owner));
+		$this->end_repeat_day = $this->today['raw'];
 		$this->read_repeated_events($this->owner);
 		$this->set_filter();
+		$this->tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+		
+		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+		{
+			$this->users_timeformat = 'h:i a';
+		}
+		else
+		{
+			$this->users_timeformat = 'H:i';
+		}
+
 	}
 
 // Generic functions that are derived from mcal functions.
@@ -177,6 +194,18 @@ class calendar extends calendar_
 				break;
 		}
 		return $status;
+	}
+
+	function display_status($user_status)
+	{
+		if(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True)
+		{
+			return ' ('.$users_status.')';
+		}
+		else
+		{
+			return '';
+		}
 	}
 
 	function get_weekday_start($year,$month,$day)
@@ -305,7 +334,8 @@ class calendar extends calendar_
 		$this->set_filter();
 		$owner = $owner == 0?$phpgw_info['user']['account_id']:$owner;
 		$sql = "AND (calendar_entry.cal_type='M') "
-			. 'AND (calendar_entry_user.cal_login='.$owner;
+			. 'AND (calendar_entry_user.cal_login='.$owner.' '
+			. 'AND ((calendar_entry_repeats.cal_end >= '.$this->end_repeat_day.') OR (calendar_entry_repeats.cal_end=0))';
 
 // Private
 		if(strpos($this->filter,'private'))
@@ -486,6 +516,8 @@ class calendar extends calendar_
 		$sql = "AND (calendar_entry.cal_type != 'M') "
 				. 'AND ((calendar_entry.cal_datetime >= '.$datetime.' AND calendar_entry.cal_datetime <= '.($datetime + 86399).') '
 				.   'OR (calendar_entry.cal_datetime <= '.$datetime.' AND calendar_entry.cal_edatetime >= '.($datetime + 86399).') '
+//				. 'AND ((calendar_entry.cal_datetime > '.$datetime.' AND calendar_entry.cal_datetime < '.($datetime + 86399).') '
+//				.   'OR (calendar_entry.cal_datetime < '.$datetime.' AND calendar_entry.cal_edatetime >= '.($datetime + 86399).') '
 				.   'OR (calendar_entry.cal_edatetime >= '.$datetime.' AND calendar_entry.cal_edatetime <= '.($datetime + 86399).')) '
 				. 'AND (calendar_entry_user.cal_login='.$owner;
 
@@ -699,13 +731,13 @@ class calendar extends calendar_
 		$retval = Array();
 		$ok = False;
 
-		$starttime -= ((60 * 60) * $phpgw_info['user']['preferences']['common']['tz_offset']);
-		$endtime -= ((60 * 60) * $phpgw_info['user']['preferences']['common']['tz_offset']);
+		$starttime -= $this->tz_offset;
+		$endtime -= $this->tz_offset;
 
 		if($starttime == $endtime)
 		{
-//			$endtime = mktime($phpgw->common->show_date($starttime,'H'),$phpgw->common->show_date($starttime,'i'),0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - ((60*60) * $phpgw_info['user']['preferences']['common']['tz_offset']) - 1;
-			$endtime = mktime(0,0,0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - ((60*60) * $phpgw_info['user']['preferences']['common']['tz_offset']) - 1;
+//			$endtime = mktime($phpgw->common->show_date($starttime,'H'),$phpgw->common->show_date($starttime,'i'),0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->tz_offset - 1;
+			$endtime = mktime(0,0,0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->tz_offset - 1;
 		}
 
 		$sql = 'AND ((('.$starttime.' <= calendar_entry.cal_datetime) AND ('.$endtime.' >= calendar_entry.cal_datetime) AND ('.$endtime.' <= calendar_entry.cal_edatetime)) '
@@ -865,6 +897,9 @@ class calendar extends calendar_
 				}
 
 				$new_event_link = '';
+				$day = $phpgw->common->show_date($date['raw'],'d');
+				$month = $phpgw->common->show_date($date['raw'],'m');
+				$year = $phpgw->common->show_date($date['raw'],'Y');
 				if (!$this->printer_friendly)
 				{
 					if((!!($grants[$owner] & PHPGW_ACL_ADD) == True))
@@ -873,11 +908,13 @@ class calendar extends calendar_
 						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="right">';
 						$new_event_link .= '</a>';
 					}
-					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$owner).'">'.$date['day'].'</a>';
+//					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$owner).'">'.$date['day'].'</a>';
+					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$month.'&day='.$day.'&year='.$year.'&owner='.$owner).'">'.$day.'</a>';
 				}
 				else
 				{
-					$day_number = $date['day'];
+//					$day_number = $date['day'];
+					$day_number = $day;
 				}
 
 				$var = Array(
@@ -890,7 +927,7 @@ class calendar extends calendar_
 				
 				$p->parse('column_data','month_day',True);
 
-				$rep_events = $this->get_sorted_by_date($date['raw'],$owner);
+				$rep_events = $this->get_sorted_by_date($date['raw'] - 7200,$owner);
 
 				if ($this->sorted_events_matching)
 				{
@@ -923,7 +960,7 @@ class calendar extends calendar_
 								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
 								'lang_view'			=>	lang('View this entry'),
 								'pic_image'			=>	$this->image_dir.'/'.$pict,
-								'description'		=>	$description.(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$lr_events->users_status.')':'')
+								'description'		=>	$description.$this->display_status($lr_events->users_status)
 							);
 							$p->set_var($var);
 							$p->parse('link_entry','link_pict');
@@ -935,33 +972,24 @@ class calendar extends calendar_
 
 						if (intval($phpgw->common->show_date($lr_events->datetime,'Hi')))
 						{
-							if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-							{
-								$format = 'h:i a';
-							}
-							else
-							{
-								$format = 'H:i';
-							}
-							
 							if($lr_events->datetime < $date['raw'] && $lr_events->recur_type==RECUR_NONE)
 							{
 								$temp_time = $this->makegmttime(0,0,0,$date['month'],$date['day'],$date['year']);
-								$start_time = $phpgw->common->show_date($temp_time['raw'],$format);
+								$start_time = $phpgw->common->show_date($temp_time['raw'],$this->users_timeformat);
 							}
 							else
 							{
-								$start_time = $phpgw->common->show_date($lr_events->datetime,$format);
+								$start_time = $phpgw->common->show_date($lr_events->datetime,$this->users_timeformat);
 							}
                 
 							if($lr_events->edatetime > ($date['raw'] + 86400))
 							{
 								$temp_time = $this->makegmttime(23,59,59,$date['month'],$date['day'],$date['year']);
-								$end_time = $phpgw->common->show_date($temp_time['raw'],$format);
+								$end_time = ' - '.$phpgw->common->show_date($temp_time['raw'],$this->users_timeformat);
 							}
 							else
 							{
-								$end_time = $phpgw->common->show_date($lr_events->edatetime,$format);
+								$end_time = ' - '.$phpgw->common->show_date($lr_events->edatetime,$this->users_timeformat);
 							}
 							
 						}
@@ -983,7 +1011,7 @@ class calendar extends calendar_
 							'start_time'		=>	$start_time,
 							'end_time'			=>	$end_time,
 							'close_view_link'	=> $close_link,
-							'name'				=>	$this->is_private($lr_events,$owner,'name').(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$lr_events->users_status.')':'')
+							'name'				=>	$this->is_private($lr_events,$owner,'name').$this->display_status($lr_events->users_status)
 						);
 						$p->set_var($var);
 						$p->parse('events','week_day_event',True);
@@ -1032,6 +1060,8 @@ class calendar extends calendar_
 		
 		$start = $this->get_weekday_start($year, $month, $day);
 
+		$this->end_repeat_day = $start + 604800;
+
 		$cellcolor = $phpgw_info['theme']['row_off'];
 
 		$true_printer_friendly = $this->printer_friendly;
@@ -1072,6 +1102,11 @@ class calendar extends calendar_
 		{
 			$owner = 0;
 		}
+
+		$monthstart = intval(date('Ymd',mktime(0,0,0,$month    ,1,$year)));
+		$monthend   = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
+
+		$this->end_repeat_day = $monthend;
 		
 		$this->read_repeated_events($owner);
 
@@ -1088,9 +1123,6 @@ class calendar extends calendar_
 		$p->set_var('month_filler_text',$this->large_month_header($month,$year,False));
 		$p->parse('row','month_filler',True);
 
-		$monthstart = intval(date('Ymd',mktime(0,0,0,$month    ,1,$year)));
-		$monthend   = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
-
 		$cellcolor = $phpgw_info['theme']['row_on'];
 
 		for ($i=$this->weekstarttime;intval(date('Ymd',$i))<=$monthend;$i += (24 * 3600 * 7))
@@ -1102,18 +1134,9 @@ class calendar extends calendar_
 		return $p->finish($p->parse('out','month'));
 	}
 
-	function html_for_event_day_at_a_glance ($event,$first_hour,$last_hour,&$time)
+	function html_for_event_day_at_a_glance ($event,$first_hour,$last_hour,&$time,$month,$day,$year)
 	{
 		global $phpgw, $phpgw_info;
-
-		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-		{
-			$format = 'h:i a';
-		}
-		else
-		{
-			$format = 'H:i';
-		}
 
 		$ind = intval($phpgw->common->show_date($event->datetime,'H'));
 
@@ -1137,12 +1160,30 @@ class calendar extends calendar_
 								. lang('View this entry')."'; return true;\">";
 		}
 
-		$time[$ind] .= '[' . $phpgw->common->show_date($event->datetime,$format);
-		if ($event->datetime <> $event->edatetime)
+		$today = mktime(0,0,0,$month,$day,$year) - $this->tz_offset;
+		$starttime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->tz_offset;
+		$endtime = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->tz_offset;
+		$nextday = mktime(0,0,0,$month,$day + 1,$year) - $this->tz_offset;
+
+		if($endtime <> $nextday)
 		{
-			$time[$ind] .= ' - ' . $phpgw->common->show_date($event->edatetime,$format);
-			$end_t_h = intval($phpgw->common->show_date($event->edatetime,'H'));
-			$end_t_m = intval($phpgw->common->show_date($event->edatetime,'i'));
+			if(($endtime <= $nextday) || ($starttime > $today && $endtime >= $nextday))
+			{
+				$time[$ind] .= '[' . $phpgw->common->show_date($starttime,$this->users_timeformat);
+			}
+			elseif($starttime <= $today && $endtime >= $nextday)
+			{
+				$time[$ind] .= '['.lang('All Day');
+			}
+		}
+		if ($starttime <> $endtime)
+		{
+			if($endtime <= $nextday)
+			{
+				$time[$ind] .= ' - ' . $phpgw->common->show_date($endtime,$this->users_timeformat);
+			}
+			$end_t_h = intval($phpgw->common->show_date($endtime,'H'));
+			$end_t_m = intval($phpgw->common->show_date($endtime,'i'));
 			$this->rowspan = $end_t_h - $ind;
 			
 			if ($end_t_m > 0)
@@ -1165,7 +1206,10 @@ class calendar extends calendar_
 			}
 		}
 
-		$time[$ind] .= '] ';
+		if(($endtime <= $nextday) || ($starttime > $today && $endtime >= $nextday) || ($starttime <= $today && $endtime >= $nextday))
+		{
+			$time[$ind] .= '] ';
+		}
 		$time[$ind] .= '<img src="'.$this->image_dir.'/circle.gif" border="0" alt="' . $description . '">';
 
 		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private')) && $this->check_perms(PHPGW_ACL_EDIT))
@@ -1178,7 +1222,7 @@ class calendar extends calendar_
 			$time[$ind] .= '<font color="CC0000">';
 		}
 		
-		$time[$ind] .= $this->is_private($event,$this->owner,'title').(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$event->users_status.')':'');
+		$time[$ind] .= $this->is_private($event,$this->owner,'title').$this->display_status($event->users_status);
 
 		if ($event->priority == 3)
 		{
@@ -1192,6 +1236,7 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info;
 
+		$this->end_repeat_day = $date['raw'];
 		$this->read_repeated_events($this->owner);
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -1232,7 +1277,7 @@ class calendar extends calendar_
 			$event = CreateObject('calendar.calendar_item');
 			for($i=0;$i<count($events);$i++)
 			{
-				$this->html_for_event_day_at_a_glance($events[$i],$first_hour,$last_hour,$time);
+				$this->html_for_event_day_at_a_glance($events[$i],$first_hour,$last_hour,$time,$date['month'],$date['day'],$date['year']);
 			}
 		}
 
@@ -1403,8 +1448,6 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info;
 
-		$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-
 		$pri = Array(
   			1	=> lang('Low'),
   			2	=> lang('Normal'),
@@ -1450,7 +1493,7 @@ class calendar extends calendar_
 			$p->parse('output','list',True);
 		}
 
-		$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
+		$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->tz_offset;
 		$var = Array(
 			'field'	=>	lang('Start Date/Time'),
 			'data'	=>	$phpgw->common->show_date($start)
@@ -1458,7 +1501,7 @@ class calendar extends calendar_
 		$p->set_var($var);
 		$p->parse('output','list',True);
 	
-		$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
+		$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->tz_offset;
 		$var = Array(
 			'field'	=>	lang('End Date/Time'),
 			'data'	=>	$phpgw->common->show_date($end)
@@ -1659,15 +1702,6 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info;
 
-		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-		{
-			$time_format .= 'h:i:s a';
-		}
-		else
-		{
-			$time_format .= 'H:i:s';
-		}
-
 		if(!isset($phpgw_info['user']['preferences']['calendar']['interval']) ||
 			!$phpgw_info['user']['preferences']['calendar']['interval'])
 		{
@@ -1718,6 +1752,7 @@ class calendar extends calendar_
 		{
 			$endtime = $starttime;
 		}
+		$this->end_repeat_day = $date['raw'];
 		for($i=0;$i<count($participants);$i++)
 		{
 			$this->read_repeated_events($participants[$i]);
@@ -1801,12 +1836,8 @@ class calendar extends calendar_
 								$index = ($hour + (($m * $increment) * 100));
 								$time_slice[$index]['marker'] = '-';
 								$time_slice[$index]['color'] = $phpgw_info['theme']['bg01'];
-								$time_display = $phpgw->common->show_date($eventstart['raw'],$time_format).'-'.$phpgw->common->show_date($eventend['raw'],$time_format);
-								$time_slice[$index]['description'] = '('.$time_display.') '.$this->is_private($event,$participants[$i],'title');
-								if(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True)
-								{
-									$time_slice[$index]['description'] .= ' ('.$event->users_status.')';
-								}
+								$time_display = $phpgw->common->show_date($eventstart['raw'],$$this->users_timeformat).'-'.$phpgw->common->show_date($eventend['raw'],$this->user_timeformat);
+								$time_slice[$index]['description'] = '('.$time_display.') '.$this->is_private($event,$participants[$i],'title').$this->display_status($event->users_status);
 							}
 						}
 					}
