@@ -928,7 +928,7 @@
 				{
 					if ($contactscat)
 					{
-						$catinfo = $this->cat->return_single($contactscat);
+						$catinfo = $this->cat->return_single(intval($contactscat));
 						$catname .= $catinfo[0]['name'] . '; ';
 					}
 				}
@@ -940,7 +940,7 @@
 			else
 			{
 				$fields[0]['cat_id'] = ereg_replace(',','',$fields[0]['cat_id']);
-				$catinfo = $this->cat->return_single($fields[0]['cat_id']);
+				$catinfo = $this->cat->return_single(intval($fields[0]['cat_id']));
 				$catname = $catinfo[0]['name'];
 				if (!$this->cat_id)
 				{
