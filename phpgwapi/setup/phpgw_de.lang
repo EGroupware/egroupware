@@ -382,8 +382,8 @@ last name of the user, eg. "%1"	common	de	Familienname des Benutzers, zB. "%1"
 last page	common	de	Letzte Seite
 lastname	common	de	Name
 latvia	common	de	LATVIA
-ldap-mgr	common	de	LDAP-Manager
 layout	htmlarea-TableOperations	de	Layout
+ldap-mgr	common	de	LDAP-Manager
 lebanon	common	de	LIBANON
 left	htmlarea-TableOperations	de	Links
 lesotho	common	de	LESOTHO
@@ -600,7 +600,8 @@ saudi arabia	common	de	SAUDI ARABIEN
 save	common	de	Speichern
 search	common	de	Suchen
 search %1 '%2'	common	de	Suche %1 '%2'
-search or select accounts	common	de	Auswählen oder Suchen von Benutzern
+search or select accounts	common	de	Suchen und auswählen von Benutzern
+search or select multiple accounts	common	de	Suchen und auswählen von mehreren Benutzern
 section	common	de	Sektion
 select	common	de	Auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
@@ -608,6 +609,7 @@ select category	common	de	Kategorie auswählen
 select date	common	de	Datum auswählen
 select group	common	de	Gruppe auswählen
 select home email address	common	de	private Email-Adresse auswählen
+select multiple accounts	common	de	mehrere Benutzer auswählen
 select one	common	de	Einen auswählen
 select user	common	de	Benutzer auswählen
 select work email address	common	de	geschäftl. Email-Addresse auswählen

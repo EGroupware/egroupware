@@ -127,7 +127,7 @@ char	htmlarea-TableOperations	en	Char
 charset	common	en	iso-8859-1
 chec_k link...	htmlarea-ContextMenu	en	Chec_k Link...
 check installation	common	en	Check installation
-Check Now	common	en	Check Now
+check now	common	en	Check Now
 chile	common	en	CHILE
 china	common	en	CHINA
 choose list style type (for ordered lists)	htmlarea-ListType	en	Choose list style type (for ordered lists)
@@ -378,8 +378,8 @@ last name of the user, eg. "%1"	common	en	last name of the user, eg. "%1"
 last page	common	en	Last page
 lastname	common	en	Lastname
 latvia	common	en	LATVIA
-ldap-mgr	common	en	LDAP-Manager
 layout	htmlarea-TableOperations	en	Layout
+ldap-mgr	common	en	LDAP-Manager
 lebanon	common	en	LEBANON
 left	htmlarea-TableOperations	en	Left
 lesotho	common	en	LESOTHO
@@ -595,6 +595,7 @@ save	common	en	Save
 search	common	en	Search
 search %1 '%2'	common	en	Search %1 '%2'
 search or select accounts	common	en	Search or select accounts
+search or select multiple accounts	common	en	search or select multiple accounts
 section	common	en	Section
 select	common	en	Select
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
@@ -602,6 +603,7 @@ select category	common	en	Select Category
 select date	common	en	Select date
 select group	common	en	Select group
 select home email address	common	en	Select home email address
+select multiple accounts	common	en	select multiple accounts
 select one	common	en	Select one
 select user	common	en	Select user
 select work email address	common	en	Select work email address
