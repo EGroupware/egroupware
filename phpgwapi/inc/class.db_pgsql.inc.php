@@ -21,6 +21,7 @@ class db {
   var $User     = "";
   var $Password = "";
 
+  var $use_pconnect      = False;
   var $auto_stripslashes = False;
   
   var $Halt_On_Error = "yes"; ## "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)    
@@ -54,7 +55,10 @@ class db {
 		  $this->ifadd($this->Port, "port=").
 		  $this->ifadd($this->User, "user=").
 		  $this->ifadd($this->Password, "password=");
-		  $this->Link_ID=pg_pconnect($cstr);
+		  if ($this->use_pconnect)
+		    $this->Link_ID=pg_pconnect($cstr);
+		  else
+		    $this->Link_ID=pg_connect($cstr);
 		  if (!$this->Link_ID) {
 			  $this->halt("Link-ID == false, pconnect failed");
 		  }
