@@ -212,8 +212,13 @@
 			. "$filter&query=$query&sort=$sort"));
 		$t->set_var(row_vcard_link,$phpgw->link("/addressbook/vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
 			. "$filter&query=$query&sort=$sort"));
-		$t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"/addressbook/edit.php",lang("edit"),"ab_id="
-			.$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort));
+		if ($rights & PHPGW_ACL_EDIT) {
+			$t->set_var(row_edit_link,$phpgw->link("/addressbook/edit.php","ab_id=$myid&start=$start&sort=$sort&order=$order"
+				. "&query=$query&sort=$sort"));
+		} else {
+			$t->set_var(row_edit_link,'');
+		}
+		
 		$t->set_var(row_owner,$phpgw->accounts->id2name($myowner));
 		
 		$t->parse("rows","row",True);
