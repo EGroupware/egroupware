@@ -16,7 +16,9 @@
 		'noheader'              => True,
 		'nonavbar'              => True,
 		'currentapp'            => 'addressbook',
-		'enable_contacts_class' => True
+		'enable_contacts_class' => True,
+		'enable_config_class'   => True,
+		'enable_country_class'  => True
 	);
 
 	include('../header.inc.php');
@@ -69,7 +71,7 @@
 
 		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 		$fields = addressbook_read_entry($ab_id,$qfields);
-		addressbook_form('edit','edit.php','Edit',$fields[0],$customfields);
+		addressbook_form('edit','edit.php',lang('Edit'),$fields[0],$customfields);
 
 		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_file(array("edit" => "edit.tpl"));
