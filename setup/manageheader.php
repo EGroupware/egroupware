@@ -363,8 +363,8 @@
 			else
 			{
 				$detected .= lang('Sample configuration not found. using built in defaults') . '<br>' . "\n";
-				$GLOBALS['phpgw_info']['server']['server_root'] = '/path/to/phpgroupware';
-				$GLOBALS['phpgw_info']['server']['include_root'] = '/path/to/phpgroupware';
+				$GLOBALS['phpgw_info']['server']['server_root'] = '/path/to/egroupware';
+				$GLOBALS['phpgw_info']['server']['include_root'] = '/path/to/egroupware';
 				/* This is the basic include needed on each page for phpGroupWare application compliance */
 				$GLOBALS['phpgw_info']['flags']['htmlcompliant'] = True;
 
@@ -373,8 +373,8 @@
 				$setup_tpl->set_var('lang_delete',lang('Delete'));
 				$setup_tpl->set_var('db_domain','default');
 				$setup_tpl->set_var('db_host','localhost');
-				$setup_tpl->set_var('db_name','phpgroupware');
-				$setup_tpl->set_var('db_user','phpgroupware');
+				$setup_tpl->set_var('db_name','egroupware');
+				$setup_tpl->set_var('db_user','egroupware');
 				$setup_tpl->set_var('db_pass','your_password');
 				$setup_tpl->set_var('db_type','mysql');
 				$setup_tpl->set_var('config_pass','changeme');
