@@ -167,7 +167,7 @@
 
 			$this->db2 = $this->db;
  
-			$this->db->query("select id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'");
+			$this->db->query("select id,lid,tid,owner,access $t_fields from $this->std_table WHERE id='$id'");
 			$this->db->next_record();
        
 			$return_fields[0]["id"]        = $this->db->f("id"); // unique id
@@ -229,7 +229,7 @@
 
 			$id = $this->db->f(0);
 
-			$this->db->query("SELECT id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
+			$this->db->query("SELECT id,lid,tid,owner,access $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]["id"]		= $this->db->f("id");
@@ -402,11 +402,11 @@
 					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod . " "
 					. $limit,__LINE__,__FILE__);
 			}  else  {
-				$this->db3->query("SELECT id,lid,tid,owner $t_fields FROM $this->std_table " . $fwhere
+				$this->db3->query("SELECT id,lid,tid,owner,access $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod,__LINE__,__FILE__);
 				$this->total_records = $this->db3->num_rows();
 
-				$this->db->query("SELECT id,lid,tid,owner $t_fields FROM $this->std_table " . $fwhere
+				$this->db->query("SELECT id,lid,tid,owner,access $t_fields FROM $this->std_table " . $fwhere
 				. $filtermethod . " " . $ordermethod . " " . $limit,__LINE__,__FILE__);
 			}
 
