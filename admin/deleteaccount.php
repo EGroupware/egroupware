@@ -18,10 +18,7 @@
   }
 
   $phpgw_info["flags"]["currentapp"] = "admin";
-  $phpgw_info["flags"]["enable_calendar_class"] = True;
   include("../header.inc.php");
-  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
-
   $phpgw->template->set_file(array("body" => "delete_common.tpl"));
 
   // I didn't active this code until all tables are up to date using the owner field
@@ -70,10 +67,39 @@
      $phpgw->common->phpgw_footer();
   }
 
-  if ($confirm) {
-     $cd = account_delete($account_id);
+	if ($confirm) {
+		$accountid = get_account_id($account_id);
+		$lid = $phpgw->accounts->id2name($accountid);
+		$table_locks = array('phpgw_preferences','todo','phpgw_addressbook','phpgw_accounts');
 
-     Header("Location: " . $phpgw->link("/admin/accounts.php","cd=$cd"));
-  }
-  account_close();
+		$cal = CreateObject('calendar.calendar');
+		$cal_stream = $cal->open('INBOX',$accountid,'');
+
+		$cal->delete_calendar($cal_stream,$accountid);
+
+		$phpgw->db->lock($table_locks);
+// This really needs to fall back on the app authors job to write the delete routines for their apps.
+// I need to get with Milosch and have him write a small hook for deleting ALL records for an owner.
+		$phpgw->db->query('delete from todo where todo_owner='.$accountid);
+		$phpgw->db->query('delete from phpgw_addressbook where owner='.$accountid);
+		$phpgw->db->query('delete from phpgw_preferences where preference_owner='.$accountid);
+
+		$phpgw->accounts->delete($accountid);
+		$phpgw->db->unlock();
+
+		$sep = $phpgw->common->filesystem_separator();
+
+		$basedir = $phpgw_info['server']['files_dir'] . $sep . 'users' . $sep;
+
+		if (! @rmdir($basedir . $lid))
+		{
+			$cd = 34;
+		}
+		else
+		{
+			$cd = 29;
+		}
+
+		Header("Location: " . $phpgw->link("/admin/accounts.php","cd=$cd"));
+	}
 ?>
