@@ -73,7 +73,7 @@ disabled	calendar	el	απενεργοποιήθηκε
 display interval in day view	calendar	el	Εμφάνηση κενών στην Ημερήσια Εμφάνηση
 display mini calendars when printing	calendar	el	Εμφάνηση μίνι ημερολογίων όταν εκτυπώνωνται
 display status of events	calendar	el	Εμφάνηση Κατάστασης των Γεγονότων
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	el	Εμφανίζει την προκαθορισμένη εμφάνηση του ημερολογίου στην αρχική σελίδα(η σελίδα που παίρνετε όταν μπαίνετε στο eGroupWare ή κάνετε click στην αρχική σελίδα
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	el	Εμφανίζει την προκαθορισμένη εμφάνηση του ημερολογίου στην αρχική σελίδα(η σελίδα που παίρνετε όταν μπαίνετε στο eGroupWare ή κάνετε click στην αρχική σελίδα
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	el	
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	el	
 do you wish to autoload calendar holidays files dynamically?	admin	el	Θέλετε να φορτωθούν τα αρχεία αδειών του ημερολογίου δυναμικά?

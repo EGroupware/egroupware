@@ -79,7 +79,7 @@ display interval in day view	calendar	zh	显示每日安排的间隔
 display mini calendars when printing	calendar	zh	打印时显示简明日程表
 display status of events	calendar	zh	显示事项状态
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zh	是否在首页(即登录后的页面, 可点击“首页”按钮跳转至该页)显示日程表?
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入phpGroupWare第一個看到或是按下您的首頁按鈕的頁面)
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入eGroupWare第一個看到或是按下您的首頁按鈕的頁面)
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zh	新建或更改事项时是否需要通知您? 您只能收到自己所作更改的通知. <br>每个事项上都列出了所有相关的通知, 您可以指定发生哪些更改时发出通知. 更改包括对标题、说明和参与者的变动, 但参与者的回应不在此列. 若启用更改通知, 事项的安排者将收到参与者对更改的回应：接受或拒绝. 
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh	您希望定期收到有关事项统计的EMail吗?<br>每日统计将在每天早上发送至您的EMail信箱, 周一则发送每周统计. <br>该选项仅在当天或者该周有事项时生效. 
 do you wish to autoload calendar holidays files dynamically?	admin	zh	是否自动加载节日文件?

@@ -284,7 +284,7 @@ start- and enddates	calendar	de	Start- und Enddatum/-zeit
 startdate	calendar	de	Startdatum
 startrecord	calendar	de	Startdatensatz
 su	calendar	de	So
-submit to repository	calendar	de	Übertragen zu phpGroupWare.org
+submit to repository	calendar	de	Übertragen zu eGroupWare.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
