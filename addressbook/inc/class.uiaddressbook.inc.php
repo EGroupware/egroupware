@@ -315,7 +315,7 @@
 				$namedfields[$y['name']] = $y['title'];
 			}
 
-			if(!isset($this->cat_id))
+			if(!$this->cat_id)
 			{
 				$this->cat_id = $this->prefs['default_category'];
 			} 
