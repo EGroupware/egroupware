@@ -731,7 +731,7 @@
 
 		$later = $GLOBALS['phpgw']->session->destroy($sessionid,$kp3);
 
-		if($later)
+		if ($later)
 		{
 			$rtrn['GOODBYE'] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
 		}
