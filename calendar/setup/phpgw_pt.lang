@@ -1,0 +1,132 @@
+calendar holiday management	admin	pt	Manutenção de feriados do Calendário
+calendar settings	admin	pt	Configurações do Calendário
+do you wish to autoload calendar holidays files dynamically?	admin	pt	Deseja carregar automaticamente arquivos de feriados do Calendário dinâmicamente ?
+location to autoload from	admin	pt	Local de onde carregar automaticamente
+(for weekly)	calendar	pt	(por semana)
+(i/v)cal	calendar	pt	(i/v)Cal
+1 match found	calendar	pt	1 ocorrência encontrada
+Display interval in Day View	calendar	pt	Exibir intervalo no modo de exibição Diária
+a	calendar	pt	um
+accept	calendar	pt	Aceitar
+accepted	calendar	pt	Aceito
+add alarm	calendar	pt	Adicionar aviso
+added	calendar	pt	Adicionado
+alarm management	calendar	pt	Gerenciador de avisos
+all day	calendar	pt	Todos os dias
+are you sure you want to delete this holiday ?	calendar	pt	Você tem certeza que deseja remover este feriado ?
+are you sure\nyou want to\ndelete this entry ?	calendar	pt	Tem certeza que deseja remover esta entrada ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	pt	Tem certeza que deseja remover esta entrada ?\n\nIsto irá remover esta entrada para todos usuários.
+brief description	calendar	pt	Descrição breve
+calendar - [iv]cal importer	calendar	pt	Calendário - [iv]Cal Importador
+calendar - add	calendar	pt	Calendário - Adicionar
+calendar - edit	calendar	pt	Calendário - Editar
+calendar event	calendar	pt	Evento do Calendário
+daily	calendar	pt	Diária
+daily matrix view	calendar	pt	Visualizar tabela diária
+days repeated	calendar	pt	Dias Repetidos
+default calendar filter	calendar	pt	Filtro padrão do calendário
+default calendar view	calendar	pt	Visualização padrão do calendário
+deleted	calendar	pt	Removido
+display mini calendars when printing	calendar	pt	Exibir mini calendários para impressão
+display status of events	calendar	pt	Exibir status dos eventos
+duration	calendar	pt	Duração
+edit series	calendar	pt	Editar séries
+edit single	calendar	pt	Editar única
+end date/time	calendar	pt	Data/Hora do término
+ends	calendar	pt	termina
+export	calendar	pt	Exportar
+fr	calendar	pt	F
+free/busy	calendar	pt	Livre/Ocupado
+frequency	calendar	pt	Frequência
+fri	calendar	pt	Sex
+full description	calendar	pt	Descrição  Completa
+generate printer-friendly version	calendar	pt	Gerar versão para impressão ?
+global public and group public	calendar	pt	Público globalmente e ao grupo
+global public only	calendar	pt	Público globalmente somente
+go!	calendar	pt	Prossiga!
+group public only	calendar	pt	Público ao grupo somente
+has been canceled	calendar	pt	Foi cancelado
+has been rescheduled to	calendar	pt	foi remarcado para
+i participate	calendar	pt	Eu participo
+ignore conflict	calendar	pt	Ignorar conflito
+import	calendar	pt	Importar
+interval	calendar	pt	Intervalo
+load [iv]cal	calendar	pt	Carregar chamada
+location	calendar	pt	Localização
+minutes	calendar	pt	minutos
+mo	calendar	pt	M
+modified	calendar	pt	Modificado
+mon	calendar	pt	Seg
+month	calendar	pt	Mês
+monthly	calendar	pt	Mensalmente
+monthly (by date)	calendar	pt	mensalmente (pela data)
+monthly (by day)	calendar	pt	mensalmente (por dia)
+new entry	calendar	pt	Nova Entrada
+no matches found.	calendar	pt	Nenhuma ocorrência encontrada.
+no repsonse	calendar	pt	Não Responde
+no response	calendar	pt	Não Responde
+participant	calendar	pt	Participante
+participants	calendar	pt	Participantes
+participates	calendar	pt	Participa
+printer friendly	calendar	pt	Versão para impressão
+private and global public	calendar	pt	Privado e público globalmente
+private and group public	calendar	pt	Privado e público ao grupo
+private only	calendar	pt	Privado somente
+re-edit event	calendar	pt	Re-Editar Evento
+refresh	calendar	pt	Atualizar
+reject	calendar	pt	Rejeitar
+rejected	calendar	pt	Rejeitado
+repeat day	calendar	pt	Repetição diária
+repeat end date	calendar	pt	Data final da repetição
+repeat type	calendar	pt	Tipo de repetição
+repeating event information	calendar	pt	Repetindo informação do evento
+repetition	calendar	pt	Repetição
+sa	calendar	pt	Sa
+sat	calendar	pt	Sab
+scheduling conflict	calendar	pt	Conflito de agendamento
+search results	calendar	pt	Resultados da pesquisa
+send/Receive updates via email	calendar	pt	Enviar/Receber atualizações através de Email
+show day view on main screen	calendar	pt	Exibir o dia na tela principal
+show high priority events on main screen	calendar	pt	Exibir eventos de alta prioridade na minha tela
+sorry, the owner has just deleted this event	calendar	pt	Desculpe, o dono do evento deve tê-lo apagado
+start date/time	calendar	pt	Início Data/hora
+su	calendar	pt	Do
+sun	calendar	pt	Dom
+tentative	calendar	pt	Tentativa
+th	calendar	pt	Qu
+the following conflicts with the suggested time:<ul>x</ul>	calendar	pt	os seguintes conflitos com o horário sugerido:<ul>%1</ul>
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	pt	Houve um erro tentanto conectar no servidor de notícias.<br>Por favor entre em contato com o administrador para verificar a configuração.
+this month	calendar	pt	Este mês
+this week	calendar	pt	Esta Semana
+this year	calendar	pt	Este ano
+thu	calendar	pt	Qui
+today	calendar	pt	Hoje
+tu	calendar	pt	Te
+tue	calendar	pt	Ter
+use end date	calendar	pt	Usar data de término
+view this entry	calendar	pt	Visualizar esta entrada
+we	calendar	pt	Qu
+wed	calendar	pt	Qua
+week	calendar	pt	Semana
+weekday starts on	calendar	pt	Semana começa em
+weekly	calendar	pt	semanal
+when creating new events default set to private	calendar	pt	Quando criar novos eventos definir por padrão como privados
+work day ends on	calendar	pt	Dias de trabalho terminam em
+work day starts on	calendar	pt	Dias de trabalho começam em 
+x matches found	calendar	pt	%1 ocorrências encontradas
+year	calendar	pt	Ano
+yearly	calendar	pt	Anual
+you have a meeting scheduled for	calendar	pt	Você tem um compromisso marcado para
+you have not entered a title	calendar	pt	Você não colocou o título
+you have not entered a valid date	calendar	pt	Você informou  uma data inválida
+you have not entered a valid time of day	calendar	pt	você informou uma hora do dia inválida 
+you have not entered participants	calendar	pt	Você não informou os participantes
+you must enter one or more search keywords	calendar	pt	voce deve digitar uma ou mais palavras chave
+your meeting scheduled for	calendar	pt	Seu compromisso está marcado para
+your meeting that was scheduled for	calendar	pt	Seu compromisso que foi marcado para
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	pt	Horiário sugerido: <B> %1 - %2 </B> está em conflito com as seguintes entradas no calendário:
+calendar	common	pt	Calendário
+grant calendar access	common	pt	Permitir acesso ao Calendário
+send updates via email	common	pt	Enviar atualizações por email
+you have 1 high priority event on your calendar today.	common	pt	Você tem 1 evento com alta prioridade no seu calendário hoje.
+you have x high priority events on your calendar today.	common	pt	Você tem %1 eventos com alta prioridade no seu calendário hoje.

@@ -1,0 +1,235 @@
+(account deletion in SQL Only)	setup	pt	(remoção de conta no banco de dados SQL somente)
+<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	pt	<br><center>A importação foi completada!  Clique <a href="index.php">aqui</a> para retornar para configuração </center>
+Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	pt	Adicionar usuários criados automaticamente para este grupo ('Default' será tentado se este campo estiver vazio.)
+Admins	setup	pt	Administradores
+All Users	setup	pt	Todos usuários
+Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	pt	Tentar usar o mimetype correto para FTP ao invés do padrão 'application/octet-stream'
+Authentication / Accounts	setup	pt	Autenticação / Contas
+Auto create account records for authenticated users	setup	pt	Criar contas de usuários automaticamente para usuários autenticados
+Country Selection	setup	pt	Seleção de Países
+Default file system space per user/group ?	setup	pt	Cota padrão por usuário/grupo ?
+Deny all users access to grant other users access to their entries ?	setup	pt	Não permitir que usuários concedam acesso a seus registros a outros usuários ?
+Enter some random text for app_session <br>encryption (requires mcrypt)	setup	pt	Digite algum texto aleatório para a encriptação de sessão (requer mcrypt)
+Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	pt	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
+Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	pt	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
+Enter the hostname of the machine on which this server is running	setup	pt	Digite o nome da máquina em que este sistema está sendo executado
+Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	pt	Digite a URL do phpGroupWare.<br>Exemplo: http://www.domain.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Sem a barra final</b>
+Enter the site password for peer servers	setup	pt	Digite a senha do servidor para comunicação com servidores remotos
+Enter the site username for peer servers	setup	pt	Digite o usuário do servidor para comunicação com servidores remotos
+Enter the title for your site	setup	pt	Digite o título para o seu site
+Enter your HTTP proxy server	setup	pt	Digite o endereço do servidor proxy HTTP
+Enter your HTTP proxy server port	setup	pt	Digite a porta do servidor proxy HTTP
+Enter your default FTP server	setup	pt	Digite seu servidor FTP padrão
+Host information	setup	pt	Informações do servidor
+If no ACL records for user or any group the user is a member of	setup	pt	Se não houver registro de permissões ou grupo para o usuário ele é membro do
+If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	pt	Se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login ?
+LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	pt	Prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
+LDAP Default shell (e.g. /bin/bash)	setup	pt	Shell padrão LDAP (Exemplo: /bin/bash)
+LDAP accounts context	setup	pt	Contexto de contas LDAP
+LDAP encryption type	setup	pt	Tipo de encriptação LDAP
+LDAP groups context	setup	pt	Contexto de grupos LDAP
+LDAP host	setup	pt	Servidor LDAP
+LDAP root password	setup	pt	Senha do super usuário LDAP
+LDAP rootdn	setup	pt	Super usuário LDAP
+Maximum account id (e.g. 65535 or 1000000)	setup	pt	Id máximo para contas (Exemplo: 65535 ou 1000000)
+Minimum account id (e.g. 500 or 100, etc.)	setup	pt	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
+Path information	setup	pt	Informação de Path
+Preferences	setup	pt	Preferências
+Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	pt	Selecione uma aplicação, escolha a versão de destino e clique em Enviar para processar esta versão.<br>Se você não definir uma versão somente as tabelas base serão instaladas para a aplicação.<br><blink>Isto irá limpar todas aplicações da tabela primeiro!</blink>
+Select where you want to store/retrieve filesystem information	setup	pt	Selecione onde você deseja guardar as informações de sitema de arquivos
+Select where you want to store/retrieve user accounts	setup	pt	Selecione onde você deseja guardar as contas de usuários
+Selectbox	setup	pt	Caixa de seleção
+Show 'powered by' logo on	setup	pt	Exibir logomarca do phpGroupWare
+Text Entry	setup	pt	Entrada de texto
+Use cookies to pass sessionid	setup	pt	Usar cookies para transmitir id de sessão
+Use pure HTML compliant code (not fully working yet)	setup	pt	Usar puro código HTML (não funciona totalmente ainda)
+Users Choice	setup	pt	À escolha dos usuários
+Would you like phpGroupWare to cache the phpgw info array ?	setup	pt	Deseja que o phpGroupWare faça cache do vetor de informações phpgw ?
+Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	pt	Deseja que o phpGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
+Would you like to show each application's upgrade status ?	setup	pt	Deseja exibir se cada aplicação está atualizada ?
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pt	Aparentemente você está usando uma versão pré-beta do phpGroupWare.<br>Estas versões não são mais suportadas, e não há como usar a Configuração para atualizar.<br> Você deve primeiro atualizar para a versão 0.9.10 (a última versão que suporta atualização de pré-betas) <br>e então atualizar a partir desta versão para a versão atual.
+actions	setup	pt	Ações
+admin first name	setup	pt	Primeiro nome do Administrador
+admin last name	setup	pt	Último nome do Administrador
+admin password	setup	pt	Senha do Administrador
+admin username	setup	pt	Código de usuário do Administrador
+all applications	setup	pt	todas aplicações
+app details	setup	pt	Detlhes da aplicação
+app install/remove/upgrade	setup	pt	Aplicações instalação/remoção/atualização
+application data	setup	pt	Dados de aplicação
+application management	setup	pt	Manutenção de aplicações
+application name and status	setup	pt	Nome da aplicação e status
+application name and status information	setup	pt	Nome da aplicação e informações de status
+application title	setup	pt	Título da aplicação
+are you sure?	setup	pt	TEM CERTEZA ?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	pt	A seu pedido, este script irá tentar criar a base de dados e definir as permissões de acesso ao usuário
+at your request, this script is going to attempt to install all the applications for you	setup	pt	A seu pedido, este script irá tentar instalar todas aplicações
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	pt	A seu pedido, este script irá tentar atualizar suas aplicações para versões atualizadas
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	pt	A seu pedido, este script irá tentar atualizar as tabelas do banco de dados para o novo formato
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	pt	A seu pedido, este script irá remover as tabelas do banco de dados e criá-las no novo formato
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	pt	A seu pedido, este script irá desinstalar  todas suas aplicações, removendo as tabelas do banco de dados e seus dados
+auto-created user accounts expire	setup	pt	Usuários criados automaticamente expirarão
+available version	setup	pt	Versão disponível
+backupwarn	setup	pt	é <u>altamente recomendável</u> fazer um backup das tabelas do banco de dados caso o script danifique seus dados. <br><strong>Estes scripts automáticos podem destruir seus dados facilmente</strong><br><em>Por favor faça um backup antes de continuar</em>
+because it depends upon	setup	pt	pois depende de
+because it is not a user application, or access is controlled via acl	setup	pt	pois não é uma aplicação de usuário ou o acesso é controlado através das regras de acesso
+because it requires manual table installation, <br>or the table definition was incorrect	setup	pt	pois requer instalação das tabelas do banco de dados manualmente, <br>ou a definição da tabela está incorreta
+because it was manually disabled	setup	pt	pois foi desabilitado manualmente
+because of a failed upgrade or install	setup	pt	devido a uma falha na atualização ou instalação
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	pt	devido a uma falha na atualização, ou a base de dados é mais nova que a versão instalada desta aplicação
+because the enable flag for this app is set to 0, or is undefined	setup	pt	pois o campo de habilitação (flag) desta aplicação está definido como 0, ou está indefinido
+bottom	setup	pt	Inferior
+cancel	setup	pt	Cancelar
+charset	setup	pt	ISO-8859-1
+check ip address of all sessions	setup	pt	verificar endereço IP de todas sessões
+click here	setup	pt	Clique aqui
+configuration	setup	pt	Configuração
+configuration completed	setup	pt	Configuração completada
+configure now	setup	pt	Configurar agora
+create	setup	pt	Criar
+create database	setup	pt	Criar base de dados
+create one now	setup	pt	Criar uma agora
+creating tables	setup	pt	Criando tabelas
+current version	setup	pt	Versão atual
+currently installed languages: x <br>	setup	pt	Idiomas instalados atualmente: %1 <br>
+db root password	setup	pt	Senha do super-usuário no banco de dados
+db root username	setup	pt	Código do super-usuário no banco de dados
+delete all my tables and data	setup	pt	Remover todas as minhas tabelas e dados
+delete all old languages and install new ones	setup	pt	Remover todos os idiomas antigos e instalar novos
+deleting tables	setup	pt	Removendo tabelas
+demo server setup	setup	pt	Configuração de demonstração do servidor
+deny access	setup	pt	Negar acesso
+deregistered	setup	pt	descadastrada
+details for admin account	setup	pt	Detalhes da conta do Administrador
+domain	setup	pt	Domínio
+dont touch my data	setup	pt	Não alterar meus dados
+edit current configuration	setup	pt	Editar configuração atual
+enter some random text for app session encryption	setup	pt	Digite algum texto aleatório para encriptação de sessão
+export phpgroupware accounts from sql to ldap	setup	pt	Exportar contas phpGroupWare do SQL para o LDAP
+export sql users to ldap	setup	pt	Exportar usuários do SQL para o LDAP
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	pt	Para uma nova instalação, selecione importar. Para converter contas existentes no SQL para o LDAP, selecione exportar
+force selectbox	setup	pt	Forçar caixa de seleção
+go back	setup	pt	Voltar
+go to	setup	pt	Ir para
+grant access	setup	pt	Liberar acesso
+has a version mismatch	setup	pt	têm um erro de versão
+hooks deregistered	setup	pt	definições descadastradas
+hooks registered	setup	pt	definições cadastradas
+however, the application is otherwise installed	setup	pt	No entanto, a aplicação está instalada
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	pt	Se a aplicação não têm tabelas definidas, selecionando atualizar deve resolver o problema
+if you did not receive any errors, your applications have been	setup	pt	Se não foi exibido nenhum erro, suas aplicações foram
+if you did not receive any errors, your tables have been	setup	pt	Se não foi exibido nenhum erro, as tabelas foram
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	pt	Importar contas LDAP para a tabela do phpGroupWare (para uma nova instalação usando contas no SQL)
+import ldap users/groups	setup	pt	Importar usuários/grupos LDAP
+insanity	setup	pt	Insanidade
+install	setup	pt	Instalar
+install Applications	setup	pt	Instalar aplicações
+install language	setup	pt	Instalar idioma
+installed	setup	pt	instalado
+is broken	setup	pt	está quebrado
+is disabled	setup	pt	está desabilitado
+ldap account import/export	setup	pt	Importação/exportação de contas LDAP
+ldap export users	setup	pt	Exportação de usuários LDAP
+ldap import users	setup	pt	Importação de usuários LDAP
+logout	setup	pt	Desconectar
+makesure	setup	pt	Verifique se sua base de dados está criada e as permissões de acesso estão definidas
+manage applications	setup	pt	Manutenção de aplicações
+manage languages	setup	pt	Manutenção de idiomas
+mcrypt algorithm (default tripledes)	setup	pt	Algoritmo Mcrypt (padrão TRIPLEDES)
+mcrypt mode (default cbc)	setup	pt	Modo Mcrypt (padrão CBC)
+mcrypt settings (requires mcrypt php extension)	setup	pt	Configurações para Mcrypt (requer extensão mcrypt do PHP)
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	pt	Modificar uma base de dados LDAP existente para usar com phpGroupWare (para uma nova instalação usando contas LDAP)
+multi-language support setup	setup	pt	Configuração de suporte a idiomas
+mysqlinstr	setup	pt	Instruções para criar a base de dados no MySQL:<br>Conecte no mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Crie a base de dados vazia e defina as permissões de acesso -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+never	setup	pt	nunca
+no	setup	pt	Não
+no algorithms available	setup	pt	Nenhum algoritmo disponível
+no modes available	setup	pt	nenhum modo disponível
+not complete	setup	pt	incompleto
+not ready for this stage yet	setup	pt	Não está pronto para este passo ainda
+note: you will be able to customize this later	setup	pt	Nota: será possível personalizar isto depois
+ok	setup	pt	OK
+once the database is setup correctly	setup	pt	Quando a base de dados estiver configurada corretamente
+one month	setup	pt	um mês
+one week	setup	pt	uma semana
+only add languages that are not in the database already	setup	pt	Somente adicionar idiomas que ainda não estão no banco de dados
+only add new phrases	setup	pt	Somente adicionar novas frases
+passwords did not match, please re-enter	setup	pt	Senhas não conferem, digite novamente
+pgsqlinstr	setup	pt	Instruções para criar a base de dados no PostgreSQL:<br>Inicie o serviço (postmaster)<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crie a base de dados vazia -<br><i>[user@server user]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	pt	Procure por scripts sql dentro do diretório da aplicação
+please configure phpGroupWare for your environment	setup	pt	Por favor configure o phpGroupWare para o seu ambiente
+please install	setup	pt	Por favor instale
+please login to phpgroupware and run the admin application for additional site configuration	setup	pt	Por favor, conecte no phpgroupware e execute a aplicação de administração para outras configurações do servidor
+possible solutions	setup	pt	Possíveis soluções
+potential problem	setup	pt	Problema em potencial
+problem resolution	setup	pt	Solução do problema
+process	setup	pt	Processar
+re-check my database	setup	pt	Verificar novamente a base de dados
+re-check my installation	setup	pt	Verificar novamente a instalação
+re-enter password	setup	pt	Digite novamente a senha
+really uninstall all applications	setup	pt	REALMENTE desinstalar todas aplicações
+registered	setup	pt	registrado
+remove	setup	pt	Remover
+requires reinstall or manual repair	setup	pt	Requer reinstalação ou reparo manual
+requires upgrade	setup	pt	Requer atualização
+resolve	setup	pt	Resolver
+select the default applications to which your users will have access	setup	pt	Selecione a aplicação padrão a qual os usuários terão acesso
+select the desired action(s) from the available choices	setup	pt	Selecione a ação (ou ações) desejada(s) a partir das opções
+select to download file	setup	pt	Selecione para fazer download do arquivo
+select which group(s) will be exported (group membership will be maintained)	setup	pt	Selecione qual grupo (ou grupos) serão exportados (estrutura de membros do grupos será mantida)
+select which group(s) will be imported (group membership will be maintained)	setup	pt	Selecione qual grupo (ou grupos) serão importados (estrutura de membros do grupos será mantida)
+select which languages you would like to use	setup	pt	Selecione o idioma a ser usado
+select which method of upgrade you would like to do	setup	pt	Selecione o método de atualização desejado
+select which type of authentication you are using	setup	pt	Selecione o tipo de autenticação a ser usado
+select which user(s) will be exported	setup	pt	Selecione os usuários a serem exportados
+select which user(s) will be imported	setup	pt	Selecione os usuários a serem importados
+select which user(s) will have admin privileges	setup	pt	Selecione os usuários que terão privilégio de administradores
+select your old version	setup	pt	Selecione a versão antiga
+setup	setup	pt	Configuração
+setup demo accounts in ldap	setup	pt	Configurar contas de demonstração no LDAP
+some or all of its tables are missing	setup	pt	Algumas ou todas tabelas estão faltando
+status	setup	pt	Status
+step 1 - simple application management	setup	pt	Passo 1 - Manutenção simples da aplicação
+step 2 - configuration	setup	pt	Passo 2 - Configuração
+step 3 - language management	setup	pt	Passo 3 - Manutenção de idiomas
+step 4 - advanced application management	setup	pt	Passo 4 - Manutenção avançada da aplicação
+submit	setup	pt	Enviar
+table change messages	setup	pt	Mensagens de alterações nas tabelas
+tables dropped	setup	pt	tabelas removidas
+tables installed, unless there are errors printed above	setup	pt	tabelas instaladas, a não ser que sejam exibidos erros abaixo
+tables upgraded	setup	pt	tabelas atualizadas
+target version	setup	pt	Versão de destino
+the table definition was correct, and the tables were installed	setup	pt	As definições de tabelas estão corretas e as tabelas estão instaladas
+the tables	setup	pt	as tabelas
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	pt	Houve um problema ao tentar conectar com o servidor LDAP. <br>Verifique sua connfiguração
+this program will help you upgrade or install different languages for phpGroupWare	setup	pt	Este programa ajudará a atualizar ou instalar diferentes linguagens para o phpGroupWare
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	pt	Esta seção ajudará a exportar usuários e grupos das tabelas do phpGroupWare para o LDAP
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	pt	Esta seção ajudará a importar usuários e grupos LDAP para as tabelas do phpGroupWare
+this stage is completed<br>	setup	pt	Este passo está completo<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	pt	Isto irá criar 1 conta de administrador e 3 contas de usuários para demonstração<br>Os usuários/senhas são: demo/guest, demo2/guest and demo3/guest.<br><b>!!!Isto irá remover TODAS as contas e grupos existentes!!!</b><br>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	pt	para configurar 1 conta de administrador e 3 contas de demonstração.<br><b>Isto irá remover todas contas existentes</b>
+top	setup	pt	topo
+translations added	setup	pt	Traduções adicionadas
+translations removed	setup	pt	Traduções removidas
+translations upgraded	setup	pt	Traduções atualizadas
+two weeks	setup	pt	2 semanas
+uninstall all applications	setup	pt	Desinstalar todas aplicações
+uninstalled	setup	pt	desinstalado
+upgrade	setup	pt	Atualizar
+upgraded	setup	pt	atualizado
+upgrading tables	setup	pt	Atualizando tabelas
+version mismatch	setup	pt	Erro de versão
+we will automatically update your tables/records to x	setup	pt	As tabelas/registros serão automaticamente atualizadas para %1
+yes	setup	pt	Sim
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	pt	Está sendo usado uma versão antiga de PHP.<br>É recomendado que a versão seja atualizada.<br>Versões antigas do PHP podem não executar o phpGroupWare corretamente. <br><br>Por favor atualize para versões acima de 3.0.16.
+you appear to be running version x of phpGroupWare	setup	pt	Aparentemente esta versão do phpGroupWare é a %1
+you are ready for this stage, but this stage is not yet written.<br>	setup	pt	Você está pronto para este passo, mas este estágio não está escrito ainda.<br>
+you do not have any languages installed. please install one now <br>	setup	pt	Não há nenhum idioma instalado. Por favor instale algum agora <br>
+you must enter a username for the admin	setup	pt	Deve ser especificado um código de usuário para o Administrador
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt	Você deve desinstalar e reinstalar, ou tentar um reparo manual
+your applications are current	setup	pt	Suas aplicações estão atualizadas
+your database does not exist	setup	pt	Sua base de dados não existe
+your database is working, but you dont have any applications installed	setup	pt	Sua base de dados está funcionando, mas não há nenhuma aplicação instalada
+your tables are current	setup	pt	Suas tabelas estão atualizadas
+your tables may be altered and you may lose data	setup	pt	Suas tabelas podem ser alteradas e pode haver perda de dados.
+your tables will be dropped and you will lose data	setup	pt	Suas tabelas serão removidas e os dados serão perdidos !!
