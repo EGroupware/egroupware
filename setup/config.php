@@ -41,10 +41,10 @@
      $db->query("delete from config");
      while ($newsetting = each($newsettings)) {
 	if($newsetting[0] == "nntp_server") {
-	  $db->query("select nntp_server from config");
+	  $db->query("select config_value FROM config WHERE config_name='nntp_server'");
 	  if($db->num_rows()) {
 	    $db->next_record();
-	    if($db->f("nntp_server") <> $newsetting[1]) {
+	    if($db->f("config_value") <> $newsetting[1]) {
 	      $db->query("DELETE FROM newsgroups");
 	      $db->query("DELETE FROM users_newsgroups");
 	    }
