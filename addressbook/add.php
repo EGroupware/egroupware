@@ -92,6 +92,8 @@
 		$fields["fn"]					= $prefix.$pspc.$firstname.$nspc.$mspc.$middle.$mspc.$lastname.$sspc.$suffix;
 		$fields["email"]				= $email;
 		$fields["email_type"]			= $email_type;
+		$fields["email_home"]			= $hemail;
+		$fields["email_home_type"]		= $hemail_type;
 		$fields["title"]				= $title;
 		$fields["tel_work"]				= $wphone;
 		$fields["tel_home"]				= $hphone;
