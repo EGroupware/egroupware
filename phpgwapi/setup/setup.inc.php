@@ -13,7 +13,7 @@
 
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
-	$setup_info['phpgwapi']['version']   = '0.9.15.008';
+	$setup_info['phpgwapi']['version']   = '0.9.15.009';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.23';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -30,12 +30,6 @@
 	(
 		'name'	=> 'Joseph Engo',
 		'email'	=> 'jengo@phpgroupware.org'
-	);
-
-	$setup_info['phpgwapi']['maintainer'][]  = array
-	(
-		'name'	=> 'Marc A. Peters',
-		'email'	=> 'skeeter@phpgroupware.org'
 	);
 
 	$setup_info['phpgwapi']['maintainer'][]	= array

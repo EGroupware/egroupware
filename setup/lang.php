@@ -35,7 +35,7 @@
 		// this is not used
 		//$sep = $common->filesystem_separator();
 	}
-	else
+	elseif ($included != 'from_login')
 	{
 		$newinstall          = True;
 		$lang_selected['en'] = 'en';
@@ -46,6 +46,16 @@
 	{
 		$lang_selected = @$GLOBALS['HTTP_POST_VARS']['lang_selected'];
 		$upgrademethod = @$GLOBALS['HTTP_POST_VARS']['upgrademethod'];
+		
+		if (!isset($GLOBALS['phpgw_info']['server']) && $upgrademethod != 'dumpold')
+		{
+			$GLOBALS['phpgw_setup']->db->query("select * from phpgw_config WHERE config_app='phpgwapi' AND config_name='lang_ctimes'",__LINE__,__FILE__);
+			if ($GLOBALS['phpgw_setup']->db->next_record())
+			{
+				$GLOBALS['phpgw_info']['server']['lang_ctimes'] = unserialize(stripslashes($GLOBALS['phpgw_setup']->db->f('config_value')));
+			}
+		}
+		
 		$GLOBALS['phpgw_setup']->db->transaction_begin();
 		if (count($lang_selected))
 		{
@@ -54,6 +64,7 @@
 				// dont delete the custom main- & loginscreen messages every time
 				$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_lang where app_name != 'mainscreen' AND app_name != 'loginscreen'",__LINE__,__FILE__);
 				//echo '<br>Test: dumpold';
+				$GLOBALS['phpgw_info']['server']['lang_ctimes'] = array();
 			}
 			while (list($null,$lang) = each($lang_selected))
 			{
@@ -86,6 +97,8 @@
 						{
 							//echo '<br>Including: ' . $appfile;
 							$raw[] = file($appfile);
+							
+							$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app['name']] = filectime($appfile);
 						}
 					}
 					@reset($raw);
@@ -100,7 +113,7 @@
 							$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
 							$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
 							$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
-							if ($upgrademethod == 'addmissing' || $upgrademethod == 'dumpold')
+							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
 								$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='".$message_id."' and lang='".$GLOBALS['phpgw_setup']->db_lang."' and (app_name='".$app_name."' or app_name='common')",__LINE__,__FILE__);
@@ -113,8 +126,7 @@
 								}
 							}
 
-//							if ($addit || ($upgrademethod == 'dumpold' || $newinstall || $upgrademethod == 'addonlynew'))
-							if ($addit || ($newinstall || $upgrademethod == 'addonlynew'))
+							if ($addit || $newinstall || $upgrademethod == 'addonlynew' || $upgrademethod == 'dumpold')
 							{
 								if($message_id && $content)
 								{
@@ -131,6 +143,10 @@
 				}
 			}
 			$GLOBALS['phpgw_setup']->db->transaction_commit();
+			
+			$GLOBALS['phpgw_setup']->db->query("DELETE from phpgw_config WHERE config_app='phpgwapi' AND config_name='lang_ctimes'",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->db->query($query="INSERT INTO phpgw_config(config_app,config_name,config_value) VALUES ('phpgwapi','lang_ctimes','".
+				addslashes(serialize($GLOBALS['phpgw_info']['server']['lang_ctimes']))."')",__LINE__,__FILE__);
 		}
 
 		if(!$included)
@@ -167,14 +183,20 @@
 			$td_align    = $newinstall ? ' align="center"' : '';
 			$hidden_var1 = $newinstall ? '<input type="hidden" name="newinstall" value="True">' : '';
 
+			if (!$newinstall && !isset($GLOBALS['phpgw_info']['setup']['installed_langs']))
+			{
+				$GLOBALS['phpgw_setup']->detection->check_lang(false);	// get installed langs
+			}
 			$select_box_desc = lang('Select which languages you would like to use');
 			$select_box = '';
 			$GLOBALS['phpgw_setup']->db->query("select lang_id,lang_name from phpgw_languages where available='Yes'");
 			while ($GLOBALS['phpgw_setup']->db->next_record())
 			{
+				$id = $GLOBALS['phpgw_setup']->db->f('lang_id');
 				$select_box_langs = 
 					$select_box_langs 
-					.'<option value="' . $GLOBALS['phpgw_setup']->db->f('lang_id') . '">'
+					.'<option value="' . $id . '"'
+					.($GLOBALS['phpgw_info']['setup']['installed_langs'][$id]?' SELECTED':'').'>'
 					. $GLOBALS['phpgw_setup']->db->f('lang_name') . '</option>'
 					."\n";
 			}

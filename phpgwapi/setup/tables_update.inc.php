@@ -9,7 +9,7 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	/* $Id$ */
-
+	
 	/* Include older phpGroupWare update support */
 	include($appdir . 'tables_update_0_9_9.inc.php');
 	include($appdir . 'tables_update_0_9_10.inc.php');
@@ -40,6 +40,13 @@
 
 	$test[] = '0.9.14.001';
 	function phpgwapi_upgrade0_9_14_001()
+	{
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.001';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.14.002';
+	function phpgwapi_upgrade0_9_14_002()
 	{
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.001';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -125,11 +132,49 @@
 	$test[] = '0.9.15.006';
 	function phpgwapi_upgrade0_9_15_006()
 	{
+		// Fix bug from update script in 0.9.11.004/5:
+		// column config_app was added to table phpgw_config (which places it as last column),
+		// but in the tables_current.inc.php it was added as first column.
+		// When setup / schemaproc wants to do the AlterColum it recreates the table for pgSql,
+		// as pgSql could not change the column-type. This recreation is can not be based on 
+		// tables_current, but on running tables_baseline throught all update-scripts.
+		// Which gives at the end two different versions of the table on new or updated installs.
+		// I fix it now in the (wrong) order of the tables_current, as some apps might depend on!
+		/*
 		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_config','config_value',array(
 			'type' => 'text',
 			'nullable' => False
 		));
-
+		*/
+		$GLOBALS['phpgw_setup']->oProc->query("SELECT * FROM phpgw_config");
+		while ($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			$confs[] = array(
+				'config_app' => $GLOBALS['phpgw_setup']->oProc->f('config_app'),
+				'config_name' => $GLOBALS['phpgw_setup']->oProc->f('config_name'),
+				'config_value' => $GLOBALS['phpgw_setup']->oProc->f('config_value')
+			);
+		}
+		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_config');
+		
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_config',array(
+			'fd' => array(
+				'config_app' => array('type' => 'varchar', 'precision' => 50),
+				'config_name' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
+				'config_value' => array('type' => 'text')
+			),
+			'pk' => array(),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array('config_name')
+		));
+		
+		foreach($confs as $conf)
+		{
+			$GLOBALS['phpgw_setup']->oProc->query(
+				"INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('".
+				$conf['config_app']."','".$conf['config_name']."','".$conf['config_value']."')");
+		}
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.007';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -156,6 +201,16 @@
 
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.008';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.15.008';
+	function phpgwapi_upgrade0_9_15_008()
+	{
+		// this might already be done in 0.9.14.002, but it does not harm to set it again to YES
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET available='Yes' WHERE lang_id='cs'");
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.009';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 ?>

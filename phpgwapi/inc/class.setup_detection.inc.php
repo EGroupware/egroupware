@@ -319,14 +319,17 @@
 			}
 		}
 
-		function check_lang()
+		function check_lang($check = True)
 		{
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
-			if($GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
+			if($check && $GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
 			{
 				return '';
 			}
-
+			if (!$check)
+			{
+				$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->get_db_versions($GLOBALS['setup_info']);
+			}
 			if($GLOBALS['phpgw_setup']->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.15.002'))
 			{
 				$langtbl  = 'lang';
