@@ -29,6 +29,7 @@
 	define('ROOM',8);
 	define('UNKNOWN',16);
 
+	/* event status */
 	define('NEEDS_ACTION',0);
 	define('ACCEPTED',1);
 	define('DECLINED',2);
@@ -37,22 +38,16 @@
 	define('COMPLETED',5);
 	define('IN_PROCESS',6);
 
-	/*
-	* Class
-	*/
+	/* class */
 	define('PRIVATE',0);
 	define('PUBLIC',1);
 	define('CONFIDENTIAL',3);
 
-	/*
-	* Transparency
-	*/
+	/* transparency */
 	define('TRANSPARENT',0);
 	define('OPAQUE',1);
 
-	/*
-	* Frequency
-	*/
+	/* frequency */
 	define('SECONDLY',1);
 	define('MINUTELY',2);
 	define('HOURLY',3);
@@ -105,403 +100,403 @@
 		function boicalendar()
 		{
 			$this->property = Array(
-				'action'		=> Array(
+				'action' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'valarm'		=> Array(
+					'valarm' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					)
 				),
-				'attach'		=> Array(
+				'attach' => Array(
 					'type'		=> 'uri',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'valarm'		=> Array(
+					'valarm' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'attendee'		=> Array(
+				'attendee' => Array(
 					'type'		=> 'cal-address',
 					'to_text'	=> False,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'valarm'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					),
-					'vfreebusy'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					)
-				),
-				'categories'		=> Array(
-					'type'		=> 'text',
-					'to_text'	=> True,
-					'vevent'	=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					),
-					'vtodo'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					),
-					'vjournal'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					)
-				),
-				'class'			=> Array(
-					'type'		=> 'text',
-					'to_text'	=> True,
-					'vevent'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					),
-					'vtodo'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					),
-					'vjournal'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					)
-				),
-				'comment'		=> Array(
-					'type'		=> 'text',
-					'to_text'	=> True,
-					'daylight'	=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					),
-					'standard'	=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					),
-					'valarm'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					),
-					'vevent'	=> Array(
+					'valarm' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
 					'vfreebusy'		=> Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
-					),
-					'vjournal'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
-					),
-					'vtodo'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> True
 					)
 				),
-				'completed'		=> Array(
-					'type'		=> 'date-time',
-					'to_text'	=> False,
-					'vtodo'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					)
-				),
-				'contact'		=> Array(
+				'categories' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'		=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vfreebusy'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'created'		=> Array(
-					'type'		=> 'date-time',
-					'to_text'	=> False,
-					'vevent'	=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					),
-					'vtodo'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					),
-					'vjournal'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					)
-				),
-				'description'		=> Array(
+				'class' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					),
+					'vjournal' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					)
+				),
+				'comment' => Array(
+					'type'		=> 'text',
+					'to_text'	=> True,
+					'daylight' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'standard' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'valarm' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'vevent' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'vfreebusy' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'vjournal' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'vtodo' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					)
+				),
+				'completed' => Array(
+					'type'		=> 'date-time',
+					'to_text'	=> False,
+					'vtodo' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					)
+				),
+				'contact' => Array(
+					'type'		=> 'text',
+					'to_text'	=> True,
+					'vevent' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'vfreebusy' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					),
+					'vjournal' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					)
+				),
+				'created' => Array(
+					'type'		=> 'date-time',
+					'to_text'	=> False,
+					'vevent' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					),
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
 					'vjournal'		=> Array(
 						'state'		=> 'optional',
-						'multiples'	=> True
-					),
-					'valarm'		=> Array(
-						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'dtend'			=> Array(
-					'type'		=> 'date-time',
-					'to_text'	=> False,
-					'vevent'	=> Array(
+				'description' => Array(
+					'type'		=> 'text',
+					'to_text'	=> True,
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vfreebusy'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					)
-				),
-				'dtstamp'		=> Array(
-					'type'		=> 'date-time',
-					'to_text'	=> False,
-					'vevent'	=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
-						'state'		=> 'optional',
-						'multiples'	=> False
-					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vfreebusy'		=> Array(
+					'valarm' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'dtstart'		=> Array(
+				'dtend'	 => Array(
 					'type'		=> 'date-time',
 					'to_text'	=> False,
-					'daylight'	=> Array(
+					'vevent' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					),
+					'vfreebusy' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					)
+				),
+				'dtstamp' => Array(
+					'type'		=> 'date-time',
+					'to_text'	=> False,
+					'vevent' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					),
+					'vtodo'	=> Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					),
+					'vjournal' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> True
+					),
+					'vfreebusy' => Array(
+						'state'		=> 'optional',
+						'multiples'	=> False
+					)
+				),
+				'dtstart' => Array(
+					'type'		=> 'date-time',
+					'to_text'	=> False,
+					'daylight' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'standard'	=> Array(
+					'standard' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vfreebusy'		=> Array(
+					'vfreebusy' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'due'			=> Array(
+				'due' => Array(
 					'type'		=> 'date-time',
 					'to_text'	=> False,
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'duration'		=> Array(
+				'duration' => Array(
 					'type'		=> 'duration',
 					'to_text'	=> False,
-					'valarm'		=> Array(
+					'valarm' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vfreebusy'		=> Array(
+					'vfreebusy' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'exdate'		=> Array(
+				'exdate' => Array(
 					'type'		=> 'date-time',
 					'to_text'	=> False,
-					'vevent'		=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'exrule'		=> Array(
+				'exrule' => Array(
 					'type'		=> 'recur',
 					'to_text'	=> False,
-					'vevent'		=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'freebusy'		=> Array(
+				'freebusy' => Array(
 					'type'		=> 'freebusy',
 					'to_text'	=> False,
-					'vfreebusy'		=> Array(
+					'vfreebusy' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'geo'			=> Array(
+				'geo' => Array(
 					'type'		=> 'float',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'last_modified'		=> Array(
+				'last_modified' => Array(
 					'type'		=> 'date-time',
 					'to_text'	=> False,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtimezone'		=> Array(
+					'vtimezone' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'location'		=> Array(
+				'location' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'method'			=> Array(
+				'method' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'ical'	=> Array(
+					'ical' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					)
 				),
-				'organizer'		=> Array(
+				'organizer' => Array(
 					'type'		=> 'cal-address',
 					'to_text'	=> False,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vfreebusy'		=> Array(
+					'vfreebusy' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'percent_complete'	=> Array(
+				'percent_complete' => Array(
 					'type'		=> 'integer',
 					'to_text'	=> False,
-					'vtodo'		=> Array(
+					'vtodo'	=> Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'priority'		=> Array(
+				'priority' => Array(
 					'type'		=> 'integer',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'prodid'			=> Array(
+				'prodid' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
 					'ical'	=> Array(
@@ -509,38 +504,38 @@
 						'multiples'	=> False
 					)
 				),
-				'rdate'			=> Array(
+				'rdate' => Array(
 					'type'		=> 'date-time',
 					'to_text'	=> False,
-					'daylight'	=> Array(
+					'daylight' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'standard'	=> Array(
+					'standard' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'recurrence_id'		=> Array(
+				'recurrence_id' => Array(
 					'type'		=> 'date-time',
 					'to_text'	=> False,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
@@ -549,230 +544,230 @@
 						'multiples'	=> False
 					)
 				),
-				'related_to'		=> Array(
+				'related_to' => Array(
 					'type'		=> 'text',
 					'to_text'	=> False,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'request_status'	=> Array(
+				'request_status' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'vfreebusy'		=> Array(
+					'vfreebusy' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'resources'		=> Array(
+				'resources' => Array(
 					'type'		=> 'text',
 					'to_text'	=> False,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'rrule'			=> Array(
+				'rrule' => Array(
 					'type'		=> 'recur',
 					'to_text'	=> False,
-					'daylight'	=> Array(
+					'daylight' => Array(
 						'state'		=> 'optional',
-						'multiples'	=> True
+						'multiples'	=> False
 					),
-					'standard'	=> Array(
+					'standard' => Array(
 						'state'		=> 'optional',
-						'multiples'	=> True
+						'multiples'	=> False
 					),
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
-						'multiples'	=> True
+						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
-						'multiples'	=> True
+						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
-						'multiples'	=> True
+						'multiples'	=> False
 					)
 				),
-				'sequence'		=> Array(
+				'sequence' => Array(
 					'type'		=> 'integer',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'status'		=> Array(
+				'status' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'summary'		=> Array(
+				'summary' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
-					'valarm'		=> Array(
+					'valarm' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'transp'		=> Array(
+				'transp' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'trigger'		=> Array(
+				'trigger' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'valarm'	=> Array(
+					'valarm' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'tzid'			=> Array(
+				'tzid' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vtimezone'		=> Array(
+					'vtimezone' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					)
 				),
-				'tzname'		=> Array(
+				'tzname' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'daylight'	=> Array(
+					'daylight' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					),
-					'standard'	=> Array(
+					'standard' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> True
 					)
 				),
-				'tzoffsetfrom'		=> Array(
+				'tzoffsetfrom' => Array(
 					'type'		=> 'utc-offset',
 					'to_text'	=> True,
-					'daylight'		=> Array(
+					'daylight' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'standard'		=> Array(
+					'standard' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					)
 				),
-				'tzoffsetto'		=> Array(
+				'tzoffsetto' => Array(
 					'type'		=> 'utc-offset',
 					'to_text'	=> True,
-					'daylight'		=> Array(
+					'daylight' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'standard'		=> Array(
+					'standard' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					)
 				),
-				'tzurl'			=> Array(
+				'tzurl'	=> Array(
 					'type'		=> 'uri',
 					'to_text'	=> True,
-					'vtimezone'		=> Array(
+					'vtimezone' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					)
 				),
-				'uid'			=> Array(
+				'uid' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'vfreebusy'		=> Array(
+					'vfreebusy' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'vtodo'		=> Array(
+					'vtodo' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					)
 				),
-				'url'			=> Array(
+				'url' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'vevent'	=> Array(
+					'vevent' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'vfreebusy'		=> Array(
+					'vfreebusy' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					),
-					'vjournal'		=> Array(
+					'vjournal' => Array(
 						'state'		=> 'optional',
 						'multiples'	=> False
 					),
@@ -781,369 +776,369 @@
 						'multiples'	=> False
 					)
 				),
-				'version'			=> Array(
+				'version' => Array(
 					'type'		=> 'text',
 					'to_text'	=> True,
-					'ical'	=> Array(
+					'ical' => Array(
 						'state'		=> 'required',
 						'multiples'	=> False
 					)
 				)
 			);
 			$this->parameter = Array(
-				'altrep'		=> Array(
+				'altrep' => Array(
 					'type'		=> 'uri',
 					'quoted'		=> True,
 					'to_text'	=> True,
-					'properties'	=> Array(
-						'comment'		=> True,
+					'properties' => Array(
+						'comment'	=> True,
 						'description'	=> True,
-						'location'		=> True,
-						'prodid'			=> True,
-						'resources'		=> True,
-						'summary'		=> True,
-						'contact'		=> True
+						'location'	=> True,
+						'prodid'	=> True,
+						'resources'	=> True,
+						'summary'	=> True,
+						'contact'	=> True
 					)
 				),
-				'byday'		=> Array(
+				'byday' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'byhour'		=> Array(
+				'byhour' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule' => True
 					)
 				),
-				'byminute'		=> Array(
+				'byminute' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'bymonth'		=> Array(
+				'bymonth' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'bymonthday'	=> Array(
+				'bymonthday' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'bysecond'		=> Array(
+				'bysecond' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'bysetpos'		=> Array(
+				'bysetpos' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule' => True
 					)
 				),
-				'byweekno'		=> Array(
+				'byweekno' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'byyearday'		=> Array(
+				'byyearday' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'		=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'class'			=> Array(
+				'class' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_class',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'class'			=> True
+					'properties' => Array(
+						'class'	=> True
 					)
 				),
-				'cn'			=> Array(
+				'cn' => Array(
 					'type'		=> 'text',
-					'quoted'		=> True,
+					'quoted'	=> True,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True,
-						'organizer'		=> True
+					'properties' => Array(
+						'attendee'	=> True,
+						'organizer'	=> True
 					)
 				),
-				'count'		=> Array(
+				'count' => Array(
 					'type'		=> 'integer',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'			=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'cu'			=> Array(
+				'cu' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_cu',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True
+					'properties' => Array(
+						'attendee'	=> True
 					)
 				),
-				'delegated_from'	=> Array(
+				'delegated_from' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_mailto',
-					'quoted'		=> True,
+					'quoted'	=> True,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True
+					'properties' => Array(
+						'attendee'	=> True
 					)
 				),
-				'delegated_to'	=> Array(
+				'delegated_to' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_mailto',
-					'quoted'		=> True,
+					'quoted'	=> True,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True
+					'properties' => Array(
+						'attendee'	=> True
 					)
 				),
-				'dir'			=> Array(
+				'dir' => Array(
 					'type'		=> 'dir',
-					'quoted'		=> True,
+					'quoted'	=> True,
 					'to_text'	=> True,
-					'properties'	=> Array(
-						'attendee'		=> True,
-						'organizer'		=> True
+					'properties' => Array(
+						'attendee'	=> True,
+						'organizer'	=> True
 					)
 				),
-				'dtend'		=> Array(
+				'dtend' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_date',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'dtend'		=> True
+					'properties' => Array(
+						'dtend'	=> True
 					)
 				),
-				'dtstamp'		=> Array(
+				'dtstamp' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_date',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'dtstamp'		=> True
+					'properties' => Array(
+						'dtstamp'	=> True
 					)
 				),
-				'dtstart'		=> Array(
+				'dtstart' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_date',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'dtstart'		=> True
+					'properties' => Array(
+						'dtstart'	=> True
 					)
 				),
-				'encoding'	=> Array( // was enocding ???
+				'encoding' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_encoding',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attach'			=> True
+					'properties' => Array(
+						'attach'	=> True
 					)
 				),
-				'fmttype'	=> Array(
+				'fmttype' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attach'			=> True
+					'properties' => Array(
+						'attach'	=> True
 					)
 				),
-				'fbtype'		=> Array(
+				'fbtype' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_fbtype',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attach'			=> True
+					'properties' => Array(
+						'attach'	=> True
 					)
 				),
-				'freq'		=> Array(
+				'freq' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_freq',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'rrule'			=> True
+					'properties' => Array(
+						'rrule'	=> True
 					)
 				),
-				'interval'		=> Array(
+				'interval' => Array(
 					'type'		=> 'integer',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'rrule'		=> True
 					)
 				),
-				'language'		=> Array(
-					'type'		=> 'text',
-					'quoted'		=> False,
+				'language' => Array(
+					'type'	=> 'text',
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'categories'	=> True,
-						'comment'		=> True,
+						'comment'	=> True,
 						'description'	=> True,
-						'location'		=> True,
-						'resources'		=> True,
-						'summary'		=> True,
-						'tzname'			=> True,
-						'attendee'		=> True,
-						'contact'		=> True,
-						'organizer'		=> True,
-						'x-type'			=> True
+						'location'	=> True,
+						'resources'	=> True,
+						'summary'	=> True,
+						'tzname'	=> True,
+						'attendee'	=> True,
+						'contact'	=> True,
+						'organizer'	=> True,
+						'x-type'	=> True
 					)
 				),
-				'last_modified'		=> Array(
+				'last_modified' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_date',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'last_modified'	=> True
 					)
 				),
-				'mailto'		=> Array(
+				'mailto' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_mailto',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True,
-						'organizer'		=> True
+					'properties' => Array(
+						'attendee'	=> True,
+						'organizer'	=> True
 					)
 				),
-				'member'		=> Array(
+				'member' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_mailto',
-					'quoted'		=> True,
+					'quoted'	=> True,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True
+					'properties' => Array(
+						'attendee'	=> True
 					)
 				),
-				'partstat'		=> Array(
+				'partstat' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_partstat',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True,
-						'organizer'		=> True
+					'properties' => Array(
+						'attendee'	=> True,
+						'organizer'	=> True
 					)
 				),
-				'range'		=> Array(
+				'range' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_range',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'recurrence_id'	=> True
 					)
 				),
-				'related'		=> Array(
+				'related' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_related',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'related_to'	=> True
 					)
 				),
-				'role'		=> Array(
+				'role' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_role',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True,
-						'organizer'		=> True
+					'properties' => Array(
+						'attendee'	=> True,
+						'organizer'	=> True
 					)
 				),
-				'rsvp'		=> Array(
+				'rsvp' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_rsvp',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True
+					'properties' => Array(
+						'attendee'	=> True
 					)
 				),
-				'sent_by'		=> Array(
+				'sent_by' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_mailto',
-					'quoted'		=> True,
+					'quoted'	=> True,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'attendee'		=> True,
-						'organizer'		=> True
+					'properties' => Array(
+						'attendee'	=> True,
+						'organizer'	=> True
 					)
 				),
-				'tzid'		=> Array(
+				'tzid' => Array(
 					'type'		=> 'text',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
-						'dtend'		=> True,
-						'due'			=> True,
+					'properties' => Array(
+						'dtend'	=> True,
+						'due'	=> True,
 						'dtstart'	=> True,
-						'exdate'		=> True,
+						'exdate'	=> True,
 						'rdate'		=> True,
 						'recurrence_id'	=> True
 					)
 				),
-				'until'		=> Array(
+				'until' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_date',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'rrule'		=> True
 					)
 				),
-				'value'		=> Array(
+				'value' => Array(
 					'type'		=> 'value',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'calscale'	=> True,
-						'prodid'		=> True,
-						'method'		=> True,
+						'prodid'	=> True,
+						'method'	=> True,
 						'version'	=> True,
-						'attach'		=> True,
+						'attach'	=> True,
 						'categories'	=> True,
 						'class'		=> True,
 						'comment'	=> True,
@@ -1153,7 +1148,7 @@
 						'percent'	=> True,
 						'priority'	=> True,
 						'resources'	=> True,
-						'status'		=> True,
+						'status'	=> True,
 						'summary'	=> True,
 						'completed'	=> True,
 						'dtend'		=> True,
@@ -1161,9 +1156,9 @@
 						'dtstart'	=> True,
 						'duration'	=> True,
 						'freebusy'	=> True,
-						'transp'		=> True,
+						'transp'	=> True,
 						'tzid'		=> True,
-						'tzname'		=> True,
+						'tzname'	=> True,
 						'tzoffsetfrom'	=> True,
 						'tzoffsetto'	=> True,
 						'tzurl'		=> True,
@@ -1175,8 +1170,8 @@
 						'uid'		=> True,
 						'exdate'	=> True,
 						'exrule'	=> True,
-						'rdate'	=> True,
-						'rrule'	=> True,
+						'rdate'		=> True,
+						'rrule'		=> True,
 						'action'	=> True,
 						'repeat'	=> True,
 						'trigger'	=> True,
@@ -1184,28 +1179,28 @@
 						'dtstamp'	=> True,
 						'last_modified'	=> True,
 						'sequence'	=> True,
-						'x_type'		=> True,
-						'request_status'	=> True
+						'x_type'	=> True,
+						'request_status'=> True
 					)
 				),
-				'wkst'		=> Array(
+				'wkst' => Array(
 					'type'		=> 'string',
 					'quoted'		=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'rrule'		=> True
 					)
 				),
-				'x_type'		=> Array(
+				'x_type' => Array(
 					'type'		=> 'x_type',
-					'quoted'		=> False,
+					'quoted'	=> False,
 					'to_text'	=> False,
-					'properties'	=> Array(
+					'properties' => Array(
 						'calscale'	=> True,
-						'method'		=> True,
-						'prodid'		=> True,
+						'method'	=> True,
+						'prodid'	=> True,
 						'version'	=> True,
-						'attach'		=> True,
+						'attach'	=> True,
 						'categories'	=> True,
 						'class'		=> True,
 						'comment'	=> True,
@@ -1215,7 +1210,7 @@
 						'percent'	=> True,
 						'priority'	=> True,
 						'resources'	=> True,
-						'status'		=> True,
+						'status'	=> True,
 						'summary'	=> True,
 						'completed'	=> True,
 						'dtend'		=> True,
@@ -1223,9 +1218,9 @@
 						'dtstart'	=> True,
 						'duration'	=> True,
 						'freebusy'	=> True,
-						'transp'		=> True,
+						'transp'	=> True,
 						'tzid'		=> True,
-						'tzname'		=> True,
+						'tzname'	=> True,
 						'tzoffsetfrom'	=> True,
 						'tzoffsetto'	=> True,
 						'tzurl'		=> True,
@@ -1237,8 +1232,8 @@
 						'uid'		=> True,
 						'exdate'	=> True,
 						'exrule'	=> True,
-						'rdate'	=> True,
-						'rrule'	=> True,
+						'rdate'		=> True,
+						'rrule'		=> True,
 						'action'	=> True,
 						'repeat'	=> True,
 						'trigger'	=> True,
@@ -1246,8 +1241,8 @@
 						'dtstamp'	=> True,
 						'last_modified'	=> True,
 						'sequence'	=> True,
-						'x_type'		=> True,
-						'request_status'	=> True
+						'x_type'	=> True,
+						'request_status'=> True
 					)
 				)
 			);
@@ -2023,28 +2018,6 @@
 							}
 						}
 					}
-					else
-					{
-						/*
-						* The time provided by the iCal is considered local time.
-						*
-						* The implementor will need to consider how to convert that time to UTC.
-						*/
-						//					if($this->api)
-						//					{
-						//						$dtime['hour'] -= $GLOBALS['phpgw_info']['users']['common']['tz_offset'];
-						//						if($dtime['hour'] < 0)
-						//						{
-						//							$dtime['mday'] -= 1;
-						//							$dtime['hour'] = 24 - $dtime['hour'];
-						//						}
-						//						elseif($dtime['hour'] >= 24)
-						//						{
-						//							$dtime['mday'] += 1;
-						//							$dtime['hour'] = $dtime['hour'] - 24;
-						//						}
-						//					}
-					}
 				}
 				else
 				{
@@ -2602,7 +2575,6 @@
 
 				if($majortype == 'duration')
 				{
-					// Unset dur var
 					unset($dur);
 
 					// Split «DURATION»
@@ -2611,15 +2583,13 @@
 					/* Datecode */
 					if(isset($_f_['day_raw']) OR $_f_['day_raw'])
 					{
-						// Days
-//						if(ereg('D', $_f_['day_raw']))
+						/* Days */
 						if(strstr($_f_['day_raw'],'D'))
 						{
 							$dur['days'] = eregi_replace("([0-9]+)D(.*)", "\\1", $_f_['day_raw']);
 						}
 
-						// Weeks
-//						if(ereg("W", $_f_["day_raw"]))
+						/* Weeks */
 						if(strstr($_f_['day_raw'],'W'))
 						{
 							$dur['weeks'] = eregi_replace("([^|.*]+D)?([0-9]+)W", "\\2", $_f_['day_raw']);
@@ -2629,24 +2599,19 @@
 					/* Timecode */
 					if(isset($_f_['time_raw']) OR $_f_['time_raw'])
 					{
-						// Hours
-//						if(ereg("H", $_f_["time_raw"]))
+						/* Hours */
 						if(strstr($_f_['time_raw'],'H'))
 						{
 							$dur['hours'] = eregi_replace("([0-9]+)H(.*)", "\\1", $_f_['time_raw']);
 						}
 
-						// Minutes
-						/* If you find better, contact me very quickly :) */
-//						if(ereg("M", $_f_["time_raw"]))
+						/* Minutes */
 						if(strstr($_f_['time_raw'],'M'))
 						{
 							$dur['minutes'] = eregi_replace("([^|.*]+H)?([0-9]+)M(.*)", "\\2", $_f_['time_raw']);
 						}
 
-						// Seconds
-						/* Same comment :) */
-//						if(ereg("S", $_f_["time_raw"]) )
+						/* Seconds */
 						if(strstr($_f_['time_raw'],'S'))
 						{
 							$dur['seconds'] = eregi_replace("([^|.*]+M)?([0-9]+)S(.*)", "\\2", $_f_['time_raw']);
@@ -2658,7 +2623,7 @@
 						'datecode' => $_f_['day_raw'],
 						'all'      => $value
 					);
-					// Add new parameters in Event
+					/* Add new parameters in Event */
 					$this->set_var($event, $majortype, $dur);
 				}
 
@@ -2985,9 +2950,11 @@
 				$mime_msg = fread($fp, filesize($filename));
 				fclose($fp);
 				unlink($filename);
-				$mime_msg = preg_replace("/(\r\n|\r)/", "\n", $mime_msg); /* dos2unix */
-				$mime_msg = preg_replace("/\n\n+/", "\n", $mime_msg); /* strip duplicate newlines */
-				$mime_msg = explode("\n",$mime_msg); /* explode the sanitized message itself */
+
+				/* explode can fail easily, so pre-chew the ical file */
+				$mime_msg = preg_replace("/(\r\n|\r)/", "\n", $mime_msg);	/* dos2unix */
+				$mime_msg = preg_replace("/\n\n+/", "\n", $mime_msg);	/* strip duplicate newlines */
+				$mime_msg = explode("\n",$mime_msg); 	/* explode the sanitized message into itself */
 			}
 			elseif(!$mime_msg)
 			{
@@ -3017,8 +2984,8 @@
 			}
 
 			$datetime_vars = Array(
-				'start'	=> 'dtstart',
-				'end'	=> 'dtend',
+				'start'		=> 'dtstart',
+				'end'		=> 'dtend',
 				'modtime'	=> 'dtstamp',
 				'modtime'	=> 'last_modified'
 			);
@@ -3032,7 +2999,7 @@
 				's'	=> 'sec'
 			);
 
-			// time limit should be controlled elsewhere
+			/* time limit should be controlled elsewhere */
 			@set_time_limit(0);
 
 			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->create_email_preferences();
@@ -3066,7 +3033,6 @@
 					$this->check_owner($event,$ical['event'][$i],$so_event);
 					$event = $so_event->get_cached_event();
 					$so_event->add_entry($event);
-//					$event = $so_event->get_cached_event();
 				}
 				else
 				{
@@ -3149,9 +3115,6 @@
 									)
 								);
 							}
-//							$temp_id = $cats->name2id($cat);
-//							echo 'Category Name : '.$cat.' : Category ID :'.$temp_id."<br>\n";
-//							$cat_id_nums[] = $temp_id;
 							$cat_id_nums[] = $cats->name2id($cat);
 						}
 						@reset($cat_id_nums);
@@ -3165,10 +3128,10 @@
 						}
 					}
 
-//rrule
-					if(isset($ical['event'][$i]['rrule'])  OR isset($ical['event'][$i]['duration']) )
+					/* rrule */
+					if(isset($ical['event'][$i]['rrule']) || isset($ical['event'][$i]['duration']))
 					{
-// recur_enddate
+						/* recur_enddate */
 						if(isset($ical['event'][$i]['rrule']['until']))
 						{
 							$recur_enddate['year']  = (int)($ical['event'][$i]['rrule']['until']['year']);
@@ -3177,46 +3140,37 @@
 						}
 						elseif( isset($ical['event'][$i]['duration']) )
 						{
-							// Create timecode for strtotime
+							/* Create timecode for strtotime */
 							$ptimer = mktime($ical['event'][$i]['dtstart']['hour'],
-							$ical['event'][$i]['dtstart']['min'],
-							$ical['event'][$i]['dtstart']['sec'],
-							$ical['event'][$i]['dtstart']['month'],
-							$ical['event'][$i]['dtstart']['mday'],
-							$ical['event'][$i]['dtstart']['year']
-						);
+								$ical['event'][$i]['dtstart']['min'],
+								$ical['event'][$i]['dtstart']['sec'],
+								$ical['event'][$i]['dtstart']['month'],
+								$ical['event'][$i]['dtstart']['mday'],
+								$ical['event'][$i]['dtstart']['year']);
 
-						/*  -- Fixbug --
-						* if "DURATION" has 1 day (for example).
-						* Event takes places between the first date
-						* (this define in "start" tag) and next day  :(
-							* This "fix" destroy one day and set hours as "23" and minutes as "59"
-							*/
+							/* 
+							 * Subtract 1 second so we don't overlap with the beginning of
+							 * another event.
+							 */
 
-							// Weeks::Day--
-							if(     $ical['event'][$i]['duration']['weeks']
-							AND
-							( $ical['event'][$i]['duration']['hours'] == 0 )
-							AND
-							( $ical['event'][$i]['duration']['minutes'] == 0 )
-						)
-						{
-							$ical['event'][$i]['duration']['days'] = (
-								$ical['event'][$i]['duration']['days'] +
-								($ical['event'][$i]['duration']['weeks']*7))-1;
+							/* handle events with duration in weeks */
+							if ($ical['event'][$i]['duration']['weeks']		&&
+								($ical['event'][$i]['duration']['hours'] == 0)	&&
+								($ical['event'][$i]['duration']['minutes'] == 0))
+							{
+								$ical['event'][$i]['duration']['days'] =
+									($ical['event'][$i]['duration']['days'] +
+									($ical['event'][$i]['duration']['weeks']*7)) - 1;
+
 								unset($ical['event'][$i]['duration']['weeks']);
+
 								$ical['event'][$i]['duration']['hours'] = "23";
 								$ical['event'][$i]['duration']['minutes'] = "59";
 								$ical['event'][$i]['duration']['seconds'] = "59";
 							}
-							// Days::Day--
-							if(
-								$ical['event'][$i]['duration']['days']
-								AND
-								( $ical['event'][$i]['duration']['hours'] == 0 )
-								AND
-								( $ical['event'][$i]['duration']['minutes'] == 0 )
-							)
+							/* handle events with duration  in days */
+							if(($ical['event'][$i]['duration']['days'] && $ical['event'][$i]['duration']['hours'] == 0) &&
+							   ($ical['event'][$i]['duration']['minutes'] == 0))
 							{
 								$ical['event'][$i]['duration']['days']--;
 								$ical['event'][$i]['duration']['hours'] = "23";
@@ -3224,35 +3178,43 @@
 								$ical['event'][$i]['duration']['seconds'] = "59";
 							}
 
-							// Create string contains datetime for strtotime
+							/* Create string contains datetime for strtotime */
 							$pdate = "+";
-							if( isset($ical['event'][$i]['duration']['weeks']) )
-							$pdate .= $ical['event'][$i]['duration']['weeks'] . " weeks ";
-							if( isset($ical['event'][$i]['duration']['days']) )
-							$pdate .= $ical['event'][$i]['duration']['days'] . " days ";
-							if( isset($ical['event'][$i]['duration']['hours']) )
-							$pdate .= $ical['event'][$i]['duration']['hours'] . " hours ";
-							if( isset($ical['event'][$i]['duration']['minutes']) )
-							$pdate .= $ical['event'][$i]['duration']['minutes'] . " minutes ";
-							if( isset($ical['event'][$i]['duration']['seconds']) )
-							$pdate .= $ical['event'][$i]['duration']['seconds'] . " seconds ";
+							if(isset($ical['event'][$i]['duration']['weeks']))
+								$pdate .= $ical['event'][$i]['duration']['weeks'] . " weeks ";
 
-							// What is datetime in 2192 ?
+							if(isset($ical['event'][$i]['duration']['days']))
+								$pdate .= $ical['event'][$i]['duration']['days'] . " days ";
+
+							if(isset($ical['event'][$i]['duration']['hours']))
+								$pdate .= $ical['event'][$i]['duration']['hours'] . " hours ";
+
+							if(isset($ical['event'][$i]['duration']['minutes']))
+								$pdate .= $ical['event'][$i]['duration']['minutes'] . " minutes ";
+
+							if(isset($ical['event'][$i]['duration']['seconds']))
+								$pdate .= $ical['event'][$i]['duration']['seconds'] . " seconds ";
+
+							/* What is datetime in 2192? */
 							$enddate = strtotime($pdate, $ptimer);
-							list(   $recur_enddate['year'],
-							$recur_enddate['month'],
-							$recur_enddate['mday'],
-							$recur_enddate['hour'],
-							$recur_enddate['min'],
-							$recur_enddate['sec'] ) = split(":", date("Y:m:d:H:i:s", $enddate));
+							list(
+								$recur_enddate['year'],
+								$recur_enddate['month'],
+								$recur_enddate['mday'],
+								$recur_enddate['hour'],
+								$recur_enddate['min'],
+								$recur_enddate['sec']
+							) = split(":", date("Y:m:d:H:i:s", $enddate));
 
-							// Set End of event
-							$so_event->set_end(     $recur_enddate['year'],
-							$recur_enddate['month'],
-							$recur_enddate['mday'],
-							$recur_enddate['hour'],
-							$recur_enddate['min'],
-							$recur_enddate['sec']);
+							/* Set End of event */
+							$so_event->set_end(
+								$recur_enddate['year'],
+								$recur_enddate['month'],
+								$recur_enddate['mday'],
+								$recur_enddate['hour'],
+								$recur_enddate['min'],
+								$recur_enddate['sec']
+							);
 
 						}
 						else
@@ -3262,18 +3224,18 @@
 							$recur_enddate['mday'] = 0;
 						}
 
-// recur_data
+						/* recur_data */
 						$recur_data = 0;
 						if(isset($ical['event'][$i]['rrule']['byday']))
 						{
 							$week_days = Array(
-								MCAL_M_SUNDAY	=> 'SU',
-								MCAL_M_MONDAY	=> 'MO',
-								MCAL_M_TUESDAY	=> 'TU',
+								MCAL_M_SUNDAY		=> 'SU',
+								MCAL_M_MONDAY		=> 'MO',
+								MCAL_M_TUESDAY		=> 'TU',
 								MCAL_M_WEDNESDAY	=> 'WE',
-								MCAL_M_THURSDAY	=> 'TH',
-								MCAL_M_FRIDAY	=> 'FR',
-								MCAL_M_SATURDAY	=> 'SA'
+								MCAL_M_THURSDAY		=> 'TH',
+								MCAL_M_FRIDAY		=> 'FR',
+								MCAL_M_SATURDAY		=> 'SA'
 							);
 							@reset($week_days);
 							while(list($key,$val) = each($week_days))
@@ -3285,7 +3247,7 @@
 							}
 						}
 
-// interval
+						/* interval */
 						if(!isset($ical['event'][$i]['rrule']['interval']))
 						{
 							$interval = 1;
@@ -3325,7 +3287,7 @@
 					}
 
 					/* if the original organizer is an egroupware user, add the original user as an event participant */
-					/* NB: ['mailto'] has two parts, ['user'], containing the username, and ['host'], containing the fqdn of the user's email address */
+					/* NB: ['mailto'] has two parts, ['user'], containing the username, and ['host'], containing the domain of the user's email address */
 					if (isset($ical['event'][$i]['organizer']['mailto']['user']) && $GLOBALS['phpgw']->accounts->exists($ical['event'][$i]['organizer']['mailto']['user']) == True)
 					{
 						$so_event->add_attribute('participants','A',(int)$GLOBALS['phpgw']->accounts->name2id($ical['event'][$i]['organizer']['mailto']['user']));
