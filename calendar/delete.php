@@ -12,19 +12,25 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True);
-  include("../header.inc.php");
+	/* $Id$ */
+	$phpgw_flags = Array(
+		'currentapp'	=> 'calendar',
+		'noheader'	=> True,
+		'nonavbar'	=> True
+	);
+	$phpgw_info['flags'] = $phpgw_flags;
+	include('../header.inc.php');
 
-  if ($id > 0) {
-     $phpgw->db->query("SELECT cal_datetime FROM calendar_entry WHERE cal_id = $id",__LINE__,__FILE__);
-     $phpgw->db->next_record();
+	if ($id > 0) && ($cal_info->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
+	{
+		$phpgw->db->query('SELECT cal_datetime FROM calendar_entry WHERE cal_id='.$id,__LINE__,__FILE__);
+		$phpgw->db->next_record();
 
-     $thisyear = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"Y"));
-     $thismonth = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"n"));
+		$thisyear = intval($phpgw->common->show_date($phpgw->db->f('cal_datetime'),'Y'));
+		$thismonth = intval($phpgw->common->show_date($phpgw->db->f('cal_datetime'),'n'));
 
-     $phpgw->calendar->delete(intval($id));
-  }
+		$phpgw->calendar->delete(intval($id));
+	}
 
-  Header("Location: " . $phpgw->link("index.php","year=$thisyear&month=$thismonth"));
+	Header('Location: ' . $phpgw->link('index.php','year='.$thisyear.'&month='.$thismonth));
 ?>
