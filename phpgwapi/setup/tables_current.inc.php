@@ -14,4 +14,5 @@
   * This file should be generated for you. It should never be edited by hand *
   \**************************************************************************/
 
+	$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.010';
 ?>
