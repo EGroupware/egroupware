@@ -340,7 +340,7 @@
 
 	/*!
 	 @function get_var
-	 @abstract retrieve a value from either a POST, GET, COOKIE, or from a class variable.
+	 @abstract retrieve a value from either a POST, GET, COOKIE, SERVER or from a class variable.
 	 @author skeeter
 	 @discussion This function is used to retrieve a value from a user defined order of methods. 
 	 @syntax get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
@@ -370,9 +370,18 @@
 				case 'POST':
 				case 'GET':
 				case 'COOKIE':
-					if(@isset($GLOBALS['HTTP_'.strtoupper($method[$i]).'_VARS'][$variable]))
+				case 'SERVER':
+					if(phpversion() >= '4.2.0')
 					{
-						$var = $GLOBALS['HTTP_'.strtoupper($method[$i]).'_VARS'][$variable];
+						$meth = '_'.strtoupper($method[$i]);
+					}
+					else
+					{
+						$meth = 'HTTP_'.strtoupper($method[$i]).'_VARS';
+					}
+					if(@isset($GLOBALS[$meth][$variable]))
+					{
+						$var = $GLOBALS[$meth][$variable];
 					}
 					break;
 				default:
