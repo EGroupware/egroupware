@@ -315,6 +315,7 @@
 			$last_loginid .= '@' . $_COOKIE['last_domain'];
 		}
 	}
+	$tmpl->set_var('lang_select_domain',lang('Domain'));
 	$tmpl->set_var('select_domain',$domain_select);
 
 	foreach($_GET as $name => $value)
@@ -339,17 +340,43 @@
 	$cnf_reg->read_repository();
 	$config_reg = $cnf_reg->config_data;
 
-	if($config_reg[enable_registration]=='True' && $config_reg[register_link]=='True')
+	if($config_reg[enable_registration]=='True')
 	{
-		$reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
+	   if ($config_reg[register_link]=='True')
+	   {
+		  $reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
+	   }
+	   if ($config_reg[lostpassword_link]=='True')
+	   {
+		  $lostpw_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostpw1">'.lang('Lost password').'</a><br/>';
+	   }
+	   if ($config_reg[lostid_link]=='True')
+	   {
+		  $lostid_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostid1">'.lang('Lost Login Id').'</a><br/>';
+	   }
+
+	   /* if at least one option of "registration" is activated display the registration section */
+	   if($config_reg[register_link]=='True' || $config_reg[lostpassword_link]=='True' || $config_reg[lostid_link]=='True')
+	   {
+		  $tmpl->set_var('register_link',$reg_link);
+		  $tmpl->set_var('lostpassword_link',$lostpw_link);
+		  $tmpl->set_var('lostid_link',$lostid_link) ;
+		  
+		  //$tmpl->set_var('registration_url',$GLOBALS['phpgw_info']['server']['webserver_url'] . '/registration/');
+	   }
+	   else
+	   {
+		  /* trick to make registration section disapear */
+		  $tmpl->set_block('login_form','registration');
+		  $tmpl->set_var('registration','');
+	   }
 	}
 
+	
 	$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
 
-	$tmpl->set_var('register_link',$reg_link);
 	$tmpl->set_var('charset',$GLOBALS['phpgw']->translation->charset());
 	$tmpl->set_var('login_url', $GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
-	$tmpl->set_var('registration_url',$GLOBALS['phpgw_info']['server']['webserver_url'] . '/registration/');
 	$tmpl->set_var('version',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 	$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
 	$tmpl->set_var('cookie',$last_loginid);
@@ -379,6 +406,8 @@
 	$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 	$tmpl->set_var($var);
 
+
+	/* language section if activated in site config */
 	if (@$GLOBALS['phpgw_info']['server']['login_show_language_selection'])
 	{
 		$select_lang = '<select name="lang" onchange="'."location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
@@ -396,6 +425,7 @@
 	}
 	else
 	{
+	   /* trick to make language section disapear */
 		$tmpl->set_block('login_form','language_select');
 		$tmpl->set_var('language_select','');
 	}

@@ -12,13 +12,6 @@
 <title>{website_title} - Login</title>
 <style type="text/css">
 
-/*body 
-{
-	height:100%;
-}
-*/
-
-
 #divMain
 {
 	height:85%;
@@ -74,13 +67,18 @@
 	<tr > 
 		<td class="divSideboxEntry">
 
-		<table  cellspacing="2" cellpadding="0" width="100%" border="0">
+		<table  cellspacing="3" cellpadding="0" width="100%" border="0">
 		<tr>
-			<td colspan="4" align="left">
+<td colspan="4" align="center">
+&nbsp;
+</td>
+</tr>
+<!--		<tr>
+			<td colspan="3" align="center">
 			{register_link}<br/>
 				<img width="200" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="spacer" />
 			</td>
-		</tr>
+		</tr>-->
 		<tr>
 			<td  colspan="3">
 				<input type="hidden" name="passwd_type" value="text">
@@ -96,29 +94,38 @@
 			<td align="left" colspan="2">{select_language}</td>
 		</tr>
 <!-- END language_select -->
-		<tr>
-			<td align="right">{lang_username}:&nbsp;</td>
-			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
+			<tr>
+			<td align="right" tablindex="1">{lang_select_domain}:&nbsp;</td>
 			<td align="left">{select_domain}</td>
+			<td align="left"></td>
+			</tr>
+			<tr>
+			<td align="right" tablindex="1">{lang_username}:&nbsp;</td>
+			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
+			<td align="left"><!--{select_domain}--></td>
 		</tr>
 		<tr>
 			<td align="right">{lang_password}:&nbsp;</td>
 			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
-			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="4">&nbsp;</td>
-		</tr>
-		<tr>
-			<td colspan="4" align="center">
-				<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;">
+			<td colspan="2" align="center" style="margin-top:5px;">
+				<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;width:100px;">
 			</td>
 		</tr>
 		<tr>
-			<td colspan="4" align="center">
-			&nbsp;
-			</td>
-		</tr>
+		<td colspan="4" align="center">
+		&nbsp;
+		</td>
+	</tr>
+<!-- BEGIN registration -->
+	<tr>
+	<td colspan="4" align="left">
+	<table  style="margin-top:0px;margin-bottom:0px;width:360;"><tr><td width="1%" nowrap="nowrap">{lostpassword_link}</td><td colspan="1" align="left">{lostid_link}</td></tr></table>
+	<table  style="margin:0px;padding:0px;width:360;border-top:solid 1px #cccccc"><tr><td>{register_link}</td></tr></table>
+	</td>
+	</tr>
+<!-- END registration -->
 		</table>
 
 	</td>
