@@ -29,7 +29,7 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value)
+		function pre_process(&$cell,&$value,&$templ)
 		{
 			if ($cell['size'] != '')
 			{
@@ -67,7 +67,7 @@
 			return True;	// extra Label is ok
 		}
 
-		function post_process($cell,&$value)
+		function post_process(&$cell,&$value,&$templ)
 		{
 			if (!isset($value))
 			{
