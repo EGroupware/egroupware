@@ -88,5 +88,7 @@
 	}
 
 	$GLOBALS['phpgw']->hooks->process('admin');
-	$GLOBALS['admin_tpl']->pparse('out','list');
+	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array(
+		'body_data' => $GLOBALS['admin_tpl']->parse('out','list')
+	));
 ?>
