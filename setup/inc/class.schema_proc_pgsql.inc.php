@@ -141,6 +141,8 @@
 					$sTranslated = "'type' => 'decimal', 'precision' => $iPrecision, 'scale' => $iScale";
 					break;
 				case "float":
+				case "float4":
+				case "float8":
 				case "double":
 					$sTranslated = "'type' => 'float', 'precision' => $iPrecision";
 					break;
