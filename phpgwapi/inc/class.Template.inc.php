@@ -139,13 +139,10 @@
 			$this->set_var($name, $m[1][0]);
 			// ralfbecker: readded for compatibility with old way to set blocks
 			$this->set_var($parent,preg_replace($reg,'{'.$name.'}',$str));
-		
-/*	this is not compatible with the way 0.9.14 handles templates
 			if ($name != $handle)
 			{
 				$this->set_var($handle, $m[1][0]);
-			} 
-*/
+			}
 		}
 
 		/* public: set_var(array $values)
