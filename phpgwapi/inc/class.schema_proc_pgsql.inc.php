@@ -410,7 +410,14 @@
 					}
 					else
 					{
-						$sSQL .= 'null';
+						if(isset($arraydef['nullable']) && $arraydef['nullable'])
+						{
+							$sSQL .= 'null';
+						}
+						else
+						{
+							$sSQL .= "''";
+						}
 					}
 					$i++;
 				}
