@@ -331,7 +331,7 @@
 			
 			$i=0;
 			while ($this->db->next_record()) {
-				$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='"
+				$this->db2->query("SELECT contact_name,contact_value FROM ".$this->ext_table." WHERE contact_id='"
 				. $this->db->f("id") . "'",__LINE__,__FILE__);
 
 				$tempinsert[$i] = "INSERT INTO " . $tmp_table . " (id,";
