@@ -37,7 +37,7 @@
     }
   }
 
-  $phpgw->common->header();
+  $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
 
   echo "<br>" . lang("your current theme is: x",$phpgw_info["user"]["preferences"]["theme"]);

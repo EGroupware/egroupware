@@ -21,7 +21,7 @@
   include("../header.inc.php");
   
   if (! $friendly) {
-     $phpgw->common->header();
+     $phpgw->common->phpgw_header();
   } else
      echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
 

@@ -27,7 +27,7 @@
 							  . $phpgw_info["user"]["preferences"]["default_app"]));
      exit;
   }
-  $phpgw->common->header();
+  $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
 
 

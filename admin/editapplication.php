@@ -39,7 +39,7 @@
   $phpgw->db->next_record();
 
   if ($error) {
-     $phpgw->common->header();
+     $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
   }
  

@@ -84,7 +84,7 @@
   }
 
   if ($error) {
-     $phpgw->common->header();
+     $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
      $t->set_var("error","<p><center>$error</center>");
   } else {

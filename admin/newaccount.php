@@ -92,7 +92,7 @@
      }
   }
 
-     $phpgw->common->header();
+     $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
      ?>
        <form method="POST" action="<?php echo $phpgw->link("newaccount.php"); ?>">

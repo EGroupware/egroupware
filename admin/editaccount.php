@@ -112,7 +112,7 @@
     }		// if ! $error
   }		// if $submit
 
-  $phpgw->common->header();
+  $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
   
   $phpgw->db->query("select account_lid from accounts where account_id=$account_id");

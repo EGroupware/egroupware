@@ -37,7 +37,7 @@
      }
   }
   if ($error) {
-     $phpgw->common->header();
+     $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
   }
 

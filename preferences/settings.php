@@ -20,7 +20,7 @@
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
      exit;
   } else if (! $submit) {
-     $phpgw->common->header();
+     $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
   }
 

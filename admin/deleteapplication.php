@@ -28,7 +28,7 @@
         exit;
   }
 
-  $phpgw->common->header();
+  $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
   ?>
      <center>

@@ -45,7 +45,7 @@
 
      $phpgw->db->query("select account_id,account_lid from accounts where account_groups like '%$group_id%'");
      if ($phpgw->db->num_rows()) {
-        $phpgw->common->header();
+        $phpgw->common->phpgw_header();
         $phpgw->common->navbar();
 
         echo '<p><center>';
@@ -85,7 +85,7 @@
      }
   }
 
-  $phpgw->common->header();
+  $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
   ?>
      <center>

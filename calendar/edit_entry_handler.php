@@ -214,7 +214,7 @@ if (! $error) {
 
 ?>
 
-$phpgw->common->header();
+$phpgw->common->phpgw_header();
 <BODY BGCOLOR="<?php echo $BGCOLOR; ?>">
 
 <?php if (strlen($overlap)) { ?>
