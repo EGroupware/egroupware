@@ -21,13 +21,13 @@
   $phpgw->template->set_file(array("form"	=> "application_form.tpl"));
 
   if ($submit) {
-     $phpgw->templateotalerrors = 0;
+     $totalerrors = 0;
   
      if (! $n_app_name)
-        $error[$phpgw->templateotalerrors++] = lang("You must enter an application name.");
+        $error[$totalerrors++] = lang("You must enter an application name.");
      
      if (! $n_app_title)
-        $error[$phpgw->templateotalerrors++] = lang("You must enter an application title.");
+        $error[$totalerrors++] = lang("You must enter an application title.");
 
      if ($old_app_name != $n_app_name) {
         $phpgw->db->query("select count(*) from applications where app_name='"
@@ -35,14 +35,14 @@
         $phpgw->db->next_record();
      
         if ($phpgw->db->f(0) != 0) {
-           $error[$phpgw->templateotalerrors++] = lang("That application name already exsists.");
+           $error[$totalerrors++] = lang("That application name already exsists.");
         }
      }
         
-     if (! $phpgw->templateotalerrors) {
+     if (! $totalerrors) {
         $phpgw->db->query("update applications set app_name='" . addslashes($n_app_name) . "',"
-			    . "app_title='" . addslashes($n_app_title) . "', app_enabled='"
-			    . "$n_app_status' where app_name='$old_app_name'",__LINE__,__FILE__);
+                	    . "app_title='" . addslashes($n_app_title) . "', app_enabled='"
+                        . "$n_app_status' where app_name='$old_app_name'",__LINE__,__FILE__);
 
         Header("Location: " . $phpgw->link("applications.php"));
         exit;
@@ -51,7 +51,7 @@
   $phpgw->db->query("select * from applications where app_name='$app_name'",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
-  if ($phpgw->templateotalerrors) {
+  if ($totalerrors) {
      $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
 
