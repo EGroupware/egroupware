@@ -113,13 +113,13 @@
           }
           $list[] = array("name" => "home", "type"  => "dir", "subdirs" => $hassubdir);
 	        $hassubdir = False;
-          $groups = $phpgw->accounts->read_group_names();
-          if (!empty ($groups[0][1])) {
+          $groups = $phpgw->accounts->get_list('groups');
+          if (!empty ($groups[0]['account_lid'])) {
             $group_count = count($groups);
             for ($groupidx=0;$groupidx<$group_count;++$groupidx) {
-              $this->verifydir("group",$groups[$groupidx][1]);
+              $this->verifydir("group",$groups[$groupidx]['account_lid']);
               if ($checksubdirs == "Yes"){ //if its a dir, does that dir have subdirs?
-                $path = $phpgw_info["server"]["files_dir"].$sep."groups".$sep.$groups[$groupidx][1];
+                $path = $phpgw_info["server"]["files_dir"].$sep."groups".$sep.$groups[$groupidx]['account_lid'];
                 $subdir = dir($path);
                 while($subentry=$subdir->read()) {
                   $subpath = $path.$sep.$subentry;
@@ -129,7 +129,7 @@
                   }
                 }
               }
-              $list[] = array("name" => $groups[$groupidx][1], "type"  => "dir", "subdirs" => $hassubdir);
+              $list[] = array("name" => $groups[$groupidx]['account_lid'], "type"  => "dir", "subdirs" => $hassubdir);
 	            $hassubdir = False;
             }
           }

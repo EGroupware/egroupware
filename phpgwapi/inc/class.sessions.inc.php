@@ -580,6 +580,7 @@
 					$url = $phpgw_info['server']['webserver_url'].'/'.$app.'/'.$url; 
 				}
 			} */
+			//echo "$url\n";
 			return $url;
 		}  
 	}
