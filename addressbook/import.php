@@ -14,6 +14,7 @@
 
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
 	$phpgw_info["flags"]["enable_contacts_class"] = True;
+	$phpgw_info["flags"]["enable_browser_class"] = True;
 	include("../header.inc.php");
 
 	//$sep = $phpgw_info["server"]["dir_separator"];
@@ -163,9 +164,18 @@
 		fclose($fp);
 		$buffer = $this->import_end_file($buffer,$private,$cat_id);
 
+		if ($phpgw->browser->get_agent() == "IE") // && browser_get_version() == "5.5")
+		{
+			$attachment = "";
+		}
+		else
+		{
+			$attachment = " attachment;";
+		}
+
 		if ($download == "") {
 			if($conv_type=="Debug LDAP" || $conv_type=="Debug SQL" ) {
-				header("Content-disposition: attachment; filename=\"conversion.txt\"");
+				header("Content-disposition:".$attachment." filename=\"conversion.txt\"");
 				header("Content-type: application/octetstream");
 				header("Content-length: ".strlen($buffer));
 				header("Pragma: no-cache");
