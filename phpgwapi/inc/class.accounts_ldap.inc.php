@@ -24,7 +24,7 @@
 
   /* $Id$ */
   
-  class accounts
+  class accounts_
   {
     var $db;
     var $account_id;

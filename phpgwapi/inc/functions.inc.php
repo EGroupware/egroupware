@@ -233,11 +233,6 @@
   define("PHPGW_ACL_EDIT",4);
   define("PHPGW_ACL_DELETE",8);
 
-  //incase we are dealing with a fresh login
-  if (! isset($phpgw_info["user"]["preferences"]["common"]["template_set"])) {
-     $phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
-  }
-
   // Since LDAP will return system accounts, there are a few we don't want to login.
   $phpgw_info["server"]["global_denied_users"] = array('root'     => True,
                                                        'bin'      => True,
@@ -268,6 +263,12 @@
   \****************************************************************************/
   $phpgw = CreateObject("phpgwapi.phpgw");
   $phpgw->phpgw_();
+  //incase we are dealing with a fresh login
+  if (! isset($phpgw_info["user"]["preferences"]["common"]["template_set"])) {
+     $phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
+  }
+
+
   if ($phpgw_info["flags"]["currentapp"] != "login" && $phpgw_info["flags"]["currentapp"] != "logout") {
      //if (! $phpgw->session->verify()) {
      //   Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));

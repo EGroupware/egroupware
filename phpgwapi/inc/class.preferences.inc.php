@@ -93,7 +93,7 @@
     {
       global $phpgw, $phpgw_info;
       $this->db->lock("preferences");
-      $this->db->query('delete from preferences where preference_owner=' . $this->account_id,__LINE__,__FILE__);
+      $this->db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 
       if ($PHP_VERSION < "4.0.0") {
         $pref_info = addslashes(serialize($this->data));
@@ -101,8 +101,8 @@
         $pref_info = serialize($this->data);
       }
 
-      $this->db->query('insert into preferences (preference_owner,preference_value) values ('
-                . $this->account_id . ",'" . $pref_info . "')",__LINE__,__FILE__);
+      $this->db->query("insert into preferences (preference_owner,preference_value) values ('"
+                     . $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
 
       $this->db->unlock();
       return $this->data;

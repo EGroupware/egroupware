@@ -100,21 +100,9 @@
       $this->common       = CreateObject("phpgwapi.common");
       $this->hooks        = CreateObject("phpgwapi.hooks");
 
-      if (! $phpgw_info["server"]["auth_type"]) {
-         $phpgw_info["server"]["auth_type"] = "sql";
-      }
-      $this->auth         = create_specialobject("phpgwapi.auth",$phpgw_info["server"]["auth_type"]);
+      $this->auth         = createobject("phpgwapi.auth");
       $this->acl          = CreateObject("phpgwapi.acl");
-
-      if (! $phpgw_info["server"]["account_repository"]) {
-         if ($phpgw_info["server"]["auth_type"]) {
-            $phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];
-         } else {
-            $phpgw_info["server"]["account_repository"] = "sql";
-         }
-      }
-      $this->accounts     = create_specialobject("phpgwapi.accounts",$phpgw_info["server"]["auth_type"]);
-
+      $this->accounts     = createobject("phpgwapi.accounts");
       $this->session      = CreateObject("phpgwapi.sessions");
       $this->preferences  = CreateObject("phpgwapi.preferences");
       $this->applications = CreateObject("phpgwapi.applications");
