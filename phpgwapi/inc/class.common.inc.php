@@ -684,40 +684,11 @@
     return $count;
   }
 
-
+  /* Wrapper to the session->appsession() */
   function appsession($data = "##NOTHING##") {
-      global $phpgw_info, $phpgw;
-
-      if ($data == "##NOTHING##") {  /* This allows the user to put "" as the value. */
-	      $phpgw->db->query("select content from phpgw_app_sessions where sessionid = '"
-		      .$phpgw_info["user"]["sessionid"]."' and loginid = '"
-		      .$phpgw_info["user"]["userid"]."' and app = '"
-		      .$phpgw_info["flags"]["currentapp"] . "'",__LINE__,__FILE__);
-	      if($phpgw->db->num_rows()) {
-	        $phpgw->db->next_record();
-	        $data = $phpgw->db->f("content");
-	        $data = $this->decrypt($data);
-	        return $data;
-	      }
-      } else {
-	      $data = $this->encrypt($data);
-	      $phpgw->db->query("select * from phpgw_app_sessions where sessionid = '"
-		      . $phpgw_info["user"]["sessionid"] . "' and app = '"
-		      . $phpgw_info["flags"]["currentapp"] . "'",__LINE__,__FILE__);
-	      if ($phpgw->db->num_rows()==0) {
-	        $phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,content)"
-		        ." VALUES ('".$phpgw_info["user"]["sessionid"]."','"
-		        .$phpgw_info["user"]["userid"]
-		        ."','".$phpgw_info["flags"]["currentapp"]."','".$data."');",__LINE__,__FILE__);
-	      } else {
-	        $phpgw->db->query("update phpgw_app_sessions set content = '$data' where sessionid = '"
-		        .$phpgw_info["user"]["sessionid"]."' and loginid = '"
-		        .$phpgw_info["user"]["userid"]."'",__LINE__,__FILE__);
-	      }
-	      $data = $this->decrypt($data);
-        return $data;
-      }
-    }
+    global $phpgw_info, $phpgw;
+    return $phpgw->session->appsession($data);
+  }
 
     function show_date($t = "", $format = "")
     {

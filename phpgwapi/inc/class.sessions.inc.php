@@ -36,6 +36,9 @@
     var $db;
     var $db2;
 
+		/*************************************************************************\
+		* Constructor just loads up some defaults from cookies                    *
+		\*************************************************************************/
     function sessions()
     {
        global $phpgw, $phpgw_info, $sessionid, $kp3;
@@ -46,6 +49,9 @@
        $this->kp3       = $kp3;
     }
 
+		/*************************************************************************\
+		* Functions for creating and verifying the session                        *
+		\*************************************************************************/
     function getuser_ip()
     {
        global $REMOTE_ADDR, $HTTP_X_FORWARDED_FOR;
@@ -148,37 +154,6 @@
        }
        $phpgw->db->query("update phpgw_sessions set session_info='$info_string' where session_id='"
                        . $this->sessionid . "'",__LINE__,__FILE__);
-    }
-
-    function read_repositories()
-    {
-      global $phpgw_info, $phpgw;
-      $phpgw->acl->acl($this->account_id);
-      $phpgw->accounts->accounts($this->account_id);
-      $phpgw->preferences->preferences($this->account_id);
-      $phpgw->applications->applications($this->account_id);
-      $phpgw_info["user"]                = $phpgw->accounts->read_repository();
-      $phpgw_info["user"]["acl"]         = $phpgw->acl->read_repository();
-      $phpgw_info["user"]["preferences"] = $phpgw->preferences->read_repository();
-      $phpgw_info["user"]["apps"]        = $phpgw->applications->read_repository();
-      @reset($phpgw_info["user"]["apps"]);
-
-      $phpgw_info["user"]["domain"]      = $this->account_domain;
-      $phpgw_info["user"]["sessionid"]   = $this->sessionid;
-      $phpgw_info["user"]["kp3"]         = $this->kp3;
-      $phpgw_info["user"]["session_ip"]  = $this->getuser_ip();
-      $phpgw_info["user"]["session_lid"] = $this->account_lid."@".$this->account_domain;
-      $phpgw_info["user"]["account_id"]  = $this->account_id;
-      $phpgw_info["user"]["account_lid"] = $this->account_lid;
-      $phpgw_info["user"]["userid"]      = $this->account_lid;
-      $phpgw_info["user"]["passwd"]      = $this->passwd;
-
-      $this->data["user"]        = $phpgw_info["user"];
-      $this->data["apps"]        = $phpgw_info["apps"];
-      $this->data["server"]      = $phpgw_info["server"];
-      $this->data["hooks"]       = $phpgw->hooks->read();
-      $this->data["user"]["preferences"] = $phpgw_info["user"]["preferences"];
-      $this->data["user"]["kp3"] = "";
     }
 
     function create($login,$passwd)
@@ -292,5 +267,227 @@
        return True;
     }
 
+		/*************************************************************************\
+		* Functions for appsession data and session cache                         *
+		\*************************************************************************/
+
+    function read_repositories()
+    {
+      global $phpgw_info, $phpgw;
+      $phpgw->acl->acl($this->account_id);
+      $phpgw->accounts->accounts($this->account_id);
+      $phpgw->preferences->preferences($this->account_id);
+      $phpgw->applications->applications($this->account_id);
+      $phpgw_info["user"]                = $phpgw->accounts->read_repository();
+      $phpgw_info["user"]["acl"]         = $phpgw->acl->read_repository();
+      $phpgw_info["user"]["preferences"] = $phpgw->preferences->read_repository();
+      $phpgw_info["user"]["apps"]        = $phpgw->applications->read_repository();
+      @reset($phpgw_info["user"]["apps"]);
+
+      $phpgw_info["user"]["domain"]      = $this->account_domain;
+      $phpgw_info["user"]["sessionid"]   = $this->sessionid;
+      $phpgw_info["user"]["kp3"]         = $this->kp3;
+      $phpgw_info["user"]["session_ip"]  = $this->getuser_ip();
+      $phpgw_info["user"]["session_lid"] = $this->account_lid."@".$this->account_domain;
+      $phpgw_info["user"]["account_id"]  = $this->account_id;
+      $phpgw_info["user"]["account_lid"] = $this->account_lid;
+      $phpgw_info["user"]["userid"]      = $this->account_lid;
+      $phpgw_info["user"]["passwd"]      = $this->passwd;
+
+      $this->data["user"]        = $phpgw_info["user"];
+      $this->data["apps"]        = $phpgw_info["apps"];
+      $this->data["server"]      = $phpgw_info["server"];
+      $this->data["hooks"]       = $phpgw->hooks->read();
+      $this->data["user"]["preferences"] = $phpgw_info["user"]["preferences"];
+      $this->data["user"]["kp3"] = "";
+    }
+
+    function appsession($data = "##NOTHING##", $location = "default") {
+      global $phpgw_info, $phpgw;
+
+      if ($data == "##NOTHING##") {  /* This allows the user to put "" as the value. */
+				$sql = 'select content from phpgw_app_sessions where'
+					.' sessionid = "'.$this->sessionid.'"'
+					.' and loginid = "'.$this->account_id.'"'
+					.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
+					.' and location = "'.$location.'"',__LINE__,__FILE__
+				);
+
+	      $phpgw->db->query($sql,__LINE__,__FILE__);
+
+	      if($phpgw->db->num_rows()) {
+	        $phpgw->db->next_record();
+	        $data = $phpgw->db->f("content");
+//	        $data = $phpgw->common->decrypt($data);
+	        return $data;
+	      }
+      } else {
+//	      $data = $phpgw->common->encrypt($data);
+				$sql = 'select content from phpgw_app_sessions where'
+					.' sessionid = "'.$this->sessionid.'"'
+					.' and loginid = "'.$this->account_id.'"'
+					.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
+					.' and location = "'.$location.'"',__LINE__,__FILE__
+				);
+	      $phpgw->db->query($sql,__LINE__,__FILE__);
+
+	      if ($phpgw->db->num_rows()==0) {
+					$sql = 'INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content)'
+						.' VALUES ("'.$this->sessionid.'"'
+						.' ","'.$this->account_id.'"'
+						.' ","'.$phpgw_info["flags"]["currentapp"].'"'
+						.' ","'.$location.'"'
+						.' ","'.$data.'"')'
+					);
+		      $phpgw->db->query($sql,__LINE__,__FILE__);
+	      } else {
+					$sql = 'update phpgw_app_sessions set content = "'.$data.'"'
+						.' where sessionid = "'.$this->sessionid.'"'
+						.' and loginid = "'.$this->account_id.'"'
+						.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
+						.' and location = "'.$location.'"',__LINE__,__FILE__
+					);
+		      $phpgw->db->query($sql,__LINE__,__FILE__);
+	      }
+	      //$data = $phpgw->common->decrypt($data);
+        return $data;
+      }
+    }
+
+		function restore()
+		{
+			global $phpgw;
+
+			$serializedData = $phpgw->common->appsession();
+			$sessionData = unserialize($serializedData);  
+			
+			if (is_array($sessionData))
+			{
+				reset($sessionData);
+				while(list($key,$value) = each($sessionData))
+				{
+					global $$key;
+					$$key = $value;
+					$this->variableNames[$key]="registered";
+					#print "restored: ".$key.", $value<br>";
+				}
+			}
+		}
+		
+		// save the current values of the variables
+		function save()
+		{
+			global $phpgw;
+			
+			if (is_array($this->variableNames))
+			{
+				reset($this->variableNames);
+				while(list($key, $value) = each($this->variableNames))
+				{
+					if ($value == "registered")
+					{
+						global $$key;
+						$sessionData[$key] = $$key;
+					}
+				}
+				$serializedData = addslashes(serialize($sessionData));
+				$phpgw->common->appsession($serializedData);
+			}
+		}
+		
+		// create a list a variable names, wich data need's to be restored
+		function register($_variableName)
+		{
+			$this->variableNames[$_variableName]="registered";
+			#print "registered $_variableName<br>";
+		}
+		
+		// mark variable as unregistered
+		function unregister($_variableName)
+		{
+			$this->variableNames[$_variableName]="unregistered";
+			#print "unregistered $_variableName<br>";
+		}
+
+		// check if we have a variable registred already
+		function is_registered($_variableName)
+		{
+			if ($this->variableNames[$_variableName] == "registered")
+			{
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+	}
+
+
+		/*************************************************************************\
+		* Function to handle session support via url or cookies                   *
+		\*************************************************************************/
+
+		function link($url = "", $extravars = "")
+		{
+			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
+			
+			/* Fix problems when PHP_SELF if used as the param */
+			if ($url == $PHP_SELF){ $url = ""; }
+			
+			if (! $kp3) { $kp3 = $phpgw_info["user"]["kp3"]; }
+
+			// Explicit hack to work around problems with php running as CGI on windows
+			// please let us know if this doesn't work for you!
+			if (! $url && (PHP_OS == "Windows" || PHP_OS == "OS/2" || PHP_OS == "WIN32" || PHP_OS == "WIN16")) {
+				$exe = strpos($PHP_SELF,"php.exe");
+				if ($exe != false) {
+					$exe += 7; // strlen("php.exe")
+					$url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
+					$url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2];
+					$url .= substr($PHP_SELF,$exe,strlen($PHP_SELF)-$exe);
+				}
+			}
+			if (! $url) {
+				$url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
+				/* Some hosting providers have their paths screwy.
+					 If the value from $PHP_SELF is not what you expect, you can use this to patch it
+					 It will need to be adjusted to your specific problem tho.
+				*/
+				//$patched_php_self = str_replace("/php4/php/phpgroupware", "/phpgroupware", $PHP_SELF);
+				$patched_php_self = $PHP_SELF;
+				$url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2] . $patched_php_self;
+			}
+
+			if (isset($phpgw_info["server"]["usecookies"]) &&
+				$phpgw_info["server"]["usecookies"]) {
+				if ($extravars) { $url .= "?$extravars"; }
+			} else {
+				$url .= "?sessionid=" . $phpgw_info["user"]["sessionid"];
+				$url .= "&kp3=" . $kp3;
+				$url .= "&domain=" . $phpgw_info["user"]["domain"];
+				// This doesn't belong in the API.
+				// Its up to the app to pass this value. (jengo)
+				// Putting it into the app requires a massive number of updates in email app. 
+				// Until that happens this needs to stay here (seek3r)
+				if ($phpgw_info["flags"]["newsmode"]) { $url .= "&newsmode=on"; }
+				if ($extravars) { $url .= "&$extravars"; }
+			}
+
+			$url = str_replace("/?", "/index.php?", $url);
+			$webserver_url_count = strlen($phpgw_info["server"]["webserver_url"]);
+			$slash_check = strtolower(substr($url ,0,1));
+			if(substr($url ,0,$webserver_url_count) != $phpgw_info["server"]["webserver_url"]) {
+				$app = $phpgw_info["flags"]["currentapp"];
+				if($slash_check == "/") {
+					$url = $phpgw_info["server"]["webserver_url"].$url; 
+				} elseif ($app == "home" || $app == "logout" || $app == "login"){
+					$url = $phpgw_info["server"]["webserver_url"]."/".$url; 
+				}else{ 
+					$url = $phpgw_info["server"]["webserver_url"]."/".$app."/".$url; 
+				}
+			} 
+			return $url;
+		}  
   }
 ?>

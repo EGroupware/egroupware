@@ -1,235 +1,130 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Core class and functions for phpGroupWare             *
-  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-  * and Joseph Engo <jengo@phpgroupware.org>                                 *
-  * This is the central class for the phpGroupWare API                       *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare API - Core class and functions for phpGroupWare             *
+	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	* and Joseph Engo <jengo@phpgroupware.org>                                 *
+	* This is the central class for the phpGroupWare API                       *
+	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	* -------------------------------------------------------------------------*
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
-  
-  /****************************************************************************\
-  * Our API class starts here                                                  *
-  \****************************************************************************/
-  class phpgw
-  {
-    var $accounts;
-    var $applications;
-    var $acl;
-    var $auth;
-    var $db;
-    var $debug = 0;		// This will turn on debugging information.
-    var $crypto;
-    var $categories;
-    var $common;
-    var $hooks;
-    var $network;
-    var $nextmatchs;
-    var $preferences;
-    var $session;
-    var $send;
-    var $template;
-    var $translation;
-    var $utilities;
-    var $vfs;
-    var $calendar;
-    var $msg;
-    var $addressbook;
-    var $todo;
+	/* $Id$ */
+	
+	/****************************************************************************\
+	* Our API class starts here                                                  *
+	\****************************************************************************/
+	class phpgw
+	{
+		var $accounts;
+		var $applications;
+		var $acl;
+		var $auth;
+		var $db;
+		var $debug = 0;		// This will turn on debugging information.
+		var $crypto;
+		var $categories;
+		var $common;
+		var $hooks;
+		var $network;
+		var $nextmatchs;
+		var $preferences;
+		var $session;
+		var $send;
+		var $template;
+		var $translation;
+		var $utilities;
+		var $vfs;
+		var $calendar;
+		var $msg;
+		var $addressbook;
+		var $todo;
 
-    // This is here so you can decied what the best way to handle bad sessions
-    // You could redirect them to login.php with code 2 or use the default
-    // I recommend using the default until all of the bugs are worked out.
+		// This is here so you can decied what the best way to handle bad sessions
+		// You could redirect them to login.php with code 2 or use the default
+		// I recommend using the default until all of the bugs are worked out.
 
-    function phpgw_()
-    {
-      global $phpgw_info, $sessionid, $login;
-      /************************************************************************\
-      * Required classes                                                       *
-      \************************************************************************/
-      $this->db           = CreateObject("phpgwapi.db");
-      $this->db->Host     = $phpgw_info["server"]["db_host"];
-      $this->db->Type     = $phpgw_info["server"]["db_type"];
-      $this->db->Database = $phpgw_info["server"]["db_name"];
-      $this->db->User     = $phpgw_info["server"]["db_user"];
-      $this->db->Password = $phpgw_info["server"]["db_pass"];
+		function phpgw()
+		{
+			global $phpgw_info, $sessionid, $login;
+			/************************************************************************\
+			* Required classes                                                       *
+			\************************************************************************/
+			$this->db           = CreateObject("phpgwapi.db");
+			$this->db->Host     = $phpgw_info["server"]["db_host"];
+			$this->db->Type     = $phpgw_info["server"]["db_type"];
+			$this->db->Database = $phpgw_info["server"]["db_name"];
+			$this->db->User     = $phpgw_info["server"]["db_user"];
+			$this->db->Password = $phpgw_info["server"]["db_pass"];
+			if ($this->debug) {
+				 $this->db->Debug = 1;
+			}
 
-      if ($this->debug) {
-         $this->db->Debug = 1;
-      }
+			$this->common       = CreateObject("phpgwapi.common");
+			$this->hooks        = CreateObject("phpgwapi.hooks");
+			$this->auth         = createobject("phpgwapi.auth");
+			$this->acl          = CreateObject("phpgwapi.acl");
+			$this->accounts     = createobject("phpgwapi.accounts");
+			$this->session      = CreateObject("phpgwapi.sessions");
+			$this->preferences  = CreateObject("phpgwapi.preferences");
+			$this->applications = CreateObject("phpgwapi.applications");
+			$this->translation  = CreateObject("phpgwapi.translation");
+		} 
 
-      if ($phpgw_info["flags"]["currentapp"] == "login") {
-         $this->db->query("select * from config",__LINE__,__FILE__);
-         while ($this->db->next_record()) {
-            $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
-         }
-      } else {
-    	 $config_var = array("encryptkey","auth_type","account_repository");
-         $c = "";
-    	 for ($i=0;$i<count($config_var);$i++) {
-     	   if ($i) {
-     	      $c .= " OR ";
-     	   }
-   	     $c .= "config_name='".$config_var[$i]."'";
-    	 }
-         $this->db->query("select * from config where $c",__LINE__,__FILE__);
-         while ($this->db->next_record()) {
-            $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
-         }
-      }
+		/**************************************************************************\
+		* Core functions                                                           *
+		\**************************************************************************/
 
-      /************************************************************************\
-      * Continue adding the classes                                            *
-      \************************************************************************/
-      $this->common       = CreateObject("phpgwapi.common");
-      $this->hooks        = CreateObject("phpgwapi.hooks");
+		/* Wrapper to the session->link() */
+		function link($url = "", $extravars = "")
+		{
+			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
+			return $this->session->link($url, $extravars);
+		}
 
-      $this->auth         = createobject("phpgwapi.auth");
-      $this->acl          = CreateObject("phpgwapi.acl");
-      $this->accounts     = createobject("phpgwapi.accounts");
-      $this->session      = CreateObject("phpgwapi.sessions");
-      $this->preferences  = CreateObject("phpgwapi.preferences");
-      $this->applications = CreateObject("phpgwapi.applications");
-      
-      if ($phpgw_info["flags"]["currentapp"] == "login") {
-         if ($login != ""){
-            $login_array = explode("@",$login);
-            $login_id = $this->accounts->name2id($login_array[0]);
-            $this->accounts->accounts($login_id);
-            $this->preferences->preferences($login_id);
-         }
-      } elseif (! $this->session->verify()) {
-         $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
-         $this->db->next_record();
-         Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
-         exit;
-      }
-      $this->translation = CreateObject("phpgwapi.translation");
+		function redirect($url = "")
+		{
+			// This function handles redirects under iis and apache
+			// it assumes that $phpgw->link() has already been called
 
-      $sep = $phpgw_info["server"]["dir_separator"];
-      $template_root = $this->common->get_tpl_dir();
+			global $HTTP_ENV_VARS;
 
-      if (is_dir($template_root)) {
-         $this->template = CreateObject("phpgwapi.Template", $template_root);
-      }
-    } 
+			$iis = strpos($HTTP_ENV_VARS["SERVER_SOFTWARE"], "IIS", 0);
+			
+			if ( !$url ) {
+				$url = $PHP_SELF;
+			}
+			if ( $iis ) {
+				echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
+				echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";
+				echo "\n</HEAD><BODY>";
+				echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
+				echo "\n</BODY></HTML>";
+				exit;
+			} else {
+				Header("Location: $url");
+				print("\n\n");
+				exit;
+			}
+		}
 
-    /**************************************************************************\
-    * Core functions                                                           *
-    \**************************************************************************/
-
-    /* A function to handle session support via url session id, or cookies */
-    function link($url = "", $extravars = "")
-    {
-      global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
-      if ($url == $PHP_SELF){ $url = ""; } //fix problems when PHP_SELF if used as the param
-      if (! $kp3) { $kp3 = $phpgw_info["user"]["kp3"]; }
-
-      // Explicit hack to work around problems with php running as CGI on windows
-      // please let us know if this doesn't work for you!
-      if (! $url && (PHP_OS == "Windows" || PHP_OS == "OS/2" || PHP_OS == "WIN32" || PHP_OS == "WIN16")) {
-        $exe = strpos($PHP_SELF,"php.exe");
-	      if ($exe != false) {
-          $exe += 7; // strlen("php.exe")
-          $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
-          $url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2];
-	        $url .= substr($PHP_SELF,$exe,strlen($PHP_SELF)-$exe);
-        }
-      }
-      if (! $url) {
-        $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
-        /* Some hosting providers have their paths screwy.
-           If the value from $PHP_SELF is not what you expect, you can use this to patch it
-           It will need to be adjusted to your specific problem tho.
-        */
-        //$patched_php_self = str_replace("/php4/php/phpgroupware", "/phpgroupware", $PHP_SELF);
-        $patched_php_self = $PHP_SELF;
-        $url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2] . $patched_php_self;
-      }
-
-      if (isset($phpgw_info["server"]["usecookies"]) &&
-	      $phpgw_info["server"]["usecookies"]) {
-        if ($extravars) { $url .= "?$extravars"; }
-      } else {
-        $url .= "?sessionid=" . $phpgw_info["user"]["sessionid"];
-        $url .= "&kp3=" . $kp3;
-        $url .= "&domain=" . $phpgw_info["user"]["domain"];
-        // This doesn't belong in the API.
-      	// Its up to the app to pass this value. (jengo)
-        // Putting it into the app requires a massive number of updates in email app. 
-        // Until that happens this needs to stay here (seek3r)
-        if ($phpgw_info["flags"]["newsmode"]) { $url .= "&newsmode=on"; }
-        if ($extravars) { $url .= "&$extravars"; }
-      }
-
-      $url = str_replace("/?", "/index.php?", $url);
-      $webserver_url_count = strlen($phpgw_info["server"]["webserver_url"]);
-      $slash_check = strtolower(substr($url ,0,1));
-      if(substr($url ,0,$webserver_url_count) != $phpgw_info["server"]["webserver_url"]) {
-        $app = $phpgw_info["flags"]["currentapp"];
-        if($slash_check == "/") {
-          $url = $phpgw_info["server"]["webserver_url"].$url; 
-        } elseif ($app == "home" || $app == "logout" || $app == "login"){
-          $url = $phpgw_info["server"]["webserver_url"]."/".$url; 
-        }else{ 
-          $url = $phpgw_info["server"]["webserver_url"]."/".$app."/".$url; 
-        }
-      } 
-      return $url;
-    }  
-
-    function strip_html($s)
-    {
-       return htmlspecialchars(stripslashes($s));
-    }
-
-    function redirect($url = "")
-    {
-      // This function handles redirects under iis and apache
-      // it assumes that $phpgw->link() has already been called
-
-      global $HTTP_ENV_VARS;
-
-      $iis = strpos($HTTP_ENV_VARS["SERVER_SOFTWARE"], "IIS", 0);
-      
-      if ( !$url ) {
-        $url = $PHP_SELF;
-      }
-      if ( $iis ) {
-        echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
-        echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";
-        echo "\n</HEAD><BODY>";
-        echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
-        echo "\n</BODY></HTML>";
-        exit;
-      } else {
-        Header("Location: $url");
-        print("\n\n");
-        exit;
-      }
-    }
-
-    function lang($key, $m1 = "", $m2 = "", $m3 = "", $m4 = "") 
-    {
-      global $phpgw;
-      
-      return $phpgw->translation->translate($key);
-    }
-    
-  }          //end phpgw class
+		function lang($key, $m1 = "", $m2 = "", $m3 = "", $m4 = "") 
+		{
+			global $phpgw;
+			return $this->translation->translate($key);
+		}
+	}	//end phpgw class
+?>
