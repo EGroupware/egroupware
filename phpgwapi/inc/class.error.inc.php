@@ -26,7 +26,7 @@
 		var $fname;
 		var $line;
 		var $app;
-		
+
 		var $public_functions = array();
 
 		// Translate Message into Language
@@ -41,7 +41,7 @@
 			if ($parms == '')
 			{
 				return;
-			};
+			}
 			$etext =$parms['text'];
 			$parray = array($parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9'],$parms['p10']);
 			$fname = $parms['file'];
@@ -62,15 +62,15 @@
 			$this->fname     = $fname;
 			$this->line		 = $line;
 			$this->app 		 = $phpgw_info['flags']['currentapp'];
-			
+
  			if (!$this->fname or !$this->line)
 			{
-				$phpgw->log->error(array('text'=>'W-PGMERR, Programmer failed to pass __FILE__ and/or __LINE__ in next log message',
-										'file'=>__FILE__,'line'=>__LINE__
-										)
-								  );
+				$phpgw->log->error(array(
+					'text'=>'W-PGMERR, Programmer failed to pass __FILE__ and/or __LINE__ in next log message',
+					'file'=>__FILE__,'line'=>__LINE__
+				));
 			}
- 
+
 			$phpgw->log->errorstack[] = $this;
 			if ($this->severity == 'F')
 			{

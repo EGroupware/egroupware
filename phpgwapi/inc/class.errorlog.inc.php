@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - errorlog                                                       *
+	* phpGroupWare - errorlog                                                  *
 	* http://www.phpgroupware.org                                              *
 	* This application written by jerry westrick <jerry@westrick.com>          *
 	* --------------------------------------------                             *
@@ -18,30 +18,29 @@
 		*	Instance Variables...   *
 		\***************************/
 		var $errorstack = array();	
-		var $public_functions = array('message',
-									'error',
-									'iserror',
-									'severity',
-									'commit',
-									'clearstack',
-									'astable',
-									);
-		
+		var $public_functions = array(
+			'message',
+			'error',
+			'iserror',
+			'severity',
+			'commit',
+			'clearstack',
+			'astable'
+		);
+
 		function message($parms)
 		{
 			$parms['ismsg']=1;
 			CreateObject('phpgwapi.error',$parms);
 			return true;
 		}
-		
-		
+
 		function error($parms)
 		{
 			$parms['ismsg']=0;
 			CreateObject('phpgwapi.error',$parms);
 			return true;
 		}
-
 
 		function write($parms)
 		{
@@ -53,12 +52,7 @@
 			$this->errorstack = $save;
 			return true;
 		}
-		
- 
-		
-		
-		
-		
+
 		function iserror($parms)
 		{
 			$ecode = $parms['code'];
@@ -73,8 +67,7 @@
 			}
 			return false;
 		}
-		
-		
+
 		function severity()
 		{
 			$max = 'D';
@@ -99,10 +92,9 @@
 			}
 			return $max;
 		}
-		
+
 		function commit()
 		{
-		
 			global $phpgw, $phpgw_info;
 			$db = $phpgw->db;
 //			$db->lock('phpgw_log');
@@ -147,7 +139,6 @@
 			return true;
 		}
 
-
 		function clearstack()
 		{
 			$new = array();
@@ -181,7 +172,7 @@
 			$html .= "\t\t<td >File</td>\n";
 			$html .= "\t\t<td >Line</td>\n";
 			$html .= "\t</tr>\n";
-			
+
 			$errorstack = $this->errorstack;
 			for ($i = 0; $i < count($errorstack); $i++)
 			{
@@ -194,7 +185,7 @@
 					case 'E': $color = 'FFC0C0'; break;
 					case 'F': $color = 'FF0909'; break;
 				}
-				
+
 				$html .= "\t<tr bgcolor=".'"'.$color.'"'.">\n";
 				$html .= "\t\t<td align=center>".$i."</td>\n";
 				$html .= "\t\t<td>".$phpgw->common->show_date($err->timestamp)."</td>\n";
@@ -208,7 +199,7 @@
 			};			
 			$html .= "</table>\n";
 			$html .= "</center>\n";
-			
+
 			return $html;
 		}
 	}
