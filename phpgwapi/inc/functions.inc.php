@@ -180,7 +180,7 @@
 	@$GLOBALS['phpgw']->db->query("SELECT COUNT(config_name) FROM phpgw_config");
 	if(!@$GLOBALS['phpgw']->db->next_record())
 	{
-		$setup_dir = @ereg_replace($PHP_SELF,'index.php','setup/');
+		$setup_dir = @ereg_replace($_SERVER['PHP_SELF'],'index.php','setup/');
 		echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
 			.'phpGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
 		exit;
