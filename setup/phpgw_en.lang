@@ -243,6 +243,7 @@ message	email	en	Message
 message	transy	en	Message
 message x	nntp	en	Message %1
 messages	email	en	Messages
+middle name	addressbook	en	Middle Name
 minutes	calendar	en	minutes
 minutes between reloads	admin	en	Minutes between Reloads
 mo	calendar	en	M
@@ -417,7 +418,7 @@ thursday	common	en	Thursday
 time	common	en	Time
 time created     notes         en       Time created
 time format	preferences	en	Time format
-time zone offset	preferences	en	Time zone offset
+time zone offset	common	en	Time zone offset
 times new roman     notes      en      Times New Roman
 title	admin	en	Title
 title	addressbook	en	Title
