@@ -574,6 +574,7 @@
         $currentver = "0.9.7pre1";
         update_version_table();
       }
+/*
       if ($currentver == "0.9.7pre1") {
         // upgrade code starts here
 
@@ -581,16 +582,18 @@
         $currentver = "0.9.7pre2";
         update_version_table();
       }
-
+*/
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
       echo "  </tr>\n";
     }
   }
+
   function v0_9_7to0_9_8(){
     global $currentver, $oldversion, $phpgw_info, $db;
 
     if ($currentver == "0.9.7" || ereg ("^0\.9\.8pre", $currentver)){
+/*
       if ($currentver == "0.9.7") {
         // upgrade code starts here
 
@@ -598,6 +601,8 @@
         $currentver = "0.9.8pre1";
         update_version_table();
       }
+*/
+/*
       if ($currentver == "0.9.8pre1") {
         // upgrade code starts here
 
@@ -605,7 +610,7 @@
         $currentver = "0.9.8pre2";
         update_version_table();
       }
-
+*/
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
       echo "  </tr>\n";
@@ -615,6 +620,7 @@
     global $currentver, $oldversion, $phpgw_info, $db;
 
     if ($currentver == "0.9.8" || ereg ("^0\.9\.9pre", $currentver)){
+/*
       if ($currentver == "0.9.8") {
         // upgrade code starts here
 
@@ -622,6 +628,8 @@
         $currentver = "0.9.9pre1";
         update_version_table();
       }
+*/
+/*
       if ($currentver == "0.9.9pre1") {
         // upgrade code starts here
 
@@ -629,7 +637,7 @@
         $currentver = "0.9.9pre2";
         update_version_table();
       }
-
+*/
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
       echo "  </tr>\n";
@@ -639,6 +647,7 @@
     global $currentver, $oldversion, $phpgw_info, $db;
 
     if ($currentver == "0.9.9" || ereg ("^0\.9\.10pre", $currentver)){
+/*
       if ($currentver == "0.9.9") {
         // upgrade code starts here
 
@@ -646,6 +655,8 @@
         $currentver = "0.9.10pre1";
         update_version_table();
       }
+*/
+/*
       if ($currentver == "0.9.10pre1") {
         // upgrade code starts here
 
@@ -653,7 +664,7 @@
         $currentver = "0.9.10pre2";
         update_version_table();
       }
-
+*/
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
       echo "  </tr>\n";
