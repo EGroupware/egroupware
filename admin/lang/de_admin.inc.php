@@ -122,6 +122,9 @@
        case "they must be removed before you can continue":
         $s = "Sie m&uuml;ssen zuvor aus dieser entfernt werden";	break;
 
+       case "remove all users from this group":
+	$s = "Entferne alle Benutzer aus dieser Gruppe";		break;
+
        default: $s = "* ". $message;
     }
     return $s;
