@@ -221,6 +221,7 @@
 			{
 				$application = $this->is->send('system.package_app',$app_id,$this->is->server['server_url']);
 // comment from here down to stop the actual install
+/*
 				// This is where I need to install the application
 				$sep = filesystem_separator();
 				@reset($application);
@@ -251,6 +252,7 @@
 					fwrite($fp,base64_decode($file_content));
 					fclose($fp);
 				}
+*/
 // Comment above to stop the actual install
 				@reset($application);
 				return $application;
@@ -405,7 +407,7 @@
 			}
 			$this->dir_file = Array();
 			$this->db->next_record();
-			$app_name = $this->db->f('app_name')
+			$app_name = $this->db->f('app_name');
 			$this->dir_file[$this->db->f('app_id')] = CreateObject('phpgwapi.xmlrpcval',
 				Array(
 					'id'      => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_id'),'int'),
