@@ -22,12 +22,11 @@
      $start = 0;
   }
 
-  $limit = $phpgw->nextmatchs->sql_limit($start);
+  $limit = $phpgw->db->limit($start);
   $phpgw->db->query("select count(*) from phpgw_sessions",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
   $total = $phpgw->db->f(0);
-  $limit = $phpgw->nextmatchs->sql_limit($start);
 
   $phpgw->template->set_var("lang_current_users",lang("List of current users"));
   $phpgw->template->set_var("bg_color",$phpgw_info["theme"][bg_color]);
@@ -51,7 +50,7 @@
      $ordermethod = "order by session_dla asc";
   }
 
-  $phpgw->db->query("select * from phpgw_sessions $ordermethod limit $limit",__LINE__,__FILE__);
+  $phpgw->db->query("select * from phpgw_sessions $ordermethod " . $phpgw->db->limit($start),__LINE__,__FILE__);
 
   $i = 0;
   while ($phpgw->db->next_record()) {
