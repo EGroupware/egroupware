@@ -522,6 +522,11 @@
 
 		function read_entry($id)
 		{
+			if (is_array($id) && count($id) == 1)	// xmlrpc
+			{
+				list(,$id) = each($id);
+				$xmlrpc = True;
+			}
 			if($this->check_perms(PHPGW_ACL_READ,$id))
 			{
 				$event = $this->so->read_entry($id);
@@ -531,7 +536,7 @@
 					$this->so->add_entry($event);
 					$event = $this->get_cached_event();
 				}
-				return $event;
+				return $xmlrpc ? $this->xmlrpc_prepare($event) : $event;
 			}
 		}
 
@@ -564,20 +569,22 @@
 
 		function delete_entry($id)
 		{
+			if (is_array($id) && count($id) == 1)	// xmlrpc
+			{
+				list(,$id) = each($id);
+				$xmlrpc = True;
+			}
 			if($this->check_perms(PHPGW_ACL_DELETE,$id))
 			{
-//				$temp_event = $this->read_entry($id);
-//				if($this->owner == $temp_event['owner'])
-//				{
 				$this->so->delete_entry($id);
-				$cd = 16;
+
+				if ($xmlrpc)
+				{
+					$this->so->expunge($id);
+				}
+				return 16;
 			}
-			else
-			{
-				$cd = 60;
-			}
-//			}
-			return $cd;
+			return 60;
 		}
 
 		function reinstate($params='')
@@ -688,15 +695,64 @@
 			$l_recur_enddate = (@isset($params['recur_enddate']) && $params['recur_enddate']?$params['recur_enddate']:$_POST['recur_enddate']);
 
 			$send_to_ui = True;
-			if($this->debug)
-			{
-				$send_to_ui = True;
-			}
-			if($p_cal || $p_participants || $p_start || $p_end || $p_recur_enddata)
+			if (!is_array($l_start) || !is_array($l_end))	// xmlrpc call
 			{
 				$send_to_ui = False;
+
+				$l_cal = $params;	// no extra array
+
+				foreach(array('start','end','recur_enddate') as $name)
+				{
+					$var = 'l_'.$name;
+					$$var = $this->iso86012date($params[$name]);
+					unset($l_cal[$name]);
+				}
+				if (!is_array($l_participants) || !count($l_participants))
+				{
+					$l_participants = array($GLOBALS['phpgw_info']['user']['account_id'].'A');
+				}
+				else
+				{
+					$l_participants = array();
+					foreach($params['participants'] as $user => $data)
+					{
+						$l_participants[] = $user.$data['status'];
+					}
+				}
+				unset($l_cal['participants']);
+
+				if (!is_object($GLOBALS['phpgw']->categories))
+				{
+					$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+				}
+				$l_categories = array();
+				if (is_array($params['category']))
+				{
+					foreach($params['category'] as $id => $name)
+					{
+						if ($id > 0 || ($id = $GLOBALS['phpgw']->categories->name2id(addslashes(trim($name)))))
+						{
+							$l_categories[] = $id;
+						}
+						else
+						{	// create new cat
+							$GLOBALS['phpgw']->categories->add( array('name' => $name,'descr' => $name ));
+							$l_categories[] = $GLOBALS['phpgw']->categories->name2id( addslashes($name) );
+						}
+					}
+				}
+				unset($l_cal['category']);
+/*
+				$fp = fopen('/tmp/xmlrpc.log','a+');
+				ob_start();
+				echo "\nbocalendar::update("; print_r($params); echo ")\n";
+				//echo "\nl_start="; print_r($l_start);
+				//echo "\nl_end="; print_r($l_end);
+				fwrite($fp,ob_get_contents());
+				ob_end_clean();
+				fclose($fp);
+*/
 			}
-			
 			print_debug('ID',$l_cal['id']);
 
 			if(isset($_GET['readsess']))
@@ -721,6 +777,10 @@
 			{
 				if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT,$l_cal['id'])))
 				{
+					if (!$send_to_ui)
+					{
+						return array(($l_cal['id']?1:2) => 'permission denied');
+					}
 					ExecMethod('calendar.uicalendar.index');
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
@@ -917,12 +977,16 @@
 				print_debug('bo->validated_update() returnval',$datetime_check);
 				if($datetime_check)
 				{
-				   ExecMethod('calendar.uicalendar.edit',
-				   	Array(
-				   		'cd'		=> $datetime_check,
-				   		'readsess'	=> 1
-				   	)
-				   );
+					if (!$send_to_ui)
+					{
+						return array($datetime_check => 'invalid input data');
+					}
+					ExecMethod('calendar.uicalendar.edit',
+						Array(
+							'cd'		=> $datetime_check,
+							'readsess'	=> 1
+						)
+					);
 					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 
@@ -993,6 +1057,7 @@
 //					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 			}
+			return True;
 		}
 
 		/* Private functions */
