@@ -118,10 +118,20 @@
 			}
 			if ($this->system_charset)	// do we have a system-charset ==> return it
 			{
-				return $this->system_charset;
+				$charset = $this->system_charset;
 			}
-			// if no translations are loaded (system-startup) use a default, else lang('charset')
-			return !is_array(@$GLOBALS['lang']) ? 'iso-8859-1' : strtolower($this->translate('charset'));
+			else
+			{
+				// if no translations are loaded (system-startup) use a default, else lang('charset')
+				$charset = !is_array(@$GLOBALS['lang']) ? 'iso-8859-1' : strtolower($this->translate('charset'));
+			}
+			// we need to set our charset as mbstring.internal_encoding if mbstring.func_overlaod > 0
+			// else we get problems for a charset is different from the default utf-8
+			if (ini_get('mbstring.func_overload') && $this->mbstring_internal_encoding != $charset)
+			{
+				ini_set('mbstring.internal_encoding',$this->mbstring_internal_encoding = $charset);
+			}			
+			return $charset;
 		}
 
 		function init()
