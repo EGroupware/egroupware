@@ -23,7 +23,7 @@
 	$n_passwd   = $_POST['n_passwd'];
 	$n_passwd_2 = $_POST['n_passwd_2'];
 
-	if (! $GLOBALS['phpgw']->acl->check('changepassword', 1) || $_POST['cancel'])
+	if(!$GLOBALS['phpgw']->acl->check('changepassword', 1) || $_POST['cancel'])
 	{
 		$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
 		$GLOBALS['phpgw']->common->phpgw_exit();
@@ -56,7 +56,7 @@
 			$errors[] = lang('You must enter a password');
 		}
 
-		if (is_array($errors))
+		if(is_array($errors))
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
@@ -67,10 +67,14 @@
 
 		$o_passwd = $GLOBALS['phpgw_info']['user']['passwd'];
 		$passwd_changed = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
-		if (! $passwd_changed)
+		if(!$passwd_changed)
 		{
-			// This need to be changed to show a different message based on the result
-			$GLOBALS['phpgw']->redirect_link('/preferences/index.php','cd=38');
+			$errors[] = lang('Failed to change password.  Please contact your administrator.');
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
+			$GLOBALS['phpgw']->template->set_var('messages',$GLOBALS['phpgw']->common->error_list($errors));
+			$GLOBALS['phpgw']->template->pfp('out','form');
+			$GLOBALS['phpgw']->common->phpgw_exit(True);
 		}
 		else
 		{
