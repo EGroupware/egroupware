@@ -52,20 +52,6 @@
 		'currentapp' => $app
 	);
 
-	/* dont call the xslt_app_tpl if app isnt ported to xslt yet.
-	this is only temporarily. when more apps use xslt we should change it to ask for non xslt apps*/
-
-	switch($app)
-	{
-		case 'notes':
-		case 'property':
-		case 'filemanager':
-		case 'email':
-		case 'admin':
-			$GLOBALS['phpgw_info']['flags']['xslt_app'] = True;
-			break;
-	}
-
 	include('./header.inc.php');
 
 	if ($app == 'home' && ! $api_requested)
