@@ -91,6 +91,5 @@
 			}
 			Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
 			$GLOBALS['phpgw']->common->phpgw_exit();
-
 		}
 	}
