@@ -97,13 +97,15 @@
 
       if (gettype($id) == "string") { $id = $this->username2userid($id); }
       $groups = Array();
-      $group_memberhips = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", $id);
-      reset ($groups);
-      $num = count($group_memberhips);
-      for ($idx=0; $idx<$num; ++$idx){
-        $groups[$group_memberhips[$idx]] = 0;
+      $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", intval($id));
+      if ($group_memberships) {
+        for ($idx=0; $idx<$count($group_memberships); $idx++){
+          $groups[$group_memberships[$idx]] = 1;
+        }
+        return $groups;
+      } else {
+        return False;
       }
-      return $groups;
     }
 
     function read_group_names($lid = "")

@@ -138,16 +138,17 @@
     {
       global $phpgw_info, $phpgw;
        
-      $db2 = $phpgw->db;
       if (gettype($id) == "string") { $id = $this->username2userid($id); }
       $groups = Array();
-      $group_memberhips = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", $id);
-      reset ($groups);
-      $num = count($group_memberhips);
-      for ($idx=0; $idx<$num; ++$idx){
-        $groups[$group_memberhips[$idx]] = 0;
+      $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", intval($id));
+      if ($group_memberships) {
+        for ($idx=0; $idx<count($group_memberships); $idx++){
+          $groups[intval($group_memberships[$idx])] = 1;
+        }
+        return $groups;
+      } else {
+        return False;
       }
-      return $groups;
     }
 
     function read_group_names($lid = "")
@@ -161,6 +162,7 @@
 
        $db = $phpgw->db;
        $i = 0;
+       reset($groups);
        while ($groups && $group = each($groups)) {
            $db->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
            $db->next_record();
@@ -170,7 +172,6 @@
        }
        if (! $lid)
           $this->group_names = $group_names;
-
        return $group_names;
     }
 

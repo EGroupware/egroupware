@@ -59,7 +59,7 @@
     
       // Group piece
       $sql .= " or (acl_account_type='g' and acl_account in (0"; // group 0 covers all users
-      $memberships = $phpgw->accounts->read_group_names();           
+      $memberships = $phpgw->accounts->read_group_names($user_id);           
       if (is_array($memberships) && count($memberships) > 0){
         for ($idx = 0; $idx < count($memberships); ++$idx){
           $sql .= ",".$memberships[$idx][0];
@@ -162,7 +162,7 @@
     
       // Group piece
       $sql .= " or (acl_account_type='g' and acl_account in (0"; // group 0 covers all users
-      $memberships = $phpgw->accounts->read_group_names();           
+      $memberships = $phpgw->accounts->read_group_names($phpgw_info["user"]["account_id"]);           
       if (is_array($memberships) && count($memberships) > 0){
         for ($idx = 0; $idx < count($memberships); ++$idx){
           $sql .= ",".$memberships[$idx][0];
@@ -195,12 +195,11 @@
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
       while ($this->db->next_record()) {
-        if ($this->db->f("acl_rights") == 0){ return False; }
-        $rights |= $this->db->f("acl_rights");
-        if (!!($rights & $required) == True){
-          $locations[] = $this->db->f("acl_location");
-        }else{
-          return False;
+        if ($this->db->f("acl_rights")) {
+          $rights |= $this->db->f("acl_rights");
+          if (!!($rights & $required) == True){
+            $locations[] = $this->db->f("acl_location");
+          }
         }
       }
       return $locations;

@@ -64,11 +64,11 @@
       global $phpgw;
       global $phpgw_info;
       $owner = $owner==$phpgw_info["user"]["account_id"]?0:$owner;
-      $groups = substr($phpgw->accounts->sql_search("calendar_entry.cal_group",$owner),4);
+      $groups = substr($phpgw->accounts->sql_search("calendar_entry.cal_group",intval($owner)),4);
       if (!$groups) {
-	return "";
+        return "";
       } else {
-	return "(calendar_entry.cal_access='group' AND (". $groups .")) ";
+        return "(calendar_entry.cal_access='group' AND (". $groups .")) ";
       }
     }
 

@@ -73,17 +73,14 @@
 // Changed By: Skeeter  29 Nov 00
 // This is to allow the user to search for other individuals group info....
       if(!$owner) {
-	$owner = $phpgw_info["user"]["account_id"];
+        $owner = $phpgw_info["user"]["account_id"];
       }
-      $db = $phpgw->db;
-      $db->query("SELECT account_lid FROM accounts WHERE account_id=".$owner,__LINE__,__FILE__);
-      $db->next_record();
-      $groups = $this->read_groups($db->f("account_lid"));
+      $groups = $this->read_groups($owner);
       if (gettype($groups) == "array") {
 //         echo "\n\n\n\n\ntest: " . count($groups) . "\n\n\n\n\n\n";
          while ($group = each($groups)) {
-           $s .= " or $table like '%," . $group[0] . ",%'";
-	 }
+           $s .= " or $table like '%," . $group[1] . ",%'";
+        }
       }
       return $s;
     }
