@@ -297,6 +297,11 @@
 				$cat_parent = $new_parent;
 			}
 
+			if (!$global_cats)
+			{
+				$global_cats = False;
+			}
+
 			if ($submit)
 			{
 				$data = serialize($cat_data);
@@ -328,28 +333,14 @@
 
 			if ($cats_level)
 			{
-				if ($global_cats)
-				{
-					$cats_list = $this->bo->cats->formated_list('select','all',$cat_parent,True);
-				}
-				else
-				{
-					$cats_list = $this->bo->cats->formated_list('select','all',$cat_parent);
-				}
+				$type = 'all';
 			}
 			else
 			{
-				if ($global_cats)
-				{
-					$cats_list = $this->bo->cats->formated_list('select','mains',$cat_parent,True);
-				}
-				else
-				{
-					$cats_list = $this->bo->cats->formated_list('select','mains',$cat_parent);
-				}
+				$type = 'mains';
 			}
 
-			$this->t->set_var('category_list',$cats_list);
+			$this->t->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cat_parent,$global_cats));
 			$this->t->set_var('cat_name',$cat_name);
 			$this->t->set_var('cat_description',$cat_description);
 
@@ -419,6 +410,11 @@
 				$cat_parent = $new_parent;
 			}
 
+			if (!$global_cats)
+			{
+				$global_cats = False;
+			}
+
 			if ($submit)
 			{
 				$data = serialize($cat_data);
@@ -455,30 +451,16 @@
 			$this->t->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats[0]['name']));
 			$this->t->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats[0]['description']));
 
-			if ($cats_level) 
+			if ($cats_level)
 			{
-				if ($global_cats)
-				{
-					$cats_list = $this->bo->cats->formated_list('select','all',$cats[0]['parent'],True);
-				}
-				else
-				{
-					$cats_list = $this->bo->cats->formated_list('select','all',$cats[0]['parent']);
-				}
+				$type = 'all';
 			}
 			else
 			{
-				if ($global_cats)
-				{
-					$cats_list = $this->bo->cats->formated_list('select','mains',$cats[0]['parent'],True);
-				}
-				else
-				{
-					$cats_list = $this->bo->cats->formated_list('select','mains',$cats[0]['parent']);
-				}
+				$type = 'mains';
 			}
 
-			$this->t->set_var('category_list',$cats_list);
+			$this->t->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cats[0]['parent'],$global_cats));
 
 			$this->t->set_var('access','<input type="checkbox" name="cat_access" value="True"'
 										. ($cats[0]['access'] == private ?' checked':'') . '>');

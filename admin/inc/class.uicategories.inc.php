@@ -195,7 +195,6 @@
 			{
 				$values = array
 				(
-					'id'		=> '',
 					'parent'	=> $cat_parent,
 					'descr'		=> $cat_description,
 					'name'		=> $cat_name,

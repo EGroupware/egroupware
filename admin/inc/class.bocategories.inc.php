@@ -138,7 +138,7 @@
 			}
 			else
 			{
-				if (!$values['cat_parent'])
+				if (!$values['parent'])
 				{
 					$exists = $this->exists(array
 					(
