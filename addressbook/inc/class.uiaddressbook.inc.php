@@ -427,7 +427,7 @@
 			$GLOBALS['filter'] = $this->filter;
 
 			$search_filter = $GLOBALS['phpgw']->nextmatchs->show_tpl('/index.php',
-				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.get_list','75%',
+				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.get_list&fcat_id='.$this->cat_id,'75%',
 				$GLOBALS['phpgw_info']['theme']['th_bg'],1,1,1,1,$this->cat_id);
 			$query = $filter = '';
 
