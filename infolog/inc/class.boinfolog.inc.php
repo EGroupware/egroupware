@@ -466,7 +466,7 @@
 		@author ralfbecker
 		@abstract query infolog for entries matching $pattern
 		*/
-		function link_title( $pattern )
+		function link_query( $pattern )
 		{
 			$start = $total = 0;
 			$ids = $this->readIdArray('','','','',$pattern,'','','',&$start,&$total);
