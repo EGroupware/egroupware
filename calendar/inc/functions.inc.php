@@ -71,7 +71,7 @@
   
 	if(!isset($phpgw_info['user']['preferences']['calendar']['weekdaystarts']))
 	{
-		$phpgw_info['user']['preferences']['calendar']['weekdaystarts'] = 'Sunday';
+		$phpgw->preferences->add('calendar','weekdaystarts','Sunday');
 		$phpgw->preferences->save_repository();
 	}
 	
