@@ -1,30 +1,34 @@
 (account deletion in SQL Only)	setup	en	(account deletion in SQL Only)
+<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	en	<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
 actions	setup	en	Actions
-Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
+add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 admin first name	setup	en	Admin first name
 admin last name	setup	en	Admin last name
 admin password	setup	en	Admin password
-Admins	setup	en	Admins
+admin password to header manager	setup	en	Admin password to header manager
 admin username	setup	en	Admin username
+admins	setup	en	Admins
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
 all applications	setup	en	all applications
-All Users	setup	en	All Users
+all users	setup	en	All Users
+analysis	setup	en	Analysis
 app details	setup	en	App details
 app install/remove/upgrade	setup	en	App install/remove/upgrade
 application data	setup	en	Application Data
 application management	setup	en	Application Management
-application name and status information	setup	en	Application Name and Status Information
 application name and status	setup	en	Application Name and Status
+application name and status information	setup	en	Application Name and Status Information
 application title	setup	en	Application Title
 are you sure?	setup	en	ARE YOU SURE?
-Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	en	At your request, this script is going to attempt to create the database and assign the db user rights to it
 at your request, this script is going to attempt to install all the applications for you	setup	en	At your request, this script is going to attempt to install all the applications for you
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	en	At your request, this script is going to attempt to upgrade your old applications to the current versions
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	en	At your request, this script is going to attempt to upgrade your old tables to the new format
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	en	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	en	At your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data
-Authentication / Accounts	setup	en	Authentication / Accounts
-Auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
+attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
+authentication / Accounts	setup	en	Authentication / Accounts
+auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
 backupwarn	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
@@ -36,143 +40,173 @@ because of a failed upgrade or install	setup	en	because of a failed upgrade or i
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	en	because of a failed upgrade, or the database is newer than the installed version of this app
 because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
 bottom	setup	en	bottom
-<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	en	<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
 cancel	setup	en	Cancel
+cannot create the header.inc.php due to file permission restrictions.<br> instead you can x the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 the file.
 charset	setup	en	ISO-8859-1
 check ip address of all sessions	setup	en	check ip address of all sessions
 click here	setup	en	Click Here
 completed	setup	en	Completed
-configuration completed	setup	en	Configuration completed
 configuration	setup	en	Configuration
+configuration completed	setup	en	Configuration completed
+configuration password	setup	en	Configuration Password
 configure now	setup	en	Configure Now
-Country Selection	setup	en	Country Selection
+could not open header.inc.php for writing!	setup	en	Could not open header.inc.php for writing!
+country Selection	setup	en	Country Selection
+create	setup	en	Create
 create database	setup	en	Create Database
 create one now	setup	en	Create one now
-create	setup	en	Create
+create your header.inc.php	setup	en	Create your header.inc.php
 creating tables	setup	en	Creating Tables
-currently installed languages: x <br>	setup	en	Currently installed languages: %1 <br>
 current version	setup	en	Current Version
+currently installed languages: x <br>	setup	en	Currently installed languages: %1 <br>
+db host	setup	en	DB Host
+db name	setup	en	DB Name
+db password	setup	en	DB Password
 db root password	setup	en	DB root password
 db root username	setup	en	DB root username
-Default file system space per user/group ?	setup	en	Default file system space per user/group ?
+db type	setup	en	DB Type
+db user	setup	en	DB User
+default file system space per user/group ?	setup	en	Default file system space per user/group ?
 delete all my tables and data	setup	en	Delete all my tables and data
 delete all old languages and install new ones	setup	en	Delete all old languages and install new ones
 deleting tables	setup	en	Deleting Tables
 demo server setup	setup	en	Demo Server Setup
 deny access	setup	en	Deny Access
-Deny all users access to grant other users access to their entries ?	setup	en	Deny all users access to grant other users access to their entries ?
+deny all users access to grant other users access to their entries ?	setup	en	Deny all users access to grant other users access to their entries ?
 deregistered	setup	en	deregistered
 details for admin account	setup	en	Details for Admin account
+did not find any valid db support!	setup	en	Did not find any valid DB support!
+do you want persistent connections (higher performance, but consumes more resources)	setup	en	Do you want persistent connections (higher performance, but consumes more resources)
 domain	setup	en	Domain
+domain select box on login	setup	en	Domain select box on login
 dont touch my data	setup	en	Dont touch my data
 edit current configuration	setup	en	Edit Current Configuration
-Enter some random text for app_session <br>encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br>encryption (requires mcrypt)
+edit your existing header.inc.php	setup	en	Edit your existing header.inc.php
+edit your header.inc.php	setup	en	Edit your header.inc.php
+enable mcrypt	setup	en	Enable MCrypt
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
-Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
-Enter the hostname of the machine on which this server is running	setup	en	Enter the hostname of the machine on which this server is running
-Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	en	Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>
-Enter the site password for peer servers	setup	en	Enter the site password for peer servers
-Enter the site username for peer servers	setup	en	Enter the site username for peer servers
-Enter the title for your site	setup	en	Enter the title for your site
-Enter your default FTP server	setup	en	Enter your default FTP server
-Enter your HTTP proxy server port	setup	en	Enter your HTTP proxy server port
-Enter your HTTP proxy server	setup	en	Enter your HTTP proxy server
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br>encryption (requires mcrypt)
+enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
+enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the hostname of the machine on which this server is running	setup	en	Enter the hostname of the machine on which this server is running
+enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	en	Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>
+enter the site password for peer servers	setup	en	Enter the site password for peer servers
+enter the site username for peer servers	setup	en	Enter the site username for peer servers
+enter the title for your site	setup	en	Enter the title for your site
+enter your HTTP proxy server	setup	en	Enter your HTTP proxy server
+enter your HTTP proxy server port	setup	en	Enter your HTTP proxy server port
+enter your default FTP server	setup	en	Enter your default FTP server
 export phpgroupware accounts from sql to ldap	setup	en	Export phpGroupWare accounts from SQL to LDAP
 export sql users to ldap	setup	en	Export SQL users to LDAP
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
 force selectbox	setup	en	Force Selectbox
+found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
 go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
 has a version mismatch	setup	en	has a version mismatch
 hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
-Host information	setup	en	Host information
+host information	setup	en	Host information
 however, the application is otherwise installed	setup	en	However, the application is otherwise installed
-If no ACL records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
+if no ACL records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
-If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+if using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
 image type selection order	setup	en	Image type selection order
 import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	en	Import accounts from LDAP to the phpGroupWare accounts table (for a new install using SQL accounts)
 import ldap users/groups	setup	en	Import LDAP users/groups
+importing old settings into the new format....	setup	en	Importing old settings into the new format....
+include root (this should be the same as server root unless you know what you are doing)	setup	en	Include Root (this should be the same as Server Root unless you know what you are doing)
 insanity	setup	en	Insanity
-install Applications	setup	en	Install Applications
-installed	setup	en	installed
-install language	setup	en	Install Language
 install	setup	en	Install
+install Applications	setup	en	Install Applications
+install language	setup	en	Install Language
+installed	setup	en	installed
 invalid password	setup	en	Invalid password
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
+ldap Default homedirectory prefix (e.g. /home for /home/username)	setup	en	LDAP Default homedirectory prefix (e.g. /home for /home/username)
+ldap Default shell (e.g. /bin/bash)	setup	en	LDAP Default shell (e.g. /bin/bash)
 ldap account import/export	setup	en	LDAP account import/export
 ldap accounts configuration	setup	en	LDAP Accounts Configuration
-LDAP accounts context	setup	en	LDAP accounts context
-LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	en	LDAP Default homedirectory prefix (e.g. /home for /home/username)
-LDAP Default shell (e.g. /bin/bash)	setup	en	LDAP Default shell (e.g. /bin/bash)
-LDAP encryption type	setup	en	LDAP encryption type
+ldap accounts context	setup	en	LDAP accounts context
+ldap encryption type	setup	en	LDAP encryption type
 ldap export users	setup	en	LDAP export users
-LDAP groups context	setup	en	LDAP groups context
-LDAP host	setup	en	LDAP host
+ldap groups context	setup	en	LDAP groups context
+ldap host	setup	en	LDAP host
 ldap import users	setup	en	LDAP import users
-LDAP rootdn	setup	en	LDAP rootdn
-LDAP root password	setup	en	LDAP root password
+ldap root password	setup	en	LDAP root password
+ldap rootdn	setup	en	LDAP rootdn
 logout	setup	en	Logout
 makesure	setup	en	Make sure that your database is created and the account permissions are set
 manage applications	setup	en	Manage Applications
 manage languages	setup	en	Manage Languages
-Maximum account id (e.g. 65535 or 1000000)	setup	en	Maximum account id (e.g. 65535 or 1000000)
+maximum account id (e.g. 65535 or 1000000)	setup	en	Maximum account id (e.g. 65535 or 1000000)
 mcrypt algorithm (default tripledes)	setup	en	Mcrypt algorithm (default TRIPLEDES)
+mcrypt initialization vector	setup	en	MCrypt initialization vector
 mcrypt mode (default cbc)	setup	en	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requires mcrypt PHP extension)
-Minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
+mcrypt version	setup	en	MCrypt version
+minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
 modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	en	Multi-Language support setup
 mysqlinstr	setup	en	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 never	setup	en	never
-no algorithms available	setup	en	no algorithms available
-no modes available	setup	en	no modes available
 no	setup	en	No
+no algorithms available	setup	en	no algorithms available
+no microsoft sql server support found. disabling	setup	en	No Microsoft SQL Server support found. Disabling
+no modes available	setup	en	no modes available
+no mysql support found. disabling	setup	en	No MySQL support found. Disabling
+no oracle-db support found. disabling	setup	en	No Oracle-DB support found. Disabling
+no postgres-db support found. disabling	setup	en	No Postgres-DB support found. Disabling
+no xml support found. disabling	setup	en	No XML support found. Disabling
 not complete	setup	en	not complete
 not completed	setup	en	Not Completed
-note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
 not ready for this stage yet	setup	en	Not ready for this stage yet
+note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
+now guessing better values for defaults...	setup	en	Now guessing better values for defaults...
 ok	setup	en	OK
 once the database is setup correctly	setup	en	Once the database is setup correctly
 one month	setup	en	one month
 one week	setup	en	one week
 only add languages that are not in the database already	setup	en	Only add languages that are not in the database already
 only add new phrases	setup	en	Only add new phrases
+or	setup	en	or
+password needed for configuration	setup	en	Password needed for configuration
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
-Path information	setup	en	Path information
+path information	setup	en	Path information
+persistent connections	setup	en	Persistent connections
 pgsqlinstr	setup	en	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb phpgroupware</i>
 please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
+please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure phpGroupWare for your environment	setup	en	Please configure phpGroupWare for your environment
 please install	setup	en	Please install
 please login to phpgroupware and run the admin application for additional site configuration	setup	en	Please login to phpgroupware and run the admin application for additional site configuration
 please wait...	setup	en	Please Wait...
 possible solutions	setup	en	Possible Solutions
 potential problem	setup	en	Potential Problem
-Preferences	setup	en	Preferences
+preferences	setup	en	Preferences
 problem resolution	setup	en	Problem resolution
 process	setup	en	Process
-really uninstall all applications	setup	en	REALLY Uninstall all applications
 re-check my database	setup	en	Re-Check my database
 re-check my installation	setup	en	Re-Check My Installation
 re-enter password	setup	en	Re-enter password
+really uninstall all applications	setup	en	REALLY Uninstall all applications
 registered	setup	en	registered
 remove	setup	en	Remove
 requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
 requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve
-Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
-Selectbox	setup	en	Selectbox
+sample configuration not found. using built in defaults	setup	en	Sample configuration not found. using built in defaults
+save this text as contents of your header.inc.php	setup	en	Save this text as contents of your header.inc.php
+select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	en	Select the desired action(s) from the available choices
 select to download file	setup	en	Select to download file
-Select where you want to store/retrieve filesystem information	setup	en	Select where you want to store/retrieve filesystem information
-Select where you want to store/retrieve user accounts	setup	en	Select where you want to store/retrieve user accounts
+select where you want to store/retrieve filesystem information	setup	en	Select where you want to store/retrieve filesystem information
+select where you want to store/retrieve user accounts	setup	en	Select where you want to store/retrieve user accounts
 select which group(s) will be exported (group membership will be maintained)	setup	en	Select which group(s) will be exported (group membership will be maintained)
 select which group(s) will be imported (group membership will be maintained)	setup	en	Select which group(s) will be imported (group membership will be maintained)
 select which languages you would like to use	setup	en	Select which languages you would like to use
@@ -182,9 +216,14 @@ select which user(s) will be exported	setup	en	Select which user(s) will be expo
 select which user(s) will be imported	setup	en	Select which user(s) will be imported
 select which user(s) will have admin privileges	setup	en	Select which user(s) will have admin privileges
 select your old version	setup	en	Select your old version
-setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
+selectbox	setup	en	Selectbox
+server root	setup	en	Server Root
+sessions type	setup	en	Sessions Type
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	en	Set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.
+settings	setup	en	Settings
 setup	setup	en	Setup
-Show 'powered by' logo on	setup	en	Show 'powered by' logo on
+setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
+show 'powered by' logo on	setup	en	Show 'powered by' logo on
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 status	setup	en	Status
 step 1 - simple application management	setup	en	Step 1 - Simple Application Management
@@ -197,46 +236,68 @@ tables dropped	setup	en	tables dropped
 tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above
 tables upgraded	setup	en	tables upgraded
 target version	setup	en	Target Version
-Text Entry	setup	en	Text Entry
-there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	en	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
+text Entry	setup	en	Text Entry
+the db_type in defaults (x) is not supported on this server. using first supported type.	setup	en	The db_type in defaults (x) is not supported on this server. using first supported type.
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	en	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
 this program will help you upgrade or install different languages for phpGroupWare	setup	en	This program will help you upgrade or install different languages for phpGroupWare
 this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	en	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	en	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
+this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	en	This should be around 30 bytes in length.<br>Note: The default has been randomly generated.
 this stage is completed<br>	setup	en	This stage is completed<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	en	This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
-top	setup	en	top
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	en	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
+top	setup	en	top
 translations added	setup	en	Translations Added
 translations removed	setup	en	Translations Removed
 translations upgraded	setup	en	Translations Upgraded
+try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	en	Try to configure your php to support one of the above mentioned DBMS, or install phpGroupWare by hand.
 two weeks	setup	en	two weeks
 uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	uninstalled
-upgraded	setup	en	upgraded
 upgrade	setup	en	Upgrade
+upgraded	setup	en	upgraded
 upgrading tables	setup	en	Upgrading Tables
-Use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
-Use pure HTML compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
-Users Choice	setup	en	Users Choice
+use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
+use pure HTML compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
+users Choice	setup	en	Users Choice
 version mismatch	setup	en	Version Mismatch
+warning!	setup	en	Warning!
 we will automatically update your tables/records to x	setup	en	We will automatically update your tables/records to %1
-Would you like phpGroupWare to cache the phpgw info array ?	setup	en	Would you like phpGroupWare to cache the phpgw info array ?
-Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
-Would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	en	What type of sessions management do you want to use (PHP4 session management may perform better)?
+which database type do you want to use with phpgroupware?	setup	en	Which database type do you want to use with phpGroupWare?
+would you like phpGroupWare to cache the phpgw info array ?	setup	en	Would you like phpGroupWare to cache the phpgw info array ?
+would you like phpGroupWare to check for a new version<br>when admins login ?	setup	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
+would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
 yes	setup	en	Yes
+you appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running version x of phpGroupWare	setup	en	You appear to be running version %1 of phpGroupWare
+you appear to be using php3. disabling php4 sessions support	setup	en	You appear to be using PHP3. Disabling PHP4 sessions support
+you appear to be using php4. enabling php4 sessions support	setup	en	You appear to be using PHP4. Enabling PHP4 sessions support
+you appear to have microsoft sql server support enabled	setup	en	You appear to have Microsoft SQL Server support enabled
+you appear to have mysql support enabled	setup	en	You appear to have MySQL support enabled
+you appear to have oracle support enabled	setup	en	You appear to have Oracle support enabled
+you appear to have oracle v8 (oci) support enabled	setup	en	You appear to have Oracle V8 (OCI) support enabled
+you appear to have postgres-db support enabled	setup	en	You appear to have Postgres-DB support enabled
+you appear to have xml support enabled	setup	en	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br>	setup	en	You are ready for this stage, but this stage is not yet written.<br>
+you didn't enter a config password	setup	en	You didn't enter a config password
+you didn't enter a header admin password	setup	en	You didn't enter a header admin password
 you do not have any languages installed. please install one now <br>	setup	en	You do not have any languages installed. Please install one now <br>
+you have not created your header.inc.php yet!<br> you can create it now.	setup	en	You have not created your header.inc.php yet!<br> You can create it now.
+you have successfully logged out	setup	en	You have successfully logged out
 you must enter a username for the admin	setup	en	You must enter a username for the admin
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
+you're using an old configuration file format...	setup	en	You're using an old configuration file format...
+you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
 your applications are current	setup	en	Your applications are current
 your database does not exist	setup	en	Your database does not exist
 your database is working, but you dont have any applications installed	setup	en	Your database is working, but you dont have any applications installed
+your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
+your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
+your header.inc.php needs upgrading.<br><blink><font color=cc0000><b>warning!</b></font></blink><br>if you are using virtual domain support, this will <b>not</b> copy those domains over.  you will need to do this manually, <b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><font color=CC0000><b>WARNING!</b></font></blink><br>If you are using virtual domain support, this will <b>NOT</b> copy those domains over.  You will need to do this manually, <b>MAKE BACKUPS!</b>
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
-you have successfully logged out	setup	en	You have successfully logged out
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
