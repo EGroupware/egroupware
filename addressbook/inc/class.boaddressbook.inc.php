@@ -61,7 +61,7 @@
 			if(!empty($sort))   { $this->sort   = $sort;   }
 			if(!empty($order))  { $this->order  = $order;  }
 			if(!empty($filter)) { $this->filter = $filter; }
-			if(!empty($fcat_id)) { $this->cat_id = $fcat_id; }
+			if(isset($fcat_id)) { $this->cat_id = $fcat_id; }
 		}
 
 		function save_sessiondata()
