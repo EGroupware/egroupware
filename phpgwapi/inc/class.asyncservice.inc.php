@@ -661,11 +661,12 @@
 			{
 				foreach ($this->other_cronlines as $cronline)
 				{
-					fwrite($crontab,$cronline);		// preserv the other lines
+					fwrite($crontab,$cronline);		// preserv the other lines on install
 				}
 				if ($times !== False)
 				{
 					$cron_units = array('min','hour','day','month','dow');
+					$cronline = '';
 					foreach($cron_units as $cu)
 					{
 						$cronline .= (isset($times[$cu]) ? $times[$cu] : '*') . ' ';
