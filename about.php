@@ -43,6 +43,11 @@
 		while (list(,$field) = each($fields))
 		{
 			$app_data[$field] = $setup_info[$app][$field];
+
+			if ($field == 'description')
+			{
+				$app_data[$field] = lang($setup_info[$app][$field]);
+			}
 		}
 	}
 

@@ -16,15 +16,27 @@
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 
-	$setup_info['calendar']['author'] = 'Mark Peters';
+	$setup_info['calendar']['author'] = array
+	(
+		'name'	=> 'Mark Peters',
+		'email'	=> 'skeeter@phpgroupware.org'
+	);
+
 	$setup_info['calendar']['license']  = 'GPL';
-	$setup_info['calendar']['description'] =
-		'Powerful calendar with meeting request system and ACL security.';
-	$setup_info['calendar']['maintainer'] = 'Mark Peters';
-	$setup_info['calendar']['maintainer_email'] = 'skeeter@phpgroupware.org';
-	$setup_info['calendar']['based_on'] = 
-		'Webcalendar by <a href="mailto:cknudsen@radix.net">Craig Knudsen</a>';
-	$setup_info['calendar']['based_on_url'] = 'http://www.radix.net/~cknudsen';
+	$setup_info['calendar']['description'] = 'Powerful calendar with meeting request system and ACL security.';
+
+	$setup_info['calendar']['maintainer'] = array
+	(
+		'name'	=> 'Mark Peters',
+		'email'	=> 'skeeter@phpgroupware.org'
+	);
+
+	$setup_info['calendar']['based_on'] = array
+	(
+		'info'	=> 'Webcalendar by Craig Knudsen',
+		'email'	=> 'cknudsen@radix.net',
+		'url'	=> 'http://www.radix.net/~cknudsen'
+	);
 
 	$setup_info['calendar']['tables'][] = 'phpgw_cal';
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_holidays';
