@@ -36,16 +36,16 @@
 	\**************************************************************************/
 	if (PHPGW_APP_INC != PHPGW_API_INC &&	// this prevents an endless inclusion on the homepage 
 		                                	// (some apps set currentapp in hook_home => it's not releyable)
-		(file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($GLOBALS['HTTP_GET_VARS']['menuaction'])) &&
+		(file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($_GET['menuaction'])) &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
 		!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 	{
-		if ($GLOBALS['HTTP_GET_VARS']['menuaction'])
+		if ($_GET['menuaction'])
 		{
-			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
+			list($app,$class,$method) = explode('.',$_GET['menuaction']);
+			if (is_array($GLOBALS[$class]->public_functions) && isset($GLOBALS[$class]->public_functions['footer']))
 			{
 //				eval("\$GLOBALS[$class]->footer();");
 				$GLOBALS[$class]->footer();

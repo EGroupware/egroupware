@@ -692,7 +692,7 @@
 		{
 			if ($p1 == '_UNDEF_' && $p1 != 1)
 			{
-				$obj = new $classname;
+				$obj = @new $classname;
 			}
 			else
 			{

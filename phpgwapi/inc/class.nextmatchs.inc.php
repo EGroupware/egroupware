@@ -243,7 +243,7 @@
 					$c_extraparams = count($extraparams) + 1;
 					for($i=0;$i<$c_extraparams;$i++)
 					{
-						if($extraparams[$i])
+						if(isset($extraparams[$i]))
 						{
 							list($var,$value) = explode('=',$extraparams[$i]);
 							if($var != 'menuaction')
@@ -306,7 +306,7 @@
 				'filter'  => $filter,
 				'q_field' => $qfield,
 				'sort'    => $sort,
-				'query'   => urlencode(stripslashes($GLOBALS['query']))
+				'query'   => urlencode(stripslashes(@$GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
@@ -360,7 +360,7 @@
 				'filter'  => $filter,
 				'q_field' => $qfield,
 				'sort'    => $sort,
-				'query'   => urlencode(stripslashes($GLOBALS['query']))
+				'query'   => urlencode(stripslashes(@$GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
@@ -683,7 +683,7 @@
 		{
 			if (! $currentcolor)
 			{
-				$currentcolor = $GLOBALS['tr_color'];
+				$currentcolor = @$GLOBALS['tr_color'];
 			}
 
 			if ($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
@@ -742,7 +742,7 @@
 				$extra = $this->extras_to_string($extra);
 			}
 
-			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$filter.'&qfield='.$qfield.'&start='.$start.'&query='.urlencode(stripslashes($GLOBALS['query'])).$extra;
+			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$filter.'&qfield='.$qfield.'&start='.$start.'&query='.urlencode(stripslashes(@$GLOBALS['query'])).$extra;
 
 			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 
