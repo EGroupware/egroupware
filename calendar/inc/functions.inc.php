@@ -19,7 +19,7 @@
 
 	if(!isset($filter) || !$filter)
 	{
-		$filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
+		$filter = $phpgw_info['user']['preferences']['calendar']['defaultfilter'];
 	}
 
 	// This is the initialization of the ACL usage
@@ -31,7 +31,7 @@
 		$owner = 0;
 	}
 
-	if(!isset($owner) || !$owner)
+	if(!isset($owner) || !$owner || ($owner == $phpgw_info['user']['account_id']))
 	{
 		$owner = $phpgw_info['user']['account_id'];
 		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;

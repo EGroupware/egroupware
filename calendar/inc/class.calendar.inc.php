@@ -74,7 +74,7 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info;
 	  
-		if(gettype($params)=="array")
+		if(gettype($params)=='array')
 		{
 			while(list($key,$value) = each($params))
 			{
@@ -104,6 +104,26 @@ class calendar extends calendar_
 		$this->open($this->owner);
 		$this->read_repeated_events($this->owner);
 		$this->set_filter();
+	}
+
+// Generic functions that are derived from mcal functions.
+// NOT PART OF THE ORIGINAL MCAL SPECS.
+	function time_compare($a_hour,$a_minute,$a_second,$b_hour,$b_minute,$b_second)
+	{
+		$a_time = mktime(intval($a_hour),intval($a_minute),intval($a_second),0,0,0);
+		$b_time = mktime(intval($b_hour),intval($b_minute),intval($b_second),0,0,0);
+		if($a_time == $b_time)
+		{
+			return 0;
+		}
+		elseif($a_time > $b_time)
+		{
+			return 1;
+		}
+		elseif($a_time < $b_time)
+		{
+			return -1;
+		}
 	}
 
 	function set_filter()

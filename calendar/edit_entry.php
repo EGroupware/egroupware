@@ -83,8 +83,8 @@
 	}
 	elseif(isset($readsess))
 	{
-		$data = $phpgw->session->appsession('entry','calendar');
-		$cal_info = unserialize($data);
+//		$cal_info = ;
+		$cal_info = $phpgw->session->appsession('entry','calendar');
 		
 		if($cal_info->owner == 0)
 		{

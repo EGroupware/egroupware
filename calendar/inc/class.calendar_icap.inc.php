@@ -247,13 +247,22 @@ class calendar_
 
 	function event_set_start($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
+	// Legacy Support
+		$this->event->year = $year;
+		$this->event->month = $month;
+		$this->event->day = $day;
+		$this->event->hour = $hour;
+		$this->event->minute = $min;
+		$this->event->datetime = mktime($hour,$min,$sec,$month,$day,$year);
+
+	// Legacy Support (New)
 		$this->event->start->year = $year;
 		$this->event->start->month = $month;
 		$this->event->start->day = $day;
 		$this->event->start->hour = $hour;
 		$this->event->start->min = $min;
 		$this->event->start->sec = $sec;
-		
+
 		if($sec == 0)
 		{
 			if($min == 0)
@@ -287,12 +296,23 @@ class calendar_
 
 	function event_set_end($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
+	// Legacy Support
+		$this->event->end_year = $year;
+		$this->event->end_month = $month;
+		$this->event->end_day = $day;
+		$this->event->end_hour = $hour;
+		$this->event->end_minute = $min;
+		$this->event->end_second = $sec;
+		$this->event->edatetime = mktime($hour,$min,$sec,$month,$day,$year);
+
+	// Legacy Support (New)
 		$this->event->end->year = $year;
 		$this->event->end->month = $month;
 		$this->event->end->day = $day;
 		$this->event->end->hour = $hour;
 		$this->event->end->min = $min;
 		$this->event->end->sec = $sec;
+		$this->event->edatetime = mktime($hour,$min,$sec,$month,$day,$year);
 		
 		if($sec == 0)
 		{
@@ -324,4 +344,113 @@ class calendar_
 			return mcal_event_set_end($stream,$year,$month,$day,$hour,$min,$sec);
 		}
 	}
+
+	function event_set_alarm($stream,$alarm)
+	{
+		return mcal_event_set_alarm ($stream,$alarm);
+	}
+
+	function event_set_class($stream,$class)
+	{
+		return mcal_event_set_class($stream,$class);
+	}
+
+	function is_leap_year($year)
+	{
+		return mcal_is_leap_year($year);
+	}
+
+	function days_in_month($month,$year)
+	{
+		return mcal_days_in_month($month,$year);
+	}
+
+	function date_valid($year,$month,$day)
+	{
+		return mcal_date_valid($year,$month,$day);
+	}
+
+	function time_valid($hour,$minutes,$seconds)
+	{
+		return mcal_time_valid($hour,$minutes,$seconds);
+	}
+
+	function day_of_week($year,$month,$day)
+	{
+		return mcal_day_of_week($year,$month,$day);
+	}
+
+	function day_of_year($year,$month,$day)
+	{
+		return mcal_day_of_year($year,$month,$day);
+	}
+
+	function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
+	{
+		return mcal_date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day);
+	}
+
+	// The function definition doesn't look correct...
+	// Need more information for this function
+	function next_recurrence($stream,$weekstart,$next)
+	{
+		return mcal_next_recurrence($stream,$weekstart,$next);
+	}
+
+	function event_set_recur_none($stream)
+	{
+		return mcal_event_set_recur_none($stream);
+	}
+
+	function event_set_recur_daily($stream,$year,$month,$day,$interval)
+	{
+		return mcal_event_set_recur_daily($stream,$year,$month,$day,$interval);
+	}
+	
+	function event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays)
+	{
+		return mcal_event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays);
+	}
+
+	function event_set_recur_monthly_mday($stream,$year,$month,$day,$interval)
+	{
+		return mcal_event_set_recur_monthly_mday($stream,$year,$month,$day,$interval);
+	}
+	
+	function event_set_recur_monthly_wday($stream,$year,$month,$day,$interval)
+	{
+		return mcal_event_set_recur_monthly_wday($stream,$year,$month,$day,$interval);
+	}
+
+	function event_set_recur_yearly($stream,$year,$month,$day,$interval)
+	{
+		return mcal_event_set_recur_yearly($stream,$year,$month,$day,$interval);
+	}
+
+	function fetch_current_stream_event($stream)
+	{
+		return mcal_fetch_current_stream_event($stream);
+	}
+
+	function event_add_attribute($stream,$attribute,$value)
+	{
+		mcal_event_add_attribute($stream,$attribute,$value);
+	}
+
+	function expunge($stream)
+	{
+		return mcal_expunge($stream);
+	}
+
+	/**************** Local functions for ICAL based Calendar *****************/
+	
+	function event_set_participants($stream,$participants)
+	{
+		$this->event->participants = Array();
+		reset($participants);
+		$this->event->participants = $participants;
+		return True;
+	}
+	
+
 }

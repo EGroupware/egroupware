@@ -332,6 +332,7 @@ class calendar_
 				$this->event->rpt_sat = (substr($rpt_days,6,1)=='Y'?1:0);
 
 		//Legacy Support (New)
+				$rpt_days = strtoupper($this->stream->f('cal_rpt_days'));
 				$this->event->recur_data = 0;
 				$this->event->recur_data += (substr($rpt_days,0,1)=='Y'?M_SUNDAY:0);
 				$this->event->recur_data += (substr($rpt_days,1,1)=='Y'?M_MONDAY:0);
@@ -421,48 +422,354 @@ class calendar_
 	function event_init($stream)
 	{
 		$this->event = CreateObject('calendar.calendar_item');
+		$this->event->owner = $this->user;
+//		echo 'Initializing Calendar Event<br>'."\n";
 		return True;
 	}
 
 	function event_set_category($stream,$category='')
 	{
 		$this->event->category = $category;
+//		echo 'Setting Calendar Category = '.$this->event->category.'<br>'."\n";
 		return True;
 	}
 
 	function event_set_title($stream,$title='')
 	{
 		$this->event->title = $title;
+		$this->event->name = $title;
+//		echo 'Setting Calendar Title = '.$this->event->title.'<br>'."\n";
 		return True;
 	}
 
 	function event_set_description($stream,$description='')
 	{
 		$this->event->description = $description;
+//		echo 'Setting Calendar Description = '.$this->event->description.'<br>'."\n";
 		return True;
 	}
 
 	function event_set_start($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-		$this->event->start->year = $year;
-		$this->event->start->month = $month;
-		$this->event->start->day = $day;
-		$this->event->start->hour = $hour;
-		$this->event->start->min = $min;
-		$this->event->start->sec = $sec;
+		global $phpgw_info;
+		
+	// Legacy Support
+		$this->event->year = intval($year);
+		$this->event->month = intval($month);
+		$this->event->day = intval($day);
+		$this->event->hour = intval($hour);
+		$this->event->minute = intval($min);
+		$this->event->datetime = mktime(intval($hour),intval($min),intval($sec),intval($month),intval($day),intval($year));
+		$this->event->datetime -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+
+	// Legacy Support (New)
+		$this->event->start->year = intval($year);
+		$this->event->start->month = intval($month);
+		$this->event->start->mday = intval($day);
+		$this->event->start->hour = intval($hour);
+		$this->event->start->min = intval($min);
+		$this->event->start->sec = intval($sec);
+
+//		echo 'Setting Calendar Start = '.$this->event->start->year.$this->event->start->month.$this->event->start->mday.':'.$this->event->start->hour.$this->event->start->min.$this->event->start->sec.'<br>'."\n";
+		return True;
 	}
 
 	function event_set_end($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
 	{
-		$this->event->end->year = $year;
-		$this->event->end->month = $month;
-		$this->event->end->day = $day;
-		$this->event->end->hour = $hour;
-		$this->event->end->min = $min;
-		$this->event->end->sec = $sec;
+		global $phpgw_info;
+		
+	// Legacy Support
+		$this->event->end_year = intval($year);
+		$this->event->end_month = intval($month);
+		$this->event->end_day = intval($day);
+		$this->event->end_hour = intval($hour);
+		$this->event->end_minute = intval($min);
+		$this->event->end_second = intval($sec);
+		$this->event->edatetime = mktime(intval($hour),intval($min),intval($sec),intval($month),intval($day),intval($year));
+		$this->event->edatetime -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+
+	// Legacy Support (New)
+		$this->event->end->year = intval($year);
+		$this->event->end->month = intval($month);
+		$this->event->end->mday = intval($day);
+		$this->event->end->hour = intval($hour);
+		$this->event->end->min = intval($min);
+		$this->event->end->sec = intval($sec);
+		
+//		echo 'Setting Calendar End = '.$this->event->end->year.$this->event->end->month.$this->event->end->mday.':'.$this->event->end->hour.$this->event->end->min.$this->event->end->sec.'<br>'."\n";
+		return True;
 	}
 
+	function event_set_alarm($stream,$alarm)
+	{
+		$this->event->alarm = intval($alarm);
+		return True;
+	}
+
+	function event_set_class($stream,$class)
+	{
+		$this->event->public = $class;
+		return True;
+	}
+
+	function is_leap_year($year)
+	{
+		if ((intval($year) % 4 == 0) && (intval($year) % 100 != 0) || (intval($year) % 400 == 0))
+			return 1;
+		else
+			return 0;
+	}
+
+	function days_in_month($month,$year)
+	{
+		$days = Array(
+			1	=>	31,
+			2	=>	28 + $this->is_leap_year(intval($year)),
+			3	=>	31,
+			4	=>	30,
+			5	=>	31,
+			6	=>	30,
+			7	=>	31,
+			8	=>	31,
+			9	=>	30,
+			10	=>	31,
+			11	=>	30,
+			12	=>	31
+		);
+		return $days[intval($month)];
+	}
+
+	function date_valid($year,$month,$day)
+	{
+		return checkdate(intval($month),intval($day),intval($year));
+	}
+
+	function time_valid($hour,$minutes,$seconds)
+	{
+		if(intval($hour) < 0 || intval($hour) > 24)
+		{
+			return False;
+		}
+		if(intval($minutes) < 0 || intval($minutes) > 59)
+		{
+			return False;
+		}
+		if(intval($seconds) < 0 || intval($seconds) > 59)
+		{
+			return False;
+		}
+
+		return True;
+	}
+
+	function day_of_week($year,$month,$day)
+	{
+		return date('w',mktime(0,0,0,intval($month),intval($day),intval($year)));
+	}
+	
+	function day_of_year($year,$month,$day)
+	{
+		return date('w',mktime(0,0,0,intval($month),intval($day),intval($year)));
+	}
+
+	function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
+	{
+		$a_date = mktime(0,0,0,intval($a_month),intval($a_day),intval($a_year));
+		$b_date = mktime(0,0,0,intval($b_month),intval($b_day),intval($b_year));
+		if($a_date == $b_date)
+		{
+			return 0;
+		}
+		elseif($a_date > $b_date)
+		{
+			return 1;
+		}
+		elseif($a_date < $b_date)
+		{
+			return -1;
+		}
+	}
+
+	// The function definition doesn't look correct...
+	// Need more information for this function
+	function next_recurrence($stream,$weekstart,$next)
+	{
+//		return next_recurrence (int stream, int weekstart, array next);
+	}
+
+	function event_set_recur_none($stream)
+	{
+	// Legacy Support
+		$this->event->rpt_type = 'none';
+		$this->event->rpt_end_use = 0;
+		$this->event->rpt_end = 0;
+		$this->event->rpt_end_day = 0;
+		$this->event->rpt_end_month = 0;
+		$this->event->rpt_end_year = 0;
+		$this->event->rpt_days = 'nnnnnnn';
+		$this->event->rpt_sun = 0;
+		$this->event->rpt_mon = 0;
+		$this->event->rpt_tue = 0;
+		$this->event->rpt_wed = 0;
+		$this->event->rpt_thu = 0;
+		$this->event->rpt_fri = 0;
+		$this->event->rpt_sat = 0;
+		$this->event->rpt_freq = 0;
+
+	// Legacy Support (New)
+		$this->event->recur_type = RECUR_NONE;
+		$this->event->recur_interval = 0;
+		$this->event->recur_enddate->year = 0;
+		$this->event->recur_enddate->month = 0;
+		$this->event->recur_enddate->mday = 0;
+		$this->event->recur_enddate->hour = 0;
+		$this->event->recur_enddate->min = 0;
+		$this->event->recur_enddate->sec = 0;
+		$this->event->recur_enddate->alarm = 0;
+		$this->event->recur_data = 0;
+		
+		return True;
+	}
+
+	function event_recur_daily($stream,$year,$monh,$day,$interval)
+	{
+	// Legacy Support
+		$this->event->rpt_type = 'daily';
+
+	// Legacy Support (New)
+		$this->event->recur_type = RECUR_DAILY;
+
+		$this->set_common_recur(intval($year),intval($month),intval($day));
+	}
+
+	function event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays)
+	{
+	// Legacy Support
+		$this->event->rpt_type = 'weekly';
+
+		$this->set_common_recur(intval($year),intval($month),intval($day));
+
+		$this->event->rpt_sun = (intval($weekdays) & M_SUNDAY	?1:0);
+		$this->event->rpt_mon = (intval($weekdays) & M_MONDAY	?1:0);
+		$this->event->rpt_tue = (intval($weekdays) & M_TUESDAY	?1:0);
+		$this->event->rpt_wed = (intval($weekdays) & M_WEDNESDAY?1:0);
+		$this->event->rpt_thu = (intval($weekdays) & M_THURSDAY	?1:0);
+		$this->event->rpt_fri = (intval($weekdays) & M_FRIDAY	?1:0);
+		$this->event->rpt_sat = (intval($weekdays) & M_SATURDAY	?1:0);
+
+		$this->event->rpt_days =
+			  ($this->event->rpt_sun == 1?'y':'n')
+			. ($this->event->rpt_mon == 1?'y':'n')
+			. ($this->event->rpt_tue == 1?'y':'n')
+			. ($this->event->rpt_wed == 1?'y':'n')
+			. ($this->event->rpt_thu == 1?'y':'n')
+			. ($this->event->rpt_fri == 1?'y':'n')
+			. ($this->event->rpt_sat == 1?'y':'n');
+
+	// Legacy Support (New)
+		$this->event->recur_type = RECUR_WEEKLY;
+		$this->event->recur_data = intval($weekdays);
+	}
+
+	function event_set_recur_monthly_mday($stream,$year,$month,$day,$interval)
+	{
+	// Legacy Support
+		$this->event->rpt_type = 'monthlybydate';
+
+	// Legacy Support
+		$this->event->recur_type = RECUR_MONTHLY_MDAY;
+
+		$this->set_common_recur(intval($year),intval($month),intval($day));
+	}
+	
+	function event_set_recur_monthly_wday($stream,$year,$month,$day,$interval)
+	{
+	// Legacy Support
+		$this->event->rpt_type = 'monthlybyday';
+
+	// Legacy Support (New)
+		$this->event->recur_type = RECUR_MONTHLY_WDAY;
+		
+		$this->set_common_recur(intval($year),intval($month),intval($day));
+	}
+	
+	function event_set_recur_yearly($stream,$year,$month,$day,$interval)
+	{
+	// Legacy Support
+		$this->event->rpt_type = 'yearly';
+
+	// Legacy Support (New)
+		$this->event->recur_type = RECUR_YEARLY;
+		
+		$this->set_common_recur(intval($year),intval($month),intval($day));
+	}
+
+	function fetch_current_stream_event($stream)
+	{
+		return $this->fetch_event($this->event->id);
+	}
+	
+	function event_add_attribute($stream,$attribute,$value)
+	{
+		$this->event->$attribute = $value;
+	}
+
+	function expunge($stream)
+	{
+		return 1;
+	}
+	
 	/***************** Local functions for SQL based Calendar *****************/
+
+	function set_common_recur($year,$month,$day)
+	{
+		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
+		{
+			$this->event->rpt_end_use = 0;
+			$this->event->rpt_end = 0;
+			$this->event->rpt_end_day = 0;
+			$this->event->rpt_end_month = 0;
+			$this->event->rpt_end_year = 0;
+		}
+		else
+		{
+			$this->event->rpt_end_use = 1;
+			$this->event->rpt_end = mktime(0,0,0,intval($month),intval($day),intval($year));
+			$this->event->rpt_end -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+			$this->event->rpt_end_day = intval($day);
+			$this->event->rpt_end_month = intval($month);
+			$this->event->rpt_end_year = intval($year);
+		}
+		$this->event->rpt_sun = 0;
+		$this->event->rpt_mon = 0;
+		$this->event->rpt_tue = 0;
+		$this->event->rpt_wed = 0;
+		$this->event->rpt_thu = 0;
+		$this->event->rpt_fri = 0;
+		$this->event->rpt_sat = 0;
+		$this->event->rpt_days = 'nnnnnnn';
+		$this->event->rpt_freq = intval($interval);
+
+	// Legacy Support (New)
+		$this->event->recur_interval = intval($interval);
+		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
+		{
+			$this->event->recur_enddate->year = 0;
+			$this->event->recur_enddate->month = 0;
+			$this->event->recur_enddate->mday = 0;
+		}
+		else
+		{
+			$this->event->recur_enddate->year = intval($year);
+			$this->event->recur_enddate->month = intval($month);
+			$this->event->recur_enddate->mday = intval($day);
+		}
+		$this->event->recur_enddate->hour = 0;
+		$this->event->recur_enddate->min = 0;
+		$this->event->recur_enddate->sec = 0;
+		$this->event->recur_enddate->alarm = 0;
+		$this->event->recur_data = 0;
+	}
 
 	function get_event_ids($search_repeats=False,$extra='')
 	{
@@ -529,11 +836,12 @@ class calendar_
 				$event->end_hour += 12;
 			}
 		}
-		$date = $this->makegmttime($event->hour,$event->minute,0,$event->month,$event->day,$event->year);
-		$enddate = $this->makegmttime($event->end_hour,$event->end_minute,0,$event->end_month,$event->end_day,$event->end_year);
-		$today = $this->gmtdate(time());
+		$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+		$date = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
+		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
+		$today = time() - $tz_offset;
 
-		if($event->rpt_type != 'none')
+		if($event->recur_type != RECUR_NONE)
 		{
 			$type = 'M';
 		}
@@ -542,11 +850,20 @@ class calendar_
 			$type = 'E';
 		}
 
-		$sql = 'UPDATE calendar_entry SET cal_id='.$event->id.', '
+		if($event->public == True)
+		{
+			$event->access = 'public';
+		}
+		else
+		{
+			$event->access = 'private';
+		}
+
+		$sql = 'UPDATE calendar_entry SET '
 				. 'cal_owner='.$event->owner.', '
-				. 'cal_datetime='.$date['raw'].', '
-				. 'cal_mdatetime='.$today['raw'].', '
-				. 'cal_edatetime='.$enddate['raw'].', '
+				. 'cal_datetime='.$date.', '
+				. 'cal_mdatetime='.$today.', '
+				. 'cal_edatetime='.$enddate.', '
 				. 'cal_priority='.$event->priority.', '
 				. "cal_type='".$type."', "
 				. "cal_access='".$event->access."', "
@@ -564,13 +881,11 @@ class calendar_
 				. 'VALUES('.$event->id.','.$participant[1].",'A')",__LINE__,__FILE__);
 		}
 
-		if(strcmp($event->rpt_type,'none') <> 0)
+		if($event->recur_type != RECUR_NONE)
 		{
-			$freq = ($event->rpt_freq?$event->rpt_freq:0);
-
 			if($event->rpt_use_end)
 			{
-				$end = $this->makegmttime(0,0,0,$event->rpt_month,$event->rpt_day,$event->rpt_year);
+				$end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year) - $tz_offset;
 				$use_end = 1;
 			}
 			else
@@ -579,20 +894,7 @@ class calendar_
 				$use_end = 0;
 			}
 
-			if($event->rpt_type == 'weekly' || $event->rpt_type == 'daily')
-			{
-				$days = ($event->rpt_sun?'y':'n')
-						. ($event->rpt_mon?'y':'n')
-						. ($event->rpt_tue?'y':'n')
-						. ($event->rpt_wed?'y':'n')
-						. ($event->rpt_thu?'y':'n')
-						. ($event->rpt_fri?'y':'n')
-						. ($event->rpt_sat?'y':'n');
-			}
-			else
-			{
-				$days = 'nnnnnnn';
-			}
+			$days = $event->rpt_days;
 			
 			$this->stream->query('SELECT count(cal_id) FROM calendar_entry_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
 			$this->stream->next_record();
@@ -602,14 +904,14 @@ class calendar_
 				$this->stream->query('INSERT INTO calendar_entry_repeats(cal_id,'
 					.'cal_type,cal_use_end,cal_end,cal_days,cal_frequency) '
 					.'VALUES('.$event->id.",'".$event->rpt_type."',".$use_end.','
-					.$end['raw'].",'$days',$freq)",__LINE__,__FILE__);
+					.$end.",'".$days."',".$event->recur_interval.')',__LINE__,__FILE__);
 			}
 			else
 			{
 				$this->stream->query('UPDATE calendar_entry_repeats '
 					."SET cal_type='".$event->rpt_type."', "
-					.'cal_use_end='.$use_end.", cal_end='".$end['raw']."', "
-					."cal_days='".$days."', cal_frequency=".$freq.' '
+					.'cal_use_end='.$use_end.", cal_end='".$end."', "
+					."cal_days='".$days."', cal_frequency=".$event->recur_interval.' '
 					.'WHERE cal_id='.$event->id,__LINE__,__FILE__);
 			}
 		}
@@ -621,6 +923,15 @@ class calendar_
 		$this->stream->unlock();
 		return True;
 	}
+
+	function event_set_participants($stream,$participants)
+	{
+		$this->event->participants = Array();
+		reset($participants);
+		$this->event->participants = $participants;
+		return True;
+	}
+	
 // End of ICal style support.......
 
 	function group_search($owner=0)

@@ -30,46 +30,28 @@
 
 	function validate($cal_info)
 	{
+		global $phpgw;
+		
 		$error = 0;
 		// do a little form verifying
 		if ($cal_info->name == '')
 		{
 			$error = 40;
 		}
-		elseif (($cal_info->hour < 0 || $cal_info->hour > 23) || ($cal_info->end_hour < 0 || $cal_info->end_hour > 23))
+		elseif (($phpgw->calendar->time_valid($cal_info->hour,$cal_info->minute,0) == False) || ($phpgw->calendar->time_valid($cal_info->end_hour,$cal_info->end_minute,0) == False))
 		{
 			$error = 41;
 		}
-		elseif (($cal_info->minute < 0 || $cal_info->minute > 59) || ($cal_info->end_minute < 0 || $cal_info->minute > 59))
-		{
-			$error = 41;
-		}
-		elseif(!checkdate($cal_info->month,$cal_info->day,$cal_info->year) || !checkdate($cal_info->end_month,$cal_info->end_day,$cal_info->end_year))
+		elseif (($phpgw->calendar->date_valid($cal_info->year,$cal_info->month,$cal_info->day) == False) || ($phpgw->calendar->date_valid($cal_info->end_year,$cal_info->end_month,$cal_info->end_day) == False)  || ($phpgw->calendar->date_compare($cal_info->year,$cal_info->month,$cal_info->day,$cal_info->end_year,$cal_info->end_month,$cal_info->end_day) == -1))
 		{
 			$error = 42;
 		}
-		elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month == $cal_info->end_month) && ($cal_info->day == $cal_info->end_day))
+		elseif ($phpgw->calendar->date_compare($cal_info->year,$cal_info->month,$cal_info->day,$cal_info->end_year,$cal_info->end_month,$cal_info->end_day) == 0)
 		{
-			if ($cal_info->hour > $cal_info->end_hour)
+			if ($phpgw->calendar->time_compare($cal_info->hour,$cal_info->minute,0,$cal_info->end_hour,$cal_info->end_minute,0) == 1)
 			{
 				$error = 42;
 			}
-			elseif (($cal_info->hour == $cal_info->end_hour) && ($cal_info->minute > $cal_info->end_minute))
-			{
-				$error = 42;
-			}
-		}
-		elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month == $cal_info->end_month) && ($cal_info->day > $cal_info->end_day))
-		{
-			$error = 42;
-		}
-		elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month > $cal_info->end_month))
-		{
-			$error = 42;
-		}
-		elseif ($cal_info->year > $cal_info->end_year)
-		{
-			$error = 42;
 		}
 		
 		return $error;
@@ -84,7 +66,6 @@
 			$cal_info->set($key,$data);
 		}
 
-		$cal_info->owner=$owner;
 
 		$parts = $cal_info->participants;
 		$part = Array();
@@ -116,7 +97,9 @@
 		{
 			$cal_info->participants[] = $parts[0];
 		}
-		
+
+		$cal_info->owner=$owner;
+
 		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
 		{
 			if ($cal_info->ampm == 'pm')
@@ -149,6 +132,7 @@
 				}
 			}
 		}
+
 		$datetime	=	$phpgw->calendar->makegmttime($cal_info->hour,$cal_info->minute,0,$cal_info->month,$cal_info->day,$cal_info->year);
 		$cal_info->datetime	= $datetime['raw'];
 		$datetime	=	$phpgw->calendar->makegmttime($cal_info->end_hour,$cal_info->end_minute,0,$cal_info->end_month,$cal_info->end_day,$cal_info->end_year);
@@ -179,8 +163,8 @@
 	}
 	else
 	{
-		$data = $phpgw->session->appsession('entry','calendar');
-		$cal_info = unserialize($data);
+		$cal_info = $phpgw->session->appsession('entry','calendar');
+//		$cal_info = unserialize($phpgw->session->appsession('entry','calendar'));
 	}
 
 	if($datetime_check)
@@ -254,7 +238,7 @@
 		$p->set_var($var);
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('','readsess='.$cal_info->id),
+							'action_url_button'		=>	$phpgw->link('','readsess='.$cal_info->id.'&year='.$cal_info->year.'&month='.$cal_info->month.'&day='.$cal_info->day),
 							'action_text_button'		=>	lang('Ignore Conflict'),
 							'action_confirm_button'	=>	''
 		);
@@ -263,7 +247,7 @@
 		$p->parse('resubmit_button','form_button');
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('edit_entry.php','readsess='.$cal_info->id),
+							'action_url_button'		=>	$phpgw->link('edit_entry.php','readsess='.$cal_info->id.'&year='.$cal_info->year.'&month='.$cal_info->month.'&day='.$cal_info->day),
 							'action_text_button'		=>	lang('Re-Edit Event'),
 							'action_confirm_button'	=>	''
 		);
@@ -276,8 +260,44 @@
 	}
 	else
 	{
-		$phpgw->calendar->add($cal_info,$cal_info->id);
-		Header('Location: '.$phpgw->link('index.php','year='.$year.'&month='.$month.'&cd=14&owner='.$owner));
+		$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
+		$phpgw->calendar->event_init($cal_stream);
+		$phpgw->calendar->event_set_category($cal_stream,'');
+		$phpgw->calendar->event_set_title($cal_stream,$cal_info->name);
+		$phpgw->calendar->event_set_description($cal_stream,$cal_info->description);
+		$phpgw->calendar->event_set_start($cal_stream,$cal_info->year,$cal_info->month,$cal_info->day,$cal_info->hour,$cal_info->minute,0);
+		$phpgw->calendar->event_set_end($cal_stream,$cal_info->end_year,$cal_info->end_month,$cal_info->end_day,$cal_info->end_hour,$cal_info->end_minute,0);
+		$phpgw->calendar->event_set_class($cal_stream,($cal_info->access == 'private'));
+		$phpgw->calendar->event_set_participants($cal_stream,$cal_info->participants);
+
+		if($cal_info->id != 0)
+		{
+			$phpgw->calendar->event->id = $cal_info->id;
+		}
+
+		switch($cal_info->rpt_type)
+		{
+			case 'none':
+				$phpgw->calendar->event_set_recur_none($cal_stream);
+				break;
+			case 'daily':
+				$phpgw->calendar->event_set_recur_daily($cal_stream,$cal_info->rpt_year,$cal_info->rpt_month,$cal_info->rpt_day,$cal_info->rpt_freq);
+				break;
+			case 'weekly':
+				$phpgw->calendar->event_set_recur_weekly($cal_stream,$cal_info->rpt_year,$cal_info->rpt_month,$cal_info->rpt_day,$cal_info->rpt_freq,$cal_freq->rpt_days);
+				break;
+			case 'monthlybydate':
+				$phpgw->calendar->event_set_recur_mday($cal_stream,$cal_info->rpt_year,$cal_info->rpt_month,$cal_info->rpt_day,$cal_info->rpt_freq);
+				break;
+			case 'monthlybyday':
+				$phpgw->calendar->event_set_recur_wday($cal_stream,$cal_info->rpt_year,$cal_info->rpt_month,$cal_info->rpt_day,$cal_info->rpt_freq);
+				break;
+			case 'yearly':
+				$phpgw->calendar->event_set_recur_yearly($cal_stream,$cal_info->rpt_year,$cal_info->rpt_month,$cal_info->rpt_day,$cal_info->rpt_freq);
+				break;
+		}
+		$phpgw->calendar->store_event($cal_stream);
+		Header('Location: '.$phpgw->link('index.php','year='.$cal_info->year.'&month='.$cal_info->month.'&cd=14&owner='.$owner));
 	}
 	$phpgw->common->phpgw_footer();
 ?>
