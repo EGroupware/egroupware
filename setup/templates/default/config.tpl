@@ -226,40 +226,31 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_LDAP_version}:</td>
-    <td>
-     <select name="newsettings[ldap_version]">
-      <option value="2"{selected_ldap_version_2}>2</option>
-      <option value="3"{selected_ldap_version_3}>3</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_on">
     <td>{lang_LDAP_host}:</td>
     <td><input name="newsettings[ldap_host]" value="{value_ldap_host}"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_LDAP_accounts_context}:</td>
     <td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="40"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_LDAP_groups_context}:</td>
     <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_LDAP_rootdn}:</td>
     <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_LDAP_root_password}:</td>
     <td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_LDAP_encryption_type}:</td>
     <td>
      <select name="newsettings[ldap_encryption_type]">
@@ -268,7 +259,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
 
@@ -277,12 +268,12 @@
     <td colspan="2"><font color="{th_text}"><b>{lang_Mcrypt_settings_(requires_mcrypt_PHP_extension)}</b></font></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Enter_some_random_text_for_app_session_encryption}:</td>
     <td><input name="newsettings[encryptkey]" value="{value_encryptkey}" size="40"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Mcrypt_algorithm_(default_TRIPLEDES)}:</td>
     <td>
      <select name="newsettings[mcrypt_algo]">
@@ -291,7 +282,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Mcrypt_mode_(default_CBC)}:</td>
     <td>
      <select name="newsettings[mcrypt_mode]">
@@ -306,7 +297,7 @@
    <tr bgcolor="{th_bg}">
     <td colspan="2"><font color="{th_text}"><b>{lang_Additional_settings}</b></font></td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>
 	{lang_Select_where_you_want_to_store/retrieve_filesystem_information}:
 	<br>
