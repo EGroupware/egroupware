@@ -55,7 +55,7 @@
 		</script>';
 	}
 
-	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+	$tpl = CreateObject('phpgwapi.Template',EGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('_head' => 'head.tpl'));
 	$tpl->set_block('_head','head');
@@ -74,20 +74,21 @@
 	if($app!='wiki') $robots ='<meta name="robots" content="none" />';
 	
 	$var = Array(
-		'img_icon'      	=> PHPGW_IMAGES_DIR . '/favicon.ico',
-		'img_shortcut'  	=> PHPGW_IMAGES_DIR . '/favicon.ico',
+		'img_icon'      	=> EGW_IMAGES_DIR . '/favicon.ico',
+		'img_shortcut'  	=> EGW_IMAGES_DIR . '/favicon.ico',
 		'pngfix'        	=> $pngfix,
 		'slider_effects'	=> $slider_effects,
 		'simple_show_hide'	=> $simple_show_hide,
 		'lang_code'			=> $lang_code,
-		'charset'       	=> $GLOBALS['phpgw']->translation->charset(),
+		'charset'       	=> $GLOBALS['egw']->translation->charset(),
 		'font_family'   	=> $GLOBALS['egw_info']['theme']['font'],
 		'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
-		'body_tags'     	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
+		'body_tags'     	=> $bodyheader .' '. $GLOBALS['egw']->common->get_body_attribs(),
 		'theme_css'     	=> $theme_css,
-		'css'           	=> $GLOBALS['phpgw']->common->get_css(),
-		'java_script'   	=> $GLOBALS['phpgw']->common->get_java_script(),
-		'meta_robots'			=> $robots
+		'css'           	=> $GLOBALS['egw']->common->get_css(),
+		'java_script'   	=> $GLOBALS['egw']->common->get_java_script(),
+		'meta_robots'		=> $robots,
+		'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 	 );
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');
