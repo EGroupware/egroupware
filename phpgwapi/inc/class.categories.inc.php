@@ -344,7 +344,7 @@
 		*/
 		function return_single($id = '')
 		{
-			$this->db->query('SELECT * FROM phpgw_categories WHERE cat_id=' . $id,__LINE__,__FILE__);
+			$this->db->query('SELECT * FROM phpgw_categories WHERE cat_id=' . intval($id),__LINE__,__FILE__);
 
 			if ($this->db->next_record())
 			{

@@ -32,21 +32,24 @@
 		var $action;
 		var $template;
 
-		function nextmatchs()
+		function nextmatchs($website=False)
 		{
-			$this->template = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$this->template->set_file(array(
-				'_nextmatchs' => 'nextmatchs.tpl'
-			));
-			$this->template->set_block('_nextmatchs','nextmatchs');
-			$this->template->set_block('_nextmatchs','filter');
-			$this->template->set_block('_nextmatchs','form');
-			$this->template->set_block('_nextmatchs','icon');
-			$this->template->set_block('_nextmatchs','link');
-			$this->template->set_block('_nextmatchs','search');
-			$this->template->set_block('_nextmatchs','cats');
-			$this->template->set_block('_nextmatchs','search_filter');
-			$this->template->set_block('_nextmatchs','cats_search_filter');
+			if(!$website)
+{
+				$this->template = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+				$this->template->set_file(array(
+					'_nextmatchs' => 'nextmatchs.tpl'
+				));
+				$this->template->set_block('_nextmatchs','nextmatchs');
+				$this->template->set_block('_nextmatchs','filter');
+				$this->template->set_block('_nextmatchs','form');
+				$this->template->set_block('_nextmatchs','icon');
+				$this->template->set_block('_nextmatchs','link');
+				$this->template->set_block('_nextmatchs','search');
+				$this->template->set_block('_nextmatchs','cats');
+				$this->template->set_block('_nextmatchs','search_filter');
+				$this->template->set_block('_nextmatchs','cats_search_filter');
+			}
 
 			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) &&
 				intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) > 0)
