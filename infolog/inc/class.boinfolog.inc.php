@@ -81,20 +81,8 @@
 
 			if ($this->config->config_data)
 			{
-				$link_pathes   = unserialize($this->config->config_data['link_pathes']);
-				$send_file_ips = unserialize($this->config->config_data['send_file_ips']);
-				/*
-				 * config.save_repository is calling addslashes,
-				 * while read_repository does not call stripslashes,
-				 * so we remove them here manually
-				 */
-				while (list($k,$v) = each($link_pathes)) {
-					$ks = stripslashes($k);
-					$this->link_pathes[$ks] = stripslashes($v);
-					$this->send_file_ips[$ks] = stripslashes($send_file_ips[$k]);
-				}
-				// echo "<p>bo: link_pathes="; _debug_array($this->link_pathes);
-				// echo "<p>bo: send_file_ips="; _debug_array($this->send_file_ips);
+				$this->link_pathes   = unserialize($this->config->config_data['link_pathes']);
+				$this->send_file_ips = unserialize($this->config->config_data['send_file_ips']);
 			}
 
 			$this->read( $info_id);
