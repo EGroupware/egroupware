@@ -27,7 +27,7 @@
     </form>
    </td>
    <td align="right">{lang_search}&nbsp;
-    <form action="{search_action}">
+    <form method="POST" action="{search_action}">
      <input name="query">
     </form>
    </td>
