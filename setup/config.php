@@ -111,7 +111,7 @@
     <td>IMAP server type:</td>
     <td>
      <select name="newsettings[imap_server_type]">
-      <option value="Cyrus"<?php echo $selected["Cyrus"]; ?>>Cyrus</option>
+      <option value="Cyrus"<?php echo $selected["Cyrus"]; ?>>Cyrus or Courier</option>
       <option value="UWash"<?php echo $selected["UWash"]; ?>>UWash</option>
      </select>
     </td>
@@ -182,6 +182,17 @@
    <tr bgcolor="e6e6e6">
     <td>Auto create account records for authenticated users:</td>
     <td><input type="checkbox" name="newsettings[auto_create_acct]" value="True"<?php echo ($current_config["auto_create_acct"]?" checked":""); ?>></td>
+   </tr>
+
+   <?php $selected[$current_config["acl_default"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>If no ACL records for user or any group the user is a member of: </td>
+    <td>
+     <select name="newsettings[acl_default]">
+      <option value="grant"<?php echo $selected["grant"]; ?>>Grant Access</option>
+      <option value="deny"<?php echo $selected["deny"]; ?>>Deny Access</option>
+     </select>
+    </td>
    </tr>
 
    <tr bgcolor="e6e6e6">
