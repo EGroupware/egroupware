@@ -209,6 +209,11 @@
 
 	$p->set_file($templates);
 
+	if ($submit)
+	{
+		$p->set_var('errors',lang('ACL grants have been updated'));
+	}
+
 	$common_hidden_vars = '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
 		. '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
 		. '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"

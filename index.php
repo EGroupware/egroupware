@@ -52,6 +52,11 @@
 		$phpgw->redirect($phpgw->link($phpgw_forward,$extra_vars));
 	}
 
+	if ($phpgw_info['server']['force_default_app'] && $phpgw_info['server']['force_default_app'] != 'user_choice')
+	{
+		$phpgw_info['user']['preferences']['common']['default_app'] = $phpgw_info['server']['force_default_app'];
+	}
+
 	if (($phpgw_info['user']['preferences']['common']['useframes'] &&
 		$phpgw_info['server']['useframes'] == 'allowed') ||
 		($phpgw_info['server']['useframes'] == 'always'))

@@ -95,4 +95,33 @@
 		}
 		return $out;
 	}
+
+	function force_default_app($config)
+	{
+		global $phpgw, $phpgw_info;
+
+		$out = '<option value="user_choice"';
+		if ($config['force_default_app'] == 'user_choice')
+		{
+			$out .= ' selected';
+		}
+		$out .= '>' . lang('Users Choice') . '</option>' . "\n";
+
+		reset($phpgw_info['user']['apps']);
+		while ($permission = each($phpgw_info['user']['apps']))
+		{
+			if ($phpgw_info['apps'][$permission[0]]['status'] != 2)
+			{
+				$out .= '<option value="' . $permission[0] . '"';
+				if ($config['force_default_app'] == $permission[0])
+				{
+					$out .= ' selected';
+				}
+				$out .= '>' . lang($phpgw_info['apps'][$permission[0]]['title']) . '</option>' . "\n";
+			}
+		}
+
+		return $out;
+	}
+
 ?>

@@ -255,7 +255,11 @@
             }
             echo "></td></tr>";
          }
-?>        
+
+			if ($phpgw_info['server']['force_default_app'] == 'user_choice')
+			{
+
+			?>        
        <tr>
         <td><?php echo lang("Default application"); ?></td>
         <td>
@@ -275,6 +279,9 @@
           ?></select>
         </td>
        </tr>
+       <?php
+			}
+			?>
 
        <tr>
         <td><?php echo lang("Currency"); ?></td>

@@ -56,6 +56,15 @@
     </td>
    </tr>
 
+   <tr bgcolor="{row_off}">
+    <td>{lang_Force_default_application}:<br></td>
+    <td>
+     <select name="newsettings[force_default_app]">
+{hook_force_default_app}
+     </select>
+    </td>
+   </tr>
+
    <tr bgcolor="{row_on}">
     <td>{lang_Use_pure_HTML_compliant_code_(not_fully_working_yet)}:</td>
     <td>
