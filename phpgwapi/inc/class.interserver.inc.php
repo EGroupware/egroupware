@@ -38,6 +38,8 @@
 		var $authed = False;
 		var $sessionid = '';
 		var $kp3 = '';
+
+		/* These are now entered as defaults if the admin forgot to enter the full URL */
 		var $urlparts = array(
 			'xmlrpc' => '/phpgroupware/xmlrpc.php',
 			'soap'   => '/phpgroupware/soap.php'
@@ -156,7 +158,7 @@
 
 		function _send_xmlrpc_ssl($method_name, $args, $url, $debug=True)
 		{
-			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['xmlrpc']);
+			list($uri,$hostpart) = $this->_split_url($url);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
@@ -184,7 +186,7 @@
 			}
 
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
-			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 443);
+			$c = CreateObject('phpgwapi.xmlrpc_client',$uri, $hostpart, 443);
 			$c->setCredentials($this->sessionid,$this->kp3);
 			$c->setDebug(0);
 			$r = $c->send($f,0,'https');
@@ -208,7 +210,7 @@
 
 		function _send_xmlrpc_($method_name, $args, $url, $debug=True)
 		{
-			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['xmlrpc']);
+			list($uri,$hostpart) = $this->_split_url($url);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
@@ -236,7 +238,7 @@
 			}
 
 			$this->debug('<pre>' . htmlentities($f->serialize()) . '</pre>' . "\n",$debug);
-			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
+			$c = CreateObject('phpgwapi.xmlrpc_client',$uri, $hostpart, 80);
 			$c->setCredentials($this->sessionid,$this->kp3);
 //			_debug_array($c);
 			$c->setDebug(0);
@@ -262,7 +264,7 @@
 		function _send_soap_ssl($method_name, $args, $url, $debug=True)
 		{
 			$method_name = str_replace('.','_',$method_name);
-			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
+			list($uri,$hostpart) = $this->_split_url($url);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
@@ -307,7 +309,7 @@
 		function _send_soap_($method_name, $args, $url, $debug=True)
 		{
 		//	$method_name = str_replace('.','_',$method_name);
-			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
+			list($uri,$hostpart) = $this->_split_url($url);
 			$this->build_request($args);
 			/*
 			if(gettype($args) != 'array')
@@ -587,7 +589,7 @@
 			}
 			if($serverid)
 			{
-				$sql = "SELECT server_name FROM $this->table WHERE serverid=$serverid";
+				$sql = "SELECT server_name FROM $this->table WHERE server_id=$serverid";
 				$this->db->query($sql,__LINE__,__FILE__);
 				if($this->db->next_record())
 				{
