@@ -37,6 +37,7 @@
 			$this->err['code'] = ' ';
 			$this->err['msg']  = ' ';
 			$this->err['desc'] = ' ';
+			$this->charset = $GLOBALS['phpgw']->translation->charset();
 		}
 
 		function msg($service, $to, $subject, $body, $msgtype='', $cc='', $bcc='', $from='', $sender='', $content_type='', $boundary='Message-Boundary')
@@ -96,7 +97,7 @@
 						. 'Content-Type: multipart/mixed;'."\n"
 						. " boundary=\"$boundary\"\n\n"
 						. "--$boundary\n"
-						. 'Content-type: text/' .$content_type . '; charset="'.lang('charset').'"'."\n";
+						. 'Content-type: text/' .$content_type . '; charset="'.$this->charset.'"'."\n";
 //					if (!empty($msgtype))
 //					{
 //						$header .= "Content-type: text/' .$content_type . '; phpgw-type=".$msgtype."\n";
@@ -111,7 +112,7 @@
 				{
 					$header .= 'Subject: '.stripslashes($subject)."\n"
 						. 'MIME-version: 1.0'."\n"
-						. 'Content-type: text/' .$content_type . '; charset="'.lang('charset').'"'."\n";
+						. 'Content-type: text/' .$content_type . '; charset="'.$this->charset.'"'."\n";
 					if (!empty($msgtype))
 					{
 						$header .= 'Content-type: text/' .$content_type . '; phpgw-type='.$msgtype."\n";
@@ -199,7 +200,7 @@
 
 				if ($enc_start == $w+1)	// first word to encode
 				{
-					$str .= '=?'.lang('charset').'?Q?';
+					$str .= '=?'.$this->charset.'?Q?';
 				}
 				$str .= $w+1 > $enc_end ? str_replace('=3D','=',$s) : $s;
 
