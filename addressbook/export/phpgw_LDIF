@@ -42,8 +42,8 @@
 			"url"                 => "url",
 			"pubkey"              => "publickey",
 
-			"org_name"            => "o",  // company
-			"org_unit"            => "ou",  // division
+			"org_name"            => "phpgworgname",  // company
+			"org_unit"            => "phpgworgunit",  // division
 			"title"               => "title",
 
 			"adr_one_street"      => "street",

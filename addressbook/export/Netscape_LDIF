@@ -75,6 +75,11 @@
 		// name/value are the fields from the export array above
 		function export_new_attrib($buffer,$name,$value) {
 			if ($this->export[$name]) {
+				if (strstr($value,"\n")) {
+					$value = ": ".base64_encode($value);
+				} else {
+					 $value = " ".$value;
+				}
 				$buffer[$this->id][$this->export[$name]] = $value;
 				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
 			}
@@ -103,7 +108,7 @@
 				reset($this->export);
 				while (list($name,$value)=each($this->export)) {
 					if ($value != 'dn') {
-						$entries .= $value . ": " . $buffer[$i][$value] . "\n";
+						$entries .= $value . ":" . $buffer[$i][$value] . "\n";
 					}
 				}
 				$entries .= "xmozillauseconferenceserver: " . $buffer[$i]["xmozillauseconferenceserver"] . "\n";
