@@ -145,16 +145,16 @@ insert into preferences values ('demo','tz_offset','0','');
 --------------
 
 CREATE TABLE sessions (
-  sessionid	varchar2(255) NOT NULL,
-  loginid	varchar2(20),
-  passwd	varchar2(255),
-  ip		varchar2(255),
-  logintime	number(11),
-  dla		number(11)
+  session_id        varchar2(255) NOT NULL,
+  session_lid       varchar2(20),
+  session_pwd       varchar2(255),
+  session_ip        varchar2(255),
+  session_logintime number(11),
+  session_dla       number(11)
 );
 
 create unique index sessions_sessionid 
-on sessions (sessionid);
+on sessions (session_id);
 
 ------------------
 -- APP_SESSIONS --

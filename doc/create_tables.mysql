@@ -67,13 +67,13 @@ insert into preferences values ('demo','theme','default','');
 insert into preferences values ('demo','tz_offset','0','');
 
 CREATE TABLE sessions (
-   sessionid	varchar(255) NOT NULL,
-   loginid	varchar(20),
-   passwd	varchar(255),
-   ip		varchar(255),
-   logintime	int(11),
-   dla		int(11),
-   UNIQUE sessionid (sessionid)
+   session_id        varchar(255) NOT NULL,
+   session_lid       varchar(20),
+   session_pwd       varchar(255),
+   session_ip        varchar(255),
+   session_logintime int(11),
+   session_dla       int(11),
+   UNIQUE sessionid (session_id)
 );
 
 CREATE TABLE app_sessions (

@@ -51,13 +51,13 @@ create table groups (
 insert into groups (group_name) values ('Default');
 
 create table sessions (
-  sessionid	varchar(255),
-  loginid	varchar(20),
-  passwd	varchar(255),
-  ip		varchar(255),
-  logintime	int,
-  dla		int,
-  unique(sessionid)
+  session_id        varchar(255),
+  session_lid       varchar(20),
+  session_pwd       varchar(255),
+  session_ip        varchar(255),
+  session_logintime	int,
+  session_dla       int,
+  unique(session_id)
 );
 
 CREATE TABLE app_sessions (

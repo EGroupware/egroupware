@@ -76,8 +76,8 @@ if (! $submit) {
 
    // Since they are logged in, we need to change the password in sessions
    // in case they decied to check there mail.
-   $phpgw->db->query("update sessions set passwd='" . $phpgw->common->encrypt($n_passwd)
-	          . "' where loginid='" . $phpgw_info["user"]["userid"] . "'");
+   $phpgw->db->query("update sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd)
+	              . "' where session_lid='" . $phpgw_info["user"]["userid"] . "'");
 
    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
 	. "/preferences/","cd=18"));
