@@ -776,18 +776,22 @@
 
 		function find_image($appname,$image)
 		{
-			switch($GLOBALS['phpgw_info']['server']['image_type'])
+			static $imgpref;
+			if(! @$imgpref)
 			{
-				case 1:
-					$imgpref = Array('png','jpg','gif');
-					break;
-				case 2:
-					$imgpref = Array('png','jpg','nogifs');
-					break;
-				default:
-					$imgpref = Array('gif','jpg','png');
+				switch(@$GLOBALS['phpgw_info']['server']['image_type'])
+				{
+					case 1:
+						$imgpref = Array('png','jpg','gif');
+						break;
+					case 2:
+						$imgpref = Array('png','jpg','nogifs');
+						break;
+					default:
+						$imgpref = Array('gif','jpg','png');
+						break;
+				}
 			}
-	
 			if (!@is_array($this->found_files[$appname]))
 			{
 				$imagedir_olddefault = '/'.$appname.'/images';
