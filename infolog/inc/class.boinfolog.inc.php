@@ -88,8 +88,8 @@
 
 			if ($this->config->config_data)
 			{
-				$this->link_pathes   = unserialize($this->config->config_data['link_pathes']);
-				$this->send_file_ips = unserialize($this->config->config_data['send_file_ips']);
+				$this->link_pathes   = $this->config->config_data['link_pathes'];
+				$this->send_file_ips = $this->config->config_data['send_file_ips'];
 			}
 
 			$this->read( $info_id);

@@ -1450,8 +1450,8 @@
 					}
 				}
 				$this->bo->config->config_data = array(
-					'link_pathes' => serialize($this->bo->link_pathes),
-					'send_file_ips' => serialize($this->bo->send_file_ips)
+					'link_pathes' => $this->bo->link_pathes,
+					'send_file_ips' => $this->bo->send_file_ips
 				);
 				$this->bo->config->save_repository(True);
 			}
