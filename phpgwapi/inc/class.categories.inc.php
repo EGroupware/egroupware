@@ -226,14 +226,14 @@
 			if (function_exists('in_array'))
 			{
 				return in_array($needle,$haystack);
-			}			
+			}
 			while (list ($k,$v) = each($haystack))
 			{
 				if ($v == $needle)
 				{
 					return True;
 				}
-			}							
+			}
 			return False;
 		}
 
@@ -272,7 +272,7 @@
 					{
 					$s .= '&lt;' . lang('Global') . '&gt;';
 					}
-					$s .= "</option>\n";
+					$s .= '</option>' . "\n";
 				}
 				return $s;
 			}
@@ -385,13 +385,8 @@
 				$cat_main = $cat_parent;
 			}
 
-			if ($cat_main && ($cat_main > 0))
+			if ($cat_parent && ($cat_parent > 0))
 			{
-				if (!$cat_parent)
-				{
-					$cat_parent = $cat_main;
-				}
-
 				$this->db2->query("select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
 				$this->db2->next_record();
 				$cat_level = $this->db2->f('cat_level')+1;
