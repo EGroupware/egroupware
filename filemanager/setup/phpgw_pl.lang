@@ -1,94 +1,103 @@
-%1 already exists as a file	filemanager	pl	%1 ju¿ istnieje jako plik
+%1 already exists as a file	filemanager	pl	%1 ju istnieje jako plik
 application	filemanager	pl	Aplikacja
-back to file manager	filemanager	pl	Powrót do managera plików
-cannot create directory because it begins or ends in a space	filemanager	pl	
-cannot replace %1 because it is a directory	filemanager	pl	
-command sucessfully run	filemanager	pl	Pomy¶lnie wykonano polecenie
+back to file manager	filemanager	pl	Powrt do managera plikw
+cannot create directory because it begins or ends in a space	filemanager	pl	Nie moge utworzy katalogu poniewasz zaczyna lub konczy si spacj
+cannot replace %1 because it is a directory	filemanager	pl	Nie mona zastpi %1 poniewasz jest katalogiem
+command sucessfully run	filemanager	pl	Pomylnie wykonano polecenie
 comment	filemanager	pl	Komentarz
 comments cannot contain "%1"	filemanager	pl	Komentarz nie zawiera "%1"
 copied %1 to %2	filemanager	pl	Skopiowano %1 do %2
 copy to	filemanager	pl	Kopiuj do
 copy to:	filemanager	pl	Kopiuj do
-could not copy %1 to %2	filemanager	pl	Nie mo¿na skopiowaæ %1 do %2
-could not create directory %1	filemanager	pl	Nie mo¿na utworzyæ katalogu %1
-could not create %1	filemanager	pl	Nie mo¿na utworzyæ %1
-could not delete %1	filemanager	pl	Nie mo¿na usun±æ %1
-could not move %1 to %2	filemanager	pl	Nie mo¿na przenie¶æ %1
-could not rename %1 to %2	filemanager	pl	Nie mo¿na zmieniæ nazwy %1
-could not save %1	filemanager	pl	Nie mo¿na zapisaæ %1
-create file	filemanager	pl	Utwórz plik
-create folder	filemanager	pl	Utwórz katalog
+could not copy %1 to %2	filemanager	pl	Nie mona skopiowa %1 do %2
+could not create %1	filemanager	pl	Nie mona utworzy %1
+could not create directory %1	filemanager	pl	Nie mona utworzy katalogu %1
+could not delete %1	filemanager	pl	Nie mona usun %1
+could not move %1 to %2	filemanager	pl	Nie mona przenie %1
+could not rename %1 to %2	filemanager	pl	Nie mona zmieni nazwy %1
+could not save %1	filemanager	pl	Nie mona zapisa %1
+create file	filemanager	pl	Utwrz plik
+create folder	filemanager	pl	Utwrz katalog
 created	filemanager	pl	Utworzony
+created %1	filemanager	pl	Utworzono %1
 created by	filemanager	pl	Utworzony przez
 created directory %1	filemanager	pl	Utworzono katalog %1
-created %1	filemanager	pl	Utworzono %1
 date	filemanager	pl	Data
-default number of upload fields to show	filemanager	pl	
-delete	filemanager	pl	Usuñ
-deleted x	filemanager	pl	Usuniêto 51
+default number of upload fields to show	filemanager	pl	Ustaw domylna ilo wywietlanych pl do wysania plikw
+delete	filemanager	pl	Usu
+deleted %1	filemanager	pl	Skasowano %1
+deleted x	filemanager	pl	Usunito 51
 directory	filemanager	pl	Katalog
-directory names cannot contain "%1"	filemanager	pl	Nazwa katalogu zawiera "%1"
-directory %1 already exists	filemanager	pl	Katalog %1 ju¿ istnieje
+directory %1 already exists	filemanager	pl	Katalog %1 ju istnieje
 directory %1 does not exist	filemanager	pl	Katalog %1 nie istnieje
-display attributes	filemanager	pl	Wy¶wietlane atrybuty
+directory names cannot contain "%1"	filemanager	pl	Nazwa katalogu zawiera "%1"
+display attributes	filemanager	pl	Wywietlane atrybuty
 download	filemanager	pl	Pobierz
 edit	filemanager	pl	Edycja
 edit comments	filemanager	pl	Edycja komentarza
-error running command	filemanager	pl	B³±d wykonania polecenia
+error running command	filemanager	pl	Bd wykonania polecenia
 execute	filemanager	pl	Wykonaj
-failed to create directory	filemanager	pl	
+failed to create directory	filemanager	pl	nie udao si utworzy katalogu
 file	filemanager	pl	Plik
+file %1 already exists. please edit it or delete it first.	filemanager	pl	Plik %1 ju istnieje. prosz edytowa go lub usun
+file %1 could not be created.	filemanager	pl	Plik %1 nie moe by utworzony
 file name	filemanager	pl	Nazwa pliku
 file names cannot contain "%1"	filemanager	pl	Plik nie zawiera "%1"
-file names cannot contain \ or /	filemanager	pl	Nazwa pliku nie mo¿e zawierac \ lub /
-file %1 already exists. please edit it or delete it first.	filemanager	pl	Plik %1 ju¿ istnieje. proszê edytowaæ go lub usun±æ
-file %1 could not be created.	filemanager	pl	Plik %1 nie mo¿e byæ utworzony
+file names cannot contain \ or /	filemanager	pl	Nazwa pliku nie moe zawierac \ lub /
+filemanager	common	pl	Administrator plikw
+filemanager preferences	filemanager	pl	Preferencje administracji plikw
 filename	filemanager	pl	Nazwa pliku
-files	filemanager	pl	Plików
+files	filemanager	pl	Plikw
+files in this directory	filemanager	pl	Pliki w tym katalogu
 folder	filemanager	pl	Katalog
-go to	filemanager	pl	Id¼ do
-go to %1	filemanager	pl	Id¼ do %1
-go to your home directory	filemanager	pl	
-go to:	filemanager	pl	Id¼ do
-home	filemanager	pl	
-locked	filemanager	pl	
+go to	filemanager	pl	Id do
+go to %1	filemanager	pl	Id do %1
+go to your home directory	filemanager	pl	Id do katalowgu domowego
+go to:	filemanager	pl	Id do
+go up	filemanager	pl	w gre
+home	filemanager	pl	Katalog Domowy
+locked	filemanager	pl	Zablokowano
 mime type	filemanager	pl	Typ mime
 modified	filemanager	pl	Zmodyfikowany
 modified by	filemanager	pl	Zmodyfikowany przez
-move to	filemanager	pl	Przenie¶ do
-move to:	filemanager	pl	Przenie¶ do
+move to	filemanager	pl	Przenie do
+move to:	filemanager	pl	Przenie do
 moved %1 to %2	filemanager	pl	Przeniesiono %1 do %2
-no version history for this file/directory	filemanager	pl	
+no files in this directory.	filemanager	pl	Nie ma plikw w tym katalogu
+no version history for this file/directory	filemanager	pl	Nie istnieje historja wersji tego pliku/katalogu
 operation	filemanager	pl	
-owner	filemanager	pl	W³a¶ciciel
-filemanager preferences	filemanager	pl	Preferencje filemanager
-preview of %1	filemanager	pl	
+other settings	filemanager	pl	Inne ustawienja
+owner	filemanager	pl	Waciciel
 preview %1	filemanager	pl	
+preview of %1	filemanager	pl	
+quick jump to	filemanager	pl	
+reload	filemanager	pl	odwierz
 rename	filemanager	pl	Zmiana nazwy
-renamed %1 to %2	filemanager	pl	Zmieniono nazwê %1 na %2
+renamed %1 to %2	filemanager	pl	Zmieniono nazw %1 na %2
 replaced %1	filemanager	pl	Zastapiono %1
-save all	filemanager	pl	Zapisz wszystko
 save %1	filemanager	pl	Zapisz %1
+save all	filemanager	pl	Zapisz wszystko
 saved %1	filemanager	pl	Zapisano %1
-show	filemanager	pl	Wy¶wietl
-show ..	filemanager	pl	Wy¶wietlaj ..
-show .files	filemanager	pl	Wy¶wietlaj .pliki
+show	filemanager	pl	Wywietl
+show ..	filemanager	pl	Wywietlaj ..
+show .files	filemanager	pl	Wywietlaj .pliki
 show command line (experimental. dangerous.)	filemanager	pl	
-show help	filemanager	pl	Wy¶wietlaj pomoc
-size	filemanager	pl	Wielko¶æ
+show help	filemanager	pl	Wywietlaj pomoc
+size	filemanager	pl	Wielko
 sort by:	filemanager	pl	Sortuj wg
-total files	filemanager	pl	Wszystkich plików
-unknown mime-type defaults to text/plain when viewing	filemanager	pl	
+total files	filemanager	pl	Wszystkich plikw
+unknown mime-type defaults to text/plain when viewing	filemanager	pl	Nieznany typ MIME domylnie traktowany jest jako text/plain w przegldaniu
 unused space	filemanager	pl	Wolne miejsce
-up	filemanager	pl	W górê
+up	filemanager	pl	W gr
 update	filemanager	pl	Aktualizuj
 updated comment for %1	filemanager	pl	Zaktualizowano komentarz do %1
-upload fields	filemanager	pl	wczytywanych plików
+upload	filemanager	pl	Wylij
+upload fields	filemanager	pl	wczytywanych plikw
 upload files	filemanager	pl	Wczytaj pliki
 used space	filemanager	pl	Wykorzystane miejsce
-users	filemanager	pl	U¿ytkownicy
+users	filemanager	pl	Uytkownicy
 version	filemanager	pl	Wersja
-view documents in new window	filemanager	pl	Wy¶wietlaj dokumenty w nowym oknie
-view documents on server (if available)	filemanager	pl	Poka¿ dokumenty na serwerze (je¶li s± dostêpne)
+view documents in new window	filemanager	pl	Wywietlaj dokumenty w nowym oknie
+view documents on server (if available)	filemanager	pl	Poka dokumenty na serwerze (jeli s dostpne)
 who	filemanager	pl	Kto
 you do not have access to %1	filemanager	pl	Nie masz praw do %1

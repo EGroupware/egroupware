@@ -1,38 +1,79 @@
+%1 - preferences	preferences	pl	Ustawienia - %1
+%1 hours	preferences	pl	%1 godzin
+12 hour	preferences	pl	12 godzinny
+24 hour	preferences	pl	24 godinny
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	pl	Szablony okre¶laj± wygl±d eGroupWare i zawieraj± ikonki dla wszystkich aplikacji
+a theme defines the colors and fonts used by the template.	preferences	pl	Tematy s³u¿± do okre¶lenia kolorów i czcionek w egroupware
+acl grants have been updated	preferences	pl	Uprawniena dostêpu (ACL) zosta³y odnowione
+any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w eGroupWare bêd± wy¶wietlaæ ci tutaj ustawion± liczbê wierszy na strone.<br>Za wiele spowolni do¶æ znacznie wy¶wietlanie stron, za ma³o spowoduje utrate przejrzysto¶ci informacji.
+are you sure you want to delete this category ?	preferences	pl	Napewno wykasowaæ t± kategorie ?
 change your password	preferences	pl	Zmieñ swoje has³o
 change your profile	preferences	pl	Zmieñ swój profil
-change your settings	preferences	pl	ZmieN swoje ustawienia
+change your settings	preferences	pl	Zmieñ swoje ustawienia
+country	preferences	pl	Pañstwo
 date format	preferences	pl	Format daty
+default	preferences	pl	domy¶lne
 default application	preferences	pl	Domy¶lna aplikacja
 default preferences	preferences	pl	Domy¶lne ustawienia
+delete categories	preferences	pl	Kategorie domy¶lne
+description can not exceed 255 characters in length !	preferences	pl	Opis nie mo¿e przekraczaæ 255 znaków !
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pl	Czy preferujesz wy¶wietlanie godziny w formacie 24 godzinnym czy w 12 godzinnym z do³±czeniem am/pm.
 edit custom fields	preferences	pl	Edytuj pola u¿ytkownika
 enter your new password	preferences	pl	Wprowad¼ swoje nowe has³o
+error: there was a problem finding the preference file for %1 in %2	preferences	pl	Wyst±pi³ b³±d: Nie znaleziono pliku z ustawieniami dla %1 w %2
 forced preferences	preferences	pl	Wymuszone ustawienia
 grant access	preferences	pl	Nadaj prawa dostêpu
+help off	preferences	pl	Wy³±cz wy¶wietlanie pomocy
+hours	preferences	pl	godzin
+how do you like to display accounts	preferences	pl	Jak maj± byæ wy¶wietlane konta u¿ytkowników
+how do you like to select accounts	preferences	pl	Jak chcia³by¶ wybieraæ/zaznaczaæ konta u¿ytkowników
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pl	Podaj o ile godzin twoja strefa czasowa ró¿ni sie od strefy lokalnej serwera eGroupWare.<br>Je¿eli znajdujesz siê w tej samej strefje czasowej co serwer, ustaw 0 godzin, w innym wypadku ustaw wed³ug twojego lokalnego czasu i daty.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	pl	Jaka ilo¶æ ikonek winna byæ wy¶wietlana w listwie nawigacji. Dalsze ikonki bed± czê¶ci± menu typu pulldown które mo¿na wywo³aæ przy pomocy kliknjêcia ikonki za strza³k± z zupe³nie prawej strony listwy nawigacji
+how should phpgroupware display dates for you.	preferences	pl	W jaki spsób eGroupWare powinien wy¶wietlaæ datê
 icons and text	preferences	pl	Ikony i tekst
 icons only	preferences	pl	Tylko ikony
+in which country are you. this is used to set certain defaults for you.	preferences	pl	W którym znajdujesz siê panstwie. eGroupWare u¿yje tego ustawienia do wyboru pewnych konfiguracji domy¶lnych.
 interface/template selection	preferences	pl	Wybór interfejsu/szablonu
 inv	preferences	pl	Fakturacja
 language	preferences	pl	Jêzyk
 max matches per page	preferences	pl	Maksymalna liczba trafieñ na stronie
+max number of icons in navbar	preferences	pl	Maksymalna liczba ikonek w pasku nawigacji
 monitor newsgroups	preferences	pl	Monitor grup dyskusyjnych
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia has³a do twojej skrzyniki pocztowej! Nale¿y to zrobiæ rêcznie.
+no default	preferences	pl	Bez domy¶lnego
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia has³a do twojej skrzynki pocztowej! Nale¿y to zrobiæ rêcznie.
 please, select a new theme	preferences	pl	Proszê wybraæ nowy temat
+popup with search	preferences	pl	Ona popup do szukania
 re-enter your password	preferences	pl	Wpisz has³o ponownie
 select different theme	preferences	pl	Wybierz inny temat
 select displayed stocks	preferences	pl	Wybór wy¶wietlanych spó³ek
 select headlines to display	preferences	pl	Wybór serwisów wiadomo¶ci
 select one	preferences	pl	Wybierz jeden
+select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz jêzyk tekstów i komunikatów wewn±trz eGroupWare.<br>Niektóre jêzyki nie zawieraj± wszelkich komunikatów. W takich wypadkach wy¶wietlane bêd± komunikaty w jêzyku angielskim.
+selectbox	preferences	pl	Box z wyborem
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pl	Ustaw to wed³ug w³asnych upodobañ. Ze wzglêdów na bezpieczeñstwo twoich danych ewentualnie nie chcia³by¶ wy¶wietlaæ twojej nazwy u¿ytkownika w publiczno¶ci.
+should the number of active sessions be displayed for you all the time.	preferences	pl	Wy¶wietlaæ liczbe sesji aktywnych.
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	pl	Wy¶wietlaæ komunikaty i teksty pomocy przy ka¿dym wywo³aniu ustawieñ domy¶lie czy wy³±cznie na ¿±danie.
 show current users on navigation bar	preferences	pl	Wy¶wietlaj liczbê u¿ytkowników
-show navigation bar as	preferences	pl	Poka¿ pasek nawigacji jako
-show text on navigation icons	preferences	pl	Poka¿ tekst na ikonach nawigacji
+show helpmessages by default	preferences	pl	Wy¶wietlaj pomoc domy¶lnie
+show navigation bar as	preferences	pl	Wy¶wietlaj pasek nawigacji jako
+show number of current users	preferences	pl	Wy¶wietlaj liczbe zalogowanych u¿ytkowników
+show text on navigation icons	preferences	pl	Wy¶wietlaj tekst na ikonach nawigacji
+show_more_apps	common	pl	Wy¶wietl wiecej aplikaji
 text only	preferences	pl	Tylko tekst
-theme (colors/fonts) selection	preferences	pl	Wybór tematu (kolory/czcionki)
+the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pl	Aplikacja domy¶lna bêdzie wywo³ywana za ka¿dym razem kiedy bêdziesz siê rejestrowa³ do eGroupWare lub wybierzesz ikonke srony g³ównej.<br>Mo¿esz tak¿e wy¶wietlaæ dane z kilku aplikacji na stronie g³ównej je¿eli nie wybierzesz ¿adnej domy¶lnej aplikacji w tym polu (wy¶wietlanie na stronie g³ównej jest ustawiane dla ka¿dej aplikacji w jej menu ustawieñ oddzielnie).
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pl	Box z wyborem pokazuje wszystkich u¿ytkowników (mo¿e byæ bardzo wolne przy du¿ych ilo¶ciach u¿ytkowników). Popup mo¿e szukaæ u¿ytkowników wed³ug imienja lub adresu poczty elektronicznej.
 the two passwords are not the same	preferences	pl	Te dwa has³a nie s± identyczne
+theme (colors/fonts) selection	preferences	pl	Wybór tematu (kolory/czcionki)
 this server is located in the %1 timezone	preferences	pl	Ten serwer znajduje siê w strefie czasowej %1
 time format	preferences	pl	Format czasu
-weather center	preferences	pl	Centrum pogodowe
+use default	preferences	pl	Domy¶lne
+users choice	preferences	pl	Wybieraj± u¿ytkownicy
 weather	preferences	pl	Pogoda
+weather center	preferences	pl	Centrum pogodowe
 weather preferences	preferences	pl	Ustawienia pogody
+which currency symbol or name should be used in phpgroupware.	preferences	pl	Który symbol waluty powinien byæ u¿yty w eGroupWare
+you can show the applications as icons only, icons with app-name or both.	preferences	pl	Mo¿esz wybraæ wy¶wietlanie aplikacji w formie ikon, tekstów lub obydwojga.
+you do not have permission to set acl's in this mode!	preferences	pl	Nie posiadasz uprawnieñ do usawianie uprawnieñ dostêpowych (ACL) w tym trybie!
 you must enter a password	preferences	pl	Musisz wprowadziæ has³o
 your current theme is: %1	preferences	pl	Twój bie¿±cy temat to: %1
 your preferences	preferences	pl	Twoje ustawienia
