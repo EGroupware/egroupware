@@ -29,16 +29,20 @@
 	// Does not return unless user is authorized
 	class phpgw {
 		var $common;
+		var $accounts;
+		var $applications;
 	}
 	$phpgw = new phpgw;
 	$phpgw->common = CreateObject('phpgwapi.common');
 
-	$common       = $phpgw->common;
+	$common              = $phpgw->common;
 	$phpgw_setup->loaddb();
 
 	$phpgw_info['server']['auth_type'] = 'ldap';
-	$acct         = CreateObject('phpgwapi.accounts');
-	$applications = CreateObject('phpgwapi.applications');
+	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
+	$acct                = $phpgw->accounts;
+	$phpgw->applications = CreateObject('phpgwapi.applications');
+	$applications        = $phpgw->applications;
 
 	$phpgw_setup->db->query("select config_name,config_value from phpgw_config where config_name like 'ldap%'",__LINE__,__FILE__);
 	while ($phpgw_setup->db->next_record()) {
