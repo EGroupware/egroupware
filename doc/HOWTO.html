@@ -10,7 +10,7 @@
 <H1>  phpGroupWare HOWTO</H1>
 
 <H2>Joseph Engo &lt;jengo@phpgroupware.org&gt;,
-  Dan Kuykendall &lt;dan@kuykendall.org&gt;</H2>  v1.0, 7 July 2000
+  Dan Kuykendall &lt;dan@kuykendall.org&gt;</H2>  v1.1, 28 September 2000
 <P><HR>
 <EM>  This document explains how to install and configure phpGroupWare.</EM>
 <HR>
@@ -73,29 +73,23 @@ have the most recent development copy of phpGroupWare in no time.
 
 <P>After you have met the system requirements, unpack the tarball in the html 
 directory of your webserver. (eg, /home/httpd/html)
-<P>The first step is to setup the database and create the tables needed.  In the 
-doc directory there is a file called create_tables.(name of your database)
-<H3>Installation with MySQL</H3>
-
-<P>We will assume that you are using the database named phpgroupware.
-<P><CODE>$ mysql phpgroupware -u username -p &lt; create_tables.mysql</CODE>
-Then add the language entries (used for translation purposes).
-<P><CODE>$ mysql phpgroupware -u username -p &lt; lang.sql</CODE>
-<H3>Installation with PostgreSQL</H3>
-
-<P>We will assume that you are using the database named phpgroupware.
-<P><CODE>$ psql -d phpgroupware -U username &lt; create_tables.pgsql</CODE>
-Then add the language entries (used for translation purposes).
-<P><CODE>$ psql -d phpgroupware -U username &lt; lang.sql</CODE>
 <H2>2.5 Configure phpGroupWare</H2>
 
 <P>Copy the <CODE>header.inc.php.sample</CODE> file to 
 <CODE>header.inc.php</CODE> and edit the file, following the
 directions in the comments.
-<P>Change to the inc directory. <BR>
-Copy <CODE>globalconfig.inc.php.sample</CODE> to <CODE>globalconfig.inc.php</CODE>
-and edit it to reflect your system settings, again following the
-comments in the file.
+<P>Then point your browser to phpgroupware/setup/ which will
+create (or upgrade) the database tables. 
+You wil be asked to login, using the password set in
+<CODE>header.inc.php</CODE>. Setup will attempt to determine what version
+of the phpGroupWare database you have installed, and upgrade to the most recent
+version. 
+<P><B>NOTE:</B>The developers are concentrating on getting the beta
+working, and have not spent a great deal of time building upgrade scripts from the
+alpha versions of phpGroupWare. You are advised to backup your existing alpha
+database before running the setup script to avoid problems!
+<P>If you get no error messages, continue on to phpgroupware/setup/config.php 
+to configure phpGroupWare to your system.
 <P>If you are using the email system you will need to create a temporary directory 
 where file uploads will be stored.  For security reasons, you should <CODE>chown
 nobody.nobody</CODE> and <CODE>chmod 700</CODE> to that directory.  Depending on your system configuration.  
@@ -282,12 +276,13 @@ AddType             application/x-httpd-php .php3 .php
 <LI>Included the FAQ.</LI>
 <LI>Other minor additions.</LI>
 </UL>
-<P>v1.1 (September 27, 2000) - blinky
+<P>v1.1 (September 27-29, 2000) - blinky
 <P>
 <UL>
 <LI>Added Testing Install section</LI>
 <LI>Added Trouble-shooting section</LI>
 <LI>Added description of application installation</LI>
+<LI>Changes for the new setup program</LI>
 </UL>
 <H2>6.5 Copyrights and Trademarks </H2>
 

@@ -10,9 +10,10 @@
   Dan Kuykendall &lt;dan@kuykendall.org&gt;
 </author>
 <date>
-  v1.0, 7 July 2000
+  v1.1, 28 September 2000
 </date>
 <abstract>
+<!-- $Id$ -->
   This document explains how to install and configure phpGroupWare.
 </abstract>
 
@@ -81,23 +82,6 @@ have the most recent development copy of phpGroupWare in no time.
 <p>
   After you have met the system requirements, unpack the tarball in the html 
   directory of your webserver. (eg, /home/httpd/html)
-  <p>
-  The first step is to setup the database and create the tables needed.  In the 
-  doc directory there is a file called create_tables.(name of your database)
-</p>
-<sect2>Installation with MySQL
-<p>
-  We will assume that you are using the database named phpgroupware.<p>
-  <tt>$ mysql phpgroupware -u username -p < create_tables.mysql</tt>
-  Then add the language entries (used for translation purposes).<p>
-  <tt>$ mysql phpgroupware -u username -p < lang.sql</tt>
-</p>
-<sect2>Installation with PostgreSQL
-<p>
-  We will assume that you are using the database named phpgroupware.<p>
-  <tt>$ psql -d phpgroupware -U username < create_tables.pgsql</tt>
-  Then add the language entries (used for translation purposes).<p>
-  <tt>$ psql -d phpgroupware -U username < lang.sql</tt>
 </p>
 <sect1>Configure phpGroupWare
 <p>
@@ -105,10 +89,20 @@ have the most recent development copy of phpGroupWare in no time.
   <tt>header.inc.php</tt> and edit the file, following the
   directions in the comments.
 <p>
-  Change to the inc directory. <newline>
-  Copy <tt>globalconfig.inc.php.sample</tt> to <tt>globalconfig.inc.php</tt>
-  and edit it to reflect your system settings, again following the
-  comments in the file.
+  Then point your browser to phpgroupware/setup/ which will
+  create (or upgrade) the database tables. 
+  You wil be asked to login, using the password set in
+  <tt>header.inc.php</tt>. Setup will attempt to determine what version
+  of the phpGroupWare database you have installed, and upgrade to the most recent
+  version. 
+
+<bf>NOTE:</bf>The developers are concentrating on getting the beta
+  working, and have not spent a great deal of time building upgrade scripts from the
+  alpha versions of phpGroupWare. You are advised to backup your existing alpha
+  database before running the setup script to avoid problems!
+
+  If you get no error messages, continue on to phpgroupware/setup/config.php 
+  to configure phpGroupWare to your system.
 <p>
   If you are using the email system you will need to create a temporary directory 
   where file uploads will be stored.  For security reasons, you should <tt>chown
@@ -304,13 +298,14 @@ name="http://sourceforge.net/mail/?group_id=7305">
 </itemize>
 </p>
 <p>
- v1.1 (September 27, 2000) - blinky
+ v1.1 (September 27-29, 2000) - blinky
 </p>
 <p>
 <itemize>
   <item>Added Testing Install section
   <item>Added Trouble-shooting section
   <item>Added description of application installation
+  <item>Changes for the new setup program
 </itemize>
 </p>
 <sect1>Copyrights and Trademarks 

@@ -1,7 +1,7 @@
   phpGroupWare HOWTO
   Joseph Engo <jengo@phpgroupware.org>, Dan Kuykendall
   <dan@kuykendall.org>
-  v1.0, 7 July 2000
+  v1.1, 28 September 2000
 
   This document explains how to install and configure phpGroupWare.
   ______________________________________________________________________
@@ -21,8 +21,6 @@
         2.3.1 Released Versions
         2.3.2 Developer's version from CVS
      2.4 Installing on Tested Systems
-        2.4.1 Installation with MySQL
-        2.4.2 Installation with PostgreSQL
      2.5 Configure phpGroupWare
 
   3. Testing the install
@@ -64,6 +62,8 @@
   phpGroupWare is a web based groupware application that includes
   integrated features such as email, calendar, todo list, address book,
   file manager, headline news, and a trouble ticket system.
+
+
   You should use it if:
 
   You would like a powerful groupware system that can be access from
@@ -126,37 +126,25 @@
   After you have met the system requirements, unpack the tarball in the
   html directory of your webserver. (eg, /home/httpd/html)
 
-  The first step is to setup the database and create the tables needed.
-  In the doc directory there is a file called create_tables.(name of
-  your database)
-
-  22..44..11..  IInnssttaallllaattiioonn wwiitthh MMyySSQQLL
-
-  We will assume that you are using the database named phpgroupware.
-
-  $ mysql phpgroupware -u username -p < create_tables.mysql Then add the
-  language entries (used for translation purposes).
-
-  $ mysql phpgroupware -u username -p < lang.sql
-
-  22..44..22..  IInnssttaallllaattiioonn wwiitthh PPoossttggrreeSSQQLL
-
-  We will assume that you are using the database named phpgroupware.
-
-  $ psql -d phpgroupware -U username < create_tables.pgsql Then add the
-  language entries (used for translation purposes).
-
-  $ psql -d phpgroupware -U username < lang.sql
-
   22..55..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
 
   Copy the header.inc.php.sample file to header.inc.php and edit the
   file, following the directions in the comments.
+  Then point your browser to phpgroupware/setup/ which will create (or
+  upgrade) the database tables.  You wil be asked to login, using the
+  password set in header.inc.php. Setup will attempt to determine what
+  version of the phpGroupWare database you have installed, and upgrade
+  to the most recent version.
 
-  Change to the inc directory.
-  Copy globalconfig.inc.php.sample to globalconfig.inc.php and edit it
-  to reflect your system settings, again following the comments in the
-  file.
+  NNOOTTEE::The developers are concentrating on getting the beta working, and
+  have not spent a great deal of time building upgrade scripts from the
+  alpha versions of phpGroupWare. You are advised to backup your
+  existing alpha database before running the setup script to avoid
+  problems!
+
+  If you get no error messages, continue on to
+  phpgroupware/setup/config.php to configure phpGroupWare to your
+  system.
 
   If you are using the email system you will need to create a temporary
   directory where file uploads will be stored.  For security reasons,
@@ -196,6 +184,7 @@
   could add a few lines to logout.php that will look in the temp
   directory for any stale uploads and delete them.  But, once again, it
   becomes a performance issue.
+
   33..  TTeessttiinngg tthhee iinnssttaallll
 
   If your config is setup properly you can now login.  Point your
@@ -203,6 +192,9 @@
   the password is 1234
   At this point it would be a good idea to create a new user with
   administrative privileges and delete the old one.
+
+
+
 
   44..  IInnssttaalllliinngg aaddddiittiioonnaall aapppplliiccaattiioonnss
 
@@ -325,9 +317,6 @@
   IMAP if you expect to have more than a few hundred messages in your
   mailbox.
 
-
-
-
   55..33..  WWhheenn II lloogg iinn II sseeee tthhee ddiirreeccttoorryy lliissttiinngg iinnsstteeaadd ooff aa wweebb ppaaggee
 
   If you are using Apache, this often means you need to add .php to the
@@ -338,8 +327,6 @@
   ______________________________________________________________________
   DirectoryIndex index.php index.php3 index.html index.htm index.cgi
   ______________________________________________________________________
-
-
 
   55..44..  II ggeett ggaarrbbaaggee tthhaatt llooookkss lliikkee ccooddee wwhheenn II ggoo ttoo tthhee pphhppGGrroouuppWWaarree
   UURRLL
@@ -393,21 +380,23 @@
   v1.0 (July 6, 2000)
 
 
-
   +o  Built proper SGML version.
 
   +o  Included the FAQ.
 
   +o  Other minor additions.
 
-  v1.1 (September 27, 2000) - blinky
+  v1.1 (September 27-29, 2000) - blinky
 
 
   +o  Added Testing Install section
 
   +o  Added Trouble-shooting section
 
+
   +o  Added description of application installation
+
+  +o  Changes for the new setup program
 
   66..55..  CCooppyyrriigghhttss aanndd TTrraaddeemmaarrkkss
 
@@ -424,6 +413,17 @@
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro) and the core of this HOWTO.  Thanks to all the developers
   and users who contribute to making phpGroupWare such a success.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
