@@ -32,8 +32,6 @@
 
 		function uipreferences()
 		{
-			global $GLOBALS;
-			
 			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->template = $GLOBALS['phpgw']->template;
 			$this->theme = $GLOBALS['phpgw_info']['theme'];
@@ -42,8 +40,6 @@
 
 		function preferences()
 		{
-			global $GLOBALS;
-
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
@@ -169,7 +165,6 @@
 
 		function display_item($field,$data)
 		{
-			global $GLOBALS;
 			static $tr_color;
 			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 			$var = Array(
