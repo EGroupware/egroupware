@@ -38,6 +38,6 @@
 		'about_app'				=> $app_data
 	);
 
-	$GLOBALS['phpgw']->xslttpl->set_var('about',$data);
-	$GLOBALS['phpgw']->xslttpl->pparse();
+	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('about_data' => $data));
+	//$GLOBALS['phpgw']->xslttpl->pparse();
 ?>

@@ -28,7 +28,6 @@
 
 		var $app_name;
 		var $app_id;
-		var $controls;
 		var $up;
 		var $down;
 		var $close;
@@ -49,24 +48,24 @@
 
 		function portalbox($reset = False)
 		{
-			$this->title = '';
-			$this->app_name = '';
-			$this->app_id = 0;
+			$this->title		= '';
+			$this->app_name		= '';
+			$this->app_id		= 0;
 
-			$this->up = '';
-			$this->down = '';
-			$this->close = '';
-			$this->question = '';
-			$this->edit = '';
+			$this->up			= '';
+			$this->down			= '';
+			$this->close		= '';
+			$this->question		= '';
+			$this->edit			= '';
 
-			$this->extrabox = '';
-			$this->xextrabox = '';
-			$this->listbox = '';
-			$this->data = array();
+			$this->extrabox		= '';
+			$this->xextrabox	= '';
+			$this->listbox		= '';
+			$this->data			= array();
 
 			if (!$reset)
 			{
-				$this->output;
+				$this->output = array();
 			}
 		}
 
@@ -139,7 +138,6 @@
 
 		function draw_box()
 		{
-			$control = '';
 			if($this->up || $this->down || $this->close || $this->question || $this->edit)
 			{
 				$control_array = array

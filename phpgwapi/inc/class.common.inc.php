@@ -1212,6 +1212,9 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				case 'home':
 					$var['home'] = True;
 					break;
+				case 'about':
+					$var['about'] = True;
+					break;
 			}
 
 			$var['lang_powered_by']			= lang('powered by');

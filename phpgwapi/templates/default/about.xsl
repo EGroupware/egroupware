@@ -1,6 +1,10 @@
 <!-- $Id$ -->
 
-	<xsl:template match="about">
+	<xsl:template name="about">
+		<xsl:apply-templates select="about_data"/>
+	</xsl:template>
+
+	<xsl:template match="about_data">
 		<table cellpadding="2" cellspacing="2" align="center" class="about">
 			<xsl:variable name="phpgw_logo"><xsl:value-of select="phpgw_logo"/></xsl:variable>
 			<xsl:variable name="lang_url_statustext"><xsl:value-of select="lang_url_statustext"/></xsl:variable>

@@ -154,6 +154,12 @@
 		 */
 		function set_var($varname, $value = '', $append=False)
 		{
+   			if ($varname == 'phpgw_body' && is_object($GLOBALS['phpgw']->xslttpl))
+			{
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $value));
+				return;
+			}
+
 			if (!is_array($varname))
 			{
 				if (!empty($varname))

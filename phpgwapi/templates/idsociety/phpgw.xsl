@@ -131,7 +131,7 @@
 						<!-- END top_part -->
 						</td>
 					</tr>
-					<tr>
+					<tr valign="top">
 						<td>
 						<!-- BEGIN left_part -->
 							<table cellspacing="0" cellpadding="0" valign="top" class="left">
@@ -151,6 +151,9 @@
 							<xsl:choose>
 								<xsl:when test="home">
 									<xsl:call-template name="portal"/>
+								</xsl:when>
+								<xsl:when test="about">
+									<xsl:call-template name="about"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of disable-output-escaping="yes" select="body_data"/>

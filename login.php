@@ -276,5 +276,5 @@
 
 	//_debug_array($data);
 
-	$GLOBALS['phpgw']->xslttpl->set_var('login',$data);
+	$GLOBALS['phpgw']->xslttpl->set_var('login',$data,False);
 ?>

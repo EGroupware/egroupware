@@ -27,8 +27,6 @@
 
 	class listbox extends portalbox
 	{
-		var $param;
-
 		/*
 		 Set up the Object. You will notice, we have not reserved
 		 memory space for variables. In this circumstance it is not necessary.
