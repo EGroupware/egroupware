@@ -102,7 +102,7 @@
 
     $first = min($nntpavailgroups["con"]);
 
-    $common_hidden_vars = $phpgw->session->hidden_var() . "\n"
+    $common_hidden_vars = $phpgw->form_sessionid() . "\n"
 		        . "<input type=\"hidden\" name=\"start\" value=\"".$start."\">\n"
 		        . "<input type=\"hidden\" name=\"first\" value=\"".$first."\">\n"
 		        . "<input type=\"hidden\" name=\"tg\" value=\"".$tg."\">\n"

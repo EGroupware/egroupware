@@ -27,7 +27,7 @@ if (! $submit) {
 
     ?>
    <form method="POST" acion="changepassword.php">
-    <?php echo $phpgw->session->hidden_var(); ?>
+    <?php echo $phpgw->form_sessionid(); ?>
 
     <table border="0">
      <tr>

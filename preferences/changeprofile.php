@@ -42,8 +42,8 @@
         $phpgw->db->query("delete from profiles where owner='" .$phpgw->session->loginid . "'");
 
         $phpgw->db->query("insert into profiles (owner,title,phone_number,comments,"
-			   . "picture_format,picture) values ('" . $phpgw->session->loginid . "','"
-			   . "$title','$phone_number','$comments','$picture_type','$picture_raw')");
+			         . "picture_format,picture) values ('" . $phpgw->session->loginid . "','"
+			         . "$title','$phone_number','$comments','$picture_type','$picture_raw')");
      } else {
         $phone_number = addslashes($phone_number);
         $picture_raw  = addslashes($picture_raw);
@@ -51,7 +51,7 @@
         $title        = addslashes($title);
 
         $phpgw->db->query("update profiles set title='$title',phone_number='$phone_number',"
-			   . "comments='$comments' where owner='" . $phpgw->session->loginid. "'");
+			         . "comments='$comments' where owner='" . $phpgw->session->loginid. "'");
      }
      echo "<center>Your profile has been updated</center>";
   }
@@ -61,7 +61,7 @@
 ?>
 
   <form method="POST" ENCTYPE="multipart/form-data" action="changeprofile.php">
-   <?php echo $phpgw->session->hidden_var(); ?>
+   <?php echo $phpgw->form_sessionid(); ?>
 
    <table border="0">
     <tr>

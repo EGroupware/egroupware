@@ -55,7 +55,7 @@
   if (! $submit) {
      ?>
       <form method="POST" action="settings.php">
-       <?php echo $phpgw->session->hidden_var(); ?>
+       <?php echo $phpgw->form_sessionid(); ?>
        <table border=0>
        <tr>
         <td><?php echo lang_pref("max matchs per page"); ?>: </td>
