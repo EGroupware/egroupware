@@ -60,7 +60,7 @@
 			{
 				if (! $navbarframe && ! $framebody)
 				{
-					$tpl = new Template($phpgw_info['server']['template_dir']);
+					$tpl = new Template(PHPGW_TEMPLATE_DIR);
 					$tpl->set_file(array(
 						'frames'       => 'frames.tpl',
 						'frame_body'   => 'frames_body.tpl',
