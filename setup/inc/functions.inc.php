@@ -21,6 +21,17 @@
   } unset($d1);unset($d2);unset($d3);
   /* ######## End security check ########## */
 
+	// This is needed is some parts of setup, until we include the API directly
+	function filesystem_separator()
+	{
+		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2') {
+			return '\\';
+		} else {
+			return '/';
+		}
+	}
+	define('SEP',filesystem_separator());
+
   // Include to check user authorization against  the 
   // password in ../header.inc.php to protect all of the setup
   // pages from unauthorized use.
