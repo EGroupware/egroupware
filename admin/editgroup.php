@@ -49,16 +49,16 @@
 				    . $phpgw->accounts->add_app("",True)
 				    . "' where group_id=$group_id");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
-	   $phpgw->db->next_record();
+	$phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
-	      $phpgw->db->next_record();
+	   $phpgw->db->next_record();
            $user_groups = $phpgw->db->f("groups") . ",$group_con:0,";
 
            $user_groups = ereg_replace(",,",",",$user_groups);
-           $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id='" . $n_users[$i] ."'");
+           $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
         }
 
         $sep = $phpgw->common->filesystem_separator();
@@ -110,7 +110,7 @@
      $phpgw->db->query("select account_id from accounts where account_groups like '%,$group_id:%'");
 
      while ($phpgw->db->next_record()) {
-        $selected_users[$phpgw->db->f("con")] = " selected";
+        $selected_users[$phpgw->db->f("account_id")] = " selected";
      }
 
      $gp = $phpgw->accounts->read_group_apps($group_id);

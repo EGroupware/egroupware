@@ -50,7 +50,7 @@
        </tr>
       </table>
      </center>
-     <?
+     <?php
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
   }
 
@@ -59,6 +59,7 @@
      $phpgw->db->next_record();
      $lid = $phpgw->db->f(0);
 
+     $i = 0;
      $phpgw->db->query("select cal_id from webcal_entry where cal_create_by='$lid'");
      while ($phpgw->db->next_record()) {
        $cal_id[$i] = $phpgw->db->f("cal_id");

@@ -79,11 +79,11 @@
       // If they changed there loginid, we need to change the owner in ALL
       // tables to reflect on the new one
       if ($lid != $n_loginid) {
-        change_owner("","preferences","owner",$n_loginid,$lid);
-        change_owner("addressbook","addressbook","owner",$n_loginid,$lid);
-        change_owner("todo","todo","owner",$n_loginid,$lid);
-        change_owner("","accounts","loginid",$n_loginid,$lid);
-        change_owner("","sessions","loginid",$n_loginid,$lid);
+        change_owner("","preferences","preference_owner",$n_loginid,$lid);
+        change_owner("addressbook","addressbook","ab_owner",$n_loginid,$lid);
+        change_owner("todo","todo","todo_owner",$n_loginid,$lid);
+        change_owner("","accounts","account_lid",$n_loginid,$lid);
+        change_owner("","sessions","session_lid",$n_loginid,$lid);
         change_owner("calendar","webcal_entry","cal_create_by",$n_loginid,$lid);
         change_owner("calendar","webcal_entry_user","cal_login",$n_loginid,$lid);
 

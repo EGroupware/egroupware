@@ -12,6 +12,8 @@
   /* $Id$ */
 
   $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
 
   $t = new Template($phpgw_info["server"]["template_dir"]);
@@ -103,3 +105,4 @@
   $t->pparse("out","footer");
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+?

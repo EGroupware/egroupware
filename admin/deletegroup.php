@@ -17,6 +17,8 @@
      Header("Location: " . $phpgw->link("groups.php"));
 
   $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"]["disable_message_class"] = True;
+  $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
 
   if ((($group_id) && ($confirm)) || $removeusers) {
@@ -31,12 +33,12 @@
           if ($user_[1] == ",") {
              $user_[1] = "";
           }
-          $phpgw->db->query("update accounts set account_groups='$user_[1]' where account_id='$user[0]'");
+          $phpgw->db->query("update accounts set account_groups='$user_[1]' where account_id=$user[0]");
         }
         $confirm = True;
      }
 
-     $phpgw->db->query("select group_name from groups where group_id='$group_id'");
+     $phpgw->db->query("select group_name from groups where group_id=$group_id");
      $phpgw->db->next_record();
 
      $group_name = $phpgw->db->f("group_name");
@@ -63,11 +65,11 @@
      }
 
      if ($confirm) {
-        $phpgw->db->query("select group_name from groups where group_id='$group_id'");
+        $phpgw->db->query("select group_name from groups where group_id=$group_id");
         $phpgw->db->next_record();
         $group_name = $phpgw->db->f("group_name");
 
-        $phpgw->db->query("delete from groups where group_id='$group_id'");
+        $phpgw->db->query("delete from groups where group_id=$group_id");
 
         $sep = $phpgw->common->filesystem_separator();
 
@@ -103,6 +105,6 @@
        </tr>
       </table>
      </center>
-     <?
+     <?php
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-
+?>
