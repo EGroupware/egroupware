@@ -122,11 +122,11 @@
 				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->db->f("account_id"));
 				$allValues = ldap_get_entries($ds, $sri);
 				$accounts[] = Array(
-					"account_id" => $allValues[$i]["uidnumber"][0],
-					"account_lid" => $allValues[$i]["uid"][0],
+					"account_id" => $allValues[0]["uidnumber"][0],
+					"account_lid" => $allValues[0]["uid"][0],
 					"account_type" => $this->db->f("account_type"),
-					"account_firstname" => $allValues[$i]["givenname"][0],
-					"account_lastname" => $allValues[$i]["sn"][0],
+					"account_firstname" => $allValues[0]["givenname"][0],
+					"account_lastname" => $allValues[0]["sn"][0],
 					"account_status" => $this->db->f("account_status")
 				);
 			}
@@ -142,8 +142,7 @@
 				);
 			}
 		}
-		
-		
+
 		return $accounts;
 	}
     
