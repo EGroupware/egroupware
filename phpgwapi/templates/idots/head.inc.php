@@ -20,7 +20,7 @@
 	}
 
 	// get used language code
-	$lang_code = 'en';
+	$lang_code = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 
 	$bodyheader = ' bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '" alink="'
 		. $GLOBALS['phpgw_info']['theme']['alink'] . '" link="' . $GLOBALS['phpgw_info']['theme']['link'] . '" vlink="'
