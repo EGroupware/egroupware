@@ -88,7 +88,6 @@ showing x - x of x	infolog	en	showing %1 - %2 of %3
 show open Events: Tasks/Calls/Notes on main screen	infolog	en	Show open Events: Tasks/Calls/Notes on main screen
 startdate	infolog	en	Startdate
 startrecord	infolog	en	Startrecord
-status	infolog	en	Status
 sub	infolog	en	Sub
 subject	infolog	en	Subject
 task	infolog	en	ToDo
