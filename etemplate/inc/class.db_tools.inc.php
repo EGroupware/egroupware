@@ -171,22 +171,29 @@
 				else // import
 				{
 					$oProc = CreateObject('phpgwapi.schema_proc',$GLOBALS['phpgw_info']['server']['db_type']);
-					$oProc->m_odb = $GLOBALS['phpgw']->db;
-					$oProc->m_oTranslator->_GetColumns($oProc,$content['new_table_name'],$nul);
-
-					while (list($key,$tbldata) = each ($oProc->m_oTranslator->sCol))
+					if (method_exists($oProc,'GetTableDefinition'))
 					{
-						$cols .= $tbldata;
+						$this->data[$this->table = $content['new_table_name']] = $oProc->GetTableDefinition($content['new_table_name']);
 					}
-					eval('$cols = array('. $cols . ');');
-
-					$this->data[$this->table = $content['new_table_name']] = array(
-						'fd' => $cols,
-						'pk' => $oProc->m_oTranslator->pk,
-						'fk' => $oProc->m_oTranslator->fk,
-						'ix' => $oProc->m_oTranslator->ix,
-						'uc' => $oProc->m_oTranslator->uc
-					);
+					else	// to support eGW 1.0
+					{
+						$oProc->m_odb = $GLOBALS['phpgw']->db;
+						$oProc->m_oTranslator->_GetColumns($oProc,$content['new_table_name'],$nul);
+	
+						while (list($key,$tbldata) = each ($oProc->m_oTranslator->sCol))
+						{
+							$cols .= $tbldata;
+						}
+						eval('$cols = array('. $cols . ');');
+	
+						$this->data[$this->table = $content['new_table_name']] = array(
+							'fd' => $cols,
+							'pk' => $oProc->m_oTranslator->pk,
+							'fk' => $oProc->m_oTranslator->fk,
+							'ix' => $oProc->m_oTranslator->ix,
+							'uc' => $oProc->m_oTranslator->uc
+						);
+					}
 				}
 			}
 			elseif ($content['editor'])
