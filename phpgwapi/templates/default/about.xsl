@@ -46,7 +46,7 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<xsl:value-of select="app_descr"/>
+				<xsl:value-of disable-output-escaping="yes" select="app_descr"/>
 			</td>
 		</tr>
 		<tr>
@@ -55,6 +55,15 @@
 			</td>
 			<td>
 				<xsl:value-of select="developers"/>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td>
+				<xsl:value-of select="lang_maintainer"/>
+			</td>
+			<td>
+				<xsl:value-of select="app_maintainer"/><br/>
+				<xsl:value-of disable-output-escaping="yes" select="app_maintainer_email"/>
 			</td>
 		</tr>
 		<tr>
@@ -66,18 +75,34 @@
 			</td>
 		</tr>
 		<tr>
-			<td valign="top"><xsl:value-of select="lang_based_on"/></td>
-			<td><xsl:value-of select="app_source"/></td>
-		</tr>
-		<tr>
-			<td height="5"></td>
 			<td>
-				<a target="_blank">
-					<xsl:attribute name="href">
-						<xsl:value-of select="app_source_url"/>
-					</xsl:attribute>
-					<xsl:value-of select="lang_app_source_url"/>
-				</a>
+				<xsl:value-of select="lang_license"/>
+			</td>
+			<td>
+				<xsl:value-of select="app_license"/>
 			</td>
 		</tr>
+		<xsl:choose>
+			<xsl:when test="app_source">
+				<tr>
+					<td valign="top"><xsl:value-of select="lang_based_on"/></td>
+					<td><xsl:value-of select="app_source"/></td>
+				</tr>
+			</xsl:when>
+		</xsl:choose>
+		<xsl:choose>
+			<xsl:when test="app_source_url">
+				<tr>
+					<td height="5"></td>
+					<td>
+						<a target="_blank">
+							<xsl:attribute name="href">
+								<xsl:value-of select="app_source_url"/>
+							</xsl:attribute>
+							<xsl:value-of select="app_source_url_name"/>
+						</a>
+					</td>
+				</tr>
+			</xsl:when>
+		</xsl:choose>
 	</xsl:template>

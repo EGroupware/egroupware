@@ -35,6 +35,8 @@
 
 	include(PHPGW_API_INC.'/common_functions.inc.php');
 
+	function parse_navbar() {}	// just for compatibility with apps, which should run under 0.9.14 too
+
 	/*!
 	 @function lang
 	 @abstract function to handle multilanguage support
@@ -268,11 +270,15 @@
 	define('PHPGW_ACL_GROUP_MANAGERS',32);
 
 	/****************************************************************************\
+	* Forcing all non-cooperating apps to send there output through the xslt-tpl *
+	\****************************************************************************/
+	$GLOBALS['phpgw']->common->start_xslt_capture();
+
+	/****************************************************************************\
 	* Forcing the footer to run when the rest of the script is done.             *
 	\****************************************************************************/
-	$footer_common = &$GLOBALS['phpgw']->common;
-	register_shutdown_function(array(&$footer_common, 'phpgw_footer'));
-	
+	register_shutdown_function(array($GLOBALS['phpgw']->common, 'phpgw_footer'));
+
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
 	\****************************************************************************/

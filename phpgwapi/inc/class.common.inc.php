@@ -694,7 +694,6 @@
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
 			}
-
 /******** start temporarily code **************************************/
 /* this just makes sure the template set is updated to the new format */
 if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'].'/phpgw.xsl'))
@@ -1073,7 +1072,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		function framework()
 		{
 			$this->navbar();
-
+			
 			$css = $this->get_css_url();
 			$var = array
 			(
@@ -1084,7 +1083,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				'phpgw_body'		=> $phpgw_body
 			);
 
-			$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'idsociety';
 			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
 
 			switch ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'])
@@ -1111,16 +1109,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					{
 						$GLOBALS['strip_portion'] = $GLOBALS['phpgw_info']['server']['webserver_url'].'/';
 					}
-
-					$var['home_link']		= $GLOBALS['phpgw_info']['navbar']['home']['url'];
-					$var['prefs_link']		= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
-					$var['logout_link']		= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
-					$var['about_link']		= $GLOBALS['phpgw_info']['navbar']['about']['url'];
-	
-					$var['home_title']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
-					$var['prefs_title']		= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
-					$var['logout_title']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
-					$var['about_title']		= $GLOBALS['phpgw_info']['navbar']['about']['title'];
 
 					if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
 					{
@@ -1163,8 +1151,27 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 					$var['logo_img'] = $this->image('phpgwapi','logo2');
 					$var['nav_bar_left_top_bg_img'] = $this->image('phpgwapi','nav_bar_left_top_bg');
+					break; 
+				
+				case 'verdilak':
+					$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+					$var['logo_img']	= $this->image('phpgwapi','logo');
+					$var['home_img']	= $this->image('phpgwapi','welcome-'.($app=='home' ? 'red' : 'grey'));
+					$var['prefs_img']	= $this->image('phpgwapi','preferences-'.($app=='preferences' ? 'red' : 'grey'));
+					$var['logout_img']	= $this->image('phpgwapi','logout-grey');
+					$var['about_img']	= $this->image('phpgwapi','help');
+					$var['greybar']		= $this->image('phpgwapi','greybar.jpg');
 					break;
 			}
+			$var['home_link']		= $GLOBALS['phpgw_info']['navbar']['home']['url'];
+			$var['prefs_link']		= $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
+			$var['logout_link']		= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
+			$var['about_link']		= $GLOBALS['phpgw_info']['navbar']['about']['url'];
+
+			$var['home_title']		= $GLOBALS['phpgw_info']['navbar']['home']['title'];
+			$var['prefs_title']		= $GLOBALS['phpgw_info']['navbar']['preferences']['title'];
+			$var['logout_title']	= $GLOBALS['phpgw_info']['navbar']['logout']['title'];
+			$var['about_title']		= $GLOBALS['phpgw_info']['navbar']['about']['title'];
 
 			if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
 			{
@@ -1180,22 +1187,22 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 									. $this->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 			$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 
-			while ($app = each($GLOBALS['phpgw_info']['navbar']))
+			while (list($app,$data) = each($GLOBALS['phpgw_info']['navbar']))
 			{
-				if ($app[0] != 'home' && $app[0] != 'preferences' && $app[0] != 'about' && $app[0] != 'logout')
+				if ($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
 				{
 					$var['applications'][] = array
 					(
-						'icon'			=> $app[1]['icon'],
-						'title'			=> $app[1]['title'],
-						'img_src_over'	=> $app[1]['icon_hover'],
-						'url'			=> $app[1]['url'],
-						'name'			=> str_replace('-','_',$app[0])
+						'icon'			=> $data['icon'],
+						'title'			=> $data['title'],
+						'img_src_over'	=> $data['icon_hover'],
+						'url'				=> $data['url'],
+						'name'			=> str_replace('-','_',$app)
 					);
 
-					if($app[1]['icon_hover'] != '')
+					if($data['icon_hover'] != '')
 					{
-						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $app[1]['icon_hover'];
+						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $data['icon_hover'];
 					}
 				}
 			}
@@ -1415,6 +1422,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		{
 			/* So far I dont have use for $forceheader and $forcenavbar */
 			/* I only allow this to be run once by using the constant */
+
+			/* not longer needed für xslttpl and would require to load the phpgw template
 			if(!defined('PHPGW_HEADER_RAN'))
 			{
 				define('PHPGW_HEADER_RAN',True);
@@ -1424,6 +1433,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
 				$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
 			}
+			*/
 		}
 
 		/*!
@@ -1465,6 +1475,32 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 		}
 
+		function start_xslt_capture()
+		{
+			if (!isset($GLOBALS['phpgw_info']['xslt_capture']))
+			{
+				$GLOBALS['phpgw_info']['xslt_capture'] = True;
+				ob_start();		// capture the output
+			}
+		}
+
+		/* Note: need to be run BEFORE exit is called, as buffers get flushed automatically before
+		 *       any registered shutdown-functions (eg. phpgw_footer) gets called
+		 */
+		function stop_xslt_capture()
+		{
+			if (isset($GLOBALS['phpgw_info']['xslt_capture']))
+			{
+				unset($GLOBALS['phpgw_info']['xslt_capture']);
+				$output = ob_get_contents();	// get captured output
+				ob_end_clean();					// stop capture and clean output-buffer
+				if (!empty($output))
+				{
+					$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $output));
+				}
+			}
+		}
+
 		function phpgw_footer()
 		{
 			if(!defined('PHPGW_FOOTER_RAN'))
@@ -1476,8 +1512,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
 					!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 				{
+					$this->start_xslt_capture();	// if index already turned it off
 					$this->phpgw_appfooter();
 				}
+				$this->stop_xslt_capture();
+
 				$GLOBALS['phpgw']->xslttpl->pp();
 				$GLOBALS['phpgw']->db->disconnect();
 
@@ -1495,41 +1534,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				}
 			}
 		}
-
-		/*function phpgw_footer()
-		{
-			if(!defined('PHPGW_FOOTER_RAN'))
-			{
-				define('PHPGW_FOOTER_RAN',True);
-				if (!isset($GLOBALS['phpgw_info']['flags']['nodisplay']) || !$GLOBALS['phpgw_info']['flags']['nodisplay'])
-				{
-					if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
-						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
-						!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
-					{
-						$this->phpgw_appfooter();
-					}
-					$this->phpgw_header();
-					$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
-				}
-				
-				$GLOBALS['phpgw']->db->disconnect();
-
-				//Clean up mcrypt
-				if (@is_object($GLOBALS['phpgw']->crypto))
-				{
-					$GLOBALS['phpgw']->crypto->cleanup();
-					unset($GLOBALS['phpgw']->crypto);
-				}
-				
-				if (DEBUG_TIMER)
-				{
-					$GLOBALS['debug_timer_stop'] = perfgetmicrotime();
-					echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
-				}
-			}
-		}*/
 
 		function hex2bin($data)
 		{

@@ -163,7 +163,14 @@
 				{
 					while(list($key,$val) = each($value))
 					{
-						$this->vars[$name][$key] = $val;
+						if (!is_array($val) && !is_array($this->vars[$name][$key]))
+						{
+							$this->vars[$name][$key] .= $val;
+						}
+						else
+						{
+							$this->vars[$name][$key] = array_merge($this->vars[$name][$key],$val);
+						}
 					}
 				}
 				//_debug_array($this->vars);

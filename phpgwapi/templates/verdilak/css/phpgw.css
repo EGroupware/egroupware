@@ -82,3 +82,14 @@ table.login
 {
 	font-weight: bold;
 }
+
+.left
+{
+	background-image: url(../images/navbar_filler.jpg);
+}
+
+.navbar
+{
+	background-image: url(../images/bg_filler.png);
+}
+

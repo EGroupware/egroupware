@@ -8,7 +8,7 @@
 	<xsl:variable name="logo_img"><xsl:value-of select="logo_img"/></xsl:variable>
 	<xsl:variable name="nav_bar_left_top_bg_img"><xsl:value-of select="nav_bar_left_top_bg_img"/></xsl:variable>
 	<xsl:variable name="home_link"><xsl:value-of select="home_link"/></xsl:variable>
-	<xsl:variable name="prefs_link"><xsl:value-of select="preferences_link"/></xsl:variable>
+	<xsl:variable name="prefs_link"><xsl:value-of select="prefs_link"/></xsl:variable>
 	<xsl:variable name="logout_link"><xsl:value-of select="logout_link"/></xsl:variable>
 	<xsl:variable name="about_link"><xsl:value-of select="about_link"/></xsl:variable>
 	<xsl:variable name="home_img_hover"><xsl:value-of select="home_img_hover"/></xsl:variable>
@@ -161,8 +161,8 @@
 							</xsl:choose>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="2" align="center" valign="middle" class="bottom">
+					<tr valign="top">
+						<td colspan="2" align="center" valign="top" class="bottom">
 						<!-- BEGIN bottom_part -->
 							<xsl:value-of select="lang_powered_by"/>
 							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;">
