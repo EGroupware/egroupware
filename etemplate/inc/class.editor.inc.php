@@ -536,7 +536,7 @@
 				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
 			}
 			$imported = $this->etemplate->xul_io->import(&$this->etemplate,$xul);
-			$this->etemplate->modified = filemtime($f);
+			$this->etemplate->modified = @filemtime($f);
 			$this->etemplate->modified_set = 'xul-import';
 
 			if (is_array($imported))
