@@ -1025,8 +1025,8 @@ class calendar extends calendar_
 						$pic_size = ' width="5" height="7"';
 						if($lr_events->recur_type != RECUR_NONE)
 						{
-							$pict = 'repeat.gif';
-							$pic_size = ' width=25 height=35';
+							$pict = 'rpt.gif';
+							$pic_size = ' width="10" height="10"';
 						}
 //						if(count($lr_events->participants) > 1)
 //						{
@@ -1298,7 +1298,15 @@ class calendar extends calendar_
 		{
 			$time[$ind] .= '] ';
 		}
-		$time[$ind] .= '<img src="'.$this->image_dir.'/circle.gif" border="0" alt="' . $description . '">';
+
+		$pict = 'circle.gif';
+		$pic_size = 'width="5" height="7"';
+		if($event->recur_type != RECUR_NONE)
+		{
+			$pict = 'rpt.gif';
+			$pic_size = 'width="10" height="10"';
+		}
+		$time[$ind] .= '<img '.$pict_size.' src="'.$this->image_dir.'/'.$pict.'" border="0" alt="' . $description . '">';
 
 		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(PHPGW_ACL_PRIVATE)) || ($description != 'private')) && $this->check_perms(PHPGW_ACL_EDIT))
 		{
