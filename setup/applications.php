@@ -363,7 +363,7 @@
 		$setup_tpl->set_var('app_remove',lang('Remove'));
 		$setup_tpl->set_var('app_upgrade',lang('Upgrade'));
 		$setup_tpl->set_var('app_resolve',lang('Resolve'));
-		$setup_tpl->set_var('check','check.gif');
+		$setup_tpl->set_var('check','check.png');
 		$setup_tpl->set_var('install_all',lang('Install All'));
 		$setup_tpl->set_var('upgrade_all',lang('Upgrade All'));
 		$setup_tpl->set_var('remove_all',lang('Remove All'));
@@ -398,7 +398,7 @@
 						if (!$GLOBALS['phpgw_setup']->detection->check_app_tables($value['name']))
 						{
 							// App installed and enabled, but some tables are missing
-							$setup_tpl->set_var('instimg','table.gif');
+							$setup_tpl->set_var('instimg','table.png');
 							$setup_tpl->set_var('bg_color','FFCCAA');
 							$setup_tpl->set_var('instalt',lang('Not Completed'));
 							$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&badinstall=True">' . lang('Potential Problem') . '</a>');
@@ -406,7 +406,7 @@
 						}
 						else
 						{
-							$setup_tpl->set_var('instimg','completed.gif');
+							$setup_tpl->set_var('instimg','completed.png');
 							$setup_tpl->set_var('instalt',lang('Completed'));
 							$setup_tpl->set_var('install','&nbsp;');
 							if($value['enabled'])
@@ -429,7 +429,7 @@
 						}
 						break;
 					case 'U':
-						$setup_tpl->set_var('instimg','incomplete.gif');
+						$setup_tpl->set_var('instimg','incomplete.png');
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
 						if (!@$value['currentver'])
 						{
@@ -463,7 +463,7 @@
 						}
 						break;
 					case 'V':
-						$setup_tpl->set_var('instimg','incomplete.gif');
+						$setup_tpl->set_var('instimg','incomplete.png');
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
 						$setup_tpl->set_var('install','&nbsp;');
 						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']">');
@@ -475,7 +475,7 @@
 						$setup_tpl->set_var('bg_color','FFCCCC');
 						$depstring = parsedep($value['depends']);
 						$depstring .= ')';
-						$setup_tpl->set_var('instimg','dep.gif');
+						$setup_tpl->set_var('instimg','dep.png');
 						$setup_tpl->set_var('instalt',lang('Dependency Failure'));
 						$setup_tpl->set_var('install','&nbsp;');
 						$setup_tpl->set_var('remove','&nbsp;');
@@ -487,7 +487,7 @@
 						$setup_tpl->set_var('bg_color','FFCCFF');
 						$depstring = parsedep($value['depends']);
 						$depstring .= ')';
-						$setup_tpl->set_var('instimg','dep.gif');
+						$setup_tpl->set_var('instimg','dep.png');
 						$setup_tpl->set_var('instalt',lang('Post-install Dependency Failure'));
 						$setup_tpl->set_var('install','&nbsp;');
 						$setup_tpl->set_var('remove','&nbsp;');
@@ -496,7 +496,7 @@
 						$status = lang('Post-install Dependency Failure') . ':' . $depstring . $value['status'];
 						break;
 					default:
-						$setup_tpl->set_var('instimg','incomplete.gif');
+						$setup_tpl->set_var('instimg','incomplete.png');
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
 						$setup_tpl->set_var('install','&nbsp;');
 						$setup_tpl->set_var('remove','&nbsp;');

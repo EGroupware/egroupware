@@ -255,7 +255,7 @@
 				$GLOBALS['setup_tpl']->set_var('currentver',$value['currentver']);
 				$GLOBALS['setup_tpl']->set_var('bg_color',$bgcolor[$i]);
 
-				$GLOBALS['setup_tpl']->set_var('instimg','completed.gif');
+				$GLOBALS['setup_tpl']->set_var('instimg','completed.png');
 				$GLOBALS['setup_tpl']->set_var('instalt',lang('Completed'));
 				$GLOBALS['setup_tpl']->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']">');
 				$status = lang('OK') . ' - ' . $value['status'];

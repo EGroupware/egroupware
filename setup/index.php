@@ -152,8 +152,8 @@
 	
 	//$GLOBALS['phpgw_setup']->app_status();
 	$GLOBALS['phpgw_info']['server']['app_images'] = 'templates/default/images';
-	$incomplete = $GLOBALS['phpgw_info']['server']['app_images'] . '/incomplete.gif';
-	$completed  = $GLOBALS['phpgw_info']['server']['app_images'] . '/completed.gif';
+	$incomplete = $GLOBALS['phpgw_info']['server']['app_images'] . '/incomplete.png';
+	$completed  = $GLOBALS['phpgw_info']['server']['app_images'] . '/completed.png';
 
 	$setup_tpl->set_var('img_incomplete',$incomplete);
 	$setup_tpl->set_var('img_completed',$completed);

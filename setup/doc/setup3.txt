@@ -1,6 +1,6 @@
 
 
-phpGroupWare Setup III
+phpGroupWare Setup
 
 June 18, 2001 
 

@@ -14,7 +14,7 @@
   .link { color: #FFFFFF; } 
   -->
   </style>
-  <title>phpGroupWare {lang_setup} III {page_title}</title>
+  <title>phpGroupWare {lang_setup} {page_title}</title>
 </head>
 
 <body bgcolor="#FFFFFF">
@@ -22,7 +22,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
 <tr>
 	<td align="left" bgcolor="#4865F1">
-		&nbsp;<font color="#fefefe">phpGroupWare version {pgw_ver} {lang_setup} III{configdomain}</font>
+		&nbsp;<font color="#fefefe">phpGroupWare version {pgw_ver} {lang_setup} {configdomain}</font>
 	</td>
 	<td align="right" bgcolor="#4865F1">
 		{logoutbutton}
