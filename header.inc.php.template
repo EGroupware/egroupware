@@ -19,40 +19,49 @@
   * the absolute path to fit your site, and you should be up and running.    *
   \**************************************************************************/
 
-  $phpgw_info["server"]["server_root"] = "/path/to/phpgroupware";
-  $phpgw_info["server"]["include_root"]	= "/path/to/phpgroupware/inc";
+  $phpgw_info["server"]["server_root"] = "__SERVER_ROOT__";
+  $phpgw_info["server"]["include_root"]	= "__INCLUDE_ROOT__";
   /* This is the basic include needed on each page for phpGroupWare application compliance */
-  $phpgw_info["flags"]["htmlcompliant"] = True;
+  $phpgw_info["flags"]["htmlcompliant"] = __HTMLCOMPLIANT__;
+
+
+  /* These are the settings for the database system */
+  $phpgw_info["server"]["db_host"] = "__DB_HOST__";
+  $phpgw_info["server"]["db_name"] = "__DB_NAME__";
+  $phpgw_info["server"]["db_user"] = "__DB_USER__";
+  $phpgw_info["server"]["db_pass"] = "__DB_PASS__";
+  $phpgw_info["server"]["db_type"] = "__DB_TYPE__";
+
 
   $phpgw_domain["default"] = array (
-    "db_host" => "localhost", 
-    "db_name" => "phpgw_domain1", 
-    "db_user" => "phpgroupware", 
-    "db_pass" => "their_password", 
+    "db_host" => "__DB_HOST__", 
+    "db_name" => "__DB_NAME__", 
+    "db_user" => "__DB_USER__", 
+    "db_pass" => "__DB_PASS__", 
   /* Look at the README file */
-    "db_type" => "mysql",
+    "db_type" => "__DB_TYPE__",
   /* This will limit who is allowed to make configuration modifcations */
-    "config_passwd" => "changeme"
+    "config_passwd" => "__CONFIG_PASS__"
   );
 
   /* This is used to control mcrypt's use */
-  $phpgw_info["server"]["mcrypt_enabled"] = False;
+  $phpgw_info["server"]["mcrypt_enabled"] = __ENABLE_MCRYPT__;
   /* Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use. */
-  $phpgw_info["server"]["mcrypt_version"] = "2.6.3";
+  $phpgw_info["server"]["mcrypt_version"] = "__MCRYPT_VERSION__";
 
   /* This is a random string used as the initilazation vector for mcrypt
      feel free to change it when setting up phpgroupware on a clean database,
      but you must not change it after that point!
      It should be around 30 bytes in length.
    */
-  $phpgw_info["server"]["mcrypt_iv"] = "cwjasud83l;la-0d.e/lc;[-%kl)ls,lf0;sa-;921kx;90flwl,skfcujd,wsodsp";
+  $phpgw_info["server"]["mcrypt_iv"] = "__MCRYPT_IV__";
 
   /* Uncomment this out and use this for supporting different domains using this single install */
   /* (ignore if you are only supporting a single domain)*/
 /*
   $phpgw_domain["domain2.com"] = array (
     "db_host" => "localhost", 
-    "db_name" => "phpgw_domain1", 
+    "db_name" => "phpgw_domain2", 
     "db_user" => "phpgroupware", 
     "db_pass" => "their_password", 
     "db_type" => "mysql",
