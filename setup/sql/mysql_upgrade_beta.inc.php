@@ -854,7 +854,7 @@
         }
       }
     }
-    $phpgw_setup->db->query("alter table accounts set account_groups = ''",__LINE__,__FILE__);
+    $phpgw_setup->db->query("update accounts set account_groups = ''",__LINE__,__FILE__);
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre3";
   }
 
