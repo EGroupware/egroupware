@@ -13,7 +13,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   if ($id < 1) {

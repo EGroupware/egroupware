@@ -13,8 +13,7 @@
   \**************************************************************************/
 
   /* $Id$ */
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True,
-                                "noheader" => True, "nonavbar" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   if ($id > 0) {
@@ -24,9 +23,7 @@
      $thisyear = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"Y"));
      $thismonth = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"n"));
 
-     $phpgw->db->query("DELETE FROM calendar_entry WHERE cal_id = $id",__LINE__,__FILE__);
-     $phpgw->db->query("DELETE FROM calendar_entry_user WHERE cal_id = $id",__LINE__,__FILE__);
-     $phpgw->db->query("DELETE FROM calendar_entry_repeats WHERE cal_id = $id",__LINE__,__FILE__);
+     $phpgw->calendar->delete($id);
   }
 
   Header("Location: " . $phpgw->link("index.php","year=$thisyear&month=$thismonth"));

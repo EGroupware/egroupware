@@ -18,8 +18,8 @@
   }
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home",
-                               "enable_network_class" => True, "enable_calendar_class" => True, 
-                               "enable_todo_class" => True, "enable_addressbook_class" => True
+                               "enable_network_class" => True, "enable_todo_class" => True,
+			       "enable_addressbook_class" => True
                               );
   include("header.inc.php");
   // Note: I need to add checks to make sure these apps are installed.
@@ -153,6 +153,7 @@
 
   if ($phpgw_info["user"]["apps"]["calendar"]
   && $phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"]) {
+    include($phpgw_info["server"]["server_root"]."/calendar/inc/functions.inc.php");
     echo "<!-- Calendar info -->\n";
     $now = $phpgw->calendar->splitdate(mktime (0, 0, 0, $phpgw->calendar->today["month"], $phpgw->calendar->today["day"], $phpgw->calendar->today["year"]) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]));
 

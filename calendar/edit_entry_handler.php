@@ -13,7 +13,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_nextmatchs_class" => True, "noappheader" => True, "noappfooter" => True);
   include("../header.inc.php");
 
   $cal_info = new calendar_item;

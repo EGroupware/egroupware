@@ -11,10 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, 
-                                "enable_nextmatchs_class" => True, 
-                                "noheader" => True, "nonavbar" => True,
-  							                "nocalendarheader" => True, "nocalendarfooter" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True, "noheader" => True, "nonavbar" => True, "noappheader" => True, "noappfooter" => True);
   include("../header.inc.php");
 
   if ($submit) {

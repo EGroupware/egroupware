@@ -15,7 +15,7 @@
 
   $matrix = $matrixtype;
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True, "parent_page" => "matrixselect.php");
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True, "parent_page" => "matrixselect.php");
 
   include("../header.inc.php");
 

@@ -14,7 +14,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
 
   if (! $keywords) {
      // If we reach this, it is because they didn't search for anything,

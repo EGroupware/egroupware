@@ -100,11 +100,6 @@
        $phpgw->todo = new todo;
     }
   
-    if ($phpgw_info["flags"]["enable_calendar_class"]) {
-       include($phpgw_info["server"]["api_inc"] . "/phpgw_calendar.inc.php");
-       $phpgw->calendar = new calendar;
-    }
-  
     if ($phpgw_info["flags"]["enable_addressbook_class"]) {
        include($phpgw_info["server"]["api_inc"] . "/phpgw_addressbook.inc.php");
        $phpgw->addressbook = new addressbook;
@@ -340,10 +335,7 @@
 
      phpgw_fillarray();
      $phpgw->common->common_();
-     if ($phpgw_info["flags"]["enable_calendar_class"]){
-       $printer_friendly = ((isset($friendly) && ($friendly==1))?True:False);
-       $phpgw->calendar->calendar_($printer_friendly);
-     }
+
      if ($phpgw_info["flags"]["enable_utilities_class"]){
         $phpgw->utilities->utilities_();
      }
