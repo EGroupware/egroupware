@@ -1056,7 +1056,7 @@
 			// different style of parsing folders into file
 			// open to active folder on reload
 			
-			$folder_tree_new = $this->createHTMLFolder($folders, $this->mailbox, 'IMAP Server', $mailPreferences['username'].'@'.$mailPreferences['imapServerAddress']);
+			$folder_tree_new = $this->createHTMLFolder($folders, $this->mailbox, lang('IMAP Server'), $mailPreferences['username'].'@'.$mailPreferences['imapServerAddress']);
 
 			$this->t->set_var('current_mailbox',$current_mailbox);
 			$this->t->set_var('folder_tree',$folder_tree_new);
