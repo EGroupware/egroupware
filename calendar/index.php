@@ -14,13 +14,13 @@
 
   /* $Id$ */
 
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
   } else {
      $friendly = 0;
   }
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   if (isset($date) && strlen($date) > 0) {
@@ -46,69 +46,37 @@
 
   $prev = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
 
-  if ($friendly) {
-     echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
-  }
   $view = "month";
-?>
 
-<HEAD>
-<STYLE TYPE="text/css">
-<!-- <?php echo "$CCS_DEFS";?> -->
+  $phpgw->template->set_file(array("index" => "index.tpl"));
 
-  .tablecell {
-    width: 80px;
-    height: 80px;
+  $phpgw->template->set_block("index");
+
+  if ($friendly) {
+    $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
+  } else {
+    $phpgw->template->set_var("printer_friendly","");
   }
-</STYLE>
-</HEAD>
 
-<table border="0" width="100%">
-<tr>
-<?php
-  echo "<td align=\"left\" valign=\"top\">";
-  echo $phpgw->calendar->pretty_small_calendar($thisday,$prev["month"],$prev["year"],"day.php");
-  echo "</td>";
-?>
+  $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
 
-<td align="middle"><font size="+2" color="#000000"><B>
-<?php
+  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->pretty_small_calendar($thisday,$prev["month"],$prev["year"],"day.php"));
+
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
-  echo lang(strftime("%B",$m)) . " " . $thisyear;
-?>
-</b></font>
-<font color="#000000" size="+1" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
-<br>
-<?php
-  echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
-?>
-</font></td>
-<?php
-  echo "<td align=\"right\" valign=\"top\">";
-  echo $phpgw->calendar->pretty_small_calendar($thisday,$next["month"],$next["year"],"day.php");
-  echo "</td>";
-?>
-</tr>
-</table>
-<?php
-  flush();
-  echo $phpgw->calendar->display_large_month($thismonth,$thisyear,True,"edit_entry.php");
-  flush();
-  /* Pre-Load the repeated events for quckier access */
-  $repeated_events = read_repeated_events();
-?>
-<p>
-<p>
-
-<?php
+  $phpgw->template->set_var("month_identifier",lang(strftime("%B",$m)) . " " . $thisyear);
+  $phpgw->template->set_var("username",$phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]));
+  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->pretty_small_calendar($thisday,$next["month"],$next["year"],"day.php"));
+  $phpgw->template->set_var("large_month",$phpgw->calendar->display_large_month($thismonth,$thisyear,True,"edit_entry.php"));
   if (!$friendly) {
-     $param = "";
-     if ($thisyear)
-        $param .= "year=$thisyear&month=$thismonth&";
-
-     $param .= "friendly=1";
-     echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\" target=\"cal_printer_friendly\" onMouseOver=\"window.status='"
-	  .lang("Generate printer-friendly version")."'\">[" . lang("Printer Friendly") . "]</a>";
-     $phpgw->common->phpgw_footer();
+    $param = "year=".$now["year"]."&month=".$now["month"]."&friendly=1";
+    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</a>");
+    $phpgw->template->parse("out","index");
+    $phpgw->template->pparse("out","index");
+    $phpgw->common->phpgw_footer();
+  } else {
+    $phpgw->template->set_var("print","");
+    $phpgw->template->parse("out","index");
+    $phpgw->template->pparse("out","index");
   }
 ?>

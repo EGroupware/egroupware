@@ -65,16 +65,11 @@
   $phpgw->template->set_var("date",lang(strftime("%B",$m))." ".$thisday.", ".$thisyear);
   $phpgw->template->set_var("username",$phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]));
   $phpgw->template->set_var("daily_events",$phpgw->calendar->print_day_at_a_glance($now));
-  $cal = $phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php");
-  $phpgw->template->set_var("small_calendar",$cal);
+  $phpgw->template->set_var("small_calendar",$phpgw->calendar->pretty_small_calendar($now["day"],$now["month"],$now["year"],"day.php"));
 
   if (!$friendly) {
-    $param = "";
-    $param .= "year=".$now["year"]."&month=".$now["month"]."&day=".$now["day"]."&";
-
-    $param .= "friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
-	    . "status = '" . lang("Generate printer-friendly version"). "'";
-    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\">[". lang("Printer Friendly") . "]</A>");
+    $param = "year=".$now["year"]."&month=".$now["month"]."&day=".$now["day"]."&friendly=1";
+    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang("Generate printer-friendly version")."'\">[".lang("Printer Friendly")."]</A>");
     $phpgw->template->parse("out","day");
     $phpgw->template->pparse("out","day");
     $phpgw->common->phpgw_footer();

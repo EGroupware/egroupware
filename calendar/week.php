@@ -95,9 +95,9 @@
   $phpgw->template->set_var("week_display",$phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true));
 
   if (!$friendly) {
-    $param = "year=".$now["year"]."&month=".$now["month"]."&friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
-	   . "status = '" . lang("Generate printer-friendly version"). "'";
-    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\">[". lang("Printer Friendly") . "]</A>");
+    $param = "year=".$now["year"]."&month=".$now["month"]."&friendly=1";
+    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</A>");
     $phpgw->template->parse("out","week");
     $phpgw->template->pparse("out","week");
     $phpgw->common->phpgw_footer();
