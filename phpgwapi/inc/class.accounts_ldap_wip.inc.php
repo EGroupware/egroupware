@@ -246,7 +246,11 @@
 					$entry["memberuid"] = "";
 					for ($i=0;$i<count($members);$i++)
 					{
-						$entry["memberuid"][$i] = $this->id2name($members[$i]['account_id']);
+						$currname = $this->id2name($members[$i]['account_id']);
+						if (!$this->isin_array($currname,$entry["memberuid"]))
+						{
+							$entry["memberuid"][$i] = $currname;
+						}
 					}
 				}
 				// Accounts
