@@ -1202,7 +1202,7 @@
 				$this->bo->add_attribute('id',0);
 
 				$can_edit = True;
-
+				$participants = (string)(get_var('participants',array('HTTP_GET_VARS'||'GET'),FALSE));
 				$starthour = (int)(get_var('hour',array('GET'),$this->bo->prefs['calendar']['workdaystarts']));
 				$startmin  = (int)(get_var('minute',array('GET'),0));
 				$endmin    = $startmin + (int)$this->bo->prefs['calendar']['defaultlength'];
@@ -1223,6 +1223,13 @@
 				{
 					$this->bo->set_class(True);
 				}
+				// Add participants
+				$participants = explode(";", base64_decode($participants));
+				for($_f_part=0; $_f_part<count($participants); $_f_part++)
+				{
+					$this->bo->add_attribute('participants','A',$participants[$_f_part]);
+				}
+				// Add misc
 				$this->bo->add_attribute('participants','A',$this->bo->owner);
 				$this->bo->set_recur_none();
 				$event = $this->bo->get_cached_event();
@@ -3566,6 +3573,8 @@
 			foreach($participants as $part => $nul)
 			{
 				$participants[$part] = $GLOBALS['phpgw']->common->grab_owner_name($part);
+				// Much better for processor  :)
+				$participants_id[]  .= $part;
 			}
 			uasort($participants,'strnatcasecmp');	// sort them after their fullname
 
@@ -3592,7 +3601,7 @@
 					$k = ($j == 0 ? sprintf('%02d',$i).'<br>':'').sprintf('%02d',$j*$increment);
 
 					$str .= '<td align="left" bgcolor="'.$this->theme['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'
-						. '<a href="'.$this->page('add','&date='.$date['full'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.(($increment * $j)<=9?'0':'').($increment * $j)."'; return true;\">"
+						. '<a href="'.$this->page('add','&date='.$date['full'].'&hour='.$i.'&minute='.(interval * $j) . '&participants=' . base64_encode(implode(";", $participants_id)) )."\" onMouseOver=\"window.status='".$i.':'.(($increment * $j)<=9?'0':'').($increment * $j)."'; return true;\">"
 						. $k."</a>&nbsp;</font></td>\n";
 				}
 			}
