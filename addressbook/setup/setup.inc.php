@@ -4,7 +4,9 @@
 	$setup_info['addressbook']['title']     = 'Addressbook';
 	$setup_info['addressbook']['version']   = '0.9.11';
 	$setup_info['addressbook']['app_order'] = 4;
-	$setup_info['addressbook']['tables']    = '';
+
+	/* The tables this app creates */
+	$setup_info['addressbook']['tables']    = Array('addressbook');
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks'][] = 'preferences';
