@@ -31,6 +31,11 @@
 		var $email_types;              // VCard email type array
 		var $total_records;            // This will contain numrows for data retrieved
 
+		function check_perms($has, $needed)
+		{
+			return (!!($has & $needed) == True);
+		}
+
 		function split_stock_and_extras($fields)
 		{
 			while (list($field,$value) = each($fields)) {

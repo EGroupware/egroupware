@@ -219,11 +219,12 @@
 		
 		$t->set_var(row_vcard_link,$phpgw->link("/addressbook/vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
 			. "$filter&query=$query&sort=$sort"));
-		if ($rights & PHPGW_ACL_EDIT) {
-			$t->set_var(row_edit_link,$phpgw->link("/addressbook/edit.php","ab_id=$myid&start=$start&sort=$sort&order=$order"
-				. "&query=$query&sort=$sort"));
+//			echo '<br>: ' . $this->grants[$myowner] . ' - ' . $myowner;
+		if ($this->check_perms($this->grants[$myowner],PHPGW_ACL_EDIT) || $myowner == $phpgw_info['user']['account_id']) {
+			$t->set_var(row_edit,'<a href="' . $phpgw->link("/addressbook/edit.php","ab_id=$myid&start=$start&sort=$sort&order=$order"
+				. "&query=$query&sort=$sort") . '">' . lang('Edit') . '</a>');
 		} else {
-			$t->set_var(row_edit_link,'');
+			$t->set_var(row_edit,'&nbsp;');
 		}
 		
 		$t->set_var(row_owner,$phpgw->accounts->id2name($myowner));

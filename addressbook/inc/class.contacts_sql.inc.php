@@ -40,15 +40,17 @@
 
 		var $account_id;
 		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid
-		var $email_types;			// VCard email type array
+		var $email_types;				// VCard email type array
 		var $total_records;			// This will contain numrows for data retrieved
+		var $grants;					// This holds all of the users that have granted access to there entrys
 
 		function contacts_()
 		{
 			global $phpgw, $phpgw_info;
 
-			$this->db = $phpgw->db;
-			$this->account_id = $phpgw_info["user"]["account_id"];
+			$this->db         = $phpgw->db;
+			$this->grants     = $phpgw->acl->get_grants('addressbook');
+			$this->account_id = $phpgw_info['user']['account_id'];
 
 			// The left side are the array elements used throughout phpgw, right side are the db field names.
     	    $this->stock_contact_fields = array(
@@ -351,6 +353,24 @@
 					$fwhere = ' WHERE '; $fand = ' AND ';
 				}
 			}
+
+			$fwhere .= " owner=" . $phpgw_info['user']['account_id'];
+			if (is_array($this->grants))
+			{
+				$grants = $this->grants;
+				while (list($user) = each($grants))
+				{
+					$public_user_list[] = $user;
+				}
+				reset($public_user_list);
+				$fwhere .= " OR (access='public' AND owner in(" . implode(',',$public_user_list) . ")) AND ";
+			}
+			else
+			{
+				$fwhere .= ' AND ';
+			}
+
+
 			if ($DEBUG && $filtermethod) {
 				echo "<br>DEBUG - Filtering with: #" . $filtermethod . "#";
 			}

@@ -8,7 +8,7 @@
     <font face="{font}" size=2><a href="{row_vcard_link}">{lang_vcard}</a></font>
   </td>
   <td valign="top" width="5%">
-    <font face="{font}" size="2"><a href="{row_edit_link}">{lang_edit}</a></font>
+    <font face="{font}" size="2">{row_edit}</font>
   </td>
   <td valign="top" width="5%">
     <font face="{font}" size="2">{row_owner}</font>
