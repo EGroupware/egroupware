@@ -846,14 +846,28 @@
 				$c_image = count($image);
 				while($image_found == '' && $i<$c_image)
 				{
-					$image_found = $this->find_image($appname,$image[$i]);
+					if($this->found_files[$appname]['images'][$image[$i]])
+					{
+						$image_found = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image[$i]].'/'.$image[$i];
+					}
+					else
+					{
+						$image_found = $this->find_image($appname,$image[$i]);
+					}
 					$i++;
 				}
 				return $image_found;
 			}
 			elseif($image != '')
 			{
-				return $this->find_image($appname,$image);
+				if($this->found_files[$appname]['images'][$image])
+				{
+					return $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image].'/'.$image;
+				}
+				else
+				{
+					return $this->find_image($appname,$image);
+				}
 			}
 			else
 			{
