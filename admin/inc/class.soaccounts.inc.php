@@ -25,6 +25,10 @@
 				$querymethod = " AND (account_firstname LIKE '%$query%' OR account_lastname LIKE "
 					. "'%$query%' OR account_lid LIKE '%$query%') ";
 			}
+			else
+			{
+				$querymethod = '';
+			}
 
 			$GLOBALS['phpgw']->db->query("SELECT COUNT(*) FROM phpgw_accounts WHERE account_type='".$account_type."'".$querymethod,__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->next_record();

@@ -84,7 +84,7 @@
 			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_groups();
+				$ui->list_groups();
 				return False;
 			}
 			
@@ -131,7 +131,7 @@
 			if (isset($GLOBALS['HTTP_POST_VARS']['cancel']) || $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
 			{
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_users();
+				$ui->list_users();
 				return False;
 			}
 			elseif($GLOBALS['HTTP_POST_VARS']['delete_account'])

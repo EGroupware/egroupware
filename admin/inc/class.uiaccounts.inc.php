@@ -50,6 +50,8 @@
 				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/admin/index.php'));
 			}
 
+			$query = (isset($GLOBALS['HTTP_POST_VARS']['query'])?$GLOBALS['HTTP_POST_VARS']['query']:'');
+
 			$GLOBALS['cd'] = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:0);
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -68,8 +70,8 @@
 
 			if ($GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
 			{
-				$total = $this->bo->account_total('g');
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, '', $total);
+				$total = $this->bo->account_total('g',$query);
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
 			}
 			else
 			{
@@ -90,7 +92,7 @@
 		 	);
 		 	$p->set_var($var);
 
-			if (!count($account_info))
+			if (!$total)
 			{
 				$p->set_var('message',lang('No matchs found'));
 				$p->parse('rows','row_empty',True);
@@ -174,7 +176,9 @@
 			{
 				$cd = $param_cd;
 			}
-			
+
+			$query = (isset($GLOBALS['HTTP_POST_VARS']['query'])?$GLOBALS['HTTP_POST_VARS']['query']:'');
+
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -192,16 +196,16 @@
 
 			if ($GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
 			{
-				$total = $this->bo->account_total('u');
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,'');
+				$total = $this->bo->account_total('u',$query);
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query,$total);
 			}
 			else
 			{
 				$total = $this->bo->account_total('u',$query);
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query);
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$query,$total);
 			}
 
-			$url = $GLOBALS['phpgw']->link('/index.php');
+			$url = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
 
 			$var = Array(
 				'bg_color'		=> $GLOBALS['phpgw_info']['theme']['bg_color'],
@@ -228,10 +232,10 @@
 
 			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
 			{
-				$p->set_var('input_search',lang('Search') . '&nbsp;<input name="query">');
+				$p->set_var('input_search',lang('Search') . '&nbsp;<input type="text" name="query">');
 			}
 
-			if (! count($account_info))
+			if (!$total)
 			{
 				$p->set_var('message',lang('No matchs found'));
 				$p->parse('rows','row_empty',True);
