@@ -9,7 +9,7 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	function parse_navbar($force = False)
 	{
@@ -18,14 +18,17 @@
 		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 		$tpl->set_unknowns('remove');
 
-		$templates = Array('navbar' => 'navbar.tpl');
-		$tpl->set_file($templates);
+		$tpl->set_file(array(
+			'navbar' => 'navbar.tpl'
+		));
+
+		$tpl->set_block('navbar','B_powered_top','V_powered_top');
 
 		$tpl->set_var('img_root',PHPGW_IMAGES_DIR);
 		$tpl->set_var('img_root_roll',PHPGW_IMAGES_DIR . '/rollover');
 		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
 
-#  echo '<pre>'; print_r($phpgw_info['navbar']); echo '</pre>';
+		#  echo '<pre>'; print_r($phpgw_info['navbar']); echo '</pre>';
 		$applications = '';
 		while ($app = each($phpgw_info['navbar']))
 		{
@@ -37,7 +40,7 @@
 				$img_src_over = $phpgw_info['server']['webserver_url'] . '/' . $app[0] . '/templates/idsociety/images/navbar-over.gif';
 				$img_src_out = $phpgw_info['server']['webserver_url'] . '/' . $app[0] . '/templates/idsociety/images/navbar.gif';
 
-// onMouseOver="two.src='rollover/admin_over.gif'" onMouseOut="two.src='images/admin.gif'"><img src="images/admin.gif" border="0" name="two"
+				// onMouseOver="two.src='rollover/admin_over.gif'" onMouseOut="two.src='images/admin.gif'"><img src="images/admin.gif" border="0" name="two"
 				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"';
 				if (isset($phpgw_info['flags']['navbar_target']))
 				{
@@ -79,11 +82,17 @@
 		}
 		$tpl->set_var('logout_img',PHPGW_IMAGES_DIR . '/logout-grey.gif');
 
-/*		if ($phpgw_info['server']['showpoweredbyon'] == 'top')
+		if ($phpgw_info['server']['showpoweredbyon'] == 'top')
 		{
-			$tpl->set_var('powered_by',lang('Powered by phpGroupWare version x',$phpgw_info['server']['versions']['phpgwapi']));
+			$tpl->set_var("powered_by",lang("Powered by phpGroupWare version x",$phpgw_info["server"]["versions"]["phpgwapi"]));
+			$tpl->set_var('power_size','2');
+			$tpl->parse('V_powered_top','B_powered_top');
 		}
-*/
+		else
+		{
+			$tpl->set_var('V_powered_top','');
+		}
+
 		if (isset($phpgw_info['navbar']['admin']) && isset($phpgw_info['user']['preferences']['common']['show_currentusers']))
 		{
 			$db  = $phpgw->db;
@@ -118,12 +127,9 @@
 */
 
 		// If the application has a header include, we now include it
-		if ((isset($phpgw_info['flags']['noheader']) && 
-		     $phpgw_info['flags']['noheader']) && 
-		    (!isset($phpgw_info['flags']['noappheader']) ||
-		     !$phpgw_info['flags']['noappheader']))
+		if ($phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"])
 		{
-
+		
 		}
 		return $tpl->fp('out','navbar');
 	}
@@ -134,10 +140,23 @@
 		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 		$tpl->set_unknowns('remove');
 
-  		$templates = array('footer' => 'footer.tpl');
-		$tpl->set_file($templates);
-		$tpl->set_var('img_root',PHPGW_IMAGES_DIR);
-		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
-		$tpl->set_var('version',$phpgw_info['server']['versions']['phpgwapi']);
+		$tpl->set_file(array('footer' => 'footer.tpl'));
+		$tpl->set_block('footer','B_powered_bottom','V_powered_bottom');
+
+		if ($phpgw_info["server"]["showpoweredbyon"] == "bottom")
+		{
+			$powered = lang("Powered by phpGroupWare version x", $phpgw_info["server"]["versions"]["phpgwapi"]);
+			$tpl->set_var('powered',$powered);
+			$tpl->set_var('img_root',PHPGW_IMAGES_DIR);
+			$tpl->set_var('power_backcolor',$phpgw_info['theme']['navbar_bg']);
+			$tpl->set_var('power_textcolor',$phpgw_info['theme']['navbar_text']);
+			//$tpl->set_var('version',$phpgw_info['server']['versions']['phpgwapi']);
+ 			$tpl->parse('V_powered_bottom','B_powered_bottom');
+		}
+		else
+		{
+			$tpl->set_var('V_powered_bottom','');
+		}
+		
 		$tpl->pfp('out','footer');
 	}
