@@ -1,0 +1,44 @@
+1) Format your code so that we can read it. Please!
+2) Use tabs for formating. NOT SPACES. Tabs creates smaller files and editors allow developers to view a tab as however many spaces as they prefer. Spaces do not allow this.
+3) Use ' instead of " for strings. This is a performance issue, and prevents alot of inconsistant coding styles.
+4) Comments go on the line ABOVE the code. NOT to the left of the code!
+5) For each section of code put a section divider with basic explaination of the following code/functions.
+It should look like this:
+/****************************************************************************\
+* These functions are used to pick my nose                                   *
+\****************************************************************************/
+
+6) Do not document every bit of code in comments. PHP is an interpreted language and it will be nasty on performance
+
+7) Use switch statements where many elseif's are going to be used. Switch is faster and I like it better!
+8) If statement formats
+Choice 1:
+if ($var == 'example'){
+	echo 'This is only an example';
+}else{
+	echo 'This is not a test. This is the real thing';
+}
+
+Choice 2:
+if ($var == 'example'){ echo 'An example'; }
+
+(I prefer that choice 2 should not be used when there is an else involved.)
+All other styles are not to be used. This is it. Use it or I will personally come and nag you to death.
+
+
+9) class/function format
+class testing 
+{
+	function print_to_screen() {
+		global phpgw, phpgw_info;
+		if ($var == 'example'){
+			echo 'This is only an example';
+		}else{
+			echo 'This is not a test. This is the real thing';
+		}
+	}
+}
+
+Notice that when defining a class we break from the norm (putting } on same line as statement) and move the { to the next line. Dont ask me why, but this is what I/we do.
+
+This is all I have got for now.
