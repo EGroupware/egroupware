@@ -45,7 +45,7 @@
 	$p->set_var("right_nextmatchs",$phpgw->nextmatchs->right("/admin/groups.php",$start,$total));
 	$p->set_var("lang_groups",lang("user groups"));
 
-	$p->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"groups.php",lang("name")));
+	$p->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"/admin/groups.php",lang("name")));
 	$p->set_var("header_edit",lang("Edit"));
 	$p->set_var("header_delete",lang("Delete"));
 
