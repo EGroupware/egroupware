@@ -13,6 +13,12 @@
 3 number of chars for day-shortcut	jscalendar	de	2
 3 number of chars for month-shortcut	jscalendar	de	3
 80 (http)	admin	de	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	de	\n formatiere das HTML, bitte warten ...
+_delete row	htmlarea-ContextMenu	de	Zeile löschen
+_image properties...	htmlarea-ContextMenu	de	_Bild Einstellungen...
+_modify link...	htmlarea-ContextMenu	de	_Link Ändern...
+_remove link...	htmlarea-ContextMenu	de	Link entfernen...
+_table properties...	htmlarea-ContextMenu	de	_Tabellen Einstellungen...
 about	common	de	Über
 about %1	common	de	Über %1
 about the calendar	jscalendar	de	Über den Kalender
@@ -36,9 +42,12 @@ administration	common	de	Administration
 afghanistan	common	de	AFGHANISTAN
 albania	common	de	ALBANIEN
 algeria	common	de	ALGERIEN
+align	htmlarea-TableOperations	de	Ausrichten
 all	common	de	alle
 all fields	common	de	alle Felder
+all four sides	htmlarea-TableOperations	de	Alle 4 Seiten
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
+alternate style-sheet:	common	de	Alternatives Stylesheet
 american samoa	common	de	AMERICANISCH SAMOA
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
@@ -62,13 +71,16 @@ autosave default category	common	de	Standard-Kategorie automatisch speichern
 azerbaijan	common	de	ASERBAIDSCHAN
 back	common	de	Zurück
 back to user login	common	de	Zurück zur Benutzer Anmeldung
+background	htmlarea-TableOperations	de	Hintergrund
 background color	htmlarea	de	Hintergrund Farbe
+background color:	common	de	Hintergrund Farbe:
 bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
 bahrain	common	de	BAHRAIN
 bangladesh	common	de	BANGLADESH
 barbados	common	de	BARBADOS
 based on	common	de	Basierend auf
+baseline	htmlarea-TableOperations	de	Basislinie
 bcc	common	de	Blindkopie
 belarus	common	de	BELORUSSLAND (WEISSRUSSLAND)
 belgium	common	de	BELGIEN
@@ -79,8 +91,11 @@ bhutan	common	de	BHUTAN
 blocked, too many attempts	common	de	Gesperrt, zu viele Versuche
 bold	htmlarea	de	Fett
 bolivia	common	de	BOLIVIEN
+border	htmlarea-TableOperations	de	Rand
+borders	htmlarea-TableOperations	de	Ränder
 bosnia and herzegovina	common	de	BOSNIEN UND HERZEGOVINA
 botswana	common	de	BOTSWANA
+bottom	htmlarea-TableOperations	de	Unten
 bouvet island	common	de	BOUVET INSELN
 brazil	common	de	BRASILIEN
 british indian ocean territory	common	de	BRITISCH INDIEN OZEAN TERRITORIUM
@@ -89,12 +104,14 @@ bulgaria	common	de	BULGARIEN
 bulleted list	htmlarea	de	Geordnete Liste
 burkina faso	common	de	BURKINA FASO
 burundi	common	de	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	de	Z_ellen Einstellungen...
 calendar	common	de	Kalender
 cambodia	common	de	KAMBODSCHA
 cameroon	common	de	KAMERUN
 canada	common	de	KANADA
 cancel	common	de	Abbruch
 cape verde	common	de	KAP VERDE
+caption	htmlarea-TableOperations	de	Überschrift
 categories	common	de	Kategorien
 categories for	common	de	Kategorien für
 category	common	de	Kategorie
@@ -102,14 +119,19 @@ category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt !
 category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet !
 cayman islands	common	de	KAIMAN INSELN
 cc	common	de	Kopie
+cell properties	htmlarea-TableOperations	de	Zellen
+center	htmlarea-TableOperations	de	Zentrieren
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
 change	common	de	ändern
+char	htmlarea-TableOperations	de	Zeichen
 charset	common	de	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	de	Link testen...
 check installation	common	de	Installation überprüfen
 check now	common	de	jetzt überprüfen
 chile	common	de	CHILE
 china	common	de	CHINA
+choose list style type (for ordered lists)	htmlarea-ListType	de	Wähle Auflistungstyp (für sortierte Listen)
 choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
 christmas island	common	de	WEIHNACHTS INSEL
@@ -122,7 +144,9 @@ click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger dar
 click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
 close	common	de	Schließen
 cocos (keeling) islands	common	de	COCOS INSELN
+collapsed borders	htmlarea-TableOperations	de	Rahmen vereinigen
 colombia	common	de	KOLUMBIEN
+color	htmlarea-TableOperations	de	Farbe
 comoros	common	de	KOMOREN
 company	common	de	Unternehmen
 congo	common	de	KONGO
@@ -133,6 +157,7 @@ copy selection	htmlarea	de	Den markierten Text kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 create	common	de	Erstellen
+create a link	htmlarea-ContextMenu	de	Link erstellen
 created	common	de	erstellt
 created by	common	de	Erstellt von
 croatia	common	de	KROATIEN
@@ -140,7 +165,9 @@ cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	derzeit
 current style	htmlarea	de	Aktueller Stil
+current url is	htmlarea-ContextMenu	de	Aktuelle URL ist
 current users	common	de	Derzeit angemeldete Benutzer
+cut	htmlarea-ContextMenu	de	Ausschneiden
 cut selection	htmlarea	de	Den markierten Text einfügen
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
@@ -148,15 +175,23 @@ date	common	de	Datum
 date due	common	de	fällig am
 date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn sie Port 13 benützen, bitte die Regeln der Firewall entsprechend anpassen bevor sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	de	Spalte löschen
 december	common	de	Dezember
+decimal numbers	htmlarea-ListType	de	Zahlen
 decrease indent	htmlarea	de	Einzug verkleinern
 default category	common	de	Standard-Kategorie
 delete	common	de	Löschen
+delete cell	htmlarea-TableOperations	de	Zelle löschen
+delete column	htmlarea-TableOperations	de	Spalte löschen
+delete row	htmlarea-TableOperations	de	Reihe löschen
+delete the current column	htmlarea-ContextMenu	de	Spalte löschen
+delete the current row	htmlarea-ContextMenu	de	Zeile löschen
 denmark	common	de	DÄNEMARK
 description	common	de	Beschreibung
 detail	common	de	Detail
 details	common	de	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausführen des Bugfix-Scripts für Internet Explorer 5.5 und höher, zum Darstellen von transparenten PNG-Bildern abschalten?
+dictionary	htmlarea-SpellChecker	de	Wörterbuch
 disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG-Bilder-Bugfix abschalten
 disable slider effects	common	de	Schwebeeffekte des Navigationsmenüs abschalten
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
@@ -164,6 +199,9 @@ disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
 djibouti	common	de	DJIBOUTI
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
+doctype:	common	de	DOCTYPE:
+document properties	common	de	Dokument Eigentschaften
+document title:	common	de	Title des Dokuments:
 domain	common	de	Domain
 domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, zB. "%1"
 domestic	common	de	Inland
@@ -182,6 +220,7 @@ egroupware api version %1	common	de	eGroupWare API Version %1
 egroupware: login blocked for user '%1', ip %2	common	de	eGroupWare: Anmelden gesperrt für Benutzer '%1', IP %2
 egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
+element...	htmlarea-ContextMenu	de	Element entfernen...
 email	common	de	E-Mail
 email-address of the user, eg. "%1"	common	de	E-Mail Adresse des Benutzers, zB. "%1"
 enabled	common	de	Verfügbar
@@ -204,18 +243,22 @@ falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 fax number	common	de	Fax Nummer
 february	common	de	Februar
+fg color	htmlarea-TableOperations	de	FG Farbe
 fields	common	de	Felder
 fiji	common	de	FIJI
 files	common	de	Dateien
 filter	common	de	Filter
+finished list of mispelled words	htmlarea-SpellChecker	de	Liste der nicht bekannten Woerter
 finland	common	de	FINLAND
 first name	common	de	Vorname
 first name of the user, eg. "%1"	common	de	Vorname des Benutzers, zB. "%1"
 first page	common	de	Erste Seite
 firstname	common	de	Vorname
 fixme!	common	de	KORREGIER MICH!
+float	htmlarea-TableOperations	de	Ausrichtung
 font color	htmlarea	de	Schrift Farbe
 force selectbox	common	de	Auswahlfeld erzwingen
+frames	htmlarea-TableOperations	de	Rahmen
 france	common	de	FRANKREICH
 french guiana	common	de	FRANZÖSISCH GUIANA
 french polynesia	common	de	FRANZÖSISCH POLYNESIEN
@@ -256,6 +299,7 @@ guinea-bissau	common	de	GUINEA-BISSAU
 guyana	common	de	GUYANA
 haiti	common	de	HAITI
 heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
+height	htmlarea-TableOperations	de	Höhe
 help	common	de	Hilfe
 help using editor	htmlarea	de	Hilfe zum benutzen des Editors
 high	common	de	Hoch
@@ -266,14 +310,39 @@ home email	common	de	private Email
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
 horizontal rule	htmlarea	de	Horizantale Linie
+how did you get here? (please report!)	htmlarea-ContextMenu	de	Wie sind Sie hierher gelangt? (Bitte melden!)
+how many columns would you like to merge?	htmlarea-TableOperations	de	Wieviele Spalten willst du verbinden?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Nabigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
+how many rows would you like to merge?	htmlarea-TableOperations	de	Wieviele Zeilen willst du verbinden?
+html tidy	htmlarea-HtmlTidy	de	HTML Tidy
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	de	Letzte Zelle in dieser Reihe!
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	de	Letzte Spalte in dieser Tabelle!
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	de	Letzte Reihe in dieser Tabelle
 hungary	common	de	UNGARN
+i will open it in a new page.	htmlarea-SpellChecker	de	Wird auf neuer Seite geöffnet
+i_nsert row before	htmlarea-ContextMenu	de	Zeile einfügen v_or Position
 iceland	common	de	ISLAND
+ignore	htmlarea-SpellChecker	de	Ignorieren
+ignore all	htmlarea-SpellChecker	de	Alle ignorieren
+image url	htmlarea-TableOperations	de	Bild URL
+in_sert row after	htmlarea-ContextMenu	de	Zeile einfügen n_ach Position
 increase indent	htmlarea	de	Einzug erhöhen
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
+insert _column before	htmlarea-ContextMenu	de	Spalte einfügen vo_r Position
+insert a new column after the current one	htmlarea-ContextMenu	de	Spalte einfügen nach der aktuellen Position
+insert a new column before the current one	htmlarea-ContextMenu	de	Spalte einfügen vor der aktuellen Position
+insert a new row after the current one	htmlarea-ContextMenu	de	Zeile einfügen nach der aktuellen Position
+insert a new row before the current one	htmlarea-ContextMenu	de	Zeile einfügen vor der aktuellen Position
 insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
+insert c_olumn after	htmlarea-ContextMenu	de	Spalte einfügen na_ch Position
+insert cell after	htmlarea-TableOperations	de	Zelle einfügen nach
+insert cell before	htmlarea-TableOperations	de	Zelle einfügen bevor
+insert column after	htmlarea-TableOperations	de	Spalte einfügen nach
+insert column before	htmlarea-TableOperations	de	Spalte einfügen bevor
 insert image	htmlarea	de	Bild einfügen
+insert row after	htmlarea-TableOperations	de	Reihe einfügen nach
+insert row before	htmlarea-TableOperations	de	Reihe einfügen vor
 insert table	htmlarea	de	Tabelle einfügen
 insert web link	htmlarea	de	Web Link hinzufügen
 international	common	de	International
@@ -293,10 +362,11 @@ japan	common	de	JAPAN
 jordan	common	de	JORDANIEN
 july	common	de	Juli
 june	common	de	Juni
-justify center	htmlarea	de	Ausrichtung mittig
-justify full	htmlarea	de	Ausrichtung im block
-justify left	htmlarea	de	Ausrichtung links
-justify right	htmlarea	de	Ausrichtung rechts
+justify	htmlarea-TableOperations	de	Justieren
+justify center	common	de	Ausrichtung mittig
+justify full	common	de	Ausrichtung im Block
+justify left	common	de	Ausrichtung links
+justify right	common	de	Ausrichtung rechts
 kazakstan	common	de	KAZAKSTAN
 kenya	common	de	KENIA
 keywords	common	de	Schlüsselwort
@@ -313,12 +383,15 @@ last page	common	de	Letzte Seite
 lastname	common	de	Name
 latvia	common	de	LATVIA
 ldap-mgr	common	de	LDAP-Manager
+layout	htmlarea-TableOperations	de	Layout
 lebanon	common	de	LIBANON
+left	htmlarea-TableOperations	de	Links
 lesotho	common	de	LESOTHO
 liberia	common	de	LYBIEN
 libyan arab jamahiriya	common	de	LIBYAN ARAB JAMAHIRIYA
 license	common	de	Lizenz
 liechtenstein	common	de	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	de	Link zeigt auf:
 list	common	de	Liste
 list members	common	de	Mitglieder anzeigen
 lithuania	common	de	LITAUEN
@@ -327,6 +400,9 @@ login	common	de	Anmelden
 loginid	common	de	Benutzerkennung
 logout	common	de	Abmelden
 low	common	de	Niedrig
+lower greek letters	htmlarea-ListType	de	kleine griechische Buchstaben
+lower latin letters	htmlarea-ListType	de	kleine lateinische Buchstaben
+lower roman numbers	htmlarea-ListType	de	kleine römische Zahlen
 lowest	common	de	Niedrigst
 luxembourg	common	de	LUXEMBURG
 macau	common	de	MACAU
@@ -336,12 +412,14 @@ mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 maintainer	common	de	Maintainer
+make lin_k...	htmlarea-ContextMenu	de	Lin_k erstellen...
 malawi	common	de	MALAWI
 malaysia	common	de	MALAYSIA
 maldives	common	de	MALDIVEN
 mali	common	de	MALI
 malta	common	de	MALTA
 march	common	de	März
+margin	htmlarea-TableOperations	de	Rand
 marshall islands	common	de	MARSHALL ISLANDS
 martinique	common	de	MARTINIQUE
 mauritania	common	de	MAURITANIEN
@@ -351,9 +429,12 @@ may	common	de	Mai
 mayotte	common	de	MAYOTTE
 medium	common	de	Mittel
 menu	common	de	Menü
+merge cells	htmlarea-TableOperations	de	Zellen vereinigen
 message	common	de	Nachricht
 mexico	common	de	MEXICO
 micronesia, federated states of	common	de	MICRONESIEN, VEREINIGTE STAATEN VON
+middle	htmlarea-TableOperations	de	Mitte
+modify url	htmlarea-ContextMenu	de	URL Ãndern
 moldova, republic of	common	de	MOLDAVIEN, REPUBLIK
 monaco	common	de	MONACO
 monday	common	de	Montag
@@ -388,6 +469,9 @@ no	common	de	Nein
 no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
 no history for this record	common	de	Keine Historie für diesen Datensatz
 no matchs found	common	de	Keine Treffer gefunden.
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	de	Keine falschen Wörter mit gewählten Wörterbuch gefunden
+no rules	htmlarea-TableOperations	de	Keine Balken
+no sides	htmlarea-TableOperations	de	Keine Seiten
 no subject	common	de	Kein Betreff
 none	common	de	Keine
 norfolk island	common	de	NORFOLK INSELN
@@ -409,13 +493,16 @@ only private	common	de	nur private
 only yours	common	de	nur eigene
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Popup Fenster öffnen
+opens this link in a new window	htmlarea-ContextMenu	de	Diesen Link in neuem Fenster öffnen
 ordered list	htmlarea	de	Geordnete Liste
 original	common	de	Original
+original word	htmlarea-SpellChecker	de	Original Wort
 other	common	de	Andere
 overview	common	de	Überblick
 owner	common	de	Besitzer
+padding	htmlarea-TableOperations	de	Auffüllung
 page	common	de	Seite
-page was generated in %1 seconds	common	de	Seite wurde erstellt in %1 sekunden
+page was generated in %1 seconds	common	de	Seite wurde erstellt in %1 Sekunden
 pakistan	common	de	PAKISTAN
 palau	common	de	PALAU
 palestinian territory, occupied	common	de	PALESTINENSISCHES TERRITORIUM, BESETZT
@@ -427,25 +514,35 @@ parent category	common	de	Übergeordnete Kategorie
 password	common	de	Passwort
 password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
+paste	htmlarea-ContextMenu	de	Einfügen
 paste from clipboard	htmlarea	de	Aus dem clipboard übernehmen
 path	htmlarea	de	Pfad
 path to user and group files has to be outside of the webservers document-root!!!	common	de	Der Pfad für Benutzer oder Gruppen Ordner muss ausserhalb des Webserver Root Verzeichnisses liegen (Webserver Root = /var/www/html; Pfad für Benutzer/Gruppen Ordner /var/www
 pattern for search in addressbook	common	de	Muster für suche im Adressbuch
 pattern for search in calendar	common	de	Muster für suche im Kalendar
 pattern for search in projects	common	de	Muster für suche in Projekten
+percent	htmlarea-TableOperations	de	%
 permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerverzeichnissen
 personal	common	de	persönlich
 peru	common	de	PERU
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 pitcairn	common	de	PITCAIRN
+pixels	htmlarea-TableOperations	de	pixels
 please %1 by hand	common	de	Bitte %1 per Hand
+please click into some cell	htmlarea-TableOperations	de	Wähle eine Zelle
+please confirm that you want to open this link	htmlarea-SpellChecker	de	Wollen Sie diesen Link öffnen
+please confirm that you want to remove this element:	htmlarea-ContextMenu	de	Wollen sie dieses Element wirklich entfernen ?
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	de	Wollen sie diesen Link wirklich entfernen ?
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
 please select	common	de	Bitte wählen
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung !
+please wait.  calling spell checker.	htmlarea-SpellChecker	de	Bitte warten.  Wörterbuch wird durchsucht.
 please wait...	common	de	Bitte warten...
+please wait: changing dictionary to	htmlarea-SpellChecker	de	Bitte warten: Wörterbuch wechseln zu
+pliz weit ;-)	htmlarea-SpellChecker	de	bittsche wartn ;-)
 poland	common	de	POLEN
 portugal	common	de	PORTUGA
 postal	common	de	Postadresse
@@ -455,6 +552,7 @@ preferences for the idots template set	common	de	Einstellungen für das Idots Tem
 prev. month (hold for menu)	jscalendar	de	Vorheriger Monat (halten für Menü)
 prev. year (hold for menu)	jscalendar	de	Vorheriges Jahr (halten für Menü)
 previous page	common	de	Vorherige Seite
+primary style-sheet:	common	de	Haupt-Stylesheet:
 print	common	de	Drucken
 priority	common	de	Priorität
 private	common	de	Privat
@@ -462,17 +560,31 @@ project	common	de	Projekt
 public	common	de	öffentlich
 puerto rico	common	de	PUERTO RICO
 qatar	common	de	QATAR
+re-check	htmlarea-SpellChecker	de	Neu Überpruefen
 read	common	de	Lesen
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
 redoes your last action	htmlarea	de	Letzte Aktion wiederholen
 reject	common	de	Zurückweisen
 remove selected accounts	common	de	Ausgewähle Benutzer entfernen
+remove the	htmlarea-ContextMenu	de	Entfernen des
+remove this node from the document	htmlarea-ContextMenu	de	Dieses Element aus dem Dokument entfernen
 rename	common	de	Umbenennen
+replace	htmlarea-SpellChecker	de	Ersetzen
+replace all	htmlarea-SpellChecker	de	Alle ersetzen
+replace with	htmlarea-SpellChecker	de	Ersetzen mit
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
 returns an array of todo items	common	de	Liefert ein array mit ToDo Einträgen
 returns struct of users application access	common	de	Liefert Strucktur mit Benutzerzugriffsrechten auf Anwendungen
 reunion	common	de	REUNION
+revert	htmlarea-SpellChecker	de	Rückgängig
+right	htmlarea-TableOperations	de	Rechts
+ro_w properties...	htmlarea-ContextMenu	de	Ze_ilen Einstellungen...
 romania	common	de	RUMÄNIEN
+row properties	htmlarea-TableOperations	de	Reihen
+rules	htmlarea-TableOperations	de	Balken
+rules will appear between all rows and columns	htmlarea-TableOperations	de	Balken zwischen Reihen und Spalten
+rules will appear between columns only	htmlarea-TableOperations	de	Balken zwischen Spalten
+rules will appear between rows only	htmlarea-TableOperations	de	Balken zwischen Reihen
 russian federation	common	de	RUSSISCHE FÖDERATION
 rwanda	common	de	RWANDA
 saint helena	common	de	SANKT HELENA
@@ -514,6 +626,10 @@ show all categorys	common	de	Alle Kategorien anzeigen
 show menu	common	de	Menü anzeigen
 show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen
+show the image properties dialog	htmlarea-ContextMenu	de	Fenster für die Bild-Einstellungen anzeigen
+show the table cell properties dialog	htmlarea-ContextMenu	de	Zellen-Einstellungen anzeigen
+show the table properties dialog	htmlarea-ContextMenu	de	Show the Table Properties dialog
+show the table row properties dialog	htmlarea-ContextMenu	de	Zeilen-Einstellungen anzeigen
 show_more_apps	common	de	Mehr Applikationen anzeigen
 showing %1	common	de	%1 Einträge
 showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
@@ -526,18 +642,28 @@ somalia	common	de	SOMALIA
 sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
 south africa	common	de	SÜDAFRIKA
 south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	htmlarea-TableOperations	de	Abstand
+spacing and padding	htmlarea-TableOperations	de	Abstände
 spain	common	de	SPANIEN
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	de	Rechtsschreibpruefung wurde ohne Fehler fertiggestellt.  Wird nun geschlossen...
+spell-check	htmlarea-SpellChecker	de	Rechtschreibprüfung
+split cell	htmlarea-TableOperations	de	Zellen aufteilen
+split column	htmlarea-TableOperations	de	Spalte aufteilen
+split row	htmlarea-TableOperations	de	Reihen aufteilen
 sri lanka	common	de	SRI LANKA
 start date	common	de	Startdatum
 start time	common	de	Startzeit
 start with	common	de	begint mit
 status	common	de	Status
 strikethrough	htmlarea	de	Durchstreichen
+style [css]	htmlarea-TableOperations	de	Style [CSS]
 subject	common	de	Betreff
 submit	common	de	Absenden
 subscript	htmlarea	de	Tiefer gestellt Zeichen
 substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
 sudan	common	de	SUDAN
+suggestions	htmlarea-SpellChecker	de	Vorschlag
+summary	htmlarea-TableOperations	de	Zusammenfassung
 sunday	common	de	Sonntag
 superscript	htmlarea	de	Hochgestellt Zeichen
 suriname	common	de	SURINAME
@@ -546,17 +672,27 @@ swaziland	common	de	SWAZILAND
 sweden	common	de	SCHWEDEN
 switzerland	common	de	SCHWEIZ
 syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
+table properties	htmlarea-TableOperations	de	Tabelle
 taiwan	common	de	TAIWAN/TAIPEI
 tajikistan	common	de	TAJIKISTAN
 tanzania, united republic of	common	de	TANZANIA, VEREINIGTE REPUBLIK
+text align	htmlarea-TableOperations	de	Ausrichtung
+text color:	common	de	Textfarbe:
 thailand	common	de	THAILAND
 the api is current	common	de	Die API ist aktuell
 the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
+the bottom side only	htmlarea-TableOperations	de	Nur untere Seite
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
+the left-hand side only	htmlarea-TableOperations	de	Nur linke Seite
 the mail server returned	common	de	Der EMailserver liefert zurück
+the right and left sides only	htmlarea-TableOperations	de	Nur linke und rechte Seite
+the right-hand side only	htmlarea-TableOperations	de	Nur rechte Seite
+the top and bottom sides only	htmlarea-TableOperations	de	Nur obere und untere Seite
+the top side only	htmlarea-TableOperations	de	Nur obere Seite
 this application is current	common	de	Diese Anwendung ist aktuell
 this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	de	Änderungen verwerfen.  Bitte bestättigen.
 thursday	common	de	Donnerstag
 time	common	de	Zeit
 time selection:	jscalendar	de	Zeitauswahl:
@@ -574,6 +710,7 @@ togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Versuche sich anzumelden: %1 für den Benutzer '%2', %3 für die IP %4
+top	htmlarea-TableOperations	de	Oben
 total	common	de	Gesamt
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
 tuesday	common	de	Dienstag
@@ -591,8 +728,13 @@ united kingdom	common	de	GROSSBRITANIEN
 united states	common	de	VEREINIGTE STAATEN VON AMERIKA
 united states minor outlying islands	common	de	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	de	Unbekannt
+unlink the current element	htmlarea-ContextMenu	de	Link auf Element entfernen
 unread	common	de	ungelesen
+unset color	htmlarea-TableOperations	de	Farbe
 update	common	de	Aktualisieren
+upload image	htmlarea-UploadImage	de	Bild hochladen
+upper latin letters	htmlarea-ListType	de	Große lateinische Buchstaben
+upper roman numbers	htmlarea-ListType	de	Große römische Zahlen
 url	common	de	URL
 uruguay	common	de	URUGUAY
 use button to search for	common	de	benutze Knopf zum suchen nach
@@ -609,6 +751,7 @@ uzbekistan	common	de	UZBEKISTAN
 vanuatu	common	de	VANUATU
 venezuela	common	de	VENEZUELA
 version	common	de	Version
+vertical align	htmlarea-TableOperations	de	Ausrichtung
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
 virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
@@ -618,6 +761,7 @@ wednesday	common	de	Mittwoch
 welcome	common	de	Willkommen
 western sahara	common	de	WEST SAHARA
 which groups	common	de	Welche Gruppen
+width	htmlarea-TableOperations	de	Breite
 wk	jscalendar	de	KW
 work email	common	de	geschäftliche Email
 written by	common	de	Geschrieben von

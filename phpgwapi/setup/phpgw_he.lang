@@ -1,0 +1,143 @@
+_delete row	htmlarea-ContextMenu	he	_מחק שורה
+_image properties...	htmlarea-ContextMenu	he	_מאפייני תמונה...
+_modify link...	htmlarea-ContextMenu	he	_שנה קישור...
+_remove link...	htmlarea-ContextMenu	he	_הסר קישור...
+_table properties...	htmlarea-ContextMenu	he	מאפייני ט_בלה...
+align	htmlarea-TableOperations	he	ישור
+all four sides	htmlarea-TableOperations	he	כל ארבעת הצדדים
+alternate style-sheet:	htmlarea-FullPage	he	גיליון סגנון אחר:
+background	htmlarea-TableOperations	he	רקע
+background color:	htmlarea-FullPage	he	צבע רקע:
+baseline	htmlarea-TableOperations	he	קו בסיס
+border	htmlarea-TableOperations	he	גבול
+borders	htmlarea-TableOperations	he	גבולות
+bottom	htmlarea-TableOperations	he	תחתון
+c_ell properties...	htmlarea-ContextMenu	he	מאפייני ת_א...
+cancel	common	he	ביטול
+caption	htmlarea-TableOperations	he	כותרת
+cell properties	htmlarea-TableOperations	he	מאפייני תא
+center	htmlarea-TableOperations	he	מרכז
+char	htmlarea-TableOperations	he	תו
+chec_k link...	htmlarea-ContextMenu	he	בדו_ק קישור...
+collapsed borders	htmlarea-TableOperations	he	גבולות קורסים
+color	htmlarea-TableOperations	he	צבע
+copy	htmlarea-ContextMenu	he	העתק
+create a link	htmlarea-ContextMenu	he	יצירת קישור
+current url is	htmlarea-ContextMenu	he	URL נוכחי הוא
+cut	htmlarea-ContextMenu	he	גזור
+de_lete column	htmlarea-ContextMenu	he	מח_ק טור
+delete cell	htmlarea-TableOperations	he	מחק תא
+delete column	htmlarea-TableOperations	he	מחק טור
+delete row	htmlarea-TableOperations	he	מחק שורה
+delete the current column	htmlarea-ContextMenu	he	מחיקת את הטור הנוכחי
+delete the current row	htmlarea-ContextMenu	he	מחיקת את השורה הנוכחית
+description	htmlarea-TableOperations	he	תיאור
+dictionary	htmlarea-SpellChecker	he	מילון
+doctype:	htmlarea-FullPage	he	DOCTYPE:
+document properties	htmlarea-FullPage	he	מאפייני מסמך
+document title:	htmlarea-FullPage	he	כותרת מסמך:
+element...	htmlarea-ContextMenu	he	...
+fg color	htmlarea-TableOperations	he	צבע קידמה
+finished list of mispelled words	htmlarea-SpellChecker	he	הסתיימה רשימת המילים המאויתות באופן שגוי
+float	htmlarea-TableOperations	he	מרחף
+frames	htmlarea-TableOperations	he	מסגרות
+height	htmlarea-TableOperations	he	גובה
+how did you get here? (please report!)	htmlarea-ContextMenu	he	איך הגעת הנה? (אנא דווח!)
+how many columns would you like to merge?	htmlarea-TableOperations	he	כמה טורים ברצונך למזג?
+how many rows would you like to merge?	htmlarea-TableOperations	he	כמה שורות ברצונך למזג?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	he	HTMLArea מסרב בפחדנות למחוק את התא האחרון בשורה.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	he	HTMLArea מסרב בפחדנות למחוק את הטור האחרון בטבלה.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	he	HTMLArea מסרב בפחדנות למחוק את השורה האחרונה בטבלה.
+i will open it in a new page.	htmlarea-SpellChecker	he	אני אפתח את זה בחלון חדש.
+i_nsert row before	htmlarea-ContextMenu	he	ה_כנס שורה לפני
+ignore	htmlarea-SpellChecker	he	התעלם
+ignore all	htmlarea-SpellChecker	he	התעלם מהכל
+image url	htmlarea-TableOperations	he	URL התמונה
+in_sert row after	htmlarea-ContextMenu	he	הכנ_ס שורה אחרי
+insert _column before	htmlarea-ContextMenu	he	הכנס _טור לפני
+insert a new column after the current one	htmlarea-ContextMenu	he	הוספת טור חדש אחרי הנוכחי
+insert a new column before the current one	htmlarea-ContextMenu	he	הוספת טור חדש לפני הנוכחי
+insert a new row after the current one	htmlarea-ContextMenu	he	הוספת שורה חדשה אחרי הנוכחית
+insert a new row before the current one	htmlarea-ContextMenu	he	הוספת שורה חדשה לפני הנוכחית
+insert c_olumn after	htmlarea-ContextMenu	he	הכנס ט_ור אחרי
+insert cell after	htmlarea-TableOperations	he	הכנס תא אחרי
+insert cell before	htmlarea-TableOperations	he	הכנס תא לפני
+insert column after	htmlarea-TableOperations	he	הכנס טור אחרי
+insert column before	htmlarea-TableOperations	he	הכנס טור לפני
+insert row after	htmlarea-TableOperations	he	הכנס שורה אחרי
+insert row before	htmlarea-TableOperations	he	הכנס שורה לפני
+justify	htmlarea-TableOperations	he	ישור
+justify center	htmlarea-ContextMenu	he	ישור למרכז
+justify full	htmlarea-ContextMenu	he	ישור לשורה מלאה
+justify left	htmlarea-ContextMenu	he	ישור לשמאל
+justify right	htmlarea-ContextMenu	he	ישור לימין
+layout	htmlarea-TableOperations	he	פריסה
+left	htmlarea-TableOperations	he	שמאל
+link points to:	htmlarea-ContextMenu	he	הקישור מצביע אל:
+make lin_k...	htmlarea-ContextMenu	he	צור קי_שור...
+margin	htmlarea-TableOperations	he	שוליים
+merge cells	htmlarea-TableOperations	he	מזג תאים
+middle	htmlarea-TableOperations	he	אמצע
+modify url	htmlarea-ContextMenu	he	שינוי URL
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	he	לא נמצאו מילים מאויתות באופן שגוי עם המילון הנבחר.
+no rules	htmlarea-TableOperations	he	ללא קווים
+no sides	htmlarea-TableOperations	he	ללא צדדים
+none	htmlarea-TableOperations	he	אין
+ok	common	he	אישור
+opens this link in a new window	htmlarea-ContextMenu	he	פתיחת קישור זה בחלון חדש
+original word	htmlarea-SpellChecker	he	המילה המקורית
+padding	htmlarea-TableOperations	he	ריווח בשוליים
+paste	htmlarea-ContextMenu	he	הדבק
+percent	htmlarea-TableOperations	he	אחוז
+pixels	htmlarea-TableOperations	he	פיקסלים
+please click into some cell	htmlarea-TableOperations	he	אנא לחץ על תא כלשהו
+please confirm that you want to open this link	htmlarea-SpellChecker	he	אנא אשר שברצונך לפתוח קישור זה
+please confirm that you want to remove this element:	htmlarea-ContextMenu	he	אנא אשר שברצונך להסיר את האלמנט הזה:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	he	אנא אשר שאתה רוצה לנתק את אלמנט זה.
+please wait.  calling spell checker.	htmlarea-SpellChecker	he	אנא המתן.  קורא לבודק איות.
+please wait: changing dictionary to	htmlarea-SpellChecker	he	אנא המתן: מחליף מילון ל-
+pliz weit ;-)	htmlarea-SpellChecker	he	ענא המטן ;-)
+primary style-sheet:	htmlarea-FullPage	he	גיליון סגנון ראשי:
+re-check	htmlarea-SpellChecker	he	בדוק מחדש
+remove the	htmlarea-ContextMenu	he	הסר את אלמנט ה-
+remove this node from the document	htmlarea-ContextMenu	he	הסרה של node זה מהמסמך
+replace	htmlarea-SpellChecker	he	החלף
+replace all	htmlarea-SpellChecker	he	החלף הכל
+replace with	htmlarea-SpellChecker	he	החלף ב-
+revert	htmlarea-SpellChecker	he	החזר שינויים
+right	htmlarea-TableOperations	he	ימין
+ro_w properties...	htmlarea-ContextMenu	he	מאפייני _טור...
+row properties	htmlarea-TableOperations	he	מאפייני שורה
+rules	htmlarea-TableOperations	he	קווים
+rules will appear between all rows and columns	htmlarea-TableOperations	he	קווים יופיעו בין כל השורות והטורים
+rules will appear between columns only	htmlarea-TableOperations	he	קווים יופיעו בין טורים בלבד
+rules will appear between rows only	htmlarea-TableOperations	he	קווים יופיעו בין שורות בלבד
+show the image properties dialog	htmlarea-ContextMenu	he	מציג את חלון הדו-שיח של מאפייני תמונה
+show the table cell properties dialog	htmlarea-ContextMenu	he	מציג את חלון הדו-שיח של מאפייני תא בטבלה
+show the table properties dialog	htmlarea-ContextMenu	he	מציג את חלון הדו-שיח של מאפייני טבלה
+show the table row properties dialog	htmlarea-ContextMenu	he	מציג את חלון הדו-שיח של מאפייני שורה בטבלה
+spacing	htmlarea-TableOperations	he	ריווח
+spacing and padding	htmlarea-TableOperations	he	ריווח ושוליים
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	he	בדיקת האיות נסתיימה, לא נמצאו מילים מאויתות באופן שגוי.  נסגר כעת...
+spell-check	htmlarea-SpellChecker	he	בדיקת איות
+split cell	htmlarea-TableOperations	he	פצל תא
+split column	htmlarea-TableOperations	he	פצל טור
+split row	htmlarea-TableOperations	he	פצל שורה
+style [css]	htmlarea-TableOperations	he	סגנון [CSS]
+suggestions	htmlarea-SpellChecker	he	הצעות
+summary	htmlarea-TableOperations	he	סיכום
+table properties	htmlarea-TableOperations	he	מאפייני טבלה
+text align	htmlarea-TableOperations	he	ישור טקסט
+text color:	htmlarea-FullPage	he	צבע טקסט:
+the bottom side only	htmlarea-TableOperations	he	הצד התחתון בלבד
+the left-hand side only	htmlarea-TableOperations	he	הצד השמאלי בלבד
+the right and left sides only	htmlarea-TableOperations	he	הצדדים הימני והשמאלי בלבד
+the right-hand side only	htmlarea-TableOperations	he	הצד הימני בלבד
+the top and bottom sides only	htmlarea-TableOperations	he	הצדדים העליון והתחתון בלבד
+the top side only	htmlarea-TableOperations	he	הצד העליון בלבד
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	he	זה יבטל את השינויים ויצא מבודק האיות.  אנא אשר.
+top	htmlarea-TableOperations	he	עליון
+unlink the current element	htmlarea-ContextMenu	he	ניתוק את האלמנט הנוכחי
+unset color	htmlarea-TableOperations	he	צבע לא נבחר
+vertical align	htmlarea-TableOperations	he	יישור אנכי
+width	htmlarea-TableOperations	he	רוחב

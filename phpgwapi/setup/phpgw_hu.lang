@@ -10,6 +10,7 @@ administration	common	hu	Adminisztráció
 april	common	hu	Április
 are you sure you want to delete this entry ?	common	hu	Biztosan törölni akarja ezt a bejegyzést?
 august	common	hu	Augusztus
+bad login or password	common	hu	Rossz felhasználó vagy jelszó
 cancel	common	hu	Mégse
 change	common	hu	Változtat
 charset	common	hu	iso-8859-2
@@ -22,6 +23,7 @@ current users	common	hu	Aktuális felhasználók
 date	common	hu	Dátum
 december	common	hu	December
 delete	common	hu	Töröl
+dictionary	htmlarea-SpellChecker	hu	SzÃ³tÃ¡r
 done	common	hu	Kész
 e-mail	common	hu	E-Mail
 e-mail preferences	common	hu	E-Mail tulajdonságok
@@ -33,6 +35,7 @@ error	common	hu	Hiba
 exit	common	hu	Kilép
 february	common	hu	Február
 filter	common	hu	Szûrõ
+finished list of mispelled words	htmlarea-SpellChecker	hu	A tÃ©vesztett szavak listÃ¡jÃ¡nak vÃ©ge
 first name	common	hu	Keresztnév
 friday	common	hu	Péntek
 ftp	common	hu	FTP
@@ -46,13 +49,15 @@ groups	common	hu	Csoportok
 help	common	hu	Súgó
 high	common	hu	Sürgõs
 home	common	hu	Kezdõlap
+i will open it in a new page.	htmlarea-SpellChecker	hu	MegnyitÃ¡s Ãºj lapon
+ignore	htmlarea-SpellChecker	hu	ElvetÃ©s
+ignore all	htmlarea-SpellChecker	hu	Minden elvetÃ©se
 it has been more then %1 days since you changed your password	common	hu	Több mint %1 nap telt el az utolsó jelszómódosítás óta
 january	common	hu	Január
 july	common	hu	Július
 june	common	hu	Június
-last name	common	hu	Családnév
 last page	common	hu	Utolsó oldal
-login	common	hu	Belépés
+login	login	hu	Belépés
 logout	common	hu	Kilépés
 low	common	hu	Alacsony
 march	common	hu	Március
@@ -64,6 +69,7 @@ new entry added sucessfully	common	hu	Új bejegyzés hozzáadva
 new phrase has been added	common	hu	Új kifejezés hozzáadva
 next page	common	hu	következõ oldal
 no	common	hu	Nem
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	hu	A vÃ¡lasztott szÃ³tÃ¡r szerint nincs tÃ©vesztett szÃ³.
 none	common	hu	Nincs
 normal	common	hu	Normál
 november	common	hu	November
@@ -72,17 +78,26 @@ ok	common	hu	OK
 on *nix systems please type: %1	common	hu	*nix rendszereken üsse be: %1
 only yours	common	hu	csak sajátot
 original	common	hu	Eredeti
-password	common	hu	Jelszó
+original word	htmlarea-SpellChecker	hu	Eredeti szÃ³
+password	login	hu	Jelszó
 password has been updated	common	hu	Jelszó módosítva
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
 please %1 by hand	common	hu	Kérem %1 kézzel
 powered by egroupware version %1	common	hu	eGroupWare %1
+please confirm that you want to open this link	htmlarea-SpellChecker	hu	MegerÅ‘sÃ­tÃ©s
+please wait.  calling spell checker.	htmlarea-SpellChecker	hu	Kis tÃ¼relmet, a helyesÃ­rÃ¡sellenÅ‘rzÅ‘ hÃ­vÃ¡sa folyamatban.
+please wait: changing dictionary to	htmlarea-SpellChecker	hu	Kis tÃ¼relmet, szÃ³tÃ¡r cserÃ©je
+pliz weit ;-)	htmlarea-SpellChecker	hu	Kis tÃ¼relmet ;-)
 preferences	common	hu	Tulajdonságok
 previous page	common	hu	Elõzõ oldal
 print	common	hu	Nyomtat
 priority	common	hu	Prioritás
 private	common	hu	Privát
+re-check	htmlarea-SpellChecker	hu	ÃšjraellenÅ‘rzÃ©s
 rename	common	hu	Átnevez
+replace	htmlarea-SpellChecker	hu	Csere
+replace all	htmlarea-SpellChecker	hu	Mind cserÃ©je
+replace with	htmlarea-SpellChecker	hu	Csere a kÃ¶vetkezÅ‘re:
 saturday	common	hu	Szombat
 save	common	hu	Elment
 search	common	hu	Keres
@@ -92,25 +107,34 @@ show all	common	hu	mindet megmutat
 showing %1	common	hu	%1 listázva
 showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
 sorry, there was a problem processing your request.	common	hu	Hiba történt a kérelem feldolgozásakor!
+sorry, your login has expired	login	hu	A hozzáférése lejárt
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	hu	A helyesÃ­rÃ¡sellenÅ‘rzÃ©s kÃ©sz, tÃ©vesztett szÃ³ nem fordult elÅ‘. BezÃ¡rÃ¡s...
+spell-check	htmlarea-SpellChecker	hu	HelyesÃ­rÃ¡sellenÅ‘rzÃ©s
 submit	common	hu	Elküld
+suggestions	htmlarea-SpellChecker	hu	Tippek
 sunday	common	hu	Vasárnap
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	hu	KilÃ©pÃ©s a vÃ¡ltozÃ¡sok eldobÃ¡sÃ¡val. JÃ³vÃ¡hagyja?
 thursday	common	hu	Csütörtök
 time	common	hu	Idõ
 to correct this error for the future you will need to properly set the	common	hu	A hiba kijavításához helyesen kell beállítani a
 total	common	hu	összesen
 tuesday	common	hu	Kedd
 updated	common	hu	Módosítva
+use cookies	login	hu	használ sütit
+username	login	hu	Felhasználó
 users	common	hu	felhasználók
 view	common	hu	Megtekint
 wednesday	common	hu	Szerda
 which groups	common	hu	melyik csoport
 yes	common	hu	Igen
 you are required to change your password during your first login	common	hu	Elsõ bejelentkezéskor meg kell változtatnia a jelszavát
-you have 1 new message!	common	hu	1 új üzenete van!
 you have %1 new messages!	common	hu	%1 új üzenete van!
+you have 1 new message!	common	hu	1 új üzenete van!
+you have been successfully logged out	login	hu	Sikeresen kijelentkezett a rendszerbõl
 your message has been sent	common	hu	Üzenet elküldve
-your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
 your search returned %1 matchs	common	hu	Keresés végeredménye: %1 találat
+your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
+your session could not be verified.	login	hu	A hozzáférése nem ellenõrizhetõ.
 your settings have been updated	common	hu	A beállításai módosításra kerültek
 bad login or password	common	hu	Rossz felhasználó vagy jelszó
 login	login	hu	Belépés

@@ -36,8 +36,10 @@ administration	common	it	Amministrazione
 afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
+align	htmlarea-TableOperations	it	Allinea
 all	common	it	Tutto
 all fields	common	it	tutti i campi
+all four sides	htmlarea-TableOperations	it	Tutti e quattro i lati
 alphabet	common	it	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	it	SAMOA AMERICANA
 andorra	common	it	ANDORRA
@@ -64,12 +66,14 @@ autosave default category	common	it	Categoria predefinita per il salvataggio aut
 azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
 back to user login	common	it	Torna al Login utente
+background	htmlarea-TableOperations	it	Sfondo
 background color	htmlarea	it	Colore di Sfondo
 bad login or password	common	it	Nome utente o password errati
 bahamas	common	it	BAHAMAS
 bahrain	common	it	BAHRAIN
 bangladesh	common	it	BANGLADESH
 barbados	common	it	BARBADOS
+baseline	htmlarea-TableOperations	it	Allineamento
 bcc	common	it	Bcc
 belarus	common	it	BELARUS
 belgium	common	it	BELGIO
@@ -80,8 +84,11 @@ bhutan	common	it	BHUTAN
 blocked, too many attempts	common	it	Bloccato, troppi tentativi
 bold	htmlarea	it	Grassetto
 bolivia	common	it	BOLIVIA
+border	htmlarea-TableOperations	it	Bordo
+borders	htmlarea-TableOperations	it	Bordi
 bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
 botswana	common	it	BOTSWANA
+bottom	htmlarea-TableOperations	it	Basso
 bouvet island	common	it	BOUVET ISLAND
 brazil	common	it	BRASILE
 british indian ocean territory	common	it	TERRITORI BRITANNICI OCEANO INDIANO
@@ -96,6 +103,7 @@ cameroon	common	it	CAMEROON
 canada	common	it	CANADA
 cancel	common	it	Annulla
 cape verde	common	it	CAPO VERDE
+caption	htmlarea-TableOperations	it	Titolo
 categories	common	it	Categorie
 categories for	common	it	Categorie per
 category	common	it	Categoria
@@ -103,9 +111,12 @@ category %1 has been added !	common	it	La categoria %1 è stata aggiunta!
 category %1 has been updated !	common	it	La categoria %1 è stata aggiornata!
 cayman islands	common	it	ISOLE CAYMAN
 cc	common	it	Cc
+cell properties	htmlarea-TableOperations	it	ProprietÃ  della Cella
+center	htmlarea-TableOperations	it	Centra
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
 change	common	it	Cambia
+char	htmlarea-TableOperations	it	Carattere
 charset	common	it	iso-8859-1
 check installation	common	it	Controlla installazione
 chile	common	it	CILE
@@ -119,10 +130,14 @@ click	common	it	Clicca
 click or mouse over to show menu's	common	it	Click o Mouse Over per visualizzare i menu
 click or mouse over to show menu's?	common	it	Click o Mouse Over per visualizzare i menu?
 click or mouse over to show menus	common	it	Clicca o passa sopra con il puntatore per mostrare i menù
+
 click or mouse over to show menus?	common	it	Clicca o passa sopra con il puntatore per mostrare i menù ?
+
 close	common	it	Chiudi
 cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
+collapsed borders	htmlarea-TableOperations	it	Bordi chiusi
 colombia	common	it	COLOMBIA
+color	htmlarea-TableOperations	it	Colore
 comoros	common	it	COMORE
 company	common	it	Azienda
 config password	common	it	Configura Password
@@ -153,11 +168,15 @@ december	common	it	Dicembre
 decrease indent	htmlarea	it	Riduci Rientro
 default category	common	it	Categoria Predefinita
 delete	common	it	Elimina
+delete cell	htmlarea-TableOperations	it	Cancella cella
+delete column	htmlarea-TableOperations	it	Cancella colonna
+delete row	htmlarea-TableOperations	it	Cancella riga
 denmark	common	it	DANIMARCA
 description	common	it	Descrizione
 detail	common	it	Dettaglio
 details	common	it	Dettagli
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilita lo script per sistemare il bug di Internet Explorer 5.5 and superiore nella visualizzazione delle trasparenze nelle immagini PNG?
+dictionary	htmlarea-SpellChecker	it	Dizionario
 disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
 disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	it	Disabilita l'effetto animato degli slider quando visualizzi o nascondi i menu nella pagina? Gli utenti di Opera e Konqueror dovrebbero farlo.
@@ -208,18 +227,22 @@ falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
 faroe islands	common	it	ISOLE FAROE
 fax number	common	it	numero di fax
 february	common	it	Febbraio
+fg color	htmlarea-TableOperations	it	Colore Principale
 fields	common	it	Campi
 fiji	common	it	FIJI
 files	common	it	File
 filter	common	it	Filtro
+finished list of mispelled words	htmlarea-SpellChecker	it	La lista delle parole scritte male Ã¨ terminata
 finland	common	it	FINLANDIA
 first name	common	it	Nome
 first name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
 first page	common	it	Prima pagina
 firstname	common	it	Nome
 fixme!	common	it	CORREGGIMI !
+float	htmlarea-TableOperations	it	Fluttuante
 font color	htmlarea	it	Colore Carattere
 force selectbox	common	it	Forza Casella di Selezione
+frames	htmlarea-TableOperations	it	Frames
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
 french polynesia	common	it	POLINESIA FRANCESE
@@ -262,6 +285,7 @@ header admin login	common	it	Login Gestione Header
 header password	common	it	Password Header
 header username	common	it	Nome Utente Header
 heard island and mcdonald islands	common	it	ISOLE HEARD E ISOLE MCDONALD
+height	htmlarea-TableOperations	it	Altezza
 help	common	it	Aiuto
 help using editor	htmlarea	it	Aiuto per l'editor
 high	common	it	Alta
@@ -272,14 +296,29 @@ home email	common	it	e-mail abitazione
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
 horizontal rule	htmlarea	it	Linea Orrizzontale
+how many columns would you like to merge?	htmlarea-TableOperations	it	Quante colonne vuoi unire?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizionali vanno in un menù pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
+how many rows would you like to merge?	htmlarea-TableOperations	it	Quante righe vuoi unire?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	it	HTMLArea si rifiuta codardamente di cancellare l'ultima cella nella riga.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	it	HTMLArea si rifiuta codardamente di cancellare l'ultima colonna nella tabella.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	it	HTMLArea si rifiuta codardamente di cancellare l'ultima riga nella tabella.
 hungary	common	it	UNGHERIA
+i will open it in a new page.	htmlarea-SpellChecker	it	Lo aprirÃ² in una nuova pagina.
 iceland	common	it	ISLANDA
+ignore	htmlarea-SpellChecker	it	Ignora
+ignore all	htmlarea-SpellChecker	it	Ignora sempre
+image url	htmlarea-TableOperations	it	URL dell'Immagine
 increase indent	htmlarea	it	Aumenta Rientro
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
+insert cell after	htmlarea-TableOperations	it	Inserisci cella dopo
+insert cell before	htmlarea-TableOperations	it	Inserisci cella prima
+insert column after	htmlarea-TableOperations	it	Inserisci colonna dopo
+insert column before	htmlarea-TableOperations	it	Inserisci colonna prima
 insert image	htmlarea	it	Inserisci Immagine
+insert row after	htmlarea-TableOperations	it	Inserisci riga dopo
+insert row before	htmlarea-TableOperations	it	Inserisci riga prima
 insert table	htmlarea	it	Inserisci Tabella
 insert web link	htmlarea	it	Inserisci Link Web
 international	common	it	Internazionale
@@ -300,6 +339,7 @@ jordan	common	it	GIORDANIA
 july	common	it	Luglio
 jun	common	it	Giu
 june	common	it	Giugno
+justify	htmlarea-TableOperations	it	Justifica
 justify center	htmlarea	it	Centrato
 justify full	htmlarea	it	Giustificato
 justify left	htmlarea	it	Allinea a Sinistra
@@ -319,7 +359,9 @@ last name of the user, eg. "%1"	common	it	Cognome dell'utente, es. "%1"
 last page	common	it	Ultima pagina
 lastname	common	it	Cognome
 latvia	common	it	LATVIA
+layout	htmlarea-TableOperations	it	Layout
 lebanon	common	it	LIBANO
+left	htmlarea-TableOperations	it	Sinistra
 lesotho	common	it	LESOTHO
 liberia	common	it	LIBERIA
 libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
@@ -348,6 +390,7 @@ maldives	common	it	MALDIVE
 mali	common	it	MALI
 malta	common	it	MALTA
 march	common	it	Marzo
+margin	htmlarea-TableOperations	it	Margine
 marshall islands	common	it	ISOLE MARSHALL
 martinique	common	it	MARTINICA
 mauritania	common	it	MAURITANIA
@@ -357,9 +400,11 @@ may	common	it	Maggio
 mayotte	common	it	MAYOTTE
 medium	common	it	Medio
 menu	common	it	Menu
+merge cells	htmlarea-TableOperations	it	Unisci celle
 message	common	it	Messaggio
 mexico	common	it	MESSICO
 micronesia, federated states of	common	it	MICRONESIA, STATI FEDERATI DELLA
+middle	htmlarea-TableOperations	it	Centrale
 moldova, republic of	common	it	MOLDAVIA, REPUBBLICA DELLA
 monaco	common	it	MONACO
 monday	common	it	Lunedì
@@ -392,6 +437,9 @@ niue	common	it	NIUE
 no	common	it	No
 no entries found, try again ...	common	it	nessuna voce trovata, prova ancora ...
 no history for this record	common	it	Nessuna history per questo record
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	it	Non sono state trovate parole scritte male con il dizionario selezionato.
+no rules	htmlarea-TableOperations	it	Nessun righello
+no sides	htmlarea-TableOperations	it	Nessun lato
 no subject	common	it	Nessun Oggetto
 none	common	it	Nessuno
 norfolk island	common	it	ISOLE NORFOLK
@@ -415,9 +463,11 @@ open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
 ordered list	htmlarea	it	Elenco ordinato
 original	common	it	Originale
+original word	htmlarea-SpellChecker	it	Parola originale
 other	common	it	Altro
 overview	common	it	Overview
 owner	common	it	Proprietario
+padding	htmlarea-TableOperations	it	Padding
 page	common	it	Pagina
 page was generated in %1 seconds	common	it	La pagina è stata generata in %1 secondi
 pakistan	common	it	PAKISTAN
@@ -437,20 +487,27 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	common	it	Pattern per la Ricerca nella Rubrica
 pattern for search in calendar	common	it	Pattern per la Ricerca nell'Agenda
 pattern for search in projects	common	it	Pattern per la Ricerca nei Progetti
+percent	htmlarea-TableOperations	it	percento
 permissions to the files/users directory	common	it	permessi per la directory dei files/utenti
 personal	common	it	Personale
 peru	common	it	PERU
 philippines	common	it	FILIPPINE
 phone number	common	it	numero telefonico
 pitcairn	common	it	PITCAIRN
+pixels	htmlarea-TableOperations	it	pixels
 please %1 by hand	common	it	Per favore %1 a mano
+please click into some cell	htmlarea-TableOperations	it	Per favore, clicca in una cella
+please confirm that you want to open this link	htmlarea-SpellChecker	it	Devi confermare l'apertura di questo link
 please enter a name	common	it	Per favore inserisci un nome!
 please run setup to become current	common	it	Per favore esegui setup per aggiornare
 please select	common	it	Per favore Seleziona
 please set your global preferences	common	it	Per favore imposta le preferenze globali !
 please set your preferences for this app	common	it	Per favore imposta le preferenze per questa applicazione
 please set your preferences for this application	common	it	Per favore imposta le tue preferenze per questa applicazione !
+please wait.  calling spell checker.	htmlarea-SpellChecker	it	Attendere.  Sto invocando lo Spell Checker.
 please wait...	common	it	Attendere per Favore...
+please wait: changing dictionary to	htmlarea-SpellChecker	it	Attendere. Cambio il dizionario in
+pliz weit ;-)	htmlarea-SpellChecker	it	Attendere Prego ;-)
 poland	common	it	POLONIA
 portugal	common	it	PORTOGALLO
 postal	common	it	Postale
@@ -467,17 +524,27 @@ project	common	it	Progetto
 public	common	it	pubblico
 puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
+re-check	htmlarea-SpellChecker	it	Ricontrolla
 read	common	it	Leggi
 read this list of methods.	common	it	Leggi questo elenco di metodi.
 redoes your last action	htmlarea	it	Ripeti l'ultima azione
 reject	common	it	Rifiuta
 remove selected accounts	common	it	rimuovi gli account selezionati
 rename	common	it	Rinomina
+replace	htmlarea-SpellChecker	it	Sostituisci
+replace all	htmlarea-SpellChecker	it	Sostituisci sempre
+replace with	htmlarea-SpellChecker	it	Stostituisci con
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
 returns struct of users application access	common	it	Restituisce la struttura degli accessi alle applicazioni
 reunion	common	it	REUNION
+right	htmlarea-TableOperations	it	Destra
 romania	common	it	ROMANIA
+row properties	htmlarea-TableOperations	it	ProprietÃ  della Riga
+rules	htmlarea-TableOperations	it	Linee
+rules will appear between all rows and columns	htmlarea-TableOperations	it	Le linee appariranno tra tutte le righe e colonne
+rules will appear between columns only	htmlarea-TableOperations	it	Le linee appariranno solo tra le colonne
+rules will appear between rows only	htmlarea-TableOperations	it	Le linee appariranno solo tra le righe
 russian federation	common	it	FEDERAZIONE RUSSA
 rwanda	common	it	RUANDA
 saint helena	common	it	SANT'ELENA
@@ -532,18 +599,28 @@ somalia	common	it	SOMALIA
 sorry, your login has expired	login	it	Spiacente, il tuo login è scaduto
 south africa	common	it	SUD AFRICA
 south georgia and the south sandwich islands	common	it	SUD GEORGIA E LE ISOLE SUD SANDWICH
+spacing	htmlarea-TableOperations	it	Spaziatura
+spacing and padding	htmlarea-TableOperations	it	Spaziatura e Padding
 spain	common	it	SPAGNA
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	it	Controllo completato, non sono state trovate parole scritte male. Sto chiudendo...
+spell-check	htmlarea-SpellChecker	it	Spell-check
+split cell	htmlarea-TableOperations	it	Dividi cella
+split column	htmlarea-TableOperations	it	Dividi colonna
+split row	htmlarea-TableOperations	it	Dividi riga
 sri lanka	common	it	SRI LANKA
 start date	common	it	Data Inizio
 start time	common	it	Ora Inizio
 start with	common	it	Inizia con
 status	common	it	Status
 strikethrough	htmlarea	it	Barrato
+style [css]	htmlarea-TableOperations	it	Stile [CSS]
 subject	common	it	Oggetto
 submit	common	it	Invia
 subscript	htmlarea	it	Pedice
 substitutions and their meanings:	common	it	Sostituzioni e loro significati:
 sudan	common	it	SUDAN
+suggestions	htmlarea-SpellChecker	it	Suggerimenti
+summary	htmlarea-TableOperations	it	Sommario
 sunday	common	it	Domenica
 superscript	htmlarea	it	Apice
 suriname	common	it	SURINAME
@@ -552,17 +629,26 @@ swaziland	common	it	SWAZILAND
 sweden	common	it	SVEZIA
 switzerland	common	it	SVIZZERA
 syrian arab republic	common	it	REPUBBLICA ARABA SIRIANA
+table properties	htmlarea-TableOperations	it	ProprietÃ  della Tabella
 taiwan	common	it	TAIWAN/TAIPEI
 tajikistan	common	it	TAJIKISTAN
 tanzania, united republic of	common	it	TANZANIA, REPUBBLICA UNITA DELLA
+text align	htmlarea-TableOperations	it	Allineamento del Testo
 thailand	common	it	TAILANDIA
 the api is current	common	it	L'API è aggiornata
 the api requires an upgrade	common	it	L'API necessita di un aggiornamento
+the bottom side only	htmlarea-TableOperations	it	Solo la parte inferiore
 the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
+the left-hand side only	htmlarea-TableOperations	it	Solo la parte sinistra
 the mail server returned	common	it	Il mail server ha risposto
+the right and left sides only	htmlarea-TableOperations	it	Solo destra e sinistra
+the right-hand side only	htmlarea-TableOperations	it	Solo la parte destra
+the top and bottom sides only	htmlarea-TableOperations	it	Solo sopra e sotto
+the top side only	htmlarea-TableOperations	it	Solo la parte sopra
 this application is current	common	it	Questa applicazione è aggiornata
 this application requires an upgrade	common	it	Questa applicazione richiede un aggiornamento
 this name has been used already	common	it	Questo nome è già stato usato!
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	it	Questo annullerÃ  le modifiche e chiuderÃ  lo Spell Checker. Conferma.
 thursday	common	it	Giovedì
 time	common	it	Ora
 time selection:	jscalendar	it	Selezione Ora:
@@ -580,6 +666,7 @@ togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	it	Troppi tentativi di login falliti: %1 per l'utente '%2', %3 dall'IP %4
+top	htmlarea-TableOperations	it	Alto
 total	common	it	Totale
 trinidad and tobago	common	it	TRINIDAD E TOBAGO
 tuesday	common	it	Martedì
@@ -597,6 +684,7 @@ united kingdom	common	it	REGNO UNITO
 united states	common	it	STATI UNITI
 united states minor outlying islands	common	it	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	it	Sconosciuto
+unset color	htmlarea-TableOperations	it	Rimuovi colore
 update	common	it	Aggiorna
 url	common	it	URL
 uruguay	common	it	URUGUAY
@@ -614,6 +702,7 @@ uzbekistan	common	it	UZBEKISTAN
 vanuatu	common	it	VANUATU
 venezuela	common	it	VENEZUELA
 version	common	it	Versione
+vertical align	htmlarea-TableOperations	it	Allineamento verticale
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
@@ -623,6 +712,7 @@ wednesday	common	it	Mercoledì
 welcome	common	it	Benvenuto
 western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
+width	htmlarea-TableOperations	it	Larghezza
 wk	jscalendar	it	lavoro
 work email	common	it	e-mail ufficio
 written by:	common	it	Scritto da:

@@ -13,6 +13,12 @@
 3 number of chars for day-shortcut	jscalendar	en	3 number of chars for day-shortcut
 3 number of chars for month-shortcut	jscalendar	en	3 number of chars for month-shortcut
 80 (http)	admin	en	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	en	\n Tidying up the HTML source, please wait...
+_delete row	htmlarea-ContextMenu	en	_Delete Row
+_image properties...	htmlarea-ContextMenu	en	_Image Properties...
+_modify link...	htmlarea-ContextMenu	en	_Modify Link...
+_remove link...	htmlarea-ContextMenu	en	_Remove Link...
+_table properties...	htmlarea-ContextMenu	en	_Table Properties...
 about	common	en	About
 about %1	common	en	About %1
 about the calendar	jscalendar	en	About the calendar
@@ -36,9 +42,12 @@ administration	common	en	Administration
 afghanistan	common	en	AFGHANISTAN
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
+align	htmlarea-TableOperations	en	Align
 all	common	en	All
 all fields	common	en	all fields
+all four sides	htmlarea-TableOperations	en	All four sides
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	en	Alternate style-sheet:
 american samoa	common	en	AMERICAN SAMOA
 andorra	common	en	ANDORRA
 angola	common	en	ANGOLA
@@ -62,12 +71,15 @@ autosave default category	common	en	Autosave Default Category
 azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
+background	htmlarea-TableOperations	en	Background
 background color	htmlarea	en	Background Color
+background color:	common	en	Background color:
 bad login or password	common	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
 bangladesh	common	en	BANGLADESH
 barbados	common	en	BARBADOS
+baseline	htmlarea-TableOperations	en	Baseline
 bcc	common	en	Bcc
 belarus	common	en	BELARUS
 belgium	common	en	BELGIUM
@@ -78,8 +90,11 @@ bhutan	common	en	BHUTAN
 blocked, too many attempts	common	en	Blocked, too many attempts
 bold	htmlarea	en	Bold
 bolivia	common	en	BOLIVIA
+border	htmlarea-TableOperations	en	Border
+borders	htmlarea-TableOperations	en	Borders
 bosnia and herzegovina	common	en	BOSNIA AND HERZEGOVINA
 botswana	common	en	BOTSWANA
+bottom	htmlarea-TableOperations	en	Bottom
 bouvet island	common	en	BOUVET ISLAND
 brazil	common	en	BRAZIL
 british indian ocean territory	common	en	BRITISH INDIAN OCEAN TERRITORY
@@ -88,12 +103,14 @@ bulgaria	common	en	BULGARIA
 bulleted list	htmlarea	en	Bulleted List
 burkina faso	common	en	BURKINA FASO
 burundi	common	en	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	en	C_ell Properties...
 calendar	common	en	Calendar
 cambodia	common	en	CAMBODIA
 cameroon	common	en	CAMEROON
 canada	common	en	CANADA
 cancel	common	en	Cancel
 cape verde	common	en	CAPE VERDE
+caption	htmlarea-TableOperations	en	Caption
 categories	common	en	Categories
 categories for	common	en	categories for
 category	common	en	Category
@@ -101,13 +118,18 @@ category %1 has been added !	common	en	Category %1 has been added !
 category %1 has been updated !	common	en	Category %1 has been updated !
 cayman islands	common	en	CAYMAN ISLANDS
 cc	common	en	Cc
+cell properties	htmlarea-TableOperations	en	Cell Properties
+center	htmlarea-TableOperations	en	Center
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
+char	htmlarea-TableOperations	en	Char
 charset	common	en	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	en	Chec_k Link...
 check installation	common	en	Check installation
 chile	common	en	CHILE
 china	common	en	CHINA
+choose list style type (for ordered lists)	htmlarea-ListType	en	Choose list style type (for ordered lists)
 choose the category	common	en	Choose the category
 choose the parent category	common	en	Choose the parent category
 christmas island	common	en	CHRISTMAS ISLAND
@@ -118,7 +140,9 @@ click or mouse over to show menus	common	en	Click or Mouse Over to show menus
 click or mouse over to show menus?	common	en	Click or Mouse Over to show menus?
 close	common	en	Close
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
+collapsed borders	htmlarea-TableOperations	en	Collapsed borders
 colombia	common	en	COLOMBIA
+color	htmlarea-TableOperations	en	Color
 comoros	common	en	COMOROS
 company	common	en	Company
 congo	common	en	CONGO
@@ -129,13 +153,16 @@ copy selection	htmlarea	en	Copy selection
 costa rica	common	en	COSTA RICA
 cote d ivoire	common	en	COTE D IVOIRE
 create	common	en	Create
+create a link	htmlarea-ContextMenu	en	Create a link
 created by	common	en	Created By
 croatia	common	en	CROATIA
 cuba	common	en	CUBA
 currency	common	en	Currency
 current	common	en	Current
 current style	htmlarea	en	Current style
+current url is	htmlarea-ContextMenu	en	Current URL is
 current users	common	en	Current users
+cut	htmlarea-ContextMenu	en	Cut
 cut selection	htmlarea	en	Cut selection
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
@@ -143,15 +170,23 @@ date	common	en	Date
 date due	common	en	Date Due
 date selection:	jscalendar	en	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	en	De_lete Column
 december	common	en	December
+decimal numbers	htmlarea-ListType	en	Decimal numbers
 decrease indent	htmlarea	en	Decrease Indent
 default category	common	en	Default Category
 delete	common	en	Delete
+delete cell	htmlarea-TableOperations	en	Delete cell
+delete column	htmlarea-TableOperations	en	Delete column
+delete row	htmlarea-TableOperations	en	Delete row
+delete the current column	htmlarea-ContextMenu	en	Delete the current column
+delete the current row	htmlarea-ContextMenu	en	Delete the current row
 denmark	common	en	DENMARK
 description	common	en	Description
 detail	common	en	Detail
 details	common	en	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
+dictionary	htmlarea-SpellChecker	en	Dictionary
 disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png-image-bugfix
 disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
@@ -159,6 +194,9 @@ disabled	common	en	Disabled
 display %s first	jscalendar	en	Display %s first
 djibouti	common	en	DJIBOUTI
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
+doctype:	common	en	DOCTYPE:
+document properties	common	en	Document properties
+document title:	common	en	Document title:
 domain	common	en	Domain
 domain name for mail-address, eg. "%1"	common	en	domain name for mail-address, eg. "%1"
 domestic	common	en	Domestic
@@ -177,6 +215,7 @@ egroupware api version %1	common	en	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
+element...	htmlarea-ContextMenu	en	Element...
 email	common	en	E-Mail
 email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1"
 enabled	common	en	Enabled
@@ -199,18 +238,22 @@ falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 fax number	common	en	fax number
 february	common	en	February
+fg color	htmlarea-TableOperations	en	FG Color
 fields	common	en	Fields
 fiji	common	en	FIJI
 files	common	en	Files
 filter	common	en	Filter
+finished list of mispelled words	htmlarea-SpellChecker	en	Finished list of mispelled words
 finland	common	en	FINLAND
 first name	common	en	First name
 first name of the user, eg. "%1"	common	en	first name of the user, eg. "%1"
 first page	common	en	First page
 firstname	common	en	Firstname
 fixme!	common	en	FIXME!
+float	htmlarea-TableOperations	en	Float
 font color	htmlarea	en	Font Color
 force selectbox	common	en	Force SelectBox
+frames	htmlarea-TableOperations	en	Frames
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
 french polynesia	common	en	FRENCH POLYNESIA
@@ -250,6 +293,7 @@ guinea-bissau	common	en	GUINEA-BISSAU
 guyana	common	en	GUYANA
 haiti	common	en	HAITI
 heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
+height	htmlarea-TableOperations	en	Height
 help	common	en	Help
 help using editor	htmlarea	en	Help using editor
 high	common	en	High
@@ -260,14 +304,39 @@ home email	common	en	home email
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
 horizontal rule	htmlarea	en	Horizontal Rule
+how did you get here? (please report!)	htmlarea-ContextMenu	en	How did you get here? (Please report!)
+how many columns would you like to merge?	htmlarea-TableOperations	en	How many columns would you like to merge?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
+how many rows would you like to merge?	htmlarea-TableOperations	en	How many rows would you like to merge?
+html tidy	htmlarea-HtmlTidy	en	HTML Tidy
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	en	HTMLArea cowardly refuses to delete the last cell in row.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	en	HTMLArea cowardly refuses to delete the last column in table.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	en	HTMLArea cowardly refuses to delete the last row in table.
 hungary	common	en	HUNGARY
+i will open it in a new page.	htmlarea-SpellChecker	en	I will open it in a new page.
+i_nsert row before	htmlarea-ContextMenu	en	I_nsert Row Before
 iceland	common	en	ICELAND
+ignore	htmlarea-SpellChecker	en	Ignore
+ignore all	htmlarea-SpellChecker	en	Ignore all
+image url	htmlarea-TableOperations	en	Image URL
+in_sert row after	htmlarea-ContextMenu	en	In_sert Row After
 increase indent	htmlarea	en	Increase Indent
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
+insert _column before	htmlarea-ContextMenu	en	Insert _Column Before
+insert a new column after the current one	htmlarea-ContextMenu	en	Insert a new column after the current one
+insert a new column before the current one	htmlarea-ContextMenu	en	Insert a new column before the current one
+insert a new row after the current one	htmlarea-ContextMenu	en	Insert a new row after the current one
+insert a new row before the current one	htmlarea-ContextMenu	en	Insert a new row before the current one
 insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 addresses of the %2 contacts in %3
+insert c_olumn after	htmlarea-ContextMenu	en	Insert C_olumn After
+insert cell after	htmlarea-TableOperations	en	Insert cell after
+insert cell before	htmlarea-TableOperations	en	Insert cell before
+insert column after	htmlarea-TableOperations	en	Insert column after
+insert column before	htmlarea-TableOperations	en	Insert column before
 insert image	htmlarea	en	Insert Image
+insert row after	htmlarea-TableOperations	en	Insert row after
+insert row before	htmlarea-TableOperations	en	Insert row before
 insert table	htmlarea	en	Insert Table
 insert web link	htmlarea	en	Insert Web Link
 international	common	en	International
@@ -288,10 +357,11 @@ jordan	common	en	JORDAN
 july	common	en	July
 jun	common	en	Jun
 june	common	en	June
-justify center	htmlarea	en	Justify Center
-justify full	htmlarea	en	Justify Full
-justify left	htmlarea	en	Justify Left
-justify right	htmlarea	en	Justify Right
+justify	htmlarea-TableOperations	en	Justify
+justify center	common	en	Justify Center
+justify full	common	en	Justify Full
+justify left	common	en	Justify Left
+justify right	common	en	Justify Right
 kazakstan	common	en	KAZAKSTAN
 kenya	common	en	KENYA
 keywords	common	en	Keywords
@@ -308,12 +378,15 @@ last page	common	en	Last page
 lastname	common	en	Lastname
 latvia	common	en	LATVIA
 ldap-mgr	common	en	LDAP-Manager
+layout	htmlarea-TableOperations	en	Layout
 lebanon	common	en	LEBANON
+left	htmlarea-TableOperations	en	Left
 lesotho	common	en	LESOTHO
 liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	en	Link points to:
 list	common	en	List
 list members	common	en	List members
 lithuania	common	en	LITHUANIA
@@ -322,6 +395,9 @@ login	common	en	Login
 loginid	common	en	LoginID
 logout	common	en	Logout
 low	common	en	Low
+lower greek letters	htmlarea-ListType	en	Lower greek letters
+lower latin letters	htmlarea-ListType	en	Lower latin letters
+lower roman numbers	htmlarea-ListType	en	Lower roman numbers
 lowest	common	en	Lowest
 luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
@@ -331,12 +407,14 @@ mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
 maintainer	common	en	Maintainer
+make lin_k...	htmlarea-ContextMenu	en	Make lin_k...
 malawi	common	en	MALAWI
 malaysia	common	en	MALAYSIA
 maldives	common	en	MALDIVES
 mali	common	en	MALI
 malta	common	en	MALTA
 march	common	en	March
+margin	htmlarea-TableOperations	en	Margin
 marshall islands	common	en	MARSHALL ISLANDS
 martinique	common	en	MARTINIQUE
 mauritania	common	en	MAURITANIA
@@ -346,9 +424,12 @@ may	common	en	May
 mayotte	common	en	MAYOTTE
 medium	common	en	Medium
 menu	common	en	Menu
+merge cells	htmlarea-TableOperations	en	Merge cells
 message	common	en	Message
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
+middle	htmlarea-TableOperations	en	Middle
+modify url	htmlarea-ContextMenu	en	Modify URL
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
 monaco	common	en	MONACO
 monday	common	en	Monday
@@ -381,6 +462,9 @@ niue	common	en	NIUE
 no	common	en	No
 no entries found, try again ...	common	en	no entries found, try again ...
 no history for this record	common	en	No history for this record
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	en	No mispelled words found with the selected dictionary.
+no rules	htmlarea-TableOperations	en	No rules
+no sides	htmlarea-TableOperations	en	No sides
 no subject	common	en	No Subject
 none	common	en	None
 norfolk island	common	en	NORFOLK ISLAND
@@ -402,11 +486,14 @@ only private	common	en	only private
 only yours	common	en	only yours
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
+opens this link in a new window	htmlarea-ContextMenu	en	Opens this link in a new window
 ordered list	htmlarea	en	Ordered List
 original	common	en	Original
+original word	htmlarea-SpellChecker	en	Original word
 other	common	en	Other
 overview	common	en	Overview
 owner	common	en	Owner
+padding	htmlarea-TableOperations	en	Padding
 page	common	en	Page
 page was generated in %1 seconds	common	en	Page was generated in %1 seconds
 pakistan	common	en	PAKISTAN
@@ -420,25 +507,35 @@ parent category	common	en	Parent Category
 password	common	en	Password
 password could not be changed	common	en	Password could not be changed
 password has been updated	common	en	Password has been updated
+paste	htmlarea-ContextMenu	en	Paste
 paste from clipboard	htmlarea	en	Paste from clipboard
 path	htmlarea	en	Path
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	common	en	Pattern for Search in Addressbook
 pattern for search in calendar	common	en	Pattern for Search in Calendar
 pattern for search in projects	common	en	Pattern for Search in Projects
+percent	htmlarea-TableOperations	en	percent
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
 phone number	common	en	phone number
 pitcairn	common	en	PITCAIRN
+pixels	htmlarea-TableOperations	en	pixels
 please %1 by hand	common	en	Please %1 by hand
+please click into some cell	htmlarea-TableOperations	en	Please click into some cell
+please confirm that you want to open this link	htmlarea-SpellChecker	en	Please confirm that you want to open this link
+please confirm that you want to remove this element:	htmlarea-ContextMenu	en	Please confirm that you want to remove this element:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	en	Please confirm that you want to unlink this element.
 please enter a name	common	en	Please enter a name !
 please run setup to become current	common	en	Please run setup to become current
 please select	common	en	Please Select
 please set your global preferences	common	en	Please set your global preferences !
 please set your preferences for this application	common	en	Please set your preferences for this application !
+please wait.  calling spell checker.	htmlarea-SpellChecker	en	Please wait.  Calling spell checker.
 please wait...	common	en	Please Wait...
+please wait: changing dictionary to	htmlarea-SpellChecker	en	Please wait: changing dictionary to
+pliz weit ;-)	htmlarea-SpellChecker	en	pliz weit ;-)
 poland	common	en	POLAND
 portugal	common	en	PORTUGAL
 postal	common	en	Postal
@@ -448,6 +545,7 @@ preferences for the idots template set	common	en	Preferences for the idots templ
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
 prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
 previous page	common	en	Previous page
+primary style-sheet:	common	en	Primary style-sheet:
 print	common	en	Print
 priority	common	en	Priority
 private	common	en	Private
@@ -455,17 +553,31 @@ project	common	en	Project
 public	common	en	public
 puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
+re-check	htmlarea-SpellChecker	en	Re-check
 read	common	en	Read
 read this list of methods.	common	en	Read this list of methods.
 redoes your last action	htmlarea	en	Redoes your last action
 reject	common	en	Reject
 remove selected accounts	common	en	remove selected accounts
+remove the	htmlarea-ContextMenu	en	Remove the
+remove this node from the document	htmlarea-ContextMenu	en	Remove this node from the document
 rename	common	en	Rename
+replace	htmlarea-SpellChecker	en	Replace
+replace all	htmlarea-SpellChecker	en	Replace all
+replace with	htmlarea-SpellChecker	en	Replace with
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system.  Warning: This is return can be quite large
 returns an array of todo items	common	en	Returns an array of todo items
 returns struct of users application access	common	en	Returns struct of users application access
 reunion	common	en	REUNION
+revert	htmlarea-SpellChecker	en	Revert
+right	htmlarea-TableOperations	en	Right
+ro_w properties...	htmlarea-ContextMenu	en	Ro_w Properties...
 romania	common	en	ROMANIA
+row properties	htmlarea-TableOperations	en	Row Properties
+rules	htmlarea-TableOperations	en	Rules
+rules will appear between all rows and columns	htmlarea-TableOperations	en	Rules will appear between all rows and columns
+rules will appear between columns only	htmlarea-TableOperations	en	Rules will appear between columns only
+rules will appear between rows only	htmlarea-TableOperations	en	Rules will appear between rows only
 russian federation	common	en	RUSSIAN FEDERATION
 rwanda	common	en	RWANDA
 saint helena	common	en	SAINT HELENA
@@ -507,6 +619,10 @@ show all categorys	common	en	Show all categorys
 show menu	common	en	show menu
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page?
+show the image properties dialog	htmlarea-ContextMenu	en	Show the image properties dialog
+show the table cell properties dialog	htmlarea-ContextMenu	en	Show the Table Cell Properties dialog
+show the table properties dialog	htmlarea-ContextMenu	en	Show the Table Properties dialog
+show the table row properties dialog	htmlarea-ContextMenu	en	Show the Table Row Properties dialog
 show_more_apps	common	en	show_more_apps
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
@@ -519,18 +635,28 @@ somalia	common	en	SOMALIA
 sorry, your login has expired	login	en	Sorry, your login has expired
 south africa	common	en	SOUTH AFRICA
 south georgia and the south sandwich islands	common	en	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	htmlarea-TableOperations	en	Spacing
+spacing and padding	htmlarea-TableOperations	en	Spacing and padding
 spain	common	en	SPAIN
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	en	Spell check complete, didn't find any mispelled words.  Closing now...
+spell-check	htmlarea-SpellChecker	en	Spell-check
+split cell	htmlarea-TableOperations	en	Split cell
+split column	htmlarea-TableOperations	en	Split column
+split row	htmlarea-TableOperations	en	Split row
 sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start time	common	en	Start time
 start with	common	en	start with
 status	common	en	Status
 strikethrough	htmlarea	en	Strikethrough
+style [css]	htmlarea-TableOperations	en	Style [CSS]
 subject	common	en	Subject
 submit	common	en	Submit
 subscript	htmlarea	en	Subscript
 substitutions and their meanings:	common	en	Substitutions and their meanings:
 sudan	common	en	SUDAN
+suggestions	htmlarea-SpellChecker	en	Suggestions
+summary	htmlarea-TableOperations	en	Summary
 sunday	common	en	Sunday
 superscript	htmlarea	en	Superscript
 suriname	common	en	SURINAME
@@ -539,17 +665,27 @@ swaziland	common	en	SWAZILAND
 sweden	common	en	SWEDEN
 switzerland	common	en	SWITZERLAND
 syrian arab republic	common	en	SYRIAN ARAB REPUBLIC
+table properties	htmlarea-TableOperations	en	Table properties
 taiwan	common	en	TAIWAN/TAIPEI
 tajikistan	common	en	TAJIKISTAN
 tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
+text align	htmlarea-TableOperations	en	Text align
+text color:	common	en	Text color:
 thailand	common	en	THAILAND
 the api is current	common	en	The API is current
 the api requires an upgrade	common	en	The API requires an upgrade
+the bottom side only	htmlarea-TableOperations	en	The bottom side only
 the following applications require upgrades	common	en	The following applications require upgrades
+the left-hand side only	htmlarea-TableOperations	en	The left-hand side only
 the mail server returned	common	en	The mail server returned
+the right and left sides only	htmlarea-TableOperations	en	The right and left sides only
+the right-hand side only	htmlarea-TableOperations	en	The right-hand side only
+the top and bottom sides only	htmlarea-TableOperations	en	The top and bottom sides only
+the top side only	htmlarea-TableOperations	en	The top side only
 this application is current	common	en	This application is current
 this application requires an upgrade	common	en	This application requires an upgrade
 this name has been used already	common	en	This name has been used already !
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	en	This will drop changes and quit spell checker.  Please confirm.
 thursday	common	en	Thursday
 time	common	en	Time
 time selection:	jscalendar	en	Time selection:
@@ -567,6 +703,7 @@ togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4
+top	htmlarea-TableOperations	en	Top
 total	common	en	Total
 trinidad and tobago	common	en	TRINIDAD AND TOBAGO
 tuesday	common	en	Tuesday
@@ -584,7 +721,12 @@ united kingdom	common	en	UNITED KINGDOM
 united states	common	en	UNITED STATES
 united states minor outlying islands	common	en	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	en	Unknown
+unlink the current element	htmlarea-ContextMenu	en	Unlink the current element
+unset color	htmlarea-TableOperations	en	Unset color
 update	common	en	Update
+upload image	htmlarea-UploadImage	en	Upload Image
+upper latin letters	htmlarea-ListType	en	Upper latin letters
+upper roman numbers	htmlarea-ListType	en	Upper roman numbers
 url	common	en	URL
 uruguay	common	en	URUGUAY
 use button to search for	common	en	use Button to search for
@@ -601,6 +743,7 @@ uzbekistan	common	en	UZBEKISTAN
 vanuatu	common	en	VANUATU
 venezuela	common	en	VENEZUELA
 version	common	en	Version
+vertical align	htmlarea-TableOperations	en	Vertical align
 viet nam	common	en	VIET NAM
 view	common	en	View
 virgin islands, british	common	en	VIRGIN ISLANDS, BRITISH
@@ -610,6 +753,7 @@ wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western sahara	common	en	WESTERN SAHARA
 which groups	common	en	Which groups
+width	htmlarea-TableOperations	en	Width
 wk	jscalendar	en	wk
 work email	common	en	work email
 written by:	common	en	Written by:

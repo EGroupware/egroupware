@@ -9,6 +9,12 @@
 00 (disable)	admin	nl	
 13 (ntp)	admin	nl	
 80 (http)	admin	nl	
+Dutch	common	nl	Nederlands
+_delete row	htmlarea-ContextMenu	nl	Rij _verwijderen
+_image properties...	htmlarea-ContextMenu	nl	Eigenschappen afbeelding...
+_modify link...	htmlarea-ContextMenu	nl	Hyperlin_k aanpassen...
+_remove link...	htmlarea-ContextMenu	nl	Ve_rwijder hyperlink...
+_table properties...	htmlarea-ContextMenu	nl	_Tabeleigenschappen...
 about %1	common	nl	Over %1
 about the calendar	common	nl	Over de agenda
 access	common	nl	Toegang
@@ -32,7 +38,10 @@ administration	common	nl	Beheer
 afghanistan	common	nl	AFGHANISTAN
 albania	common	nl	ALBANIË
 algeria	common	nl	ALGERIJË
+align	htmlarea-TableOperations	nl	Uitlijning
 all	common	nl	Alles
+all four sides	htmlarea-TableOperations	nl	Alle 4 zijden
+alternate style-sheet:	htmlarea-FullPage	nl	Alternatieve style-sheet:
 american samoa	common	nl	AMERIKAANS SAMOA
 andorra	common	nl	ANDORRA
 angola	common	nl	ANGOLA
@@ -56,11 +65,14 @@ autosave default category	common	nl	Automatisch standaard categorie opslaan
 azerbaijan	common	nl	AZERBEIDSJAN
 back	common	nl	Terug
 back to user login	common	nl	Terug naar gebruikers loginscherm
+background	htmlarea-TableOperations	nl	Achtergrond
+background color:	htmlarea-FullPage	nl	Achtergrondkleur:
 bad login or password	common	nl	Onjuist gebruikersnaam of wachtwoord
 bahamas	common	nl	BAHAMAS
 bahrain	common	nl	BAHREIN
 bangladesh	common	nl	BANGLADESH
 barbados	common	nl	BARBADOS
+baseline	htmlarea-TableOperations	nl	Basis
 bcc	common	nl	Bcc
 belarus	common	nl	WIT-RUSLAND
 belgium	common	nl	BELGIË
@@ -70,8 +82,11 @@ bermuda	common	nl	BERMUDA
 bhutan	common	nl	BHUTAN
 blocked, too many attempts	common	nl	Geblokkeerd, te veel pogingen
 bolivia	common	nl	BOLIVIA
+border	htmlarea-TableOperations	nl	Rand
+borders	htmlarea-TableOperations	nl	Randen
 bosnia and herzegovina	common	nl	BOSNIË-HERZEGOVINA
 botswana	common	nl	BOTSWANA
+bottom	htmlarea-TableOperations	nl	Onder
 bouvet island	common	nl	Centraal Afrikaanse Republiek
 brazil	common	nl	BRAZILIË
 british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
@@ -79,12 +94,14 @@ brunei darussalam	common	nl	BRUNEI DARUSSALAM
 bulgaria	common	nl	BULGARIË
 burkina faso	common	nl	BURKINA FASO
 burundi	common	nl	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	nl	C_eleigenschappen...
 calendar	common	nl	Agenda
 cambodia	common	nl	CAMBODJA
 cameroon	common	nl	KAMEROEN
 canada	common	nl	CANADA
 cancel	common	nl	Annuleren
 cape verde	common	nl	KAAPVERDIË
+caption	htmlarea-TableOperations	nl	Opmerking
 categories	common	nl	Categorieën
 categories for	common	nl	categorieën voor
 category	common	nl	Categorie
@@ -92,10 +109,14 @@ category %1 has been added !	common	nl	Categorie %1 is toegevoegd
 category %1 has been updated !	common	nl	Categorie %1 is bijgewerkt
 cayman islands	common	nl	KAAIMAN EILANDEN
 cc	common	nl	Cc
+cell properties	htmlarea-TableOperations	nl	Celeigenschappen
+center	htmlarea-TableOperations	nl	Centreren
 central african republic	common	nl	CENTRAAL-AFRIKAANSE REPUBLIEK
 chad	common	nl	CHAD
 change	common	nl	Veranderen
+char	htmlarea-TableOperations	nl	Karakter
 charset	common	nl	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	nl	Controleer hyperlin_k...
 check installation	common	nl	Controleer installatie
 chile	common	nl	CHILI
 china	common	nl	CHINA
@@ -109,7 +130,9 @@ click or mouse over to show menus	common	nl	Klik or Mouse Over om menus weer te 
 click or mouse over to show menus?	common	nl	Klik or Mouse Over om menus weer te geven?
 close	common	nl	Sluiten
 cocos (keeling) islands	common	nl	COCOS (KEELING) EILANDEN
+collapsed borders	htmlarea-TableOperations	nl	Geen randen
 colombia	common	nl	COLOMBIA
+color	htmlarea-TableOperations	nl	Kleur
 comments	common	nl	Opmerkingen
 comoros	common	nl	COMOROS
 company	common	nl	Bedrijf
@@ -120,12 +143,15 @@ copy	common	nl	Kopiëren
 costa rica	common	nl	COSTA RICA
 cote d ivoire	common	nl	IVOORKUST
 create	common	nl	Maken
+create a link	htmlarea-ContextMenu	nl	Maak een hyperlink
 created by	common	nl	Gemaakt door
 croatia	common	nl	KROATIË
 cuba	common	nl	CUBA
 currency	common	nl	Munteenheid
 current	common	nl	Huidig
+current url is	htmlarea-ContextMenu	nl	Huidig URL is
 current users	common	nl	huidig aantal gebruikers
+cut	htmlarea-ContextMenu	nl	Knippen
 cyprus	common	nl	CYPRUS
 czech republic	common	nl	TSJECHIË
 date	common	nl	Datum
@@ -133,9 +159,15 @@ date due	common	nl	Einddatum
 date hired	common	nl	Datum in dienst
 date selection:	common	nl	Datumselectie
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	
+de_lete column	htmlarea-ContextMenu	nl	Kolom verwijderen
 december	common	nl	December
 default category	common	nl	Standaard Categorie
 delete	common	nl	Verwijderen
+delete cell	htmlarea-TableOperations	nl	Cel verwijderen
+delete column	htmlarea-TableOperations	nl	Kolom verwijderen
+delete row	htmlarea-TableOperations	nl	Rij verwijderen
+delete the current column	htmlarea-ContextMenu	nl	Verwijder de huidige kolom
+delete the current row	htmlarea-ContextMenu	nl	Verwijder de huidige rij
 denmark	common	nl	DENEMARKEN
 description	common	nl	Beschrijving
 detail	common	nl	Detail
@@ -149,6 +181,9 @@ display monday first	common	nl	Begin de week maandag
 display sunday first	common	nl	Begin de week zondag
 djibouti	common	nl	DJIBOUTI
 do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorieën wissen
+doctype:	htmlarea-FullPage	nl	DOCTYPE:
+document properties	htmlarea-FullPage	nl	Documenteigenschappen 
+document title:	htmlarea-FullPage	nl	Documenttitel:
 domain	common	nl	Domein
 domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bijv. "%1"
 domestic	common	nl	thuis
@@ -166,6 +201,7 @@ edit category	common	nl	Bewerk categorie
 egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
 egypt	common	nl	EGYPTE
 el salvador	common	nl	EL SALVADOR
+element...	htmlarea-ContextMenu	nl	element...
 email	common	nl	Email
 email-address of the user, eg. "%1"	common	nl	emailadres van de gebruiker, bijv. "%1"
 enabled	common	nl	Geactiveerd
@@ -186,6 +222,7 @@ falkland islands (malvinas)	common	nl	FALKLAND EILANDEN
 faroe islands	common	nl	LAND EILANDEN
 fax number	common	nl	Faxnummer
 february	common	nl	Februari
+fg color	htmlarea-TableOperations	nl	Voorgrond
 fields	common	nl	Velden
 fiji	common	nl	FIJI
 files	common	nl	Bestanden
@@ -196,7 +233,9 @@ first name of the user, eg. "%1"	common	nl	Voornaam van de gebruiker, bijv. "%1"
 first page	common	nl	Eerste pagina
 firstname	common	nl	Voornaam
 fixme!	common	nl	FIXME!
+float	htmlarea-TableOperations	nl	Zwevend
 force selectbox	common	nl	Forceer Selectbox
+frames	htmlarea-TableOperations	nl	Frames
 france	common	nl	FRANKRIJK
 french guiana	common	nl	FRANS GUYANA
 french polynesia	common	nl	FRANS POLYNESIË
@@ -236,6 +275,7 @@ guinea-bissau	common	nl	GUINEA-BISSAU
 guyana	common	nl	GUYANA
 haiti	common	nl	HAITI
 heard island and mcdonald islands	common	nl	HEARD EILAND EN MCDONALD EILANDEN
+height	htmlarea-TableOperations	nl	Hoogte
 help	common	nl	Help
 high	common	nl	Hoog
 highest	common	nl	Hoogste
@@ -244,12 +284,33 @@ home	common	nl	Start
 home email	common	nl	email thuis
 honduras	common	nl	HONDURAS
 hong kong	common	nl	HONG KONG
+how did you get here? (please report!)	htmlarea-ContextMenu	nl	Hoe kwam je hier? (A.U.B. doorgeven!)
+how many columns would you like to merge?	htmlarea-TableOperations	nl	Hoeveel kolommen wilt u samenvoegen?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
+how many rows would you like to merge?	htmlarea-TableOperations	nl	Hoeveel rijen wilt u samenvoegen?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	nl	HTMLArea kan de laatste cel in deze tabel niet verwijderen.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	nl	HTMLArea kan de laatste kolom in deze tabel niet verwijderen.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	nl	HTMLArea kan de laatste rij in deze tabel niet verwijderen.
 hungary	common	nl	HONGARIJË
+i_nsert row before	htmlarea-ContextMenu	nl	Rij invoegen boven
 iceland	common	nl	IJSLAND
+image url	htmlarea-TableOperations	nl	Afbeelding URL
+in_sert row after	htmlarea-ContextMenu	nl	Rij invoegen onder
 india	common	nl	INDIA
 indonesia	common	nl	INDONESIË
+insert _column before	htmlarea-ContextMenu	nl	Kolom invoegen voor
+insert a new column after the current one	htmlarea-ContextMenu	nl	Voeg een nieuwe kolom in na de huidige
+insert a new column before the current one	htmlarea-ContextMenu	nl	Voeg een nieuwe kolom in voor de huidige
+insert a new row after the current one	htmlarea-ContextMenu	nl	Voeg een nieuwe rij in onder de huidige
+insert a new row before the current one	htmlarea-ContextMenu	nl	Voeg een nieuwe rij in boven de huidige
 insert all %1 addresses of the %2 contacts in %3	common	nl	Voer alle %1 adressen in van de %2 contacten in %3
+insert c_olumn after	htmlarea-ContextMenu	nl	Kolom invoegen na
+insert cell after	htmlarea-TableOperations	nl	Voeg cel toe achter
+insert cell before	htmlarea-TableOperations	nl	Voeg cel toe voor
+insert column after	htmlarea-TableOperations	nl	Kolom invoegen achter
+insert column before	htmlarea-TableOperations	nl	Kolom invoegen voor
+insert row after	htmlarea-TableOperations	nl	Rij invoegen onder
+insert row before	htmlarea-TableOperations	nl	Rij invoegen boven
 international	common	nl	Internationaal
 invalid ip address	common	nl	Ongeldig IP-adres
 invalid password	common	nl	Ongeldig wachtwoord
@@ -266,6 +327,11 @@ japan	common	nl	JAPAN
 jordan	common	nl	JORDANIË
 july	common	nl	Juli
 june	common	nl	Juni
+justify	htmlarea-TableOperations	nl	Uitvullen
+justify center	htmlarea-ContextMenu	nl	Centreren
+justify full	htmlarea-ContextMenu	nl	Uitvullen
+justify left	htmlarea-ContextMenu	nl	Links uitlijnen
+justify right	htmlarea-ContextMenu	nl	Rechts uitlijnen
 kazakstan	common	nl	KAZACHSTAN
 kenya	common	nl	KENIA
 keywords	common	nl	Trefwoorden
@@ -281,12 +347,15 @@ last name of the user, eg. "%1"	common	nl	Achternaam van de gebruiker, bijv. "%1
 last page	common	nl	laaste pagina
 lastname	common	nl	Achternaam
 latvia	common	nl	LETLAND
+layout	htmlarea-TableOperations	nl	Opmaak
 lebanon	common	nl	LIBANON
+left	htmlarea-TableOperations	nl	Links
 lesotho	common	nl	LESOTHO
 liberia	common	nl	LIBERIE
 libyan arab jamahiriya	common	nl	LIBIË
 license	phpgwapi	nl	Licentie
 liechtenstein	common	nl	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	nl	Hyperlink verwijst naar:
 list	common	nl	Lijst
 lithuania	common	nl	LITOUWEN
 local	common	nl	Lokaal
@@ -304,12 +373,14 @@ mail domain, eg. "%1"	common	nl	emai domein, bijv. "%1"
 main category	common	nl	Hoofdcategorie
 main screen	common	nl	Hoofdscherm
 maintainer	phpgwapi	nl	Beheerder
+make lin_k...	htmlarea-ContextMenu	nl	Maak hyperlin_k...
 malawi	common	nl	MALAWI
 malaysia	common	nl	MALEISIË
 maldives	common	nl	MALADIEVEN
 mali	common	nl	MALI
 malta	common	nl	MALTA
 march	common	nl	Maart
+margin	htmlarea-TableOperations	nl	Marge
 marshall islands	common	nl	MARSHALL EILANDEN
 martinique	common	nl	MARTINIQUE
 mauritania	common	nl	MAURITANIË
@@ -319,10 +390,13 @@ may	common	nl	Mei
 mayotte	common	nl	MAYOTTE
 medium	common	nl	Gemiddeld
 menu	common	nl	Menu
+merge cells	htmlarea-TableOperations	nl	Cellen samenvoegen
 message	common	nl	Bericht
 mexico	common	nl	MEXICO
 micronesia, federated states of	common	nl	MICRONESIË
+middle	htmlarea-TableOperations	nl	Midden
 mobile	common	nl	Mobiel
+modify url	htmlarea-ContextMenu	nl	Aanpassen URL
 moldova, republic of	common	nl	MOLDOVIË
 monaco	common	nl	MONACO
 monday	common	nl	Maandag
@@ -336,7 +410,6 @@ name of the user, eg. "%1"	common	nl	naam van de gebruiker, bijv. "%1"
 namibia	common	nl	NAMIBIË
 nauru	common	nl	NAURU
 nepal	common	nl	NEPAL
-Dutch	common	nl	Nederlands
 netherlands	common	nl	NEDERLAND
 netherlands antilles	common	nl	DE NEDERLANDSE ANTILLEN
 never	common	nl	Nooit
@@ -357,6 +430,8 @@ niue	common	nl	NIUE
 no	common	nl	Nee
 no entries found, try again ...	common	nl	Geen items gevonden, probeer het nogmaals ...
 no history for this record	common	nl	Geen geschiedenis voor dit item
+no rules	htmlarea-TableOperations	nl	Geen regels
+no sides	htmlarea-TableOperations	nl	Geen zijlijnen
 no subject	common	nl	Geen onderwerp
 none	common	nl	Geen
 norfolk island	common	nl	NORFOLK EILAND
@@ -379,10 +454,12 @@ only private	common	nl	alleen privé
 only yours	common	nl	alleen eigen weergeven
 open notify window	common	nl	Attentievenster openen
 open popup window	common	nl	Popupvenster openen
+opens this link in a new window	htmlarea-ContextMenu	nl	Opend deze hyperlink in een nieuw venster
 original	common	nl	Origineel
 other	common	nl	Andere
 overview	common	nl	Overzicht
 owner	common	nl	Eigenaar
+padding	htmlarea-TableOperations	nl	Celmarge
 page was generated in %1 seconds	common	nl	Deze pagina werd gegenereerd in %1 seconden.
 pager	common	nl	Buzzer
 pakistan	common	nl	PAKISTAN
@@ -396,10 +473,12 @@ parent category	common	nl	Bovenliggende categorie
 password	common	nl	Wachtwoord
 password could not be changed	common	nl	Wachtwoord kon niet worden gewijzigd
 password has been updated	common	nl	Wachtwoord is gewijzigd
+paste	htmlarea-ContextMenu	nl	Plakken
 path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
 pattern for search in addressbook	common	nl	Patroon voor zoekopdracht in Adressenboek
 pattern for search in calendar	common	nl	Patroon voor zoekopdracht in Agenda
 pattern for search in projects	common	nl	Patroon voor zoekopdracht in Projecten
+percent	htmlarea-TableOperations	nl	procent
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
 personal	common	nl	Persoonlijk
 peru	common	nl	PERU
@@ -407,7 +486,11 @@ philippines	common	nl	FILIPIJNEN
 phone	common	nl	Telefoon
 phone number	common	nl	telefoonnummer
 pitcairn	common	nl	PITCAIRN (EILAND)
+pixels	htmlarea-TableOperations	nl	pixels
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
+please click into some cell	htmlarea-TableOperations	nl	Klik in een cel a.u.b.
+please confirm that you want to remove this element:	htmlarea-ContextMenu	nl	Is het werkelijk de bedoeling dit element te verwijderen:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	nl	Is het werkelijk de bedoeling dit element te unlinken.
 please enter a name	common	nl	Voer a.u.b. een naam in !
 please run setup to become current	common	nl	Voer a.u.b. de setup uit om een actuele versie te verkrijgen
 please select	common	nl	Selecteer a.u.b.
@@ -422,6 +505,7 @@ preferences	common	nl	Voorkeuren
 prev. month (hold for menu)	common	nl	Vorige maand (vasthouden voor menu)
 prev. year (hold for menu)	common	nl	Vorig jaar (vasthouden voor menu)
 previous page	common	nl	Vorige pagina
+primary style-sheet:	htmlarea-FullPage	nl	Primaire style-sheet:
 print	common	nl	Afdrukken
 priority	common	nl	Prioriteit
 private	common	nl	Privé
@@ -432,12 +516,21 @@ qatar	common	nl	QATAR
 read	common	nl	Lezen
 read this list of methods.	common	nl	Lees deze lijst met methodes.
 reject	common	nl	Afwijzen
+remove the	htmlarea-ContextMenu	nl	Verwijder het
+remove this node from the document	htmlarea-ContextMenu	nl	Verwijder dit punt van het document
 rename	common	nl	Hernoemen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
 returns an array of todo items	common	nl	Geef een array met todo items
 returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
 reunion	common	nl	RÉUNION (EILAND)
+right	htmlarea-TableOperations	nl	Rechts
+ro_w properties...	htmlarea-ContextMenu	nl	Rijeigenscha_ppen...
 romania	common	nl	ROMANIË
+row properties	htmlarea-TableOperations	nl	Rijeigenschappen
+rules	htmlarea-TableOperations	nl	Regels
+rules will appear between all rows and columns	htmlarea-TableOperations	nl	Regels verschijnen tussen alle rijen en kolommen
+rules will appear between columns only	htmlarea-TableOperations	nl	Regels verschijnen enkel tussen de kolommen
+rules will appear between rows only	htmlarea-TableOperations	nl	Regels verschijnen enkel tussen de rijen
 russian federation	common	nl	RUSLAND
 rwanda	common	nl	RWANDA
 saint helena	common	nl	SINT HELENA
@@ -475,6 +568,10 @@ show all	common	nl	laat alles zien
 show all categorys	common	nl	Alle categorieën weergegeven
 show page generation time	common	nl	Generatietijd van de pagina's weergeven?
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
+show the image properties dialog	htmlarea-ContextMenu	nl	Laat het afbeeldingseigenschappen dialog zien
+show the table cell properties dialog	htmlarea-ContextMenu	nl	Laat de tabel celeigenschappen dialog zien
+show the table properties dialog	htmlarea-ContextMenu	nl	Laat de tabel eigenschappen dialog zien
+show the table row properties dialog	htmlarea-ContextMenu	nl	Laat de tabel rijeigenschappen dialog zien
 show_more_apps	common	nl	Meer applicaties weergeven
 showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
@@ -488,15 +585,22 @@ sorry, there was a problem processing your request.	common	nl	Sorry, er is een p
 sorry, your login has expired	login	nl	Excuses, uw sessie is verlopen
 south africa	common	nl	ZUID AFRIKA
 south georgia and the south sandwich islands	common	nl	ZUID-GEORGIA EN DE ZUIDELIJKE SANDWICHEILANDEN
+spacing	htmlarea-TableOperations	nl	marge
+spacing and padding	htmlarea-TableOperations	nl	Celmarge en afstand tussen cellen
 spain	common	nl	SPANJE
+split cell	htmlarea-TableOperations	nl	Cel splitsen
+split column	htmlarea-TableOperations	nl	Kolom splitsen
+split row	htmlarea-TableOperations	nl	Rij splitsen
 sri lanka	common	nl	SRI LANKA
 start date	common	nl	Startdatum
 start time	common	nl	Starttijd
 status	common	nl	Status
+style [css]	htmlarea-TableOperations	nl	CSS Style
 subject	common	nl	Onderwerp
 submit	common	nl	Verzenden
 substitutions and their meanings:	common	nl	Substituties en hun betekenissen:
 sudan	common	nl	SUDAN
+summary	htmlarea-TableOperations	nl	Overzicht
 sunday	common	nl	Zondag
 suriname	common	nl	SURINAME
 svalbard and jan mayen	common	nl	SVALBARD EN JAN MAYEN (EILANDEN)
@@ -504,14 +608,23 @@ swaziland	common	nl	SWAZILAND
 sweden	common	nl	ZWEDEN
 switzerland	common	nl	ZWITSERLAND
 syrian arab republic	common	nl	SYRIË
+table properties	htmlarea-TableOperations	nl	Tabel eigenschappen
 taiwan	common	nl	TAIWAN/TAIPEI
 tajikistan	common	nl	TADZJIKISTAN
 tanzania, united republic of	common	nl	TANZANIA
+text align	htmlarea-TableOperations	nl	Text uitlijning
+text color:	htmlarea-FullPage	nl	Tekstkleur:
 thailand	common	nl	THAILAND
 the api is current	common	nl	De API is actueel
 the api requires an upgrade	common	nl	De API vereist een upgrade
+the bottom side only	htmlarea-TableOperations	nl	Enkel aan de onderkant
 the following applications require upgrades	common	nl	De volgende toepassingen vereisen een upgrade
+the left-hand side only	htmlarea-TableOperations	nl	Enkel aan de linkerkant
 the mail server returned	common	nl	De mailserver gaf als reactie
+the right and left sides only	htmlarea-TableOperations	nl	Enkel aan de linker en rechterkant
+the right-hand side only	htmlarea-TableOperations	nl	Enkel aan de rechterkant
+the top and bottom sides only	htmlarea-TableOperations	nl	Enkel aan de bovenen onderkant
+the top side only	htmlarea-TableOperations	nl	Enkel aan de bovenkant
 this application is current	common	nl	Deze toepassing is actueel
 this application requires an upgrade	common	nl	Deze toepassing vereist een upgrade
 this name has been used already	common	nl	Deze naam is reeds in gebruik !
@@ -532,6 +645,7 @@ togo	common	nl	TOGO
 tokelau	common	nl	TOKELAU
 tonga	common	nl	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	nl	De veel mislukte pogingen om in te loggen: %1 voor de gebruiker '%2', %3 voor het IP %4
+top	htmlarea-TableOperations	nl	Boven
 total	common	nl	Totaal
 trinidad and tobago	common	nl	TRINIDAD EN TOBAGO
 tuesday	common	nl	Dinsdag
@@ -547,6 +661,8 @@ united kingdom	common	nl	VERENIGD KONINKRIJK
 united states	common	nl	VERENIGDE STATES
 united states minor outlying islands	common	nl	VERENIGDE STATES: KLEINE EILANDEN
 unknown	common	nl	Onbekend
+unlink the current element	htmlarea-ContextMenu	nl	Unlink het huidige element
+unset color	htmlarea-TableOperations	nl	Wis kleur
 update	common	nl	Bijwerken
 updated	common	nl	Bijgewerkt
 url	common	nl	URL
@@ -567,6 +683,7 @@ vacation hours used	common	nl	Gebruikte verlofuren
 vanuatu	common	nl	VANUATU
 venezuela	common	nl	VENEZUELA
 version	common	nl	Versie
+vertical align	htmlarea-TableOperations	nl	Vertikale uitlijning
 viet nam	common	nl	VIETNAM
 view	common	nl	Bekijken
 virgin islands, british	common	nl	BRITSE MAAGDENEILANDEN
@@ -576,6 +693,7 @@ wednesday	common	nl	Woensdag
 welcome	common	nl	Welkom
 western sahara	common	nl	WESTELIJK SAHARA
 which groups	common	nl	welke groepen
+width	htmlarea-TableOperations	nl	Breedte
 wk	common	nl	wk
 work email	common	nl	email werk
 written by:	common	nl	Geschreven door:

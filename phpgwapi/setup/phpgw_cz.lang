@@ -1,0 +1,92 @@
+align	htmlarea-TableOperations	cz	Zarovnání
+all four sides	htmlarea-TableOperations	cz	Všechny čtyři strany
+background	htmlarea-TableOperations	cz	Pozadí
+baseline	htmlarea-TableOperations	cz	Základní linka
+border	htmlarea-TableOperations	cz	Obrys
+borders	htmlarea-TableOperations	cz	Obrysy
+bottom	htmlarea-TableOperations	cz	Dolů
+cancel	htmlarea-SpellChecker	cz	Zrušit
+caption	htmlarea-TableOperations	cz	Titulek
+cell properties	htmlarea-TableOperations	cz	Vlastnosti buňky
+center	htmlarea-TableOperations	cz	Na střed
+char	htmlarea-TableOperations	cz	Znak
+collapsed borders	htmlarea-TableOperations	cz	Stlačené okraje
+color	htmlarea-TableOperations	cz	Barva
+delete cell	htmlarea-TableOperations	cz	Smazat buňku
+delete column	htmlarea-TableOperations	cz	Smazat sloupec
+delete row	htmlarea-TableOperations	cz	Smazat řádek
+description	htmlarea-TableOperations	cz	Popis
+dictionary	htmlarea-SpellChecker	cz	Slovník
+fg color	htmlarea-TableOperations	cz	Barva popředí
+finished list of mispelled words	htmlarea-SpellChecker	cz	Dokončen seznam chybných slov
+float	htmlarea-TableOperations	cz	Obtékání
+frames	htmlarea-TableOperations	cz	Rámečky
+height	htmlarea-TableOperations	cz	Výška
+how many columns would you like to merge?	htmlarea-TableOperations	cz	Kolik sloupců si přejete spojit?
+how many rows would you like to merge?	htmlarea-TableOperations	cz	Kolik řádků si přejete spojit?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	cz	HTMLArea zbaběle odmítá smazat poslední buňku v řádku.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	cz	HTMLArea zbaběle odmítá smazat poslední sloupec v tabulce.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	cz	HTMLArea zbaběle odmítá smazat poslední řádek v tabulce.
+i will open it in a new page.	htmlarea-SpellChecker	cz	Bude otevřen jej v nové stránce.
+ignore	htmlarea-SpellChecker	cz	Ignorovat
+ignore all	htmlarea-SpellChecker	cz	Ignorovat vše
+image url	htmlarea-TableOperations	cz	Adresa obrázku
+insert cell after	htmlarea-TableOperations	cz	Vložit buňku za
+insert cell before	htmlarea-TableOperations	cz	Vložit buňku před
+insert column after	htmlarea-TableOperations	cz	Vložit sloupec za
+insert column before	htmlarea-TableOperations	cz	Vložit sloupec před
+insert row after	htmlarea-TableOperations	cz	Smazat řádek pod
+insert row before	htmlarea-TableOperations	cz	Smazat řádek nad
+justify	htmlarea-TableOperations	cz	Do stran
+layout	htmlarea-TableOperations	cz	Rozložení
+left	htmlarea-TableOperations	cz	Vlevo
+margin	htmlarea-TableOperations	cz	Okraj
+merge cells	htmlarea-TableOperations	cz	Spojit buňky
+middle	htmlarea-TableOperations	cz	Na střed
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	cz	Podle zvoleného slovníku nebyla nalezena žádná chybná slova.
+no rules	htmlarea-TableOperations	cz	Žádné čáry
+no sides	htmlarea-TableOperations	cz	Žádné strany
+none	htmlarea-TableOperations	cz	Žádné
+ok	htmlarea-SpellChecker	cz	OK
+original word	htmlarea-SpellChecker	cz	Původní slovo
+padding	htmlarea-TableOperations	cz	Odsazování
+percent	htmlarea-TableOperations	cz	procent
+pixels	htmlarea-TableOperations	cz	pixelů
+please click into some cell	htmlarea-TableOperations	cz	Prosím klikněte do některé buňky
+please confirm that you want to open this link	htmlarea-SpellChecker	cz	Prosím potvrďte otevření tohoto odkazu
+please wait.  calling spell checker.	htmlarea-SpellChecker	cz	Prosím čekejte. Komunikuace s kontrolou správnosti slov.
+please wait: changing dictionary to	htmlarea-SpellChecker	cz	Prosím čekejte: změna adresáře na
+pliz weit ;-)	htmlarea-SpellChecker	cz	strpení prosím ;-)
+re-check	htmlarea-SpellChecker	cz	Překontrolovat
+replace	htmlarea-SpellChecker	cz	Zaměnit
+replace all	htmlarea-SpellChecker	cz	Zaměnit všechno
+replace with	htmlarea-SpellChecker	cz	Zaměnit za
+right	htmlarea-TableOperations	cz	Vpravo
+row properties	htmlarea-TableOperations	cz	Vlastnosti řádku
+rules	htmlarea-TableOperations	cz	Čáry
+rules will appear between all rows and columns	htmlarea-TableOperations	cz	Čáry mezi všemi řádky i sloupci
+rules will appear between columns only	htmlarea-TableOperations	cz	Čáry pouze mezi sloupci
+rules will appear between rows only	htmlarea-TableOperations	cz	Čáry pouze mezi řádky
+spacing	htmlarea-TableOperations	cz	Mezery
+spacing and padding	htmlarea-TableOperations	cz	Mezery a odsazování
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	cz	Kontrola správnosti slov dokončena, nebyla nalezena žádná chybná slova. Ukončování ...
+spell-check	htmlarea-SpellChecker	cz	Kontrola správnosti slov
+split cell	htmlarea-TableOperations	cz	Rozdělit buňku
+split column	htmlarea-TableOperations	cz	Rozdělit sloupec
+split row	htmlarea-TableOperations	cz	Rozdělit řádek
+style [css]	htmlarea-TableOperations	cz	Kaskádové styly (CSS)
+suggestions	htmlarea-SpellChecker	cz	Doporučení
+summary	htmlarea-TableOperations	cz	Shrnutí
+table properties	htmlarea-TableOperations	cz	Vlastnosti tabulky
+text align	htmlarea-TableOperations	cz	Zarovnání textu
+the bottom side only	htmlarea-TableOperations	cz	Pouze spodní strana
+the left-hand side only	htmlarea-TableOperations	cz	Pouze levá strana
+the right and left sides only	htmlarea-TableOperations	cz	Pouze levá a pravá strana
+the right-hand side only	htmlarea-TableOperations	cz	Pouze pravá strana
+the top and bottom sides only	htmlarea-TableOperations	cz	Pouze horní a dolní strana
+the top side only	htmlarea-TableOperations	cz	Pouze horní strana
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	cz	Změny budou zrušeny a kontrola správnosti slov ukončena. Prosím potvrďte.
+top	htmlarea-TableOperations	cz	Nahoru
+unset color	htmlarea-TableOperations	cz	Zrušit barvu
+vertical align	htmlarea-TableOperations	cz	Svislé zarovnání
+width	htmlarea-TableOperations	cz	Šířka

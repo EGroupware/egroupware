@@ -1,0 +1,117 @@
+#!/usr/bin/php -q
+<?php
+/**************************************************************************\
+* eGroupWare - API htmlarea translations (according to lang in user prefs) *
+* http: //www.eGroupWare.org                                               *
+* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+* --------------------------------------------                             *
+*  This program is free software; you can redistribute it and/or modify it *
+*  under the terms of the GNU General Public License as published by the   *
+*  Free Software Foundation; either version 2 of the License, or (at your  *
+*  option) any later version.                                              *
+\**************************************************************************/
+
+/* $Id$ */
+
+$plugin_dir = realpath(dirname(__FILE__));
+$setup_dir = realpath(dirname(__FILE__).'/../../../setup');
+
+function load_langfile($lang)
+{
+	global $setup_dir;
+	
+	$lang_file = $setup_dir.'/phpgw_'.$lang.'.lang';
+	
+	$arr = array();
+	if (file_exists($lang_file))
+	{
+		foreach(file($lang_file) as $line)
+		{
+			@list($phrase,$app,$lang,$trans) = split("[\t\n\r]",$line);
+			$arr[$phrase] = array(
+				'app' => $app,
+				'trans' => $trans,
+			);
+		}
+	}
+	return $arr;
+}
+
+function save_langfile($lang,$arr)
+{
+	$content = '';
+	ksort($arr);
+	foreach($arr as $phrase => $data)
+	{
+		$content .= "$phrase\t$data[app]\t$lang\t$data[trans]\n";
+	}
+	global $setup_dir;
+	$lang_file = $setup_dir.'/phpgw_'.$lang.'.lang';
+	
+	if ($f = fopen($lang_file,'w'))
+	{
+		fwrite($f,$content);
+	}
+	fclose($f);
+}
+
+$d = opendir($plugin_dir);
+while ($plugin = readdir($d))
+{
+	if (!is_dir($plugin) || $plugin == 'CVS' || $plugin == 'CSS' || $plugin[0] == '.') continue;
+	
+	if (!@file_exists($lang_file = $plugin_dir.'/'.$plugin.'/lang/en.js')) continue;
+	$lang_file = file_get_contents($lang_file);
+	
+	if (!preg_match_all('/"([^"]+)"[ \t:]+"([^"]+)"/',$lang_file,$matches)) continue;
+	$token2en = array();
+	foreach($matches[1] as $n => $token)
+	{
+		$token2en[$token] = $matches[2][$n];
+	}
+	
+	$l = opendir($plugin_dir.'/'.$plugin.'/lang');
+	
+	while ($lang_file = readdir($l))
+	{
+		if (!preg_match('/.js$/',$lang_file)) continue;
+		
+		$lang = substr($lang_file,0,2);
+		$lang_file = $plugin_dir.'/'.$plugin.'/lang/'.$lang_file;
+		echo "\nprocessing: $lang_file\n";
+
+		$lang_file = file_get_contents($lang_file);
+		
+		if (preg_match_all('/"([^"]+)"[ \t:]+"([^"]+)"/',$lang_file,$matches))
+		{
+			$arr = load_langfile($lang);
+			$needs_save = false;
+			
+			foreach($matches[1] as $n => $token)
+			{
+				if (!isset($token2en[$token])) continue;
+
+				$phrase = strtolower($token2en[$token]);
+				
+				if (!$phrase) continue;
+				
+				if (isset($arr[$phrase]))
+				{
+					if ($arr[$phrase]['app'] != 'common' && $arr[$phrase]['app'] != 'htmlarea-'.$plugin)
+					{
+						$arr[$phrase]['app'] = 'common';
+					}
+					continue;
+				}				
+				$arr[$phrase] = array(
+					'app'	=> 'htmlarea-'.$plugin,
+					'trans' => $matches[2][$n],
+				);
+				echo "adding: $phrase = ".$matches[2][$n]."\n";
+				$needs_save = true;
+			}
+			if ($needs_save) save_langfile($lang,$arr);
+		}
+	}
+}
+closedir($d);

@@ -37,7 +37,9 @@ administration	common	no	Administrasjon
 afghanistan	common	no	AFGANISTAN
 albania	common	no	ALBANIA
 algeria	common	no	ALGERIE
+align	htmlarea-TableOperations	no	Juster
 all	common	no	Alle
+all four sides	htmlarea-TableOperations	no	Alle fire sider
 alphabet	common	no	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,x,z
 american samoa	common	no	SAMOA
 andorra	common	no	ANDORRA
@@ -62,12 +64,14 @@ autosave default category	common	no	Autolagre standard kategori
 azerbaijan	common	no	AZERBADSJAN
 back	common	no	Tilbake
 back to user login	common	no	Tilbake til brukerpålogging
+background	htmlarea-TableOperations	no	Bakgrund
 background color	htmlarea	no	Bakgrunnsfarge
 bad login or password	common	no	Ugyldig login eller passord
 bahamas	common	no	BAHAMAS
 bahrain	common	no	BAHRAIN
 bangladesh	common	no	BANGLADESH
 barbados	common	no	BARBADOS
+baseline	htmlarea-TableOperations	no	Grunnlinje
 bcc	common	no	Bcc
 belarus	common	no	HVITERUSSLAND
 belgium	common	no	BELGIA
@@ -78,8 +82,11 @@ bhutan	common	no	BHUTAN
 blocked, too many attempts	common	no	Sperret, for mange forsøk
 bold	htmlarea	no	Fet
 bolivia	common	no	BOLIVIA
+border	htmlarea-TableOperations	no	Kantlinje
+borders	htmlarea-TableOperations	no	Kantlinjer
 bosnia and herzegovina	common	no	BOSNIA-HERZEGOVINA
 botswana	common	no	BOTSWANA
+bottom	htmlarea-TableOperations	no	Bunn
 bouvet island	common	no	BOUVETØYA
 brazil	common	no	BRASIL
 british indian ocean territory	common	no	BRITISK INDISKE HAVTERRITORIUM
@@ -94,6 +101,7 @@ cameroon	common	no	KAMERUN
 canada	common	no	CANADA
 cancel	common	no	Avbryt
 cape verde	common	no	KAPP VERDE
+caption	htmlarea-TableOperations	no	Overskrift
 categories	common	no	Kategorier
 categories for	common	no	kategorier for
 category	common	no	Kategori
@@ -101,9 +109,12 @@ category %1 has been added !	common	no	Kategori %1 ble lagt til!
 category %1 has been updated !	common	no	Kategori %1 ble oppdatert!
 cayman islands	common	no	CAYMAN-ØYENE
 cc	common	no	Cc
+cell properties	htmlarea-TableOperations	no	Celleegenskaper
+center	htmlarea-TableOperations	no	Sentrer
 central african republic	common	no	SENTRALAFRIKANSKE REPUBLIKK
 chad	common	no	CHAD
 change	common	no	Endre
+char	htmlarea-TableOperations	no	Tegn
 charset	common	no	iso-8859-1
 check installation	common	no	Sjekk installasjon
 chile	common	no	CHILE
@@ -118,7 +129,9 @@ click or mouse over to show menus	common	no	Klikk eller hold peker over for å vi
 click or mouse over to show menus?	common	no	Klikk eller hold peker over for å vise menyene?
 close	common	no	Lukk
 cocos (keeling) islands	common	no	COCOS (KEELING) ØYENE
+collapsed borders	htmlarea-TableOperations	no	Fjern kantlinjer
 colombia	common	no	COLOMBIA
+color	htmlarea-TableOperations	no	Farge
 comoros	common	no	COMOROS
 company	common	no	Firma
 congo	common	no	KONGO
@@ -147,6 +160,9 @@ december	common	no	Desember
 decrease indent	htmlarea	no	Krymp innrykk
 default category	common	no	Standard kategori
 delete	common	no	Slett
+delete cell	htmlarea-TableOperations	no	Slett celle
+delete column	htmlarea-TableOperations	no	Slett kolonne
+delete row	htmlarea-TableOperations	no	Slett rad
 denmark	common	no	DANMARK
 description	common	no	Beskrivelse
 detail	common	no	Detalj
@@ -204,6 +220,7 @@ falkland islands (malvinas)	common	no	FALKLANDSØYENE
 faroe islands	common	no	FÆRØYENE
 fax number	common	no	Telefaksnummer
 february	common	no	Februar
+fg color	htmlarea-TableOperations	no	FG farge
 fields	common	no	Felter
 fiji	common	no	FIJI
 files	common	no	Filer
@@ -214,8 +231,10 @@ first name of the user, eg. "%1"	common	no	brukerens fornavn, f.eks: "%1"
 first page	common	no	Første side
 firstname	common	no	Fornavn
 fixme!	common	no	FIXMEG!
+float	htmlarea-TableOperations	no	Flytende
 font color	htmlarea	no	Font farge
 force selectbox	common	no	Tvungen utvalgsboks
+frames	htmlarea-TableOperations	no	rammer
 france	common	no	FRANKRIKE
 french guiana	common	no	FRANSKE GUYANA
 french polynesia	common	no	FRANSK POLYNESIA
@@ -255,6 +274,7 @@ guinea-bissau	common	no	GUINEA BISSAU
 guyana	common	no	GUYANA
 haiti	common	no	HAITI
 heard island and mcdonald islands	common	no	HEARD OG MCDONALD ØYENE
+height	htmlarea-TableOperations	no	Høyde
 help	common	no	Hjelp
 help using editor	htmlarea	no	Hjelp til editoren
 high	common	no	Høy
@@ -265,14 +285,26 @@ home email	common	no	hjemme epost
 honduras	common	no	HONDURAS
 hong kong	common	no	HONG KONG
 horizontal rule	htmlarea	no	Horisontal regel
+how many columns would you like to merge?	htmlarea-TableOperations	no	Hvor mange kolonner vil du slå sammen?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	no	Hvor mange ikoner som skal vises på navigasjonslinjen (på toppen av siden). Ekstra ikoner vises i en rullegardinmeny ved å trykke på ikonet lengst til høyre på navigasjonslinjen.
+how many rows would you like to merge?	htmlarea-TableOperations	no	Hvor mange rader vil du slå sammen?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	no	HTMLArea nekter å slette siste cellen i tabellen.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	no	HTMLArea nekter å slette siste kolonnen i tabellen.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	no	HTMLArea nekter å slette siste raden i tabellen.
 hungary	common	no	UNGARN
 iceland	common	no	ISLAND
+image url	htmlarea-TableOperations	no	Bildets URL
 increase indent	htmlarea	no	Øk marg
 india	common	no	INDIA
 indonesia	common	no	INONESIA
 insert all %1 addresses of the %2 contacts in %3	common	no	Legg til alle %1 adresser fra %2 kontakter i %3
+insert cell after	htmlarea-TableOperations	no	Sett inn celle etter
+insert cell before	htmlarea-TableOperations	no	Sett inn celle foran
+insert column after	htmlarea-TableOperations	no	Skyt inn kolonne etter
+insert column before	htmlarea-TableOperations	no	Skyt inn kolonne før
 insert image	htmlarea	no	Sett inn bilde
+insert row after	htmlarea-TableOperations	no	Skyt inn rad etter
+insert row before	htmlarea-TableOperations	no	Skyt inn rad foran
 insert table	htmlarea	no	Sett inn tabell
 insert web link	htmlarea	no	Legg til web lenke
 international	common	no	Internasjonal
@@ -293,6 +325,7 @@ jordan	common	no	JORDAN
 july	common	no	Juli
 jun	common	no	Jun
 june	common	no	Juni
+justify	htmlarea-TableOperations	no	Juster
 justify center	htmlarea	no	Senterjustèr
 justify full	htmlarea	no	Fulljustèring
 justify left	htmlarea	no	Venstrejustèr
@@ -312,7 +345,9 @@ last name of the user, eg. "%1"	common	no	Brukerens etternavn, f.eks: "%1"
 last page	common	no	siste side
 lastname	common	no	Etternavn
 latvia	common	no	LATVIA
+layout	htmlarea-TableOperations	no	Layout
 lebanon	common	no	LIBANON
+left	htmlarea-TableOperations	no	Venstre
 lesotho	common	no	LESOTHO
 liberia	common	no	LIBERIA
 libyan arab jamahiriya	common	no	LIBYA
@@ -340,6 +375,7 @@ maldives	common	no	MALDIVENE
 mali	common	no	MALI
 malta	common	no	MALTA
 march	common	no	Mars
+margin	htmlarea-TableOperations	no	Marg
 marshall islands	common	no	MARSHALL-ØYENE
 martinique	common	no	MARTINIQUE
 mauritania	common	no	MAURITANIA
@@ -349,9 +385,11 @@ may	common	no	Mai
 mayotte	common	no	MAYOTTE
 medium	common	no	Medium
 menu	common	no	Meny
+merge cells	htmlarea-TableOperations	no	Slå sammen celler
 message	common	no	Melding
 mexico	common	no	MEXICO
 micronesia, federated states of	common	no	MIKRONESIA
+middle	htmlarea-TableOperations	no	Midten
 moldova, republic of	common	no	MOLDOVA
 monaco	common	no	MONACO
 monday	common	no	Mandag
@@ -384,6 +422,8 @@ niue	common	no	NIUE
 no	common	no	Nei
 no entries found, try again ...	common	no	ingen treff prøv igjen ...
 no history for this record	common	no	Ingen historie for denne posten
+no rules	htmlarea-TableOperations	no	Ingen linjal
+no sides	htmlarea-TableOperations	no	Ingen sider
 no subject	common	no	Ingen Overskrift
 none	common	no	Ingen
 norfolk island	common	no	NORFOLK-ØYA
@@ -410,6 +450,7 @@ original	common	no	Orginal
 other	common	no	Annet
 overview	common	no	Oversikt
 owner	common	no	Eier
+padding	htmlarea-TableOperations	no	Luft
 page was generated in %1 seconds	common	no	Siden ble generert på %1 sekunder
 pakistan	common	no	PAKISTAN
 palau	common	no	PALAU
@@ -428,13 +469,16 @@ path to user and group files has to be outside of the webservers document-root!!
 pattern for search in addressbook	common	no	Søkeord for søk i Adresseliste
 pattern for search in calendar	common	no	Søkeord for søk i Kalender
 pattern for search in projects	common	no	Søkeord for søk i Prosjekter
+percent	htmlarea-TableOperations	no	prosent
 permissions to the files/users directory	common	no	tilgang til filmapper / brukermapper
 personal	common	no	Personlig
 peru	common	no	PERU
 philippines	common	no	FILIPPINENE
 phone number	common	no	Telefonnummer
 pitcairn	common	no	PITCAIRN
+pixels	htmlarea-TableOperations	no	billedpunkter
 please %1 by hand	common	no	Vennligst %1 for hånd
+please click into some cell	htmlarea-TableOperations	no	Klikk i en eller annen celle
 please enter a name	common	no	Vennligst tast inn et navn !
 please run setup to become current	common	no	Vennligst kjør setup for å oppdatere til siste versjon
 please select	common	no	Velg
@@ -466,7 +510,13 @@ returns a full list of accounts on the system.  warning: this is return can be q
 returns an array of todo items	common	no	Viser en tabell med gjøremål
 returns struct of users application access	common	no	Viser en struktur over brukeres tilgang til applikasjonene
 reunion	common	no	REUNION
+right	htmlarea-TableOperations	no	Høyre
 romania	common	no	ROMANIA
+row properties	htmlarea-TableOperations	no	Egenskaper for rad
+rules	htmlarea-TableOperations	no	Linjer
+rules will appear between all rows and columns	htmlarea-TableOperations	no	Linjer vil synes mellom alle rader og kolonner
+rules will appear between columns only	htmlarea-TableOperations	no	Linjer vil synes kun mellom kolonner
+rules will appear between rows only	htmlarea-TableOperations	no	Linjer vil synes kun mellom rader
 russian federation	common	no	RUSSISKE FØDERASJON
 rwanda	common	no	RUANDA
 saint helena	common	no	SAINT HELENA
@@ -518,17 +568,24 @@ sorry, there was a problem processing your request.	common	no	Beklager, der var 
 sorry, your login has expired	login	no	Beklager, din bruker har gått ut på dato
 south africa	common	no	SØR_AFRIKA
 south georgia and the south sandwich islands	common	no	SØR GEORGIA OG SØR SANDWICH ØYENE
+spacing	htmlarea-TableOperations	no	Luft
+spacing and padding	htmlarea-TableOperations	no	Luft
 spain	common	no	SPANIA
+split cell	htmlarea-TableOperations	no	Del celle
+split column	htmlarea-TableOperations	no	Del kolonne
+split row	htmlarea-TableOperations	no	Del rad
 sri lanka	common	no	SRI LANKA
 start date	common	no	Startdato
 start time	common	no	Start tid
 status	common	no	Status
 strikethrough	htmlarea	no	Overstrek
+style [css]	htmlarea-TableOperations	no	Stil [CSS]
 subject	common	no	Emne
 submit	common	no	Send
 subscript	htmlarea	no	Senket skrift
 substitutions and their meanings:	common	no	Erstatninger og deres betydninger:
 sudan	common	no	SUDAN
+summary	htmlarea-TableOperations	no	Sammendrag
 sunday	common	no	Søndag
 superscript	htmlarea	no	Hevet script
 suriname	common	no	SURINAM
@@ -537,14 +594,22 @@ swaziland	common	no	SWAZILAND
 sweden	common	no	SVERIGE
 switzerland	common	no	SVEITS
 syrian arab republic	common	no	SYRIA
+table properties	htmlarea-TableOperations	no	Tabellegenskaper
 taiwan	common	no	TAIWAN/TAIPEI
 tajikistan	common	no	TADJIKISTAN
 tanzania, united republic of	common	no	TANZANIA
+text align	htmlarea-TableOperations	no	Juster tekst
 thailand	common	no	THAILAND
 the api is current	common	no	API er oppdatert
 the api requires an upgrade	common	no	API trenger oppgradering
+the bottom side only	htmlarea-TableOperations	no	Bunnen kun
 the following applications require upgrades	common	no	De følgende applikasjonene trenger oppgradering
+the left-hand side only	htmlarea-TableOperations	no	Venstresiden kun
 the mail server returned	common	no	Epost tjener returnerte
+the right and left sides only	htmlarea-TableOperations	no	Høyre- og venstresiden kun
+the right-hand side only	htmlarea-TableOperations	no	Høyresiden kun
+the top and bottom sides only	htmlarea-TableOperations	no	The top and bottom sides only
+the top side only	htmlarea-TableOperations	no	Overkanten kun
 this application is current	common	no	Applikasjonen er oppdatert
 this application requires an upgrade	common	no	Applikasjonen trenger oppgradering
 this name has been used already	common	no	Dette navnet er allerede i bruk !
@@ -567,6 +632,7 @@ tonga	common	no	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	no	For mange mislykkede påloggings-forsøk: %1 av brukeren '%2', %3 på IP %4
 too many unsucessful attempts to login: %1 for the user \'%2\', %3 for the ip %4	common	no	For mange feilaktige påloggings-forsøk: %1 for brukeren '%2', %3 for IP %4
 too many unsucessful attempts to login: %1 for the user \\\'%2\\\', %3 for the ip %4	common	no	For mange påloggingsforsøk: %1 for brukeren '%2', %3 med IP %4
+top	htmlarea-TableOperations	no	Overkant
 total	common	no	Total
 trinidad and tobago	common	no	TRINIDAD OG TOBAGO
 tuesday	common	no	Tirsdag
@@ -584,6 +650,7 @@ united kingdom	common	no	STORBRITANIA
 united states	common	no	USA
 united states minor outlying islands	common	no	USA-ØYER
 unknown	common	no	Ukjent
+unset color	htmlarea-TableOperations	no	Ikke-bestemt farge
 update	common	no	Oppdater
 updated	common	no	Oppdatert
 url	common	no	URL
@@ -603,6 +670,7 @@ uzbekistan	common	no	USBEKISTAN
 vanuatu	common	no	VANUATU
 venezuela	common	no	VENEZUELA
 version	common	no	Versjon
+vertical align	htmlarea-TableOperations	no	Vertikal justering
 viet nam	common	no	VIETNAM
 view	common	no	Vis
 virgin islands, british	common	no	JOMFRUØYENE (BR.)
@@ -612,6 +680,7 @@ wednesday	common	no	Onsdag
 welcome	common	no	Velkommen
 western sahara	common	no	VEST-SAHARA
 which groups	common	no	Hvilke grupper
+width	htmlarea-TableOperations	no	Bredde
 wk	jscalendar	no	wk
 work email	common	no	arbeids-epost
 written by:	common	no	Skrevet av:
