@@ -27,11 +27,11 @@
 		*/
 		function loaddb()
 		{
-			$ConfigDomain = $GLOBALS['HTTP_POST_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_POST_VARS']['ConfigDomain'] : $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'];
+			$ConfigDomain = $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : $GLOBALS['HTTP_POST_VARS']['ConfigDomain'];
 			if(empty($ConfigDomain))
 			{
 				/* This is to fix the reading of this value immediately after the cookie was set on login */
-				$ConfigDomain = $HTTP_POST_VARS['FormDomain'];
+				$ConfigDomain = $GLOBALS['HTTP_POST_VARS']['FormDomain'];
 			}
 
 			/* Database setup */
