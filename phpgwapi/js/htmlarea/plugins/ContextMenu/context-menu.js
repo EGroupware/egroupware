@@ -385,8 +385,12 @@ ContextMenu.prototype.popupMenu = function(ev) {
 	}
 
 	if (!HTMLArea.is_ie) {
-		var dx = x + div.offsetWidth - window.innerWidth + 4;
-		var dy = y + div.offsetHeight - window.innerHeight + 4;
+//		var dx = x + div.offsetWidth - window.innerWidth + 4;
+//		var dy = y + div.offsetHeight - window.innerHeight + 4;
+
+		var dx = x + div.offsetWidth - window.innerWidth - window.pageXOffset + 4;
+		var dy = y + div.offsetHeight - window.innerHeight - window.pageYOffset + 4;    
+
 		if (dx > 0) x -= dx;
 		if (dy > 0) y -= dy;
 		div.style.left = x + "px";
