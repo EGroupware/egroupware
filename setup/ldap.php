@@ -76,8 +76,8 @@
      }
 
      if (! $error) {
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_ldap.inc.php");
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
+        include($phpgw_info["server"]["api_inc"] . "/class.accounts_ldap.inc.php");
+        include($phpgw_info["server"]["api_inc"] . "/class.accounts_shared.inc.php");
         $accounts = new accounts;
 
         while ($app = each($s_apps)) {
