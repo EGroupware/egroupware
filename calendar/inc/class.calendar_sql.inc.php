@@ -18,6 +18,7 @@ class calendar_
 {
 	var $stream;
 	var $user;
+	var $event;
 
 	var $printer_friendly = False;
 	var $owner;
@@ -107,21 +108,48 @@ class calendar_
 		
 		if($this->stream->num_rows() > 0)
 		{
-			$this->cal_event = CreateObject('calendar.calendar_item');
+			$this->event = CreateObject('calendar.calendar_item');
 			$this->stream->next_record();
-			// Load the calendar event data from the db into the cal_event structure
+			// Load the calendar event data from the db into $this->event structure
 			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
+			
 		}
 		else
 		{
-			$this->cal_event = False;
+			$this->event = False;
 		}
       
 		$this->stream->unlock();
-	  
-		return $this->cal_event;
+
+		return $this->event;
 	}
 
+	function list_events($mcal_stream,$startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endYear='')
+	{
+		if(!isset($this->stream))
+		{
+			return False;
+		}
+
+		$datetime = $this->makegmttime(0,0,0,$startMonth,$startDay,$startYear);
+		$startDate = ' AND (datetime >= '.$datetime.') ';
+	  
+		if($endYear != '' && $endMonth != '' && $endDay != '')
+		{
+			$edatetime = $this->makegmttime(23,59,59,intval($endMonth),intval($endDay),intval($endYear));
+			$endDate = ' AND (edatetime <= '.$edatetime.') ';
+		}
+		else
+		{
+			$endDate = '';
+		}
+
+		// Still need to write a common query that we pass extra query parameters to.
+		// then just return an array of the id's that match the condition.
+		// Something like......
+		// $events = $this->get_event_ids($startDate.$endDate);
+		return $events;
+	}
 // End of ICal style support.......
 
 	function set_filter()
@@ -174,20 +202,38 @@ class calendar_
 	}
 
 	function get_weekday_start($year,$month,$day) {
-		global $phpgw, $phpgw_info;
+		global $phpgw_info;
 
 		$weekday = date('w',mktime(0,0,0,$month,$day,$year));
+
 		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
 		{
-			$this->days = array(0 => 'Mon', 1 => 'Tue', 2 => 'Wed', 3 => 'Thu', 4 => 'Fri', 5 => 'Sat', 6 => 'Sun');
+			$days = Array(
+				0	=>	'Mon',
+				1	=>	'Tue',
+				2	=>	'Wed',
+				3	=>	'Thu',
+				4	=>	'Fri',
+				5	=>	'Sat',
+				6	=>	'Sun'
+			);
 			$sday = mktime(0,0,0,$month,$day - ($weekday - 1),$year);
 		}
 		else
 		{
-			$this->days = array(0 => 'Sun', 1 => 'Mon', 2 => 'Tue', 3 => 'Wed', 4 => 'Thu', 5 => 'Fri', 6 => 'Sat');
+			$days = Array(
+				0	=>	'Sun',
+				1	=>	'Mon',
+				2	=>	'Tue',
+				3	=>	'Wed',
+				4	=>	'Thu',
+				5	=>	'Fri',
+				6	=>	'Sat'
+			);
 			$sday = mktime(0,0,0,$month,$day - $weekday,$year);
 		}
 
+		$this->days = $days;
       return $sday;
 	}
 
@@ -816,16 +862,14 @@ class calendar_
 		$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 		$p->set_unknowns('remove');
 		$templates = Array (
-									'month_header' => 'month_header.tpl',
-									'column_title' => 'column_title.tpl'
+			'month_header' => 'month_header.tpl',
+			'column_title' => 'column_title.tpl'
 		);
 		$p->set_file($templates);
-//		$p->set_block('month_header','month_header');
-//		$p->set_block('column_title','column_title');
 
 		$var = Array(
-							'bgcolor'		=> $phpgw_info['theme']['th_bg'],
-							'font_color'	=> $phpgw_info['theme']['th_text']
+			'bgcolor'		=> $phpgw_info['theme']['th_bg'],
+			'font_color'	=> $phpgw_info['theme']['th_text']
 		);
 		$p->set_var($var);
 		
@@ -856,19 +900,14 @@ class calendar_
 		$p->set_unknowns('remove');
 		
 		$templates = Array (
-									'month_header'		=> 'month_header.tpl',
-									'month_column'		=> 'month_column.tpl',
-									'month_day'			=> 'month_day.tpl',
-									'week_day_event'	=> 'week_day_event.tpl',
-									'week_day_events'	=> 'week_day_events.tpl',
-									'link_pict'			=>	'link_pict.tpl'
+			'month_header'		=> 'month_header.tpl',
+			'month_column'		=> 'month_column.tpl',
+			'month_day'			=> 'month_day.tpl',
+			'week_day_event'	=> 'week_day_event.tpl',
+			'week_day_events'	=> 'week_day_events.tpl',
+			'link_pict'			=>	'link_pict.tpl'
 		);
 		$p->set_file($templates);
-//      $p->set_block('month_header','month_header');
-//      $p->set_block('month_column','month_column');
-//      $p->set_block('month_day','month_day');
-//      $p->set_block('week_day_event','week_day_event');
-//      $p->set_block('week_day_events','week_day_events');
 
 		$p->set_var('extra','');
 		
@@ -950,7 +989,7 @@ class calendar_
 
 						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 						{
-							$p->set_var('link_link',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$$lr_events->id.'&owner='.$owner));
+							$p->set_var('link_link',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$lr_events->id.'&owner='.$owner));
 							$p->set_var('lang_view',lang('View this entry'));
 							$p->set_var('pic_image',$phpgw->common->get_image_path('calendar').'/'.$pict);
 							$p->set_var('description',$description);
@@ -1051,16 +1090,12 @@ class calendar_
 		$p->set_unknowns('remove');
 
 		$templates = Array(
-									'month'			=>	'month.tpl',
-									'month_filler'	=>	'month_filler.tpl',
-									'month_header'	=>	'month_header.tpl'
+			'month'			=>	'month.tpl',
+			'month_filler'	=>	'month_filler.tpl',
+			'month_header'	=>	'month_header.tpl'
 		);
 		$p->set_file($templates);
 		
-//		$p->set_block('month','month');
-//		$p->set_block('month_filler','month_filler');
-//		$p->set_block('month_header','month_header');
-
 		$p->set_var('month_filler_text',$this->large_month_header($month,$year,False));
 		$p->parse('row','month_filler',True);
 
@@ -1086,26 +1121,15 @@ class calendar_
 		$p->set_unknowns('remove');
 
 		$templates = Array(
-									'month'			=>	'month.tpl',
-									'month_filler'	=>	'month_filler.tpl',
-									'month_header'	=>	'month_header.tpl'
+			'month'			=>	'month.tpl',
+			'month_filler'	=>	'month_filler.tpl',
+			'month_header'	=>	'month_header.tpl'
 		);
 		$p->set_file($templates);
 		
-//		$p->set_block('month','month');
-//		$p->set_block('month_filler','month_filler');
-//		$p->set_block('month_header','month_header');
-
 		$start = $this->get_weekday_start($year, $month, $day);
 
 		$cellcolor = $phpgw_info['theme']['row_off'];
-
-//		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
-//		{
-//			$start += 86400;
-//		}
-
-//		$str  = '';
 
 		$true_printer_friendly = $this->printer_friendly;
 
@@ -1371,111 +1395,6 @@ class calendar_
 		return $str;
 	}
 
-	function mini_calendar($day,$month,$year,$link='')
-	{
-		global $phpgw, $phpgw_info, $view;
-
-		$date = $this->makegmttime(0,0,0,$month,$day,$year);
-		$month_ago = intval(date('Ymd',mktime(0,0,0,$month - 1,$day,$year)));
-		$month_ahead = intval(date('Ymd',mktime(0,0,0,$month + 1,$day,$year)));
-		$monthstart = intval(date('Ymd',mktime(0,0,0,$month,1,$year)));
-		$monthend = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
-
-		$weekstarttime = $this->get_weekday_start($year,$month,1);
-
-		$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
-		$p->set_unknowns('remove');
-
-		$templates = Array(
-									'mini_cal'	=> 'mini_cal.tpl',
-									'mini_day'	=>	'mini_day.tpl',
-									'mini_week'	=> 'mini_week.tpl'
-		);
-		$p->set_file($templates);
-		
-//		$p->set_block('mini_cal','mini_week','mini_day');
-		$p->set_var('img_root',$phpgw->common->get_image_path('phpgwapi'));
-		$p->set_var('cal_img_root',$phpgw->common->get_image_path('calendar'));
-		$p->set_var('bgcolor',$phpgw_info['theme']['bg_color']);
-		$p->set_var('bgcolor1',$phpgw_info['theme']['bg_color']);
-		
-		if(!$this->printer_friendly)
-		{
-			$p->set_var('month','<a href="' . $phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','month='.date('m',$date['raw']).'&year='.date('Y',$date['raw']).'&owner='.$this->owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year . '</a>');
-		}
-		else
-		{
-			$p->set_var('month',lang($phpgw->common->show_date($date['raw'],'F')).' '.$year);
-		}
-
-		$p->set_var('prevmonth',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ago.'&owner='.$this->owner));
-		$p->set_var('nextmonth',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ahead.'&owner='.$this->owner));
-		$p->set_var('bgcolor2',$phpgw_info['theme']['cal_dayview']);
-		
-		for($i=0;$i<7;$i++)
-		{
-			$p->set_var('dayname','<b>' . substr(lang($this->days[$i]),0,2) . '</b>');
-			$p->parse('daynames','mini_day',True);
-		}
-		
-		for($i=$weekstarttime;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
-		{
-			for($j=0;$j<7;$j++)
-			{
-				$str = '';
-				$cal = $this->gmtdate($i + ($j * 24 * 3600));
-				if($cal['full'] >= $monthstart && $cal['full'] <= $monthend)
-				{
-					if ($cal['full'] == $this->today['full'])
-					{
-						$p->set_var('day_image',' background="' . $phpgw_info['server']['webserver_url']
-									. '/calendar/templates/' . $phpgw_info['server']['template_set']
-									. '/images/mini_day_block.gif' . '"');
-					}
-					else
-					{
-						$p->set_var('day_image','');
-						$p->set_var('bgcolor2','#FFFFFF');
-					}
-					
-					if(!$this->printer_friendly)
-					{
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day'].'&owner='.$this->owner).'" class="minicalendar">';
-					}
-					
-					$str .= $cal['day'];
-					
-					if (!$this->printer_friendly)
-					{
-						$str .= '</a>';
-					}
-					
-					if ($cal['full'] == $this->today['full'])
-					{
-						$p->set_var('dayname',"<b>$str</b>");
-					}
-					else
-					{
-						$p->set_var('dayname',$str);
-					}
-				}
-				else
-				{
-					$p->set_var('day_image','');
-					$p->set_var('bgcolor2','#FEFEFE');
-					$p->set_var('dayname','');
-				}
-				
-				$p->parse('monthweek_day','mini_day',True);
-			}
-			$p->parse('display_monthweek','mini_week',True);
-			$p->set_var('dayname','');
-			$p->set_var('monthweek_day','');
-		}
-		
-		return $p->finish($p->parse('out','mini_cal'));
-	}
-
 	function html_for_event_day_at_a_glance ($event)
 	{
 		global $phpgw, $phpgw_info;
@@ -1575,17 +1494,14 @@ class calendar_
 		$p->set_unknowns('remove');
 
 		$templates = Array(
-									'day_cal'			=>	'day_cal.tpl',
-									'mini_week'			=> 'mini_week.tpl',
-//									'day_row'			=>	'day_row.tpl',
-									'day_row_event'	=> 'day_row_event.tpl',
-									'day_row_time'		=>	'day_row_time.tpl'
+			'day_cal'			=>	'day_cal.tpl',
+			'mini_week'			=> 'mini_week.tpl',
+//			'day_row'			=>	'day_row.tpl',
+			'day_row_event'	=> 'day_row_event.tpl',
+			'day_row_time'		=>	'day_row_time.tpl'
 		);
       $p->set_file($templates);
       
-//		$p->set_block('day_cal','mini_week','day_row_event','day_row_time');
-
-
 		if (! $phpgw_info['user']['preferences']['calendar']['workdaystarts'] &&
 			 ! $phpgw_info['user']['preferences']['calendar']['workdayends'])
 		{
@@ -1662,7 +1578,7 @@ class calendar_
 		$p->set_var('bg_time_image',$phpgw->common->get_image_path('phpgwapi').'/navbar_filler.jpg');
 		$p->set_var('font_color',$phpgw_info['theme']['bg_text']);
 		$p->set_var('font',$phpgw_info['theme']['font']);
-		if (isset($this->hour_arr[99]) && strlen($this->hour_arr[99]))
+		if (isset($this->hour_arr[99]) && strlen($this->hour_arr[99]) > 0)
 		{
 			$p->set_var('event',$this->hour_arr[99]);
 			$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());

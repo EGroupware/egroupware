@@ -19,9 +19,12 @@ include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_'.$phpgw_info['server']
 
 class calendar extends calendar_
 {
+	var $template_dir;
+	var $image_dir;
+	
 	function calendar($params=False)
 	{
-	  global $phpgw_info;
+	  global $phpgw, $phpgw_info;
 	  
 	  if(gettype($params)=="array")
 	  {
@@ -45,8 +48,120 @@ class calendar extends calendar_
         $this->rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
       }
 
+		$this->template_dir = $phpgw->common->get_tpl_dir('calendar');
+		$this->image_dir = $phpgw->common->get_image_path('calendar');
       $this->today = $this->localdates(time());
     }
+
+	function mini_calendar($day,$month,$year,$link='')
+	{
+		global $phpgw, $phpgw_info, $view;
+
+		$date = $this->makegmttime(0,0,0,$month,$day,$year);
+		$month_ago = intval(date('Ymd',mktime(0,0,0,$month - 1,$day,$year)));
+		$month_ahead = intval(date('Ymd',mktime(0,0,0,$month + 1,$day,$year)));
+		$monthstart = intval(date('Ymd',mktime(0,0,0,$month,1,$year)));
+		$monthend = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
+
+		$weekstarttime = $this->get_weekday_start($year,$month,1);
+
+		$p = CreateObject('phpgwapi.Template',$this->template_dir);
+		$p->set_unknowns('remove');
+
+		$templates = Array(
+			'mini_cal'	=> 'mini_cal.tpl',
+			'mini_day'	=>	'mini_day.tpl',
+			'mini_week'	=> 'mini_week.tpl'
+		);
+		$p->set_file($templates);
+
+		if($this->printer_firendly == False)
+		{
+			$month = '<a href="' . $phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','month='.date('m',$date['raw']).'&year='.date('Y',$date['raw']).'&owner='.$this->owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year . '</a>';
+		}
+		else
+		{
+			$month = lang($phpgw->common->show_date($date['raw'],'F')).' '.$year;
+		}
+
+		$var = Array(
+			'img_root'			=>	$phpgw->common->get_image_path('phpgwapi'),
+			'cal_img_root'		=>	$this->image_dir,
+			'bgcolor'			=>	$phpgw_info['theme']['bg_color'],
+			'bgcolor1'			=>	$phpgw_info['theme']['bg_color'],
+			'month'				=>	$month,
+			'prevmonth'			=>	$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ago.'&owner='.$this->owner),
+			'nextmonth'			=>	$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ahead.'&owner='.$this->owner),
+			'bgcolor2'			=>	$phpgw_info['theme']['cal_dayview']
+		);
+
+		$p->set_var($var);
+		
+		for($i=0;$i<7;$i++)
+		{
+			$p->set_var('dayname','<b>' . substr(lang($this->days[$i]),0,2) . '</b>');
+			$p->parse('daynames','mini_day',True);
+		}
+		
+		for($i=$weekstarttime;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
+		{
+			for($j=0;$j<7;$j++)
+			{
+				$str = '';
+				$cal = $this->gmtdate($i + ($j * 24 * 3600));
+				if($cal['full'] >= $monthstart && $cal['full'] <= $monthend)
+				{
+					if ($cal['full'] == $this->today['full'])
+					{
+						$p->set_var('day_image',' background="' . $phpgw_info['server']['webserver_url']
+									. '/calendar/templates/' . $phpgw_info['server']['template_set']
+									. '/images/mini_day_block.gif' . '"');
+					}
+					else
+					{
+						$p->set_var('day_image','');
+						$p->set_var('bgcolor2','#FFFFFF');
+					}
+					
+					if(!$this->printer_friendly)
+					{
+						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day'].'&owner='.$this->owner).'" class="minicalendar">';
+					}
+					
+					$str .= $cal['day'];
+					
+					if (!$this->printer_friendly)
+					{
+						$str .= '</a>';
+					}
+					
+					if ($cal['full'] == $this->today['full'])
+					{
+						$p->set_var('dayname',"<b>$str</b>");
+					}
+					else
+					{
+						$p->set_var('dayname',$str);
+					}
+				}
+				else
+				{
+					$p->set_var('day_image','');
+					$p->set_var('bgcolor2','#FEFEFE');
+					$p->set_var('dayname','');
+				}
+				
+				$p->parse('monthweek_day','mini_day',True);
+			}
+			$p->parse('display_monthweek','mini_week',True);
+			$p->set_var('dayname','');
+			$p->set_var('monthweek_day','');
+		}
+		
+		$return_value = $p->finish($p->parse('out','mini_cal'));
+		unset($p);
+		return $return_value;
+	}
 
 	function timematrix($date,$starttime,$endtime,$participants)
 	{
