@@ -653,7 +653,7 @@
 	}
 
 	/*
-	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcStruct));
+	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcStruct,xmlrpcString));
 	$GLOBALS['_xmlrpcs_listApps_doc'] = 'Returns a list of installed phpgw apps';
 	function _xmlrpcs_listApps($server,$m)
 	{
