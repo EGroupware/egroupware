@@ -14,7 +14,6 @@
   if ($confirm) {
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
-
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   if ($ksessionid == $phpgw_info["user"]["sessionid"]) {

@@ -11,11 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
-
-  $phpgw_info["flags"]["currentapp"] = "admin";
-  $phpgw_info["flags"]["disable_message_class"] = True;
-  $phpgw_info["flags"]["disable_send_class"] = True;
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
         . $phpgw_info["server"]["auth_type"] . ".inc.php");

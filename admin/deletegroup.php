@@ -11,15 +11,11 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
 
   if (! $group_id)
      Header("Location: " . $phpgw->link("groups.php"));
 
-
-  $phpgw_info["flags"]["currentapp"] = "admin";
-  $phpgw_info["flags"]["disable_message_class"] = True;
-  $phpgw_info["flags"]["disable_send_class"] = True;
   include("../header.inc.php");
 
   if ((($group_id) && ($confirm)) || $removeusers) {

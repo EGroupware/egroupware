@@ -11,11 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
-
-  $phpgw_info["flags"]["disable_message_class"] = True;
-  $phpgw_info["flags"]["disable_send_class"] = True;
-  $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"] = array("currentapp" => "admin", "noheader" => True, "nonavbar" => True);
   include("../header.inc.php");
 
   //$phpgw->template->set_unknowns("remove");

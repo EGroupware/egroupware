@@ -15,7 +15,6 @@
   /* $Id$ */
 
   $phpgw_info["flags"]["currentapp"] = "admin";
-
   include("../header.inc.php");
   check_code($cd);
 

@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   $phpgw->template->set_file(array("header"     => "currentusers.tpl",
