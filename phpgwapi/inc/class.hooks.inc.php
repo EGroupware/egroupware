@@ -234,7 +234,7 @@
 					$filename = "hook_$hook.inc.php";
 				}
 				$this->db->query("INSERT INTO phpgw_hooks (hook_appname,hook_location,hook_filename)".
-					" VALUES ('$appname','$location','$filename');");
+					" VALUES ('$appname','$location','$filename')");
 			}
 			return True;
 		}
