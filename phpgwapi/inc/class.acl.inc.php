@@ -48,6 +48,7 @@
 		var $data = Array();
 		/*! @var $db */
 		var $db;
+		var $table_name = 'phpgw_acl';
 
 		/*!
 		@function acl
@@ -62,6 +63,8 @@
 		function acl($account_id = '')
 		{
 			$this->db = clone($GLOBALS['phpgw']->db);
+			$this->db->set_app('phpgwapi');
+
 			if ((int)$this->account_id != (int)$account_id)
 			{
 				$this->account_id = get_account_id((int)$account_id,@$GLOBALS['phpgw_info']['user']['account_id']);
@@ -130,36 +133,24 @@
 		{
 			// For some reason, calling this via XML-RPC doesn't call the constructor.
 			// Here is yet another work around(tm) (jengo)
-			if (! $this->account_id)
+			if (!$this->account_id)
 			{
 				$this->acl();
 			}
-
-			$sql = 'select * from phpgw_acl where (acl_account in ('.$this->account_id.', 0'; 
-
-			$groups = $this->get_location_list_for_id('phpgw_group', 1, $this->account_id);
-			while($groups && list($key,$value) = each($groups))
-			{
-				if($value != '')
-					$sql .= ','.$value;
-			}
-			$sql .= '))';
-			$this->db->query($sql ,__LINE__,__FILE__);
-			$count = $this->db->num_rows();
+			$this->db->select($this->table_name,'*',array(
+				'acl_account' => array($this->account_id,0) + array_values((array)$this->get_location_list_for_id('phpgw_group', 1, $this->account_id))
+			),__LINE__,__FILE__);
+			
 			$this->data = Array();
-			for ($idx = 0; $idx < $count; ++$idx)
+			while($this->db->next_record())
 			{
-				//reset ($this->data);
-				//while(list($idx,$value) = each($this->data)){
-				$this->db->next_record();
 				$this->data[] = array(
-					'appname' => $this->db->f('acl_appname'),
+					'appname'  => $this->db->f('acl_appname'),
 					'location' => $this->db->f('acl_location'), 
-					'account' => $this->db->f('acl_account'), 
-					'rights' => $this->db->f('acl_rights')
+					'account'  => $this->db->f('acl_account'), 
+					'rights'   => $this->db->f('acl_rights')
 				);
 			}
-			reset ($this->data);
 			return $this->data;
 		}
 
@@ -173,11 +164,10 @@
 		*/
 		function read()
 		{
-			if (count($this->data) == 0)
+			if (!count($this->data))
 			{
 				$this->read_repository();
 			}
-			reset ($this->data);
 			return $this->data;
 		}
 
@@ -191,15 +181,17 @@
 		@param $location location
 		@param $rights rights
 		*/
-		function add($appname = False, $location, $rights)
+		function add($appname,$location,$rights)
 		{
-			if ($appname == False)
-			{
-				settype($appname,'string');
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-			$this->data[] = array('appname' => $appname, 'location' => $location, 'account' => $this->account_id, 'rights' => $rights);
-			reset($this->data);
+			if (!$appname) $appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+
+			$this->data[] = array(
+				'appname'  => $appname, 
+				'location' => $location, 
+				'account'  => (int) $this->account_id, 
+				'rights'   => (int) $rights
+			);
+
 			return $this->data;
 		}
 
@@ -212,23 +204,17 @@
 		@param $appname optional defaults to $phpgw_info['flags']['currentapp']
 		@param $location app location
 		*/
-		function delete($appname = False, $location)
+		function delete($appname, $location)
 		{
-			if ($appname == False)
-			{
-				settype($appname,'string');
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-			$count = count($this->data);
-			reset ($this->data);
-			while(list($idx,$value) = each($this->data))
+			if (!$appname) $appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+
+			foreach($this->data as $idx => $value)
 			{
 				if ($this->data[$idx]['appname'] == $appname && $this->data[$idx]['location'] == $location && $this->data[$idx]['account'] == $this->account_id)
 				{
-					$this->data[$idx] = Array();
+					unset($this->data[$idx]);
 				}
 			}
-			reset($this->data);
 			return $this->data;
 		}
 
@@ -242,24 +228,22 @@
 		
 		function save_repository()
 		{
-			reset($this->data);
+			$this->db->delete($this->table_name,array(
+				'acl_account' => $this->account_id,
+			),__LINE__,__FILE__);
 
-			$sql = 'delete from phpgw_acl where acl_account = '. (int)$this->account_id;
-			$this->db->query($sql ,__LINE__,__FILE__);
-
-			$count = count($this->data);
-			reset ($this->data);
-			while(list($idx,$value) = each($this->data))
+			foreach($this->data as $value)
 			{
-				if ($this->data[$idx]['account'] == $this->account_id)
+				if ($value['account'] == $this->account_id)
 				{
-					$sql = 'insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)';
-					$sql .= " values('".$this->data[$idx]['appname']."', '"
-						. $this->data[$idx]['location']."', ".$this->account_id.', '.$this->data[$idx]['rights'].')';
-					$this->db->query($sql ,__LINE__,__FILE__);
+					$this->db->insert($this->table_name,array(
+						'acl_appname'  => $value['appname'],
+						'acl_location' => $value['location'],
+						'acl_account'  => $this->account_id,
+						'acl_rights'   => $value['rights'],
+					),false,__LINE__,__FILE__);
 				}
 			}
-			reset($this->data);
 			return $this->data;
 		}
 
@@ -279,41 +263,32 @@
 			// For XML-RPC, change this once its working correctly for passing parameters (jengo)
 			if (is_array($location))
 			{
-				$a        = $location;
-				$location = $a['location'];
-				$appname  = $a['appname'];
+				$appname  = $location['appname'];
+				$location = $location['location'];
 			}
 
-			if (count($this->data) == 0)
+			if (!count($this->data))
 			{
 				$this->read_repository();
 			}
-			reset ($this->data);
-			if ($appname == False)
-			{
-				settype($appname,'string');
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-			$count = count($this->data);
-			if ($count == 0 && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny')
+			if (!$appname) $appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+
+			if (!count($this->data) && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny')
 			{
 				return True;
 			}
 			$rights = 0;
-			//for ($idx = 0; $idx < $count; ++$idx){
-			reset ($this->data);
-			while(list($idx,$value) = each($this->data))
+			foreach($this->data as $idx => $value)
 			{
-				if ($this->data[$idx]['appname'] == $appname)
+				if ($value['appname'] == $appname)
 				{
-					if ($this->data[$idx]['location'] == $location || $this->data[$idx]['location'] == 'everywhere')
+					if ($value['location'] == $location || $value['location'] == 'everywhere')
 					{
-						if ($this->data[$idx]['rights'] == 0)
+						if ($value['rights'] == 0)
 						{
 							return False;
 						}
-
-						$rights |= $this->data[$idx]['rights'];
+						$rights |= $value['rights'];
 					}
 				}
 			}
@@ -329,6 +304,7 @@
 		function check($location, $required, $appname = False)
 		{
 			$rights = $this->get_rights($location,$appname);
+
 			return !!($rights & $required);
 		}
 		/*!
@@ -340,32 +316,25 @@
 		*/
 		function get_specific_rights($location, $appname = False)
 		{
-			if ($appname == False)
-			{
-				settype($appname,'string');
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
+			if (!$appname) $appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 
-			$count = count($this->data);
-			if ($count == 0 && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny')
+			if (!count($this->data) && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny')
 			{
 				return True;
 			}
 			$rights = 0;
 
-			reset ($this->data);
-			while(list($idx,$value) = each($this->data))
+			foreach($this->data as $idx => $value)
 			{
-				if ($this->data[$idx]['appname'] == $appname && 
-					($this->data[$idx]['location'] == $location ||
-					$this->data[$idx]['location'] == 'everywhere') &&
-					$this->data[$idx]['account'] == $this->account_id)
+				if ($value['appname'] == $appname && 
+					($value['location'] == $location ||	$value['location'] == 'everywhere') &&
+					$value['account'] == $this->account_id)
 				{
-					if ($this->data[$idx]['rights'] == 0)
+					if ($value['rights'] == 0)
 					{
 						return False;
 					}
-					$rights |= $this->data[$idx]['rights'];
+					$rights |= $value['rights'];
 				}
 			}
 			return $rights;
@@ -381,135 +350,65 @@
 		function check_specific($location, $required, $appname = False)
 		{
 			$rights = $this->get_specific_rights($location,$appname);
+
 			return !!($rights & $required);
 		}
-		/*!
-		@function get_location_list
-		@abstract ?
-		@param $app appname
-		@param $required ?
-		*/
-		function get_location_list($app, $required)
-		{
-			// User piece
-			$sql = "select acl_location, acl_rights from phpgw_acl where acl_appname = '$app' ";
-			$sql .= " and (acl_account in ('".$this->account_id."', 0"; // group 0 covers all users
-			$equalto = $GLOBALS['phpgw']->accounts->security_equals($this->account_id);
-			if (is_array($equalto) && count($equalto) > 0)
-			{
-				for ($idx = 0; $idx < count($equalto); ++$idx)
-				{
-					$sql .= ','.$equalto[$idx][0];
-				}
-			}
-			$sql .= ')))';
-
-			$this->db->query($sql ,__LINE__,__FILE__);
-			$rights = 0;
-			if ($this->db->num_rows() == 0 )
-			{
-				return False;
-			}
-			while ($this->db->next_record())
-			{
-				if ($this->db->f('acl_rights') == 0)
-				{
-					return False;
-				}
-				$rights |= $this->db->f('acl_rights');
-				if (!!($rights & $required) == True)
-				{
-					$locations[] = $this->db->f('acl_location');
-				}
-				else
-				{
-					return False;
-				}
-			}
-			return $locations;
-		}
-
-/*
-		This is kinda how the function SHOULD work, so that it doesnt need to do its own sql query. 
-		It should use the values in the $this->data
-
-		function get_location_list($app, $required)
-		{
-			if ($appname == False)
-			{
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-
-			$count = count($this->data);
-			if ($count == 0 && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny'){ return True; }
-			$rights = 0;
-
-			reset ($this->data);
-			while(list($idx,$value) = each($this->data))
-			{
-				if ($this->data[$idx]['appname'] == $appname && $this->data[$idx]['rights'] != 0)
-				{
-					$location_rights[$this->data[$idx]['location']] |= $this->data[$idx]['rights'];
-				}
-			}
-			reset($location_rights);
-			for ($idx = 0; $idx < count($location_rights); ++$idx)
-			{
-				if (!!($location_rights[$idx] & $required) == True)
-				{
-					$location_rights[] = $this->data[$idx]['location'];
-				}
-			}
-			return $locations;
-		}
-*/
 
 		/**************************************************************************\
 		* These are the generic functions. Not specific to $this->account_id       *
 		\**************************************************************************/
 
-		/*!
-		@function add_repository
-		@abstract add repository information for an app
-		@param $app appname
-		@param $location location
-		@param $account_id account id
-		@param $rights rights
-		*/
+		/**
+		 * add repository information / rights for app/location/account_id
+		 *
+		 * @param $app appname
+		 * @param $location location
+		 * @param $account_id account id
+		 * @param $rights rights
+		 */
 		function add_repository($app, $location, $account_id, $rights)
 		{
-			$this->delete_repository($app, $location, $account_id);
-			$sql = 'insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)';
-			$sql .= " values ('" . $app . "','" . $location . "','" . $account_id . "','" . $rights . "')";
-			$this->db->query($sql ,__LINE__,__FILE__);
+			//echo "<p>acl::add_repository('$app','$location',$account_id,$rights);</p>\n";
+			$this->db->insert($this->table_name,array(
+				'acl_rights' => $rights,
+			),array(
+				'acl_appname' => $app,
+				'acl_location' => $location,
+				'acl_account'  => $account_id,
+			),__LINE__,__FILE__);
+
 			return True;
 		}
 
-		/*!
-		@function delete_repository
-		@abstract delete repository information for an app
-		@param $app appname
-		@param $location location
-		@param $account_id account id
-		*/
-		function delete_repository($app, $location, $accountid = '')
+		/**
+		 * delete repository information / rights for app/location[/account_id]
+		 * @param string $app appname
+		 * @param string $location location
+		 * @param int/boolean $account_id account id, default 0=$this->account_id, or false to delete all entries for $app/$location
+		 * @return int number of rows deleted
+		 */
+		function delete_repository($app, $location, $accountid='')
 		{
 			static $cache_accountid;
 
-			if(isset($cache_accountid[$accountid]) && $cache_accountid[$accountid])
+			$where = array(
+				'acl_appname'  => $app,
+				'acl_location' => $location,
+			);
+			if ($accountid !== false)
 			{
-				$account_id = $cache_accountid[$accountid];
+				if(isset($cache_accountid[$accountid]) && $cache_accountid[$accountid])
+				{
+					$where['acl_account'] = $cache_accountid[$accountid];
+				}
+				else
+				{
+					$where['acl_account'] = $cache_accountid[$accountid] = get_account_id($accountid,$this->account_id);
+				}
 			}
-			else
-			{
-				$account_id = get_account_id($accountid,$this->account_id);
-				$cache_accountid[$accountid] = $account_id;
-			}
-			$sql = "delete from phpgw_acl where acl_appname like '".$app."'"
-				. " and acl_location like '".$location."' and "
-				. " acl_account = ".$account_id;
-			$this->db->query($sql ,__LINE__,__FILE__);
-			return $this->db->num_rows();
+			$this->db->delete($this->table_name,$where,__LINE__,__FILE__);
+
+			return $this->db->affected_rows();
 		}
 
 		/*!
@@ -532,15 +431,13 @@
 				$account_id = get_account_id($accountid,$this->account_id);
 				$cache_accountid[$accountid] = $account_id;
 			}
-			$sql  = 'SELECT acl_appname, acl_rights from phpgw_acl ';
-			$sql .= "where acl_location = '" . $this->db->db_addslashes($location) . "' ";
-			$sql .= 'AND acl_account = ' . (int)$account_id;
-			$this->db->query($sql ,__LINE__,__FILE__);
+			$this->db->select($this->table_name,array('acl_appname','acl_rights'),array(
+				'acl_location' => $location,
+				'acl_account'  => $account_id,
+			),__LINE__,__FILE__);
+
 			$rights = 0;
-			if ($this->db->num_rows() == 0 )
-			{
-				return False;
-			}
+			$apps = false;
 			while ($this->db->next_record())
 			{
 				if ($this->db->f('acl_rights') == 0)
@@ -548,7 +445,7 @@
 					return False;
 				}
 				$rights |= $this->db->f('acl_rights');
-				if (!!($rights & $required) == True)
+				if (!!($rights & $required))
 				{
 					$apps[] = $this->db->f('acl_appname');
 				}
@@ -570,32 +467,23 @@
 
 			if($cache_accountid[$accountid])
 			{
-				$account_id = $cache_accountid[$accountid];
+				$accountid = $cache_accountid[$accountid];
 			}
 			else
 			{
-				$account_id = get_account_id($accountid,$this->account_id);
-				$cache_accountid[$accountid] = $account_id;
+				$accountid = $cache_accountid[$accountid] = get_account_id($accountid,$this->account_id);
 			}
-			$sql  = 'SELECT acl_location, acl_rights ';
-			$sql .= "FROM phpgw_acl where acl_appname = '" . $this->db->db_addslashes($app) . "' ";
-			$sql .= 'AND acl_account =' . (int)$account_id;
-			
-			$this->db->query($sql ,__LINE__,__FILE__);
-			$rights = 0;
-			if ($this->db->num_rows() == 0 )
-			{
-				return False;
-			}
+			$this->db->select($this->table_name,'acl_location,acl_rights',array(
+				'acl_appname' => $app,
+				'acl_account' => $accountid,
+			),__LINE__,__FILE__);
+
+			$locations = false;
 			while ($this->db->next_record())
 			{
-				if ($this->db->f('acl_rights'))
+				if ($this->db->f('acl_rights') & $required)
 				{
-					$rights |= $this->db->f('acl_rights');
-					if (!!($rights & $required) == True)
-					{
-						$locations[] = $this->db->f('acl_location');
-					}
+					$locations[] = $this->db->f('acl_location');
 				}
 			}
 			return $locations;
@@ -609,28 +497,21 @@
 		*/
 		function get_ids_for_location($location, $required, $app = False)
 		{
-			if ($app == False)
-			{
-				$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-			$sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and ";
-			$sql .= "acl_location = '".$location."'";
-			$this->db->query($sql ,__LINE__,__FILE__);
-			$rights = 0;
-			if ($this->db->num_rows() == 0 )
-			{
-				return False;
-			}
+			if (!$app) $app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+
+			$this->db->select($this->table_name,array('acl_account','acl_rights'),array(
+				'acl_appname'  => $app,
+				'acl_location' => $location,
+			),__LINE__,__FILE__);
+
+			$accounts = false;
 			while ($this->db->next_record())
 			{
-				$rights = 0;
-				$rights |= $this->db->f('acl_rights');
-				if (!!($rights & $required) == True)
+				if (!!($this->db->f('acl_rights') & $required))
 				{
-					$accounts[] = (int)$this->db->f('acl_account');
+					$accounts[] = (int) $this->db->f('acl_account');
 				}
 			}
-			@reset($accounts);
 			return $accounts;
 		}
 
@@ -653,36 +534,26 @@
 				$account_id = get_account_id($accountid,$this->account_id);
 				$cache_accountid[$accountid] = $account_id;
 			}
+			$memberships = array($account_id);
+			foreach((array)$GLOBALS['phpgw']->accounts->membership($account_id) as $group)
+			{
+				$memberships[] = $group['account_id'];
+			}
 			$db2 = clone($this->db);
-			$memberships = $GLOBALS['phpgw']->accounts->membership($account_id);
-			$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
-				. 'acl_account in ';
-			$security = '('.$account_id;
-			while($groups = @each($memberships))
-			{
-				$group = each($groups);
-				$security .= ','.$group[1]['account_id'];
-			}
-			$security .= ')';
-			$db2->query($sql . $security ,__LINE__,__FILE__);
+			$db2->select($this->table_name,array('acl_appname','acl_rights'),array(
+				'acl_location' => 'run',
+				'acl_account'  => $memberships,
+			),__LINE__,__FILE__);
 
-			if ($db2->num_rows() == 0)
-			{
-				return False;
-			}
+			$apps = false;
 			while ($db2->next_record())
 			{
-				if(isset($apps[$db2->f('acl_appname')]))
+				$app = $db2->f('acl_appname');
+				if(!isset($apps[$app]))
 				{
-					$rights = $apps[$db2->f('acl_appname')];
+					$apps[$app] = 0;
 				}
-				else
-				{
-					$rights = 0;
-					$apps[$db2->f('acl_appname')] = 0;
-				}
-				$rights |= $db2->f('acl_rights');
-				$apps[$db2->f('acl_appname')] |= $rights;
+				$apps[$app] |= (int) $db2->f('acl_rights');
 			}
 			return $apps;
 		}
@@ -693,33 +564,20 @@
 		*/
 		function get_grants($app='')
 		{
+			if (!$app) $app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+
+			$memberships = array($this->account_id);
+			foreach((array)$GLOBALS['phpgw']->accounts->membership($this->account_id) as $group)
+			{
+				$memberships[] = $group['account_id'];
+			}
 			$db2 = clone($this->db);
-
-			if ($app=='')
-			{
-				$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			}
-
-			$sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and "
-				. "acl_location in ";
-			$security = "('". $this->account_id ."'";
-			$myaccounts = CreateObject('phpgwapi.accounts');
-			$my_memberships = $myaccounts->membership($this->account_id);
-			unset($myaccounts);
-			@reset($my_memberships);
-			while($my_memberships && list($key,$group) = each($my_memberships))
-			{
-				$security .= ",'" . $group['account_id'] . "'";
-			}
-			$security .= ')';
-			$db2->query($sql . $security ,__LINE__,__FILE__);
-			$rights = 0;
-			$accounts = Array();
-			if ($db2->num_rows() == 0)
-			{
-				$grants[$GLOBALS['phpgw_info']['user']['account_id']] = ~0;
-				return $grants;
-			}
+			$db2->select($this->table_name,array('acl_account','acl_rights'),array(
+				'acl_appname'  => $app,
+				'acl_location' => $memberships,
+			),__LINE__,__FILE__);
+			
+			$grants = $accounts = Array();
 			while ($db2->next_record())
 			{
 				$grantor = $db2->f('acl_account');
@@ -755,7 +613,7 @@
 						$grants[$grantor] |= PHPGW_ACL_READ;
 					}
 				}
-				while(list($nul,$grantors) = each($accounts[$grantor]))
+				foreach($accounts[$grantor] as $grantors)
 				{
 					if(!isset($grants[$grantors]))
 					{
@@ -763,7 +621,6 @@
 					}
 					$grants[$grantors] |= $rights;
 				}
-				reset($accounts[$grantor]);
 			}
 			$grants[$GLOBALS['phpgw_info']['user']['account_id']] = ~0;
 
@@ -779,10 +636,14 @@
 		{
 			if ((int) $account_id)
 			{
-				$this->db->query('DELETE FROM phpgw_acl WHERE acl_account='.(int)$account_id,__LINE__,__FILE__);
+				$this->db->delete($this->table_name,array(
+					'acl_account' => $account_id
+				),__LINE__,__FILE__);
 				// delete all memberships in account_id (if it is a group)
-				$this->db->query("DELETE FROM phpgw_acl WHERE acl_appname='phpgw_group' AND acl_location='".(int)$account_id."'",__LINE__,__FILE__);
+				$this->db->delete($this->table_name,array(
+					'acl_appname' => 'phpgw_group',
+					'acl_location' => $account_id,
+				),__LINE__,__FILE__);
 			}
 		}
 	} //end of acl class
-?>
