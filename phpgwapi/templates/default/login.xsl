@@ -3,6 +3,7 @@
 	<xsl:template match="login">
 	<xsl:variable name="phpgw_head_charset"><xsl:value-of select="phpgw_head_charset"/></xsl:variable>
 	<xsl:variable name="login_theme"><xsl:value-of select="login_theme"/></xsl:variable>
+	<xsl:variable name="phpgw_theme"><xsl:value-of select="phpgw_theme"/></xsl:variable>
 		<html>
 			<head>
 				<meta http-equiv="content-type" content="text/html; charset={$phpgw_head_charset}"/>
@@ -14,6 +15,7 @@
 				<link rel="icon" href="favicon.ico" type="image/x-ico"/>
 				<link rel="shortcut icon" href="favicon.ico"/>
 				<title><xsl:value-of select="phpgw_head_website_title"/></title>
+				<link rel="stylesheet" type="text/css" href="{$phpgw_theme}"/>
 				<link rel="stylesheet" type="text/css" href="{$login_theme}"/>
 			</head>
 			<body>

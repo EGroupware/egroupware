@@ -617,7 +617,7 @@
 			$dh = opendir($tpl_dir . SEP . 'css');
 			while ($file = readdir($dh))
 			{
-				if (eregi("\.css$", $file))
+				if (eregi("\.css$", $file) && $file != 'phpgw.css')
 				{
 					$list[] = substr($file,0,strpos($file,'.'));
 				}
@@ -1291,7 +1291,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				$css_file =  $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] . SEP . 'css' . SEP . 'submarine.css';
 			}
-
 			else
 			{
 				/* Hope we don't get to this point.  Better then the user seeing a */
@@ -1299,7 +1298,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$GLOBALS['phpgw_info']['theme']['bg_color'] = 'FFFFFF';
 				$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
 			}
-			$GLOBALS['phpgw']->template->set_var('phpgw_css','<link rel="stylesheet" type="text/css" href="' . $css_file . '">');
+			$phpgw_css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
+							. SEP . 'css' . SEP . 'phpgw.css';
+
+			$GLOBALS['phpgw']->template->set_var('phpgw_css','<link rel="stylesheet" type="text/css" href="' . $phpgw_css_file . '">' . "\n"
+															. '<link rel="stylesheet" type="text/css" href="' . $css_file . '">');
 		}
 
 		function load_preload_images_data()

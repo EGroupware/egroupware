@@ -3,14 +3,9 @@ body,p,td,th,table,input,form,option
 	color: #000000;
 }
 
-a:link,a:active
+a:link,a:active,a:visited
 {
 	color: #336699;
-}
-
-a:visited
-{
-	color: #333366;
 }
 
 a:hover
@@ -45,7 +40,7 @@ a:hover
 
 .login,.portal
 {
-	background-color: #ADADAD;
+	background-color: #486591;
 	border-color: #000000;
 }
 
@@ -54,19 +49,19 @@ a:hover
 	color: #FFFFFF;
 }
 
-.row_on
+.row_on,.th_bright
 {
-	background-color: #DDDDDD;
+	background-color: #fefefe;
 }
 
 .row_off
 {
-	background-color: #EEEEEE;
+	background-color: #e6e6e6;
 }
 
 .th
 {
-	background-color: #ADADAD;
+	background-color: #486591;
 }
 
 .th_text,.app_header_text
@@ -76,7 +71,7 @@ a:hover
 
 .app_header
 {
-	background-color: #DDDDDD;
+	background-color: #fefefe;
 }
 
 .cal_today
@@ -86,6 +81,6 @@ a:hover
 
 .email_folder
 {
-	background-color: #adadad;
+	background-color: #486591;
 	color: #ffffff;
 }

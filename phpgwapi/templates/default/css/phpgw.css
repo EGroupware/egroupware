@@ -1,0 +1,74 @@
+body,p,td,th,table,input,form,option
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+body
+{
+	margin-right: 0em;
+	margin-left: 0em;
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+
+table
+{
+	border-width: 0;
+}
+
+a:link,a:visited,a:active,a:hover
+{
+	text-decoration: none;
+}
+
+table.portal
+{
+	width: 100%;
+}
+
+table.login
+{
+	margin-top: 130px;
+	width: 40%;
+	text-align: center;
+}
+
+.login,.portal
+{
+	border-width: 1px;
+	border-style: ridge;
+}
+
+.portal_text
+{
+	font-weight: bold;
+	background: url(../images/bg_filler.png);
+}
+
+.small_text
+{
+	font-size: 80%;
+}
+
+.headertext
+{
+	font-size: 110%;
+	font-weight: bold;
+}
+
+.th_text.app_header_text
+{
+	font-weight: bold;
+}
+
+.app_header
+{
+	font-weight: bold;
+}
