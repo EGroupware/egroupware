@@ -33,6 +33,7 @@ business street	addressbook	zh	街道
 business zip code	addressbook	zh	邮政编码
 car phone	addressbook	zh	车载电话
 cell phone	addressbook	zh	手机
+charset of file	addressbook	zh	文件字符集
 city	common	zh	城市
 company	common	zh	公司
 company name	common	zh	公司名称
@@ -53,6 +54,7 @@ domestic	addressbook	zh	国内
 download	addressbook	zh	下载
 edit custom field	addressbook	zh	编辑自定义字段
 edit custom fields	admin	zh	编辑自定义字段
+empty for all	addressbook	zh	全部清空
 export contacts	addressbook	zh	导出联系信息
 export file name	addressbook	zh	导出文件名称
 export from addressbook	addressbook	zh	从通讯录导出
@@ -82,6 +84,7 @@ import csv-file into addressbook	addressbook	zh	导入CSV文件
 import file	addressbook	zh	导入文件
 import from ldif, csv, or vcard	addressbook	zh	从LDIF、CSV或vCard导入
 import from outlook	addressbook	zh	从Outlook导入
+import next set	addressbook	zh	导入下一个集合
 international	addressbook	zh	国际
 isdn phone	addressbook	zh	ISDN电话
 label	addressbook	zh	附注
@@ -119,13 +122,16 @@ show birthday reminders on main screen	addressbook	zh	在主页面上提醒生�
 startrecord	addressbook	zh	起始记录
 state	common	zh	省/自治区
 street	common	zh	街道
+successfully imported %1 records into your addressbook.	addressbook	zh	已成功地将%1条记录导入您的通讯录.
 suffix	addressbook	zh	后缀
 test import (show importable records <u>only</u> in browser)	addressbook	zh	导入测试(<u>仅</u> 仅显示可导入记录)
 that field name has been used already !	addressbook	zh	该字段名已被占用!
 this person's first name was not in the address book.	addressbook	zh	通讯录中无此人名.
 this person's last name was not in the address book.	addressbook	zh	通讯录中无此姓氏.
+to many might exceed your execution-time-limit	addressbook	zh	to many might exceed your execution-time-limit
 today is %1's birthday!	common	zh	今天是%1的生日!
 tomorrow is %1's birthday.	common	zh	明天是%1的生日。
+translation	addressbook	zh	翻译
 update a single entry by passing the fields.	addressbook	zh	Update a single entry by passing the fields.
 use country list	addressbook	zh	使用“国家/地区”列表
 vcard	common	zh	vCard

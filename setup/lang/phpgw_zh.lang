@@ -1,376 +1,376 @@
-(account deletion in sql only)	setup	zh	(½öÔÚSQLÊı¾İ¿âÖĞÉ¾³ıÕÊ»§)
-00 (disable)	setup	zh	00 (½ûÓÃ)
+ï»¿(account deletion in sql only)	setup	zh	(ä»…åœ¨SQLæ•°æ®åº“ä¸­åˆ é™¤å¸æˆ·)
+00 (disable)	setup	zh	00 (ç¦ç”¨)
 13 (ntp)	setup	zh	13 (ntp)
 80 (http)	setup	zh	80 (http)
-actions	setup	zh	²Ù×÷
-add a domain	setup	zh	Ìí¼ÓÓò
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh	°Ñ×Ô¶¯´´½¨µÄÓÃ»§Ìí¼Óµ½¸Ã×é(Áô¿ÕÔòÊ¹ÓÃÄ¬ÈÏÉèÖÃ)
-additional settings	setup	zh	¸½¼ÓÅäÖÃ
-admin first name	setup	zh	¹ÜÀíÔ±Ãû×Ö
-admin last name	setup	zh	¹ÜÀíÔ±ĞÕÊÏ
-admin password	setup	zh	¹ÜÀíÔ±ÃÜÂë
-admin password to header manager	setup	zh	Ö÷¹ÜÀíÔ±ÃÜÂë
-admin username	setup	zh	¹ÜÀíÔ±ÓÃ»§Ãû
-admins	setup	zh	¹ÜÀíÔ±
-after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	zh	Çë½«»Ö¸´ºóÎÄ¼şÃüÃûÎªheader.inc.php£¬´æ·Åµ½ÏàÓ¦Î»ÖÃ£¬²¢µã»÷¡°¼ÌĞø¡±¡£
-all core tables and the admin and preferences applications	setup	zh	ËùÓĞºËĞÄ±í¸ñ¡¢¹ÜÀíÔ±ºÍ¸öĞÔ»¯ÅäÖÃµÄÓ¦ÓÃ³ÌĞò
-all users	setup	zh	ËùÓĞÓÃ»§
-analysis	setup	zh	·ÖÎö
-app details	setup	zh	Ó¦ÓÃ³ÌĞòÏêÏ¸ĞÅÏ¢
-app install/remove/upgrade	setup	zh	°²×°/Ğ¶ÔØ/Éı¼¶Ó¦ÓÃ³ÌĞò 
-app process	setup	zh	Ó¦ÓÃ³ÌĞò½ø³Ì
-application data	setup	zh	Ó¦ÓÃ³ÌĞòÊı¾İ
-application list	setup	zh	Ó¦ÓÃ³ÌĞòÁĞ±í¸ñ
-application management	setup	zh	Ó¦ÓÃ³ÌĞò¹ÜÀí
-application name and status	setup	zh	Ó¦ÓÃ³ÌĞòÃû³Æ¼°×´Ì¬
-application name and status information	setup	zh	Ó¦ÓÃ³ÌĞòÃû³Æ¼°×´Ì¬ĞÅÏ¢
-application title	setup	zh	Ó¦ÓÃ³ÌĞò±êÌâ
-are you sure you want to delete your existing tables and data?	setup	zh	È·¶¨ÒªÉ¾³ıÄúËùÓĞ±í¸ñºÍÊı¾İÂğ£¿
-are you sure?	setup	zh	È·¶¨Âğ£¿
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	zh	¸ù¾İÄúµÄÒªÇó, ¸Ã½Å±¾½«´´½¨Êı¾İ¿â²¢ÎªÊı¾İ¿âÓÃ»§·ÖÅäÈ¨ÏŞ
-at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	zh	¸ù¾İÄúµÄÒªÇó£¬¸Ã½Å±¾½«ÎªÄú°²×°ºËĞÄ±í¸ñ¡¢¹ÜÀíÔ±ºÍ¸öĞÔ»¯ÅäÖÃµÄÓ¦ÓÃ³ÌĞò
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	zh	¸ù¾İÄúµÄÒªÇó£¬¸Ã½Å±¾½«Éı¼¶ÄúµÄÓ¦ÓÃ³ÌĞòÖÁ×îĞÂ°æ±¾
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	zh	¸ù¾İÄúµÄÒªÇó£¬¸Ã½Å±¾½«Éı¼¶ÄúµÄ±í¸ñ£¬ÒÔÊ¹ÓÃĞÂ¸ñÊ½
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	zh	¸ù¾İÄúµÄÒªÇó£¬¸Ã½Å±¾½«É¾³ıÄúËùÓĞ±í¸ñ£¬²¢ÒÔĞÂµÄ¸ñÊ½ÖØ½¨
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	zh	¸ù¾İÄúµÄÒªÇó£¬¸Ã½Å±¾½«É¾³ıËùÓĞÓ¦ÓÃ³ÌĞò£¬²¢Çå³ıËùÓĞ±í¸ñºÍÊı¾İ
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	zh	ÔÚFTPÖĞ³¢ÊÔÊ¹ÓÃÕıÈ·µÄmimetypeÀ´Ìæ´úÄ¬ÈÏµÄapplication/otect-stream
-authentication / accounts	setup	zh	Éí·İÑéÖ¤/ÕÊ»§
-auto create account records for authenticated users	setup	zh	×Ô¶¯ÎªÒÑÍ¨¹ıÉí·İÑéÖ¤µÄÓÃ»§´´½¨ÕÊ»§¼ÇÂ¼
-auto-created user accounts expire	setup	zh	×Ô¶¯½¨Á¢µÄÓÃ»§ÕÊ»§ÒÑ¹ıÆÚ
-available version	setup	zh	¿ÉÓÃ°æ±¾
-back to the previous screen	setup	zh	·µ»ØÉÏÒ»¸öÒ³Ãæ
-backupwarn	setup	zh	µ«ÊÇÎÒÃÇ <u>Ç¿ÁÒ½¨ÒéÄú±¸·İ±í¸ñ£¬</u> ÒÔ·ÀÖ¹½Å±¾ÆÆ»µÊı¾İ£¬<br><strong>ÕâÊÇÓĞ¿ÉÄÜ·¢ÉúµÄ£¡</strong><br><em>ÇëÔÚ²Ù×÷Ç°×÷ºÃ±¸·İ£¡</em>
-because an application it depends upon was upgraded	setup	zh	ÒòÎªËüËùÒÀÀµµÄÓ¦ÓÃ³ÌĞòÒÑÉı¼¶
-because it depends upon	setup	zh	ÒòÎªËüÒÀÀµÓÚ
-because it is not a user application, or access is controlled via acl	setup	zh	ÒòÎªËü²»ÊÇÓÃ»§Ó¦ÓÃ³ÌĞò, »òÕßÊÜACLÏŞÖÆÎŞÈ¨·ÃÎÊ
-because it requires manual table installation, <br>or the table definition was incorrect	setup	zh	ÒòÎªËüÒªÇóÊÖ¶¯°²×°±í¸ñ, <br>»òÕß±í¸ñµÄ¶¨Òå´íÎó
-because it was manually disabled	setup	zh	ÒòÎªËüÒÑ±»ÊÖ¶¯½ûÓÃ
-because of a failed upgrade or install	setup	zh	ÒòÎªÉı¼¶»ò°²×°Ê§°Ü
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	zh	ÒòÎªÉı¼¶Ê§°Ü£¬»òÊÇÏÖÓĞÊı¾İ¿âµÄ°æ±¾±È¸ÃÓ¦ÓÃ³ÌĞòĞÂ
-because the enable flag for this app is set to 0, or is undefined	setup	zh	ÒòÎª¸ÃÓ¦ÓÃ³ÌĞòµÄÆôÓÃ±êÖ¾Îª0»òÎ´¶¨Òå
-bottom	setup	zh	µ×²¿
-cancel	setup	zh	È¡Ïû
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	zh	È¨ÏŞ²»×ã£¬ÎŞ·¨´´½¨ÎÄ¼şheader.inc.php¡£<br>Äú¿ÉÒÔ³¢ÊÔ%1¸ÃÎÄ¼ş¡£
+actions	setup	zh	æ“ä½œ
+add a domain	setup	zh	æ·»åŠ åŸŸ
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh	æŠŠè‡ªåŠ¨åˆ›å»ºçš„ç”¨æˆ·æ·»åŠ åˆ°è¯¥ç»„(ç•™ç©ºåˆ™ä½¿ç”¨é»˜è®¤è®¾ç½®)
+additional settings	setup	zh	é™„åŠ é…ç½®
+admin first name	setup	zh	ç®¡ç†å‘˜åå­—
+admin last name	setup	zh	ç®¡ç†å‘˜å§“æ°
+admin password	setup	zh	ç®¡ç†å‘˜å¯†ç 
+admin password to header manager	setup	zh	ä¸»ç®¡ç†å‘˜å¯†ç 
+admin username	setup	zh	ç®¡ç†å‘˜ç”¨æˆ·å
+admins	setup	zh	ç®¡ç†å‘˜
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	zh	è¯·å°†æ¢å¤åæ–‡ä»¶å‘½åä¸ºheader.inc.phpï¼Œå­˜æ”¾åˆ°ç›¸åº”ä½ç½®ï¼Œå¹¶ç‚¹å‡»â€œç»§ç»­â€ã€‚
+all core tables and the admin and preferences applications	setup	zh	æ‰€æœ‰æ ¸å¿ƒè¡¨æ ¼ã€ç®¡ç†å‘˜å’Œä¸ªæ€§åŒ–é…ç½®çš„åº”ç”¨ç¨‹åº
+all users	setup	zh	æ‰€æœ‰ç”¨æˆ·
+analysis	setup	zh	åˆ†æ
+app details	setup	zh	åº”ç”¨ç¨‹åºè¯¦ç»†ä¿¡æ¯
+app install/remove/upgrade	setup	zh	å®‰è£…/å¸è½½/å‡çº§åº”ç”¨ç¨‹åº 
+app process	setup	zh	åº”ç”¨ç¨‹åºè¿›ç¨‹
+application data	setup	zh	åº”ç”¨ç¨‹åºæ•°æ®
+application list	setup	zh	åº”ç”¨ç¨‹åºåˆ—è¡¨æ ¼
+application management	setup	zh	åº”ç”¨ç¨‹åºç®¡ç†
+application name and status	setup	zh	åº”ç”¨ç¨‹åºåç§°åŠçŠ¶æ€
+application name and status information	setup	zh	åº”ç”¨ç¨‹åºåç§°åŠçŠ¶æ€ä¿¡æ¯
+application title	setup	zh	åº”ç”¨ç¨‹åºæ ‡é¢˜
+are you sure you want to delete your existing tables and data?	setup	zh	ç¡®å®šè¦åˆ é™¤æ‚¨æ‰€æœ‰è¡¨æ ¼å’Œæ•°æ®å—ï¼Ÿ
+are you sure?	setup	zh	ç¡®å®šå—ï¼Ÿ
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	zh	æ ¹æ®æ‚¨çš„è¦æ±‚, è¯¥è„šæœ¬å°†åˆ›å»ºæ•°æ®åº“å¹¶ä¸ºæ•°æ®åº“ç”¨æˆ·åˆ†é…æƒé™
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	zh	æ ¹æ®æ‚¨çš„è¦æ±‚ï¼Œè¯¥è„šæœ¬å°†ä¸ºæ‚¨å®‰è£…æ ¸å¿ƒè¡¨æ ¼ã€ç®¡ç†å‘˜å’Œä¸ªæ€§åŒ–é…ç½®çš„åº”ç”¨ç¨‹åº
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	zh	æ ¹æ®æ‚¨çš„è¦æ±‚ï¼Œè¯¥è„šæœ¬å°†å‡çº§æ‚¨çš„åº”ç”¨ç¨‹åºè‡³æœ€æ–°ç‰ˆæœ¬
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	zh	æ ¹æ®æ‚¨çš„è¦æ±‚ï¼Œè¯¥è„šæœ¬å°†å‡çº§æ‚¨çš„è¡¨æ ¼ï¼Œä»¥ä½¿ç”¨æ–°æ ¼å¼
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	zh	æ ¹æ®æ‚¨çš„è¦æ±‚ï¼Œè¯¥è„šæœ¬å°†åˆ é™¤æ‚¨æ‰€æœ‰è¡¨æ ¼ï¼Œå¹¶ä»¥æ–°çš„æ ¼å¼é‡å»º
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	zh	æ ¹æ®æ‚¨çš„è¦æ±‚ï¼Œè¯¥è„šæœ¬å°†åˆ é™¤æ‰€æœ‰åº”ç”¨ç¨‹åºï¼Œå¹¶æ¸…é™¤æ‰€æœ‰è¡¨æ ¼å’Œæ•°æ®
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	zh	åœ¨FTPä¸­å°è¯•ä½¿ç”¨æ­£ç¡®çš„mimetypeæ¥æ›¿ä»£é»˜è®¤çš„application/otect-stream
+authentication / accounts	setup	zh	èº«ä»½éªŒè¯/å¸æˆ·
+auto create account records for authenticated users	setup	zh	è‡ªåŠ¨ä¸ºå·²é€šè¿‡èº«ä»½éªŒè¯çš„ç”¨æˆ·åˆ›å»ºå¸æˆ·è®°å½•
+auto-created user accounts expire	setup	zh	è‡ªåŠ¨å»ºç«‹çš„ç”¨æˆ·å¸æˆ·å·²è¿‡æœŸ
+available version	setup	zh	å¯ç”¨ç‰ˆæœ¬
+back to the previous screen	setup	zh	è¿”å›ä¸Šä¸€ä¸ªé¡µé¢
+backupwarn	setup	zh	ä½†æ˜¯æˆ‘ä»¬ <u>å¼ºçƒˆå»ºè®®æ‚¨å¤‡ä»½è¡¨æ ¼ï¼Œ</u> ä»¥é˜²æ­¢è„šæœ¬ç ´åæ•°æ®ï¼Œ<br><strong>è¿™æ˜¯æœ‰å¯èƒ½å‘ç”Ÿçš„ï¼</strong><br><em>è¯·åœ¨æ“ä½œå‰ä½œå¥½å¤‡ä»½ï¼</em>
+because an application it depends upon was upgraded	setup	zh	å› ä¸ºå®ƒæ‰€ä¾èµ–çš„åº”ç”¨ç¨‹åºå·²å‡çº§
+because it depends upon	setup	zh	å› ä¸ºå®ƒä¾èµ–äº
+because it is not a user application, or access is controlled via acl	setup	zh	å› ä¸ºå®ƒä¸æ˜¯ç”¨æˆ·åº”ç”¨ç¨‹åº, æˆ–è€…å—ACLé™åˆ¶æ— æƒè®¿é—®
+because it requires manual table installation, <br>or the table definition was incorrect	setup	zh	å› ä¸ºå®ƒè¦æ±‚æ‰‹åŠ¨å®‰è£…è¡¨æ ¼, <br>æˆ–è€…è¡¨æ ¼çš„å®šä¹‰é”™è¯¯
+because it was manually disabled	setup	zh	å› ä¸ºå®ƒå·²è¢«æ‰‹åŠ¨ç¦ç”¨
+because of a failed upgrade or install	setup	zh	å› ä¸ºå‡çº§æˆ–å®‰è£…å¤±è´¥
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	zh	å› ä¸ºå‡çº§å¤±è´¥ï¼Œæˆ–æ˜¯ç°æœ‰æ•°æ®åº“çš„ç‰ˆæœ¬æ¯”è¯¥åº”ç”¨ç¨‹åºæ–°
+because the enable flag for this app is set to 0, or is undefined	setup	zh	å› ä¸ºè¯¥åº”ç”¨ç¨‹åºçš„å¯ç”¨æ ‡å¿—ä¸º0æˆ–æœªå®šä¹‰
+bottom	setup	zh	åº•éƒ¨
+cancel	setup	zh	å–æ¶ˆ
+cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	zh	æƒé™ä¸è¶³ï¼Œæ— æ³•åˆ›å»ºæ–‡ä»¶header.inc.phpã€‚<br>æ‚¨å¯ä»¥å°è¯•%1è¯¥æ–‡ä»¶ã€‚
 charset	setup	zh	utf-8
-check ip address of all sessions	setup	zh	¼ì²éËùÓĞ»á»°µÄIPµØÖ·
-click <a href="index.php">here</a> to return to setup.	setup	zh	µã»÷<a href="index.php">´Ë´¦</a>·µ»Ø°²×°.
-click here	setup	zh	µã»÷´Ë´¦
-completed	setup	zh	ÒÑÍê³É
-configuration	setup	zh	ÉèÖÃ
-configuration completed	setup	zh	ÉèÖÃÍê³É
-configuration password	setup	zh	ÉèÖÃÃÜÂë
-configure now	setup	zh	Á¢¿ÌÉèÖÃ
-continue	setup	zh	¼ÌĞø
-could not open header.inc.php for writing!	setup	zh	ÎŞ·¨´ò¿ªÎÄ¼şheader.inc.php½øĞĞĞ´²Ù×÷£¡
-country selection	setup	zh	Ñ¡Ôñ¹ú¼Ò/µØÇø
-create	setup	zh	´´½¨
-create database	setup	zh	´´½¨Êı¾İ¿â
-create demo accounts	setup	zh	´´½¨ÑİÊ¾ÕÊ»§
-create one now	setup	zh	Á¢¼´´´½¨
-create the empty database -	setup	zh	´´½¨¿ÕÊı¾İ¿â¡ª
-create the empty database and grant user permissions -	setup	zh	´´½¨¿ÕÊı¾İ¿â²¢ÊÚÈ¨¡ª
-create your header.inc.php	setup	zh	´´½¨ÄúµÄheader.inc.php
-created	setup	zh	ÒÑ´´½¨
-creating tables	setup	zh	ÕıÔÚ´´½¨±í¸ñ
-current version	setup	zh	µ±Ç°°æ±¾ºÅ
-currently installed languages: %1 <br>	setup	zh	µ±Ç°ÒÑ°²×°µÄÓïÑÔ£º%1<br>
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	zh	ÈÕÆÚÊ±¼ä¶Ë¿Ú¡£<br>Èç¹ûÊ¹ÓÃ13ºÅ¶Ë¿Ú, ÇëÔÚÌá½»¸ÃÒ³Ö®Ç°ÉèÖÃÕıÈ·µÄ·À»ğÇ½¹æÔò.<br>(ÀıÈç¶Ë¿ÚºÅ13/Ö÷»ú129.6.15.28)
-db host	setup	zh	Êı¾İ¿âÖ÷»ú
-db name	setup	zh	Êı¾İ¿âÃû³Æ
-db password	setup	zh	Êı¾İ¿âÃÜÂë
-db root password	setup	zh	Êı¾İ¿â¹ÜÀíÔ±ÃÜÂë
-db root username	setup	zh	Êı¾İ¿â¹ÜÀíÔ±Ãû³Æ
-db type	setup	zh	Êı¾İ¿âÀàĞÍ
-db user	setup	zh	Êı¾İ¿âÓÃ»§
-default file system space per user/group ?	setup	zh	ÊÇ·ñ½«ÓÃ»§/×éµÄÎÄ¼şÏµÍ³¿Õ¼äÉèÎªÄ¬ÈÏÖµ£¿
-delete	setup	zh	É¾³ı
-delete all my tables and data	setup	zh	É¾³ıËùÓĞµÄ±í¸ñºÍÊı¾İ
-delete all old languages and install new ones	setup	zh	É¾³ı¾É°æ±¾ÓïÑÔ²¢°²×°ĞÂ°æ±¾
-deleting tables	setup	zh	ÕıÔÚÉ¾³ı±í¸ñ
-demo server setup	setup	zh	·şÎñÆ÷°²×°ÑİÊ¾
-deny access	setup	zh	¾Ü¾ø·ÃÎÊ
-deny all users access to grant other users access to their entries ?	setup	zh	¾Ü¾øÈÎºÎÓÃ»§½«×Ô¼ºµÄ×ÊÁÏ¿ª·Å¸øÆäËûÓÃ»§·ÃÎÊ?
-dependency failure	setup	zh	¹ØÁªÊ§°Ü
-deregistered	setup	zh	È¡Ïû×¢²á
-details for admin account	setup	zh	¹ÜÀíÔ±ÕÊ»§ÏêÏ¸ĞÅÏ¢
-developers' table schema toy	setup	zh	¿ª·¢ÈËÔ±µÄ±í¸ñÄ£Ê½¹¤¾ß
-did not find any valid db support!	setup	zh	ÕÒ²»µ½ÈÎºÎºÏ·¨µÄÊı¾İ¿âÖ§³Ö!
-do you want persistent connections (higher performance, but consumes more resources)	setup	zh	ÊÇ·ñÒª±£³ÖÁ¬½Ó (ĞÔÄÜ¸üºÃ, µ«ÊÇÏûºÄ¸ü¶à×ÊÔ´)
-do you want to manage homedirectory and loginshell attributes?	setup	zh	ÊÇ·ñÒª¹ÜÀíÖ÷Ä¿Â¼ºÍµÇÂ½shellµÄÊôĞÔ?
-domain	setup	zh	Óò
-domain select box on login	setup	zh	µÇÂ½Ê±ÓòÑ¡Ôñ´°¿Ú
-dont touch my data	setup	zh	±ğÅöÎÒµÄÊı¾İ
-download	setup	zh	ÏÂÔØ
-edit current configuration	setup	zh	±à¼­µ±Ç°ÅäÖÃ
-edit your existing header.inc.php	setup	zh	±à¼­ÄãÒÑÏÖÓĞµÄ header.inc.php
-edit your header.inc.php	setup	zh	±à¼­ÄãµÄheader.inc.php
-enable for extra debug-messages	setup	zh	ÆôÓÃ¿ÉÌáÈ¡debugĞÅÏ¢¹¦ÄÜ
-enable ldap version 3	setup	zh	ÆôÓÃµÚ3°æLDAP
-enable mcrypt	setup	zh	ÆôÓÃ¼ÓÃÜ¹¦ÄÜ
-enter some random text for app session encryption	setup	zh	ÊäÈëÓÃÓÚÔÚÏß¼ÓÃÜµÄÈÎÒâ×Ö´®
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	zh	ÊäÈëÓÃÓÚÔÚÏß¼ÓÃÜµÄÈÎÒâ×Ö´® <br> (ĞèÒª°²×°MCRYPT)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	zh	ÊäÈëÓÃÓÚ´æ·ÅÁÙÊ±ÎÄ¼şµÄÍêÕûÂ·¾¶.<br>ÀıÈç: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	zh	ÊäÈëÓÃÓÚ´æ·ÅÓÃ»§ºÍ×éÎÄ¼şµÄÍêÕûÂ·¾¶.<br>ÀıÈç: /files, E:\FILES
-enter the hostname of the machine on which this server is running	setup	zh	ÊäÈëÔËĞĞ¸Ã·şÎñÆ÷µÄ»úÆ÷Ö÷»úÃû
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	setup	zh	ÊäÈëphpGroupWareµÄÍøÖ·.<br>ÀıÈç: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>Ä©Î²²»¼ÓÉÏ"/"</b>
-enter the site password for peer servers	setup	zh	ÊäÈë¶Ô½Ó·şÎñÆ÷µÄÕ¾µãÃÜÂë
-enter the site username for peer servers	setup	zh	ÊäÈë¶Ô½Ó·şÎñÆ÷µÄÕ¾µãÓÃ»§Ãû
-enter the title for your site	setup	zh	ÊäÈëÄúÕ¾µãµÄ±êÌâ
-enter your default ftp server	setup	zh	ÊäÈëÈ±Ê¡µÄFTP·şÎñÆ÷Ö÷»úÃû
-enter your http proxy server	setup	zh	ÊäÈëHTTP´úÀí·şÎñÆ÷µÄÖ÷»úÃû
-enter your http proxy server port	setup	zh	ÊäÈëHTTP´úÀí·şÎñÆ÷µÄ¶Ë¿ÚºÅ
-export has been completed!  you will need to set the user passwords manually.	setup	zh	µ¼³öÍê³É!  Äú±ØĞëÊÖ¶¯ÉèÖÃÓÃ»§µÄÃÜÂë.
-export phpgroupware accounts from sql to ldap	setup	zh	½«ÏÖ´æÓÚ SQL ÖĞµÄ phpGroupWare ÕÊ»§×ÊÁÏµ¼³öÖÁ LDAP
-export sql users to ldap	setup	zh	½« SQL µÄÓÃ»§×ÊÁÏµ¼³öÖÁ LDAP
-file	setup	zh	ÎÄ¼ş
-file type, size, version, etc.	setup	zh	ÎÄ¼şÀàĞÍ, ´óĞ¡, °æ±¾, µÈ.
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	zh	µÚÒ»´Î°²×°ÇëÑ¡Ôñ¡±µ¼Èë¡°.  Òª½« SQL ÖĞµÄÕÊ»§×ÊÁÏ×ª»»µ½ LDAP, ÇëÑ¡Ôñ¡±µ¼³ö¡°
+check ip address of all sessions	setup	zh	æ£€æŸ¥æ‰€æœ‰ä¼šè¯çš„IPåœ°å€
+click <a href="index.php">here</a> to return to setup.	setup	zh	ç‚¹å‡»<a href="index.php">æ­¤å¤„</a>è¿”å›å®‰è£….
+click here	setup	zh	ç‚¹å‡»æ­¤å¤„
+completed	setup	zh	å·²å®Œæˆ
+configuration	setup	zh	è®¾ç½®
+configuration completed	setup	zh	è®¾ç½®å®Œæˆ
+configuration password	setup	zh	è®¾ç½®å¯†ç 
+configure now	setup	zh	ç«‹åˆ»è®¾ç½®
+continue	setup	zh	ç»§ç»­
+could not open header.inc.php for writing!	setup	zh	æ— æ³•æ‰“å¼€æ–‡ä»¶header.inc.phpè¿›è¡Œå†™æ“ä½œï¼
+country selection	setup	zh	é€‰æ‹©å›½å®¶/åœ°åŒº
+create	setup	zh	åˆ›å»º
+create database	setup	zh	åˆ›å»ºæ•°æ®åº“
+create demo accounts	setup	zh	åˆ›å»ºæ¼”ç¤ºå¸æˆ·
+create one now	setup	zh	ç«‹å³åˆ›å»º
+create the empty database -	setup	zh	åˆ›å»ºç©ºæ•°æ®åº“â€”
+create the empty database and grant user permissions -	setup	zh	åˆ›å»ºç©ºæ•°æ®åº“å¹¶æˆæƒâ€”
+create your header.inc.php	setup	zh	åˆ›å»ºæ‚¨çš„header.inc.php
+created	setup	zh	å·²åˆ›å»º
+creating tables	setup	zh	æ­£åœ¨åˆ›å»ºè¡¨æ ¼
+current version	setup	zh	å½“å‰ç‰ˆæœ¬å·
+currently installed languages: %1 <br>	setup	zh	å½“å‰å·²å®‰è£…çš„è¯­è¨€ï¼š%1<br>
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	zh	æ—¥æœŸæ—¶é—´ç«¯å£ã€‚<br>å¦‚æœä½¿ç”¨13å·ç«¯å£, è¯·åœ¨æäº¤è¯¥é¡µä¹‹å‰è®¾ç½®æ­£ç¡®çš„é˜²ç«å¢™è§„åˆ™.<br>(ä¾‹å¦‚ç«¯å£å·13/ä¸»æœº129.6.15.28)
+db host	setup	zh	æ•°æ®åº“ä¸»æœº
+db name	setup	zh	æ•°æ®åº“åç§°
+db password	setup	zh	æ•°æ®åº“å¯†ç 
+db root password	setup	zh	æ•°æ®åº“ç®¡ç†å‘˜å¯†ç 
+db root username	setup	zh	æ•°æ®åº“ç®¡ç†å‘˜åç§°
+db type	setup	zh	æ•°æ®åº“ç±»å‹
+db user	setup	zh	æ•°æ®åº“ç”¨æˆ·
+default file system space per user/group ?	setup	zh	æ˜¯å¦å°†ç”¨æˆ·/ç»„çš„æ–‡ä»¶ç³»ç»Ÿç©ºé—´è®¾ä¸ºé»˜è®¤å€¼ï¼Ÿ
+delete	setup	zh	åˆ é™¤
+delete all my tables and data	setup	zh	åˆ é™¤æ‰€æœ‰çš„è¡¨æ ¼å’Œæ•°æ®
+delete all old languages and install new ones	setup	zh	åˆ é™¤æ—§ç‰ˆæœ¬è¯­è¨€å¹¶å®‰è£…æ–°ç‰ˆæœ¬
+deleting tables	setup	zh	æ­£åœ¨åˆ é™¤è¡¨æ ¼
+demo server setup	setup	zh	æœåŠ¡å™¨å®‰è£…æ¼”ç¤º
+deny access	setup	zh	æ‹’ç»è®¿é—®
+deny all users access to grant other users access to their entries ?	setup	zh	æ‹’ç»ä»»ä½•ç”¨æˆ·å°†è‡ªå·±çš„èµ„æ–™å¼€æ”¾ç»™å…¶ä»–ç”¨æˆ·è®¿é—®?
+dependency failure	setup	zh	å…³è”å¤±è´¥
+deregistered	setup	zh	å–æ¶ˆæ³¨å†Œ
+details for admin account	setup	zh	ç®¡ç†å‘˜å¸æˆ·è¯¦ç»†ä¿¡æ¯
+developers' table schema toy	setup	zh	å¼€å‘äººå‘˜çš„è¡¨æ ¼æ¨¡å¼å·¥å…·
+did not find any valid db support!	setup	zh	æ‰¾ä¸åˆ°ä»»ä½•åˆæ³•çš„æ•°æ®åº“æ”¯æŒ!
+do you want persistent connections (higher performance, but consumes more resources)	setup	zh	æ˜¯å¦è¦ä¿æŒè¿æ¥ (æ€§èƒ½æ›´å¥½, ä½†æ˜¯æ¶ˆè€—æ›´å¤šèµ„æº)
+do you want to manage homedirectory and loginshell attributes?	setup	zh	æ˜¯å¦è¦ç®¡ç†ä¸»ç›®å½•å’Œç™»é™†shellçš„å±æ€§?
+domain	setup	zh	åŸŸ
+domain select box on login	setup	zh	ç™»é™†æ—¶åŸŸé€‰æ‹©çª—å£
+dont touch my data	setup	zh	åˆ«ç¢°æˆ‘çš„æ•°æ®
+download	setup	zh	ä¸‹è½½
+edit current configuration	setup	zh	ç¼–è¾‘å½“å‰é…ç½®
+edit your existing header.inc.php	setup	zh	ç¼–è¾‘ä½ å·²ç°æœ‰çš„ header.inc.php
+edit your header.inc.php	setup	zh	ç¼–è¾‘ä½ çš„header.inc.php
+enable for extra debug-messages	setup	zh	å¯ç”¨å¯æå–debugä¿¡æ¯åŠŸèƒ½
+enable ldap version 3	setup	zh	å¯ç”¨ç¬¬3ç‰ˆLDAP
+enable mcrypt	setup	zh	å¯ç”¨åŠ å¯†åŠŸèƒ½
+enter some random text for app session encryption	setup	zh	è¾“å…¥ç”¨äºåœ¨çº¿åŠ å¯†çš„ä»»æ„å­—ä¸²
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	zh	è¾“å…¥ç”¨äºåœ¨çº¿åŠ å¯†çš„ä»»æ„å­—ä¸² <br> (éœ€è¦å®‰è£…MCRYPT)
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	zh	è¾“å…¥ç”¨äºå­˜æ”¾ä¸´æ—¶æ–‡ä»¶çš„å®Œæ•´è·¯å¾„.<br>ä¾‹å¦‚: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	setup	zh	è¾“å…¥ç”¨äºå­˜æ”¾ç”¨æˆ·å’Œç»„æ–‡ä»¶çš„å®Œæ•´è·¯å¾„.<br>ä¾‹å¦‚: /files, E:\FILES
+enter the hostname of the machine on which this server is running	setup	zh	è¾“å…¥è¿è¡Œè¯¥æœåŠ¡å™¨çš„æœºå™¨ä¸»æœºå
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	setup	zh	è¾“å…¥phpGroupWareçš„ç½‘å€.<br>ä¾‹å¦‚: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>æœ«å°¾ä¸åŠ ä¸Š"/"</b>
+enter the site password for peer servers	setup	zh	è¾“å…¥å¯¹æ¥æœåŠ¡å™¨çš„ç«™ç‚¹å¯†ç 
+enter the site username for peer servers	setup	zh	è¾“å…¥å¯¹æ¥æœåŠ¡å™¨çš„ç«™ç‚¹ç”¨æˆ·å
+enter the title for your site	setup	zh	è¾“å…¥æ‚¨ç«™ç‚¹çš„æ ‡é¢˜
+enter your default ftp server	setup	zh	è¾“å…¥ç¼ºçœçš„FTPæœåŠ¡å™¨ä¸»æœºå
+enter your http proxy server	setup	zh	è¾“å…¥HTTPä»£ç†æœåŠ¡å™¨çš„ä¸»æœºå
+enter your http proxy server port	setup	zh	è¾“å…¥HTTPä»£ç†æœåŠ¡å™¨çš„ç«¯å£å·
+export has been completed!  you will need to set the user passwords manually.	setup	zh	å¯¼å‡ºå®Œæˆ!  æ‚¨å¿…é¡»æ‰‹åŠ¨è®¾ç½®ç”¨æˆ·çš„å¯†ç .
+export phpgroupware accounts from sql to ldap	setup	zh	å°†ç°å­˜äº SQL ä¸­çš„ phpGroupWare å¸æˆ·èµ„æ–™å¯¼å‡ºè‡³ LDAP
+export sql users to ldap	setup	zh	å°† SQL çš„ç”¨æˆ·èµ„æ–™å¯¼å‡ºè‡³ LDAP
+file	setup	zh	æ–‡ä»¶
+file type, size, version, etc.	setup	zh	æ–‡ä»¶ç±»å‹, å¤§å°, ç‰ˆæœ¬, ç­‰.
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	zh	ç¬¬ä¸€æ¬¡å®‰è£…è¯·é€‰æ‹©â€å¯¼å…¥â€œ.  è¦å°† SQL ä¸­çš„å¸æˆ·èµ„æ–™è½¬æ¢åˆ° LDAP, è¯·é€‰æ‹©â€å¯¼å‡ºâ€œ
 force selectbox	setup	zh	Force Selectbox
-found existing configuration file. loading settings from the file...	setup	zh	ÕÒµ½ÅäÖÃÎÄ¼ş. ÕıÔÚ´ÓÎÄ¼şÖĞ¶ÁÈ¡ÉèÖÃ...
-go back	setup	zh	·µ»ØÉÏÒ»Ò³
+found existing configuration file. loading settings from the file...	setup	zh	æ‰¾åˆ°é…ç½®æ–‡ä»¶. æ­£åœ¨ä»æ–‡ä»¶ä¸­è¯»å–è®¾ç½®...
+go back	setup	zh	è¿”å›ä¸Šä¸€é¡µ
 go to	setup	zh	Go to
-grant access	setup	zh	·ÃÎÊÊÚÈ¨
-has a version mismatch	setup	zh	°æ±¾²»·û
-historylog removed	setup	zh	ÀúÊ·¼ÇÂ¼ÒÑÇå³ı
-hooks deregistered	setup	zh	È¡Ïû¹³×Ó×¢²á
-hooks registered	setup	zh	¹³×Ó×¢²á
-host information	setup	zh	¹³×ÓĞÅÏ¢
-hostname/ip of database server	setup	zh	Êı¾İ¿â·şÎñÆ÷µÄÖ÷»úÃû/IP
-however, the application is otherwise installed	setup	zh	µ«ÊÇ´ËÓ¦ÓÃ³ÌĞòÒÑ¾­°²×°¹ı
-however, the application may still work	setup	zh	µ«ÊÇ´ËÓ¦ÓÃ³ÌĞòÈÔÈ»¿ÉÒÔ¹¤×÷
-if no acl records for user or any group the user is a member of	setup	zh	Èç¹ûÊ¹ÓÃÕßÃ»ÓĞÈÎºÎÈ¨ÏŞÉè¶¨»òÕßÊÇ²»ÊôÓÚÈÎºÎ×é£¬Ôò½«¸ÃÊ¹ÓÃÕßµÄ×éÊÓÎª
-if the application has no defined tables, selecting upgrade should remedy the problem	setup	zh	Èç¹ûÓ¦ÓÃ³ÌĞòÃ»¶¨ÒåÈÎºÎ±í¸ñ, ¿ÉÊ¹ÓÃ¡±Éı¼¶"¹¦ÄÜĞŞÕı´ËÎÊÌâ
-if using ldap	setup	zh	Èç¹ûÊ¹ÓÃ LDAP
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	zh	Èç¹ûÄúÊ¹ÓÃLDAP, ÄúÏ£ÍûÄÜ¹ÜÀíÖ÷Ä¿Â¼ºÍµÇÂ½shellµÄÊôĞÔÂğ?
-if you did not receive any errors, your applications have been	setup	zh	Èç¹ûÄúÃ»ÓĞ¿´µ½ÈÎºÎ´íÎóĞÅÏ¢£¬ÄúµÄÓ¦ÓÃ³ÌĞòÒÑ¾­
-if you did not receive any errors, your tables have been	setup	zh	Èç¹ûÄúÃ»ÓĞ¿´µ½ÈÎºÎ´íÎóĞÅÏ¢£¬ÄúµÄ±í¸ñÒÑ¾­
-if you running this the first time, don't forget to manualy %1 !!!	setup	zh	Èç¹ûÄúÊÇµÚÒ»´ÎÔËĞĞ, ±ğÍüÁËÊÖ¶¯ %1 !!!
-image type selection order	setup	zh	Í¼ÏñÀàĞÍÑ¡ÔñÃüÁî
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	zh	½« LDAP ÖĞµÄÕÊ»§ĞÅÏ¢µ¼Èëµ½ phpGroupWare ÕÊ»§±í¸ñ (µÚÒ»´Î°²×°Ê¹ÓÃ SQL ÕÊ»§)
-import has been completed!	setup	zh	µ¼ÈëÍê³É!
-import ldap users/groups	setup	zh	µ¼Èë LDAP ÓÃ»§/×é
-importing old settings into the new format....	setup	zh	½«Ô­ÓĞÉèÖÃµ¼Èëµ½ĞÂ¸ñÊ½....
-include root (this should be the same as server root unless you know what you are doing)	setup	zh	°üº¬ Root (±ØĞëºÍ·şÎñÆ÷µÄRootÒ»Ñù£¬³ı·ÇÄãÖªµÀÄãÕıÔÚÔÚ×öÊ²Ã´£¡)
-insanity	setup	zh	½¨Òé²»Ê¹ÓÃ
-install	setup	zh	°²×°
-install all	setup	zh	ÍêÈ«°²×°
-install applications	setup	zh	°²×°Ó¦ÓÃ³ÌĞò
-install language	setup	zh	°²×°ÓïÑÔ
-installed	setup	zh	ÒÑ¾­°²×°
-instructions for creating the database in %1:	setup	zh	´´½¨Êı¾İ¿âµÄÃüÁîÔÚ %1:
-invalid ip address	setup	zh	·Ç·¨IPµØÖ·
-invalid password	setup	zh	ÃÜÂë´íÎó
-is broken	setup	zh	±»ÖĞ¶Ï
-is disabled	setup	zh	±»½ûÓÃ
-ldap account import/export	setup	zh	LDAP ÕÊ»§µ¼Èë/µ¼³ö
-ldap accounts configuration	setup	zh	LDAP ÕÊ»§ÅäÖÃ
-ldap accounts context	setup	zh	LDAP ÕÊ»§ÄÚÈİ
-ldap config	setup	zh	LDAP ÅäÖÃ
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	zh	LDAP È±Ê¡Ö÷Ä¿Â¼Ç°×º (Èç£º /home/username µÄÇ°×ºÊÇ /home)
-ldap default shell (e.g. /bin/bash)	setup	zh	LDAP È±Ê¡µÄ shell (Èç£º /bin/bash)
-ldap encryption type	setup	zh	LDAP ¼ÓÃÜÀàĞÍ
-ldap export users	setup	zh	LDAP µ¼³öÓÃ»§
-ldap groups context	setup	zh	LDAP ×éÄÚÈİ
-ldap host	setup	zh	LDAP Ö÷»ú
-ldap import users	setup	zh	LDAP µ¼ÈëÓÃ»§
-ldap modify	setup	zh	LDAP ĞŞ¸Ä
-ldap root password	setup	zh	LDAP root ÃÜÂë
+grant access	setup	zh	è®¿é—®æˆæƒ
+has a version mismatch	setup	zh	ç‰ˆæœ¬ä¸ç¬¦
+historylog removed	setup	zh	å†å²è®°å½•å·²æ¸…é™¤
+hooks deregistered	setup	zh	å–æ¶ˆé’©å­æ³¨å†Œ
+hooks registered	setup	zh	é’©å­æ³¨å†Œ
+host information	setup	zh	é’©å­ä¿¡æ¯
+hostname/ip of database server	setup	zh	æ•°æ®åº“æœåŠ¡å™¨çš„ä¸»æœºå/IP
+however, the application is otherwise installed	setup	zh	ä½†æ˜¯æ­¤åº”ç”¨ç¨‹åºå·²ç»å®‰è£…è¿‡
+however, the application may still work	setup	zh	ä½†æ˜¯æ­¤åº”ç”¨ç¨‹åºä»ç„¶å¯ä»¥å·¥ä½œ
+if no acl records for user or any group the user is a member of	setup	zh	å¦‚æœä½¿ç”¨è€…æ²¡æœ‰ä»»ä½•æƒé™è®¾å®šæˆ–è€…æ˜¯ä¸å±äºä»»ä½•ç»„ï¼Œåˆ™å°†è¯¥ä½¿ç”¨è€…çš„ç»„è§†ä¸º
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	zh	å¦‚æœåº”ç”¨ç¨‹åºæ²¡å®šä¹‰ä»»ä½•è¡¨æ ¼, å¯ä½¿ç”¨â€å‡çº§"åŠŸèƒ½ä¿®æ­£æ­¤é—®é¢˜
+if using ldap	setup	zh	å¦‚æœä½¿ç”¨ LDAP
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	zh	å¦‚æœæ‚¨ä½¿ç”¨LDAP, æ‚¨å¸Œæœ›èƒ½ç®¡ç†ä¸»ç›®å½•å’Œç™»é™†shellçš„å±æ€§å—?
+if you did not receive any errors, your applications have been	setup	zh	å¦‚æœæ‚¨æ²¡æœ‰çœ‹åˆ°ä»»ä½•é”™è¯¯ä¿¡æ¯ï¼Œæ‚¨çš„åº”ç”¨ç¨‹åºå·²ç»
+if you did not receive any errors, your tables have been	setup	zh	å¦‚æœæ‚¨æ²¡æœ‰çœ‹åˆ°ä»»ä½•é”™è¯¯ä¿¡æ¯ï¼Œæ‚¨çš„è¡¨æ ¼å·²ç»
+if you running this the first time, don't forget to manualy %1 !!!	setup	zh	å¦‚æœæ‚¨æ˜¯ç¬¬ä¸€æ¬¡è¿è¡Œ, åˆ«å¿˜äº†æ‰‹åŠ¨ %1 !!!
+image type selection order	setup	zh	å›¾åƒç±»å‹é€‰æ‹©å‘½ä»¤
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	zh	å°† LDAP ä¸­çš„å¸æˆ·ä¿¡æ¯å¯¼å…¥åˆ° phpGroupWare å¸æˆ·è¡¨æ ¼ (ç¬¬ä¸€æ¬¡å®‰è£…ä½¿ç”¨ SQL å¸æˆ·)
+import has been completed!	setup	zh	å¯¼å…¥å®Œæˆ!
+import ldap users/groups	setup	zh	å¯¼å…¥ LDAP ç”¨æˆ·/ç»„
+importing old settings into the new format....	setup	zh	å°†åŸæœ‰è®¾ç½®å¯¼å…¥åˆ°æ–°æ ¼å¼....
+include root (this should be the same as server root unless you know what you are doing)	setup	zh	åŒ…å« Root (å¿…é¡»å’ŒæœåŠ¡å™¨çš„Rootä¸€æ ·ï¼Œé™¤éä½ çŸ¥é“ä½ æ­£åœ¨åœ¨åšä»€ä¹ˆï¼)
+insanity	setup	zh	å»ºè®®ä¸ä½¿ç”¨
+install	setup	zh	å®‰è£…
+install all	setup	zh	å®Œå…¨å®‰è£…
+install applications	setup	zh	å®‰è£…åº”ç”¨ç¨‹åº
+install language	setup	zh	å®‰è£…è¯­è¨€
+installed	setup	zh	å·²ç»å®‰è£…
+instructions for creating the database in %1:	setup	zh	åˆ›å»ºæ•°æ®åº“çš„å‘½ä»¤åœ¨ %1:
+invalid ip address	setup	zh	éæ³•IPåœ°å€
+invalid password	setup	zh	å¯†ç é”™è¯¯
+is broken	setup	zh	è¢«ä¸­æ–­
+is disabled	setup	zh	è¢«ç¦ç”¨
+ldap account import/export	setup	zh	LDAP å¸æˆ·å¯¼å…¥/å¯¼å‡º
+ldap accounts configuration	setup	zh	LDAP å¸æˆ·é…ç½®
+ldap accounts context	setup	zh	LDAP å¸æˆ·å†…å®¹
+ldap config	setup	zh	LDAP é…ç½®
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	zh	LDAP ç¼ºçœä¸»ç›®å½•å‰ç¼€ (å¦‚ï¼š /home/username çš„å‰ç¼€æ˜¯ /home)
+ldap default shell (e.g. /bin/bash)	setup	zh	LDAP ç¼ºçœçš„ shell (å¦‚ï¼š /bin/bash)
+ldap encryption type	setup	zh	LDAP åŠ å¯†ç±»å‹
+ldap export users	setup	zh	LDAP å¯¼å‡ºç”¨æˆ·
+ldap groups context	setup	zh	LDAP ç»„å†…å®¹
+ldap host	setup	zh	LDAP ä¸»æœº
+ldap import users	setup	zh	LDAP å¯¼å…¥ç”¨æˆ·
+ldap modify	setup	zh	LDAP ä¿®æ”¹
+ldap root password	setup	zh	LDAP root å¯†ç 
 ldap rootdn	setup	zh	LDAP rootdn
-limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	zh	ÏŞÖÆ°²×°¹ı³Ì¶ÔÒÔÏÂµØÖ·»òÍøÂçµÄ·ÃÎÊ(Èç£º 10.1.1,127.0.0.1)
-login to mysql -	setup	zh	µÇÂ½µ½ mysql -
-logout	setup	zh	×¢Ïú
-makesure	setup	zh	È·¶¨ÄúµÄÊı¾İ¿âÒÑ¾­´´½¨£¬ÕÊ»§µÄĞí¿ÉÒÑ¾­ÉèÖÃ
-manage applications	setup	zh	¹ÜÀíÓ¦ÓÃ³ÌĞò
-manage languages	setup	zh	¹ÜÀíÓïÑÔ
-maximum account id (e.g. 65535 or 1000000)	setup	zh	×î´óÕÊ»§ÊıÄ¿ (Èç£º 65535 or 1000000)
-may be broken	setup	zh	¿ÉÄÜ±»ÖĞ¶Ï
-mcrypt algorithm (default tripledes)	setup	zh	Mcrypt ¼ÓÃÜËã·¨ (È±Ê¡ÊÇ TRIPLEDES)
-mcrypt initialization vector	setup	zh	MCrypt ³õÊ¼»¯ÏòÁ¿
-mcrypt mode (default cbc)	setup	zh	Mcrypt Ä£Ê½ (È±Ê¡ÊÇ CBC)
-mcrypt settings (requires mcrypt php extension)	setup	zh	Mcrypt ÉèÖÃ (ÒªÇó mcrypt ÒÔ PHP ÎªÀ©Õ¹Ãû)
-mcrypt version	setup	zh	MCrypt °æ±¾
-minimum account id (e.g. 500 or 100, etc.)	setup	zh	×îĞ¡ÕÊ»§ÊıÄ¿ (Èç£º 500 or 100, etc.)
-modifications have been completed!	setup	zh	ĞŞ¸ÄÍê³É!
-modify	setup	zh	ĞŞ¸Ä
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	zh	ĞŞ¸ÄÏÖÓĞ LDAP ÕÊºÅµÄ±£´æ£¬ÒÔ±ãÊ¹ÓÃ phpGroupWare (µÚÒ»´Î°²×°Ê¹ÓÃ LDAP ÕÊ»§)
-multi-language support setup	setup	zh	¶àÓïÑÔ°²×°Ö§³Ö
-name of database	setup	zh	Êı¾İ¿âÃû
-name of db user phpgroupware uses to connect	setup	zh	phpGroupWare Á¬½ÓµÄÊı¾İ¿âÓÃ»§Ãû
-never	setup	zh	¾ö²»
-new	setup	zh	ĞÂ½¨
-no	setup	zh	·ñ
-no algorithms available	setup	zh	ÎŞ¿ÉÓÃËã·¨
-no microsoft sql server support found. disabling	setup	zh	ÕÒ²»µ½Microsoft SQL Server. Í£ÓÃÖĞ
-no modes available	setup	zh	ÎŞ¿ÉÓÃÄ£Ê½
-no mysql support found. disabling	setup	zh	ÎŞ¿ÉÓÃµÄMySQL£¬Õı½ûÓÃ
-no oracle-db support found. disabling	setup	zh	ÕÒ²»µ½¿ÉÓÃµÄOracle£¬Í£ÓÃÖĞ
-no postgres-db support found. disabling	setup	zh	ÕÒ²»µ½¿ÉÓÃµÄPostgres-DB. Í£ÓÃÖĞ
-no xml support found. disabling	setup	zh	ÕÒ²»µ½XMLµÄÖ§³Ö. Í£ÓÃÖĞ
-not complete	setup	zh	ÉĞÎ´Íê³É
-not completed	setup	zh	ÉĞÎ´Íê³É
-not ready for this stage yet	setup	zh	ÕâÒ»²½»¹Î´×¼±¸ºÃ
-note: you will be able to customize this later	setup	zh	×¢Òâ: Äú¿ÉÒÔÉÔºóÔÙ½øĞĞ¶¨ÖÆ
+limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	zh	é™åˆ¶å®‰è£…è¿‡ç¨‹å¯¹ä»¥ä¸‹åœ°å€æˆ–ç½‘ç»œçš„è®¿é—®(å¦‚ï¼š 10.1.1,127.0.0.1)
+login to mysql -	setup	zh	ç™»é™†åˆ° mysql -
+logout	setup	zh	æ³¨é”€
+makesure	setup	zh	ç¡®å®šæ‚¨çš„æ•°æ®åº“å·²ç»åˆ›å»ºï¼Œå¸æˆ·çš„è®¸å¯å·²ç»è®¾ç½®
+manage applications	setup	zh	ç®¡ç†åº”ç”¨ç¨‹åº
+manage languages	setup	zh	ç®¡ç†è¯­è¨€
+maximum account id (e.g. 65535 or 1000000)	setup	zh	æœ€å¤§å¸æˆ·æ•°ç›® (å¦‚ï¼š 65535 or 1000000)
+may be broken	setup	zh	å¯èƒ½è¢«ä¸­æ–­
+mcrypt algorithm (default tripledes)	setup	zh	Mcrypt åŠ å¯†ç®—æ³• (ç¼ºçœæ˜¯ TRIPLEDES)
+mcrypt initialization vector	setup	zh	MCrypt åˆå§‹åŒ–å‘é‡
+mcrypt mode (default cbc)	setup	zh	Mcrypt æ¨¡å¼ (ç¼ºçœæ˜¯ CBC)
+mcrypt settings (requires mcrypt php extension)	setup	zh	Mcrypt è®¾ç½® (è¦æ±‚ mcrypt ä»¥ PHP ä¸ºæ‰©å±•å)
+mcrypt version	setup	zh	MCrypt ç‰ˆæœ¬
+minimum account id (e.g. 500 or 100, etc.)	setup	zh	æœ€å°å¸æˆ·æ•°ç›® (å¦‚ï¼š 500 or 100, etc.)
+modifications have been completed!	setup	zh	ä¿®æ”¹å®Œæˆ!
+modify	setup	zh	ä¿®æ”¹
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	zh	ä¿®æ”¹ç°æœ‰ LDAP å¸å·çš„ä¿å­˜ï¼Œä»¥ä¾¿ä½¿ç”¨ phpGroupWare (ç¬¬ä¸€æ¬¡å®‰è£…ä½¿ç”¨ LDAP å¸æˆ·)
+multi-language support setup	setup	zh	å¤šè¯­è¨€å®‰è£…æ”¯æŒ
+name of database	setup	zh	æ•°æ®åº“å
+name of db user phpgroupware uses to connect	setup	zh	phpGroupWare è¿æ¥çš„æ•°æ®åº“ç”¨æˆ·å
+never	setup	zh	å†³ä¸
+new	setup	zh	æ–°å»º
+no	setup	zh	å¦
+no algorithms available	setup	zh	æ— å¯ç”¨ç®—æ³•
+no microsoft sql server support found. disabling	setup	zh	æ‰¾ä¸åˆ°Microsoft SQL Server. åœç”¨ä¸­
+no modes available	setup	zh	æ— å¯ç”¨æ¨¡å¼
+no mysql support found. disabling	setup	zh	æ— å¯ç”¨çš„MySQLï¼Œæ­£ç¦ç”¨
+no oracle-db support found. disabling	setup	zh	æ‰¾ä¸åˆ°å¯ç”¨çš„Oracleï¼Œåœç”¨ä¸­
+no postgres-db support found. disabling	setup	zh	æ‰¾ä¸åˆ°å¯ç”¨çš„Postgres-DB. åœç”¨ä¸­
+no xml support found. disabling	setup	zh	æ‰¾ä¸åˆ°XMLçš„æ”¯æŒ. åœç”¨ä¸­
+not complete	setup	zh	å°šæœªå®Œæˆ
+not completed	setup	zh	å°šæœªå®Œæˆ
+not ready for this stage yet	setup	zh	è¿™ä¸€æ­¥è¿˜æœªå‡†å¤‡å¥½
+note: you will be able to customize this later	setup	zh	æ³¨æ„: æ‚¨å¯ä»¥ç¨åå†è¿›è¡Œå®šåˆ¶
 now guessing better values for defaults...	setup	zh	Now guessing better values for defaults...
 ok	setup	zh	OK
-once the database is setup correctly	setup	zh	Ò»µ©Êı¾İ¿âÕıÈ·°²×°
-one month	setup	zh	Ò»¸öÔÂ
-one week	setup	zh	Ò»ÖÜ
-only add languages that are not in the database already	setup	zh	½öÌí¼ÓÊı¾İ¿âÖĞÃ»ÓĞµÄÓïÑÔ
-only add new phrases	setup	zh	½öÌí¼ÓĞÂµÄ¶ÌÓï
-or	setup	zh	»òÕß
-or http://webdav.domain.com (webdav)	setup	zh	»òÕß http://webdav.domain.com (WebDAV)
-or we can attempt to create the database for you:	setup	zh	»òÕßÎÒÃÇ³¢ÊÔÎªÄú´´½¨Êı¾İ¿â:
-password needed for configuration	setup	zh	ÅäÖÃĞèÒªÃÜÂë
-password of db user	setup	zh	Êı¾İ¿âÓÃ»§µÄÃÜÂë
-passwords did not match, please re-enter	setup	zh	ÃÜÂë²»·û£¬ÇëÖØĞÂÊäÈë
-path information	setup	zh	Â·¾¶ĞÅÏ¢
-path to user and group files has to be outside of the webservers document-root!!!	setup	zh	ÓÃ»§ºÍ×éÎÄ¼şµÄÂ·¾¶²»ÔÚweb·şÎñÆ÷µÄ¸ùÄ¿Â¼ÄÚ!!!
-persistent connections	setup	zh	±£³ÖÁ¬½Ó
-phpgroupware administration manual	setup	zh	phpGroupWare ¹ÜÀíÊÖ²á
-please check for sql scripts within the application's directory	setup	zh	ÇëÔÚÓ¦ÓÃ³ÌĞòËùÔÚÄ¿Â¼ÖĞ¼ì²ésql½Å±¾
-please check read/write permissions on directories, or back up and use another option.	setup	zh	Çë¼ì²é¶ÔÄ¿Â¼µÄ¶Á/Ğ´È¨ÏŞ£¬»òÕß±¸·İºó²ÉÈ¡ÆäËü´ëÊ©.
-please configure phpgroupware for your environment	setup	zh	Çë¸ù¾İÄúµÄÔËĞĞ»·¾³ÉèÖÃ phpGroupWare
-please consult the %1.	setup	zh	Çë×ÉÑ¯ %1.
-please install	setup	zh	Çë°²×°
-please login	setup	zh	ÇëµÇÂ½
-please login to phpgroupware and run the admin application for additional site configuration	setup	zh	ÇëµÇÂ½µ½ phpGroupWare ÉÏ£¬ÔËĞĞ¹ÜÀíÔ±Ó¦ÓÃ³ÌĞòÒÔ½øĞĞÕ¾µãµÄ¸½¼ÓÅäÖÃ
-please wait...	setup	zh	ÇëÉÔºò...
-possible reasons	setup	zh	¿ÉÄÜµÄÔ­Òò
-possible solutions	setup	zh	¿ÉÄÜµÄ½â¾ö·½·¨
+once the database is setup correctly	setup	zh	ä¸€æ—¦æ•°æ®åº“æ­£ç¡®å®‰è£…
+one month	setup	zh	ä¸€ä¸ªæœˆ
+one week	setup	zh	ä¸€å‘¨
+only add languages that are not in the database already	setup	zh	ä»…æ·»åŠ æ•°æ®åº“ä¸­æ²¡æœ‰çš„è¯­è¨€
+only add new phrases	setup	zh	ä»…æ·»åŠ æ–°çš„çŸ­è¯­
+or	setup	zh	æˆ–è€…
+or http://webdav.domain.com (webdav)	setup	zh	æˆ–è€… http://webdav.domain.com (WebDAV)
+or we can attempt to create the database for you:	setup	zh	æˆ–è€…æˆ‘ä»¬å°è¯•ä¸ºæ‚¨åˆ›å»ºæ•°æ®åº“:
+password needed for configuration	setup	zh	é…ç½®éœ€è¦å¯†ç 
+password of db user	setup	zh	æ•°æ®åº“ç”¨æˆ·çš„å¯†ç 
+passwords did not match, please re-enter	setup	zh	å¯†ç ä¸ç¬¦ï¼Œè¯·é‡æ–°è¾“å…¥
+path information	setup	zh	è·¯å¾„ä¿¡æ¯
+path to user and group files has to be outside of the webservers document-root!!!	setup	zh	ç”¨æˆ·å’Œç»„æ–‡ä»¶çš„è·¯å¾„ä¸åœ¨webæœåŠ¡å™¨çš„æ ¹ç›®å½•å†…!!!
+persistent connections	setup	zh	ä¿æŒè¿æ¥
+phpgroupware administration manual	setup	zh	phpGroupWare ç®¡ç†æ‰‹å†Œ
+please check for sql scripts within the application's directory	setup	zh	è¯·åœ¨åº”ç”¨ç¨‹åºæ‰€åœ¨ç›®å½•ä¸­æ£€æŸ¥sqlè„šæœ¬
+please check read/write permissions on directories, or back up and use another option.	setup	zh	è¯·æ£€æŸ¥å¯¹ç›®å½•çš„è¯»/å†™æƒé™ï¼Œæˆ–è€…å¤‡ä»½åé‡‡å–å…¶å®ƒæªæ–½.
+please configure phpgroupware for your environment	setup	zh	è¯·æ ¹æ®æ‚¨çš„è¿è¡Œç¯å¢ƒè®¾ç½® phpGroupWare
+please consult the %1.	setup	zh	è¯·å’¨è¯¢ %1.
+please install	setup	zh	è¯·å®‰è£…
+please login	setup	zh	è¯·ç™»é™†
+please login to phpgroupware and run the admin application for additional site configuration	setup	zh	è¯·ç™»é™†åˆ° phpGroupWare ä¸Šï¼Œè¿è¡Œç®¡ç†å‘˜åº”ç”¨ç¨‹åºä»¥è¿›è¡Œç«™ç‚¹çš„é™„åŠ é…ç½®
+please wait...	setup	zh	è¯·ç¨å€™...
+possible reasons	setup	zh	å¯èƒ½çš„åŸå› 
+possible solutions	setup	zh	å¯èƒ½çš„è§£å†³æ–¹æ³•
 post-install dependency failure	setup	zh	Post-install Dependency Failure
-potential problem	setup	zh	Ç±ÔÚÎÊÌâ
-preferences	setup	zh	Ï²ºÃÉè¶¨
-problem resolution	setup	zh	ÎÊÌâ½â¾ö·½·¨
-process	setup	zh	½ø³Ì
-re-check my database	setup	zh	ÖØĞÂ¼ì²éÎÒµÄÊı¾İ¿â
-re-check my installation	setup	zh	ÖØĞÂ¼ì²éÎÒµÄ°²×°
-re-enter password	setup	zh	ÖØĞÂÊäÈëÃÜÂë
-read translations from	setup	zh	¶ÁÈ¡×ª»»ĞÅÏ¢
-really uninstall all applications	setup	zh	È·ÊµĞ¶ÔØËùÓĞÓ¦ÓÃ³ÌĞò
-recommended: filesystem	setup	zh	ÍÆ¼ö: ÎÄ¼şÏµÍ³
-registered	setup	zh	×¢²á
-remove	setup	zh	É¾³ı
-remove all	setup	zh	È«²¿É¾³ı
-requires reinstall or manual repair	setup	zh	ĞèÒªÖØĞÂ°²×°»òÕßÊÖ¶¯ĞŞ¸´
-requires upgrade	setup	zh	ĞèÒªÉı¼¶
-resolve	setup	zh	½â¾ö
-sample configuration not found. using built in defaults	setup	zh	Ã»ÕÒµ½ÅäÖÃÑù±¾. ÓÃÈ±Ê¡Öµbuild
-save	setup	zh	±£´æ
-save this text as contents of your header.inc.php	setup	zh	½«ÎÄ±¾±£´æÎª header.inc.php
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	zh	Ñ¡ÔñÒ»¸öÓ¦ÓÃ³ÌĞò, ÊäÈëÄ¿±ê°æ±¾,È»ºóÌá½»£¬ÒÔ´¦Àí¸Ã°æ±¾.<br>Èç¹ûÄúÃ»ÓĞÊäÈëÒ»¸ö°æ±¾, Ö»ÎªÓ¦ÓÃ³ÌĞò°²×°×î»ù±¾µÄ±í¸ñ.<br><blink>Ê×ÏÈ»áÒÆ³ıËùÓĞÓ¦ÓÃ³ÌĞòµÄ±í¸ñ!</blink>
-select the default applications to which your users will have access	setup	zh	Ñ¡ÔñÒ»¸öÄúµÄÓÃ»§ÄÜ¹»·ÃÎÊµÄÓ¦ÓÃ³ÌĞò
-select the desired action(s) from the available choices	setup	zh	´ÓÏÂÃæµÄ²Ù×÷ÖĞÑ¡³öÄúĞèÒªµÄ²Ù×÷
-select to download file	setup	zh	Ñ¡ÔñÏÂÔØÎÄ¼ş
-select where you want to store/retrieve file contents	setup	zh	ÇëÑ¡Ôñ±£´æ/»Ö¸´ÎÄ¼şÄÚÈİµÄÎ»ÖÃ
-select where you want to store/retrieve filesystem information	setup	zh	ÇëÑ¡Ôñ±£´æ/»Ö¸´ÎÄ¼şÏµÍ³ĞÅÏ¢µÄÎ»ÖÃ
-select where you want to store/retrieve user accounts	setup	zh	Ñ¡Ôñ±£´æ/»Ö¸´ÓÃ»§ÕÊ»§ĞÅÏ¢µÄÎ»ÖÃ
-select which group(s) will be exported (group membership will be maintained)	setup	zh	ÇëÑ¡ÔñÒªµ¼³öµÄ×é (×é³ÉÔ±ÈÔÈ»±£Áô)
-select which group(s) will be imported (group membership will be maintained)	setup	zh	ÇëÑ¡ÔñÒªµ¼ÈëµÄ×é (×é³ÉÔ±ÈÔÈ»±£Áô)
-select which group(s) will be modified (group membership will be maintained)	setup	zh	ÇëÑ¡ÔñÒªĞŞ¸Ä×é (×é³ÉÔ±ÈÔÈ»±£Áô)
-select which languages you would like to use	setup	zh	ÇëÑ¡ÔñÄúÊ¹ÓÃµÄÓïÑÔ
-select which method of upgrade you would like to do	setup	zh	ÇëÑ¡ÔñÄúÏ²»¶µÄÉı¼¶·½Ê½
-select which type of authentication you are using	setup	zh	ÇëÑ¡ÔñÄúÊ¹ÓÃµÄÈÏÖ¤ÀàĞÍ
-select which user(s) will also have admin privileges	setup	zh	ÇëÑ¡ÔñÄÄ¸öÓÃ»§Ò²ÓĞ¹ÜÀíÔ±È¨ÏŞ
-select which user(s) will be exported	setup	zh	ÇëÑ¡ÔñÒªµ¼³öµÄÓÃ»§
-select which user(s) will be imported	setup	zh	ÇëÑ¡ÔñÒªµ¼ÈëµÄÓÃ»§
-select which user(s) will be modified	setup	zh	ÇëÑ¡ÔñÒªĞŞ¸ÄµÄÓÃ»§
-select which user(s) will have admin privileges	setup	zh	ÇëÑ¡ÔñÄÄ¸öÓÃ»§ÓĞ¹ÜÀíÔ±È¨ÏŞ
-select your old version	setup	zh	ÇëÑ¡ÔñÄú¾ÉµÄ°æ±¾
-selectbox	setup	zh	Ñ¡Ôñ¶Ô»°¿ò
-server root	setup	zh	·şÎñÆ÷ Root
-sessions type	setup	zh	»á»°ÀàĞÍ
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	zh	°ÑÕâ¸öÉèÖÃ³É¡±¾É¡°°æ±¾ &lt; 2.4, »òÕßÉèÖÃÎªÄúµÄ mcrypt ¾«È·°æ±¾ºÅ.
-settings	setup	zh	ÉèÖÃ
-setup	setup	zh	°²×°
-setup demo accounts in ldap	setup	zh	ÔÚ LDAP ÖĞ°²×°ÑİÊ¾ÕÊ»§
-setup the database	setup	zh	°²×°Êı¾İ¿â
-show 'powered by' logo on	setup	zh	ÏÔÊ¾ 'powered by' »Õ±ê
-some or all of its tables are missing	setup	zh	Ò»Ğ©»òÈ«²¿±í¸ñ¶ªÊ§
-start the postmaster	setup	zh	Æô¶¯ postmaster ÊØ»¤½ø³Ì
-status	setup	zh	×´Ì¬
-step 1 - simple application management	setup	zh	²½Öè 1 - »ù±¾Ó¦ÓÃ³ÌĞò¹ÜÀí
-step 2 - configuration	setup	zh	²½Öè 2 - ÅäÖÃ
-step 3 - language management	setup	zh	²½Öè 3 - ÓïÑÔ¹ÜÀí
-step 4 - advanced application management	setup	zh	²½Öè 4 - ¸ß¼¶Ó¦ÓÃ³ÌĞò¹ÜÀí
-table change messages	setup	zh	±í¸ñ±ä¶¯ĞÅÏ¢
-tables dropped	setup	zh	±í¸ñÒÑ¾­ÒÆ³ı
-tables installed, unless there are errors printed above	setup	zh	Èç¹ûÉÏÃæÃ»ÓĞÏÔÊ¾ÈÎºÎ´íÎóĞÅÏ¢£¬Ôò±í¸ñÒÑ¾­°²×°
-tables upgraded	setup	zh	±í¸ñÉı¼¶
-target version	setup	zh	Ä¿±ê°æ±¾
-text entry	setup	zh	ÎÄ×ÖÌõÄ¿
-the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	zh	ÕâÌ¨·şÎñÆ÷ÉÏ²»Ö§³ÖÈ±Ê¡µÄ (%1) . Ê¹ÓÃÄÜÖ§³ÖµÄµÚÒ»ÖÖÀàĞÍµÄÊı¾İ¿â.
-the file	setup	zh	ÎÄ¼ş
-the table definition was correct, and the tables were installed	setup	zh	±í¸ñ¶¨ÒåÕıÈ·£¬±í¸ñÒÑ¾­°²×°Íê±Ï
-the tables	setup	zh	±í¸ñ
-there was a problem trying to connect to your ldap server. <br>	setup	zh	ÎŞ·¨Á¬½Óµ½ÄúµÄ LDAP ·şÎñÆ÷. <br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	zh	ÎŞ·¨Á¬½Óµ½ÄúµÄ LDAP ·şÎñÆ÷. <br>Çë¼ì²éÄúµÄ LDAP ·şÎñÆ÷µÄÅäÖÃ
-this has to be outside the webservers document-root!!!	setup	zh	²»ÔÚ web·şÎñÆ÷µÄ¸ùÄ¿Â¼ÄÚ!!!
-this program will help you upgrade or install different languages for phpgroupware	setup	zh	¸Ã³ÌĞò½«°ïÖúÉı¼¶ÄúµÄ phpGroupWare »ò°²×°ÆäËûÓïÑÔ
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	zh	Õâ²¿·Ö½«°ïÖúÄú´Ó phpGroupWare µÄÕÊ»§±í¸ñÖĞ½«ÓÃ»§ºÍ×éĞÅÏ¢µ¼³öµ½ LDAP Ê÷
-this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	zh	Õâ²¿·Ö½«°ïÖúÄú´Ó LDAP Ê÷ÖĞ½«ÓÃ»§ºÍ×éĞÅÏ¢µ¼Èëµ½ phpGroupWare µÄÕÊ»§±í¸ñÖĞ
-this section will help you setup your ldap accounts for use with phpgroupware	setup	zh	Õâ²¿·Ö½«°ïÖúÄú½¨Á¢ÄúµÄ LDAP ÕÊ»§£¬ÒÔ±ãºÍ phpGroupWare Ò»ÆğÊ¹ÓÃ
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	zh	³¤¶ÈÓ¦¸ÃÔÚ30×Ö½Ú×óÓÒ.<br>×¢Òâ: È±Ê¡ÖµÒÑ¾­Ëæ»úÉú³É.
-this stage is completed<br>	setup	zh	ÕâÒ»²½Íê³É<br>
-this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	zh	Õâ½«´´½¨Ò»¸ö¹ÜÀíÔ±ÕÊ»§ºÍÈı¸öÑİÊ¾ÕÊ»§<br>ÓÃ»§Ãû/ÃÜÂëÊÇ: demo/guest, demo2/guest ºÍ demo3/guest.<br><b>!!!Õâ½«É¾³ıËùÓĞÕÊ»§!!!</b><br>
-to a version it does not know about	setup	zh	²»ÖªµÀµÄ°æ±¾
-to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	zh	°²×°Ò»¸ö¹ÜÀíÔ±ÕÊ»§ºÍÈı¸öÑİÊ¾ÕÊ»§.<br><b>Õâ½«É¾³ıËùÓĞÏÖÓĞÕÊ»§</b>
-top	setup	zh	¶¥²¿
-translations added	setup	zh	×ª»»ÒÑ¾­Ìí¼Ó
-translations removed	setup	zh	×ª»»ÒÑ¾­É¾³ı
-translations upgraded	setup	zh	×ª»»ÒÑ¾­Éı¼¶
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	zh	Çë½«ÄúµÄphpÅäÖÃ³ÉÖ§³ÖÉÏÊöµÄ¹ØÏµÊı¾İ¿â, »òÕßÊÖ¶¯°²×°phpGroupWare.
-two weeks	setup	zh	Á½ÖÜ
-uninstall	setup	zh	Ğ¶ÔØ
-uninstall all applications	setup	zh	Ğ¶ÔØËùÓĞÓ¦ÓÃ³ÌĞò
-uninstalled	setup	zh	Ğ¶ÔØ
-upgrade	setup	zh	Éı¼¶
-upgrade all	setup	zh	Éı¼¶È«²¿
-upgraded	setup	zh	Éı¼¶
-upgrading tables	setup	zh	±í¸ñÕıÔÚÉı¼¶
-use cookies to pass sessionid	setup	zh	Ê¹ÓÃcookiesÀ´´«µİ»á»°id
-use pure html compliant code (not fully working yet)	setup	zh	Ê¹ÓÃ´¿ HTML ±àÂë
-users choice	setup	zh	ÓÃ»§µÄÑ¡Ôñ
-version mismatch	setup	zh	°æ±¾²»·û
-view	setup	zh	²é¿´
-warning!	setup	zh	¾¯¸æ!
-we can proceed	setup	zh	¿ÉÒÔ¼ÌĞø
-we will automatically update your tables/records to %1	setup	zh	ÎÒÃÇ½«°ÑÄúµÄ±í¸ñ/¼ÍÂ¼×Ô¶¯Éı¼¶µ½ %1
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	zh	ÄúÏëÊ¹ÓÃÄÄÖÖÀàĞÍµÄ»á»°¹ÜÀí¹¤¾ß (PHP4 µÄ»á»°¹ÜÀíĞÔÄÜ½ÏºÃ)?
-which database type do you want to use with phpgroupware?	setup	zh ÄúÏëÔÚ phpGroupWare ÖĞÊ¹ÓÃÄÄÒ»ÖÖÊı¾İ¿â£¿
-would you like phpgroupware to cache the phpgw info array ?	setup	zh	ÄúÏ£Íû phpGroupWare ½«ÏµÍ³ĞÅÏ¢´æµ½»º³åÇøÂğ?
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	zh	ÄúÏ£Íû phpGroupWare Ã¿´ÎÓÃ¹ÜÀíµÇÂ½Ê±¶¼¼ì²éÊÇ·ñÓĞ¸üĞÂ°æ±¾Âğ<br>?
-would you like to show each application's upgrade status ?	setup	zh	ÄúÏ£ÍûÏÔÊ¾Ã¿¸öÓ¦ÓÃ³ÌĞòµÄÉı¼¶×´Ì¬Âğ ?
-write config	setup	zh	Ğ´ÅäÖÃ
+potential problem	setup	zh	æ½œåœ¨é—®é¢˜
+preferences	setup	zh	å–œå¥½è®¾å®š
+problem resolution	setup	zh	é—®é¢˜è§£å†³æ–¹æ³•
+process	setup	zh	è¿›ç¨‹
+re-check my database	setup	zh	é‡æ–°æ£€æŸ¥æˆ‘çš„æ•°æ®åº“
+re-check my installation	setup	zh	é‡æ–°æ£€æŸ¥æˆ‘çš„å®‰è£…
+re-enter password	setup	zh	é‡æ–°è¾“å…¥å¯†ç 
+read translations from	setup	zh	è¯»å–è½¬æ¢ä¿¡æ¯
+really uninstall all applications	setup	zh	ç¡®å®å¸è½½æ‰€æœ‰åº”ç”¨ç¨‹åº
+recommended: filesystem	setup	zh	æ¨è: æ–‡ä»¶ç³»ç»Ÿ
+registered	setup	zh	æ³¨å†Œ
+remove	setup	zh	åˆ é™¤
+remove all	setup	zh	å…¨éƒ¨åˆ é™¤
+requires reinstall or manual repair	setup	zh	éœ€è¦é‡æ–°å®‰è£…æˆ–è€…æ‰‹åŠ¨ä¿®å¤
+requires upgrade	setup	zh	éœ€è¦å‡çº§
+resolve	setup	zh	è§£å†³
+sample configuration not found. using built in defaults	setup	zh	æ²¡æ‰¾åˆ°é…ç½®æ ·æœ¬. ç”¨ç¼ºçœå€¼build
+save	setup	zh	ä¿å­˜
+save this text as contents of your header.inc.php	setup	zh	å°†æ–‡æœ¬ä¿å­˜ä¸º header.inc.php
+select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	zh	é€‰æ‹©ä¸€ä¸ªåº”ç”¨ç¨‹åº, è¾“å…¥ç›®æ ‡ç‰ˆæœ¬,ç„¶åæäº¤ï¼Œä»¥å¤„ç†è¯¥ç‰ˆæœ¬.<br>å¦‚æœæ‚¨æ²¡æœ‰è¾“å…¥ä¸€ä¸ªç‰ˆæœ¬, åªä¸ºåº”ç”¨ç¨‹åºå®‰è£…æœ€åŸºæœ¬çš„è¡¨æ ¼.<br><blink>é¦–å…ˆä¼šç§»é™¤æ‰€æœ‰åº”ç”¨ç¨‹åºçš„è¡¨æ ¼!</blink>
+select the default applications to which your users will have access	setup	zh	é€‰æ‹©ä¸€ä¸ªæ‚¨çš„ç”¨æˆ·èƒ½å¤Ÿè®¿é—®çš„åº”ç”¨ç¨‹åº
+select the desired action(s) from the available choices	setup	zh	ä»ä¸‹é¢çš„æ“ä½œä¸­é€‰å‡ºæ‚¨éœ€è¦çš„æ“ä½œ
+select to download file	setup	zh	é€‰æ‹©ä¸‹è½½æ–‡ä»¶
+select where you want to store/retrieve file contents	setup	zh	è¯·é€‰æ‹©ä¿å­˜/æ¢å¤æ–‡ä»¶å†…å®¹çš„ä½ç½®
+select where you want to store/retrieve filesystem information	setup	zh	è¯·é€‰æ‹©ä¿å­˜/æ¢å¤æ–‡ä»¶ç³»ç»Ÿä¿¡æ¯çš„ä½ç½®
+select where you want to store/retrieve user accounts	setup	zh	é€‰æ‹©ä¿å­˜/æ¢å¤ç”¨æˆ·å¸æˆ·ä¿¡æ¯çš„ä½ç½®
+select which group(s) will be exported (group membership will be maintained)	setup	zh	è¯·é€‰æ‹©è¦å¯¼å‡ºçš„ç»„ (ç»„æˆå‘˜ä»ç„¶ä¿ç•™)
+select which group(s) will be imported (group membership will be maintained)	setup	zh	è¯·é€‰æ‹©è¦å¯¼å…¥çš„ç»„ (ç»„æˆå‘˜ä»ç„¶ä¿ç•™)
+select which group(s) will be modified (group membership will be maintained)	setup	zh	è¯·é€‰æ‹©è¦ä¿®æ”¹ç»„ (ç»„æˆå‘˜ä»ç„¶ä¿ç•™)
+select which languages you would like to use	setup	zh	è¯·é€‰æ‹©æ‚¨ä½¿ç”¨çš„è¯­è¨€
+select which method of upgrade you would like to do	setup	zh	è¯·é€‰æ‹©æ‚¨å–œæ¬¢çš„å‡çº§æ–¹å¼
+select which type of authentication you are using	setup	zh	è¯·é€‰æ‹©æ‚¨ä½¿ç”¨çš„è®¤è¯ç±»å‹
+select which user(s) will also have admin privileges	setup	zh	è¯·é€‰æ‹©å“ªä¸ªç”¨æˆ·ä¹Ÿæœ‰ç®¡ç†å‘˜æƒé™
+select which user(s) will be exported	setup	zh	è¯·é€‰æ‹©è¦å¯¼å‡ºçš„ç”¨æˆ·
+select which user(s) will be imported	setup	zh	è¯·é€‰æ‹©è¦å¯¼å…¥çš„ç”¨æˆ·
+select which user(s) will be modified	setup	zh	è¯·é€‰æ‹©è¦ä¿®æ”¹çš„ç”¨æˆ·
+select which user(s) will have admin privileges	setup	zh	è¯·é€‰æ‹©å“ªä¸ªç”¨æˆ·æœ‰ç®¡ç†å‘˜æƒé™
+select your old version	setup	zh	è¯·é€‰æ‹©æ‚¨æ—§çš„ç‰ˆæœ¬
+selectbox	setup	zh	é€‰æ‹©å¯¹è¯æ¡†
+server root	setup	zh	æœåŠ¡å™¨ Root
+sessions type	setup	zh	ä¼šè¯ç±»å‹
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	zh	æŠŠè¿™ä¸ªè®¾ç½®æˆâ€æ—§â€œç‰ˆæœ¬ &lt; 2.4, æˆ–è€…è®¾ç½®ä¸ºæ‚¨çš„ mcrypt ç²¾ç¡®ç‰ˆæœ¬å·.
+settings	setup	zh	è®¾ç½®
+setup	setup	zh	å®‰è£…
+setup demo accounts in ldap	setup	zh	åœ¨ LDAP ä¸­å®‰è£…æ¼”ç¤ºå¸æˆ·
+setup the database	setup	zh	å®‰è£…æ•°æ®åº“
+show 'powered by' logo on	setup	zh	æ˜¾ç¤º 'powered by' å¾½æ ‡
+some or all of its tables are missing	setup	zh	ä¸€äº›æˆ–å…¨éƒ¨è¡¨æ ¼ä¸¢å¤±
+start the postmaster	setup	zh	å¯åŠ¨ postmaster å®ˆæŠ¤è¿›ç¨‹
+status	setup	zh	çŠ¶æ€
+step 1 - simple application management	setup	zh	æ­¥éª¤ 1 - åŸºæœ¬åº”ç”¨ç¨‹åºç®¡ç†
+step 2 - configuration	setup	zh	æ­¥éª¤ 2 - é…ç½®
+step 3 - language management	setup	zh	æ­¥éª¤ 3 - è¯­è¨€ç®¡ç†
+step 4 - advanced application management	setup	zh	æ­¥éª¤ 4 - é«˜çº§åº”ç”¨ç¨‹åºç®¡ç†
+table change messages	setup	zh	è¡¨æ ¼å˜åŠ¨ä¿¡æ¯
+tables dropped	setup	zh	è¡¨æ ¼å·²ç»ç§»é™¤
+tables installed, unless there are errors printed above	setup	zh	å¦‚æœä¸Šé¢æ²¡æœ‰æ˜¾ç¤ºä»»ä½•é”™è¯¯ä¿¡æ¯ï¼Œåˆ™è¡¨æ ¼å·²ç»å®‰è£…
+tables upgraded	setup	zh	è¡¨æ ¼å‡çº§
+target version	setup	zh	ç›®æ ‡ç‰ˆæœ¬
+text entry	setup	zh	æ–‡å­—æ¡ç›®
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	zh	è¿™å°æœåŠ¡å™¨ä¸Šä¸æ”¯æŒç¼ºçœçš„ (%1) . ä½¿ç”¨èƒ½æ”¯æŒçš„ç¬¬ä¸€ç§ç±»å‹çš„æ•°æ®åº“.
+the file	setup	zh	æ–‡ä»¶
+the table definition was correct, and the tables were installed	setup	zh	è¡¨æ ¼å®šä¹‰æ­£ç¡®ï¼Œè¡¨æ ¼å·²ç»å®‰è£…å®Œæ¯•
+the tables	setup	zh	è¡¨æ ¼
+there was a problem trying to connect to your ldap server. <br>	setup	zh	æ— æ³•è¿æ¥åˆ°æ‚¨çš„ LDAP æœåŠ¡å™¨. <br>
+there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	zh	æ— æ³•è¿æ¥åˆ°æ‚¨çš„ LDAP æœåŠ¡å™¨. <br>è¯·æ£€æŸ¥æ‚¨çš„ LDAP æœåŠ¡å™¨çš„é…ç½®
+this has to be outside the webservers document-root!!!	setup	zh	ä¸åœ¨ webæœåŠ¡å™¨çš„æ ¹ç›®å½•å†…!!!
+this program will help you upgrade or install different languages for phpgroupware	setup	zh	è¯¥ç¨‹åºå°†å¸®åŠ©å‡çº§æ‚¨çš„ phpGroupWare æˆ–å®‰è£…å…¶ä»–è¯­è¨€
+this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	zh	è¿™éƒ¨åˆ†å°†å¸®åŠ©æ‚¨ä» phpGroupWare çš„å¸æˆ·è¡¨æ ¼ä¸­å°†ç”¨æˆ·å’Œç»„ä¿¡æ¯å¯¼å‡ºåˆ° LDAP æ ‘
+this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	zh	è¿™éƒ¨åˆ†å°†å¸®åŠ©æ‚¨ä» LDAP æ ‘ä¸­å°†ç”¨æˆ·å’Œç»„ä¿¡æ¯å¯¼å…¥åˆ° phpGroupWare çš„å¸æˆ·è¡¨æ ¼ä¸­
+this section will help you setup your ldap accounts for use with phpgroupware	setup	zh	è¿™éƒ¨åˆ†å°†å¸®åŠ©æ‚¨å»ºç«‹æ‚¨çš„ LDAP å¸æˆ·ï¼Œä»¥ä¾¿å’Œ phpGroupWare ä¸€èµ·ä½¿ç”¨
+this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	zh	é•¿åº¦åº”è¯¥åœ¨30å­—èŠ‚å·¦å³.<br>æ³¨æ„: ç¼ºçœå€¼å·²ç»éšæœºç”Ÿæˆ.
+this stage is completed<br>	setup	zh	è¿™ä¸€æ­¥å®Œæˆ<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	zh	è¿™å°†åˆ›å»ºä¸€ä¸ªç®¡ç†å‘˜å¸æˆ·å’Œä¸‰ä¸ªæ¼”ç¤ºå¸æˆ·<br>ç”¨æˆ·å/å¯†ç æ˜¯: demo/guest, demo2/guest å’Œ demo3/guest.<br><b>!!!è¿™å°†åˆ é™¤æ‰€æœ‰å¸æˆ·!!!</b><br>
+to a version it does not know about	setup	zh	ä¸çŸ¥é“çš„ç‰ˆæœ¬
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	zh	å®‰è£…ä¸€ä¸ªç®¡ç†å‘˜å¸æˆ·å’Œä¸‰ä¸ªæ¼”ç¤ºå¸æˆ·.<br><b>è¿™å°†åˆ é™¤æ‰€æœ‰ç°æœ‰å¸æˆ·</b>
+top	setup	zh	é¡¶éƒ¨
+translations added	setup	zh	è½¬æ¢å·²ç»æ·»åŠ 
+translations removed	setup	zh	è½¬æ¢å·²ç»åˆ é™¤
+translations upgraded	setup	zh	è½¬æ¢å·²ç»å‡çº§
+try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	zh	è¯·å°†æ‚¨çš„phpé…ç½®æˆæ”¯æŒä¸Šè¿°çš„å…³ç³»æ•°æ®åº“, æˆ–è€…æ‰‹åŠ¨å®‰è£…phpGroupWare.
+two weeks	setup	zh	ä¸¤å‘¨
+uninstall	setup	zh	å¸è½½
+uninstall all applications	setup	zh	å¸è½½æ‰€æœ‰åº”ç”¨ç¨‹åº
+uninstalled	setup	zh	å¸è½½
+upgrade	setup	zh	å‡çº§
+upgrade all	setup	zh	å‡çº§å…¨éƒ¨
+upgraded	setup	zh	å‡çº§
+upgrading tables	setup	zh	è¡¨æ ¼æ­£åœ¨å‡çº§
+use cookies to pass sessionid	setup	zh	ä½¿ç”¨cookiesæ¥ä¼ é€’ä¼šè¯id
+use pure html compliant code (not fully working yet)	setup	zh	ä½¿ç”¨çº¯ HTML ç¼–ç 
+users choice	setup	zh	ç”¨æˆ·çš„é€‰æ‹©
+version mismatch	setup	zh	ç‰ˆæœ¬ä¸ç¬¦
+view	setup	zh	æŸ¥çœ‹
+warning!	setup	zh	è­¦å‘Š!
+we can proceed	setup	zh	å¯ä»¥ç»§ç»­
+we will automatically update your tables/records to %1	setup	zh	æˆ‘ä»¬å°†æŠŠæ‚¨çš„è¡¨æ ¼/çºªå½•è‡ªåŠ¨å‡çº§åˆ° %1
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	zh	æ‚¨æƒ³ä½¿ç”¨å“ªç§ç±»å‹çš„ä¼šè¯ç®¡ç†å·¥å…· (PHP4 çš„ä¼šè¯ç®¡ç†æ€§èƒ½è¾ƒå¥½)?
+which database type do you want to use with phpgroupware?	setup	zh æ‚¨æƒ³åœ¨ phpGroupWare ä¸­ä½¿ç”¨å“ªä¸€ç§æ•°æ®åº“ï¼Ÿ
+would you like phpgroupware to cache the phpgw info array ?	setup	zh	æ‚¨å¸Œæœ› phpGroupWare å°†ç³»ç»Ÿä¿¡æ¯å­˜åˆ°ç¼“å†²åŒºå—?
+would you like phpgroupware to check for a new version<br>when admins login ?	setup	zh	æ‚¨å¸Œæœ› phpGroupWare æ¯æ¬¡ç”¨ç®¡ç†ç™»é™†æ—¶éƒ½æ£€æŸ¥æ˜¯å¦æœ‰æ›´æ–°ç‰ˆæœ¬å—<br>?
+would you like to show each application's upgrade status ?	setup	zh	æ‚¨å¸Œæœ›æ˜¾ç¤ºæ¯ä¸ªåº”ç”¨ç¨‹åºçš„å‡çº§çŠ¶æ€å— ?
+write config	setup	zh	å†™é…ç½®
 yes	setup	zh	Yes
-you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zh	ÄúÄ¿Ç°ÔËĞĞµÄÊÇ²âÊÔ°æ±¾µÄ phpGroupWare¡£<br>Ä¿Ç°ÒÑ¾­²»ÔÙÖ§³ÖÕâ¸ö°æ±¾£¬½¨ÒéÄúÏÈÉı¼¶µ½ 0.9.10 °æ£¨×îºóÒ»¸ö²âÊÔ°æ£© <br>ÔÙÉı¼¶µ½ÏÖÔÚµÄ°æ±¾.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	zh	ÄúÄ¿Ç°ÔËĞĞµÄPHP°æ±¾Ì«¾É <br>½¨ÒéÄúÉı¼¶µ½½ÏĞÂ°æ±¾. <br>ÒòÎªÀÏ°æ±¾µÄ PHP ¿ÉÄÜ»áÔì³É phpGroupWare ÔËĞĞ²»Õı³£. <br><br>½¨ÒéÄúÉı¼¶µ½ÖÁÉÙ %1
-you appear to be running version %1 of phpgroupware	setup	zh	ÄúÄ¿Ç°ÔËĞĞµÄphpGroupWare°æ±¾Îª %1  
-you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	zh	ÄúµÄ PHP °æ±¾ºÅµÍÓÚ 4.1.0 . phpGroupWare ÒªÇó4.1.0°æ»ò¸ü¸ß°æ±¾
-you appear to be using php3. disabling php4 sessions support	setup	zh	ÄúÄ¿Ç°ÔËĞĞµÄÊÇ PHP3. Í£ÓÃ PHP4 »á»°Ö§³Ö
-you appear to be using php4. enabling php4 sessions support	setup	zh	ÄúÄ¿Ç°ÔËĞĞµÄ PHP4. ÆôÓÃ PHP4 »á»°Ö§³Ö
-you appear to have microsoft sql server support enabled	setup	zh	ÄúÒÑ¾­Ê¹ Microsoft SQL Server ¿ÉÓÃ
-you appear to have mysql support enabled	setup	zh	ÄúÒÑ¾­Ê¹ MySQL ¿ÉÓÃ
-you appear to have oracle support enabled	setup	zh	ÄúÒÑ¾­Ê¹ Oracle ¿ÉÓÃ
-you appear to have oracle v8 (oci) support enabled	setup	zh	ÄúÒÑ¾­Ê¹ Oracle V8 (OCI) ¿ÉÓÃ
-you appear to have postgres-db support enabled	setup	zh	ÄúÒÑ¾­ÊÇ Postgres-DB ¿ÉÓÃ
-you appear to have xml support enabled	setup	zh	ÄúÒÑ¾­Ê¹ XML ¿ÉÓÃ
+you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zh	æ‚¨ç›®å‰è¿è¡Œçš„æ˜¯æµ‹è¯•ç‰ˆæœ¬çš„ phpGroupWareã€‚<br>ç›®å‰å·²ç»ä¸å†æ”¯æŒè¿™ä¸ªç‰ˆæœ¬ï¼Œå»ºè®®æ‚¨å…ˆå‡çº§åˆ° 0.9.10 ç‰ˆï¼ˆæœ€åä¸€ä¸ªæµ‹è¯•ç‰ˆï¼‰ <br>å†å‡çº§åˆ°ç°åœ¨çš„ç‰ˆæœ¬.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	zh	æ‚¨ç›®å‰è¿è¡Œçš„PHPç‰ˆæœ¬å¤ªæ—§ <br>å»ºè®®æ‚¨å‡çº§åˆ°è¾ƒæ–°ç‰ˆæœ¬. <br>å› ä¸ºè€ç‰ˆæœ¬çš„ PHP å¯èƒ½ä¼šé€ æˆ phpGroupWare è¿è¡Œä¸æ­£å¸¸. <br><br>å»ºè®®æ‚¨å‡çº§åˆ°è‡³å°‘ %1
+you appear to be running version %1 of phpgroupware	setup	zh	æ‚¨ç›®å‰è¿è¡Œçš„phpGroupWareç‰ˆæœ¬ä¸º %1  
+you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	zh	æ‚¨çš„ PHP ç‰ˆæœ¬å·ä½äº 4.1.0 . phpGroupWare è¦æ±‚4.1.0ç‰ˆæˆ–æ›´é«˜ç‰ˆæœ¬
+you appear to be using php3. disabling php4 sessions support	setup	zh	æ‚¨ç›®å‰è¿è¡Œçš„æ˜¯ PHP3. åœç”¨ PHP4 ä¼šè¯æ”¯æŒ
+you appear to be using php4. enabling php4 sessions support	setup	zh	æ‚¨ç›®å‰è¿è¡Œçš„ PHP4. å¯ç”¨ PHP4 ä¼šè¯æ”¯æŒ
+you appear to have microsoft sql server support enabled	setup	zh	æ‚¨å·²ç»ä½¿ Microsoft SQL Server å¯ç”¨
+you appear to have mysql support enabled	setup	zh	æ‚¨å·²ç»ä½¿ MySQL å¯ç”¨
+you appear to have oracle support enabled	setup	zh	æ‚¨å·²ç»ä½¿ Oracle å¯ç”¨
+you appear to have oracle v8 (oci) support enabled	setup	zh	æ‚¨å·²ç»ä½¿ Oracle V8 (OCI) å¯ç”¨
+you appear to have postgres-db support enabled	setup	zh	æ‚¨å·²ç»æ˜¯ Postgres-DB å¯ç”¨
+you appear to have xml support enabled	setup	zh	æ‚¨å·²ç»ä½¿ XML å¯ç”¨
 you are ready for this stage, but this stage is not yet written.<br>	setup	zh	You are ready for this stage, but this stage is not yet written.<br>
-you didn't enter a config password for domain %1	setup	zh	ÄúÃ»ÓĞÎªÓòÊäÈëÒ»¸öÅäÖÃÃÜÂë %1
-you didn't enter a header admin password	setup	zh	ÄúÃ»ÓĞÊäÈë³¬¼¶¹ÜÀíÔ±ÃÜÂë
-you do not have any languages installed. please install one now <br>	setup	zh	ÄúÃ»ÓĞ°²×°ÈÎºÎÓïÑÔ£¬Çë°²×°ÖÁÉÙÒ»ÖÖÓïÑÔ <br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	zh	Äú»¹Ã»ÓĞ´´½¨ header.inc.php!<br> Äú¿ÉÒÔÁ¢¿Ì´´½¨Ëü.
-you have successfully logged out	setup	zh	ÄúÒÑ¾­³É¹¦×¢Ïú
-you must enter a username for the admin	setup	zh	Äú±ØĞëÎª¹ÜÀíÔ±ÊäÈëÒ»¸öÓÃ»§Ãû
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh	ÄúÓ¦¸ÃĞ¶ÔØºóÖØĞÂ°²×°£¬»òÕß³¢ÊÔÊÖ¶¯ĞŞ¸´
-you're using an old configuration file format...	setup	zh	ÄúÊ¹ÓÃµÄÊÇ¾ÉµÄÅäÖÃÎÄ¼ş¸ñÊ½...
-you're using an old header.inc.php version...	setup	zh	ÄúÊ¹ÓÃµÄÊÇÀÏ°æ±¾µÄ header.inc.php ...
-your applications are current	setup	zh	ÄúµÄÓ¦ÓÃ³ÌĞòÊÇµ±Ç°Ó¦ÓÃ³ÌĞò
-your database does not exist	setup	zh	ÄúµÄÊı¾İ¿â²»´æÔÚ
-your database is not working!	setup	zh	ÄúµÄÊı¾İ¿âÃ»ÓĞÔÚÔËĞĞ!
-your database is working, but you dont have any applications installed	setup	zh	ÄúµÄÊı¾İ¿âÕı³£ÔËĞĞÖĞ£¬µ«ÊÇÃ»ÓĞ°²×°ÈÎºÎÓ¦ÓÃ³ÌĞò
-your header admin password is not set. please set it now!	setup	zh	ÄúµÄ³¬¼¶¹ÜÀíÔ±ÃÜÂëÃ»ÓĞÉèÖÃ. ÇëÁ¢¿ÌÉèÖÃ!
-your header.inc.php needs upgrading.	setup	zh	ÄúµÄ header.inc.php ĞèÒªÉı¼¶.
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	zh	ÄúµÄ header.inc.php ĞèÒªÉı¼¶.<br><blink><b class="msg">¾¯¸æ!</b></blink><br><b>Çë×ö±¸·İ!</b>
-your tables are current	setup	zh	ÄúµÄ±í¸ñÊÇµ±Ç°±í¸ñ
-your tables may be altered and you may lose data	setup	zh	ÄúµÄ±í¸ñ¿ÉÄÜ¸Ä¶¯¹ı.²¢¿ÉÄÜ¶ªÊ§²¿·ÖÊı¾İ
-your tables will be dropped and you will lose data	setup	zh	ÄúµÄ±í¸ñ½«±»ÒÆ³ı£¬Êı¾İÒ²»áÈ«²¿¶ªÊ§
+you didn't enter a config password for domain %1	setup	zh	æ‚¨æ²¡æœ‰ä¸ºåŸŸè¾“å…¥ä¸€ä¸ªé…ç½®å¯†ç  %1
+you didn't enter a header admin password	setup	zh	æ‚¨æ²¡æœ‰è¾“å…¥è¶…çº§ç®¡ç†å‘˜å¯†ç 
+you do not have any languages installed. please install one now <br>	setup	zh	æ‚¨æ²¡æœ‰å®‰è£…ä»»ä½•è¯­è¨€ï¼Œè¯·å®‰è£…è‡³å°‘ä¸€ç§è¯­è¨€ <br>
+you have not created your header.inc.php yet!<br> you can create it now.	setup	zh	æ‚¨è¿˜æ²¡æœ‰åˆ›å»º header.inc.php!<br> æ‚¨å¯ä»¥ç«‹åˆ»åˆ›å»ºå®ƒ.
+you have successfully logged out	setup	zh	æ‚¨å·²ç»æˆåŠŸæ³¨é”€
+you must enter a username for the admin	setup	zh	æ‚¨å¿…é¡»ä¸ºç®¡ç†å‘˜è¾“å…¥ä¸€ä¸ªç”¨æˆ·å
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh	æ‚¨åº”è¯¥å¸è½½åé‡æ–°å®‰è£…ï¼Œæˆ–è€…å°è¯•æ‰‹åŠ¨ä¿®å¤
+you're using an old configuration file format...	setup	zh	æ‚¨ä½¿ç”¨çš„æ˜¯æ—§çš„é…ç½®æ–‡ä»¶æ ¼å¼...
+you're using an old header.inc.php version...	setup	zh	æ‚¨ä½¿ç”¨çš„æ˜¯è€ç‰ˆæœ¬çš„ header.inc.php ...
+your applications are current	setup	zh	æ‚¨çš„åº”ç”¨ç¨‹åºæ˜¯å½“å‰åº”ç”¨ç¨‹åº
+your database does not exist	setup	zh	æ‚¨çš„æ•°æ®åº“ä¸å­˜åœ¨
+your database is not working!	setup	zh	æ‚¨çš„æ•°æ®åº“æ²¡æœ‰åœ¨è¿è¡Œ!
+your database is working, but you dont have any applications installed	setup	zh	æ‚¨çš„æ•°æ®åº“æ­£å¸¸è¿è¡Œä¸­ï¼Œä½†æ˜¯æ²¡æœ‰å®‰è£…ä»»ä½•åº”ç”¨ç¨‹åº
+your header admin password is not set. please set it now!	setup	zh	æ‚¨çš„è¶…çº§ç®¡ç†å‘˜å¯†ç æ²¡æœ‰è®¾ç½®. è¯·ç«‹åˆ»è®¾ç½®!
+your header.inc.php needs upgrading.	setup	zh	æ‚¨çš„ header.inc.php éœ€è¦å‡çº§.
+your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	zh	æ‚¨çš„ header.inc.php éœ€è¦å‡çº§.<br><blink><b class="msg">è­¦å‘Š!</b></blink><br><b>è¯·åšå¤‡ä»½!</b>
+your tables are current	setup	zh	æ‚¨çš„è¡¨æ ¼æ˜¯å½“å‰è¡¨æ ¼
+your tables may be altered and you may lose data	setup	zh	æ‚¨çš„è¡¨æ ¼å¯èƒ½æ”¹åŠ¨è¿‡.å¹¶å¯èƒ½ä¸¢å¤±éƒ¨åˆ†æ•°æ®
+your tables will be dropped and you will lose data	setup	zh	æ‚¨çš„è¡¨æ ¼å°†è¢«ç§»é™¤ï¼Œæ•°æ®ä¹Ÿä¼šå…¨éƒ¨ä¸¢å¤±
