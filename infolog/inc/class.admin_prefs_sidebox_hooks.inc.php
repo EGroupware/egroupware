@@ -23,6 +23,8 @@ class admin_prefs_sidebox_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$file = array(
+				'infolog index' => $GLOBALS['phpgw']->link('/index.php',array(
+					'menuaction' => 'infolog.uiinfolog.index' )),
 				'add' => $GLOBALS['phpgw']->link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.edit' ))
 			);
