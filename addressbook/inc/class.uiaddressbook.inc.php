@@ -999,11 +999,7 @@
 							$data = $coldata;
 						}
 					}
-					elseif($column == 'label' && $coldata)
-					{
-						$data .= $this->contacts->formatted_address($fields[0]['id'],'',False);
-					}
-					elseif($column == 'url' && $coldata)
+					elseif ($column == 'url' && $coldata)
 					{
 						$ref = '<a href="' . $coldata . '" target="_new">';
 						$data = $coldata . '</a>';
@@ -1019,6 +1015,11 @@
 							$ref = '<a href="mailto:'.$coldata.'">';
 						}
 						$data = $coldata.'</a>';
+					}
+					elseif ($column == 'bday')
+					{
+						list($month,$day,$year) = explode('/',$coldata);
+						$data = $GLOBALS['phpgw']->common->dateformatorder($year,$month,$day,True);
 					}
 					else
 					{
