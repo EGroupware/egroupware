@@ -1,0 +1,111 @@
+%1 records imported	infolog	fi	%1 tietue(tta) tuotu
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	fi	%1 tietue(tta) luettu (ei viel‰ tuotu, voit palata %2takaisin%3 and uncheck Test Import)
+accept	infolog	fi	hyv‰ksy
+action	infolog	fi	Toimenpide
+Add a file	infolog	fi	Lis‰‰ tiedosto
+add	infolog	fi	Lis‰‰
+add sub	infolog	fi	lis‰‰ Sub
+all	infolog	fi	Kaikki
+are you sure you want to delete this entry	infolog	fi	Haluatko poistaa t‰m‰n viennin
+attach file	infolog	fi	Liit‰ tiedosto
+back to Projectlist	infolog	fi	Takaisin projektilistaan
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	<b>tiedostoliitteet linkkein‰</b> siirt‰m‰tt‰ tiedostoa palvelimelle k‰ytt‰m‰ll‰ file:/polku l‰hiverkossa
+billed	infolog	fi	laskutettu
+both	infolog	fi	molemmat
+call	infolog	fi	soitto
+category	infolog	fi	Luokka
+close	infolog	fi	Sulje
+comment	infolog	fi	Kommentti
+configuration	infolog	fi	Asetukset
+confirm	infolog	fi	vahvista
+csv-fieldname	infolog	fi	CSV kent‰n nimi
+csv-filename	infolog	fi	CSV tiedoston nimi
+csv-import	common	fi	CSV Tuo
+datecreated	infolog	fi	luotu
+days	infolog	fi	p‰iv‰‰
+default Filter for InfoLog	infolog	fi	InfoLog oletusrajaus
+description can not exceed 8000 characters in length	infolog	fi	Kuvauksen maksimipituus on 8000 merkki‰
+description	infolog	fi	Kuvaus
+done	infolog	fi	valmis
+download	infolog	fi	Lataa
+duration	infolog	fi	Kesto
+enddate can not be before startdate	infolog	fi	Loppumisp‰iv‰ ei voi olla ennen alkamisp‰iv‰‰
+enddate	infolog	fi	Loppumisp‰iv‰
+entry and all files	infolog	fi	Vienti ja kaikki tiedostot
+fax	infolog	fi	Faksi
+fieldseparator	infolog	fi	Kentt‰erotin
+finish	infolog	fi	valmis
+from	infolog	fi	Mist‰
+import	infolog	fi	Tuo
+info log	common	fi	InfoLog
+infolog	common	fi	InfoLog
+infolog - delete	infolog	fi	InfoLog - Poista
+infolog - edit	infolog	fi	InfoLog - Muokkaat
+infolog-fieldname	infolog	fi	InfoLog- kent‰n nimi
+infolog - import CSV-File	infolog	fi	InfoLog - Tuo CSV-tiedosto
+infolog - new	infolog	fi	InfoLog - Uusi
+infolog - new subproject	infolog	fi	InfoLog - Uusi aliprojekti
+infolog preferences	common	fi	InfoLog asetukset
+infolog - subprojects from	infolog	fi	InfoLog - Aliprojektit kohteesta
+Invalid filename	infolog	fi	Tiedostonimi ei kelpaa
+last changed	infolog	fi	muutettu viimeksi
+list no Subs/Childs	infolog	fi	List no Subs/Childs
+no - cancel	infolog	fi	Ei - Peruuta
+no entries found, try again ...	infolog	fi	ei lˆytynyt, yrit‰ uudelleen ...
+no filter	infolog	fi	ei rajausta
+none	infolog	fi	Ei mit‰‰n
+not assigned	infolog	fi	ei kohdistettu
+note	infolog	fi	Tietoja
+not	infolog	fi	ei
+number of records to read (<=200)	infolog	fi	Luettavien tietueiden m‰‰r‰ (<=200)
+offer	infolog	fi	tarjous
+ongoing	infolog	fi	nykyinen
+open	infolog	fi	avoin
+overdue	infolog	fi	overdue
+owner	infolog	fi	Omistaja
+own	infolog	fi	oma
+own open	infolog	fi	oma avoin
+own overdue	infolog	fi	own overdue
+own upcoming	infolog	fi	oma tuleva
+path on (web-)serverside<br>eg. /var/samba/Share	infolog	fi	polku (web-)palvelimella<br>esim. /var/samba/Share
+pattern for search in addressbook	infolog fi  merkkijonohaku Osoitekirjasta
+pattern for search in projects	infolog	fi	merkkijonohaku Projekteista
+phonecall	infolog	fi	Puhelinsoitto
+phone/email	infolog	fi	Puhelin/E-mail
+phone	infolog	fi	Puhelinsoitto
+priority	infolog	fi	T‰rkeys
+private	infolog	fi	Yksityinen
+project	infolog	fi	Projekti
+reg. expr. for local IP's<br>eg. ^192\.168\.1\.	infolog	fi	reg. expr. paikallisille IP-osoitteille<br>esim. ^192\.168\.1\.
+re:	infolog	fi	Re:
+reject	infolog	fi	hylk‰‰
+responsible	infolog	fi	Vastuuhenkilˆ
+search for:	infolog	fi	Etsi:
+select	infolog	fi	Valiste
+show full usernames	infolog	fi	N‰yt‰ koko nimet
+showing x	infolog	fi	n‰yt‰n %1
+showing x - x of x	infolog	fi	n‰yt‰n %1 - %2 / %3
+show open Events: Tasks/Calls/Notes on main screen	infolog	fi	N‰yt‰ avoimet tapahtumat: Teht‰v‰t/Puhelut/Muistiinpanot p‰‰n‰ytˆll‰
+startdate	infolog	fi	Alkup‰iv‰
+startrecord	infolog	fi	Startrecord
+status	infolog	fi	Tila
+sub	infolog	fi	Sub
+subject	infolog	fi	Aihe
+task	infolog	fi	ToDo
+test Import (show importable records <u>only</u> in browser)	infolog	fi	Kokeile tuonti (n‰yt‰ tuotavat tietueet <u>vain</u> selaimessa)
+today	infolog	fi	T‰n‰‰n
+translation	infolog	fi	K‰‰nnˆs
+type	infolog	fi	Tyyppi
+upcoming	infolog	fi	tuleva
+urgency	infolog	fi	t‰rkeys
+urgent	infolog	fi	t‰rke‰
+use Button to search for Address	infolog	fi	Osoitteen haku painikkeella
+use Button to search for Project	infolog	fi	Projektin haku painikkeella
+valid path on clientside<br>eg. \\Server\Share or e:\	infolog	fi	polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
+view other subs	infolog	fi	n‰yt‰ muut Alipr
+view subs	infolog	fi	n‰yt‰ Alipr
+will-call	infolog	fi	soittaa
+yes - delete	infolog	fi	Kyll‰ - Poista
+you have entered an invalid ending date	infolog	fi	Loppumisp‰iv‰ ei kelpaa
+you have entered an invalid starting date	infolog	fi	Alkamisp‰iv‰ ei kelpaa
+you must enter a subject or a description	infolog	fi	Anna aihe tai kuvaus
