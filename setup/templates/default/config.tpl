@@ -168,8 +168,22 @@
     <td>{lang_Maximum_account_id_(e.g._65535_or_1000000)}:</td>
     <td><input name="newsettings[account_max_id]" value="{value_account_max_id}"></td>
    </tr>
+   <tr class="row_off">
+    <td>{lang_User_account_prefix}:</td>
+    <td><input name="newsettings[account_prefix]" value="{value_account_prefix}"></td>
+   </tr>
 
 
+
+   <tr class="row_on">
+    <td>{lang_Usernames_are_casesensitive}:</td>
+    <td>
+      <select name="newsettings[case_sensitive_username]">
+       <option value="">{lang_No}</option>
+       <option value="True"{selected_case_sensitive_username_True}>{lang_Yes}</option>
+      </select>
+    </td>
+   </tr>
 
    <tr class="row_off">
     <td>{lang_Auto_create_account_records_for_authenticated_users}:</td>
