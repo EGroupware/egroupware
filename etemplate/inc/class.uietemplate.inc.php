@@ -226,9 +226,13 @@
 			$GLOBALS['phpgw_info']['etemplate']['dom_enabled'] = $session_data['dom_enabled'] || $_POST['dom_enabled'];
 			//echo "globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', session_data[java_script] = '".$session_data['java_script']."', _POST[java_script] = '".$_POST['java_script']."'\n";
 			//echo "process_exec($this->name) content ="; _debug_array($content);
+			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
+			{
+				$GLOBALS['phpgw']->translation->add_app('etemplate');	// some extensions have own texts
+			}
 			$this->process_show($content,$session_data['to_process'],'exec');
 
-			$GLOBALS['phpgw_info']['etemplate']['loop'] |= !$this->canceled &&
+			$GLOBALS['phpgw_info']['etemplate']['loop'] |= !$this->canceled && $this->button_pressed &&
 				count($GLOBALS['phpgw_info']['etemplate']['validation_errors']) > 0;	// set by process_show
 
 			//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
@@ -1032,7 +1036,7 @@
 			$content_in = $cname ? array($cname => $content) : $content;
 			$content = array();
 			$GLOBALS['phpgw_info']['etemplate']['validation_errors'] = array();
-			$this->canceled = False;
+			$this->canceled = $this->button_pressed = False;
 
 			foreach($to_process as $form_name => $type)
 			{
@@ -1123,10 +1127,13 @@
 						if ($value)
 						{
 							$this->canceled = True;
+							$this->set_array($content,$form_name,$value);
 						}
+						break;
 					case 'button':
 						if ($value)
 						{
+							$this->button_pressed = True;
 							$this->set_array($content,$form_name,$value);
 						}
 						break;
