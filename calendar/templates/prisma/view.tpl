@@ -1,8 +1,7 @@
 <!-- $Id$ -->
 
 <!-- BEGIN view_event -->
-<center>
-<table id="calendar_view_event" border="0" width="90%">
+<table id="calendar_view_event" border="0" width="98%" align="center">
 	{row}
 	<tr>
 		<td>
@@ -28,13 +27,12 @@
 		</td>
 	</tr>
 </table>
-</center>
 <!-- END view_event -->
 
 <!-- BEGIN list -->
 	<tr bgcolor="{tr_color}">
-		<td valign="top" width="30%">&nbsp;<b>{field}:</b></td>
-		<td colspan="2" valign="top" width="70%">{data}</td>
+		<td valign="top" width="30%" align="right">&nbsp;<b>{field}&nbsp;:&nbsp;</b></td>
+		<td colspan="2" valign="top" width="70%" align="left">{data}</td>
 	</tr>
 <!-- END list -->
 

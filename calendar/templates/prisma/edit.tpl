@@ -5,7 +5,7 @@
 
 <form action="{action_url}" method="post" name="app_form">
 {common_hidden}
-<table border="0" width="90%">
+<table border="0" width="98%">
  <tr>
   <td colspan="2">
    <center><font size="+1"><b>{errormsg}</b></font></center>
@@ -30,8 +30,8 @@
 <!-- END edit_entry -->
 <!-- BEGIN list -->
  <tr bgcolor="{tr_color}">
-  <td valign="top" width="35%">&nbsp;<b>{field}:</b></td>
-  <td valign="top" width="65%">{data}</td>
+  <td valign="top" width="35%" align="right">&nbsp;<b>{field}&nbsp;:&nbsp;</b></td>
+  <td valign="top" width="65%" align="left">{data}</td>
  </tr>
 <!-- END list -->
 <!-- BEGIN hr -->

@@ -4,22 +4,24 @@
 <!--
 function removeSelectedOptions(id)
 {
-    openerSelectBox = document.getElementById(id);
-
-    if (openerSelectBox == null) 
-	window.close();
-
-    for (i=0; i < openerSelectBox.length; i++) 
-    {
-	if (openerSelectBox.options[i].selected) 
+    for(i=0; i<document.matrixform.participants.options.length;i++)
+    {	
+	if(document.matrixform.participants.options[i].selected==true) 
 	{
-	    openerSelectBox.removeChild(openerSelectBox[i]);
-	    //openerSelectBox.options[i--] = null	    
-        }
+	    document.matrixform.participants.options[i]=null;
+	    i--;
+	}
     }
 }
 function selectAll(id)
 {
+
+    for(i=0; i<document.matrixform.participants.options.length;i++)
+    {	
+	document.matrixform.participants.options[i].selected = true ;
+	
+    }
+/*
     openerSelectBox = document.getElementById(id);
 
     if (openerSelectBox == null) 
@@ -28,7 +30,7 @@ function selectAll(id)
     
     for (i=0; i < openerSelectBox.length; i++) 
 	openerSelectBox.options[i].selected = 1 ;
-
+*/
     document.matrixform.submit();
 }
 

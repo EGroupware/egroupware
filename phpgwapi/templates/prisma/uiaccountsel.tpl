@@ -1,5 +1,4 @@
 <!-- $Id$ -->
-
 <script LANGUAGE="JavaScript">
 	window.focus();
 
@@ -37,21 +36,22 @@
 		}
 	}
 
-	function removeSelectedOptions(id)
+	function removeSelectedOptions()
 	{
-		openerSelectBox = opener.document.getElementById(id);
-		if (openerSelectBox == null) window.close();
-		selectBox = document.getElementById('uiaccountsel_popup_selection');
-		for (i=0; i < selectBox.length; i++) {
-			if (selectBox.options[i].selected) {
-				for (j=0; j < openerSelectBox.length; j++) {
-					if (openerSelectBox[j].value == selectBox.options[i].value) {
-						openerSelectBox.removeChild(openerSelectBox[j]);
-					}
-				}
-				selectBox.options[i--] = null;
-			}
-		}
+	    for(i=0; i<document.uiaccountsel.participants.options.length;i++)                                   
+    	    {                                                                                                 
+	        if(document.uiaccountsel.participants.options[i].selected==true)                                
+	        {     
+		    for (j = 0 ; j < opener.document.{FormName}.{SelectName}.options.length ; j++)
+	    	    { 
+			if (opener.document.{FormName}.{SelectName}.options[j].value == document.uiaccountsel.participants.options[i].value)     
+	    		opener.document.{FormName}.{SelectName}.options[j]=null;                                         
+	    	    }                                                                                             
+		                                                                                            
+	    	    document.uiaccountsel.participants.options[i]=null;                                         
+	            i--;                                                                                      
+	        }                                                                                             
+	    }                                                                                                 
 	}
 
 	function copyOptions(id)
@@ -169,21 +169,19 @@
 		<td valign="top">
 			<table border="0" width="100%" cellpadding="2" cellspacing="2">
 				<tr class="th">
-					<td width="100%" class="th" align="center" colspan="4"><b>{lang_accounts}</b></td>
+					<td width="100%" class="th" align="center" colspan="3"><b>{lang_accounts}</b></td>
 				</tr>
 				<tr class="th">
-					<td align="center">{sort_lid}</td>
-					<td align="center">{sort_firstname}</td>
 					<td align="center">{sort_lastname}</td>
+					<td align="center">{sort_firstname}</td>
 					<td width="10%">&nbsp;</td>
 				</tr>
 
 <!-- BEGIN accounts_list -->
 
 	<tr class="{tr_color}">
-		<td>{lid}</td>
-		<td>{firstname}</td>
-		<td>{lastname}</td>
+		<td>{bold}{lastname}</td>
+		<td>{bold}{firstname}</td>
 		<td align="center">
 			<input type="image" src="{img}" onclick="{onclick}; return false;" title="{lang_select_user}">
 		</td>
@@ -198,11 +196,13 @@
 				<tr class="th">
 					<td align="center" colspan="2"><b>{lang_selection}</b> {remove}</td>
 				</tr>
+				<form name="uiaccountsel">
 				<tr class="row_off">
 					<td align="center">
 						{selection}
 					</td>
 				</tr>
+				</form>
 				<tr>
 					<td align="center" colspan="2">
 						<input type="button" name="close" value="{lang_close}" onClick="{close_action}">

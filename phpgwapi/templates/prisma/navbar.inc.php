@@ -308,11 +308,14 @@
 			// If the application has a header include, we now include it
 			if(!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
 			{
+			
 				list($app,$class,$method) = explode('.',$_GET['menuaction']);
+	
 				if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
 				{
 					$GLOBALS[$class]->header();
 				}
+	
 			}
 			$GLOBALS['phpgw']->hooks->process('after_navbar');
 			return;
@@ -328,12 +331,14 @@
 
 				foreach($file as $text => $url)
 				{
+				    if ($text != 'Export' && $text != 'Import' ) 
 					sidebox_menu_item($url,$text);
 				}
 
 				$GLOBALS['prisma_tpl']->pparse('out','extra_blocks_footer');
 			}
 		}
+
 
 		function sidebox_menu_item($item_link='',$item_text='')
 		{
