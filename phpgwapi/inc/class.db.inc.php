@@ -794,6 +794,26 @@ if (is_array($str)) $this->halt('db::db_addslashes('.print_r($str,True).",'$type
 		}
 
 		/**
+		* Returns an array containing column names that are the primary keys of $tablename.
+		*
+		* @return array of columns
+		*/
+		function pkey_columns($tablename)
+		{
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
+			// REMOVE-IF-ONLY-ADODB
+			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
+			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
+			{
+				return array();
+			}
+			return $this->Link_ID->MetaPrimaryKeys($tablename);
+		}
+
+		/**
 		* Create a new database
 		*
 		* @param string $adminname name of database administrator user (optional)

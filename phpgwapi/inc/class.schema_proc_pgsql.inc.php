@@ -602,14 +602,16 @@
 				$oProc->m_odb->query("ALTER TABLE $sOldTableName ALTER $sField SET DEFAULT nextval('seq_" . $sNewTableName . "')",__LINE__,__FILE__);
 			}
 
+			$indexes = array();
 			$indexnames = $oProc->m_odb->index_names();
 			while(list($key,$val) = @each($indexnames))
 			{
 				$indexes[] = $val['index_name'];
 			}
-			if(!in_array($sOldTableName . '_pkey',$indexes))	// no idea how this can happen
+			$pkeys = $oProc->m_odb->pkey_columns($sOldTableName);
+			if(!in_array($sOldTableName . '_pkey',$indexes) && !isset($pkeys[0]))	// no idea how this can happen
 			{
-				$oProc->m_odb->query("DROP INDEX " . $sOldTableName . "_pkey",__LINE__,__FILE__);
+				$oProc->m_odb->query("ALTER TABLE " . $sOldTableName . " DROP CONSTRAINT " . $sOldTableName . "_pkey",__LINE__,__FILE__);
 			}
 			else	// rename the index
 			{
