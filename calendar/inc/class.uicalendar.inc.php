@@ -4209,9 +4209,11 @@ return;
 				{
 					$GLOBALS['phpgw']->uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
 				}
-				$fts_link = $GLOBALS['phpgw']->link('/index.php',array('menuaction'=>'calendar.uiforms.freetimesearch'));
+				$get_args = array('menuaction'=>'calendar.uiforms.freetimesearch');
+				if ($event['id']) $get_args['cal_id'] = $event['id'];
+				$fts_link = $GLOBALS['phpgw']->link('/index.php',$get_args);
 
-				$fields = array('start[str]','start[hour]','start[min]','end[str]','end[hour]','end[min]','cal[id]','cal[recur_type]');
+				$fields = array('start[str]','start[hour]','start[min]','end[str]','end[hour]','end[min]','cal[recur_type]');
 				if ($this->bo->prefs['common']['timeformat'] == '12')
 				{
 					$fields[] = 'start[ampm]';

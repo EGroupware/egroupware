@@ -76,7 +76,7 @@ class uiforms extends uical
 			{
 				if ((int) $uid) $content['participants'][] = (int) $uid;
 			}
-			$content['cal_id'] = $_GET['cal']['id'];
+			$content['cal_id'] = $_GET['cal_id'];
 			$content['recur_type'] = $_GET['cal']['recur_type'];
 			
 			// default search parameters
@@ -96,7 +96,7 @@ class uiforms extends uical
 			if (is_array($content['freetime']['select']))
 			{
 				list($selected) = each($content['freetime']['select']);
-				echo "$selected = ".date('D d.m.Y H:i',$content['freetime'][$selected]['start']);
+				//echo "$selected = ".date('D d.m.Y H:i',$content['freetime'][$selected]['start']);
 				$start = (int) $content['freetime'][$selected]['start'];
 				$end = $start + $duration;
 				$fields_to_set = array(
