@@ -12,8 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['infolog']['name']      = 'infolog';
-	$setup_info['infolog']['title']     = 'InfoLog';	// still needed to run in 0.9.14/6
-	$setup_info['infolog']['version']   = '0.9.15.004';
+	$setup_info['infolog']['version']   = '0.9.15.005';
 	$setup_info['infolog']['app_order'] = 4;
 	$setup_info['infolog']['tables']    = array('phpgw_infolog','phpgw_links');
 	$setup_info['infolog']['enable']    = 1;
@@ -43,7 +42,9 @@
 		'Their is a <b>CSV import filter</b> (in the admin-section) to import existing data.
 		It allows to interactivly assign fields, customize the values with regular 
 		expressions and direct calls to php-functions (e.g. to link the phone calls 
-		(again) to the addressbook entrys).';
+		(again) to the addressbook entrys).<p>
+		<b>More information</b> about InfoLog and the current development-status can be found on the 
+		<a href="http://www.phpgroupware.org/wiki/InfoLog" target="_blank">InfoLog page in our Wiki</a>.';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';
@@ -60,10 +61,10 @@
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.13','0.9.14','0.9.15')
+		 'versions' => Array('0.9.13','0.9.14','0.9.15','0.9.16')
 	);
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'etemplate',
-		 'versions' => Array('0.9.15')
+		 'versions' => Array('0.9.15','0.9.16')
 	);
 ?>

@@ -57,16 +57,16 @@
 	$test[] = '0.9.15.002';
 	function infolog_upgrade0_9_15_002()
 	{
-		echo "<p>infolog_upgrade0_9_15_002</p>\n";
+		//echo "<p>infolog_upgrade0_9_15_002</p>\n";
 		$insert = 'INSERT INTO phpgw_links (link_app1,link_id1,link_app2,link_id2,link_remark,link_lastmod,link_owner) ';
 		$select = "SELECT 'infolog',info_id,'addressbook',info_addr_id,info_from,info_datemodified,info_owner FROM phpgw_infolog WHERE info_addr_id != 0";
-		echo "<p>copying address-links: $insert.$select</p>\n";
+		//echo "<p>copying address-links: $insert.$select</p>\n";
 		$GLOBALS['phpgw_setup']->oProc->query($insert.$select);
 		$select = "SELECT 'infolog',info_id,'projects',info_proj_id,'',info_datemodified,info_owner FROM phpgw_infolog WHERE info_proj_id != 0";
-		echo "<p>copying projects-links: $insert.$select</p>\n";
+		//echo "<p>copying projects-links: $insert.$select</p>\n";
 		$GLOBALS['phpgw_setup']->oProc->query($insert.$select);
 		$select = "SELECT 'infolog',info_id,'calendar',info_event_id,'',info_datemodified,info_owner FROM phpgw_infolog WHERE info_event_id != 0";
-		echo "<p>copying calendar-links: $insert.$select</p>\n";
+		//echo "<p>copying calendar-links: $insert.$select</p>\n";
 		$GLOBALS['phpgw_setup']->oProc->query($insert.$select);
 
 		$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_infolog',array(
@@ -214,6 +214,28 @@
 		}
 
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.004';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
+	
+	$test[] = '0.9.15.004';
+	function infolog_upgrade0_9_15_004()
+	{
+		// this update correctes wrong escapes of ' and " in the past
+		//
+		$db2 = $GLOBALS['phpgw_setup']->db;	// we need a 2. result-set
+		
+		$to_correct = array('info_from','info_subject','info_des');
+		foreach ($to_correct as $col)
+		{
+			$GLOBALS['phpgw_setup']->oProc->query("SELECT info_id,$col FROM phpgw_infolog WHERE $col LIKE '%\\'%' OR $col LIKE '%\"%'");
+			while ($GLOBALS['phpgw_setup']->oProc->next_record())
+			{
+				$db2->query("UPDATE phpgw_infolog SET $col='".$db2->db_addslashes(stripslashes($GLOBALS['phpgw_setup']->oProc->f($col))).
+					"' WHERE info_id=".$GLOBALS['phpgw_setup']->oProc->f('info_id'));
+			}
+		}
+		
+		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.005';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
 ?>
