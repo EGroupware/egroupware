@@ -5,14 +5,34 @@
 
   /* authentication phase */
   $phpgw_info["setup"]["stage"]["header"] = $phpgw_setup->check_header();
-  if ( $phpgw_info["setup"]["stage"]["header"] == 2){
-      $phpgw_setup->show_header("Please set your header admin password",True);
-  }elseif ( $phpgw_info["setup"]["stage"]["header"] == 10){
-    if (!$phpgw_setup->auth("Header")){
-      $phpgw_setup->show_header("Please login",True);
-      $phpgw_setup->login_form();
-      exit;
-    }
+  switch($phpgw_info["setup"]["stage"]["header"]){
+    case "1":
+      $phpgw_info["setup"]["HeaderFormMSG"] = "Create your header.inc.php";
+      $phpgw_info["setup"]["PageMSG"] = "You have not created your header.inc.php yet!<br> You can create it now.";
+      break;
+    case "2":
+      $phpgw_info["setup"]["HeaderFormMSG"] = "Your header admin password is NOT set. Please set it now!";
+      $phpgw_info["setup"]["PageMSG"] = "Your header admin password is NOT set. Please set it now!";
+      break;
+    case "3":
+      $phpgw_info["setup"]["HeaderFormMSG"] = "Your header.inc.php needs upgrading.";
+      $phpgw_info["setup"]["PageMSG"] = "Your header.inc.php needs upgrading.";
+      $phpgw_info["setup"]["HeaderLoginMSG"] = "Your header.inc.php needs upgrading.";
+      if (!$phpgw_setup->auth("Header")){
+        $phpgw_setup->show_header("Please login",True);
+        $phpgw_setup->login_form();
+        exit;
+      }
+      break;
+    case "10":
+      if (!$phpgw_setup->auth("Header")){
+        $phpgw_setup->show_header("Please login",True);
+        $phpgw_setup->login_form();
+        exit;
+      }
+      $phpgw_info["setup"]["HeaderFormMSG"] = "Edit your header.inc.php";
+      $phpgw_info["setup"]["PageMSG"] = "Edit your existing header.inc.php";
+      break;
   }
 
   switch($action){
@@ -48,10 +68,15 @@
       }
       break;
     default:
-      $phpgw_setup->show_header("Create/Edit your header.inc.php", False, "header");
-      echo '<table>
-          <tr bgcolor="486591"><th colspan=2><font color="fefefe"> Analysis </font></th></tr>
-          <tr><td colspan=2>';
+      $phpgw_setup->show_header($phpgw_info["setup"]["HeaderFormMSG"], False, "header");
+      echo $phpgw_info["setup"]["PageMSG"];
+/*
+      echo '<table border="0" width="100%" cellspacing="0" cellpadding="2">';
+      echo '  <tr><td align="center" WIDTH="20%" bgcolor="486591" colspan=2><font color="fefefe">Analysis</td></tr>';
+      echo '</table>';
+*/
+      echo '<table border="0" width="100%" cellspacing="0" cellpadding="2">';
+      echo '<tr bgcolor="486591"><td align="center" colspan=2><font color="fefefe"> Analysis </font></td></tr><tr><td colspan=2>';
       // Hardly try to find what DB-support is compiled in
       // this dont work with PHP 3.0.10 and lower !
     

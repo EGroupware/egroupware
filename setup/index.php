@@ -67,23 +67,6 @@
     exit;
   }
 
-  /* The stages are as follows:
-    Stage 1.1 = header does not exists yet
-    Stage 1.2 = header exists, but is the wrong version
-    Stage 1.3 = header exists and is current
-    Stage 2.1 = database does not exists yet
-    Stage 2.2 = database exists pre-beta tables
-    Stage 2.3 = database exists but no tables
-    Stage 2.4 = database and tables exists but need upgrading
-    Stage 2.5 = tables being modified in some way
-    Stage 2.6 = database and tables exists and are current
-    Stage 3.1 = configuration has not been done
-    Stage 3.2 = configuration has been completed
-    Stage 4.1 = install new language
-    Stage 5.1 = something to do with the add-on applications
-    Stage 5.2 = 
-  */
-
   $phpgw_info["server"]["app_images"] = "templates/default/images";
 
   echo '<table border="1" width="100%" cellspacing="0" cellpadding="2">';
@@ -201,6 +184,7 @@
   }elseif ($phpgw_info["setup"]["stage"]["config"] == 10) {
     echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="X" border="0"></td><td>Configuration completed.';
     echo "<form method=\"POST\" action=\"config.php\"><input type=\"submit\" value=\"Edit Current Configuration\"></form>";
+    echo '<br><a href="setup_demo.php">Click Here</a> to setup 1 admin account and 3 demo accounts. <br><b>This will delete all existing accounts</b>';
     echo '</td></tr>';
   }
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';

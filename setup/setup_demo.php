@@ -14,43 +14,40 @@
   }
 
   if (! $submit) {
+    $phpgw_setup->show_header("Demo Server Setup");
 ?>
-    <form method="POST" acion="<?php echo $PHP_SELF; ?>">
-      <table border="0">
-        <tr>
-          <td>Admin username</td>
-          <td><input type="text" name="username"></td>
-        </tr>
-        <tr>
-          <td>Admin first name</td>
-          <td><input type="text" name="fname"></td>
-        </tr>
-        <tr>
-          <td>Admin last name</td>
-          <td><input type="text" name="lname"></td>
-        </tr>
-        <tr>
-          <td>Admin password</td>
-          <td><input type="password" name="passwd"></td>
-        </tr>
-        <tr>
-          <td>Mail Suffix</td>
-          <td><input type="text" name="mail_suffix" value="phpgroupware.org"></td>
-        </tr>
-        <tr>
-          <td>Mail login type</td>
-          <td>
-             <select name="mail_login_type">
-              <option value="vmailmgr">VMailMGR</option>
-              <option value="standard">Standard</option>
-             </select>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2"><input type="submit" name="submit" value="Submit"> </td>
-        </tr>
-      </table>
-    </form>
+    <table border="1" width="100%" cellspacing="0" cellpadding="2">
+    <tr><td>
+    This will create 1 admin account and 3 demo accounts<br>
+    The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br>
+    <b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
+    </td></tr>
+    <tr><td align="left" bgcolor="486591"><font color="fefefe">Details for Admin account</td><td align="right" bgcolor="486591">&nbsp;</td></tr>
+    <tr><td>
+      <form method="POST" acion="<?php echo $PHP_SELF; ?>">
+        <table border="0">
+          <tr>
+            <td>Admin username</td>
+            <td><input type="text" name="username"></td>
+          </tr>
+          <tr>
+            <td>Admin first name</td>
+            <td><input type="text" name="fname"></td>
+          </tr>
+          <tr>
+            <td>Admin last name</td>
+            <td><input type="text" name="lname"></td>
+          </tr>
+          <tr>
+            <td>Admin password</td>
+            <td><input type="password" name="passwd"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input type="submit" name="submit" value="Submit"> </td>
+          </tr>
+        </table>
+      </form>
+    </td></tr></table>
 <?php
   }else{
     $phpgw_setup->loaddb();
@@ -98,14 +95,7 @@
     $phpgw_setup->db->query($sql);
     $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
   
-    /* Create system records */
-    $this_dir = dirname($SCRIPT_FILENAME);
-    $rootdir    = ereg_replace("/setup","",$this_dir);
-    $phpgw_setup->db->query("update config set config_value = '/tmp' where config_name = 'temp_dir'");
-    $phpgw_setup->db->query("update config set config_value = '$rootdir/files' where config_name = 'files_dir'");
-    $phpgw_setup->db->query("update config set config_value = '$mail_suffix' where config_name = 'mail_suffix'");
-    $phpgw_setup->db->query("update config set config_value = '$mail_login_type' where config_name = 'mail_login_type'");
-    $phpgw_setup->db->query("delete from config where config_name = 'freshinstall'");
-    echo "Done";
+    Header("Location: index.php");
+    exit;
   }
 ?>
