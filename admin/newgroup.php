@@ -37,14 +37,14 @@
 
         $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
 				. "('$n_group','"
-				. $phpgw->accounts->array_to_string("none",$n_group_permissions) . "') ");
+				. $phpgw->accounts->array_to_string("none",$n_group_permissions) . "')");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
         $phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
-	      $phpgw->db->next_record();
+	   $phpgw->db->next_record();
            $user_groups = $phpgw->db->f("account_groups") . ",$group_con:0,";
 
            $user_groups = ereg_replace(",,",",",$user_groups);

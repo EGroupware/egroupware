@@ -65,8 +65,7 @@
 
 
         if ($old_group_name <> $n_group) {
-           $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "groups" . $sep;
-
+	   $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
            if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
 	      $cd = 39;
            } else {
