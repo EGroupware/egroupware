@@ -757,7 +757,7 @@
 					 * This format is somewhat loose, allowing for optional parenthesis, + sign,
 					 * and 0-7 numbers between separators.
 					 */
-					$regex = "/^[\s]*[\(]?[\+]?\d{0,7}[\s]?[\(]?[0-9]{0,7}[ ]?[\)]?[-]{0,7}[ ]?[0-9]{0,7}[ ]*[-]{0,7}[ ]*[0-9]{0,7}[ ]*$/x";
+					$regex = "/^[-0-9\+\(\)\/]/";
 					if(!preg_match($regex,$value))
 					{
 						$errors[] = array($field => $value);
