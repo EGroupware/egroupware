@@ -62,16 +62,16 @@
     // This is used for searching the access fields
     function sql_search($table,$owner=0)
     {
-      global $phpgw_info;
+      global $phpgw, $phpgw_info;
 
       $s = "";
       if (!$owner) {
          $owner = $phpgw_info["user"]["account_id"];
       }
-      $groups = $this->read_groups(intval($owner));
+      $groups = $phpgw->accounts->memberships(intval($owner));
       if (gettype($groups) == "array") {
          while ($group = each($groups)) {
-           $s .= " or $table like '%," . $group[0] . ",%'";
+           $s .= " or $table like '%," . $group[2] . ",%'";
         }
       }
       return $s;
