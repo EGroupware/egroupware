@@ -152,7 +152,7 @@
 		$fields["note"]					= $notes;
 		$fields["label"]                = $label;
 
-		if ($access == True) {
+		if ($access == True || $access == "private") {
 			$fields["access"]           = 'private';
 		} else {
 			$fields["access"]           = 'public';
