@@ -1,0 +1,296 @@
+%1 does not exist !!!	setup	it	%1 non esiste !!!
+%1 is %2%3 !!!	setup	it	%1 è %2%3 !!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	it	*** NON aggiornare il tuo database tramite setup, perché l'aggiornamento potrebbe essere interrotto dal max_execution_time, che lascerebbe il tuo DB in uno stato irrecuperabile (dati persi) !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	it	*** Devi effettuare manualmente le modifiche al tuo php.ini (di solito in /etc su linux) perché eGW sia completamente funzionante !!!
+00 (disable)	setup	it	00 (disabilitato/ consigliato)
+13 (ntp)	setup	it	13 (ntp)
+80 (http)	setup	it	80 (http)
+<br><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	it	<br><center>L'importazione &egrave; stata completata! Cliccare <a href="index.php">qui</a> per titornare al setup </center>
+accounts existing	setup	it	Esistono Account
+actions	setup	it	Azioni
+add a domain	setup	it	Aggiungi un dominio
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	it	Aggiungi gli utenti auto-creati a questo gruppo (sarà utilizzato 'Default'se il campo è vuoto)
+additional settings	setup	it	Impostazioni aggiuntive
+admin first name	setup	it	Nome amministratore
+admin last name	setup	it	Cognome amministratore
+admin password	setup	it	Password amministratore
+admin password to header manager	setup	it	Password amministratore per Header manager
+admin user for header manager	setup	it	User amministratore per Header manager
+admin username	setup	it	Username amministratore
+admins	setup	it	Amministratori
+all applications	setup	it	tutte le applicazioni
+all users	setup	it	Tutti gli utenti
+analysis	setup	it	Analisi
+and reload your webserver, so the above changes take effect !!!	setup	it	E riavvia il tuo webserver, così che le modifiche abbiano effetto !!!
+app details	setup	it	Dettagli applicazione
+app install/remove/upgrade	setup	it	installa/rimuovi/aggiorna applicazione
+app process	setup	it	processo Applicazione
+application data	setup	it	Dati Applicazione
+application list	setup	it	Elenco Applicazioni
+application management	setup	it	Gestione Applicazioni
+application name and status	setup	it	Nome Applicazione e Stato
+application name and status information	setup	it	Nome Applicazione e Informazioni di Stato
+application title	setup	it	Titolo Applicazione
+are you sure you want to delete your existing tables and data?	setup	it	Sei sicuro di voler cancellare i dati e le tabelle esistenti?
+are you sure?	setup	it	SEI SICURO?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di creare il database e di assegnare i privilegi corretti al suo utente
+at your request, this script is going to attempt to install all the applications for you	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di installare tutte le tue applicazioni
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di aggiornare le tue vecchie applicazioni alla versione corrente
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di aggiornare le tue vecchie tabelle al nuovo formato
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di cancellare le tabelle esistenti e di ricrearle nel nuovo formato
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	it	In base alla tua richiesta, questa procedura cercher&agrave; di disinstallare tutte le tue applicazioni, cosa che canceller&agrave; tutte le tue tabelle e dati esistenti
+auto-created user accounts expire	setup	it	Gli account utente auto-creati scadono
+available version	setup	it	Versione Disponibile
+back to the previous screen	setup	it	Indietro alla schermata precedente
+back to user login	setup	it	Indietro al Login Utente
+backupwarn	setup	it	ma noi <u>consigliamo vivamente di salvare</u> le tue tabelle nel caso in cui la procedura causidanni ai tuoi dati.<br><strong>Queste procedure automatizzate possono distruggere molto facilmente i tuoi dati.</strong><br><em>Per favore esegui un salvataggio prima di proseguire oltre!</em>
+because an application it depends upon was upgraded	setup	it	perché un'applicazione da cui dipende è stata aggiornata
+because it depends upon	setup	it	perché dipende da
+because it is not a user application, or access is controlled via acl	setup	it	perché non si tratta di un'applicazione dell'utente, o l'accesso è controllato tramite ACL
+because it requires manual table installation, <br>or the table definition was incorrect	setup	it	perrché richiede un'installazione manuale delle tabelle, <br>o la definizione delle tabelle non è corretta
+because it was manually disabled	setup	it	perché è stato disabilitato manualmente
+because of a failed upgrade or install	setup	it	a causa di un aggiornamento o installazione fallita
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	it	poich&eacute; &egrave; avvenuto un aggiornamento non corretto, o il database &egrave; pi&ugrave; recente della versione installata di questa applicazione
+because the enable flag for this app is set to 0, or is undefined	setup	it	poich&eacute; il valore di abilitazione di questa applicazione &egrave; impostato a 0, o &egrave; non definito
+bottom	setup	it	in fondo
+cancel	setup	it	Annulla
+change system-charset	setup	it	Cambia set di caratteri
+charset	setup	it	Set di caratteri
+check installation	setup	it	Controlla installazione
+check ip address of all sessions	setup	it	controlla l'indirizzo ip di tutte le sessioni
+checking php.ini	setup	it	Esecuzione controllo di php.ini
+checking the egroupware installation	setup	it	Esecuzione controllo installazione eGroupWare
+click here	setup	it	Clicca qui
+click here to re-run the installation tests	setup	it	Clicca qui per rieseguire i test di installazione
+completed	setup	it	Completato
+config password	setup	it	Password Configurazione
+config username	setup	it	Username Configurazione
+configuration	setup	it	Configurazione
+configuration completed	setup	it	Configurazione completata
+configuration password	setup	it	Password Configurazione
+configuration user	setup	it	Username Configurazione
+configure now	setup	it	Configura adesso
+contain	setup	it	contiene
+continue	setup	it	Continua
+convert	setup	it	Converti
+country selection	setup	it	Selezione Nazione
+create	setup	it	Crea
+create admin account	setup	it	Crea account amministratore
+create database	setup	it	Crea Database
+create demo accounts	setup	it	Crea utenti demo
+create one now	setup	it	Creane una adesso
+create the empty database -	setup	it	Crea il database vuoto -
+create your header.inc.php	setup	it	Crea il tuo header.inc.php
+created	setup	it	creato
+created header.inc.php!	setup	it	Header.inc.php creato!
+creating tables	setup	it	Creazione Tabelle
+current system-charset	setup	it	Set di caratteri attuale
+current system-charset is %1, click %2here%3 to change it.	setup	it	Il set di caratteri attuale è %1, clicca %2qui%3 per cambiarlo.
+current version	setup	it	Versione attuale
+currently installed languages: %1 <br>	setup	it	Lingue attualmente installate: %1 <br>
+database successfully converted from '%1' to '%2'	setup	it	Database convertito con successo da '%1' a '%2'
+db host	setup	it	Host DB
+db name	setup	it	Nome DB
+db password	setup	it	Password DB
+db port	setup	it	Porta DB
+db root password	setup	it	Password root DB
+db root username	setup	it	Username root DB
+db type	setup	it	Tipo DB
+db user	setup	it	Utente DB
+delete	setup	it	Cancella
+delete all my tables and data	setup	it	Cancella tutte le mie tabelle e i dati
+delete all old languages and install new ones	setup	it	Cancella tutte le lingue gi&agrave; presenti e installa quelle nuove
+deleting tables	setup	it	Cancella Tabelle
+demo server setup	setup	it	Setup del server dimostrativo
+deregistered	setup	it	deregistrato
+details for admin account	setup	it	Dettagli per l'utente amministratore
+domain	setup	it	Dominio
+domain select box on login	setup	it	Casella selezione dominio al Login
+dont touch my data	setup	it	Non toccare i miei dati
+download	setup	it	Download
+edit current configuration	setup	it	Modifica la Configurazione Esistente
+egroupware administration manual	setup	it	Manuale Amministrazione eGroupWare
+enable ldap version 3	setup	it	Abilita LDAP Versione 3
+enable mcrypt	setup	it	Abilita MCrypt
+enter some random text for app session encryption	setup	it	Inserisci del testo casuale per il crittaggio della sessione
+export sql users to ldap	setup	it	Esporta utenti SQL verso LDAP
+false	setup	it	Falso
+file	setup	it	FILE
+file type, size, version, etc.	setup	it	tipo file, dimensione, versione, ecc.
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	it	Per una nuova installazione, seleziona importa.  Per convertire gli utenti SQL verso utenti LDAP, seleziona esporta
+force selectbox	setup	it	Forza Casella di Selezione
+go back	setup	it	Torna indietro
+go to	setup	it	Vai A
+grant access	setup	it	Autorizza Accesso
+has a version mismatch	setup	it	ha un conflitto di versione
+hooks deregistered	setup	it	collegamenti deregistrati
+hooks registered	setup	it	collegamenti registrati
+host information	setup	it	Informazioni host
+however, the application is otherwise installed	setup	it	Tuttavia, l'applicazione &egrave; altrimenti installata
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	it	Se l'applicazione non ha tabelle definite, selezionando aggiorna il problema dovrebbe risolversi
+if using ldap	setup	it	Se utilizzi LDAP
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	it	Se utilizzi LDAP, vuoi gestire la directory Home e gli attributi loginshell?
+if you did not receive any errors, your applications have been	setup	it	Se non hai ricevuto alcun errore, allora le tue applicazioni sono state
+if you did not receive any errors, your tables have been	setup	it	Se non hai ricevuto alcun errore, allora le tue tabelle sono state
+image type selection order	setup	it	Ordine di selezione del tipo di immagine
+import has been completed!	setup	it	Importazione completata!
+import ldap users/groups	setup	it	Importa utenti/gruppi LDAP
+importing old settings into the new format....	setup	it	Esecuzione importazione vecchie impostazioni nel nuovo formato....
+insanity	setup	it	Follia
+install	setup	it	Installa
+install all	setup	it	Installa tutto
+install applications	setup	it	Installa Applicazioni
+install language	setup	it	Installa Lingue
+installed	setup	it	installato
+instructions for creating the database in %1:	setup	it	Istruzioni per creare il database in %1:
+invalid ip address	setup	it	Indirizzo IP errato
+invalid password	setup	it	Password errata
+is broken	setup	it	non funziona
+is disabled	setup	it	&egrave; disabilitato
+ldap account import/export	setup	it	importa/esporta utenti LDAP
+ldap export users	setup	it	esporta utenti LDAP
+ldap import users	setup	it	importa utenti LDAP
+login to mysql -	setup	it	Login a Mysql -
+logout	setup	it	Esci
+makesure	setup	it	Controlla che il tuo database sia stato creato e che i permessi dell'utente siano corretti
+manage applications	setup	it	Gestione Applicazioni
+manage languages	setup	it	Gestione Lingue
+mcrypt version	setup	it	Versione MCrypt
+minimum account id (e.g. 500 or 100, etc.)	setup	it	Minimo ID account (es. 500 o 100, ecc.)
+modifications have been completed!	setup	it	Le modifiche sono state completate
+modify	setup	it	Modifica
+multi-language support setup	setup	it	Configurazione del supporto multi-lingua
+mysqlinstr	setup	it	Istruzioni per creare il database usando MySQL:<br>Entra in mysql -<br><i>[utente@server utente]# mysql -u root -p</i><br>Crea il database vuoto e assegna i permessi all'utente -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
+name of database	setup	it	Nome del database
+never	setup	it	mai
+new	setup	it	Nuovo
+no	setup	it	No
+no accounts existing	setup	it	Nessun account esistente
+no algorithms available	setup	it	nessun algoritmo disponibile
+no modes available	setup	it	nessuna modalità disponibile
+not	setup	it	non
+not complete	setup	it	non completo
+not completed	setup	it	Non Completato
+not ready for this stage yet	setup	it	Non ancora pronto per questo passaggio
+not set	setup	it	non impostato
+note: you will be able to customize this later	setup	it	Nota: Potrai personalizzarlo dopo
+ok	setup	it	OK
+once the database is setup correctly	setup	it	Una volta che il database sar&agrave; impostato correttamente
+one month	setup	it	un mese
+one week	setup	it	una settimana
+only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono già presenti nel database
+only add new phrases	setup	it	Aggiungi solo le nuove frasi
+or	setup	it	o
+password of db user	setup	it	Password dell'utente del DB
+passwords did not match, please re-enter	setup	it	Le password non corrispondono, per favore reinseriscile
+path information	setup	it	Informazioni sul Path
+persistent connections	setup	it	Connessioni persistenti
+pgsqlinstr	setup	it	Istruzioni per creare il database in usando PostgreSQL:<br>Fai partire postmaster<br><i>[utente@server utente]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crea il database vuoto -<br><i>[utente@server utente]# createdb egroupware</i>
+please check for sql scripts within the application's directory	setup	it	Per favore controlla gli script sql nella cartella dell'applicazione
+please configure egroupware for your environment	setup	it	Per favore configura eGroupWare per il tuo Sistema
+please consult the %1.	setup	it	Prego consulta il %1.
+please fix the above errors (%1) and warnings(%2)	setup	it	Prego sistema i soprastanti errori (%1) e avvertimenti (%2)
+please install	setup	it	Per favore installa
+please login	setup	it	Prego Login
+please login to egroupware and run the admin application for additional site configuration	setup	it	Accedi a egroupware ed esegui l'applicazione 'admin' per una ulteriore configurazione del sito
+please make the following change in your php.ini	setup	it	Prego apporta le seguenti modifiche al tuo php.ini
+please wait...	setup	it	Please Wait...
+possible reasons	setup	it	Possibili Ragioni
+possible solutions	setup	it	Soluzioni possibili
+potential problem	setup	it	Problema Potenziale
+preferences	setup	it	Preferenze
+problem resolution	setup	it	Risoluzione del problema
+process	setup	it	Processo
+re-check my database	setup	it	ricontrolla il mio database
+re-check my installation	setup	it	ricontrolla la mia installazione
+re-enter password	setup	it	Reinserisci la password
+read translations from	setup	it	Leggi traduzioni da
+readable by the webserver	setup	it	leggibile dal webserver
+really uninstall all applications	setup	it	DAVVERO Disinstalla tutte le applicazioni
+recommended: filesystem	setup	it	Consigliato: Filesystem
+registered	setup	it	registrato
+remove	setup	it	Rimuovi
+remove all	setup	it	Rimuovi tutto
+requires reinstall or manual repair	setup	it	Richiede reinstallazione o riparazione manuale
+requires upgrade	setup	it	Richiede aggiornamento
+resolve	setup	it	Risolvi
+return to setup	setup	it	Ritorna al Setup
+run installation tests	setup	it	Esegui test installazione
+save	setup	it	Salva
+save this text as contents of your header.inc.php	setup	it	Salva questo testo come contenuto del tuo header.inc.php
+select an app, enter a target version, then submit to process to that version.<br><blink>this will drop all of the apps' tables first!</blink>	setup	it	Seleziona una'applicazione, inserisci una versione di destinazione, quindi invia per processare verso quella versione.<br><blink>QUESTO CANGELLERA' PRIMA TUTTE LE TABELLE DELL'APPLICAZIONE</blink>
+select one...	setup	it	selezionane uno...
+select the default applications to which your users will have access	setup	it	Seleziona l'applicazione predefinita alla quale i tuoi utenti avranno accesso
+select the desired action(s) from the available choices	setup	it	Seleziona, dalle scelte disponibili, le azioni desiderate
+select to download file	setup	it	Seleziona per scaricare file
+select where you want to store/retrieve file contents	setup	it	Seleziona dove vuoi memorizzare/recuperare i contenuti dei file
+select where you want to store/retrieve user accounts	setup	it	Seleziona dove vuoi memorizzare/recuperare gli account utente
+select which group(s) will be exported (group membership will be maintained)	setup	it	Seleziona quale gruppo/i esportare (le appartenenze ai gruppi rimarranno impostate)
+select which group(s) will be imported (group membership will be maintained)	setup	it	Seleziona quale gruppo/i importare (le appartenenze ai gruppi rimarranno impostate)
+select which languages you would like to use	setup	it	Seleziona quali lingue desideri usare
+select which method of upgrade you would like to do	setup	it	Seleziona quale metodo di aggiornamento desideri usare
+select which user(s) will be exported	setup	it	Seleziona quale utente/i esportare
+select which user(s) will be imported	setup	it	Seleziona quale utente/i importare
+select which user(s) will have admin privileges	setup	it	Seleziona quale utente/i privilegi da amministratore
+select your old version	setup	it	Seleziona la tua vecchia versione
+selectbox	setup	it	Casella di selezione
+server root	setup	it	Root Server
+sessions type	setup	it	Tipo sessione
+set	setup	it	imposta
+settings	setup	it	Impostazioni
+setup	setup	it	Setup
+setup main menu	setup	it	Menù Principale Setup
+some or all of its tables are missing	setup	it	Alcune o tutte delle sue tabelle sono mancanti
+status	setup	it	Stato
+step %1 - admin account	setup	it	Passaggio %1 - Gestione Account
+step %1 - advanced application management	setup	it	Passaggio %1 - Gestione Applicazioni Avanzata
+step %1 - configuration	setup	it	Passaggio %1 - Configurazione
+step %1 - language management	setup	it	Passaggio %1 - Gestione Lingue
+step %1 - simple application management	setup	it	Passaggio %1 - Gestione Applicazioni Semplice
+submit	setup	it	Invia
+table change messages	setup	it	Messaggi di modifiche alle tabelle
+tables dropped	setup	it	tabelle cancellate
+tables installed, unless there are errors printed above	setup	it	tabelle installate, a meno che non vi siano errori qui sopra
+tables upgraded	setup	it	tabelle aggiornate
+target version	setup	it	Versione di destinazione
+text entry	setup	it	Voce di testo
+the file	setup	it	il file
+the tables	setup	it	le tabelle
+there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	it	Si &egrave; verificato un problema nel contattare il tuo server LDAP. <br>Per favore controlla la configurazione del tuo server LDAP
+this might take a while, please wait ...	setup	it	Questa operazione può richiedere del tempo, prego attendere...
+this program will help you upgrade or install different languages for egroupware	setup	it	Questo programma ti aiuter&agrave; ad aggiornare o ad installare lingue differenti per eGroupWare
+this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	it	Questa sezione ti aiuter&agrave; ad esportare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	it	Questa sezione ti aiuter&agrave; ad importare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
+this stage is completed<br>	setup	it	Questo passaggio &egrave; stato completato<br>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	it	Questo creer&agrave; 1 utente amministratore e 3 utenti di esempio<br>I nome utente/password sono: demo/guest, demo2/guest and demo3/guest.<br><b>!!!QUESTO CANCELLER&Agrave; TUTTI GLI UTENTI PREESISTENTI!!!</b><br>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	it	per predisporre 1 account amministratore e 3 account dimostrativi.<br><b>Questa operazione canceller&agrave; tutti gli account esistenti</b>
+two weeks	setup	it	due settimane
+uninstall	setup	it	disinstalla
+uninstall all applications	setup	it	disinstalla tutte le applicazioni
+uninstalled	setup	it	disinstallato
+upgrade	setup	it	Aggiorna
+upgrade all	setup	it	Aggiorna Tutto
+upgraded	setup	it	aggiornato
+upgrading tables	setup	it	Aggiornamento Tabelle
+use cookies to pass sessionid	setup	it	utilizza i cookie per passare l'id di sessione
+version	setup	it	versione
+version mismatch	setup	it	Incompatibilità versione
+view	setup	it	Vedi
+warning!	setup	it	Attenzione!
+we will automatically update your tables/records to %1	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
+write config	setup	it	Scrivi configurazione
+yes	setup	it	Sì
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di eGroupWare.<br>Queste versioni non sono pi&ugrave; supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br>e poi aggiornare da l&igrave; usando questa versione.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version 4.1.0	setup	it	Sembra che tu stia usando una vecchia versione di PHP <br>&Egrave raccomandabile che tu esegua un aggiornamento ad una versione recente. <br>Vecchie versioni di PHP potrebbero non far funzionare correttamenterun eGroupWare, o potrebbero non farlo funzionare per nulla. <br><br>Per favore aggiorna almeno alla versione 4.1.0
+you appear to be running version %1 of egroupware	setup	it	Sembra che tu sta utilizzando la versione %1 di eGroupWare
+you are ready for this stage, but this stage is not yet written.<br>	setup	it	Sei pronto per questo passaggio, ma questa procedura non &egrave; ancora stata scritta.<br>
+you do not have any languages installed. please install one now <br>	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br>
+you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	it	Dovresti disinstallare e poi reinstallare, oppure tentare riparazioni manuali
+your applications are current	setup	it	Le tue applicazioni sono aggiornate
+your database does not exist	setup	it	Il tuo database non esiste
+your database is not working!	setup	it	Il tuo database non sta funzionando!
+your database is working, but you dont have any applications installed	setup	it	Il tuo database funziona correttamente, ma non hai nessuna applicazione installata
+your tables are current	setup	it	Le tue tabelle sono aggiornate
+your tables may be altered and you may lose data	setup	it	Le tue tabelle potranno essere modificate e perdere dati
+your tables will be dropped and you will lose data	setup	it	Le tue tabelle verranno cancellate e perderai tutti i tuoi dati
