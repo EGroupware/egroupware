@@ -330,15 +330,16 @@
 												. 'sessionid = "'.$this->sessionid.'" and loginid = "'.$this->account_id.'" '
 												. 'and app = "'.$appname.'" and location = "'.$location.'"',__LINE__,__FILE__);
 	      if ($phpgw->db->num_rows()==0) {
-    		$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
-		      $phpgw->db->query('INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) '
-													. 'VALUES ("'.$this->sessionid.'","'.$this->account_id.'","'.$appname
-													. '","'.$location.'","'.$data.'")',__LINE__,__FILE__);
+    				$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
+		      	$phpgw->db->query('INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) '
+														. 'VALUES ("'.$this->sessionid.'","'.$this->account_id.'","'.$appname
+														. '","'.$location.'","'.$data.'")',__LINE__,__FILE__);
 	      } else {
-		      $phpgw->db->query('update phpgw_app_sessions set content = "'.$data.'" '
-													. 'where sessionid = "'.$this->sessionid.'" '
-													. 'and loginid = "'.$this->account_id.'" and app = "'.$appname.'" '
-													. 'and location = "'.$location.'"',__LINE__,__FILE__);
+	      		$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
+		      	$phpgw->db->query('update phpgw_app_sessions set content = "'.$data.'" '
+														. 'where sessionid = "'.$this->sessionid.'" '
+														. 'and loginid = "'.$this->account_id.'" and app = "'.$appname.'" '
+														. 'and location = "'.$location.'"',__LINE__,__FILE__);
 	      }
         return $data;
       }
