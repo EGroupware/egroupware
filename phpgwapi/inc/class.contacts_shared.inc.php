@@ -57,8 +57,9 @@
 		function loop_addslashes($fields)
 		{
 			$absf = $this->stock_contact_fields;
-			while ($t = each($absf)) {
-				$ta[] = addslashes($fields[$t[0]]);
+			while ($t = each($absf))
+			{
+				$ta[] = $this->db->db_addslashes($fields[$t[0]]);
 			}
 			reset($absf);
 			return $ta;

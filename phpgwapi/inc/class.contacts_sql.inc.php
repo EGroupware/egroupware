@@ -568,7 +568,7 @@
 				while (list($name,$value) = each($extra_fields))
 				{
 					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $this->account_id . "','"
-						. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
+						. $this->db->db_addslashes($name) . "','" . $this->db->db_addslashes($value) . "')",__LINE__,__FILE__);
 				}
 			}
 			return $id;
@@ -577,21 +577,21 @@
 		function field_exists($id,$field_name)
 		{
 			$this->db->query("SELECT COUNT(*) FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
-				. addslashes($field_name) . "'",__LINE__,__FILE__);
+				. $this->db->db_addslashes($field_name) . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0);
 		}
 
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
-			$this->db->query("INSERT INTO $this->ext_table VALUES ($id,'$owner','" . addslashes($field_name)
-				. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
+			$this->db->query("INSERT INTO $this->ext_table VALUES ($id,'$owner','" . $this->db->db_addslashes($field_name)
+				. "','" . $this->db->db_addslashes($field_value) . "')",__LINE__,__FILE__);
 		}
 
 		function delete_single_extra_field($id,$field_name)
 		{
 			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
-				. addslashes($field_name) . "'",__LINE__,__FILE__);
+				. $this->db->db_addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
 		function update($id,$owner,$fields,$access='',$cat_id='',$tid='n')
@@ -609,7 +609,7 @@
 			{
 				while (list($stock_fieldname) = each($stock_fieldnames))
 				{
-					$ta[] = $stock_fieldname . "='" . addslashes($stock_fields[$stock_fieldname]) . "'";
+					$ta[] = $stock_fieldname . "='" . $this->db->db_addslashes($stock_fields[$stock_fieldname]) . "'";
 				}
 				$fields_s = ',' . implode(',',$ta);
 				if ($field_s == ',')
@@ -630,8 +630,8 @@
 					}
 					else
 					{
-						$this->db->query("UPDATE $this->ext_table SET contact_value='" . addslashes($x_value)
-							. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
+						$this->db->query("UPDATE $this->ext_table SET contact_value='" . $this->db->db_addslashes($x_value)
+							. "',contact_owner='$owner' WHERE contact_name='" . $this->db->db_addslashes($x_name)
 							. "' AND contact_id='$id'",__LINE__,__FILE__);
 					}
 				}
