@@ -220,6 +220,18 @@
 			}
 		}
 
+		function is_opera()
+		{
+			if ($this->get_agent()=='OPERA')
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		// Echo content headers for file downloads
 		function content_header($fn="",$mime="application/octetstream",$length="",$nocache=True)
 		{
