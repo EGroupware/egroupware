@@ -84,44 +84,48 @@
 		
 		@reset($db_perms);
 		
-		// The $i<200 is only used for a brake
-		for ($i=0;$i<200;) 
+		for ($i=0;$i<=count($perm_display);$i++) 
 		{
-			if (! $perm_display[$i]['translatedName']) break;
-			$perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i]['translatedName']) . '</td>'
-					. '<td><input type="checkbox" name="new_permissions['
-					. $perm_display[$i]['appName'] . ']" value="True"';
+			$checked = "";
 			if ($new_permissions[$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
 			{
-				$perm_html .= " checked";
+				$checked = " checked";
 			}
-			$perm_html .= "></td>";
+			
+			if($perm_display[$i]['translatedName'])
+			{
+				$part1 = sprintf("<td>%s</td><td><input type=\"checkbox\" name=\"new_permissions[%s]\" value=\"True\" %s></td>",
+					lang($perm_display[$i]['translatedName']),
+					$perm_display[$i]['appName'],
+					$checked);
+			}
+
+
 			$i++;
 			
-			if ($i == count($perm_display) && is_odd(count($perm_display))) 
+			
+			$checked = "";
+			if ($new_permissions[$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
 			{
-				$perm_html .= '<td colspan="2">&nbsp;</td></tr>';
+				$checked = " checked";
 			}
-
-     if (! $perm_display[$i]['translatedName']) break;
-     $perm_html .= '<td>' . lang($perm_display[$i]['translatedName']) . '</td>'
-                 . '<td><input type="checkbox" name="new_permissions['
-                 . $perm_display[$i]['appName'] . ']" value="True"';
-     if ($new_permissions[$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) {
-        $perm_html .= " checked";
-     }
-     $perm_html .= "></td></tr>\n";
-     $i++;
-  }
-
-  $t->set_var("permissions_list",$perm_html);	
-		
-		
-		
-		
-		
-		
-		
+			
+			if($perm_display[$i]['translatedName'])
+			{
+				$part2 = sprintf("<td>%s</td><td><input type=\"checkbox\" name=\"new_permissions[%s]\" value=\"True\" %s></td>",
+					lang($perm_display[$i]['translatedName']),
+					$perm_display[$i]['appName'],
+					$checked);
+			}
+			else
+			{
+				$part2 = '<td colspan="2">&nbsp;</td>';
+			}
+			
+			$appRightsOutput .= sprintf("<tr bgcolor=\"%s\">$part1$part2</tr>\n",$phpgw_info["theme"]["row_on"]);
+		}
+	
+		$t->set_var("permissions_list",$appRightsOutput);
 
 		$t->pparse('out','form');
 	}
@@ -129,6 +133,8 @@
 	// stores the userdata
 	function saveUserData($_userData)
 	{
+		global $new_permissions;
+		
 		$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
 		$account->update_data($_userData);
 		$account->save_repository();
@@ -136,7 +142,27 @@
 		{
 			$auth = CreateObject('phpgwapi.auth');
 #			$auth->change_password($old_passwd, $_userData['passwd']);
-  		}
+		}
+
+		$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
+#		$apps->read_installed_apps();
+#		$apps_before = $apps->read_account_specific();
+		
+		$apps->account_type = 'u';
+		$apps->account_id = $_userData['account_id'];
+		$apps->account_apps = Array(Array());
+		while($app = each($new_permissions)) 
+		{
+			if($app[1]) 
+			{
+				$apps->add($app[0]);
+				if(!$apps_before[$app[0]]) 
+				{
+					$apps_after[] = $app[0];
+				}
+			}
+		}
+		$apps->save_repository();
   	}
   	
   	// checks if the userdata are valid
@@ -181,16 +207,6 @@
   	
   	return;
   	
-  function is_odd($n)
-  {
-     $ln = substr($n,-1);
-     if ($ln == 1 || $ln == 3 || $ln == 5 || $ln == 7 || $ln == 9) {
-        return True;
-     } else {
-        return False;
-     }
-  }
-
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));
   }
