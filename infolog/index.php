@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Info Log                                                  *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Info Log                                                    *
+	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
