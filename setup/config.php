@@ -302,13 +302,6 @@
       $templates = $phpgw_setup->get_template_list();
       while (list ($key, $value) = each ($templates)){
         echo '<option value="'.$key.'" '.$selected[$key].'>'.$templates[$key]["title"].'</option>';
-//        echo '<option value="'.$key.'">'.$templates[$key]["title"].'</option>';
-/*
-        echo "key= ".$key."<br>";
-        echo "value= ".$value."<br>";
-        echo "selected[value]= ".$selected[$key]."<br>";
-        echo "title= ".$templates[$key]["title"]."<br>";
-*/
       }
     ?>
      </select>

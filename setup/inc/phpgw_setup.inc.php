@@ -284,7 +284,7 @@
       while($entry=$d->read()) {
         if ($entry != "CVS" && $entry != "." && $entry != ".."){
           $list[$entry]["name"] = $entry;
-          $f = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/details.inc.php";
+          $f = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/".$entry."/details.inc.php";
           if (file_exists ($f)){
             include($f);
             $list[$entry]["title"] = "Use ".$phpgw_info["template"][$entry]["title"]."interface";
