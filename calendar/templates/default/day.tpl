@@ -6,12 +6,11 @@
   <td valign="top" width="70%">
    <table border="0" width=100%>
     <tr>
-     <td align="middle">
-      <font size="+2" color="{bg_text}"><b>{date}</b></font><br>
-      <font size="+1" color="{bg_text}">{username}</font><br>&nbsp;
+     <td class="calendar_header">
+      {date}&nbsp;[{username}]<br />
      </td>
     </tr>
-{day_events}
+	{day_events}
    </table>
    <p align="center">{print}</p>
   </td>

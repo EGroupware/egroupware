@@ -20,8 +20,8 @@
  </tr>
 </table>
 <table border="0" width="100%">
-  <td align="center">
-   <font size="+2" color="#000000"><b>{week_identifier}</b><br>{username}</font>
+  <td style="font-size: 14px" align="center">
+   <b>{week_identifier}<br>{username}</b>
   </td>
 </table>
 {week_display}

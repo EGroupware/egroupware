@@ -1,0 +1,124 @@
+/* CSS Document */
+A.minicalendar 
+{ 
+	color: #000000; 
+	font-size: 10px;
+	
+}
+
+A.bminicalendar 
+{ 
+	color: #336699; 
+	font-style: italic;
+	font-weight: bold;
+	font-size: 10px; 
+}
+
+A.minicalendargrey 
+{ 
+	color: #999999; 
+	font-size: 10px;
+	font-weight: bold;
+}
+
+A.bminicalendargrey 
+{ 
+	color: #336699; 
+	font-style: italic; 
+	font-size:10px; 
+}
+
+A.minicalhol
+{ 
+	padding-left:3px;
+	padding-right:3px;
+	background: #dab0b0;
+	color: #000000; 
+	font-size: 10px; 
+}
+
+A.bminicalhol
+{ 
+	padding-left:3px;
+	padding-right:3px;
+	background: #dab0b0;
+	color: #336699; 
+	font-size: 10px; 
+}
+
+A.minicalgreyhol
+{ 
+	padding-left:3px;
+	padding-right:3px;
+	background: #dab0b0;
+	color: #999999; 
+	font-size: 10px; 
+}
+
+A.bminicalgreyhol
+{ 
+	padding-left:3px;
+	padding-right:3px;
+	background: #dab0b0;
+	color: #999999; 
+	font-size: 10px; 
+}
+
+
+.event-on
+{ 
+	background: #D3DCE3;
+	border: #E8F0F0 1px solid;
+}
+
+.event-off
+{ 
+	background: #E8F0F0;
+	border: #D3DCE3 1px solid;
+}
+
+.event-holiday
+{
+	font-size: 100%;
+	background: #dac0c0;
+	color:#000000;
+	vertical-align: middle;
+}
+
+.time
+{
+	background: #D3DCE3;
+	color:#000000;
+	font-size: 10px;
+	font-weight: bold;
+	vertical-align: middle;
+	width: 5.2%;
+	text-align: right;
+	padding-right: 5px;
+	line-height: 11px;
+	border: #E8F0F0 1px solid;
+}
+
+
+.planner-cell
+{
+	cursor: pointer;
+	cursor: hand;
+	border: thin solid black;
+}
+
+
+// week view
+
+.calendar-weekidentifier
+{
+	font-size:16px;
+	font-weight: bold;
+}
+
+.calendar_header
+{
+	font-size:16px;
+	font-weight: bold;
+	text-align: center;
+}
