@@ -17,7 +17,7 @@
   $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
   
   // Authorize the user to use setup app
-  include("setup_auth.inc.php");
+  include("inc/setup_auth.inc.php");
   // Does not return unless user is authorized
 
   /* Database setup */
