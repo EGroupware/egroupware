@@ -98,6 +98,33 @@
 		}
 	}
 
+	function array_shift(&$array)
+	{
+		if(!is_array($array))
+		{
+			return '';
+		}
+
+		reset($array);
+		$rtrn = array();
+		$i = 0;
+
+		while(list($key,$value) = each($array))
+		{
+			$i++;
+			if($i == 1)
+			{
+				$one = $value;
+			}
+			else
+			{
+				$rtrn[$key] = $value;
+			}
+		}
+		$array = $rtrn;
+		return $one;
+	}
+
 	function array_unique ($array)
 	{
 		reset($array);
