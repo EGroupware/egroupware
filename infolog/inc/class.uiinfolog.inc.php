@@ -274,7 +274,7 @@
 			{
 				if ($values['delete'] && $info_id > 0 && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 				{
-					$this->bo->delete($info_id);
+					$this->bo->delete($info_id,$values['remove_subs'],$values['info_id_parent']);
 				}
 				return $referer ? $this->tmpl->location($referer) : $this->index();
 			}
@@ -284,8 +284,10 @@
 			$this->tmpl->read('infolog.delete');
 
 			$values['main']['no_actions'] = True;
+			$values['remove_subs'] = $this->bo->anzSubs($info_id) > 0;
 			$persist['info_id'] = $info_id;
 			$persist['referer'] = $referer;
+			$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
 

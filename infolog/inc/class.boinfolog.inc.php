@@ -191,11 +191,11 @@
 			return $err ? False : $data;
 		}
 
-		function delete($info_id)
+		function delete($info_id,$delete_children,$new_parent)
 		{
 			$this->link->unlink(0,'infolog',$info_id);
 
-			$this->so->delete($info_id);
+			$this->so->delete($info_id,$delete_children,$new_parent);
 		}
 
 		function write($values,$check_defaults=True,$touch_modified=True)

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog                                                   *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - InfoLog                                                     *
+	* http://www.eGroupWare.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
@@ -284,11 +284,13 @@
 		@function delete
 		@abstract delete InfoLog entry $info_id AND the links to it
 		@syntax delete( $info_id )
-		@param $info_id id of log-entry
-		@param int $delete_children delete the children, if not set there parent-id to 0
+		@param int $info_id id of log-entry
+		@param bool $delete_children delete the children, if not set there parent-id to $new_parent
+		@param int new_parent new parent-id to set for subs
 		*/
-		function delete($info_id,$delete_children=True)  // did _not_ ensure ACL
+		function delete($info_id,$delete_children=True,$new_parent=0)  // did _not_ ensure ACL
 		{
+			//echo "<p>soinfolog::delete($info_id,'$delete_children',$new_parent)</p>\n";
 			if (($info_id = intval($info_id)) <= 0)
 			{
 				return;
@@ -311,8 +313,9 @@
 					$this->delete($db2->f(0),$delete_children);
 				}
 			}
-			// set parent_id to 0 for all not deleted children
-			$this->db->query("UPDATE phpgw_infolog SET info_id_parent=0 WHERE info_id_parent=$info_id",__LINE__,__FILE__);
+			// set parent_id to $new_parent for all not deleted children
+			$new_parent = intval($new_parent);
+			$this->db->query("UPDATE phpgw_infolog SET info_id_parent=$new_parent WHERE info_id_parent=$info_id",__LINE__,__FILE__);
 		}
 
 		/*!

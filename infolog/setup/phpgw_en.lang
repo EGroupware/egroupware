@@ -73,6 +73,7 @@ default filter for infolog	infolog	en	Default Filter for InfoLog
 default status for a new log entry	infolog	en	default status for a new log entry
 delegation	infolog	en	Delegation
 delete	infolog	en	Delete
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	en	Delete all subs (if not subs will be subs of this enties parent or have no parent)
 delete the entry	infolog	en	Delete the entry
 delete this entry	infolog	en	delete this entry
 deletes the selected typ	infolog	en	deletes the selected type

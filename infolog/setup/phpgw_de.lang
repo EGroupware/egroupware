@@ -73,6 +73,7 @@ default filter for infolog	infolog	de	Standard-Filter für InfoLog
 default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
 delegation	infolog	de	Delegation
 delete	infolog	de	Löschen
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	de	Alle Untereinträge löschen (wenn nicht werden diese Untereinträge des übergeordneten Eintrags oder sind keine Untereinträge mehr)
 delete the entry	infolog	de	Eintrag löschen
 delete this entry	infolog	de	diesen Eintrag löschen
 deletes the selected typ	infolog	de	löscht den ausgewählten Typ
