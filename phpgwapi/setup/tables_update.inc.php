@@ -544,4 +544,40 @@
 		
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre5";
 	}
+
+
+
+	$test[] = '0.9.11.008';
+	function phpgwapi_upgrade0_9_11_008()
+	{
+		global $phpgw_info,$phpgw_setup,$oProc;
+
+		@$oProc->query("drop table profiles",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.009';
+	}
+
+	// following are three null upgrades for version only, for testing.
+	$test[] = '0.9.11';
+	function phpgwapi_upgrade0_9_11()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.001';
+		return True;
+	}
+
+	$test[] = '0.9.11.010';
+	function phpgwapi_upgrade0_9_11_010()
+	{
+		global $phpgw_info;
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
+	}
+
+	$test[] = '0.9.11.011';
+	function phpgwapi_upgrade0_9_11_011()
+	{
+		global $phpgw_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.001';
+	}
+
 ?>
