@@ -65,7 +65,7 @@
     session_ip        varchar(255),
     session_logintime int(11),
     session_dla       int(11),
-    session_info      text,
+    session_action    varchar(255),
     UNIQUE sessionid (session_id)
   )";
   $phpgw_setup->db->query($sql);  
@@ -298,7 +298,7 @@
          );";
   $phpgw_setup->db->query($sql); 
 
-  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
+  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
   $phpgw_info["setup"]["oldver"]["phpgwapi"] = $phpgw_info["setup"]["currentver"]["phpgwapi"];
   update_version_table();
 //  $phpgw_setup->update_version_table();

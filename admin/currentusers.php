@@ -40,6 +40,8 @@
                             "currentusers.php",lang("IP")));
   $phpgw->template->set_var("sort_login_time",$phpgw->nextmatchs->show_sort_order($sort,"session_logintime",$order,
                             "currentusers.php",lang("Login Time")));
+  $phpgw->template->set_var("sort_action",$phpgw->nextmatchs->show_sort_order($sort,"session_action",$order,
+                            "currentusers.php",lang("Action")));
   $phpgw->template->set_var("sort_idle",$phpgw->nextmatchs->show_sort_order($sort,"session_dla",$order,
                             "currentusers.php",lang("idle")));
   $phpgw->template->set_var("lang_kill",lang("Kill"));
@@ -67,6 +69,7 @@
      $phpgw->template->set_var("row_loginid",$loginid);
      $phpgw->template->set_var("row_ip",$phpgw->db->f("session_ip"));
      $phpgw->template->set_var("row_logintime",$phpgw->common->show_date($phpgw->db->f("session_logintime")));
+     $phpgw->template->set_var("row_action",$phpgw->strip_html($phpgw->db->f("session_action")));
      $phpgw->template->set_var("row_idle",gmdate("G:i:s",(time() - $phpgw->db->f("session_dla"))));
 
      if ($phpgw->db->f("session_id") != $phpgw_info["user"]["sessionid"]) {

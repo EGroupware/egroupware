@@ -1034,6 +1034,27 @@
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
   }
 
+  $test[] = "0.9.10pre8";
+  function upgrade0_9_10pre8()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+		// Just temp data anyway
+		$phpgw_setup->db->query("drop table phpgw_sessions",__LINE__,__FILE__);
+	  $sql = "create table phpgw_sessions (
+	    session_id         varchar(255),
+ 	   session_lid        varchar(255),
+  	  session_ip         varchar(255),
+   	 session_logintime  int,
+	    session_dla        int,
+ 	   session_action     varchar(255),
+  	  unique(session_id)
+	  )";
+ 	 $phpgw_setup->db->query($sql);
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

@@ -980,6 +980,16 @@
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
   }
 
+  $test[] = "0.9.10pre8";
+  function upgrade0_9_10pre8()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+    $phpgw_setup->db->query("alter table phpgw_sessions change session_info session_action varchar(255)",__LINE__,__FILE__);
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
