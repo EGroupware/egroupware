@@ -37,6 +37,7 @@ afghanistan	common	zt	AFGHANISTAN
 albania	common	zt	ALBANIA
 algeria	common	zt	ALGERIA
 all	common	zt	所有
+all fields	common	zt	所有欄位
 alphabet	common	zt	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	zt	AMERICAN SAMOA
 andorra	common	zt	ANDORRA
@@ -197,6 +198,7 @@ error deleting %1 %2 directory	common	zt	無法移除目錄 %1 %2
 error renaming %1 %2 directory	common	zt	無法更名目錄 %1 %2
 estonia	common	zt	ESTONIA
 ethiopia	common	zt	ETHIOPIA
+exact	common	zt	正確的
 falkland islands (malvinas)	common	zt	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	zt	FAROE ISLANDS
 fax number	common	zt	傳真號碼
@@ -319,6 +321,7 @@ libyan arab jamahiriya	common	zt	LIBYAN ARAB JAMAHIRIYA
 license	common	zt	版權
 liechtenstein	common	zt	LIECHTENSTEIN
 list	common	zt	列表
+list members	common	zt	列出會員
 lithuania	common	zt	LITHUANIA
 local	common	zt	本地
 login	common	zt	登入
@@ -410,6 +413,7 @@ original	common	zt	原本的
 other	common	zt	其它
 overview	common	zt	總覽
 owner	common	zt	擁有者
+page	common	zt	頁
 page was generated in %1 seconds	common	zt	網頁花費 %1 秒產生
 pakistan	common	zt	PAKISTAN
 palau	common	zt	PALAU
@@ -462,6 +466,7 @@ read	common	zt	讀取
 read this list of methods.	common	zt	讀取這個方法的列表
 redoes your last action	htmlarea	zt	重新執行最後一個動作
 reject	common	zt	拒絕
+remove selected accounts	common	zt	移除選取的帳號
 rename	common	zt	更名
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zt	傳回系統的完整帳號清單。注意：傳回的資料量可能非常多
 returns an array of todo items	common	zt	傳回待辦事項所有項目成為陣列
@@ -482,6 +487,8 @@ saturday	common	zt	星期六
 saudi arabia	common	zt	SAUDI ARABIA
 save	common	zt	儲存
 search	common	zt	搜尋
+search %1 '%2'	common	zt	搜尋 %1 '%2'
+search or select accounts	common	zt	搜尋或是選取帳號
 section	common	zt	選擇
 select	common	zt	選擇
 select all %1 %2 for %3	common	zt	選擇 %3 的所有 %1 %2
@@ -492,6 +499,7 @@ select home email address	common	zt	選擇家用信箱
 select one	common	zt	選擇一個
 select user	common	zt	選擇使用者
 select work email address	common	zt	選擇工作用信箱
+selection	common	zt	選取
 send	common	zt	送出
 senegal	common	zt	SENEGAL
 september	common	zt	九月
@@ -523,6 +531,7 @@ spain	common	zt	SPAIN
 sri lanka	common	zt	SRI LANKA
 start date	common	zt	開始日期
 start time	common	zt	開始時間
+start with	common	zt	開始於
 status	common	zt	狀態
 strikethrough	htmlarea	zt	突破
 subject	common	zt	主題
