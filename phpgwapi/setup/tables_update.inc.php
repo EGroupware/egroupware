@@ -987,4 +987,23 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+
+
+	$test[] = '0.9.99.011';
+	function phpgwapi_upgrade0_9_99_011()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_categories','last_mod',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_addressbook','last_mod',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.012';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
