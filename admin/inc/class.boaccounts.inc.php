@@ -9,6 +9,8 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 
+	/* $Id$ */
+
 	class boaccounts
 	{
 		var $public_functions = array(
