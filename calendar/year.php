@@ -12,8 +12,10 @@
 
   /* $Id$ */
 
-  if ($friendly) {
+  if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
+  } else {
+     $friendly = 0;
   }
 
   $phpgw_info["flags"]["currentapp"] = "calendar";
@@ -28,7 +30,7 @@
 <table border="0" cellspacing="4" cellpadding="4">
  <tr>
   <?php
-    if (! $friendly)
+    if (!$friendly)
        echo "<td align=\"left\"><A HREF=\"" . $phpgw->link("year.php","year=" . ($year - 1)) . "\">&lt;&lt;</A>";
   ?>
   </td>
@@ -42,21 +44,21 @@
   ?>
   </td>
  </tr>
- <tr>
-  <td valign="top"><? display_small_month(1,$year,False); ?></td>
-  <td valign="top"><? display_small_month(2,$year,False); ?></td>
-  <td valign="top"><? display_small_month(3,$year,False); ?></td>
-  <td valign="top"><? display_small_month(4,$year,False); ?></td>
-  <td valign="top"><? display_small_month(5,$year,False); ?></td>
-  <td valign="top"><? display_small_month(6,$year,False); ?></td>
- </tr>
- <tr>
-  <td valign="top"><? display_small_month(7,$year,False); ?></td>
-  <td valign="top"><? display_small_month(8,$year,False); ?></td>
-  <td valign="top"><? display_small_month(9,$year,False); ?></td>
-  <td valign="top"><? display_small_month(10,$year,False); ?></td>
-  <td valign="top"><? display_small_month(11,$year,False); ?></td>
-  <td valign="top"><? display_small_month(12,$year,False); ?></td>
+ <tr valign="top">
+<?php
+  if(!$friendly) $link = "day.php"; else $link = "";
+  for($i=1;$i<13;$i++) {
+    echo "<td valign=\"top\">";
+    if(!$friendly)
+      echo $phpgw->calendar->pretty_small_calendar($i,$i,$year,"day.php");
+//      echo $phpgw->calendar->display_small_month($i,$year,False,"day.php");
+    else
+      echo $phpgw->calendar->pretty_small_calendar($i,$i,$year);
+//      echo $phpgw->calendar->display_small_month($i,$year,False);
+    echo "</td>";
+    if($i==6) echo "</tr><tr valign=\"top\">";
+  }
+?>
  </tr>
 </table>
 </center>

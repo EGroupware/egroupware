@@ -13,172 +13,111 @@
   \**************************************************************************/
 
   /* $Id$ */
-  if (!$friendly){
-    $phpgw_info["flags"]["noheader"]="True";
+  if (isset($friendly) && $friendly){
+     $phpgw_info["flags"]["noheader"] = True;
+  } else {
+     $friendly = 0;
   }
 
   $phpgw_info["flags"]["currentapp"] = "calendar";
   include("../header.inc.php");
-  
-  if (! $friendly) {
-     $phpgw->common->phpgw_header();
-  } else
-     echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
 
-  $view = "week";
-?>
-
-<STYLE TYPE="text/css">
-  .tablecell {
-    width: 80px;
-    height: 80px;
-  }
-</STYLE>
-</HEAD>
-
-<?php
-  if (strlen($date) > 0) {
+  if (isset($date) && strlen($date) > 0) {
      $thisyear  = substr($date, 0, 4);
      $thismonth = substr($date, 4, 2);
      $thisday   = substr($date, 6, 2);
   } else {
-     if ($month == 0)
-        $thismonth = date("m");
-     else
-        $thismonth = $month;
-
-     if ($year == 0)
-        $thisyear = date("Y");
-     else
-        $thisyear = $year;
-
-     if ($day == 0)
-        $thisday = date("d");
+     if (!isset($day) || !$day)
+        $thisday = $phpgw->calendar->today["day"];
      else
         $thisday = $day;
+     if (!isset($month) || !$month)
+        $thismonth = $phpgw->calendar->today["month"];
+     else
+        $thismonth = $month;
+     if (!isset($year) || !$year)
+        $thisyear = $phpgw->calendar->today["year"];
+     else
+        $thisyear = $year;
   }
 
-  $next = mktime(2, 0, 0, $thismonth, $thisday + 7, $thisyear);
-  $nextyear = date("Y", $next);
-  $nextmonth = date("m", $next);
-  $nextday = date("d", $next);
+  $next = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth,$thisday + 7,$thisyear));
+  $prev = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth,$thisday - 7,$thisyear));
 
-  $prev = mktime(2, 0, 0, $thismonth, $thisday - 7, $thisyear);
-  $prevyear = date("Y", $prev);
-  $prevmonth = date("m", $prev);
-  $prevday = date("d", $prev);
+  $nextmonth = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,1,$thisyear));
+  $prevmonth = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
 
-  // We add 2 hours on to the time so that the switch to DST doesn't
-  // throw us off.  So, all our dates are 2AM for that day.
-  $sun = get_sunday_before($thisyear, $thismonth, $thisday) + 7200;
-  $sat = $sun + (3600 * 24 * 7);
+  $sun = $phpgw->calendar->splitdate($phpgw->calendar->get_sunday_before($thisyear, $thismonth, $thisday) + 7200);
+  $sat = $phpgw->calendar->splitdate($sun["raw"] + 604800);
+
+  if ($friendly) {
+     echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
+     $view = "week";
+  }
 ?>
 
-<TABLE BORDER=0 WIDTH=100%>
-<TR>
+<head>
+<style type="text/css">
+  .tablecell {
+    width: 80px;
+    height: 80px;
+  }
+</style>
+</head>
+<table border=0 width=100%>
+<tr>
+<?php
+  echo "<td align=\"left\" valign=\"top\">";
+  echo $phpgw->calendar->pretty_small_calendar($thisday,$prevmonth["month"],$prevmonth["year"],"day.php");
+  echo "</td>";
+  echo "<td align=\"left\">";
+  if (!$friendly)
+    echo "<a href=\"".$phpgw->link("week.php","year=".$prev["year"]."&month=".$prev["month"]."&day=".$prev["day"])."\">";
+  echo "&lt;&lt;";
+  if(!friendly) echo "</a>";
+  echo "</td>";
+  echo "<td align=\"center\" valign=\"top\">";
+  echo $phpgw->calendar->pretty_small_calendar($thisday,$thismonth,$thisyear,"day.php");
+?>
+<font size="+2" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>"><b>
+<?php
+  echo lang(strftime("%B",$sun["raw"]))." ".$sun["day"];
+  if($sun["month"] <> $sat["month"] && $sun["year"] <> $sat["year"]) echo ", ".$sun["year"];
+  echo " - ";
+  if($sun["month"] <> $sat["month"])  echo lang(strftime("%B",$sat["raw"]))." ";
+  echo $sat["day"].", ".$sat["year"];
+?>
+</b></font>
+<font size="+1" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
+<br>
+<?php
+  echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
+?>
+</font></td>
+<?php
+  echo "<td align=\"right\">";
+  if (!$friendly)
+    echo "<a href=\"".$phpgw->link("week.php","year=".$next["year"]."&month=".$next["month"]."&day=".$next["day"])."\">";
+  echo "&gt;&gt;";
+  if(!friendly) echo "</a>";
+  echo "</td>";
+  echo "<td align=\"right\" valign=\"top\">";
+  echo $phpgw->calendar->pretty_small_calendar($thisday,$nextmonth["month"],$nextmonth["year"],"day.php");
+  echo "</td>";
+?>
+</tr>
+</table>
 <?php 
-  if (! $friendly) {
-    echo "<td align=\"left\"><a href=\"".$phpgw->link("week.php","year=$prevyear&month=$prevmonth&day=$prevday")."\">&lt;&lt;</a></td>";
+  echo $phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true);
+
+  if (!$friendly) {
+     $param = "";
+     if ($thisyear)
+        $param .= "year=$thisyear&month=$thismonth&";
+
+     $param .= "friendly=1";
+     echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\" target=\"cal_printer_friendly\" onMouseOver=\"window.status='"
+	  .lang("Generate printer-friendly version")."'\">[" . lang("Printer Friendly") . "]</a>";
+     $phpgw->common->phpgw_footer();
   }
-?>
-<TD ALIGN="middle"><FONT SIZE="+2" COLOR="<?php echo $H2COLOR;?>"><B>
-<?php
-  if (date("m", $sun) == date("m", $sat)) {
-     echo strftime("%b %d", $sun) . " - " . strftime("%d, %Y", $sat);
-  } else {
-     if (date("Y", $sun) == date("Y", $sat)) {
-        echo strftime("%b %d", $sun) . " - " .
-        strftime("%b %d, %Y", $sat);
-     } else {
-        echo strftime("%b %d, %Y", $sun) . " - " .
-        strftime("%b %d, %Y", $sat);
-     }
-  }
-?>
-</B></FONT>
-<FONT SIZE="+1" COLOR="<?php echo $H2COLOR;?>">
-<?php
-  $phpgw->db->query("SELECT account_lastname, account_firstname FROM accounts WHERE account_lid='"
-	      . $phpgw_info["user"]["account_lid"]. "'");
-  echo "<BR>\n";
-  if ($phpgw->db->next_record()) {
-     if (strlen($phpgw->db->f(0)) || strlen($phpgw->db->f(1))) {
-        if (strlen($phpgw->db->f(1)))
-           echo $phpgw->db->f(1) . " ";
-           if (strlen($phpgw->db->f(0)))
-              echo $phpgw->db->f(0) . " ";
-     } else
-       echo $user;
-     }
-?>
-</FONT>
-</TD>
-<?php 
-  if (! $friendly) {
-     echo "<TD ALIGN=\"right\"><A HREF=\"" . $phpgw->link("week.php","&year=$nextyear&month=$nextmonth&day=$nextday")
-        . "\">&gt;&gt;</A></TD>";
-  }
-?>
-</TR>
-</TABLE>
-
-<TABLE WIDTH=100% BORDER=0 bordercolor=FFFFFF cellspacing=2 cellpadding=2>
-
-<TR>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Sun"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Mon"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Tue"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Wed"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Thu"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Fri"); ?></FONT></TH>
-<TH WIDTH=14% BGCOLOR="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><FONT COLOR="#000000"><?php echo lang("Sat"); ?></FONT></TH>
-</TR>
-
-<TR>
-<?php
-  // Pre-Load the repeated events
-  $repeated_events = read_repeated_events($phpgw_info["user"]["account_id"]);
-
-  $today = mktime(2,0,0,date("m"), date("d"), date("Y"));
-  for ($j = 0; $j < 7; $j++) {
-    $date = $sun + ($j * 24 * 3600);
-    $CELLBG = $phpgw->nextmatchs->alternate_row_color($CELLBG);
-
-    echo "<TD VALIGN=\"top\" WIDTH=75 HEIGHT=75 ID=\"tablecell\"";
-    if (date("Ymd", $date) == date("Ymd", $today))
-       echo "BGCOLOR=\"".$phpgw_info["theme"]["cal_today"]."\">";
-    else
-       echo "BGCOLOR=\"$CELLBG\">";
-
-    print_date_entries($date,$hide_icons,$phpgw_info["user"]["sessionid"]);
-
-    //$date = $i + ($j * 24 * 3600);
-/*    $thirsday=$j+24*3600*4;
-    if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Sunday" && $j == 0) {
-       echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' .(int)((date("z",$thirsday)+7)/7) . '</a></font>';
-    }
-    if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday" && $j == 1) {
-       echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' . (int)((date("z",$thirsday)+7)/7) . '</a></font>';
-    }*/
-    
-    echo "</TD>\n";
-  }
-
-?>
-</TR>
-
-</TABLE>
-
-<?php
-  if ($thisyear) {
-     $yeartext = "year=$thisyear&month=$thismonth&day=$thisday";
-  }
-
-  if (! $friendly) {
-     echo "<P>&nbsp;<A HREF=\"" . $phpgw->link("week.php","$yeartext&friendly=1");
-     ?>" TARGET="cal_printer_friendly" onMouseOver="window.status = '<?php echo lang("Generate printer-friendly version"); ?>'">[<?php echo lang("Printer Friendly"); ?>]</A>
-     <?php
-  }
-
-  $phpgw->common->phpgw_footer();
 ?>

@@ -66,8 +66,8 @@
 <table border="0" width="100%">
 <tr>
 <?php
-  echo "<td align=\"left\">";
-  echo $phpgw->calendar->pretty_small_calendar($thisday,$prev["month"],$prev["year"],"edit_entry.php");
+  echo "<td align=\"left\" valign=\"top\">";
+  echo $phpgw->calendar->pretty_small_calendar($thisday,$prev["month"],$prev["year"],"day.php");
   echo "</td>";
 ?>
 
@@ -77,15 +77,15 @@
   echo lang(strftime("%B",$m)) . " " . $thisyear;
 ?>
 </b></font>
-<font color="#000000" size="+1">
+<font color="#000000" size="+1" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
 <br>
 <?php
   echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
 ?>
 </font></td>
 <?php
-  echo "<td align=\"right\">";
-  echo $phpgw->calendar->pretty_small_calendar($thisday,$next["month"],$next["year"],"edit_entry.php");
+  echo "<td align=\"right\" valign=\"top\">";
+  echo $phpgw->calendar->pretty_small_calendar($thisday,$next["month"],$next["year"],"day.php");
   echo "</td>";
 ?>
 </tr>
