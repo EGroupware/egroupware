@@ -5,16 +5,18 @@
       <pre>
 	$phpgw_baseline = array(
 <!-- END sqlheader -->
+
 <!-- BEGIN sqlbody -->
 		'{table}' => array(
 			'fd' => array(
-{arr}			){term}
+{arr}			),
 			'pk' => array({pks}),
 			'fk' => array({fks}),
 			'ix' => array({ixs}),
 			'uc' => array({ucs})
 		){term}
 <!-- END sqlbody -->
+
 <!-- BEGIN sqlfooter -->
 	);
       </pre>

@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Setup                                                       *
+  * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -18,10 +18,10 @@
 		'currentapp' => 'home',
 		'noapi' => True
 	);
-	include ('./inc/functions.inc.php');
+	include('./inc/functions.inc.php');
 
 	/* Check header and authentication */
-	if (!$GLOBALS['phpgw_setup']->auth('Config'))
+	if(!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -35,7 +35,7 @@
 	$submit   = get_var('submit',Array('GET','POST'));
 	$showall  = get_var('showall',Array('GET','POST'));
 	$appname  = get_var('appname',Array('GET','POST'));
-	if ($download)
+	if($download)
 	{
 		$setup_tpl->set_file(array(
 			'sqlarr'   => 'arraydl.tpl'
@@ -79,7 +79,7 @@
 
 		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['phpgw_setup']->process->sql_to_array($table);
 		$GLOBALS['setup_tpl']->set_var('arr',$arr);
-		if (count($pk) > 1)
+		if(count($pk) > 1)
 		{
 			$GLOBALS['setup_tpl']->set_var('pks', "'".implode("','",$pk)."'");
 		}
@@ -92,7 +92,7 @@
 			$GLOBALS['setup_tpl']->set_var('pks','');
 		}
 
-		if (count($fk) > 1)
+		if(count($fk) > 1)
 		{
 			$GLOBALS['setup_tpl']->set_var('fks', "'" . implode("','",$fk) . "'");
 		}
@@ -105,7 +105,7 @@
 			$GLOBALS['setup_tpl']->set_var('fks','');
 		}
 
-		if (count($ix) > 1)
+		if(count($ix) > 1)
 		{
 			$GLOBALS['setup_tpl']->set_var('ixs', "'" . implode("','",$ix) . "'");
 		}
@@ -118,7 +118,7 @@
 			$GLOBALS['setup_tpl']->set_var('ixs','');
 		}
 
-		if (count($uc) > 1)
+		if(count($uc) > 1)
 		{
 			$GLOBALS['setup_tpl']->set_var('ucs', "'" . implode("','",$uc) . "'");
 		}
@@ -134,9 +134,12 @@
 
 	function printout($template)
 	{
-		global $download,$appname,$table,$showall;
+		$download = get_var('download',array('POST','GET'));
+		$appname  = get_var('appname',array('POST','GET'));
+		$table    = get_var('table','GLOBALS');
+		$showall  = get_var('showall',array('POST','GET'));
 
-		if ($download)
+		if($download)
 		{
 			$GLOBALS['setup_tpl']->set_var('appname',$appname);
 			$string = $GLOBALS['setup_tpl']->parse('out',$template);
@@ -155,24 +158,23 @@
 
 	function download_handler($dlstring,$fn='tables_current.inc.php')
 	{
-		//include( PHPGW_SERVER_ROOT . '/phpgwapi/inc/class.browser.inc.php');
 		$b = CreateObject('phpgwapi.browser');
 		$b->content_header($fn);
 		echo $dlstring;
 		exit;
 	}
 
-	if ($submit || $showall)
+	if($submit || $showall)
 	{
 		$dlstring = '';
 		$term = '';
 
-		if (!$download)
+		if(!$download)
 		{
 			$GLOBALS['phpgw_setup']->html->show_header();
 		}
 
-		if ($showall)
+		if($showall)
 		{
 			$table = $appname = '';
 		}
@@ -182,10 +184,17 @@
 			$term = ',';
 			$dlstring .= printout('sqlheader');
 
-			$db = $GLOBALS['phpgw_setup']->db;
+			copyobj($GLOBALS['phpgw_setup']->db,$db);
 			$db->query('SHOW TABLES');
+			$i = 0;
+			$tbls = $db->num_rows();
 			while($db->next_record())
 			{
+				$i++;
+				if($i == $tbls)
+				{
+					$term = '';
+				}
 				$table = $db->f(0);
 				parse_vars($table,$term);
 				$dlstring .= printout('sqlbody');
@@ -201,20 +210,23 @@
 			if(!$setup_info[$appname]['tables'])
 			{
 				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/setup/setup.inc.php';
-				if (file_exists ($f)) { include($f); }
+				if(file_exists($f))
+				{
+					include($f);
+				}
 			}
 
 			//$tables = explode(',',$setup_info[$appname]['tables']);
 			$tables = $setup_info[$appname]['tables'];
-			/* $i = 1; */
+			$i = 0;
+			$tbls = count($tables);
 			while(list($key,$table) = @each($tables))
 			{
-				/*
-				if($i == count($tables))
+				$i++;
+				if($i == $tbls)
 				{
 					$term = '';
 				}
-				*/
 				parse_vars($table,$term);
 				$dlstring .= printout('sqlbody');
 				/* $i++; */
@@ -229,7 +241,7 @@
 			$dlstring .= printout('sqlbody');
 			$dlstring .= printout('sqlfooter');
 		}
-		if ($download)
+		if($download)
 		{
 			download_handler($dlstring);
 		}
@@ -247,15 +259,18 @@
 		$setup_tpl->pfp('out','appheader');
 
 		$d = dir(PHPGW_SERVER_ROOT);
-		while($entry=$d->read())
+		while($entry = $d->read())
 		{
 			$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
-			if (file_exists ($f)) { include($f); }
+			if(file_exists($f))
+			{
+				include($f);
+			}
 		}
 
-		while (list($key,$data) = @each($setup_info))
+		while(list($key,$data) = @each($setup_info))
 		{
-			if ($data['tables'] && $data['title'])
+			if($data['tables'] && $data['title'])
 			{
 				$setup_tpl->set_var('appname',$data['name']);
 				$setup_tpl->set_var('apptitle',$data['title']);

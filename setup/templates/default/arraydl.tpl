@@ -1,7 +1,7 @@
 <!-- BEGIN sqlheader --><?php
   /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Setup                                                       *
+  * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -19,16 +19,18 @@
   /* table array for {appname} */
 	$phpgw_baseline = array(
 <!-- END sqlheader -->
+
 <!-- BEGIN sqlbody -->
 		'{table}' => array(
 			'fd' => array(
-{arr}			){term}
+{arr}			),
 			'pk' => array({pks}),
 			'fk' => array({fks}),
 			'ix' => array({ixs}),
 			'uc' => array({ucs})
 		){term}
 <!-- END sqlbody -->
+
 <!-- BEGIN sqlfooter -->
 	);
 ?>
