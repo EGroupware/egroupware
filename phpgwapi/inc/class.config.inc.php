@@ -65,6 +65,7 @@
 				{
 					$name  = addslashes($name);
 					$value = addslashes($value);
+					$this->db->query("delete from phpgw_config where config_name='" . $name . "'",__LINE__,__FILE__);
 					$this->db->query("insert into phpgw_config (config_app,config_name,config_value) "
 						. "values ('" . $this->appname . "','" . $name . "','" . $value . "')",__LINE__,__FILE__);
 				}
