@@ -104,7 +104,7 @@
 					$GLOBALS['phpgw']->sessions->phpgw_setcookie(PHPGW_PHPSESSID);
 				}
 
-				return '<font color=#FF0000>' . lang('Your session could not be verified.') . '</font>';
+				return '<font color="#FF0000">' . lang('Your session could not be verified.') . '</font>';
 				break;
 			default:
 				return '&nbsp;';
