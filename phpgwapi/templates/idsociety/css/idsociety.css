@@ -129,6 +129,20 @@ a:hover
     background-color: #c0c0c0;
 }
 
+.portal
+{
+	background-color: #ADADAD;
+	border-width: 1px;
+	border-color: #000000;
+	border-style: ridge;
+}
+
+.portal_text
+{
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
 .row_on
 {
 	background-color: #DDDDDD;
@@ -146,21 +160,18 @@ a:hover
 
 .th_text
 {
-	font-style: bold;
 	font-weight: bold;
 	color: #000000;
 }
 
 .appheader
 {
-	font-style: bold;
 	font-weight: bold;
 	background-color: #DDDDDD;
 }
 
 .functionmsg
 {
-	font-style: bold;
 	font-weight: bold;
 }
 
