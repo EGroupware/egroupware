@@ -31,17 +31,17 @@
      $i = 1;
      while ($app = each($phpgw_info["navbar"])) {
         if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] == "text") {
-           $tabs[$i]["label"] = $app[1]["title"];
+           $tabs[$i]["label"] = lang($app[1]["title"]);
            $tabs[$i]["link"]  = $app[1]["url"];
            if (ereg($phpgw_info["navbar"][$app[0]],$PHP_SELF)) {                                                                           
               $selected = $i;                                                                       
            }
            $i++;
         } else {
-           $title = '<img src="' . $app[1]["icon"] . '" alt="' . $app[1]["title"] . '" title="'
-                   . $app[1]["title"] . '" border="0">';
+           $title = '<img src="' . $app[1]["icon"] . '" alt="' . lang($app[1]["title"]) . '" title="'
+                   . lang($app[1]["title"]) . '" border="0">';
            if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] == "icons_and_text") {
-              $title .= "<br>" . $app[1]["title"];
+              $title .= "<br>" . lang($app[1]["title"]);
               $tpl->set_var("width","7%");
            } else {
               $tpl->set_var("width","3%");
