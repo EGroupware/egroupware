@@ -97,15 +97,17 @@ documentation for the details).
 a tool like phpMyAdmin to update the permission tables. 
 It is recommended that you add a user with no permissions, then
 explicitly grant the user access to the phpgroupware database.
-The following SQL is an example:
+The following SQL is an example, using the DB name of <CODE>phpgroupware</CODE> user of <CODE>phpgwuser</CODE> and password of <CODE>somethinghardtoguess</CODE>:
 <PRE>
-  insert into users(Host,User,Password) values('localhost','phpgwuser',PASSWORD('somethinghardtoguess');
+  insert into user(Host,User,Password) values('localhost','phpgwuser',PASSWORD('somethinghardtoguess');
   insert into db(Host,DB,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv,Alter_priv)
           values('localhost','phpgroupware','phpgwuser','Y','Y','Y','Y','Y','Y','Y')
   
 </PRE>
 
 you must then reload the grant tables with <CODE>mysqladmin reload</CODE> or <CODE>refresh privledges</CODE> from the mysql utility.
+<P>Some people find it even easier to use MySQL's grant command instead. Please consult the
+MySQL manuall for details on correct syntax.
 <H3>PostgereSQL install  </H3>
 
 <P>This is from <CODE>gnrfan</CODE> but has yet to be updated for the recent version of phpGroupWare, although

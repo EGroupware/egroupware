@@ -171,9 +171,10 @@
   like phpMyAdmin to update the permission tables.  It is recommended
   that you add a user with no permissions, then explicitly grant the
   user access to the phpgroupware database.  The following SQL is an
-  example:
+  example, using the DB name of phpgroupware user of phpgwuser and
+  password of somethinghardtoguess:
 
-    insert into users(Host,User,Password) values('localhost','phpgwuser',PASSWORD('somethinghardtoguess');
+    insert into user(Host,User,Password) values('localhost','phpgwuser',PASSWORD('somethinghardtoguess');
     insert into db(Host,DB,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv,Alter_priv)
             values('localhost','phpgroupware','phpgwuser','Y','Y','Y','Y','Y','Y','Y')
 
@@ -181,6 +182,9 @@
 
   you must then reload the grant tables with mysqladmin reload or
   refresh privledges from the mysql utility.
+
+  Some people find it even easier to use MySQL's grant command instead.
+  Please consult the MySQL manuall for details on correct syntax.
 
   22..55..22..
 
@@ -194,7 +198,6 @@
   intitiated (assuming that postgreSQL is installed).  To do that you
   have to use initdb to create the dataDIR. Please look in the
   documentation of posgreSQL or the manual page for initdb for details.
-
 
   If you have not encountered any error than you are ready to roll.  Now
   create a database which will be used by the phpGroupWare.  To do that
@@ -260,7 +263,6 @@
   could add a few lines to logout.php that will look in the temp
   directory for any stale uploads and delete them.  But, once again, it
   becomes a performance issue.
-
 
   33..  TTeessttiinngg tthhee iinnssttaallll
 
@@ -390,8 +392,6 @@
   it, but it took 15 minutes to load the page. We highly suggest you use
   IMAP if you expect to have more than a few hundred messages in your
   mailbox.
-
-
 
 
   55..33..  WWhheenn II lloogg iinn II sseeee tthhee ddiirreeccttoorryy lliissttiinngg iinnsstteeaadd ooff aa wweebb ppaaggee
