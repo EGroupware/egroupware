@@ -112,7 +112,7 @@
 		if (!is_object($$classname))
 		{
 			$classname = CreateObject($appname.'.'.$classname);
-			$code = '$'.$classname.' = CreateObject('.$appname.'.'.$classname.')';';
+			$code = '$'.$classname.' = CreateObject('.$appname.'.'.$classname.')';
 			/*	$code = '$'.$classname.' = new '.$classname.';'; */
 			eval($code);
 		}
