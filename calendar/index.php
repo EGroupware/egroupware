@@ -24,9 +24,9 @@
   include("../header.inc.php");
 
   if (isset($date) && strlen($date) > 0) {
-     $thisyear = substr($date, 0, 4);
+     $thisyear  = substr($date, 0, 4);
      $thismonth = substr($date, 4, 2);
-     $thisday = substr($date, 6, 2);
+     $thisday   = substr($date, 6, 2);
   } else {
      if (!isset($day) || !$day)
         $thisday = $phpgw->calendar->today["day"];
@@ -43,20 +43,18 @@
   }
 
   $next = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,1,$thisyear));
-//  $nextdate = date("Ymd");
 
   $prev = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
-//  $prevdate = date("Ymd");
 
   if ($friendly) {
-     echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
+     echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
      $view = "month";
   }
 ?>
 
 <HEAD>
 <STYLE TYPE="text/css">
-<?php echo "$CCS_DEFS";?>
+<!-- <?php echo "$CCS_DEFS";?> -->
 
   .tablecell {
     width: 80px;
@@ -77,7 +75,7 @@
 <td align="middle"><font size="+2" color="#000000"><B>
 <?php
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
-  print lang(strftime("%B",$m)) . " " . $thisyear;
+  echo lang(strftime("%B",$m)) . " " . $thisyear;
 ?>
 </b></font>
 <font color="#000000" size="+1">
@@ -95,8 +93,9 @@
 </tr>
 </table>
 <?php
+  flush();
   echo $phpgw->calendar->display_large_month($thismonth,$thisyear,True,"edit_entry.php");
-
+  flush();
   /* Pre-Load the repeated events for quckier access */
   $repeated_events = read_repeated_events();
 ?>

@@ -14,8 +14,10 @@
 
   /* $Id$ */
 
-  if ($friendly) {
+  if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
+  } else {
+     $friendly = 0;
   }
 
   $phpgw_info["flags"]["currentapp"] = "calendar";
@@ -23,85 +25,76 @@
 
   $view = "day";
 
-  if (strlen($date) > 0) {
-     $thisyear  = substr($date,0,4);
-     $thismonth = substr($date,4,2);
-     $thisday   = substr($date,6,2);
+  if (isset($date) && strlen($date) > 0) {
+     $thisyear  = substr($date, 0, 4);
+     $thismonth = substr($date, 4, 2);
+     $thisday   = substr($date, 6, 2);
   } else {
-     if ($month == 0) {
-        $thismonth = date("m");
-     } else {
-        $thismonth = $month;
-     }
-
-     if ($year == 0) {
-        $thisyear = date("Y");
-     } else {
-        $thisyear = $year;
-     }
-
-     if ($day == 0) {
-        $thisday = date("d");
-     } else {
+     if (!isset($day) || !$day)
+        $thisday = $phpgw->calendar->today["day"];
+     else
         $thisday = $day;
-     }
+     if (!isset($month) || !$month)
+        $thismonth = $phpgw->calendar->today["month"];
+     else
+        $thismonth = $month;
+     if (!isset($year) || !$year)
+        $thisyear = $phpgw->calendar->today["year"];
+     else
+        $thisyear = $year;
   }
 
-  $now		 = mktime (2, 0, 0, $thismonth, $thisday, $thisyear);
+  $now		 = $phpgw->calendar->splitdate(mktime (2, 0, 0, $thismonth, $thisday, $thisyear));
 
-  $next		 = mktime(2, 0, 0, $thismonth, $thisday + 1, $thisyear);
-  $nextyear	 = date("Y", $next);
-  $nextmonth	 = date("m", $next);
-  $nextday	 = date("d", $next);
-  $month_ago	 = date("Ymd", mktime(2, 0, 0,$thismonth - 1,$thisday,$thisyear));
+  $next          = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth,$thisday + 1,$thisyear));
 
-  $prev		 = mktime(2, 0, 0, $thismonth, $day - 1, $thisyear);
-  $prevyear	 = date("Y", $prev);
-  $prevmonth	 = date("m", $prev);
-  $prevday	 = date("d", $prev);
-  $month_ahead	 = date("Ymd", mktime(2,0,0,$thismonth + 1,$thisday,$thisyear));
+  $month_ago	 = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,$thisday,$thisyear));
 
-  /* Pre-Load the repeated events for quckier access */
-  $repeated_events = read_repeated_events();
+  $prev          = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
+
+  $month_ahead	 = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,$thisday,$thisyear));
 
   if ($friendly) {
-     echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
+     echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
   }
 
 ?>
-<TABLE BORDER=0 WIDTH=100%>
-<TR><TD VALIGN="top" WIDTH=70%"><TR><TD>
-<TABLE BORDER=0 WIDTH=100%>
-<TR>
-<TD ALIGN="middle"><FONT SIZE="+2" COLOR="<?php echo $H2COLOR;?>"><B>
+<table border="0" width="100%">
+<tr><td valign="top" width="70%"><tr><td>
+<table border="0" width=100%>
+<tr>
+<td align="middle"><font size="+2" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>"><b>
 
-<?php echo "$month_names[$thismonth], $thisday $thisyear"; ?>
+<?php
+  $m = mktime(2,0,0,$thismonth,1,$thisyear);
+  echo lang(strftime("%B",$m)) . " " .$thisday . ", " . $thisyear;
+?>
 
-</B></FONT>
-<FONT SIZE="+1" COLOR="<?php echo $H2COLOR;?>">
+</b></font>
+<font size="+1" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
 <br>
 <?php
   echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
 ?>
-</FONT>
-</TD>
-</TR>
-</TABLE>
+</font>
+</td>
+</tr>
+</table>
 
-<TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
- <TR>
-  <TD BGCOLOR="<?php echo $TABLEBG?>">
-   <TABLE BORDER="0" WIDTH="100%" CELLSPACING="1" CELLPADDING="2" BORDER="0">
-    <?php print_day_at_a_glance($now, $friendly); ?>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+ <tr>
+  <td bgcolor="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
+   <table border="0" width="100%" cellspacing="1" cellpadding="2" border="0">
+    <?php echo $phpgw->calendar->print_day_at_a_glance($now); ?>
   </td>
- </TR>
+ </tr>
 
-</TABLE>
-</TD></TR></TABLE>
-</TD>
-<TD VALIGN="top">
+</table>
+</td></tr></table>
+</td>
+<td valign="top">
 <?php
-  if (! $friendly) {
+  if (!$friendly) {
      ?>
       <DIV ALIGN="right">
       <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0">
