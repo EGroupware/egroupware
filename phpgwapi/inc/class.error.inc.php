@@ -46,7 +46,7 @@
 			$parray = array($parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9'],$parms['p10']);
 			$fname = $parms['file'];
 			$line  = $parms['line'];
-			if (eregi('([DIWEF])-(.*)[\,](.*)',$etext,$match))
+			if (eregi('([DIWEF])-([[:alnum:]]*)\,(.*)',$etext,$match))
 			{
 				$this->severity = strtoupper($match[1]);
 				$this->code     = $match[2];
