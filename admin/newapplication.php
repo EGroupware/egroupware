@@ -61,7 +61,7 @@
                      . "$n_app_status','$app_order')",__LINE__,__FILE__);
 
         if($n_app_anonymous) {
-          $phpgw->acl->add($n_app_name,'everywhere',0,'g',1);
+          $phpgw->acl->add_repository($n_app_name,'everywhere',0,PHPGW_ACL_READ);
         }
 
         Header("Location: " . $phpgw->link("/admin/applications.php"));

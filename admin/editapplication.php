@@ -67,9 +67,9 @@
                         . "$n_app_status',app_order='$app_order' where app_name='$old_app_name'",__LINE__,__FILE__);
 
         if($n_app_anonymous) {
-          $phpgw->acl->add($n_app_name,'everywhere',0,'g',PHPGW_ACL_READ);
+          $phpgw->acl->add_repository($n_app_name,'everywhere',0,PHPGW_ACL_READ);
         } else {
-          $phpgw->acl->delete($n_app_name,'everywhere',0,'g');
+          $phpgw->acl->delete_repository($n_app_name,'everywhere',0);
         }
 
         Header("Location: " . $phpgw->link("/admin/applications.php"));
@@ -92,7 +92,7 @@
      $n_app_status = $phpgw->db->f("app_enabled");
      $old_app_name = $phpgw->db->f("app_name");
      $app_order    = $phpgw->db->f("app_order");
-     $n_app_anonymous = $phpgw->acl->check('', PHPGW_ACL_READ, $n_app_name);
+     $n_app_anonymous = $phpgw->acl->check('everywhere', PHPGW_ACL_READ, $n_app_name);
   }
  
   $p->set_var("lang_header",lang("Edit application"));
