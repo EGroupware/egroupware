@@ -51,9 +51,6 @@
 					'confirm' => 'confirm','reject' => 'reject','email' => 'email',
 					'fax' => 'fax' )
 			);
-			$this->longnames = 0;   // should go into preferences
-			$this->listChilds = 1;
-
 			$this->so = CreateObject('infolog.soinfolog');
 			$this->data = &$this->so->data;
 			$this->grants = &$this->so->grants;
@@ -62,7 +59,7 @@
 		}
 				
 		function accountInfo($id,$account_data=0,$longname=0) {
-			global $phpgw;
+			global $phpgw,$phpgw_info;
 			
 			if (!$id) return '&nbsp;';
 			
@@ -72,7 +69,7 @@
 				$accounts->read_repository();
 				$account_data = $accounts->data;
 			}
-			if ($longnames)
+			if ($phpgw_info['user']['preferences']['infolog']['longNames'])
 				return $account_data['firstname'].' '.$account_data['lastname'];
 				
 			return $account_data['account_lid'];   

@@ -22,6 +22,7 @@
 			'add'		=>	True,
 			'edit'	=> True,
 			'delete'	=> True,
+			'preferences' => True
 		);
 		var $icons;
 		var $data;
@@ -315,7 +316,8 @@
 				$sql_query = "AND (info_from like '%$query%' OR info_subject like '%$query%' OR info_des like '%$query%') ";
 
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $info_id : 0);  
-			if ($this->bo->listChilds && $action != 'sp')
+			if (!$phpgw_info['user']['preferences']['infolog']['listNoSubs'] &&
+				 $action != 'sp')
 				$pid = '';
 
 			$db->query("SELECT COUNT(*) FROM phpgw_infolog WHERE $filtermethod $pid $sql_query",__LINE__,__FILE__);
@@ -756,6 +758,54 @@
 					array('info_id' => $info_id,'confirm' => 'True')+
 					$this->menuaction('delete')));
 				$t->pfp('out','info_delete');
+			}
+		}
+
+		function preferences( ) {
+			global $phpgw,$phpgw_info;
+			global $save;
+
+			$prefs = array(
+				'homeShowEvents' => 'Show open Events: Tasks/Calls/Notes on main screen',
+				'listNoSubs'	=> 'List no Subs/Childs',
+				'longNames'	=> 'Show full usernames'
+			);
+			$phpgw->preferences->read_repository();
+
+			if ($save) {
+				while (list($pref,$lang) = each($prefs)) {
+					$phpgw->preferences->add('infolog',$pref);
+				}
+				$phpgw->preferences->save_repository(True);
+
+				Header('Location: '.$phpgw->link('/preferences/index.php'));
+				$phpgw->common->phpgw_exit();
+			} else {
+			$phpgw->common->phpgw_header();
+			echo parse_navbar();
+
+			$t = &$this->template; $html = &$this->html;
+
+			$t->set_file(array('info_prefs' => 'preferences.tpl'));
+
+			$vars = Array(
+				'title' => lang('InfoLog preferences'),
+				'text' => '&nbsp;',
+				'action_url' => $html->link('/index.php',
+													 $this->menuaction('preferences')),
+				'bg_h_color' => $phpgw_info['theme']['th_bg'],
+				'save_button' => $html->submit_button('save','Save'),
+			);
+			$t->set_var($vars);
+
+			$t->set_block('info_prefs', 'pref_line', 'pref_linehandle');
+			while (list($pref,$lang) = each($prefs)) {
+				$t->set_var('bg_nm_color',$this->nextmatchs->alternate_row_color());
+				$t->set_var('field',lang($lang));
+				$t->set_var('data',$html->checkbox($pref,$phpgw_info['user']['preferences']['infolog'][$pref]));
+				$t->parse('pref_linehandle','pref_line',True);
+			}
+			$t->pfp('out','info_prefs');
 			}
 		}
 	}
