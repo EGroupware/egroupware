@@ -10,7 +10,7 @@
 		<td><font face="{font}">{department}</font></td>
 	</tr>
 	<tr>
-		<td><font face="{font}">{city},&nbsp;{state}&nbsp{zip}</font></td>
+		<td><font face="{font}">{city},&nbsp;{state}&nbsp;{zip}</font></td>
 	</tr>
 	<tr>
 		<td><font face="{font}">{country}</font></td>
