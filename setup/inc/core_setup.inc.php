@@ -31,6 +31,11 @@
     @$db->next_record();
     $oldversion = $db->f("app_version");
   }
+
+  if ($action != "Delete my old tables" && ! isset($oldversion)) {
+     setup_header();
+     echo "<br>";
+  }
   
   if (PHP_VERSION < "3.0.16") {
      echo "You appear to be running an old version of PHP.  It its recommend that you upgrade "
@@ -173,10 +178,10 @@
       break;      
     default:
       if (isset($oldversion)){
-        if ($phpgw_info["server"]["version"] != $oldversion){
-          Header("Location: $PHP_SELF?action=regularversion");
-	  $ok = false;
-        }
+         if ($phpgw_info["server"]["version"] != $oldversion){
+            Header("Location: $PHP_SELF?action=regularversion");
+      	  $ok = false;
+         }
       }else{
         @$db->query("select * from config");
         if (@$db->num_rows() == 0){
@@ -204,7 +209,7 @@
             echo "</table>\n";
           }else{
             Header("Location: $PHP_SELF?action=prebetaversion");
-	    $ok = false;
+    	    $ok = false;
           }
         }else{
           echo "<table border=\"0\" align=\"center\">\n";

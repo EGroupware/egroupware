@@ -56,8 +56,6 @@
      $oldversion = $db->f("app_version");
   }
 
-
-
   /**********************************************************************\
    * First order of business is to upgrade or install the core.         *
    * if $ok is set to false after this include, the setup stops here    *
@@ -66,8 +64,6 @@
    * for applications to inteact with the user, this is how it is.      *
    *                                                                    *
   \**********************************************************************/
-  setup_header();
-  echo "<br>";
 
   $ok = true;
   $baseDir = $phpgw_info["server"]["server_root"];

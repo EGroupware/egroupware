@@ -314,13 +314,12 @@
          update_version_table();
       }
       if ($currentver == "0.9.4pre1") {
-        $sql = "CREATE TABLE notes (
-           accountid      int(11),
-           date           int(11),
-           note           text, 
-           noteid         int(20) auto_increment, 
-           PRIMARY KEY (noteid)
-        )";
+         $sql = "CREATE TABLE notes (
+                  note_id        serial, 
+                  note_owner     int,
+                  note_date      int,
+                  note_content   text
+                )";
         $db->query($sql);
         $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('notes', 'Notes', 1, 13, NULL, '".$phpgw_info["server"]["version"]."')");
         $currentver = "0.9.4pre2";

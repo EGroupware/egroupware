@@ -252,12 +252,11 @@
   $db->query($sql);
 
   $sql = "CREATE TABLE notes (
-     accountid      int(11),
-     date           int(11),
-     note           text, 
-     noteid         int(20) auto_increment, 
-     PRIMARY KEY (noteid)
-  )";
+           note_id        serial, 
+           note_owner     int,
+           note_date      int,
+           note_content   text
+          )";
   $db->query($sql);
 
   $currentver = "0.9.3";
