@@ -62,6 +62,18 @@
     </tr>
 
    <?php $selected = array(); ?>
+   <?php $selected[$GLOBALS['current_config']['sessions_checkip']] = ' selected'; ?>
+   <tr bgcolor="e6e6e6">
+     <td>Check ip address of all sessions (Recommended setting is 'Yes'):</td>
+     <td>
+      <select name="newsettings[sessions_checkip]">
+       <option value="">No</option>
+       <option value="True"<?php echo $selected['True']?>>Yes</option>
+      </select>
+     </td>
+    </tr>
+
+   <?php $selected = array(); ?>
    <?php $selected[$GLOBALS['current_config']['checkfornewversion']] = ' selected'; ?>
    <tr bgcolor="e6e6e6">
      <td>Would you like phpGroupWare to check for new version<br>when admins login ?:</td>
@@ -91,7 +103,7 @@
      <td>Default file system space per user/group ?:</td>
      <td>
       <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="<?php echo $GLOBALS['current_config']['vfs_default_account_size_number']; ?> ">
-	&nbsp;&nbsp;
+      &nbsp;&nbsp;
    <?php $selected[$GLOBALS['current_config']['vfs_default_account_size_type']] = ' selected'; ?>
       <select name="newsettings[vfs_default_account_size_type]">
        <option value="gb" <?php echo $selected['gb']?>>GB</option>
