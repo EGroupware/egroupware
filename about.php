@@ -31,11 +31,12 @@
 
 	$data = array
 	(
-		'phpgw_logo'	=> $GLOBALS['phpgw']->common->get_image_path('phpgwapi'),
-		'lang_version'	=> lang('version'),
-		'phpgw_version'	=> 'phpGroupWare API ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
-		'phpgw_descr'	=> lang('is a multi-user, web-based groupware suite written in PHP'), 
-		'about_app'		=> $app_data
+		'phpgw_logo'			=> $GLOBALS['phpgw']->common->get_image_path('phpgwapi'),
+		'lang_url_statustext'	=> lang('phpGroupWare homepage'),
+		'lang_version'			=> lang('version'),
+		'phpgw_version'			=> 'phpGroupWare API ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
+		'phpgw_descr'			=> lang('is a multi-user, web-based groupware suite written in PHP'), 
+		'about_app'				=> $app_data
 	);
 
 	$tpl->set_var('about',$data);

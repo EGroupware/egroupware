@@ -3,14 +3,19 @@
 	<xsl:template match="about">
 		<table cellpadding="2" cellspacing="2" width="70%" align="center" class="portal">
 			<xsl:variable name="phpgw_logo"><xsl:value-of select="phpgw_logo"/></xsl:variable>
+			<xsl:variable name="lang_url_statustext"><xsl:value-of select="lang_url_statustext"/></xsl:variable>
 			<tr>
 				<td colspan="2">
-					<a href="http://www.phpgroupware.org" target="_blank"><img src="{$phpgw_logo}/logo.png" border="0"/></a>
+					<a href="http://www.phpgroupware.org" target="_blank" onMouseover="window.status='{$lang_url_statustext}'; return true;" onMouseout="window.status=''; return true;">
+						<img src="{$phpgw_logo}/logo.png" border="0" alt="{$lang_url_statustext}"/>
+					</a>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<a href="http://www.phpgroupware.org" target="_blank">phpGroupWare </a>
+					<a href="http://www.phpgroupware.org" target="_blank" onMouseover="window.status='{$lang_url_statustext}'; return true;" onMouseout="window.status=''; return true;">
+						<xsl:text>phpGroupWare </xsl:text>
+					</a>
 					<xsl:value-of select="phpgw_descr"/>
 				</td>
 			</tr>
