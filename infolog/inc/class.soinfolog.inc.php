@@ -307,7 +307,7 @@
 				}
 			}
 			// set parent_id to 0 for all not deleted children
-			$this->db->query("UPDATE phpgw_infolog SET info_parent_id=0 WHERE info_parent_id=$info_id",__LINE__,__FILE__);
+			$this->db->query("UPDATE phpgw_infolog SET info_id_parent=0 WHERE info_id_parent=$info_id",__LINE__,__FILE__);
 		}
 
 		/*!
