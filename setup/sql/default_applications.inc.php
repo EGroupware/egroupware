@@ -33,9 +33,9 @@
 				$new_schema[] = $dir;
 			}
 
-			if (is_file(PHPGW_SERVER_ROOT . SEP . $dir . SEP . 'setup' . SEP . 'setup_info.inc.php'))
+			if (is_file(PHPGW_SERVER_ROOT . SEP . $dir . SEP . 'setup' . SEP . 'setup.inc.php'))
 			{
-				include(PHPGW_SERVER_ROOT . SEP . $dir . SEP . 'setup' . SEP . 'setup_info.inc.php');
+				include(PHPGW_SERVER_ROOT . SEP . $dir . SEP . 'setup' . SEP . 'setup.inc.php');
 			}
 			else
 			{
