@@ -66,9 +66,9 @@
 				if ($this->mbstring = extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX))
 				{
 					ini_set('mbstring.internal_encoding',$this->system_charset);
-					if (ini_get('mbstring.func_overload') < 4)
+					if (ini_get('mbstring.func_overload') < 7)
 					{
-						if ($warnings) echo "<p>Warning: Please set <b>mbstring.func_overload = 4</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
+						if ($warnings) echo "<p>Warning: Please set <b>mbstring.func_overload = 7</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
 					}
 				}
 				else
@@ -247,7 +247,7 @@
 			}
 			if (!$to)
 			{
-				$to = $this->system_charset;
+				$to = $this->charset();
 			}
 			if ($from == $to || !$from || !$to)
 			{
