@@ -6,6 +6,7 @@
 <META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
 <META NAME="description" CONTENT="phpGroupWare">
 <META NAME="keywords" CONTENT="phpGroupWare">
+<meta name="robots" content="none">
 <STYLE type="text/css">
 <!--
 	A.main_menu, A.main_menu:LINK, A.main_menu:VISITED 
