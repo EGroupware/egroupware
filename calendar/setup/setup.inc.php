@@ -24,17 +24,21 @@
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_alarm';
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['calendar']['hooks'][] = 'add_def_prefs';
-	$setup_info['calendar']['hooks'][] = 'admin';
-	$setup_info['calendar']['hooks'][] = 'deleteaccount';
-	$setup_info['calendar']['hooks'][] = 'email';
-	$setup_info['calendar']['hooks'][] = 'home';
-	$setup_info['calendar']['hooks'][] = 'home_day';
-	$setup_info['calendar']['hooks'][] = 'home_month';
-	$setup_info['calendar']['hooks'][] = 'home_week';
-	$setup_info['calendar']['hooks'][] = 'home_year';
-	$setup_info['calendar']['hooks'][] = 'manual';
-	$setup_info['calendar']['hooks'][] = 'preferences';
+	$setup_info['calendar']['hooks'] = array
+	(
+		'add_def_prefs',
+		'admin',
+		'deleteaccount',
+		'email',
+		'home',
+		'home_day',
+		'home_month',
+		'home_week',
+		'home_year',
+		'manual',
+		'preferences',
+		'about'
+	);
 
 	/* Dependencies for this app to work */
 	$setup_info['calendar']['depends'][] = array(
