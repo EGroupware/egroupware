@@ -155,6 +155,126 @@
 	}
 
 	/*!
+	 @function safe_args
+	 @abstract Allows for array and direct function params as well as sanatization.
+	 @author seek3r
+	 @discussion This function is used to validate param data as well as offer flexible function usage.
+	 @syntax safe_args($expected_args, $recieved_args,__LINE__,__FILE__);
+	 @example 
+		function somefunc()
+		{
+			$expected_args[0] = Array('name'=>'fname','default'=>'joe', 'type'=>'string');
+			$expected_args[1] = Array('name'=>'mname','default'=>'hick', 'type'=>'string');
+			$expected_args[2] = Array('name'=>'lname','default'=>'bob', 'type'=>'string');
+			$recieved_args = func_get_args();
+			$args = safe_args($expected_args, $recieved_args,__LINE__,__FILE__);
+			echo 'Full name: '.$args['fname'].' '.$args['fname'].' '.$args['lname'].'<br>';
+			//default result would be:
+			// Full name: joe hick bob<br>
+		}
+		
+		Using this it is possible to use the function in any of the following ways
+		somefunc('jack','city','brown');
+		or
+		somefunc(array('fname'=>'jack','mname'=>'city','lname'=>'brown'));
+		or
+		somefunc(array('lname'=>'brown','fname'=>'jack','mname'=>'city'));
+		
+		For the last one, when using named params in an array you dont have to follow any order
+		All three would result in - Full name: jack city brown<br>
+		
+		When you use this method of handling params you can secure your functions as well offer
+		flexibility needed for both normal use and web services use.
+		If you have params that are required just set the default as ##REQUIRED##
+		Users of your functions can also use ##DEFAULT## to use your default value for a param 
+		when using the standard format like this:
+		somefunc('jack','##DEFAULT##','brown');
+		This would result in - Full name: jack hick brown<br>
+		Its using the default value for the second param.
+		Of course if you have the second param as a required field it will fail to work.
+	*/
+	function safe_args($expected, $recieved, $line='??', $file='??')
+	{
+		/* This array will contain all the required fields */
+		$required = Array();
+
+		/* This array will contain all types for sanatization checking */
+		/* only used when an array is passed as the first arg          */
+		$types = Array();
+		
+		/* start by looping thru the expected list and set params with */
+		/* the default values                                          */
+		$num = count($expected);
+    for ($i = 0; $i < $num; $i++)
+		{
+			$args[$expected[$i]['name']] = $expected[$i]['default'];
+			if ($expected[$i]['default'] === '##REQUIRED##')
+			{
+				$required[$expected[$i]['name']] = True;
+			}
+			$types[$expected[$i]['name']] = $expected[$i]['type']; 
+ 		}
+		
+		/* Make sure they passed at least one param */
+		if(count($recieved) != 0)
+		{
+			/* if used as standard function we loop thru and set by position */
+			if(!is_array($recieved[0]))
+			{
+		    for ($i = 0; $i < $num; $i++)
+				{
+					if(isset($recieved[$i]) && $recieved[$i] != '##DEFAULT##')
+					{
+						if(sanitize($recieved[$i],$expected[$i]['type']))
+						{
+							$args[$expected[$i]['name']] = $recieved[$i];
+							unset($required[$expected[$i]['name']]);
+						}
+						else
+						{
+							echo 'Fatal Error: Invalid paramater type for '.$expected[$i]['name'].' on line '.$line.' of '.$file.'<br>';
+							exit;
+						}
+					}
+   			}
+			}
+			/* if used as standard function we loop thru and set by position */
+			else
+			{
+		    for ($i = 0; $i < $num; $i++)
+				{
+					$types[$expected[$i]['name']] = $expected[$i]['type']; 
+ 				}
+				while(list($key,$val) = each($recieved[0]))
+				{
+					if($val != '##DEFAULT##')
+					{
+						if(sanitize($val,$types[$key]) == True)
+						{
+							$args[$key] = $val;
+							unset($required[$key]);
+						}
+						else
+						{
+							echo 'Fatal Error: Invalid paramater type for '.$key.' on line '.$line.' of '.$file.'<br>';
+							exit;
+						}
+					}
+				}
+			}
+		}
+		if(count($required) != 0)
+		{
+			while (list($key) = each($required))
+			{
+				echo 'Fatal Error: Missing required paramater '.$key.' on line '.$line.' of '.$file.'<br>';
+			}
+			exit;
+		}
+		return $args;
+	}
+
+	/*!
 	 @function sanitize
 	 @abstract Validate data.
 	 @author seek3r
@@ -552,7 +672,8 @@
 		{
 			if ($p1 == '_UNDEF_' && $p1 != 1)
 			{
-				eval('$obj = new ' . $classname . ';');
+				echo('$obj = new ' . $classname . ';');
+				$obj = new $classname;
 			}
 			else
 			{
