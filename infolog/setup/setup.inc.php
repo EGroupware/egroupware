@@ -12,6 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['infolog']['name']      = 'infolog';
+	$setup_info['infolog']['title']     = 'InfoLog';	// still needed to run in 0.9.14/6
 	$setup_info['infolog']['version']   = '0.9.15.004';
 	$setup_info['infolog']['app_order'] = 20;
 	$setup_info['infolog']['tables']    = array('phpgw_infolog','phpgw_links');
@@ -57,7 +58,7 @@
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.13', '0.9.14','0.9.15')
+		 'versions' => Array('0.9.13','0.9.14','0.9.15')
 	);
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'etemplate',
