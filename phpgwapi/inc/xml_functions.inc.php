@@ -677,7 +677,10 @@
 		$rdata = $m->getParam(0);
 		$data = $rdata->scalarval();
 
-		$server_name = $data['server_name']->scalarval();
+		if($data['server_name'])
+		{
+			$server_name = $data['server_name']->scalarval();
+		}
 		$username    = $data['username']->scalarval();
 		$password    = $data['password']->scalarval();
 
@@ -699,7 +702,8 @@
 			{
 				$user = $username;
 			}
-			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create($user,$password);
+			$sessionid = $GLOBALS['phpgw']->session->create($user,$password);
+			$kp3 = $GLOBALS['phpgw']->session->kp3;
 		}
 
 		if($sessionid && $kp3)
