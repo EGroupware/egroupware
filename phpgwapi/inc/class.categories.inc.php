@@ -137,19 +137,26 @@
 				$ordermethod = ' ORDER BY cat_main, cat_level, cat_name ASC';
 			}
 
-			if (is_array($this->grants))
+			if ($this->account_id == '-1')
 			{
-				$grants = $this->grants;
-				while(list($user) = each($grants))
-				{
-					$public_user_list[] = $user;
-				}
-				reset($public_user_list);
-				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
+				$grant_cats = " cat_owner='-1' ";
 			}
 			else
 			{
-				$grant_cats = " cat_owner='" . $this->account_id . "' or cat_owner='-1' ";
+				if (is_array($this->grants))
+				{
+					$grants = $this->grants;
+					while(list($user) = each($grants))
+					{
+						$public_user_list[] = $user;
+					}
+					reset($public_user_list);
+					$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
+				}
+				else
+				{
+					$grant_cats = " cat_owner='" . $this->account_id . "' OR cat_owner='-1' ";
+				}
 			}
 
 			if ($parent_id)
@@ -216,19 +223,26 @@
 				$ordermethod = ' ORDER BY cat_name ASC';
 			}
 
-			if (is_array($this->grants))
+			if ($this->account_id == '-1')
 			{
-				$grants = $this->grants;
-				while(list($user) = each($grants))
-				{
-					$public_user_list[] = $user;
-				}
-				reset($public_user_list);
-				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
+				$grant_cats = " cat_owner='-1' ";
 			}
 			else
 			{
-				$grant_cats = " cat_owner='" . $this->account_id . "' or cat_owner='-1' ";
+				if (is_array($this->grants))
+				{
+					$grants = $this->grants;
+					while(list($user) = each($grants))
+					{
+						$public_user_list[] = $user;
+					}
+					reset($public_user_list);
+					$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
+				}
+				else
+				{
+					$grant_cats = " cat_owner='" . $this->account_id . "' or cat_owner='-1' ";
+				}
 			}
 
 			if ($query)

@@ -59,7 +59,6 @@
 			_debug_array($data);
 		}
 
-		/* Called only by index() */
 		function save_sessiondata()
 		{
 			$data = array
@@ -166,7 +165,7 @@
 					$descr = '<font color="FF0000"><b>' . $descr . '</b></font>';
 				}
 
-				if ($categories[$i]['app_name'] == 'phpgw')
+				if ($GLOBALS['appname'] && $categories[$i]['app_name'] == 'phpgw')
 				{
 					$appendix = '&lt;' . lang('Global') . '&gt;';
 				}
@@ -182,8 +181,6 @@
 				));
 
 				$link_data['menuaction'] = 'admin.uicategories.add';
-				$this->template->set_var('add_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
-
 				$link_data['cat_parent'] = $id;
 				$this->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
 				$this->template->set_var('lang_sub_entry',lang('Add sub'));
@@ -200,35 +197,45 @@
 				$this->template->fp('list','cat_list',True);
 			}
 
+			$link_data['menuaction'] = 'admin.uicategories.add';
+			$link_data['cat_parent'] = '';
+			$this->template->set_var('add_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
+
 			$this->save_sessiondata();
 			$this->template->pfp('out','cat_list_t',True);
 		}
 
 		function add()
 		{
+			$link_data = array
+			(
+				'menuaction'	=> 'admin.uicategories.index',
+				'appname'		=> $GLOBALS['appname']
+			));
+
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
 			$this->set_langs();
 
-			$new_parent = $GLOBALS['HTTP_POST_VARS']['new_parent'];
-			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent = $GLOBALS['HTTP_POST_VARS']['cat_parent'] ? $GLOBALS['HTTP_POST_VARS']['cat_parent'] : $GLOBALS['HTTP_GET_VARS']['cat_parent'];
-			$cat_name   = $GLOBALS['HTTP_POST_VARS']['cat_name'];
-			$cat_description = $GLOBALS['HTTP_POST_VARS']['cat_description'];
+			$new_parent			= $GLOBALS['HTTP_POST_VARS']['new_parent'];
+			$submit				= $GLOBALS['HTTP_POST_VARS']['submit'];
+			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'] ? $GLOBALS['HTTP_POST_VARS']['cat_parent'] : $GLOBALS['HTTP_GET_VARS']['cat_parent'];
+			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
+			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
 
 			$this->template->set_file(array('form' => 'category_form.tpl'));
 			$this->template->set_block('form','add','addhandle');
 			$this->template->set_block('form','edit','edithandle');
 
+			$this->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+
 			if ($GLOBALS['appname'])
 			{
-				$this->bo->cats->app_name = $GLOBALS['appname'];
 				$this->template->set_var('title_categories',lang('Add global category for %1',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
 			}
 			else
 			{
-				$this->bo->cats->app_name = 'phpgw';
 				$this->template->set_var('title_categories',lang('Add global category'));
 			}
 
@@ -259,9 +266,9 @@
 				}
 			}
 
-			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.add' . '&appname=' . $GLOBALS['appname']));
-			$this->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index' . '&appname=' . $GLOBALS['appname']));
-			$this->template->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $this->cat_id . '">');
+			$link_data['menuaction'] = 'admin.uicategories.add'; 			
+			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+
 			$this->template->set_var('category_list',$this->bo->formatted_list(array('select' => 'select','all' => 'all','cat_parent' => $cat_parent)));
 			$this->template->set_var('cat_name',$cat_name);
 			$this->template->set_var('cat_description',$cat_description);
@@ -274,9 +281,15 @@
 
 		function edit()
 		{
+			$link_data = array
+			(
+				'menuaction'	=> 'admin.uicategories.index',
+				'appname'		=> $GLOBALS['appname']
+			));
+
 			if (!$this->cat_id)
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index'));
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -284,19 +297,19 @@
 
 			$this->set_langs();
 
-			$new_parent = $GLOBALS['HTTP_POST_VARS']['new_parent'];
-			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent = $GLOBALS['HTTP_POST_VARS']['cat_parent'];
-			$cat_name   = $GLOBALS['HTTP_POST_VARS']['cat_name'];
-			$cat_description = $GLOBALS['HTTP_POST_VARS']['cat_description'];
+			$new_parent			= $GLOBALS['HTTP_POST_VARS']['new_parent'];
+			$submit				= $GLOBALS['HTTP_POST_VARS']['submit'];
+			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'];
+			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
+			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
 
 			$this->template->set_file(array('form' => 'category_form.tpl'));
 			$this->template->set_block('form','add','addhandle');
 			$this->template->set_block('form','edit','edithandle');
 
-			$this->bo->cats->app_name = 'phpgw';
-
 			$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n";
+			$this->template->set_var('hidden_vars',$hidden_vars);
+			$this->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			if ($new_parent)
 			{
@@ -337,10 +350,11 @@
 				$this->template->set_var('title_categories',lang('Edit global category'));
 			}
 
-			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.edit&appname=' . $GLOBALS['appname']));
-			$this->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.delete&cat_id=' . $this->cat_id . '&appname=' . $GLOBALS['appname']));
-			$this->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $GLOBALS['appname']));
-			$this->template->set_var('hidden_vars',$hidden_vars);
+			$link_data['menuaction']	= 'admin.uicategories.edit'; 
+			$link_data['cat_id']		= $this->cat_id; 
+			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$link_data['menuaction']	= 'admin.uicategories.delete'; 
+			$this->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$this->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats[0]['name']));
 			$this->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats[0]['description']));
@@ -365,8 +379,6 @@
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 			}
 
-			$this->bo->cats->app_name = 'phpgw';
-
 			if ($GLOBALS['HTTP_POST_VARS']['confirm'])
 			{
 				if ($GLOBALS['HTTP_POST_VARS']['subs'])
@@ -381,8 +393,6 @@
 			}
 			else
 			{
-				$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n";
-
 				$this->template->set_file(array('category_delete' => 'delete_cat.tpl'));
 				$this->template->set_block('category_delete','delete','deletehandle');
 				$this->template->set_block('category_delete','done','donehandle');
@@ -399,11 +409,14 @@
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 
+				$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n";
+				$this->template->set_var('hidden_vars',$hidden_vars);
+
 				if ($apps_cats)
 				{
 					$this->template->set_var('messages',lang('This category is currently being used by applications as a parent category') . '<br>'
 						. lang('You will need to remove the subcategories before you can delete this category'));
-					$this->template->set_var('hidden_vars',$hidden_vars);
+
 					$this->template->set_var('lang_subs','');
 					$this->template->set_var('subs','');
 					$this->template->set_var('nolink',$nolink);
@@ -415,13 +428,14 @@
 				else
 				{
 					$this->template->set_var('messages',lang('Are you sure you want to delete this category ?'));
-					$this->template->set_var('hidden_vars',$hidden_vars);
 
-					$exists = $this->bo->exists(array(
+					$exists = $this->bo->exists(array
+					(
 						'type'     => 'subs',
 						'cat_name' => '',
 						'cat_id'   => $this->cat_id
 					));
+
 					if ($exists)
 					{
 						$this->template->set_var('lang_subs',lang('Do you also want to delete all global subcategories ?'));

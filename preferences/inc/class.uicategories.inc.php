@@ -173,6 +173,10 @@
 				{
 					$appendix = '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['phpgw_info']['apps'][$cats_app]['title'] . '&gt;';
 				}
+				else
+				{
+					$appendix = '';
+				}
 
 				$level = $cats[$i]['level'];
 

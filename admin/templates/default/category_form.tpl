@@ -30,13 +30,11 @@
 <table width="50%" border="0" cellspacing="2" cellpadding="2">
 	<tr valign="bottom">
 		<td height="50" align="center">
-			{hidden_vars}
 			<input type="submit" name="submit" value="{lang_save}"></td>
 		<td height="50" align="center">
 			<input type="reset" name="reset" value="{lang_reset}"></form></td>
 		<td height="50" align="center">
 			<form method="POST" action="{doneurl}">
-			{hidden_vars}
 			<input type="submit" name="done" value="{lang_done}"></form></td>
 	</tr>
 </table>
@@ -56,7 +54,6 @@
 			<input type="submit" name="delete" value="{lang_delete}"></form></td>
 		<td height="50" align="center">
 			<form method="POST" action="{doneurl}">
-			{hidden_vars}
 			<input type="submit" name="done" value="{lang_done}"></form></td>
 	</tr>
 </table>

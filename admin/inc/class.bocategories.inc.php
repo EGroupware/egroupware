@@ -124,7 +124,7 @@
 
 		function formatted_list($data)
 		{
-			return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent']);
+			return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent'],True);
 		}
 
 		function delete($cat_id,$subs=False)
