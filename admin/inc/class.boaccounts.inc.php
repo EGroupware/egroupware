@@ -15,12 +15,12 @@
 	{
 		var $so;
 		var $public_functions = array(
-			'add_group'	=> True,
-			'add_user'	=> True,
-			'delete_group'	=> True,
-			'delete_user'	=> True,
-			'edit_group'	=> True,
-			'edit_user'	=> True
+			'add_group'    => True,
+			'add_user'     => True,
+			'delete_group' => True,
+			'delete_user'  => True,
+			'edit_group'   => True,
+			'edit_user'    => True
 		);
 
 		var $xml_functions = array();
@@ -37,7 +37,7 @@
 			$this->so = createobject('admin.soaccounts');
 		}
 
-		function list_methods($_type='xmlrpc')
+		function DONTlist_methods($_type='xmlrpc')
 		{
 			/*
 			  This handles introspection or discovery by the logged in client,
@@ -116,9 +116,8 @@
 			$GLOBALS['phpgw']->db->unlock();
 
 			$ui = createobject('admin.uiaccounts');
-		  $ui->list_accounts();
+			$ui->list_accounts();
 			return False;
-
 		}
 
 		function delete_user()
@@ -149,10 +148,10 @@
 						}
 					}
 				}
-		
+
 				$GLOBALS['phpgw']->common->hook_single('deleteaccount','preferences');
 				$GLOBALS['phpgw']->common->hook_single('deleteaccount','admin');
-		
+
 				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'users' . SEP;
 
 				if (! @rmdir($basedir . $lid))
@@ -175,7 +174,7 @@
 			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
 			{
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_groups();
+				$ui->list_groups();
 				return False;
 			}
 
@@ -201,10 +200,10 @@
 			@reset($account_apps);
 
 			$group_info = Array(
-				'account_id'	=> ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
-				'account_name'	=> ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
-				'account_user'	=> $account_user,
-				'account_apps'	=> $account_apps
+				'account_id'   => ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
+				'account_name' => ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
+				'account_user' => $account_user,
+				'account_apps' => $account_apps
 			);
 
 			$this->validate_group($group_info);
@@ -276,9 +275,9 @@
 					$GLOBALS['pref']->save_repository();
 				}
 			}
-			
+
 			$acl->save_repository();
-			
+
 			$basedir = $phpgw_info['server']['files_dir'] . SEP . 'groups' . SEP;
 			$cd = 31;
 			umask(000);
@@ -290,7 +289,7 @@
 			$GLOBALS['phpgw']->db->unlock();
 
 			$ui = createobject('admin.uiaccounts');
-		  $ui->list_groups();
+			$ui->list_groups();
 			return False;
 		}
 
@@ -306,7 +305,7 @@
 			if ($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				$userData = array(
-					'account_type'				=> 'u',
+					'account_type'          => 'u',
 					'account_lid'           => $GLOBALS['HTTP_POST_VARS']['account_lid'],
 					'account_firstname'     => $GLOBALS['HTTP_POST_VARS']['account_firstname'],
 					'account_lastname'      => $GLOBALS['HTTP_POST_VARS']['account_lastname'],
@@ -324,7 +323,7 @@
 					'account_expires_day'   => $GLOBALS['HTTP_POST_VARS']['account_expires_day'],
 					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year'],
 					'account_expires_never' => $GLOBALS['HTTP_POST_VARS']['never_expires']
-					/* 'file_space'	=> $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
+					/* 'file_space' => $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
 				);
 
 				if (!$errors = $this->validate_user($userData))
@@ -343,7 +342,7 @@
 			else
 			{
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_users();
+				$ui->list_users();
 				return False;
 			}
 		}
@@ -353,7 +352,7 @@
 			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
 			{
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_groups();
+				$ui->list_groups();
 				return False;
 			}
 
@@ -379,14 +378,14 @@
 			@reset($account_apps);
 
 			$group_info = Array(
-				'account_id'	=> ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
-				'account_name'	=> ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
-				'account_user'	=> $account_user,
-				'account_apps'	=> $account_apps
+				'account_id'   => ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
+				'account_name' => ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
+				'account_user' => $account_user,
+				'account_apps' => $account_apps
 			);
-			
+
 			$this->validate_group($group_info);
-			
+
 			// Lock tables
 			$GLOBALS['phpgw']->db->lock(
 				Array(
@@ -403,7 +402,7 @@
 
 			$group = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$old_group_info = $group->read_repository();
-			
+
 			// Set group apps
 			$apps = CreateObject('phpgwapi.applications',$group_info['account_id']);
 			$apps_before = $apps->read_account_specific();
@@ -427,7 +426,7 @@
 			if($old_group_info['account_lid'] <> $group_info['account_name'])
 			{
 				$group->data['account_lid'] = $group_info['account_name'];
-				
+
 				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
 				if (! @rename($basedir . $old_group_info['account_lid'], $basedir . $group_info['account_name']))
 				{
@@ -471,7 +470,7 @@
 					continue;
 				}
 				$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
-				
+
 				// If the user is logged in, it will force a refresh of the session_info
 				$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_action='' "
 					."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name($user_id)
@@ -547,7 +546,7 @@
 					'account_expires_day'   => $GLOBALS['HTTP_POST_VARS']['account_expires_day'],
 					'account_expires_year'  => $GLOBALS['HTTP_POST_VARS']['account_expires_year'],
 					'account_expires_never' => $GLOBALS['HTTP_POST_VARS']['never_expires']
-					/* 'file_space'	=> $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
+					/* 'file_space' => $GLOBALS['HTTP_POST_VARS']['account_file_space_number'] . "-" . $GLOBALS['HTTP_POST_VARS']['account_file_space_type'] */
 				);
 
 				if (!$errors = $this->validate_user($userData))
@@ -572,8 +571,8 @@
 				}
 				else
 				{
-						$ui = createobject('admin.uiaccounts');
-						$ui->create_edit_user($userData['account_id'],$userData,$errors);
+					$ui = createobject('admin.uiaccounts');
+					$ui->create_edit_user($userData['account_id'],$userData,$errors);
 				}
 			}
 		}
@@ -628,7 +627,7 @@
 					$totalerrors++;
 				}
 			}
-			
+
 			if (!$_userData['account_lid'])
 			{
 				$error[$totalerrors] = lang('You must enter a loginid');
@@ -704,7 +703,7 @@
 				return $error;
 			}
 		}
-		
+
 		/* stores the userdata */
 		function save_user($_userData)
 		{
@@ -721,7 +720,7 @@
 
 			$apps->account_id = $_userData['account_id'];
 			if ($_userData['account_permissions'])
-			{				
+			{
 				while($app = each($_userData['account_permissions'])) 
 				{
 					if($app[1]) 
@@ -801,6 +800,8 @@
 
 		function rpc_add_user($data)
 		{
+			exit;
+
 			if (!$errors = $this->validate_user($data))
 			{
 				$result = $this->so->add_user($data);
@@ -809,9 +810,7 @@
 			{
 				$result = $errors;
 			}
-
 			return $result;
 		}
-
 	}
 ?>
