@@ -213,6 +213,9 @@
 			$GLOBALS['current_config']['tz_offset'] = $datetime->getbestguess();
 			unset($datetime);
 
+			// RalfBecker: php.net recommend this for security reasons, it should be our default too
+			$GLOBALS['current_config']['usecookies'] = 'True';
+
 			foreach($GLOBALS['current_config'] as $setting => $value)
 			{
 				$setting = $GLOBALS['phpgw_setup']->db->db_addslashes($setting);
