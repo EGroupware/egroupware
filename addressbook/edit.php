@@ -160,7 +160,14 @@
 
 		$fields["cat_id"]               = $cat_id;
 
-		$userid = $phpgw_info["user"]["account_id"];
+		if (($this->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
+		{
+			$userid = $check[0]['owner'];
+		}
+		else
+		{
+			$userid = $phpgw_info["user"]["account_id"];
+		}
 
 		addressbook_update_entry($ab_id,$userid,$fields,$fields['access'],$fields["cat_id"]);
 
