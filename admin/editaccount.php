@@ -172,7 +172,6 @@
 
   $i = 0;
   $sorted_apps = $phpgw_info["apps"];
-  echo "TEST: " . gettype($phpgw_info);
 //  @asort($sorted_apps);
 //  @reset($sorted_apps);
   while ($permission = each($phpgw_info["apps"])) {
