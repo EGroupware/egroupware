@@ -729,6 +729,7 @@
 					}
 				}
 			}
+			return True;
 		}
 
 		/* Used by admin to change ownership on account delete */
