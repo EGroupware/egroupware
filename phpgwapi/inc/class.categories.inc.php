@@ -118,7 +118,7 @@
 		{
 			if ($public)
 			{
-				$public_cats = " OR cat_appname='phpgw'";
+				$public_cats = " OR cat_appname='phpgw' OR (cat_access='public' AND cat_appname='".$this->app_name."')";
 			}
 
 			$filter = $this->filter($type);
@@ -206,7 +206,7 @@
 		{
 			if ($public)
 			{
-				$public_cats = " OR cat_appname='phpgw'";
+				$public_cats = " OR cat_appname='phpgw' OR (cat_access='public' AND cat_appname='".$this->app_name."')";
 			}
 
 			if (!$sort)
