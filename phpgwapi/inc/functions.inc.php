@@ -1,27 +1,27 @@
 <?php
-	/* $debugme = 'on'; */
-	/**************************************************************************\
-	* phpGroupWare API - phpgwapi loader                                       *
-	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	* and Joseph Engo <jengo@phpgroupware.org>                                 *
-	* Has a few functions, but primary role is to load the phpgwapi            *
-	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
+/*	$GLOBALS['debugme'] = "on"; */
+	 /**************************************************************************\
+	 * phpGroupWare API - phpgwapi loader                                       *
+	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	 * and Joseph Engo <jengo@phpgroupware.org>                                 *
+	 * Has a few functions, but primary role is to load the phpgwapi            *
+	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	 * -------------------------------------------------------------------------*
+	 * This library is part of the phpGroupWare API                             *
+	 * http://www.phpgroupware.org/api                                          * 
+	 * ------------------------------------------------------------------------ *
+	 * This library is free software; you can redistribute it and/or modify it  *
+	 * under the terms of the GNU Lesser General Public License as published by *
+	 * the Free Software Foundation; either version 2.1 of the License,         *
+	 * or any later version.                                                    *
+	 * This library is distributed in the hope that it will be useful, but      *
+	 * WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	 * See the GNU Lesser General Public License for more details.              *
+	 * You should have received a copy of the GNU Lesser General Public License *
+	 * along with this library; if not, write to the Free Software Foundation,  *
+	 * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	 \**************************************************************************/
 	
 	/* $Id$ */
 	
@@ -212,7 +212,7 @@
 	*/
 	function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
 	{
-		if(gettype($m1) == 'array')
+		if(is_array($m1))
 		{
 			$vars = $m1;
 		}
@@ -294,7 +294,12 @@
 	{
 		if(floor(phpversion()) == 4)
 		{
+			ob_start(); 
 			echo '<pre>'; print_r($array); echo '</pre>';
+			$contents = ob_get_contents(); 
+			ob_end_clean();
+			echo $contents;
+//			return $contents;
 		}
 		else
 		{
@@ -351,8 +356,8 @@
 	$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
 	unset ($default_domain); // we kill this for security reasons
 
-	$GLOBALS['login'] = $GLOBALS['HTTP_POST_VARS']['login'];
-	$GLOBALS['logindomain'] = $GLOBALS['HTTP_POST_VARS']['logindomain'];
+	$GLOBALS['login'] = @$GLOBALS['HTTP_POST_VARS']['login'];
+	$GLOBALS['logindomain'] = @$GLOBALS['HTTP_POST_VARS']['logindomain'];
 
 	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
 	if (isset($domain))
@@ -465,7 +470,7 @@
 			$GLOBALS['phpgw_info']['server'][$GLOBALS['phpgw']->db->f('config_name')] = stripslashes($GLOBALS['phpgw']->db->f('config_value'));
 		}
 
-		if($GLOBALS['phpgw_info']['server']['cache_phpgw_info'])
+		if(@isset($GLOBALS['phpgw_info']['server']['cache_phpgw_info']))
 		{
 			if($server_info_cache)
 			{
@@ -486,6 +491,7 @@
 	* Required classes                                                       *
 	\************************************************************************/
 	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.errorlog');
+	$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
 	$GLOBALS['phpgw']->common       = CreateObject('phpgwapi.common');
 	$GLOBALS['phpgw']->hooks        = CreateObject('phpgwapi.hooks');
 	$GLOBALS['phpgw']->auth         = CreateObject('phpgwapi.auth');
@@ -494,7 +500,6 @@
 	$GLOBALS['phpgw']->session      = CreateObject('phpgwapi.sessions');
 	$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
 	$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
-	$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
 	//	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 	print_debug('main class loaded');
 	if (! isset($GLOBALS['phpgw_info']['flags']['included_classes']['error']) ||
@@ -529,7 +534,9 @@
 			if (@$login != '')
 			{
 				$login_array = explode("@",$login);
+				print_debug('LID : '.$login_array[0]);
 				$login_id = $GLOBALS['phpgw']->accounts->name2id($login_array[0]);
+				print_debug('User ID : '.$login_id);
 				$GLOBALS['phpgw']->accounts->accounts($login_id);
 				$GLOBALS['phpgw']->preferences->preferences($login_id);
 			}
