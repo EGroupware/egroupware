@@ -30,7 +30,7 @@
 			'not_writeable' => "Error: webserver is not allowed to write into '%s' !!!",
 			'exported'   => "eTemplate '%s' written to '%s'",
 			'newer_version' => "newer version '%s' exists !!!",
-			'need_name'  => 'Application name needed to write a langfile !!!'
+			'need_name'  => 'Application name needed to write a langfile or dump the eTemplates !!!'
 		);
 		var $aligns = array(
 			'' => 'Left',
@@ -86,7 +86,7 @@
 			{
 				$msg .= $this->messages['not_found'];
 			}
-			if ($this->extensions == '')
+			if (!is_array($this->extensions))
 			{
 				$this->extensions = $this->scan_for_extensions();
 				if (count($this->extensions))
@@ -424,7 +424,15 @@
 			}
 			elseif ($content['dump'])
 			{
-				$msg = $this->etemplate->dump2setup($content['name']);
+				list($name) = explode('.',$content['name']);
+				if (empty($name) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$name))
+				{
+					$msg = $this->messages['need_name'];
+				}
+				else
+				{
+					$msg = $this->etemplate->dump2setup($content['name']);
+				}
 			}
 			elseif ($content['save'])
 			{
@@ -455,7 +463,27 @@
 						$m = new editor(False);
 						$additional = $m->messages + $this->etemplate->types + $this->extensions + $this->aligns;
 					}
-					$msg = $this->etemplate->writeLangFile($name,'en',$additional);
+					else	// try to call the writeLangFile function of the app's ui-layer
+					{
+						$ui = @CreateObject($name.'.'.($class = 'ui'.$name));
+						if (!is_object($ui))
+						{
+							$ui = @CreateObject($name.'.'.($class = 'ui'));
+						}
+						if (!is_object($ui))
+						{
+							$ui = @CreateObject($name.'.'.($class = $name));
+						}
+						if (is_object($ui) && @$ui->public_functions['writeLangFile'])
+						{
+							$msg = "$class::writeLangFile: ".$ui->writeLangFile();
+						}
+						unset($ui);
+					}
+					if (empty($msg))
+					{
+						$msg = $this->etemplate->writeLangFile($name,'en',$additional);
+					}
 				}
 			}
 			elseif ($content['export_xml'])
@@ -553,21 +581,25 @@
 			return $imported;
 		}
 
-		function delete($post_vars='',$back = 'edit')
+		function delete($content='',$back = 'edit')
 		{
 			if ($this->debug)
 			{
-				echo "delete(back='$back') cont = "; _debug_array($post_vars);
+				echo "delete(back='$back') content = "; _debug_array($content);
 			}
-			if (!$post_vars)
+			if (!is_array($content))
 			{
-				$post_vars = array();
+				$content = array();
 			}
-			if (isset($post_vars['name']))
+			if (!is_array($this->extensions) && isset($content['**extensions**']))
 			{
-				$read_ok = $this->etemplate->read($post_vars);
+				$this->extensions = $content['**extensions**']; unset($content['**extensions**']);
 			}
-			if (isset($post_vars['yes']))	// Delete
+			if (isset($content['name']))
+			{
+				$read_ok = $this->etemplate->read($content);
+			}
+			if (isset($content['yes']))	// Delete
 			{
 				if ($read_ok)
 				{
@@ -575,9 +607,9 @@
 				}
 				$msg = $this->messages[$read_ok ? 'deleted' : 'not_found'];
 
-				if ($post_vars['back'] == 'list_result')
+				if ($content['back'] == 'list_result')
 				{
-					$this->list_result($post_vars['preserv'],$msg);
+					$this->list_result($content['preserv'],$msg);
 				}
 				else
 				{
@@ -585,12 +617,12 @@
 				}
 				return;
 			}
-			if (isset($post_vars['no']))	// Back to ...
+			if (isset($content['no']))	// Back to ...
 			{
-				switch ($back = $post_vars['back'])
+				switch ($back = $content['back'])
 				{
 					case 'list_result':
-						$this->$back($post_vars['preserv']);
+						$this->$back($content['preserv']);
 						return;
 					case 'show':
 						break;
@@ -605,13 +637,17 @@
 				$this->edit($this->messages['not_found']);
 				return;
 			}
+			$preserv = array(
+				'preserv' => $content['preserv'],
+				'back'    => $back
+			);
 			$content = $this->etemplate->as_array();
 
 			$delete = new etemplate('etemplate.editor.delete');
-			$delete->exec('etemplate.editor.delete',$content,array(),array(),$content+ array(
-				'back' => $back,
-				'preserv' => $post_vars['preserv']
-			),'');
+			$delete->exec('etemplate.editor.delete',$content,array(),array(),
+				$content+$preserv+array(
+					'**extensions**' => $this->extensions
+				),'');
 		}
 
 		function list_result($cont='',$msg='')
@@ -619,6 +655,10 @@
 			if ($this->debug)
 			{
 				echo "<p>etemplate.editor.list_result: cont="; _debug_array($cont);
+			}
+			if (!is_array($this->extensions) && is_array($cont) && isset($cont['**extensions**']))
+			{
+				$this->extensions = $cont['**extensions**']; unset($cont['**extensions**']);
 			}
 			if (!$cont || !is_array($cont))
 			{
@@ -666,7 +706,10 @@
 			}
 			$list_result = new etemplate('etemplate.editor.list_result');
 			//$list_result->debug=1;
-			$list_result->exec('etemplate.editor.list_result',$content,'','',array('result' => $result),'');
+			$list_result->exec('etemplate.editor.list_result',$content,'','',array(
+				'result' => $result,
+				'**extensions**' => $this->extensions
+			),'');
 		}
 
 		function show($post_vars='')
@@ -675,9 +718,13 @@
 			{
 				echo "<p>etemplate.editor.show: content="; _debug_array($post_vars);
 			}
-			if (!$post_vars)
+			if (!is_array($post_vars))
 			{
 				$post_vars = array();
+			}
+			if (!is_array($this->extensions) && isset($post_vars['**extensions**']))
+			{
+				$this->extensions = $post_vars['**extensions**']; unset($post_vars['**extensions**']);
 			}
 			if (isset($GLOBALS['HTTP_GET_VARS']['name']) && !$this->etemplate->read($GLOBALS['HTTP_GET_VARS']) ||
 			    isset($post_vars['name']) && !$this->etemplate->read($post_vars))
@@ -735,7 +782,10 @@
 						unserialize(substr($vals["A$r"],0,-5)) : $vals["A$r"];
 				}
 			}
-			$show->exec('etemplate.editor.show',$content,array(),'',array('olds' => $vals),'');
+			$show->exec('etemplate.editor.show',$content,array(),'',array(
+				'olds' => $vals,
+				'**extensions**' => $this->extensions
+			),'');
 		}
 
 		/*!
