@@ -268,7 +268,7 @@
 
 		function read_entry($data)
 		{
-			if ($this->check_perms($data,PHPGW_ACL_DELETE))
+			if ($this->check_perms($data,PHPGW_ACL_READ))
 			{
 				$entry = $this->so->read_entry($data['id'],$data['fields']);
 				return $this->strip_html($entry);
@@ -278,7 +278,7 @@
 
 		function read_last_entry($fields)
 		{
-			if ($this->check_perms($fields,PHPGW_ACL_DELETE))
+			if ($this->check_perms($fields,PHPGW_ACL_READ))
 			{
 				$entry = $this->so->read_last_entry($fields);
 				return $this->strip_html($entry);
