@@ -483,10 +483,12 @@
 				$myowner = $entries[$i]['owner'];
 
 				/* each entry column */
-				while ($column = each($columns_to_display))
+				@reset($columns_to_display);
+				while ($column = @each($columns_to_display))
 				{
 					$ref = $data='';
 					$coldata = $entries[$i][$column[0]];
+					/* echo '<br>coldata="' . $coldata . '"'; */
 					/* Some fields require special formatting. */
 					if ($column[0] == 'url')
 					{
