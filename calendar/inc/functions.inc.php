@@ -43,6 +43,8 @@
 	{
 		if($grants[$owner])
 		{
+			$grants[$phpgw_info['user']['account_id']] = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + PHPGW_ACL_PRIVATE;
+
 			$rights = $grants[$owner];
 			if ($rights == 0)
 			{

@@ -126,6 +126,7 @@
       <option value="<?php echo $grantor; ?>"<?php if($grantor==$owner) echo ' selected'; ?>><?php echo $phpgw->common->grab_owner_name($grantor); ?></option>
 <?php
       }
+		reset($grants);
 ?>
     </select>
     <NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang('Go!'); ?>"></NOSCRIPT></FONT>
