@@ -40,15 +40,15 @@
 	$phpgw->template->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
 	$phpgw->template->set_var('sort_loginid',$phpgw->nextmatchs->show_sort_order($sort,'session_lid',$order,
-			'currentusers.php',lang('LoginID')));
+			'/admin/currentusers.php',lang('LoginID')));
 	$phpgw->template->set_var('sort_ip',$phpgw->nextmatchs->show_sort_order($sort,'session_ip',$order,
-			'currentusers.php',lang('IP')));
+			'/admin/currentusers.php',lang('IP')));
 	$phpgw->template->set_var('sort_login_time',$phpgw->nextmatchs->show_sort_order($sort,'session_logintime',$order,
-			'currentusers.php',lang('Login Time')));
+			'/admin/currentusers.php',lang('Login Time')));
 	$phpgw->template->set_var('sort_action',$phpgw->nextmatchs->show_sort_order($sort,'session_action',$order,
-			'currentusers.php',lang('Action')));
+			'/admin/currentusers.php',lang('Action')));
 	$phpgw->template->set_var('sort_idle',$phpgw->nextmatchs->show_sort_order($sort,'session_dla',$order,
-			'currentusers.php',lang('idle')));
+			'/admin/currentusers.php',lang('idle')));
 	$phpgw->template->set_var('lang_kill',lang('Kill'));
 
 	if ($order)

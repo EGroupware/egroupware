@@ -33,7 +33,7 @@
   $p->set_var("bg_color",$phpgw_info["theme"]["bg_color"]);
   $p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
-  $p->set_var("sort_title",$phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"applications.php",lang("title")));
+  $p->set_var("sort_title",$phpgw->nextmatchs->show_sort_order($sort,"app_title",$order,"/admin/applications.php",lang("title")));
   $p->set_var("lang_edit",lang("Edit"));
   $p->set_var("lang_delete",lang("Delete"));
   $p->set_var("lang_enabled",lang("Enabled"));
