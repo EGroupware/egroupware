@@ -255,7 +255,7 @@
 			}
 			$ids = solink::get_links($app,$id,$only_app,$order);
 
-			if (empty($only_app) || $only_apps == $this->vfs_appname ||
+			if (empty($only_app) || $only_app == $this->vfs_appname ||
 			    ($only_app[0] == '!' && $only_app != '!'.$this->vfs_appname))
 			{
 				if ($vfs_ids = $this->list_attached($app,$id))
