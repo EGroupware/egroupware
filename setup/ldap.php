@@ -97,9 +97,14 @@
 			$acct->db = $phpgw_setup->db;
 
 			// Check if the group account is already there
-			// Since the id above is random, this will fail on a reload
-			$acct_exist = $acct->exists($defaultgroupid);
-			if(!$acct_exist && $defaultgroupid) {
+			// if so, set our group_id to that account's id for use below
+			$acct_exist = $acct->name2id('Default');
+			if ($acct_exist) {
+				$defaultgroupid = $acct_exist;
+			}
+			$id_exist   = $acct->exists(intval($defaultgroupid));
+			// if not, create it, using our original groupid
+			if(!$id_exist) {
 				$acct->create('g','Default',$passwd,'Default','Group','A',$defaultgroupid);
 			}
 
@@ -112,6 +117,7 @@
 			$acl->save_repository();
 
 			while ($account = each($account_info)) {
+				$id_exist = 0;
 				// do some checks before we try to import the data
 				if (!empty($account[1]['account_id']) && !empty($account[1]['account_lid']))
 					$accounts = CreateObject('phpgwapi.accounts',$account[1]['account_id']);
@@ -127,11 +133,16 @@
 							$acl->add('admin','run',1);
 						}
 					}
-					
-					// Check if the account is already there
-					$acct_exist = $accounts->exists($account[1]['account_id']);
 
-					if(!$acct_exist && $account[1]['account_id']) {
+					// Check if the account is already there
+					// if so, we won't try to create it again
+					$acct_exist = $acct->name2id($account[1]['account_lid']);
+					if ($acct_exist) {
+						$account[1]['account_id'] = $acct_exist;
+					}
+					$id_exist = $accounts->exists(intval($account[1]['account_id']));
+					// if not, create it now
+					if(!$id_exist) {
 						$accounts->create('u', $account[1]['account_lid'], 'x',
 							$account[1]['account_firstname'], $account[1]['account_lastname'],
 							'A',$account[1]['account_id']
