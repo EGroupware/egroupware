@@ -10,6 +10,7 @@ CSV-Fieldname	infolog	en	CSV-Fieldname
 CSV-Filename	infolog	en	CSV-Filename
 Category	infolog	en	Category
 Confirm	infolog	en	Confirm
+Default Filter for InfoLog	infolog	en	Default Filter for InfoLog
 Description	infolog	en	Description
 Description can not exceed 8000 characters in length	infolog	en	Description can not exceed 8000 characters in length
 Download	infolog	en	Download
@@ -24,7 +25,7 @@ Info Log	infolog	en	Info Log
 Info Log - Delete	infolog	en	Info Log - Delete
 Info Log - Subprojects from	infolog	en	Info Log - Subprojects from
 Info Log-Fieldname	infolog	en	Info Log-Fieldname
-List no Subs/Childs	infolog	de	List no Subs/Childs
+List no Subs/Childs	infolog	en	List no Subs/Childs
 None	infolog	en	None
 Number of records to read (<=200)	infolog	en	Number of records to read (<=200)
 Owner	infolog	en	Owner
@@ -35,8 +36,9 @@ Re:	infolog	en	Re:
 Responsible	infolog	en	Responsible
 Search for:	infolog	en	Search for:
 Select	infolog	en	Select
-Show full usernames	infolog	de	Show full usernames
+Show full usernames	infolog	en	Show full usernames
 Show open Events: Tasks/Calls/Notes on main screen	infolog	de	Show open Events: Tasks/Calls/Notes on main screen
+Show open Events: Tasks/Calls/Notes on main screen	infolog	en	Show open Events: Tasks/Calls/Notes on main screen
 Start Date	infolog	en	Start Date
 Startrecord	infolog	en	Startrecord
 Status	infolog	en	Status
@@ -56,9 +58,18 @@ help	infolog	en	help
 infolog	common	en	InfoLog
 infolog preferences	common	en	InfoLog preferences
 last changed	infolog	en	last changed
-no - cancel	infolog	de	No - Cancel
-no entries found, try again ...	infolog	de	no entries found, try again ...
+no - cancel	infolog	en	No - Cancel
+no Filter	infolog	en	no Filter
+no entries found, try again ...	infolog	en	no entries found, try again ...
+open	infolog	en	open
+overdue	infolog	en	overdue
+own	infolog	en	own
+own open	infolog	en	own open
+own overdue	infolog	en	own overdue
+own upcoming	infolog	en	own upcoming
 showing x	infolog	en	showing %1
 showing x - x of x	infolog	en	showing %1 - %2 of %3
 startdate	infolog	en	Startdate
-yes - delete	infolog	de	Yes - Delete
+startdate	infolog	en	Startdate
+upcoming	infolog	en	upcoming
+yes - delete	infolog	en	Yes - Delete
