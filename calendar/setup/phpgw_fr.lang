@@ -12,7 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 add a single entry by passing the fields.	calendar	fr	Ajouter une unique entrée en passant les champs.
 add alarm	calendar	fr	Ajouter une alarme
 add contact	calendar	fr	Ajouter un contact
-add or update a single entry by passing the fields.	calendar	fr	Ajouter ou mettre à jour une unique entrée en passant les champs.
+add or update a single entry by passing the fields.	calendar	fr	Ajoutez ou mettez à jour une seule entrée en passant les champs.
 added	calendar	fr	Ajouté
 address book	calendar	fr	Carnet d'adresses
 alarm	calendar	fr	Alarme
@@ -27,7 +27,11 @@ are you sure\nyou want to\ndelete these alarms?	calendar	fr	Etes-vous sûr\nde vo
 are you sure\nyou want to\ndelete this entry ?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
 are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette unique occurence ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
-before the event	calendar	fr	avant l'événement
+are you surenyou want tondelete these alarms?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer ces alarmes?
+are you surenyou want tondelete this entry ?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?
+are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
+are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette unique occurence ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
+before the event	calendar	fr	avant l'évènement
 brief description	calendar	fr	Description brève
 business	calendar	fr	Travail
 calendar	common	fr	Calendrier
@@ -72,14 +76,14 @@ description	calendar	fr	Description
 disable	calendar	fr	Désactiver
 disabled	calendar	fr	Désactivé
 display interval in day view	calendar	fr	Afficher l'intervalle dans la vue journalière
-display mini calendars when printing	calendar	fr	Afficher les mini calendriers à l'impression
+display mini calendars when printing	calendar	fr	Afficher mini calendriers à l'impression
 display status of events	calendar	fr	Afficher le statut des événements
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	fr	Afficher votre vue par défaut sur la page d'accueil (page sur laquelle vous arrivez lorsque vous cliquez sur l'icone "Accueil") ?
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	fr	Afficher votre vue de calendrier par défaut sur la page de démarrage (page que vous obtenez quand vous entrez dans eGroupWare ou cliquez sur l'icône page maison (homepage))?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	fr	Voulez-vous être prévenu des rendez-vous nouveaux ou modifiés? Vous serez prévenu des modifications que vous faites vous-même.<br>Vous pouvez limiter les notifications à certains changements seulement. Chaque objet inclut toutes les notifications listées au-dessus de lui. Toutes les modifications inclut les modifications de titre, description, participants, mais pas les réponses des participants. Si le propriétaire d'un évènement a demandé aucune notification, il aura toujours les réponses des participants comme les acceptations et les rejets aussi.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fr	Voulez-vous recevoir un résumé régulier de vos rendez-vous par EMail?<br>Le résumé est envoyé à votre adresse EMail standard le matin de ce jour ou le lundi pour les résumés hebdomadaires.<br>Il est envoyé seulement quand vous avez des rendez-vous ce jour-là ou cette semaine-là.
 do you wish to autoload calendar holidays files dynamically?	admin	fr	Voulez-vous auto-charger les fichiers de vacances calendrier dynamiquement?
-download	calendar	fr	Télécharger
+download	calendar	fr	Downloader
 duration	calendar	fr	Durée
 edit series	calendar	fr	Modifier toutes les occurrences
 edit single	calendar	fr	Modifier cette occurrence
@@ -103,10 +107,10 @@ external participants	calendar	fr	Participants extérieurs
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	fr	Impossible d'envoyer le message à "%1" #%2 sujet="%3", expéditeur="%4" !
 fieldseparator	calendar	fr	Séparateur de champs
 firstname of person to notify	calendar	fr	Prénom de la personne à prévenir
-format of event updates	calendar	fr	Format des mises à jour d'événement
+format of event updates	calendar	fr	Format des mises à jour d'évènement
 fr	calendar	fr	V
 free/busy	calendar	fr	Libre/occupé
-freebusy: unknow user '%1', wrong password or not available to not loged in users !!!	calendar	fr	
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	fr	Libre/occupé: Utilisateur '%1' inconnu, mot de passe incorrect ou non disponible aux utilisateurs non connectés !!!
 frequency	calendar	fr	Fréquence
 fri	calendar	fr	Ven
 full description	calendar	fr	Description complète
@@ -115,7 +119,7 @@ generate printer-friendly version	calendar	fr	Générer une version imprimable
 global categories	calendar	fr	Catégories globales
 global public and group public	calendar	fr	Public global et groupe public
 global public only	calendar	fr	Public global seulement
-go!	calendar	fr	Aller!
+go!	calendar	fr	Go!
 grant calendar access	common	fr	Régler les autorisations d'accès au calendrier
 group planner	calendar	fr	Planificateur de groupe
 group public only	calendar	fr	Groupe public seulement
@@ -129,7 +133,7 @@ hours	calendar	fr	Heures
 i participate	calendar	fr	Je participe
 ical / rfc2445	calendar	fr	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	fr	Si activé les vacances tombant sur un Week-End, sont prises sur le lundi d'après.
-if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fr	Si vous ne mettez pas de mot de passe ici, l'information sera accessible par n'importe quelle personne connaissant l'URL!
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	fr	Si vous ne mettez pas de mot de passe ici, l'information sera accessible par n'importe quelle personne connaissant l'URL!
 ignore conflict	calendar	fr	Ignorer le conflit
 import	calendar	fr	Import
 import csv-file	common	fr	Importer un fichier CSV
@@ -143,11 +147,12 @@ lastname of person to notify	calendar	fr	Nom de famille de la personne à préveni
 length shown<br>(emtpy for full length)	calendar	fr	Longueur montrée<br>(vide pour longueur complète)
 length<br>(<= 255)	calendar	fr	Longueur<br>(<= 255)
 link	calendar	fr	Lien
-link to view the event	calendar	fr	Lien de visualisation des évènements
+link to view the event	calendar	fr	Lien pour voir l'événement
 list all categories.	calendar	fr	Lister toutes les catégories
 load [iv]cal	calendar	fr	Charger [iv]Cal
 location	calendar	fr	Emplacement
 location to autoload from	admin	fr	Emplacement depuis lequel auto-charger
+make freebusy information availible to not loged in persons?	calendar	fr	Mettre à disposition des utilisateurs non connectés l'information Libre/Occupé?
 matrixview	calendar	fr	Vue matricielle
 minutes	calendar	fr	minutes
 mo	calendar	fr	L
@@ -189,14 +194,14 @@ overlap holiday	calendar	fr	Vacances recouvrantes
 participant	calendar	fr	Participant
 participants	calendar	fr	Participants
 participates	calendar	fr	Participe
-password for not loged in users to your freebusy information?	calendar	fr	
+password for not loged in users to your freebusy information?	calendar	fr	Mot de passe des utilisateurs non connectés pour l'information Libre/Occupé?
 people holiday	calendar	fr	Vacances des personnes
 permission denied	calendar	fr	Permission refusée
 planner	calendar	fr	Planificateur
-planner by category	calendar	fr	Planificateur par catégorie
+planner by category	calendar	fr	Planificateur par catégrie
 planner by user	calendar	fr	Planificateur par utilisateur
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	fr	SVP confirmez, acceptez, rejetez ou examinez les modifications dans l'entrée correspondante de votre calendrier
-please enter a filename !!!	calendar	fr	veuillez entrer un nom de fichier !!!
+please enter a filename !!!	calendar	fr	veuilez entrer un nom de fichier !!!
 preselected group for entering the planner	calendar	fr	Groupe présélectionné pour entrer le planificateur
 print calendars in black & white	calendar	fr	Imprimer les calendriers en noir & blanc
 print the mini calendars	calendar	fr	Imprimer les mini-calendriers
@@ -212,7 +217,7 @@ read this list of methods.	calendar	fr	Lire cette liste de méthodes.
 receive email updates	calendar	fr	Recevoir les mises à jour par EMail
 receive extra information in event mails	calendar	fr	Recevoir des informations supplémentaires dans les EMails d'évènements
 receive summary of appointments	calendar	fr	Recevoir le résumé des rendez-vous
-recurring event	calendar	fr	Evénement récurrent
+recurring event	calendar	fr	Evènement récurrent
 refresh	calendar	fr	Rafraîchir
 reinstate	calendar	fr	Réinstaller
 rejected	calendar	fr	Rejeté
@@ -235,7 +240,7 @@ set a year only for one-time / non-regular holidays.	calendar	fr	Régler sur une 
 set new events to private	calendar	fr	Régler les nouveaux évènements comme privés
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	fr	Les invitations que vous avez rejeté doivent-elles être encore montrées dans votre calendrier ?<br>Vous ne pourrez les accepter plus tard (p.e. quand le conflit de rendez-vous est supprimé), que si elles sont encore montrées dans votre calendrier!
 should new events created as private by default ?	calendar	fr	Les nouveaux évènements doivent-ils être crées comme privés par défaut ?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	fr	
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	fr	Est-ce que les utilisateurs non connectés devraient avoir accès à l'information Libre/Occupé? Vous pouvez spécifier un mot de passe supplémentaire, différent de votre mot de passe habituel, afin de protéger cette information. L'information Libre/Occupé est au format iCal et comprend seulement les heures où vous êtes occupé. Elle n'inclut pas les noms d'événements, descriptions et locations. L'URL de votre information Libre/Occupé est %1.
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	fr	Les mini-calendriers doivent-ils être imprimés / affichés dans les vues compatibles imprimante ?
 should the printer friendly view be in black & white or in color (as in normal view)?	calendar	fr	La vue compatible imprimante doit-elle être en noir & blanc ou en couleur (comme dans la vue normale)?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	fr	Le statut de chaque participant à l'évènement (accepté, rejeté, ...) doit-il être montré entre crochets après le nom de chaque participant ?
@@ -282,7 +287,7 @@ thu	calendar	fr	Jeu
 title	calendar	fr	Titre
 title of the event	calendar	fr	Titre de l'évènement
 title-row	calendar	fr	Titre de ligne
-to many might exceed your execution-time-limit	calendar	fr	
+to many might exceed your execution-time-limit	calendar	fr	trop pourrait excéder votre limite de temps d'exécution
 to-firstname	calendar	fr	A-prénom
 to-fullname	calendar	fr	A-Nom complet
 to-lastname	calendar	fr	A-Nom de famille
@@ -328,18 +333,3 @@ you need to set either a day or a occurence !!!	calendar	fr	Vous devez régler so
 your meeting scheduled for %1 has been canceled	calendar	fr	Votre réunion planifiée pour %1 a été annulée
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	fr	Votre réunion qui avait été planifiée pour %1 a été replanifiée pour %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	fr	L'heure que vous avez suggéré <B> %1 - %2 </B> entre en conflit avec les entrés suivantes du calendrier:
-weekview without weekend	calendar	fr	Vue par semaine sans Week-end
-No filter	calendar	fr	Pas de filtre
-All categories	calendar	fr	Pas de catégories
-default week view	calendar	fr	Vue par défaut pour les semaines
-How much day do you want to see per week ?	calendar	fr	Combien de jour voulez-vous afficher par semaine ?
-previous day	calendar	fr	précédent jour
-next day	calendar	fr	suivant jour
-show next seven days	calendar	fr	Voir les 7 prochains jours
-show only one day	calendar	fr	Voir un seul jour
-show this week	calendar	fr	Voir cette semaine
-show the calendar of multiple users	calendar	fr	Montrer le calendrier en multi-utilisateurs
-make freebusy information available to not loged in persons?	calendar	fr	Rends l'information de disponibilité accessible aux personnes non loggées
-should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.	calendar	fr	Permet aux personnes non connectés de disposer des informations de disponibilités. Vous pouvez définir un « extra password » différent de votre mot de passe habituel, afin de protéger cette information. Les informations disposées sont aux format iCal et inclus le temps ou vous êtes occupés. Il n'include pas le nom de l'évènement en lui-même, ni même sa description et ni sa localisation. Le lien pour voir cette information est celui ci : %1
-password for not loged in users to your freebusy information?	calendar	fr	Le mot de passe « informations de disponibilité » pour les utilisateurs non-loggués
-if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fr	Si vous ne définissez pas de mot de passe ici, vos informations de disponibilitées seront accessibles par tous connaissant l'adresse !!!
