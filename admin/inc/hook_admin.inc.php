@@ -23,6 +23,7 @@
 		'Change Main Screen Message' => $phpgw->link('/admin/mainscreen_message.php'),
 		'View Sessions'              => $phpgw->link('/admin/currentusers.php'),
 		'View Access Log'            => $phpgw->link('/index.php','menuaction=admin.uiaccess_history.list_history'),
+		'View Error Log'             => $phpgw->link('/admin/log.php'),    //j3rry
 		'phpInfo'                    => $phpgw->link('/admin/phpinfo.php')
 	);
 //Do not modify below this line

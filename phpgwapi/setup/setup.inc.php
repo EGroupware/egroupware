@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'phpgwapi';
-	$setup_info['phpgwapi']['version']   = '0.9.13.006';
+	$setup_info['phpgwapi']['version']   = '0.9.13.007';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.16';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -35,6 +35,8 @@
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_nextid';
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_addressbook';
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_addressbook_extra';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_log';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_log_msg';
 
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
