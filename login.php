@@ -189,10 +189,10 @@
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','cd=5'));
 		}
-		if(!isset($_COOKIE['eGroupWareLoginTime']))
-		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','cd=4'));
-		}
+		#if(!isset($_COOKIE['eGroupWareLoginTime']))
+		#{
+		#	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','cd=4'));
+		#}
 		
 		// don't get login data again when $submit is true
 		if($submit == false)
