@@ -77,6 +77,102 @@
 		return True;
 	}
 
+	$test[] = "0.9.10pre4";
+	function addressbook_upgrade0_9_10pre4()
+	{
+		global $setup_info, $oProc;
+
+		$db2 = $oProc->m_odb;
+		$db3 = $oProc->m_odb;
+
+		$oProc->m_odb->query('SELECT oldid,newid FROM phpgw_temp_groupmap',__LINE__,__FILE__);
+		if($oProc->m_odb->num_rows())
+		{
+			while($oProc->m_odb->next_record())
+			{
+				$old_group_id = $oProc->m_odb->f(0);
+				$new_group_id = $oProc->m_odb->f(1);
+				$db2->query("SELECT ab_access,ab_id FROM addressbook WHERE ab_access LIKE '%,".$old_group_id.",%'",__LINE__,__FILE__);
+				if($db2->num_rows())
+				{
+					while($db2->next_record())
+					{
+						$access = $db2->f('cat_access');
+						$id     = $db2->f('cat_id');
+						$access = str_replace(','.$old_group_id.',' , ','.$new_group_id.',' , $access);
+						$db3->query("UPDATE phpgw_categories SET cat_access='".$access."' WHERE cat_id=".$id,__LINE__,__FILE__);
+					}
+				}
+			}
+		}
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre5";
+		return True;
+	}
+ 
+	$test[] = "0.9.10pre5";
+	function addressbook_upgrade0_9_10pre5()
+	{
+		global $setup_info, $oProc;
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre6";
+		return True;
+	}
+       
+	$test[] = "0.9.10pre6";
+	function addressbook_upgrade0_9_10pre6()
+	{
+		global $setup_info, $oProc;
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre7";
+		return True;
+	}
+
+	$test[] = "0.9.10pre7";
+	function addressbook_upgrade0_9_10pre7()
+	{
+		global $setup_info, $oProc;
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre8";
+		return True;
+	}
+
+	$test[] = "0.9.10pre8";
+	function addressbook_upgrade0_9_10pre8()
+	{
+		global $setup_info, $oProc;
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre9";
+		return True;
+	}
+
+	$test[] = "0.9.10pre9";
+	function addressbook_upgrade0_9_10pre9()
+	{
+		global $setup_info, $oProc;
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre10";
+		return True;
+	}
+
+	$test[] = "0.9.10pre10";
+	function addressbook_upgrade0_9_10pre10()
+	{
+		global $setup_info, $oProc;
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre11";
+		return True;
+	}
+
+	$test[] = "0.9.10pre11";
+	function addressbook_upgrade0_9_10pre11()
+	{
+		global $setup_info, $oProc;
+
+		$setup_info["addressbook"]["currentver"] = "0.9.10pre12";
+		return True;
+	}
+
 	$test[] = '0.9.10pre12';
 	function addressbook_upgrade0_9_10pre12()
 	{
@@ -506,6 +602,22 @@
 		return True;
 	}
 
+	$test[] = '0.9.10pre18';
+	function addressbook_upgrade0_9_10pre18()
+	{
+		global $setup_info, $oProc;
+		$setup_info['addressbook']['currentver'] = '0.9.10pre19';
+		return True;
+	}
+
+	$test[] = '0.9.10pre19';
+	function addressbook_upgrade0_9_10pre19()
+	{
+		global $setup_info, $oProc;
+		$setup_info['addressbook']['currentver'] = '0.9.10pre20';
+		return True;
+	}
+
 	$test[] = '0.9.10pre20';
 	function addressbook_upgrade0_9_10pre20()
 	{
@@ -525,6 +637,14 @@
 		$oProc->AddColumn('phpgw_addressbook', 'cat_id', array('type' => 'varchar', 'precision' => 32));
 
 		$setup_info['addressbook']['currentver'] = '0.9.10pre22';
+		return True;
+	}
+
+	$test[] = '0.9.10pre22';
+	function addressbook_upgrade0_9_10pre22()
+	{
+		global $setup_info, $oProc;
+		$setup_info['addressbook']['currentver'] = '0.9.10pre23';
 		return True;
 	}
 
