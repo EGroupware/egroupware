@@ -187,6 +187,7 @@
 			}
 
 			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			$this->db->next_record();
 			return $this->db->f(0) > 0;
 		}
 
