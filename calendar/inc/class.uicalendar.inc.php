@@ -4245,7 +4245,7 @@
 			{
 				$str .= '<option value="'.$type.'"'.($event['recur_type']==$type?' selected':'').'>'.lang($label).'</option>';
 			}
-			$var['recure_type'] = Array(
+			$var['recur_type'] = Array(
 				'field'	=> lang('Repeat Type'),
 				'data'	=> '<select name="cal[recur_type]">'."\n".$str.'</select>'."\n"
 			);
@@ -4261,7 +4261,7 @@
 				$recur_end = $this->bo->maketime($event['start']) + 86400 - $GLOBALS['phpgw']->datetime->tz_offset;
 			}
 
-			$var['recure_enddate'] = Array(
+			$var['recur_enddate'] = Array(
 				'field'	=> lang('Repeat End Date'),
 				'data'	=> '<input type="checkbox" name="cal[rpt_use_end]" value="y"'.$checked.'>'.lang('Use End Date').'  '.
 /*
@@ -4280,12 +4280,12 @@
 				$boxes .= '<input type="checkbox" name="cal[rpt_day][]" value="'.$mask.'"'.($event['recur_data'] & $mask ? ' checked' : '').'>&nbsp;'.lang($name)."\n";
 				if (++$i == 5) $boxes .= '<br>';
 			}
-			$var['recure_day'] = Array(
+			$var['recur_day'] = Array(
 				'field'	=> lang('Repeat Day').'<br>'.lang('(for weekly)'),
 				'data'	=> $boxes
 			);
 
-			$var['recure_interval'] = Array(
+			$var['recur_interval'] = Array(
 				'field'	=> lang('Interval'),
 				'data'	=> '<input name="cal[recur_interval]" size="4" maxlength="4" value="'.$event['recur_interval'].'">'
 			);
@@ -4319,14 +4319,14 @@
 								$this->output_template_array($p,'row','list',$var['enddate']);
 								$this->output_template_array($p,'row','list',$var['endtime']);
 								break;
-							case 'recure_type':
+							case 'recur_type':
 								$p->set_var('tr_color',$this->theme['th_bg']);
 								$p->set_var('hr_text','<center><b>'.lang('Repeating Event Information').'</b></center>');
 								$p->parse('row','hr',True);
-								$this->output_template_array($p,'row','list',$var['recure_type']);
-								$this->output_template_array($p,'row','list',$var['recure_enddate']);
-								$this->output_template_array($p,'row','list',$var['recure_day']);
-								$this->output_template_array($p,'row','list',$var['recure_interval']);
+								$this->output_template_array($p,'row','list',$var['recur_type']);
+								$this->output_template_array($p,'row','list',$var['recur_enddate']);
+								$this->output_template_array($p,'row','list',$var['recur_day']);
+								$this->output_template_array($p,'row','list',$var['recur_interval']);
 								break;
 							default:
 								$this->output_template_array($p,'row','list',$var[$field]);
@@ -4364,7 +4364,7 @@
 						case 'owner':
 							$preserved[$field] = $event['id'] ? $event['participants'][$event['owner']] : 'A';
 							break;
-						case 'recure_type':
+						case 'recur_type':
 							foreach(array('recur_type','recur_enddate','recur_data','recur_interval') as $field)
 							{
 								$preserved[$field] = $event[$field];

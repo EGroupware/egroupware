@@ -3162,7 +3162,7 @@
 					$str .= ' ('.implode(', ',$str_extra).')';
 				}
 
-				$var['recure_type'] = Array(
+				$var['recur_type'] = Array(
 					'field'	=> lang('Repetition'),
 					'data'	=> $str,
 				);
