@@ -14,7 +14,7 @@
 					</xsl:when>
 				</xsl:choose>
 				<tr>
-					<td align="center" colspan="2" class="row_on"><xsl:value-of select="lang_confirm_msg"/></td>
+					<td align="center" colspan="2" class="row_on"><xsl:value-of select="lang_delete_msg"/></td>
 				</tr>
 
 <!-- delete sub -->
@@ -74,30 +74,29 @@
 				</xsl:choose>
 
 				<tr>
+				<xsl:variable name="delete_url"><xsl:value-of select="delete_url"/></xsl:variable>
+				<form method="POST" action="{$delete_url}">
 					<td>
-						<xsl:variable name="delete_url"><xsl:value-of select="delete_url"/></xsl:variable>
-						<xsl:variable name="lang_yes"><xsl:value-of select="lang_yes"/></xsl:variable>
-						<form method="POST" action="{$delete_url}">
-							<input type="submit" name="confirm" value="{$lang_yes}" onMouseout="window.status='';return true;">
-								<xsl:attribute name="onMouseover">
-									<xsl:text>window.status='</xsl:text>
-										<xsl:value-of select="lang_yes_statustext"/>
-									<xsl:text>'; return true;</xsl:text>
-								</xsl:attribute>
-							</input>
-						</form>
-					</td>
-					<td align="right">
-						<xsl:variable name="done_url"><xsl:value-of select="done_url"/></xsl:variable>
-						<a href="{$done_url}" onMouseout="window.status='';return true;">
+					<xsl:variable name="lang_delete"><xsl:value-of select="lang_delete"/></xsl:variable>
+						<input type="submit" name="delete" value="{$lang_delete}" onMouseout="window.status='';return true;">
 							<xsl:attribute name="onMouseover">
 								<xsl:text>window.status='</xsl:text>
-									<xsl:value-of select="lang_no_statustext"/>
+									<xsl:value-of select="lang_yes_statustext"/>
 								<xsl:text>'; return true;</xsl:text>
 							</xsl:attribute>
-							<xsl:value-of select="lang_no"/>
-						</a>
+						</input>
 					</td>
+					<td align="right">
+					<xsl:variable name="lang_cancel"><xsl:value-of select="lang_cancel"/></xsl:variable>
+						<input type="submit" name="cancel" value="{$lang_cancel}" onMouseout="window.status='';return true;">
+							<xsl:attribute name="onMouseover">
+								<xsl:text>window.status='</xsl:text>
+									<xsl:value-of select="lang_cancel_statustext"/>
+								<xsl:text>'; return true;</xsl:text>
+							</xsl:attribute>
+						</input>
+					</td>
+				</form>
 				</tr>
 			</table>
 	</xsl:template>

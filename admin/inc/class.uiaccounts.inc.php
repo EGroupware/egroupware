@@ -48,9 +48,14 @@
 
 		function list_groups()
 		{
-			if ($GLOBALS['phpgw']->acl->check('group_access',1,'admin'))
+			if ($_POST['done'] || $GLOBALS['phpgw']->acl->check('group_access',1,'admin'))
 			{
-				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.mainscreen'));
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uimainscreen.mainscreen');
+			}
+
+			if($_POST['add'])
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.edit_group');
 			}
 
 			$query = (isset($_POST['query'])?$_POST['query']:'');
@@ -109,10 +114,9 @@
 			(
 				'lang_add'				=> lang('add'),
 				'lang_add_statustext'	=> lang('add a group'),
-				'add_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.edit_group'),
+				'action_url'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
 				'lang_done'				=> lang('done'),
 				'lang_done_statustext'	=> lang('return to admin mainscreen'),
-				'done_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.mainscreen'),
 				'add_access'			=> ($this->bo->check_rights('add')?'yes':''),
 			);
 
@@ -139,9 +143,14 @@
 
 		function list_users($param_cd='')
 		{
-			if ($GLOBALS['phpgw']->acl->check('account_access',1,'admin'))
+			if ($_POST['done'] || $GLOBALS['phpgw']->acl->check('account_access',1,'admin'))
 			{
-				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.mainscreen'));
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uimainscreen.mainscreen');
+			}
+
+			if ($_POST['add'])
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.edit_user');
 			}
 
 			if($param_cd)
@@ -244,10 +253,9 @@
 			(
 				'lang_add'				=> lang('add'),
 				'lang_add_statustext'	=> lang('add a user'),
-				'add_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.edit_user'),
+				'action_url'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'),
 				'lang_done'				=> lang('done'),
 				'lang_done_statustext'	=> lang('return to admin mainscreen'),
-				'done_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.mainscreen'),
 				'add_access'			=> ($this->bo->check_rights('add','account_access')?'yes':''),
 			);
 
@@ -307,21 +315,14 @@
 					else
 					{
 						$this->bo->add_group($values);
-						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+						$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_groups');
 					}
 				}
 			}
 
-			if (!$account_id && $GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
+			if ($values['cancel'] || (!$account_id && $GLOBALS['phpgw']->acl->check('group_access',4,'admin')) || ($account_id && $GLOBALS['phpgw']->acl->check('group_access',16,'admin')))
 			{
-				$this->list_groups();
-				return False;
-			}
-
-			if ($account_id && $GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
-			{
-				$this->list_groups();
-				return False;
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_groups');
 			}
 
 			$cdid = $cd;
@@ -446,7 +447,6 @@
 			$data = array
 			(
 				'edit_url'				=> $GLOBALS['phpgw']->link('/index.php',$link_data),
-				'cancel_url'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
 				'account_id'			=> $group_info['account_id'],
 				'lang_account_name'		=> lang('group name'),
 				'value_account_name'	=> $group_info['account_name'],
@@ -888,17 +888,15 @@
 		{
 			$account_id = get_var('account_id',array('POST','GET'));
 
-			if ($GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
+			if ($_POST['cancel'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
-				$this->list_groups();
-				return False;
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_groups');
 			}
 
-			if ($account_id && get_var('confirm',array('POST')))
+			if ($account_id && $_POST['delete'])
 			{
 				$this->bo->delete_group($account_id);
-				$this->list_groups();
-				return False;
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_groups');
 			}
 
 			$GLOBALS['phpgw']->xslttpl->add_file(array('app_data',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_delete'));
@@ -906,13 +904,12 @@
 
 			$data = array
 			(
-				'delete_url'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.delete_group&account_id=' . $account_id),
-				'done_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
-				'lang_yes'				=> lang('Yes'),
-				'lang_no'				=> lang('No'),
-				'lang_yes_statustext'	=> lang('Delete the entry'),
-				'lang_no_statustext'	=> lang('Back to the list'),
-				'lang_error_msg'		=> lang('are you sure you want to delete this group ?')
+				'delete_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.delete_group&account_id=' . $account_id),
+				'lang_delete'				=> lang('delete'),
+				'lang_cancel'				=> lang('cancel'),
+				'lang_delete_statustext'	=> lang('delete the group'),
+				'lang_cancel_statustext'	=> lang('Leave the group untouched and return back to the list'),
+				'lang_delete_msg'			=> lang('are you sure you want to delete this group ?')
 			);
 
 			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location(intval($account_id),1,'phpgw_group');

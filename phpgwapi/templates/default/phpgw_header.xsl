@@ -50,7 +50,7 @@
 						<td align="center" valign="bottom" class="bottom">
 						<!-- BEGIN bottom_part -->
 							<xsl:value-of select="lang_powered_by"/>
-							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;">
+							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;" class="bottom">
 								<xsl:attribute name="onMouseover">
 									<xsl:text>window.status='</xsl:text>
 									<xsl:value-of select="lang_phpgw_statustext"/>

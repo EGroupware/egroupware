@@ -95,40 +95,35 @@
 <!-- BEGIN user_add -->
 
 	<xsl:template match="user_add">
-			<tr>
-				<td height="50" valign="bottom">
-					<xsl:choose>
-						<xsl:when test="add_access = 'yes'">
-							<xsl:variable name="add_url"><xsl:value-of select="add_url"/></xsl:variable>
-							<xsl:variable name="lang_add"><xsl:value-of select="lang_add"/></xsl:variable>
-							<form method="post" action="{$add_url}">
-								<input type="submit" name="add" value="{$lang_add}" onMouseout="window.status='';return true;">
-									<xsl:attribute name="onMouseover">
-										<xsl:text>window.status='</xsl:text>
-										<xsl:value-of select="lang_add_statustext"/>
-										<xsl:text>'; return true;</xsl:text>
-									</xsl:attribute>
-								</input>
-							</form>
-						</xsl:when>
-					</xsl:choose>
-				</td>
-			</tr>
-			<tr>
-				<td height="50" valign="bottom">
-					<xsl:variable name="done_url"><xsl:value-of select="done_url"/></xsl:variable>
-					<xsl:variable name="lang_done"><xsl:value-of select="lang_done"/></xsl:variable>
-					<form method="post" action="{$done_url}">
-						<input type="submit" name="done" value="{$lang_done}" onMouseout="window.status='';return true;">
+		<tr height="50">
+			<xsl:variable name="action_url"><xsl:value-of select="action_url"/></xsl:variable>
+			<form method="post" action="{$action_url}">
+			<td valign="bottom" colspan="3">
+				<xsl:choose>
+					<xsl:when test="add_access = 'yes'">
+					<xsl:variable name="lang_add"><xsl:value-of select="lang_add"/></xsl:variable>
+						<input type="submit" name="add" value="{$lang_add}" onMouseout="window.status='';return true;">
 							<xsl:attribute name="onMouseover">
 								<xsl:text>window.status='</xsl:text>
-									<xsl:value-of select="lang_done_statustext"/>
+								<xsl:value-of select="lang_add_statustext"/>
 								<xsl:text>'; return true;</xsl:text>
 							</xsl:attribute>
 						</input>
-					</form>
-				</td>
-			</tr>
+					</xsl:when>
+				</xsl:choose>
+			</td>
+			<td align="right" valign="bottom" colspan="3">
+			<xsl:variable name="lang_done"><xsl:value-of select="lang_done"/></xsl:variable>
+				<input type="submit" name="done" value="{$lang_done}" onMouseout="window.status='';return true;">
+					<xsl:attribute name="onMouseover">
+						<xsl:text>window.status='</xsl:text>
+							<xsl:value-of select="lang_done_statustext"/>
+						<xsl:text>'; return true;</xsl:text>
+					</xsl:attribute>
+				</input>
+			</td>
+		</form>
+		</tr>
 	</xsl:template>
 
 <!-- END user_list -->
