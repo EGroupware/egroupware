@@ -80,8 +80,10 @@
 	* Do not edit these lines                                                  *
 	\**************************************************************************/
 	define('PHPGW_API_INC',PHPGW_INCLUDE_ROOT.'/phpgwapi/inc');
-	include(PHPGW_SERVER_ROOT.'/version.inc.php');
-	$phpgw_info['server']['versions']['header'] = '1.12';
+	include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
+	$phpgw_info['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
+	unset($setup_info);
+	$phpgw_info['server']['versions']['header'] = '1.13';
 	// This is a fix for NT
 	if (!isset($phpgw_info['flags']['noapi']) || !$phpgw_info['flags']['noapi'] == True)
 	{

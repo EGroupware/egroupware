@@ -149,7 +149,7 @@
 	\****************************************************************************/
 //	error_reporting(7);
 	/* Make sure the header.inc.php is current. */
-	if ($phpgw_info["server"]["versions"]["header"] < $phpgw_info["server"]["versions"]["current_header"]){
+	if ($phpgw_info['server']['versions']['header'] < $phpgw_info['server']['versions']['current_header']){
 		echo "<center><b>You need to port your settings to the new header.inc.php version.</b></center>";
 		exit;
 	}
