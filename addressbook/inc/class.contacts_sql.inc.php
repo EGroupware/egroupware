@@ -313,7 +313,7 @@
 			global $phpgw,$phpgw_info;
 
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			$DEBUG = 1;
+			$DEBUG = 0;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 			if (count($stock_fieldnames))
