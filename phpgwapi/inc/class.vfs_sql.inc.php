@@ -92,6 +92,7 @@
 		var $linked_dirs;
 		var $meta_types;
 		var $now;
+		var $file_actions;
 
 		/*!
 		@function vfs
@@ -130,8 +131,25 @@
 				'name',
 				'link_directory',
 				'link_name',
-				'version'
+				'version',
+				'content'
 			);
+
+			/*
+			   Decide whether to use any actual filesystem calls (fopen(), fread(),
+			   unlink(), rmdir(), touch(), etc.).  If not, then we're working completely
+			   in the database.
+			*/
+			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+			$conf->read_repository();
+			if ($conf->config_data['file_store_contents'] == 'filesystem' || !$conf->config_data['file_store_contents'])
+			{
+				$this->file_actions = 1;
+			}
+			else
+			{
+				$this->file_actions = 0;
+			}
 	
 			/*
 			   These are stored in the MIME-type field and should normally be ignored.
@@ -374,7 +392,7 @@
 
 			for ($i = 0; list ($attribute, $value) = each ($file_array); $i++)
 			{
-				if ($attribute == 'file_id')
+				if ($attribute == 'file_id' || $attribute == 'content')
 				{
 					continue;
 				}
@@ -1388,14 +1406,29 @@
 				return False;
 			}
 
-			if ($fp = fopen ($p->real_full_path, 'rb'))
+			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+			$conf->read_repository();
+			if ($this->file_actions || $p->outside)
 			{
-				$contents = fread ($fp, filesize ($p->real_full_path));
-				fclose ($fp);
+				if ($fp = fopen ($p->real_full_path, 'rb'))
+				{
+					$contents = fread ($fp, filesize ($p->real_full_path));
+					fclose ($fp);
+				}
+				else
+				{
+					$contents = False;
+				}
 			}
 			else
 			{
-				$contents = False;
+				$ls_array = $this->ls (array(
+						'string'	=> $p->fake_full_path,
+						'relatives'	=> array ($p->mask),
+					)
+				);
+
+				$contents = $ls_array[0]['content'];
 			}
 
 			return $contents;
@@ -1466,15 +1499,40 @@
 				)
 			);
 
-			if ($fp = fopen ($p->real_full_path, 'wb'))
+			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+			$conf->read_repository();
+			if ($this->file_actions)
 			{
-				fwrite ($fp, $data['content'], strlen ($data['content']));
-				fclose ($fp);
+				if ($fp = fopen ($p->real_full_path, 'wb'))
+				{
+					fwrite ($fp, $data['content'], strlen ($data['content']));
+					fclose ($fp);
+					$write_ok = 1;
+				}
+			}
 
-				$this->set_attributes (array(
+			if ($write_ok || !$this->file_actions)
+			{
+				if ($this->file_actions)
+				{
+					$set_attributes_array = array(
+						'size' => filesize ($p->real_full_path)
+					);
+				}
+				else
+				{
+					$set_attributes_array = array (
+						'size'	=> strlen ($data['content']),
+						'content'	=> $data['content']
+					);
+				}
+
+
+				$this->set_attributes (array
+					(
 						'string'	=> $p->fake_full_path,
 						'relatives'	=> array ($p->mask),
-						'attributes'	=> array ('size' => filesize ($p->real_full_path))
+						'attributes'	=> $set_attributes_array
 					)
 				);
 
@@ -1528,15 +1586,18 @@
 
 			umask (000);
 
-			/*
-			   PHP's touch function will automatically decide whether to
-			   create the file or set the modification time
-			*/
-			$rr = @touch ($p->real_full_path);
-
-			if ($p->outside)
+			if ($this->file_actions)
 			{
-				return $rr;
+				/*
+				   PHP's touch function will automatically decide whether to
+				   create the file or set the modification time
+				*/
+				$rr = @touch ($p->real_full_path);
+
+				if ($p->outside)
+				{
+					return $rr;
+				}
 			}
 
 			/* We, however, have to decide this ourselves */
@@ -1699,17 +1760,30 @@
 				)) != 'Directory'
 			)
 			{
-				if (!copy ($f->real_full_path, $t->real_full_path))
+				if ($this->file_actions)
 				{
-					return False;
+					if (!copy ($f->real_full_path, $t->real_full_path))
+					{
+						return False;
+					}
+
+					$size = filesize ($t->real_full_path);
+				}
+				else
+				{
+					$content = $this->read (array(
+							'string'	=> $f->fake_full_path,
+							'relatives'	=> array ($f->mask)
+						)
+					);
+
+					$size = strlen ($content);
 				}
 
 				if ($t->outside)
 				{
 					return True;
 				}
-
-				$size = filesize ($t->real_full_path);
 
 				$ls_array = $this->ls (array(
 						'string'	=> $f->fake_full_path,
@@ -1729,18 +1803,25 @@
 				{
 					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
 
+					$set_attributes_array = array (
+						'createdby_id' => $account_id,
+						'created' => $this->now,
+						'size' => $size,
+						'mime_type' => $record['mime_type'],
+						'deleteable' => $record['deleteable'],
+						'comment' => $record['comment'],
+						'app' => $record['app']
+					);
+
+					if (!$this->file_actions)
+					{
+						$set_attributes_array['content'] = $content;
+					}
+
 					$this->set_attributes(array(
 						'string'	=> $t->fake_full_path,
 						'relatives'	=> array ($t->mask),
-						'attributes'	=> array (
-									'createdby_id' => $account_id,
-									'created' => $this->now,
-									'size' => $size,
-									'mime_type' => $record['mime_type'],
-									'deleteable' => $record['deleteable'],
-									'comment' => $record['comment'],
-									'app' => $record['app']
-								)
+						'attributes'	=> $set_attributes_array
 						)
 					);
 
@@ -1759,18 +1840,25 @@
 						)
 					);
 
+					$set_attributes_array = array (
+						'createdby_id' => $account_id,
+						'created' => $this->now,
+						'size' => $size,
+						'mime_type' => $record['mime_type'],
+						'deleteable' => $record['deleteable'],
+						'comment' => $record['comment'],
+						'app' => $record['app']
+					);
+
+					if (!$this->file_actions)
+					{
+						$set_attributes_array['content'] = $content;
+					}
+
 					$this->set_attributes(array(
-						'string'	=> $t->fake_full_path,
-						'relatives'	=> array ($t->mask),
-						'attributes'	=> array (
-									'createdby_id' => $account_id,
-									'created' => $this->now,
-									'size' => $size,
-									'mime_type' => $record['mime_type'],
-									'deleteable' => $record['deleteable'],
-									'comment' => $record['comment'],
-									'app' => $record['app']
-								)
+							'string'	=> $t->fake_full_path,
+							'relatives'	=> array ($t->mask),
+							'attributes'	=> $set_attributes_array
 						)
 					);
 				}
@@ -2024,7 +2112,10 @@
 					)
 				);
 
-				$rr = rename ($f->real_full_path, $t->real_full_path);
+				if ($this->file_actions)
+				{
+					$rr = rename ($f->real_full_path, $t->real_full_path);
+				}
 
 				/*
 				   This removes the original entry from the database
@@ -2129,7 +2220,14 @@
 				))
 			)
 			{
-				$rr = unlink ($p->real_full_path);
+				if ($this->file_actions)
+				{
+					$rr = unlink ($p->real_full_path);
+				}
+				else
+				{
+					$rr = True;
+				}
 
 				if ($rr)
 				{
@@ -2155,7 +2253,15 @@
 				);
 
 				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'".$this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
-				$rr = unlink ($p->real_full_path);
+
+				if ($this->file_actions)
+				{
+					$rr = unlink ($p->real_full_path);
+				}
+				else
+				{
+					$rr = True;
+				}
 
 				if ($query || $rr)
 				{
@@ -2225,7 +2331,11 @@
 							'nolinks'	=> True
 						)
 					);
-					rmdir ($path->real_full_path);
+
+					if ($this->file_actions)
+					{
+						rmdir ($path->real_full_path);
+					}
 				}
 
 				/* Last, we delete the directory itself */
@@ -2238,7 +2348,10 @@
 
 				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
 
-				rmdir ($p->real_full_path);
+				if ($this->file_actions)
+				{
+					rmdir ($p->real_full_path);
+				}
 
 				return True;
 			}
@@ -2301,9 +2414,12 @@
 
 			umask (000);
 
-			if (!@mkdir ($p->real_full_path, 0770))
+			if ($this->file_actions)
 			{
-				return False;
+				if (!@mkdir ($p->real_full_path, 0770))
+				{
+					return False;
+				}
 			}
 
 			if (!$this->file_exists (array(
@@ -2449,22 +2565,7 @@
 		@param relatives Relativity array
 		@param attributes keyed array of attributes.  key is attribute name, value is attribute value
 		@result Boolean True/False
-		@discussion Valid attributes are:
-				owner_id
-				createdby_id
-				modifiedby_id
-				created
-				modified
-				size
-				mime_type
-				deleteable
-				comment
-				app
-				link_directory
-				link_name
-				version
-				name
-				directory
+		@discussion Valid attributes are list in vfs->attributes
 		*/
 		function set_attributes ($data)
 		{
