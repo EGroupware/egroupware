@@ -228,6 +228,7 @@
 		$p->set_file($templates);
 
 		$p->set_var('color',$phpgw_info['theme']['bg_text']);
+		$p->set_var('overlap_title',lang('Scheduling Conflict'));
 
 		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
 		$overlap = '';

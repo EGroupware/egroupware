@@ -2,7 +2,7 @@
 <!-- BEGIN overlap -->
 <center>
 <h2>
- <font color="{color}">Scheduling Conflict</font>
+ <font color="{color}">{overlap_title}</font>
 </h2>
 <table>
  <tr><td>{overlap_text}</td></tr>
