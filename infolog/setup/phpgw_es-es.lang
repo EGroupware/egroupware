@@ -2,16 +2,16 @@
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	es-es	%1 registros leídos (aún sin importar, puede %2volver%3 y desmarcar Probar Importar)
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	es-es	%1 registros leidos (aun no importados, puede %2volver%3 y desmarcar Testear Importacion)
 - subprojects from	infolog	es-es	- Subproyecto de
-0%	infolog	es-es	
-10%	infolog	es-es	
-20%	infolog	es-es	
-30%	infolog	es-es	
-40%	infolog	es-es	
-50%	infolog	es-es	
-60%	infolog	es-es	
-70%	infolog	es-es	
-80%	infolog	es-es	
-90%	infolog	es-es	
+0%	infolog	es-es	0%
+10%	infolog	es-es	10%
+20%	infolog	es-es	20%
+30%	infolog	es-es	30%
+40%	infolog	es-es	40%
+50%	infolog	es-es	50%
+60%	infolog	es-es	60%
+70%	infolog	es-es	70%
+80%	infolog	es-es	80%
+90%	infolog	es-es	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	es-es	<b>ficheros adjuntos por enlaces smbólicos</b> en vez de subir y recuperar con file:/ruta para clientes de la red local
 a short subject for the entry	infolog	es-es	descripción corta para la entrada
 abort without deleting	infolog	es-es	Cancelar sin eliminar
@@ -30,7 +30,6 @@ add:	infolog	es-es	Añadir:
 all	infolog	es-es	Todos
 all links and attachments	infolog	es-es	todos los enlaces y ficheros adjuntos
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	es-es	permite establecer el estado de una entrada, p.e. poner una tarea pendiente cono finalizada si está terminada (los valores dependen del tipo de entrada)
-allows to set the status of an entry, eg. set a todo to done if it\'s finished (values depend on entry-typ)	infolog	es-es	permite establecer el estado de una entrada, p.e. poner una tarea pendiente cono finalizada si está terminada (los valores dependen del tipo de entrada)
 applies the changes	infolog	es-es	aplica los cambios
 are you shure you want to delete this entry ?	infolog	es-es	¿Está seguro de querer borrar esta entrada?
 are you sure you want to delete this entry	infolog	es-es	¿Está seguro de querer borrar esta entrada?
@@ -183,8 +182,7 @@ priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
 re:	infolog	es-es	Re:
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192.168.1.
-reg. expr. for local ip\'s<br>eg. ^192\\.168\\.1\\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
 reject	infolog	es-es	rechazar
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
@@ -200,7 +198,6 @@ select a category for this entry	infolog	es-es	seleccionar una categoría para es
 select a priority for this task	infolog	es-es	seleccionar una prioridad para esta tarea
 select a responsible user: a person you want to delegate this task	infolog	es-es	seleccionar un responsable: una persona en la que se quiere delegar la tarea
 select a typ to edit it's status-values or delete it	infolog	es-es	seleccionar un tipo para editar sus valores de estado o eliminarlo
-select a typ to edit it\'s status-values or delete it	infolog	es-es	seleccionar un tipo para editar sus valores de estado o eliminarlo
 select an app to search in	infolog	es-es	Seleccionar una aplicación en la que buscar
 select an entry to link with	infolog	es-es	Seleccionar una entrada a la que apunte un enlace
 should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	es-es	¿Mostrar en el Registro las entradas abiertas en la pantalla principal (tareas sin finalizar, llamadas telefónicas o notas)? Funciona sólo si no ha seleccionado en las preferencias una aplicación para la pantalla principal
@@ -235,7 +232,6 @@ todo	infolog	es-es	Tareas pendientes
 translation	infolog	es-es	Traducción
 typ	infolog	es-es	Tipo
 typ '%1' already exists !!!	infolog	es-es	¡El tipo '%1' ya existe!
-typ \'%1\' already exists !!!	infolog	es-es	¡El tipo '%1' ya existe!
 type	infolog	es-es	Tipo
 type ...	infolog	es-es	Tipo...
 type of the log-entry: note, phonecall or todo	infolog	es-es	Tipo de entrada para el Registro: Nota, llamada de teléfono o tarea pendiente
@@ -245,8 +241,7 @@ urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 use button to search for address	infolog	es-es	usar el botón para buscar por la dirección
 use button to search for project	infolog	es-es	usar el botón para buscar por el proyecto
-valid path on clientside<br>eg. \\\\server\\share or e:\\	infolog	es-es	Ruta válida en el cliente<br>por ej. \\servidor\recurso o e:\
-valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	Ruta válida en el cliente<br>por ej. servidorrecurso o e:
+valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	Ruta válida en el cliente<br>por ej. \\servidor\recurso o e:\
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs
@@ -258,7 +253,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 will-call	infolog	es-es	va a llamar
 yes - delete	infolog	es-es	Sí - Eliminar
 you can't delete one of the stock types !!!	infolog	es-es	¡¡No puede borrar uno de los tipos almacenados!!
-you can\'t delete one of the stock types !!!	infolog	es-es	¡¡No puede borrar uno de los tipos almacenados!!
 you have entered an invalid ending date	infolog	es-es	Ha introducido una fecha de finalización que no es válida
 you have entered an invalid starting date	infolog	es-es	Ha introducido una fecha de inicio que no es válida
 you have to enter a name, to create a new typ!!!	infolog	es-es	¡Debe introducir un nombre para crear un tipo nuevo!

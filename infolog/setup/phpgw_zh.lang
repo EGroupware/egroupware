@@ -247,8 +247,6 @@ urgency	infolog	zh	紧急
 urgent	infolog	zh	最高
 use button to search for address	infolog	zh	点击该按钮以查找地址
 use button to search for project	infolog	zh	点击该按钮以查找项目
-valid path on clientside<br>eg. \\\\\\\\server\\\\share or e:\\\\	infolog	zh	客户端有效路径<br>例如. \\Server\Share 或 e:\
-valid path on clientside<br>eg. \\\\server\\share or e:\\	infolog	zh	客户端有效路径<br>例如. \\Server\Share 或 e:\
 valid path on clientside<br>eg. \\server\share or e:\	infolog	zh	客户端有效路径<br>例如. \\Server\Share 或 e:\
 values for selectbox	infolog	zh	预设选项
 view all subs of this entry	infolog	zh	查看该条目的所有子任务

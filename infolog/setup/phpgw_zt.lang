@@ -181,7 +181,6 @@ priority	infolog	zt	優先權
 private	infolog	zt	私人的
 project	infolog	zt	專案
 re:	infolog	zt	回覆：
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	zt	
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zt	本地端IP的過濾規則<br>例如^192\.168\.1\.
 remark	infolog	zt	標註
 remove this link (not the entry itself)	infolog	zt	移除這個連結(不是它的資料)
@@ -239,8 +238,6 @@ urgent	infolog	zt	緊急的
 use button to search for address	infolog	zt	使用按鈕搜尋通訊錄
 use button to search for project	infolog	zt	使用按鈕搜尋專案
 valid path on clientside<br>eg. \\server\share or e:\	infolog	zt	用戶端可用的路徑<br>例如\\Server\Share 或是 e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	zt	
-valid path on clientside<br>eg. servershare or e:	infolog	zt	
 values for selectbox	infolog	zt	選單的值
 view all subs of this entry	infolog	zt	顯示這個事件的所有附屬資訊
 view other subs	infolog	zt	顯示其他附屬資訊

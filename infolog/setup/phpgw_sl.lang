@@ -12,7 +12,6 @@
 70%	infolog	sl	70%
 80%	infolog	sl	80%
 90%	infolog	sl	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	sl	
 a short subject for the entry	infolog	sl	kratek predmet za vstop
 abort without deleting	infolog	sl	Prekli&#269;i brez brisanja
 accept	infolog	sl	sprejmi
@@ -43,7 +42,6 @@ call	infolog	sl	klic
 cancel	infolog	sl	Prekli&#269;i
 categories	infolog	sl	Kategorije
 category	infolog	sl	Kategorija
-charset of file	infolog	sl	
 check to set startday	infolog	sl	odkljukaj za ozna&#269;itev za&#269;etnega dneva
 click here to create the link	infolog	sl	Klikni tukaj za ustvariti povezavo
 click here to start the search	infolog	sl	Klikni tukaj za zaèetek iskanja
@@ -64,7 +62,7 @@ custom contact-address, leave empty to use information from most recent link	inf
 custom contact-information, leave emtpy to use information from most recent link	infolog	sl	Lastni kontaktni naslov (pusti prazno za uporabo informacije iz najnovej¹e povezave)
 custom fields	infolog	sl	Lastna polja
 custom fields, typ and status	common	sl	Lastna polja, tip in status
-custom regarding	infolog	sl	lastno glede na 
+custom regarding	infolog	sl	lastno glede na
 custom status for typ	infolog	sl	Lastni satus za tip
 datecreated	infolog	sl	datum kreiran
 dates, status, access	infolog	sl	Datumi, status, dostop
@@ -157,7 +155,7 @@ open	infolog	sl	odpri
 opsl	infolog	sl	open
 optional note to the link	infolog	sl	optimalna opomba za povezavo
 order	infolog	sl	Vrstni red
-overdue	infolog	sl	zapadel  
+overdue	infolog	sl	zapadel
 own	infolog	sl	lasten
 own open	infolog	sl	odpri lastno
 own opsl	infolog	sl	own open
@@ -167,7 +165,6 @@ owner	infolog	sl	Lastnik
 owner responsible	infolog	sl	Odgovoren lastnik
 path on (web-)serverside<br>eg. /var/samba/share	infolog	sl	pot na (web-)stran stre¾nika<br>npr. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sl	Pot do uporabnikov in skupine datotek MORA BITI ZUNAJ webstre¾nikovega glavnega direktorija!
-pattern for search in addressbook	infolog	sl	
 pattern for search in projects	infolog	sl	vzorec za iskanje po Projektih
 phone	infolog	sl	Telefonki klic
 phone/email	infolog	sl	Telefon/Enaslov
@@ -176,7 +173,7 @@ priority	infolog	sl	Prioriteta
 private	infolog	sl	Privatno
 project	infolog	sl	Projekt
 re:	infolog	sl	Odg:
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	sl	regularni izraz za lokalne IPje<br>npr. ^192.168.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	sl	regularni izraz za lokalne IPje<br>npr. ^192\.168\.1\.
 remark	infolog	sl	Opomba
 remove this link (not the entry itself)	infolog	sl	Pobri¹i povezavo (ne tudi zapisa)
 responsible	infolog	sl	Odgovoren
@@ -229,7 +226,7 @@ urgency	infolog	sl	nujnost
 urgent	infolog	sl	nujno
 use button to search for address	infolog	sl	uporabi gumb za iskanje naslova
 use button to search for project	infolog	sl	uporabi gumb za iskanje projekta
-valid path on clientside<br>eg. \\server\share or e:\	infolog	sl	veljavna pot na strani odjemalca<br>npr. \Stre¾nikSkupno ali e:
+valid path on clientside<br>eg. \\server\share or e:\	infolog	sl	veljavna pot na strani odjemalca<br>npr. \\Stre¾nik\Skupno ali e:\
 values for selectbox	infolog	sl	Vrednosti za izbirno polje
 view all subs of this entry	infolog	sl	Poglej vse podzapise
 view other subs	infolog	sl	poglej ostale podzapise
