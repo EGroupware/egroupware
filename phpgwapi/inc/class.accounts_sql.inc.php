@@ -141,7 +141,7 @@
       $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
       $sql .= "values (".$accountid.", '".$accountname."','u', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A')";
       $this->db->query($sql);
-      $this->db->query("insert into preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
+      $this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)",__LINE__,__FILE__);
       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
       $this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);

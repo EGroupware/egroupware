@@ -48,8 +48,8 @@
 
 		function read_repository()
 		{
-			$this->db->lock("preferences");
-			$this->db->query("SELECT preference_value FROM preferences WHERE preference_owner='".$this->account_id."'",__LINE__,__FILE__);
+			$this->db->lock("phpgw_preferences");
+			$this->db->query("SELECT preference_value FROM phpgw_preferences WHERE preference_owner='".$this->account_id."'",__LINE__,__FILE__);
 			$this->db->next_record();
 			$pref_info = $this->db->f("preference_value");
 			$this->data = Array();
@@ -97,8 +97,8 @@
 			global $phpgw, $phpgw_info;
 
 			if (! $phpgw->acl->check("session_only_preferences",1,"preferences")) {
-				 $this->db->lock("preferences");
-				 $this->db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
+				 $this->db->lock("phpgw_preferences");
+				 $this->db->query("delete from phpgw_preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 	 
 				 if ($PHP_VERSION < "4.0.0") {
 					 $pref_info = addslashes(serialize($this->data));
@@ -106,7 +106,7 @@
 					 $pref_info = serialize($this->data);
 				 }
 	 
-				 $this->db->query("insert into preferences (preference_owner,preference_value) values ('"
+				 $this->db->query("insert into phpgw_preferences (preference_owner,preference_value) values ('"
 												. $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
 	 
 				 $this->db->unlock();

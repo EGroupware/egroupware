@@ -53,12 +53,6 @@
   )";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "CREATE TABLE preferences (
-    preference_owner       int,
-    preference_value       text
-  )";
-  $phpgw_setup->db->query($sql);  
-
   $sql = "CREATE TABLE phpgw_sessions (
     session_id        varchar(255) NOT NULL,
     session_lid       varchar(255),
@@ -298,8 +292,8 @@
          );";
   $phpgw_setup->db->query($sql); 
 
-  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
-  $phpgw_info["setup"]["oldver"]["phpgwapi"] = $phpgw_info["setup"]["currentver"]["phpgwapi"];
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre10';
+  $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();
 ?>

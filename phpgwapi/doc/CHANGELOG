@@ -7,7 +7,7 @@
 	- Fixed calendar when editing events and groups associated to them.
 	- Fixed lang independence with navbar text.
 	- Implemented new Applications class.
-	- Changed a few table names to use the phpgw_ prefix.
+	- Changed all API table names to use the phpgw_ prefix.
 	- Application permissions on accounts is now done via full ACL
 	- You can now turn off cacheing of the phpgw_info array, maybe a small preformance increase
 		depending on the setup.

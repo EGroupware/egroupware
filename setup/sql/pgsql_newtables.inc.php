@@ -46,12 +46,6 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "create table preferences ( 
-    preference_owner       int,
-    preference_value       text
-  )";
-  $phpgw_setup->db->query($sql);
-
   $sql = "create table phpgw_preferences ( 
     preference_owner       int,
     preference_value       text
@@ -271,7 +265,7 @@
           );";
   $phpgw_setup->db->query($sql);  
 
-  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
-  $phpgw_info["setup"]["oldver"]["phpgwapi"] = $phpgw_info["setup"]["currentver"]["phpgwapi"];
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre10';
+  $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>
