@@ -17,6 +17,7 @@
   $phpgw_info = array();
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
+
   check_code($cd);
 
   // This func called by the includes to dump a row header
@@ -49,7 +50,7 @@
 
   for( $i =0; $i < sizeof($apps); $i++) {
     $appname = $apps[$i];
-    $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_admin.inc.php";
+    $f = PHPGW_SERVER_ROOT . "/" . $appname . "/inc/hook_admin.inc.php";
     if (file_exists($f)) {
       include($f);
       echo "<p>\n";

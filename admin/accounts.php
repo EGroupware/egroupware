@@ -14,7 +14,7 @@
   $phpgw_info = array();
   $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);  
   include("../header.inc.php");
-  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+  include(PHPGW_APP_INC . "/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
   $phpgw->template->set_file(array("list" => "accounts.tpl",
               			         "row"  => "accounts_row.tpl"));
