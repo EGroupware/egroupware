@@ -10,12 +10,13 @@
   \**************************************************************************/
 
   /**************************************************************************\
-  * This file should be generated for you. It should never be edited by hand *
+  * This file should be generated for you by setup. It should not need to be *
+  * edited by hand.                                                          *
   \**************************************************************************/
 
   {idstring}
 
-  // table array for {appname}
+  /* table array for {appname} */
 	$phpgw_baseline = array(
 <!-- END sqlheader -->
 <!-- BEGIN sqlbody -->
