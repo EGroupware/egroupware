@@ -48,7 +48,7 @@
 			'update_dla'   => True
 		);
 
-		var $dom;
+		var $cookie_domain;
 
 		/*************************************************************************\
 		* Constructor just loads up some defaults from cookies                    *
@@ -59,6 +59,7 @@
 			$this->kp3       = get_var('kp3',Array('COOKIE','GET'));
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
+			$this->phpgw_set_cookiedomain();
 		}
 
 		function DONTlist_methods($_type)
@@ -280,9 +281,9 @@
 			// With php4 sessions support this isnt really our job
 		}
 
-		function phpgw_set_domain()
+		function phpgw_set_cookiedomain()
 		{
-			$dom = $GLOBALS['HTTP_HOST'];
+			$dom = $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'];
 			if (preg_match("/^(.*):(.*)$/",$dom,$arr))
 			{
 				$dom = $arr[1];
@@ -290,21 +291,21 @@
 			$parts = explode('.',$dom);
 			if (count($parts) > 2)
 			{
-				$this->dom = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
+				$this->cookie_domain) = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
 			}
 			else
 			{
-				$this->dom = '';
+				$this->cookie_domain) = '';
 			}
 		}
 
 		function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
 		{
-			if (!$this->dom)
+			if (!$this->cookie_domain)
 			{
-				$this->phpgw_set_domain();
+				$this->phpgw_set_cookiedomain();
 			}
-			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->dom); 
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain)); 
 		}
 
 		function create($login,$passwd = '',$passwd_type = '')
@@ -682,6 +683,7 @@
 
 			session_unset();
 			session_destroy();
+ 			$this->phpgw_setcookie(session_name());
 			//$GLOBALS['phpgw']->db->query("UPDATE phpgw_access_log SET lo='" . time() . "' WHERE sessionid='"
 			//	. $sessionid . "'",__LINE__,__FILE__);
 

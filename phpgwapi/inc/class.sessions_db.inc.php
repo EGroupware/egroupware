@@ -50,6 +50,8 @@
 			'update_dla'   => True
 		);
 
+		var $cookie_domain;
+
 		/*************************************************************************\
 		* Constructor just loads up some defaults from cookies                    *
 		\*************************************************************************/
@@ -62,6 +64,7 @@
 
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
+			$this->phpgw_set_cookiedomain()
 		}
 
 		function DONTlist_methods($_type)
@@ -295,9 +298,9 @@
 				. "'",__LINE__,__FILE__);
 		}
 
-		function phpgw_set_domain()
+		function phpgw_set_cookiedomain()
 		{
-			$dom = $GLOBALS['HTTP_HOST'];
+			$dom = $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'];
 			if (preg_match("/^(.*):(.*)$/",$dom,$arr))
 			{
 				$dom = $arr[1];
@@ -305,21 +308,21 @@
 			$parts = explode('.',$dom);
 			if (count($parts) > 2)
 			{
-				$this->dom = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
+				$this->cookie_domain = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
 			}
 			else
 			{
-				$this->dom = '';
+				$this->cookie_domain = '';
 			}
 		}
 
 		function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
 		{
-			if (!$this->dom)
+			if (!$this->cookie_domain)
 			{
-				$this->phpgw_set_domain();
+				$this->phpgw_set_cookiedomain();
 			}
-			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->dom); 
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
 		}
 
 		function create($login,$passwd = '',$passwd_type = '')

@@ -58,9 +58,9 @@
 
 	if($GLOBALS['phpgw_info']['server']['usecookies'])
 	{
-		Setcookie('sessionid');
-		Setcookie('kp3');
-		Setcookie('domain');
+		$GLOBALS['phpgw']->session->phpgw_setcookie('sessionid');
+		$GLOBALS['phpgw']->session->phpgw_setcookie('kp3');
+		$GLOBALS['phpgw']->session->phpgw_setcookie('domain');
 	}
 
 	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?code=1',True);
