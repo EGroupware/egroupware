@@ -57,7 +57,20 @@
 		// You could redirect them to login.php with code 2 or use the default
 		// I recommend using the default until all of the bugs are worked out.
 
-		function phpgw_()
+		function phpgw() {
+			global $phpgw_info;
+			$this->db           = CreateObject("phpgwapi.db");
+			$this->db->Host     = $phpgw_info["server"]["db_host"];
+			$this->db->Type     = $phpgw_info["server"]["db_type"];
+			$this->db->Database = $phpgw_info["server"]["db_name"];
+			$this->db->User     = $phpgw_info["server"]["db_user"];
+			$this->db->Password = $phpgw_info["server"]["db_pass"];
+			if ($this->debug) {
+				 $this->db->Debug = 1;
+			}
+		}
+
+		function load_core_objects()
 		{
 			/************************************************************************\
 			* Required classes                                                       *
@@ -77,18 +90,6 @@
 		* Core functions                                                           *
 		\**************************************************************************/
 
-	function load_db() {
-			global $phpgw_info;
-			$this->db           = CreateObject("phpgwapi.db");
-			$this->db->Host     = $phpgw_info["server"]["db_host"];
-			$this->db->Type     = $phpgw_info["server"]["db_type"];
-			$this->db->Database = $phpgw_info["server"]["db_name"];
-			$this->db->User     = $phpgw_info["server"]["db_user"];
-			$this->db->Password = $phpgw_info["server"]["db_pass"];
-			if ($this->debug) {
-				 $this->db->Debug = 1;
-			}
-	}
     function strip_html($s)
     {
        return htmlspecialchars(stripslashes($s));

@@ -185,7 +185,6 @@
 	\****************************************************************************/
 	/* Load main class */
 	$phpgw = CreateObject("phpgwapi.phpgw");
-	$phpgw->load_db();
 
 	/* Fill phpgw_info["server"] array */
 	$phpgw->db->query("select * from phpgw_config",__LINE__,__FILE__);
@@ -193,7 +192,7 @@
 		$phpgw_info["server"][$phpgw->db->f("config_name")] = stripslashes($phpgw->db->f("config_value"));
 	}
 	
-	$phpgw->phpgw_();	
+	$phpgw->load_core_objects();	
 	print_debug('main class loaded');
 	
 	// Handy little shortcut
