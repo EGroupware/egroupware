@@ -1319,9 +1319,9 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
 						. SEP . 'css' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.css';
 			}
-			elseif(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . 'default' . SEP . 'css' . SEP . 'submarine.css'))
+			elseif(@file_exists(PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'templates' . SEP . 'idsociety' . SEP . 'css' . SEP . 'submarine.css'))
 			{
-				$css_file =  $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . 'default' . SEP . 'css' . SEP . 'submarine.css';
+				$css_file =  $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . 'idsociety' . SEP . 'css' . SEP . 'submarine.css';
 			}
 
 			else
@@ -1397,7 +1397,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 		function load_phpgw_body_tags()
 		{
-			$GLOBALS['phpgw_info']['flags']['body_tags']['onLoad'] .= $this->load_preload_images_data(); 
+			$GLOBALS['phpgw_info']['flags']['body_tags']['onLoad'] = $this->load_preload_images_data(); 
 
 			if(@is_array($GLOBALS['phpgw_info']['flags']['body_tags']))
 			{
