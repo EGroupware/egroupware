@@ -2,6 +2,7 @@
 	- Added in transaction support to the db classes
 	- Hooks code has been changed some, the location is now required, and the hook filenames
 		need to follow the new format: hook_<location>.inc.php
+	- The sessions class now base64 encodes passwords in appsessions to prevent invaild chars.
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
