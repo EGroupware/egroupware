@@ -1879,7 +1879,7 @@
 			$version = $db->f('app_version');
 			unset($db);
 
-			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->common->create_emailpreferences($GLOBALS['phpgw_info']['user']['preferences']);
+			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->prefereces->create_email_preferences();
 			$sender = $GLOBALS['phpgw_info']['user']['preferences']['email']['address'];
 
 			$temp_tz_offset = $this->prefs['common']['tz_offset'];
@@ -1902,19 +1902,19 @@
 			if($this->owner != $temp_user['account_id'])
 			{
 				$user = $this->owner;
-		
-				$accounts = CreateObject('phpgwapi.accounts',$user);
-				$phpgw_info['user'] = $accounts->read_repository();
-
-				$pref = CreateObject('phpgwapi.preferences',$user);
-				$GLOBALS['phpgw_info']['user']['preferences'] = $pref->read_repository();
+//		
+//				$accounts = CreateObject('phpgwapi.accounts',$user);
+//				$phpgw_info['user'] = $accounts->read_repository();
+//
+//				$pref = CreateObject('phpgwapi.preferences',$user);
+//				$GLOBALS['phpgw_info']['user']['preferences'] = $pref->read_repository();
 			}
 			else
 			{
 				$user = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 
-			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->common->create_emailpreferences($GLOBALS['phpgw_info']['user']['preferences'],$user);
+			$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->create_email_preferences($user);
 
 			switch($msg_type)
 			{
@@ -1988,7 +1988,7 @@
 					{
 						continue;
 					}
-					$part_prefs = $GLOBALS['phpgw']->common->create_emailpreferences($part_prefs,intval($userid));
+					$part_prefs = $preferences->create_email_preferences(intval($userid));
 					$to = $part_prefs['email']['address'];
 					
 					if($this->debug)
