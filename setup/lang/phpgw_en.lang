@@ -10,6 +10,7 @@ admin first name	setup	en	Admin first name
 admin last name	setup	en	Admin last name
 admin password	setup	en	Admin password
 admin password to header manager	setup	en	Admin password to header manager
+admin user for header manager	setup	en	Admin user for header manager
 admin username	setup	en	Admin username
 admins	setup	en	Admins
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
@@ -61,9 +62,12 @@ checking the egroupware installation	setup	en	Checking the eGroupWare Installati
 click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="index.php">here</a> to return to setup.
 click here	setup	en	Click Here
 completed	setup	en	Completed
+config password	setup	en	Config Password
+config username	setup	en	Config Username
 configuration	setup	en	Configuration
 configuration completed	setup	en	Configuration completed
 configuration password	setup	en	Configuration Password
+configuration user	setup	en	Configuration User
 configure now	setup	en	Configure Now
 continue	setup	en	Continue
 continue to the header admin	setup	en	Continue to the Header Admin
@@ -146,6 +150,9 @@ go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
 has a version mismatch	setup	en	has a version mismatch
+header admin login	setup	en	Header Admin Login
+header password	setup	en	Header Password
+header username	setup	en	Header Username
 historylog removed	setup	en	Historylog removed
 hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
@@ -304,9 +311,10 @@ setup	setup	en	Setup
 setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 setup main menu	setup	en	Setup Main Menu
 setup the database	setup	en	Setup the database
+setup/config admin login	setup	en	Setup/Config Admin Login
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
-SQL encryption type	setup	en	SQL encryption type for passwords (default - md5)
+sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
 start the postmaster	setup	en	Start the postmaster
 status	setup	en	Status
 step 1 - simple application management	setup	en	Step 1 - Simple Application Management
@@ -351,6 +359,8 @@ upgraded	setup	en	upgraded
 upgrading tables	setup	en	Upgrading Tables
 use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
+user account prefix	setup	en	User account prefix
+usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice
 utf-8 (unicode)	setup	en	utf-8 (Unicode)
 version mismatch	setup	en	Version Mismatch
@@ -378,10 +388,10 @@ you appear to have oracle v8 (oci) support enabled	setup	en	You appear to have O
 you appear to have postgresql support enabled	setup	en	You appear to have PostgreSQL support enabled
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br>	setup	en	You are ready for this stage, but this stage is not yet written.<br>
-you didn't enter a config username for domain %1	setup	en	You didn't enter a config username for domain %1
 you didn't enter a config password for domain %1	setup	en	You didn't enter a config password for domain %1
-you didn't enter a header admin username	setup	en	You didn't enter a header admin username 
+you didn't enter a config username for domain %1	setup	en	You didn't enter a config username for domain %1
 you didn't enter a header admin password	setup	en	You didn't enter a header admin password
+you didn't enter a header admin username	setup	en	You didn't enter a header admin username
 you do not have any languages installed. please install one now <br>	setup	en	You do not have any languages installed. Please install one now <br>
 you have not created your header.inc.php yet!<br> you can create it now.	setup	en	You have not created your header.inc.php yet!<br> You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out
@@ -401,11 +411,3 @@ your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blin
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
-config username	setup	en	Config Username
-config password	setup	en	Config Password
-configuration user	setup	en	Configuration User
-admin user for header manager	setup	en	Admin user for header manager
-header username	setup	en	Header Username
-header password	setup	en	Header Password
-setup/config admin login	setup	en	Setup/Config Admin Login
-header admin login	setup	en	Header Admin Login
