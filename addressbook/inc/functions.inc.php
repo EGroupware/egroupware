@@ -33,15 +33,17 @@
 		}
 	}
 
-	function cat_option($cat_id='') {
+	function cat_option($cat_id='',$notall=False) {
 		global $phpgw_info;
 		// Setup all and none first
 		$cats_link  = "<select name=\"cat_id\">";
-		$cats_link .= "<option value =\"all\"";
-		if ($cat_id=="all") {
-			$cats_link .= " selected";
+		if (!$notall) {
+			$cats_link .= "<option value =\"all\"";
+			if ($cat_id=="all") {
+				$cats_link .= " selected";
+			}
+			$cats_link .= ">".lang("all");
 		}
-		$cats_link .= ">".lang("all");
 
 		$cats_link .= "<option value =\"0\"";
 		if (!$cat_id) {
@@ -258,7 +260,7 @@
 		$access       = $fields["access"];
 		$cat_id       = $fields["cat_id"];
 	
-		$cats_link    = cat_option($cat_id);
+		$cats_link    = cat_option($cat_id,True);
 
 		if ($access == 'private') {
 			$access_check = ' checked';
