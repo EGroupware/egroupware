@@ -76,32 +76,32 @@
 <!-- END cats -->
 
 <!-- BEGIN search_filter -->
-    <form method="POST" action="{form_action}" name="filter">
-     <input type="hidden" name="filter" value="{filter_value}">
-     <input type="hidden" name="qfield" value="{qfield_value}">
-     <input type="hidden" name="start" value="{start_value}">
-     <input type="hidden" name="order" value="{order_value}">
-     <input type="hidden" name="sort" value="{sort_value}">
-     <input type="hidden" name="query" value="{query_value}">
-     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+    <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+     <form method="POST" action="{form_action}" name="filter">
+      <input type="hidden" name="filter" value="{filter_value}">
+      <input type="hidden" name="qfield" value="{qfield_value}">
+      <input type="hidden" name="start" value="{start_value}">
+      <input type="hidden" name="order" value="{order_value}">
+      <input type="hidden" name="sort" value="{sort_value}">
+      <input type="hidden" name="query" value="{query_value}">
       <tr>{search}<td>&nbsp;</td>{filter}
       </tr>
-     </table>
-    </form>
+     </form>
+    </table>
 <!-- END search_filter -->
 
 <!-- BEGIN cats_search_filter -->
-    <form method="POST" action="{form_action}" name="filter">
-     <input type="hidden" name="filter" value="{filter_value}">
-     <input type="hidden" name="qfield" value="{qfield_value}">
-     <input type="hidden" name="start" value="{start_value}">
-     <input type="hidden" name="order" value="{order_value}">
-     <input type="hidden" name="sort" value="{sort_value}">
-     <input type="hidden" name="query" value="{query_value}">
-     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+    <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+     <form method="POST" action="{form_action}" name="filter">
+      <input type="hidden" name="filter" value="{filter_value}">
+      <input type="hidden" name="qfield" value="{qfield_value}">
+      <input type="hidden" name="start" value="{start_value}">
+      <input type="hidden" name="order" value="{order_value}">
+      <input type="hidden" name="sort" value="{sort_value}">
+      <input type="hidden" name="query" value="{query_value}">
       <tr>{cats}<td>&nbsp;</td>{search}<td>&nbsp;&nbsp;</td>{filter}
       </tr>
-     </table>
-    </form>
+     </form>
+    </table>
 <!-- END cats_search_filter -->
 
