@@ -42,11 +42,19 @@
   }
 
   $db             = new db;
-  $db->Host       = $phpgw_info["server"]["db_host"];
-  $db->Type       = $phpgw_info["server"]["db_type"];
-  $db->Database   = $phpgw_info["server"]["db_name"];
-  $db->User       = $phpgw_info["server"]["db_user"];
-  $db->Password   = $phpgw_info["server"]["db_pass"];
+  if ($phpgw_info["multiable_domains"] != True){
+    $db->Host       = $phpgw_info["server"]["db_host"];
+    $db->Type       = $phpgw_info["server"]["db_type"];
+    $db->Database   = $phpgw_info["server"]["db_name"];
+    $db->User       = $phpgw_info["server"]["db_user"];
+    $db->Password   = $phpgw_info["server"]["db_pass"];
+  }else{
+    $db->Host       = $domains[$SetupDomain]["db_host"];
+    $db->Type       = $domains[$SetupDomain]["db_type"];
+    $db->Database   = $domains[$SetupDomain]["db_name"];
+    $db->User       = $domains[$SetupDomain]["db_user"];
+    $db->Password   = $domains[$SetupDomain]["db_pass"];
+  }
 //  $db->Halt_On_Error = "report";
   $db->Halt_On_Error = "no";
 
