@@ -258,7 +258,7 @@
 				'YE'=>'YEMEN', 
 				'YU'=>'YUGOSLAVIA', 
 				'ZM'=>'ZAMBIA', 
-				'ZW'=>'ZIMBABWE', 
+				'ZW'=>'ZIMBABWE'
 			); 
 		}
 
