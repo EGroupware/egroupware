@@ -53,7 +53,9 @@ because the enable flag for this app is set to 0, or is undefined	setup	de	weil 
 bottom	setup	de	unten
 cancel	setup	de	Abbrechen
 cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br>Stattdessen können sie die Datei %1.
+change system-charset	setup	de	Systemzeichensatz wechseln
 charset	setup	de	ISO-8859-1
+charset to convert to	setup	de	Zeichensatz in den konvertiert werden soll
 check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüfen
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier clicken</a> um zum Setup zurück zu kommen.
 click here	setup	de	Hier clicken
@@ -63,6 +65,7 @@ configuration completed	setup	de	Konfiguration abgeschlossen
 configuration password	setup	de	Konfigurationspasswort
 configure now	setup	de	Jetzt konfigurieren
 continue	setup	de	Weiter
+convert	setup	de	Konvertieren
 could not open header.inc.php for writing!	setup	de	Konnte die Datei header.inc.php nicht zum schreiben öffen!
 country selection	setup	de	Länderauswahl
 create	setup	de	erstellen
@@ -74,8 +77,11 @@ create the empty database and grant user permissions -	setup	de	Leere Datenbank 
 create your header.inc.php	setup	de	Datei header.inc.php anlegen
 created	setup	de	erzeugt
 creating tables	setup	de	Erstelle Tabellen
+current system-charset	setup	de	Aktueller Systemzeichensatz
+current system-charset is %1, click %2here%3 to change it.	setup	de	Aktueller Systemzeichensatz ist %1, %2hier%3 klicken um ihn zu ändern.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br>	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
+database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von '%1' nach '%2' konvertiert
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
 db host	setup	de	Datenbank Host
 db name	setup	de	Datenbank Name
@@ -120,7 +126,9 @@ enter the site username for peer servers	setup	de	Site Benutzername für Peer Ser
 enter the title for your site	setup	de	Titel der phpGroupWare Installation
 enter your default ftp server	setup	de	Default FTP Server
 enter your http proxy server	setup	de	HTTP Proxy Server
-enter your http proxy server port	setup	de	HTTP Proxy Server Port
+enter your http proxy server password	setup	de	Passwort des HTTP Proxy Server
+enter your http proxy server port	setup	de	Port des HTTP Proxy Server
+enter your http proxy server username	setup	de	Benutzername des HTTP Proxy Server
 export has been completed!  you will need to set the user passwords manually.	setup	de	Export ist abgeschlossen! Sie müssen die Benutzerpasswörter manuell setzen.
 export phpgroupware accounts from sql to ldap	setup	de	phpGroupWare Benutzerkonten von SQL nach LDAP exportieren
 export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
@@ -211,6 +219,7 @@ no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. A
 not complete	setup	de	nicht komplett
 not completed	setup	de	Nicht komplett
 not ready for this stage yet	setup	de	Noch nicht fertig für diesen Schritt
+not set	setup	de	nicht gesetzt
 note: you will be able to customize this later	setup	de	Notiz: Sie können dies später anpassen
 now guessing better values for defaults...	setup	de	Nun wird versucht bessere Werte für die Vorgaben zu finden ...
 ok	setup	de	OK
@@ -260,6 +269,7 @@ sample configuration not found. using built in defaults	setup	de	Beispiel Konfig
 save	setup	de	Speichern
 save this text as contents of your header.inc.php	setup	de	Sichern sie diesen Text als Datei header.inc.php
 select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	de	Wählen Sie eine Applikation, geben Sie eine Zielversion ein, dann bestätigen Sie den Vorgang.<br>Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
+select one...	setup	de	Einen auswählen...
 select the default applications to which your users will have access	setup	de	Wählen Sie die voreingestellten Applikationen, zu denen Ihre Benutzer Zugriff haben werden
 select the desired action(s) from the available choices	setup	de	Wählen Sie die verlangten Aktion(en) aus der verfügbaren Auswahl
 select to download file	setup	de	Auswähle um die Datei herunterzuladen
@@ -308,6 +318,7 @@ there was a problem tring to connect to your ldap server. <br>please check your 
 there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab ein Problem eine Verbindung zu ihrem LDAP Server herzustellen.<br>
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu ihrem LDAP Server herzustellen.<br>Bitte überprüfen sie die Konfiguration ihres LDAP servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss ausserhalb der document-root des Webservers sein!!!
+this program will convert your database to a new system-charset.	setup	de	Diese Programm wird ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
 this program will help you upgrade or install different languages for phpgroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für phpGroupWare behilflich sein
 this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus phpGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
 this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	de	Dieser Abschnitt wird Ihnen beim importieren von Benutzern/Gruppen aus Ihrem LDAP Baum in phpGroupWare's Account Tabellen behilflich sein
@@ -316,7 +327,7 @@ this should be around 30 bytes in length.<br>note: the default has been randomly
 this stage is completed<br>	setup	de	Dieser Schritt ist abgeschlossen<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	de	Dies wird 1 Admin- und 3 Demo Benutzerkonten erstellen<br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.<br><b>!!!DIES WIRD ALLE EXISTIERENDEN BENUTZERKONTEN LÖSCHEN!!!</b><br>
 to a version it does not know about	setup	de	auf eine Version von der nichts bekannt ist
-to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	de	zum einrichten von 1 Admin- und 3 Demo-Benutzerkonten.<br><b>Dies wird alle existierenden Benutzerkonten löschen!</b>
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	de	zum Einrichten von eines Adminkontos und ggf. 3 Demo-Benutzerkonten.<br><b>Dies wird alle existierenden Benutzerkonten löschen!</b>
 top	setup	de	oben
 translations added	setup	de	Übersetzungen hinzugefügt
 translations removed	setup	de	Übersetzungen entfernt
@@ -333,6 +344,7 @@ upgrading tables	setup	de	aktualisiere Tabellen
 use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 users choice	setup	de	Benutzerauswahl
+utf-8 (unicode)	setup	de	utf-8 (Unicode)
 version mismatch	setup	de	Versionen passen nicht zueinander
 view	setup	de	Anzeigen
 warning!	setup	de	Warnung!
@@ -364,6 +376,7 @@ you do not have any languages installed. please install one now <br>	setup	de	si
 you have not created your header.inc.php yet!<br> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br>Sie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	sie müssen einen Benutzernamen für den Administrator eingeben !
+you need to select your current charset!	setup	de	Sie müssen ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...

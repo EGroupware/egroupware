@@ -51,7 +51,9 @@ because the enable flag for this app is set to 0, or is undefined	setup	en	becau
 bottom	setup	en	bottom
 cancel	setup	en	Cancel
 cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 the file.
+change system-charset	setup	en	Change system-charset
 charset	setup	en	ISO-8859-1
+charset to convert to	setup	en	Charset to convert to
 check ip address of all sessions	setup	en	check ip address of all sessions
 click <a href="index.php">here</a> to return to setup.	setup	en	Click <a href="index.php">here</a> to return to setup.
 click here	setup	en	Click Here
@@ -61,6 +63,7 @@ configuration completed	setup	en	Configuration completed
 configuration password	setup	en	Configuration Password
 configure now	setup	en	Configure Now
 continue	setup	en	Continue
+convert	setup	en	Convert
 could not open header.inc.php for writing!	setup	en	Could not open header.inc.php for writing!
 country selection	setup	en	Country Selection
 create	setup	en	Create
@@ -72,8 +75,11 @@ create the empty database and grant user permissions -	setup	en	Create the empty
 create your header.inc.php	setup	en	Create your header.inc.php
 created	setup	en	created
 creating tables	setup	en	Creating Tables
+current system-charset	setup	en	Current system-charset
+current system-charset is %1, click %2here%3 to change it.	setup	en	Current system-charset is %1, click %2here%3 to change it.
 current version	setup	en	Current Version
 currently installed languages: %1 <br>	setup	en	Currently installed languages: %1 <br>
+database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 db host	setup	en	DB Host
 db name	setup	en	DB Name
@@ -118,7 +124,9 @@ enter the site username for peer servers	setup	en	Enter the site username for pe
 enter the title for your site	setup	en	Enter the title for your site
 enter your default ftp server	setup	en	Enter your default FTP server
 enter your http proxy server	setup	en	Enter your HTTP proxy server
+enter your http proxy server password	setup	en	Enter your HTTP proxy server password
 enter your http proxy server port	setup	en	Enter your HTTP proxy server port
+enter your http proxy server username	setup	en	Enter your HTTP proxy server username
 export has been completed!  you will need to set the user passwords manually.	setup	en	Export has been completed!  You will need to set the user passwords manually.
 export phpgroupware accounts from sql to ldap	setup	en	Export phpGroupWare accounts from SQL to LDAP
 export sql users to ldap	setup	en	Export SQL users to LDAP
@@ -209,6 +217,7 @@ no xml support found. disabling	setup	en	No XML support found. Disabling
 not complete	setup	en	not complete
 not completed	setup	en	Not Completed
 not ready for this stage yet	setup	en	Not ready for this stage yet
+not set	setup	en	not set
 note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
 now guessing better values for defaults...	setup	en	Now guessing better values for defaults...
 ok	setup	en	OK
@@ -258,6 +267,7 @@ sample configuration not found. using built in defaults	setup	en	Sample configur
 save	setup	en	Save
 save this text as contents of your header.inc.php	setup	en	Save this text as contents of your header.inc.php
 select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
+select one...	setup	en	select one...
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	en	Select the desired action(s) from the available choices
 select to download file	setup	en	Select to download file
@@ -305,6 +315,7 @@ the tables	setup	en	the tables
 there was a problem trying to connect to your ldap server. <br>	setup	en	There was a problem trying to connect to your LDAP server. <br>
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the webservers document-root!!!
+this program will convert your database to a new system-charset.	setup	en	This program will convert your database to a new system-charset.
 this program will help you upgrade or install different languages for phpgroupware	setup	en	This program will help you upgrade or install different languages for phpGroupWare
 this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	en	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	en	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
@@ -330,6 +341,7 @@ upgrading tables	setup	en	Upgrading Tables
 use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
 users choice	setup	en	Users Choice
+utf-8 (unicode)	setup	en	utf-8 (Unicode)
 version mismatch	setup	en	Version Mismatch
 view	setup	en	View
 warning!	setup	en	Warning!
@@ -361,6 +373,7 @@ you do not have any languages installed. please install one now <br>	setup	en	Yo
 you have not created your header.inc.php yet!<br> you can create it now.	setup	en	You have not created your header.inc.php yet!<br> You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out
 you must enter a username for the admin	setup	en	You must enter a username for the admin
+you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
