@@ -347,7 +347,8 @@
 
 			if (is_array($this->grants))
 			{
-				$filterfields += array('phpgwcontactaccess' => 'public');
+				/* this was not listing private entries when show all was selected */
+				/* $filterfields += array('phpgwcontactaccess' => 'public'); */
 				$grants = $this->grants;
 				while (list($user) = each($grants))
 				{
