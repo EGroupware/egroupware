@@ -22,6 +22,9 @@
   $phpgw_info["flags"]["nofooter"] = True;
   include("../header.inc.php");
 
-  Header("Location: ".$phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"]."?".$QUERY_STRING);
+  $newpage = $phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"];
+  if ($namepage=="index.php") $newpage = "month.php";
+
+  Header("Location: ".$newpage."?".$QUERY_STRING);
   $phpgw->common->phpgw_exit();
 ?>

@@ -115,7 +115,7 @@
        }
      ?>
      <option value="year.php"<?php echo $selected["year.php"] . ">" . lang("Yearly"); ?></option>
-     <option value="index.php"<?php echo $selected["month.php"] . ">" . lang("Monthly"); ?></option>
+     <option value="month.php"<?php echo $selected["month.php"] . ">" . lang("Monthly"); ?></option>
      <option value="week.php"<?php echo $selected["week.php"]  . ">" . lang("Weekly"); ?></option>
      <option value="day.php"<?php echo $selected["day.php"] . ">" . lang("Daily"); ?></option>
     </select>
