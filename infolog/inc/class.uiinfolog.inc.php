@@ -147,7 +147,7 @@
 			return $total;
 		}
 
-		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False)
+		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False,$return_html=False)
 		{
 			$referer = is_array($values) ? $values['referer'] : $referer;
 			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]')</p>\n";
@@ -236,7 +236,7 @@
 			$persist['action_id'] = $values['nm']['action_id'] = $action_id;
 			$persist['referer'] = $referer;
 
-			$this->tmpl->exec('infolog.uiinfolog.index',$values,'',$readonlys,$persist);
+			return $this->tmpl->exec('infolog.uiinfolog.index',$values,'',$readonlys,$persist,'',$return_html);
 		}
 
 		function delete($values=0,$referer='')
