@@ -15,7 +15,7 @@
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
-		'currentapp' => 'home',	// resolves to phpgwapi, which is not allowed itself
+		'currentapp' => 'addressbook',	
 		'enable_nextmatchs_class' => True
 	);
 	
@@ -24,9 +24,9 @@
 	// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
 	header('Content-type: text/html; charset='.$GLOBALS['phpgw']->translation->charset());
 	
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'addressbook';
 	include('templates/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'].'/head.inc.php');
 
+	$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
 	$GLOBALS['phpgw']->template->set_file(array(
 		'addressbook_list_t' => 'addressbook.tpl',
 	));
