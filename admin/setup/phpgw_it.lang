@@ -361,7 +361,7 @@ view user account	admin	it	Visualizza account utente
 who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
 would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che eGroupWare controlli se c'è una nuova versione<br>quando un amministratore effettua il login ?
 would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che eGroupWare controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login ?
-would you like phpgroupware to cache the phpgw info array ?	admin	it	Vuoi che phpGroupWare utilizzi la cache per l'array phpgw info?
+would you like egroupware to cache the egw info array ?	admin	it	Vuoi che eGroupWare utilizzi la cache per l'array egw info?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuoi caricare automaticamente i nuovi file di traduzione (al momento del login) ?
 would you like to show each application's upgrade status ?	admin	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
 xml-rpc	admin	it	XML-RPC

@@ -396,7 +396,7 @@ view user account	admin	es-ca	Veure compte d'usuari
 who would you like to transfer all records owned by the deleted user to?	admin	es-ca	A qui voleu transferir TOTS els registres que pertanyen a l'usuari esborrat?
 would you like egroupware to check for a new version<br>when admins login ?	admin	es-ca	Voleu que eGroupWare comprovi si hi ha una nova versió<br> quan un administrador es connecti ?
 would you like egroupware to check for new application versions when admins login ?	admin	es-ca	Voleu que eGroupWare comprovi si hi ha noves versions de les aplicacions<br> quan un administrador es connecti ?
-would you like phpgroupware to cache the phpgw info array ?	admin	es-ca	Voleu que eGroupWare emmagatzemi en memòria cau la matriu "phpgw info" ?
+would you like egroupware to cache the egw info array ?	admin	es-ca	Voleu que eGroupWare emmagatzemi en memòria cau la matriu "egw info" ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	es-ca	¿Desea que eGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
 would you like egroupware to check for new application versions when admins login ?	admin	es-ca	¿Desea que eGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	es-ca	Voleu carregar automàticament nous arxius d'idioma (en iniciar la sessió)?

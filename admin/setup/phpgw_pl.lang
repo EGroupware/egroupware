@@ -418,7 +418,7 @@ weather center	admin	pl	Centrum pogodowe
 who would you like to transfer all records owned by the deleted user to?	admin	pl	Kto powinien przej±æ wszystkie rekordy usuwanego u¿ytkownika?
 would you like egroupware to check for a new version<br>when admins login ?	admin	pl	Czy eGroupware powinien sprawdzaæ, czy pojawia siê nowa wersja<br>przy ka¿dym logowaniu administratorów ?
 would you like egroupware to check for new application versions when admins login ?	admin	pl	Czy eGroupware powinien sprawdzaæ czy pojawi³y siê nowe wersjê aplikacji<br>przy ka¿dym logowaniu administratorów ?
-would you like phpgroupware to cache the phpgw info array ?	admin	pl	Czy przechowywaæ tablicê informacyjn± eGroupware w pamiêci ?
+would you like egroupware to cache the egw info array ?	admin	pl	Czy przechowywaæ tablicê informacyjn± eGroupware w pamiêci ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	pl	Chcesz sprawdza czy s nowe wersje<br>gdy zaloguje si administrator?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pl	Czy przy logowaniu automatycznie ³adowaæ nowe wersje plików jêzykowych do bazy ?
 would you like to show each application's upgrade status ?	admin	pl	Chcesz wy¶wietlaæ status aktualizacji dla ka¿dej aplikacji?

@@ -367,7 +367,7 @@ view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 would you like egroupware to check for a new version<br>when admins login ?	admin	de	Soll eGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich ein Administrator anmeldet ?
 would you like egroupware to check for new application versions when admins login ?	admin	de	Soll eGroupWare auf neue Versionen der Anwendungen prüfen, wenn sich ein Administrator anmeldet ?
-would you like egroupware to cache the phpgw info array ?	admin	de	Soll eGroupWare das phpgw info Array cachen ?
+would you like egroupware to cache the egw info array ?	admin	de	Soll eGroupWare das egw info Array cachen ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 xml-rpc	admin	de	XML-RPC

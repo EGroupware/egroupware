@@ -342,7 +342,7 @@ view sessions	admin	uk	Перегляд сесій
 view this user	admin	uk	переглянути цього користувача
 view user account	admin	uk	Перегляд рахунку користувача
 who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?
-would you like phpgroupware to cache the phpgw info array ?	admin	uk	Чи хотіли б Ви, щоб eGroupWare утримувало в кеші інформаційний масив phpgw?
+would you like egroupware to cache the egw info array ?	admin	uk	Чи хотіли б Ви, щоб eGroupWare утримувало в кеші інформаційний масив egw?
 would you like egroupware to check for a new version<br>when admins login ?	admin	uk	Чи перевіряти на нові версіі при вході адміністратора ?
 would you like egroupware to check for new application versions when admins login ?	admin	uk	Чи перевіряти на нові версіі приложень при вході адміністратора ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	uk	Чи потрібно автоматично загружати нові мовні файли під час входу?

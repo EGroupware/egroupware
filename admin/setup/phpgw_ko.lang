@@ -364,7 +364,7 @@ view user account	admin	ko	사용자 계정 보기
 who would you like to transfer all records owned by the deleted user to?	admin	ko	** 누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
 would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 접속 할때<br>eGroupWare가 새버전을 확인하겠습니까?
 would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 접속 할때 eGroupWare가 새 응용프로그램 버전을 확인하시겠습니까?
-would you like phpgroupware to cache the phpgw info array ?	admin	ko	phpGroupWare가 phpgw info 배열을 캐쉬하도록 하겠습니까?
+would you like egroupware to cache the egw info array ?	admin	ko	eGroupWare가 egw info 배열을 캐쉬하도록 하겠습니까?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	ko	새로운 언어 파일을 자동적으로 읽겠습니까? (접속 할때)
 would you like to show each application's upgrade status ?	admin	ko	각 응용프로그램의 업그레이드 상태를 보시겠습니까?
 xml-rpc	admin	ko	XML-RPC

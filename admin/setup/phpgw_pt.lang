@@ -197,7 +197,7 @@ view access log	admin	pt	Exibir registro de acessos
 view error log	admin	pt	Exibir registro de erros
 view sessions	admin	pt	Exibir sessões
 who would you like to transfer all records owned by the deleted user to?	admin	pt	Para que você deseja transferir todas as entradas do usuário removido ?
-would you like phpgroupWare to cache the phpgw info array ?	admin	pt	Deseja que o phpGroupWare faça cache do vetor de informações phpgw ?
+would you like egroupWare to cache the egw info array ?	admin	pt	Deseja que o eGroupWare faça cache do vetor de informações egw ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	pt	Deseja que o eGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
 would you like to show each application's upgrade status ?	admin	pt	Deseja exibir se cada aplicação está atualizada ?
 you have entered an invalid expiration date	admin	pt	A data de expiração digitada é inválida

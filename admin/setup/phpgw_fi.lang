@@ -193,7 +193,7 @@ view access log	admin	fi	Näytä käyttöloki
 view error log	admin	fi	Näytä virheloki
 view sessions	admin	fi	Näytä istunnot
 who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirretään KAIKKI poistetun käyttäjän tietueet?
-would you like egroupWare to cache the phpgw info array ?	admin	fi	Säilytetäänkö egw info -rakenne välimuistissa?
+would you like egroupWare to cache the egw info array ?	admin	fi	Säilytetäänkö egw info -rakenne välimuistissa?
 would you like egroupware to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko eGroupWare:sta uutta versiota<br>kun pääkäyttäjä kirjautuu järjestelmään?
 would you like to show each application's upgrade status ?	admin	fi	Näytetäänkö kunkin sovelluksen päivitystilanne?
 you have entered an invalid expiration date	admin	fi	Vanhenemispäivä ei kelpaa

@@ -270,7 +270,7 @@ view sessions	admin	fr	Voir les sessions
 view this user	admin	fr	Voir cet utilisateur
 view user account	admin	fr	Voir le compte utilisateur
 who would you like to transfer all records owned by the deleted user to?	admin	fr	A qui voudriez-vous tranférer tous les enregistrements appartenant à l'utilisateur effacé?
-would you like egroupware to cache the egw info array ?	admin	fr	Voudriez-vous que eGroupWare cache le champ phpgw info ?
+would you like egroupware to cache the egw info array ?	admin	fr	Voudriez-vous que eGroupWare cache le champ egw info ?
 would you like egroupware to check for new application versions when admins login ?	admin	fr	Voudriez-vous que eGroupWare vérifie s'il y a de nouvelles versions d'applications quand les administrateurs se connectent ?
 would you like to show each application's upgrade status ?	admin	fr	Voudriez-vous montrer l'état de mise à jour de chaque application ?
 you have entered an invalid expiration date	admin	fr	Vous avez entré une date d'expiration invalide

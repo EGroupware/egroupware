@@ -354,7 +354,7 @@ view user account	admin	zh	查看用户帐户
 who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁?
 would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查系統最新版本嗎？
 would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查應用程式最新版本嗎？
-would you like phpgroupware to cache the phpgw info array ?	admin	zh	需要eGroupWare缓存egw信息数组吗?
+would you like egroupware to cache the egw info array ?	admin	zh	需要eGroupWare缓存egw信息数组吗?
 would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望 eGroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	登录时，是否自动加载新的语言文件?
