@@ -623,7 +623,7 @@
 							$currentver = $setup_info[$key]['currentver'];
 
 							/* build upgrade function name */
-							$function = $appname . '_upgrade' . str_replace("\.", '_', $value);
+							$function = $appname . '_upgrade' . str_replace(".", '_', $value);
 
 							if($DEBUG)
 							{
