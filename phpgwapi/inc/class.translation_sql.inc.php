@@ -245,10 +245,10 @@
 				if ($from == 'ascii') $from = 'iso-8859-1';
 				//echo "<p>autodetected charset of '$data' = '$from'</p>\n";
 			}
-			/* php does not seem to support gb2312
+			/* php does not seem to support gb2312 and big5
 			   but seems to be able to decode it as another charset
 			*/
-			if(strtolower($from) == 'gb2312')
+			if(strtolower($from) == 'gb2312' || strtolower($from) == 'big5')
 			{
 				$from = mb_detect_encoding($data);
 			}
