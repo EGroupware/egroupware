@@ -118,8 +118,9 @@
 		{
 			$tpl->set_var('messages',$api_messages . '<br>' . checkcode($cd));
 		}
-
-		return $tpl->pfp('out','navbar');
+		$tpl->pfp('out','navbar');
+		$phpgw->common->hook('after_navbar');
+		return;
 	}
 
 	function parse_navbar_end()

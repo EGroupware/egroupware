@@ -887,7 +887,6 @@
 				!$phpgw_info['flags']['navbar_target']))
 			{
 				echo parse_navbar();
-				$this->hook('after_navbar');
 			}
 		}
 

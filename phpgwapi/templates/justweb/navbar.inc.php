@@ -93,7 +93,9 @@
      if ($phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"]) {
 
      }
-     return $tpl->finish($tpl->parse("out","navbar"));
+	$tpl->pfp('out','navbar');
+	$phpgw->common->hook('after_navbar');
+	return;
   }
 
   function parse_navbar_end()
