@@ -21,6 +21,7 @@
 	/*!
 	@class bolink
 	@author ralfbecker
+	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - BO layer
 	@discussion This class is the BO-layer of the links
 	@discussion Links have to ends each pointing to an entry, an entry is a double:
@@ -30,15 +31,6 @@
 	class bolink extends solink
 	{
 		var $app_register = array(		// this should be setup/extended by setup
-			'infolog' => array(
-				'query' => 'infolog.boinfolog.link_query',
-				'title' => 'infolog.boinfolog.link_title',
-				'view' => array(
-					'menuaction' => 'infolog.uiinfolog.get_list',
-					'action' => 'sp'
-				),
-				'view_id' => 'info_id',
-			),
 			'addressbook' => array(
 				'query' => 'addressbook_query',
 				'title' => 'addressbook_title',
@@ -59,25 +51,52 @@
 				'query' => 'calendar_query',
 				'title' => 'calendar_title',
 				'view' => array (
-					'menuaction' => 'calendar.uicalendar.view
+					'menuaction' => 'calendar.uicalendar.view'
 				),
 				'view_id' => 'cal_id'
-			) /*,
+			), /*
 			'email' => array(
 				'view' => array(
 					'menuaction' => 'email.uimessage.message'
 				),
 				'view_id' => 'msgball[acctnum:folder:msgnum]'	// id is a tupple/array, fields separated by ':'
-			) */
+			), */
+			'infolog' => array(
+				'query' => 'infolog.boinfolog.link_query',
+				'title' => 'infolog.boinfolog.link_title',
+				'view' => array(
+					'menuaction' => 'infolog.uiinfolog.get_list',
+					'action' => 'sp'
+				),
+				'view_id' => 'info_id',
+			)
 		);
 
 		function bolink( )
 		{
-			solink( );									// call constructor of derived class
+			$this->solink( );							// call constructor of derived class
 			$this->public_functions += array(	// extend the public_functions of solink
-				'query'      => True,
+				'query' => True,
 				'title' => True,
 			);
+		}
+
+		/*!
+		@function app_list
+		@syntax app_list(   )
+		@author ralfbecker
+		@abstrac get list/array of link-aware apps
+		@result array( $app => lang($app), ... )
+		*/
+		function app_list( )
+		{
+			reset ($this->app_register);
+			$apps = array();
+			while (list($app,$reg) = each($this->app_register))
+			{
+				$apps[$app] = lang($app);
+			}
+			return $apps;
 		}
 
 		function check_method($method,&$class,&$func)
@@ -94,13 +113,14 @@
 		*/
 		function query($app,$pattern)
 		{
-			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !is_set[$reg['query']])
+			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['query']))
 			{
 				return array();
 			}
 			$method = $reg['query'];
+			echo "<p>bolink.query('$app','$pattern') => '$method'</p>\n";
 
-			return strchr('.',$method) ? ExecuteMethod($method,$pattern) : $this->$method($pattern);
+			return strchr($method,'.') ? ExecMethod($method,$pattern) : $this->$method($pattern);
 		}
 
 		/*!
@@ -112,13 +132,13 @@
 		*/
 		function title($app,$id)
 		{
-			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !is_set[$reg['title']])
+			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !is_set($reg['title']))
 			{
 				return array();
 			}
 			$method = $reg['title'];
 
-			return strchr('.',$method) ? ExecuteMethod($method,$id) : $this->$method($id);
+			return strchr($method,'.') ? ExecuteMethod($method,$id) : $this->$method($id);
 		}
 
 		/*!
@@ -160,7 +180,7 @@
 			{
 				$this->bocal = createobject('calendar.bocalendar');
 			}
-			$event_ids = $this->bocal->search_keywords($query_name);
+			$event_ids = $this->bocal->search_keywords($pattern);
 
 			$content = array( );
 			while (is_array($event_ids) && list( $key,$id ) = each( $event_ids ))
@@ -217,12 +237,13 @@
 			{
 				$this->contacts = createobject('phpgwapi.contacts');
 			}
-			$addrs = $contacts->read( 0,0,'',$query_name,'','DESC','org_name,n_family,n_given' );
+			$addrs = $this->contacts->read( 0,0,'',$pattern,'','DESC','org_name,n_family,n_given' );
 			$content = array( );
 			while ($addrs && list( $key,$addr ) = each( $addrs ))
 			{
 				$content[$addr['id']] = $this->addressbook_title( $addr );
 			}
+			return $content;
 		}
 
 		/*!
@@ -241,7 +262,7 @@
 			}
 			if (!is_array($proj))
 			{
-				$proj = $this->boprojects->read_single_project( $proj ))
+				$proj = $this->boprojects->read_single_project( $proj );
 			}
 			return $proj['title'];
 		}
@@ -252,7 +273,7 @@
 		@author ralfbecker
 		@abstract query for projects matching $pattern, should be moved to boprojects.link_query
 		*/
-		function projects_title( $pattern )
+		function projects_query( $pattern )
 		{
 			if (!is_object($this->boprojects))
 			{
