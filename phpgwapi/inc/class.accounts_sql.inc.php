@@ -360,7 +360,7 @@
 				}
 				else
 				{
-					// If they don't have a default group, they need some sort of permissions.
+					// If they dont have a default group, they need some sort of permissions.
 					// This generally doesn't / shouldn't happen, but will (jengo)
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
@@ -398,7 +398,21 @@
 			$lname = $account_name[$account_id]['lname'];
 			return;
 		}
-	} 
+
+		function get_account_data($account_id)
+		{
+			$this->account_id = $account_id;
+			$this->read_repository();
+
+			$data[$this->data['account_id']]['lid']			= $this->data['account_lid'];
+			$data[$this->data['account_id']]['firstname']	= $this->data['firstname'];
+			$data[$this->data['account_id']]['lastname']	= $this->data['lastname'];
+			$data[$this->data['account_id']]['fullname']	= $this->data['fullname'];
+			$data[$this->data['account_id']]['type']		= $this->data['account_type'];
+
+			return $data;
+		}
+	}
 	/*!
 	 @class_end accounts
 	*/
