@@ -61,13 +61,15 @@
 		\*************************************************************************/
 		function getuser_ip()
 		{
-			if ($GLOBALS['HTTP_X_FORWARDED_FOR'])
+			global $HTTP_SERVER_VARS,$REMOTE_ADDR,$HTTP_X_FORWARDED_FOR;
+
+			if ($GLOBALS['HTTP_X_FORWARDED_FOR'] || $HTTP_X_FORWARDED_FOR)
 			{
-				return $GLOBALS['HTTP_X_FORWARDED_FOR'];
+				return $GLOBALS['HTTP_X_FORWARDED_FOR'] ? $GLOBALS['HTTP_X_FORWARDED_FOR'] : $HTTP_X_FORWARDED_FOR;
 			}
 			else
 			{
-				return $GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'];
+				return $GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'] ? $GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'] : $REMOTE_ADDR;
 			}
 		}
 
@@ -114,9 +116,8 @@
 			$this->update_dla();
 			$this->account_id = $GLOBALS['phpgw']->accounts->name2id($this->account_lid);
 
-			if (! $this->account_id)
+			if (!$this->account_id)
 			{
-//			echo 'er';
 				return False;
 			}
 
