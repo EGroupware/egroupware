@@ -122,9 +122,18 @@
 		reset($this->bo->grants);
 		while(list($grantor,$temp_rights) = each($this->bo->grants))
 		{
-			$form_options .= '    <option value="'.$grantor.'"'.($grantor==$this->bo->owner?' selected':'').'>'.$GLOBALS['phpgw']->common->grab_owner_name($grantor).'</option>'."\n";
-      }
-		reset($this->bo->grants);
+			$GLOBALS['phpgw']->accounts->get_account_name($grantor,$lid,$fname,$lname);
+			$drop_down[$lname.' '.$fname] = Array(
+				'grantor'	=> $grantor,
+				'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
+			);
+		}
+		@reset($drop_down);
+		@ksort($drop_down);
+		while(list($key,$grant) = each($drop_down))
+		{
+			$form_options .= '    <option value="'.$grant['grantor'].'"'.($grant['grantor']==$this->bo->owner?' selected':'').'>'.$grant['name'].'</option>'."\n";
+      }		reset($this->bo->grants);
 		
 		$var = Array(
 			'form_width' => $remainder,
