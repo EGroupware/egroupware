@@ -63,12 +63,17 @@ closes the window without saving the changes	etemplate	de	schließt das Fenster o
 column...	etemplate	de	Spalte...
 columnname	etemplate	de	Spaltenname
 comment	etemplate	de	Kommentar
+confirm	etemplate	de	bestätigen
+confirmation message or custom javascript (returning true or false)	etemplate	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurücklieferned)
+confirmation necesary or custom java-script	etemplate	de	Bestätigung notwendig oder spezielles Javascript
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
 css class for the table-tag	etemplate	de	CSS class der Tabelle
+css properties	etemplate	de	CSS Attribute
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-styles	etemplate	de	CSS Stile
+custom	etemplate	de	speziell
 cut	etemplate	de	Ausschneiden
 date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
@@ -214,12 +219,14 @@ no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 no row to swap with !!!	etemplate	de	Keine Zeile um damit zu tauschen !!!
 not null	etemplate	de	NOT NULL
+nothing	etemplate	de	nichts
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
 nothing in clipboard to paste !!!	etemplate	de	Zwischenablage leer - nichts zum einfügen !!!
 nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchkriterium !!!
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
 of	etemplate	de	von
+onclick	etemplate	de	onClick
 only an other version found !!!	etemplate	de	nur eine andere Version gefunden !!!
 optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
 options	etemplate	de	Optionen
@@ -319,7 +326,7 @@ unlink	etemplate	de	Lösen
 update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag über seine Felder.
 update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
-valign	etemplate	de	Valing
+valign	etemplate	de	vAlign
 value	etemplate	de	Wert
 value has to be at least '%1' !!!	etemplate	de	Der Wert muss mindestens '%1' betragen !!!
 value has to be at maximum '%1' !!!	etemplate	de	Der Wert darf höchstens '%1' betragen !!!

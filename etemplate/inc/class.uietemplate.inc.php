@@ -316,6 +316,8 @@
 			{
 				$readonlys = array();
 			}
+			if (++$this->already_showed > 1) return '';	// prefens infinit self-inclusion
+
 			if (is_int($this->debug) && $this->debug >= 1 || $this->name && $this->debug == $this->name)
 			{
 				echo "<p>etemplate.show($this->name): $cname =\n"; _debug_array($content);
@@ -569,7 +571,7 @@
 		*/
 		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$class,$path='')
 		{
-			if (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type'])
+			if ($this->debug && (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type']))
 			{
 				echo "<p>etemplate.show_cell($this->name,name='${cell['name']}',type='${cell['type']}',cname='$cname')</p>\n";
 			}
@@ -792,9 +794,14 @@
 					list($app) = explode('.',$this->name);
 					list($img,$ro_img) = explode(',',$cell_options);
 					$title = strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label);
+					if (($onclick = $cell['onclick']) && preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);$/',$cell['onclick'],$matches))
+					{
+						$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars(lang($matches[1])))."');";
+					}
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
-						$onclick = ($cell['onchange'] == 1 || $img) ? "return submitit(document.eTemplate,'$form_name');" : $cell['onchange'].'; return false;';
+						$onclick = ($onclick ? preg_replace('/^return(.*);?/','if (\\1) ',$onclick) : '').
+							(($cell['onchange'] == 1 || $img) ? "return submitit(document.eTemplate,'$form_name');" : $cell['onchange'].'; return false;');
 						if (!$this->html->netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 						{
 							$html .= $this->html->progressbar($percent,$title,'onclick="'.$onclick.'" '.$options);
@@ -811,7 +818,11 @@
 						{
 							$options .= ' title="'.$title.'"';
 						}
-						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$cell['onchange'],
+						if ($cell['onchange'] && $cell['onchange'] != 1)
+						{
+							$onclick = ($onclick ? preg_replace('/^return(.*);?/','if (\\1) ',$onclick) : '').$cell['onchange'];
+						}
+						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$onclick,
 							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
 							$this->html->image($app,$ro_img);
 					}

@@ -15,6 +15,7 @@
 	$menu_title = $GLOBALS['phpgw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 	$file = Array(
 		'eTemplate Editor' => $GLOBALS['phpgw']->link('/index.php','menuaction=etemplate.editor.edit'),
+		'old Editor' => $GLOBALS['phpgw']->link('/index.php','menuaction=etemplate.editor.old_editor'),
 		'DB-Tools' => $GLOBALS['phpgw']->link('/index.php','menuaction=etemplate.db_tools.edit'),
 	);
 	if (@$GLOBALS['phpgw_info']['user']['apps']['developer_tools'])
@@ -45,5 +46,11 @@
 			'link'   => $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/doc/',
 			'target' => 'docs'
 		),
+		array(
+			'text'   => 'CSS properties',
+			'link'   => 'http://www.w3.org/TR/REC-CSS2/propidx.html',
+			'target' => 'docs'
+		),
+
 	);
 	display_sidebox($appname,$menu_title,$file);

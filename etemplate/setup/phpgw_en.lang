@@ -63,12 +63,17 @@ closes the window without saving the changes	etemplate	en	closes the window with
 column...	etemplate	en	Column...
 columnname	etemplate	en	ColumnName
 comment	etemplate	en	Comment
+confirm	etemplate	en	confirm
+confirmation message or custom javascript (returning true or false)	etemplate	en	confirmation message or custom javascript (returning true or false)
+confirmation necesary or custom java-script	etemplate	en	confirmation necesary or custom java-script
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	en	CSS class for the table-tag
+css properties	etemplate	en	CSS properties
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	en	CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
 css-styles	etemplate	en	CSS-styles
+custom	etemplate	en	custom
 cut	etemplate	en	Cut
 date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
@@ -214,12 +219,14 @@ no file	etemplate	en	no file
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
 no row to swap with !!!	etemplate	en	no row to swap with !!!
 not null	etemplate	en	NOT NULL
+nothing	etemplate	en	nothing
 nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
 nothing in clipboard to paste !!!	etemplate	en	nothing in clipboard to paste !!!
 nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria !!!
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
+onclick	etemplate	en	onClick
 only an other version found !!!	etemplate	en	only an other Version found !!!
 optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
@@ -319,7 +326,7 @@ unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields.
 update from version '%s' to	etemplate	en	Update from Version '%s' to
 upload	etemplate	en	Upload
-valign	etemplate	en	Valign
+valign	etemplate	en	vAlign
 value	etemplate	en	Value
 value has to be at least '%1' !!!	etemplate	en	Value has to be at least '%1' !!!
 value has to be at maximum '%1' !!!	etemplate	en	Value has to be at maximum '%1' !!!

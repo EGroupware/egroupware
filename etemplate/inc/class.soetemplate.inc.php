@@ -46,7 +46,7 @@
 		var $children;	// array with children
 		var $data;		// depricated: first grid of the children
 		var $size;		// depricated: witdh,height,border of first grid
-		var $db,$db_name = 'phpgw_etemplate'; // DB name
+		var $db,$table_name = 'phpgw_etemplate'; // name of table
 		var $db_key_cols = array(
 			'et_name' => 'name',
 			'et_template' => 'template',
@@ -61,14 +61,18 @@
 			'et_modified' => 'modified'
 		);
 		var $db_cols;
-		var $widgets_with_children = array(	// widgets that contain other widgets, for tree_walk method
-			'box' => true,
-			'vbox' => true,
-			'hbox' => true,
-			'groupbox' => true,
-			'deck' => true,
-			'grid' => true,
-			'template' => true,
+		/**
+		 * @var array $widgets_with_children widgets that contain other widgets, eg. for tree_walk method
+		 * widget-type is the key, the value specifys how the children are stored: 1=template, 2=grid, 3=box
+		 */
+		var $widgets_with_children = array(
+			'template' => 1,
+			'grid' => 2,
+			'box' => 3,
+			'vbox' => 3,
+			'hbox' => 3,
+			'groupbox' => 3,
+			'deck' => 3,
 		);
 		
 		/**
@@ -362,7 +366,7 @@
 			$pref_lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			$pref_templ = $GLOBALS['phpgw_info']['server']['template_set'];
 
-			$sql = "SELECT * FROM $this->db_name WHERE et_name='".$this->db->db_addslashes($this->name)."' AND ";
+			$sql = "SELECT * FROM $this->table_name WHERE et_name='".$this->db->db_addslashes($this->name)."' AND ";
 			if (is_array($name))
 			{
 				$template = $name['template'];
@@ -515,7 +519,7 @@
 				$version = $name['version'];
 				$name = $name['name'];
 			}
-			$sql = "SELECT et_name,et_template,et_lang,et_group,et_version FROM $this->db_name WHERE et_name LIKE '".$this->db->db_addslashes($name)."%'";
+			$sql = "SELECT et_name,et_template,et_lang,et_group,et_version FROM $this->table_name WHERE et_name LIKE '".$this->db->db_addslashes($name)."%'";
 
 			if ($template != '' && $template != 'default')
 			{
@@ -675,28 +679,41 @@
 		 *
 		 * the returned array ($data_too > 0) can be used with init to recreate the template 
 		 *
-		 * @param int $data_too -1 = only keys, 0 = no data array, 1 = data array too, 2 = serialize data array
+		 * @param int $data_too -1 = only keys, 0 = no data array, 1 = data array too, 2 = serialize data array, 
+		 *	3 = only data values and data serialized
+		 * @param boolean $db_keys use db-column-names or internal names, default false=internal names
 		 * @return array with template-data
 		 */
-		function as_array($data_too=0)
+		function as_array($data_too=0,$db_keys=false)
 		{
 			$arr = array();
-			foreach($data_too == -1 ? $this->db_key_cols : $this->db_cols as $db_col => $col)
+			switch($data_too)
+			{
+				case -1:
+					$cols = $this->db_key_cols;
+					break;
+				case 3:
+					$cols = $this->db_data_cols;
+					break;
+				default:
+					$cols = $this->db_cols;
+			}
+			foreach($cols as $db_col => $col)
 			{
 				if ($col == 'data')
 				{
-					if ($data_too)
+					if ($data_too > 0)
 					{
-						$arr['data'] = $data_too != 2 ? $this->children :
+						$arr[$db_keys ? $db_col : $col] = $data_too < 2 ? $this->children :
 							serialize($this->compress_array($this->children));
 					}
 				}
 				else
 				{
-					$arr[$col] = $this->$col;
+					$arr[$db_keys ? $db_col : $col] = $this->$col;
 				}
 			}
-			if ($data_too != -1 && $this->tpls_in_file) 
+			if ($data_too != -1 && $this->tpls_in_file && !$db_keys) 
 			{
 				$arr['tpls_in_file'] = $this->tpls_in_file;
 			}
@@ -751,8 +768,6 @@
 			{
 				echo "<p>soetemplate::save('$this->name','$this->template','$this->lang',$this->group,'$this->version')</p>\n";
 			}
-			$this->delete();	// so we have always a new insert
-
 			if ($this->name[0] != '.' && is_array($this->data))		// correct old messed up templates
 			{
 				reset($this->data); each($this->data);
@@ -775,19 +790,7 @@
 			{
 				$this->modified = time();
 			}
-			$data = $this->as_array(2);
-
-			$sql = "INSERT INTO $this->db_name (";
-			foreach ($this->db_cols as $db_col => $col)
-			{
-				$sql .= $db_col . ',';
-				$vals .= $db_col == 'et_group' ? intval($data[$col]).',' : "'" . $this->db->db_addslashes($data[$col]) . "',";
-			}
-			$sql[strlen($sql)-1] = ')';
-			$sql .= " VALUES ($vals";
-			$sql[strlen($sql)-1] = ')';
-
-			$this->db->query($sql,__LINE__,__FILE__);
+			$this->db->insert($this->table_name,$this->as_array(3,true),$this->as_array(-1,true),__LINE__,__FILE__);
 
 			$rows = $this->db->affected_rows();
 			
@@ -807,11 +810,7 @@
 		 */
 		function delete()
 		{
-			foreach ($this->db_key_cols as $db_col => $col)
-			{
-				$vals .= ($vals ? ' AND ' : '') . $db_col . '=' . ($db_col == 'et_group' ? intval($this->$col) : "'".$this->$col."'");
-			}
-			$this->db->query("DELETE FROM $this->db_name WHERE $vals",__LINE__,__FILE__);
+			$this->db->delete($this->table_name,$this->as_array(-1,true),__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}
@@ -826,7 +825,7 @@
 		{
 			list($app) = explode('.',$app);
 
-			$this->db->query("SELECT * FROM $this->db_name WHERE et_name LIKE '$app%'");
+			$this->db->query("SELECT * FROM $this->table_name WHERE et_name LIKE '$app%'");
 
 			$dir = PHPGW_SERVER_ROOT . "/$app/setup";
 			if (!is_writeable($dir))

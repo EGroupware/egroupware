@@ -310,18 +310,18 @@
 			}
 			$this->garbage_collection_done = true;
 
-			if (count($sessions) < 50) return $data;	// we dont need to care
+			if (count($app_sessions) < 20) return $data;	// we dont need to care
 
 			list($msec,$sec) = explode(' ',microtime());
 			$now = 	100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
 
-			foreach($app_sessions as $id => $session_data)
+			foreach(array_keys($app_sessions) as $id)
 			{
 				list($app,$time) = explode(':',$id);
 				
 				if (!$time) continue;	// other data, no session
 				
-				//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".strlen($session_data)."<br>\n";
+				//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".strlen($app_sessions[$id])."<br>\n";
 
 				if ($session_used[$id] == 1 && $time < $now - 10*6000 || // session used and older then 10min
 					$time < $now - 60*6000)	// session not used and older then 1h
