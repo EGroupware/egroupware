@@ -118,8 +118,16 @@
 		{
 			if(empty($sessionid) || !$sessionid)
 			{
-				$sessionid = get_var('sessionid',Array('COOKIE','GET'));
-				$kp3       = get_var('kp3',Array('COOKIE','GET'));
+				$sessionid = get_var('sessionid',array('COOKIE'));
+				if(@empty($sessionid))
+				{
+					$sessionid = get_var('sessionid',array('GET'));
+				}
+				$kp3 = get_var('kp3',array('COOKIE'));
+				if(@empty($kp3))
+				{
+					$kp3 = get_var('kp3',array('GET'));
+				}
 			}
 
 			$db              = $GLOBALS['phpgw']->db;

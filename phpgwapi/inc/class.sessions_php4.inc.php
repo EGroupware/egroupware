@@ -113,13 +113,20 @@
 		{
 			if(empty($sessionid) || !$sessionid)
 			{
-				$sessionid = get_var('sessionid',Array('COOKIE','GET'));
-				$kp3       = get_var('kp3',Array('COOKIE','GET'));
+				$sessionid = get_var('sessionid',array('COOKIE'));
+				if(@empty($sessionid))
+				{
+					$sessionid = get_var('sessionid',array('GET'));
+				}
+				$kp3 = get_var('kp3',array('COOKIE'));
+				if(@empty($kp3))
+				{
+					$kp3 = get_var('kp3',array('GET'));
+				}
 			}
 
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
-			
 
 			session_start();
 			$GLOBALS['phpgw_session'] = $GLOBALS['HTTP_SESSION_VARS']['phpgw_session'];
@@ -389,7 +396,7 @@
 			$GLOBALS['phpgw_session']['session_dla'] = $now;
 			$GLOBALS['phpgw_session']['session_action'] = $GLOBALS['PHP_SELF'];
 			$GLOBALS['phpgw_session']['session_flags'] = $session_flags;
-		
+
 			session_register('phpgw_session');
 			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
@@ -602,7 +609,7 @@
 			$GLOBALS['phpgw_session']['session_dla'] = $now;
 			$GLOBALS['phpgw_session']['session_action'] = $GLOBALS['PHP_SELF'];
 			$GLOBALS['phpgw_session']['session_flags'] = $session_flags;
-		
+
 			session_register('phpgw_session');
 			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
@@ -630,7 +637,7 @@
 
 			$GLOBALS['phpgw_session']['session_dla'] = time();
 			$GLOBALS['phpgw_session']['session_action'] = $action;
-		
+
 			session_register('phpgw_session');
 			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
@@ -742,7 +749,7 @@
 				$this->appsession('phpgw_info_cache','phpgwapi',$phpgw_info_temp);
 			}
 		}
-	
+
 		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
 		{
 			if (! $appname)
@@ -858,7 +865,7 @@
 					$url = $app.'/'.$url;
 				}
 			}
-			
+
 			if($full_scriptname)
 			{
 				$webserver_url_count = strlen($GLOBALS['phpgw_info']['server']['webserver_url'])-1;
