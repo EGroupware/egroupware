@@ -378,9 +378,9 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Integer</b></td>
-	<td>&lt;textbox<br>type="integer"/></td>
+	<td>&lt;textbox<br>type="int"/></td>
 	<td>?</td>
-	<td>integer</td>
+	<td>int</td>
 	<td>
 		<b>a input-field to enter an integer</b><br>
 		In the html-UI this is rendered as &lt;input ...>. <i>There are no checks implemented at the moment,
@@ -549,6 +549,24 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>Input and Button to select a file for uploading</b><br>
 		Returns the file-name of the uploaded file in the servers tmp-dir (the webserver needs to have a
 		writable tmp-dir) plus, if javascript is enabled, the local filename of the client as "${name}_path".
+	</td>
+</tr>
+<tr>
+	<td><b>Date</b></td>
+	<td>
+		&lt;date options="Y-m-d,1"/><br>
+	</td>
+	<td>no</td>
+	<td>date</td>
+	<td>
+		<b>Dateinput</b> via selectboxes or a field for the year<br>
+		The order of the input-fields is determined by the prefs of the user.<br>
+		<b>Options</b>: [date-storage-format][,year-no-selectbox]<br>
+		<b>date-storage-format</b> is the format, in which the date is stored in the variable: empty means 
+		an unix-timestamp, or a string containing the letters <b>Y</b>, <b>m</b> and <b>d</b> plus separators, 
+		eg. 'Y-m-d': 2002-12-31.<br>
+		<b>year-no-selectbox</b> if true an int-widget (input-field) is used instead of a select-year widget.<br>
+		<i>If readonly is set, this widget can be used to display a date, without the need to convert it.</i>
 	</td>
 </tr>
 <tr>
