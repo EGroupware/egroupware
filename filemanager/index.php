@@ -843,7 +843,7 @@ if ($edit)
 			continue;
 		}
 
-		if ($phpgw->vfs->file_exists ($fileman_decoded, array (RELATIVE_ALL)))
+		if ($fileman_decoded && $phpgw->vfs->file_exists ($fileman_decoded, array (RELATIVE_ALL)))
 		{
 			if ($edit_file)
 				$content = stripslashes ($$edit_file);
