@@ -65,7 +65,7 @@
 	switch($matrixtype)
 	{
 		case 'free/busy':
-			$freetime = $phpgw->calendar->makegmttime(0,0,0,$thismonth,$thisday,$thisyear);
+			$freetime = $phpgw->calendar->datetime->makegmttime(0,0,0,$thismonth,$thisday,$thisyear);
 			echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000',False),0,$participants);
 			break;
 		case 'weekly':

@@ -23,28 +23,26 @@
 
 	include('../header.inc.php');
 
-	$datetime = mktime(0,0,0,$thismonth,$thisday,$thisyear) - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+	$datetime = mktime(0,0,0,$thismonth,$thisday,$thisyear) - $phpgw->calendar->datetime->tz_offset;
 
 	$sb = CreateObject('phpgwapi.sbox');
 	
 	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 
 	$templates = Array(
-		'matrix_query_begin'	=>	'matrix_query.tpl',
-		'list'					=>	'list.tpl',
-		'matrix_query_end'	=>	'matrix_query.tpl',
-		'form_button'			=>	'form_button_script.tpl'
+		'mq'			=> 'matrix_query.tpl',
+		'form_button'		=>	'form_button_script.tpl'
 	);
-
 	$p->set_file($templates);
+	$p->set_block('mq','matrix_query','matrix_query');
+	$p->set_block('mq','list','list');
 
 	$var = Array(
 		'matrix_action'			=>	lang('Daily Matrix View'),
-		'action_url'				=> $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/viewmatrix.php')
+		'action_url'				=> $phpgw->link('/calendar/viewmatrix.php')
 	);
 
 	$p->set_var($var);
-	$p->parse('out','matrix_query_begin');
 
 // Date
 	$day_html = $sb->getDays('day',intval($phpgw->common->show_date($datetime,'d')));
@@ -57,7 +55,7 @@
 	);
 		
 	$p->set_var($var);
-	$p->parse('output','list',True);
+	$p->parse('rows','list',True);
 	
 // View type
 	$str  = '<select name="matrixtype">';
@@ -71,7 +69,7 @@
 	);
 
 	$p->set_var($var);
-	$p->parse('output','list',True);
+	$p->parse('rows','list',True);
 
 // Participants
 	$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
@@ -129,7 +127,7 @@
 	);
 
 	$p->set_var($var);
-	$p->parse('output','list',True);
+	$p->parse('rows','list',True);
 
 	$var = Array(
 		'submit_button'		=> lang('Submit'),
@@ -142,7 +140,7 @@
 	$p->set_var($var);
 	$p->parse('cancel_button','form_button');
 
-	$p->pparse('out','matrix_query_end');
+	$p->pparse('out','matrix_query');
 
 	$phpgw->common->phpgw_footer();
 ?>

@@ -74,12 +74,12 @@
 		}
 		else
 		{
-			$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
+			$phpgw->calendar->open('INBOX',intval($owner),'');
 			for($i=0;$i<count($events);$i++)
 			{
-				$event = $phpgw->calendar->fetch_event($cal_stream,$events[$i]);
+				$event = $phpgw->calendar->fetch_event($events[$i]);
 				
-				$datetime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->tz_offset;
+				$datetime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->datetime->tz_offset;
 				
 				$ids[strval($event->id)]++;
 				$info[strval($event->id)] = $phpgw->common->show_date($datetime).$phpgw->calendar->link_to_entry($event,$event->start->month,$event->start->mday,$event->start->year);
