@@ -39,7 +39,6 @@
 		'halt'     => True,
 		'ldap'     => True,
 		'mail'     => True,
-		'nscd'     => True,
 		'news'     => True,
 		'uucp'     => True,
 		'operator' => True,
@@ -72,7 +71,8 @@
 		'pvm'      => True,
 		'squid'    => True,
 		'ident'    => True,
-		'mailnull' => True
+		'mailnull' => True,
+		'cyrus'	  => True
 	);
 
 	class accounts_
@@ -305,41 +305,44 @@
 			}
 		}
 
-		function exists($account_lid)
+		/*
+		 * returns nonzero if $account exists in SQL or LDAP: 0: nowhere 1: SQL, 2: LDAP, 3: SQL+LDAP
+		 * $account can be an account_id (LDAP: uidnumber) or an account_lid (LDAP: uid) (is determinded by gettype($account) == 'interger')
+		 */
+		function exists($account)
 		{
 			global $phpgw, $phpgw_info;
 
-			if(gettype($account_lid) == 'integer')
+			if(gettype($account) == 'integer')
 			{
-				$account_id = $account_lid;
-				settype($account_lid,'string');
-				$account_lid = $this->id2name($account_id);
+				$sql_name  = 'account_id';
+				$ldap_name = 'uidnumber';
 			}
-
-			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			else
+			{						
+				$sql_name  = 'account_lid';
+				$ldap_name = 'uid';
+			}
+			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE $sql_name='$account'",__LINE__,__FILE__);
 			$this->db->next_record();
 			if ($this->db->f(0))
 			{
-				$insql = True;
-			}
-			else
-			{
-				$insql = False;
+				$in += 1;
 			}
 
 			$ds = $phpgw->common->ldapConnect();
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
+			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "$ldap_name=$account");
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]["dn"]) {
-				$inldap = True;
-			} else {
-				$inldap = False;
+			if ($allValues[0]["dn"]) 
+			{
+				$in += 2;
 			}
-
-			$rtrn = $insql || $inldap;
-			return $rtrn;
+			// echo "<p>class_accounts_ldap->exists('$account') == $in</p>";
+			
+			return $in;
 		}
+		
 
 		function create($account_info)
 		{
@@ -347,7 +350,7 @@
 
 			$ds = $phpgw->common->ldapConnect();
 
-			if (! $account_info['account_id'])
+			if (!($account_id = $account_info['account_id']))
 			{
 				if ($phpgw_info['server']['account_min_id']) { $min = $phpgw_info['server']['account_min_id']; }
 				if ($phpgw_info['server']['account_max_id']) { $max = $phpgw_info['server']['account_max_id']; }
@@ -384,13 +387,12 @@
 				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
 				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "'," . $account_info['account_expires'] . ")",__LINE__,__FILE__);
 
-			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'],'uid=' . $account_info['lid']);
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'],'uid=' . $account_info['account_lid']);
 			$allValues = ldap_get_entries($ds, $sri);
 
 			$entry['uidnumber']    = $account_id;
-			$entry['gidnumber']    = $account_id;
 			$entry['uid']          = $account_info['account_lid'];
-			$entry['cn']           = sprintf('%s %s', $account_firstname, $account_info['account_lastname']);
+			$entry['cn']           = sprintf('%s %s', $account_info['account_firstname'], $account_info['account_lastname']);
 			$entry['sn']           = $account_info['account_lastname'];
 			$entry['givenname']    = $account_info['account_firstname'];
 			$entry['userpassword'] = $phpgw->common->encrypt_password($account_info['account_passwd']);

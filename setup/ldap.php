@@ -68,7 +68,7 @@
 		exit;
 	}
 
-	$sr = ldap_search($ldap,$config['ldap_context'],'(|(uid=*))',array('sn','givenname','uid','uidnumber'));
+	$sr = ldap_search($ldap,$config['ldap_context'],'(|(uid=*))',array('sn','givenname','uid','uidnumber','gidnumber'));
 	$info = ldap_get_entries($ldap, $sr);
   
 	for ($i=0; $i<$info['count']; $i++) {
@@ -77,6 +77,7 @@
 			$account_info[$i]['account_lid']       = $info[$i]['uid'][0];
 			$account_info[$i]['account_firstname']  = $info[$i]['givenname'][0];
 			$account_info[$i]['account_lastname'] = $info[$i]['sn'][0];
+			$account_info[$i]['gidnumber'] = $info[$i]['gidnumber'][0];
 		}
 	}
 
@@ -143,13 +144,11 @@
 			}
 			$acl->save_repository();
 
-			while ($account = each($account_info))
+			while (list($nul,$account) = each($account_info))
 			{
 				$id_exist = 0;
-				$thisacctid  = $account[1]['account_id'];
-				$thisacctlid = $account[1]['account_lid'];
-				$thisfirstname = $account[1]['account_firstname'];
-				$thislastname  = $account[1]['account_lastname'];
+				$thisacctid  = $account['account_id'];
+				$thisacctlid = $account['account_lid'];
 
 				// Do some checks before we try to import the data.
 				if (!empty($thisacctid) && !empty($thisacctlid))
@@ -159,21 +158,24 @@
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
-					$acct_exist = $acct->name2id($thisacctlid);
-					if ($acct_exist)
-					{
-						$thisacctid = $acct_exist;
+					$acct_exist = $acct->name2id($thisacctlid);	// name2id checks only SQL
+					if ($acct_exist)										// this gives the SQL account_id a preference over LDAP uidnummber
+					{															// this could be fatal if one already has an user with account_lid == uid
+						// $thisacctid = $acct_exist;					// and uses the LDAP uidnumber for an unix account
+						if ($acct_exist != $thisacctid)
+							echo "<p>WARNING: user '$thisacctlid'=$thisacctid already exist in SQL under the account_id=$acct_exist</p>";
 					}
 					$id_exist = $accounts->exists(intval($thisacctid));
-					// If not, create it now.
-					if(!$id_exist)
+					// If the account does not exist in _both_ (== returnvalue < 3) create it
+					if($id_exist < 3)
 					{
 						$thisaccount_info = array(
 							'account_type'      => 'u',
+							'account_id'		  => $thisacctid,
 							'account_lid'       => $thisacctlid,
 							'account_passwd'    => 'x',
-							'account_firstname' => $thisfirstname,
-							'account_lastname'  => $thislastname,
+							'account_firstname' => $account['account_firstname'],
+							'account_lastname'  => $account['account_lastname'],
 							'account_status'    => 'A',
 							'account_expires'   => -1
 						);
@@ -200,6 +202,16 @@
 						}
 					}
 
+					// Check if user has a group assigned in LDAP and this group exists (in SQL)
+					// --> make him member of this group instead of the 'Default' group
+					if (($gid = $account['gidnumber']) && ($gname = $acct->id2name($gid))) 
+					{
+						// echo "<p>putting '$thisacctlid' in Group gid=$gid</p>\n";
+
+						$acl->delete('phpgw_group',$gid,1);
+						$acl->add('phpgw_group',$gid,1);
+					} else 					
+					
 					// Now make them a member of the 'Default' group.
 					// But, only if the current user is not the group itself.
 					if ($defaultgroupid != $thisacctid)
