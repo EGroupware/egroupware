@@ -715,38 +715,59 @@
       return $e_password;
   }
 
-  function hook($location = '', $order = ''){
-    global $phpgw, $phpgw_info;
-    if ($order == ''){$order[] = $phpgw_info['flags']['currentapp'];}
-    /* First include the ordered apps hook file */
-    reset ($order);
-    while (list (, $appname) = each ($order)){
-       $f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
-    	if ($location != '') {
-    	   $f .= '_'.$location.'.inc.php';
-    	} else {
-    	   $f .= '.inc.php';
-    	}
-  	  if (file_exists($f)) {include($f);}
-      $completed_hooks[$appname] = True;
-    }
-    /* Then add the rest */
-    reset ($phpgw_info['user']['apps']);
-    while ($permission = each($phpgw_info['user']['apps'])) {
-       if ($completed_hooks[$permission[0]] != True){
-          $appname = $permission[0];
-          $f = PHPGW_SERVER_ROOT . '/' . $permission[0] . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
-      	if ($location != '') {
-      	   $f .= '_'.$location.'.inc.php';
-      	} else {
-      	   $f .= '.inc.php';
-      	}
-    	  if (file_exists($f)) {
-    	     include($f);
-    	  }
-      }
-    }
-  }
+		function hook($location = '', $order = '')
+		{
+			global $phpgw, $phpgw_info;
+			if ($order == '')
+			{
+				$order[] = $phpgw_info['flags']['currentapp'];
+			}
+
+			/* First include the ordered apps hook file */
+			reset ($order);
+			while (list (, $appname) = each ($order))
+			{
+				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
+				if ($location != '')
+				{
+					$f .= '_'.$location.'.inc.php';
+				}
+				else
+				{
+					$f .= '.inc.php';
+				}
+
+				if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
+				{
+					include($f);
+				}
+				$completed_hooks[$appname] = True;
+			}
+
+			/* Then add the rest */
+			reset ($phpgw_info['user']['apps']);
+			while ($permission = each($phpgw_info['user']['apps']))
+			{
+				if ($completed_hooks[$permission[0]] != True)
+				{
+					$appname = $permission[0];
+					$f = PHPGW_SERVER_ROOT . '/' . $permission[0] . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
+					if ($location != '')
+					{
+						$f .= '_'.$location.'.inc.php';
+					}
+					else
+					{
+						$f .= '.inc.php';
+					}
+
+					if (file_exists($f) && $phpgw_info['user']['apps'][$appname])
+					{
+						include($f);
+					}
+				}
+			}
+		}
 
   function hook_single($location = '', $appname = '')
   {
