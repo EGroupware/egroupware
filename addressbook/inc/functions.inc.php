@@ -297,8 +297,7 @@
 		//$t->set_block('form','add','add');
 		//$t->set_block('form','edit','edit');
 
-		$phpgw->config->read_repository();
-		$countrylist = $phpgw->config->config_data['countrylist'];
+		$countrylist  = $phpgw_info['server']['countrylist'];
 
 		$email        = $fields['email'];
 		$emailtype    = $fields['email_type'];
