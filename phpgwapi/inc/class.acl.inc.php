@@ -61,7 +61,7 @@
 		*/
 		function acl($account_id = '')
 		{
-			copyobj($GLOBALS['phpgw']->db,$this->db);
+			$this->db = clone($GLOBALS['phpgw']->db);
 			if ((int)$this->account_id != (int)$account_id)
 			{
 				$this->account_id = get_account_id((int)$account_id,@$GLOBALS['phpgw_info']['user']['account_id']);
@@ -653,7 +653,7 @@
 				$account_id = get_account_id($accountid,$this->account_id);
 				$cache_accountid[$accountid] = $account_id;
 			}
-			$db2 = $this->db;
+			$db2 = clone($this->db);
 			$memberships = $GLOBALS['phpgw']->accounts->membership($account_id);
 			$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
 				. 'acl_account in ';
@@ -693,7 +693,7 @@
 		*/
 		function get_grants($app='')
 		{
-			$db2 = $this->db;
+			$db2 = clone($this->db);
 
 			if ($app=='')
 			{
