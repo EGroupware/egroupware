@@ -13,6 +13,15 @@
   /* $Id$ */
 
   /**************************************************************************\
+  * !!!!!!! DONT TOUCH THESE LINES !!!!!!!!                                   *
+  * This flushes out any vars from the url for security reason               *
+  \**************************************************************************/
+  $sec_clean = $phpgw_info["flags"]
+  $phpgw_info = array();
+  $phpgw_info["flags"] = $sec_clean;
+  unset ($sec_clean);
+
+  /**************************************************************************\
   * !!!!!!! EDIT THESE LINES !!!!!!!!                                        *
   * This setting allows you to easily move the include directory and the     *
   * base of the phpGroupWare install. Simple edit the following 2 lines with * 
@@ -63,7 +72,7 @@
   * Do not edit these lines                                                  *
   \**************************************************************************/
   include($phpgw_info["server"]["server_root"]."/version.inc.php");
-  $phpgw_info["server"]["header_version"] = "1.4";
+  $phpgw_info["server"]["header_version"] = "1.5";
 // This is a fix for NT
   if (!isset($phpgw_info["flags"]["noapi"]) || 
       !$phpgw_info["flags"]["noapi"] == True){
