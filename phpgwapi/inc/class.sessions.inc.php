@@ -310,8 +310,7 @@
 					.' sessionid = "'.$this->sessionid.'"'
 					.' and loginid = "'.$this->account_id.'"'
 					.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
-					.' and location = "'.$location.'"',__LINE__,__FILE__
-				);
+					.' and location = "'.$location.'"';
 
 	      $phpgw->db->query($sql,__LINE__,__FILE__);
 
@@ -327,8 +326,8 @@
 					.' sessionid = "'.$this->sessionid.'"'
 					.' and loginid = "'.$this->account_id.'"'
 					.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
-					.' and location = "'.$location.'"',__LINE__,__FILE__
-				);
+					.' and location = "'.$location.'"';
+
 	      $phpgw->db->query($sql,__LINE__,__FILE__);
 
 	      if ($phpgw->db->num_rows()==0) {
@@ -337,16 +336,15 @@
 						.' ","'.$this->account_id.'"'
 						.' ","'.$phpgw_info["flags"]["currentapp"].'"'
 						.' ","'.$location.'"'
-						.' ","'.$data.'"')'
-					);
+						.' ","'.$data.'")'
+					;
 		      $phpgw->db->query($sql,__LINE__,__FILE__);
 	      } else {
 					$sql = 'update phpgw_app_sessions set content = "'.$data.'"'
 						.' where sessionid = "'.$this->sessionid.'"'
 						.' and loginid = "'.$this->account_id.'"'
 						.' and app = "'.$phpgw_info["user"]["currentapp"].'"'
-						.' and location = "'.$location.'"',__LINE__,__FILE__
-					);
+						.' and location = "'.$location.'"';
 		      $phpgw->db->query($sql,__LINE__,__FILE__);
 	      }
 	      //$data = $phpgw->common->decrypt($data);
@@ -421,7 +419,6 @@
 				return False;
 			}
 		}
-	}
 
 
 		/*************************************************************************\
