@@ -1,8 +1,8 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - vCalendar                                                 *
+  * phpGroupWare - vCalendar Parser                                          *
   * http://www.phpgroupware.org                                              *
-  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
+  * Written by Mark Peters <skeeter@phpgroupware.org>                        *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -11,6 +11,9 @@
   \**************************************************************************/
 
 	/* $Id$ */
+
+define('VEVENT',1);
+define('VTODO',2);
 
 define('NONE',0);
 define('CHAIR',1);
@@ -24,9 +27,22 @@ define('RESOURCE',4);
 define('ROOM',8);
 define('UNKNOWN',16);
 
+define('NEEDS_ACTION',0);
+define('ACCEPTED',1);
+define('DECLINED',2);
+define('TENTATIVE',3);
+define('DELEGATED',4);
+define('COMPLETED',5);
+define('IN_PROCESS',6);
+
 define('PRIVATE',0);
 define('PUBLIC',1);
-define('CONFIDENTIAL',0);
+define('CONFIDENTIAL',3);
+
+define('TRANSPARENT',0);
+define('OPAQUE',1);
+
+define('OTHER',99);
 
 class mailto
 {
@@ -39,13 +55,13 @@ class attendee
 	var $cn = 'Unknown';
 	var $cutype = INDIVIDUAL;
 	var $role = REQ_PARTICIPANT;
-	var $rsvp = False;
+	var $rsvp = 0;
 	var $mailto;
 	var $sent_by;
 	var $delegated_from;
 	var $delegated_to;
 	var $member;
-	var $partstat;
+	var $partstat = NEEDS_ACTION;
 }
 
 class organizer
@@ -55,7 +71,7 @@ class organizer
 	var $delegated_from;
 	var $delegated_to;
 	var $member;
-	var $partstat;
+	var $partstat = NEEDS_ACTION;
 	var $mailto;
 	var $sent_by;
 }
@@ -90,7 +106,7 @@ class vCalendar_event
 	var $dtstart;
 	var $dtend;
 	var $location;
-	var $transp;
+	var $transp = OPAQUE;
 	var $sequence;
 	var $uid;
 	var $dtstamp;
@@ -124,9 +140,18 @@ class vCalendar
 		$dtime->year = intval(substr($value,0,4));
 		$dtime->month = intval(substr($value,4,2));
 		$dtime->mday = intval(substr($value,6,2));
-		$dtime->hour = intval(substr($value,9,2));
-		$dtime->min = intval(substr($value,11,2));
-		$dtime->sec = intval(substr($value,13,2));
+		if(substr($value,8,1) == 'T')
+		{
+			$dtime->hour = intval(substr($value,9,2));
+			$dtime->min = intval(substr($value,11,2));
+			$dtime->sec = intval(substr($value,13,2));
+		}
+		else
+		{
+			$dtime->hour = 0;
+			$dtime->min = 0;
+			$dtime->sec = 0;
+		}
 		return $dtime;		
 	}
 
@@ -150,7 +175,7 @@ class vCalendar
 	{
 //		if($value != False)
 //		{
-			$type = strtolower($type);
+			$type = strtolower(str_replace('-','_',$type));
 			$event->$type = $value;
 //		}
 	}
@@ -175,11 +200,7 @@ class vCalendar
 
 	function strip_quotes($str)
 	{
-		if(strpos(' '.$str.' ','"'))
-		{
-			$str = substr($str,1,strlen($str)-2);
-		}
-		return $str;
+		return str_replace('"','',$str);
 	}
 
 	function strip_param($str)
@@ -195,34 +216,203 @@ class vCalendar
 		}
 	}
 
+	function switch_role($var)
+	{
+		if(gettype($var) == 'string')
+		{
+			switch($var)
+			{
+				case 'NONE':
+					return NONE;
+					break;
+				case 'CHAIR':
+					return CHAIR;
+					break;
+				case 'REQ-PARTICIPANT':
+					return REQ_PARTICIPANT;
+					break;
+				case 'OPT-PARTICIPANT':
+					return OPT_PARTICIPANT;
+					break;
+				case 'NON-PARTICIPANT':
+					return NON_PARTICIPANT;
+					break;
+			}
+		}
+		elseif(gettype($var) == 'integer')
+		{
+			switch($var)
+			{
+				case NONE:
+					return 'NONE';
+					break;
+				case CHAIR:
+					return 'CHAIR';
+					break;
+				case REQ_PARTICIPANT:
+					return 'REQ-PARTICIPANT';
+					break;
+				case OPT_PARTICIPANT:
+					return 'OPT-PARTICIPANT';
+					break;
+				case NON_PARTICIPANT:
+					return 'NON-PARTICIPANT';
+					break;
+			}
+		}
+		else
+		{
+			return $var;
+		}
+	}
+
+	function switch_partstat($var)
+	{
+		if(gettype($var) == 'string')
+		{
+			switch($var)
+			{
+				case 'NEEDS-ACTION':
+					return NEEDS_ACTION;
+					break;
+				case 'ACCEPTED':
+					return ACCEPTED;
+					break;
+				case 'DECLINED':
+					return DECLINED;
+					break;
+				case 'TENTATIVE':
+					return TENTATIVE;
+					break;
+				case 'DELEGATED':
+					return DELEGATED;
+					break;
+				case 'COMPLETED':
+					return COMPLETED;
+					break;
+				case 'IN-PROCESS':
+					return IN_PROCESS;
+					break;
+				default:
+					return OTHER;
+					break;
+			}
+		}
+		elseif(gettype($var) == 'integer')
+		{
+			switch($var)
+			{
+				case NEEDS_ACTION:
+					return 'NEEDS-ACTION';
+					break;
+				case ACCEPTED:
+					return 'ACCEPTED';
+					break;
+				case DECLINED:
+					return 'DECLINED';
+					break;
+				case TENTATIVE:
+					return 'TENTATIVE';
+					break;
+				case DELEGATED:
+					return 'DELEGATED';
+					break;
+				case COMPLETED:
+					return 'COMPLETED';
+					break;
+				case IN_PROCESS:
+					return 'IN-PROCESS';
+					break;
+				default:
+					return 'X-OTHER';
+					break;
+			}
+		}
+		else
+		{
+			return $var;
+		}
+	}
+
+	function switch_rsvp($var)
+	{
+		if(gettype($var) == 'string')
+		{
+			if($var == 'TRUE')
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		elseif(gettype($var) == 'boolean')
+		{
+			if($var == 1)
+			{
+				return 'TRUE';
+			}
+			else
+			{
+				return 'FALSE';
+			}
+		}
+		else
+		{
+			return $var;
+		}
+	}
+
 	function parse_attendee(&$event,$value)
 	{
 		$param = explode(':',$value);
 		for($j=0;$j<count($param);$j++)
 		{
-			if(strpos($param[$j],'='))
+			$param_sub = explode(';',$param[$j]);
+			for($k=0;$k<count($param_sub);$k++)
 			{
-				$type = explode('=',$param[$j]);
-				$this->set_var($event,$type[0],$this->strip_quotes($type[1]));
-			}
-			else
-			{
-				if(strpos($param[$j],'@'))
+				if(strpos($param_sub[$k],'='))
 				{
-					$this->set_var($event,'mailto',$this->split_address($param[$j]));
+					$type = explode('=',$param_sub[$k]);
+					$type[0] = strtolower($type[0]);
+					$type[1] = $this->strip_quotes($type[1]);
+					switch($type[0])
+					{
+						case 'role':
+							$val = $this->switch_role($type[1]);
+							break;
+						case 'partstat':
+							$val = $this->switch_partstat($type[1]);
+							break;
+						case 'rsvp':
+							$val = $this->switch_rsvp($type[1]);
+							break;
+						default:
+							$val = $type[1];
+							break;
+					}
+					$this->set_var($event,$type[0],$val);
 				}
 				else
 				{
-					switch(strtolower($param[$j]))
+					if(strpos($param_sub[$k],'@'))
 					{
-						case 'mailto':
-							$email_addy = $param[$j + 1];
-							$this->set_var($event,$param[$j++],$this->split_address($email_addy));
-							break;
-						default:
-							$var = $this->strip_param($this->strip_quotes($param[$j + 1]));
-							$this->set_var($event,$param[$j++],$var);
-							break;									
+						$this->set_var($event,'mailto',$this->split_address($param_sub[$k]));
+					}
+					else
+					{
+						switch(strtolower($param_sub[$k]))
+						{
+							case 'mailto':
+								$email_addy = $param_sub[$k + 1];
+								$this->set_var($event,$param_sub[$k++],$this->split_address($email_addy));
+								break;
+							default:
+								$var = $this->strip_param($this->strip_quotes($param_sub[$k + 1]));
+								$this->set_var($event,$param_sub[$k++],$var);
+								break;									
+						}
 					}
 				}
 			}
@@ -352,21 +542,33 @@ class vCalendar
 				case 'dtstamp':
 					$this->set_var($event,$majortype,$this->splitdate($value));
 					break;
-//				case 'class':
-//					switch(strtolower($value))
-//					{
-//						case 'private':
-//							$var = PRIVATE;
-//							break;
-//						case 'public':
-//							$var = PUBLIC;
-//							break;
-//						case 'confidential':
-//							$var = CONFIDENTIAL;
-//							break;
-//					}
-//					$this->set_var($event,$majortype,$var);
-//					break;
+				case 'class':
+					switch(strtolower($value))
+					{
+						case 'private':
+							$class = PRIVATE;
+							break;
+						case 'public':
+							$class = PUBLIC;
+							break;
+						case 'confidential':
+							$class = CONFIDENTIAL;
+							break;
+					}
+					$this->set_var($event,$majortype,$class);
+					break;
+				case 'transp':
+					switch(strtolower($value))
+					{
+						case 'transparent':
+							$transp = TRANSPARENT;
+							break;
+						case 'opaque':
+							$transp = OPAQUE;
+							break;
+					}
+					$this->set_var($event,$majortype,$transp);
+					break;
 				case 'rrule':
 					$event->$majortype = new $majortype;
 					$this->parse_recurrence($event->$majortype,$value);

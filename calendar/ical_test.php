@@ -28,13 +28,19 @@
 	echo "Product ID = ".$vcalendar->prodid."<br>\n";
 	echo "Method = ".$vcalendar->method."<br>\n";
 	echo "Version = ".$vcalendar->version."<br>\n";
-	echo "Sequence = ".$vcalendar->event[0]->sequence."<br>\n";
-	$datet = CreateObject('phpgwapi.datetime');
-	$datetime = mktime($vcalendar->event[0]->dtstart->hour,$vcalendar->event[0]->dtstart->min,$vcalendar->event[0]->dtstart->sec,$vcalendar->event[0]->dtstart->month,$vcalendar->event[0]->dtstart->mday,$vcalendar->event[0]->dtstart->year);
-	echo "Date Start : ".$phpgw->common->show_date($datetime)."<br>\n";
+	echo "Summary = ".$vcalendar->event[0]->summary."<br>\n";
+	echo "Location = ".$vcalendar->event[0]->location."<br>\n";
+	echo "Sequence = ".$vcalendar->event[0]->sequence."<br>\n";	
+	echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->event[0]->dtstart->hour,$vcalendar->event[0]->dtstart->min,$vcalendar->event[0]->dtstart->sec,$vcalendar->event[0]->dtstart->month,$vcalendar->event[0]->dtstart->mday,$vcalendar->event[0]->dtstart->year))."<br>\n";
 	echo "Organizer = ".$vcalendar->event[0]->organizer->mailto->user.'@'.$vcalendar->event[0]->organizer->mailto->host."<br>\n";
-	echo "Attendee[0] = ".$vcalendar->event[0]->attendee[0]->mailto->user.'@'.$vcalendar->event[0]->attendee[0]->mailto->host."<br>\n";
-	echo "Attendee[1] = ".$vcalendar->event[0]->attendee[1]->mailto->user.'@'.$vcalendar->event[0]->attendee[1]->mailto->host."<br>\n";
+	for($i=0;$i<3;$i++)
+	{
+		echo "Attendee[$i] CN = ".$vcalendar->event[0]->attendee[$i]->cn."<br>\n";
+		echo "Attendee[$i] Address= ".$vcalendar->event[0]->attendee[$i]->mailto->user.'@'.$vcalendar->event[0]->attendee[$i]->mailto->host."<br>\n";
+		echo "Attendee[$i] Role = ".$vcal->switch_role($vcalendar->event[0]->attendee[$i]->role)."<br>\n";
+//		echo "Attendee[$i] RSVP = ".$vcal->switch_rsvp($vcalendar->event[0]->attendee[$i]->rsvp)."<br>\n";
+		echo "Attendee[$i] RSVP = ".$vcalendar->event[0]->attendee[$i]->rsvp."<br>\n";
+	}
 	echo "Class = ".$vcalendar->event[0]->class."<br>\n";
 	$phpgw->common->phpgw_footer();
 ?>
