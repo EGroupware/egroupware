@@ -76,14 +76,14 @@ display mini calendars when printing	calendar	it	Visualizza mini calendari quand
 display status of events	calendar	it	Visualizza lo stato per gli Eventi
 displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	it	Mostra la visualizzazione predefinita nella prima pagina (la pagina che vedi quando entri in eGroupWare o cliccando sull'icona homepage)?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	it	Vuoi una notifica sui nuovi appuntamenti o su quelli cambiati? Sarai avvertito sui cambiamenti da te effettuati.<br>Puoi limitare la notifica su alcuni cambiamenti. Each item includes all the notification listed above it. Tutte le modifiche includono il cambiamento del titolo, della descrizione, dei partecipanti, ma non delle risposte dei partecipanti. Se il creatore dell'evento richiede ogni notifica, avrà sempre le risposte dei partecipanti sia gli accetti che i rifiuti.
-do you want to receive a regulary summary of your appointsments via e-mail?<br>the summary is sent to your standard e-mail-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	it	Vuoi ricevere regolarmente il resoconto dei tuoi appuntamenti via e-mail?<br>Il resoconto sarà mandato al tuo indirizzo e-mail standard ogni mattina o ogni Lunedì per il resoconto settimanale.<br>Sarà mandato solo se avrai un appuntamento per quel giorno o per quella settimana.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	it	Vuoi ricevere regolarmente il resoconto dei tuoi appuntamenti via e-mail?<br>Il resoconto sarà mandato al tuo indirizzo e-mail standard ogni mattina o ogni Lunedì per il resoconto settimanale.<br>Sarà mandato solo se avrai un appuntamento per quel giorno o per quella settimana.
 do you wish to autoload calendar holidays files dynamically?	admin	it	Vuoi caricare automaticamente nell'agenda i file con l'elenco delle festività?
 download	calendar	it	Download
 duration	calendar	it	Durata
 edit series	calendar	it	Modifica Serie
 edit single	calendar	it	Modifica Singolo
-e-mail notification	calendar	it	Notifica via e-mail
-e-mail notification for %1	calendar	it	Notifica via e-mail %1
+email notification	calendar	it	Notifica via e-mail
+email notification for %1	calendar	it	Notifica via e-mail %1
 empty for all	calendar	it	vuoto per tutti
 enable	calendar	it	Abilita
 enabled	calendar	it	abilitato
@@ -205,7 +205,7 @@ re-edit event	calendar	it	Ri-modifica l'evento
 read a list of entries.	calendar	it	Leggi una lista di inserimenti
 read a single entry by passing the id and fieldlist.	calendar	it	Leggi una singola voce inserendo l'ID e l'elenco dei campi
 read this list of methods.	calendar	it	Leggi questa lista di metodi
-receive e-mail updates	calendar	it	Ricevi aggiornamenti via e-mail
+receive email updates	calendar	it	Ricevi aggiornamenti via e-mail
 receive extra information in event mails	calendar	it	Ricevi informazioni extra nell'e-mail dell'evento
 receive summary of appointments	calendar	it	Ricevi il resoconto degli appuntamenti
 recurring event	calendar	it	evento ricorrente
@@ -225,8 +225,8 @@ sat	calendar	it	Sab
 scheduling conflict	calendar	it	Conflitto di orario
 search results	calendar	it	Risultati Ricerca
 selected contacts (%1)	calendar	it	Contatti selezionati (%1)
-send updates via e-mail	common	it	Invia aggiornamenti via e-mail
-send/receive updates via e-mail	calendar	it	Invia/Ricevi aggiornamenti via e-mail
+send updates via email	common	it	Invia aggiornamenti via e-mail
+send/receive updates via email	calendar	it	Invia/Ricevi aggiornamenti via e-mail
 set a year only for one-time / non-regular holidays.	calendar	it	Imposta l'anno se cade una sola volta / festività non regolari.
 set new events to private	calendar	it	Imposta il nuovo evento come privato
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	it	Gli inviti non accettati compaiono nel tuo calendario?<br>Potrai accettarli più tardi (es. quando l'appuntamento in conflitto sarà rimosso), se li lascierai visibili nell'agenda!
@@ -267,7 +267,7 @@ this group that is preselected when you enter the planner. you can change it in 
 this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	it	Questo è causato da un impostazione sbagliata del server SMTP. Avvisa l'Amministratore.
 this message is sent for canceled or deleted events.	calendar	it	Questo messaggio è inviato per gli eventi annullati o cancellati.
 this message is sent for modified or moved events.	calendar	it	Questo messaggio è inviato. per gli eventi modficiati o spostati.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the e-mail.	calendar	it	Questo messaggio è inviato ad ogni partecipante, che ha richiesto la notifica, all'evento da te creato.<br>Puoi usare certe variabili che sostituiranno dati dell'evento. La prima linea è l'oggetto dell'e-mail.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	it	Questo messaggio è inviato ad ogni partecipante, che ha richiesto la notifica, all'evento da te creato.<br>Puoi usare certe variabili che sostituiranno dati dell'evento. La prima linea è l'oggetto dell'e-mail.
 this message is sent when you accept, tentative accept or reject an event.	calendar	it	Questo messaggio è inviato quando accetti, provi ad accettare, o rifiuti un evento.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	it	Questo messaggio è inviato quando imposti un Allarme per certi eventi.  Include tutte le informazioni di cui hai bisogno.
 this month	calendar	it	Questo mese
