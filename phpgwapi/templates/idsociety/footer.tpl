@@ -3,8 +3,8 @@
     </TR>
    </TABLE>
 
-   </TR>
-  </TD>
+   </td>
+  </tr>
 </TABLE>
 
 <!-- END footer -->
