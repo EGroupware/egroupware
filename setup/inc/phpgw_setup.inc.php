@@ -174,7 +174,7 @@
       if (!isset($phpgw_info["server"]["api_inc"])) {
         $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["server_root"]."/phpgwapi/inc";
       }
-      include($phpgw_info["server"]["api_inc"] . "/phpgw_db_".$phpgw_domain[$ConfigDomain]["db_type"].".inc.php");
+      include($phpgw_info["server"]["api_inc"] . "/class.db_".$phpgw_domain[$ConfigDomain]["db_type"].".inc.php");
       $this->db	          = new db;
       $this->db->Host       = $phpgw_domain[$ConfigDomain]["db_host"];
       $this->db->Type       = $phpgw_domain[$ConfigDomain]["db_type"];
