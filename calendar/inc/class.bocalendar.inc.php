@@ -559,7 +559,7 @@
 				$datetime_check = $this->validate_update($event);
 				if($datetime_check)
 				{
-				   $ExecMethod('calendar.uicalendar.edit',
+				   ExecMethod('calendar.uicalendar.edit',
 				   	Array(
 				   		'cd'		=> $datetime_check,
 				   		'readsess'	=> 1
@@ -1059,7 +1059,7 @@
 			for ($i=0;$i<$r_events;$i++)
 			{
 				$rep_events = $this->repeating_events[$i];
-				$id = $rep_events->id;
+				$id = $rep_events['id'];
 				$event_beg_day = mktime(0,0,0,$rep_events['start']['month'],$rep_events['start']['mday'],$rep_events['start']['year']);
 				if($rep_events['recur_enddate']['month'] != 0 && $rep_events['recur_enddate']['mday'] != 0 && $rep_events['recur_enddate']['year'] != 0)
 				{
