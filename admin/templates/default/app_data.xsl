@@ -17,6 +17,9 @@
 			<xsl:when test="group_edit">
 				<xsl:call-template name="groups"/>
 			</xsl:when>
+			<xsl:when test="delete">
+				<xsl:call-template name="app_delete"/>
+			</xsl:when>
 			<xsl:otherwise>
 				<xsl:apply-templates select="list"/>
 			</xsl:otherwise>

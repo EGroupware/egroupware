@@ -72,5 +72,6 @@
 	}
  
 	/* Do not modify below this line */
-	display_section('admin',$file);
+
+	$GLOBALS['phpgw']->common->display_mainscreen('admin',$file);
 ?>

@@ -1,35 +1,38 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - account administration                                    *
+	* phpGroupWare - Account Administration                                    *
 	* http://www.phpgroupware.org                                              *
-	* --------------------------------------------                             *
+	* Written by coreteam <phpgroupware-developers@gnu.org>                    *
+	* -----------------------------------------------------                    *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	class boaccounts
 	{
 		var $so;
-		var $public_functions = array(
-			'add_group'    => True,
-			'add_user'     => True,
-			'delete_group' => True,
-			'delete_user'  => True,
-			'edit_group'   => True,
-			'edit_user'    => True,
+		var $public_functions = array
+		(
+			'add_group'				=> True,
+			'add_user'				=> True,
+			'delete_group'			=> True,
+			'delete_user'			=> True,
+			'edit_group'			=> True,
+			'edit_user'				=> True,
 			'set_group_managers'	=> True
 		);
 
 		var $xml_functions = array();
 
-		var $soap_functions = array(
-			'add_user' => array(
-				'in'  => array('int', 'struct'),
-				'out' => array()
+		var $soap_functions = array
+		(
+			'add_user'	=> array
+			(
+				'in'	=> array('int','struct'),
+				'out'	=> array()
 			)
 		);
 
@@ -75,23 +78,20 @@
 			}
 		}
 
-		function delete_group()
+		function delete_group($account_id)
 		{
-			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
+			if ($GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_groups');
 				return False;
 			}
-			
-			$account_id = intval($GLOBALS['HTTP_POST_VARS']['account_id']);
 
-			$GLOBALS['phpgw']->db->lock(
-				Array(
+			$GLOBALS['phpgw']->db->lock(array
+				(
 					'phpgw_accounts',
 					'phpgw_acl'
 				)
 			);
-				
+
 			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
 
 			@reset($old_group_list);
@@ -113,12 +113,7 @@
 			}
 
 			$GLOBALS['phpgw']->accounts->delete($account_id);
-
 			$GLOBALS['phpgw']->db->unlock();
-
-			Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-			exit;
 		}
 
 		function delete_user()
@@ -171,15 +166,9 @@
 			}
 		}
 
-		function add_group()
+		function add_group($values)
 		{
-			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
-			{
-				ExecMethod('admin.uiaccounts.list_groups');
-				return False;
-			}
-
-			$temp_users = ($GLOBALS['HTTP_POST_VARS']['account_user']?$GLOBALS['HTTP_POST_VARS']['account_user']:Array());
+			$temp_users = ($values['account_user']?$values['account_user']:Array());
 			$account_user = Array();
 			@reset($temp_users);
 			while(list($key,$user_id) = each($temp_users))
@@ -188,7 +177,7 @@
 			}
 			@reset($account_user);
 
-			$group_permissions = ($GLOBALS['HTTP_POST_VARS']['account_apps']?$GLOBALS['HTTP_POST_VARS']['account_apps']:Array());
+			$group_permissions = ($values['account_apps']?$values['account_apps']:Array());
 			$account_apps = Array();
 			@reset($group_permissions);
 			while(list($key,$value) = each($group_permissions))
@@ -200,31 +189,30 @@
 			}
 			@reset($account_apps);
 
-			$group_info = Array(
-				'account_id'   => ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
-				'account_name' => ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
+			$group_info = Array
+			(
+				'account_id'   => ($values['account_id']?intval($values['account_id']):0),
+				'account_name' => ($values['account_name']?$values['account_name']:''),
 				'account_user' => $account_user,
 				'account_apps' => $account_apps
 			);
 
-			$this->validate_group($group_info);
-
-			$GLOBALS['phpgw']->db->lock(
-				Array(
-					'phpgw_accounts',
-					'phpgw_nextid',
-					'phpgw_preferences',
-					'phpgw_sessions',
-					'phpgw_acl',
-					'phpgw_applications',
-					'phpgw_app_sessions',
-					'phpgw_hooks'
-				)
-			);
+			$GLOBALS['phpgw']->db->lock(array
+			(
+				'phpgw_accounts',
+				'phpgw_nextid',
+				'phpgw_preferences',
+				'phpgw_sessions',
+				'phpgw_acl',
+				'phpgw_applications',
+				'phpgw_app_sessions',
+				'phpgw_hooks'
+			));
 
 			$group = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$group->acct_type = 'g';
-			$account_info = array(
+			$account_info = array
+			(
 				'account_type'      => 'g',
 				'account_lid'       => $group_info['account_name'],
 				'account_passwd'    => '',
@@ -286,11 +274,7 @@
 			{
 				$cd = 37;
 			}
-
 			$GLOBALS['phpgw']->db->unlock();
-
-			ExecMethod('admin.uiaccounts.list_groups');
-			return False;
 		}
 
 		function add_user()
@@ -348,15 +332,14 @@
 			}
 		}
 
-		function edit_group()
+		function edit_group($values)
 		{
 			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_groups');
-				return False;
+				$error[] = lang('no permission to create groups');
 			}
 
-			$temp_users = ($GLOBALS['HTTP_POST_VARS']['account_user']?$GLOBALS['HTTP_POST_VARS']['account_user']:Array());
+			$temp_users = ($values['account_user']?$values['account_user']:Array());
 			$account_user = Array();
 			@reset($temp_users);
 			while($temp_users && list($key,$user_id) = each($temp_users))
@@ -365,7 +348,7 @@
 			}
 			@reset($account_user);
 
-			$group_permissions = ($GLOBALS['HTTP_POST_VARS']['account_apps']?$GLOBALS['HTTP_POST_VARS']['account_apps']:Array());
+			$group_permissions = ($values['account_apps']?$values['account_apps']:Array());
 			$account_apps = Array();
 			@reset($group_permissions);
 			while(list($key,$value) = each($group_permissions))
@@ -378,13 +361,11 @@
 			@reset($account_apps);
 
 			$group_info = Array(
-				'account_id'   => ($GLOBALS['HTTP_POST_VARS']['account_id']?intval($GLOBALS['HTTP_POST_VARS']['account_id']):0),
-				'account_name' => ($GLOBALS['HTTP_POST_VARS']['account_name']?$GLOBALS['HTTP_POST_VARS']['account_name']:''),
+				'account_id'   => ($values['account_id']?intval($values['account_id']):0),
+				'account_name' => ($values['account_name']?$values['account_name']:''),
 				'account_user' => $account_user,
 				'account_apps' => $account_apps
 			);
-
-			$this->validate_group($group_info);
 
 			// Lock tables
 			$GLOBALS['phpgw']->db->lock(
@@ -514,9 +495,6 @@
 		*/
 
 			$GLOBALS['phpgw']->db->unlock();
-
-			ExecMethod('admin.uiaccounts.list_groups');
-			return False;
 		}
 
 		function edit_user()
@@ -605,38 +583,38 @@
 			exit;
 		}
 
-		function validate_group($group_info)
+		function validate_group($values)
 		{
-			$errors = Array();
-			
-			$group = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
+			$group = CreateObject('phpgwapi.accounts',$values['account_id'],'g');
 			$group->read_repository();
 
-			if(!$group_info['account_name'])
+			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
 			{
-				$errors[] = lang('You must enter a group name.');
+				$error[] = lang('no permission to create groups');
 			}
 
-			if($group_info['account_name'] != $group->id2name($group_info['account_id']))
+			if(!$values['account_name'])
 			{
-				if ($group->exists($group_info['account_name']))
+				$error[] = lang('You must enter a group name.');
+			}
+
+			if($values['account_name'] != $group->id2name($values['account_id']))
+			{
+				if ($group->exists($values['account_name']))
 				{
-					$errors[] = lang('Sorry, that group name has already been taken.');
+					$error[] = lang('Sorry, that group name has already been taken.');
 				}
 			}
 
 		/*
 			if (preg_match ("/\D/", $account_file_space_number))
 			{
-				$errors[] = lang ('File space must be an integer');
+				$error[] = lang ('File space must be an integer');
 			}
 		*/
-			if(count($errors))
+			if(is_array($error))
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->create_edit_group($group_info,$errors);
-				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-				exit;
+				return $error;
 			}
 		}
 
