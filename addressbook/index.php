@@ -180,7 +180,7 @@
           $field = $phpgw->db->f("ab_" . $column[0]);
        }
 
-       $field = htmlentities($field);
+       $field = $phpgw->strip_html($field);
 
        // Some fields require special formating.       
        if ($column[0] == "url") {
