@@ -69,8 +69,8 @@
 		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 		{
-			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
 			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
 		}
 		if ($p1 == '_UNDEF_' && $p1 != 1)
 		{
@@ -494,11 +494,11 @@
 	$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
 	//	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 	print_debug('main class loaded');
-	if (! isset($phpgw_info['flags']['included_classes']['error']) ||
-		! $phpgw_info['flags']['included_classes']['error'])
+	if (! isset($GLOBALS['phpgw_info']['flags']['included_classes']['error']) ||
+		! $GLOBALS['phpgw_info']['flags']['included_classes']['error'])
 	{
-		$phpgw_info['flags']['included_classes']['error'] = True;
 		include(PHPGW_INCLUDE_ROOT.'/phpgwapi/inc/class.error.inc.php');
+		$GLOBALS['phpgw_info']['flags']['included_classes']['error'] = True;
 	}
 
 	 /****************************************************************************\
