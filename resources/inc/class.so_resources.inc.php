@@ -91,6 +91,7 @@ class so_resources
 	function delete($id)
         {
                 $this->db->delete($this->rs_table,$id,__LINE__,__FILE__);
+		/* delete images here */
                 return true;
         }
 	
