@@ -51,13 +51,3 @@
 	$setup_info['notifywindow']['app_order'] = 1;
 	$setup_info['notifywindow']['tables']    = '';
 	$setup_info['notifywindow']['hooks'][]   = 'home';
-
-
-
-
-
-
-
-
-
-
