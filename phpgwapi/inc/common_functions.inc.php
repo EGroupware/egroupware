@@ -1201,6 +1201,27 @@
 		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
 
+	function _check_script_tag(&$var)
+	{
+		if (is_array($var))
+		{
+			foreach($var as $key => $val)
+			{
+				if (is_array($val))
+				{
+					_check_script($var[$key]);
+				}
+				else
+				{
+					if (preg_match('/(<|&lt;)+\/?script(>|&gt;)+/i',$val))
+					{
+						unset($var[$key]);
+					}
+				}
+			}
+		}
+	}
+		
 	foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS','HTTP_REQUEST_VARS') as $where)
 	{
 		$pregs = array(
@@ -1213,6 +1234,10 @@
 			{
 				$GLOBALS[$where][$name] = '';
 			}
+		}
+		if (is_array($GLOBALS[$where]))
+		{
+			_check_script_tag($GLOBALS[$where]);
 		}
 	}
 ?>
