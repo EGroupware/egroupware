@@ -30,7 +30,7 @@
     var $group_names;
     var $apps;
 
-    function phpgw_fillarray()
+    function fill_user_array()
     {
       global $phpgw_info, $phpgw;
 
