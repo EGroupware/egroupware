@@ -1,0 +1,111 @@
+%1 already exists as a file	filemanager	es-ca	%1 ja existeix com a arxiu
+application	filemanager	es-ca	Aplicació
+back to file manager	filemanager	es-ca	Tornar a l'Administrador d'Arxius
+cancel editing %1 without saving	filemanager	es-ca	Cancelar la edición de %1 sin guardar
+cannot create directory because it begins or ends in a space	filemanager	es-ca	No es pot crear el directori perqué comença o acaba amb un espai
+cannot replace %1 because it is a directory	filemanager	es-ca	No es pot reemplaçar %1 perqué és un directori
+command sucessfully run	filemanager	es-ca	Ordre executada correctament
+comment	filemanager	es-ca	Comentari
+comments cannot contain "%1"	filemanager	es-ca	Els comentaris no poden tenir "%1"
+copied %1 to %2	filemanager	es-ca	Copiat %1 a %2
+copy to	filemanager	es-ca	Copiar A
+copy to:	filemanager	es-ca	Copiar a:
+could not copy %1 to %2	filemanager	es-ca	No es pot copiar %1 a %2
+could not create %1	filemanager	es-ca	No es pot crear %1
+could not create directory %1	filemanager	es-ca	No es pot crear el directori %1
+could not delete %1	filemanager	es-ca	No es pot esborrar %1
+could not move %1 to %2	filemanager	es-ca	No es pot moure %1 a %2
+could not rename %1 to %2	filemanager	es-ca	No es pot reanomenar %1 a %2
+could not save %1	filemanager	es-ca	No es pot desar %1
+create file	filemanager	es-ca	Crear arxiu
+create folder	filemanager	es-ca	Crear carpeta
+created	filemanager	es-ca	Creat
+created %1	filemanager	es-ca	Creat %1
+created %1,%2	filemanager	es-ca	Se ha creado %1,%2
+created by	filemanager	es-ca	Creat per
+created directory %1	filemanager	es-ca	Directori %1 creat
+date	filemanager	es-ca	Data
+default number of upload fields to show	filemanager	es-ca	Nombre de camps a mostrar per defecte
+delete	filemanager	es-ca	Esborrar
+deleted %1	filemanager	es-ca	%1 esborrat
+directory	filemanager	es-ca	Directori
+directory %1 already exists	filemanager	es-ca	El directori %1 ja existeix
+directory %1 does not exist	filemanager	es-ca	El directori %1 no existeix
+directory names cannot contain "%1"	filemanager	es-ca	Els noms de directori no poden tenir "%1"
+display attributes	filemanager	es-ca	Mostrar atributs
+download	filemanager	es-ca	Descarregar
+edit	filemanager	es-ca	Editar
+edit comments	filemanager	es-ca	Editar comentaris
+error running command	filemanager	es-ca	Error al executar l'ordre
+execute	filemanager	es-ca	Executar
+failed to create directory	filemanager	es-ca	error al crear el directori
+file	filemanager	es-ca	Arxiu
+file %1 already exists. please edit it or delete it first.	filemanager	es-ca	L'arxiu %1 ja existeix. Si us plau, editeu-lo o esborreu-lo abans.
+file %1 could not be created.	filemanager	es-ca	No es pot crear l'arxiu %1.
+file name	filemanager	es-ca	Nom de l'arxiu
+file names cannot contain  or /	filemanager	es-ca	Los nombres de fichero no pueden contener  o /
+file names cannot contain "%1"	filemanager	es-ca	Els noms d'arxiu no poden tenir "%1"
+file names cannot contain \ or /	filemanager	es-ca	Los nombres de fichero no pueden contener  o /
+filemanager	common	es-ca	Administrador d'Arxius
+filemanager preferences	filemanager	es-ca	Preferències de l'Administrador d'Arxius
+files	filemanager	es-ca	Arxius
+files is this directory	filemanager	es-ca	Ficheros en este directorio
+folder	filemanager	es-ca	Carpeta
+folder up	filemanager	es-ca	Subir una carpeta
+go home	filemanager	es-ca	ir al inicio
+go to	filemanager	es-ca	Anar A
+go to %1	filemanager	es-ca	Anar a %1
+go to your home directory	filemanager	es-ca	Anar al directori personal
+go to:	filemanager	es-ca	Anar a:
+go up	filemanager	es-ca	subir
+home	filemanager	es-ca	Inici
+location	filemanager	es-ca	Ubicación
+locked	filemanager	es-ca	Bloquejat
+mime type	filemanager	es-ca	Tipus MIME
+modified	filemanager	es-ca	Modificat
+modified by	filemanager	es-ca	Modificat per
+move to	filemanager	es-ca	Moure A
+move to:	filemanager	es-ca	Moure a:
+moved %1 to %2	filemanager	es-ca	S'ha mogut %1 a %2
+no files in this directory.	filemanager	es-ca	No hay ficheros en este directorio
+no version history for this file/directory	filemanager	es-ca	No hi ha historial de versió per aquest arxiu o directori
+operation	filemanager	es-ca	Operació
+owner	filemanager	es-ca	Propietari
+please select a file to delete.	filemanager	es-ca	Por favor, seleccione un fichero para borrar
+preferences old	preferences	es-ca	Preferencias antiguas
+preview %1	filemanager	es-ca	Vista prévia de %1
+preview of %1	filemanager	es-ca	Vista prévia de %1
+reload	filemanager	es-ca	recargar
+rename	filemanager	es-ca	Reanomenar
+renamed %1 to %2	filemanager	es-ca	S'ha reanomenat %1 a %2
+replaced %1	filemanager	es-ca	Reemplaçat %1
+save %1	filemanager	es-ca	Desar %1
+save %1, and go back to file listing	filemanager	es-ca	Guardar %1, y volver al listado de ficheros
+save all	filemanager	es-ca	Desar tot
+save changes	filemanager	es-ca	Guardar cambios
+saved %1	filemanager	es-ca	Desat %1
+show	filemanager	es-ca	Mostrar
+show ..	filemanager	es-ca	Mostrar ..
+show .files	filemanager	es-ca	Mostrar arxius ocults
+show command line (experimental. dangerous.)	filemanager	es-ca	Mostrar línia d'ordres (EXPERIMENTAL. PERILLÓS.)
+show help	filemanager	es-ca	Mostrar l'ajuda
+size	filemanager	es-ca	Tamany
+sort by:	filemanager	es-ca	Ordenar per:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	es-ca	El Administrador de archivos futuro, SOLO PARA PRUEBAS. Por favor, informe de los fallos.
+total files	filemanager	es-ca	Total arxius
+unknown mime-type defaults to text/plain when viewing	filemanager	es-ca	Els tipus MIME desconeguts es mostren per defecte com a text/plain
+unused space	filemanager	es-ca	Espai lliure
+up	filemanager	es-ca	Adalt
+update	filemanager	es-ca	Actualitzar
+updated comment for %1	filemanager	es-ca	Comentari actualitzat per %1
+upload	filemanager	es-ca	Copiar a servidor
+upload fields	filemanager	es-ca	Pujar camps
+upload files	filemanager	es-ca	Pujar arxius
+use new experimental filemanager?	filemanager	es-ca	¿Usar el nuevo Administrador de archivos (experimental)?
+used space	filemanager	es-ca	Espai usat
+users	filemanager	es-ca	Usuaris
+version	filemanager	es-ca	Versió
+view documents in new window	filemanager	es-ca	Veure documents en una nova finestra
+view documents on server (if available)	filemanager	es-ca	Veure documents al servidor (si està disponible)
+who	filemanager	es-ca	Qui
+you do not have access to %1	filemanager	es-ca	No teniu accés a %1
