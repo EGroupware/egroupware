@@ -438,7 +438,7 @@
 			$GLOBALS['phpgw_setup']->html->show_header(lang('Welcome to the eGroupWare Installation'),False,'config');
 			echo '<h1>'.lang('Welcome to the eGroupWare Installation')."</h1>\n";
 			echo lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.');
-			echo ,'<br /><br />'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.');
+			echo '<br /><br />'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.');
 			echo '<h3><a href="check_install.php">'.lang('Run installation tests').'</a></h3>';
 			$setup_tpl->pparse('out','T_footer');
 			exit;
