@@ -21,7 +21,10 @@
 	$setup_info['addressbook']['note']   = 'The phpgwapi manages contact data.  Addressbook manages servers for its remote capability.';
 	$setup_info['addressbook']['license']  = 'GPL';
 	$setup_info['addressbook']['description'] =
-		'Contact manager with Vcard support.';
+		'Contact manager with Vcard support.<br>
+		Addressbook is the phpgroupware default contact application. <br>
+		It makes use of the phpgroupware contacts class to store and retrieve 
+		contact information via SQL or LDAP.';
 	$setup_info['addressbook']['maintainer'] = 'Miles Lott';
 	$setup_info['addressbook']['maintainer_email'] = 'milosch@phpgroupware.org';
 
