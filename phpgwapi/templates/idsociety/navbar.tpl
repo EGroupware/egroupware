@@ -42,7 +42,7 @@
      </TD>
 	</TR>
     <TR>
-      <TD ALIGN="left" COLSPAN="2">
+      <TD ALIGN="left" width="100%">
 {user_info}&nbsp;&nbsp;{current_users}
       </TD>
     </TR>
