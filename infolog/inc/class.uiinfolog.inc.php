@@ -460,7 +460,7 @@
 			{
 				$this->tmpl->set_cell_attribute('description|links|delegation|customfields','name','description|links|delegation');
 			}
-			echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
+			//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
 				'info_type'     => $this->bo->enums['type'],
 				'info_pri'      => $this->bo->enums['priority'],
