@@ -647,7 +647,7 @@
 
 			$update .= "\n
 		\$GLOBALS['setup_info']['$app']['currentver'] = '$version';
-		return \$GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return \$GLOBALS['setup_info']['$app']['currentver'];
 	}
 ?".">\n";
 			if (!($f = fopen($file_update,'w')))
