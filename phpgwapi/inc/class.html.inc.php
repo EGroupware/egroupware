@@ -161,7 +161,7 @@ class html
 		if (!is_array($key))
 		{
 			// explode on ',' only if multiple values expected and the key contains just numbers and commas
-			$key = $multiple && ('/^[,0-9]+$/',$key) ? explode(',',$key) : array($key);
+			$key = $multiple && preg_match('/^[,0-9]+$/',$key) ? explode(',',$key) : array($key);
 		}
 		foreach($arr as $k => $text)
 		{
