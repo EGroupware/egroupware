@@ -20,7 +20,7 @@
      $phpgw->preferences->change("common","theme");
      $phpgw->preferences->commit();
      if ($phpgw_info["server"]["useframes"] != "never") {
-        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php","forward=/preferences/changetheme.php&cd=yes"));
+        Header("Location: " . $phpgw->link("changetheme.php","cd=yes"));
         Header("Window-Target: _top");
      } else {
         Header("Location: " . $phpgw->link("changetheme.php"));
