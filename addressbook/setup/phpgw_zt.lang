@@ -1,0 +1,145 @@
+%1 records imported	addressbook	zt	共有%1  筆紀錄被匯入
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zt	共有%1 筆記錄被讀取（還未被匯入，您應該前往 %2back%3 並取消「匯入測試」）
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zt	<b>沒有轉換格式 &lt;沒有&gt; 可以被指定。</b>  請從選單選取一種轉換格式
+@-eval() is only availible to admins!!!	addressbook	zt	@-eval() 只提供給管理者使用！！
+add a single entry by passing the fields.	addressbook	zt	從欄位中新增一筆資料。
+add custom field	addressbook	zt	新增自訂欄位
+address book	common	zt	通訊錄
+address book - vcard in	addressbook	zt	通訊錄 - VCard匯入
+address book - view	addressbook	zt	通訊錄 - 檢視
+address line 2	addressbook	zt	住址 2
+address line 3	addressbook	zt	住址 3
+address type	addressbook	zt	住址類型
+addressbook	common	zt	通訊錄
+addressbook preferences	addressbook	zt	通訊錄設定
+addressbook-fieldname	addressbook	zt	通訊錄-欄位名稱
+addvcard	addressbook	zt	新增VCard
+alt. csv import	addressbook	zt	Alt. CSV匯入
+are you sure you want to delete this field?	addressbook	zt	您確定要刪除這個欄位嗎？
+bbs phone	addressbook	zt	BBS電話
+birthday	common	zt	生日
+birthdays	common	zt	生日
+blank	addressbook	zt	空白
+business	common	zt	公司
+business address type	addressbook	zt	公司住址資料
+business city	addressbook	zt	公司所在縣/市
+business country	addressbook	zt	公司所在國家/地區
+business email	addressbook	zt	公司電子郵件
+business email type	addressbook	zt	公司電子郵件類型
+business fax	addressbook	zt	公司傳真
+business phone	addressbook	zt	公司電話
+business state	addressbook	zt	公司所在省/市
+business street	addressbook	zt	公司所在街道
+business zip code	addressbook	zt	公司郵遞區號
+car phone	addressbook	zt	車用電話
+cell phone	addressbook	zt	行動電話
+charset of file	addressbook	zt	檔案字元設定
+city	common	zt	縣市
+company	common	zt	公司
+company name	common	zt	公司名稱
+contact	common	zt	聯絡人
+contact application	admin	zt	聯絡人申請
+contact settings	admin	zt	聯絡人設定
+copied by %1, from record #%2.	addressbook	zt	由 %1 複製, 從記錄 #%2.
+country	common	zt	國家/地區
+csv-fieldname	addressbook	zt	CSV欄位名稱
+csv-filename	addressbook	zt	CSV檔名
+custom	addressbook	zt	自訂
+custom fields	addressbook	zt	自訂欄位
+debug output in browser	addressbook	zt	從瀏覽器輸入錯誤訊息
+default filter	addressbook	zt	預設過濾器
+delete a single entry by passing the id.	addressbook	zt	從id刪除一筆資料。
+department	common	zt	部門
+domestic	addressbook	zt	國內
+download	addressbook	zt	下載
+edit custom field	addressbook	zt	編輯自訂欄位
+edit custom fields	admin	zt	編輯自訂欄位
+empty for all	addressbook	zt	全部清除
+export contacts	addressbook	zt	匯出聯絡人
+export file name	addressbook	zt	匯出檔名
+export from addressbook	addressbook	zt	從通訊錄匯出
+extra	addressbook	zt	其他
+fax	addressbook	zt	傳真
+fax number	common	zt	傳真號碼
+field %1 has been added !	addressbook	zt	欄位 %1 已被新增！
+field %1 has been updated !	addressbook	zt	欄位 %1 已被更新！
+field name	addressbook	zt	欄位名稱
+fields to show in address list	addressbook	zt	在住址清單中顯示欄位
+fieldseparator	addressbook	zt	欄位分隔
+full name	addressbook	zt	全名
+geo	addressbook	zt	GEO
+grant addressbook access	common	zt	允許存取通訊錄
+home address type	addressbook	zt	住家住址資料
+home city	addressbook	zt	住家所在縣/市
+home country	addressbook	zt	住家所在國家/地區
+home email	addressbook	zt	住家電子郵件
+home email type	addressbook	zt	住家電子郵件類型
+home phone	addressbook	zt	住家電話
+home state	addressbook	zt	住家所在省/市
+home street	addressbook	zt	住家所在街道
+home zip code	addressbook	zt	住家郵遞區號
+import	addressbook	zt	匯入
+import contacts	addressbook	zt	匯入聯絡人
+import csv-file into addressbook	addressbook	zt	將CSV檔案匯入通訊錄
+import file	addressbook	zt	匯入檔案
+import from ldif, csv, or vcard	addressbook	zt	從LDIF, CSV, 或 VCard匯入
+import from outlook	addressbook	zt	從Outlook匯入
+import next set	addressbook	zt	匯入下一個
+international	addressbook	zt	國際
+isdn phone	addressbook	zt	ISDN電話
+label	addressbook	zt	概述
+ldap context for contacts	admin	zt	聯絡人之LDAP context
+ldap host for contacts	admin	zt	聯絡人之LDAP host
+ldap root dn for contacts	admin	zt	聯絡人之LDAP root dn
+ldap root pw for contacts	admin	zt	聯絡人之LDAP root pw
+ldif	addressbook	zt	LDIF
+line 2	addressbook	zt	Line 2
+message phone	addressbook	zt	留言電話
+middle name	addressbook	zt	Middle Name
+mobile	addressbook	zt	Mobile
+mobile phone	addressbook	zt	行動電話
+modem phone	addressbook	zt	撥接電話
+no vcard	addressbook	zt	沒有VCard
+number of records to read (%1)	addressbook	zt	讀取記錄號碼(%1)
+other number	addressbook	zt	其他號碼
+other phone	addressbook	zt	其他電話
+pager	common	zt	呼叫器
+parcel	addressbook	zt	兼職
+phone number	common	zt	電話號碼
+phone numbers	common	zt	電話號碼
+please enter a name for that field !	addressbook	zt	請輸入欄位名稱！
+postal	common	zt	郵政信箱
+pref	addressbook	zt	pref
+prefix	addressbook	zt	稱謂
+public key	addressbook	zt	Public Key
+read a list of entries.	addressbook	zt	讀取項目清單。
+read a single entry by passing the id and fieldlist.	addressbook	zt	從id及欄位清單讀取一筆資料。
+record access	addressbook	zt	記錄存取
+record owner	addressbook	zt	記錄擁有者
+retrieve contacts	admin	zt	讀取聯絡人
+select where you want to store	admin	zt	選擇您想存放的位置
+show birthday reminders on main screen	addressbook	zt	在主畫面顯示生日提示
+startrecord	addressbook	zt	開始記錄
+state	common	zt	省/市
+street	common	zt	街道
+suffix	addressbook	zt	暱稱
+test import (show importable records <u>only</u> in browser)	addressbook	zt	測試匯入？（在瀏覽器中<u>只顯示</u>可匯入的紀錄）
+that field name has been used already !	addressbook	zt	這個欄位名稱已經被使用！
+this person's first name was not in the address book.	addressbook	zt	這個人的名字沒有在通訊錄中。
+this person's last name was not in the address book.	addressbook	zt	這個人的姓氏沒有在通訊錄中。
+to many might exceed your execution-time-limit	addressbook	zt	太多可能會超過您的時間限制
+today is %1's birthday!	common	zt	今天是 %1 的生日！
+tomorrow is %1's birthday.	common	zt	明天是 %1 的生日。
+translation	addressbook	zt	轉換
+update a single entry by passing the fields.	addressbook	zt	從欄位更新一筆資料。
+use country list	addressbook	zt	使用國家清單
+vcard	common	zt	VCard
+vcards require a first name entry.	addressbook	zt	VCards需要名字資料。
+vcards require a last name entry.	addressbook	zt	Vcards需要姓氏資料。
+video phone	addressbook	zt	影像電話
+voice phone	addressbook	zt	語音電話
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zt	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
+work phone	addressbook	zt	Work Phone
+you must select a vcard. (*.vcf)	addressbook	zt	您必須選取一個vcard (*.vcf)
+you must select at least 1 column to display	addressbook	zt	您必須至少選取一個欄位才能顯示
+zip code	common	zt	郵遞區號
