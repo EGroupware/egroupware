@@ -87,8 +87,8 @@ class calendar extends calendar_
 		$this->today = $this->localdates(time());
 
 		$this->open('',intval($this->owner));
-		$this->end_repeat_day = $this->today['raw'];
-		$this->read_repeated_events($this->owner);
+//		$this->end_repeat_day = $this->today['raw'];
+//		$this->read_repeated_events($this->owner);
 		$this->set_filter();
 		$this->tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 		
@@ -212,7 +212,7 @@ class calendar extends calendar_
 	{
 		global $phpgw_info;
 
-		$weekday = date('w',mktime(0,0,0,$month,$day,$year));
+		$weekday = date('w',mktime(2,0,0,$month,$day,$year));
 
 		if ($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
 		{
@@ -875,7 +875,7 @@ class calendar extends calendar_
 		
 		for ($j=0;$j<7;$j++)
 		{
-			$date = $this->gmtdate($startdate + ($j * 24 * 3600));
+			$date = $this->gmtdate($startdate + ($j * 86400));
 			$var = Array(
 				'column_data'	=>	'',
 				'extra'		=>	''
@@ -889,19 +889,20 @@ class calendar extends calendar_
 					$cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
 				}
 				
-				if ($date['full'] == $this->today['full'])
-				{
-					$extra = ' bgcolor="'.$phpgw_info['theme']['cal_today'].'"';
-				}
-				else
+				if ($date['full'] != $this->today['full'])
 				{
 					$extra = ' bgcolor="'.$cellcolor.'"';
 				}
+				else
+				{
+					$extra = ' bgcolor="'.$phpgw_info['theme']['cal_today'].'"';
+				}
 
-				$new_event_link = '';
 				$day = $phpgw->common->show_date($date['raw'],'d');
 				$month = $phpgw->common->show_date($date['raw'],'m');
 				$year = $phpgw->common->show_date($date['raw'],'Y');
+				$date = $this->gmtdate(mktime(0,0,0,$month,$day,$year));
+				$new_event_link = '';
 				if (!$this->printer_friendly)
 				{
 					if((!!($grants[$owner] & PHPGW_ACL_ADD) == True))
@@ -910,12 +911,10 @@ class calendar extends calendar_
 						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="right">';
 						$new_event_link .= '</a>';
 					}
-//					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$owner).'">'.$date['day'].'</a>';
 					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$month.'&day='.$day.'&year='.$year.'&owner='.$owner).'">'.$day.'</a>';
 				}
 				else
 				{
-//					$day_number = $date['day'];
 					$day_number = $day;
 				}
 
@@ -972,7 +971,7 @@ class calendar extends calendar_
 							$p->set_var('link_entry','');
 						}
 
-						if (intval($phpgw->common->show_date($lr_events->datetime,'Hi')))
+						if (intval($phpgw->common->show_date($lr_events->datetime,'Hi')) || $lr_events->datetime != $lr_events->edatetime)
 						{
 							if($lr_events->datetime < $date['raw'] && $lr_events->recur_type==RECUR_NONE)
 							{
@@ -1110,8 +1109,12 @@ class calendar extends calendar_
 
 		$this->end_repeat_day = $monthend;
 		
-		$this->read_repeated_events($owner);
+		$start = $this->get_weekday_start($year, $month, 1);
 
+		$this->repeated_events = Null;
+		$this->repeating_events = Null;
+		$this->read_repeated_events($owner);
+		
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('remove');
 
@@ -1127,7 +1130,7 @@ class calendar extends calendar_
 
 		$cellcolor = $phpgw_info['theme']['row_on'];
 
-		for ($i=$this->weekstarttime;intval(date('Ymd',$i))<=$monthend;$i += (24 * 3600 * 7))
+		for ($i=intval($start);intval(date('Ymd',$i)) <= $monthend;$i += 604800)
 		{
 			$cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
 			$p->set_var('month_filler_text',$this->display_week($i,False,$cellcolor,False,$owner,$monthstart,$monthend));
@@ -1255,10 +1258,24 @@ class calendar extends calendar_
 		if (! $phpgw_info['user']['preferences']['calendar']['workdaystarts'] &&
 			 ! $phpgw_info['user']['preferences']['calendar']['workdayends'])
 		{
-
 			$phpgw_info['user']['preferences']['calendar']['workdaystarts'] = 8;
 			$phpgw_info['user']['preferences']['calendar']['workdayends']   = 16;
+			$phpgw->preferences->save_repository();
 		}
+
+		if($phpgw_info['user']['preferences']['common']['time_format'] == '12')
+		{
+			$time_width=15;
+		}
+		else
+		{
+			$time_width=9;
+		}
+		$var = Array(
+			'event_width' => (100 - $time_width),
+			'time_width'  => $time_width
+		);
+		$p->set_var($var);
 
 		$first_hour = (int)$phpgw_info['user']['preferences']['calendar']['workdaystarts'] + 1;
 		$last_hour  = (int)$phpgw_info['user']['preferences']['calendar']['workdayends'] + 1;
@@ -1385,7 +1402,7 @@ class calendar extends calendar_
 			{
 				if (!strlen($h))
 				{
-					$p->set_var('event','&nbsp;');
+					$p->set_var('event','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
 					$p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
 					$p->parse('monthweek_day','day_row_event',False);
 				}
