@@ -366,6 +366,19 @@
 	$currentver = "0.9.3pre10";
 	update_version_table();
       }
+      
+   if ($currentver == "0.9.3pre10") {
+   	$sql = "ALTER TABLE todo ADD todo_startdate int(11) not null";
+   	$db->query($sql);
+		
+		$sql "ALTER TABLE todo CHANGE todo_datedue todo_enddate int(11) not null";
+		$db->query($sql);	
+		
+		$currentver = "0.9.3pre11";
+		update_version_table();
+	}
+   
+   
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
       echo "  </tr>\n";
