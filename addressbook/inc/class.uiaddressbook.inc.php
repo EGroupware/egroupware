@@ -613,6 +613,7 @@
 
 				$referer = urlencode($fields['referer']);
 				unset($fields['referer']);
+				$fields['owner'] = $phpgw_info['user']['account_id'];
 
 				$this->bo->add_entry($fields);
 
