@@ -43,50 +43,57 @@
 			$this->contacts = CreateObject('phpgwapi.contacts');
 		}
 
+		function makeobj()
+		{
+			if(!$this->contacts)
+			{
+				$this->contacts = CreateObject('phpgwapi.contacts','0');
+			}
+		}
+
 		function read_repository()
 		{
-			global $phpgw, $phpgw_info;
-
 			$qcols = array(
-				'n_given'  => 'n_given',
-				'n_family' => 'n_family',
+				'n_given'                => 'n_given',
+				'n_family'               => 'n_family',
+				'account_lastlogin'      => 'account_lastlogin',
+				'account_lastloginfrom'  => 'account_lastloginfrom',
+				'account_lastpwd_change' => 'account_lastpwd_change',
+				'account_status'         => 'account_status'
 			);
 
 			$allValues = $this->contacts->read_single_entry($this->account_id,$qcols);
 
 			/* Now dump it into the array */
-			$this->data["account_id"]	= $allValues[0]["id"];
-			$this->data["account_lid"] 	= $allValues[0]["lid"];
-			$this->data["account_type"] = $allValues[0]["tid"];
-			$this->data["firstname"]   	= $allValues[0]["n_given"];
-			$this->data["lastname"]    	= $allValues[0]["n_family"];
-			$this->data["fullname"]    	= $allValues[0]["fn"];
-
-			$this->db->query("select * from phpgw_accounts where account_id='" . $this->data["account_id"] . "'",__LINE__,__FILE__);
-			$this->db->next_record();
-
-			$this->data["lastlogin"]         = $this->db->f("account_lastlogin");
-			$this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-			$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-			$this->data["status"]            = $this->db->f("account_status");
+			$this->data["account_id"]	     = $allValues[0]["id"];
+			$this->data["account_lid"] 	     = $allValues[0]["lid"];
+			$this->data["account_type"]      = $allValues[0]["tid"];
+			$this->data["firstname"]   	     = $allValues[0]["n_given"];
+			$this->data["lastname"]    	     = $allValues[0]["n_family"];
+			$this->data["fullname"]    	     = $allValues[0]["fn"];
+			$this->data["lastlogin"]         = $allValues[0]["account_lastlogin"];
+			$this->data["lastloginfrom"]     = $allValues[0]["account_lastloginfrom"];
+			$this->data["lastpasswd_change"] = $allValues[0]["account_lastpwd_change"];
+			$this->data["status"]            = $allValues[0]["account_status"];
+			$this->data["status"] = 'A';
 
 			return $this->data;
 		}
 
 		function save_repository()
 		{
-			global $phpgw_info, $phpgw;
-
-			$entry["fn"] 		= sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
-			$entry["n_family"]	= $this->data["lastname"];
-			$entry["n_given"]	= $this->data["firstname"];
+			$entry["id"]                        = $this->data["account_id"];
+			$entry["lid"]                       = $this->data["account_lid"];
+			$entry["tid"]                       = $this->data["account_type"];
+			$entry["fn"]                        = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
+			$entry["n_family"]                  = $this->data["lastname"];
+			$entry["n_given"]                   = $this->data["firstname"];
+			$entry["account_lastlogin"]         = $this->data["lastlogin"];
+			$entry["account_lastloginfrom"]     = $this->data["lastloginfrom"];
+			$entry["account_lastpasswd_change"] = $this->data["lastpwd_change"];
+			$entry["account_status"]    = $this->data["status"];		
 
 			$this->contacts->update($this->account_id,$entry);
-
-			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
-				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
-
 		}
 
 		function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
@@ -134,7 +141,7 @@
 				);
 
 				$this->db->query("select account_status from phpgw_accounts where account_id='" . $allValues[$i]["id"] . "'",__LINE__,__FILE__);
-				$this->db->next_record()) {
+				$this->db->next_record();
 				$accounts[$i]["account_status"] = $this->db->f("account_status");
 			}
 
@@ -143,10 +150,8 @@
 
 		function name2id($account_lid)
 		{
-			global $phpgw, $phpgw_info;
-
 			$qcols = array('id' => 'id');
-
+			$this->makeobj();
 			$allValues = $this->contacts->read(0,0,$qcols,'',"lid=".$account_lid);
 
 			if($allValues[0]['id']) {
@@ -159,10 +164,12 @@
 		function id2name($account_id)
 		{
 			global $phpgw, $phpgw_info;
-
+			$this->makeobj();
 			$allValues = $this->contacts->read_single_entry($account_id);
+			echo '<br>id2name: '.$allValues[0]['lid'];
 
 			if($allValues[0]['lid']) {
+
 				return intval($allValues[0]['lid']);
 			} else {
 				return False;
@@ -172,22 +179,23 @@
 		function get_type($accountid = '')
 		{
 			global $phpgw, $phpgw_info;
-
-	    	$account_id = get_account_id($accountid);
+			$this->makeobj();
+			$account_id = get_account_id($accountid);
 
 			$allValues = $this->contacts->read_single_entry($account_id);
 
 			if ($allValues[0]['tid']) {
 				return $allValues[0]['tid'];
-	    	} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
 
 		function exists($account_lid)
 		{
-			global $phpgw, $phpgw_info;
-
+			$this->makeobj();
 			if(gettype($account_lid) == 'integer')
 			{
 				$account_id = $account_lid;
@@ -196,13 +204,13 @@
 			}
 
 			$allValues = $this->contacts->read(0,0,$qcols,'',"lid=".$account_lid);
-			if $allValues[0]['id'])
+			if ($allValues[0]['id'])
 			{
 				return True;
 			}
 			else
 			{
-				return  False;
+				return False;
 			}
 		}
 
