@@ -125,7 +125,6 @@ group access 	common	de	Gruppenzugriff
 group public	common	de	Group Public
 groups	common	de	Gruppen
 help	common	de	Hilfe
-high	common	de	Hoch
 home	common	de	Home
 it has been more then x days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
@@ -136,7 +135,6 @@ last name	common	de	Name
 lastname	common	de	Name
 login	common	de	Login
 logout	common	de	Logout
-low	common	de	Niedrig
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 manual	common	de	Handbuch
@@ -154,7 +152,6 @@ no subject	common	de	Kein Betreff
 none	common	de	Keiner
 notes	common	de	Notizen
 note	common	de	Notiz
-normal	common	de	Normal
 november	common	de	November
 october	common	de	Oktober
 ok	common	de	OK
