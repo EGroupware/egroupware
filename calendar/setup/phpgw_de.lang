@@ -93,6 +93,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 download	calendar	de	Herunterladen
 duration	calendar	de	Dauer
+duration of the meeting	calendar	de	Dauer des Termins
 edit series	calendar	de	Serie bearbeiten
 edit single	calendar	de	Einzel bearbeiten
 email notification	calendar	de	Benachrichtigung per Email
@@ -102,6 +103,7 @@ enable	calendar	de	Einschalten
 enabled	calendar	de	eingeschaltet
 end date/time	calendar	de	Enddatum/-zeit
 enddate	calendar	de	Enddatum
+enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum und -zeit des Termins, zB. für mehr als einen Tag
 ends	calendar	de	endet
 enter output filename: ( .vcs appended )	calendar	de	Namen der Ausgabedatei (.vcs angehangen)
 event details follow	calendar	de	Details zum Termin folgen
@@ -118,6 +120,7 @@ format of event updates	calendar	de	Format der Benachrichtigungen
 fr	calendar	de	Fr
 free/busy	calendar	de	frei/belegt
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Belegtzeiten: Unbekannter Benutzername '%1', falsches Passwort oder nicht verfügbar für nicht angemeldete Benutzer !!!
+freetime search	calendar	de	Terminsuche
 frequency	calendar	de	Häufigkeit
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
@@ -138,10 +141,11 @@ holiday management	calendar	de	Feitertagsverwaltung
 holiday-management	calendar	de	Feitertagsverwaltung
 holidays	calendar	de	Feiertage
 hours	calendar	de	Stunden
+how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
 i participate	calendar	de	Ich nehme teil
 ical / rfc2445	calendar	de	iCal / RFC2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 import csv-file	common	de	CSV-Datei importieren
@@ -175,6 +179,7 @@ monthview	calendar	de	Monatsansicht
 needs javascript to be enabled !!!	calendar	de	Dafür muss Javascript aktiviert sein !!!
 new entry	calendar	de	Neuer Eintrag
 new name must not exist and not be empty!!!	calendar	de	Neuer Name darf nicht exisitieren und nicht leer sein!!!
+new search with the above parameters	calendar	de	neue Suche mit den obigen Parametern
 next day	calendar	de	nächster Tag
 no filter	calendar	de	Kein Filter
 no matches found	calendar	de	Keine Treffer gefunden
@@ -203,7 +208,11 @@ on invitation / cancelation only	calendar	de	nur bei Einladungen/Absagen
 on participant responses too	calendar	de	auch bei Antworten der Teilnehmer
 on time change of more than 4 hours too	calendar	de	bei zeitlichen Änderungen größer als 4 Stunden
 on time change of time of more than 4 hours (and above options)	calendar	de	wenn der Termin sich um mehr als 4 Stunde verschiebt (und obige Optionen)
+one month	calendar	de	ein Monat
+one week	calendar	de	eine Woche
+one year	calendar	de	ein Jahr
 open todo's:	calendar	de	unerledigte Aufgaben:
+or enddate / -time	calendar	de	oder Enddatum / -zeit
 order	calendar	de	Reihenfolge
 overlap holiday	calendar	de	überlappender Feiertag
 participant	calendar	de	Teilnehmer
@@ -252,6 +261,7 @@ sat	calendar	de	Sa
 scheduling conflict	calendar	de	Terminüberschneidung
 search results	calendar	de	Suchergebnisse
 select a %1	calendar	de	%1 auswählen
+select a time	calendar	de	eine Zeit auswählen
 selected contacts (%1)	calendar	de	Ausgewählte Kontakte (%1)
 send updates via email	common	de	Updates via E-Mail senden
 send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen via EMail
@@ -282,6 +292,8 @@ specifies the the number of intervals shown in the planner view.	calendar	de	Leg
 start date/time	calendar	de	Startdatum/-zeit
 start- and enddates	calendar	de	Start- und Enddatum/-zeit
 startdate	calendar	de	Startdatum
+startdate / -time	calendar	de	Startdatum / -zeit
+startdate and -time of the search	calendar	de	Startdatum und -zeit der Suche
 startrecord	calendar	de	Startdatensatz
 su	calendar	de	So
 submit to repository	calendar	de	Übertragen zu eGroupWare.org
@@ -308,7 +320,11 @@ this message is sent when you set an alarm for a certain event. include all info
 this month	calendar	de	Dieser Monat
 this week	calendar	de	Diese Woche
 this year	calendar	de	Dieses Jahr
+three month	calendar	de	drei Monate
 thu	calendar	de	Do
+til	calendar	de	bis
+timeframe	calendar	de	Zeitrahmen
+timeframe to search	calendar	de	Zeitrahmen für die Suche
 title	calendar	de	Titel
 title of the event	calendar	de	Titel des Termin
 title-row	calendar	de	Titelzeile
@@ -321,14 +337,18 @@ translation	calendar	de	Übersetzung
 tu	calendar	de	Di
 tue	calendar	de	Di
 two dayview	calendar	de	Zweitagesansicht
+two weeks	calendar	de	zwei Wochen
 update a single entry by passing the fields.	calendar	de	Einen einzelnen Termin über seine Felder updaten.
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
+use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Popup
 view this entry	calendar	de	Diesen Eintrag anzeigen
 we	calendar	de	Mi
 wed	calendar	de	Mi
 week	calendar	de	Woche
 weekday starts on	calendar	de	Arbeitswoche beginnt am
+weekdays	calendar	de	Werktags
+weekdays to use in search	calendar	de	Wochentage für die Suche
 weekly	calendar	de	Wöchentlich
 weekview	calendar	de	Wochenansicht
 weekview including weekend	calendar	de	Wochenansicht mit Wochenende

@@ -153,6 +153,9 @@
 				$GLOBALS['phpgw']->preferences->add('calendar','interval',30);
 				$GLOBALS['phpgw']->preferences->save_repository();
 			}
+		
+			// calendar does not work with hidden sidebox atm.
+			unset($GLOBALS['phpgw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		}
 
 		/* Public functions */
@@ -4206,9 +4209,42 @@ return;
 				{
 					$GLOBALS['phpgw']->uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
 				}
+				$fts_link = $GLOBALS['phpgw']->link('/index.php',array('menuaction'=>'calendar.uiforms.freetimesearch'));
+
+				$fields = array('start[str]','start[hour]','start[min]','end[str]','end[hour]','end[min]');
+				if ($this->bo->prefs['common']['timeformat'] == '12')
+				{
+					$fields[] = 'start[ampm]';
+					$fields[] = 'end[ampm]';
+				}
 				$var['participants'] = array(
 					'field'	=> lang('Participants'),
-					'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_select_participants',$event['participants'],'calendar+',7,$event['owner']),
+					'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_select_participants',$event['participants'],'calendar+',7,$event['owner']).'
+<script>
+	function call_freetimesearch(link,form) {
+		fields = Array("'.implode('","',$fields).'");
+		for (i=0; i < fields.length; ++i) {
+			link += "&"+fields[i]+"="+form[fields[i]].value;
+		}
+		participants = "";
+		for(n=0; n < form.length; ++n) {
+			with(form.elements[n]) {
+				if (name == "participants[]") {
+					if (form.elements[n].options) {
+						for(i=0; i < options.length; ++i) {
+							if (options[i].selected) participants += ":"+options[i].value;
+						}
+					} else if (checked) {
+						participants += ":"+value;
+					}
+				}
+			}
+		}
+		link += "&participants="+participants.slice(1);
+		window.open(link,"ft_search","width=700,height=500,scrollbars=yes,resizable=yes,status=yes");
+	}
+</script>
+						'.$this->html->submit_button('freetimesearch',/*lang(*/'freetime search'/*)*/,"call_freetimesearch('".$fts_link."',this.form); return false;",0,' title="'.$this->html->htmlspecialchars(lang('Find free timeslots where the marked participants are availible for the given timespan')).'"')
 				);
 /*
 // External Participants

@@ -719,7 +719,7 @@ class bocal
 	 *
 	 * @param $date mixed date to convert
 	 * @param $server2user_time boolean conversation between user- and server-time default False == Off
-	 * @return array with keys 'second', 'minute', 'hour', 'day', 'month', 'year', 'ras' (timestamp) and 'full' (Ymd-string)
+	 * @return array with keys 'second', 'minute', 'hour', 'day', 'month', 'year', 'raw' (timestamp) and 'full' (Ymd-string)
 	 */
 	function date2array($date,$server2user=False)
 	{

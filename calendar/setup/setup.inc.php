@@ -53,6 +53,10 @@
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.14','0.9.15','0.9.16','1.0.0','1.0.1')
 	);
+	$setup_info['calendar']['depends'][] = array(
+		 'appname' => 'etemplate',
+		 'versions' => Array('1.0.0','1.0.1')
+	);
 
 
 

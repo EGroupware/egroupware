@@ -85,6 +85,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
 download	calendar	en	Download
 duration	calendar	en	Duration
+duration of the meeting	calendar	en	Duration of the meeting
 edit series	calendar	en	Edit Series
 edit single	calendar	en	Edit Single
 email notification	calendar	en	Email Notification
@@ -94,6 +95,7 @@ enable	calendar	en	Enable
 enabled	calendar	en	enabled
 end date/time	calendar	en	End Date/Time
 enddate	calendar	en	Enddate
+enddate / -time of the meeting, eg. for more then one day	calendar	en	Enddate / -time of the meeting, eg. for more then one day
 ends	calendar	en	ends
 enter output filename: ( .vcs appended )	calendar	en	Enter Output Filename: ( .vcs appended )
 event details follow	calendar	en	Event Details Follow
@@ -110,6 +112,7 @@ format of event updates	calendar	en	Format of event updates
 fr	calendar	en	F
 free/busy	calendar	en	Free/Busy
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!
+freetime search	calendar	en	Freetime Search
 frequency	calendar	en	Frequency
 fri	calendar	en	Fri
 full description	calendar	en	Full Description
@@ -129,10 +132,11 @@ holiday management	calendar	en	Holiday Management
 holiday-management	calendar	en	Holiday-Management
 holidays	calendar	en	Holidays
 hours	calendar	en	hours
+how far to search (from startdate)	calendar	en	how far to search (from startdate)
 i participate	calendar	en	I Participate
 ical / rfc2445	calendar	en	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays falling on a weekend, are taken on the monday after.
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	en	If you dont set a password here, the information is availible to everyone, who knows the URL!!!
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you dont set a password here, the information is available to everyone, who knows the URL!!!
 ignore conflict	calendar	en	Ignore Conflict
 import	calendar	en	Import
 import csv-file	common	en	Import CSV-File
@@ -165,6 +169,7 @@ monthview	calendar	en	Month View
 needs javascript to be enabled !!!	calendar	en	Needs javascript to be enabled !!!
 new entry	calendar	en	New Entry
 new name must not exist and not be empty!!!	calendar	en	New name must not exist and not be empty!!!
+new search with the above parameters	calendar	en	new search with the above parameters
 next day	calendar	en	next day
 no filter	calendar	en	No filter
 no matches found	calendar	en	No matches found
@@ -188,7 +193,11 @@ on any time change too	calendar	en	on any time change too
 on invitation / cancelation only	calendar	en	on invitation / cancelation only
 on participant responses too	calendar	en	on participant responses too
 on time change of more than 4 hours too	calendar	en	on time change of more than 4 hours too
+one month	calendar	en	one month
+one week	calendar	en	one week
+one year	calendar	en	one year
 open todo's:	calendar	en	Open To Do Items:
+or enddate / -time	calendar	en	or Enddate / -time
 order	calendar	en	Order
 overlap holiday	calendar	en	overlap holiday
 participant	calendar	en	Participant
@@ -235,6 +244,7 @@ sat	calendar	en	Sat
 scheduling conflict	calendar	en	Scheduling Conflict
 search results	calendar	en	Search Results
 select a %1	calendar	en	Select a %1
+select a time	calendar	en	select a time
 selected contacts (%1)	calendar	en	Selected contacts (%1)
 send updates via email	common	en	Send updates via EMail
 send/receive updates via email	calendar	en	Send/Receive updates via EMail
@@ -265,6 +275,8 @@ specifies the the number of intervals shown in the planner view.	calendar	en	Spe
 start date/time	calendar	en	Start Date/Time
 start- and enddates	calendar	en	Start- and Enddates
 startdate	calendar	en	Startdate
+startdate / -time	calendar	en	Startdate / -time
+startdate and -time of the search	calendar	en	Startdate and -time of the search
 startrecord	calendar	en	Startrecord
 su	calendar	en	Su
 submit to repository	calendar	en	Submit to Repository
@@ -289,7 +301,11 @@ this message is sent when you set an alarm for a certain event. include all info
 this month	calendar	en	This Month
 this week	calendar	en	This Week
 this year	calendar	en	This Year
+three month	calendar	en	three month
 thu	calendar	en	Thu
+til	calendar	en	til
+timeframe	calendar	en	Timeframe
+timeframe to search	calendar	en	Timeframe to search
 title	calendar	en	Title
 title of the event	calendar	en	Title of the event
 title-row	calendar	en	Title-row
@@ -302,14 +318,18 @@ translation	calendar	en	Translation
 tu	calendar	en	T
 tue	calendar	en	Tue
 two dayview	calendar	en	two dayview
+two weeks	calendar	en	two weeks
 update a single entry by passing the fields.	calendar	en	Update a single entry by passing the fields.
 updated	calendar	en	Updated
 use end date	calendar	en	Use End date
+use the selected time and close the popup	calendar	en	use the selected time and close the popup
 view this entry	calendar	en	View this entry
 we	calendar	en	W
 wed	calendar	en	Wed
 week	calendar	en	Week
 weekday starts on	calendar	en	Weekday starts on
+weekdays	calendar	en	Weekdays
+weekdays to use in search	calendar	en	Weekdays to use in search
 weekly	calendar	en	Weekly
 weekview	calendar	en	Week View
 weekview including weekend	calendar	en	Weekview including weekend
