@@ -353,7 +353,7 @@
 				reset($GLOBALS['phpgw_info']['setup']['installed_langs']);
 				while(list($key, $value) = each($GLOBALS['phpgw_info']['setup']['installed_langs']))
 				{
-					$sql = "SELECT lang_name FROM $langstbl WHERE lang_id = '".$value."';";
+					$sql = "SELECT lang_name FROM $langstbl WHERE lang_id = '".$value."'";
 					$GLOBALS['phpgw_setup']->db->query($sql);
 					$GLOBALS['phpgw_setup']->db->next_record();
 					$GLOBALS['phpgw_info']['setup']['installed_langs'][$value] = $GLOBALS['phpgw_setup']->db->f('lang_name');

@@ -395,16 +395,11 @@
 			reset ($GLOBALS['phpgw_info']['setup']['installed_langs']);
 			while (list ($key, $value) = each ($GLOBALS['phpgw_info']['setup']['installed_langs']))
 			{
-				$langs_list = ($langs_list ? $langs_list . ', ' : '') . $value;
-			}
-			if(@strlen($langs_list))
-			{
-				if(substr($langs_list,0,-2) == ', ')
+				if($value)
 				{
-					$langs_list = substr($langs_list,0,-2);
+					$langs_list .= ($langs_list?', ':'') . $value;
 				}
 			}
-
 			$setup_tpl->set_var('lang_status_img',$completed);
 			$setup_tpl->set_var('lang_status_alt','completed');
 			$btn_manage_lang = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
