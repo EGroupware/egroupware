@@ -471,11 +471,13 @@
 
 			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			$user_ip = $this->getuser_ip();
+				
+			$this->account_id = $GLOBALS['phpgw']->accounts->name2id($this->account_lid);
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
 				$GLOBALS['phpgw_info']['server']['global_denied_users'][$this->account_lid] ||
 				!$GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) ||
-				$GLOBALS['phpgw']->accounts->get_type($this->account_lid) == 'g')
+				$this->account_id && $GLOBALS['phpgw']->accounts->get_type($this->account_id) == 'g')
 			{
 				$this->reason = $blocked ? 'blocked, too many attempts' : 'bad login or password';
 				$this->cd_reason = $blocked ? 99 : 5;
@@ -484,14 +486,11 @@
 				return False;
 			}
 
-			if ((!$GLOBALS['phpgw']->accounts->exists($this->account_lid)) && $GLOBALS['phpgw_info']['server']['auto_create_acct'] == True)
+			if (!$this->account_id && $GLOBALS['phpgw_info']['server']['auto_create_acct'] == True)
 			{
 				$this->account_id = $GLOBALS['phpgw']->accounts->auto_add($this->account_lid, $passwd);
 			}
-			else
-			{
-				$this->account_id = $GLOBALS['phpgw']->accounts->name2id($this->account_lid);
-			}
+
 			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
 			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
 			$this->sessionid = $this->new_session_id();
