@@ -180,7 +180,7 @@ if (! $error) {
 	$end = "'" . date("Ymd",mktime(0,0,0,$rpt_month,$rpt_day,$rpt_year))
 	     . "'";
      } else
-	$end = 'NULL';
+	$end = 0;
 
      if ($rpt_type == 'weekly') {
 	$days = ($rpt_sun?'y':'n')
