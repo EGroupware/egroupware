@@ -55,3 +55,4 @@ if (isset($FormPW) ) {
 }
 // Auth ok.
 setcookie("SetupCookie","$SetupCookie");
+?>

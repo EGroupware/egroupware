@@ -69,7 +69,7 @@
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>";
-      echo "      <form method=\"POST\" action=$PHP_SELF>\n";
+      echo "      <form method=\"POST\" action=\"$PHP_SELF\">\n";
       echo "      <input type=\"hidden\" name=\"oldversion\" value=\"".$oldversion."\">\n";
       echo "      <input type=\"hidden\" name=\"useglobalconfigsettings\">\n";
       echo "      <input type=\"submit\" name=\"action\" value=\"Upgrade\">\n";
@@ -98,7 +98,7 @@
       echo "  </tr>\n";
       echo "</table>\n";
 ?>
-      <form method="POST" action=<?php $PHP_SELF?>>
+      <form method="POST" action="<?php $PHP_SELF?>">
       <table border="0" align="center">
         <tr bgcolor="486591">
           <td colspan="2"><font color="fefefe">&nbsp;<b>Upgrade information</b></font></td>
