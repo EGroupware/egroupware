@@ -16,9 +16,9 @@
 		global $phpgw, $phpgw_info, $treemenu;
 	}
 
-	$treemenu .= '..<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">'.ucwords($appname).'|'.$phpgw->link('/'.$appname.'/help/'.$appname.'.php')."\n";
+	$treemenu[] = '..<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">'.ucwords($appname).'|'.$phpgw->link('/'.$appname.'/help/'.$appname.'.php')."\n";
 // Modify the $treemenu variables from here down.....
-	$treemenu .= '...<font face="'.$phpgw_info['theme']['font'].'">Account Management</font>|'.$phpgw->link('/'.$appname.'/help/account.php')."\n";
-	$treemenu .= '...<font face="'.$phpgw_info['theme']['font'].'">Session Management</font>|'.$phpgw->link('/'.$appname.'/help/session.php')."\n";
-	$treemenu .= '...<font face="'.$phpgw_info['theme']['font'].'">Other</font>|'.$phpgw->link('/'.$appname.'/help/other.php')."\n";
+	$treemenu[] = '...<font face="'.$phpgw_info['theme']['font'].'">Account Management</font>|'.$phpgw->link('/'.$appname.'/help/account.php')."\n";
+	$treemenu[] = '...<font face="'.$phpgw_info['theme']['font'].'">Session Management</font>|'.$phpgw->link('/'.$appname.'/help/session.php')."\n";
+	$treemenu[] = '...<font face="'.$phpgw_info['theme']['font'].'">Other</font>|'.$phpgw->link('/'.$appname.'/help/other.php')."\n";
 ?>
