@@ -118,6 +118,10 @@
 
 		function import($tsvfile,$conv_type,$private,$fcat_id)
 		{
+			if($conv_type == 'none')
+			{
+				return False;
+			}
 			include(PHPGW_APP_INC . '/import/' . $conv_type);
 
 			if($private == '')
@@ -267,7 +271,12 @@
 
 		function export($conv_type,$cat_id='')
 		{
+			if($conv_type == 'none')
+			{
+				return False;
+			}
 			include(PHPGW_APP_INC . '/export/' . $conv_type);
+
 			$buffer = array();
 			$contacts = new export_conv;
 
