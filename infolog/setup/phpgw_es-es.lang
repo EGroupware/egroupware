@@ -76,7 +76,7 @@ default filter for infolog	infolog	es-es	Filtro predeterminado para el Registro
 default status for a new log entry	infolog	es-es	Estado predeterminado para una entrada nueva en el registro
 delegation	infolog	es-es	Delegación
 delete	infolog	es-es	Eliminar
-delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	es-es	
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	es-es	Borrar todas la "sub-algo" (si no hay, las "subs" ocuparán el lugar superior cuando proceda)
 delete the entry	infolog	es-es	Eliminar la entrada
 delete this entry	infolog	es-es	eliminar esta entrada
 deletes the selected typ	infolog	es-es	elimina el tipo seleccionado
@@ -121,7 +121,7 @@ infolog - import csv-file	infolog	es-es	Registro - Importar archivo CSV
 infolog - new	infolog	es-es	Registro - Nuevo
 infolog - new subproject	infolog	es-es	Registro - Nuevo subproyecto
 infolog - subprojects from	infolog	es-es	Registro - Subproyectos de
-infolog list	infolog	es-es	
+infolog list	infolog	es-es	Lista del registro
 infolog preferences	common	es-es	Preferencias del registro
 infolog-fieldname	infolog	es-es	Registro - Nombre del Campo
 invalid filename	infolog	es-es	El nombre de archivo no es válido
@@ -159,7 +159,7 @@ offer	infolog	es-es	ofrecer
 ongoing	infolog	es-es	actuales
 only the attachments	infolog	es-es	sólo los adjuntos
 only the links	infolog	es-es	sólo los enlaces
-only up to this number of entries are displayed on the main screen.	infolog	es-es	
+only up to this number of entries are displayed on the main screen.	infolog	es-es	Sólo hasta este número de entradas se mostrarán en la pantalla principal.
 open	infolog	es-es	abrir
 optional note to the link	infolog	es-es	nota opcional para el enlace
 order	infolog	es-es	Ordenar
@@ -217,7 +217,7 @@ startdate	infolog	es-es	Fecha de inicio
 startdate enddate	infolog	es-es	Fechas de inicio y Fin
 startrecord	infolog	es-es	Comenzar grabación de registro
 status	infolog	es-es	Estado
-status ...	infolog	es-es	
+status ...	infolog	es-es	Estado...
 sub	infolog	es-es	Sub
 subject	infolog	es-es	Asunto
 task	infolog	es-es	Tareas pendientes
@@ -235,7 +235,7 @@ typ	infolog	es-es	Tipo
 typ '%1' already exists !!!	infolog	es-es	¡El tipo '%1' ya existe!
 typ \'%1\' already exists !!!	infolog	es-es	¡El tipo '%1' ya existe!
 type	infolog	es-es	Tipo
-type ...	infolog	es-es	
+type ...	infolog	es-es	Tipo...
 type of the log-entry: note, phonecall or todo	infolog	es-es	Tipo de entrada para el Registro: Nota, llamada de teléfono o tarea pendiente
 unlink	infolog	es-es	Desvincular
 upcoming	infolog	es-es	próxima
@@ -244,7 +244,7 @@ urgent	infolog	es-es	urgente
 use button to search for address	infolog	es-es	usar el botón para buscar por la dirección
 use button to search for project	infolog	es-es	usar el botón para buscar por el proyecto
 valid path on clientside<br>eg. \\\\server\\share or e:\\	infolog	es-es	Ruta válida en el cliente<br>por ej. \\servidor\recurso o e:\
-valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	Ruta válida en el cliente<br>por ej. \servidorrecurso o e:
+valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	Ruta válida en el cliente<br>por ej. servidorrecurso o e:
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs

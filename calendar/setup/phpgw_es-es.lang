@@ -73,6 +73,7 @@ disabled	calendar	es-es	desactivado
 display interval in day view	calendar	es-es	Mostrar intervalo en vista diaria
 display mini calendars when printing	calendar	es-es	Mostrar minicalendarios al imprimir
 display status of events	calendar	es-es	Mostrar estado de los eventos
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	es-es	Muestra la vista predeterminada del calendario en la página de inicio de eGroupWare
 displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	es-es	¿Mostrar la vista predeterminada en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio)?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	es-es	¿Desea que se le notifiquen citas nuevas o modificadas? Se le notificará de los cambios que haga usted mismo.<br>Puede limitar las notificaciones para sólo ciertos cambios. Cada elemento incluye toda la notificación listada encima. Todas las modificaciones incluyen cambios de título, participantes, pero no las respuestas de los participantes. Si el dueño de un evento solicitó alguna notificación, siempre obtendrá las respuestas de aceptación o rechazo del participante.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	es-es	¿Desea recibir regularmente por correo un resumen de sus citas?<br>El resumen se le enviará a su correo electrónico habitual el mismo día por la mañana o el lunes para resúmenes semanales.<br>Sólo se envía si hay citas en ese día o esa semana.
@@ -108,6 +109,7 @@ fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
 fullname of person to notify	calendar	es-es	Nombre completo de la persona a la que notificar
 generate printer-friendly version	calendar	es-es	Generar versión para impresion
+global categories	calendar	es-es	Categorías globales
 global public and group public	calendar	es-es	Público Global y grupo público
 global public only	calendar	es-es	Público global sólo
 go!	calendar	es-es	¡Adelante!

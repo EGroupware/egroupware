@@ -282,4 +282,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	es-es	fichero xml a importar
 xslt template	etemplate	es-es	Plantilla XSLT
 year	etemplate	es-es	Año
-1	etemplate	es-es	
+1	etemplate	es-es	1

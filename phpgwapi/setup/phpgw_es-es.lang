@@ -1,5 +1,5 @@
 %1 email addresses inserted	common	es-es	%1 direcciones de correo insertadas
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
 (shift-)click or drag to change value	common	es-es	Pulse mayúsculas o arrastre para cambiar el valor
 - click on any of the time parts to increase it	common	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
 - hold mouse button on any of the above buttons for faster selection.	common	es-es	- Mantenga pulsando el botón del ratón en cualquiera de los botones de arriba para una selección más rápida.
@@ -10,7 +10,7 @@
 00 (disable)	admin	es-es	00 (desactivar)
 13 (ntp)	admin	es-es	13 (ntp)
 80 (http)	admin	es-es	80 (http)
-about	common	es-es	
+about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
 about the calendar	common	es-es	Acerca del calendario
 access	common	es-es	Acceso
@@ -53,8 +53,8 @@ august	common	es-es	Agosto
 australia	common	es-es	AUSTRALIA
 austria	common	es-es	AUSTRIA
 author	common	es-es	Autor
-autohide sidebox menu's	common	es-es	
-automacally hide the sidebox menu's?	common	es-es	
+autohide sidebox menu's	common	es-es	Ocultar automáticamente los recuadros laterales
+automacally hide the sidebox menu's?	common	es-es	¿Ocultar automáticamente los recuadros laterales?
 autosave default category	common	es-es	Autograbar Categoria Predeterminada
 azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
@@ -108,9 +108,9 @@ choose the parent category	common	es-es	Elija la categoría superior
 christmas island	common	es-es	CHRISTMAS ISLAND
 clear	common	es-es	Limpiar
 clear form	common	es-es	Limpiar formulario
-click	common	es-es	
-click or mouse over to show menu's	common	es-es	
-click or mouse over to show menu's?	common	es-es	
+click	common	es-es	Pulse
+click or mouse over to show menu's	common	es-es	Pulse o mueva el ratón por encima para mostrar menús
+click or mouse over to show menu's?	common	es-es	¿Pulsar o mover el ratón por encima para mostrar menús?
 close	common	es-es	Cerrar
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
 colombia	common	es-es	COLOMBIA
@@ -143,10 +143,10 @@ denmark	common	es-es	DENMARK
 description	common	es-es	Descripción
 detail	common	es-es	Detalle
 details	common	es-es	Detalles
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	
-disable internet explorer png-image-bugfix	common	es-es	
-disable slider effects	common	es-es	
-disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	es-es	
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del script que arregla el bug de IE 5.5 y superiores para mostrar transparencias en imágenes PNG?
+disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de IE para ver imágenes PNG
+disable slider effects	common	es-es	Desactivar efectos deslizantes
+disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
 disabled	common	es-es	Deshabilitado
 display monday first	common	es-es	Mostrar el lunes primero
 display sunday first	common	es-es	Mostar el domingo primero
@@ -167,7 +167,7 @@ edit %1 category for	common	es-es	Editar %1 categoría para
 edit categories	common	es-es	Editar categorías
 edit category	common	es-es	Editar categoría
 edit user account	common	es-es	Editar Cuenta de Usuario
-egroupware api version %1	common	es-es	
+egroupware api version %1	common	es-es	eGroupWare API versión %1
 egroupware: login blocked for user '%1', ip %2	common	es-es	eGroupWare: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGYPT
 el salvador	common	es-es	EL SALVADOR
@@ -379,7 +379,7 @@ ok	common	es-es	Aceptar
 old value	common	es-es	Valor anterior
 oman	common	es-es	OMAN
 on *nix systems please type: %1	common	es-es	En sistemas *nix por favor escriba: %1
-on mouse over	common	es-es	
+on mouse over	common	es-es	Al mover el ratón por encima
 only private	common	es-es	privado solamente
 only yours	common	es-es	sólo los suyos
 open notify window	common	es-es	Abrir ventana de notificación
@@ -531,6 +531,7 @@ timetrack	preferences	es-es	Seguimiento del Tiempo
 title	common	es-es	Título
 to	common	es-es	Para
 to correct this error for the future you will need to properly set the	common	es-es	Para corregir este error para el futuro necesitará configurar adecuadamente el
+to go back to the msg list, click <a href= %1?sessionid=69211c0c32aa5581c5d69abdbcac4d64 >here</a>	common	es-es	Para volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 to go back to the msg list, click <a href= %1?sessionid=7fe5595a67d8747e64c2b92411ceaf31 >here</a>	common	es-es	
 today	common	es-es	Hoy
 todays date, eg. "%1"	common	es-es	fecha de hoy, ej. "%1"

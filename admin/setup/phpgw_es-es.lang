@@ -1,9 +1,9 @@
-%1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuario
+%1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuarios
 %1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
-(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	ll
-(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, use<br><a href="setup/" target="setup">Instalación</a> [Administrar aplicaciones] !!!)
-(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, use<br><a href="setup/" target="setup">Instalación</a> [Administrar aplicaciones] !!!)
+(to install new applications use<br><a href="setup/"?sessionid=69211c0c32aa5581c5d69abdbcac4d64 target="setup">setup</a> [manage applications] !!!)	admin	es-es	P
+(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	PAra
+(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	
 accesslog and bruteforce defense	admin	es-es	Defensa de acceso al registro y fuerza bruta
 account active	admin	es-es	Cuenta activa
 account has been created	common	es-es	La cuenta ha sido creada

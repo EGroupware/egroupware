@@ -55,6 +55,7 @@ delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada se
 department	common	es-es	Departmento
 domestic	addressbook	es-es	Doméstico
 download	addressbook	es-es	Descargar
+download export file (uncheck to debug output in browser)	addressbook	es-es	Descargar fichero exportado (desmarcar para depurar la salida en el navegador)
 e-mail	addressbook	es-es	E-Mail
 edit custom field	addressbook	es-es	Editar campo personalizado
 edit custom fields	admin	es-es	Editar campos personalizados
@@ -74,6 +75,7 @@ fieldseparator	addressbook	es-es	Separador de campos
 first name	addressbook	es-es	Nombre
 full name	addressbook	es-es	Nombre completo
 geo	addressbook	es-es	GEO
+global categories	addressbook	es-es	Categorías globales
 grant addressbook access	common	es-es	Conceder acceso a la libreta
 home address type	addressbook	es-es	Tipo de dirección particular
 home city	addressbook	es-es	Ciudad de residencia
@@ -131,7 +133,9 @@ record access	addressbook	es-es	Acceso al registro
 record owner	addressbook	es-es	Dueño del registro
 records read (not yet imported, you may go back and uncheck test import)	addressbook	es-es	registros leidos (aun no importados, usted puede volver y desmarcar Testear)
 retrieve contacts	admin	es-es	Recuperar contactos
+select all	addressbook	es-es	Seleccionar todo
 select the type of conversion	addressbook	es-es	Seleccione el tipo de conversión
+select the type of conversion:	addressbook	es-es	Seleccione el tipo de conversión
 select where you want to store	admin	es-es	Seleccione dónde desea almacenar
 show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumplea&ntilde;os en la pantalla principal
 startrecord	addressbook	es-es	Registro inicial

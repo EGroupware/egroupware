@@ -2,7 +2,7 @@
 00 (disable)	setup	es-es	00 (desactivar / recomendado)
 13 (ntp)	setup	es-es	13 (ntp)
 80 (http)	setup	es-es	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	<b>Esto creará 1 cuenta de administrador y 3 de demostración</b><br>Los nombres de usuario y contraseñas son: demo/guest, demo2/guest y demo3/guest.
 actions	setup	es-es	Acciones
 add a domain	setup	es-es	Añadir un dominio
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	es-es	Añadir usuarios creados automáticamente a este grupo (Si está vacío, se le asignará el grupo predeterminado)
@@ -61,6 +61,7 @@ charset to convert to	setup	es-es	Juego de caracteres al que convertir
 check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
+click <a href="index.php"?sessionid=69211c0c32aa5581c5d69abdbcac4d64>here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
 click <a href="index.php"?sessionid=7fe5595a67d8747e64c2b92411ceaf31>here</a> to return to setup.	setup	es-es	
 click here	setup	es-es	Pulse aquí
 completed	setup	es-es	Completado
@@ -98,7 +99,7 @@ db type	setup	es-es	Tipo de base de datos
 db user	setup	es-es	Usuario de la base de datos
 default file system space per user/group ?	setup	es-es	¿Espacio predeterminado en el sistema por usuario o grupo?
 delete	setup	es-es	Borrar
-delete all existing sql accounts, groups, acls and preferences (normaly not necessary)?	setup	es-es	
+delete all existing sql accounts, groups, acls and preferences (normaly not necessary)?	setup	es-es	¿Borrar todas las cuentas SQL existentes, ACLs y preferencias? (normalmente no es necesario)
 delete all my tables and data	setup	es-es	Elimine todas mis tablas e información
 delete all old languages and install new ones	setup	es-es	Elimine todos los idiomas antigüos e instale los nuevos
 deleting tables	setup	es-es	Eliminando Tablas
@@ -228,7 +229,7 @@ no modes available	setup	es-es	No hay modos disponibles
 no mysql support found. disabling	setup	es-es	No se encontró soporte para MySQL Desactivando.
 no oracle-db support found. disabling	setup	es-es	No se encontró soporte para Oracle. Desactivando.
 no postgres-db support found. disabling	setup	es-es	No se encontró soporte para PostgreSQL. Desactivando.
-no postgresql support found. disabling	setup	es-es	
+no postgresql support found. disabling	setup	es-es	No se encontró soporte para PostgreSQL. Desactivando.
 no xml support found. disabling	setup	es-es	No se encontró soporte para XML. Desactivando.
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	es-es	No todos los algoritmos y modos de mcrypt funcionan con eGroupWare. Si tiene problemas, intente desactivarlo.
 not complete	setup	es-es	sin completar
@@ -356,7 +357,7 @@ this should be around 30 bytes in length.<br>note: the default has been randomly
 this stage is completed<br>	setup	es-es	Esta fase está completada<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	es-es	Esto creará 1 cuenta de administrador y 3 cuentas de demostración<br>Los nombres de usuario y contraseñas son: demo/guest, demo2/guest and demo3/guest.<br><b>¡¡¡ESTO ELIMINARÁ TODAS LAS CUENTAS EXISTENTES!!!</b><br>
 to a version it does not know about	setup	es-es	a una versión que no conoce
-to setup 1 admin account and 3 demo accounts.	setup	es-es	
+to setup 1 admin account and 3 demo accounts.	setup	es-es	Para configurar una cuenta de administrador y 3 de invitado
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	es-es	para configurar 1 cuenta de administrador y 3 cuentas de demonstración.<br><b>Esto eliminará todas las cuentas existentes</b>
 top	setup	es-es	parte superior
 translations added	setup	es-es	Traducciones añadidas
@@ -407,7 +408,7 @@ you appear to have mysql support enabled	setup	es-es	Parece que tiene activado e
 you appear to have oracle support enabled	setup	es-es	Parece que tiene activado el soporte Oracle
 you appear to have oracle v8 (oci) support enabled	setup	es-es	Parece que tiene activado el soporte Oracle V8 (OCI)
 you appear to have postgres-db support enabled	setup	es-es	Parece que tiene activado el soporte Postgre-DB
-you appear to have postgresql support enabled	setup	es-es	
+you appear to have postgresql support enabled	setup	es-es	Parece que tiene activado el soporte PostgreSQL
 you appear to have xml support enabled	setup	es-es	Parece que tiene activado el soporte XML
 you are ready for this stage, but this stage is not yet written.<br>	setup	es-es	Está listo para esta fase, pero esta fase aún no está escrita.<br>
 you didn't enter a config password for domain %1	setup	es-es	No introdujo una contraseña de configuración para el dominio %1
