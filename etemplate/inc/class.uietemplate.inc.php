@@ -228,6 +228,9 @@
 			//echo "process_exec($this->name) content ="; _debug_array($content);
 			$this->process_show($content,$session_data['to_process'],'exec');
 
+			$GLOBALS['phpgw_info']['etemplate']['loop'] |= !$this->canceled &&
+				count($GLOBALS['phpgw_info']['etemplate']['validation_errors']) > 0;	// set by process_show
+
 			//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
 			//echo "process_exec($this->name) session_data[changes] ="; _debug_array($session_data['changes']);
 			$content = $this->complete_array_merge($session_data['changes'],$content);
@@ -606,8 +609,9 @@
 					{
 						$cell_options = $cell['type'] == 'int' ? 5 : 8;
 					}
+					$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 					// fall-through
-				case 'text':		// size: [length][,maxLength]
+				case 'text':		// size: [length][,maxLength[,preg]]
 					if ($readonly)
 					{
 						$html .= $this->html->bold(htmlspecialchars($value));
@@ -616,20 +620,36 @@
 					{
 						$html .= $this->html->input($form_name,$value,'',
 							$options.$this->html->formatOptions($cell_options,'SIZE,MAXLENGTH'));
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+						$cell_options = explode(',',$cell_options,3);
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  array(
+							'type'      => $cell['type'],
+							'maxlength' => $cell_options[1],
+							'needed'    => $cell['needed'],
+							'preg'      => $cell_options[2],
+							'min'       => $min,	// int and float only
+							'max'       => $max,
+						);
 					}
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					$html .= $this->html->textarea($form_name,$value,
 						$options.$this->html->formatOptions($cell_options,'ROWS,COLS'));
 					if (!$readonly)
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					{
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  array(
+							'type'      => $cell['type'],
+							'needed'    => $cell['needed'],
+						);
+					}
 					break;
 				case 'htmlarea':	// Multiline formatted Text Input, size: [inline styles for the widget]
 					if (!$readonly)
 					{
 						$html .= $this->html->htmlarea($form_name,$value,$cell_options);
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  array(
+							'type'      => $cell['type'],
+							'needed'    => $cell['needed'],
+						);
 					}
 					else
 					{
@@ -682,6 +702,7 @@
 					}
 					break;
 				case 'button':
+				case 'cancel':	// cancel button
 					list($app) = explode('.',$this->name);
 					list($img,$ro_img) = explode(',',$cell_options);
 					$title = strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label);
@@ -710,7 +731,13 @@
 					}
 					$extra_label = False;
 					if (!$readonly)
+					{
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+						if (strtolower($name) == 'cancel')
+						{
+							$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'cancel';
+						}
+					}
 					break;
 				case 'hrule':
 					$html .= $this->html->hr($cell_options);
@@ -972,6 +999,11 @@
 					return $this->html->a_href($html,$extra_link,'',$help != '' ? $options : '');
 				}
 			}
+			// if necessary show validation-error behind field
+			if (isset($GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name]))
+			{
+				$html .= ' <font color="red">'.$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name].'</font>';
+			}
 			return $html;
 		}
 
@@ -999,6 +1031,8 @@
 			}
 			$content_in = $cname ? array($cname => $content) : $content;
 			$content = array();
+			$GLOBALS['phpgw_info']['etemplate']['validation_errors'] = array();
+			$this->canceled = False;
 
 			foreach($to_process as $form_name => $type)
 			{
@@ -1034,14 +1068,62 @@
 						}
 						$this->set_array($content,$form_name,$value);
 						break;
+					case 'int':
+					case 'float':
 					case 'text':
 					case 'textarea':
 						if (isset($value))
 						{
 							$value = stripslashes($value);
 						}
+						if ($value === '' && $attr['needed'])
+						{
+							$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang('Field must not be empty !!!',$value);
+						}
+						if ((int) $attr['maxlength'] > 0 && strlen($value) > (int) $attr['maxlength'])
+						{
+							$value = substr($value,0,(int) $attr['maxlength']);
+						}
+						if ($attr['preg'] && !preg_match($attr['preg'],$value))
+						{
+							switch($type)
+							{
+								case 'int':
+									$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' is not a valid integer !!!",$value);
+									break;
+								case 'float':
+									$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' is not a valid floatingpoint number !!!",$value);
+									break;
+								default:
+									$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' has an invalid format !!!",$value);
+									break;
+							}
+						}
+						elseif ($type == 'int' || $type == 'float')	// cast int and float and check range
+						{
+							if ($value !== '' || $attr['needed'])	// empty values are Ok if needed is not set
+							{
+								$value = $type == 'int' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
+
+								if (!empty($attr['min']) && $value < $attr['min'])
+								{
+									$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang("Value has to be at least '%1' !!!",$attr['min']);
+									$value = $type == 'int' ? (int) $attr['min'] : (float) $attr['min'];
+								}
+								if (!empty($attr['max']) && $value > $attr['max'])
+								{
+									$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang("Value has to be at maximum '%1' !!!",$attr['max']);
+									$value = $type == 'int' ? (int) $attr['max'] : (float) $attr['max'];
+								}
+							}
+						}
 						$this->set_array($content,$form_name,$value);
 						break;
+					case 'cancel':	// cancel button ==> dont care for validation errors
+						if ($value)
+						{
+							$this->canceled = True;
+						}
 					case 'button':
 						if ($value)
 						{
@@ -1068,8 +1150,7 @@
 						$name = array_shift($parts);
 						$index  = count($parts) ? '['.implode('][',$parts).']' : '';
 						$value = array();
-						$parts = array('tmp_name','type','size','name');
-						while (list(,$part) = each($parts))
+						foreach(array('tmp_name','type','size','name') as $part)
 						{
 							$value[$part] = is_array($_FILES[$name]) ? $this->get_array($_FILES[$name],$part.$index) : False;
 						}
@@ -1093,7 +1174,12 @@
 			if (is_int($this->debug) && $this->debug >= 2 || $this->debug == $this->name && $this->name)
 			{
 				echo "<p>process_show($this->name) end: content ="; _debug_array($content);
+				if (count($GLOBALS['phpgw_info']['etemplate']['validation_errors']))
+				{
+					echo "<p>validation_errors = "; _debug_array($GLOBALS['phpgw_info']['etemplate']['validation_errors']);
+				}
 			}
+			return count($GLOBALS['phpgw_info']['etemplate']['validation_errors']);
 		}
 
 		/*!

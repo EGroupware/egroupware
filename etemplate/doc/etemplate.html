@@ -278,7 +278,7 @@ with the content the user put into the fields of the dialog.</p>
 		even submit the form back to the user if for a address-selection a search for a pattern has to be performed and the matches
 		are shown to the user. In this case the callback is NOT called. The same is true if an int field contains letters or is not
 		within the minimum or maximum set. <i>Not all of the is allready working, it will follow in the next days/weeks.</i><br>
-		For the specialist process_exec uses $GLOBALS['HTTP_POST_VARS'] and ignores HTTP_GET_VARS set as query in the url.
+		For the specialist process_exec uses $_POST and ignores $_GET set as query in the url.
 	<li>the so_sql function data_merge, copies all values from $content, which are columns in the db-table, in our internal data array.
 		Values which are not real data, like buttons pressed are not copied (!).
 	<li>if $content['save'] is set, the [Save] button has been pressed ('save' is the name NOT the label of the save button), in that

@@ -49,7 +49,7 @@
 				),
 				'text' => array(
 					'.name' => 'textbox',
-					'size' => 'size,maxlength'
+					'size' => 'size,maxlength,validator'
 				),
 				'textarea' => array(
 					'.name' => 'textbox',

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.validation-test" template="" lang="" group="" version="" border="0" spacing="0" padding="0">
+		<columns>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<textbox size="10" maxlength="10" validator="/^[A-Z]+/" label="Text (&lt;= 10 chars, has to start with capital letter)" id="text"/>
+			</row>
+			<row>
+				<int options="-15,5" label="Integer (-15 &lt;= x &lt;= 5)" id="integer" needed="1"/>
+			</row>
+			<row>
+				<textbox type="float" min="-1.5" max="3.5" label="Floatingpoint (-1.5 &lt;= x &lt;= 3.5)" id="float"/>
+			</row>
+			<row>
+				<hbox>
+					<button label="Save" id="save"/>
+					<button label="Cancel" id="cancel"/>
+				</hbox>
+			</row>
+		</rows>
+	</grid>
+</overlay>

@@ -235,7 +235,6 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		If checked (xml-attr: needed="1") the etemplates will reprompt the user if he left
 		the widget / field empty.<br>
-		<i>This is not yet implemented, but should be filled if applicable.</i>
 	</td>
 </tr>
 <tr>
@@ -392,9 +391,10 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		<b>a single-line input field for text</b><br>
 		In the html-UI this is rendered as &lt;input ...><p>
-		<b>Options</b> has 2 comma-separated fields:<br>
+		<b>Options</b> has 3 comma-separated fields:<br>
 		xml: <b>size</b>: the length in chars of the input-field<br>
-		xml: <b>maxlength</b>: the maximum length of the input
+		xml: <b>maxlength</b>: the maximum length of the input<br>
+		xml: <b>validator</b>: perl regular expression to validate the input (kommas are allowed in the expression)
 	</td>
 </tr>
 <tr>
@@ -404,11 +404,11 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>int</td>
 	<td>
 		<b>a input-field to enter an integer</b><br>
-		In the html-UI this is rendered as &lt;input ...>. <i>There are no checks implemented at the moment,
-		but the will come in the near future.</i><p>
+		In the html-UI this is rendered as &lt;input ...>. <i>The input-validation is done at the moment only on server-side,
+		clientside validation and input-restriction to only numbers is planed.</i><p>
 		<b>Options</b> has 3 comma-separated fields:<br>
-		xml: <b>min</b>: minimum value, default none<br>
-		xml: <b>max</b>: maximum value, default none<br>
+		xml: <b>min</b>: minimum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br>
+		xml: <b>max</b>: maximum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br>
 		xml: <b>size</b>: the length in chars of the input-field, default 5
 	</td>
 </tr>
@@ -419,11 +419,11 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>float</td>
 	<td>
 		<b>a input-field to enter a float</b><br>
-		In the html-UI this is rendered as &lt;input ...>. <i>There are no checks implemented at the moment,
-		but the will come in the near future.</i><p>
+		In the html-UI this is rendered as &lt;input ...>. <i>The input-validation is done at the moment only on server-side,
+		clientside validation and input-restriction to only numbers is planed.</i><p>
 		<b>Options</b> has 3 comma-separated fields:<br>
-		xml: <b>min</b>: minimum value, default none<br>
-		xml: <b>max</b>: maximum value, default none<br>
+		xml: <b>min</b>: minimum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br>
+		xml: <b>max</b>: maximum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br>
 		xml: <b>size</b>: the length in chars of the input-field, default 5
 	</td>
 </tr>

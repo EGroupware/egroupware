@@ -9,6 +9,9 @@
 %s notranslation		en	%s NoTranslation
 %s onchange		en	%s onChange
 %s readonly		en	%s readonly
+'%1' has an invalid format !!!	etemplate	en	'%1' has an invalid format !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floatingpoint number !!!
+'%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer !!!
 a pattern to be searched for		en	a pattern to be searched for
 add a new column (after the existing ones)		en	Add a new column (after the existing ones)
 add a new multi-column index		en	Add a new multi-column index
@@ -109,6 +112,7 @@ exchange this two columns		en	exchange this two columns
 export the loaded etemplate into a xml-file		en	export the loaded eTemplate into a xml-file
 export xml		en	Export XML
 extensions loaded:		en	Extensions loaded:
+field must not be empty !!!	etemplate	en	Field must not be empty !!!
 file		en	File
 file contains more than one etemplate, last one is shown !!!		en	File contains more than one eTemplate, last one is shown !!!
 file writen		en	File writen
@@ -267,6 +271,8 @@ update a single entry by passing the fields.		en	Update a single entry by passin
 update from version '%s' to		en	Update from Version '%s' to
 upload		en	Upload
 value		en	Value
+value has to be at least '%1' !!!	etemplate	en	Value has to be at least '%1' !!!
+value has to be at maximum '%1' !!!	etemplate	en	Value has to be at maximum '%1' !!!
 vbox		en	VBox
 version		en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)		en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
