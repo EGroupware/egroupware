@@ -8,25 +8,26 @@
 a	calendar	sl	a
 accept	calendar	sl	Sprejmi
 accepted	calendar	sl	Sprejeto
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sl	Dejanje, ki je povzročilo obvestilo: Dodano, Prekinjeno, Sprejeto, Zavrneno,...
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sl	Dejanje, ki je sprožilo obvestilo: Dodano, Prekinjeno, Sprejeto, Zavrnjeno,...
 add a single entry by passing the fields.	calendar	sl	Dodaj zapis z vnosom polj.
-add alarm	calendar	sl	Dodaj alarm
+add alarm	calendar	sl	Dodaj opomnik
 add contact	calendar	sl	Dodaj kontakt
 add or update a single entry by passing the fields.	calendar	sl	Dodaj ali spremeni zapis z vnosom polj.
 added	calendar	sl	Dodano
 address book	calendar	sl	Imenik
-alarm	calendar	sl	Alarm
-alarm for %1 at %2 in %3	calendar	sl	Alarm za %1 ob %2 v %3
-alarm management	calendar	sl	Upravljanje alarma
-alarm-management	calendar	sl	Upravljanje alarma
-alarms	calendar	sl	Alarmi
+alarm	calendar	sl	Opomnik
+alarm for %1 at %2 in %3	calendar	sl	Opomnik za %1 ob %2 v %3
+alarm management	calendar	sl	Upravljanje opomnikov
+alarm-management	calendar	sl	Upravljanje opomnikov
+alarms	calendar	sl	Opomniki
+all categories	calendar	sl	Vse kategorije
 all day	calendar	sl	Ves dan
 are you sure you want to delete this country ?	calendar	sl	Ali ste prepričani, da želite izbrisati to državo?
 are you sure you want to delete this holiday ?	calendar	sl	Ali ste prepričani, da želite izbrisati ta praznik?
-are you sure\nyou want to\ndelete these alarms?	calendar	sl	Ali ste prepričani, da želite izbrisati te alarme?
-are you sure\nyou want to\ndelete this entry ?	calendar	sl	Ali ste prepričani, da želite izbrisati ta zapis?
+are you sure\nyou want to\ndelete these alarms?	calendar	sl	Ali ste prepričani,\nda želite\nizbrisati te opomnike?
+are you sure\nyou want to\ndelete this entry ?	calendar	sl	Ali ste prepričani,\nda želite\nizbrisati ta zapis?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	sl	Ali ste prepričani\n, da želite izbrisati ta zapis?\n\nTo bo izbrisalo\nta zapis za vse uporabnike.
-are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	sl	Ali ste prepričani,\nda želite izbrisati edino pojavo zapisa?\nTo bo izbrisalo\nta zapis za vse uporabnike.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	sl	Ali ste prepričani,\nda želite izbrisati edini dogodek?\nTo bo izbrisalo\nta zapis za vse uporabnike.
 before the event	calendar	sl	pred dogodkom
 brief description	calendar	sl	Kratek opis
 business	calendar	sl	Služba
@@ -43,7 +44,7 @@ canceled	calendar	sl	Razveljavljeno
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	sl	Spremeni vse dogodke za $params['old_owner'] v $params['new_owner'].
 change status	calendar	sl	Spremeni status
 charset of file	calendar	sl	Kodna tabela datoteke
-click %1here%2 to return to the calendar.	calendar	sl	Klikni %1tukaj%2 za vrnitev na kolendar.
+click %1here%2 to return to the calendar.	calendar	sl	Klikni %1tukaj%2 za vrnitev v kolendar.
 configuration	calendar	sl	Konfiguracija
 countries	calendar	sl	Države
 country	calendar	sl	Država
@@ -61,26 +62,31 @@ default appointment length (in minutes)	calendar	sl	privzeta dolžina sestanka (
 default calendar filter	calendar	sl	Privzeti koledarski filter
 default calendar view	calendar	sl	Privzeti pogled koledarja
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sl	Privzeta dolžina novih dogodkov. Dolžina se meri v minutah, npr. 60 minut za 1 uro.
+default week view	calendar	sl	Privzeti tedenski pogled
 defines the size in minutes of the lines in the day view.	calendar	sl	Nastavi velikost vrstic (v minutah) v dnevnem pogledu.
 delete a single entry by passing the id.	calendar	sl	Izbriši posamezen zapis podan s šifro.
 delete an entire users calendar.	calendar	sl	Izbriši celoten uporabnikov koledar.
 delete selected contacts	calendar	sl	Izbriši izbrane kontakte
+delete selected participants	calendar	sl	Izbriši izbrane soudeležence
 delete series	calendar	sl	Izbriši serijo
 delete single	calendar	sl	Izbriši posamezno
 deleted	calendar	sl	Izbrisano
 description	calendar	sl	Opis
+determining window width ...	calendar	sl	Ugotavljam širino okna ...
 disable	calendar	sl	Onemogoči
 disabled	calendar	sl	onemogočen
 display interval in day view	calendar	sl	Pokaži interval v dnevnem pogledu
-display mini calendars when printing	calendar	sl	Prikaži majhne koledarje med printanjem
+display mini calendars when printing	calendar	sl	Pri tiskanju prikaži majhne koledarje
 display status of events	calendar	sl	Pokaži statuse dogodkov
+displayed view	calendar	sl	prikazan pogled
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	sl	Prikaži vaš privzeti koledar na začetni strani.
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	sl	Prika�e tvoj privzeti pogled koledarja na za&#269;etni strani (stran, ki je vidna, ko vstopi� v eGroupWare oz. ko klikne� na ikono Domov).
+do you want a weekview with or without weekend?	calendar	sl	Želite tedenski pogled z ali brez vikendov?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sl	Ali želite biti obveščeni o novih ali spremenjenih sestankih? O spremembah, ki jih naredite, ne boste obveščeni.<br>Obvestila lahko omejite samo na določene spremembe. Vsak element vključuje vsa obvestila našteta nad njimi. Vse spremembe vključujejo spremembo naslova, opisa, udeležencev, ne pa tudi odgovorov udeležencev. Če avtor dogodka zahteva katerokoli obvestilo, bo vedno dobil pozivne in negativne odgovore udeležencev.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sl	Ali želite prejemati povzetke sestankov po E-pošti?<br>Povzetki se pošiljajo na vaš običajni elektronski naslov vsako jutro tistega dne ali v ponedeljek v primeru tedenskih poročil.<br>Poslano je samo v primeru, če imate kake sestanke tisti dan oz. tisti teden.
 do you wish to autoload calendar holidays files dynamically?	admin	sl	Ali želite, da se dela prosti dnevi naložijo samodejno?
 download	calendar	sl	Prenos
 duration	calendar	sl	Trajanje
+duration of the meeting	calendar	sl	Trajanje sestanka
 edit series	calendar	sl	Uredi serije
 edit single	calendar	sl	Uredi posamezno
 email notification	calendar	sl	Obveščanje po E-pošti
@@ -90,6 +96,7 @@ enable	calendar	sl	Omogoči
 enabled	calendar	sl	omogočen
 end date/time	calendar	sl	Končni datum/čas
 enddate	calendar	sl	Končni datum
+enddate / -time of the meeting, eg. for more then one day	calendar	sl	Končni datum / -čas sestanka, npr. za več kot en dan
 ends	calendar	sl	konča
 enter output filename: ( .vcs appended )	calendar	sl	Vnesite ime datoteke: (.vcs se pripne)
 event details follow	calendar	sl	Sledijo podrobnosti dogodka
@@ -98,19 +105,21 @@ export	calendar	sl	Izvoz
 export a list of entries in ical format.	calendar	sl	Izvozi seznam zapisov v iCal formatu.
 extended	calendar	sl	Razširjen
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sl	Razširjeni popravki vedno vključujejo popolne podrobnosti o dogodku. iCal-ovi dogodki se lahko uvozijo preko drugih aplikacij koledarja.
-external participants	calendar	sl	Zunanji udeleženci
+external participants	calendar	sl	Soudeleženci
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	sl	Pošiljanje obvestila %2 naslovniku '%1' (naslov='%3', pošiljatelj='%4') ni uspelo!
 fieldseparator	calendar	sl	Ločilo polj
+find free timeslots where the marked participants are availible for the given timespan	calendar	sl	Poišči proste termine za označene soudeležence za določeno časovno obdobje
 firstname of person to notify	calendar	sl	Ime osebe, ki jo obveščamo
 format of event updates	calendar	sl	Format popravkov dogodka
 fr	calendar	sl	P
 free/busy	calendar	sl	Prost/Zaseden
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sl	Prost/Zaseden: Neznani uporabnik '%1', napačno geslo ali pa ni na voljo neprijavljenim uporabnikom!
+freetime search	calendar	sl	Iskanje prostega termina
 frequency	calendar	sl	Pogostost
 fri	calendar	sl	Pet
 full description	calendar	sl	Polni opis
 fullname of person to notify	calendar	sl	Polno ime osebe, ki jo obveščamo
-generate printer-friendly version	calendar	sl	Generiraj tiskalniku prijazno različico
+generate printer-friendly version	calendar	sl	Pripravi tiskalniku prijazno različico
 global categories	calendar	sl	Globalne kategorije
 global public and group public	calendar	sl	Globalna in skupinska publika
 global public only	calendar	sl	Samo globalna publika
@@ -125,96 +134,105 @@ holiday management	calendar	sl	Urejanje praznikov
 holiday-management	calendar	sl	Urejanje praznikov
 holidays	calendar	sl	Prazniki
 hours	calendar	sl	ure
+how far to search (from startdate)	calendar	sl	kako daleč od začetnega datuma naj iščem
 i participate	calendar	sl	Se udeležujem
 ical / rfc2445	calendar	sl	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	sl	Če označeno, potem se praznik s konca tedna prenese na ponedeljek.
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	sl	Če ne tukaj ne nastavite gesla, bo informacija dostopna vsakemu, ki pozna URL naslov!
-ignore conflict	calendar	sl	Ignoriraj konflikt
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sl	Če tukaj ne vnesete gesla, bo informacija na voljo vsem, ki poznajo URL!!!
+ignore conflict	calendar	sl	Prezri navzkrižje
 import	calendar	sl	Uvoz
 import csv-file	common	sl	Uvozi CSV datoteko
-import csv-file into calendar	calendar	sl	Uvozio CSV-datoteko v kolendar
 interval	calendar	sl	Interval
 intervals in day view	calendar	sl	Intervali v dnevnem pogledu
-intervals per day in planner view	calendar	sl	Intervali na dan v načrtovalnem pogledu
+intervals per day in planner view	calendar	sl	Intervali na dan v pogledu načrtovalca
 invalid entry id.	calendar	sl	Napačna šifra zapisa
 last	calendar	sl	zadnji
 lastname of person to notify	calendar	sl	Priimek osebe, ki jo obveščamo
 length shown<br>(emtpy for full length)	calendar	sl	Prikazana dolžina<br>(pustite prazno za polno dolžino)
-length<br>(<= 255)	calendar	sl	Dolžina<br>(manjša od 255)
+length<br>(<= 255)	calendar	sl	Dolžina<br>(krajša od 255)
 link	calendar	sl	Povezava
 link to view the event	calendar	sl	Povezava na ogled dogodka
 list all categories.	calendar	sl	Izpis vseh kategorij
-load [iv]cal	calendar	sl	Prenesi [iv]Cal
+load [iv]cal	calendar	sl	Naloži [iv]Cal
 location	calendar	sl	Lokacija
-location to autoload from	admin	sl	Lokacija za samoprenos iz
-make freebusy information availible to not loged in persons?	calendar	sl	Naredi, da bo informacija Prost/Zasedeben na voljo neprijavljenim uporabnikom.
+location to autoload from	admin	sl	Lokacija za samodejni prenos iz
+make freebusy information available to not loged in persons?	calendar	sl	Določim informacijo prost/zaseden na voljo tudi za neprijavljene uporabnike?
 matrixview	calendar	sl	Matrični pogled
 minutes	calendar	sl	minut
 mo	calendar	sl	P
-modified	calendar	sl	Popravljen
-modify list of external participants	calendar	sl	Popravi seznam zunanjih udeležencev
+modified	calendar	sl	Spremenjeno
+modify list of external participants	calendar	sl	Spremeni seznam soudeležencev
 mon	calendar	sl	Pon
 month	calendar	sl	Mesec
 monthly	calendar	sl	Mesečno
 monthly (by date)	calendar	sl	Mesečno (po datumu)
 monthly (by day)	calendar	sl	Mesečno (po dnevu)
 monthview	calendar	sl	Mesečni pogled
+needs javascript to be enabled !!!	calendar	sl	JavaScript mora biti omogočen!!!
 new entry	calendar	sl	Nov zapis
-new name must not exist and not be empty!!!	calendar	sl	Novo ime ne sme obstajati in in ne sme biti prazno!
+new name must not exist and not be empty!!!	calendar	sl	Novo ime že obstaja ali pa je polje prazno!!!
+new search with the above parameters	calendar	sl	novo iskanje z zgornjimi parametri
+next day	calendar	sl	naslednji dan
+no filter	calendar	sl	Brez filtra
 no matches found	calendar	sl	Ni zadetkov
 no response	calendar	sl	Ni odgovora
-notification messages for added events	calendar	sl	Obvestila za dodane dogodke
-notification messages for canceled events	calendar	sl	Obvestila za preklicane dogodke
-notification messages for modified events	calendar	sl	Obvestila za popravljene dogodke
-notification messages for your alarms	calendar	sl	Obvestila za alarme
-notification messages for your responses	calendar	sl	Obvestila za tvoje odgovore
-number of intervals per day in planner view	calendar	sl	Število intervalov na dan in načrtovalnem pogledu
+notification messages for added events	calendar	sl	Sporočilo ob dodanih dogodkih
+notification messages for canceled events	calendar	sl	Sporočilo ob preklicanih dogodkih
+notification messages for modified events	calendar	sl	Sporočilo ob spremenjenih dogodkih
+notification messages for your alarms	calendar	sl	Sporočilo ob vaših opomnikih
+notification messages for your responses	calendar	sl	Sporočilo ob vaših odgovorih
+number of intervals per day in planner view	calendar	sl	Število dnevnih intervalov v načrtovalcu
 number of months	calendar	sl	Število mesecev
 number of records to read (%1)	calendar	sl	Število zapisov za branje (%1)
-number of records to read (<=200)	calendar	sl	�tevilka zapisov za branje(<=200)
 observance rule	calendar	sl	Pravilo opazovanja
-occurence	calendar	sl	Pojavitev
+occurence	calendar	sl	Dogodek
 old startdate	calendar	sl	Star datum začetka
 olddate	calendar	sl	Star datum
-on %1 %2 %3 your meeting request for %4	calendar	sl	%1 %2 %3 tvoja zahteva za srečanje za %4
+on %1 %2 %3 your meeting request for %4	calendar	sl	%1 %2 %3 vaša zahteva za srečanje za %4
 on all changes	calendar	sl	ob vseh spremembah
 on all modification, but responses	calendar	sl	ob vseh spremembah, ampak ne odgovorih
-on any time change too	calendar	sl	tudi ob vsakem času
-on invitation / cancelation only	calendar	sl	samo ob povabilu / ob preklicu
-on participant responses too	calendar	sl	ob odgovoru udeležencev
+on any time change too	calendar	sl	tudi ob vsaki spremembi časa
+on invitation / cancelation only	calendar	sl	samo ob povabilu / preklicu
+on participant responses too	calendar	sl	ob odgovoru soudeležencev
 on time change of more than 4 hours too	calendar	sl	ob spremembi časa za več kot 4 ure
+one month	calendar	sl	en mesec
+one week	calendar	sl	en teden
+one year	calendar	sl	eno leto
+only the initial date of that recuring event is checked!	calendar	sl	Označen bo samo začetni datum ponovitve dogodka!
 open todo's:	calendar	sl	Odpri ToDo-je:
-order	calendar	sl	Uredi
+or enddate / -time	calendar	sl	oziroma končni datum /-čas
+order	calendar	sl	Razvrsti
 overlap holiday	calendar	sl	prekrivajoči se prazniki
 participant	calendar	sl	Udeleženec
 participants	calendar	sl	Udeleženci
 participates	calendar	sl	Udeležuje
-password for not loged in users to your freebusy information?	calendar	sl	Geslo za vaše Prost/Zaseden informacije za uporabnike, ki niso prijavljeni?
-people holiday	calendar	sl	posameznikovi prazniki
-permission denied	calendar	sl	Dovoljenje zavrnjeno
+password for not loged in users to your freebusy information?	calendar	sl	Geslo za vaše informacije Prost/Zaseden za uporabnike, ki niso prijavljeni?
+people holiday	calendar	sl	narodni prazniki
+permission denied	calendar	sl	Dostop zavrnjen
 planner	calendar	sl	Načrtovalec
 planner by category	calendar	sl	Načrtovalec po kategoriji
 planner by user	calendar	sl	Načrtovalec po uporabniku
-please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	sl	Prosim potrdite, sprejmite, odklonite ali preglejte spremembe v v ustreznem zapisu v tvojem koledarju
-please enter a filename !!!	calendar	sl	prosim vnesite ime datoteke!
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	sl	Potrdite, sprejmite, odklonite ali preglejte spremembe v v ustreznem zapisu v vašem  koledarju
+please enter a filename !!!	calendar	sl	vnesite ime datoteke!
 preselected group for entering the planner	calendar	sl	Predoznačena skupina za vstop v načrtovalec
-print calendars in black & white	calendar	sl	Natisni koledarje v črnobelem tisku
+previous day	calendar	sl	prejšnji dan
+print calendars in black & white	calendar	sl	Natisni koledarje v črno-belem tisku
 print the mini calendars	calendar	sl	Natisni majhne koledarje
 printer friendly	calendar	sl	Tiskalniku prijazno
 privat	calendar	sl	Zasebno
-private and global public	calendar	sl	Zasebna in globalna publika
-private and group public	calendar	sl	Zasebna in globalna publika
+private and global public	calendar	sl	Zasebno in ostali
+private and group public	calendar	sl	Zasebno in skupina
 private only	calendar	sl	Samo zasebno
 re-edit event	calendar	sl	Ponovno uredi dogodek
 read a list of entries.	calendar	sl	Preberi seznam zapisov
-read a single entry by passing the id and fieldlist.	calendar	sl	Preberi en zapis preko šifre in seznama polj.
+read a single entry by passing the id and fieldlist.	calendar	sl	Preberi zapis preko šifre in seznama polj.
 read this list of methods.	calendar	sl	Branje seznama metod.
 receive email updates	calendar	sl	Obveščanje o spremembah po E-pošti
 receive extra information in event mails	calendar	sl	Sprejem dodatnih informacije o dogodkih po E-pošti
 receive summary of appointments	calendar	sl	Sprejem povzetkov sestankov
 recurring event	calendar	sl	Ponavljajoči dogodek
 refresh	calendar	sl	Osveži
-reinstate	calendar	sl	Ponovno umeščeno
+reinstate	calendar	sl	Obnovljeno
 rejected	calendar	sl	Zavrnjeno
 repeat day	calendar	sl	Ponovi dan
 repeat end date	calendar	sl	Ponovi končni datum
@@ -226,60 +244,71 @@ reset	calendar	sl	Ponastavi
 rule	calendar	sl	Pravilo
 sa	calendar	sl	So
 sat	calendar	sl	Sob
-scheduling conflict	calendar	sl	Konflikt v urniku
+scheduling conflict	calendar	sl	Navzkrižje v urniku
 search results	calendar	sl	Rezultati iskanja
+select a %1	calendar	sl	Izberite %1
+select a time	calendar	sl	izberite čas
 selected contacts (%1)	calendar	sl	Izbrani kontakti (%1)
 send updates via email	common	sl	Pošlji spremembe po E-pošti
-send/receive updates via email	calendar	sl	Pošlji/sprejmi  spremembe po E-pošti
+send/receive updates via email	calendar	sl	Pošlji/sprejmi spremembe po E-pošti
 set a year only for one-time / non-regular holidays.	calendar	sl	Nastavi leto samo za enkratne / neponavljajoče praznike.
 set new events to private	calendar	sl	Novi dogodki naj bodo označeni kot zasebni
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sl	Ali naj bodo povabila, ki ste jih zavrnili, še vedno vidna v koledarju?<br>Kasneje jih lahko le potrdite (npr. ko so konfliktni dogodki odstranjeni), če so še vedno v koledarju.
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sl	Ali naj bodo povabila, ki ste jih zavrnili, še vedno vidna v koledarju?<br>Kasneje jih lahko le potrdite (npr. ko so dogodki v navzkrižju odstranjeni), če so še vedno v koledarju.
 should new events created as private by default ?	calendar	sl	Ali naj bodo novi dogodki označeni kot zasebni?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sl	Dovolite, da uporabnik, ki ni prijavljen vidi vašo Prost/Zasedeb informacijo? Za dostop do teh informacij lahko tudi določite geslo. Informacija Prost/Zaseden je v iCal obliki in vključuje samo termine, ko ste zasedeni, ne vključuje pa imena doggodkov, opisov in lokacij. URL za dostop do vaših Prost/Zaseden informacij je %1.
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	sl	Ali naj bodo majhni koledarji natisnjeni / prikazani v tiskalniku prijaznem pogledu?
-should the printer friendly view be in black & white or in color (as in normal view)?	calendar	sl	Ali naj bo tiskalniku prijazen pogled črnobel ali barvni?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	sl	Ali naj bo tiskalniku prijazen pogled črno-bel ali barvni?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sl	Ali naj bo status udeležencev dogodka (sprejet, zavrnjen,...) prikazan v oklepajih za imenom udeleženca?
 show day view on main screen	calendar	sl	prikaži dnevni pogled na glavni strani
-show day view on main scresl	calendar	sl	show day view on main screen
 show default view on main screen	calendar	sl	Prikaži privzeti pogled na glavni strani
-show default view on main scresl	calendar	sl	Show default view on main screen
 show high priority events on main screen	calendar	sl	Prikaži dogodke z visoko prioriteto na glavni strani
-show high priority events on main scresl	calendar	sl	Show high priority events on main screen
 show invitations you rejected	calendar	sl	Prikaži dobljena povabila
 show list of upcoming events	calendar	sl	Prikaži prihajajoče dogodke
-single event	calendar	sl	en dogodek
-sorry, the owner has just deleted this event	calendar	sl	Oprosti, lastnik je izbrisal ta dogodek
-sorry, this event does not exist	calendar	sl	Oprosti, ta dogodek ne obstaja
-sorry, this event does not have exceptions defined	calendar	sl	Oprosti, ta dogodek nima izjem
-sort by	calendar	sl	Uredi po
-specifies the the number of intervals shown in the planner view.	calendar	sl	Število prikazanih intervalov v načrtovalnem pogledu.
+show next seven days	calendar	sl	Prikaže naslednjih sedem dni
+show only one day	calendar	sl	Prikaži samo en dan
+show the calendar of multiple users	calendar	sl	prikažu skupinski koledar
+show this month	calendar	sl	prikaži ta mesec
+show this week	calendar	sl	prikaži ta teden
+single event	calendar	sl	posamezen dogodek
+sorry, the owner has just deleted this event	calendar	sl	Lastnik je izbrisal ta dogodek
+sorry, this event does not exist	calendar	sl	Ta dogodek ne obstaja
+sorry, this event does not have exceptions defined	calendar	sl	Ta dogodek nima določenih izjem
+sort by	calendar	sl	Razvrsti po
+specifies the the number of intervals shown in the planner view.	calendar	sl	Število prikazanih intervalov v pogledu načrtovalca.
 start date/time	calendar	sl	Začetni datum/čas
 start- and enddates	calendar	sl	Začetni in končni datumi
 startdate	calendar	sl	Začetni datum
+startdate / -time	calendar	sl	Začetni datum /-čas
+startdate and -time of the search	calendar	sl	Začetni datum in -čas iskanja
 startrecord	calendar	sl	Začetni zapis
 su	calendar	sl	Ne
-submit to repository	calendar	sl	Objavi v skladišče
+submit to repository	calendar	sl	Pošlji v zbirko
 sun	calendar	sl	Ned
-tentative	calendar	sl	Morda
-test import (show importable records <u>only</u> in browser)	calendar	sl	Tesi uvoza (pokaži uvozljive zapise<u>samo</u> v brskalniku)
+tentative	calendar	sl	Preizkušen
+test import (show importable records <u>only</u> in browser)	calendar	sl	Test uvoza (pokaži uvozljive zapise<u>samo</u> v brskalniku)
 text	calendar	sl	Tekst
 th	calendar	sl	Č
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	sl	Sledeči konflikti s predlaganim časom:<ul>%1</ul>
-the user %1 is not participating in this event!	calendar	sl	Uporabnik %1 ni udeleženec tega dogodka!
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	sl	Sledeča navzkrižja predlaganim časom:<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	sl	Uporabnik %1 ni soudeleženec tega dogodka!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	sl	Napaka pri povezovanju na novičarski strežnik.<br>Obvestite skrbnika, da preveri novičarski strežnik ali preverite uporabniško ime in geslo.
 this day is shown as first day in the week or month view.	calendar	sl	Ta dan je prikazan kot prvi dan v tednu ali v mesecu.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sl	To definira konec dnevnega pogleda. Dogodki po tem času so prikazani pod dnevnim ogledom.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sl	To definira začetek dnevnega pogleda. Dogodki pred tem so prikazani pred dnevnim pogledom.<br>Ta čas je tudi uporaben kot privzeti za nove dogodke.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sl	Ta skupina je že označena, ko vstopite v načrtovalca. V načrtovalcu jo lahko spremenite kadarkoli želite.
-this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	sl	To je najverjetneje vzrok nedefinranega SMTP strežnika ali napačne konfiguracije. Obvestite skrbnika SMTP strežnika.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	sl	To je najverjetneje vzrok nedefiniranega SMTP strežnika ali napačne konfiguracije. Obvestite skrbnika SMTP strežnika.
 this message is sent for canceled or deleted events.	calendar	sl	Sporočilo je poslano ob preklicu ali brisanju dogodkov.
 this message is sent for modified or moved events.	calendar	sl	Sporočilo je poslano ob spremembi ali premiku dogodkov.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sl	To sporočilo je poslano vsem udeležencem dogodka, ki sprejemajo obvestila o dogodkih.<br>V obvestilu lahko uporabite nekatere spremenljivke, ki se ob pošiljanju zamenjajo s podatki dogodka. Prva vrstica je naslov E-pošte.
 this message is sent when you accept, tentative accept or reject an event.	calendar	sl	To sporočilo se pošlje ko sprejmete ali zavrnete dogodek.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sl	To sporočilo je poslano, ko nastavite alarm za dogodek. Vključuje vse potrebne informacije.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sl	To sporočilo je poslano, ko nastavite opomnik za dogodek. Vključuje vse potrebne informacije.
 this month	calendar	sl	Ta mesec
 this week	calendar	sl	Ta teden
 this year	calendar	sl	To leto
+three month	calendar	sl	trije meseci
 thu	calendar	sl	Čet
+til	calendar	sl	do
+timeframe	calendar	sl	Časovni okvir
+timeframe to search	calendar	sl	Iskanje časovnega okvira
 title	calendar	sl	Naslov
 title of the event	calendar	sl	Naslov dogodka
 title-row	calendar	sl	Naslovna vrstica
@@ -291,29 +320,37 @@ today	calendar	sl	Danes
 translation	calendar	sl	Prevod
 tu	calendar	sl	T
 tue	calendar	sl	Tor
-update a single entry by passing the fields.	calendar	sl	Popravi en zapis z vnosom polj.
-updated	calendar	sl	Popravljeno
+two dayview	calendar	sl	dva dnevna pogleda
+two weeks	calendar	sl	dva tedna
+update a single entry by passing the fields.	calendar	sl	Spremeni en zapis z vnosom polj.
+updated	calendar	sl	Podosodobljeno
 use end date	calendar	sl	Uporabi končni datum
+use the selected time and close the popup	calendar	sl	uporabi izbrani čas in zapri pojavno okno
 view this entry	calendar	sl	Poglej ta zapis
 we	calendar	sl	S
 wed	calendar	sl	Sre
 week	calendar	sl	Teden
 weekday starts on	calendar	sl	Teden se začne z dnem
+weekdays	calendar	sl	Dnevi tedna
+weekdays to use in search	calendar	sl	Dnevi tedna, ki jih uporabim pri iskanju
 weekly	calendar	sl	Tedensko
 weekview	calendar	sl	Tedenski pogled
+weekview including weekend	calendar	sl	Tedenski pogled z vikendom
+weekview without weekend	calendar	sl	Tedenski pogled brez vikenda
 when creating new events default set to private	calendar	sl	Novi dogodki naj bodo označeni kot zasebni
 which events do you want to see when you enter the calendar.	calendar	sl	Katere dogodke želite videti, ko odprete koledar?
 which of calendar view do you want to see, when you start calendar ?	calendar	sl	Kateri pogled želite videti, ko odprete koledar?
-work day ends on	calendar	sl	Teden se konča z dnem
-work day starts on	calendar	sl	Delovni dan se začne ob
+wk	calendar	sl	Ted
+work day ends on	calendar	sl	Delovnik se konča ob
+work day starts on	calendar	sl	Delovnik se začne ob
 workdayends	calendar	sl	konec delovnega dne
 yearly	calendar	sl	Letno
 yearview	calendar	sl	Letni pogled
 you can either set a year or a occurence, not both !!!	calendar	sl	Nastavite lahko ali leto ali pojavljanje, ne pa obojega!
 you can only set a year or a occurence !!!	calendar	sl	Nastavite lahko le leto ali pojavljanje!
-you do not have permission to add alarms to this event !!!	calendar	sl	Nimate dovoljenja dodati alarma za ta dogodek!
-you do not have permission to delete this alarm !!!	calendar	sl	Nimate dovoljenja izbrisati tega alarma!
-you do not have permission to enable/disable this alarm !!!	calendar	sl	Nimate dovoljenja omogočiti/onemogočiti tega alarma!
+you do not have permission to add alarms to this event !!!	calendar	sl	Nimate dovoljenja dodati opomnika za ta dogodek!!!
+you do not have permission to delete this alarm !!!	calendar	sl	Nimate dovoljenja za brisanje tega opomnika!!!
+you do not have permission to enable/disable this alarm !!!	calendar	sl	Nimate dovoljenja omogočiti/onemogočiti tega opomnika!
 you do not have permission to read this record!	calendar	sl	Nimate dovoljenja brati tega zapisa!
 you have %1 high priority events on your calendar today.	common	sl	Danes imate %1 dogodkov z visoko prioriteto v vašem koledarju.
 you have 1 high priority event on your calendar today.	common	sl	Danes imate 1 dogodek z visoko prioriteto v vašem koledarju.
