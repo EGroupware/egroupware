@@ -62,6 +62,13 @@
 				$this->BROWSER_AGENT = 'Netscape';
 			}
 
+			elseif (ereg( 'Konqueror/([0-9].[0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
+				ereg( 'Konqueror/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
+			{
+				$this->BROWSER_VER=$log_version[1];
+				$this->BROWSER_AGENT='Konqueror';
+			}
+
 			elseif (ereg( 'Mozilla/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER=$log_version[1];
