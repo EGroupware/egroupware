@@ -498,16 +498,17 @@
 					$sql .= " UPPER($f) LIKE UPPER('%$query%') OR ";
 					$sqlcount .= $sql;
 				}
-				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
-				$sqlcount = $sql;
-				unset($f); unset($x);
+				$_tmp = $sql;
+				$sql = substr($_tmp,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
+				$sqlcount = substr($_tmp,0,-3) . ') ' . $fand . $filtermethod; 
+				unset($_tmp); unset($f); unset($x);
 			}
 			else
 			{
 				$sql = "SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod . ' ' . $ordermethod;
 				$sqlcount = "SELECT COUNT(id) FROM $this->std_table " . $fwhere
-					. $filtermethod . ' ' . $ordermethod;
+					. $filtermethod;
 			}
 			if($DEBUG)
 			{
