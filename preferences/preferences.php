@@ -225,10 +225,20 @@
 		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
 	}
 
-	function process_array(&$_p, $array)
+	function process_array(&$_p,$array,$prefix='')
 	{
 		$_appname = check_app();
 
+		$prefs = &$_p->data[$_appname];
+
+		if ($prefix != '')
+		{
+			$prefix_arr = explode('/',$prefix);
+			foreach ($prefix_arr as $pre)
+			{
+				$prefs = &$prefs[$pre];
+			}
+		}
 		while (is_array($array) && list($var,$value) = each($array))
 		{
 			if (isset($value) && $value != '' && $value != '**NULL**')
@@ -241,13 +251,15 @@
 						continue;	// dont write empty password-fields
 					}
 				}
-				$_p->add($_appname,$var,$value);
+				$prefs[$var] = $value;
 			}
 			else
 			{
-				unset($_p->data[$_appname][$var]);
+				unset($prefs[$var]);
 			}
 		}
+		//echo "prefix='$prefix', prefs=<pre>"; print_r($_p->data[$_appname]);
+
 		$_p->save_repository(True);
 	}
 
@@ -267,7 +279,9 @@
 	/* and is able to create less powerfull admins.  This will handle the ACL checks for that (jengo) */
 	function is_admin()
 	{
-		if (HAS_ADMIN_RIGHTS == 1 && !isset($_GET['prefix']))	// tabs only without prefix
+		global $prefix;
+
+		if (HAS_ADMIN_RIGHTS == 1 && empty($prefix))	// tabs only without prefix
 		{
 			return True;
 		}
@@ -290,6 +304,8 @@
 
 	$session_data = $GLOBALS['phpgw']->session->appsession('session_data','preferences');
 
+	$prefix = get_var('prefix',array('GET'),$session_data['appname'] == $_GET['appname'] ? $session_data['prefix'] : '');
+	
 	if (is_admin())
 	{
 		/* This is where we will keep track of our postion. */
@@ -306,10 +322,8 @@
 	{
 		$GLOBALS['type'] = 'user';
 	}
-	$prefix = get_var('prefix',array('GET'),$session_data['prefix']);
-	
-	$show_help = "$session_data[show_help]" != '' ? $session_data['show_help'] : 
-		intval($GLOBALS['phpgw_info']['user']['preferences']['common']['show_help']);
+	$show_help = "$session_data[show_help]" != '' && $session_data['appname'] == $_GET['appname'] ? 
+		$session_data['show_help'] : intval($GLOBALS['phpgw_info']['user']['preferences']['common']['show_help']);
 
 	if ($toggle_help = get_var('toggle_help','POST'))
 	{
@@ -329,7 +343,7 @@
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
 		if ($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 		{
-			process_array($GLOBALS['phpgw']->preferences, $user);
+			process_array($GLOBALS['phpgw']->preferences,$user,$prefix);
 		}
 
 		if ($GLOBALS['type'] == 'default' && is_admin())
@@ -346,24 +360,22 @@
 		{
 			$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
 		}
-
-		if ($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences')	// changes for the admin itself
+		
+		if ($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences' && $user['show_help'] != '')
 		{
-			if ($user['show_help'] != '')
-			{
-				$show_help = $user['show_help'];	// use it, if admin changes his help-prefs
-			}
-			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] != $user['lang'])
-			{
-				$GLOBALS['phpgw']->redirect_link('/preferences/preferences.php','appname='.$_GET['appname']);
-			}
+			$show_help = $user['show_help'];	// use it, if admin changes his help-prefs
 		}
 	}
 	$GLOBALS['phpgw']->session->appsession('session_data','preferences',array(
 		'type'      => $GLOBALS['type'],	// save our state in the app-session
 		'show_help' => $show_help,
-		'prefix'    => $prefix
+		'prefix'    => $prefix,
+		'appname'   => $_GET['appname']		// we use this to reset prefix on appname-change
 	));
+	// changes for the admin itself, should have immediate feedback ==> redirect
+	if ($_POST['submit'] && $GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences') {
+		$GLOBALS['phpgw']->redirect_link('/preferences/preferences.php','appname='.$_GET['appname']);
+	}
 
 	if ($_GET['appname'] == 'preferences')
 	{
@@ -387,10 +399,10 @@
 		default:
 			$prefs = &$GLOBALS['phpgw']->preferences->data[check_app()];
 			// use prefix if given in the url, used for email extra-accounts
-			if ($_GET['prefix'] != '')
+			if ($prefix != '')
 			{
-				$prefix = explode('/',$_GET['prefix']);
-				foreach ($prefix as $pre)
+				$prefix_arr = explode('/',$prefix);
+				foreach ($prefix_arr as $pre)
 				{
 					$prefs = &$prefs[$pre];
 				}
