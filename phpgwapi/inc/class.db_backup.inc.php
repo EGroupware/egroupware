@@ -168,6 +168,8 @@
 					$charset = substr($line,9);
 					// needed if mbstring.func_overload > 0, else eg. substr does not work with non ascii chars
 					@ini_set('mbstring.internal_encoding',$charset);
+					// set the DB's client encoding
+					$this->db->Link_ID->SetCharSet($charset);
 					continue;
 				}
 				if (substr($line,0,8) == 'schema: ')
