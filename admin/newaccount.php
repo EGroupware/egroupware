@@ -207,83 +207,80 @@
 		$account_status = 'A';
 	}
 
-	$phpgw->template->set_unknowns('remove');
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$p->set_unknowns('remove');
 
-	if ($phpgw_info["server"]["ldap_extra_attributes"] && $phpgw_info['server']['account_repository'] == 'ldap') {
-		$phpgw->template->set_file(array(
-			'form'              => 'account_form_ldap.tpl',
-			'form_passwordinfo' => 'account_form_password.tpl',
-			'form_buttons_'     => 'account_form_buttons.tpl'
-		));
+	if ($phpgw_info["server"]["ldap_extra_attributes"] && $phpgw_info['server']['account_repository'] == 'ldap')
+	{
+		$p->set_file(array('account' => 'account_form_ldap.tpl'));
 	}
 	else
 	{
-		$phpgw->template->set_file(array(
-			'form'              => 'account_form.tpl',
-			'form_passwordinfo' => 'account_form_password.tpl',
-			'form_buttons_'     => 'account_form_buttons.tpl'
-		));
+		$p->set_file(array('account' => 'account_form.tpl'));
 	}
+	$p->set_block('account','form','form');
+	$p->set_block('account','form_passwordinfo','form_passwordinfo');
+	$p->set_block('account','form_buttons_','form_buttons_');
 
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-	$phpgw->template->set_var('lang_action',lang('Add new account'));
+	$p->set_var('lang_action',lang('Add new account'));
 
 	if ($totalerrors)
 	{
-		$phpgw->template->set_var('error_messages','<center>' . $phpgw->common->error_list($error) . '</center>');
+		$p->set_var('error_messages','<center>' . $phpgw->common->error_list($error) . '</center>');
 	}
 
-	$phpgw->template->set_var('th_bg',$phpgw_info['theme']['th_bg']);
-	$phpgw->template->set_var('tr_color1',$phpgw_info['theme']['row_on']);
-	$phpgw->template->set_var('tr_color2',$phpgw_info['theme']['row_off']);
+	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+	$p->set_var('tr_color1',$phpgw_info['theme']['row_on']);
+	$p->set_var('tr_color2',$phpgw_info['theme']['row_off']);
 
-	$phpgw->template->set_var('form_action',$phpgw->link('/admin/newaccount.php'));
-	$phpgw->template->set_var('lang_loginid',lang('LoginID'));
+	$p->set_var('form_action',$phpgw->link('/admin/newaccount.php'));
+	$p->set_var('lang_loginid',lang('LoginID'));
 
 	if ($account_status) 
 	{
-		$phpgw->template->set_var('account_status','<input type="checkbox" name="account_status" value="A" checked>');
+		$p->set_var('account_status','<input type="checkbox" name="account_status" value="A" checked>');
 	}
 	else
 	{
-		$phpgw->template->set_var('account_status','<input type="checkbox" name="account_status" value="A">');
+		$p->set_var('account_status','<input type="checkbox" name="account_status" value="A">');
 	}
 
-	$phpgw->template->set_var('account_lid','<input name="account_lid" value="' . $account_lid . '">');
+	$p->set_var('account_lid','<input name="account_lid" value="' . $account_lid . '">');
 
-	$phpgw->template->set_var('lang_account_active',lang('Account active'));
+	$p->set_var('lang_account_active',lang('Account active'));
 
-	$phpgw->template->set_var('lang_password',lang('Password'));
-	$phpgw->template->set_var('account_passwd',$account_passwd);
+	$p->set_var('lang_password',lang('Password'));
+	$p->set_var('account_passwd',$account_passwd);
 
 	if ($phpgw_info["server"]["ldap_extra_attributes"]) {
-		$phpgw->template->set_var("lang_homedir",lang("home directory"));
-		$phpgw->template->set_var("lang_shell",lang(" login shell"));
-		$phpgw->template->set_var("homedirectory",'<input name="homedirectory" value="' . $phpgw_info["server"]["ldap_account_home"].SEP.$account_lid . '">');
-		$phpgw->template->set_var("loginshell",'<input name="loginshell" value="' . $phpgw_info["server"]["ldap_account_shell"] . '">');
+		$p->set_var("lang_homedir",lang("home directory"));
+		$p->set_var("lang_shell",lang(" login shell"));
+		$p->set_var("homedirectory",'<input name="homedirectory" value="' . $phpgw_info["server"]["ldap_account_home"].SEP.$account_lid . '">');
+		$p->set_var("loginshell",'<input name="loginshell" value="' . $phpgw_info["server"]["ldap_account_shell"] . '">');
 	}
 
-	$phpgw->template->set_var('lang_reenter_password',lang('Re-Enter Password'));
-	$phpgw->template->set_var('account_passwd_2',$account_passwd_2);
-	$phpgw->template->parse('password_fields','form_passwordinfo',True);
+	$p->set_var('lang_reenter_password',lang('Re-Enter Password'));
+	$p->set_var('account_passwd_2',$account_passwd_2);
+	$p->parse('password_fields','form_passwordinfo',True);
 
-	$phpgw->template->set_var('lang_firstname',lang('First Name'));
-	$phpgw->template->set_var('account_firstname','<input name="account_firstname" value="' . $account_firstname . '">');
+	$p->set_var('lang_firstname',lang('First Name'));
+	$p->set_var('account_firstname','<input name="account_firstname" value="' . $account_firstname . '">');
 
-	$phpgw->template->set_var('lang_lastname',lang('Last Name'));
-	$phpgw->template->set_var('account_lastname','<input name="account_lastname" value="' . $account_lastname . '">');
+	$p->set_var('lang_lastname',lang('Last Name'));
+	$p->set_var('account_lastname','<input name="account_lastname" value="' . $account_lastname . '">');
 
-	$phpgw->template->set_var('lang_groups',lang('Groups'));
+	$p->set_var('lang_groups',lang('Groups'));
 
-	$phpgw->template->set_var('lang_expires',lang('Expires'));
+	$p->set_var('lang_expires',lang('Expires'));
 	$_y = $phpgw->sbox->getyears('account_expires_year',$account_expires_year,date('Y'),date('Y')+10);
 	$_m = $phpgw->sbox->getmonthtext('account_expires_month',$account_expires_month);
 	$_d = $phpgw->sbox->getdays('account_expires_day',$account_expires_day);
-	$phpgw->template->set_var('input_expires',$phpgw->common->dateformatorder($_y,$_m,$_d,True));
+	$p->set_var('input_expires',$phpgw->common->dateformatorder($_y,$_m,$_d,True));
 
-	$phpgw->template->parse('form_buttons','form_buttons_',True);
+	$p->parse('form_buttons','form_buttons_',True);
 
 	// groups list
 	$groups_select = '<select name="account_groups[]" multiple>';
@@ -306,7 +303,7 @@
 		$groups_select .= "\n";
 	}
 	$groups_select .= '</select>';
-	$phpgw->template->set_var('groups_select',$groups_select);
+	$p->set_var('groups_select',$groups_select);
 	// end groups list
 
 	$i = 0;
@@ -366,7 +363,7 @@
 
 		$i++;
 	}
-	$phpgw->template->set_var('permissions_list',$perms_html);
+	$p->set_var('permissions_list',$perms_html);
 
 	$includedSomething = False;
 
@@ -379,8 +376,8 @@
 	//  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
 	//  }
 
-	$phpgw->template->set_var('lang_button',Lang('Add'));
-	$phpgw->template->pfp('out','form');
+	$p->set_var('lang_button',Lang('Add'));
+	$p->pfp('out','form');
 
 	$phpgw->common->phpgw_footer();
 ?>

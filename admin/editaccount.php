@@ -25,24 +25,20 @@
 	{
 		global $phpgw, $phpgw_info;
 
-		$t = new Template($phpgw->common->get_tpl_dir('admin'));
+		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_unknowns('remove');
 
-		if ($phpgw_info["server"]["ldap_extra_attributes"] && ($phpgw_info['server']['account_repository'] == 'ldap')) {
-			$t->set_file(array(
-				'form'              => 'account_form_ldap.tpl',
-				'form_passwordinfo' => 'account_form_password.tpl',
-				'form_buttons_'     => 'account_form_buttons.tpl'
-			));
+		if ($phpgw_info["server"]["ldap_extra_attributes"] && ($phpgw_info['server']['account_repository'] == 'ldap'))
+		{
+			$t->set_file(array('account' => 'account_form_ldap.tpl'));
 		}
 		else
 		{
-			$t->set_file(array(
-				'form'              => 'account_form.tpl',
-				'form_passwordinfo' => 'account_form_password.tpl',
-				'form_buttons_'     => 'account_form_buttons.tpl',
-			));
+			$t->set_file(array('account' => 'account_form.tpl'));
 		}
+		$t->set_block('account','form','form');
+		$t->set_block('account','form_passwordinfo','form_passwordinfo');
+		$t->set_block('account','form_buttons_','form_buttons_');
 
 		if ($_userData)
 		{

@@ -1,3 +1,4 @@
+<!-- BEGIN form -->
 <p><b>{lang_action}</b><hr><br>
 {error_messages}
 
@@ -44,3 +45,19 @@
    </table>
   </center>
  </form>
+<!-- END form -->
+
+<!-- BEGIN form_passwordinfo -->
+    <tr bgcolor="{tr_color1}">
+     <td>{lang_password}</td>
+     <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
+     <td>{lang_reenter_password}</td>
+     <td><input type="password" name="account_passwd_2" value="{account_passwd_2}"></td>
+    </tr>
+<!-- END form_passwordinfo -->
+
+<!-- BEGIN form_buttons_ -->
+    <tr bgcolor="{tr_color2}">
+     <td colspan="4" align="right"><input type="submit" name="submit" value="{lang_button}"></td>
+    </tr>
+<!-- END form_buttons_ -->
