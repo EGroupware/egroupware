@@ -675,15 +675,18 @@ class calendar extends calendar_
 			$outer_etime = mktime($outer->end->hour,$outer->end->min,$outer->end->sec,$outer->end->month,$outer->end->mday,$outer->end->year) - $this->datetime->tz_offset;
 			$ostime = $phpgw->common->show_date($outer_stime,'Hi');
 			$oetime = $phpgw->common->show_date($outer_etime,'Hi');
-			
-			if($outer_stime < $datetime)
+
+			if($outer->recur_type == MCAL_RECUR_NONE)
 			{
-				$ostime = 0;
-			}
+				if($outer_stime < $datetime)
+				{
+					$ostime = 0;
+				}
 			
-			if($outer_etime > $eod)
-			{
-				$oetime = 2359;
+				if($outer_etime > $eod)
+				{
+					$oetime = 2359;
+				}
 			}
 
 			for($inner_loop=$outer_loop;$inner_loop<$this->sorted_events_matching;$inner_loop++)
@@ -694,18 +697,20 @@ class calendar extends calendar_
 				$istime = $phpgw->common->show_date($inner_stime,'Hi');
 				$ietime = $phpgw->common->show_date($inner_etime,'Hi');
 				
-				if($inner_stime < $datetime)
+				if($inner->recur_type == MCAL_RECUR_NONE)
 				{
-					$istime = 0;
+					if($inner_stime < $datetime)
+					{
+						$istime = 0;
+					}
+				
+					if($inner_etime > ($datetime + 86399))
+					{
+						$ietime = 2359;
+					}
 				}
 				
-				if($inner_etime > ($datetime + 86399))
-				{
-					$ietime = 2359;
-				}
-				
-				if(($ostime > $istime) ||
-					(($ostime == $istime) && ($oetime > $ietime)))
+				if(($ostime > $istime) || (($ostime == $istime) && ($oetime > $ietime)))
 				{
 					$temp = $events[$inner_loop];
 					$events[$inner_loop] = $events[$outer_loop];
@@ -904,12 +909,9 @@ class calendar extends calendar_
 		$retval = Array();
 		$ok = False;
 
-		$starttime -= $this->datetime->tz_offset;
-		$endtime -= $this->datetime->tz_offset;
-
 		if($starttime == $endtime)
 		{
-			$endtime = mktime(0,0,0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->datetime->tz_offset - 1;
+			$endtime = mktime(23,59,59,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->datetime->tz_offset;
 		}
 
 		$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
@@ -922,13 +924,18 @@ class calendar extends calendar_
 			$p_g = '';
 			if(count($participants))
 			{
-				while(list($user,) = each($participants))
+				$users = '';
+				while(list($user,$status) = each($participants))
 				{
-					if($p_g)
+					if($users)
 					{
-						$p_g .= ' OR ';
+						$users .= ',';
 					}
-					$p_g .= 'phpgw_cal_user.cal_login='.$user;
+					$users .= $user;
+				}
+				if($users)
+				{
+					$p_g .= 'phpgw_cal_user.cal_login in ('.$users.')';
 				}
 			}
 			if($p_g)
@@ -942,13 +949,16 @@ class calendar extends calendar_
 			$sql .= ' AND phpgw_cal.cal_id <> '.$id;
 		}
 
-		$db2 = $phpgw->db;
+		$sql .= ' ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
 		$events = $this->get_event_ids(False,$sql);
 		if($events == False)
 		{
 			return false;
 		}
+		
+		$db2 = $phpgw->db;
+
 		for($i=0;$i<count($events);$i++)
 		{
 			$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE cal_id='.$events[$i],__LINE__,__FILE__);
@@ -1712,26 +1722,26 @@ class calendar extends calendar_
 
 // Repeated Events
 		$rpt_type = Array(
-			'none',
-			'daily',
-			'weekly',
-			'monthlybyday',
-			'monthlybydate',
-			'yearly'
+			MCAL_RECUR_NONE => 'none',
+			MCAL_RECUR_DAILY => 'daily',
+			MCAL_RECUR_WEEKLY => 'weekly',
+			MCAL_RECUR_MONTHLY_WDAY => 'monthlybyday',
+			MCAL_RECUR_MONTHLY_MDAY => 'monthlybydate',
+			MCAL_RECUR_YEARLY => 'yearly'
 		);
 		$str = lang($rpt_type[$event->recur_type]);
 		if($event->recur_type <> MCAL_RECUR_NONE)
 		{
-			$str .= ' (';
+			$str_extra = '';
 			if ($event->recur_enddate->mday != 0 && $event->recur_enddate->month != 0 && $event->recur_enddate->year != 0)
 			{
 				$recur_end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year);
 				if($recur_end != 0)
 				{
 					$recur_end -= $this->datetime->tz_offset;
-					$str .= lang('ends').': '.lang($phpgw->common->show_date($recur_end,'l'));
-					$str .= ', '.lang($phpgw->common->show_date($recur_end,'F'));
-					$str .= ' '.$phpgw->common->show_date($recur_end,'d, Y').' ';
+					$str_extra .= lang('ends').': '.lang($phpgw->common->show_date($recur_end,'l'));
+					$str_extra .= ', '.lang($phpgw->common->show_date($recur_end,'F'));
+					$str_extra .= ' '.$phpgw->common->show_date($recur_end,'d, Y').' ';
 				}
 			}
 			if($event->recur_type == MCAL_RECUR_WEEKLY || $event->recur_type == MCAL_RECUR_DAILY)
@@ -1777,14 +1787,18 @@ class calendar extends calendar_
 				}
 				if($repeat_days <> '')
 				{
-					$str .= lang('days repeated').': '.$repeat_days;
+					$str_extra .= lang('days repeated').': '.$repeat_days;
 				}
 			}
 			if($event->recur_interval)
 			{
-				$str .= lang('Interval').': '.$event->recur_interval;
+				$str_extra .= lang('Interval').': '.$event->recur_interval;
 			}
-			$str .= ')';
+
+			if($str_extra)
+			{
+				$str .= ' ('.$str_extra.')';
+			}
 
 			$var = Array(
 				'field'	=>	lang('Repetition'),
