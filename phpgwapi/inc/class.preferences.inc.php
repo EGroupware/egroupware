@@ -312,7 +312,7 @@
 		function add($app_name,$var,$value = '##undef##',$type='user')
 		{
 			//echo "<p>add('$app_name','$var','$value')</p>\n";
-			if ($value == '##undef##')
+			if ($value === '##undef##')
 			{
 				global $$var;
 				$value = $$var;
