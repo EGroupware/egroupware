@@ -101,7 +101,8 @@
 			// private: own entries plus the one user is responsible for 
 			if ($filter == 'private' || $filter == 'own')
 			{
-				$filtermethod .= " OR info_responsible=$this->user AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
+				$filtermethod .= " OR (info_responsible=$this->user OR info_status = 'offer')".
+				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
 			}
 			else      				// none --> all entrys user has rights to see
 			{
