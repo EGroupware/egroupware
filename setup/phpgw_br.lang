@@ -1,0 +1,310 @@
+	common	br	
+(for weekly)	calendar	br	(por semana)
+* make sure that you remove users from this group before you delete it.	admin	br	* tenha certeza de apagar os usuarios deste grupo antes de voce apaga-lo.
+1 match found	calendar	br	Encontrada 1 ocorrencia
+:
+	$s =	common	br	>phpGroupWare</a>/traduzido por chgp
+access	common	br	Accesso
+access type	common	br	Tipo de acesso
+access type	todo	br	Tipo de accesso
+account active	admin	br	Conta Inativa
+account has been created	common	br	Conta foi criada
+account has been deleted	common	br	Conta foi apagada
+account has been updated	common	br	Conta foi atualizada
+active	admin	br	Ativo
+add	common	br	Adicionar
+address book	addressbook	br	Contatos
+address book	common	br	Contatos
+addressbook	common	br	Rubrica
+admin	common	br	Administrador
+administration	common	br	Administracao
+all records and account information will be lost!	admin	br	Todos registros e informacoes de contas serao perdidas!
+anonymous user	admin	br	Usuario Anonimo
+april	common	br	Abril
+are you sure you want to delete this account ?	admin	br	Tem certeza que deseja apagar esta conta ?
+are you sure you want to delete this group ?	admin	br	Voce tem certeza que deseja apagar este grupo ?
+are you sure you want to delete this news site ?	admin	br	Tem certeza que deseja apagar este site news ?
+are you sure you want to kill this session ?	admin	br	Voce tem certeza que deseja matar esta secao ?
+are you sure\nyou want to\ndelete this entry ?	calendar	br	Tem certeza\nque quer apagar\nesta entrada ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	br	Tem certeza\nvoce quer\napagar esta entrada ?\n\nIsto apagara a entrada\npara todos usuarios.
+august	common	br	Agosto
+author	nntp	br	Author
+available groups	nntp	br	Available Groups
+bad login or password	login	br	login ou senha incorreta
+base url	admin	br	URL de base
+birthday	addressbook	br	Aniversario
+book marks	common	br	book marks
+brief description	calendar	br	Curta Descricao
+calendar	common	br	Calendario
+calendar - add	calendar	br	Calendario - Adicionar
+calendar - edit	calendar	br	Calendario - Editar
+cancel	common	br	Cancelar
+change	common	br	Mudar
+change your password	preferences	br	Mude sua senha
+change your settings	preferences	br	mude suas preferencias
+charset	common	br	iso-8859-1
+chat	common	br	Chat
+city	addressbook	br	Cidade
+clear	common	br	Cancelar
+clear form	common	br	Limpar Formulario
+clear form	todo	br	Limpar Formulario
+clipboard_contents	filemanager	br	Conteudo do clipboard
+completed	todo	br	completo
+copy	common	br	Copiar
+copy_as	filemanager	br	Copie como
+create	common	br	Criar
+create group	admin	br	Criar Grupo
+created by	common	br	Criado por
+created by	todo	br	Creado por
+current users	common	br	Usuarios ativos
+current_file	filemanager	br	Arquivo em uso
+daily	calendar	br	Diaria
+date	nntp	br	Date
+date	common	br	Data
+date due	todo	br	Data due
+date format	preferences	br	Formato data
+days repeated	calendar	br	Dias Repetidos
+december	common	br	Dezembro
+delete	common	br	Cancelar
+description	calendar	br	Descricao
+disabled	admin	br	Desabilitato
+display	admin	br	Visualiza
+done	common	br	Pronto
+download	filemanager	br	Baixar
+duration	calendar	br	Duracao
+e-mail	addressbook	br	E-Mail
+e-mail	common	br	E-Mail
+edit	common	br	Modificar
+email	common	br	E-Mail
+email signature	preferences	br	Assinatura do email
+enter your new password	preferences	br	Entre uma nova senha
+entry has been deleted sucessfully	common	br	Entrada apagada com sucesso
+entry updated sucessfully	common	br	Entrada modificada com sucesso
+error	common	br	Erro
+err_saving_file	filemanager	br	Erro durante a gravacao do arquivo
+exit	common	br	Saida
+fax	addressbook	br	Fax
+february	common	br	Fevereiro
+file manager	common	br	Gerenciador de arquivos
+files	filemanager	br	Arquivo
+file_upload	filemanager	br	Enviar arquivo
+filter	common	br	Filtro
+first name	addressbook	br	Primeiro Nome
+first name	common	br	Nome
+first page	common	br	primeira pagina
+frequency	calendar	br	Frequencia
+fri	calendar	br	Sex
+friday	common	br	Sexta
+ftp	common	br	FTP
+full description	calendar	br	Descricao  Completa
+generate printer-friendly version	calendar	br	Gera versoes imprimiveis?!?
+global public	common	br	Publico Global
+go!	calendar	br	Vai!
+group access	common	br	Acesso Grupo
+group has been added	common	br	Grupo Adicionado
+group has been deleted	common	br	Grupo cancelado
+group has been updated	common	br	Grupo atualizado
+group name	admin	br	Nome do Grupo
+group public	common	br	Grupo Publico
+groups	common	br	Grupos
+groupsfile_perm_error	filemanager	br	Para corrigir este erro voce deve configurar corretamente as permissoes neste diretorio e o grupo.<BR> Nos sistemas *ix digite: chmod 707
+group_files	filemanager	br	Arquivo do grupo
+headline sites	admin	br	Headlines
+headlines	common	br	headlines
+help	common	br	Ajuda
+high	common	br	Alta
+home	common	br	Pagina Inicial
+home phone	addressbook	br	Fone Residencial
+idle	admin	br	inativo
+ip	admin	br	IP
+it has been more then x days since you changed your password	common	br	Ja passaram-se mais de %1 dias desde que vc mudou sua senha
+january	common	br	Janeiro
+july	common	br	Julho
+june	common	br	Junho
+kill	admin	br	Matar
+language	preferences	br	Lingua
+last name	addressbook	br	Ultimo Nome
+last name	common	br	Ultimo nome
+last page	common	br	ultima pagina
+last time read	admin	br	Ultima Leitura
+last updated	todo	br	Ultima Modificao
+last x logins	admin	br	Ultimo %1 login
+list of current users	admin	br	Lista de usuarios correntes
+listings displayed	admin	br	listagens mostradas
+login	login	br	Login
+login	common	br	Login
+login time	admin	br	Hora do Login
+loginid	admin	br	Identificativo Login
+logout	common	br	Logout
+low	common	br	Baixa
+manager	admin	br	Gerente
+march	common	br	Marco
+max matchs per page	preferences	br	Numero maximo de resultados por pagina
+may	common	br	Maio
+medium	common	br	Media
+message x	nntp	br	Message %1
+minutes	calendar	br	minutos
+minutes between reloads	admin	br	Minutos entre reloads
+mobile	addressbook	br	Celular
+mon	calendar	br	Seg
+monday	common	br	Segunda
+monitor	nntp	br	Monitor
+month	calendar	br	Mes
+monthly (by date)	calendar	br	mensal (pela data)
+monthly (by day)	calendar	br	mensal (por dia)
+name	common	br	Nome
+new entry	calendar	br	Nova Entrada
+new entry added sucessfully	common	br	Entrada adicionada corretamente
+new group name	admin	br	Novo nome do Grupo
+new password [ leave blank for no change ]	admin	br	Nova Senha [ Deixe em branco para nao alterar ]
+news file	admin	br	Arquivo de news
+news headlines	common	br	titulos novos
+news reader	common	br	Leitor de  News
+news type	admin	br	Tipo de news
+newsgroups	nntp	br	Newsgroups
+new_file	filemanager	br	Novo Arquivo
+next	nntp	br	Next
+next page	common	br	proxima pagina
+no	common	br	Nao
+no matches found.	calendar	br	Nenhuma ocorrencia encontrada.
+none	calendar	br	Nenhuma
+normal	common	br	Normal
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	br	Nota: Esta funcao *nao* muda sua senha de email. voce devera fazer isto manualmente.
+notes	addressbook	br	Notas
+november	common	br	Novembro
+no_file_name	filemanager	br	Nenhum nome foi especificado
+october	common	br	Outubro
+ok	common	br	OK
+only yours	common	br	so as suas
+other number	addressbook	br	Outro Numero
+pager	addressbook	br	Pager
+participants	calendar	br	Participante
+password	login	br	Password
+password	common	br	Senha
+password has been updated	common	br	Senha foi alterada
+percent of users that logged out	admin	br	Percentual de usuarios que terminaram a secao corretamente
+please, select a new theme	preferences	br	por favor, selecione um tema
+preferences	common	br	Preferencas
+previous page	common	br	pagina anterior
+printer friendly	calendar	br	imprimivel
+priority	common	br	Prioridade
+private	common	br	Privado
+private_files	filemanager	br	Arquivo Privado
+re-enter password	admin	br	Re-digite sua senha
+re-enter your password	preferences	br	Re-digite sua senha
+rename	common	br	Renomiar
+rename_to	filemanager	br	Renomear para
+repeat day	calendar	br	Repeticao Diaria
+repeat end date	calendar	br	Data final da repeticao
+repeat type	calendar	br	Tipo de repeticao
+repetition	calendar	br	Repeticao
+sat	calendar	br	Sab
+saturday	common	br	Sabado
+save	common	br	Salvar
+search	common	br	Procura
+search results	calendar	br	Resultados da pesquisa
+select different theme	preferences	br	Selecione um tema diferente
+select headline news sites	preferences	br	Selecione os sites de noticias
+september	common	br	Setembro
+session has been killed	common	br	Sessao foi morta
+show all	common	br	mostra tudo
+show all groups	nntp	br	Show All Groups
+show birthday reminders on main screen	preferences	br	Mostra Aniversariantes na primeira tela
+show current users on navigation bar	preferences	br	Mostra usuarios ativos na barra de navegacao
+show groups containing	nntp	br	Show Groups Containing
+show high priority events on main screen	preferences	br	Mostra eventos de alta prioridade na primeira tela
+show new messages on main screen	preferences	br	Mostra novas mensagens na tela principal
+show text on navigation icons	preferences	br	Mostra texto na barra de navegacao
+showing x	common	br	Visualizando %1
+showing x - x of x	common	br	Visualizando %1 - %2 de %3
+site	admin	br	Site
+sorry, there was a problem proccesing your request.	common	br	Desculpe, ocorreu um problema processando sua requisicao.
+sorry, your login has expired	login	br	Desculpe, sua conta expiorou
+specify_file_name	filemanager	br	Devera especificar um nome para cada arquivo a ser criado
+state	addressbook	br	Estado
+status	todo	br	Estado
+street	addressbook	br	Rua
+subject	nntp	br	Subject
+submit	common	br	Inserir
+sun	calendar	br	Dom
+sunday	common	br	Domingo
+that loginid has already been taken	admin	br	Este nome ja esta em uso
+that site has already been entered	admin	br	Este site ja foi cadastrado
+the following conflicts with the suggested time:<ul>x</ul>	calendar	br	os seguintes conflitos com o horario sugerido:<ul>%1</ul>
+the login and password can not be the same	admin	br	O login nao pode ser o mesmo da senha
+the two passwords are not the same	preferences	br	As duas senhas nao sao a mesma
+the two passwords are not the same	admin	br	As duas senhas nao sao a mesma
+this month	calendar	br	Este mes
+this server is located in the x timezone	preferences	br	Este servidor esta localizado no fuso horario %1
+this week	calendar	br	Esta Semana
+threads	nntp	br	Threads
+thu	calendar	br	Qui
+thursday	common	br	Quinta
+time	common	br	Hora
+time format	preferences	br	Formato horario
+time zone offset	preferences	br	Diferenca de fuso horario
+today	calendar	br	Hoje
+today is x's birthday!	common	br	Hoje e' aniversario de %1!
+todo	todo	br	a fazer
+todo list	common	br	Agenda
+todo list	todo	br	Agenda
+todo list - add	todo	br	Agenda - adicionar
+todo list - edit	todo	br	Agenda - editar
+tommorow is x's birthday.	common	br	Amanha e' aniversario de %1.
+total	common	br	Total
+total records	admin	br	Total de registros
+trouble ticket system	common	br	Sistema de gestao de tickets
+tue	calendar	br	Ter
+tuesday	common	br	Terca
+update	nntp	br	Update
+updated	common	br	Atualizado
+upload	filemanager	br	Enviar
+urgency	todo	br	Urgencia
+use cookies	login	br	usa i cookie
+use end date	calendar	br	Usar data final
+user accounts	admin	br	Contas de Usuarios
+user groups	admin	br	Grupos de Usuarios
+username	login	br	Nome Utente
+usersfile_perm_error	filemanager	br	Para corrigir este erro voce deve configurar corretamente as perimissoes nos diretoriosi.<BR> Nos sistemas *ix digite: chmod 707
+view	common	br	Visualizar
+view access log	admin	br	Visualiza Log de acesso
+view sessions	admin	br	Visualiza Sessao
+view this entry	calendar	br	Visualiza esta entrada
+wed	calendar	br	Qua
+wednesday	common	br	Quarta
+week	calendar	br	Semana
+weekday starts on	preferences	br	A Semana comeca em
+weekly	calendar	br	semanal
+which groups	common	br	Qual grupo
+which groups	todo	br	Quais Grupos
+work day ends on	preferences	br	A jornada de trabalho termina em
+work day starts on	preferences	br	A jornada de trabalho comeca em
+work phone	addressbook	br	Fone Comercial
+x matches found	calendar	br	%1 ocorrencias encontradas
+year	calendar	br	Ano
+yearly	calendar	br	Anual
+yes	common	br	Sim
+you have 1 high priority event on your calendar today.	common	br	Voce tem 1 evento com alta prioridade no seu calendario hoje.
+you have 1 new message!	common	br	Voce tem 1 nova mensagem!
+you have been successfully logged out	login	br	Voce foi desconectado com sucesso
+you have entered an invailed date	todo	br	Voce digitou uma data invalida
+you have not entered a\nbrief description	calendar	br	Voce nao digitou uma \nBreve Descricao
+you have not entered a\nvalid time of day.	calendar	br	Voce nao digitou \num horario valido.
+you have x high priority events on your calendar today.	common	br	Voce tem %1 eventos com alta prioridade no seu calendario hoje.
+you have x new messages!	common	br	Voce tem %1 novas mensagens!
+you must enter a base url	admin	br	Insira a URL base
+you must enter a display	admin	br	Voce deve digitar o display
+you must enter a news url	admin	br	Voce deve digitar uma URL de news
+you must enter a password	preferences	br	Voce deve digitar uma senha
+you must enter a password	admin	br	Voce deve digitar uma senha
+you must enter one or more search keywords	calendar	br	voce deve digitar uma ou mais palavras chave
+you must enter the number of listings display	admin	br	Digite o numero de listagens exibidas
+you must enter the number of minutes between reload	admin	br	Entre com o numero de minutos entre os reloads
+you must select a file type	admin	br	Voce deve selecionar um tipo de arquivo
+your current theme is: x	preferences	br	Seu tema corrente e': 
+your message as been sent	common	br	Sua mensagem foi enviada
+your search returned 1 match	common	br	sua pesquisa retornou 1 correspondecia
+your search returned x matchs	common	br	Sua pesquisa retornou %1 correspondencias
+your settings have been updated	common	br	suas preferencias foram atualizadas
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	br	Horiario Sugerido: <B> %1 - %2 </B> esta em conflito com as seguintes entradas no calendario:
+zip code	addressbook	br	CEP

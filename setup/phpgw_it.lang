@@ -1,0 +1,280 @@
+	common	it	
+(for weekly)	calendar	it	(per settimanale)
+1 match found	calendar	it	Trovata 1 occorrenza
+access	common	it	Accesso
+access type	todo	it	Tipo di accesso
+access type	common	it	Tipo di accesso
+account active	admin	it	Account inattivo
+account has been created	common	it	L'account è stato creato
+account has been deleted	common	it	L'Account è stato cancellato
+account has been updated	common	it	L'account è stato aggiornato
+active	admin	it	Attivo
+add	common	it	Aggiungi
+address book	common	it	Rubrica
+addressbook	common	it	Rubrica
+admin	common	it	Amministratore
+administration	common	it	Amministrazione
+all records and account information will be lost!	admin	it	Tutte le registrazioni e gli account andranno persi!
+anonymous user	admin	it	Utente anonimo
+april	common	it	Aprile
+are you sure you want to delete this account ?	admin	it	Sei sicuro di voler cancellare questo account ?
+are you sure you want to delete this group ?	admin	it	Sei sicuro di voler cancellare questo gruppo ?
+are you sure you want to delete this news site ?	admin	it	Sei sicuro di voler cancellare questo sito di notizie ?
+are you sure you want to kill this session ?	admin	it	sei sicuro di voler eliminare questa sessione ?
+are you sure\nyou want to\ndelete this entry ?	calendar	it	sei sicuro\ndi voler cancellare\nquesta nota ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro\ndi voler\ncancellare questo appuntamento ?\n\nQuesta azione lo cancellerà per\ntutti gli utenti.
+august	common	it	Agosto
+bad login or password	login	it	login o password sbagliate
+base url	admin	it	URL di base
+book marks	common	it	Segnalibri
+brief description	calendar	it	Breve Descrizione
+calendar	common	it	Calendario
+calendar - add	calendar	it	Calendario - Aggiungi
+calendar - edit	calendar	it	Calendario - Modifica
+cancel	common	it	Cancella
+change	common	it	Cambia
+change your password	preferences	it	Cambia la password
+change your settings	preferences	it	Cambia le preferenze
+charset	common	it	iso-8859-1
+chat	common	it	Chat
+clear	common	it	Cancella
+clear form	common	it	Cancella modulo
+clear form	todo	it	Cancella modulo
+clipboard_contents	filemanager	it	Contenuto Appunti
+completed	todo	it	completato
+copy	common	it	Copia
+copy_as	filemanager	it	Copia come
+create	common	it	Crea
+create group	admin	it	Crea Gruppo
+created by	common	it	Creato da
+created by	todo	it	Creato da
+current users	common	it	Utenti attivi ora
+current_file	filemanager	it	File in uso
+daily	calendar	it	giornaliera
+date	common	it	Data
+date due	todo	it	Date scadenza
+date format	preferences	it	Formato data
+days repeated	calendar	it	giorni ripetizione
+december	common	it	Dicembre
+delete	common	it	Cancella
+description	calendar	it	Descrizione
+disabled	admin	it	Disabilitato
+display	admin	it	Mostra
+done	common	it	Finito
+download	filemanager	it	Scarica
+duration	calendar	it	Durata
+e-mail	common	it	E-Mail
+edit	common	it	Modifica
+email	common	it	E-Mail
+email signature	preferences	it	Firma dell'E-Mail
+enter your new password	preferences	it	Inserisci la nuova password
+entry has been deleted sucessfully	common	it	Nota cancellata con successo
+entry updated sucessfully	common	it	Nota modificata con successo
+error	common	it	Errore
+err_saving_file	filemanager	it	Errore durante il salvataggio sul disco
+exit	common	it	Esci
+february	common	it	Febbraio
+file manager	common	it	gestione risorse
+files	filemanager	it	File
+file_upload	filemanager	it	Invia file
+filter	common	it	Filtro
+first name	common	it	Nome
+first page	common	it	prima pagina
+frequency	calendar	it	Frequeza
+fri	calendar	it	Ven
+friday	common	it	Venerdì
+ftp	common	it	FTP
+full description	calendar	it	Descrizione Completa
+generate printer-friendly version	calendar	it	Genera versione per Stampante
+global public	common	it	Pubblico Globale
+go!	calendar	it	Vai!
+group access	common	it	Accesso Gruppo
+group has been added	common	it	Il gruppo è stato aggiunto
+group has been deleted	common	it	Il gruppo è stato cancellato
+group has been updated	common	it	Il gruppo è stato aggiornato
+group name	admin	it	Nome Gruppo
+group public	common	it	Gruppo Pubblico
+groups	common	it	Gruppi
+groupsfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e dei gruppi.<BR> Nei sistemi *nix digita: chmod 707
+group_files	filemanager	it	file del gruppo
+headline sites	admin	it	Siti con titoli
+headlines	common	it	Titoli
+help	common	it	Guida
+high	common	it	Alta
+home	common	it	Pagina iniziale
+idle	admin	it	inattivo
+ip	admin	it	IP
+it has been more then x days since you changed your password	common	it	Sono passati più di %1 giorni dall'ultmia volta che hai cambiato la tua password
+january	common	it	Gennaio
+july	common	it	Luglio
+june	common	it	Giugno
+kill	admin	it	Termina
+language	preferences	it	Lingua
+last name	common	it	Cognome
+last page	common	it	ultima pagina
+last time read	admin	it	Letto ultima volta
+last updated	todo	it	Ultima Modifica
+last x logins	admin	it	Ultimi %1 login
+list of current users	admin	it	lista degli utenti attivi adesso
+listings displayed	admin	it	Listings elencati
+login	login	it	Login
+login	common	it	Login
+login time	admin	it	Ora del Login
+loginid	admin	it	Identificativo Login
+logout	common	it	Logout
+low	common	it	Bassa
+manager	admin	it	Manager
+march	common	it	Marzo
+max matchs per page	preferences	it	Numero massimo di risultati per pagina
+may	common	it	Maggio
+medium	common	it	Media
+minutes	calendar	it	minuti
+minutes between reloads	admin	it	Minuti fra i caricamenti
+mon	calendar	it	Lun
+monday	common	it	Lunedì
+month	calendar	it	Mese
+monthly (by date)	calendar	it	mensile (per data)
+monthly (by day)	calendar	it	mensile (per giorno)
+name	common	it	Nome
+new entry	calendar	it	Nuovo appuntamento
+new entry added sucessfully	common	it	Nuova nota inserita correttamente
+new group name	admin	it	Nuovo nome gruppo
+new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia vuoto se non vuoi cambiarla ]
+news file	admin	it	File delle news
+news headlines	common	it	Titoli Notizie
+news reader	common	it	Visualizzaore News
+news type	admin	it	Tipo di news
+new_file	filemanager	it	Nuovo file
+next page	common	it	prossima pagina
+no	common	it	No
+no matches found.	calendar	it	Nessuna occorrenza trovata.
+none	calendar	it	Nessuna
+normal	common	it	Normale
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	it	Nota: Questa funzione *non* cambia la tua password di posta elettronica. Deve essere fatto manualmente.
+november	common	it	Novembre
+no_file_name	filemanager	it	Nessun nome è stato specificato
+october	common	it	Ottobre
+ok	common	it	OK
+only yours	common	it	solo i tuoi
+participants	calendar	it	Partecipanti
+password	login	it	Password
+password	common	it	Password
+password has been updated	common	it	La pasword è stata aggiornata
+percent of users that logged out	admin	it	Percentuale di utenti che hanno terminato la connessione correttamente
+please, select a new theme	preferences	it	per favore, seleziona un tema
+powered by phpgroupware version	common	it	realizzato con <a href=www.phpgroupware.org>phpGroupWare</a> versione
+preferences	common	it	Preferenze
+previous page	common	it	pagina precedente
+printer friendly	calendar	it	Per Stampa
+priority	common	it	Priorità
+private	common	it	Privato
+private_files	filemanager	it	File privati
+re-enter password	admin	it	Reinserisci la password
+re-enter your password	preferences	it	Reinserisci la password
+rename	common	it	Rinomina
+rename_to	filemanager	it	Rinomina come
+repeat day	calendar	it	Giorno ripetizione
+repeat end date	calendar	it	Data fine ripetizioni
+repeat type	calendar	it	Tipo di ripetizione
+repetition	calendar	it	Ripetizione
+sat	calendar	it	Sab
+saturday	common	it	Sabato
+save	common	it	Salva
+search	common	it	Cerca
+search results	calendar	it	Risultati ricerca
+select different theme	preferences	it	Seleziona un tema differente
+select headline news sites	preferences	it	Seleziona i siti da cui prendere le notizie
+september	common	it	Settembre
+session has been killed	common	it	La sessione è stata terminata
+show all	common	it	mostra tutti
+show birthday reminders on main screen	preferences	it	Mostra sullo schermo i promemoria dei compleanni
+show current users on navigation bar	preferences	it	Mostra gli utenti collegati nella barra di navigazioner
+show high priority events on main screen	preferences	it	Mostra sullo schermo gli eventi a priorità alta
+show new messages on main screen	preferences	it	Mostra i nuovi messaggi sullo schremo principale
+show text on navigation icons	preferences	it	Mostra il testo nella barra di navigazione
+showing x	common	it	Visualizzo %1
+showing x - x of x	common	it	Visualizzo %1 - %2 di %3
+site	admin	it	Sito
+sorry, there was a problem proccesing your request.	common	it	Spiacente, c'è stato un un problema nel processare la tua richiesta.
+sorry, your login has expired	login	it	Spiacente, la tua login è scaduta
+specify_file_name	filemanager	it	Devi specificare un nome per il file che desideri creare
+status	todo	it	Stato
+submit	common	it	Inserisci
+sun	calendar	it	Dom
+sunday	common	it	Domenica
+that loginid has already been taken	admin	it	Questo nome utente è già in uso
+that site has already been entered	admin	it	Quel sito è già stato inserito
+the following conflicts with the suggested time:<ul>x</ul>	calendar	it	Il seguente è in conflitto con l'orario suggerito:<ul>%1</ul>
+the login and password can not be the same	admin	it	Il nome utente e la passvord non possono essere uguali
+the two passwords are not the same	preferences	it	Le due password non sono uguali
+the two passwords are not the same	admin	it	Tle due password non sono uguali
+this month	calendar	it	Questo mese
+this server is located in the x timezone	preferences	it	Questo server è situato nel fuso orario %1
+this week	calendar	it	Questa settimana
+thu	calendar	it	Giov
+thursday	common	it	Giovedì
+time	common	it	Ora
+time format	preferences	it	Formato orario
+time zone offset	preferences	it	Differenza di fuso orario
+today	calendar	it	Oggi
+today is x's birthday!	common	it	Oggi è il compleanno di %1!
+todo	todo	it	da fare
+todo list	todo	it	Agenda
+todo list	common	it	Agenda
+todo list - add	todo	it	Agenda - aggiungi
+todo list - edit	todo	it	Agenda - modifica
+tommorow is x's birthday.	common	it	Domani è il compleanno di %1.
+total	common	it	Totale
+total records	admin	it	Totale registrazioni
+trouble ticket system	common	it	Sistema di gestione problemi
+tue	calendar	it	Mar
+tuesday	common	it	Martedì
+updated	common	it	Aggiornato
+upload	filemanager	it	Invia
+urgency	todo	it	Urgenza
+use cookies	login	it	usa i cookie
+use end date	calendar	it	Usa data finale
+user accounts	admin	it	Account Utenti
+user groups	admin	it	gruppi di utenti
+username	login	it	Nome Utente
+usersfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e degli utenti.<BR> Nei sistemi *nix digita: chmod 707
+view	common	it	Visualizza
+view access log	admin	it	Visualizza Log di accesso
+view sessions	admin	it	Visualizza sessioni
+view this entry	calendar	it	Visualizza questo appuntamento
+wed	calendar	it	Mer
+wednesday	common	it	Mercoledì
+week	calendar	it	Settimana
+weekday starts on	preferences	it	La settiman inizia il
+weekly	calendar	it	settimanale
+which groups	common	it	quale gruppo
+which groups	todo	it	Quali gruppi
+work day ends on	preferences	it	La giornata lavorativa finisce alle
+work day starts on	preferences	it	La giornata lavorativa inizia alle
+x matches found	calendar	it	%1 occorrenze trovate
+year	calendar	it	Anno
+yearly	calendar	it	Annuale
+yes	common	it	Sì
+you have 1 high priority event on your calendar today.	common	it	Nel calendario di oggi hai 1 evento ad alta priorità.
+you have 1 new message!	common	it	Hai 1 nuovo messaggio!
+you have been successfully logged out	login	it	Sei riuscito a scollegarti correttamente
+you have entered an invailed date	todo	it	hai inserito una data sbagliata
+you have not entered a\nbrief description	calendar	it	Non hai inserito una a\nBreve Descrizione
+you have not entered a\nvalid time of day.	calendar	it	Hai inserito un a\norario non valido.
+you have x high priority events on your calendar today.	common	it	Nel calendario di oggi hai %1 eventi ad alta priorità.
+you have x new messages!	common	it	Hai %1 nuovi messaggi!
+you must enter a base url	admin	it	Devi inserire un URL di base
+you must enter a display	admin	it	Devi inserire un display
+you must enter a news url	admin	it	Devi inserire un url con notizie
+you must enter a password	preferences	it	Devi inserire una password
+you must enter a password	admin	it	Devi inserire una password
+you must enter one or more search keywords	calendar	it	Devi specificare una o più parole chiave per la ricerca
+you must enter the number of listings display	admin	it	Devi inserire il numero di display elencati
+you must enter the number of minutes between reload	admin	it	Devi inserire il numero di minuti fra i caricamenti
+you must select a file type	admin	it	Devi selezionare un tipo di file
+your current theme is: x	preferences	it	il tuo tema attuale è: 
+your message as been sent	common	it	Il tuo messaggio è stato inviato
+your search returned 1 match	common	it	La tua ricerca ha restituito 1 corrispondenza
+your search returned x matchs	common	it	La tua ricerca ha restituito %1 corrispondenze
+your settings have been updated	common	it	Le tue preferenze sono state aggiornate
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	it	L'orario da te suggerito: <B> %1 - %2 </B> è in conflitto con i seguenti appuntamenti in calendario:

@@ -1,0 +1,352 @@
+(for weekly)	calendar	fr	(pour hebdomadaire)
+1 match found	calendar	fr	1 r&eacute;sultat trouv&eacute;
+a	calendar	fr	
+access	common	fr	Acc&egrave;s
+access type	todo	fr	Type d'acc&egrave;s
+access type	common	fr	Type d'acc&egrave;s
+account active	admin	fr	Compte actif
+account has been created	common	fr	Le compte a &eacute;t&eacute; cr&eacute;&eacute;
+account has been deleted	common	fr	Le compte a &eacute;t&eacute; supprim&eacute;
+account has been updated	common	fr	Le compte a &eacute;t&eacute; mis &agrave; jour
+active	admin	fr	Actif
+add	common	fr	Ajouter
+add to addressbook	email	fr	Ajouter au carnet d'adresses
+address book	addressbook	fr	Carnet d'adresse
+address book	common	fr	Carnet d'Adressses
+addressbook	common	fr	Carnet d'adresses
+admin	common	fr	Admin
+administration	common	fr	Administration
+all records and account information will be lost!	admin	fr	Tous les enregistrements et le compte vont &ecirc;tre perdus !
+anonymous user	admin	fr	Utilisateur anonyme
+april	common	fr	Avril
+are you sure you want to delete this account ?	admin	fr	Voulez-vous vraiment supprimer ce compte ?
+are you sure you want to delete this entry	todo	fr	&Ecirc;tes-vous certain de vouloir supprimer cette entr&eacute;e ?
+are you sure you want to delete this entry ?	common	fr	Etes vous certain de vouloir supprimer cette entr&eacute;e ?
+are you sure you want to delete this group ?	admin	fr	Voulez-vous vraiment supprimer ce groupe ?
+are you sure you want to delete this news site ?	admin	fr	Voulez-vous vraiment supprimer ce site de news ?
+are you sure you want to kill this session ?	admin	fr	Voulez-vous vraiment tuer cette session ?
+are you sure\nyou want to\ndelete this entry ?	calendar	fr	&ecirc;tes vous certain\nde vouloir\nsupprimer cette entr&eacute; ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	fr	&Eacute;tes vous certain\nde vouloir\nsupprimer cette entr&eacute;e ?\n\nCeci d&eacute;truira\ncette entr&eacute;e pour tous les utilisateurs.
+august	common	fr	Au&ucirc;t
+author	nntp	fr	Auteur
+available groups	nntp	fr	Groups disponibles
+bad login or password	login	fr	Mauvais login ou mot de passe
+base url	admin	fr	URL de base
+birthday	addressbook	fr	Anniversaire
+book marks	common	fr	Signets
+bookmarks	common	fr	Signet
+brief description	calendar	fr	Description R&eacute;sum&eacute;
+calendar	common	fr	Calendrier
+calendar - add	calendar	fr	Calendrier - Ajout
+calendar - edit	calendar	fr	Calendrier - Edition
+cancel	filemanager	fr	Annuler
+cancel	common	fr	Annuler
+cc	email	fr	CC
+change	common	fr	Changer
+change your password	preferences	fr	Modifez votre mot de passe
+change your settings	preferences	fr	Modifiez vos pr&eacute;f&eacute;rences
+charset	common	fr	iso-8859-1
+chat	common	fr	Chat
+city	addressbook	fr	Ville
+clear	common	fr	Effacer
+clear form	common	fr	Effarcer le Formulaire
+clear form	todo	fr	Effacer le formulaire
+clipboard_contents	filemanager	fr	Contenus du presse-papier
+completed	todo	fr	termin&eacute;
+compose	email	fr	Composer
+copy	filemanager	fr	Copier
+copy	common	fr	Copier
+copy_as	filemanager	fr	Copier vers
+create	filemanager	fr	Cr&eacute;er
+create	common	fr	Cr&eacute;er
+create group	admin	fr	Cr&eacute;er un groupe
+created by	common	fr	Cr&eacute;&eacute; Par
+created by	todo	fr	Cr&eacute;&eacute; par
+current users	common	fr	Utilisateurs courants
+current_file	filemanager	fr	Fichier courant
+daily	calendar	fr	Quotidien
+date	nntp	fr	Date
+date	email	fr	Date
+date	common	fr	Date
+date due	todo	fr	Date butoir
+date format	preferences	fr	Format de date
+days repeated	calendar	fr	jours r&eacute;p&eacute;t&eacute;s
+december	common	fr	D&eacute;cembre
+delete	filemanager	fr	Supprimer
+delete	email	fr	Supprimer
+delete	common	fr	Supprimer
+description	calendar	fr	Description
+disabled	admin	fr	D&eacute;sactiv&eacute;
+display	admin	fr	Afficher
+done	common	fr	Fait
+download	filemanager	fr	T&eacutel&eacute;charger
+do_delete	filemanager	fr	Supprimer
+duration	calendar	fr	Dur&eacute;e
+e-mail	addressbook	fr	E-Mail
+e-mail	common	fr	E-Mail
+edit	filemanager	fr	Editer
+edit	common	fr	Editer
+email	common	fr	E-Mail
+email signature	preferences	fr	Signature E-Mail
+enter your new password	preferences	fr	Entrer votre mot de passe
+entry has been deleted sucessfully	common	fr	Entr&eacute;e supprim&eacute;e avec succ&egrave;s
+entry updated sucessfully	common	fr	Entr&eacute;e mise &agrave; jour avec succ&egrave;s
+error	common	fr	Erreur
+err_saving_file	filemanager	fr	Erreur en sauvant sur le disque
+exit	filemanager	fr	Sortir
+exit	common	fr	Sortir
+fax	addressbook	fr	Fax
+february	common	fr	F&eacute;vrier
+file manager	common	fr	Gestionnaire de fichiers
+files	filemanager	fr	Fichiers
+files	email	fr	Fichiers
+file_upload	filemanager	fr	Upload du fichier
+filter	common	fr	Filtrer
+first name	addressbook	fr	Pr&eacute;nom
+first name	common	fr	Pr&eacute;nom
+first page	common	fr	premi&egrave;re page
+folder	email	fr	Dossier
+forward	email	fr	Transf&eacute;rer
+frequency	calendar	fr	Fr&eacute;quence
+fri	calendar	fr	Ven
+friday	common	fr	Vendredi
+from	email	fr	De
+ftp	common	fr	FTP
+full description	calendar	fr	Description Compl&egrave;te
+generate printer-friendly version	calendar	fr	G&eacute;n&eacute;rer une version imprimable
+global public	common	fr	Publique
+go!	calendar	fr	Go!
+group access	common	fr	Acc&egrave;s par groupe
+group has been added	common	fr	Le groupe a &eacute;t&eacute; ajout&eacute;
+group has been deleted	common	fr	Le groupe a &eacute;t&eacute; supprim&eacute;
+group has been updated	common	fr	Le groupe a &eacute;t&eacute;Group mis &agrave; jour
+group name	admin	fr	Nom de groupe
+group public	common	fr	Publique par groupe
+groups	common	fr	Groupes
+groupsfile_perm_error	filemanager	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/groups.<BR> Sur un system *nix tappez: chmod 707
+group_files	filemanager	fr	Fichiers de groupe
+headline sites	admin	fr	Sites d'Headline
+headlines	common	fr	Headlines
+help	common	fr	Aide
+high	common	fr	Haut
+home	common	fr	Home
+home phone	addressbook	fr	T&eacute;l&eacute;phone Personnel
+idle	admin	fr	inactivit&eacute;
+image	email	fr	Image
+ip	admin	fr	IP
+it has been more then x days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas modifi&eacute; votre mot de passe
+january	common	fr	Janvier
+july	common	fr	Juillet
+june	common	fr	Juin
+kill	admin	fr	Tuer
+language	preferences	fr	Langage
+last name	addressbook	fr	Nom
+last name	common	fr	Nom
+last page	common	fr	derni&egrave;re page
+last time read	admin	fr	Heure de derni&egrave;re lecture
+last updated	todo	fr	Modifi&eacute; en dernier
+last x logins	admin	fr	Les %1 derniers logins
+list of current users	admin	fr	liste des utilisateurs connect&eacute;s en ce moment
+listings displayed	admin	fr	Affichage en listing
+login	login	fr	Login
+login	common	fr	Login
+login time	admin	fr	Heure d'entr&eacute;e
+loginid	admin	fr	LoginID
+logout	common	fr	Logout
+low	common	fr	Faible
+manager	admin	fr	Manager
+march	common	fr	Mars
+max matchs per page	preferences	fr	Nombre max d'entit&eacute;s par page
+may	common	fr	Mai
+medium	common	fr	Moyen
+message	email	fr	Message
+message x	nntp	fr	Message %1
+messages	email	fr	Messages
+minutes	calendar	fr	minutes
+minutes between reloads	admin	fr	Minutes entre chaque recharge
+mobile	addressbook	fr	T&eacute;l&eacute;phone Portable
+mon	calendar	fr	Lun
+monday	common	fr	Lundi
+monitor	nntp	fr	Monitorer
+monitor	email	fr	Monitorer
+month	calendar	fr	Mois
+monthly (by date)	calendar	fr	Mensuel (par date)
+monthly (by day)	calendar	fr	Mensuel (par jour)
+move selected messages into	email	fr	D&eacute;placer Les Messages Selectionn&eacute;s Dans
+name	common	fr	Nom
+new entry	calendar	fr	Nouvelle entr&eacute;e
+new entry added sucessfully	common	fr	Nouvelle entr&eacute;e ajout&eacute;e avec succ&egrave;s
+new group name	admin	fr	Nouveau nom de groupe
+new message	email	fr	Nouveau message
+new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laissez vide pour ne rien changer ]
+news file	admin	fr	Fichier de News
+news headlines	common	fr	News headlines
+news reader	common	fr	Lecteur de News
+news type	admin	fr	Type de News
+newsgroups	nntp	fr	Newsgroups
+new_file	filemanager	fr	Nouveau fichier
+next	nntp	fr	Suivant
+next	email	fr	Suivant
+next page	common	fr	page suivante
+no	filemanager	fr	Non
+no	common	fr	Non
+no matches found.	calendar	fr	Aucune correspondance trouv&eacute;e.
+no subject	email	fr	Pas De Sujet
+none	calendar	fr	Aucun
+normal	common	fr	Normal
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: Ceci ne change pas le mot de passe de votre email. Ceci doit &ecirc;tre fait manuellement.
+notes	addressbook	fr	Notes
+november	common	fr	Novembre
+no_file_name	filemanager	fr	Aucun nom de fichier sp&eacute;cifi&eacute;
+october	common	fr	Octobre
+ok	common	fr	OK
+only yours	common	fr	seulement les votres
+other number	addressbook	fr	Autre num&eacute;ro
+pager	addressbook	fr	Pager
+participants	calendar	fr	Participants
+password	login	fr	Mot de passe
+password	common	fr	Mot de passe
+password has been updated	common	fr	Le mot de passe a &eacute;t&eacute; mis &agrave; jour avec succ&egrave;s
+percent of users that logged out	admin	fr	Pourcentage d'utilisateurs qui se sont d&eacute;logu&eacute;s
+please select a message first	email	fr	Veuillez d'abord selectionner un message
+please, select a new theme	preferences	fr	Choisissez un nouveau theme
+powered by phpgroupware version	common	fr	Propuls&eacute; par phpGroupWare version
+preferences	common	fr	Pr&eacute;faeacute;rences
+previous	email	fr	Pr&eacute;c&eacute;dent
+previous page	common	fr	page pr&eacute;c&eacute;dente
+printer friendly	calendar	fr	Version imprimable
+priority	common	fr	Priorit&eacute;
+private	common	fr	Priv&eacute;
+private_files	filemanager	fr	Fichiers priv&eacutes;s
+re-enter password	admin	fr	Re-saisissez le mot de passe
+re-enter your password	preferences	fr	Re-rentrer votre mot de passe
+rename	filemanager	fr	Renomer
+rename	common	fr	Renomer
+rename_to	filemanager	fr	Renomer vers
+repeat day	calendar	fr	Jour de r&eacute;p&eacute;tition
+repeat end date	calendar	fr	Date de fin de r&eacute;p&eacute;tition
+repeat type	calendar	fr	Type de r&eacute;p&eacute;tition
+repetition	calendar	fr	R&eacute;p&eacute;tition
+reply	email	fr	R&eacute;pondre
+reply all	email	fr	R&eacute;pondre &agrave; tous
+sat	calendar	fr	Sam
+saturday	common	fr	Samedi
+save	filemanager	fr	Sauver
+save	common	fr	Sauver
+search	common	fr	Chercher
+search results	calendar	fr	R&eacute;sultats de la recherche
+section	email	fr	Section
+select different theme	preferences	fr	Choisissez un theme diff&eacute;rent
+select headline news sites	preferences	fr	Choisissez les site d'Headlines
+send	email	fr	Envoyer
+september	common	fr	Septembre
+session has been killed	common	fr	La session a &eacute;t&eacute; tu&eacute;e
+show all	common	fr	montrer tout
+show all groups	nntp	fr	Montrer tous les groupes
+show birthday reminders on main screen	preferences	fr	Montrer les anniversaires sur la page d'accueil
+show current users on navigation bar	preferences	fr	Montrer les utlisteurs connect&eacute;s sur la barre de navigation
+show groups containing	nntp	fr	Monter les groupes contenant
+show high priority events on main screen	preferences	fr	Montrer les &eacute;v&eacute;nements de haute priorit&eacute; sur la page d'accueil
+show new messages on main screen	preferences	fr	Montrer les nouveaux messages sur la page d'accueil
+show text on navigation icons	preferences	fr	Montrer le texte sur les icones de navigation
+showing x	common	fr	%1 &eacute;l&eacute;ments
+showing x - x of x	common	fr	&eacute;l&eacute;ments %1 - %2 de %3
+site	admin	fr	Site
+size	email	fr	Taille
+sorry, there was a problem processing your request.	common	fr	D&eacute;sol&eacute;, il y a eut un probl&egrave;me lors du traitement de votre requ&ecirc;te.
+sorry, your login has expired	login	fr	D&eacute;sol&eacute;, votre login a expir&eacute;
+specify_file_name	filemanager	fr	Vous devez donner un nom au fichier que vous d&eacute;sirez cr&eacute;er
+state	addressbook	fr	Etat
+status	todo	fr	&Eacute;tat
+street	addressbook	fr	Rue
+subject	nntp	fr	Sujet
+subject	email	fr	Sujet
+submit	common	fr	Envoyer
+sun	calendar	fr	Dim
+sunday	common	fr	Dimanche
+switch current folder to	email	fr	Changer Le Dossier Courant Vers
+that loginid has already been taken	admin	fr	Ce login est d&eacute;j&agrave; utlis&eacute;
+that site has already been entered	admin	fr	Ce site a d&eacute;j&agrave; &eacute;t&eacute; entr&eacute;
+the following conflicts with the suggested time:<ul>x</ul>	calendar	fr	Les entr&eacute;es suivantes entrent en conflit avec l'heure propos&eacute;e :<ul>%1</ul>
+the login and password can not be the same	admin	fr	Le login et le mot de passe ne peuvent pas &ecirc;tre identiques
+the two passwords are not the same	preferences	fr	Les deux mots de passes ne sont pas identiques
+the two passwords are not the same	admin	fr	Les deux mots de passe ne sont pas identiques
+this folder is empty	email	fr	Ce dossier est vide
+this month	calendar	fr	Ce mois
+this server is located in the x timezone	preferences	fr	Ce serveur est situ&eacute dans la zone de temps %1
+this week	calendar	fr	Cette semaine
+threads	nntp	fr	Threads
+thu	calendar	fr	Jeu
+thursday	common	fr	Jeudi
+time	common	fr	Heure
+time format	preferences	fr	Format d'heure
+time zone offset	preferences	fr	D&eacute;calage de la zone horaire
+to	email	fr	A
+today	calendar	fr	Aujourd'hui
+today is x's birthday!	common	fr	Aujourd'hui, c'est l'anniversaire de %1 !
+todo	todo	fr	t&acirc;ches
+todo list	todo	fr	Liste de t&acirc;ches
+todo list	common	fr	Liste de t&acirc;ches
+todo list - add	todo	fr	Liste de t&acirc;ches - ajouter
+todo list - edit	todo	fr	Liste de t&acirc;ches - &eacute;diter
+tommorow is x's birthday.	common	fr	Demain, c'est l'anniversaire de %1.
+total	common	fr	Total
+total records	admin	fr	Nombre total d'enregistrements
+trouble ticket system	common	fr	Trouble Ticket System
+tue	calendar	fr	Mar
+tuesday	common	fr	Mardi
+undisclosed recipients	email	fr	Undisclosed Recipients
+undisclosed sender	email	fr	Undisclosed Sender
+update	nntp	fr	Mettre &agrave; jour
+updated	common	fr	Mis &agrave; jour
+upload	filemanager	fr	Upload
+urgency	todo	fr	Priorit&eacute;
+use cookies	login	fr	utiliser les cookies
+use end date	calendar	fr	Utiliser la date de fin
+user accounts	admin	fr	Comptes utilisateurs
+user groups	admin	fr	Groupes d'utilisateurs
+username	login	fr	Nom d'utilisateur
+usersfile_perm_error	filemanager	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/users/.<BR> Sur un system *nix tappez: chmod 707
+view	common	fr	Voir
+view access log	admin	fr	Voir les log d'acc&egrave;s
+view sessions	admin	fr	Voir les sessions
+view this entry	calendar	fr	Voir cette entr&eacute;e
+wed	calendar	fr	Mer
+wednesday	common	fr	Mercredi
+week	calendar	fr	Semaine
+weekday starts on	preferences	fr	Le premier jour de la semaine est
+weekly	calendar	fr	Hebdomadaire
+which groups	todo	fr	Quels groupes
+which groups	common	fr	quels groupes
+work day ends on	preferences	fr	La journ&eacute;e de travaille finit &agrave;
+work day starts on	preferences	fr	La journ&eacute;e de travaille commence &agrave;
+work phone	addressbook	fr	T&eacute;l&eacute;phone Professionnel
+x matches found	calendar	fr	%1 r&eacute;sultats trouv&eacute;
+year	calendar	fr	Ann&eacute;e
+yearly	calendar	fr	Annuel
+yes	filemanager	fr	Oui
+yes	common	fr	Oui
+you have 1 high priority event on your calendar today.	common	fr	Vous avez un &eacute;v&eacute;nement de haute priorit&eacute; dans votre calendrier.
+you have 1 new message!	common	fr	Vous avez un nouveau message !
+you have been successfully logged out	login	fr	Vous avez &eacute;t&eacute; d&eacute;logu&eacute; avec succ&egrave;
+you have entered an invailed date	todo	fr	vous avez entr&eacute; une date invalide
+you have not entered a\nbrief description	calendar	fr	Vous n'avez pas saisi\de Description R&eacute;sum&eacute;
+you have not entered a\nvalid time of day.	calendar	fr	Vous n'avez pas saisi\nune heure valide.
+you have x high priority events on your calendar today.	common	fr	Vous avez %1 &eacute;v&eacute;nements de haute priorit&eacute; dans votre calendrier.
+you have x new messages!	common	fr	Vous avez %1 nouveaux messages!
+you must enter a base url	admin	fr	Vous devez entrer une URL de base
+you must enter a display	admin	fr	Vous devez entrer un affichage
+you must enter a news url	admin	fr	Vous devez entrer une URL de news
+you must enter a password	preferences	fr	Vous devez entrer un mot de passe
+you must enter a password	admin	fr	Vous devez entrer un mot de passe
+you must enter one or more search keywords	calendar	fr	Vous devez entrer au moins un mot clef pour la recherche
+you must enter the number of listings display	admin	fr	Vous devez entrer le nombre d'entit&eacute;s affich&eacute; dans chaque listing
+you must enter the number of minutes between reload	admin	fr	Vous devez entrer un le nombre de minutes entre chaque recharge
+you must select a file type	admin	fr	Vous devez entrer un type de fichier
+your current theme is: x	preferences	fr	</b>
+your message has been sent	common	fr	Votre message a &eacute;t&eacute; envoy&eacute;
+your search returned 1 match	common	fr	Votre recherche a retourn&eacute;e un r&eacute;sultat
+your search returned x matchs	common	fr	Votre recherche a retourn&eacute;e %1 r&eacutes;sultats
+your settings have been updated	common	fr	Vos pr&eacute;f&eacute;rences ont &eacute;t&eacute; mises &agrave; jour
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	fr	La plage horaire <B> %1 - %2 </B> que vous proposez entre en conflit avec les entr&eacute;es suivantes du calendrier :
+zip code	addressbook	fr	Code Postal

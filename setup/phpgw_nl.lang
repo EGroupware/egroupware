@@ -1,0 +1,378 @@
+(for weekly)	calendar	nl	(voor wekelijks)
+1 match found	calendar	nl	1 item gevonden
+1 message has been deleted	email	nl	1 bericht is verwijderd
+a	calendar	nl	
+access	common	nl	Toegang
+access type	common	nl	Soort toegang
+access type	todo	nl	Toegangs type
+account active	admin	nl	Account actief
+account has been created	common	nl	Account is aangemaakt
+account has been deleted	common	nl	Account is verwijderd
+account has been updated	common	nl	Account is bijgewerkt
+active	admin	nl	Actief
+add	common	nl	Toevoegen
+add to addressbook	email	nl	Voeg toe aan adresboek
+address book	addressbook	nl	Adresboek
+address book	common	nl	Adresboek
+addressbook	common	nl	Adresboek
+admin	common	nl	Admin
+administration	common	nl	Administratie
+all records and account information will be lost!	admin	nl	Alle records en account informatie zal verloren gaan!
+anonymous user	admin	nl	Anonieme gebruiker
+april	common	nl	April
+are you sure you want to delete this account ?	admin	nl	Weet u zeker dat u deze account wilt verwijderen ?
+are you sure you want to delete this entry	todo	nl	Weet u zeker dat u deze taak item wilt verwijderen?
+are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit item wilt verwijderen?
+are you sure you want to delete this group ?	admin	nl	Weet u zeker dat u deze groep wilt verwijderen ?
+are you sure you want to delete this news site ?	admin	nl	Weet u zeker dat u deze nieuws-site wilt verwijderen ?
+are you sure you want to kill this session ?	admin	nl	Weet u zeker dat u deze sessie wilt beëindigen?
+are you sure\nyou want to\ndelete this entry ?	calendar	nl	Weet u zeker dat u \ndeze afspraak wilt verwideren?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	nl	Weet u zeker dat \nu deze afspraak \nwilt verwijderen?\n \nDit zal deze \nafspraak voor alle \ngebruikers verwijderen.
+august	common	nl	Augustus
+author	nntp	nl	Auteur
+available groups	nntp	nl	Beschikbare groepen
+bad login or password	login	nl	Verkeerde gebruikersnaam of wachtwoord
+base url	admin	nl	Basis-URL
+birthday	addressbook	nl	Verjaardag
+book marks	common	nl	bladwijzers
+bookmarks	common	nl	bladwijzers
+brief description	calendar	nl	Korte omschrijving
+calendar	common	nl	kalendar
+calendar - add	calendar	nl	Kalendar - Toevoegen
+calendar - edit	calendar	nl	Kalendar - Bewerken
+cancel	filemanager	nl	Annuleren
+cancel	common	nl	Annuleren
+cc	email	nl	Kopie naar
+change	common	nl	Veranderen
+change your password	preferences	nl	Verander uw wachtwoord
+change your settings	preferences	nl	Verander uw instellingen
+charset	common	nl	iso-8859-1
+chat	common	nl	Chat
+city	addressbook	nl	Stad
+clear	common	nl	Wissen
+clear form	common	nl	Formulier wissen
+clear form	todo	nl	Formulier wissen
+clipboard_contents	filemanager	nl	Inhoud Klembord
+company name	addressbook	nl	Bedrijfsnaam
+completed	todo	nl	gereed
+compose	email	nl	Bericht maken
+copy	filemanager	nl	Kopieëren
+copy	common	nl	Kopieëren
+copy_as	filemanager	nl	Kopieëren naar
+create	filemanager	nl	Maken
+create	common	nl	Maken
+create group	admin	nl	Maak Groep
+created by	common	nl	Gemaakt door
+created by	todo	nl	Gemaakt door
+current users	common	nl	huidig aantal gebruikers
+current_file	filemanager	nl	Huidig Bestand
+daily	calendar	nl	Dagelijks
+date	nntp	nl	Datum
+date	email	nl	Datum
+date	common	nl	Datum
+date due	todo	nl	Datum gereed
+date format	preferences	nl	Datum formaat
+days repeated	calendar	nl	dagen herhaald
+december	common	nl	December
+default application	preferences	nl	Standaard toepassing
+default sorting order	preferences	nl	Standaard sorteer volgorde
+delete	filemanager	nl	Verwijderen
+delete	email	nl	Verwijderen
+delete	common	nl	Verwijderen
+description	calendar	nl	Omschrijving
+disabled	admin	nl	Uitgeschakeld
+display	admin	nl	Weergave
+done	common	nl	Klaar
+download	filemanager	nl	Download
+do_delete	filemanager	nl	Verwijderen
+duration	calendar	nl	Duur
+e-mail	addressbook	nl	E-Mail
+e-mail	common	nl	E-Mail
+edit	filemanager	nl	Bewerken
+edit	common	nl	Bewerken
+email	common	nl	E-Mail
+email signature	preferences	nl	E-Mail ondertekening
+enter your new password	preferences	nl	Verander uw wachtwoord
+entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
+entry updated sucessfully	common	nl	Item succesvol bijgewerkt
+error	common	nl	Fout
+error creating x x directory	common	nl	Fout bij maken van %1%2directory
+error deleting x x directory	common	nl	Fout bij verwijderen van %1%2directory
+error renaming x x directory	common	nl	Fout bij hernoemen %1%2directory
+err_saving_file	filemanager	nl	Fout bij opslaan van bestand
+exit	filemanager	nl	Einde
+exit	common	nl	Einde
+f	calendar	nl	Vr
+fax	addressbook	nl	Fax
+february	common	nl	Februari
+file manager	common	nl	Bestandsbeheer
+files	filemanager	nl	Bestanden
+files	email	nl	Bestanden
+file_upload	filemanager	nl	Bestand op server opslaan
+filter	common	nl	Filter
+first name	addressbook	nl	Voornaam
+first name	common	nl	Voornaam
+first page	common	nl	eerste pagina
+folder	email	nl	Folder
+forward	email	nl	Doorsturen
+frequency	calendar	nl	Frequentie
+fri	calendar	nl	Vr
+friday	common	nl	Vrijdag
+from	email	nl	Van
+ftp	common	nl	FTP
+full description	calendar	nl	Volledige omschrijving
+generate printer-friendly version	calendar	nl	Genereer een printer-vriendelijke versie
+global public	common	nl	Toegang Openbaar
+go!	calendar	nl	Doen!
+group access	common	nl	Groepstoegang
+group has been added	common	nl	Groep is toegevoegd
+group has been deleted	common	nl	Groep is verwijderd
+group has been updated	common	nl	Groep is bijgewerkt
+group name	admin	nl	Groepsnaam
+group public	common	nl	Toegang voor groep
+groups	common	nl	Groepen
+groupsfile_perm_error	filemanager	nl	Om deze fout te corrigeren zult u de juiste rechten moeten toekennen.<BR> Op *nix systemen typt u: chmod 707
+group_files	filemanager	nl	groepsbestanden
+headline sites	admin	nl	Headline Sites
+headlines	common	nl	Krantekoppen
+help	common	nl	Help
+high	common	nl	Hoog
+home	common	nl	Start
+home phone	addressbook	nl	Telefoon privé
+human resources	common	nl	Personeel
+idle	admin	nl	niet actief
+image	email	nl	Afbeelding
+inventory	common	nl	Magazijn
+ip	admin	nl	IP-adres
+it has been more then x days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd
+january	common	nl	Januari
+july	common	nl	Juli
+june	common	nl	Juni
+kill	admin	nl	Verwijder
+language	preferences	nl	Taal
+last name	addressbook	nl	Achternaam
+last name	common	nl	Achternaam
+last page	common	nl	laaste pagina
+last time read	admin	nl	Voor het laatst gelezen op
+last updated	todo	nl	Laatst bijgewerkt
+last x logins	admin	nl	Laatste %1 logins
+list of current users	admin	nl	lijst van huidige gebruikers
+listings displayed	admin	nl	Weergegeven lijsten
+login	login	nl	Aanmelden
+login	common	nl	Aanmelden
+login time	admin	nl	Login tijd
+loginid	admin	nl	LoginID
+logout	common	nl	Afmelden
+low	common	nl	Laag
+m	calendar	nl	Ma
+manager	admin	nl	Manager
+march	common	nl	Maart
+max matchs per page	preferences	nl	Max items per pagina
+may	common	nl	Mei
+medium	common	nl	Gemiddeld
+message	email	nl	Bericht
+message x	nntp	nl	Bericht %1
+messages	email	nl	Berichten
+minutes	calendar	nl	minuten
+minutes between reloads	admin	nl	Minuten tussen herladen
+mobile	addressbook	nl	Telefoon Mobiel
+mon	calendar	nl	Ma
+monday	common	nl	Maandag
+monitor	nntp	nl	observeer
+monitor	email	nl	Monitor
+month	calendar	nl	Maand
+monthly (by date)	calendar	nl	Maandelijks (op datum)
+monthly (by day)	calendar	nl	Maandelijks (op dag)
+move selected messages into	email	nl	Verplaats de geselecteerde berichten naar
+name	common	nl	Naam
+network news	admin	nl	Netwerk nieuws
+new entry	calendar	nl	Nieuwe afspraak
+new entry added sucessfully	common	nl	Nieuw item succesvol toegevoegd
+new group name	admin	nl	Nieuwe groepsnaam
+new message	email	nl	Nieuw bericht
+new password [ leave blank for no change ]	admin	nl	Nieuw wachtwoord [ Laat leeg om niet te wijzigen ]
+news file	admin	nl	Nieuws-bestand
+news headlines	common	nl	Nieuws koppen
+news reader	common	nl	Nieuwslezer
+news type	admin	nl	Nieuwssoort
+newsgroups	nntp	nl	Nieuwsgroepen
+new_file	filemanager	nl	Nieuw Bestand
+next	nntp	nl	Volgende
+next	email	nl	Volgende
+next page	common	nl	volgende pagina
+nntp	common	nl	NNTP
+no	filemanager	nl	Nee
+no	common	nl	Nee
+no matches found.	calendar	nl	Geen item gevonden.
+no subject	email	nl	Geen onderwerp
+none	calendar	nl	Geen
+normal	common	nl	Normaal
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	nl	opmerking: Deze optie veranderd *niet* uw email-wachtwoord. Dit moet handmatig gebeuren.
+notes	addressbook	nl	Opmerkingen
+november	common	nl	November
+no_file_name	filemanager	nl	Er is geen bestandsnaam opgegeven
+october	common	nl	Oktober
+ok	common	nl	OK
+on *nix systems please type: x	common	nl	Op *nix systemen typt u: %1
+only yours	common	nl	alleen eigen weergeven
+other number	addressbook	nl	Ander nummer
+pager	addressbook	nl	Pieper
+participants	calendar	nl	Deelnemers
+password	login	nl	Wachtwoord
+password	common	nl	Wachtwoord
+password has been updated	common	nl	Wachtwoord is gewijzigd
+percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
+permissions	admin	nl	Rechten
+permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
+please select a message first	email	nl	Selecteer eerst een bericht
+please x by hand	common	nl	Gelieve %1 handmatig uit te voeren
+please, select a new theme	preferences	nl	Selecteer een nieuw thema
+powered by phpgroupware version	common	nl	Gegenereerd door <a href=http://www.phpgroupware.org>phpGroupWare</a> versie
+preferences	common	nl	Voorkeuren
+previous	email	nl	Vorige
+previous page	common	nl	Vorige pagina
+printer friendly	calendar	nl	Printer-vriendelijk
+priority	common	nl	Prioriteit
+private	common	nl	Privé
+private_files	filemanager	nl	Persoonlijke bestanden
+re-enter password	admin	nl	Voer wachtwoord opnieuw in
+re-enter your password	preferences	nl	Voer uw wachtwoord nogmaals in
+rename	filemanager	nl	Hernoemen
+rename	common	nl	Hernoemen
+rename_to	filemanager	nl	Hernoemen als
+repeat day	calendar	nl	Herhaal dag
+repeat end date	calendar	nl	Einddatum terugkeerpatroon
+repeat type	calendar	nl	Terugkeer-patroon
+repetition	calendar	nl	Terugkeerpatroon
+reply	email	nl	Antwoorden
+reply all	email	nl	Allen antwoorden
+sa	calendar	nl	Za
+sat	calendar	nl	Za
+saturday	common	nl	Zaterdag
+save	filemanager	nl	Opslaan
+save	common	nl	Opslaan
+search	common	nl	Zoek
+search results	calendar	nl	Zoek resultaten
+section	email	nl	Sectie
+select different theme	preferences	nl	Selecteer een ander thema
+select headline news sites	preferences	nl	Selecteer Headline Nieuws sites
+select users for inclusion	admin	nl	Selecteer gebruikers
+send	email	nl	Verzenden
+september	common	nl	September
+session has been killed	common	nl	Sessie is beëindigd
+show all	common	nl	laat alles zien
+show all groups	nntp	nl	Alle groepen weergeven
+show birthday reminders on main screen	preferences	nl	Geef verjaardags herinneringen op het hoofdscherm weer
+show current users on navigation bar	preferences	nl	Geef het aantal huidige gebruikers weer op de navigatiebalk
+show groups containing	nntp	nl	Toon groepen met 
+show high priority events on main screen	preferences	nl	Geef evenementen met hoge prioriteit op het hoofdscherm weer
+show new messages on main screen	preferences	nl	Geef het aantal nieuwe berichten weer op het hoofdscherm
+show text on navigation icons	preferences	nl	Geef tekst weer op de navigatie iconen
+showing x	common	nl	weergegeven: %1
+showing x - x of x	common	nl	weergegeven: %1 - %2 van %3
+site	admin	nl	Site
+size	email	nl	Grootte
+sorry, the follow users are still a member of the group x	admin	nl	Sorry, de volgende gebruikers zijn nog lid van de groep %1
+sorry, there was a problem processing your request.	common	nl	Sorry, er is een probleem opgetreden met het verwerken van uw verzoek.
+sorry, your login has expired	login	nl	Sorry, uw sessie is verlopen
+specify_file_name	filemanager	nl	U moet een naam opgeven voor het nieuw te maken bestand
+state	addressbook	nl	Provincie
+status	todo	nl	Status
+street	addressbook	nl	Straat
+su	calendar	nl	Zo
+subject	nntp	nl	Onderwerp
+subject	email	nl	Onderwerp
+submit	common	nl	Verzenden
+sun	calendar	nl	Zo
+sunday	common	nl	Zondag
+switch current folder to	email	nl	Verander van Huidige Folder Naar
+that loginid has already been taken	admin	nl	Die gevraagde gebruikersnaam is reeds vergeven
+that site has already been entered	admin	nl	Die site is al ingevoerd
+the following conflicts with the suggested time:<ul>x</ul>	calendar	nl	Het volgende levert een conflict op met de aangegeven tijd:<ul>%1</ul>
+the login and password can not be the same	admin	nl	De login en het wachtwoord mogen niet hetzelfde zijn
+the two passwords are not the same	admin	nl	De twee wachtwoorden komen niet overeen
+the two passwords are not the same	preferences	nl	TDe twee wachtwoorden komen niet overeen
+they must be removed before you can continue	admin	nl	Zij moeten verwijderd worden voor u verder kunt
+this folder is empty	email	nl	Deze folder is leeg
+this month	calendar	nl	Deze maand
+this server is located in the x timezone	preferences	nl	 tijdzone
+this week	calendar	nl	Deze week
+threads	nntp	nl	Discussies
+thu	calendar	nl	Do
+thursday	common	nl	Donderdag
+time	common	nl	Tijd
+time format	preferences	nl	Tijd formaat
+time zone offset	preferences	nl	Tijdzone verschil
+to	email	nl	Aan
+to correct this error for the future you will need to properly set the	common	nl	Om deze fout te in de toekomst te voorkomen moet u de juiste 
+today	calendar	nl	Vandaag
+today is x's birthday!	common	nl	Vandaag is %1's verjaardag!
+todo	todo	nl	taken
+todo list	common	nl	Takenlijst
+todo list	todo	nl	Takenlijst
+todo list - add	todo	nl	Taken lijst - toevoegen
+todo list - edit	todo	nl	Taken lijst - bewerken
+tommorow is x's birthday.	common	nl	Morgen is %1's verjaardag.
+total	common	nl	Totaal
+total records	admin	nl	Totaal aantal records
+trouble ticket system	common	nl	Probleem Registratie Systeem
+tue	calendar	nl	Di
+tuesday	common	nl	Dinsdag
+undisclosed recipients	email	nl	Onbekende ontvangers
+undisclosed sender	email	nl	Onbekende afzender
+update	nntp	nl	Bijwerken
+updated	common	nl	Bijgewerkt
+upload	filemanager	nl	Bestand op server opslaan
+urgency	todo	nl	Urgentie
+use cookies	login	nl	Gerbuik cookies
+use end date	calendar	nl	Gebruik einddatum
+user accounts	admin	nl	Gebruiker accounts
+user groups	admin	nl	Gebruikersgroepen
+username	login	nl	Gebruiker
+users	common	nl	gebruikers
+usersfile_perm_error	filemanager	nl	Om deze fout te corrigeren zult u de juiste rechten moeten toekennen.<BR> Op *nix systemen typt u: chmod 707
+view	common	nl	Bekijken
+view access log	admin	nl	Bekijk bezoek-logboek
+view sessions	admin	nl	Bekijk sessies
+view this entry	calendar	nl	Bekijk deze afspraak
+w	calendar	nl	Wo
+wed	calendar	nl	Wo
+wednesday	common	nl	Woensdag
+week	calendar	nl	Week
+weekday starts on	preferences	nl	Eerste werkdag
+weekly	calendar	nl	Wekelijks
+which groups	common	nl	welke groepen
+which groups	todo	nl	Welke groepen
+work day ends on	preferences	nl	Werkdag eindigt om
+work day starts on	preferences	nl	Werkdag begint om
+work phone	addressbook	nl	Telefoon werk
+x matches found	calendar	nl	%1 items gevonden
+x messages have been deleted	email	nl	%1 berichten zijn verwijderd
+year	calendar	nl	Jaar
+yearly	calendar	nl	Jaarlijks
+yes	filemanager	nl	Ja
+yes	common	nl	Ja
+you have 1 high priority event on your calendar today.	common	nl	U hebt vandaag 1 afspraak met hoge prioriteit op uw agenda staan.
+you have 1 new message!	common	nl	U hebt 1 nieuw bericht!
+you have been successfully logged out	login	nl	U bent succesvol afgemeld
+you have entered an invailed date	todo	nl	U hebt een ongeldige datum ingevoerd
+you have not entered a\nbrief description	calendar	nl	U hebt geen korte \nomschrijving ingevoerd
+you have not entered a\nvalid time of day.	calendar	nl	U hebt geen geldig \ntijdstip ingevoerd.
+you have x high priority events on your calendar today.	common	nl	U hebt vandaag %1 afspraken met hoge prioriteit op uw agenda staan.
+you have x new messages!	common	nl	U hebt %1 nieuwe berichten!
+you must enter a base url	admin	nl	U moet een basis-url opgeven
+you must enter a display	admin	nl	U moet een weergave opgeven
+you must enter a news url	admin	nl	U moet een nieuws-url opgeven
+you must enter a password	admin	nl	U moet een wachtwoord invoeren
+you must enter a password	preferences	nl	U moet een wachtwoord opgeven
+you must enter one or more search keywords	calendar	nl	U moet een of meer trefwoorden opgeven om op te zoeken
+you must enter the number of listings display	admin	nl	U moet het aantal weer te geven lijsten opgeven
+you must enter the number of minutes between reload	admin	nl	U moet het aantal minuten tussen herladen opgeven
+you must select a file type	admin	nl	U moet een bestandstype selecteren
+your current theme is: x	preferences	nl	</b>
+your message has been sent	common	nl	Uw bericht is verzonden
+your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
+your search returned x matchs	common	nl	Uw zoekopdracht leverde %1 items op
+your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	nl	De door u opgegeven tijd <B> %1 - %2 </B> levert een confilct op met de volgende afspraken:
+zip code	addressbook	nl	Postcode
