@@ -1327,13 +1327,27 @@
         global $phpgw_info, $phpgw_setup;
 
         $sql = "create table phpgw_nextid (
-           appname varchar(25) NOT NULL,
+           appname varchar(25),
            id      int(8),
-	   UNIQUE (appname)
+           UNIQUE (appname)
           )";
 
         $phpgw_setup->db->query($sql);
         $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre19';
+    }
+
+    $test[] = '0.9.10pre19';
+    function upgrade0_9_10pre19() {
+        global $phpgw_info, $phpgw_setup;
+
+        $sql = "create table phpgw_nextid (
+           appname varchar(25) NOT NULL,
+           id      int(8),
+           UNIQUE (appname)
+          )";
+
+        $phpgw_setup->db->query($sql);
+        $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre20';
     }
 
   reset ($test);
