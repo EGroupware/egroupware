@@ -11,7 +11,7 @@
 <body bgcolor="#FFFFFF">
 
 <h2>ADOdb Library for PHP</h2>
-<p>V4.20 22 Feb 2004 (c) 2000-2004 John Lim (jlim#natsoft.com)</p>
+<p>V4.22 15 Apr 2004 (c) 2000-2004 John Lim (jlim#natsoft.com)</p>
 <p><font size="1">This software is dual licensed using BSD-Style and LGPL. This 
   means you can use it in compiled proprietary and commercial products.</font></p>
 	<p>Useful ADOdb links:  <a href=http://php.weblogs.com/adodb>Download</a> &nbsp; <a href=http://php.weblogs.com/adodb_manual>Other Docs</a>
@@ -202,24 +202,30 @@ visit <a href="http://php.weblogs.com/adodb-cool-applications">http://php.weblog
 <li>adodb.inc.php
 <li>adodb-lib.inc.php
 <li>adodb-time.inc.php
-<li>adodb-csvlib.inc.php (if you use cached recordsets - CacheExecute(), etc)
-<li>adodb-error.inc.php and lang/adodb-$lang.inc.php (if you use MetaError())
 <li>drivers/adodb-$database.inc.php
 <li>license.txt (for legal reasons)
+<li>adodb-php4.inc.php
+<li>adodb-iterator.inc.php
+</ul>
+Optional:
+<ul>
+<li>adodb-error.inc.php and lang/adodb-$lang.inc.php (if you use MetaError())
+<li>adodb-csvlib.inc.php (if you use cached recordsets - CacheExecute(), etc)
+<li>adodb-exceptions.inc.php and adodb-errorhandler.inc.php (if you use adodb error handler or php5 exceptions).
 </ul>
 
 <h3>Code Initialization Examples<a name="coding"></a></h3>
 <p>When running ADOdb, at least two files are loaded. First is adodb/adodb.inc.php, 
  which contains all functions used by all database classes. The code specific 
  to a particular database is in the adodb/driver/adodb-????.inc.php file.</p>
- <a name="adonewconnection">
+ <a name="adonewconnection"></a>
 <p>For example, to connect to a mysql database:</p>
 <pre>
 include('/path/to/set/here/adodb.inc.php');
 $conn = &amp;ADONewConnection('mysql');
 </pre>
 <p>Whenever you need to connect to a database, you create a Connection object 
-  using the <b>ADONewConnection</b></a>($driver) function. 
+  using the <b>ADONewConnection</b>($driver) function. 
   <b>NewADOConnection</b>($driver) is an alternative name for the same function.</p>
 
 <p>At this point, you are not connected to the database. You will first need to decide
@@ -256,7 +262,48 @@ different databases. The solution is to always use different userid's for differ
 <p> b. the classical 4 parameters:</p>
  <pre>
 	$conn-&gt;PConnect('localhost','userid','password','database');
- </pre>
+ </pre><a name=ldap>
+ <h4>LDAP</h4>
+  <p>Here is an example of querying a LDAP server. Thanks to Josh Eldridge for the driver and this example:
+<pre>
+ &lt;?php
+require('/path/to/adodb.inc.php');
+
+$host = 'ldap.baylor.edu';
+$ldapbase = 'ou=People,o=Baylor University,c=US';
+
+$ldap = NewADOConnection( 'ldap' );
+$ldap->Connect( $host, $user_name='', $password='', $ldapbase );
+
+echo "&lt;pre>";
+
+print_r( $ldap->ServerInfo() );
+$ldap->SetFetchMode(ADODB_FETCH_ASSOC);
+$userName = 'eldridge';
+$filter="(|(CN=$userName*)(sn=$userName*)(givenname=$userName*)(uid=$userName*))";
+
+$rs = $ldap->Execute( $filter );
+if ($rs)
+	while ($arr = $rs->FetchRow()) {
+	     print_r($arr);	
+	}
+
+$rs = $ldap->Execute( $filter );
+if ($rs) 
+	while (!$rs->EOF) {
+ 		print_r($rs->fields);	
+		$rs->MoveNext();
+	} 
+	
+$rs = $ldap->Execute( $filter );
+print_r( $ldap->GetArray( $filter ) );
+
+$rs = $ldap->Execute( $filter );
+print_r( $ldap->GetRow( $filter ) );
+
+$ldap->Close();
+echo "&lt;/pre>";
+?></pre>
 <h4>Interbase/Firebird</h4>
 You define the database in the $host parameter:
 <pre>
@@ -330,7 +377,7 @@ using the ADOdb library and Microsoft's ADO:
   <tr> 
     <td><p align="center">Connect, PConnect, NConnect<br>
         Execute, CacheExecute<br>
-        SelectLimit, SelectLimit<br>
+        SelectLimit, CacheSelectLimit<br>
         MoveNext, Close <br>
 		qstr, Affected_Rows, Insert_ID</p></td>
   </tr>
@@ -392,12 +439,12 @@ include_once('adodb.inc.php');
 
 </pre>
 <p>Don't forget to call the constructor of the parent class.
-<a name="php5">
+<a name="php5"></a>
 <h2>PHP5 Features</h2>
  ADOdb 4.02 or later will transparently determine which version of PHP you are using.
 If PHP5 is detected, the following features become available:
 <ul>
-<a name="php5iterators">
+<a name="php5iterators"></a>
 <li><b>Foreach iterators</b>: This is a very natural way of going through a recordset:
 <pre>
 	$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
@@ -407,7 +454,7 @@ If PHP5 is detected, the following features become available:
 	}
 </pre>
 <p>
-<a name="php5exceptions">
+<a name="php5exceptions"></a>
 <li><b>Exceptions</b>: Just include <i>adodb-exceptions.inc.php</i> and you can now 
 catch exceptions on errors as they occur.
 <pre>
@@ -420,6 +467,7 @@ catch exceptions on errors as they occur.
 		var_dump($e); 
 	} 
 </pre>
+<p>Note that reaching EOF is <b>not</b> considered an error nor an exception.
 </ul> 
 <h3><a name="drivers"></a>Databases Supported</h3>
 <table width="100%" border="1">
@@ -542,6 +590,23 @@ catch exceptions on errors as they occur.
     <td><font size="2">Unix and Windows</font></td>
   </tr>
   <tr valign="top"> 
+    <td><b><font size="2">informix72</font></b></td>
+    <td><font size="2">C</font></td>
+    <td><font size="2"> Informix databases before Informix 7.3 that do no support 
+      SELECT FIRST.</font></td>
+    <td><font size="2">Y/N</font></td>
+    <td><font size="2">Informix client</font></td>
+    <td><font size="2">Unix and Windows</font></td>
+  </tr>
+  <tr valign="top"> 
+    <td><b><font size="2">ldap</font></b></td>
+    <td><font size="2">C</font></td>
+    <td><font size="2">LDAP driver. See this example for usage information.</font></td>
+    <td>&nbsp;</td>
+    <td><font size="2">LDAP extension</font></td>
+    <td><font size="2">?</font></td>
+  </tr>
+  <tr valign="top"> 
     <td height="73"><b><font size="2">mssql</font></b></td>
     <td height="73"><font size="2">A</font></td>
     <td height="73"> <p><font size="2">Microsoft SQL Server 7 and later. Works 
@@ -653,6 +718,24 @@ catch exceptions on errors as they occur.
     <td><font size="2">ODBC</font></td>
     <td><font size="2">Unix and Windows. </font></td>
   </tr>
+    
+  <tr valign="top"> 
+    <td><b><font size="2">odbtp</font></b></td>
+    <td><font size="2">C</font></td>
+    <td><font size="2">Generic odbtp driver. <a href=http://odbtp.sourceforge.net/>Odbtp</a> is a software for
+	accessing Windows ODBC data sources from other operating systems.</font></td>
+    <td><font size="2">Y/N</font></td>
+    <td><font size="2">odbtp</font></td>
+    <td><font size="2">Unix and Windows</font></td>
+  </tr>
+  <tr valign="top"> 
+    <td><b><font size="2">odbtp_unicode</font></b></td>
+    <td><font size="2">C</font></td>
+    <td><font size="2">Odtbp with unicode support</font></td>
+    <td><font size="2">Y/N</font></td>
+    <td><font size="2">odbtp</font></td>
+    <td><font size="2">Unix and Windows</font></td>
+  </tr>
   <tr valign="top"> 
     <td height="34"><b><font size="2">oracle</font></b></td>
     <td height="34"><font size="2">C</font></td>
@@ -661,6 +744,14 @@ catch exceptions on errors as they occur.
     <td height="34"><font size="2">Y/N</font></td>
     <td height="34"><font size="2">Oracle client</font></td>
     <td height="34"><font size="2">Unix and Windows</font></td>
+  </tr>
+  <tr valign="top"> 
+    <td height="34"><b><font size="2">netezza</font></b></td>
+    <td height="34"><font size="2">C</font></td>
+    <td height="34"><font size="2">Netezza driver. Netezza is based on postgres code-base.</font></td>
+    <td height="34"><font size="2">Y</font></td>
+    <td height="34"><font size="2">?</font></td>
+    <td height="34"><font size="2">?</font></td>
   </tr>
   <tr valign="top"> 
     <td><b><font size="2">postgres</font></b></td>
@@ -944,6 +1035,8 @@ update or insert into the table automatically.
   fields: (ID, FirstName, LastName, Created). 
 <p> Before these functions can be called, you need to initialize the recordset 
   by performing a select on the table. Idea and code by Jonathan Younger jyounger#unilab.com. 
+ Since ADOdb 2.42, you can pass a  table name instead of a recordset into 
+GetInsertSQL (in $rs), and it will generate an insert statement for that table.
 <p> 
 <pre>&lt;?
 #==============================================
@@ -1965,6 +2058,8 @@ $ret = $db->Replace('atable2',
 	
 <p>Since 3.61, define('ADODB_FORCE_NULLS',1) and all PHP nulls will be auto-converted 
   to SQL nulls. 
+  Since ADOdb 2.42, you can pass a  table name instead of a recordset into 
+GetInsertSQL (in $rs), and it will generate an insert statement for that table.
 <p><b>PageExecute<a name="pageexecute"></a>($sql, $nrows, $page, $inputarr=false)</b> 
 <p>Used for pagination of recordset. $page is 1-based. See <a href="#ex8">Example 
   8</a>.</p>
@@ -2176,7 +2271,7 @@ as the function to retrieve a sub-string. To use this property:
 offset (1-based) to the beginning of the sub-string, and the 3rd is the length of the sub-string.
 
 
-<p><b>Param<a name="param"></a>($name )</b></p>
+<p><b>Param<a name="param"></a>($name)</b></p>
 <p>Generates a bind placeholder portably. For most databases, the bind placeholder 
   is "?". However some databases use named bind parameters such as Oracle, eg 
   ":somevar". This allows us to portably define an SQL statement with bind parameters: 
@@ -2188,12 +2283,14 @@ $stmt = $DB-&gt;Execute($stmt,array('one','two'));
 </font></pre>
 <font color="#000000"> 
 <p></p>
-<p><b>PrepareSP</b><b><a name="preparesp"></a></b><b>($sql)</b></p>
+<p><b>PrepareSP</b><b><a name="preparesp"></a></b><b>($sql, $cursor=false )</b></p>
 <p>When calling stored procedures in mssql and oci8 (oracle), and you might want 
   to directly bind to parameters that return values, or for special LOB handling. 
   PrepareSP() allows you to do so. 
 <p>Returns the same array or $sql string as Prepare( ) above. If you do not need 
   to bind to return values, you should use Prepare( ) instead.</p>
+<p>The 2nd parameter, $cursor is not used except with oci8. Setting it to true will
+force OCINewCursor to be called; this is to support output REF CURSORs.
 <p>For examples of usage of PrepareSP( ), see InParameter( ) below. 
 <p>Note: in the mssql driver, preparing stored procedures requires a special function 
   call, mssql_init( ), which is called by this function. PrepareSP( ) is available 
@@ -2512,7 +2609,11 @@ printf(&quot;&lt;p&gt;Total queries=%d; total cached=%d&lt;/p&gt;&quot;,$EXECS+$
  <p>For schema support, pass in the $table parameter, "$schema.$tablename". This is only
  supported for selected databases.
 <p><b>MetaColumnNames<a name="metacolumnames"></a>($table)</b></p>
-<p>Returns an array of column names for $table. 
+<p>Returns an array of column names for $table. Since ADOdb 4.22, this is an associative array, with the
+keys in uppercase.
+<p>
+e.g. array('FIELD1' => 'Field1', 'FIELD2'=>'Field2')
+<p>
 <p><font color="#000000"><b>MetaPrimaryKeys<a name="metaprimarykeys"></a>($table, 
   $owner=false)</b></font></font> 
 <p><font color="#000000">Returns an array containing column names that are the 
@@ -2679,6 +2780,7 @@ supports:
 <pre>
  Y: 4-digit Year
  Q: Quarter (1-4)
+ M: Month (Jan-Dec)
  m: Month (01-12)
  d: Day (01-31)
  H: Hour (00-23)
@@ -2980,6 +3082,32 @@ $<font color="#663300">rs</font>   = $<font color="#663300">conn</font>->Execute
   PHP</a>. </p>
 </font>
 <h2>Change Log<a name="Changes"></a><a name="changes"></a><a name="changelog"></a></h2>
+<p><b>4.??  2004</b>
+<p>Fixed session bug when quoting compressed/encrypted data in Replace().
+<p>Netezza Driver and LDAP drivers contributed by Josh Eldridge.
+<p>GetMenu now uses rtrim() on values instead of trim().
+<p>Changed MetaColumnNames to return an associative array, keys being the field names in uppercase.
+<p>Suggested fix to adodb-ado.inc.php affected_rows to support PHP5 variants. Thx to Alexios Fakos.
+<p>Contributed bulgarian language file by Valentin Sheiretsky valio#valio.eu.org.
+<p>Contributed romanian language file by stefan bogdan.
+<p>GetInsertSQL now checks for table name (string) in $rs, and will create a recordset for that
+table automatically. Contributed by Walt Boring. Also added OCI_B_BLOB in bind on Walt's request - hope
+it doesn't break anything :-)
+<p>Some minor postgres speedups in _initrs().
+<p> ChangeTableSQL checks now if MetaColumns returns empty. Thx Jason Judge.
+<p>Added ADOConnection::Time(), returns current database time in unix timestamp format, or false.
+<p><b>4.21 20 Mar 2004</b>
+<p>We no longer in SelectLimit for VFP driver add SELECT TOP X unless an ORDER BY exists.
+<p>Pim Koeman contributed dutch language file adodb-nl.inc.php.
+<p>Rick Hickerson added CLOB support to db2 datadict.
+<p>Added odbtp driver. Thx to "stefan bogdan" sbogdan#rsb.ro.
+<p>Changed PrepareSP() 2nd parameter, $cursor, to default to true (formerly false). Fixes oci8 backward
+compat problems with OUT params.
+<p>Fixed month calculation error in adodb-time.inc.php. 2102-June-01 appeared as 2102-May-32.
+<p>Updated PHP5 RC1 iterator support. API changed, hasMore() renamed to valid().
+<p>Changed internal format of serialized cache recordsets. As we store a version number, this should be
+backward compatible.
+<p>Error handling when driver file not found was flawed in ADOLoadCode(). Fixed.
 <p><b>4.20 27 Feb 2004</b>
 <p>Updated to AXMLS 1.01.
 <p>MetaForeignKeys for postgres7 modified by Edward Jaramilla, works on pg 7.4.

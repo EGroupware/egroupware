@@ -581,6 +581,7 @@ class ADODB_Session {
 		}
 
 		if (!$clob) {	// no lobs, simply use replace()
+			$arr[$data] = $conn->qstr($val);
 			$rs = $conn->Replace($table, $arr, 'sesskey', $autoQuote = true);
 			ADODB_Session::_dumprs($rs);
 		} else {

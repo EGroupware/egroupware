@@ -11,7 +11,7 @@
 <body bgcolor="#FFFFFF">
 <h3>ADODB Session Management Manual</h3>
 <p>
-V4.20 22 Feb 2004 (c) 2000-2004 John Lim (jlim#natsoft.com.my)
+V4.22 15 Apr 2004 (c) 2000-2004 John Lim (jlim#natsoft.com.my)
 <p> <font size=1>This software is dual licensed using BSD-Style and LGPL. This 
   means you can use it in compiled proprietary and commercial products. </font> 
 <p>Useful ADOdb links:  <a href=http://php.weblogs.com/adodb>Download</a> &nbsp; <a href=http://php.weblogs.com/adodb_manual>Other Docs</a>
@@ -186,12 +186,36 @@ When a session is first created, we check a global variable $ADODB_SESSION_EXPIR
         }</font>
     </pre>
 	<p>
- 
+ 	NOTE 1: If you have register_globals disabled in php.ini, then you will have to
+	manually set the EXPIREREF. E.g.
+	  <pre> <font color=#004040>
+	    $GLOBALS['USERID'] =& $_SESSION['USERID'];
+        $ADODB_SESSION_EXPIRE_NOTIFY = array('USERID','NotifyFn');
+    </font></pre>
     <p>
-    NOTE: If you want to change the EXPIREREF after the session record has been
+    NOTE 2: If you want to change the EXPIREREF after the session record has been
     created, you will need to modify any session variable to force a database
     record update.
-<h4>Compression/Encryption Schemes</h4>
+
+<h4>Neat Notification Tricks</h4>
+
+<p><i>ExpireRef</i> normally holds the user id of the current session.
+<p>
+1. You can then write a session monitor, scanning expireref to see
+who is currently logged on.
+<p>
+2. If you delete the sessions record for a specific user, eg.
+<pre>
+delete from sessions where expireref = '$USER'
+</pre>
+then the user is logged out. Useful for ejecting someone from a
+site.
+<p>
+3. You can scan the sessions table to ensure no user
+can be logged in twice. Useful for security reasons.
+<p>
+
+<h3>Compression/Encryption Schemes</h3>
 Since ADOdb 4.05, thanks to Ross Smith,  multiple encryption and compression schemes are supported.
   Currently, supported:
 <pre>

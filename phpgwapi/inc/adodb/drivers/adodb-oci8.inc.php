@@ -1,7 +1,7 @@
 <?php
 /*
 
-  version V4.20 22 Feb 2004 (c) 2000-2004 John Lim. All rights reserved.
+  version V4.22 15 Apr 2004 (c) 2000-2004 John Lim. All rights reserved.
 
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
@@ -110,6 +110,14 @@ class ADODB_oci8 extends ADOConnection {
 		}
 		$rs->Close();
 		return $retarr;
+	}
+	
+	function Time()
+	{
+		$rs =& $this->Execute("select TO_CHAR($this->sysTimeStamp,'YYYY-MM-DD HH24:MI:SS') from dual");
+		if ($rs && !$rs->EOF) return $this->UnixTimeStamp(reset($rs->fields));
+		
+		return false;
 	}
  
 /*
@@ -588,6 +596,7 @@ NATSOFT.DOMAIN =
 		if ($rez) $rs->Close();
 		return $rez;
 	}
+
 	
 	/*
 		Example of usage:
@@ -683,6 +692,11 @@ NATSOFT.DOMAIN =
 			if ($type !== false) $rez = OCIBindByName($stmt[1],":".$name,$var,$size,$type);
 			else $rez = OCIBindByName($stmt[1],":".$stmt[2],$var,$size); // +1 byte for null terminator
 			$stmt[2] += 1;
+		} else if ($type == OCI_B_BLOB){
+            //we have to create a new Descriptor here
+            $_blob = OCINewDescriptor($this->_connectionID, OCI_D_LOB);
+            $rez = OCIBindByName($stmt[1], ":".$name, &$_blob, -1, OCI_B_BLOB);
+            $rez = $_blob;
 		} else {
 			if ($type !== false) $rez = OCIBindByName($stmt[1],":".$name,$var,$size,$type);
 			else $rez = OCIBindByName($stmt[1],":".$name,$var,$size); // +1 byte for null terminator

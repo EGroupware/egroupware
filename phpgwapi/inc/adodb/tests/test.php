@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -10,6 +10,7 @@ V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights rese
 */
 
 error_reporting(E_ALL);
+
 $ADODB_FLUSH = true;
 
 define('ADODB_ASSOC_CASE',0);
@@ -29,13 +30,13 @@ function CheckWS($conn)
 global $ADODB_EXTENSION;
 
 	include_once('../session/adodb-session.php');
-	
+	if (defined('CHECKWSFAIL')){ echo " TESTING $conn ";flush();}
 	$saved = $ADODB_EXTENSION;
 	$db = ADONewConnection($conn);
 	$ADODB_EXTENSION = $saved;
 	if (headers_sent()) {
 		print "<p><b>White space detected in adodb-$conn.inc.php or include file...</b></p>";
-		die();
+		//die();
 	}
 }
 
@@ -103,7 +104,6 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	}
 	$ADODB_CACHE_DIR = dirname(TempNam('/tmp','testadodb'));
 	$db->debug = false;
-	
 	//print $db->UnixTimeStamp('2003-7-22 23:00:00');
 	
 	$phpv = phpversion();
@@ -116,6 +116,14 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	echo "<br>";
 	$e = error_reporting(E_ALL-E_WARNING);
 	flush();
+	
+	$tt  = $db->Time(); 
+	if ($tt == 0) echo '<br><b>$db->Time failed</b>';
+	else echo "<br>db->Time: ".date('d-m-Y H:i:s',$tt);
+	echo '<br>';
+	
+	
+	
 	print "<i>date1</i> (1969-02-20) = ".$db->DBDate('1969-2-20');
 	print "<br><i>date1</i> (1999-02-20) = ".$db->DBDate('1999-2-20');
 	print "<br><i>date1.1</i> 1999 = ".$db->DBDate("'1999'");
@@ -435,7 +443,6 @@ END adodb;
 		} else {
 			print "<b>Error in using Cursor Variables 1</b><p>";
 		}
-		
 		
 		print "<h4>Testing Stored Procedures for oci8</h4>";
 		
@@ -1296,6 +1303,11 @@ END adodb;
 		}
 	}
 	
+	$saved = $db->debug;
+	$db->debug=1;
+	$cnt = _adodb_getcount($db, 'select * from ADOXYZ where firstname in (select firstname from ADOXYZ)');
+	echo "<b>Count=</b> $cnt";
+	$db->debug=$saved;
 	
 	global $TESTERRS;
 	$debugerr = true;
@@ -1399,7 +1411,7 @@ if (isset($_SERVER['argv'][1])) {
 	$HTTP_GET_VARS[$_SERVER['argv'][1]] = 1;
 }
 
-if (@$HTTP_SERVER_VARS['COMPUTERNAME'] == 'TIGRESS') {
+if ( @$HTTP_SERVER_VARS['COMPUTERNAME'] == 'TIGRESS') {
 	CheckWS('mysqlt');
 	CheckWS('postgres');
 	CheckWS('oci8po');

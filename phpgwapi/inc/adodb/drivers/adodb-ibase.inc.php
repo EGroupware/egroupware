@@ -1,6 +1,6 @@
 <?php
 /*
-V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.  
+V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.  
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -294,8 +294,9 @@ class ADODB_ibase extends ADOConnection {
 			$fn = 'ibase_execute';
 			$sql = $sql[1];
 			
-			if (is_array($iarr)) {	
-				if (ADODB_PHPVER >= 0x4050) { // actually 4.0.4
+			if (is_array($iarr)) {
+				if  (ADODB_PHPVER >= 0x4050) { // actually 4.0.4
+					if ( !isset($iarr[0]) ) $iarr[0] = ''; // PHP5 compat hack
 					$fnarr =& array_merge( array($sql) , $iarr);
 					$ret = call_user_func_array($fn,$fnarr);
 				} else {
@@ -317,6 +318,7 @@ class ADODB_ibase extends ADOConnection {
 		
 			if (is_array($iarr)) {	
 				if (ADODB_PHPVER >= 0x4050) { // actually 4.0.4
+					if ( !isset($iarr[0]) ) $iarr[0] = ''; // PHP5 compat hack
 					$fnarr =& array_merge( array($conn,$sql) , $iarr);
 					$ret = call_user_func_array($fn,$fnarr);
 				} else {

@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -90,7 +90,7 @@ global $HTTP_SERVER_VARS;
 		if (is_array($sql)) $sql = $sql[0];
 		$arr = array('b'=>trim(substr($sql,0,230)),
 					'c'=>substr($sql,0,3900), 'd'=>$params,'e'=>$tracer,'f'=>round($time,6));
-
+		//var_dump($arr);
 		$saved = $conn->debug;
 		$conn->debug = 0;
 		
@@ -597,7 +597,7 @@ Committed_AS:   348732 kB
 	if (!isset($_SESSION['ADODB_PERF_SQL'])) $nsql = $_SESSION['ADODB_PERF_SQL'] = 10;
 	else  $nsql = $_SESSION['ADODB_PERF_SQL'];
 	
-	$app .= '<font size=-1>'.$info['description'].'</font>';
+	$app .= $info['description'];
 	
 	
 	if (isset($HTTP_GET_VARS['do'])) $do = $HTTP_GET_VARS['do'];
@@ -616,10 +616,10 @@ Committed_AS:   348732 kB
 	
 	if  (empty($HTTP_GET_VARS['hidem']))
 	echo "<table border=1 width=100% bgcolor=lightyellow><tr><td colspan=2>
-	<b><a href=http://php.weblogs.com/adodb?perf=1>ADOdb</a> Performance Monitor</b> for $app</tr><tr><td>
-	<a href=?do=stats>Performance Stats</a> &nbsp; <a href=?do=viewsql>View SQL</a>
-	 &nbsp; <a href=?do=tables>View Tables</a> &nbsp; <a href=?do=poll>Poll Stats</a>",
-	 $allowsql ? ' &nbsp; <a href=?do=dosql>Run SQL</a>' : '',
+	<b><a href=http://php.weblogs.com/adodb?perf=1>ADOdb</a> Performance Monitor</b> <font size=1>for $app</font></tr><tr><td>
+	<a href=?do=stats><b>Performance Stats</b></a> &nbsp; <a href=?do=viewsql><b>View SQL</b></a>
+	 &nbsp; <a href=?do=tables><b>View Tables</b></a> &nbsp; <a href=?do=poll><b>Poll Stats</b></a>",
+	 $allowsql ? ' &nbsp; <a href=?do=dosql><b>Run SQL</b></a>' : '',
 	 "$form",
 	 "</tr></table>";
 

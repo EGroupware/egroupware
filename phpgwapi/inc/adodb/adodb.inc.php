@@ -14,7 +14,7 @@
 /**
 	\mainpage 	
 	
-	 @version V4.20 22 Feb 2004 (c) 2000-2004 John Lim (jlim\@natsoft.com.my). All rights reserved.
+	 @version V4.22 15 Apr 2004 (c) 2000-2004 John Lim (jlim\@natsoft.com.my). All rights reserved.
 
 	Released under both BSD license and Lesser GPL library license. You can choose which license
 	you prefer.
@@ -133,7 +133,7 @@
 		$ADODB_FETCH_MODE = ADODB_FETCH_DEFAULT;
 		
 		if (!isset($ADODB_CACHE_DIR)) {
-			$ADODB_CACHE_DIR = '/tmp';
+			$ADODB_CACHE_DIR = '/tmp'; //(isset($_ENV['TMP'])) ? $_ENV['TMP'] : '/tmp';
 		} else {
 			// do not accept url based paths, eg. http:/ or ftp:/
 			if (strpos($ADODB_CACHE_DIR,'://') !== false) 
@@ -147,7 +147,7 @@
 		/**
 		 * ADODB version as a string.
 		 */
-		$ADODB_vers = 'V4.20 22 Feb 2004 (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved. Released BSD & LGPL.';
+		$ADODB_vers = 'V4.22 15 Apr 2004 (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved. Released BSD & LGPL.';
 	
 		/**
 		 * Determines whether recordset->RecordCount() is used. 
@@ -323,10 +323,14 @@
 	*/
 	function outp($msg,$newline=true)
 	{
-	global $HTTP_SERVER_VARS,$ADODB_FLUSH;
+	global $HTTP_SERVER_VARS,$ADODB_FLUSH,$ADODB_OUTP;
 	
 		if (defined('ADODB_OUTP')) {
 			$fn = ADODB_OUTP;
+			$fn($msg,$newline);
+			return;
+		} else if (isset($ADODB_OUTP)) {
+			$fn = $ADODB_OUTP;
 			$fn($msg,$newline);
 			return;
 		}
@@ -337,6 +341,14 @@
 		else echo strip_tags($msg);
 		if (!empty($ADODB_FLUSH) && ob_get_length() !== false) flush(); //  dp not flush if output buffering enabled - useless - thx to Jesse Mullan 
 		
+	}
+	
+	function Time()
+	{
+		$rs =& $this->Execute("select $this->sysTimeStamp");
+		if ($rs && !$rs->EOF) return $this->UnixTimeStamp(reset($rs->fields));
+		
+		return false;
 	}
 	
 	/**
@@ -474,7 +486,7 @@
 	 * 			if the database does not support prepare.
 	 *
 	 */	
-	function PrepareSP($sql,$param=false)
+	function PrepareSP($sql,$param=true)
 	{
 		return $this->Prepare($sql,$param);
 	}
@@ -786,9 +798,10 @@
 	
 	function& _Execute($sql,$inputarr=false)
 	{
-		// debug version of query
+
 		if ($this->debug) {
 		global $HTTP_SERVER_VARS;
+		
 			$ss = '';
 			if ($inputarr) {
 				foreach($inputarr as $kk=>$vv) {
@@ -802,44 +815,41 @@
 			// check if running from browser or command-line
 			$inBrowser = isset($HTTP_SERVER_VARS['HTTP_USER_AGENT']);
 			
-			if ($inBrowser)
+			if ($inBrowser) {
 				if ($this->debug === -1)
-				ADOConnection::outp( "<br>\n($this->databaseType): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<br>\n",false);
-				else ADOConnection::outp( "<hr />\n($this->databaseType): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<hr />\n",false);
-			else
-				ADOConnection::outp(  "=----\n($this->databaseType): ".($sqlTxt)." \n-----\n",false);
-			
+					ADOConnection::outp( "<br>\n($this->databaseType): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<br>\n",false);
+				else 
+					ADOConnection::outp( "<hr>\n($this->databaseType): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<hr>\n",false);
+			} else {
+				ADOConnection::outp("-----\n($this->databaseType): ".($sqlTxt)." \n-----\n",false);
+			}
 			$this->_queryID = $this->_query($sql,$inputarr);
 			/* 
 				Alexios Fakios notes that ErrorMsg() must be called before ErrorNo() for mssql
-				because ErrorNo() calls Execute('SELECT @ERROR'), causing recure
+				because ErrorNo() calls Execute('SELECT @ERROR'), causing recursion
 			*/
 			if ($this->databaseType == 'mssql') { 
-			// ErrorNo is a slow function call in mssql, and not reliable
-			// in PHP 4.0.6
+			// ErrorNo is a slow function call in mssql, and not reliable in PHP 4.0.6
 				if($emsg = $this->ErrorMsg()) {
-					$err = $this->ErrorNo();
-					if ($err) {
-						ADOConnection::outp($err.': '.$emsg);
-					}
+					if ($err = $this->ErrorNo()) ADOConnection::outp($err.': '.$emsg);
 				}
-			} else 
-				if (!$this->_queryID) {
-					$e = $this->ErrorNo();
-					$m = $this->ErrorMsg();
-					ADOConnection::outp($e .': '. $m );
-				}
+			} else if (!$this->_queryID) {
+				ADOConnection::outp($this->ErrorNo() .': '. $this->ErrorMsg());
+			}	
 		} else {
+			//****************************
 			// non-debug version of query
+			//****************************
 			
 			$this->_queryID =@$this->_query($sql,$inputarr);
 		}
 		
 		/************************
-			OK, query executed
+		// OK, query executed
 		*************************/
-		// error handling if query fails
+
 		if ($this->_queryID === false) {
+		// error handling if query fails
 			if ($this->debug == 99) adodb_backtrace(true,5);	
 			$fn = $this->raiseErrorFn;
 			if ($fn) {
@@ -847,7 +857,10 @@
 			} 
 				
 			return false;
-		} else if ($this->_queryID === true) {
+		} 
+		
+		
+		if ($this->_queryID === true) {
 		// return simplified empty recordset for inserts/updates/deletes with lower overhead
 			$rs =& new ADORecordSet_empty();
 			return $rs;
@@ -855,7 +868,7 @@
 		
 		// return real recordset from select statement
 		$rsclass = $this->rsPrefix.$this->databaseType;
-		$rs =& new $rsclass($this->_queryID,$this->fetchMode); // &new not supported by older PHP versions
+		$rs =& new $rsclass($this->_queryID,$this->fetchMode);
 		$rs->connection = &$this; // Pablo suggestion
 		$rs->Init();
 		if (is_array($sql)) $rs->sql = $sql[0];
@@ -1972,7 +1985,7 @@
 		
 		$arr = array();
 		foreach($objarr as $v) {
-			$arr[] = $v->name;
+			$arr[strtoupper($v->name)] = $v->name;
 		}
 		return $arr;
 	}
@@ -2640,7 +2653,7 @@
 	*
 	* @return false or array containing the current record
 	*/
-	function FetchRow()
+	function &FetchRow()
 	{
 		if ($this->EOF) return false;
 		$arr = $this->fields;
@@ -3269,12 +3282,12 @@
 		 *			unless paramter $colnames is used.
 		 * @param fieldarr	holds an array of ADOFieldObject's.
 		 */
-		function InitArrayFields($array,$fieldarr)
+		function InitArrayFields(&$array,&$fieldarr)
 		{
-			$this->_array = $array;
+			$this->_array =& $array;
 			$this->_skiprow1= false;
 			if ($fieldarr) {
-				$this->_fieldobjects = $fieldarr;
+				$this->_fieldobjects =& $fieldarr;
 			} 
 			$this->Init();
 		}
@@ -3412,7 +3425,7 @@
 		if ($ok) return $db;
 		
 		$file = ADODB_DIR."/drivers/adodb-".$db.".inc.php";
-		if (file_exists($file)) ADOConnection::outp("Missing file: $file");
+		if (!file_exists($file)) ADOConnection::outp("Missing file: $file");
 		else ADOConnection::outp("Syntax error in file: $file");
 		return false;
 	}
