@@ -1,4 +1,4 @@
-This release requires you to change your addressbook table.  You need to add the field company varchar(255) after the notes field.
+This release requires you to resubmit all of your user accounts.  The format of the groups field
+has changed.
 
-The groups table has changed greatly. This should be the last changed the groups table requires
-for quite a while.
+The inventory program has a new field called mstock.

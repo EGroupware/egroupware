@@ -18,6 +18,8 @@
 	     no information followed the colon, a bunch of error messages were
 	     displayed ("xxx not an object"). Fixed.
 	   - Inventory program now supports changeable status fields.
+	   - Added feature to show minium in stock products in different colors.
+	   
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly
