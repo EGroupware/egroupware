@@ -38,7 +38,8 @@
 		'notes'		=> True,
 		'projects'	=> True,
 		'phonelog'	=> True,
-		'infolog'	=> True
+		'infolog'	=> True,
+		'phpwebhosting'	=> True,
 	);
 
 	function is_odd($n)
@@ -71,6 +72,11 @@
 			{
 				$error = lang('Sorry, that group name has already been taken.');
 			}
+		}
+
+		if (preg_match ("/\D/", $account_file_space_number))
+		{
+			$error = lang ('File space must be an integer');
 		}
 
 		if (!$error)
@@ -153,10 +159,16 @@
 				{
 					$pref->save_repository();
 				}
+
 				// This is down here so we are sure to catch the acl changes
 				// for LDAP to update the memberuid attribute
 				$group->save_repository();
 			}
+
+			// Update any other options here, since the above save_repository () depends
+			// on a group having users
+			$group->data['file_space'] = $account_file_space_number . "-" . $account_file_space_type;
+			$group->save_repository ();
 
 			if ($old_group_name <> $n_group)
 			{
@@ -251,6 +263,31 @@
 			. '</option>'."\n";
 	}
 	$p->set_var('user_list',$user_list);
+
+	$group_repository = $accounts->read_repository ();
+	if (!$group_repository['file_space'])
+	{
+		$group_repository['file_space'] = $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type'];
+	}
+	$file_space_array = explode ("-", $group_repository['file_space']);
+	$account_file_space_number = $file_space_array[0];
+	$account_file_space_type = $file_space_array[1];
+	$account_file_space_type_selected[$account_file_space_type] = "selected";
+
+	$account_file_space = '
+		<input type=text name="account_file_space_number" value="' . $account_file_space_number . '" size="7">';
+	$account_file_space_select ='<select name="account_file_space_type">';
+	$account_file_space_types = array ("gb", "mb", "kb", "b");
+	while (list ($num, $type) = each ($account_file_space_types))
+	{
+		$account_file_space_select .= "<option value=$type " . $account_file_space_type_selected[$type] . ">" . strtoupper ($type) . "</option>";
+	}
+	$account_file_space_select .= '</select>';
+
+	$p->set_var ('lang_file_space', "File space");
+	$p->set_var ('account_file_space', $account_file_space);
+	$p->set_var ('account_file_space_select', $account_file_space_select);
+
 	$p->set_var('lang_permissions',lang('Permissions this group has'));
 
 	$i = 0;

@@ -16,6 +16,13 @@
     </tr>
 
     <tr>
+     <td>{lang_file_space}</td>
+     <td>
+	{account_file_space}{account_file_space_select}
+     </td>
+    </td>
+
+    <tr>
      <td>{lang_permissions}</td>
      <td><table width="100%" border="0" cols="6">
       {permissions_list}

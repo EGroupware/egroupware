@@ -44,7 +44,11 @@
  
     <tr bgcolor="{tr_color2}">
      <td>{lang_groups}</td>
-     <td colspan="3">{groups_select}&nbsp;</td>
+     <td>{groups_select}&nbsp;</td>
+     <td>{lang_file_space}</td>
+     <td>{account_file_space}{account_file_space_select}</td>
+    </tr>
+
     </tr>
 
     {permissions_list}

@@ -63,6 +63,10 @@
 			$account_expires = -1;
 		}
 
+		if (preg_match ("/\D/", $account_file_space_number))
+		{
+			$error = lang ('File space must be an integer');
+		}
 
 		if (!$error)
 		{
@@ -83,7 +87,8 @@
 				'account_firstname' => $n_group,
 				'account_lastname'  => 'Group',
 				'account_status'    => 'A',
-				'account_expires'   => $account_expires
+				'account_expires'   => $account_expires,
+				'account_file_space' => $account_file_space_number . "-" . $account_file_space_type,
 			);
 			$group->create($account_info);
 			$group_id = $phpgw->accounts->name2id($n_group);
@@ -173,7 +178,7 @@
 	$p->set_var("form_action",$phpgw->link("/admin/newgroup.php"));
 	$p->set_var("hidden_vars","");
 	$p->set_var("lang_group_name",lang("New group name"));
-	$p->set_var("group_name_value","");
+	$p->set_var("group_name_value",$n_group);
 
 	$accounts = CreateObject('phpgwapi.accounts',$group_id);
 	$account_list = $accounts->get_list('accounts');
@@ -207,6 +212,31 @@
 	}
 
 	$p->set_var("user_list",$user_list);
+
+	if (!$account_file_space_number)
+	{
+		$account_file_space_number = $phpgw_info['server']['vfs_default_account_size_number'];
+	}
+	if (!$account_file_space_type)
+	{
+		$account_file_space_type = $phpgw_info['server']['vfs_default_account_size_type'];
+	}
+	$account_file_space_type_selected[$account_file_space_type] = "selected";
+
+	$account_file_space = '
+		<input type=text name="account_file_space_number" value="' . $account_file_space_number . '" size="7">';
+	$account_file_space_select ='<select name="account_file_space_type">';
+	$account_file_space_types = array ("gb", "mb", "kb", "b");
+	while (list ($num, $type) = each ($account_file_space_types))
+	{
+		$account_file_space_select .= "<option value=$type " . $account_file_space_type_selected[$type] . ">" . strtoupper ($type) . "</option>";
+	}
+	$account_file_space_select .= '</select>';
+
+	$p->set_var ('lang_file_space', "File space");
+	$p->set_var ('account_file_space', $account_file_space);
+	$p->set_var ('account_file_space_select', $account_file_space_select);
+
 	$p->set_var("lang_permissions",lang("Permissions this group has"));
 
 	$i = 0;

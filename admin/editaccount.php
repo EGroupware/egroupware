@@ -97,7 +97,8 @@
 			'lang_groups'		=> lang('Groups'),
 			'lang_expires'		=> lang('Expires'),
 			'lang_firstname'	=> lang('First Name'),
-			'lang_button'		=> lang('Save')
+			'lang_button'		=> lang('Save'),
+			'lang_file_space'	=> lang('File Space'),
 		);
 		$t->set_var($var);
 		$t->parse('form_buttons','form_buttons_',True);
@@ -120,6 +121,29 @@
 		$_m = $phpgw->sbox->getmonthtext('account_expires_month',$userData['account_expires_month']);
 		$_d = $phpgw->sbox->getdays('account_expires_day',$userData['account_expires_day']);
 		
+		if (!$userData['file_space'])
+		{
+			$userData['file_space'] = $phpgw_info['server']['vfs_default_account_size_number'] . "-" . $phpgw_info['server']['vfs_default_account_size_type'];
+		}
+		$file_space_array = explode ("-", $userData['file_space']);
+		$account_file_space_number = $file_space_array[0];
+		$account_file_space_type = $file_space_array[1];
+		$account_file_space_type_selected[$account_file_space_type] = "selected";
+
+		$account_file_space = '
+			<input type=text name="account_file_space_number" value="' . $account_file_space_number . '" size="7">';
+		$account_file_space_select ='<select name="account_file_space_type">';
+		$account_file_space_types = array ("gb", "mb", "kb", "b");
+		while (list ($num, $type) = each ($account_file_space_types))
+		{
+			$account_file_space_select .= "<option value=$type " . $account_file_space_type_selected[$type] . ">" . strtoupper ($type) . "</option>";
+		}
+		$account_file_space_select .= '</select>';
+
+		$t->set_var ('lang_file_space', "File space");
+		$t->set_var ('account_file_space', $account_file_space);
+		$t->set_var ('account_file_space_select', $account_file_space_select);
+
 		$var = Array(
 			'input_expires'	=> $phpgw->common->dateformatorder($_y,$_m,$_d,True),
 			'account_lid'	=> '<input name="account_lid" value="' . $userData['account_lid'] . '">',
@@ -128,7 +152,8 @@
 			'homedirectory'	=> $homedirectory,
 			'loginshell'	=> $loginshell,
 			'account_passwd'	=> $account_passwd,
-			'account_passwd_2'	=> $account_passwd_2
+			'account_passwd_2'	=> $account_passwd_2,
+			'account_file_space'	=> $account_file_space,
 		);
 		$t->set_var($var);
 		$t->parse('password_fields','form_passwordinfo',True);
@@ -362,6 +387,12 @@
 			$_userData['expires'] = -1;
 		}
 
+		$check_account_file_space = explode ("-", $_userData['file_space']);
+		if (preg_match ("/\D/", $check_account_file_space[0]))
+		{
+			$error[$totalerrors++] = lang ('File space must be an integer');
+		}
+
 		if ($totalerrors == 0)
 		{
 			return FALSE;
@@ -420,9 +451,10 @@
 			'loginshell'            => $loginshell,
 			'account_expires_month' => $account_expires_month,
 			'account_expires_day'   => $account_expires_day,
-			'account_expires_year'  => $account_expires_year
+			'account_expires_year'  => $account_expires_year,
+			'file_space'	=> $account_file_space_number . "-" . $account_file_space_type,
 		);
-		
+
 		if (!$errors = userDataInvalid($userData))
 		{ 
 			saveUserData($userData);
