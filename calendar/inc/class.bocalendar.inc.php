@@ -521,7 +521,7 @@
 				}
 
 				$event = $this->get_cached_event();
-				if(!@$event['participants'][$l_cal['owner']])
+				if(!@isset($event['participants'][$l_cal['owner']]))
 				{
 					$this->so->add_attribute('owner',$minparts);
 				}
@@ -623,7 +623,7 @@
 		
 			if(($event['owner'] == $this->owner) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
-				if($event['public'] != True)
+				if($event['public'] == False || $event['public'] == 0)
 				{
 					if($this->check_perms(PHPGW_ACL_PRIVATE) == True)
 					{

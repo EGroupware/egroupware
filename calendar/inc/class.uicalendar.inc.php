@@ -612,7 +612,7 @@
 				
 				if(!$this->bo->can_user_edit($event))
 				{
-					Header('Location: '.$this->page('view','&cal_id='$cal_id));
+					Header('Location: '.$this->page('view','&cal_id='.$cal_id));
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 				if(@isset($GLOBALS['HTTP_POST_VARS']['edit_type']) && $GLOBALS['HTTP_POST_VARS']['edit_type'] == 'single')
