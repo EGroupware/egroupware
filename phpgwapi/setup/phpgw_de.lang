@@ -73,7 +73,6 @@ groups	common	de	Gruppen
 help	common	de	Hilfe
 high	common	de	Hoch
 home	common	de	Home
-international	common	de	International
 it has been more then x days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht ge‰ndert
 january	common	de	Januar
 july	common	de	Juli
@@ -107,7 +106,7 @@ october	common	de	Oktober
 ok	common	de	OK
 on *nix systems please type: x 	common	de	Auf *nix Systemen  bitte eingeben: %1
 only yours	common	de	nur eigene
-original	common	de	Original
+overview	common	de	&Uuml;berblick
 owner	common	de	Besitzer
 parent category	common	de	&Uuml;bergeordnete Kategorie
 password	common	de	Passwort
@@ -158,10 +157,7 @@ username	common	de	Benutzername
 users	common	de	Benutzer
 view	common	de	Anzeigen
 wednesday	common	de	Mittwoch
-weekday starts on	common	de	Arbeitswoche beginnt am
 which groups	common	de	Welche Gruppen
-work day ends on	common	de	Arbeitstag endet um
-work day starts on	common	de	Arbeitstag beginnt um
 yes	common	de	ja
 you are required to change your password during your first login	common	de	Das Passwort muﬂ beim ersten Login ge‰ndert werden!
 you have 1 new message!	common	de	Sie haben eine neue Nachricht!

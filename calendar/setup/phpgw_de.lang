@@ -21,6 +21,8 @@ frequency	calendar	de	Häufigkeit
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
+global public and group public	calendar	de	Global &Ouml;ffentlich und Gruppen-&Ouml;ffentlich
+global public only	calendar	de	nur Global &Ouml;ffentlich
 go!	calendar	de	Go!
 grant calendar access	common	de	Berechtigungen f&uuml;r Kalenderzugriffe
 i participate	calendar	de	Ich nehme teil
@@ -63,7 +65,10 @@ view this entry	calendar	de	Diesen Eintrag anzeigen
 we	calendar	de	Mi
 wed	calendar	de	Mi
 week	calendar	de	Woche
+weekday starts on	calendar	de	Wochentag beginnt um
 weekly	calendar	de	Wöchentlich
+work day ends on	calendar	de	Arbeitstag ended um
+work day starts on	calendar	de	Arbeitstag beginnt um
 x matches found	calendar	de	%1 Treffer gefunden
 year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
