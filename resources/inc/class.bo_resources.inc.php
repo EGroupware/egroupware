@@ -28,7 +28,7 @@ class bo_resources
 		$this->cats = $this->acl->egw_cats;
 		$this->vfs = CreateObject('phpgwapi.vfs');
 		
-// 		print_r($this->cats->return_array('all',0)); die(); 
+// 		print_r($this->cats->return_single(33)); die(); 
 	}
 
 	/*!
@@ -73,16 +73,7 @@ class bo_resources
 			{
 				$readonlys["bookable[$resource[id]]"] = true;
 			}
-			
-			if($resource['picture_src'] == 'own_src')
-			{
-				$rows[$num]['picture_thumb'] = $GLOBALS['phpgw_info']['server']['webserver_url']. '/resources/pictures/thumbs/'.$resource['id'].'.jpg';
-				
-			}
-			else
-			{
-				$rows[$num]['picture_thumb'] = 'generic.png';
-			}
+			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id'],$resource['picture_src']);
 		}
 		return $nr;
 	}
@@ -244,20 +235,28 @@ class bo_resources
 		return;
 	}
 	
-	
-	function get_images($params)
+	/*!
+		@function get_picture
+		@abstact get resource picture either from vfs or from symlink
+		@param int $id id of resource
+		@param string $src can be: own_src, gen_src, cat_scr
+		@param bool $size false = thumb, true = full pic
+		@return string url of picture
+	*/
+	function get_picture($id,$src,$size=false)
 	{
-		$id = implode($params);
-		$picture = $this->so->get_value('picture_thumb',$id);
-		if($picture)
+		switch($src)
 		{
-			// $picture = GD($picture);
-			header('Content-type: image/png');
-			echo $picture;
+			case 'own_src':
+				$picture = false /*$this->config->use_vfs*/ ? 'vfs:' : $GLOBALS['phpgw_info']['server']['webserver_url'];
+				$picture .= $size ? $this->pictures_dir.$id.'.jpg' : $this->thumbs_dir.$id.'.jpg';
+				break;
+			case 'gen_src':
+			case 'cat_src':
+			default :
+				$picture = 'generic.png';
 		}
-		header('Content-type: image/png');
-		echo file_get_contents(PHPGW_INCLUDE_ROOT.'/resources/templates/default/images/generic.png');
-		return;
+		return $picture;
 	}
 }
 

@@ -126,15 +126,14 @@ class ui_resources
 		{
 			$preserv = array('id' => $content);
 			$content = $this->bo->read($content);
-			$content['resource_picture'] = $GLOBALS['phpgw_info']['server']['webserver_url']. '/resources/pictures/'.$content['id'].'.jpg';
 		}
 		else
 		{
 			$content = array();
-			$content['resource_picture'] = 'generic.png';
 		}
+		$content['resource_picture'] = $this->bo->get_picture($content['id'],$content['picture_src'],$size=true);
 		$content['msg'] = $msg;
-		$preserv = $preserv + $content;
+		$preserv = (array)$preserv + $content; // debug for eTemplate tabs don't know if really needed atm.
 		$this->tmpl->read('resources.edit');
 		$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv);
 		

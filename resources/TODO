@@ -14,15 +14,17 @@ TODO:
 
 - list 
 	2 rows each entry
-	read pics via vfs (waiting for eTemplate --> Ralf)
 	don't translate cats in header (eTemplate bug --> Ralf)
 	handle cats and general pics (waiting for cats picures in api)
 	
 -edit / add
-	read pic via vfs (waiting for eTemplate --> Ralf)
 	handle cats and general pics (waiting for cats picures in api)
 	add accessories functionality
 	add prize functionality
 	add location functionality
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
+	use eTemplates input validation
 	
+	
+----
+if basics are working --> make it scheudable (meeting with ralf)
