@@ -166,13 +166,13 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$_account_id'",__LINE__,__FILE__);
 				$GLOBALS['phpgw']->db->next_record();
 				$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
 	
 				$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
 					. "$ip', account_lastlogin='" . time()
-					. "' where account_id='$account_id'",__LINE__,__FILE__);
+					. "' where account_id='$_account_id'",__LINE__,__FILE__);
 			}
 		}
 	}
