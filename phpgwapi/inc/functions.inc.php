@@ -310,6 +310,10 @@
 			$phpgw->vfs = CreateObject("phpgwapi.vfs");
 		}
 
+		if ($phpgw_info["flags"]["enable_browser_class"]) {
+			$phpgw->browser = CreateObject("phpgwapi.browser");
+		}
+
 		/*************************************************************************\
 		* These lines load up the templates class                                 *
 		\*************************************************************************/
