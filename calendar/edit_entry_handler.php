@@ -47,7 +47,11 @@
     $groups = Array();
     for(reset($cal);$key=key($cal);next($cal)) {
       $data = $cal[$key];
-      $cal_info->set($key,$data);
+      if($data=="participants") {
+	$cal_info->set("participants[]",$data);
+      } else {
+	$cal_info->set($key,$data);
+      }
     }
 
     $participating = False;
