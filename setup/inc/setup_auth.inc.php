@@ -14,6 +14,16 @@
   // Include to check user authorization against  the 
   // password in ../header.inc.php to protect all of the setup
   // pages from unauthorized use.
+  
+  function setup_header()
+  {
+     global $phpgw_info;
+
+     echo '<title>phpGroupWare - setup</title><BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" '
+        . 'marginright="0" marginbottom="0"><table border="0" width="100%"><tr>'
+        . '<td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '
+        . $phpgw_info["server"]["version"] . ' setup</font></td></tr></table>';
+  }
 
 function loginForm($err="") {
 	global $PHP_SELF;
