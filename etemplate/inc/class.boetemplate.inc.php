@@ -154,7 +154,7 @@
 					$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' || substr($pat,0,4) == 'row_');
 				}
 			}
-			if ($this->name == $this->debug)
+			if ($this->name && $this->name == $this->debug)
 			{
 				echo "$this->name ".($check_col ? 'col' : 'row')."-check: c=$c, r=$r, idx='$org_idx' ==> ".($Ok?'True':'False')."<p>\n";
 			}
