@@ -587,7 +587,7 @@
 						list($img,$ro_img) = explode(',',$cell['size']);
                   if (!empty($img))
 						{
-							$options .= ' TITLE="'.$label.'"';
+							$options .= ' TITLE="'.(strlen($label)<=1||$cell['no_lang']?$label:lang($label)).'"';
 						}
 						$html .= !$readonly ? $this->html->submit_button($form_name,$label,'',
 							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
