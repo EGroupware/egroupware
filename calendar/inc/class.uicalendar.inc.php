@@ -541,7 +541,7 @@
 				),
 				'print'			=>	$print
 			);
-
+//todo
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(
 				Array(
@@ -2735,6 +2735,8 @@
 				$date = sprintf('%04d%02d%02d',$year,$month,$day);
 				$this->link_tpl->set_var('link_link',$this->page('view','&cal_id='.$event['id'].'&date='.$date));
 				$this->link_tpl->set_var('lang_view',lang('View this entry'));
+				$this->link_tpl->set_var('desc', $textdesc);
+				$this->link_tpl->set_var('location', $textlocation);
 				$this->link_tpl->parse('picture','link_open',True);
 			}
 			if (!$is_private)
