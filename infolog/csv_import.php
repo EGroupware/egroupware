@@ -103,9 +103,7 @@ function cat_id($cats)
 	}
 
 	// no multiple cat's in InfoLog atm.
-	$cats = array($cats); //split('[,;]',$cats);
-
-	foreach($cats as $k => $cat)
+	foreach(array($cats) /*split('[,;]',$cats)*/ as $cat)
 	{
 		if (isset($cat2id[$cat]))
 		{
@@ -117,7 +115,11 @@ function cat_id($cats)
 			{
 				$GLOBALS['phpgw']->categories = createobject('phpgwapi.categories');
 			}
-			if ($id = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) ))
+			if (is_numeric($cat) && $GLOBALS['phpgw']->categories->id2name($cat) != '--')
+			{
+				$cat2id[$cat] = $ids[$cat] = $cat;
+			}	
+			elseif ($id = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) ))
 			{	// cat exists
 				$cat2id[$cat] = $ids[$cat] = $id;
 			}
