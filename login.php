@@ -1,9 +1,9 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare                                                             *
-	* http://www.phpgroupware.org                                              *
-	* Written by Dan Kuykendall <seek3r@phpgroupware.org>                      *
-	*            Joseph Engo    <jengo@phpgroupware.org>                       *
+	* eGroupWare login                                                         *
+	* http://www.egroupware.org                                                *
+	* Originaly written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	*                      Joseph Engo    <jengo@phpgroupware.org>             *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -207,7 +207,7 @@
 		{
 			$login .= '@' . $_POST['logindomain'];
 		}
-		elseif(count($GLOBALS['phpgw_domain']) == 1)
+		elseif(!isset($GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]))
 		{
 			$login .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
 		}
