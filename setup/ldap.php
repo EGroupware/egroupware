@@ -12,43 +12,42 @@
   /* $Id$ */
 
 	$phpgw_info["flags"] = array(
-		"noheader"	=> True,
-		"nonavbar"	=> True,
-		"currentapp"=> "home",
-		"noapi"		=> True
+		'noheader'	=> True,
+		'nonavbar'	=> True,
+		'currentapp'	=> 'home',
+		'noapi'		=> True
 	);
 
-	include("../header.inc.php");
-	include("./inc/functions.inc.php");
+	include('../header.inc.php');
+	include('./inc/functions.inc.php');
 
 	// Authorize the user to use setup app and load the database
-	if (!$phpgw_setup->auth("Config")){
-		Header("Location: index.php");
+	if (!$phpgw_setup->auth('Config')){
+		Header('Location: index.php');
 		exit;
 	}
 	// Does not return unless user is authorized
-
 	class phpgw {
 		var $common;
 	}
 	$phpgw = new phpgw;
-	$phpgw->common = CreateObject("phpgwapi.common");
+	$phpgw->common = CreateObject('phpgwapi.common');
 
 	$common       = $phpgw->common;
 	$phpgw_setup->loaddb();
 
-	$phpgw_info["server"]["auth_type"] = "ldap";
-	$acct         = CreateObject("phpgwapi.accounts");
-	$applications = CreateObject("phpgwapi.applications");
+	$phpgw_info['server']['auth_type'] = 'ldap';
+	$acct         = CreateObject('phpgwapi.accounts');
+	$applications = CreateObject('phpgwapi.applications');
 
 	$phpgw_setup->db->query("select config_name,config_value from phpgw_config where config_name like 'ldap%'",__LINE__,__FILE__);
 	while ($phpgw_setup->db->next_record()) {
-		$config[$phpgw_setup->db->f("config_name")] = $phpgw_setup->db->f("config_value");
+		$config[$phpgw_setup->db->f('config_name')] = $phpgw_setup->db->f('config_value');
 	}
-	$phpgw_info["server"]["ldap_host"]    = $config["ldap_host"];
-	$phpgw_info["server"]["ldap_context"] = $config["ldap_context"];
-	$phpgw_info["server"]["ldap_root_dn"] = $config["ldap_root_dn"];
-	$phpgw_info["server"]["ldap_root_pw"] = $config["ldap_root_pw"];
+	$phpgw_info['server']['ldap_host']    = $config['ldap_host'];
+	$phpgw_info['server']['ldap_context'] = $config['ldap_context'];
+	$phpgw_info['server']['ldap_root_dn'] = $config['ldap_root_dn'];
+	$phpgw_info['server']['ldap_root_pw'] = $config['ldap_root_pw'];
 
 	// First, see if we can connect to the LDAP server, if not send `em back to config.php with an
 	// error message.
@@ -59,35 +58,35 @@
 	}
 
 	if ($noldapconnection) {
-		Header("Location: config.php?error=badldapconnection");
+		Header('Location: config.php?error=badldapconnection');
 		exit;
 	}
 
-	$sr = ldap_search($ldap,$config["ldap_context"],"(|(uid=*))",array("sn","givenname","uid","uidnumber"));
+	$sr = ldap_search($ldap,$config['ldap_context'],'(|(uid=*))',array('sn','givenname','uid','uidnumber'));
 	$info = ldap_get_entries($ldap, $sr);
   
-	for ($i=0; $i<$info["count"]; $i++) {
-		if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
-			$account_info[$i]["account_id"]        = $info[$i]["uidnumber"][0];
-			$account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
-			$account_info[$i]["account_firstname"]  = $info[$i]["givenname"][0];
-			$account_info[$i]["account_lastname"] = $info[$i]["sn"][0];
+	for ($i=0; $i<$info['count']; $i++) {
+		if (! $phpgw_info['server']['global_denied_users'][$info[$i]['uid'][0]]) {
+			$account_info[$i]['account_id']        = $info[$i]['uidnumber'][0];
+			$account_info[$i]['account_lid']       = $info[$i]['uid'][0];
+			$account_info[$i]['account_firstname']  = $info[$i]['givenname'][0];
+			$account_info[$i]['account_lastname'] = $info[$i]['sn'][0];
 		}
 	}
 
 	$phpgw_setup->db->query("select app_name,app_title from phpgw_applications where app_enabled != '0' and "
 		. "app_name != 'administration'",__LINE__,__FILE__);
 	while ($phpgw_setup->db->next_record()) {
-		$apps[$phpgw_setup->db->f("app_name")] = $phpgw_setup->db->f("app_title");
+		$apps[$phpgw_setup->db->f('app_name')] = $phpgw_setup->db->f('app_title');
 	}
 
 	if ($submit) {
 		if (! count($admins)) {
-			$error = "<br>You must select at least 1 admin";
+			$error = '<br>You must select at least 1 admin';
 		}
 
 		if (! count($s_apps)) {
-			$error .= "<br>You must select at least 1 application";
+			$error .= '<br>You must select at least 1 application';
 		}
 
 		if (! $error) {
@@ -114,33 +113,33 @@
 
 			while ($account = each($account_info)) {
 				// do some checks before we try to import the data
-				if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
-					$accounts = CreateObject("phpgwapi.accounts",$account[1]["account_id"]);
+				if (!empty($account[1]['account_id']) && !empty($account[1]['account_lid']))
+					$accounts = CreateObject('phpgwapi.accounts',$account[1]['account_id']);
 					$accounts->db = $phpgw_setup->db;
 
-					$acl = CreateObject("phpgwapi.acl",intval($account[1]["account_id"]));
+					$acl = CreateObject('phpgwapi.acl',intval($account[1]['account_id']));
 					$acl->db = $phpgw_setup->db;
 					$acl->read_repository();
 
 					// Only give them admin if we asked for them to have it
 					for ($a=0;$a<count($admins);$a++) {
-						if ($admins[$a] == $account[1]["account_id"]) {
+						if ($admins[$a] == $account[1]['account_id']) {
 							$acl->add('admin','run',1);
 						}
 					}
 					
 					// Check if the account is already there
-					$acct_exist = $accounts->exists($account[1]["account_id"]);
+					$acct_exist = $accounts->exists($account[1]['account_id']);
 
-					if(!$acct_exist && $account[1]["account_id"]) {
-						$accounts->create('u', $account[1]["account_lid"], 'x',
-							$account[1]["account_firstname"], $account[1]["account_lastname"],
-							'A',$account[1]["account_id"]
+					if(!$acct_exist && $account[1]['account_id']) {
+						$accounts->create('u', $account[1]['account_lid'], 'x',
+							$account[1]['account_firstname'], $account[1]['account_lastname'],
+							'A',$account[1]['account_id']
 						);
 					}
 
 					// Now make them a member of the 'Default' group
-					$acl->add("phpgw_group",$defaultgroupid,1);
+					$acl->add('phpgw_group',$defaultgroupid,1);
 					$acl->save_repository();
 				}
 				$setup_complete = True;
@@ -152,7 +151,7 @@
 	$phpgw_setup->show_header();
   
 	if ($error) {
-		echo "<br><center><b>Error:</b> $error</center>";
+		echo '<br><center><b>Error:</b> '.$error.'</center>';
 	}
 
 	if ($setup_complete) {
@@ -181,8 +180,8 @@
      <select name="admins[]" multiple size="5">
       <?php
         while ($account = each($account_info)) {
-          echo '<option value="' . $account[1]["account_id"] . '">'
-             . $common->display_fullname($account[1]["account_lid"],$account[1]["account_firstname"],$account[1]["account_lastname"])
+          echo '<option value="' . $account[1]['account_id'] . '">'
+             . $common->display_fullname($account[1]['account_lid'],$account[1]['account_firstname'],$account[1]['account_lastname'])
              . '</option>';
           echo "\n";
         }
