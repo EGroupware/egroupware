@@ -249,8 +249,13 @@ class html
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='')
 	{
-		if (!$plugins) $plugins = 'ContextMenu,TableOperations,SpellChecker';
 		if (!$style) $style = 'width:100%; min-width:500px; height:300px;';
+		// check if htmlarea is availible for the browser and use a textarea if not
+		if (!$this->htmlarea_availible())
+		{
+			return $this->textarea($name,$content,'style="'.$style.'"');
+		}
+		if (!$plugins) $plugins = 'ContextMenu,TableOperations,SpellChecker';
 
 		if (!is_object($GLOBALS['phpgw']->js))
 		{
