@@ -367,6 +367,7 @@ select which language for this phrase	transy	en	select which language for this p
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right)
 send	email	en	Send
 send deleted messages to the trash	email	en	Send deleted messages to the trash
+send updates via email	common	en	Send updates via EMail
 september	common	en	September
 session has been killed	common	en	Session has been killed
 show all	common	en	show all
