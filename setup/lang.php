@@ -61,7 +61,7 @@
 	if (@get_var('submit',Array('POST')))
 	{
 		$lang_selected = get_var('lang_selected',Array('POST'));
-		$upgrademethod = get_var('upgrademethod',Array(POST'));
+		$upgrademethod = get_var('upgrademethod',Array('POST'));
 		$GLOBALS['phpgw_setup']->db->transaction_begin();
 		if (count($lang_selected))
 		{
