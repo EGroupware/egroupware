@@ -1,0 +1,539 @@
+<!DOCTYPE chapter SYSTEM "installation.sgml" PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+
+<chapter id="Installation">
+<title>Installation</Title>
+<para>
+Installation and Configuration of phpGroupWare has never
+been easier. Just point and click, yeah it's very easy.
+</para>
+<para>
+Since this is still a beta version we do expect some bugs.
+By carefully reading this document you can easly install
+phpGroupWare.
+</para>
+<sect1>
+<title>Requirements</Title>
+<para>
+You will need PHP compiled and installed on your system.
+You will also need MySQL or PostgreSQL setup. If you are
+planning on using the email system, you will need to have
+an IMAP server installed and IMAP support compiled into
+PHP. You can have it installed as an Apache module or command
+line version, the Apache module is preferred. We will assume
+that you are running on a Linux or other Unix system for
+these steps. Windows is supported, but there is no documentation
+for it currently.
+</para>
+<para>
+In order to check if you have php installed create the file
+with your favorite text editor named test.php in your webserver
+root directory:
+</para>
+<programlisting>
+&lt;? phpinfo(); ?&gt;
+</programlisting>
+<para>
+Then point your browser to http://yourserverroot/test.php.
+You should get a very detailed page describing various options
+in php.
+</para>
+<para>
+If you need to to compile php and apache the following links
+are good starting points: 
+</para>
+<variablelist>
+<varlistentry>
+<term>http://www.apachetoolbox.com</term>
+<listitem>
+<para>A set of scripts to compile and install various modules with
+apache.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>http://www.linuxhelp.net/guides/</term>
+<listitem>
+<para>The Linux Apache MySQL PHP (LAMP) Guide v2 (latest as of
+this writing)</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>http://www.devshed.com/Server_Side/PHP/SoothinglySeamless</term>
+<listitem>
+<para>The Soothing Seemless Setup of Apache, SSL, MySQL, and PHP</Para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+<sect1>
+<title>Tested Systems</Title>
+<para>
+On Linux 2.2.x, 2.4.x
+</para>
+<itemizedlist>
+<listitem>
+<para>
+PHP 3.0.15+ / PHP 4.0.x
+</para>
+</listitem>
+<listitem>
+<para>
+Apache 1.3.x
+</para>
+</listitem>
+<listitem>
+<para>
+MySQL 3.22.25 or PostgreSQL 7.0.x
+</para>
+</listitem>
+<listitem>
+<para>
+Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access
+</para>
+</listitem>
+</itemizedlist>
+<para>
+We have reports of it working on Windows NT and OS/2, and using Oracle as the database.
+</para>
+</sect1>
+<sect1>
+<title>Obtaining and Installing phpgroupware</Title>
+<sect2>
+<title>Installing from TarBall</Title>
+<para>
+Installing from a TarBall is very easy. The files should
+be installed in the webserver directory. Example steps (please
+adjust to your servers config):
+</para>
+<blockquote><literallayout>
+<userinput># cp phpgroupware-version.tar.gz /home/httpd/html</userinput>
+<userinput># cd /home/httpd/html</userinput>
+<userinput># tar zxf phpgroupware-version.tar.gz</userinput>
+</literallayout></blockquote>
+<para>
+You may have to get required permissions to do this. Contact
+your system administrator if you dont have the permission
+to write to your webserver directory.
+</para>
+<para>
+You can get current releases of phpGroupWare at the phpGroupware
+website.
+</para>
+</sect2>
+<sect2>
+<title>Installing from CVS</Title>
+<para>
+Installing from a CVS is fairly easy. The files should be checked out in the webserver directory.
+You may have to get required permissions to install from CVS. Contact your system administrator if you dont have the permission to write to your webserver directory. 
+</para>
+<para>
+To see a list of applications currently available via CVS, go to [http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/phpgroupware/]
+</para>
+<sect3>
+<title>Development Branch in CVS</Title>
+Follow these steps (please adjust to your servers config):
+<blockquote><literallayout>
+<userinput># cd /home/httpd/html</userinput>
+<userinput># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co phpgroupware</userinput>
+<userinput># cd phpgroupware</userinput>
+<userinput># cvs co admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
+</literallayout></blockquote>
+<para>
+or if you prefer using CVSROOT:
+</para>
+<blockquote><literallayout>
+<userinput># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</userinput>
+<userinput># cvs co phpgroupware</userinput>
+<userinput># cd phpgroupware</userinput>
+<userinput># cvs co admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
+</literallayout></blockquote>
+</sect3>
+<sect3>
+<title>Stable Branch in CVS</Title>
+<para>
+Follow these steps (please adjust to your servers config):
+</para>
+<blockquote><literallayout>
+<userinput># cd /home/httpd/html</userinput>
+<userinput># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co -r Version-0_9_12-branch phpgroupware</userinput>
+<userinput># cd phpgroupware</userinput>
+<userinput># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
+</literallayout></blockquote>
+<para>
+or if you prefer using CVSROOT:
+</para>
+<blockquote><literallayout>
+<userinput># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</userinput>
+<userinput># cvs co -r Version-0_9_12-branch phpgroupware</userinput>
+<userinput># cd phpgroupware</userinput>
+<userinput># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
+</literallayout></blockquote>
+</sect3>
+<sect3>
+<title>Patched Branches in CVS</Title>
+<para>
+Recently the phpGroupWare developers started a branch for patches to released versions. This is to facilitate bugs being fixed in a released version without having to wait for the next offical release. There is a developer who has been assigned the responsibility for maintaining that branch and applying patches and fixes. To check out this version of the code using 0.9.12 as an example you would do the following:
+</para>
+<blockquote><literallayout>
+<userinput># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware -r Version-0_9_12-patches phpgroupware</userinput>
+</literallayout></blockquote>
+</sect3>
+</sect2>
+<sect2>
+<title>Setting File Permissions</Title>
+<para>
+There are a few directories which will need special fie permissions set for phpGroupWare to work properly.
+</para>
+
+<para>
+Temp Directory (Required) - This can be /tmp for simplicity, but it is required for several apps to function properly.  Simply make sure that the webserver can add/delete files in it.
+</para>
+
+<para>
+Files Directory (Required) - This can be should be the files dir under the phpgroupware dir. You will need to give the webserver account owndership of this directory.
+</para>
+<blockquote><literallayout>
+(from phpgroupware root)
+<userinput># mkdir files</userinput>
+<userinput># mkdir files/groups</userinput>
+<userinput># mkdir files/users</userinput>
+<userinput># chown nobody:nobody files</userinput> (note: this assumes your webserver runs as user nobody, adjust for your installation)
+<userinput># chmod 700 files</userinput>
+</literallayout></blockquote>
+
+<para>
+Root Directory (Not recommended) - If you give the webserver account write access to the phpgroupware directory, then the setup program can create the header.inc.php for you.  Otherwise you will need to use the setup program to create it, and then you can manually save it to file.
+</para>
+
+<para>
+If you want to do it:
+</para>
+<blockquote><literallayout>
+<userinput># chown :nobody phpgroupware</userinput>
+<userinput># chmod 770 phpgroupware</userinput>
+</literallayout></blockquote>
+<para>
+You may have to get required permissions to do this. Contact your system administrator if you dont have the permission to write to your webserver directory. 
+</para>
+</sect2>
+<sect2>
+<title>Setup the database</Title>
+<para>
+You need to create empty databases for the setup app to create the tables in.
+</para>
+<sect3>
+<title>MySQL</Title>
+<para>
+Ensure that you have a working MySQL installation and that MySQL is running.
+</para>
+<blockquote><literallayout>
+Mandrake or Redhat: 
+<userinput>/etc/rc.d/init.d/mysqld start</userinput>
+other: 
+<userinput>/usr/local/mysql/bin/safe_mysqld &</userinput>
+</literallayout></blockquote>
+<para>Create the phpgroupware Database and give permissions to the phpgroupware user</Para>
+<blockquote><literallayout>
+<userinput># mysqladmin -u someuser -p create phpgroupware</userinput> (enter password when prompted)
+<userinput># mysql -u someuser -p</userinput>
+<userinput>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by "somepassword";</userinput>
+</literallayout></blockquote>
+
+<para>
+<note>Make sure you change the password from "somepassword" to your MySQL password in the GRANT statement</note>
+For more detailed user documentation on MySQL see their website: [http://www.mysql.com]
+</para>
+</sect3>
+
+<sect3>
+<title>PostgreSQL</Title>
+<para>
+Ensure that you have a working PostgreSQL installation and that PostgreSQL is running.
+</para>
+<blockquote><literallayout>
+Mandrake or Redhat : 
+<userinput>/etc/rc.d/init.d/postgresql start</userinput>
+Others: 
+<userinput> /usr/bin/postmaster -D /var/lib/pgsql/data or /usr/bin/pg_ctl -D /var/lib/pgsq/data start</userinput> (adjust for your install dirs)
+</literallayout></blockquote>
+<para>
+Create the phpgroupware database and user
+</para>
+<blockquote><literallayout>
+<userinput> # /usr/bin/createdb phpgroupware</userinput>
+<userinput> # /usr/bin/createuser phpgroupware --pwprompt</userinput>
+</literallayout></blockquote>
+<para>
+For more detailed user documentation on Postgresql see their website: [http://www.postgresql.org]
+</para>
+</sect3>
+</sect2>
+
+<sect2>
+<title>Setup/Configure phpGroupWare</Title>
+<sect3>
+<title>configure header file</title>
+<para>
+Point your browser to http://yourserverroot/phpgroupware/setup/ which will create (or upgrade) the header.inc.php and database tables. Setup will attempt to determine what version of the phpGroupWare databases and header.inc.php you have installed, and upgrade to the most recent version. 
+</para>
+<para>
+Most values for the header setup can be left as the default, be sure to enter a password for header admin, and change the password for your DB, and for configuration.
+</para>
+<para>
+*addme* What is mcrypt for?
+</para>
+<para>
+*addme* Explain what the Domain select box is for
+</para>
+<para>
+Once you have finished your configuration, you can have phpGroupWare write it directly if you changed permissions on the directory, or you can download or view it with your browser, and save it in the directory yourself.
+</para>
+</sect3>
+<sect3>
+<title>Site Configuration</title>
+<para>
+After header configuration, you will be prompted to enter your Setup/Config Login, or your Header login if you want to go back and change something.
+</para>
+<para>
+<caution>
+You are advised to backup your existing database before running the setup script to avoid problems!
+</caution>
+</para>
+<para>
+<note>
+You have to press the button, not hit enter on the setup/index.php script
+</note>
+</para>
+<para>
+Your first step is to install all application databases, simply click on the <guibutton>Install</guibutton> to have phpGroupWare add all the necessary tables.
+</para>
+<para>
+Next, click on <guibutton>Edit Current Configuration</guibutton>.  You will be prompted with a list of configuration options.
+<table>
+<title>Edit Current Configuration</title>
+<tgroup cols="2">
+<thead>
+<row>
+<entry>Prompt</entry>
+<entry>Notes</entry>
+</thead>
+<tbody>
+<row>
+<entry>full path for temporary files</entry>
+<entry>usually /tmp</entry>
+<row>
+<entry>full path for user and group files</entry>
+<entry>directory must exist and have user and group directories underneath it.</entry>
+</row>
+<row>
+<entry>location of phpGroupWare URL</entry>
+<entry>
+full domain name or just relative link, no trailing slash
+</row>
+<row>
+<entry>hostname of machine</entry>
+<entry> Fully qualified hostname </entry>
+</row>
+<row>
+<entry>default ftp server</entry>
+<entry> *addme* what is this for?</entry>
+</row>
+<row>
+<entry>use correct mimetype for FTP</entry>
+<entry> *addme* what might this affect?</entry>
+</row>
+<row>
+<entry>HTTP proxy server</entry>
+</row>
+<row>
+<entry>HTTP proxy port</entry>
+</row>
+<row>
+<entry>Which type of Authentication</entry>
+<entry>
+<literallayout>
+SQL  use SQL table (default)
+SQL/SSL  use encrypted SQL access
+LDAP  use LDAP server
+mail  use mail server (IMAP/POP3)
+HTTP  use HTTP authentication (.htaccess)
+PAM   use PAM authentication (note currently working)
+</literallayout>
+</entry>
+</row>
+<row>
+<entry>Where to store user accounts</entry>
+<entry>
+<literallayout>
+SQL  store in SQL table
+LDAP store in LDAP server
+Contacts  *addme* what is this?
+</literallayout>
+</row>
+<row>
+<entry>Minimum account ID</entry>
+</row>
+<row>
+<entry>Maximum account ID</entry>
+</row>
+<row>
+<entry>manage homedirectory and loginshell attributes</entry>
+<entry> *addme* what is this?</entry>
+</row>
+<row>
+<entry>LDAP home directory prefix</entry>
+</row>
+<row>
+<entry>LDAP default shell</entry>
+</row>
+<row>
+<entry>Auto create account records?</entry> 
+<entry>*addme* what is this?</entry>
+</row>
+<row>
+<entry>if no ACL records...</entry>
+</row>
+<row>
+<entry>LDAP host</entry>
+</row>
+<row>
+<entry>LDAP accounts context</entry>
+</row>
+<row>
+<entry>LDAP root dn</entry>
+</row>
+<row>
+<entry>LDAP root password</entry>
+</row>
+<row>
+<entry>LDAP encryption type</entry>
+</row>
+<row>
+<entry>app_session encryption</entry>
+<entry>*addme* what is this?</entry>
+</row>
+<row>
+<entry>title for your site</entry>
+</row>
+<row>
+<entry>Show powered by logo on</entry>
+</row>
+<row>
+<entry>Country Selection</entry>
+</row>
+<row>
+<entry>use pure HTML</entry>
+</row>
+<row>
+<entry>Use cookies</entry>
+</row>
+<row>
+<entry>check for new version?</entry>
+<entry>*addme* what does this check, stable version or CVS?</entry>
+</row>
+<row>
+<entry>cache the phpgw_info array</entry>
+<entry>*addme* what effect does this have on speed, what tradeoffs?</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</para>
+<para>
+Next, select <guibutton>click here</guibutton> to add admin account and optionally, three demo accounts.  Fill in the fields on the next screen and uncheck the box at the bottom if you don't want the demo accounts created.  Click on Submit when finished.
+</para>
+<para>
+Click <guibutton>Install Languages</guibutton> to add at least one language to the system.  On the next screen, select all the languages you want by single clicking them, then click on <guibutton>Install<guibutton>.
+</para>
+<para>
+There shouldn't be anything to do under <guibutton>Manage Applications</guibutton> at this time, this is where you will return after an upgrade to update and table differences.
+</para>
+<para>
+after your done, click on logout to complete the install and end the session.
+</para>
+</sect2>
+<sect2>
+<title>Testing the install</Title>
+<para>
+If your config is setup properly you can now login. Point your browser to the installed location and login with the new admin username and password you created.
+</para>
+
+</sect2>
+<sect2>
+<title>Installing additional applications</Title>
+
+<para>
+Once you have the core phpGroupWare install up and running, you may want to download and install additional applications.
+</para>
+
+<para>
+You should consult any README or INSTALL files that come with the new application first, as most require you to create additional tables in the database, and add additional translation data to the lang table (typically a file called lang.sql)
+</para>
+
+<para>
+You install the new application within the phpGroupWare install tree by copying the application directory into the phpGroupWare install location, and enabling the application through the Administration page.
+</para>
+
+
+<para>
+For example, this is the process to install the Headlines application: (see [http://www.sourceforge.net/projects/phpgwapps] for more applications)
+</para>
+
+<para>
+Download the .tar.gz file for the application, or check out the source with cvs with
+</para>
+<blockquote><literallayout>
+<userinput># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'</userinput>
+<userinput># cvs login</userinput> (just hit enter if prompted for a password)
+<userinput># cvs co headlines</userinput>
+</literallayout></blockquote>
+<para>
+Move the headlines directory into your phpGroupWare install directory.
+</para>
+
+<para>
+Log into phpGroupWare as an administrative user, and go to the Administration page.
+</para>
+
+<para>
+In the first section, choose the Applications link.
+</para>
+
+<para>
+Click on add, and fill in the form.
+</para>
+
+<para>
+Application name should be identical to the name of the directory you moved into the phpGroupWare install, in this case use headlines
+</para>
+
+<para>
+Application title is shown in the navigation bar and other places to refer to the new application. Enter Headlines for this example.
+</para>
+
+<para>
+Enabled can be used to disable an application for all users temporially. You should normal check the box to enable the application.
+</para>
+
+<para>
+Back in the Administration page, you need to enable the application for specific users or user groups by editing them, and checking the new Headlines box that appears in the middle of the account editing page.
+</para>
+
+<para>
+Once you have added the Headlines app to your account, you should see a Headlines entry in the Administration and Preferences pages, and there should be an icon for the Headlines application in the navigation bar.
+</para>
+
+<para>
+Once you enable a few of the Headlines sites through the Administration page link, you should see headlines grabbed from the sites you selected when you click on the Headlines icon in the navigation bar. 
+</para>
+</sect2>
+</sect1>
+
+<sect1>
+<title>Troubleshooting</Title>
+<para>
+deb package of 4.0.6 has a problem with cookies, the setup program uses cookies
+See the FAQ
+</para>
+</sect1>
+</chapter>
