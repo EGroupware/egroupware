@@ -447,19 +447,31 @@
 					break;
 
 				case 'select-account':	// options: #rows,{accounts(default)|both|groups},{0(=lid)|1(default=name)|2(=lid+name))}
+					$cell['no_lang'] = True;
+					// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
+					if ($cell['readonly'] || $readonlys)
+					{
+						foreach(is_array($value) ? $value : array($value) as $id)
+						{
+							$cell['sel_options'][$id] = $this->accountInfo($id,$acc,$type2,$type=='both');
+						}
+						break;
+					}
 					$accs = $GLOBALS['phpgw']->accounts->get_list(empty($type) ? 'accounts' : $type); // default is accounts
-					while (list(,$acc) = each($accs))
+					foreach($accs as $acc)
 					{
 						if ($acc['account_type'] == 'g')
+						{
 							$cell['sel_options'][$acc['account_id']] = $this->accountInfo($acc['account_id'],$acc,$type2,$type=='both');
+						}
 					}
-					reset($accs);
-					while (list(,$acc) = each($accs))
+					foreach($accs as $acc)
 					{
 						if ($acc['account_type'] == 'u')
+						{
 							$cell['sel_options'][$acc['account_id']] = $this->accountInfo($acc['account_id'],$acc,$type2,$type=='both');
+						}
 					}
-					$cell['no_lang'] = True;
 					break;
 
 				case 'select-year':	// options: #rows,#before(default=3),#after(default=2)
@@ -559,8 +571,11 @@
 
 			if (!is_array($acc))
 			{
-				$GLOBALS['phpgw']->accounts->read_repository();
-				$acc = $GLOBALS['phpgw']->accounts->data;
+				$data = $GLOBALS['phpgw']->accounts->get_account_data($id);
+				foreach(array('type','lid','firstname','lastname') as $name)
+				{
+					$acc['account_'.$name] = $data[$id][$name];
+				}
 			}
 			$info = $show_type ? '('.$acc['account_type'].') ' : '';
 
