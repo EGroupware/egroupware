@@ -33,7 +33,7 @@
 		BACKGROUND : #FFFFCC; 
 		COLOR: #000000; 
 		BORDER: 1px solid #000000; 
-		FONT-SIZE: 10px;  
+		FONT-SIZE: 12px;  
 		border-collapse : collapse;
 	}
 
