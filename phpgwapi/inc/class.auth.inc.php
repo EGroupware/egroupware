@@ -207,7 +207,7 @@
 
 		/**
 		@function smd5_compare
-		@abstract compare SHA-encrypted passwords for authentication
+		@abstract compare SMD5-encrypted passwords for authentication
 		@param $form_val user input value for comparison
 		@param $db_val   stored value (from database)
 		@return boolean	 True on successful comparison
@@ -216,6 +216,8 @@
 		{
 			/* Start with the first char after {SMD5} */
 			$hash = base64_decode(substr($db_val,6));
+
+			/* SMD5 hashes are 16 bytes long */
 			$orig_hash = substr($hash, 0, 16);
 			$salt = substr($hash, 16);
 
