@@ -69,6 +69,7 @@ class so_resources
 		{
 			$data[$n] = $this->db->row();
 		}
+		unset($data[0]);
 		return $nr;
 	}
 	

@@ -42,6 +42,7 @@ class bo_resources
 					'short_description' 	=> $query['search']
 				);
 		$cats = $query['filter'] ? array($query['filter'] => '') : $this->acl->get_cats(PHPGW_ACL_READ);
+		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
 		
 		$rows = array( 0 => array(	'id'			=> '',
 						'name' 			=> '',
@@ -56,7 +57,8 @@ class bo_resources
 		
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		
-		$nr = $this->so->search($criteria,$cats,&$rows,$accessory_of=-1,$order_by,$offset=$query['start'],$num_rows=0);
+		$nr = $this->so->search($criteria,$cats,&$rows,$accessory_of,$order_by,$offset=$query['start'],$num_rows=0);
+		
 		foreach($rows as $num => $resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_EDIT))
@@ -66,6 +68,10 @@ class bo_resources
 			if (!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_DELETE))
 			{
 				$readonlys["delete[$resource[id]]"] = true;
+			}
+			if ((!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_ADD)) || $accessory_of != -1)
+			{
+				$readonlys["new_acc[$resource[id]]"] = true;
 			}
 			if (!$resource['bookable'] /* && calender-acl viewable */)
 			{
@@ -180,6 +186,10 @@ class bo_resources
 		if(is_array($resource['link_to']['to_id']))
 		{
 			$this->link->link('resources',$resource['id'],$resource['link_to']['to_id']);
+		}
+		if($resource['accessory_of'] != -1)
+		{	echo $resource['id'].', '.$resource['accessory_of'];
+			$this->link->link('resources',$resource['id'],'resources',$resource['accessory_of']);
 		}
 		
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
@@ -365,7 +375,7 @@ class bo_resources
 		@param bool $size false = thumb, true = full pic
 		@return string url of picture
 	*/
-	function get_picture($id,$size=false)
+	function get_picture($id=0,$size=false)
 	{
 		if ($id > 0)
 		{

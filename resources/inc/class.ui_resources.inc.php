@@ -51,22 +51,38 @@ class ui_resources
 		{
 			if (isset($content['nm']['rows']))
 			{
-				if (isset($content['nm']['rows']['edit']))
-				{ 
-					list($id) = each($content['nm']['rows']['edit']);
-					return $this->edit($id);
-				}
-				elseif (isset($content['nm']['rows']['delete']))
+				unset($content['nm']['rows']['checkbox']);
+				switch (key($content['nm']['rows']))
 				{
-					list($id) = each($content['nm']['rows']['delete']);
-					return $this->delete($id);
+					case 'edit':
+						list($id) = each($content['nm']['rows']['edit']);
+						return $this->edit($id);
+					case 'delete':
+						list($id) = each($content['nm']['rows']['delete']);
+						return $this->delete($id);
+					case 'new_acc':
+						list($id) = each($content['nm']['rows']['new_acc']);
+						return $this->edit(array('resource_id' => 0, 'accessory_of' => $id));
+					case 'view_acc':
+						list($id) = each($content['nm']['rows']['view_acc']);
+						$content['view_accs_of'] = $id;
+						break;
+					case 'view':
+					case 'bookable':
+					case 'buyable':
 				}
 			}
 			if (isset($content['add']))
 			{
 				return $this->edit(0);
 			}
+			if (isset($content['back']))
+			{
+				return $this->index();
+			}
+			
 		}
+		$this->tmpl->read('resources.show');
 		
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
@@ -82,8 +98,17 @@ class ui_resources
 		{
 			$no_button['add'] = true;
 		}
+		$no_button['back'] = true;
 		
-		$this->tmpl->read('resources.show');
+		if($content['view_accs_of'])
+		{
+			$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
+			$content['nm']['no_filter'] 	= true;
+			$content['nm']['no_filter2'] 	= true;
+			$content['nm']['view_accs_of']	= $content['view_accs_of'];
+			$no_button['add'] = true;
+			$no_button['back'] = false;
+		}
 		$this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
 	}
 
@@ -126,9 +151,6 @@ class ui_resources
 		{
 			$resource_id = $content;
 			$content = array('resource_id' => $resource_id);
-			// some presetes
-			$content['quantity'] = $content['useable'] = 1;
-			$content['accessory_of'] = -1;
 			
 			if ($resource_id > 0)
 			{
@@ -139,13 +161,23 @@ class ui_resources
 					'to_id' => $resource_id,
 					'to_app' => 'resources'
 				);
-// 				$sel_options += array('acc_list' => $this->bo->get_acc_list($resource_id));
 			}
 			
-			$content['resource_picture'] = $this->bo->get_picture($resource_id,$content['picture_src'],$size=true);
 		}
-		$sel_options['cat_id'] = $this->bo->acl->get_cats(PHPGW_ACL_ADD);
+		// some presetes
+		$content['resource_picture'] = $this->bo->get_picture($content['resource_id'],$content['picture_src'],$size=true);
+		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : -1;
+		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
+		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
+		
+		$sel_options['cat_id'] =  $this->bo->acl->get_cats(PHPGW_ACL_ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
+		if($content['accessory_of'] != -1)
+		{
+			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
+			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
+		}
+		
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
