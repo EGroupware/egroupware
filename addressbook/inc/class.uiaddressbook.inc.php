@@ -314,7 +314,7 @@
 
 			/* $qfields = $contacts->stock_contact_fields + $extrafields + $customfields; */
 			/* create column list and the top row of the table based on user prefs */
-			foreach($this->bo->stock_contact_fields as $column)
+			foreach($this->bo->stock_contact_fields as $column => $db_name)
 			{
 				$test = strtolower($column);
 				if(isset($this->prefs[$test]) && $this->prefs[$test])
