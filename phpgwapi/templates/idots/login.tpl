@@ -34,12 +34,12 @@
 </TR>
 <TR bgcolor="#e6e6e6">
 <td align="right"><font color="#000000">{lang_username}:&nbsp;</font></TD>
-<td align="left"><input name="login" value="{cookie}" style="width: 100px;"></TD>
+<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></TD>
 <TD align="left">&nbsp;</TD>
 </TR>
 <TR bgcolor="#e6e6e6">
 <TD align="RIGHT"><font color="#000000">{lang_password}:&nbsp;</font></TD>
-<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="WIDTH: 100px;"></TD>
+<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="WIDTH: 100px; border: 1px solid silver;"></TD>
 <td>&nbsp;</td>
 </TR>
 <TR bgcolor="#e6e6e6">
@@ -49,7 +49,7 @@
 </TR>
 <TR bgcolor="#e6e6e6">
 <TD colspan="3" align="CENTER">
-<input type="submit" value="{lang_login}" name="submitit">
+<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;">
 </TD>
 </TR>
 <TR bgcolor="#e6e6e6">
