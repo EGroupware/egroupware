@@ -84,11 +84,13 @@
 	$phpgw_info["server"]["versions"]["phpgwapi"] = $setup_info['phpgwapi']['version'];
 	$phpgw_info['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
-	$phpgw_info['server']['versions']['header'] = '1.16';
+	$phpgw_info['server']['versions']['header'] = '1.17';
 	/* This is a fix for NT */
 	if (!isset($phpgw_info['flags']['noapi']) || !$phpgw_info['flags']['noapi'] == True)
 	{
 		include(PHPGW_API_INC . '/functions.inc.php');
+		include(PHPGW_API_INC . '/xml_functions.inc.php');
+		include(PHPGW_API_INC . '/soap_functions.inc.php');
 	}
 
 	/* 
