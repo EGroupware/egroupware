@@ -394,7 +394,7 @@
 				'query_value'	=> urlencode(stripslashes($query)),
 				'th_bg'	=> $phpgw_info['theme']['th_bg'],
 				'search'	=> $this->search($search_obj),
-				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):''),
+				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):'')
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','search_filter');
@@ -427,7 +427,7 @@
 				'query_value'	=> urlencode(stripslashes($query)),
 				'th_bg'	=> $phpgw_info['theme']['th_bg'],
 				'search'	=> $this->search($search_obj),
-				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):''),
+				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):'')
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','cats_search_filter');
@@ -526,7 +526,7 @@
 			{
 				if ($filter_obj == 1)
 				{
-//					$user_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
+//					$user_groups = $phpgw->accounts->membership($phpgw_info['user']['account_id']);
 					$indexlimit = count($user_groups);
 
 					if ($yours)
