@@ -156,7 +156,7 @@
 				case 'text':
 				case 'blob':
 				case 'date':
-				case 'bool';
+				case 'bool':
 					$sTranslated = "'type' => '$sType'";
 					break;
 			}
