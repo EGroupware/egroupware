@@ -1898,8 +1898,8 @@
 
 		$sql = "CREATE TABLE phpgw_cal (
 			id		serial,
-			owner		int DFAULT 0 NOT NULL,
-			category	int DFAULT 0 NOT NULL,
+			owner		int DEFAULT 0 NOT NULL,
+			category	int DEFAULT 0 NOT NULL,
 			groups	varchar(255),
 			datetime	int4,
 			mdatetime	int4,
