@@ -15,6 +15,7 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
+		'Site Configuration' => $phpgw->link('/admin/config.php','appname=' . $appname),
 		'Calendar Holiday Management'		=> $phpgw->link('/calendar/holiday_admin.php')
 	);
 //Do not modify below this line
