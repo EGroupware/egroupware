@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['addressbook']['name']      = 'addressbook';
 	$setup_info['addressbook']['title']     = 'Addressbook';
-	$setup_info['addressbook']['version']   = '0.9.13.002';
+	$setup_info['addressbook']['version']   = '1.0.0';
 	$setup_info['addressbook']['app_order'] = 4;
 	$setup_info['addressbook']['enable']    = 1;
 
@@ -25,20 +25,19 @@
 		'Contact manager with Vcard support.<br>
 		 Always have your address book available for updates or look ups from anywhere. <br>
 		 Share address book contact information with others. <br>
-		 Link contacts to calendar events or infolog entires like phonecalls.<br> 
+		 Link contacts to calendar events or InfoLog entires like phonecalls.<br> 
 		 Addressbook is the eGroupWare default contact application. <br>
 		 It makes use of the eGroupWare contacts class to store and retrieve 
 		 contact information via SQL or LDAP.';
 
 	$setup_info['addressbook']['maintainer'] = 'eGroupWare coreteam';
-	$setup_info['addressbook']['maintainer_email'] = 'milosch@users.sourceforge.net';
+	$setup_info['addressbook']['maintainer_email'] = 'egroupware-developer@lists.sourceforge.net';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks'][] = 'admin';
 	$setup_info['addressbook']['hooks'][] = 'add_def_pref';
 	$setup_info['addressbook']['hooks'][] = 'config_validate';
 	$setup_info['addressbook']['hooks'][] = 'home';
-	$setup_info['addressbook']['hooks'][] = 'manual';
 	$setup_info['addressbook']['hooks'][] = 'addaccount';
 	$setup_info['addressbook']['hooks'][] = 'editaccount';
 	$setup_info['addressbook']['hooks'][] = 'deleteaccount';

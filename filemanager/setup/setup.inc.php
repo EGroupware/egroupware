@@ -13,7 +13,7 @@
 
 	$setup_info['filemanager']['name']    = 'filemanager';
 	$setup_info['filemanager']['title']   = 'Filemanager';
-	$setup_info['filemanager']['version'] = '0.9.13.005';
+	$setup_info['filemanager']['version'] = '1.0.0';
 	$setup_info['filemanager']['app_order'] = 6;
 	$setup_info['filemanager']['enable']  = 1;
 
@@ -27,7 +27,6 @@
 		'sidebox_menu',
 		'personalizer',
 		'preferences',
-		'manual'
 	);
 
 	/* Dependencies for this app to work */

@@ -34,7 +34,6 @@
 			'nullable' => False
 		));
 
-
 		$GLOBALS['setup_info']['etemplate']['currentver'] = '0.9.15.001';
 		return $GLOBALS['setup_info']['etemplate']['currentver'];
 	}
@@ -72,8 +71,15 @@
 			'nullable' => True
 		));
 
-
 		$GLOBALS['setup_info']['etemplate']['currentver'] = '0.9.15.002';
+		return $GLOBALS['setup_info']['etemplate']['currentver'];
+	}
+	
+
+	$test[] = '0.9.15.002';
+	function etemplate_upgrade0_9_15_002()
+	{
+		$GLOBALS['setup_info']['etemplate']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['etemplate']['currentver'];
 	}
 ?>

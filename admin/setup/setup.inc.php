@@ -12,19 +12,19 @@
 	/* $Id$ */
 
 	$setup_info['admin']['name']      = 'admin';
-	$setup_info['admin']['version']   = '0.9.13.002';
+	$setup_info['admin']['version']   = '1.0.0';
 	$setup_info['admin']['app_order'] = 1;
 	$setup_info['admin']['tables']    = '';
 	$setup_info['admin']['enable']    = 1;
 
 	$setup_info['admin']['author'][] = array(
 		'name'  => 'eGroupWare coreteam',
-		'email' => 'egroupware-developers@sourceforge.net'
+		'email' => 'egroupware-developers@lists.sourceforge.net'
 	);
 
 	$setup_info['admin']['maintainer'][] = array(
 		'name'  => 'eGroupWare coreteam',
-		'email' => 'egroupware-developers@sourceforge.net',
+		'email' => 'egroupware-developers@lists.sourceforge.net',
 		'url'   => 'www.egroupware.org'
 	);
 
@@ -39,7 +39,6 @@
 		'after_navbar',
 		'config',
 		'deleteaccount',
-		'manual',
 		'view_user' => 'admin.uiaccounts.edit_view_user_hook',
 		'edit_user' => 'admin.uiaccounts.edit_view_user_hook',
 		'sidebox_menu'
