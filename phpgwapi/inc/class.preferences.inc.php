@@ -79,7 +79,7 @@
         $value = $$var;
       }
  
-      $this->data["$app_name"]["$var"] = $value;
+      $this->data[$app_name][$var] = $value;
       reset($this->data);
       return $this->data;
     }
@@ -87,9 +87,9 @@
     function delete($app_name, $var = "")
     {
       if ($var == "") {
-        $this->data["$app_name"] = array();
+        $this->data[$app_name] = array();
       } else {
-        unset($this->data["$app_name"]["$var"]);
+        unset($this->data[$app_name][$var]);
       }
       reset ($this->data);
       return $this->data;

@@ -40,11 +40,12 @@
         return $s;
      }
 
-     function return_array($type = "all")
+     function return_array($type = "all", $id = "")
      {
         $filter = $this->filter($type);
-        if (gettype($type) == "integer") {
-           $filter = " and cat_id='$type'";
+
+        if ($type == "single") {
+           $filter = " and cat_id='$id'";
         }
 
         $this->db->query("select * from phpgw_categories where cat_owner='"
@@ -115,7 +116,7 @@
                   . $this->account_id . "'",__LINE__,__FILE__);
      }
 
-     function edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data)
+     function edit($cat_id,$cat_parent,$cat_name,$cat_description = "",$cat_data = "")
      {
          $this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
                         . "cat_description='" . addslashes($cat_description) . "', cat_data='"
