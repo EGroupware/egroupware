@@ -1,10 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - database support                                      *
-	* Copyright (c) 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp      *
-	* ------------------------------------------------------------------------ *
-	* This is not part of phpGroupWare, but is used by phpGroupWare.           *
-	* http://www.phpgroupware.org/                                             *
+	* phpGroupWare API - database support via ADOdb                            *
 	* ------------------------------------------------------------------------ *
 	* This program is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published    *
@@ -14,29 +10,38 @@
 
 	/* $Id$ */
 
-	/* db_type setup moved after the class below - milosch */
-
-	/**
+   /**
 	* Database abstraction library
 	*
-	* This allows phpGroupWare to use multiple database backends
+	* This allows eGroupWare to use multiple database backends via ADOdb
 	*
 	* @package phpgwapi
 	* @subpackage db
-	* @abstract
-	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp <br> hacked on by phpGW
-	* @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> 2003 FreeSoftware Foundation
+	* @author RalfBecker@outdoor-training.de
 	* @license LGPL
-	* @link http://www.sanisoft.com/phplib/manual/DB_sql.php
 	*/
+
+	if(empty($GLOBALS['phpgw_info']['server']['db_type']))
+	{
+		$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql';
+	}
+	if (@$GLOBALS['phpgw_info']['server']['use_adodb'])
+	{
+		include_once('adodb/adodb.inc.php');
+	}
 
 	class db_
 	{
 		/**
+		* @var string $type database type
+		*/
+		var $type     = '';
+
+		/**
 		* @var string $Host database host to connect to
 		*/
 		var $Host     = '';
-        
+
 		/**
 		* @var string $Database name of database to use
 		*/
@@ -70,7 +75,7 @@
 		/**
 		* @var string $Halt_On_Error "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)
 		*/
-		var $Halt_On_Error = 'yes';
+		var $Halt_On_Error = 'no';//'yes';
         
 		/**
 		* @var string $Seq_Table table for storing sequences ????
@@ -100,15 +105,19 @@
 		//i am not documenting private vars - skwashd :)
         var $xmlrpc = False;
 		var $soap   = False;
+		var $Link_ID = 0;
+		var $Query_ID = 0;
 
 		/**
 		* @param string $query query to be executed (optional)
 		*/
 
-		function db_($query = '')
+		function db($query = '')
 		{
 			$this->query($query);
 		}
+
+		function db_($query='') {}	// only for NOT useing ADOdb
 
 		/**
 		* @return int current connection id
@@ -135,13 +144,60 @@
 		* @var string $Password password for database user (optional)
 		*/
 		function connect($Database = '', $Host = '', $User = '', $Password = '')
-		{}
+		{
+			/* Handle defaults */
+			if ($Database == '')
+			{
+				$Database = $this->Database;
+			}
+			if ($Host == '')
+			{
+				$Host     = $this->Host;
+			}
+			if ($User == '')
+			{
+				$User     = $this->User;
+			}
+			if ($Password == '')
+			{
+				$Password = $this->Password;
+			}
+			if (!$this->Link_ID)
+			{
+				$this->type = $GLOBALS['phpgw_info']['server']['db_type'];
+				if (!is_object($GLOBALS['phpgw']->ADOdb))
+				{
+					switch($this->type)	// convert to ADO db-type-names
+					{
+						case 'pgsql':
+							$type = 'postgres';
+							break;
+						default:
+							$type = $this->type;
+					}
+					$GLOBALS['phpgw']->adodb = ADONewConnection($type);
+					if (!$GLOBALS['phpgw']->adodb)
+					{
+						$this->halt("No ADOdb support for '$type' !!!");
+					}
+					$connect = $GLOBALS['phpgw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
+					if (!$connect = $GLOBALS['phpgw']->adodb->$connect($Host, $User, $Password, $Database))
+					{
+						$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
+					}
+				}
+				$this->Link_ID = &$GLOBALS['phpgw']->adodb;
+			}
+			return $this->Link_ID;
+		}
 
 		/**
-		* Close a connection to a database - only needed for persistent connections
+		* Close a connection to a database - not needed for ADOdb connection
 		*/
 		function disconnect()
-		{}
+		{
+
+		}
 
 		/**
 		* Escape strings before sending them to the database
@@ -155,8 +211,8 @@
 			{
 				return '';
 			}
-
-			return addslashes($str);
+			// the substring is needed as the string is already in quotes
+			return substr($this->Link_ID->quote($str),1,-1);
 		}
 
 		/**
@@ -166,7 +222,9 @@
 		* @return string rdms specific timestamp
 		*/
 		function to_timestamp($epoch)
-		{}
+		{
+			return $this->Link_ID->DBTimeStamp($epoch);
+		}
 
 		/**
 		* Convert a rdms specific timestamp to a unix timestamp
@@ -175,7 +233,9 @@
 		* @return int unix timestamp
 		*/
 		function from_timestamp($timestamp)
-		{}
+		{
+			return $this->Link_ID->UnixTimeStamp($timestamp);
+		}
 
 		/**
 		* @deprecated
@@ -189,7 +249,6 @@
 		*/
 		function free()
 		{
-			@mysql_free_result($this->Query_ID);
 			$this->Query_ID = 0;
 		}
 
@@ -199,10 +258,52 @@
 		* @param string $Query_String the query to be executed
 		* @param mixed $line the line method was called from - use __LINE__
 		* @param string $file the file method was called from - use __FILE__
+		* @param int $offset row to start from
+		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
 		* @return int current query id if sucesful and null if fails
 		*/
-		function query($Query_String, $line = '', $file = '')
-		{}
+		function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1)
+		{
+			if ($Query_String == '')
+			{
+				return 0;
+			}
+			if (!$this->connect())
+			{
+				return 0; /* we already complained in connect() about that. */
+			};
+
+			# New query, discard previous result.
+			if ($this->Query_ID)
+			{
+				$this->free();
+			}
+			if ($this->Link_ID->fetchMode != ADODB_FETCH_BOTH)
+			{
+				$this->Link_ID->SetFetchMode(ADODB_FETCH_BOTH);
+			}
+			if (! $num_rows)
+			{
+				$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+			}
+			if ($num_rows > 0)
+			{
+				$this->Query_ID = $this->Link_ID->SelectLimit($Query_String,$num_rows,intval($offset));
+			}
+			else
+			{
+				$this->Query_ID = $this->Link_ID->Execute($Query_String);
+			}
+			$this->Row = 0;
+			$this->Errno  = $this->Link_ID->ErrorNo();
+			$this->Error  = $this->Link_ID->ErrorMsg();
+			$this->sql = $Query_String;
+			if (! $this->Query_ID)
+			{
+				$this->halt("Invalid SQL: ".$Query_String, $line, $file);
+			}
+			return $this->Query_ID;
+		}
 
 		/**
 		* Execute a query with limited result set
@@ -215,16 +316,36 @@
 		* @return int current query id if sucesful and null if fails
 		*/
 		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
-		{}
+		{
+			return $this->query($Query_String,$line,$file,$offset,$num_rows);
+		}
 
-		
 		/**
 		* Move to the next row in the results set
 		*
 		* @return bool was another row found?
 		*/
 		function next_record()
-		{}
+		{
+			if (!$this->Query_ID)
+			{
+				$this->halt('next_record called with no query pending.');
+				return 0;
+			}
+			if ($this->Row)	// first row is already fetched
+			{
+				$this->Query_ID->MoveNext();
+			}
+			++$this->Row;
+
+			if ($this->Query_ID->EOF || !$this->Query_ID->RecordCount())
+			{
+				return False;
+			}
+			$this->Record = $this->Query_ID->fields;
+
+			return True;
+		}
 
 		/**
 		* Move to position in result set
@@ -233,7 +354,16 @@
 		* @return int 1 if sucessful or 0 if not found
 		*/
 		function seek($pos = 0)
-		{}
+		{
+			if (!$this->Query_ID->Move($this->Row = $pos))
+			{
+				$this->halt("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
+				$this->Query_ID->Move( $this->num_rows() );
+				$this->Row = $this->num_rows();
+				return False;
+			}
+			return True;
+		}
 
 		/**
 		* Begin Transaction
@@ -242,7 +372,7 @@
 		*/
 		function transaction_begin()
 		{
-			return True;
+			return $this->Link_ID->BeginTrans();
 		}
 
 		/**
@@ -252,7 +382,7 @@
 		*/
 		function transaction_commit()
 		{
-			return True;
+			return $this->Link_ID->CommitTrans();
 		}
 
 		/**
@@ -262,7 +392,7 @@
 		*/
 		function transaction_abort()
 		{
-			return True;
+			return $this->Link_ID->RollbackTrans();
 		}
 
 		/**
@@ -273,7 +403,9 @@
 		* @return int the id, -1 if fails
 		*/
 		function get_last_insert_id($table, $field)
-		{}
+		{
+			return $this->Link_ID->Insert_ID();
+		}
 
 		/**
 		* Lock a table
@@ -299,7 +431,9 @@
 		* @return int number of rows
 		*/
 		function affected_rows()
-		{}
+		{
+			return $this->Link_ID->Affected_Rows();
+		}
 
 		/**
 		* Number of rows in current result set
@@ -307,7 +441,9 @@
 		* @return int number of rows
 		*/
 		function num_rows()
-		{}
+		{
+			return $this->Query_ID->RecordCount();
+		}
 
 		/**
 		* Number of fields in current row
@@ -315,7 +451,9 @@
 		* @return int number of fields
 		*/
 		function num_fields()
-		{}
+		{
+			return $this->Query_ID->FieldCount();
+		}
 
 		/**
 		* short hand for @see num_rows()
@@ -393,42 +531,8 @@
 		* @return int sequence id
 		*/
 		function nextid($seq_name)
-		{}
-
-		/**
-		* Get description of a table
-		*
-		* @param string $table name of table to describe
-		* @param bool $full optional, default False summary information, True full information
-		* @return array table meta data
-		*/
-		function metadata($table='',$full=false)
 		{
-			/*
-			 * Due to compatibility problems with Table we changed the behavior
-			 * of metadata();
-			 * depending on $full, metadata returns the following values:
-			 *
-			 * - full is false (default):
-			 * $result[]:
-			 *   [0]["table"]  table name
-			 *   [0]["name"]   field name
-			 *   [0]["type"]   field type
-			 *   [0]["len"]    field length
-			 *   [0]["flags"]  field flags
-			 *
-			 * - full is true
-			 * $result[]:
-			 *   ["num_fields"] number of metadata records
-			 *   [0]["table"]  table name
-			 *   [0]["name"]   field name
-			 *   [0]["type"]   field type
-			 *   [0]["len"]    field length
-			 *   [0]["flags"]  field flags
-			 *   ["meta"][field name]  index of field named "field name"
-			 *   The last one is used, if you have a field name, but no index.
-			 *   Test:  if (isset($result['meta']['myfield'])) { ...
-			 */
+			echo "<p>db::nextid(sequence='$seq_name') not yet implemented</p>\n";
 		}
 
 		/**
@@ -439,7 +543,78 @@
 		* @param string $file file of calling method/function (optional)
 		*/
 		function halt($msg, $line = '', $file = '')
-		{}
+		{
+			$this->Error = $this->Link_ID->ErrorMsg();	// need to be BEFORE unlock,
+			$this->Errno = $this->Link_ID->ErrorNo();	// else we get its error or none
+
+			if ($this->Link_ID)		// only if we have a link, else infinite loop
+			{
+				$this->unlock();	/* Just in case there is a table currently locked */
+			}
+			if ($this->Halt_On_Error == "no")
+			{
+				return;
+			}
+			$this->haltmsg($msg);
+
+			if ($file)
+			{
+				printf("<br><b>File:</b> %s",$file);
+			}
+			if ($line)
+			{
+				printf("<br><b>Line:</b> %s",$line);
+			}
+			printf("<br><b>Function:</b> %s\n",function_backtrace(2));
+
+			if ($this->Halt_On_Error != "report")
+			{
+				echo "<p><b>Session halted.</b>";
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
+			}
+		}
+
+		function haltmsg($msg)
+		{
+			printf("<p><b>Database error:</b> %s<br>\n", $msg);
+			if ($this->Errno != "0" && $this->Error != "()")
+			{
+				printf("<b>$this->type Error</b>: %s (%s)<br>\n",$this->Errno,$this->Error);
+			}
+		}
+
+		/**
+		* Get description of a table
+		*
+		* Beside the column-name all other data depends on the db-type !!!
+		*
+		* @param string $table name of table to describe
+		* @param bool $full optional, default False summary information, True full information
+		* @return array table meta data
+		*/
+		function metadata($table='',$full=false)
+		{
+			$columns = $this->Link_ID->MetaColumns($table);
+			//echo "<b>metadata</b>('$table')=<pre>\n".print_r($columns,True)."</pre>\n";
+
+			$metadata = array();
+			$i = 0;
+			foreach($columns as $column)
+			{
+				$metadata[$i] = $column;
+				$metadata[$i]['table'] = $table;
+				if ($full)
+				{
+					$metadata['meta'][$column['name']] = $i;
+				}
+				++$i;
+			}
+			if ($full)
+			{
+				$metadata['num_fields'] = $i;
+			}
+			return $metadata;
+		}
 
 		/**
 		* Get a list of table names in the current database
@@ -448,6 +623,20 @@
 		*/
 		function table_names()
 		{
+			$result = array();
+			$tables = $this->Link_ID->MetaTables('TABLES');
+			if (is_array($tables))
+			{
+				foreach($tables as $table)
+				{
+					$result[] = array(
+						'table_name'      => $table,
+						'tablespace_name' => $this->Database,
+						'database'        => $this->Database
+     				);
+				}
+			}
+			return $result;
 		}
 
 		/**
@@ -457,6 +646,7 @@
 		*/
 		function index_names()
 		{
+			echo "<p>db::index_names() not yet implemented</p>\n";
 			return array();
 		}
 
@@ -467,7 +657,9 @@
 		* @param string $adminpasswd password for the database administrator user (optional)
 		*/
 		function create_database($adminname = '', $adminpasswd = '')
-		{}
+		{
+			echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented</p>\n";
+		}
 
 		/**
 		* Implodes an array of column-value pairs for the use in sql-querys.
@@ -548,9 +740,12 @@
 		}
 	}
 
-	if(empty($GLOBALS['phpgw_info']['server']['db_type']))
+	if (!@$GLOBALS['phpgw_info']['server']['use_adodb'])
 	{
-		$GLOBALS['phpgw_info']['server']['db_type'] = 'mysql';
+		include(PHPGW_API_INC.'/class.db_'.$GLOBALS['phpgw_info']['server']['db_type'].'.inc.php');
 	}
-	include(PHPGW_API_INC.'/class.db_'.$GLOBALS['phpgw_info']['server']['db_type'].'.inc.php');
+	else
+	{
+		class db extends db_{}
+	}
 ?>
