@@ -5,8 +5,8 @@
   * Maintain list and provide send interface to remote phpgw servers         *
   * Copyright (C) 2001 Miles Lott                                            *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org                                                *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -40,10 +40,7 @@
 		var $kp3 = '';
 
 		/* These are now entered as defaults if the admin forgot to enter the full URL */
-		var $urlparts = array(
-			'xmlrpc' => '/phpgroupware/xmlrpc.php',
-			'soap'   => '/phpgroupware/soap.php'
-		);
+		var $urlparts = array();
 
 		/*
 		0/none == no access
@@ -84,6 +81,12 @@
 
 		function interserver($serverid='')
 		{
+			$url = eregi_replace('https*://[^/]*/','',$GLOBALS['phpgw_info']['server']['webserver_url']);
+			$this->urlparts = array(
+				'xmlrpc' => $url.'/xmlrpc.php',
+				'soap'   => $url.'/soap.php'
+			);
+
 			$this->db = $GLOBALS['phpgw']->db;
 			if($serverid)
 			{
