@@ -139,7 +139,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	da	Indt
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	da	Indtast den fuldstændige sti til brugere og gruppe filer.<br>Eksempel: /tmp, C:\TEMP
 enter the hostname of the machine on which this server is running	admin	da	Indtast hostnavnet for computeren på hvor denne serveren kører
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	da	Indtast placeringen af eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware &nbsp; eller &nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast placeringen af eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware &nbsp; eller &nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	da	Indtast søg streng. For at vise alt, tøm dette felt og tryk SEND knappen igen
 enter the site password for peer servers	admin	da	Indtast site adgangskoden for peer serverene
 enter the site username for peer servers	admin	da	Indtast site brugernavnet for peer serverene
@@ -333,7 +333,7 @@ view user account	admin	da	Vis bruger konto
 who would you like to transfer all records owned by the deleted user to?	admin	da	Hvem vil du overføre ALLE posteringer ejet af den slettede bruger til?
 would you like egroupware to check for a new version<br>when admins login ?	admin	da	Vil du have eGroupWare til at kikke efter nyere versioner<br>når adminstratorer logget ind?
 would you like egroupware to check for new application versions when admins login ?	admin	da	Vil du have eGroupWare til at kikke efter nyere applikations versioner når administratoren logger ind?
-would you like phpgroupware to cache the phpgw info array ?	admin	da	Vil du have eGroupWare til at cache pgpgw info array?
+would you like egroupware to cache the phpgw info array ?	admin	da	Vil du have eGroupWare til at cache pgpgw info array?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	da	Vil du automatisk indlæse nye sprogfiler (under login)?
 would you like to show each application's upgrade status ?	admin	da	Vil du gerne have vist hver applikations opgraderings status?
 xml-rpc	admin	da	XML-RPC

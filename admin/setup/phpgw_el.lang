@@ -143,7 +143,7 @@ enter the file name of your logo	admin	el	Εισάγετε το όνομα του αρχείου του λογό
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	el	
 enter the full path for users and group files.<br>examples: /files, e:files	admin	el	
 enter the hostname of the machine on which this server is running	admin	el	Εισάγετε το όνομα κομβου του μηχανίματος στο οποίο τρέχει ο server
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε την τοποθεσία του phpGroupWare's URL.<br>Παράδειγμα: http://www.domain.com/phpgroupware &nbsp; ή &nbsp; /phpgroupware<br><b>Χωρίς να ακολουθείται απο κάθετο</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε την τοποθεσία του eGroupWare's URL.<br>Παράδειγμα: http://www.domain.com/egroupware &nbsp; ή &nbsp; /egroupware<br><b>Χωρίς να ακολουθείται απο κάθετο</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	el	Εισάγετε το αλφαριθμητικό εύρεσης. Για εμφάνηση όλων των εισόδων, άδεισε αυτό το πεδίο και πάτα το κουμπί ΥΠΟΒΟΛΗ πάλι
 enter the site password for peer servers	admin	el	Εισήγαγε το συνθηματικό της ιστιοσελίδας για ισότιμους server
 enter the site username for peer servers	admin	el	Εισήγαγε το όνομα χρήστη της ιστιοσελίδας για ισότιμους server
@@ -344,7 +344,7 @@ view user account	admin	el	Εμφάνηση λογαριασμού χρήστη
 who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε?
 would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η phpGroupWare να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή ?
 would you like egroupware to check for new application versions when admins login ?	admin	el	Θέλετε η phpGroupWare να ελέγχει για νέες εκδώσεις της εφαρμογής όταν ο διαχειρηστής κάνει εισαγωγή ?
-would you like phpgroupware to cache the phpgw info array ?	admin	el	Θέλετε η phpGroupWare να κρύβει τον πίνακα πληροφοριών της phpgw ?
+would you like egroupware to cache the phpgw info array ?	admin	el	Θέλετε η eGroupWare να κρύβει τον πίνακα πληροφοριών της phpgw ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	el	Θέλετε αυτόματα να φορτώνονται νέα langfiles (κατα τη διάρκεια εισαγογής) ?
 would you like to show each application's upgrade status ?	admin	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής ?
 xml-rpc	admin	el	XML-RPC

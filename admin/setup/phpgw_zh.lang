@@ -148,7 +148,7 @@ enter the file name of your logo	admin	zh	徽标文件的名称
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh	请输入临时文件的完整路径。<br>例如: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	请输入用户和组的完整路径。<br>例如: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	zh	请输入服务器所在主机的名称
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zh	请输入phpGroupWare的网址。<br>例如： http://www.domain.com/phpgroupware &nbsp; 或者 &nbsp; /phpgroupware<br><b>不能以/结尾</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	请输入eGroupWare的网址。<br>例如： http://www.domain.com/egroupware &nbsp; 或者 &nbsp; /egroupware<br><b>不能以/结尾</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zh	请输入要查找的字符串。要显示所有条目，此处留空并点击提交按钮
 enter the site password for peer servers	admin	zh	请输入对等服务器站点的密码
 enter the site username for peer servers	admin	zh	请输入对等服务器站点的用户名

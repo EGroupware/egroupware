@@ -143,7 +143,7 @@ enter the file name of your logo	admin	sl	Vnesite ime datoteke va¹ega logotipa
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sl	Vnesite polno ime do za&#269;asnih datotek. <br> Primera: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sl	Vnesite ime stre¾nika skupine, na kateri te&#269;e stre¾nik.
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URP va¹ega eGroupware stre¾nika.<br>Primer: http://www.domena.si/egw &nbsp; ali &nbsp; /egw<br><b>Brez kon&#269;ne po¹evnice.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URP va¹ega eGroupware stre¾nika.<br>Primer: http://www.domena.si/egw &nbsp; ali &nbsp; /egw<br><b>Brez kon&#269;ne po¹evnice.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sl	Vnesite niz za iskanje. Za prikaz vseh vnosov izpraznite to polje in kliknite gumb Po¹lji.
 enter the site password for peer servers	admin	sl	Vnesite geslo vzporednega stre¾nika
 enter the site username for peer servers	admin	sl	Vnesite uporabni¹ko ime vzporednega stre¾nika

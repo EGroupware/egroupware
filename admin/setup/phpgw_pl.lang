@@ -162,7 +162,7 @@ enter the file name of your logo	admin	pl	Wpisz nazwe pliku ze znakiem firmowym
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pl	Podaj pe³n± ¶cie¿kê do katalogu dla plików tymczasowych.<br>Na przyk³ad: /tmp, C:TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pl	Podaj pe³n± ¶cie¿kê do plików uy¿tkowników i grup.<br>Na przykad: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pl	Podaj nazwê komputera, na którym jest uruchomiony serwer
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	pl	Podaj URL do twojego portalu eGroupWare.<br>Na przykad: http://www.twojadomena.com.pl/egroupware &nbsp; or &nbsp;/egroupware<br><b>Bez koñcz±cego slash-a (,,/'')</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj URL do twojego portalu eGroupWare.<br>Na przykad: http://www.twojadomena.com.pl/egroupware &nbsp; or &nbsp;/egroupware<br><b>Bez koñcz±cego slash-a (,,/'')</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pl	Wpisz szukany ci±g znaków. Aby pokazaæ wszystkie wpisy, wyczy¶æ to pole i kliknij ponownie  przycisk SZUKAJ.
 enter the site password for peer servers	admin	pl	Wprowad¼ has³o serwisu dla  serwerów równorzêdnych (peer servers)
 enter the site username for peer servers	admin	pl	Wprowad¼ nazwê u¿ytkownika serwisu dla serwerów równorzdnych (peer servers)

@@ -152,7 +152,7 @@ enter the background color for the site title	admin	ko	사이트 제목의 배경색 입력
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ko	임시 파일의 완전경로 입력<br>예:/tmp,C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	ko	사용자와 그룹 파일의 완전경로 입력<br>예:/files ,E:\FILES
 enter the hostname of the machine on which this server is running	admin	ko	이 서버의 호스트이름 입력
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	ko	phpGroupWare의 URL의 위치를 입력.<br>예: http://www.domain.com/phpgroupware &nbsp; 이나 &nbsp; /phpgroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	eGroupWare의 URL의 위치를 입력.<br>예: http://www.domain.com/egroupware &nbsp; 이나 &nbsp; /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ko	검색할 문자열을 입력. 모든 항목을 보기위해선, 이 필드를 비우고 보내기(Submit) 버튼을 다시 누르세요
 enter the site password for peer servers	admin	ko	피어서버의 사이트 암호 입력
 enter the site username for peer servers	admin	ko	피어서버의 사이트 사용자이름 입력

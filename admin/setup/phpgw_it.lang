@@ -149,7 +149,7 @@ enter the background color for the site title	admin	it	Inserisci il colore di ba
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	it	Inserisci l'hostname della macchina su cui sta girando questo server
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di phpGroupWare.<br>Esempio: http://www.domain.com/phpgroupware &nbsp; o &nbsp; /phpgroupware<br><b>senza slash finale</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware &nbsp; o &nbsp; /egroupware<br><b>senza slash finale</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	it	Inserisci la stringa di ricerca. Per vedere tutta la lista, svuota il campo e premi ancora il pulsante INVIA
 enter the site password for peer servers	admin	it	Inserisci la password per i peer server
 enter the site username for peer servers	admin	it	Inserisci il nome utente per i peer server

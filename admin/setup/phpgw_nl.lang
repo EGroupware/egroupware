@@ -148,7 +148,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	nl	Voer
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br/>Bijv.: /files of D:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br/>Bijv.: /files of D:\FILES
 enter the hostname of the machine on which this server is running	admin	nl	Voer de hostnaam van de machine in waar deze server op draait
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van eGRoupWare's URL.<br/>Bijv.: http://www.domein.com/egroupware &nbsp; or &nbsp; /egroupware<br/><b>Gebruik geen afsluiten slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van eGroupWare's URL.<br/>Bijv.: http://www.domein.com/egroupware &nbsp; or &nbsp; /egroupware<br/><b>Gebruik geen afsluiten slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	nl	Voer de zoekstring in. Laat dit veld leeg om alles weer te geven en druk opnieuw op de VERZENDKNOP
 enter the site password for peer servers	admin	nl	Voer het sitewachtwoord in voor peer-servers
 enter the site username for peer servers	admin	nl	Voer het sitegebruikersnaam in voor peer-servers

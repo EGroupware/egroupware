@@ -166,7 +166,7 @@ enter the file name of your logo	admin	es-es	Introduzca el nombre del fichero de
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta completa para los archivos temporales.<br> Ejemplos: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:\FILES
 enter the hostname of the machine on which this server is running	admin	es-es	Introduzca el nombre de la máquina sobre la cual se está ejecutando este servidor
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de phpGroupWare.<br>Ejemplo: http://www.dominio.com/phpgroupware o /phpgroupware.<br><b>Sin barra del final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare.<br>Ejemplo: http://www.dominio.com/egroupware o /egroupware.<br><b>Sin barra del final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	es-es	Introduzca la cadena de búsqueda. Para mostrar todas las entradas, vacíe este campo y pulse de nuevo el botón ENVIAR.
 enter the site password for peer servers	admin	es-es	Introduzca la contraseña del sitio para servidores 'peer'
 enter the site username for peer servers	admin	es-es	Introduzca el usuario del sitio para servidores 'peer'
@@ -395,7 +395,7 @@ view user account	admin	es-es	ver cuenta de usuario
 who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
 would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión<br>cuando inicien la sesión los administradores?
 would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión de las aplicaciones cuando inicien la sesión los administradores?
-would you like phpgroupware to cache the phpgw info array ?	admin	es-es	¿Desea que phpGroupWare almacene en memoria el array phpgw info?
+would you like egroupware to cache the phpgw info array ?	admin	es-es	¿Desea que eGroupWare almacene en memoria el array phpgw info?
 would you like phpgroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que phpGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
 would you like phpgroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que phpGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	es-es	¿Desea cargar automáticamente nuevos ficheros de idioma (al iniciar la sesión)?

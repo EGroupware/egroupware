@@ -166,7 +166,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	es-ca	I
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-ca	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	es-ca	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:FILES
 enter the hostname of the machine on which this server is running	admin	es-ca	Introduïu el nom complet de l'ordinador on s'executa aquest servidor
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	es-ca	Introduïu l'adreça URL d'eGroupWare.<br>Exemple: http://www.domini.com/egroupware o bé  /egroupware.<br><b>Sense barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-ca	Introduïu l'adreça URL d'eGroupWare.<br>Exemple: http://www.domini.com/egroupware o bé  /egroupware.<br><b>Sense barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	es-ca	Introduïu la cadena de recerca. Per a mostrar totes les entrades, deixeu buit aquest camp i premeu el botó ENVIAR altra vegada.
 enter the site password for peer servers	admin	es-ca	Introduïu la contrasenya del lloc per a servidors parells
 enter the site username for peer servers	admin	es-ca	Introduïu el nom d'usuari del lloc per a servidors parells

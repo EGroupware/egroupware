@@ -66,7 +66,7 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi
 enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	admin	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
 enter the full path for users and group files.<br>Examples: /files, E:\FILES	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen isäntänimi (hostname)
-enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	admin	fi	Anna phpGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/phpgroupware &nbsp; tai &nbsp; /phpgroupware<br><b>Ei kauttaviivaa loppuun</b>
+enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	admin	fi	Anna eGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/egroupware &nbsp; tai &nbsp; /egroupware<br><b>Ei kauttaviivaa loppuun</b>
 enter the site password for peer servers	admin	fi	Anna salasana rinnakkaispalvelimille
 enter the site username for peer servers	admin	fi	Anna käyttäjätunnus rinnakkaispalvelimille
 enter the title for your site	admin	fi	Anna palvelun nimi
@@ -193,7 +193,7 @@ view access log	admin	fi	Näytä käyttöloki
 view error log	admin	fi	Näytä virheloki
 view sessions	admin	fi	Näytä istunnot
 who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirretään KAIKKI poistetun käyttäjän tietueet?
-would you like phpgroupWare to cache the phpgw info array ?	admin	fi	Säilytetäänkö phpgw info -rakenne välimuistissa?
+would you like egroupWare to cache the phpgw info array ?	admin	fi	Säilytetäänkö egw info -rakenne välimuistissa?
 would you like phpgroupWare to check for a new version<br>when admins login ?	admin	fi	Tarkistetaanko, onko phpGroupWare:sta uutta versiota<br>kun pääkäyttäjä kirjautuu järjestelmään?
 would you like to show each application's upgrade status ?	admin	fi	Näytetäänkö kunkin sovelluksen päivitystilanne?
 you have entered an invalid expiration date	admin	fi	Vanhenemispäivä ei kelpaa

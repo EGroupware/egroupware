@@ -68,7 +68,7 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt
 enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	admin	pt	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
 enter the full path for users and group files.<br>Examples: /files, E:\FILES	admin	pt	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pt	Digite o nome da máquina em que este servidor está sendo executado
-enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	admin	pt	Digite a URL do phpGroupWare.<br>Exemplo: http://www.domain.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Sem a barra final</b>
+enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	admin	pt	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br><b>Sem a barra final</b>
 enter the site password for peer servers	admin	pt	Digite a senha do servidor para comunicação com servidores remotos
 enter the site username for peer servers	admin	pt	Digite o usuário do servidor para comunicação com servidores remotos
 enter the title for your site	admin	pt	Digite o título para o seu site

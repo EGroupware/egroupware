@@ -148,7 +148,7 @@ enter the file name of your logo	admin	zt	請輸入商標的檔案名稱
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
 enter the hostname of the machine on which this server is running	admin	zt	輸入這個伺服器主機的主機名稱
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zt	輸入 phpGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>結尾無斜線</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	輸入 eGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/egroupware &nbsp;或&nbsp; /egroupware<br><b>結尾無斜線</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zt	輸入搜尋的字串，如果要顯示所有事件，保持空白並且再次按下送出
 enter the site password for peer servers	admin	zt	輸入對接伺服器的主機密碼
 enter the site username for peer servers	admin	zt	輸入對接伺服器的主機名稱

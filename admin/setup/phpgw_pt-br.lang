@@ -158,7 +158,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	D
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da máquina em que este servidor está sendo executado
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a expressão de busca. Para mostrar todas as entradas, deixe esse campo em branco e pressione ENVIAR novamente
 enter the site password for peer servers	admin	pt-br	Digite a senha do servidor para comunicação com servidores Parceiros
 enter the site username for peer servers	admin	pt-br	Digite o usuário do servidor para comunicação com servidores Parceiros
