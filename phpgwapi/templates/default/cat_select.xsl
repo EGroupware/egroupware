@@ -8,7 +8,7 @@
 	<xsl:template match="cat_list">
 	<xsl:variable name="id"><xsl:value-of select="id"/></xsl:variable>
 		<xsl:choose>
-			<xsl:when test="selected_cat">
+			<xsl:when test="selected">
 				<option value="{$id}" selected="selected"><xsl:value-of select="name"/></option>
 			</xsl:when>
 			<xsl:otherwise>
