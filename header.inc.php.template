@@ -79,6 +79,10 @@
 	/**************************************************************************\
 	* Do not edit these lines                                                  *
 	\**************************************************************************/
+	// This is required becuase some applications (outside of phpGW) set a cookie named lang
+	// Which messes up phpGWs $lang array, people will pull there hair out tring to find it.
+	// This should make there life a little simpler.
+	unset($lang);
 	define('PHPGW_API_INC',PHPGW_INCLUDE_ROOT.'/phpgwapi/inc');
 	include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
 	$phpgw_info["server"]["versions"]["phpgwapi"] = $setup_info['phpgwapi']['version'];
