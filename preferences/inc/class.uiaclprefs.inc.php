@@ -30,14 +30,7 @@
 			$s_groups = get_var('s_groups',Array('GET','POST'));
 			$s_users  = get_var('s_users',Array('GET','POST'));
 
-			if(isset(get_var('owner',Array('POST'))))
-			{
-				$owner = get_var('owner',Array('POST'));
-			}
-			else
-			{
-				$owner = get_var('owner',Array('GET'));
-			}
+			$owner = get_var('owner',Array('POST','GET'));
 
 			if (! $acl_app)
 			{
