@@ -259,7 +259,10 @@
 
 			if (!$GLOBALS['phpgw_setup']->db->Link_ID)
 			{
+				$old = error_reporting();
+				error_reporting($old & ~E_WARNING);	// no warnings
 				$GLOBALS['phpgw_setup']->db->connect();
+				error_reporting($old);
 			}
 			if (!$GLOBALS['phpgw_setup']->db->Link_ID)
 			{
