@@ -1,0 +1,8 @@
+alter table chat_channel change name name varchar(10) not null;
+alter table chat_messages change channel channel char(20) not null;
+alter table chat_messages change loginid loginid varchar(20) not null;
+alter table chat_currentin change loginid loginid varchar(25) not null;
+alter table chat_currentin change channel channel char(20);
+alter table chat_privatechat change user1 user1 varchar(25) not null;
+alter table chat_privatechat change user2 user2 varchar(25) not null;
+
