@@ -50,6 +50,7 @@
 			$this->db = $phpgw->db;
 			$this->account_id = $phpgw_info["user"]["account_id"];
 
+			// The left side are the array elements used throughout phpgw, right side are the db field names.
     	    $this->stock_contact_fields = array(
 				"fn"                     => "fn",        // 'prefix given middle family suffix'
 				"n_given"                => "n_given",   // firstname
