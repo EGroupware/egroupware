@@ -11,6 +11,14 @@
 
 /* $Id$ */
 
+function submitit(form,name)
+{
+	//alert(name+' pressed');
+	form.submit_button.value = name;
+	form.submit();
+	return false;
+}
+
 function set_element(form,name,value)
 {
 	//alert('set_element: '+name+'='+value);

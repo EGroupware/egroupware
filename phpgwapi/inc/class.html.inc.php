@@ -202,8 +202,7 @@
 				{
 					$image = substr($image,0,strpos($image,'.'));
 				}
-				if (!($path = $GLOBALS['phpgw']->common->image($app,$image)) &&
-				    !($path = $GLOBALS['phpgw']->common->image('phpgwapi',$image)))
+				if (!($path = $GLOBALS['phpgw']->common->image($app,$image)))
 				{
 					$path = $image;		// name may already contain absolut path
 				}
@@ -349,6 +348,10 @@
 
 		function image( $app,$name,$title='',$options='' )
 		{
+			if (strpos($name,'.'))
+			{
+				$name = substr($name,0,strpos($name,'.'));
+			}
 			if (!($path = $GLOBALS['phpgw']->common->image($app,$name)))
 			{
 				$path = $name;		// name may already contain absolut path

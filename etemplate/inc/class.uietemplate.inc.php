@@ -128,6 +128,7 @@
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
 			$html = ($this->stable ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
 				$this->html->form($this->include_java_script(1).
+					$this->html->input_hidden('submit_button','',False).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id
 					),'/etemplate/process_exec.php?menuaction='.$method,'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
@@ -209,6 +210,10 @@
 			{
 				// this prevents an empty screen, if the sessiondata gets lost somehow
 				$this->location(array('menuaction' => $_GET['menuaction']));
+			}
+			if (isset($_POST['submit_button']) && !empty($_POST['submit_button']))
+			{
+				$this->set_array($_POST,$_POST['submit_button'],'pressed');
 			}
 			$content = $_POST['exec'];
 			if (!is_array($content))
@@ -632,7 +637,7 @@
 					}
 					if ($value)
 					{
-						$options .= ' CHECKED';
+						$options .= ' checked="1"';
 					}
 					if ($readonly)
 					{
@@ -652,7 +657,7 @@
 
 					if ($value == $set_val)
 					{
-						$options .= ' CHECKED';
+						$options .= ' checked="1"';
 					}
 					if ($readonly)
 					{
@@ -666,26 +671,19 @@
 					break;
 				case 'button':
 					list($app) = explode('.',$this->name);
-					if ($this->java_script() && $cell['onchange'] != '' && !$cell['needed']) // use a link instead of a button
+					list($img,$ro_img) = explode(',',$cell_options);
+					$title = strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label);
+					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
-						if ($cell['onchange'] == 1)
-						{
-							$html .= $this->html->input_hidden($form_name,'',False) . "\n";
-							$html .= '<a href="" onClick="set_element(document.eTemplate,\''.$form_name.'\',\'pressed\'); document.eTemplate.submit(); return false;" '.$options.'>' .
-								(strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label)) . '</a>';
-						}
-						else	// use custom javascript
-						{
-							$html .= '<a href="" onClick="'.$cell['onchange'].'; return false;" '.$options.'>' .
-								(strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label)) . '</a>';
-						}
+						$onclick = ($cell['onchange'] == 1 || $img) ? "return submitit(document.eTemplate,'$form_name');" : $cell['onchange'].'; return false;';
+						$html .= '<a href="" onClick="'.$onclick.'" '.$options.'>' .
+							($img ? $this->html->image($app,$img,$title,'border="0"') : $title) . '</a>';
 					}
 					else
 					{
-						list($img,$ro_img) = explode(',',$cell_options);
 						if (!empty($img))
 						{
-							$options .= ' TITLE="'.(strlen($label)<=1||$cell['no_lang']?$label:lang($label)).'"';
+							$options .= ' title="'.$title.'"';
 						}
 						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$cell['onchange'],
 							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
@@ -978,7 +976,7 @@
 			}
 			if (is_int($this->debug) && $this->debug >= 1 || $this->debug == $this->name && $this->name)
 			{
-				echo "<p>process_show($this->name) start: content ="; _debug_array($content);
+				echo "<p>process_show($this->name) cname='$cname' start: content ="; _debug_array($content);
 			}
 			$content_in = $cname ? array($cname => $content) : $content;
 			$content = array();
