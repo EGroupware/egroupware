@@ -64,10 +64,10 @@
      exit;
   }
 
-  $phpgw->common->read_preferences("addressbook");
-  $phpgw->common->read_preferences("email");
-  $phpgw->common->read_preferences("calendar");
-  $phpgw->common->read_preferences("stocks");
+ // $phpgw->preferences->read_preferences("addressbook");
+//  $phpgw->preferences->read_preferences("email");
+//  $phpgw->preferences->read_preferences("calendar");
+//  $phpgw->preferences->read_preferences("stocks");
   
   $phpgw->db->query("select app_version from applications where app_name='admin'",__LINE__,__FILE__);
   $phpgw->db->next_record();

@@ -739,11 +739,27 @@
         $currentver = "0.9.8pre2";
         update_version_table();
       }
-      if ($currentver == "0.9.8pre1") {
+      if ($currentver == "0.9.8pre2") {
         // upgrade code starts here
 
+        $db->query("select * from preferences order by preference_owner");
+        while ($db->next_record()) {
+           $t[$db->f("preference_owner")][$db->f("preference_appname")][$db->f("preference_var")] = $db->f("preference_value");
+        }
+
+        $db->query("drop table preferences");
+        $sql = "create table preferences ( 
+          preference_owner       int,
+          preference_value       text
+        )";
+        $db->query($sql);         
+
+        while ($tt = each($t)) {
+           $db->query("insert into preferences values ('$tt[0]','" . serialize($tt[1]) . "'");
+        }
+
         // upgrade code ends here
-        $currentver = "0.9.8pre2";
+        $currentver = "0.9.8pre3";
         update_version_table();
       }
       if ($oldversion != $currentver){

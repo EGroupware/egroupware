@@ -18,16 +18,17 @@
   include("../header.inc.php");
 
   if ($submit) {
-     $phpgw->preferences->preferences_delete("byapp",$phpgw_info["user"]["account_id"],"calendar");
-     $phpgw->preferences->preferences_delete("byappvar",$phpgw_info["user"]["account_id"],"common|defaultcalendar");
-
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"workdayends","calendar");
-     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"defaultcalendar","common");
+     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
+     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
+     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"workdayends","calendar");
+     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"defaultcalendar","common");
      if ($mainscreen_showevents) {
-        $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
+        $phpgw->preferences->change($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
+     } else {
+        $phpgw->preferences->delete("calendar","mainscreen_showevents");
      }
+     $phpgw->preferences->commit();
+     
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      exit;
   }

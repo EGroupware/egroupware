@@ -13,7 +13,7 @@
 
   function add_default_server_config(){
     global $db, $phpgw_info, $currentver;
-    
+
     $phpgw_info["server"]["default_tplset"] = "default";
           $phpgw_info["server"]["temp_dir"]="/path/to/tmp";
           $phpgw_info["server"]["files_dir"]="/path/to/phpgroupware/files";
@@ -48,7 +48,9 @@
           $phpgw_info["server"]["nntp_login_username"]="";
           $phpgw_info["server"]["nntp_login_password"]="";
     
-    $db->query("insert into config values("' . serialize($s) . '")");
+    $db->query("insert into config values('" . serialize($phpgw_info["server"]) . "')");
+
+    // I disabled a lot of this for temp. (jengo)
 
 /*    $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
     $db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
@@ -85,7 +87,7 @@
     $db->query("insert into config (config_name, config_value) values ('showpoweredbyon', 'bottom')");
     $db->query("insert into config (config_name, config_value) values ('htmlcompliant', 'False')");
     $db->query("insert into config (config_name, config_value) values ('checkfornewversion', 'False')");
-    $db->query("insert into config (config_name, config_value) values ('freshinstall', 'True')"); */
+    $db->query("insert into config (config_name, config_value) values ('freshinstall', 'True')");
   }
 
   if ($useglobalconfigsettings == "on"){
@@ -132,10 +134,11 @@
       echo "  </tr>\n";
       echo "</table>\n";
       add_default_server_config();
-    }
-  }else{
-    add_default_server_config();
+    } 
+  }else{ */
   }
+    add_default_server_config();
+//  }
 
   include($phpgw_info["server"]["server_root"] . "/setup/sql/default_applications.inc.php");
 

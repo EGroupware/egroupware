@@ -129,17 +129,9 @@
          <td>
           <select name="settings[lang]">
           <?php
-            $phpgw->db->query("select preference_value from preferences where preference_owner='"
-                            . $phpgw_info["user"]["account_id"] . "' and preference_name='lang' and "
-                            . "preference_appname='common'",__LINE__,__FILE__);
-            $phpgw->db->next_record();
 
-            if ($phpgw->db->f("preference_value") == "") {
-               $phpgw_info["user"]["preferences"]["common"]["lang"] = "en";
-            }
             $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; 
-            $strSql = "SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'";
-            $phpgw->db->query($strSql);
+            $phpgw->db->query("SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'",__LINE__,__FILE__);
             while ($phpgw->db->next_record()) {
                 echo "<option value=\"" . $phpgw->db->f("lang_id") . "\"";
                 if ($phpgw_info["user"]["preferences"]["common"]["lang"]) {
@@ -156,7 +148,6 @@
          </td>
        </tr>
        <?php
-         // This one is specialized, so we do it manually
          if ($phpgw_info["user"]["apps"]["admin"]) {
             echo '<tr><td>' . lang("show current users on navigation bar") . '</td><td>'
                . '<input type="checkbox" name="show_currentusers" value="True"';
@@ -210,22 +201,18 @@
  <?php
      $phpgw->common->phpgw_footer();
   } else {
-     $phpgw->preferences->preferences_delete("byappnotheme",$phpgw_info["user"]["account_id"],"common");
-
-     $phpgw->db->lock("preferences");
+     //$phpgw->preferences->preferences_delete("byappnotheme",$phpgw_info["user"]["account_id"],"common");
 
      while ($setting = each($settings)) {
-        $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],$setting[0],"common",$setting[1]);
+        $phpgw->preferences->change($phpgw_info["user"]["account_id"],$setting[0],"common",$setting[1]);
      }
 
      // This one is specialized, so we do it manually
      if ($phpgw_info["user"]["apps"]["admin"]) {
         if ($show_currentusers) {
-           $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"show_currentusers","common");
+           $phpgw->preferences->change($phpgw_info["user"]["account_id"],"show_currentusers","common");
         }
      }
-
-     $phpgw->db->unlock();
 
      if ($phpgw_info["server"]["useframes"] != "never") {
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php"));

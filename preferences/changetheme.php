@@ -17,16 +17,15 @@
   include("../header.inc.php");
   
   if ($ntheme) {
-     $theme = $ntheme;
-     $phpgw->preferences->preferences_update($phpgw_info["user"]["account_id"],"theme","common");
+     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"theme","common",$ntheme);
+     $phpgw->preferences->commit();
      Header("location: " . $phpgw->link("changetheme.php"));
      exit;
   }
 
   $dh = opendir($phpgw_info["server"]["server_root"] . "/themes");
   while ($file = readdir($dh)) {
-#    if ($file != "." && $file != ".." && $file != "CVS") {
-    if ( eregi( "\.theme$", $file ) ) {
+    if (eregi("\.theme$", $file)) {
        $installed_themes[] = substr($file,0,strpos($file,"."));
     }
   }

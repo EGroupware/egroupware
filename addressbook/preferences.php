@@ -26,13 +26,16 @@
      }
      
      if (! $totalerrors) {
-        $phpgw->common->preferences_delete("byapp",$phpgw_info["user"]["account_id"],"addressbook");
         while ($pref = each($ab_selected)) {
-          $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],$pref[0],"addressbook","addressbook_" . $pref[1]);
+          $phpgw->preferences->change($phpgw_info["user"]["account_id"],$pref[0],"addressbook","addressbook_" . $pref[1]);
         }
         if ($mainscreen_showbirthdays) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"mainscreen_showbirthdays","addressbook");
+           $phpgw->preferences->change($phpgw_info["user"]["account_id"],"mainscreen_showbirthdays","addressbook");
+        } else {
+           $phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
         }
+
+        $phpgw->preferences->commit();
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      }
   }
