@@ -1,30 +1,30 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
-%1 etemplates deleted	etemplate	de	%1 eTemplates gelöscht
-%1 etemplates for application '%2' dumped to '%3'	etemplate	de	%1 eTemplates für die Anwendung '%2' nach '%3' geschrieben
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	de	%1 (%2 neue) Texte fÃ¼r die Anwendung '%3' und die Sprache '%4' geschrieben
+%1 etemplates deleted	etemplate	de	%1 eTemplates gelÃ¶scht
+%1 etemplates for application '%2' dumped to '%3'	etemplate	de	%1 eTemplates fÃ¼r die Anwendung '%2' nach '%3' geschrieben
 %1 etemplates found	etemplate	de	%1 eTemplates gefunden
 %1 matches on search criteria	etemplate	de	%1 Treffer bei der Suche
-%1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplates importiert für die Anwendung '%2'
+%1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplates importiert fÃ¼r die Anwendung '%2'
 %s disabled	etemplate	de	%s deaktiviert
-%s needed	etemplate	de	%s benötigt
-%s notranslation	etemplate	de	%s nicht übersetzen
+%s needed	etemplate	de	%s benÃ¶tigt
+%s notranslation	etemplate	de	%s nicht Ã¼bersetzen
 %s onchange	etemplate	de	%s onChange
 %s readonly	etemplate	de	%s Schreibschutz
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
-add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
-add column	etemplate	de	Spalte zufügen
-add table	etemplate	de	Tabelle zufügen
+add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufÃ¼gen (hinter den bestehenden)
+add column	etemplate	de	Spalte zufÃ¼gen
+add table	etemplate	de	Tabelle zufÃ¼gen
 align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
 am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 application	etemplate	de	Anwendung
-application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
-attach	etemplate	de	Anhängen
-attach file	etemplate	de	Datei anhängen
+application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benÃ¶tigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
+attach	etemplate	de	AnhÃ¤ngen
+attach file	etemplate	de	Datei anhÃ¤ngen
 blurtext	etemplate	de	blurText
 border	etemplate	de	Rand
-border-line-thickness for the table-tag	etemplate	de	Randbreite (border) für die Tabelle
+border-line-thickness for the table-tag	etemplate	de	Randbreite (border) fÃ¼r die Tabelle
 can not have special sql-value null	etemplate	de	darf nicht den speziellen SQL Wert NULL annehmen
 cancel	etemplate	de	Abbruch
 category	etemplate	de	Kategorie
@@ -32,19 +32,19 @@ cellpadding for the table-tag	etemplate	de	Innenabstand (cellpadding) der Tabell
 cells	etemplate	de	Zellen
 cellspacing for the table-tag	etemplate	de	Zellenabstand (cellspacing) der Tabelle
 center	etemplate	de	Zentriert
-check if content should only be displayed but not altered (the content is not send back then!)	etemplate	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
-check if field has to be filled by user	etemplate	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	de	abhaken wenn der Inhalt nur angezeigt aber nicht geÃ¤ndert werden soll (der Inhalt wird dann nicht zurÃ¼ckgesendet!)
+check if field has to be filled by user	etemplate	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefÃ¼llt werden muss
 checkbox	etemplate	de	Checkbox
 class	etemplate	de	Class
 class, valign	etemplate	de	Class, Valign
-click here to attach the file	etemplate	de	hier clicken um die Datei anzuhängen
-click here to create the link	etemplate	de	hier clicken um die Verknüpfung anzulegen
+click here to attach the file	etemplate	de	hier clicken um die Datei anzuhÃ¤ngen
+click here to create the link	etemplate	de	hier clicken um die VerknÃ¼pfung anzulegen
 click here to start the search	etemplate	de	hier clicken um die Suche zu starten
 click here to upload the file	etemplate	de	hier clicken um die Datei hochzuladen
 columnname	etemplate	de	Spaltenname
 comment	etemplate	de	Kommentar
-create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
-creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
+create a new table for the application	etemplate	de	Neue Tabelle fÃ¼r die Anwendung anlegen
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (fÃ¼r die Anwendung in Name)
 css class for the table-tag	etemplate	de	CSS class der Tabelle
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-styles	etemplate	de	CSS Stile
@@ -55,53 +55,53 @@ db ensures that every row has a unique value in that column	etemplate	de	die Dat
 db-tools	etemplate	de	DB-Tools
 deck	etemplate	de	Deck (intern)
 default	etemplate	de	Vorgabe
-delete	etemplate	de	Löschen
-delete a single entry by passing the id.	etemplate	de	Löscht einen einzelnen Eintrag über seine Id.
-delete all selected etemplates, without further inquiry	etemplate	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
-delete column	etemplate	de	Spalte löschen
-delete this etemplate	etemplate	de	dieses eTemplate löschen
-delete whole column (can not be undone!!!)	etemplate	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
-deletes the above spez. etemplate from the database, can not be undone	etemplate	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
-deletes the etemplate spez. above	etemplate	de	löscht das oben spezifizierte eTemplate
-deletes this column	etemplate	de	Löscht diese Spalte
-discard changes	etemplate	de	verwirft Änderungen
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
+delete	etemplate	de	LÃ¶schen
+delete a single entry by passing the id.	etemplate	de	LÃ¶scht einen einzelnen Eintrag Ã¼ber seine Id.
+delete all selected etemplates, without further inquiry	etemplate	de	lÃ¶scht ALLE ausgewÃ¤hlten eTemplates OHNE weitere RÃ¼ckfrage
+delete column	etemplate	de	Spalte lÃ¶schen
+delete this etemplate	etemplate	de	dieses eTemplate lÃ¶schen
+delete whole column (can not be undone!!!)	etemplate	de	ganze Zeile lÃ¶schen (kann NICHT rÃ¼ckgÃ¤ngig gemacht werden)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	de	lÃ¶scht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rÃ¼ckgÃ¤ngig gemacht werden
+deletes the etemplate spez. above	etemplate	de	lÃ¶scht das oben spezifizierte eTemplate
+deletes this column	etemplate	de	LÃ¶scht diese Spalte
+discard changes	etemplate	de	verwirft Ã„nderungen
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird fÃ¼r ein '%s' eingefÃ¼gt (Beschriftung einer SchaltflÃ¤che oder Dateiname eine Grafik)
 displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
-do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
-drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
-drop table	etemplate	de	Tabelle löschen
+do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Ã„nderungen in der Tabelle '%s' speichern?
+drop a table - this can not be undone	etemplate	de	Tabelle lÃ¶schen (drop) - NICHT rÃ¼ckgÃ¤nig zu machen
+drop table	etemplate	de	Tabelle lÃ¶schen
 dump4setup	etemplate	de	Dump4Setup
 edit	etemplate	de	Bearbeiten
 edit the etemplate spez. above	etemplate	de	das oben spezifizierte eTemplate bearbeiten
 editable templates - db-tools	etemplate	de	eTemplates - DB-Tools
-editable templates - delete template	etemplate	de	eTemplates - Löschen
+editable templates - delete template	etemplate	de	eTemplates - LÃ¶schen
 editable templates - editor	etemplate	de	eTemplates - Bearbeiten
 editable templates - search	etemplate	de	eTemplates - Suchen
 editable templates - show template	etemplate	de	eTemplates - Anzeigen
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	de	eingebette CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) or '@import url(...)' (Angaben gelten für die gesamte Seite!)
-enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
-enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	de	eingebette CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) or '@import url(...)' (Angaben gelten fÃ¼r die gesamte Seite!)
+enable javascript onchange submit	etemplate	de	JavaScript absenden bei Ã„nderung (onChange) aktivieren
+enter '' for an empty default, nothing mean no default	etemplate	de	'' fÃ¼r einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	etemplate	de	Suchmuster eingeben
-enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
-enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
-enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
+enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochland oder AnhÃ¤ngen eingeben, [Browse ...] zum Suchen verwenden
+enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (grÃ¶ÃŸer als alte), leer wenn keine Update-Datei erzeugt werden soll
+enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss grÃ¶ÃŸer als die alte sein)
 entry saved	etemplate	de	Eintrag gespeichert
 error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
 error: while saveing !!!	etemplate	de	Fehler: beim Speichern !!!
 error: writeing !!!	etemplate	de	Fehler: schreiben !!!
-error: writing file (no write-permission for the webserver) !!!	etemplate	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	de	Fehler: Datei schreiben (keine Schreibberechtigung fÃ¼r den Webserver) !!!
 etemplate	common	de	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
 etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' geschrieben
 etemplate editor	etemplate	de	eTemplate Editor
-exchange this row with the one above	etemplate	de	diese Zeile mit der darüber austauschen
+exchange this row with the one above	etemplate	de	diese Zeile mit der darÃ¼ber austauschen
 exchange this two columns	etemplate	de	diese beiden Spalten austauschen
 export the loaded etemplate into a xml-file	etemplate	de	das geladene eTemplate als XML Datei (.xet) exportieren
 export xml	etemplate	de	XML Export
 extensions loaded:	etemplate	de	Erweiterungen geladen:
 file	etemplate	de	Datei
-file contains more than one etemplate, last one is shown !!!	etemplate	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
+file contains more than one etemplate, last one is shown !!!	etemplate	de	Datei enthÃ¤lt mehr als ein eTemplate, das letzte wird angezeigt !!!
 file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
@@ -109,13 +109,13 @@ floating point	etemplate	de	Gleitkommawert
 foreign key	etemplate	de	Foreign Key
 go to the first entry	etemplate	de	gehe zum ersten Eintrag
 go to the last entry	etemplate	de	gege zum letzten Eintrag
-go to the next page of entries	etemplate	de	gehe zur nächsten Seite
+go to the next page of entries	etemplate	de	gehe zur nÃ¤chsten Seite
 go to the previous page of entries	etemplate	de	gehe zur vorherigen Seite
 hbox	etemplate	de	HBox
-height	etemplate	de	Höhe
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
-height of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Höhe der Tabelle in % oder Punkten
-height, disabled	etemplate	de	Höhe, Deaktiviert
+height	etemplate	de	HÃ¶he
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	de	HÃ¶he der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prÃ¼fung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	de	HÃ¶he der Tabelle in % oder Punkten
+height, disabled	etemplate	de	HÃ¶he, Deaktiviert
 help	etemplate	de	Hilfe
 horizontal rule	etemplate	de	Waagrechte Linie
 hour	etemplate	de	Stunde
@@ -126,50 +126,50 @@ import	etemplate	de	Import
 import an etemplate from a xml-file	etemplate	de	Importiert ein eTemplate aus einer XML Datei
 import table-definitions from existing db-table	etemplate	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
 import xml	etemplate	de	XML Import
-index/name of returned content (name of the template, link / method for image)	etemplate	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
+index/name of returned content (name of the template, link / method for image)	etemplate	de	Index / Name des zurÃ¼ckgelieferten Inhalts (Name des eTemplates oder Link/Methode fÃ¼r Grafik)
 indexed	etemplate	de	Indiziert
-insert new column behind this one	etemplate	de	Neue Spalte hinter dieser einfügen
-insert new column in front of all	etemplate	de	Neue Spalte vor dieser einfüben
-insert new row after this one	etemplate	de	Neue Zeile nach dieser einfügen
-insert new row in front of first line	etemplate	de	Neue Zeile vor dieser einfügen
+insert new column behind this one	etemplate	de	Neue Spalte hinter dieser einfÃ¼gen
+insert new column in front of all	etemplate	de	Neue Spalte vor dieser einfÃ¼ben
+insert new row after this one	etemplate	de	Neue Zeile nach dieser einfÃ¼gen
+insert new row in front of first line	etemplate	de	Neue Zeile vor dieser einfÃ¼gen
 integer	etemplate	de	Ganzzahl
-key	etemplate	de	Schlüssel
+key	etemplate	de	SchlÃ¼ssel
 label	etemplate	de	Beschriftung
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	de	Beschriftung:[bold][italic] Text:[len][,max] Zahlen:[min][,[max][,len]] mehrz.Text:[Zeilen][,Spalten] Radiok.:Wert Templ.:[IndexInContent] Auswahl:[mehrzeilig] Datum:[Format: zB. 'Y-m-d']
 lang	etemplate	de	Sprache
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhänige Template ('' ließt die bevorzugte Sprache, benutze 'default' für das standard Template '')
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	de	KÃ¼rzel der Sprache (zb. 'en' fÃ¼r Englisch) fÃ¼r sprachabhÃ¤nige Template ('' lieÃŸt die bevorzugte Sprache, benutze 'default' fÃ¼r das standard Template '')
 last	etemplate	de	Letzte
 left	etemplate	de	Links
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
-link	etemplate	de	Verknüpfung
-linklist	etemplate	de	VerknüpfungListe
-linkstring	etemplate	de	VerküpfungZeichenkette
-linkto	etemplate	de	VerküpfungZu
-load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	LÃ¤nge fÃ¼r char+varchar, Genauigkeit fÃ¼r int: 2, 4, 8 und float: 4, 8
+link	etemplate	de	VerknÃ¼pfung
+linklist	etemplate	de	VerknÃ¼pfungListe
+linkstring	etemplate	de	VerkÃ¼pfungZeichenkette
+linkto	etemplate	de	VerkÃ¼pfungZu
+load this template into the editor	etemplate	de	lÃ¤dt diese Template zum Bearbeiten
 minute	etemplate	de	Minute
 month	etemplate	de	Monat
 name	etemplate	de	Name
-name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des phpGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
-name of table to add	etemplate	de	Name der zuzufügenden Tabelle
+name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein SchlÃ¼ssel ist
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des phpGW layouts (zb. verdilak): '' = Standard (lieÃŸt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
+name of table to add	etemplate	de	Name der zuzufÃ¼genden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf ein reserviertes Wort von SQL sein, am besten alle mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss fÃ¼r die Tabelle einmalig sein und darf ein reserviertes Wort von SQL sein, am besten alle mit einem gemeinsammen KÃ¼rzel der Anwendung beginnen: zb. 'et_'
 new search	etemplate	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
 no file	etemplate	de	keine Datei
-no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
+no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewÃ¤hlt
 not null	etemplate	de	NOT NULL
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
 nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchkriterium !!!
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld Ã¼berspannt oder 'all' fÃ¼r die Ã¼brigen Spalten, CSS class Name (fÃ¼r das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
 of	etemplate	de	von
 only an other version found !!!	etemplate	de	nur eine andere Version gefunden !!!
-optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
+optional note about the link	etemplate	de	optionale Notiz zur VerknÃ¼pfung
 options	etemplate	de	Optionen
-overflow	etemplate	de	Überbreite
+overflow	etemplate	de	Ãœberbreite
 padding	etemplate	de	Innenabstand
 please enter table-name first !!!	etemplate	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
 pm	etemplate	de	Nachmittag
@@ -178,42 +178,42 @@ primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
 radiobutton	etemplate	de	Radioknopf
 read	etemplate	de	Lesen
-read a list of entries.	etemplate	de	Liest eine Liste von Einträgen.
-read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch übergabe seiner Id und Feldliste.
-read etemplate from database (for the keys above)	etemplate	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
-remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)
-remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
-returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
+read a list of entries.	etemplate	de	Liest eine Liste von EintrÃ¤gen.
+read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch Ã¼bergabe seiner Id und Feldliste.
+read etemplate from database (for the keys above)	etemplate	de	lieÃŸt ein eTemplate aus der Datenbank (fÃ¼r die SchlÃ¼ssel darÃ¼ber)
+remove row (can not be undone!!!)	etemplate	de	lÃ¶scht eine Zeile (NICHT rÃ¼ckgÃ¤ngig zu machen)
+remove this link (not the entry itself)	etemplate	de	entfernt diese VerknÃ¼pfung (nicht den Eintrag selbst)
+returns savely, without deleting	etemplate	de	Abbruch, OHNE zu lÃ¶schen
 right	etemplate	de	Rechts
 save	etemplate	de	Speichern
-save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
-saves changes to tables_current.inc.php	etemplate	de	Speichert Änderungen in tables_current.inc.php
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen SchlÃ¼sseln (name, ...), Ã¤ndern fÃ¼r ein Speichern unter
+saves changes to tables_current.inc.php	etemplate	de	Speichert Ã„nderungen in tables_current.inc.php
 scale	etemplate	de	Scale
-scale for float	etemplate	de	Nachkommastellen für Gleitkommawerte
+scale for float	etemplate	de	Nachkommastellen fÃ¼r Gleitkommawerte
 search	etemplate	de	Suchen
-select a category	etemplate	de	eine Kategorie auswählen
-select a primary contact, to show in the list	etemplate	de	einen Hauptkontakt auswählen, der in der Auflistung mit angezeigt wird
-select access	etemplate	de	Zugriff auswählen
-select account	etemplate	de	Benutzer auswählen
-select an app first !!!	etemplate	de	Bitte wählen Sie zuerst ein Anwendung aus !!!
-select an app to search in	etemplate	de	Anwendung zum Durchsuchen auswählen
-select an application	etemplate	de	Anwendung auswählen
-select an application, (*) = uninstalled	etemplate	de	Anwendung auswählen, (*) = nicht installiert
-select an entry to link with	etemplate	de	Eintrag zum Verküpfen auswählen
-select an table of the application	etemplate	de	Tabelle der Anwendung auswählen
-select application	etemplate	de	Anwendung auswählen
-select category	etemplate	de	Kategorie auswählen
-select country	etemplate	de	Land auswählen
-select day	etemplate	de	Tag auswählen
-select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
-select month	etemplate	de	Monat auswählen
-select number	etemplate	de	Zahl auswählen
-select one ...	etemplate	de	Eine auswählen ...
-select percentage	etemplate	de	Prozente auswählen
-select priority	etemplate	de	Priorität auswählen
-select state	etemplate	de	US-State auswählen
-select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen auswählen
-select year	etemplate	de	Jahr auswählen
+select a category	etemplate	de	eine Kategorie auswÃ¤hlen
+select a primary contact, to show in the list	etemplate	de	einen Hauptkontakt auswÃ¤hlen, der in der Auflistung mit angezeigt wird
+select access	etemplate	de	Zugriff auswÃ¤hlen
+select account	etemplate	de	Benutzer auswÃ¤hlen
+select an app first !!!	etemplate	de	Bitte wÃ¤hlen Sie zuerst ein Anwendung aus !!!
+select an app to search in	etemplate	de	Anwendung zum Durchsuchen auswÃ¤hlen
+select an application	etemplate	de	Anwendung auswÃ¤hlen
+select an application, (*) = uninstalled	etemplate	de	Anwendung auswÃ¤hlen, (*) = nicht installiert
+select an entry to link with	etemplate	de	Eintrag zum VerkÃ¼pfen auswÃ¤hlen
+select an table of the application	etemplate	de	Tabelle der Anwendung auswÃ¤hlen
+select application	etemplate	de	Anwendung auswÃ¤hlen
+select category	etemplate	de	Kategorie auswÃ¤hlen
+select country	etemplate	de	Land auswÃ¤hlen
+select day	etemplate	de	Tag auswÃ¤hlen
+select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht Ã¼bersetzt werden soll (Beschriftung wird immer Ã¼bersetzt)
+select month	etemplate	de	Monat auswÃ¤hlen
+select number	etemplate	de	Zahl auswÃ¤hlen
+select one ...	etemplate	de	Eine auswÃ¤hlen ...
+select percentage	etemplate	de	Prozente auswÃ¤hlen
+select priority	etemplate	de	PrioritÃ¤t auswÃ¤hlen
+select state	etemplate	de	US-State auswÃ¤hlen
+select this etemplate to delete it	etemplate	de	dieses eTemplate zum LÃ¶schen auswÃ¤hlen
+select year	etemplate	de	Jahr auswÃ¤hlen
 selectbox	etemplate	de	Auswahlbox
 sets today as date	etemplate	de	setzt heutiges Datum
 show	etemplate	de	Anzeigen
@@ -225,14 +225,14 @@ shows/displays etemplate for testing, does not save it before	etemplate	de	zeigt
 spacing	etemplate	de	Zellenabstand
 span, class	etemplate	de	Span, Class
 stack	etemplate	de	Stapel
-start a new search, cancel this link	etemplate	de	neue Suche Starten, diese Verknüpfung abbrechen
-start new search for the above pattern	etemplate	de	neue Suche für das obige Muster starten
-submitbutton	etemplate	de	Schaltfläche
-table unchanged, no write necessary !!!	etemplate	de	Tabelle nicht geändert, kein schreiben notwendig !!!
+start a new search, cancel this link	etemplate	de	neue Suche Starten, diese VerknÃ¼pfung abbrechen
+start new search for the above pattern	etemplate	de	neue Suche fÃ¼r das obige Muster starten
+submitbutton	etemplate	de	SchaltflÃ¤che
+table unchanged, no write necessary !!!	etemplate	de	Tabelle nicht geÃ¤ndert, kein schreiben notwendig !!!
 tablename	etemplate	de	Tabellenname
 tabs	etemplate	de	Karteikarten
 template	etemplate	de	Template
-template deleted	etemplate	de	Template gelöscht
+template deleted	etemplate	de	Template gelÃ¶scht
 template saved	etemplate	de	Template gespeichert
 text	etemplate	de	Textfeld
 textarea	etemplate	de	mehrzeiliges Textfeld
@@ -244,18 +244,18 @@ to start the search	etemplate	de	startet die Suche
 today	etemplate	de	Heute
 type	etemplate	de	Typ
 type of the column	etemplate	de	Typ der Spalte
-type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
+type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswÃ¤hlen wenn Feld leer sein soll)
 unique	etemplate	de	Unique
-unlink	etemplate	de	Lösen
-update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag über seine Felder.
+unlink	etemplate	de	LÃ¶sen
+update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag Ã¼ber seine Felder.
 update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
 value	etemplate	de	Wert
 vbox	etemplate	de	VBox
 version	etemplate	de	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefÃ¼llt)
 view this linked entry in its application	etemplate	de	Zeige diesen Eintrag in seiner Anwendung an
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatich (der Browser entscheidet)
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit Ã¼berbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatich (der Browser entscheidet)
 width	etemplate	de	Breite
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Breite der Tabelle in % oder Punkten
@@ -263,7 +263,7 @@ width, disabled	etemplate	de	Breite, Deaktiviert
 write <app>/setup/tables_current.inc.php	etemplate	de	schreibt <app>/setup/tables_current.inc.php
 write langfile	etemplate	de	Sprachdatei
 write tables	etemplate	de	Tabelle Schreiben
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das setup Verzeichnis der Anwendung
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	de	schreibt ein Distributionsfile 'etemplates.inc.php' (fÃ¼r die Anwendung in Name) in das setup Verzeichnis der Anwendung
 xml-file to import	etemplate	de	XML Datei zum Importieren
 xslt template	etemplate	de	XSLT Template
 year	etemplate	de	Jahr

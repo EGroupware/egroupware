@@ -1,18 +1,18 @@
 %1 already exists as a file	filemanager	de	Es gibt bereits eine Datei %1
 application	filemanager	de	Anwendung
-back to file manager	filemanager	de	Zurück zum FileManager
+back to file manager	filemanager	de	ZurÃ¼ck zum FileManager
 cannot create directory because it begins or ends in a space	filemanager	de	Kann Verzeichnis nicht anlegen, da der Name mit einem Leerzeichen endet
 cannot replace %1 because it is a directory	filemanager	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
-command sucessfully run	filemanager	de	Kommando erfolgreich ausgeführt
+command sucessfully run	filemanager	de	Kommando erfolgreich ausgefÃ¼hrt
 comment	filemanager	de	Kommentar
-comments cannot contain "%1"	filemanager	de	Kommentare dürfen kein "%1" enthalten
+comments cannot contain "%1"	filemanager	de	Kommentare dÃ¼rfen kein "%1" enthalten
 copied %1 to %2	filemanager	de	%1 nach %2 kopiert
 copy to	filemanager	de	Kopieren nach
 copy to:	filemanager	de	Kopieren nach:
 could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
 could not create %1	filemanager	de	Konnte %1 nicht anlegen
 could not create directory %1	filemanager	de	Konnte Verzeichnis %1 nicht anlegen
-could not delete %1	filemanager	de	Konnte %1 nicht löschen
+could not delete %1	filemanager	de	Konnte %1 nicht lÃ¶schen
 could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
 could not rename %1 to %2	filemanager	de	Konnte %1 nicht nach %2 umbenennen
 could not save %1	filemanager	de	Konnte %1 nicht speichern
@@ -23,26 +23,26 @@ created %1	filemanager	de	%1 erstellt
 created by	filemanager	de	Erstellt von
 created directory %1	filemanager	de	Verzeichnis %1 erstellt
 date	filemanager	de	Datum
-default number of upload fields to show	filemanager	de	Vorgabe für Anzahl Felder zum Hochladen
-delete	filemanager	de	Löschen
-deleted %1	filemanager	de	%1 gelöscht
+default number of upload fields to show	filemanager	de	Vorgabe fÃ¼r Anzahl Felder zum Hochladen
+delete	filemanager	de	LÃ¶schen
+deleted %1	filemanager	de	%1 gelÃ¶scht
 directory	filemanager	de	Verzeichnis
 directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
 directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
-directory names cannot contain "%1"	filemanager	de	Verzeichnisname dürfen kein "%1" enthalten
+directory names cannot contain "%1"	filemanager	de	Verzeichnisname dÃ¼rfen kein "%1" enthalten
 display attributes	filemanager	de	Anzeigeattribute
 download	filemanager	de	Herunterladen
 edit	filemanager	de	Bearbeiten
 edit comments	filemanager	de	Kommentare bearbeiten
-error running command	filemanager	de	Fehler beim Ausführen des Kommandos
-execute	filemanager	de	Ausführen
+error running command	filemanager	de	Fehler beim AusfÃ¼hren des Kommandos
+execute	filemanager	de	AusfÃ¼hren
 failed to create directory	filemanager	de	Verzeichnis konnte nicht erstellt werden
 file	filemanager	de	Datei
-file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte zuerst bearbeiten oder löschen.
+file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte zuerst bearbeiten oder lÃ¶schen.
 file %1 could not be created.	filemanager	de	Datei %1 konnte nicht erstellt werden.
 file name	filemanager	de	Dateiname
-file names cannot contain "%1"	filemanager	de	Dateinamen dürfen keine "%1" enthalten
-file names cannot contain \ or /	filemanager	de	Dateinamen dürfen keine \ oder / enthalten
+file names cannot contain "%1"	filemanager	de	Dateinamen dÃ¼rfen keine "%1" enthalten
+file names cannot contain \ or /	filemanager	de	Dateinamen dÃ¼rfen keine \ oder / enthalten
 filemanager	common	de	DateiManager
 filemanager preferences	filemanager	de	DateiManager Einstellungen
 files	filemanager	de	Dateien
@@ -54,14 +54,14 @@ go to:	filemanager	de	Gehe zu:
 home	filemanager	de	Home
 locked	filemanager	de	Gesperrt
 mime type	filemanager	de	MIME Typ
-modified	filemanager	de	Verändert
-modified by	filemanager	de	Verändert von
+modified	filemanager	de	VerÃ¤ndert
+modified by	filemanager	de	VerÃ¤ndert von
 move to	filemanager	de	Verschieben nach
 move to:	filemanager	de	Verschieben nach:
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
-no version history for this file/directory	filemanager	de	Keine Versionshistorie für dies Datei / Verzeichnis
+no version history for this file/directory	filemanager	de	Keine Versionshistorie fÃ¼r dies Datei / Verzeichnis
 operation	filemanager	de	Operation
-owner	filemanager	de	Eigentümer
+owner	filemanager	de	EigentÃ¼mer
 preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
 rename	filemanager	de	Umbenennen
@@ -73,22 +73,22 @@ saved %1	filemanager	de	%1 gespeichert
 show	filemanager	de	Anzeigen
 show ..	filemanager	de	Anzeigen ...
 show .files	filemanager	de	.Dateien anzeigen
-show command line (experimental. dangerous.)	filemanager	de	Kommando anzeigen (EXPERIMENTELL / GEFÄHRLICH)
+show command line (experimental. dangerous.)	filemanager	de	Kommando anzeigen (EXPERIMENTELL / GEFÃ„HRLICH)
 show help	filemanager	de	Hilfe anzeigen
-size	filemanager	de	Größe
+size	filemanager	de	GrÃ¶ÃŸe
 sort by:	filemanager	de	Sortieren nach:
 total files	filemanager	de	Anzahl Dateien
 unknown mime-type defaults to text/plain when viewing	filemanager	de	Zum Anzeigen von unbekannte MIME-Typen text/plain verwenden
 unused space	filemanager	de	Unbenutzer Speicherplatz
 up	filemanager	de	Nach oben
 update	filemanager	de	Aktualisieren
-updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
+updated comment for %1	filemanager	de	Kommentar fÃ¼r %1 aktualisiert
 upload fields	filemanager	de	Felder zum Hochladen
 upload files	filemanager	de	Dateien hochladen
 used space	filemanager	de	Benutzter Speicherplatz
 users	filemanager	de	Benutzer
 version	filemanager	de	Version
 view documents in new window	filemanager	de	Dokumente in neuem Fenster anzeigen
-view documents on server (if available)	filemanager	de	Dokument auf Server anzeigen (falls verfügbar)
+view documents on server (if available)	filemanager	de	Dokument auf Server anzeigen (falls verfÃ¼gbar)
 who	filemanager	de	Wer
 you do not have access to %1	filemanager	de	Sie haben keinen Zugang zu %1

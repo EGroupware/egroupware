@@ -1,38 +1,38 @@
 %1 %2 in %3	calendar	de	%1 %2 im %3
 %1 matches found	calendar	de	%1 Treffer gefunden
-%1 records imported	calendar	de	%1 Datensätze importiert
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, sie können zurück gehen und Test Import ausschalten)
-(for weekly)	calendar	de	(für wöchentlich)
+%1 records imported	calendar	de	%1 DatensÃ¤tze importiert
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 DatensÃ¤tze gelesen (noch nicht importiert, sie kÃ¶nnen zurÃ¼ck gehen und Test Import ausschalten)
+(for weekly)	calendar	de	(fÃ¼r wÃ¶chentlich)
 (i/v)cal	calendar	de	[iv]Cal
 1 match found	calendar	de	1 Treffer gefunden
 a	calendar	de	a
 accept	calendar	de	Zusagen
 accepted	calendar	de	Zugesagt
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion die die Benachrichtigung verursacht hat: Zugefügt, Storniert, Zugesagt, Abgesagt
-add a single entry by passing the fields.	calendar	de	Einen einzelnen neuen Eintrag über seine Felder erzeugen.
-add alarm	calendar	de	Alarm zufügen
-add contact	calendar	de	Kontakt zufügen
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion die die Benachrichtigung verursacht hat: ZugefÃ¼gt, Storniert, Zugesagt, Abgesagt
+add a single entry by passing the fields.	calendar	de	Einen einzelnen neuen Eintrag Ã¼ber seine Felder erzeugen.
+add alarm	calendar	de	Alarm zufÃ¼gen
+add contact	calendar	de	Kontakt zufÃ¼gen
 added	calendar	de	Neuer Termin
 address book	calendar	de	Adressbuch
 alarm	calendar	de	Alarm
-alarm for %1 at %2 in %3	calendar	de	Alarm für %1 am %2 in %3
+alarm for %1 at %2 in %3	calendar	de	Alarm fÃ¼r %1 am %2 in %3
 alarm management	calendar	de	Alarm Management
 alarm-management	calendar	de	Alarm Management
 alarms	calendar	de	Alarme
-all day	calendar	de	ganztägig
-are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen wollen ?
-are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen wollen ?
-are you sure\nyou want to\ndelete these alarms?	calendar	de	Sind Sie sicher,\ndass Sie diese\nAlarme löschen wollen ?
-are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndass Sie diesen\nEintrag löschen wollen ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	Sind Sie sicher,\ndass Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
-are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	de	Sind Sie sicher,\ndass Sie diesen einzelnen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
-back	calendar	de	zurück
+all day	calendar	de	ganztÃ¤gig
+are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land lÃ¶schen wollen ?
+are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag lÃ¶schen wollen ?
+are you sure\nyou want to\ndelete these alarms?	calendar	de	Sind Sie sicher,\ndass Sie diese\nAlarme lÃ¶schen wollen ?
+are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndass Sie diesen\nEintrag lÃ¶schen wollen ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	Sind Sie sicher,\ndass Sie diesen\nEintrag lÃ¶schen wollen ?\n\nDieser Eintrag wird damit\nfÃ¼r alle Benutzer gelÃ¶scht.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	de	Sind Sie sicher,\ndass Sie diesen einzelnen\nEintrag lÃ¶schen wollen ?\n\nDieser Eintrag wird damit\nfÃ¼r alle Benutzer gelÃ¶scht.
+back	calendar	de	zurÃ¼ck
 before the event	calendar	de	vor dem Termin
 brief description	calendar	de	Kurzbeschreibung
-business	calendar	de	geschäftlich
+business	calendar	de	geschÃ¤ftlich
 calendar	common	de	Kalender
 calendar - [iv]cal importer	calendar	de	Kalendar - [iv]Cal Importieren
-calendar - add	calendar	de	Kalendereintrag hinzufügen
+calendar - add	calendar	de	Kalendereintrag hinzufÃ¼gen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
 calendar event	calendar	de	Kalender Aktualisierung
 calendar holiday management	admin	de	Feiertage verwalten
@@ -40,33 +40,33 @@ calendar preferences	calendar	de	Kalender Einstellungen
 calendar settings	admin	de	Kalender Einstellungen
 calendar-fieldname	calendar	de	Kalender Feldname
 canceled	calendar	de	Abgesagt
-change all events for $params['old_owner'] to $params['new_owner'].	calendar	de	Ändere alle Termine für $params['old_owner'] auf $params['new_owner'].
-change status	calendar	de	Zusage ändern
-choose the category	calendar	de	Kategorie auswählen
-click %1here%2 to return to the calendar.	calendar	de	%1Hier%2 klicken um zum Kalender zurück zu kehren.
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	de	Ã„ndere alle Termine fÃ¼r $params['old_owner'] auf $params['new_owner'].
+change status	calendar	de	Zusage Ã¤ndern
+choose the category	calendar	de	Kategorie auswÃ¤hlen
+click %1here%2 to return to the calendar.	calendar	de	%1Hier%2 klicken um zum Kalender zurÃ¼ck zu kehren.
 configuration	calendar	de	Konfiguration
-countries	calendar	de	Länder
+countries	calendar	de	LÃ¤nder
 country	calendar	de	Land
 csv-fieldname	calendar	de	CSV-Feldname
 csv-filename	calendar	de	CSV-Dateiname
 custom fields	calendar	de	Benutzerdefinierte Felder
 custom fields and sorting	common	de	Benutzerdefinierte Felder und Sortierung
-daily	calendar	de	Täglich
+daily	calendar	de	TÃ¤glich
 daily matrix view	calendar	de	Matrix-Ansicht
 days	calendar	de	Tage
 days repeated	calendar	de	wiederholte Tage
 dayview	calendar	de	Tagesansicht
-default appointment length (in minutes)	calendar	de	Standardlänge eines neuen Kalendareintrags (in Minuten)
+default appointment length (in minutes)	calendar	de	StandardlÃ¤nge eines neuen Kalendareintrags (in Minuten)
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendareinträgen. Die Länge ist in Minuten, zb. 60 für 1 Stunde.
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe fÃ¼r die LÃ¤nge von neuen KalendareintrÃ¤gen. Die LÃ¤nge ist in Minuten, zb. 60 fÃ¼r 1 Stunde.
 default view of appointments	calendar	de	Standard-Ansicht der Termine
 defines the size in minutes of the lines in the day view.	calendar	de	Bestimmt die Zeitskala in Minuten der Tagesansicht des Kalendars.
-delete a single entry by passing the id.	calendar	de	Lösche einen einzelnen Eintrag über seine Id.
-delete an entire users calendar.	calendar	de	Lösche den kompletten Kalender eines Benutzers.
-delete selected contacts	calendar	de	Löscht die ausgewählten Kontakte.
-delete series	calendar	de	Serie löschen
-delete single	calendar	de	Einzelevent löschen
+delete a single entry by passing the id.	calendar	de	LÃ¶sche einen einzelnen Eintrag Ã¼ber seine Id.
+delete an entire users calendar.	calendar	de	LÃ¶sche den kompletten Kalender eines Benutzers.
+delete selected contacts	calendar	de	LÃ¶scht die ausgewÃ¤hlten Kontakte.
+delete series	calendar	de	Serie lÃ¶schen
+delete single	calendar	de	Einzelevent lÃ¶schen
 deleted	calendar	de	Abgesagt
 description	calendar	de	Beschreibung
 disable	calendar	de	Ausschalten
@@ -74,19 +74,19 @@ disabled	calendar	de	ausgeschaltet
 display interval in day view	calendar	de	Intervall der Tagesansicht
 display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
 display status of events	calendar	de	Status von Terminen anzeigen
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	de	Soll Ihr Kalender auf der phpGroupWare Startseite angezeigt werden (die Seite welche sich nach dem Login öffnet oder wenn Sie auch Home klicken)?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all changes include changes of title, description, participants and the acceptions and rejections of the appointment.	calendar	de	Möchten Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden benachrichtigt werden über Änderungen welche Sie selbst durchführen.<br> Sie können die benachrichtigungen beschränken auf bestimmte Änderungen. Jeder auszuwählende Punkt schließt auch die darüber aufgeführten Benachrichtigungen mit ein. Alle Änderungen beinhaltet Änderungen des Titels, der Beschreibung, Teilnehmer so wie Zusagen so wie Absagen von Terminen.
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	de	Soll Ihr Kalender auf der phpGroupWare Startseite angezeigt werden (die Seite welche sich nach dem Login Ã¶ffnet oder wenn Sie auch Home klicken)?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all changes include changes of title, description, participants and the acceptions and rejections of the appointment.	calendar	de	MÃ¶chten Sie Ã¼ber neue oder geÃ¤nderte Termine benachrichtigt werden? Sie werden benachrichtigt werden Ã¼ber Ã„nderungen welche Sie selbst durchfÃ¼hren.<br> Sie kÃ¶nnen die benachrichtigungen beschrÃ¤nken auf bestimmte Ã„nderungen. Jeder auszuwÃ¤hlende Punkt schlieÃŸt auch die darÃ¼ber aufgefÃ¼hrten Benachrichtigungen mit ein. Alle Ã„nderungen beinhaltet Ã„nderungen des Titels, der Beschreibung, Teilnehmer so wie Zusagen so wie Absagen von Terminen.
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie Ã¼ber neue oder geÃ¤nderte Termine benachrichtigt werden? Sie werden nie Ã¼ber eigene Ã„nderungen benachrichtig.<br>Sie kÃ¶nnen die Benachrichtigungen auf verschiedene Ã„nderungen begrenzen. Jede Zeile enthÃ¤lt die Benachrichtigungen der darÃ¼berliegenden. Alle Ã„nderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhÃ¤lt er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
 do you want to be notified about new or changed appointments? you dont get notifications for changes you made yourself.<br>you can limit the notifications on certain changes only. every item include all notification above. all changes include changes of title, description, participants and the acceptions and rejections of them.	calendar	de	
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is send to your standard email-address in the morning of that day or on monday for weekly summarys.<br>it is only send when you have any appointments on that day or week.	calendar	de	
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	MÃ¶chten Sie eine regelmÃ¤ÃŸige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird tÃ¤glich (jeden Morgen), oder fÃ¼r eine wÃ¶chentliche Zusammenfassung Montags an Ihre standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet wenn Sie am nÃ¤chsten Tag oder in der nÃ¤chsten Woche auch einen Termin haben.
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 download	calendar	de	Herunterladen
 duration	calendar	de	Dauer
 edit series	calendar	de	Serie bearbeiten
 edit single	calendar	de	Einzel bearbeiten
 email notification	calendar	de	Benachrichtigung per Email
-email notification for %1	calendar	de	Benachrichtigung per Email für %1
+email notification for %1	calendar	de	Benachrichtigung per Email fÃ¼r %1
 enable	calendar	de	Einschalten
 enabled	calendar	de	eingeschaltet
 end date/time	calendar	de	Enddatum/-zeit
@@ -96,9 +96,9 @@ enter output filename: ( .vcs appended )	calendar	de	Namen der Ausgabedatei (.vc
 event details follow	calendar	de	Details zum Termin folgen
 exceptions	calendar	de	Ausnahmen
 export	calendar	de	Exportieren
-export a list of entries in ical format.	calendar	de	Eine Liste von Einträgen im iCal Format exportieren.
+export a list of entries in ical format.	calendar	de	Eine Liste von EintrÃ¤gen im iCal Format exportieren.
 extended	calendar	de	Erweitert
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	de	Erweiterte Benachrichtigungen enthälten immer die kompletten Termindetails. iCal's können von vielen anderen Kalendarprogrammen importiert werden.
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	de	Erweiterte Benachrichtigungen enthÃ¤lten immer die kompletten Termindetails. iCal's kÃ¶nnen von vielen anderen Kalendarprogrammen importiert werden.
 external participants	calendar	de	Externe Teilnehmer
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	de	Fehler beim Senden einer Email an '%1' #%2 Betreff='%3', Absender='%4' !!!
 fieldseparator	calendar	de	Feldtrenner
@@ -106,21 +106,21 @@ firstname of person to notify	calendar	de	Vorname der zu benachrichtigenden Pers
 format of event updates	calendar	de	Format der Benachrichtigungen
 fr	calendar	de	Fr
 free/busy	calendar	de	frei/belegt
-frequency	calendar	de	Häufigkeit
+frequency	calendar	de	HÃ¤ufigkeit
 fri	calendar	de	Fr
-full description	calendar	de	vollständige Beschreibung
+full description	calendar	de	vollstÃ¤ndige Beschreibung
 fullname of person to notify	calendar	de	Name der zu benachrichtigenden Person
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
 global categories	calendar	de	Globale Kategorien
-global public and group public	calendar	de	Global öffentlich und Gruppen-öffentlich
-global public only	calendar	de	nur Global öffentlich
+global public and group public	calendar	de	Global Ã¶ffentlich und Gruppen-Ã¶ffentlich
+global public only	calendar	de	nur Global Ã¶ffentlich
 go!	calendar	de	Go!
-grant calendar access	common	de	Berechtigungen für Kalenderzugriffe
+grant calendar access	common	de	Berechtigungen fÃ¼r Kalenderzugriffe
 group planner	calendar	de	Gruppenplaner
-group public only	calendar	de	Gruppen-Öffentlich
+group public only	calendar	de	Gruppen-Ã–ffentlich
 here is your requested alarm.	calendar	de	Hier ist ihr bestellter Alarm.
 high	calendar	de	hoch
-high priority	calendar	de	Hohe Priorität
+high priority	calendar	de	Hohe PrioritÃ¤t
 holiday	calendar	de	Feiertag
 holiday management	calendar	de	Feitertagsverwaltung
 holiday-management	calendar	de	Feitertagsverwaltung
@@ -128,18 +128,18 @@ holidays	calendar	de	Feiertage
 hours	calendar	de	Stunden
 i participate	calendar	de	Ich nehme teil
 ical / rfc2445	calendar	de	iCal / RFC2445
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewÃ¤hlt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 import csv-file into calendar	calendar	de	CSV-Datei in den Kalender importieren
 interval	calendar	de	Interval
 intervals in day view	calendar	de	Zeitintervalle in der Tagesansicht
 intervals per day in planner view	calendar	de	Zeitintervalle pro Tag in der Planeransicht
-invalid entry id.	calendar	de	ungültige Id des Eintrags.
+invalid entry id.	calendar	de	ungÃ¼ltige Id des Eintrags.
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
-length shown<br>(emtpy for full length)	calendar	de	angezeigte Länge<br>(leer für volle Länge)
-length<br>(<= 255)	calendar	de	Länge<br>(<= 255)
+length shown<br>(emtpy for full length)	calendar	de	angezeigte LÃ¤nge<br>(leer fÃ¼r volle LÃ¤nge)
+length<br>(<= 255)	calendar	de	LÃ¤nge<br>(<= 255)
 load [iv]cal	calendar	de	[iv]Cal Laden
 location	calendar	de	Ort
 location to autoload from	admin	de	Von wo sollen sie geladen werden
@@ -147,8 +147,8 @@ low	calendar	de	niedrig
 matrixview	calendar	de	Matrixansicht
 minutes	calendar	de	Minuten
 mo	calendar	de	Mo
-modified	calendar	de	Geändert
-modify list of external participants	calendar	de	Liste der externen Teilnehmer änderen
+modified	calendar	de	GeÃ¤ndert
+modify list of external participants	calendar	de	Liste der externen Teilnehmer Ã¤nderen
 mon	calendar	de	Mo
 month	calendar	de	Monat
 monthly	calendar	de	Monatlich
@@ -161,34 +161,34 @@ no matches found	calendar	de	Keine Treffer gefunden
 no matches found.	calendar	de	Keine Treffer gefunden.
 no response	calendar	de	Keine Antwort
 normal	calendar	de	normal
-notification message for updates you send	calendar	de	Mitteilungs Text für updates welche Sie versenden
-notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
-notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
-notification messages for modified events	calendar	de	Benachrichtigungstext für geänderte Termine
-notification messages for your alarms	calendar	de	Benachrichtigungstext für ihre Alarem
-notification messages for your responses	calendar	de	Benachrichtigungstext für ihre Antworten
+notification message for updates you send	calendar	de	Mitteilungs Text fÃ¼r updates welche Sie versenden
+notification messages for added events	calendar	de	Benachrichtigungstext fÃ¼r neue Termine
+notification messages for canceled events	calendar	de	Benachrichtigungstext fÃ¼r stornierte Termine
+notification messages for modified events	calendar	de	Benachrichtigungstext fÃ¼r geÃ¤nderte Termine
+notification messages for your alarms	calendar	de	Benachrichtigungstext fÃ¼r ihre Alarem
+notification messages for your responses	calendar	de	Benachrichtigungstext fÃ¼r ihre Antworten
 number of intervals per day in planner view	calendar	de	Anzahl Intervale pro Tag im Planer
 number of months	calendar	de	Anzahl Monate
-number of records to read (<=200)	calendar	de	Anzeil Datensätze zu lesen (<= 200)
+number of records to read (<=200)	calendar	de	Anzeil DatensÃ¤tze zu lesen (<= 200)
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
 old startdate	calendar	de	Altes Startdatum
 olddate	calendar	de	AltesDatum
-on %1 %2 %3 your meeting request for %4	calendar	de	Am %1 hat %2 Ihre Einladung für den %4 %3
-on all changes	calendar	de	bei allen Veränderungen
+on %1 %2 %3 your meeting request for %4	calendar	de	Am %1 hat %2 Ihre Einladung fÃ¼r den %4 %3
+on all changes	calendar	de	bei allen VerÃ¤nderungen
 on all changes too	calendar	de	
-on all modification, but responses	calendar	de	bei allen Änderungen, außer Antworten
-on any time change (and above options)	calendar	de	bei allen zeitliche Änderunge (und obige optionen)
-on any time change too	calendar	de	auch jede zeitliche Veränderung
+on all modification, but responses	calendar	de	bei allen Ã„nderungen, auÃŸer Antworten
+on any time change (and above options)	calendar	de	bei allen zeitliche Ã„nderunge (und obige optionen)
+on any time change too	calendar	de	auch jede zeitliche VerÃ¤nderung
 on every time-change too	calendar	de	
 on invitation / cancelation only	calendar	de	nur bei Einladungen/Absagen
 on participant responses too	calendar	de	auch bei Antworten der Teilnehmer
-on time change of more than 4 hours too	calendar	de	bei zeitlichen Änderungen größer als 4 Stunden
+on time change of more than 4 hours too	calendar	de	bei zeitlichen Ã„nderungen grÃ¶ÃŸer als 4 Stunden
 on time change of time of more than 4 hours (and above options)	calendar	de	wenn der Termin sich um mehr als 4 Stunde verschiebt (und obige Optionen)
 on time-changes >= 4 hours too	calendar	de	
 open todo's:	calendar	de	unerledigte Aufgaben:
 order	calendar	de	Reihenfolge
-overlap holiday	calendar	de	überlappender Feiertag
+overlap holiday	calendar	de	Ã¼berlappender Feiertag
 participant	calendar	de	Teilnehmer
 participants	calendar	de	Teilnehmer
 participates	calendar	de	nimmt teil
@@ -197,22 +197,22 @@ permission denied	calendar	de	Zugriff verweigert
 planner	calendar	de	Planer
 planner by category	calendar	de	Planer nach Kategorien
 planner by user	calendar	de	Planer nach Benutzern
-please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	de	Bitte den entsprechenden Eintrag im Ihrem Kalendar bestätigen, Zusagen, Absagen oder die Änderungen beachten
-preselected group for entering the planner	calendar	de	vorausgewählte Gruppe beim Planeraufruf
-print calendars in black & white	calendar	de	Kalender in schwarz und weiß drucken
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	de	Bitte den entsprechenden Eintrag im Ihrem Kalendar bestÃ¤tigen, Zusagen, Absagen oder die Ã„nderungen beachten
+preselected group for entering the planner	calendar	de	vorausgewÃ¤hlte Gruppe beim Planeraufruf
+print calendars in black & white	calendar	de	Kalender in schwarz und weiÃŸ drucken
 print the mini calendars	calendar	de	Mini- Kalender drucken
 printer friendly	calendar	de	Drucker-freundlich
 privat	calendar	de	Privat
-private and global public	calendar	de	Privat und Global öffentlich
-private and group public	calendar	de	Privat und Gruppen öffentlich
+private and global public	calendar	de	Privat und Global Ã¶ffentlich
+private and group public	calendar	de	Privat und Gruppen Ã¶ffentlich
 private only	calendar	de	nur private
 re-edit event	calendar	de	Event erneut bearbeiten
-read a list of entries.	calendar	de	Eine Liste von Einträgen lesen.
-read a single entry by passing the id and fieldlist.	calendar	de	Einen einzelnen Eintrag über seine Id und eine Feldliste lesen.
+read a list of entries.	calendar	de	Eine Liste von EintrÃ¤gen lesen.
+read a single entry by passing the id and fieldlist.	calendar	de	Einen einzelnen Eintrag Ã¼ber seine Id und eine Feldliste lesen.
 read this list of methods.	calendar	de	Diese Liste der Methoden lesen.
 receive email updates	calendar	de	Empfange E-Mail updates
 receive email updates when:	calendar	de	Empfange E-Mail updates wenn:
-receive extra information in event mails	calendar	de	Zusätzliche Informationen bei EMail-Benachrichtigung
+receive extra information in event mails	calendar	de	ZusÃ¤tzliche Informationen bei EMail-Benachrichtigung
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
 recurring event	calendar	de	Wiederholender Termin
 refresh	calendar	de	Aktualisieren
@@ -226,31 +226,31 @@ repeat type	calendar	de	Wiederholungstyp
 repeating event information	calendar	de	Informationen zu sich wiederholenden Ereignissen
 repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
-reset	calendar	de	Zurücksetzen
+reset	calendar	de	ZurÃ¼cksetzen
 rule	calendar	de	Regel
 sa	calendar	de	Sa
 sat	calendar	de	Sa
-scheduling conflict	calendar	de	Terminüberschneidung
+scheduling conflict	calendar	de	TerminÃ¼berschneidung
 search results	calendar	de	Suchergebnisse
-selected contacts (%1)	calendar	de	Ausgewählte Kontakte (%1)
+selected contacts (%1)	calendar	de	AusgewÃ¤hlte Kontakte (%1)
 send updates via email	common	de	Updates via E-Mail senden
 send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen via EMail
-set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige/unregelmäßige Feiertage das Jahr angeben.
+set a year only for one-time / non-regular holidays.	calendar	de	Nur fÃ¼r einmalige/unregelmÃ¤ÃŸige Feiertage das Jahr angeben.
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	de	Sollen Einladungen welche von Ihnen abgelehnt wurden in Ihrem Kalender angezeigt werden?<br> Sie können diese Einladungen dann später akzeptieren (z. B. wenn Sie eine Terminkolission gelöst haben), wenn Sie in Ihrem Kalender noch vorhanden sind!
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	de	Sollen Einladungen welche von Ihnen abgelehnt wurden in Ihrem Kalender angezeigt werden?<br> Sie kÃ¶nnen diese Einladungen dann spÃ¤ter akzeptieren (z. B. wenn Sie eine Terminkolission gelÃ¶st haben), wenn Sie in Ihrem Kalender noch vorhanden sind!
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your sheduling conflict disappears), if they are still in your calendar!	calendar	de	
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should new events created private by default ?	calendar	de	
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	de	Soll der Mini Kalender "gedruckt werden/angezeigt werden"  in einer Druck freundlichen Ansicht ?
-should the printer friendly view be in black & white or in color (as in normal view)?	calendar	de	Soll die Drucker freundliche Ansicht in schwarz-weiß dargestellt werden oder in Farbe (identisch der normalen Ansicht)?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	de	Soll die Drucker freundliche Ansicht in schwarz-weiÃŸ dargestellt werden oder in Farbe (identisch der normalen Ansicht)?
 should the printer friendly view be in black & white or in color, like the normal view?	calendar	de	
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	de	Soll der Status (Zugesagt,Abgesagt ...)der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
 show day view on main screen	calendar	de	Tagesansicht auf Startseite anzeigen
 show default view on main screen	calendar	de	Standardansicht auf der Startseite anzeigen
-show high priority events on main screen	calendar	de	Termine mit hoher Priorität auf der Startseite anzeigen
+show high priority events on main screen	calendar	de	Termine mit hoher PrioritÃ¤t auf der Startseite anzeigen
 show invitations you rejected	calendar	de	Zeige Einladungen welche abgelehnt wurden an
 single event	calendar	de	Einzelner Termin
-sorry, the owner has just deleted this event	calendar	de	Der Eigentümer hat diesen Termin gerade gelöscht
+sorry, the owner has just deleted this event	calendar	de	Der EigentÃ¼mer hat diesen Termin gerade gelÃ¶scht
 sorry, this event does not exist	calendar	de	Dieser Termin existiert nicht
 sorry, this event does not have exceptions defined	calendar	de	Dieser Termin hat keine Ausnahmen definiert
 sort by	calendar	de	Sortieren nach
@@ -261,31 +261,31 @@ start- and enddates	calendar	de	Start- und Enddatum/-zeit
 startdate	calendar	de	Startdatum
 startrecord	calendar	de	Startdatensatz
 su	calendar	de	So
-submit to repository	calendar	de	Übertragen zu phpGroupWare.org
+submit to repository	calendar	de	Ãœbertragen zu phpGroupWare.org
 sun	calendar	de	So
-tentative	calendar	de	Vorläufige Zusage
-test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
+tentative	calendar	de	VorlÃ¤ufige Zusage
+test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte DatensÃ¤tze <u>nur</u> im Webbrowser an)
 text	calendar	de	Text
 th	calendar	de	Do
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	de	Im gewÃ¤hlten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
 the user %1 is not participating in this event!	calendar	de	Der Benutzer %1 nimmt nicht an diesem Event teil!
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	de	Fehler beim Kontaktieren Ihres News-Servers.<br>Bitte benachrichtigen Sie ihren Administrator um Servername, Username und Passwort für News zu überprüfen.
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	de	Fehler beim Kontaktieren Ihres News-Servers.<br>Bitte benachrichtigen Sie ihren Administrator um Servername, Username und Passwort fÃ¼r News zu Ã¼berprÃ¼fen.
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
 this defines the end of your dayview. events after that time, are shown below the dayview.	calendar	de	
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle späteren Einträge werden darunter dargestellt.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle spÃ¤teren EintrÃ¤ge werden darunter dargestellt.
 this defines the start of your dayview. events before that time, are shown above the dayview.	calendar	de	
-this defines the start of your dayview. events before this time, are shown above the dayview.	calendar	de	Diese Zeit definiert das Start des Arbeitstags in der Tageseinsicht. Alle späteren Einträge werden darüber dargestellt.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt.
+this defines the start of your dayview. events before this time, are shown above the dayview.	calendar	de	Diese Zeit definiert das Start des Arbeitstags in der Tageseinsicht. Alle spÃ¤teren EintrÃ¤ge werden darÃ¼ber dargestellt.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle frÃ¼heren EintrÃ¤ge werden darÃ¼ber dargestellt.
 this group got preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als vorauswahl ausgewÃ¤hlt wenn Sie den Planer Ã¶ffnen. Sie kÃ¶nnen die Gruppe jederzeit wechseln wenn Sie mÃ¶chten.
 this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	de	Das wird meistens durch einen nicht oder falsch konfigurierten SMTP Server verursacht. Benachrichtigen sie ihren Administrator.
 this message is send to every participant of events you own, who requested notifcations.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	
-this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versandt.
-this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versandt.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine die Sie anlegen versandt, die Benachrichtigungen wünschen.<br>Sie können verschiedene Variablen verwenden, welche durch die Daten des Termins ersetzt werden. Die erste Zeite ist der Betreff der E-Mail.
-this message is sent to every participant of events you own, who has requested notifcations.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Mit dieser Nachricht laden Sie Teilnehmer zu einem Termin ein, welche eine automatische Benachrichtigung aktiviert haben.<br> Sie können verschiedene Variablen benutzen welche durch die Daten des Meetings ersetzt werden. Die erste Zeile ist der Betreff der E-Mail
-this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder absagen.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Meldung wird ihnen gesandt, wenn sie einen Alarm für einen Termin setzen. Nehmen sie alle Information darin auf, die sie benötigen.
+this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird fÃ¼r stornierte oder gelÃ¶schte Termine versandt.
+this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird fÃ¼r geÃ¤nderte Termine versandt.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine die Sie anlegen versandt, die Benachrichtigungen wÃ¼nschen.<br>Sie kÃ¶nnen verschiedene Variablen verwenden, welche durch die Daten des Termins ersetzt werden. Die erste Zeite ist der Betreff der E-Mail.
+this message is sent to every participant of events you own, who has requested notifcations.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Mit dieser Nachricht laden Sie Teilnehmer zu einem Termin ein, welche eine automatische Benachrichtigung aktiviert haben.<br> Sie kÃ¶nnen verschiedene Variablen benutzen welche durch die Daten des Meetings ersetzt werden. Die erste Zeile ist der Betreff der E-Mail
+this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorlÃ¤ufig zusagen oder absagen.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Meldung wird ihnen gesandt, wenn sie einen Alarm fÃ¼r einen Termin setzen. Nehmen sie alle Information darin auf, die sie benÃ¶tigen.
 this month	calendar	de	Dieser Monat
 this week	calendar	de	Diese Woche
 this year	calendar	de	Dieses Jahr
@@ -297,10 +297,10 @@ to-firstname	calendar	de	An-Vorname
 to-fullname	calendar	de	An-Name
 to-lastname	calendar	de	An-Nachname
 today	calendar	de	Heute
-translation	calendar	de	Übersetzung
+translation	calendar	de	Ãœbersetzung
 tu	calendar	de	Di
 tue	calendar	de	Di
-update a single entry by passing the fields.	calendar	de	Einen einzelnen Termin über seine Felder updaten.
+update a single entry by passing the fields.	calendar	de	Einen einzelnen Termin Ã¼ber seine Felder updaten.
 updated	calendar	de	Aktualisiert
 updates of your appointments via email	calendar	de	
 use end date	calendar	de	Enddatum benutzen
@@ -309,37 +309,37 @@ we	calendar	de	Mi
 wed	calendar	de	Mi
 week	calendar	de	Woche
 weekday starts on	calendar	de	Arbeitswoche beginnt am
-weekly	calendar	de	Wöchentlich
+weekly	calendar	de	WÃ¶chentlich
 weekview	calendar	de	Wochenansicht
 when creating new events default set to private	calendar	de	neue Termine sind privat
-which events do you want to see when you enter the calendar.	calendar	de	Welche Termine möchten Sie angezeigt bekommen wenn Sie den Kalender öffnen?
-which of calendar view do you want to see, when you start calendar ?	calendar	de	Welche der möglichen Ansichten des Kalenders möchten Sie als Standard sehen wenn der Kalender geöffnet wird?
+which events do you want to see when you enter the calendar.	calendar	de	Welche Termine mÃ¶chten Sie angezeigt bekommen wenn Sie den Kalender Ã¶ffnen?
+which of calendar view do you want to see, when you start calendar ?	calendar	de	Welche der mÃ¶glichen Ansichten des Kalenders mÃ¶chten Sie als Standard sehen wenn der Kalender geÃ¶ffnet wird?
 which of the calendar-views do you want to see, when you enter the calendar ?	calendar	de	
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
 workdayends	calendar	de	Arbeitstag endet
 year	calendar	de	Jahr
-yearly	calendar	de	Jährlich
-yearview	calendar	de	Jährliche Ansicht
-you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
-you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !
-you do not have permission to add alarms to this event !!!	calendar	de	Sie haben keine Berechtigung Alarme zu diesem Termin zuzufügen !!!
-you do not have permission to delete this alarm !!!	calendar	de	Sie haben keine Berechtigung diesen Alarm zu löschen !!!
+yearly	calendar	de	JÃ¤hrlich
+yearview	calendar	de	JÃ¤hrliche Ansicht
+you can either set a year or a occurence, not both !!!	calendar	de	Sie kÃ¶nnen nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
+you can only set a year or a occurence !!!	calendar	de	Sie kÃ¶nnen nur ein Jahr oder eine Wiederholung angeben !
+you do not have permission to add alarms to this event !!!	calendar	de	Sie haben keine Berechtigung Alarme zu diesem Termin zuzufÃ¼gen !!!
+you do not have permission to delete this alarm !!!	calendar	de	Sie haben keine Berechtigung diesen Alarm zu lÃ¶schen !!!
 you do not have permission to enable/disable this alarm !!!	calendar	de	Sie haben keine Berechtigung diesen Alarm ein- oder auszuschalten !!!
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!
-you have %1 high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
-you have 1 high priority event on your calendar today.	common	de	Sie haben heute einen Eintrag mit hoher Priorität auf Ihrer Liste!
+you have %1 high priority events on your calendar today.	common	de	Sie haben heute %1 EintrÃ¤ge mit hoher PrioritÃ¤t auf Ihrer Liste!
+you have 1 high priority event on your calendar today.	common	de	Sie haben heute einen Eintrag mit hoher PrioritÃ¤t auf Ihrer Liste!
 you have a meeting scheduled for %1	calendar	de	Sie haben einen Termin am %1.
 you have not entered a title	calendar	de	Sie haben keinen Titel angegeben
-you have not entered a valid date	calendar	de	Sie haben kein gültiges Datum angegeben
-you have not entered a valid time of day	calendar	de	Sie haben keine gültige Uhrzeit angegeben
+you have not entered a valid date	calendar	de	Sie haben kein gÃ¼ltiges Datum angegeben
+you have not entered a valid time of day	calendar	de	Sie haben keine gÃ¼ltige Uhrzeit angegeben
 you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbeschreibung eingegeben
-you have not entered a\nvalid time of day	calendar	de	Sie haben keine a\ngültige Tageszeit eingegeben.
+you have not entered a\nvalid time of day	calendar	de	Sie haben keine a\ngÃ¼ltige Tageszeit eingegeben.
 you have not entered participants	calendar	de	Sie haben keine Teilnehmer angegeben
-you must enter one or more search keywords	calendar	de	Sie müssen einen oder mehrere Suchbegriffe angeben
-you must enter one or more search keywords.	calendar	de	Sie müssen einen oder mehrere Suchbegriffe angeben.
-you must select a [iv]cal. (*.[iv]cs)	calendar	de	Sie müssen einen [iv]Cal (*.[iv]cs) auswählen.
-you need to set either a day or a occurence !!!	calendar	de	Sie müssen entweder einen Tag oder eine Wiederholung angeben !!!
+you must enter one or more search keywords	calendar	de	Sie mÃ¼ssen einen oder mehrere Suchbegriffe angeben
+you must enter one or more search keywords.	calendar	de	Sie mÃ¼ssen einen oder mehrere Suchbegriffe angeben.
+you must select a [iv]cal. (*.[iv]cs)	calendar	de	Sie mÃ¼ssen einen [iv]Cal (*.[iv]cs) auswÃ¤hlen.
+you need to set either a day or a occurence !!!	calendar	de	Sie mÃ¼ssen entweder einen Tag oder eine Wiederholung angeben !!!
 your meeting scheduled for %1 has been canceled	calendar	de	Ihr Termin am %1 wurde abgesagt.
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	de	Ihr Termin am %1 wurde auf %2 verschoben.
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	de	Der von Ihnen gewählte Zeitraum <B> %1 - %2 </B> führt zu Konflikten mit folgenden bereits existierenden Kalendereinträgen:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	de	Der von Ihnen gewÃ¤hlte Zeitraum <B> %1 - %2 </B> fÃ¼hrt zu Konflikten mit folgenden bereits existierenden KalendereintrÃ¤gen:

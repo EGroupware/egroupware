@@ -1,36 +1,36 @@
-%1 records imported	addressbook	de	%1 Datens‰tze importiert
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datens‰tze gelesen (noch nicht importiert, sie kˆnnen %2zur¸ck%3 gehen und Test-Import auschalten)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein ‹bersetzungstyp &lt;none&gt; konnte gefunden werden.</b> Bitte w‰hlen Sie einen ‹bersetzungstype aus der Liste
-@-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verf¸gbar f¸r Administratoren!!!
-add a single entry by passing the fields.	addressbook	de	Hinzuf¸gen eines einzelnen Eintrags durch ‹bergeben der Felder.
-add custom field	addressbook	de	Benutzerdefiniertes Feld hinzuf¸gen
+%1 records imported	addressbook	de	%1 Datens√§tze importiert
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datens√§tze gelesen (noch nicht importiert, sie k√∂nnen %2zur√ºck%3 gehen und Test-Import auschalten)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein √úbersetzungstyp &lt;none&gt; konnte gefunden werden.</b> Bitte w√§hlen Sie einen √úbersetzungstype aus der Liste
+@-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verf√ºgbar f√ºr Administratoren!!!
+add a single entry by passing the fields.	addressbook	de	Hinzuf√ºgen eines einzelnen Eintrags durch √úbergeben der Felder.
+add custom field	addressbook	de	Benutzerdefiniertes Feld hinzuf√ºgen
 address book	common	de	Adressbuch
 address book - vcard in	addressbook	de	Adressbuch - VCard in
 address book - view	addressbook	de	Adressbuch - Anzeigen
-address line 2	addressbook	de	Adreﬂzeile 2
-address line 3	addressbook	de	Adreﬂzeile 3
-address type	addressbook	de	Adreﬂtyp
+address line 2	addressbook	de	Adre√üzeile 2
+address line 3	addressbook	de	Adre√üzeile 3
+address type	addressbook	de	Adre√ütyp
 addressbook	common	de	Adressbuch
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
-addvcard	addressbook	de	VCard hinzuf¸gen
+addvcard	addressbook	de	VCard hinzuf√ºgen
 alt. csv import	addressbook	de	Alt. CSV Import
-are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass sie dieses Feld lˆschen wollen?
+are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass sie dieses Feld l√∂schen wollen?
 bbs phone	addressbook	de	BBS
 birthday	common	de	Geburtstag
 birthdays	common	de	Geburtstage
 blank	addressbook	de	Leer
-business	common	de	Gesch‰ftlich
-business address type	addressbook	de	Typ der gesch‰flt. Adresse
-business city	addressbook	de	gesch‰ftl. Stadt
-business country	addressbook	de	gesch‰ftl. Staat
-business email	addressbook	de	gesch‰ftl. EMail
-business email type	addressbook	de	Typ der gesch‰ftl. EMail
-business fax	addressbook	de	Fax gesch‰ftl.
-business phone	addressbook	de	Tel. gesch‰ftl.
-business state	addressbook	de	gesch‰ftl. Land
-business street	addressbook	de	gesch‰ftl. Straﬂe
-business zip code	addressbook	de	gesch‰ftl. PLZ
+business	common	de	Gesch√§ftlich
+business address type	addressbook	de	Typ der gesch√§flt. Adresse
+business city	addressbook	de	gesch√§ftl. Stadt
+business country	addressbook	de	gesch√§ftl. Staat
+business email	addressbook	de	gesch√§ftl. EMail
+business email type	addressbook	de	Typ der gesch√§ftl. EMail
+business fax	addressbook	de	Fax gesch√§ftl.
+business phone	addressbook	de	Tel. gesch√§ftl.
+business state	addressbook	de	gesch√§ftl. Land
+business street	addressbook	de	gesch√§ftl. Stra√üe
+business zip code	addressbook	de	gesch√§ftl. PLZ
 car phone	addressbook	de	Autotelefon
 cell phone	addressbook	de	Mobilfunk
 city	common	de	Stadt
@@ -47,7 +47,7 @@ custom	addressbook	de	Benutzerdefiniert
 custom fields	addressbook	de	Benutzerdefinierte Felder
 debug output in browser	addressbook	de	Debugausgaben in Browser
 default filter	addressbook	de	Standardfilter
-delete a single entry by passing the id.	addressbook	de	Lˆscht einen einzelnen Eintrag durch ‹bergabe seiner Id.
+delete a single entry by passing the id.	addressbook	de	L√∂scht einen einzelnen Eintrag durch √úbergabe seiner Id.
 department	common	de	Abteilung
 domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen
@@ -59,13 +59,13 @@ export from addressbook	addressbook	de	Export vom Addressbuch
 extra	addressbook	de	Extra
 fax	addressbook	de	Telefax
 fax number	common	de	Telefaxnummer
-field %1 has been added !	addressbook	de	Feld %1 wurde hinzugef¸gt !
+field %1 has been added !	addressbook	de	Feld %1 wurde hinzugef√ºgt !
 field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
 field name	addressbook	de	Feldname
 fields	addressbook	de	Felder
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
-full name	addressbook	de	vollst‰ndiger Name
+full name	addressbook	de	vollst√§ndiger Name
 geo	addressbook	de	GEO
 grant addressbook access	common	de	Berechtigungen
 home address type	addressbook	de	Typ der Privatadresse
@@ -75,7 +75,7 @@ home email	addressbook	de	private EMail
 home email type	addressbook	de	Typ der privaten EMail
 home phone	addressbook	de	Tel privat
 home state	addressbook	de	Land (priv)
-home street	addressbook	de	Straﬂe (priv)
+home street	addressbook	de	Stra√üe (priv)
 home zip code	addressbook	de	PLZ (priv)
 import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
@@ -85,11 +85,11 @@ import from ldif, csv, or vcard	addressbook	de	Import von LDIF, CSV oder VCard
 import from outlook	addressbook	de	Aus Outlook importieren
 international	addressbook	de	International
 isdn phone	addressbook	de	ISDN Tel.
-label	addressbook	de	Adreﬂetikett
-ldap context for contacts	admin	de	LDAP Kontext f¸r Kontakte
-ldap host for contacts	admin	de	LDAP Host f¸r Kontakte
-ldap root dn for contacts	admin	de	LDAP rootdn f¸r Kontakte
-ldap root pw for contacts	admin	de	LDAP Paswort f¸r Kontakte
+label	addressbook	de	Adre√üetikett
+ldap context for contacts	admin	de	LDAP Kontext f√ºr Kontakte
+ldap host for contacts	admin	de	LDAP Host f√ºr Kontakte
+ldap root dn for contacts	admin	de	LDAP rootdn f√ºr Kontakte
+ldap root pw for contacts	admin	de	LDAP Paswort f√ºr Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
 message phone	addressbook	de	Anrufbeantworter
@@ -98,53 +98,53 @@ mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobil-Telefon
 modem phone	addressbook	de	Modem
 no vcard	addressbook	de	Keine VCard
-number of records to read (<=200)	addressbook	de	Nummer der einzulesenden Datens‰tze (<= 200)
+number of records to read (<=200)	addressbook	de	Nummer der einzulesenden Datens√§tze (<= 200)
 on	addressbook	de	an
 other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.
 other phone	addressbook	de	Anderes Telefon
 pager	common	de	Pager
 parcel	addressbook	de	Lieferadresse
-personal	addressbook	de	Persˆnlich
+personal	addressbook	de	Pers√∂nlich
 phone number	common	de	Telefon
 phone numbers	common	de	Telefonnummern
-please enter a name for that field !	addressbook	de	Bitte geben sie einen Namen f¸r das Feld an !
-please select	addressbook	de	Bitte ausw‰hlen
+please enter a name for that field !	addressbook	de	Bitte geben sie einen Namen f√ºr das Feld an !
+please select	addressbook	de	Bitte ausw√§hlen
 postal	common	de	Postanschrift
 pref	addressbook	de	pref
 prefix	addressbook	de	Prefix
-public key	addressbook	de	ˆffentlicher Schl¸ssel
-read a list of entries.	addressbook	de	Liest eine Liste von Eintr‰gen.
-read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen einzelnen Eintrag ¸ber seine Id und Feldliste.
+public key	addressbook	de	√∂ffentlicher Schl√ºssel
+read a list of entries.	addressbook	de	Liest eine Liste von Eintr√§gen.
+read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen einzelnen Eintrag √ºber seine Id und Feldliste.
 read this list of methods.	addressbook	de	Liest diese Liste der Methoden.
 record access	addressbook	de	Zugriffsrechte
-record owner	addressbook	de	Datensatz Eigent¸mer
+record owner	addressbook	de	Datensatz Eigent√ºmer
 retrieve contacts	admin	de	Kontakte laden
-select	addressbook	de	Ausw‰hlen
-select where you want to store	admin	de	Ausw‰hlen wo Sie speichern wollen
+select	addressbook	de	Ausw√§hlen
+select where you want to store	admin	de	Ausw√§hlen wo Sie speichern wollen
 show birthday reminders on main screen	addressbook	de	Geburtstags-Mahner auf der Startseite anzeigen
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Land
-street	common	de	Straﬂe
+street	common	de	Stra√üe
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
-test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datens‰tze <u>nur</u> im Browser an)
+test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datens√§tze <u>nur</u> im Browser an)
 that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt !
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch.
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
-translation	addressbook	de	‹bersetzung
-update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch ‹bergabe seiner Felder.
-use country list	addressbook	de	L‰nderliste benutzen
+translation	addressbook	de	√úbersetzung
+update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch √úbergabe seiner Felder.
+use country list	addressbook	de	L√§nderliste benutzen
 vcard	common	de	VCard
-vcards require a first name entry.	addressbook	de	VCards benˆtigen einen Vornamen.
-vcards require a last name entry.	addressbook	de	VCards benˆtigen einen Nachnamen.
+vcards require a first name entry.	addressbook	de	VCards ben√∂tigen einen Vornamen.
+vcards require a last name entry.	addressbook	de	VCards ben√∂tigen einen Nachnamen.
 video phone	addressbook	de	Bildtelefon
 voice phone	addressbook	de	Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 work phone	addressbook	de	Tel dienstl.
 you appear to be running	addressbook	de	Sie benutzen gerade einen
-you must select a vcard. (*.vcf)	addressbook	de	Sie m¸ssen eine VCard ausw‰hlen (*.vcf)
-you must select at least 1 column to display	addressbook	de	Sie m¸ssen mindestens eine Spalte zum Anzeigen ausw‰hlen
+you must select a vcard. (*.vcf)	addressbook	de	Sie m√ºssen eine VCard ausw√§hlen (*.vcf)
+you must select at least 1 column to display	addressbook	de	Sie m√ºssen mindestens eine Spalte zum Anzeigen ausw√§hlen
 zip code	common	de	PLZ
