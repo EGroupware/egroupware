@@ -22,7 +22,7 @@
 		return '<a href="'.$link.'"><img src="'.$GLOBALS['phpgw']->common->image('calendar',$image).'" alt="'.$alt.'" border="0"></a>';
 	}
 
-	$refer = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+	$refer = explode('.',MENUACTION);
 	$referrer = $refer[2];
 
 	$templates = Array(
@@ -45,7 +45,7 @@
 		$tpl->set_var('cols',7);
 	}
 
-	$today = date('Ymd',time());
+	$today = date('Ymd',$GLOBALS['phpgw']['datetime']->users_localtime);
 
 	$col_width = 12;
 
@@ -77,25 +77,29 @@
 	if($referrer!='view')
 	{
 		$remainder = 72;
+		$cal_id = get_var('cal_id',Array('GET','DEFAULT'),0);
+		$keywords = get_var('keywords',Array('POST','DEFAULT'),'');
+		$matrixtype = get_var('matrixtype',Array('POST','DEFAULT'),'');
+		$participants = get_var('participants',Array('POST'));
 
-		$hidden_vars = '<input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-		if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
+		$hidden_vars = '<input type="hidden" name="from" value="'.MENUACTION.'">'."\n";
+		if($cal_id != 0)
 		{
-			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$cal_id.'">'."\n";
 		}
-		if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
+		if($keywords)
 		{
-			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
 		}
-		if(isset($GLOBALS['HTTP_POST_VARS']['matrixtype']) && $GLOBALS['HTTP_POST_VARS']['matrixtype'])
+		if($matrixtype)
 		{
-			$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$GLOBALS['HTTP_POST_VARS']['matrixtype'].'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$matrixtype.'">'."\n";
 		}
-		if(isset($GLOBALS['HTTP_POST_VARS']['participants']) && $GLOBALS['HTTP_POST_VARS']['participants'])
+		if($participants)
 		{
-			for ($i=0;$i<count($GLOBALS['HTTP_POST_VARS']['participants']);$i++)
+			for ($i=0;$i<count($participants);$i++)
 			{
-				$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$GLOBALS['HTTP_POST_VARS']['participants'][$i].'">'."\n";
+				$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$participants[$i].'">'."\n";
 			}
 		}
 		if($this->debug) { echo 'Cat ID = ('.$this->bo->cat_id.")<br>\n"; }
@@ -116,24 +120,24 @@
 		if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
 		{
 			$remainder -= 28;
-			$hidden_vars = '<input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-			if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
+			$hidden_vars = '<input type="hidden" name="from" value="'.MENUACTION.'">'."\n";
+			if($cal_id)
 			{
-				$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
+				$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$cal_id.'">'."\n";
 			}
-			if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
+			if($keywords)
 			{
-				$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
+				$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
 			}
-			if(isset($GLOBALS['HTTP_POST_VARS']['matrixtype']) && $GLOBALS['HTTP_POST_VARS']['matrixtype'])
+			if($matrixtype)
 			{
-				$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$GLOBALS['HTTP_POST_VARS']['matrixtype'].'">'."\n";
+				$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$matrixtype.'">'."\n";
 			}
-			if(isset($GLOBALS['HTTP_POST_VARS']['participants']) && $GLOBALS['HTTP_POST_VARS']['participants'])
+			if($participants)
 			{
-				for ($i=0;$i<count($GLOBALS['HTTP_POST_VARS']['participants']);$i++)
+				for ($i=0;$i<count($participants);$i++)
 				{
-					$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$GLOBALS['HTTP_POST_VARS']['participants'][$i].'">'."\n";
+					$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$participants[$i].'">'."\n";
 				}
 			}
 			if($this->debug) { echo 'Filter = ('.$this->bo->filter.")<br>\n"; }
@@ -156,14 +160,18 @@
 
 		if((!isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) || !$GLOBALS['phpgw_info']['server']['deny_user_grants_access']) && count($this->bo->grants) > 0)
 		{
-			$hidden_vars = '    <input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-			if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
+			$hidden_vars = '    <input type="hidden" name="from" value="'.MENUACTION.'">'."\n";
+			if($keywords)
 			{
-				$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
+				$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
 			}
-			if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
+			if($cal_id)
 			{
-				$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
+				$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$cal_id.'">'."\n";
+			}
+			if($matrixtype)
+			{
+				$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$matrixtype.'">'."\n";
 			}
 			$hidden_vars .= '    <!-- BO Owner = '.$this->bo->owner.' -->'."\n";
 			$form_options = '';
@@ -222,10 +230,11 @@
 		}
 	}
 
-	$hidden_vars = '    <input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-	if(isset($GLOBALS['HTTP_GET_VARS']['date']) && $GLOBALS['HTTP_GET_VARS']['date'])
+	$hidden_vars = '    <input type="hidden" name="from" value="'.MENUACTION.'">'."\n";
+	$date = get_vars('date',Array('GET'));
+	if($date)
 	{
-		$hidden_vars .= '    <input type="hidden" name="date" value="'.$GLOBALS['HTTP_GET_VARS']['date'].'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="date" value="'.$date.'">'."\n";
 	}
 	$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
 	$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
@@ -234,7 +243,7 @@
 	{
 		$hidden_vars .= '    <input type="hidden" name="filter" value="'.$this->bo->filter.'">'."\n";
 	}
-	$hidden_vars .= '    <input name="keywords"'.($GLOBALS['HTTP_POST_VARS']['keywords']?' value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'"':'').'>';
+	$hidden_vars .= '    <input name="keywords"'.($keywords?' value="'.$keywords.'"':'').'>';
 
 	$var = Array(
 		'action_url_button'	=> $this->page('search'),
