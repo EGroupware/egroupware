@@ -276,11 +276,6 @@
 
 			if (!$this->bo->printer_friendly)
 			{
-				unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				unset($GLOBALS['phpgw_info']['flags']['noappheader']);
-				unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
-				$GLOBALS['phpgw']->common->phpgw_header();
 				$printer = '';
 				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&friendly=1';
 				$print = '<a href="'.$this->page('month'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
@@ -303,6 +298,15 @@
 				'print'						=>	$print
 			);
 
+			if (!$this->bo->printer_friendly)
+			{
+				unset($GLOBALS['phpgw_info']['flags']['noheader']);
+				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+				unset($GLOBALS['phpgw_info']['flags']['noappheader']);
+				unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
+				$GLOBALS['phpgw']->common->phpgw_header();
+			}
+			
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
 			$p->set_file(
@@ -321,7 +325,7 @@
 			$next = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day + 7,$this->bo->year);
 			$prev = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day - 7,$this->bo->year);
 
-			if (!$this->bo->printer_firendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
+			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
 			{
 				$minical_this = $this->mini_calendar(
 					Array(
@@ -363,9 +367,6 @@
 			
 			if (!$this->bo->printer_friendly)
 			{
-				unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				$GLOBALS['phpgw']->common->phpgw_header();
 				$printer = '';
 				$prev_week_link = '<a href="'.$this->page('week','&date='.$prev['full']).'">&lt;&lt;</a>';
 				$next_week_link = '<a href="'.$this->page('week','&date='.$next['full']).'">&gt;&gt;</a>';
@@ -400,6 +401,13 @@
 				'print'						=>	$print
 			);
 
+			if (!$this->bo->printer_friendly)
+			{
+				unset($GLOBALS['phpgw_info']['flags']['noheader']);
+				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+				$GLOBALS['phpgw']->common->phpgw_header();
+			}
+			
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(
 				Array(
@@ -1003,7 +1011,7 @@
 
 					if ($akt_cell < $start_cell)
 					{
-						$row[$event->id.\'_1\'] = \'&nbsp;\';
+						$row[$event[\'id\'].\'_1\'] = \'&nbsp;\';
 						$row[\'.\'.$event[\'id\'].\'_1\'] = \'colspan="\'.($start_cell-$akt_cell).\'"\';
 					}
 
@@ -1034,23 +1042,29 @@
 
 					$akt_cell = $end_cell + 1;
 				}
-				ksort($rows);
-				while (list($k,$r) = each($rows))
+			}
+			ksort($rows);
+			while (list($k,$r) = each($rows))
+			{
+				if (is_array($r))
 				{
-					if (is_array($r))
+					$rows[\'.\'.$k] = \'bgcolor="\'.$GLOBALS[\'phpgw\']->nextmatchs->alternate_row_color().\'"\';
+					$row = &$rows[$k];
+					$akt_cell = &$rows[\'.nr_\'.$k];
+					if ($akt_cell <= $last_cell)
 					{
-						$rows[\'.\'.$k] = \'bgcolor="\'.$GLOBALS[\'phpgw\']->nextmatchs->alternate_row_color().\'"\';
-						$row = &$rows[$k];
-						$akt_cell = &$rows[\'.nr_\'.$k];
-						if ($akt_cell <= $last_cell)
-						{
-							$row[\'3\'] = \'&nbsp\';
-							$row[\'.3\'] = \'colspan="\'.(1+$last_cell-$akt_cell).\'"\';
-						}
+						$row[\'3\'] = \'&nbsp\';
+						$row[\'.3\'] = \'colspan="\'.(1+$last_cell-$akt_cell).\'"\';
 					}
 				}
 			}
 			$bgcolor = \'bgcolor="\'.$this->theme[\'th_bg\'].\'"\';
+
+			if ($this->debug)
+			{
+				_debug_array($rows);
+				reset($rows);
+			}
 			echo $html->table(
 				array(
 					\'_h\' => $header,
@@ -1058,8 +1072,8 @@
 				)+$rows,
 				\'width="100%" cols="\'.(1+$days*$intervals_per_day).\'"\'
 			);
-			'); 
-		} 
+			');
+		}
 
 		}
 
@@ -1818,17 +1832,34 @@
 			return $names;
 		}
 			
-		function planner_category($id)
+		function planner_category($ids)
 		{
 			static $cats;
-
-			if (!isset($cats[$id]))
+	echo "Categories : ".$ids."<br>\n";
+			if(!is_array($ids))
 			{
-				$cat_arr = $this->cat->return_single( $id );
-				$cats[$id] = $cat_arr[0];
-				$cats[$id]['color'] = strstr($cats[$id]['description'],'#');
+				if (strpos($ids,','))
+				{
+					$id_array = explode(',',$ids);
+				}
+				else
+				{
+					$id_array[0] = $ids;
+				}
 			}
-			return $cats[$id];
+			@reset($id_array);
+			$ret_val = Array();
+			while(list($index,$id) = each($id_array))
+			{
+				if (!isset($cats[$id]))
+				{
+					$cat_arr = $this->cat->return_single( $id );
+					$cats[$id] = $cat_arr[0];
+					$cats[$id]['color'] = strstr($cats[$id]['description'],'#');
+				}
+				$ret_val[] = $cats[$id];
+			}
+			return implode($ret_val,',');
 		}
 
 		function week_header($month,$year,$display_name = False)
