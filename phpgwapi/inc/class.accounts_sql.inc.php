@@ -141,6 +141,30 @@
        return $group_names;
     }
 
+
+    // This is used to convert a raw group string (,5,6,7,) into a string of
+    // there names.
+    // Example: accounting, billing, developers
+    function convert_string_to_names($gs)
+    {
+      global $phpgw;
+
+      $groups = explode(",",$gs);
+
+      $s = "";
+      for ($i=1;$i<count($groups)-1; $i++) {
+	      $group_number = explode(",",$groups[$i]);
+        //$phpgw->db->query("select group_name from groups where group_id=".$groups[$i]);
+        $phpgw->db->query("select group_name from groups where group_id=".$group_number[0],__LINE__,__FILE__);
+        $phpgw->db->next_record();
+        $s .= $phpgw->db->f("group_name");
+        if (count($groups) != 0 && $i != count($groups)-2)
+           $s .= ",";
+        }
+      return $s;
+    }    
+
+
     function listusers($group="")
     {
        global $phpgw;

@@ -40,6 +40,43 @@
     var $key = "";
     var $crypto;
 
+    // Convert an array into the format needed for the access column.
+    function array_to_string($access,$array)
+    {
+      $s = "";
+      if ($access == "group" || $access == "public" || $access == "none") {
+         if (count($array)) {
+            while ($t = each($array)) {
+   			$s .= "," . $t[1];
+            }
+            $s .= ",";
+         }
+         if (! count($array) && $access == "none") {
+            $s = "";
+         }
+      }
+      return $s;
+    }
+
+
+    // This is used for searching the access fields
+    function sql_search($table,$owner=0)
+    {
+      global $phpgw_info;
+
+      $s = "";
+      if (!$owner) {
+         $owner = $phpgw_info["user"]["account_id"];
+      }
+      $groups = $this->read_groups(intval($owner));
+      if (gettype($groups) == "array") {
+         while ($group = each($groups)) {
+           $s .= " or $table like '%," . $group[0] . ",%'";
+        }
+      }
+      return $s;
+    }
+
     // return a array of installed languages
     function getInstalledLanguages()
     {
