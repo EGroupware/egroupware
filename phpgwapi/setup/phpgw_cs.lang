@@ -4,14 +4,11 @@ account has been created	common	cs	U¾ivatelský úèet byl vytvoøen
 account has been deleted	common	cs	U¾ivatelský úèet byl smazán
 account has been updated	common	cs	U¾ivatelský úèet byl zmìnìn
 add	common	cs	Pøidat
-address book	common	cs	Telefonní seznam
-addressbook	common	cs	Telefonní seznam
 admin	common	cs	Administrátor
 administration	common	cs	Správa
 april	common	cs	Duben
 are you sure you want to delete this entry ?	common	cs	Jste si jist, ¾e chcete vymazat tento záznam?
 august	common	cs	Srpen
-calendar	common	cs	Kalendáø
 cancel	common	cs	Storno
 change	common	cs	Zmìnit
 charset	common	cs	iso-8859-2
@@ -31,15 +28,10 @@ email	common	cs	E-Mail
 entry has been deleted sucessfully	common	cs	Záznam úspì¹nì vymazán
 entry updated sucessfully	common	cs	Záznam úspì¹nì upraven
 error	common	cs	Chyba
-error creating x x directory	common	cs	Chyba pøi vytváøení  adresáøe
-error deleting x x directory	common	cs	Chyba pøi mazání  adresáøe
-error renaming x x directory	common	cs	Chyba pøi pøejmenování  adresáøe
 exit	common	cs	Ukonèit
 february	common	cs	Únor
-file manager	common	cs	Správce souborù
 filter	common	cs	Filtr
 first name	common	cs	Jméno
-first page	common	cs	první stránka
 friday	common	cs	Pátek
 ftp	common	cs	FTP
 global public	common	cs	Veøejný pro v¹echny
@@ -100,8 +92,6 @@ sunday	common	cs	Nedìla
 thursday	common	cs	Ètvrtek
 time	common	cs	Èas
 to correct this error for the future you will need to properly set the	common	cs	 = Aby se chyba neobjevovala v budoucnosti musíte právnì nastavit
-today is x's birthday!	common	cs	Dnes má narozeniny %1!
-tomorrow is x's birthday.	common	cs	Zítra má narozeniny %1.
 total	common	cs	Celkem
 tuesday	common	cs	Úterý
 updated	common	cs	Upraven
@@ -110,9 +100,7 @@ view	common	cs	Prohlédnout
 wednesday	common	cs	Støeda
 which groups	common	cs	které skupiny
 yes	common	cs	Ano
-you have 1 high priority event on your calendar today.	common	cs	Máte dnes 1 událost s vysokou prioritou.
 you have 1 new message!	common	cs	Máte 1 novou zprávu!
-you have x high priority events on your calendar today.	common	cs	Máte dnes  událostí s vysokou priritou.
 you have x new messages!	common	cs	Máte  nových zpráv!
 your message has been sent	common	cs	Va¹e zpráva byla odeslána
 your search returned 1 match	common	cs	byl nalezen 1 záznam

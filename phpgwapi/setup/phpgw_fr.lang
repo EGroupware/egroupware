@@ -16,11 +16,6 @@ add a single phrase	common	fr	Ajouter une seule ligne
 add new account	common	fr	Ajouter un nouveau compte
 add new application	common	fr	Ajouter une nouvelle application
 add new phrase	common	fr	Ajouter une nouvelle phrase
-add to addressbook	common	fr	Ajouter au carnet d'adresses
-address book	common	fr	Carnet d'adresse
-address book - view	common	fr	Carnet d'adresses - voir
-addressbook	common	fr	Carnet d'adresses
-addressbook preferences	common	fr	Pref&eacute;rences du carnet d'adresses
 addsub	common	fr	AjouterSoustraire
 admin	common	fr	Admin
 administration	common	fr	Administration
@@ -49,10 +44,6 @@ bad login or password	common	fr	Mauvais login ou mot de passe
 base url	common	fr	URL de base
 birthday	common	fr	Anniversaire
 brief description	common	fr	Description R&eacute;sum&eacute;
-calendar	common	fr	Calendrier
-calendar - add	common	fr	Calendrier - Ajout
-calendar - edit	common	fr	Calendrier - Edition
-calendar preferences	common	fr	Pref&eacute;rences de calendrier
 cancel	common	fr	Annuler
 cc	common	fr	CC
 change	common	fr	Changer
@@ -95,36 +86,24 @@ download	common	fr	T&eacutel&eacute;charger
 do_delete	common	fr	Supprimer
 duration	common	fr	Dur&eacute;e
 e-mail	common	fr	E-Mail
-e-mail preferences	common	fr	Pref&eacute;rences E-mail
 edit	common	fr	Editer
 edit application	common	fr	Editer l'applcation
 edit group	common	fr	Editer groupe
 email	common	fr	E-Mail
-email account name	common	fr	Nom de compte e-mail
-email address	common	fr	Adresse e-mail
-email password	common	fr	Mot de passe e-mail
-email signature	common	fr	Signature E-Mail
 enabled	common	fr	Activ&eacute;
 enabled - hidden from navbar	common	fr	Activ&eacute; - cach&eacute; de la barre de navigation
 enter your new password	common	fr	Entrer votre mot de passe
 entry has been deleted sucessfully	common	fr	Entr&eacute;e supprim&eacute;e avec succ&egrave;s
 entry updated sucessfully	common	fr	Entr&eacute;e mise &agrave; jour avec succ&egrave;s
 error	common	fr	Erreur
-error creating x x directory	common	fr	Erreur pendant la cr&eacute;ation du r&eacute;pertoire %1 %2
-error deleting x x directory	common	fr	Erreur pendant la destruction du r&eacute;pertoire %1 %2
-error renaming x x directory	common	fr	Erreur pendant le renommage du r&eacute;pertoire %1 %2
 err_saving_file	common	fr	Erreur en sauvant sur le disque
 exit	common	fr	Sortir
 fax	common	fr	Fax
 february	common	fr	F&eacute;vrier
-file manager	common	fr	Gestionnaire de fichiers
 files	common	fr	Fichiers
-file_upload	common	fr	Upload du fichier
 filter	common	fr	Filtrer
 first name	common	fr	Pr&eacute;nom
-first page	common	fr	premi&egrave;re page
 folder	common	fr	Dossier
-forum	common	fr	Forum
 forward	common	fr	Transf&eacute;rer
 fr	common	fr	V
 frequency	common	fr	Fr&eacute;quence
@@ -214,6 +193,7 @@ non-standard	common	fr	Non standard
 none	common	fr	Aucun
 normal	common	fr	Normal
 note: this feature does *not* change your email password. this will need to be done manucommony.	common	fr	Note: Ceci ne change pas le mot de passe de votre email. Ceci doit &ecirc;tre fait manuellement.
+notes	common	fr	Notes
 november	common	fr	Novembre
 no_file_name	common	fr	Aucun nom de fichier sp&eacute;cifi&eacute;
 october	common	fr	Octobre
@@ -328,12 +308,8 @@ title	common	fr	Titre
 to	common	fr	A
 to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur vous devriez dans le future mettre correctement le
 today	common	fr	Aujourd'hui
-today is x's birthday!	common	fr	Aujourd'hui, c'est l'anniversaire de %1 !
-tomorrow is x's birthday.	common	fr	Demain, c'est l'anniversaire de %1.
 total	common	fr	Total
 total records	common	fr	Nombre total d'enregistrements
-translation	common	fr	Traduction
-translation management	common	fr	Direction de Traduction
 tu	common	fr	M
 tue	common	fr	Mar
 tuesday	common	fr	Mardi
@@ -373,13 +349,11 @@ year	common	fr	Ann&eacute;e
 yearly	common	fr	Annuel
 yes	common	fr	Oui
 you are required to change your password during your first login	common	fr	Vous devez changer votre mot de passe a votre premiere connection
-you have 1 high priority event on your calendar today.	common	fr	Vous avez un &eacute;v&eacute;nement de haute priorit&eacute; dans votre calendrier.
 you have 1 new message!	common	fr	Vous avez un nouveau message !
 you have been successfully logged out	common	fr	Vous avez &eacute;t&eacute; d&eacute;logu&eacute; avec succ&egrave;
 you have entered an invailed date	common	fr	vous avez entr&eacute; une date invalide
 you have not entered a\nbrief description	common	fr	Vous n'avez pas saisi\nde Description R&eacute;sum&eacute;
 you have not entered a\nvalid time of day.	common	fr	Vous n'avez pas saisi\nune heure valide.
-you have x high priority events on your calendar today.	common	fr	Vous avez %1 &eacute;v&eacute;nements de haute priorit&eacute; dans votre calendrier.
 you have x new messages!	common	fr	Vous avez %1 nouveaux messages!
 you must add at least 1 permission to this account	common	fr	Vous devez ajouter au moins une permission a ce compte
 you must enter a password	common	fr	Vous devez entrer un mot de passe

@@ -5,25 +5,26 @@ address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
 address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
-addvcard        common  en      Add VCard
+addvcard	addressbook	en	Add VCard
 bbs phone	addressbook	en	BBS Phone
-birthday	addressbook	en	Birthday
+birthday	common	en	Birthday
 business address type	addressbook	en	Business Address Type
-business city	common	en	Business City
+business city	addressbook	en	Business City
 business	common	en	Business
-business country	common	en	Business Country
-business email	common	en	Business EMail
-business email type	common	en	Business EMail Type
-business fax	common	en	Business Fax
-business phone	common	en	Business Phone
-business state	common	en	Business State
-business street	common	en	Business Street
-business zip code	common	en	Business Postal Code
+business country	addressbook	en	Business Country
+business email	addressbook	en	Business EMail
+business email type	addressbook	en	Business EMail Type
+business fax	addressbook	en	Business Fax
+business phone	addressbook	en	Business Phone
+business state	addressbook	en	Business State
+business street	addressbook	en	Business Street
+business zip code	addressbook	en	Business Postal Code
 car phone	common	en	Car Phone
 cell phone	common	en	cell phone
 city	common	en	City
 company	common	en	Company
 company name	common	en	Company Name
+contact	common	en	Contact
 country	common	en	Country
 custom fields	addressbook	en	Custom Fields
 department	common	en	Department
@@ -75,5 +76,5 @@ vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 video phone	addressbook	en	Video Phone
 voice phone	addressbook	en	Voice Phone
-work phone	common	en	Work Phone
+work phone	addressbook	en	Work Phone
 zip code	common	en	ZIP Code

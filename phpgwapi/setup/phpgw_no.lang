@@ -4,14 +4,11 @@ account has been created	common	no	Account har blitt opprettet
 account has been deleted	common	no	Account har blitt slettet
 account has been updated	common	no	Account har blitt oppdatert
 add	common	no	Legg til
-address book	common	no	Addresse Bok
-addressbook	common	no	Addressebook
 admin	common	no	Admin
 administration	common	no	Administrasjon
 april	common	no	April
 are you sure you want to delete this entry ?	common	no	Er du sikker du vil slette denne entry ?
 august	common	no	August
-calendar	common	no	kalender
 cancel	common	no	Avbryt
 change	common	no	Endre
 charset	common	no	iso-8859-1
@@ -33,10 +30,9 @@ entry updated sucessfully	common	no	Entry er oppdatert
 error	common	no	Feil
 exit	common	no	Avslutt
 february	common	no	Februar
-file manager	common	no	Fil manager
+files	common	no	Filer
 filter	common	no	Filter
 first name	common	no	Fornavn
-first page	common	no	første side
 friday	common	no	Fredag
 ftp	common	no	FTP
 global public	common	no	Global Public
@@ -93,8 +89,6 @@ submit	common	no	Submit
 sunday	common	no	Søndag
 thursday	common	no	Torsdag
 time	common	no	Tid
-today is x's birthday!	common	no	I dag har %1 fødselsdag!
-tomorrow is x's birthday.	common	no	I morgen er det %1's fødselsdag.
 total	common	no	Total
 tuesday	common	no	Tirsdag
 updated	common	no	Oppdatert
@@ -102,9 +96,7 @@ view	common	no	Vis
 wednesday	common	no	Onsdag
 which groups	common	no	hvilke grupper
 yes	common	no	Ja
-you have 1 high priority event on your calendar today.	common	no	Du har 1 høy prioritets event i din kalender i dag.
 you have 1 new message!	common	no	Du har 1 ny melding!
-you have x high priority events on your calendar today.	common	no	Du har %1 høy prioritets event i din kalender i dag.
 you have x new messages!	common	no	Du har %1 nye meldinger!
 your message has been sent	common	no	Din melding har blitt sent
 your search returned 1 match	common	no	ditt søk gav 1 match

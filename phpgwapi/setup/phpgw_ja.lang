@@ -13,11 +13,6 @@ active	common	ja	アクティブ
 add	common	ja	追加
 add category	common	ja	カテゴリ追加
 add x category for	common	ja	%1 カテゴリ追加
-address book	common	ja	アドレス帳
-addressbook	common	ja	アドレス帳
-addressbook preferences	common	ja	アドレス帳ユーザ設定
-addresses	common	ja	アドレス帳
-addvcard	common	ja	VCard追加
 admin	common	ja	環境設定
 administration	common	ja	環境設定
 all	common	ja	全て
@@ -26,18 +21,6 @@ are you sure you want to delete this category ?	common	ja	このカテゴリを削除して
 are you sure you want to delete this entry ?	common	ja	この項目を削除してもよろしいですか。
 august	common	ja	８月
 autosave default category	common	ja	デフォルトカテゴリを自動保存
-business	common	ja	ビジネス
-business city	common	ja	市区町村
-business country	common	ja	国
-business email	common	ja	電子メール
-business email type	common	ja	電子メールタイプ
-business fax	common	ja	FAX
-business phone	common	ja	電話
-business state	common	ja	都道府県
-business street	common	ja	町域
-business zip code	common	ja	郵便番号
-calendar	common	ja	カレンダー
-calendar preferences	common	ja	カレンダーユーザ設定
 cancel	common	ja	取消
 categories	common	ja	カテゴリ
 category	common	ja	カテゴリ
@@ -50,11 +33,8 @@ charset	common	ja	EUC-JP
 choose the category	common	ja	カテゴリ選択
 clear	common	ja	クリア
 clear form	common	ja	再入力
-company	common	ja	会社
 compose	common	ja	新規作成
-contact	common	ja	連絡先
 copy	common	ja	コピー
-country	common	ja	国
 create	common	ja	作成
 created by	common	ja	作成者
 cron	common	ja	Cron
@@ -71,32 +51,24 @@ domestic	common	ja	国内
 done	common	ja	終了
 download	common	ja	ダウンロード
 e-mail	common	ja	電子メール
-e-mail preferences	common	ja	電子メールユーザ設定
 edit	common	ja	訂正
 edit categories	common	ja	カテゴリ訂正
 edit category	common	ja	カテゴリ訂正
 edit x category for	common	ja	%1 カテゴリ訂正
 email	common	ja	電子メール
-email type	common	ja	電子メールタイプ
 end date	common	ja	終了日
 end time	common	ja	終了時間
 entry has been deleted sucessfully	common	ja	削除しました。
 entry updated sucessfully	common	ja	訂正しました。
 error	common	ja	エラー
-error creating x x directory	common	ja	エラー：ディレクトリ %1%2 が作成できません。
-error deleting x x directory	common	ja	エラー：ディレクトリ %1%2 が削除できません。
-error renaming x x directory	common	ja	エラー：ディレクトリ %1%2 の名前を変更できません。
 exit	common	ja	閉じる
 extra	common	ja	追加
 february	common	ja	２月
 fields	common	ja	項目
-file manager	common	ja	ファイルマネージャ
 files	common	ja	ファイル
 filter	common	ja	選択
 first name	common	ja	姓
-first page	common	ja	先頭ページ
 folders	common	ja	フォルダ
-forum	common	ja	フォーラム
 forward	common	ja	転送
 friday	common	ja	金曜日
 from	common	ja	差出人
@@ -105,9 +77,6 @@ full name	common	ja	名前
 global	common	ja	グローバル
 global public	common	ja	パブリック
 grant access	common	ja	利用許可設定
-grant addressbook access	common	ja	利用許可設定
-grant calendar access	common	ja	利用許可設定
-grant todo access	common	ja	利用許可設定
 group	common	ja	グループ
 group access	common	ja	グループ
 group has been added	common	ja	グループを追加しました。
@@ -166,7 +135,7 @@ password	common	ja	パスワード
 password has been updated	common	ja	パスワードを変更しました。
 permissions to the files/users directory	common	ja	permissions to the files/users directory
 personal	common	ja	個人
-please set your preferences for this app	common	ja	このアプリケーションのユーザ設定を行って下さい。
+please set your preferences for this application	common	ja	このアプリケーションのユーザ設定を行って下さい。
 please x by hand	common	ja	Please %1 by hand
 please, check your username and password, or contact your admin.	common	ja	ユーザとパスワードをチェックするか、管理者に問い合わせてください。
 powered by phpgroupware version x	common	ja	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
@@ -209,7 +178,6 @@ subject:	common	ja	件名：
 submit	common	ja	実行
 sunday	common	ja	日曜日
 that category name has been used already !	common	ja	カテゴリ名は既に存在しています。
-that phrase already exists	common	ja	フレーズは既に存在しています。
 the two passwords are not the same	common	ja	２つのパスワードが等しくありません
 themes	common	ja	Themes
 there was an error trying to connect to your mail server.	common	ja	メールサーバに接続できませんでした。
@@ -221,26 +189,19 @@ time zone	common	ja	時差
 time zone offset	common	ja	時差
 title	common	ja	タイトル
 to correct this error for the future you will need to properly set the	common	ja	To correct this error for the future you will need to properly set the
-today is x's birthday!	common	ja	今日は %1 さんの誕生日です。
-tommorow is x's birthday.	common	ja	明日は %1 さんの誕生日です。
-tomorrow is x's birthday.	common	ja	明日は %1 さんの誕生日です。
 total	common	ja	合計
-translation management	common	ja	言語環境
 tuesday	common	ja	火曜日
 updated	common	ja	更新日時
 users	common	ja	ユーザ
-vcard	common	ja	VCard
 view	common	ja	表示
 wednesday	common	ja	水曜日
 which groups	common	ja	グループ選択
 yes	common	ja	はい
 you are required to change your password during your first login	common	ja	初回ログイン時にパスワード変更
 you are required to change your password durring your first login	common	ja	初回ログイン時にパスワード変更
-you have 1 high priority event on your calendar today.	common	ja	優先度の高い予定が１つあります。
 you have 1 new message!	common	ja	新着メールが１通あります。
 you have messages!	common	ja	メッセージがあります。
 you have no new messages	common	ja	新着メールはありません。
-you have x high priority events on your calendar today.	common	ja	優先度の高い予定が %1 つあります。
 you have x new messages!	common	ja	新着メールが %1 通あります。
 you must enter a password	common	ja	パスワードを入力して下さい。
 your message has been sent	common	ja	メッセージを送信しました。

@@ -23,6 +23,7 @@ cell phone	addressbook	de	Mobilfunk
 city	common	de	Stadt
 company	common	de	Firma
 company name	common	de	Firmenname
+contact	common	de	Kontakt
 country	common	de	Land
 custom fields	addressbook	de	Benutzerdefinierte Felder
 department	common	de	Abteilung
@@ -72,7 +73,7 @@ suffix	addressbook	de	Zusatz
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
-vcard	addressbook	de	VCard
+vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 video phone	addressbook	de	Bildtelefon
 voice phone	addressbook	de	Telefon

@@ -6,9 +6,10 @@ address book	addressbook	sv	Adress bok
 address book - view	addressbook	sv	Adress bok - visa
 birthday	addressbook	sv	Födelsedag
 city	addressbook	sv	Stad
+company	common	sv	Företag
 company name	addressbook	sv	Företags namn
 e-mail	addressbook	sv	E-Post
-fax	addressbook	sv	Telefax
+fax	common	sv	Telefax
 first name	addressbook	sv	Förnamn
 home phone	addressbook	sv	Hemtelefon
 import file	addressbook	sv	Importera Fil

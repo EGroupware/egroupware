@@ -22,7 +22,9 @@ business zip codecommonitCAP ufficio
 car phone	addressbook	it	Telefono auto
 cell phone	addressbook	it	telefono cellulare
 city	addressbook	it	Città
+company	common	it	Società
 company name	addressbook	it	Nome società
+contact	common	it	Contatto
 country	addressbook	it	Stato
 custom fields	addressbook	it	Campi Personalizzati
 department	addressbook	it	Dipartimento

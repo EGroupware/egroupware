@@ -4,13 +4,10 @@ account has been created	common	br	Conta foi criada
 account has been deleted	common	br	Conta foi apagada
 account has been updated	common	br	Conta foi atualizada
 add	common	br	Adicionar
-address book	common	br	Contatos
-addressbook	common	br	Rubrica
 admin	common	br	Administrador
 administration	common	br	Administracao
 april	common	br	Abril
 august	common	br	Agosto
-calendar	common	br	Calendario
 cancel	common	br	Cancelar
 change	common	br	Mudar
 charset	common	br	iso-8859-1
@@ -24,6 +21,7 @@ date	common	br	Data
 december	common	br	Dezembro
 delete	common	br	Cancelar
 done	common	br	Pronto
+email	common	br	E-Mail
 e-mail	common	br	E-Mail
 edit	common	br	Modificar
 email	common	br	E-Mail
@@ -32,10 +30,8 @@ entry updated sucessfully	common	br	Entrada modificada com sucesso
 error	common	br	Erro
 exit	common	br	Saida
 february	common	br	Fevereiro
-file manager	common	br	Gerenciador de arquivos
 filter	common	br	Filtro
-first name	common	br	Nome
-first page	common	br	primeira pagina
+first name	common	br	Primeiro Nome
 friday	common	br	Sexta
 ftp	common	br	FTP
 global public	common	br	Publico Global
@@ -91,8 +87,6 @@ submit	common	br	Inserir
 sunday	common	br	Domingo
 thursday	common	br	Quinta
 time	common	br	Hora
-today is x's birthday!	common	br	Hoje e' aniversario de %1!
-tomorrow is x's birthday.	common	br	Amanha e' aniversario de %1.
 total	common	br	Total
 tuesday	common	br	Terca
 updated	common	br	Atualizado
@@ -100,9 +94,7 @@ view	common	br	Visualizar
 wednesday	common	br	Quarta
 which groups	common	br	Qual grupo
 yes	common	br	Sim
-you have 1 high priority event on your calendar today.	common	br	Voce tem 1 evento com alta prioridade no seu calendario hoje.
 you have 1 new message!	common	br	Voce tem 1 nova mensagem!
-you have x high priority events on your calendar today.	common	br	Voce tem %1 eventos com alta prioridade no seu calendario hoje.
 you have x new messages!	common	br	Voce tem %1 novas mensagens!
 your message as been sent	common	br	Sua mensagem foi enviada
 your search returned 1 match	common	br	sua pesquisa retornou 1 correspondecia

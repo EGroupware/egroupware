@@ -4,14 +4,11 @@ account has been created	common	ko	아이디가 생성되었습니다.
 account has been deleted	common	ko	아이디가 삭제되었습니다.
 account has been updated	common	ko	아이디가 변경되었습니다.
 add	common	ko	추가
-address book	common	ko	주소록
-addressbook	common	ko	주소록
 admin	common	ko	관리
 administration	common	ko	관리
 april	common	ko	 4월
 are you sure you want to delete this entry ?	common	ko	현재 항목을 삭제하시겠습니까?
 august	common	ko	 8월
-calendar	common	ko	일정
 cancel	common	ko	취소
 change	common	ko	변경
 charset	common	ko	euc-kr
@@ -31,15 +28,11 @@ email	common	ko	E-Mail
 entry has been deleted sucessfully	common	ko	데이터가 성공적으로 삭제되었습니다.
 entry updated sucessfully	common	ko	데이터가 성공적으로 수정되었습니다.
 error	common	ko	에러
-error creating x x directory	common	ko	%1%2 디렉토리를 생성할 수 없습니다..
-error deleting x x directory	common	ko	%1%2 디렉토리를 삭제할 수 없습니다.
-error renaming x x directory	common	ko	%1%2 디렉토리의 이름을 변경할 수 없습니다.
 exit	common	ko	나가기
 february	common	ko	 2월
-file manager	common	ko	파일 관리자
+files	common	ko	파일들
 filter	common	ko	필터
 first name	common	ko	이름
-first page	common	ko	첫 페이지로
 friday	common	ko	금요일
 ftp	common	ko	FTP
 global public	common	ko	모두에게 공개
@@ -71,6 +64,7 @@ next page	common	ko	다음 페이지로
 no	common	ko	아니오
 none	common	ko	없음
 normal	common	ko	보통
+notes	common	ko	기타
 november	common	ko	11월
 october	common	ko	10월
 ok	common	ko	확인
@@ -100,8 +94,6 @@ sunday	common	ko	일요일
 thursday	common	ko	목요일
 time	common	ko	시간
 to correct this error for the future you will need to properly set the	common	ko	To correct this error for the future you will need to properly set the
-today is x's birthday!	common	ko	오늘은 %1의 생일입니다!
-tomorrow is x's birthday.	common	ko	내일은 %1의 생일입니다.
 total	common	ko	합계
 tuesday	common	ko	화요일
 updated	common	ko	최종 수정
@@ -110,9 +102,7 @@ view	common	ko	보기
 wednesday	common	ko	수요일
 which groups	common	ko	그룹선택
 yes	common	ko	예
-you have 1 high priority event on your calendar today.	common	ko	1건의 중요도가 높은 작업이 있습니다.
 you have 1 new message!	common	ko	1 개의 새로운 메시지가 있습니다!
-you have x high priority events on your calendar today.	common	ko	%1건의 중요도가 높은 작업들이 있습니다.
 you have x new messages!	common	ko	%1 개의 새로운 메시지가 있습니다!
 your message has been sent	common	ko	메시지가 전송되었습니다.
 your search returned 1 match	common	ko	1건의 결과가 검색되었습니다.

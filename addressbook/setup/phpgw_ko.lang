@@ -8,7 +8,6 @@ first name	addressbook	ko	성
 home phone	addressbook	ko	집전화
 last name	addressbook	ko	이름
 mobile	addressbook	ko	핸드폰
-notes	addressbook	ko	기타
 other number	addressbook	ko	기타번호
 pager	addressbook	ko	삐삐
 state	addressbook	ko	지역

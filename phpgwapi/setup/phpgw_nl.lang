@@ -5,16 +5,11 @@ account has been deleted	common	nl	Account is verwijderd
 account has been updated	common	nl	Account is bijgewerkt
 account preferences	common	nl	Account voorkeuren
 add	common	nl	Toevoegen
-address book	common	nl	Adresboek
-addressbook	common	nl	Adresboek
-addressbook preferences	common	nl	Adresboek voorkeuren
 admin	common	nl	admin
 administration	common	nl	Administratie
 april	common	nl	April
 are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit item wilt verwijderen?
 august	common	nl	Augustus
-calendar	common	nl	kalendar
-calendar preferences	common	nl	Kalender voorkeuren
 cancel	common	nl	Annuleren
 change	common	nl	Veranderen
 charset	common	nl	iso-8859-1
@@ -31,22 +26,16 @@ december	common	nl	December
 delete	common	nl	Verwijderen
 done	common	nl	Gereed
 e-mail	common	nl	E-mail
-e-mail preferences	common	nl	E-mail voorkeuren
 edit	common	nl	Bewerken
 email	common	nl	E-mail
 entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
 entry updated sucessfully	common	nl	Item succesvol bijgewerkt
 error	common	nl	Fout
-error creating x x directory	common	nl	Fout bij maken van %1%2directory
-error deleting x x directory	common	nl	Fout bij verwijderen van %1%2directory
-error renaming x x directory	common	nl	Fout bij hernoemen %1%2directory
 exit	common	nl	Einde
 february	common	nl	Februari
-file manager	common	nl	Bestandsbeheer
+files	common	nl	Bestands
 filter	common	nl	Filter
 first name	common	nl	Voornaam
-first page	common	nl	eerste pagina
-forum	common	nl	Forum
 friday	common	nl	Vrijdag
 ftp	common	nl	FTP
 global public	common	nl	Toegang Openbaar
@@ -115,10 +104,7 @@ thursday	common	nl	Donderdag
 time	common	nl	tijd
 time tracking	common	nl	Tijdregistratie
 to correct this error for the future you will need to properly set the	common	nl	Om deze fout te in de toekomst te voorkomen moet u de juiste
-today is x's birthday!	common	nl	Vandaag is %1's verjaardag!
-tomorrow is x's birthday.	common	nl	Morgen is %1's verjaardag.
 total	common	nl	Totaal
-translation management	common	nl	Vertalingen management
 tuesday	common	nl	Dinsdag
 updated	common	nl	Bijgewerkt
 users	common	nl	gebruikers
@@ -129,9 +115,7 @@ wednesday	common	nl	Woensdag
 which groups	common	nl	welke groepen
 yes	common	nl	Ja
 you are required to change your password during your first login	common	nl	U moet na de eerste keer inlogggen uw eerste sessie uw wachtwoord wijzigen
-you have 1 high priority event on your calendar today.	common	nl	U hebt vandaag 1 afspraak met hoge prioriteit op uw agenda staan.
 you have 1 new message!	common	nl	U hebt 1 nieuw bericht!
-you have x high priority events on your calendar today.	common	nl	U hebt vandaag %1 afspraken met hoge prioriteit op uw agenda staan.
 you have x new messages!	common	nl	U hebt %1 nieuwe berichten!
 your message has been sent	common	nl	Uw bericht is verzonden
 your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op

@@ -1,19 +1,15 @@
 addressbook     common  br      Rubrica
 address book	common	br	Contatos
-birthday	addressbook	br	Aniversario
-city	addressbook	br	Cidade
-e-mail	addressbook	br	E-Mail
-fax	addressbook	br	Fax
-first name	addressbook	br	Primeiro Nome
+birthday	common	br	Aniversario
+city	common	br	Cidade
+fax	common	br	Fax
 home phone	addressbook	br	Fone Residencial
-last name	addressbook	br	Ultimo Nome
-mobile	addressbook	br	Celular
-notes	addressbook	br	Notas
+cell phone	addressbook	br	Celular
 other number	addressbook	br	Outro Numero
-pager	addressbook	br	Pager
-state	addressbook	br	Estado
-street	addressbook	br	Rua
+pager	common	br	Pager
+state	common	br	Estado
+street	common	br	Rua
 today is x's birthday!	common	br	Hoje e' aniversario de %1!
 tomorrow is x's birthday.	common	br	Amanha e' aniversario de %1.
-work phone	addressbook	br	Fone Comercial
-zip code	addressbook	br	CEP
+work phone	common	br	Fone Comercial
+zip code	common	br	CEP

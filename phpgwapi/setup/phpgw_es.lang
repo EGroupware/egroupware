@@ -5,16 +5,11 @@ account has been deleted	common	es	Cuenta borrada
 account has been updated	common	es	Cuenta actualizada
 account preferences	common	es	Preferencias de la Cuenta
 add	common	es	Agregar
-address book	common	es	Libreta de Direcciones
-addressbook	common	es	Libreta de direcciones
-addressbook preferences	common	es	Preferencias - Libreta de direcciones
 admin	common	es	Admin
 administration	common	es	Administración
 april	common	es	Abril
 are you sure you want to delete this entry ?	common	es	Seguro de querer borrar esta entrada ?
 august	common	es	Agosto
-calendar	common	es	Calendario
-calendar preferences	common	es	Preferencias - Calendario
 cancel	common	es	Cancelar
 change	common	es	Cambiar
 charset	common	es	iso-8859-1
@@ -29,22 +24,16 @@ december	common	es	Diciembre
 delete	common	es	Borrar
 done	common	es	Hecho
 e-mail	common	es	E-Mail
-e-mail preferences	common	es	Preferencias - E-Mail
 edit	common	es	Editar
 email	common	es	E-Mail
 entry has been deleted sucessfully	common	es	Entrada borrada exitosamente
 entry updated sucessfully	common	es	Entrada actualizada exitosamente
 error	common	es	Error
-error creating x x directory	common	es	Error al crear %1%2directory
-error deleting x x directory	common	es	Error al borrar %1%2directory
-error renaming x x directory	common	es	Error al renombrar %1%2directory
 exit	common	es	Salir
 february	common	es	Febrero
-file manager	common	es	Manejador de archivos
 filter	common	es	Filtro
+files	common	es	Archivos
 first name	common	es	Nombre
-first page	common	es	primer pagina
-forum	common	es	Forum
 friday	common	es	Viernes
 ftp	common	es	FTP
 global public	common	es	Global Publico
@@ -77,6 +66,7 @@ next page	common	es	proxima pagina
 no	common	es	No
 none	common	es	Ninguno
 normal	common	es	Normal
+notes	common	es	Notas
 november	common	es	Noviembre
 october	common	es	Octubre
 ok	common	es	OK
@@ -107,21 +97,17 @@ sunday	common	es	Domingo
 thursday	common	es	Jueves
 time	common	es	Hora
 to correct this error for the future you will need to properly set the	common	es	Para corregir este error para el futuro necesitara setear apropiadamente el
-today is x's birthday!	common	es	Hoy es el cumpleaños de %1!
-tomorrow is x's birthday.	common	es	Mañana es el cumpleaños de %1.
 total	common	es	Total
-translation management	common	es	Manejador de Traducción
 tuesday	common	es	Martes
 updated	common	es	Actualizado
+url	common	es	URL
 users	common	es	usuarios
 view	common	es	Ver
 wednesday	common	es	Miercoles
 which groups	common	es	Que groupos
 yes	common	es	Si
 you are required to change your password during your first login	common	es	Se requiere que cambie la contraseña durante su primer login.
-you have 1 high priority event on your calendar today.	common	es	Ud. tiene 1 evento de alta prioridad es su calendario para hoy.
 you have 1 new message!	common	es	Ud. tiene 1 nuevo mensaje!
-you have x high priority events on your calendar today.	common	es	Ud. tiene %1 eventos de alta prioridad es su calendario para hoy.
 you have x new messages!	common	es	Ud. tiene %1 nuevos mensajes!
 your message as been sent	common	es	Su mensaje fue enviado
 your search returned 1 match	common	es	su busqueda retorno 1 coincidencia

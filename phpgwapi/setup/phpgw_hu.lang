@@ -5,16 +5,11 @@ account has been deleted	common	hu	Hozzáférés törölve
 account has been updated	common	hu	Hozzáférés módosítva
 account preferences	common	hu	Hozzáférés tulajdonságok
 add	common	hu	Hozzáad
-address book	common	hu	Címjegyzék
-addressbook	common	hu	Címjegyzék
-addressbook preferences	common	hu	Címjegyzék tulajdonságok
 admin	common	hu	Admin
 administration	common	hu	Adminisztráció
 april	common	hu	Április
 are you sure you want to delete this entry ?	common	hu	Biztosan törölni akarja ezt a bejegyzést?
 august	common	hu	Augusztus
-calendar	common	hu	Naptár
-calendar preferences	common	hu	Kalendárium tulajdonságok
 cancel	common	hu	Mégse
 change	common	hu	Változtat
 charset	common	hu	iso-8859-2
@@ -35,16 +30,10 @@ email	common	hu	E-Mail
 entry has been deleted sucessfully	common	hu	Bejegyzés törölve
 entry updated sucessfully	common	hu	Bejegyzés módosítva
 error	common	hu	Hiba
-error creating x x directory	common	hu	Hiba a %1%2 könyvtár létrehozásakor
-error deleting x x directory	common	hu	Hiba a %1%2 könyvtár törlésekor
-error renaming x x directory	common	hu	Hiba a %1%2 könyvtár átnevezésekor
 exit	common	hu	Kilép
 february	common	hu	Február
-file manager	common	hu	Fájlkezelõ
 filter	common	hu	Szûrõ
 first name	common	hu	Keresztnév
-first page	common	hu	elsõ oldal
-forum	common	hu	Fórum
 friday	common	hu	Péntek
 ftp	common	hu	FTP
 global public	common	hu	Publikus
@@ -54,7 +43,6 @@ group has been deleted	common	hu	Csoport törölve
 group has been updated	common	hu	Csoport módosítva
 group public	common	hu	Csoporton belül publikus
 groups	common	hu	Csoportok
-headlines	common	hu	Fejlécek
 help	common	hu	Súgó
 high	common	hu	Sürgõs
 home	common	hu	Kezdõlap
@@ -108,10 +96,7 @@ sunday	common	hu	Vasárnap
 thursday	common	hu	Csütörtök
 time	common	hu	Idõ
 to correct this error for the future you will need to properly set the	common	hu	A hiba kijavításához helyesen kell beállítani a
-today is x's birthday!	common	hu	Ma van %1 születésnapja!
-tomorrow is x's birthday.	common	hu	Holnap van %1 születésnapja.
 total	common	hu	összesen
-translation management	common	hu	Fordítás menedzsment
 tuesday	common	hu	Kedd
 updated	common	hu	Módosítva
 users	common	hu	felhasználók
@@ -120,9 +105,7 @@ wednesday	common	hu	Szerda
 which groups	common	hu	melyik csoport
 yes	common	hu	Igen
 you are required to change your password during your first login	common	hu	Elsõ bejelentkezéskor meg kell változtatnia a jelszavát
-you have 1 high priority event on your calendar today.	common	hu	1 fontos esemény szerepel a mai napra a naptárban.
 you have 1 new message!	common	hu	1 új üzenete van!
-you have x high priority events on your calendar today.	common	hu	%1 fontos esemény szerepel a mai napra a naptárban.
 you have x new messages!	common	hu	%1 új üzenete van!
 your message has been sent	common	hu	Üzenet elküldve
 your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
