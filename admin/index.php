@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - administration                                            *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - administration                                              *
+	* http://www.egroupware.org                                                *
 	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
 	* Modified by Stephen Brown <steve@dataclarity.net>                        *
 	*  to distribute admin across the application directories                  *
