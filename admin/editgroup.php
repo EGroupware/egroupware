@@ -15,11 +15,13 @@
      $phpgw_flags = array("noheader" => True, "nonavbar" => True);
   }
 
-  if (! $group_id)
-     Header("Location: " . $phpgw->link("groups.php"));
-
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
+  
+  if (! $group_id) {
+     Header("Location: " . $phpgw->link("groups.php"));
+  }
+
 
   $t = new Template($phpgw_info["server"]["template_dir"]);
   $t->set_file(array("form"	=> "groups_form.tpl"));

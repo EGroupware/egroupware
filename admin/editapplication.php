@@ -48,9 +48,7 @@
   } else {
      $t->set_var("error","");
   }
-  $t->set_var("session_hidden_var","<input type=\"hidden\" "
-				 . "name=\"old_app_name\" value=\""
-				 . $phpgw->db->f("app_name") . "\">");
+  $t->set_var("hidden_vars",'<input type="hidden" name="old_app_name" value="' . $phpgw->db->f("app_name") . '">');
 
   $t->set_var("form_action",$phpgw->link("editapplication.php"));
   $t->set_var("lang_app_name",lang_admin("application name"));
