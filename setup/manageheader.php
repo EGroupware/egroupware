@@ -12,6 +12,7 @@
   /* $Id$ */
 
 	$phpgw_info['flags'] = array(
+		'nocachecontrol' => True,
 		'noheader' => True,
 		'nonavbar' => True,
 		'currentapp' => 'home',
@@ -211,6 +212,19 @@
 				echo '<b><p align=center><font size=+2 color=red>did not found any valid DB support !<br>try to configure your php to support one of the above mentioned dbs or install phpgroupware by hand </font></p></b><td></tr></table></body></html>';
 				exit;
 			}
+
+			if (floor(phpversion()) == 3)
+			{
+				echo 'You appear to be using PHP3. Disabling PHP4 sessions support<br>' . "\n";
+				$supported_sessions_type[] = 'db';
+			}
+			else
+			{
+				echo 'You appear to be using PHP4. Enabling PHP4 sessions support<br>' . "\n";
+				$supported_sessions_type[] = 'db';
+				$supported_sessions_type[] = 'php4';
+			}
+
 			$no_guess = false;
 			if(file_exists('../header.inc.php') && is_file('../header.inc.php'))
 			{
@@ -331,7 +345,7 @@
 		}
 ?>
         </select>
-        </td><td>What Database do you want to use with PHPGroupWare?
+        </td><td>What Database do you want to use with PHPGroupWare?</td></tr>
 
         <tr><td><b>Configuration Password</b><br><input type=text name="setting[config_pass]" value="<?php echo $phpgw_info['server']['config_passwd'] ?>"></td><td>Password needed for configuration</td></tr>
         <tr><td><b>Persistent connection</b><br>
@@ -340,6 +354,29 @@
         <option value="False"<?php echo (! $phpgw_info['server']['db_persistent']?' selected':''); ?>>False</option>
 		  </select></td>
 		  <td>Do you want persistent connections (higher performance, but eats memory)</td></tr>
+
+        <tr><td><b>DB Type</b><br><select name="setting[sessions_type]">
+      <?php
+		$selected = '';
+		$found_dbtype = false;
+		while(list($k,$v) = each($supported_sessions_type))
+		{
+			if($v == $phpgw_info['server']['sessions_type'])
+			{
+				$selected = ' selected ';
+				$found_dbtype = true;
+			}
+			else
+			{
+				$selected = '';
+			}
+			print '<option ' . $selected . ' value="' . $v . '">' . $v . "\n";
+		}
+?>
+        </select>
+        </td><td>What sessions management type do you want to use?</td></tr>
+
+			
         <tr><td colspan=2><b>Enable MCrypt</b><br>
         <select name="setting[enable_mcrypt]">
         <?php if($phpgw_info["server"]["mcrypt_enabled"] == True) { ?>
