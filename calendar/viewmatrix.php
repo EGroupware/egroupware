@@ -73,7 +73,7 @@
 			break;
 	}
 	echo "\n".'<center>'."\n";
-	echo ' <form action="'.$phpgw->link('viewmatrix.php').'" method="post" name="matrixform" target="viewmatrix">'."\n";
+	echo ' <form action="'.$phpgw->link('/calendar/viewmatrix.php').'" method="post" name="matrixform" target="viewmatrix">'."\n";
 	echo '  <input type="hidden" name="year" value="'.$thisyear.'">'."\n";
 	echo '  <input type="hidden" name="month" value="'.$thismonth.'">'."\n";
 	echo '  <input type="hidden" name="day" value="'.$thisday.'">'."\n";
