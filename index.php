@@ -59,17 +59,17 @@
            $phpgw->common->navbar(True);
         }
     }
+  } elseif ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
+      && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]]) {
+     $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
+		  . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/"));
+     $phpgw->common->phpgw_exit();
   } else {
      $phpgw->common->phpgw_header();
      $phpgw->common->navbar();  
   }
 
-  if ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
-      && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]]) {
-     $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
-		  . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/"));
-     $phpgw->common->phpgw_exit();
-  }
+  
 
   //$phpgw->hooks->proccess("location","mainscreen");
 
