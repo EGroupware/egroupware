@@ -13,16 +13,13 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'currentapp'	=> 'infolog', 
 		'noheader'		=> True,
 		'nonavbar'		=> True
 	);
 	include('../header.inc.php');
 
-	$obj = CreateObject('infolog.uiinfolog');
-	$QUERY_STRING = 'menuaction=infolog.uiinfolog.get_list'; // to make cats-selection work if called by index.php
-	$obj->get_list();
-
-	$phpgw->common->phpgw_footer();
+	header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=infolog.uiinfolog.get_list'));
+	$GLOBALS['phpgw']->common->phpgw_exit();
 ?>
