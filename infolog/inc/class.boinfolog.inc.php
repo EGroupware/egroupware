@@ -457,6 +457,7 @@
 			$query = array(
 				'search' => $pattern,
 				'start'  => 0,
+				'subs'   => true,
 			);
 			$ids = $this->search($query);
 			$content = array();

@@ -467,6 +467,7 @@
 		@param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
 		@param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
 		@param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+		@param $query[subs] boolean return subs or not, if unset the user preference is used
 		@returns array with id's as key of the matching log-entries
 		*/
 		function search(&$query)
@@ -546,7 +547,7 @@
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
 
 			if (!$GLOBALS['phpgw_info']['user']['preferences']['infolog']['listNoSubs'] &&
-				 $action != 'sp')
+				 $action != 'sp' || isset($query['subs']) && $query['subs'])
 			{
 				$pid = '';
 			}
