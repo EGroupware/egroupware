@@ -84,6 +84,10 @@
 			$access = 'public';
 		}
 
+		if ($status == 'done') {
+			$enddate = time();
+		}
+
 		if (! is_array($error)) {
 			$phpgw->infolog->write(array(
 				'type'      => $type,
