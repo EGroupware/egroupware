@@ -369,7 +369,7 @@
 				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
 				if($other['default_filter'])
 				{
-					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',True);
+					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',$other['default_filter']);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
