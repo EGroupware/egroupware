@@ -22,13 +22,13 @@ add a new entry	infolog	da	Tilføj et nyt felt
 add a new note	infolog	da	Tilføj en ny Note
 add a new phonecall	infolog	da	Tilføj en ny Telefon besked
 add a new sub-task, -note, -call to this entry	infolog	da	Tilføj en ny under-opgave, -note, telefon besked til dette felt
-add a new todo	infolog	da	Tilføj en ny ToDo
+add a new todo	infolog	da	Tilføj en ny Opgave
 add file	infolog	da	Tilføj fil
 add sub	infolog	da	Tilføj Underkategori
 add:	infolog	da	Tilføj:
 all	infolog	da	Alle
 all links and attachments	infolog	da	alle links og vedhæftet filer
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	da	tillader at sætte status på en indtastning, f.eks. sætte en ToDo til forbi hvis den er færdig (værdierne afhænger af typen)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	da	tillader at sætte status på en indtastning, f.eks. sætte en opgave til forbi hvis den er færdig (værdierne afhænger af typen)
 applies the changes	infolog	da	anvend ændringerne
 are you shure you want to delete this entry ?	infolog	da	Er du sikker på at du vil slette felt?
 are you sure you want to delete this entry	infolog	da	Er du sikker på at du vil slette felt?
@@ -59,14 +59,13 @@ creates a new typ with the given name	infolog	da	opretter en ny type for det giv
 csv-fieldname	infolog	da	CSV-feltnavn
 csv-filename	infolog	da	CSV-Filnavn
 csv-import	common	da	CSV-Import
-custom	infolog	da	
+custom	infolog	da	Egne
 custom contact-address, leave empty to use information from most recent link	infolog	da	Egen kontakt-adresser, efterlad tom for at bruge informationen fra det seneste link
 custom contact-information, leave emtpy to use information from most recent link	infolog	da	Egen kontakt-information, efterlad tom for at bruge informationen fra det seneste link
 custom fields	infolog	da	Egne felter
 custom fields, typ and status	common	da	Egne felter, type og status
-custom regarding	infolog	da	
-custom status for typ	infolog	da	
-customfields	infolog	da	
+custom status for typ	infolog	da	Egen status for type
+customfields	infolog	da	Egne felter
 datecreated	infolog	da	dato oprettet
 dates, status, access	infolog	da	Datoer, status og adgang
 days	infolog	da	dage
@@ -74,7 +73,7 @@ default filter for infolog	infolog	da	Standart filter for Opgaver
 default status for a new log entry	infolog	da	standart status for en ny opgave
 delegation	infolog	da	Overdrag
 delete	infolog	da	Slet
-delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	da	
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	da	Det alle underkategorier (hvis ikke vil underkategorier fra denne kategori eller have ingen overstående kategori tilgængelig
 delete the entry	infolog	da	Slet indtastningen
 delete this entry	infolog	da	Slet denne indtastning
 deletes the selected typ	infolog	da	slet den valgte type
@@ -97,12 +96,10 @@ edit this entry	infolog	da	Redigér denne indstasning
 empty for all	infolog	da	tom for alle
 enddate	infolog	da	Slut dato
 enddate can not be before startdate	infolog	da	Slut dato kan ikke være før start dato
-enter a custom contact, leave empty if linked entry should be used	infolog	da	
-enter a custom phone/email, leave empty if linked entry should be used	infolog	da	
-enter a textual description of the log-entry	infolog	da	
-enter the query pattern	infolog	da	
-entry and all files	infolog	da	
-existing links	infolog	da	
+enter a custom contact, leave empty if linked entry should be used	infolog	da	indtast egen kontakt, efterlad tom hvis den linkede kontakt skal bruges
+enter a custom phone/email, leave empty if linked entry should be used	infolog	da	indtast egen telefon/e-mail, efterlad tom hvis den linkede skal bruges
+enter the query pattern	infolog	da	Indtast forspørgelses mønster
+existing links	infolog	da	Nuværende links
 fax	infolog	da	Fax
 fieldseparator	infolog	da	feltseparator
 finish	infolog	da	færdig
@@ -111,7 +108,6 @@ from	infolog	da	Fra
 high	infolog	da	Høj
 id	infolog	da	ID
 import	infolog	da	Importer
-import next set	infolog	da	
 info log	common	da	Opgaver
 infolog	common	da	Opgaver
 infolog - delete	infolog	da	Opgaver - Slet
@@ -124,7 +120,7 @@ infolog list	infolog	da	Vis Infolog
 infolog preferences	common	da	Opgaver - Præferencer
 infolog-fieldname	infolog	da	Opgaver - Feltnavn
 invalid filename	infolog	da	Ugyldigt filnavn
-label<br>helptext	infolog	da	
+label<br>helptext	infolog	da	Label<br>Hjælp tekst
 last changed	infolog	da	Sidst ændret
 last modified	infolog	da	Sidst ændret
 leave without saveing the entry	infolog	da	forlad uden at gemme indtastningen
@@ -132,18 +128,19 @@ leaves without saveing	infolog	da	forlad uden at gemme
 length<br>rows	infolog	da	Længde<br>række
 link	infolog	da	Link
 links	infolog	da	Links
-links of this entry	infolog	da	
+links of this entry	infolog	da	Links til denne postering
+list all categories	infolog	da	Vis alle kategorier
 list no subs/childs	infolog	da	Vis ikke underkategorier/børn
-longer textual description	infolog	da	
+longer textual description	infolog	da	Længere tekstet beskrivelse
 low	infolog	da	lav
-max length of the input [, length of the inputfield (optional)]	infolog	da	
+max length of the input [, length of the inputfield (optional)]	infolog	da	maks længde af inputtet [længde af input feltet (valg frit)]
 max number of entries to display on the main screen	infolog	da	Maks antal opgaver der vises på startsiden
 name must not be empty !!!	infolog	da	Navn må ikke være tomt!!!
-name of new type to create	infolog	da	
+name of new type to create	infolog	da	navn på den nye type der skal oprettes
 new name	infolog	da	nyt navn
 new search	infolog	da	Ny søgning
 no - cancel	infolog	da	No - Annullere
-no entries found, try again ...	infolog	da	
+no entries found, try again ...	infolog	da	ingen resultater fundet, prøv igen....
 no filter	infolog	da	ingen filter
 no links or attachments	infolog	da	ingen links eller vedhæftet filer
 none	infolog	da	Ingen
@@ -151,25 +148,23 @@ normal	infolog	da	normal
 not	infolog	da	ikke
 not assigned	infolog	da	ikke tildelt
 note	infolog	da	Note
-number of records to read (%1)	infolog	da	
-number of row for a multiline inputfield or line of a multi-select-box	infolog	da	
+number of records to read (%1)	infolog	da	Antal posteringer at læse (%1)
 offer	infolog	da	tilbyde
 ongoing	infolog	da	i gang
-only the attachments	infolog	da	
-only the links	infolog	da	
+only the attachments	infolog	da	kun vedhæftninger
+only the links	infolog	da	kun linkene
 only up to this number of entries are displayed on the main screen.	infolog	da	Kun op til dette antal opgaver er vist på startsiden
 open	infolog	da	åben
-optional note to the link	infolog	da	
 order	infolog	da	Rækkefølge
 overdue	infolog	da	forfalden
 own	infolog	da	egne
 own open	infolog	da	egne, åbne
 own overdue	infolog	da	egne, forfalden
 own upcoming	infolog	da	egne, kommende
-path on (web-)serverside<br>eg. /var/samba/share	infolog	da	
-path to user and group files has to be outside of the webservers document-root!!!	infolog	da	
-pattern for search in addressbook	infolog	da	
-pattern for search in projects	infolog	da	
+path on (web-)serverside<br>eg. /var/samba/share	infolog	da	sti på (web-)serverens side<br>f.eks. /var/samba/share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	da	sti til bruger og gruppe filer SKAL VÆRE UDENFOR webserveren document-root!!!
+pattern for search in addressbook	infolog	da	Søg efter mønster i Adressebog
+pattern for search in projects	infolog	da	Søg efter mønster i Projekter
 phone	infolog	da	Telefon besked
 phone/email	infolog	da	Telefon/E-mail
 phonecall	infolog	da	Telefon besked
@@ -177,21 +172,22 @@ priority	infolog	da	Prioritet
 private	infolog	da	Privat
 project	infolog	da	Projekt
 re:	infolog	da	SV:
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	da	
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	da	reg. expr. for lokale IP'er<br>f.eks. ^192\.168\.1\.
 remark	infolog	da	Bemærkning
 remove this link (not the entry itself)	infolog	da	Fjern dette link (ikke opgaven selv)
 responsible	infolog	da	Ansvarlig
 responsible user, priority, ...	infolog	da	Ansvarlig bruger, prioritet
+returns a list / search for records.	infolog	da	Viser en liste / Søger efter posteringer
 save	infolog	da	Gem
 saves the changes made and leaves	infolog	da	gem ændringerne og afslut
-saves this entry	infolog	da	
+saves this entry	infolog	da	Gem denne postering
 search	infolog	da	Søg
 search for:	infolog	da	Søg efter:
 select	infolog	da	Vælg
 select a category for this entry	infolog	da	vælg en kategori for denne opgave
 select a priority for this task	infolog	da	vælg en prioritet for denne opgave
 select a responsible user: a person you want to delegate this task	infolog	da	vælg den ansvarlige bruger: en person du vil uddele denne opgave til
-select a typ to edit it's status-values or delete it	infolog	da	
+select a typ to edit it's status-values or delete it	infolog	da	vælg en type som dens status-værdi skal redigeres eller slettes
 select an app to search in	infolog	da	Vælg en appilkation at søge i
 select an entry to link with	infolog	da	Vælg en opgave at linke med
 should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	da	Skal Opgaver vise dine igangværende (ikke udførte) opgaver, telefon beskeder eller noter på startsiden. Virker kun hvis du ikke har valgt en applikation til startside (i dine præferencer).
@@ -207,18 +203,18 @@ small view	infolog	da	lille visning
 start a new search, cancel this link	infolog	da	start en ny søgning, annullere dette link
 startdate	infolog	da	Start dato
 startdate enddate	infolog	da	Start dato Slut Dato
-startrecord	infolog	da	
+startrecord	infolog	da	Startpostering
 status	infolog	da	Status
 status ...	infolog	da	Status ...
 sub	infolog	da	Under<br>kategori
 subject	infolog	da	Emne
 task	infolog	da	Opgave
 test import (show importable records <u>only</u> in browser)	infolog	da	Test Import (vis importerede data <u>kun</u> i browseren)
-the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	da	
-the text displayed to the user	infolog	da	
+the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	da	det interne navn brugt (<= 32 tegn), ændring af dette vil gøre eksisterende data utilgængelige
+the text displayed to the user	infolog	da	teksten som vises til brugeren
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	da	Dette er filteret som Opgaver bruger når du starter applikationen. Filteret begrænser hvilke opgaver der vises som standart. Der er filter som viser kun udførte, åbne eller kommende opgaver for dig eller alle andre brugere.
-til when should the todo or phonecall be finished	infolog	da	
-to many might exceed your execution-time-limit	infolog	da	
+til when should the todo or phonecall be finished	infolog	da	hvornår skal opgaven eller telefon kaldet være udført
+to many might exceed your execution-time-limit	infolog	da	for mange vil måske overstige din eksekvere tid begrænsning
 today	infolog	da	I dag
 todo	infolog	da	Opgaver
 translation	infolog	da	Oversættelse
@@ -226,26 +222,21 @@ typ	infolog	da	Type
 typ '%1' already exists !!!	infolog	da	Type '%1' eksistere allerede
 type	infolog	da	Type
 type ...	infolog	da	Type ...
-type of the log-entry: note, phonecall or todo	infolog	da	
-unlink	infolog	da	
+unlink	infolog	da	Fjern link
 upcoming	infolog	da	kommende
 urgency	infolog	da	Prioritet
 urgent	infolog	da	haster
 use button to search for address	infolog	da	brug knappen for at søge efter adresse
 use button to search for project	infolog	da	brug knappen for at søge efter projekt
-valid path on clientside<br>eg. \servershare or e:	infolog	da	
-valid path on clientside<br>eg. servershare or e:	infolog	da	
-values for selectbox	infolog	da	
-view all subs of this entry	infolog	da	
-view other subs	infolog	da	
+valid path on clientside<br>eg. \\server\share or e:\	infolog	da	gyldig sti fra klienten<br>f.eks. \\server\share eller e:\
+values for selectbox	infolog	da	Værdier for selectboks
+view all subs of this entry	infolog	da	Vis alle underkategorier for denne postering
+view other subs	infolog	da	vis andre underkategori
 view parent	infolog	da	vis forældre
 view subs	infolog	da	vis underkategori
-view the parent of this entry and all his subs	infolog	da	
-view this linked entry in its application	infolog	da	
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	da	hvornår skal Opgaven eller Telefon beskeden startes, den vises fra den dato i filteret åben eller egne åbne (på startsiden)
 will-call	infolog	da	vil ringe
 yes - delete	infolog	da	Ja - Slet
-you can't delete one of the stock types !!!	infolog	da	
 you have entered an invalid ending date	infolog	da	Du har indtastet en ugyldig slut dato
 you have entered an invalid starting date	infolog	da	Du har indtastet en ugyldig start dato
 you have to enter a name, to create a new typ!!!	infolog	da	Du skal indtaste et navn, for at oprette en ny type!!!
