@@ -60,7 +60,7 @@
 	/* Make sure the header.inc.php is current. */
 	if ($GLOBALS['phpgw_info']['server']['versions']['header'] < $GLOBALS['phpgw_info']['server']['versions']['current_header'])
 	{
-		echo '<center><b>You need to port your settings to the new header.inc.php version.</b></center>';
+		echo '<center><b>You need to port your settings to the new header.inc.php version by running <a href="setup/manageheader.php">setup/headeradmin</a>.</b></center>';
 		exit;
 	}
 
