@@ -3,7 +3,7 @@
 <center>
 <h2><font color="#000000">{matrix_action}</font></h2>
 
-<form action="{action_url}" method="post" name="matrixform" target="timematrix">
+<form action="{action_url}" method="post" name="matrixform" target="viewmatrix">
 <table border="0" width="75%">
 <!-- END matrix_query_begin -->
 

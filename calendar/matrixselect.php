@@ -49,7 +49,7 @@
   $phpgw->template->set_block("matrix_query_begin","list","matrix_query_end","form_button");
 
   $phpgw->template->set_var("matrix_action",lang("Daily Matrix View"));
-  $phpgw->template->set_var("action_url",$phpgw->link("timematrix.php"));
+  $phpgw->template->set_var("action_url",$phpgw->link("viewmatrix.php"));
 
   $phpgw->template->parse("out","matrix_query_begin");
 
@@ -63,7 +63,7 @@
 
   $month_html = "<select name=\"month\">";
   for ($i = 1; $i <= 12; $i++) {
-    $m = lang(date("F", mktime(0,0,0,$i,1,$cal_info->year)));
+    $m = lang(date("F", mktime(0,0,0,$i,1,$thisyear)));
     $month_html .= "<option value=\"$i\"" . ($i == $thismonth ? " selected" : "") . ">$m"
 		 . "</option>\n";
   }
@@ -78,6 +78,15 @@
 
   $phpgw->template->set_var("data",$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
   $phpgw->template->parse("output","list",True);
+
+  $phpgw->template->set_var("field",lang("View"));
+  $str = "<select name=\"view\">";
+  $str .= "<option value=\"free/busy\">".lang("Free/Busy").</option>\n";
+  $str .= "<option value=\"weekly\">".lang("Weekly")."</option>\n";
+  $str .= "</select>\n";
+  $phpgw->template->set_var("data",$str);
+  $phpgw->template->parse("output","list",True);
+  
 
   $phpgw->template->set_var("field",lang("Participants"));
   $db2 = $phpgw->db;
