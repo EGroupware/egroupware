@@ -33,6 +33,7 @@ contact application	admin	en	Contact application
 contact	common	en	Contact
 contact settings	admin	en	Contact Settings
 country	common	en	Country
+custom	addressbook	en	Custom
 custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
@@ -45,6 +46,7 @@ enter the path to the export file here	addressbook	en	Enter the path to the expo
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 extra	addressbook	en	Extra
+fax	addresbook	en	Fax
 fax number	common	en	Fax Number
 field name	addressbook	en	Field Name
 field x has been added !	addressbook	en	Field x has been added !
