@@ -38,8 +38,10 @@
 		$GLOBALS['phpgw_info']['login_theme'] = 'submarine';
 	}
 
+	$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
+
 	$GLOBALS['phpgw']->xslttpl = CreateObject('phpgwapi.xslttemplates',$GLOBALS['phpgw_info']['server']['template_dir']);
-	$GLOBALS['phpgw']->xslttpl->add_file(array('login'));
+	$GLOBALS['phpgw']->xslttpl->add_file('login');
 
 	$data = array
 	(
@@ -76,7 +78,6 @@
 
 	function check_logoutcode()
 	{
-		$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
 		switch($GLOBALS['HTTP_GET_VARS']['code'])
 		{
 			case 1:
@@ -259,8 +260,12 @@
 	/*$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
 	$GLOBALS['phpgw']->template->set_var('registration_url','registration/');*/
 
+	if($GLOBALS['phpgw_info']['flags']['msgbox_data'])
+	{
+		$data['login_standard']['msgbox_data'] = $GLOBALS['phpgw']->common->msgbox('',False,True);
+	}
+
 	$data['login_standard']['website_title']	= $GLOBALS['phpgw_info']['server']['site_title'];
-	$data['login_standard']['msgbox']			= $GLOBALS['phpgw']->common->msgbox('',False);
 	$data['login_standard']['login_url']		= 'login.php' . $extra_vars;
 	$data['login_standard']['cookie']			= show_cookie();
 	$data['login_standard']['lang_username']	= lang('username');
@@ -269,6 +274,8 @@
 	$data['login_standard']['phpgw_version']	= $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
 	$data['login_standard']['lang_password']	= lang('password');
 	$data['login_standard']['lang_login']		= lang('login');
+
+	//_debug_array($data);
 
 	$GLOBALS['phpgw']->xslttpl->set_var('login',$data);
 	$GLOBALS['phpgw']->xslttpl->pp();

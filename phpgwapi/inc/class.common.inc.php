@@ -993,7 +993,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@discussion makes it easier and more consistant to generate message boxes
 		*/
 
-		function msgbox($text='',$type=True)
+		function msgbox($text='',$type=True,$xslt=False)
 		{
 			if ($text=='' && @isset($GLOBALS['phpgw_info']['flags']['msgbox_data']))
 			{
@@ -1005,8 +1005,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				return;
 			}
 
-		//	$GLOBALS['phpgw']->xslttpl->add_file(array('msgbox'));
-			$GLOBALS['phpgw']->xslttpl->add_file(array($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'msgbox'));
+			$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'msgbox');
 
 			$prev_helper = $GLOBALS['phpgw']->translation->translator_helper;
 			$GLOBALS['phpgw']->translation->translator_helper = '';
@@ -1015,7 +1014,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				reset($text);
 
-			//_debug_array($text);
 				while (list($key,$value) = each($text))
 				{
 					if ($value == True)
@@ -1029,7 +1027,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						$alt	= lang('ERROR');
 					}
 
-					$data['msgbox_data'][] = array
+					$data[] = array
 					(
 						'msgbox_text'				=> lang($key),
 						'msgbox_img'				=> $img,
@@ -1037,9 +1035,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						'lang_msgbox_statustext'	=> $alt
 					);
 				}
-
-			//_debug_array($data);
-
 			}
 			else
 			{
@@ -1054,7 +1049,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$alt	= lang('ERROR');
 				}
 
-				$data['msgbox_data'] = array
+				$data = array
 				(
 					'msgbox_text'				=> lang($text),
 					'msgbox_img'				=> $img,
@@ -1064,9 +1059,18 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			$GLOBALS['phpgw']->translation->translator_helper = $prev_helper;
-			$GLOBALS['phpgw']->xslttpl->set_var('msgbox',$data);
 
-			return $GLOBALS['phpgw']->xslttpl->parse();
+			if ($xslt)
+			{
+				return $data;
+			}
+			else
+			{
+				$parse_data['msgbox_data'] = $data;
+
+				$GLOBALS['phpgw']->xslttpl->set_var('msgbox',$parse_data);
+				return $GLOBALS['phpgw']->xslttpl->parse();
+			}
 		}
 
 		/*function msgbox($text='',$type=True,$output='return')
