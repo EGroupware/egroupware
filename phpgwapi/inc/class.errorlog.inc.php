@@ -108,7 +108,7 @@
 //			$db->lock('phpgw_log');
 			$db->query("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
 				."('". $GLOBALS['phpgw']->db->to_timestamp(time())
-				."','".$GLOBALS['phpgw']->session->account_id
+				."','".(int)$GLOBALS['phpgw']->session->account_id
 				."','".$GLOBALS['phpgw_info']['flags']['currentapp']."'"
 				.",'".$this->severity()."'"
 				.")"
