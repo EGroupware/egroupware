@@ -1166,7 +1166,7 @@
 		function get_email_passwd_ex()
 		{
 			// ----  Create the email Message Class  if needed  -----
-			if (isset($GLOBALS['phpgw']->msg))
+			if (is_object($GLOBALS['phpgw']->msg))
 			{
 				$do_free_me = False;
 			}
@@ -1206,7 +1206,7 @@
 		function create_emailpreferences($prefs='',$accountid='')
 		{
 			// ----  Create the email Message Class  if needed  -----
-			if (isset($GLOBALS['phpgw']->msg))
+			if (is_object($GLOBALS['phpgw']->msg))
 			{
 				$do_free_me = False;
 			}

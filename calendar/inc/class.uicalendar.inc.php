@@ -651,8 +651,6 @@
 
 		function add($cd=0,$readsess=0)
 		{
-			global $HTTP_GET_VARS;
-			
 			if(!$this->bo->check_perms(PHPGW_ACL_ADD))
 			{
 				$this->index();
@@ -674,8 +672,8 @@
 
 				$can_edit = True;
 
-				$thishour = (isset($HTTP_GET_VARS['hour'])?intval($HTTP_GET_VARS['hour']):0);
-		      $thisminute = (isset($HTTP_GET_VARS['minute'])?intval($HTTP_GET_VARS['minute']):0);
+				$thishour = (isset($GLOBALS['HTTP_GET_VARS']['hour'])?intval($GLOBALS['HTTP_GET_VARS']['hour']):0);
+		      $thisminute = (isset($GLOBALS['HTTP_GET_VARS']['minute'])?intval($GLOBALS['HTTP_GET_VARS']['minute']):0);
 				$this->bo->set_start($this->bo->year,$this->bo->month,$this->bo->day,$thishour,$thisminute,0);
 				$this->bo->set_end($this->bo->year,$this->bo->month,$this->bo->day,$thishour,$thisminute,0);
 				$this->bo->set_title('');
@@ -705,20 +703,18 @@
 
 		function delete()
 		{
-			global $HTTP_GET_VARS;
-
-			if(!isset($HTTP_GET_VARS['cal_id']))
+			if(!isset($GLOBALS['HTTP_GET_VARS']['cal_id']))
 			{
 				Header('Location: '.$this->page('','&date='.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day)));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$event = $this->bo->read_entry(intval($HTTP_GET_VARS['cal_id']));
-			if(($HTTP_GET_VARS['cal_id'] > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
+			$event = $this->bo->read_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
+			if(($GLOBALS['HTTP_GET_VARS']['cal_id'] > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
 			{
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 
-				$cd = $this->bo->delete_entry(intval($HTTP_GET_VARS['cal_id']));
+				$cd = $this->bo->delete_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
 				$this->bo->expunge();
 			}
 			else
@@ -799,15 +795,13 @@
 
 		function edit_status()
 		{
-			global $HTTP_GET_VARS;
-
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
 			$GLOBALS['phpgw']->common->phpgw_header();
 			
-			$event = $this->bo->read_entry($HTTP_GET_VARS['cal_id']);
+			$event = $this->bo->read_entry($GLOBALS['HTTP_GET_VARS']['cal_id']);
 
 			reset($event['participants']);
 
@@ -841,15 +835,13 @@
 
 		function set_action()
 		{
-			global $HTTP_GET_VARS;
-			
 			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
 			{
 			   $this->no_edit();
 				return;
 			}
 
-			$this->bo->set_status(intval($HTTP_GET_VARS['cal_id']),intval($HTTP_GET_VARS['action']));
+			$this->bo->set_status(intval($GLOBALS['HTTP_GET_VARS']['cal_id']),intval($GLOBALS['HTTP_GET_VARS']['action']));
 
 			Header('Location: '.$this->page('',''));
 		}
@@ -1161,9 +1153,7 @@
 
 		function viewmatrix()
 		{
-			global $HTTP_POST_VARS;
-
-			$participants = $HTTP_POST_VARS['participants'];
+			$participants = $GLOBALS['HTTP_POST_VARS']['participants'];
 			$parts = Array();
 			$acct = CreateObject('phpgwapi.accounts',$this->bo->owner);
 			$c_participants = count($participants);
@@ -1204,7 +1194,7 @@
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			switch($HTTP_POST_VARS['matrixtype'])
+			switch($GLOBALS['HTTP_POST_VARS']['matrixtype'])
 			{
 				case 'free/busy':
 					$freetime = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year);
@@ -1232,7 +1222,7 @@
 			echo '  <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
 			echo '  <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
 			echo '  <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
-			echo '  <input type="hidden" name="matrixtype" value="'.$HTTP_POST_VARS['matrixtype'].'">'."\n";
+			echo '  <input type="hidden" name="matrixtype" value="'.$GLOBALS['HTTP_POST_VARS']['matrixtype'].'">'."\n";
 			reset($parts);
 			while(list($key,$value) = each($parts))
 			{
@@ -1245,9 +1235,7 @@
 
 		function search()
 		{
-			global $HTTP_POST_VARS;
-
-			if (!$HTTP_POST_VARS['keywords'])
+			if (!$GLOBALS['HTTP_POST_VARS']['keywords'])
 			{
 				// If we reach this, it is because they didn't search for anything,
 				// attempt to send them back to where they where.
@@ -1260,7 +1248,7 @@
 
 			$error = '';
 
-			if (strlen($HTTP_POST_VARS['keywords']) == 0)
+			if (strlen($GLOBALS['HTTP_POST_VARS']['keywords']) == 0)
 			{
 				echo '<b>'.lang('Error').':</b>';
 				echo lang('You must enter one or more search keywords.');
@@ -1275,7 +1263,7 @@
 
 			// This has been solved by the little icon indicator for recurring events.
 
-			$event_ids = $this->bo->search_keywords($HTTP_POST_VARS['keywords']);
+			$event_ids = $this->bo->search_keywords($GLOBALS['HTTP_POST_VARS']['keywords']);
 			$ids = Array();
 			while(list($key,$id) = each($event_ids))
 			{
@@ -1407,8 +1395,6 @@
 
 		function header()
 		{
-			global $HTTP_POST_VARS, $HTTP_GET_VARS;
-
 			$cols = 8;
 			if($this->bo->check_perms(PHPGW_ACL_PRIVATE) == True)
 			{
@@ -1426,7 +1412,7 @@
 
 		function footer()
 		{
-			list(,,$method) = explode('.',$GLOBALS['menuaction']);
+			list(,,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
 		
 			if (@$this->bo->printer_friendly)
 			{
