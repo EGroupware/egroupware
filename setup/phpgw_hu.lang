@@ -259,7 +259,7 @@ no	filemanager	hu	Nem
 no matches found.	calendar	hu	Nincs találat.
 no subject	email	hu	Tárgy nélkül
 non-standard	email	hu	Nem szabványos
-none	calendar	hu	Nincs
+none	common	hu	Nincs
 normal	common	hu	Normál
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg.
 notes	addressbook	hu	Jegyzet

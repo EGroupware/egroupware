@@ -285,7 +285,7 @@ no matches found.	calendar	sv	Ingen träff hittad.
 no subject	email	sv	Inget Subjekt
 no_file_name	filemanager	sv	Inget filnamn blev specifierat
 non-standard	email	sv	inte standard
-none	calendar	sv	Ingen
+none	common	sv	Ingen
 normal	common	sv	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sv	Note: Denna funktionen ändrar *inte* ditt epost lösenord. Detta måste göras manuellt.
 notes	addressbook	sv	Annat

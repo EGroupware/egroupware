@@ -167,7 +167,7 @@ next	nntp	br	Next
 next page	common	br	proxima pagina
 no	common	br	Nao
 no matches found.	calendar	br	Nenhuma ocorrencia encontrada.
-none	calendar	br	Nenhuma
+none	common	br	Nenhuma
 normal	common	br	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	br	Nota: Esta funcao *nao* muda sua senha de email. voce devera fazer isto manualmente.
 notes	addressbook	br	Notas

@@ -199,7 +199,7 @@ no	filemanager	ko	아니오
 no	common	ko	아니오
 no matches found.	calendar	ko	검색조건에 맞는 항목이 없습니다.
 no subject	email	ko	제목없음
-none	calendar	ko	없음
+none	common	ko	없음
 normal	common	ko	보통
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ko	참고: e-mail의 암호는 변경되지 않습니다. 수동으로 변경하십시오.
 notes	addressbook	ko	기타
