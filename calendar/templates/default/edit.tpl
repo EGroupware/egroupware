@@ -21,7 +21,7 @@
 {row}
  <tr>
   <td>
-   <table><tr>
+   <table><tr valign="top">
     <td><input type="submit" value="{submit_button}">&nbsp;</form></td>
     <td>{cancel_button}</td>
    </tr></table>
