@@ -209,7 +209,8 @@
 			$setup_tpl->set_var('dbexists',lang('Your database is working, but you dont have any applications installed'));
 			$setup_tpl->set_var('install',lang('Install'));
 			$setup_tpl->set_var('proceed',lang('We can proceed'));
-			$setup_tpl->set_var('coreapps',lang('all core tables and the admin and preferences applications'));
+			$setup_tpl->set_var('coreapps',lang('all applications'));
+			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
 			$setup_tpl->parse('V_db_stage_3','B_db_stage_3');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_3');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
@@ -263,11 +264,11 @@
 				case 'new':
 					/* process all apps and langs(last param True), excluding apps with the no_mass_update flag set. */
 					$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
-					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$GLOBALS['DEBUG'],True);
+					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 				case 'oldversion':
-					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'upgrade',$GLOBALS['DEBUG']);
+					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'upgrade',$_REQUEST['debug']);
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 			}

@@ -54,6 +54,7 @@
 		{dbexists}<br>
         <input type="hidden" name="action" value="Install">
 		<input type="submit" name="label" value="{install}"> {coreapps}
+		<br><input type="checkbox" name="debug" value="1"> {lang_debug}
 		</form>
 	</td>
 </tr>
@@ -75,6 +76,7 @@
 		<input type="hidden" name="useglobalconfigsettings">
 		<input type="hidden" name="action" value="Upgrade">
 		<input type="submit" name="label" value="{upgrade}"><br>
+		<input type="checkbox" name="debug" value="1"> {lang_debug}<br>
 		</form>
 
 		<form method="POST" action="index.php">
