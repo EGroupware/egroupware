@@ -3560,9 +3560,17 @@
 				}
 				elseif (!isset($rows[$slot]))
 				{
-					$p->set_var('event','&nbsp;');
-					$row_to_print = $this->nm_on_off();
-					$p->parse('event','day_event'.$row_to_print);
+					if((int)($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])==2 &&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] == 'home')
+					{
+						$p->set_var('event', '');
+					}
+					else
+					{
+						$p->set_var('event','&nbsp;');
+						$row_to_print = $this->nm_on_off();
+						$p->parse('event','day_event'.$row_to_print);
+					}
 				}
 				else
 				{
