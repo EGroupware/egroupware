@@ -182,8 +182,8 @@ responsible	infolog	it	Responsabile
 responsible user, priority, ...	infolog	it	responsabile, priorità, ...
 save	infolog	it	Salva
 saves the changes made and leaves	infolog	it	salva i cambiamenti ed esci
-saves this entry	infolog	en	Salva questa voce
-search	infolog	en	Cerca
+saves this entry	infolog	it	Salva questa voce
+search	infolog	it	Cerca
 search for:	infolog	it	Ricerca:
 select	infolog	it	Seleziona
 select a category for this entry	infolog	it	seleziona una ricerca per questa voce
@@ -233,7 +233,7 @@ use button to search for address	infolog	it	utilizzare il pulsante per cercare u
 use button to search for project	infolog	it	utilizzare il pulsante per cercare un progetto
 valid path on clientside<br>eg. \\server\share or e:\	infolog	it	percorsi validi lato client<br>es. \\Server\Share or e:\
 values for selectbox	infolog	it	Valori per la selectbox
-view all subs of this entry	infolog	en	Visualizza tutti le sub voci
+view all subs of this entry	infolog	it	Visualizza tutti le sub voci
 view other subs	infolog	it	visualizza altri sub
 view parent	infolog	it	Visualizza i padri
 view subs	infolog	it	visualizza sub
