@@ -117,7 +117,7 @@
 			{
 				session_unset();
 				//echo "<p>sessions_php4::destroy: session_destroy() returned ".(session_destroy() ? 'True' : 'False')."</p>\n";
-				session_destroy();
+				@session_destroy();
 				if ($GLOBALS['phpgw_info']['server']['usecookies'])
 				{
 					$this->phpgw_setcookie(session_name());
