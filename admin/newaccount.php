@@ -111,8 +111,8 @@
   $phpgw->template->set_var("","");
   $i = 0;
   $sorted_apps = $phpgw_info["apps"];
-  asort($sorted_apps);
-  reset($sorted_apps);
+  @asort($sorted_apps);
+  @reset($sorted_apps);
   while ($permission = each($sorted_apps)) {
     if ($permission[1]["enabled"]) {
        $perm_display[$i][0] = $permission[0];
