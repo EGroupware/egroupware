@@ -74,6 +74,7 @@
 				if (!count($content)) {		// search was unsuccsessful
 					$ret[$name] = lang('no entries found, try again ...');
 				} else {
+					$ret[$name.'_OK'] = '';	// flag we have something so select
 					$ret[$name] = "<select name=\"id_$name\">\n";
 					while (list( $id,$text ) = each( $content )) {
 						$ret[$name] .= "<option value=\"$id\">" . $phpgw->strip_html($text) . "\n";
@@ -149,6 +150,55 @@
 			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content);
 		}		
 
+		function addr2email( $addr,$home='' ) {
+			global $phpgw;
+			
+			if (!is_array($addr)) {
+				$home = substr($addr,-1) == 'h';
+				$contacts = createobject('phpgwapi.contacts');
+				list( $addr ) = $contacts->read_single_entry( intval($addr) );
+			}			
+			if ($home) $home = '_home';
+
+			if (!count($addr) || !$addr['email'.$home])
+				return False;
+
+			if ($addr['n_given'])
+				$name = $addr['n_given'];
+			else 
+				if ($addr['n_prefix'])
+					$name = $addr['n_prefix'];
+			
+			$name .= ($name ? ' ' : '') . $addr['n_family'];
+
+			return $name.' <'.$addr['email'.$home].'>';			
+		}
+
+		function getEmail( $name,$id_name,$query_name,$title='') {
+			// echo "<p>getAddress('$name',$id_name,'$query_name','$title')</p>";
+			global $phpgw;
+			
+			if ($id_name || $query_name) {
+				$contacts = createobject('phpgwapi.contacts');
+
+				if ($query_name) {
+					$addrs = $contacts->read( 0,0,'',$query_name,'','DESC','org_name,n_family,n_given' );
+					$content = array( );
+					while ($addrs && list( $key,$addr ) = each( $addrs )) {
+						if ($addr['email'])
+							$content[$addr['id']] = $this->addr2email( $addr );
+						if ($addr['email_home'])
+							$content[$addr['id'].'h'] = $this->addr2email( $addr,'_home' );
+					}
+				} else {
+					$content = $this->addr2email( $id_name );
+				}
+			}
+			if (!$title) $title = lang('Addressbook');
+			
+			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content);
+		}
+		
 		/*
 		 * Function		Allows you to show and select an project from the projects-app (works with and without javascript !!!)
 		 * Parameters	$name 		string with basename of all variables (not to conflict with the name other template or submitted vars !!!)
