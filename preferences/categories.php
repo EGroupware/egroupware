@@ -93,7 +93,11 @@
     $cat_id = $categories[$i]['id'];
     $owner = $categories[$i]['owner'];
     $space = '&nbsp;&nbsp;';
-    if ($categories[$i]['parent'] > 0) { $name = $space . $phpgw->strip_html($categories[$i]['name']); }
+		if ($categories[$i]['parent'] > 0)
+		{
+			$parent_data = $c->return_single($categories[$i]['parent']);
+			$name = $space . $phpgw->strip_html($parent_data[0]['name'] . ' :: ' . $categories[$i]['name']);
+		}
 
     $descr = $phpgw->strip_html($categories[$i]['description']);
     if (! $descr) { $descr  = '&nbsp;'; }
