@@ -180,12 +180,11 @@
 	$t->set_var("lang_clear",lang("clear"));
 	$t->set_var("lang_cancel",lang("cancel"));
 	$t->set_var("lang_submit",lang("submit"));
-	$t->set_var("cancel_link",'<form method="POST" action="'
-		. $phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id") . '">');
+	$t->set_var("cancel_link",'<form method="POST" action="' . $phpgw->link("/addressbook/index.php") . '">');
 
-	if ($this->grants[$check[0]['owner']] & PHPGW_ACL_DELETE || $check[0]['owner'] == $phpgw_info['user']['account_id'])
+	if (($this->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $phpgw_info['user']['account_id'])
 	{
-		$t->set_var('delete_link','<form method="POST" action="'.$phpgw->link("/addressbook/delete.php","ab_id=$ab_id") . '">');
+		$t->set_var('delete_link','<form method="POST" action="'.$phpgw->link("/addressbook/delete.php") . '">');
 		$t->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
 	}
 

@@ -115,10 +115,12 @@
 	$cat = CreateObject('phpgwapi.categories');
 	$catinfo  = $cat->return_single($fields[0]['cat_id']);
 	$catname  = $catinfo[0]["name"];
+	if ($fields[0]['cat_id']) { $cat_id = $fields[0]['cat_id']; }
 
 	$cat->app_name = "phpgw";
 	$catinfo  = $cat->return_single($fields[0]['cat_id']);
 	$catname .= $catinfo[0]["name"];
+	if ($fields[0]['cat_id']) { $cat_id = $fields[0]['cat_id']; }
 
 	if (!$catname) { $catname = lang('none'); }
 
@@ -133,19 +135,15 @@
 
 	$sfields = rawurlencode(serialize($fields[0]));
 
-	if ($this->grants[$record_owner] & PHPGW_ACL_EDIT || $record_owner == $phpgw_info['user']['account_id'])
+	if (($this->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $phpgw_info['user']['account_id']))
 	{
-		$t->set_var('edit_link','<form method="POST" action="'.$phpgw->link("/addressbook/edit.php","ab_id=$ab_id&start=$start&sort=$sort&order=$order&cat_id=$cat_id"
-			. "&query=$query&sort=$sort").'">');
+		$t->set_var('edit_link','<form method="POST" action="' . $phpgw->link("/addressbook/edit.php").'">');
 		$t->set_var('edit_button','<input type="submit" name="edit" value="' . lang('Edit') . '">');
 	}
 
-	$copylink  = '<form method="POST" action="'
-		. $phpgw->link("/addressbook/add.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id").'">';
-	$vcardlink = '<form method="POST" action="'
-		. $phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id").'">';
-	$donelink  = '<form method="POST" action="'
-		. $phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id").'">';
+	$copylink  = '<form method="POST" action="' . $phpgw->link("/addressbook/add.php").'">';
+	$vcardlink = '<form method="POST" action="' . $phpgw->link("/addressbook/vcardout.php").'">';
+	$donelink  = '<form method="POST" action="' . $phpgw->link("/addressbook/index.php").'">';
 
 	$t->set_var("access_link",$access_link);
 	$t->set_var("ab_id",$ab_id);
@@ -153,6 +151,7 @@
 	$t->set_var("order",$order);
 	$t->set_var("filter",$filter);
 	$t->set_var("start",$start);
+	$t->set_var("cat_id",$cat_id);
 	$t->set_var("view_header",$view_header);
 	$t->set_var("cols",$columns_html);
 	$t->set_var("lang_ok",lang("ok"));

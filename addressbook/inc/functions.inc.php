@@ -34,7 +34,7 @@
 	}
 
 	// Return a select form element with the categories option dialog in it
-	function cat_option($cat_id='',$name='cat_id',$notall=False,$java=True) {
+	function cat_option($cat_id='',$name='ncat_id',$notall=False,$java=False) {
 		global $phpgw_info;
 		if ($java) {
 			$jselect = " onChange=\"this.form.submit();\"";
@@ -264,7 +264,7 @@
 			$cat_id   = $fields["cat_id"];
 		}
 
-		$cats_link    = cat_option($cat_id,'ncat_id',True,False);
+		$cats_link    = cat_option($cat_id,'ncat_id',True);
 
 		if ($access == 'private') {
 			$access_check = ' checked';

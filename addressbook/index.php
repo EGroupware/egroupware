@@ -44,6 +44,9 @@
 	if ($cat_id=='') {
 		$cat_id = $phpgw_info["user"]["preferences"]["addressbook"]["default_category"];
 	} 
+	if($ncat_id || ($ncat_id==0)) {
+		$cat_id = $ncat_id;
+	}
 
 	if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"]) {
 		$phpgw->preferences->delete("addressbook","default_category");
@@ -184,22 +187,21 @@
 	$t->set_var(lang_showing,$lang_showing);
 	$t->set_var(search_filter,$search_filter);
 	$t->set_var(cats,lang('Category'));
-	$t->set_var(cats_url,$phpgw->link("/addressbook/index.php",
-		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
-	$t->set_var(cats_link,cat_option($cat_id,'cat_id',False,False));
+	$t->set_var(cats_url,$phpgw->link("/addressbook/index.php"));
+	$t->set_var(cats_link,cat_option($cat_id));
 	$t->set_var(lang_cats,lang('Select'));
 	$t->set_var("lang_addressbook",lang("Address book"));
 	$t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 	$t->set_var("th_font",$phpgw_info["theme"]["font"]);
 	$t->set_var("th_text",$phpgw_info["theme"]["th_text"]);
 	$t->set_var("lang_add",lang("Add"));
+	$t->set_var("add_url",$phpgw->link("/addressbook/add.php"));
 	$t->set_var("lang_addvcard",lang("AddVCard"));
+	$t->set_var("vcard_url",$phpgw->link("/addressbook/vcardin.php"));
 	$t->set_var("lang_import",lang("Import Contacts"));
-	$t->set_var("import_url",$phpgw->link("/addressbook/import.php",
-		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+	$t->set_var("import_url",$phpgw->link("/addressbook/import.php"));
 	$t->set_var("lang_export",lang("Export Contacts"));
-	$t->set_var("export_url",$phpgw->link("/addressbook/export.php",
-		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+	$t->set_var("export_url",$phpgw->link("/addressbook/export.php"));
 	$t->set_var("start",$start);
 	$t->set_var("sort",$sort);
 	$t->set_var("order",$order);
@@ -208,8 +210,6 @@
 	$t->set_var("cat_id",$cat_id);
 	$t->set_var("qfield",$qfield);
 	$t->set_var("query",$query);
-	$t->set_var("actionurl",$phpgw->link("/addressbook/add.php",
-		"sort=$sort&order=$order&query=$query&filter=$filter&start=$start&cat_id=$cat_id"));
 	$t->set_var("start",$start);
 	$t->set_var("filter",$filter);
 	$t->set_var("cols",$cols);

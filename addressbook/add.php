@@ -164,7 +164,7 @@
 	$t->set_var("lang_ok",lang("ok"));
 	$t->set_var("lang_clear",lang("clear"));
 	$t->set_var("lang_cancel",lang("cancel"));
-	$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start&cat_id=$cat_id"));
+	$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 	$t->parse("out","add");
 	$t->pparse("out","add");
 
