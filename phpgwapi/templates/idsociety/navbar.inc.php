@@ -13,7 +13,7 @@
 
 	function parse_navbar($force = False)
 	{
-		global $phpgw_info, $phpgw;
+		global $phpgw_info, $phpgw, $menuaction;
 
 		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 		$tpl->set_unknowns('remove');
@@ -135,16 +135,20 @@
 			$tpl->set_var('messages',$api_messages . '<br>' . checkcode($cd));
 		}
 */
-
-		// If the application has a header include, we now include it
-		if ((isset($phpgw_info["flags"]["noheader"]) &&
-		     $phpgw_info['flags']['noheader']) &&
-		    (isset($phpgw_info['flags']['noappheader']) && 
-		     !$phpgw_info["flags"]["noappheader"]))
-		{
-		
-		}
 		$tpl->pfp('out','navbar');
+		// If the application has a header include, we now include it
+		if (!@$phpgw_info['flags']['noappheader'] && $menuaction)
+		{
+			list($app,$class,$method) = explode('.',$menuaction);
+			if ($app && $class && $method)
+			{
+				$obj = CreateObject(sprintf('%s.%s',$app,$class));
+				if (is_array($obj->public_functions) && $obj->public_functions['header'])
+				{
+					eval("\$obj->header();");
+				}
+			}
+		}
 		$phpgw->common->hook('after_navbar');
 		return;
 	}

@@ -429,7 +429,7 @@
 		/*************************************************************************\
 		* These lines load up the templates class                                 *
 		\*************************************************************************/
-		if(!$phpgw_info['flags']['disable_Template_class'])
+		if(!@$phpgw_info['flags']['disable_Template_class'])
 		{
 			$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		}
@@ -510,8 +510,7 @@
 		/*************************************************************************\
 		* Load the header unless the developer turns it off                       *
 		\*************************************************************************/
-		if (!isset($phpgw_info['flags']['noheader']) ||
-			!$phpgw_info['flags']['noheader'])
+		if (!@$phpgw_info['flags']['noheader'])
 		{
 			$phpgw->common->phpgw_header();
 		}
@@ -520,15 +519,13 @@
 		* Load the app include files if the exists                                *
 		\*************************************************************************/
 		/* Then the include file */
-		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php'))
+		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !isset($menuaction))
 		{
 			include(PHPGW_APP_INC . '/functions.inc.php');
 		}
-		if ((!isset($phpgw_info['flags']['noheader']) || 
-		     !$phpgw_info['flags']['noheader']) && 
-		    (!isset($phpgw_info['flags']['noappheader']) ||
-		     !$phpgw_info['flags']['noappheader']) &&
-		    file_exists(PHPGW_APP_INC . '/header.inc.php'))
+		if (!@$phpgw_info['flags']['noheader'] && 
+			 !@$phpgw_info['flags']['noappheader'] &&
+		    file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($menuaction))
 		{
 			include(PHPGW_APP_INC . '/header.inc.php');
 		}

@@ -864,10 +864,7 @@
 			$this->navbar(False);
 			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
 				. '/navbar.inc.php');
-			if ((!isset($phpgw_info['flags']['nonavbar']) || 
-				!$phpgw_info['flags']['nonavbar']) && 
-				(!isset($phpgw_info['flags']['navbar_target']) ||
-				!$phpgw_info['flags']['navbar_target']))
+			if (!@$phpgw_info['flags']['nonavbar'] && !@$phpgw_info['flags']['navbar_target'])
 			{
 				echo parse_navbar();
 			}
@@ -875,7 +872,7 @@
 
 		function phpgw_footer()
 		{
-			global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
+			global $phpgw, $phpgw_info, $HTMLCOMPLIANT;
 
 			if (!isset($phpgw_info['flags']['nofooter']) || !$phpgw_info['flags']['nofooter'])
 			{
