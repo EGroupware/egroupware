@@ -179,7 +179,7 @@
     cal_group		varchar(255),
     cal_datetime	int(11),
     cal_mdatetime	int(11),
-    cal_duration 	int(11),
+    cal_edatetime 	int(11),
     cal_priority 	int(11) DEFAULT '2' NOT NULL,
     cal_type		varchar(10),
     cal_access		varchar(10),
