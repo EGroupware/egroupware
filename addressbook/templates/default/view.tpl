@@ -13,6 +13,16 @@
      {edit_link}
    </TD>
    <TD align=left>
+     {copy_link}
+     <input type="hidden" name="sort" value="{sort}">
+     <input type="hidden" name="order" value="{order}">
+     <input type="hidden" name="filter" value="{filter}">
+     <input type="hidden" name="start" value="{start}">
+     <input type="hidden" name="fields" value="{copy_fields}">
+     <input type="submit" name="submit" value="{lang_copy}">
+    </form>
+   </TD>
+   <TD align=left>
      {vcard_link}
      <input type="hidden" name="ab_id" value="{ab_id}">
      <input type="hidden" name="sort" value="{sort}">

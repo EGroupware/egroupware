@@ -98,7 +98,9 @@
 		. $phpgw->common->grab_owner_name($record_owner) . '</td><td><b>' 
 		. $access_link . '</b></td><td></table>';
 
+	$sfields = rawurlencode(serialize($fields[0]));
 	$editlink  = $phpgw->common->check_owner($record_owner,"/addressbook/edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
+	$copylink  = '<form action="'.$phpgw->link("/addressbook/add.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 	$vcardlink = '<form action="'.$phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 	$donelink  = '<form action="'.$phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 
@@ -113,10 +115,13 @@
 	$t->set_var("lang_ok",lang("ok"));
 	$t->set_var("lang_done",lang("done"));
 	$t->set_var("lang_edit",lang("edit"));
+	$t->set_var("lang_copy",lang("copy"));
+	$t->set_var("copy_fields",$sfields);
 	$t->set_var("lang_submit",lang("submit"));
 	$t->set_var("lang_vcard",lang("vcard"));
 	$t->set_var("done_link",$donelink);
 	$t->set_var("edit_link",$editlink);
+	$t->set_var("copy_link",$copylink);
 	$t->set_var("vcard_link",$vcardlink);
 
 	$t->parse("out","view");

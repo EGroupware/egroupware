@@ -47,6 +47,22 @@
 		addressbook_form("","add.php","Add",$fields);
 	} else if (! $submit && ! $add_email) {
 		addressbook_form("","add.php","Add","");
+	} elseif ($submit && $fields) {
+		// This came from the view form, Copy entry
+		$extrafields = array(
+			"ophone"   => "ophone",
+			"address2" => "address2",
+			"address3" => "address3"
+		);
+		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+		$addnew = unserialize(rawurldecode($fields));
+		$addnew['note'] .= "\nCopied from ".$phpgw->accounts->id2name($addnew['owner']).", record #".$addnew['id'].".";
+		$addnew['owner'] = $phpgw_info["user"]["account_id"];
+		$addnew['id']    = '';
+		addressbook_add_entry($addnew['owner'],$addnew);
+		$fields = addressbook_read_last_entry($qfields);
+		$newid = $fields[0]['id'];
+		Header("Location: " . $phpgw->link('/addressbook/edit.php',"&ab_id=$newid&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 	} else {
 		if (! $bday_month && ! $bday_day && ! $bday_year) {
 			$bday = "";

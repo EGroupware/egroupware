@@ -97,7 +97,7 @@
 	$company      = $fields["org_name"];
 	$dept         = $fields["org_unit"];
 	$bday         = $fields["bday"];
-	$notes        = $fields["note"];
+	$notes        = ereg_replace("\r\n","=0A",$fields["note"]);
 	$access       = $fields["access"];
 	$url          = $fields["url"];
 
@@ -191,7 +191,7 @@
 			$NOTES .= $notes;
 
 		if($NOTES != "") /* All of the notes. */
-			printf("NOTE:%s\r\n", $NOTES);
+			printf("NOTE;QUOTED-PRINTABLE:%s\r\n", $NOTES);
 		/* End of Stuff. */
 		printf("VERSION:2.1\r\n");
 		printf("END:VCARD\r\n");
