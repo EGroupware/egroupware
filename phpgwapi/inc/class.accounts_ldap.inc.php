@@ -77,6 +77,10 @@
 				$this->data['account_lid'] = $allValues[0]['uid'][0];
 				$this->data['firstname']   = $GLOBALS['phpgw']->translation->convert($allValues[0]['givenname'][0],'utf-8');
 				$this->data['lastname']    = $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
+				if(isset($allValues[0]['email'][0]))
+				{
+					$this->data['mailaddress'] = $allValues[0]['email'][0]);
+				}
 			}
 			$this->data['account_dn']  = $allValues[0]['dn'];
 			$this->data['fullname']    = $allValues[0]['cn'][0];
@@ -1033,7 +1037,7 @@
 				}
 			}
 			$this->db->transaction_commit();
-			
+
 			$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
 			$GLOBALS['hook_values']['account_id']	= $accountid;
 			$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
@@ -1043,7 +1047,7 @@
 			$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 				'location' => 'addaccount'
 			),False,True);  // called for every app now, not only enabled ones
-			
+
 			return $accountid;
 		}
 
