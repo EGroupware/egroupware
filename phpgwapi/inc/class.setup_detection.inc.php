@@ -380,6 +380,7 @@
 				$copy = $setup_info;
 				$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
 				$tablenames = $GLOBALS['phpgw_setup']->db->table_names();
+				$tables = Array();
 				while(list($key,$val) = @each($tablenames))
 				{
 					$tables[] = $val['table_name'];
