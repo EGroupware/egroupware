@@ -60,7 +60,7 @@
 		@reset($haystack);
 		while(list($key,$value) = each($haystack))
 		{
-			if ($haystack[$key]==$needle && (!$strict || gettype($haystack[$key]==gettype($needle)))
+			if ($haystack[$key]==$needle && (!$strict || gettype($haystack[$key])==gettype($needle)))
 			{
 				return $key;
 			}
