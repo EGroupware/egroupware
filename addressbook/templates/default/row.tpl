@@ -10,5 +10,8 @@
   <td valign="top" width="5%">
     <font face="{font}" size="2">{row_edit_link}</font>
   </td>
+  <td valign="top" width="5%">
+    <font face="{font}" size="2">{row_owner}</font>
+  </td>
 </tr>
 <!-- END row -->

@@ -58,7 +58,7 @@
 	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
 	
 	while ($column = each($columns_to_display)) { // each entry column
-		$columns_html .= "<tr><td><b>" . lang(display_name($colname[$column[0]])) . "</b>:</td>";
+		$columns_html .= "<tr><td><b>" . display_name($colname[$column[0]]) . "</b>:</td>";
 		$ref=$data="";
 		$coldata = $fields[0][$column[0]];
 		// Some fields require special formatting.       

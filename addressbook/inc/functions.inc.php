@@ -65,37 +65,45 @@
 		//"access"			=> "access"
 	);
 
+	// this cleans up the fieldnames for display (so we don't see adr_postalcode, etc..)
 	function display_name($column) {
 		global $abc;
 		while($name = each($abc) ) {
-			if ($column == $name[0]) { return $name[1]; }
+			if ($column == $name[0]) { return lang($name[1]); }
 		}
 	}
 
 	function addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid="") {
-		global $this;
-		$entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order);
+		global $this,$rights;
+		$readrights = $rights & PHPGW_ACL_READ;
+		$entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order,$readrights);
 		return $entries;
 	}
 
 	function addressbook_read_entry($id,$fields,$userid="") {
-		global $this;
-		$entry = $this->read_single_entry($id,$fields);
-		return $entry;
+		global $this,$rights;
+		if ($rights & PHPGW_ACL_READ) {
+			$entry = $this->read_single_entry($id,$fields);
+			return $entry;
+		} else {
+			return "No access";
+		}
 	}
 
 	function addressbook_add_entry($userid,$fields) {
-		global $this;
-		$this->add($userid,$fields);
+		global $this,$rights;
+		if ($rights & PHPGW_ACL_ADD) {
+			$this->add($userid,$fields);
+		}
 		return;
 	}
 
 	function addressbook_update_entry($id,$userid,$fields) {
-		global $this;
+		global $this,$rights;
 		//$rights = $phpgw->acl->get_rights($owner,$phpgw_info["flags"]["currentapp"]);
-		//if ( ($rights & PHPGW_ACL_EDIT) || ($owner == $phpgw_info["user"]["account_id"]) ) {
-
-		$this->update($id,$userid,$fields);
+		if ($rights & PHPGW_ACL_EDIT) {
+			$this->update($id,$userid,$fields);
+		}
 		return;
 	}
 

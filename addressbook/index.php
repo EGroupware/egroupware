@@ -34,7 +34,7 @@
 			$showcol = display_name($column[0]);
 			$cols .= "  <td height=\"21\">\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"index.php",lang($showcol));
+			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"index.php",$showcol);
 			$cols .= "</font>\n  </td>";
 			$cols .= "\n";
 			       
@@ -83,6 +83,7 @@
 	$t->set_var("lang_view",lang("View"));
 	$t->set_var("lang_vcard",lang("VCard"));
 	$t->set_var("lang_edit",lang("Edit"));
+	$t->set_var("lang_owner",lang("Owner"));
 	
 	$t->set_var(searchreturn,$noprefs . " " . $searchreturn);
 	$t->set_var(lang_showing,$lang_showing);
@@ -143,6 +144,7 @@
 			. "$filter&query=$query&sort=$sort"));
 		$t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id="
 			.$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort));
+		$t->set_var(row_owner,$phpgw->accounts->id2name($myowner));
 		
 		$t->parse("rows","row",True);
 		$t->pparse("out","row");

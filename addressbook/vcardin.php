@@ -12,12 +12,18 @@
 
 /* $Id$ */
 
-
-	if ($action == "Load Vcard"){
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "addressbook", "enable_addressbook_class" => True);
+	if ($action == "Load Vcard") {
+		$phpgw_info["flags"] = array(
+			"noheader" => True, "nonavbar" => True,
+			"currentapp" => "addressbook",
+			"enable_contacts_class" => True
+		);
 		include("../header.inc.php");
 	} else {
-		$phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_addressbook_class" => True);
+		$phpgw_info["flags"] = array(
+			"currentapp" => "addressbook",
+			"enable_contacts_class" => True
+		);
 		include("../header.inc.php");
 		echo '<body bgcolor="' . $phpgw_info["theme"]["bg_color"] . '">';
 	}
@@ -66,54 +72,49 @@
 		echo "<B><CENTER>You must select a vcard. (*.vcf)</B></CENTER><BR><BR>";
 	}
 
-  ?>
-    <form ENCTYPE="multipart/form-data" method="POST" action="<?php echo $phpgw->link("vcardin.php")?>">
-      <table border=0>
-      <tr>
-       <td>Vcard: <input type="file" name="uploadedfile"></td>
-       <td><input type="submit" name="action" value="Load Vcard"></td>
-      </tr>
-      <tr></tr>
-      <tr></tr>
-      <tr></tr>
-      <tr>
-        <td><?php echo lang("Access");?>:</td>
-        <td><?php echo lang("Which groups");?>:</td>
-      </tr>
-      <tr>
-        <td>
-          <select name="access">
-            <option value="private"<?php if($access == "private") echo "selected";?>>
-              <?php echo lang("private"); ?>
-            </option>
-            <option value="public"<?php if($access == "public") echo "selected";?>>
-              <?php echo lang("Global Public"); ?>
-            </option>
-            <option value="group"<?php if($access != "private" && $access != "public"
-                                    && $access != "") echo "selected";?>>
-              <?php echo lang("Group Public"); ?>
-            </option>
-          </select>
-        </td>
-        <td colspan="3">
-          <select name=n_groups[] multiple size="5">
-            <?php
-             $user_groups = $phpgw->accounts->read_group_names($fields["ab_owner"]);
-             for ($i=0;$i<count($user_groups);$i++) {
-               echo "<option value=\"" . $user_groups[$i][0] . "\"";
-               if (ereg(",".$user_groups[$i][0].",",$access))
-                 echo " selected";
-               echo ">" . $user_groups[$i][1] . "</option>\n";
-             }
-            ?>
-          </select>
-        </td>
-      </tr>
-      </table>
-     </form>
 
+	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
+	$t->set_file(array("vcardin" => "vcardin.tpl"));
+	
+	$vcard_header  = "<p>&nbsp;<b>" . lang("Address book - VCard in") . "</b><hr><p>";
 
-<?php
+	$t->set_var(vcard_header,$vcard_header);
+	$t->set_var(action_url,$phpgw->link("vcardin.php"));
+	$t->set_var(lang_access,lang("Access"));
+	$t->set_var(lang_groups,lang("Which groups"));
+
+	$access_option = "<option value=\"private\"";
+	if($access == "private")
+		$access_option .= "selected";
+    $access_option .= ">" . lang("private");
+	$access_option .= "</option>\n";
+	$access_option .= "<option value=\"public\"\n";
+	if($access == "public")
+		$access_option .=  "selected";
+    $access_option .= ">" . lang("Global Public");
+    $access_option .= "</option>\n";
+    $access_option .= "<option value=\"group\"";
+	if($access != "private" && $access != "public" && $access != "")
+		$access_option .= "selected";
+    $access_option .= ">" . lang("Group Public"); 
+    $access_option .= "</option>\n";
+	
+	$t->set_var(access_option,$access_option);
+	
+    //$user_groups = $phpgw->accounts->read_group_names($fields["ab_owner"]);
+    for ($i=0;$i<count($user_groups);$i++) {
+    	$group_option = "<option value=\"" . $user_groups[$i][0] . "\"";
+        if (ereg(",".$user_groups[$i][0].",",$access)) {
+        	$group_option .= " selected";
+            $group_option .= ">" . $user_groups[$i][1];
+			$group_option .= "</option>\n";
+		}
+	}
+
+	$t->set_var(group_option,$group_option);
+	
+	$t->pparse("out","vcardin");
+
 	if ($action != "Load Vcard")
 		$phpgw->common->phpgw_footer();
 ?>

@@ -23,5 +23,10 @@
     {lang_edit}
     </font>
   </td>
+  <td width="5%" height="21">
+    <font face="Arial, Helvetica, sans-serif" size="-1">
+    {lang_owner}
+    </font>
+  </td>
 </tr>
 <!-- END addressbook_header -->

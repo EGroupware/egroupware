@@ -18,8 +18,8 @@
 								"noheader" => True, "nonavbar" => True);
 	include("../header.inc.php");
 
-	if($access == "group")
-		$access = $n_groups;
+	//if($access == "group")
+	//	$access = $n_groups;
 	//echo $access . "<BR>";
 
 	parsevcard($filename,$access);

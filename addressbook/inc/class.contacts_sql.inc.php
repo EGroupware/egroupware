@@ -158,7 +158,7 @@
 
 		// send this the range,query,sort,order
 		// and whatever fields you want to see
-		function read($start,$offset,$fields=array(),$query="",$filter="",$sort="",$order="")
+		function read($start,$offset,$fields=array(),$query="",$filter="",$sort="",$order="",$rights="")
 		{
 			global $phpgw,$phpgw_info;
 			$DEBUG = 1;
