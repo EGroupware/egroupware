@@ -13,6 +13,7 @@
      var $db;
      var $account_id;
      var $stock_addressbook_fields;     // This is an array of all the fields in the addressbook
+     var $total_records;
 
      function contacts()
      {
@@ -70,6 +71,10 @@
            }
         }
 
+        $this->db->query("select ab_id,ab_owner,ab_access $t_fields from addressbook "
+                       . $filters,__LINE__,__FILE__);
+        $this->total_records = $this->db->num_rows();
+	
         $i = 0;
         $this->db2 = $this->db;        // Create new result object before our query
 
