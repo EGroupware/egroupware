@@ -1,8 +1,5 @@
 /* $Id$ */
 
-THESE FILES ARE NOT YET REQUIRED!!!!!!!!!!!!!!
-THIS IS STILL FOR FUTURE USE ONLY AND IS A WORK IN PROGRESS.
-
 This directory contains schema files for use the with various
 LDAP servers to which we have access.  Openldap 1.X is very
 forgiving, and it is not required to load this schema in all
