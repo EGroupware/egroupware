@@ -18,7 +18,7 @@ class ProcessMonitor extends Base {
     $result = $this->query($query);
     $status = array();
     while($info = $result->fetchRow()) {
-      $status[$info['wf_status']] = $info['num_instances'];
+      $status[$info['wf_status']] = $info['wf_num_instances'];
     }
     $res['active_instances'] = isset($status['active']) ? $status['active'] : 0;
     $res['completed_instances'] = isset($status['completed']) ? $status['completed'] : 0;
@@ -243,7 +243,8 @@ class ProcessMonitor extends Base {
         $mid.= " where ($where) ";
       }
     }
-    $query = "select gp.`wf_p_id`, ga.`wf_is_interactive`, gi.`wf_owner`, gp.`wf_name` as `wf_wf_procname`, gp.`wf_version`, ga.`wf_type`,";
+
+    $query = "select gp.`wf_p_id`, ga.`wf_is_interactive`, gi.`wf_owner`, gp.`wf_name` as `wf_procname`, gp.`wf_version`, ga.`wf_type`,";
     $query.= " ga.`wf_activity_id`, ga.`wf_name`, gi.`wf_instance_id`, gi.`wf_status`, gia.`wf_activity_id`, gia.`wf_user`, gi.`wf_started`, gi.`wf_ended`, gia.`wf_status` as wf_act_status ";
     $query.=" from `".GALAXIA_TABLE_PREFIX."instances` gi LEFT JOIN `".GALAXIA_TABLE_PREFIX."instance_activities` gia ON gi.`wf_instance_id`=gia.`wf_instance_id` ";
     $query.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."activities` ga ON gia.`wf_activity_id` = ga.`wf_activity_id` ";
