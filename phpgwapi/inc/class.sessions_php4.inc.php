@@ -388,8 +388,8 @@
 			$GLOBALS['phpgw_session']['session_action'] = $GLOBALS['PHP_SELF'];
 			$GLOBALS['phpgw_session']['session_flags'] = $session_flags;
 		
-			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 			session_register('phpgw_session');
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
 			//$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
 			//	." VALUES ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
@@ -601,8 +601,8 @@
 			$GLOBALS['phpgw_session']['session_action'] = $GLOBALS['PHP_SELF'];
 			$GLOBALS['phpgw_session']['session_flags'] = $session_flags;
 		
-			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 			session_register('phpgw_session');
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
 			//$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
 			//	. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
@@ -629,8 +629,8 @@
 			$GLOBALS['phpgw_session']['session_dla'] = time();
 			$GLOBALS['phpgw_session']['session_action'] = $action;
 		
-			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 			session_register('phpgw_session');
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
 			return True;
 		}
@@ -719,8 +719,8 @@
 
 			$GLOBALS['phpgw_session']['phpgw_app_sessions']['phpgwapi']['phpgw_info_cache'] = '';
 	
-			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 			session_register('phpgw_session');
+			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 		}
 	
 		function save_repositories()
@@ -746,13 +746,14 @@
 			if ($data == '##NOTHING##')
 			{
 				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location] = '';
-
-				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location] = '';
+				session_register('phpgw_session');
+				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
 				// I added these into seperate steps for easier debugging
 				$data = $GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location]['content'];
-				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
+
 				session_register('phpgw_session');
+				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 				// Changed by Skeeter 2001 Mar 04 0400Z
 				// This was not properly decoding structures saved into session data properly
 //				$data = $GLOBALS['phpgw']->common->decrypt($data);
@@ -772,8 +773,8 @@
 			{
 				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
 				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location]['content'] = $encrypteddata;
-				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 				session_register('phpgw_session');
+				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 				return $data;
 			}
 		}
