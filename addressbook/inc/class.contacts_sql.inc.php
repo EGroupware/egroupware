@@ -393,7 +393,7 @@
 								if ($name == 'cat_id')
 								{
 									// This is the alternative to CONCAT, since it is mysql-only
-									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."=".$value.");";
+									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."='".$value."');";
 								}
 								elseif (gettype($value) == "integer")
 								{
