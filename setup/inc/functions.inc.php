@@ -25,7 +25,7 @@
   // password in ../header.inc.php to protect all of the setup
   // pages from unauthorized use.
 
-  if(file_exists("../version.inc.php") || is_file("../version.inc.php")) {
+  if(file_exists("../version.inc.php")) {
     include("../version.inc.php");  // To set the current core version
   }else{
     $phpgw_info["server"]["versions"]["phpgwapi"] = "Undetected";
@@ -35,8 +35,5 @@
 
   include("./inc/phpgw_setup.inc.php");
   include("./inc/phpgw_schema_proc.inc.php");
-  include("./inc/phpgw_template.inc.php");
-
   $phpgw_setup = new phpgw_setup;
-  $phpgw_setup->template = new Template("../");
 ?>

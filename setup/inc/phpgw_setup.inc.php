@@ -14,35 +14,26 @@
   class phpgw_setup
   {
     var $db;
-    var $template;
 
     function show_header($title = "",$nologoutbutton = False, $logoutfrom = "config") 
     {
       global $phpgw_info, $PHP_SELF;
-      echo '
-        <html>
-        <head>
-          <title>phpGroupWare Setup
-      ';
-      if ($title != ""){echo " - ".$title;}
-      echo'
-        </title>
-        <style type="text/css"><!-- .link { color: #FFFFFF; } --></style>
-        </head>
-        <BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" marginright="0" marginbottom="0">
-        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-        <tr>
-          <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '.$phpgw_info["server"]["versions"]["phpgwapi"].' setup</font>
-        </td>
-        <td align="right" bgcolor="486591">
-      ';
-      if ($nologoutbutton) {
-        echo "&nbsp;";
-      } else {
-        echo '<a href="' . $PHP_SELF . '?FormLogout='.$logoutfrom.'" class="link">Logout</a>&nbsp;';
-      }
-      echo "</td></tr></table>";
+      echo "<html>\n<head>\n";
+      echo "  <title>phpGroupWare Setup"; if ($title != ""){echo " - ".$title;}; echo "</title>\n";
+      echo "  <style type=\"text/css\"><!-- .link { color: #FFFFFF; } --></style>\n";
+      echo "</head>\n";
+      echo "<BODY BGCOLOR=\"FFFFFF\" margintop=\"0\" marginleft=\"0\" marginright=\"0\" marginbottom=\"0\">";
+      echo "<table border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"2\"><tr>";
+      echo "  <td align=\"left\" bgcolor=\"486591\">&nbsp;<font color=\"fefefe\">phpGroupWare version ".$phpgw_info["server"]["versions"]["phpgwapi"]." setup</font></td>";
+      echo "  <td align=\"right\" bgcolor=\"486591\">";
+        if ($nologoutbutton) {
+          echo "&nbsp;</td>";
+        } else {
+          echo "<a href=\"".$PHP_SELF."?FormLogout=".$logoutfrom."\" class=\"link\">Logout</a>&nbsp;</td>";
+        }
+      echo "</tr></table>";
     }
+
     function login_form()
     {
      	global $phpgw_info, $phpgw_domain, $PHP_SELF;
@@ -57,15 +48,15 @@
         echo "  <tr bgcolor=\"e6e6e6\">\n";
         echo "    <td><form action='index.php' method='POST'>\n";
         if (count($phpgw_domain) > 1){
-          echo "      <table><tr><td>Domain: </td><td><input type='text' name='FormDomain' value=''></td></tr>\n";
-          echo "      <tr><td>Password: </td><td><input type='password' name='FormPW' value=''></td></tr></table>\n";
+          echo "      <table><tr><td>Domain: </td><td><input type=\"text\" name=\"FormDomain\" value=\"\"></td></tr>\n";
+          echo "      <tr><td>Password: </td><td><input type=\"password\" name=\"FormPW\" value=\"\"></td></tr></table>\n";
         }else{
           reset($phpgw_domain);
           $default_domain = each($phpgw_domain);
-          echo "      <input type='password' name='FormPW' value=''>\n";
-          echo "      <input type='hidden' name='FormDomain' value='".$default_domain[0]."'>\n";
+          echo "      <input type=\"password\" name=\"FormPW\" value=\"\">\n";
+          echo "      <input type=\"hidden\" name=\"FormDomain\" value=\"".$default_domain[0]."\">\n";
         }
-        echo "      <input type='submit' name='ConfigLogin' value='Login'>\n";
+        echo "      <input type=\"submit\" name=\"ConfigLogin\" value=\"Login\">\n";
         echo "    </form></td>\n";
         echo "  </tr>\n";
       }
@@ -73,11 +64,11 @@
       echo "  <tr bgcolor=\"486591\">\n";
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Header Admin Login</b></font></td>\n";
       echo "  </tr>\n";
-      echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$phpgw_info["setup"]["HeaderLoginMSG"]."</font></td></tr>\n";
+      echo "   <tr bgcolor=\"#e6e6e6\"><td colspan=\"2\"><font color=\"#ff0000\">".$phpgw_info["setup"]["HeaderLoginMSG"]."</font></td></tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td><form action='manageheader.php' method='POST'>\n";
-      echo "      <input type='password' name='FormPW' value=''>\n";
-      echo "      <input type='submit' name='HeaderLogin' value='Login'>\n";
+      echo "    <td><form action=\"manageheader.php\" method=\"POST\">\n";
+      echo "      <input type=\"password\" name=\"FormPW\" value=\"\">\n";
+      echo "      <input type=\"submit\" name=\"HeaderLogin\" value=\"Login\">\n";
       echo "    </form></td>\n";
       echo "  </tr>\n";
   
@@ -88,33 +79,36 @@
     function check_header()
     {
       global $phpgw_domain, $phpgw_info;
-      if(!file_exists("../header.inc.php") || !is_file("../header.inc.php")) {
+      if(!file_exists("../header.inc.php")) {
         $phpgw_info["setup"]["header_msg"] = "Stage One";
-        return 1;
+        return "1";
       }else{
         include("../header.inc.php");
         if (!isset($phpgw_info["server"]["header_admin_password"])){
           $phpgw_info["setup"]["header_msg"] = "Stage One (No header admin password set)";
-          return 2;
-        }elseif (!isset($phpgw_domain) || $phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]) {
+          return "2";
+        }elseif (!isset($phpgw_domain)) {
           $phpgw_info["setup"]["header_msg"] = "Stage One (Upgrade your header.inc.php)";
-          return 3;
+          return "3";
+        }elseif ($phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]) {
+          $phpgw_info["setup"]["header_msg"] = "Stage One (Upgrade your header.inc.php)";
+          return "3";
         }else{ /* header.inc.php part settled. Moving to authentication */
           $phpgw_info["setup"]["header_msg"] = "Stage One (Completed)";
-          return 10;
+          return "10";
         }
       }
     }
   
     function generate_header()
     {
-      global $setting, $phpgw_setup, $phpgw_info;
+      global $setting, $phpgw_setup, $phpgw_info, $header_template;
       
-      $phpgw_setup->template->set_file(array("header" => "header.inc.php.template"));
+      $header_template->set_file(array("header" => "header.inc.php.template"));
       while(list($k,$v) = each($setting)) {
-        $phpgw_setup->template->set_var(strtoupper($k),$v);
+        $header_template->set_var(strtoupper($k),$v);
       }
-      return $phpgw_setup->template->parse("out","header");
+      return $header_template->parse("out","header");
     }
   
     function auth($auth_type = "Config")
@@ -317,43 +311,6 @@
         echo "  </tr>\n";
       }
       */
-    }
-  
-    function setup_header($title = "",$nologoutbutton = False) {
-      global $phpgw_info, $PHP_SELF;
-  
-      // Ok, so it isn't the greatest idea, but it works for now.  Setup needs to be rewritten.
-      if ($phpgw_info["setup"]["dontshowtheheaderagain"]) {
-         return False;
-      }
-  
-      $phpgw_info["setup"]["dontshowtheheaderagain"] = True;
-?>
-      <head>
-       <title>phpGroupWare setup <?php echo $title; ?></title>
-        <style type="text/css">
-         <!--
-           .link
-           { 
-              color: #FFFFFF;
-           }
-         -->
-        </style>
-      </head>
-      <BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" marginright="0" marginbottom="0">
-      <table border="0" width="100%" cellspacing="0" cellpadding="2">
-       <tr>
-        <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version <?php 
-         echo $phpgw_info["server"]["versions"]["phpgwapi"]; ?> setup</font>
-        </td>
-        <td align="right" bgcolor="486591">
-<?php
-      if ($nologoutbutton) {
-        echo "&nbsp;";
-      } else {
-        echo '<a href="' . $PHP_SELF . '?FormLogout=True" class="link">Logout</a>&nbsp;';
-      }
-      echo "</td></tr></table>";
     }
   }
 ?>

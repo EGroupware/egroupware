@@ -37,6 +37,8 @@
 
   switch($action){
     case "download":
+      include("./inc/phpgw_template.inc.php");
+      $header_template = new Template("../");
       header("Content-disposition: attachment; filename=\"header.inc.php\"");
       header("Content-type: application/octet-stream");
       header("Pragma: no-cache");
@@ -45,6 +47,8 @@
       echo $newheader;
       break;
     case "view":
+      include("./inc/phpgw_template.inc.php");
+      $header_template = new Template("../");
       $phpgw_setup->show_header("Generated header.inc.php", False, "header");
       echo "<br>Save this text as contents of your header.inc.php<br><hr>";
       $newheader = $phpgw_setup->generate_header();
@@ -53,8 +57,9 @@
       echo "</pre></body></html>";
       break;
     case "write config":
+      include("./inc/phpgw_template.inc.php");
+      $header_template = new Template("../");
       if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
-        $phpgw_setup->show_header("Saved header.inc.php", False, "header");
         $newheader = $phpgw_setup->generate_header();
         $fsetup = fopen("../header.inc.php","w");
         fwrite($fsetup,$newheader);
@@ -250,5 +255,7 @@
       echo "</form>";
       echo "</body>";
       echo "</html>";
+
+      break; // ending the switch default
   } 
 ?>
