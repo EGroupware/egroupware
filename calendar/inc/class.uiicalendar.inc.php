@@ -37,7 +37,7 @@
 
 		function print_test($val,$title,$x_pre='')
 		{
-//			echo 'VAL = '._debug_array($val)."<br>\n";
+//			echo 'VAL = '._debug_array($val,False)."<br>\n";
 			if(is_array($val))
 			{
 				@reset($val);
@@ -89,7 +89,7 @@
 			echo "Start Time : ".$GLOBALS['phpgw']->common->show_date()."<br>\n";
 			@set_time_limit(0);
 
-			$icsfile=PHPGW_APP_INC.'/events.ics';
+			$icsfile=PHPGW_APP_INC.'/events.vcs';
 			$fp=fopen($icsfile,'rt');
 			$contents = explode("\n",fread($fp, filesize($icsfile)));
 			fclose($fp);
@@ -107,7 +107,7 @@
 					$event = $vcalendar['event'][$i];
 
 					echo "<br>\nEVENT<br>\n";
-//					echo 'TEST Debug : '._debug_array($event)."<br>\n";
+//					echo 'TEST Debug : '._debug_array($event,False)."<br>\n";
 					$this->print_test($event['uid'],'UID','X-');
 					$this->print_test($event['valscale'],'Calscale','X-');
 					$this->print_test($event['description'],'Description','X-');
@@ -173,6 +173,11 @@
 			$GLOBALS['phpgw_info']['flags']['nonappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['nonappfooter'] = True;
 			$GLOBALS['phpgw']->common->phpgw_header();
+
+			if(!@is_dir($GLOBALS['phpgw_info']['server']['temp_dir']))
+			{
+				mkdir($GLOBALS['phpgw_info']['server']['temp_dir'],0700);
+			}
 
 			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
 
