@@ -18,7 +18,7 @@
 		(
 			'Site Configuration'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
 			'Calendar Holiday Management'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uiholiday.admin'),
-			'Global categories'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname)
+			'Global categories'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True')
 		);
 //Do not modify below this line
 		display_section($appname,$appname,$file);

@@ -95,6 +95,8 @@
 
 		function index()
 		{
+			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -106,7 +108,8 @@
 			$link_data = array
 			(
 				'menuaction'	=> 'admin.uicategories.index',
-				'appname'		=> $GLOBALS['appname']
+				'appname'		=> $GLOBALS['appname'],
+				'global_cats'	=> $global_cats
 			);
 
 			$this->template->set_var('lang_action',lang('Category list'));
@@ -128,7 +131,12 @@
 				$start = 0;
 			}
 
-			$categories = $this->bo->get_list();
+			if (!$global_cats)
+			{
+				$global_cats = False;
+			}
+
+			$categories = $this->bo->get_list($global_cats);
 
 			$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->cats->total_records,$link_data);
 			$right = $this->nextmatchs->right('/index.php',$this->start,$this->bo->cats->total_records,$link_data);
@@ -229,10 +237,13 @@
 
 		function add()
 		{
+			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+
 			$link_data = array
 			(
 				'menuaction'	=> 'admin.uicategories.index',
-				'appname'		=> $GLOBALS['appname']
+				'appname'		=> $GLOBALS['appname'],
+				'global_cats'	=> $global_cats
 			);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -291,7 +302,9 @@
 			$link_data['menuaction'] = 'admin.uicategories.add'; 			
 			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
-			$this->template->set_var('category_list',$this->bo->formatted_list(array('select' => 'select','all' => 'all','cat_parent' => $cat_parent)));
+			$this->template->set_var('category_list',$this->bo->formatted_list(array('select' => 'select','all' => 'all','cat_parent' => $cat_parent,
+																						'global_cats' => $global_cats)));
+			
 			$this->template->set_var('cat_name',$cat_name);
 			$this->template->set_var('cat_description',$cat_description);
 
@@ -303,10 +316,13 @@
 
 		function edit()
 		{
+			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+
 			$link_data = array
 			(
 				'menuaction'	=> 'admin.uicategories.index',
-				'appname'		=> $GLOBALS['appname']
+				'appname'		=> $GLOBALS['appname'],
+				'global_cats'	=> $global_cats
 			);
 
 			if (!$this->cat_id)
@@ -380,7 +396,8 @@
 
 			$this->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats[0]['name']));
 			$this->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats[0]['description']));
-			$this->template->set_var('category_list',$this->bo->formatted_list(array('select' => 'select','all' => 'all', 'cat_parent' => $cats[0]['parent'])));
+			$this->template->set_var('category_list',$this->bo->formatted_list(array('select' => 'select','all' => 'all','cat_parent' => $cats[0]['parent'],
+																					'global_cats' => $global_cats)));
 
 			$this->template->set_var('edithandle','');
 			$this->template->set_var('addhandle','');
@@ -390,10 +407,13 @@
 
 		function delete()
 		{
+			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+	
 			$link_data = array
 			(
 				'menuaction'	=> 'admin.uicategories.index',
-				'appname'		=> $GLOBALS['appname']
+				'appname'		=> $GLOBALS['appname'],
+				'global_cats'	=> $global_cats
 			);
 
 			if (!$this->cat_id)

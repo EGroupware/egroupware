@@ -97,10 +97,18 @@
 			}
 		}
 
-		function get_list()
+		function get_list($global_cats=False)
 		{
 			if($this->debug) { echo '<br>querying: "' . $this->query . '"'; }
-			return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,True);
+
+			if ($global_cats)
+			{
+				return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,True);
+			}
+			else
+			{
+				return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order);
+			}
 		}
 
 		function save_cat($values)
@@ -124,7 +132,14 @@
 
 		function formatted_list($data)
 		{
-			return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent'],True);
+			if ($data['global_cats'])
+			{
+				return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent'],True);
+			}
+			else
+			{
+				return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent']);
+			}
 		}
 
 		function delete($cat_id,$subs=False)
