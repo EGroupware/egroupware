@@ -51,7 +51,11 @@
 			}
 			global $start,$limit,$query,$sort,$order,$filter,$cat_id;
 
-			if($start || $start == 0)  { $this->start = $start; }
+			if(!empty($start) || ($start == "0" ))
+			{
+				if($this->debug) { echo '<br>overriding start: "' . $this->start . '" now "' . $start . '"'; }
+				$this->start = $start;
+			}
 			if($limit)  { $this->limit  = $limit;  }
 			if(!empty($query))  { $this->query  = $query;  }
 			if(!empty($sort))   { $this->sort   = $sort;   }
