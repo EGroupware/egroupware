@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - eTemplate Extension - Nextmatch Widget                    *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - eTemplate Extension - Nextmatch Widget                      *
+	* http://www.eGroupWare.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -25,19 +25,72 @@
 			'pre_process' => True,
 			'post_process' => True
 		);
-		var $human_name = 'Nextmatch';	// this is the name for the editor
+		var $human_name = array(
+			'nextmatch' => 'Nextmatch',
+			'nextmatch-sortheader' => 'Nextmatch Sortheader',
+			'nextmatch-filterheader' => 'Nextmatch Filterheader'
+		);
 
 		function nextmatch_widget($ui)
 		{
 		}
 
+		function last_part($name)
+		{
+			$parts = explode('[',str_replace(']','',$name));
+			return $parts[count($parts)-1];
+		}
+
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			//echo "<p>nextmatch_widget.pre_process: value = "; _debug_array($value);
+			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
+			//echo "<p>nextmatch_widget.pre_process(name='$name'): value = "; _debug_array($value);
+			echo "<p>nextmatch_widget.pre_process(name='$name'): nm_global = "; _debug_array($nm_global);
 
+			$extension_data = array(
+				'type' => $cell['type']
+			);
+			switch ($cell['type'])
+			{
+				case 'nextmatch-sortheader':
+					$cell['type'] = 'button';
+					$cell['onchange'] = True;
+					if (!$cell['help'])
+					{
+						$cell['help'] = 'click to order after that criteria';
+					}
+					if ($this->last_part($name) == $nm_global['order'])	// we're the active column
+					{
+						$cell[1] = $cell;
+						$cell[1]['span'] = ',activ_sortcolumn';
+						$cell[2] = $tmpl->empty_cell('image',$nm_global['sort']!='DESC'?'down':'up');
+						$cell['type'] = 'hbox';
+						$cell['size'] = '2,0,0';
+						$cell['name'] = $cell['label'] = '';
+					}
+					else
+					{
+						$cell['span'] = ',inactiv_sortcolumn';
+					}
+					return True;
+
+				case 'nextmatch-filterheader':
+					$cell['type'] = 'select';
+					if (!$cell['size'])
+					{
+						$cell['size'] = 'All';
+					}
+					if (!$cell['help'])
+					{
+						$cell['help'] = 'select which values to show';
+					}
+					$cell['onchange'] = True;
+					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
+					return True;
+			}
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			$obj = CreateObject($app.'.'.$class);
-			if (!is_object($obj))
+			if (!is_object($obj) || !method_exists($obj,$method))
 			{
 				echo "<p>nextmatch_widget::pre_process($name): '$value[get_rows]' is no valid method !!!</p>\n";
 				//return;
@@ -116,16 +169,38 @@
 			$cell['label'] = $cell['help'] = '';
 
 			// save values in persistent extension_data to be able use it in post_process
-			$extension_data = $value;
-			
+			$extension_data += $value;
+
+			foreach(array('sort','order','col_filter') as $n)	// save them for the sortheader
+			{
+				$nm_global[$n] = $value[$n];
+			}
 			$value['bottom'] = $value;	// copy the values for the bottom-bar
 
 			return False;	// NO extra Label
 		}
 
-		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			//echo "<p>nextmatch_widget.post_process: value = "; _debug_array($value);
+			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
+			//echo "<p>nextmatch_widget.post_process(name='$name',value_in='$value_in',order='$nm_global[order]'): value = "; _debug_array($value);
+
+			switch($extension_data['type'])
+			{
+				case 'nextmatch-sortheader':
+					if ($value_in)
+					{
+						$nm_global['order'] = $this->last_part($name);
+					}
+					return False;	// dont report value back, as it's in the wrong location (rows)
+
+				case 'nextmatch-filterheader':
+					if ($value_in != $extension_data['old_value'])
+					{
+						$nm_global['filter'][$this->last_part($name)] = $value_in;
+					}
+					return False;	// dont report value back, as it's in the wrong location (rows)
+			}
 			$old_value = $extension_data;
 
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
@@ -181,6 +256,18 @@
 			elseif ($value['last'])
 			{
 				$value['start'] = (int) (($old_value['total']-2) / $max) * $max;
+				$loop = True;
+			}
+			elseif ($nm_global['order'])
+			{
+				$value['order'] = $nm_global['order'];
+				$value['sort']  = $old_value['order'] == $nm_global['order'] && $old_value['sort']!='DESC'?'DESC':'ASC';
+				$loop = True;
+			}
+			elseif ($nm_global['filter'])
+			{
+				if (!is_array($value['col_filter'])) $value['col_filter'] = array();
+				$value['col_filter'] += $nm_global['filter'];
 				$loop = True;
 			}
 			return True;

@@ -151,13 +151,7 @@
 				$hooked = $hooked['body_data'];
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $GLOBALS['phpgw_info']['flags']['java_script'].$this->include_java_script(2)));
 			}
-			/* is in show now for every template
-			list($width,$height,,,,,$overflow) = explode(',',$this->size);
-			if ($overflow)
-			{
-				$html = $this->html->div($html,'STYLE="'.($width?"width: $width; ":'').($height?"height: $height; ":'')."overflow: $overflow;\"");
-			}
-			*/
+
 			$id = $this->save_appsession($this->as_array(1) + array(
 				'readonlys' => $readonlys,
 				'content' => $content,
@@ -378,7 +372,7 @@
 					{
 						$cell = &$cols[$c_key];
 						list($col_width,$col_disabled) = explode(',',$opts[$col]);
-						
+
 						if (!$cell['height'])	// if not set, cell-height = height of row
 						{
 							$cell['height'] = $height;
@@ -405,7 +399,8 @@
 						continue;	// col is disabled
 					}
 					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,
-						$c,$r,$span);
+						$c,$r,$span,$cl);
+
 					if ($row_data[$col] == '' && $this->rows == 1)
 					{
 						unset($row_data[$col]);	// omit empty/disabled cells if only one row
@@ -439,7 +434,6 @@
 						}
 					}
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align'],'ALIGN');
-					list(,$cl) = explode(',',$cell['span']);
 					$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 						$c,$r,$show_c,$show_row,$content);
 					$row_data[".$col"] .= $this->html->formatOptions($cl,'CLASS');
@@ -469,7 +463,7 @@
 		@param for rest see show
 		@result the generated HTML
 		*/
-		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span)
+		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$class)
 		{
 			if (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type'])
 			{
@@ -515,9 +509,11 @@
 				$ext_type = $type;
 				$extra_label = $this->extensionPreProcess($ext_type,$form_name,$value,$cell,$readonlys[$name]);
 
-				$readonly = $readonly || $cell['readonly'];	// might be set be extension
+				$readonly = $readonly || $cell['readonly'];	// might be set by extension
 				$this->set_array($content,$name,$value);
 			}
+			list(,$class) = explode(',',$cell['span']);	// might be set by extension
+
 			$cell_options = $cell['size'];
 			if ($cell_options[0] == '@')
 			{
@@ -807,7 +803,7 @@
 				case 'image':
 					$image = $value != '' ? $value : $name;
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
-						$image,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'BORDER="0"');
+						$image,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'border="0"');
 					$html .= $image;
 					$extra_link = $cell_options;
 					$extra_label = False;
@@ -827,7 +823,7 @@
 					$box_anz = 0;
 					for ($n = 1; $n <= $cell_options; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul);
+						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl);
 						if ($h != '' && $h != '&nbsp;')
 						{
 							if ($cell['type'] == 'vbox')
@@ -844,7 +840,6 @@
 							{
 								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'ALIGN');
 							}
-							list(,$cl) = explode(',',$cell[$n]['span']);
 							$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 								$show_c,$show_row,$content['.c'],$content['.row'],$content);
 							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($cl,'CLASS');
@@ -874,7 +869,7 @@
 					}
 					for ($n = 1; $n <= $cell_options; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul);
+						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$nul);
 						$vis = !empty($value) && $value == $cell_options[$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
 						list (,$cl) = explode(',',$cell[$n]['span']);
 						$html .= $this->html->div($h,$this->html->formatOptions(array(
@@ -976,8 +971,8 @@
 			}
 			$content_in = $cname ? array($cname => $content) : $content;
 			$content = array();
-			reset($to_process);
-			while (list($form_name,$type) = each($to_process))
+
+			foreach($to_process as $form_name => $type)
 			{
 				if (is_array($type))
 				{
@@ -994,12 +989,15 @@
 				{
 					$value = '';	// blur-values is equal to emtpy
 				}
-				//echo "<p>process_show($this->name) $type: $form_name = '$value'</p>\n";
+				// echo "<p>process_show($this->name) $type: $form_name = '$value'</p>\n";
 				list($type,$sub) = explode('-',$type);
 				switch ($type)
 				{
 					case 'ext':
-						$this->extensionPostProcess($sub,$form_name,$this->get_array($content,$form_name),$value);
+						if (!$this->extensionPostProcess($sub,$form_name,$this->get_array($content,$form_name),$value))
+						{
+							$this->unset_array($content,$form_name);
+						}
 						break;
 					case 'text':
 					case 'textarea':

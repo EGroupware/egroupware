@@ -25,3 +25,19 @@
 		);
 	}
 	display_sidebox($appname,$menu_title,$file);
+
+	$menu_title = lang('Documentation');
+	$docs = $GLOBALS['phpgw_info']['server']['webserver_url'].'/etemplate/doc/';
+	$file = Array(
+		array(
+			'text'   => 'eTemplate Tutorial',
+			'link'   => $docs.'etemplate.html',
+			'target' => 'docs'
+		),
+		array(
+			'text'   => 'eTemplate Referenz',
+			'link'   => $docs.'referenz.html',
+			'target' => 'docs'
+		),
+	);
+	display_sidebox($appname,$menu_title,$file);

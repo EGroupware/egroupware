@@ -43,6 +43,7 @@ click here to attach the file	etemplate	en	click here to attach the file
 click here to create the link	etemplate	en	click here to create the Link
 click here to start the search	etemplate	en	Click here to start the search
 click here to upload the file	etemplate	en	Click here to upload the file
+click to order after that criteria	etemplate	en	click to order after that criteria
 columnname	etemplate	en	ColumnName
 comment	etemplate	en	Comment
 create a new table for the application	etemplate	en	Create a new table for the application
@@ -73,6 +74,7 @@ discard changes	etemplate	en	discard changes
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
 do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
+documentation	etemplate	en	Documentation
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
 drop table	etemplate	en	Drop Table
 dump4setup	etemplate	en	Dump4Setup
@@ -100,6 +102,8 @@ etemplate	common	en	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, use Save to put it in the database
 etemplate '%1' written to '%2'	etemplate	en	eTemplate '%1' written to '%2'
 etemplate editor	etemplate	en	eTemplate Editor
+etemplate referenz	etemplate	en	eTemplate Referenz
+etemplate tutorial	etemplate	en	eTemplate Tutorial
 exchange this row with the one above	etemplate	en	exchange this row with the one above
 exchange this two columns	etemplate	en	exchange this two columns
 export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
@@ -221,6 +225,7 @@ select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
 select the indexed columns in their desired order	etemplate	en	Select the indexed columns in their desired order
 select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
+select which values to show	etemplate	en	select which values to show
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox
 sets today as date	etemplate	en	sets today as date

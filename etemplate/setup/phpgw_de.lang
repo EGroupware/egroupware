@@ -43,6 +43,7 @@ click here to attach the file	etemplate	de	hier clicken um die Datei anzuhängen
 click here to create the link	etemplate	de	hier clicken um die Verknüpfung anzulegen
 click here to start the search	etemplate	de	hier clicken um die Suche zu starten
 click here to upload the file	etemplate	de	hier clicken um die Datei hochzuladen
+click to order after that criteria	etemplate	de	anclicken um nach diesem Kriterium zu sortieren
 columnname	etemplate	de	Spaltenname
 comment	etemplate	de	Kommentar
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
@@ -73,6 +74,7 @@ discard changes	etemplate	de	verwirft Änderungen
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
 displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
 do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
+documentation	etemplate	de	Dokumentation
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
@@ -100,6 +102,8 @@ etemplate	common	de	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
 etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' geschrieben
 etemplate editor	etemplate	de	eTemplate Editor
+etemplate referenz	etemplate	de	eTemplate Handbuch
+etemplate tutorial	etemplate	de	eTemplate Einführung
 exchange this row with the one above	etemplate	de	diese Zeile mit der darüber austauschen
 exchange this two columns	etemplate	de	diese beiden Spalten austauschen
 export the loaded etemplate into a xml-file	etemplate	de	das geladene eTemplate als XML Datei (.xet) exportieren
@@ -221,6 +225,7 @@ select priority	etemplate	de	Priorität auswählen
 select state	etemplate	de	US-State auswählen
 select the indexed columns in their desired order	etemplate	de	Zu indizierende Spalten in der gewünchten Reihenfolge auswählen
 select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen auswählen
+select which values to show	etemplate	de	auswählen welche Werte angezeigt werden
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
 sets today as date	etemplate	de	setzt heutiges Datum

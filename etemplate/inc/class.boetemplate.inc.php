@@ -551,12 +551,13 @@
 		@param $name form-name of this widget/field (used as a unique index into extension_data)
 		@param &$value value of the extensions content(-array)
 		@abstract executes the post_process-function of the extension $cell[type]
+		@returns True if a value should be returned (default for no postprocess fkt.), else False
 		@author ralfbecker
 		*/
 		{
 			if (!$this->haveExtension($type,'post_process'))
 			{
-				return False;
+				return True;
 			}
 			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->post_process($name,$value,
 				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],
@@ -644,10 +645,6 @@
 			$pos = &$arr;
 			foreach($idxs as $idx)
 			{
-				if (!is_array($pos))
-				{
-					return $pos = '';
-				}
 				$pos = &$pos[$idx];
 			}
 			return $pos;
