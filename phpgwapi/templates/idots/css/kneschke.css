@@ -22,34 +22,30 @@ body
 	font-size: 11px; 
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	padding:14px;
-/*	margin:14px;*/
 }
 
 a:link
 {
 	color: #006699; 
 	text-decoration: none;
-	font-size: 11px;
 }
 
 a:visited 
 {
 	color: #006699; 
 	text-decoration: none;
-	font-size: 11px;
 }
 
 a:hover 
 {
-	color: #ff9933; text-decoration: underline;
-	font-size: 11px;
+	color: #ff9933;
+	text-decoration: underline;
 }
 
 a:active 
 {
 	color: #006699; 
 	text-decoration: underline;
-	font-size: 11px;
 }
 
 input 
@@ -68,11 +64,19 @@ select
 	border: 1px #bbbbbb solid;
 }
 
+textarea
+{
+	font-size: 11px; 
+	color: #006699; 
+	font-family: Arial, Helvetica, sans-serif;
+	border: 1px #bbbbbb solid;
+}
+
 td
 {
 	font-size: 11px;
-	padding-top:1px;
-	padding-bottom:1px;
+/*	padding-top:1px;
+	padding-bottom:1px;*/
 }
 
 .divSidebox 
@@ -88,20 +92,25 @@ td
 .divSideboxHeader 
 {
 	text-align:center;
-	bbackground-image:url(../images/sidebox-header-background.png);
-	bbackground-repeat: repeat-x;
 	background-color:#dddddd;
+	background-color:#D8DEED;
+	background-color:#D3DCE3;
 	height:12px;
-	font-size:10px;
-	color:#666666;
+	padding-top:2px;
+	padding-bottom:2px;
+	font-size:11px;
+	color:#333333;
+	font-weight : bold;
+
 }
 
 a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
 	height:16px;
-	background-color:#eeeeee;
+	background-color:#F6F7F4;
 }
+
 a.appTitles,.appTitles
 {
 	font-size: 10px; 
@@ -119,7 +128,6 @@ a.textSidebox
 .textSidebox
 {
 	font-size: 10px; 
-	height:18px;
 	padding-top:2px;
 	padding-bottom:2px;
 	border-top: #aaaaaa 1px solid;
@@ -143,10 +151,8 @@ a.textSidebox
 #divMain
 {
 	background-color:white;
-	margin-top: 9px;
-/*	margin-left: 14px;
-	margin-right: 14px;*/
-	padding:4px;
+	margin-top: 5px;
+	padding:9px;
 	border-color:#7e7e7e;
 	border-width:1px;
 	border-style:solid;
@@ -181,13 +187,11 @@ a.textSidebox
 	height:15px;
 	padding-left:170px;
 	margin-top: 13px;
-	margin-bottom: 2px;
+/*	margin-bottom: 2px;*/
 }
 
 #divSubContainer
 {
-	margin-top: 2px;
-	margin-bottom: 4px;
 }
 
 #tdSidebox
@@ -199,7 +203,8 @@ a.textSidebox
 #tdAppbox
 {
 	background-color:white;
-	padding:1px;
+	padding-left:9px;
+	width: 100%;
 }
 #divSideboxContainer
 {
@@ -216,14 +221,17 @@ a.textSidebox
 
 #divAppboxHeader
 {
+	width:100%;
 	background-image:url(../images/appbox-header-background.png);
 	background-repeat: repeat-x;
-	height:10px;
+	height:16px;
+	line-height:18px;
 	text-align:center;
-	font-size:9px;
+/*	padding-top:7px;*/
+	padding-bottom:0px;
+	font-size:12px;
 	font-weight:bold;
-	color:#666666;
-	padding-top:5px;
+	color:#555555;
 	border-top-color:#9c9c9c;
 	border-top-width:1px;
 	border-top-style:solid;
@@ -240,7 +248,6 @@ a.textSidebox
 	width:100%;
 	background-color:#f7f7f7;
 	padding:5px;
-/*	height:200px;*/
 	border-bottom-color:#9c9c9c;
 	border-bottom-width:1px;
 	border-bottom-style:solid;
@@ -254,8 +261,7 @@ a.textSidebox
 
 #user_info
 {
-	color: #666666;
-	font-size: 9px;
+	color: #555555;
 }
 
 #admin_info
