@@ -117,7 +117,7 @@ td
 .divSidebox 
 {
 	position:relative;
-	width: 160px; 
+	width: 147px; 
 	border-right: #9c9c9c 1px solid; 
 	border-top: #9c9c9c 1px solid; 
 	border-left: #9c9c9c 1px solid; 
@@ -187,16 +187,18 @@ a.textSidebox
 
 #extraIcons
 {
-	position:absolute;
+/*	position:absolute;
 	z-index:13;
 	right:10px;
 	top:113px;
-	visibility:hidden;
+	visibility:hidden;*/
 	background-image:url(../images/alpha-white.png);
 	border-width:1px;
 	border-color:#7e7e7e;
 	border-style:solid;
 }
+
+
 
 #divMain
 {
@@ -240,20 +242,22 @@ a.textSidebox
 	/*	margin-bottom: 2px;*/
 }
 
-#divSubContainer
+/*#divSubContainer
 {
 }
-
+*/
 #tdSidebox
 {
 	width:170px;
 	background-color:white;
+	overflow:visible;
 }
+
 
 #tdAppbox
 {
 	background-color:white;
-	padding-left:9px;
+	padding-left:5px;
 	width: 100%;
 }
 #divSideboxContainer
@@ -263,7 +267,6 @@ a.textSidebox
 	top:0px;
 	left:0px;
 	background-color:white;
-	border-color:red;
 	border-width:1px;
 	border-style:solid;
 	z-index:40;

@@ -15,5 +15,23 @@
 	create_input_box('Max number of icons in navbar','max_icons',
 'How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.','10',3);
 
+	create_check_box('Autohide Sidebox menu\'s','auto_hide_sidebox',
+'Automacally hide the Sidebox menu\'s?');
+
+	$click_or_onmouseover = array(
+	'click'          => lang('Click'),
+	'onmouseover'         => lang('On Mouse Over'),
+	);
+
+	create_select_box('Click or Mouse Over to show menu\'s','click_or_onmouseover',$click_or_onmouseover,
+'Click or Mouse Over to show menu\'s?');
+
+
+	create_check_box('Disable slider effects','disable_slider_effects',
+'Disable the animated slider effects when showing or hiding menu\'s in the page? Opera and Konqueror users will probably must want this.');
+
+	create_check_box('Disable Internet Explorer png-image-bugfix','disable_pngfix',
+	'Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?');
+
 	create_check_box('Show page generation time','show_generation_time',
 	'Show page generation time on the bottom of the page?');

@@ -36,19 +36,19 @@
 <body bgcolor="#ffffff">
 <div id="divLogo"><a href="http://{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}"/></a></div>
 
-<div id="divMain">
+<div id="divMain"style= "background-repeat:no-repeat;background-position: center center;background-image:url(./phpgwapi/templates/idots/images/login-background.jpg)">
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td width="180" valign="top" align="left"><img src="./phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+				<td width="180" valign="top" align="left"><img src="./phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="69" alt="spacer" /></td>
 				<td>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="100%"><img src="./phpgwapi/templates/idots/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
 						</tr>
-						<tr>
+<!--						<tr>
 							<td width="100%">&nbsp;</td>
-						</tr>
+						</tr>-->
 					</table>
 
 				</td>
@@ -58,7 +58,7 @@
 	</div>
 <br/>
 <!--</div>-->
-<div id="containerDiv">
+<div id="containerDiv" >
 <div id="centerBox">
 <div align="center">{lang_message}</div>
 <div align="center">{cd}</div>

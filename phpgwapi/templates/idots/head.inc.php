@@ -20,6 +20,9 @@
 		$GLOBALS['page_start_time'] = $mtime; 
 	}
 	
+	// get used language code
+	$lang_code='en';
+
 	
 	$bodyheader = ' bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '" alink="'
 		. $GLOBALS['phpgw_info']['theme']['alink'] . '" link="' . $GLOBALS['phpgw_info']['theme']['link'] . '" vlink="'
@@ -37,8 +40,31 @@
 		$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
 	}
 
-	$pngfix = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
+	//pngfix defaults to yes
+	if(!$GLOBALS['phpgw_info']['user']['preferences']['common']['disable_pngfix'])
+	{
+		$pngfix_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
+		$pngfix ='<!-- This solves the Internet Explorer PNG-transparency bug, but only for IE 5.5 and higher --> 
+		<!--[if gte IE 5.5000]>
+		<script src="'.$pngfix_src.'" type=text/javascript>
+		</script>
+		<![endif]-->';
+	}
+	
+		if(!$GLOBALS['phpgw_info']['user']['preferences']['common']['disable_slider_effects'])
+		{
+			$slider_effects_src=$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/slidereffects.js';
+			$slider_effects='<script src="'.$slider_effects_src.'" type=text/javascript>
+			</script>';
+		}
+		else
+		{
+			$simple_show_hide_src=$GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/simple_show_hide.js';
+			$simple_show_hide='<script src="'.$simple_show_hide_src.'" type=text/javascript>
+			</script>';
+		}
 
+	
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
@@ -50,6 +76,9 @@
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'pngfix'        => $pngfix,
+		'slider_effects'=> $slider_effects,
+		'simple_show_hide'=> $simple_show_hide,
+		'lang_code'=> $lang_code,
 		'charset'       => $GLOBALS['phpgw']->translation->charset(),
 		'font_family'   => $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'].$app,

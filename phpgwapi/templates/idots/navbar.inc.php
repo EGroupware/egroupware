@@ -26,11 +26,25 @@
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row','extra_block_row');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_spacer','extra_block_spacer');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_blocks_footer','extra_blocks_footer');
+		$GLOBALS['idots_tpl']->set_block('navbar','sidebox_hide_header','sidebox_hide_header');
+		$GLOBALS['idots_tpl']->set_block('navbar','sidebox_hide_footer','sidebox_hide_footer');
+		$GLOBALS['idots_tpl']->set_block('navbar','appbox','appbox');
 		$GLOBALS['idots_tpl']->set_block('navbar','navbar_footer','navbar_footer');
-
+		
 		$var['img_root'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images';
 		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
+		if($GLOBALS['phpgw_info']['user']['preferences']['common']['click_or_onmouseover']=='onmouseover')
+		{
+			$show_menu_event='onMouseOver';
+		}
+		else
+		{
+			$show_menu_event='onClick';
+		}
+
+
+		
 		$applications = '';
 	
 		//	== 'icons_and_text')
@@ -99,14 +113,25 @@
 		if($i>$max_icons)
 		{
 			$app_extra_icons_div='
-				<div id="extraIcons">
-					<table>'.$app_extra_icons.'
-						<tr><td>&nbsp;</td><td nowrap=nowrap align="right"><a href="javascript:void(0);" onClick="HideL(\'extraIcons\');" title="'.lang('close').'"><img border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
-					</table>
-				</div>';
+			<script language="javascript">
+			new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,\'right\')
+			</script>	
+				<div id="menu1Container">
+				<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
+				
+					<div id="extraIcons">
+					<table>
+						<tr><td>&nbsp;</td><td nowrap=nowrap align="right"><a href="#" '.$show_menu_event.'="ypSlideOutMenu.hide(\'menu1\')" title="'.lang('close').'"><img style="margin:4px;" border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
+'.$app_extra_icons.'					</table>
+				</div>
+			
+				</div>
+				</div>
+				';
 			
 			$var['app_extra_icons_div']= $app_extra_icons_div;
-			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
 		
 		}
 
@@ -159,6 +184,11 @@
 		$GLOBALS['idots_tpl']->set_var($var);
 		$GLOBALS['idots_tpl']->pfp('out','navbar_header');
 
+	
+		/******************************************************\
+		* The sidebox menu's                                   *
+		\******************************************************/
+
 		$menu_title = lang('General Menu');
 
 		$file['Home'] = $GLOBALS['phpgw_info']['navbar']['home']['url'];
@@ -167,15 +197,46 @@
 			$file['Preferences'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
 		}
 		$file += array(
-			'About %1'=>$GLOBALS['phpgw_info']['navbar']['about']['url'],
+			'About '.$appname=>$GLOBALS['phpgw_info']['navbar']['about']['url'],
 			'Logout'=>$GLOBALS['phpgw_info']['navbar']['logout']['url']
-		);
+		);		
+		
+		if($GLOBALS['phpgw_info']['user']['preferences']['common']['auto_hide_sidebox']==1)
+		{
+			$GLOBALS['idots_tpl']->set_var('show_menu_event',$show_menu_event);
+			$GLOBALS['idots_tpl']->pparse('out','sidebox_hide_header');
+			
+			display_sidebox('',$menu_title,$file);
+			$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
+			
+			$GLOBALS['idots_tpl']->pparse('out','sidebox_hide_footer');
 
-		display_sidebox('',$menu_title,$file);
+			$var[sideboxcolstart]='';
+			
+			$GLOBALS['idots_tpl']->set_var($var);
+			$GLOBALS['idots_tpl']->pparse('out','appbox');
+			$var[remove_padding]='style="padding-left:0px;"';	
+			$var[sideboxcolend]='';
 
-		$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
+		}
+		else
+		{
+			$var[menu_link]='';
+			$var[sideboxcolstart]='<td id="tdSidebox" valign="top">';
+			$var[remove_padding]='';	
+			$GLOBALS['idots_tpl']->set_var($var);
+			$GLOBALS['idots_tpl']->pparse('out','appbox');
+			
+			display_sidebox('',$menu_title,$file);
+			$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
+			
+			$var[sideboxcolend]='</td>';
+		}
 
+		$GLOBALS['idots_tpl']->set_var($var);
 		$GLOBALS['idots_tpl']->pparse('out','navbar_footer');
+
+
 
 		// If the application has a header include, we now include it
 		if(!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
