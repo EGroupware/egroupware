@@ -4,8 +4,8 @@
 		<xsl:variable name="select_action"><xsl:value-of select="select_action"/></xsl:variable>
 		<xsl:variable name="lang_submit"><xsl:value-of select="lang_submit"/></xsl:variable>
 		<form method="post" action="{$select_action}">
-			<select name="cat_id" class="forms" onChange="this.form.submit();">
-				<option value=""><xsl:value-of select="lang_select_category"/></option>
+			<select name="cat_id" class="forms" onChange="this.form.submit();" onMouseover="window.status='Select the category. To show all entries select NONE.';return true;" onMouseout="window.status='';return true;">
+				<option value=""><xsl:value-of select="lang_none"/></option>
 					<xsl:apply-templates select="cat_list"/>
 			</select>
 			<noscript>

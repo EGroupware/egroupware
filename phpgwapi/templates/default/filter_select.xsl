@@ -4,7 +4,7 @@
 		<xsl:variable name="select_action"><xsl:value-of select="select_action"/></xsl:variable>
 		<xsl:variable name="lang_submit"><xsl:value-of select="lang_submit"/></xsl:variable>
 		<form method="post" action="{$select_action}">
-			<select name="filter" class="forms" onChange="this.form.submit()">
+			<select name="filter" class="forms" onChange="this.form.submit()" onMouseover="window.status='Select the filter. To show all entries select SHOW ALL';return true;" onMouseout="window.status='';return true;">
 				<xsl:apply-templates select="filter_list"/>
 			</select>
 			<noscript>
