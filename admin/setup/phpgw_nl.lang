@@ -1,60 +1,369 @@
+%1 - %2 of %3 user accounts	admin	nl	
+%1 not found or not executable !!!	admin	nl	
+(stored password will not be shown here)	admin	nl	
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	nl	
+accesslog and bruteforce defense	admin	nl	
 account active	admin	nl	Gebruiker actief
+account has been created	common	nl	
+account has been deleted	common	nl	
+account has been updated	common	nl	
+account list	admin	nl	
+account permissions	admin	nl	
+account preferences	admin	nl	
+acl manager	admin	nl	
+acl rights	admin	nl	
+action	admin	nl	
 active	admin	nl	actief
+add a category	admin	nl	
+add a group	admin	nl	
+add a new account.	admin	nl	
+add a subcategory	admin	nl	
+add a user	admin	nl	
+add account	admin	nl	
+add application	admin	nl	
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	nl	
+add global category	admin	nl	
+add global category for %1	admin	nl	
+add group	admin	nl	
 add new account	admin	nl	Nieuwe gebruiker toevoegen
 add new application	admin	nl	Nieuwe toepassing toevoegen
+add peer server	admin	nl	
+add sub-category	admin	nl	
+admin email	admin	nl	
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	nl	
+admin name	admin	nl	
+administration	admin	nl	
+admins	admin	nl	
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	nl	
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	nl	
 all records and account information will be lost!	admin	nl	Alle records en gebruikersinformatie zal verloren gaan!
+all users	admin	nl	
+allow anonymous access to this app	admin	nl	
 anonymous user	admin	nl	Anonieme gebruiker
+anonymous user (not shown in list sessions)	admin	nl	
+appearance	admin	nl	
+application	admin	nl	
 application name	admin	nl	Toepassingsnaam
 application title	admin	nl	Toepassingstitel
 applications	admin	nl	Toepassingen
+applications list	admin	nl	
+apply	admin	nl	
+are you sure you want to delete the application %1 ?	admin	nl	
 are you sure you want to delete this account ?	admin	nl	Weet u zeker dat u deze gebruiker wilt verwijderen?
 are you sure you want to delete this application ?	admin	nl	Weet u zeker dat u deze toepassing wilt verwijderen?
+are you sure you want to delete this category ?	common	nl	
+are you sure you want to delete this global category ?	admin	nl	
 are you sure you want to delete this group ?	admin	nl	Weet u zeker dat u deze groep wilt verwijderen?
+are you sure you want to delete this server?	admin	nl	
 are you sure you want to kill this session ?	admin	nl	Weet u zeker dat u deze sessie wilt verwijderen?
+async services last executed	admin	nl	Laatst uitgevoerde asynchrone timerdienst
+asynchronous timed services	admin	nl	Asynchrone timerdiensten (cron)
+asyncservices not yet installed or other error (%1) !!!	admin	nl	
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	nl	
+authentication / accounts	admin	nl	
+auto create account records for authenticated users	admin	nl	
+back to the list	admin	nl	
+bi-dir passthrough	admin	nl	
+bi-directional	admin	nl	
+bottom	admin	nl	
+calculate next run	admin	nl	
+can change password	admin	nl	
+cancel testjob!	admin	nl	
+categories list	admin	nl	
+category %1 has been saved !	admin	nl	
+category list	admin	nl	
+change acl rights	admin	nl	
+change config settings	admin	nl	
+change main screen message	admin	nl	
+check ip address of all sessions	admin	nl	
+check items to <b>%1</b> to %2 for %3	admin	nl	
+country selection	admin	nl	
 create group	admin	nl	Groep maken
+crontab only (recomended)	admin	nl	
+data	admin	nl	
+day	admin	nl	
+day of week<br>(0-6, 0=sun)	admin	nl	
+default	admin	nl	
+default file system space per user	admin	nl	
+default file system space per user/group ?	admin	nl	
+deinstall crontab	admin	nl	
+delete account	admin	nl	
+delete all records	admin	nl	
+delete application	admin	nl	
+delete category	admin	nl	
+delete group	admin	nl	
+delete peer server	admin	nl	
+delete the category	admin	nl	
+delete the group	admin	nl	
+delete this category	admin	nl	
+delete this group	admin	nl	
+delete this user	admin	nl	
+deny access to access log	admin	nl	
+deny access to application registery	admin	nl	
+deny access to applications	admin	nl	
+deny access to asynchronous timed services	admin	nl	
+deny access to current sessions	admin	nl	
+deny access to error log	admin	nl	
+deny access to global categories	admin	nl	
+deny access to groups	admin	nl	
+deny access to mainscreen message	admin	nl	
+deny access to peer servers	admin	nl	
+deny access to phpinfo	admin	nl	
+deny access to site configuration	admin	nl	
+deny access to user accounts	admin	nl	
+deny all users access to grant other users access to their entries ?	admin	nl	
+description can not exceed 255 characters in length !	admin	nl	
+disable "auto completion" of the login form	admin	nl	
 disabled	admin	nl	Uitgeschakeld
+disabled (not recomended)	admin	nl	
 display	admin	nl	Weergave
+do not delete the category and return back to the list	admin	nl	
+do you also want to delete all global subcategories ?	admin	nl	
+do you want to delete all global subcategories ?	admin	nl	
+do you want to move all global subcategories one level down ?	admin	nl	
+edit account	admin	nl	
 edit application	admin	nl	Toepassing bewerken
+edit global category	admin	nl	
+edit global category for %1	admin	nl	
 edit group	admin	nl	Groep bewerken
+edit login screen message	admin	nl	
+edit main screen message	admin	nl	
+edit peer server	admin	nl	
+edit table format	admin	nl	
+edit this category	admin	nl	
+edit this group	admin	nl	
+edit this user	admin	nl	
+edit user	admin	nl	
+edit user account	admin	nl	
+enable debug-messages	admin	nl	
 enabled	admin	nl	Ingeschakeld
 enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
+enter a description for the category	admin	nl	
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	nl	
+enter the background color for the login page	admin	nl	
+enter the background color for the site title	admin	nl	
+enter the file name of your logo	admin	nl	
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	nl	
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	
+enter the hostname of the machine on which this server is running	admin	nl	
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	nl	
+enter the search string. to show all entries, empty this field and press the submit button again	admin	nl	
+enter the site password for peer servers	admin	nl	
+enter the site username for peer servers	admin	nl	
+enter the title for your site	admin	nl	
+enter the title of your logo	admin	nl	
+enter the url where your logo should link to	admin	nl	
+enter your default ftp server	admin	nl	
+enter your http proxy server	admin	nl	
+enter your http proxy server port	admin	nl	
+error canceling timer, maybe there's none set !!!	admin	nl	
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	nl	
+error: %1 not found or other error !!!	admin	nl	
+expires	admin	nl	
+fallback (after each pageview)	admin	nl	
+file space	admin	nl	
+file space must be an integer	admin	nl	
+find and register all application hooks	admin	nl	Zoek en registreer alle 'Application Hooks'
+for the times above	admin	nl	
+for the times below (empty values count as '*', all empty = every minute)	admin	nl	
+force selectbox	admin	nl	
+global categories	common	nl	Globale Categorieën
+group ?	admin	nl	
+group has been added	common	nl	
+group has been deleted	common	nl	
+group has been updated	common	nl	
+group list	admin	nl	
+group manager	admin	nl	
 group name	admin	nl	Groepsnaam
+hide php information	admin	nl	
+home directory	admin	nl	
+host information	admin	nl	
+hour<br>(0-23)	admin	nl	
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	nl	
+how many minutes should an account or ip be blocked (default 30) ?	admin	nl	
 idle	admin	nl	inactief
+if no acl records for user or any group the user is a member of	admin	nl	
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	nl	
+inbound	admin	nl	
+install crontab	admin	nl	
 installed applications	common	nl	Geinstalleerde toepassingen
+installed crontab	admin	nl	
+interface	admin	nl	
 ip	admin	nl	IP
+jobs	admin	nl	
 kill	admin	nl	Beeindigen
-last time read	admin	nl	Laatste keer gelezen
+kill session	admin	nl	
 last %1 logins	admin	nl	Laatste %1 logins
+last %1 logins for %2	admin	nl	
+last login	admin	nl	
+last login from	admin	nl	
+last time read	admin	nl	Laatste keer gelezen
+ldap accounts context	admin	nl	
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	nl	
+ldap default shell (e.g. /bin/bash)	admin	nl	
+ldap encryption type	admin	nl	
+ldap groups context	admin	nl	
+ldap host	admin	nl	
+ldap root password	admin	nl	
+ldap rootdn	admin	nl	
+leave the category untouched and return back to the list	admin	nl	
+leave the group untouched and return back to the list	admin	nl	
+list config settings	admin	nl	
+list current sessions	admin	nl	
 list of current users	admin	nl	Lijst van huidige gebruikers
+login history	admin	nl	
+login message	admin	nl	
+login screen	admin	nl	
+login shell	admin	nl	
 login time	admin	nl	Logintijd
 loginid	admin	nl	LoginID
+main screen message	admin	nl	
 manager	admin	nl	Manager
+maximum account id (e.g. 65535 or 1000000)	admin	nl	
+maximum entries in click path history	admin	nl	
+message has been updated	admin	nl	
+method	admin	nl	
+minimum account id (e.g. 500 or 100, etc.)	admin	nl	
+minute	admin	nl	
+mode	admin	nl	
+month	admin	nl	
 new group name	admin	nl	Nieuwe groepsnaam
 new password [ leave blank for no change ]	admin	nl	Nieuw wachtwoord [Leeg laten om niet te wijzigen]
+next run	admin	nl	
+no algorithms available	admin	nl	
+no jobs in the database !!!	admin	nl	
+no login history exists for this user	admin	nl	
+no matches found	admin	nl	
+no modes available	admin	nl	
+no permission to add groups	admin	nl	
+no permission to add users	admin	nl	
+no permission to create groups	admin	nl	
+note: ssl available only if php is compiled with curl support	admin	nl	
+outbound	admin	nl	
+passthrough	admin	nl	
+path information	admin	nl	
+peer server list	admin	nl	
+peer servers	admin	nl	
 percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
+percent this user has logged out	admin	nl	
 permissions	admin	nl	Rechten
 permissions this group has	admin	nl	Rechten van deze groep
+phpinfo	admin	nl	PHP informatie
+please enter a name	admin	nl	
+please enter a name for that server !	admin	nl	
+please run setup to become current	admin	nl	
+please select	admin	nl	
+preferences	admin	nl	
+primary group	admin	nl	
 re-enter password	admin	nl	Wachtwoord opnieuw invoeren
+read this list of methods.	admin	nl	
+register application hooks	admin	nl	
 remove all users from this group	admin	nl	Verwijder alle gebruikers uit deze groep
+remove all users from this group ?	admin	nl	
+return to admin mainscreen	admin	nl	
+return to view account	admin	nl	
+run asynchronous services	admin	nl	
+save the category	admin	nl	
+save the category and return back to the list	admin	nl	
+search accounts	admin	nl	
+search categories	admin	nl	
+search groups	admin	nl	
+search peer servers	admin	nl	
+security	admin	nl	
+select group managers	admin	nl	
 select permissions this group will have	admin	nl	Selecteer de rechten die deze groep krijgt
+select the parent category. if this is a main category select no category	admin	nl	
 select users for inclusion	admin	nl	Selecteer gebruikers om toe te voegen
+select where you want to store/retrieve filesystem information	admin	nl	
+select where you want to store/retrieve user accounts	admin	nl	
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	nl	
+selectbox	admin	nl	
+server %1 has been updated	admin	nl	
+server list	admin	nl	
+server password	admin	nl	
+server type(mode)	admin	nl	
+server url	admin	nl	
+server username	admin	nl	
+set preference values.	admin	nl	
+show 'powered by' logo on	admin	nl	
+show access log	admin	nl	
+show current action	admin	nl	
+show error log	admin	nl	
+show phpinfo()	admin	nl	
+show session ip address	admin	nl	
 site	admin	nl	Site
+site configuration	common	nl	Site-configuratie
+soap	admin	nl	
+sorry, that group name has already been taken.	admin	nl	
 sorry, that group name has already been taking.	admin	nl	Sorry, die groepsnaam is al in gebruik
+sorry, the above users are still a member of the group %1	admin	nl	
 sorry, the follow users are still a member of the group %1	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
+sort the entries	admin	nl	
+ssl	admin	nl	
+standard	admin	nl	
+start testjob!	admin	nl	
 status	admin	nl	status
 submit changes	admin	nl	Wijzigingen toepassen
+submit the search string	admin	nl	
+template selection	admin	nl	
+text entry	admin	nl	
+that application name already exists.	admin	nl	
+that application order must be a number.	admin	nl	
 that loginid has already been taken	admin	nl	Die loginid is al in gebruik
+that name has been used already	admin	nl	
+that server name has been used already !	admin	nl	
+the api is current	admin	nl	
+the api requires an upgrade	admin	nl	
 the login and password can not be the same	admin	nl	De login en het wachtwoord mogen niet gelijk zijn
+the loginid can not be more then 8 characters	admin	nl	
+the testjob sends you a mail everytime it is called.	admin	nl	
 the two passwords are not the same	admin	nl	De twee wachtwoorden komen niet overeen
+the users bellow are still members of group %1	admin	nl	
 they must be removed before you can continue	admin	nl	Ze moeten worden verwijderd voor u verder kunt
+this application is current	admin	nl	
+this application requires an upgrade	admin	nl	
+this category is currently being used by applications as a parent category	admin	nl	
+timeout for application session data in seconds (default 86400 = 1 day)	admin	nl	
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	nl	
+times	admin	nl	
 title	admin	nl	Titel
+top	admin	nl	
 total records	admin	nl	Aantal records
+trust level	admin	nl	
+trust relationship	admin	nl	
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	nl	
+use cookies to pass sessionid	admin	nl	
+use pure html compliant code (not fully working yet)	admin	nl	
+use theme	admin	nl	
 user accounts	admin	nl	Gebruikersaccounts
+user data	admin	nl	
 user groups	admin	nl	Gebruikersgroepen
 user profiles	admin	nl	Gebruikersprofielen
+userdata	admin	nl	
+users choice	admin	nl	
 view access log	admin	nl	Toegangslog bekijken
+view account	admin	nl	
+view category	admin	nl	
+view error log	admin	nl	Foutenlogboek bekijken
 view sessions	admin	nl	Sessies bekijken
+view this user	admin	nl	
+view user account	admin	nl	
+who would you like to transfer all records owned by the deleted user to?	admin	nl	
+would you like phpgroupware to cache the phpgw info array ?	admin	nl	
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	nl	
+would you like phpgroupware to check for new application versions when admins login ?	admin	nl	
+would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	
+would you like to show each application's upgrade status ?	admin	nl	
+xml-rpc	admin	nl	
+you have entered an invalid expiration date	admin	nl	
+you must add at least 1 permission or group to this account	admin	nl	
 you must add at least 1 permission to this account	admin	nl	U moet tenminste 1 recht toekennen aan deze gebruiker
+you must enter a group name.	admin	nl	
+you must enter a lastname	admin	nl	
+you must enter a loginid	admin	nl	
 you must enter a password	admin	nl	U moet een wachtwoord invoeren
 you must enter an application name and title.	admin	nl	U moet een toepassingsnaam en -titel invoeren
+you must enter an application name.	admin	nl	
+you must enter an application title.	admin	nl	
 you must select a file type	admin	nl	U moet een bestandstype invoeren
+you will need to remove the subcategories before you can delete this category	admin	nl	
