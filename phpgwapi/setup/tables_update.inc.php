@@ -2055,7 +2055,7 @@
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_interserv', array(
 				'fd' => array(
-					'server_id'   => array('type' => 'auto'),
+					'server_id'   => array('type' => 'auto', 'nullable' => False),
 					'server_name' => array('type' => 'varchar', 'precision' => 64,  'nullable' => True),
 					'server_host' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
 					'server_url'  => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),

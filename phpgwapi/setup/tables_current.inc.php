@@ -292,12 +292,12 @@
 		),
 		'phpgw_interserv' => array(
 			'fd' => array(
-				'server_id'   => array('type' => 'auto'),
+				'server_id'   => array('type' => 'auto', 'nullable' => False),
 				'server_name' => array('type' => 'varchar', 'precision' => 64,  'nullable' => True),
 				'server_host' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
 				'server_url'  => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
-				'trust_level' => array('type' => 'int',     'precision' => 4,   'nullable' => True),
-				'trust_rel'   => array('type' => 'int',     'precision' => 4,   'nullable' => True),
+				'trust_level' => array('type' => 'int',     'precision' => 4),
+				'trust_rel'   => array('type' => 'int',     'precision' => 4),
 				'username'    => array('type' => 'varchar', 'precision' => 64,  'nullable' => True),
 				'password'    => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
 				'admin_name'  => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
