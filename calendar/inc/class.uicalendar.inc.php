@@ -1113,7 +1113,10 @@
 			));
 			$p->fp('phpgw_body','view_event',True);
 			
-			$GLOBALS['phpgw']->hooks->process('calendar_view');
+			$GLOBALS['phpgw']->hooks->process(array(
+				'location' => 'calendar_view',
+				'cal_id'   => $cal_id
+			));
 		}
 
 		function edit($params='')
