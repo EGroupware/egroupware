@@ -534,6 +534,10 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 			}
 			$html .= "\t</tr>\n";
 		}
+		if (!is_array($rows))
+		{
+			echo "<p>".function_backtrace()."</p>\n";
+		}
 		$html .= "</table>\n";
 		
 		if ($no_table_tr)
@@ -691,4 +695,16 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		}
 		return "<label$id$accesskey $options>$content</label>";
 	}
+	
+	function fieldset($content,$legend='',$options='')
+	{
+		$html = "<fieldset $options>".($legend ? '<legend>'.$this->htmlspecialchars($legend).'</legend>' : '')."\n";
+		
+		if ($content)
+		{
+			$html .= $content;
+			$html .= "\n</fieldset>\n";
+		}
+		return $html;
+	}		
 }
