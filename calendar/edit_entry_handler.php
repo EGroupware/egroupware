@@ -76,6 +76,11 @@
 				}
 			}
 			
+			if($start[hour] > 24)
+			{
+				$start[hour] -= 12;
+			}
+			
 			if ($end[ampm] == 'pm')
 			{
 				if ($end[hour] <> 12)
@@ -89,6 +94,11 @@
 				{
 					$end[hour] -= 12;
 				}
+			}
+			
+			if($end[hour] > 24)
+			{
+				$end[hour] -= 12;
 			}
 		}
 
