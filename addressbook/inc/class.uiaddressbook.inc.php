@@ -367,8 +367,8 @@
 				$this->limit = 30;
 			}
 
-			global $filter;
-			if (empty($filter) || !isset($filter))
+//			global $filter;
+			if (empty($this->filter) || !isset($this->filter))
 			{
 				if($this->prefs['default_filter'])
 				{
@@ -428,14 +428,15 @@
 				$total_records = $this->bo->total;
 			}
 
-			/* global here so nextmatchs accepts our setting of $query */
-			global $query;
+			/* global here so nextmatchs accepts our setting of $query and $filter */
+			global $query,$filter;
+			$query  = $this->query;
+			$filter = $this->filter;
 
-			$query = $this->query;
 			$search_filter = $phpgw->nextmatchs->show_tpl('/index.php',
 				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.get_list','75%',
 				$phpgw_info['theme']['th_bg'],1,1,1,1,$this->cat_id);
-			$query = '';
+			$query = $filter = '';
 
 			$lang_showing = $phpgw->nextmatchs->show_hits($total_records,$this->start);
 
