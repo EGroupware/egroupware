@@ -12,12 +12,29 @@
 
   /* $Id$ */
 {
-// Only Modify the $file and $title variables.....
-	$title = $appname;
-	$file = Array(
-		'PHPWebHosting preferences'	=> $phpgw->link('/phpwebhosting/preferences.php')
-	);
-//Do not modify below this line
-	display_section($appname,$title,$file);
+	echo "<p>\n";
+	$imgfile = $phpgw->common->get_image_dir ($appname) . '/' . $appname . '.gif';
+	if (file_exists ($imgfile))
+	{
+		$imgpath = $phpgw->common->get_image_path ($appname) . '/' . $appname . '.gif';
+	}
+	else
+	{
+		$imgfile = $phpgw->common->get_image_dir ($appname) . '/navbar.gif';
+		if (file_exists ($imgfile))
+		{
+			$imgpath = $phpgw->common->get_image_path ($appname) . '/navbar.gif';
+		}
+		else
+		{
+			$imgpath = '';
+		}
+	}
+
+	section_start (ucfirst ($appname), $imgpath);
+
+	echo '<a href="' . $phpgw->link ('/phpwebhosting/preferences.php') . '">' . lang ('PHPWebHosting preferences') . '</a>';
+
+	section_end (); 
 }
 ?>
