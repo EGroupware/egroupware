@@ -124,9 +124,6 @@
 		return  $id_str;
 	}
 
-	$GLOBALS['phpgw']->preferences->read_repository();
-	echo "prefs[addressbook] = "; _debug_array($GLOBALS['phpgw_info']['user']['preferences']['addressbook']);
-
 	switch ($action)
 	{
 		case '':	// Start, ask Filename
