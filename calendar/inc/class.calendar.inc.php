@@ -132,6 +132,33 @@ class calendar extends calendar_
 		return (!!($this->rights & $needed) == True);
 	}
 
+	function get_fullname($accountid)
+	{
+		global $phpgw;
+
+		$account_id = get_account_id($accountid);
+		if($phpgw->accounts->exists($account_id) == False)
+		{
+			return False;
+		}
+		$db = $phpgw->db;
+		$db->query('SELECT account_lid,account_lastname,account_firstname FROM phpgw_accounts WHERE account_id='.$account_id,__LINE__,__FILE__);
+		if($db->num_rows())
+		{
+			$db->next_record();
+			$fullname = $db->f('account_lid');
+			if($db->f('account_lastname') && $db->f('account_firstname'))
+			{
++				$fullname = $db->f('account_lastname').', '.$db->f('account_firstname');
+			}
+			return $fullname;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
 	function get_long_status($status_short)
 	{
 		switch ($status_short)
@@ -1668,7 +1695,7 @@ class calendar extends calendar_
 		{
 			$this->read_repeated_events($participants[$i]);
 			$str .= '<tr>';
-			$str .= '<td width="15%">'.$phpgw->common->grab_owner_name($participants[$i]).'</td>';
+			$str .= '<td width="15%">'.$this->get_fullname($participants[$i]).'</td>';
 			$events = $this->get_sorted_by_date($date['raw'],$participants[$i]);
 			if($this->sorted_events_matching == False)
 			{
