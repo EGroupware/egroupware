@@ -31,6 +31,7 @@
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 
+	$apps = get_var('apps','GET');
 	$download = get_var('download',Array('GET','POST'));
 	$submit   = get_var('submit',Array('GET','POST'));
 	$showall  = get_var('showall',Array('GET','POST'));
@@ -138,19 +139,24 @@
 		$appname  = get_var('appname',array('POST','GET'));
 		$table    = get_var('table','GLOBALS');
 		$showall  = get_var('showall',array('POST','GET'));
+		$apps     = $GLOBALS['apps'] ? $GLOBALS['apps'] : '';
 
 		if($download)
 		{
 			$GLOBALS['setup_tpl']->set_var('appname',$appname);
+			$GLOBALS['setup_tpl']->set_var('apps',$apps);
 			$string = $GLOBALS['setup_tpl']->parse('out',$template);
 		}
 		else
 		{
+			$url = $GLOBALS['apps'] ? 'applications.php' : 'sqltoarray.php';
 			$GLOBALS['setup_tpl']->set_var('appname',$appname);
 			$GLOBALS['setup_tpl']->set_var('table',$table);
-			$GLOBALS['setup_tpl']->set_var('lang_download','Download');
+			$GLOBALS['setup_tpl']->set_var('lang_download',lang('Download'));
+			$GLOBALS['setup_tpl']->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['setup_tpl']->set_var('showall',$showall);
-			$GLOBALS['setup_tpl']->set_var('action_url','sqltoarray.php');
+			$GLOBALS['setup_tpl']->set_var('apps',$apps);
+			$GLOBALS['setup_tpl']->set_var('action_url',$url);
 			$GLOBALS['setup_tpl']->pfp('out',$template);
 		}
 		return $string;

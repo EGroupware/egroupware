@@ -152,7 +152,7 @@
 
 	if($newsettings['auth_type'] != 'ldap')
 	{
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Configuration'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]["db_type"] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Configuration'),False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
 	}
 
 	@$GLOBALS['phpgw_setup']->db->query("SELECT * FROM $configtbl");

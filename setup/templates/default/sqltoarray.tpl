@@ -25,9 +25,11 @@
 <form method="GET" action="{action_url}">
   <tr>
     <td align="left" width="7%">
-      <input type="submit" name="download" value="{lang_download}">
+      <input type="submit" name="download" value="{lang_download}">&nbsp;
+      <input type="submit" name="cancel" value="{lang_cancel}">
       <input type="hidden" name="appname" value="{appname}">
       <input type="hidden" name="table" value="{table}">
+      <input type="hidden" name="apps" value="{apps}">
       <input type="hidden" name="showall" value="{showall}">
       <input type="hidden" name="submit" value="True">
     </td>

@@ -103,8 +103,7 @@
 	$setup_tpl->set_var('lang_install',lang('install'));
 	$setup_tpl->set_var('lang_cancel',lang('cancel'));
 
-	$ConfigDomain = $_COOKIE['ConfigDomain'] ? $_COOKIE['ConfigDomain'] : $_POST['ConfigDomain'];
-	$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+	$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
 	$setup_tpl->pparse('out','T_lang_main');
 	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>

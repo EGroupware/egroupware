@@ -105,8 +105,7 @@
 		exit;
 	}
 
-	$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
-	$GLOBALS['phpgw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$GLOBALS['phpgw_setup']['ConfigDomain']);
 
 	if(get_var('submit',Array('POST')))
 	{

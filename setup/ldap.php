@@ -43,7 +43,7 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
-	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Config'),'','config',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Config'),'','config',$GLOBALS['phpgw_setup']['ConfigDomain']);
 
 	if ($GLOBALS['error'])
 	{

@@ -1,4 +1,4 @@
-<!-- begin system_chaset.tpl -->
+<!-- begin system_charset.tpl -->
 <p align="center"><font color="red">{error_msg}</font></p>
 
 <form method="POST" action="system_charset.php">

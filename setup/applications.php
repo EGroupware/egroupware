@@ -38,8 +38,6 @@
 	}
 	// Does not return unless user is authorized
 
-	$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
-
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array(
@@ -117,7 +115,7 @@
 
 	if(@get_var('submit',Array('POST')))
 	{
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
 		$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
 		$setup_tpl->pparse('out','header');
 
@@ -238,7 +236,7 @@
 	}
 	else
 	{
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
 	}
 
 	$detail = get_var('detail',Array('GET'));
@@ -265,7 +263,7 @@
 					$tblcnt = count($setup_info[$detail][$key]);
 					if(is_array($val))
 					{
-						$key = '<a href="sqltoarray.php?appname=' . $detail . '&submit=True">' . $key . '(' . $tblcnt . ')</a>' . "\n";
+						$key = '<a href="sqltoarray.php?appname=' . $detail . '&submit=True&apps=True">' . $key . '(' . $tblcnt . ')</a>' . "\n";
 						$val = implode(',' . "\n",$val);
 					}
 				}

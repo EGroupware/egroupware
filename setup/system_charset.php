@@ -48,14 +48,14 @@
 
 	if ($diagnostics || !@$_POST['convert'])
 	{
-		$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
 	}
 	if (@$_POST['convert'])
 	{
 		if (empty($_POST['current_charset']))
 		{
 			$errors[] = lang('You need to select your current charset!');
-			$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+			$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['phpgw_setup']['ConfigDomain'] . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']['ConfigDomain']]['db_type'] . ')');
 		}
 		else
 		{

@@ -39,9 +39,7 @@
 		echo 'Please contact your System Administrator';
 		exit;
 	}
-										
 
-	
 	/*  If we included the header.inc.php, but it is somehow broken, cover ourselves... */
 	if(!defined('PHPGW_SERVER_ROOT') && !defined('PHPGW_INCLUDE_ROOT'))
 	{
