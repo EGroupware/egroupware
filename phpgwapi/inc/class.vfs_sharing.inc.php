@@ -214,7 +214,8 @@
 				$sql = "SELECT DISTINCT sh.file_id     as file_id,
 							   sh.acl_rights  as acl_rights,
 							   fls.directory  as directory,
-							   fls.name       as name
+							   fls.name       as name,
+                               fls.owner_id   as owner_id
 						FROM   phpgw_vfs2_shares as sh,
 							   phpgw_vfs2_files  as fls
 						WHERE  sh.file_id = fls.file_id
@@ -236,7 +237,8 @@
 				$sql = "SELECT DISTINCT sh.file_id     as file_id,
 							   sh.acl_rights  as acl_rights,
 							   fls.directory  as directory,
-							   fls.name       as name
+							   fls.name       as name,
+                               fls.owner_id   as owner_id
 						FROM   phpgw_vfs2_shares as sh,
 							   phpgw_vfs2_files  as fls
 						WHERE  sh.file_id = fls.file_id
@@ -287,7 +289,8 @@
 			$sql = "SELECT DISTINCT sh.file_id     as file_id,
 						   sh.acl_rights  as acl_rights,
 						   fls.directory  as directory,
-						   fls.name       as name
+						   fls.name       as name,
+                           fls.owner_id   as owner_id
 					FROM   phpgw_vfs2_shares as sh,
 						   phpgw_vfs2_files  as fls
 					WHERE  sh.file_id = fls.file_id
