@@ -91,11 +91,20 @@ class db {
     return $this->Link_ID;
   }
 
-  // This only affects systems not using persistant connections
-  function disconnect()
-  {
-    return @mysql_close($this->Link_ID);
-  }
+	// This only affects systems not using persistant connections
+	function disconnect()
+	{
+		if($this->Link_ID <> 0)
+		{
+			@mysql_close($this->Link_ID);
+			$this->Link_ID = 0;
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
   function limit($start)
   {
