@@ -1,16 +1,21 @@
 %1 records imported	infolog	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+Add a file	infolog	de	Add a file
+Invalid filename	infolog	de	Invalid filename
 accept	infolog	en	accept
 action	infolog	en	Action
 add	infolog	en	Add
 add sub	infolog	en	add Sub
 all	infolog	en	All
 are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
+attach file	infolog	en	Attach file
 back to Projectlist	infolog	en	Back to Projectlist
 billed	infolog	en	billed
 both	infolog	en	both
 call	infolog	en	call
 category	infolog	en	Category
+close	infolog	de	Close
+comment	infolog	en	Comment
 confirm	infolog	en	confirm
 csv-fieldname	infolog	en	CSV-Fieldname
 csv-filename	infolog	en	CSV-Filename
@@ -30,20 +35,20 @@ fieldseparator	infolog	en	Fieldseparator
 finish	infolog	en	finish
 from	infolog	en	From
 import	infolog	en	Import
-infolog - import CSV-File	infolog	en	InfoLog - Import CSV-File
+infolog	common	en	InfoLog
 infolog - delete	infolog	en	Info Log - Delete
 infolog - edit	infolog	en	InfoLog - Edit
+infolog - import CSV-File	infolog	en	InfoLog - Import CSV-File
 infolog - new	infolog	en	InfoLog - New
 infolog - new subproject	infolog	en	InfoLog - New Subproject
 infolog - subprojects from	infolog	en	InfoLog - Subprojects from
-infolog-fieldname	infolog	en	Info Log-Fieldname
-infolog	common	en	InfoLog
 infolog preferences	common	en	InfoLog preferences
+infolog-fieldname	infolog	en	Info Log-Fieldname
 last changed	infolog	en	last changed
 list no Subs/Childs	infolog	en	List no Subs/Childs
 no - cancel	infolog	en	No - Cancel
-no filter	infolog	en	no Filter
 no entries found, try again ...	infolog	en	no entries found, try again ...
+no filter	infolog	en	no Filter
 none	infolog	en	None
 not	infolog	en	not
 not assigned	infolog	en	not assigned
@@ -63,9 +68,9 @@ pattern for search in projects	infolog	en	pattern for search in Projects
 phone	infolog	en	Phonecall
 phone/email	infolog	en	Phone/Email
 phonecall	infolog	en	Phonecall
-project	infolog	en	Project
 priority	infolog	en	Priority
 private	infolog	en	Private
+project	infolog	en	Project
 re:	infolog	en	Re:
 reject	infolog	en	reject
 responsible	infolog	en	Responsible

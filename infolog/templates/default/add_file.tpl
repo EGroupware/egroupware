@@ -1,5 +1,7 @@
 {info_css}
-      <p class=action>{lang_info_action}<br>
+ <p class=action>{lang_info_action}<br>
+
+ <center>{error_list}</center>
       <hr noshade width="98%" align="center" size="1">
      <center>
          <table width=95% border=0 cellspacing=1 cellpadding=3>
@@ -23,15 +25,25 @@
           </tr>
       </table><p>
 
-       <table border=0 with=65%>
-       <tr>
-        <td align=center colspan=2>
-         <b>{deleteheader}</b>
-        </td>
-       </tr>
-       <tr>
-         <td>{no_button}</td>
-         <td>{yes_button}</td>
-       </tr>
-      </table>
-     </center>
+ <center>
+  <form method="POST" name="EditorForm" action="{actionurl}" enctype="multipart/form-data">
+        {hidden_vars}
+        <table width="90%" border="0" cellspacing="0" cellpadding="2">
+         <tr>
+           <td>{lang_file}</td>
+           <td><input type="file" name="attachfile" value=""></td>
+
+           <td>{lang_comment}</td>
+           <td><input name="filecomment" size="30" maxlength="64" value=""></td>
+         </tr>
+        </table>
+		  <p>
+        <table width="75%" border="0" cellspacing="0" cellpadding="0">
+         <tr valign="bottom">
+          <td>{submit_button}</td>
+          <td>{cancel_button}</td>
+         </tr>
+        </table>
+    </form>
+  </center>
+</html>

@@ -17,40 +17,46 @@
 	{
 		var $public_functions = array
 		(
-			'get_list'	=> True,
-			'view'	=>	True,
-			'add'		=>	True,
-			'edit'	=> True,
-			'delete'	=> True,
+			'get_list'    => True,
+			'view'        => True,
+			'add'         => True,
+			'edit'        => True,
+			'delete'      => True,
+			'get_file'    => True,
+			'add_file'    => True,
 			'preferences' => True
 		);
 		var $icons;
+		var $vfs;
+		var $basedir='/infolog';
 
 		function uiinfolog( )
 		{
 			$this->bo = CreateObject('infolog.boinfolog');
+			$this->vfs = CreateObject('phpgwapi.vfs');
 
 			$this->icons = array(
 				'type' => array(
-					'task' => 'task.gif',       'task_alt' => 'Task',
-					'phone' => 'phone.gif',      'phone_alt' => 'Phonecall',
-					'note' => 'note.gif',      'note_alt' => 'Note',
-					'confirm' => 'confirm.gif','confirm_alt' => 'Confirmation',
-					'reject' => 'reject.gif',   'reject_alt' => 'Reject',
-					'email' => 'email.gif',      'email_alt' => 'Email' ),
+					'task'      => 'task.gif',      'task_alt'      => 'Task',
+					'phone'     => 'phone.gif',     'phone_alt'     => 'Phonecall',
+					'note'      => 'note.gif',      'note_alt'      => 'Note',
+					'confirm'   => 'confirm.gif',   'confirm_alt'   => 'Confirmation',
+					'reject'    => 'reject.gif',    'reject_alt'    => 'Reject',
+					'email'     => 'email.gif',     'email_alt'     => 'Email' ),
 				'action' => array(
-					'new' => 'new.gif',         'new_alt' => 'Add Sub',
-					'view' => 'view.gif',      'view_alt' => 'View Subs',
-					'parent' => 'parent.gif',   'parent_alt' => 'View other Subs',
-					'edit' => 'edit.gif',      'edit_alt' => 'Edit',
-					'delete' => 'delete.gif',   'delete_alt' => 'Delete' ),
+					'new'       => 'new.gif',       'new_alt'       => 'Add Sub',
+					'view'      => 'view.gif',      'view_alt'      => 'View Subs',
+					'parent'    => 'parent.gif',    'parent_alt'    => 'View other Subs',
+					'edit'      => 'edit.gif',      'edit_alt'      => 'Edit',
+					'addfile'   => 'addfile.gif',   'addfile_alt'   => 'Add a file',
+					'delete'    => 'delete.gif',    'delete_alt'    => 'Delete' ),
 				'status' => array(
-					'billed' => 'billed.gif',   'billed_alt' => 'billed',
-					'done' => 'done.gif',      'done_alt' => 'done',
+					'billed'    => 'billed.gif',    'billed_alt'    => 'billed',
+					'done'      => 'done.gif',      'done_alt'      => 'done',
 					'will-call' => 'will-call.gif', 'will-call_alt' => 'will-call',
-					'call' => 'call.gif',      'call_alt' => 'call',
-					'ongoing' => 'ongoing.gif','ongoing_alt' => 'ongoing',
-					'offer' => 'offer.gif',      'offer_alt' => 'offer' )
+					'call'      => 'call.gif',      'call_alt'      => 'call',
+					'ongoing'   => 'ongoing.gif',   'ongoing_alt'   => 'ongoing',
+					'offer'     => 'offer.gif',     'offer_alt'     => 'offer' )
 			);
 
 			$this->filters = array(
@@ -190,6 +196,20 @@
 			{
 				$owner = "<span class=private>$owner</span>";
 			}
+
+			// add the links to the files which corrospond to this entry
+			$attachments=$this->vfs->ls($this->basedir.'/'.$info['info_id'].'/',array(REALTIVE_NONE));
+			while (list($keys,$fileinfo) = each($attachments))
+			{
+				$links .= isset($links) ? ', ' : '<br>';
+				$links .= $this->html->a_href($fileinfo['name'],'/index.php',
+					$this->menuaction('get_file') + array(
+						'info_id'    => $info['info_id'],
+						'filename'   => $fileinfo['name'])
+					);
+				if ($fileinfo['comment']) $links .= ' (' . $fileinfo['comment'] . ')';
+			}
+
 			return array(
 				'type'        => $this->icon('type',$info['info_type']),
 				'status'      => $this->icon('status',$info['info_status']),
@@ -197,12 +217,13 @@
 				'subject'     => $subject,
 				'des'         => nl2br($info['info_des']),
 				'startdate'   => $GLOBALS['phpgw']->common->show_date($info['info_startdate'],
-						$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
 				'enddate'     => $enddate,
 				'owner'       => $owner,
 				'datecreated' => $GLOBALS['phpgw']->common->show_date($info['info_datecreated'],
-						$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
-				'responsible' => $responsible
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
+				'responsible' => $responsible,
+				'filelinks'   => $links
 			);
 		}
 
@@ -252,7 +273,8 @@
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $action,$addr_id,$proj_id,$info_id;
 
-			if (!$for_include) {
+			if (!$for_include)
+			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 			}
@@ -419,6 +441,10 @@
 						$this->icon('action','edit'),'/index.php',
 						$hidden_vars+array('info_id' => $id)+
 						$this->menuaction('edit')));
+					$t->set_var('addfiles',$html->a_href(
+						$this->icon('action','addfile'),'/index.php',
+						$hidden_vars+array('info_id' => $id)+
+						$this->menuaction('add_file')));
 				}
 				else
 				{
@@ -485,6 +511,127 @@
 			$t->pfp('out','info_list_t',true);
 		}
 
+		/*
+		**	Send a requested file to the user.
+		**	ACL check is done by the VFS
+		*/
+		function get_file( )
+		{
+			$info_id=$GLOBALS['HTTP_GET_VARS']['info_id'];
+			$filename=$GLOBALS['HTTP_GET_VARS']['filename'];
+
+			$browser = CreateObject('phpgwapi.browser');
+
+			$referer = $this->get_referer();
+
+			if (!$info_id || !$filename || !$this->bo->check_access($info_id,PHPGW_ACL_READ))
+			{
+				Header('Location: ' .  $html->link($referer));
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+
+			$fn=$this->basedir.'/'.$info_id.'/'.$filename;
+			$browser->content_header($fn);
+			echo $this->vfs->read($fn,array(RELATIVE_ROOT));
+			$GLOBALS['phpgw']->common->phpgw_exit();
+		}
+
+		/*
+		**	Put a file to the corrosponding place in the VFS and set the attributes
+		**	ACL check is done by the VFS
+		*/
+		function add_one_file($info_id,$filepos,$name,$size,$type,$comment='')
+		{
+			//echo "<p>add_one_file: info_id='$info_id', filepos='$filepos', name='$name', size='$size', type='$type', comment='$comment'</p>\n";
+
+			if ($filepos && ($filepos!="none") && $info_id)
+			{
+				// create the root for attached files in infolog, if it does not exists
+				if (!($this->vfs->file_exists($this->basedir,array(RELATIVE_ROOT))))
+				{
+					$this->vfs->override_acl = 1;
+					$this->vfs->mkdir($this->basedir,array(RELATIVE_ROOT));
+					$this->vfs->override_acl = 0;
+				}
+
+				if (!$this->vfs->securitycheck($filename))
+				{
+					return lang('Invalid filename');
+				}
+				else
+				{
+					$dir=$this->basedir.'/'.$info_id;
+					if (!($this->vfs->file_exists($dir,array(RELATIVE_ROOT))))
+					{
+						$this->vfs->override_acl = 1;
+						$this->vfs->mkdir($dir,array(RELATIVE_ROOT));
+						$this->vfs->override_acl = 0;
+					}
+					$this->vfs->cp($filepos,$dir.'/'.$name,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
+					$this->vfs->set_attributes ($dir.'/'.$name, array (RELATIVE_ROOT),
+						array ('mime_type' => $type,
+								 'comment' => stripslashes ($comment),
+								 'app' => 'infolog'));
+				}
+			}
+		}
+
+		/*
+		**  Display dialog to add one file to an info_log entry
+		*/
+		function add_file( )
+		{
+			global $upload,$info_id;
+			global $attachfile,$attachfile_name,$attachfile_size,$attachfile_type;
+			global $filecomment;
+			global $sort,$order,$query,$start,$filter,$cat_id,$referer;
+
+			$t = $this->template; $html = $this->html;
+			$hidden_vars = array('sort' => $sort,'order' => $order,
+										'query' => $query,'start' => $start,
+										'filter' => $filter,'cat_id' => $cat_id );
+			if (!isset($referer))
+				$referer = $this->get_referer();
+
+			if (!isset($info_id) || !$info_id || !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
+			{
+				$error[]=lang('Access denied');
+				Header('Location: ' . $html->link($referer, $hidden_vars+array('cd'=>15)));
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+
+			if ($upload) {
+				$fileerror = $this->add_one_file($info_id,$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment);
+				if ($fileerror!='') $error[]=$fileerror;
+			}
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
+
+			$t->set_file(array('info_add_file' => 'add_file.tpl'));
+			$t->set_var( $this->setStyleSheet( ));
+			$t->set_var( $this->infoHeaders(  ));
+			$t->set_var( $this->formatInfo( $info_id ));
+			$t->set_var( 'hidden_vars',$html->input_hidden($hidden_vars+array('info_id' => $info_id)));
+
+			if (is_array($error))
+			{
+				$t->set_var('error_list',$GLOBALS['phpgw']->common->error_list($error));
+			}
+
+			$t->set_var('lang_info_action',lang('InfoLog').' - '.lang('attach file'));
+
+			$t->set_var('actionurl',$html->link('/index.php',array('menuaction' => 'infolog.uiinfolog.add_file')));
+
+			$t->set_var('lang_file',lang('attach file').':');
+			$t->set_var('lang_comment',lang('comment').':');
+
+			$t->set_var('submit_button',$html->submit_button('upload','attach file'));
+			$t->set_var('cancel_button',$html->form_1button('cancel_button','Cancel','',$referer));
+
+			$t->pfp('out','info_add_file');
+		}
+
+
 		function edit( )
 		{
 			global $cat_id,$sort,$order,$query,$start,$filter;
@@ -494,6 +641,8 @@
 			global $dur_days,$eday,$emonth,$eyear;
 			global $type,$from,$addr,$id_addr,$id_project,$subject,$des,$access;
 			global $pri,$status,$confirm,$info_cat,$id_parent,$responsible;
+			global $attachfile,$attachfile_name,$attachfile_size,$attachfile_type;
+			global $filecomment;
 
 			$t = $this->template; $html = $this->html;
 
@@ -614,10 +763,16 @@
 							'id_parent' => $id_parent,
 							'responsible' => $responsible
 						));
+
+						// save the attached file
+						$fileerror = $this->add_one_file($this->bo->so->data['info_id'],$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment);
+						if ($fileerror!='') $error[]=$fileerror;
 					}
+
 					if (!$query_addr && !$query_project)
 					{
 						Header('Location: ' . $html->link($referer, array('cd'=>15)));
+						$GLOBALS['phpgw']->common->phpgw_exit();
 					}
 				}
 			}
@@ -782,6 +937,9 @@
 			if (!isset($access)) $access = $this->bo->so->data['info_access'] == 'private';
 			$t->set_var('access_list',$html->checkbox('access',$access));
 
+			$t->set_var('lang_file',lang('attach file').':');
+			$t->set_var('lang_comment',lang('comment').':');
+
 			$t->set_var('edit_button',$html->submit_button('save','Save'));
 
 			if (!$action && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
@@ -814,12 +972,24 @@
 			    !$this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 			{
 				Header('Location: ' .  $html->link($referer));
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 			if ($confirm)
 			{
 				$this->bo->delete($info_id);
 
 				Header('Location: ' . $html->link($referer,array( 'cd' => 16 )));
+
+				/*
+				**	Also remove the attached files for that entry
+				*/
+				$dir=$this->basedir.'/'.$info_id;
+				if ($this->vfs->file_exists($dir,array(RELATIVE_ROOT)))
+				{
+						$this->vfs->override_acl = 1;
+						$this->vfs->delete($dir,array(RELATIVE_ROOT));
+						$this->vfs->override_acl = 0;
+				}
 			}
 			else
 			{

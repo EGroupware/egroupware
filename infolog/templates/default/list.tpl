@@ -22,7 +22,7 @@
            <tr bgcolor="{th_bg}" valign="top">
             <td class=list>{type}</td>
             <td class=list>{status}</td>
-            <td class=list>{subject}<br>{des}</td>
+            <td class=list>{subject}<br>{des}{filelinks}</td>
             <td class=list>{startdate}<br>{enddate}</td>
             <td class=list>{owner}<br>{datecreated}</td>
             <td class=list">{responsible}</td>
@@ -48,14 +48,14 @@
       <tr bgcolor="{tr_color}" valign="top">
         <td class=list>{type}</td>
         <td class=list>{status}</td>
-        <td class=list>{subject}<br>{des}</td>
+        <td class=list>{subject}<br>{des}{filelinks}</td>
         <td class=list>{startdate}<br>{enddate}</td>
         <td class=list>{owner}<br>{datecreated}</td>
         <td class=list>{responsible}</td>
         <td class=list>{subadd} 
            {viewsub} 
          {viewparent}</td>
-        <td class=list>{edit}&nbsp;{delete}</td>
+        <td class=list>{edit}&nbsp;{delete}&nbsp;{addfiles}</td>
       </tr>
 <!-- END info_list -->
 

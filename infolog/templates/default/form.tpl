@@ -6,7 +6,7 @@
       <center>{error_list}</center>
 
      <center>
-       <form method="POST" name="EditorForm" action="{actionurl}">
+       <form method="POST" name="EditorForm" action="{actionurl}" enctype="multipart/form-data">
         {common_hidden_vars}
         <table width="90%" border="0" cellspacing="0" cellpadding="2">
    
@@ -61,6 +61,18 @@
          <tr>
             <td colspan="4"><hr size="1"></td>
          </tr>
+
+         <tr>
+           <td>{lang_file}</td>
+           <td><input type="file" name="attachfile" value=""></td>
+
+           <td>{lang_comment}</td>
+           <td><input name="filecomment" size="30" maxlength="64" value=""></td>
+         </tr>
+         <tr>
+            <td colspan="4"><hr size="1"></td>
+         </tr>
+
          <tr>
            <td width="15%">{lang_start_date}:</td>
            <td width="40%">{start_select_date}</td>

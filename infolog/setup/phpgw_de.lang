@@ -1,16 +1,21 @@
 %1 records imported	infolog	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
+Add a file	infolog	de	Datei anhängen
+Invalid filename	infolog	de	Ungültiger Dateiname
 accept	infolog	de	bei Annahme
 action	infolog	de	Befehle
 add	infolog	de	Hinzufügen
 add sub	infolog	de	neues Teilprojekt anlegen
 all	infolog	de	alle
 are you sure you want to delete this entry	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
+attach file	infolog	de	Datei anhängen
 back to projectlist	infolog	de	Zurück zur Gesamtliste
 billed	infolog	de	abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	anrufen
 category	infolog	de	Kategorie
+close	infolog	de	Schließen
+comment	infolog	de	Kommentar
 confirm	infolog	de	Bestätigung
 csv-fieldname	infolog	de	CSV-Feldname
 csv-filename	infolog	de	CSV-Dateiname
@@ -30,20 +35,20 @@ fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
 from	infolog	de	Von
 import	infolog	de	Import
-infolog - import csv-file	infolog	de	InfoLog - Import CSV-Datei
+infolog	common	de	InfoLog
 infolog - delete	infolog	de	InfoLog - Löschen
 infolog - edit	infolog	de	InfoLog - Bearbeiten
+infolog - import csv-file	infolog	de	InfoLog - Import CSV-Datei
 infolog - new	infolog	de	InfoLog - Anlegen
 infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
 infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
-infolog-fieldname	infolog	de	InfoLog-Feldname
-infolog	common	de	InfoLog
 infolog preferences	common	de	InfoLog Einstellungen
+infolog-fieldname	infolog	de	InfoLog-Feldname
 last changed	infolog	de	letzte Änderung
 list no Subs/Childs	infolog	de	Teilprojekte/Antwortdokumente nicht anzeigen
 no - cancel	infolog	de	Nein - Abbruch
-no filter	infolog	de	kein Filter
 no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
+no filter	infolog	de	kein Filter
 none	infolog	de	keine
 not	infolog	de	nicht
 not assigned	infolog	de	nicht zugewiesen
@@ -63,9 +68,9 @@ pattern for search in projects	infolog	de	Muster für Suche des Projekts
 phone	infolog	de	Anruf
 phone/email	infolog	de	Telefon/Email
 phonecall	infolog	de	Telefonanruf
-project	infolog	de	Projekt
 priority	infolog	de	Priorität
 private	infolog	de	Privat
+project	infolog	de	Projekt
 re:	infolog	de	Re: 
 reject	infolog	de	Absage
 responsible	infolog	de	Auftrag an
