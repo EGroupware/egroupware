@@ -99,7 +99,7 @@
     }
   }
   function v9072000to0_9_1(){
-    global $currentver, $newversion, $db;
+    global $currentver, $phpgw_info, $db;
     $didupgrade = True;
     if ($currentver == "9072000"){
 
@@ -181,22 +181,42 @@
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 9072000 to 0.9.1 is completed.</td>\n";
       echo "  </tr>\n";
-      $currentver = "0_9_1";
+      $currentver = "0.9.1";
     }
   }
 
-
-  function v0_9_1to0_9_2()
-  {
-    global $currentver, $newversion, $db;
+  function v0_9_1to0_9_2pre1(){
+    global $currentver, $phpgw_info, $db;
     $didupgrade = True;
-    if ($currentver == "9072000") {
-       $db->query("alter table access_log change lo lo varchar(255)");
+    if ($currentver == "0.9.1"){
+
+      $db->query("alter table access_log change lo lo varchar(255)");
+      $db->query("alter table addressbook  change ab_id ab_id int(11) NOT NULL auto_increment");
+      $db->query("alter table addressbook add ab_company_id int(10) unsigned");
+      $db->query("alter table addressbook add ab_title varchar(60)");
+      $db->query("alter table addressbook add ab_address2 varchar(60)");
+
+      $sql = "CREATE TABLE customers (
+          company_id int(10) unsigned NOT NULL auto_increment,
+          company_name varchar(255),
+          website varchar(80),
+          ftpsite varchar(80),
+          industry_type varchar(50),
+          status varchar(30),
+          software varchar(40),
+          lastjobnum int(10) unsigned,
+          lastjobfinished date,
+          busrelationship varchar(30),
+          notes text,
+          PRIMARY KEY (company_id)
+        );";
+      $db->query($sql);  
+
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from 0.9.1 to 0.9.2pre1 is completed.</td>\n";
+      echo "  </tr>\n";
+      $currentver = "0.9.2pre1";
     }
-    echo "  <tr bgcolor=\"e6e6e6\">\n";
-    echo "    <td>Upgrade from 0.9.1 to 0.9.2 is completed.</td>\n";
-    echo "  </tr>\n";
-    $currentver = "0_9_2";
   }
 
   echo "<table border=\"0\" align=\"center\">\n";
@@ -209,8 +229,8 @@
   v8212000to9052000();
   v9052000to9072000();
   v9072000to0_9_1();
-  v0_9_1to0_9_2();
-  $db->query("update applications set app_version='$newversion' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
+  v0_9_1to0_9_2pre1();
+  $db->query("update applications set app_version='".$phpgw_info["server"]["version"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
   if (!$didupgrade == True){
     echo "  <tr bgcolor=\"e6e6e6\">\n";

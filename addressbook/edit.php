@@ -35,6 +35,7 @@
 			      'access'	=> $phpgw->db->f("ab_access"),
 			      'firstname' => $phpgw->db->f("ab_firstname"),
 			      'lastname' => $phpgw->db->f("ab_lastname"),
+       			      'title'   => $phpgw->db->f("ab_title"),
 			      'email'	=> $phpgw->db->f("ab_email"),
 			      'hphone'	=> $phpgw->db->f("ab_hphone"),
  			      'wphone'	=> $phpgw->db->f("ab_wphone"),
@@ -43,11 +44,13 @@
 			      'mphone'	=> $phpgw->db->f("ab_mphone"),
 			      'ophone'	=> $phpgw->db->f("ab_ophone"),
 			      'street'	=> $phpgw->db->f("ab_street"),
+                	      'address2' => $phpgw->db->f("ab_address2"),
 			      'city'	=> $phpgw->db->f("ab_city"),
 			      'state'	=> $phpgw->db->f("ab_state"),
 			      'zip'	=> $phpgw->db->f("ab_zip"),
 			      'bday'	=> $phpgw->db->f("ab_bday"),
 			      'company' => $phpgw->db->f("ab_company"),
+			      'company_id' => $phpgw->db->f("ab_company_id"),
 			      'notes'	=> $phpgw->db->f("ab_notes")
 		          );
 
@@ -55,11 +58,15 @@
 
   } else {
     $bday = $bday_month . "/" . $bday_day . "/" . $bday_year;
-    $access = $phpgw->accounts->array_to_string($access,$n_groups);
+    if ($access != "private" && $access != "public") {
+     $access = $phpgw->accounts->array_to_string($access,$n_groups);
+    }
 
-    $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
-         . "', ab_firstname='". addslashes($firstname)
+    if($phpgw_info["apps"]["timetrack"]["enabled"]) {
+      $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
+            . "', ab_firstname='". addslashes($firstname)
 	    . "', ab_lastname='" . addslashes($lastname)
+            . "', ab_title='"   . addslashes($title)
 	    . "', ab_hphone='" 	. addslashes($hphone)
 	    . "', ab_wphone='" 	. addslashes($wphone)
 	    . "', ab_fax='" 	. addslashes($fax)
@@ -67,14 +74,37 @@
 	    . "', ab_mphone='" 	. addslashes($mphone)
 	    . "', ab_ophone='" 	. addslashes($ophone)
 	    . "', ab_street='" 	. addslashes($street)
+            . "', ab_address2='" . addslashes($address2)
 	    . "', ab_city='" 	. addslashes($city)
 	    . "', ab_state='" 	. addslashes($state)
 	    . "', ab_zip='" 	. addslashes($zip)
 	    . "', ab_bday='" 	. addslashes($bday)
 	    . "', ab_notes='" 	. addslashes($notes)
-	    . "', ab_company='" 	. addslashes($company)
+	    . "', ab_company_id='" . addslashes($company)
 	    . "', ab_access='" 	. addslashes($access)
 	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["userid"] . "' AND ab_id=$ab_id";
+     } else {
+      $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
+            . "', ab_firstname='". addslashes($firstname)
+            . "', ab_lastname='" . addslashes($lastname)
+            . "', ab_title='"   . addslashes($title)
+            . "', ab_hphone='"  . addslashes($hphone)
+            . "', ab_wphone='"  . addslashes($wphone)
+            . "', ab_fax='"     . addslashes($fax)
+            . "', ab_pager='"   . addslashes($pager)
+            . "', ab_mphone='"  . addslashes($mphone)
+            . "', ab_ophone='"  . addslashes($ophone)
+            . "', ab_street='"  . addslashes($street)
+            . "', ab_address2='" . addslashes($address2)
+            . "', ab_city='"    . addslashes($city)
+            . "', ab_state='"   . addslashes($state)
+            . "', ab_zip='"     . addslashes($zip)
+            . "', ab_bday='"    . addslashes($bday)
+            . "', ab_notes='"   . addslashes($notes)
+            . "', ab_company='" . addslashes($company)
+            . "', ab_access='"  . addslashes($access)
+            . "'  WHERE ab_owner='" . $phpgw_info["user"]["userid"] . "' AND ab_id=$ab_id";
+     }
 
      $phpgw->db->query($sql);
 

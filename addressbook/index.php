@@ -17,6 +17,7 @@
   include("../header.inc.php");
 
   echo "<center>" . lang("Address book");
+  //echo "<br>Time track = " . $phpgw_info["apps"]["timetrack"]["enabled"];
 
   if (! $start)
      $start = 0;
@@ -44,11 +45,25 @@
   }
 
   if ($query) {
-     $phpgw->db->query("select count(*) from addressbook where $filtermethod AND (ab_lastname "
-			      . "like '%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%"
-			      . "' OR ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state like '"
-			      . "%$query%' OR ab_zip like '%$query%' OR ab_notes like '%$query%' OR ab_company"
-			      . " like '%$query%')");
+    if ($phpgw_info["apps"]["timetrack"]["enabled"]){
+     $phpgw->db->query("SELECT count(*) "
+       . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
+       . "AND $filtermethod AND (a.ab_lastname like '"
+       . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
+       . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
+       . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
+       . "'%$query%' OR c.company_name like '%$query%')"
+       . " $ordermethod limit $limit");
+     } else {
+     $phpgw->db->query("SELECT count(*) "
+       . "from addressbook "
+       . "WHERE $filtermethod AND (ab_lastname like '"
+       . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
+       . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
+       . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
+       . "'%$query%' OR ab_company like '%$query%')"
+       . " $ordermethod limit $limit");
+     }
 
     $phpgw->db->next_record();
 
@@ -58,9 +73,14 @@
         echo "<br>" . lang("your search returned x matchs",$phpgw->db->f(0));
   } else {
      $phpgw->db->query("select count(*) from addressbook where $filtermethod");
+     $phpgw->db->next_record();
   }
+  if($phpgw_info["apps"]["timetrack"]["enabled"])
+   $company_sortorder = "c.company_name";
+  else
+   $company_sortorder = "ab_company";
 
-  $phpgw->db->next_record();
+  //$phpgw->db->next_record();
 
   if ($phpgw->db->f(0) > $phpgw_info["user"]["preferences"]["maxmatchs"])
      echo "<br>" . lang("showing x - x of x",($start + 1),
@@ -80,7 +100,7 @@
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_company"] == "True" ) {
           echo '<td height="21">';
           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-          echo $phpgw->nextmatchs->show_sort_order($sort,"ab_company",$order,"index.php",lang("Company Name"));
+          echo $phpgw->nextmatchs->show_sort_order($sort,$company_sortorder,$order,"index.php",lang("Company Name"));
           echo '</font></td>';
        }
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_lastname"] == "True" ) {
@@ -129,13 +149,37 @@
 
 <?php
   if ($query) {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod AND (ab_lastname like '"
-			      . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
-	                . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
-	                . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
-	                . "'%$query%' OR ab_company like '%$query%') $ordermethod limit $limit");
+   if($phpgw_info["apps"]["timetrack"]["enabled"]){
+     $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
+       . "a.ab_email,a.ab_wphone,c.company_name "
+       . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
+       . "AND $filtermethod AND (a.ab_lastname like '"
+       . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
+       . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
+       . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
+       . "'%$query%' OR c.company_name like '%$query%') $ordermethod limit $limit");
+   } else {
+     $phpgw->db->query("SELECT ab_id,ab_owner,ab_firstname,ab_lastname,"
+       . "ab_email,ab_wphone,ab_company "
+       . "from addressbook "
+       . "WHERE $filtermethod AND (ab_lastname like '"
+       . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
+       . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
+       . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
+       . "'%$query%' OR ab_company like '%$query%') $ordermethod limit $limit");
+   }
   } else {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod $ordermethod limit $limit");
+   if($phpgw_info["apps"]["timetrack"]["enabled"]){
+     $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
+       . "a.ab_email,a.ab_wphone,c.company_name "
+       . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
+       . "AND $filtermethod $ordermethod limit $limit");
+   } else {
+     $phpgw->db->query("SELECT ab_id,ab_owner,ab_firstname,ab_lastname,"
+       . "ab_email,ab_wphone,ab_company "
+       . "from addressbook "
+       . "WHERE $filtermethod $ordermethod limit $limit");
+   }
   }
 
   while ($phpgw->db->next_record()) {
@@ -144,7 +188,10 @@
     $firstname	= $phpgw->db->f("ab_firstname");
     $lastname 	= $phpgw->db->f("ab_lastname");
     $email     = $phpgw->db->f("ab_email");
-    $company   = $phpgw->db->f("ab_company");
+    if($phpgw_info["apps"]["timetrack"]["enabled"])
+      $company   = $phpgw->db->f("company_name");
+    else
+      $company   = $phpgw->db->f("company");
     $wphone    = $phpgw->db->f("ab_wphone");
     $ab_id	= $phpgw->db->f("ab_id");
 
@@ -178,7 +225,7 @@
      if ( $phpgw_info["user"]["preferences"]["addressbook_view_email"] == 'True' ) {
          echo '<td valign=top>';
          echo '<font face=Arial, Helvetica, sans-serif size=2>';
-         echo $email;
+         echo '<a href="mailto:' . $email . '">' . $email . '</a>';
          echo '</font></td>';
      };
      if ( $phpgw_info["user"]["preferences"]["addressbook_view_wphone"] == 'True' ) {

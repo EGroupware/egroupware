@@ -37,6 +37,8 @@
   /**************************************************************************\
   * Do not edit these lines                                                  *
   \**************************************************************************/
+  include($phpgw_info["server"]["server_root"]."/version.inc.php");
+  $phpgw_info["server"]["header_version"] = "1.1";
   if (!$phpgw_info["flags"]["noapi"] == True){
     include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw.inc.php");
   }

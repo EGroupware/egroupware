@@ -86,7 +86,7 @@
    loginid      varchar(30),
    ip           varchar(30),
    li           int,
-   lo           int
+   lo           varchar(255)
   )";
   $db->query($sql);
 
@@ -121,6 +121,9 @@
     ab_bday		varchar(255),
     ab_notes	TEXT,
     ab_company	varchar(255)
+    ab_company_id int(10) unsigned,
+    ab_title varchar(60),   
+    ab_address2 varchar(60),
   )";
   $db->query($sql);
 

@@ -26,8 +26,15 @@
   if ($filter != "private")
      $filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
 
-  $phpgw->db->query("SELECT * FROM addressbook WHERE ab_id=$ab_id AND (ab_owner='"
+  if($phpgw_info["apps"]["timetrack"]["enabled"]) {
+   $phpgw->db->query("SELECT * FROM addressbook as a, customers as c WHERE a.ab_company_id = c.company_id "
+		     . "AND ab_id=$ab_id AND (ab_owner='"
 	             . $phpgw_info["user"]["userid"] . "' $filtermethod)");
+  } else {
+   $phpgw->db->query("SELECT * FROM addressbook "
+                     . "WHERE ab_id=$ab_id AND (ab_owner='"
+                     . $phpgw_info["user"]["userid"] . "' $filtermethod)");
+  }
   $phpgw->db->next_record();
 
   $fields = array('ab_id'   => $phpgw->db->f("ab_id"),
@@ -35,6 +42,7 @@
 			   'access'  => $phpgw->db->f("ab_access"),
 			   'firstname' => $phpgw->db->f("ab_firstname"),
 			   'lastname' => $phpgw->db->f("ab_lastname"),
+			   'title'   => $phpgw->db->f("ab_title"),
 			   'email'   => $phpgw->db->f("ab_email"),
 			   'hphone'  => $phpgw->db->f("ab_hphone"),
  		        'wphone'  => $phpgw->db->f("ab_wphone"),
@@ -43,11 +51,14 @@
 			   'mphone'  => $phpgw->db->f("ab_mphone"),
 			   'ophone'  => $phpgw->db->f("ab_ophone"),
 			   'street'  => $phpgw->db->f("ab_street"),
+			   'address2' => $phpgw->db->f("ab_address2"),
 			   'city'	   => $phpgw->db->f("ab_city"),
 			   'state'   => $phpgw->db->f("ab_state"),
 			   'zip'	   => $phpgw->db->f("ab_zip"),
 			   'bday'	   => $phpgw->db->f("ab_bday"),
 			   'company' => $phpgw->db->f("ab_company"),
+			   'company_id' => $phpgw->db->f("ab_company_id"),
+			   'company_name' => $phpgw->db->f("company_name"),
 			   'notes'   => $phpgw->db->f("ab_notes")
 		        );
 

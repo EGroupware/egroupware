@@ -32,12 +32,14 @@
         $bday = "$bday_month/$bday_day/$bday_year";
 
      $access = $phpgw->accounts->array_to_string($access,$n_groups);
-
-     $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_email,"
-       	. "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_city,ab_state,ab_zip,ab_bday,"
-          . "ab_notes,ab_company) values ('" . $phpgw_info["user"]["userid"] . "','$access','"
+     if($phpgw_info["apps"]["timetrack"]["enabled"]) {
+       $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_title,ab_email,"
+       	. "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
+        . "ab_state,ab_zip,ab_bday,"
+          . "ab_notes,ab_company_id) values ('" . $phpgw_info["user"]["userid"] . "','$access','"
           . addslashes($firstname). "','"
           . addslashes($lastname) . "','"
+          . addslashes($title)  . "','"
           . addslashes($email) 	. "','" 
           . addslashes($hphone) . "','"
           . addslashes($wphone) . "','"
@@ -46,12 +48,37 @@
           . addslashes($mphone)	. "','"
           . addslashes($ophone)	. "','"
           . addslashes($street)	. "','"
+          . addslashes($address2) . "','"
           . addslashes($city) 	. "','"
           . addslashes($state) 	. "','"
           . addslashes($zip) 	. "','"
           . addslashes($bday) 	. "','"
           . addslashes($notes) 	. "','"
           . addslashes($company). "')";
+     } else {
+       $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_title,ab_email,"
+        . "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
+        . "ab_state,ab_zip,ab_bday,"
+          . "ab_notes,ab_company) values ('" . $phpgw_info["user"]["userid"] . "','$access','"
+          . addslashes($firstname). "','"
+          . addslashes($lastname) . "','"
+          . addslashes($title)  . "','"
+          . addslashes($email)  . "','"
+          . addslashes($hphone) . "','"
+          . addslashes($wphone) . "','"
+          . addslashes($fax)    . "','"
+          . addslashes($pager)  . "','"
+          . addslashes($mphone) . "','"
+          . addslashes($ophone) . "','"
+          . addslashes($street) . "','"
+          . addslashes($address2) . "','"
+          . addslashes($city)   . "','"
+          . addslashes($state)  . "','"
+          . addslashes($zip)    . "','"
+          . addslashes($bday)   . "','"
+          . addslashes($notes)  . "','"
+          . addslashes($company). "')";
+     }
      $phpgw->db->query($sql);
  
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/",

@@ -86,7 +86,7 @@
     loginid	  varchar(30),
     ip		   varchar(30),
     li		   int,
-    lo		   int
+    lo		   varchar(255)
   )";
   $db->query($sql);  
 
@@ -103,7 +103,7 @@
   $db->query($sql);  
 
   $sql = "CREATE TABLE addressbook (
-    ab_id	     int(11) DEFAULT '0' NOT NULL auto_increment,
+    ab_id       int(11) NOT NULL auto_increment,
     ab_owner    varchar(25),
     ab_access   varchar(10),
     ab_firstname varchar(255),
@@ -122,8 +122,28 @@
     ab_bday     varchar(255),
     ab_notes    text,
     ab_company  varchar(255),
+    ab_company_id int(10) unsigned,
+    ab_title varchar(60),
+    ab_address2 varchar(60),
     PRIMARY KEY (ab_id)
   )";
+  $db->query($sql);  
+
+
+  $sql = "CREATE TABLE customers (
+    company_id int(10) unsigned NOT NULL auto_increment,
+    company_name varchar(255),
+    website varchar(80),
+    ftpsite varchar(80),
+    industry_type varchar(50),
+    status varchar(30),
+    software varchar(40),
+    lastjobnum int(10) unsigned,
+    lastjobfinished date,
+    busrelationship varchar(30),
+    notes text,
+    PRIMARY KEY (company_id)
+  );";
   $db->query($sql);  
 
   $sql = "CREATE TABLE todo (

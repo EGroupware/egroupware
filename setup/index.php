@@ -11,9 +11,6 @@
 
   /* $Id$ */
 
-  /* !!! This needs to be changed each time we do an update !!! */
-  $newversion = "0.9.2";
-
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("../header.inc.php");
 
@@ -70,7 +67,7 @@
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>You appear to be running version $oldversion of phpGroupWare.<br>\n";
-      echo "    We will automaticly update your tables/records to $newversion, but we highly recommend backing up your tables incase the script causes damage to your data.\n";
+      echo "    We will automaticly update your tables/records to ".$phpgw_info["server"]["version"].", but we highly recommend backing up your tables incase the script causes damage to your data.\n";
       echo "    These automated scripts can easily destroy your data. Please backup before going any further!</td>\n";
       echo "  </tr>\n";
       echo "  </tr>\n";
@@ -192,7 +189,7 @@
       break;      
     default:
       if (isset($oldversion)){
-        if ($newversion == $oldversion){
+        if ($phpgw_info["server"]["version"] == $oldversion){
           echo "<html><head><title>phpGroupWare Setup</title></head>\n";
           echo "<body bgcolor='#ffffff'>\n"; 
           echo "<table border=\"0\" align=\"center\">\n";
