@@ -123,6 +123,22 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.14.504';
+	function phpgwapi_upgrade0_9_14_504()
+	{
+		// 0.9.15.001-12 are already included in 0.9.14.504
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.012';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.14.505';
+	function phpgwapi_upgrade0_9_14_505()
+	{
+		// 0.9.15.001-12 are already included in 0.9.14.505
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.012';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 	$test[] = '0.9.15.001';
 	function phpgwapi_upgrade0_9_15_001()
 	{
@@ -348,4 +364,22 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.15.011';
+	function phpgwapi_upgrade0_9_15_011()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_addressbook','last_mod',array(
+				'type' => 'int',
+				'precision' => '4',
+				'nullable' => False
+			));
+
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_categories','last_mod',array(
+				'type' => 'int',
+				'precision' => '4',
+				'nullable' => False
+			));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.012';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

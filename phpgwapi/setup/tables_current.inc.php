@@ -180,7 +180,8 @@
 				'cat_appname' => array('type' => 'varchar', 'precision' => 50, 'nullable' => false),
 				'cat_name' => array('type' => 'varchar', 'precision' => 150, 'nullable' => false),
 				'cat_description' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
-				'cat_data' => array('type' => 'text')
+				'cat_data' => array('type' => 'text'),
+				'last_mod' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('cat_id'),
 			'fk' => array(),
@@ -240,7 +241,8 @@
 				'email' => array('type' => 'varchar', 'precision' => 64,'nullable' => True),
 				'email_type' => array('type' => 'varchar', 'precision' => 32,'nullable' => False,'default' => 'INTERNET'),
 				'email_home' => array('type' => 'varchar', 'precision' => 64,'nullable' => True),
-				'email_home_type' => array('type' => 'varchar', 'precision' => 32,'nullable' => False,'default' => 'INTERNET')
+				'email_home_type' => array('type' => 'varchar', 'precision' => 32,'nullable' => False,'default' => 'INTERNET'),
+				'last_mod' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('id'),
 			'fk' => array(),
