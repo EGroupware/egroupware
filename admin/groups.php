@@ -11,68 +11,79 @@
 
   /* $Id$ */
 
-  $phpgw_info = array();
-  $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
-  include("../header.inc.php");
+	$phpgw_info = array();
+	$phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
+	include("../header.inc.php");
 
-  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
-  $p->set_file(array("list"   => "groups.tpl",
-                     "row"    => "groups_row.tpl"));
+	function account_total($query)
+	{
+		global $phpgw;
 
-  if (! $start)
-     $start = 0;
+		if ($query) {
+			$querymethod = " AND account_firstname LIKE '%$query%' OR account_lastname LIKE "
+					. "'%$query%' OR account_lid LIKE '%$query%' ";
+		}
+     
+		$phpgw->db->query("SELECT COUNT(*) FROM phpgw_accounts WHERE account_type='g'".$querymethod,__LINE__,__FILE__);
+		$phpgw->db->next_record();
 
-  if ($order)
-      $ordermethod = "ORDER BY $order $sort";
-   else
-      $ordermethod = "ORDER BY account_lid asc";
+		return $phpgw->db->f(0);
+	}
 
-  if (! $sort)
-     $sort = "asc";
+	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$p->set_file(array(
+		'list'      => 'groups.tpl',
+		'row'       => 'groups_row.tpl',
+		'empty_row' => 'accounts_row_empty.tpl'
+	));
 
-  if ($query) {
-     $querymethod = "AND account_lid like '%$query%'";
-  }
-
-  $phpgw->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='g' $querymethod");
-  $phpgw->db->next_record();
-
-  $total = $phpgw->db->f(0);
-  $limit = $phpgw->db->limit($start,$total);
-  
-  $p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $p->set_var("left_nextmatchs",$phpgw->nextmatchs->left("groups.php",$start,$total));
-  $p->set_var("right_nextmatchs",$phpgw->nextmatchs->right("groups.php",$start,$total));
-  $p->set_var("lang_groups",lang("user groups"));
-
-  $p->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"groups.php",lang("name")));
-  $p->set_var("header_edit",lang("Edit"));
-  $p->set_var("header_delete",lang("Delete"));
-
-  $phpgw->db->query("SELECT * FROM phpgw_accounts WHERE account_type='g' $querymethod $ordermethod $limit");
-  while ($phpgw->db->next_record()) {
-     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+	$account_info = $phpgw->accounts->get_list('groups',$start,$sort, $order, $query, $total);
+	$total = account_total($query);
  
-     $p->set_var("tr_color",$tr_color);
- 
-     $group_name = $phpgw->db->f("account_lid");
- 
-     if (! $group_name)  $group_name  = '&nbsp;';
+	$p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
-     $p->set_var("group_name",$group_name); 
-     $p->set_var("edit_link",'<a href="' . $phpgw->link("/admin/editgroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Edit") . ' </a>');
-     $p->set_var("delete_link",'<a href="' . $phpgw->link("/admin/deletegroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Delete") . ' </a>');
- 
-     $p->parse("rows","row",True);
-  }
+	$p->set_var("left_nextmatchs",$phpgw->nextmatchs->left("/admin/groups.php",$start,$total));
+	$p->set_var("right_nextmatchs",$phpgw->nextmatchs->right("/admin/groups.php",$start,$total));
+	$p->set_var("lang_groups",lang("user groups"));
 
-  $p->set_var("new_action",$phpgw->link("/admin/newgroup.php"));
-  $p->set_var("lang_add",lang("add"));
+	$p->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"groups.php",lang("name")));
+	$p->set_var("header_edit",lang("Edit"));
+	$p->set_var("header_delete",lang("Delete"));
 
-  $p->set_var("search_action",$phpgw->link("/admin/groups.php"));
-  $p->set_var("lang_search",lang("search"));
+	$account_info = $phpgw->accounts->get_list('groups',$start,$sort, $order, $query, $total);
 
-  $p->pparse("out","list");
+	if (! count($account_info))
+	{
+		$p->set_var('message',lang('No matchs found'));
+		$p->parse('rows','empty_row',True);
+	}
+	else
+	{
+		while (list($null,$account) = each($account_info))
+		{
+			$account_id = $account['account_id'];
+			$group_name = $account['account_lid'];
 
-  $phpgw->common->phpgw_footer();
+			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+			$p->set_var("tr_color",$tr_color);
+
+			if (! $group_name)  $group_name  = '&nbsp;';
+
+			$p->set_var("group_name",$group_name); 
+			$p->set_var("edit_link",'<a href="' . $phpgw->link("/admin/editgroup.php","group_id=" . $group_id) . '"> ' . lang("Edit") . ' </a>');
+			$p->set_var("delete_link",'<a href="' . $phpgw->link("/admin/deletegroup.php","group_id=" . $group_id) . '"> ' . lang("Delete") . ' </a>');
+			$p->parse("rows","row",True);
+
+		}
+	}
+
+	$p->set_var("new_action",$phpgw->link("/admin/newgroup.php"));
+	$p->set_var("lang_add",lang("add"));
+
+	$p->set_var("search_action",$phpgw->link("/admin/groups.php"));
+	$p->set_var("lang_search",lang("search"));
+
+	$p->pparse("out","list");
+
+	$phpgw->common->phpgw_footer();
 ?>
