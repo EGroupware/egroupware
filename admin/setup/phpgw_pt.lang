@@ -157,7 +157,7 @@ server username	admin	pt	Usuário do servidor
 server %1 has been added	admin	pt	Servdor %1 foi adicionado
 server %1 has been updated	admin	pt	Servidor %1 foi atualizado
 set preference values.	admin	pt	Definir preferências.
-show 'powered by' logo on	admin	pt	Área para exibição da logomarca do phpGroupWare
+show 'powered by' logo on	admin	pt	Área para exibição da logomarca do eGroupWare
 site	admin	pt	Site
 site configuration	common	pt	Configuração do servidor
 sorry, that group name has already been taken.	admin	pt	Este nome de grupo já está em uso.
@@ -173,8 +173,8 @@ that application order must be a number.	admin	pt	O campo ordem da aplicação dev
 that loginid has already been taken	admin	pt	Este código de usuário já existe
 that name has been used already	admin	pt	Este nome já está em uso
 that server name has been used already !	admin	pt	Este nome de servidor já está em uso !
-the api is current	admin	pt	A base (API) do phpGroupWare está atualizada
-the api requires an upgrade	admin	pt	 A base (API) do phpGroupWare precisa ser atualizada
+the api is current	admin	pt	A base (API) do eGroupWare está atualizada
+the api requires an upgrade	admin	pt	 A base (API) do eGroupWare precisa ser atualizada
 the login and password can not be the same	admin	pt	O login e a senha não podem ser iguais
 the loginid can not be more then 8 characters	admin	pt	O código de usuário não pode ter mais de 8 caracteres
 the two passwords are not the same	admin	pt	As senhas não conferem entre si
