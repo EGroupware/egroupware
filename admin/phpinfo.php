@@ -18,6 +18,13 @@
 	);
 	include('../header.inc.php');
 
+// Throw a little notice out if PHPaccelerator is enabled.
+	if($GLOBALS['_PHPA']['ENABLED'])
+	{
+		echo 'PHPaccelerator enabled:</br>'."\n";
+		echo 'PHPaccelerator Version: '.$GLOBALS['_PHPA']['VERSION'].'</br></p>'."\n";
+	}
+
 	phpinfo();
 
 //	$phpgw->common->phpgw_footer();
