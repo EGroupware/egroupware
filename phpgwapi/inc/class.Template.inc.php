@@ -334,7 +334,7 @@
 					break;
 			}
 
-			$str str_replace (".gif", ".png",$str);
+			$str = str_replace (".gif", ".png",$str);
 			return $str;
 		}
 
