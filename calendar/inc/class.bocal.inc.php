@@ -838,11 +838,14 @@ class bocal
 					case 'boolean':
 						$param = $param ? 'True' : 'False';
 						break;
+					case 'integer':
+						if ($param >= mktime(0,0,0,1,1,2000)) $param = date('Y-m-d H:i:s',$param)." ($param)";
+						break;
 				}
 			}
 			$msg = str_replace('%'.($i-1),$param,$msg);
 		}
-		echo '<p>'.$msg."<br>\n".($backtrace ? 'Backtrace: '.function_backtrace(1)."</p>\n" : '');
+		echo '<p>'.$msg."<br>\n".($backtrace ? 'Backtrace: '.function_backtrace(1)."</p>\n" : '').str_repeat(' ',4096);
 	}
 
 	/**
