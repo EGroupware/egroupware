@@ -14,30 +14,36 @@
 			<!-- BEGIN B_multi_domain -->
 				<table>
 				<tr>
-					<td>
-						Domain: 
-					</td>
-					<td>
+					<td>Domain:</td>
+					<td colspan="2">
 						<select name="FormDomain">{domains}</select>
 					</td>
 				</tr>
 				<tr>
-					<td>
-						Password:
-					</td>
+					<td>Config Password:</td>
 					<td>
 						<input type="password" name="FormPW" value="">
+					</td>
+					<td>
+						{lang_select}
 					</td>
 				</tr>
 				</table>
 			<!-- END B_multi_domain -->
-					Config Password:
 			<!-- &nbsp; stupid seperator -->
 		<!-- BEGIN B_single_domain -->
-				<input type="password" name="FormPW" value="">
+				<table>
+				<tr>
+					<td>Config Password:</td>
+					<td>
+						<input type="password" name="FormPW" value="">
+					</td>
+					<td>
+						{lang_select}
+					</td>
+				</table>
 				<input type="hidden" name="FormDomain" value="{default_domain_zero}">
 		<!-- END B_single_domain -->
-{lang_select}
 
 				<input type="hidden" name="ConfigLogin" value="Login">
 				<input type="submit" name="submit" value="Login">
