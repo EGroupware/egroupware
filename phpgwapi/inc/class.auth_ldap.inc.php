@@ -55,13 +55,13 @@
 			}
 			/* find the dn for this uid, the uid is not always in the dn */
 			$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','gidNumber');
+			
+			$filter = $GLOBALS['phpgw_info']['server']['ldap_search_filter'] ? $GLOBALS['phpgw_info']['server']['ldap_search_filter'] : '(uid=%user)';
+			$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['phpgw_info']['user']['domain']),$filter);
+
 			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
 			{
-				$filter = "(&(uid=$username)(phpgwaccountstatus=A))";
-			}
-			else
-			{
-				$filter = "(uid=$username)";
+				$filter = "(&$filter(phpgwaccountstatus=A))";
 			}
 
 			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], $filter, $attributes);
@@ -123,11 +123,17 @@
 		{
 			if ('' == $_account_id)
 			{
-				$_account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+				$username = $GLOBALS['phpgw_info']['user']['account_lid'];
 			}
-	
+			else
+			{
+				$username = $GLOBALS['phpgw']->accounts->id2name($_account_id);
+			}
+			$filter = $GLOBALS['phpgw_info']['server']['ldap_search_filter'] ? $GLOBALS['phpgw_info']['server']['ldap_search_filter'] : '(uid=%user)';
+			$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['phpgw_info']['user']['domain']),$filter);
+
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
+			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], $filter);
 			$allValues = ldap_get_entries($ds, $sri);
 	
 			$entry['userpassword'] = $this->encrypt_password($new_passwd);
@@ -144,17 +150,30 @@
 
 		function update_lastlogin($_account_id, $ip)
 		{
-			$entry['phpgwaccountlastlogin']     = time();
-			$entry['phpgwaccountlastloginfrom'] = $ip;
-
-			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
-			$allValues = ldap_get_entries($ds, $sri);
-
-			$dn = $allValues[0]['dn'];
-			$this->previous_login = $allValues[0]['phpgwaccountlastlogin'][0];
-
-			@ldap_modify($ds, $dn, $entry);
+			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
+			{
+				$entry['phpgwaccountlastlogin']     = time();
+				$entry['phpgwaccountlastloginfrom'] = $ip;
+	
+				$ds = $GLOBALS['phpgw']->common->ldapConnect();
+				$sri = ldap_search($ds, $GLOBALS['phpgw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
+				$allValues = ldap_get_entries($ds, $sri);
+	
+				$dn = $allValues[0]['dn'];
+				$this->previous_login = $allValues[0]['phpgwaccountlastlogin'][0];
+	
+				@ldap_modify($ds, $dn, $entry);
+			}
+			else
+			{
+				$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->next_record();
+				$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
+	
+				$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
+					. "$ip', account_lastlogin='" . time()
+					. "' where account_id='$account_id'",__LINE__,__FILE__);
+			}
 		}
 	}
 ?>
