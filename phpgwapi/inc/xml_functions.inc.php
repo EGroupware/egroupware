@@ -690,6 +690,7 @@
 		else
 		{
 			/* possible phpgw domain */
+			/* Milosch - jengo, does this make sense? */
 			if($server_name)
 			{
 				$user = $username.'@'.$server_name;
