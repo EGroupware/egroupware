@@ -150,63 +150,62 @@
 		$defaultgroupid = add_account('Default','Default','Group',$passwd,'g');
 		$admingroupid   = add_account('Admins','Admin', 'Group',$passwd,'g');
 
-		/* Creation of the demo accounts is now optional - the checkbox is on by default. */
+		/* Group perms for the default group */
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpwebhosting','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('email','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('notes','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('todo','run'," . $defaultgroupid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('manual','run'," . $defaultgroupid . ", 1)");
+
+		/* Creation of the demo accounts is optional - the checkbox is on by default. */
 		if($HTTP_POST_VARS['create_demo'])
 		{
 			/* Create records for demo accounts */
 			$accountid = add_account('demo','Demo','Account','guest');
 
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences (preference_owner, preference_value) VALUES ('$accountid', '$defaultprefs')");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('preferences', 'changepassword', ".$accountid.", 0)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('addressbook', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('filemanager', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('calendar', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('email', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('notes', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('todo', 'run', ".$accountid.", 1)");
+			/* User permissions based on group membership with additional user perms for the messenger and infolog apps */
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences(preference_owner,preference_value) VALUES('" . $accountid . "','" . $defaultprefs . "')");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', " . $accountid . ",0)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group', '" . $defaultgroupid."'," . $accountid . ",1)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('messenger','run'," . $accountid . ", 1)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('infolog','run'," . $accountid . ", 1)");
 
 			$accountid = add_account('demo2','Demo2','Account','guest');
 
+			/* User permissions based solely on group membership */
 			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences (preference_owner, preference_value) VALUES ('$accountid', '$defaultprefs')");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('preferences', 'changepassword', ".$accountid.", 0)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_account, acl_location, acl_rights) VALUES ('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('addressbook', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('filemanager', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('calendar', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('email', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('notes', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('todo', 'run', ".$accountid.", 1)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', ".$accountid.", 0)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group','" . $defaultgroupid . "'," . $accountid . ",1)");
 
 			$accountid = add_account('demo3','Demo3','Account','guest');
 
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences (preference_owner, preference_value) VALUES ('$accountid', '$defaultprefs')");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('preferences', 'changepassword', ".$accountid.", 0)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('addressbook', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('filemanager', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('calendar', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('email', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('notes', 'run', ".$accountid.", 1)");
-			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('todo', 'run', ".$accountid.", 1)");
+			/* User-specific perms, no group membership */
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences(preference_owner,preference_value) VALUES('" . $accountid . "','" . $defaultprefs . "')");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', " . $accountid . ",0)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run', " . $accountid . ", 1)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run', " . $accountid . ", 1)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('notes','run', " . $accountid . ", 1)");
+			$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('todo','run', " . $accountid . ", 1)");
 		}
 
 		/* Create records for administrator account */
 		$accountid = add_account($username,$fname,$lname,$passwd);
 
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences (preference_owner, preference_value) VALUES ('$accountid', '$defaultprefs')");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('phpgw_group', '".$defaultgroupid."', $accountid, 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('phpgw_group', '".$admingroupid."', $accountid, 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('preferences', 'changepassword', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('admin', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('addressbook', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('filemanager', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('calendar', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('email', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('notes', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('nntp', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('todo', 'run', ".$accountid.", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('manual', 'run', ".$accountid.", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences (preference_owner, preference_value) VALUES('" . $accountid . "','" . $defaultprefs . "')");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group','" . $defaultgroupid."'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpgw_group','" . $admingroupid."'," . $accountid . ",1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','changepassword', " . $accountid . ",1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('admin','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('phpwebhosting','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('email','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('notes','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('nntp','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('todo','run'," . $accountid . ", 1)");
+		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('manual','run'," . $accountid . ", 1)");
 
 		$GLOBALS['phpgw_setup']->db->transaction_commit();
 
