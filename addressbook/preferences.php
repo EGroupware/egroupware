@@ -11,31 +11,34 @@
 
 /* $Id$ */
 
-	$phpgw_info["flags"] = array(
-		"currentapp"              => "addressbook", 
-		"noheader"                => True, 
-		"nonavbar"                => True, 
+	$phpgw_info['flags'] = array(
+		'currentapp'              => 'addressbook', 
+		'noheader'                => True, 
+		'nonavbar'                => True, 
 		'noappheader'             => True,
 		'noappfooter'             => True,
-		"enable_contacts_class"   => True,
-		"enable_nextmatchs_class" => True
+		'enable_contacts_class'   => True,
+		'enable_nextmatchs_class' => True
 	);
-                               
-	include("../header.inc.php");
 
-	$this = CreateObject("phpgwapi.contacts");
+	include('../header.inc.php');
+
+	$this = CreateObject('phpgwapi.contacts');
 
  	$extrafields = array(
-		"ophone"   => "ophone",
-		"address2" => "address2",
-		"address3" => "address3"
+		'ophone'   => 'ophone',
+		'address2' => 'address2',
+		'address3' => 'address3'
 	);
 
 	$phpgw->preferences->read_repository();
 	$customfields = array();
-	if ($phpgw_info["user"]["preferences"]["addressbook"]) {
-		while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
-			if ( substr($col,0,6) == 'extra_' ) {
+	if ($phpgw_info['user']['preferences']['addressbook'])
+	{
+		while (list($col,$descr) = each($phpgw_info['user']['preferences']['addressbook']))
+		{
+			if ( substr($col,0,6) == 'extra_' )
+			{
 				$field = ereg_replace('extra_','',$col);
 				$customfields[$field] = ucfirst($field);
 			}
@@ -44,57 +47,74 @@
 
 	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 
-	if ($submit) {
+	if ($submit)
+	{
 		$totalerrors = 0;
-		if (! count($ab_selected)) {
-			$errors[$totalerrors++] = lang("You must select at least 1 column to display");
+		if (! count($ab_selected))
+		{
+			$errors[$totalerrors++] = lang('You must select at least 1 column to display');
 		}
-		if (! $totalerrors) {
+		if (! $totalerrors)
+		{
 			$phpgw->preferences->read_repository();
-			while (list($pref[0]) = each($qfields)) {
-				if ($ab_selected["$pref[0]"]) {
-					$phpgw->preferences->change("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
-				} else {
-					$phpgw->preferences->delete("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
+			while (list($pref[0]) = each($qfields))
+			{
+				if ($ab_selected["$pref[0]"])
+				{
+					$phpgw->preferences->change('addressbook',$pref[0],'addressbook_' . $ab_selected["$pref[0]"]);
+				}
+				else
+				{
+					$phpgw->preferences->delete('addressbook',$pref[0],'addressbook_' . $ab_selected["$pref[0]"]);
 				}
 			}
 
- 			if ($mainscreen_showbirthdays) {
-				$phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
-				$phpgw->preferences->add("addressbook","mainscreen_showbirthdays");
-			} else {
-				$phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
+ 			if ($mainscreen_showbirthdays)
+			{
+				$phpgw->preferences->delete('addressbook','mainscreen_showbirthdays');
+				$phpgw->preferences->add('addressbook','mainscreen_showbirthdays');
+			}
+			else
+			{
+				$phpgw->preferences->delete('addressbook','mainscreen_showbirthdays');
 			}
 
- 			if ($autosave_category) {
-				$phpgw->preferences->delete("addressbook","autosave_category");
-				$phpgw->preferences->add("addressbook","autosave_category",True);
-			} else {
-				$phpgw->preferences->delete("addressbook","autosave_category");
+ 			if ($autosave_category)
+			{
+				$phpgw->preferences->delete('addressbook','autosave_category');
+				$phpgw->preferences->add('addressbook','autosave_category',True);
+			}
+			else
+			{
+				$phpgw->preferences->delete('addressbook','autosave_category');
 			}
 
- 			if ($cat_id) {
-				$phpgw->preferences->delete("addressbook","default_category");
-				$phpgw->preferences->add("addressbook","default_category",$cat_id);
-			} else {
-				$phpgw->preferences->delete("addressbook","default_category");
+ 			if ($cat_id)
+			{
+				$phpgw->preferences->delete('addressbook','default_category');
+				$phpgw->preferences->add('addressbook','default_category',$cat_id);
+			}
+			else
+			{
+				$phpgw->preferences->delete('addressbook','default_category');
 			}
 
 			$phpgw->preferences->save_repository(True);
-			Header("Location: " . $phpgw->link("/preferences/index.php"));
+			Header('Location: ' . $phpgw->link('/preferences/index.php'));
 		}
 	}
 
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
 
-	if ($totalerrors) {  
-		echo "<p><center>" . $phpgw->common->error_list($errors) . "</center>";
+	if ($totalerrors)
+	{
+		echo '<p><center>' . $phpgw->common->error_list($errors) . '</center>';
 	}
 
 	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array(
-		"preferences"	=> "preferences.tpl",
+		'preferences' => 'preferences.tpl',
 	));
 
 	$t->set_var(action_url,$phpgw->link('/addressbook/preferences.php'));
@@ -113,9 +133,9 @@
 		if ($coltest)
 		{
 			$t->set_var($col,$showcol);
-			if ($phpgw_info["user"]["preferences"]["addressbook"][$col])
+			if ($phpgw_info['user']['preferences']['addressbook'][$col])
 			{
-				$t->set_var($col.'_checked'," checked");
+				$t->set_var($col.'_checked',' checked');
 			}
 			else
 			{
@@ -139,7 +159,7 @@
 			$custom_var .= "\n" . '<tr bgcolor="' . $tr_color . '">';
 			$custom_var .= '    <td><input type="checkbox" name="ab_selected['
 				. strtolower($cf) . ']"'
-				. ($phpgw_info["user"]["preferences"]["addressbook"][$cf]?" checked":"")
+				. ($phpgw_info['user']['preferences']['addressbook'][$cf]?' checked':'')
 				. '>' . $cf . '</option></td>' . "\n"
 				. '</tr>' . "\n";
 		}
@@ -151,38 +171,38 @@
 	}
 
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    $t->set_var(tr_color,$tr_color);
-	$t->set_var(lang_showbirthday,lang("show birthday reminders on main screen"));
+	$t->set_var(tr_color,$tr_color);
+	$t->set_var(lang_showbirthday,lang('show birthday reminders on main screen'));
 
-	if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"])
+	if ($phpgw_info['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
-		$t->set_var(show_birthday," checked");
+		$t->set_var(show_birthday,' checked');
 	}
 	else
 	{
 		$t->set_var(show_birthday,'');
 	}
 
-	$t->set_var(lang_autosave,lang("Autosave default category"));
-	if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"])
+	$t->set_var(lang_autosave,lang('Autosave default category'));
+	if ($phpgw_info['user']['preferences']['addressbook']['autosave_category'])
 	{
-		$t->set_var(autosave," checked");
+		$t->set_var(autosave,' checked');
 	}
 	else
 	{
-		$t->set_var(autosave,"");
+		$t->set_var(autosave,'');
 	}
-	$t->set_var(lang_defaultcat,lang("Default Category"));
-    $t->set_var(cat_select,cat_option($phpgw_info["user"]["preferences"]["addressbook"]["default_category"]));
-	$t->set_var(lang_abprefs,lang('Addressbook').' '.lang('Preferences'));
-	$t->set_var(lang_fields,lang('Fields to show in address list'));
-	$t->set_var(lang_personal,lang('Personal'));
-	$t->set_var(lang_business,lang('Business'));
-	$t->set_var(lang_home,lang('Home'));
-	$t->set_var(lang_phones,lang('Extra').' '.lang('Phone Numbers'));
-	$t->set_var(lang_other,lang('Other').' '.lang('Fields'));
-	$t->set_var(lang_otherprefs,lang('Other').' '.lang('Preferences'));
-	$t->set_var(lang_submit,lang("submit"));
+	$t->set_var('lang_defaultcat',lang('Default Category'));
+	$t->set_var('cat_select',cat_option($phpgw_info['user']['preferences']['addressbook']['default_category']));
+	$t->set_var('lang_abprefs',lang('Addressbook').' '.lang('Preferences'));
+	$t->set_var('lang_fields',lang('Fields to show in address list'));
+	$t->set_var('lang_personal',lang('Personal'));
+	$t->set_var('lang_business',lang('Business'));
+	$t->set_var('lang_home',lang('Home'));
+	$t->set_var('lang_phones',lang('Extra').' '.lang('Phone Numbers'));
+	$t->set_var('lang_other',lang('Other').' '.lang('Fields'));
+	$t->set_var('lang_otherprefs',lang('Other').' '.lang('Preferences'));
+	$t->set_var('lang_submit',lang('submit'));
 
 	$t->pparse('out','preferences');
 	$phpgw->common->phpgw_footer();
