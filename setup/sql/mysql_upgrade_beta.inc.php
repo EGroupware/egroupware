@@ -301,8 +301,19 @@
       echo "  </tr>\n";
     }
   }
+  
+  function v0_9_3to0_9_4()
+  {
+     $currentver = "0.9.4pre1";
+     update_version_table();
+
+     echo "  <tr bgcolor=\"e6e6e6\">\n";
+     echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
+     echo "  </tr>\n";  
+  }
 
   v0_9_1to0_9_2();
   v0_9_2to0_9_3();
+  v0_9_3to0_9_4();
   
 ?>
