@@ -2785,7 +2785,7 @@
 		{
 			if(!is_array($param))
 			{
-				$this-index();
+				$this->index();
 			}
 
 			if(isset($param['event']))
