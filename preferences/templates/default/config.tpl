@@ -1,8 +1,8 @@
 <!-- BEGIN header -->
 <form method="POST" action="{action_url}">
 <table border="0" align="center" width="85%">
-   <tr bgcolor="{th_bg}">
-    <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
+   <tr class="th">
+    <td colspan="2">&nbsp;<b>{title}</b></td>
    </tr>
 <!-- END header -->
 <!-- BEGIN body -->
@@ -10,8 +10,8 @@
     <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr bgcolor="{th_bg}">
-    <td colspan="2"><font color="{th_text}"><b>{lang_Preferences}</b></font></td>
+   <tr class="th">
+    <td colspan="2"><b>{lang_Preferences}</b></td>
    </tr>
 
    <tr bgcolor="{row_off}">
@@ -181,7 +181,7 @@
 <!-- END body -->
 
 <!-- BEGIN footer -->
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
     <td colspan="2">
 &nbsp;
     </td>

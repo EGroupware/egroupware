@@ -26,14 +26,14 @@
 <!-- END footer -->
 
 <!-- BEGIN list -->
- <tr bgcolor="{th_bg}">
+ <tr class="th">
   <td colspan="2">&nbsp;</td>
  </tr>
 {rows}
 <!-- END list -->
 
 <!-- BEGIN row -->
- <tr bgcolor="{tr_color}">
+ <tr>
   <td>{row_name}</td>
   <td>{row_value}</td>
  </tr>
