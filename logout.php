@@ -16,11 +16,10 @@
   $phpgw_flags["disable_send_class"] = True;
   $phpgw_flags["disable_nextmatchs_class"] = True;
   $phpgw_flags["disable_template_class"] = True;
-  $phpgw_flags["currentapp"] = "";
+  $phpgw_flags["currentapp"] = "logout";
   $phpgw_flags["noheader"] = True;
 
   include("header.inc.php");
-//  include($phpgw_info["server"]["include_root"] . "/lang/en/" . "en" . "_logout.inc.php");
 
   $sep = $phpgw->common->filesystem_sepeartor();
 
