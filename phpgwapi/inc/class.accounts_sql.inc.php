@@ -163,7 +163,7 @@
 			global $phpgw, $phpgw_info;
 			static $name_list;
 
-			if($name_list[$account_lid])
+			if($name_list[$account_lid] && $name_list[$account_lid] != '')
 			{
 				return $name_list[$account_lid];
 			}
