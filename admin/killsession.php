@@ -46,6 +46,7 @@
        </tr>
       </table>
      </center>
-     <?
+<?php
+    $phpgw->common->phpgw_footer();
   }
-
+?>

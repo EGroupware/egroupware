@@ -105,6 +105,6 @@
        </tr>
       </table>
      </center>
-     <?php
+<?php
 	$phpgw->common->phpgw_footer();
 ?>

@@ -93,5 +93,5 @@
   }
   $phpgw->template->set_var("error_message",$message);      
   $phpgw->template->pparse("out","form");
-
+  $phpgw->common->phpgw_footer();
 ?>

@@ -84,7 +84,6 @@
 
   $phpgw->template->pparse("out","list");
 
-  $phpgw->common->phpgw_footer();
-  
   account_close();
+  $phpgw->common->phpgw_footer();
 ?>

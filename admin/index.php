@@ -65,7 +65,5 @@ if ( $SHOW_INFO > 0 ) {
 else {
   echo "<p><a href=\"".$phpgw->link($PHP_SELF, "SHOW_INFO=1")."\">PHP Information</a>";
 }
-?>
-<?php
   $phpgw->common->phpgw_footer();
 ?>
