@@ -50,9 +50,13 @@
 				<tr>
 					<td colspan="3" align="center"><b><xsl:value-of select="website_title"/></b></td>
 				</tr>
-				<tr class="row_off">
-					<td colspan="3" align="center"><xsl:value-of disable-output-escaping="yes" select="msgbox"/></td>
-				</tr>
+				<xsl:choose>
+					<xsl:when test="msgbox_data">
+						<tr class="row_off">
+							<td colspan="3" align="center"><xsl:call-template name="msgbox"/></td>
+						</tr>
+					</xsl:when>
+				</xsl:choose>
 				<tr class="row_off">
 					<td width="33%" align="right"><xsl:value-of select="lang_username"/></td>
 					<td width="33%" align="center"><input name="login" value="{$cookie}"/></td>
