@@ -1,16 +1,18 @@
 <!doctype linuxdoc system>
 
-<!-- LinuxDoc file was created by hand by <Dan Kuykendall> 7 July 2000 -->
+<!-- LinuxDoc file was created by hand by <Dan Kuykendall> 7 July 2000
+	Subsequently hacked upon by Stephen Brown September And October 2000  -->
 <article>
 <title>
   phpGroupWare HOWTO
 </title>
 <author>
   Joseph Engo &lt;jengo@phpgroupware.org&gt;,
-  Dan Kuykendall &lt;dan@kuykendall.org&gt;
+  Dan Kuykendall &lt;dan@kuykendall.org&gt;,
+  Stephen Brown &lt;blinky@phpgroupware.net&gt;
 </author>
 <date>
-  v1.1, 28 September 2000
+  v1.3, 17 October 2000
 </date>
 <abstract>
 <!-- $Id$ -->
@@ -45,14 +47,18 @@
 </p>
 <sect1>Tested Systems
 <p>
-  On Linux 2.2.x
+  Known compatible software
   <itemize>
-    <item>PHP 3.0.15+ / PHP 4.0.x
+    <item>PHP 3.0.15+ or PHP 4.0.x (preferred)
     <item>Apache 1.3.x
-    <item>MySQL 3.22.25 or PostgreSQL 7.0.x
-    <item>Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access
+    <item>MySQL 3.22.25 or greater
+    <item>MySQL 3.23.10 or greater
+    <item>Courier IMAP 0.33+ for IMAP (optionally with vmailmgr)
+    <item>qmail 1.03 for SMTP and POP
+    <item>sendmail for SMTP
   </itemize>
 
+  Example configurations that the CVS versions have been up and running on are listed at the end of this document.
   We have reports of phpGroupWare working on Windows NT and OS/2, and using Oracle as the database.
 </p>
 <sect1>Obtaining phpGroupWare
@@ -80,8 +86,11 @@ have the most recent development copy of phpGroupWare in no time.
 
 <sect1>Installing on Tested Systems
 <p>
-  After you have met the system requirements, unpack the tarball in the html 
-  directory of your webserver. (eg, /home/httpd/html)
+  After you have met the additional software requirements (working DB, POP3/IMAP server, and PHP), 
+  unpack the tarball in the html directory of your webserver. (eg, /home/httpd/html)
+  If you want the phpGroupWare install to appear at a URL other than
+  http://localhost/phpgroupware now is the time to rename the directory or move it
+  around under your document root.
 </p>
 <sect1>Create a database and user for phpGroupWare
 <p>
@@ -91,6 +100,40 @@ have the most recent development copy of phpGroupWare in no time.
   exclusive use (for security).
 
   Note the host the database engine is on, user, password and database name, you will need them soon.
+  <sect2>Adding DB and users in MySQL
+  <p>The quick stepse to get going on mysql are as follows (please consult the offical MySQL
+  documentation for the details).
+  
+  <tt>mysqladmin create phpgroupware</tt> - creates the blank database 
+  
+  Go into the mysql command line utility with <tt>mysql mysql</tt> or use
+  a tool like phpMyAdmin to update the permission tables. 
+  It is recommended that you add a user with no permissions, then
+  explicitly grant the user access to the phpgroupware database.
+  The following SQL is an example:
+  <verb>
+  insert into users(Host,User,Password) values('localhost','phpgwuser',PASSWORD('somethinghardtoguess');
+  insert into db(Host,DB,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv,Alter_priv)
+          values('localhost','phpgroupware','phpgwuser','Y','Y','Y','Y','Y','Y','Y')
+  </verb>
+  you must then reload the grant tables with <tt>mysqladmin reload</tt> or <tt>refresh privledges</tt> from the mysql utility.
+  </p>
+  <sect2>PostgereSQL install
+  <p>
+  This is from <tt>gnrfan</tt> but has yet to be updated for the recent version of phpGroupWare, although
+  it should get you started.
+
+  To start the postmaster just type at the console: 
+  <tt>$postmaster -i -D /home/[username]/[dataDir]</tt>
+  Now if there is an error then is no datadir intitiated (assuming that postgreSQL is installed). 
+  To do that you have to use initdb to create the dataDIR. Please look in
+  the documentation of posgreSQL or the manual page for initdb for details.
+
+  If you have not encountered any error than you are ready to roll. 
+  Now create a database which will be used by the phpGroupWare.
+  To do that type at the console: 
+  <tt>$createdb phpgroupware</tt> assumming that you would name the database phpgroupware. 
+  </p>
 <sect1>Configure phpGroupWare
 <p>
   Copy the <tt>header.inc.php.sample</tt> file to 
@@ -224,7 +267,7 @@ try logging out of phpGroupWare (the rightmost icon in the navigation bar)
 and then log back in.
 
 An preference page to edit the email settings is being developed, and should
-appear shortly after the first beta release.
+appear shortly after the second beta release.
 </p>
 
 <sect1>It seems to hang when I try to read my mail
@@ -271,6 +314,34 @@ For PHP4:
 AddType             application/x-httpd-php .php3 .php
 </code>
 </p>
+<sect>Known working systems
+<p>
+  A rough description of some of the hardware and software the developers have
+  used to develop phpGroupWare on, oh have confirmed working reports from people
+  in IRC.
+</p>
+  <sect1>Seek3r has tested
+  <p>
+  phpGroupWare.org runs:
+  Red Hat 6.2, Apache/1.3.12,PHP/4.0.2,mod_perl/1.21,MySQL 3.23.10-alpha,Courier-IMAP 0.33+ with qmail 1.03
+  </p>
+  <sect1>blinky has tested
+  <p>
+  phpGroupWare.net runs:
+  Red Hat 6.2,Apache/1.3.14 PHP/4.0.3pl1 mod_ssl/2.7.1 OpenSSL/0.9.6 PHP4.03.pl1,MySQL 3.23.10-alpha,qmail 1.03
+
+  dev boxes are variants on:
+  Red Hat 7.0,mysql-3.23.22-6 (from RH7 RPM), and Sendmail, Courier, or qmail+courier IMAP depending on mood.  
+  </p>
+  <sect1>Jengo has tested
+  <p>
+  main test box: Red Hat 6.2,Apache/1.3.12,PHP 3.0.16,PostgreSQL 7.2,Sendmail (from RH6.2)
+
+  laptop is rh 6.1, apache 1.3.?, MySQL and PostgreSQL 7.0 w/ PHP 3.0.16, its a P-90 w/ 40 mb ram and a 800 mb hd
+  </p>
+<p>  
+  Also, confirmation through IRC of phpGroupware working on Win2k with IIS5.0, PHP4.0.2 and MySQL just recently
+</p> 
 <sect>About this document
 <sect1>New versions 
 <p>
@@ -314,6 +385,15 @@ name="http://sourceforge.net/mail/?group_id=7305">
   <item>Added Trouble-shooting section
   <item>Added description of application installation
   <item>Changes for the new setup program
+</itemize>
+</p>
+<p>
+ v1.2 (Early October 2000) - blinky
+</p>
+<p>
+<itemize>
+ <item>Info about creatign MySQL DB and user
+ <item>Partial PostgreSQL info from gnrfan
 </itemize>
 </p>
 <sect1>Copyrights and Trademarks 

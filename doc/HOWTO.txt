@@ -1,7 +1,8 @@
   phpGroupWare HOWTO
   Joseph Engo <jengo@phpgroupware.org>, Dan Kuykendall
-  <dan@kuykendall.org>
-  v1.1, 28 September 2000
+  <dan@kuykendall.org>, Stephen Brown <blinky@phpgroup-
+  ware.net>
+  v1.3, 17 October 2000
 
   This document explains how to install and configure phpGroupWare.
   ______________________________________________________________________
@@ -22,6 +23,8 @@
         2.3.2 Developer's version from CVS
      2.4 Installing on Tested Systems
      2.5 Create a database and user for phpGroupWare
+        2.5.1 Adding DB and users in MySQL
+        2.5.2 PostgereSQL install
      2.6 Configure phpGroupWare
 
   3. Testing the install
@@ -35,14 +38,20 @@
      5.3 When I log in I see the directory listing instead of a web page
      5.4 I get garbage that looks like code when I go to the phpGroupWare URL
 
-  6. About this document
+  6. Known working systems
 
-     6.1 New versions
-     6.2 Comments
-     6.3 History
-     6.4 Version History
-     6.5 Copyrights and Trademarks
-     6.6 Acknowledgments and Thanks
+     6.1 Seek3r has tested
+     6.2 blinky has tested
+     6.3 Jengo has tested
+
+  7. About this document
+
+     7.1 New versions
+     7.2 Comments
+     7.3 History
+     7.4 Version History
+     7.5 Copyrights and Trademarks
+     7.6 Acknowledgments and Thanks
 
 
   ______________________________________________________________________
@@ -55,7 +64,6 @@
 
   It should run on all systems where PHP is available and currently
   supports MySQL and PostgreSQL.
-
   11..11..  WWhhaatt iiss pphhppGGrroouuppWWaarree aanndd wwhhyy sshhoouulldd II uussee iitt??
 
   phpGroupWare is:
@@ -63,6 +71,7 @@
   phpGroupWare is a web based groupware application that includes
   integrated features such as email, calendar, todo list, address book,
   file manager, headline news, and a trouble ticket system.
+
 
   You should use it if:
 
@@ -85,18 +94,26 @@
 
   22..22..  TTeesstteedd SSyysstteemmss
 
-  On Linux 2.2.x
+  Known compatible software
 
-  +o  PHP 3.0.15+ / PHP 4.0.x
+  +o  PHP 3.0.15+ or PHP 4.0.x (preferred)
 
   +o  Apache 1.3.x
 
-  +o  MySQL 3.22.25 or PostgreSQL 7.0.x
+  +o  MySQL 3.22.25 or greater
 
-  +o  Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access
+  +o  MySQL 3.23.10 or greater
 
-  We have reports of phpGroupWare working on Windows NT and OS/2, and
-  using Oracle as the database.
+  +o  Courier IMAP 0.33+ for IMAP (optionally with vmailmgr)
+
+  +o  qmail 1.03 for SMTP and POP
+
+  +o  sendmail for SMTP
+
+  Example configurations that the CVS versions have been up and running
+  on are listed at the end of this document.  We have reports of
+  phpGroupWare working on Windows NT and OS/2, and using Oracle as the
+  database.
 
   22..33..  OObbttaaiinniinngg pphhppGGrroouuppWWaarree
 
@@ -111,6 +128,8 @@
   contains links to the most recent releases, and several mirror sites
   for the releases.
 
+
+
   22..33..22..  DDeevveellooppeerr''ss vveerrssiioonn ffrroomm CCVVSS
 
   If you have never used CVS, you may want to read through the
@@ -123,8 +142,12 @@
 
   22..44..  IInnssttaalllliinngg oonn TTeesstteedd SSyysstteemmss
 
-  After you have met the system requirements, unpack the tarball in the
-  html directory of your webserver. (eg, /home/httpd/html)
+  After you have met the additional software requirements (working DB,
+  POP3/IMAP server, and PHP), unpack the tarball in the html directory
+  of your webserver. (eg, /home/httpd/html) If you want the phpGroupWare
+  install to appear at a URL other than http://localhost/phpgroupware
+  now is the time to rename the directory or move it around under your
+  document root.
 
   22..55..  CCrreeaattee aa ddaattaabbaassee aanndd uusseerr ffoorr pphhppGGrroouuppWWaarree
 
@@ -134,6 +157,49 @@
 
   Note the host the database engine is on, user, password and database
   name, you will need them soon.
+
+  22..55..11..
+
+  AAddddiinngg DDBB aanndd uusseerrss iinn MMyySSQQLL
+
+  The quick stepse to get going on mysql are as follows (please consult
+  the offical MySQL documentation for the details).
+
+  mysqladmin create phpgroupware - creates the blank database
+
+  Go into the mysql command line utility with mysql mysql or use a tool
+  like phpMyAdmin to update the permission tables.  It is recommended
+  that you add a user with no permissions, then explicitly grant the
+  user access to the phpgroupware database.  The following SQL is an
+  example:
+
+    insert into users(Host,User,Password) values('localhost','phpgwuser',PASSWORD('somethinghardtoguess');
+    insert into db(Host,DB,User,Select_priv,Insert_priv,Update_priv,Delete_priv,Create_priv,Drop_priv,Alter_priv)
+            values('localhost','phpgroupware','phpgwuser','Y','Y','Y','Y','Y','Y','Y')
+
+
+
+  you must then reload the grant tables with mysqladmin reload or
+  refresh privledges from the mysql utility.
+
+  22..55..22..
+
+  PPoossttggeerreeSSQQLL iinnssttaallll
+
+  This is from gnrfan but has yet to be updated for the recent version
+  of phpGroupWare, although it should get you started.
+
+  To start the postmaster just type at the console: $postmaster -i -D
+  /home/[username]/[dataDir] Now if there is an error then is no datadir
+  intitiated (assuming that postgreSQL is installed).  To do that you
+  have to use initdb to create the dataDIR. Please look in the
+  documentation of posgreSQL or the manual page for initdb for details.
+
+
+  If you have not encountered any error than you are ready to roll.  Now
+  create a database which will be used by the phpGroupWare.  To do that
+  type at the console: $createdb phpgroupware assumming that you would
+  name the database phpgroupware.
 
   22..66..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
 
@@ -292,7 +358,7 @@
   bar) and then log back in.
 
   An preference page to edit the email settings is being developed, and
-  should appear shortly after the first beta release.
+  should appear shortly after the second beta release.
 
   55..22..  IItt sseeeemmss ttoo hhaanngg wwhheenn II ttrryy ttoo rreeaadd mmyy mmaaiill
 
@@ -362,14 +428,53 @@
 
 
 
-  66..  AAbboouutt tthhiiss ddooccuummeenntt
+  66..  KKnnoowwnn wwoorrkkiinngg ssyysstteemmss
 
-  66..11..  NNeeww vveerrssiioonnss
+  A rough description of some of the hardware and software the
+  developers have used to develop phpGroupWare on, oh have confirmed
+  working reports from people in IRC.
+
+  66..11..
+
+  SSeeeekk33rr hhaass tteesstteedd
+
+  phpGroupWare.org runs: Red Hat 6.2,
+  Apache/1.3.12,PHP/4.0.2,mod_perl/1.21,MySQL 3.23.10-alpha,Courier-IMAP
+  0.33+ with qmail 1.03
+
+  66..22..
+
+  bblliinnkkyy hhaass tteesstteedd
+
+  phpGroupWare.net runs: Red Hat 6.2,Apache/1.3.14 PHP/4.0.3pl1
+  mod_ssl/2.7.1 OpenSSL/0.9.6 PHP4.03.pl1,MySQL 3.23.10-alpha,qmail 1.03
+
+  dev boxes are variants on: Red Hat 7.0,mysql-3.23.22-6 (from RH7 RPM),
+  and Sendmail, Courier, or qmail+courier IMAP depending on mood.
+
+  66..33..
+
+  JJeennggoo hhaass tteesstteedd
+
+  main test box: Red Hat 6.2,Apache/1.3.12,PHP 3.0.16,PostgreSQL
+  7.2,Sendmail (from RH6.2)
+
+
+  laptop is rh 6.1, apache 1.3.?, MySQL and PostgreSQL 7.0 w/ PHP
+  3.0.16, its a P-90 w/ 40 mb ram and a 800 mb hd
+
+
+  Also, confirmation through IRC of phpGroupware working on Win2k with
+  IIS5.0, PHP4.0.2 and MySQL just recently
+
+  77..  AAbboouutt tthhiiss ddooccuummeenntt
+
+  77..11..  NNeeww vveerrssiioonnss
 
   The newest version of this document can be found on our website
   <http://www.phpgroupware.org> as SGML source, HTML, or TEXT.
 
-  66..22..  CCoommmmeennttss
+  77..22..  CCoommmmeennttss
 
   Comments on this HOWTO should be directed to the phpGroupWare
   developers mailing list phpgroupware-developers@lists.sourceforge.net
@@ -378,12 +483,12 @@
   To subscribe, go to http://sourceforge.net/mail/?group_id=7305
   <http://sourceforge.net/mail/?group_id=7305>
 
-  66..33..  HHiissttoorryy
+  77..33..  HHiissttoorryy
 
   This document was started by Joseph Engo and reworked by Dan
   Kuykendall.
 
-  66..44..  VVeerrssiioonn HHiissttoorryy
+  77..44..  VVeerrssiioonn HHiissttoorryy
 
   Old Version
 
@@ -391,7 +496,6 @@
   +o  Created by Jengo, wasn't in SGML HOWTO format.
 
   v1.0 (July 6, 2000)
-
 
 
   +o  Built proper SGML version.
@@ -411,7 +515,14 @@
 
   +o  Changes for the new setup program
 
-  66..55..  CCooppyyrriigghhttss aanndd TTrraaddeemmaarrkkss
+  v1.2 (Early October 2000) - blinky
+
+
+  +o  Info about creatign MySQL DB and user
+
+  +o  Partial PostgreSQL info from gnrfan
+
+  77..55..  CCooppyyrriigghhttss aanndd TTrraaddeemmaarrkkss
 
   Copyright (c)  Dan Kuykendall.  Permission is granted to copy,
   distribute and/or modify this document under the terms of the GNU Free
@@ -421,11 +532,32 @@
   A copy of the license is available at GNU Free Documentation License
   <http://www.gnu.org/copyleft/fdl.txt>.
 
-  66..66..  AAcckknnoowwlleeddggmmeennttss aanndd TThhaannkkss
+  77..66..  AAcckknnoowwlleeddggmmeennttss aanndd TThhaannkkss
 
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro) and the core of this HOWTO.  Thanks to all the developers
   and users who contribute to making phpGroupWare such a success.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
