@@ -25,97 +25,97 @@
 
   /* $Id$ */
 
-       if (empty($GLOBALS['phpgw_info']['server']['sessions_type']))
+	if (empty($GLOBALS['phpgw_info']['server']['sessions_type']))
 	{
 		$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';
 	}
 	include_once(PHPGW_API_INC.'/class.sessions_'.$GLOBALS['phpgw_info']['server']['sessions_type'].'.inc.php');
 
 	/**
-       * Session Management Libabray
-       * 
-       * This allows phpGroupWare to use php4 or database sessions 
-       *
-       * @package phpgwapi
-       * @subpackage sessions
-       * @abstract
-       * @author NetUSE AG Boris Erdmann, Kristian Koehntopp <br> hacked on by phpGW
-       * @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> &copy; 2003 FreeSoftware Foundation
-       * @license LGPL
-       * @link http://www.sanisoft.com/phplib/manual/DB_sql.php
-       * @uses db
-       */
+	* Session Management Libabray
+	*
+	* This allows phpGroupWare to use php4 or database sessions
+	*
+	* @package phpgwapi
+	* @subpackage sessions
+	* @abstract
+	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp <br> hacked on by phpGW
+	* @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> &copy; 2003 FreeSoftware Foundation
+	* @license LGPL
+	* @link http://www.sanisoft.com/phplib/manual/DB_sql.php
+	* @uses db
+	*/
 
 	class sessions_
 	{
 		/**
-        * @var string current user login
-        */
-        var $login;
-        
-        /**
-        * @var string current user password
-        */
+		* @var string current user login
+		*/
+		var $login;
+
+		/**
+		* @var string current user password
+		*/
 		var $passwd;
-        
-        /**
-        * @var int current user db/ldap account id
-        */
+
+		/**
+		* @var int current user db/ldap account id
+		*/
 		var $account_id;
-        
-        /**
-        * @var string current user account login id - ie user@domain
-        */
+
+		/**
+		* @var string current user account login id - ie user@domain
+		*/
 		var $account_lid;
-        
-        /**
-        * @var string previous page call id - repost prevention
-        */
+
+		/**
+		* @var string previous page call id - repost prevention
+		*/
 		var $history_id;
-        
-        /**
-        * @var string domain for current user
-        */
+
+		/**
+		* @var string domain for current user
+		*/
 		var $account_domain;
-        
-        /**
-        * @var session type flag, A - anonymous session, N - None, normal session
-        */
+
+		/**
+		* @var session type flag, A - anonymous session, N - None, normal session
+		*/
 		var $session_flags;
-        
-        /**
-        * @var string current user session id
-        */
+
+		/**
+		* @var string current user session id
+		*/
 		var $sessionid;
-        
-        /**
-        * @var string not sure what this does, but it is important :)
-        */
+
+		/**
+		* @var string not sure what this does, but it is important :)
+		*/
 		var $kp3;
-        
-        /**
-        * @var string encryption key?
-        */
+
+		/**
+		* @var string encryption key?
+		*/
 		var $key;
-        
-        /**
-        * @var string iv == ivegotnoidea ;) (skwashd)
-        */
+
+		/**
+		* @var string iv == ivegotnoidea ;) (skwashd)
+		*/
 		var $iv;
 
-        /**
-        * @var session data
-        */
+		/**
+		* @var session data
+		*/
 		var $data;
         
-        /**
-        * @var object holder for the database object
-        */ 
+		/**
+		* @var object holder for the database object
+		*/
 		var $db;
         
-        /**
-        * @var array publicly available methods
-        */
+		/**
+		* @var array publicly available methods
+		*/
 		var $public_functions = array(
 			'list_methods' => True,
 			'update_dla'   => True,
@@ -124,14 +124,14 @@
 		);
 
 		/**
-        * @var string domain for cookies
-        */
-        var $cookie_domain;
-		
-        /**
-        * @var name of XML-RPC/SOAP method called
-        */
-        var $xmlrpc_method_called;
+		* @var string domain for cookies
+		*/
+		var $cookie_domain;
+
+		/**
+		* @var name of XML-RPC/SOAP method called
+		*/
+		var $xmlrpc_method_called;
 
 		/**
 		* Constructor just loads up some defaults from cookies
@@ -207,13 +207,13 @@
 		}
 
 		/**
-        * Introspection for XML-RPC/SOAP
-        * Diabled - why??
-        *
-        * @param string $_type tpye of introspection being sought
-        * @return array available methods and args
-        */
-        function DONTlist_methods($_type)
+		* Introspection for XML-RPC/SOAP
+		* Diabled - why??
+		*
+		* @param string $_type tpye of introspection being sought
+		* @return array available methods and args
+		*/
+		function DONTlist_methods($_type)
 		{
 			if (is_array($_type))
 			{
@@ -247,13 +247,13 @@
 		}
 
 		/**
-        * Check to see if a session is still current and valid
-        *
-        * @param string $sessionid session id to be verfied
-        * @param string $kp3 ?? to be verified
-        * @return bool is the session valid?
-        */
-        function verify($sessionid='',$kp3='')
+		* Check to see if a session is still current and valid
+		*
+		* @param string $sessionid session id to be verfied
+		* @param string $kp3 ?? to be verified
+		* @return bool is the session valid?
+		*/
+		function verify($sessionid='',$kp3='')
 		{
 			if(empty($sessionid) || !$sessionid)
 			{
@@ -407,22 +407,22 @@
 		* Functions for creating and verifying the session
 		*/
         
-        /**
-        * Get the ip address of current users
-        *
-        * @return string ip address
-        */
+		/**
+		* Get the ip address of current users
+		*
+		* @return string ip address
+		*/
 		function getuser_ip()
 		{
 			return (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']);
 		}
 
 		/**
-        * Set the domain used for cookies
-        *
-        * @return string domain
-        */
-        function phpgw_set_cookiedomain()
+		* Set the domain used for cookies
+		*
+		* @return string domain
+		*/
+		function phpgw_set_cookiedomain()
 		{
 			$dom = $_SERVER['HTTP_HOST'];
 			if (preg_match("/^(.*):(.*)$/",$dom,$arr))
@@ -454,13 +454,13 @@
 		}
 
 		/**
-        * Set a cookie
-        *
-        * @param string $cookiename name of cookie to be set
-        * @param string $cookievalue value to be used, if unset cookie is cleared (optional)
-        * @param int $cookietime when cookie should expire, 0 for session only (optional)
-        */
-        function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
+		* Set a cookie
+		*
+		* @param string $cookiename name of cookie to be set
+		* @param string $cookievalue value to be used, if unset cookie is cleared (optional)
+		* @param int $cookietime when cookie should expire, 0 for session only (optional)
+		*/
+		function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
 		{
 			if (!$this->cookie_domain)
 			{
@@ -470,14 +470,14 @@
 		}
 
 		/**
-        * Create a new session
-        *
-        * @param string $login user login
-        * @param string $passwd user password
-        * @param string $passwd_type type of password being used, ie plaintext, md5, sha1
-        * @return string session id
-        */
-        function create($login,$passwd = '',$passwd_type = '')
+		* Create a new session
+		*
+		* @param string $login user login
+		* @param string $passwd user password
+		* @param string $passwd_type type of password being used, ie plaintext, md5, sha1
+		* @return string session id
+		*/
+		function create($login,$passwd = '',$passwd_type = '')
 		{
 			if (is_array($login))
 			{
@@ -678,13 +678,13 @@
 		}
 
 		/**
-        * Verfy a peer server access request
-        * 
-        * @param string $sessionid session id to verfiy
-        * @param string $kp3 ??
-        * @return bool verfied?
-        */
-        function verify_server($sessionid, $kp3)
+		* Verfy a peer server access request
+		*
+		* @param string $sessionid session id to verfiy
+		* @param string $kp3 ??
+		* @return bool verfied?
+		*/
+		function verify_server($sessionid, $kp3)
 		{
 			$GLOBALS['phpgw']->interserver = CreateObject('phpgwapi.interserver');
 			$this->sessionid = $sessionid;
@@ -808,13 +808,13 @@
 		}
 
 		/**
-        * Validate a peer server login request
-        *
-        * @param string $login login name
-        * @param string $password password
-        * @return bool login ok?
-        */
-        function create_server($login,$passwd)
+		* Validate a peer server login request
+		*
+		* @param string $login login name
+		* @param string $password password
+		* @return bool login ok?
+		*/
+		function create_server($login,$passwd)
 		{
 			$GLOBALS['phpgw']->interserver = CreateObject('phpgwapi.interserver');
 			$this->login  = $login;
@@ -883,12 +883,12 @@
 
 		/**
 		* Functions for appsession data and session cache
-        */
+		*/
 
 		/**
-        * Is this also useless?? (skwashd)
-        */
-        function read_repositories($cached='',$write_cache=True)
+		* Is this also useless?? (skwashd)
+		*/
+		function read_repositories($cached='',$write_cache=True)
 		{
 			$GLOBALS['phpgw']->acl->acl($this->account_id);
 			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
@@ -919,8 +919,8 @@
 		}
 
 		/**
-        * Is this also useless?? (skwashd)
-        */
+		* Is this also useless?? (skwashd)
+		*/
 		function setup_cache($write_cache=True)
 		{
 			$this->user                = $GLOBALS['phpgw']->accounts->read_repository();
@@ -945,13 +945,13 @@
 			}
 		}
         
-        /**
-        * This looks to be useless
-        * This will capture everything in the $GLOBALS['phpgw_info'] including server info,
-        * and store it in appsessions.  This is really incompatible with any type of restoring
-        * from appsession as the saved user info is really in ['user'] rather than the root of
-        * the structure, which is what this class likes.
-        */
+		/**
+		* This looks to be useless
+		* This will capture everything in the $GLOBALS['phpgw_info'] including server info,
+		* and store it in appsessions.  This is really incompatible with any type of restoring
+		* from appsession as the saved user info is really in ['user'] rather than the root of
+		* the structure, which is what this class likes.
+		*/
 		function save_repositories()
 		{
 			$phpgw_info_temp = $GLOBALS['phpgw_info'];
@@ -981,8 +981,8 @@
 		}
 
 		/**
-        * Save the current values of all registered variables
-        */
+		* Save the current values of all registered variables
+		*/
 		function save()
 		{
 			if (is_array($this->variableNames))
@@ -1001,10 +1001,10 @@
 		}
 
 		/**
-        * Create a list a variable names, which data needs to be restored
-        *
-        * @param string $_variableName name of variable to be registered
-        */
+		* Create a list a variable names, which data needs to be restored
+		*
+		* @param string $_variableName name of variable to be registered
+		*/
 		function register($_variableName)
 		{
 			$this->variableNames[$_variableName]='registered';
@@ -1012,10 +1012,10 @@
 		}
 
 		/**
-        * Mark variable as unregistered
-        *
-        * @param string $_variableName name of variable to deregister
-        */
+		* Mark variable as unregistered
+		*
+		* @param string $_variableName name of variable to deregister
+		*/
 		function unregister($_variableName)
 		{
 			$this->variableNames[$_variableName]='unregistered';
@@ -1023,11 +1023,11 @@
 		}
 
 		/**
-        * Check if we have a variable registred already
-        *
-        * @param string $_variableName name of variable to check
-        * @return bool was the variable found?
-        */
+		* Check if we have a variable registred already
+		*
+		* @param string $_variableName name of variable to check
+		* @return bool was the variable found?
+		*/
 		function is_registered($_variableName)
 		{
 			if ($this->variableNames[$_variableName] == 'registered')
@@ -1040,10 +1040,10 @@
 			}
 		}
 		/**
-        * Additional tracking of user actions - prevents reposts/use of back button
-        *
-        * @author skwashd
-        * @return string current history id
+		* Additional tracking of user actions - prevents reposts/use of back button
+		*
+		* @author skwashd
+		* @return string current history id
 		*/
 		function generate_click_history()
 		{
@@ -1062,9 +1062,9 @@
 		}
 		
 		/**
-        * Detects if the page has already been called before - good for forms
-        *
-        * @author skwashd
+		* Detects if the page has already been called before - good for forms
+		*
+		* @author skwashd
 		* @param bool $diplay_error when implemented will use the generic error handling code
 		* @return True if called previously, else False - call ok
 		*/
@@ -1091,12 +1091,12 @@
 		}
 
 		/**
-        * Generate a url which supports url or cookies based sessions
-        *
-        * @param string $url a url relative to the phpgroupware install root
-        * @param array $extravars query string arguements
-        * @return string generated url
-        */
+		* Generate a url which supports url or cookies based sessions
+		*
+		* @param string $url a url relative to the phpgroupware install root
+		* @param array $extravars query string arguements
+		* @return string generated url
+		*/
 		function link($url, $extravars = '')
 		{
 			/* first we process the $url to build the full scriptname */
@@ -1151,7 +1151,7 @@
 				$i = 0;
 				while ($i < count($a))
 				{
-					$b = split('=', $a[$i]);
+					$b = split('=', $a[$i],2);
 					$new_extravars[$b[0]] = $b[1];
 					$i++;
 				}
@@ -1184,8 +1184,7 @@
 			if (is_array($extravars))
 			{
 				$new_extravars = '';
-				reset($extravars);
-				while(list($key,$value) = each($extravars))
+				foreach($extravars as $key => $value)
 				{
 					if (!empty($new_extravars))
 					{
@@ -1198,16 +1197,17 @@
 			/* if no extravars then we return the cleaned up url/scriptname */
 			return $url;
 		}
-	 /**
-        * The remaining methods are abstract - as they are unique for each session handler
-        */
-        
-        /**
-        * Load user's session information
-        *
-        * @param string $sessionid user's session id string
-        * @return mixed the session data
-        */
+
+		/**
+		* The remaining methods are abstract - as they are unique for each session handler
+		*/
+
+		/**
+		* Load user's session information
+		*
+		* @param string $sessionid user's session id string
+		* @return mixed the session data
+		*/
 		function read_session($sessionid)
 		{}
 
@@ -1218,76 +1218,76 @@
 		{}
 
 		/**
-        * Set paramaters for cookies - only implemented in PHP4 sessions
-        *
-        * @param string $domain domain name to use in cookie
-        */
-        
-        function set_cookie_params($domain)
+		* Set paramaters for cookies - only implemented in PHP4 sessions
+		*
+		* @param string $domain domain name to use in cookie
+		*/
+
+		function set_cookie_params($domain)
 		{}
 
 		/**
-        * Create a new session
-        *
-        * @param string $login user login
-        * @param string $user_ip users ip address
-        * @param int $now time now as a unix timestamp
-        * @param string $session_flags A = Anonymous, N = Normal
-        */
-        function register_session($login,$user_ip,$now,$session_flags)
+		* Create a new session
+		*
+		* @param string $login user login
+		* @param string $user_ip users ip address
+		* @param int $now time now as a unix timestamp
+		* @param string $session_flags A = Anonymous, N = Normal
+		*/
+		function register_session($login,$user_ip,$now,$session_flags)
 		{}
 
 		/**
-        * Update the date last active info for the session, so the login does not expire
-        *
-        * @return bool did it suceed?
-        */
+		* Update the date last active info for the session, so the login does not expire
+		*
+		* @return bool did it suceed?
+		*/
 		function update_dla()
 		{}
 
 		/**
-        * Terminate a session
-        *
-        * @param string $sessionid the id of the session to be terminated
-        * @param string $kp3 - NOT SURE
-        * @return bool did it suceed?
-        */
-        function destroy($sessionid, $kp3)
+		* Terminate a session
+		*
+		* @param string $sessionid the id of the session to be terminated
+		* @param string $kp3 - NOT SURE
+		* @return bool did it suceed?
+		*/
+		function destroy($sessionid, $kp3)
 		{}
 
 		/**
 		* Functions for appsession data and session cache
 		*/
         
-        /**
-        * Delete all data from the session cache for a user
-        * 
-        * @param int $accountid user account id, defaults to current user (optional)
-        */
+		/**
+		* Delete all data from the session cache for a user
+		*
+		* @param int $accountid user account id, defaults to current user (optional)
+		*/
 		function delete_cache($accountid='')
 		{}
 
 		/**
-        * Stores or retrieves information from the sessions cache
-        * 
-        * @param string $location identifier for data
-        * @param string $appname name of app which is responsbile for the data
-        * @param mixed $data data to be stored, if left blank data is retreived (optional)
-        * @return mixed data from cache, only returned if $data arg is not used 
-        */
-        function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
+		* Stores or retrieves information from the sessions cache
+		*
+		* @param string $location identifier for data
+		* @param string $appname name of app which is responsbile for the data
+		* @param mixed $data data to be stored, if left blank data is retreived (optional)
+		* @return mixed data from cache, only returned if $data arg is not used
+		*/
+		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
 		{}
 
 		/**
 		* Get list of normal / non-anonymous sessions
 		* Note: The data from the session-files get cached in the app_session phpgwapi/php4_session_cache
-        *
+		*
 		* @author ralfbecker
-        * @param int $start session to start at
-        * @param string $order field to sort on
-        * @param string $sort sort order
-        * @param bool $all_no_sort list all with out sorting (optional) default False
-        * @return array info for all current sessions  
+		* @param int $start session to start at
+		* @param string $order field to sort on
+		* @param string $sort sort order
+		* @param bool $all_no_sort list all with out sorting (optional) default False
+		* @return array info for all current sessions
 		*/
 		function list_sessions($start,$order,$sort,$all_no_sort = False)
 		{}
@@ -1295,8 +1295,8 @@
 		/**
 		* Get the number of normal / non-anonymous sessions
 		* 
-        * @author ralfbecker
-        * @return int number of sessions
+		* @author ralfbecker
+		* @return int number of sessions
 		*/
 		function total()
 		{}
