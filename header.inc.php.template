@@ -73,7 +73,9 @@
   \**************************************************************************/
   include($phpgw_info["server"]["server_root"]."/version.inc.php");
   $phpgw_info["server"]["header_version"] = "1.4";
-  if (!$phpgw_info["flags"]["noapi"] == True){
+// This is a fix for NT
+  if (!isset($phpgw_info["flags"]["noapi"]) || 
+      !$phpgw_info["flags"]["noapi"] == True){
     include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw.inc.php");
   }
 
