@@ -456,6 +456,7 @@
 
 				case 'select-month':
 					$cell['sel_options'] = $this->monthnames;
+					$value = intval($value);
 					break;
 
 				case 'select-day':
