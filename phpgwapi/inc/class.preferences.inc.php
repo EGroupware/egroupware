@@ -215,8 +215,8 @@
 			if (! $GLOBALS['phpgw']->acl->check('session_only_preferences',1,'preferences'))
 			{
 				$this->db->transaction_begin();
-				$this->db->query("DELETE FROM phpgw_preferences WHERE preference_owner='" . $this->account_id
-					. "'",__LINE__,__FILE__);
+				$this->db->query("DELETE FROM phpgw_preferences WHERE preference_owner=" . intval($this->account_id),
+					__LINE__,__FILE__);
 
 				if (floor(phpversion()) < 4)
 				{
