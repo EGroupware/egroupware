@@ -172,7 +172,7 @@
 			$this->template->set_var('lang_title',lang('Kill session'));
 			$this->template->set_var('lang_message',lang('Are you sure you want to kill this session ?'));
 			$this->template->set_var('link_no','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' . lang('No') . '</a>');
-			$this->template->set_var('link_yes','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.bocurrentsessions.kill&ksession=' . $GLOBALS['ksession']) . '">' . lang('Yes') . '</a>');
+			$this->template->set_var('link_yes','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.bocurrentsessions.kill&ksession=' . $GLOBALS['HTTP_GET_VARS']['ksession']) . '">' . lang('Yes') . '</a>');
 
 			$this->template->pfp('out','form');
 		}
