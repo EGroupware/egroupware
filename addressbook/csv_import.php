@@ -161,7 +161,8 @@
 				'owner'  => 'Owner: defaults to user',
 				'address2' => 'address line 2',
 				'address3' => 'address line 3',
-			 	'ophone'   => 'Other Phone'
+			 	'ophone'   => 'Other Phone',
+				'ab_id'    => 'Address Id: @addr_id(n_family,n_given,org_name)'
 			);
 
 			while(list($field,$name) = each($addr_names))
@@ -364,8 +365,17 @@
 				}
 				if(!$debug)
 				{
-					$GLOBALS['phpgw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
-						$values,$values['access'],$values['cat_id']);
+					if (!$values['ab_id'])
+					{
+						$GLOBALS['phpgw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
+							$values,$values['access'],$values['cat_id']);
+					}
+					else
+					{
+						$GLOBALS['phpgw']->contacts->update( $values['ab_id'],
+							$values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
+							$values,$values['access'],$values['cat_id']);
+					}
 					// echo "<p>adding: ".dump_array($values)."</p>\n";
 				}
 			}
