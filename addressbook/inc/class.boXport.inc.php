@@ -181,6 +181,7 @@
 			}
 			else
 			{
+				$needToCallEndRecord = 0;
 				while ($data = fgets($fp,8000))
 				{
 					$data = trim($data);
@@ -200,6 +201,7 @@
 					if (strtolower(substr($name,0,5)) == 'begin')
 					{
 						$buffer = $contacts->import_start_record($buffer);
+						$needToCallEndRecord = 1;
 					}
 					if ($name && $value)
 					{
@@ -215,8 +217,11 @@
 					else
 					{
 						$buffer = $contacts->import_end_record($buffer);
+						$needToCallEndRecord = 0;
 					}
 				}
+				if($needToCallEndRecord)
+					$buffer = $contacts->import_end_record($buffer);
 			}
 
 			fclose($fp);
