@@ -23,6 +23,48 @@
 
 	/* $Id$ */
 
+	/*
+	  Dont know where to put this (seek3r)
+	  This is where it belongs (jengo)
+	  This is where it ended up (milosch)
+	  Moved again at least temporarily since sql and ldap use it.
+	*/
+	$GLOBALS['phpgw_info']['server']['global_denied_users'] = array(
+		'root'     => True, 'bin'      => True, 'daemon'   => True,
+		'adm'      => True, 'lp'       => True, 'sync'     => True,
+		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
+		'mail'     => True, 'news'     => True, 'uucp'     => True,
+		'operator' => True, 'games'    => True, 'gopher'   => True,
+		'nobody'   => True, 'xfs'      => True, 'pgsql'    => True,
+		'mysql'    => True, 'postgres' => True, 'oracle'   => True,
+		'ftp'      => True, 'gdm'      => True, 'named'    => True,
+		'alias'    => True, 'web'      => True, 'sweep'    => True,
+		'cvs'      => True, 'qmaild'   => True, 'qmaill'   => True,
+		'qmaillog' => True, 'qmailp'   => True, 'qmailq'   => True,
+		'qmailr'   => True, 'qmails'   => True, 'rpc'      => True,
+		'rpcuser'  => True, 'amanda'   => True, 'apache'   => True,
+		'pvm'      => True, 'squid'    => True, 'ident'    => True,
+		'nscd'     => True, 'mailnull' => True, 'cyrus'    => True,
+		'backup'    => True
+	);
+
+	$GLOBALS['phpgw_info']['server']['global_denied_groups'] = array(
+		'root'      => True, 'bin'       => True, 'daemon'    => True,
+		'sys'       => True, 'adm'       => True, 'tty'       => True,
+		'disk'      => True, 'lp'        => True, 'mem'       => True,
+		'kmem'      => True, 'wheel'     => True, 'mail'      => True,
+		'uucp'      => True, 'man'       => True, 'games'     => True,
+		'dip'       => True, 'ftp'       => True, 'nobody'    => True,
+		'floppy'    => True, 'xfs'       => True, 'console'   => True,
+		'utmp'      => True, 'pppusers'  => True, 'popusers'  => True,
+		'slipusers' => True, 'slocate'   => True, 'mysql'     => True,
+		'dnstools'  => True, 'web'       => True, 'named'     => True,
+		'dba'       => True, 'oinstall'  => True, 'oracle'    => True,
+		'gdm'       => True, 'sweep'     => True, 'cvs'       => True,
+		'postgres'  => True, 'qmail'     => True, 'nofiles'   => True,
+		'ldap'      => True, 'backup'    => True
+	);
+
 	class accounts extends accounts_
 	{
 		var $memberships = Array();
@@ -41,8 +83,13 @@
 			{
 				$this->account_id = get_account_id($account_id);
 			}
-			$this->user_context  = $GLOBALS['phpgw_info']['server']['ldap_context'];
-			$this->group_context = $GLOBALS['phpgw_info']['server']['ldap_group_context'];
+
+			if($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
+			{
+				$this->ds = $GLOBALS['phpgw']->common->ldapConnect();
+				$this->user_context  = $GLOBALS['phpgw_info']['server']['ldap_context'];
+				$this->group_context = $GLOBALS['phpgw_info']['server']['ldap_group_context'];
+			}
 		}
 
 		function is_expired()
