@@ -10,6 +10,8 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
+  /* $Id$ */
+
 	$phpgw_info['flags'] = array(
 		'currentapp' => 'login',
 		'noheader'   => True
