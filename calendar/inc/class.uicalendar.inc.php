@@ -1463,7 +1463,7 @@
 					{
 						foreach($todos as $todo)
 						{
-							if(!$showall && ($i++>$maxshow))
+							if(!$showall && ($i++>=$maxshow))
 							{
 								break;
 							}
