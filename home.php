@@ -238,8 +238,14 @@
 			'news_admin'
 		);
 	}
-	//_debug_array($sorted_apps);
-	@reset($sorted_apps);
+
+	// Now add the rest of the user's apps, to make sure we pick up any additions to the home display
+	@reset($GLOBALS['phpgw_info']['user']['apps']);
+	while (list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
+	{
+		$sorted_apps[] = $p['name'];
+
+	}
 	//$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
 	
 	function migrate_pref($appname,$var_old,$var_new,$type='user')
@@ -275,27 +281,26 @@
 		}
 		return $result;
 	}
+
 	$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest','mainscreen_showmail','mainscreen_showbirthdays','mainscreen_show_new_updated');
 	$migrate_oldvarnames = false;
 	if($migrate_oldvarnames)
 	{
 		$_apps = $GLOBALS['phpgw_info']['user']['apps'];
+		@reset($_apps);
 		foreach($_apps as $_appname)
 		{
+			@reset($portal_oldvarnames);
 			foreach($portal_oldvarnames as $varname)
 			{
-				migrate_pref($appname,$varname,'homepage_display','all');
+				//echo "Want to migrate '$appname' from '$varname' to 'homepage_display'.<br>";
+				//migrate_pref($appname,$varname,'homepage_display','all');
 			}
 		}
 	}
 
-	$displayapps = $sorted_apps;
-	$_myapps = $GLOBALS['phpgw_info']['user']['apps'];
-	foreach($_myapps as $app)
-	{
-		$displayapps[] = $app['name'];
-	}
-	$shown = array();
+	$neworder = array();
+	$done = array();
 	// Display elements, within appropriate table cells
 	print '<table border="0" cellpadding="5" cellspacing="0" width="100%">';
 	$tropen=0;
@@ -303,9 +308,10 @@
 	$lastd = 0;
 	$numcols = 2;
 	$curcol = 1;
-	foreach($displayapps as $appname)
+	@reset($sorted_apps);
+	foreach($sorted_apps as $appname)
 	{
-		if(intval($shown[$appname])==1)
+		if(intval($done[$appname])==1 || empty($appname))
 		{
 			continue;
 		}
@@ -314,13 +320,24 @@
 		$thisd = 0;
 		foreach($varnames as $varcheck)
 		{
-		 	$_thisd = intval($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]);
-		 	if($_thisd>0)
+		 	//echo "$appname:$varcheck=".$GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]."<br>";
+		 	if($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]=='True')
 			{
-				$thisd = $_thisd;
+				$thisd = 1;
 				break;
 			}
+			else 
+			{
+				$_thisd = intval($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]);
+				if($_thisd>0)
+				{
+					//echo "Found $appname=$_thisd through $varcheck<br>";
+					$thisd = $_thisd;
+					break;
+				}
+			}
 		}
+		//echo "$appname: $thisd<br>";
 		if($thisd>0)
 		{
 			if((($curcol++>$numcols) || ($thisd+$lastd==3)) && $tropen==1)
@@ -337,7 +354,6 @@
 			$colspan = ($thisd==2)?'1':'2';
 			print '<td valign="top" colspan="'.$colspan.'" width="'.$tdwidth.'%">';
 			$result = $GLOBALS['phpgw']->hooks->single('home',$appname);
-			$shown[$appname] = 1;
 			print '</td>';
 			if(($thisd!=2 || ($thisd==2&&$lastd==2)) && $tropen)
 			{
@@ -345,20 +361,24 @@
 				$curcol = 1;
 			}
 			$lastd = $thisd;
+			$neworder[] = $appname;
 		}
+		$done[$appname] = 1;
 	}
 	print '</table>';
 
 	// Update stored value of order
-	if($GLOBALS['portal_order'])
+	//_debug_array($neworder);
+	if(count($neworder)>0)//$GLOBALS['portal_order'])
 	{
 		$GLOBALS['phpgw']->preferences->delete('portal_order');
-		@reset($GLOBALS['portal_order']);
-		while(list($app_order,$app_id) = each($GLOBALS['portal_order']))
+		@reset($neworder);
+		while(list($app_order,$app_name) = each($neworder))
 		{
+			$app_id = $GLOBALS['phpgw']->applications->name2id($app_name);
 			$GLOBALS['phpgw']->preferences->add('portal_order',$app_order,$app_id);
 		}
-		$GLOBALS['phpgw']->preferences->save_repository();
+		$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();
 	}
 
 	//$phpgw->common->debug_phpgw_info();
