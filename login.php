@@ -111,58 +111,8 @@
 		}
 	}
 	
-	function check_langs()
-	{
-		//echo "<h1>check_langs()</h1>\n";
-		if ($GLOBALS['phpgw_info']['server']['lang_ctimes'] && !is_array($GLOBALS['phpgw_info']['server']['lang_ctimes']))
-		{
-			$GLOBALS['phpgw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['phpgw_info']['server']['lang_ctimes']);
-		}
-		//_debug_array($GLOBALS['phpgw_info']['server']['lang_ctimes']);
-		
-		$lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-		$apps = $GLOBALS['phpgw_info']['user']['apps'];
-		$apps['phpgwapi'] = true;	// check the api too
-		while (list($app,$data) = each($apps))
-		{
-			$fname = PHPGW_SERVER_ROOT . "/$app/setup/phpgw_$lang.lang";
-			
-			if (file_exists($fname))
-			{
-				$ctime = filectime($fname);
-				$ltime = intval($GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app]);
-				//echo "checking lang='$lang', app='$app', ctime='$ctime', ltime='$ltime'<br>\n";
-				
-				if ($ctime != $ltime)
-				{
-					update_langs();		// update all langs
-					break;
-				}
-			}
-		}
-	}
-	
-	function update_langs()
-	{
-		$GLOBALS['phpgw_setup'] = CreateObject('phpgwapi.setup');
-		$GLOBALS['phpgw_setup']->db = $GLOBALS['phpgw']->db;
-		
-		$GLOBALS['phpgw_setup']->detection->check_lang(false);	// get installed langs
-		$langs = $GLOBALS['phpgw_info']['setup']['installed_langs'];
-		while (list($lang) = @each($langs))
-		{
-			$langs[$lang] = $lang;
-		}
-		$_POST['submit'] = true;
-		$_POST['lang_selected'] = $langs;
-		$_POST['upgrademethod'] = 'dumpold';
-		$included = 'from_login';
-		
-		include(PHPGW_SERVER_ROOT . '/setup/lang.php');
-	}
-
 	/* Program starts here */
-  
+
 	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
 	{
 		$submit = True;
@@ -237,7 +187,7 @@
 			}
 			if (!$GLOBALS['phpgw_info']['server']['disable_autoload_langfiles'])
 			{
-				check_langs();
+				$GLOBALS['phpgw']->translation->autoload_changed_langfiles();
 			}
 			$extra_vars['cd'] = 'yes';
 			
