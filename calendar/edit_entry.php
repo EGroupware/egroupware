@@ -322,7 +322,7 @@
 
     $month_html = "<select name=\"rpt_month\">";
     for ($i = 1; $i <= 12; $i++) {
-      $m = lang($phpgw->common->show_date($cal_info->rpt_end,"F"));
+      $m = lang(date("F",mktime(0,0,0,$i,1,2000)));
       $month_html .= "<option value=\"$i\"" . ($i == intval($phpgw->common->show_date($cal_info->rpt_end,"n")) ? " selected" : "") . ">$m</option>\n";
     }
     $month_html .= "</select>";

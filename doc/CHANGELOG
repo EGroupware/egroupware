@@ -4,6 +4,7 @@
 	- Added ability for admin to edit any calendar event.
 	- Fixed entries showing improperly on wrong date.
 	- Fixed file uploads through filemanager.
+	- Fixed repeating entries Month select box.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
