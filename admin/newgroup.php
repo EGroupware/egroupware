@@ -26,7 +26,10 @@
      $phpgw->db->next_record();
 
      if ($phpgw->db->f(0) != 0) {
-        $error = lang_admin("Sorry, that group name has already been taking.");
+        $error = "<br>" . lang_admin("Sorry, that group name has already been taking.");
+     }
+     if (! $n_group) {
+        $error = "<br>" . lang_admin("You must enter a group name.");
      }
 
      if (! $error) {
@@ -72,7 +75,6 @@
   }
 
   $t->set_var("form_action",$phpgw->link("newgroup.php"));
-  $t->set_var("hidden_vars","");
   $t->set_var("lang_group_name",lang_admin("New group name"));
   $t->set_var("group_name_value","");
 
