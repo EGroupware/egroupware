@@ -207,8 +207,16 @@
     cat_description text NOT NULL
   )";
   $db->query($sql);
+  
+  $sql = "CREATE TABLE languages (
+     lang_id         varchar(2) NOT NULL,
+     lang_name       varchar(50) NOT NULL,
+     available       varchar(3) NOT NULL DEFAULT 'No'
+  )";
+  $db->query($sql);
 
-  $currentver = "0.9.3pre7";
+
+  $currentver = "0.9.3pre8";
   update_version_table();
 
 ?>

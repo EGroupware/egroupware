@@ -74,7 +74,7 @@
     global $currentver, $phpgw_info, $db;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4" || $currentver == "0.9.3pre5" || $currentver == "0.9.3pre6") {
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4" || $currentver == "0.9.3pre5" || $currentver == "0.9.3pre6" || $currentver == "0.9.3pre7") {
       if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
 	      v0_9_2to0_9_3update_owner("addressbook","ab_owner");
 	      v0_9_2to0_9_3update_owner("todo","todo_owner");
@@ -134,6 +134,154 @@
          $db->query("alter table addressbook add ab_url varchar(255)");
          $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
          $currentver = "0.9.3pre7";
+         update_version_table();
+      }
+
+      if ($currentver == "0.9.3pre7") {
+         $db->query("CREATE TABLE languages (
+                      lang_id         varchar(2) NOT NULL,
+                      lang_name       varchar(50) NOT NULL,
+                      available       char(3) NOT NULL DEFAULT 'No', 
+                      PRIMARY KEY (lang_id)
+                   )");
+         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AA','Afar','No')");        
+         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AB','Abkhazian','No')");   
+         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AF','Afrikaans','No')");   
+         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AM','Amharic','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AR','Arabic','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AS','Assamese','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AY','Aymara','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AZ','Azerbaijani','No')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BA','Bashkir','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BE','Byelorussian','No')");        
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BG','Bulgarian','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BH','Bihari','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BI','Bislama','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BN','Bengali / Bangla','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BO','Tibetan','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('BR','Breton','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('CA','Catalan','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('CO','Corsican','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('CS','Czech','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('CY','Welsh','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('DA','Danish','Yes')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('DE','German','Yes')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('DZ','Bhutani','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('EL','Greek','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('EN','English / American','Yes')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('EO','Esperanto','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ES','Spanish','Yes')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ET','Estonian','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('EU','Basque','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('FA','Persian','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('FI','Finnish','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('FJ','Fiji','No')");        
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('FO','Faeroese','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('FR','French','Yes')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('FY','Frisian','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('GA','Irish','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('GD','Gaelic / Scots Gaelic','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('GL','Galician','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('GN','Guarani','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('GU','Gujarati','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('HA','Hausa','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('HI','Hindi','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('HR','Croatian','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('HU','Hungarian','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('HY','Armenian','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('IA','Interlingua','No')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('IE','Interlingue','No')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('IK','Inupiak','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('IN','Indonesian','No')");  
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('IS','Icelandic','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('IT','Italian','Yes')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('IW','Hebrew','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('JA','Japanese','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('JI','Yiddish','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('JW','Javanese','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KA','Georgian','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KK','Kazakh','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KL','Greenlandic','No')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KM','Cambodian','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KN','Kannada','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KO','Korean','Yes')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KS','Kashmiri','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KU','Kurdish','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('KY','Kirghiz','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('LA','Latin','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('LN','Lingala','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('LO','Laothian','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('LT','Lithuanian','No')");  
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('LV','Latvian / Lettish','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MG','Malagasy','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MI','Maori','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MK','Macedonian','No')");  
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ML','Malayalam','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MN','Mongolian','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MO','Moldavian','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MR','Marathi','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MS','Malay','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MT','Maltese','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('MY','Burmese','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('NA','Nauru','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('NE','Nepali','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('NL','Dutch','Yes')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('NO','Norwegian','Yes')");  
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('OC','Occitan','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('OM','Oromo / Afan','No')");        
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('OR','Oriya','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('PA','Punjabi','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('PL','Polish','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('PS','Pashto / Pushto','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('PT','Portuguese','Yes')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('QU','Quechua','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('RM','Rhaeto-Romance','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('RN','Kirundi','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('RO','Romanian','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('RU','Russian','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('RW','Kinyarwanda','No')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SA','Sanskrit','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SD','Sindhi','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SG','Sangro','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SH','Serbo-Croatian','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SI','Singhalese','No')");  
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SK','Slovak','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SL','Slovenian','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SM','Samoan','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SN','Shona','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SO','Somali','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SQ','Albanian','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SR','Serbian','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SS','Siswati','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ST','Sesotho','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SU','Sudanese','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SV','Swedish','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('SW','Swahili','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TA','Tamil','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TE','Tegulu','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TG','Tajik','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TH','Thai','No')");        
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TI','Tigrinya','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TK','Turkmen','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TL','Tagalog','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TN','Setswana','No')");    
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TO','Tonga','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TR','Turkish','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TS','Tsonga','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TT','Tatar','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('TW','Twi','No')"); 
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('UK','Ukrainian','No')");   
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('UR','Urdu','No')");        
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('UZ','Uzbek','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('VI','Vietnamese','No')");  
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('VO','Volapuk','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('WO','Wolof','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('XH','Xhosa','No')");       
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('YO','Yoruba','No')");      
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZH','Chinese','No')");     
+  @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZU','Zulu','No')");   
+
+         $currentver = "0.9.3pre8";
          update_version_table();
       }
 

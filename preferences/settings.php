@@ -95,20 +95,22 @@
        <tr>
          <td><?php echo lang("language"); ?></td>
          <td>
-          <?php $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; ?>
           <select name="lang">
-           <option value="en"<?php echo $lang_select["en"]; ?>>English</option>
-           <option value="de"<?php echo $lang_select["de"]; ?>>Deutsch</option>
-           <option value="da"<?php echo $lang_select["da"]; ?>>Danish</option>
-           <option value="sp"<?php echo $lang_select["sp"]; ?>>Spanish</option>
-           <option value="br"<?php echo $lang_select["br"]; ?>>Brazilian Portuguese</option>
-           <option value="no"<?php echo $lang_select["no"]; ?>>Norwegien</option>
-           <option value="it"<?php echo $lang_select["it"]; ?>>Italian</option>
-           <option value="fr"<?php echo $lang_select["fr"]; ?>>French</option>
-           <option value="nl"<?php echo $lang_select["nl"]; ?>>Dutch</option>
-           <option value="ko"<?php echo $lang_select["ko"]; ?>>Korean</option>
-           <option value="cs"<?php echo $lang_select["cs"]; ?>>Czechoslovakian</option>
-           <option value="sv"<?php echo $lang_select["sv"]; ?>>Swedish</option>
+          <?php 
+          $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; 
+          $strSql = "SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'";
+          $phpgw->db->query($strSql);
+          while ($phpgw->db->next_record()) {
+              echo "<option value=\"" . $phpgw->db->f("lang_id") . "\"";
+              if ($phpgw_info["user"]["preferences"]["common"]["lang"]) {
+              if ($phpgw->db->f("lang_id") == $phpgw_info["user"]["preferences"]["common"]["lang"]) {
+                 echo " selected"; }
+              } elseif ($phpgw->db->f("lang_id") == "EN") {
+                 echo " selected";
+              }
+              echo ">" . lang($phpgw->db->f("lang_name")) . "</option>";
+          }
+          ?>
           </select>
          </td>
        </tr>
