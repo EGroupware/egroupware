@@ -2914,11 +2914,11 @@
 			$str = '';
 			@asort($users);
 			@reset($users);
-			while (list($id,$name) = each($users))
+			while (list($id,$user_array) = each($users))
 			{
-				if(intval($id) != intval($this->bo->owner))
+				if($id != intval($this->bo->owner))
 				{
-					$str .= '    <option value="' . intval($id) . '"'.($event['participants'][intval($id)]?' selected':'').'>('.$GLOBALS['phpgw']->accounts->get_type(intval($id)).') '.$name.'</option>'."\n";
+					$str .= '    <option value="' . $id . '"'.($event['participants'][$id]?' selected':'').'>('.$user_array['type'].') '.$user_array['name'].'</option>'."\n";
 				}
 			}
 			$var[] = Array(
@@ -3049,19 +3049,23 @@
 			@reset($accounts);
 			while(list($index,$id) = each($accounts))
 			{
-				if(intval($id) == $owner)
+				$i_id = intval($id);
+				if($i_id == $owner)
 				{
 					continue;
 				}
-				elseif(!isset($users[intval($id)]))
+				elseif(!isset($users[$i_id]))
 				{
-					if($GLOBALS['phpgw']->accounts->exists(intval($id)) == True)
+					if($GLOBALS['phpgw']->accounts->exists($i_id) == True)
 					{
-						$users[intval($id)] = $GLOBALS['phpgw']->common->grab_owner_name(intval($id));
+						$users[$i_id] = Array(
+							'name'	=> $GLOBALS['phpgw']->common->grab_owner_name($i_id),
+							'type'	=> $GLOBALS['phpgw']->accounts->get_type($i_id)
+						);
 					}
-					if($GLOBALS['phpgw']->accounts->get_type(intval($id)) == 'g')
+					if($GLOBALS['phpgw']->accounts->get_type($i_id) == 'g')
 					{
-						$this->build_part_list($users,$GLOBALS['phpgw']->acl->get_ids_for_location(intval($id),1,'phpgw_group'),$owner);
+						$this->build_part_list($users,$GLOBALS['phpgw']->acl->get_ids_for_location($i_id,1,'phpgw_group'),$owner);
 					}
 				}
 			}
