@@ -553,8 +553,9 @@
 
 		function name2id($cat_name)
 		{
-			$this->db->query("SELECT cat_id FROM phpgw_categories WHERE cat_name='" . $cat_name . "' AND cat_appname='" . $this->app_name
-				. "' AND cat_owner=" . $this->account_id,__LINE__,__FILE__);
+			$this->db->query("SELECT cat_id FROM phpgw_categories WHERE cat_name='" . $this->db->db_addslashes($cat_name) . "' "
+				."AND cat_appname='" . $this->app_name . "' "
+				."AND cat_owner=" . $this->account_id,__LINE__,__FILE__);
 
 			if(!$this->db->num_rows())
 			{
