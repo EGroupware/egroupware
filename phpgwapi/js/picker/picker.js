@@ -14,7 +14,7 @@ function TCPopup(field, palette) {
 	var w = 194, h = 206,
 	move = screen ? 
 		',left=' + ((screen.width - w) >> 1) + ',top=' + ((screen.height - h) >> 1) : '', 
-	o_colWindow = window.open('picker.html', null, "help=no,status=no,scrollbars=no,resizable=no" + move + ",width=" + w + ",height=" + h + ",dependent=yes", true);
+	o_colWindow = window.open((this.url?this.url:'')+'picker.html', null, "help=no,status=no,scrollbars=no,resizable=no" + move + ",width=" + w + ",height=" + h + ",dependent=yes", true);
 	o_colWindow.opener = window;
 	o_colWindow.focus();
 }
