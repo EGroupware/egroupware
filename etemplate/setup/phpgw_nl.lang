@@ -1,0 +1,277 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	nl	
+%1 etemplates deleted	etemplate	nl	
+%1 etemplates for application '%2' dumped to '%3'	etemplate	nl	
+%1 etemplates found	etemplate	nl	
+%1 matches on search criteria	etemplate	nl	
+%1 new etemplates imported for application '%2'	etemplate	nl	
+%s disabled	etemplate	nl	
+%s needed	etemplate	nl	
+%s notranslation	etemplate	nl	
+%s onchange	etemplate	nl	
+%s readonly	etemplate	nl	
+a pattern to be searched for	etemplate	nl	
+add a new column (after the existing ones)	etemplate	nl	
+add a new multi-column index	etemplate	nl	
+add column	etemplate	nl	
+add index	etemplate	nl	
+add table	etemplate	nl	
+align	etemplate	nl	
+alignment of label and input-field in table-cell	etemplate	nl	
+alignment of the v/hbox containing table-cell	etemplate	nl	
+am	etemplate	nl	
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	nl	
+application	etemplate	nl	
+application name needed to write a langfile or dump the etemplates !!!	etemplate	nl	
+attach	etemplate	nl	
+attach file	etemplate	nl	
+blurtext	etemplate	nl	
+border	etemplate	nl	
+border-line-thickness for the table-tag	etemplate	nl	
+can not have special sql-value null	etemplate	nl	
+cancel	etemplate	nl	
+category	etemplate	nl	
+cellpadding for the table-tag	etemplate	nl	
+cells	etemplate	nl	
+cellspacing for the table-tag	etemplate	nl	
+center	etemplate	nl	
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	nl	
+check if field has to be filled by user	etemplate	nl	
+checkbox	etemplate	nl	
+class	etemplate	nl	
+class, valign	etemplate	nl	
+click here to attach the file	etemplate	nl	
+click here to create the link	etemplate	nl	
+click here to start the search	etemplate	nl	
+click here to upload the file	etemplate	nl	
+columnname	etemplate	nl	
+comment	etemplate	nl	
+create a new table for the application	etemplate	nl	
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	
+css class for the table-tag	etemplate	nl	
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	nl	
+css-styles	etemplate	nl	
+date+time	etemplate	nl	
+datum	etemplate	nl	
+day	etemplate	nl	
+db ensures that every row has a unique value in that column	etemplate	nl	
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	nl	
+db-tools	etemplate	nl	
+deck	etemplate	nl	
+default	etemplate	nl	
+delete	etemplate	nl	
+delete a single entry by passing the id.	etemplate	nl	
+delete all selected etemplates, without further inquiry	etemplate	nl	
+delete column	etemplate	nl	
+delete index	etemplate	nl	
+delete this etemplate	etemplate	nl	
+delete whole column (can not be undone!!!)	etemplate	nl	
+deletes the above spez. etemplate from the database, can not be undone	etemplate	nl	
+deletes the etemplate spez. above	etemplate	nl	
+deletes this column	etemplate	nl	
+deletes this index	etemplate	nl	
+discard changes	etemplate	nl	
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	nl	
+displayed in statusline of browser if input-field gets focus	etemplate	nl	
+do you want to save the changes you made in table %s?	etemplate	nl	
+drop a table - this can not be undone	etemplate	nl	
+drop table	etemplate	nl	
+dump4setup	etemplate	nl	
+edit	etemplate	nl	
+edit the etemplate spez. above	etemplate	nl	
+editable templates - db-tools	etemplate	nl	
+editable templates - delete template	etemplate	nl	
+editable templates - editor	etemplate	nl	
+editable templates - search	etemplate	nl	
+editable templates - show template	etemplate	nl	
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	nl	
+enable javascript onchange submit	etemplate	nl	
+enter '' for an empty default, nothing mean no default	etemplate	nl	
+enter a search pattern	etemplate	nl	
+enter filename to upload and attach, use [browse...] to search for it	etemplate	nl	
+enter the new version number here (> old_version), empty for no update-file	etemplate	nl	
+enter the new version number here (has to be > old_version)	etemplate	nl	
+entry saved	etemplate	nl	
+error: template not found !!!	etemplate	nl	
+error: webserver is not allowed to write into '%1' !!!	etemplate	nl	
+error: while saveing !!!	etemplate	nl	
+error: writeing !!!	etemplate	nl	
+error: writing file (no write-permission for the webserver) !!!	etemplate	nl	
+etemplate	common	nl	eTemplate
+etemplate '%1' imported, use save to put it in the database	etemplate	nl	
+etemplate '%1' written to '%2'	etemplate	nl	
+etemplate editor	etemplate	nl	
+exchange this row with the one above	etemplate	nl	
+exchange this two columns	etemplate	nl	
+export the loaded etemplate into a xml-file	etemplate	nl	
+export xml	etemplate	nl	
+extensions loaded:	etemplate	nl	
+file	etemplate	nl	Bestand
+file contains more than one etemplate, last one is shown !!!	etemplate	nl	
+file writen	etemplate	nl	
+fileupload	etemplate	nl	
+first	etemplate	nl	Eerste
+floating point	etemplate	nl	
+foreign key	etemplate	nl	
+go to the first entry	etemplate	nl	
+go to the last entry	etemplate	nl	
+go to the next page of entries	etemplate	nl	
+go to the previous page of entries	etemplate	nl	
+hbox	etemplate	nl	
+height	etemplate	nl	Hoogte
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	nl	
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	nl	
+height, disabled	etemplate	nl	
+help	etemplate	nl	Help
+horizontal rule	etemplate	nl	
+hour	etemplate	nl	Uur
+html	etemplate	nl	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	nl	
+image	etemplate	nl	Afbeelding
+import	etemplate	nl	Importeren
+import an etemplate from a xml-file	etemplate	nl	
+import table-definitions from existing db-table	etemplate	nl	
+import xml	etemplate	nl	
+index/name of returned content (name of the template, link / method for image)	etemplate	nl	
+indexed	etemplate	nl	
+indexoptions	etemplate	nl	
+insert new column behind this one	etemplate	nl	
+insert new column in front of all	etemplate	nl	
+insert new row after this one	etemplate	nl	
+insert new row in front of first line	etemplate	nl	
+integer	etemplate	nl	
+key	etemplate	nl	
+label	etemplate	nl	
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	nl	
+lang	etemplate	nl	
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	nl	
+last	etemplate	nl	
+left	etemplate	nl	
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	nl	
+link	etemplate	nl	
+linklist	etemplate	nl	
+linkstring	etemplate	nl	
+linkto	etemplate	nl	
+load this template into the editor	etemplate	nl	
+minute	etemplate	nl	
+month	etemplate	nl	Maand
+multicolumn indices	etemplate	nl	
+name	etemplate	nl	Naam
+name of other table where column is a key from	etemplate	nl	
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	nl	
+name of table to add	etemplate	nl	
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	nl	
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	nl	
+new search	etemplate	nl	Nieuwe zoekopdracht
+new table created	etemplate	nl	
+newer version '%1' exists !!!	etemplate	nl	
+nextmatch	etemplate	nl	
+no file	etemplate	nl	
+no filename given or selected via browse...	etemplate	nl	
+not null	etemplate	nl	
+nothing found - try again !!!	etemplate	nl	
+nothing matched search criteria !!!	etemplate	nl	
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	nl	
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	nl	
+of	etemplate	nl	
+only an other version found !!!	etemplate	nl	
+optional note about the link	etemplate	nl	
+options	etemplate	nl	
+overflow	etemplate	nl	
+padding	etemplate	nl	
+please enter table-name first !!!	etemplate	nl	
+pm	etemplate	nl	
+precision	etemplate	nl	
+primary key	etemplate	nl	
+primary key for the table, gets automaticaly indexed	etemplate	nl	
+radiobutton	etemplate	nl	
+read	etemplate	nl	
+read a list of entries.	etemplate	nl	
+read a single entry by passing the id and fieldlist.	etemplate	nl	
+read etemplate from database (for the keys above)	etemplate	nl	
+remove row (can not be undone!!!)	etemplate	nl	
+remove this link (not the entry itself)	etemplate	nl	
+returns savely, without deleting	etemplate	nl	
+right	etemplate	nl	
+save	etemplate	nl	
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	nl	
+saves changes to tables_current.inc.php	etemplate	nl	
+scale	etemplate	nl	
+scale for float	etemplate	nl	
+search	etemplate	nl	
+select a category	etemplate	nl	
+select a primary contact, to show in the list	etemplate	nl	
+select access	etemplate	nl	
+select account	etemplate	nl	
+select an app first !!!	etemplate	nl	
+select an app to search in	etemplate	nl	
+select an application	etemplate	nl	
+select an application, (*) = uninstalled	etemplate	nl	
+select an entry to link with	etemplate	nl	
+select an table of the application	etemplate	nl	
+select application	etemplate	nl	
+select category	etemplate	nl	
+select country	etemplate	nl	
+select day	etemplate	nl	
+select if content of field should not be translated (label gets always translated)	etemplate	nl	
+select month	etemplate	nl	
+select number	etemplate	nl	
+select one ...	etemplate	nl	
+select percentage	etemplate	nl	
+select priority	etemplate	nl	
+select state	etemplate	nl	
+select the indexed columns in their desired order	etemplate	nl	
+select this etemplate to delete it	etemplate	nl	
+select year	etemplate	nl	
+selectbox	etemplate	nl	
+sets today as date	etemplate	nl	
+show	etemplate	nl	
+show (no save)	etemplate	nl	
+show values	etemplate	nl	
+showing	etemplate	nl	
+shows / allows you to enter values into the etemplate for testing	etemplate	nl	
+shows/displays etemplate for testing, does not save it before	etemplate	nl	
+spacing	etemplate	nl	
+span, class	etemplate	nl	
+stack	etemplate	nl	
+start a new search, cancel this link	etemplate	nl	
+start new search for the above pattern	etemplate	nl	
+submitbutton	etemplate	nl	
+table unchanged, no write necessary !!!	etemplate	nl	
+tablename	etemplate	nl	
+tabs	etemplate	nl	
+template	etemplate	nl	
+template deleted	etemplate	nl	
+template saved	etemplate	nl	
+text	etemplate	nl	Tekst
+textarea	etemplate	nl	Textarea
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	nl	
+time	etemplate	nl	
+to start the db-tools	etemplate	nl	
+to start the etemplate editor	etemplate	nl	
+to start the search	etemplate	nl	
+today	etemplate	nl	
+type	etemplate	nl	
+type of the column	etemplate	nl	
+type of the field (select label if field should be empty)	etemplate	nl	
+unique	etemplate	nl	
+unlink	etemplate	nl	
+update a single entry by passing the fields.	etemplate	nl	
+update from version '%s' to	etemplate	nl	
+upload	etemplate	nl	
+value	etemplate	nl	Waarde
+vbox	etemplate	nl	VBox
+version	etemplate	nl	Versie
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	nl	
+view this linked entry in its application	etemplate	nl	
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	nl	
+width	etemplate	nl	Breedte
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	nl	
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	nl	
+width, disabled	etemplate	nl	
+write <app>/setup/tables_current.inc.php	etemplate	nl	
+write langfile	etemplate	nl	
+write tables	etemplate	nl	Schrijf tabellen
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	nl	
+xml-file to import	etemplate	nl	
+xslt template	etemplate	nl	
+year	etemplate	nl	Jaar
