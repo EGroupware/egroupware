@@ -1,15 +1,15 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - Todo                                                      *
-  * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare - Preferences                                               *
+	* http://www.phpgroupware.org                                              *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	$phpgw_flags = Array(
 		'currentapp'               => $acl_app,
@@ -20,13 +20,6 @@
 
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
-
-	$private_acl = True;
-
-	if($private_acl == True)
-	{
-		define(PHPGW_ACL_PRIVATE,16);
-	}
 
 	function check_acl($label,$id,$acl,$rights,$right)
 	{
@@ -46,24 +39,17 @@
 
 	function display_row($bg_color,$label,$id,$name)
 	{
-		global $phpgw_info, $acl, $private_acl, $p;
+		global $phpgw_info, $acl, $p;
     
 		$p->set_var('row_color',$bg_color);
 		$p->set_var('user',$name);
 		$rights = $acl->get_rights($id,$phpgw_info['flags']['currentapp']);
 
 		check_acl($label,$id,'read',$rights,PHPGW_ACL_READ);
-    
-		check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD);
-    
-		check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT);
-    
+    	check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD);
+    	check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT);
 		check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE);
-
-		if($private_acl == True)
-		{
-			check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE);
-		}
+		check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE);
     
 		$p->parse('row','acl_row',True);
 	}
@@ -172,22 +158,11 @@
 	}
 
 	$p = CreateObject('phpgwapi.Template',$phpgw_info['server']['app_tpl']);
-	if($private_acl == True)
-	{
-		$templates = Array (
-									'preferences'	=>	'preference_acl.tpl',
-									'row_colspan'	=>	'preference_colspan_private.tpl',
-									'acl_row'		=> 'preference_acl_row_private.tpl'
-		);
-  }
-  else
-  {
-		$templates = Array (
-									'preferences'	=>	'preference_acl.tpl',
-									'row_colspan'	=>	'preference_colspan.tpl',
-									'acl_row'		=> 'preference_acl_row.tpl'
-		);
-  }
+	$templates = Array (
+		'preferences'	=>	'preference_acl.tpl',
+		'row_colspan'	=>	'preference_colspan.tpl',
+		'acl_row'		=> 'preference_acl_row.tpl'
+	);
 
 	$p->set_file($templates);
 //	$p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
@@ -226,11 +201,7 @@
 	);
 	
 	$p->set_var($var);
-                    
-	if($private_acl == True)
-	{
-		$p->set_var('private_lang',lang('Private'));
-	}
+	$p->set_var('private_lang',lang('Private'));
 
 	if(intval($s_groups) <> count($groups))
 	{
@@ -314,6 +285,6 @@
 	
 	$p->set_var($var);
 
-	$p->pparse('out','preferences');
+	$p->pfp('out','preferences');
 	$phpgw->common->phpgw_footer();
 ?>
