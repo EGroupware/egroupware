@@ -140,9 +140,9 @@
       }
 
       while ($permission = each($account_info["permissions"])) {
-        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-           $phpgw->accounts->add_app($permission[0]);
-        }
+         if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+            $phpgw->accounts->add_app($permission[0]);
+         }
       }
 
       if (! $account_info["account_status"]) {
@@ -150,27 +150,13 @@
       }
       $cd = 27;
 
-      // If they changed there loginid, we need to change the owner in ALL
-      // tables to reflect on the new one
-      if ($lid != $account_info["loginid"]) {
-/*
-         change_owner("","preferences","preference_owner",$account_info["loginid"],$lid);
-         change_owner("addressbook","addressbook","ab_owner",$account_info["loginid"],$lid);
-         change_owner("todo","todo","todo_owner",$account_info["loginid"],$lid);
-//         change_owner("","accounts","account_lid",$account_info["loginid"],$lid);
-         change_owner("","sessions","session_lid",$account_info["loginid"],$lid);
-         change_owner("calendar","webcal_entry","cal_create_by",$account_info["loginid"],$lid);
-         change_owner("calendar","webcal_entry_user","cal_login",$account_info["loginid"],$lid);
-*/
-
-         if ($lid != $n_loginid) {
-            $sep = $phpgw->common->filesystem_separator();
+      if ($account_info["c_loginid"] != $account_info["loginid"]) {
+         $sep = $phpgw->common->filesystem_separator();
 	
-            $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
+         $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
-  	      if (! @rename($basedir . $lid, $basedir . $account_info["loginid"])) {
-	           $cd = 35;
-            }
+         if (! @rename($basedir . $lid, $basedir . $account_info["loginid"])) {
+            $cd = 35;
          }
       }
 

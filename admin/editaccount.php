@@ -24,16 +24,6 @@
      Header("Location: " . $phpgw->link("accounts.php"));
   }
 
-  // This function is gonna go soon. (jengo)
-  function change_owner($app,$table,$field,$new,$old)
-  {
-    global $phpgw, $phpgw_info;
-
-    if ($phpgw_info["apps"][$app]["enabled"] || ! $app) {
-       $phpgw->db->query("update $table set $field='$new' where $field='$old'");
-    }
-  }
-
   if ($submit) {
      if ($old_loginid != $n_loginid) {
         if (account_exsists($n_loginid)) {
@@ -64,64 +54,8 @@
         				         "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
      }
 
-     
-//    $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
-//    $phpgw->db->next_record();
-//    $lid = $phpgw->db->f("account_lid");
-
-
-/*    if (! $error) {
-      $phpgw->db->lock(array('accounts','preferences','sessions'));
-	    if ($n_passwd) {
-        $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "', "
-		              . "account_lastpwd_change='" . time() . "' where account_lid='" . "$lid'");
-        $phpgw->db->query("update sessions set session_pwd='" . addslashes($n_passwd)
-                        . "' where session_lid='$lid'");
-      }
-      while ($permission = each($new_permissions)) {
-        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-          $phpgw->accounts->add_app($permission[0]);
-        }
-      }
-
-      if (! $n_account_status) {
-        $n_account_status = "L";
-      }
-      $cd = 27;
-
-      // If they changed there loginid, we need to change the owner in ALL
-      // tables to reflect on the new one
-      if ($lid != $n_loginid) {
-        change_owner("","preferences","preference_owner",$n_loginid,$lid);
-        change_owner("addressbook","addressbook","ab_owner",$n_loginid,$lid);
-        change_owner("todo","todo","todo_owner",$n_loginid,$lid);
-        change_owner("","accounts","account_lid",$n_loginid,$lid);
-        change_owner("","sessions","session_lid",$n_loginid,$lid);
-        change_owner("calendar","webcal_entry","cal_create_by",$n_loginid,$lid);
-        change_owner("calendar","webcal_entry_user","cal_login",$n_loginid,$lid);
-
-        if ($lid <> $n_loginid) {
-          $sep = $phpgw->common->filesystem_separator();
-	
-          $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
-
-   	      if (! @rename($basedir . $lid, $basedir . $n_loginid)) {
-	          $cd = 35;
-          }
-        }
-      }
-
-      $phpgw->db->query("update accounts set account_firstname='" . addslashes($n_firstname) . "',"
-			       . " account_lastname='" . addslashes($n_lastname) . "', account_permissions='"
-	  		       . $phpgw->accounts->add_app("",True) . "', account_status='"
-			       . "$n_account_status', account_groups='"
-  			       . $phpgw->accounts->groups_array_to_string($n_groups)
-			       . "' where account_lid='$n_loginid'");
-
-        $phpgw->db->unlock();
-        Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
-        exit;
-    }		// if ! $error */
+     Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
+     exit;
   }		// if $submit
 
   $phpgw->common->phpgw_header();

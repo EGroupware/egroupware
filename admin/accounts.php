@@ -46,11 +46,22 @@
   $account_info = account_read($method,$start,$sort,$order);
 
   while (list($null,$account) = each($account_info)) {
+//  while (list($key) = each($account_info[0])) {
+//  for ($i=0; $i<count($account_info);$i++) {
+//    echo "<br>0: " . $account_info[1][$key];
+//    echo "<br>1: " . $a[2];
+//    echo "<br>2: " . $b[1];
+
+    $lastname   = $account["account_lastname"];
+    $firstname  = $account["account_firstname"];
+    $account_id = $account["account_id"];
+    $loginid    = $account["account_lid"];
+
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var("tr_color",$tr_color);
 
-    $lastname  = $account["account_lastname"];
-    $firstname = $account["account_firstname"];
+//    $lastname  = $account["account_lastname"];
+//    $firstname = $account["account_firstname"];
 
     if (! $lastname)  $lastname  = '&nbsp;';
     if (! $firstname) $firstname = '&nbsp;';
@@ -58,17 +69,17 @@
     $t->set_var("row_firstname",$firstname);
     $t->set_var("row_lastname",$lastname);
     $t->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","account_id="
-				     . $account["account_id"]) . '"> ' . lang("Edit") . ' </a>');
+    				     . $account_id) . '"> ' . lang("Edit") . ' </a>');
 
     if ($phpgw_info["user"]["userid"] != $account["account_lid"]) {
        $t->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'account_id='
-						. $account["account_id"]) . '"> '.lang("Delete").' </a>');
+      						. $account_id) . '"> '.lang("Delete").' </a>');
     } else {
        $t->set_var("row_delete","&nbsp;");
     }
 
     $t->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
-				     . $account["account_id"]) . '"> ' . lang("View") . ' </a>');
+				         . $account_id) . '"> ' . lang("View") . ' </a>');
 
     if ($total == 1) {
        $t->set_var("output","");

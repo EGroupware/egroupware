@@ -41,7 +41,14 @@
     $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("uid"));
     $info = ldap_get_entries($ldap, $sr);
 
-    return count($info);
+    $total = 0;
+    for ($i=0;$i<count($info);$i++) {
+       if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
+          $total++;
+       }
+    }
+
+    return $total;
   }
   
   function account_view($loginid)
@@ -63,7 +70,18 @@
   function account_read($method,$start,$sort,$order)
   {
     global $phpgw_info, $ldap;
-  
+    
+/*    echo "sort: $sort";
+    if ($sort == "account_lastname") {
+       $sort = 3;
+    } else if ($sort == "account_firstname") {
+       $sort = 2;
+    } else {
+       $sort = 1;
+    }
+    echo " - sort: $sort";
+*/
+
     $filter = "(|(uid=*))";
     $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid","uidnumber"));
     $info = ldap_get_entries($ldap, $sr);
@@ -72,10 +90,17 @@
        if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
           $account_info[$i]["account_id"]        = $info[$i]["uidnumber"][0];
           $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
-          $account_info[$i]["account_firstname"] = $info[$i]["givenname"][0];
-          $account_info[$i]["account_lastname"]  = $info[$i]["sn"][0];
+          $account_info[$i]["account_lastname"]  = $info[$i]["givenname"][0];
+          $account_info[$i]["account_firstname"] = $info[$i]["sn"][0];
        }
     }
+    
+//    echo " - order: $order";
+/*    if ($order == "ASC") {
+       sort($account_info[$sort]);
+    } else {
+       rsort($account_info[$sort]);
+    } */
 
     return $account_info;
   }
@@ -205,11 +230,24 @@
     $phpgw->db->next_record();
     
     ldap_delete($ldap,"uid=" . $phpgw->db->f("account_lid") . ", ". $phpgw_info["server"]["ldap_context"]);
+    $phpgw->db->query("delete from accounts where account_id='$account_id'");
   }
 
   function account_exsists($loginid)
   {
+    global $phpgw_info, $ldap;
 
+    $filter = "(|(uid=$loginid))";
+
+    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("uid"));
+    $total = ldap_get_entries($ldap, $sr);
+    
+    // Odd, but it works
+    if (count($total) == 2) {
+       return True;
+    } else {
+       return False;
+    }
   }
   
   function account_close()
