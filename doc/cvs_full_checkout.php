@@ -28,64 +28,76 @@
 
 
 	// Modules you want to checkout, do NOT add the phpgroupware module
-	$co_modules[] = 'addressbook';
-	$co_modules[] = 'admin';
-	$co_modules[] = 'backup';
-	$co_modules[] = 'bookkeeping';
-	$co_modules[] = 'bookmarks';
-	$co_modules[] = 'brewer';
-	$co_modules[] = 'calendar';
-	$co_modules[] = 'cart';
-	$co_modules[] = 'ccs';
-	$co_modules[] = 'cdb';
-	$co_modules[] = 'chat';
-	$co_modules[] = 'chora';
-	$co_modules[] = 'comic';
-	$co_modules[] = 'cron';
-	$co_modules[] = 'developer_tools';
-	$co_modules[] = 'dj';
-	$co_modules[] = 'eldaptir';
-	$co_modules[] = 'email';
-	$co_modules[] = 'filemanager';
-	$co_modules[] = 'forum';
-	$co_modules[] = 'ftp';
-	$co_modules[] = 'headlines';
-	$co_modules[] = 'hr';
-	$co_modules[] = 'infolog';
-	$co_modules[] = 'inv';
-	$co_modules[] = 'manual';
-	$co_modules[] = 'mediadb';
-	$co_modules[] = 'meerkat';
-	$co_modules[] = 'messenger';
-	$co_modules[] = 'napster';
-	$co_modules[] = 'netsaint';
-	$co_modules[] = 'news_admin';
-	$co_modules[] = 'nntp';
-	$co_modules[] = 'notes';
-	$co_modules[] = 'phonelog';
-	$co_modules[] = 'phpGWShell_Win32_VB';
-	$co_modules[] = 'phpgwapi';
-	$co_modules[] = 'phpgwnetsaint';
-	$co_modules[] = 'phpsysinfo';
-	$co_modules[] = 'polls';
-	$co_modules[] = 'preferences';
-	$co_modules[] = 'projects';
-	$co_modules[] = 'qmailldap';
-	$co_modules[] = 'rbs';
-	$co_modules[] = 'setup';
-	$co_modules[] = 'skel';
-	$co_modules[] = 'soap';
-	$co_modules[] = 'squirrelmail';
-	$co_modules[] = 'stocks';
-	$co_modules[] = 'syncml-server';
-	$co_modules[] = 'timetrack';
-	$co_modules[] = 'todo';
-	$co_modules[] = 'transy';
-	$co_modules[] = 'tts';
-	$co_modules[] = 'wap';
-	$co_modules[] = 'wcm';
-	$co_modules[] = 'weather';
-	$co_modules[] = 'xmlrpc';
+	$co_modules[] = array
+	(
+		'addbook',
+		'addressbook',
+		'admin',
+		'backup',
+		'bookkeeping',
+		'bookmarks',
+		'brewer',
+		'calendar',
+		'cart',
+		'ccs',
+		'cdb',
+		'chat',
+		'chora',
+		'comic',
+		'cron',
+		'developer_tools',
+		'dj',
+		'eldaptir',
+		'email',
+		'etemplate',
+		'felamimail'
+		'filemanager',
+		'forum';
+		'ftp',
+		'headlines',
+		'hr',
+		'img',
+		'infolog',
+		'inv',
+		'manual',
+		'mediadb',
+		'meerkat',
+		'messenger',
+		'napster',
+		'netsaint',
+		'news_admin',
+		'nntp',
+		'notes',
+		'packages',
+		'phonelog',
+		'phpGWShell_Win32_VB',
+		'phpgwapi',
+		'phpgwnetsaint',
+		'phpsysinfo',
+		'polls',
+		'preferences',
+		'projects',
+		'property'
+		'qmailldap',
+		'rbs',
+		'registration',
+		'setup',
+		'sitemgr'
+		'skel',
+		'soap',
+		'squirrelmail',
+		'stocks',
+		'syncml-server',
+		'timetrack',
+		'todo',
+		'transy',
+		'tts',
+		'vmailmgr',
+		'wap',
+		'wcm',
+		'weather',
+		'xmlrpc'
+	);
 
    // -- End config section
 
