@@ -587,11 +587,7 @@
 					}
 					elseif (count($name_parts))
 					{
-						$org_name = array_shift($name_parts);
-						if (count($name_parts))
-						{
-							 $org_name .= '['.implode('][',$name_parts).']';
-						}
+						$org_name = $name_parts[count($name_parts)-1];
 						if (isset($sel_options[$org_name]))
 						{
 							$sels += $sel_options[$org_name];
