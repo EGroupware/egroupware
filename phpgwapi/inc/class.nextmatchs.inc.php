@@ -1,12 +1,14 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - next                                                  *
-	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
+	* phpGroupWare API - nextmatchs                                            *
+	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
+	*        and Bettina Gille [ceb@phpgroupware.org]                          *
 	* Handles limiting number of rows displayed                                *
 	* Copyright (C) 2000, 2001 Joseph Engo                                     *
+	* Copyright (C) 2002, 2003 Joseph Engo, Bettina Gille                      *
 	* -------------------------------------------------------------------------*
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* http://www.phpgroupware.org                                              * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
