@@ -37,7 +37,7 @@
 
 	if ($action == "Load Vcard") {
 		if($uploadedfile == "none" || $uploadedfile == "") {
-			Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/vcardin.php","action=GetFile"));
+			Header("Location: " . $phpgw->link("/addressbook/vcardin.php","action=GetFile"));
 		} else {
 			srand((double)microtime()*1000000);
 			$random_number = rand(100000000,999999999);
@@ -61,7 +61,7 @@
 			// Delete the temp file.
 			unlink($filename);
 			unlink($filename . ".info");
-			Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/", "cd=14"));
+			Header("Location: " . $phpgw->link("/addressbook/", "cd=14"));
 		}
 	}
 
@@ -79,7 +79,7 @@
 	$vcard_header  = "<p>&nbsp;<b>" . lang("Address book - VCard in") . "</b><hr><p>";
 
 	$t->set_var(vcard_header,$vcard_header);
-	$t->set_var(action_url,$phpgw->link("vcardin.php"));
+	$t->set_var(action_url,$phpgw->link("/addressbook/vcardin.php"));
 	$t->set_var(lang_access,lang("Access"));
 	$t->set_var(lang_groups,lang("Which groups"));
 

@@ -32,7 +32,7 @@
 	$this = CreateObject("phpgwapi.contacts");
 
 	if (! $ab_id) {
-		Header("Location: " . $phpgw->link("index.php"));
+		Header("Location: " . $phpgw->link("/addressbook/index.php"));
 	}
 
 	while ($column = each($this->stock_contact_fields)) {
@@ -67,8 +67,7 @@
 			$data=$coldata.'</a>';
 		} elseif ($column[0] == "email") {
 			if ($phpgw_info["user"]["apps"]["email"]) {
-			$ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
-			. "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+			$ref='<a href="'.$phpgw->link("/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
 			} else {
 				$ref='<a href="mailto:'.$coldata.'">';
 			}
@@ -93,9 +92,9 @@
 		. $phpgw->common->grab_owner_name($record_owner) . '</td><td><b>' 
 		. $access_link . '</b></td><td></table>';
 
-	$editlink  = $phpgw->common->check_owner($record_owner,"edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
-	$vcardlink = '<form action="'.$phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-	$donelink  = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+	$editlink  = $phpgw->common->check_owner($record_owner,"/addressbook/edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
+	$vcardlink = '<form action="'.$phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+	$donelink  = '<form action="'.$phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 		
 	$t->set_var("access_link",$access_link);
 	$t->set_var("ab_id",$ab_id);

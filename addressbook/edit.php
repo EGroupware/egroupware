@@ -92,7 +92,7 @@
 		//}
 		addressbook_update_entry($ab_id,$userid,$fields);
 
-		Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
+		Header("Location: " . $phpgw->link("/addressbook/view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -106,8 +106,8 @@
 	$t->set_var("lang_cancel",lang("cancel"));
 	$t->set_var("lang_delete",lang("delete"));
 	$t->set_var("lang_submit",lang("submit"));
-	$t->set_var("cancel_link",'<form action="'.$phpgw->link("index.php","sort=$sort&order=$order&filter=$filter&start=$start") . '">');
-	$t->set_var("delete_link",'<form action="'.$phpgw->link("delete.php","ab_id=$ab_id") . '">');
+	$t->set_var("cancel_link",'<form action="'.$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start") . '">');
+	$t->set_var("delete_link",'<form action="'.$phpgw->link("/addressbook/delete.php","ab_id=$ab_id") . '">');
 	
 	$t->parse("out","edit");
 	$t->pparse("out","edit");

@@ -29,7 +29,7 @@
 	include("../header.inc.php");
 	
 	if (! $ab_id) {
-		Header("Location: " . $phpgw->link("index.php"));
+		Header("Location: " . $phpgw->link("/addressbook/index.php"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -72,10 +72,10 @@
 		/* First name and last must be in the vcard. */
 		if($lastname == "") {
 			/* Run away here. */
-			Header("Location: " . $phpgw->link("vcardout.php","nolname=1&ab_id=$ab_id&start=$start&order=$order&filter=" . "$filter&query=$query&sort=$sort"));
+			Header("Location: " . $phpgw->link("/addressbook/vcardout.php","nolname=1&ab_id=$ab_id&start=$start&order=$order&filter=" . "$filter&query=$query&sort=$sort"));
 		}
 		if($firstname == "" ) {
-			Header("Location: " . $phpgw->link("vcardout.php","nofname=1&ab_id=$ab_id&start=$start&order=$order&filter=" . "$filter&query=$query&sort=$sort"));
+			Header("Location: " . $phpgw->link("/addressbook/vcardout.php","nofname=1&ab_id=$ab_id&start=$start&order=$order&filter=" . "$filter&query=$query&sort=$sort"));
 		}
 
 		header("Content-type: text/X-VCARD");
@@ -133,7 +133,7 @@
 		echo "<BR><BR><CENTER>";
 		echo lang("This person's first name was not in the address book.") ."<BR>";
 		echo lang("Vcards require a first name entry.") . "<BR><BR>";
-		echo "<a href=" . $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort") . ">OK</a>";
+		echo "<a href=" . $phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort") . ">OK</a>";
 		echo "</CENTER>";
 	}
 
@@ -141,7 +141,7 @@
 		echo "<BR><BR><CENTER>";
 		echo lang("This person's last name was not in the address book.") . "<BR>";
 		echo lang("Vcards require a last name entry.") . "<BR><BR>";
-		echo "<a href=" . $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort") . ">OK</a>";
+		echo "<a href=" . $phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort") . ">OK</a>";
 		echo "</CENTER>";
 	}
 

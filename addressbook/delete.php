@@ -24,7 +24,7 @@
 	include("../header.inc.php");
   
 	if (! $ab_id) {
-		@Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
+		@Header("Location: " . $phpgw->link("/addressbook/"));
 	}
 
 	$this = CreateObject("phpgwapi.contacts");
@@ -36,9 +36,9 @@
 
 	if ($confirm != "true") {
 		$t->set_var(lang_sure,lang("Are you sure you want to delete this entry ?"));
-		$t->set_var(no_link,$phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		$t->set_var(no_link,$phpgw->link("/addressbook/view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 		$t->set_var(lang_no,lang("NO"));
-		$t->set_var(yes_link,$phpgw->link("delete.php","ab_id=$ab_id&confirm=true&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		$t->set_var(yes_link,$phpgw->link("/addressbook/delete.php","ab_id=$ab_id&confirm=true&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 		$t->set_var(lang_yes,lang("YES"));
 		$t->pparse("out","delete");
 
@@ -46,6 +46,6 @@
 	} else {
 		$this->account_id=$phpgw_info["user"]["account_id"];
 		$this->delete($ab_id);
-		@Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/","cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		@Header("Location: " . $phpgw->link("/addressbook/","cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 	}
 ?>
