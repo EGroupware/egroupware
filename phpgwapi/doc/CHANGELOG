@@ -1,3 +1,28 @@
+[0.9.14.001]
+	This is a bug fix release for 0.9.14, which includes the following fixes/improvements:
+		- Support for Apache 2.x
+		- Improved LDAP support for accounts and contacts
+		- Various minor api/setup/config fixes
+		- Additional Translations - especially German and French
+		- Enhanced email client - now supports multiple mailboxes, spell check and filters, 
+			includes "M$ Outlook" style addressbook choser
+		- Sitemgr content management system - with multilingual support
+		- Addressbook - minor fixes
+		- Bookmarks - various fixes - mainly ui related
+		- Calendar - email notifications, acl enforcement and other minor fixes
+		- Chat - scrolls properly and focus always set to text input field
+		- eTemplates - new template-system, templates stored in db or xml-files, 
+			interactive editor, automatically creates lang-files. Developer documents provided
+		- Felamimail - added sieve support, improved ui, various minor fixes
+		- FileManager/phpWebHosting - various minor fixes
+		- Forums - fixed colors
+		- News Admin - minor changes to allow integration with sitemgr
+		- Polls - add/strip slashes and other minor issues
+		- Projects - various minor fixes
+		- Time Track - minor fixes
+	Thanks to all those who contributed patches, bug reports, time or energy.  I can't remember you
+		all but we are aware of your contribution and appreciate it.
+
 [0.9.14]
 	- Added in transaction support to the db classes
 	- Hooks code has been changed some, the location is now required, and the hook filenames
@@ -21,6 +46,7 @@
 	- login.php will now accept md5 passwords, if you not using email and have javascript
 		enabled on your browser.  Clear text passwords won't be sent over the wire.  The javascript
 		portion isn't complete yet, but will be before 0.9.14 is released.  (REMOVE ME ONCE COMPLETE)
+	- Added global application level categories.  You can now create a category for all users within a single app.
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
