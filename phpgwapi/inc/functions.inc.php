@@ -29,15 +29,16 @@
 	* Direct functions, which are not part of the API class                      *
 	* because they are require to be availble at the lowest level.               *
 	\****************************************************************************/
-	/*!!
-	* @Type: function
-	* @Name: CreateObject
-	* @Author: mdean
-	* @Title: Load a class and include the class file if not done so already.
-	* @Description: This function is used to create an instance of a class, 
-	* and if the class file has not been included it will do so.
-	* @Syntax: CreateObject('app.class', 'constructor_params');
-	* @Example1: $phpgw->acl = CreateObject('phpgwapi.acl');
+	/*!
+	@function CreateObject
+	@abstract Load a class and include the class file if not done so already.
+	@discussion Author: mdean <br>
+	This function is used to create an instance of a class,  
+	and if the class file has not been included it will do so. <br>
+	Syntax: CreateObject('app.class', 'constructor_params'); <br>
+	Example1: $phpgw->acl = CreateObject('phpgwapi.acl');
+	@param $classname name of class
+	@param $constructor_param constructor parameter
 	*/
 	function CreateObject($classname, $constructor_param = "")
 	{
@@ -56,7 +57,10 @@
 		}
 		return $obj;
 	}
-
+		/*!
+		@function lang
+		@abstract function to deal with multilanguage support
+		*/
 	function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
 	{
 		global $phpgw;
@@ -73,7 +77,11 @@
 		 global $phpgw;
 		 return $phpgw->common->check_code($code);
 	}
-
+		/*!
+		@function filesystem_separator()
+		@abstract sets the file system seperator depending on OS
+		@result file system separator
+		*/
 	function filesystem_separator()
 	{
 		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2') {
