@@ -30,10 +30,22 @@
 	{
 		var $maxmatches;
 		var $action;
+		var $template;
 		
 		function nextmatchs()
 		{
 			global $phpgw_info, $menuaction;
+
+			$this->template = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$this->template->set_file(array(
+				'_nextmatchs' => 'nextmatchs.tpl'
+			));
+			$this->template->set_block('_nextmatchs','nextmatchs');
+			$this->template->set_block('_nextmatchs','filter');
+			$this->template->set_block('_nextmatchs','form');
+			$this->template->set_block('_nextmatchs','icon');
+			$this->template->set_block('_nextmatchs','link');
+			$this->template->set_block('_nextmatchs','search');
 
 			if(isset($phpgw_info['user']['preferences']['common']['maxmatchs']) &&
 				intval($phpgw_info['user']['preferences']['common']['maxmatchs']) > 0)
@@ -54,7 +66,6 @@
 		/*!
 		@function set_icon
 		@abstract ?
-		@param $tpl ? 
 		@param $align ?
 		@param $img_src ?
 		@param $label ?
@@ -62,24 +73,17 @@
 		function set_icon($align,$img,$label)
 		{
 			global $phpgw;
-			
-			$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(
-				Array(
-					'link' => 'nextmatchs_link.tpl'
-				)
-			);
 
-			$var = Array(
+			$var = array(
 				'align'	=> $align,
 				'img'	=> $phpgw->common->image('phpgwapi',$img),
 				'label'	=> lang($label)
 			);
-			$tpl->set_var($var);
-			return $tpl->fp('out','link');
+			$this->template->set_var($var);
+			return $this->template->fp('out','link');
 		}
 
-		
+
 		/*!
 		@function page
 		@abstract ?
@@ -99,7 +103,6 @@
 		/*!
 		@function set_link
 		@abstract ?
-		@param $tpl ?
 		@param $img_src ?
 		@param $label ?
 		@param $link ?
@@ -109,13 +112,6 @@
 		{
 			global $phpgw;
 
-			$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(
-				Array(
-					'_out'	=> 'nextmatchs_form.tpl'
-				)
-			);
-			
 			$hidden = '';
 			while(list($var,$value) = each($extravars))
 			{
@@ -125,15 +121,16 @@
 				}
 			}
 
-			$var = Array(
+			$var = array(
 				'align'	=> $align,
 				'action'	=> ($this->action?$this->page():$phpgw->link($link)),
 				'hidden'	=> $hidden,
 				'img'	=> $phpgw->common->image('phpgwapi',$img)
 			);
-			$tpl->set_var($var);
-			return $tpl->fp('out','_out');
+			$this->template->set_var($var);
+			return $this->template->fp('_out','form');
 		}
+
 
 		/*!
 		@function show_tpl
@@ -152,14 +149,8 @@
 		{
 			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
 			$start = $localstart;
-			$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(
-				Array(
-					'nextmatchs' => 'nextmatchs.tpl'
-				)
-			);
 
-			$var = Array(
+			$var = array(
 				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
 				'filter_value'	=> $filter,
 				'qfield'	=> $qfield,
@@ -174,8 +165,8 @@
 				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):''),
 				'right'	=> $this->right($sn,$start,$total,$extra)
 			);
-			$tpl->set_var($var);
-			return $tpl->fp('out','nextmatchs');
+			$this->template->set_var($var);
+			return $this->template->fp('out','nextmatchs');
 		}
 
 		function split_extras($extravars,$extradata)
@@ -322,12 +313,6 @@
 		function search($search_obj=0)
 		{
 			global $query;
-			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(
-				Array(
-					'search' => 'nextmatchs_search.tpl'
-				)
-			);
 
 			$_query = stripslashes($query);
 
@@ -338,14 +323,14 @@
 				$_query = ereg_replace('"','',$_query);
 			}
 
-			$var = Array(
+			$var = array(
 				'query_value'	=> stripslashes($_query),
 				'searchby'	=> $this->searchby($search_obj),
 				'lang_search'	=> lang('Search')
 			);
 
-			$tpl->set_var($var);
-			return $tpl->fp('out','search');
+			$this->template->set_var($var);
+			return $this->template->fp('out','search');
 		} /* search() */
 
 		/*!
@@ -408,12 +393,6 @@
 		function filter($filter_obj,$yours=0)
 		{
 			global $filter, $phpgw, $phpgw_info;
-			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(
-				Array(
-					'filter' => 'nextmatchs_filter.tpl'
-				)
-			);
 
 			if (is_long($filter_obj))
 			{
@@ -458,11 +437,11 @@
 				}
 
 				$str = '<select name="filter" onChange="this.form.submit()">'."\n" . $str . '</select>'."\n";
-				$tpl->set_var('select',$str);
-				$tpl->set_var('lang_filter',lang('Filter'));
+				$this->template->set_var('select',$str);
+				$this->template->set_var('lang_filter',lang('Filter'));
 			}
 
-			return $tpl->fp('out','filter');
+			return $this->template->fp('out','filter');
 		} /* filter() */
 
 		/*!

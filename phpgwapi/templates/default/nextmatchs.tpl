@@ -1,3 +1,4 @@
+<!-- BEGIN nextmatchs -->
 <form method="POST" action="{form_action}">
  <input type="hidden" name="filter" value="{filter_value}">
  <input type="hidden" name="qfield" value="{qfield_value}">
@@ -18,3 +19,36 @@
 <br>
 
 </form>
+<!-- END nextmatchs -->
+
+
+<!-- BEGIN filter -->
+<td>{select}<noscript><input type="submit" value="{lang_filter}"></noscript></td>
+<!-- END filter -->
+
+
+<!-- BEGIN form -->
+    <td width="2%" align="{align}">
+     <form method="POST" action="{action}">
+{hidden}      <input type="image" src="{img}" border="0">
+     <form>
+    </td>
+<!-- END form -->
+
+
+<!-- BEGIN icon -->
+<td width="2%" align="{align}">&nbsp;{_link}</td>
+<!-- END icon -->
+
+
+<!-- BEGIN link -->
+   <td width="2%" align="{align}"><img src="{img}" border="0" width="12" height="12" alt="{label}"></td>
+<!-- END link -->
+
+
+<!-- BEGIN search -->
+  <td>
+    <input type="text" name="query" value="{query_value}">&nbsp;{searchby}<input type="submit" name="Search" value="{lang_search}">
+  </td>
+<!-- END search -->
+
