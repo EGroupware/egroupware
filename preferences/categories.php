@@ -62,11 +62,11 @@
 
 	if ($global_cats)
 	{
-		$categories = $c->return_array('all',$start,True,$query,$sort,$order,True);
+		$categories = $c->return_sorted_array($start,True,$query,$sort,$order,True);
 	}
 	else
 	{
-		$categories = $c->return_array('all',$start,True,$query,$sort,$order);
+		$categories = $c->return_sorted_array($start,True,$query,$sort,$order);
 	}
 
 //--------------------------------- nextmatch --------------------------------------------
