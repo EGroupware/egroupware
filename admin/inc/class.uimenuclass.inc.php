@@ -13,6 +13,9 @@
 
 	class uimenuclass
 	{
+		var $t;
+		var $rowColor = Array();
+		
 		function uimenuclass()
 		{
 			$this->t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('admin'));
@@ -21,14 +24,12 @@
 			$this->t->set_block('menurow','menu_links','menu_links');
 			$this->t->set_block('menurow','link_row','link_row');
 
-			$this->rowColor[0] = $GLOBALS['phpgw_info']["theme"]["row_on"];
-			$this->rowColor[1] = $GLOBALS['phpgw_info']["theme"]["row_off"];
+			$this->rowColor[0] = $GLOBALS['phpgw_info']['theme']['row_on'];
+			$this->rowColor[1] = $GLOBALS['phpgw_info']['theme']['row_off'];
 		}
 
 		function section_item($pref_link='',$pref_text='', $bgcolor)
 		{
-			global $t;
-
 			$this->t->set_var('row_link',$pref_link);
 			$this->t->set_var('row_text',$pref_text);
 			$this->t->set_var('tr_color',$bgcolor);
@@ -42,21 +43,19 @@
 		// This allows extra data to be sent along
 		function display_section($_menuData)
 		{
-			global $account_id;
-
 			$i=0;
 
 			while(list($key,$value) = each($_menuData))
 			{
 				if (!empty($value['extradata']))
 				{
-					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $account_id . '&' . $value['extradata']);
+					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $GLOBALS['account_id'] . '&' . $value['extradata']);
 				}
 				else
 				{
-					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $account_id);
+					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $GLOBALS['account_id']);
 				}
-				$this->section_item($link,lang($value['description']),$this->rowColor[$i%2]);
+				$this->section_item($link,lang($value['description']),$this->rowColor[($i % 2)]);
 				$i++;
 			}
 

@@ -78,8 +78,7 @@
 		{
 			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_groups();
+				ExecMethod('admin.uiaccounts.list_groups');
 				return False;
 			}
 			
@@ -115,17 +114,15 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			$ui = createobject('admin.uiaccounts');
-			$ui->list_accounts();
-			return False;
+			Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function delete_user()
 		{
 			if (isset($GLOBALS['HTTP_POST_VARS']['cancel']) || $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_users();
+				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
 			elseif($GLOBALS['HTTP_POST_VARS']['delete_account'])
@@ -163,8 +160,7 @@
 					$cd = 29;
 				}
 
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_users();
+				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
 		}
@@ -173,8 +169,7 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_groups();
+				ExecMethod('admin.uiaccounts.list_groups');
 				return False;
 			}
 
@@ -288,8 +283,7 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			$ui = createobject('admin.uiaccounts');
-			$ui->list_groups();
+			ExecMethod('admin.uiaccounts.list_groups');
 			return False;
 		}
 
@@ -297,8 +291,7 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_users();
+				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
 
@@ -329,8 +322,7 @@
 				if (!$errors = $this->validate_user($userData))
 				{
 					$this->so->add_user($userData);
-					$ui = createobject('admin.uiaccounts');
-					$ui->list_users();
+					ExecMethod('admin.uiaccounts.list_users');
 					return False;
 				}
 				else
@@ -341,8 +333,7 @@
 			}
 			else
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_users();
+				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
 		}
@@ -351,8 +342,7 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_groups();
+				ExecMethod('admin.uiaccounts.list_groups');
 				return False;
 			}
 
@@ -512,8 +502,7 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			$ui = createobject('admin.uiaccounts');
-			$ui->list_groups();
+			ExecMethod('admin.uiaccounts.list_groups');
 			return False;
 		}
 
@@ -521,8 +510,7 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
 			{
-				$ui = createobject('admin.uiaccounts');
-				$ui->list_users();
+				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
 
@@ -555,17 +543,14 @@
 					// check if would create a menu
 					// if we do, we can't return to the users list, because
 					// there are also some other plugins
-					$menuClass = CreateObject('admin.uimenuclass');
-					if (!$menuClass->createHTMLCode('edit_user'))
+					if (!ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'))
 					{
-						$ui = createobject('admin.uiaccounts');
-						$ui->list_users();
+						ExecMethod('admin.uiaccounts.list_users');
 						return False;
 					}
 					else
 					{
-						$ui = createobject('admin.uiaccounts');
-						$ui->edit_user($GLOBALS['HTTP_GET_VARS']['account_id']);
+						ExecMethod('admin.uiaccountsiedit_user',$GLOBALS['HTTP_GET_VARS']['account_id']);
 						return False;
 					}
 				}

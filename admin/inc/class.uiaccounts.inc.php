@@ -663,8 +663,9 @@
 			$var['permissions_list'] = $appRightsOutput;
 
 			// create the menu on the left, if needed
-			$menuClass = CreateObject('admin.uimenuclass');
-			$var['rows'] = $menuClass->createHTMLCode('view_user');
+//			$menuClass = CreateObject('admin.uimenuclass');
+			// This is now using ExecMethod()
+			$var['rows'] = ExecMethod('admin.uimenuclass.createHTMLCode','view_user');
 			$t->set_var($var);
 			$t->pfp('out','form');
 		}
@@ -1038,8 +1039,9 @@
 			$t->set_var($var);
 
 			// create the menu on the left, if needed
-			$menuClass = CreateObject('admin.uimenuclass');
-			$t->set_var('rows',$menuClass->createHTMLCode('edit_user'));
+//			$menuClass = CreateObject('admin.uimenuclass');
+			// This is now using ExecMethod()
+			$t->set_var('rows',ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'));
 
 			echo $t->fp('out','form');
 		}
