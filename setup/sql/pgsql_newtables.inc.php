@@ -218,6 +218,14 @@
   )";
   $phpgw_setup->db->query($sql);
 
+  $sql = "CREATE TABLE phpgw_cal_holidays (
+    locale		char(2) NOT NULL,
+    name		varchar(50) NOT NULL,
+    date_time	int4 DEFAULT 0 NOT NULL,
+    PRIMARY KEY (locale,name)
+  )";
+  $phpgw_setup->db->query($sql);
+
   $sql = "CREATE TABLE newsgroups (
     con		serial,
     name		varchar(255) NOT NULL,

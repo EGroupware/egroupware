@@ -40,9 +40,10 @@
   $phpgw_setup->db->query("DROP TABLE phpgw_cal");
   $phpgw_setup->db->query("DROP TABLE phpgw_cal_user");
   $phpgw_setup->db->query("DROP TABLE phpgw_cal_repeats");
-  $phpgw_setup->db->query("DROP TABLE calendar_entry");
-  $phpgw_setup->db->query("DROP TABLE calendar_entry_user");
-  $phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
+  $phpgw_setup->db->query("DROP TABLE phpgw_cal_holidays");
+  @$phpgw_setup->db->query("DROP TABLE calendar_entry");
+  @$phpgw_setup->db->query("DROP TABLE calendar_entry_user");
+  @$phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
 
 	/* Legacy tables */
 

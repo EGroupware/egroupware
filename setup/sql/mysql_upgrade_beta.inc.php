@@ -1573,6 +1573,23 @@
         }
 
 
+	$test[] = '0.9.11.003';
+	function upgrade0_9_11_003()
+	{
+		global $phpgw_info,$phpgw_setup;
+		
+		$sql = "CREATE TABLE phpgw_cal_holidays (
+			locale char(2) NOT NULL,
+			name varchar(50) NOT NULL,
+			date_time int(11) DEFAULT '0' NOT NULL,
+			PRIMARY KEY (locale,name)
+		)";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.004';
+	}
+
+			
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
