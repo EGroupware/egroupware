@@ -14,9 +14,9 @@
 		{instr}<p>
 		<form action="index.php" method="post">
 		{createdb}<br>
-		    DB root username: <input type="text" name="db_root" value="root">
-		    DB root password: <input type="password" name="db_pass">
-            <input type="hidden" name="action" value="Create Database">
+		    DB root username: <input type="text" name="db_root" value="root"><br>
+		    DB root password: <input type="password" name="db_pass"><br>
+		    <input type="hidden" name="action" value="Create Database">
 		    <input type="submit" name="label" value="{create_database}">
 		</form>
 		<form method="POST" action="index.php"> <br>
