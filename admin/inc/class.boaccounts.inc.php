@@ -238,62 +238,64 @@
 				'account_expires'   => -1
 //				'account_file_space' => $account_file_space_number . "-" . $account_file_space_type,
 			);
-			$group->create($account_info);
-			$group_info['account_id'] = $GLOBALS['phpgw']->accounts->name2id($group_info['account_name']);
-
-			$apps = CreateObject('phpgwapi.applications',$group_info['account_id']);
-			$apps->update_data(Array());
-			reset($group_info['account_apps']);
-			while(list($app,$value) = each($group_info['account_apps']))
+			$group_info['account_id'] = $group->create($account_info);
+			// do the following only if we got an id - the create succided
+			if ($group_info['account_id'])
 			{
-				$apps->add($app);
-				$new_apps[] = $app;
-			}
-			$apps->save_repository();
-
-			$acl = CreateObject('phpgwapi.acl',$group_info['account_id']);
-			$acl->read_repository();
-
-			@reset($group_info['account_user']);
-			while(list($user_id,$dummy) = each($group_info['account_user']))
-			{
-				if(!$dummy)
+				$apps = CreateObject('phpgwapi.applications',$group_info['account_id']);
+				$apps->update_data(Array());
+				reset($group_info['account_apps']);
+				while(list($app,$value) = each($group_info['account_apps']))
 				{
-					continue;
+					$apps->add($app);
+					$new_apps[] = $app;
 				}
-				$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
-
-				$docommit = False;
-				$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$user_id);
-				$t = $GLOBALS['pref']->read_repository();
-				@reset($new_apps);
-				while(is_array($new_apps) && list($app_key,$app_name) = each($new_apps))
+				$apps->save_repository();
+	
+				$acl = CreateObject('phpgwapi.acl',$group_info['account_id']);
+				$acl->read_repository();
+	
+				@reset($group_info['account_user']);
+				while(list($user_id,$dummy) = each($group_info['account_user']))
 				{
-					if (!$t[($app_name=='admin'?'common':$app_name)])
+					if(!$dummy)
 					{
-						$GLOBALS['phpgw']->hooks->single('add_def_pref', $app_name);
-						$docommit = True;
+						continue;
+					}
+					$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
+	
+					$docommit = False;
+					$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$user_id);
+					$t = $GLOBALS['pref']->read_repository();
+					@reset($new_apps);
+					while(is_array($new_apps) && list($app_key,$app_name) = each($new_apps))
+					{
+						if (!$t[($app_name=='admin'?'common':$app_name)])
+						{
+							$GLOBALS['phpgw']->hooks->single('add_def_pref', $app_name);
+							$docommit = True;
+						}
+					}
+					if ($docommit)
+					{
+						$GLOBALS['pref']->save_repository();
 					}
 				}
-				if ($docommit)
+	
+				$acl->save_repository();
+	
+				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
+				$cd = 31;
+				umask(000);
+				if (! @mkdir ($basedir . $group_info['account_name'], 0707))
 				{
-					$GLOBALS['pref']->save_repository();
+					$cd = 37;
 				}
+	
+				$GLOBALS['phpgw']->db->unlock();
 			}
-
-			$acl->save_repository();
-
-			$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
-			$cd = 31;
-			umask(000);
-			if (! @mkdir ($basedir . $group_info['account_name'], 0707))
-			{
-				$cd = 37;
-			}
-
-			$GLOBALS['phpgw']->db->unlock();
-
 			ExecMethod('admin.uiaccounts.list_groups');
+			
 			return False;
 		}
 
@@ -357,10 +359,9 @@
 				}
 				
 				// do we have all needed data??
-				if (!$errors = $this->validate_user($userData))
+				if (!($errors = $this->validate_user($userData)) &&
+					($userData['account_id'] = $account_id = $this->so->add_user($userData)))	// no error in the creation
 				{
-					$userData['account_id'] = $account_id = $this->so->add_user($userData);
-
 					if ($userData['anonymous']) 
 					{
 						$GLOBALS['phpgw']->acl->add_repository('phpgwapi','anonymous',$account_id,1);

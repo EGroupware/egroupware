@@ -156,6 +156,8 @@ enter your http proxy server	setup	de	HTTP-Proxy-Server
 enter your http proxy server password	setup	de	Passwort des HTTP-Proxy-Servers
 enter your http proxy server port	setup	de	Port des HTTP-Proxy-Servers
 enter your http proxy server username	setup	de	Benutzername des HTTP-Proxy-Servers
+error in admin-creation !!!	setup	de	Fehler beim Anlegen des Admin-Kontos !!!
+error in group-creation !!!	setup	de	Fehler beim Anlegen der Gruppen !!!
 export egroupware accounts from sql to ldap	setup	de	eGroupWare Benutzerkonten von SQL nach LDAP exportieren
 export has been completed!  you will need to set the user passwords manually.	setup	de	Export ist abgeschlossen! Sie müssen die Benutzerpasswörter manuell setzen.
 export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren

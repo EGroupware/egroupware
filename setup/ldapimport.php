@@ -199,10 +199,12 @@
 								'account_status'    => 'A',
 								'account_expires'   => -1
 							);
-							$accounts->create($thisaccount_info);
-							$thisacctid = $acct->name2id($thisacctlid);
+							$thisacctid = $accounts->create($thisaccount_info);
 						}
-
+						if (!$thisacctid)	// if we have no account_id, we cant continue
+						{
+							continue;
+						}
 						// Insert default acls for this user.
 						// Since the group has app rights, we don't need to give users
 						//  these rights.  Instead, we make the user a member of the Default group
@@ -279,10 +281,12 @@
 								'account_status'    => 'A',
 								'account_expires'   => -1
 							);
-							$groups->create($thisgroup_info);
-							$thisacctid = $acct->name2id($thisacctlid);
+							$thisacctid = $groups->create($thisgroup_info);
 						}
-
+						if (!$thisacctid)	// if we have no account_id, we cant continue
+						{
+							continue;
+						}
 						// Now make them a member of this group in phpgw.
 						while(list($key,$members) = each($thismembers))
 						{

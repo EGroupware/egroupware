@@ -97,6 +97,14 @@
 		/* Create the demo groups */
 		$defaultgroupid = (int)$GLOBALS['phpgw_setup']->add_account('Default','Default','Group',False,False);
 		$admingroupid   = (int)$GLOBALS['phpgw_setup']->add_account('Admins','Admin','Group',False,False);
+		
+		if (!$defaultgroupid || !$admingroupid)
+		{
+			echo '<p><b>'.lang('Error in group-creation !!!')."</b></p>\n";
+			echo '<p>'.lang('click <a href="index.php">here</a> to return to setup.')."</p>\n";
+			$GLOBALS['phpgw_setup']->db->transaction_abort();
+			exit;
+		}
 
 		/* Group perms for the default group */
 		$GLOBALS['phpgw_setup']->add_acl(array('addressbook','calendar','infolog','email','preferences'),'run',$defaultgroupid);
@@ -147,13 +155,20 @@
 		if(get_var('create_demo',Array('POST')))
 		{
 			// Create 3 demo accounts
-			$accountid = $GLOBALS['phpgw_setup']->add_account('demo','Demo','Account','guest');
-			$accountid = $GLOBALS['phpgw_setup']->add_account('demo2','Demo2','Account','guest');
-			$accountid = $GLOBALS['phpgw_setup']->add_account('demo3','Demo3','Account','guest');
+			$GLOBALS['phpgw_setup']->add_account('demo','Demo','Account','guest');
+			$GLOBALS['phpgw_setup']->add_account('demo2','Demo2','Account','guest');
+			$GLOBALS['phpgw_setup']->add_account('demo3','Demo3','Account','guest');
 		}
 
 		/* Create records for administrator account, with Admins as primary and Default as additional group */
 		$accountid = $GLOBALS['phpgw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True);
+		if (!$accountid)
+		{
+			echo '<p><b>'.lang('Error in admin-creation !!!')."</b></p>\n";
+			echo '<p>'.lang('click <a href="index.php">here</a> to return to setup.')."</p>\n";
+			$GLOBALS['phpgw_setup']->db->transaction_abort();
+			exit;
+		}
 		$GLOBALS['phpgw_setup']->add_acl('phpgw_group',$admingroupid,$accountid);
 		$GLOBALS['phpgw_setup']->add_acl('phpgw_group',$defaultgroupid,$accountid);
 
