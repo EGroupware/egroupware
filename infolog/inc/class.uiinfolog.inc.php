@@ -676,7 +676,8 @@
 					$phpgw->common->phpgw_exit();
 				}
 			}      
-			$id_parent = $this->data['info_id_parent'];
+			if (!$id_parent)
+				$id_parent = $this->data['info_id_parent'];
 
 			$common_hidden_vars =  $html->input_hidden( $hidden_vars + array(
 				'info_id' => $info_id,
