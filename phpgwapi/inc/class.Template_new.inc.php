@@ -19,7 +19,7 @@
 * LGPL
 * @package cPage
  */
-class template {
+class Template {
   /** Internal Use - Array of file names */
   var $m_file     = array();
   /** Internal Use - Array of block names*/
@@ -43,22 +43,22 @@ class template {
   * @param path - Path to were templates are located (default in preferences)
   * @param unknown - Defines what to do with unknown tags (default in preferences)
   */
-  function template($root="", $unknowns="") {
+  function Template($root="", $unknowns="") {
     global $preferences;
 
     $this->c_error = createObject("cError","1");
-    $this->c_error->setFile(__FILE__);
+    $this->c_error->set_file(__FILE__);
 
     if (!empty($root)) {
-      $this->setRoot($root);
+      $this->set_root($root);
     }
     else {
-      $this->setRoot($preferences["template"]["path"]);
+      $this->set_root($preferences["template"]["path"]);
     }
     if (!empty($unknowns)) {
-      $this->setUnknowns($unknowns);
+      $this->set_unknowns($unknowns);
     } else {
-      $this->setUnknowns($preferences["template"]["unknowns"]);
+      $this->set_unknowns($preferences["template"]["unknowns"]);
     }
   }
 
@@ -66,10 +66,10 @@ class template {
   * @param path - Path to were templates are located
   * @returns returns false if an error has occured
   */
-  function setRoot($root) {
+  function set_root($root) {
     if (!is_array($root)) {
       if (!is_dir($root)) {
-        $this->c_error->halt("setRoot (scalar): $root is not a directory.",0,__LINE__);
+        $this->c_error->halt("set_root (scalar): $root is not a directory.",0,__LINE__);
         return false;
       }
       $this->m_root[] = $root;
@@ -77,7 +77,7 @@ class template {
       reset($root);
       while(list($k, $v) = each($root)) {
         if (!is_dir($v)) {
-          $this->c_error->halt("setRoot (array): $v (entry $k of root) is not a directory.",0,__LINE__);
+          $this->c_error->halt("set_root (array): $v (entry $k of root) is not a directory.",0,__LINE__);
           return false;
         }
         $this->m_root[] = $v;
@@ -92,7 +92,7 @@ class template {
   * @notes remove - removes unknown tags
   * @returns returns false if an error has occured
   */
-  function setUnknowns($unknowns = "") {
+  function set_unknowns($unknowns = "") {
     $this->m_unknowns = $unknowns;
   }
 
@@ -102,13 +102,13 @@ class template {
   * @notes Must be passed in as array
   * @returns returns false if an error has occured
   */
-  function setFile($varname, $filename = "") {
+  function set_file($varname, $filename = "") {
     if (!is_array($varname)) {
       if ($filename == "") {
         $c_error->halt("set_file: For varname $varname filename is empty.",0,__LINE__);
         return false;
       }
-      $this->m_file[$varname] = $this->fileName($filename);
+      $this->m_file[$varname] = $this->filename($filename);
     } else {
       reset($varname);
       while(list($h, $f) = each($varname)) {
@@ -116,7 +116,7 @@ class template {
           $this->c_error->halt("set_file: For varname $h filename is empty.",0,__LINE__);
           return false;
         }
-        $this->m_file[$h] = $this->fileName($f);
+        $this->m_file[$h] = $this->filename($f);
       }
     }
     return true;
@@ -129,7 +129,7 @@ class template {
   * @notes Also can be used to define nested blocks
   * @returns Currently returns true
   */
-  function setBlock($parent, $varname, $name = "") {
+  function set_block($parent, $varname, $name = "") {
     if ($name == "") {
       $name = $varname;
     }
@@ -143,17 +143,17 @@ class template {
   * @param Value that will be included when parsing complete
   * @return No return
   */
-  function setVar($varname, $value = "") {
+  function set_var($varname, $value = "") {
     if (!is_array($varname)) {
       if (!empty($varname)) {
-        $this->m_varkeys[$varname] = "/".$this->varName($varname)."/";
+        $this->m_varkeys[$varname] = "/".$this->varname($varname)."/";
         $this->m_varvals[$varname] = $value;
       }
     } else {
       reset($varname);
       while(list($k, $v) = each($varname)) {
         if (!empty($k)) {
-          $this->m_varkeys[$k] = "/".$this->varName($k)."/";
+          $this->m_varkeys[$k] = "/".$this->varname($k)."/";
           $this->m_varvals[$k] = $v;
         }
       }
@@ -166,7 +166,7 @@ class template {
   * @notes Internal Use
   */
   function subst($varname) {
-    $str = $this->getVar($varname);
+    $str = $this->get_var($varname);
     $str = @preg_replace($this->m_varkeys, $this->m_varvals, $str);
     return $str;
   }
@@ -190,15 +190,15 @@ class template {
     if (!is_array($varname)) {
       $str = $this->subst($varname);
       if ($append) {
-        $this->setVar($target, $this->getVar($target) . $str);
+        $this->set_var($target, $this->get_var($target) . $str);
       } else {
-        $this->setVar($target, $str);
+        $this->set_var($target, $str);
       }
     } else {
       reset($varname);
       while(list($i, $h) = each($varname)) {
         $str = $this->subst($h);
-        $this->setVar($target, $str);
+        $this->set_var($target, $str);
       }
     }
     return $str;
@@ -217,10 +217,10 @@ class template {
   /** Gets the tags from the array
   * @notes Internal use
   */
-  function getVars() {
+  function get_vars() {
     reset($this->m_varkeys);
     while(list($k, $v) = each($this->m_varkeys)) {
-      $result[$k] = $this->getVar($k);
+      $result[$k] = $this->get_var($k);
     }
 
     return $result;
@@ -230,11 +230,11 @@ class template {
   * @notes Internal use
   * @returns Result array
   */
-  function getVar($varname) {
+  function get_var($varname) {
     if (!is_array($varname)) {
       if (!isset($this->m_varkeys[$varname]) or empty($this->m_varvals[$varname])) {
         if (isset($this->m_file[$varname])) {
-          $this->loadFile($varname);
+          $this->loadfile($varname);
         }
         if (isset($this->m_block[$varname])) {
           $this->implodeBlock($varname);
@@ -248,7 +248,7 @@ class template {
       while(list($k, $v) = each($varname)) {
         if (!isset($this->m_varkeys[$varname]) or empty($this->m_varvals[$varname])) {
           if ($this->m_file[$v]) {
-            $this->loadFile($v);
+            $this->loadfile($v);
           }
           if ($this->m_block[$v]) {
             $this->implodeBlock($v);
@@ -263,8 +263,8 @@ class template {
   /** Gets undefined
   * @notes Internal Use
   */
-  function getUndefined($varname) {
-    $str = $this->getVar($varname);
+  function get_undefined($varname) {
+    $str = $this->get_var($varname);
     preg_match_all("/\\{([a-zA-Z0-9_]+)\\}/", $str, $m);
     $m = $m[1];
     if (!is_array($m)) {
@@ -307,7 +307,7 @@ class template {
   * @param Alias to processed template
   */
   function p($varname) {
-    print $this->finish($this->getVar($varname));
+    print $this->finish($this->get_var($varname));
   }
 
   /** Gets results for finished
@@ -315,15 +315,15 @@ class template {
   * @returns processed tabs from finished
   */
   function get($varname) {
-    return $this->finish($this->getVar($varname));
+    return $this->finish($this->get_var($varname));
   }
 
   /** Remove unwanted characters from filename
   * @notes Internal use
   * @returns Returns file name if not error has occured
   */
-  function fileName($filename) {
-    if (substr($filename, 0, 1) == "/" || preg_match("/[a-z]{1}:/i",$fileName) ) {
+  function filename($filename) {
+    if (substr($filename, 0, 1) == "/" || preg_match("/[a-z]{1}:/i",$filename) ) {
       if (file_exists($filename)) {
         return $filename;
       }
@@ -347,7 +347,7 @@ class template {
   * @notes Internal use
   * @returns Block name
   */
-  function varName($m_varname) {
+  function varname($m_varname) {
     return preg_quote("{".$m_varname."}");
   }
 
@@ -355,12 +355,12 @@ class template {
   * @notes Internal use
   * @returns Processed string
   */
-  function loadFile($varname) {
+  function loadfile($varname) {
     if (!isset($this->m_file[$varname])) {
       $this->c_error->halt("loadfile: $varname is not a valid varname.",0,__LINE__);
       return false;
     }
-    $filename = $this->fileName($this->m_file[$varname]);
+    $filename = $this->filename($this->m_file[$varname]);
 
     $str = implode("", @file($filename));
     if (empty($str)) {
@@ -368,7 +368,7 @@ class template {
       return false;
     }
 
-    $this->setVar($varname, $str);
+    $this->set_var($varname, $str);
     return true;
   }
 
@@ -379,7 +379,7 @@ class template {
     $parent = $this->m_block[$varname]["parent"];
     $alias  = $this->m_block[$varname]["alias"];
 
-    $str = $this->getVar($parent);
+    $str = $this->get_var($parent);
 
     $reg = "/<!--\\s+BEGIN $varname\\s+-->(.*)\n\s*<!--\\s+END $varname\\s+-->/sm";
     if (!preg_match_all($reg, $str, $m))
@@ -389,8 +389,8 @@ class template {
     else
     {
         $str = preg_replace($reg, "{"."$alias}", $str);
-        $this->setVar($varname, $m[1][0]);
-        $this->setVar($parent, $str);
+        $this->set_var($varname, $m[1][0]);
+        $this->set_var($parent, $str);
     }
   }
 }
