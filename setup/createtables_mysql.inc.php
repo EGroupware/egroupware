@@ -212,12 +212,6 @@
   )";
   $db->query($sql);  
 
-  $sql = "CREATE TABLE users_newsgroups (
-    owner		int(11) NOT NULL,
-    newsgroup	int(11) NOT NULL
-  )";
-  $db->query($sql);  
-
   $sql = "CREATE TABLE lang (
     message_id varchar(150) DEFAULT '' NOT NULL,
     app_name varchar(100) DEFAULT 'common' NOT NULL,

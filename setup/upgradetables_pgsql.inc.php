@@ -229,20 +229,51 @@
     }
   }
   
-  function v0_9_2to0_9_3pre2() {
+  function update_owner($table,$field){
+    $db->query("select distinct($field) from $table");
+    if ($db->num_rows()) {
+      while($db->next_record()) {
+	$owner[count($owner)] = $db->f($field);
+      }
+      for($i=0;$i<count($owner);$i++) {
+        $db->query("select account_id From accounts where account_lid='".$owner[$i]."'");
+	$account_id[$i] = $db->f("account_id");
+	$db->query("update $table set $field=".$account_id[$i]. where $field='".$owner[$i]."'");
+      }
+    }
+    $db->query("alter table $table change $field $field int(11) NOT NULL");
+  }
+
+  function v0_9_2to0_9_3pre3(){
     global $currentver, $phpgw_info, $db;
     $didupgrade = True;
-    
+
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
-       $db->query("update addressbook       set ab_owner=accounts.account_id      where ab_owner=accounts.account_lid");
-       $db->query("update todo              set todo_owner=accounts.account_id    where todo_owner=accounts.account_lid");
-       $db->query("update webcal_entry      set cal_create_by=accounts.account_id where cal_create_by=accounts.account_lid");
-       $db->query("update webcal_entry_user set cal_login=accounts.account_id     where cal_login=accounts.account_lid");
-       $db->query("update preferences       set preference_owner=accounts.account_id  where preference_owner=accounts.account_lid");
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2") {
+      if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
+	update_owner("addressbook","ab_owner");
+	update_owner("todo","todo_owner");
+	update_owner("webcal_entry","cal_create_by");
+	update_owner("webcal_entry_user","cal_login");
+      }
+      if ($currentver == "0.9.3pre2") {
+	$db->query("select owner, newsgroup from users_newsgroups");
+	if($db->num_rows()) {
+	  while($db->next_record()) {
+	    $owner[count($owner)] = $db->f("owner");
+	    $newsgroup[count($newsgroup)] = $db->f("newsgroup");
+	  }
+	  for($i=0;$i<count($owner);$i++) {
+	    $db->query("insert into preferences (preference_owner,preference_name,"
+		       ."preference_value,preference_appname) values ('".$owner[$i]."','".$newsgroup[$i]."','True',"
+		       ."'nntp')");
+ 	  }
+	  $db->query("drop table users_newsgroups");
+	}
+      }
 
        echo "  <tr bgcolor=\"e6e6e6\">\n";
-       echo "    <td>Upgrade from 0.9.2 to 0.9.3pre2 is completed.</td>\n";
+       echo "    <td>Upgrade from 0.9.2 to 0.9.3pre3 is completed.</td>\n";
        echo "  </tr>\n";
        $currentver = "0.9.3pre2";
     }
@@ -259,7 +290,7 @@
   v9052000to9072000();
   v9072000to0_9_1();
   v0_9_1to0_9_2();
-  v0_9_2to0_9_3pre2();
+  v0_9_2to0_9_3pre3();
   $db->query("update applications set app_version='".$phpgw_info["server"]["version"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
   if (!$didupgrade == True){
