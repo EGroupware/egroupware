@@ -688,6 +688,21 @@
 	$test[] = '0.9.14.508';
 	function phpgwapi_upgrade0_9_14_508()
 	{
+		// the following if detects if we come from a phpGW version after the fork
+		// (0.9.14.508 < currentversion < 0.9.99) and running only baseline-deltas
+		if ($GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly)
+		{
+			$currentver = explode('.',$GLOBALS['phpgw_setup']->process->currentversion);
+			if ($currentver[0] == 0 && $currentver[1] == 9 && 
+				($currentver[2] == 14 && $currentver[3] > 508 || 
+				($currentver[2] > 14 && $currentver[2] < 99)))
+			{
+				// this is a phpGW update from a version after the fork
+				$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.509';
+				//echo "currentver=".print_r($currentver,true)." ==> following the phpGW update path ==> ".$GLOBALS['setup_info']['phpgwapi']['currentver']."<br>\n";
+				return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+			}
+		}					
 		// update to 0.9.10pre3 droped the columns account_permissions and account_groups
 		// unfortunally they are still in the tables_current of 0.9.14.508
 		// so it depends on having a new or an updated install, if one have them or not
@@ -772,14 +787,144 @@
 	}
 
 	/*
-	 * Updates from phpGroupWare .16 branch
+	 * Updates from phpGroupWare after the fork
 	 */
 
 	$test[] = '0.9.14.509';
 	function phpgwapi_upgrade0_9_14_509()
 	{
-		// this is the phpGW .16RC1 with the new contacts tables
-		// we need to drop them here to not run into problems later on, if we install them
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.510';
+	}
+		
+	$test[] = '0.9.14.510';
+	function phpgwapi_upgrade0_9_14_510()
+	{
+		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_log_msg');
+		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_log');
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_log',array(
+			'fd' => array(
+				'log_id' => array('type' => 'auto','precision' => '4','nullable' => False),
+				'log_date' => array('type' => 'timestamp','nullable' => False),
+				'log_account_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'log_account_lid' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'log_app' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'log_severity' => array('type' => 'char','precision' => '1','nullable' => False),
+				'log_file' => array('type' => 'varchar','precision' => '255','nullable' => False, 'default' => ''),
+				'log_line' => array('type' => 'int','precision' => '4','nullable' => False, 'default' => '0'),
+				'log_msg' => array('type' => 'text','nullable' => False)
+			),
+			'pk' => array('log_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.511';
+	}
+		
+	$test[] = '0.9.14.511';
+	function phpgwapi_upgrade0_9_14_511()
+	{
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.512';
+	}
+		
+	$test[] = '0.9.14.512';
+	function phpgwapi_upgrade0_9_14_512()
+	{
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.513';
+	}
+		
+	$test[] = '0.9.14.513';
+	function phpgwapi_upgrade0_9_14_513()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_accounts','account_quota',array('type' => 'int','precision' => '4','default' => -1,'nullable' => True));
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.514';
+	}
+	
+	$test[] = '0.9.14.514';
+	function phpgwapi_upgrade0_9_14_514()
+	{
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.16.000';
+	}
+		
+	$test[] = '0.9.16.000';
+	function phpgwapi_upgrade0_9_16_000()
+	{
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.16.001';
+	}
+
+	$test[] = '0.9.16.001';
+	function phpgwapi_upgrade0_9_16_001()
+	{
+		foreach($GLOBALS['phpgw_setup']->db->table_names() as $tableinfo)
+		{
+			$tablenames[] = $tableinfo['table_name'];
+		}
+		// we need to redo the 0.9.14.510 update with the new phpgw_log table
+		// we just drop and recreate the table, as it contains no important data
+		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_log');
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_log',array(
+			'fd' => array(
+				'log_id' => array('type' => 'auto','precision' => '4','nullable' => False),
+				'log_date' => array('type' => 'timestamp','nullable' => False),
+				'log_user' => array('type' => 'int','precision' => '4','nullable' => False),
+				'log_app' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'log_severity' => array('type' => 'char','precision' => '1','nullable' => False)
+			),
+			'pk' => array('log_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+		if (in_array('phpgw_log_msg',$tablenames)) 
+		{
+			$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_log_msg');
+		}
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_log_msg',array(
+			'fd' => array(
+				'log_msg_log_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'log_msg_seq_no' => array('type' => 'int','precision' => '4','nullable' => False),
+				'log_msg_date' => array('type' => 'timestamp','nullable' => False),
+				'log_msg_tx_fid' => array('type' => 'varchar','precision' => '4','nullable' => True),
+				'log_msg_tx_id' => array('type' => 'varchar','precision' => '4','nullable' => True),
+				'log_msg_severity' => array('type' => 'char','precision' => '1','nullable' => False),
+				'log_msg_code' => array('type' => 'varchar','precision' => '30','nullable' => False),
+				'log_msg_msg' => array('type' => 'text','nullable' => False),
+				'log_msg_parms' => array('type' => 'text','nullable' => False),
+				'log_msg_file' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'log_msg_line' => array('type' => 'int','precision' => '4','nullable' => False)
+			),
+			'pk' => array('log_msg_log_id','log_msg_seq_no'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+		
+		// now we need to drop phpgw_accounts.accounts_quota from the 0.9.14.513 update
+		$GLOBALS['phpgw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['phpgw_setup']->oProc,'phpgw_accounts',$columns);
+		$columns = explode(',',$columns);
+		if (in_array('account_quota',$columns))
+		{
+			$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_accounts',array(
+				'fd' => array(
+					'account_id' => array('type' => 'auto','nullable' => False),
+					'account_lid' => array('type' => 'varchar','precision' => '25','nullable' => False),
+					'account_pwd' => array('type' => 'varchar','precision' => '32','nullable' => False),
+					'account_firstname' => array('type' => 'varchar','precision' => '50'),
+					'account_lastname' => array('type' => 'varchar','precision' => '50'),
+					'account_lastlogin' => array('type' => 'int','precision' => '4'),
+					'account_lastloginfrom' => array('type' => 'varchar','precision' => '255'),
+					'account_lastpwd_change' => array('type' => 'int','precision' => '4'),
+					'account_status' => array('type' => 'char','precision' => '1','nullable' => False,'default' => 'A'),
+					'account_expires' => array('type' => 'int','precision' => '4'),
+					'account_type' => array('type' => 'char','precision' => '1','nullable' => True)
+				),
+				'pk' => array('account_id'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array('account_lid')
+			),'account_quota');
+		}
+		/* we dont drop phpGW's new contacts tables for now ;-)
 		foreach(array(
 			'phpgw_contact',
 			'phpgw_contact_person',
@@ -797,11 +942,89 @@
 		) as $table)
 		{
 			$GLOBALS['phpgw_setup']->oProc->DropTable($table);
+		}*/
+		
+		// we need to check if we stil have the original addressbook-tables and create them again if not
+		if (!in_array('phpgw_addressbook',$tablenames))
+		{
+			$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_addressbook',array(
+				'fd' => array(
+					'id' => array('type' => 'auto','nullable' => False),
+					'lid' => array('type' => 'varchar','precision' => '32'),
+					'tid' => array('type' => 'char','precision' => '1'),
+					'owner' => array('type' => 'int','precision' => '8'),
+					'access' => array('type' => 'varchar','precision' => '7'),
+					'cat_id' => array('type' => 'varchar','precision' => '32'),
+					'fn' => array('type' => 'varchar','precision' => '64'),
+					'n_family' => array('type' => 'varchar','precision' => '64'),
+					'n_given' => array('type' => 'varchar','precision' => '64'),
+					'n_middle' => array('type' => 'varchar','precision' => '64'),
+					'n_prefix' => array('type' => 'varchar','precision' => '64'),
+					'n_suffix' => array('type' => 'varchar','precision' => '64'),
+					'sound' => array('type' => 'varchar','precision' => '64'),
+					'bday' => array('type' => 'varchar','precision' => '32'),
+					'note' => array('type' => 'text'),
+					'tz' => array('type' => 'varchar','precision' => '8'),
+					'geo' => array('type' => 'varchar','precision' => '32'),
+					'url' => array('type' => 'varchar','precision' => '128'),
+					'pubkey' => array('type' => 'text'),
+					'org_name' => array('type' => 'varchar','precision' => '64'),
+					'org_unit' => array('type' => 'varchar','precision' => '64'),
+					'title' => array('type' => 'varchar','precision' => '64'),
+					'adr_one_street' => array('type' => 'varchar','precision' => '64'),
+					'adr_one_locality' => array('type' => 'varchar','precision' => '64'),
+					'adr_one_region' => array('type' => 'varchar','precision' => '64'),
+					'adr_one_postalcode' => array('type' => 'varchar','precision' => '64'),
+					'adr_one_countryname' => array('type' => 'varchar','precision' => '64'),
+					'adr_one_type' => array('type' => 'varchar','precision' => '32'),
+					'label' => array('type' => 'text'),
+					'adr_two_street' => array('type' => 'varchar','precision' => '64'),
+					'adr_two_locality' => array('type' => 'varchar','precision' => '64'),
+					'adr_two_region' => array('type' => 'varchar','precision' => '64'),
+					'adr_two_postalcode' => array('type' => 'varchar','precision' => '64'),
+					'adr_two_countryname' => array('type' => 'varchar','precision' => '64'),
+					'adr_two_type' => array('type' => 'varchar','precision' => '32'),
+					'tel_work' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_home' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_voice' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_fax' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_msg' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_cell' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_pager' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_bbs' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_modem' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_car' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_isdn' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_video' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+					'tel_prefer' => array('type' => 'varchar','precision' => '32'),
+					'email' => array('type' => 'varchar','precision' => '64'),
+					'email_type' => array('type' => 'varchar','precision' => '32','default' => 'INTERNET'),
+					'email_home' => array('type' => 'varchar','precision' => '64'),
+					'email_home_type' => array('type' => 'varchar','precision' => '32','default' => 'INTERNET'),
+					'last_mod' => array('type' => 'int','precision' => '8','nullable' => False)
+				),
+				'pk' => array('id'),
+				'fk' => array(),
+				'ix' => array(array('tid','owner','access','n_family','n_given','email'),array('tid','cat_id','owner','access','n_family','n_given','email')),
+				'uc' => array()
+			));
+			$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_addressbook_extra',array(
+				'fd' => array(
+					'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
+					'contact_owner' => array('type' => 'int','precision' => '8'),
+					'contact_name' => array('type' => 'varchar','precision' => '255','nullable' => False),
+					'contact_value' => array('type' => 'text')
+				),
+				'pk' => array('contact_id','contact_name'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array()
+			));
 		}
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.508';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		// now we return to the version of the fork
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.508';
 	}
-
+	
 	/*
 	 * Updates / downgrades from phpGroupWare HEAD branch
 	 */
