@@ -104,7 +104,7 @@
 
   if ($error) {
      $phpgw->common->phpgw_header();
-     $phpgw->common->navbar();
+     echo parse_navbar();
      $phpgw->template->set_var("error","<p><center>$error</center>");
   } else {
      $phpgw->template->set_var("error","");

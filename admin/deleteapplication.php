@@ -26,7 +26,7 @@
   }
 
   $phpgw->common->phpgw_header();
-  $phpgw->common->navbar();
+  echo parse_navbar();
   ?>
      <center>
       <table border=0 with=65%>

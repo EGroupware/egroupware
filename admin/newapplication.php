@@ -69,7 +69,7 @@
      $phpgw->template->set_var("error","");
   }
   $phpgw->common->phpgw_header();
-  $phpgw->common->navbar();
+  echo parse_navbar();
 
   $phpgw->template->set_var("lang_header",lang("Add new application"));
   $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);

@@ -36,7 +36,7 @@
   }
 
   $phpgw->common->phpgw_header();
-  $phpgw->common->navbar();
+  echo parse_navbar();
 
   echo "<br>" . lang("your current theme is: x",$phpgw_info["user"]["preferences"]["theme"]);
   echo "<br>" . lang("please, select a new theme") . ":";

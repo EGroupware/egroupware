@@ -125,7 +125,7 @@
   $phpgw->template->set_file(array("form" => "account_form.tpl"));
 
   $phpgw->common->phpgw_header();
-  $phpgw->common->navbar();
+  echo parse_navbar();
 
   if ($totalerrors) {
      $phpgw->template->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");

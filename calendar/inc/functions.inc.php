@@ -935,7 +935,7 @@
       $str .= "</tr>";
       $str .= "<tr>";
       for($i=0;$i<7;$i++) {
-	$str .= "<td bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\".<font size=\"-2\">".substr(lang($days[$i]),0,2)."</td>";
+	$str .= "<td bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\"><font size=\"-2\">".substr(lang($days[$i]),0,2)."</td>";
       }
       $str .= "</tr>";
       for($i=$weekstarttime;date("Ymd",$i)<=$monthend;$i += (24 * 3600 * 7)) {

@@ -89,7 +89,7 @@
     Header("Location: ".$phpgw->link("edit_entry.php","readsess=".$cal_info->id."&cd=".$datetime_check));
   } elseif($overlapping_events) {
     $phpgw->common->phpgw_header();
-    $phpgw->common->navbar();
+    echo parse_navbar();
     $phpgw->template->set_file(array("overlap" => "overlap.tpl",
 				   "form_button"     => "form_button_script.tpl"));
 

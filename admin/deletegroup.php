@@ -45,7 +45,7 @@
      $phpgw->db->next_record();
      if ($phpgw->db->f(0) != 0) {
         $phpgw->common->phpgw_header();
-        $phpgw->common->navbar();
+        echo parse_navbar();
 
         echo '<p><center>';
 	   echo lang("Sorry, the follow users are still a member of the group x",$group_name)
@@ -86,7 +86,7 @@
   }
 
   $phpgw->common->phpgw_header();
-  $phpgw->common->navbar();
+  echo parse_navbar();
   ?>
      <center>
       <table border=0 with=65%>

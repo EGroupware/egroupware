@@ -71,7 +71,7 @@
 
   if ($totalerrors) {
      $phpgw->common->phpgw_header();
-     $phpgw->common->navbar();
+     echo parse_navbar();
 
      $phpgw->template->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
   } else {

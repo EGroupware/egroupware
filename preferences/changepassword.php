@@ -24,7 +24,7 @@
 
   if (! $submit) {
      $phpgw->common->phpgw_header();
-     $phpgw->common->navbar();
+     echo parse_navbar();
 
     ?>
    <form method="POST" acion="<?php echo $phpgw->link("changepassword.php"); ?>">
@@ -68,7 +68,7 @@
     $error = lang("you must enter a password");
 
   if ($error) {
-    $phpgw->common->navbar();
+    echo parse_navbar();
     echo "<p><br>$error</p>";
     $phpgw->common->phpgw_exit();
   }
