@@ -76,11 +76,15 @@
 		}
 
 
-	function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '')
+	function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
 	{
 		global $phpgw, $phpgw_info;
 
-		if ($start)
+		if ($offset)
+		{
+			$limitclause = $phpgw->db->limit($start,$offset);
+		}
+		elseif ($start && !$offset)
 		{
 			$limitclause = $phpgw->db->limit($start);
 		}

@@ -141,9 +141,32 @@
 			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
 		}
 
-		function get_list($_type='both')
+		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
 			global $phpgw;
+
+			if ($offset)
+			{
+				$limitclause = $phpgw->db->limit($start,$offset);
+			}
+			elseif ($start && !$offset)
+			{
+				$limitclause = $phpgw->db->limit($start);
+			}
+
+			if (! $sort)
+			{
+				$sort = "desc";
+			}
+
+			if ($order)
+			{
+				$orderclause = "order by $order $sort";
+			}
+			else
+			{
+				$orderclause = "order by account_lid,account_lastname,account_firstname asc";
+			}
 
 			$ds = $phpgw->common->ldapConnect();
 
@@ -159,7 +182,7 @@
 					$whereclause = "";
 			}
 
-			$sql = "select * from phpgw_accounts $whereclause";
+			$sql = "select * from phpgw_accounts $whereclause $orderclause $limitclause";
 			$this->db->query($sql,__LINE__,__FILE__);
 			while ($this->db->next_record()) {
 				// get user information from ldap only, if it's a user, not a group
