@@ -158,7 +158,7 @@
 				
 				$html .= "\t<tr bgcolor=".'"'.$color.'"'.">\n";
 				$html .= "\t\t<td align=center>".$i."</td>\n";
-				$html .= "\t\t<td>".date('Y.n.d:H.i.s',$err->timestamp)."</td>\n";
+				$html .= "\t\t<td>".$phpgw->common->show_date($err->timestamp)."</td>\n";
 				$html .= "\t\t<td>".$phpgw_info['flags']['currentapp']."&nbsp </td>\n";
 				$html .= "\t\t<td align=center>".$err->severity."</td>\n";
 				$html .= "\t\t<td>".$err->code."</td>\n";

@@ -68,7 +68,7 @@
 				echo "</center>";
 				// Commit stack to log
 				$phpgw->log->commit();
-				exit();
+				$phpgw->common->phpgw_exit(True);
 			}
 		}
 	}
