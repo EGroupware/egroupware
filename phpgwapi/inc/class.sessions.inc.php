@@ -74,7 +74,6 @@
 
        $phpgw_info_flags    = $phpgw_info["flags"];
        $phpgw_info          = $phpgw->crypto->decrypt($db->f("session_info"));
-
        $phpgw_info["flags"] = $phpgw_info_flags;
 
        $userid_array = explode("@",$db->f("session_lid"));
@@ -155,7 +154,7 @@
           unset ($phpgw_info["server"]["default_domain"]); // we kill this for security reasons
        }
 
-       //$phpgw->accounts->accounts_const();
+       $phpgw->accounts->accounts_const();
 
        $phpgw_info["user"]["session_ip"] = $this->getuser_ip();
 

@@ -25,13 +25,13 @@
   
   class acl
   {
-     var $db;
+    var $db;
 
-     function acl()
-     {
-        global $phpgw;
-        $this->db = $phpgw->db;
-     }
+    function acl()
+    {
+      global $phpgw;
+      $this->db = $phpgw->db;
+    }
 
     /* This is a new class. These are sample table entries
        insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) 
@@ -43,17 +43,19 @@
        insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) 
                           values('filemanager', 'create', 2, 'g', 2);
     */
-          
-    function get_rights($location,$appname = False){
-      global $phpgw, $phpgw_info;
 
+    function get_rights($location,$appname = False, $user_id = ""){
+      global $phpgw, $phpgw_info;
       if ($appname == False){
         $appname = $phpgw_info["flags"]["currentapp"];
+      }
+      if($user_id == "") {
+        $user_id = $phpgw_info["user"]["account_id"];
       }
       // User piece
       $sql = "select acl_rights from phpgw_acl where acl_appname='$appname'";
       $sql .= " and (acl_location in ('$location','everywhere')) and ";
-      $sql .= "((acl_account_type = 'u' and acl_account = ".$phpgw_info["user"]["account_id"].")";
+      $sql .= "((acl_account_type = 'u' and acl_account = ".$user_id.")";
     
       // Group piece
       $sql .= " or (acl_account_type='g' and acl_account in (0"; // group 0 covers all users
@@ -74,10 +76,39 @@
       return $rights;
     }
 
-    function check($location, $required, $appname = False){
+    function check($location, $required, $appname = False, $user_id = ""){
       global $phpgw, $phpgw_info;
-      $rights = $this->get_rights($location,$appname);
+      $rights = $this->get_rights($location,$appname, $user_id);
       
+      return !!($rights & $required);
+    }
+
+    function get_specific_rights($location, $appname = False, $id = "", $id_type = "u"){
+      global $phpgw, $phpgw_info;
+
+      if ($appname == False){
+        $appname = $phpgw_info["flags"]["currentapp"];
+      }
+      if($id == "") {
+        $id = $phpgw_info["user"]["account_id"];
+      }
+      // User piece
+      $sql = "select acl_rights from phpgw_acl where acl_appname='$appname'";
+      $sql .= " and acl_location = '$location' and ";
+      $sql .= "acl_account_type = ".$id_type." and acl_account = ".$id;
+      $this->db->query($sql ,__LINE__,__FILE__);
+      $rights = 0;
+      if ($this->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ return True; }
+      while ($this->db->next_record()) {
+        if ($this->db->f("acl_rights") == 0){ return False; }
+        $rights |= $this->db->f("acl_rights");
+      }
+      return $rights;
+    }
+
+    function check_specific($location, $required, $appname = False, $id = "", $id_type = "u"){
+      global $phpgw, $phpgw_info;
+      $rights = $this->get_specific_rights($location,$appname, $id, $id_type);
       return !!($rights & $required);
     }
 
@@ -102,10 +133,9 @@
       return True;
     }
 
-    function get_app_list_for_id($location, $required, $id_type = "", $id = ""){
+    function get_app_list_for_id($location, $required, $id = "", $id_type = "u"){
       global $phpgw, $phpgw_info;
       if ($id == ""){ $id = $phpgw_info["user"]["account_id"]; }
-      if ($id_type == ""){ $id_type = "u"; }
       $sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = '$location' and ";
       $sql .= "acl_account_type = '".$id_type."' and acl_account = ".$id;
       $this->db->query($sql ,__LINE__,__FILE__);

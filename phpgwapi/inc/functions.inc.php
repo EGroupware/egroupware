@@ -67,6 +67,16 @@
     return $phpgw->common->check_code($code);
   }
 
+  function filesystem_separator()
+  {
+     if (PHP_OS == "Windows" || PHP_OS == "OS/2") {
+        return "\\";
+     } else {
+        return "/";
+     }
+  }
+
+
   /****************************************************************************\
   * Optional classes, which can be disabled for performance increases          *
   *  - they are loaded after pulling in the config from the DB                 *
@@ -167,11 +177,27 @@
   }
   unset ($domain); // we kill this to save memory
 
+  $phpgw_info["server"]["dir_separator"] = filesystem_separator();
+  $phpgw_info["server"]["sep"] = $phpgw_info["server"]["dir_separator"];
+
   // some constants which can be used in setting user acl rights.
   define("PHPGW_ACL_READ",1);
   define("PHPGW_ACL_ADD",2);
   define("PHPGW_ACL_EDIT",4);
   define("PHPGW_ACL_DELETE",8);
+
+  //incase we are dealing with a fresh login
+  if (!isset($phpgw_info["user"]["preferences"]["common"]["template_set"])){
+    $phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
+  }
+
+  // Since LDAP will return system accounts, there are a few we don't want to login.
+  $phpgw_info["server"]["global_denied_users"] = array(
+    'root'=>True,'bin'=>True,'daemon'=>True,'adm'=>True,'lp'=>True,'sync'=>True,
+    'shutdown' => True,'halt'=>True,'mail'=>True,'news'=>True,'uucp'=>True,
+    'operator' => True,'games'=>True,'gopher'=>True,'nobody'=>True,'xfs'=>True,
+    'pgsql'=>True,'mysql'=>True,'postgres'=>True,'ftp'=>True,'gdm'=>True,'named'=>True
+  );
 
   // This function needs to be optimized, its reading duplicate information.
   function phpgw_fillarray()
@@ -210,7 +236,6 @@
      load_optional();
 
      phpgw_fillarray();
-     $phpgw->common->common_();
 
      if ($phpgw_info["flags"]["enable_utilities_class"]){
         $phpgw->utilities->utilities_();

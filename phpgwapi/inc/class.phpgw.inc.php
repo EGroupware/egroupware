@@ -111,30 +111,35 @@
 
       /* Load selected accounts class */
       if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
-      $this->accounts = CreateObject("phpgwapi.accounts");
-      $this->preferences = CreateObject("phpgwapi.preferences");
-      $this->session = CreateObject("phpgwapi.sessions");
       $this->acl = CreateObject("phpgwapi.acl");
-      $this->applications = CreateObject("phpgwapi.applications");
+      $this->accounts = CreateObject("phpgwapi.accounts");
+      $this->session = CreateObject("phpgwapi.sessions");
+//      $this->applications = CreateObject("phpgwapi.applications");
+//      $this->preferences = CreateObject("phpgwapi.preferences");
+//echo "check point 1<br>\n";
       if ($phpgw_info["flags"]["currentapp"] == "login") {
-        $log = explode("@",$login);
-        $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
-        $this->applications = CreateObject("phpgwapi.applications");
+//echo "check point 2<br>\n";
+        if ($login != ""){
+          $log = explode("@",$login);
+          $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
+//          $this->applications = CreateObject("phpgwapi.applications", $log[0]);
+        }
       }else{
+//echo "check point 3<br>\n";
         if (! $this->session->verify()) {
+//echo "check point 4<br>\n";
           $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
           $this->db->next_record();
           Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
           exit;
         }
+//echo "check point 5<br>\n";
         $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
-        $this->applications = CreateObject("phpgwapi.applications");
-        $this->applications->users_enabled_apps();
+        $this->applications = CreateObject("phpgwapi.applications", intval($phpgw_info["user"]["account_id"]));
      }
-
       $this->translation = CreateObject("phpgwapi.translation");
 
-      $sep = filesystem_separator();
+      $sep = $phpgw_info["server"]["dir_separator"];
       $template_root = $this->common->get_tpl_dir();
 
       if (is_dir($template_root)) {
@@ -157,11 +162,11 @@
       // please let us know if this doesn't work for you!
       if (! $url && (PHP_OS == "Windows" || PHP_OS == "OS/2" || PHP_OS == "WIN32" || PHP_OS == "WIN16")) {
         $exe = strpos($PHP_SELF,"php.exe");
-	if ($exe != false) {
+	      if ($exe != false) {
           $exe += 7; // strlen("php.exe")
           $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
           $url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2];
-	  $url .= substr($PHP_SELF,$exe,strlen($PHP_SELF)-$exe);
+	        $url .= substr($PHP_SELF,$exe,strlen($PHP_SELF)-$exe);
         }
       }
       if (! $url) {
@@ -251,5 +256,4 @@
       
       return $phpgw->translation->translate($key);
     }
-  }
-
+  }//end phpgw class

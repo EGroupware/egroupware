@@ -115,8 +115,11 @@
     // If there is something wrong with this code TELL ME!
     // Commenting out the code will not fix it. (jengo)
     if (isset($last_loginid)) {
-       $pref = new preferences($last_loginid);
-       $phpgw_info["user"]["preferences"] = $pref;
+//echo "check point 1 - $last_loginid<br>\n";
+       $prefs = CreateObject("phpgwapi.preferences", $last_loginid);
+//echo "check point 2<br>\n";
+       $phpgw_info["user"]["preferences"] = $prefs->get_saved_preferences();
+//echo "check point 3<br>\n";
        #print "LANG:".$phpgw_info["user"]["preferences"]["common"]["lang"]."<br>";
        $phpgw->translation->add_app("login");
        $phpgw->translation->add_app("loginscreen");

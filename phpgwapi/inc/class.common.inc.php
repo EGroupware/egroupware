@@ -32,45 +32,6 @@
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
     exit;
   } unset($d1);unset($d2);unset($d3);
-  //incase we are dealing with a fresh login
-  if (!isset($phpgw_info["user"]["preferences"]["common"]["template_set"])){
-    $phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
-  }
-  // Since LDAP will return system accounts, there are a few we don't want to login.
-  $phpgw_info["server"]["global_denied_users"] = array('root'     => True,
-                                                       'bin'      => True,
-                                                       'daemon'   => True,
-                                                       'adm'      => True,
-                                                       'lp'       => True,
-                                                       'sync'     => True,
-                                                       'shutdown' => True,
-                                                       'halt'     => True,
-                                                       'mail'     => True,
-                                                       'news'     => True,
-                                                       'uucp'     => True,
-                                                       'operator' => True,
-                                                       'games'    => True,
-                                                       'gopher'   => True,
-                                                       'nobody'   => True,
-                                                       'xfs'      => True,
-                                                       'pgsql'    => True,
-                                                       'mysql'    => True,
-                                                       'postgres' => True,
-                                                       'ftp'      => True,
-                                                       'gdm'      => True,
-                                                       'named'    => True);
-
-
-  // I had to create this has a wrapper, becuase the phpgw.inc.php files needs it before the classes
-  // are finished loading (jengo)
-  function filesystem_separator()
-  {
-     if (PHP_OS == "Windows" || PHP_OS == "OS/2") {
-        return "\\";
-     } else {
-        return "/";
-     }
-  }
 
   class common
   {
@@ -455,6 +416,7 @@
        $phpgw_info["navbar"]["home"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php");
        $phpgw_info["navbar"]["home"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
                                               . $phpgw_info["server"]["template_set"] . "/images/home.gif";
+
        while ($permission = each($phpgw_info["user"]["apps"])) {
           if ($phpgw_info["apps"][$permission[0]]["status"] != 2) {
              $phpgw_info["navbar"][$permission[0]]["title"] = $phpgw_info["apps"][$permission[0]]["title"];
@@ -601,10 +563,9 @@
     }
     /* Then add the rest */
     reset ($phpgw_info["user"]["apps"]);
-    asort ($phpgw_info["user"]["apps"]);
-    while (list (, $appname) = each ($phpgw_info["user"]["apps"])){
-      if (gettype($appname) != "array" && $appname != "" && $completed_hooks[$appname] != True){
-        $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+    while ($permission = each($phpgw_info["user"]["apps"])) {
+      if ($completed_hooks[$permission[0]] != True){
+        $f = $phpgw_info["server"]["server_root"] . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
       	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
     	  if (file_exists($f)) {include($f);}
       }
@@ -635,10 +596,9 @@
 
   function hook_count($location = ""){
     global $phpgw, $phpgw_info;
-    reset ($phpgw_info["user"]["app_perms"]);
     $count = 0;
-    while (list (, $appname) = each ($phpgw_info["user"]["app_perms"])){
-      $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+    while ($permission = each($phpgw_info["user"]["apps"])) {
+      $f = $phpgw_info["server"]["server_root"] . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
     	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
   	  if (file_exists($f)) {++$count;}
     }
@@ -912,11 +872,4 @@
        system("grep -r '^[ \t]*function' *");
        echo "</pre>";
     }    
-
-    function common_()
-    { 
-      global $phpgw, $phpgw_info;
-      $phpgw_info["server"]["dir_separator"] = $this->filesystem_separator();
-    }    
-
-  }
+  }//end common class

@@ -30,7 +30,7 @@
     var $group_names;
     var $apps;
 
-    function phpgw_fillarray()
+    function fill_user_array()
     {
       global $phpgw_info, $phpgw;
       
@@ -46,8 +46,13 @@
       $phpgw_info["user"]["fullname"]          = $db2->f("account_firstname") . " "
                                                . $db2->f("account_lastname");
       $phpgw_info["user"]["groups"]            = explode (",", $db2->f("account_groups"));
+
       $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-      $phpgw_info["user"]["app_perms"]         = $apps->app_perms;
+      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
+      $phpgw_info["user"]["preferences"] = $prefs->get_saved_preferences();
+      $phpgw_info["user"]["app_perms"] = $apps->app_perms();
+      $phpgw_info["user"]["apps"] = $apps->enabled_apps();
+
       $phpgw_info["user"]["lastlogin"]         = $db2->f("account_lastlogin");
       $phpgw_info["user"]["lastloginfrom"]     = $db2->f("account_lastloginfrom");
       $phpgw_info["user"]["lastpasswd_change"] = $db2->f("account_lastpwd_change");
@@ -72,7 +77,11 @@
                                                . $db2->f("account_lastname");
       $userData["groups"]            = explode(",", $db2->f("account_groups"));
       $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-      $userData["app_perms"]         = $apps->app_perms;
+      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
+      $userData["preferences"] = $prefs->get_saved_preferences();
+      $userData["app_perms"] = $apps->app_perms();
+      $userData["apps"] = $apps->enabled_apps();
+
       $userData["lastlogin"]         = $db2->f("account_lastlogin");
       $userData["lastloginfrom"]     = $db2->f("account_lastloginfrom");
       $userData["lastpasswd_change"] = $db2->f("account_lastpwd_change");
@@ -235,4 +244,56 @@
        return $accounts;
     }
 
-  }
+    function username2userid($user_name)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT account_id FROM accounts WHERE account_lid='".$user_name."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("account_id");
+      }else{
+        return False;
+      }
+    }
+
+    function userid2username($user_id)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT account_lid FROM accounts WHERE account_id='".$user_id."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("account_lid");
+      }else{
+        return False;
+      }
+    }
+
+    function groupname2groupid($group_name)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT group_id FROM groups WHERE group_name='".$group_name."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("group_id");
+      }else{
+        return False;
+      }
+    }
+
+    function groupid2groupname($group_id)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT group_name FROM groups WHERE group_id='".$group_id."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("group_name");
+      }else{
+        return False;
+      }
+    }
+  }//end of class
+?>

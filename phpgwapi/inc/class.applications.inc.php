@@ -25,119 +25,111 @@
   class applications
   {
     var $account_id;
-    var $user_apps = Array();
-    var $group_apps = Array();
+    var $account_type;
+    var $account_apps = Array();
+    var $db;
 
-    function applications($var="")
+    function applications($account_id = "", $account_type = "u")
     {
+      global $phpgw, $phpgw_info;
+      $this->db = $phpgw->db;
+      if ($account_id == ""){ 
+        $this->account_id = $phpgw_info["user"]["account_id"]; 
+      }elseif (is_long($account_id)) {
+        $this->account_id = $account_id;
+      } elseif(is_string($account_id)) {
+        $this->account_id = $phpgw->accounts->username2userid($account_id);
+      }
+      $this->account_type = $account_type;
+//echo "Account ID (Initializing applications) = ".$this->account_id."<br>\n";
     }
 
-    function users_enabled_apps()
+    function enabled_apps()
     {
-       global $phpgw, $phpgw_info;
+      global $phpgw, $phpgw_info;
+      if (gettype($phpgw_info["apps"]) != "array") {
+        $this->read_installed_apps();
+      }
+      while (list($app) = each($phpgw_info["apps"])) {
+        if ($this->account_type == "g") {
+          $check = $phpgw->acl->check_specific("run",1,$app, $this->account_id, "g");
+        }else{
+          $check = $phpgw->acl->check("run",1,$app, $this->account_id);
+        }
+        if ($check) {
+          $this->account_apps[$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
+        } 
+        return $this->account_apps;
+      }
+      return False;
+    }
 
-       if (gettype($phpgw_info["apps"]) != "array") {
-          $this->read_installed_apps();
-       }
-       while (list($app) = each($phpgw_info["apps"])) {
-          if ($phpgw->acl->check("run",1,$app)) {
-             $phpgw_info["user"]["apps"][$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
-          } 
-       }
+    function app_perms()
+    {
+      global $phpgw, $phpgw_info;
+      if (count($this->account_apps) == 0) {
+        $this->enabled_apps();
+      }
+      while (list ($key) = each ($this->account_apps)) {
+          $app[] = $this->account_apps[$key]["name"];
+      }
+      return $app;
+    }
+
+    function read_account_specific() {
+      global $phpgw, $phpgw_info;
+      if (gettype($phpgw_info["apps"]) != "array") {
+        $this->read_installed_apps();
+      }
+      while (list($app) = each($phpgw_info["apps"])) {
+        if ($phpgw->acl->check_specific("run",1,$app, $this->account_id, $this->account_type)) {
+          $this->account_apps[$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
+        } 
+        return $this->account_apps;
+      }
+      return False;
+    }
+
+    function add_app($apps) {
+      if(gettype($appname) == "array") {
+        while($app = each($appname)) {
+          $this->account_apps[] = $app[0];
+        }
+      } elseif(gettype($appname) == "string") {
+          $this->account_apps[] = $appname;
+      }
+      reset($this->account_apps);
+      return $this->account_apps;
+    }
+
+    function delete_app($appname) {
+      unset($this->account_apps[$appname]);
+      reset($this->account_apps);
+      return $this->account_apps;
+    }
+    
+    function save_apps(){
+      global $phpgw, $phpgw_info;
+      $phpgw->acl->delete("%", "run", $this->account_id, $this->account_type);
+      reset($this->account_apps[$group_id]);
+      while($app = each($this->account_apps)) {
+        $phpgw->acl->add($app["name"],'run',$this->account_id,$this->account_type,1);
+      }
+      reset($this->account_apps);
+      return $this->account_apps;
     }
 
     function read_installed_apps(){
       global $phpgw, $phpgw_info;
-      $phpgw->db->query("select * from applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
-      if($phpgw->db->num_rows()) {
-        while ($phpgw->db->next_record()) {
-//          echo "<br>TEST: " . $phpgw->db->f("app_order") . " - " . $phpgw->db->f("app_name");
-          $name = $phpgw->db->f("app_name");
-          $title  = $phpgw->db->f("app_title");
-          $status = $phpgw->db->f("app_enabled");
+      $this->db->query("select * from applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
+      if($this->db->num_rows()) {
+        while ($this->db->next_record()) {
+          $name = $this->db->f("app_name");
+          $title  = $this->db->f("app_title");
+          $status = $this->db->f("app_enabled");
           $phpgw_info["apps"][$name] = array("title" => $title, "enabled" => True, "status" => $status);
         }
       }
-    }
-
-    function read_user_apps($lid ="") {
-      global $phpgw, $phpgw_info;
-      if ($lid == ""){$lid = $phpgw_info["user"]["account_id"];}
-      $owner_found = False;
-      if(gettype($lid) == "string" && $lid == $phpgw_info["user"]["user_id"]) {
-        $owner_id = $phpgw_info["user"]["account_id"];
-        $owner_found = True;
-      }
-      if($owner_found == False && gettype($lid) == "integer") {
-        $owner_id = $lid;
-        $owner_found = True;
-      } elseif($owner_found == False && gettype($lid) == "string") {
-        $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='".$lid."'",__LINE__,__FILE__);
-        if($phpgw->db->num_rows()) {
-          $phpgw->db->next_record();
-          $owner_id = $phpgw->db->f("account_id");
-          $owner_found = True;
-        }
-      }
-      if($owner_found) {
-        $acl_apps = $phpgw->acl->get_app_list_for_id('run', 1, 'u', $owner_id);
-        if ($acl_apps != False){
-          reset ($acl_apps);
-          while (list(,$value) = each($acl_apps)){
-            $apps[] = $value;
-          }
-        }
-        if(gettype($phpgw_info["apps"]) != "array") {
-          $this->read_installed_apps();
-        }
-        if(count($apps)) {
-          for ($i=0; $i<count($apps); $i++) {
-            if ($phpgw_info["apps"][$apps[$i]]["enabled"] == True) {
-              $this->user_apps[$owner_id][] = $apps[$i];
-            }
-          }
-        }
-        return $this->user_apps[$owner_id];
-      }
-      return False;
-    }
-
-    function read_group_apps($group_id) {
-      global $phpgw, $phpgw_info;
-      $group_found = False;
-      if(gettype($group_id) == "integer") {
-        $group_found = True;
-      } elseif(gettype($group_id) == "string") {
-        $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='".$group_id."'",__LINE__,__FILE__);
-        if($phpgw->db->num_rows()) {
-          settype($group_id,"integer");
-          $phpgw->db->next_record();
-          $group_id = $phpgw->db->f("group_id");
-          $group_found = True;
-        }           
-      }
-
-      if($group_found) {
-        $acl_apps = $phpgw->acl->get_app_list_for_id('run', 1, 'g', $group_id);
-        if ($acl_apps != False){
-          reset ($acl_apps);
-          while (list(,$value) = each($acl_apps)){
-            $apps[] = $value;
-          }
-        }
-        if(gettype($phpgw_info["apps"]) != "array") {
-          $this->read_installed_apps();
-        }
-        if(count($apps)) {
-          for ($i=0;$i<count($apps);$i++) {
-            if ($phpgw_info["apps"][$apps[$i]]["enabled"] == True) {
-              $this->group_apps[$group_id][] = $apps[$i];
-            }
-          }
-        }
-        return $this->group_apps[$group_id];
-      }
-      return False;
     }
 
     function is_system_enabled($appname){
@@ -148,62 +140,6 @@
         return True;
       }else{
         return False;
-      }
-    }
-
-    function add_group_app($apps, $group_id) {
-      if(gettype($appname) == "array") {
-        while($app = each($appname)) {
-          $this->group_apps[$group_id][] = $app[0];
-        }
-      } elseif(gettype($appname) == "string") {
-          $this->group_apps[$group_id][] = $appname;
-      }
-    }
-
-    function add_user_app($appname, $user_id = "") {
-      global $phpgw, $phpgw_info;
-      if ($user_id == ""){$user_id = $phpgw_info["user"]["account_id"];}
-      if(gettype($appname) == "array") {
-        while($app = each($appname)) {
-          $this->user_apps[$user_id][] = $app[0];
-        }
-      } elseif(gettype($appname) == "string") {
-          $this->user_apps[$user_id][] = $appname;
-      }
-    }
-
-    function delete_group_app($appname, $group_id) {
-      unset($this->group_apps[$group_id][$appname]);
-    }
-
-    function delete_user_app($appname, $user_id = ""){
-      global $phpgw, $phpgw_info;
-      if ($user_id == ""){$user_id = $phpgw_info["user"]["account_id"];}
-      unset($this->group_apps[$user_id][$appname]);
-    }
-    
-    function save_group_apps($group_id){
-      global $phpgw, $phpgw_info;
-
-      if($group_id) {
-        $phpgw->acl->delete("%", "run", "g", $group_id);
-        reset($this->group_apps[$group_id]);
-        while($app = each($this->group_apps[$group_id])) {
-          $phpgw->acl->add($app[1],'run',$group_id,'g',1);
-        }
-      }
-    }
-
-    function save_user_apps($user_id = ""){
-      global $phpgw, $phpgw_info;
-      if ($user_id == ""){$user_id = $phpgw_info["user"]["account_id"];}
-      if($user_id) {
-        $phpgw->acl->delete("%", "run", "u", $user_id);
-        reset($this->user_apps);
-        while($app = each($this->user_apps[$user_id])) {
-          $phpgw->acl->add($app[1],'run',$user_id,'u',1);
-        }
       }
     }
   }

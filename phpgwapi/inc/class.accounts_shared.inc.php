@@ -26,20 +26,12 @@
   class accounts extends accounts_
   {
   
-    function accounts_const($line,$file)
+    function accounts_const()
     {
        global $phpgw, $phpgw_info;
-       
-       //echo "accounts_const called<br>line: $line<br>$file";
-
-       $phpgw->accounts->phpgw_fillarray();
-       if(!$phpgw->preferences->account_id) {
-         $phpgw->preferences = CreateObject('phpgwapi.preferences',$phpgw_info["user"]["account_id"]);
-       }
-       $phpgw_info["user"]["preferences"] = $phpgw->preferences->get_preferences();
+      
+       $phpgw->accounts->fill_user_array();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
-       $apps = CreateObject('phpgwapi.applications');
-       $phpgw_info["user"]["apps"] = $apps->users_enabled_apps();
     }
   
     // use this if you make any changes to phpgw_info, including preferences, config table changes, etc
@@ -55,7 +47,7 @@
        while($db->next_record()) {
          $phpgw_info["server"][$db->f("config_name")] = $db->f("config_value");
        }
-       $phpgw->accounts->accounts_const(__LINE__,__FILE__);
+       $phpgw->accounts->accounts_const();
 
        $phpgw_info_temp["user"]        = $phpgw_info["user"];
        $phpgw_info_temp["apps"]        = $phpgw_info["apps"];

@@ -27,42 +27,46 @@
   class preferences
   {
     var $account_id;
-    var $preference;
+    var $preference = Array();
+    var $db;
 
-    function preferences($account_id = 0)
+    function preferences($account_id = "")
     {
-      global $phpgw;
-//      echo "Account ID (Initializing) = ".$account_id."<br>\n";
-
-  
-      $db2 = $phpgw->db;
-      $load_pref = True;
-      if (is_long($account_id) && $account_id) {
+//echo "Account_id = ".$account_id."<br>\n";
+      global $phpgw, $phpgw_info;
+      $this->db = $phpgw->db;
+      if ($account_id == ""){ 
+        $this->account_id = $phpgw_info["user"]["account_id"]; 
+      }elseif (is_long($account_id)) {
         $this->account_id = $account_id;
       } elseif(is_string($account_id)) {
-        $db2->query("SELECT account_id FROM accounts WHERE account_lid='".$account_id."'",__LINE__,__FILE__);
-        if($db2->num_rows()) {
-          $db2->next_record();
-          $this->account_id = $db2->f("account_id");
-        } else {
-          $load_pref = False;
-        }
-      } else {
-        $load_pref = False;
+        $this->account_id = $phpgw->accounts->username2userid($account_id);
       }
+//echo "Account ID (Initializing prefs) = ".$this->account_id."<br>\n";
+    }
+    
+    function get_saved_preferences()
+    {
+      global $phpgw;
+      $this->db->lock("preferences");
+      $this->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
+      $this->db->next_record();
+      $pref_info = $this->db->f("preference_value");
+      $this->preference = Array();
+      $this->preference = unserialize($pref_info);
+      $this->db->unlock();
+//echo "Account ID (get_saved_pref) = ".$this->account_id."<br>\n";
+//echo "Preferences = ".$this->preference."<br>\n";
+      return $this->preference;
+    }
 
-//echo "Load Pref = $load_pref<br>\n";
-//echo "Account ID (After Initializing) = ".$this->account_id."<br>\n";
 
-      if ($load_pref) {
-        $db2->lock("preferences");
-        $db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
-        $db2->next_record();
-        $pref_info = $db2->f("preference_value");
-        $this->preference = unserialize($pref_info);
-//	echo "Preferences = ".$this->get_preferences()."<br>\n";
-        $db2->unlock();
-      }
+    function get_preferences()
+    {
+      global $phpgw;
+//echo "Account ID (get_pref) = ".$this->account_id."<br>\n";
+//echo "Preferences = ".$this->preference."<br>\n";
+      return $this->preference;
     }
 
     // This should be called when you are done makeing changes to the preferences
@@ -72,11 +76,8 @@
 
       //echo "<br>commit called<br>Line: $line<br>File: $file".$phpgw_info["user"]["account_id"]."<br>";
       if ($this->account_id) {
-        $db = $phpgw->db;
-
-        $db->lock("preferences");
-
-        $db->query("delete from preferences where preference_owner=" . $this->account_id,__LINE__,__FILE__);
+        $this->db->lock("preferences");
+        $this->db->query("delete from preferences where preference_owner=" . $this->account_id,__LINE__,__FILE__);
 
         if ($PHP_VERSION < "4.0.0") {
           $pref_info = addslashes(serialize($this->preference));
@@ -84,14 +85,13 @@
           $pref_info = serialize($this->preference);
         }
 
-        $db->query("insert into preferences (preference_owner,preference_value) values ("
+        $this->db->query("insert into preferences (preference_owner,preference_value) values ("
                   . $this->account_id . ",'" . $pref_info . "')",__LINE__,__FILE__);
 
-        $db->unlock();
-
+        $this->db->unlock();
 
         if ($phpgw_info["user"]["account_id"] == $this->account_id) {
-          $phpgw->preferences->preference = $this->get_preferences();
+          $this->get_saved_preferences();
           $phpgw->accounts->sync(__LINE__,__FILE__);
         }
       }
@@ -125,9 +125,5 @@
        $this->preference["$app_name"] = array();
     }
 
-    function get_preferences()
-    {
-       return $this->preference;
-    }
   } //end of preferences class
 ?>
