@@ -68,9 +68,6 @@
 			reset($rows);
 			while(list($rno,$r)=each($rows))
 			{
-//				_debug_array($r['log_msg_date']);
-//				echo 'Convert: ' . $r['log_date'] . ' -&gt; ' . $GLOBALS['phpgw']->db->from_timestamp($r['log_msg_date']);
-
 				unset($r['acount_pwd']);	// remove the accounts_pwd
 				$r['log_date_e']['value']               = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['log_date']['value']));
 				$r['log_msg_date_e']['value']           = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['log_msg_date']['value']));
