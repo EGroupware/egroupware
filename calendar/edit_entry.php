@@ -125,11 +125,11 @@
 		$phpgw->calendar->event->priority = 2;
 		if($phpgw_info['user']['preferences']['calendar']['default_private'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['default_private'] == True)
 		{
-			$phpgw->calendar->event_set_class(False);
+			$phpgw->calendar->event_set_class($cal_stream,False);
 		}
 		else
 		{
-			$phpgw->calendar->event_set_class(True);
+			$phpgw->calendar->event_set_class($cal_stream,True);
 		}
 
 		$phpgw->calendar->event_set_recur_none($cal_stream);
