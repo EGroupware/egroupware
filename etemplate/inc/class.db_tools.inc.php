@@ -166,7 +166,7 @@
 				}
 				else // import
 				{
-					$oProc = CreateObject('setup.schema_proc','mysql');
+					$oProc = CreateObject('phpgwapi.schema_proc','mysql');
 					$oProc->m_odb = $GLOBALS['phpgw']->db;
 					$oProc->m_oTranslator->_GetColumns($oProc,$content['new_table_name'],$nul);
 
