@@ -12,27 +12,33 @@
   /* $Id$ */
 {
 
-  echo "<p>\n";
-  $imgfile = $phpgw->common->get_image_dir($appname)."/" . $appname .".gif";
-  if (file_exists($imgfile)) {
-    $imgpath = $phpgw->common->get_image_path($appname)."/" . $appname .".gif";
-  } else {
-    $imgfile = $phpgw->common->get_image_dir($appname)."/navbar.gif";
-    if (file_exists($imgfile)) {
-      $imgpath = $phpgw->common->get_image_path($appname)."/navbar.gif";
-    } else {
-      $imgpath = "";
-    }
-  }
+	echo "<p>\n";
+	$imgfile = $phpgw->common->get_image_dir($appname) . '/' . $appname . '.gif';
+	if (file_exists($imgfile))
+	{
+		$imgpath = $phpgw->common->get_image_path($appname) . '/' . $appname . '.gif';
+	}
+	else
+	{
+		$imgfile = $phpgw->common->get_image_dir($appname) . '/navbar.gif';
+		if (file_exists($imgfile))
+		{
+			$imgpath = $phpgw->common->get_image_path($appname) . '/navbar.gif';
+		}
+		else
+		{
+			$imgpath = '';
+		}
+	}
 
-  section_start(ucfirst($appname),$imgpath);
+	section_start(ucfirst($appname),$imgpath);
 
-  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/preferences.php");
-  echo "<a href=".$pg.">" . lang("Calendar preferences") . "</a><br>";
+	echo '<a href="' . $phpgw->link('/calendar/preferences.php') . '">' . lang('Calendar preferences')
+		. '</a><br>';
 
-  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/acl_preferences.php");
-  echo "<a href=".$pg.">" . lang("Grant Calendar Access") . "</a>";
+	echo '<a href="' . $phpgw->link('/calendar/acl_preferences.php') . '">'
+		. lang('Grant Calendar Access') . '</a>';
 
-  section_end(); 
+	section_end(); 
 }
 ?>

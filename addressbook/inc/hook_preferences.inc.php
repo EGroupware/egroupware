@@ -9,31 +9,32 @@
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
-  /* $ Id $ */
+
+  /* $Id$ */
 {
 	echo "<p>\n";
-	$imgfile = $phpgw->common->get_image_dir($appname)."/" . $appname .".gif";
+	$imgfile = $phpgw->common->get_image_dir($appname) . '/' . $appname . '.gif';
 	if (file_exists($imgfile)) {
-		$imgpath = $phpgw->common->get_image_path($appname)."/" . $appname .".gif";
+		$imgpath = $phpgw->common->get_image_path($appname) . '/' . $appname . '.gif';
 	} else {
-		$imgfile = $phpgw->common->get_image_dir($appname)."/navbar.gif";
+		$imgfile = $phpgw->common->get_image_dir($appname) . '/navbar.gif';
 		if (file_exists($imgfile)) {
-			$imgpath = $phpgw->common->get_image_path($appname)."/navbar.gif";
+			$imgpath = $phpgw->common->get_image_path($appname) . '/navbar.gif';
 		} else {
-			$imgpath = "";
+			$imgpath = '';
 		}
 	}
 
 	section_start(ucfirst($appname),$imgpath);
 
-	$pg=$phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/preferences.php");
-	echo "<a href=".$pg.">" . lang("Addressbook preferences") . "</a><br>";
+	echo '<a href="' . $phpgw->link('/addressbook/preferences.php') . '">'
+		. lang('Addressbook preferences') . '</a><br>';
 
-	$pg=$phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/fields.php");
-	echo "<a href=".$pg.">" . lang("Edit custom fields") . "</a><br>";
+	echo '<a href="' . $phpgw->link('/addressbook/fields.php') . '">'
+		. lang('Edit custom fields') . '</a><br>';
 
-	$pg=$phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/acl_preferences.php");
-	echo "<a href=".$pg.">" . lang("Grant Addressbook Access") . "</a>";
+	echo '<a href="' . $phpgw->link('/addressbook/acl_preferences.php') . '">'
+		. lang('Grant Addressbook Access') . '</a>';
 
 	section_end(); 
 }
