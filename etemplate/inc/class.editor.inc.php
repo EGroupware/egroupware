@@ -374,6 +374,10 @@
 
 		function show($post_vars='')
 		{
+			if ($this->debug)
+			{
+				echo "<p>etemplate.editor.show: content="; _debug_array($post_vars);
+			}
 			if (!$post_vars)
 			{
 				$post_vars = array();
@@ -406,7 +410,6 @@
 			if (!$msg && isset($post_vars['values']) && !isset($post_vars['vals']))
 			{
 				$cont = $post_vars['cont'];
-				$this->etemplate->process_show($cont);	// need to be done manually as name is set to $this->etemplate object
 				for ($r = 1; list($key,$val) = @each($cont); ++$r)
 				{
 					$vals["@$r"] = $key;
@@ -420,7 +423,7 @@
 			{
 				$show->data[$show->rows]['A']['name'] = $this->etemplate;
 				$vals = $post_vars['vals'];
-				$olds = $post_vars['olds']; //unserialize(stripslashes($post_vars['olds']));
+				$olds = $post_vars['olds'];
 
 				for ($r = 1; isset($vals["A$r"]); ++$r)
 				{
