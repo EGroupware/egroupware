@@ -1,10 +1,6 @@
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 access type	common	en	Access type
-account has been created	common	en	Account has been created
-account has been deleted	common	en	Account has been deleted
-account has been updated	common	en	Account has been updated
-account preferences	common	en	Account Preferences
 acl	common	en	ACL
 active	common	en	Active
 add	common	en	Add
@@ -41,6 +37,7 @@ december	common	en	December
 default category	common	en	Default Category
 delete	common	en	Delete
 description	common	en	Description
+disabled	common	en	Disabled
 done	common	en	Done
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 edit	common	en	Edit
@@ -49,6 +46,7 @@ edit categories	common	en	Edit Categories
 edit x category for	common	en	Edit %1 category for
 e-mail	common	en	E-Mail
 email	common	en	E-Mail
+enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
@@ -67,9 +65,6 @@ global public	common	en	Global Public
 grant access	common	en	Grant access
 group access	common	en	Group Access
 group	common	en	Group
-group has been added	common	en	Group has been added
-group has been deleted	common	en	Group has been deleted
-group has been updated	common	en	Group has been updated
 group public	common	en	Group Public
 groups	common	en	Groups
 help	common	en	Help
@@ -82,7 +77,6 @@ july	common	en	July
 june	common	en	June
 last name	common	en	Last name
 lastname	common	en	Lastname
-last page	common	en	last page
 login	common	en	Login
 logout	common	en	Logout
 low	common	en	Low
@@ -108,18 +102,15 @@ november	common	en	November
 october	common	en	October
 ok	common	en	OK
 only yours	common	en	only yours
-on *nix systems please type: x	common	en	On *nix systems please type: %1
 other	common	en	Other
 overview	common	en	Overview
 owner	common	en	Owner
 parent category	common	en	Parent Category
 password	common	en	Password
 password has been updated	common	en	Password has been updated
-permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
 please enter a name	common	en	Please enter a name !
 please set your preferences for this application	common	en	Please set your preferences for this application
-please x by hand	common	en	Please %1 by hand
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 prefer	common	en	Prefer
 preferences	common	en	Preferences
@@ -145,14 +136,12 @@ status	common	en	Status
 subject	common	en	Subject
 submit	common	en	Submit
 sunday	common	en	Sunday
-the two passwords are not the same	common	en	The two passwords are not the same
 this name has been used already	common	en	This name has been used already !
 thursday	common	en	Thursday
 time	common	en	Time
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
-to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 total	common	en	Total
 tuesday	common	en	Tuesday
 url	common	en	URL
@@ -163,23 +152,17 @@ users	common	en	users
 view	common	en	View
 wednesday	common	en	Wednesday
 which groups	common	en	Which groups
+written by:	common	en	Written by:
 yes	common	en	Yes
 you are required to change your password during your first login	common	en	You are required to change your password during your first login
-you have 1 new message!	common	en	You have 1 new message!
-you have messages!	common	en	You have messages!
-you have no new messages	common	en	You have no new messages
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
-you have x new messages!	common	en	You have %1 new messages!
 you must enter a password	common	en	You must enter a password
-your message has been sent	common	en	Your message has been sent
 your search returned 1 match	common	en	your search returned 1 match
 your search returned x matchs	common	en	your search returned %1 matches
 your settings have been updated	common	en	Your settings have been Updated
 bad login or password	login	en	Bad login or password
-phpgroupware login	login	en	phpGroupWare login
 sorry, your login has expired	login	en	Sorry, your login has expired
-use cookies	login	en	use cookies
 username	login	en	Username
 you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for
 you have been successfully logged out	login	en	You have been successfully logged out

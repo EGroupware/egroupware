@@ -1,10 +1,6 @@
 access	common	de	Zugriff
 access not permitted	common	de	Zugriff verweigert
 access type	common	de	Zugriffstyp
-account has been created	common	de	Konto wurde erstellt
-account has been deleted	common	de	Konto wurde gelöscht
-account has been updated	common	de	Konto wurde aktualisiert
-account preferences 	common	de	Einstellungen der Benutzerkonten
 acl	common	de	ACL
 active	common	de	Aktiv
 add	common	de	Hinzufügen
@@ -40,6 +36,7 @@ december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 delete	common	de	Löschen
 description	common	de	Beschreibung
+disabled	common	de	Deaktiviert
 do you also want to delete all subcategories ?	common	de Wollen Sie auch alle Unterkategorien l&ouml;schen ?
 done	common	de	Fertig
 e-mail	common	de	E-Mail
@@ -48,6 +45,7 @@ edit category	common	de	Kategorie editieren
 edit categories	common	de	Kategorien editieren
 edit x category for	common	de	%1 Kategorie editieren f&uuml;r
 email	common	de	E-Mail
+enabled	common	de	Verf&uuml;gbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
 entry has been deleted sucessfully	common	de	Eintrag erfolgreich gelöscht
@@ -65,9 +63,6 @@ global public	common	de	Global Public
 grant access	common	de	Zugriff gew&auml;hren
 group	common	de	Gruppe
 group access 	common	de	Gruppenzugriff
-group has been added	common	de	Gruppe hinzugefügt
-group has been deleted	common	de	Gruppe gelöscht
-group has been updated	common	de	Gruppe aktualisiert
 group public	common	de	Group Public
 groups	common	de	Gruppen
 help	common	de	Hilfe
@@ -79,7 +74,6 @@ july	common	de	Juli
 june	common	de	Juni
 last name	common	de	Name
 lastname	common	de	Name
-last page	common	de	letzte Seite
 login	common	de	Login
 logout	common	de	Logout
 low	common	de	Niedrig
@@ -104,17 +98,14 @@ normal	common	de	Normal
 november	common	de	November
 october	common	de	Oktober
 ok	common	de	OK
-on *nix systems please type: x 	common	de	Auf *nix Systemen  bitte eingeben: %1
 only yours	common	de	nur eigene
 overview	common	de	&Uuml;berblick
 owner	common	de	Besitzer
 parent category	common	de	&Uuml;bergeordnete Kategorie
 password	common	de	Passwort
 password has been updated	common	de	Passwort wurde aktualisiert
-permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Applikation!
-please x by hand	common	de	Bitte manuell %1
 powered by phpgroupware version x	common	de	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 preferences	common	de	Einstellungen
 print	common	de	Drucken
@@ -139,14 +130,12 @@ status	common	de	Status
 subject	common	de	Betreff
 submit	common	de	Absenden
 sunday	common	de	Sonntag
-the two passwords are not the same	common	de	Die Eingaben stimmen nicht überein
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
 thursday	common	de	Donnerstag
 time	common	de	Zeit
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonen Differenz
 title	common	de	Titel
-to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler für die Zukunft zu beheben, korrigieren Sie die Einstellungen
 total	common	de	Total
 tuesday	common	de	Dienstag
 update	common	de	Aktualisieren
@@ -158,21 +147,15 @@ users	common	de	Benutzer
 view	common	de	Anzeigen
 wednesday	common	de	Mittwoch
 which groups	common	de	Welche Gruppen
+written by:	common	de	Geschrieben von:
 yes	common	de	ja
 you are required to change your password during your first login	common	de	Das Passwort muß beim ersten Login geändert werden!
-you have 1 new message!	common	de	Sie haben eine neue Nachricht!
-you have messages!	common	de	Sie haben Nachrichten!
-you have no new messages	common	de	Keine neuen Nachrichten
 you have selected an invalid date	common	en	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
 you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
-you have x new messages!	common	de	Sie haben %1 neue Nachrichten!
-your message has been sent	common	de	Ihre Nachricht wurde versandt
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your search returned x matchs	common	de	Ihre Suche ergab %1 Treffer
 your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 bad login or password	login	de	Bad login or password
-phpgroupware login	login	de	phpGroupWare Login
 sorry, your login has expired	login	de	Sorry - Login abgelaufen
-use cookies	login	de	Cookies benutzen
 you have been successfully logged out	login	de	Abmeldung erfolgreich
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.

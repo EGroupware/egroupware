@@ -1,4 +1,8 @@
 account active	admin	en	Account active
+account has been created	common	en	Account has been created
+account has been deleted	common	en	Account has been deleted
+account has been updated	common	en	Account has been updated
+account preferences admin	en	Account Preferences
 account permissions	admin	en	Account permissions
 action	admin	en	Action
 add global category	admin	en	Add global category
@@ -16,20 +20,20 @@ are you sure you want to delete this group ?	admin	en	Are you sure you want to d
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
 change main screen message	admin	en	Change main screen message
 create group	admin	en	Create Group
-disabled	admin	en	Disabled
 display	admin	en	Display
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global subcategories ?
 edit application	admin	en	Edit application
 edit global category	admin	en	Edit global category
 edit group	admin	en	Edit Group
 edit user account	admin	en	Edit user account
-enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 global categories	admin	en	Global Categories
 group name	admin	en	Group Name
+group has been added	common	en	Group has been added
+group has been deleted	common	en	Group has been deleted
+group has been updated	common	en	Group has been updated
 hide php information	admin	en	hide php information
 home directory	admin	en	Home directory
-id	admin	en	ID
 idle	admin	en	idle
 installed applications	admin	en	Installed applications
 ip	admin	en	IP
@@ -64,6 +68,7 @@ sorry, the follow users are still a member of the group x	admin	en	Sorry, the fo
 submit changes	admin	en	Submit Changes
 that loginid has already been taken	admin	en	That loginid has already been taken
 the login and password can not be the same	admin	en	The login and password can not be the same
+the two passwords are not the same	admin	en	The two passwords are not the same
 they must be removed before you can continue	admin	en	They must be removed before you can continue
 This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category	admin	en	This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category !
 total records	admin	en	Total records

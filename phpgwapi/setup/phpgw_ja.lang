@@ -68,6 +68,7 @@ fields	common	ja	項目
 files	common	ja	ファイル
 filter	common	ja	選択
 first name	common	ja	姓
+firstname	common	ja	姓
 folders	common	ja	フォルダ
 forward	common	ja	転送
 friday	common	ja	金曜日
@@ -96,6 +97,7 @@ july	common	ja	７月
 june	common	ja	６月
 large	common	ja	大
 last name	common	ja	名
+lastname	common	ja	名
 last page	common	ja	last page
 login	common	ja	ログイン
 logout	common	ja	ログアウト

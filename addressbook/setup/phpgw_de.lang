@@ -52,6 +52,8 @@ line 2	addressbook	de	Zeile 2
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 mobile	addressbook	de	Mobil
+mobile phone	addressbook	de	Mobil-Telefon
+other phone	addressbook	de	Anderes Telefon
 modem phone	addressbook	de	Modem
 other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.

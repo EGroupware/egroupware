@@ -30,6 +30,7 @@ custom fields	addressbook	en	Custom Fields
 department	common	en	Department
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
+extra	addressbook	en	Extra
 fax	common	en	Fax
 fields to show in address list	addressbook	en	Fields to show in address list
 full name	addressbook	en	Full Name
@@ -53,6 +54,9 @@ line 2	addressbook	en	Line 2
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
+mobile phone	addressbook	en	Mobile Phone
+modem phone	addressbook	en	Modem Phone
+other phone	addressbook	en	Other Phone
 <b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 other number	addressbook	en	Other Number
 pager	common	en	Pager
