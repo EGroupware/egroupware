@@ -688,8 +688,15 @@
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
 						$onclick = ($cell['onchange'] == 1 || $img) ? "return submitit(document.eTemplate,'$form_name');" : $cell['onchange'].'; return false;';
-						$html .= '<a href="" onClick="'.$onclick.'" '.$options.'>' .
-							($img ? $this->html->image($app,$img,$title,'border="0"') : $title) . '</a>';
+						if (!$this->html->netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
+						{
+							$html .= $this->html->progressbar($percent,$title,'onclick="'.$onclick.'" '.$options);
+						}
+						else
+						{
+							$html .= '<a href="" onClick="'.$onclick.'" '.$options.'>' .
+								($img ? $this->html->image($app,$img,$title,'border="0"') : $title) . '</a>';
+						}
 					}
 					else
 					{
