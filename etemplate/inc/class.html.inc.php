@@ -264,6 +264,10 @@ class html
 		{
 			$path = $name;		// name may already contain absolut path
 		}
+		if (!@is_readable($GLOBALS['DOCUMENT_ROOT'] . $path))
+		{
+			return $title;
+		}
 		if ($title)
 		{
 			$options .= " $this->prefered_img_title=\"$title\"";
