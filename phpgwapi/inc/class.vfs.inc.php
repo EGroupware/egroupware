@@ -320,7 +320,7 @@
       global $phpgw_info;
       $path = $this->getabsolutepath($dir);
       umask(000);
-      if (!mkdir($path, 01707)) {
+      if (!mkdir($path, 01770)) {
         return False;
       }else{
         return True;
@@ -340,7 +340,7 @@
         if (!$this->mkdir ($path)) {
           $msg = "To correct this error you will need to properly set the "
 	          . "permissions to the files/users directory.<br> "
-            ."On *nix systems please type: chmod 707 ";
+            ."On *nix systems please type: chmod 770 ";
 
           if ($type = "user"){
 	          $msg .= $phpgw_info["server"]["files_dir"] . "/users/";

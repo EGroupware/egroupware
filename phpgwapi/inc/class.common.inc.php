@@ -1081,7 +1081,7 @@
  		             .  ',<br>' . lang('Please x by hand',lang('delete')) . '<br><br>'
 		             .  lang('To correct this error for the future you will need to properly set the')
 		             .  '<br>' . lang('permissions to the files/users directory')
-	          	   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+	          	   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
 			        . $phpgw_info['server']['files_dir'] . '/users/'); 
        		break;
       case 35:	$s .= lang('Account has been updated') . '<p>'
@@ -1091,7 +1091,7 @@
 		      lang('rename')) . '<br><br>'
 		   .  lang('To correct this error for the future you will need to properly set the')
 		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
 			. $phpgw_info['server']['files_dir'] . '/users/'); 
 		break;
       case 36:	$s .= lang('Account has been created') . '<p>'
@@ -1101,7 +1101,7 @@
 		      lang('create')) . '<br><br>'
 		   .  lang('To correct this error for the future you will need to properly set the')
 		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
 			. $phpgw_info['server']['files_dir'] . '/users/'); 
 		break;
       case 37:	$s .= lang('Group has been added') . '<p>'
@@ -1110,7 +1110,7 @@
 		      lang('create')) . '<br><br>'
 		   .  lang('To correct this error for the future you will need to properly set the')
 		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
 			. $phpgw_info['server']['files_dir'] . '/groups/'); 
 		break;
       case 38:	$s .= lang('Group has been deleted') . '<p>'
@@ -1119,7 +1119,7 @@
 		      lang('delete')) . '<br><br>'
 		   .  lang('To correct this error for the future you will need to properly set the')
 		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
 			. $phpgw_info['server']['files_dir'] . '/groups/'); 
 		break;
       case 39:	$s .= lang('Group has been updated') . '<p>'
@@ -1128,7 +1128,7 @@
 		      lang('rename')) . '<br><br>'
 		   .  lang('To correct this error for the future you will need to properly set the')
 		   .  '<br>' . lang('permissions to the files/users directory')
-		   .  '<br>' . lang('On *nix systems please type: x','chmod 707 '
+		   .  '<br>' . lang('On *nix systems please type: x','chmod 770 '
 			. $phpgw_info['server']['files_dir'] . '/groups/'); 
 		break;
       case 40: $s .= lang('You have not entered a\nBrief Description').'.';
