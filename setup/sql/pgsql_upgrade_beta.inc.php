@@ -1071,7 +1071,8 @@
 		global $phpgw_info, $phpgw_setup;
 
 		$phpgw_setup->db->query("create table phpgw_temp as select acl_appname,acl_location,acl_account,"
-                            . "acl_right from phpgw_acl",__LINE__,__FILE__);
+                            . "acl_rights from phpgw_acl",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_acl",__LINE__,__FILE__);
 
 		$sql = "CREATE TABLE phpgw_acl (
 			acl_appname       varchar(50),

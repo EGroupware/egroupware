@@ -40,19 +40,17 @@
   $phpgw_setup->db->query("drop sequence news_msg_con_seq");
   $phpgw_setup->db->query("DROP TABLE news_msg");
   $phpgw_setup->db->query("DROP TABLE languages");
-  $phpgw_setup->db->query("drop sequence categories_cat_id_seq");
-  $phpgw_setup->db->query("DROP TABLE categories");
+  //$phpgw_setup->db->query("drop sequence categories_cat_id_seq");
+  //$phpgw_setup->db->query("DROP TABLE categories");
   $phpgw_setup->db->query("DROP sequence notes_note_id_seq");
   $phpgw_setup->db->query("DROP TABLE notes");
 
-  $phpgw_setup->db->query("DROP TABLE config");
-  $phpgw_setup->db->query("DROP TABLE applications");
-  $phpgw_setup->db->query("DROP TABLE config");
-  $phpgw_setup->db->query("DROP TABLE applications");
-  $phpgw_setup->db->query("drop sequence groups_group_id_seq");
-  $phpgw_setup->db->query("DROP TABLE groups");
-  $phpgw_setup->db->query("drop sequence accounts_account_id_seq");
-  $phpgw_setup->db->query("DROP TABLE accounts");
-  $phpgw_setup->db->query("DROP TABLE preferences");
+  //$phpgw_setup->db->query("DROP TABLE config");
+  //$phpgw_setup->db->query("DROP TABLE applications");
+  //$phpgw_setup->db->query("drop sequence groups_group_id_seq");
+  //$phpgw_setup->db->query("DROP TABLE groups");
+  //$phpgw_setup->db->query("drop sequence accounts_account_id_seq");
+  //$phpgw_setup->db->query("DROP TABLE accounts");
+  //$phpgw_setup->db->query("DROP TABLE preferences");
 
 ?>
