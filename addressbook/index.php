@@ -28,6 +28,7 @@
 
 	$this = CreateObject("phpgwapi.contacts");
 
+	// create column list and the top row of the table based on user prefs
 	while ($column = each($this->stock_contact_fields)) {
 		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) &&
 			$phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) {
