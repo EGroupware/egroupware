@@ -8,9 +8,9 @@
 
   <tr bgcolor="{th_bg}">
    <td> {sort_title} </td>
-   <td> {lang_edit} </td>
-   <td> {lang_delete} </td>
-   <td> {lang_enabled} </td>
+   <td>{lang_edit}</td>
+   <td>{lang_delete}</td>
+   <td>{lang_enabled}</td>
   </tr>
 
   {rows}
