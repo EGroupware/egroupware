@@ -13,7 +13,7 @@
   /* $Id$ */
 
   $phpgw_info["flags"] = array("disable_template_class" => True, "login" => True, "currentapp" => "login", "noheader"  => True);
-  include("header.inc.php");
+  include("./header.inc.php");
 /*
   if ($code != 10 && $phpgw_info["server"]["usecookies"] == False) {
     Setcookie("sessionid");
@@ -81,14 +81,14 @@
   
   if (isset($submit) && $submit) {
     if (getenv(REQUEST_METHOD) != "POST") {
-       Header("Location: ".$phpgw->link("","code=5"));
+       $phpgw->redirect($phpgw->link("","code=5"));
     }
 
     $sessionid = $phpgw->session->create($login,$passwd);
     if (!isset($sessionid) || !$sessionid) {
-       Header("Location: ".$phpgw_info["server"]["webserver_url"]."/login.php?cd=5");
+       $phpgw->redirect($phpgw_info["server"]["webserver_url"]."/login.php?cd=5");
     } else {
-       Header("Location: ".$phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
+       $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
     }
 
   } else {

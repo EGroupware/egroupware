@@ -26,8 +26,8 @@
 
   if ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
       && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]]) {
-     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
-							  . $phpgw_info["user"]["preferences"]["common"]["default_app"]));
+     $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
+		  . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/"));
      exit;
   }
   $phpgw->common->phpgw_header();
