@@ -799,7 +799,7 @@
       $ver();
       echo "<table>";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from $value to $phpgw_info["setup"]["currentver"]["phpgwapi"] is completed.</td>\n";
+      echo "    <td>Upgrade from ".$value." to ".$phpgw_info["setup"]["currentver"]["phpgwapi"]." is completed.</td>\n";
       echo "  </tr>\n";
       echo "</table>";
       if ($tableschanged == True){$tablechanges = True;}
