@@ -1,7 +1,7 @@
 (for weekly)	calendar	en	(for Weekly)
 1 match found	calendar	en	1 match found
 1 message has been deleted	email	en	1 message has been deleted
-a	calendar	en	
+a	calendar	en	a
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 access type	common	en	Access type
@@ -15,13 +15,13 @@ acl	common	en	ACL
 action	admin	en	Action
 active	admin	en	Active
 add	common	en	Add
-add a note for          notes   en      Add a note for
+add a note for	notes	en	Add a note for
 add a single phrase	transy	en	Add a single phrase
 add new account	admin	en	Add new account
 add new application	admin	en	Add new application
 add new phrase	transy	en	Add new phrase
 add new ticket	tts	en	Add new ticket
-add note    notes       en      Add note 
+add note	notes	en	Add note 
 add ticket 	tts	en	Add ticket
 add to addressbook	email	en	Add to addressbook
 address book	common	en	Address Book
@@ -51,11 +51,11 @@ are you sure you want to delete this entry	todo	en	Are you sure you want to dele
 are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
 are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
 are you sure you want to delete this news site ?	admin	en	Are you sure you want to delete this news site ?
-are you sure you want to delete this note ?     notes   en      Are you sure you want to delete this note ?
+are you sure you want to delete this note ?	notes	en	Are you sure you want to delete this note ?
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
 are you sure\nyou want to\ndelete this entry ?	calendar	en	Are you sure\nyou want to\ndelete this entry ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this entry ?\n\nThis will delete\nthis entry for all users.
-arial   notes   en     Arial
+arial	notes	en	Arial
 august	common	en	August
 author	nntp	en	Author
 available groups	nntp	en	Available Groups
@@ -91,8 +91,8 @@ change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
 charset	common	en	iso-8859-1
 chat	common	en	Chat
-choose a font     notes     en       Choose a font
-choose the font size        notes        en           Choose the font size
+choose a font	notes	en	Choose a font
+choose the font size	notes	en	Choose the font size
 city	addressbook	en	City
 clear	common	en	Clear
 clear form	common	en	Clear Form
@@ -106,7 +106,7 @@ contact	common	en	Contact
 copy	common	en	Copy
 copy_as	filemanager	en	Copy as
 country	addressbook	en	Country
-courier new       notes      en       Courier New
+courier new	notes	en	Courier New
 create	common	en	Create
 create group	admin	en	Create Group
 create lang.sql file	transy	en	Create lang.sql file
@@ -135,7 +135,7 @@ detail	tts	en	Detail
 disabled	admin	en	Disabled
 display	admin	en	Display
 display missing phrases in lang set	transy	en	Display missing phrases in lang set
-display note for      notes     en       Display note for
+display note for	notes	en	Display note for
 do_delete	filemanager	en	Delete
 domestic	common	en	Domestic
 done	common	en	Done
@@ -146,7 +146,7 @@ e-mail preferences	common	en	E-Mail preferences
 edit	common	en	Edit
 edit application	admin	en	Edit application
 edit group	admin	en	Edit Group
-edit note for    notes        en        Edit note for
+edit note for	notes	en	Edit note for
 edit user account	admin	en	Edit user account
 email	common	en	E-Mail
 email account name	email	en	Email Account Name
@@ -191,7 +191,7 @@ full name	addressbook	en	Full Name
 generate new lang.sql file	transy	en	Generate new lang.sql file
 generate printer-friendly version	calendar	en	Generate printer-friendly version
 geo	addressbook	en	GEO
-georgia    notes    en       Georgia
+georgia	notes	en	Georgia
 global public	common	en	Global Public
 global public and group public	calendar	en	Global Public and group public
 global public only	calendar	en	Global Public Only
@@ -212,7 +212,7 @@ headline preferences	common	en	Headline preferences
 headline sites	admin	en	Headline Sites
 headlines	common	en	Headlines
 help	common	en	Help
-helvetica       notes       en       Helvetica
+helvetica	notes	en	Helvetica
 high	common	en	High
 home	common	en	Home
 home city	addressbook	en	Home City
@@ -248,7 +248,7 @@ june	common	en	June
 kill	admin	en	Kill
 label	addressbook	en	Label
 language	preferences	en	Language
-large    notes       en        Large
+large	notes	en	Large
 last name	common	en	Last name
 last page	common	en	last page
 last time read	admin	en	Last Time Read
@@ -345,7 +345,7 @@ permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
-personalized notes for    notes    en       Personalized notes for  
+personalized notes for	notes	en	Personalized notes for  
 phpgroupware login	login	en	phpGroupWare login
 phrase in english	transy	en	Phrase in English
 phrase in new language	transy	en	Phrase in new language
@@ -422,7 +422,7 @@ showing x	common	en	showing %1
 showing x - x of x	common	en	showing %1 - %2 of %3
 site	admin	en	Site
 size	email	en	Size
-small    notes       en        Small
+small	notes	en	Small
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
 sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
@@ -443,7 +443,7 @@ suffix	addressbook	en	Suffix
 sun	calendar	en	Sun
 sunday	common	en	Sunday
 switch current folder to	email	en	Switch Current Folder To
-tahoma     notes       en       Tahoma
+tahoma	notes	en	Tahoma
 target language	transy	en	Target Language
 text only	preferences	en	Text only
 th	calendar	en	T
@@ -463,11 +463,11 @@ threads	nntp	en	Threads
 thu	calendar	en	Thu
 thursday	common	en	Thursday
 time	common	en	Time
-time created     notes         en       Time created
+time created	notes	en	Time created
 time format	preferences	en	Time format
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
-times new roman     notes      en      Times New Roman
+times new roman	notes	en	Times New Roman
 title	common	en	Title
 to	email	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
@@ -503,9 +503,9 @@ users	common	en	users
 usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
-verdana    notes       en      Verdana
-very large    notes    en      Very Large
-very small    notes    en      Very Small
+verdana	notes	en	Verdana
+very large	notes	en	Very Large
+very small	notes	en	Very Small
 video phone	addressbook	en	Video Phone
 view	common	en	View
 view access log	admin	en	View Access Log
