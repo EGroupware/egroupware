@@ -179,11 +179,11 @@ a.textSidebox
 
 #extraIcons
 {
-	position:absolute;
+/*	position:absolute;
 	z-index:13;
 	right:10px;
 	top:113px;
-	visibility:hidden;
+	visibility:hidden;*/
 	background-image:url(../images/alpha-white.png);
 	border-width:1px;
 	border-color:#7e7e7e;
