@@ -4,6 +4,7 @@ access not permitted	common	de	Zugriff verweigert
 account has been created	common	de	Benutzerkennung wurde angelegt
 account has been deleted	common	de	Benutzerkennung wurde gelöscht
 account has been updated	common	de	Benutzerkennung wurde aktualisiert
+account is expired	common	de	Benutzerkennung ist abgelaufen
 acl	common	de	ACL
 action	common	de	Aktion
 active	common	de	Aktiv
@@ -248,7 +249,7 @@ lebanon	common	de	LIBANON
 lesotho	common	de	LESOTHO
 liberia	common	de	LYBIEN
 libyan arab jamahiriya	common	de	LIBYAN ARAB JAMAHIRIYA
-license	about	de	Lizenz
+license	phpgwapi	de	Lizenz
 liechtenstein	common	de	LIECHTENSTEIN
 list	common	de	Liste
 lithuania	common	de	LITAUEN
@@ -265,7 +266,7 @@ madagascar	common	de	MADAGASCAR
 mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
-maintainer	about	de	Maintainer
+maintainer	phpgwapi	de	Maintainer
 malawi	common	de	MALAWI
 malaysia	common	de	MALAYSIA
 maldives	common	de	MALDIVEN

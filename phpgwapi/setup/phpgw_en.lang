@@ -4,6 +4,7 @@ access not permitted	common	en	Access not permitted
 account has been created	common	en	Account has been created
 account has been deleted	common	en	Account has been deleted
 account has been updated	common	en	Account has been updated
+account is expired	common	en	Account is expired
 acl	common	en	ACL
 action	common	en	Action
 active	common	en	Active
@@ -245,7 +246,7 @@ lebanon	common	en	LEBANON
 lesotho	common	en	LESOTHO
 liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
-license	about	en	License
+license	phpgwapi	en	License
 liechtenstein	common	en	LIECHTENSTEIN
 list	common	en	List
 lithuania	common	en	LITHUANIA
@@ -262,7 +263,7 @@ madagascar	common	en	MADAGASCAR
 mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
-maintainer	about	en	Maintainer
+maintainer	phpgwapi	en	Maintainer
 malawi	common	en	MALAWI
 malaysia	common	en	MALAYSIA
 maldives	common	en	MALDIVES
