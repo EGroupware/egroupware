@@ -20,38 +20,45 @@
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home",
                                "enable_network_class" => True, "enable_calendar_class" => True, 
                                "enable_todo_class" => True, "enable_addressbook_class" => True
-                               );
+                              );
   include("header.inc.php");
   // Note: I need to add checks to make sure these apps are installed.
 
   if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
      || ($phpgw_info["server"]["useframes"] == "always")) {
 
-     if (! $navbarframe && ! $framebody) {
-        $tpl = new Template($phpgw_info["server"]["template_dir"]);
-        $tpl->set_file(array("frames"       => "frames.tpl",
-                             "frame_body"   => "frames_body.tpl",
-                             "frame_navbar" => "frames_navbar.tpl"
-                            ));
+     if ($cd == "yes") {
 
-        $tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True"));
-        $tpl->set_var("body_link",$phpgw->link("index.php","framebody=True"));
-
-        if ($phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"] == "bottom") {
-           $tpl->set_var("frame_size","*,60");
-           $tpl->parse("frames_","frame_body",True);
-           $tpl->parse("frames_","frame_navbar",True);
-        } else {
-           $tpl->set_var("frame_size","60,*");        
-           $tpl->parse("frames_","frame_navbar",True);
-           $tpl->parse("frames_","frame_body",True);
+        if (! $navbarframe && ! $framebody) {
+           $tpl = new Template($phpgw_info["server"]["template_dir"]);
+           $tpl->set_file(array("frames"       => "frames.tpl",
+                                "frame_body"   => "frames_body.tpl",
+                                "frame_navbar" => "frames_navbar.tpl"
+                               ));
+   
+           $tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True&cd=yes"));
+           if ($forward) {
+              $tpl->set_var("body_link",$phpgw->link($phpgw_info["server"]["webserver_url"] . $forward));
+           } else {
+              $tpl->set_var("body_link",$phpgw->link("index.php","framebody=True&cd=yes"));
+           }
+   
+           if ($phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"] == "bottom") {
+              $tpl->set_var("frame_size","*,60");
+              $tpl->parse("frames_","frame_body",True);
+              $tpl->parse("frames_","frame_navbar",True);
+           } else {
+              $tpl->set_var("frame_size","60,*");        
+              $tpl->parse("frames_","frame_navbar",True);
+              $tpl->parse("frames_","frame_body",True);
+           }
+           $tpl->pparse("out","frames");
         }
-        $tpl->pparse("out","frames");
-     }
-     if ($navbarframe) {
-        $phpgw->common->phpgw_header();
-        $phpgw->common->navbar(True);
-     }
+        if ($navbarframe) {
+           $phpgw->common->phpgw_header();
+           $phpgw->common->navbar(True);
+        }
+    }
   } else {
      $phpgw->common->phpgw_header();
      $phpgw->common->navbar();  

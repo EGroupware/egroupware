@@ -16,14 +16,19 @@
 
   include("../header.inc.php");
   
-  if ($ntheme) {
-     $phpgw->preferences->change("common","theme",$ntheme);
+  if ($theme) {
+     $phpgw->preferences->change("common","theme");
      $phpgw->preferences->commit();
-     Header("location: " . $phpgw->link("changetheme.php"));
+     if ($phpgw_info["server"]["useframes"] != "never") {
+        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php","forward=/preferences/changetheme.php&cd=yes"));
+        Header("Window-Target: _top");
+     } else {
+        Header("Location: " . $phpgw->link("changetheme.php"));
+     }
      exit;
   }
 
-  $dh = opendir($phpgw_info["server"]["server_root"] . "/themes");
+  $dh = opendir($phpgw_info["server"]["api_dir"] . "/themes");
   while ($file = readdir($dh)) {
     if (eregi("\.theme$", $file)) {
        $installed_themes[] = substr($file,0,strpos($file,"."));
@@ -38,8 +43,13 @@
   echo "<br>";
 
   for ($i=0; $i<count($installed_themes); $i++) {
-     echo "<br><a href=\"" . $phpgw->link("changetheme.php","ntheme="
-	. $installed_themes[$i]) . "\">" . $installed_themes[$i] . "</a>\n";
+     echo '<br><a href="' . $phpgw->link("changetheme.php","theme="
+     	. $installed_themes[$i]) . '">' . $installed_themes[$i] . '</a>';
+  
+     if ($phpgw_info["server"]["useframes"] != "never") {     
+//        echo '<br><a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php","ntheme="
+//        	. $installed_themes[$i] . "&forward=" . urlencode("preferences/index.php")) . '" target="_new">' . $installed_themes[$i] . '</a>';
+     }
   }
 
   $phpgw->common->phpgw_footer();
