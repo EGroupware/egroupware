@@ -17,12 +17,14 @@
 </table>
 </center>
 <!-- END view_event -->
+
 <!-- BEGIN list -->
   <tr bgcolor="{tr_color}">
    <td valign="top" width="30%">&nbsp;<b>{field}:</b></td>
    <td colspan="2" valign="top" width="70%">{data}</td>
   </tr>
 <!-- END list -->
+
 <!-- BEGIN hr -->
  <tr>
   <td colspan="3" bgcolor="{th_bg}" align="center">

@@ -20,7 +20,7 @@
 		<tr>
 			<td>{large_month}</td>
 		</tr>
-	</table><p>{print}
+	</table><p style="font-size:10px; text-align:center">{print}</p>
 </td>
 </tr>
 </table>

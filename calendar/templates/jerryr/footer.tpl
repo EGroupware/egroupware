@@ -1,32 +1,39 @@
 <!-- $Id$ -->
 <!-- BEGIN footer_table -->
-		<tr><td height="10"></td></tr>
-       <font size="-1">
-       <table border="0" width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-{table_row}
-	</tr>
+<!--
+<tr>
+    <td>1</td>
+</tr>
+-->
 
-       <tr>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+	{table_row}
+    </tr>
+</table>
+<!--       <tr>-->
 <!-- END footer_table -->
+
+
 <!-- BEGIN footer_row -->
-         <td valign="top" width="33%">
-          <font size="-1">
-           <form action="{action_url}" method="post" name="{form_name}">
-            <B>{label}:</B>
-			{hidden_vars}
-            <select name="{form_label}" onchange="{form_onchange}">
-	     {row}
-	    </select>
-            <noscript><input type="submit" value="{go}"></noscript>
-	   </form>
-	  </font>
-	 </td>
+
+    <form action="{action_url}" method="post" name="{form_name}">
+<td valign="top">
+	<span style="font-size:9px; font-weight:bold;">{label}:</span>
+	{hidden_vars}
+	<select name="{form_label}" onchange="{form_onchange}">
+	{row}
+	</select>
+	<noscript><input type="submit" value="{go}"></noscript>
+</td>
+    </form>
+
 <!-- END footer_row -->
+
 <!-- BEGIN blank_row -->
-         <td>
-          {b_row}
-         </td>
+     <td>
+    {b_row}
+    </td>
 <!-- END blank_row -->
-<td>
+<!-- <td> -->
 

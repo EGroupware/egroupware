@@ -69,7 +69,7 @@
 <!-- END day -->
 <!-- BEGIN day_event -->
     <tr>
-     <td>
+     <td valign="top">
 {daily_events}
      </td>
     </tr>
