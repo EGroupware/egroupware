@@ -1,4 +1,4 @@
-<!-- BEGIN phpgw_main_tables -->
+<!-- BEGIN phpgw_main_tables_start -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -22,7 +22,13 @@
 		</TR>
 		<TR>
 			<TD width="{phpgw_left_table_width}" height="100%" align="left" valign="top">{phpgw_left}</TD>
-			<TD width="100%" height="100%" align="left" valign="top">{phpgw_msgbox}{phpgw_body}</TD>
+			<TD width="100%" height="100%" align="left" valign="top">
+				{phpgw_msgbox}
+<!-- END phpgw_main_tables_start -->
+
+<!-- BEGIN phpgw_main_tables_end -->
+				{phpgw_body}
+			</TD>
 			<TD width="{phpgw_right_table_width}" height="100%" align="right" valign="top">{phpgw_right}</TD>
 		</TR>
 		<TR>
@@ -31,9 +37,9 @@
 	</TABLE>
 </BODY>
 </HTML>
-<!-- END phpgw_main_tables -->
+<!-- END phpgw_main_tables_end -->
 
-<!-- BEGIN phpgw_main_basic -->
+<!-- BEGIN phpgw_main_basic_start -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -52,12 +58,15 @@
 </HEAD>
 <BODY{phpgw_body_tags}>
 	{phpgw_msgbox}
+<!-- END phpgw_main_basic_start -->
+
+<!-- BEGIN phpgw_main_basic_end -->
 	{phpgw_body}
 </BODY>
 </HTML>
-<!-- END phpgw_main_basic -->
+<!-- END phpgw_main_basic_end -->
 
-<!-- BEGIN phpgw_main_frames -->
+<!-- BEGIN phpgw_main_frames_start -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
@@ -84,8 +93,11 @@
 		</NOFRAMES>
 	</FRAMESET>
 </HEAD>
+<!-- END phpgw_main_frames_start -->
+
+<!-- BEGIN phpgw_main_frames_end -->
 </HTML>
-<!-- END phpgw_main_frames -->
+<!-- END phpgw_main_frames_end -->
 
 <!-- BEGIN phpgw_head_javascript -->
 	<SCRIPT language="JavaScript" type="text/javascript">

@@ -1330,7 +1330,17 @@
 		*/
 		function phpgw_header($forceheader = True, $forcenavbar = True)
 		{
-			/* This is no longer used */
+			/* So far I dont have use for $forceheader and $forcenavbar */
+			/* I only allow this to be run once by using the constant */
+			if(!defined('PHPGW_HEADER_RAN'))
+			{
+				define('PHPGW_HEADER_RAN',True);
+				$this->msgbox('',False,'phpgw_msgbox');
+				$this->load_css_data();
+				$this->load_phpgw_body_tags();
+				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
+				$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
+			}
 		}
 
 		/*!
@@ -1388,11 +1398,8 @@
 						$this->phpgw_appfooter();
 					}
 					$GLOBALS['phpgw']->db->disconnect();
-					$this->msgbox('',False,'phpgw_msgbox');
-					$this->load_css_data();
-					$this->load_phpgw_body_tags();
-					$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
-					$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
+					$this->phpgw_header();
+					$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
 /*
 				
 					$GLOBALS['phpgw']->template->p('phpgw_head');

@@ -396,7 +396,7 @@
 		{
 			define('PHPGW_FRAME_PART','start');
 		}
-//$GLOBALS['phpgw_info']['server']['useframes'] = 'always';
+$GLOBALS['phpgw_info']['server']['useframes'] = 'always';
 		if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&	
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes'] && 
 			$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') || 
@@ -414,12 +414,14 @@
 				$GLOBALS['phpgw']->template->set_var('phpgw_left_link',$GLOBALS['phpgw']->session->link('home.php','framepart=left'));
 				$GLOBALS['phpgw']->template->set_var('phpgw_bottom_link',$GLOBALS['phpgw']->session->link('home.php','framepart=bottom'));
 				$GLOBALS['phpgw']->template->set_var('phpgw_unupported_link',$GLOBALS['phpgw']->session->link($GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME'],'framepart=unsupported'));
-				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_frames','phpgw_main');
+				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_frames_start','phpgw_main_start');
+				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_frames_end','phpgw_main_end');
 			}
 			else
 			{
 				/* if we are using frames and not starting then we use the basic block to keep each part in a nice clean html format */
-				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
+				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_start','phpgw_main_start');
+				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_end','phpgw_main_end');
 			}
 		}
 		else
@@ -427,7 +429,8 @@
 			/* Not using frames, so we default to tables */
 			define('PHPGW_USE_FRAMES',False);
 			define('PHPGW_NAVBAR_TARGET','_self');
-			$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_tables','phpgw_main');
+			$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_tables_start','phpgw_main_start');
+			$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_tables_end','phpgw_main_end');
 		}
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_target',PHPGW_NAVBAR_TARGET);
 
@@ -580,6 +583,12 @@
 			}
 			if($continue_app_data)
 			{
+				/* I want to phase this out over time. App apps should put their data into the templates phpgw_body var*/
+				if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
+				{
+					$GLOBALS['phpgw']->common->phpgw_header();
+				}
+
 				$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
 				$GLOBALS['phpgw']->template->halt_on_error = 'report';
 				if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !MENUACTION)

@@ -40,12 +40,14 @@
 	// This is used for system downtime, to prevent new logins.
 	if ($GLOBALS['phpgw_info']['server']['deny_all_logins'])
 	{
-		$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
+		$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_start','phpgw_main_start');
+		$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_end','phpgw_main_end');
 		$GLOBALS['phpgw']->template->set_block('login','login_form_deny','login_form');
 		$GLOBALS['phpgw']->template->set_var('template_set','default');
 		$GLOBALS['phpgw']->template->set_var('phpgw_head_tags','<script><!-- if (window!= top) top.location.href=location.href// --></script>');
 		$GLOBALS['phpgw']->template->fp('phpgw_body','login_form');
-		$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
+		$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
+		$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
 		exit;
 	}
 
@@ -232,7 +234,8 @@
 	check_logoutcode();
 	$GLOBALS['phpgw']->common->msgbox('', False,'phpgw_login_msgbox');
 	
-	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
+	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_start','phpgw_main_start');
+	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic_end','phpgw_main_end');
 	$GLOBALS['phpgw']->template->set_var('phpgw_head_charset',lang('charset'));
 	$GLOBALS['phpgw']->template->set_var('phpgw_head_description','phpGroupWare - Login Page');
 	$GLOBALS['phpgw']->template->set_var('phpgw_head_keywords','phpGroupWare');
@@ -251,5 +254,6 @@
 	$GLOBALS['phpgw']->template->set_var('lang_login',lang('login'));
 	$GLOBALS['phpgw']->template->set_var('template_set',$GLOBALS['phpgw_info']['login_template_set']);
 	$GLOBALS['phpgw']->template->fp('phpgw_body','login_form');
-	$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
+	$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
+	$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
 ?>
