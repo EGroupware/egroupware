@@ -859,7 +859,21 @@
   $test[] = "0.9.10pre1";                                                                                                                                                                        
   function upgrade0_9_10pre1(){                                                                                                                                                                  
     global $phpgw_info, $phpgw_setup;
-    $phpgw_setup->db->query("alter table phpgw_categories add column cat_access varchar(25)");
+    $phpgw_setup->db->query("create table temp as select * from phpgw_categories");                                                                
+    $phpgw_setup->db->query("drop sequence phpgw_categories_cat_id_seq");                                                                                        
+    $phpgw_setup->db->query("drop table phpgw_categories");
+    $phpgw_setup->db->query("CREATE TABLE phpgw_categories (                                                                                       
+            cat_id          serial,                                                                                                                
+            cat_parent      int,                                                                                                                   
+            cat_owner       int,                                                                                                                   
+            cat_access      varchar(25),                                                                                                           
+            cat_appname     varchar(50) NOT NULL,                                                                                                  
+            cat_name        varchar(150) NOT NULL,                                                                                                 
+            cat_description varchar(255) NOT NULL,                                                                                                 
+            cat_data        text                                                                                                                   
+            )");                                                                                                                                   
+    $phpgw_setup->db->query("insert into phpgw_categories select * from temp");                                                                    
+    $phpgw_setup->db->query("drop table temp");
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre2";
   }
 
