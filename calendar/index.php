@@ -128,7 +128,7 @@
   $today = mktime(2,0,0,date("m"),date("d"),date("Y"));
 
   for ($i = $sun; date("Ymd",$i) <= date("Ymd",$monthend); $i += (24 * 3600 * 7) ) {
-    $CELLBG = $phpgw->nextmatchs->alternate_row_color($CELLBG);
+    $cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
 
     echo "<tr>\n";
     for ($j = 0; $j < 7; $j++) {
@@ -139,7 +139,8 @@
          if (date("Ymd",$date) == date("Ymd",$today)) {
             echo " bgcolor=\"".$phpgw_info["theme"]["cal_today"]."\">";
          } else {
-            echo " bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\">";
+            echo " bgcolor=\"$cellcolor\">";
+         //   echo " bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\">";
          }
 
          print_date_entries($date,$friendly,$phpgw_info["user"]["sessionid"]);
