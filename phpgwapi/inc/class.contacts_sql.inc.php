@@ -140,7 +140,8 @@
 
 		function contacts_($useacl=True)
 		{
-			$this->db = $GLOBALS['phpgw']->db;
+//			$this->db = $GLOBALS['phpgw']->db;
+			copyobj($GLOBALS['phpgw']->db,$this->db);
 			if($useacl)
 			{
 				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
@@ -505,7 +506,8 @@
 			}
 			if ($DEBUG) { echo '<br>' . $sql; }
 
-			$db2 = $this->db;
+//			$db2 = $this->db;
+			copyobj($this->db,$db2);
 
 			$this->db->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db->num_rows();
