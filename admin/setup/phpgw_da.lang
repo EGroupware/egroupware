@@ -11,7 +11,7 @@ account list	admin	da	Konto liste
 account permissions	admin	da	Konto rettigheder
 account preferences	admin	da	Konto præferencer
 acl manager	admin	da	ACL Håndtering
-acl rights	admin	da	ACL rettigheder
+acl rights	common	da	ACL rettigheder
 action	admin	da	Handling
 add a category	admin	da	tilføj en kategori
 add a group	admin	da	tilføj en gruppe
@@ -202,7 +202,7 @@ leave the group untouched and return back to the list	admin	da	efterlad gruppen 
 list config settings	admin	da	Vis konfigurations indstillinger
 list current sessions	admin	da	Vis nuværende sessions
 list of current users	admin	da	Vis alle nuværende brugere
-login history	admin	da	Login historie
+login history	common	da	Login historie
 login message	admin	da	Login besked
 login screen	admin	da	Login skærm
 login shell	admin	da	Login shell

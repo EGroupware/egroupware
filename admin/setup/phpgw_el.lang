@@ -11,7 +11,7 @@ account list	admin	el	Λίστα λογαριασμών
 account permissions	admin	el	Δικαιώματα λογαριασμού
 account preferences	admin	el	Ιδιότητες λογαριασμού
 acl manager	admin	el	Διευθυντής ACL
-acl rights	admin	el	Δικαιώματα ACL
+acl rights	common	el	Δικαιώματα ACL
 action	admin	el	Ενέργια
 add a category	admin	el	πρόσθεσε μία κατηγορία
 add a group	admin	el	πρόσθεσε ένα Group
@@ -208,7 +208,7 @@ leave the group untouched and return back to the list	admin	el	Αφείστε την ομάδα
 list config settings	admin	el	Λίστα διαμόρφωσης ρυθμίσεων
 list current sessions	admin	el	Λίστα τρέχωντων περιόδων
 list of current users	admin	el	λίστα απο τρέχων χρήστες
-login history	admin	el	Ιστορικό Εισόδου
+login history	common	el	Ιστορικό Εισόδου
 login message	admin	el	Μήνυμα εισόδου
 login screen	admin	el	Οθόνη εισόδου
 login shell	admin	el	Κέλυφος εισόδου

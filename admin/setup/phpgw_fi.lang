@@ -5,7 +5,7 @@ account has been updated	common	fi	Tunnus p‰ivitetty
 account permissions	admin	fi	Tunnuksen oikeudet
 account preferences	admin	fi	Tunnuksen asetukset
 acl manager	admin	fi	ACL -hallinta
-acl rights	admin	fi	ACL Oikeudet
+acl rights	common	fi	ACL Oikeudet
 action	admin	fi	Toimenpide
 add a new account.	admin	fi	Uusi tunnus.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	fi	Lis‰‰ automaattisesti luodut k‰ytt‰j‰t ryhm‰‰n (k‰ytet‰‰n ryhm‰‰ 'Default' jollei t‰ss‰ toisi m‰‰ritell‰.)
@@ -106,7 +106,7 @@ ldap host	admin	fi	LDAP palvelin
 ldap rootdn	admin	fi	LDAP rootdn
 ldap root password	admin	fi	LDAP root salasana
 list of current users	admin	fi	nykyiset k‰ytt‰j‰t
-login history	admin	fi	Kirjautumisten historia
+login history	common	fi	Kirjautumisten historia
 login screen	admin	fi	Kirjautumisn‰yttˆ
 login shell	admin	fi	Kirjautumis-shell
 login time	admin	fi	Kirjautumisaika

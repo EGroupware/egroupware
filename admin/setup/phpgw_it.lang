@@ -11,7 +11,7 @@ account list	admin	it	Lista Account
 account permissions	admin	it	Permessi account
 account preferences	admin	it	Preferenze account
 acl manager	admin	it	Gestione ACL
-acl rights	admin	it	Diritti ACL
+acl rights	common	it	Diritti ACL
 action	admin	it	Azione
 add a category	admin	it	aggiungi una categoria
 add a group	admin	it	aggiungi un gruppo
@@ -210,7 +210,7 @@ leave the group untouched and return back to the list	admin	it	Lascia i gruppi i
 list config settings	admin	it	Lista impostazioni di configurazione
 list current sessions	admin	it	Lista sessioni currenti
 list of current users	admin	it	lista utenti attivi
-login history	admin	it	Cronologia Collegamenti
+login history	common	it	Cronologia Collegamenti
 login message	admin	it	Messaggio di Login
 login screen	admin	it	Schermata di login
 login shell	admin	it	Shell di login

@@ -11,7 +11,7 @@ account list	admin	uk	Перелік рахунків
 account permissions	admin	uk	Права рахунку
 account preferences	admin	uk	Параметри рахунку
 acl manager	admin	uk	Керування ACL
-acl rights	admin	uk	Права ACL
+acl rights	common	uk	Права ACL
 action	admin	uk	Дія
 add a category	admin	uk	Додати категорію
 add a group	admin	uk	Додати групу
@@ -208,7 +208,7 @@ leave the group untouched and return back to the list	admin	uk	Залишити 
 list config settings	admin	uk	Перелік конфігураційних установок
 list current sessions	admin	uk	Перелік поточних сесій
 list of current users	admin	uk	Перелік поточних користувачів
-login history	admin	uk	Історія входів
+login history	common	uk	Історія входів
 login message	admin	uk	Повідомлення при вході
 login screen	admin	uk	Екран входу
 login shell	admin	uk	Шелл після входу

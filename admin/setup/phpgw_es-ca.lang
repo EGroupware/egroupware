@@ -14,7 +14,7 @@ account list	admin	es-ca	Llista de comptes
 account permissions	admin	es-ca	Permissos del compte
 account preferences	admin	es-ca	Preferències del compte
 acl manager	admin	es-ca	Gestió de LCA
-acl rights	admin	es-ca	Permissos de LCA
+acl rights	common	es-ca	Permissos de LCA
 action	admin	es-ca	Acció
 active	admin	es-ca	Activo
 add a category	admin	es-ca	Afegir una categoría
@@ -229,7 +229,7 @@ leave the group untouched and return back to the list	admin	es-ca	Deixar el grup
 list config settings	admin	es-ca	Llista de les opcions de configuració
 list current sessions	admin	es-ca	Llista de les sessions actuals
 list of current users	admin	es-ca	Llista d' usuaris presents
-login history	admin	es-ca	Historial d' accessos
+login history	common	es-ca	Historial d' accessos
 login message	admin	es-ca	Missatge d'inici de sessió
 login screen	admin	es-ca	Pantalla d'inici de sessió
 login shell	admin	es-ca	Interpret d'ordres d'inici de sessió

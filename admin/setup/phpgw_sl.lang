@@ -11,7 +11,7 @@ account list	admin	sl	Seznam ra&#269;unov
 account permissions	admin	sl	Dovoljenja ra&#269;una
 account preferences	admin	sl	Nastavitve ra&#269;una
 acl manager	admin	sl	Upravljalec SND (ACL)
-acl rights	admin	sl	Pravice SNDja (ACL)
+acl rights	common	sl	Pravice SNDja (ACL)
 action	admin	sl	Akcija
 add a category	admin	sl	dodaj kategorijo
 add a group	admin	sl	dodaj skupino
@@ -208,7 +208,7 @@ leave the group untouched and return back to the list	admin	sl	Pusti skupino ned
 list config settings	admin	sl	Seznam konfiguracijskih nastavitev
 list current sessions	admin	sl	Seznam trenutnih sej
 list of current users	admin	sl	Seznam trenutnih uporabnikov
-login history	admin	sl	Zgodovina prijav
+login history	common	sl	Zgodovina prijav
 login message	admin	sl	Prijavno sporo&#269;ilo
 login screen	admin	sl	Prijavni zaslon
 login shell	admin	sl	Prijavna lupina

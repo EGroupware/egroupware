@@ -12,7 +12,7 @@ account list	admin	en	Account list
 account permissions	admin	en	Account permissions
 account preferences	admin	en	Account Preferences
 acl manager	admin	en	ACL Manager
-acl rights	admin	en	ACL Rights
+acl rights	common	en	ACL Rights
 action	admin	en	Action
 activate wysiwyg-editor	admin	en	activate WYSIWYG-editor
 add a category	admin	en	add a category
@@ -216,7 +216,7 @@ leave the group untouched and return back to the list	admin	en	Leave the group u
 list config settings	admin	en	List config settings
 list current sessions	admin	en	List current sessions
 list of current users	admin	en	list of current users
-login history	admin	en	Login History
+login history	common	en	Login History
 login message	admin	en	Login message
 login screen	admin	en	Login screen
 login shell	admin	en	Login shell

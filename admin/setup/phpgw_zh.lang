@@ -12,7 +12,7 @@ account list	admin	zh	列举帐户
 account permissions	admin	zh	帐户权限
 account preferences	admin	zh	帐户个性化配置
 acl manager	admin	zh	ACL权限管理
-acl rights	admin	zh	ACL权限管理
+acl rights	common	zh	ACL权限管理
 action	admin	zh	操作
 activate wsiwyg-editor	admin	zt	啟用所見即所得編輯器
 add a category	admin	zh	添加类别
@@ -214,7 +214,7 @@ leave the group untouched and return back to the list	admin	zh	不更改组，�
 list config settings	admin	zh	查看配置
 list current sessions	admin	zh	列举当前会话
 list of current users	admin	zh	列举当前用户
-login history	admin	zh	登录历史记录
+login history	common	zh	登录历史记录
 login message	admin	zh	更改登录页面信息
 login screen	admin	zh	登录页面
 login shell	admin	zh	登录shell

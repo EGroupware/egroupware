@@ -13,7 +13,7 @@ account list	admin	de	Benutzerkonten anzeigen
 account permissions	admin	de	Zugriffsrechte
 account preferences	admin	de	Einstellungen der Benutzerkonten
 acl manager	admin	de	ACL-Manager
-acl rights	admin	de	ACL-Rechte
+acl rights	common	de	ACL-Rechte
 action	admin	de	Aktion
 activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 add a category	admin	de	Eine Kategorie hinzufügen
@@ -220,7 +220,7 @@ leave the group untouched and return back to the list	admin	de	Gruppe unveränder
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
-login history	admin	de	Login-Kontrolle
+login history	common	de	Login-Kontrolle
 login message	admin	de	Meldung der Login-Seite
 login screen	admin	de	Login-Seite
 login shell	admin	de	Login-Komandointerpreter (Login-Shell)

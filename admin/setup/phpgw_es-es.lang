@@ -14,7 +14,7 @@ account list	admin	es-es	Lista de cuentas
 account permissions	admin	es-es	Permisos de la cuenta
 account preferences	admin	es-es	Preferencias de la cuenta
 acl manager	admin	es-es	Manejo de LCA
-acl rights	admin	es-es	Permisos de LCA
+acl rights	common	es-es	Permisos de LCA
 action	admin	es-es	Acción
 activate wsiwyg-editor	admin	es-es	activar editor WSIWYG
 active	admin	es-es	Activo
@@ -231,7 +231,7 @@ leave the group untouched and return back to the list	admin	es-es	Dejar el grupo
 list config settings	admin	es-es	Lista de las opciones de configuración
 list current sessions	admin	es-es	Lista de las sesiones actuales
 list of current users	admin	es-es	Lista de usuarios actuales
-login history	admin	es-es	Historial de accesos
+login history	common	es-es	Historial de accesos
 login message	admin	es-es	Mensaje de inicio de sesión
 login screen	admin	es-es	Pantalla de inicio de sesión
 login shell	admin	es-es	Shell de inicio de sesión

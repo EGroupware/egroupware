@@ -11,7 +11,7 @@ account list	admin	nl	Accountlijst
 account permissions	admin	nl	Toegangsrechten account
 account preferences	admin	nl	Voorkeuren account
 acl manager	admin	nl	ACL-beheerder
-acl rights	admin	nl	ACL-rechten
+acl rights	common	nl	ACL-rechten
 action	admin	nl	Actie
 active	admin	nl	actief
 add a category	admin	nl	Een categorie toevoegen
@@ -213,7 +213,7 @@ leave the group untouched and return back to the list	admin	nl	laat de groep ong
 list config settings	admin	nl	Configuratie-instellingen weergeven
 list current sessions	admin	nl	Huidige sessies weergeven
 list of current users	admin	nl	Lijst van huidige gebruikers
-login history	admin	nl	Loginhistorie
+login history	common	nl	Loginhistorie
 login message	admin	nl	Loginbericht
 login screen	admin	nl	Loginpagina
 login shell	admin	nl	Loginshell

@@ -12,7 +12,7 @@ account list	admin	zt	帳號清單
 account permissions	admin	zt	帳號權限
 account preferences	admin	zt	帳號喜好設定
 acl manager	admin	zt	ACL管理者
-acl rights	admin	zt	ACL權限
+acl rights	common	zt	ACL權限
 action	admin	zt	動作
 activate wsiwyg-editor	admin	zt	啟用所見即所得編輯器
 add a category	admin	zt	新增類別
@@ -214,7 +214,7 @@ leave the group untouched and return back to the list	admin	zt	保留群組員�
 list config settings	admin	zt	列出組態設定
 list current sessions	admin	zt	列出目前連線
 list of current users	admin	zt	線上使用者列表
-login history	admin	zt	登入歷史記錄
+login history	common	zt	登入歷史記錄
 login message	admin	zt	登入訊息
 login screen	admin	zt	登入畫面
 login shell	admin	zt	登入命令處理器

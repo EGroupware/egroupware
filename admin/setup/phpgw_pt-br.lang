@@ -11,7 +11,7 @@ account list	admin	pt-br	Lista de Contas
 account permissions	admin	pt-br	Permissões da Conta
 account preferences	admin	pt-br	Preferências da Conta
 acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
-acl rights	admin	pt-br	Permissões de Acesso
+acl rights	common	pt-br	Permissões de Acesso
 action	admin	pt-br	Ação
 add a category	admin	pt-br	adicionar uma categoria
 add a group	admin	pt-br	adicionar um grupo
@@ -221,7 +221,7 @@ list current sessions	admin	pt-br	Listar sessões correntes
 list of current users	admin	pt-br	lista de usuários conectados
 lock and unlock pages	common	pt-br	Travar ou destravar páginas
 lock/unlock pages	common	pt-br	Travar/Destravar Págs.
-login history	admin	pt-br	Histórico de conexões
+login history	common	pt-br	Histórico de conexões
 login message	admin	pt-br	Mensagem de entrada
 login screen	admin	pt-br	Tela de Conexão
 login shell	admin	pt-br	Shell de Conexão

@@ -5,7 +5,7 @@ account has been updated	common	pt	Conta foi atualizada
 account permissions	admin	pt	Permissões da conta
 account preferences	admin	pt	Preferências da conta
 acl manager	admin	pt	Administração de regras de acesso
-acl rights	admin	pt	Permissões de acesso
+acl rights	common	pt	Permissões de acesso
 action	admin	pt	Ação
 add a new account.	admin	pt	Adicionar nova conta.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	pt	Adicionar usuários criados automaticamente para este grupo ('Default' será tentado se este campo estiver vazio.)
@@ -109,7 +109,7 @@ ldap host	admin	pt	servidor LDAP
 ldap rootdn	admin	pt	super usuário LDAP
 ldap root password	admin	pt	senha do super usuário LDAP
 list of current users	admin	pt	lista de usuários conectados
-login history	admin	pt	Histórico de conexões
+login history	common	pt	Histórico de conexões
 loginid	admin	pt	Código do usuário
 login screen	admin	pt	Tela de login
 login shell	admin	pt	Shell de login

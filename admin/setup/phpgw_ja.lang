@@ -2,7 +2,7 @@ account active	admin	ja	アカウントアクティブ
 account list	admin	ja	ユーザアカウント項目全体
 account permissions	admin	ja	利用可能アプリケーション
 acl manager	admin	ja	利用許可設定
-acl rights	admin	ja	利用許可設定
+acl rights	common	ja	利用許可設定
 action	admin	ja	アクション
 add account	admin	ja	アカウントの追加
 add application	admin	ja	アプリケーション追加
@@ -98,7 +98,7 @@ last %1 logins	admin	ja	過去 %1 のログイン
 list config settings	admin	ja	環境設定項目の表示
 list current sessions	admin	ja	セッション参照項目全体
 list of current users	admin	ja	ログイン中ユーザ一覧
-login history	admin	ja	ログイン履歴
+login history	common	ja	ログイン履歴
 login message	admin	ja	ログイン画面メッセージ
 login screen	admin	ja	ログイン画面
 login shell	admin	ja	ログインシェル

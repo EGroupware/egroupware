@@ -11,7 +11,7 @@ account list	admin	pl	Lista kont
 account permissions	admin	pl	Prawa do konta
 account preferences	admin	pl	Ustawienia konta
 acl manager	admin	pl	Meneder ACL
-acl rights	admin	pl	Prawa ACL
+acl rights	common	pl	Prawa ACL
 action	admin	pl	Czynno¶æ
 activate wsiwyg-editor	admin	pl	aktywuj edytor WYSIWYG
 add a category	admin	pl	dodaj kategorie
@@ -242,7 +242,7 @@ list config settings	admin	pl	Wy¶wietl ustawienia
 list current sessions	admin	pl	Wy¶wietl listê aktualnych sesji
 list of current users	admin	pl	Lista bie¿±cych u¿ytkowników
 listings displayed	admin	pl	Dugo wy¶wietlanych wiadomo¶ci
-login history	admin	pl	Historia logowania
+login history	common	pl	Historia logowania
 login message	admin	pl	Wiadomo¶æ przy logowaniu do systemu
 login screen	admin	pl	Ekran logowania
 login shell	admin	pl	Pow³oka logowania

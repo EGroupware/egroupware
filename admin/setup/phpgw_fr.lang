@@ -9,7 +9,7 @@ account has been updated	common	fr	Le compte a été mis à jour
 account permissions	admin	fr	Permissions de compte
 account preferences	admin	fr	Préférences de compte
 acl manager	admin	fr	Gestionnaire des droits d'accès
-acl rights	admin	fr	Droits d'accès
+acl rights	common	fr	Droits d'accès
 action	admin	fr	Action
 add a category	admin	fr	Ajouter une catégorie
 add a group	admin	fr	Ajouter un groupe
@@ -163,7 +163,7 @@ ldap rootdn	admin	fr	Rootdn LDAP
 leave the category untouched and return back to the list	admin	fr	Laisser la catégorie telle quelle et retourner à la liste
 leave the group untouched and return back to the list	admin	fr	Laisser le groupe tel quel et retouner à la liste
 list of current users	admin	fr	Liste des utilisateurs actuels
-login history	admin	fr	Historique de connexion
+login history	common	fr	Historique de connexion
 login screen	admin	fr	Ecran de connexion
 login shell	admin	fr	Shell de connexion
 login time	admin	fr	Heure de connexion
