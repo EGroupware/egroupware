@@ -308,7 +308,7 @@
 
 
 			$GLOBALS['phpgw']->template->set_var('title',$GLOBALS['phpgw_info']['site_title']);
-			$GLOBALS['phpgw']->template->set_var('charset',$GLOBALS['phpgw']->translation->translate('charset'));
+			$GLOBALS['phpgw']->template->set_var('charset',$GLOBALS['phpgw']->translation->charset());
 			$GLOBALS['phpgw']->template->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
 			$GLOBALS['phpgw']->template->set_var('lang_search',lang('search'));
 			$GLOBALS['phpgw']->template->set_var('lang_groups',lang('user groups'));
