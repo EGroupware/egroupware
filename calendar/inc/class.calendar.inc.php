@@ -1130,7 +1130,7 @@ class calendar extends calendar_
 			$time[$ind] .= '<font color="CC0000">';
 		}
 		
-		$time[$ind] .= $this->is_private($event,$this->owner,'name').(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$event->users_status.')':'');
+		$time[$ind] .= $this->is_private($event,$this->owner,'title').(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' ('.$event->users_status.')':'');
 
 		if ($event->priority == 3)
 		{
@@ -1174,7 +1174,7 @@ class calendar extends calendar_
 
 		$time = Array();
 
-		$events = $this->get_sorted_by_date($date['raw']);
+		$events = $this->get_sorted_by_date($date['raw'],$this->owner);
 
 		if(!$events)
 		{
@@ -1184,11 +1184,7 @@ class calendar extends calendar_
 			$event = CreateObject('calendar.calendar_item');
 			for($i=0;$i<count($events);$i++)
 			{
-				$event = $events[$i];
-				if($event)
-				{
-					$this->html_for_event_day_at_a_glance($event,$first_hour,$last_hour,$time);
-				}
+				$this->html_for_event_day_at_a_glance($events[$i],$first_hour,$last_hour,$time);
 			}
 		}
 
