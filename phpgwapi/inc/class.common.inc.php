@@ -256,8 +256,11 @@
 			// bind as admin, we not to able to do everything
 			if (! ldap_bind($ds,$dn,$passwd))
 			{
-				$GLOBALS['phpgw']->log->message('F-Abort, Failed binding to LDAP server');
-				$GLOBALS['phpgw']->log->commit();
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					$GLOBALS['phpgw']->log->message('F-Abort, Failed binding to LDAP server');
+					$GLOBALS['phpgw']->log->commit();
+				}
 
 				printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
 				return False;
