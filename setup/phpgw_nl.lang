@@ -582,7 +582,7 @@ todo list	common	nl	Takenlijst
 todo list	todo	nl	Takenlijst
 todo list - add	todo	nl	Takenlijst - toevoegen
 todo list - edit	todo	nl	Takenlijst - bewerken
-tommorow is x's birthday.	common	nl	Morgen is %1's verjaardag.
+tomorrow is x's birthday.	common	nl	Morgen is %1's verjaardag.
 total	common	nl	Totaal
 total records	admin	nl	Aantal records
 translation	transy	nl	Vertaling

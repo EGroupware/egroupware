@@ -223,7 +223,7 @@ todo list	todo	it	Agenda
 todo list	common	it	Agenda
 todo list - add	todo	it	Agenda - aggiungi
 todo list - edit	todo	it	Agenda - modifica
-tommorow is x's birthday.	common	it	Domani è il compleanno di %1.
+tomorrow is x's birthday.	common	it	Domani è il compleanno di %1.
 total	common	it	Totale
 total records	admin	it	Totale registrazioni
 trouble ticket system	common	it	Sistema di gestione problemi

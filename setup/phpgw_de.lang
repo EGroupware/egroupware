@@ -503,7 +503,7 @@ todo list	common	de	Aufgabenliste
 todo list - add	todo	de	Aufgabenliste - hinzufügen
 todo list - add sub-project	todo	de	ToDo-List: Teilprojekt hinzufügen
 todo list - edit	todo	de	Aufgabenliste - editieren
-tommorow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
+tomorrow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
 total	common	de	Total
 total records	admin	de	Anzahl Datensätze insgesamt
 translation	transy	de	Übersetzung

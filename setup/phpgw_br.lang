@@ -250,7 +250,7 @@ todo list	common	br	Agenda
 todo list	todo	br	Agenda
 todo list - add	todo	br	Agenda - adicionar
 todo list - edit	todo	br	Agenda - editar
-tommorow is x's birthday.	common	br	Amanha e' aniversario de %1.
+tomorrow is x's birthday.	common	br	Amanha e' aniversario de %1.
 total	common	br	Total
 total records	admin	br	Total de registros
 trouble ticket system	common	br	Sistema de gestao de tickets
