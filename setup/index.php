@@ -24,11 +24,11 @@
   include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
   $db	            = new db;
-  $db->Host	      = $phpgw_info["server"]["db_host"];
-  $db->Type	      = $phpgw_info["server"]["db_type"];
-  $db->Database      = $phpgw_info["server"]["db_name"];
-  $db->User	      = $phpgw_info["server"]["db_user"];
-  $db->Password      = $phpgw_info["server"]["db_pass"];
+  $db->Host	    = $phpgw_info["server"]["db_host"];
+  $db->Type	    = $phpgw_info["server"]["db_type"];
+  $db->Database     = $phpgw_info["server"]["db_name"];
+  $db->User	    = $phpgw_info["server"]["db_user"];
+  $db->Password     = $phpgw_info["server"]["db_pass"];
 //  $db->Halt_On_Error = "report";
   $db->Halt_On_Error = "no";
 
@@ -73,7 +73,7 @@
       echo "      <input type=\"hidden\" name=\"oldversion\" value=\"".$oldversion."\">\n";
       echo "      <input type=\"hidden\" name=\"useglobalconfigsettings\">\n";
       echo "      <input type=\"submit\" name=\"action\" value=\"Upgrade\">\n";
-      echo "      <input type=\"submit\" name=\"action\" value=\"Dump my old tables\">\n";
+      echo "      <input type=\"submit\" name=\"action\" value=\"Drop my old tables\">\n";
       echo "      </form>\n";
       echo "      <form method=\"POST\" action=\"config.php\">\n";
       echo "      <input type=\"submit\" name=\"action\" value=\"Dont touch my data\">\n";
@@ -127,13 +127,13 @@
           <td colspan="2" align="center"><input type="submit" name="action" value="Upgrade"></td>
         </tr>
         <tr>
-          <td colspan="2" align="center"><input type="submit" name="action" value="Dump my old tables"></td>
+          <td colspan="2" align="center"><input type="submit" name="action" value="Drop my old tables"></td>
         </tr>
       </table>
       </form>
 <?php
       break;
-    case "Dump my old tables":
+    case "Drop my old tables":
       echo "<html><head><title>phpGroupWare Setup</title></head>\n";
       echo "<body bgcolor='#ffffff'>\n"; 
       echo "<table border=\"0\" align=\"center\">\n";
