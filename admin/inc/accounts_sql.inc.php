@@ -133,7 +133,7 @@
       $phpgw->db->query("update accounts set account_firstname='"
       			 . addslashes($account_info["firstname"]) . "', account_lastname='"
       			 . addslashes($account_info["lastname"]) . "', account_status='"
-			       . $account_info["account_status"] . "', where account_lid='" . $account_info["loginid"]
+			       . $account_info["account_status"] . "' where account_lid='" . $account_info["loginid"]
     		       . "'");
 
       return $cd;
