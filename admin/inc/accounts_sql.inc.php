@@ -176,9 +176,6 @@
 
      $phpgw->db->lock($table_locks);
 
-     $phpgw->db->query("delete from webcal_entry where cal_create_by='".$account_id."'");
-     $phpgw->db->query("delete from webcal_entry_user where cal_login='".$account_id."'");
-
      $phpgw->db->query("delete from todo where todo_owner='".$account_id."'");
      $phpgw->db->query("delete from addressbook where ab_owner='".$account_id."'");
      $phpgw->db->query("delete from accounts where account_id='".$account_id."'");
