@@ -69,7 +69,7 @@ makesure	setup	es	Asegurese que su base de datos está creada y que los permisos 
 manage applications	setup	es	Administrar Aplicaciones
 manage languages	setup	es	Administrar Idiomas
 multi-language support setup	setup	es	Configuración del soporte Multi-Idioma
-mysqlinstr	setup	es	 Instrucciones para crear la base de datos en MySQL:<br>Autentifiquese en mysql -<br><i>[usuario@servidor usuario]# mysql -u root -p</i><br>Cree la base de datos vacia y conceda permisos al usuario -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+mysqlinstr	setup	es	 Instrucciones para crear la base de datos en MySQL:<br>Autentifiquese en mysql -<br><i>[usuario@servidor usuario]# mysql -u root -p</i><br>Cree la base de datos vacia y conceda permisos al usuario -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 not complete	setup	es	no completado
 note: you will be able to customize this later	setup	es	Nota: Usted tendrá que personalizar esto luego
 not ready for this stage yet	setup	es	No está listo para esta fase todabía
@@ -78,9 +78,9 @@ once the database is setup correctly	setup	es	Una vez que la base de datos esté 
 only add languages that are not in the database already	setup	es	Sólo añade los nuevos idiomas que no están ya en la base de datos
 only add new phrases	setup	es	Sólo añade las nuevas frases
 passwords did not match, please re-enter	setup	es	Las contreñas no coinciden, por favor vuelvalas a introducir
-pgsqlinstr	setup	es	Instrucciones para cræar la base de datos en PostgreSQL:<br>Inicie el postmaster<br><i>[usuario@servidor usuario]# postmaster -i -D /home/[usuario]/[dataDir]</i><br>Crear la base de datos vacia -<br><i>[usuario@servidor usuario]# createdb phpgroupware</i>
+pgsqlinstr	setup	es	Instrucciones para cræar la base de datos en PostgreSQL:<br>Inicie el postmaster<br><i>[usuario@servidor usuario]# postmaster -i -D /home/[usuario]/[dataDir]</i><br>Crear la base de datos vacia -<br><i>[usuario@servidor usuario]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	es	Por favor comprueve los guiones sql en el directorio de la aplicación
-please configure phpGroupWare for your environment	setup	es	Por favor configure phpGroupware para su entorno
+please configure eGroupWare for your environment	setup	es	Por favor configure phpGroupware para su entorno
 please install	setup	es	Por favor Instale
 please wait...	setup	es	Please Wait...
 possible solutions	setup	es	Posibles Soluciones
@@ -118,8 +118,8 @@ tables upgraded	setup	es	tablas actualizadas
 target version	setup	es	Versión Objetivo
 there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	es	Hubo un problema intentando conectar con su servidor LDAP.<br>Por favor comprueve la configuración de su servidor LDAP
 the tables	setup	es	las tablas	
-this program will help you upgrade or install different languages for phpGroupWare	setup	es	Este programa le ayudará a actualizar o instalar diferentes idiomas para phpGroupWare
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	es	Esta sección le ayudará a importar usuarios y grupos desde su arbol LDAP a las tablas de cuentas de usuarios/grupos de phpGroupWare
+this program will help you upgrade or install different languages for eGroupWare	setup	es	Este programa le ayudará a actualizar o instalar diferentes idiomas para eGroupWare
+this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	es	Esta sección le ayudará a importar usuarios y grupos desde su arbol LDAP a las tablas de cuentas de usuarios/grupos de eGroupWare
 this stage is completed<br>	setup	es	Esta fase está completada<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	es	Esto creará 1 cuenta de administrador y 3 cuentas de demostración<br>Los nombres de usuario/contraseñas son: demo/guest, demo2/guest and demo3/guest.<br><b>!!!ESTO ELIMINARÁ TODAS LAS CUENTAS EXISTENTES!!!</b><br>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	es	para configurar 1 cuenta de administrador y 3 cuentas de demonstración.<br><b>Esto eliminará todas las cuentas existentes</b>
@@ -128,9 +128,9 @@ upgrade	setup	es	Actualizar
 upgrading tables	setup	es	Actualizando Tablas
 version mismatch	setup	es	Dispariad de Versiones
 we will automatically update your tables/records to %1	setup	es	Actualizaremos automáticamente sus tablas/registros a %1
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup es	Parece que está ejecutando una versión antigüa de PHP<br>Le recomedamos que actulice a una versión mas nueva.<br>Algunas versiones antigüas de PHP pueden no ejecutar phpGroupWare correctamente, o simplemente no ejecutarlo.  <br><br>Por favor actualize su versión de php por lo menos a la 3.0.16
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es Parece que está usted ejecutando una versión pre-beta de phpGroupware.<br>Esas versiones no dispondran mas de soporte, y no hay forma de actualizarlas con esta utilidad.<br> Puede que usted desee primero actualizar a la versión 0.9.10 (la última versión que soportó actualizaciones desde las versiones pre-beta) <br>y luego actulizar desde esta a la versión actual.
-you appear to be running version %1 of phpGroupWare	setup	es	Parece que está ejecutando la versión %1 de phpGroupWare
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup es	Parece que está ejecutando una versión antigüa de PHP<br>Le recomedamos que actulice a una versión mas nueva.<br>Algunas versiones antigüas de PHP pueden no ejecutar eGroupWare correctamente, o simplemente no ejecutarlo.  <br><br>Por favor actualize su versión de php por lo menos a la 4.1.0
+You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es Parece que está usted ejecutando una versión pre-beta de phpGroupware.<br>Esas versiones no dispondran mas de soporte, y no hay forma de actualizarlas con esta utilidad.<br> Puede que usted desee primero actualizar a la versión 0.9.10 (la última versión que soportó actualizaciones desde las versiones pre-beta) <br>y luego actulizar desde esta a la versión actual.
+you appear to be running version %1 of eGroupWare	setup	es	Parece que está ejecutando la versión %1 de eGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	es Está preparado para esta fase, pero esta fase no ha sido escrita todabía.<br>
 you do not have any languages installed. please install one now <br>	setup	es No tiene soporte para ningún idioma instalado. Por favor instale uno ahora <br>
 you must enter a username for the admin	setup	es	Debe de introducir una nombre de usuario para el administrador

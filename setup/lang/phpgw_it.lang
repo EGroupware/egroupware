@@ -76,7 +76,7 @@ makesure	setup	it	Controlla che il tuo database sia stato creato e che i permess
 manage applications	setup	it	Gestione Applicazioni
 manage languages	setup	it	Gestione Lingue
 multi-language support setup	setup	it	Configurazione del supporto multi-lingua
-mysqlinstr	setup	it	Istruzioni per creare il database usando MySQL:<br>Entra in mysql -<br><i>[utente@server utente]# mysql -u root -p</i><br>Crea il database vuoto e assegna i permessi all'utente -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+mysqlinstr	setup	it	Istruzioni per creare il database usando MySQL:<br>Entra in mysql -<br><i>[utente@server utente]# mysql -u root -p</i><br>Crea il database vuoto e assegna i permessi all'utente -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 not complete	setup	it	non completo
 note: you will be able to customize this later	setup	it	Nota: Potrai personalizzarlo dopo
 not ready for this stage yet	setup	it	Non ancora pronto per questo passaggio
@@ -85,11 +85,11 @@ once the database is setup correctly	setup	it	Una volta che il database sar&agra
 only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono gi&agrave; presenti nel database
 only add new phrases	setup	it	Aggiungi solo le nuove frasi
 passwords did not match, please re-enter	setup	it	Le password non corrispondono, per favore reinseriscile
-pgsqlinstr	setup	it	Istruzioni per creare il database in usando PostgreSQL:<br>Fai partire postmaster<br><i>[utente@server utente]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crea il database vuoto -<br><i>[utente@server utente]# createdb phpgroupware</i>
+pgsqlinstr	setup	it	Istruzioni per creare il database in usando PostgreSQL:<br>Fai partire postmaster<br><i>[utente@server utente]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crea il database vuoto -<br><i>[utente@server utente]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	it	Per favore controlla gli script sql nella cartella dell'applicazione
-please configure phpGroupWare for your environment	setup	it	Per favore configura phpGroupWare per il tuo Sistema
+please configure eGroupWare for your environment	setup	it	Per favore configura eGroupWare per il tuo Sistema
 please install	setup	it	Per favore installa
-please login to phpgroupware and run the admin application for additional site configuration	setup	it	Accedi a phpgroupware ed esegui l'applicazione 'admin' per una ulteriore configurazione del sito
+please login to egroupware and run the admin application for additional site configuration	setup	it	Accedi a egroupware ed esegui l'applicazione 'admin' per una ulteriore configurazione del sito
 please wait...	setup	it	Please Wait...
 possible solutions	setup	it	Soluzioni possibili
 potential problem	setup	it	Problema Potenziale
@@ -128,9 +128,9 @@ tables upgraded	setup	it	tabelle aggiornate
 target version	setup	it	Versione di destinazione
 there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	it	Si &egrave; verificato un problema nel contattare il tuo server LDAP. <br>Per favore controlla la configurazione del tuo server LDAP
 the tables	setup	it	le tabelle
-this program will help you upgrade or install different languages for phpGroupWare	setup	it	Questo programma ti aiuter&agrave; ad aggiornare o ad installare lingue differenti per phpGroupWare
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	it	Questa sezione ti aiuter&agrave; ad esportare utenti e gruppi dalle relative tabelle di phpGroupWare nel tuo LDAP tree
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	it	Questa sezione ti aiuter&agrave; ad importare utenti e gruppi dalle relative tabelle di phpGroupWare nel tuo LDAP tree
+this program will help you upgrade or install different languages for eGroupWare	setup	it	Questo programma ti aiuter&agrave; ad aggiornare o ad installare lingue differenti per eGroupWare
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	it	Questa sezione ti aiuter&agrave; ad esportare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
+this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	it	Questa sezione ti aiuter&agrave; ad importare utenti e gruppi dalle relative tabelle di eGroupWare nel tuo LDAP tree
 this stage is completed<br>	setup	it	Questo passaggio &egrave; stato completato<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	it	Questo creer&agrave; 1 utente amministratore e 3 utenti di esempio<br>I nome utente/password sono: demo/guest, demo2/guest and demo3/guest.<br><b>!!!QUESTO CANCELLER&Agrave; TUTTI GLI UTENTI PREESISTENTI!!!</b><br>
 select an app, enter a target version, then submit to process to that version.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	it	Seleziona una'applicazione, inserisci una versione di destinazione, quindi invia per processare verso quella versione.<br><blink>QUESTO CANGELLERA' PRIMA TUTTE LE TABELLE DELL'APPLICAZIONE</blink>
@@ -142,9 +142,9 @@ upgrade	setup	it	Aggiorna
 upgrading tables	setup	it	Aggiornamento Tabelle
 version mismatch	setup	it	Version Mismatch
 we will automatically update your tables/records to %1	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	it	Sembra che tu stia usando una vecchia versione di PHP <br>&Egrave raccomandabile che tu esegua un aggiornamento ad una versione recente. <br>Vecchie versioni di PHP potrebbero non far funzionare correttamenterun phpGroupWare, o potrebbero non farlo funzionare per nulla. <br><br>Per favore aggiorna almeno alla versione 3.0.16
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di phpGroupWare.<br>Queste versioni non sono pi&ugrave; supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br>e poi aggiornare da l&igrave; usando questa versione.
-you appear to be running version %1 of phpGroupWare	setup	it	Sembra che tu sta utilizzando la versione %1 di phpGroupWare
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup	it	Sembra che tu stia usando una vecchia versione di PHP <br>&Egrave raccomandabile che tu esegua un aggiornamento ad una versione recente. <br>Vecchie versioni di PHP potrebbero non far funzionare correttamenterun eGroupWare, o potrebbero non farlo funzionare per nulla. <br><br>Per favore aggiorna almeno alla versione 4.1.0
+You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	it	Sembra che tu stia usando una versione pre-beta di eGroupWare.<br>Queste versioni non sono pi&ugrave; supportate, e non esiste un modo di aggiornarle direttamente con questo setup.<br> Puoi provare ad effettuare prima l'aggiornamento alla versione 0.9.10 (l'ultima versione a supportare gli aggiornamenti dalle pre-beta) <br>e poi aggiornare da l&igrave; usando questa versione.
+you appear to be running version %1 of eGroupWare	setup	it	Sembra che tu sta utilizzando la versione %1 di eGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	it	Sei pronto per questo passaggio, ma questa procedura non &egrave; ancora stata scritta.<br>
 you do not have any languages installed. please install one now <br>	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br>
 you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore

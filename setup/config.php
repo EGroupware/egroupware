@@ -269,7 +269,7 @@
 		unset($t);
 	//}
 
-	$setup_tpl->set_var('more_configs',lang('Please login to phpgroupware and run the admin application for additional site configuration') . '.');
+	$setup_tpl->set_var('more_configs',lang('Please login to egroupware and run the admin application for additional site configuration') . '.');
 
 	$setup_tpl->set_var('lang_submit',lang('Save'));
 	$setup_tpl->set_var('lang_cancel',lang('Cancel'));

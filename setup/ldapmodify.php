@@ -40,7 +40,7 @@
 
 	$common = $phpgw->common;
 	$GLOBALS['phpgw_setup']->loaddb();
-	$phpgw->db = $GLOBALS['phpgw_setup']->db;
+	copyobj($GLOBALS['phpgw_setup']->db,$phpgw->db);
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
@@ -63,8 +63,8 @@
 	$phpgw_info['server']['ldap_root_pw']       = $config['ldap_root_pw'];
 	$phpgw_info['server']['account_repository'] = $config['account_repository'];
 
-	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
-	$acct                = $phpgw->accounts;
+	$phpgw->accounts = CreateObject('phpgwapi.accounts');
+	$acct            = $phpgw->accounts;
 
 	/* connect to ldap server */
 	if (! $ldap = $common->ldapConnect())
@@ -127,11 +127,11 @@
 	if (isset($_POST['submit']))
 	{
 		$acl = CreateObject('phpgwapi.acl');
-		$acl->db = $GLOBALS['phpgw_setup']->db;
+		copyobj($GLOBALS['phpgw_setup']->db,$acl->db);
 		if (isset($_POST['ldapgroups']))
 		{
 			$groups = CreateObject('phpgwapi.accounts');
-			$groups->db = $GLOBALS['phpgw_setup']->db;
+			copyobj($GLOBALS['phpgw_setup']->db,$groups->db);
 			while (list($key,$groupid) = each($_POST['ldapgroups']))
 			{
 				$id_exist = 0;
@@ -146,7 +146,7 @@
 				/* Do some checks before we try to import the data. */
 				if (!empty($thisacctid) && !empty($thisacctlid))
 				{
-					$groups->account_id = intval($thisacctid);
+					$groups->account_id = (int)$thisacctid;
 
 					$sr = ldap_search($ldap,$config['ldap_group_context'],'cn='.$thisacctlid);
 					$entry = ldap_get_entries($ldap, $sr);
@@ -173,15 +173,15 @@
 					unset($add);
 					if(!@isset($entry[0]['phpgwaccountstatus']))
 					{
-						$add['phpgwaccountstatus'][]	= 'A';
+						$add['phpgwaccountstatus'][] = 'A';
 					}
 					if(!@isset($entry[0]['phpgwaccounttype']))
 					{
-						$add['phpgwaccounttype'][]	= 'g';
+						$add['phpgwaccounttype'][] = 'g';
 					}
 					if(!@isset($entry[0]['phpgwaccountexpires']))
 					{
-						$add['phpgwaccountexpires'][]	= -1;
+						$add['phpgwaccountexpires'][] = -1;
 					}
 					if(@isset($add))
 					{
@@ -213,7 +213,7 @@
 							//  these rights.  Instead, we maintain group membership here.
 							if($tmpid)
 							{
-								$acl->account_id = intval($tmpid);
+								$acl->account_id = (int)$tmpid;
 								$acl->read_repository();
 	
 								$acl->delete('phpgw_group',$thisacctid,1);
@@ -229,7 +229,7 @@
 					}
 					/* Now give this group some rights */
 					$phpgw_info['user']['account_id'] = $thisacctid;
-					$acl->account_id = intval($thisacctid);
+					$acl->account_id = (int)$thisacctid;
 					$acl->read_repository();
 					@reset($s_apps);
 					while (list($key,$app) = @each($s_apps))
@@ -246,7 +246,7 @@
 		if(isset($_POST['users']))
 		{
 			$accounts = CreateObject('phpgwapi.accounts');
-			$accounts->db = $GLOBALS['phpgw_setup']->db;
+			copyobj($GLOBALS['phpgw_setup']->db,$accounts->db);
 			while (list($key,$id) = each($_POST['users']))
 			{
 				$id_exist = 0;
@@ -258,7 +258,7 @@
 				/* Do some checks before we try to import the data. */
 				if (!empty($thisacctid) && !empty($thisacctlid))
 				{
-					$accounts->account_id = intval($thisacctid);
+					$accounts->account_id = (int)$thisacctid;
 					$sr = ldap_search($ldap,$config['ldap_context'],'uid='.$thisacctlid);
 					$entry = ldap_get_entries($ldap, $sr);
 					reset($entry[0]['objectclass']);
@@ -283,15 +283,15 @@
 					unset($add);
 					if(!@isset($entry[0]['phpgwaccountstatus']))
 					{
-						$add['phpgwaccountstatus'][]	= 'A';
+						$add['phpgwaccountstatus'][] = 'A';
 					}
 					if(!@isset($entry[0]['phpgwaccounttype']))
 					{
-						$add['phpgwaccounttype'][]	= 'u';
+						$add['phpgwaccounttype'][] = 'u';
 					}
 					if(!@isset($entry[0]['phpgwaccountexpires']))
 					{
-						$add['phpgwaccountexpires'][]	= -1;
+						$add['phpgwaccountexpires'][] = -1;
 					}
 					if(@isset($add))
 					{
@@ -303,7 +303,7 @@
 					Since the group has app rights, we don't need to give users
 					these rights.
 					*/
-					$acl->account_id = intval($thisacctid);
+					$acl->account_id = (int)$thisacctid;
 					$acl->read_repository();
 
 					/*
@@ -411,7 +411,7 @@
 	$setup_tpl->set_var('s_apps',$app_list);
 
 	$setup_tpl->set_var('ldap_import',lang('LDAP Modify'));
-	$setup_tpl->set_var('description',lang("This section will help you setup your LDAP accounts for use with phpGroupWare").'.');
+	$setup_tpl->set_var('description',lang("This section will help you setup your LDAP accounts for use with eGroupWare").'.');
 	$setup_tpl->set_var('select_users',lang('Select which user(s) will be modified'));
 	$setup_tpl->set_var('select_admins',lang('Select which user(s) will also have admin privileges'));
 	$setup_tpl->set_var('select_groups',lang('Select which group(s) will be modified (group membership will be maintained)'));

@@ -37,7 +37,7 @@
 	));
 	$setup_tpl->set_block('T_footer','footer','footer');
 
-	$host = 'us3.phpgroupware.org';
+	$host = 'us.egroupware.org';
 	$path = '/cvsdemo/xmlrpc.php';
 
 	$GLOBALS['phpgw_setup']->html->show_header(lang('Application List'),True);

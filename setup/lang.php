@@ -49,7 +49,7 @@
 	$setup_tpl->set_block('T_lang_main','B_choose_method','V_choose_method');
 
 	$stage_title = lang('Multi-Language support setup');
-	$stage_desc  = lang('This program will help you upgrade or install different languages for phpGroupWare');
+	$stage_desc  = lang('This program will help you upgrade or install different languages for eGroupWare');
 	$tbl_width   = @$newinstall ? '60%' : '80%';
 	$td_colspan  = @$newinstall ? '1' : '2';
 	$td_align    = @$newinstall ? ' align="center"' : '';

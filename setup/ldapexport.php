@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$phpgw_info = array();
-	$phpgw_info["flags"] = array(
+	$phpgw_info['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'home',
@@ -40,7 +40,7 @@
 
 	$common = $phpgw->common;
 	$GLOBALS['phpgw_setup']->loaddb();
-	$phpgw->db = $GLOBALS['phpgw_setup']->db;
+	copyobj($GLOBALS['phpgw_setup']->db,$phpgw->db);
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
@@ -147,8 +147,8 @@
 				// Do some checks before we try to import the data to LDAP.
 				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
-					$groups = CreateObject('phpgwapi.accounts',intval($thisacctid));
-					$groups->db = $GLOBALS['phpgw_setup']->db;
+					$groups = CreateObject('phpgwapi.accounts',(int)$thisacctid);
+					copyobj($GLOBALS['phpgw_setup']->db,$groups->db);
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
@@ -157,7 +157,7 @@
 					{
 						$thisacctid = $acct_exist;
 					}
-					$id_exist = $groups->exists(intval($thisacctid));
+					$id_exist = $groups->exists((int)$thisacctid);
 					
 					echo '<br>accountid: ' . $thisacctid;
 					echo '<br>accountlid: ' . $thisacctlid;
@@ -195,8 +195,8 @@
 				// Do some checks before we try to import the data.
 				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
-					$accounts = CreateObject('phpgwapi.accounts',intval($thisacctid));
-					$accounts->db = $GLOBALS['phpgw_setup']->db;
+					$accounts = CreateObject('phpgwapi.accounts',(int)$thisacctid);
+					copyobj($GLOBALS['phpgw_setup']->db,$accounts->db);
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
@@ -205,7 +205,7 @@
 					{
 						$thisacctid = $acct_exist;
 					}
-					$id_exist = $accounts->exists(intval($thisacctid));
+					$id_exist = $accounts->exists((int)$thisacctid);
 					// If not, create it now.
 					if(!$id_exist)
 					{
@@ -283,7 +283,7 @@
 	$setup_tpl->set_var('s_apps',$app_list);
 
 	$setup_tpl->set_var('ldap_import',lang('LDAP export users'));
-	$setup_tpl->set_var('description',lang("This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree").'.');
+	$setup_tpl->set_var('description',lang("This section will help you export users and groups from eGroupWare's account tables into your LDAP tree").'.');
 	$setup_tpl->set_var('select_users',lang('Select which user(s) will be exported'));
 	$setup_tpl->set_var('select_groups',lang('Select which group(s) will be exported (group membership will be maintained)'));
 	$setup_tpl->set_var('form_submit','export');

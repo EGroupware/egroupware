@@ -77,7 +77,7 @@ enter the title for your site	setup	pl	Podaj nazwê swojego portala (serwisu)
 enter your default ftp server	setup	pl	Podaj domy¶lny serwer FTP
 enter your http proxy server	setup	pl	Podaj adres serwera proxy HTTP
 enter your http proxy server port	setup	pl	Podaj port serwera proxy HTTP
-export phpgroupware accounts from sql to ldap	setup	pl	Eksportuj konta phpGroupWare z SQL do LDAP
+export egroupware accounts from sql to ldap	setup	pl	Eksportuj konta eGroupWare z SQL do LDAP
 export sql users to ldap	setup	pl	Eksportuj u¿ytkowników SQL do LDAP
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	pl	Dla nowej instalacji wybierz importuj.  Aby skonwertowaæ istniej±ce konta SQL do LDAP wybierz eksportuj.
 force selectbox	setup	pl	Wymu¶ wybór z listy
@@ -94,7 +94,7 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pl	
 if you did not receive any errors, your applications have been	setup	pl	
 if you did not receive any errors, your tables have been	setup	pl	
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	pl	
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	pl	
 import ldap users/groups	setup	pl	Import u¿tkowników/grup LDAP
 insanity	setup	pl	Szaleñstwo
 install	setup	pl	Instaluj
@@ -123,9 +123,9 @@ mcrypt algorithm (default tripledes)	setup	pl	Mcrypt algorithm (default TRIPLEDE
 mcrypt mode (default cbc)	setup	pl	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pl	Ustawienia Mcrypt (wymaga rozszerzenia PHP: mcrypt)
 minimum account id (e.g. 500 or 100, etc.)	setup	pl	Minimalny ID konta (np. 500 lub 100, itd.)
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	pl	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	pl	Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	pl	Instalacja wersji jêzykowych
-mysqlinstr	setup	pl	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+mysqlinstr	setup	pl	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 never	setup	pl	Nigdy
 no	setup	pl	Nie
 no algorithms available	setup	pl	no algorithms available
@@ -142,11 +142,11 @@ only add languages that are not in the database already	setup	pl	Dodaj tylko te 
 only add new phrases	setup	pl	Dodaj tylko nowe zdania
 passwords did not match, please re-enter	setup	pl	Has³a nie s± identyczne, proszê wpisaæ je jeszcze raz
 path information	setup	pl	¦cie¿ki
-pgsqlinstr	setup	pl	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb phpgroupware</i>
+pgsqlinstr	setup	pl	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	pl	Please check for sql scripts within the application's directory
-please configure phpgroupware for your environment	setup	pl	Proszê skonfigurowaæ phpGroupWare dla Twojego ¶rodowiska
+please configure egroupware for your environment	setup	pl	Proszê skonfigurowaæ eGroupWare dla Twojego ¶rodowiska
 please install	setup	pl	Proszê zainstalowaæ
-please login to phpgroupware and run the admin application for additional site configuration	setup	pl	Proszê zalogowaæ siê siê do phpGroupWare i wej¶æ do modu³u Administracja dla dalszej konfiguracji 
+please login to egroupware and run the admin application for additional site configuration	setup	pl	Proszê zalogowaæ siê siê do eGroupWare i wej¶æ do modu³u Administracja dla dalszej konfiguracji 
 possible solutions	setup	pl	Mo¿liwe rozwiazania
 potential problem	setup	pl	Potencjalny problem
 preferences	setup	pl	Ustawienia
@@ -196,9 +196,9 @@ text entry	setup	pl	Wpisywanie tekstu
 the table definition was correct, and the tables were installed	setup	pl	Definicja tabel jest poprawna i tabele zosta³y zainstalowane
 the tables	setup	pl	tabele
 there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	pl	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
-this program will help you upgrade or install different languages for phpgroupware	setup	pl	Ten program pomo¿e Ci zainstalowaæ lub uaktualniæ wersje jêzykowe phpGroupWare
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	pl	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
-this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	pl	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
+this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomo¿e Ci zainstalowaæ lub uaktualniæ wersje jêzykowe eGroupWare
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	pl	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	pl	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
 this stage is completed<br>	setup	pl	Etap zakoñczony<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	pl	Zostanie utworzone jedno konto administratora i trzy konta demonstracyne<br>Nazwy u¿ytkowników/has³a: demo/guest, demo2/guest i demo3/guest.<br><b>UWAGA! Wszystkie istniej±ce konta zostan± usuniête!!!</b><br>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	pl	aby za³o¿yæ jedno konto administracyjne i trzy konta demo.<br><b>Istniej±ce konta zostan± usuniete!</b>
@@ -217,13 +217,13 @@ use pure html compliant code (not fully working yet)	setup	pl	Use pure HTML comp
 users choice	setup	pl	Wybór u¿ytkownika
 version mismatch	setup	pl	Niezgodne wersje
 we will automatically update your tables/records to %1	setup	pl	We will automatically update your tables/records to %1
-would you like phpgroupware to cache the phpgw info array ?	setup	pl	Would you like phpGroupWare to cache the phpgw info array ?
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	pl	Chcesz sprawdzaæ czy jest nowa wersja phpGroupWare<br>gdy loguje siê administrator?
+would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like eGroupWare to cache the phpgw info array ?
+would you like egroupware to check for a new version<br>when admins login ?	setup	pl	Chcesz sprawdzaæ czy jest nowa wersja eGroupWare<br>gdy loguje siê administrator?
 would you like to show each application's upgrade status ?	setup	pl	Would you like to show each application's upgrade status ?
 yes	setup	pl	Tak
-you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup	pl	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16
-you appear to be running version %1 of phpgroupware	setup	pl	You appear to be running version %1 of phpGroupWare
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version 4.1.0	setup	pl	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0
+you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of eGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	pl	You are ready for this stage, but this stage is not yet written.<br>
 you do not have any languages installed. please install one now <br>	setup	pl	You do not have any languages installed. Please install one now <br>
 you must enter a username for the admin	setup	pl	Musisz podaæ nazwê administratora

@@ -60,7 +60,7 @@
 		
 		$GLOBALS['phpgw']->accounts->create($account_info);
 
-		return $GLOBALS['phpgw']->accounts->name2id($username);
+		return (int)$GLOBALS['phpgw']->accounts->name2id($username);
 	}
 
 	if(!get_var('submit',Array('POST')))
@@ -149,10 +149,10 @@
 			var $accounts;
 		}
 		$GLOBALS['phpgw'] = new phpgw;
-		$GLOBALS['phpgw']->db		= $GLOBALS['phpgw_setup']->db;
-		$GLOBALS['phpgw']->common	= CreateObject('phpgwapi.common');
-		$GLOBALS['phpgw']->accounts	= CreateObject('phpgwapi.accounts');
-		$GLOBALS['phpgw']->translation	= CreateObject('phpgwapi.translation');
+		copyobj($GLOBALS['phpgw_setup']->db,$GLOBALS['phpgw']->db);
+		$GLOBALS['phpgw']->common      = CreateObject('phpgwapi.common');
+		$GLOBALS['phpgw']->accounts    = CreateObject('phpgwapi.accounts');
+		$GLOBALS['phpgw']->translation = CreateObject('phpgwapi.translation');
 		if(($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap') &&
 			!$GLOBALS['phpgw']->accounts->ds)
 		{
@@ -169,8 +169,8 @@
 		$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_acl');
 
 		/* Create the demo groups */
-		$defaultgroupid = intval(add_account('Default','Default','Group',$passwd,'g'));
-		$admingroupid   = intval(add_account('Admins','Admin', 'Group',$passwd,'g'));
+		$defaultgroupid = (int)add_account('Default','Default','Group',$passwd,'g');
+		$admingroupid   = (int)add_account('Admins','Admin', 'Group',$passwd,'g');
 
 		/* Group perms for the default group */
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('addressbook','run'," . $defaultgroupid . ", 1)");
@@ -178,31 +178,30 @@
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('calendar','run'," . $defaultgroupid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('email','run'," . $defaultgroupid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('notes','run'," . $defaultgroupid . ", 1)");
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('todo','run'," . $defaultgroupid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('manual','run'," . $defaultgroupid . ", 1)");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('preferences','run'," . $defaultgroupid . ", 1)");
 
 		function insert_default_prefs($accountid)
 		{
 			$defaultprefs = array(
-				"common" => array(
-					"maxmatchs" => 15,
-					"template_set" => "idots",
-					"theme"        => "idots",
-					"navbar_format"=> "icons",
-					"tz_offset"    => 0,
-					"dateformat"   => "Y/m/d",
-					"timeformat"   => "24",
-					"lang"         => get_var('ConfigLang',Array('POST','COOKIE'),'en'),
-					"default_app"  => "calendar",
-					"currency"     => "$",
-					'show_help'    => True,
+				'common' => array(
+					'maxmatchs'     => 15,
+					'template_set'  => 'idots',
+					'theme'         => 'idots',
+					'navbar_format' => 'icons',
+					'tz_offset'     => 0,
+					'dateformat'    => 'Y/m/d',
+					'timeformat'    => '24',
+					'lang'          => get_var('ConfigLang',Array('POST','COOKIE'),'en'),
+					'default_app'   => 'calendar',
+					'currency'      => '$',
+					'show_help'     => True,
 				),
-				"calendar" => array(
-					"workdaystarts" => 9,
-					"workdayends"   => 17,
-					"weekdaystarts" => "Monday",
-					"defaultcalendar" => "day",
+				'calendar' => array(
+					'workdaystarts' => 9,
+					'workdayends'   => 17,
+					'weekdaystarts' => 'Monday',
+					'defaultcalendar' => 'day',
 					'planner_start_with_group' => $GLOBALS['defaultgroupid'],
 				),
 			);

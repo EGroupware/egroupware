@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
   * eGroupWare - Setup - change / convert system-charset                     *
-  * http://www.eGroupWareare.org                                             *
+  * http://www.eGroupWare.org                                                *
   * Written by RalfBecker@outdoor-training.de                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *

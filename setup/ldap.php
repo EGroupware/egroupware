@@ -57,9 +57,9 @@
 	$setup_tpl->set_block('ldap','footer','footer');
 
 	$setup_tpl->set_var('description',lang('LDAP Accounts Configuration'));
-	$setup_tpl->set_var('lang_ldapmodify',lang('Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)'));
-	$setup_tpl->set_var('lang_ldapimport',lang('Import accounts from LDAP to the phpGroupware accounts table (for a new install using SQL accounts)'));
-	$setup_tpl->set_var('lang_ldapexport',lang('Export phpGroupware accounts from SQL to LDAP'));
+	$setup_tpl->set_var('lang_ldapmodify',lang('Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)'));
+	$setup_tpl->set_var('lang_ldapimport',lang('Import accounts from LDAP to the eGroupware accounts table (for a new install using SQL accounts)'));
+	$setup_tpl->set_var('lang_ldapexport',lang('Export eGroupware accounts from SQL to LDAP'));
 	$setup_tpl->set_var('lang_ldapdummy',lang('Setup demo accounts in LDAP'));
 	$setup_tpl->set_var('ldapmodify','ldapmodify.php');
 	$setup_tpl->set_var('ldapimport','ldapimport.php');

@@ -168,8 +168,8 @@
 					// Do some checks before we try to import the data.
 					if (!empty($thisacctid) && !empty($thisacctlid))
 					{
-						$accounts = CreateObject('phpgwapi.accounts',intval($thisacctid));
-						$accounts->db = $GLOBALS['phpgw_setup']->db;
+						$accounts = CreateObject('phpgwapi.accounts',(int)$thisacctid);
+						copyobj($GLOBALS['phpgw_setup']->db,$accounts->db);
 
 						// Check if the account is already there.
 						// If so, we won't try to create it again.
@@ -200,7 +200,7 @@
 						// Since the group has app rights, we don't need to give users
 						//  these rights.  Instead, we make the user a member of the Default group
 						//  below.
-						$acl = CreateObject('phpgwapi.acl',intval($thisacctid));
+						$acl = CreateObject('phpgwapi.acl',(int)$thisacctid);
 						$acl->db = $GLOBALS['phpgw_setup']->db;
 						$acl->read_repository();
 
@@ -215,7 +215,7 @@
 								$acl->add('admin','run',1);
 							}
 						}
-	
+
 						// Now make them a member of the 'Default' group.
 						// But, only if the current user is not the group itself.
 						if (!$defaultgroupid)
@@ -246,11 +246,11 @@
 					$thismembers   = $group_info[$groupid]['members'];
 
 					// Do some checks before we try to import the data.
-					if (!empty($thisacctid) && !empty($thisacctlid))
+					if(!empty($thisacctid) && !empty($thisacctlid))
 					{
-						$groups = CreateObject('phpgwapi.accounts',intval($thisacctid));
-						$groups->db = $GLOBALS['phpgw_setup']->db;
-	
+						$groups = CreateObject('phpgwapi.accounts',(int)$thisacctid);
+						copyobj($GLOBALS['phpgw_setup']->db,$groups->db);
+
 						// Check if the account is already there.
 						// If so, we won't try to create it again.
 						$acct_exist = $groups->name2id($thisacctlid);
@@ -259,7 +259,7 @@
 						{
 							$thisacctid = $acct_exist;
 						}
-						$id_exist = $groups->exists(intval($thisacctid));
+						$id_exist = $groups->exists((int)$thisacctid);
 						// If not, create it now.
 						if(!$id_exist)
 						{
@@ -302,8 +302,8 @@
 							if($tmpid)
 							{
 								$acl = CreateObject('phpgwapi.acl',$tmpid);
-								$acl->db = $GLOBALS['phpgw_setup']->db;
-								$acl->account_id = intval($tmpid);
+								copyobj($GLOBALS['phpgw_setup']->db,$acl->db);
+								$acl->account_id = (int)$tmpid;
 								$acl->read_repository();
 
 								$acl->delete('phpgw_group',$thisacctid,1);
@@ -320,7 +320,7 @@
 								*/
 								$pref = CreateObject('phpgwapi.preferences',$tmpid);
 								$pref->db = $GLOBALS['phpgw_setup']->db;
-								$pref->account_id = intval($tmpid);
+								$pref->account_id = (int)$tmpid;
 								$pref->read_repository();
 								@reset($s_apps);
 								while (list($key,$app) = each($s_apps))
@@ -333,8 +333,8 @@
 						/* Now give this group some rights */
 						$phpgw_info['user']['account_id'] = $thisacctid;
 						$acl = CreateObject('phpgwapi.acl');
-						$acl->db = $GLOBALS['phpgw_setup']->db;
-						$acl->account_id = intval($thisacctid);
+						copyobj($GLOBALS['phpgw_setup']->db,$acl->db);
+						$acl->account_id = (int)$thisacctid;
 						$acl->read_repository();
 						@reset($s_apps);
 						while (list($key,$app) = each($s_apps))
@@ -351,7 +351,7 @@
 			{
 				/* Create the 'Default' group */
 				$groups = CreateObject('phpgwapi.accounts',$defaultgroupid);
-				$groups->db = $GLOBALS['phpgw_setup']->db;
+				copyobj($GLOBALS['phpgw_setup']->db,$groups->db);
 
 				// Check if the group account is already there.
 				// If so, set our group_id to that account's id for use below.
@@ -360,7 +360,7 @@
 				{
 					$defaultgroupid = $acct_exist;
 				}
-				$id_exist   = $groups->exists(intval($defaultgroupid));
+				$id_exist   = $groups->exists((int)$defaultgroupid);
 				// if not, create it, using our original groupid.
 				if($id_exist)
 				{
@@ -380,8 +380,8 @@
 				$defaultgroupid = $acct->name2id('Default');
 
 				$acl = CreateObject('phpgwapi.acl',$defaultgroupid);
-				$acl->db = $GLOBALS['phpgw_setup']->db;
-				$acl->account_id = intval($defaultgroupid);
+				copyobj($GLOBALS['phpgw_setup']->db,$acl->db);
+				$acl->account_id = (int)$defaultgroupid;
 				$acl->read_repository();
 				@reset($s_apps);
 				while (list($key,$app) = each($s_apps))
@@ -466,7 +466,7 @@
 	$setup_tpl->set_var('s_apps',$app_list);
 
 	$setup_tpl->set_var('ldap_import',lang('LDAP import users'));
-	$setup_tpl->set_var('description',lang("This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables").'.');
+	$setup_tpl->set_var('description',lang("This section will help you import users and groups from your LDAP tree into eGroupWare's account tables").'.');
 	$setup_tpl->set_var('select_users',lang('Select which user(s) will be imported'));
 	$setup_tpl->set_var('select_admins',lang('Select which user(s) will have admin privileges'));
 	$setup_tpl->set_var('select_groups',lang('Select which group(s) will be imported (group membership will be maintained)'));

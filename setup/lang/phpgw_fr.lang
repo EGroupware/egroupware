@@ -116,7 +116,7 @@ enter your default FTP server	setup	fr	Entrez votre serveur FTP par défaut
 enter your HTTP proxy server	setup	fr	Entrez votre serveur proxy HTTP
 enter your HTTP proxy server port	setup	fr	Entrez le port de votre serveur proxy HTTP
 export has been completed!  you will need to set the user passwords manually.	setup	fr	L'export a été complété!  Vous allez devoir régler les mots de passe des utilisateurs manuellement.
-export phpgroupware accounts from sql to ldap	setup	fr	Exporter les comptes phpGroupWare de SQL vers LDAP
+export egroupware accounts from sql to ldap	setup	fr	Exporter les comptes eGroupWare de SQL vers LDAP
 export sql users to ldap	setup	fr	Exporter les utilisateurs SQL vers LDAP
 file	setup	fr	Fichier
 file type, size, version, etc.	setup	fr	Type de fichier, taille, version, etc.
@@ -141,7 +141,7 @@ if you did not receive any errors, your applications have been	setup	fr	Si vous 
 if you did not receive any errors, your tables have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos tables ont été
 if you running this the first time, don't forget to manualy %1 !!!	setup	fr	Si vous exécutez ceci pour la première fois, n'oubliez pas  de faire manuellement %1 !!!
 image type selection order	setup	fr	Ordre de sélection de type d'image
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	fr	Importer les comptes de LDAP vers la table des comptes phpGroupWare (pour une nouvelle installation utilisant les comptes SQL)
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	fr	Importer les comptes de LDAP vers la table des comptes eGroupWare (pour une nouvelle installation utilisant les comptes SQL)
 import has been completed!	setup	fr	L'import a été complété!
 import ldap users/groups	setup	fr	Importer les utilisateurs/groupes LDAP
 importing old settings into the new format....	setup	fr	J'importe les vieux réglages dans le nouveau format....
@@ -185,11 +185,11 @@ mcrypt version	setup	fr	Versio de MCrypt
 minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 500 ou 100, etc.)
 modifications have been completed!	setup	fr	Les modifications ont été complétées!
 modify	setup	fr	Modifier
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	fr	Modifier un compte LDAP existant pour stocker et utiliser avec phpGroupWare (pour une nouvelle installation utilisant les comptes LDAP)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	fr	Modifier un compte LDAP existant pour stocker et utiliser avec eGroupWare (pour une nouvelle installation utilisant les comptes LDAP)
 multi-language support setup	setup	fr	Setup pour le support du multi-langues
-mysqlinstr	setup	fr	 Instructions pour créer la base de données dans MySQL:<br>Se connecter à mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Créer la base de données vide et attribuer les permissions utilisateurs -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+mysqlinstr	setup	fr	 Instructions pour créer la base de données dans MySQL:<br>Se connecter à mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Créer la base de données vide et attribuer les permissions utilisateurs -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 name of database	setup	fr	Nom de la base de données
-name of db user phpGroupWare uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont phpGroupWare se sert pour se connecter
+name of db user eGroupWare uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont eGroupWare se sert pour se connecter
 never	setup	fr	Jamais
 new	setup	fr	Nouveau
 no	setup	fr	Non
@@ -220,15 +220,15 @@ passwords did not match, please re-enter	setup	fr	Les mots de passe ne correspon
 path information	setup	fr	Information de chemin
 path to user and group files has to be outside of the webservers document-root!!!	setup	fr	Le chemin vers les fichiers utilisateur et groupe DOIT ETRE EN DEHORS du répertoire racine des serveurs web!!!
 persistent connections	setup	fr	Connexions persistantes
-pgsqlinstr	setup	fr	Instructions pour créer la base de données dans PostgreSQL:<br>Démarrer le postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Créer la base de données vide-<br><i>[user@server user]# createdb phpgroupware</i>
-phpgroupware administration manual	setup	fr	Manuel d'Administration phpGroupWare
+pgsqlinstr	setup	fr	Instructions pour créer la base de données dans PostgreSQL:<br>Démarrer le postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Créer la base de données vide-<br><i>[user@server user]# createdb egroupware</i>
+egroupware administration manual	setup	fr	Manuel d'Administration eGroupWare
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
-please configure phpGroupWare for your environment	setup	fr	SVP configurez phpGroupWare pour votre environnement
+please configure eGroupWare for your environment	setup	fr	SVP configurez eGroupWare pour votre environnement
 please consult the %1.	setup	fr	SVP consultez le %1.
 please install	setup	fr	SVP installez
 please login	setup	fr	SVP connectez-vous
-please login to phpgroupware and run the admin application for additional site configuration	setup	fr	SVP connectez-vous à phpgroupware et exécutez l'application admin pour les possibilités supplémentaires de configuration du site
+please login to egroupware and run the admin application for additional site configuration	setup	fr	SVP connectez-vous à egroupware et exécutez l'application admin pour les possibilités supplémentaires de configuration du site
 please wait...	setup	fr	Patientez SVP...
 possible reasons	setup	fr	Raisons possibles
 possible solutions	setup	fr	Solutions possibles
@@ -298,10 +298,10 @@ the table definition was correct, and the tables were installed	setup	fr	La défi
 the tables	setup	fr	Les tables
 there was a problem trying to connect to your ldap server. <br>please check your LDAP server configuration	setup	fr	Il y a eu un problème en essayant de se connecter à votre serveur LDAP. <br>SVP vérifiez la configuration de votre serveur LDAP
 this has to be outside the webservers document-root!!!	setup	fr	Ceci doit être en dehors du répertoire racine des documents des serveurs Web!!!
-this program will help you upgrade or install different languages for phpGroupWare	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans phpGroupWare
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et groupes des tables de comptes de phpGroupWare vers votre arbre LDAP
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	fr	Cette section va vous aider à importer les utilisateurs et groupes de votre arbre LDAP vers les tables de comptes de phpGroupWare
-this section will help you setup your LDAP accounts for use with phpGroupWare	setup	fr	Cette section va vous aider à configurer vos comptes LDAP pour les utiliser dans phpGroupWare
+this program will help you upgrade or install different languages for eGroupWare	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans eGroupWare
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et groupes des tables de comptes de eGroupWare vers votre arbre LDAP
+this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	fr	Cette section va vous aider à importer les utilisateurs et groupes de votre arbre LDAP vers les tables de comptes de eGroupWare
+this section will help you setup your LDAP accounts for use with eGroupWare	setup	fr	Cette section va vous aider à configurer vos comptes LDAP pour les utiliser dans eGroupWare
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br>Note: la valeur par défaut a été générée au hasard.
 this stage is completed<br>	setup	fr	Cette étape est complétée<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	fr	Ceci va créer 1 compte admin et 3 comptes demo<br>Les utilisateurs/mots de passe sont: demo/guest, demo2/guest et demo3/guest.<br><b>!!!CECI VA SUPPRIMER TOUS LES COMPTES EXISTANTS!!!</b><br>
@@ -311,7 +311,7 @@ top	setup	fr	top
 translations added	setup	fr	Traductions ajoutées
 translations removed	setup	fr	Traductions enlevées
 translations upgraded	setup	fr	Traductions mises à jour
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	fr	Essayez de configurer votre php pour qu'il supporte une des bases de données mentionnées ci-dessus, ou installez phpGroupWare à la main.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fr	Essayez de configurer votre php pour qu'il supporte une des bases de données mentionnées ci-dessus, ou installez eGroupWare à la main.
 two weeks	setup	fr	Deux semaines
 uninstall	setup	fr	Désinstaller
 uninstall all applications	setup	fr	Désinstaller toutes les applications
@@ -329,16 +329,16 @@ warning!	setup	fr	Attention!
 we can proceed	setup	fr	Nous pouvons continuer
 we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	fr	Quel type de gestion de sessions voulez-vous utiliser (gestion de session PHP4 devrait être le plus performant)?
-which database type do you want to use with phpgroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec phpGroupWare?
-would you like phpGroupWare to cache the phpgw info array ?	setup	fr	Voudriez-vous que phpGroupWare mette en cache le champ phpgw info ?
-would you like phpGroupWare to check for a new version<br>when admins login ?	setup	fr	Voudriez-vous que phpGroupWare vérifie la disponibilité d'une nouvelle version<br>quand les administrateurs se connectent ?
+which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec eGroupWare?
+would you like eGroupWare to cache the phpgw info array ?	setup	fr	Voudriez-vous que eGroupWare mette en cache le champ phpgw info ?
+would you like eGroupWare to check for a new version<br>when admins login ?	setup	fr	Voudriez-vous que eGroupWare vérifie la disponibilité d'une nouvelle version<br>quand les administrateurs se connectent ?
 would you like to show each application's upgrade status ?	setup	fr	Voudriez-vous montrer le statut de mise à jour de chaque application ?
 write config	setup	fr	Ecrire la configuration
 yes	setup	fr	Oui
-you appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de phpGroupWare.<br>Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br>puis mettre à jour depuis cette version jusqu'à la version actuelle.
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	fr	Vous semblez utiliser une version ancienne de PHP <br>Il est recommandé que vous mettiez votre système à jour vers une version plus récente. <br>Les anciennes version de PHP pourraient ne pas faire fonctionner correctement phpGroupWare, voire pas du tout. <br><br>SVP, mettez votre système à jour vers au moins la version 3.0.16
-you appear to be running version %1 of phpGroupWare	setup	fr	Vous semblez utiliser la version %1 de phpGroupWare
-you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	fr	Vous semblez utiliser une version de PHP plus ancienne que la 4.1.0. phpGroupWare nécessite maintenant 4.1.0 ou plus récent
+you appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de eGroupWare.<br>Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br>puis mettre à jour depuis cette version jusqu'à la version actuelle.
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup	fr	Vous semblez utiliser une version ancienne de PHP <br>Il est recommandé que vous mettiez votre système à jour vers une version plus récente. <br>Les anciennes version de PHP pourraient ne pas faire fonctionner correctement eGroupWare, voire pas du tout. <br><br>SVP, mettez votre système à jour vers au moins la version 4.1.0
+you appear to be running version %1 of eGroupWare	setup	fr	Vous semblez utiliser la version %1 de eGroupWare
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	fr	Vous semblez utiliser une version de PHP plus ancienne que la 4.1.0. eGroupWare nécessite maintenant 4.1.0 ou plus récent
 you appear to be using php3. disabling php4 sessions support	setup	fr	Vous semblez utiliser PHP3. Je désactive le support des sessions PHP4
 you appear to be using php4. enabling php4 sessions support	setup	fr	Vous semblez utiliser PHP4. J'active le support des sessions PHP4
 you appear to have microsoft sql server support enabled	setup	fr	Vous semblez avoir le support de Microsoft SQL Server activé

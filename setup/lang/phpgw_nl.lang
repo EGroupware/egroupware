@@ -132,7 +132,7 @@ enter your http proxy server password	setup	nl
 enter your http proxy server port	setup	nl	
 enter your http proxy server username	setup	nl	
 export has been completed!  you will need to set the user passwords manually.	setup	nl	
-export phpgroupware accounts from sql to ldap	setup	nl	
+export egroupware accounts from sql to ldap	setup	nl	
 export sql users to ldap	setup	nl	
 file	setup	nl	
 file type, size, version, etc.	setup	nl	
@@ -158,7 +158,7 @@ if you did not receive any errors, your applications have been	setup	nl
 if you did not receive any errors, your tables have been	setup	nl	
 if you running this the first time, don't forget to manualy %1 !!!	setup	nl	
 image type selection order	setup	nl	
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	nl	
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	nl	
 import has been completed!	setup	nl	
 import ldap users/groups	setup	nl	
 importing old settings into the new format....	setup	nl	
@@ -204,10 +204,10 @@ mcrypt version	setup	nl
 minimum account id (e.g. 500 or 100, etc.)	setup	nl	
 modifications have been completed!	setup	nl	
 modify	setup	nl	
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	nl	
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	nl	
 multi-language support setup	setup	nl	
 name of database	setup	nl	
-name of db user phpgroupware uses to connect	setup	nl	
+name of db user egroupware uses to connect	setup	nl	
 never	setup	nl	
 new	setup	nl	
 no	setup	nl	
@@ -239,15 +239,15 @@ passwords did not match, please re-enter	setup	nl
 path information	setup	nl	
 path to user and group files has to be outside of the webservers document-root!!!	setup	nl	
 persistent connections	setup	nl	
-phpgroupware administration manual	setup	nl	
+egroupware administration manual	setup	nl	
 please check for sql scripts within the application's directory	setup	nl	
 please check read/write permissions on directories, or back up and use another option.	setup	nl	
-please configure phpgroupware for your environment	setup	nl	
+please configure egroupware for your environment	setup	nl	
 please consult the %1.	setup	nl	
 please fix the above errors (***) and %1continue to the header admin%2	setup	nl	
 please install	setup	nl	
 please login	setup	nl	
-please login to phpgroupware and run the admin application for additional site configuration	setup	nl	
+please login to egroupware and run the admin application for additional site configuration	setup	nl	
 please wait...	setup	nl	
 possible reasons	setup	nl	
 possible solutions	setup	nl	
@@ -323,10 +323,10 @@ there was a problem trying to connect to your ldap server. <br>	setup	nl
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	nl	
 this has to be outside the webservers document-root!!!	setup	nl	
 this program will convert your database to a new system-charset.	setup	nl	
-this program will help you upgrade or install different languages for phpgroupware	setup	nl	
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	nl	
-this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	nl	
-this section will help you setup your ldap accounts for use with phpgroupware	setup	nl	
+this program will help you upgrade or install different languages for egroupware	setup	nl	
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	nl	
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	nl	
+this section will help you setup your ldap accounts for use with egroupware	setup	nl	
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	nl	
 this stage is completed<br>	setup	nl	
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	nl	
@@ -336,7 +336,7 @@ top	setup	nl
 translations added	setup	nl	
 translations removed	setup	nl	
 translations upgraded	setup	nl	
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	nl	
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	nl	
 two weeks	setup	nl	
 uninstall	setup	nl	
 uninstall all applications	setup	nl	
@@ -355,16 +355,16 @@ warning!	setup	nl
 we can proceed	setup	nl	
 we will automatically update your tables/records to %1	setup	nl	
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	nl	
-which database type do you want to use with phpgroupware?	setup	nl	
-would you like phpgroupware to cache the phpgw info array ?	setup	nl	
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	nl	
+which database type do you want to use with egroupware?	setup	nl	
+would you like egroupware to cache the phpgw info array ?	setup	nl	
+would you like egroupware to check for a new version<br>when admins login ?	setup	nl	
 would you like to show each application's upgrade status ?	setup	nl	
 write config	setup	nl	
 yes	setup	nl	
-you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	nl	
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	nl	
-you appear to be running version %1 of phpgroupware	setup	nl	U lijkt eGroupWare versie %1 te draaien
-you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	nl	U lijkt een oudere versie dan PHP 4.1.0 te gebruiken. eGroupWare vereist nu PHP 4.1.0 of nieuwer
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	nl	
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	nl	
+you appear to be running version %1 of egroupware	setup	nl	U lijkt eGroupWare versie %1 te draaien
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	nl	U lijkt een oudere versie dan PHP 4.1.0 te gebruiken. eGroupWare vereist nu PHP 4.1.0 of nieuwer
 you appear to be using php3. disabling php4 sessions support	setup	nl	Het lijkt erop dat u PHP3 gebruikt. PHP4 Sessieondersteuning is gedeactiveerd.
 you appear to be using php4. enabling php4 sessions support	setup	nl	Het lijkt erop dat u PHP4 gebruikt. PHP4 Sessieondersteuning is geactiveerd.
 you appear to have microsoft sql server support enabled	setup	nl	Microsoft SQL Server ondersteuning lijkt te zijn geactiveerd

@@ -207,7 +207,7 @@
 			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="0">' . "\n";
 
 			$detected .= '<tr><td colspan="2"><p>' . $GLOBALS['phpgw_info']['setup']['PageMSG'] . '<br />&nbsp;</p></td></tr>';
-			$manual = '<a href="../doc/en_US/html/admin/" target="manual">'.lang('phpGroupWare Administration Manual').'</a>';
+			$manual = '<a href="../doc/en_US/html/admin/" target="manual">'.lang('eGroupWare Administration Manual').'</a>';
 			$detected .= '<tr><td colspan="2"><p><b>'.lang('Please consult the %1.',$manual).'</b><br>&nbsp;</td></tr>'. "\n";
 
 			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr><tr><td colspan="2">'. "\n";
@@ -268,7 +268,7 @@
 				$detected .= '<b><p align="center" class="msg">'
 					. lang('Did not find any valid DB support!')
 					. "<br>\n"
-					. lang('Try to configure your php to support one of the above mentioned DBMS, or install phpGroupWare by hand.')
+					. lang('Try to configure your php to support one of the above mentioned DBMS, or install eGroupWare by hand.')
 					. '</p></b><td></tr></table></body></html>';
 				echo $detected;
 				exit;
@@ -277,7 +277,7 @@
 			if(!function_exists('version_compare'))
 			{
 				$detected .= '<b><p align="center" class="msg">'
-					. lang('You appear to be using PHP earlier than 4.1.0. phpGroupWare now requires 4.1.0 or later'). "\n"
+					. lang('You appear to be using PHP earlier than 4.1.0. eGroupWare now requires 4.1.0 or later'). "\n"
 					. '</p></b><td></tr></table></body></html>';
 				echo $detected;
 				exit;
@@ -426,7 +426,7 @@
 				$detected .= lang('Sample configuration not found. using built in defaults') . '<br>' . "\n";
 				$GLOBALS['phpgw_info']['server']['server_root'] = '/path/to/egroupware';
 				$GLOBALS['phpgw_info']['server']['include_root'] = '/path/to/egroupware';
-				/* This is the basic include needed on each page for phpGroupWare application compliance */
+				/* This is the basic include needed on each page for eGroupWare application compliance */
 				$GLOBALS['phpgw_info']['flags']['htmlcompliant'] = True;
 
 				/* These are the settings for the database system */
@@ -583,11 +583,11 @@
 			$setup_tpl->set_var('lang_dbname',lang('DB Name'));
 			$setup_tpl->set_var('lang_dbnamedescr',lang('Name of database'));
 			$setup_tpl->set_var('lang_dbuser',lang('DB User'));
-			$setup_tpl->set_var('lang_dbuserdescr',lang('Name of db user phpGroupWare uses to connect'));
+			$setup_tpl->set_var('lang_dbuserdescr',lang('Name of db user eGroupWare uses to connect'));
 			$setup_tpl->set_var('lang_dbpass',lang('DB Password'));
 			$setup_tpl->set_var('lang_dbpassdescr',lang('Password of db user'));
 			$setup_tpl->set_var('lang_dbtype',lang('DB Type'));
-			$setup_tpl->set_var('lang_whichdb',lang('Which database type do you want to use with phpGroupWare?'));
+			$setup_tpl->set_var('lang_whichdb',lang('Which database type do you want to use with eGroupWare?'));
 			$setup_tpl->set_var('lang_configpass',lang('Configuration Password'));
 			$setup_tpl->set_var('lang_passforconfig',lang('Password needed for configuration'));
 			$setup_tpl->set_var('lang_persist',lang('Persistent connections'));

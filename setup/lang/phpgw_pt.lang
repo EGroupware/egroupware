@@ -77,7 +77,7 @@ Enter the title for your site	setup	pt	Digite o título para o site
 Enter your default FTP server	setup	pt	Digite seu servidor FTP padrão
 Enter your HTTP proxy server port	setup	pt	Digite a porta do servidor proxy HTTP
 Enter your HTTP proxy server	setup	pt	Digite o endereço do servidor proxy HTTP
-export phpgroupware accounts from sql to ldap	setup	pt	Exportar contas phpGroupWare do SQL para o LDAP
+export egroupware accounts from sql to ldap	setup	pt	Exportar contas eGroupWare do SQL para o LDAP
 export sql users to ldap	setup	pt	Exportar usuários do SQL para o LDAP
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	pt	Para uma nova instalação, selecione importar. Para converter contas existentes no SQL para o LDAP, selecione exportar
 force selectbox	setup	pt	Forçar caixa de seleção
@@ -94,7 +94,7 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	pt	Se estiver usando LDAP, você deseja definir atributos de diretório home e interpretador de comandos ?
 if you did not receive any errors, your applications have been	setup	pt	Se não foi exibido nenhum erro, suas aplicações foram
 if you did not receive any errors, your tables have been	setup	pt	Se não foi exibido nenhum erro, as tabelas foram
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	pt	Importar contas LDAP para a tabela do phpGroupWare (para uma nova instalação usando contas no SQL)
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	pt	Importar contas LDAP para a tabela do eGroupWare (para uma nova instalação usando contas no SQL)
 import ldap users/groups	setup	pt	Importar usuários/grupos LDAP
 insanity	setup	pt	Insanidade
 install Applications	setup	pt	Instalar aplicações
@@ -123,9 +123,9 @@ mcrypt algorithm (default tripledes)	setup	pt	Algoritmo Mcrypt (padrão TRIPLEDES
 mcrypt mode (default cbc)	setup	pt	Modo Mcrypt (padrão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt	Configurações para Mcrypt (requer extensão mcrypt do PHP)
 Minimum account id (e.g. 500 or 100, etc.)	setup	pt	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	pt	Modificar uma base de dados LDAP existente para usar com phpGroupWare (para uma nova instalação usando contas LDAP)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	pt	Modificar uma base de dados LDAP existente para usar com eGroupWare (para uma nova instalação usando contas LDAP)
 multi-language support setup	setup	pt	Configuração de suporte a idiomas
-mysqlinstr	setup	pt	Instruções para criar a base de dados no MySQL:<br>Conecte no mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Crie a base de dados vazia e defina as permissões de acesso -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+mysqlinstr	setup	pt	Instruções para criar a base de dados no MySQL:<br>Conecte no mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Crie a base de dados vazia e defina as permissões de acesso -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 never	setup	pt	nunca
 no algorithms available	setup	pt	Nenhum algoritmo disponível
 no modes available	setup	pt	nenhum modo disponível
@@ -142,11 +142,11 @@ only add languages that are not in the database already	setup	pt	Somente adicion
 only add new phrases	setup	pt	Somente adicionar novas frases
 passwords did not match, please re-enter	setup	pt	Senhas não conferem, digite novamente
 Path information	setup	pt	Informação de Path
-pgsqlinstr	setup	pt	Instruções para criar a base de dados no PostgreSQL:<br>Inicie o serviço (postmaster)<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crie a base de dados vazia -<br><i>[user@server user]# createdb phpgroupware</i>
+pgsqlinstr	setup	pt	Instruções para criar a base de dados no PostgreSQL:<br>Inicie o serviço (postmaster)<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crie a base de dados vazia -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	pt	Procure por scripts sql dentro do diretório da aplicação
-please configure phpGroupWare for your environment	setup	pt	Por favor configure o phpGroupWare para o seu ambiente
+please configure eGroupWare for your environment	setup	pt	Por favor configure o eGroupWare para o seu ambiente
 please install	setup	pt	Por favor instale
-please login to phpgroupware and run the admin application for additional site configuration	setup	pt	Por favor, conecte no phpgroupware e execute a aplicação de administração para outras configurações do servidor
+please login to egroupware and run the admin application for additional site configuration	setup	pt	Por favor, conecte no egroupware e execute a aplicação de administração para outras configurações do servidor
 possible solutions	setup	pt	Possíveis soluções
 potential problem	setup	pt	Problema em potencial
 Preferences	setup	pt	Preferências
@@ -179,7 +179,7 @@ select which user(s) will have admin privileges	setup	pt	Selecione os usuários q
 select your old version	setup	pt	Selecione a versão antiga
 setup demo accounts in ldap	setup	pt	Configurar contas de demonstração no LDAP
 setup	setup	pt	Configuração
-Show 'powered by' logo on	setup	pt	Área para exibição da logomarca do phpGroupWare
+Show 'powered by' logo on	setup	pt	Área para exibição da logomarca do eGroupWare
 some or all of its tables are missing	setup	pt	Algumas ou todas tabelas estão faltando
 status	setup	pt	Status
 step 1 - simple application management	setup	pt	Passo 1 - Configuração inicial das aplicações
@@ -196,9 +196,9 @@ Text Entry	setup	pt	Entrada de texto
 there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	pt	Houve um problema ao tentar conectar com o servidor LDAP. <br>Verifique sua connfiguração
 the table definition was correct, and the tables were installed	setup	pt	As definições de tabelas estão corretas e as tabelas estão instaladas
 the tables	setup	pt	as tabelas
-this program will help you upgrade or install different languages for phpGroupWare	setup	pt	Este programa ajudará a atualizar ou instalar diferentes idiomas para o phpGroupWare
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	pt	Esta seção ajudará a exportar usuários e grupos das tabelas do phpGroupWare para o LDAP
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	pt	Esta seção ajudará a importar usuários e grupos LDAP para as tabelas do phpGroupWare
+this program will help you upgrade or install different languages for eGroupWare	setup	pt	Este programa ajudará a atualizar ou instalar diferentes idiomas para o eGroupWare
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	pt	Esta seção ajudará a exportar usuários e grupos das tabelas do eGroupWare para o LDAP
+this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	pt	Esta seção ajudará a importar usuários e grupos LDAP para as tabelas do eGroupWare
 this stage is completed<br>	setup	pt	Este passo está completo<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	pt	Isto irá criar 1 conta de administrador e 3 contas de usuários para demonstração<br>Os usuários/senhas são: demo/guest, demo2/guest and demo3/guest.<br><b>!!!Isto irá remover TODAS as contas e grupos existentes!!!</b><br>
 top	setup	pt	topo
@@ -217,13 +217,13 @@ Use pure HTML compliant code (not fully working yet)	setup	pt	Usar puro código H
 Users Choice	setup	pt	À escolha dos usuários
 version mismatch	setup	pt	Erro de versão
 we will automatically update your tables/records to %1	setup	pt	As tabelas/registros serão automaticamente atualizadas para %1
-Would you like phpGroupWare to cache the phpgw info array ?	setup	pt	Deseja que o phpGroupWare faça cache do vetor de informações phpgw ?
-Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	pt	Deseja que o phpGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
+Would you like eGroupWare to cache the phpgw info array ?	setup	pt	Deseja que o eGroupWare faça cache do vetor de informações phpgw ?
+Would you like eGroupWare to check for a new version<br>when admins login ?	setup	pt	Deseja que o eGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
 Would you like to show each application's upgrade status ?	setup	pt	Deseja exibir se cada aplicação está atualizada ?
 yes	setup	pt	Sim
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	pt	Está sendo usado uma versão antiga de PHP.<br>É recomendado que a versão seja atualizada.<br>Versões antigas do PHP podem não executar o phpGroupWare corretamente. <br><br>Por favor atualize para versões acima de 3.0.16.
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pt	Aparentemente você está usando uma versão pré-beta do phpGroupWare.<br>Estas versões não são mais suportadas, e não há como usar a Configuração para atualizar.<br> Você deve primeiro atualizar para a versão 0.9.10 (a última versão que suporta atualização de pré-betas) <br>e então atualizar a partir desta versão para a versão atual.
-you appear to be running version %1 of phpGroupWare	setup	pt	Aparentemente esta versão do phpGroupWare é a %1
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup	pt	Está sendo usado uma versão antiga de PHP.<br>É recomendado que a versão seja atualizada.<br>Versões antigas do PHP podem não executar o eGroupWare corretamente. <br><br>Por favor atualize para versões acima de 4.1.0.
+You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	pt	Aparentemente você está usando uma versão pré-beta do eGroupWare.<br>Estas versões não são mais suportadas, e não há como usar a Configuração para atualizar.<br> Você deve primeiro atualizar para a versão 0.9.10 (a última versão que suporta atualização de pré-betas) <br>e então atualizar a partir desta versão para a versão atual.
+you appear to be running version %1 of eGroupWare	setup	pt	Aparentemente esta versão do eGroupWare é a %1
 you are ready for this stage, but this stage is not yet written.<br>	setup	pt	Você está pronto para este passo, mas este estágio não está escrito ainda.<br>
 you do not have any languages installed. please install one now <br>	setup	pt	Não há nenhum idioma instalado. Por favor instale algum agora <br>
 you must enter a username for the admin	setup	pt	Deve ser especificado um código de usuário para o Administrador

@@ -70,14 +70,14 @@ enter some random text for app session encryption	setup	fi	Anna hieman satunnais
 Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
 Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 Enter the hostname of the machine on which this server is running	setup	fi	Anna palvelimen isäntänimi (hostname)
-Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	setup	fi	Anna eGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/egroupware &nbsp; tai &nbsp; /phpgroupware<br><b>Ei kauttaviivaa loppuun</b>
+Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>	setup	fi	Anna eGroupWare:n URL.<br>Esimerkiksi: http://www.domain.com/egroupware &nbsp; tai &nbsp; /egroupware<br><b>Ei kauttaviivaa loppuun</b>
 Enter the site password for peer servers	setup	fi	Anna salasana rinnakkaispalvelimille
 Enter the site username for peer servers	setup	fi	Anna käyttäjätunnus rinnakkaispalvelimille
 Enter the title for your site	setup	fi	Anna palvelun nimi
 Enter your default FTP server	setup	fi	Anna oletuksena käytettävä FTP-palvelin
 Enter your HTTP proxy server port	setup	fi	Anna HTTP-välityspalvelimen portti
 Enter your HTTP proxy server	setup	fi	Anna HTTP-välityspalvelin
-export phpgroupware accounts from sql to ldap	setup	fi	Vie phpGroupWare käyttäjätunnukset SQL => LDAP
+export egroupware accounts from sql to ldap	setup	fi	Vie eGroupWare käyttäjätunnukset SQL => LDAP
 export sql users to ldap	setup	fi	Vie SQL => LDAP
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	fi	Uutta asennusta varten valitse Tuo. Valitse Vie muuntaaksesi vanhat SQL-tunnukset LDAP-tunnuksiksi.
 force selectbox	setup	fi	Pakota -valintalisto
@@ -94,7 +94,7 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	fi	Jos käytät LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellejä?
 if you did not receive any errors, your applications have been	setup	fi	Jos virheilmoituksia ei tullut, sovellukset on nyt
 if you did not receive any errors, your tables have been	setup	fi	Jos virheilmoituksia ei tullut, taulut on nyt
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	fi	Tuo tunnukset LDAP => phpGroupWare tunnustaulu (uusi asennus ja käytetään SQL käyttäjätunnuksia)
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	fi	Tuo tunnukset LDAP => eGroupWare tunnustaulu (uusi asennus ja käytetään SQL käyttäjätunnuksia)
 import ldap users/groups	setup	fi	Tuo LDAP käyttäjät/ryhmät
 insanity	setup	fi	Sulaa hulluutta
 install Applications	setup	fi	Asenna sovellukset
@@ -123,9 +123,9 @@ mcrypt algorithm (default tripledes)	setup	fi	Mcrypt salaustapa (oletus TRIPLEDE
 mcrypt mode (default cbc)	setup	fi	Mcrypt moodi (oletus CBC)
 mcrypt settings (requires mcrypt php extension)	setup	fi	Mcrypt -asetukset (vaatii mcrypt PHP laajennuksen)
 Minimum account id (e.g. 500 or 100, etc.)	setup	fi	Pienin tunnus-id (esim. 500 tai 100, jne)
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	fi	Muuunna vanha LDAP tunnusvaranto phpGroupWare -kelpoiseksi (uusi asennus ja käytetään LDAP käyttäjätunnuksia)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	fi	Muuunna vanha LDAP tunnusvaranto eGroupWare -kelpoiseksi (uusi asennus ja käytetään LDAP käyttäjätunnuksia)
 multi-language support setup	setup	fi	Useiden kielien tuen asennus
-mysqlinstr	setup	fi	 Ohjeet MYSQL-tietokannan luomiseen:<br>Kirjaudu mysql:ään -<br><i>[user@server user]# mysql -u root -p</i><br>Luo tyhjä tietokanta ja anna käyttöoikeudet -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'salasana';</i>
+mysqlinstr	setup	fi	 Ohjeet MYSQL-tietokannan luomiseen:<br>Kirjaudu mysql:ään -<br><i>[user@server user]# mysql -u root -p</i><br>Luo tyhjä tietokanta ja anna käyttöoikeudet -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'salasana';</i>
 never	setup	fi	ei koskaan
 no algorithms available	setup	fi	ei algoritmeja
 no modes available	setup	fi	ei moodeja
@@ -141,11 +141,11 @@ only add languages that are not in the database already	setup	fi	Lisää vain kiel
 only add new phrases	setup	fi	Lisää vain uudet fraasit
 passwords did not match, please re-enter	setup	fi	Salasanat eivät täsmää, anna uudelleen
 Path information	setup	fi	Tiedostopolut
-pgsqlinstr	setup	fi	Ohjeet PostgreSQL-tietokannan luomiseen:<br>Käynnistä postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Luo tyhjä tietokanta -<br><i>[user@server user]# createdb phpgroupware</i>
+pgsqlinstr	setup	fi	Ohjeet PostgreSQL-tietokannan luomiseen:<br>Käynnistä postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Luo tyhjä tietokanta -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	fi	Tarkista onko sovelluksen hakemistossa sql-skriptejä
-please configure phpGroupWare for your environment	setup	fi	Tee phpGroupWare -asetukset ympäristöäsi varten
+please configure eGroupWare for your environment	setup	fi	Tee eGroupWare -asetukset ympäristöäsi varten
 please install	setup	fi	Asenna
-please login to phpgroupware and run the admin application for additional site configuration	setup	fi	Kirjaudu phpgroupware:een ja suorita admin-sovellus tehdäksesi palvelun asetukset
+please login to egroupware and run the admin application for additional site configuration	setup	fi	Kirjaudu egroupware:een ja suorita admin-sovellus tehdäksesi palvelun asetukset
 possible solutions	setup	fi	Mahdollisia ratkaisuja
 potential problem	setup	fi	Mahdollinen ongelma
 Preferences	setup	fi	Asetukset
@@ -195,9 +195,9 @@ Text Entry	setup	fi	Tekstille
 there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	fi	LDAP-palvelimeen yhdistäminen epäonnistui. <br>Tarkista LDAP-asetukset
 the table definition was correct, and the tables were installed	setup	fi	Taulun määrittely oli oikein ja taulut asennettiin
 the tables	setup	fi	taulut
-this program will help you upgrade or install different languages for phpGroupWare	setup	fi	Tämä sovellus avustaa eri phpGroupWare:n käyttökielten asennuksessa ja päivityksessä
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	fi	Tämä avustaa käyttäjien ja ryhmien viemisessä phpGroupWare:sta LDAP -hakemistoon
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	fi	Tämä avustaa käyttäjien ja ryhmien tuomisessa LDAP -hakemistosta phpGroupWareen
+this program will help you upgrade or install different languages for eGroupWare	setup	fi	Tämä sovellus avustaa eri eGroupWare:n käyttökielten asennuksessa ja päivityksessä
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	fi	Tämä avustaa käyttäjien ja ryhmien viemisessä eGroupWare:sta LDAP -hakemistoon
+this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	fi	Tämä avustaa käyttäjien ja ryhmien tuomisessa LDAP -hakemistosta eGroupWareen
 this stage is completed<br>	setup	fi	Tämä vaihe on valmis<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	fi	Luodaan 1 ylläpito- ja 3 esittelytunnusta<br>Käyttäjätunnukset/salasanat ovat: demo/guest, demo2/guest ja demo3/guest.<br><b>!!!KAIKKI MUUT KÄYTTÄJÄTUNNUKSET POISTETAAN!!!</b><br>
 top	setup	fi	ylös
@@ -216,13 +216,13 @@ Use pure HTML compliant code (not fully working yet)	setup	fi	Käytä HTML yhteens
 Users Choice	setup	fi	Käyttäjä valitsee
 version mismatch	setup	fi	Epäyhteensopiva versio
 we will automatically update your tables/records to %1	setup	fi	Taulut/tietueet päivitetään automaattisesti versioon %1
-Would you like phpGroupWare to cache the phpgw info array ?	setup	fi	Säilytetäänkö phpgw info -rakenne välimuistissa?
-Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	fi	Tarkistetaanko, onko phpGroupWare:sta uutta versiota<br>kun pääkäyttäjä kirjautuu järjestelmään?
+Would you like eGroupWare to cache the phpgw info array ?	setup	fi	Säilytetäänkö phpgw info -rakenne välimuistissa?
+Would you like eGroupWare to check for a new version<br>when admins login ?	setup	fi	Tarkistetaanko, onko eGroupWare:sta uutta versiota<br>kun pääkäyttäjä kirjautuu järjestelmään?
 Would you like to show each application's upgrade status ?	setup	fi	Näytetäänkö kunkin sovelluksen päivitystilanne?
 yes	setup	fi	Kyllä
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	fi	Käytössä on PHP:n vanha versio<br>Suosittelemme päivittämään uudempaan versioon. <br>phpGroupWare ei ehkä toimi oikein (tai ollenkaan) vanhoilla PHP:n versioilla. <br><br>Päivitä versioon 3.0.16 tai uudempi
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fi	Käytössä on esi-beta versio phpGroupWare:sta.<br>Sitä ei enää tueta ja tämä asennus ei osaa tehdä päivitystä siitä.<br> Voit päivittää ensin versioon 0.9.10 (viimeinen versio joka tuki esi-beta päivityksiä) <br>ja päivittää edelleen sitä nykyiseen versioon.
-you appear to be running version %1 of phpGroupWare	setup	fi	Käytössä on phpGroupWare:n versio %1
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup	fi	Käytössä on PHP:n vanha versio<br>Suosittelemme päivittämään uudempaan versioon. <br>eGroupWare ei ehkä toimi oikein (tai ollenkaan) vanhoilla PHP:n versioilla. <br><br>Päivitä versioon 4.1.0 tai uudempi
+You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	fi	Käytössä on esi-beta versio eGroupWare:sta.<br>Sitä ei enää tueta ja tämä asennus ei osaa tehdä päivitystä siitä.<br> Voit päivittää ensin versioon 0.9.10 (viimeinen versio joka tuki esi-beta päivityksiä) <br>ja päivittää edelleen sitä nykyiseen versioon.
+you appear to be running version %1 of eGroupWare	setup	fi	Käytössä on eGroupWare:n versio %1
 you are ready for this stage, but this stage is not yet written.<br>	setup	fi	Olet valmis tähän vaiheeseen, mutta vaihetta ei ole vielä kirjoitettu.<br>
 you do not have any languages installed. please install one now <br>	setup	fi	Ei asennettuja kieliä. Asenna ensin ainakin yksi kieli <br>
 you must enter a username for the admin	setup	fi	Anna pääkäyttäjän käyttäjätunnus

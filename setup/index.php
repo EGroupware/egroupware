@@ -144,13 +144,13 @@
 	{
 		$GLOBALS['phpgw_setup']->html->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],True);
 		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',
-			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1','4.1'));
+			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1','4.1'));
 		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}
-	
+
 	// BEGIN setup page
-	
+
 	//$GLOBALS['phpgw_setup']->app_status();
 	$GLOBALS['phpgw_info']['server']['app_images'] = 'templates/default/images';
 	$incomplete = $GLOBALS['phpgw_info']['server']['app_images'] . '/incomplete.png';
@@ -196,7 +196,7 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 2:
-			$setup_tpl->set_var('prebeta',lang('You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.'));
+			$setup_tpl->set_var('prebeta',lang('You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.'));
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->parse('V_db_stage_2','B_db_stage_2');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_2');
@@ -212,7 +212,7 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 4:
-			$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of phpGroupWare',$setup_info['phpgwapi']['currentver']));
+			$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',$setup_info['phpgwapi']['currentver']));
 			$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
 			$setup_tpl->set_var('backupwarn',lang('backupwarn'));
 			$setup_tpl->set_var('upgrade',lang('Upgrade'));
@@ -308,7 +308,7 @@
 			$setup_tpl->set_var('config_status_img',$incomplete);
 			$setup_tpl->set_var('config_status_alt',lang('not completed'));
 			$btn_config_now = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
-				lang('Please configure phpGroupWare for your environment'),
+				lang('Please configure eGroupWare for your environment'),
 				'POST','config.php',
 				'submit',lang('Configure Now'),
 				'');

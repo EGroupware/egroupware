@@ -128,7 +128,7 @@ enter your http proxy server password	setup	sl	Vnesite geslo vašega HTTP proxy s
 enter your http proxy server port	setup	sl	Vnesite vrata vašega HTTP proxy strežnika
 enter your http proxy server username	setup	sl	Vnesite uporabniško ime vašega HTTP proxy strežnika
 export has been completed!  you will need to set the user passwords manually.	setup	sl	Izvoz je dokon&#269;an. Ro&#269;no morate še nastaviti uporabniške nastavitve.
-export phpgroupware accounts from sql to ldap	setup	sl	Izvozi eGroupware ra&#269;une iz SQL v LDAP
+export egroupware accounts from sql to ldap	setup	sl	Izvozi eGroupware ra&#269;une iz SQL v LDAP
 export sql users to ldap	setup	sl	Izvozi SQL uporabniške ra&#269;une v LDAP
 file	setup	sl	DATOTEKA
 file type, size, version, etc.	setup	sl	tip datoteke, velikost, razli&#269;ica itd.
@@ -154,7 +154,7 @@ if you did not receive any errors, your applications have been	setup	sl	&#268;e 
 if you did not receive any errors, your tables have been	setup	sl	&#268;e ni prikazana nobena napaka, so bile vaše tabele
 if you running this the first time, don't forget to manualy %1 !!!	setup	sl	&#268;e to izvajate prvi&#269;, ne pozabite ro&#269;no %1!
 image type selection order	setup	sl	Zaporedje izbire tipov slik
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	sl	Uvozi ra&#269;une iz LDAP v eGroupware (za novo namestitev, ki uporablja SQL ra&#269;une).
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	sl	Uvozi ra&#269;une iz LDAP v eGroupware (za novo namestitev, ki uporablja SQL ra&#269;une).
 import has been completed!	setup	sl	Uvoz je bil dokon&#269;an!
 import ldap users/groups	setup	sl	Uvoz LDAP uporabnikov/skupin
 importing old settings into the new format....	setup	sl	Uvažanje starih nastavitev v nov format....
@@ -200,10 +200,10 @@ mcrypt version	setup	sl	Razli&#269;ica mcrypt
 minimum account id (e.g. 500 or 100, etc.)	setup	sl	Najmanjši ID ra&#269;una (npr. 500 ali 100)
 modifications have been completed!	setup	sl	Spremembe so dokon&#269;ane.
 modify	setup	sl	Spremeni
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	sl	Prilagodi obstoje&#269;o LDAP zbirko ra&#269;unov za uporabo z eGroupWare (za novo namestitev, ki uporablja LDAP ra&#269;une)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	sl	Prilagodi obstoje&#269;o LDAP zbirko ra&#269;unov za uporabo z eGroupWare (za novo namestitev, ki uporablja LDAP ra&#269;une)
 multi-language support setup	setup	sl	Namestitev ve&#269;jezi&#269;ne podpore
 name of database	setup	sl	Ime podatkovne baze
-name of db user phpgroupware uses to connect	setup	sl	Uporabniško ime za dostop do podatkvne baze
+name of db user egroupware uses to connect	setup	sl	Uporabniško ime za dostop do podatkvne baze
 never	setup	sl	nikoli
 new	setup	sl	Novo
 no	setup	sl	Ne
@@ -235,14 +235,14 @@ passwords did not match, please re-enter	setup	sl	Gesli se ne ujemata, prosim, p
 path information	setup	sl	Podatki o poti
 path to user and group files has to be outside of the webservers document-root!!!	setup	sl	Pot do uporabnikovih in skupinskih datotek <b>mora biti zunaj</b> strežnikovega spletnega podro&#269;ja!
 persistent connections	setup	sl	Trajne povezave
-phpgroupware administration manual	setup	sl	eGroupware upravljalski priro&#269;nik
+egroupware administration manual	setup	sl	eGroupware upravljalski priro&#269;nik
 please check for sql scripts within the application's directory	setup	sl	Prosim, preverite za SQL skripte znotraj direktorijev aplikacij
 please check read/write permissions on directories, or back up and use another option.	setup	sl	Prosim, preverite pravice dostopa do direktorijev, ali pa se vrnite in uporabite drugo možnost.
-please configure phpgroupware for your environment	setup	sl	Prosim, konfigurirajte eGroupware za vaše okolje.
+please configure egroupware for your environment	setup	sl	Prosim, konfigurirajte eGroupware za vaše okolje.
 please consult the %1.	setup	sl	Prosim, posvetujte se z %1.
 please install	setup	sl	Prosim, namestite
 please login	setup	sl	Prosim, prijavite se
-please login to phpgroupware and run the admin application for additional site configuration	setup	sl	Prosim, za dodatno konfiguriranje spletnega mesta se prijavite v eGroupWare in poženite aplikacijo Admin
+please login to egroupware and run the admin application for additional site configuration	setup	sl	Prosim, za dodatno konfiguriranje spletnega mesta se prijavite v eGroupWare in poženite aplikacijo Admin
 please wait...	setup	sl	Prosim, po&#269;akajte
 possible reasons	setup	sl	Mogo&#269;i razlogi
 possible solutions	setup	sl	Mogo&#269;e rešitve
@@ -316,10 +316,10 @@ there was a problem trying to connect to your ldap server. <br>	setup	sl	Težave 
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	sl	Težave pri povezovanju z LDAP strežnikom.<br>Prosim, preverite nastavitve LDAP strežnika.
 this has to be outside the webservers document-root!!!	setup	sl	To mora biti izven strežnikovega spletnega podro&#269;ja!
 this program will convert your database to a new system-charset.	setup	sl	Ta program bo prevedel podatkovno bazo na nov sistemski nabor znakov.
-this program will help you upgrade or install different languages for phpgroupware	setup	sl	Ta program vam bo pomagal pri posodabljanju ali namestitvi razli&#269;nih jezikov za eGroupware.
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	sl	V tej sekciji boste izvozili uporabnike in skupine iz tabel podatkovne baze v vaše LDAP drevo.
-this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	sl	Ta ekcija vam bo pomagala prenesti uporabnike in skupine iz LDAP drevesa v tabele podatkovne baze.
-this section will help you setup your ldap accounts for use with phpgroupware	setup	sl	Ta sekcija vam bo pomagala prenesti vaše LDAP ra&#269;une za uporabo v eGroupware.
+this program will help you upgrade or install different languages for egroupware	setup	sl	Ta program vam bo pomagal pri posodabljanju ali namestitvi razli&#269;nih jezikov za eGroupware.
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	sl	V tej sekciji boste izvozili uporabnike in skupine iz tabel podatkovne baze v vaše LDAP drevo.
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	sl	Ta ekcija vam bo pomagala prenesti uporabnike in skupine iz LDAP drevesa v tabele podatkovne baze.
+this section will help you setup your ldap accounts for use with egroupware	setup	sl	Ta sekcija vam bo pomagala prenesti vaše LDAP ra&#269;une za uporabo v eGroupware.
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	sl	To naj bo dolgo približno 30 bytov. <br> Privzeto besedilo je bilo naklju&#269;no generirano.
 this stage is completed<br>	setup	sl	Ta korak je zaklju&#269;en. <br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	sl	Ukaz bo ustvaril en upravljalski ra&#269;un in tri demo ra&#269;une.<br>Uporabniška imena so demo/guest, demo2/guest in demo3/guest.<br><b>Pozor: ukaz bo izbrisal vse obstoje&#269;e ra&#269;une!!!</b><br>
@@ -329,7 +329,7 @@ top	setup	sl	vrh
 translations added	setup	sl	prevodi dodani
 translations removed	setup	sl	prevodi odstranjeni
 translations upgraded	setup	sl	prevodi posodobljeni
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	sl	Poizkusite skonfigurirati vašo php podporo na enega od zgoraj naštetih DBMS, ali pa ro&#269;no namestite eGroupWare.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	sl	Poizkusite skonfigurirati vašo php podporo na enega od zgoraj naštetih DBMS, ali pa ro&#269;no namestite eGroupWare.
 two weeks	setup	sl	&#269;ez dva tedna
 uninstall	setup	sl	odstrani
 uninstall all applications	setup	sl	Odstrani vse aplikacije
@@ -348,16 +348,16 @@ warning!	setup	sl	Opozorilo!
 we can proceed	setup	sl	Lahko nadaljujem.
 we will automatically update your tables/records to %1	setup	sl	Vaše tabele/zapise bom avtomati&#269;no nadgradil na %1.
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	sl	Kakšen na&#269;in upravljanja sej želite uporabljati? (PHP4 upravljanje sej je navadno boljši.)
-which database type do you want to use with phpgroupware?	setup	sl	Kater tip podatkovne baze želite uporabljati za eGroupware?
-would you like phpgroupware to cache the phpgw info array ?	setup	sl	Ali želite, da eGroupware shrani phpgw_info polje v predpomnilnik?
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	sl	Ali želite, da eGroupware preveri za novo razli&#269;ico ob upravljal&#269;evi prijavi?
+which database type do you want to use with egroupware?	setup	sl	Kater tip podatkovne baze želite uporabljati za eGroupware?
+would you like egroupware to cache the phpgw info array ?	setup	sl	Ali želite, da eGroupware shrani phpgw_info polje v predpomnilnik?
+would you like egroupware to check for a new version<br>when admins login ?	setup	sl	Ali želite, da eGroupware preveri za novo razli&#269;ico ob upravljal&#269;evi prijavi?
 would you like to show each application's upgrade status ?	setup	sl	Ali želite pokazati aktualnost vsake aplikacije?
 write config	setup	sl	Zapiši konfiguracijo
 yes	setup	sl	Da
-you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	sl	Videti je, da uporabljate pred-beta razli&#269;ico phpGroupware.<br> Te razli&#269;ice niso ve&#269; podprte in nadgradnja z njih ni mogo&#269;a.<br> Prosimo, da najprej nadgradite na 0.9.10, (zadnja razli&#269;ica, ki podpira pred-beta posodabljanje) <br> in potem nadgradite na aktualno razli&#269;ico.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	sl	Videti je, da uporabljate staro razli&#269;ico PHP.<br>Priporo&#269;amo, da nadgradite na novo razli&#269;ico.<br>Starejše razli&#269;ice morda ne bodo pravilno izvajale eGroupware programov, &#269;e jih sploh bodo.<br><br>Prosimo, nadgradite vsaj na PHP razli&#269;ica %1.
-you appear to be running version %1 of phpgroupware	setup	sl	Videti je, da imate eGroupware razli&#269;ica %1.
-you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	sl	Videti je, da uporabljate PHP, ki je starejši od 4.1.0. eGroupware potrebuje PHP razli&#269;ica 4.1.0 ali novejši.
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	sl	Videti je, da uporabljate pred-beta razli&#269;ico phpGroupware.<br> Te razli&#269;ice niso ve&#269; podprte in nadgradnja z njih ni mogo&#269;a.<br> Prosimo, da najprej nadgradite na 0.9.10, (zadnja razli&#269;ica, ki podpira pred-beta posodabljanje) <br> in potem nadgradite na aktualno razli&#269;ico.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	sl	Videti je, da uporabljate staro razli&#269;ico PHP.<br>Priporo&#269;amo, da nadgradite na novo razli&#269;ico.<br>Starejše razli&#269;ice morda ne bodo pravilno izvajale eGroupware programov, &#269;e jih sploh bodo.<br><br>Prosimo, nadgradite vsaj na PHP razli&#269;ica %1.
+you appear to be running version %1 of egroupware	setup	sl	Videti je, da imate eGroupware razli&#269;ica %1.
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	sl	Videti je, da uporabljate PHP, ki je starejši od 4.1.0. eGroupware potrebuje PHP razli&#269;ica 4.1.0 ali novejši.
 you appear to be using php3. disabling php4 sessions support	setup	sl	Videti je, da uporabljate PHP3. Onemogo&#269;am podporo za PHP4 seje.
 you appear to be using php4. enabling php4 sessions support	setup	sl	Videti je, da uporabljate PHP4. Omogo&#269;am podporo za PHP4 seje.
 you appear to have microsoft sql server support enabled	setup	sl	Videti je, da imate omogo&#269;eno podporo MS SQL podatkovnega strežnika.

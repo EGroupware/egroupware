@@ -127,14 +127,14 @@ enter the hostname of the machine on which this server is running	setup	de	Hostn
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br>Beispiel: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the site password for peer servers	setup	de	Site Passwort für Peer Server
 enter the site username for peer servers	setup	de	Site Benutzername für Peer Server
-enter the title for your site	setup	de	Titel der phpGroupWare Installation
+enter the title for your site	setup	de	Titel der eGroupWare Installation
 enter your default ftp server	setup	de	Default FTP Server
 enter your http proxy server	setup	de	HTTP Proxy Server
 enter your http proxy server password	setup	de	Passwort des HTTP Proxy Server
 enter your http proxy server port	setup	de	Port des HTTP Proxy Server
 enter your http proxy server username	setup	de	Benutzername des HTTP Proxy Server
 export has been completed!  you will need to set the user passwords manually.	setup	de	Export ist abgeschlossen! Sie müssen die Benutzerpasswörter manuell setzen.
-export phpgroupware accounts from sql to ldap	setup	de	phpGroupWare Benutzerkonten von SQL nach LDAP exportieren
+export egroupware accounts from sql to ldap	setup	de	eGroupWare Benutzerkonten von SQL nach LDAP exportieren
 export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
 file	setup	de	DATEI
 file type, size, version, etc.	setup	de	Datei Typ, Größe, Version, usw.
@@ -160,7 +160,7 @@ if you did not receive any errors, your applications have been	setup	de	Wenn Sie
 if you did not receive any errors, your tables have been	setup	de	Wenn sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn sie das zum ersten mal ausführen, vergessen sie nicht manuell die %1 !!!
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	de	Benutzerkonton von LDAP in die phpGroupWare Kontentabelle importieren (für eine neue Installation mit SQL Konten)
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	de	Benutzerkonton von LDAP in die eGroupWare Kontentabelle importieren (für eine neue Installation mit SQL Konten)
 import has been completed!	setup	de	Import ist beendet!
 import ldap users/groups	setup	de	LDAP Benutzer/Gruppen importieren
 importing old settings into the new format....	setup	de	Importiere alte Einstellung in das neue Format ...
@@ -206,10 +206,10 @@ mcrypt version	setup	de	MCrypt Version
 minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer Id (zB. 500 oder 100)
 modifications have been completed!	setup	de	Änderung ist abgeschlossen!
 modify	setup	de	Ändern
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	de	Bestehende LDAP Benutzerkonten für die Benutzung durch phpGroupWare anpassen (für eine neue Installation mit LDAP Konten)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	de	Bestehende LDAP Benutzerkonten für die Benutzung durch eGroupWare anpassen (für eine neue Installation mit LDAP Konten)
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
 name of database	setup	de	Name der Datenbank
-name of db user phpgroupware uses to connect	setup	de	Name des Datenbank-Benutzers den phpGroupWare verwendet
+name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers den eGroupWare verwendet
 never	setup	de	niemals
 new	setup	de	Neu
 no	setup	de	Nein
@@ -242,15 +242,15 @@ passwords did not match, please re-enter	setup	de	Passworte stimmten nicht übere
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (Document-root) des Webservers sein!!!
 persistent connections	setup	de	Permanennte Verbindungen
-phpgroupware administration manual	setup	de	phpGroupWare Adminsitrationsmanual (nur in englisch)
+egroupware administration manual	setup	de	eGroupWare Adminsitrationsmanual (nur in englisch)
 please check for sql scripts within the application's directory	setup	de	Bitte schauen Sie nach sql-Scripten im Applikations-Ordner
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen sie die lese/schreib Rechte der Verzeichnisse oder gehen sie zurück und benutzen eine andere Option.
-please configure phpgroupware for your environment	setup	de	Bitte konfigurieren Sie phpGroupWare für Ihre Umgebung
+please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
 please consult the %1.	setup	de	Bitte konsultieren sie das %1.
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	de	Bitte beheben sie die obigen Fehler (%1) und Warnungen (%2) und machen Sie %3weiter mit dem Header Admin%4
 please install	setup	de	Bitte installieren
 please login	setup	de	Bitte einlogen
-please login to phpgroupware and run the admin application for additional site configuration	setup	de	Bitte in phpGroupWare einloggen und die Administration für weitere Konfigurationen aufrufen.
+please login to egroupware and run the admin application for additional site configuration	setup	de	Bitte in eGroupWare einloggen und die Administration für weitere Konfigurationen aufrufen.
 please wait...	setup	de	Bitte warten ...
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
@@ -327,10 +327,10 @@ there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab 
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu ihrem LDAP Server herzustellen.<br>Bitte überprüfen sie die Konfiguration ihres LDAP servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss ausserhalb der document-root des Webservers sein!!!
 this program will convert your database to a new system-charset.	setup	de	Diese Programm wird ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
-this program will help you upgrade or install different languages for phpgroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für phpGroupWare behilflich sein
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus phpGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
-this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	de	Dieser Abschnitt wird Ihnen beim importieren von Benutzern/Gruppen aus Ihrem LDAP Baum in phpGroupWare's Account Tabellen behilflich sein
-this section will help you setup your ldap accounts for use with phpgroupware	setup	de	Dieser Abschnitt wird ihnen helfen ihrer LDAP Benutzer für phpGroupWare vorzubereiten.
+this program will help you upgrade or install different languages for egroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für eGroupWare behilflich sein
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus eGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	de	Dieser Abschnitt wird Ihnen beim importieren von Benutzern/Gruppen aus Ihrem LDAP Baum in eGroupWare's Account Tabellen behilflich sein
+this section will help you setup your ldap accounts for use with egroupware	setup	de	Dieser Abschnitt wird ihnen helfen ihrer LDAP Benutzer für eGroupWare vorzubereiten.
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br>Hinweis: Die Vorgabe wurde zufällig erzeugt.
 this stage is completed<br>	setup	de	Dieser Schritt ist abgeschlossen<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	de	Dies wird 1 Admin- und 3 Demo Benutzerkonten erstellen<br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.<br><b>!!!DIES WIRD ALLE EXISTIERENDEN BENUTZERKONTEN LÖSCHEN!!!</b><br>
@@ -340,7 +340,7 @@ top	setup	de	oben
 translations added	setup	de	Übersetzungen hinzugefügt
 translations removed	setup	de	Übersetzungen entfernt
 translations upgraded	setup	de	Übersetzungen aktualisiert
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	de	Versuchen sie ihr php so zu konfigurieren, dass es eine der oben genannten Datenbanken unterstützt, oder installieren sie phpGroupWare von Hand.
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	de	Versuchen sie ihr php so zu konfigurieren, dass es eine der oben genannten Datenbanken unterstützt, oder installieren sie eGroupWare von Hand.
 two weeks	setup	de	zwei Wochen
 uninstall	setup	de	deinstaliert
 uninstall all applications	setup	de	Alle Anwendungen deinstallieren
@@ -359,16 +359,16 @@ warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	de	Welches Session Management wollen sie verwenden (PHP4 Session Management hat eine bessere performance)?
-which database type do you want to use with phpgroupware?	setup	de	Welchen Datanbanktyp wollen sie mit phpGroupWare verwenden?
-would you like phpgroupware to cache the phpgw info array ?	setup	de	Soll phpGroupWare das phpgw info Array cachen ?
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	de	Soll phpGroupWare nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet ?
+which database type do you want to use with egroupware?	setup	de	Welchen Datanbanktyp wollen sie mit eGroupWare verwenden?
+would you like egroupware to cache the phpgw info array ?	setup	de	Soll eGroupWare das phpgw info Array cachen ?
+would you like egroupware to check for a new version<br>when admins login ?	setup	de	Soll eGroupWare nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet ?
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 write config	setup	de	Konfiguration schreiben
 yes	setup	de	Ja
-you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von phpGroupWare benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für sie im Einrichtung-Programm.<br>Sie möchten vieleicht erst auf
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten phpGroupWare (wenn überhaupt) nicht korrekt ausführen. <br><br>Biite aktualisieren Sie mindestens auf Version %1
-you appear to be running version %1 of phpgroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von phpGroupWare
-you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	de	Sie scheinen php in einer Version vor 4.1.0 zu verwenden. phpGroupWare benötigt nun Version 4.1.0 oder höher.
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von eGroupWare benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für sie im Einrichtung-Programm.<br>Sie möchten vieleicht erst auf
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br><br>Biite aktualisieren Sie mindestens auf Version %1
+you appear to be running version %1 of egroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von eGroupWare
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	de	Sie scheinen php in einer Version vor 4.1.0 zu verwenden. eGroupWare benötigt nun Version 4.1.0 oder höher.
 you appear to be using php3. disabling php4 sessions support	setup	de	Sie scheinen PHP3 zu verwenden. Schalte PHP4 Session Unterstützung ab.
 you appear to be using php4. enabling php4 sessions support	setup	de	Sie scheinen PHP4 zu verwenden. Schalte PHP4 Session Unterstützung ein.
 you appear to have microsoft sql server support enabled	setup	de	Sie scheinen Microsoft SQL Server Unterstützung zu haben.

@@ -64,7 +64,7 @@ enter some random text for app session <br>encryption (requires mcrypt)	setup	ja
 enter some random text for app session encryption	setup	ja	アプリケーションセッション暗号化のための任意テキスト入力
 enter the full path for temporary files.<br>Examples: /tmp, c:\temp	setup	ja	テンポラリファイル（フルパス）<br>例：/tmp や C:\TEMP など
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	ja	ファイルマネージャのファイル保存先（フルパス）<br>例：/files や E:\FILES など
-enter the hostname of the machine on which this server is running	setup	ja	phpGroupWare が動作するホスト名
+enter the hostname of the machine on which this server is running	setup	ja	eGroupWare が動作するホスト名
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	ja	eGroupWare の URL<BR>例：http://www.itheart.com/egroupware &nbsp; や &nbsp; /egroupware など<BR><b>最後はスラッシュを指定しないこと</b>
 enter the site username for peer servers	setup	ja	同等サーバのユーザ名
 enter the site password for peer servers	setup	ja	同等サーバのパスワード
@@ -117,7 +117,7 @@ mcrypt mode (default cbc)	setup	ja	Mcryptモード(デフォルト:CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt 設定情報(McryptはPHPの拡張が必要)
 minimum account id (e.g. 500 or 100, etc.)	setup	ja	最小ユーザID &nbsp; (例： 500 や 100 など)
 multi-language support setup	setup	ja	言語環境設定
-mysqlinstr	setup	ja	 MySQLでデータベースを作成するには:<br>mysql にログイン -<br><i>[user@server user]# mysql -u root -p</i><br>空のデータベースを作成し、アカウントに権限を付与する -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+mysqlinstr	setup	ja	 MySQLでデータベースを作成するには:<br>mysql にログイン -<br><i>[user@server user]# mysql -u root -p</i><br>空のデータベースを作成し、アカウントに権限を付与する -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 never	setup	ja	無期限
 no	setup	ja	いいえ
 not complete	setup	ja	完了していません。
@@ -132,12 +132,12 @@ only add new phrases	setup	ja	新しいフレーズの追加
 or we can attempt to create the database for you:	setup	ja	または、この処理でデータベースを作成することが可能です
 passwords did not match, please re-enter	setup	ja	パスワードに誤りがあります。再度入力して下さい
 path information	setup	ja	パス情報
-pgsqlinstr	setup	ja	PostgreSQLでデータベースを作成するには:<br>postmaster の起動<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>空のデータベース作成 -<br><i>[user@server user]# createdb phpgroupware</i>
+pgsqlinstr	setup	ja	PostgreSQLでデータベースを作成するには:<br>postmaster の起動<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>空のデータベース作成 -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	ja	Please check for sql scripts within the application's directory
-please configure phpGroupWare for your environment	setup	ja	Please configure phpGroupWare for your environment
+please configure eGroupWare for your environment	setup	ja	Please configure eGroupWare for your environment
 please install	setup	ja	Please install
 please login	setup	ja	ログイン
-please login to phpgroupware and run the admin application for additional site configuration	setup	ja	phpGroupWare にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
+please login to egroupware and run the admin application for additional site configuration	setup	ja	eGroupWare にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
 possible solutions	setup	ja	Possible Solutions
 potential problem	setup	ja	Potential Problem
 preferences	setup	ja	ユーザ設定情報
@@ -179,9 +179,9 @@ tables upgraded	setup	ja	テーブルを更新しました
 text entry	setup	ja	テキスト入力
 there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	ja	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
 the tables	setup	ja	the tables
-this program will help you upgrade or install different languages for phpGroupWare	setup	ja	phpGroupWare での、言語環境を設定します。
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	ja	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	ja	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
+this program will help you upgrade or install different languages for eGroupWare	setup	ja	eGroupWare での、言語環境を設定します。
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	ja	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
+this section will help you import users and groups from your ldap tree into eGroupWare's account tables	setup	ja	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
 this stage is completed<br>	setup	ja	この段階は完了しました。<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	ja	１つの管理者アカウントと３つのデモアカウントをセットアップします。<br>デモアカウントのユーザ名とパスワードは demo/guest, demo2/guest, demo3/guest です。<br><b>現在のアカウントをすべて削除しますので注意してください。</b><br>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	ja	と、１つの管理者アカウントと３つのデモアカウントをセットアップします。<br><b>現在のアカウントをすべて削除しますので注意してください。</b>
@@ -197,13 +197,13 @@ use cookies to pass sessionid	setup	ja	cookieのセッションidを使用
 users choice	setup	ja	ユーザ選択
 version mismatch	setup	ja	Version Mismatch
 we will automatically update your tables/records to %1	setup	ja	セットアップは、%1 用のテーブルやデータに自動アップグレードします。
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	ja	管理者でログイン時、phpGroupWareのバージョンチェックを行う
-would you like phpgroupware to cache the phpgw info array ?	setup	ja	phpGroupWare のキャッシュにphpgw info 配列を利用する
+would you like egroupware to check for a new version<br>when admins login ?	setup	ja	管理者でログイン時、eGroupWareのバージョンチェックを行う
+would you like egroupware to cache the phpgw info array ?	setup	ja	eGroupWare のキャッシュにphpgw info 配列を利用する
 would you like to show each application's upgrade status ?	setup	ja	アプリケーションのアップグレード状況表示
 yes	setup	ja	はい
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	ja	PHPのバージョンが古いようです。<br>バージョンアップをお勧めします。<br>古いバージョンの PHP では、phpGroupWare のすべての機能が正確に動作しません。<br><br>Ver 3.0.16 以降にバージョンアップしてください。
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running version %1 of phpGroupWare	setup	ja	現在、phpGroupWare Ver. %1 が動作していると思われます。
+you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup	ja	PHPのバージョンが古いようです。<br>バージョンアップをお勧めします。<br>古いバージョンの PHP では、eGroupWare のすべての機能が正確に動作しません。<br><br>Ver 4.1.0 以降にバージョンアップしてください。
+You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ja	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
+you appear to be running version %1 of eGroupWare	setup	ja	現在、eGroupWare Ver. %1 が動作していると思われます。
 you are ready for this stage, but this stage is not yet written.<br>	setup	ja	You are ready for this stage, but this stage is not yet written.<br>
 you do not have any languages installed. please install one now <br>	setup	ja	どの言語環境もありません。最低１つの言語環境をインストールして下さい。<br>
 you must enter a username for the admin	setup	ja	ユーザIDを入力して下さい。
