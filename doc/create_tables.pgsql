@@ -1,9 +1,9 @@
-BEGIN WORK;
+
 
 create table applications (
-  app_name varchar(25) NOT NULL,
-  app_title varchar(50),
-  app_enabled int,
+  app_name     varchar(25) NOT NULL,
+  app_title    varchar(50),
+  app_enabled  int,
   app_order    int,
   app_tables   varchar(255),
   unique(app_name)
@@ -43,20 +43,20 @@ insert into accounts (account_ld,account_pwd,account_firstname,account_lastname,
 status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1,','A');
 
 create table groups (
-  group_id	serial,
-  group_name	varchar(50),
-  group_apps    varchar(255)
+  group_id     serial,
+  group_name   varchar(50),
+  group_apps   varchar(255)
 );
 
 insert into groups (group_name) values ('Default');
 
 create table sessions (
-  session_id        varchar(255),
-  session_lid       varchar(20),
-  session_pwd       varchar(255),
-  session_ip        varchar(255),
-  session_logintime	int,
-  session_dla       int,
+  session_id         varchar(255),
+  session_lid        varchar(20),
+  session_pwd        varchar(255),
+  session_ip         varchar(255),
+  session_logintime	 int,
+  session_dla        int,
   unique(session_id)
 );
 
@@ -70,16 +70,17 @@ CREATE TABLE app_sessions (
 create table preferences ( 
   preference_owner       varchar(20),
   preference_name        varchar(50),
-  preference_value       varchar(50)
+  preference_value       varchar(50),
+  preference_appname     varchar(50)
 );
 
-insert into preferences values ('demo','maxmatchs','10','');
-insert into preferences values ('demo','mainscreen_showbirthdays','True','');
-insert into preferences values ('demo','mainscreen_showevents','True','');
-insert into preferences values ('demo','timeformat','12','');
-insert into preferences values ('demo','dateformat','m/d/Y','');
-insert into preferences values ('demo','theme','default','');
-insert into preferences values ('demo','tz_offset','0','');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','maxmatchs','10','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','mainscreen_showbirthdays','True','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','mainscreen_showevents','True','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','timeformat','12','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','dateformat','m/d/Y','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','theme','default','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','tz_offset','0','common');
 
 create table access_log (
    sessionid    varchar(30),
@@ -182,11 +183,11 @@ CREATE TABLE users_newsgroups (
 );
 
 CREATE TABLE lang (
-  message_id varchar(150) DEFAULT '' NOT NULL,
-  app_name varchar(100) DEFAULT 'common' NOT NULL,
-  lang varchar(5) DEFAULT '' NOT NULL,
-  content text NOT NULL,
+  message_id     varchar(150) DEFAULT '' NOT NULL,
+  app_name       varchar(100) DEFAULT 'common' NOT NULL,
+  lang           varchar(5) DEFAULT '' NOT NULL,
+  content        text NOT NULL,
   unique(message_id,app_name,lang)
 );
 
-COMMIT;
+

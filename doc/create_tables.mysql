@@ -58,13 +58,14 @@ CREATE TABLE preferences (
    preference_appname varchar(50)
 );
 
-insert into preferences values ('demo','maxmatchs','10','');
-insert into preferences values ('demo','mainscreen_showbirthdays','True','');
-insert into preferences values ('demo','mainscreen_showevents','True','');
-insert into preferences values ('demo','timeformat','12','');
-insert into preferences values ('demo','dateformat','m/d/Y','');
-insert into preferences values ('demo','theme','default','');
-insert into preferences values ('demo','tz_offset','0','');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','maxmatchs','10','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','mainscreen_showbirthdays','True','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','mainscreen_showevents','True','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','timeformat','12','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','dateformat','m/d/Y','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','theme','default','common');
+insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','tz_offset','0','common');
+
 
 CREATE TABLE sessions (
    session_id        varchar(255) NOT NULL,
