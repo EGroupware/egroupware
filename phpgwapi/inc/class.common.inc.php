@@ -781,6 +781,10 @@
 			{
 				$phpgw_info["user"]["preferences"]["email"]["passwd"] = $phpgw_info["user"]["passwd"];
 			}
+			else
+			{
+				$phpgw_info["user"]["preferences"]["email"]["passwd"] = $this->decrypt($phpgw_info["user"]["preferences"]["email"]["passwd"]);
+			}
 			if (!isset($phpgw_info["user"]["preferences"]["email"]["address"]))
 			{
 				$phpgw_info["user"]["preferences"]["email"]["address"] = $phpgw_info["user"]["userid"]
