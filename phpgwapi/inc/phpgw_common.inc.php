@@ -574,6 +574,10 @@
        * Load the app include files if the exists                                 *
        \**************************************************************************/
        /* Then the include file */
+       if (! $phpgw_info["flags"]["nonavbar"] && file_exists ($phpgw_info["server"]["app_inc"]."/functions.inc.php")){
+        include($phpgw_info["server"]["app_inc"]."/functions.inc.php");
+       }
+
        if (file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
           include($phpgw_info["server"]["app_inc"]."/header.inc.php");
        }

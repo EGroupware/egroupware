@@ -417,7 +417,7 @@
      /**************************************************************************\
      * Load the header unless the developer turns it off                        *
      \**************************************************************************/
-     if (!isset($phpgw_info["flags"]["noheader"]) || ! $phpgw_info["flags"]["noheader"]) {
+     if (! $phpgw_info["flags"]["noheader"]) {
         $phpgw->common->phpgw_header();
      }
 
@@ -425,7 +425,7 @@
      * Load the app include files if the exists                                 *
      \**************************************************************************/
      /* Then the include file */
-     if (file_exists ($phpgw_info["server"]["app_inc"]."/functions.inc.php")){
+     if ($phpgw_info["flags"]["nonavbar"] && file_exists ($phpgw_info["server"]["app_inc"]."/functions.inc.php")){
         include($phpgw_info["server"]["app_inc"]."/functions.inc.php");
      }
   }
