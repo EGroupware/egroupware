@@ -8,6 +8,7 @@ address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
 addvcard	addressbook	en	Add VCard
 alt. csv import	addressbook	en	Alt. CSV Import
+are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 bbs phone	addressbook	en	BBS Phone
 birthday	common	en	Birthday
 <b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
