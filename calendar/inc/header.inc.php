@@ -16,11 +16,18 @@
 
   if (floor($PHP_VERSION ) == 4) {
     global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
-    global $matrixtype, $participants;
+    global $matrixtype, $participants, $owner, $phpgw;
   }
 
   if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
      $phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] = "Sunday";
+
+  if(!isset($owner)) { $owner = 0; } 
+
+  if(!isset($owner) || !$owner) {
+    $owner = $phpgw_info['user']['account_id'];
+    $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE;
+  }
 
   if(!isset($filter) || !$filter) 
     $filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
@@ -79,7 +86,7 @@
    </a>
   </td>
   <form action="<?php echo $phpgw->link(); ?>" method="POST" name="filtermethod">
-   <td width="55%" align="center" valign="center">
+   <td width="45%" align="center" valign="center">
     <b><?php echo lang("Filter"); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
 <?php if(isset($date) && $date) { ?>
@@ -111,6 +118,40 @@
     <NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang("Go!"); ?>"></NOSCRIPT></FONT>
    </td>
   </form>
+<?php
+    $grants = $phpgw->acl->get_grants('calendar');
+    if(count($grants) > 0)
+    {
+?>
+  <form action="<?php echo $phpgw->link(); ?>" method="POST" name="setowner">
+   <td width="20%" align="center" valign="center">
+    <b><?php echo lang("User"); ?>:</b>
+    <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
+<?php if(isset($date) && $date) { ?>
+    <input type="hidden" name="date" value="<?php echo $date; ?>">
+<?php } ?>
+    <input type="hidden" name="month" value="<?php echo $thismonth; ?>">
+    <input type="hidden" name="day" value="<?php echo $thisday; ?>">
+    <input type="hidden" name="year" value="<?php echo $thisyear; ?>">
+<?php if(isset($keywords) && $keywords) { ?>
+    <input type="hidden" name="keywords" value="<?php echo $keywords; ?>">
+<?php } ?>
+    <select name="owner" onchange="document.setowner.submit()">
+<?php
+      while(list($grantor,$rights) = each($grants))
+      {
+?>
+      <option value="<?php echo $grantor; ?>"<?php if($grantor==$owner) echo " selected"; ?>><?php echo $phpgw->common->grab_owner_name($grantor); ?></option>
+<?php
+      }
+?>
+    </select>
+    <NOSCRIPT><INPUT TYPE="submit" VALUE="<?php echo lang("Go!"); ?>"></NOSCRIPT></FONT>
+   </td>
+  </form>
+<?php
+    }
+?>
   <form action="<?php echo $phpgw->link("search.php"); ?>" method="POST">
    <td align="right" valign="center">
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">

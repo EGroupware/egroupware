@@ -21,7 +21,8 @@
   {
 	function calendar($p_friendly=False)
 	{
-		$this->calendar_($p_friendly);
-	}
+      $this->printer_friendly = $p_friendly;
+      $this->today = $this->localdates(time());
+    }
   }
 ?>
