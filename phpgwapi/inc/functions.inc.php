@@ -194,9 +194,15 @@
 	
 	$phpgw->load_core_objects();	
 	print_debug('main class loaded');
-	
-	// Handy little shortcut
-	$sep = $phpgw_info["server"]["dir_separator"];
+
+	/****************************************************************************\
+	* This is a global constant that should be used                              *
+	* instead of / or \ in file paths                                            *
+	\****************************************************************************/
+	define("SEP",filesystem_separator());
+	/* Legacy vars that can be delete after 0.9.11 is release (Seek3r) */
+	$sep = SEP;
+	$phpgw_info["server"]["dir_separator"] = SEP;
 
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
