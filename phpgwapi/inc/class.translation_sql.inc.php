@@ -31,6 +31,7 @@
 		var $userlang   = 'en';
 		var $currentapp = '';
 		var $loaded = False;
+		var $translator_helper = '*';
 
 		/*!
 		 @function translation
@@ -104,7 +105,7 @@
 				$this->load_langs();
 			}
 
-			$ret = @isset($this->lang[$_key]) ? $this->lang[$_key] : $key . '*';
+			$ret = @isset($this->lang[$_key]) ? $this->lang[$_key] : $key . $this->translator_helper;	
 
 			$ndx = 1;
 			while(list($key,$val) = each($vars))

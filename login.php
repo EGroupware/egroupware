@@ -43,6 +43,7 @@
 		$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
 		$GLOBALS['phpgw']->template->set_block('login','login_form_deny','login_form');
 		$GLOBALS['phpgw']->template->set_var('template_set','default');
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_tags','<script><!-- if (window!= top) top.location.href=location.href// --></script>');
 		$GLOBALS['phpgw']->template->fp('phpgw_body','login_form');
 		$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
 		exit;

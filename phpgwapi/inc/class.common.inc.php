@@ -1025,7 +1025,10 @@
 						$row = 1;
 					}
 
+					$prev_helper = $GLOBALS['phpgw']->translation->translator_helper;
+					$GLOBALS['phpgw']->translation->translator_helper = '';
 					$GLOBALS['phpgw']->template->set_var('msgbox_text',lang($key));
+					$GLOBALS['phpgw']->translation->translator_helper = $prev_helper;
 					if ($value == True)
 					{
 						$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_good'));
@@ -1042,7 +1045,9 @@
 			else
 			{
 				$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_on']);
-				$GLOBALS['phpgw']->template->set_var('msgbox_text',lang($text));
+				$GLOBALS['phpgw']->translation->translator_helper = '';
+				$GLOBALS['phpgw']->template->set_var('msgbox_text',lang($key));
+				$GLOBALS['phpgw']->translation->translator_helper = $prev_helper;
 				if ($type == True)
 				{
 					$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_good'));
@@ -1287,11 +1292,38 @@
 						$preload_image_string .= "'$value'";
 					}
 				}
-				$preload_image_string = "MM_preloadImages($preload_image_string); ";
-				$GLOBALS['phpgw']->template->set_var('phpgw_preload_images',$preload_image_string);
+				return " MM_preloadImages($preload_image_string);";
 			}
+			return '';
 		}
 		
+
+		function load_phpgw_body_tags()
+		{
+			$GLOBALS['phpgw_info']['flags']['body_tags']['marginwidth']='0';
+			$GLOBALS['phpgw_info']['flags']['body_tags']['marginheight']='0';
+			$GLOBALS['phpgw_info']['flags']['body_tags']['topmargin']='0';
+			$GLOBALS['phpgw_info']['flags']['body_tags']['bottommargin']='0';
+			$GLOBALS['phpgw_info']['flags']['body_tags']['rightmargin']='0';
+			$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
+			$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
+			$GLOBALS['phpgw_info']['flags']['body_tags']['border']='0';
+
+			$GLOBALS['phpgw_info']['flags']['body_tags']['onLoad'] .= $this->load_preload_images_data(); 
+			
+			
+			if(@is_array($GLOBALS['phpgw_info']['flags']['body_tags']))
+			{
+				$body_tags_string = '';
+				reset($GLOBALS['phpgw_info']['flags']['body_tags']);
+				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['body_tags']))
+				{
+					$body_tags_string .= " $key=\"$value\"";
+				}
+				$GLOBALS['phpgw']->template->set_var('phpgw_body_tags',$body_tags_string);
+			}
+		}
+
 		/*!
 		@function phpgw_header
 		@abstract load the phpgw header
@@ -1358,7 +1390,8 @@
 					$GLOBALS['phpgw']->db->disconnect();
 					$this->msgbox('',False,'phpgw_msgbox');
 					$this->load_css_data();
-					$this->load_preload_images_data();
+					$this->load_phpgw_body_tags();
+					$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
 					$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
 /*
 				
