@@ -347,7 +347,7 @@
 
 								$raw[$app_name][$message_id] = $content;
 							}
-							$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app['name']] = filectime($appfile);
+							$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app] = filectime($appfile);
 						}
 					}
 					$charset = @$raw['common']['charset'] ? $raw['common']['charset'] : $this->charset($lang);
