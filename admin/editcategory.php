@@ -50,7 +50,7 @@
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category $cat_name has been updated !")); }
+    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category x has been updated !",$catname)); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
     $cats = $c->return_single($cat_id);

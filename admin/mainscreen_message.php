@@ -25,7 +25,7 @@
                      . "$section' and lang='$select_lang'",__LINE__,__FILE__);
      $phpgw->db->query("insert into lang values ('$section" . "_message','$section','$select_lang','"
                      . addslashes($message) . "')",__LINE__,__FILE__);
-     $message = "<center>Message has been updated</center>";
+     $message = "<center>".lang("message has been updated")."</center>";
   }
   
   if (! isset($select_lang)) {
