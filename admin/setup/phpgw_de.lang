@@ -57,7 +57,7 @@ are you sure you want to delete this group ?	admin	de	Sind Sie sicher, dass Sie 
 are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie diesen Server löschen wollen ?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie diese Session beenden wollen ?
 async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
-asynchronous timed services	admin	de	Asynchroner zeitgesteuterter Dienst
+asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst is noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden den richtigen MINE-typ für FTP zu verwenden, statt dem default 'application/octet-stream'
 authentication / accounts	admin	de	Benutzerauthentifizierung / Benutzerkonten
