@@ -30,19 +30,22 @@ var $read_from_file;          // You can send the tree info from a string or fil
 var $root_level_value;        // This is what the top level name or image will be
 var $last_column_size;
 
-	function menutree($read_from_file='T')
+	function menutree($read_from_file='text')
 	{
-		if($read_from_file == 'T')
+		if($read_from_file == 'text')
 		{
-			settype($read_from_file,'integer');
-			$read_from_file = 1;
+			$this->read_from_file = False;
 		}
-		elseif($read_from_file == 'F')
+		elseif($read_from_file == 'file')
 		{
-			settype($read_from_file,'integer');
-			$read_from_file = 0;
+			$this->read_from_file = True;
 		}
-		$this->read_from_file = $read_from_file;
+		$this->set_lcs();
+	}
+
+	function set_lcs($size=300)
+	{
+		$this->last_column_size = $size;
 	}
 
 	function showtree($treefile, $expandlevels='', $num_menus = 50, $invisible_menus = Null)
@@ -83,69 +86,52 @@ var $last_column_size;
 			{
 				die("menutree.inc : Unable to open file ".$treefile);
 			}
+			$treefile = array();
 			while($buffer = fgets($fd, 4096))
 			{
-				$cnt++;
-				$tree[$cnt][0]=strspn($buffer,'.');
-				$tmp=rtrim(substr($buffer,$tree[$cnt][0]));
-				$node=explode('|',$tmp); 
-				$tree[$cnt][1]=$node[0];
-				$tree[$cnt][2]=$node[1];
-				$tree[$cnt][3]=$node[2];
-				$tree[$cnt][4]=0;
-				if(count($node) == 5)
-				{
-					$tree[$cnt][5]=$node[4];
-				}
-				if($tree[$cnt][0] > $maxlevel)
-				{
-					$maxlevel=$tree[$cnt][0];
-				}
+				$treefile[] = buffer;
 			}
 			fclose($fd);
 		}
-		else
+		if(is_array($treefile))
 		{
-			if(is_array($treefile))
+			$ta = $treefile;
+		}
+		elseif(gettype($treefile) == 'string')
+		{
+			$ta = explode("\n",$treefile);
+		}
+		while (list($null,$buffer) = each($ta))
+		{
+			$cnt++;
+			$tree[$cnt][0]=strspn($buffer,".");
+			$tmp=rtrim(substr($buffer,$tree[$cnt][0]));
+			$node=explode('|',$tmp); 
+			$tree[$cnt][1]=chop($node[0]);
+			$tree[$cnt][2]=chop($node[1]);
+			$tree[$cnt][3]=chop($node[2]);
+			$tree[$cnt][4]=0;
+			if(count($node) == 5)
 			{
-				$ta = $treefile;
+				$tree[$cnt][5]=$node[4];
 			}
-			elseif(gettype($treefile) == 'string')
+			if($tree[$cnt][0] > $maxlevel)
 			{
-				$ta = explode("\n",$treefile);
-			}
-			while (list($null,$buffer) = each($ta))
-			{
-				$cnt++;
-				$tree[$cnt][0]=strspn($buffer,".");
-				$tmp=rtrim(substr($buffer,$tree[$cnt][0]));
-				$node=explode('|',$tmp); 
-				$tree[$cnt][1]=chop($node[0]);
-				$tree[$cnt][2]=chop($node[1]);
-				$tree[$cnt][3]=chop($node[2]);
-				$tree[$cnt][4]=0;
-				if(count($node) == 5)
-				{
-					$tree[$cnt][5]=$node[4];
-				}
-				if($tree[$cnt][0] > $maxlevel)
-				{
-					$maxlevel=$tree[$cnt][0];
-				}
+				$maxlevel=$tree[$cnt][0];
 			}
 		}
 		$c_tree = count($tree);
 		for($i=0; $i<$c_tree; $i++)
 		{
-			if($i!=0)
-			{
+//			if($i!=0)
+//			{
 				$expand[$i]=0;
-			}
-			else
-			{
-				$expand[$i]=1;
-			}
-			if($tree[$i][0] <= 2)
+//			}
+//			else
+//			{
+//				$expand[$i]=1;
+//			}
+			if($tree[$i][0] == 1)
 			{
 				$visible[$i]=1;
 			}
@@ -179,7 +165,7 @@ var $last_column_size;
 		/*********************************************/
     
 		$lastlevel=$maxlevel;
-		for ($i=count($tree)-1; $i>=0; $i -= 1)
+		for ($i=$c_tree - 1; $i>=0; $i -= 1)
 		{
 			if($tree[$i][0] < $tree[$i+1][0])
 			{
@@ -273,7 +259,7 @@ var $last_column_size;
 			/* Create expand/collapse parameters    */
 			/****************************************/
 			$params='p=';
-			for($i=1;$i<=$c_tree;$i++)
+			for($i=0;$i<=$c_tree;$i++)
 			{
 				if(($expand[$i]==1) && ($cnt!=$i) || ($expand[$i]==0 && $cnt==$i))
 				{
