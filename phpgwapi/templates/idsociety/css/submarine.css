@@ -82,6 +82,7 @@ a:hover
 	border-width: 1px;
 	border-color: #000000;
 	border-style: ridge;
+	width: 100%;
 }
 
 .portal_text

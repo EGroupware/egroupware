@@ -4,8 +4,8 @@
 		<xsl:variable name="outer_width"><xsl:value-of select="outer_width"/></xsl:variable>
 		<xsl:variable name="header_background_image"><xsl:value-of select="header_background_image"/></xsl:variable>
 		<xsl:variable name="inner_width"><xsl:value-of select="inner_width"/></xsl:variable>
-			<table cellpadding="0" cellspacing="0" width="{$outer_width}" class="portal">
- 				<tr align="center">
+			<table cellpadding="0" cellspacing="0" class="portal">
+ 				<tr>
   					<td align="center" background="{$header_background_image}" class="portal_text">
 						<xsl:value-of select="title"/> 
 					</td>
@@ -15,7 +15,7 @@
 				</tr>
  				<tr>
   					<td colspan="2">
-   						<table cellpadding="0" cellspacing="0" width="{$inner_width}" class="portal">
+   						<table cellpadding="3" cellspacing="0" class="portal">
 							<tr>
 								<td>
 									<xsl:choose>
