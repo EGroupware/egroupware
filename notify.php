@@ -23,7 +23,7 @@
 	<!-- Activate Cloaking Device
 	function CheckEmail()
 	{
-		window.opener.document.location.href="<?php echo $phpgw->link($phpgw_info["server"]["webserver_url"].'/email/'); ?>";
+		window.opener.document.location.href="<?php echo $phpgw->link('/email/index.php'); ?>";
 	}
 	//-->
 	</script>
