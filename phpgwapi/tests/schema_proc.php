@@ -47,6 +47,7 @@
 	// creating a schema_proc instance
 	$schema_proc = CreateObject('phpgwapi.schema_proc',$db->Type);
 	$schema_proc->debug = isset($_GET['debug']) ? $_GET['debug'] : ($_SERVER['argc'] > 2 ? $_SERVER['argv'][2] :  0);
+	if ($schema_proc->debug > 1) $adodb->debug = true;
 
 	// define a test-table to create
 	$test_tables = array(
@@ -66,6 +67,7 @@
 			'uc' => array('test_char')
 		),
 	);
+	$GLOBALS['phpgw_info']['apps']['login']['table_defs'] = &$test_tables;	// to be able to use db::insert and db::update
 	
 	// droping test-tables, if they are there from a previous failed run
 	foreach($adodb->MetaTables() as $table)
@@ -119,10 +121,53 @@
 	}
 	echo "Inserting some content:\n";
 	$adodb->Execute("INSERT INTO schema_proc_test (test_int4,test_varchar,test_char) VALUES (1,'Hallo Ralf','0123456789')");
-	$adodb->Execute("INSERT INTO schema_proc_test (test_int4,test_varchar,test_char) VALUES (2,'Hallo wer noch?','9876543210')");
+	//$adodb->Execute("INSERT INTO schema_proc_test (test_int4,test_varchar,test_char) VALUES (2,'Hallo wer noch?','9876543210')");
+	$db->insert('schema_proc_test',array(
+			'test_int4'		=> 2,
+			'test_varchar'	=> 'Hallo wer noch?',
+			'test_char'		=> '9876543210',
+			'test_text'	=> 'This is a test-value for the text-column, insert-value',
+			'test_blob'	=> 'This is a test-value for the blob-column, insert-value',
+		),False,__LINE__,__FILE__);
 	check_content($adodb->GetAll("SELECT * FROM schema_proc_test"),array(
-			array('test_auto' => 1, 'test_int4' => 1, 'test_varchar' => 'Hallo Ralf','test_char' => '0123456789'),
-			array('test_auto' => 2, 'test_int4' => 2, 'test_varchar' => 'Hallo wer noch?','test_char' => '9876543210'),
+			array(
+				'test_auto' => 1, 'test_int4' => 1, 'test_varchar' => 'Hallo Ralf','test_char' => '0123456789',
+			),
+			array(
+				'test_auto' => 2, 'test_int4' => 2, 'test_varchar' => 'Hallo wer noch?','test_char' => '9876543210',
+				'test_text'	=> 'This is a test-value for the text-column, insert-value',
+				'test_blob'	=> 'This is a test-value for the blob-column, insert-value',
+			),
+		));
+	echo "==> SUCCESS\n";
+	
+	echo "Updating the text- and blob-columns\n";
+	// updating blob's and other columns
+	$db->update('schema_proc_test',array(
+			'test_int4'	=> 99,
+			'test_char' => 'abcdefghij',
+			'test_text'	=> 'This is a test-value for the text-column',
+			'test_blob'	=> 'This is a test-value for the blob-column',
+		),array('test_auto'=>1),__LINE__,__FILE__);
+	// updating only the blob's
+	$db->update('schema_proc_test',array(
+			'test_text'	=> 'This is a test-value for the text-column, 2.row',
+			'test_blob'	=> 'This is a test-value for the blob-column, 2.row',
+		),array('test_auto'=>2),__LINE__,__FILE__);
+	// db::update uses UpdateBlob only for MaxDB at the moment, it works for MySql too, but fails for postgres with text / CLOB's
+	// $adodb->UpdateBlob('schema_proc_test','test_text','This is a test-value for the text-column, 2.row','test_auto=2','CLOB');
+	// $adodb->UpdateBlob('schema_proc_test','test_blob','This is a test-value for the blob-column, 2.row','test_auto=2','BLOB');
+	check_content($adodb->GetAll("SELECT * FROM schema_proc_test"),array(
+			array(
+				'test_auto' => 1, 'test_int4' => 99, 'test_varchar' => 'Hallo Ralf','test_char' => 'abcdefghij',
+				'test_text' => 'This is a test-value for the text-column',
+				'test_blob'=>'This is a test-value for the blob-column',
+			),
+			array(
+				'test_auto' => 2, 'test_int4' => 2, 'test_varchar' => 'Hallo wer noch?','test_char' => '9876543210',
+				'test_text' => 'This is a test-value for the text-column, 2.row',
+				'test_blob'=>'This is a test-value for the blob-column, 2.row',
+			),
 		));
 	echo "==> SUCCESS\n";
 
@@ -181,7 +226,7 @@
 	echo "Inserting some more content\n";
 	$db->query("INSERT INTO schema_proc_renamed (test_int4,test_varchar_renamed,test_char) VALUES (10,'Hallo Hallo Hallo ...','12345678901234567890123456789012')");
 	check_content($adodb->GetAll("SELECT * FROM schema_proc_renamed"),array(
-			array('test_auto' => 1, 'test_int4' => 1, 'test_varchar_renamed' => 'Hallo Ralf','test_char' => '0123456789'),
+			array('test_auto' => 1, 'test_int4' => 99, 'test_varchar_renamed' => 'Hallo Ralf','test_char' => 'abcdefghij'),
 			array('test_auto' => 2, 'test_int4' => 2, 'test_varchar_renamed' => 'Hallo wer noch?','test_char' => '9876543210'),
 			array('test_auto' => 3, 'test_int4' => 10, 'test_varchar_renamed' => 'Hallo Hallo Hallo ...','test_char' => '12345678901234567890123456789012'),
 		));
