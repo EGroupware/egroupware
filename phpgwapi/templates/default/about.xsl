@@ -20,7 +20,7 @@
 				</td>
 			</tr>
 			<hr noshade="noshade" width="98%" align="center" size="1"/>
-			<xsl:call-template name="about_app"/>
+			<xsl:apply-template select="about_app"/>
 		</table>
 	</xsl:template>
 
