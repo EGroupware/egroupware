@@ -66,17 +66,17 @@ class calendar__
 		switch($msg_type)
 		{
 			case MSG_DELETED:
-				$action = 'Deleted ';
+				$action = 'Deleted';
 				$event_id = $old_event->id;
 				$msgtype = '"calendar";';
 				break;
 			case MSG_MODIFIED:
-				$action = 'Modified ';
+				$action = 'Modified';
 				$event_id = $old_event->id;
 				$msgtype = '"calendar"; Version="'.$phpgw_info['server']['versions']['calendar'].'"; Id="'.$new_event->id.'"';
 				break;
 			case MSG_ADDED:
-				$action = 'Added ';
+				$action = 'Added';
 				$event_id = $old_event->id;
 				$msgtype = '"calendar"; Version="'.$phpgw_info['server']['versions']['calendar'].'"; Id="'.$new_event->id.'"';
 				break;
