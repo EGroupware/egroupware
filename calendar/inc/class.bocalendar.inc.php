@@ -138,10 +138,13 @@
 				{
 					echo '<!-- Grantor: '.$grantor.' Rights: '.$rights.' -->'."\n";
 				}
-				@reset($this->grantor);
+				@reset($this->grants);
 			}
 
-			if($this->debug) { echo '<!-- Read Use_Session : ('.$session.') -->'."\n"; }
+			if($this->debug)
+			{
+				echo '<!-- Read Use_Session : ('.$session.') -->'."\n";
+			}
 
 			if($session)
 			{
@@ -192,7 +195,19 @@
 
 			$this->filter = get_var('filter',Array('HTTP_POST_VARS','DEFAULT'),' '.$this->prefs['calendar']['defaultfilter'].' ');
 			$this->cat_id = get_var('cat_id',Array('HTTP_POST_VARS'));
+
+			$this->so = CreateObject('calendar.socalendar',
+				Array(
+					'owner'		=> $this->owner,
+					'filter'		=> $this->filter,
+					'category'	=> $this->cat_id,
+					'g_owner'	=> $this->g_owner
+				)
+			);
+			$this->datetime = $this->so->datetime;
 			
+			$localtime = $this->datetime->gmtnow + $this->datetime->tz_offset;
+
 			$date = get_var('date',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			$year = get_var('year',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			$month = get_var('month',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
@@ -212,7 +227,7 @@
 				}
 				elseif($this->year == 0)
 				{
-					$this->year = date('Y',time());
+					$this->year = date('Y',$localtime);
 				}
 				if(isset($month) && $month!='')
 				{
@@ -220,7 +235,7 @@
 				}
 				elseif($this->month == 0)
 				{
-					$this->month = date('m',time());
+					$this->month = date('m',$localtime);
 				}
 				if(isset($day) && $day!='')
 				{
@@ -228,21 +243,11 @@
 				}
 				elseif($this->day == 0)
 				{
-					$this->day = date('d',time());
+					$this->day = date('d',$localtime);
 				}
 			}
-			
-			$this->so = CreateObject('calendar.socalendar',
-				Array(
-					'owner'		=> $this->owner,
-					'filter'		=> $this->filter,
-					'category'	=> $this->cat_id,
-					'g_owner'	=> $this->g_owner
-				)
-			);
-			$this->datetime = $this->so->datetime;
-			
-			$this->today = date('Ymd',time());
+
+			$this->today = date('Ymd',$this->datetime->gmtnow);
 
 			if($this->debug)
 			{
@@ -354,7 +359,10 @@
 		{
 			if ($this->use_session)
 			{
-				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
+				if($this->debug)
+				{
+					echo '<!-- '."\n".'Save:'."\n"._debug_array($data,False)."\n".' -->'."\n";
+				}
 				$GLOBALS['phpgw']->session->appsession('session_data','calendar',$data);
 			}
 		}
@@ -362,8 +370,11 @@
 		function read_sessiondata()
 		{
 			$data = $GLOBALS['phpgw']->session->appsession('session_data','calendar');
-			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
-
+			if($this->debug)
+			{
+				echo '<!-- '."\n".'Read:'."\n"._debug_array($data,False)."\n".' -->'."\n";
+			}
+			
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
 			$this->owner  = intval($data['owner']);
