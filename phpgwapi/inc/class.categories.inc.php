@@ -45,6 +45,8 @@
 
 	global $phpgw, $phpgw_info;
 
+	$this->db2 = $this->db;
+
 	$filter = $this->filter($type);
 	if (!$sort) { $sort = "ASC";  }
 
@@ -52,17 +54,17 @@
 	else { $ordermethod = " order by cat_parent asc"; }
 
 	if ($query) {
-	$this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "' and "
-		    . "(cat_name like '%$query%' or cat_description like '%$query%') $filter $ordermethod" . " "
-		    . $this->db->limit($start,$limit),__LINE__,__FILE__);
-	$this->total_records = $this->db->num_rows();
+	$sql = "select * from phpgw_categories where cat_appname='" . $this->app_name . "' and "
+		    . "(cat_name like '%$query%' or cat_description like '%$query%') $filter $ordermethod";
 	}
 	else {
-	$this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
-			. "$filter $ordermethod" . " "
-			. $this->db->limit($start,$limit),__LINE__,__FILE__);
-        $this->total_records = $this->db->num_rows();
+	$sql = "select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
+			. "$filter $ordermethod";
 	}
+
+	$this->db2->query($sql,__LINE__,__FILE__);
+        $this->total_records = $this->db2->num_rows();
+	$this->db->query($sql. " " . $this->db->limit($start,$limit),__LINE__,__FILE__);
 
 	    $i = 0;
 	    while ($this->db->next_record()) {
