@@ -41,7 +41,6 @@
 	}
 -->
 </STYLE>
-<LLINK rel="stylesheet" href="/phpgroupware_devel/phpgwapi/templates/linux-at-work.de/copy.css">
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>
 
@@ -50,7 +49,7 @@
 <p>&nbsp;</p>
 
 <center>
-<img src="/phpgroupware/phpgwapi/templates/linux-at-work.de/images/vater_logo.gif" border="0">
+<img src="/egroupware/phpgwapi/templates/linux-at-work.de/images/vater_logo.gif" border="0">
 
 <br>
 
