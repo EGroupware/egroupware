@@ -506,6 +506,7 @@
 					'adr_two_locality' =>    array('type' => 'varchar', 'precision' => 32),
 					'adr_two_region' =>      array('type' => 'varchar', 'precision' => 32),
 					'adr_two_postalcode' =>  array('type' => 'varchar', 'precision' => 32),
+					'adr_two_countryname' => array('type' => 'varchar', 'precision' => 32),
 					'adr_two_type' =>        array('type' => 'varchar', 'precision' => 64),
 					'tel_work' =>            array('type' => 'varchar', 'precision' => 40, 'default' => '+1 (000) 000-0000', 'nullable' => False),
 					'tel_home' =>            array('type' => 'varchar', 'precision' => 40, 'default' => '+1 (000) 000-0000', 'nullable' => False),
