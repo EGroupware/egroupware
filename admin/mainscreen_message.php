@@ -11,98 +11,119 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
-	$phpgw_info['flags'] = array('currentapp' => 'admin', 'enable_nextmatchs_class' => True);
+	$GLOBALS['phpgw_info'] = array();
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'currentapp' => 'admin',
+		'enable_nextmatchs_class' => True,
+		'nonavbar'   => True,
+		'noheader' => True
+	);
 	include('../header.inc.php');
 
-	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$p->set_file(array('message' => 'mainscreen_message.tpl'));
-	$p->set_block('message','form','form');
-	$p->set_block('message','row','row');
-	$p->set_block('message','row_2','row_2');
-
-	if ($submit)
+	if ($GLOBALS['HTTP_POST_VARS']['cancel'])
 	{
-		$phpgw->db->query("delete from lang where message_id='$section" . "_message' and app_name='"
-			. "$section' and lang='$select_lang'",__LINE__,__FILE__);
-		$phpgw->db->query("insert into lang values ('$section" . "_message','$section','$select_lang','"
-			. addslashes($message) . "')",__LINE__,__FILE__);
-		$message = "<center>".lang("message has been updated")."</center>";
+		header('Location: ' . $GLOBALS['phpgw']->link('/admin/index.php'));
 	}
 
-	if (! isset($select_lang))
-	{
-		$p->set_var("header_lang",lang("Main screen message"));
-		$p->set_var("form_action",$phpgw->link("/admin/mainscreen_message.php"));
-		$p->set_var("tr_color",$phpgw_info["theme"]["th_bg"]);
-		$p->set_var("value","&nbsp;");
-		$p->parse("rows","row_2",True);
+	$GLOBALS['phpgw']->template->set_file(array('message' => 'mainscreen_message.tpl'));
+	$GLOBALS['phpgw']->template->set_block('message','form','form');
+	$GLOBALS['phpgw']->template->set_block('message','row','row');
+	$GLOBALS['phpgw']->template->set_block('message','row_2','row_2');
 
-		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-		$p->set_var("tr_color",$tr_color);
+	$section     = $GLOBALS['HTTP_POST_VARS']['section'];
+	$select_lang = $GLOBALS['HTTP_POST_VARS']['select_lang'];
+	$message     = $GLOBALS['HTTP_POST_VARS']['message'];
+
+	$GLOBALS['phpgw']->common->phpgw_header();
+	echo parse_navbar();
+
+	if ($GLOBALS['HTTP_POST_VARS']['submit'])
+	{
+		$GLOBALS['phpgw']->db->query("DELETE FROM lang WHERE message_id='$section" . "_message' AND app_name='"
+			. "$section' AND lang='$select_lang'",__LINE__,__FILE__);
+		$GLOBALS['phpgw']->db->query("INSERT INTO lang VALUES ('$section" . "_message','$section','$select_lang','"
+			. addslashes($message) . "')",__LINE__,__FILE__);
+		$message = '<center>'.lang('message has been updated').'</center>';
+	}
+
+	if (empty($select_lang))
+	{
+		$GLOBALS['phpgw']->template->set_var('header_lang',lang('Main screen message'));
+		$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/admin/mainscreen_message.php'));
+		$GLOBALS['phpgw']->template->set_var('tr_color',$GLOBALS['phpgw_info']['theme']['th_bg']);
+		$GLOBALS['phpgw']->template->set_var('value','&nbsp;');
+		$GLOBALS['phpgw']->template->fp('rows','row_2',True);
+
+		$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+		$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
 
 		$select_lang = '<select name="select_lang">';
-		$phpgw->db->query("select lang,languages.lang_name,languages.lang_id from lang,languages where "
-			. "lang.lang=languages.lang_id group by lang,languages.lang_name,"
-			. "languages.lang_id order by lang");
-		while ($phpgw->db->next_record())
+		$GLOBALS['phpgw']->db->query("SELECT lang,languages.lang_name,languages.lang_id FROM lang,languages WHERE "
+			. "lang.lang=languages.lang_id GROUP BY lang,languages.lang_name,"
+			. "languages.lang_id ORDER BY lang");
+		while ($GLOBALS['phpgw']->db->next_record())
 		{
-			$select_lang .= '<option value="' . $phpgw->db->f("lang") . '">' . $phpgw->db->f("lang_id")
-				. ' - ' . $phpgw->db->f("lang_name") . '</option>';
+			$select_lang .= '<option value="' . $GLOBALS['phpgw']->db->f('lang') . '">' . $GLOBALS['phpgw']->db->f('lang_id')
+				. ' - ' . $GLOBALS['phpgw']->db->f('lang_name') . '</option>';
 		}
 		$select_lang .= '</select>';
-		$p->set_var("label",lang("Language"));
-		$p->set_var("value",$select_lang);
-		$p->parse("rows","row",True);
+		$GLOBALS['phpgw']->template->set_var('label',lang('Language'));
+		$GLOBALS['phpgw']->template->set_var('value',$select_lang);
+		$GLOBALS['phpgw']->template->fp('rows','row',True);
 
-		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-		$p->set_var("tr_color",$tr_color);
-		$select_section = '<select name="section"><option value="mainscreen">' . lang("Main screen")
+		$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+		$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
+		$select_section = '<select name="section"><option value="mainscreen">' . lang('Main screen')
 			. '</option><option value="loginscreen">' . lang("Login screen") . '</option>'
 			. '</select>';
-		$p->set_var("label",lang("Section"));
-		$p->set_var("value",$select_section);
-		$p->parse("rows","row",True);
+		$GLOBALS['phpgw']->template->set_var('label',lang('Section'));
+		$GLOBALS['phpgw']->template->set_var('value',$select_section);
+		$GLOBALS['phpgw']->template->fp('rows','row',True);
 
-		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-		$p->set_var("tr_color",$tr_color);
-		$p->set_var("value",'<input type="submit" value="' . lang("Submit") . '">');
-		$p->parse("rows","row_2",True);
-
+		$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+		$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
+		$GLOBALS['phpgw']->template->set_var('value','<input type="submit" value="' . lang('Submit')
+			. '"><input type="submit" name="cancel" value="'. lang('cancel') .'">');
+		$GLOBALS['phpgw']->template->fp('rows','row_2',True);
 	}
 	else
 	{
-		$phpgw->db->query("select content from lang where lang='$select_lang' and message_id='$section"
+		$GLOBALS['phpgw']->db->query("SELECT content FROM lang WHERE lang='$select_lang' AND message_id='$section"
 			. "_message'");
-		$phpgw->db->next_record();
-		$current_message = $phpgw->db->f("content");
+		$GLOBALS['phpgw']->db->next_record();
+		$current_message = $GLOBALS['phpgw']->db->f('content');
 
-		if ($section == "mainscreen")
+		if ($section == 'mainscreen')
 		{
-			$p->set_var("header_lang",lang("Edit main screen message"));
+			$GLOBALS['phpgw']->template->set_var('header_lang',lang('Edit main screen message'));
 		}
 		else
 		{
-			$p->set_var("header_lang",lang("Edit login screen message"));
+			$GLOBALS['phpgw']->template->set_var('header_lang',lang('Edit login screen message'));
 		}
 
-		$p->set_var("form_action",$phpgw->link("/admin/mainscreen_message.php","select_lang=$select_lang&section=$section"));
-		$p->set_var("tr_color",$phpgw_info["theme"]["th_bg"]);
-		$p->set_var("value","&nbsp;");
-		$p->parse("rows","row_2",True);
+		$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/admin/mainscreen_message.php'));
+		$GLOBALS['phpgw']->template->set_var('select_lang',$select_lang);
+		$GLOBALS['phpgw']->template->set_var('section',$section);
+		$GLOBALS['phpgw']->template->set_var('tr_color',$GLOBALS['phpgw_info']['theme']['th_bg']);
+		$GLOBALS['phpgw']->template->set_var('value','&nbsp;');
+		$GLOBALS['phpgw']->template->fp('rows','row_2',True);
 
-		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-		$p->set_var("tr_color",$tr_color);
-		$p->set_var("value",'<textarea name="message" cols="50" rows="10" wrap="virtual">' . stripslashes($current_message) . '</textarea>');
-		$p->parse("rows","row_2",True);
+		$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+		$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
+		$GLOBALS['phpgw']->template->set_var('value','<textarea name="message" cols="50" rows="10" wrap="virtual">' . stripslashes($current_message) . '</textarea>');
+		$GLOBALS['phpgw']->template->fp('rows','row_2',True);
 
-		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-		$p->set_var("tr_color",$tr_color);
-		$p->set_var("value",'<input type="submit" name="submit" value="' . lang("Update") . '">');
-		$p->parse("rows","row_2",True);
+		$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+		$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
+		$GLOBALS['phpgw']->template->set_var('value','<input type="submit" name="submit" value="' . lang('Update')
+			. '"><input type="submit" name="cancel" value="'. lang('cancel') .'">'
+);
+		$GLOBALS['phpgw']->template->fp('rows','row_2',True);
 	}
 
-	$p->set_var("error_message",$message);
-	$p->pparse("out","form");
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
+	$GLOBALS['phpgw']->template->set_var('error_message',$message);
+	$GLOBALS['phpgw']->template->pfp('out','form');
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
