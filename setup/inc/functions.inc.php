@@ -21,6 +21,8 @@
     $phpgw_info["server"]["version"] = "Undetected";
   }
 
+  $phpgw_info["server"]["app_images"] = "templates/default/images";
+
   function show_header($title = "",$nologoutbutton = False) 
   {
     global $phpgw_info, $PHP_SELF;
@@ -155,7 +157,6 @@
     $db->Database   = $phpgw_domain[$SetupDomain]["db_name"];
     $db->User       = $phpgw_domain[$SetupDomain]["db_user"];
     $db->Password   = $phpgw_domain[$SetupDomain]["db_pass"];
-    
   }
 
   function check_db()
@@ -207,6 +208,63 @@
       }
       $db->query("DROP TABLE phpgw_testrights");
     }
+  }
+
+  function app_setups($appname = ""){
+    global $phpgw_info;
+    $d = dir($phpgw_info["server"]["server_root"]);
+    while($entry=$d->read()) {
+      if (is_dir ($phpgw_info["server"]["server_root"]."/".$entry."/setup")){
+        echo $entry."<br>\n";
+      }
+    }
+    $d->close();
+  }
+
+  function execute_script($script, $appname = ""){
+    global $phpgw_info, $currentver, $oldversion, $phpgw_domain, $db;
+    if ($appname == ""){
+      $d = dir($phpgw_info["server"]["server_root"]);
+      while($entry=$d->read()) {
+        $f = $phpgw_info["server"]["server_root"]."/".$entry."/setup/".$script.".inc.php";
+        if (file_exists ($f)){include($f);}
+      }
+      $d->close();
+    }else{
+      $f = $phpgw_info["server"]["server_root"]."/".$appname."/setup/".$script.".inc.php";
+      if (file_exists ($f)){include($f);}
+    }
+  }
+
+  function update_app_version($appname, $tableschanged = True){
+    global $currentver, $phpgw_info, $db, $tablechanges;
+    if ($tableschanged == True){$tablechanges = True;}
+    $db->query("update applications set app_version='".$currentver."' where app_name='".$appname."'");
+  }
+
+  function manage_tables(){
+    global $currentver, $tablechanges, $phpgw_domain, $phpgw_info, $db;
+    if ($currentver == "drop"){
+      execute_script("droptables");
+    }
+    if ($currentver == "new") {
+      execute_script("newtables");
+      execute_script("common_default_records");
+      execute_script("lang");
+    }
+  
+    if ($currentver == "oldversion") {
+      $currentver = $oldversion;
+      execute_script("upgradetables");
+    }
+  
+    /* Not yet implemented
+    if (!$tablechanges == True){
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>No table changes were needed. The script only updated your version setting.</td>\n";
+      echo "  </tr>\n";
+    }
+    */
   }
 
   function setup_header($title = "",$nologoutbutton = False) {

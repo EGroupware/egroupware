@@ -81,23 +81,25 @@
     Stage 5.2 = 
   */
 
+  $phpgw_info["server"]["app_images"] = "templates/default/images";
+
   echo '<table border="1" width="100%" cellspacing="0" cellpadding="2">';
   echo '  <tr><td align="left" WIDTH="20%" bgcolor="486591"><font color="fefefe">Step 1 - header.inc.php</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($stage == 1.1) {
-    echo '<tr><td align="center">O</td><td><form action="./createheader.php" method=post>You have not created your header.inc.php yet.<br> <input type=submit value="Create one now"></form></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="./createheader.php" method=post>You have not created your header.inc.php yet.<br> <input type=submit value="Create one now"></form></td></tr>';
   }elseif ($stage == 1.2) {
-    echo '<tr><td align="center">O</td><td><form action="./createheader.php" method=post>Your header.inc.php is out of date. Please upgrade it.<br> <input type=submit value="Upgrade now"></form></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="./createheader.php" method=post>Your header.inc.php is out of date. Please upgrade it.<br> <input type=submit value="Upgrade now"></form></td></tr>';
   }elseif ($stage >= 1.3) {
-    echo '<tr><td align="center">X</td><td><form action="./createheader.php" method=post>
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="X" border="0"></td><td><form action="./createheader.php" method=post>
     Your header.inc.php is in place and current.<br> <input type=submit value="Edit existing header.inc.php"></form></td></tr>';
   }
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 2 - database management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($stage < 2.1) {
-    echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($stage == 2.1) {
-    echo '<tr><td align="center">O</td><td><form action="index.php" method=post>Your database does not exist.<br> <input type=submit value="Create one now"></form></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="index.php" method=post>Your database does not exist.<br> <input type=submit value="Create one now"></form></td></tr>';
   }elseif ($stage == 2.2) {
-    echo '<tr><td align="center">O</td><td>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>';
     echo '
       You appear to be running a pre-beta version of phpGroupWare<br>
       We are providing an automated upgrade system, but we highly recommend backing up your tables incase the script causes damage to your data.<br>
@@ -121,8 +123,8 @@
     echo '</td></tr>';
   }elseif ($stage == 2.3) {
     /* commented out because I cannot accuratly figure out if the DB exists */
-    //echo '<tr><td align="center">O</td><td><form action="index.php" method=post>Your database exist, would you like to create your tables now?<br> <input type=submit value="Create tables"></form></td></tr>';
-    echo '<tr><td align="center">O</td><td>Make sure that your database is created and the account permissions are set.<br>';
+    //echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="index.php" method=post>Your database exist, would you like to create your tables now?<br> <input type=submit value="Create tables"></form></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Make sure that your database is created and the account permissions are set.<br>';
     if ($phpgw_domain[$SetupDomain]["db_type"] == "mysql"){
       echo "
       <br>Instructions for creating the database in MySQL:<br>
@@ -145,7 +147,7 @@
     echo "<input type=\"hidden\" name=\"oldversion\" value=\"new\">\n";
     echo 'Once the database is setup correctly <br><input type=submit name="action" value="Create"> the tables</form></td></tr>';
   }elseif ($stage == 2.4) {
-    echo '<tr><td align="center">O</td><td>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>';
     echo "You appear to be running version $oldversion of phpGroupWare.<br>\n";
     echo "We will automaticly update your tables/records to ".$phpgw_info["server"]["version"].", but we highly recommend backing up your tables in case the script causes damage to your data.\n";
     echo "These automated scripts can easily destroy your data. Please backup before going any further!\n";
@@ -160,7 +162,7 @@
     echo "</form>\n";
     echo '</td></tr>';
   }elseif ($stage == 2.5) {
-    echo '<tr><td align="center">O</td><td>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>';
     echo "<table width=\"100%\">\n";
     echo "  <tr bgcolor=\"486591\"><td><font color=\"fefefe\">&nbsp;<b>$subtitle</b></font></td></tr>\n";
     echo "  <tr bgcolor=\"e6e6e6\"><td>$submsg</td></tr>\n";
@@ -176,7 +178,7 @@
     echo '</form>';
     echo '</td></tr>';
   }elseif ($stage >= 2.6) {
-    echo '<tr><td align="center">X</td><td>Your tables are current.';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="X" border="0"></td><td>Your tables are current.';
     echo "<form method=\"POST\" action=\"index.php\">\n";
     echo "<input type=\"hidden\" name=\"oldversion\" value=\"new\">\n";
     echo "<br>Insanity: <input type=\"submit\" name=\"action\" value=\"Delete all my tables and data\">\n";
@@ -185,31 +187,31 @@
   }
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - Configuration</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($stage < 3.1) {
-    echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($stage == 3.1) {
-    echo '<tr><td align="center">O</td><td>Please phpGroupWare for your environment.';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Please phpGroupWare for your environment.';
     echo "<form method=\"POST\" action=\"config.php\"><input type=\"submit\" value=\"Configure Now\"></form>";
     echo '</td></tr>';
   }elseif ($stage == 3.2) {
-    echo '<tr><td align="center">X</td><td>Configuration completed.';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/completed.gif" alt="X" border="0"></td><td>Configuration completed.';
     echo "<form method=\"POST\" action=\"config.php\"><input type=\"submit\" value=\"Edit Current Configuration\"></form>";
     echo '</td></tr>';
   }
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 4 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($stage < 4.1) {
-    echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($stage == 4.1) {
-    echo '<tr><td align="center">O</td><td>stage 4.1.<br></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>stage 4.1.<br></td></tr>';
   }elseif ($stage == 4.2) {
-    echo '<tr><td align="center">O</td><td>stage 4.2.<br></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>stage 4.2.<br></td></tr>';
   }
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 5 - Add-on Application Installation</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   if ($stage < 5.1) {
-    echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
   }elseif ($stage == 5.1) {
-    echo '<tr><td align="center">O</td><td>stage 5.1.<br></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>stage 5.1.<br></td></tr>';
   }elseif ($stage == 5.2) {
-    echo '<tr><td align="center">O</td><td>stage 5.2.<br></td></tr>';
+    echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>stage 5.2.<br></td></tr>';
   }
 
   echo '</table>';
