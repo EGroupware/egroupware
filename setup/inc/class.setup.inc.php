@@ -27,11 +27,11 @@
 		*/
 		function loaddb()
 		{
-			$ConfigDomain = $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : $GLOBALS['HTTP_POST_VARS']['ConfigDomain'];
-			if(empty($ConfigDomain))
+			$GLOBALS['ConfigDomain'] = @$GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? @$GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : @$GLOBALS['HTTP_POST_VARS']['ConfigDomain'];
+			if(empty($GLOBALS['ConfigDomain']))
 			{
 				/* This is to fix the reading of this value immediately after the cookie was set on login */
-				$ConfigDomain = $GLOBALS['HTTP_POST_VARS']['FormDomain'];
+				$GLOBALS['ConfigDomain'] = @$GLOBALS['HTTP_POST_VARS']['FormDomain'] ? @$GLOBALS['HTTP_POST_VARS']['FormDomain'] : 'default';
 			}
 
 			/* Database setup */
@@ -39,13 +39,13 @@
 			{
 				$GLOBALS['phpgw_info']['server']['api_inc'] = PHPGW_SERVER_ROOT . '/phpgwapi/inc';
 			}
-			include($GLOBALS['phpgw_info']['server']['api_inc'] . '/class.db_'.$GLOBALS['phpgw_domain'][$ConfigDomain]['db_type'].'.inc.php');
+			include($GLOBALS['phpgw_info']['server']['api_inc'] . '/class.db_'.$GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'].'.inc.php');
 			$this->db           = new db;
-			$this->db->Host     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_host'];
-			$this->db->Type     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_type'];
-			$this->db->Database = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_name'];
-			$this->db->User     = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_user'];
-			$this->db->Password = $GLOBALS['phpgw_domain'][$ConfigDomain]['db_pass'];
+			$this->db->Host     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_host'];
+			$this->db->Type     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];
+			$this->db->Database = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_name'];
+			$this->db->User     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_user'];
+			$this->db->Password = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_pass'];
 		}
 
 		/*!
@@ -55,17 +55,15 @@
 		*/
 		function auth($auth_type = "Config")
 		{
-			global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
-
-			$FormLogout   = $HTTP_GET_VARS['FormLogout']    ? $HTTP_GET_VARS['FormLogout']    : $HTTP_POST_VARS['FormLogout'];
-			$ConfigLogin  = $HTTP_POST_VARS['ConfigLogin']  ? $HTTP_POST_VARS['ConfigLogin']  : $HTTP_COOKIE_VARS['ConfigLogin'];
-			$HeaderLogin  = $HTTP_POST_VARS['HeaderLogin']  ? $HTTP_POST_VARS['HeaderLogin']  : $HTTP_COOKIE_VARS['HeaderLogin'];
-			$FormDomain   = $HTTP_POST_VARS['FormDomain'];
-			$FormPW       = $HTTP_POST_VARS['FormPW'];
-			$ConfigDomain = $HTTP_POST_VARS['ConfigDomain'] ? $HTTP_POST_VARS['ConfigDomain'] : $HTTP_COOKIE_VARS['ConfigDomain'];
-			$ConfigPW     = $HTTP_POST_VARS['ConfigPW']     ? $HTTP_POST_VARS['ConfigPW']     : $HTTP_COOKIE_VARS['ConfigPW'];
-			$HeaderPW     = $HTTP_COOKIE_VARS['HeaderPW']   ? $HTTP_COOKIE_VARS['HeaderPW']   : $HTTP_POST_VARS['HeaderPW'];
-			$ConfigLang   = $HTTP_POST_VARS['ConfigLang']   ? $HTTP_POST_VARS['ConfigLang']   : $HTTP_COOKIE_VARS['ConfigLang'];
+			$FormLogout   = @$GLOBALS['HTTP_GET_VARS']['FormLogout']    ? @$GLOBALS['HTTP_GET_VARS']['FormLogout']    : @$GLOBALS['HTTP_POST_VARS']['FormLogout'];
+			$ConfigLogin  = @$GLOBALS['HTTP_POST_VARS']['ConfigLogin']  ? @$GLOBALS['HTTP_POST_VARS']['ConfigLogin']  : @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLogin'];
+			$HeaderLogin  = @$GLOBALS['HTTP_POST_VARS']['HeaderLogin']  ? @$GLOBALS['HTTP_POST_VARS']['HeaderLogin']  : @$GLOBALS['HTTP_COOKIE_VARS']['HeaderLogin'];
+			$FormDomain   = @$GLOBALS['HTTP_POST_VARS']['FormDomain'];
+			$FormPW       = @$GLOBALS['HTTP_POST_VARS']['FormPW'];
+			$ConfigDomain = @$GLOBALS['HTTP_POST_VARS']['ConfigDomain'] ? @$GLOBALS['HTTP_POST_VARS']['ConfigDomain'] : @$GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'];
+			$ConfigPW     = @$GLOBALS['HTTP_POST_VARS']['ConfigPW']     ? @$GLOBALS['HTTP_POST_VARS']['ConfigPW']     : @$GLOBALS['HTTP_COOKIE_VARS']['ConfigPW'];
+			$HeaderPW     = @$GLOBALS['HTTP_COOKIE_VARS']['HeaderPW']   ? @$GLOBALS['HTTP_COOKIE_VARS']['HeaderPW']   : @$GLOBALS['HTTP_POST_VARS']['HeaderPW'];
+			$ConfigLang   = @$GLOBALS['HTTP_POST_VARS']['ConfigLang']   ? @$GLOBALS['HTTP_POST_VARS']['ConfigLang']   : @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'];
 
 			if (isset($FormLogout) && !empty($FormLogout))
 			{
@@ -79,12 +77,14 @@
 					setcookie('ConfigDomain');  /* scrub the old one */
 					setcookie('ConfigLang');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'You have successfully logged out';
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
 				}
 				elseif($FormLogout == 'header')
 				{
 					setcookie('HeaderPW');  /* scrub the old one */
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'You have successfully logged out';
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
 				}
 			}
@@ -96,6 +96,7 @@
 					setcookie('ConfigDomain');  /* scrub the old one */
 					setcookie('ConfigLang');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
 				}
 				else
@@ -119,6 +120,7 @@
 					else
 					{
 						$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid password';
+						$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 						return False;
 					}
 				}
@@ -132,6 +134,7 @@
 					else
 					{
 						$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid password';
+						$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 						return False;
 					}
 				}
@@ -142,6 +145,7 @@
 				{
 					setcookie('HeaderPW');  /* scrub the old one */
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
 				}
 				else
@@ -198,7 +202,6 @@
 		*/
 		function clear_session_cache()
 		{
-			
 			$tablenames = @$this->db->table_names();
 			while(list($key,$val) = @each($tablenames))
 			{

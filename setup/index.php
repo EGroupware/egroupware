@@ -18,7 +18,7 @@
 	*/
 	$DEBUG = False;
 
-	$phpgw_info = array();
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
@@ -64,14 +64,15 @@
 		$phpgw_setup->show_header(lang('Please login'),True);
 		$phpgw_setup->login_form();
 		$phpgw_setup->show_footer();
-
-		/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
-		$phpgw_setup->clear_session_cache();
 		exit;
 	}
 
-	// Database actions
 	$phpgw_setup->loaddb();
+
+	/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
+	$phpgw_setup->clear_session_cache();
+
+	// Database actions
 	$setup_info = $phpgw_setup->get_versions();
 	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
 	if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 1)
@@ -91,7 +92,7 @@
 	//$action = 'Upgrade';
 	// end DEBUG code
 
-	switch($HTTP_POST_VARS['action'])
+	switch(@$GLOBALS['HTTP_POST_VARS']['action'])
 	{
 		case 'Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
@@ -129,9 +130,9 @@
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 	}
-	$setup_tpl->set_var('subtitle',$subtitle);
-	$setup_tpl->set_var('submsg',$submsg);
-	$setup_tpl->set_var('subaction',lang($subaction));
+	$setup_tpl->set_var('subtitle',@$subtitle);
+	$setup_tpl->set_var('submsg',@$submsg);
+	$setup_tpl->set_var('subaction',lang(@$subaction));
 
 	// Old PHP
 	if (phpversion() < '3.0.16')
@@ -155,8 +156,6 @@
 
 	$setup_tpl->set_var('db_step_text',lang('Step 1 - Simple Application Management'));
 
-	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
-
 	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{
 		case 1:
@@ -165,7 +164,7 @@
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
 			$setup_tpl->set_var('createdb',lang('Or we can attempt to create the database for you:'));
-			switch ($phpgw_domain[$ConfigDomain]['db_type'])
+			switch ($phpgw_domain[$GLOBALS['ConfigDomain']]['db_type'])
 			{
 				case 'mysql':
 					$setup_tpl->set_var('instr',lang('mysqlinstr'));
@@ -391,15 +390,7 @@
 			reset ($GLOBALS['phpgw_info']['setup']['installed_langs']);
 			while (list ($key, $value) = each ($GLOBALS['phpgw_info']['setup']['installed_langs']))
 			{
-				if (!$notfirst)
-				{
-					$langs_list = $value;
-				}
-				else
-				{
-					$langs_list =  $langs_list .', ' .$value;
-				}
-				$notfirst = True;
+				$langs_list = ($langs_list?$langs_list.', ':'') . $value;
 			}
 
 			$setup_tpl->set_var('lang_status_img',$completed);
@@ -440,7 +431,7 @@
 			break;
 	}
 
-	$phpgw_setup->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+	$phpgw_setup->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],False,'config',$GLOBALS['ConfigDomain'] . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'] . ')');
 	$setup_tpl->pparse('out','T_setup_main');
 	$phpgw_setup->show_footer();
 ?>

@@ -22,10 +22,12 @@
 			$setting = $GLOBALS['HTTP_POST_VARS']['setting'];
 
 			$GLOBALS['header_template']->set_file(array('header' => 'header.inc.php.template'));
+			$var = Array();
 			while(list($k,$v) = @each($setting))
 			{
-				$GLOBALS['header_template']->set_var(strtoupper($k),$v);
+				$var[strtoupper($k)] = $v;
 			}
+			$GLOBALS['header_template']->set_var($var);
 			return $GLOBALS['header_template']->parse('out','header');
 		}
 
@@ -68,7 +70,7 @@
 			{
 				$GLOBALS['setup_tpl']->set_var('configdomain',' - ' . lang('Domain') . ': '.$configdomain);
 			}
-			$GLOBALS['setup_tpl']->set_var('pgw_ver',$phpgw_info['server']['versions']['phpgwapi']);
+			$GLOBALS['setup_tpl']->set_var('pgw_ver',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			$GLOBALS['setup_tpl']->set_var('logoutbutton',$btn_logout);
 			$GLOBALS['setup_tpl']->pparse('out','T_head');
 			/* $setup_tpl->set_var('T_head',''); */
