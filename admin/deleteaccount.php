@@ -25,6 +25,18 @@
   }
 
   if (($con) && (! $confirm)) {
+     $t = new Template($phpgw_info["server"]["template_dir"]);
+     $t->set_file(array("form"			=> "delete_common.tpl",
+			    "message_row"	=> "delete_common.tpl"));
+     $t->set_var("yes","yes");
+     $t->set_var("no","no");
+
+     $t->set_var("message_display",lang_admin("Are you sure you want to delete this account ?"));
+     $t->set_var("message_display",lang_admin("All records and account information will be lost!"));
+     $t->parse("messages","message_row");
+     $t->pparse("out","form");
+
+/*
      ?>
      <center>
       <table border=0 with=65%>
@@ -48,7 +60,8 @@
        </tr>
       </table>
      </center>
-     <?
+     <?php
+*/
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
   }
 
