@@ -237,6 +237,8 @@
     }
 
     function gmtdate($localtime) {
+      global $phpgw_info;
+      
       $localtime -= ((60 * 60) * intval($phpgw_info["user"]["preferences"]["common"]["tz_offset"]));
       return $this->localdates($localtime);
     }
@@ -1056,8 +1058,6 @@
       					 'mini_day' => 'mini_day.tpl',
       					 'mini_week' => 'mini_week.tpl'));
       $p->set_block('mini_cal','mini_week','mini_day');
-//      $p->set_block('mini_cal',"mini_week");
-//      $p->set_block('mini_cal','mini_day');
       $p->set_var('bgcolor',$phpgw_info["theme"]["bg_text"]);
       $p->set_var('bgcolor1',$phpgw_info["theme"]["bg_color"]);
       $p->set_var('month',lang($phpgw->common->show_date($date["raw"],"F")).' '.$year);
