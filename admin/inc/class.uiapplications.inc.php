@@ -123,7 +123,7 @@
 				$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
 
 				$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
-				$GLOBALS['phpgw']->template->set_var('name',$GLOBALS['phpgw_info']['apps'][$app['name']]['title']);
+				$GLOBALS['phpgw']->template->set_var('name',$app['title']);
 
 				$GLOBALS['phpgw']->template->set_var('edit',$can_edit ? '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.edit&app_name=' . urlencode($app['name'])) . '&start='.$start.'"> ' . lang('Edit') . ' </a>' : '&nbsp;');
 				$GLOBALS['phpgw']->template->set_var('delete',$can_delete ? '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.delete&app_name=' . urlencode($app['name'])) . '&start='.$start.'"> ' . lang('Delete') . ' </a>' : '&nbsp;');

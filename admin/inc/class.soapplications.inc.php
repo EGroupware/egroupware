@@ -43,14 +43,19 @@
 			{
 				while ($this->db->next_record())
 				{
-					$apps[$this->db->f('app_name')] = array(
-						'title'  => $GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')],
-						'name'   => $this->db->f('app_name'),
+					$app = $this->db->f('app_name');
+					$title = @$GLOBALS['phpgw_info']['apps'][$app]['title'];
+					if (empty($title))
+					{
+						$title = lang($app) == $app.'*' ? $app : lang($app);
+					}
+					$apps[$app] = array(
+						'title'  => $title,
+						'name'   => $app,
 						'status' => $this->db->f('app_enabled')
 					);
 				}
 			}
-			@reset($apps);
 			return $apps;
 		}
 
