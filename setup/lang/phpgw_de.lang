@@ -23,6 +23,7 @@ all applications	setup	de	Alle Applikationen
 all core tables and the admin and preferences applications	setup	de	Sie alle Kern-Tabellen und die Anwendungen Admin und Einstellungen
 all users	setup	de	Alle Benutzer
 analysis	setup	de	Analyse
+and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten !!!
 app details	setup	de	Details der Anwendung
 app install/remove/upgrade	setup	de	Anwendung installierenn/entfernen/aktualisieren
 app process	setup	de	Anwendung bearbeiten
@@ -274,6 +275,7 @@ passwords did not match, please re-enter	setup	de	Passworte stimmten nicht übere
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 persistent connections	setup	de	Permanente Verbindungen
+please check for sql scripts within the application's directory	setup	de	Bitte suchen Sie ein SQL Skript im Verzeichnis der Anwendung
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen Sie die Lese/Schreib-Rechte der Verzeichnisse oder gehen Sie zurück und benutzen eine andere Option.
 please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
 please consult the %1.	setup	de	Bitte konsultieren Sie das %1.

@@ -22,6 +22,7 @@ after retrieving the file, put it into place as the header.inc.php.  then, click
 all core tables and the admin and preferences applications	setup	en	all core tables and the admin and preferences applications
 all users	setup	en	All Users
 analysis	setup	en	Analysis
+and reload your webserver, so the above changes take effect !!!	setup	en	AND reload your webserver, so the above changes take effect !!!
 app details	setup	en	App details
 app install/remove/upgrade	setup	en	App install/remove/upgrade
 app process	setup	en	App process
@@ -270,6 +271,7 @@ passwords did not match, please re-enter	setup	en	Passwords did not match, pleas
 path information	setup	en	Path information
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 persistent connections	setup	en	Persistent connections
+please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure egroupware for your environment	setup	en	Please configure eGroupWare for your environment
 please consult the %1.	setup	en	Please consult the %1.

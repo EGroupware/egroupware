@@ -389,11 +389,22 @@
 				{
 					echo $error_icon.$msg;
 				}
-				echo '*** '.lang('Please make the following change in your php.ini').': '.($args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
+				echo '*** '.lang('Please make the following change in your php.ini').' ('.get_php_ini().'): '.(@$args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
+				echo '*** '.lang('AND reload your webserver, so the above changes take effect !!!')."\n";
 			}
 		}
 		echo "\n";
 		return $result;
+	}
+
+	function get_php_ini()
+	{
+		ob_start();
+		phpinfo(INFO_GENERAL);
+		$phpinfo = ob_get_contents();
+		ob_end_clean();
+
+		return preg_match('/\(php.ini\).*<\/td><td[^>]*>([^ <]+)/',$phpinfo,$found) ? $found[1] : False;
 	}
 
 	if ($run_by_webserver)
