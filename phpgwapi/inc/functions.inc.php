@@ -43,10 +43,10 @@
 	/*!
 	 @function sanitize
 	 @abstract Validate data.
-	 @discussion Author: seek3r<br>
-	 This function is used to validate input data. <br>
-	 Syntax: sanitize('type', 'match string'); <br>
-	 Example1: sanitize('number',$somestring);
+	 @author seek3r
+	 @discussion This function is used to validate input data. 
+	 @syntax sanitize('type', 'match string');
+	 @example sanitize('number',$somestring);
 	*/
 
 	/*
@@ -206,11 +206,12 @@
 	/*!
 	 @function CreateObject
 	 @abstract Load a class and include the class file if not done so already.
-	 @discussion Author: mdean, milosch (thanks to jengo and ralf)<br>
-	 This function is used to create an instance of a class,
-	 and if the class file has not been included it will do so. <br>
-	 Syntax: CreateObject('app.class', 'constructor_params'); <br>
-	 Example1: $phpgw->acl = CreateObject('phpgwapi.acl');
+	 @author mdean
+	 @author milosch
+	 @author (thanks to jengo and ralf)
+	 @discussion This function is used to create an instance of a class, and if the class file has not been included it will do so. 
+	 @syntax CreateObject('app.class', 'constructor_params');
+	 @example $phpgw->acl = CreateObject('phpgwapi.acl');
 	 @param $classname name of class
 	 @param $p1-$p16 class parameters (all optional)
 	*/
@@ -277,15 +278,14 @@
 	/*!
 	 @function ExecObject
 	 @abstract Execute a function, and load a class and include the class file if not done so already.
-	 @discussion Author: seek3r<br>
-	 This function is used to create an instance of a class,
-	 and if the class file has not been included it will do so. <br>
-	 Syntax: ExecObject('app.class', 'constructor_params'); <br>
-	 Example1: ExecObject('phpgwapi.acl.read');
+	 @author seek3r
+	 @discussion This function is used to create an instance of a class, and if the class file has not been included it will do so.
+	 @syntax ExecObject('app.class', 'constructor_params');
 	 @param $method to execute
 	 @param $functionparams function param should be an array
 	 @param $loglevel developers choice of logging level
 	 @param $classparams params to be sent to the contructor
+	 @example ExecObject('phpgwapi.acl.read');
 	*/
 	function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 	{
@@ -407,12 +407,10 @@
 	/*!
 	 @function get_account_id()
 	 @abstract Return a properly formatted account_id.
-	 @discussion Author: skeeter <br>
-	 This function will return a properly formatted account_id. <br>
-	 This can take either a name or an account_id as paramters. <br>
-	 If a name is provided it will return the associated id. <br>
-	 Syntax: get_account_id($accountid); <br>
-	 Example1: $account_id = get_account_id($accountid);
+	 @author skeeter
+	 @discussion This function will return a properly formatted account_id. This can take either a name or an account_id as paramters. If a name is provided it will return the associated id.
+	 @syntax get_account_id($accountid);
+	 @example $account_id = get_account_id($accountid);
 	 @param $account_id either a name or an id
 	 @param $default_id either a name or an id
 	*/
