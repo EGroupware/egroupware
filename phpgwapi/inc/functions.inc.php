@@ -46,25 +46,6 @@
      return $obj;
   }
 
-  function create_specialobject($classname, $ext, $constructor_param = "")
-  {
-     global $phpgw, $phpgw_info, $phpgw_domain;
-     $classpart = explode (".", $classname);
-     $appname = $classpart[0];
-     $classname = $classpart[1];
-     if (!$phpgw_info["flags"]["included_classes"][$classname]){
-        $phpgw_info["flags"]["included_classes"][$classname] = True;   
-        include(PHPGW_INCLUDE_ROOT . "/" . $appname . "/inc/class." . $classname . "_" . $ext . ".inc.php");
-     }
-     if ($constructor_param == ""){
-        $obj = new $classname;
-     } else {
-        $obj = new $classname($constructor_param);
-     }
-     return $obj;
-  }
-
-
   function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
   {
      global $phpgw;
