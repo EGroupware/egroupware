@@ -167,7 +167,30 @@ class bo_resources
 	{
 		return $this->so->delete(array('id'=>$id)) ? false : lang('Something went wrong by saving resource');
 	}
-
+	
+	/*!
+		@function get_acc_list
+		@abstract gets list of accessories for resource
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
+		@param int $id id of resource
+		@return array
+	*/
+	function get_acc_list($id)
+	{
+		if($id < 1){return;}
+		$cat_id = $this->so->get_value('cat_id',$id);
+		$data[0] = array('id' => '', 'name' => '');
+		$this->so->search(array('accessory_only' => 1),array($cat_id => ''),&$data,$order_by='',$offset=false,$num_rows=-1);
+		foreach($data as $num => $resource)
+		{
+			if($num != 0)
+			{
+				$acc_list[$resource['id']] = $resource['name'];
+			}
+		}
+		return $acc_list;
+	}
+	
 	/*!
 		@function save_picture
 		@abstract resizes and saves an pictures in vfs

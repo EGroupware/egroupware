@@ -134,6 +134,9 @@ class ui_resources
 			$content = $this->bo->read($content);
 			$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
 			$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
+			$content['link_id'] = $content;
+			$sel_options += array('acc_list' => $this->bo->get_acc_list($content['id']));
+			
 		}
 		else
 		{

@@ -106,4 +106,26 @@
 		$GLOBALS['setup_info']['resources']['currentver'] = '0.0.1.015';
 		return $GLOBALS['setup_info']['resources']['currentver'];
 	}
+
+
+	$test[] = '0.0.1.015';
+	function resources_upgrade0_0_1_015()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_resources','accessories',array(
+			'type' => 'varchar',
+			'precision' => '100'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('egw_resources','accessory_only',array(
+			'type' => 'varchar',
+			'precision' => '1',
+			'default' => '0'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('egw_resources','relatives',array(
+			'type' => 'varchar',
+			'precision' => '100'
+		));
+
+		$GLOBALS['setup_info']['resources']['currentver'] = '0.0.1.016';
+		return $GLOBALS['setup_info']['resources']['currentver'];
+	}
 ?>
