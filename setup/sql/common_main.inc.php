@@ -24,10 +24,10 @@
   }
 
   if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == "drop"){
-    include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_droptables.inc.php");
+    include("./sql/".$phpgw_domain[$ConfigDomain]["db_type"]."_droptables.inc.php");
   }
   if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == "new") {
-    include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_newtables.inc.php");
+    include("./sql/".$phpgw_domain[$ConfigDomain]["db_type"]."_newtables.inc.php");
     include("./sql/common_default_records.inc.php");
     $included = True;
 //    include($phpgw_info["server"]["server_root"] . "/setup/lang.php");
@@ -37,9 +37,9 @@
   if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == "oldversion") {
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = $phpgw_info["setup"]["oldver"]["phpgwapi"];
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == "7122000" || $phpgw_info["setup"]["currentver"]["phpgwapi"] == "8032000" || $phpgw_info["setup"]["currentver"]["phpgwapi"] == "8072000" || $phpgw_info["setup"]["currentver"]["phpgwapi"] == "8212000" || $phpgw_info["setup"]["currentver"]["phpgwapi"] == "9052000" || $phpgw_info["setup"]["currentver"]["phpgwapi"] == "9072000") {
-      include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_upgrade_prebeta.inc.php");
+      include("./sql/".$phpgw_domain[$ConfigDomain]["db_type"]."_upgrade_prebeta.inc.php");
     }
-    include("./sql/".$phpgw_domain[$SetupDomain]["db_type"]."_upgrade_beta.inc.php");
+    include("./sql/".$phpgw_domain[$ConfigDomain]["db_type"]."_upgrade_beta.inc.php");
   }
 
 /* Not yet implemented

@@ -3,7 +3,7 @@
   include("../header.inc.php");
   include("./inc/functions.inc.php");
 
-  $SetupDomain = "phpgroupware.org";
+  $ConfigDomain = "phpgroupware.org";
   loaddb();
 //  $currentver = "drop";
   $currentver = "new";
