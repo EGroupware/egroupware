@@ -19,6 +19,7 @@
   $cal_info = new calendar_item;
 
   if(!isset($readsess)) {
+    $groups = Array();
     for(reset($HTTP_POST_VARS);$key=key($HTTP_POST_VARS);next($HTTP_POST_VARS)) {
       $data = $HTTP_POST_VARS[$key];
       $cal_info->set($key,$data);

@@ -151,42 +151,35 @@
   )";
   $db->query($sql);
 
-  $sql = "CREATE TABLE webcal_entry (
-    cal_id	serial,
-    cal_group_id	int NULL,
-    cal_owner	int NOT NULL,
-    cal_date	int NOT NULL,
-    cal_time	int NULL,
-    cal_mod_date	int,
-    cal_mod_time	int,
-    cal_duration	int NOT NULL,
+  $sql = "CREATE TABLE calendar_entry (
+    cal_id		serial,
+    cal_owner		int DEFAULT 0 NOT NULL,
+    cal_group		varchar(255),
+    cal_datetime	int4,
+    cal_mdatetime	int4,
+    cal_duration	int DEFAULT 0 NOT NULL,
     cal_priority	int DEFAULT 2,
-    cal_type	varchar(10),
-    cal_access	varchar(10),
-    cal_name	varchar(80) NOT NULL,
-    cal_description varchar(255)
+    cal_type		varchar(10),
+    cal_access		varchar(10),
+    cal_name		varchar(80) NOT NULL,
+    cal_description	text
   )";
   $db->query($sql);
 
-  $sql = "CREATE TABLE webcal_entry_user (
-    cal_id	     int,
-    cal_login	varchar(25) NOT NULL,
-    cal_status	char(1) DEFAULT 'A'
+  $sql = "CREATE TABLE calendar_entry_user (
+    cal_id		int DEFAULT 0 NOT NULL,
+    cal_login		int DEFAULT 0 NOT NULL,
+    cal_status		char(1) DEFAULT 'A'
   )";
   $db->query($sql);
 
   $sql = "create table webcal_entry_repeats ( 
-    cal_id	     int,
-    cal_type	varchar(20),
-    cal_end	int,
+    cal_id		int DEFAULT 0 NOT NULL,
+    cal_type		varchar(20),
+    cal_use_end		int default 0,
+    cal_end		int4,
     cal_frequency	int default 1,
-    cal_days	char(7)
-  )";
-  $db->query($sql);
-
-  $sql = "create table webcal_entry_groups (
-    cal_id	int,
-    groups	varchar(255)
+    cal_days		char(7)
   )";
   $db->query($sql);
 

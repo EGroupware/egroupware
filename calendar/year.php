@@ -29,7 +29,7 @@
 ?>
 
 <center>
-<table border="0" cellspacing="4" cellpadding="4">
+<table border="0" cellspacing="3" cellpadding="4">
  <tr>
   <?php
     if (!$friendly)

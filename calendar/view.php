@@ -21,9 +21,9 @@
      exit;
   }
 
-  function add_day($repeat_days,$day) {
+  function add_day(&$repeat_days,$day) {
     if($repeat_days) $repeat_days .= ", ";
-    return $repeat_days . $day;
+    $repeat_days .= $day;
   }
 
   if ($year) $thisyear = $year;
@@ -32,6 +32,8 @@
   $pri[1] = lang("Low");
   $pri[2] = lang("Medium");
   $pri[3] = lang("High");
+
+  $db = $phpgw->db;
 
   $unapproved = FALSE;
 
@@ -66,7 +68,7 @@
   }
 
   $phpgw->template->set_var("field",lang("Date"));
-  $phpgw->template->set_var("data",$phpgw->common->show_date(mktime(0,0,0,$cal_info->month,$cal_info->day,$cal_info->year),"l, F d, Y"));
+  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->datetime,$phpgw_info["user"]["preferences"]["common"]["dateformat"]));
   $phpgw->template->parse("output","list",True);
 
   // save date so the trailer links are for the same time period
@@ -74,9 +76,14 @@
   $thismonth	= (int)$cal_info->month;
   $thisday 	= (int)$cal_info->day;
 
-  if($cal_info->hour || $cal_info->minute) {
+  if(intval($phpgw->common->show_date($cal_info->datetime,"H")) || intval($phpgw->common->show_date($cal_info->datetime,"i"))) {
     $phpgw->template->set_var("field",lang("Time"));
-    $phpgw->template->set_var("data",$phpgw->calendar->build_time_for_display($phpgw->calendar->fixtime($cal_info->hour,$cal_info->minute,$cal_info->ampm)));
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+      $format .= "h:i:s a";
+    } else {
+      $format .= "H:i:s";
+    }
+    $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->datetime,$format));
     $phpgw->template->parse("output","list",True);
   }
 
@@ -106,15 +113,16 @@
   $phpgw->template->parse("output","list",True);
 
   $phpgw->template->set_var("field",lang("Updated"));
-  $phpgw->template->set_var("data",$phpgw->common->show_date(mktime(0,0,0,$cal_info->mod_month,$cal_info->mod_day,$cal_info->mod_year),"l, F d, Y")." ".$phpgw->calendar->build_time_for_display($phpgw->calendar->fixtime($cal_info->mod_hour,$cal_info->mod_minute,$cal_info->mod_ampm)));
+  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->mdatetime));
   $phpgw->template->parse("output","list",True);
 
-  if($cal_info->groups) {
-    $cal_groups = explode(",",$phpgw->accounts->convert_string_to_names_access($cal_info->groups));
+  if($cal_info->groups[0]) {
     $cal_grps = "";
-    for($i=1;$i<=count($cal_groups);$i++) {
-      if($i>1) $cal_grps .= "<br>";
-      $cal_grps .= $cal_groups[$i];
+    for($i=0;$i<count($cal_info->groups);$i++) {
+      if($i>0) $cal_grps .= "<br>";
+      $db->query("SELECT group_name FROM groups WHERE group_id=".$cal_info->groups[$i],__LINE__,__FILE__);
+      $db->next_record();
+      $cal_grps .= $db->f("group_name");
     }
     $phpgw->template->set_var("field",lang("Groups"));
     $phpgw->template->set_var("data",$cal_grps);
@@ -132,25 +140,26 @@
 
 // Repeated Events
   $str = $cal_info->rpt_type;
-  if($str <> "none" || ($cal_info->rpt_end_month && $cal_info->rpt_end_day && $cal_info->rpt_end_year)) {
+  if($str <> "none" || $cal_info->rpt_use_end) {
     $str .= " (";
-    if($cal_info->rpt_end_month && $cal_info->rpt_end_day && $cal_info->rpt_end_year) 
-      $str .= lang("ends").": ".$phpgw->common->show_date(mktime(0,0,0,$cal_info->rpt_end_month,$cal_info->rpt_end_day,$cal_info->rpt_end_year),"l, F d, Y")." ";
-    if($cal_info->rpt_type == "weekly") {
+    if($cal_info->rpt_use_end) 
+      $str .= lang("ends").": ".$phpgw->common->show_date($cal_info->rpt_end,"l, F d, Y")." ";
+    if($cal_info->rpt_type == "weekly" || $cal_info->rpt_type == "daily") {
+      $repeat_days = "";
       if ($cal_info->rpt_sun)
-	$repeat_days = add_day($repeat_days,lang("Sunday "));
+	add_day(&$repeat_days,lang("Sunday "));
       if ($cal_info->rpt_mon)
-	$repeat_days = add_day($repeat_days,lang("Monday "));
+	add_day(&$repeat_days,lang("Monday "));
       if ($cal_info->rpt_tue)
-	$repeat_days = add_day($repeat_days,lang("Tuesay "));
+	add_day(&$repeat_days,lang("Tuesay "));
       if ($cal_info->rpt_wed)
-	$repeat_days = add_day($repeat_days,lang("Wednesday "));
+	add_day(&$repeat_days,lang("Wednesday "));
       if ($cal_info->rpt_thu)
-	$repeat_days = add_day($repeat_days,lang("Thursday "));
+	add_day(&$repeat_days,lang("Thursday "));
       if ($cal_info->rpt_fri)
-	$repeat_days = add_day($repeat_days,lang("Friday "));
+	add_day(&$repeat_days,lang("Friday "));
       if ($cal_info->rpt_sat)
-	$repeat_days = add_day($repeat_days,lang("Saturday "));
+	add_day(&$repeat_days,lang("Saturday "));
       $str .= lang("days repeated").": ".$repeat_days;
     }
     if($cal_info->rpt_freq) $str .= lang("frequency")." ".$cal_info->rpt_freq;

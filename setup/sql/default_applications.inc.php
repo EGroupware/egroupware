@@ -16,7 +16,7 @@
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('admin', 'Administration', 1, 1, NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('addressbook', 'Address Book', 1, 7, 'addressbook', '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('filemanager', 'File manager', 1, 6, NULL, '".$currentver."')");
-  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('calendar', 'Calendar', 1, 9, 'webcal_entry,webcal_entry_users,webcal_entry_groups,webcal_repeats', '".$currentver."')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('calendar', 'Calendar', 1, 9, 'calendar_entry,calendar_entry_users,calendar_entry_repeats', '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('cron_apps', 'cron_apps', 0, 0, NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('email', 'Email', 1, 10,NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('nntp', 'NNTP', 1, 11, 'newsgroups', '".$currentver."')");

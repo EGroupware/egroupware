@@ -173,44 +173,37 @@
   )";
   $db->query($sql);  
 
-  $sql = "CREATE TABLE webcal_entry (
-    cal_id	int(11) DEFAULT '0' NOT NULL auto_increment,
-    cal_group_id	int(11),
-    cal_owner int(11) NOT NULL,
-    cal_date	int(11) DEFAULT '0' NOT NULL,
-    cal_time	int(11),
-    cal_mod_date int(11),
-    cal_mod_time int(11),
-    cal_duration int(11) DEFAULT '0' NOT NULL,
-    cal_priority int(11) DEFAULT '2',
-    cal_type	varchar(10),
-    cal_access	char(10),
-    cal_name	varchar(80) NOT NULL,
-    cal_description text,
+  $sql = "CREATE TABLE calendar_entry (
+    cal_id		int(11) DEFAULT '0' NOT NULL auto_increment,
+    cal_owner 		int(11) DEFAULT '0' NOT NULL,
+    cal_group		varchar(255),
+    cal_datetime	int(11),
+    cal_mdatetime	int(11),
+    cal_duration 	int(11) DEFAULT '0' NOT NULL,
+    cal_priority 	int(11) DEFAULT '2' NOT NULL,
+    cal_type		varchar(10),
+    cal_access		varchar(10),
+    cal_name		varchar(80) NOT NULL,
+    cal_description 	text,
     PRIMARY KEY (cal_id)
   )";
   $db->query($sql);  
 
-  $sql = "CREATE TABLE webcal_entry_repeats (
-    cal_id	int(11) DEFAULT '0' NOT NULL,
-    cal_type	enum('daily','weekly','monthlyByDay','monthlyByDate','yearly') DEFAULT 'daily' NOT NULL,
-    cal_end	int(11),
-    cal_frequency int(11) DEFAULT '1',
-    cal_days	char(7)
+  $sql = "CREATE TABLE calendar_entry_repeats (
+    cal_id		int(11) DEFAULT '0' NOT NULL,
+    cal_type		enum('daily','weekly','monthlyByDay','monthlyByDate','yearly') DEFAULT 'daily' NOT NULL,
+    cal_use_end		int DEFAULT '0',
+    cal_end		int(11),
+    cal_frequency	int(11) DEFAULT '1',
+    cal_days		char(7)
   )";
   $db->query($sql);  
 
-  $sql = "CREATE TABLE webcal_entry_user (
+  $sql = "CREATE TABLE calendar_entry_user (
     cal_id       int(11) DEFAULT '0' NOT NULL,
-    cal_login    varchar(25) NOT NULL,
+    cal_login    int(11) DEFAULT '0' NOT NULL,
     cal_status   char(1) DEFAULT 'A',
     PRIMARY KEY (cal_id, cal_login)
-  )";
-  $db->query($sql);  
-
-  $sql = "create table webcal_entry_groups (
-    cal_id	int,
-    groups	varchar(255)
   )";
   $db->query($sql);  
 

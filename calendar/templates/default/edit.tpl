@@ -11,13 +11,13 @@ function validate_and_submit() {
   }
   h = parseInt(document.addform.hour.value);
   m = parseInt(document.addform.minute.value);
-  if (h > 23) {
+  if (h < 0 || h > 23) {
     alert ("{time_error}");
     document.addform.hour.select();
     document.addform.hour.focus();
     return false;
   }
-  if (m > 59) {
+  if (m < 0 || m > 59) {
     alert ("{time_error}");
     document.addform.minute.select();
     document.addform.minute.focus();
