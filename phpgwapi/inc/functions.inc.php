@@ -47,18 +47,21 @@
 		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
 	{
 		global $phpgw, $phpgw_info, $phpgw_domain;
+
+		error_reporting(0);
+
 		$classpart = explode (".", $classname);
-		$appname = $classpart[0];
+		$appname   = $classpart[0];
 		$classname = $classpart[1];
-		if (!isset($phpgw_info['flags']['included_classes'][$classname])
-		|| !$phpgw_info['flags']['included_classes'][$classname])
+		if (!isset($phpgw_info['flags']['included_classes'][$classname]) ||
+			!$phpgw_info['flags']['included_classes'][$classname])
 		{
 			$phpgw_info['flags']['included_classes'][$classname] = True;   
 			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
 		if ($p1 == '_UNDEF_')
 		{
-			$obj = new $classname;
+			$ret = eval("\$obj = new \$classname;  if(is_object(\$obj)) { return True; };");
 		}
 		else
 		{
@@ -77,22 +80,36 @@
 				}
 				$i++;
 			}
-			$code = substr($code,0,-1) . ');';
-			eval($code);
+			$code = substr($code,0,-1) . "); if(is_object(\$obj)) { return True; };";
+			$ret = eval($code);
 		}
-		return $obj;
+		error_reporting(E_ERROR | E_WARNING | E_PARSE);
+		if($ret)
+		{
+			return $obj;
+		}
+		else
+		{
+			return False;
+		}
 	}
 	/*!
 	@function lang
-	@abstract function to deal with multilanguage support
+	@abstract function to handle multilanguage support
 	*/
-	function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
+	function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
 	{
 		global $phpgw;
-		// # TODO: check if $m1 is of type array.
-		// If so, use it instead of $m2-$mN (Stephan)
-		$vars = array( $m1, $m2, $m3, $m4, $m5, $m6, $m7, $m8, $m9, $m10 );
-		$value = $phpgw->translation->translate("$key", $vars );
+
+		if(gettype($m1) == 'array')
+		{
+			$vars = $m1;
+		}
+		else
+		{
+			$vars = array($m1,$m2,$m3,$m4,$m5,$m6,$m7,$m8,$m9,$m10);
+		}
+		$value = $phpgw->translation->translate("$key",$vars);
 		return $value;
 	}
 
