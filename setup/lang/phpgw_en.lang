@@ -132,7 +132,7 @@ enter your http proxy server password	setup	en	Enter your HTTP proxy server pass
 enter your http proxy server port	setup	en	Enter your HTTP proxy server port
 enter your http proxy server username	setup	en	Enter your HTTP proxy server username
 export has been completed!  you will need to set the user passwords manually.	setup	en	Export has been completed!  You will need to set the user passwords manually.
-export phpgroupware accounts from sql to ldap	setup	en	Export phpGroupWare accounts from SQL to LDAP
+export phpgroupware accounts from sql to ldap	setup	en	Export eGroupWare accounts from SQL to LDAP
 export sql users to ldap	setup	en	Export SQL users to LDAP
 file	setup	en	FILE
 file type, size, version, etc.	setup	en	file type, size, version, etc.
@@ -158,7 +158,7 @@ if you did not receive any errors, your applications have been	setup	en	If you d
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
 if you running this the first time, don't forget to manualy %1 !!!	setup	en	If you running this the first time, don't forget to manualy %1 !!!
 image type selection order	setup	en	Image type selection order
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	en	Import accounts from LDAP to the phpGroupWare accounts table (for a new install using SQL accounts)
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	en	Import accounts from LDAP to the eGroupWare accounts table (for a new install using SQL accounts)
 import has been completed!	setup	en	Import has been completed!
 import ldap users/groups	setup	en	Import LDAP users/groups
 importing old settings into the new format....	setup	en	Importing old settings into the new format....
@@ -204,10 +204,10 @@ mcrypt version	setup	en	MCrypt version
 minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
 modifications have been completed!	setup	en	Modifications have been completed!
 modify	setup	en	Modify
-modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with phpGroupWare (for a new install using LDAP accounts)
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)
 multi-language support setup	setup	en	Multi-Language support setup
 name of database	setup	en	Name of database
-name of db user phpgroupware uses to connect	setup	en	Name of db user phpGroupWare uses to connect
+name of db user phpgroupware uses to connect	setup	en	Name of db user eGroupWare uses to connect
 never	setup	en	never
 new	setup	en	New
 no	setup	en	No
@@ -240,15 +240,15 @@ passwords did not match, please re-enter	setup	en	Passwords did not match, pleas
 path information	setup	en	Path information
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 persistent connections	setup	en	Persistent connections
-phpgroupware administration manual	setup	en	phpGroupWare Administration Manual
+phpgroupware administration manual	setup	en	eGroupWare Administration Manual
 please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
-please configure phpgroupware for your environment	setup	en	Please configure phpGroupWare for your environment
+please configure phpgroupware for your environment	setup	en	Please configure eGroupWare for your environment
 please consult the %1.	setup	en	Please consult the %1.
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	en	Please fix the above errors (%1) and warnings(%2) and %3continue to the Header Admin%4
 please install	setup	en	Please install
 please login	setup	en	Please login
-please login to phpgroupware and run the admin application for additional site configuration	setup	en	Please login to phpgroupware and run the admin application for additional site configuration
+please login to phpgroupware and run the admin application for additional site configuration	setup	en	Please login to eGroupWare and run the admin application for additional site configuration
 please wait...	setup	en	Please Wait...
 possible reasons	setup	en	Possible Reasons
 possible solutions	setup	en	Possible Solutions
@@ -324,10 +324,10 @@ there was a problem trying to connect to your ldap server. <br>	setup	en	There w
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the webservers document-root!!!
 this program will convert your database to a new system-charset.	setup	en	This program will convert your database to a new system-charset.
-this program will help you upgrade or install different languages for phpgroupware	setup	en	This program will help you upgrade or install different languages for phpGroupWare
-this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	en	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
-this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	en	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
-this section will help you setup your ldap accounts for use with phpgroupware	setup	en	This section will help you setup your LDAP accounts for use with phpGroupWare
+this program will help you upgrade or install different languages for phpgroupware	setup	en	This program will help you upgrade or install different languages for eGroupWare
+this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	en	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
+this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	en	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
+this section will help you setup your ldap accounts for use with phpgroupware	setup	en	This section will help you setup your LDAP accounts for use with eGroupWare
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	en	This should be around 30 bytes in length.<br>Note: The default has been randomly generated.
 this stage is completed<br>	setup	en	This stage is completed<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	en	This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
@@ -337,7 +337,7 @@ top	setup	en	top
 translations added	setup	en	Translations Added
 translations removed	setup	en	Translations Removed
 translations upgraded	setup	en	Translations Upgraded
-try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	en	Try to configure your php to support one of the above mentioned DBMS, or install phpGroupWare by hand.
+try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	en	Try to configure your php to support one of the above mentioned DBMS, or install eGroupWare by hand.
 two weeks	setup	en	two weeks
 uninstall	setup	en	uninstall
 uninstall all applications	setup	en	Uninstall all applications
@@ -356,16 +356,16 @@ warning!	setup	en	Warning!
 we can proceed	setup	en	We can proceed
 we will automatically update your tables/records to %1	setup	en	We will automatically update your tables/records to %1
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	en	What type of sessions management do you want to use (PHP4 session management may perform better)?
-which database type do you want to use with phpgroupware?	setup	en	Which database type do you want to use with phpGroupWare?
-would you like phpgroupware to cache the phpgw info array ?	setup	en	Would you like phpGroupWare to cache the phpgw info array ?
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
+which database type do you want to use with phpgroupware?	setup	en	Which database type do you want to use with eGroupWare?
+would you like phpgroupware to cache the phpgw info array ?	setup	en	Would you like eGroupWare to cache the phpgw info array ?
+would you like phpgroupware to check for a new version<br>when admins login ?	setup	en	Would you like eGroupWare to check for a new version<br>when admins login ?
 would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
 write config	setup	en	Write config
 yes	setup	en	Yes
-you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
-you appear to be running version %1 of phpgroupware	setup	en	You appear to be running version %1 of phpGroupWare
-you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	en	You appear to be using PHP earlier than 4.1.0. phpGroupWare now requires 4.1.0 or later
+you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
+you appear to be running version %1 of phpgroupware	setup	en	You appear to be running version %1 of eGroupWare
+you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	en	You appear to be using PHP earlier than 4.1.0. eGroupWare now requires 4.1.0 or later
 you appear to be using php3. disabling php4 sessions support	setup	en	You appear to be using PHP3. Disabling PHP4 sessions support
 you appear to be using php4. enabling php4 sessions support	setup	en	You appear to be using PHP4. Enabling PHP4 sessions support
 you appear to have microsoft sql server support enabled	setup	en	You appear to have Microsoft SQL Server support enabled
