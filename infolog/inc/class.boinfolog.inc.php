@@ -125,6 +125,10 @@
 				//echo " title='$title'</p>\n";
 				return $title;
 			}
+			else
+			{
+				$info['info_link_title'] = $info['info_from'];
+			}
 			return False;
 		}
 
