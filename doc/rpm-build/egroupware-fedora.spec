@@ -1,7 +1,7 @@
 Name: eGroupWare
 Version: 1.0.00
 Release: 0.fdr.1
-Epoch: 0
+Epoch: 1
 Summary: eGroupWare is a web-based groupware suite written in php. 
 
 Group: Web/Database
@@ -67,6 +67,9 @@ cp -aRf * $RPM_BUILD_ROOT/var/www/html/egroupware
 /var/www/html/egroupware/*
 
 %changelog
+* Mon Aug 23 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.1.fdr.1
+- Security release fixes several XSS problems
+
 * Sat Aug 07 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.0.fdr.1
 - Final 1.0 release from eGroupWare
 - some bugs fixed

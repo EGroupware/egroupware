@@ -1,7 +1,7 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 1.0.00.003
-%define packaging 2
+%define version 1.0.00.004
+%define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
@@ -133,6 +133,9 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
+* Mon Aug 23 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.004-1
+- Security release fixes several XSS problems
+
 * Sat Aug 07 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.003-1
 - Final 1.0 release from eGroupWare
 - some bugs fixed
