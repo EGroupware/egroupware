@@ -1,28 +1,26 @@
+<!-- BEGIN head -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
-<!-- BEGIN head -->
 <HEAD>
-
-<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META http-equiv="Content-Type" content="text/html; charset={charset}">
 <META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
 <META NAME="description" CONTENT="phpGroupWare">
 <META NAME="keywords" CONTENT="phpGroupWare">
 <STYLE type="text/css">
+<!--
   a { text-decoration:none; }
-  <!--
-    A:link{ text-decoration:none }
-    A:visted{ text-decoration:none }
-    A:active{ text-decoration:none }
-    body { margin-top: 0px; margin-right: 0px; margin-left: 0px }
-    .tablink { color: #000000; }
-  -->
+  A:link{ text-decoration:none }
+  A:visted{ text-decoration:none }
+  A:active{ text-decoration:none }
+  body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: {font_family}  }
+  .tablink { color: #000000; }
+-->
 </STYLE>
 <TITLE>{website_title}</TITLE>
 
-
 <script language="JavaScript" src="{webserver_url}/phpgwapi/templates/justweb/navcond.js"></script>
 <script language="JavaScript">
-
+<!--
 var myNavBar1 = new NavBar(0);
 var dhtmlMenu;
 
@@ -74,13 +72,10 @@ function init() {
   myNavBar1.create();
   myNavBar1.setzIndex(2);
 }
-
-
+-->
 </script>
 
-
 </HEAD>
-<!-- END Head -->
-
 <BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="init();" {body_tags}>
+<!-- END Head -->
 
