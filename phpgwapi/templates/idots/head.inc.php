@@ -11,20 +11,6 @@
 
 	/* $Id$ */
 
-	$app_css = $java_script = '';
-	if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
-	{
-		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['java_script'])
-		{
-			$java_script = $GLOBALS[$class]->java_script();
-		}
-	}
-	if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
-	{
-		$java_script .= $GLOBALS['phpgw_info']['flags']['java_script'];
-	}
-
 	$bodyheader = ' bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '" alink="'
 			. $GLOBALS['phpgw_info']['theme']['alink'] . '" link="' . $GLOBALS['phpgw_info']['theme']['link'] . '" vlink="'
 			. $GLOBALS['phpgw_info']['theme']['vlink'] . '"';
@@ -49,13 +35,13 @@
 	$var = Array (
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
-		'charset'		=> lang('charset'),
+		'charset'	=> lang('charset'),
 		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'].$app,
-		'body_tags'		=> $bodyheader,
-		'theme_css'		=> $theme_css,
-		'css'			=> $GLOBALS['phpgw']->common->get_css(),
-		'java_script'	=> $java_script
+		'body_tags'	=> $bodyheader . $GLOBALS['phpgw']->common->get_body_attribs(),
+		'theme_css'	=> $theme_css,
+		'css'		=> $GLOBALS['phpgw']->common->get_css(),
+		'java_script'	=> $GLOBALS['phpgw']->common->get_java_script(),
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');

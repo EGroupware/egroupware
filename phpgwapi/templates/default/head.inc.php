@@ -11,20 +11,6 @@
 
   /* $Id$ */
 
-	$app_css = $java_script = '';
-	if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
-	{
-		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['java_script'])
-		{
-			$java_script = $GLOBALS[$class]->java_script();
-		}
-	}
-	if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
-	{
-		$java_script .= $GLOBALS['phpgw_info']['flags']['java_script'];
-	}
-
 	$bodyheader = 'BGCOLOR="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'"';
 	if ($GLOBALS['phpgw_info']['server']['htmlcompliant'])
 	{
@@ -44,9 +30,9 @@
 		'charset'       => lang('charset'),
 		'font_family'   => $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'] . $app,
-		'body_tags'     => $bodyheader,
-		'css'			=> $GLOBALS['phpgw']->common->get_css(),
-		'java_script'   => $java_script
+		'body_tags'     => $bodyheader . $GLOBALS['phpgw']->common->get_body_attribs(),
+		'css'		=> $GLOBALS['phpgw']->common->get_css(),
+		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');

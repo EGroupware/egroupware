@@ -381,6 +381,7 @@
 		function check_owner($record,$link,$label,$extravars = '')
 		{
 			$this->debug_info[] = 'check_owner() is a depreciated function - use ACL instead';
+			/*
 			$s = '<a href="' . $GLOBALS['phpgw']->link($link,$extravars) . '"> ' . lang($label) . ' </a>';
 			if (ereg('^[0-9]+$',$record))
 			{
@@ -398,6 +399,7 @@
 			}
 
 			return $s;
+			*/
 		}
 
 		/*!
@@ -665,16 +667,19 @@
 			return $list;
 		}
 
-		/*!
-		@function list_templates
-		@abstract list available templates
+		/**
+		* List available templates
+		*
+		* @returns array alphabetically sorted list of templates
 		*/
 		function list_templates()
 		{
 			$d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
 			while ($entry=$d->read())
 			{
-				if ($entry != 'CVS' && $entry != '.' && $entry != '..' && $entry != 'phpgw_website' && is_dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry))
+				if ($entry != 'CVS' && $entry != '.' && $entry != '..' 
+					&& $entry != 'phpgw_website' 
+					&& is_dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry))
 				{
 					$list[$entry]['name'] = $entry;
 					$f = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
@@ -690,7 +695,7 @@
 				}
 			}
 			$d->close();
-			reset ($list);
+			ksort($list);
 			return $list;
 		}
 
@@ -1122,38 +1127,96 @@
 			}
 		}
 
+		/**
+		* Used by template headers for including CSS in the header
+		*
+		* This first loads up the basic global CSS definitions, which support
+		* the selected user theme colors.  Next we load up the app CSS.  This is
+		* all merged into the selected theme's css.tpl file.
+		*
+		* @author Dave Hall (*based* on verdilak? css inclusion code)
+		*/
 		function get_css()
 		{
 			$tpl = createObject('phpgwapi.Template', $this->get_tpl_dir('phpgwapi'));
 			$tpl->set_file('css', 'css.tpl');
 			$tpl->set_var($GLOBALS['phpgw_info']['theme']);
 			$app_css = '';
-			
-			if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
-			{
-				list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-				if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
-				{
-					$app_css .= $GLOBALS[$class]->css();
-				}
-				if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['java_script'])
-				{
-					$java_script = $GLOBALS[$class]->java_script();
-				}
-			}
-			if (isset($GLOBALS['phpgw_info']['flags']['css']))
-			{
-				$app_css .= $GLOBALS['phpgw_info']['flags']['css'];
-			}
+		    	if(@isset($_GET['menuaction']))
+		    	{
+	    			list($app,$class,$method) = explode('.',$_GET['menuaction']);
+    				if(is_array($GLOBALS[$class]->public_functions) 
+					&& $GLOBALS[$class]->public_functions['css'])
+    				{
+    					$app_css .= $GLOBALS[$class]->css();
+    				}
+    			}
+    			if (isset($GLOBALS['phpgw_info']['flags']['css']))
+    			{
+    				$app_css .= $GLOBALS['phpgw_info']['flags']['css'];
+    			}
 			$tpl->set_var('app_css', $app_css);
 			
 			return $tpl->subst('css');			
 		}
+		/**
+		* Used by the template headers for including javascript in the header
+		*
+		* The method is included here to make it easier to change the js support
+		* in phpgw.  One change then all templates will support it (as long as they 
+		* include a call to this method).
+		*
+		* @author Dave Hall (*vaguely based* on verdilak? css inclusion code)
+		* @return string the javascript to be included
+		*/
+		function get_java_script()
+		{
+			$java_script = '';
+			if(@is_object($GLOBALS['phpgw']->js))
+			{
+				$java_script .= $GLOBALS['phpgw']->js->get_script_links();
+			}
+			
+		    	if(@isset($_GET['menuaction']))
+		    	{
+	    			list($app,$class,$method) = explode('.',$_GET['menuaction']);
+    				if(is_array($GLOBALS[$class]->public_functions) 
+					&& $GLOBALS[$class]->public_functions['java_script'])
+    				{
+    					$java_script .= $GLOBALS[$class]->java_script();
+    				}
+    			}
+			//you never know - best to protect the stupid ;)
+    			if (isset($GLOBALS['phpgw_info']['flags']['java_script']))
+    			{
+    				$java_script .= $GLOBALS['phpgw_info']['flags']['java_script'] . "\n";
+    			}
+			return $java_script;
+		}
+
+		/**
+		* Returns on(Un)Load attributes from js class
+		*
+		*@author Dave Hall - skwashd at phpgroupware.org
+		*@returns string body attributes
+		*/
+		function get_body_attribs()
+		{
+			if(@is_object($GLOBALS['phpgw']->js))
+			{
+				return $GLOBALS['phpgw']->js->get_body_attribs();
+			}
+			else
+			{
+				return '';
+			}
+		}
+
 		
 		function hex2bin($data)
 		{
 			$len = strlen($data);
-			return pack('H' . $len, $data);
+			return @pack('H' . $len, $data);
 		}
 
 		/*!
