@@ -36,23 +36,24 @@ function about_app()
 		'license'    => lang('License')
 	);
 
-	$s = "<table width='70%' cellpadding='4'>\n<tr><td align='right'><img src='$icon'></td><td align='left'><b>$info[title]</b></td></tr>";
+	$s = "<table width='70%' cellpadding='4'>\n<tr>
+		  <td align='left'><img src='$icon' alt=\"$info[title]\" /></td><td align='left'><h2>$info[title]</h2></td></tr>";
 	
 	if ($info['description'])
 	{
 		$info['description'] = lang($info['description']);
-		$s .= "<tr><td colspan='2' align='center'>$info[description]</td></tr>\n";
+		$s .= "<tr><td colspan='2' align='left'>$info[description]</td></tr>\n";
 		if ($info['note'])
 		{
 			$info['note'] = lang($info['note']);
-			$s .= "<tr><td colspan='2' align='center'><i>$info[note]</i></td></tr>\n";
+			$s .= "<tr><td colspan='2' align='left'><i>$info[note]</i></td></tr>\n";
 		}
 	}
 	foreach ($other_infos as $key => $val)
 	{
 		if (isset($info[$key]))
 		{
-			$s .= "<tr><td width='50%' align='right'>$val</td><td>";
+			$s .= "<tr><td width='1%' align='left'>$val</td><td>";
 			$infos = $info[$key];
 			for ($n = 0; is_array($info[$key][$n]) && ($infos = $info[$key][$n]) || !$n; ++$n)
 			{
@@ -73,7 +74,7 @@ function about_app()
 					{
 						if ($infos) $infos .= '<br>';
 						$name = $names ? array_shift($names) : $user;
-						$infos .= "<a href='mailto:$user at $domain' onClick=\"document.location='mailto:$user'+'@'+'$domain'; return false;\">$name</a>";
+						$infos .= "<a href='mailto:$user at $domain'><span onClick=\"document.location='mailto:$user'+'@'+'$domain'; return false;\">$name</span></a>";
 						array_shift($emails); array_shift($emails);
 					}
 				}
@@ -101,9 +102,9 @@ function about_app()
 	));
 
 	$tpl->set_var('phpgw_logo',$GLOBALS['phpgw']->common->image('phpgwapi','logo.gif'));
-	$tpl->set_var('phpgw_version',lang('phpGroupWare API version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']));
-	$tpl->set_var('phpgw_message',lang('%1phpGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.',
-		'<a href="http://www.phpGroupWare.org" target="_blank">','</a>','<a href="http://www.php.net" target="_blank">','</a>'));
+	$tpl->set_var('phpgw_version',lang('eGroupWare API version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']));
+	$tpl->set_var('phpgw_message',lang('%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.',
+		'<a href="http://www.eGroupWare.org" target="_blank">','</a>','<a href="http://www.php.net" target="_blank">','</a>'));
 
 	if ($included)
 	{
