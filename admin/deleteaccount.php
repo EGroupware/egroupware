@@ -19,7 +19,7 @@
   include("../header.inc.php");
   // Make sure they are not attempting to delete there own account.
   // If they are, they should not reach this point anyway.
-  if ($phpgw->session->con == $con) {
+  if ($phpgw_info["user"]["con"] == $con) {
      Header("Location: " . $phpgw->link("accounts.php"));
      exit;
   }

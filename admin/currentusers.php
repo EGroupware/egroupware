@@ -67,7 +67,7 @@
      $t->set_var("row_logintime",$phpgw->common->show_date($phpgw->db->f("logintime")));
      $t->set_var("row_idle",gmdate("G:i:s",(time() - $phpgw->db->f("dla"))));
 
-     if ($phpgw->db->f("sessionid") != $phpgw->session->id) {
+     if ($phpgw->db->f("sessionid") != $phpgw_info["user"]["sessionid"]) {
         $t->set_var("row_kill",'<a href="' . $phpgw->link("killsession.php","ksession="
 		  . $phpgw->db->f("sessionid") . "&kill=true\">" . lang_admin("Kill")).'</a>');
      } else {

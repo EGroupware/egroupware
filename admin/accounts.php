@@ -77,7 +77,7 @@
     $t->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","con="
 				  . $phpgw->db->f("con")) . '"> ' . lang_common("Edit") . ' </a>');
 
-    if ($phpgw->session->loginid != $phpgw->db->f("loginid")) {
+    if ($phpgw_info["user"]["userid"] != $phpgw->db->f("loginid")) {
        $t->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'con='
 						. $phpgw->db->f("con")) . '"> '.lang_common("Delete").' </a>');
     } else {
