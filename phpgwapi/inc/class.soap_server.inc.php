@@ -66,8 +66,9 @@ class soap_server
 		$header[] = "Connection: Close\r\n";
 		$header[] = "Content-Type: text/xml; charset=$this->xml_encoding\r\n";
 		$header[] = "Content-Length: ".strlen($payload)."\r\n\r\n";
-		reset($header);
-		foreach($header as $hdr)
+		@reset($header);
+		while(list($null,$hdr) = @each($header))
+		/* foreach($header as $hdr) */
 		{
 			header($hdr);
 		}
@@ -85,7 +86,8 @@ class soap_server
 		if(function_exists("getallheaders"))
 		{
 			$this->headers = getallheaders();
-			foreach($this->headers as $k=>$v)
+			while(list($k,$v) = @each($this->headers))
+			/* foreach($this->headers as $k=>$v) */
 			{
 				$dump .= "$k: $v\r\n";
 			}
@@ -327,7 +329,9 @@ class soap_server
 			if(is_array($params))
 			{
 				$this->debug("entered verify_method() with ".count($params)." parameters");
-				foreach($params as $v)
+				@reset($params);
+				while(list($null,$v) = @each($params))
+				/* foreach($params as $v) */
 				{
 					$this->debug("param '$v->name' of type '$v->type'");
 				}
@@ -336,7 +340,9 @@ class soap_server
 				{
 					$this->debug("got correct number of parameters: ".count($sig));
 					// make array of param types
-					foreach($params as $param)
+					@reset($params);
+					while(list($null,$param) = @each($params))
+					/* foreach($params as $param) */
 					{
 						$p[] = strtolower($param->type);
 					}

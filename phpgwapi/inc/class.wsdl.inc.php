@@ -208,10 +208,14 @@ class wsdl
 
 	function getPortName($operation)
 	{
-		foreach($this->ports as $port => $portAttrs)
+		@reset($this->ports);
+		while(list($port,$portAttrs) = @each($this->ports));
+		/* foreach($this->ports as $port => $portAttrs) */
 		{
 			$binding = substr($portAttrs["binding"],4);
-			foreach($this->bindings[$binding]["operations"] as $op => $opAttrs)
+			@reset($this->bindings[$binding]["operations"]);
+			while(list($op,$opAttrs) = @each($this->bindings[$binding]["operations"]))
+			/* foreach($this->bindings[$binding]["operations"] as $op => $opAttrs) */
 			{
 				if($op == $operation)
 				{

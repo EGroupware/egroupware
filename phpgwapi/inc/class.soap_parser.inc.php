@@ -86,7 +86,9 @@ class soap_parser
 			$this->debug("children string = ".$this->message[$pos]["children"]);
 			$children = explode("|",$this->message[$pos]["children"]);
 			$this->debug("it has ".count($children)." children");
-			foreach($children as $c => $child_pos)
+			@reset($children);
+			while(list($c,$child_pos) = @each($children))
+			/* foreach($children as $c => $child_pos) */
 			{
 				//$this->debug("child pos $child_pos: ".$this->message[$child_pos]["name"]);
 				if($this->message[$child_pos]["eval_str"] != "")
@@ -176,7 +178,9 @@ class soap_parser
 			$this->message[$pos]["namespace"] = $this->default_namespace;
 		}
 		// loop through atts, logging ns and type declarations
-		foreach($attrs as $key => $value)
+		@reset($attrs);
+		while (list($key,$value) = @each($attrs))
+		/* foreach($attrs as $key => $value) */
 		{
 			// if ns declarations, add to class level array of valid namespaces
 			if(ereg("xmlns:",$key))
@@ -357,7 +361,9 @@ class soap_parser
 
 	function decode_entities($text)
 	{
-		foreach($this->entities as $entity => $encoded)
+		@reset($this->entities);
+		while(list($entity,$encoded) = @each($this->entities))
+		/* foreach($this->entities as $entity => $encoded) */
 		{
 			$text = str_replace($encoded,$entity,$text);
 		}

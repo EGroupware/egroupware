@@ -14,7 +14,9 @@ class soapmsg
 		{
 			global $namespaces;
 			$i = count($namespaces);
-			foreach($new_namespaces as $v)
+			@reset($new_namespaces);
+			while(list($null,$v) = @each($new_namespaces))
+			/* foreach($new_namespaces as $v) */
 			{
 				$namespaces[$v] = "ns".$i++;
 			}
@@ -28,7 +30,9 @@ class soapmsg
 	function make_envelope($payload)
 	{
 		global $namespaces;
-		foreach($namespaces as $k => $v)
+		@reset($namespaces);
+		while(list($k,$v) = @each($namespaces))
+		/* foreach($namespaces as $k => $v) */
 		{
 			$ns_string .= " xmlns:$v=\"$k\"";
 		}

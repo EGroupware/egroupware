@@ -106,7 +106,9 @@ class soapclient
 					{
 						$this->debug("got fault");
 						$faultArray = $return->decode();
-						foreach($faultArray as $k => $v)
+						@reset($faultArray);
+						while(list($k,$v) = @each($faultArray))
+						/* foreach($faultArray as $k => $v) */
 						{
 							print "$k = $v<br>";
 						}
