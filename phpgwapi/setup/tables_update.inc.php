@@ -1634,4 +1634,12 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0.005';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+
+	$test[] = '1.0.0.005';
+	function phpgwapi_upgrade1_0_0_005()
+	{
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0.006';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
