@@ -1,0 +1,115 @@
+%1 already exists as a file	filemanager	cs	%1 ji¾ existuje jako soubor
+application	filemanager	cs	Aplikace
+back to file manager	filemanager	cs	Zpìt do správce souborù
+cancel editing %1 without saving	filemanager	cs	Zru¹ zmìny %1 bez ulo¾ení
+cannot create directory because it begins or ends in a space	filemanager	cs	Nelze vytvoøit slo¾ku s názvem s mezerou na zaèátku èi konci
+cannot replace %1 because it is a directory	filemanager	cs	Nelze nahradit %1 proto¾e jde o slo¾ku
+command sucessfully run	filemanager	cs	Pøíkaz úspì¹nì vykonán
+comment	filemanager	cs	Komentáø
+comments cannot contain "%1"	filemanager	cs	Komentáøe nesmí obsahovat "%1"
+copied %1 to %2	filemanager	cs	%1 zkopírován do %2
+copy to	filemanager	cs	Zkopírovat
+copy to:	filemanager	cs	Zkopírovat:
+could not copy %1 to %2	filemanager	cs	Nelze zkopírovat %1 do %2
+could not copy file because no destination directory is given	filemanager	cs	Nelze zkopírovat soubor, není urèena cílová slo¾ka
+could not create %1	filemanager	cs	Nelze vytvoøit %1
+could not create directory %1	filemanager	cs	Nelze vytvoøit slo¾ku %1
+could not delete %1	filemanager	cs	Nelze smazat %1
+could not move %1 to %2	filemanager	cs	Nelze pøesunout %1 na %2
+could not move file because no destination directory is given	filemanager	cs	Nelze pøesunout soubor, proto¾e není urèena cílová slo¾ka
+could not rename %1 to %2	filemanager	cs	Nelze pøejmenovat %1 na %2
+could not save %1	filemanager	cs	Nelze ulo¾it %1
+create file	filemanager	cs	Vytvoø soubor
+create folder	filemanager	cs	Vytvoø slo¾ku
+created	filemanager	cs	Vytvoøen
+created %1	filemanager	cs	%1 vytvoøen
+created %1,%2	filemanager	cs	%1, %2 vytvoøeny
+created by	filemanager	cs	Vytvoøil
+created directory %1	filemanager	cs	Vytvoøena slo¾ka %1
+date	filemanager	cs	Datum
+default number of upload fields to show	filemanager	cs	Výchozí poèet zobrazených polo¾ek k nahrání
+delete	filemanager	cs	Smazat
+deleted %1	filemanager	cs	%1 smazáno
+directory	filemanager	cs	Slo¾ka
+directory %1 already exists	filemanager	cs	Slo¾ka %1 ji¾ existuje
+directory %1 does not exist	filemanager	cs	Slo¾ka %1 neexistuje
+directory names cannot contain "%1"	filemanager	cs	Název slo¾ky nesmí obsahovat "%1"
+display attributes	filemanager	cs	Zobrazení vlastností
+download	filemanager	cs	Download
+edit	filemanager	cs	Upravit
+edit comments	filemanager	cs	Uprav komentáøe
+error running command	filemanager	cs	Chyba pøi zpracování pøíkazu
+execute	filemanager	cs	Spus»
+failed to create directory	filemanager	cs	Nelze vytvoøit slo¾ku
+fake base dir did not exist, egroupware created a new one.	filemanager	cs	Fale¹ná bázová slo¾ka neexistovala, systém vytvoøil novou
+file	filemanager	cs	Soubor
+file %1 already exists. please edit it or delete it first.	filemanager	cs	Soubor %1 ji¾ existuje. Nejprve jej zmìnte èi sma¾te.
+file %1 could not be created.	filemanager	cs	Soubor %1 nelze vytvoøit
+file name	filemanager	cs	Jméno souboru
+file names cannot contain "%1"	filemanager	cs	Jméno souboru nesmí obsahovat "%1"
+file names cannot contain \ or /	filemanager	cs	Jméno souboru nesmí obsahovat \ ani /
+filemanager	common	cs	Správce souborù
+filemanager preferences	filemanager	cs	Nastavení správce souborù
+files	filemanager	cs	Soubory
+files in this directory	filemanager	cs	Soubory v této slo¾ce
+folder	filemanager	cs	Slo¾ka
+folder up	filemanager	cs	Nahoru
+go home	filemanager	cs	Domù
+go to	filemanager	cs	Pøejít
+go to %1	filemanager	cs	Pøejít do %1
+go to your home directory	filemanager	cs	Pøejít do domácí slo¾ky
+go to:	filemanager	cs	Pøejít:
+go up	filemanager	cs	nahoru
+home	filemanager	cs	Domù
+location	filemanager	cs	Umístìní
+locked	filemanager	cs	Uzamèen
+mime type	filemanager	cs	Typ souboru (MIME)
+modified	filemanager	cs	Zmìnìn
+modified by	filemanager	cs	Zmìnìn kým
+move to	filemanager	cs	Pøesunout
+move to:	filemanager	cs	Pøesunout:
+moved %1 to %2	filemanager	cs	%1 pøesunut do %2
+no files in this directory.	filemanager	cs	Tato slo¾ka je prázdná
+no version history for this file/directory	filemanager	cs	Tento soubor/slo¾ka nemá historii verzí
+operation	filemanager	cs	Operace
+other settings	filemanager	cs	Dal¹í nastavení
+owner	filemanager	cs	Vlastník
+please select a file to delete.	filemanager	cs	Prosím vyberte soubor ke smazání
+preview %1	filemanager	cs	Zobraz %1
+preview of %1	filemanager	cs	Náhled %1
+quick jump to	filemanager	cs	Rychle pøejít
+reload	filemanager	cs	obèerstvit
+rename	filemanager	cs	Pøejmenovat
+renamed %1 to %2	filemanager	cs	%1 pøejmenován na %2
+replaced %1	filemanager	cs	%1 nahrazen
+save %1	filemanager	cs	Ulo¾it %1
+save %1, and go back to file listing	filemanager	cs	Ulo¾it %1 a zpìt na seznam souborù
+save all	filemanager	cs	Ulo¾it v¹e
+save changes	filemanager	cs	Ulo¾it zmìny
+saved %1	filemanager	cs	%1 ulo¾en
+show	filemanager	cs	Zobraz
+show ..	filemanager	cs	Zobrazit ..
+show .files	filemanager	cs	Zobrazit skryté soubory
+show command line (experimental. dangerous.)	filemanager	cs	Zobraz pøíkazovou øádku (EXPERIMENTÁLNÍ A NEBEZPEÈNÉ)
+show help	filemanager	cs	Zobraz nápovìdu
+size	filemanager	cs	Velikost
+sort by:	filemanager	cs	Øadit podle:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	cs	Správce souborù budoucnosti, nyní JEN PRO TESTOVÁNÍ, prosím posílejte informace o chybách
+total files	filemanager	cs	Celkem souborù
+unknown mime-type defaults to text/plain when viewing	filemanager	cs	Neznámé typy souborù zobrazit jako text
+unused space	filemanager	cs	Nevyu¾ité místo
+up	filemanager	cs	Nahoru
+update	filemanager	cs	Aktualizovat
+updated comment for %1	filemanager	cs	Komentáø k %1 upraven
+upload	filemanager	cs	Nahrát
+upload fields	filemanager	cs	polo¾ek k nahrání
+upload files	filemanager	cs	Nahrát soubory
+use new experimental filemanager?	filemanager	cs	Pou¾ít nový experimentální Správce souborù?
+used space	filemanager	cs	Pou¾ité místo
+users	filemanager	cs	U¾ivatelé
+version	filemanager	cs	Verze
+view documents in new window	filemanager	cs	Zobrazit dokumenty v novém oknì
+view documents on server (if available)	filemanager	cs	Zobraz dokumenty na serveru (pokud to jde)
+who	filemanager	cs	Kdo
+you do not have access to %1	filemanager	cs	Nemáte pøístup k %1
+your home dir did not exist, egroupware created a new one.	filemanager	cs	Va¹e domovská slo¾ka neexistovala, systém vytvoøil novou.
