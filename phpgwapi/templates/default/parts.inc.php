@@ -11,9 +11,15 @@
 
   /* $Id$ */
 
-	$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','10%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_left_table_width','5%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_right_table_width','5%');
+
+	$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','5%');
 	$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','45');
-	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','5%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_top_scrolling','NO');
+	$GLOBALS['phpgw']->template->set_var('phpgw_body_table_width','90%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_body_table_height','89%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','1%');
 	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','40');
 
 	function parse_toppart($output)
@@ -105,7 +111,7 @@
 			$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
 			$GLOBALS['phpgw']->template->set_block('parts','bottom_part');
 			$var = Array(
-				'msg'			=> "<p><p>\n".lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']).'<p>',
+				'msg'			=> lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
 				'version'		=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);
 			$GLOBALS['phpgw']->template->set_var($var);
@@ -116,3 +122,4 @@
 			$GLOBALS['phpgw']->template->set_var($output,'');
 		}
 	}
+	

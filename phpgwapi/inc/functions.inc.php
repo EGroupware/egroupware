@@ -350,12 +350,21 @@
 		$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_top_scrolling','AUTO');
+
 		$GLOBALS['phpgw']->template->set_var('phpgw_left_table_width','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_left_frame_width','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_left_scrolling','AUTO');
+
+		$GLOBALS['phpgw']->template->set_var('phpgw_body_table_height','100%');
+		$GLOBALS['phpgw']->template->set_var('phpgw_body_table_width','100%');
+		$GLOBALS['phpgw']->template->set_var('phpgw_body_frame_height','*');
+		$GLOBALS['phpgw']->template->set_var('phpgw_body_frame_width','*');
+		$GLOBALS['phpgw']->template->set_var('phpgw_body_scrolling','AUTO');
+
 		$GLOBALS['phpgw']->template->set_var('phpgw_right_table_width','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_right_frame_width','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_right_scrolling','AUTO');
+
 		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','0');
 		$GLOBALS['phpgw']->template->set_var('phpgw_bottom_scrolling','AUTO');

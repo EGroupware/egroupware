@@ -21,15 +21,15 @@
 			<TD width="100%" height="{phpgw_top_table_height}" align="left" valign="top" colspan="3">{phpgw_top}</TD>
 		</TR>
 		<TR>
-			<TD width="{phpgw_left_table_width}" height="100%" align="left" valign="top">{phpgw_left}</TD>
-			<TD width="100%" height="100%" align="left" valign="top">
+			<TD width="{phpgw_left_table_width}" height="{phpgw_body_table_height}" align="left" valign="top">{phpgw_left}</TD>
+			<TD width="{phpgw_body_table_width}" height="{phpgw_body_table_height}" align="left" valign="top">
 				{phpgw_msgbox}
 <!-- END phpgw_main_tables_start -->
 
 <!-- BEGIN phpgw_main_tables_end -->
 				{phpgw_body}
 			</TD>
-			<TD width="{phpgw_right_table_width}" height="100%" align="right" valign="top">{phpgw_right}</TD>
+			<TD width="{phpgw_right_table_width}" height="{phpgw_body_table_height}" align="right" valign="top">{phpgw_right}</TD>
 		</TR>
 		<TR>
 			<TD width="100%" height="{phpgw_bottom_table_height}" align="left" valign="top" colspan="3">{phpgw_bottom}</TD>
@@ -79,9 +79,9 @@
 	<LINK REL="ICON" href="{phpgw_head_browser_ico}" type="image/x-ico">
 	<LINK REL="SHORTCUT ICON" href="{phpgw_head_browser_ico}">
 	<TITLE>{phpgw_head_website_title}</TITLE>
-	<FRAMESET frameborder="0" border="0" framespacing="0" ROWS="{phpgw_top_frame_height},*,{phpgw_bottom_frame_height}">
+	<FRAMESET frameborder="0" border="0" framespacing="0" ROWS="{phpgw_top_frame_height},{phpgw_body_frame_height},{phpgw_bottom_frame_height}">
 		<FRAME MARGINWIDTH=0 MARGINHEIGHT=0 SRC="{phpgw_top_link}" NAME="top" SCROLLING="{phpgw_top_scrolling}">
-		<FRAMESET frameborder="0" border="0" framespacing="0" COLS="{phpgw_left_frame_width},*,{phpgw_right_frame_width}">
+		<FRAMESET frameborder="0" border="0" framespacing="0" COLS="{phpgw_left_frame_width},{phpgw_body_frame_width},{phpgw_right_frame_width}">
 			<FRAME MARGINWIDTH=0 MARGINHEIGHT=0 SRC="{phpgw_left_link}" NAME="left" SCROLLING="{phpgw_left_scrolling}">
 			<FRAME MARGINWIDTH=0 MARGINHEIGHT=0 SRC="{phpgw_body_link}" NAME="body">
 			<FRAME MARGINWIDTH=0 MARGINHEIGHT=0 SRC="{phpgw_right_link}" NAME="right" SCROLLING="{phpgw_right_scrolling}">

@@ -12,9 +12,13 @@
   /* $Id$ */
 
 	$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','10%');
-	$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','85');
+	$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','90');
+	
 	$GLOBALS['phpgw']->template->set_var('phpgw_left_table_width','5%');
-	$GLOBALS['phpgw']->template->set_var('phpgw_left_frame_width','155');
+	$GLOBALS['phpgw']->template->set_var('phpgw_left_frame_width','165');
+
+	$GLOBALS['phpgw']->template->set_var('phpgw_body_table_height','85%');
+	
 	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','5%');
 	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','30');
 	$GLOBALS['phpgw_info']['flags']['body_tags']['background']=$GLOBALS['phpgw']->common->image('phpgwapi','content_spacer_middle');
@@ -141,6 +145,7 @@
 		$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
 		$GLOBALS['phpgw']->template->set_block('parts','left_part');
 		$applications = '';
+		$var['nav_bar_left_spacer_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_spacer');
 		while ($app = each($GLOBALS['phpgw_info']['navbar']))
 		{
 			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && !ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
@@ -150,7 +155,7 @@
 				$img_src_over = $app[1]['icon_hover'];
 				$img_src_out = $app[1]['icon'];
 
-				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"';
+				$applications .= '<tr><td background="'.$var['nav_bar_left_spacer_img'].'"><a href="' . $app[1]['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']))
 				{
 					$applications .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
@@ -181,7 +186,6 @@
 		}
 
 		$var['applications'] = $applications;
-		$var['nav_bar_left_spacer_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_spacer');
 		$var['nav_bar_left_top_bg_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_top_bg');
 
 		$GLOBALS['phpgw']->template->set_var($var);

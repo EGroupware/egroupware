@@ -1,9 +1,9 @@
 <!-- BEGIN top_part -->
-<table border="0" width="100%" height="%100" cellspacing="0" cellpadding="0">
+<table border="0" width="100%" height="73" cellspacing="0" cellpadding="0">
 	<tr>
 		<!-- top row back images are 58px high, but the row may be smaller than that -->
 		<!-- row 2 images are 15 px high, so this table with these 2 rows is 58 plus 15 equals 73px high  -->
-		<td width="154" height="58" align="left" valign="top" background="{em_img}">
+		<td width="5%" height="58" align="left" valign="top" background="{em_img}" nowrap>
 			<img src="{logo_img}">
 		</td>
 		<td width="100%" align="right" background="{em_img}">
@@ -11,10 +11,10 @@
 				<tr>
 					<!-- <td width="100%" align="right" valign="top"><font size="{powered_by_size}" color="{powered_by_color}">{powered_by}&nbsp;{current_users}</font></td> -->
 					<td width="50%" align="left" valign="top">
-						<font size="{powered_by_size}" color="{powered_by_color}">{current_users}</font>
+						<font size="{powered_by_size}" color="{powered_by_color}">{current_users}&nbsp;</font>
 					</td>
 					<td width="50%" align="right" valign="top">
-						<font size="{powered_by_size}" color="{powered_by_color}">{powered_by}&nbsp;</font>
+						<font size="{powered_by_size}" color="{powered_by_color}">&nbsp;{powered_by}</font>
 					</td>
 				</tr>
 			</table>
@@ -49,7 +49,7 @@
 <!-- END top_part -->
 
 <!-- BEGIN left_part -->
-<table border="0" width="100%" height="%100" cellspacing="0" cellpadding="0">
+<table border="0" width="154" height="100%" cellspacing="0" cellpadding="0">
 	<tr>
 		<td width="154" align="left" valign="top" background="{nav_bar_left_spacer_img}">
 			<!-- left nav table -->
@@ -67,7 +67,7 @@
 
 
 <!-- BEGIN bottom_part -->
-<table border="0" width="100%" height="%100" cellspacing="0" cellpadding="0">
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 	<tr>
 		<td align="center" background="{em_bottom_img}">
 			<font color="{power_textcolor}">{powered}</font>
