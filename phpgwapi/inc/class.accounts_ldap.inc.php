@@ -89,7 +89,7 @@
 */        
     }
     
-    function function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
+    function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
     {
     }
     
