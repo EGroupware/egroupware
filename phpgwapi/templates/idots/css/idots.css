@@ -24,33 +24,33 @@ A:active
 INPUT 
 {
 	FONT-SIZE: 12px; 
-	font-COLOR: #006699; 
-	FONT-FAMILY: "Arial", "Helvetica", "sans-serif"
+	COLOR: #006699; 
+	FONT-FAMILY: Arial, Helvetica, sans-serif
 }
 
 SELECT 
 {
 	FONT-SIZE: 12px; 
 	COLOR: #006699; 
-	FONT-FAMILY: "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Arial, Helvetica, sans-serif
 }
 
 BODY 
 {
 	FONT-SIZE: 12px; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 FORM 
 {
 	FONT-SIZE: 12px; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 TABLE 
 {
 	FONT-SIZE: 12px; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 .sideboxcontent 
@@ -63,14 +63,14 @@ TABLE
 	COLOR: #000000; 
 	LINE-HEIGHT: 20px; 
 	PADDING-TOP: 5px; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 .mainnote 
 {
 	FONT-SIZE: 12px; 
 	COLOR: #006699; 
-	FONT-FAMILY: "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Arial, Helvetica, sans-serif
 }
 
 .articlecontent 
@@ -82,14 +82,14 @@ TABLE
 	COLOR: #000000; 
 	LINE-HEIGHT: 20px; 
 	PADDING-TOP: 10px; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 .sideboxtext 
 {
 	FONT-SIZE: 12px; 
 	LINE-HEIGHT: 18px; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 .toppannel 
@@ -110,7 +110,7 @@ TABLE
 	FONT-WEIGHT: bold; 
 	FONT-SIZE: 12px; 
 	COLOR: #000000; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 .box 
@@ -125,7 +125,7 @@ TABLE
 {
 	FONT-SIZE: 12px; 
 	COLOR: #000000; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 .sideboxtitle 
@@ -135,7 +135,7 @@ TABLE
 	FONT-SIZE: 12px; 
 	BACKGROUND-IMAGE: url(../images/boxbg.gif); 
 	COLOR: #000000; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
 }
 
 .sidebox 
@@ -155,6 +155,6 @@ TABLE
 	COLOR: #000000; 
 	TEXT-INDENT: 5pt; 
 	BACKGROUND-REPEAT: repeat-x; 
-	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"; 
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
 	HEIGHT: 20px
 }
