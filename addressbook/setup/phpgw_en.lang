@@ -11,6 +11,7 @@ alt. csv import	addressbook	en	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 bbs phone	addressbook	en	BBS Phone
 birthday	common	en	Birthday
+blank	addressbook	en	Blank
 <b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 business address type	addressbook	en	Business Address Type
 business city	addressbook	en	Business City
@@ -33,6 +34,7 @@ contact	common	en	Contact
 contact settings	admin	en	Contact Settings
 country	common	en	Country
 custom fields	addressbook	en	Custom Fields
+default filter	addressbook	en	Default Filter
 department	common	en	Department
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
