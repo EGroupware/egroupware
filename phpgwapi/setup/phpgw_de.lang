@@ -96,7 +96,8 @@ default category	common	de	Standard-Kategorie
 delete	common	de	Löschen
 description	common	de	Beschreibung
 disabled	common	de	Deaktiviert
-do you also want to delete all subcategories ?	common	de Wollen Sie auch alle Unterkategorien l&ouml;schen ?
+do you want to delete all subcategories ?	common	de M&ouml;chten Sie alle Unterkategorien l&ouml;schen ?
+do you want to move all subcategories one level down ?	common	de	M&ouml;chten Sie alle Unterkategorien um einen Level nach unten verschieben ?
 done	common	de	Fertig
 e-mail	common	de	E-Mail
 edit	common	de	Editieren

@@ -57,7 +57,7 @@
 			$this->app_name   = $app_name;
 			$this->db         = $GLOBALS['phpgw']->db;
 			$this->grants     = $GLOBALS['phpgw']->acl->get_grants($app_name);
-			$this->cats       = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
+			$this->cats       = $this->return_array($type,$start,$limit,$query,$sort,$order,$globals,$parent_id);
 		}
 
 		/*!
@@ -74,7 +74,8 @@
 				case 'mains':		$s = " AND cat_parent = '0'"; break;
 				case 'appandmains':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
 				case 'appandsubs':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
-				case 'noapp':		$s = " AND cat_appname != '" . $this->app_name . "'"; break;
+				case 'noglobal':	$s = " AND cat_appname != '" . $this->app_name . "'"; break;
+				case 'noglobalapp':	$s = " AND cat_appname = '" . $this->app_name . "' AND cat_owner != '" . $this->account_id . "'"; break;
 				default:            return False;
 			}
 			return $s;

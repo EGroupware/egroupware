@@ -94,7 +94,7 @@
 
 		function index()
 		{
-			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+			$global_cats  = get_var('global_cats',array('POST','GET'));
 
 			$GLOBALS['phpgw']->common->phpgw_header();
 
@@ -236,7 +236,7 @@
 
 		function add()
 		{
-			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+			$global_cats  = get_var('global_cats',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -317,7 +317,7 @@
 
 		function edit()
 		{
-			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+			$global_cats  = get_var('global_cats',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -411,7 +411,7 @@
 
 		function delete()
 		{
-			$global_cats = $GLOBALS['HTTP_POST_VARS']['global_cats'] ? $GLOBALS['HTTP_POST_VARS']['global_cats'] : $GLOBALS['HTTP_GET_VARS']['global_cats'];
+			$global_cats  = get_var('global_cats',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -449,9 +449,18 @@
 			$GLOBALS['phpgw']->template->set_var('error_msg',$error_msg);
 			$nolink = $GLOBALS['phpgw']->link('/index.php',$link_data);
 
+			if ($GLOBALS['appname'])
+			{
+				$type = 'noglobalapp';
+			}
+			else
+			{
+				$type = 'noglobal';
+			}
+
 			$apps_cats = $this->bo->exists(array
 			(
-				'type'     => 'noapp',
+				'type'     => $type,
 				'cat_name' => '',
 				'cat_id'   => $this->cat_id
 			));
@@ -461,8 +470,8 @@
 
 			if ($apps_cats)
 			{
-				$GLOBALS['phpgw']->template->set_var('messages',lang('This category is currently being used by applications as a parent category') . '<br>'
-																. lang('You will need to remove the subcategories before you can delete this category'));
+				$GLOBALS['phpgw']->template->set_var('delete_msg',lang('This category is currently being used by applications as a parent category') . '<br>'
+																. lang('You will need to reassign these subcategories before you can delete this category'));
 
 				$GLOBALS['phpgw']->template->set_var('lang_subs','');
 				$GLOBALS['phpgw']->template->set_var('subs','');
@@ -474,7 +483,7 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this global category ?'));
+				$GLOBALS['phpgw']->template->set_var('delete_msg',lang('Are you sure you want to delete this global category ?'));
 
 				$exists = $this->bo->exists(array
 				(

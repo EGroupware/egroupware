@@ -103,7 +103,8 @@ detail	common	en	Detail
 details	common	en	Details
 disabled	common	en	Disabled
 djibouti	common	en	DJIBOUTI
-do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
+do you want to delete all subcategories ?	common	en	Do you want to delete all subcategories ?
+do you want to move all subcategories one level down ?	common	en	Do you want to move all subcategories one level down ?
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done

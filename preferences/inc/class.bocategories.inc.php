@@ -96,9 +96,7 @@
 
 		function exists($data)
 		{
-			$data['type']   = $data['type'] ? $data['type'] : '';
-			$data['cat_id'] = $data['cat_id'] ? $data['cat_id'] : '';
-			return $this->cats->exists($data['type'],$data['cat_name'],$data['cat_id']);
+			return $this->cats->exists($data);
 		}
 
 		function formatted_list($format,$type,$cat_parent,$global_cats)
@@ -106,9 +104,9 @@
 			return $this->cats->formated_list($format,$type,$cat_parent,$global_cats);
 		}
 
-		function delete($cat_id,$subs)
+		function delete($cat_id,$drop_subs,$modify_subs)
 		{
-			return $this->cats->delete($cat_id,$subs);
+			$this->cats->delete($cat_id,$drop_subs,$modify_subs);
 		}
 
 		function check_values($values)

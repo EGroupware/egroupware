@@ -24,8 +24,8 @@ are you sure you want to kill this session ?	admin	de	Sind Sie sicher, daß Sie d
 change main screen message	admin	de	Nachricht der Startseite ändern
 create group	admin	de	Erstelle Gruppe
 display	admin	de	Bezeichnung
-do you want to delete all global subcategories ?	admin	de	Wollen Sie alle globalen Unterkategorien l&ouml;schen ?
-do you want to move all global subcategories one level down ?	admin	de	Wollen Sie alle globalen Unterkategorien einen Level nach unten verschieben ?
+do you want to delete all global subcategories ?	admin	de	M&ouml;chten Sie alle globalen Unterkategorien l&ouml;schen ?
+do you want to move all global subcategories one level down ?	admin	de	M&ouml;chten Sie alle globalen Unterkategorien um einen Level nach unten verschieben ?
 edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
 edit global category for x	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
@@ -78,8 +78,8 @@ that loginid has already been taken	admin	de	Diese LoginID ist bereits vergeben
 the login and password can not be the same	admin	de	Login und Passwort dürfen nicht identisch sein
 the two passwords are not the same	admin	de	Die beiden Pa&szlig;w&ouml;rter stimmen nicht &uuml;berein
 they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
-This category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig als &uuml;bergeordnete Kategorie benutzt.
-You will need to remove the subcategories before you can delete this category	admin	de	Sie m&uuml;ssen erst die Unterkategorien l&ouml;schen befor Sie diese Kategorie l&ouml;schen k&ouml;nnen !
+This category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenw&auml;rtig von Anwendungen als &uuml;bergeordnete Kategorie benutzt.
+you will need to reassign these subcategories before you can delete this category	admin	de	Sie m&uuml;ssen die Unterkategorien neu zuordnen, befor Sie diese Kategorie l&ouml;schen k&ouml;nnen !
 total records	admin	de	Anzahl Datensätze insgesamt
 user data	admin	de	Benutzerdaten
 user accounts	admin	de	Benutzerkonten
@@ -91,4 +91,4 @@ view user account	admin	de	Benutzerkonto anzeigen
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Filetyp auswählen
-userdata	admin	de	Benutzerkonto
+userdata	admin	de	Benutzerkonten
