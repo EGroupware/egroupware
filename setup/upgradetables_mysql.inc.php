@@ -172,7 +172,6 @@
       $db->query("insert into config (config_name, config_value) values ('nntp_admin', 'admin@yourserver.com')");
       $db->query("insert into config (config_name, config_value) values ('nntp_login_username', '')");
       $db->query("insert into config (config_name, config_value) values ('nntp_login_password', '')");
-      $db->query("insert into config (config_name, config_value) values ('charset', 'iso-8859-1')");
       $db->query("insert into config (config_name, config_value) values ('default_ftp_server', 'localhost')");
       $db->query("insert into config (config_name, config_value) values ('httpproxy_server', '')");
       $db->query("insert into config (config_name, config_value) values ('httpproxy_port', '')");
