@@ -74,7 +74,7 @@
        global $phpgw_info, $phpgw;
 
        /* ********This sets the server variables from the database******** */
-/*       $db->query("select * from config",__LINE__,__FILE__);
+/*       $db->query("select * from phpgw_config",__LINE__,__FILE__);
        while ($db->next_record()) {
           $phpgw_info["server"][$db->f("config_name")] = $db->f("config_value");
        }

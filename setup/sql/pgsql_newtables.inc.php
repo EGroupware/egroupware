@@ -13,7 +13,7 @@
 
   // NOTE: Please use spaces to seperate the field names.  It makes copy and pasting easier.
 
-  $sql = "CREATE TABLE config (
+  $sql = "CREATE TABLE phpgw_config (
     config_name     varchar(255) NOT NULL UNIQUE,
     config_value    varchar(100) NOT NULL
   )";

@@ -27,8 +27,10 @@
 
 
   // Actual content
-  echo "<a href=\"" . $phpgw->link("changepassword.php") . "\">"
+  if ($phpgw->acl->check('changepassword',1)) {
+			echo "<a href=\"" . $phpgw->link("changepassword.php") . "\">"
      . lang("change your password") . "</a>";
+	}
   echo "<br><a href=\"" . $phpgw->link("settings.php") . "\">"
      . lang("change your settings") . "</a>";
 //  echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"

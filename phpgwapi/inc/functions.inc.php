@@ -189,7 +189,7 @@
 	print_debug('main class loaded');
 
 	/* Fill phpgw_info["server"] array */
-	$phpgw->db->query("select * from config",__LINE__,__FILE__);
+	$phpgw->db->query("select * from phpgw_config",__LINE__,__FILE__);
 	while ($phpgw->db->next_record()) {
 		$phpgw_info["server"][$phpgw->db->f("config_name")] = stripslashes($phpgw->db->f("config_value"));
 	}

@@ -960,6 +960,16 @@
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre6";
   }
 
+  $test[] = "0.9.10pre6";
+  function upgrade0_9_10pre6()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+    $phpgw_setup->db->query("alter table config rename phpgw_config",__LINE__,__FILE__);
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre7";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
