@@ -23,7 +23,7 @@
 	}
 	unset($d1);
 
-	$GLOBALS['extra_data'] = $GLOBALS['css']."\n".'<td>'."\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
+	$GLOBALS['extra_data'] = '<td>'."\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
 		. ExecMethod('calendar.uicalendar.mini_calendar',
 			Array(
 				'day'		=> $GLOBALS['g_day'],

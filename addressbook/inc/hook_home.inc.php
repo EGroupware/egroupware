@@ -1,14 +1,13 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - E-Mail                                                    *
-  * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
+	/**************************************************************************\
+	* phpGroupWare - Addressbook hook_home                                     *
+	* http://www.phpgroupware.org                                              *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 	/* $Id$ */
 
 	$d1 = strtolower(substr(PHPGW_APP_INC,0,3));
@@ -23,10 +22,9 @@
 	if ($GLOBALS['phpgw_info']['user']['apps']['addressbook']
 		&& $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
-		$tmp = "\n<!-- Birthday info -->\n";
-
 		$c = CreateObject('phpgwapi.contacts');
-		$qfields = array(
+		$qfields = array
+		(
 			'n_given'  => 'n_given',
 			'n_family' => 'n_family',
 			'bday'     => 'bday'
@@ -36,38 +34,17 @@
 
 		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
 
-		$title = '<center><font color="#FFFFFF">'.lang('Birthdays').'</font></center>';
-
-		$portalbox = CreateObject('phpgwapi.listbox',
-			Array(
-				'title'     => $title,
-				'width'     => '100%',
-				'header_background_image' => $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
-			)
-		);
 		$app_id = $GLOBALS['phpgw']->applications->name2id('addressbook');
 		$GLOBALS['portal_order'][] = $app_id;
-		$var = Array(
-			'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
-			'down'     => Array('url' => '/set_box.php', 'app' => $app_id),
-			'close'    => Array('url' => '/set_box.php', 'app' => $app_id),
-			'question' => Array('url' => '/set_box.php', 'app' => $app_id),
-			'edit'     => Array('url' => '/set_box.php', 'app' => $app_id)
-		);
 
-		while(list($key,$value) = each($var))
-		{
-			$portalbox->set_controls($key,$value);
-		}
-
-		$portalbox->data = Array();
-
+		$GLOBALS['phpgw']->portalbox->set_params(array('app_id'	=> $app_id,
+														'title'	=> lang('addressbook')));
 		while(list($key,$val) = @each($bdays))
 		{
-			$portalbox->data[] = array
+			$GLOBALS['phpgw']->portalbox->data[] = array
 			(
-				'text' => lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
-				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']),
+				'text'					=> lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
+				'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']),
 				'lang_link_statustext'	=> lang('show contact')
 			);
 		}
@@ -78,20 +55,13 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$portalbox->data[] = array
+			$GLOBALS['phpgw']->portalbox->data[] = array
 			(
-				'text' => lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
-				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id']),
-				'lang_link_statustext'  => lang('show contact')
+				'text'					=> lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
+				'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id']),
+				'lang_link_statustext'	=> lang('show contact')
 			);
 		}
-		if(count($portalbox->data))
-		{
-			$tmp = $portalbox->draw();
-		}
-		unset($portalbox);
-
-		$GLOBALS['phpgw']->template->set_var('phpgw_body',$tmp,True);
-		unset($tmp);
+		$GLOBALS['phpgw']->portalbox->draw();
 	}
 ?>
