@@ -359,7 +359,7 @@
 				// do we have all needed data??
 				if (!$errors = $this->validate_user($userData))
 				{
-					$account_id = $this->so->add_user($userData);
+					$userData['account_id'] = $account_id = $this->so->add_user($userData);
 
 					if ($userData['anonymous']) 
 					{
@@ -370,7 +370,7 @@
 						$GLOBALS['phpgw']->acl->delete_repository('phpgwapi','anonymous',$account_id);
 					}
 					// make this information for the hooks available
-					$GLOBALS['hook_values'] = $userData;
+					$GLOBALS['hook_values'] = $userData + array('new_passwd' => $userData['account_passwd']);
 					$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 						'location' => 'addaccount'
 					),False,True);	// called for every app now, not only enabled ones
