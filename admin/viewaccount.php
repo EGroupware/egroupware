@@ -130,7 +130,7 @@
 	@reset($availableApps);
 	while ($application = each($availableApps)) 
 	{
-		if ($application[1]['enabled']) 
+		if ($application[1]['enabled'] && $application[1]['status'] != 2) 
 		{
 			$perm_display[$i]['appName']        = $application[0];
 			$perm_display[$i]['translatedName'] = $application[1]['title'];
