@@ -19,6 +19,7 @@ Enter the title for your site	setup	en	Enter the title for your site
 Enter your HTTP proxy server	setup	en	Enter your HTTP proxy server
 Enter your HTTP proxy server port	setup	en	Enter your HTTP proxy server port
 Enter your default FTP server	setup	en	Enter your default FTP server
+go to	setup	en	Go to
 Host information	setup	en	Host information
 If no ACL records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
