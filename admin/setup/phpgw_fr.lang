@@ -23,7 +23,7 @@ add new account	admin	fr	Ajouter un nouveau compte
 add new application	admin	fr	Ajouter une nouvelle application
 add peer server	admin	fr	Ajouter un serveur pair
 admin email	admin	fr	Email de l'administrateur
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify) ?	admin	fr	Adresses EMail des administrateurs (séparées par des virgules) à prévenir en cas de blocage (vide pour aucune notification) ?
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fr	Adresses EMail (séparées par des virgules) des administrateurs à prévenir à propos du blocage (vide pour aucune notification)
 admin name	admin	fr	Nom de l'administrateur
 administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
@@ -270,8 +270,8 @@ view sessions	admin	fr	Voir les sessions
 view this user	admin	fr	Voir cet utilisateur
 view user account	admin	fr	Voir le compte utilisateur
 who would you like to transfer all records owned by the deleted user to?	admin	fr	A qui voudriez-vous tranférer tous les enregistrements appartenant à l'utilisateur effacé?
-would you like phpgroupware to cache the phpgw info array ?	admin	fr	Désirez-vous que phpGroupWare cache le champ phpgw info ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	fr	Désirez-vous que phpGroupWare vérifie la disponibilité d'une nouvelle version<br>quand les administrateurs se connectent ?
+would you like phpgroupware to cache the phpgw info array ?	admin	fr	Voudriez-vous que phpGroupWare cache le champ phpgw info ?
+would you like phpgroupware to check for new application versions when admins login ?	admin	fr	Voudriez-vous que phpGroupWare vérifie s'il y a de nouvelles versions d'applications quand les administrateurs se connectent ?
 would you like to show each application's upgrade status ?	admin	fr	Voudriez-vous montrer l'état de mise à jour de chaque application ?
 you have entered an invalid expiration date	admin	fr	Vous avez entré une date d'expiration invalide
 you must add at least 1 permission or group to this account	admin	fr	Vous devez ajouter au moins 1 permission ou groupe à ce compte
