@@ -4,7 +4,7 @@
 <HEAD>
 
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
+<META name="AUTHOR" content="dGroupWare http://www.eGroupWare.org">
 <META NAME="description" CONTENT="{website_title} login screen, working environment powered by eGroupWare">
 <META NAME="keywords" CONTENT="{website_title} login screen, eGroupWare, groupware, groupware suite">
 
@@ -33,21 +33,23 @@
 		<input type="hidden" name="passwd_type" value="text">
 			<TABLE border="0" align="CENTER" bgcolor="#486591" width="100%" cellpadding="0" cellspacing="0">
 				<TR bgcolor="#e6e6e6">
-					<TD colspan="2" align="CENTER">{cd}</TD>
+					<TD colspan="3" align="CENTER">{cd}</TD>
 				</TR>
 				<TR bgcolor="#e6e6e6">
 					<TD align="RIGHT"><font color="#000000">{lang_username}:&nbsp;</font></TD>
 					<TD><input name="login" value="{cookie}"></TD>
+					<TD>{select_domain}</TD>
 				</TR>
 				<TR bgcolor="#e6e6e6">
 					<TD align="RIGHT"><font color="#000000">{lang_password}:&nbsp;</font></TD>
 					<TD><input name="passwd" type="password"></TD>
+					<TD>&nbsp;</TD>
 				</TR>
 				<TR bgcolor="#e6e6e6">
-					<TD colspan="2" align="CENTER"><input type="submit" value="{lang_login}" name="submitit"></TD>
+					<TD colspan="3" align="CENTER"><input type="submit" value="{lang_login}" name="submitit"></TD>
 				</TR>
 				<TR bgcolor="#e6e6e6">
-					<TD colspan="2" align="right"><font color="#000000" size="-1">phpGroupWare {version}</font></TD>
+					<TD colspan="3" align="right"><font color="#000000" size="-1">eGroupWare {version}</font></TD>
 				</TR>       
 			</TABLE>
 		</FORM>

@@ -44,6 +44,7 @@
 		$tmpl->pfp('loginout','login_form');
 		exit;
 	}
+	$tmpl->set_file(array('login_form'  => 'login.tpl'));
 
 	// !! NOTE !!
 	// Do NOT and I repeat, do NOT touch ANYTHING to do with lang in this file.
@@ -67,15 +68,6 @@
 		exit;
 	}
 */
-
-	if (! $deny_login && ! $GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
-	{
-		$tmpl->set_file(array('login_form'  => 'login.tpl'));
-	}
-	elseif ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
-	{
-		$tmpl->set_file(array('login_form'  => 'login_selectdomain.tpl'));
-	}
 
 	function check_logoutcode($code)
 	{
@@ -235,10 +227,11 @@
 		}
 	}
 
+	$domain_select = '&nbsp;';
 	$last_loginid = $_COOKIE['last_loginid'];
 	if ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
-		$domain_select = '';      // For security ... just in case
+		$domain_select = "<select name=\"logindomain\">\n";
 		foreach($GLOBALS['phpgw_domain'] as $domain_name => $domain_vars)
 		{	
 			$domain_select .= '<option value="' . $domain_name . '"';
@@ -247,9 +240,9 @@
 			{
 				$domain_select .= ' selected';
 			}
-			$domain_select .= '>' . $domain_name . '</option>';
+			$domain_select .= '>' . $domain_name . "</option>\n";
 		}
-		$tmpl->set_var('select_domain',$domain_select);
+		$domain_select .= "</select>\n";
 	}
 	elseif ($last_loginid !== '')
 	{
@@ -261,6 +254,7 @@
 			$last_loginid .= '@' . $_COOKIE['last_domain'];
 		}
 	}
+	$tmpl->set_var('select_domain',$domain_select);
 
 	foreach($_GET as $name => $value)
 	{

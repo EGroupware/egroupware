@@ -59,7 +59,7 @@
 <tr bgcolor="#e6e6e6">
 <td align="right"><font color="#000000">{lang_username}:&nbsp;</font></td>
 <td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
-<td align="left"><select name="logindomain">{select_domain}</select></td>
+<td align="left">{select_domain}</td>
 </tr>
 <tr bgcolor="#e6e6e6">
 <td align="right"><font color="#000000">{lang_password}:&nbsp;</font></td>
