@@ -16,20 +16,24 @@
 
 	$phpgw_flags = Array(
 		'currentapp'		=>	'calendar',
-		'enable_nextmatchs_class'	=>	True
+		'enable_nextmatchs_class'	=>	True,
+		'noheader'	=> True,
+		'nonavbar'	=> True
 	);
-	
 	$phpgw_info['flags'] = $phpgw_flags;
-
+	include('../header.inc.php');
 	if (! $keywords)
 	{
 		// If we reach this, it is because they didn't search for anything,
 		// attempt to send them back to where they where.
-		Header('Location: ' . $phpgw->link($from,'month='.$month.'&day='.$day.'&year='.$year));
+		Header('Location: ' . $phpgw->link($from,'owner='.$owner.'&month='.$month.'&day='.$day.'&year='.$year));
 	}
-
-	include('../header.inc.php');
-
+	else
+	{
+		$phpgw->common->phpgw_header();
+		echo parse_navbar();
+	}
+	
 	$error = '';
 
 	if (strlen($keywords) == 0)
