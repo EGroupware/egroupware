@@ -264,6 +264,10 @@ class uical
 			'matrixselect' => array('icon'=>'view','text'=>'Daily Matrix View','menuaction' => 'calendar.uicalendar.matrixselect'),
 		) as $view => $data)
 		{
+			if ($view == 'add' && $this->owner != $this->user && !$this->bo->check_perms(PHPGW_ACL_ADD,0,$this->owner))
+			{
+				continue;	// we dont have permission add events to the cal of $this->owner ==> skip the icon
+			}
 			$vars = $link_vars;
 			$vars['menuaction'] = $data['menuaction'];
 			if ($view == 'day')
