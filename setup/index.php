@@ -25,36 +25,6 @@
   include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
 
-  /* Database setup */
-  switch($phpgw_info["server"]["db_type"]){
-    case "pgsql":
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_db_pgsql.inc.php");
-      break;
-    case "oracle":
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_db_oracle.inc.php");
-      break;
-    case "mysql":
-      include($phpgw_info["server"]["api_dir"] . "/phpgw_db_mysql.inc.php");
-      break;
-    default:
-      echo("<h1>Please set db_type in your header.inc.php correctly</h1>\n");
-      exit;
-  }
-
-  $db             = new db;
-  if ($phpgw_info["multiable_domains"] != True){
-    $db->Host       = $phpgw_info["server"]["db_host"];
-    $db->Type       = $phpgw_info["server"]["db_type"];
-    $db->Database   = $phpgw_info["server"]["db_name"];
-    $db->User       = $phpgw_info["server"]["db_user"];
-    $db->Password   = $phpgw_info["server"]["db_pass"];
-  }else{
-    $db->Host       = $phpgw_domain[$SetupDomain]["db_host"];
-    $db->Type       = $phpgw_domain[$SetupDomain]["db_type"];
-    $db->Database   = $phpgw_domain[$SetupDomain]["db_name"];
-    $db->User       = $phpgw_domain[$SetupDomain]["db_user"];
-    $db->Password   = $phpgw_domain[$SetupDomain]["db_pass"];
-  }
 //  $db->Halt_On_Error = "report";
   $db->Halt_On_Error = "no";
 

@@ -21,24 +21,6 @@
   include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
   
-  /* Database setup */
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
-
-  $db	          = new db;
-  if ($phpgw_info["multiable_domains"] != True){
-    $db->Host       = $phpgw_info["server"]["db_host"];
-    $db->Type       = $phpgw_info["server"]["db_type"];
-    $db->Database   = $phpgw_info["server"]["db_name"];
-    $db->User       = $phpgw_info["server"]["db_user"];
-    $db->Password   = $phpgw_info["server"]["db_pass"];
-  }else{
-    $db->Host       = $phpgw_domain[$SetupDomain]["db_host"];
-    $db->Type       = $phpgw_domain[$SetupDomain]["db_type"];
-    $db->Database   = $phpgw_domain[$SetupDomain]["db_name"];
-    $db->User       = $phpgw_domain[$SetupDomain]["db_user"];
-    $db->Password   = $phpgw_domain[$SetupDomain]["db_pass"];
-  }
-
   if ($newsettings["auth_type"] != "ldap") {
      setup_header();
   }
