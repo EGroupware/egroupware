@@ -214,7 +214,7 @@
 		{
 			global $phpgw, $phpgw_info;
 
-	    	$account_id = get_account_type($accountid);
+	    	$account_id = get_account_id($accountid);
 			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
 			if ($this->db->num_rows()) {
 				$this->db->next_record();
