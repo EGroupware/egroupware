@@ -42,16 +42,18 @@
 			$this->query		= $this->bo->query;
 			$this->sort			= $this->bo->sort;
 			$this->order		= $this->bo->order;
+			$this->cat_id		= $this->bo->cat_id;
 		}
 
 		function save_sessiondata($cats_app)
 		{
 			$data = array
 			(
-				'start'	=> $this->start,
-				'query'	=> $this->query,
-				'sort'	=> $this->sort,
-				'order'	=> $this->order
+				'start'		=> $this->start,
+				'query'		=> $this->query,
+				'sort'		=> $this->sort,
+				'order'		=> $this->order,
+				'cat_id'	=> $this->cat_id
 			);
 			$this->bo->save_sessiondata($data,$cats_app);
 		}
@@ -90,7 +92,6 @@
 			$extra			= get_var('extra',array('POST','GET'));
 			$global_cats	= get_var('global_cats',array('POST','GET'));
 			$cats_level		= get_var('cats_level',array('POST','GET'));
-			$cat_id			= get_var('cat_id',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -118,11 +119,6 @@
 			$GLOBALS['phpgw']->template->set_var('lang_app',lang($cats_app));
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/preferences/index.php'));
-
-			if(!$this->start)
-			{
-				$this->start = 0;
-			}
 
 			if (!$global_cats)
 			{
@@ -186,7 +182,7 @@
 					$name = $spaceset . $GLOBALS['phpgw']->strip_html($cats[$i]['name']) . $appendix;
 				}
 
-				$descr = $GLOBALS['phpgw']->strip_html($cats[$i]['description']);
+				$descr = $GLOBALS['phpgw']->strip_html($cats[$i]['descr']);
 				if (!$descr) { $descr = '&nbsp;'; }
 
 				if (is_array($edata))
@@ -215,14 +211,13 @@
 					'descr' => $descr
 				));
 
-				$GLOBALS['phpgw']->template->set_var('app_url',$GLOBALS['phpgw']->link('/' . $cats_app . '/index.php','cat_id=' . $cats[$i]['id']));
+				$GLOBALS['phpgw']->template->set_var('app_url',$GLOBALS['phpgw']->link('/' . $cats_app . '/index.php','cat_id=' . $cats[$i]['cat_id']));
 
 				if ($cats_level || ($level == 0))
 				{
 					if ($cats[$i]['owner'] == $this->account || $cats[$i]['app_name'] == 'phpgw')
 					{
 						$link_data['menuaction'] = 'preferences.uicategories.add';
-						$link_data['cat_parent'] = $cats[$i]['id'];
 						$GLOBALS['phpgw']->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
 						$GLOBALS['phpgw']->template->set_var('lang_sub_entry',lang('Add sub'));
 					}
@@ -233,7 +228,7 @@
 					$GLOBALS['phpgw']->template->set_var('lang_sub_entry','&nbsp;');
 				}
 
-				$link_data['cat_id'] = $cats[$i]['id'];
+				$link_data['cat_id'] = $cats[$i]['cat_id'];
 				if ($cats[$i]['owner'] == $this->account && $cats[$i]['app_name'] != 'phpgw')
 				{
 					$link_data['menuaction'] = 'preferences.uicategories.edit';
@@ -267,7 +262,6 @@
 			$extra			= get_var('extra',array('POST','GET'));
 			$global_cats	= get_var('global_cats',array('POST','GET'));
 			$cats_level		= get_var('cats_level',array('POST','GET'));
-			$cat_id			= get_var('cat_id',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -278,40 +272,30 @@
 				'cats_level'  => $cats_level
 			);
 
-			$new_parent      = get_var('new_parent',Array('POST'));
-			$cat_parent      = get_var('cat_parent',Array('GET','POST'));
-			$cat_name        = get_var('cat_name',Array('POST'));
-			$cat_description = get_var('cat_description',Array('POST'));
-			$cat_data        = get_var('cat_data',Array('POST'));
-			$cat_access      = get_var('cat_access',Array('POST'));
-
-			if ($new_parent)
-			{
-				$cat_parent = $new_parent;
-			}
+			$values		= get_var('values',array('POST'));
+			$cat_data	= get_var('cat_data',array('POST'));
 
 			if (get_var('submit',Array('POST')))
 			{
-				$data = serialize($cat_data);
-
-				$values = array
-				(
-					'parent' => $cat_parent,
-					'descr'  => $cat_description,
-					'name'   => $cat_name,
-					'access' => $cat_access,
-					'data'   => $data
-				);
-
-				$error = $this->bo->check_values($values);
-				if (is_array($error))
+				if (is_array($cat_data))
 				{
-					 $message = $GLOBALS['phpgw']->common->error_list($error);
+					$data = serialize($cat_data);
 				}
-				else
+
+				if (is_array($values))
 				{
-					$this->bo->save_cat($values);
-					$message = lang('Category x has been added !', $cat_name);
+					$values['data'] = $data;
+
+					$error = $this->bo->check_values($values);
+					if (is_array($error))
+					{
+						 $message = $GLOBALS['phpgw']->common->error_list($error);
+					}
+					else
+					{
+						$this->cat_id = $this->bo->save_cat($values);
+						$message = lang('Category x has been added !', $values['name']);
+					}
 				}
 			}
 
@@ -375,7 +359,6 @@
 			$extra			= get_var('extra',array('POST','GET'));
 			$global_cats	= get_var('global_cats',array('POST','GET'));
 			$cats_level		= get_var('cats_level',array('POST','GET'));
-			$cat_id			= get_var('cat_id',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -383,52 +366,39 @@
 				'cats_app'    => $cats_app,
 				'extra'       => $extra,
 				'global_cats' => $global_cats,
-				'cats_level'  => $cats_level,
-				'cat_id'      => $cat_id
+				'cats_level'  => $cats_level
 			);
 
-			if (!$cat_id)
+			if (!$this->cat_id)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 			}
 
-			$new_parent			= get_var('new_parent',Array('POST'));
-			$cat_parent			= get_var('cat_parent',Array('POST'));
-			$cat_name			= get_var('cat_name',Array('POST'));
-			$cat_description	= get_var('cat_description',Array('POST'));
-			$cat_data			= get_var('cat_data',Array('POST'));
-			$cat_access			= get_var('cat_access',Array('POST'));
-			$old_parent			= get_var('old_parent',array('POST'));
-
-			if ($new_parent)
-			{
-				$cat_parent = $new_parent;
-			}
+			$values		= get_var('values',Array('POST'));
+			$cat_data	= get_var('cat_data',Array('POST'));
 
 			if (get_var('submit',Array('POST')))
 			{
-				$data = serialize($cat_data);
-
-				$values = array
-				(
-					'id'			=> $cat_id,
-					'parent'		=> $cat_parent,
-					'old_parent'	=> $old_parent,
-					'descr'			=> $cat_description,
-					'name'			=> $cat_name,
-					'access'		=> $cat_access,
-					'data'			=> $data
-				);
-
-				$error = $this->bo->check_values($values);
-				if (is_array($error))
+				if (is_array($cat_data))
 				{
-					$message = $GLOBALS['phpgw']->common->error_list($error);
+					$data = serialize($cat_data);
 				}
-				else
+
+				if (is_array($values))
 				{
-					$cat_id = $this->bo->save_cat($values);
-					$message = lang('Category x has been updated !',$cat_name);
+					$values['cat_id']	= $this->cat_id;
+					$values['data']		= $data;
+
+					$error = $this->bo->check_values($values);
+					if (is_array($error))
+					{
+						$message = $GLOBALS['phpgw']->common->error_list($error);
+					}
+					else
+					{
+						$this->cat_id = $this->bo->save_cat($values);
+						$message = lang('Category x has been updated !',$values['name']);
+					}
 				}
 			}
 
@@ -442,9 +412,7 @@
 
 			$this->set_langs();
 
-			$cats = $this->bo->cats->return_single($cat_id);
-
-			$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="old_parent" value="' . $cats[0]['parent'] . '">');
+			$cats = $this->bo->cats->return_single($this->cat_id);
 
 			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit x category for',lang($cats_app)));
 			$GLOBALS['phpgw']->template->set_var('message',$message);
@@ -454,8 +422,9 @@
 			$link_data['menuaction'] = 'preferences.uicategories.edit';
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
-			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats[0]['name']));
-			$GLOBALS['phpgw']->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats[0]['description']));
+			$GLOBALS['phpgw']->template->set_var('old_parent',$cats['parent']);
+			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats['name']));
+			$GLOBALS['phpgw']->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats['descr']));
 
 			if (!$global_cats)
 			{
@@ -471,16 +440,15 @@
 				$type = 'mains';
 			}
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cats[0]['parent'],$global_cats));
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cats['parent'],$global_cats));
 
-			$GLOBALS['phpgw']->template->set_var('access','<input type="checkbox" name="cat_access" value="True"'
-														. ($cats[0]['access'] == private ?' checked':'') . '>');
+			$GLOBALS['phpgw']->template->set_var('access',$cats['access'] == 'private' ?' checked':'');
 
 			if ($extra)
 			{
 				$edata = explode(',',$extra);
 
-				$data = unserialize($cats[0]['data']);
+				$data = unserialize($cats['data']);
 				for($i=0;$i<count($edata);$i++)
 				{
 					$GLOBALS['phpgw']->template->set_var('td_data','<input name="cat_data[' . $edata[$i] . ']" size="50" value="' . $data[$edata[$i]] . '">');
@@ -510,7 +478,6 @@
 			$extra			= get_var('extra',array('POST','GET'));
 			$global_cats	= get_var('global_cats',array('POST','GET'));
 			$cats_level		= get_var('cats_level',array('POST','GET'));
-			$cat_id			= get_var('cat_id',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -518,11 +485,10 @@
 				'cats_app'    => $cats_app,
 				'extra'       => $extra,
 				'global_cats' => $global_cats,
-				'cats_level'  => $cats_level,
-				'cat_id'      => $cat_id
+				'cats_level'  => $cats_level
 			);
 
-			if (!$cat_id)
+			if (!$this->cat_id)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 			}
@@ -565,7 +531,7 @@
 			(
 				'type'     => 'subs',
 				'cat_name' => '',
-				'cat_id'   => $cat_id
+				'cat_id'   => $this->cat_id
 			));
 
 			if ($exists)

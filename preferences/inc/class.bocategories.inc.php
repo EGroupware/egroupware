@@ -31,11 +31,17 @@
 			$query  = get_var('query',Array('GET','POST'));
 			$sort   = get_var('sort',Array('GET','POST'));
 			$order  = get_var('order',Array('GET','POST'));
+			$cat_id = intval(get_var('cat_id', array('POST','GET')));
 
 			if(!empty($start) || $start == '0' || $start == 0)
 			{
 				$this->start = $start;
 			}
+			else
+			{
+				$this->start = 0;
+			}
+
 			if((empty($query) && !empty($this->query)) || !empty($query))
 			{
 				$this->query = $query;
@@ -48,6 +54,15 @@
 			if(isset($order) && !empty($order))
 			{
 				$this->order = $order;
+			}
+			if(isset($cat_id))
+			{
+				$this->cat_id = $cat_id;
+			}
+
+			if($cat_id == 0)
+			{
+				unset($this->cat_id);
 			}
 		}
 
@@ -62,10 +77,11 @@
 			$colum = $cats_app . '_cats';
 			$data = $GLOBALS['phpgw']->session->appsession('session_data',$column);
 
-			$this->start  = $data['start'];
-			$this->query  = $data['query'];
-			$this->sort   = $data['sort'];
-			$this->order  = $data['order'];
+			$this->start	= $data['start'];
+			$this->query	= $data['query'];
+			$this->sort		= $data['sort'];
+			$this->order	= $data['order'];
+			$this->cat_id	= $data['cat_id'];
 		}
 
 		function get_list($global_cats)
@@ -84,7 +100,7 @@
 				$values['access'] = 'public';
 			}
 
-			if ($values['id'] && $values['id'] != 0)
+			if ($values['cat_id'] && $values['cat_id'] != 0)
 			{
 				return $this->cats->edit($values);
 			}
@@ -131,7 +147,7 @@
 					(
 						'type'     => 'appandmains',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['id']
+						'cat_id'   => $values['cat_id']
 					));
 				}
 				else
@@ -140,7 +156,7 @@
 					(
 						'type'     => 'appandsubs',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['id']
+						'cat_id'   => $values['cat_id']
 					));
 				}
 
