@@ -24,14 +24,14 @@
 			'error_writing' => 'Error: while saveing !!!',
 			'other_version' => 'only an other Version found !!!',
 			'ext_loaded' => 'Extensions loaded:',
-			'x_found'    => '%d eTemplates found',
-			'imported'   => "eTemplate '%s' imported, use Save to put it in the database",
+			'x_found'    => '%1 eTemplates found',
+			'imported'   => "eTemplate '%1' imported, use Save to put it in the database",
 			'no_filename'=> 'no filename given or selected via Browse...',
-			'not_writeable' => "Error: webserver is not allowed to write into '%s' !!!",
-			'exported'   => "eTemplate '%s' written to '%s'",
-			'newer_version' => "newer version '%s' exists !!!",
+			'not_writeable' => "Error: webserver is not allowed to write into '%1' !!!",
+			'exported'   => "eTemplate '%1' written to '%2'",
+			'newer_version' => "newer version '%1' exists !!!",
 			'need_name'  => 'Application name needed to write a langfile or dump the eTemplates !!!',
-			'x_deleted'  => '%d eTemplates deleted'
+			'x_deleted'  => '%1 eTemplates deleted'
 		);
 		var $aligns = array(
 			'' => 'Left',

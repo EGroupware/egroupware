@@ -19,7 +19,7 @@
 	{
 		var $messages = array(
 			'nothing_found' => 'Nothing matched search criteria !!!',
-			'anz_found' => '%d matches on search criteria',
+			'anz_found' => '%1 matches on search criteria',
 			'saved' => 'Entry saved',
 			'error_writeing' => 'Error: writeing !!!'
 		);

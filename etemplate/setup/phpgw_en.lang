@@ -1,10 +1,10 @@
-%d etemplates deleted	etemplate	en	%d eTemplates deleted
-%d etemplates found	etemplate	en	%d eTemplates found
-%s disabled	etemplate	en	%s disabled
-%s needed	etemplate	en	%s needed
-%s notranslation	etemplate	en	%s NoTranslation
-%s onchange	etemplate	en	%s onChange
-%s readonly	etemplate	en	%s readonly
+%1 etemplates deleted	etemplate	en	%1 eTemplates deleted
+%1 etemplates found	etemplate	en	%1 eTemplates found
+%1 disabled	etemplate	en	%1 disabled
+%1 needed	etemplate	en	%1 needed
+%1 notranslation	etemplate	en	%1 NoTranslation
+%1 onchange	etemplate	en	%1 onChange
+%1 readonly	etemplate	en	%1 readonly
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
 add column	etemplate	en	Add Column
@@ -60,9 +60,9 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
 deletes this column	etemplate	en	Deletes this column
 discard changes	etemplate	en	discard changes
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
+displayed in front of input or input is inserted for a '%1' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%1' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
-do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
+do you want to save the changes you made in table %1?	etemplate	en	Do you want to save the changes you made in table %1?
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
 drop table	etemplate	en	Drop Table
 dump4setup	etemplate	en	Dump4Setup
@@ -81,11 +81,11 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	en	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
 error: template not found !!!	etemplate	en	Error: Template not found !!!
-error: webserver is not allowed to write into '%s' !!!	etemplate	en	Error: webserver is not allowed to write into '%s' !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: webserver is not allowed to write into '%1' !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
 etemplate	common	en	eTemplate
-etemplate '%s' imported, use save to put it in the database	etemplate	en	eTemplate '%s' imported, use Save to put it in the database
-etemplate '%s' written to '%s'	etemplate	en	eTemplate '%s' written to '%s'
+etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, use Save to put it in the database
+etemplate '%1' written to '%2'	etemplate	en	eTemplate '%1' written to '%2'
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this row with the one above	etemplate	en	exchange this row with the one above
 exchange this two columns	etemplate	en	exchange this two columns
@@ -146,7 +146,7 @@ name of the etemplate, should be in form application.function[.subtemplate]	etem
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 new search	etemplate	en	New search
 new table created	etemplate	en	New table created
-newer version '%s' exists !!!	etemplate	en	newer version '%s' exists !!!
+newer version '%1' exists !!!	etemplate	en	newer version '%1' exists !!!
 nextmatch	etemplate	en	Nextmatch
 no file	etemplate	en	no file
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
@@ -236,7 +236,7 @@ type of the field (select label if field should be empty)	etemplate	en	type of t
 unique	etemplate	en	Unique
 unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields.
-update from version '%s' to	etemplate	en	Update from Version '%s' to
+update from version '%1' to	etemplate	en	Update from Version '%1' to
 upload	etemplate	en	Upload
 value	etemplate	en	Value
 vbox	etemplate	en	VBox

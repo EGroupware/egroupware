@@ -1,10 +1,10 @@
-%d etemplates deleted	etemplate	de	%d eTemplates gelöscht
-%d etemplates found	etemplate	de	%d eTemplates gefunden
-%s disabled	etemplate	de	%s deaktiviert
-%s needed	etemplate	de	%s benötigt
-%s notranslation	etemplate	de	%s nicht übersetzen
-%s onchange	etemplate	de	%s onChange
-%s readonly	etemplate	de	%s Schreibschutz
+%1 etemplates deleted	etemplate	de	%1 eTemplates gelöscht
+%1 etemplates found	etemplate	de	%1 eTemplates gefunden
+%1 disabled	etemplate	de	%1 deaktiviert
+%1 needed	etemplate	de	%1 benötigt
+%1 notranslation	etemplate	de	%1 nicht übersetzen
+%1 onchange	etemplate	de	%1 onChange
+%1 readonly	etemplate	de	%1 Schreibschutz
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
 add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
 add column	etemplate	de	Spalte zufügen
@@ -59,9 +59,9 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	de	löscht das oben spezifizierte eTemplate
 deletes this column	etemplate	de	Löscht diese Spalte
 discard changes	etemplate	de	verwirft Änderungen
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
+displayed in front of input or input is inserted for a '%1' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%1' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
 displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
-do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
+do you want to save the changes you made in table %1?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%1' speichern?
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
@@ -80,11 +80,11 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
-error: webserver is not allowed to write into '%s' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%s' !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
 error: while saveing !!!	etemplate	de	Fehler: beim Speichern !!!
 etemplate	common	de	eTemplate
-etemplate '%s' imported, use save to put it in the database	etemplate	de	eTemplate '%s' importiert, benutze Speichern um es in der Datenbank abzulegen
-etemplate '%s' written to '%s'	etemplate	de	eTemplate '%s' wurde nach '%s' geschrieben
+etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
+etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' geschrieben
 etemplate editor	etemplate	de	eTemplate Editor
 exchange this row with the one above	etemplate	de	diese Zeile mit der darüber austauschen
 exchange this two columns	etemplate	de	diese beiden Spalten austauschen
@@ -145,7 +145,7 @@ name of the etemplate, should be in form application.function[.subtemplate]	etem
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf ein reserviertes Wort von SQL sein, am besten alle mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
 new search	etemplate	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
-newer version '%s' exists !!!	etemplate	de	Neuere Version '%s' existiert !!!
+newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
@@ -231,7 +231,7 @@ type of the column	etemplate	de	Typ der Spalte
 type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
 unique	etemplate	de	Unique
 unlink	etemplate	de	Lösen
-update from version '%s' to	etemplate	de	Update von Version '%s' auf
+update from version '%1' to	etemplate	de	Update von Version '%1' auf
 upload	etemplate	de	Hochladen
 value	etemplate	de	Wert
 vbox	etemplate	de	VBox

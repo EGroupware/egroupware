@@ -1,10 +1,10 @@
-%d etemplates deleted	etemplate	fr	%d eTemplates effacé(s)
-%d etemplates found	etemplate	fr	%d eTemplates trouvé(s)
-%s disabled	etemplate	fr	%s désactivé
-%s needed	etemplate	fr	%s nécessaire
-%s notranslation	etemplate	fr	%s PasDeTraduction
-%s onchange	etemplate	fr	%s EnCoursDeModification
-%s readonly	etemplate	fr	%s LectureSeulement
+%1 etemplates deleted	etemplate	fr	%1 eTemplates effacé(s)
+%1 etemplates found	etemplate	fr	%1 eTemplates trouvé(s)
+%1 disabled	etemplate	fr	%1 désactivé
+%1 needed	etemplate	fr	%1 nécessaire
+%1 notranslation	etemplate	fr	%1 PasDeTraduction
+%1 onchange	etemplate	fr	%1 EnCoursDeModification
+%1 readonly	etemplate	fr	%1 LectureSeulement
 a pattern to be searched for	etemplate	fr	Une chaine de caractères à rechercher
 add a new column (after the existing ones)	etemplate	fr	Ajouter une nouvelle colonne (après celles existant déjà)
 add column	etemplate	fr	Ajouter une colonne
@@ -60,9 +60,9 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	fr	fface le eTemplate spécifié ci-dessus
 deletes this column	etemplate	fr	Efface cette colonne
 discard changes	etemplate	fr	Annuler les changements
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché devant l'entrée ou l'entrée est insérée pour un '%s' dans le label (label du bouton de soumission ou nom de fichier image)
+displayed in front of input or input is inserted for a '%1' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché devant l'entrée ou l'entrée est insérée pour un '%1' dans le label (label du bouton de soumission ou nom de fichier image)
 displayed in statusline of browser if input-field gets focus	etemplate	fr	affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
-do you want to save the changes you made in table %s?	etemplate	fr	Voulez-vous enregistrer les modifications que vous avez apporté à la table %s ?
+do you want to save the changes you made in table %1?	etemplate	fr	Voulez-vous enregistrer les modifications que vous avez apporté à la table %1 ?
 drop a table - this can not be undone	etemplate	fr	Détruire une table - ceci ne peut PAS être annulé
 drop table	etemplate	fr	Effacer table
 dump4setup	etemplate	fr	DumpPourRéglage
@@ -81,11 +81,11 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	fr	Entrez le nouveau numéro de version ici (> ancienne_version), vide pour aucun fichier de mise à jour
 enter the new version number here (has to be > old_version)	etemplate	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
 error: template not found !!!	etemplate	fr	Erreur: Template non trouvé !!!
-error: webserver is not allowed to write into '%s' !!!	etemplate	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%s' !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !!!
 error: while saveing !!!	etemplate	fr	Erreur: pendant la sauvegarde !!!
 etemplate	common	fr	eTemplate
-etemplate '%s' imported, use save to put it in the database	etemplate	fr	eTemplate '%s' importé, utilisez Enregistrer pour le mettre dans la base de données
-etemplate '%s' written to '%s'	etemplate	fr	eTemplate '%s' écrit dans '%s'
+etemplate '%1' imported, use save to put it in the database	etemplate	fr	eTemplate '%1' importé, utilisez Enregistrer pour le mettre dans la base de données
+etemplate '%1' written to '%2'	etemplate	fr	eTemplate '%1' écrit dans '%2'
 etemplate editor	etemplate	fr	Editeur d'eTemplate
 exchange this row with the one above	etemplate	fr	Echanger cette ligne avec celle du dessus
 exchange this two columns	etemplate	fr	Echanger ces deux colonnes
@@ -146,7 +146,7 @@ name of the etemplate, should be in form application.function[.subtemplate]	etem
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	fr	Doit être unique dans la table et pas un mot SQL réservé, le mieux est de préfixer tout avec une abréviation sur 2 caractères du nom de l'application, p.e. 'et_'
 new search	etemplate	fr	Nouvelle recherche
 new table created	etemplate	fr	Nouvelle table créée
-newer version '%s' exists !!!	etemplate	fr	La nouvelle version '%s' existe !!!
+newer version '%1' exists !!!	etemplate	fr	La nouvelle version '%1' existe !!!
 nextmatch	etemplate	fr	Occurrence trouvée suivante
 no file	etemplate	fr	Pas de fichier
 no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec naviguer...
@@ -236,7 +236,7 @@ type of the field (select label if field should be empty)	etemplate	fr	Type du c
 unique	etemplate	fr	Unique
 unlink	etemplate	fr	Délier
 update a single entry by passing the fields.	etemplate	fr	Mettre à jour une unique entrée en passant les champs.
-update from version '%s' to	etemplate	fr	Mettre à jour depuis la version '%s' vers
+update from version '%1' to	etemplate	fr	Mettre à jour depuis la version '%1' vers
 upload	etemplate	fr	Uploader
 value	etemplate	fr	Valeur
 vbox	etemplate	fr	BoîteV
