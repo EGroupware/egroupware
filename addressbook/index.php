@@ -123,9 +123,9 @@
 		}
 	} else {
 		if ($cat_id == "all") {
-			$filter .= ',tid=';
+			$filter = 'tid=,owner='.$filter;
 		} else {
-			$filter .= ',tid=,cat_id='.$cat_id;
+			$filter = 'tid=,owner='.$filter.'cat_id='.$cat_id;
 		}
 	}
 
