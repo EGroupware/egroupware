@@ -75,6 +75,7 @@ belize	common	fr	BELIZE
 benin	common	fr	BENIN
 bermuda	common	fr	BERMUDES
 bhutan	common	fr	BOUTAN
+blocked, too many attempts	common	fr	Accès refusé car trop de tentatives infructueuses
 bold	htmlarea	fr	Gras
 bolivia	common	fr	BOLIVIE
 bosnia and herzegovina	common	fr	BOSNIE HERZEGOVINE
@@ -134,13 +135,14 @@ cuba	common	fr	CUBA
 currency	common	fr	Devise
 current	common	fr	Courant
 current style	htmlarea	fr	Style courat
-current users	common	fr	Utilisateurs courants
+current users	common	fr	Utilisateurs connectés
 cut selection	htmlarea	fr	Sélection pour couper
 cyprus	common	fr	CHYPRE
 czech republic	common	fr	REPUBLIQUE TCHEQUE
 date	common	fr	Date
 date due	common	fr	Date butoir
 date selection:	jscalendar	fr	Sélection de la date :
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptze svp les règles de votre firewall avant de soumettre cette page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	fr	Décembre
 decrease indent	htmlarea	fr	Diminuer l'indentation
 default category	common	fr	Catégorie par défaut
@@ -149,10 +151,11 @@ denmark	common	fr	DANEMARK
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
-disable the execution of bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution du bugfixscript pour Internet Explorer 5.5 et plus afin d'afficher la tranparence dans les images PNG?
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
 disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
 disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
+disable the execution of bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution du bugfixscript pour Internet Explorer 5.5 et plus afin d'afficher la tranparence dans les images PNG?
 disabled	common	fr	Désactivé
 display %s first	jscalendar	fr	Affiche %s en premier
 display monday first	jscalendar	fr	Affiche Lundi en premier
@@ -174,7 +177,7 @@ edit %1 category for	common	fr	Modifier la catégorie %1 pour
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
 egroupware api version %1	common	fr	eGroupWare version API %1
-egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 email	common	fr	EMail
@@ -402,6 +405,7 @@ only private	common	fr	Seulement privés
 only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
+ordered list	htmlarea	fr	Liste triée
 original	common	fr	Original
 other	common	fr	Autre
 overview	common	fr	Vue d'ensemble
@@ -431,13 +435,13 @@ peru	common	fr	PERU
 philippines	common	fr	PHILIPPINES
 phone number	common	fr	Numéro de téléphone
 pitcairn	common	fr	PITCAIRN
-please %1 by hand	common	fr	SVP %1 à la main
+please %1 by hand	common	fr	Veuillez %1 à la main
 please enter a name	common	fr	Veuillez saisir un nom !
-please run setup to become current	common	fr	SVP exécutez setup pour vous mettre à jour
-please select	common	fr	SVP choisissez
-please set your global preferences	common	fr	SVP réglez vos préférences globales !
+please run setup to become current	common	fr	Veuillez exécutez setup pour vous mettre à jour
+please select	common	fr	Veuillez Choisir
+please set your global preferences	common	fr	Veuillez réglez vos préférences globales !
 please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
-please wait...	common	fr	SVP patientez...
+please wait...	common	fr	Veuillez patienter...
 poland	common	fr	POLOGNE
 portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
@@ -457,7 +461,7 @@ qatar	common	fr	QATAR
 read	common	fr	Lire
 read this list of methods.	common	fr	Lire cette liste de méthodes.
 redoes your last action	htmlarea	fr	Répète votre dernière action
-reject	common	fr	Rejetter
+reject	common	fr	Rejeter
 remove selected accounts	common	fr	effacer les comptes sélectionnés
 rename	common	fr	Renommer
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
@@ -477,8 +481,9 @@ san marino	common	fr	SAN MARIN
 sao tome and principe	common	fr	SAO TOME AND PRINCIPE
 saturday	common	fr	Samedi
 saudi arabia	common	fr	ARABIE SAOUDITE
-save	common	fr	Sauver
+save	common	fr	Enregistrer
 search	common	fr	Chercher
+search %1 '%2'	common	fr	Chercher %1 '%2'
 search or select accounts	common	fr	Chercher ou sélectionner des comptes
 section	common	fr	Section
 select	common	fr	Sélectionner
@@ -490,7 +495,7 @@ select home email address	common	fr	Sélectionner l'email Maison
 select one	common	fr	Sélectionner un
 select user	common	fr	Sélectionner l'utilisateur
 select work email address	common	fr	Sélectionner l'email Bureau
-selection	common	en	Sélection
+selection	common	fr	Sélection
 send	common	fr	Envoyer
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
@@ -504,6 +509,7 @@ show all	common	fr	Tous les éléments
 show all categorys	common	fr	Voir toutes les catégories
 show menu	common	fr	Voir menu
 show page generation time	common	fr	Voir le temps de génération de page
+show page generation time on the bottom of the page?	common	fr	Montrer le temps de génération de page au fond de la page?
 show_more_apps	common	fr	Voir plus d'applications
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
@@ -518,9 +524,9 @@ south africa	common	fr	AFRIQUE DU SUD
 south georgia and the south sandwich islands	common	fr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 spain	common	fr	ESPAGNE
 sri lanka	common	fr	SRI LANKA
-start date	common	fr	Date début
-start time	common	fr	Heure début
-start with	common	fr	Débute à
+start date	common	fr	Date de début
+start time	common	fr	Heure de début
+start with	common	fr	commence avec
 status	common	fr	Etat
 strikethrough	htmlarea	fr	Rayé
 subject	common	fr	Sujet
@@ -557,7 +563,7 @@ to	common	fr	Pour
 to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur dans le futur vous allez devoir régler correctement le
 to go back to the msg list, click <a href= %1 >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
 today	common	fr	Aujourd'hui
-todays date, eg. "%1"	common	fr	Date d'aujourd'hui, p.e. "%1"
+todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
 toggle first day of week	jscalendar	fr	Voir le premier jour de la semaine
 toggle html source	htmlarea	fr	Voir source HTML
 togo	common	fr	TOGO
@@ -624,6 +630,7 @@ you have not entered participants	common	fr	Vous n'avez pas entré de participant
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
 you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
+you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
 your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>
 your message has been sent	common	fr	Votre message a été envoyé
 your search returned %1 matchs	common	fr	Votre recherche a retourné %1 résultats
