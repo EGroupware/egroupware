@@ -1798,44 +1798,24 @@ class calendar extends calendar_
 		);
 		$p->set_file($templates);
 
-		$var = Array(	
-			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.ACCEPTED),
-			'action_text_button'	=> '  '.lang('Accept').'  ',
-			'action_confirm_button'	=> '',
-			'action_extra_field'	=> ''
+		$response_choices = Array(
+			ACCEPTED	=> lang('Accept'),
+			REJECTED	=> lang('Reject'),
+			TENTATIVE	=> lang('Tentative'),
+			NO_RESPONSE	=> lang('No Response')
 		);
-		$p->set_var($var);
-		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
-
-		$var = Array(
-			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.REJECTED),
-			'action_text_button'	=> '  '.lang('Reject').'  ',
-			'action_confirm_button'	=> '',
-			'action_extra_field'	=> ''
-		);
-		$p->set_var($var);
-		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
-
-		$var = Array(
-			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.TENTATIVE),
-			'action_text_button'	=> '  '.lang('Tentative').'  ',
-			'action_confirm_button'	=> '',
-			'action_extra_field'	=> ''
-		);
-		$p->set_var($var);
-		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
-
-		$var = Array(
-			'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.NO_RESPONSE),
-			'action_text_button'	=> '  '.lang('No Response').'  ',
-			'action_confirm_button'	=> '',
-			'action_extra_field'	=> ''
-		);
-		$p->set_var($var);
-		$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
-
+		while(list($param,$text) = each($response_choices))
+		{
+			$var = Array(	
+				'action_url_button'	=> $phpgw->link('/calendar/action.php','id='.$this->event->id.'&action='.$param),
+				'action_text_button'	=> '  '.$text.'  ',
+				'action_confirm_button'	=> '',
+				'action_extra_field'	=> ''
+			);
+			$p->set_var($var);
+			$str .= '<td>'.$p->fp('out','form_button').'</td>'."\n";
+		}
 		$str .= '</tr></table>';
-
 		return $str;
 	}
 
