@@ -79,6 +79,12 @@
 
 		function load_langs($all=False)
 		{
+			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
+				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+			{
+				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+			}
+
 			if($all)
 			{
 				@reset($GLOBALS['phpgw_info']['user']['apps']);
@@ -108,6 +114,7 @@
 			define('SEP',filesystem_separator());
 
 			$userlang = $this->userlang ? $this->userlang : 'en';
+			//echo '<br>add_app(): userlang is: ' . $userlang;
 
 			$fn = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . $userlang . '.lang';
 			if(!file_exists($fn))
@@ -117,7 +124,7 @@
 
 			if(file_exists($fn))
 			{
-				$fp = fopen($fn,'rb');
+				$fp = fopen($fn,'r');
 				while($data = fgets($fp,8000))
 				{
 					list($message_id,$app_name,$null,$content) = explode("\t",$data);
