@@ -120,6 +120,7 @@
 			$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
 			$this->data["status"]            = $this->db->f("account_status");
 			$this->data["account_type"]      = $this->db->f("account_type");
+			$this->data['expires'] = -1;
 
 			return $this->data;
 		}
