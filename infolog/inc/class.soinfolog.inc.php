@@ -552,8 +552,17 @@
 			if ($action == '' || $action == 'sp' || count($links))
 			{
 				$sql_query = "FROM phpgw_infolog $join WHERE ($filtermethod $pid $sql_query) $link_extra";
-				// mssql cant use DISTICT of text columns (info_des) are involved
-				$distinct = $this->db->Type != 'mssql' ? 'DISTINCT' : '';
+				switch($this->db->Type)
+				{
+					// mssql and others cant use DISTICT of text columns (info_des) are involved
+					case 'mssql':
+					case 'sapdb':
+					case 'maxdb':
+						$distinct = '';
+						break;
+					default:
+						$distinct = 'DISTINCT';
+				}
 				$this->db->query($sql="SELECT $distinct phpgw_infolog.info_id ".$sql_query,__LINE__,__FILE__);
 				$query['total'] = $this->db->num_rows();
 
