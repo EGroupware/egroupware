@@ -700,10 +700,30 @@
 		{
 			return False;
 
-			if (! $expiredate)
+			if ($expiredate)
 			{
-				/* expire in 30 days by default */
-				$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
+				$expires = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+			}
+			else
+			{
+				if($GLOBALS['phpgw_info']['server']['auto_create_expire'])
+				{
+					if($GLOBALS['phpgw_info']['server']['auto_create_expire'] == 'never')
+					{
+						$expires = -1;
+					}
+					else
+					{
+						$expiredate = time() + $GLOBALS['phpgw_info']['server']['auto_create_expire'];
+						$exprires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+					}
+				}
+				else
+				{
+					/* expire in 30 days by default */
+					$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
+					$exprires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+				}
 			}
 
 			$acct_info = array(
@@ -713,7 +733,7 @@
 				'account_firstname' => 'New',
 				'account_lastname'  => 'User',
 				'account_status'    => $account_status,
-				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
+				'account_expires'   => $expires
 			);
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
