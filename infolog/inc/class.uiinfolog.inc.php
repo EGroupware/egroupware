@@ -72,6 +72,7 @@
 			$this->html = CreateObject('infolog.html');
 			$this->categories = CreateObject('phpgwapi.categories');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$this->link = CreateObject('infolog.uilink');
 		}
 
 		function menuaction($action = 'get_list',$app='infolog')
@@ -710,6 +711,22 @@
 				return;
 			}
 
+			$linkto = get_var('linkto',Array('POST'));
+			if (is_array($linkto) && $linkto['create'])
+			{
+				switch ($linkto['app'])
+				{
+					case 'addressbook':
+						$id_addr = $linkto['id'];
+						break;
+					case 'projects':
+						$id_project = $linkto['id'];
+						break;
+					case 'calendar':
+						$id_event = $linkto['id'];
+						break;
+				}
+			}
 			// check wether to write dates or not
 			if ($selfortoday)
 			{
@@ -879,6 +896,8 @@
 
 			$GLOBALS['phpgw']->template->set_file(array('info_edit_t' => 'form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('info_edit_t','info_edit');
+
+			$GLOBALS['phpgw']->template->set_var('linkto',$this->link->getEntry('linkto'));
 
 			if (is_array($error))
 			{
