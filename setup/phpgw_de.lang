@@ -21,10 +21,14 @@ add new application	admin	de	Neue Anwendung hinzufügen
 add new phrase	transy	de	Neue Übersetzung hinzufügen
 add new ticket	tts	de	Neues Ticket hinzufügen
 add note	notes	de	Notiz hinzufügen
+add sub	todo	de	Teilprojekt hinzufügen
 add ticket 	tts	de	Ticket hinzufügen
 add to addressbook	email	de	Zum Addressbuch hinzufügen
 address book	common	de	Adressbuch
 address book - view	addressbook	de	Adressbuch - Anzeigen
+address line 2	addressbook	de	Adreßzeile 2
+address line 3	addressbook	de	Adreßzeile 3
+address type	addressbook	de	Adreßtyp
 addressbook	common	de	Adressbuch
 addressbook preferences	common	de	Adressbuch Einstellungen
 addsub	todo	de	AddSub
@@ -62,6 +66,16 @@ birthday	addressbook	de	Geburtstag
 book marks 	common	de	Bookmarks
 bookmarks	common	de	Lesezeichen
 brief description	calendar	de	Kurzbeschreibung
+business	addressbook	de	Geschäftlich
+business city	addressbook	de	geschäftl. Stadt
+business country	addressbook	de	geschäftl. Staat
+business email	addressbook	de	geschäftl. EMail
+business email type	addressbook	de	Typ der geschäftl. EMail
+business fax	addressbook	de	Fax geschäftl.
+business phone	addressbook	de	Tel. geschäftl.
+business state	addressbook	de	geschäftl. Land
+business street	addressbook	de	geschäftl. Straße
+business zip code	addressbook	de	geschäftl. PLZ
 calendar	common	de	Kalender
 calendar - add	calendar	de	Kalendereintrag hinzufügen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
@@ -69,7 +83,11 @@ calendar preferences 	common	de	Kalender Einstellungen
 cancel	common	de	Abbruch
 cancel	filemanager	de	Abbrechen
 cannot display the requested article from the requested newsgroup	nntp	de	Der gewünschte Artikel kann leider nicht angezeigt werden
+car phone	addressbook	de	Autotelefon
+categories	notes	de	Kategorien
+categories for	notes	de	Kategorien für
 cc	email	de	Kopie
+cell phone	addressbook	de	Mobilfunk
 change	common	de	Ändern
 change main screen message	admin	de	Nachricht der Startseite ändern
 change your password 	preferences	de	Passwort ändern
@@ -87,7 +105,7 @@ company	common	de	Firma
 company name	addressbook	de	Firma
 completed	todo	de	fertig
 compose	email	de	Verfassen
-copy	filemanager	de	Kopieren
+copy	common	de	Kopieren
 copy_as	filemanager	de	Kopieren nach
 country	addressbook	de	Land
 courier new	notes	de	Courier New
@@ -113,13 +131,15 @@ default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default sorting order	common	de	Standard-Sortierung
 delete	common	de	Löschen
 department	addressbook	de	Abteilung
-description	calendar	de	Beschreibung
+department	addressbook	de	Abteilung
+description	common	de	Beschreibung
 detail	tts	de	Detail
 disabled	admin	de	Deaktiviert
 display	admin	de	Bezeichnung
 display missing phrases in lang set	transy	de	Im Sprachset fehlende Phrasen anzeigen
 display note for	notes	de	Display note for
 do_delete	filemanager	de	Lösche
+domestic	addressbook	de	Wohnung
 done	common	de	Fertig
 download	filemanager	de	Download
 duration	calendar	de	Dauer
@@ -150,6 +170,7 @@ error creating x x directory	common	de	Fehler beim Erstellen des Verzeichnisses 
 error deleting x x directory	common	de	Fehler beim Löschen des Verzeichnisses %1%2
 error renaming x x directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1%2
 exit	filemanager	de	Exit
+export contacts	addressbook	de	Kontakte exportieren
 fax	addressbook	de	Fax
 february	common	de	Februar
 file manager	common	de	Filemanager
@@ -169,6 +190,7 @@ friday	common	de	Freitag
 from	email	de	Von
 ftp	common	de	FTP
 full description	calendar	de	vollständige Beschreibung
+full name	addressbook	de	vollständiger Name
 full name	addressbook	de	vollständiger Name
 generate new lang.sql file	transy	de	Erzeuge neue lang.sql Datei
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
@@ -196,7 +218,14 @@ help	common	de	Hilfe
 helvetica	notes	de	Helvetica
 high	common	de	Hoch
 home	common	de	Home
+home city	addressbook	de	Stadt (priv)
+home country	addressbook	de	Staat (priv)
+home email	addressbook	de	private EMail
+home email type	addressbook	de	Typ der privaten EMail
 home phone	addressbook	de	Tel privat
+home state	addressbook	de	Land (priv)
+home street	addressbook	de	Straße (priv)
+home zip code	addressbook	de	PLZ (priv)
 human resources	common	de	Personenverzeichnis
 i participate	calendar	de	Ich nehme teil
 icons and text	preferences	de	Icons und Text
@@ -206,17 +235,21 @@ if applicable	email	de	falls zutreffend
 ignore conflict	calendar	de	Konflikt ignorieren
 image	email	de	Grafik
 imap server type	email	de	Typ des IMAP Servers
+import contacts	addressbook	de	Kontakte importieren
 import file	addressbook	de	Datei importieren
 import from outlook	addressbook	de	Aus Outlook importieren
 import lang set	transy	de	Sprachset importieren
 installed applications	admin	de	Installierte Anwendungen
+international	addressbook	de	international
 inventory	common	de	Inventar
 ip	admin	de	IP
+isdn phone	addressbook	de	ISDN Tel.
 it has been more then x days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
 january	common	de	Januar
 july	common	de	Juli
 june	common	de	Juni
 kill	admin	de	Kill
+label	addressbook	de	Adreßetikett
 language	common	de	Sprache
 large	notes	de	Groß
 last login	admin	de	Letzter Login
@@ -247,9 +280,11 @@ max matchs per page	preferences	de	Maximale Treffer pro Seite
 may	common	de	Mai
 medium	common	de	Mittel
 message	common	de	Nachricht
+message phone	addressbook	de	Anrufbeantworter
 message x	nntp	de	Nachricht %1
 messages	email	de	Nachrichten
 middle name	addressbook	de	Zweiter Vorname
+middle name	addressbook	de	zweiter Vorname
 minutes	calendar	de	Minuten
 minutes between reloads	admin	de	Minuten zwischen Reloads
 mo	calendar	de	Mo
@@ -306,7 +341,10 @@ or: select for today:	todo	de	alternativ: heute
 original	common	de	Original
 other number	addressbook	de	andere Nr.
 other phone	common	de	Tel sonst.
+owner	common	de	Besitzer
 pager 	addressbook	de	Pager
+parcel	addressbook	de	Lieferadresse
+parent projekt:	todo	de	Gesamtprojekt
 participants	calendar	de	Teilnehmer
 password	common	de	Passwort
 password has been updated	common	de	Passwort wurde aktualisiert
@@ -314,16 +352,20 @@ percent of users that logged out	admin	de	Prozent der User, die sich korrekt abg
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
-personalized notes for	notes	de	Persönliche Notizen von
+personal	addressbook	de	Persönlich
+personalized notes for	notes	de	Persönliche Notizen für
 phpgroupware login	login	de	phpGroupWare Login
 phrase in english	transy	de	Phrase in English
 phrase in new language	transy	de	Phrase in der neuen Sprache
 please select a message first	email	de	Bitte zuerst eine Nachricht wählen
+please set your preferences for this app	common	de	Bitte editieren Sie Ihre Einstellungen für diese Applikation!
 please x by hand	common	de	Bitte manuell %1
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
+postal	addressbook	de	Postanschrift
 powered by phpgroupware version x	common	de	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+pref	addressbook	de	pref
 preferences	common	de	Einstellungen
-prefix	addressbook	de	Vorwahl
+prefix	addressbook	de	Prefix
 previous	email	de	Vorige
 previous page	common	de	vorige Seite
 print	common	de	Drucken
@@ -335,6 +377,7 @@ private and group public	common	de	private und Gruppen
 private only	common	de	nur private
 private_files	filemanager	de	private Dateien
 project description	todo	de	Beschreibung
+public key	addressbook	de	öffentlicher Schlüssel
 re-edit event	calendar	de	Event erneut bearbeiten
 re-enter password	admin	de	Passwort wiederholen
 re-enter your password	preferences	de	Neues Passwort wiederholen
@@ -360,6 +403,7 @@ search results	calendar	de	Suchergebnisse
 section	admin	de	Abschnitt
 section	email	de	Sektion
 select application	transy	de	Anwendung auswählen
+select category	notes	de	Kategorie auswählen
 select different theme	preferences	de	anderes Schema wählen
 select headline news sites	common	de	News-Sites für Schlagzeilen auswählen
 select language to generate for	transy	de	Sprache auswählen
@@ -400,9 +444,12 @@ state	addressbook	de	Land
 status	common	de	Status
 street	addressbook	de	Straße
 su	calendar	de	So
+sub	todo	de	Teilprojekt
 subject	common	de	Betreff
 submit	common	de	Absenden
 submit changes	admin	de	Änderungen Speichern
+subproject description	todo	de	Beschreibung des Teilprojekts
+suffix	addressbook	de	Suffix
 suffix	addressbook	de	Zusatz
 sun	calendar	de	So
 sunday	common	de	Sonntag
@@ -430,7 +477,8 @@ thursday	common	de	Donnerstag
 time	common	de	Zeit
 time created	notes	de	wann erstellt
 time format	preferences	de	Zeitformat
-time zone offset	preferences	de	Zeitzonen Differenz
+time zone	common	de	Zeitzone
+time zone offset	common	de	Zeitzonen Differenz
 times new roman	notes	de	Times New Roman
 title	common	de	Titel
 to	email	de	An
@@ -440,6 +488,7 @@ today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
 todo	todo	de	Beschreibung
 todo list	common	de	Aufgabenliste
 todo list - add	todo	de	Aufgabenliste - hinzufügen
+todo list - add sub-project	todo	de	ToDo-List: Teilprojekt hinzufügen
 todo list - edit	todo	de	Aufgabenliste - editieren
 tommorow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
 total	common	de	Total
@@ -460,6 +509,7 @@ url	common	de	URL
 use cookies	login	de	Cookies benutzen
 use custom settings	email	de	Benutzerdefinierte Einstellungen verwenden
 use end date	calendar	de	Enddatum benutzen
+user	common	de	Benutzer
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
 username	login	de	Benutzername
@@ -470,6 +520,7 @@ vcards require a first name entry.	addressbook	de	VCards benötigen einen Vorname
 verdana	notes	de	Verdana
 very large	notes	de	Sehr Groß
 very small	notes	de	Sehr Klein
+video phone	addressbook	de	Bildtelefon
 view	common	de	Anzeigen
 view access log	admin	de	Access Log anzeigen
 view all tickets	tts	de	Alle Tickets anzeigen
