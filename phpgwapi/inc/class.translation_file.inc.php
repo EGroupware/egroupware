@@ -25,7 +25,7 @@
 	// This should be considered experimental.  It works, at the app level.
 	// But, for admin and prefs it really slows things down.  See the note
 	// in the translate() function.
-	// To use, set $GLOBALS['phpgw_info']["server"]["translation_system"] = "file"; in
+	// To use, set $GLOBALS['phpgw_info']['server']['translation_system'] = 'file'; in
 	// class.translation.inc.php
 	class translation
 	{
@@ -46,13 +46,87 @@
 				$lang = $loadlang;
 			}
 			$this->add_app($appname,$lang);
+
+			if(!isset($GLOBALS['phpgw_setup']))
+			{
+				$this->system_charset = $GLOBALS['phpgw_info']['server']['system_charset'];
+			}
+			else
+			{
+				$GLOBALS['phpgw']->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
+				if($GLOBALS['phpgw']->db->next_record())
+				{
+					$this->system_charset = $GLOBALS['phpgw']->db->f(0);
+				}
+			}
+			// load multi-byte-string-extension if needed, and set its internal encodeing to your system_charset
+			if($this->system_charset && substr($this->system_charset,0,9) != 'iso-8859-1')
+			{
+				if($this->mbstring = extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX))
+				{
+					ini_set('mbstring.internal_encoding',$this->system_charset);
+					if(ini_get('mbstring.func_overload') < 7)
+					{
+						if($warnings) echo "<p>Warning: Please set <b>mbstring.func_overload = 7</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
+					}
+				}
+				else
+				{
+					if($warnings) echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset, we are defaulting to <b>iconv</b> for now !!!</p>\n";
+				}
+			}
+		}
+
+		function init()
+		{
+			// post-nuke and php-nuke are using $GLOBALS['lang'] too
+			// but not as array!
+			// this produces very strange results
+			if (!is_array($GLOBALS['lang']))
+			{
+				$GLOBALS['lang'] = array();
+			}
+
+			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+			{
+				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+			}
+			$this->add_app('common');
+			if (!count($GLOBALS['lang']))
+			{
+				$this->userlang = 'en';
+				$this->add_app('common');
+			}
+			$this->add_app($GLOBALS['phpgw_info']['flags']['currentapp']);
+		}
+		/*
+		@function charset
+		@abstract returns the charset to use (!$lang) or the charset of the lang-files or $lang
+		*/
+		function charset($lang=False)
+		{
+			if($lang)
+			{
+				if(!isset($this->charsets[$lang]))
+				{
+					$GLOBALS['phpgw']->db->query("SELECT content FROM phpgw_lang WHERE lang='$lang' AND message_id='charset' AND app_name='common'",__LINE__,__FILE__);
+					$this->charsets[$lang] = $GLOBALS['phpgw']->db->next_record() ? strtolower($GLOBALS['phpgw']->db->f(0)) : 'iso-8859-1';
+				}
+				return $this->charsets[$lang];
+			}
+			if($this->system_charset)	// do we have a system-charset ==> return it
+			{
+				return $this->system_charset;
+			}
+			// if no translations are loaded (system-startup) use a default, else lang('charset')
+			return !is_array($GLOBALS['lang']) ? 'iso-8859-1' : strtolower($this->translate('charset'));
 		}
 
 		function isin_array($needle,$haystack)
 		{
-			while (list ($k,$v) = each($haystack))
+			while(list($k,$v) = each($haystack))
 			{
-				if ($v == $needle)
+				if($v == $needle)
 				{
 					return True;
 				}
@@ -62,41 +136,39 @@
 
 		function translate($key, $vars=False) 
 		{
-			global $lang;
-
-			if (!$this->isin_array($GLOBALS['phpgw_info']['flags']['currentapp'],$this->loaded_apps) &&
+			if(!$this->isin_array($GLOBALS['phpgw_info']['flags']['currentapp'],$this->loaded_apps) &&
 				$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
 			{
 				//echo '<br>loading app "' . $GLOBALS['phpgw_info']['flags']['currentapp'] . '" for the first time.';
-				$this->add_app($GLOBALS['phpgw_info']['flags']['currentapp'],$lang);
+				$this->add_app($GLOBALS['phpgw_info']['flags']['currentapp'],$GLOBALS['lang']);
 			}
-			elseif ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'admin' ||
+			elseif($GLOBALS['phpgw_info']['flags']['currentapp'] == 'admin' ||
 				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
 			{
 				// This is done because for these two apps, all langs must be loaded.
 				// Note we cannot load for navbar, since it would slow down EVERY page.
 				// This is true until all common/admin/prefs langs are in the api file only.
 				@ksort($GLOBALS['phpgw_info']['apps']);
-				while(list($x,$app) = each($GLOBALS['phpgw_info']['apps']))
+				while(list($x,$app) = @each($GLOBALS['phpgw_info']['apps']))
 				{
-					if (!$this->isin_array($app['name'],$this->loaded_apps))
+					if(!$this->isin_array($app['name'],$this->loaded_apps))
 					{
 						//echo '<br>loading app "' . $app['name'] . '" for the first time.';
-						$this->add_app($app['name'],$lang);
+						$this->add_app($app['name'],$GLOBALS['lang']);
 					}
 				}
 			}
 
-			if (!$vars)
+			if(!$vars)
 			{
 				$vars = array();
 			}
 
 			$ret = $key;
 
-			if (isset($this->langarray[strtolower ($key)]) && $this->langarray[strtolower ($key)])
+			if(isset($this->langarray[strtolower($key)]) && $this->langarray[strtolower($key)])
 			{
-				$ret = $this->langarray[strtolower ($key)];
+				$ret = $this->langarray[strtolower($key)];
 			}
 			else
 			{
@@ -111,6 +183,28 @@
 			return $ret;
 		}
 
+		function autoload_changed_langfiles()
+		{
+			return;
+		}
+		function drop_langs($appname,$DEBUG=False)
+		{
+			if($DEBUG)
+			{
+				echo '<br>drop_langs(): Working on: ' . $appname;
+				echo '<br>drop_langs(): Not needed with file-based lang class.';
+			}
+		}
+
+		function add_langs($appname,$DEBUG=False,$force_langs=False)
+		{
+			if($DEBUG)
+			{
+				echo '<br>add_langs(): Working on: ' . $appname;
+				echo '<br>add_langs(): Not needed with file-based lang class.';
+			}
+		}
+
 		/*!
 		@function add_app
 		@abstract loads all app phrases into langarray
@@ -121,9 +215,9 @@
 			define('SEP',filesystem_separator());
 
 			//echo '<br>add_app(): called with app="' . $app . '", lang="' . $userlang . '"';
-			if (!isset($lang) || !$lang)
+			if(!isset($lang) || !$lang)
 			{
-				if (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
+				if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 				{
 					$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
@@ -139,15 +233,15 @@
 			}
 
 			$fn = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . $userlang . '.lang';
-			if (!file_exists($fn))
+			if(!file_exists($fn))
 			{
 				$fn = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_en.lang';
 			}
 
-			if (file_exists($fn))
+			if(file_exists($fn))
 			{
 				$fp = fopen($fn,'r');
-				while ($data = fgets($fp,8000))
+				while($data = fgets($fp,8000))
 				{
 					list($message_id,$app_name,$null,$content) = explode("\t",$data);
 					//echo '<br>add_app(): adding phrase: $this->langarray["'.$message_id.'"]=' . trim($content);
