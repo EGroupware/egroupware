@@ -922,7 +922,7 @@
 			'type' => 'varchar',
 			'precision' => '1',
 			'nullable' => False,
-			'default' => ''
+			'default' => 'u'
 		));
 
 		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_cal_extra',array(
@@ -939,7 +939,7 @@
 
 		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_cal_alarm');
 
-		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.001';
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.002';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
 
