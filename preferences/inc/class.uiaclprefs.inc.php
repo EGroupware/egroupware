@@ -30,8 +30,6 @@
 			$query			= get_var('query',Array('GET','POST'));
 			$s_groups		= get_var('s_groups',Array('GET','POST'));
 			$s_users		= get_var('s_users',Array('GET','POST'));
-			$maxm			= get_var('maxm',Array('GET','POST'));
-			$totalentries	= get_var('totalentries',Array('GET','POST'));
 			$owner			= $GLOBALS['owner'];
 
 			if (! $acl_app)
