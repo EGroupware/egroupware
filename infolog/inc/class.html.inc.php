@@ -15,6 +15,15 @@
 
 class html
 {
+	var $prefered_img_title;
+
+	function html()
+	{
+		global $HTTP_USER_AGENT;
+																// should be Ok for all HTML 4 compatible browsers
+		$this->prefered_img_title = stristr($HTTP_USER_AGENT,'konqueror') ? 'title' : 'alt';
+	}
+
 	function input_hidden($vars,$value='')
 	{
 		if (!is_array($vars))
@@ -42,7 +51,6 @@ class html
 	 */
 	function link($url,$vars='')
 	{
-		global $phpgw;
 		if (is_array( $vars ))
 		{
 			$v = array( );
@@ -59,12 +67,17 @@ class html
 		if ($v)
 			$vars .= ($vars ? '&' : '') . $v;
 
-		return $phpgw->link($url,$vars);
+		return $GLOBALS['phpgw']->link($url,$vars);
 	}
 
 	function checkbox($name,$value='')
 	{
 		return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . ">\n";
+	}
+
+	function file($name)
+	{
+		return "<input type=\"file\" name=\"$name\">\n";
 	}
 
 	function form($content,$hidden_vars,$url,$url_vars='',$method='POST')
@@ -124,15 +137,13 @@ class html
 		return $html;
 	}
 
-	function image( $app,$name,$alt='',$opts='' )
+	function image( $app,$name,$title='',$opts='' )
 	{
-		global $phpgw;
+		$html = '<img src="'.$GLOBALS['phpgw']->common->image($app,$name).'"';
 
-		$html = '<img src="'.$phpgw->common->image($app,$name).'"';
-
-		if ($alt) 
+		if ($title)
 		{
-			$html .= ' alt="'.$alt.'"';
+			$html .= " $this->prefered_img_title=\"$title\"";
 		}
 		if ($opts)
 		{
@@ -141,9 +152,9 @@ class html
 		return $html . '>';
 	}
 
-	function a_href( $content,$url,$vars='')
+	function a_href( $content,$url,$vars='',$options='')
 	{
-		return '<a href="'.$this->link($url,$vars).'">'.$content.'</a>';
+		return '<a href="'.$this->link($url,$vars).'" '.$options.'>'.$content.'</a>';
 	}
 	
 	function bold($content)
