@@ -138,7 +138,7 @@
 		*/
 		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
 		{
-			//if ($this->debug)
+			if ($this->debug)
 			{
 				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner,$lastmod)</p>\n";
 			}

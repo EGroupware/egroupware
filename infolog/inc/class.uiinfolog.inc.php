@@ -318,7 +318,7 @@
 			}
 			else
 			{
-				echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
+				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 				$action    = $action    ? $action    : get_var('action',   array('POST','GET'));
 				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
@@ -326,7 +326,7 @@
 				$referer   = $referer !== '' ? $referer : 
 					ereg_replace('^.*'.$GLOBALS['phpgw_info']['server']['webserver_url'],'',
 					get_var('HTTP_REFERER',Array('SERVER')));
-				echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
+				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 				
 				$this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
 				$content = $this->bo->so->data;
