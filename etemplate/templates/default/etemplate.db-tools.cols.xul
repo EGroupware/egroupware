@@ -17,21 +17,21 @@
     </columns>
     <rows>
       <row class="nmh">
-        <label value="#" no_lang="1" align="center"/>
-        <label value="ColumnName"/>
-        <label value="Type"/>
-        <label value="Precision"/>
-        <label value="Scale"/>
-        <label value="Nullable"/>
-        <label value="Unique"/>
-        <label value="Primary Key"/>
-        <label value="Indexed"/>
-        <label value="Foreign Key"/>
-        <label value="Default"/>
+        <description value="#" no_lang="1" align="center"/>
+        <description value="ColumnName"/>
+        <description value="Type"/>
+        <description value="Precision"/>
+        <description value="Scale"/>
+        <description value="Nullable"/>
+        <description value="Unique"/>
+        <description value="Primary Key"/>
+        <description value="Indexed"/>
+        <description value="Foreign Key"/>
+        <description value="Default"/>
         <button label="Add Column" align="center" id="add_column"/>
       </row>
       <row class="nmr">
-        <label no_lang="1" align="center" id="Row${row}[n]"/>
+        <description no_lang="1" align="center" id="Row${row}[n]"/>
         <textbox size="20" no_lang="1" id="Row${row}[name]" statustext="need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'"/>
         <menulist>
           <menupopup no_lang="1" id="Row${row}[type]" statustext="type of the column"/>

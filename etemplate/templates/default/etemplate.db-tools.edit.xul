@@ -12,14 +12,14 @@
     </columns>
     <rows>
       <row>
-        <label size="bi" span="6" value="Editable Templates - DB-Tools" no_lang="1" id="msg"/>
+        <description size="bi" span="6" value="Editable Templates - DB-Tools" no_lang="1" id="msg"/>
         <button label="eTemplate Editor" align="right" id="editor" statustext="to start the eTemplate editor"/>
       </row>
       <row>
         <hrule span="all"/>
       </row>
       <row>
-        <label span="all"/>
+        <description span="all"/>
       </row>
       <row>
         <menulist>
