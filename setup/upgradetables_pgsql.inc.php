@@ -239,6 +239,7 @@
        $db->query("update todo              set todo_owner=accounts.account_id    where todo_owner=accounts.account_lid");
        $db->query("update webcal_entry      set cal_create_by=accounts.account_id where cal_create_by=accounts.account_lid");
        $db->query("update webcal_entry_user set cal_login=accounts.account_id     where cal_login=accounts.account_lid");
+       $db->query("update preferences       set preference_owner=accounts.account_id  where preference_owner=accounts.account_lid");
 
        echo "  <tr bgcolor=\"e6e6e6\">\n";
        echo "    <td>Upgrade from 0.9.2 to 0.9.3pre2 is completed.</td>\n";
