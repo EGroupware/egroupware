@@ -126,15 +126,12 @@
        
       if (gettype($id) == "string") { $id = $this->name2id($id); }
       $groups = Array();
-      $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", intval($id));
-      if ($group_memberships) {
-        for ($idx=0; $idx<count($group_memberships); $idx++){
-          $groups[intval($group_memberships[$idx])] = 1;
-        }
-        return $groups;
-      } else {
-        return False;
+      $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, intval($id));
+      if (!$group_memberships) { return False; }
+      for ($idx=0; $idx<count($group_memberships); $idx++){
+        $groups[intval($group_memberships[$idx])] = 1;
       }
+      return $groups;
     }
 
     function read_group_names($lid = "")

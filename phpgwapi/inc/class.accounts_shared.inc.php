@@ -67,18 +67,15 @@
     function sql_search($table,$owner=0)
     {
       global $phpgw_info;
-      global $phpgw;
+
       $s = "";
-// Changed By: Skeeter  29 Nov 00
-// This is to allow the user to search for other individuals group info....
       if(!$owner) {
         $owner = $phpgw_info["user"]["account_id"];
       }
-      $groups = $this->read_groups($owner);
+      $groups = $this->read_groups(intval($owner));
       if (gettype($groups) == "array") {
-//         echo "\n\n\n\n\ntest: " . count($groups) . "\n\n\n\n\n\n";
          while ($group = each($groups)) {
-           $s .= " or $table like '%," . $group[1] . ",%'";
+           $s .= " or $table like '%," . $group[0] . ",%'";
         }
       }
       return $s;
