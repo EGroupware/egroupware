@@ -399,7 +399,7 @@ class calendar__
 		return $this->fetch_event($this->event->id);
 	}
 	
-	function add_attribute($attribute,&$value)
+	function add_attribute($attribute,$value)
 	{
 		if(is_array($value))
 		{
