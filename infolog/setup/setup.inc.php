@@ -20,8 +20,26 @@
 	$setup_info['infolog']['author'] = 'Ralf Becker';
 	$setup_info['infolog']['license']  = 'GPL';
 	$setup_info['infolog']['description'] =
-		'CRM type app using Addressbook providing Todo List, Notes and Phonelog.';
-	$setup_info['infolog']['maintainer'] = 'Ralf Becker';
+		'<b>CRM</b> (customer-relation-management) type app using Addressbook providing 
+		Todo List, Notes and Phonelog. <b>InfoLog</b> is orininaly based on phpGroupWare\'s 
+		ToDo-List and has the features of all 3 mentioned applications plus fully working ACL 
+		(including Add+Private attributes, add for to addreplys/subtasks).<p>
+		Responsibility for a task (ToDo) or a phonecall can be <b>delegated</b> to an other 
+		user. All entries can be linked to addressbook entries, projects and/or calendar events.
+		This allows you to <b>log all activity of a contact</b>/address or project. 
+		The entries may be viewed or added from InfoLog direct or from within
+		the contact/address, project or calendar view.<p>
+		Other documents / files can be linked to InfoLog entries and are store in the VFS
+		(phpGroupWare\'s virtual file system). An extension of the VFS allows to symlink
+		the files to a fileserver, instead of placeing a copy in the VFS 
+		(<i>need to be configured in the admin-section</i>).
+		It is planed to include emails and faxes into InfoLog in the future.';
+	$setup_info['infolog']['note'] =
+		'Their is a <b>CSV import filter</b> (in the admin-section) to import existing data.
+		It allows to interactivly assign fields, customize the values with regular 
+		expressions and direct calls to php-functions (e.g. to link the phone calls 
+		(again) to the addressbook entrys).';
+ 	$setup_info['infolog']['maintainer'] = 'Ralf Becker';
 	$setup_info['infolog']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
 
 	/* The hooks this app includes, needed for hooks registration */

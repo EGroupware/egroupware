@@ -84,6 +84,7 @@ entries	etemplate	en	entries
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%s' !!!	etemplate	en	Error: webserver is not allowed to write into '%s' !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
+etemplate	common	en	eTempalte
 etemplate '%s' imported, use save to put it in the database	etemplate	en	eTemplate '%s' imported, use Save to put it in the database
 etemplate '%s' written to '%s'	etemplate	en	eTemplate '%s' written to '%s'
 etemplate editor	etemplate	en	eTemplate Editor
