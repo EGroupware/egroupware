@@ -16,7 +16,7 @@
 			'fd' => array(
 				'cal_id' => array('type' => 'auto','nullable' => False),
 				'owner' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'category' => array('type' => 'int', 'precision' => 8,'nullable' => False),
+				'category' => array('type' => 'int', 'precision' => 8,'nullable' => True),
 				'groups' => array('type' => 'varchar', 'precision' => 255,'nullable' => True),
 				'datetime' => array('type' => 'int', 'precision' => 8,'nullable' => True),
 				'mdatetime' => array('type' => 'int', 'precision' => 8,'nullable' => True),
