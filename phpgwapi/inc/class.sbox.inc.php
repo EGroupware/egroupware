@@ -625,11 +625,10 @@
 				$name = 'country';
 			}
 			$str = '<select name="'.$name.'">'."\n"
-				. ' <option value="  "'.($selected == '  '?' selected':'').'>Select One</option>'."\n";
-			reset($this->country_array);
-			while(list($key,$value) = each($this->country_array))
+				. ' <option value="  "'.($selected == '  '?' selected':'').'>'.lang('Select One').'</option>'."\n";
+			foreach($this->country_array as $key => $value)
 			{
-				$str .= ' <option value="'.$key.'"'.($selected == $key?' selected':'') . '>'.lang($value).'</option>'."\n";
+				$str .= ' <option value="'.$key.'"'.($selected == $key?' selected':'') . '>'.$value.'</option>'."\n";
 			}
 			$str .= '</select>'."\n";
 			return $str;
