@@ -984,13 +984,17 @@
 			/* Check if they're in the group.  If so, they have access */
 			$memberships = $phpgw->accounts->membership ($account_id);
 	
-			reset ($memberships);
-			while (list ($num, $group_array) = each ($memberships))
+			if (is_array ($memberships))
 			{
-				if ($group_id == $phpgw->accounts->name2id ($group_array["account_name"]))
+				reset ($memberships);
+
+				while (list ($num, $group_array) = @each ($memberships))
 				{
-					$group_ok = 1;
-					break;
+					if ($group_id == $phpgw->accounts->name2id ($group_array["account_name"]))
+					{
+						$group_ok = 1;
+						break;
+					}
 				}
 			}
 	
@@ -2155,7 +2159,103 @@
 		{
 			return $this->ls ($dir, $relatives, $checksubdirs, $mime_type, $nofiles, $orderby);
 		}
-	
+
+		/*!
+		@function command_line
+		@abstract Process and run a Unix-sytle command line
+		@discussion EXPERIMENTAL.  DANGEROUS.  DO NOT USE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!
+			    This is mostly working, but the command parser needs to be improved to take
+			    files with spaces into consideration (those should be in "").
+		@param $command_line Unix-style command line with one of the commands in the $args array
+		@result $result The return value of the actual VFS call
+		*/
+		function command_line ($command_line)
+		{
+			$args = array
+			(
+				array ('name'	=> 'mv', 'params'	=> 2),
+				array ('name'	=> 'cp', 'params'	=> 2),
+				array ('name'	=> 'rm', 'params'	=> 1),
+				array ('name'	=> 'ls', 'params'	=> -1),
+				array ('name'	=> 'du', 'params'	=> 1, 'func'	=> get_size),
+				array ('name'	=> 'cd', 'params'	=> 1),
+				array ('name'	=> 'pwd', 'params'	=> 0),
+				array ('name'	=> 'cat', 'params'	=> 1, 'func'	=> read),
+				array ('name'	=> 'file', 'params'	=> 1, 'func'	=> file_type),
+				array ('name'	=> 'mkdir', 'params'	=> 1),
+				array ('name'	=> 'touch', 'params'	=> 1)
+			);
+
+			if (!$first_space = strpos ($command_line, ' '))
+			{
+				$first_space = strlen ($command_line);
+			}
+			if ((!$last_space = strrpos ($command_line, ' ')) || ($last_space == $first_space))
+			{
+				$last_space = strlen ($command_line) + 1;
+			}
+			$argv[0] = substr ($command_line, 0, $first_space);
+			if (strlen ($argv[0]) != strlen ($command_line))
+			{
+				$argv[1] = substr ($command_line, $first_space + 1, $last_space - ($first_space + 1));
+				if ((strlen ($argv[0]) + 1 + strlen ($argv[1])) != strlen ($command_line))
+				{
+					$argv[2] = substr ($command_line, $last_space + 1);
+				}
+			}
+			$argc = count ($argv);
+
+			reset ($args);
+			while (list (,$arg_info) = each ($args))
+			{
+				if ($arg_info['name'] == $argv[0])
+				{
+					$command_ok = 1;
+					if (($argc == ($arg_info['params'] + 1)) || ($arg_info['params'] == -1))
+					{
+						$param_count_ok = 1;
+					}
+					break;
+				}
+			}
+
+			if (!$command_ok)
+			{
+//				return E_VFS_BAD_COMMAND;
+				return False;
+			}
+			if (!$param_count_ok)
+			{
+//				return E_VFS_BAD_PARAM_COUNT;
+				return False;
+			}
+
+			for ($i = 1; $i != ($arg_info['params'] + 1); $i++)
+			{
+				if (substr ($argv[$i], 0, 1) == "/")
+				{
+					$relatives[] = RELATIVE_NONE;
+				}
+				else
+				{
+					$relatives[] = RELATIVE_ALL;
+				}
+			}
+
+			$func = $arg_info['func'] ? $arg_info['func'] : $arg_info['name'];
+
+			if (!$argv[2])
+			{
+				$rv = $this->$func ($argv[1], $relatives);
+			}
+			else
+			{
+				$rv = $this->$func ($argv[1], $argv[2], $relatives);
+			}
+
+			return ($rv);
+		}
+
 		/*!
 		@function update_real
 		@abstract Update database information for file or directory $string
