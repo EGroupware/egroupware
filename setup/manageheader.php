@@ -45,7 +45,7 @@
 			$dom = get_var('setting_'.$k,Array('POST'));
 			if(!$dom['config_pass'])
 			{
-				$errors .= '<br>' . lang("You didn't enter a config password for domain x",$v);
+				$errors .= '<br>' . lang("You didn't enter a config password for domain %1",$v);
 			}
 		}
 
@@ -380,8 +380,8 @@
 
 				/* These are a few of the advanced settings */
 				$GLOBALS['phpgw_info']['server']['db_persistent'] = True;
-				$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = False;
-				$GLOBALS['phpgw_info']['server']['mcrypt_version'] = '2.6.3';
+				$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = extension_loaded('mcrypt');
+				$GLOBALS['phpgw_info']['server']['versions']['mcrypt'] = '';
 
 				srand((double)microtime()*1000000);
 				$random_char = array(
@@ -401,8 +401,8 @@
 			if(!$no_guess)
 			{
 				$detected .= lang('Now guessing better values for defaults...') . '<br>' . "\n";
-				$this_dir = dirname($SCRIPT_FILENAME);
-				$updir    = ereg_replace('/setup','',$this_dir);
+				$this_dir = dirname($_SERVER['SCRIPT_FILENAME']);
+				$updir    = str_replace('/setup','',$this_dir);
 				$GLOBALS['phpgw_info']['server']['server_root'] = $updir; 
 				$GLOBALS['phpgw_info']['server']['include_root'] = $updir; 
 			}
@@ -468,7 +468,7 @@
 			{
 				/*
 				$errors .= '<br><font color="red">' . lang('Warning!') . '<br>'
-					. lang('The db_type in defaults (x) is not supported on this server. using first supported type.',$GLOBALS['phpgw_info']['server']['db_type'])
+					. lang('The db_type in defaults (%1) is not supported on this server. using first supported type.',$GLOBALS['phpgw_info']['server']['db_type'])
 					. '</font>';
 				*/
 			}
@@ -483,7 +483,7 @@
 			else
 			{
 				$errors .= '<br>'
-					. lang('Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can x the file.',
+					. lang('Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 the file.',
 					'<input type="submit" name="action" value="download">' . lang('or') . '&nbsp;<input type="submit" name="action" value="view">')
 					. '</form>';
 			}
