@@ -59,7 +59,7 @@ this server is located in the %1 timezone	preferences	fr	Ce serveur est situé da
 time format	preferences	fr	Format d'heure
 use default	preferences	fr	Utiliser le défaut
 users choice	preferences	fr	Choix des utilisateurs
-which currency symbol or name should be used in phpgroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans phpGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe

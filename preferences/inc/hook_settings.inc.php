@@ -108,7 +108,7 @@
 		"The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).");
 
 	create_input_box('Currency','currency',
-		'Which currency symbol or name should be used in phpGroupWare.');
+		'Which currency symbol or name should be used in eGroupWare.');
 		
 	$account_sels = array(
 		'selectbox' => lang('Selectbox'),

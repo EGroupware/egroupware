@@ -64,7 +64,7 @@ this server is located in the %1 timezone	preferences	es-ca	Aquest servidor pert
 time format	preferences	es-ca	Format d'hora
 use default	preferences	es-ca	Utilitza el valor per defecte
 users choice	preferences	es-ca	Tria de l'usuari
-which currency symbol or name should be used in phpgroupware.	preferences	es-ca	Quin simbol o nom de moneda s'ha d'utilitzar a eGroupWare ?
+which currency symbol or name should be used in egroupware.	preferences	es-ca	Quin simbol o nom de moneda s'ha d'utilitzar a eGroupWare ?
 you can show the applications as icons only, icons with app-name or both.	preferences	es-ca	podeu mostrar les aplicacions com: només icones, només nom o bé ambdós.
 you do not have permission to set acl's in this mode!	preferences	es-ca	No teniu permís per establir LCA's en aquest modus!
 you must enter a password	preferences	es-ca	Heu d'entrar una contrasenya

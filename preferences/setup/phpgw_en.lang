@@ -68,7 +68,7 @@ time format	preferences	en	Time format
 use default	preferences	en	Use default
 users choice	preferences	en	Users choice
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	en	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
-which currency symbol or name should be used in phpgroupware.	preferences	en	Which currency symbol or name should be used in eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	en	Which currency symbol or name should be used in eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
 you do not have permission to set acl's in this mode!	preferences	en	You do not have permission to set ACL's in this mode!
 you must enter a password	preferences	en	You must enter a password

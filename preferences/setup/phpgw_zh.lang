@@ -66,7 +66,7 @@ this server is located in the %1 timezone	preferences	zh	该服务器所在时�
 time format	preferences	zh	时间格式
 use default	preferences	zh	使用默认值
 users choice	preferences	zh	用户的选择
-which currency symbol or name should be used in phpgroupware.	preferences	zh	在phpGroupWare中使用何种货币符号和名称. 
+which currency symbol or name should be used in egroupware.	preferences	zh	在eGroupWare中使用何种货币符号和名称. 
 you can show the applications as icons only, icons with app-name or both.	preferences	zh	您可以指定工具栏上的应用程序只显示图标、文字, 或是两者都显示. 
 you do not have permission to set acl's in this mode!	preferences	zh	您无权在该模式下设置ACL! 
 you must enter a password	preferences	zh	必须输入密码

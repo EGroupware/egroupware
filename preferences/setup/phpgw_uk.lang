@@ -62,7 +62,7 @@ this server is located in the %1 timezone	preferences	uk	Цей сервер з�
 time format	preferences	uk	Формат часу
 use default	preferences	uk	По замовченню
 users choice	preferences	uk	Вибір користувача
-which currency symbol or name should be used in phpgroupware.	preferences	uk	Який символ валюти, або його назва має використовуватись в eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	uk	Який символ валюти, або його назва має використовуватись в eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	uk	Ви можете бачити приложення як іконку, іконку з текстом і т.п.
 you do not have permission to set acl's in this mode!	preferences	uk	Ви не маєте можливості встановлювати ACL в цьому режимі!
 you must enter a password	preferences	uk	Необхідно ввести пароль

@@ -64,7 +64,7 @@ time format	preferences	da	Tidsformat
 time zone offset	preferences	da	Tidszone forskel
 use default	preferences	da	Brug standart
 users choice	preferences	da	Brugerens valg
-which currency symbol or name should be used in phpgroupware.	preferences	da	Hvilket valuta symbol eller navn skal bruges i eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	da	Hvilket valuta symbol eller navn skal bruges i eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	da	Du kan få vist appilkationerne som Kun ikoner, Ikoner med navn eller begge dele.
 you do not have permission to set acl's in this mode!	preferences	da	Du har ikke rettigheder til at sætte ACL's
 you must enter a password	preferences	da	Du skal angive en adgangskode

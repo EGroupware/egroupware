@@ -62,7 +62,7 @@ this server is located in the %1 timezone	preferences	fi	Palvelin on aikavyˆhykk
 time format	preferences	fi	Ajan muoto
 use default	preferences	fi	K‰yt‰ oletusta
 users choice	preferences	fi	K‰ytt‰j‰n valinta
-which currency symbol or name should be used in phpgroupware.	preferences	fi	Mit‰ valuutan nime‰ tai merkki‰ k‰ytet‰‰n eGroupWaressa.
+which currency symbol or name should be used in egroupware.	preferences	fi	Mit‰ valuutan nime‰ tai merkki‰ k‰ytet‰‰n eGroupWaressa.
 you can show the applications as icons only, icons with app-name or both.	preferences	fi	Voit n‰ytt‰‰ sovellukset kuvakkeina, sovelluksen nimell‰ tai molemmilla.
 you do not have permission to set acl's in this mode!	preferences	fi	Et voi m‰‰ritell‰ ACL-oikeuksia t‰ss‰ tilassa!
 you must enter a password	preferences	fi	Anna salasana

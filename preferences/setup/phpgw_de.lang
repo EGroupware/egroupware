@@ -75,7 +75,7 @@ use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 when you say yes the home and logout buttons are presented as applications in the main top application bar.	preferences	de	Wenn Sie (Ja) wählen, werden sowohl der Home-Button, als auch der Logout-Button in der Hauptnavigationsleiste angezeigt.
-which currency symbol or name should be used in phpgroupware.	preferences	de	Welches Währungssymbol oder Name soll in eGroupWare verwendet werden.
+which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in eGroupWare verwendet werden.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesm Modus zu setzen.
 you do not have permission to set acl\'s in this mode!	preferences	de	Sie haben keine Berechtigung ACL's in diesem Modus zu setzen!

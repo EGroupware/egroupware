@@ -67,7 +67,7 @@ time format	preferences	nl	Tijdweergave
 time zone offset	preferences	nl	Tijdzoneverschil
 use default	preferences	nl	Gebruik standaard
 users choice	preferences	nl	Gebruikerskeuze
-which currency symbol or name should be used in phpgroupware.	preferences	nl	Welke symbool of naam voor de munteenheid moet gebruikt worden in eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	nl	Welke symbool of naam voor de munteenheid moet gebruikt worden in eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	nl	U kunt de toepassingen weergven met alleen icoontjes, icoontjes met tekst, of alleen tekst.
 you do not have permission to set acl's in this mode!	preferences	nl	U heeft geen permissie om de ACL's in te stellen in deze modus!
 you must enter a password	preferences	nl	U moet een wachtwoord invoeren

@@ -65,7 +65,7 @@ time format	preferences	hu	Id? formátum
 time zone offset	preferences	hu	Idõzóna eltolódás
 use default	preferences	hu	Használja az alapértelmezettet
 users choice	preferences	hu	Felhasználó választása
-which currency symbol or name should be used in phpgroupware.	preferences	hu	Melyik aktuális szimbólumot vagy nevet szeretnél használni az eGroupWare-ben.
+which currency symbol or name should be used in egroupware.	preferences	hu	Melyik aktuális szimbólumot vagy nevet szeretnél használni az eGroupWare-ben.
 you can show the applications as icons only, icons with app-name or both.	preferences	hu	A programok megjeleníthetök mint ikonok csupán, a program nevével vagy mindkettövel.
 you do not have permission to set acl's in this mode!	preferences	hu	Nincs jogosultságod beállítani az ACl-eket ebben a módban!
 you must enter a password	preferences	hu	A jelszót meg kell adni

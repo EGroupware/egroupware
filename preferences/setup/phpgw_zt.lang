@@ -66,7 +66,7 @@ this server is located in the %1 timezone	preferences	zt	這台伺服器主機�
 time format	preferences	zt	時間格式
 use default	preferences	zt	預設值
 users choice	preferences	zt	使用者選擇
-which currency symbol or name should be used in phpgroupware.	preferences	zt	您希望在eGroupWare中使用什麼貨幣符號或名稱。
+which currency symbol or name should be used in egroupware.	preferences	zt	您希望在eGroupWare中使用什麼貨幣符號或名稱。
 you can show the applications as icons only, icons with app-name or both.	preferences	zt	您可以指定只顯示應用程式圖示或是加上它的名稱。
 you do not have permission to set acl's in this mode!	preferences	zt	您沒有權限設定ACL在這個模式
 you must enter a password	preferences	zt	您必須輸入密碼

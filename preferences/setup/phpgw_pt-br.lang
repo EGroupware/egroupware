@@ -73,7 +73,7 @@ use default	preferences	pt-br	usar o padrão
 users choice	preferences	pt-br	escolha do usuário
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar	preferences	pt-br	Quando você selecionar Sim os botões serão colocados na barra de ferramentas ao topo do aplicativo.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	pt-br	Quando você selecionar Sim os botões serão colocados na barra de ferramentas ao topo do aplicativo.
-which currency symbol or name should be used in phpgroupware.	preferences	pt-br	Qual o simbolo monetário ou nome deve ser usado pelo eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	pt-br	Qual o simbolo monetário ou nome deve ser usado pelo eGroupWare.
 you can show the applications as icons only, icons with app-name or both.	preferences	pt-br	Você pode mostrar os aplicativos como ícones, ícones com o nome do aplicativo ou ambos
 you do not have permission to set acl's in this mode!	preferences	pt-br	Você não possui permissão para determinar ACL´s nesse modo!
 you must enter a password	preferences	pt-br	Você deve digitar uma senha

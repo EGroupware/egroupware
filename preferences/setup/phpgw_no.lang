@@ -73,7 +73,7 @@ time zone offset	preferences	no	Tids-sone offset
 use default	preferences	no	Bruk standard
 users choice	preferences	no	Brukers valg
 weekday starts on	preferences	no	Ukedag begynner på
-which currency symbol or name should be used in phpgroupware.	preferences	no	Hvilket valuta symbol eller navn skal brukes i eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	no	Hvilket valuta symbol eller navn skal brukes i eGroupWare.
 work day ends on	preferences	no	Arbeidsdag slutter på
 work day starts on	preferences	no	Arbeidsdag begynner på
 you can show the applications as icons only, icons with app-name or both.	preferences	no	Du kan vises programmene som kun ikoner, ikoner med programnavn eller begge.
