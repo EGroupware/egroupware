@@ -404,8 +404,7 @@
 				// This was not properly decoding structures saved into session data properly
 //				$data = $phpgw->common->decrypt($data);
 //				$data = stripslashes($data);
-				$data = $phpgw->crypto->decrypt($data);
-				return unserialize($data);
+				return $phpgw->crypto->decrypt($data);
 
 			} else {
 				$phpgw->db->query("select content from phpgw_app_sessions where "
@@ -415,14 +414,15 @@
 				if ($phpgw->db->num_rows()==0) {
 
 					// I added these into seperate steps for easier debugging
-					$data = serialize($data);
 					$data = $phpgw->crypto->encrypt($data);
+					$data = addslashes($data);
 
 					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
 					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
 					. "','".$location."','".$data."','" . time() . "')",__LINE__,__FILE__);
 				} else {
-	 				$data = $phpgw->crypto->encrypt(serialize($data));
+					$data = $phpgw->crypto->encrypt($data);
+					$data = addslashes($data);
 					$phpgw->db->query("update phpgw_app_sessions set content = '".$data."'"
 					. "where sessionid = '".$this->sessionid."'"
 					. "and loginid = '".$this->account_id."' and app = '".$appname."'"
@@ -437,11 +437,13 @@
 		{
 			global $phpgw;
 			
-			$serializedData = $this->appsession();
-			$sessionData = unserialize($serializedData);
+			$sessionData = $this->appsession("sessiondata");
+			print "Tyoe: ".$sessionData;
+#			$sessionData = unserialize($serializedData);
 			
 			if (is_array($sessionData))
 			{
+				print "is Array<br>";
 				reset($sessionData);
 				while(list($key,$value) = each($sessionData))
 				{
@@ -469,7 +471,7 @@
 						$sessionData[$key] = $$key;
 					}
 				}
-				$this->appsession($sessionData);
+				$this->appsession("sessiondata",'',$sessionData);
 			}
 		}
 			
