@@ -7,8 +7,8 @@ add alarm	calendar	fr	Ajouter une alarme
 added	calendar	fr	Ajouté
 alarm management	calendar	fr	Gestion des alarmes
 all day	calendar	fr	Journée entière
-are you surenyou want tondelete this entry ?	calendar	fr	Etes-vous sûrnde vouloirneffacer cette entrée ?
-are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	fr	Etes-vous sûrnde vouloirneffacer cette entrée ?nnCecinva effacerncette entrée pour tous les utilisateurs.
+are you sure\nyou want to\ndelete this entry ?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
 are you sure you want to delete this holiday ?	calendar	fr	Etes-vous sûr de vouloir effacer ces vacances ?
 brief description	calendar	fr	Description brève
 calendar	common	fr	Calendrier

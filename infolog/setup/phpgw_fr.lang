@@ -140,7 +140,7 @@ priority	infolog	fr	Priorité
 private	infolog	fr	Privé
 project	infolog	fr	Projet
 re:	infolog	fr	Re:
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	fr	Expr. reg. pour les IPs locales<br>p.e. ^192.168.1.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	fr	Expr. reg. pour les IPs locales<br>p.e. ^192\.168\.1\.
 remark	infolog	fr	Remarque
 remove this link (not the entry itself)	infolog	fr	Enlever ce lien (pas l'entrée elle-même)
 responsible	infolog	fr	Responsable
@@ -181,7 +181,8 @@ urgency	infolog	fr	Priorité
 urgent	infolog	fr	Urgent
 use button to search for address	infolog	fr	Utiliser le bouton pour chercher une adresse
 use button to search for project	infolog	fr	Utiliser le bouton pour chercher un projet
-valid path on clientside<br>eg. \servershare or e:	infolog	fr	Chemin valide côté client<br>p.e. \PartageServeur ou e:voir les sous de cette entrée
+valid path on clientside<br>eg. \\server\share or e:\	infolog	fr	Chemin valide côté client<br>p.e. \\Partage\Serveur ou e:\
+view all subs of this entry	infolog	fr	Voir tous les sous de cette entrée
 view other subs	infolog	fr	Voir les autres sous
 view parent	infolog	fr	Voir le parent
 view subs	infolog	fr	Voir les sous

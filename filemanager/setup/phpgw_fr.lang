@@ -39,7 +39,7 @@ failed to create directory	phpwebhosting	fr	Echec de création du répertoire
 file	phpwebhosting	fr	Fichier
 file name	phpwebhosting	fr	Nom du fichier
 file names cannot contain "x"	phpwebhosting	fr	Les noms de fichier ne peuvent contenir "%1"
-file names cannot contain \ or /	phpwebhosting	fr	Les noms de fichier ne peuvent contenir \ ou /
+file names cannot contain \\ or /	phpwebhosting	fr	Les noms de fichier ne peuvent contenir \\ ou /
 file x already exists. please edit it or delete it first.	phpwebhosting	fr	Le fichier %1 existe déjà. SVP modifiez-le ou effacez-le d'abord.
 file x could not be created.	phpwebhosting	fr	Le fichier %1 n'a pas pu être créé.
 files	phpwebhosting	fr	Fichiers

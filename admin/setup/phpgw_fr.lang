@@ -72,8 +72,8 @@ edit table format	admin	fr	Modifier le format de la table
 edit user account	admin	fr	Modifier le compte de l'utilisateur
 enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	fr	Entrez un texte au hasard pour le <br>chiffrement de l'app_session (nécessite mcrypt)
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.<br>Exemples: /files, E:FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, c:\temp
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.<br>Exemples: /files, e:\files
 enter the hostname of the machine on which this server is running	admin	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	fr	Entrez l'emplacement de l'URL phpGroupWare.<br>Exemple: http://www.domaine.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Pas de division (/) à la fin</b>
 enter the site password for peer servers	admin	fr	Entrez le mot de passe du site pour les serveurs pairs

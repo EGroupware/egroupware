@@ -92,8 +92,8 @@ edit your header.inc.php	setup	fr	Modifier votre fichier header.inc.php
 enable mcrypt	setup	fr	Activer MCrypt
 enter some random text for app session encryption	setup	fr	Entrez du texte au hasard pour le cryptage des sessions applicatives
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	fr	Entrez du texte au hasard pour l'encryptage <br>app_session (nécessite mcrypt)
-enter the full path for temporary files.<br>Examples: /tmp, C:TEMP	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:TEMP
-enter the full path for users and group files.<br>Examples: /files, E:FILES	setup	fr	Entrez le chemin complet pour les fichiers des utilisateurs et groupes.<br>Exemples: /files, E:FILES
+enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:\TEMP
+enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	fr	Entrez le chemin complet pour les fichiers des utilisateurs et groupes.<br>Exemples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
 enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL phpGroupWare.<br>Exemple: http://www.domain.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Pas de / (division) à la fin</b>
 enter the site password for peer servers	setup	fr	Entrez le mot de passe du site pour les serveurs pairs
