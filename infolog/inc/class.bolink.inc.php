@@ -311,10 +311,15 @@
 		@param $link_id link-id to remove if > 0
 		@param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params
 		@discussion Note: if $link_id != '' and $id is an array: unlink removes links from that array only
-			unlink has to be called with &$id so see the result !!!
+			unlink has to be called with &$id to see the result (depricated) or unlink2 has to be used !!!
 		@result the number of links deleted
 		*/
 		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
+		{
+			return unlink2($link_id,$app,$id,$owner,$app2,$id2);
+		}
+
+		function unlink2($link_id,$app,&$id,$owner='',$app2='',$id2='')
 		{
 			if ($link_id < 0)	// vfs-link?
 			{

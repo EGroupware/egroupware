@@ -370,7 +370,7 @@
 				{
 					$this->xul_io = CreateObject('etemplate.xul_io');
 				}
-				$loaded = $this->xul_io->import(&$this,$xml);
+				$loaded = $this->xul_io->import($this,$xml);
 
 				if (!is_array($loaded))
 				{

@@ -234,7 +234,7 @@
 						echo "<p>unlink(link-id=$unlink,$value[to_app],$value[to_id])</p>\n";
 						if (is_array($value['to_id'])) _debug_array($value['to_id']);
 					}
-					$this->link->unlink($unlink,$value['to_app'],&$value['to_id']);
+					$this->link->unlink2($unlink,$value['to_app'],$value['to_id']);
 					if (is_array($value['to_id']))
 					{
 						$extension_data['to_id'] = $value['to_id'];	// else changes from unlink get lost

@@ -524,7 +524,7 @@
 			{
 				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
 			}
-			$xul = $this->etemplate->xul_io->export(&$this->etemplate);
+			$xul = $this->etemplate->xul_io->export($this->etemplate);
 
 			fwrite($f,$xul);
 			fclose($f);
@@ -545,7 +545,7 @@
 			{
 				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
 			}
-			$imported = $this->etemplate->xul_io->import(&$this->etemplate,$xul);
+			$imported = $this->etemplate->xul_io->import($this->etemplate,$xul);
 			$this->etemplate->modified = @filemtime($f);
 			$this->etemplate->modified_set = 'xul-import';
 

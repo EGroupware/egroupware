@@ -96,7 +96,12 @@
 			);
 		}
 
-		function set_attributes(&$widget,$attr,$val,$spanned='')
+		function set_attributes(&$widget,$attr,$val)
+		{
+			$this->set_attributes2($widget,$attr,$val,$dummy);
+		}
+
+		function set_attributes2(&$widget,$attr,$val,&$spanned)
 		{
 			if ($attr != '')
 			{
@@ -162,7 +167,7 @@
 				$embeded = new etemplate($tpl,$etempl->as_array());
 				if ($embeded_too)
 				{
-					$this->etempl2grid($embeded,&$root,$embeded_too);
+					$this->etempl2grid($embeded,$root,$embeded_too);
 				}
 				$cell['size'] = $embeded->name;
 				unset($embeded);
@@ -181,7 +186,7 @@
 					$embeded = new etemplate($names[$n],$etempl->as_array());
 					if ($embeded_too)
 					{
-						$this->etempl2grid($embeded,&$root,$embeded_too);
+						$this->etempl2grid($embeded,$root,$embeded_too);
 					}
 					$grid = new xmlnode('grid');
 					$grid->set_attribute('id',$embeded->name);
@@ -219,7 +224,7 @@
 					$embeded = new etemplate();
 					if ($embeded->read($name=$embeded->expand_name($cell['name'],0,0),'default','default',0,'',$etempl->as_array()))
 					{
-						$this->etempl2grid($embeded,&$root,$embeded_too);
+						$this->etempl2grid($embeded,$root,$embeded_too);
 					}
 					$cell['name'] = $embeded->name;
 					unset($embeded);
@@ -240,7 +245,7 @@
 				{
 					$attr = $this->attr2xul[$attr];
 				}
-				$this->set_attributes($attr_widget,$attr,$val,&$spanned);
+				$this->set_attributes2($attr_widget,$attr,$val,$spanned);
 			}
 			if ($child)
 			{
@@ -331,7 +336,7 @@
 			$xul_overlay = new xmlnode('overlay');
 
 			$embeded_too = True;
-			$this->etempl2grid($etempl,&$xul_overlay,$embeded_too);
+			$this->etempl2grid($etempl,$xul_overlay,$embeded_too);
 
 			$doc->add_root($xul_overlay);
 			$xml = $doc->export_xml();
@@ -492,7 +497,7 @@
 							$tab_attr['span'] .= $tab_attr['class'] ? ','.$tab_attr['class'] : '';
 							unset($tab_attr['class']);
 							
-							$this->add_cell($etempl,$tab_attr,&$box,&$col,$node['level']);
+							$this->add_cell($etempl,$tab_attr,$box,$col,$node['level']);
 							unset($tab_attr);
 						}
 						break;
@@ -521,7 +526,7 @@
 						}
 						else
 						{
-							$this->add_cell($etempl,$menulist_attr,&$box,&$col,$node['level']);
+							$this->add_cell($etempl,$menulist_attr,$box,$col,$node['level']);
 							unset($menulist_attr);
 						}
 						break; 
@@ -536,7 +541,7 @@
 							$cell = &$box[$node['level']];
 							$cell['size'] = $cell['anz'] . ($cell['size'] != '' ? ','.$cell['size'] : '');
 							unset($cell['anz']);
-							$this->add_cell($etempl,$cell,&$box,&$col,$node['level']);
+							$this->add_cell($etempl,$cell,$box,$col,$node['level']);
 							unset($box[$node['level']]);
 						}
 						break;
@@ -595,7 +600,7 @@
 						{
 							break;
 						}
-						$this->add_cell($etempl,$attr,&$box,&$col,$node['level']);
+						$this->add_cell($etempl,$attr,$box,$col,$node['level']);
 						break;
 				}
 			}
