@@ -11,6 +11,7 @@ admin first name	setup	es-es	Nombre del Administrador
 admin last name	setup	es-es	Apellido del Administrador
 admin password	setup	es-es	Contraseña del Administrador
 admin password to header manager	setup	es-es	Contraseña del administrador para el admnistrador de encabazados
+admin user for header manager	setup	es-es	Usuario de administración para el administrador de encabezados
 admin username	setup	es-es	Nombre de usuario del Administrador
 admins	setup	es-es	Admnistradores
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	es-es	Después de recuperar el fichero, póngalo en su lugar como header.inc.php. Después, pulse "continuar".
@@ -62,11 +63,15 @@ check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
+click <a href="index.php"?sessionid=e8b5fbb098cb6b1e628cc61a5b848229>here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
 completed	setup	es-es	Completado
+config password	setup	es-es	Contraseña de configuración
+config username	setup	es-es	Usuario de configuración
 configuration	setup	es-es	Configuración
 configuration completed	setup	es-es	Configuración completada
 configuration password	setup	es-es	Contraseña de configuración
+configuration user	setup	es-es	Usuario de configuración
 configure now	setup	es-es	Configurar ahora
 continue	setup	es-es	Continuar
 continue to the header admin	setup	es-es	Continuar en el Administrador de cabeceras
@@ -150,6 +155,9 @@ go back	setup	es-es	Volver
 go to	setup	es-es	Ir a
 grant access	setup	es-es	Conceder acceso
 has a version mismatch	setup	es-es	No coinciden las versiones
+header admin login	setup	es-es	Usuario administrador del encabezado
+header password	setup	es-es	Contraseña del encabezado
+header username	setup	es-es	Usuario del encabezado
 historylog removed	setup	es-es	Se borró el registro del historial
 hooks deregistered	setup	es-es	Se borraron del registro las cadenas sueltas
 hooks registered	setup	es-es	Se registraron las cadenas sueltas
@@ -189,9 +197,11 @@ ldap config	setup	es-es	Configuración LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	es-es	Prefijo del directorio personal predeterminado (p. ej. /home para /home/<usuario>)
 ldap default shell (e.g. /bin/bash)	setup	es-es	Shell LDAP predeterminada (p. ej. /bin/bash)
 ldap encryption type	setup	es-es	Tipo de cifrado LDAP
+ldap export	setup	es-es	Exportar LDAP
 ldap export users	setup	es-es	Usuarios de exportar LDAP
 ldap groups context	setup	es-es	Contexto de grupos LDAP
 ldap host	setup	es-es	Servidor LDAP
+ldap import	setup	es-es	Importar LDAP
 ldap import users	setup	es-es	Importar usuarios LDAP
 ldap modify	setup	es-es	Modificar LDAP
 ldap root password	setup	es-es	Contraseña del administrador LDAP
@@ -318,8 +328,10 @@ setup	setup	es-es	Instalación
 setup demo accounts in ldap	setup	es-es	Instalar cuentas de demostración en LDAP
 setup main menu	setup	es-es	Menú principal de la instalación
 setup the database	setup	es-es	Instalar la base de datos
+setup/config admin login	setup	es-es	Usuario administrador para Instalación/Configuración
 show 'powered by' logo on	setup	es-es	Mostrar el logo en
 some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas no se encuentran
+sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas (predeterminado - md5)
 start the postmaster	setup	es-es	Iniciar el postmaster
 status	setup	es-es	Estado
 step 1 - simple application management	setup	es-es	Paso 1 - Administración simple de aplicaciones
@@ -374,6 +386,8 @@ upgraded	setup	es-es	actualizado
 upgrading tables	setup	es-es	Actualizando tablas
 use cookies to pass sessionid	setup	es-es	Usar cookies para pasar el id de sesión
 use pure html compliant code (not fully working yet)	setup	es-es	Usar código compatible HTML puro (no funciona completamente todavía)
+user account prefix	setup	es-es	Prefijo de cuentas de usuario
+usernames are casesensitive	setup	es-es	Nombres de usuario distinguen mayúsculas
 users choice	setup	es-es	A elegir por el usuario
 utf-8 (unicode)	setup	es-es	utf-8 (Unicode)
 version mismatch	setup	es-es	Disparidad de versiones
@@ -411,7 +425,9 @@ you appear to have postgresql support enabled	setup	es-es	Parece que tiene activ
 you appear to have xml support enabled	setup	es-es	Parece que tiene activado el soporte XML
 you are ready for this stage, but this stage is not yet written.<br>	setup	es-es	Está listo para esta fase, pero esta fase aún no está escrita.<br>
 you didn't enter a config password for domain %1	setup	es-es	No introdujo una contraseña de configuración para el dominio %1
+you didn't enter a config username for domain %1	setup	es-es	No introdujo un usuario de configuración para el dominio %1
 you didn't enter a header admin password	setup	es-es	No introdujo una contraseña para la administración de cabeceras
+you didn't enter a header admin username	setup	es-es	No introdujo un nombre de usuario para el administrador de encabezados
 you do not have any languages installed. please install one now <br>	setup	es-es	No tiene ningún idioma instalado. Por favor, instale uno ahora
 you have not created your header.inc.php yet!<br> you can create it now.	setup	es-es	¡No ha creado todavía el header.inc.php!<br>Puede crearlo ahora.
 you have successfully logged out	setup	es-es	Ha cerrado la sesión correctamente.

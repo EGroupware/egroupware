@@ -43,11 +43,13 @@ file	filemanager	es-es	Fichero
 file %1 already exists. please edit it or delete it first.	filemanager	es-es	El fichero %1 ya existe. Por favor, edítelo o bórrelo antes.
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1.
 file name	filemanager	es-es	Nombre del fichero
+file names cannot contain  or /	filemanager	es-es	
 file names cannot contain "%1"	filemanager	es-es	Los nombres de fichero no pueden contener "%1"
 file names cannot contain \ or /	filemanager	es-es	Los nombres de fichero no pueden contener  o /
 filemanager	common	es-es	Administrador de archivos
 filemanager preferences	filemanager	es-es	Preferencias del Administrador de archivos
 files	filemanager	es-es	Ficheros
+files in this directory	filemanager	es-es	Ficheros en este directorio
 files is this directory	filemanager	es-es	Ficheros en este directorio
 folder	filemanager	es-es	Carpeta
 folder up	filemanager	es-es	Subir una carpeta
@@ -69,11 +71,13 @@ moved %1 to %2	filemanager	es-es	Se ha movido %1 a %2
 no files in this directory.	filemanager	es-es	No hay ficheros en este directorio
 no version history for this file/directory	filemanager	es-es	No hay historial de versión para este fichero o directorio
 operation	filemanager	es-es	Operación
+other settings	filemanager	es-es	Otras opciones
 owner	filemanager	es-es	Propietario
 please select a file to delete.	filemanager	es-es	Por favor, seleccione un fichero para borrar
 preferences old	preferences	es-es	Preferencias antiguas
 preview %1	filemanager	es-es	Vista previa de %1
 preview of %1	filemanager	es-es	Vista previa de %1
+quick jump to	filemanager	es-es	Salto rápido a
 reload	filemanager	es-es	recargar
 rename	filemanager	es-es	Renombrar
 renamed %1 to %2	filemanager	es-es	Se ha renombrado %1 a %2

@@ -319,4 +319,4 @@ you must select a [iv]cal. (*.[iv]cs)	calendar	es-es	Debe seleccionar un [iv]Val
 you need to set either a day or a occurence !!!	calendar	es-es	Debe poner un día o una ocurrencia
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-es	Su reunión programada para %1 ha sido reprogramada para %2
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	es-es	Sus horas sugeridas de <B> %1 - %2 </B> están es conflicto con las siguientes entradas es el calendario:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	es-es	Sus horas sugeridas de <B> %1 - %2 </B> están en conflicto con las siguientes entradas es el calendario:

@@ -137,6 +137,7 @@ select all	addressbook	es-es	Seleccionar todo
 select the type of conversion	addressbook	es-es	Seleccione el tipo de conversión
 select the type of conversion:	addressbook	es-es	Seleccione el tipo de conversión
 select where you want to store	admin	es-es	Seleccione dónde desea almacenar
+show	addressbook	es-es	Mostrar
 show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumplea&ntilde;os en la pantalla principal
 startrecord	addressbook	es-es	Registro inicial
 state	common	es-es	Provincia

@@ -37,7 +37,7 @@ afghanistan	common	es-es	AFGHANISTAN
 albania	common	es-es	ALBANIA
 algeria	common	es-es	ARGELIA
 all	common	es-es	Todos
-alphabet	common	es	a,b,c,ch,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
+alphabet	common	es-es	a,b,c,ch,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	es-es	AMERICAN SAMOA
 andorra	common	es-es	ANDORRA
 angola	common	es-es	ANGOLA
@@ -57,6 +57,7 @@ austria	common	es-es	AUSTRIA
 author	common	es-es	Autor
 autohide sidebox menus	common	es-es	Ocultar automáticamente los recuadros laterales
 automacally hide the sidebox menus?	common	es-es	¿Ocultar automáticamente los recuadros laterales?
+automatically hide the sidebox menus?	common	es-es	¿Ocultar automáticamente los menús laterales?
 autosave default category	common	es-es	Autograbar Categoria Predeterminada
 azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
@@ -122,6 +123,8 @@ colombia	common	es-es	COLOMBIA
 comoros	common	es-es	COMOROS
 company	common	es-es	Compañía
 company directory	common	es-es	Directorio de la Organizacion
+config password	common	es-es	Contraseña de configuración
+config username	common	es-es	Usuario de configuración
 congo	common	es-es	CONGO
 congo, the democratic republic of the	common	es-es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	es-es	COOK ISLANDS
@@ -187,6 +190,7 @@ enabled	common	es-es	Habilitado
 end date	common	es-es	Fecha de finalización
 end time	common	es-es	Hora de finalización
 enlarge editor	htmlarea	es-es	Agrandar editor
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare. <br>Ejemplo: http://www.dominio.com/egroupware &nbsp; o &nbsp; /egroupware<br><b>Sin barra al final</b>
 entry has been deleted sucessfully	common	es-es	La entrada ha sido eliminada correctamente
 entry updated sucessfully	common	es-es	La entrada ha sido actualizada correctamente
 equatorial guinea	common	es-es	EQUATORIAL GUINEA
@@ -253,6 +257,9 @@ guinea	common	es-es	GUINEA
 guinea-bissau	common	es-es	GUINEA-BISSAU
 guyana	common	es-es	GUYANA
 haiti	common	es-es	HAITI
+header admin login	common	es-es	Usuario administrador del encabezado
+header password	common	es-es	Contraseña del encabezado
+header username	common	es-es	Usuario del encabezado
 heard island and mcdonald islands	common	es-es	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	es-es	Ayuda
 help using editor	htmlarea	es-es	Ayuda usando el editor
@@ -490,7 +497,7 @@ section	common	es-es	Sección
 select	common	es-es	Seleccionar
 select all %1 %2 for %3	common	es-es	Seleccionar todos los %1 %2 para %3
 select category	common	es-es	Seleccionar categoría
-select date	jscalendar	es-es	Seleccionar fecha
+select date	common	es-es	Seleccionar fecha
 select group	common	es-es	Seleccionar grupo
 select home email address	common	es-es	Seleccionar dirección de correo inicial
 select one	common	es-es	Seleccionar uno
@@ -504,9 +511,11 @@ server name	common	es-es	Nombre del servidor
 session has been killed	common	es-es	La sesión ha sido eliminada
 setup	common	es-es	Instalación
 setup main menu	common	es-es	Menú principal de instalación
+setup/config admin login	common	es-es	Usuario administrador de Instalación/Configuración
 seychelles	common	es-es	SEYCHELLES
 show all	common	es-es	mostrar todo
 show all categorys	common	es-es	Mostrar todas las categorías
+show menu	common	es-es	mostrar menú
 show page generation time	common	es-es	Mostrar el tiempo que tarda en generarse la página
 show page generation time on the bottom of the page?	common	es-es	¿Mostrar el tiempo que tarda en generarse la página en la parte inferior de la página?
 show_more_apps	common	es-es	mostrar más aplicaciones
@@ -564,6 +573,7 @@ to correct this error for the future you will need to properly set the	common	es
 to go back to the msg list, click <a href= %1?sessionid=69211c0c32aa5581c5d69abdbcac4d64 >here</a>	common	es-es	Para volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 to go back to the msg list, click <a href= %1?sessionid=7fe5595a67d8747e64c2b92411ceaf31 >here</a>	common	es-es	
 to go back to the msg list, click <a href= %1?sessionid=c0878fba5e3f2f6230f04199a7af15c6 >here</a>	common	es-es	Para volver a la lista de menseajes, pulse <a href="%1">aquí</a>
+to go back to the msg list, click <a href= %1?sessionid=e8b5fbb098cb6b1e628cc61a5b848229 >here</a>	common	es-es	Para volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 today	common	es-es	Hoy
 todays date, eg. "%1"	common	es-es	fecha de hoy, ej. "%1"
 toggle first day of week	jscalendar	es-es	Cambiar el primer día de la semana
