@@ -24,7 +24,7 @@
 		);
 	}
 
-	$phpgw_info["flags"]["enable_addressbook_class"] = True;
+	$phpgw_info["flags"]["enable_contacts_class"] = True;
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
 	include("../header.inc.php");
 
@@ -118,6 +118,7 @@
 		header("Content-Disposition: attachment; filename=$filename");
 
 		printf("BEGIN:VCARD\r\n");
+		printf("X-PHPGROUPWARE-FILE-AS:phpGroupWare.org\r\n");
 		printf("N:%s;%s\r\n", $lastname, $firstname);
 		if (!$fullname) { printf("FN:%s %s\r\n", $firstname, $lastname); }
 		else            { printf("FN:%s\r\n", $fullname); }
@@ -152,10 +153,10 @@
 				$astreet,$acity,$astate,$azip,$acountry);
 		}
 		if ($label) {
-			printf("LABEL;ENCODING=QUOTED-PRINTABLE:%s\r\n",$label);
+			printf("LABEL;WORK;QUOTED-PRINTABLE:%s\r\n",$label);
 		} else {
 			if ($address2 && $astreet && $acity && $astate && $azip && $acountry) {
-				printf("LABEL;ENCODING=QUOTED-PRINTABLE:%s=0D=0A %s=0D=0A %s,%s  %s=0D=0A %s\r\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
+				printf("LABEL;WORK;QUOTED-PRINTABLE:%s=0A%s=0A%s,%s  %s=0A%s\r\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
 			}
 		}
 		// end 'A' grouping
@@ -172,6 +173,13 @@
 			$bzip != "") {    /* Home Zip */
 			printf("B.ADR%s;HOME:;;%s;%s;%s;%s;%s\r\n", $btype,$bstreet,
 				$bcity,$bstate,$bzip,$bcountry);
+		}
+		if ($bstreet && $bcity && $bstate && $bzip && $bcountry) {
+			printf("LABEL;HOME;QUOTED-PRINTABLE:%s=0A%s,%s  %s=0A%s\r\n",$bstreet,$bcity,$bstate,$bzip,$bcountry);
+		}
+
+		if ($url) {
+			printf("URL:%s\r\n",$url);
 		}
 		// end 'B' grouping
 
