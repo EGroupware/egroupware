@@ -114,11 +114,11 @@
 			}
 			if($timeout>0)
 			{
-				$fp = fsockopen($server, $port, &$this->errno, &$this->errstr, $timeout);
+				$fp = fsockopen($server, $port, $this->errno, $this->errstr, $timeout);
 			}
 			else
 			{
-				$fp = fsockopen($server, $port, &$this->errno, &$this->errstr);
+				$fp = fsockopen($server, $port, $this->errno, $this->errstr);
 			}
 			if(!$fp)
 			{
