@@ -1,12 +1,18 @@
 <?php
 
+error_reporting (4);
+
+if (@!$phpgw->vfs)
+{
+	$phpgw->vfs = CreateObject ('phpgwapi.vfs');
+}
+
 ### Start Configuration Options ###
 ### These are automatically set in phpGW - do not edit ###
 
 $sep = SEP;
 $rootdir = $phpgw->vfs->basedir;
 $fakebase = $phpgw->vfs->fakebase;
-$hostname = $phpgw_info["server"]["webserver_url"] . $filesdir;
 $appname = $phpgw_info["flags"]["currentapp"];
 $settings = $phpgw_info["user"]["preferences"][$appname];
 
@@ -19,9 +25,23 @@ else
 	unset ($filesdir);
 }
 
+$hostname = $phpgw_info["server"]["webserver_url"] . $filesdir;
+
+###
+# Note that $userinfo["username"] is actually the id number, not the login name
+###
+
+$userinfo["username"] = $phpgw_info["user"]["account_id"];
+$userinfo["account_lid"] = $phpgw->accounts->id2name ($userinfo["username"]);
+$userinfo["hdspace"] = 10000000000;
+$homedir = "$fakebase/$userinfo[account_lid]";
+
 ### End Configuration Options ###
 
-define ("NULL", "");
+if (!defined ("NULL"))
+{
+	define ("NULL", "");
+}
 
 require (PHPGW_APP_INC . "/db.inc.php");
 
@@ -85,10 +105,18 @@ function borkb ($size, $enclosed = NULL, $return = 0)
 # Check for and return the first unwanted character
 ###
 
-function bad_chars ($string, $return = 0)
+function bad_chars ($string, $all = True, $return = 0)
 {
-	if (preg_match("-([\\/<>\"'])-", $string, $badchars))
-		$rstring = $badchars[1];
+	if ($all)
+	{
+		if (preg_match("-([\\/<>\'\"\&])-", $string, $badchars))
+			$rstring = $badchars[1];
+	}
+	else
+	{
+		if (preg_match("-([\\/<>])-", $string, $badchars))
+			$rstring = $badchars[1];
+	}
 
 	return trim ((eor ($rstring, $return)));
 }
@@ -134,18 +162,18 @@ function eor ($rstring, $return)
 # but should be able to handle any normal query string or URL
 ###
 
-function string_encode ($string, $return)
+function string_encode ($string, $return = False)
 {
 	global $hostname;
 
 	if (preg_match ("/=(.*)(&|$)/U", $string))
 	{
-		$rstring = preg_replace ("/=(.*)(&|$)/Ue", "'=' . rawurlencode ('\\1') . '\\2'", $string);
+		$rstring = preg_replace ("/=(.*)(&|$)/Ue", "'=' . rawurlencode (base64_encode ('\\1')) . '\\2'", $string);
 	}
 	elseif (ereg ("^$hostname", $string))
 	{
 		$rstring = ereg_replace ("^$hostname/", "", $string);
-		$rstring = preg_replace ("/(.*)(\/|$)/Ue", "rawurlencode ('\\1') . '\\2'", $rstring);
+		$rstring = preg_replace ("/(.*)(\/|$)/Ue", "rawurlencode (base64_encode ('\\1')) . '\\2'", $rstring);
 		$rstring = "$hostname/$rstring";
 	}
 	else
@@ -159,7 +187,7 @@ function string_encode ($string, $return)
 	return (eor ($rstring, $return));
 }
 
-function string_decode ($string, $return)
+function string_decode ($string, $return = False)
 {
 	$rstring = rawurldecode ($string);
 
@@ -186,7 +214,7 @@ function translate ($text)
 }
 
 $help_info = array
-(
+	(
 		array ("up", "The Up button takes you to the directory above the current directory.  For example, if you're in /home/jdoe/mydir, the Up button would take you to /home/jdoe."),
 		array ("directory_name", "The name of the directory you're currently in."),
 		array ("home", "The Home button takes you to your personal home directory."),
@@ -202,21 +230,22 @@ $help_info = array
 		array ("application", "The application associated with the file or directory.  Usually the application used to create it.  A blank application field is ok."),
 		array ("comment", "The comment for the file or directory.  Comments can be set when creating the file or directory, and created or edited any time thereafter."),
 		array ("version", "The current version for the file or directory.  Clicking on the version number will display a list of changes made to the file or directory."),
-		array ("edit", "Edit the text of the selected file(s).  You can select more than one file; this is useful when you want to copy part of one file into another.  Clicking Preview will show you a preview of the file.  Click Save to save your changes"),
+		array ("edit", "Edit the text of the selected file(s).  You can select more than one file; this is useful when you want to copy part of one file into another.  Clicking Preview will show you a preview of the file.  Click Save to save your changes."),
 		array ("rename", "Rename the selected file(s).  You can select as many files or directories as you want.  You are presented with a text field to enter the new name of each file or directory."),
 		array ("delete", "Delete the selected file(s).  You can select as many files or directories as you want.  When deleting directories, the entire directory and all of its contents are deleted.  You will not be prompted to make sure you want to delete the file(s); make sure you really want to delete them before clicking Delete."),
 		array ("edit_comments", "Create a comment for a file or directory, or edit an existing comment.  You can select as many files or directories as you want."),
-		array ("go_to", "The Go to button takes you to the directory selected in the drop down Directory List."),
-		array ("copy_to", "This will copy all selected files and directories to the directory selected in the drop down Directory List."),
-		array ("move_to", "This will move all selected files and directories to the directory selected in the drop down Directory List."),
-		array ("directory_list", "The Directory List contains a list of all directories you have (at least) read access to.  Selecting a directory and clicking one of the Go to/Copy to/Move to buttons will perform the selected action on that directory.  For example, if you select \"/home/somegroup/reports\" from the Directory List, and click the \"Copy to\" button, all selected files and directories will be copied to \"/home/somegroup/reports\"."),
-		array ("download", "Download the first selected file to your local computer.  You can only download one file at a time."),
+		array ("go_to", "The Go to button takes you to the directory selected in the drop down [directory_list|Directory List]."),
+		array ("copy_to", "This will copy all selected files and directories to the directory selected in the drop down [directory_list|Directory List]."),
+		array ("move_to", "This will move all selected files and directories to the directory selected in the drop down [directory_list|Directory List]."),
+		array ("directory_list", "The Directory List contains a list of all directories you have (at least) read access to.  Selecting a directory and clicking one of the [go_to|Go to]/[copy_to|Copy to]/[move_to|Move to] buttons will perform the selected action on that directory.  For example, if you select \"/home/somegroup/reports\" from the Directory List, and click the \"[copy_to|Copy to]\" button, all selected files and directories will be copied to \"/home/somegroup/reports\"."),
+		array ("download", "Download the first selected file to your local computer.  You can only download one file at a time.  Directories cannot be downloaded, only files."),
 		array ("create_folder", "Creates a directory (folder == directory).  The name of the directory is specified in the text box next to the Create Folder button."),
-		array ("file_stats", "Various statistics on the number and size of the files in the current directory.  In some situations, these reflect different statistics.  For example, when in / and the base directory."),
-		array ("upload_file", "The full path of the local file to upload.  You can type it in or use the Browse.. button to select it.  The file will be uploaded to the current directory."),
-		array ("upload_comment", "The inital comment to use for the newly uploaded file.  Totally optional and completely arbitrary."),
 		array ("update", "Sync the database with the filesystem for the current directory.  This is useful if you use another interface to access the same files.  Any new files or directories in the current directory will be read in, and the attributes for the other files will be updated to reflect any changes to the filesystem.  Update is run automatically every few page loads (currently every 20 page loads as of this writing, but that may have changed by now)."),
-		array ("upload_files", "This will upload the files listed in the input boxes above, and stored them in the current directory."),
-);
+		array ("file_stats", "Various statistics on the number and size of the files in the current directory.  In some situations, these reflect different statistics.  For example, when in / or the base directory."),
+		array ("upload_file", "The full path of the local file to upload.  You can type it in or use the Browse.. button to select it.  The file will be uploaded to the current directory.  You cannot upload directories, only files."),
+		array ("upload_comment", "The inital comment to use for the newly uploaded file.  Totally optional and completely arbitrary.  You can [edit_comments|create or edit the comment] at any time in the future."),
+		array ("upload_files", "This will upload the files listed in the input boxes above, and store them in the current directory."),
+		array ("show_upload_fields", "This setting determines how many [upload_files|upload fields] will be shown at once.  You can change the default number that will be shown in the [preferences].")
+	);
 
 ?>
