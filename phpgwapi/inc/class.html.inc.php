@@ -130,8 +130,8 @@ class html
 		$str = @htmlspecialchars($str,ENT_COMPAT,$this->charset);
 		
 		// we need '&#' unchanged, so we translate it back
-		$str = str_replace('&amp;#','&#',$str);
-		
+		$str = str_replace(array('&amp;#','&amp;nbsp;','&amp;lt;','&amp;gt;'),array('&#','&nbsp;','&lt;','&gt;'),$str);
+
 		return $str;
 	}
 	
@@ -175,7 +175,7 @@ class html
 			{
 				$out .= ' selected="1"';
 			}
-			$out .= ">" . ($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
+			$out .= ">" . $this->htmlspecialchars($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
 		}
 		$out .= "</select>\n";
 		
