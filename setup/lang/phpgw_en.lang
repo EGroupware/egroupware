@@ -199,6 +199,8 @@ this section will help you import users and groups from your ldap tree into phpG
 this stage is completed<br>	setup	en	This stage is completed<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	en	This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	en	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
+translations added	setup	en	Translations Added
+translations removed	setup	en	Translations Removed
 uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	uninstalled
 upgrade	setup	en	Upgrade

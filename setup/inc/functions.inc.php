@@ -215,6 +215,22 @@
 	   pages from unauthorized use.
 	*/
 
+	function _debug_array($array)
+	{
+		if(floor(phpversion()) == 4)
+		{
+			ob_start(); 
+			echo '<pre>'; print_r($array); echo '</pre>';
+			$contents = ob_get_contents(); 
+			ob_end_clean();
+			echo $contents;
+		}
+		else
+		{
+			echo '<pre>'; var_dump($array); echo '</pre>';
+		}
+	}
+
 	if(file_exists(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'))
 	{
 		include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); // To set the current core version

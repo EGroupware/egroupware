@@ -106,5 +106,89 @@
 			}
 			return $ret;
 		}
+
+		/* Following functions are called for app (un)install in applications.php only */
+
+		/*!
+		@function get_langs
+		@abstract return array of installed languages, e.g. array('de','en')
+		*/
+		function get_langs()
+		{
+			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT(lang) FROM lang",__LINE__,__FILE__);
+			$langs = array();
+
+			while($GLOBALS['phpgw_setup']->db->next_record())
+			{
+				/* echo 'HELLO: ' . $GLOBALS['phpgw_setup']->db->f(0); */
+				$langs[] = $GLOBALS['phpgw_setup']->db->f(0);
+			}
+			return $langs;
+		}
+
+		/*!
+		@function drop_langs
+		@abstract delete all lang entries for an application, return True if langs were found
+		@param $appname app_name whose translations you want to delete
+		*/
+		function drop_langs($appname)
+		{
+			$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(message_id) FROM lang WHERE app_name='$appname'",__LINE__,__FILE__);
+			$GLOBALS['phpgw_setup']->db->next_record();
+			if($GLOBALS['phpgw_setup']->db->f(0))
+			{
+				$GLOBALS['phpgw_setup']->db->query("DELETE FROM lang WHERE app_name='$appname'",__LINE__,__FILE__);
+				return True;
+			}
+			return False;
+		}
+
+		/*!
+		@function add_langs
+		@abstract process an application's lang files, calling get_langs() to see what langs the admin installed already
+		@param $appname app_name of application to process
+		*/
+		function add_langs($appname)
+		{
+			$langs = $this->get_langs();
+
+			$GLOBALS['phpgw_setup']->db->transaction_begin();
+
+			while (list($null,$lang) = each($langs))
+			{
+				/* echo '<br>Working on: ' . $lang; */
+				$appfile = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
+				if(file_exists($appfile))
+				{
+					/* echo '<br>Including: ' . $appfile; */
+					$raw_file = file($appfile);
+
+					while (list($null,$line) = @each($raw_file))
+					{
+						list($message_id,$app_name,$phpgw_setup->db_lang,$content) = explode("\t",$line);
+						$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($message_id));
+						/* echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id; */
+						$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
+						$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
+						$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
+
+						$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM lang WHERE message_id='$message_id' and lang='"
+							. $GLOBALS['phpgw_setup']->db_lang . "'",__LINE__,__FILE__);
+						$GLOBALS['phpgw_setup']->db->next_record();
+
+						if ($GLOBALS['phpgw_setup']->db->f(0) == 0)
+						{
+							if($message_id && $content)
+							{
+								/* echo "<br>adding - INSERT INTO lang VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')"; */
+								$GLOBALS['phpgw_setup']->db->query("INSERT INTO lang VALUES ('$message_id','$app_name','"
+									. $GLOBALS['phpgw_setup']->db_lang . "','$content')",__LINE__,__FILE__);
+							}
+						}
+					}
+				}
+			}
+			$GLOBALS['phpgw_setup']->db->transaction_commit();
+		}
 	}
 ?>

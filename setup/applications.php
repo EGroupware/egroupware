@@ -141,6 +141,13 @@
 				$phpgw_setup->deregister_hooks($setup_info[$appname]['name']);
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks deregistered') . '.';
 			}
+
+			$dropped = False;
+			$dropped = $phpgw_setup->drop_langs($appname);
+			if($dropped)
+			{
+				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
+			}
 		}
 
 		while (list($appname,$key) = @each($install))
@@ -155,24 +162,25 @@
 				echo '<br>' . $setup_info[$appname]['title'] . ' '
 					. lang('tables installed, unless there are errors printed above') . '.';
 			}
+
+			if ($phpgw_setup->app_registered($setup_info[$appname]['name']))
+			{
+				$phpgw_setup->update_app($setup_info[$appname]['name']);
+			}
 			else
 			{
-				if ($phpgw_setup->app_registered($setup_info[$appname]['name']))
-				{
-					$phpgw_setup->update_app($setup_info[$appname]['name']);
-				}
-				else
-				{
-					$phpgw_setup->register_app($setup_info[$appname]['name']);
-				}
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('registered') . '.';
-
-				if ($setup_info[$appname]['hooks'])
-				{
-					$phpgw_setup->register_hooks($setup_info[$appname]['name']);
-					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
-				}
+				$phpgw_setup->register_app($setup_info[$appname]['name']);
 			}
+			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('registered') . '.';
+
+			if ($setup_info[$appname]['hooks'])
+			{
+				$phpgw_setup->register_hooks($setup_info[$appname]['name']);
+				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
+			}
+
+			$phpgw_setup->add_langs($appname);
+			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations added') . '.';
 		}
 
 		while (list($appname,$key) = @each($upgrade))
