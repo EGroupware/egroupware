@@ -1,20 +1,19 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - Preferences - categories                                  *
-  * http://www.phpgroupware.org                                              *
-  * Written by Bettina Gille [ceb@phpgroupware.org]                          *
-  * -----------------------------------------------                          *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare - Preferences - categories                                  *
+	* http://www.phpgroupware.org                                              *
+	* Written by Bettina Gille [ceb@phpgroupware.org]                          *
+	* -----------------------------------------------                          *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+	/* $Id$ */
 
 	class uicategories
 	{
 		var $bo;
-		var $t;
 
 		var $start;
 		var $query;
@@ -24,34 +23,35 @@
 
 		var $public_functions = array
 		(
-			'index'  => True,
-			'add'    => True,
-			'edit'   => True,
-			'delete' => True
+			'index'		=> True,
+			'add'		=> True,
+			'edit'		=> True,
+			'delete'	=> True
 		);
 
 		function uicategories()
 		{
-			
-			$this->bo         = CreateObject('preferences.bocategories',$cats_app);
-			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
-			$this->account    = $GLOBALS['phpgw_info']['user']['account_id'];
-			$this->user       = $GLOBALS['phpgw_info']['user']['fullname'];
+			$cats_app			= get_var('cats_app',array('POST','GET'));	
 
-			$this->start = $this->bo->start;
-			$this->query = $this->bo->query;
-			$this->sort  = $this->bo->sort;
-			$this->order = $this->bo->order;
+			$this->bo			= CreateObject('preferences.bocategories',$cats_app);
+			$this->nextmatchs	= CreateObject('phpgwapi.nextmatchs');
+			$this->account		= $GLOBALS['phpgw_info']['user']['account_id'];
+			$this->user			= $GLOBALS['phpgw_info']['user']['fullname'];
+
+			$this->start		= $this->bo->start;
+			$this->query		= $this->bo->query;
+			$this->sort			= $this->bo->sort;
+			$this->order		= $this->bo->order;
 		}
 
 		function save_sessiondata($cats_app)
 		{
 			$data = array
 			(
-				'start' => $this->start,
-				'query' => $this->query,
-				'sort'  => $this->sort,
-				'order' => $this->order
+				'start'	=> $this->start,
+				'query'	=> $this->query,
+				'sort'	=> $this->sort,
+				'order'	=> $this->order
 			);
 			$this->bo->save_sessiondata($data,$cats_app);
 		}
@@ -94,11 +94,11 @@
 
 			$link_data = array
 			(
-				'menuaction'  => 'preferences.uicategories.index',
-				'cats_app'    => $cats_app,
-				'extra'       => $extra,
-				'global_cats' => $global_cats,
-				'cats_level'  => $cats_level
+				'menuaction'	=> 'preferences.uicategories.index',
+				'cats_app'		=> $cats_app,
+				'extra'			=> $extra,
+				'global_cats'	=> $global_cats,
+				'cats_level'	=> $cats_level
 			);
 
 			if ($extra)
@@ -392,12 +392,13 @@
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 			}
 
-			$new_parent      = get_var('new_parent',Array('POST'));
-			$cat_parent      = get_var('cat_parent',Array('POST'));
-			$cat_name        = get_var('cat_name',Array('POST'));
-			$cat_description = get_var('cat_description',Array('POST'));
-			$cat_data        = get_var('cat_data',Array('POST'));
-			$cat_access      = get_var('cat_access',Array('POST'));
+			$new_parent			= get_var('new_parent',Array('POST'));
+			$cat_parent			= get_var('cat_parent',Array('POST'));
+			$cat_name			= get_var('cat_name',Array('POST'));
+			$cat_description	= get_var('cat_description',Array('POST'));
+			$cat_data			= get_var('cat_data',Array('POST'));
+			$cat_access			= get_var('cat_access',Array('POST'));
+			$old_parent			= get_var('old_parent',array('POST'));
 
 			if ($new_parent)
 			{
@@ -410,12 +411,13 @@
 
 				$values = array
 				(
-					'id'     => $cat_id,
-					'parent' => $cat_parent,
-					'descr'  => $cat_description,
-					'name'   => $cat_name,
-					'access' => $cat_access,
-					'data'   => $data
+					'id'			=> $cat_id,
+					'parent'		=> $cat_parent,
+					'old_parent'	=> $old_parent,
+					'descr'			=> $cat_description,
+					'name'			=> $cat_name,
+					'access'		=> $cat_access,
+					'data'			=> $data
 				);
 
 				$error = $this->bo->check_values($values);
@@ -425,7 +427,7 @@
 				}
 				else
 				{
-					$this->bo->save_cat($values);
+					$cat_id = $this->bo->save_cat($values);
 					$message = lang('Category x has been updated !',$cat_name);
 				}
 			}
@@ -441,6 +443,8 @@
 			$this->set_langs();
 
 			$cats = $this->bo->cats->return_single($cat_id);
+
+			$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="old_parent" value="' . $cats[0]['parent'] . '">');
 
 			$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit x category for',lang($cats_app)));
 			$GLOBALS['phpgw']->template->set_var('message',$message);

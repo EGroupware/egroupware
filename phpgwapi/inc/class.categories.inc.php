@@ -649,26 +649,35 @@
 		*/
 		function edit($cat_values)
 		{
-			if ($cat_values['parent'] && ($cat_values['parent'] != 0))
+			if (intval($cat_values['old_parent']) != $cat_values['parent'])
 			{
-				$cat_values['main']  = $this->id2name($cat_values['parent'],'main');
-				$cat_values['level'] = $this->id2name($cat_values['parent'],'level')+1;
+				$this->delete(array('cat_id' => $cat_values['id'],'drop_subs' => False,'modify_subs' => True));
+				return $this->add($cat_values);
 			}
 			else
 			{
-				$cat_values['main']  = $cat_values['id'];
-				$cat_values['level'] = 0;
+				if ($cat_values['parent'] && ($cat_values['parent'] != 0))
+				{
+					$cat_values['main']  = intval($this->id2name($cat_values['parent'],'main'));
+					$cat_values['level'] = intval($this->id2name($cat_values['parent'],'level')+1);
+				}
+				else
+				{
+					$cat_values['main']  = intval($cat_values['id']);
+					$cat_values['level'] = 0;
+				}
 			}
 
 			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
 			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $cat_values['name'] . "', cat_description='" . $cat_values['descr']
-				. "', cat_data='" . $cat_values['data'] . "', cat_parent='" . $cat_values['parent'] . "', cat_access='"
-				. $cat_values['access'] . "', cat_main='" . $cat_values['main'] . "', cat_level='" . $cat_values['level'] . "' "
-				. "WHERE cat_appname='" . $this->app_name . "' AND cat_id='" . $cat_values['id'] . "'";
+				. "', cat_data='" . $cat_values['data'] . "', cat_parent=" . $cat_values['parent'] . ", cat_access='"
+				. $cat_values['access'] . "', cat_main=" . $cat_values['main'] . ", cat_level=" . $cat_values['level']
+				. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($cat_values['id']);
 
 			$this->db->query($sql,__LINE__,__FILE__);
+			return intval($cat_values['id']);
 		}
 
 		function name2id($cat_name)

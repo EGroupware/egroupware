@@ -59,6 +59,7 @@
 <table width="80%" border="0" cellspacing="2" cellpadding="2">
 	<tr valign="bottom">
 		<td height="50">
+			{hidden_vars}
 			<input type="submit" name="submit" value="{lang_save}"></form></td>
 		<td height="50" align="center">
 			{delete}</td>

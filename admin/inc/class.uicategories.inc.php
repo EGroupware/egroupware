@@ -34,25 +34,25 @@
 
 		function uicategories()
 		{
-			$this->bo         = CreateObject('admin.bocategories');
-			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$this->bo			= CreateObject('admin.bocategories');
+			$this->nextmatchs	= CreateObject('phpgwapi.nextmatchs');
 
-			$this->start  = $this->bo->start;
-			$this->query  = $this->bo->query;
-			$this->sort   = $this->bo->sort;
-			$this->order  = $this->bo->order;
-			$this->cat_id = $this->bo->cat_id;
+			$this->start		= $this->bo->start;
+			$this->query		= $this->bo->query;
+			$this->sort			= $this->bo->sort;
+			$this->order		= $this->bo->order;
+			$this->cat_id		= $this->bo->cat_id;
 			if($this->debug) { $this->_debug_sqsof(); }
 		}
 
 		function _debug_sqsof()
 		{
 			$data = array(
-				'start'  => $this->start,
-				'query'  => $this->query,
-				'sort'   => $this->sort,
-				'order'  => $this->order,
-				'cat_id' => $this->cat_id
+				'start'		=> $this->start,
+				'query'		=> $this->query,
+				'sort'		=> $this->sort,
+				'order'		=> $this->order,
+				'cat_id'	=> $this->cat_id
 			);
 			echo '<br>UI:<br>';
 			_debug_array($data);
@@ -62,10 +62,10 @@
 		{
 			$data = array
 			(
-				'start' => $this->start,
-				'query' => $this->query,
-				'sort'  => $this->sort,
-				'order' => $this->order
+				'start'	=> $this->start,
+				'query'	=> $this->query,
+				'sort'	=> $this->sort,
+				'order'	=> $this->order
 			);
 
 			if(isset($this->cat_id))
@@ -335,20 +335,18 @@
 
 			$this->set_langs();
 
-			$new_parent = $GLOBALS['HTTP_POST_VARS']['new_parent'];
-			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent = $GLOBALS['HTTP_POST_VARS']['cat_parent'];
-			$cat_name   = $GLOBALS['HTTP_POST_VARS']['cat_name'];
-			$cat_description = $GLOBALS['HTTP_POST_VARS']['cat_description'];
+			$new_parent			= $GLOBALS['HTTP_POST_VARS']['new_parent'];
+			$submit				= $GLOBALS['HTTP_POST_VARS']['submit'];
+			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'];
+			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
+			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
+			$old_parent			= $GLOBALS['HTTP_POST_VARS']['old_parent'];
 
 			$GLOBALS['phpgw']->template->set_file(array('cat_form' => 'category_form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('cat_form','add');
 			$GLOBALS['phpgw']->template->set_block('cat_form','edit');
 			$GLOBALS['phpgw']->template->set_block('cat_form','form');
 
-
-			$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n";
-			$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			if ($new_parent)
@@ -360,11 +358,12 @@
 			{
 				$values = array
 				(
-					'id'     => $this->cat_id,
-					'parent' => $cat_parent,
-					'descr'  => $cat_description,
-					'name'   => $cat_name,
-					'access' => 'public'
+					'id'			=> $this->cat_id,
+					'old_parent'	=> $old_parent,
+					'parent'		=> $cat_parent,
+					'descr'			=> $cat_description,
+					'name'			=> $cat_name,
+					'access'		=> 'public'
 				);
 
 				$error = $this->bo->check_values($values);
@@ -374,7 +373,7 @@
 				}
 				else
 				{
-					$this->bo->save_cat($values);
+					$this->cat_id = $this->bo->save_cat($values);
 					$GLOBALS['phpgw']->template->set_var('message',lang('Category x has been updated !',$cat_name));
 				}
 			}
@@ -390,6 +389,10 @@
 				$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit global category'));
 			}
 
+			$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n"
+							. '<input type="hidden" name="old_parent" value="' . $cats[0]['parent'] . '">' . "\n";
+			$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
+
 			$link_data['menuaction'] = 'admin.uicategories.edit';
 			$link_data['cat_id']     = $this->cat_id;
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
@@ -398,13 +401,10 @@
 
 			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats[0]['name']));
 			$GLOBALS['phpgw']->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats[0]['description']));
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array(
-				'select'      => 'select',
-				'all'         => 'all',
-				'cat_parent'  => $cats[0]['parent'],
-				'global_cats' => $global_cats
-			)));
-
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array('select'	=> 'select',
+																									'all'	=> 'all',
+																							'cat_parent'	=> $cats[0]['parent'],
+																							'global_cats'	=> $global_cats)));
 			$GLOBALS['phpgw']->template->parse('buttons','edit');
 			$GLOBALS['phpgw']->template->fp('phpgw_body','form');
 		}
