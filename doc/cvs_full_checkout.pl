@@ -23,7 +23,6 @@
 	$cvs_anonymous = True;
 	# Only needed if you have developers cvs access
 	$cvs_login    = '';
-	$cvs_password = '';
 
 	# Modules you want to checkout, do NOT add the phpgroupware module
 	@co_modules = (
@@ -110,12 +109,7 @@
 		$contents .= "spawn $command\n";
 		$contents .= "match_max 100000\n";
 
-		if (!$cvs_anonymous)
-		{
-			$contents .= "expect \":\"\n";
-			$contents .= "send -- \"" . $cvs_password . "\\r\"\n";
-		}
-		elsif ($cvs_anonymous and $anonymous_login)
+		if ($cvs_anonymous and $anonymous_login)
 		{
 			$contents .= "expect \"CVS password:\"\n";
 			$contents .= "send -- \"\\r\"\n";
@@ -136,7 +130,7 @@
 	}
 	else
 	{
-		&docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:443/cvsroot/phpgroupware co phpgroupware');
+		&docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:/cvsroot/phpgroupware co phpgroupware');
 	}
 
 	chdir($co_dir . '/phpgroupware');
@@ -147,7 +141,7 @@
 	}
 	else
 	{
-		&docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:443/cvsroot/phpgroupware co ' . join(' ',@co_modules));
+		&docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:/cvsroot/phpgroupware co ' . join(' ',@co_modules));
 	}
 
 	&docvscommand('cvs update -dP');

@@ -25,7 +25,6 @@
 	$cvs_anonymous = True;
 	// Only needed if you have developers cvs access
 	$cvs_login     = '';
-	$cvs_password  = '';
 
 
 	// Modules you want to checkout, do NOT add the phpgroupware module
@@ -93,7 +92,7 @@
 
 	function docvscommand($command, $anonymous_login = False)
 	{
-		global $tmp_dir, $cvs_password, $cvs_anonymous;
+		global $tmp_dir, $cvs_anonymous;
 
 		$fp = fopen($tmp_dir . '/createrelease.exp','w');
 		$contents = "#!/usr/bin/expect -f\n";
@@ -110,12 +109,7 @@
 		$contents .= "spawn $command\n";
 		$contents .= "match_max 100000\n";
 
-		if (! $cvs_anonymous)
-		{
-			$contents .= "expect \":\"\n";
-			$contents .= "send -- \"" . $cvs_password . "\\r\"\n";
-		}
-		else if ($cvs_anonymous && $anonymous_login)
+		if ($cvs_anonymous && $anonymous_login)
 		{
 			$contents .= "expect \"CVS password:\"\n";
 			$contents .= "send -- \"\\r\"\n";
@@ -136,7 +130,7 @@
 	}
 	else
 	{
-		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:443/cvsroot/phpgroupware co phpgroupware');
+		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:/cvsroot/phpgroupware co phpgroupware');
 	}
 
 	chdir($co_dir . '/phpgroupware');
@@ -147,7 +141,7 @@
 	}
 	else
 	{
-		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:443/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
+		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
 	}
 
 	docvscommand('cvs update -dP');
