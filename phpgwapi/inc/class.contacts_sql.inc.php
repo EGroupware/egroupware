@@ -484,6 +484,7 @@
 
 			if($cquery)
 			{
+				$sql = "SELECT * FROM $this->std_table WHERE (";
 				$cfields = array(
 					'fn'       => 'cn',
 					'n_family' => 'sn',
