@@ -338,7 +338,7 @@ or: select for today:	todo	en	or: select for today:
 original	transy	en	Original
 other number	addressbook	en	Other Number
 other phone	common	en	Other phone
-owner	addressbook	en	Owner
+owner	common	en	Owner
 pager	addressbook	en	Pager
 participants	calendar	en	Participants
 password	common	en	Password
