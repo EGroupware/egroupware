@@ -1,10 +1,111 @@
-fax	infolog	es	Fax
-duration	infolog	es	Duración
-today	infolog	es	Hoy
-from	infolog	es	De
-download	infolog	es	Bajar
-done	infolog	es	Hecho
-showing x - x of x	infolog	es	showing %1 - %2 of %3
+%1 records imported	infolog	es	%1 registros importados
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	es	%1 registros leidos (aun no importados, puede %2volver%3 y desmarcar Testear Importacion)
+accept	infolog	es	aceptar
+action	infolog	es	Accion
+Add a file	infolog	es	Agregar archivo
+add	infolog	es	Agregar
+add sub	infolog	es	agregar Sub
+all	infolog	es	Todos
 are you sure you want to delete this entry	infolog	es	Esta seguro de querer borrar esta entrada?
-urgency	infolog	es	Urgencia
+are you sure you want to delete this entry	infolog	es	Esta Ud. seguro que desea borrar esta entrada?
+attach file	infolog	es	Adjuntar Archivo
+back to Projectlist	infolog	en	Volver a la Lista de Proyectos
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog es	<b>Archivos adjuntos por enlace simbolico</b> en vez de uploads y descargas via archivo:/camino para clientes locales de red
+billed	infolog	es	facturado
+both	infolog	es	ambos
+call	infolog	es	llamar
+category	infolog	es	Categoria
+close	infolog	es	Cerrar
+comment	infolog	es	Comentario
+configuration	infolog	es	Configuracion
+confirm	infolog	es	confirmar
+csv-fieldname	infolog	es	CSV-NombredeCampo
+csv-filename	infolog	es	CSV-NombredeArchivo
+csv-import	common	es	CSV-Importar
+datecreated	infolog	es	fecha de creacion
+days	infolog	es	dias
+default Filter for InfoLog	infolog	es	Filtro por Defecto para InfoLog
+description can not exceed 8000 characters in length	infolog	es	La descripcion no puede exceder 8000 caracteres de largo
+description	infolog	es	Descripcion
+done	infolog	es	Hecho
+download	infolog	es	Descargar
+duration	infolog	es	Duración
+enddate can not be before startdate	infolog	es	La fecha de finalizacion no puede ser anterior a la de Inicio
+enddate	infolog	es	Fecha de Finalizacion
+entry and all files	infolog	es	Entrada y todos los archivos
+fax	infolog	es	Fax
+fieldseparator	infolog	es	Separador de Campos
+finish	infolog	es	finalizar
+from	infolog	es	De
+import	infolog	es	Importar
+infolog	common	es	InfoLog
+infolog - delete	infolog	es	Info Log - Eliminar
+infolog - edit	infolog	es	InfoLog - Editar
+infolog-fieldname	infolog	es	Info Log - Nombre del Campo
+infolog - import CSV-File	infolog	es	InfoLog - Importar Archivo CSV
+infolog - new	infolog	es	InfoLog - Nuevo
+infolog - new subproject	infolog	es	InfoLog - Nuevo Subproyecto
+infolog preferences	common	es	InfoLog - preferencias
+infolog - subprojects from	infolog	es	InfoLog - Subproyectos de
+Invalid filename	infolog	es	Nombre de Archivo Invalido
+last changed	infolog	es	ultimo cambio
+list no Subs/Childs	infolog	es	No Listar Subs/Hijos
+no - cancel	infolog	es	No - Cancelar
+no entries found, try again ...	infolog	es	no se encontraron registros, reintentelo ...
+no filter	infolog	es	sin Filtro
+none	infolog	es	Ninguno
+not assigned	infolog	es	no asignado
+note	infolog	es	Nota
+not	infolog	es	no
+number of records to read (<=200)	infolog	es	Numero de registros a leer (<=200)
+offer	infolog	es	ofrecer
+ongoing	infolog	es	actuales
+open	infolog	es	abrir
+overdue	infolog	es	vencido
+owner	infolog	es	Due&ntilde;o
+own	infolog	es	propio
+own open	infolog	es	propio abierto
+own overdue	infolog	es	propio vencido
+own upcoming	infolog	es	propio 
+path on (web-)serverside<br>eg. /var/samba/Share	infolog	es	Camino en el servidor ej. /var/samba/Share
+pattern for search in addressbook	infolog	es	expresion a buscar en la Libreta de direcciones
+pattern for search in projects	infolog	es	expresion a buscar en Proyectos
+phonecall	infolog	es	Llamado
+phone/email	infolog	es	Telefono/Email
+phone	infolog	es	Llamada Telefonica
+priority	infolog	es	Prioridad
+private	infolog	es	Privado
+project	infolog	es	Proyecto
+reg. expr. for local IP's<br>eg. ^192\.168\.1\.	infolog	es	expresion regular para IP locales <br>ej. ^192\.168\.1\.
+re:	infolog	es	Re:
+reject	infolog	es	rechazar
+responsible	infolog	es	Responsable
+search for:	infolog	es	Buscar:
+select	infolog	es	Seleccionar
+show full usernames	infolog	es	Mostrar nombres de usuario completos
+showing x	infolog	es	mostrando %1
+showing x - x of x	infolog	es	mostrando %1 - %2 de %3
+show open Events: Tasks/Calls/Notes on main screen	infolog	es	Mostrar eventos abiertos: Tareas/Llamados/Notas en la Pantalla Principal
+startdate	infolog	es	Fecha de Inicio
+startrecord	infolog	es	Comenzar Registro
+status	infolog	es	Estado
+sub	infolog	es	Sub
+subject	infolog	es	Asunto
+task	infolog	es	Tareas
+test Import (show importable records <u>only</u> in browser)	infolog	es	Probar Importacion (mostrar registros importables <u>solo</u> en el navegador)
+today	infolog	es	Hoy
 translation	infolog	es	Traducción
+type	infolog	es	Tipo
+upcoming	infolog	es	actuales
+urgency	infolog	es	Urgencia
+urgent	infolog	es	urgente
+use Button to search for Address	infolog	es	usar Boton para buscar por Direccion
+use Button to search for Project	infolog	es	usar Boton para buscar por Proyecto
+valid path on clientside<br>eg. \\Server\Share or e:\	infolog	es	camino valido en el cliente<br>ej. \\Servidor\Share o e:\
+view other subs	infolog	es	ver otros Subs
+view subs	infolog	es	ver Subs
+will-call	infolog	es	va a llamar
+yes - delete	infolog	es	Si - Eliminar
+you have entered an invalid ending date	infolog	es	Usted ha ingresado una fecha de finalizacion invalida
+you have entered an invalid starting date	infolog	es	Usted ha ingresado una fecha de comienzo invalida
+you must enter a subject or a description	infolog	es	Usted debe ingresar un asunto o descripcion
