@@ -140,7 +140,7 @@
 			{
 				$xul_row = new xmlnode('row');
 				$this->set_attributes($xul_row,'class,valign',$opts["c$r"]);
-				$this->set_attributes($xul_row,'height',$opts["h$r"]);
+				$this->set_attributes($xul_row,'height,disabled',$opts["h$r"]);
 
 				$spanned = 0;
 				while (list($c,$cell) = each($row))
@@ -148,7 +148,7 @@
 					if ($r == '1')	// write columns only once in the first row
 					{
 						$xul_column = new xmlnode('column');
-						$this->set_attributes($xul_column,'width',$opts[$c]);
+						$this->set_attributes($xul_column,'width,disabled',$opts[$c]);
 						$xul_columns->add_node($xul_column);
 					}
 					if ($spanned)
@@ -391,7 +391,8 @@
 						{
 							return 'place widgets in <row> and not in <column> !!!';
 						}
-						$etempl->data[0][$etempl->num2chrs($etempl->cols++)] = $attr['width'];
+						$etempl->data[0][$etempl->num2chrs($etempl->cols++)] = $attr['width'] .
+							($attr['disabled'] ? ','.$attr['disabled'] : '');
 						break;
 					case 'row':
 						if ($type != 'open')
@@ -401,7 +402,8 @@
 						$r = ++$etempl->rows;
 						$col = 0;
 						$etempl->data[0]["c$r"] = $attr['class'] . ($attr['valign'] ? ','.$attr['valign'] : '');
-						$etempl->data[0]["h$r"] = $attr['height'];
+						$etempl->data[0]["h$r"] = $attr['height'] .
+							($attr['disabled'] ? ','.$attr['disabled'] : '');
 						break;
 					case 'styles':
 						$etempl->style = trim($node['value']);

@@ -185,6 +185,29 @@
 			}
 		}
 
+		function check_disabled($disabled,$content)
+		{
+			//return False;
+			if ($not = $disabled[0] == '!')
+			{
+				$disabled = substr($disabled,1);
+			}
+			list($val,$check_val) = $vals = explode('=',$disabled);
+
+			if ($val[0] == '@')
+			{
+				$val = $this->get_array($content,substr($val,1));
+			}
+			if ($check_val[0] == '@')
+			{
+				$check_val = $this->get_array($content,substr($check_val,1));
+			}
+			$result = count($vals) == 1 ? $val != '' : $val == $check_val;
+			if ($not) $result = !$result;
+			echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
+			return $result;
+		}
+
 		/*!
 		@function show
 		@abstract creates HTML from an eTemplate
@@ -228,11 +251,11 @@
 			reset($this->data);
 			if (isset($this->data[0]))
 			{
-				list(,$width) = each($this->data);
+				list(,$opts) = each($this->data);
 			}
 			else
 			{
-				$width = array();
+				$opts = array();
 			}
 			for ($r = 0; $row = 1+$r /*list($row,$cols) = each($this->data)*/; ++$r)
 			{
@@ -248,13 +271,18 @@
 				else
 				{
 					$cols = &$this->data[$r_key];
-					$height = &$this->data[0]["h$row"];
-					$class = &$this->data[0]["c$row"];
+					list($height,$disabled) = explode(',',$opts["h$row"]);
+					$class = $opts["c$row"];
+				}
+				if ($disabled != '' && $this->check_disabled($disabled,$content))
+				{
+					continue;	// row is disabled
 				}
 				reset ($cols);
 				$row_data = array();
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
 				{
+					$col = $this->num2chrs($c);
 					if (!(list($c_key) = each($cols)))		// no further cols
 					{
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
@@ -266,8 +294,12 @@
 					else
 					{
 						$cell = &$cols[$c_key];
+						list(,$col_disabled) = explode(',',$opts[$col]);
 					}
-					$col = $this->num2chrs($c);
+					if ($col_disabled != '' && $this->check_disabled($col_disabled,$content))
+					{
+						continue;	// col is disabled
+					}
 					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,
 						$c,$r,$span);
 					if ($row_data[$col] == '' && $this->rows == 1)
@@ -284,10 +316,10 @@
 							each($cols);	// skip next cell(s)
 						}
 					}
-					elseif ($width[$col])	// width only once for a non colspan cell
+					elseif ($opts[$col])	// width only once for a non colspan cell
 					{
-						$row_data[".$col"] .= ' WIDTH='.$width[$col];
-						$width[$col] = 0;
+						$row_data[".$col"] .= ' WIDTH='.$opts[$col];
+						$opts[$col] = 0;
 					}
 					$row_data[".$col"] .= $this->html->formatOptions($cell['align'],'ALIGN');
 					list(,$cl) = explode(',',$cell['span']);
@@ -413,6 +445,8 @@
 			switch ($type)
 			{
 				case 'label':		//  size: [[b]old][[i]talic]
+					if (is_array($value))
+						break;
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					if ($value != '' && strstr($cell['size'],'b')) $value = $this->html->bold($value);
 					if ($value != '' && strstr($cell['size'],'i')) $value = $this->html->italic($value);

@@ -215,8 +215,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>no</td>
 	<td>no_lang</td>
 	<td>
-		If checked the content of the widget gets NOT translated.<br>
-		The label of a widget get always translated.
+		If checked the content of the widget and the label gets NOT translated.<br>
+		The helptext of a widget is always translated.
 	</td>
 </tr>
 <tr>
@@ -291,7 +291,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	</td>
 </tr>
 <tr>
-	<td><b>Width</b><br>column-attr.</td>
+	<td><b>Width, Disabled</b><br>column-attr.</td>
 	<td>width</td>
 	<td>yes</td>
 	<td>row[0][#]</td>
@@ -300,12 +300,27 @@ implement only a subset of XUL. Here are the main differences:</p>
 	</td>
 </tr>
 <tr>
-	<td><b>Height</b><br>row-attr.</td>
+	<td><b>Height, Disabled</b><br>row-attr.</td>
 	<td>height</td>
 	<td>yes</td>
 	<td>row[0][h#]</td>
 	<td>
 		Can be set to a percentage (eg. '10%'), a number of pixels or ...
+	</td>
+</tr>
+<tr>
+	<td><b>Disabled</b><br>column-attr.<br>row-attr.</td>
+	<td>disabled</td>
+	<td>no</td>
+	<td>&nbsp;</td>
+	<td>
+		Syntax: <b>[!]{@name|value}[={@name2|value2}]</b><br>
+		Disables (=dont show it) a row/column if a certain criteria is (not (=!)) meet.<br>
+      If no '=...' / 2. value is given, the test is made on the first value being not empty, else
+		the test is made by comparing the two values. Instead of a value you can give a name as an
+		index into the content prefixed by @. Examples:<br>
+		<b>!@data</b> disables row/col if value of data is empty, <br>
+		<b>@val=false</b> disables if value of val is equal to (the string) 'false'
 	</td>
 </tr>
 <tr>

@@ -8,6 +8,14 @@
 %s readonly	etemplate	en	%s Readonly
 -1	etemplate	en	-1
 ../../developer_tools/templates/default/images/navbar.gif	etemplate	en	../../developer_tools/templates/default/images/navbar.gif
+1a	etemplate	en	1A
+1b	etemplate	en	1B
+1c	etemplate	en	1C
+1d	etemplate	en	1D
+2a	etemplate	en	2A
+2b	etemplate	en	2B
+2c	etemplate	en	2C
+2d	etemplate	en	2D
 <<	etemplate	en	<<
 >>	etemplate	en	>>
 a pattern to be searched for	etemplate	en	a pattern to be searched for
@@ -40,12 +48,14 @@ class, valign	etemplate	en	class, Valign
 click here to create the link	etemplate	en	click here to create the Link
 click here to start the search	etemplate	en	click here to start the search
 columnname	etemplate	en	ColumnName
+comment	etemplate	en	Comment
 companyname	etemplate	en	Companyname
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	en	CSS class for the table-tag
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	en	CSS-styles
+data	etemplate	en	Data
 date	etemplate	en	Date
 datefield	etemplate	en	Datefield
 day	etemplate	en	Day
@@ -109,8 +119,11 @@ go to the next page of entries	etemplate	en	go to the next page of entries
 go to the previous page of entries	etemplate	en	go to the previous page of entries
 group/-user	etemplate	en	Group/-User
 height	etemplate	en	Height
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	en	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
 height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table-tag and (optional) div
+height, disable	etemplate	en	Height, Disable
+height, disabled	etemplate	en	Height, Disabled
 help	etemplate	en	Help
 hier kommt text rein	etemplate	en	Hier kommt text rein
 horizontal rule	etemplate	en	Horizontal Rule
@@ -261,13 +274,18 @@ unlink	etemplate	en	Unlink
 update from version '%s' to	etemplate	en	Update from Version '%s' to
 upload	etemplate	en	Upload
 value	etemplate	en	Value
+value for data	etemplate	en	value for data
+value for test	etemplate	en	value for test
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when was the company founded	etemplate	en	when was the company founded
 width	etemplate	en	Width
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	en	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
 width of column (in percent or pixel)	etemplate	en	width of column (in percent or pixel)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table-tag and (optional) div
+width, disable	etemplate	en	Width, Disable
+width, disabled	etemplate	en	Width, Disabled
 width, height and border-line-thickness of the table / template	etemplate	en	width, height and border-line-thickness of the table / template
 width, height, border	etemplate	en	Width, Height, Border
 width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Height, Border, class, Cellspacing, Cellpadding
