@@ -48,7 +48,8 @@
     if ($tg == 0)
     {
       set_time_limit(0);
-      include($phpgw_info["server"]["include_root"]."/nntp/nntp.inc.php");
+      include($phpgw_info["server"]["include_root"]
+		. "../nntp/inc/functions.inc.php");
       $nntp = new NNTP;
       $nntp->load_table();
       $tg = get_tg();
@@ -56,13 +57,49 @@
 
     if (! $start) $start = 0;
      
+    if (! $query_result) $query_result = 0;
+
+    $orderby = "";
+    if ($order)
+    {
+      switch ($order)
+      {
+	case 1:
+	  $orderby = " ORDER BY CON $sort";
+	  break;
+	case 2:
+	  $orderby = " ORDER BY NAME $sort";
+	  break;
+	case 3:
+	  $orderby = " ORDER BY ACTIVE $sort";
+	  break;
+      }
+    }
+
+    if ($search || $next) {
+      if ($search)
+	$query_result = 0;
+      else
+	$query_result++;
+      $phpgw->db->query("SELECT con FROM newsgroups "
+		    ."WHERE name LIKE '%".$query."%'$orderby LIMIT "
+		    .$phpgw->nextmatchs->sql_limit($query_result));
+      $phpgw->db->next_record();
+      $start = $phpgw->db->f("con");
+    }
+     
     $urlname = $phpgw_info["server"]["webserver_url"]."/admin/nntp.php";
 
     $common_hidden_vars = $phpgw->session->hidden_var() . "\n"
 		        . "<input type=\"hidden\" name=\"start\" value=\"".$start."\">\n"
 		        . "<input type=\"hidden\" name=\"stop\" value=\""
 			. ($start + $phpgw_info["user"]["preferences"]["maxmatchs"])."\">\n"
-		        . "<input type=\"hidden\" name=\"tg\" value=\"".$tg."\">\n";
+		        . "<input type=\"hidden\" name=\"tg\" value=\"".$tg."\">\n"
+		        . "<input type=\"hidden\" name=\"query_result\" value=\"".$query_result."\">\n";
+
+    $t->set_var("search_value",$query);
+    $t->set_var("search",lang_common("search"));
+    $t->set_var("next",lang_nntp("next"));
 
     $t->set_var("nml",$phpgw->nextmatchs->left($urlname,$start,$tg,
 					"&tg=$tg&sort=$sort&order=$order"));
