@@ -417,7 +417,14 @@
 						{
 							$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
 						}
-						$cell['sel_options'][$cat['id']] = $s;
+						if ($tmpl->stable)
+						{
+							$cell['sel_options'][$cat['id']] = $s;	// 0.9.14 only
+						}
+						else
+						{
+							$cell['sel_options'][$cat['cat_id']] = $s;
+						}
 					}
 					$cell['no_lang'] = True;
 					break;
