@@ -297,6 +297,7 @@
 				$acl->delete_repository('phpgw_group',$groupData['account_id'],$_userData['account_id']);
 			}
 		}
+		$phpgw->session->delete_cache(intval($_userData['account_id']));
 	}
 
 	// checks if the userdata are valid

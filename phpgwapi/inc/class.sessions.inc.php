@@ -376,6 +376,18 @@
 				$this->appsession('phpgw_info_cache','phpgwapi',$this->user);
 			}
 		}
+
+		function delete_cache($accountid='')
+		{
+			global $phpgw;
+			
+			$account_id = get_account_id($accountid,$this->account_id);
+
+			$query = "DELETE FROM phpgw_app_sessions WHERE loginid = '".$account_id."'"
+				." AND app = 'phpgwapi' and location = 'phpgw_info_cache'";
+
+			$phpgw->db->query($query);			
+		}
 	
 		function save_repositories()
 		{
