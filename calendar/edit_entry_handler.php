@@ -204,10 +204,9 @@ if (! $error) {
   
   Header("Location: ".$phpgw->link("index.php","year=$year&month=$month&cd=14"));
 
-?>
-
+}
 $phpgw->common->phpgw_header();
-<BODY BGCOLOR="<?php echo $BGCOLOR; ?>">
+?>
 
 <?php if (strlen($overlap)) { ?>
 <H2><FONT COLOR="<?php echo $H2COLOR;?>">Scheduling Conflict</H2></FONT>
@@ -231,4 +230,3 @@ $phpgw->common->phpgw_header();
 
   $phpgw->db->unlock();
   $phpgw->common->phpgw_footer();
-?>
