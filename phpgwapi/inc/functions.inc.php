@@ -1,4 +1,5 @@
 <?php
+$debugme = "on";
 	/**************************************************************************\
 	* phpGroupWare API - phpgwapi loader                                       *
 	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
@@ -65,94 +66,28 @@
 
 	function filesystem_separator()
 	{
-		if (PHP_OS == "Windows" || PHP_OS == "OS/2") {
-			return "\\";
+		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2') {
+			return '\\';
 		} else {
-			return "/";
+			return '/';
 		}
 	}
 
-	/****************************************************************************\
-	* Optional classes, which can be disabled for performance increases          *
-	*  - they are loaded after pulling in the config from the DB                 *
-	\****************************************************************************/
-	function load_optional()
+	function print_debug($text)
 	{
-		global $phpgw,$phpgw_info;
-	
-		if ($phpgw_info["flags"]["enable_categories_class"]) {
-			$phpgw->categories = CreateObject("phpgwapi.categories");
-		}
-	
-		if ($phpgw_info["flags"]["enable_network_class"]) {
-			$phpgw->network = CreateObject("phpgwapi.network");
-		}
-		
-		if ($phpgw_info["flags"]["enable_send_class"]) {
-			$phpgw->send = CreateObject("phpgwapi.send");
-		}
- 
-		if ($phpgw_info["flags"]["enable_nextmatchs_class"]) {
-			$phpgw->nextmatchs = CreateObject("phpgwapi.nextmatchs");
-		}
-		
-		if ($phpgw_info["flags"]["enable_utilities_class"]) {
-			$phpgw->utilities = CreateObject("phpgwapi.utilities");
-		}
- 
-		if ($phpgw_info["flags"]["enable_vfs_class"]) {
-			$phpgw->vfs = CreateObject("phpgwapi.vfs");
-		}
-	} 
-
-	// This function needs to be optimized, its reading duplicate information.
-	function phpgw_fillarray()
-	{
-		global $phpgw, $phpgw_info, $cd, $colspan;
-
-		define("PHPGW_TEMPLATE_DIR",$phpgw->common->get_tpl_dir("phpgwapi"));
-		define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_path("phpgwapi"));
-		define("PHPGW_IMAGES_FILEDIR", $phpgw->common->get_image_dir("phpgwapi"));
-		define("PHPGW_APP_ROOT", $phpgw->common->get_app_dir());
-		define("PHPGW_APP_INC", $phpgw->common->get_inc_dir());
-		define("PHPGW_APP_TPL", $phpgw->common->get_tpl_dir());
-		define("PHPGW_IMAGES", $phpgw->common->get_image_path());
-		define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_dir());
-
-		/* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
-		$phpgw_info["server"]["template_dir"]     = PHPGW_TEMPLATE_DIR;
-		$phpgw_info["server"]["images_dir"]       = PHPGW_IMAGES_DIR;
-		$phpgw_info["server"]["images_filedir"]   = PHPGW_IMAGES_FILEDIR;
-		$phpgw_info["server"]["app_root"]         = PHPGW_APP_ROOT;
-		$phpgw_info["server"]["app_inc"]          = PHPGW_APP_INC;
-		$phpgw_info["server"]["app_tpl"]          = PHPGW_APP_TPL;
-		$phpgw_info["server"]["app_images"]       = PHPGW_IMAGES;
-		$phpgw_info["server"]["app_images_dir"]   = PHPGW_IMAGES_DIR;
-	
-		/* ********This sets the user variables******** */
-		$phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"] . "/users/"
-																			 . $phpgw_info["user"]["userid"];
-
-		// This shouldn't happen, but if it does get ride of the warnings it will spit out    
-		if (gettype($phpgw_info["user"]["preferences"]) != "array") {
-			 $phpgw_info["user"]["preferences"] = array();
-		}
+		global $debugme;
+		if ($debugme == "on") { echo 'debug: '.$text.'<br>'; }
 	}
-
-
+print_debug('core functions are done');
 	/****************************************************************************\
-	* Quick verification of updated header.inc.php                               *
+	* Quick verification of sane environment                                     *
 	\****************************************************************************/
 	error_reporting(7);
+	/* Make sure the header.inc.php is current. */
 	if ($phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]){
 		echo "<center><b>You need to port your settings to the new header.inc.php version.</b></center>";
 		exit;
 	}
-
-	/****************************************************************************\
-	* Load up all the base values                                                 *
-	\****************************************************************************/
-	magic_quotes_runtime(false);
 
 	/* Make sure the developer is following the rules. */
 	if (!isset($phpgw_info["flags"]["currentapp"])) {
@@ -160,17 +95,24 @@
 		echo "<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>";
 	}
 
-	if (!isset($phpgw_domain)) { // make them fix their header
+	magic_quotes_runtime(false);
+print_debug('sane environment');
+
+	/****************************************************************************\
+	* Multi-Domain support                                                       *
+	\****************************************************************************/
+
+	/* make them fix their header */
+	if (!isset($phpgw_domain)) {
 		 echo "<center><b>The administration is required to upgrade the header.inc.php file before you can continue.</b></center>";
 		 exit;
 	}
-
 	reset($phpgw_domain);
 	$default_domain = each($phpgw_domain);
 	$phpgw_info["server"]["default_domain"] = $default_domain[0];
 	unset ($default_domain); // we kill this for security reasons
 
-	// This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode.
+	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
 	if (isset($domain)){
 		$phpgw_info["user"]["domain"] = $domain;
 	} elseif (isset($login) && isset($logindomain)) {
@@ -208,13 +150,10 @@
 	}
 	unset ($domain); // we kill this to save memory
 
-	// some constants which can be used in setting user acl rights.
-	define("PHPGW_ACL_READ",1);
-	define("PHPGW_ACL_ADD",2);
-	define("PHPGW_ACL_EDIT",4);
-	define("PHPGW_ACL_DELETE",8);
+print_debug('sane environment');
 
-	// Since LDAP will return system accounts, there are a few we don't want to login.
+//dont know where to put this (seek3r)
+	/* Since LDAP will return system accounts, there are a few we don't want to login. */
 	$phpgw_info["server"]["global_denied_users"] = array('root'     => True,
 																												'bin'      => True,
 																												'daemon'   => True,
@@ -239,14 +178,14 @@
 																												'named'    => True
 																											);
 
-
-
 	/****************************************************************************\
 	* These lines load up the API, fill up the $phpgw_info array, etc            *
 	\****************************************************************************/
 	/* Load main class */
 	$phpgw = CreateObject("phpgwapi.phpgw");
 	
+print_debug('main class loaded');
+
 	/* Fill phpgw_info["server"] array */
 	$phpgw->db->query("select * from config",__LINE__,__FILE__);
 	while ($phpgw->db->next_record()) {
@@ -255,76 +194,101 @@
 	// Handy little shortcut
 	$sep = $phpgw_info["server"]["dir_separator"];
 
-	if ($phpgw_info["flags"]["currentapp"] == "login") {
-		if ($login != ""){
-			$login_array = explode("@",$login);
-			$login_id = $this->accounts->name2id($login_array[0]);
-			$this->accounts->accounts($login_id);
-			$this->preferences->preferences($login_id);
+	if ($phpgw_info["flags"]["currentapp"] == "login" || $phpgw_info["flags"]["currentapp"] == "logout") {
+		/****************************************************************************\
+		* Stuff to use if logging in or logging out                                  *
+		\****************************************************************************/
+
+		/* incase we are dealing with a fresh login */
+// not sure these lines are needed anymore (seek3r)
+//		if (! isset($phpgw_info["user"]["preferences"]["common"]["template_set"])) {
+//			$phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
+//		}
+
+		if ($phpgw_info["flags"]["currentapp"] == "login") {
+			if ($login != ""){
+				$login_array = explode("@",$login);
+				$login_id = $phpgw->accounts->name2id($login_array[0]);
+				$phpgw->accounts->accounts($login_id);
+				$phpgw->preferences->preferences($login_id);
+			}
 		}
-	} elseif (! $this->session->verify()) {
-		Header("Location: " . $phpgw->redirect($phpgw->session->link($phpgw_info["server"]["webserver_url"]."/login.php","cd=10")));
-		exit;
-	}
-
-	$template_root = $this->common->get_tpl_dir();
-	if (is_dir($template_root)) {
-		$this->template = CreateObject("phpgwapi.Template", $template_root);
-	}
-
-	//incase we are dealing with a fresh login
-	if (! isset($phpgw_info["user"]["preferences"]["common"]["template_set"])) {
-		$phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
-	}
 
 	/****************************************************************************\
 	* Everything from this point on will ONLY happen if                          *
 	* the currentapp is not login or logout                                      *
 	\****************************************************************************/
-	if ($phpgw_info["flags"]["currentapp"] != "login" && $phpgw_info["flags"]["currentapp"] != "logout") {
+	} else {
 		if (! $phpgw->session->verify()) {
 		 Header("Location: " . $phpgw->redirect($phpgw->session->link($phpgw_info["server"]["webserver_url"]."/login.php","cd=10")));
 		 exit;
 		}
-		load_optional();
 
-		phpgw_fillarray();
+		/* A few hacker proof constants that will be used throught the program */
 
-		if ($phpgw_info["flags"]["enable_utilities_class"]){
+		define("PHPGW_TEMPLATE_DIR",$phpgw->common->get_tpl_dir("phpgwapi"));
+		define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_path("phpgwapi"));
+		define("PHPGW_IMAGES_FILEDIR", $phpgw->common->get_image_dir("phpgwapi"));
+		define("PHPGW_APP_ROOT", $phpgw->common->get_app_dir());
+		define("PHPGW_APP_INC", $phpgw->common->get_inc_dir());
+		define("PHPGW_APP_TPL", $phpgw->common->get_tpl_dir());
+		define("PHPGW_IMAGES", $phpgw->common->get_image_path());
+		define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_dir());
+		define("PHPGW_ACL_READ",1);
+		define("PHPGW_ACL_ADD",2);
+		define("PHPGW_ACL_EDIT",4);
+		define("PHPGW_ACL_DELETE",8);
+
+		/********* Load up additional phpgw_info["server"] values *********/
+			/* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
+			$phpgw_info["server"]["template_dir"]     = PHPGW_TEMPLATE_DIR;
+			$phpgw_info["server"]["images_dir"]       = PHPGW_IMAGES_DIR;
+			$phpgw_info["server"]["images_filedir"]   = PHPGW_IMAGES_FILEDIR;
+			$phpgw_info["server"]["app_root"]         = PHPGW_APP_ROOT;
+			$phpgw_info["server"]["app_inc"]          = PHPGW_APP_INC;
+			$phpgw_info["server"]["app_tpl"]          = PHPGW_APP_TPL;
+			$phpgw_info["server"]["app_images"]       = PHPGW_IMAGES;
+			$phpgw_info["server"]["app_images_dir"]   = PHPGW_IMAGES_DIR;
+			/* END LEGACY SUPPORT!!!*/
+
+		/********* This sets the user variables *********/
+		$phpgw_info["user"]["private_dir"] = $phpgw_info["server"]["files_dir"]
+				. "/users/".$phpgw_info["user"]["userid"];
+
+		/* This will make sure that a user has the basic default prefs. If not it will add them */
+		$phpgw->preferences->verify_basic_settings();
+	
+		/********* Optional classes, which can be disabled for performance increases *********/
+		if ($phpgw_info["flags"]["enable_categories_class"]) {
+			$phpgw->categories = CreateObject("phpgwapi.categories");
+		}
+	
+		if ($phpgw_info["flags"]["enable_network_class"]) {
+			$phpgw->network = CreateObject("phpgwapi.network");
+		}
+		
+		if ($phpgw_info["flags"]["enable_send_class"]) {
+			$phpgw->send = CreateObject("phpgwapi.send");
+		}
+ 
+		if ($phpgw_info["flags"]["enable_nextmatchs_class"]) {
+			$phpgw->nextmatchs = CreateObject("phpgwapi.nextmatchs");
+		}
+		
+		if ($phpgw_info["flags"]["enable_utilities_class"]) {
+			$phpgw->utilities = CreateObject("phpgwapi.utilities");
 			$phpgw->utilities->utilities_();
 		}
-
-		if (! isset($phpgw_info["flags"]["nocommon_preferences"]) || ! $phpgw_info["flags"]["nocommon_preferences"]) {
-			if (! isset($phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) ||
-			!$phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
-				$phpgw->preferences->add("common","maxmatchs",15);
-				$preferences_update = True;
-			}
-			if (!isset($phpgw_info["user"]["preferences"]["common"]["theme"]) ||
-			!$phpgw_info["user"]["preferences"]["common"]["theme"]) {
-				$phpgw->preferences->add("common","theme","default");
-				$preferences_update = True;
-			}
-			if (!isset($phpgw_info["user"]["preferences"]["common"]["dateformat"]) ||
-			!$phpgw_info["user"]["preferences"]["common"]["dateformat"]) {
-				$phpgw->preferences->add("common","dateformat","m/d/Y");
-				$preferences_update = True;
-			}
-			if (!isset($phpgw_info["user"]["preferences"]["common"]["timeformat"]) ||
-			!$phpgw_info["user"]["preferences"]["common"]["timeformat"]) {
-				$phpgw->preferences->add("common","timeformat",12);
-				$preferences_update = True;
-			}
-			if (!isset($phpgw_info["user"]["preferences"]["common"]["lang"]) ||
-			!$phpgw_info["user"]["preferences"]["common"]["lang"]) {
-				$phpgw->preferences->add("common","lang",$phpgw->common->getPreferredLanguage());
-				$preferences_update = True;
-			}
-			if ($preferences_update) {
-				$phpgw->preferences->save_repository();
-			}
-			unset($preferences_update);
+ 
+		if ($phpgw_info["flags"]["enable_vfs_class"]) {
+			$phpgw->vfs = CreateObject("phpgwapi.vfs");
 		}
+
+		/*************************************************************************\
+		* These lines load up the templates class                                 *
+		\*************************************************************************/
+		$phpgw->template = CreateObject("phpgwapi.Template", PHPGW_TEMPLATE_DIR);
+
 		/*************************************************************************\
 		* These lines load up the themes                                          *
 		\*************************************************************************/
@@ -336,12 +300,13 @@
 			echo "Warning: error locating selected theme";
 			include (PHPGW_SERVER_ROOT . "/phpgwapi/themes/default.theme");
 			if ($phpgw_info["theme"]["bg_color"] == "") {
-				// Hope we don't get to this point.  Better then the user seeing a 
-				// complety back screen and not know whats going on
+				/* Hope we don't get to this point.  Better then the user seeing a */
+				/* complety back screen and not know whats going on                */
 				echo "<body bgcolor=FFFFFF>Fatal error: no themes found";
 				exit;
 			}
 		}
+
 		/*************************************************************************\
 		* If they are using frames, we need to set some variables                 *
 		\*************************************************************************/
