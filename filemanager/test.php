@@ -13,11 +13,8 @@ include("../header.inc.php");
 */
 
 html_break (1);
-html_text_italic (PHP_OS . " - " . $phpgw_info["server"]["db_type"] . " - " . PHP_VERSION);
+html_text_italic (PHP_OS . " - " . $phpgw_info["server"]["db_type"] . " - " . PHP_VERSION . " - " . $phpgw->vfs->basedir);
 html_break (1);
-
-###
-# start of getabsolutepath tests
 
 $sep = $phpgw_info["server"]["dir_separator"];
 $user = $phpgw->vfs->working_lid;
@@ -25,6 +22,9 @@ $homedir = $phpgw->vfs->fakebase . "/" . $user;
 $realhomedir = preg_replace ("|/|", $sep, $homedir);
 $filesdir = $phpgw->vfs->basedir;
 $currentapp = $phpgw_info["flags"]["currentapp"];
+
+###
+# start of getabsolutepath tests
 
 $phpgw->vfs->cd ();
 $io = array ("" => "$homedir", "dir" => "$homedir/dir", "dir/file" => "$homedir/dir/file", "dir/dir2" => "$homedir/dir/dir2", "dir/dir2/file" => "$homedir/dir/dir2/file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$homedir/`~!@#$%^&*()-_=+/|[{]};:'\",<.>?");
