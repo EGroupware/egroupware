@@ -14,28 +14,28 @@
 
 	$diagnostics = 1;	// can be set to 0=non, 1=some (default for now), 2=all
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'noheader' => True,
-		'nonavbar' => True,
-		'currentapp' => 'home',
-		'noapi' => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader' => True,
+			'nonavbar' => True,
+			'currentapp' => 'home',
+			'noapi' => True
+	));
 	include('./inc/functions.inc.php');
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
-	if (!$GLOBALS['phpgw_setup']->auth('Config') || @$_POST['cancel'])
+	if (!$GLOBALS['egw_setup']->auth('Config') || @$_POST['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
 	}
-	$GLOBALS['phpgw_setup']->loaddb();
+	$GLOBALS['egw_setup']->loaddb();
 
-	$GLOBALS['phpgw_setup']->translation->setup_translation_sql();
-	$translation = &$GLOBALS['phpgw_setup']->translation->sql;
+	$GLOBALS['egw_setup']->translation->setup_translation_sql();
+	$translation = &$GLOBALS['egw_setup']->translation->sql;
 	$translation->translation(True);	// to get the mbstring warnings
 
-	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
@@ -48,14 +48,14 @@
 
 	if ($diagnostics || !@$_POST['convert'])
 	{
-		$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
+		$GLOBALS['egw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 	}
 	if (@$_POST['convert'])
 	{
 		if (empty($_POST['current_charset']))
 		{
 			$errors[] = lang('You need to select your current charset!');
-			$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
+			$GLOBALS['egw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 		}
 		else
 		{
@@ -77,9 +77,9 @@
 
 		@set_time_limit(0);		// this might take a while
 
-		$db2 = $GLOBALS['phpgw_setup']->db;
-		$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
-		$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
+		$db2 = $GLOBALS['egw_setup']->db;
+		$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
+		$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
 		// Visit each app/setup dir, look for a phpgw_lang file
 
 		foreach($setup_info as $app => $data)
@@ -87,7 +87,7 @@
 			if ($diagnostics) echo "<p><b>$app</b>: ";
 
 			if (!isset($data['tables']) || !count($data['tables']) ||
-			    !$GLOBALS['phpgw_setup']->app_registered($app) ||
+			    !$GLOBALS['egw_setup']->app_registered($app) ||
 				!($table_definitions = $db2->get_table_definitions($app)))
 			{
 				if ($diagnostics) echo "skipping (no tables or not installed)</p>\n";
@@ -98,8 +98,8 @@
 				if ($diagnostics) { echo "<br>start converting table '$table' ... "; }
 				$db2->set_column_definitions($definitions['fd']);
 				$updates = 0;
-				$GLOBALS['phpgw_setup']->db->query("SELECT * FROM $table",__LINE__,__FILE__);
-				while($columns = $GLOBALS['phpgw_setup']->db->row(True))
+				$GLOBALS['egw_setup']->db->query("SELECT * FROM $table",__LINE__,__FILE__);
+				while($columns = $GLOBALS['egw_setup']->db->row(True))
 				{
 					$update = array();
 					foreach($columns as $name => $data)
@@ -137,15 +137,15 @@
 				}
 				if ($diagnostics)
 				{
-					$GLOBALS['phpgw_setup']->db->query("SELECT count(*) FROM $table",__LINE__,__FILE__);
-					$GLOBALS['phpgw_setup']->db->next_record();
-					$total = $GLOBALS['phpgw_setup']->db->f(0);
+					$GLOBALS['egw_setup']->db->query("SELECT count(*) FROM $table",__LINE__,__FILE__);
+					$GLOBALS['egw_setup']->db->next_record();
+					$total = $GLOBALS['egw_setup']->db->f(0);
 					echo " done, $updates/$total rows updated";
 				}
 			}
 		}
-		@$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
-		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('phpgwapi','system_charset','$to')",__LINE__,__FILE__);
+		@$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('phpgwapi','system_charset','$to')",__LINE__,__FILE__);
 	}
 
 	$setup_tpl->set_var('stage_title',$stage_title);
@@ -206,5 +206,5 @@
 		$setup_tpl->set_var('new_charset',"<select name=\"new_charset\">\n$options</select>\n");
 	}
 	$setup_tpl->pparse('out','T_system_charset');
-	$GLOBALS['phpgw_setup']->html->show_footer();
+	$GLOBALS['egw_setup']->html->show_footer();
 ?>

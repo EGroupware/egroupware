@@ -18,12 +18,12 @@
 	{
 		function get_versions()
 		{
-			$d = dir(PHPGW_SERVER_ROOT);
+			$d = dir(EGW_SERVER_ROOT);
 			while($entry=$d->read())
 			{
-				if($entry != ".." && !ereg('setup',$entry) && is_dir(PHPGW_SERVER_ROOT . '/' . $entry))
+				if($entry != ".." && !ereg('setup',$entry) && is_dir(EGW_SERVER_ROOT . '/' . $entry))
 				{
-					$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
+					$f = EGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
 					if (@file_exists ($f))
 					{
 						include($f);
@@ -224,29 +224,29 @@
 		{
 			if(!file_exists('../header.inc.php'))
 			{
-				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One';
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage One';
 				return '1';
 			}
 			else
 			{
-				if(!@isset($GLOBALS['phpgw_info']['server']['header_admin_password']))
+				if(!@isset($GLOBALS['egw_info']['server']['header_admin_password']))
 				{
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (No header admin password set)';
+					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage One (No header admin password set)';
 					return '2';
 				}
-				elseif(!@isset($GLOBALS['phpgw_domain']))
+				elseif(!@isset($GLOBALS['egw_domain']))
 				{
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Add domains to your header.inc.php)';
+					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage One (Add domains to your header.inc.php)';
 					return '3';
 				}
-				elseif(@$GLOBALS['phpgw_info']['server']['versions']['header'] != @$GLOBALS['phpgw_info']['server']['versions']['current_header'])
+				elseif(@$GLOBALS['egw_info']['server']['versions']['header'] != @$GLOBALS['egw_info']['server']['versions']['current_header'])
 				{
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
+					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
 					return '4';
 				}
 			}
 			/* header.inc.php part settled. Moving to authentication */
-			$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Completed)';
+			$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage One (Completed)';
 			return '10';
 		}
 
@@ -266,7 +266,7 @@
 			}
 			if (!$GLOBALS['phpgw_setup']->db->Link_ID)
 			{
-				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
 				return 1;
 			}
 			if(!isset($setup_info['phpgwapi']['currentver']))
@@ -278,12 +278,12 @@
 			{
 				if(@$setup_info['phpgwapi']['currentver'] == @$setup_info['phpgwapi']['version'])
 				{
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 1 (Tables Complete)';
+					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Tables Complete)';
 					return 10;
 				}
 				else
 				{
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 1 (Tables need upgrading)';
+					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Tables need upgrading)';
 					return 4;
 				}
 			}
@@ -294,12 +294,12 @@
 				if(!$GLOBALS['phpgw_setup']->db->Errno)
 				{
 					$GLOBALS['phpgw_setup']->db->query('DROP TABLE phpgw_testrights');
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 3 (Install Applications)';
+					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (Install Applications)';
 					return 3;
 				}
 				else
 				{
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
+					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
 					return 1;
 				}
 			}
@@ -308,13 +308,13 @@
 		function check_config()
 		{
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
-			if(@$GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
+			if(@$GLOBALS['egw_info']['setup']['stage']['db'] != 10)
 			{
 				return '';
 			}
 
 			/* Since 0.9.10pre6 config table is named as phpgw_config */
-			$ver = explode('.',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$ver = explode('.',@$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 			$config_table = $ver[0] > 0 || (int)$ver[2] > 10 ? 'phpgw_config' : 'config';
 
 			if(ereg("([0-9]+)(pre)([0-9]+)",$ver[2],$regs))
@@ -329,12 +329,12 @@
 			$configured = $GLOBALS['phpgw_setup']->db->next_record() ? $GLOBALS['phpgw_setup']->db->f('config_value') : False;
 			if($configed)
 			{
-				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 2 (Needs Configuration)';
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Needs Configuration)';
 				return 1;
 			}
 			else
 			{
-				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 2 (Configuration OK)';
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Configuration OK)';
 				return 10;
 			}
 		}
@@ -342,7 +342,7 @@
 		function check_lang($check = True)
 		{
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
-			if($check && $GLOBALS['phpgw_info']['setup']['stage']['db'] != 10)
+			if($check && $GLOBALS['egw_info']['setup']['stage']['db'] != 10)
 			{
 				return '';
 			}
@@ -364,25 +364,25 @@
 			$GLOBALS['phpgw_setup']->db->query($q = "SELECT DISTINCT lang FROM $langtbl",__LINE__,__FILE__);
 			if($GLOBALS['phpgw_setup']->db->num_rows() == 0)
 			{
-				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 3 (No languages installed)';
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (No languages installed)';
 				return 1;
 			}
 			else
 			{
 				while(@$GLOBALS['phpgw_setup']->db->next_record())
 				{
-					$GLOBALS['phpgw_info']['setup']['installed_langs'][$GLOBALS['phpgw_setup']->db->f('lang')] = $GLOBALS['phpgw_setup']->db->f('lang');
+					$GLOBALS['egw_info']['setup']['installed_langs'][$GLOBALS['phpgw_setup']->db->f('lang')] = $GLOBALS['phpgw_setup']->db->f('lang');
 				}
-				foreach($GLOBALS['phpgw_info']['setup']['installed_langs'] as $key => $value)
+				foreach($GLOBALS['egw_info']['setup']['installed_langs'] as $key => $value)
 				{
 					$sql = "SELECT lang_name FROM $languagestbl WHERE lang_id = '".$value."'";
 					$GLOBALS['phpgw_setup']->db->query($sql);
 					if ($GLOBALS['phpgw_setup']->db->next_record())
 					{
-						$GLOBALS['phpgw_info']['setup']['installed_langs'][$value] = $GLOBALS['phpgw_setup']->db->f('lang_name');
+						$GLOBALS['egw_info']['setup']['installed_langs'][$value] = $GLOBALS['phpgw_setup']->db->f('lang_name');
 					}
 				}
-				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 3 (Completed)';
+				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (Completed)';
 				return 10;
 			}
 		}

@@ -17,22 +17,22 @@
 
 	if ($run_by_webserver)
 	{
-		$phpgw_info = array();
-		$GLOBALS['phpgw_info']['flags'] = array(
-			'noheader' => True,
-			'nonavbar' => True,
-			'currentapp' => 'home',
-			'noapi' => True
-		);
+		$GLOBALS['egw_info'] = array(
+			'flags' => array(
+				'noheader' => True,
+				'nonavbar' => True,
+				'currentapp' => 'home',
+				'noapi' => True
+		));
 		$safe_er = error_reporting();
 		include ('./inc/functions.inc.php');
 		error_reporting($safe_er);
 
-		$GLOBALS['phpgw_info']['setup']['stage']['header'] = $GLOBALS['phpgw_setup']->detection->check_header();
-		if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == '10')
+		$GLOBALS['egw_info']['setup']['stage']['header'] = $GLOBALS['egw_setup']->detection->check_header();
+		if ($GLOBALS['egw_info']['setup']['stage']['header'] == '10')
 		{
 			// Check header and authentication
-			if (!$GLOBALS['phpgw_setup']->auth('Config') && !$GLOBALS['phpgw_setup']->auth('Header'))
+			if (!$GLOBALS['egw_setup']->auth('Config') && !$GLOBALS['egw_setup']->auth('Header'))
 			{
 				Header('Location: index.php');
 				exit;
@@ -143,7 +143,7 @@
 		'header.inc.php' => array(
 			'func' => 'permission_check',
 			'is_world_readable' => False,
-			'only_if_exists' => @$GLOBALS['phpgw_info']['setup']['stage']['header'] != 10
+			'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 		),
 		'phpgwapi/images' => array(
 			'func' => 'permission_check',
@@ -443,7 +443,7 @@
 	
 	if ($run_by_webserver)
 	{
-		$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+		$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 		$setup_tpl = CreateObject('setup.Template',$tpl_root);
 		$setup_tpl->set_file(array(
 			'T_head' => 'head.tpl',
@@ -453,9 +453,9 @@
 		if (@$_GET['intro']) {
 			if($ConfigLang = get_var('ConfigLang',array('POST','COOKIE')))
 			{
-				$GLOBALS['phpgw_setup']->set_cookie('ConfigLang',$ConfigLang,(int) (time()+(1200*9)),'/');
+				$GLOBALS['egw_setup']->set_cookie('ConfigLang',$ConfigLang,(int) (time()+(1200*9)),'/');
 			}
-			$GLOBALS['phpgw_setup']->html->show_header(lang('Welcome to the eGroupWare Installation'),False,'config');
+			$GLOBALS['egw_setup']->html->show_header(lang('Welcome to the eGroupWare Installation'),False,'config');
 			echo '<h1>'.lang('Welcome to the eGroupWare Installation')."</h1>\n";
 			if(!$ConfigLang)
 			{
@@ -467,7 +467,7 @@
 			$setup_tpl->pparse('out','T_footer');
 			exit;
 		} else {
-			$GLOBALS['phpgw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain ? $ConfigDomain . '(' . @$phpgw_domain[$ConfigDomain]['db_type'] . ')' : '');
+			$GLOBALS['egw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain ? $ConfigDomain . '(' . @$GLOBALS['egw_domain'][$ConfigDomain]['db_type'] . ')' : '');
 			echo '<h1>'.lang('Checking the eGroupWare Installation')."</h1>\n";
 			# echo "<pre style=\"text-align: left;\">\n";;
 		}
@@ -489,7 +489,7 @@
 	{
 		# echo "</pre>\n";;
 
-		if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != 10)
+		if ($GLOBALS['egw_info']['setup']['stage']['header'] != 10)
 		{
 			if (!$Ok)
 			{

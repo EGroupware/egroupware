@@ -13,24 +13,24 @@
 
 	$GLOBALS['DEBUG'] = True;
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'noheader' => True,
-		'nonavbar' => True,
-		'currentapp' => 'home',
-		'noapi' => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader' => True,
+			'nonavbar' => True,
+			'currentapp' => 'home',
+			'noapi' => True
+	));
 	include ('./inc/functions.inc.php');
 
 	// Check header and authentication
-	if (!$GLOBALS['phpgw_setup']->auth('Config'))
+	if (!$GLOBALS['egw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
 	}
 	// Does not return unless user is authorized
 
-	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$GLOBALS['setup_tpl'] = CreateObject('setup.Template',$tpl_root);
 	$GLOBALS['setup_tpl']->set_file(array(
 		'T_head' => 'head.tpl',
@@ -86,16 +86,16 @@
 		}
 	}
 
-	$GLOBALS['phpgw_setup']->loaddb();
-	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db();
+	$GLOBALS['egw_setup']->loaddb();
+	$GLOBALS['egw_info']['setup']['stage']['db'] = $GLOBALS['egw_setup']->detection->check_db();
 
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->get_versions();
+	$GLOBALS['setup_info'] = $GLOBALS['egw_setup']->detection->get_versions();
 	//var_dump($GLOBALS['setup_info']);exit;
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->get_db_versions($GLOBALS['setup_info']);
+	$GLOBALS['setup_info'] = $GLOBALS['egw_setup']->detection->get_db_versions($GLOBALS['setup_info']);
 	//var_dump($GLOBALS['setup_info']);exit;
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->compare_versions($GLOBALS['setup_info']);
+	$GLOBALS['setup_info'] = $GLOBALS['egw_setup']->detection->compare_versions($GLOBALS['setup_info']);
 	//var_dump($GLOBALS['setup_info']);exit;
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->check_depends($GLOBALS['setup_info']);
+	$GLOBALS['setup_info'] = $GLOBALS['egw_setup']->detection->check_depends($GLOBALS['setup_info']);
 	//var_dump($GLOBALS['setup_info']);exit;
 	@ksort($GLOBALS['setup_info']);
 
@@ -105,7 +105,7 @@
 		exit;
 	}
 
-	$GLOBALS['phpgw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$GLOBALS['phpgw_setup']['ConfigDomain']);
+	$GLOBALS['egw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$GLOBALS['egw_setup']['ConfigDomain']);
 
 	if(get_var('submit',Array('POST')))
 	{
@@ -127,7 +127,7 @@
 
 			// Drop newest tables
 			$terror[$appname]['tables'] = $GLOBALS['setup_info'][$appname]['tables'];
-			$GLOBALS['phpgw_setup']->process->droptables($terror,$GLOBALS['DEBUG']);
+			$GLOBALS['egw_setup']->process->droptables($terror,$GLOBALS['DEBUG']);
 			$terror[$appname]['tables'] = array();
 
 			// Reset tables field to baseline table names
@@ -145,13 +145,13 @@
 			{
 				echo '<br>Processing ' . $terror[$appname]['name'] . ' to ' . $version[$appname];
 
-				$terror = $GLOBALS['phpgw_setup']->process->droptables($terror,$GLOBALS['DEBUG']);
-				$GLOBALS['phpgw_setup']->deregister_app($terror[$appname]['name']);
+				$terror = $GLOBALS['egw_setup']->process->droptables($terror,$GLOBALS['DEBUG']);
+				$GLOBALS['egw_setup']->deregister_app($terror[$appname]['name']);
 
-				$terror = $GLOBALS['phpgw_setup']->process->baseline($terror,$GLOBALS['DEBUG']);
-				$terror = $GLOBALS['phpgw_setup']->process->test_data($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['egw_setup']->process->baseline($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['egw_setup']->process->test_data($terror,$GLOBALS['DEBUG']);
 
-				$terror = $GLOBALS['phpgw_setup']->process->upgrade($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['egw_setup']->process->upgrade($terror,$GLOBALS['DEBUG']);
 				$terror[$appname]['version'] = $version[$appname];
 			}
 			else
@@ -162,7 +162,7 @@
 				. lang('tables installed, unless there are errors printed above') . '.';
 
 			$GLOBALS['setup_info'][$appname]['version'] = $terror[$appname]['version'];
-			$GLOBALS['phpgw_setup']->register_app($appname);
+			$GLOBALS['egw_setup']->register_app($appname);
 			echo '<br>' . $terror[$appname]['title'] . ' ' . lang('registered') . '.';
 		}
 
@@ -272,5 +272,5 @@
 	$GLOBALS['setup_tpl']->set_var('cancel',lang('Cancel'));
 	$GLOBALS['setup_tpl']->pparse('out','app_footer');
 	$GLOBALS['setup_tpl']->pparse('out','footer');
-	$GLOBALS['phpgw_setup']->html->show_footer();
+	$GLOBALS['egw_setup']->html->show_footer();
 ?>

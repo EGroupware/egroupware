@@ -11,37 +11,37 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'noheader' => True,
-		'nonavbar' => True,
-		'currentapp' => 'home',
-		'noapi' => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader' => True,
+			'nonavbar' => True,
+			'currentapp' => 'home',
+			'noapi' => True
+	));
 	include('./inc/functions.inc.php');
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
-	if (!$GLOBALS['phpgw_setup']->auth('Config') || @$_POST['cancel'])
+	if (!$GLOBALS['egw_setup']->auth('Config') || @$_POST['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
 	}
-	$GLOBALS['phpgw_setup']->loaddb();
+	$GLOBALS['egw_setup']->loaddb();
 
 	if (@$_POST['submit'])
 	{
-		$GLOBALS['phpgw_setup']->translation->setup_translation_sql();
-		$GLOBALS['phpgw_setup']->translation->sql->install_langs(@$_POST['lang_selected'],@$_POST['upgrademethod']);
+		$GLOBALS['egw_setup']->translation->setup_translation_sql();
+		$GLOBALS['egw_setup']->translation->sql->install_langs(@$_POST['lang_selected'],@$_POST['upgrademethod']);
 
 		
-		if( !$GLOBALS['phpgw_setup']->translation->sql->line_rejected )
+		if( !$GLOBALS['egw_setup']->translation->sql->line_rejected )
 		{
 			Header('Location: index.php');
 			exit;
 		}
 	}
 
-	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
@@ -59,9 +59,9 @@
 	$td_align    = @$newinstall ? ' align="center"' : '';
 	$hidden_var1 = @$newinstall ? '<input type="hidden" name="newinstall" value="True">' : '';
 
-	if (!@$newinstall && !isset($GLOBALS['phpgw_info']['setup']['installed_langs']))
+	if (!@$newinstall && !isset($GLOBALS['egw_info']['setup']['installed_langs']))
 	{
-		$GLOBALS['phpgw_setup']->detection->check_lang(false);	// get installed langs
+		$GLOBALS['egw_setup']->detection->check_lang(false);	// get installed langs
 	}
 	$select_box_desc = lang('Select which languages you would like to use');
 	$select_box = '';
@@ -72,7 +72,7 @@
 		$select_box_langs =
 			@$select_box_langs
 			.'<option value="' . $id . '"'
-			.(@$GLOBALS['phpgw_info']['setup']['installed_langs'][$id]?' SELECTED="1"':'').'>'
+			.(@$GLOBALS['egw_info']['setup']['installed_langs'][$id]?' SELECTED="1"':'').'>'
 			. $data['descr'] . '</option>'
 			."\n";
 	}
@@ -97,10 +97,10 @@
 	}
 
 	// Rejected Lines
-	if($_POST['debug'] && count($GLOBALS['phpgw_setup']->translation->sql->line_rejected))
+	if($_POST['debug'] && count($GLOBALS['egw_setup']->translation->sql->line_rejected))
 	{
 		$str = '';
-		foreach($GLOBALS['phpgw_setup']->translation->sql->line_rejected as $badline)
+		foreach($GLOBALS['egw_setup']->translation->sql->line_rejected as $badline)
 		{
 			$_f_buffer = split("[/\\]", $badline['appfile']);
 			$str .= lang('Application: %1, File: %2, Line: "%3"','<b>'.$_f_buffer[count($_f_buffer)-3].'</b>',
@@ -123,11 +123,11 @@
 	$setup_tpl->set_var('lang_install',lang('install'));
 	$setup_tpl->set_var('lang_cancel',lang('cancel'));
 
-	$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
+	$GLOBALS['egw_setup']->html->show_header("$stage_title",False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 	$setup_tpl->pparse('out','T_lang_main');
 	
 	if($alert)
 		$setup_tpl->pparse('out','T_alert_msg');
 		
-	$GLOBALS['phpgw_setup']->html->show_footer();
+	$GLOBALS['egw_setup']->html->show_footer();
 ?>

@@ -36,13 +36,13 @@
 
 		function setup($html=False, $translation=False)
 		{
-			$this->detection = CreateObject('phpgwapi.setup_detection');
-			$this->process   = CreateObject('phpgwapi.setup_process');
-			$this->appreg    = CreateObject('phpgwapi.app_registry');
+			$this->detection = CreateObject('setup.setup_detection');
+			$this->process   = CreateObject('setup.setup_process');
+			$this->appreg    = CreateObject('setup.app_registry');
 
 			/* The setup application needs these */
-			$this->html = $html ? CreateObject('phpgwapi.setup_html') : '';
-			$this->translation = $translation ? CreateObject('phpgwapi.setup_translation') : '';
+			$this->html = $html ? CreateObject('setup.setup_html') : '';
+			$this->translation = $translation ? CreateObject('setup.setup_translation') : '';
 
 //			$this->tbl_apps    = $this->get_apps_table_name();
 //			$this->tbl_config  = $this->get_config_table_name();
@@ -60,19 +60,19 @@
 				$this->ConfigDomain = get_var('ConfigDomain',array('COOKIE','POST'),$_POST['FormDomain']);
 			}
 
-			$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_type'];
+			$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_type'];
 
-			if ($GLOBALS['phpgw_info']['server']['db_type'] == 'pgsql')
+			if ($GLOBALS['egw_info']['server']['db_type'] == 'pgsql')
 			{
-				$GLOBALS['phpgw_info']['server']['db_persistent'] = False;
+				$GLOBALS['egw_info']['server']['db_persistent'] = False;
 			}
 			$this->db           = CreateObject('phpgwapi.db');
-			$this->db->Host     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_host'];
-			$this->db->Port     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_port'];
-			$this->db->Type     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_type'];
-			$this->db->Database = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_name'];
-			$this->db->User     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_user'];
-			$this->db->Password = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_pass'];
+			$this->db->Host     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_host'];
+			$this->db->Port     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_port'];
+			$this->db->Type     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_type'];
+			$this->db->Database = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_name'];
+			$this->db->User     = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_user'];
+			$this->db->Password = $GLOBALS['egw_domain'][$this->ConfigDomain]['db_pass'];
 			
 			$this->db->set_app('phpgwapi');
 			
@@ -154,13 +154,13 @@
 				/* Setup defaults to aid in header upgrade to version 1.26.
 				 * This was the first version to include the following values.
 				 */
-				if(!@isset($GLOBALS['phpgw_domain'][$FormDomain]['config_user']) && isset($GLOBALS['phpgw_domain'][$FormDomain]))
+				if(!@isset($GLOBALS['egw_domain'][$FormDomain]['config_user']) && isset($GLOBALS['egw_domain'][$FormDomain]))
 				{
-					@$GLOBALS['phpgw_domain'][$FormDomain]['config_user'] = 'admin';
+					@$GLOBALS['egw_domain'][$FormDomain]['config_user'] = 'admin';
 				}
-				if(!@isset($GLOBALS['phpgw_info']['server']['header_admin_user']))
+				if(!@isset($GLOBALS['egw_info']['server']['header_admin_user']))
 				{
-					@$GLOBALS['phpgw_info']['server']['header_admin_user'] = 'admin';
+					@$GLOBALS['egw_info']['server']['header_admin_user'] = 'admin';
 				}
 			}
 
@@ -177,9 +177,9 @@
 					$this->set_cookie('ConfigPW','',$expire,'/');
 					$this->set_cookie('ConfigDomain','',$expire,'/');
 					$this->set_cookie('ConfigLang','',$expire,'/');
-					$GLOBALS['phpgw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+					$GLOBALS['egw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
+					$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
+					$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
 				case 'header':
 					/* header admin logout */
@@ -187,8 +187,8 @@
 					$this->set_cookie('HeaderUser','',$expire,'/');
 					$this->set_cookie('HeaderPW','',$expire,'/');
 					$this->set_cookie('ConfigLang','',$expire,'/');
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+					$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
+					$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
 			}
 
@@ -203,8 +203,8 @@
 					{
 						/* header admin login */
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if ($this->check_auth($FormUser,$FormPW,$GLOBALS['phpgw_info']['server']['header_admin_user'],
-							$GLOBALS['phpgw_info']['server']['header_admin_password']))
+						if ($this->check_auth($FormUser,$FormPW,$GLOBALS['egw_info']['server']['header_admin_user'],
+							$GLOBALS['egw_info']['server']['header_admin_password']))
 						{
 							$this->set_cookie('HeaderUser',"$FormUser",$expire,'/');
 							$this->set_cookie('HeaderPW',"$FormPW",$expire,'/');
@@ -213,8 +213,8 @@
 						}
 						else
 						{
-							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
-							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+							$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
+							$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 							return False;
 						}
 					}
@@ -222,8 +222,8 @@
 					{
 						// Returning after login to header admin
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if ($this->check_auth($HeaderUser,$HeaderPW,$GLOBALS['phpgw_info']['server']['header_admin_user'],
-							$GLOBALS['phpgw_info']['server']['header_admin_password']))
+						if ($this->check_auth($HeaderUser,$HeaderPW,$GLOBALS['egw_info']['server']['header_admin_user'],
+							$GLOBALS['egw_info']['server']['header_admin_password']))
 						{
 							$this->set_cookie('HeaderUser',"$HeaderUser",$expire,'/');
 							$this->set_cookie('HeaderPW',"$HeaderPW",$expire,'/');
@@ -232,8 +232,8 @@
 						}
 						else
 						{
-							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
-							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+							$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
+							$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 							return False;
 						}
 					}
@@ -243,9 +243,9 @@
 					{
 						/* config login */
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if (isset($GLOBALS['phpgw_domain'][$FormDomain]) &&
-							$this->check_auth($FormUser,$FormPW,@$GLOBALS['phpgw_domain'][$FormDomain]['config_user'],
-							@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
+						if (isset($GLOBALS['egw_domain'][$FormDomain]) &&
+							$this->check_auth($FormUser,$FormPW,@$GLOBALS['egw_domain'][$FormDomain]['config_user'],
+							@$GLOBALS['egw_domain'][$FormDomain]['config_passwd']))
 						{
 							$this->set_cookie('ConfigUser',"$FormUser",$expire,'/');
 							$this->set_cookie('ConfigPW',"$FormPW",$expire,'/');
@@ -257,8 +257,8 @@
 						}
 						else
 						{
-							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
-							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+							$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
+							$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
 							return False;
 						}
 					}
@@ -266,8 +266,8 @@
 					{
 						// Returning after login to config
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if ($this->check_auth($ConfigUser,$ConfigPW,@$GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_user'],
-							@$GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']))
+						if ($this->check_auth($ConfigUser,$ConfigPW,@$GLOBALS['egw_domain'][$this->ConfigDomain]['config_user'],
+							@$GLOBALS['egw_domain'][$this->ConfigDomain]['config_passwd']))
 						{
 							$this->set_cookie('ConfigUser',"$ConfigUser",$expire,'/');
 							$this->set_cookie('ConfigPW',"$ConfigPW",$expire,'/');
@@ -277,8 +277,8 @@
 						}
 						else
 						{
-							$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
-							$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+							$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
+							$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
 							return False;
 						}
 					}
@@ -304,9 +304,9 @@
 
 		function checkip($remoteip='')
 		{
-			//echo "<p>setup::checkip($remoteip) against setup_acl='".$GLOBALS['phpgw_info']['server']['setup_acl']."'</p>\n";
-			$allowed_ips = explode(',',@$GLOBALS['phpgw_info']['server']['setup_acl']);
-			if(empty($GLOBALS['phpgw_info']['server']['setup_acl']) || !is_array($allowed_ips))
+			//echo "<p>setup::checkip($remoteip) against setup_acl='".$GLOBALS['egw_info']['server']['setup_acl']."'</p>\n";
+			$allowed_ips = explode(',',@$GLOBALS['egw_info']['server']['setup_acl']);
+			if(empty($GLOBALS['egw_info']['server']['setup_acl']) || !is_array($allowed_ips))
 			{
 				return True;	// no test
 			}
@@ -331,8 +331,8 @@
 					return True;	// match
 				}
 			}
-			$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
-			$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
+			$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
+			$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
 
 			return False;
 		}
@@ -555,7 +555,7 @@
 
 			if($tableschanged == True)
 			{
-				$GLOBALS['phpgw_info']['setup']['tableschanged'] = True;
+				$GLOBALS['egw_info']['setup']['tableschanged'] = True;
 			}
 			if($setup_info[$appname]['currentver'])
 			{
@@ -848,7 +848,7 @@
 
 		function setup_account_object()
 		{
-			if (!is_object($GLOBALS['phpgw']->accounts))
+			if (!is_object($GLOBALS['egw']->accounts))
 			{
 				if (!is_object($this->db))
 				{
@@ -859,20 +859,20 @@
 					. "WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%'",__LINE__,__FILE__);
 				while($this->db->next_record())
 				{
-					$GLOBALS['phpgw_info']['server'][$this->db->f('config_name')] = $this->db->f('config_value');
+					$GLOBALS['egw_info']['server'][$this->db->f('config_name')] = $this->db->f('config_value');
 				}
-				if (!is_object($GLOBALS['phpgw']))
+				if (!is_object($GLOBALS['egw']))
 				{
-					$GLOBALS['phpgw'] = CreateObject('phpgwapi.phpgw');
+					$GLOBALS['egw'] = CreateObject('phpgwapi.phpgw');
 				}
-				copyobj($this->db,$GLOBALS['phpgw']->db);
-				$GLOBALS['phpgw']->common      = CreateObject('phpgwapi.common');
-				$GLOBALS['phpgw']->accounts    = CreateObject('phpgwapi.accounts');
+				copyobj($this->db,$GLOBALS['egw']->db);
+				$GLOBALS['egw']->common      = CreateObject('phpgwapi.common');
+				$GLOBALS['egw']->accounts    = CreateObject('phpgwapi.accounts');
 
-				if(($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap') &&
-					!$GLOBALS['phpgw']->accounts->ds)
+				if(($GLOBALS['egw_info']['server']['account_repository'] == 'ldap') &&
+					!$GLOBALS['egw']->accounts->ds)
 				{
-					printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['phpgw_info']['server']['ldap_host']);
+					printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['egw_info']['server']['ldap_host']);
 					exit;
 				}
 			}
@@ -893,11 +893,11 @@
 		{
 			$this->setup_account_object();
 
-			$groupid = $group ? $GLOBALS['phpgw']->accounts->name2id($group) : False;
+			$groupid = $group ? $GLOBALS['egw']->accounts->name2id($group) : False;
 
-			if(!($accountid = $GLOBALS['phpgw']->accounts->name2id($username)))
+			if(!($accountid = $GLOBALS['egw']->accounts->name2id($username)))
 			{
-				$accountid = $accountid ? $accountid : $GLOBALS['phpgw']->accounts->create(array(
+				$accountid = $accountid ? $accountid : $GLOBALS['egw']->accounts->create(array(
 					'account_type'      => $group ? 'u' : 'g',
 					'account_lid'       => $username,
 					'account_passwd'    => $passwd,
@@ -931,7 +931,7 @@
 			if (!is_int($account))
 			{
 				$this->setup_account_object();
-				$account = $GLOBALS['phpgw']->accounts->name2id($account);
+				$account = $GLOBALS['egw']->accounts->name2id($account);
 			}
 			$rights = (int)$rights;
 			if(!is_object($this->db))

@@ -97,9 +97,9 @@
 		function setup_tpl_dir($app_name='setup')
 		{
 			/* hack to get tpl dir */
-			if (is_dir(PHPGW_SERVER_ROOT))
+			if (is_dir(EGW_SERVER_ROOT))
 			{
-				$srv_root = PHPGW_SERVER_ROOT . SEP . "$app_name" . SEP;
+				$srv_root = EGW_SERVER_ROOT . SEP . "$app_name" . SEP;
 			}
 			else
 			{
@@ -155,7 +155,7 @@
 			}
 
 			$GLOBALS['setup_tpl']->set_var('lang_version',lang('version'));
-			$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$GLOBALS['setup_tpl']->set_var('pgw_ver',@$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 			$GLOBALS['setup_tpl']->set_var(array(
 				'logoutbutton'  => $btn_logout,
 				'indexbutton'   => $index_btn,
@@ -204,8 +204,8 @@
 		function login_form()
 		{
 			/* begin use TEMPLATE login_main.tpl */
-			$GLOBALS['setup_tpl']->set_var('ConfigLoginMSG',@$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG']);
-			$GLOBALS['setup_tpl']->set_var('HeaderLoginMSG',@$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG']);
+			$GLOBALS['setup_tpl']->set_var('ConfigLoginMSG',@$GLOBALS['egw_info']['setup']['ConfigLoginMSG']);
+			$GLOBALS['setup_tpl']->set_var('HeaderLoginMSG',@$GLOBALS['egw_info']['setup']['HeaderLoginMSG']);
 			$GLOBALS['setup_tpl']->set_var('lang_header_username',lang('Header Username'));
 			$GLOBALS['setup_tpl']->set_var('lang_header_password',lang('Header Password'));
 			$GLOBALS['setup_tpl']->set_var('lang_header_login',lang('Header Admin Login'));
@@ -216,17 +216,17 @@
 
 			$GLOBALS['setup_tpl']->set_var('lang_select',lang_select());
 
-			if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == '10')
+			if ($GLOBALS['egw_info']['setup']['stage']['header'] == '10')
 			{
 				/*
 				 Begin use SUB-TEMPLATE login_stage_header,
 				 fills V_login_stage_header used inside of login_main.tpl
 				*/
-				if (count($GLOBALS['phpgw_domain']) > 1)
+				if (count($GLOBALS['egw_domain']) > 1)
 				{
-					foreach($GLOBALS['phpgw_domain'] as $domain => $data)
+					foreach($GLOBALS['egw_domain'] as $domain => $data)
 					{
-						$domains .= "<option value=\"$domain\" ".($domain == @$GLOBALS['phpgw_info']['setup']['LastDomain'] ? ' SELECTED' : '').">$domain</option>\n";
+						$domains .= "<option value=\"$domain\" ".($domain == @$GLOBALS['egw_info']['setup']['LastDomain'] ? ' SELECTED' : '').">$domain</option>\n";
 					}
 					$GLOBALS['setup_tpl']->set_var('domains',$domains);
 
@@ -237,8 +237,8 @@
 				}
 				else
 				{
-					reset($GLOBALS['phpgw_domain']);
-					$default_domain = each($GLOBALS['phpgw_domain']);
+					reset($GLOBALS['egw_domain']);
+					$default_domain = each($GLOBALS['egw_domain']);
 					$GLOBALS['setup_tpl']->set_var('default_domain_zero',$default_domain[0]);
 
 					/* Use BLOCK B_single_domain inside of login_stage_header */
@@ -268,18 +268,18 @@
 
 		function get_template_list()
 		{
-			$d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
+			$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
 
 			while($entry = $d->read())
 			{
 				if ($entry != 'CVS' && $entry != '.' && $entry != '..')
 				{
 					$list[$entry]['name'] = $entry;
-					$f = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
+					$f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/details.inc.php';
 					if (file_exists ($f))
 					{
 						include($f);
-						$list[$entry]['title'] = 'Use ' . $GLOBALS['phpgw_info']['template'][$entry]['title'] . 'interface';
+						$list[$entry]['title'] = 'Use ' . $GLOBALS['egw_info']['template'][$entry]['title'] . 'interface';
 					}
 					else
 					{
@@ -294,7 +294,7 @@
 
 		function list_themes()
 		{
-			$dh = dir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
+			$dh = dir(EGW_SERVER_ROOT . '/phpgwapi/themes');
 			while ($file = $dh->read())
 			{
 				if (eregi("\.theme$", $file))

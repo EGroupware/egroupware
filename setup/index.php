@@ -11,20 +11,19 @@
 	/* $Id$ */
 
 	$GLOBALS['DEBUG'] = False;
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array
-	(
-		'noheader'   => True,
-		'nonavbar'   => True,
-		'currentapp' => 'home',
-		'noapi'      => True,
-		'nocachecontrol' => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader'   => True,
+			'nonavbar'   => True,
+			'currentapp' => 'home',
+			'noapi'      => True,
+			'nocachecontrol' => True
+	));
 	include('./inc/functions.inc.php');
 
 	@set_time_limit(0);
 
-	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array
 	(
@@ -52,10 +51,10 @@
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_default','V_db_stage_default');
 
 	// Check header and authentication
-	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $GLOBALS['phpgw_setup']->detection->check_header();
-	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
+	$GLOBALS['egw_info']['setup']['stage']['header'] = $GLOBALS['egw_setup']->detection->check_header();
+	if ($GLOBALS['egw_info']['setup']['stage']['header'] != '10')
 	{
-		if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == 4)	// header needs update, go there direct
+		if ($GLOBALS['egw_info']['setup']['stage']['header'] == 4)	// header needs update, go there direct
 		{
 			Header('Location: manageheader.php');
 		}
@@ -65,42 +64,42 @@
 		}
 		exit;
 	}
-	elseif(!$GLOBALS['phpgw_setup']->auth('Config'))
+	elseif(!$GLOBALS['egw_setup']->auth('Config'))
 	{
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Please login'),True);
-		$GLOBALS['phpgw_setup']->html->login_form();
-		$GLOBALS['phpgw_setup']->html->show_footer();
+		$GLOBALS['egw_setup']->html->show_header(lang('Please login'),True);
+		$GLOBALS['egw_setup']->html->login_form();
+		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
 
-	$GLOBALS['phpgw_setup']->loaddb();
+	$GLOBALS['egw_setup']->loaddb();
 
-	$GLOBALS['phpgw_setup']->html->show_header(
-		$GLOBALS['phpgw_info']['setup']['header_msg'],
+	$GLOBALS['egw_setup']->html->show_header(
+		$GLOBALS['egw_info']['setup']['header_msg'],
 		False,
 		'config',
-		$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')'
+		$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')'
 	);
 	/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
-	/* $GLOBALS['phpgw_setup']->clear_session_cache(); */
+	/* $GLOBALS['egw_setup']->clear_session_cache(); */
 
 	// Database actions
-	$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
-	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db($setup_info);
-	if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 1)
+	$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
+	$GLOBALS['egw_info']['setup']['stage']['db'] = $GLOBALS['egw_setup']->detection->check_db($setup_info);
+	if ($GLOBALS['egw_info']['setup']['stage']['db'] != 1)
 	{
-		$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
-		$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
-		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db($setup_info);
+		$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
+		$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
+		$GLOBALS['egw_info']['setup']['stage']['db'] = $GLOBALS['egw_setup']->detection->check_db($setup_info);
 		if($GLOBALS['DEBUG'])
 		{
 			_debug_array($setup_info);
 		}
 	}
 
-	if ($GLOBALS['DEBUG']) { echo 'Stage: ' . $GLOBALS['phpgw_info']['setup']['stage']['db']; }
+	if ($GLOBALS['DEBUG']) { echo 'Stage: ' . $GLOBALS['egw_info']['setup']['stage']['db']; }
 	// begin DEBUG code
-	//$GLOBALS['phpgw_info']['setup']['stage']['db'] = 0;
+	//$GLOBALS['egw_info']['setup']['stage']['db'] = 0;
 	//$action = 'Upgrade';
 	// end DEBUG code
 
@@ -110,22 +109,22 @@
 			$subtitle = lang('Deleting Tables');
 			$submsg = lang('Are you sure you want to delete your existing tables and data?') . '.';
 			$subaction = lang('uninstall');
-			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'predrop';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
+			$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'predrop';
+			$GLOBALS['egw_info']['setup']['stage']['db'] = 5;
 			break;
 		case 'Create Database':
 			$subtitle = lang('Create Database');
 			$submsg = lang('At your request, this script is going to attempt to create the database and assign the db user rights to it');
 			$subaction = lang('created');
-			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'dbcreate';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
+			$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'dbcreate';
+			$GLOBALS['egw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'REALLY Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
 			$submsg = lang('At your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data') . '.';
 			$subaction = lang('uninstalled');
-			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'drop';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
+			$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'drop';
+			$GLOBALS['egw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'Upgrade':
 			$subtitle = lang('Upgrading Tables');
@@ -135,8 +134,8 @@
 				$submsg .= ' '.lang('After backing up your tables first.');
 			}
 			$subaction = lang('upgraded');
-			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
+			$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+			$GLOBALS['egw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'Install':
 			$subtitle = lang('Creating Tables');
@@ -149,8 +148,8 @@
 				$submsg = lang('At your request, this script is going to attempt to install the core tables and the admin and preferences applications for you').'.';
 			}
 			$subaction = lang('installed');
-			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'new';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
+			$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'new';
+			$GLOBALS['egw_info']['setup']['stage']['db'] = 6;
 			break;
 	}
 	$setup_tpl->set_var('subtitle',@$subtitle);
@@ -160,35 +159,35 @@
 	// Old PHP
 	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
 	{
-		$GLOBALS['phpgw_setup']->html->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],True);
-		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',
+		$GLOBALS['egw_setup']->html->show_header($GLOBALS['egw_info']['setup']['header_msg'],True);
+		$GLOBALS['egw_setup']->html->show_alert_msg('Error',
 			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1','4.1'));
-		$GLOBALS['phpgw_setup']->html->show_footer();
+		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
 
 	// BEGIN setup page
 
-	//$GLOBALS['phpgw_setup']->app_status();
-	$GLOBALS['phpgw_info']['server']['app_images'] = 'templates/default/images';
-	$incomplete = $GLOBALS['phpgw_info']['server']['app_images'] . '/incomplete.png';
-	$completed  = $GLOBALS['phpgw_info']['server']['app_images'] . '/completed.png';
+	//$GLOBALS['egw_setup']->app_status();
+	$GLOBALS['egw_info']['server']['app_images'] = 'templates/default/images';
+	$incomplete = $GLOBALS['egw_info']['server']['app_images'] . '/incomplete.png';
+	$completed  = $GLOBALS['egw_info']['server']['app_images'] . '/completed.png';
 
 	$setup_tpl->set_var('img_incomplete',$incomplete);
 	$setup_tpl->set_var('img_completed',$completed);
 
 	$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management',1));
 
-	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
+	switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	{
 		case 1:
-			$setup_tpl->set_var('dbnotexist',lang('Your Database is not working!').':<p>'.$GLOBALS['phpgw_setup']->db->Error);
+			$setup_tpl->set_var('dbnotexist',lang('Your Database is not working!').':<p>'.$GLOBALS['egw_setup']->db->Error);
 			$setup_tpl->set_var('makesure',lang('makesure'));
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
 			$setup_tpl->set_var('createdb',lang('Or we can attempt to create the database for you:'));
 			$setup_tpl->set_var('create_database',lang('Create database'));
-			$info = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_setup']->ConfigDomain];
+			$info = $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain];
 			switch ($info['db_type'])
 			{
 				case 'mysql':
@@ -231,7 +230,7 @@
 			$setup_tpl->set_var('coreapps',lang('all applications'));
 			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
 			$setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
-			$setup_tpl->set_var('system_charset',$GLOBALS['phpgw_setup']->translation->get_charsets('system_charset',lang('charset')));
+			$setup_tpl->set_var('system_charset',$GLOBALS['egw_setup']->translation->get_charsets('system_charset',lang('charset')));
 			$setup_tpl->set_var('lang_restore',lang('Or you can install a previous backup.'));
 			$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 				'<input type="submit" name="upload" value="'.htmlspecialchars(lang('install backup')).'" title="'.htmlspecialchars(lang("uploads a backup and installs it on your DB")).'" />');
@@ -278,16 +277,16 @@
 			$setup_tpl->set_var('tableshave',lang('If you did not receive any errors, your applications have been'));
 
 			// FIXME : CAPTURE THIS OUTPUT
-			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'report';
+			$GLOBALS['egw_setup']->db->Halt_On_Error = 'report';
 
-			switch ($GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'])
+			switch ($GLOBALS['egw_info']['setup']['currentver']['phpgwapi'])
 			{
 				case 'dbcreate':
-					$GLOBALS['phpgw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass']);
+					$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass']);
 					break;
 				case 'drop':
-					$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions($setup_info);
-					$setup_info = $GLOBALS['phpgw_setup']->process->droptables($setup_info);
+					$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
+					$setup_info = $GLOBALS['egw_setup']->process->droptables($setup_info);
 					break;
 				case 'new':
 					// use uploaded backup, instead installing from scratch
@@ -321,14 +320,14 @@
 					}
 					else
 					{
-						$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
+						$setup_info = $GLOBALS['egw_setup']->detection->upgrade_exclude($setup_info);
 						// Set the DB's client charset if a system-charset is set
 						if ($_REQUEST['system_charset'])
 						{
-							$GLOBALS['phpgw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
+							$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
 						}
-						$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True,$_REQUEST['system_charset']);
-						$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True,$_REQUEST['system_charset']);
+						$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					}
 					break;
 				case 'oldversion':
@@ -352,13 +351,13 @@
 					}
 					if (!@$_POST['backup'] || !is_string($f))
 					{
-						$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'upgrade',$_REQUEST['debug']);
-						$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',$_REQUEST['debug']);
+						$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					}
 					break;
 			}
 
-			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
+			$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
 
 			$setup_tpl->set_var('re-check_my_installation',lang('Re-Check My Installation'));
 			$setup_tpl->parse('V_db_stage_6_post','B_db_stage_6_post');
@@ -397,7 +396,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 	}
 	if ($check_in_docroot)
 	{
-		$docroots = array(PHPGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
+		$docroots = array(EGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
 		$dir = realpath($dir);
 
 		foreach ($docroots as $docroot)
@@ -421,18 +420,18 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 
 	// Config Section
 	$setup_tpl->set_var('config_step_text',lang('Step %1 - Configuration',2));
-	$GLOBALS['phpgw_info']['setup']['stage']['config'] = $GLOBALS['phpgw_setup']->detection->check_config();
+	$GLOBALS['egw_info']['setup']['stage']['config'] = $GLOBALS['egw_setup']->detection->check_config();
 
 	// begin DEBUG code
-	//$GLOBALS['phpgw_info']['setup']['stage']['config'] = 10;
+	//$GLOBALS['egw_info']['setup']['stage']['config'] = 10;
 	// end DEBUG code
 
 	$setup_tpl->set_var('config_status_img',$incomplete);
 	$setup_tpl->set_var('config_status_alt',lang('not completed'));
-	switch($GLOBALS['phpgw_info']['setup']['stage']['config'])
+	switch($GLOBALS['egw_info']['setup']['stage']['config'])
 	{
 		case 1:
-			$btn_config_now = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+			$btn_config_now = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				lang('Please configure eGroupWare for your environment'),
 				'POST','config.php',
 				'submit',lang('Configure Now'),
@@ -441,10 +440,10 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			$setup_tpl->set_var('ldap_table_data','&nbsp;');
 			break;
 		case 10:
-			$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_app='phpgwapi'");
-			while($GLOBALS['phpgw_setup']->db->next_record())
+			$GLOBALS['egw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_app='phpgwapi'");
+			while($GLOBALS['egw_setup']->db->next_record())
 			{
-				$config[$GLOBALS['phpgw_setup']->db->f(0)] = $GLOBALS['phpgw_setup']->db->f(1);
+				$config[$GLOBALS['egw_setup']->db->f(0)] = $GLOBALS['egw_setup']->db->f(1);
 			}
 			// set and create the default backup_dir
 			if (@is_writeable($config['files_dir']) && !isset($config['backup_dir']) && $config['file_store_contents'] == 'filesystem')
@@ -452,7 +451,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 				$config['backup_dir'] = $config['files_dir'].'/db_backup';
 				if (!is_dir($config['backup_dir']) && mkdir($config['backup_dir']))
 				{
-					$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('phpgwapi','backup_dir',".$GLOBALS['phpgw_setup']->db->quote($config['backup_dir']).')',__LINE__,__FILE__);
+					$GLOBALS['egw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('phpgwapi','backup_dir',".$GLOBALS['egw_setup']->db->quote($config['backup_dir']).')',__LINE__,__FILE__);
 				}
 			}
 			$config_msg = '';
@@ -474,7 +473,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 				$setup_tpl->set_var('config_status_alt',lang('completed'));
 				$config_msg = lang('Configuration completed');
 			}
-			$btn_edit_config = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+			$btn_edit_config = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				$config_msg,
 				'POST','config.php',
 				'submit',lang('Edit Current Configuration'),
@@ -484,7 +483,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			{
 				if ($config['ldap_host'] != '')
 				{
-					$btn_config_ldap = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+					$btn_config_ldap = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 						lang('LDAP account import/export'),
 						'POST','ldap.php',
 						'submit',lang('Configure Now'),
@@ -509,16 +508,16 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 	// Admin Account Section
 	$setup_tpl->set_var('admin_step_text',lang('Step %1 - Admin Account',3));
 
-	switch($GLOBALS['phpgw_info']['setup']['stage']['config'])
+	switch($GLOBALS['egw_info']['setup']['stage']['config'])
 	{
 		case 10:
 			// check if there is already a user account (not the anonymous account of sitemgr or a group)
 			// Note: this does not check the availiblitly of accounts via other auth-methods then sql !!!
-			$GLOBALS['phpgw_setup']->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='u' AND account_lid!='anonymous'",__LINE__,__FILE__);
-			$no_accounts = !$GLOBALS['phpgw_setup']->db->next_record() || !$GLOBALS['phpgw_setup']->db->f(0);
+			$GLOBALS['egw_setup']->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='u' AND account_lid!='anonymous'",__LINE__,__FILE__);
+			$no_accounts = !$GLOBALS['egw_setup']->db->next_record() || !$GLOBALS['egw_setup']->db->f(0);
 			$setup_tpl->set_var('admin_status_img',$no_accounts ? $incomplete : $completed);
 			$setup_tpl->set_var('admin_status_alt',$no_accounts ? lang('not completed') : lang('completed'));
-			$setup_tpl->set_var('admin_table_data',$GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+			$setup_tpl->set_var('admin_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				$no_accounts ? lang('No accounts existing') : lang('Accounts existing'),
 				'POST','setup_demo.php',
 				'submit',lang('Create admin account'),
@@ -534,18 +533,18 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 
 	// Lang Section
 	$setup_tpl->set_var('lang_step_text',lang('Step %1 - Language Management',4));
-	$GLOBALS['phpgw_info']['setup']['stage']['lang'] = $GLOBALS['phpgw_setup']->detection->check_lang();
+	$GLOBALS['egw_info']['setup']['stage']['lang'] = $GLOBALS['egw_setup']->detection->check_lang();
 
 	// begin DEBUG code
-	//$GLOBALS['phpgw_info']['setup']['stage']['lang'] = 0;
+	//$GLOBALS['egw_info']['setup']['stage']['lang'] = 0;
 	// end DEBUG code
 
-	switch($GLOBALS['phpgw_info']['setup']['stage']['lang'])
+	switch($GLOBALS['egw_info']['setup']['stage']['lang'])
 	{
 		case 1:
 			$setup_tpl->set_var('lang_status_img',$incomplete);
 			$setup_tpl->set_var('lang_status_alt','not completed');
-			$btn_install_lang = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+			$btn_install_lang = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				lang('You do not have any languages installed. Please install one now <br>'),
 				'POST','lang.php',
 				'submit',lang('Install Language'),
@@ -555,19 +554,19 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 		case 10:
 			$langs_list = array();
 			$languages = get_langs();
-			foreach ($GLOBALS['phpgw_info']['setup']['installed_langs'] as $key => $value)
+			foreach ($GLOBALS['egw_info']['setup']['installed_langs'] as $key => $value)
 			{
 				$langs_list[] = isset($languages[$key]) ? $languages[$key]['descr'] : $value;
 			}
 			$setup_tpl->set_var('lang_status_img',$completed);
 			$setup_tpl->set_var('lang_status_alt','completed');
-			$btn_manage_lang = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+			$btn_manage_lang = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				lang('This stage is completed<br>') . lang('Currently installed languages: %1 <br>',implode(', ',$langs_list)),
 				'POST','lang.php',
 				'submit',lang('Manage Languages'),
 				'');
 			// show system-charset and offer conversation
-			include_once(PHPGW_API_INC.'/class.translation_sql.inc.php');
+			include_once(EGW_API_INC.'/class.translation_sql.inc.php');
 			$translation = new translation;
 			$btn_manage_lang .= lang('Current system-charset is %1, click %2here%3 to change it.',
 				$translation->system_charset ? "'$translation->system_charset'" : lang('not set'),
@@ -582,8 +581,8 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 	}
 
 	$setup_tpl->set_var('apps_step_text',lang('Step %1 - Advanced Application Management',5));
-//	$GLOBALS['phpgw_info']['setup']['stage']['apps'] = $GLOBALS['phpgw_setup']->check_apps();
-	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
+//	$GLOBALS['egw_info']['setup']['stage']['apps'] = $GLOBALS['egw_setup']->check_apps();
+	switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	{
 		case 10:
 			$setup_tpl->set_var('apps_status_img',$completed);
@@ -597,7 +596,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 					$to_upgrade[] = $app;
 				}
 			}
-			$btn_manage_apps = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+			$btn_manage_apps = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				count($to_upgrade) ? '<b>'.lang('The following applications need to be upgraded:').'</b> '.implode(', ',$to_upgrade) :
 				lang('This stage is completed<br>'),
 				'','applications.php',
@@ -613,12 +612,12 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 	}
 	// Backup and restore section
 	$setup_tpl->set_var('backup_step_text',lang('Step %1 - DB backup and restore',6));
-	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
+	switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	{
 		case 10:
 			$setup_tpl->set_var('backup_status_img',$completed);
 			$setup_tpl->set_var('backup_status_alt',lang('completed'));
-			$setup_tpl->set_var('backup_table_data',$GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+			$setup_tpl->set_var('backup_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				''/*lang('This stage is completed<br>')*/,
 				'','db_backup.php',
 				'submit',lang('backup and restore'),
@@ -632,5 +631,5 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 	}
 	
 	$setup_tpl->pparse('out','T_setup_main');
-	$GLOBALS['phpgw_setup']->html->show_footer();
+	$GLOBALS['egw_setup']->html->show_footer();
 ?>

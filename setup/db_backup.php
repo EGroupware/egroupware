@@ -12,29 +12,30 @@
 
  	/* $Id$ */
 
- 	if (!is_object(@$GLOBALS['phpgw']))	// called from outside eGW ==> setup
+ 	if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
  	{
-		$GLOBALS['phpgw_info'] = array('flags' => array(
-			'noheader' => True,
-			'nonavbar' => True,
-			'currentapp' => 'home',
-			'noapi' => True
+		$GLOBALS['egw_info'] = array(
+			'flags' => array(
+				'noheader' => True,
+				'nonavbar' => True,
+				'currentapp' => 'home',
+				'noapi' => True
 		));
 		include ('./inc/functions.inc.php');
 
 		@set_time_limit(0);
 
 		// Check header and authentication
-		if (!$GLOBALS['phpgw_setup']->auth('Config'))
+		if (!$GLOBALS['egw_setup']->auth('Config'))
 		{
 			Header('Location: index.php');
 			exit;
 		}
 		// Does not return unless user is authorized
 
-		$GLOBALS['phpgw_setup']->loaddb();
+		$GLOBALS['egw_setup']->loaddb();
 
-		$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+		$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 		$self = 'db_backup.php';
 	}
 	$db_backup = CreateObject('phpgwapi.db_backup');
@@ -67,16 +68,16 @@
 
 	$bgcolor = array('#DDDDDD','#EEEEEE');
 
-	if (is_object($GLOBALS['phpgw_setup']->html))
+	if (is_object($GLOBALS['egw_setup']->html))
 	{
-		$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
+		$GLOBALS['egw_setup']->html->show_header($stage_title,False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 	}
 	else
 	{
 		$setup_tpl->set_block('T_db_backup','setup_header');
 		$setup_tpl->set_var('setup_header','');
-		$GLOBALS['phpgw_info']['flags']['app_header'] = $stage_title;
-		$GLOBALS['phpgw']->common->phpgw_header();
+		$GLOBALS['egw_info']['flags']['app_header'] = $stage_title;
+		$GLOBALS['egw']->common->phpgw_header();
 		parse_navbar();
 	}
 	// create a backup now
@@ -231,8 +232,8 @@
 	$setup_tpl->set_var('self',$self);
 	$setup_tpl->pparse('out','T_db_backup');
 
-	if (is_object($GLOBALS['phpgw_setup']->html))
+	if (is_object($GLOBALS['egw_setup']->html))
 	{
-		$GLOBALS['phpgw_setup']->html->show_footer();
+		$GLOBALS['egw_setup']->html->show_footer();
 	}
 ?>

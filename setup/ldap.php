@@ -11,17 +11,17 @@
 
   /* $Id$ */
 
-	$GLOBALS['phpgw_info'] = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'noheader'   => True,
-		'nonavbar'   => True,
-		'currentapp' => 'home',
-		'noapi'      => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader'   => True,
+			'nonavbar'   => True,
+			'currentapp' => 'home',
+			'noapi'      => True
+	));
 	include('./inc/functions.inc.php');
 
 	// Authorize the user to use setup app and load the database
-	if (!$GLOBALS['phpgw_setup']->auth('Config'))
+	if (!$GLOBALS['egw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -34,7 +34,7 @@
 		exit;
 	}
 
-	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'ldap'   => 'ldap.tpl',
@@ -43,12 +43,12 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
-	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Config'),False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
+	$GLOBALS['egw_setup']->html->show_header(lang('LDAP Config'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 
 	if ($GLOBALS['error'])
 	{
 		//echo '<br><center><b>Error:</b> '.$error.'</center>';
-		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$GLOBALS['error']);
+		$GLOBALS['egw_setup']->html->show_alert_msg('Error',$GLOBALS['error']);
 	}
 
 	$setup_tpl->set_block('ldap','header','header');
@@ -73,5 +73,5 @@
 	$setup_tpl->pfp('out','cancel_only');
 	$setup_tpl->pfp('out','footer');
 
-	$GLOBALS['phpgw_setup']->html->show_footer();
+	$GLOBALS['egw_setup']->html->show_footer();
 ?>

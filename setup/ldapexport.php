@@ -11,17 +11,17 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
-	$phpgw_info['flags'] = array(
-		'noheader'   => True,
-		'nonavbar'   => True,
-		'currentapp' => 'home',
-		'noapi'      => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader'   => True,
+			'nonavbar'   => True,
+			'currentapp' => 'home',
+			'noapi'      => True
+	));
 	include('./inc/functions.inc.php');
 
 	// Authorize the user to use setup app and load the database
-	if (!$GLOBALS['phpgw_setup']->auth('Config'))
+	if (!$GLOBALS['egw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -39,10 +39,10 @@
 	$phpgw->common = CreateObject('phpgwapi.common');
 
 	$common = $phpgw->common;
-	$GLOBALS['phpgw_setup']->loaddb();
-	copyobj($GLOBALS['phpgw_setup']->db,$phpgw->db);
+	$GLOBALS['egw_setup']->loaddb();
+	copyobj($GLOBALS['egw_setup']->db,$phpgw->db);
 
-	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'ldap'   => 'ldap.tpl',
@@ -51,10 +51,10 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
-	$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%'",__LINE__,__FILE__);
-	while ($GLOBALS['phpgw_setup']->db->next_record())
+	$GLOBALS['egw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%'",__LINE__,__FILE__);
+	while ($GLOBALS['egw_setup']->db->next_record())
 	{
-		$config[$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
+		$config[$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
 	}
 	$phpgw_info['server']['ldap_host']		= $config['ldap_host'];
 	$phpgw_info['server']['ldap_context']		= $config['ldap_context'];
@@ -87,16 +87,16 @@
 	}
 
 	$sql = "SELECT * FROM phpgw_accounts WHERE account_type='u'";
-	$GLOBALS['phpgw_setup']->db->query($sql,__LINE__,__FILE__);
-	while($GLOBALS['phpgw_setup']->db->next_record())
+	$GLOBALS['egw_setup']->db->query($sql,__LINE__,__FILE__);
+	while($GLOBALS['egw_setup']->db->next_record())
 	{
-		$i = $GLOBALS['phpgw_setup']->db->f('account_id');
-		$account_info[$i]['account_id']        = $GLOBALS['phpgw_setup']->db->f('account_id');
-		$account_info[$i]['account_lid']       = $GLOBALS['phpgw_setup']->db->f('account_lid');
-		$account_info[$i]['account_firstname'] = $GLOBALS['phpgw_setup']->db->f('account_firstname');
-		$account_info[$i]['account_lastname']  = $GLOBALS['phpgw_setup']->db->f('account_lastname');
-		$account_info[$i]['account_status']    = $GLOBALS['phpgw_setup']->db->f('account_status');
-		$account_info[$i]['account_expires']   = $GLOBALS['phpgw_setup']->db->f('account_expires');
+		$i = $GLOBALS['egw_setup']->db->f('account_id');
+		$account_info[$i]['account_id']        = $GLOBALS['egw_setup']->db->f('account_id');
+		$account_info[$i]['account_lid']       = $GLOBALS['egw_setup']->db->f('account_lid');
+		$account_info[$i]['account_firstname'] = $GLOBALS['egw_setup']->db->f('account_firstname');
+		$account_info[$i]['account_lastname']  = $GLOBALS['egw_setup']->db->f('account_lastname');
+		$account_info[$i]['account_status']    = $GLOBALS['egw_setup']->db->f('account_status');
+		$account_info[$i]['account_expires']   = $GLOBALS['egw_setup']->db->f('account_expires');
 	}
 
 	while(list($key,$data) = @each($account_info))
@@ -107,16 +107,16 @@
 	$account_info = $newaccount;
 
 	$sql = "SELECT * FROM phpgw_accounts WHERE account_type='g'";
-	$GLOBALS['phpgw_setup']->db->query($sql,__LINE__,__FILE__);
-	while($GLOBALS['phpgw_setup']->db->next_record())
+	$GLOBALS['egw_setup']->db->query($sql,__LINE__,__FILE__);
+	while($GLOBALS['egw_setup']->db->next_record())
 	{
-		$i = $GLOBALS['phpgw_setup']->db->f('account_id');
-		$group_info[$i]['account_id']        = $GLOBALS['phpgw_setup']->db->f('account_id');
-		$group_info[$i]['account_lid']       = $GLOBALS['phpgw_setup']->db->f('account_lid');
-		$group_info[$i]['account_firstname'] = $GLOBALS['phpgw_setup']->db->f('account_firstname');
-		$group_info[$i]['account_lastname']  = $GLOBALS['phpgw_setup']->db->f('account_lastname');
-		$group_info[$i]['account_status']    = $GLOBALS['phpgw_setup']->db->f('account_status');
-		$group_info[$i]['account_expires']   = $GLOBALS['phpgw_setup']->db->f('account_expires');
+		$i = $GLOBALS['egw_setup']->db->f('account_id');
+		$group_info[$i]['account_id']        = $GLOBALS['egw_setup']->db->f('account_id');
+		$group_info[$i]['account_lid']       = $GLOBALS['egw_setup']->db->f('account_lid');
+		$group_info[$i]['account_firstname'] = $GLOBALS['egw_setup']->db->f('account_firstname');
+		$group_info[$i]['account_lastname']  = $GLOBALS['egw_setup']->db->f('account_lastname');
+		$group_info[$i]['account_status']    = $GLOBALS['egw_setup']->db->f('account_status');
+		$group_info[$i]['account_expires']   = $GLOBALS['egw_setup']->db->f('account_expires');
 	}
 
 	while(list($key,$data) = @each($group_info))
@@ -156,7 +156,7 @@
 				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
 					$groups = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-					copyobj($GLOBALS['phpgw_setup']->db,$groups->db);
+					copyobj($GLOBALS['egw_setup']->db,$groups->db);
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
@@ -204,7 +204,7 @@
 				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
 					$accounts = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-					copyobj($GLOBALS['phpgw_setup']->db,$accounts->db);
+					copyobj($GLOBALS['egw_setup']->db,$accounts->db);
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
@@ -238,19 +238,19 @@
 		$setup_complete = True;
 	}
 
-	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Export'),False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
+	$GLOBALS['egw_setup']->html->show_header(lang('LDAP Export'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 
 	if($error)
 	{
 		//echo '<br><center><b>Error:</b> '.$error.'</center>';
-		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$error);
+		$GLOBALS['egw_setup']->html->show_alert_msg('Error',$error);
 	}
 
 	if($setup_complete)
 	{
 		echo '<br><center>'.lang('Export has been completed!  You will need to set the user passwords manually.').'</center>';
 		echo '<br><center>'.lang('Click <a href="index.php">here</a> to return to setup.').'</center>';
-		$GLOBALS['phpgw_setup']->html->show_footer();
+		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
 
@@ -309,5 +309,5 @@
 	$setup_tpl->pfp('out','submit');
 	$setup_tpl->pfp('out','footer');
 
-	$GLOBALS['phpgw_setup']->html->show_footer();
+	$GLOBALS['egw_setup']->html->show_footer();
 ?>

@@ -11,24 +11,24 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'noheader' => True,
-		'nonavbar' => True,
-		'currentapp' => 'home',
-		'noapi' => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader' => True,
+			'nonavbar' => True,
+			'currentapp' => 'home',
+			'noapi' => True
+	));
 	include('./inc/functions.inc.php');
 
 	/* Check header and authentication */
-	if(!$GLOBALS['phpgw_setup']->auth('Config'))
+	if(!$GLOBALS['egw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
 	}
 	// Does not return unless user is authorized
 
-	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 
 	$apps = get_var('apps','GET');
@@ -71,14 +71,14 @@
 		$setup_tpl->set_block('sqlarr','sqlfooter','sqlfooter');
 	}
 
-	$GLOBALS['phpgw_setup']->loaddb();
+	$GLOBALS['egw_setup']->loaddb();
 
 	function parse_vars($table,$term)
 	{
 		$GLOBALS['setup_tpl']->set_var('table', $table);
 		$GLOBALS['setup_tpl']->set_var('term',$term);
 
-		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['phpgw_setup']->process->sql_to_array($table);
+		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['egw_setup']->process->sql_to_array($table);
 		$GLOBALS['setup_tpl']->set_var('arr',$arr);
 		
 		foreach(array('pk','fk','ix','uc') as $kind)
@@ -147,7 +147,7 @@
 
 		if(!$download)
 		{
-			$GLOBALS['phpgw_setup']->html->show_header();
+			$GLOBALS['egw_setup']->html->show_header();
 		}
 
 		if($showall)
@@ -160,8 +160,8 @@
 			$term = ',';
 			$dlstring .= printout('sqlheader');
 
-			$GLOBALS['phpgw_setup']->db->connect();
-			foreach($GLOBALS['phpgw_setup']->db->Link_ID->MetaTables() as $table)
+			$GLOBALS['egw_setup']->db->connect();
+			foreach($GLOBALS['egw_setup']->db->Link_ID->MetaTables() as $table)
 			{
 				parse_vars($table,$term);
 				$dlstring .= printout('sqlbody');
@@ -215,7 +215,7 @@
 	}
 	else
 	{
-		$GLOBALS['phpgw_setup']->html->show_header();
+		$GLOBALS['egw_setup']->html->show_header();
 
 		$setup_tpl->set_var('action_url','sqltoarray.php');
 		$setup_tpl->set_var('lang_submit','Show selected');
