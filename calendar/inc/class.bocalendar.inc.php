@@ -1569,7 +1569,15 @@
 
 			while(list($userid,$statusid) = each($participants))
 			{
-				if(intval($userid) != $GLOBALS['phpgw_info']['user']['account_id'])
+				if((intval($userid) != $GLOBALS['phpgw_info']['user']['account_id']) &&
+				   (
+				    (
+				     ($msg_type == MSG_REJECTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_ACCEPTED) &&
+				     ($old_event['owner'] == $userid)
+				    ) ||
+				    ($msg_type == MSG_DELETED || $msg_type == MSG_MODIFIED || $msg_type == MSG_ADDED)
+				   )
+				  )
 				{
 					if($this->debug)
 					{
