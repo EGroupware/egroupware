@@ -626,14 +626,16 @@
 
 		function name2id($name,$which='account_lid')
 		{
-			$sri = ldap_search($this->ds, $this->group_context, '(&(cn=' . (string)$account_lid . ')(phpgwaccounttype=g))');
-			$allValues = ldap_get_entries($this->ds, $sri);
-
-			if (@$allValues[0]['gidnumber'][0])
+			if ($which == 'account_lid')	// groups only support account_lid
 			{
-				return (int)$allValues[0]['gidnumber'][0];
+				$sri = ldap_search($this->ds, $this->group_context, '(&(cn=' . (string)$name . ')(phpgwaccounttype=g))');
+				$allValues = ldap_get_entries($this->ds, $sri);
+	
+				if (@$allValues[0]['gidnumber'][0])
+				{
+					return (int)$allValues[0]['gidnumber'][0];
+				}
 			}
-
 			$to_ldap = array(
 				'account_lid'   => 'uid',
 				'account_email' => 'mail',
@@ -654,15 +656,18 @@
 
 		function id2name($account_id,$which='account_lid')
 		{
-			$allValues = array();
-			$sri = ldap_search($this->ds, $this->group_context, '(&(gidnumber=' . (int)$account_id . ')(phpgwaccounttype=g))');
-			$allValues = ldap_get_entries($this->ds, $sri);
-
-			if (@$allValues[0]['cn'][0])
+			if ($which == 'account_lid' || $which == 'account_type')	// groups only support account_lid and account_type
 			{
-				return $allValues[0]['cn'][0];
+				$allValues = array();
+				$sri = ldap_search($this->ds, $this->group_context, '(&(gidnumber=' . (int)$account_id . ')(phpgwaccounttype=g))');
+				$allValues = ldap_get_entries($this->ds, $sri);
+	
+				$attr = $which == 'account_lid' ? 'cn' : 'phpgwaccounttype';
+				if (@$allValues[0]['cn'][0])
+				{
+					return $allValues[0]['cn'][0];
+				}
 			}
-
 			$to_ldap = array(
 				'account_lid'   => 'uid',
 				'account_email' => 'mail',
