@@ -4,8 +4,8 @@
 <table border="0" cellpadding="0" cellspacing="0" width="{outer_width}"> 
  <tr nowrap align="center">
   <td align="left">
-	<div class="divSideboxHeader" style="height: 15px; padding-top: 0px">
-	<table border="0" cellpadding="1" cellspacing="0" width="{outer_width}">
+	<div class="divSideboxHeader" style="padding-top: 0px">
+	<table border="0" cellpadding="0" cellspacing="0" width="{outer_width}">
 	  <tr>
 		<td align="left">&nbsp;<strong>{title}</strong></td>{portal_controls}
 	  </tr>
