@@ -250,6 +250,16 @@
 				}
 				return $ret;
 			}
+
+            if ($from)
+            {
+                $from = strtolower($from);
+            }
+            if ($to)
+            {
+                $to = strtolower($to);
+            }
+
 			if (!$from)
 			{
 				$from = $this->mbstring ? strtolower(mb_detect_encoding($data)) : 'iso-8859-1';
@@ -260,7 +270,7 @@
 			   php does not seem to support gb2312
 			   but seems to be able to decode it as EUC-CN
 			*/
-			switch(strtolower($from))
+			switch($from)
 			{
 				case 'gb2312':
 				case 'gb18030':
@@ -293,7 +303,7 @@
 			}
 			if(function_exists('iconv'))
 			{
-				if (($data = iconv($from,$to,$date)))
+				if (($data = iconv($from,$to,$data)))
 				{
 					return $data;
 				}
