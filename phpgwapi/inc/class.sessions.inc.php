@@ -285,9 +285,18 @@
 		// This will update the DateLastActive column, so the login does not expire
 		function update_dla()
 		{
-			global $phpgw_info, $phpgw, $PHP_SELF;
+			global $phpgw_info, $phpgw, $PHP_SELF, $menuaction;
 
-			$phpgw->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$PHP_SELF' "
+			if ($menuaction)
+			{
+				$action = $menuaction;			
+			}
+			else
+			{
+				$action = $PHP_SELF;
+			}
+
+			$phpgw->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$action' "
 								. "where session_id='" . $this->sessionid."'",__LINE__,__FILE__);
 
 			$phpgw->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
