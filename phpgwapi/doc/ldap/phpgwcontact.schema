@@ -11,9 +11,9 @@ attributetype ( 1.3.6.1.4.1.9554.100
 # REQUIRED
 attributetype ( 1.3.6.1.4.1.9554.101
 	NAME 'phpgwContactCatId'
-	EQUALITY numericStringMatch
-	SUBSTR numericStringSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16} )
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{16}
 
 # REQUIRED
 attributetype ( 1.3.6.1.4.1.9554.102
