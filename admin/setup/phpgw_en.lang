@@ -111,6 +111,7 @@ deny access to site configuration	admin	en	Deny access to site configuration
 deny access to user accounts	admin	en	Deny access to user accounts
 deny all users access to grant other users access to their entries ?	admin	en	Deny all users access to grant other users access to their entries ?
 description can not exceed 255 characters in length !	admin	en	Description can not exceed 255 characters in length !
+disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
 disabled (not recomended)	admin	en	disabled (not recomended)
 display	admin	en	Display
 do not delete the category and return back to the list	admin	en	do NOT delete the category and return back to the list
@@ -215,16 +216,15 @@ loginid	admin	en	LoginID
 main screen message	admin	en	Main screen message
 manager	admin	en	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id (e.g. 65535 or 1000000)
+maximum entries in click path history	admin	en	Maximum entries in click path history
 message has been updated	admin	en	message has been updated
 method	admin	en	Method
 minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account id (e.g. 500 or 100, etc.)
 minute	admin	en	Minute
 mode	admin	en	Mode
 month	admin	en	Month
-new group	admin	en	New Group
 new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
-new user	admin	en	New User
 next run	admin	en	Next run
 no algorithms available	admin	en	no algorithms available
 no jobs in the database !!!	admin	en	No jobs in the database !!!
@@ -341,6 +341,7 @@ view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like phpgroupware to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
 would you like phpgroupware to check for new application versions when admins login ?	admin	en	Would you like phpGroupWare to check for new application versions when admins login ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automaticaly load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
 xml-rpc	admin	en	XML-RPC
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date

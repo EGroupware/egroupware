@@ -98,13 +98,14 @@ deny access to site configuration	admin	de	Zugriff auf Konfiguration der Anwendu
 deny access to user accounts	admin	de	Zugriff auf Benutzerkonten verbieten
 deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten anderen Benutzern Zugriff zu ihren Daten zu gewähren ?
 description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
+disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	Anzeigen
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
-edit global category for %1	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
+edit global category for %1	admin	de	Globale Kategorie für %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit login screen message	admin	de	Nachricht der Login Seite bearbeiten
 edit main screen message	admin	de	Nachricht der Startseite bearbeiten
@@ -143,7 +144,7 @@ force selectbox	admin	de	Auswahl erzwingen
 global categories	admin	de	Globale Kategorien
 group ?	admin	de	Gruppe ?
 group has been added	common	de	Gruppe wurde hinzugefügt
-group has been deleted	common	de	Gruppe wurde gel&ouml;scht
+group has been deleted	common	de	Gruppe wurde gelöscht
 group has been updated	common	de	Gruppe wurde aktualisiert
 group list	admin	de	Liste der Gruppen
 group manager	admin	de	Gruppenmanager
@@ -192,6 +193,7 @@ loginid	admin	de	LoginID
 main screen message	admin	de	Nachricht der Startseite
 manager	admin	de	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer Id (zB. 65535 oder 1000000)
+maximum entries in click path history	admin	de	Max. Anzahl Einträge in der Click-Path-Historie
 message has been updated	admin	de	Nachricht wurde geändert
 method	admin	de	Methode
 minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer Id (zB.
@@ -199,11 +201,9 @@ minute	admin	de	Minute
 mode	admin	de	Modus
 month	admin	de	Monat
 never	admin	de	Nie
-new group	admin	de	Neuer Benutzer
 new group name	admin	de	Neuer Gruppenname
 new password [ leave blank for no change	admin	de	
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
-new user	admin	de	Neue Gruppe
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank !!!
@@ -310,6 +310,7 @@ view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 would you like phpgroupware to cache the phpgw info array ?	admin	de	Soll phpGroupWare das phpgw info Array cachen ?
 would you like phpgroupware to check for new application versions when admins login ?	admin	de	Soll phpGroupWare auf neue Programm-Versionen pr&uuml;fen, wenn sich ein Administrator anmeldet ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 xml-rpc	admin	de	XML-RPC
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
