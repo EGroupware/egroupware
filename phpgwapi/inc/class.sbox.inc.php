@@ -133,11 +133,13 @@
 			{
 				$startYear = date('Y') - 2;
 			}
+			if ($selected && $startYear > $selected) $startYear = $selected;
 
 			if (!$endyear)
 			{
 				$endyear = date('Y') + 5;
 			}
+			if ($selected && $endYear < $selected) $endYear = $selected;
 
 			$out = '<select name="'.$name.'">'."\n";
 
