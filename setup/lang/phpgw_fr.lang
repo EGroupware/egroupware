@@ -430,9 +430,10 @@ register_globals is turned On, eGroupWare does NOT require it and it's generaly 
 memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures	setup	fr	L'option « Memory Limit » est positionnée en dessous des 16M; Certaines applications ont besoin de plus de 8M, cela peut entrainer des problèmes.
 max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «Max Execution Time» est positionnée en dessous des 30 secondes; Parfois, eGroupware aura besoin de plus de temps.
 include_path need to contain "." - the current directory	setup	fr	« include_path » a besoin de contenir "." - le répertoire courant
-readable by the webserver	setup	fr	Lisible par le serveur Web
-writable by the webserver	setup	fr	Accès en écriture pour le serveur Web
-not	setup	fr	n'ai pas
+readable by the webserver	setup	fr	lisible par le serveur Web
+writable by the webserver	setup	fr	accès en écriture pour le serveur Web
+not	setup	fr	n'a pas
+is	setup	fr	 
 world readable	setup	fr	visible par tous
 world writable	setup	fr	accès en écriture pour tous
 Checking file-permissions of %1 for %2: %3	setup	fr	Vérification des permissions de fichiers de %1 pour %2 : %3
@@ -449,3 +450,4 @@ Click here to re-run the installation tests	setup	fr	Cliquez ici pour rédemarrer
 or %1Continue to the Header Admin%2	setup	fr	ou %1continuer la configuration eGroupWare%2
 Continue to the Header Admin	setup	fr	Continuer la configuration eGroupWare
 Return to Setup	setup	fr	Revenir à la page de l'installateur
+%1 is %2%3	setup	fr	%1 est %2%3
