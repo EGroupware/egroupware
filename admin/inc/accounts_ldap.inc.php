@@ -261,18 +261,16 @@
      $entry["cn"]	 	= sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
      $entry["sn"]	 	= $account_info["lastname"];
      $entry["givenname"] 	= $account_info["firstname"];
-     $entry["phpgw_status"] 	= $account_info["account_status"];
-     
-     $i=0;
-     reset ($account_info["permissions"]);
-     while (list($key,$value) = each($account_info["permissions"]))
-     {
-     	$entry["phpgw_account_perms"][$i] = $key;
-     	$i++;
-     }
-
      $dn = $account_info["account_id"];
      @ldap_modify($ldap, $dn, $entry);
+
+     $phpgw->db->query("update accounts set account_firstname='". $account_info["firstname"] ."',
+			 account_lastname='". $account_info["lastname"] ."', 
+			 account_permissions='". $phpgw->accounts->add_app("",True) . "', 
+			 account_status='". $account_info["account_status"] . "', 
+		       	 account_groups='". $account_info["groups"] . "' 
+			 where account_lid='" . $account_info["loginid"]. "'");
+
 
      $cd = 27;
      if ($account_info["old_loginid"] != $account_info["loginid"]) {
