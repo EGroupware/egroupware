@@ -103,7 +103,7 @@
 				'loginid' => array('type' => 'varchar','precision' => '20'),
 				'location' => array('type' => 'varchar','precision' => '255'),
 				'app' => array('type' => 'varchar','precision' => '20'),
-				'content' => array('type' => 'text'),
+				'content' => array('type' => 'longtext'),
 				'session_dla' => array('type' => 'int','precision' => '4')
 			),
 			'pk' => array(),
