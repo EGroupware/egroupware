@@ -196,7 +196,7 @@
     var $account_id;
     var $preferences;
 
-    function preferences($account_id=0)
+    function preferences($account_id)
     {
       global $phpgw;
 
@@ -205,18 +205,19 @@
       if (is_long($account_id) && $account_id) {
 	$this->account_id = $account_id;
       } elseif(is_string($account_id)) {
-	$db2->query("SELECT account_id FROM accounts WHERE account_lid='".$account_id."'");
+	$db2->query("SELECT account_id FROM accounts WHERE account_lid='".$account_id."'",__LINE__,__FILE__);
 	if($db2->num_rows()) {
 	  $db2->next_record();
 	  $this->account_id = $db2->f("account_id");
+	} else {
+	  $load_pref = False;
 	}
       } else {
 	$load_pref = False;
       }
 
       if ($load_pref) {
-	$db2->query("select preference_value from preferences where preference_owner='"
-                  . $this->account_id . "'",__LINE__,__FILE__);
+	$db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
 	$db2->next_record();
 	$this->preferences = unserialize($db2->f("preference_value"));
       }

@@ -38,51 +38,35 @@
      }
 
      if (! $error) {
-        $phpgw->db->lock(array("accounts","groups"));
+//        $phpgw->db->lock(array("accounts","groups","preferences","config","applications","phpgw_hooks","phpgw_sessions"));
 
-	$phpgw->db->query("SELECT group_apps FROM groups WHERE group_id=".$group_id,__FILE__,__LINE__);
-	$phpgw->db->next_record();
-	$apps_before = $phpgw->db->f("group_apps");
         $phpgw->accounts->add_app($n_group_permissions);
-	$apps_after = $phpgw->accounts->add_app("",True);
+	$apps_after = explode(":",$phpgw->accounts->add_app("",True));
 
-	if($apps_before <> $apps_after) {
-	  $after_apps = explode(":",$apps_after);
-	  for ($i=1;$i<=count($after_apps);$i++) {
-	    if (!strpos(" ".$apps_before." ",$after_apps)) {
-	      $new_apps[] = $after_apps[$i];
-	    }
-	  }
-	}
         $phpgw->db->query("update groups set group_name='$n_group', group_apps='" . $apps_after
 			 . "' where group_id=$group_id");
-        $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
-	$phpgw->db->next_record();
-        $group_con = $phpgw->db->f("group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
 	   $phpgw->db->next_record();
-	   if(strpos($phpgw->db->f("account_groups"),$group_con.":0,") == 0) {
-             $user_groups = $phpgw->db->f("account_groups") . ",$group_con:0,";
+	   if(strpos($phpgw->db->f("account_groups"),$group_id.":0,") == 0) {
+             $user_groups = $phpgw->db->f("account_groups") . ",$group_id:0,";
              $user_groups = ereg_replace(",,",",",$user_groups);
              $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
 	   }
 
 // The following sets any default preferences needed for new applications..
 // This is smart enough to know if previous preferences were selected, use them.
-	   if (count($new_apps)) {
-	     $pref = new preferences($n_users[$i]);
-	     $docommit = False;
-	     for ($j=0;$j<count($new_apps);$j++) {
-	       if (!$pref->preferences[$new_apps[$j]]) {
-		 $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
-		 $docommit = True;
-	       }
+	   $pref = new preferences(intval($n_users[$i]));
+	   $docommit = False;
+	   for ($j=1;$j<=count($apps_after);$j++) {
+	     if (!$pref->preferences[$apps_after[$j]]) {
+	       $phpgw->common->hook_single("add_def_pref", $apps_after[$j]);
+	       $docommit = True;
 	     }
-	     if ($docommit) {
-		 $pref->commit();
-	     }
+	   }
+	   if ($docommit) {
+	     $pref->commit();
 	   }
         }
 
@@ -100,7 +84,7 @@
            $cd = 33;
         }
 
-        $phpgw->db->unlock();
+//        $phpgw->db->unlock();
 
         Header("Location: " . $phpgw->link("groups.php","cd=$cd"));
         $phpgw->common->phpgw_exit();
