@@ -448,145 +448,175 @@
       }      
     }
 
-    function get_image_path($appname = ''){
-      global $phpgw_info;
-      if ($appname == '') {
-         $appname = $phpgw_info['flags']['currentapp'];
-      }
-      if (empty($phpgw_info['server']['template_set'])) { 
-         $phpgw_info['server']['template_set'] = 'default';
-      }
+		function get_image_path($appname = '')
+		{
+			global $phpgw_info;
 
-      $imagedir            = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
-      $imagedir_default    = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
-      $imagedir_olddefault = PHPGW_SERVER_ROOT . '/'.$appname.'/images';
+			if ($appname == '')
+			{
+				$appname = $phpgw_info['flags']['currentapp'];
+			}
 
-      if (is_dir ($imagedir)){
-        return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
-      }elseif (is_dir ($imagedir_default)){
-        return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/default/images';
-      }elseif (is_dir ($imagedir_olddefault)){
-        return $phpgw_info['server']['webserver_url'].'/'.$appname.'/images';
-      }else{
-        return False;
-      }      
-    }
+			if (empty($phpgw_info['server']['template_set']))
+			{
+				$phpgw_info['server']['template_set'] = 'default';
+			}
 
-    function navbar()
-    {    
-       global $phpgw_info, $phpgw;
+			$imagedir            = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
+			$imagedir_default    = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
+			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/'.$appname.'/images';
 
-       $phpgw_info['navbar']['home']['title'] = 'Home';
-       $phpgw_info['navbar']['home']['url']   = $phpgw->link($phpgw_info['server']['webserver_url'] . '/index.php');
-       $phpgw_info['navbar']['home']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
-                                              . $phpgw_info['server']['template_set'] . '/images/home.gif';
+			if (is_dir ($imagedir))
+			{
+				return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
+			}
+			elseif (is_dir ($imagedir_default))
+			{
+				return $phpgw_info['server']['webserver_url'].'/'.$appname.'/templates/default/images';
+			}
+			elseif (is_dir ($imagedir_olddefault))
+			{
+				return $phpgw_info['server']['webserver_url'].'/'.$appname.'/images';
+			}
+			else
+			{
+				return False;
+			}      
+		}
 
-       reset($phpgw_info['user']['apps']);
-       while ($permission = each($phpgw_info['user']['apps'])) {
-          if (is_long($permission[0])) { continue; }
-          if ($phpgw_info['apps'][$permission[0]]['status'] != 2) {
-             $phpgw_info['navbar'][$permission[0]]['title'] = $phpgw_info['apps'][$permission[0]]['title'];
-             $phpgw_info['navbar'][$permission[0]]['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
-                                                            . '/' . $permission[0] . '/index.php');
-            $icon_file = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/'. $phpgw_info['server']['template_set']. '/images/navbar.gif';
-            if (file_exists($icon_file)){
-              $phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
-                . $permission[0] . '/templates/' . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
-            }else{
-              $phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
-                . $permission[0] . '/templates/default/images/navbar.gif';
-            }
-          }
-       }
-       $phpgw_info['navbar']['preferences']['title'] = 'preferences';
-       $phpgw_info['navbar']['preferences']['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
-                                                     . '/preferences/index.php');
-       $phpgw_info['navbar']['preferences']['icon']  = $phpgw_info['server']['webserver_url'] . '/preferences/templates/'
+		function navbar()
+		{    
+			global $phpgw_info, $phpgw;
+
+			$phpgw_info['navbar']['home']['title'] = 'Home';
+			$phpgw_info['navbar']['home']['url']   = $phpgw->link('/index.php');
+			$phpgw_info['navbar']['home']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
+				. $phpgw_info['server']['template_set'] . '/images/home.gif';
+
+			reset($phpgw_info['user']['apps']);
+			while ($permission = each($phpgw_info['user']['apps']))
+			{
+				if (is_long($permission[0]))
+				{
+					continue;
+				}
+
+				if ($phpgw_info['apps'][$permission[0]]['status'] != 2)
+				{
+					$phpgw_info['navbar'][$permission[0]]['title'] = $phpgw_info['apps'][$permission[0]]['title'];
+					$phpgw_info['navbar'][$permission[0]]['url']   = $phpgw->link('/' . $permission[0] . '/index.php');
+					$icon_file = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/'. $phpgw_info['server']['template_set']. '/images/navbar.gif';
+
+					if (file_exists($icon_file))
+					{
+						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
+							. $permission[0] . '/templates/' . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
+					}
+					else
+					{
+						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
+							. $permission[0] . '/templates/default/images/navbar.gif';
+					}
+				}
+			}
+			$phpgw_info['navbar']['preferences']['title'] = 'preferences';
+			$phpgw_info['navbar']['preferences']['url']   = $phpgw->link('/preferences/index.php');
+			$phpgw_info['navbar']['preferences']['icon']  = $phpgw_info['server']['webserver_url'] . '/preferences/templates/'
                                                      . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
 
-       if ($phpgw_info['flags']['currentapp'] == 'home' || $phpgw_info['flags']['currentapp'] == 'preferences' || $phpgw_info['flags']['currentapp'] == 'about') {
-          $app = 'phpGroupWare';
-       } else {
-          $app = $phpgw_info['flags']['currentapp'];
-       }
-       $phpgw_info['navbar']['about']['title'] = lang('About x',$app);      // We handle this here
-                                                                            // becuase its special
-       $phpgw_info['navbar']['about']['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
-                                               . '/about.php','app='.$app);
-       $phpgw_info['navbar']['about']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
+			if ($phpgw_info['flags']['currentapp'] == 'home' || $phpgw_info['flags']['currentapp'] == 'preferences' || $phpgw_info['flags']['currentapp'] == 'about')
+			{
+				$app = 'phpGroupWare';
+			}
+			else
+			{
+				$app = $phpgw_info['flags']['currentapp'];
+			}
+
+			// We handle this here becuase its special
+			$phpgw_info['navbar']['about']['title'] = lang('About x',$app);
+
+			$phpgw_info['navbar']['about']['url']   = $phpgw->link('/about.php','app='.$app);
+			$phpgw_info['navbar']['about']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
                                                . $phpgw_info['server']['template_set'] . '/images/about.gif';
 
-       $phpgw_info['navbar']['logout']['title'] = 'Logout';
-       $phpgw_info['navbar']['logout']['url']   = $phpgw->link($phpgw_info['server']['webserver_url']
-                                                . '/logout.php');
-       $phpgw_info['navbar']['logout']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
+			$phpgw_info['navbar']['logout']['title'] = 'Logout';
+			$phpgw_info['navbar']['logout']['url']   = $phpgw->link('/logout.php');
+			$phpgw_info['navbar']['logout']['icon']  = $phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/'
                                                 . $phpgw_info['server']['template_set'] . '/images/logout.gif';
-    }
+		}
 
 
-    function app_header()
-    {
-       if (file_exists(PHPGW_APP_INC . '/header.inc.php')) {
-          include(PHPGW_APP_INC . '/header.inc.php');
-       }
-    }
+		function app_header()
+		{
+			if (file_exists(PHPGW_APP_INC . '/header.inc.php'))
+			{
+				include(PHPGW_APP_INC . '/header.inc.php');
+			}
+		}
 
-    function phpgw_header() {
-      global $phpgw, $phpgw_info;
+		function phpgw_header()
+		{
+			global $phpgw, $phpgw_info;
 
-      include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
+			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
                                  . '/head.inc.php');
-      $this->navbar(False);
-      include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
+			$this->navbar(False);
+			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
                                  . '/navbar.inc.php');
-      if ((! isset($phpgw_info['flags']['nonavbar']) || ! $phpgw_info['flags']['nonavbar']) && ! $phpgw_info['flags']['navbar_target']) {
-         echo parse_navbar();
-      }
-    }
+			if ((! isset($phpgw_info['flags']['nonavbar']) || ! $phpgw_info['flags']['nonavbar']) && ! $phpgw_info['flags']['navbar_target'])
+			{
+				echo parse_navbar();
+			}
+		}
 
-    function phpgw_footer()
-    {
-       global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
+		function phpgw_footer()
+		{
+			global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
 
-       if (!isset($phpgw_info['flags']['nofooter']) || !$phpgw_info['flags']['nofooter']) {
-          include(PHPGW_API_INC . '/footer.inc.php');
-       }
+			if (!isset($phpgw_info['flags']['nofooter']) || !$phpgw_info['flags']['nofooter'])
+			{
+				include(PHPGW_API_INC . '/footer.inc.php');
+			}
  
-       // Clean up mcrypt
-       if (is_object($this->crypto)) {
-          $this->crypto->cleanup();
-          unset($this->crypto);
-       }
-    }
+			// Clean up mcrypt
+			if (is_object($this->crypto))
+			{
+				$this->crypto->cleanup();
+				unset($this->crypto);
+			}
+		}
 
-    function hex2bin($data)
-    {
-       $len = strlen($data);
-       return pack('H' . $len, $data);
-    }
+		function hex2bin($data)
+		{
+			$len = strlen($data);
+			return pack('H' . $len, $data);
+		}
 
-    function encrypt($data) {
-      global $phpgw_info, $phpgw;
+		function encrypt($data)
+		{
+			global $phpgw_info, $phpgw;
 
-      $data = serialize($data);
-      return $phpgw->crypto->encrypt($data);
-    }
+			$data = serialize($data);
+			return $phpgw->crypto->encrypt($data);
+		}
 
-    function decrypt($data) {
-      global $phpgw_info, $phpgw;
+		function decrypt($data)
+		{
+			global $phpgw_info, $phpgw;
 
-      $data = $phpgw->crypto->decrypt($data);
-      return unserialize($data);
-    }
+			$data = $phpgw->crypto->decrypt($data);
+			return unserialize($data);
+		}
 
-  function des_cryptpasswd($userpass, $random)
-  {
-    $lcrypt = "{crypt}";
-    $password = crypt($userpass);
-    $ldappassword = sprintf("%s%s", $lcrypt, $password);
+		function des_cryptpasswd($userpass, $random)
+		{
+			$lcrypt = '{crypt}';
+			$password = crypt($userpass);
+			$ldappassword = sprintf('%s%s', $lcrypt, $password);
  
-    return $ldappassword;
-  }
+			return $ldappassword;
+		}
 
   function md5_cryptpasswd($userpass, $random)
   {

@@ -490,16 +490,10 @@
 		/*************************************************************************\
 		* Function to handle session support via url or cookies                   *
 		\*************************************************************************/
-		function link($url = '', $extravars = '')
+		function link($url, $extravars = '')
 		{
 			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
-			
-			/* Fix problems when PHP_SELF if used as the param */
-			if ($url == $PHP_SELF)
-			{
-				$url = '';
-			}
-			
+
 			if (! $kp3)
 			{
 				$kp3 = $phpgw_info['user']['kp3'];
@@ -507,7 +501,11 @@
 
 			// Explicit hack to work around problems with php running as CGI on windows
 			// please let us know if this doesn't work for you!
-			if (! $url && (PHP_OS == 'Windows' || PHP_OS == 'OS/2' || PHP_OS == 'WIN32' || PHP_OS == 'WIN16'))
+
+			// I am not sure how my changes will affect the following.
+			// Could someone with access to a Windows install check it ?  (jengo)
+
+/*			if (! $url && (PHP_OS == 'Windows' || PHP_OS == 'OS/2' || PHP_OS == 'WIN32' || PHP_OS == 'WIN16'))
 			{
 				$exe = strpos($PHP_SELF,'php.exe');
 				if ($exe != false) {
@@ -517,18 +515,25 @@
 					$url .= substr($PHP_SELF,$exe,strlen($PHP_SELF)-$exe);
 				}
 			}
-			if (! $url)
+*/
+
+			$url = $phpgw_info['server']['webserver_url'] . $url;
+
+			// This needs to be tested as well. (jengo)
+
+/*			if (! $url)
 			{
 				$url_root = split ('/', $phpgw_info['server']['webserver_url']);
-				/* Some hosting providers have their paths screwy.
-					 If the value from $PHP_SELF is not what you expect, you can use this to patch it
-					 It will need to be adjusted to your specific problem tho.
-				*/
+				// Some hosting providers have their paths screwy.
+				//	 If the value from $PHP_SELF is not what you expect, you can use this to patch it
+				//	 It will need to be adjusted to your specific problem tho.
+				//
 				//$patched_php_self = str_replace('/php4/php/phpgroupware', '/phpgroupware', $PHP_SELF);
 				$patched_php_self = $PHP_SELF;
 				$url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2] . $patched_php_self;
 			}
-	
+*/
+
 			if (isset($phpgw_info['server']['usecookies']) && $phpgw_info['server']['usecookies'])
 			{
 				if ($extravars)
@@ -549,13 +554,14 @@
 				{
 					$url .= '&newsmode=on';
 				}
+
 				if ($extravars)
 				{
-					$url .= "&$extravars";
+					$url .= '&' . $extravars;
 				}
 			}
-	
-			$url = str_replace('/?', '/index.php?', $url);
+
+/*			$url = str_replace('/?', '/index.php?', $url);
 			$webserver_url_count = strlen($phpgw_info['server']['webserver_url']);
 			$slash_check = strtolower(substr($url ,0,1));
 			if (substr($url ,0,$webserver_url_count) != $phpgw_info['server']['webserver_url'])
@@ -573,7 +579,7 @@
 				{
 					$url = $phpgw_info['server']['webserver_url'].'/'.$app.'/'.$url; 
 				}
-			} 
+			} */
 			return $url;
 		}  
 	}
