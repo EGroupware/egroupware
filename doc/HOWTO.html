@@ -44,11 +44,32 @@ Windows is supported, but there is no documentation for it currently.
 <LI>PHP 3.0.15+ / PHP 4.0.x</LI>
 <LI>Apache 1.3.x</LI>
 <LI>MySQL 3.22.25 or PostgreSQL 7.0.x</LI>
-<LI>Courier-IMAP 0.33+</LI>
-<LI>qmail 1.03 (using the qmail POP3 server)</LI>
+<LI>Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access</LI>
 </UL>
 <P>We have reports of it working on Windows NT and OS/2, and using Oracle as the database.
-<H2>2.3 Tested Systems</H2>
+<H2>2.3 Obtaining phpGroupWare</H2>
+
+<P>While we are still in the Beta phase of phpGroupWare, you may
+want to track the CVS copy as closely as possible. The released
+versions are more stable, but often contain bugs that have been fixed
+in the CVS version.
+<H3>Released Versions</H3>
+
+<P>The downloads section on the 
+<A HREF="http://www.phpgroupware.org/">http://www.phpgroupware.org/</A> site
+contains links to the most recent releases, and several mirror sites
+for the releases.
+<H3>Developer's version from CVS</H3>
+
+<P>If you have never used CVS, you may want to read through the doucmentation
+found at 
+<A HREF="http://www.cvshome.org/">http://www.cvshome.org/</A>. 
+The CVS pages for the core and apps projects can be found at
+<A HREF="http://sourceforge.net/cvs/?group_id=7305">phpGroupWare Core CVS</A>, and
+<A HREF="http://sourceforge.net/cvs/?group_id=9787">phpGroupWare Apps CVS</A>.
+Follow the directions for <B>Anonymous CVS access</B> and you should
+have the most recent development copy of phpGroupWare in no time.
+<H2>2.4 Installing on Tested Systems</H2>
 
 <P>After you have met the system requirements, unpack the tarball in the html 
 directory of your webserver. (eg, /home/httpd/html)
@@ -66,7 +87,7 @@ Then add the language entries (used for translation purposes).
 <P><CODE>$ psql -d phpgroupware -U username &lt; create_tables.pgsql</CODE>
 Then add the language entries (used for translation purposes).
 <P><CODE>$ psql -d phpgroupware -U username &lt; lang.sql</CODE>
-<H2>2.4 Configure phpGroupWare</H2>
+<H2>2.5 Configure phpGroupWare</H2>
 
 <P>Copy the <CODE>header.inc.php.sample</CODE> file to 
 <CODE>header.inc.php</CODE> and edit the file, following the

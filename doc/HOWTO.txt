@@ -17,10 +17,13 @@
 
      2.1 Requirements
      2.2 Tested Systems
-     2.3 Tested Systems
-        2.3.1 Installation with MySQL
-        2.3.2 Installation with PostgreSQL
-     2.4 Configure phpGroupWare
+     2.3 Obtaining phpGroupWare
+        2.3.1 Released Versions
+        2.3.2 Developer's version from CVS
+     2.4 Installing on Tested Systems
+        2.4.1 Installation with MySQL
+        2.4.2 Installation with PostgreSQL
+     2.5 Configure phpGroupWare
 
   3. Testing the install
 
@@ -61,9 +64,6 @@
   phpGroupWare is a web based groupware application that includes
   integrated features such as email, calendar, todo list, address book,
   file manager, headline news, and a trouble ticket system.
-
-
-
   You should use it if:
 
   You would like a powerful groupware system that can be access from
@@ -93,14 +93,35 @@
 
   +o  MySQL 3.22.25 or PostgreSQL 7.0.x
 
-  +o  Courier-IMAP 0.33+
-
-  +o  qmail 1.03 (using the qmail POP3 server)
+  +o  Courier-IMAP 0.33+ and/or qmail 1.03 for POP3 access
 
   We have reports of it working on Windows NT and OS/2, and using Oracle
   as the database.
 
-  22..33..  TTeesstteedd SSyysstteemmss
+  22..33..  OObbttaaiinniinngg pphhppGGrroouuppWWaarree
+
+  While we are still in the Beta phase of phpGroupWare, you may want to
+  track the CVS copy as closely as possible. The released versions are
+  more stable, but often contain bugs that have been fixed in the CVS
+  version.
+
+  22..33..11..  RReelleeaasseedd VVeerrssiioonnss
+
+  The downloads section on the  <http://www.phpgroupware.org/> site
+  contains links to the most recent releases, and several mirror sites
+  for the releases.
+
+  22..33..22..  DDeevveellooppeerr''ss vveerrssiioonn ffrroomm CCVVSS
+
+  If you have never used CVS, you may want to read through the
+  doucmentation found at  <http://www.cvshome.org/>.  The CVS pages for
+  the core and apps projects can be found at phpGroupWare Core CVS
+  <http://sourceforge.net/cvs/?group_id=7305>, and phpGroupWare Apps CVS
+  <http://sourceforge.net/cvs/?group_id=9787>.  Follow the directions
+  for AAnnoonnyymmoouuss CCVVSS aacccceessss and you should have the most recent
+  development copy of phpGroupWare in no time.
+
+  22..44..  IInnssttaalllliinngg oonn TTeesstteedd SSyysstteemmss
 
   After you have met the system requirements, unpack the tarball in the
   html directory of your webserver. (eg, /home/httpd/html)
@@ -109,7 +130,7 @@
   In the doc directory there is a file called create_tables.(name of
   your database)
 
-  22..33..11..  IInnssttaallllaattiioonn wwiitthh MMyySSQQLL
+  22..44..11..  IInnssttaallllaattiioonn wwiitthh MMyySSQQLL
 
   We will assume that you are using the database named phpgroupware.
 
@@ -118,7 +139,7 @@
 
   $ mysql phpgroupware -u username -p < lang.sql
 
-  22..33..22..  IInnssttaallllaattiioonn wwiitthh PPoossttggrreeSSQQLL
+  22..44..22..  IInnssttaallllaattiioonn wwiitthh PPoossttggrreeSSQQLL
 
   We will assume that you are using the database named phpgroupware.
 
@@ -127,10 +148,7 @@
 
   $ psql -d phpgroupware -U username < lang.sql
 
-
-
-
-  22..44..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
+  22..55..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
 
   Copy the header.inc.php.sample file to header.inc.php and edit the
   file, following the directions in the comments.
@@ -178,7 +196,6 @@
   could add a few lines to logout.php that will look in the temp
   directory for any stale uploads and delete them.  But, once again, it
   becomes a performance issue.
-
   33..  TTeessttiinngg tthhee iinnssttaallll
 
   If your config is setup properly you can now login.  Point your
@@ -196,6 +213,7 @@
   application first, as most require you to create additional tables in
   the database, and add additional translation data to the lang table
   (typically a file called lang.sql)
+
   You install the new application within the phpGroupWare install tree
   by copying the application directory into the phpGroupWare install
   location, and enabling the application through the Administration
@@ -261,7 +279,6 @@
   The phpGroupWare developers can often be seen hanging out in
   #phpGroupWare on irc.openprojects.net if you require real-time help.
 
-
   Also check the FAQ in this directory for additional common questions,
   it is available as FAQ.sgml, FAQ.txt and FAQ.html
 
@@ -308,6 +325,9 @@
   IMAP if you expect to have more than a few hundred messages in your
   mailbox.
 
+
+
+
   55..33..  WWhheenn II lloogg iinn II sseeee tthhee ddiirreeccttoorryy lliissttiinngg iinnsstteeaadd ooff aa wweebb ppaaggee
 
   If you are using Apache, this often means you need to add .php to the
@@ -326,7 +346,6 @@
 
   This is often because you have php3 installed, which does not map .php
   to the PHP engine.
-
 
   For PHP3:
 
@@ -374,6 +393,7 @@
   v1.0 (July 6, 2000)
 
 
+
   +o  Built proper SGML version.
 
   +o  Included the FAQ.
@@ -404,26 +424,6 @@
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro) and the core of this HOWTO.  Thanks to all the developers
   and users who contribute to making phpGroupWare such a success.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
