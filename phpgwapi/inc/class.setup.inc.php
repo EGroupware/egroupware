@@ -60,6 +60,10 @@
 
 			$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_type'];
 
+			if ($GLOBALS['phpgw_info']['server']['db_type'] == 'pgsql')
+			{
+				$GLOBALS['phpgw_info']['server']['db_persistent'] = False;
+			}
 			$this->db           = CreateObject('phpgwapi.db');
 			$this->db->Host     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_host'];
 			$this->db->Port     = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_port'];
