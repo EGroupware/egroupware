@@ -1,0 +1,94 @@
+application	phpwebhosting	pl	Aplikacja
+back to file manager	phpwebhosting	pl	Powrót do managera plików
+cannot create directory because it begins or ends in a space	phpwebhosting	pl	
+cannot replace x because it is a directory	phpwebhosting	pl	
+command sucessfully run	phpwebhosting	pl	Pomy¶lnie wykonano polecenie
+comment	phpwebhosting	pl	Komentarz
+comments cannot contain "x"	phpwebhosting	pl	Komentarz nie zawiera "%1"
+copied x to x	phpwebhosting	pl	Skopiowano %1 do %2
+copy to	phpwebhosting	pl	Kopiuj do
+copy to:	phpwebhosting	pl	Kopiuj do
+could not copy x to x	phpwebhosting	pl	Nie mo¿na skopiowaæ %1 do %2
+could not create directory x	phpwebhosting	pl	Nie mo¿na utworzyæ katalogu %1
+could not create x	phpwebhosting	pl	Nie mo¿na utworzyæ %1
+could not delete x	phpwebhosting	pl	Nie mo¿na usun±æ %1
+could not move x to x	phpwebhosting	pl	Nie mo¿na przenie¶æ %1
+could not rename x to x	phpwebhosting	pl	Nie mo¿na zmieniæ nazwy %1
+could not save x	phpwebhosting	pl	Nie mo¿na zapisaæ %1
+create file	phpwebhosting	pl	Utwórz plik
+create folder	phpwebhosting	pl	Utwórz katalog
+created	phpwebhosting	pl	Utworzony
+created by	phpwebhosting	pl	Utworzony przez
+created directory x	phpwebhosting	pl	Utworzono katalog %1
+created x	phpwebhosting	pl	Utworzono %1
+date	phpwebhosting	pl	Data
+default number of upload fields to show	phpwebhosting	pl	
+delete	phpwebhosting	pl	Usuñ
+deleted x	phpwebhosting	pl	Usuniêto 51
+directory	phpwebhosting	pl	Katalog
+directory names cannot contain "x"	phpwebhosting	pl	Nazwa katalogu zawiera "%1"
+directory x already exists	phpwebhosting	pl	Katalog %1 ju¿ istnieje
+directory x does not exist	phpwebhosting	pl	Katalog %1 nie istnieje
+display attributes	phpwebhosting	pl	Wy¶wietlane atrybuty
+download	phpwebhosting	pl	Pobierz
+edit	phpwebhosting	pl	Edycja
+edit comments	phpwebhosting	pl	Edycja komentarza
+error running command	phpwebhosting	pl	B³±d wykonania polecenia
+execute	phpwebhosting	pl	Wykonaj
+failed to create directory	phpwebhosting	pl	
+file	phpwebhosting	pl	Plik
+file name	phpwebhosting	pl	Nazwa pliku
+file names cannot contain "x"	phpwebhosting	pl	Plik nie zawiera "%1"
+file names cannot contain \\ or /	phpwebhosting	pl	Nazwa pliku nie mo¿e zawierac \\ lub /
+file x already exists. please edit it or delete it first.	phpwebhosting	pl	Plik %1 ju¿ istnieje. proszê edytowaæ go lub usun±æ
+file x could not be created.	phpwebhosting	pl	Plik %1 nie mo¿e byæ utworzony
+filename	phpwebhosting	pl	Nazwa pliku
+files	phpwebhosting	pl	Plików
+folder	phpwebhosting	pl	Katalog
+go to	phpwebhosting	pl	Id¼ do
+go to x	phpwebhosting	pl	Id¼ do %1
+go to your home directory	phpwebhosting	pl	
+go to:	phpwebhosting	pl	Id¼ do
+home	phpwebhosting	pl	
+locked	phpwebhosting	pl	
+mime type	phpwebhosting	pl	Typ mime
+modified	phpwebhosting	pl	Zmodyfikowany
+modified by	phpwebhosting	pl	Zmodyfikowany przez
+move to	phpwebhosting	pl	Przenie¶ do
+move to:	phpwebhosting	pl	Przenie¶ do
+moved x to x	phpwebhosting	pl	Przeniesiono %1 do %2
+no version history for this file/directory	phpwebhosting	pl	
+operation	phpwebhosting	pl	
+owner	phpwebhosting	pl	W³a¶ciciel
+phpwebhosting preferences	phpwebhosting	pl	Preferencje phpWebHosting
+preview of x	phpwebhosting	pl	
+preview x	phpwebhosting	pl	
+rename	phpwebhosting	pl	Zmiana nazwy
+renamed x to x	phpwebhosting	pl	Zmieniono nazwê %1 na %2
+replaced x	phpwebhosting	pl	Zastapiono %1
+save all	phpwebhosting	pl	Zapisz wszystko
+save x	phpwebhosting	pl	Zapisz %1
+saved x	phpwebhosting	pl	Zapisano %1
+show	phpwebhosting	pl	Wy¶wietl
+show ..	phpwebhosting	pl	Wy¶wietlaj ..
+show .files	phpwebhosting	pl	Wy¶wietlaj .pliki
+show command line (experimental. dangerous.)	phpwebhosting	pl	
+show help	phpwebhosting	pl	Wy¶wietlaj pomoc
+size	phpwebhosting	pl	Wielko¶æ
+sort by:	phpwebhosting	pl	Sortuj wg
+total files	phpwebhosting	pl	Wszystkich plików
+unknown mime-type defaults to text/plain when viewing	phpwebhosting	pl	
+unused space	phpwebhosting	pl	Wolne miejsce
+up	phpwebhosting	pl	W górê
+update	phpwebhosting	pl	Aktualizuj
+updated comment for x	phpwebhosting	pl	Zaktualizowano komentarz do 51
+upload fields	phpwebhosting	pl	wczytywanych plików
+upload files	phpwebhosting	pl	Wczytaj pliki
+used space	phpwebhosting	pl	Wykorzystane miejsce
+users	phpwebhosting	pl	U¿ytkownicy
+version	phpwebhosting	pl	Wersja
+view documents in new window	phpwebhosting	pl	Wy¶wietlaj dokumenty w nowym oknie
+view documents on server (if available)	phpwebhosting	pl	Poka¿ dokumenty na serwerze (je¶li s± dostêpne)
+who	phpwebhosting	pl	Kto
+x already exists as a file	phpwebhosting	pl	%1 ju¿ istnieje jako plik
+you do not have access to x	phpwebhosting	pl	Nie masz praw do %1
