@@ -6,7 +6,7 @@
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * http://www.phpgroupware.org/api                                          *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -23,7 +23,11 @@
 
   /* $Id$ */
 
-	include(PHPGW_API_INC . '/class.sbox.inc.php');
+	if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
+	{
+		include(PHPGW_API_INC . '/class.sbox.inc.php');
+		$GLOBALS['phpgw_info']['flags']['included_classes']['sbox'] = True;
+	}
 
 	class sbox2 extends sbox
 	{
@@ -50,7 +54,7 @@
 		function getId($name,$lang_name,$prompt,$id_name,$content='',$note='',$multiple=False)
 		{
 			// echo "<p>getId('$name','$lang_name','$prompt',$id_name,'$content') =";
-			$ret['doSearchFkt'] = 
+			$ret['doSearchFkt'] =
 '<script language="JavaScript">'."\n".
 " function doSearch(field,ask) {\n".
 "  field.value = prompt(ask,'');\n".
@@ -63,7 +67,7 @@
 " }\n".
 '</script>';
 
-			$ret[$name.'_title'] = is_array($content) && count($content) ? $lang_name : 
+			$ret[$name.'_title'] = is_array($content) && count($content) ? $lang_name :
 '<script language="JavaScript">'."\n".
 " document.writeln('<input type=\"hidden\" name=\"query_$name\" value=\"\">');\n".
 " document.writeln('<input type=\"button\" onClick=\"doSearch(this.form.query_$name,\'$prompt\')\" value=\"$lang_name\">');\n".
@@ -73,9 +77,11 @@
 "</noscript>";
 
 			if (is_array($content))
-			{	// result from search
+			{
+				// result from search
 				if (!count($content))
-				{	// search was unsuccsessful
+				{
+					// search was unsuccsessful
 					$ret[$name] = lang('no entries found, try again ...');
 				}
 				else
@@ -111,7 +117,7 @@
 
 			$ret[$name.'_nojs'] =
 "<noscript>\n".
-" <input name=\"query_$name\" value=\"\" size=10> &nbsp;	<input type=\"submit\" value=\"?\">\n".
+" <input name=\"query_$name\" value=\"\" size=10> &nbsp;<input type=\"submit\" value=\"?\">\n".
 "</noscript>";
 
 			// print_r($ret);
@@ -151,7 +157,6 @@
 		 *
 		 * Note			As query's for an address are submitted, you have to check $query_XXX if it is a search or a regular submit (!$query_string)
 		 */
-		 
 		function getAddress( $name,$id_name,$query_name,$title='',$multiple=False)
 		{
 			// echo "<p>getAddress('$name',$id_name,'$query_name','$title')</p>";
@@ -270,10 +275,14 @@
 			// echo "<p>getProject('$name',$id_name,'$query_name','$title')</p>";
 			if ($id_name || $query_name)
 			{
-				$projects = createobject('projects.projects');
+				$projects = createobject('projects.boprojects');
+				if (!is_object($projects))
+				{
+					return '';
+				}
 				if ($query_name)
 				{
-					$projs = $projects->read_projects( 0,0,$query_name,'','','','',0 );
+					$projs = $projects->list_projects( 0,0,$query_name,'','','','',0,'mains','' );
 					$content = array();
 					while ($projs && list( $key,$proj ) = each( $projs ))
 					{
@@ -301,33 +310,96 @@
 		/*
 		 * Function:		Allows to show and select one item from an array
 		 *	Parameters:		$name		string with name of the submitted var which holds the key of the selected item form array
-		 *						$key		key of already selected item from $arr
+		 *						$key		key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
 		 *						$arr		array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
-		 *						$no_lang	if !$no_lang send items through lang() 
-		 * On submit		$XXX		is the key of the selected item (XXX is the content of $name) 
-		 * Returns:			string to set for a template or to echo into html page 
+		 *						$no_lang	if !$no_lang send items through lang()
+		 *						$options	additional options (e.g. 'multiple')
+		 * On submit		$XXX		is the key of the selected item (XXX is the content of $name)
+		 * Returns:			string to set for a template or to echo into html page
 		 */
-		function getArrayItem($name, $key, $arr=0,$no_lang=0)
-		{	// should be in class common.sbox
+		function getArrayItem($name, $key, $arr=0,$no_lang=0,$options='',$multiple=0)
+		{
+			// should be in class common.sbox
 			if (!is_array($arr))
 			{
 				$arr = array('no','yes');
 			}
-				
-			$out = "<select name=\"$name\">\n";
+			if (0+$multiple > 0)
+			{
+				$options .= ' MULTIPLE SIZE='.(0+$multiple);
+				if (substr($name,-2) != '[]')
+				{
+					$name .= '[]';
+				}
+			}
+			$out = "<select name=\"$name\" $options>\n";
 
+			if (is_array($key))
+			{
+				$key = implode(',',$key);
+			}
 			while (list($k,$text) = each($arr))
 			{
 				$out .= '<option value="'.$k.'"';
-				if($k == $key) $out .= " SELECTED";
-				$out .= ">" . ($no_lang ? $text : lang($text)) . "</option>\n";
+				if($k == $key || strstr(",$key,",",$k,"))
+				{
+					$out .= " SELECTED";
+				}
+				$out .= ">" . ($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
 			}
 			$out .= "</select>\n";
-			
+
 			return $out;
 		}
 
-		function accountInfo($id,$account_data=0,$longname=0)
+		function getPercentage($name, $selected=0,$options='')
+		{
+			// reimplemented using getArrayItem
+			for ($i=0; $i <= 100; $i+=10)
+			{
+				$arr[$i] = "$i%";
+			}
+			return $this->getArrayItem($name,$selected,$arr,1,$options);
+		}
+
+		function getPriority($name, $selected=2,$options='')
+		{
+			// reimplemented using getArrayItem
+			$arr = array('','low','normal','high');
+
+			return $this->getArrayItem($name,$selected,$arr,0,$options);
+		}
+
+		function getAccessList($name,$selected='private',$options='')
+		{
+			// reimplemented using getArrayItem
+			$arr = array(
+				'private' => 'Private',
+				'public' => 'Global public',
+				'group' => 'Group public'
+			);
+
+			if (strstr($selected,','))
+			{
+				$selected = "group";
+			}
+
+			return $this->getArrayItem($name,$selected,$arr,0,$options);
+		}
+
+		function getCountry($name='country',$selected='  ',$options='')
+		{
+			// reimplemented using getArrayItem
+			return $this->getArrayItem($name,$selected,$this->country_array,0,$options);
+		}
+
+		function form_select($name='country',$selected='  ',$options='')
+		{
+			// reimplemented using getArrayItem (stupid name!!!)
+			return getCountry($name,$selected,$options);
+		}
+
+		function accountInfo($id,$account_data=0,$longnames=0,$show_type=0)
 		{
 			if (!$id)
 			{
@@ -341,39 +413,48 @@
 				$accounts->read_repository();
 				$account_data = $accounts->data;
 			}
-			if ($longnames)
-			{
-				return $account_data['firstname'].' '.$account_data['lastname'];
-			}
+			$info = $show_type ? '('.$account_data['account_type'].') ' : '';
 
-			return $account_data['account_lid'];
+			switch ($longnames)
+			{
+				case 2: $info .= '&lt;'.$account_data['account_lid'].'&gt; '; // fall-through
+				case 1: $info .= $account_data['account_firstname'].' '.$account_data['account_lastname']; break;
+				default: $info .= $account_data['account_lid']; break;
+			}
+			return $info;
 		}
 
 		/*
 		 * Function:		Allows to select one accountname
 		 *	Parameters:		$name		string with name of the submitted var, which holds the account_id or 0 after submit
 		 *						$id		account_id of already selected account
-		 *						$id2text($id,$acct_data)	fkt that translates account_id $id in text to show
+		 *						$longnames 0=account_lid 1=firstname lastname
 		 */
-		 
-		function getAccount($name,$id,$longnames=0)
+		function getAccount($name,$id,$longnames=0,$type='accounts',$multiple=0,$options='')
 		{
 			$accounts = createobject('phpgwapi.accounts');
 			$accounts->db = $GLOBALS['phpgw']->db;
-			$accs = $accounts->get_list('accounts'); 
+			$accs = $accounts->get_list($type);
 
-			$aarr = Array(lang('not assigned'));
+			if ($multiple < 0)
+			{
+				$aarr[] = lang('not assigned');
+			}
 			while ($a = current($accs))
 			{
-				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a,$longnames);
+				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a,$longnames,$type=='both');
 				next($accs);
 			}
-			return $this->getArrayItem($name,$id,$aarr,1);
+			return $this->getArrayItem($name,$id,$aarr,1,$options,$multiple);
 		}
 
-		function getDate($n_year,$n_month,$n_day,$date)
+		function getDate($n_year,$n_month,$n_day,$date,$options='')
 		{
-			if (!$date)
+			if (is_array($date))
+			{
+				list($year,$month,$day) = $date;
+			}
+			elseif (!$date)
 			{
 				$day = $month = $year = 0;
 			}
@@ -383,10 +464,48 @@
 				$month = date('m',$date);
 				$year = date('Y',$date);
 			}
-			return $GLOBALS['phpgw']->common->dateformatorder($this->getYears($n_year,$year),
+			return $GLOBALS['phpgw']->common->dateformatorder(
+				$this->getYears($n_year,$year),
 				$this->getMonthText($n_month,$month),
-				$this->getDays($n_day,$day));
+				$this->getDays($n_day,$day)
+			);
+		}
+
+		function getCategory($name,$cat_id='',$notall=False,$jscript=True,$multiple=0,$options='')
+		{
+			if (!is_object($this->cat))
+			{
+				$this->cat = CreateObject('phpgwapi.categories');
+			}
+			if ($jscript)
+			{
+				$options .= ' onChange="this.form.submit();"';
+			}
+			if (0+$multiple > 0)
+			{
+				$options .= ' MULTIPLE SIZE='.(0+$multiple);
+				if (substr($name,-2) != '[]')
+				{
+					$name .= '[]';
+				}
+			}
+			/* Setup all and none first */
+			$cats_link  = "\n<SELECT NAME=\"$name\" $options>\n";
+
+			if (!$notall)
+			{
+				$cats_link .= '<option value=""';
+				if ($cat_id=='all')
+				{
+					$cats_link .= ' selected';
+				}
+				$cats_link .= '>'.lang("all")."</option>\n";
+			}
+
+			/* Get global and app-specific category listings */
+			$cats_link .= $this->cat->formated_list('select','all',$cat_id,True);
+			$cats_link .= '</select>'."\n";
+
+			return $cats_link;
 		}
 	}
-
-?>
