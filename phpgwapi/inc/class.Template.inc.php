@@ -146,7 +146,7 @@
 						print "scalar: set *$varname* to *$value*<br>\n";
 					}
 					$this->varkeys[$varname] = $this->varname($varname);
-					$this->varvals[$varname] = $value;
+					$this->varvals[$varname] = str_replace('phpGroupWare','eGroupWare',$value);
 				}
 			}
 			else
@@ -161,7 +161,7 @@
 							print "array: set *$k* to *$v*<br>\n";
 						}
 						$this->varkeys[$k] = $this->varname($k);
-						$this->varvals[$k] = $v;
+						$this->varvals[$k] = str_replace('phpGroupWare','eGroupWare',$v);
 					}
 				}
 			}

@@ -29,7 +29,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 <tr class="banner">
 	<td align="left">
-		&nbsp;phpGroupWare version {pgw_ver} {lang_setup} {configdomain}
+		&nbsp;eGroupWare version {pgw_ver} {lang_setup} {configdomain}
 	</td>
 	<td align="right">{logoutbutton}</td>
 </tr>
