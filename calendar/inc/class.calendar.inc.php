@@ -788,7 +788,7 @@
                   $pict = "rpt.gif";
                 }
               }
-              $p->set_var('link_entry',$this->link_to_entry($lr_events->id, $pict, $lr_events->description));
+              $p->set_var('link_entry',$this->link_to_entry($lr_events->id, $pict, $this->is_private($lr_events,$owner).' - '.$lr_events->description));
               if (intval($phpgw->common->show_date($lr_events->datetime,"Hi"))) {
                 if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
                   $format = "h:i a";
