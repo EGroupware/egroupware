@@ -1,0 +1,63 @@
+** This file is mostly out of date, please see the HOWTO docs **
+
+This program was created becuase I needed a more centralize means of conduting
+my daily life.  I have seen many great programs out there, calendars, todolist,
+addressbooks, email, etc...  But, there is a very common problem with 95% of 
+them, they don't like each other. ( The programs, not the people :)  If I was
+logged into the calendar and wanted to grab a phone number, I would have to
+login to another app.  Which became a real pain real quick.  So, I search high
+and low for something that would have all these systems tied in to one.  Well,
+I didn't find anything I really liked.  So, I made my own. ( Isn't that the 
+driving force of 99% of Open Source apps ? :)
+
+Before I bore you to death, not all of these programs are written by me.  Some,
+I wrote my self.  Some where downloaded and converted.  All apps are released
+under the GPL license.  I would not use anything but.  If you are intrested
+in adding/recommending a program to be included in this ditro.  Please, send
+me the URL.  I will not except restrictive licenses.  I will only accept GPL
+or freeware.  If you are intrested in helping out with development, or think
+you might be able to help out.  Let me know what your plains are.
+
+You might have noticed there are a few references to programs that can't be
+found anywhere in the archive or on the site.  Thats becuase there not ready
+yet.  For example, pop_mail.  This is a feature that will be added in the
+future.  It will give the admin control over who has POP-3 access for virtual
+users.  Becuase the system does not use nor require the user to have a shell
+account on the system, a special POP-3 server is going to be used.  It will
+verify the user from the accounts table, then allow or disallow access to there
+messages.  I don't think this feature will be used too often, but, it gives
+a nice bit of control for some added flexablity.  Currently users that have
+access to email will be required to have an account on the server.  This will
+change in the future.  I am looking into other IMAP servers that can verify
+logins through the accounts table.  This will take some time for me to find the
+best solution.
+
+Some things you should note on how this system works.  Think of the navigation
+bar as the glue sticking all of these apps together.  It is handling the
+login portions, session info and account info.  If you notice the layout of
+the directorys, it can give a good clue to how this system is layied out.
+
+/phpGroupWare
+ |- inc			[ The common files used by the distro	]
+ |- addressbook		[ File needed by the addressbook only	]
+ |  |- inc		[ The include files for the addressbook	]
+ |  \- icons		[ Images for the addressbook, unless commonly
+ |			  used through out the program		]
+ |- icons		[ Images used throughout the program	]
+
+I think you can get the idea of it.  Another thing that should be noted is the
+structure of the database.  Yes, it looks pretty odd, but, for the most part
+makes a lot of sense.  Lets say you didn't need the addressbook.  Delete 
+/phpGroupWare/addressbook and change the settings in /phpGroupWare/config.inc  There are 
+still a few references to it, like in the account table.  But, there not used.
+This is one of the main reasons I use $dbase->f("con") instead of $dbase->f(0)
+
+Which brings me to another point, I _try_ to use standared colum names through 
+out the database.  con = control number, owner = the users loginid, 
+status = that records status.  This makes it easier to keep track of what does 
+what.  Refear to CODES in the doc directory.
+
+BTW: Please, ingnore my very poor spelling and grammer.  I am a programmer
+     not an English teacher.
+
+Happy hacking :)

@@ -1,0 +1,167 @@
+<HTML
+><HEAD
+><TITLE
+>I get garbage that looks like code when I go to the phpGroupWare URL</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.52"><LINK
+REL="HOME"
+TITLE="phpGroupWare Docs V0.05"
+HREF="book1.html"><LINK
+REL="UP"
+TITLE="Trouble Shooting"
+HREF="troubleshoot.html"><LINK
+REL="PREVIOUS"
+TITLE="When I log in I see the directory listing instead of a web page"
+HREF="trob3.html"><LINK
+REL="NEXT"
+TITLE="Using phpGroupWare"
+HREF="p237.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare Docs V0.05</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="trob3.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 8. Trouble Shooting</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="p237.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="TROB4"
+>I get garbage that looks like code when I go to the phpGroupWare URL</A
+></H1
+><P
+>			This is often because you have php3 installed,
+			which does not map <TT
+CLASS="CLASSNAME"
+>.php</TT
+> to the PHP engine.
+                        For PHP3:
+			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>AddType             application/x-httpd-php3 .php3 .php
+			</PRE
+></TD
+></TR
+></TABLE
+>
+For PHP4:
+			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>AddType             application/x-httpd-php .php3 .php
+			</PRE
+></TD
+></TR
+></TABLE
+>
+		</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="trob3.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="book1.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="p237.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>When I log in I see the directory listing instead of a web page</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="troubleshoot.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Using phpGroupWare</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
