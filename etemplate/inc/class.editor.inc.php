@@ -492,7 +492,7 @@
 			}
 			elseif ($content['import_xml'])
 			{
-				$msg = $this->import_xml($content['file']);
+				$msg = $this->import_xml($content['file']['tmp_name']);
 			}
 			elseif ($content['db_tools'])
 			{

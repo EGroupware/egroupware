@@ -25,8 +25,6 @@
 
 	/*!
 	@class vfs
-	@author ralfbecker
-	@author ralfbecker
 	@abstract Virtual File System
 	@description Authors: Zone
 	*/
@@ -57,8 +55,6 @@
 
 	/*!
 	@class path_class
-	@author ralfbecker
-	@author ralfbecker
 	@abstract helper class for path_parts
 	*/
 
@@ -1304,6 +1300,10 @@
 				$relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT);
 			}
 
+			if ($this->debug)
+			{
+				echo "<p>vfs::$cmd('$from','$to',$relatives[0],$relatives[1])</p>\n";
+			}
 			$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 
 			$f = $this->path_parts ($from, array ($relatives[0]));
@@ -1338,6 +1338,11 @@
 
 			if ($this->file_type ($f->fake_full_path, array ($f->mask)) != 'Directory')
 			{
+				if ($this->debug)
+				{
+					echo "<p>$cmd('$f->read_full_path','$t->real_full_path')</p>\n";
+				}
+
 				if (!$cmd ($f->real_full_path, $t->real_full_path))
 				{
 					return False;
@@ -1394,6 +1399,10 @@
 			}
 			else	/* It's a directory */
 			{
+				if ($this->debug)
+				{
+					echo "<p>mkdir('$t->real_full_path')</p>\n";
+				}
 				/* First, make the initial directory */
 				$this->mkdir ($to, array ($relatives[1]));
 
@@ -1452,7 +1461,8 @@
 		}
 
 		/*!
-		@function readlink
+		@function readlink  
+		@syntax readlink( $file,$relatives )
 		@abstract read linkdata (target path) for symlink created by symlink
 		@param $path vfs file/directory
 		@param $relatives Relativity array
@@ -1461,9 +1471,31 @@
 		*/
 		function readlink($file,$relatives = '')
 		{
-			$pp = $this->path_parts ($file, array (RELATIVE_ROOT));
+			if (!is_array($relatives))
+			{
+				$relatives = array (RELATIVE_ROOT);
+			}
+			$pp = $this->path_parts ($file,$relatives);
 
 			return @readlink($pp->real_full_path);
+		}
+
+		/*!
+		@function fileinfo
+		@syntax readlink( $file_id )
+		@abstract read infos (row in the db) about a file
+		@param $file_id identifying the file
+		@result array with row from db or False
+		*/
+		function fileinfo($file_id)
+		{
+			$GLOBALS['phpgw']->db->query ($sql="SELECT * FROM phpgw_vfs WHERE file_id=$file_id", __LINE__, __FILE__);
+
+			if (!$GLOBALS['phpgw']->db->next_record())
+			{
+				return False;
+			}
+			return array($file_id => $GLOBALS['phpgw']->db->Record);
 		}
 
 		/*!
@@ -2001,6 +2033,10 @@
 
 			$p = $this->path_parts ($file, array ($relatives[0]));
 
+			if ($this->debug)
+			{
+				echo "<p>vfs::file_type('$file',$relatives[0]) p = "; _debug_array($p);
+			}
 			if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_READ, True))
 			{
 				return False;
@@ -2035,7 +2071,7 @@
 		@abstract check if file/directory exists
 		@param $string file/directory to check existance of
 		@param $relatives Relativity array
-		@result Boolean True/False
+		@result file_id or False
 		*/
 		function file_exists ($string, $relatives = '')
 		{
@@ -2054,7 +2090,7 @@
 			}
 
 			$query = $GLOBALS['phpgw']->db->query ("SELECT name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
-
+			
 			if ($GLOBALS['phpgw']->db->next_record ())
 			{
 				return True;

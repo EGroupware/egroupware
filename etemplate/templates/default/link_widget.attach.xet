@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.link_widget.attach" template="" lang="" group="" version="0.9.15.001">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="row_on">
+				<description value="File"/>
+				<description class="like_input" no_lang="1" id="file[path]"/>
+				<button label="Attach" id="attach" statustext="click here to attach the file"/>
+				<button label="Cancel" id="new" statustext="start a new search, cancel this link"/>
+			</row>
+			<row class="row_off">
+				<description value="Comment"/>
+				<textbox size="50" maxlength="50" span="all" id="remark" statustext="optional note about the Link"/>
+			</row>
+		</rows>
+		<styles>
+			.like_input { background: white; border: medium groove black; padding-left: 3px; padding-right: 3px; }
+		</styles>
+	</grid>
+</overlay>

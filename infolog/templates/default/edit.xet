@@ -71,7 +71,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.002" width="100%">
+	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.003" width="100%">
 		<columns>
 			<column width="103"/>
 			<column width="300"/>
@@ -152,7 +152,12 @@
 					<menupopup type="select-account" options=",,2" id="info_owner" readonly="true"/>
 				</menulist>
 				<description value="Last modified"/>
-				<date id="info_datemodified" readonly="true"/>
+				<hbox options="0,0">
+					<menulist>
+						<menupopup type="select-account" options=",,2" id="info_modifier" readonly="true"/>
+					</menulist>
+					<date class="lpadding5" id="info_datemodified" readonly="true"/>
+				</hbox>
 			</row>
 			<row>
 				<button label="Save" id="save" statustext="Saves this entry"/>
@@ -163,6 +168,7 @@
 		</rows>
 		<styles>
 			.headertext { color: black; font-size: 120%; }
+.lpadding5 { padding-left: 5px; };
 		</styles>
 	</grid>
 </overlay>

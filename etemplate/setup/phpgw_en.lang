@@ -16,10 +16,14 @@ alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HB
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
 application name needed to write a langfile !!!	etemplate	en	Application name needed to write a langfile !!!
+application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
 array	etemplate	en	Array
+attach	etemplate	en	Attach
+attach file	etemplate	en	attach file
 border	etemplate	en	Border
 border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
 can have special sql-value null	etemplate	en	can have special SQL-value NULL
+cancel	etemplate	en	Cancel
 category	etemplate	en	Category
 cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
 cells	etemplate	en	Cells
@@ -30,8 +34,10 @@ check if field has to be filled by user	etemplate	en	check if field has to be fi
 checkbox	etemplate	en	Checkbox
 class	etemplate	en	class
 class, valign	etemplate	en	class, Valign
+click here to attach the file	etemplate	en	click here to attach the file
 click here to create the link	etemplate	en	click here to create the Link
 click here to start the search	etemplate	en	click here to start the search
+click here to upload the file	etemplate	en	click here to upload the file
 columnname	etemplate	en	ColumnName
 comment	etemplate	en	Comment
 create a new table for the application	etemplate	en	Create a new table for the application
@@ -69,6 +75,9 @@ editable templates - show template	etemplate	en	Editable Templates - Show Templa
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
+enter a search pattern	etemplate	en	Enter a search pattern
+enter filename to upload and attach, use [browse...] to search for it	etemplate	en	Enter filename to upload and attach, use [Browse...] to search for it
+enter filename to upload and attach, use browse to search for it	etemplate	en	Enter filename to upload and attach, use Browse to search for it
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
 enter the query pattern	etemplate	en	Enter the query pattern
 entries	etemplate	en	entries
@@ -84,6 +93,7 @@ exchange this two rows	etemplate	en	exchange this two rows
 export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
 export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
+file	etemplate	en	File
 fileupload	etemplate	en	FileUpload
 first	etemplate	en	First
 floating point	etemplate	en	Floating Point
@@ -177,6 +187,7 @@ scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 search	etemplate	en	Search
 select a category	etemplate	en	select a Category
+select a primary contact, to show in the list	etemplate	en	Select a primary contact, to show in the list
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
 select an app to search in	etemplate	en	Select an App to search in
@@ -225,10 +236,12 @@ type of the field (select label if field should be empty)	etemplate	en	type of t
 unique	etemplate	en	Unique
 unlink	etemplate	en	Unlink
 update from version '%s' to	etemplate	en	Update from Version '%s' to
+upload	etemplate	en	Upload
 value	etemplate	en	Value
 vbox	etemplate	en	VBox
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
+view this linked entry in its application	etemplate	en	view this linked entry in its application
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 width	etemplate	en	Width
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	en	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty

@@ -459,7 +459,7 @@
 				{
 					$options .= " onFocus=\"self.status='".addslashes(lang($help))."'; return true;\"";
 					$options .= " onBlur=\"self.status=''; return true;\"";
-					if ($cell['type'] == 'button')	// for button additionally when mouse over button
+					if ($cell['type'] == 'button' || $cell['type'] == 'file')	// for button additionally when mouse over button
 					{
 						$options .= " onMouseOver=\"self.status='".addslashes(lang($help))."'; return true;\"";
 						$options .= " onMouseOut=\"self.status=''; return true;\"";
@@ -701,11 +701,10 @@
 					break;
 				case 'file':
 					$html .= $this->html->input_hidden($path = str_replace($name,$name.'_path',$form_name),'.');
-					$html .= $this->html->input($form_name,'','file');
+					$html .= $this->html->input($form_name,'','file',$options);
 					$GLOBALS['phpgw_info']['etemplate']['form_options'] =
 						"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path','$form_name')\"";
 					$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
-					$GLOBALS['phpgw_info']['etemplate']['to_process'][$path] = 'file-path';
 					break;
 				case 'vbox':
 				case 'hbox':
@@ -872,6 +871,24 @@
 						}
 						$this->set_array($content,$form_name,$value);
 						break;
+					case 'file':
+						$parts = explode('[',str_replace(']','',$form_name));
+						$name = array_shift($parts);
+						$index  = count($parts) ? '['.implode('][',$parts).']' : '';
+						$value = array();
+						$parts = array('tmp_name','type','size','name');
+						while (list(,$part) = each($parts))
+						{
+							$value[$part] = $this->get_array($GLOBALS['HTTP_POST_FILES'][$name],$part.$index);
+						}
+						$value['path'] = $this->get_array($content_in,substr($form_name,0,-1).'_path]');
+						$value['ip'] = get_var('REMOTE_ADDR',Array('SERVER'));
+						if (function_exists('is_uploaded_file') && !is_uploaded_file($value['tmp_name']))
+						{
+							$value = array();	// to be on the save side
+						}
+						//_debug_array($value);
+						// fall-throught
 					default:
 						$this->set_array($content,$form_name,$value);
 						break;

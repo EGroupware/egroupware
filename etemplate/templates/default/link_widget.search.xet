@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="etemplate.link_widget.search" template="" lang="" group="" version="0.9.15.001">
+	<grid id="etemplate.link_widget.search" template="" lang="" group="" version="0.9.15.002">
 		<columns>
 			<column/>
 			<column/>
@@ -9,13 +9,19 @@
 			<column/>
 		</columns>
 		<rows>
-			<row>
+			<row class="row_on">
 				<menulist>
 					<menupopup label="Search" id="app" statustext="Select an App to search in"/>
 				</menulist>
-				<textbox id="query" statustext="Enter the query pattern"/>
-				<button label="Search" id="search" statustext="click here to start the search"/>
+				<textbox size="25" id="query" statustext="Enter a search pattern"/>
+				<button label="Search" id="search" statustext="Click here to start the search"/>
 				<description class="error_msg" value="Nothing found - try again !!!" id="msg"/>
+			</row>
+			<row class="row_off">
+				<description value="attach file"/>
+				<file id="file" statustext="Enter filename to upload and attach, use [Browse...] to search for it"/>
+				<button label="Upload" id="upload" statustext="Click here to upload the file"/>
+				<description/>
 			</row>
 		</rows>
 		<styles>

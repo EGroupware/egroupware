@@ -66,8 +66,12 @@
 					'action' => 'sp'
 				),
 				'view_id' => 'action_id',
-			)
+			),
 		);
+		var $vfs;
+		var $vfs_basedir='/infolog';
+		var $valid_pathes = array();
+		var $send_file_ips = array();
 
 		function bolink( )
 		{
@@ -75,8 +79,19 @@
 			$this->public_functions += array(	// extend the public_functions of solink
 				'query' => True,
 				'title' => True,
-				'view'  => True
+				'view'  => True,
+				'vfs_view' => True
 			);
+			$this->vfs = CreateObject('infolog.vfs');
+
+			$config = CreateObject('phpgwapi.config');
+			$config->read_repository();
+			if (is_array($config->config_data))
+			{
+				$this->link_pathes   = $config->config_data['link_pathes'];
+				$this->send_file_ips = $config->config_data['send_file_ips'];
+			}
+			unset($config);
 		}
 
 		/*!
@@ -85,8 +100,17 @@
 		@author ralfbecker
 		@abstract creats a link between $app1,$id1 and $app2,$id2 - $id1 does NOT need to exist yet
 		@param $app1 app of $id1
-		@param $id1 id of item to linkto or 0 if item not yet created or array with links of not created item
+		@param $id1 id of item to linkto or 0 if item not yet created or array with links 
+			of not created item or $file-array if $app1 == 'vfs' (see below)
 		@param $app2 app of 2.linkend or array with links ($id2 not used)
+		@param $id2 id of 2. item of $file-array if $app2 == 'vfs' (see below)
+		@param $file array with informations about the file in format of the etemplate file-type
+		@param $file['name'] name of the file (no directory)
+		@param $file['type'] mine-type of the file
+		@param $file['tmp_name'] name of the uploaded file (incl. directory)
+		@param $file['path'] path of the file on the client computer
+		@param $file['ip'] of the client
+		@discussion path and ip are only needed if u want a symlink (if possible)
 		@param $remark Remark to be saved with the link (defaults to '')
 		@param $owner Owner of the link (defaults to user)
 		@discussion Does NOT check if link already exists
@@ -126,9 +150,25 @@
 				$link_id = True;
 				while ($link_id && list(,$link) = each($app2))
 				{
-					$link_id = solink::link($app1,$id1,$link['app'],$link['id'],$link['remark'],$link['owner'],$link['lastmod']);
+					if ($link['app'] == 'vfs')
+					{
+						$link_id = -intval($this->attach_file($app1,$id1,$link['id'],$link['remark']));
+					}
+					else
+					{
+						$link_id = solink::link($app1,$id1,$link['app'],$link['id'],
+							$link['remark'],$link['owner'],$link['lastmod']);
+					}
 				}
 				return $link_id;
+			}
+			if ($app1 == 'vfs')
+			{
+				return -intval($this->attach_file($app2,$id2,$id1,$remark));
+			}
+			elseif ($app2 == 'vfs')
+			{
+				return -intval($this->attach_file($app1,$id1,$id2,$remark));
 			}
 			return solink::link($app1,$id1,$app2,$id2,$remark,$owner);
 		}
@@ -167,7 +207,17 @@
 				}
 				return $ids;
 			}
-			return solink::get_links($app,$id,$only_app,$order);
+			$ids = solink::get_links($app,$id,$only_app,$order);
+
+			if (empty($only_apps) || $only_apps == 'vfs' ||
+			    ($only_app[0] == '!' && $only_app != '!vfs'))
+			{
+				if ($vfs_ids = $this->list_attached($app,$id))
+				{
+					$ids += $vfs_ids;
+				}
+			}
+			return $ids;
 		}
 
 		/*!
@@ -190,6 +240,18 @@
 				}
 				return False;
 			}
+			if (intval($app_link_id) < 0 || $app_link_id == 'vfs' || $app2 == 'vfs')
+			{
+				if (intval($app_link_id) < 0)	// vfs link_id ?
+				{
+					return $this->fileinfo2link(-$app_link_id);
+				}
+				if ($app_link_id == 'vfs')
+				{
+					return $this->info_attached($app2,$id2,$id);
+				}
+				return $this->info_attached($app_link_id,$id,$id2);
+			}
 			return solink::get_link($app_link_id,$id,$app2,$id2);
 		}
 
@@ -206,6 +268,18 @@
 		*/
 		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
 		{
+			if ($link_id < 0)	// vfs-link?
+			{
+				return $this->delete_attached(-$link_id);
+			}
+			elseif ($app == 'vfs')
+			{
+				return $this->delete_attached($app2,$id2,$id);
+			}
+			elseif ($app2 == 'vfs')
+			{
+				return $this->delete_attached($app,$id,$id2);
+			}
 			if ($link_id > 0 || !is_array($id))
 			{
 				return solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
@@ -238,11 +312,6 @@
 			return $apps;
 		}
 
-		function check_method($method,&$class,&$func)
-		{
-			// Idea: check if method exist and cache the class
-		}
-
 		/*!
 		@function query
 		@syntax query( $app,$pattern )
@@ -272,8 +341,32 @@
 		@abstract returns the title (short description) of entry $id and $app
 		@result the title
 		*/
-		function title($app,$id)
+		function title($app,$id,$link='')
 		{
+			if ($this->debug)
+			{
+				echo "<p>bolink::title('$app','$id')</p>\n";
+			}
+			if ($app == 'vfs')
+			{
+				if (is_array($link))
+				{
+					$size = $link['size'];
+					if ($size_k = intval($size / 1024))
+					{
+						if (intval($size_k / 1024))
+						{
+							$size = sprintf('%3.1dM',doubleval($size_k)/1024.0);
+						}
+						else
+						{
+							$size = $size_k.'k';
+						}
+					}
+					$size = ' '.$size;
+				}
+				return $id.$size;
+			}
 			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['title']))
 			{
 				return array();
@@ -290,8 +383,12 @@
 		@abstract view entry $id of $app
 		@result array with name-value pairs for link to view-methode of $app to view $id
 		*/
-		function view($app,$id)
+		function view($app,$id,$link='')
 		{
+			if ($app == 'vfs' && !empty($id) && is_array($link))
+			{
+				return $this->vfs_view($link);
+			}
 			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['view']) || !isset($reg['view_id']))
 			{
 				return array();
@@ -312,6 +409,335 @@
 				$view[$reg['view_id']] = $id;
 			}
 			return $view;
+		}
+		
+		function vfs_view($link='')
+		{
+			if (is_array($link))
+			{
+				return array(
+					'menuaction' => 'infolog.bolink.vfs_view',
+					'app' => $link['app2'],
+					'id'  => $link['id2'],
+					'filename' => $link['id']
+				);
+			}
+			$app = get_var('app','GET');
+			$id  = get_var('id','GET');
+			$filename = get_var('filename','GET');
+
+			if (empty($app) || empty($id) || empty($filename) /* || !$this->bo->check_access($info_id,PHPGW_ACL_READ)*/)
+			{
+				Header('Location: ' .  $GLOBALS['phpgw']->link('/'));
+				exit();
+			}
+			$browser = CreateObject('phpgwapi.browser');
+
+			$local = $this->attached_local($app,$id,$filename,
+				get_var('REMOTE_ADDR',Array('SERVER')),$browser->is_windows());
+			
+			if ($local)
+			{
+				Header('Location: ' . $local);
+				exit();
+			}
+			$info = $this->info_attached($app,$id,$filename);
+			$browser->content_header($filename,$info['mime_type']);
+			echo $this->read_attached($app,$id,$filename);
+			
+			exit();
+		}
+
+		/*!
+		@function vfs_path
+		@syntax vfs_path ( $app,$id,$file='' )
+		@abstract path to the attached files of $app/$ip
+		@discussion All link-files are based in the vfs-subdir 'infolog'. For other apps
+		@discussion separate subdirs with name app are created.
+		*/
+		function vfs_path($app,$id='',$file='')
+		{
+			$path = $this->vfs_basedir . ($app == '' || $app == 'infolog' ? '' : '/'.$app) .
+				($id != '' ? '/' . $id : '') . ($file != '' ? '/' . $file : '');
+			
+			if ($this->debug)
+			{
+				echo "<p>bolink::vfs_path('$app','$id','$file') = '$path'</p>\n";
+			}
+			return $path;
+		}
+
+		/*!
+		@function vfs_path
+		@syntax vfs_path ( $app,$id,$file='' )
+		@abstract Put a file to the corrosponding place in the VFS and set the attributes
+		@param $app/$id entry which should the file should be linked with
+		@param $file array with informations about the file in format of the etemplate file-type
+		@param $file['name'] name of the file (no directory)
+		@param $file['type'] mine-type of the file
+		@param $file['tmp_name'] name of the uploaded file (incl. directory)
+		@param $file['path'] path of the file on the client computer
+		@param $file['ip'] of the client
+		@discussion path and ip are only needed if u want a symlink (if possible)
+		*/
+		function attach_file($app,$id,$file,$comment='')
+		{
+			if ($this->debug)
+			{
+				echo "<p>attach_file: app='$app', id='$id', tmp_name='$file[tmp_name]', name='$file[name]', size='$file[size]', type='$file[type]', path='$file[path]', ip='$file[ip]', comment='$comment'</p>\n";
+			}
+			// create the root for attached files in infolog, if it does not exists
+			if (!($this->vfs->file_exists($this->vfs_basedir,array(RELATIVE_ROOT))))
+			{
+				$this->vfs->override_acl = 1;
+				$this->vfs->mkdir($this->vfs_basedir,array(RELATIVE_ROOT));
+				$this->vfs->override_acl = 0;
+			}
+
+			$dir=$this->vfs_path($app);
+			if (!($this->vfs->file_exists($dir,array(RELATIVE_ROOT))))
+			{
+				$this->vfs->override_acl = 1;
+				$this->vfs->mkdir($dir,array(RELATIVE_ROOT));
+				$this->vfs->override_acl = 0;
+			}
+			$dir=$this->vfs_path($app,$id);
+			if (!($this->vfs->file_exists($dir,array(RELATIVE_ROOT))))
+			{
+				$this->vfs->override_acl = 1;
+				$this->vfs->mkdir($dir,array(RELATIVE_ROOT));
+				$this->vfs->override_acl = 0;
+			}
+			$fname = $this->vfs_path($app,$id,$file['name']);
+			$tfname = '';
+			if (!empty($file['path']))
+			{
+				$file['path'] = str_replace('\\\\','/',$file['path']);	// vfs uses only '/'
+				@reset($this->link_pathes);
+				while ((list($valid,$trans) = @each($this->link_pathes)) && !$tfname)
+				{  // check case-insensitive for WIN etc.
+					$check = $valid[0] == '\\' || strstr(':',$valid) ? 'eregi' : 'ereg';
+					$valid2 = str_replace('\\','/',$valid);
+					//echo "<p>attach_file: ereg('".$this->send_file_ips[$valid]."', '$file[ip]')=".ereg($this->send_file_ips[$valid],$file['ip'])."</p>\n";
+					if ($check('^('.$valid2.')(.*)$',$file['path'],$parts) &&
+					    ereg($this->send_file_ips[$valid],$file['ip']) &&     // right IP
+					    $this->vfs->file_exists($trans.$parts[2],array(RELATIVE_NONE|VFS_REAL)))
+					{
+						$tfname = $trans.$parts[2];
+					}
+					//echo "<p>attach_file: full_fname='$file[path]', valid2='$valid2', trans='$trans', check=$check, tfname='$tfname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
+				}
+				if ($tfname && !$this->vfs->securitycheck($tfname))
+				{
+					return False; //lang('Invalid filename').': '.$tfname;
+				}
+			}
+			$this->vfs->override_acl = 1;
+			if ($tfname)	// file is local
+			{
+				$this->vfs->symlink($tfname,$fname,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
+			}
+			else
+			{
+				$this->vfs->cp($file['tmp_name'],$fname,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
+			}
+			$this->vfs->set_attributes ($fname, array (RELATIVE_ROOT),
+				array ('mime_type' => $file['type'],
+						 'comment' => stripslashes ($comment),
+						 'app' => $app));
+			$this->vfs->override_acl = 0;
+
+			$link = $this->info_attached($app,$id,$file['name']);
+			return is_array($link) ? $link['file_id'] : False;
+		}
+
+		/*!
+		@function delete_attached
+		@syntax delete_attached( $app,$id,$filename )
+		@author ralfbecker
+		@abstract deletes an attached file
+		@param $app > 0: file_id of an attchemnt or $app/$id entry which linked to
+		@param $filename
+		*/
+		function delete_attached($app,$id='',$fname = '')
+		{
+			if (intval($app) > 0)	// is file_id
+			{
+				$link  = $this->fileinfo2link($file_id=$app);
+				$app   = $link['app2'];
+				$id    = $link['id2'];
+				$fname = $link['id'];
+			}
+			if ($this->debug)
+			{
+				echo "<p>bolink::delete_attached('$app','$id','$fname') file_id=$file_id</p>\n";
+			}
+			if (empty($app) || empty($id))
+			{
+				return False;	// dont delete more than all attachments of an entry
+			}
+			$file = $this->vfs_path($app,$id,$fname);
+
+			if ($this->vfs->file_exists($file,array(RELATIVE_ROOT)))
+			{
+				$this->vfs->override_acl = 1;
+				$Ok = $this->vfs->delete($file,array(RELATIVE_ROOT));
+				$this->vfs->override_acl = 0;
+				return $Ok;
+			}
+			return False;
+		}
+
+		/*!
+		@function info_attached
+		@syntax info_attached( $app,$id,$filename )
+		@author ralfbecker
+		@abstract converts the infos vfs has about a file into a link
+		@param $app/$id entry which linked to
+		@param $filename
+		@returns a 'kind' of link-array
+		*/
+		function info_attached($app,$id,$filename)
+		{
+			$this->vfs->override_acl = 1;
+			$attachments = $this->vfs->ls($this->vfs_path($app,$id,$filename),array(REALTIVE_NONE));
+			$this->vfs->override_acl = 0;
+
+			if (!count($attachments) || !$attachments[0]['name'])
+			{
+				return False;
+			}
+			return $this->fileinfo2link($attachments[0]);
+		}
+
+		/*!
+		@function fileinfo2link
+		@syntax fileinfo2link( $fileinfo )
+		@author ralfbecker
+		@abstract converts a fileinfo (row in the vfs-db-table) in a link
+		@param $fileinfo a row from the vfs-db-table (eg. returned by the vfs ls function)
+			or a file_id of that table
+		@returns a 'kind' of link-array
+		*/
+		function fileinfo2link($fileinfo)
+		{
+			if (!is_array($fileinfo))
+			{
+				$fileinfo = $this->vfs->fileinfo($fileinfo);
+				list(,$fileinfo) = each($fileinfo);
+
+				if (!is_array($fileinfo))
+				{
+					return False;
+				}
+			}
+			$lastmod = $fileinfo[!empty($fileinfo['modified']) ? 'modified' : 'created'];
+			list($y,$m,$d) = explode('-',$lastmod);
+			$lastmod = mktime(0,0,0,$m,$d,$y);
+			
+			$dir_parts = array_reverse(explode('/',$fileinfo['directory']));
+
+			return array(
+				'app'       => 'vfs',
+				'id'        => $fileinfo['name'],
+				'app2'      => $dir_parts[1],
+				'id2'       => $dir_parts[0],
+				'remark'    => $fileinfo['comment'],
+				'owner'     => $fileinfo['owner_id'],
+				'link_id'   => -$fileinfo['file_id'],
+				'lastmod'   => $lastmod,
+				'size'      => $fileinfo['size'],
+				'mime_type' => $fileinfo['mime_type']
+			);
+		}
+
+		/*!
+		@function list_attached
+		@syntax list_attached( $app,$id )
+		@author ralfbecker
+		@abstract lists all attachments to $app/$id
+		@returns a 'kind' of link-array
+		*/
+		function list_attached($app,$id)
+		{
+			$this->vfs->override_acl = 1;
+			$attachments = $this->vfs->ls($this->vfs_path($app,$id),array(REALTIVE_NONE));
+			$this->vfs->override_acl = 0;
+
+			if (!count($attachments) || !$attachments[0]['name'])
+			{
+				return False;
+			}
+			while (list(,$fileinfo) = each($attachments))
+			{
+				$link = $this->fileinfo2link($fileinfo);
+				$attached[$link['link_id']] = $link;
+			}
+			return $attached;
+		}
+
+		/*!
+		@function is_win_path
+		@syntax is_win_path( $path )
+		@author ralfbecker
+		@abstract checks if path starts with a '\\' or has a ':' in it
+		*/
+		function is_win_path($path)
+		{
+			return $path[0] == '\\' || strstr($path,':');
+		}
+
+		/*!
+		@function read_attached
+		@syntax read_attached($app,$id,$filename)
+		@author ralfbecker
+		@abstract reads the attached file and returns the content
+		*/
+		function read_attached($app,$id,$filename)
+		{
+			if (empty($app) || !$id || empty($filename) /*|| !$this->check_access($info_id,PHPGW_ACL_READ)*/)
+			{
+				return False;
+			}
+			$this->vfs->override_acl = 1;
+			return $this->vfs->read($this->vfs_path($app,$id,$filename),array(RELATIVE_ROOT));
+		}
+
+		/*!
+		@function attached_local
+		@syntax attached_local($app,$id,$filename,$ip,$win_user)
+		@author ralfbecker
+		@abstract Checks if filename should be local availible and if so returns
+		@abstract 'file:/path' for HTTP-redirect else return False
+		*/
+		function attached_local($app,$id,$filename,$ip,$win_user)
+		{
+			//echo "<p>attached_local(app=$app, id='$id', filename='$filename', ip='$ip', win_user='$win_user', count(send_file_ips)=".count($this->send_file_ips).")</p>\n";
+
+			if (!$id || !$filename || /* !$this->check_access($info_id,PHPGW_ACL_READ) || */
+			    !count($this->send_file_ips))
+			{
+				return False;
+			}
+			$link = $this->vfs->readlink ($this->vfs_path($app,$id,$filename), array (RELATIVE_ROOT));
+
+			if ($link)
+			{
+				reset($this->link_pathes); $fname = '';
+				while ((list($valid,$trans) = each($this->link_pathes)) && !$fname)
+				{
+					if (!$this->is_win_path($valid) == !$win_user && // valid for this OS
+					    eregi('^'.$trans.'(.*)$',$link,$parts)  &&    // right path
+					    ereg($this->send_file_ips[$valid],$ip))      // right IP
+					{
+						$fname = $valid . $parts[1];
+						$fname = !$win_user ? str_replace('\\','/',$fname) : str_replace('/','\\',$fname);
+						return 'file:'.($win_user ? '//' : '' ).$fname;
+					}
+					// echo "<p>attached_local: link=$link, valid=$valid, trans='$trans', fname='$fname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
+				}
+			}
+			return False;
 		}
 
 		/*!

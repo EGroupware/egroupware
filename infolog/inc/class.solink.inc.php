@@ -61,7 +61,7 @@
 		*/
 		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0,$lastmod=0 )
 		{
-			//if ($this->debug)
+			if ($this->debug)
 			{
 				echo "<p>solink.link('$app1',$id1,'$app2',$id2,'$remark',$owner)</p>\n";
 			}

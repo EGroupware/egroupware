@@ -75,9 +75,6 @@
 				'sp'      => '- Subprojects from',
 				're'      => 'Re:'
 			);
-			//$this->html = CreateObject('etemplate.html');
-			//$this->categories = CreateObject('phpgwapi.categories');
-			//$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->link = &$this->bo->link;
 			
 			$this->tmpl = CreateObject('etemplate.etemplate');
@@ -1439,7 +1436,7 @@
 
 			if(get_var('save',Array('POST')))
 			{
-				$this->bo->link_pathes = array(); $this->bo->send_file_ips = array();
+				$this->bo->link_pathes = $this->bo->send_file_ips = array();
 
 				$valid = get_var('valid',Array('POST'));
 				$trans = get_var('trans',Array('POST'));
@@ -1469,7 +1466,7 @@
 				'title' => lang('InfoLog').' - '.lang('configuration'),
 				'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
 				'action_url'  => $this->html->link('/index.php',$this->menuaction('admin')),
-				'bg_h_color'  => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'bg_h_color'  => 'th',
 				'save_button' => $this->html->submit_button('save','Save'),
 				'done_button' => $this->html->submit_button('done','Done'),
 				'lang_valid'  => lang('valid path on clientside<br>eg. \\\\Server\\Share or e:\\'),
@@ -1481,7 +1478,7 @@
 			do {
 				list($valid,$trans) = @each($this->bo->link_pathes);
 				$GLOBALS['phpgw']->template->set_var(array(
-					'bg_nm_color' => $this->nextmatchs->alternate_row_color(),
+					'bg_nm_color' => $i & 1 ? 'row_off' : 'row_on',
 					'num'       => $i+1,
 					'val_valid' => $this->html->input("valid[$i]",$valid),
 					'val_trans' => $this->html->input("trans[$i]",$trans),
@@ -1496,8 +1493,6 @@
 
 		function preferences( )
 		{
-			global $save;
-
 			$prefs = array(
 				'homeShowEvents'	=> 'Show open Events: Tasks/Calls/Notes on main screen',
 				'defaultFilter'	=>	'Default Filter for InfoLog',
@@ -1510,7 +1505,7 @@
 
 			$GLOBALS['phpgw']->preferences->read_repository();
 
-			if ($save)
+			if ($GLOBALS['HTTP_POST_VARS']['save'])
 			{
 				while (list($pref,$lang) = each($prefs))
 				{
@@ -1531,14 +1526,14 @@
 				'title' => lang('InfoLog preferences'),
 				'text' => '&nbsp;',
 				'action_url' => $this->html->link('/index.php',$this->menuaction('preferences')),
-				'bg_h_color' => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'bg_h_color' => 'th',
 				'save_button' => $this->html->submit_button('save','Save')
 			);
 			$GLOBALS['phpgw']->template->set_var($vars);
 
-			while (list($pref,$lang) = each($prefs))
+			for ($n=0; list($pref,$lang) = each($prefs); ++$n)
 			{
-				$GLOBALS['phpgw']->template->set_var('bg_nm_color',$this->nextmatchs->alternate_row_color());
+				$GLOBALS['phpgw']->template->set_var('bg_nm_color',$n & 1 ? 'row_off':'row_on');
 				$GLOBALS['phpgw']->template->set_var('field',lang($lang));
 
 				if (is_array($allowed_values[$pref]))

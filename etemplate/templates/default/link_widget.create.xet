@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- $Id$ -->
 <overlay>
 	<grid id="etemplate.link_widget.create" template="" lang="" group="" version="0.9.15.001">
@@ -17,7 +17,7 @@
 				<button label="Link" id="create" statustext="click here to create the Link"/>
 				<button label="New search" id="new" statustext="start a new search, cancel this link"/>
 			</row>
-			<row>
+			<row class="row_off">
 				<description value="Comment"/>
 				<textbox size="50" maxlength="50" span="all" id="remark" statustext="optional note about the Link"/>
 			</row>

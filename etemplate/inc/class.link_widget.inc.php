@@ -49,14 +49,21 @@
 			switch ($type = $cell['type'])
 			{
 			case 'link-to':
-				if ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
+				if ($value['button'] == 'upload' && !empty($value['file']) && $value['file']['tmp_name'] != 'none')
+				{
+					$value = $extension_data;
+					$value['remark'] = '';
+
+					$tpl = new etemplate('etemplate.link_widget.attach');
+				}
+				elseif ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
 				{
 					$extension_data['app'] = $value['app'];
-               
+
 					$value = $extension_data;
 					$value['options-id'] = $ids;
 					$value['remark'] = '';
-					
+
 					$tpl = new etemplate('etemplate.link_widget.create');
 				}
 				else
@@ -97,8 +104,8 @@
 				for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 				{
 					$value[$row] = $link;
-					$value[$row]['title'] = $this->link->title($link['app'],$link['id']);
-					$value[$row]['view']  = $this->link->view($link['app'],$link['id']);
+					$value[$row]['title'] = $this->link->title($link['app'],$link['id'],$link);
+					$value[$row]['view']  = $this->link->view($link['app'],$link['id'],$link);
 				}
 				break;
 			}
@@ -113,35 +120,32 @@
 
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			if ($value['search'])
+			$buttons = array('search','create','new','upload','attach');
+			while (!$button && list(,$name) = each($buttons))
 			{
-				$button = 'search';
+				$button = $value[$name] ? $name : '';
 			}
-			elseif ($value['create'])
-			{
-				$button = 'create';
-			}
-			elseif ($value['new'])
-			{
-				$button = 'new';
-			}
-			elseif (is_array($value['unlink']))
+			if (is_array($value['unlink']))
 			{
 				$button = 'unlink';
 				list($unlink) = @each($value['unlink']);
 			}
-			//echo "<p>start: link_widget::post_process: button='$button', unlink='$unlink', value ="; _debug_array($value);
 			unset($value[$button]);
 
 			$value = array_merge($extension_data,$value);
-
+			
+			if ($button && $this->debug)
+			{
+				echo "<p>start: link_widget::post_process: button='$button', unlink='$unlink', value ="; _debug_array($value);
+			}
 			switch ($button)
 			{
 				case 'create':
 					if ($value['to_app'])						// make the link
 					{
-						$link_id = $this->link->link($value['to_app'],$value['to_id'],$value['app'],$value['id'],$value['remark']);
-						//echo "<p>link($value[to_app],$value[to_id],$value[app],$value[id],'$value[remark]')</p>\n";
+						$link_id = $this->link->link($value['to_app'],$value['to_id'],
+							$value['app'],$value['id'],$value['remark']);
+						
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
 							$value['primary'] = $link_id;
@@ -151,6 +155,34 @@
 				case 'search':
 				case 'new':
 					$extension_data = $value;
+					$loop = True;
+					break;
+
+				case 'attach':
+					if (is_array($value['file']) && $value['to_app'])
+					{
+						$link_id = $this->link->link($value['to_app'],$value['to_id'],
+							'vfs',$value['file'],$value['remark']);
+						unlink($value['file']['tmp_name']);
+						unset($value['file']); 
+					}
+					$extension_data = $value;
+					$loop = True;
+					break;
+
+				case 'upload':		// need to rename file, as php deletes it otherwise
+					if (is_array($value['file']) && !empty($value['file']['tmp_name']) && 
+					    $value['file']['tmp_name'] != 'none')
+					{
+						move_uploaded_file($value['file']['tmp_name'],$value['file']['tmp_name'].'+');
+						$value['file']['tmp_name'] .= '+';
+						$extension_data = $value;
+					}
+					else
+					{
+						unset($value['file']);
+						$button = '';
+					}
 					$loop = True;
 					break;
 
