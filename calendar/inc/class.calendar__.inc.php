@@ -70,6 +70,12 @@ class calendar__
 
 		$tz_offset = ((60 * 60) * intval($temp_tz_offset));
 
+		$t_old_start_time = mktime($old_event->start->hour,$old_event->start->min,$old_event->start->sec,$old_event->start->month,$old_event->start->mday,$old_event->start->year);
+		if($t_old_start_time < (time() - 86400))
+		{
+			return False;
+		}
+
 		$temp_user = $phpgw_info['user'];
 
 		if((is_int($this->user) && $this->user != $temp_user['account_id']) ||
@@ -120,7 +126,7 @@ class calendar__
 
 		if($old_event != False)
 		{
-			$old_event_datetime = mktime($old_event->start->hour,$old_event->start->min,$old_event->start->sec,$old_event->start->month,$old_event->start->mday,$old_event->start->year) - $tz_offset;
+			$old_event_datetime = $t_old_start_time - $tz_offset;
 		}
 		
 		if($new_event != False)
