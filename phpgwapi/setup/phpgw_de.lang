@@ -12,6 +12,7 @@ april	common	de	April
 are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
 august	common	de	August
 autosave default category	common	de	Standard-Kategorie automatisch speichern
+bad login or password	login	de	Falsches Login order Passwort
 cancel	common	de	Abbruch
 category	common	de	Kategorie
 categories	common	de	Kategorien
@@ -46,7 +47,12 @@ email	common	de	E-Mail
 enabled	common	de	Verf&uuml;gbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
+entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gel&ouml;scht
+entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
 error	common	de	Fehler
+error creating x x directory	common	de	Fehler beim Erstellen des Verzeichnisses %1%2
+error deleting x x directory	common	de	Fehler beim L.schen des Verzeichnisses %1%2
+error renaming x x directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1%2
 february	common	de	Februar
 files	common	de	Dateien
 filter	common	de	Filter
@@ -65,6 +71,7 @@ help	common	de	Hilfe
 high	common	de	Hoch
 home	common	de	Home
 it has been more then x days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
+it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
 january	common	de	Januar
 july	common	de	Juli
 june	common	de	Juni
@@ -82,6 +89,7 @@ medium	common	de	Mittel
 message	common	de	Nachricht
 monday	common	de	Montag
 name	common	de	Name
+new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugef&uuml;gt
 new main category	common	de	neue Hauptkategorie
 no	common	de	Nein
 no matchs found	common	de	Keine Treffer gefunden.
@@ -98,6 +106,7 @@ overview	common	de	&Uuml;berblick
 owner	common	de	Besitzer
 parent category	common	de	&Uuml;bergeordnete Kategorie
 password	common	de	Passwort
+password has been updated	common	de	Passwort wurde aktualisiert
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Applikation!
 powered by phpgroupware version x	common	de	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
@@ -119,6 +128,7 @@ showing x - x of x	common	de	%1 Einträge - %2 von %3
 start date	common	de	Startdatum
 start time	common	de	Startzeit
 status	common	de	Status
+sorry, your login has expired   login   de  Sorry - Login abgelaufen
 subject	common	de	Betreff
 submit	common	de	Absenden
 sunday	common	de	Sonntag
@@ -141,10 +151,11 @@ wednesday	common	de	Mittwoch
 which groups	common	de	Welche Gruppen
 written by:	common	de	Geschrieben von:
 yes	common	de	ja
+you are running a newer version of phpGroupWare than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.  
 you have selected an invalid date	common	en	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
 you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your search returned x matchs	common	de	Ihre Suche ergab %1 Treffer
-bad login or password	login	de	Bad login or password
+your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 you have been successfully logged out	login	de	Abmeldung erfolgreich
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.

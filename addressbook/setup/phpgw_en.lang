@@ -1,6 +1,6 @@
 address book	common	en	Address Book
 addressbook	common	en	Addressbook
-addressbook preferences	common	en	Addressbook preferences
+addressbook preferences	addressbook	en	Addressbook preferences
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
 address line 3	addressbook	en	Address Line 3
@@ -19,8 +19,8 @@ business phone	addressbook	en	Business Phone
 business state	addressbook	en	Business State
 business street	addressbook	en	Business Street
 business zip code	addressbook	en	Business Postal Code
-car phone	common	en	Car Phone
-cell phone	common	en	cell phone
+car phone	addressbook	en	Car Phone
+cell phone	addressbook	en	cell phone
 city	common	en	City
 company	common	en	Company
 company name	common	en	Company Name

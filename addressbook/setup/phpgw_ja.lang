@@ -1,7 +1,7 @@
 address book	common	ja	¥¢¥É¥ì¥¹Ä¢
 address book - vcard in	addressbook	ja	¥¢¥É¥ì¥¹Ä¢ - VCardÄÉ²Ã
 addressbook	common	ja	¥¢¥É¥ì¥¹Ä¢
-addressbook preferences	common	ja	¥¢¥É¥ì¥¹Ä¢¥æ¡¼¥¶ÀßÄê
+addressbook preferences	addressbook	ja	¥¢¥É¥ì¥¹Ä¢¥æ¡¼¥¶ÀßÄê
 addresses	common	ja	¥¢¥É¥ì¥¹Ä¢
 addvcard	addressbook	ja	VCardÄÉ²Ã
 add a field	addressbook	ja	¹àÌÜÄÉ²Ã
@@ -15,15 +15,15 @@ bbs phone	addressbook	ja	BBSÅÅÏÃ
 birthday	common	ja	ÃÂÀ¸Æü
 business address type	addressbook	ja	¥¢¥É¥ì¥¹¥¿¥¤¥×
 business	common	ja	¥Ó¥¸¥Í¥¹
-business city	common	ja	»Ô¶èÄ®Â¼
-business country	common	ja	¹ñ
-business email	common	ja	ÅÅ»Ò¥á¡¼¥ë
-business email type	common	ja	ÅÅ»Ò¥á¡¼¥ë¥¿¥¤¥×
-business fax	common	ja	FAX
-business phone	common	ja	ÅÅÏÃ
-business state	common	ja	ÅÔÆ»ÉÜ¸©
-business street	common	ja	Ä®°è
-business zip code	common	ja	Í¹ÊØÈÖ¹æ
+business city	addressbook	ja	»Ô¶èÄ®Â¼
+business country	addressbook	ja	¹ñ
+business email	addressbook	ja	ÅÅ»Ò¥á¡¼¥ë
+business email type	addressbook	ja	ÅÅ»Ò¥á¡¼¥ë¥¿¥¤¥×
+business fax	addressbook	ja	FAX
+business phone	addressbook	ja	ÅÅÏÃ
+business state	addressbook	ja	ÅÔÆ»ÉÜ¸©
+business street	addressbook	ja	Ä®°è
+business zip code	addressbook	ja	Í¹ÊØÈÖ¹æ
 car phone	addressbook	ja	¼«Æ°¼ÖÅÅÏÃ
 cell phone	addressbook	ja	cell ÅÅÏÃ
 city	common	ja	»Ô¶èÄ®Â¼
@@ -67,11 +67,11 @@ label	addressbook	ja	¥é¥Ù¥ë
 line 2	addressbook	ja	Ä®°è¡Ê£²¹ÔÌÜ¡Ë
 message phone	addressbook	ja	¥á¥Ã¥»¡¼¥¸
 middle name	addressbook	ja	¥ß¥É¥ë¥Í¡¼¥à
-mobile	common	ja	·ÈÂÓÅÅÏÃ
+mobile	addressbook	ja	·ÈÂÓÅÅÏÃ
 other number	addressbook	ja	¤½¤ÎÂ¾ÈÖ¹æ
 pager	common	ja	¥Ú¡¼¥¸¥ã¡¼
 parcel	addressbook	ja	¶è²è
-phone numbers	addressbook	ja	ÅÅÏÃÈÖ¹æ
+phone numbers	common	ja	ÅÅÏÃÈÖ¹æ
 Please enter a name for that field!	addressbook	ja	¹àÌÜÌ¾¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
 please set your preferences for this app	addressbook	ja	¥æ¡¼¥¶ÀßÄê¤ò¹Ô¤Ã¤Æ²¼¤µ¤¤¡£
 postal	common	ja	Í¹ÊØ
@@ -87,11 +87,10 @@ that field name has been used already !	addressbook	ja	¹àÌÜÌ¾¤Ï´û¤ËÂ¸ºß¤·¤Æ¤¤¤Ş¤
 this person's first name was not in the address book.	addressbook	ja	¥¢¥É¥ì¥¹Ä¢¤ËÌ¾Á°¤¬¤¢¤ê¤Ş¤»¤ó¡£
 today is x's birthday!	common	ja	º£Æü¤Ï %1 ¤µ¤ó¤ÎÃÂÀ¸Æü¤Ç¤¹¡£
 tommorow is x's birthday.	common	ja	ÌÀÆü¤Ï %1 ¤µ¤ó¤ÎÃÂÀ¸Æü¤Ç¤¹¡£
-url	common	ja	URL
 vcard	common	ja	VCard
 vcards require a first name entry.	addressbook	ja	VCard ¤Ë¤Ï¡¢Ì¾Á°¤¬É¬Í×¤Ç¤¹¡£
 video phone	addressbook	ja	¥Ó¥Ç¥ªÅÅÏÃ
 voice phone	addressbook	ja	ÅÅÏÃ
-work phone	common	ja	¶ĞÌ³ÀèTEL
+work phone	addressbook	ja	¶ĞÌ³ÀèTEL
 you must select at least 1 column to display	addressbook	ja	É½¼¨¤¹¤ë¹àÌÜ¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£
 zip code	common	ja	Í¹ÊØÈÖ¹æ
