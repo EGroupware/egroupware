@@ -232,6 +232,10 @@
 						}
 
 					}
+					else
+					{
+						$day_params['day_image'] = '';
+					}
 					$var[] = Array(
 						'day_image'	=> $day_params['day_image'],
 						'dayname'	=> $str
@@ -257,6 +261,31 @@
 			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
+		function printer_friendly($body)
+		{
+			if($this->bo->printer_friendly)
+			{
+				$new_body = '<html>'."\n"
+					.'<head>'."\n"
+					.'<STYLE type="text/css">'."\n"
+					.'<!--'."\n"
+					.'  body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: "'.$GLOBALS['phpgw_info']['theme']['font'].'" }'."\n"
+					.'  .tablink { color: #000000; }'."\n"
+					.' '.$this->css()."\n"
+					.'-->'."\n"
+					.'</STYLE>'."\n"
+					.'</head>'."\n"
+					.$body
+					.'</body>'."\n"
+					.'</html>'."\n";
+			}
+			else
+			{
+				$new_body = $body;
+			}
+			return $new_body;
+		}
+
 		function month()
 		{
 			if (!$this->bo->printer_friendly)
@@ -267,7 +296,7 @@
 				unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
 				$GLOBALS['phpgw']->common->phpgw_header();
 			}
-			echo $this->get_month();
+			echo $this->printer_friendly($this->get_month());
 		}
 
 		function get_month()
@@ -345,7 +374,7 @@
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 				$GLOBALS['phpgw']->common->phpgw_header();
 			}
-			echo $this->get_week();
+			echo $this->printer_friendly($this->get_week());
 		}
 
 		function get_week()
@@ -522,7 +551,7 @@
 			{
 				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 			}
-			echo $this->get_year();
+			echo $this->printer_friendly($this->get_year());
 		}
 
 		function get_year()
@@ -1164,7 +1193,7 @@
 
 			$p->set_var($var);
 			$p->parse('day_events','day_event');
-			$p->pparse('out','day');
+			echo $this->printer_friendly($p->fp('out','day'));
 		}
 
 		function edit_status()
