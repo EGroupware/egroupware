@@ -14,7 +14,7 @@ account permissions	admin	en	Account permissions
 account preferences	common	en	Account Preferences
 acl	common	en	ACL
 action	admin	en	Action
-active	admin	en	Active
+active	common	en	Active
 add a note for	notes	en	Add a note for
 add a note for x	notes	en	Add a note for %1
 add a single phrase	transy	en	Add a single phrase
@@ -153,7 +153,7 @@ daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
 date	bookkeeping	en	Date
 date	common	en	Date
-date due	todo	en	Date Due
+date due	common	en	Date Due
 date format	preferences	en	Date format
 days datedue	todo	en	days datedue
 days repeated	calendar	en	days repeated
