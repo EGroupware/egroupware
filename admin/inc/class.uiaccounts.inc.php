@@ -547,7 +547,7 @@
 
 			$t->parse('password_fields','form_logininfo',True);
 
-			$account = CreateObject('phpgwapi.accounts',intval($GLOBALS['HTTP_GET_VARS']['account_id']));
+			$account = CreateObject('phpgwapi.accounts',intval($GLOBALS['HTTP_GET_VARS']['account_id']),'u');
 			$userData = $account->read_repository();
 
 			$var['account_lid']		= $userData['account_lid'];
@@ -690,7 +690,7 @@
 				)
 			);
 
-			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id'],'u');
 			$account_list = $accounts->get_list('accounts');
 			$account_num = count($account_list);
 
@@ -823,7 +823,7 @@
 			{
 				if($_account_id)
 				{
-					$account = CreateObject('phpgwapi.accounts',intval($_account_id));
+					$account = CreateObject('phpgwapi.accounts',intval($_account_id),'u');
 					$userData = $account->read_repository();
 					$userGroups = $account->membership($_account_id);
 				}

@@ -184,7 +184,7 @@
 				)
 			);
 
-			$group = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$group = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$group->acct_type = 'g';
 			$account_info = array(
 				'account_type'      => 'g',
@@ -440,7 +440,7 @@
 				'account_user'	=> $account_user,
 				'account_apps'	=> $account_apps
 			);
-
+			
 			$this->validate_group($group_info);
 			
 			// Lock tables
@@ -457,9 +457,9 @@
 				)
 			);
 
-			$group = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$group = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$old_group_info = $group->read_repository();
-
+			
 			// Set group apps
 			$apps = CreateObject('phpgwapi.applications',$group_info['account_id']);
 			$apps_before = $apps->read_account_specific();
@@ -634,7 +634,7 @@
 		{
 			$errors = Array();
 			
-			$group = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$group = CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$group->read_repository();
 
 			if(!$group_info['account_name'])
@@ -760,7 +760,7 @@
 		/* stores the userdata */
 		function save_user($_userData)
 		{
-			$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
+			$account = CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
 			$account->update_data($_userData);
 			$account->save_repository();
 			if ($_userData['account_passwd'])
@@ -784,7 +784,7 @@
 			}
 			$apps->save_repository();
 
-			$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
+			$account = CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
 			$allGroups = $account->get_list('groups');
 
 			if ($_userData['account_groups'])

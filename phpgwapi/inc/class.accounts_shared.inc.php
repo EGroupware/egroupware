@@ -75,13 +75,18 @@
 		* This constructor sets the account id, if string is sent, converts to id  *
 		* I might move this to the accounts_shared if it stays around              *
 		\**************************************************************************/
-		function accounts($account_id = '')
+		function accounts($account_id = '', $account_type='')
 		{
 			$this->db = $GLOBALS['phpgw']->db;
 
 			if($account_id != '')
 			{
 				$this->account_id = get_account_id($account_id);
+			}
+
+			if($account_type != '')
+			{
+				$this->account_type = $account_type;
 			}
 
 			if($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')

@@ -449,6 +449,11 @@
 
 		function get_type($accountid = '')
 		{
+			if (isset($this->account_type))
+			{
+				return $this->account_type;
+			}
+
 			static $account_type;
 
 			$account_id = get_account_id($accountid);
@@ -456,13 +461,14 @@
 			{
 				return $account_type[$account_id];
 			}
-
+			
 			$allValues = array();
 			$sri = ldap_search($this->ds, $this->user_context, "(&(uidnumber=$account_id)(phpgwaccounttype=u))");
 			$allValues = ldap_get_entries($this->ds, $sri);
 
 			if ($allValues[0]['phpgwaccounttype'][0])
 			{
+				$allValues[0]['phpgwaccounttype'][0];
 				$account_type[$account_id] = $allValues[0]['phpgwaccounttype'][0];
 				return $account_type[$account_id];
 			}
