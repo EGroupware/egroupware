@@ -228,6 +228,24 @@
       $currentver = "0.9.2";
     }
   }
+  
+  function v0_9_2to0_9_3pre2() {
+    global $currentver, $phpgw_info, $db;
+    $didupgrade = True;
+    
+    // The 0.9.3pre1 is only temp until release
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
+       $db->query("update addressbook       set ab_owner=accounts.account_id      where ab_owner=accounts.account_lid");
+       $db->query("update todo              set todo_owner=accounts.account_id    where todo_owner=accounts.account_lid");
+       $db->query("update webcal_entry      set cal_create_by=accounts.account_id where cal_create_by=accounts.account_lid");
+       $db->query("update webcal_entry_user set cal_login=accounts.account_id     where cal_login=accounts.account_lid");
+
+       echo "  <tr bgcolor=\"e6e6e6\">\n";
+       echo "    <td>Upgrade from 0.9.2 to 0.9.3pre2 is completed.</td>\n";
+       echo "  </tr>\n";
+       $currentver = "0.9.3pre2";
+    }
+  }
 
   echo "<table border=\"0\" align=\"center\">\n";
   echo "  <tr bgcolor=\"486591\">\n";
@@ -240,6 +258,7 @@
   v9052000to9072000();
   v9072000to0_9_1();
   v0_9_1to0_9_2();
+  v0_9_2to0_9_3pre2();
   $db->query("update applications set app_version='".$phpgw_info["server"]["version"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
   if (!$didupgrade == True){

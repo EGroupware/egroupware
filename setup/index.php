@@ -24,11 +24,11 @@
   include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
   $db	            = new db;
-  $db->Host	    = $phpgw_info["server"]["db_host"];
-  $db->Type	    = $phpgw_info["server"]["db_type"];
-  $db->Database   = $phpgw_info["server"]["db_name"];
-  $db->User	    = $phpgw_info["server"]["db_user"];
-  $db->Password   = $phpgw_info["server"]["db_pass"];
+  $db->Host	      = $phpgw_info["server"]["db_host"];
+  $db->Type	      = $phpgw_info["server"]["db_type"];
+  $db->Database      = $phpgw_info["server"]["db_name"];
+  $db->User	      = $phpgw_info["server"]["db_user"];
+  $db->Password      = $phpgw_info["server"]["db_pass"];
 //  $db->Halt_On_Error = "report";
   $db->Halt_On_Error = "no";
 
@@ -115,6 +115,7 @@
               <option value="9072000">9072000</option>
               <option value="9262000">9262000</option>
               <option value="0_9_1">0.9.1</option>
+              <option value="0_9_2">0.9.2</option>
             </select>
           </td>
         </tr>
