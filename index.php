@@ -30,6 +30,17 @@
   include("header.inc.php");
   // Note: I need to add checks to make sure these apps are installed.
 
+  if ($phpgw_forward) {
+     if ($phpgw_forward) {
+        while (list($name,$value) = each($HTTP_GET_VARS)) {
+           if (ereg("phpgw_",$name)) {
+              $extra_vars .= "&" . $name . "=$value";
+           }
+        }
+     }
+     $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . $phpgw_forward,$extra_vars));
+  }
+
   if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
      || ($phpgw_info["server"]["useframes"] == "always")) {
 

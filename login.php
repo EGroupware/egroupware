@@ -108,7 +108,14 @@
     if (!isset($sessionid) || !$sessionid) {
        $phpgw->redirect($phpgw_info["server"]["webserver_url"]."/login.php?cd=5");
     } else {
-       $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
+       if ($phpgw_forward) {
+          while (list($name,$value) = each($HTTP_GET_VARS)) {
+             if (ereg("phpgw_",$name)) {
+                $extra_vars .= "&" . $name . "=$value";
+             }
+          }
+       }
+       $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes$extra_vars"));
     }
   } else {
     // !!! DONT CHANGE THESE LINES !!!
@@ -152,8 +159,17 @@
      }
      $tmpl->set_var("select_domain",$domain_select);
   }
-  
-  $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
+
+  while (list($name,$value) = each($HTTP_GET_VARS)) {
+     if (ereg("phpgw_",$name)) {
+        $extra_vars .= "&" . $name . "=$value";
+     }
+  }
+  if ($extra_vars) {
+     $extra_vars = "?" . substr($extra_vars,1,strlen($extra_vars));
+  }
+
+  $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php" . $extra_vars);
   $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
   $tmpl->set_var("cd",check_logoutcode($cd));
   $tmpl->set_var("cookie",show_cookie());
