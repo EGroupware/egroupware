@@ -26,6 +26,7 @@
 	{
 		//Set up the Object, reserving memory space for variables
 
+		var $app_name;
 		var $outerwidth;
 		var $width;
 		var $innerwidth;
@@ -75,15 +76,23 @@
 		/*
 		This is the constructor for the object.
 		*/
-		function portalbox($title='')
+		function portalbox($title = '')
 		{
 			$this->setvar('title',$title);
+
 			// echo 'After SetVar Title = '.$this->getvar('title')."<br>\n";
 		}
 
-		function start_template()
+		function start_template($extra = False)
 		{
-			$GLOBALS['phpgw']->xslttpl->add_file(array('portal'));
+			if ($extra)
+			{
+				$GLOBALS['phpgw']->xslttpl->add_file(array('portal',$GLOBALS['phpgw']->common->get_tpl_dir($this->getvar('app_name'),'default') . SEP . 'extrabox'));
+			}
+			else
+			{
+				$GLOBALS['phpgw']->xslttpl->add_file(array('portal'));
+			}
 
 			$this->output = array
 			(
@@ -111,10 +120,7 @@
 				$data = ' ';
 			}
 
-			$this->output['extrabox'] = array
-			(
-				'data' => $data
-			);
+			$this->output['extrabox'] = $data;
 		}
 
 		function draw_box()

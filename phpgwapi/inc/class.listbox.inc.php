@@ -57,7 +57,7 @@
 				}
 			}
 			$this->portalbox($param['title']);
-			$this->start_template();
+			//$this->start_template();
 		}
 
 		/*
@@ -66,6 +66,15 @@
 		*/
 		function draw($extra_data='')
 		{
+			if ($extra_data)
+			{
+				$this->start_template(True);
+			}
+			else
+			{
+				$this->start_template();
+			}
+
 			if(count($this->data))
 			{
 				for ($x = 0; $x < count($this->data); $x++)
@@ -79,6 +88,7 @@
 				}
 				$this->output['listbox'] = $var;
 			}
+
 			$this->set_internal($extra_data);
 			return $this->draw_box();
 		}

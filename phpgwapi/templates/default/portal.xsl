@@ -25,7 +25,7 @@
 											</ul>
 										</xsl:when>
 										<xsl:otherwise>
-											<xsl:apply-templates select="extrabox"/>
+											<xsl:call-template name="extrabox"/>
 										</xsl:otherwise>
 									</xsl:choose>
 								</td>
