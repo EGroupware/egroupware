@@ -1,9 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Bookmarks                                                 *
+	* phpGroupWare - Addressbook                                               *
 	* http://www.phpgroupware.org                                              *
-	* Based on Bookmarker Copyright (C) 1998  Padraic Renaghan                 *
-	*                     http://www.renaghan.com/bookmarker                   *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
