@@ -141,6 +141,12 @@
 				$t->set_var('th_err',$GLOBALS['phpgw_info']['theme']['th_bg']);
 			}
 
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
+
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 

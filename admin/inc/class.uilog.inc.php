@@ -261,6 +261,11 @@
 			$this->t->set_var('event_list',$table);
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.($this->editmode?lang('Edit Table format') : lang('View error log'));
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 			$this->t->pfp('out','log_list_t');

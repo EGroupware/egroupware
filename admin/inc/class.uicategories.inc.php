@@ -53,6 +53,11 @@
 			$this->acl_add_sub= !$GLOBALS['phpgw']->acl->check('global_categories_access',64,'admin');
 
 			$this->appname = get_var('appname',array('GET','POST'));
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps'][$this->appname ? $this->appname : 'admin']['title'];
 
 			$this->start		= $this->bo->start;
@@ -143,6 +148,11 @@
 			}
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Global categories');
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 			$this->set_langs();
@@ -308,6 +318,11 @@
 			}
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Add global category');
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -375,6 +390,11 @@
 			}
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Edit global category');
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -446,6 +466,11 @@
 			));
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Delete category');
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 

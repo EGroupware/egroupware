@@ -41,6 +41,11 @@
 			$can_delete = !$GLOBALS['phpgw']->acl->check('applications_access',8,'admin');
 			
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Installed applications');
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -215,6 +220,11 @@
 			}
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Add new application');
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -306,6 +316,11 @@
 			}
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Edit application');
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -362,6 +377,11 @@
 
 			$GLOBALS['phpgw']->template->set_file(array('body' => 'delete_common.tpl'));
 
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 

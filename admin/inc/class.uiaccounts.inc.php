@@ -60,6 +60,11 @@
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -215,6 +220,11 @@
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -377,6 +387,11 @@
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -451,6 +466,11 @@
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -578,6 +598,11 @@
 			}
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -797,6 +822,11 @@
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -935,6 +965,11 @@
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -1212,6 +1247,11 @@
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);

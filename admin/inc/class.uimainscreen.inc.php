@@ -72,6 +72,11 @@
 					$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Main screen message');
 					break;
 			}
+			if(!@is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
