@@ -69,8 +69,8 @@ cameroon	common	nl	KAMEROEN
 canada	common	nl	CANADA
 cancel	common	nl	Annuleren
 cape verde	common	nl	KAAPVERDIË
-categories	common	nl	Categoriën
-categories for	common	nl	categoriën voor
+categories	common	nl	Categorieën
+categories for	common	nl	categorieën voor
 category	common	nl	Categorie
 category %1 has been added !	common	nl	Categorie %1 is toegevoegd
 category %1 has been updated !	common	nl	Categorie %1 is bijgewerkt
@@ -122,7 +122,7 @@ disabled	common	nl	Uitgeschakeld
 display monday first	common	nl	Begin de week maandag
 display sunday first	common	nl	Begin de week zondag
 djibouti	common	nl	DJIBOUTI
-do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategoriën wissen
+do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorieën wissen
 domain	common	nl	Domein
 domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bijv. "%1"
 domestic	common	nl	thuis
@@ -135,7 +135,7 @@ east timor	common	nl	OOST TIMOR
 ecuador	common	nl	ECUADOR
 edit	common	nl	Bewerken
 edit %1 category for	common	nl	Bewerk %1 categorie voor
-edit categories	common	nl	Categoriën bewerken
+edit categories	common	nl	Categorieën bewerken
 edit category	common	nl	Bewerk categorie
 egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
 egypt	common	nl	EGYPTE
@@ -439,7 +439,7 @@ session has been killed	common	nl	Sessie is beëindigd
 setup	common	nl	Setup
 seychelles	common	nl	SEYCHELLEN
 show all	common	nl	laat alles zien
-show all categorys	common	nl	Alle categoriën weergegeven
+show all categorys	common	nl	Alle categorieën weergegeven
 showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
 sierra leone	common	nl	SIERRA LEONE

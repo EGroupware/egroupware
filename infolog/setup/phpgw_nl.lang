@@ -38,9 +38,9 @@ back to main list	infolog	nl	Terug naar hoofdlijst
 back to projectlist	infolog	nl	Terug naar projectenlijst
 billed	infolog	nl	gefactureerd
 both	infolog	nl	beiden
-call	infolog	nl	telefoongesprek
+call	infolog	nl	bellen
 cancel	infolog	nl	Annuleren
-categories	infolog	nl	Categoriën
+categories	infolog	nl	Categorieën
 category	infolog	nl	Categorie
 charset of file	infolog	nl	Karakterset van bestand
 check to set startday	infolog	nl	Markeer om startdag aan te geven
@@ -63,7 +63,7 @@ custom contact-address, leave empty to use information from most recent link	inf
 custom contact-information, leave emtpy to use information from most recent link	infolog	nl	Aangepaste contactinformatie, laat dit leeg om de informatie te gebruiken van de meest recente link
 custom fields	infolog	nl	Aangepast velden
 custom fields, typ and status	common	nl	Aangepaste velden, type en status
-custom regarding	infolog	nl	
+custom regarding	infolog	nl	Aangepast m.b.t.
 custom status for typ	infolog	nl	Aangepaste status voor type
 datecreated	infolog	nl	datum aangemaakt
 dates, status, access	infolog	nl	Data, Status, Toegang
@@ -87,7 +87,7 @@ download	infolog	nl	Downloaden
 duration	infolog	nl	Duur
 each value is a line like <id>[=<label>]	infolog	nl	elke waarde is een regel zoals <id>[=<label>]
 edit	infolog	nl	Wijzigen
-edit or create categories for ingolog	infolog	nl	Categoriën voor InfoLog aanmaken of wijzigen
+edit or create categories for ingolog	infolog	nl	Categorieën voor InfoLog aanmaken of wijzigen
 edit the entry	infolog	nl	Wijzig de infolog
 edit this entry	infolog	nl	Wijzig dit infolog
 empty for all	infolog	nl	leeg voor alle
@@ -173,7 +173,7 @@ private	infolog	nl	Privé
 project	infolog	nl	Project
 re:	infolog	nl	Re:
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	nl	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
-remark	infolog	nl	
+remark	infolog	nl	aandachtspunt
 remove this link (not the entry itself)	infolog	nl	Verwijder deze link (niet het record zeld)
 responsible	infolog	nl	Verantwoordelijk
 responsible user, priority, ...	infolog	nl	verantwoordelijk gebruiker, prioriteit, ..

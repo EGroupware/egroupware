@@ -15,7 +15,7 @@ date format	preferences	nl	Datumweergave
 default	preferences	nl	standaard
 default application	preferences	nl	Standaard toepassing
 default preferences	preferences	nl	Standaard voorkeuren
-delete categories	preferences	nl	Verwijder categoriën
+delete categories	preferences	nl	Verwijder categorieën
 description can not exceed 255 characters in length !	preferences	nl	Beschrijving mag niet de 255 tekens overschrijden in lengte!
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	nl	Prefereert u de tijd in 24 uurs formaat, of in 12 uurs formaat met am/pm toegevoegd?
 edit custom fields	preferences	nl	wijzig aangepaste velden

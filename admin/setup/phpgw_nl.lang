@@ -28,7 +28,7 @@ add group	admin	nl	Groep toevoegen
 add new account	admin	nl	Nieuwe gebruikersaccount toevoegen
 add new application	admin	nl	Nieuwe toepassing toevoegen
 add peer server	admin	nl	Peer-server toevoegen
-add sub-category	admin	nl	Subcategoriën toevoegen
+add sub-category	admin	nl	Subcategorieën toevoegen
 admin email	admin	nl	Emailadres beheerder
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	nl	Emailadressen beheerder (gescheiden door komma's) om gewaarschuwd te worden blokkeringen (laat leeg om geen notificaties te sturen)
 admin name	admin	nl	Naam bheerder
@@ -69,12 +69,12 @@ bottom	admin	nl	onderaan
 calculate next run	admin	nl	Volgende uitvoer berekenen
 can change password	admin	nl	Kan wachtwoord wijzigen
 cancel testjob!	admin	nl	Annuleer testtaak!
-categories list	admin	nl	Categoriënlijst
+categories list	admin	nl	Categorieënlijst
 category %1 has been saved !	admin	nl	Categorie %1 is opgeslagen!
-category list	admin	nl	Categoriënlijst
+category list	admin	nl	Categorieënlijst
 change acl rights	admin	nl	Bewerk ACL-rechten
 change config settings	admin	nl	Bewerk configuratieinstellingen
-change main screen message	admin	nl	Bericht op startpagina wijzigen
+change main screen message	admin	nl	Bericht op start- of loginpagina wijzigen
 check ip address of all sessions	admin	nl	Controleer IP-adressen van alle sessies
 check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> tot %2 van %3
 country selection	admin	nl	Landenselectie
@@ -104,7 +104,7 @@ deny access to applications	admin	nl	Toegang tot toepassingen weigeren
 deny access to asynchronous timed services	admin	nl	Toegang tot asynchrone services weigeren
 deny access to current sessions	admin	nl	Toegang tot huidige sessies weigeren
 deny access to error log	admin	nl	Toegang tot foutenlogboek weigeren
-deny access to global categories	admin	nl	Toegang tot globale categoriën weigeren
+deny access to global categories	admin	nl	Toegang tot globale categorieën weigeren
 deny access to groups	admin	nl	Toegang tot groepen weigeren
 deny access to mainscreen message	admin	nl	Toegang tot berichtop startpagina weigeren
 deny access to peer servers	admin	nl	Toegang tot peer-servers weigeren
@@ -118,9 +118,9 @@ disabled	admin	nl	Uitgeschakeld
 disabled (not recomended)	admin	nl	uitgeschakeld (niet aanbevolen)
 display	admin	nl	Weergave
 do not delete the category and return back to the list	admin	nl	de categorie NIET verwijderen en terugkeren naar de lijst
-do you also want to delete all global subcategories ?	admin	nl	Wilt u tevens alle globale subcategoriën verwijderen?
-do you want to delete all global subcategories ?	admin	nl	Wilt u  alle globale subcategoriën verwijderen?
-do you want to move all global subcategories one level down ?	admin	nl	Wilt u alle globale subcategoriën een niveau naar beneden verplaatsen?
+do you also want to delete all global subcategories ?	admin	nl	Wilt u tevens alle globale subcategorieën verwijderen?
+do you want to delete all global subcategories ?	admin	nl	Wilt u  alle globale subcategorieën verwijderen?
+do you want to move all global subcategories one level down ?	admin	nl	Wilt u alle globale subcategorieën een niveau naar beneden verplaatsen?
 edit account	admin	nl	Account bewerken
 edit application	admin	nl	Toepassing bewerken
 edit global category	admin	nl	Globale catergorie bewerken
@@ -262,108 +262,108 @@ remove all users from this group	admin	nl	Alle gebruikers uit deze groep verwijd
 remove all users from this group ?	admin	nl	Alle gebruikers uit deze groep verwijderen?
 return to admin mainscreen	admin	nl	terug naar de startpagina van beheer
 return to view account	admin	nl	Terug naar accountweergave
-run asynchronous services	admin	nl	
-save the category	admin	nl	
-save the category and return back to the list	admin	nl	
-search accounts	admin	nl	
-search categories	admin	nl	
-search groups	admin	nl	
-search peer servers	admin	nl	
-security	admin	nl	
-select group managers	admin	nl	
+run asynchronous services	admin	nl	Asynchrone services uitvoeren
+save the category	admin	nl	De categorie opslaan
+save the category and return back to the list	admin	nl	De categorie opslaan en teruggaan naar de lijst
+search accounts	admin	nl	Doorzoek de accounts
+search categories	admin	nl	Doorzoek de categorieën
+search groups	admin	nl	Doorzoek de groepen
+search peer servers	admin	nl	Doorzoek de peer-servers
+security	admin	nl	Beveiliging
+select group managers	admin	nl	Selecteer Groepsmanagers
 select permissions this group will have	admin	nl	Selecteer de rechten die deze groep krijgt
-select the parent category. if this is a main category select no category	admin	nl	
+select the parent category. if this is a main category select no category	admin	nl	Selecteer de bovenliggende categorieën. Als dit een hoofdcategorie is selecteer dan GEEN CATEGORIE
 select users for inclusion	admin	nl	Selecteer gebruikers om toe te voegen
-select where you want to store/retrieve filesystem information	admin	nl	
-select where you want to store/retrieve user accounts	admin	nl	
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	nl	
-selectbox	admin	nl	
-server %1 has been updated	admin	nl	
-server list	admin	nl	
-server password	admin	nl	
-server type(mode)	admin	nl	
-server url	admin	nl	
-server username	admin	nl	
-set preference values.	admin	nl	
-show 'powered by' logo on	admin	nl	
-show access log	admin	nl	
-show current action	admin	nl	
-show error log	admin	nl	
-show phpinfo()	admin	nl	
-show session ip address	admin	nl	
+select where you want to store/retrieve filesystem information	admin	nl	Selecteer waar u uw bestandssysteeminformatie wilt opslaan/verkrijgen
+select where you want to store/retrieve user accounts	admin	nl	Selecteer waar u uw gebruikersaccounts wilt opslaan/verkrijgen
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	nl	Selecteer op welke locatie deze toepassing moet verschijnen op de navigatiebalk, van laagste(links) naar hoogste(rechts.
+selectbox	admin	nl	Selectbox
+server %1 has been updated	admin	nl	Server %1 is bijgewerkt.
+server list	admin	nl	Serverlijst
+server password	admin	nl	Serverwachtwoord
+server type(mode)	admin	nl	Servertype(modus)
+server url	admin	nl	Server-URL
+server username	admin	nl	Servergebruikersnaam
+set preference values.	admin	nl	Stel waarden van voorkeuren in
+show 'powered by' logo on	admin	nl	''Powered by'-logo weergeven op
+show access log	admin	nl	Toegangslogboek weergeven
+show current action	admin	nl	Huidige actie weergeven
+show error log	admin	nl	Foutenlogboek weergeven
+show phpinfo()	admin	nl	De uitvoer van phpinfo() weergeven
+show session ip address	admin	nl	Sessie IP-adres weergeven
 site	admin	nl	Site
-site configuration	common	nl	Site-configuratie
-soap	admin	nl	
-sorry, that group name has already been taken.	admin	nl	
+site configuration	common	nl	Siteconfiguratie
+soap	admin	nl	SOAP
+sorry, that group name has already been taken.	admin	nl	Excuses, de groep met die naam bestaat al.
 sorry, that group name has already been taking.	admin	nl	Sorry, die groepsnaam is al in gebruik
-sorry, the above users are still a member of the group %1	admin	nl	
+sorry, the above users are still a member of the group %1	admin	nl	Excuses, de bovenstaande gebruikers zijn nog steeds lid van de groep %1.
 sorry, the follow users are still a member of the group %1	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
-sort the entries	admin	nl	
-ssl	admin	nl	
-standard	admin	nl	
-start testjob!	admin	nl	
+sort the entries	admin	nl	Sorteer de records
+ssl	admin	nl	ssl
+standard	admin	nl	standaard
+start testjob!	admin	nl	Testtaak starten
 status	admin	nl	status
 submit changes	admin	nl	Wijzigingen toepassen
-submit the search string	admin	nl	
-template selection	admin	nl	
-text entry	admin	nl	
-that application name already exists.	admin	nl	
-that application order must be a number.	admin	nl	
-that loginid has already been taken	admin	nl	Die loginid is al in gebruik
-that name has been used already	admin	nl	
-that server name has been used already !	admin	nl	
-the api is current	admin	nl	
-the api requires an upgrade	admin	nl	
-the login and password can not be the same	admin	nl	De login en het wachtwoord mogen niet gelijk zijn
-the loginid can not be more then 8 characters	admin	nl	
-the testjob sends you a mail everytime it is called.	admin	nl	
-the two passwords are not the same	admin	nl	De twee wachtwoorden komen niet overeen
-the users bellow are still members of group %1	admin	nl	
-they must be removed before you can continue	admin	nl	Ze moeten worden verwijderd voor u verder kunt
-this application is current	admin	nl	
-this application requires an upgrade	admin	nl	
-this category is currently being used by applications as a parent category	admin	nl	
-timeout for application session data in seconds (default 86400 = 1 day)	admin	nl	
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	nl	
-times	admin	nl	
+submit the search string	admin	nl	Verzend de zoekopdracht
+template selection	admin	nl	Templateselectie
+text entry	admin	nl	Tekstinvoer
+that application name already exists.	admin	nl	Die toepassingsnaam bestaat reeds.
+that application order must be a number.	admin	nl	De invoer van de toepassingsvolgorde moet numeriek zijn.
+that loginid has already been taken	admin	nl	Die loginnaami is reeds in gebruik!
+that name has been used already	admin	nl	Die naam is reeds in Gebruik!
+that server name has been used already !	admin	nl	Die servernaam is reeds in gebruik!
+the api is current	admin	nl	De API is actueel.
+the api requires an upgrade	admin	nl	De API vereist een upgrade.
+the login and password can not be the same	admin	nl	De loginnaam en het wachtwoord mogen niet gelijk zijn
+the loginid can not be more then 8 characters	admin	nl	De loginnaam mag de 8 tekens in lengte niet overschreiden.
+the testjob sends you a mail everytime it is called.	admin	nl	De testtaak verzend elke als het wordt uitgevoerd een email.
+the two passwords are not the same	admin	nl	De twee wachtwoorden komen niet overeen.
+the users bellow are still members of group %1	admin	nl	de gebruikers hieronder zijn nog steeds lid van groep %1.
+they must be removed before you can continue	admin	nl	Ze moeten worden verwijderd voor u verder kunt gaan.
+this application is current	admin	nl	Deze toepassing is actueel.
+this application requires an upgrade	admin	nl	Deze toepassing vereist een upgrade.
+this category is currently being used by applications as a parent category	admin	nl	Deze categorie wordt momenteel gebruikt door toepassingen als bovenliggende categorie.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	nl	Uitvoertijd is overschreden voor toepassingssessiegegevens in seconden.(standaard 86400 = 1 dag)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	nl	Uitvoertijd is overschreden voor sessies in seconden. (standaard 14400 =4 uren)
+times	admin	nl	Tijden
 title	admin	nl	Titel
-top	admin	nl	
+top	admin	nl	boven
 total records	admin	nl	Aantal records
-trust level	admin	nl	
-trust relationship	admin	nl	
-under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	nl	
-use cookies to pass sessionid	admin	nl	
-use pure html compliant code (not fully working yet)	admin	nl	
-use theme	admin	nl	
+trust level	admin	nl	Vertrouwensniveau
+trust relationship	admin	nl	Vertrouwensrelatie
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	nl	Onder Windows kunt u momenteel alleen de Fallbackvalmodus gebruiken. Fallback betekend dat taken alleen gecontroleerd worden na elk paginaverzoek.
+use cookies to pass sessionid	admin	nl	Gebruik cookies om sessie-ID door te geven
+use pure html compliant code (not fully working yet)	admin	nl	Gebruik pure HTML compatible code (werk momenteel niet volledig)
+use theme	admin	nl	Gebruik thema
 user accounts	admin	nl	Gebruikersaccounts
-user data	admin	nl	
+user data	admin	nl	Gebruikersgegevens
 user groups	admin	nl	Gebruikersgroepen
 user profiles	admin	nl	Gebruikersprofielen
-userdata	admin	nl	
-users choice	admin	nl	
+userdata	admin	nl	gebruikersgegevens
+users choice	admin	nl	Gebruikerskeuze
 view access log	admin	nl	Toegangslog bekijken
-view account	admin	nl	
-view category	admin	nl	
-view error log	admin	nl	Foutenlogboek bekijken
-view sessions	admin	nl	Sessies bekijken
-view this user	admin	nl	
-view user account	admin	nl	
-who would you like to transfer all records owned by the deleted user to?	admin	nl	
-would you like phpgroupware to cache the phpgw info array ?	admin	nl	
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	nl	
-would you like phpgroupware to check for new application versions when admins login ?	admin	nl	
-would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	
-would you like to show each application's upgrade status ?	admin	nl	
-xml-rpc	admin	nl	
-you have entered an invalid expiration date	admin	nl	
-you must add at least 1 permission or group to this account	admin	nl	
+view account	admin	nl	Account weergegeven
+view category	admin	nl	Categorie weergeven
+view error log	admin	nl	Foutenlogboek weergeven
+view sessions	admin	nl	Sessies weergeven
+view this user	admin	nl	Deze gebruiker weergeven
+view user account	admin	nl	Gebruikersaccount weergeven
+who would you like to transfer all records owned by the deleted user to?	admin	nl	Wilt u tevens ALLE records in eigendom van de verwijderde gebruikers
+would you like phpgroupware to cache the phpgw info array ?	admin	nl	Wilt u eGroupWare de phpgwinfo-array laten cachen ? (EXTREEM GEVAARLIJK!)
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie wanneer beheerders inloggen?
+would you like phpgroupware to check for new application versions when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor nieuwe toepassingensversies wanneer beheerders inloggen?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wilt u automatisch (bij inloggen) nieuwe taalbestanden laden?
+would you like to show each application's upgrade status ?	admin	nl	Wilt u bij de elke toepassing de upgradestatus weergeven?
+xml-rpc	admin	nl	XML-RPC
+you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
+you must add at least 1 permission or group to this account	admin	nl	U moet op z'n minst 1 permissie of groep toewijzen aan dit account.
 you must add at least 1 permission to this account	admin	nl	U moet tenminste 1 recht toekennen aan deze gebruiker
-you must enter a group name.	admin	nl	
-you must enter a lastname	admin	nl	
-you must enter a loginid	admin	nl	
+you must enter a group name.	admin	nl	U moet een groepsnaam invoeren.
+you must enter a lastname	admin	nl	U moet een achternaam invoeren.
+you must enter a loginid	admin	nl	U moet een loginnaam invoeren.
 you must enter a password	admin	nl	U moet een wachtwoord invoeren
-you must enter an application name and title.	admin	nl	U moet een toepassingsnaam en -titel invoeren
-you must enter an application name.	admin	nl	
-you must enter an application title.	admin	nl	
+you must enter an application name and title.	admin	nl	U moet een toepassingsnaam en -titel invoeren.
+you must enter an application name.	admin	nl	U moet een toepassingsnaam invoeren.
+you must enter an application title.	admin	nl	U moet een toepassingstitel invoeren.
 you must select a file type	admin	nl	U moet een bestandstype invoeren
-you will need to remove the subcategories before you can delete this category	admin	nl	
+you will need to remove the subcategories before you can delete this category	admin	nl	U moet eerst de subcategorieën verwijderen voor dat u deze bovenliggende categorie kunt verwijderen!
