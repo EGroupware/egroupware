@@ -13,8 +13,7 @@
   \**************************************************************************/
 
   /* $Id$ */
-
-  $phpgw_flags["currentapp"] = "calendar";
+  $phpgw_flags = array("noheader" => True, "nonavbar" => True, "currentapp" => "calendar");
   include("../header.inc.php");
 
   if ($id > 0) {
@@ -31,4 +30,5 @@
      $phpgw->db->query("DELETE FROM webcal_entry_groups WHERE cal_id = $id");
   }
 
-  Header("Location: " . $phpgw->link("index.php,"year=$thisyear&month=$thismonth"));
+  Header("Location: " . $phpgw->link("index.php","year=$thisyear&month=$thismonth"));
+?>
