@@ -22,21 +22,43 @@
 
   function display_row($bg_color,$label,$id,$name) {
     global $p;
+    global $phpgw;
     global $phpgw_info;
     
     $p->set_var('row_color',$bg_color);
     $p->set_var('user',$name);
+    $rights = $phpgw->acl->get_rights($label.$id,$phpgw_info["flags"]["currentapp"]);
     $p->set_var('read',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_READ.']');
+    if ($rights & PHPGW_ACL_READ) {
+      $p->set_var('read_selected',' checked');
+    } else {
+      $p->set_var('read_selected','');
+    }
     $p->set_var('add',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_ADD.']');
+    if ($rights & PHPGW_ACL_ADD) {
+      $p->set_var('add_selected',' checked');
+    } else {
+      $p->set_var('add_selected','');
+    }
     $p->set_var('edit',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_EDIT.']');
+    if ($rights & PHPGW_ACL_EDIT) {
+      $p->set_var('edit_selected',' checked');
+    } else {
+      $p->set_var('edit_selected','');
+    }
     $p->set_var('delete',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_DELETE.']');
+    if ($rights & PHPGW_ACL_DELETE) {
+      $p->set_var('delete_selected',' checked');
+    } else {
+      $p->set_var('delete_selected','');
+    }
     $p->parse('row','acl_row',True);
   }
 
   if ($submit) {
 
-// Still need to write a function in ACL class to wipe all records where 
-// acl_location like '[gu]_$phpgw_info["flags"]["currentapp"]_%'
+    $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],"u");
+    $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],"g");
   
 // Group records
     $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
@@ -46,7 +68,7 @@
       while(list($acl,$permission) = each($acllist)) {
         $totalacl += $acl;
       }
-      echo "Commiting ACL record for group_id[$group_id]: ".$totalacl."<br>\n";
+      $phpgw->acl->add($phpgw_info["flags"]["currentapp"],'g_'.$group_id,$phpgw_info["user"]["account_id"],'u',$totalacl);
     }
 
 // User records
@@ -57,20 +79,8 @@
       while(list($acl,$permission) = each($acllist)) {
         $totalacl += $acl;
       }
-      echo "Commiting ACL record for user_id[$user_id]: ".$totalacl."<br>\n";
+      $phpgw->acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$phpgw_info["user"]["account_id"],'u',$totalacl);
     }
-//     $phpgw->db->query("DELETE FROM phpgw_acl WHERE acl_appname='calendar' AND ");
-//     $phpgw->preferences->change("calendar","weekdaystarts");
-//     $phpgw->preferences->change("calendar","workdaystarts");
-//     $phpgw->preferences->change("calendar","workdayends");
-//     $phpgw->preferences->change("calendar","defaultcalendar");
-//     $phpgw->preferences->change("calendar","defaultfilter");
-//     if ($mainscreen_showevents) {
-//        $phpgw->preferences->change("calendar","mainscreen_showevents");
-//     } else {
-//        $phpgw->preferences->delete("calendar","mainscreen_showevents");
-//     }
-//     $phpgw->preferences->commit();
      
      header("Location: ".$phpgw->link($phpgw_info["server"]["webserver_url"]."/preferences/index.php"));
      $phpgw->common->phpgw_exit();

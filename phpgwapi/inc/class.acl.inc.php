@@ -44,9 +44,8 @@
                           values('filemanager', 'create', 2, 'g', 2);
     */
           
-    function check($location, $required, $appname = False){
+    function get_rights($location,$appname = False){
       global $phpgw, $phpgw_info;
-//      $this->db = $phpgw->db;
 
       if ($appname == False){
         $appname = $phpgw_info["flags"]["currentapp"];
@@ -72,6 +71,12 @@
         if ($this->db->f("acl_rights") == 0){ return False; }
         $rights |= $this->db->f("acl_rights");
       }
+      return $rights;
+    }
+
+    function check($location, $required, $appname = False){
+      $rights = $this->get_rights($location,$appname);
+      
       return !!($rights & $required);
     }
 
@@ -186,6 +191,13 @@
       global $phpgw, $phpgw_info;
       if ($id == ""){$id = $phpgw_info["user"]["account_id"];}
       $sql = "DELETE FROM phpgw_acl WHERE acl_location='".$location."' AND acl_account_type='".$id_type."' AND acl_account='".$id."'";
+      $this->db->query($sql ,__LINE__,__FILE__);
+    }
+
+    function remove_granted_rights($app, $id_type = "u", $id="") {
+      global $phpgw, $phpgw_info;
+      if ($id == ""){$id = $phpgw_info["user"]["account_id"];}
+      $sql = "DELETE FROM phpgw_acl WHERE acl_appname='".$app."' AND acl_account_type = 'u' AND acl_location like '".$id_type."_%' AND acl_account='".$id."'";
       $this->db->query($sql ,__LINE__,__FILE__);
     }
   } //end of acl class
