@@ -45,12 +45,15 @@
 		var $total_records;         // This will contain numrows for data retrieved
 		var $grants;                // This holds all of the users that have granted access to there entrys
 
-		function contacts_()
+		function contacts_($useacl=True)
 		{
 			global $phpgw, $phpgw_info;
 
 			$this->db         = $phpgw->db;
-			$this->grants     = $phpgw->acl->get_grants('addressbook');
+			if($useacl)
+			{
+				$this->grants = $phpgw->acl->get_grants('addressbook');
+			}
 			$this->account_id = $phpgw_info['user']['account_id'];
 
 			// The left side are the array elements used throughout phpgw, right side are the db field names.
@@ -380,11 +383,23 @@
 			}
 
 			if (!$filtermethod) {
-				$fwhere .= " (owner=" . $phpgw_info['user']['account_id'];
-				$fand   .= " (owner=" . $phpgw_info['user']['account_id'];
+				if($phpgw_info['user']['account_id'])
+				{
+					$fwhere .= " (owner=" . $phpgw_info['user']['account_id'];
+					$fand   .= " (owner=" . $phpgw_info['user']['account_id'];
+				}
 			} else {
-				$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
-				$fand   .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
+				if($phpgw_info['user']['account_id'])
+				{
+					$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
+					$fand   .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
+				}
+				else
+				{
+					$filtermethod = substr($filtermethod,0,-2);
+					$fwhere .= $filtermethod;
+					$fand   .= $filtermethod;
+				}
 			}
 
 			if (is_array($this->grants))
