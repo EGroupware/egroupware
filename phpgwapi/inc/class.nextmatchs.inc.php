@@ -35,7 +35,7 @@
 		function nextmatchs($website=False)
 		{
 			if(!$website)
-{
+			{
 				$this->template = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 				$this->template->set_file(array(
 					'_nextmatchs' => 'nextmatchs.tpl'
