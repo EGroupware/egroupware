@@ -1304,13 +1304,13 @@
 		@abstract uses the encryption type set in setup and calls the appropriate encryption functions
 		@param $password password to encrypt
 		*/
-		function encrypt_password($password)
+		function encrypt_password($password,$sql=False)
 		{
 			if(!@is_object($GLOBALS['phpgw']->auth))
 			{
 				$GLOBALS['phpgw']->auth = CreateObject('phpgwapi.auth');
 			}
-			return $GLOBALS['phpgw']->auth->encrypt_password($password);
+			return $GLOBALS['phpgw']->auth->encrypt_password($password,$sql);
 		}
 
 		/*!
