@@ -87,7 +87,7 @@
            change_owner("calendar","webcal_entry","cal_create_by",$n_loginid,$lid);
            change_owner("calendar","webcal_entry_user","cal_login",$n_loginid,$lid);
 
-           $sep = $phpgw->common->filesystem_sepeartor();
+           $sep = $phpgw->common->filesystem_separator();
 	
   	   $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
 		    . "users" . $sep;

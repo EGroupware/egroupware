@@ -91,7 +91,7 @@
 
       // Create the users private_dir if not exist
 /*
-        $sep = $phpgw->common->filesystem_sepeartor();
+        $sep = $phpgw->common->filesystem_separator();
         $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
                  . "users" . $sep;
         if(!is_dir($basedir . $phpgw->db->f("loginid")))

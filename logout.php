@@ -21,7 +21,7 @@
 
   include("header.inc.php");
 
-  $sep = $phpgw->common->filesystem_sepeartor();
+  $sep = $phpgw->common->filesystem_separator();
 
 /*
   if ($installed[cron_apps] != "Y") {

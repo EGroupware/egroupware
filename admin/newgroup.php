@@ -48,7 +48,7 @@
            $phpgw->db->query("UPDATE accounts SET groups='$user_groups' WHERE con='" . $n_users[$i] . "'");
         }
 
-        $sep = $phpgw->common->filesystem_sepeartor();
+        $sep = $phpgw->common->filesystem_separator();
 
         $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
 

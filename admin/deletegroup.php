@@ -69,7 +69,7 @@
 
         $phpgw->db->query("delete from groups where group_id='$group_id'");
 
-        $sep = $phpgw->common->filesystem_sepeartor();
+        $sep = $phpgw->common->filesystem_separator();
 
         $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
 

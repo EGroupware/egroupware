@@ -72,7 +72,7 @@
           $phpgw->db->query($sql);
           $phpgw->db->unlock();
 
-          $sep = $phpgw->common->filesystem_sepeartor();
+          $sep = $phpgw->common->filesystem_separator();
 
           $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
