@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Calendar - Planner                                        *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Calendar - Planner                                          *
+  * http://www.egroupware.org                                                *
   * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
   *          http://www.radix.net/~cknudsen                                  *
   * Written by Mark Peters <skeeter@phpgroupware.org>                        *

@@ -1,10 +1,10 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Calendar                                                  *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Calendar                                                    *
+  * http://www.egroupware.org                                                *
   * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
   *          http://www.radix.net/~cknudsen                                  *
-  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
+  * Modified by Mark Peters <milosch@phpwhere.org>                           *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *

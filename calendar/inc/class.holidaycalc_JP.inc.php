@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - holidaycalc_JP                                            *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - holidaycalc_JP                                              *
+  * http://www.egroupware.org                                              *
   * Based on Yoshihiro Kamimura <your@itheart.com>                           *
   *          http://www.itheart.com                                          *
   * --------------------------------------------                             *

@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - ICal Calendar                                             *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - ICal Calendar                                               *
+  * http://www.egroupware.org                                                *
   * Created by Mark Peters <skeeter@phpgroupware.org>                        *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
