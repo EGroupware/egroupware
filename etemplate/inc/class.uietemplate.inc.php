@@ -109,6 +109,11 @@
 					array('etemplate_exec_id' => $id,'app' => $GLOBALS['phpgw_info']['flags']['currentapp']),
 					'/etemplate/process_exec.php','','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
 
+			list($width,$height,,,,,$overflow) = explode(',',$this->size);
+			if ($overflow)
+			{
+				$html = $this->html->div($html,'STYLE="'.($width?"width: $width; ":'').($height?"height: $height; ":'')."overflow: $overflow;\"");
+			}
 			$id = $this->save_appsession($this->as_array(1) + array(
 				'readonlys' => $readonlys,
 				'content' => $content,
@@ -303,11 +308,12 @@
 			}
 			$html = $this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING'));
 
+			/* does NOT work with mozilla: shows nothing if a div is inside a form
 			list($width,$height,,,,,$overflow) = explode(',',$this->size);
 			if (!empty($overflow)) {
 				$div_style=' STYLE="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow\"";
 				$html = $this->html->div($html,$div_style);
-			}
+			}*/
 			return "\n\n<!-- BEGIN $this->name -->\n$style\n".$html."<!-- END $this->name -->\n\n";
 		}
 
