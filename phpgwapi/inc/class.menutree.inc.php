@@ -28,6 +28,7 @@ class menutree {
 
 var $read_from_file;          // You can send the tree info from a string or file
 var $root_level_value;        // This is what the top level name or image will be
+var $last_column_size;
 
 	function menutree($read_from_file='T')
 	{
@@ -299,14 +300,14 @@ var $root_level_value;        // This is what the top level name or image will b
 			if($cnt==0)
 			{
 //				$str = '<table cellspacing="0" cellpadding="0" border="0" cols="'.($maxlevel+3).'" width="'.($maxlevel*16+100).'">'."\n";
-				$str = '<table cellspacing="0" cellpadding="0" border="0" cols="'.($maxlevel+3).'" width="'.($maxlevel*16+300).'">'."\n";
+				$str = '<table cellspacing="0" cellpadding="0" border="0" cols="'.($maxlevel+3).'" width="'.($maxlevel * 16 + $this->last_column_size).'">'."\n";
 				$str .= '<a href="' . $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php',$params) . '" target="_parent">' . $this->root_level_value . '</a>';
 				$str .= "\n".'<tr>';
 				for ($k=0; $k<$maxlevel; $k++)
 				{
 					$str .= '<td width=16></td>';
 				}
-				$str .= '<td width=300></td></tr>'."\n";
+				$str .= '<td width='.$this->last_column_size.'></td></tr>'."\n";
 			}
 
 			/****************************************/
