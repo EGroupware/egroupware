@@ -61,7 +61,7 @@
 				while ($data = fgets($fp,8000))
 				{
 					// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
-					list($message_id,,,$content) = explode("\n",$data);
+					list($message_id,,,$content) = explode("\t",$data);
 					$this->langarray[strtolower(trim($message_id))] = str_replace("\n",'',$content);
 				}
 				fclose($fp);
