@@ -211,7 +211,7 @@ ldap host	setup	en	LDAP host
 ldap import	setup	en	LDAP Import
 ldap import users	setup	en	LDAP import users
 ldap modify	setup	en	LDAP Modify
-ldap note	setup	en	You will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/README	setup	en	You will need to load the proper schema into your ldap server - see <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	en	Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)

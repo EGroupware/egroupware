@@ -133,10 +133,6 @@
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>
    </tr>
 
-   <tr class="row_off">
-    <td colspan="2"><b>{lang_ldap_note}</b></td>
-   </tr>
-
    <tr class="row_on">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
@@ -185,8 +181,6 @@
     <td>{lang_User_account_prefix}:</td>
     <td><input name="newsettings[account_prefix]" value="{value_account_prefix}"></td>
    </tr>
-
-
 
    <tr class="row_on">
     <td>{lang_Usernames_are_casesensitive}:</td>
@@ -239,9 +233,12 @@
     <td colspan="2">&nbsp;</td>
    </tr>
 
-	<tr class="row_on">
-		<td colspan="2"><b>{lang_If_using_LDAP}:</b></td>
-	<tr>
+   <tr class="th">
+    <td colspan="2"><b>{lang_If_using_LDAP}:</b></td>
+   </tr>
+   <tr class="row_on">
+    <td colspan="2"><b>{lang_You_will_need_to_load_the_proper_schema_into_your_ldap_server_-_see_phpgwapi/doc/ldap/README} !!!</b></td>
+   </tr>
 
    <tr class="row_off">
      <td>{lang_Do_you_want_to_manage_homedirectory_and_loginshell_attributes?}:</td>
