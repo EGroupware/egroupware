@@ -28,8 +28,6 @@
 
 		function uiinfolog( )
 		{
-			global $phpgw;
-
 			$this->bo = CreateObject('infolog.boinfolog');
 
 			$this->icons = array(
@@ -69,11 +67,11 @@
 
 			$this->html = CreateObject('infolog.html');
 			$this->template = CreateObject('phpgwapi.Template',
-													 $phpgw->common->get_tpl_dir('infolog'));
+													 $GLOBALS['phpgw']->common->get_tpl_dir('infolog'));
 			$this->categories = CreateObject('phpgwapi.categories');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 		}
-				
+
 		function menuaction($action = 'get_list',$app='infolog')
 		{
 			return array( 'menuaction' => "$app.ui$app.$action" );
@@ -81,23 +79,13 @@
 
 		function icon($cat,$id,$status='')
 		{
-			global $phpgw,$DOCUMENT_ROOT;
-
-			if (!$status || !($icon = $this->icons[$cat][$id.'_'.$status])) {
+			if (!$status || !($icon = $this->icons[$cat][$id.'_'.$status]))
+			{
 				$icon = $this->icons[$cat][$id];
 			}
-			if ($icon)
+			if ($icon && !is_readable($GLOBALS['phpgw']->common->get_image_dir() . '/' . $icon))
 			{
-				$fname = $phpgw->common->get_image_dir() . '/' . $icon; 
-				
-				if (!is_readable($fname))
-				{
-					$icon = False;      // echo "<br>Can't read '$fname' !!!";
-				}
-				else
-				{            
-					$icon = $phpgw->common->get_image_path() . '/' . $icon;
-				}            
+				$icon = False;
 			}
 			if (!$status || !($alt = $this->icons[$cat][$id.'_'.$status.'_alt']))
 			{
@@ -106,40 +94,35 @@
 					$alt = $id;
 				}
 			}
-   		return ($icon ? "<img src='$icon' alt='" : '') . lang($alt) .
-					 ($icon ? '\' border=0>' : '');
+			return $icon ? $this->html->image('infolog',$icon,lang($alt),'border=0') : lang($alt);
 		}
-		
+
 		function setStyleSheet( )
 		{
-			global $phpgw;
-
 			return array (
 				'info_css' => '<link rel="stylesheet" type="text/css" href="'.
 									str_replace( '/images','',
-									$phpgw->common->get_image_path()).'/info.css">'
+									$GLOBALS['phpgw']->common->get_image_path()).'/info.css">'
 			);
 		}
-		
+
 		/*
 		 * $info: info_id or array with one row form info-db
 		 * no Proj.Info if proj_id == p_id / no Addr.Info if addr_id == a_id
 		 */
 		function formatInfo($info=0,$p_id=0,$a_id=0)
 		{
-			global $phpgw,$phpgw_info;
-			
 			if (!is_array($info) && (!$info ||
 				 !is_array($info=$this->bo->read($info))))
 			{
 				$info = $this->bo->so->data;
 			}
 			$done = $info['info_status'] == 'done' ||
-					  $info['info_status'] == 'billed';   
+					  $info['info_status'] == 'billed';
 
 			$css_class = $info['info_pri'].($done ? '_done' : '');
 			$subject = "<span class=$css_class>";
-			
+
 			if ($p_id != ($proj_id = $info['info_proj_id']) &&
 			    $proj = $this->bo->readProj($proj_id))
 			{
@@ -185,10 +168,10 @@
 			}
 			else
 			{
-				$enddate = $phpgw->common->show_date($info['info_enddate'],
-						$phpgw_info['user']['preferences']['common']['dateformat']);
-				
-				if (!$done && $info['info_enddate'] < time()+(60*60)*$phpgw_info['user']['preferences']['common']['tz_offset'])
+				$enddate = $GLOBALS['phpgw']->common->show_date($info['info_enddate'],
+						$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+
+				if (!$done && $info['info_enddate'] < time()+(60*60)*$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'])
 				{
 					$enddate = "<span class=overdue>$enddate</span>";
 				}
@@ -200,8 +183,8 @@
 			}
 			else
 			{
-				$responsible = $this->bo->accountInfo($responsible);         
-			}         
+				$responsible = $this->bo->accountInfo($responsible);
+			}
 			$owner = $this->bo->accountInfo($info['info_owner']);
 			if ($info['info_access'] == 'private')
 			{
@@ -213,22 +196,20 @@
 				'pri'         => lang($info['info_pri']),
 				'subject'     => $subject,
 				'des'         => nl2br($info['info_des']),
-				'startdate'   => $phpgw->common->show_date($info['info_startdate'],
-						$phpgw_info['user']['preferences']['common']['dateformat']),
+				'startdate'   => $GLOBALS['phpgw']->common->show_date($info['info_startdate'],
+						$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
 				'enddate'     => $enddate,
 				'owner'       => $owner,
-				'datecreated' => $phpgw->common->show_date($info['info_datecreated'],
-						$phpgw_info['user']['preferences']['common']['dateformat']),
+				'datecreated' => $GLOBALS['phpgw']->common->show_date($info['info_datecreated'],
+						$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
 				'responsible' => $responsible
-			);            
+			);
 		}
 
 		function infoHeaders( $do_sort_header=0,$sort=0,$order=0,$cat_id=0)
 		{
-			global $phpgw,$phpgw_info;
-			
-			$headers['th_bg'] = $phpgw_info['theme']['th_bg'];
-			
+			$headers['th_bg'] = $GLOBALS['phpgw_info']['theme']['th_bg'];
+
 			$fields = array(
 				'type'		=> 'Type',
 				'status'		=> 'Status',
@@ -245,17 +226,17 @@
 				$lang = lang($lang);
 				$headers['lang_'.$f] = $do_sort_header ? $this->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/index.php',$lang,"&cat_id=$cat_id") : $lang;
 			}
-			return $headers;         
+			return $headers;
 		}
-		
+
 		function get_referer( )
 		{
-			global $phpgw_info,$HTTP_REFERER,$referer;
+			global $HTTP_REFERER,$referer;
 
 			if (!$referer)
 				$referer = $HTTP_REFERER;
 
-			$url = parse_url(str_replace($phpgw_info['server']['webserver_url'],'',
+			$url = parse_url(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',
 										  		  $referer));
 			$referer = $url['path'];
 
@@ -268,12 +249,11 @@
 
 	 	function get_list($for_include=0)
 		{
-			global $phpgw,$phpgw_info;
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $action,$addr_id,$proj_id,$info_id;
 
 			if (!$for_include) {
-				$phpgw->common->phpgw_header();
+				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 			}
 			$t = $this->template; $html = $this->html;
@@ -285,7 +265,7 @@
 
 			if (!$filter)
 			{
-				$filter = $phpgw_info['user']['preferences']['infolog']['defaultFilter'];
+				$filter = $GLOBALS['phpgw_info']['user']['preferences']['infolog']['defaultFilter'];
 			}
 
 			$hidden_vars = array(
@@ -359,7 +339,7 @@
 								  					$action,$addr_id,$proj_id,$info_id,
 													$ordermethod,$start,$total);
 
-			$maxmatchs = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+			$maxmatchs = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			if ($total > $maxmatchs)
 			{
 			  $to = $start + $maxmatchs;
@@ -412,7 +392,7 @@
 					$filters[] = array( $f,$lang );
 				}
 				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,
-							$total,'&'.$q_string,'95%',$phpgw_info['theme']['th_bg'],
+							$total,'&'.$q_string,'95%',$GLOBALS['phpgw_info']['theme']['th_bg'],
 							0,$filters,1,0,$cat_id,'cat_id');
 
 				$t->set_var('next_matchs',$next_matchs);
@@ -476,7 +456,7 @@
 							$this->menuaction('edit')+
 							array('info_id' => $id,'filter' => $filter,
 									'action' => 'sp')));
-					}            
+					}
 				}                       // if parent --> display VIEW SUBS of Parent
 				if ($parent && $action != 'sp')
 				{
@@ -486,7 +466,7 @@
 						array('info_id' => $parent,
 								'filter' => $filter,'action' => 'sp')));
 			  }
-			  
+
 			  $t->parse('list','info_list',True);
 			  // -------------- end record declaration ------------------------
 			}
@@ -507,7 +487,6 @@
 
 		function edit( )
 		{
-			global $phpgw,$phpgw_info;
 			global $cat_id,$sort,$order,$query,$start,$filter;
 			global $action,$info_id,$save,$add,$query_addr,$query_project;
 			// formular fields
@@ -526,7 +505,7 @@
 
 			if ((!isset($info_id) || !$info_id) && !$action)
 			{
-				Header('Location: ' . 
+				Header('Location: ' .
 						 $html->link('/index.php',$hidden_vars+$this->menuaction()));
 			}
 
@@ -554,7 +533,7 @@
 				else
 				{
 					if (isset($sday)) $startdate = 0;
-				}         
+				}
 			}
 
 			// Check ending date
@@ -604,26 +583,38 @@
 
 				if (! is_array($error))
 				{
-					$this->bo->write(array(
-						'type'      => $type,
-						'from'      => $from,
-						'addr'      => $addr,
-						'addr_id'   =>	$id_addr,
-						'proj_id'   =>	$id_project,
-						'subject'   => $subject,
-						'des'       => $des,
-						'pri'       => $pri,
-						'status'    => $status,
-						'confirm'   => $confirm,
-						'access'    => $access,
-						'cat'       => $info_cat,
-						'startdate' => $startdate,
-						'enddate'   => $enddate,
-						'info_id'   => $info_id,
-						'id_parent' => $id_parent,
-						'responsible' => $responsible
-					));
-			
+					/*
+					**	if an info_id exists, check if this user hast the rights to edit
+					**	this entry (should prevent faking the info_id in a post request)
+					**	or if is a new sub check if he has rights to add a sub
+					*/
+					if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT) ||
+					    !$info_id && $id_parent && !$this->bo->check_access($id_parent,PHPGW_ACL_ADD))
+					{
+						$error[]=lang('Access denied');
+					}
+					else
+					{
+						$this->bo->write(array(
+							'type'      => $type,
+							'from'      => $from,
+							'addr'      => $addr,
+							'addr_id'   =>	$id_addr,
+							'proj_id'   =>	$id_project,
+							'subject'   => $subject,
+							'des'       => $des,
+							'pri'       => $pri,
+							'status'    => $status,
+							'confirm'   => $confirm,
+							'access'    => $access,
+							'cat'       => $info_cat,
+							'startdate' => $startdate,
+							'enddate'   => $enddate,
+							'info_id'   => $info_id,
+							'id_parent' => $id_parent,
+							'responsible' => $responsible
+						));
+					}
 					if (!$query_addr && !$query_project)
 					{
 						Header('Location: ' . $html->link($referer, array('cd'=>15)));
@@ -637,11 +628,11 @@
 				if (!$this->bo->check_access($info_id,PHPGW_ACL_ADD))
 				{
 					Header('Location: ' .  $html->link($referer));
-					$phpgw->common->phpgw_exit();
+					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 				$parent = $this->bo->so->data;
 				$this->bo->so->data['info_id'] = $info_id = 0;
-				$this->bo->so->data['info_owner'] = $phpgw_info['user']['account_id'];
+				$this->bo->so->data['info_owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
 				$this->bo->so->data['info_id_parent'] = $parent['info_id'];
 				if ($parent['info_type']=='task' && $parent['info_status']=='offer')
 				{
@@ -658,9 +649,9 @@
 				if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
 				{
 					Header('Location: ' .  $html->link($referer));
-					$phpgw->common->phpgw_exit();
+					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
-			}      
+			}
 			if (!$id_parent)
 				$id_parent = $this->bo->so->data['info_id_parent'];
 
@@ -671,11 +662,11 @@
 				'referer' => $referer
 			));
 
-			$phpgw->common->phpgw_header();
+			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
 			$t->set_file(array('info_edit' => 'form.tpl'));
-			  
+
 			// ====================================================================
 			// create two seperate blocks, addblock will be cut off from template
 			// editblock contains the buttons and forms for edit
@@ -683,10 +674,10 @@
 			$t->set_block('info_edit', 'add', 'addhandle');
 			$t->set_block('info_edit', 'edit', 'edithandle');
 			$t->set_block('info_edit', 'subpro', 'subprohandle');
-			  
+
 			if (is_array($error))
 			{
-				$t->set_var('error_list',$phpgw->common->error_list($error));
+				$t->set_var('error_list',$GLOBALS['phpgw']->common->error_list($error));
 			}
 
 			switch ($action)
@@ -728,11 +719,11 @@
 												'type',$type,$this->bo->enums['type']),True));
 
 			$t->set_var('lang_prfrom', lang('From'));
-			if (!isset($from)) $from =$phpgw->strip_html($this->bo->so->data['info_from']);
+			if (!isset($from)) $from =$GLOBALS['phpgw']->strip_html($this->bo->so->data['info_from']);
 			$t->set_var('fromval', $from);
 
 			$t->set_var('lang_praddr', lang('Phone/Email'));
-			if (!isset($addr)) $addr =$phpgw->strip_html($this->bo->so->data['info_addr']);
+			if (!isset($addr)) $addr =$GLOBALS['phpgw']->strip_html($this->bo->so->data['info_addr']);
 			$t->set_var('addrval', $addr);
 
 			if (!isset($id_project)) $id_project = $this->bo->so->data['info_proj_id'];
@@ -740,15 +731,15 @@
 
 			if (!isset($id_addr)) $id_addr = $this->bo->so->data['info_addr_id'];
 			$t->set_var($sb->getAddress('addr',$id_addr,$query_addr));
-					
+
 			$t->set_var('lang_prsubject', lang('Subject'));
 			if (!isset($subject)) {
-				$subject = $phpgw->strip_html($this->bo->so->data['info_subject']);
+				$subject = $GLOBALS['phpgw']->strip_html($this->bo->so->data['info_subject']);
 			}
 			$t->set_var('subjectval', $subject);
 
 			$t->set_var('lang_prdesc', lang('Description'));
-			if (!isset($des)) $des = $phpgw->strip_html($this->bo->so->data['info_des']);
+			if (!isset($des)) $des = $GLOBALS['phpgw']->strip_html($this->bo->so->data['info_des']);
 			$t->set_var('descval', $des);
 
 			$t->set_var('lang_start_date',lang('Startdate'));
@@ -790,9 +781,9 @@
 			$t->set_var('lang_access_type',lang('Private'));
 			if (!isset($access)) $access = $this->bo->so->data['info_access'] == 'private';
 			$t->set_var('access_list',$html->checkbox('access',$access));
-			  
+
 			$t->set_var('edit_button',$html->submit_button('save','Save'));
-			 
+
 			if (!$action && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 			{
 				$t->set_var('delete_button',$html->form_1button('delete','Delete',
@@ -808,7 +799,6 @@
 
 		function delete( )
 		{
-			global $phpgw,$phpgw_info;
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $info_id,$confirm;
 
@@ -833,7 +823,7 @@
 			}
 			else
 			{
-				$phpgw->common->phpgw_header();
+				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 
 				$t->set_file(array( 'info_delete' => 'delete.tpl' ));
@@ -856,7 +846,6 @@
 
 		function preferences( )
 		{
-			global $phpgw,$phpgw_info;
 			global $save;
 
 			$prefs = array(
@@ -869,20 +858,20 @@
 				'defaultFilter' => $this->filters
 			);
 
-			$phpgw->preferences->read_repository();
+			$GLOBALS['phpgw']->preferences->read_repository();
 
 			if ($save)
 			{
 				while (list($pref,$lang) = each($prefs))
 				{
-					$phpgw->preferences->add('infolog',$pref);
+					$GLOBALS['phpgw']->preferences->add('infolog',$pref);
 				}
-				$phpgw->preferences->save_repository(True);
+				$GLOBALS['phpgw']->preferences->save_repository(True);
 
-				Header('Location: '.$phpgw->link('/preferences/index.php'));
-				$phpgw->common->phpgw_exit();
+				Header('Location: '.$GLOBALS['phpgw']->link('/preferences/index.php'));
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
-			$phpgw->common->phpgw_header();
+			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
 			$t = $this->template; $html = $this->html;
@@ -894,7 +883,7 @@
 				'text' => '&nbsp;',
 				'action_url' => $html->link('/index.php',
 													 $this->menuaction('preferences')),
-				'bg_h_color' => $phpgw_info['theme']['th_bg'],
+				'bg_h_color' => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'save_button' => $html->submit_button('save','Save')
 			);
 			$t->set_var($vars);
@@ -911,13 +900,13 @@
 					if (!is_object($sbox)) $sbox = CreateObject('phpgwapi.sbox2');
 
 					$t->set_var('data',$sbox->getArrayItem($pref,
-									$phpgw_info['user']['preferences']['infolog'][$pref],
+									$GLOBALS['phpgw_info']['user']['preferences']['infolog'][$pref],
 									$allowed_values[$pref],1));
 				}
 				else
 				{
 					$t->set_var('data',$html->checkbox($pref,
-								$phpgw_info['user']['preferences']['infolog'][$pref]));
+								$GLOBALS['phpgw_info']['user']['preferences']['infolog'][$pref]));
 				}
 				$t->parse('pref_linehandle','pref_line',True);
 			}
