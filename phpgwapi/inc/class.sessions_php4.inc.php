@@ -288,7 +288,14 @@
 				$dom = $arr[1];
 			}
 			$parts = explode('.',$dom);
-			$this->dom = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
+			if (count($parts) > 2)
+			{
+				$this->dom = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
+			}
+			else
+			{
+				$this->dom = '';
+			}
 		}
 
 		function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
