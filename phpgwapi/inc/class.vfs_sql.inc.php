@@ -1173,6 +1173,12 @@
 				$owner_id = $data['owner_id'];
 			}
 
+			/* This is correct.  The ACL currently doesn't handle undefined values correctly */
+			if (!$owner_id)
+			{
+				$owner_id = 0;
+			}
+
 			$user_id = $GLOBALS['phpgw_info']['user']['account_id'];
 
 			/* They always have access to their own files */
