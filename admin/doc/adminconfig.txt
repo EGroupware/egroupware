@@ -1,15 +1,10 @@
 
-
 phpGroupWare admin/config.php
 
 Abstract
 
-A brief introduction to writing hooks and templates for any
-application to use this admin interface, by
-
-Abstract
-
-Miles Lott <milosch@phpgroupware.org> Dec 22, 2001.
+A brief introduction to writing hooks and templates for any application to use
+this admin interface, by Miles Lott <milosch@phpgroupware.org> Dec 22, 2001.
 
 1 Files
 
@@ -22,67 +17,39 @@ include a POST method form. The following template tags
 may be used:
 
 1. {action_url} - A phpgw->link to config.php will be inserted.
-
 2. {title} - This will be parsed to display 'Site Configuration'.
-
-3. {th_bg},{th_text},{row_on},{row_off} - Replaced with the
-  current theme colors.
+3. {th_bg},{th_text},{row_on},{row_off} - Replaced with the current theme colors.
 
 and the following special types:
 
 1. {lang_XXX} - Filled with lang('XXX').
-
-2. {value_XXX} - Filled with the current value of config item
-  'XXX'.
-
-3. {selected_XXX} - set to '', or ' selected' if an option
-  value is current.
-
-4. {hook_XXX} - Calls a function named XXX (will be discussed
-  later).
+2. {value_XXX} - Filled with the current value of config item 'XXX'.
+3. {selected_XXX} - set to '', or ' selected' if an option value is current.
+4. {hook_XXX} - Calls a function named XXX (will be discussed later).
 
 Following is an example from the addressbook application:
 
 <form method="POST" action="{action_url}">
-
 <table border="0" align="center">
-
  <tr bgcolor="{th_bg}">
-
   <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
-
  </tr> <tr bgcolor="{th_err}">
-
   <td colspan="2">&nbsp;<b>{error}</b></font></td>
-
  </tr>
-
 <!-- END header -->
 
 <!-- BEGIN body -->
-
  <tr bgcolor="{row_on}">
-
   <td colspan="2">&nbsp;</td>
-
  </tr>
-
  <tr bgcolor="{row_off}">
-
   <td colspan="2">&nbsp;<b>{lang_Addressbook}/{lang_Contact_Settings}</b></font>
-
 </td>
-
  </tr>
-
  <tr bgcolor="{row_on}">
-
   <td>{lang_Contact_application}:</td>
-
   <td><input name="newsettings[contact_application]" value="{value_contact_application}"></td>
-
  </tr>
-
 ...
 
 Note the fieldname, newsettings[contact_application]. This
@@ -97,19 +64,12 @@ if available.
 Let's take a look at part of the preferences/default/config.tpl:
 
  <tr bgcolor="{row_on}">
-
   <td>{lang_Country_Selection} ({lang_Text_Entry}/{lang_SelectBox}):</td>
-
   <td>
-
    <select name="newsettings[countrylist]">
-
 {hook_country_set}
-
    </select>
-
   </td>
-
  </tr>
 
 Here, we are adding a new element, {hook_country_set}. This
@@ -125,41 +85,22 @@ hook_country_set, here is the corresponding function in
 preferences/inc/hook_config.inc.php:
 
 function country_set($config)
-
 {
-
-    $country = array( 'user_choice' => 'Users Choice', 'force_select'
-=> 'Force Selectbox' );
-
+    $country = array( 'user_choice' => 'Users Choice', 'force_select' => 'Force Selectbox' );
     while (list ($key, $value) = each ($country))
-
     {
-
         if ($config['countrylist'] == $key)
-
         {
-
             $selected = ' selected';
-
         } 
-
         else
-
         {
-
             $selected = '';
-
         }
-
         $descr = lang($value);
-
-        $out .= '<option value="' . $key . '"' . $selected
-. '>' . $descr . '</option>' . "\n";
-
+        $out .= '<option value="' . $key . '"' . $selected . '>' . $descr . '</option>' . "\n";
     }
-
     return $out;
-
 }
 
 Note again the template value we used earlier, {hook_country_set}.
@@ -182,42 +123,24 @@ was found. Following then are functions named after each
 config we want to validate. The following example is for
 addressbook:
 
-    $GLOBALS['phpgw_info']['server']['found_validation_hook']
-= True;
+    $GLOBALS['phpgw_info']['server']['found_validation_hook'] = True;
 
-    /* Check a specific setting. Name must match the setting.
-*/
+    /* Check a specific setting. Name must match the setting. */
 
     function ldap_contact_context($value='')
-
     {
-
         if($value == $GLOBALS['phpgw_info']['server']['ldap_context'])
-
         {
-
-            $GLOBALS['config_error'] = 'Contact context for
-ldap must be different from the context used for accounts';
-
+            $GLOBALS['config_error'] = 'Contact context for ldap must be different from the context used for accounts';
         }
-
         elseif($value == $GLOBALS['phpgw_info']['server']['ldap_group_context'])
-
         {
-
-            $GLOBALS['config_error'] = 'Contact context for
-ldap must be different from the context used for groups';
-
+            $GLOBALS['config_error'] = 'Contact context for ldap must be different from the context used for groups';
         }
-
         else
-
         {
-
             $GLOBALS['config_error'] = '';
-
         }
-
     }
 
 Here we created a function to check the entered value for
@@ -240,40 +163,21 @@ config.php redirects to admin/index.php.
 However, there is one more function that may be included
 in hook_config_validate.inc.php:
 
-    /* Check all settings to validate input. Name must be
-'final_validation' */
-
+    /* Check all settings to validate input. Name must be 'final_validation' */
     function final_validation($value='') 
-
     {
-
         if($value['contact_repository'] == 'ldap' && !$value['ldap_contact_dn'])
-
         {
-
-            $GLOBALS['config_error'] = 'Contact dn must be
-set';
-
+            $GLOBALS['config_error'] = 'Contact dn must be set';
         }
-
-        elseif($value['contact_repository'] == 'ldap' &&
-!$value['ldap_contact_context'])
-
+        elseif($value['contact_repository'] == 'ldap' && !$value['ldap_contact_context'])
         {
-
-            $GLOBALS['config_error'] = 'Contact context must
-be set';
-
+            $GLOBALS['config_error'] = 'Contact context must be set';
         }
-
         else
-
         {
-
             $GLOBALS['config_error'] = '';
-
         }
-
     }
 
 config.php checks for the existence of the function 'final_validation()'.
