@@ -376,7 +376,7 @@ new message	email	en	New message
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 new phrase has been added	transy	en	New phrase has been added
 news file	admin	en	News File
-newsgroups	nntp	en	Newsgroups
+newsgroups	common	en	Newsgroups
 news headlines	common	en	News headlines
 news reader	common	en	News Reader
 news type	admin	en	News Type
@@ -582,7 +582,7 @@ todo list - add sub-project	todo	en	todo list - add sub-project
 todo list - add	todo	en	todo list - add
 todo list	common	en	Todo List
 todo list - edit	todo	en	Todo list - edit
-todo	todo	en	todo
+todo	common	en	Todo
 to	email	en	To
 tomorrow is x's birthday.	common	en	Tomorrow is %1's birthday.
 total	common	en	Total
