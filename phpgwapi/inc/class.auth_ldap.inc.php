@@ -35,7 +35,12 @@
 			error_reporting MUST be set to zero, otherwise you'll get nasty LDAP errors with a bad login/pass...
 			these are just "warnings" and can be ignored.....
 			*/
-			error_reporting(0); 
+			error_reporting(0);
+
+			if (ereg('[()|&=*,<>!~]',$username))
+			{
+				return False;
+			}
 
 			if(!$ldap = @ldap_connect($GLOBALS['phpgw_info']['server']['ldap_host']))
 			{
