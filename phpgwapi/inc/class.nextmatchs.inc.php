@@ -46,6 +46,7 @@
 			$this->template->set_block('_nextmatchs','icon');
 			$this->template->set_block('_nextmatchs','link');
 			$this->template->set_block('_nextmatchs','search');
+			$this->template->set_block('_nextmatchs','search_filter');
 
 			if(isset($phpgw_info['user']['preferences']['common']['maxmatchs']) &&
 				intval($phpgw_info['user']['preferences']['common']['maxmatchs']) > 0)
@@ -103,12 +104,21 @@
 		{
 			global $phpgw;
 
-			if($extravars && substr($extravars,0,1)!='&')
+			if($extravars && is_string($extravars) && substr($extravars,0,1)!='&')
 			{
-				$extravars = '&'.$extravars;
+				$extras = '&'.$extravars;
+			}
+			elseif($extravars && is_array($extravars))
+			{
+				@reset($extravars);
+				while(list($var,$value) = each($extravars))
+				{
+					$t_extras[] = $var.'='.$value;
+				}
+				$extras = implode($t_extras,'&');
 			}
 
-			return $phpgw->link('/index.php','menuaction='.$this->action.$extravars);
+			return $phpgw->link('/index.php','menuaction='.$this->action.$extras);
 		}
 
 		/*!
@@ -187,6 +197,10 @@
 			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
 			$start = $localstart;
 
+			$extravars = Array();
+
+			$extravars = $this->split_extras($extravars,$extra);
+
 			$var = array(
 				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
 				'filter_value'	=> $filter,
@@ -203,6 +217,7 @@
 				'right'	=> $this->right($sn,$start,$total,$extra)
 			);
 			$this->template->set_var($var);
+			$this->template->parse('search_filter_data','search_filter');
 			return $this->template->fp('out','nextmatchs');
 		}
 
@@ -223,6 +238,10 @@
 							{
 								$extravars[$var] = $value;
 							}
+							else
+							{
+								$this->action = $value;
+							}
 						}
 					}
 				}
@@ -233,6 +252,10 @@
 						if($var != 'menuaction')
 						{
 							$extravars[$var] = $value;
+						}
+						else
+						{
+							$this->action = $value;
 						}
 					}
 				}
@@ -332,7 +355,7 @@
 			if (($start != $total - $this->maxmatches) && (($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
 				$extravars['start'] = ($total - $this->maxmatches);
-				$ret_str .= $this->set_link('right','last.gif',$scriptname,'Next page',$extravars);
+				$ret_str .= $this->set_link('right','last.gif',$scriptname,'Last page',$extravars);
 			}
 			else
 			{
@@ -342,6 +365,32 @@
 			return $ret_str;
 		} /* right() */
 
+		/*!
+		@function search_filter
+		@abstract ?
+		@param $search_obj default 0
+		*/
+		function search_filter($search_obj=0,$filter_obj=1,$yours=0,$link='',$extra='')
+		{
+			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
+			$start = $localstart;
+
+			$var = array(
+				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
+				'filter_value'	=> $filter,
+				'qfield'	=> $qfield,
+				'start_value'	=> $start,
+				'order_value'	=> $order,
+				'sort_value'	=> $sort,
+				'query_value'	=> urlencode(stripslashes($query)),
+				'th_bg'	=> $phpgw_info['theme']['th_bg'],
+				'search'	=> $this->search($search_obj),
+				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):''),
+			);
+			$this->template->set_var($var);
+			return $this->template->fp('out','search_filter');
+		}
+		
 		/*!
 		@function search
 		@abstract ?

@@ -5,18 +5,7 @@
   </tr>
   <tr>
    <td align="center" valign="top" colspan="5">
-    <form method="POST" action="{form_action}" name="filter">
-     <input type="hidden" name="filter" value="{filter_value}">
-     <input type="hidden" name="qfield" value="{qfield_value}">
-     <input type="hidden" name="start" value="{start_value}">
-     <input type="hidden" name="order" value="{order_value}">
-     <input type="hidden" name="sort" value="{sort_value}">
-     <input type="hidden" name="query" value="{query_value}">
-     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
-      <tr>{search}<td>&nbsp;</td>{filter}
-      </tr>
-     </table>
-    </form>
+    {search_filter_data}
    </td>
   </tr>
  </table>
@@ -75,4 +64,19 @@
         <input type="text" name="query" value="{query_value}">&nbsp;{searchby}<input type="submit" name="Search" value="{lang_search}">
        </td>
 <!-- END search -->
+
+<!-- BEGIN search_filter -->
+    <form method="POST" action="{form_action}" name="filter">
+     <input type="hidden" name="filter" value="{filter_value}">
+     <input type="hidden" name="qfield" value="{qfield_value}">
+     <input type="hidden" name="start" value="{start_value}">
+     <input type="hidden" name="order" value="{order_value}">
+     <input type="hidden" name="sort" value="{sort_value}">
+     <input type="hidden" name="query" value="{query_value}">
+     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+      <tr>{search}<td>&nbsp;</td>{filter}
+      </tr>
+     </table>
+    </form>
+<!-- END search_filter -->
 
