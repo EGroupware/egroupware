@@ -849,12 +849,16 @@ class calendar_ extends calendar__
 		
 		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event->id,__LINE__,__FILE__);
 
+		reset($event->participants);
 		while ($participant = each($event->participants))
 		{
-			$status = 'U';
 			if(intval($participant[1]) == intval($this->user))
 			{
 				$status = 'A';
+			}
+			else
+			{
+				$status = $event->status[$participant[0]];
 			}
 			$this->stream->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
 				. 'VALUES('.$event->id.','.$participant[1].",'".$status."')",__LINE__,__FILE__);

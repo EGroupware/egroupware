@@ -150,7 +150,7 @@ class calendar__
 		$phpgw_info['user']['preferences']['common']['dateformat'] = $temp_dateformat;
 	}
 
-	function prepare_recipients($new_event,$old_event)
+	function prepare_recipients(&$new_event,$old_event)
 	{
 		for($i=0;$i<count($old_event->participants);$i++)
 		{
@@ -161,6 +161,7 @@ class calendar__
 				{
 					$delete = False;
 					$this->modified[] = $new_event->participants[$k];
+					$new_event->status[$k] = $old_event->status[$i];
 				}
 			}
 			if($delete == True)
@@ -181,6 +182,7 @@ class calendar__
 			if($add == True)
 			{
 				$this->added[] = $new_event->participants[$i];
+				$new_event->status[$i] = 'U';
 			}
 		}
 		
