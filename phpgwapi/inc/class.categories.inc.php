@@ -167,7 +167,8 @@
 			$this->db->query("select * from phpgw_categories where cat_id='$id' and "
 				. "cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 	    
-			while ($this->db->next_record()) {
+			$this->db->next_record();
+		
 			    $cats[0]['id']          = $this->db->f('cat_id');
         		    $cats[0]['owner']       = $this->db->f('cat_owner');
         		    $cats[0]['access']      = $this->db->f('cat_access');
@@ -175,7 +176,7 @@
         		    $cats[0]['name']        = $this->db->f('cat_name');
         		    $cats[0]['description'] = $this->db->f('cat_description');
         		    $cats[0]['data']        = $this->db->f('cat_data');
-			    }
+		
 		    return $cats;
 		}
 		/*!
