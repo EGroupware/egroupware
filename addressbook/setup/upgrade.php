@@ -13,7 +13,6 @@
 
 	function upgradeaddr() {
 		global $phpgw_info, $phpgw_setup;
-		$phpgw_setup->loaddb();
 
 		// create db objects for the main and two nested queries below
 		$db1 = $db2 = $phpgw_setup->db;
