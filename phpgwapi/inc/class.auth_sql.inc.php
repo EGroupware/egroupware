@@ -26,6 +26,8 @@
 
 	class auth
 	{
+		var $previous_login = -1;
+
 		function authenticate($username, $passwd)
 		{
 			global $phpgw_info, $phpgw;
@@ -35,9 +37,13 @@
 				. "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
 			$db->next_record();
 
-			if ($db->f('account_lid')) {
+			if ($db->f('account_lid'))
+			{
+				$this->previous_login = $db->f('account_lastlogin');
 				return True;
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -64,8 +70,6 @@
 		function update_lastlogin($account_id, $ip)
 		{
 			global $phpgw;
-
-			$account_id = get_account_id($account_id);
 
 			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
