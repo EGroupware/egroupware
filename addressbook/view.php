@@ -66,16 +66,17 @@
       $i++;
 	  $columns_html .= "</td></tr>";
   }
-  $owner  = $phpgw->db->f("ab_owner");
   $access = $phpgw->db->f("ab_access");
-  
+  $owner  = $phpgw->db->f("ab_owner");
+  $ab_id  = $phpgw->db->f("ab_id");
+
   echo $columns_html . '<tr><td colspan="4">&nbsp;</td></tr>';
   echo "<tr><td><b>" . lang("Record owner") . "</b></td><td>"
      . $phpgw->common->grab_owner_name($phpgw->db->f("ab_owner")) . "</td><td><b>"
      . lang("Record Access") . "</b></td><td>";
      
   if ($access != "private" && $access != "public") {
-	 echo lang("Group access") . $phpgw->accounts->convert_string_to_names_access($access);
+	 echo lang("Group access") . " - " . $phpgw->accounts->convert_string_to_names_access($access);
   } else {
      
      echo $access;
@@ -87,7 +88,7 @@
   <TR> 
    <TD align="left">
     <?php
-      echo $phpgw->common->check_owner($owner,"edit.php","Edit");
+      echo $phpgw->common->check_owner($owner,"edit.php","Edit","ab_id=$ab_id");
     ?>
    </TD>
    <TD align="left">

@@ -11,6 +11,9 @@
   \**************************************************************************/
 
   /* $Id$ */
+  
+  // NOTE: This entire file needs to be rewritten.  There is a great deal of code not being used
+  //       anymore. (jengo)
 
   $abc = array('company'   => 'company',		  // AddressBook Columns and their descriptions
                'firstname' => 'first name',
