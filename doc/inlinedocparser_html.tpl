@@ -23,22 +23,28 @@
 <!-- END group -->
 
 <!-- BEGIN object -->
-		<H2>{object_name}</H2>
+		<H2><A href="{PHP_SELF}?object={object_id}">{object_name}</A></H2>
 		{object_contents}
-		<BR>
 <!-- END object -->
 
-<!-- BEGIN reference_list_of_types -->
-'abstract','param','example','syntax','result','description','discussion','author','copyright','package','access'
-<!-- END reference_list_of_types -->
-
 <!-- BEGIN abstract -->
-	Abstract: {abstract}<br>
+	<B>Abstract:</B> {abstract}<BR>
 <!-- END abstract -->
 
 <!-- BEGIN generic -->
-	{generic_name}: {generic_value}<br>
+	<B>{generic_name}:</B> {generic_value}<BR>
 <!-- END generic -->
+
+<!-- BEGIN generic_para -->
+	<P><B>{generic_name}:</B> {generic_value}</P>
+<!-- END generic_para -->
+
+<!-- BEGIN generic_pre -->
+		<B>{generic_name}:</B>
+		<PRE>
+		{generic_value}
+		</PRE>
+<!-- END generic_pre -->
 
 <!-- BEGIN params -->
 	<TABLE border="1">

@@ -282,14 +282,14 @@
 			$returndata = parseobject($data[1][0], $fn);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
 			{
-				if (!is_array($doc_array['file '.$fn][0]['files']))
+				if (!is_array($doc_array['file '.$fn][0]['file']))
 				{
-					$doc_array['file '.$fn][0]['files'] = Array();
+					$doc_array['file '.$fn][0]['file'] = Array();
 				}
 
-				if (!in_array($fn,$doc_array['file '.$fn][0]['files']))
+				if (!in_array($fn,$doc_array['file '.$fn][0]['file']))
 				{
-					$doc_array['file '.$fn][0]['files'][] = $fn;
+					$doc_array['file '.$fn][0]['file'][] = $fn;
 				}
 				$doc_array['file '.$fn][$returndata['name']] = $returndata['value'];
 			}
@@ -300,26 +300,26 @@
 					$returndoc = parsesimpleobject($matches_starts[$startstop[$key]]);
 					if ($returndoc != False)
 					{
-						if (!is_array($returndoc['value']['files']))
+						if (!is_array($returndoc['value']['file']))
 						{
-							$returndoc['value']['files'] = Array();
+							$returndoc['value']['file'] = Array();
 						}
-						if (!in_array($fn, $returndoc['value']['files']))
+						if (!in_array($fn, $returndoc['value']['file']))
 						{
-							$returndoc['value']['files'][] = $fn;
+							$returndoc['value']['file'][] = $fn;
 						}
 					}
 					$doc_array[$startstop[$key]][0] = $returndoc['value'];
 				}
 				else
 				{
-					if (!is_array($doc_array[$startstop[$key]][0]['files']))
+					if (!is_array($doc_array[$startstop[$key]][0]['file']))
 					{
-						$doc_array[$startstop[$key]][0]['files'] = Array();
+						$doc_array[$startstop[$key]][0]['file'] = Array();
 					}
-					if (!in_array($fn, $doc_array[$startstop[$key]][0]['files']))
+					if (!in_array($fn, $doc_array[$startstop[$key]][0]['file']))
 					{
-						$doc_array[$startstop[$key]][0]['files'][] = $fn;
+						$doc_array[$startstop[$key]][0]['file'][] = $fn;
 					}
 				}
 				$doc_array[$startstop[$key]][$returndata['name']] = $returndata['value'];
@@ -341,12 +341,85 @@
 	$GLOBALS['template']->set_block('tpl_file','border_top');
 	$GLOBALS['template']->set_block('tpl_file', 'group');
 	$GLOBALS['template']->set_block('tpl_file', 'object');
+	$GLOBALS['template']->set_block('tpl_file', 'object_name');
 	$GLOBALS['template']->set_block('tpl_file','border_bottom');
 	$GLOBALS['template']->set_block('tpl_file','generic');
+	$GLOBALS['template']->set_block('tpl_file','generic_para');
+	$GLOBALS['template']->set_block('tpl_file','generic_pre');
 	$GLOBALS['template']->set_block('tpl_file','abstract');
 	$GLOBALS['template']->set_block('tpl_file','params');
 	$GLOBALS['template']->set_block('tpl_file','param_entry');
+	$GLOBALS['template']->set_var('PHP_SELF',$PHP_SELF);
 
+	function parsedetails($array, $output_name = 'object_contents')
+	{
+		while(list($key, $value) = each($array))
+		{
+			switch ($key)
+			{
+				case 'author':
+				case 'file':
+					$num = count($value);
+					if ($num > 1)
+					{
+						$GLOBALS['template']->set_var('generic_name',ucwords($key.'s'));
+						for ($idx = 0; $idx < $num; ++$idx)
+						{
+							if($idx > 0)
+							{
+								$new_value .= ', '.$value[$idx];
+							}
+							else
+							{
+								$new_value = $value[$idx];
+							}
+						}
+						$GLOBALS['template']->set_var('generic_value',$new_value);
+					}
+					else
+					{
+						$GLOBALS['template']->set_var('generic_name',ucwords($key));
+						$GLOBALS['template']->set_var('generic_value',$value[0]);
+					}
+					$GLOBALS['template']->fp($output_name,'generic',True);
+					break;
+				case 'discussion':
+					$GLOBALS['template']->set_var('generic_name',ucwords($key));
+					$GLOBALS['template']->set_var('generic_value',$value[0]);
+					$GLOBALS['template']->fp($output_name,'generic_para',True);
+					break;
+				case 'syntax':
+				case 'example':
+					while(list($sub_key, $sub_value) = each($value))
+					{
+						$GLOBALS['template']->set_var('generic_name',ucwords($key));
+						$GLOBALS['template']->set_var('generic_value',$value[$sub_key]);
+						$GLOBALS['template']->fp($output_name,'generic_pre',True);
+					}
+					break;
+				case 'param':
+					while(list($sub_key, $sub_value) = each($value))
+					{
+						$GLOBALS['template']->set_var('generic_name',ucwords($key.($sub_key+1)));
+						$GLOBALS['template']->set_var('generic_value',$value[$sub_key]);
+						$GLOBALS['template']->fp($output_name,'generic',True);
+					}
+					break;
+				case 'abstract':
+				case 'description':
+				case 'result':
+				case 'package':
+				case 'copyright':
+				case 'access':
+				default:
+					$GLOBALS['template']->set_var('generic_name',ucwords($key));
+					$GLOBALS['template']->set_var('generic_value',$value[0]);
+					$GLOBALS['template']->fp($output_name,'generic',True);
+			}
+		}
+	}
+
+	
 	$GLOBALS['template']->fp('doc','border_top',True);
 	reset($doc_array);
 	while(list($group_key, $group_value) = each($doc_array))
@@ -355,16 +428,19 @@
 		/* This is where most of the work in creating the output gets done */
 		while(list($object_key, $object_value) = each($group_value))
 		{
-			$GLOBALS['template']->set_var('object_name',$object_key);
+			if ($object_key == '0')
+			{
+				$GLOBALS['template']->set_var('object_id','');
+				$GLOBALS['template']->set_var('object_name','');
+			}
+			else
+			{
+				$GLOBALS['template']->set_var('object_id',trim(ereg_replace ("function ", "", $object_key)));
+				$GLOBALS['template']->set_var('object_name',$object_key);
+			}
 			if(is_array($object_value))
 			{
-				while(list($docline_key, $docline_value) = each($object_value))
-				{
-					
-					$GLOBALS['template']->set_var('generic_name',$docline_key);
-					$GLOBALS['template']->set_var('generic_value',$docline_value[0]);
-					$GLOBALS['template']->fp('object_contents','generic',True);
-				}
+				parsedetails($object_value);	
 				$GLOBALS['template']->set_var('generic_name',$docline_key);
 				$GLOBALS['template']->set_var('generic_value',$docline_value[0]);
 				$GLOBALS['template']->fp('group_contents','object',True);
