@@ -327,15 +327,28 @@
 					'account_expires_never' => $_POST['never_expires']
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
-				if ($userData['account_primary_group'] && !in_array($userData['account_primary_group'],$userData['account_groups']))
+				
+				// add the primary group, to the users other groups, if not already added
+				if(is_array($userData['account_groups']))
 				{
-					$userData['account_groups'][] = intval($userData['account_primary_group']);
+					if(!in_array($userData['account_primary_group'],$userData['account_groups']))
+					{
+						$userData['account_groups'][] = intval($userData['account_primary_group']);
+					}
 				}
+				else
+				{
+					$userData['account_groups'] = array(intval($userData['account_primary_group']));
+				}
+				
+				// when does the account expire
 				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
 				{
 					$jscal = CreateObject('phpgwapi.jscalendar',False);
 					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
 				}
+				
+				// do we have all needed data??
 				if (!$errors = $this->validate_user($userData))
 				{
 					$account_id = $this->so->add_user($userData);
