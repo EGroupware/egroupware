@@ -75,7 +75,7 @@
 	function section_start($appname='',$icon='')
 	{
 		$GLOBALS['phpgw']->template->set_var('app_name',$appname);
-		$GLOBALS['phpgw']->template->set_var('app_title',lang($appname));
+		$GLOBALS['phpgw']->template->set_var('app_title',$GLOBALS['phpgw_info']['apps'][$appname]['title']);
 		$GLOBALS['phpgw']->template->set_var('app_icon',$icon);
 
 		if ($icon)
@@ -109,8 +109,12 @@
 		$GLOBALS['phpgw']->template->parse('rows','spacer_row',True);
 	}
 
-	function display_section($appname,$file)
+	function display_section($appname,$file,$file2=False)
 	{
+		if ($file2)
+		{
+			$file = $file2;
+		}
 		section_start($appname,$GLOBALS['phpgw']->common->image($appname,'navbar','',True));
 
 		while(is_array($file) && list($text,$url) = each($file))
