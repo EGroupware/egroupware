@@ -44,4 +44,6 @@
   $phpgw_setup->db->query("DROP TABLE phpgw_categories");
   $phpgw_setup->db->query("DROP sequence notes_note_id_seq");
   $phpgw_setup->db->query("DROP TABLE notes");
+  $phpgw_setup->db->query("drop sequence phpgw_hooks_hook_id_seq");
+  $phpgw_setup->db->query("DROP TABLE phpgw_hooks");
 ?>
