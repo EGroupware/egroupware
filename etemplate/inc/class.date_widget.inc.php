@@ -83,6 +83,7 @@
 				$value = array(
 					'Y' => date('Y',$value),
 					'm' => date('m',$value),
+					'M' => substr(lang(date('F',$value)),0,3),
 					'd' => date('d',$value),
 					'H' => date('H',$value),
 					'i' => date('i',$value)
@@ -133,6 +134,7 @@
 			$types = array(
 				'Y' => ($options&1 ? 'int' : 'select-year'),	// if options&1 set, show an int-field
 				'm' => 'select-month',
+				'M' => 'select-month',
 				'd' => 'select-day',
 				'H' => 'select-number',
 				'i' => 'select-number'
@@ -144,6 +146,7 @@
 			$help = array(
 				'Y' => 'Year',
 				'm' => 'Month',
+				'M' => 'Month',
 				'd' => 'Day',
 				'H' => 'Hour',
 				'i' => 'Minute'

@@ -65,7 +65,11 @@ class jscalendar
 		}
 		if ($year && $month && $day)
 		{
-			$date = date($this->dateformat,mktime(12,0,0,$month,$day,$year));
+			$date = date($this->dateformat,$ts = mktime(12,0,0,$month,$day,$year));
+			if (strpos($this->dateformat,'M') !== False)
+			{
+				$date = str_replace(date('M',$ts),substr(lang(date('F',$ts)),0,3),$date);
+			}
 		}
 		if ($helpmsg !== '')
 		{
@@ -97,6 +101,7 @@ class jscalendar
 	*/
 	function input2date($datestr,$raw='raw',$day='day',$month='month',$year='year')
 	{
+		//echo "<p>jscalendar::input2date('$datestr') ".print_r($fields,True)."</p>\n";
 		if ($datestr === '')
 		{
 			return False;
@@ -104,6 +109,25 @@ class jscalendar
 		$fields = split('[./-]',$datestr);
 		foreach(split('[./-]',$this->dateformat) as $n => $field)
 		{
+			if ($field == 'M')
+			{
+				if (!is_numeric($fields[$n]))
+				{
+					for($i = 1; $i <= 12; $i++)
+					{
+						$long_name  = date('F',mktime(12,0,0,$i,1,2000));
+						$short_name = date('M',mktime(12,0,0,$i,1,2000));
+						$translated = lang($long_name);
+						if ($fields[$n] == $long_name || $fields[$n] == $short_name ||
+						    strstr($translated,$fields[$n]) == $translated)	// multibyte save
+						{
+							$fields[$n] = $i;
+							break;
+						}
+					}
+				}
+				$field = 'm';
+			}
 			$date[$field] = intval($fields[$n]);
 		}
 		$ret = array(
