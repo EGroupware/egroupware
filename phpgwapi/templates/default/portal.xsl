@@ -1,13 +1,18 @@
 <!-- $Id$ -->
 
 	<xsl:template name="portal">
+		<xsl:choose>
+			<xsl:when test="mainscreen_message != ''">
+				<xsl:value-of disable-output-escaping="yes" select="mainscreen_message"/>
+			</xsl:when>
+		</xsl:choose>
 		<xsl:apply-templates select="portal_data"/>
 	</xsl:template>
 
 	<xsl:template match="portal_data">
 		<table cellpadding="0" cellspacing="0" class="portal">
- 			<tr>
-  				<td class="portal_text">
+			<tr>
+				<td class="portal_text">
 					<xsl:value-of disable-output-escaping="yes" select="space"/>
 					<xsl:value-of select="title"/>
 				</td>
@@ -15,8 +20,8 @@
 					<xsl:apply-templates select="control_link"/>
 				</td>
 			</tr>
- 			<tr>
-  				<td colspan="2">
+			<tr>
+				<td colspan="2">
 					<table cellpadding="3" cellspacing="0" class="portal">
 						<xsl:choose>
 							<xsl:when test="listbox != ''">
@@ -49,6 +54,7 @@
   				</td>
  			</tr>
 		</table>
+		<br/>
 	</xsl:template>
 
 	<xsl:template match="control_link">

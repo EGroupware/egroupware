@@ -60,13 +60,15 @@
 				$extra_vars .= '&' . $name . '=' . urlencode($value);
 			}
 		}
-		$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link($GLOBALS['phpgw_forward'],$extra_vars));
+		$GLOBALS['phpgw']->redirect_link($GLOBALS['phpgw_forward'],$extra_vars);
 	}
 
 	$GLOBALS['phpgw']->translation->add_app('mainscreen');
 	if (lang('mainscreen_message') != 'mainscreen_message'.lang_char())
 	{
-		echo '<center>' . stripslashes(lang('mainscreen_message')) . '</center>';
+		$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array(
+			'mainscreen_message' => stripslashes(lang('mainscreen_message'))
+		));
 	}
 
 	if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
@@ -212,6 +214,7 @@
 		}
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'home';	// has been changed by hook_home's
 
 	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output);
 	}

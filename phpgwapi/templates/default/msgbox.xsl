@@ -17,7 +17,7 @@
 							<xsl:text>'; return true;</xsl:text>
 						</xsl:attribute>
 					</img><xsl:text> </xsl:text>
-					<xsl:value-of select="msgbox_text"/>
+					<xsl:value-of disable-output-escaping="yes" select="msgbox_text"/>
 				</td>
 			</tr>
 		</table>
