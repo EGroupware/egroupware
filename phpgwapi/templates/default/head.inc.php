@@ -22,15 +22,21 @@
 	$tpl->set_file(array('_head' => 'head.tpl'));
 	$tpl->set_block('_head','head');
 
-	$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-	$app = $app ? ' ['.(isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app)).']':'';
-
+	if ($GLOBALS['phpgw_info']['flags']['app_header'])
+	{
+		$app = $GLOBALS['phpgw_info']['flags']['app_header'];
+	}
+	else
+	{
+		$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+		$app = isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : lang($app);
+	}
 	$var = Array (
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'charset'       => $GLOBALS['phpgw']->translation->charset(),
 		'font_family'   => $GLOBALS['phpgw_info']['theme']['font'],
-		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'] . $app,
+		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'] . ($app ? " [$app]" : ''),
 		'body_tags'     => $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
 		'css'           => $GLOBALS['phpgw']->common->get_css(),
 		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
