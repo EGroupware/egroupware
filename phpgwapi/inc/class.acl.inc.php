@@ -381,7 +381,7 @@ It should use the values in the $this->data
 		$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
 			. 'acl_account in ';
 		$security = '('.$account_id;
-		while($groups = each($memberships))
+		while($groups = @each($memberships))
 		{
 			$group = each($groups);
 			$security .= ','.$group[1]['account_id'];
