@@ -96,7 +96,7 @@
 			}
 			$info['info_des'] = nl2br($info['info_des']);
 			$info['info_anz_subs'] = $this->bo->anzSubs($id);
-			$this->bo->link_id2title(&$info,$action,$action_id);
+			$this->bo->link_id2from($info,$action,$action_id);
 			
 			$readonlys["edit[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_EDIT);
 			$readonlys["delete[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_DELETE);
@@ -281,21 +281,30 @@
 				{
 					if ($content['save'] && (!$info_id || $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
 					{
+						if (strstr($content['info_link_id'],':') !== False)
+						{
+							$info_link_id = $content['info_link_id'];
+							$content['info_link_id'] = 0;	// as field has to be int
+						}
+						if ($content['info_link_id'] && empty($content['info_from']))
+						{
+							$this->bo->link_id2from($content);
+						}
 						$this->bo->write($content);
 
 						if (!$info_id && is_array($content['link_to']['to_id']))	// writing link for new entry
 						{
 							$content['info_id'] = $this->bo->so->data['info_id'];
 							$this->link->link('infolog',$content['info_id'],$content['link_to']['to_id']);
-							if (strstr($content['info_link_id'],':') !== False)
+							if ($info_link_id)
 							{
-								list($app,$id) = explode(':',$content['info_link_id']);
+								list($app,$id) = explode(':',$info_link_id);
 								$link = $this->link->get_link('infolog',$content['info_id'],$app,$id);
 								$content['info_link_id'] = $link['link_id'];
 
-								if ($content['info_from'] == '')
+								if (empty($content['info_from']))
 								{
-									$content['info_from'] = $this->bo->link_id2title($content);
+									$this->bo->link_id2from($content);
 								}
 								$this->bo->write(array(
 									'info_id' => $content['info_id'],

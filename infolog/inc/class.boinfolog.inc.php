@@ -37,7 +37,7 @@
 			'attached_local' => True,
 			'link_title'     => True,
 			'link_query'     => True,
-			'link_id2title'  => True
+			'link_id2from'   => True
 		);
 		var $enums;
 		var $so;
@@ -129,8 +129,9 @@
 			$this->so->init();
 		}
 
-		function link_id2title(&$info,$not_app='',$not_id='')
+		function link_id2from(&$info,$not_app='',$not_id='')
 		{
+			//echo "<p>boinfolog::link_id2title(subject='$info[info_subject]', link_id='$info[info_link_id], from='$info[info_from]')";
 			if ($info['info_link_id'] > 0 &&
 				 ($link = $this->link->get_link($info['info_link_id'])) !== False)
 			{
@@ -149,6 +150,7 @@
 					$info['info_link_view'] = $this->link->view($link['link_app'.$nr],$link['link_id'.$nr]);
 					$info['info_from'] = $info['info_link_title'] = $title;
 				}
+				//echo " title='$title'</p>\n";
 				return $title;
 			}
 			return False;
