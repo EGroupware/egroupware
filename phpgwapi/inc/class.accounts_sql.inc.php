@@ -288,6 +288,13 @@
 				. md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
 				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status']
 				. "','" . $account_info['account_expires'] . "')",__LINE__,__FILE__);
+
+			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
+			if($account_id)
+			{
+				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
+				return $accountid;
+			}
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')

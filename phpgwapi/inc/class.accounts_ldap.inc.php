@@ -688,6 +688,12 @@
 				ldap_add($this->ds, $dn, $entry);
 			}
 			/* print ldap_error($this->ds); */
+
+			if($account_id)
+			{
+				$GLOBALS['phpgw']->preferences->create_defaults($account_id);
+				return $account_id;
+			}
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
