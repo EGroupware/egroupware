@@ -23,8 +23,9 @@
 
   /* $Id$ */
 
-  class sbox2 {
-  	
+	include(PHPGW_API_INC."/class.sbox.inc.php");
+
+	class sbox2 extends sbox {
 		/*
 		 * Function:	search for an id of an db-entry, eg. an address
 		 * Parameter:	$name			base name for all template-vars and of the submitted vars (not to conflict with other template-var-names !!!)
@@ -298,5 +299,21 @@
 				next($accs);
 			}
 			return $this->getArrayItem($name,$selected,$aarr,1);			
+		}
+
+		function getDate($n_year,$n_month,$n_day,$date)
+		{
+			global $phpgw;
+
+   		if (!$date) {
+      		$day = $month = $year = 0;
+			} else {
+				$day = date('d',$date);
+				$month = date('m',$date);
+				$year = date('Y',$date);
+			}
+         return $phpgw->common->dateformatorder($this->getYears($n_year,$year),
+																$this->getMonthText($n_month,$month),
+																$this->getDays($n_day,$day));
 		}
   }
