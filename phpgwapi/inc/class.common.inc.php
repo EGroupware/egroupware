@@ -669,17 +669,23 @@
 				{
 					$phpgw_info['navbar'][$permission[0]]['title'] = $phpgw_info['apps'][$permission[0]]['title'];
 					$phpgw_info['navbar'][$permission[0]]['url']   = $phpgw->link('/' . $permission[0] . '/index.php');
-					$icon_file = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/'. $phpgw_info['server']['template_set']. '/images/navbar.gif';
+					$icon_file    = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/'. $phpgw_info['server']['template_set']. '/images/navbar.gif';
+					$icon_default = PHPGW_SERVER_ROOT . '/'.$permission[0] . '/templates/default/images/navbar.gif';
 
 					if (file_exists($icon_file))
 					{
 						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
 							. $permission[0] . '/templates/' . $phpgw_info['server']['template_set'] . '/images/navbar.gif';
 					}
-					else
+					elseif (file_exists($icon_default))
 					{
 						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
 							. $permission[0] . '/templates/default/images/navbar.gif';
+					}
+					else
+					{
+						$phpgw_info['navbar'][$permission[0]]['icon']  = $phpgw_info['server']['webserver_url'] . '/'
+							. 'phpgwapi/templates/' . $phpgw_info['server']['template_set'] . '/images/nonav.gif';
 					}
 				}
 			}
