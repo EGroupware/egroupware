@@ -27,6 +27,8 @@
 	);
 	include('./inc/functions.inc.php');
 
+	set_time_limit(0);
+
 	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(

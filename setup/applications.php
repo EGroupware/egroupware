@@ -28,6 +28,8 @@
 	);
 	include ('./inc/functions.inc.php');
 
+	set_time_limit(0);
+
 	// Check header and authentication
 	if (!$phpgw_setup->auth('Config'))
 	{
