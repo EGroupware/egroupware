@@ -120,6 +120,12 @@
 		} else {
 			$qfilter  = 'tid=n,access=private,owner='.$phpgw_info["user"]["account_id"].',cat_id='.$cat_id;
 		}
+	} elseif($filter == "yours") {
+		if (!$cat_id) {
+			$qfilter  = 'tid=n,owner='.$phpgw_info["user"]["account_id"];
+		} else {
+			$qfilter  = 'tid=n,owner='.$phpgw_info["user"]["account_id"].',cat_id='.$cat_id;
+		}
 	} else {
 		if (!$cat_id) {
 			$qfilter = 'tid=n,owner='.$filter;
@@ -159,7 +165,7 @@
 
 	$search_filter = $phpgw->nextmatchs->show_tpl("/addressbook/index.php",
 		$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query&cat_id=$cat_id","75%",
-		$phpgw_info["theme"]["th_bg"]);
+		$phpgw_info["theme"]["th_bg"],1,1,1,1);
 
 	if ($this->total_records > $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
 		if ($start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > $this->total_records) {

@@ -373,16 +373,18 @@
 
 				if ($filterlist) {
 					$filtermethod = '('.$filterlist.') ';
-					$fwhere = ' WHERE '; $fand = '';
+					$fwhere = ' WHERE '; $fand = ' AND ';
 				}
 			} else {
 				$filtermethod = "WHERE (tid='n' OR tid is null)";
 			}
 
 			if (!$filtermethod) {
-				$fwhere .= " WHERE (owner=" . $phpgw_info['user']['account_id'];
+				$fwhere .= " (owner=" . $phpgw_info['user']['account_id'];
+				$fand   .= " (owner=" . $phpgw_info['user']['account_id'];
 			} else {
 				$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
+				$fand   .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
 			}
 
 			if (is_array($this->grants))
@@ -394,10 +396,11 @@
 				}
 				reset($public_user_list);
 				$fwhere .= " OR (access='public' AND owner in(" . implode(',',$public_user_list) . "))) ";
+				$fand   .= " OR (access='public' AND owner in(" . implode(',',$public_user_list) . "))) ";
 			}
 			else
 			{
-				$fwhere .= ') '; $fand = '';
+				$fwhere .= ') '; $fand .= ') ';
 			}
 
 
