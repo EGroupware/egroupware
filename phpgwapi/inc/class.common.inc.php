@@ -1313,17 +1313,19 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$GLOBALS['phpgw_info']['flags']['body_tags']['link'] = $GLOBALS['phpgw_info']['theme']['link'];
 			$GLOBALS['phpgw_info']['flags']['body_tags']['vlink'] = $GLOBALS['phpgw_info']['theme']['vlink'];
 
-			$GLOBALS['phpgw_info']['flags']['body_tags']['marginwidth']='0';
-			$GLOBALS['phpgw_info']['flags']['body_tags']['marginheight']='0';
-			$GLOBALS['phpgw_info']['flags']['body_tags']['topmargin']='0';
-			$GLOBALS['phpgw_info']['flags']['body_tags']['bottommargin']='0';
-			$GLOBALS['phpgw_info']['flags']['body_tags']['rightmargin']='0';
-			$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
-			$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
-			$GLOBALS['phpgw_info']['flags']['body_tags']['border']='0';
+			if (!$GLOBALS['phpgw_info']['server']['htmlcompliant'])
+			{
+				$GLOBALS['phpgw_info']['flags']['body_tags']['marginwidth']='0';
+				$GLOBALS['phpgw_info']['flags']['body_tags']['marginheight']='0';
+				$GLOBALS['phpgw_info']['flags']['body_tags']['topmargin']='0';
+				$GLOBALS['phpgw_info']['flags']['body_tags']['bottommargin']='0';
+				$GLOBALS['phpgw_info']['flags']['body_tags']['rightmargin']='0';
+				$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
+				$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
+				$GLOBALS['phpgw_info']['flags']['body_tags']['border']='0';
+			}
 
 			$GLOBALS['phpgw_info']['flags']['body_tags']['onLoad'] .= $this->load_preload_images_data(); 
-			
 			
 			if(@is_array($GLOBALS['phpgw_info']['flags']['body_tags']))
 			{

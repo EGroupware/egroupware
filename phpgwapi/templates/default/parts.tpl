@@ -2,7 +2,7 @@
 <TABLE width="100%" border="0" cellspacing="0" cellpadding="0">
 	<TR bgcolor="{navbar_bg}">
 		<TD align="left" nowrap>{user_info}</TD>
-		<TD align="right">{applications}</TD>
+		{applications}
 	</TR>
 </TABLE>
 <TABLE width="100%" border="0" cellspacing="0" cellpadding="0">

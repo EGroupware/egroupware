@@ -15,8 +15,8 @@
 	{phpgw_css}
 	{phpgw_head_tags}
 </HEAD>
-<BODY{phpgw_body_tags}>
-	<TABLE border="0" width="100%" height="%100" cellspacing="0" cellpadding="0">
+<BODY {phpgw_body_tags}>
+	<TABLE border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 		<TR>
 			<TD width="100%" height="{phpgw_top_table_height}" align="left" valign="top" colspan="3">{phpgw_top}</TD>
 		</TR>
@@ -56,7 +56,7 @@
 	{phpgw_css}
 	{phpgw_head_tags}
 </HEAD>
-<BODY{phpgw_body_tags}>
+<BODY {phpgw_body_tags}>
 	{phpgw_msgbox}
 <!-- END phpgw_main_basic_start -->
 
