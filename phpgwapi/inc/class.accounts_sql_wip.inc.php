@@ -24,8 +24,42 @@
 
   /* $Id$ */
 
-	$phpgw_info["server"]["global_denied_users"] = array();
-	$phpgw_info["server"]["global_denied_groups"] = array();
+	/* These are needed here also to exclude these on ldap import into SQL */
+	$phpgw_info['server']['global_denied_users'] = array(
+		'root'     => True, 'bin'      => True, 'daemon'   => True,
+		'adm'      => True, 'lp'       => True, 'sync'     => True,
+		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
+		'mail'     => True, 'news'     => True, 'uucp'     => True,
+		'operator' => True, 'games'    => True, 'gopher'   => True,
+		'nobody'   => True, 'xfs'      => True, 'pgsql'    => True,
+		'mysql'    => True, 'postgres' => True, 'oracle'   => True,
+		'ftp'      => True, 'gdm'      => True, 'named'    => True,
+		'alias'    => True, 'web'      => True, 'sweep'    => True,
+		'cvs'      => True, 'qmaild'   => True, 'qmaill'   => True,
+		'qmaillog' => True, 'qmailp'   => True, 'qmailq'   => True,
+		'qmailr'   => True, 'qmails'   => True, 'rpc'      => True,
+		'rpcuser'  => True, 'amanda'   => True, 'apache'   => True,
+		'pvm'      => True, 'squid'    => True, 'ident'    => True,
+		'nscd'     => True, 'mailnull' => True, 'cyrus'	   => True,
+		'backup'   => True
+	);
+
+	$phpgw_info['server']['global_denied_groups'] = array(
+		'root'      => True, 'bin'       => True, 'daemon'    => True,
+		'sys'       => True, 'adm'       => True, 'tty'       => True,
+		'disk'      => True, 'lp'        => True, 'mem'       => True,
+		'kmem'      => True, 'wheel'     => True, 'mail'      => True,
+		'uucp'      => True, 'man'       => True, 'games'     => True,
+		'dip'       => True, 'ftp'       => True, 'nobody'    => True,
+		'floppy'    => True, 'xfs'       => True, 'console'   => True,
+		'utmp'      => True, 'pppusers'  => True, 'popusers'  => True,
+		'slipusers' => True, 'slocate'   => True, 'mysql'     => True,
+		'dnstools'  => True, 'web'       => True, 'named'     => True,
+		'dba'       => True, 'oinstall'  => True, 'oracle'    => True,
+		'gdm'       => True, 'sweep'     => True, 'cvs'       => True,
+		'postgres'  => True, 'qmail'     => True, 'nofiles'   => True,
+		'ldap'      => True, 'backup'    => True
+	);
 
 	class accounts_
 	{
@@ -42,7 +76,7 @@
 		function read_repository()
 		{
 			global $phpgw, $phpgw_info;
-			$this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT * FROM phpgw_accounts WHERE account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$this->data['userid']            = $this->db->f('account_lid');
@@ -50,11 +84,11 @@
 			$this->data['account_lid']       = $this->db->f('account_lid');
 			$this->data['firstname']         = $this->db->f('account_firstname');
 			$this->data['lastname']          = $this->db->f('account_lastname');
-			$this->data['fullname']          = $this->db->f('account_firstname').' '.$this->db->f('account_lastname');
+			$this->data['fullname']          = $this->db->f('account_firstname') . ' '
+														. $this->db->f('account_lastname');
 			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
 			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
-			$this->data['account_type']      = $this->db->f('account_type');
 			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires']           = $this->db->f('account_expires');
 			return $this->data;
@@ -62,13 +96,11 @@
 
 		function save_repository()
 		{
-			$this->db->query("update phpgw_accounts set account_lid='" . $this->data["account_lid"]
-				. "', account_firstname='" . $this->data['firstname']
+			$this->db->query("UPDATE phpgw_accounts SET account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "', account_expires='" . $this->data['expires'] . "' where account_id='"
+				. $this->data['status'] . "', account_expires='" . $this->data['expires'] . "' WHERE account_id='"
 				. $this->account_id . "'",__LINE__,__FILE__);
 		}
-
 
 		function delete($accountid = '')
 		{
@@ -82,7 +114,6 @@
 			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
 			$this->db->unlock();
 		}
-
 
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
@@ -99,25 +130,25 @@
 
 			if (! $sort)
 			{
-				$sort = "desc";
+				$sort = "DESC";
 			}
 
 			if ($order)
 			{
-				$orderclause = "order by $order $sort";
+				$orderclause = "ORDER BY $order $sort";
 			}
 			else
 			{
-				$orderclause = "order by account_lid,account_lastname,account_firstname asc";
+				$orderclause = "ORDER BY account_lid,account_lastname,account_firstname ASC";
 			}
 
 			switch($_type)
 			{
 				case 'accounts':
-					$whereclause = "where account_type = 'u'";
+					$whereclause = "WHERE account_type = 'u'";
 					break;
 				case 'groups':
-					$whereclause = "where account_type = 'g'";
+					$whereclause = "WHERE account_type = 'g'";
 					break;
 				default:
 					$whereclause = "";
@@ -127,22 +158,22 @@
 			{
 				if ($whereclause)
 				{
-					$whereclause .= ' and ( ';
+					$whereclause .= ' AND ( ';
 				}
 				else
 				{
-					$whereclause .= ' where ';
+					$whereclause .= ' WHERE ';
 				}
 
-				$whereclause .= " account_firstname like '%$query%' OR account_lastname like "
-					. "'%$query%' OR account_lid like '%$query%' ";
+				$whereclause .= " account_firstname LIKE '%$query%' OR account_lastname LIKE "
+					. "'%$query%' OR account_lid LIKE '%$query%' ";
 				if ($whereclause)
 				{
 					$whereclause .= ' ) ';
 				}
 			}
 
-			$sql = "select * from phpgw_accounts $whereclause $orderclause $limitclause";
+			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause $limitclause";
 			$this->db->query($sql,__LINE__,__FILE__);
 			while ($this->db->next_record()) {
 				$accounts[] = Array(
@@ -151,7 +182,7 @@
 					'account_type'      => $this->db->f('account_type'),
 					'account_firstname' => $this->db->f('account_firstname'),
 					'account_lastname'  => $this->db->f('account_lastname'),
-					'account_status'    => $this->db->f('account_status',
+					'account_status'    => $this->db->f('account_status'),
 					'account_expires'   => $this->db->f('account_expires')
 				);
 			}
@@ -221,49 +252,63 @@
 			return $this->db->f(0) > 0;
 		}
 
-		// !! NOTE: We should pass an array to this to make updates easier, plus I need to add account_expires
-		//          I didn't want to risk breaking too much code at once, I will do this soon. (jengo)
-		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='', $account_home='',$account_shell='')
+		function create($account_info)
 		{
-			//echo '<br>in create for account_lid: "'.$account_lid.'"';
-			if (empty($account_id) || !$account_id)
+			if (empty($account_info['id']) || !$account_info['id'])
 			{
-				$account_id = $this->get_nextid();
-				//echo '<br>using'.$account_id;exit;
+				$account_id = $this->get_nextid($account_info['account_type']);
+				/* echo '<br>using'.$account_id;exit; */
 			}
-
-			// $account_home and $account_shell not used here
-			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status) values ("
-				. $account_id . ",'" . $account_lid . "','"
-				. $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname . "','"
-				. $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
+			$this->db->query("insert into phpgw_accounts (account_id,account_lid, account_type, account_pwd, "
+				. "account_firstname, account_lastname, account_status, account_expires) values (" . $account_info['account_id'] . ",'" . $account_info['account_lid']
+				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
+				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "','" . $account_info['account_expires']
+				. "')",__LINE__,__FILE__);
 		}
 
-		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False)
+		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
 			global $phpgw, $phpgw_info;
 
-			$account_id = $this->get_nextid();
-
-			if ($default_prefs == False) {
-				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
-				//$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+			if (! $expiredate)
+			{
+				// expire in 30 days by default
+				$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
 			}
-			$sql = "insert into phpgw_accounts";
-			$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
-			$sql .= "values (".$accountid.", '".$accountname."','u', '".md5($passwd)."', '".$accountname."', 'AutoCreated', ".time().", 'A')";
-			$this->db->query($sql);
-			$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '1', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
-			$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 'u', 1)",__LINE__,__FILE__);
+
+			$acct_info = array(
+				'account_lid'       => $accountname,
+				'account_type'      => 'u',
+				'account_passwd'    => $passwd,
+				'account_firstname' => '',
+				'account_lastname'  => '',
+				'account_status'    => $account_status,
+				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
+			);
+			$this->create($acct_info);
+			$accountid = $this->name2id($accountname);
+
+			$this->db->transaction_begin();
+			if ($default_prefs == False)
+			{
+				$default_prefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
+//				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+				$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
+			}
+
+			if ($default_acls == False)
+			{
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '1', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+			}
+			$this->db->transaction_commit();
 			return $accountid;
 		}
-	}        //end of class
+	} //end of class
 ?>
