@@ -75,6 +75,21 @@ class bo_resources
 			{
 				$readonlys["buyable[$resource[id]]"] = true;
 			}
+			$readonlys["view_acc[$resource[id]]"] = true;
+			$links = $this->link->get_links('resources',$resource['id']);
+			if(count($links) != 0)
+			{
+				foreach ($links as $link_num => $link)
+				{
+					if($link['app'] == 'resources')
+					{
+						if($this->so->get_value('accessory_of',$link['id']) != -1)
+						{
+							$readonlys["view_acc[$resource[id]]"] = false;
+						}
+					}
+				}
+			}
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource['id']);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
