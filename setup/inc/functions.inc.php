@@ -87,15 +87,16 @@
   // password in ../header.inc.php to protect all of the setup
   // pages from unauthorized use.
 
-  if(file_exists('../version.inc.php')) {
-    include('../version.inc.php');  // To set the current core version
-  }else{
-    $phpgw_info['server']['versions']['phpgwapi'] = 'Undetected';
-  }
+	$phpgw_info['server']['app_images'] = 'templates/default/images';
 
-  $phpgw_info['server']['app_images'] = 'templates/default/images';
-
-  if(file_exists('../header.inc.php')) { include('../header.inc.php'); }
+	if(file_exists('../header.inc.php'))
+	{
+		include('../header.inc.php');
+	}
+	else
+	{
+		$phpgw_info['server']['versions']['phpgwapi'] = 'Undetected';
+	}
 
   include('./inc/phpgw_setup.inc.php');
   include('./inc/phpgw_schema_proc.inc.php');
