@@ -98,7 +98,7 @@
 		}
 
 		/* This data needs to be updated in LDAP, not SQL (jengo) */
-		function update_lastlogin($account_id, $ip)
+		function old_update_lastlogin($account_id, $ip)
 		{
 			$GLOBALS['phpgw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id='$account_id'",__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->next_record();
@@ -111,7 +111,7 @@
 				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
 		}
 
-		function new_update_lastlogin($_account_id, $ip)
+		function update_lastlogin($_account_id, $ip)
 		{
 			$entry['phpgwaccountlastlogin']     = time();
 			$entry['phpgwaccountlastloginfrom'] = $ip;
