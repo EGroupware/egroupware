@@ -328,6 +328,8 @@
 			$link_data['order'] = $order;
 
 			$GLOBALS['phpgw']->template->set_var('lang_list_members',lang('List members'));
+			$GLOBALS['phpgw']->template->set_var('lang_firstname',lang('firstname'));
+			$GLOBALS['phpgw']->template->set_var('lang_lastname',lang('lastname'));
 
 			if ($app)
 			{
