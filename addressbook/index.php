@@ -84,7 +84,9 @@
           $ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
 	    . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
         } else {
-          $ref='<a href="mailto:"'.$coldata.'">'.$coldata.'</a>';
+//changed frmo a patch posted on sf, have not fully tested. Seek3r, Jan 30 2001
+//          $ref='<a href="mailto:"'.$coldata.'">'.$coldata.'</a>';
+          $ref='<a href="mailto:'.$coldata.'">';
         }
         $data=$coldata."</a>";
       } else { // But these do not
