@@ -139,7 +139,7 @@
 						if ( strstr(strtolower($name), $this->import[$fname]) )
 						{
 							$value = trim($value);
-							$value = ereg_replace("=0D=0A","\n",$value);
+							$value = str_replace('=0D=0A',"\n",$value);
 							$buffer += array($name => $value);
 						}
 					}
@@ -151,6 +151,36 @@
 			/* _debug_array($entry);exit; */
 
 			return $entry;
+		}
+
+		/* Try to decode strings that may be base64 encoding, otherwise assume they are QUOTED-PRINTABLE */
+		function decode($string)
+		{
+			$tmp = base64_decode($string);
+			if(base64_encode($tmp) == $string)
+			{
+				return $tmp;
+			}
+			else
+			{
+				return (str_replace('=0D=0A',"\n",$string));
+			}
+			return $out;
+		}
+
+		function encode($string, $type='qp')
+		{
+			$out = '';
+			switch($type)
+			{
+				case 'qp':
+					$out = ereg_replace("\r\n",'=0D=0A',$string);
+					$out = ereg_replace("\n",'=0D=0A',$out);
+					break;
+				case 'base64':
+					$out = base64_encode($string);
+			}
+			return $out;
 		}
 
 		/*
@@ -202,10 +232,10 @@
 					switch ($field[0])
 					{
 						case 'LABEL':
-							$entry['label'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['label'] = $this->decode($values[0]);
 							break;
 						case 'NOTE':
-							$entry['note'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['note'] = $this->decode($values[0]);
 							break;
 						case 'ADR':
 							switch ($field[1])
@@ -555,13 +585,13 @@
 							$entry['url'] = $values[0];
 							break;
 						case 'NOTE':
-							$entry['note'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['note'] = $this->decode($values[0]);
 							break;
 						case 'KEY':
-							$entry['key'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['key'] = $this->decode($values[0]);
 							break;
 						case 'LABEL':
-							$entry['label'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['label'] = $this->decode($values[0]);
 							break;
 						case 'BDAY': #1969-12-31
 							if(strlen($values[0]) == 8)
@@ -609,7 +639,7 @@
 			$entry   = '';
 			$header  = 'BEGIN:VCARD' . "\n";
 			$header .= 'VERSION:2.1' . "\n";
-			$header .= 'X-PHPGROUPWARE-FILE-AS:phpGroupWare.org' . "\n";
+			$header .= 'X-EGROUPWARE-FILE-AS:eGroupWare.org' . "\n";
 
 			reset($this->export);
 			while ( list($name,$value) = each($this->export) )
@@ -619,10 +649,9 @@
 					$mult = explode(';',$value);
 					if (!$mult[1])
 					{ // Normal
-						if (strstr($buffer[$value],"\r\n") || strstr($buffer[$value],"\n"))
+						if(strstr($buffer[$value],"\r\n") || strstr($buffer[$value],"\n"))
 						{
-							$buffer[$value] = ereg_replace("\r\n","=0D=0A",$buffer[$value]);
-							$buffer[$value] = ereg_replace("\n","=0D=0A",$buffer[$value]);
+							$buffer[$value] = $this->encode($buffer[$value]);
 							$entry .= $value . ';QUOTED-PRINTABLE:' . $buffer[$value]."\n";
 						}
 						elseif ($value == 'BDAY')
@@ -631,7 +660,7 @@
 							if ($tmp[0])
 							{
 								if (strlen($tmp[0]) == 1) { $tmp[0] = '0'.$tmp[0]; }
-								if (strlen($tmp[0]) == 1) { $tmp[1] = '0'.$tmp[1]; }
+								if (strlen($tmp[1]) == 1) { $tmp[1] = '0'.$tmp[1]; }
 								$entry .= 'BDAY:' . $tmp[2] . '-' . $tmp[0] . '-' . $tmp[1] . "\n";
 							}
 						}
@@ -789,8 +818,8 @@
 					$entries .= 'ORG:' . $org_name . $org_unit . "\n";
 				}
 
-				$workattr = ereg_replace('ADR;','',$workattr);
-				$homeattr = ereg_replace('ADR;','',$homeattr);
+				$workattr = str_replace('ADR;','',$workattr);
+				$homeattr = str_replace('ADR;','',$homeattr);
 				if (!$buffer['EXT']) { $buffer['EXT'] = ';'; }
 				if ($workaddr)
 				{
@@ -798,9 +827,9 @@
 					if (!$buffer['LABEL'])
 					{
 						$wlabel = substr($workaddr,0,-1);
-						$wlabel = ereg_replace(';','=0D=0A',$wlabel);
-						//$wlabel = ereg_replace('(',',',$wlabel);
-						//$wlabel = ereg_replace(')',',',$wlabel);
+						$wlabel = str_replace(';','=0D=0A',$wlabel);
+						//$wlabel = str_replace('(',',',$wlabel);
+						//$wlabel = str_replace(')',',',$wlabel);
 						$wlabel = 'LABEL;WORK;QUOTED-PRINTABLE:' . $wlabel . "\n";
 					}
 				}
@@ -808,12 +837,12 @@
 				{
 					$home = 'B.ADR;'.$homeattr.':;;'.substr($homeaddr,0,-1)."\n";
 					$hlabel = substr($homeaddr,0,-1);
-					$hlabel = ereg_replace(';','=0D=0A',$hlabel);
-					//$hlabel = ereg_replace('(',',',$hlabel);
-					//$hlabel = ereg_replace(')',',',$hlabel);
+					$hlabel = str_replace(';','=0D=0A',$hlabel);
+					//$hlabel = str_replace('(',',',$hlabel);
+					//$hlabel = str_replace(')',',',$hlabel);
 					$hlabel = 'LABEL;HOME;QUOTED-PRINTABLE:' . $hlabel . "\n";
 				}
-				$entries = ereg_replace('PUBKEY','KEY',$entries);
+				$entries = str_replace('PUBKEY','KEY',$entries);
 				$entries .= $work . $home . $wlabel . $hlabel . 'END:VCARD' . "\n";
 				$entries .= "\n";
 
