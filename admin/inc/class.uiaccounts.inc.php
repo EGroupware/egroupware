@@ -1030,8 +1030,8 @@
 			{
 				$userData = Array();
 				$userData=$_userData;
-				$userData['account_firstname'] = $userData['firstname'];
-				$userData['account_lastname']  = $userData['lastname'];
+				$userData['firstname'] = $userData['account_firstname'];
+				$userData['lastname']  = $userData['account_lastname'];
 				@reset($userData['account_groups']);
 				while (list($key, $value) = @each($userData['account_groups']))
 				{
@@ -1164,8 +1164,8 @@
 				'account_firstname' => '<input name="account_firstname" value="' . $userData['firstname'] . '">',
 				'account_lastname'  => '<input name="account_lastname" value="' . $userData['lastname'] . '">',
 				'account_email'     => '<input name="account_email" size="32" value="' . $userData['email'] . '">',
-				'account_passwd'    => $account_passwd,
-				'account_passwd_2'  => $account_passwd_2,
+				'account_passwd'    => $userData['account_passwd'],
+				'account_passwd_2'  => $userData['account_passwd_2'],
 				'account_file_space' => $account_file_space
 			);
 
