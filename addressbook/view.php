@@ -87,34 +87,83 @@
 
 	$record_owner  = $fields[0]["owner"];
 
-	if ($fields[0]["access"] == 'private') {
+	if ($fields[0]["access"] == 'private')
+	{
 		$access_check = lang('private');
-	} else {
+	}
+	else
+	{
 		$access_check = lang('public');
 	}
 
 	$t->set_var('lang_viewpref',lang("Address book - view") . $noprefs);
 
 	reset($columns_to_display);
-	while ($column = each($columns_to_display)) { // each entry column
-		$t->set_var('display_col',display_name($colname[$column[0]]));
-		$ref=$data="";
-		$coldata = $fields[0][$column[0]];
-		// Some fields require special formatting.       
-		if ($column[0] == "url") {
-			$ref='<a href="'.$coldata.'" target="_new">';
-			$data=$coldata.'</a>';
-		} elseif (($column[0] == "email") || ($column[0] == "email_home")) {
-			if ($phpgw_info["user"]["apps"]["email"]) {
-			$ref='<a href="'.$phpgw->link("/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
-			} else {
-				$ref='<a href="mailto:'.$coldata.'">';
-			}
-			$data=$coldata."</a>";
-		} else { // But these do not
-			$ref=""; $data=$coldata;
+	while (list($column,$null) = each($qfields)) { // each entry column
+		if(display_name($colname[$column]))
+		{
+			$t->set_var('display_col',display_name($colname[$column]));
 		}
-		$t->set_var('ref_data',$ref . $data);
+		else
+		{
+			$t->set_var('display_col',display_name($column));
+		}
+		$ref = $data = "";
+		$coldata = $fields[0][$column];
+		// Some fields require special formatting.       
+		if ( ($column == "note" || $column == "label" || $column == "pubkey") && $coldata )
+		{
+			$datarray = explode ("\n",$coldata);
+			if ($datarray[1])
+			{
+				while (list($key,$info) = each ($datarray))
+				{
+					if ($key)
+					{
+						$data .= "</td></tr><tr><td></td><td>" .$info . "</td></tr>";
+					}
+					else
+					{	// First row, don't close td/tr
+						$data .= $info . "</td></tr>";
+					}
+				}
+			}
+			else
+			{
+				$data = $coldata;
+			}
+		}
+		elseif ($column == "url" && $coldata)
+		{
+			$ref = '<a href="' . $coldata . '" target="_new">';
+			$data = $coldata . '</a>';
+		}
+		elseif ( (($column == "email") || ($column == "email_home")) && $coldata)
+		{
+			if ($phpgw_info["user"]["apps"]["email"])
+			{
+				$ref='<a href="' . $phpgw->link("/email/compose.php","to="
+					. urlencode($coldata)) . '" target="_new">';
+			}
+			else
+			{
+				$ref = '<a href="mailto:'.$coldata.'">';
+			}
+			$data = $coldata."</a>";
+		}
+		else
+		{ // But these do not
+			$ref = ""; $data = $coldata;
+		}
+
+		if (!$data)
+		{
+			$t->set_var('ref_data',"&nbsp;");
+		}
+		else
+		{
+			$t->set_var('ref_data',$ref . $data);
+		}
 		$t->parse("cols","view_row",True);
 	}
 
@@ -130,13 +179,13 @@
 
 	if (!$catname) { $catname = lang('none'); }
 
+	// These are in the footer
 	$t->set_var('lang_owner',lang("Record owner"));
 	$t->set_var('owner',$phpgw->common->grab_owner_name($record_owner));
 	$t->set_var('lang_access',lang("Record access"));
 	$t->set_var('access',$access_check);
 	$t->set_var('lang_category',lang("Category"));
 	$t->set_var('catname',$catname);
-	$t->set_var('columns',$columns_html);
 
 	$sfields = rawurlencode(serialize($fields[0]));
 
