@@ -138,7 +138,7 @@
 		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $cats array
 		*/
-		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
+		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '## undef ##')
 		{
 			if ($globals)
 			{
@@ -183,7 +183,7 @@
 				}
 			}
 
-			if ($parent_id)
+			if ($parent_id != '## undef ##')
 			{
 				$parent_filter = " AND cat_parent='$parent_id'";
 			}
