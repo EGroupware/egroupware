@@ -17,7 +17,8 @@ class calendar_holiday
 	var $db;
 	var $year;
 	var $tz_offset;
-	var $holidays;
+	var $holidays = Array();
+	var $index = Array();
 	var $users;
 //	var $cal;
 
@@ -106,7 +107,7 @@ class calendar_holiday
 				$month = intval($holiday[3]);
 				$occurence = intval($holiday[4]);
 				$dow = intval($holiday[5]);
-				$observ_rule = intval($holidays[6]);
+				$observ_rule = intval($holiday[6]);
 //				echo "Inserting LOCALE='".$loc."' NAME='".$name."' extra=(".$day.'/'.$month.'/'.$occurence.'/'.$dow.'/'.")<br>\n";
 				$sql = "INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow,observance_rule) VALUES('$loc','$name',$day,$month,$occurence,$dow,$observ_rule)";
 				$this->db->query($sql,__LINE__,__FILE__);
@@ -186,13 +187,14 @@ class calendar_holiday
 		$i = 0;
 		while($this->db->next_record())
 		{
+			$this->index[$this->db->f('hol_id')] = $i;
 			$this->holidays[$i]['locale'] = $this->db->f('locale');
 			$this->holidays[$i]['name'] = $phpgw->strip_html($this->db->f('name'));
 			$this->holidays[$i]['day'] = intval($this->db->f('mday'));
 			$this->holidays[$i]['month'] = intval($this->db->f('month_num'));
 			$this->holidays[$i]['occurence'] = intval($this->db->f('occurence'));
 			$this->holidays[$i]['dow'] = intval($this->db->f('dow'));
-			$this->holidays[$i]['observance_rule'] = intval($this->db->f('observance_rule'));
+			$this->holidays[$i]['observance_rule'] = $this->db->f('observance_rule');
 			if(count($this->users) == 2 && $this->users[0] != $this->users[1])
 			{
 				if($this->holidays[$i]['locale'] == $this->users[1])
@@ -284,6 +286,11 @@ class calendar_holiday
 		{
 			return False;
 		}
+	}
+
+	function get_holiday($index)
+	{
+		return $this->holidays[$index];
 	}
 
 	function get_name($id)
