@@ -146,7 +146,7 @@
 			}
 			$var = Array(
 				'new_action'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_group'),
-				'search_action'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'),
+				'search_action'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups')
 			);
 			$p->set_var($var);
 
