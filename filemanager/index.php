@@ -3,9 +3,9 @@
 ###
 # DEV NOTE:
 #
-# index.php is depreciated by the inc/class.xxphpwebhosting.inc.php files.
+# index.php is depreciated by the inc/class.xxfilemanager.inc.php files.
 # index.php is still used in the 0.9.14 release, but all future changes should be
-# made to the inc/class.xxphpwebhosting.inc.php files (3-tiered).  This includes using templates.
+# made to the inc/class.xxfilemanager.inc.php files (3-tiered).  This includes using templates.
 ###
 
 ###
@@ -85,7 +85,7 @@ if ($noheader || $nofooter || ($download && (count ($fileman) > 0)) || ($op == '
 
 $GLOBALS['phpgw_info']['flags'] = array
 (
-	'currentapp'	=> 'phpwebhosting',
+	'currentapp'	=> 'filemanager',
 	'noheader'	=> $noheader,
 	'nofooter'	=> $nofooter,
 	'noappheader'	=> False,
@@ -165,7 +165,7 @@ $now = date ('Y-m-d');
 
 if ($phpwh_debug)
 {
-	echo "<b>PHPWebHosting debug:</b><br>
+	echo "<b>Filemanager debug:</b><br>
 		path: $path<br>
 		disppath: $disppath<br>
 		cwd: $cwd<br>

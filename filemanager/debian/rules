@@ -13,7 +13,7 @@
 # This is the debhelper compatability version to use.
 export DH_COMPAT=3
 
-APP = phpwebhosting
+APP = filemanager
 PACKAGE = debian/phpgroupware-$(APP)/usr/share/phpgroupware/$(APP)
 PACKAGEDOC = debian/phpgroupware-$(APP)/usr/share/doc/phpgroupware-$(APP)
 

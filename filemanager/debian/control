@@ -1,16 +1,16 @@
-Source: phpgroupware-phpwebhosting
+Source: phpgroupware-filemanager
 Section: web
 Priority: optional
 Maintainer: Luca - De Whiskey's - De Vitis <luca@debian.org>
 Build-Depends: debhelper (>> 3.0.0)
 Standards-Version: 3.5.2
 
-Package: phpgroupware-phpwebhosting
+Package: phpgroupware-filemanager
 Section: web
 Architecture: all
 Depends: phpgroupware (>= ${Source-Version}), php3-pgsql | php3-cgi-pgsql | php4-pgsql | php3-mysql | php3-cgi-mysql | php4-mysql
-Description: The phpGroupWare next generation file manager module.
- The next generation file manager for phpGroupWare. Abilities include all
+Description: The phpGroupWare file manager module.
+ The file manager for phpGroupWare. Abilities include all
  common file actions (upload, mkdir, rename, delete, copy, move), creating and
  editing text files, and syncing with the file system. Per file/directory
  comments are stored, and version history is tracked. Group sharing and ACL

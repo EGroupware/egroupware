@@ -1,10 +1,10 @@
 <?php
 
-	class sophpwebhosting
+	class sofilemanager
 	{
 
 		/* Any initializations that need to be done */
-		function sophpwebhosting()
+		function sofilemanager()
 		{
 			$GLOBALS['phpgw']->db->Auto_Free = 0;
 		}

@@ -15,7 +15,7 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
-		lang('Preferences')	=> $GLOBALS['phpgw']->link('/phpwebhosting/preferences.php')
+		lang('Preferences')	=> $GLOBALS['phpgw']->link('/filemanager/preferences.php')
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);

@@ -1,94 +1,94 @@
-application	phpwebhosting	pl	Aplikacja
-back to file manager	phpwebhosting	pl	Powrót do managera plików
-cannot create directory because it begins or ends in a space	phpwebhosting	pl	
-cannot replace x because it is a directory	phpwebhosting	pl	
-command sucessfully run	phpwebhosting	pl	Pomy¶lnie wykonano polecenie
-comment	phpwebhosting	pl	Komentarz
-comments cannot contain "x"	phpwebhosting	pl	Komentarz nie zawiera "%1"
-copied x to x	phpwebhosting	pl	Skopiowano %1 do %2
-copy to	phpwebhosting	pl	Kopiuj do
-copy to:	phpwebhosting	pl	Kopiuj do
-could not copy x to x	phpwebhosting	pl	Nie mo¿na skopiowaæ %1 do %2
-could not create directory x	phpwebhosting	pl	Nie mo¿na utworzyæ katalogu %1
-could not create x	phpwebhosting	pl	Nie mo¿na utworzyæ %1
-could not delete x	phpwebhosting	pl	Nie mo¿na usun±æ %1
-could not move x to x	phpwebhosting	pl	Nie mo¿na przenie¶æ %1
-could not rename x to x	phpwebhosting	pl	Nie mo¿na zmieniæ nazwy %1
-could not save x	phpwebhosting	pl	Nie mo¿na zapisaæ %1
-create file	phpwebhosting	pl	Utwórz plik
-create folder	phpwebhosting	pl	Utwórz katalog
-created	phpwebhosting	pl	Utworzony
-created by	phpwebhosting	pl	Utworzony przez
-created directory x	phpwebhosting	pl	Utworzono katalog %1
-created x	phpwebhosting	pl	Utworzono %1
-date	phpwebhosting	pl	Data
-default number of upload fields to show	phpwebhosting	pl	
-delete	phpwebhosting	pl	Usuñ
-deleted x	phpwebhosting	pl	Usuniêto 51
-directory	phpwebhosting	pl	Katalog
-directory names cannot contain "x"	phpwebhosting	pl	Nazwa katalogu zawiera "%1"
-directory x already exists	phpwebhosting	pl	Katalog %1 ju¿ istnieje
-directory x does not exist	phpwebhosting	pl	Katalog %1 nie istnieje
-display attributes	phpwebhosting	pl	Wy¶wietlane atrybuty
-download	phpwebhosting	pl	Pobierz
-edit	phpwebhosting	pl	Edycja
-edit comments	phpwebhosting	pl	Edycja komentarza
-error running command	phpwebhosting	pl	B³±d wykonania polecenia
-execute	phpwebhosting	pl	Wykonaj
-failed to create directory	phpwebhosting	pl	
-file	phpwebhosting	pl	Plik
-file name	phpwebhosting	pl	Nazwa pliku
-file names cannot contain "x"	phpwebhosting	pl	Plik nie zawiera "%1"
-file names cannot contain \\ or /	phpwebhosting	pl	Nazwa pliku nie mo¿e zawierac \\ lub /
-file x already exists. please edit it or delete it first.	phpwebhosting	pl	Plik %1 ju¿ istnieje. proszê edytowaæ go lub usun±æ
-file x could not be created.	phpwebhosting	pl	Plik %1 nie mo¿e byæ utworzony
-filename	phpwebhosting	pl	Nazwa pliku
-files	phpwebhosting	pl	Plików
-folder	phpwebhosting	pl	Katalog
-go to	phpwebhosting	pl	Id¼ do
-go to x	phpwebhosting	pl	Id¼ do %1
-go to your home directory	phpwebhosting	pl	
-go to:	phpwebhosting	pl	Id¼ do
-home	phpwebhosting	pl	
-locked	phpwebhosting	pl	
-mime type	phpwebhosting	pl	Typ mime
-modified	phpwebhosting	pl	Zmodyfikowany
-modified by	phpwebhosting	pl	Zmodyfikowany przez
-move to	phpwebhosting	pl	Przenie¶ do
-move to:	phpwebhosting	pl	Przenie¶ do
-moved x to x	phpwebhosting	pl	Przeniesiono %1 do %2
-no version history for this file/directory	phpwebhosting	pl	
-operation	phpwebhosting	pl	
-owner	phpwebhosting	pl	W³a¶ciciel
-phpwebhosting preferences	phpwebhosting	pl	Preferencje phpWebHosting
-preview of x	phpwebhosting	pl	
-preview x	phpwebhosting	pl	
-rename	phpwebhosting	pl	Zmiana nazwy
-renamed x to x	phpwebhosting	pl	Zmieniono nazwê %1 na %2
-replaced x	phpwebhosting	pl	Zastapiono %1
-save all	phpwebhosting	pl	Zapisz wszystko
-save x	phpwebhosting	pl	Zapisz %1
-saved x	phpwebhosting	pl	Zapisano %1
-show	phpwebhosting	pl	Wy¶wietl
-show ..	phpwebhosting	pl	Wy¶wietlaj ..
-show .files	phpwebhosting	pl	Wy¶wietlaj .pliki
-show command line (experimental. dangerous.)	phpwebhosting	pl	
-show help	phpwebhosting	pl	Wy¶wietlaj pomoc
-size	phpwebhosting	pl	Wielko¶æ
-sort by:	phpwebhosting	pl	Sortuj wg
-total files	phpwebhosting	pl	Wszystkich plików
-unknown mime-type defaults to text/plain when viewing	phpwebhosting	pl	
-unused space	phpwebhosting	pl	Wolne miejsce
-up	phpwebhosting	pl	W górê
-update	phpwebhosting	pl	Aktualizuj
-updated comment for x	phpwebhosting	pl	Zaktualizowano komentarz do 51
-upload fields	phpwebhosting	pl	wczytywanych plików
-upload files	phpwebhosting	pl	Wczytaj pliki
-used space	phpwebhosting	pl	Wykorzystane miejsce
-users	phpwebhosting	pl	U¿ytkownicy
-version	phpwebhosting	pl	Wersja
-view documents in new window	phpwebhosting	pl	Wy¶wietlaj dokumenty w nowym oknie
-view documents on server (if available)	phpwebhosting	pl	Poka¿ dokumenty na serwerze (je¶li s± dostêpne)
-who	phpwebhosting	pl	Kto
-x already exists as a file	phpwebhosting	pl	%1 ju¿ istnieje jako plik
-you do not have access to x	phpwebhosting	pl	Nie masz praw do %1
+application	filemanager	pl	Aplikacja
+back to file manager	filemanager	pl	Powrót do managera plików
+cannot create directory because it begins or ends in a space	filemanager	pl	
+cannot replace x because it is a directory	filemanager	pl	
+command sucessfully run	filemanager	pl	Pomy¶lnie wykonano polecenie
+comment	filemanager	pl	Komentarz
+comments cannot contain "x"	filemanager	pl	Komentarz nie zawiera "%1"
+copied x to x	filemanager	pl	Skopiowano %1 do %2
+copy to	filemanager	pl	Kopiuj do
+copy to:	filemanager	pl	Kopiuj do
+could not copy x to x	filemanager	pl	Nie mo¿na skopiowaæ %1 do %2
+could not create directory x	filemanager	pl	Nie mo¿na utworzyæ katalogu %1
+could not create x	filemanager	pl	Nie mo¿na utworzyæ %1
+could not delete x	filemanager	pl	Nie mo¿na usun±æ %1
+could not move x to x	filemanager	pl	Nie mo¿na przenie¶æ %1
+could not rename x to x	filemanager	pl	Nie mo¿na zmieniæ nazwy %1
+could not save x	filemanager	pl	Nie mo¿na zapisaæ %1
+create file	filemanager	pl	Utwórz plik
+create folder	filemanager	pl	Utwórz katalog
+created	filemanager	pl	Utworzony
+created by	filemanager	pl	Utworzony przez
+created directory x	filemanager	pl	Utworzono katalog %1
+created x	filemanager	pl	Utworzono %1
+date	filemanager	pl	Data
+default number of upload fields to show	filemanager	pl	
+delete	filemanager	pl	Usuñ
+deleted x	filemanager	pl	Usuniêto 51
+directory	filemanager	pl	Katalog
+directory names cannot contain "x"	filemanager	pl	Nazwa katalogu zawiera "%1"
+directory x already exists	filemanager	pl	Katalog %1 ju¿ istnieje
+directory x does not exist	filemanager	pl	Katalog %1 nie istnieje
+display attributes	filemanager	pl	Wy¶wietlane atrybuty
+download	filemanager	pl	Pobierz
+edit	filemanager	pl	Edycja
+edit comments	filemanager	pl	Edycja komentarza
+error running command	filemanager	pl	B³±d wykonania polecenia
+execute	filemanager	pl	Wykonaj
+failed to create directory	filemanager	pl	
+file	filemanager	pl	Plik
+file name	filemanager	pl	Nazwa pliku
+file names cannot contain "x"	filemanager	pl	Plik nie zawiera "%1"
+file names cannot contain \\ or /	filemanager	pl	Nazwa pliku nie mo¿e zawierac \\ lub /
+file x already exists. please edit it or delete it first.	filemanager	pl	Plik %1 ju¿ istnieje. proszê edytowaæ go lub usun±æ
+file x could not be created.	filemanager	pl	Plik %1 nie mo¿e byæ utworzony
+filename	filemanager	pl	Nazwa pliku
+files	filemanager	pl	Plików
+folder	filemanager	pl	Katalog
+go to	filemanager	pl	Id¼ do
+go to x	filemanager	pl	Id¼ do %1
+go to your home directory	filemanager	pl	
+go to:	filemanager	pl	Id¼ do
+home	filemanager	pl	
+locked	filemanager	pl	
+mime type	filemanager	pl	Typ mime
+modified	filemanager	pl	Zmodyfikowany
+modified by	filemanager	pl	Zmodyfikowany przez
+move to	filemanager	pl	Przenie¶ do
+move to:	filemanager	pl	Przenie¶ do
+moved x to x	filemanager	pl	Przeniesiono %1 do %2
+no version history for this file/directory	filemanager	pl	
+operation	filemanager	pl	
+owner	filemanager	pl	W³a¶ciciel
+filemanager preferences	filemanager	pl	Preferencje filemanager
+preview of x	filemanager	pl	
+preview x	filemanager	pl	
+rename	filemanager	pl	Zmiana nazwy
+renamed x to x	filemanager	pl	Zmieniono nazwê %1 na %2
+replaced x	filemanager	pl	Zastapiono %1
+save all	filemanager	pl	Zapisz wszystko
+save x	filemanager	pl	Zapisz %1
+saved x	filemanager	pl	Zapisano %1
+show	filemanager	pl	Wy¶wietl
+show ..	filemanager	pl	Wy¶wietlaj ..
+show .files	filemanager	pl	Wy¶wietlaj .pliki
+show command line (experimental. dangerous.)	filemanager	pl	
+show help	filemanager	pl	Wy¶wietlaj pomoc
+size	filemanager	pl	Wielko¶æ
+sort by:	filemanager	pl	Sortuj wg
+total files	filemanager	pl	Wszystkich plików
+unknown mime-type defaults to text/plain when viewing	filemanager	pl	
+unused space	filemanager	pl	Wolne miejsce
+up	filemanager	pl	W górê
+update	filemanager	pl	Aktualizuj
+updated comment for x	filemanager	pl	Zaktualizowano komentarz do 51
+upload fields	filemanager	pl	wczytywanych plików
+upload files	filemanager	pl	Wczytaj pliki
+used space	filemanager	pl	Wykorzystane miejsce
+users	filemanager	pl	U¿ytkownicy
+version	filemanager	pl	Wersja
+view documents in new window	filemanager	pl	Wy¶wietlaj dokumenty w nowym oknie
+view documents on server (if available)	filemanager	pl	Poka¿ dokumenty na serwerze (je¶li s± dostêpne)
+who	filemanager	pl	Kto
+x already exists as a file	filemanager	pl	%1 ju¿ istnieje jako plik
+you do not have access to x	filemanager	pl	Nie masz praw do %1

@@ -2,7 +2,7 @@
   /**************************************************************************\
   * phpGroupWare                                                             *
   * This file written by Mark A Peters (Skeeter) <skeeter@phpgroupware.org>  *
-  * This class user interface for the phpwebhosting app                      *
+  * This class user interface for the filemanager app                        *
   * Copyright (C) 2002 Mark A Peters                                         *
   * -------------------------------------------------------------------------*
   * This library is free software; you can redistribute it and/or modify it  *
@@ -20,7 +20,7 @@
 
   /* $Id$ */
 
-	class uiphpwebhosting
+	class uifilemanager
 	{
 
 		var $public_functions = array(
@@ -39,9 +39,9 @@
 		var $template_dir;
 		var $help_info;
 
-		function uiphpwebhosting()
+		function uifilemanager()
 		{
-			$this->bo = CreateObject('phpwebhosting.bophpwebhosting');
+			$this->bo = CreateObject('filemanager.bofilemanager');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->browser = CreateObject('phpgwapi.browser');
 			$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir($GLOBALS['phpgw_info']['flags']['currentapp']);

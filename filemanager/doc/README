@@ -1,20 +1,24 @@
-Module: phpwebhosting
+Module: filemanager (formerly phpwebhosting)
 Author: Jason Wies <zone@phpgroupware.org>
 Comments to: phpgroupware-developers@gnu.org, zone@phpgroupware.org
 Description: The file manager for phpGroupWare.  Abilities include all common file actions (upload, mkdir, rename, delete, copy, move), creating and editing text files, and syncing with the file system.  Per file/directory comments are stored, and version history is tracked.  Group sharing and ACL are fully supported.
 
 NOTES
 -----
-phpwebhosting replaces filemanger.  phpwebhosting should be used instead of filemanager in all new installs.
-
-phpwebhosting will be renamed after 0.9.14, at least in time for 0.9.16, but perhaps much sooner.  Most likely it will be renamed to 'filemanager', and the current 'filemanager' removed completely.
-
-phpwebhosting started as an independent (non-phpGroupWare) project, and there continues to be a separate stand-alone distribution available at http://phpwebhosting.sourceforge.net.  This is also the origin of the name, as the code was originally (and still can be) used for public webhosting.
+filemanager started as an independent (non-phpGroupWare) project named phpwebhosting, and there continues to be a separate stand-alone distribution available at http://phpwebhosting.sourceforge.net/.
 
 For installation help, see the INSTALL file in this directory.
 
 DEV NOTES
 ---------
-index.php is depreciated by the inc/class.xxphpwebhosting.inc.php files.  index.php is still used in the 0.9.14 release, but all future changes should be made to the inc/class.xxphpwebhosting.inc.php files (3-tiered).  This includes using templates.
+index.php is depreciated by the inc/class.xxfilemanager.inc.php files.  index.php is still used in the 0.9.14 release, but all future changes should be made to the inc/class.xxfilemanager.inc.php files (3-tiered).  This includes using templates.
 
 See the docs in phpgwapi/doc/vfs for more information on interacting with the VFS (Virtual File System).
+
+OLD NOTES
+---------
+phpwebhosting replaces filemanger.  phpwebhosting should be used instead of filemanager in all new installs.
+
+phpwebhosting will be renamed after 0.9.14, at least in time for 0.9.16, but perhaps much sooner.  Most likely it will be renamed to 'filemanager', and the current 'filemanager' removed completely.
+
+UPDATE: The above renaming has occurred, the module formerly known as 'phpwebhosting' is now 'filemanager', the default file manager for phpGroupWare.  Any references to phpwebhosting should be replaced in favor of filemanger.

@@ -4,7 +4,7 @@
 
 
 
-	class bophpwebhosting
+	class bofilemanager
 	{
 		var $public_functions = array(
 			'delete'	=> True
@@ -55,7 +55,7 @@
 //		var $debug = True;
 		var $debug = False;
 
-		function bophpwebhosting()
+		function bofilemanager()
 		{
 			$this->vfs = CreateObject('phpgwapi.vfs');
 
@@ -122,7 +122,7 @@
 				define('NULL','');
 			}
 
-			$this->so = CreateObject('phpwebhosting.sophpwebhosting');
+			$this->so = CreateObject('filemanager.sofilemanager');
 
 			$this->file_attributes = Array(
 				'name' => 'Filename',
@@ -146,7 +146,7 @@
 
 			if($this->debug)
 			{
-				echo 'DEBUG: bo.bophpwebhosting: PATH = '.$this->path.'<br>'."\n";
+				echo 'DEBUG: bo.bofilemanager: PATH = '.$this->path.'<br>'."\n";
 			}
 
 			if(!$this->path)
@@ -192,7 +192,7 @@
 
 			if($this->debug)
 			{
-				echo '<b>PHPWebHosting debug:</b><br>'
+				echo '<b>Filemanager debug:</b><br>'
 					. 'path: '.$this->path.'<br>'
 					. 'disppath: '.$this->disppath.'<br>'
 					. 'cwd: '.$this->cwd.'<br>'

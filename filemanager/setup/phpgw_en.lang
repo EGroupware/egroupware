@@ -1,93 +1,93 @@
-application	phpwebhosting	en	Application
-back to file manager	phpwebhosting	en	Back to file manager
-cannot create directory because it begins or ends in a space	phpwebhosting	en	Cannot create directory because it begins or ends in a space
-cannot replace x because it is a directory	phpwebhosting	en	Cannot replace %1 because it is a directory
-command sucessfully run	phpwebhosting	en	Command sucessfully run
-comment	phpwebhosting	en	Comment
-comments cannot contain "x"	phpwebhosting	en	Comments cannot contain "%1"
-copied x to x	phpwebhosting	en	Copied %1 to %2
-copy to	phpwebhosting	en	Copy To
-copy to:	phpwebhosting	en	Copy to:
-could not copy x to x	phpwebhosting	en	Could not copy %1 to %2
-could not create directory x	phpwebhosting	en	Could not create directory %1
-could not create x	phpwebhosting	en	Could not create %1
-could not delete x	phpwebhosting	en	Could not delete %1
-could not move x to x	phpwebhosting	en	Could not move %1 to %2
-could not rename x to x	phpwebhosting	en	Could not rename %1 to %2
-could not save x	phpwebhosting	en	Could not save %1
-create file	phpwebhosting	en	Create File
-create folder	phpwebhosting	en	Create Folder
-created	phpwebhosting	en	Created
-created by	phpwebhosting	en	Created by
-created directory x	phpwebhosting	en	Created directory %1
-created x	phpwebhosting	en	Created %1
-date	phpwebhosting	en	Date
-default number of upload fields to show	phpwebhosting	en	Default number of upload fields to show
-delete	phpwebhosting	en	Delete
-deleted x	phpwebhosting	en	Deleted %1
-directory	phpwebhosting	en	Directory
-directory names cannot contain "x"	phpwebhosting	en	Directory names cannot contain "%1"
-directory x already exists	phpwebhosting	en	Directory %1 already exists
-directory x does not exist	phpwebhosting	en	Directory %1 does not exist
-display attributes	phpwebhosting	en	Display attributes
-download	phpwebhosting	en	Download
-edit	phpwebhosting	en	Edit
-edit comments	phpwebhosting	en	Edit comments
-error running command	phpwebhosting	en	Error running command
-execute	phpwebhosting	en	Execute
-failed to create directory	phpwebhosting	en	failed to create directory
-file	phpwebhosting	en	File
-file name	phpwebhosting	en	File Name
-file names cannot contain "x"	phpwebhosting	en	File names cannot contain "%1"
-file names cannot contain \\ or /	phpwebhosting	en	File names cannot contain \\ or /
-file x already exists. please edit it or delete it first.	phpwebhosting	en	File %1 already exists. Please edit it or delete it first.
-file x could not be created.	phpwebhosting	en	File %1 could not be created.
-files	phpwebhosting	en	Files
-folder	phpwebhosting	en	Folder
-go to	phpwebhosting	en	Go To
-go to x	phpwebhosting	en	Go to %1
-go to your home directory	phpwebhosting	en	Go to your home directory
-go to:	phpwebhosting	en	Go to:
-home	phpwebhosting	en	Home
-locked	phpwebhosting	en	Locked
-mime type	phpwebhosting	en	MIME Type
-modified	phpwebhosting	en	Modified
-modified by	phpwebhosting	en	Modified by
-move to	phpwebhosting	en	Move To
-move to:	phpwebhosting	en	Move to:
-moved x to x	phpwebhosting	en	Moved %1 to %2
-no version history for this file/directory	phpwebhosting	en	No version history for this file/directory
-operation	phpwebhosting	en	Operation
-owner	phpwebhosting	en	Owner
-phpwebhosting preferences	phpwebhosting	en	PHPWebHosting preferences
-preview of x	phpwebhosting	en	Preview of %1
-preview x	phpwebhosting	en	Preview %1
-rename	phpwebhosting	en	Rename
-renamed x to x	phpwebhosting	en	Renamed %1 to %2
-replaced x	phpwebhosting	en	Replaced %1
-save all	phpwebhosting	en	Save all
-save x	phpwebhosting	en	Save %1
-saved x	phpwebhosting	en	Saved %1
-show	phpwebhosting	en	Show
-show ..	phpwebhosting	en	Show ..
-show .files	phpwebhosting	en	Show .files
-show command line (experimental. dangerous.)	phpwebhosting	en	Show command line (EXPERIMENTAL. DANGEROUS.)
-show help	phpwebhosting	en	Show help
-size	phpwebhosting	en	Size
-sort by:	phpwebhosting	en	Sort by:
-total files	phpwebhosting	en	Total Files
-unknown mime-type defaults to text/plain when viewing	phpwebhosting	en	Unknown MIME-type defaults to text/plain when viewing
-unused space	phpwebhosting	en	Unused space
-up	phpwebhosting	en	Up
-update	phpwebhosting	en	Update
-updated comment for x	phpwebhosting	en	Updated comment for %1
-upload fields	phpwebhosting	en	upload fields
-upload files	phpwebhosting	en	Upload files
-used space	phpwebhosting	en	Used Space
-users	phpwebhosting	en	Users
-version	phpwebhosting	en	Version
-view documents in new window	phpwebhosting	en	View documents in new window
-view documents on server (if available)	phpwebhosting	en	View documents on server (if available)
-who	phpwebhosting	en	Who
-x already exists as a file	phpwebhosting	en	%1 already exists as a file
-you do not have access to x	phpwebhosting	en	You do not have access to %1
+application	filemanager	en	Application
+back to file manager	filemanager	en	Back to file manager
+cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
+cannot replace x because it is a directory	filemanager	en	Cannot replace %1 because it is a directory
+command sucessfully run	filemanager	en	Command sucessfully run
+comment	filemanager	en	Comment
+comments cannot contain "x"	filemanager	en	Comments cannot contain "%1"
+copied x to x	filemanager	en	Copied %1 to %2
+copy to	filemanager	en	Copy To
+copy to:	filemanager	en	Copy to:
+could not copy x to x	filemanager	en	Could not copy %1 to %2
+could not create directory x	filemanager	en	Could not create directory %1
+could not create x	filemanager	en	Could not create %1
+could not delete x	filemanager	en	Could not delete %1
+could not move x to x	filemanager	en	Could not move %1 to %2
+could not rename x to x	filemanager	en	Could not rename %1 to %2
+could not save x	filemanager	en	Could not save %1
+create file	filemanager	en	Create File
+create folder	filemanager	en	Create Folder
+created	filemanager	en	Created
+created by	filemanager	en	Created by
+created directory x	filemanager	en	Created directory %1
+created x	filemanager	en	Created %1
+date	filemanager	en	Date
+default number of upload fields to show	filemanager	en	Default number of upload fields to show
+delete	filemanager	en	Delete
+deleted x	filemanager	en	Deleted %1
+directory	filemanager	en	Directory
+directory names cannot contain "x"	filemanager	en	Directory names cannot contain "%1"
+directory x already exists	filemanager	en	Directory %1 already exists
+directory x does not exist	filemanager	en	Directory %1 does not exist
+display attributes	filemanager	en	Display attributes
+download	filemanager	en	Download
+edit	filemanager	en	Edit
+edit comments	filemanager	en	Edit comments
+error running command	filemanager	en	Error running command
+execute	filemanager	en	Execute
+failed to create directory	filemanager	en	failed to create directory
+file	filemanager	en	File
+file name	filemanager	en	File Name
+file names cannot contain "x"	filemanager	en	File names cannot contain "%1"
+file names cannot contain \\ or /	filemanager	en	File names cannot contain \\ or /
+file x already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
+file x could not be created.	filemanager	en	File %1 could not be created.
+files	filemanager	en	Files
+folder	filemanager	en	Folder
+go to	filemanager	en	Go To
+go to x	filemanager	en	Go to %1
+go to your home directory	filemanager	en	Go to your home directory
+go to:	filemanager	en	Go to:
+home	filemanager	en	Home
+locked	filemanager	en	Locked
+mime type	filemanager	en	MIME Type
+modified	filemanager	en	Modified
+modified by	filemanager	en	Modified by
+move to	filemanager	en	Move To
+move to:	filemanager	en	Move to:
+moved x to x	filemanager	en	Moved %1 to %2
+no version history for this file/directory	filemanager	en	No version history for this file/directory
+operation	filemanager	en	Operation
+owner	filemanager	en	Owner
+filemanager preferences	filemanager	en	Filemanager preferences
+preview of x	filemanager	en	Preview of %1
+preview x	filemanager	en	Preview %1
+rename	filemanager	en	Rename
+renamed x to x	filemanager	en	Renamed %1 to %2
+replaced x	filemanager	en	Replaced %1
+save all	filemanager	en	Save all
+save x	filemanager	en	Save %1
+saved x	filemanager	en	Saved %1
+show	filemanager	en	Show
+show ..	filemanager	en	Show ..
+show .files	filemanager	en	Show .files
+show command line (experimental. dangerous.)	filemanager	en	Show command line (EXPERIMENTAL. DANGEROUS.)
+show help	filemanager	en	Show help
+size	filemanager	en	Size
+sort by:	filemanager	en	Sort by:
+total files	filemanager	en	Total Files
+unknown mime-type defaults to text/plain when viewing	filemanager	en	Unknown MIME-type defaults to text/plain when viewing
+unused space	filemanager	en	Unused space
+up	filemanager	en	Up
+update	filemanager	en	Update
+updated comment for x	filemanager	en	Updated comment for %1
+upload fields	filemanager	en	upload fields
+upload files	filemanager	en	Upload files
+used space	filemanager	en	Used Space
+users	filemanager	en	Users
+version	filemanager	en	Version
+view documents in new window	filemanager	en	View documents in new window
+view documents on server (if available)	filemanager	en	View documents on server (if available)
+who	filemanager	en	Who
+x already exists as a file	filemanager	en	%1 already exists as a file
+you do not have access to x	filemanager	en	You do not have access to %1

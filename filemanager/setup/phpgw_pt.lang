@@ -1,94 +1,94 @@
-application	phpwebhosting	pt	Aplicação
-back to file manager	phpwebhosting	pt	Voltar ao Gerenciador de Arquivos
-cannot create directory because it begins or ends in a space	phpwebhosting	pt	Não é possível criar a pasta porque seu nome inicia ou termina em espaço em branco
-cannot replace x because it is a directory	phpwebhosting	pt	Não é possível subtituir %1 porque é uma pasta
-command sucessfully run	phpwebhosting	pt	Comando executado com sucesso
-comment	phpwebhosting	pt	Comentário
-comments cannot contain "x"	phpwebhosting	pt	Comentários não podem conter "%1"
-copied x to x	phpwebhosting	pt	Copiado %1 para %2
-copy to	phpwebhosting	pt	Copiar Para
-copy to:	phpwebhosting	pt	Copiar para:
-could not copy x to x	phpwebhosting	pt	Não foi possível copiar %1 para %2
-could not create directory x	phpwebhosting	pt	Não foi possível criar a pasta %1
-could not create x	phpwebhosting	pt	Não foi possível criar %1
-could not delete x	phpwebhosting	pt	Não foi possível remover %1
-could not move x to x	phpwebhosting	pt	Não foi possível mover %1 para %2
-could not rename x to x	phpwebhosting	pt	Não foi possível renomear %1 para %2
-could not save x	phpwebhosting	pt	Não foi possível salvar %1
-create file	phpwebhosting	pt	Criar Arquivo
-create folder	phpwebhosting	pt	Criar Pasta
-created	phpwebhosting	pt	Criado
-created by	phpwebhosting	pt	Criado por
-created directory x	phpwebhosting	pt	Criada pasta %1
-created x	phpwebhosting	pt	Criado %1
-date	phpwebhosting	pt	Data
-default number of upload fields to show	phpwebhosting	pt	Padrão para o número de campos de envio de arquivos a exibir
-delete	phpwebhosting	pt	Remover
-deleted x	phpwebhosting	pt	Removido %1
-directory	phpwebhosting	pt	Pasta
-directory names cannot contain "x"	phpwebhosting	pt	Nomes de pastas não podem conter "%1"
-directory x already exists	phpwebhosting	pt	Pasta %1 já existe
-directory x does not exist	phpwebhosting	pt	Pasta %1 não existe
-display attributes	phpwebhosting	pt	Exibir atributos
-download	phpwebhosting	pt	Download
-edit	phpwebhosting	pt	Editar
-edit comments	phpwebhosting	pt	Editar Comentários
-error running command	phpwebhosting	pt	Erro executando comando
-execute	phpwebhosting	pt	Executar
-failed to create directory	phpwebhosting	pt	falhou ao criar pasta
-file	phpwebhosting	pt	Arquivo
-file name	phpwebhosting	pt	Nome do Arquivo
-file names cannot contain "x"	phpwebhosting	pt	Nomes de arquivos não podem conter "%1"
-file names cannot contain \\ or /	phpwebhosting	pt	Nomes de arquivos não podem conter \\ ou /
-file x already exists. please edit it or delete it first.	phpwebhosting	pt	Arquivo %1 já existe. Por favor edite-o ou remova-o antes.
-file x could not be created.	phpwebhosting	pt	Arquivo %1 não pôde ser criado.
-files	phpwebhosting	pt	Arquivos
-folder	phpwebhosting	pt	Pasta
-go to	phpwebhosting	pt	Ir Para
-go to x	phpwebhosting	pt	Ir para %1
-go to your home directory	phpwebhosting	pt	Ir para sua pasta Home
-go to:	phpwebhosting	pt	Ir para:
-home	phpwebhosting	pt	Home
-locked	phpwebhosting	pt	Travado
-mime type	phpwebhosting	pt	Tipo MIME
-modified	phpwebhosting	pt	Modificado
-modified by	phpwebhosting	pt	Modificado por
-move to	phpwebhosting	pt	Mover Para
-move to:	phpwebhosting	pt	Mover para:
-moved x to x	phpwebhosting	pt	Movido %1 para %2
-no version history for this file/directory	phpwebhosting	pt	Sem histórico de versão para este arquivo/pasta
-operation	phpwebhosting	pt	Operação
-owner	phpwebhosting	pt	Dono
-phpwebhosting preferences	phpwebhosting	pt	Preferências para Gerenciador de Arquivos
-preview of x	phpwebhosting	pt	Visualizar %1
-preview x	phpwebhosting	pt	Visualizar %1
-rename	phpwebhosting	pt	Renomear
-renamed x to x	phpwebhosting	pt	Renomeado %1 para %2
-replaced x	phpwebhosting	pt	Substituído %1
-save all	phpwebhosting	pt	Salvar tudo
-save x	phpwebhosting	pt	Salvar %1
-saved x	phpwebhosting	pt	Salvo %1
-show	phpwebhosting	pt	Exibir
-show ..	phpwebhosting	pt	Exibir ..
-show .files	phpwebhosting	pt	Exibir arquivos cujos nomes iniciam por um ponto
-show command line (experimental. dangerous.)	phpwebhosting	pt	Exibir linha de comando (EXPERIMENTAL. PERIGOSO.)
-show help	phpwebhosting	pt	Exibir ajuda
-size	phpwebhosting	pt	Tamanho
-sort by:	phpwebhosting	pt	Ordenar por:
-total files	phpwebhosting	pt	Total de Arquivos
-unknown mime-type defaults to text/plain when viewing	phpwebhosting	pt	Tipos MIME desconhecidos são visualizados como text/plain por padrão
-unused space	phpwebhosting	pt	Espaço Não Usado
-unused space:	phpwebhosting	pt	Espaço Não Usado:
-up	phpwebhosting	pt	Acima
-update	phpwebhosting	pt	Atualizar
-updated comment for x	phpwebhosting	pt	Comentário atualizado para %1
-upload fields	phpwebhosting	pt	campos de envio de arquivos
-upload files	phpwebhosting	pt	Enviar Arquivos
-used space	phpwebhosting	pt	Espaço Usado
-users	phpwebhosting	pt	Usuários
-version	phpwebhosting	pt	Versão
-view documents in new window	phpwebhosting	pt	Visualizar documentos em uma nova janela
-view documents on server (if available)	phpwebhosting	pt	Visualizar documentos no servidor (se disponível)
-who	phpwebhosting	pt	Quem
-x already exists as a file	phpwebhosting	pt	%1 já existe como um arquivo
-you do not have access to x	phpwebhosting	pt	Você não tem acesso a %1
+application	filemanager	pt	Aplicação
+back to file manager	filemanager	pt	Voltar ao Gerenciador de Arquivos
+cannot create directory because it begins or ends in a space	filemanager	pt	Não é possível criar a pasta porque seu nome inicia ou termina em espaço em branco
+cannot replace x because it is a directory	filemanager	pt	Não é possível subtituir %1 porque é uma pasta
+command sucessfully run	filemanager	pt	Comando executado com sucesso
+comment	filemanager	pt	Comentário
+comments cannot contain "x"	filemanager	pt	Comentários não podem conter "%1"
+copied x to x	filemanager	pt	Copiado %1 para %2
+copy to	filemanager	pt	Copiar Para
+copy to:	filemanager	pt	Copiar para:
+could not copy x to x	filemanager	pt	Não foi possível copiar %1 para %2
+could not create directory x	filemanager	pt	Não foi possível criar a pasta %1
+could not create x	filemanager	pt	Não foi possível criar %1
+could not delete x	filemanager	pt	Não foi possível remover %1
+could not move x to x	filemanager	pt	Não foi possível mover %1 para %2
+could not rename x to x	filemanager	pt	Não foi possível renomear %1 para %2
+could not save x	filemanager	pt	Não foi possível salvar %1
+create file	filemanager	pt	Criar Arquivo
+create folder	filemanager	pt	Criar Pasta
+created	filemanager	pt	Criado
+created by	filemanager	pt	Criado por
+created directory x	filemanager	pt	Criada pasta %1
+created x	filemanager	pt	Criado %1
+date	filemanager	pt	Data
+default number of upload fields to show	filemanager	pt	Padrão para o número de campos de envio de arquivos a exibir
+delete	filemanager	pt	Remover
+deleted x	filemanager	pt	Removido %1
+directory	filemanager	pt	Pasta
+directory names cannot contain "x"	filemanager	pt	Nomes de pastas não podem conter "%1"
+directory x already exists	filemanager	pt	Pasta %1 já existe
+directory x does not exist	filemanager	pt	Pasta %1 não existe
+display attributes	filemanager	pt	Exibir atributos
+download	filemanager	pt	Download
+edit	filemanager	pt	Editar
+edit comments	filemanager	pt	Editar Comentários
+error running command	filemanager	pt	Erro executando comando
+execute	filemanager	pt	Executar
+failed to create directory	filemanager	pt	falhou ao criar pasta
+file	filemanager	pt	Arquivo
+file name	filemanager	pt	Nome do Arquivo
+file names cannot contain "x"	filemanager	pt	Nomes de arquivos não podem conter "%1"
+file names cannot contain \\ or /	filemanager	pt	Nomes de arquivos não podem conter \\ ou /
+file x already exists. please edit it or delete it first.	filemanager	pt	Arquivo %1 já existe. Por favor edite-o ou remova-o antes.
+file x could not be created.	filemanager	pt	Arquivo %1 não pôde ser criado.
+files	filemanager	pt	Arquivos
+folder	filemanager	pt	Pasta
+go to	filemanager	pt	Ir Para
+go to x	filemanager	pt	Ir para %1
+go to your home directory	filemanager	pt	Ir para sua pasta Home
+go to:	filemanager	pt	Ir para:
+home	filemanager	pt	Home
+locked	filemanager	pt	Travado
+mime type	filemanager	pt	Tipo MIME
+modified	filemanager	pt	Modificado
+modified by	filemanager	pt	Modificado por
+move to	filemanager	pt	Mover Para
+move to:	filemanager	pt	Mover para:
+moved x to x	filemanager	pt	Movido %1 para %2
+no version history for this file/directory	filemanager	pt	Sem histórico de versão para este arquivo/pasta
+operation	filemanager	pt	Operação
+owner	filemanager	pt	Dono
+filemanager preferences	filemanager	pt	Preferências para Gerenciador de Arquivos
+preview of x	filemanager	pt	Visualizar %1
+preview x	filemanager	pt	Visualizar %1
+rename	filemanager	pt	Renomear
+renamed x to x	filemanager	pt	Renomeado %1 para %2
+replaced x	filemanager	pt	Substituído %1
+save all	filemanager	pt	Salvar tudo
+save x	filemanager	pt	Salvar %1
+saved x	filemanager	pt	Salvo %1
+show	filemanager	pt	Exibir
+show ..	filemanager	pt	Exibir ..
+show .files	filemanager	pt	Exibir arquivos cujos nomes iniciam por um ponto
+show command line (experimental. dangerous.)	filemanager	pt	Exibir linha de comando (EXPERIMENTAL. PERIGOSO.)
+show help	filemanager	pt	Exibir ajuda
+size	filemanager	pt	Tamanho
+sort by:	filemanager	pt	Ordenar por:
+total files	filemanager	pt	Total de Arquivos
+unknown mime-type defaults to text/plain when viewing	filemanager	pt	Tipos MIME desconhecidos são visualizados como text/plain por padrão
+unused space	filemanager	pt	Espaço Não Usado
+unused space:	filemanager	pt	Espaço Não Usado:
+up	filemanager	pt	Acima
+update	filemanager	pt	Atualizar
+updated comment for x	filemanager	pt	Comentário atualizado para %1
+upload fields	filemanager	pt	campos de envio de arquivos
+upload files	filemanager	pt	Enviar Arquivos
+used space	filemanager	pt	Espaço Usado
+users	filemanager	pt	Usuários
+version	filemanager	pt	Versão
+view documents in new window	filemanager	pt	Visualizar documentos em uma nova janela
+view documents on server (if available)	filemanager	pt	Visualizar documentos no servidor (se disponível)
+who	filemanager	pt	Quem
+x already exists as a file	filemanager	pt	%1 já existe como um arquivo
+you do not have access to x	filemanager	pt	Você não tem acesso a %1

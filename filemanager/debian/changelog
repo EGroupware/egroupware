@@ -1,4 +1,4 @@
-phpgroupware-phpwebhosting (0.9.14-0.RC3.3) unstable; urgency=low
+phpgroupware-filemanager (0.9.14-0.RC3.3) unstable; urgency=low
 
   * New release.
   	- Source is now splitted into modules.
