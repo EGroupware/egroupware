@@ -90,7 +90,11 @@
 	$t->set_var('left',$left);
 	$t->set_var('right',$right);
 
-	if ($c->total_records > $limit)
+	if (($start + $limit) > $c->total_records)
+	{
+		$t->set_var('lang_showing',lang('showing x - x of x',($start + 1),$c->total_records,$c->total_records));
+	}
+	elseif ($c->total_records > $limit)
 	{
 		$t->set_var('lang_showing',lang('showing x - x of x',($start + 1),($start + $limit),$c->total_records));
 	}
