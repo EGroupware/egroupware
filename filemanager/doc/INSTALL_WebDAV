@@ -85,8 +85,8 @@ To install:
 		AuthMySQL_Password <mysql password>
 		Auth_MySQL_DB <mysql egroupware database>
 
-		AuthMySQL_Password_Table phpgw_accounts
-		AuthMySQL_Username_Field account_lid
+		AuthMySQL_Password_Table "phpgw_accounts AS users"
+		AuthMySQL_Username_Field users.account_lid
 		AuthMySQL_Password_Field account_pwd
 
 		Auth_MySQL_Encryption_Types PHP_MD5
@@ -95,39 +95,18 @@ To install:
 		AuthType Basic
 		require valid-user
 
-	eGroupWare's WebDAV vfs class has some suppose for adding
+	eGroupWare's WebDAV vfs class has some support for adding
 	.htaccess files when creating new directories but does not do
 	so when creating a new directory for a new user so you will
 	need to do this by hand or modify the vfs_dav class.  The .htaccess
-	file would look like "require user boab"
+	file would look like "require user <username>"
 
-	Filemanager also support group directories.  Unfortunatly
-	mod_auth_mysql does not easily support authentication on these and you
-	have to modify it's source with the following patch:
+	Filemanager also supports group directories.  Add the
+	following to the .htaccess file:
 
---- mod_auth_mysql.c-orig       2004-05-24 23:51:55.000000000 +0100
-+++ mod_auth_mysql.c    2004-05-24 23:52:08.000000000 +0100
-@@ -862,8 +862,11 @@
- #endif
-
-        query = ap_pstrcat(r->pool,"select count(*) from ", auth_table,
--       " where ", auth_user_field, "='", esc_user, "'",
--       " and FIND_IN_SET('", esc_group, "',", auth_group_field,")", auth_group_clause, NULL);
-+                          " AS groups, ", auth_table, " AS users, phpgw_acl AS acl",
-+                          " where users.", auth_user_field, "='", esc_user, "'", " AND groups.account_type='g'",
-+                          " AND users.account_type='u' AND groups.account_id=acl.acl_location AND users.account_id=acl.acl_account",
-+                          " AND groups.", auth_group_field, "='", esc_group, "'", NULL);
-+       //         " and FIND_IN_SET('", esc_group, "',", auth_group_field,")", auth_group_clause, NULL);
-
-        ap_log_error(APLOG_MARK, APLOG_NOERRNO | APLOG_DEBUG, r->server,
-                "Group query created; [%s]", query);
-
-	Recompile (if building from Debian source packages:
-	dpkg-buildpackage -rfakeroot -uc -b), then add this to your
-	root .htaccess file:
-
-		AuthMySQL_Group_Table phpgw_accounts
-		Auth_MySQL_Group_Field account_lid
+		AuthMySQL_Group_Table "phpgw_accounts AS groups, phpgw_accounts AS users, phpgw_acl AS acl"
+		Auth_MySQL_Group_Field groups.account_lid
+		Auth_MySQL_Group_Clause " AND groups.account_type='g' AND users.account_type='u' AND groups.account_id=acl.acl_location AND users.account_id=acl.acl_account AND groups.account_lid='Admins'"
 
 	And finally make the group directories by hand: 
 
