@@ -43,10 +43,10 @@
 			$showcol = display_name($column[0]);
 			$cols .= "  <td height=\"21\">\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"index.php",$showcol);
+			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol);
 			$cols .= "</font>\n  </td>";
 			$cols .= "\n";
-			       
+
 			// To be used when displaying the rows
 			$columns_to_display[$column[0]] = True;
 		}
@@ -72,12 +72,23 @@
 		$filter .= ',tid=';
 	}
 
+	// Check if prefs were set, if not, create some defaults
 	if (!$columns_to_display ) {
 		$columns_to_display = array(
-			"n_given" => "n_given",
+			"n_given"  => "n_given",
 			"n_family" => "n_family",
 			"org_name" => "org_name"
 		);
+		// No prefs,. so cols above may have been set to "" or a bunch of <td></td>
+		$cols="";
+		while ($column = each($columns_to_display)) {
+			$showcol = display_name($column[0]);
+			$cols .= "  <td height=\"21\">\n";
+			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
+			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol);
+			$cols .= "</font>\n  </td>";
+			$cols .= "\n";
+		}
 		$noprefs=lang("Please set your preferences for this app");
 	}
 	$qcols = $columns_to_display;
