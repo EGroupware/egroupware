@@ -1,5 +1,5 @@
-address book	common	en	Address Book
 addressbook	common	en	Addressbook
+address book	common	en	Address Book
 addressbook preferences	addressbook	en	Addressbook preferences
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
@@ -9,6 +9,7 @@ addvcard	addressbook	en	Add VCard
 alt. csv import	addressbook	en	Alt. CSV Import
 bbs phone	addressbook	en	BBS Phone
 birthday	common	en	Birthday
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 business address type	addressbook	en	Business Address Type
 business city	addressbook	en	Business City
 business	common	en	Business
@@ -25,7 +26,9 @@ cell phone	addressbook	en	cell phone
 city	common	en	City
 company	common	en	Company
 company name	common	en	Company Name
+contact application	admin	en	Contact application
 contact	common	en	Contact
+contact settings	admin	en	Contact Settings
 country	common	en	Country
 custom fields	addressbook	en	Custom Fields
 department	common	en	Department
@@ -37,8 +40,8 @@ fields to show in address list	addressbook	en	Fields to show in address list
 full name	addressbook	en	Full Name
 geo	addressbook	en	GEO
 grant addressbook access	common	en	Grant Addressbook Access
-home city	addressbook	en	Home City
 home address type	addressbook	en	Home Address Type
+home city	addressbook	en	Home City
 home country	addressbook	en	Home Country
 home email	addressbook	en	Home EMail
 home email type	addressbook	en	Home EMail Type
@@ -51,15 +54,18 @@ import file	addressbook	en	Import File
 import from outlook	addressbook	en	Import from Outlook
 isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
+ldap context for contacts	admin	en	LDAP context for contacts
+ldap host for contacts	admin	en	LDAP host for contacts
+ldap root dn for contacts	admin	en	LDAP root dn for contacts
+ldap root pw for contacts	admin	en	LDAP root pw for contacts
 line 2	addressbook	en	Line 2
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
-other phone	addressbook	en	Other Phone
-<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 other number	addressbook	en	Other Number
+other phone	addressbook	en	Other Phone
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
 phone number	common	en	Phone Number
@@ -69,6 +75,8 @@ prefix	addressbook	en	Prefix
 public key	addressbook	en	Public Key
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
+retrieve contacts	admin	en	retrieve contacts
+select where you want to store	admin	en	Select where you want to store
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 state	common	en	State
 street	common	en	Street
