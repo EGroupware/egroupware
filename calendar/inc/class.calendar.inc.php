@@ -1263,18 +1263,41 @@ class calendar extends calendar_
 			$phpgw->preferences->save_repository();
 		}
 
-		if($phpgw_info['user']['preferences']['common']['time_format'] == '12')
+		$t_format = $phpgw_info['user']['preferences']['common']['time_format'];
+		$browser = CreateObject('phpgwapi.browser');
+		$browser->browser();
+		$browser_agent = $browser->get_agent();
+		if($browser_agent == 'MOZILLA')
 		{
-			$time_width=15;
+			if($t_format == '12')
+			{
+				$time_width=48;
+			}
+			else
+			{
+				$time_width=26;
+			}
 		}
 		else
 		{
-			$time_width=9;
+			if($t_format == '12')
+			{
+				$time_width=20;
+			}
+			else
+			{
+				$time_width=14;
+			}
 		}
 		$var = Array(
-			'event_width' => (100 - $time_width),
-			'time_width'  => $time_width
+			'event_width'		=> (100 - $time_width),
+			'time_width'		=> $time_width,
+			'time_bgcolor'		=>	$phpgw_info['theme']['cal_dayview'],
+			'bg_time_image'	=>	$this->phpgwapi_template_dir.'/navbar_filler.jpg',
+			'font_color'		=>	$phpgw_info['theme']['bg_text'],
+			'font'				=>	$phpgw_info['theme']['font']
 		);
+
 		$p->set_var($var);
 
 		$first_hour = (int)$phpgw_info['user']['preferences']['calendar']['workdaystarts'] + 1;
@@ -1341,15 +1364,7 @@ class calendar extends calendar_
 				$this->last_row = $i;
 			}
 		}
-		$var = Array(
-			'time_bgcolor'		=>	$phpgw_info['theme']['cal_dayview'],
-			'bg_time_image'	=>	$this->phpgwapi_template_dir.'/navbar_filler.jpg',
-			'font_color'		=>	$phpgw_info['theme']['bg_text'],
-			'font'				=>	$phpgw_info['theme']['font']
-		);
 
-		$p->set_var($var);
-		
 		if (isset($time[99]) && strlen($time[99]) > 0)
 		{
 			$var = Array(

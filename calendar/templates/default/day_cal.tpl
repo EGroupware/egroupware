@@ -17,10 +17,12 @@
     {
       width: {time_width}%;
       background-image: url('{bg_time_image}');
+      background-repeat: repeat;
+      border-width: 1;
       color: #{font_color};
       font-family: {font};
       font-size: 65%;
-      line-height: 110%;
+      line-height: 100%;
       vertical-align: middle;
     }
 
