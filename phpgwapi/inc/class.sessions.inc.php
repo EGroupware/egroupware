@@ -99,6 +99,15 @@
           $db->next_record();   */
        }
 
+			 $login_array = explode("@", $db->f("session_lid"));
+       $this->account_lid = $login_array[0];
+
+       if ($login_array[1]!="") {
+          $this->account_domain = $login_array[1];
+       } else {
+          $this->account_domain = $phpgw_info["server"]["default_domain"];
+       }
+
        $phpgw_info["user"]["kp3"] = $this->kp3;
        $phpgw_info_flags    = $phpgw_info["flags"];
 
@@ -110,13 +119,15 @@
 
        if ($this->use_cache) {
       		$t = $this->appsession('phpgw_info_cache','phpgwapi');
+					$phpgw_info["server"]	= $t["server"];
+					$phpgw_info["user"]		= $t["user"];
+					$phpgw_info["hooks"]	 = $t["hooks"];
        } else {
-      		$t = $this->read_repositories();
+      		$this->read_repositories();
+      		$phpgw_info["user"]		= $this->user;
+      		$phpgw_info["hooks"]	 = $this->hooks;
        }
 
-       $phpgw_info["server"]					= $t["server"];
-       $phpgw_info["user"]						= $t["user"];
-       $phpgw_info["hooks"]					 = $t["hooks"];
        $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
