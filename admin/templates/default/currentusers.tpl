@@ -5,6 +5,7 @@
  <tr bgcolor="{bg_color}">
    {left_next_matchs}
    <td>&nbsp;</td>
+   <td>&nbsp;</td>
    {right_next_matchs}
  </tr> 
 
