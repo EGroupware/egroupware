@@ -139,6 +139,7 @@
       $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
   }
 
+  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
   $phpgw->template->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
   $phpgw->template->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
 

@@ -4,6 +4,10 @@
  <form method="POST" action="{form_action}">
   <center>
    <table border=0 width=65%>
+    <tr bgcolor="{th_bg}">
+      <td colspan="4">&nbsp;</td>
+    </tr>
+
     <tr bgcolor="{tr_color1}">
      <td>{lang_loginid}</td>
      <td><input name="n_loginid" value="{n_loginid_value}"></td>
