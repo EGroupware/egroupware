@@ -162,7 +162,7 @@
 		function _send_xmlrpc_ssl($method_name, $args, $url, $debug=True)
 		{
 			list($uri,$hostpart) = $this->_split_url($url);
-			if(gettype($args) != 'array')
+			if(!@is_array($args))
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'string');
@@ -171,7 +171,7 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(gettype($val) == 'array')
+					if(@is_array($val))
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -214,7 +214,7 @@
 		function _send_xmlrpc_($method_name, $args, $url, $debug=True)
 		{
 			list($uri,$hostpart) = $this->_split_url($url);
-			if(gettype($args) != 'array')
+			if(!@is_array($args))
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 				$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'string');
@@ -223,7 +223,7 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(gettype($val) == 'array')
+					if(@is_array($val))
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -268,7 +268,7 @@
 		{
 			$method_name = str_replace('.','_',$method_name);
 			list($uri,$hostpart) = $this->_split_url($url);
-			if(gettype($args) != 'array')
+			if(!@is_array($args))
 			{
 				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
 			}
@@ -276,7 +276,7 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(gettype($val) == 'array')
+					if(@is_array($val))
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -318,11 +318,11 @@
 			{
 				$arr = '';
 			}
-			elseif(is_array($args))
+			elseif(@is_array($args))
 			{
 				while(list($key,$val) = @each($args))
 				{
-					if(gettype($val) == 'array')
+					if(@is_array($val))
 					{
 						while(list($x,$y) = each($val))
 						{
@@ -365,7 +365,7 @@
 
 		function build_request($_req,$recursed=False,$ext='')
 		{
-			if(is_array($_req))
+			if(@is_array($_req))
 			{
 				$ele = array();
 				@reset($_req);
@@ -378,7 +378,7 @@
 			}
 			else
 			{
-				$_type = (is_long($_req)?'int':gettype($_req));
+				$_type = (is_long($_req) ? 'int' : gettype($_req));
 				if($recursed)
 				{
 					return CreateObject('phpgwapi.soapval',$ext,$_type,$_req);
@@ -421,7 +421,7 @@
 			{
 				$serverid = $this->serverid;
 			}
-			if($serverid && gettype($this->server) == 'array')
+			if((int)$serverid && @is_array($this->server))
 			{
 				$sql = "UPDATE $this->table SET "
 					. "server_name='" . $this->server['server_name'] . "',"
@@ -443,7 +443,7 @@
 
 		function create($server_info='')
 		{
-			if(gettype($server_info) != 'array')
+			if(!@is_array($server_info))
 			{
 				return False;
 			}
@@ -608,7 +608,7 @@
 			{
 				return False;
 			}
-			if(gettype($serverdata) == 'integer')
+			if(is_int($serverdata))
 			{
 				$serverid = $serverdata;
 				settype($server_name,'string');
@@ -630,7 +630,7 @@
 		/* TODO - Determine trust level here */
 		function auth($serverdata='')
 		{
-			if(!$serverdata || gettype($serverdata) != 'array')
+			if(!$serverdata || !@is_array($serverdata))
 			{
 				return False;
 			}
