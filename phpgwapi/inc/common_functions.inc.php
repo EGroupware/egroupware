@@ -195,7 +195,6 @@
 	*/
 	function safe_args($expected, $recieved, $line='??', $file='??')
 	{
-echo '$recieved:<pre>'; print_r($recieved); echo '</pre>';
 		/* This array will contain all the required fields */
 		$required = Array();
 
