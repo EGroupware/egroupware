@@ -100,6 +100,7 @@ enter your HTTP proxy server port	setup	en	Enter your HTTP proxy server port
 enter your default FTP server	setup	en	Enter your default FTP server
 export phpgroupware accounts from sql to ldap	setup	en	Export phpGroupWare accounts from SQL to LDAP
 export sql users to ldap	setup	en	Export SQL users to LDAP
+file	setup	en	FILE
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
 force selectbox	setup	en	Force Selectbox
 found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
@@ -127,6 +128,7 @@ install	setup	en	Install
 install Applications	setup	en	Install Applications
 install language	setup	en	Install Language
 installed	setup	en	installed
+invalid ip address	setup	en	Invalid IP address
 invalid password	setup	en	Invalid password
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
@@ -142,6 +144,7 @@ ldap host	setup	en	LDAP host
 ldap import users	setup	en	LDAP import users
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
+limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	en	Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)
 logout	setup	en	Logout
 makesure	setup	en	Make sure that your database is created and the account permissions are set
 manage applications	setup	en	Manage Applications
@@ -200,6 +203,7 @@ process	setup	en	Process
 re-check my database	setup	en	Re-Check my database
 re-check my installation	setup	en	Re-Check My Installation
 re-enter password	setup	en	Re-enter password
+read_translations_from	setup	en	Read_translations_from
 really uninstall all applications	setup	en	REALLY Uninstall all applications
 registered	setup	en	registered
 remove	setup	en	Remove
