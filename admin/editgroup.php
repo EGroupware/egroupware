@@ -18,8 +18,6 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
-$debugme = "on";
-
   function is_odd($n)
   {
      $ln = substr($n,-1);
@@ -142,7 +140,7 @@ $debugme = "on";
      $group_user = $phpgw->acl->get_ids_for_location($group_id,1,'phpgw_group');
 
      while ($user = each($group_user)) {
-        $selected_users[$user[1]] = ' selected';
+        $selected_users[intval($user[1])] = ' selected';
      }
 
      $apps = CreateObject('phpgwapi.applications',intval($group_id));
@@ -169,7 +167,7 @@ $debugme = "on";
 	  	        . "account_status != 'L' AND account_type='u' ORDER BY account_lastname,account_firstname,account_lid asc");
   while ($phpgw->db->next_record()) {
      $user_list .= '<option value="' . $phpgw->db->f('account_id') . '"'
-    	        . $selected_users[$phpgw->db->f('account_id')] . '>'
+    	        . $selected_users[intval($phpgw->db->f('account_id'))] . '>'
 	            . $phpgw->common->display_fullname($phpgw->db->f('account_lid'),
 						       $phpgw->db->f('account_firstname'),
 						       $phpgw->db->f('account_lastname')) . '</option>';
