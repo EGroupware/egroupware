@@ -12,17 +12,25 @@
 
 	/* $Id$ */
 
-	/*!
-	@class date_widget
-	@author ralfbecker
-	@abstract widget that reads a date and/or time 
-	@param Options/$cell['size'] = $format[,$options], 
-	@param $format: ''=timestamp or eg. 'Y-m-d H:i' for 2002-12-31 23:59
-	@param $options: &1 = year is int-input not selectbox, &2 = show a [Today] button, \
-		&4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps),
-		&8 = dont show time for readonly and type date-time if time is 0:00
-	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
-	*/
+	/**
+	 * eTemplate extension to input or display date and/or time values
+	 *
+	 * Contains the following widgets: Date, Date+Time, Time, Hour
+	 *
+	 * Supported attributes: format[,options]
+	 *  format: ''=timestamp, or eg. 'Y-m-d H:i' for 2002-12-31 23:59
+	 *  options: &1 = year is int-input not selectbox, &2 = show a [Today] button, (html-UI always uses jscal and dont care for &1+&2)
+	 *           &4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps),
+	 *           &8 = dont show time for readonly and type date-time if time is 0:00, 
+	 *           &16 = prefix r/o display with dow
+	 *
+	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
+	 * Uses the adodb datelibary to overcome the windows-limitation to not allow dates before 1970
+	 *
+	 * @package etemplate
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class date_widget
 	{
 		var $public_functions = array(
@@ -32,23 +40,35 @@
 		var $human_name = array(
 			'date'      => 'Date',		// just a date, no time
 			'date-time' => 'Date+Time',	// date + time
-			'date-timeonly' => 'Time'
+			'date-timeonly' => 'Time',	// time
+			'date-houronly' => 'Hour',	// hour
 		);
+		var $dateformat;	// eg. Y-m-d, d-M-Y
+		var $timeformat;	// 12 or 24
 
 		function date_widget($ui)
 		{
 			if ($ui == 'html')
 			{
-				$this->jscal = CreateObject('phpgwapi.jscalendar');
+				if (!is_object($GLOBALS['phpgw']->jscalendar))
+				{
+					$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+				}
+				$this->jscal = &$GLOBALS['phpgw']->jscalendar;
 			}
 			$this->timeformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'];
+			$this->dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			list($data_format,$options) = explode(',',$cell['size']);
-			$extension_data = $data_format;
 			$type = $cell['type'];
+			list($data_format,$options) = explode(',',$cell['size']);
+			if ($type == 'date-houronly' && empty($data_format)) $data_format = 'H';
+			$extension_data = array(
+				'data_format'	=> $data_format,
+				'type'			=> $type,
+			);	
 
 			if (!$value)
 			{
@@ -81,12 +101,12 @@
 			else
 			{
 				$value = array(
-					'Y' => date('Y',$value),
-					'm' => date('m',$value),
-					'M' => substr(lang(date('F',$value)),0,3),
-					'd' => date('d',$value),
-					'H' => date('H',$value),
-					'i' => date('i',$value)
+					'Y' => adodb_date('Y',$value),
+					'm' => adodb_date('m',$value),
+					'M' => substr(lang(adodb_date('F',$value)),0,3),
+					'd' => adodb_date('d',$value),
+					'H' => adodb_date('H',$value),
+					'i' => adodb_date('i',$value)
 				);
 			}
 			$time_0h0 = !(int)$value['H'] && !(int)$value['i'];
@@ -102,7 +122,7 @@
 				}
 				$timeformat += array(5 => 'a');
 			}
-			$format = split('[/.-]',$sep=$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+			$format = split('[/.-]',$this->dateformat);
 			
 			$readonly = $cell['readonly'] || $readonlys;
 
@@ -114,15 +134,22 @@
 			if ($readonly)	// is readonly
 			{
 				$sep = array(
-					1 => $sep[1],
-					2 => $sep[1],
+					1 => $this->dateformat[1],
+					2 => $this->dateformat[1],
 					3 => ' ',
 					4 => ':'
 				);
-				for ($str='',$n = $type == 'date-timeonly' ? 3 : 0; $n < count($format); ++$n)
+				for ($str='',$n = substr($type,-4) == 'only' ? 3 : 0; $n < count($format); ++$n)
 				{
-					$str .= ($str != '' ? $sep[$n] : '');
-					$str .= $value[$format[$n]];
+					if ($value[$format[$n]])
+					{
+						if (!$n && $options & 16 )
+						{
+							$str = lang(adodb_date('l',adodb_mktime(12,0,0,$value['m'],$value['d'],$value['Y']))).' ';
+						}
+						$str .= ($str != '' ? $sep[$n] : '') . $value[$format[$n]];
+					}
+					if ($type == 'date-houronly') ++$n;	// no minutes
 				}
 				$value = $str;
 				$cell['type'] = 'label';
@@ -158,7 +185,7 @@
 				'i' => 'Minute'
 			);
 			$row = array();
-			for ($i=0,$n=$type == 'date-timeonly'?3:0; $n < ($type == 'date' ? 3 : 5); ++$n,++$i)
+			for ($i=0,$n= substr($type,-4) == 'only' ? 3 : 0; $n < ($type == 'date' ? 3 : 5); ++$n,++$i)
 			{
 				$dcell = $tpl->empty_cell();
 				// test if we can use jsCalendar
@@ -169,8 +196,6 @@
 					$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],lang($cell['help']));
 					$n = 2;				// no other fields
 					$options &= ~2;		// no set-today button
-					// register us for process_exec
-					$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'ext-'.$cell['type'];
 				}
 				else
 				{
@@ -183,7 +208,7 @@
 				{
 					$dcell['label'] = ':';	// put a : between hour and minute
 				}
-				$dcell['no_lang'] = True;
+				$dcell['no_lang'] = 2;
 				$row[$tpl->num2chrs($i)] = &$dcell;
 				unset($dcell);
 				
@@ -193,10 +218,11 @@
 					$dcell['name'] = 'today';
 					$dcell['label'] = 'Today';
 					$dcell['help'] = 'sets today as date';
+					$dcell['no_lang'] = True;
 					if (($js = $tmpl->java_script()))
 					{
 						$dcell['needed'] = True;	// to get a button
-						$dcell['onchange'] = "this.form.elements['$name"."[Y]'].value='".date('Y')."'; this.form.elements['$name"."[m]'].value='".date('n')."';this.form.elements['$name"."[d]'].value='".(0+date('d'))."'; return false;";
+						$dcell['onchange'] = "this.form.elements['$name"."[Y]'].value='".adodb_date('Y')."'; this.form.elements['$name"."[m]'].value='".adodb_date('n')."';this.form.elements['$name"."[d]'].value='".(0+adodb_date('d'))."'; return false;";
 					}
 					$dcell['type'] = $js ? 'button' : 'checkbox';
 					$row[$tpl->num2chrs(++$i)] = &$dcell;
@@ -208,10 +234,11 @@
 					$dcell['type'] = 'html';
 					$dcell['name'] = 'space';
 					$value['space'] = ' &nbsp; &nbsp; ';
-					$dcell['no_lang'] = True;
 					$row[$tpl->num2chrs(++$i)] = &$dcell;
 					unset($dcell);
 				}
+				if ($type == 'date-houronly') $n++;	// no minutes
+
 				if ($n == 4 && $type != 'date' && $this->timeformat == '12')
 				{
 					$dcell = $tpl->empty_cell();
@@ -240,7 +267,7 @@
 
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			//echo "<p>date_widget::post_process('$name','$extension_data') value="; print_r($value); echo ", value_in="; print_r($value_in); echo "</p>\n";
+			//echo "<p>date_widget::post_process('$name','$extension_data[type]','$extension_data[data_format]') value="; print_r($value); echo ", value_in="; print_r($value_in); echo "</p>\n";
 			if (!isset($value) && !isset($value_in))
 			{
 				return False;
@@ -250,7 +277,7 @@
 				$set = array('Y','m','d');
 				foreach($set as $d)
 				{
-					$value[$d] = date($d);
+					$value[$d] = adodb_date($d);
 				}
 			}
 			if (isset($value_in['str']) && !empty($value_in['str']))
@@ -268,11 +295,11 @@
 				{
 					if (!$value['m'])
 					{
-						$value['m'] = date('m');
+						$value['m'] = adodb_date('m');
 					}
 					if (!$value['Y'])
 					{
-						$value['Y'] = date('Y');
+						$value['Y'] = adodb_date('Y');
 					}
 					elseif ($value['Y'] < 100)
 					{
@@ -291,15 +318,22 @@
 						$value['H'] += 12;
 					}
 				}
-				if (empty($extension_data))
+				// checking the date is a correct one
+				if (!checkdate($value['m'],$value['d'],$value['Y']))
 				{
-					$value = mktime(intval($value['H']),intval($value['i']),0,$value['m'],$value['d'],$value['Y']);
+					$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] = lang("'%1' is not a valid date !!!",
+						$GLOBALS['phpgw']->common->dateformatorder($value['Y'],$value['m'],$value['d'],true));
+				}
+				$data_format = $extension_data['data_format'];
+				if (empty($data_format))
+				{
+					$value = adodb_mktime((int) $value['H'],(int) $value['i'],0,$value['m'],$value['d'],$value['Y']);
 				}
 				else
 				{
-					for ($n = 0,$str = ''; $n < strlen($extension_data); ++$n)
+					for ($n = 0,$str = ''; $n < strlen($data_format); ++$n)
 					{
-						if (strstr('YmdHi',$c = $extension_data[$n]))
+						if (strstr('YmdHi',$c = $data_format[$n]))
 						{
 							$str .= sprintf($c=='Y'?'%04d':'%02d',$value[$c]);
 						}
