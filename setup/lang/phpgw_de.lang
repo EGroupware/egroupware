@@ -375,7 +375,7 @@ you appear to have microsoft sql server support enabled	setup	de	Sie scheinen Mi
 you appear to have mysql support enabled	setup	de	Sie scheinen MySQL Unterstützung zu haben.
 you appear to have oracle support enabled	setup	de	Sie scheinen Oracle Unterstützung zu haben.
 you appear to have oracle v8 (oci) support enabled	setup	de	Sie scheinen Oracle V8 (OCI) Unterstützung zu haben.
-you appear to have postgres-db support enabled	setup	de	Sie scheinen Postgres Unterstützung zu haben.
+You appear to have PostgreSQL support enabled	setup	de	Sie scheinen Postgres Unterstützung zu haben.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
 you are ready for this stage, but this stage is not yet written.<br>	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br>
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben

@@ -40,17 +40,21 @@
 
 	function check_form_values()
 	{
+		// PHP will automatically replace any dots in incoming
+		// variable names with underscores.
+		
 		$errors = '';
 		$domains = get_var('domains',Array('POST'));
 		@reset($domains);
 		while(list($k,$v) = @each($domains))
-		{
+		{	
+			$variableName = str_replace('.','_',$k);
 			$deletedomain = get_var('deletedomain',Array('POST'));
-			if(isset($deletedomain[$k]))
+			if(isset($deletedomain[$variableName]))
 			{
 				continue;
 			}
-			$dom = get_var('setting_'.$k,Array('POST'));
+			$dom = get_var('setting_'.$variableName,Array('POST'));
 			if(!$dom['config_pass'])
 			{
 				$errors .= '<br>' . lang("You didn't enter a config password for domain %1",$v);
