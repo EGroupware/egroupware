@@ -19,8 +19,14 @@
 	$setup_info['admin']['enable']    = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['admin']['hooks'][] = 'preferences';
+	$setup_info['admin']['hooks'][] = 'acl_manager';
+	$setup_info['admin']['hooks'][] = 'add_def_pref';
 	$setup_info['admin']['hooks'][] = 'admin';
+	$setup_info['admin']['hooks'][] = 'after_navbar';
+	$setup_info['admin']['hooks'][] = 'config';
+	$setup_info['admin']['hooks'][] = 'deleteaccount';
+	$setup_info['admin']['hooks'][] = 'manual';
+	$setup_info['admin']['hooks'][] = 'view_user';
 
 	/* Dependacies for this app to work */
 	$setup_info['admin']['depends'][] = array(

@@ -18,7 +18,7 @@
 	$setup_info['phpwebhosting']['enable']  = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['phpwebhosting']['hooks'] = array ('preferences', 'admin');
+	$setup_info['phpwebhosting']['hooks'] = array ('add_def_pref', 'admin', 'deleteaccount', 'preferences');
 
 	/* Dependencies for this app to work */
 	$setup_info['phpwebhosting']['depends'][] = array(

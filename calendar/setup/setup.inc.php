@@ -22,16 +22,20 @@
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_repeats';
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_user';
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_alarm';
-	
+
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['calendar']['hooks'] = array(
-		'preferences',
-		'admin',
-		'manual',
-		'deleteaccount',
 		'add_def_prefs',
+		'admin',
+		'deleteaccount',
 		'email',
-		'home'
+		'home',
+		'home_day',
+		'home_month',
+		'home_week',
+		'home_year',
+		'manual',
+		'preferences'
 	);
 
 	/* Dependencies for this app to work */
