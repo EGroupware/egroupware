@@ -240,7 +240,17 @@
 
       // next line adds index.php when one is assumed since
       // iis will not interpret urls like http://.../addressbook/?xyz=5
-      return str_replace("/?", "/index.php?", $url);
+      $url = str_replace("/?", "/index.php?", $url);
+      $html_check = strtolower(substr($url ,0,4));
+      $slash_check = strtolower(substr($url ,0,1));
+      if($url_check != "http") {
+        if($slash_check != "/") {
+          $url = $phpgw_info["server"]["hostname"].$phpgw_info["server"]["webserver_url"]."/".$url; 
+        } else{
+          $url = $phpgw_info["server"]["hostname"].$url; 
+        } 
+      }
+      return $url;
     }  
 
     function strip_html($s)

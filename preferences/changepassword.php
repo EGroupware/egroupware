@@ -77,7 +77,7 @@
   $passwd_changed = $phpgw->auth->change_password($o_passwd, $n_passwd);
   if (!$passwd_changed){
     // This need to be changed to show a different message based on the result
-    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/"));
+    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/","cd=38"));
   }else{
     $phpgw_info["user"]["passwd"] = $phpgw->auth->change_password($o_passwd, $n_passwd);
     $phpgw->accounts->sync();

@@ -852,6 +852,7 @@
         case 15:	$s .= lang("Entry updated sucessfully");	break;
         case 16:	$s .= lang("Entry has been deleted sucessfully"); break;
         case 18:	$s .= lang("Password has been updated");	break;
+        case 38:	$s .= lang("Password could not be changed");	break;
         case 19:	$s .= lang("Session has been killed");	break;
         case 27:	$s .= lang("Account has been updated");	break;
         case 28:	$s .= lang("Account has been created");	break;
