@@ -76,31 +76,71 @@
 			}
 			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
 			/* Might change this to '' at the end---> */
-			$start   = $GLOBALS['HTTP_POST_VARS']['start']   ? $GLOBALS['HTTP_POST_VARS']['start']   : $GLOBALS['HTTP_GET_VARS']['start'];
-			$query   = $GLOBALS['HTTP_POST_VARS']['query']   ? $GLOBALS['HTTP_POST_VARS']['query']   : $GLOBALS['HTTP_GET_VARS']['query'];
-			$sort    = $GLOBALS['HTTP_POST_VARS']['sort']    ? $GLOBALS['HTTP_POST_VARS']['sort']    : $GLOBALS['HTTP_GET_VARS']['sort'];
-			$order   = $GLOBALS['HTTP_POST_VARS']['order']   ? $GLOBALS['HTTP_POST_VARS']['order']   : $GLOBALS['HTTP_GET_VARS']['order'];
-			$filter  = $GLOBALS['HTTP_POST_VARS']['filter']  ? $GLOBALS['HTTP_POST_VARS']['filter']  : $GLOBALS['HTTP_GET_VARS']['filter'];
-			$cat_id  = $GLOBALS['HTTP_POST_VARS']['cat_id']  ? $GLOBALS['HTTP_POST_VARS']['cat_id']  : $GLOBALS['HTTP_GET_VARS']['cat_id'];
-			$fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'] ? $GLOBALS['HTTP_POST_VARS']['fcat_id'] : $GLOBALS['HTTP_GET_VARS']['fcat_id'];
+			$_start   = $GLOBALS['HTTP_POST_VARS']['start']   ? $GLOBALS['HTTP_POST_VARS']['start']   : $GLOBALS['HTTP_GET_VARS']['start'];
+			$_query   = $GLOBALS['HTTP_POST_VARS']['query']   ? $GLOBALS['HTTP_POST_VARS']['query']   : $GLOBALS['HTTP_GET_VARS']['query'];
+			$_sort    = $GLOBALS['HTTP_POST_VARS']['sort']    ? $GLOBALS['HTTP_POST_VARS']['sort']    : $GLOBALS['HTTP_GET_VARS']['sort'];
+			$_order   = $GLOBALS['HTTP_POST_VARS']['order']   ? $GLOBALS['HTTP_POST_VARS']['order']   : $GLOBALS['HTTP_GET_VARS']['order'];
+			$_filter  = $GLOBALS['HTTP_POST_VARS']['filter']  ? $GLOBALS['HTTP_POST_VARS']['filter']  : $GLOBALS['HTTP_GET_VARS']['filter'];
+			$_cat_id  = $GLOBALS['HTTP_POST_VARS']['cat_id']  ? $GLOBALS['HTTP_POST_VARS']['cat_id']  : $GLOBALS['HTTP_GET_VARS']['cat_id'];
+			$_fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'] ? $GLOBALS['HTTP_POST_VARS']['fcat_id'] : $GLOBALS['HTTP_GET_VARS']['fcat_id'];
 
-			if(!empty($start) || ($start == '0') || ($start == 0))
+			if(!empty($_start) || ($_start == '0') || ($_start == 0))
 			{
-				if($this->debug) { echo '<br>overriding start: "' . $this->start . '" now "' . $start . '"'; }
-				$this->start = $start;
+				if($this->debug) { echo '<br>overriding $start: "' . $this->start . '" now "' . $_start . '"'; }
+				$this->start = $_start;
 			}
-			if($limit)  { $this->limit  = $limit;  }
-			if((empty($query) && !empty($this->query)) ||
-				!empty($query))
+			if($_limit)
 			{
-				$this->query  = $query;
+				$this->limit  = $_limit;
+			}
+			if((empty($_query) && !empty($this->query)) || !empty($_query))
+			{
+				$this->query  = $_query;
 			}
 
-			if(isset($fcat_id)) { $this->cat_id = $fcat_id; }
-			if($fcat_id == '0' || $fcat_id == 0 || $fcat_id == '') { $this->cat_id = 0; }
-			if(isset($sort))    { $this->sort   = $sort;   }
-			if(isset($order))   { $this->order  = $order;  }
-			if(isset($filter))  { $this->filter = $filter; }
+			if(isset($_fcat_id) && !empty($_fcat_id))
+			{
+				$this->cat_id = $_fcat_id;
+			}
+			if($_fcat_id == '0' || $_fcat_id == 0 || $_fcat_id == '')
+			{
+				$this->cat_id = 0;
+			}
+
+			if(isset($_sort)   && !empty($_sort))
+			{
+				if($this->debug) { echo '<br>overriding $sort: "' . $this->sort . '" now "' . $_sort . '"'; }
+				$this->sort   = $_sort;
+			}
+
+			if(isset($_order)  && !empty($_order))
+			{
+				if($this->debug) { echo '<br>overriding $order: "' . $this->order . '" now "' . $_order . '"'; }
+				$this->order  = $_order;
+			}
+
+			if(isset($_filter) && !empty($_filter))
+			{
+				if($this->debug) { echo '<br>overriding $filter: "' . $this->filter . '" now "' . $_filter . '"'; }
+				$this->filter = $_filter;
+			}
+
+			if($this->debug) { $this->_debug_sqsof(); }
+		}
+
+		function _debug_sqsof()
+		{
+			$data = array(
+				'start'  => $this->start,
+				'limit'  => $this->limit,
+				'query'  => $this->query,
+				'sort'   => $this->sort,
+				'order'  => $this->order,
+				'filter' => $this->filter,
+				'cat_id' => $this->cat_id
+			);
+			echo '<br>BO:';
+			_debug_array($data);
 		}
 
 		function list_methods($_type='xmlrpc')
@@ -181,6 +221,7 @@
 			$this->order  = $data['order'];
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
+			if($this->debug) { echo '<br>read_sessiondata();'; $this->_debug_sqsof(); }
 		}
 
 		function strip_html($dirty = '')

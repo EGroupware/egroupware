@@ -63,6 +63,11 @@
 			$this->company  = CreateObject('phpgwapi.categories','addressbook_company');
 			$this->prefs    = $GLOBALS['phpgw_info']['user']['preferences']['addressbook'];
 
+			$this->_set_sessiondata();
+		}
+
+		function _set_sessiondata()
+		{
 			$this->start    = $this->bo->start;
 			$this->limit    = $this->bo->limit;
 			$this->query    = $this->bo->query;
@@ -71,7 +76,6 @@
 			$this->filter   = $this->bo->filter;
 			$this->cat_id   = $this->bo->cat_id;
 			if($this->debug) { $this->_debug_sqsof(); }
-			/* _debug_array($this); */
 		}
 
 		function _debug_sqsof()
@@ -1151,6 +1155,11 @@
 			$entry   = $GLOBALS['HTTP_POST_VARS']['entry'];
 			$fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'];
 
+			$test = unserialize(rawurldecode($entry));
+			if(!($test == $entry))
+			{
+				$entry = $test;
+			}
 			/* _debug_array($entry); exit; */
 
 			if (!$entry['bday_month'] && !$entry['bday_day'] && !$entry['bday_year'])
