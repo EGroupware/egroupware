@@ -6,46 +6,46 @@ account permissions	admin	es	Permisos de la cuenta
 account preferences	admin	es	Preferencias de la cuenta
 acl manager	admin	es	Manejo de LCA
 acl rights	admin	es	Permisos de LCA
-action	admin	es	Accion
+action	admin	es	Acción
 active	admin	es	Activo
-add a new account.	admin	es	Agregar una nueva cuenta.
-add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	es	Agregar usuarios creados automaticamente al siguiente grupo (se usara 'Default' si no especifica ninguno.)
-add global category	admin	es	Agregar Categoria Global
-add new account	admin	es	Agregar una nueva cuenta
-add new application	admin	es	Agregar nueva aplicación
-add peer server	admin	es	Agregar Servidor Par
+add a new account.	admin	es	Añadir una nueva cuenta.
+add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	es	Añadir usuarios creados automaticamente al siguiente grupo (se usara 'Default' si no especifica ninguno.)
+add global category	admin	es	Añadir Categoria Global
+add new account	admin	es	Añadir una nueva cuenta
+add new application	admin	es	Añadir nueva aplicación
+add peer server	admin	es	Añadir Servidor Par
 admin email	admin	es	Administrador E-mail
-administration	admin	es	Administracion
+administration	admin	es	Administración
 admin name	admin	es	Nombre del Administrador
-admin options	admin	es	Opciones de Administracion
+admin options	admin	es	Opciones de Administración
 admins	admin	es	Administradores
-allow anonymous access to this app	admin	es	Permitir acceso anonimo a esta aplicacion
-all records and account information will be lost!	admin	es	Se perderan todos los registros e informacion de cuentas!
+allow anonymous access to this app	admin	es	Permitir acceso anónimo a esta aplicación
+all records and account information will be lost!	admin	es	¡ Se perderan todos los registros e información de las cuentas!
 all users	admin	es	Todos los usuarios
-anonymous user	admin	es	Usuario anonimo
+anonymous user	admin	es	Usuario anónimo
 application name	admin	es	Nombre de la aplicación
 applications	admin	es	Aplicaciones
 application title	admin	es	Titulo de la aplicación
-are you sure you want to delete this account ?	admin	es	Esta seguro de querer borrar esta cuenta ?
-are you sure you want to delete this application ?	admin	es	Seguro de querer borrar esta aplicación ?
-are you sure you want to delete this category ?	admin	es	Seguro de querer borrar esta categoria ?
-are you sure you want to delete this group ?	admin	es	Esta seguro de querer borrar este grupo ?
-are you sure you want to delete this server ?	admin	es	Esta seguro de querer borrar este servidor ?
-are you sure you want to kill this session ?	admin	es	Esta seguro de querer matar esta sesion ?
-attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	es	Intento usar el tipo MIME correcto para FTP en vez de 'application/octet-stream'
-authentication / accounts	admin	es	Autenticacion / Cuentas
-auto create account records for authenticated users	admin	es	Crear cuentas automaticamente para usuarios autenticados
-bi-directional	admin	es	bi-direccional
-bi-dir passthrough	admin	es	bi-direccional pasante
+are you sure you want to delete this account ?	admin	es	¿ Está seguro de querer borrar esta cuenta ?
+are you sure you want to delete this application ?	admin	es	¿ Está seguro de querer borrar esta aplicación ?
+are you sure you want to delete this category ?	admin	es	¿ Está seguro de querer borrar esta categoria ?
+are you sure you want to delete this group ?	admin	es	¿ Está seguro de querer borrar este grupo ?
+are you sure you want to delete this server ?	admin	es	¿ Está seguro de querer borrar este servidor ?
+are you sure you want to kill this session ?	admin	es	¿ Está seguro de querer matar esta sesión ?
+attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	es	Intentar usar el tipo MIME correcto para FTP en vez de 'application/octet-stream'
+authentication / accounts	admin	es	Autenticación / Cuentas
+auto create account records for authenticated users	admin	es	Crear cuentas automáticamente para usuarios autenticados
+bi-directional	admin	es	bidireccional
+bi-dir passthrough	admin	es	bidireccional pasante
 bookeeping admins	admin	es	Administradores de Contabilidad
 bottom	admin	es	Debajo
 change main screen message	admin	es	Cambiar mensaje de la pantalla principal
 check ip address of all sesions	admin	es	Verificar la direccion IP de todas las sesiones
-configuration	admin	es	Configuracion
+configuration	admin	es	Configuración
 country selection	admin	es	Seleccion del Pais
 create group	admin	es	Crear Grupo
 default file system space per user	admin	es	Espacio por defecto en el sistema de archivos por usuario
-default file system space per user/group ?	admin	es	Espacio por defecto en el sistema de archivos por usuario/grupo ?
+default file system space per user/group ?	admin	es	Espacio por defecto en el sistema de archivos por usuario/grupo
 deny access to applications	admin	es	Denegar acceso a aplicaciones
 deny access to current sessions	admin	es	Denegar acceso a las sesiones actuales
 deny access to global categories	admin	es	Denegar acceso a las categorias globales
@@ -53,11 +53,11 @@ deny access to groups	admin	es	Denegar acceso a grupos
 deny access to mainscreen message	admin	es	Denegar acceso al mensaje de la pantalla principal
 deny access to peer servers	admin	es	Denegar acceso a servidores pares
 deny access to user accounts	admin	es	Denegar acceso a las cuentas de usuario
-deny all users access to grant other users access to their entries ?	admin	es	Prohibirle a los usuarios ceder acceso a otros usuarios para sus registros ?
+deny all users access to grant other users access to their entries ?	admin	es	¿ Prohibirle a los usuarios ceder acceso a otros usuarios para sus registros ?
 disabled	admin	es	Deshabilitado
-do you also want to delete all global subcategories ?	admin	es	Desea tambien eliminar todas las subcategorias globales?
+do you also want to delete all global subcategories ?	admin	es	¿ Desea tambien eliminar todas las subcategorias globales?
 display	admin	es	Mostrar
-edit application	admin	es	Editar aplicatión
+edit application	admin	es	Editar aplicación
 edit cvs repository list	admin	es	Editar Lista de Sitios CVS
 edit global category	admin	es	Editar categoria global
 edit group	admin	es	Editar Grupo
@@ -70,25 +70,25 @@ edit table format	admin	es	Editar formato de tabla
 edit user account	admin	es	Editar cuenta del usuario
 edit work catagory table	admin	es	Editar Tabla de Categorias de Trabajos
 enabled	admin	es	Habilitado
-enabled - hidden from navbar	admin	es	Habilitado - Esconder es la Barra
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	es	Ingrese texto aleatorio para la encriptacion <br> de la sesion (requiere mcrypt)
-enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	admin	es	Ingrese el camino completo para los archivos temporales.<br> Ejemplos: /files , E:\FILES
-enter the full path for users and group files.<br>Examples: /files, E:\FILES	admin	es	Ingrese el camino completo para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:\FILES
-enter the hostname of the machine on which this server is running	admin	es	Ingrese el nombre completo de la maquina sobre la cual corre este servidor
-enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	admin	es	Ingrese la direccion URL de phpGroupWare.<br>Ejemplo: http://www.dominio.com/phpgroupware o /phpgroupware.<br><b>Sin barra al final</b>
-enter the site password for peer servers	admin	es	Ingrese la clave del sitio para servidores pares
-enter the site username for peer servers	admin	es	Ingrese el usuario del sitio para servidores pares
-enter the title for your site	admin	es	Ingrese el titulo para su sitio
-enter your default FTP server	admin	es	Ingrese su servidor FTP por defecto
-enter your HTTP proxy server	admin	es	Ingrese su servidor proxy HTTP
-enter your HTTP proxy server port	admin	es	Ingrese el puerto de su servidor proxy HTTP
+enabled - hidden from navbar	admin	es	Habilitado - Esconder de la Barra
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	es	Introduzca texto aleatorio para la encriptación <br> de la sesion (requiere mcrypt)
+enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	admin	es	Introduzca el camino completo para los archivos temporales.<br> Ejemplos: /files , E:\FILES
+enter the full path for users and group files.<br>Examples: /files, E:\FILES	admin	es	Introduzca el camino completo para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:\FILES
+enter the hostname of the machine on which this server is running	admin	es	Introduzca el nombre completo de la maquina sobre la cual corre este servidor
+enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	admin	es	Introduzca la direccion URL de phpGroupWare.<br>Ejemplo: http://www.dominio.com/phpgroupware o /phpgroupware.<br><b>Sin barra al final</b>
+enter the site password for peer servers	admin	es	Introduzca la clave del sitio para servidores pares
+enter the site username for peer servers	admin	es	Introduzca el usuario del sitio para servidores pares
+enter the title for your site	admin	es	Introduzca el titulo para su sitio
+enter your default FTP server	admin	es	Introduzca su servidor FTP por defecto
+enter your HTTP proxy server	admin	es	Introduzca su servidor proxy HTTP
+enter your HTTP proxy server port	admin	es	Introduzca el puerto de su servidor proxy HTTP
 expires	admin	es	Expira
 find and register all aplication hooks	admin	es	Encontrar y registrar todos los enlaces a aplicaciones
 force selectbox	admin	es	Forzar Caja de Seleccion
 forum administration	admin	es	Administracion de Foros
 global categories	admin	es	Categorias Globales
 global options	admin	es	Opciones Globales
-group ?	admin	es	Grupo?
+group ?	admin	es	¿Grupo?
 group has been added	common	es	El grupo ha sido agregado
 group has been deleted	common	es	El grupo ha sido eliminado
 group has been updated	common	es	El grupo ha sido actualizado
@@ -98,7 +98,7 @@ home directory	admin	es	Directorio principal
 host information	admin	es	Informacion del servidor
 idle	admin	es	idle
 if no acl records for user or any group the user is a member of	admin	es	Si no se encuentran registros LCA del usuario y grupo, entonces el usuario es miembro del grupo administradores
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	es	Si utiliza LDAP, desea manejar el directorio de inicio y attributos del shell?
+if using ldap, do you want to manage homedirectory and loginshell attributes?  admin	es	Si utiliza LDAP, ¿ desea manejar el directorio de inicio y attributos del shell?
 inbound	admin	es	entrantes
 interface	admin	es	Interfaz
 installed applications	common	es	Aplicaciones Instaladas
