@@ -49,7 +49,7 @@
 		var $forced = array();
 		/*! @var db */
 		var $db;
-		
+
 		var $values,$vars;	// standard notify substitues, will be set by standard_substitues()
 
 		/**************************************************************************\
@@ -200,7 +200,7 @@
 				}
 				else
 				{
-					$arr[$key] = stripslashes($value);	
+					$arr[$key] = stripslashes($value);
 				}
 			}
 		}
@@ -213,8 +213,8 @@
 		*/
 		function read_repository()
 		{
-			$this->db->query("SELECT * FROM phpgw_preferences".
-				" WHERE preference_owner IN (-1,-2,".intval($this->account_id).")",__LINE__,__FILE__);
+			$this->db->query("SELECT * FROM phpgw_preferences"
+				. " WHERE preference_owner IN (-1,-2," . (int)$this->account_id . ')',__LINE__,__FILE__);
 
 			$this->forced = $this->default = $this->user = array();
 			while($this->db->next_record())
@@ -266,7 +266,7 @@
 			// setup the standard substitues and substitues the data in $this->data
 			//
 			$this->standard_substitutes();
-			
+
 			// This is to supress warnings durring login
 			if (is_array($this->data))
 			{
@@ -327,7 +327,7 @@
 				case 'default':
 					$this->default[$app_name][$var] = $value;
 					if ((!isset($this->forced[$app_name][$var]) || $this->forced[$app_name][$var] === '') &&
-					    (!isset($this->user[$app_name][$var]) || $this->user[$app_name][$var] === ''))
+						(!isset($this->user[$app_name][$var]) || $this->user[$app_name][$var] === ''))
 					{
 						$this->data[$app_name][$var] = $value;
 					}
@@ -493,7 +493,7 @@
 				}
 			}
 		}
-		
+
 		/*!
 		@function save_repository
 		@abstract save the the preferences to the repository
@@ -515,7 +515,7 @@
 					$prefs = &$this->default;
 					break;
 				default:
-					$account_id = intval($this->account_id);
+					$account_id = (int)$this->account_id;
 					$prefs = &$this->user;	// we use the user-array as data contains default values too
 					break;
 			}
@@ -524,8 +524,9 @@
 			if (! $GLOBALS['phpgw']->acl->check('session_only_preferences',1,'preferences'))
 			{
 				$this->db->transaction_begin();
-				$this->db->query("delete from phpgw_preferences where preference_owner='$account_id'",
-					__LINE__,__FILE__);
+				$this->db->query("DELETE FROM phpgw_preferences WHERE preference_owner='$account_id'",
+					__LINE__,__FILE__
+				);
 
 				foreach($prefs as $app => $value)
 				{
@@ -534,9 +535,9 @@
 					$value = addslashes(serialize($value));	// this addslashes is for the database
 					$app = $this->db->db_addslashes($app);
 					
-					$this->db->query($sql = "INSERT INTO phpgw_preferences".
-						" (preference_owner,preference_app,preference_value)".
-						" VALUES ($account_id,'$app','$value')",__LINE__,__FILE__);
+					$this->db->query($sql = "INSERT INTO phpgw_preferences"
+						. " (preference_owner,preference_app,preference_value)"
+						. " VALUES ($account_id,'$app','$value')",__LINE__,__FILE__);
 				}
 				$this->db->transaction_commit();
 			}
@@ -551,7 +552,7 @@
 				$GLOBALS['phpgw']->session->delete_cache($this->account_id);
 				$GLOBALS['phpgw']->session->read_repositories(False);
 			}
-			
+
 			return $this->data;
 		}
 
@@ -572,12 +573,11 @@
 				$this->db->query("insert into phpgw_preferences values ('$account_id','"
 					. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
 			}
-			
+
 			if ($GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $account_id == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				$GLOBALS['phpgw']->session->read_repositories(False);
 			}
-
 		}
 
 		/*!
@@ -616,11 +616,11 @@
 		*/
 		function verify_basic_settings()
 		{
-			if (gettype($GLOBALS['phpgw_info']['user']['preferences']) != 'array')
+			if (!@is_array($GLOBALS['phpgw_info']['user']['preferences']))
 			{
-				 $GLOBALS['phpgw_info']['user']['preferences'] = array();
+				$GLOBALS['phpgw_info']['user']['preferences'] = array();
 			}
-			/* This takes care of new users who dont have proper default prefs setup */
+			/* This takes care of new users who don't have proper default prefs setup */
 			if (!isset($GLOBALS['phpgw_info']['flags']['nocommon_preferences']) || 
 				!$GLOBALS['phpgw_info']['flags']['nocommon_preferences'])
 			{
@@ -692,8 +692,8 @@
 		function sub_get_mailsvr_port($prefs, $acctnum=0)
 		{
 			// first we try the port number supplied in preferences
-			if ( (isset($prefs['email']['accounts'][$acctnum]['mail_port']))
-			&& ($prefs['email']['accounts'][$acctnum]['mail_port'] != '') )
+			if((isset($prefs['email']['accounts'][$acctnum]['mail_port'])) &&
+				($prefs['email']['accounts'][$acctnum]['mail_port'] != ''))
 			{
 				$port_number = $prefs['email']['accounts'][$acctnum]['mail_port'];
 			}
@@ -704,7 +704,7 @@
 				{
 					$prefs['email']['accounts'][$acctnum]['mail_server_type'] = $prefs['email']['mail_server_type'];
 				}
-					
+
 				switch($prefs['email']['accounts'][$acctnum]['mail_server_type'])
 				{
 					case 'pop3s':
@@ -882,7 +882,7 @@
 			// a custom email preference. Currently, we simply use standard port numbers
 			// for the service in question.
 			$prefs['email']['mail_port'] = $this->sub_get_mailsvr_port($prefs);
-			
+
 			//---  [email][fullname]  ---
 			// we pick this up from phpgw api for the default account
 			// the user does not directly manipulate this pref for the default email account
@@ -890,8 +890,7 @@
 			{
 				$prefs['email']['fullname'] = $GLOBALS['phpgw_info']['user']['fullname'];
 			}
-			
-			
+
 			// = = = =  SIMPLER PREFS  = = = =
 
 			// Default Preferences info that is articulated in the email prefs schema array itself
@@ -1099,7 +1098,7 @@
 		}
 
 			/*
-			// ==== DEPRECIATED - ARCHIVAL CODE ====
+			// ==== DEPRECATED - ARCHIVAL CODE ====
 			// used to be part of function this->create_email_preferences()
 			// = = = =  SIMPLER PREFS  = = = =
 			// Default Preferences info that is:

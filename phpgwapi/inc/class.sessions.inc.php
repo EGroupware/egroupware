@@ -134,7 +134,6 @@
 		*/
 		function sessions_()
 		{
-
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->sessionid = get_var('sessionid',array('GET','COOKIE'));
 			$this->kp3       = get_var('kp3',array('GET','COOKIE'));
@@ -587,7 +586,7 @@
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
 			$GLOBALS['phpgw']->db->transaction_commit();
-			
+
 			//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 
 			return $this->sessionid;
@@ -607,19 +606,19 @@
 
 			if ($login != '')
 			{
-				$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id)'.
-					" VALUES ('" . $sessionid . "','" . $this->db->db_addslashes($login). "','" . 
-					$this->db->db_addslashes($user_ip) . "',$now,0,".intval($account_id).")",__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id)'
+					. " VALUES ('" . $sessionid . "','" . $this->db->db_addslashes($login). "','"
+					. $this->db->db_addslashes($user_ip) . "',$now,0," . (int)$account_id .')',__LINE__,__FILE__);
 			}
 			else
 			{
-				$GLOBALS['phpgw']->db->query("UPDATE phpgw_access_log SET lo=" . $now . " WHERE sessionid='" .
-					$sessionid . "'",__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->query("UPDATE phpgw_access_log SET lo=" . $now . " WHERE sessionid='"
+					. $sessionid . "'",__LINE__,__FILE__);
 			}
 			if ($GLOBALS['phpgw_info']['server']['max_access_log_age'])
 			{
 				$max_age = $now - $GLOBALS['phpgw_info']['server']['max_access_log_age'] * 24 * 60 * 60;
-				
+
 				$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_access_log WHERE li < $max_age");
 			}
 		}
@@ -654,7 +653,7 @@
 			}
 			if ($blocked && $GLOBALS['phpgw_info']['server']['admin_mails'] &&
 				// max. one mail each 5mins
-			    $GLOBALS['phpgw_info']['server']['login_blocked_mail_time'] < time()-5*60)
+				$GLOBALS['phpgw_info']['server']['login_blocked_mail_time'] < time()-5*60)
 			{
 				// notify admin(s) via email
 				$from    = 'eGroupWare@'.$GLOBALS['phpgw_info']['server']['mail_suffix'];
@@ -707,7 +706,7 @@
 			$phpgw_info_flags = $GLOBALS['phpgw_info']['flags'];
 
 			$GLOBALS['phpgw_info']['flags'] = $phpgw_info_flags;
-			
+
 			$this->update_dla();
 			$this->account_id = $GLOBALS['phpgw']->interserver->name2id($this->account_lid);
 
@@ -717,7 +716,7 @@
 			}
 
 			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
-			
+
 			$this->read_repositories(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info']);
 
 			/* init the crypto object before appsession call below */
@@ -897,7 +896,7 @@
 			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
 			$GLOBALS['phpgw']->preferences->preferences($this->account_id);
 			$GLOBALS['phpgw']->applications->applications($this->account_id);
-			
+
 			if(@$cached)
 			{
 				$this->user = $this->appsession('phpgw_info_cache','phpgwapi');
@@ -960,17 +959,17 @@
 			$phpgw_info_temp = $GLOBALS['phpgw_info'];
 			$phpgw_info_temp['user']['kp3'] = '';
 			$phpgw_info_temp['flags'] = array();
-			
+
 			if ($GLOBALS['phpgw_info']['server']['cache_phpgw_info'])
 			{
 				$this->appsession('phpgw_info_cache','phpgwapi',$phpgw_info_temp);
 			}
 		}
-	
+
 		function restore()
 		{
 			$sessionData = $this->appsession('sessiondata');
-			
+
 			if (!empty($sessionData) && is_array($sessionData))
 			{
 				foreach($sessionData as $key => $value)
@@ -1120,7 +1119,7 @@
 					$url = $app.'/'.$url;
 				}
 			}
-			
+
 			if($full_scriptname)
 			{
 				$webserver_url_count = strlen($GLOBALS['phpgw_info']['server']['webserver_url'])-1;
@@ -1171,7 +1170,7 @@
 					$extravars['framepart']='body';
 				}
 			}
-			
+
 			/* add session params if not using cookies */
 			if (@!$GLOBALS['phpgw_info']['server']['usecookies'])
 			{
@@ -1179,7 +1178,7 @@
 				$extravars['kp3'] = $this->kp3;
 				$extravars['domain'] = $this->account_domain;
 			}
-			
+
 			//used for repost prevention
 //			$extravars['click_history'] = $this->generate_click_history();
 
@@ -1319,4 +1318,3 @@
 		$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';
 	}
 	include_once(PHPGW_API_INC.'/class.sessions_'.$GLOBALS['phpgw_info']['server']['sessions_type'].'.inc.php');
-

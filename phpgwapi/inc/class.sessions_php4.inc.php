@@ -92,7 +92,7 @@
 
 			$GLOBALS['phpgw_session']['session_dla'] = time();
 			$GLOBALS['phpgw_session']['session_action'] = $action;
-		
+
 			session_register('phpgw_session');
 			$_SESSION['phpgw_session'] = $GLOBALS['phpgw_session'];
 
@@ -141,7 +141,7 @@
 			$account_id = get_account_id($accountid,$this->account_id);
 
 			$GLOBALS['phpgw_session']['phpgw_app_sessions']['phpgwapi']['phpgw_info_cache'] = '';
-	
+
 			session_register('phpgw_session');
 			$_SESSION['phpgw_session'] = $GLOBALS['phpgw_session'];
 		}
@@ -152,7 +152,7 @@
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			
+
 			/* This allows the user to put '' as the value. */
 			if ($data == '##NOTHING##')
 			{
@@ -181,10 +181,12 @@
 		{
 			$sign = strcasecmp($GLOBALS['phpgw']->session->sort_order,'ASC') ? 1 : -1;
 
-			return strcasecmp($a[$GLOBALS['phpgw']->session->sort_by],
-			                  $b[$GLOBALS['phpgw']->session->sort_by]) * $sign;
+			return strcasecmp(
+				$a[$GLOBALS['phpgw']->session->sort_by],
+				$b[$GLOBALS['phpgw']->session->sort_by]
+			) * $sign;
 		}
-		
+
 		/*!
 		@function list_sessions
 		@abstract get list of normal / non-anonymous sessions
@@ -240,30 +242,30 @@
 					unset($session['phpgw_app_sessions']);	// not needed, saves memory
 					$session_cache[$file] = $session;
 				}
-				if ($session['session_flags'] == 'A' || !$session['session_id'] ||
-				    $session['session_install_id'] != $GLOBALS['phpgw_info']['server']['install_id'])
+				if($session['session_flags'] == 'A' || !$session['session_id'] ||
+					$session['session_install_id'] != $GLOBALS['phpgw_info']['server']['install_id'])
 				{
 					continue;	// no anonymous sessions or other domains or installations
 				}
 				//echo "file='$file'=<pre>"; print_r($session); echo "</pre>"; 
-				
+
 				$session['php_session_file'] = $path . '/' . $file;
 				$values[$session['session_id']] = $session;
 			}
 			closedir($dir);
-			
-			if (!$all_no_sort)
+
+			if(!$all_no_sort)
 			{
 				$GLOBALS['phpgw']->session->sort_by = $sort;
 				$GLOBALS['phpgw']->session->sort_order = $order;
-			
+
 				uasort($values,array('sessions','session_sort'));
-				
+
 				$i = 0;
-				$start = intval($start);
+				$start = (int)$start;
 				foreach($values as $id => $data)
 				{
-					if ($i < $start || $i > $start+$maxmatchs)
+					if($i < $start || $i > $start+$maxmatchs)
 					{
 						unset($values[$id]);
 					}
@@ -275,7 +277,7 @@
 
 			return $values;
 		}
-		
+
 		/*!
 		@function total
 		@abstract get number of normal / non-anonymous sessions

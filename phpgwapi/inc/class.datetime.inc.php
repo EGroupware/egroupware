@@ -51,7 +51,7 @@
 
 		function datetime()
 		{
-			$this->tz_offset = 3600 * intval(@$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
+			$this->tz_offset = 3600 * (int)@$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
 			print_debug('datetime::datetime::gmtnow',$this->gmtnow,'api');
 
 			$error_occured = True;
@@ -60,7 +60,7 @@
 			{
 				if(isset($GLOBALS['phpgw_info']['server']['tz_offset']))
 				{
-					$this->gmtnow = time() - (intval($GLOBALS['phpgw_info']['server']['tz_offset']) * 3600);
+					$this->gmtnow = time() - ((int)$GLOBALS['phpgw_info']['server']['tz_offset'] * 3600);
 					//echo "<p>set via tz_offset=".$GLOBALS['phpgw_info']['server']['tz_offset'].": gmtnow=".date('Y/m/d H:i',$this->gmtnow)."</p>\n";
 				}
 				else
@@ -71,7 +71,7 @@
 			}
 			$this->users_localtime = time() + $this->tz_offset;
 		}
-		
+
 		function getntpoffset()
 		{
 			$error_occured = False;
@@ -99,7 +99,7 @@
 				{
 					$date = explode('-',$array[1]);
 					$time = explode(':',$array[2]);
-					$this->gmtnow = mktime(intval($time[0]),intval($time[1]),intval($time[2]),intval($date[1]),intval($date[2]),intval($date[0]) + 2000);
+					$this->gmtnow = mktime((int)$time[0],(int)$time[1],(int)$time[2],(int)$date[1],(int)$date[2],(int)$date[0] + 2000);
 					print_debug('Temporary RFC epoch',$this->gmtnow,'api');
 					print_debug('GMT',date('Ymd H:i:s',$this->gmtnow),'api');
 				}
@@ -108,14 +108,14 @@
 			{
 				$error_occured = True;
 			}
-			
+
 			if($error_occured == True)
 			{
 				return $this->getbestguess();
 			}
 			else
 			{
-				return intval(($server_time - $this->gmtnow) / 3600);
+				return (int)($server_time - $this->gmtnow / 3600);
 			}
 		}
 
@@ -145,7 +145,7 @@
 			print_debug('this->gmtnow',$this->gmtnow,'api');
 			print_debug('server time',$server_time,'api');
 			print_debug('server DateTime',date('D, d M Y H:i:s',$server_time),'api');
-			return intval(($server_time - $this->gmtnow) / 3600);
+			return (int)($server_time - $this->gmtnow / 3600);
 		}
 
 		function getbestguess()
@@ -156,7 +156,7 @@
 			// If DST, add 1 hour...
 			//  - (date('I') == 1?3600:0)
 			$this->gmtnow = $this->convert_rfc_to_epoch(gmdate('D, d M Y H:i:s',$server_time).' GMT');
-			return intval(($server_time - $this->gmtnow) / 3600);
+			return (int)($server_time - $this->gmtnow / 3600);
 		}
 
 		function convert_rfc_to_epoch($date_str)
@@ -192,8 +192,8 @@
 			if(substr($dta[5],0,3) <> 'GMT')
 			{
 				$tzoffset = substr($dta[5],0,1);
-				$tzhours = intval(substr($dta[5],1,2));
-				$tzmins = intval(substr($dta[5],3,2));
+				$tzhours = (int)substr($dta[5],1,2);
+				$tzmins = (int)substr($dta[5],3,2);
 				switch ($tzoffset)
 				{
 					case '-':
@@ -280,7 +280,7 @@
 
 		function is_leap_year($year)
 		{
-			if ((intval($year) % 4 == 0) && (intval($year) % 100 != 0) || (intval($year) % 400 == 0))
+			if (((int)$year % 4 == 0) && ((int)$year % 100 != 0) || ((int)$year % 400 == 0))
 			{
 				return 1;
 			}
@@ -293,38 +293,38 @@
 		function days_in_month($month,$year)
 		{
 			$days = Array(
-				1	=>	31,
-				2	=>	28 + $this->is_leap_year(intval($year)),
-				3	=>	31,
-				4	=>	30,
-				5	=>	31,
-				6	=>	30,
-				7	=>	31,
-				8	=>	31,
-				9	=>	30,
-				10	=>	31,
-				11	=>	30,
-				12	=>	31
+				1  => 31,
+				2  => 28 + $this->is_leap_year((int)$year),
+				3  => 31,
+				4  => 30,
+				5  => 31,
+				6  => 30,
+				7  => 31,
+				8  => 31,
+				9  => 30,
+				10 => 31,
+				11 => 30,
+				12 => 31
 			);
-			return $days[intval($month)];
+			return $days[(int)$month];
 		}
 
 		function date_valid($year,$month,$day)
 		{
-			return checkdate(intval($month),intval($day),intval($year));
+			return checkdate((int)$month,(int)$day,(int)$year);
 		}
 
 		function time_valid($hour,$minutes,$seconds)
 		{
-			if(intval($hour) < 0 || intval($hour) > 24)
+			if((int)$hour < 0 || (int)$hour > 24)
 			{
 				return False;
 			}
-			if(intval($minutes) < 0 || intval($minutes) > 59)
+			if((int)$minutes < 0 || (int)$minutes > 59)
 			{
 				return False;
 			}
-			if(intval($seconds) < 0 || intval($seconds) > 59)
+			if((int)$seconds < 0 || (int)$seconds > 59)
 			{
 				return False;
 			}
@@ -346,7 +346,7 @@
 			$day = (floor((13 * $month - 1) / 5) + $day + ($year % 100) + floor(($year % 100) / 4) + floor(($year / 100) / 4) - 2 * floor($year / 100) + 77);
 			return (($day - 7 * floor($day / 7)));
 		}
-	
+
 		function day_of_year($year,$month,$day)
 		{
 			$days = array(0,31,59,90,120,151,181,212,243,273,304,334);
@@ -369,13 +369,13 @@
 		*/
 		function days_between($m1,$d1,$y1,$m2,$d2,$y2)
 		{
-			return intval((mktime(0,0,0,$m2,$d2,$y2,0) - mktime(0,0,0,$m1,$d1,$y1,0)) / 86400);
+			return (int)(mktime(0,0,0,$m2,$d2,$y2,0) - mktime(0,0,0,$m1,$d1,$y1,0) / 86400);
 		}
 
 		function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
 		{
-			$a_date = mktime(0,0,0,intval($a_month),intval($a_day),intval($a_year));
-			$b_date = mktime(0,0,0,intval($b_month),intval($b_day),intval($b_year));
+			$a_date = mktime(0,0,0,(int)$a_month,(int)$a_day,(int)$a_year);
+			$b_date = mktime(0,0,0,(int)$b_month,(int)$b_day,(int)$b_year);
 			if($a_date == $b_date)
 			{
 				return 0;
@@ -394,8 +394,8 @@
 		{
 			// I use the 1970/1/2 to compare the times, as the 1. can get via TZ-offest still 
 			// before 1970/1/1, which is the earliest date allowed on windows
-			$a_time = mktime(intval($a_hour),intval($a_minute),intval($a_second),1,2,1970);
-			$b_time = mktime(intval($b_hour),intval($b_minute),intval($b_second),1,2,1970);
+			$a_time = mktime((int)$a_hour,(int)$a_minute,(int)$a_second,1,2,1970);
+			$b_time = mktime((int)$b_hour,(int)$b_minute,(int)$b_second,1,2,1970);
 			if($a_time == $b_time)
 			{
 				return 0;
@@ -419,16 +419,16 @@
 		{
 			$date = Array('raw','day','month','year','full','dow','dm','bd');
 			$date['raw'] = $localtime;
-			$date['year'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'Y'));
-			$date['month'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'m'));
-			$date['day'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'d'));
-			$date['full'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'Ymd'));
+			$date['year'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'Y');
+			$date['month'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'m');
+			$date['day'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'d');
+			$date['full'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'Ymd');
 			$date['bd'] = mktime(0,0,0,$date['month'],$date['day'],$date['year']);
-			$date['dm'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'dm'));
+			$date['dm'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'dm');
 			$date['dow'] = $this->day_of_week($date['year'],$date['month'],$date['day']);
-			$date['hour'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'H'));
-			$date['minute'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'i'));
-			$date['second'] = intval($GLOBALS['phpgw']->common->show_date($date['raw'],'s'));
+			$date['hour'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'H');
+			$date['minute'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'i');
+			$date['second'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'s');
 		
 			return $date;
 		}
