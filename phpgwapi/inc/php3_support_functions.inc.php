@@ -271,22 +271,31 @@
 		}
 	}
 
-	function print_r($array)
+	function print_r($array,$recursed=False)
 	{
-		if(gettype($array)=="array")
+		if(is_array($array) || is_object($array))
 		{
-			echo '<ul>';
+			if(!$recursed)
+			{
+				echo '<p>';
+			}
+			echo ucfirst(gettype($array)) . '(<ul>';
+
 			while(list($index, $subarray) = each($array) )
 			{
-				echo '<li>'.$index.' <code>=&gt;</code>';
-				print_r($subarray);
+				echo '<li>'.$index.' <code>=&gt;&nbsp;</code>';
+				print_r($subarray,True);
 				echo '</li>';
 			}
-			echo '</ul>';
+			echo '</ul>)';
+		}
+		elseif(is_string($array))
+		{
+			echo ucfirst(gettype($array)) . '("' . $array . '")';
 		}
 		else
 		{
-			echo $array;
+			echo gettype($array) . '(' . $array . ')';
 		}
 	}
 
