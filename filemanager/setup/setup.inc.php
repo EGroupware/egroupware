@@ -22,7 +22,7 @@
 	$setup_info['phpwebhosting']['hooks'][] = 'preferences';
 
 	/* The tables this app creates */
-	$setup_info['addressbook']['tables']    = array(
+	$setup_info['phpwebhosting']['tables']    = array(
 		'phpgw_vfs'
 	);
 
