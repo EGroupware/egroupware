@@ -95,7 +95,13 @@
     } else {
        $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
     }
-
+  }elseif (isset($PHP_AUTH_USER)) {
+    $sessionid = $phpgw->session->create($PHP_AUTH_USER,$PHP_AUTH_PW);
+    if (!isset($sessionid) || !$sessionid) {
+       $phpgw->redirect($phpgw_info["server"]["webserver_url"]."/login.php?cd=5");
+    } else {
+       $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php", "cd=yes"));
+    }
   } else {
     // !!! DONT CHANGE THESE LINES !!!
     // If there is something wrong with this code TELL ME!
