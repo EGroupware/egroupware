@@ -23,7 +23,7 @@
 	$server = CreateObject('phpgwapi.xmlrpc_server');
 	$server->authed = False;
 	/* _debug_array($server);exit; */
-	include(PHPGW_API_INC . '/xmlrpc.interop.php');
+	/* include(PHPGW_API_INC . '/xmlrpc.interop.php'); */
 
 	$headers = getallheaders();
 
