@@ -169,8 +169,8 @@ in an alphabetic order.';
 	{
 		// don't even ask me _why_ these come padded with
 		// hyphens, I couldn't tell you :p
-		$a=ereg_replace('-', '', $a);
-		$b=ereg_replace('-', '', $b);
+		$a = str_replace('-', '', $a);
+		$b = str_replace('-', '', $b);
 
 		if ($GLOBALS['agesorter_arr'][$a]==$agesorter[$b])
 		{

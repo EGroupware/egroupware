@@ -288,7 +288,7 @@
 					//print "<!-- " . $GLOBALS['_xh'][$parser]['params'][$i]. "-->\n";
 					$plist .= "$i - " . $GLOBALS['_xh'][$parser]['params'][$i]. " \n";
 					$code = '$m->addParam(' . $GLOBALS['_xh'][$parser]['params'][$i] . ');';
-					$code = ereg_replace(',,',",'',",$code);
+					$code = str_replace(',,',",'',",$code);
 					eval($code);
 				}
 				// uncomment this to really see what the server's getting!
@@ -373,7 +373,7 @@
 						if ($sysCall)
 						{
 							$code = '$r=' . $dmap[$methName]['function'] . '($this, $m);';
-							$code = ereg_replace(',,',",'',",$code);
+							$code = str_replace(',,',",'',",$code);
 							eval($code);
 						}
 						else
@@ -381,7 +381,7 @@
 							if (function_exists($dmap[$methName]['function']))
 							{
 								$code = '$r =' . $dmap[$methName]['function'] . '($m);';
-								$code = ereg_replace(',,',",'',",$code);
+								$code = str_replace(',,',",'',",$code);
 								eval($code);
 							}
 							else
