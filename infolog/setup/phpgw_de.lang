@@ -1,43 +1,95 @@
 %1 records imported	infolog	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
+%s $row_cont[info_addr	infolog	de	
+%s today	infolog	de	%s Heute
+- subprojects from	infolog	de	- Untereinträge von
+0%	infolog	de	0%
+10%	infolog	de	10%
+20%	infolog	de	20%
+30%	infolog	de	30%
+40%	infolog	de	40%
+50%	infolog	de	50%
+60%	infolog	de	60%
+70%	infolog	de	70%
+80%	infolog	de	80%
+90%	infolog	de	90%
 <b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	de	<b>Dateianhänge über Symlinks</b> anstatt sie hochzuladen und Zugriff mit file:/pfad für lokale Benutzer
-Add a file	infolog	de	Datei anhängen
-Invalid filename	infolog	de	Ungültiger Dateiname
+a short subject for the entry	infolog	de	einen kurzen Titel für diesen Eintrag
+abort without deleting	infolog	de	Abruch ohne zu Löschen
 accept	infolog	de	bei Annahme
 action	infolog	de	Befehle
 add	infolog	de	Hinzufügen
-add sub	infolog	de	neues Teilprojekt anlegen
+add a file	infolog	de	Datei anhängen
+add a new entry	infolog	de	einen neuen Eintrag anlegen
+add a new note	infolog	de	eine neue Notiz anlegen
+add a new phonecall	infolog	de	einen neuen Telefonanruf anlegen
+add a new sub-task, -note, -call to this entry	infolog	de	einen neuen Unterauftrag, -notiz, -anruf zu diesem Eintrag anlegen
+add a new todo	infolog	de	einen neuen Auftrag anlegen
+add file	infolog	de	Datei zufügen
+add sub	infolog	de	neuen Untereintrag anlegen
+add:	infolog	de	Hinzufügen:
 all	infolog	de	alle
+are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
 are you sure you want to delete this entry	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
+attach a file	infolog	de	Datei anhängen
 attach file	infolog	de	Datei anhängen
+back to main list	infolog	de	Zurück zur Gesamtliste
 back to projectlist	infolog	de	Zurück zur Gesamtliste
 billed	infolog	de	abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	anrufen
+cancel	infolog	de	Abbruch
+categories	infolog	de	Kategorien
 category	infolog	de	Kategorie
+check to set startday	infolog	de	ankreutzen um Startdatum zu setzen
+click here to create the link	infolog	de	hier klicken um die Verknüpfung zu erzeugen
+click here to start the search	infolog	de	hier klicken um die Suche zu starten
 close	infolog	de	Schließen
 comment	infolog	de	Kommentar
 configuration	infolog	de	Konfiguration
 confirm	infolog	de	Bestätigung
+contact	infolog	de	Kontakt
+create new links	infolog	de	Neue Verknüpfung erzeugen
 csv-fieldname	infolog	de	CSV-Feldname
 csv-filename	infolog	de	CSV-Dateiname
 csv-import	common	de	CSV-Import
+custom contact-address, leave empty to use information from most recent link	infolog	de	benutzerdefinierte Kontaktadresse, leer lassen um die Daten der Verknüpfung zu verwenden
+custom contact-information, leave emtpy to use information from most recent link	infolog	de	benutzerdefinierte Kontaktinformationen, leer lassen um die Daten der Verknüpfung zu verwenden
+custom regarding	infolog	de	benutzerdefinierter Bezug
 datecreated	infolog	de	erstellt am
+dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
-default Filter for InfoLog	infolog	de	Standard-Filter für InfoLog
+default filter for infolog	infolog	de	Standard-Filter für InfoLog
+delegation	infolog	de	Delegation
+delete	infolog	de	Löschen
+delete the entry	infolog	de	Eintrag löschen
+delete this entry	infolog	de	diesen Eintrag löschen
 description	infolog	de	Beschreibung
 description can not exceed 8000 characters in length	infolog	de	Beschreibung darf nicht länger als 8000 Zeichen sein
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	de	wollen Sie eine Bestätigung des Verantwortlichen bei: Annahme, Beendigung der Aufgabe oder bei beidem
 done	infolog	de	erledigt
 download	infolog	de	Datei laden
 duration	infolog	de	Dauer
+edit	infolog	de	Bearbeiten
+edit or create categories for ingolog	infolog	de	Kategorien für InfoLog bearbeiten oder neu anlegen
+edit the entry	infolog	de	Eintrag bearbeiten
+edit this entry	infolog	de	diesen Eintrag bearbeiten
 enddate	infolog	de	Enddatum
 enddate can not be before startdate	infolog	de	Das Enddatum kann nicht vor dem Startdatum liegen
+enter a custom contact, leave empty if linked entry should be used	infolog	de	benutzerdefinierter Kontakt, leer lassen um die Daten der Verknüpfung zu verwenden
+enter a custom phone/email, leave empty if linked entry should be used	infolog	de	benutzerdefinierte Telefonnumer/Emailadresse, leer lassen um die Daten der Verknüpfung zu verwenden
+enter a textual description of the log-entry	infolog	de	geben Sie eine textliche Beschreibung des Eintrags ein
+enter the query pattern	infolog	de	geben Sie ein Suchmuster ein
 entry and all files	infolog	de	Eintrag und alle Dateien
+existing links	infolog	de	Bestehende Verknüpfungen
 fax	infolog	de	Fax
 fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
 from	infolog	de	Von
+high	infolog	de	hoch
+id	infolog	de	Id
 import	infolog	de	Import
+info log	common	de	InfoLog
 infolog	common	de	InfoLog
 infolog - delete	infolog	de	InfoLog - Löschen
 infolog - edit	infolog	de	InfoLog - Bearbeiten
@@ -47,12 +99,22 @@ infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
 infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
 infolog preferences	common	de	InfoLog Einstellungen
 infolog-fieldname	infolog	de	InfoLog-Feldname
+invalid filename	infolog	de	Ungültiger Dateiname
 last changed	infolog	de	letzte Änderung
-list no Subs/Childs	infolog	de	Teilprojekte/Antwortdokumente nicht anzeigen
+last modified	infolog	de	zuletzt geändert
+leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
+link	infolog	de	Verknüpfung
+links	infolog	de	Verknüpfungen
+links of this entry	infolog	de	Verknüpfungen dieses Eintrags
+list no subs/childs	infolog	de	Untereinträge nicht anzeigen
+longer textual description	infolog	de	längere textliche Beschreibung
+low	infolog	de	niedrig
+new search	infolog	de	Neue Suche
 no - cancel	infolog	de	Nein - Abbruch
 no entries found, try again ...	infolog	de	Kein Einträge gefunden, nochmal versuchen ...
 no filter	infolog	de	kein Filter
 none	infolog	de	keine
+normal	infolog	de	normal
 not	infolog	de	nicht
 not assigned	infolog	de	nicht zugewiesen
 note	infolog	de	Notiz
@@ -60,13 +122,15 @@ number of records to read (<=200)	infolog	de	Anzahl Datensätze lesen (<=200)
 offer	infolog	de	Angebot
 ongoing	infolog	de	in Arbeit
 open	infolog	de	offen
+optional note to the link	infolog	de	zusätzliche Notiz zur Verknüfung
 overdue	infolog	de	überfällig
 own	infolog	de	eigene
 own open	infolog	de	eigene offen
 own overdue	infolog	de	eigene überfällig
 own upcoming	infolog	de	eigene zukünftig
 owner	infolog	de	Erstellt von
-path on (web-)serverside<br>eg. /var/samba/Share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
+owner responsible	infolog	de	Ersteller Verantwortlich
+path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
 pattern for search in projects	infolog	de	Muster für Suche des Projekts
 phone	infolog	de	Anruf
@@ -75,34 +139,57 @@ phonecall	infolog	de	Telefonanruf
 priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
-re:	infolog	de	Re: 
-reg. expr. for local IP's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
+re:	infolog	de	Re:
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 reject	infolog	de	Absage
+remark	infolog	de	Bemerkung
+remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst) 
 responsible	infolog	de	Auftrag an
+responsible user, priority, ...	infolog	de	Verantwortlicher, Prioritäten, ...
+save	infolog	de	Speichern
+saves this entry	infolog	de	diesen Eintrag speichern
+search	infolog	de	Suchen
 search for:	infolog	de	Suchen nach:
 select	infolog	de	Auswählen
+select a category for this entry	infolog	de	eine Kategorie für diesen Eintrag auswählen
+select a priority for this task	infolog	de	eine Priorität für diesen Eintrag auswählen
+select a responsible user: a person you want to delegate this task	infolog	de	einen Verantwortlichen auswählen: eine Person der Sie diese Aufgabe delegieren wollen
+select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
+select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
+should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
-show open Events: Tasks/Calls/Notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
+show open events: tasks/calls/notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
 showing x	infolog	de	%1 Einträge
 showing x - x of x	infolog	de	Einträge %1 - %2 von %3
+start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
+startdate enddate	infolog	de	Startdatum Endedatum
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
-sub	infolog	de	Teil-<br>projekte
+sub	infolog	de	Unter-<br>einträge
 subject	infolog	de	Titel
 task	infolog	de	Auftrag
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
 today	infolog	de	Heute
+todo	infolog	de	Auftrag
 translation	infolog	de	Translation
 type	infolog	de	Typ
+type of the log-entry: note, phonecall or todo	infolog	de	Typ des Eintrags: Notiz, Anruf oder Auftrag
+unlink	infolog	de	Verküpfung lösen
 upcoming	infolog	de	zukünftig
 urgency	infolog	de	Priorität
 urgent	infolog	de	Dringend
-use Button to search for Address	infolog	de	Button zum Suchen der Adresse verwenden
-use Button to search for Project	infolog	de	Button zum Suchen des Projekts verwenden
-valid path on clientside<br>eg. \\Server\Share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-view other subs	infolog	de	andere Teileprojekte anzeigen
-view subs	infolog	de	Teilprojekte anzeigen
+use button to search for address	infolog	de	Button zum Suchen der Adresse verwenden
+use button to search for project	infolog	de	Button zum Suchen des Projekts verwenden
+valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
+view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
+view other subs	infolog	de	andere Untereinträge anzeigen
+view parent	infolog	de	übergeordneter Eintrag anzeigen
+view subs	infolog	de	Untereinträge anzeigen
+view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
+view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eingene offen angezeigt (Startseite)
 will-call	infolog	de	ruft zurück
 yes - delete	infolog	de	Ja - Löschen
 you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum eingegeben
