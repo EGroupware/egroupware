@@ -559,7 +559,7 @@
 			$aIXSQL = array();
 			foreach($aFields as $mFields)
 			{
-				$options = False;
+				$options = '';
 				if (is_array($mFields))
 				{
 					if (isset($mFields['options']))		// array sets additional options
