@@ -49,7 +49,7 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
-			global $start,$limit,$query,$sort,$order,$filter,$cat_id;
+			global $start,$limit,$query,$sort,$order,$filter,$cat_id,$fcat_id;
 
 			if(!empty($start) || ($start == "0" ))
 			{
@@ -61,7 +61,7 @@
 			if(!empty($sort))   { $this->sort   = $sort;   }
 			if(!empty($order))  { $this->order  = $order;  }
 			if(!empty($filter)) { $this->filter = $filter; }
-			$this->cat_id = $cat_id;
+			if(!empty($fcat_id)) { $this->cat_id = $fcat_id; }
 		}
 
 		function save_sessiondata()
