@@ -1034,7 +1034,7 @@
 					if ($orient == 'horizontal')	// ==> use first row
 					{
 						$row =& $old['data'][1];
-						for ($n = 1; $n <= $old['cols']; ++$n)
+						for ($n = 0; $n < $old['cols']; ++$n)
 						{
 							$cell =& $row[soetemplate::num2chrs($n)];
 							soetemplate::add_child($widget,$cell);
@@ -1047,7 +1047,7 @@
 					{
 						for ($n = 1; $n <= $old['rows']; ++$n)
 						{
-							soetemplate::add_child($widget,$old['data'][$n][soetemplate::num2chrs(1)]);
+							soetemplate::add_child($widget,$old['data'][$n][soetemplate::num2chrs(0)]);
 						}
 					}
 				}
@@ -1229,11 +1229,11 @@
 		 * @param string &$action row_delete, row_insert_above, row_insert_below, row_swap, row_prefs
 		 * @param array &$parent referece to the parent
 		 * @param array &$content reference to the content-array
-		 * @param string $child_id id of a cell
+		 * @param string &$child_id id of a cell, may change to the next cell if inserting behind
 		 * @param string $parent_path path of parent
 		 * @return string msg to display
 		 */
-		function box_actions(&$action,&$parent,&$content,$child_id,$parent_path)
+		function box_actions(&$action,&$parent,&$content,&$child_id,$parent_path)
 		{
 			switch ($action)
 			{
@@ -1253,7 +1253,7 @@
 						$parent[1+$i] = $parent[$i];
 					}
 					$parent[$n] = $content['cell'] = soetemplate::empty_cell();
-					$content['path'] = $parent_path.'/'.$n;
+					$child_id = $n;
 					if ($parent['type']) $parent['size'] = (1+$num) . ($options ? ','.$options : '');
 					break;
 					
@@ -1655,7 +1655,7 @@
 				unset($content['grid_row']);
 				unset($content['grid_column']);
 			}
-			$content['path'] = $path;
+			$content['path'] = ($parent_path!='/'?$parent_path:'').'/'.$child_id;
 			$content['msg'] = $msg;
 			$content['goto'] = $this->path_components($content['path']);
 			$content['goto2'] = $this->parent_navigation($parent,$parent_path,$child_id,$widget);
