@@ -1265,6 +1265,8 @@
 		{
 			$entry   = $GLOBALS['HTTP_POST_VARS']['entry'];
 			$fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'];
+			$referer = $entry['referer'] ? $entry['referer'] : $GLOBALS['HTTP_GET_VARS']['referer'];
+			$referer = $referer ? $referer : $GLOBALS['HTTP_POST_VARS']['referer'];
 
 			$test = @unserialize(rawurldecode($entry));
 			if($test && ($test != $entry))
@@ -1403,7 +1405,7 @@
 				$fields['tid'] = 'n';
 			}
 
-			$fields['referer'] = $entry['referer'];
+			$fields['referer'] = $referer;
 			/* _debug_array($fields);exit; */
 			return $fields;
 		} /* end get_form() */
