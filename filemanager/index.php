@@ -772,13 +772,13 @@ if ($edit)
 
 	if ($edit_file)
 	{
-		$$edit_file = stripslashes ($$edit_file);
+		$edit_file_content = stripslashes ($edit_file_content);
 	}
 
 	if ($edit_preview)
 	{
-		$edit_file_decoded = base64_decode (string_decode ($edit_file, 1));
-		$content = $$edit_file;
+		$edit_file_decoded = stripslashes (base64_decode (string_decode ($edit_file, 1)));
+		$content = $edit_file_content;
 
 		html_break (1);
 		html_text_bold ("Preview of $path/$edit_file_decoded");
@@ -794,10 +794,10 @@ if ($edit)
 	}
 	elseif ($edit_save)
 	{
-		$edit_file_decoded = base64_decode (string_decode ($edit_file, 1));
-		$content = $$edit_file;
+		$edit_file_decoded = stripslashes (base64_decode (string_decode ($edit_file, 1)));
+		$content = $edit_file_content;
 
-		if ($phpgw->vfs->write ($edit_file_decoded, $content))
+		if ($phpgw->vfs->write ($edit_file_decoded, array (RELATIVE_ALL), $content))
 		{
 			html_text_bold ("Saved $path/$edit_file_decoded");
 			html_break (2);
@@ -822,7 +822,7 @@ if ($edit)
 			echo "fileman[$j]: $fileman[$j]<br><b>$content</b><br>";
 			continue;
 
-			if ($phpgw->vfs->write ($fileman_decoded, $content))
+			if ($phpgw->vfs->write ($fileman_decoded, array (RELATIVE_ALL), $content))
 			{
 				html_text_bold ("Saved $path/$fileman_decoded");
 				html_break (1);
@@ -844,7 +844,8 @@ if ($edit)
 
 	for ($j = 0; $j != $numoffiles; $j++)
 	{
-		$fileman_decoded = string_decode ($fileman[$j], 1);
+		$fileman[$j] = string_decode ($fileman[$j], 1);
+		$fileman_decoded = stripslashes (string_decode ($fileman[$j], 1));
 
 		###
 		# If we're in preview or save mode, we only show the file
@@ -859,14 +860,18 @@ if ($edit)
 		if ($fileman_decoded && $phpgw->vfs->file_exists ($fileman_decoded, array (RELATIVE_ALL)))
 		{
 			if ($edit_file)
-				$content = stripslashes ($$edit_file);
+			{
+				$content = stripslashes ($edit_file_content);
+			}
 			else
+			{
 				$content = $phpgw->vfs->read ($fileman_decoded);
+			}
 
 			html_table_begin ("100%");
 			html_form_begin ("$appname/index.php?path=$path");
 			html_form_input ("hidden", "edit", True);
-			html_form_input ("hidden", "edit_file", base64_encode ($fileman[$j]));
+			html_form_input ("hidden", "edit_file", base64_encode (string_decode ($fileman[$j], 1)));
 
 			###
 			# We need to include all of the fileman entries for each file's form,
@@ -875,17 +880,17 @@ if ($edit)
 
 			for ($i = 0; $i != $numoffiles; $i++)
 			{
-				html_form_input ("hidden", "fileman[$i]", "$fileman[$i]");
+				html_form_input ("hidden", "fileman[$i]", string_encode ($fileman[$i], 1));
 			}
 
 			html_table_row_begin ();
 			html_table_col_begin ();
-			html_form_textarea (base64_encode ($fileman[$j]), 35, 75, $content);
+			html_form_textarea ("edit_file_content", 35, 75, $content);
 			html_table_col_end ();
 			html_table_col_begin ("center");
-			html_form_input ("submit", "edit_preview", "Preview $fileman_decoded");
+			html_form_input ("submit", "edit_preview", "Preview " . html_encode ($fileman_decoded, 1));
 			html_break (1);
-			html_form_input ("submit", "edit_save", "Save $fileman_decoded");
+			html_form_input ("submit", "edit_save", "Save " . html_encode ($fileman_decoded, 1));
 //			html_break (1);
 //			html_form_input ("submit", "edit_save_all", "Save all");
 			html_table_col_end ();
@@ -978,9 +983,10 @@ elseif ($comment_files)
 {
 	while (list ($file) = each ($comment_files))
 	{
-		$phpgw->vfs->set_attributes ($file, array (RELATIVE_ALL), array ("comment" => $comment_files[$file]));
+		$file_decoded = stripslashes (string_decode ($file, 1));
+		$phpgw->vfs->set_attributes ($file_decoded, array (RELATIVE_ALL), array ("comment" => stripslashes ($comment_files[$file])));
 
-		html_text_summary ("Updated comment for $path/$file");
+		html_text_summary ("Updated comment for $path/$file_decoded");
 	}
 
 	html_break (2);
@@ -995,8 +1001,8 @@ elseif ($renamefiles)
 {
 	while (list ($file) = each ($renamefiles))
 	{
-		$from_file_decoded = string_decode ($file, 1);
-		$to_file_decoded = string_decode ($renamefiles[$file], 1);
+		$from_file_decoded = stripslashes (string_decode ($file, 1));
+		$to_file_decoded = stripslashes (string_decode ($renamefiles[$file], 1));
 
 		if (ereg ("/", $to_file_decoded))
 		{
@@ -1024,7 +1030,7 @@ elseif ($move)
 {
 	while (list ($num, $file) = each ($fileman))
 	{
-		$file_decoded = string_decode ($file, 1);
+		$file_decoded = stripslashes (string_decode ($file, 1));
 		if ($phpgw->vfs->mv ($file_decoded, $todir . "/" . $file_decoded, array (RELATIVE_ALL, RELATIVE_NONE)))
 		{
 			$moved++;
@@ -1054,7 +1060,7 @@ elseif ($copy)
 {
 	while (list ($num, $file) = each ($fileman))
 	{
-		$file_decoded = string_decode ($file, 1);
+		$file_decoded = stripslashes (string_decode ($file, 1));
 
 		if ($phpgw->vfs->cp ($file_decoded, $todir . "/" . $file_decoded, array (RELATIVE_ALL, RELATIVE_NONE)))
 		{
