@@ -24,6 +24,10 @@
 
   /* $Id$ */
 
+	/*!
+	 @class_start accounts
+	 @abstract Class for handling user and group accounts
+	*/
 	class accounts_
 	{
 		var $db;
@@ -37,6 +41,10 @@
 			$this->db = $GLOBALS['phpgw']->db;
 		}
 
+		/*!
+		@function read_repository
+		@abstract grabs the records from the data store
+		*/
 		function read_repository()
 		{
 			$this->db->query("SELECT * FROM phpgw_accounts WHERE account_id='" . $this->account_id . "'",__LINE__,__FILE__);
@@ -57,6 +65,10 @@
 			return $this->data;
 		}
 
+		/*!
+		@function save_repository
+		@abstract saves the records to the data store
+		*/
 		function save_repository()
 		{
 			$this->db->query("UPDATE phpgw_accounts SET account_firstname='" . $this->data['firstname']
@@ -356,5 +368,7 @@
 			$lname = $account_name[$account_id]['lname'];
 			return;
 		}
-	} //end of class
-?>
+	} 
+	/*!
+	 @class_end accounts
+	*/

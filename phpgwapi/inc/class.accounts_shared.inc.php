@@ -65,6 +65,11 @@
 		'ldap'      => True, 'backup'    => True
 	);
 
+	/*!
+	 @class_start accounts
+	 @abstract Class for handling user and group accounts
+	*/
+
 	class accounts extends accounts_
 	{
 		var $memberships = Array();
@@ -175,10 +180,6 @@
 
 			return $this->members;
 		}
-	/*!
-	 @class_start accounts
-	 @abstract a test.
-	*/
 
 		/*!
 		@function get_nextid
@@ -235,6 +236,4 @@
 	}
 	/*!
 	 @class_end accounts
-	 @abstract a test.
 	*/
-?>
