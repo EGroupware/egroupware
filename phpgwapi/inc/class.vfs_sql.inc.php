@@ -142,8 +142,16 @@
 			$this->meta_types = array ('journal', 'journal-deleted');
 
 			/* We store the linked directories in an array now, so we don't have to make the SQL call again */
+			if ($GLOBALS['phpgw_info']['server']['db_type']=='mssql'
+				|| $GLOBALS['phpgw_info']['server']['db_type']=='sybase')
+			{
+				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE CONVERT(varchar,link_directory) != '' AND CONVERT(varchar,link_name) != ''" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
+			}
+			else
+			{
+				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE link_directory != '' AND link_name != ''" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
+			}
 
-			$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE link_directory != '' AND link_name != ''" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)));
 
 			$this->linked_dirs = array ();
 			while ($GLOBALS['phpgw']->db->next_record ())
