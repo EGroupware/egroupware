@@ -69,6 +69,11 @@
 
 	// whoooo scaring
 
+	if($GLOBALS['phpgw_info']['server']['usecookies'] == True)
+	{
+		$GLOBALS['phpgw']->sessions->phpgw_setcookie('eGroupWareLoginTime', time());
+	}
+
 /*
 	if($_GET['cd'] != 10 && $GLOBALS['phpgw_info']['server']['usecookies'] == False)
 	{
@@ -97,6 +102,9 @@
 				break;
 			case 2:
 				return lang('Sorry, your login has expired');
+				break;
+			case 4:
+				return lang('Cookies are required to login to this site.');
 				break;
 			case 5:
 				return '<font color="FF0000">' . lang('Bad login or password') . '</font>';
@@ -173,13 +181,17 @@
 		unset($sslattributes);
 	}
 
-	if(isset($passwd_type) || $_POST['submit_x'] || $_POST['submit_y'] || $submit)
+	if(isset($passwd_type) || $_POST['submitit_x'] || $_POST['submitit_y'] || $submit)
 //		isset($_POST['passwd']) && $_POST['passwd']) // enable konqueror to login via Return
 	{
-		if(getenv(REQUEST_METHOD) != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
+		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','code=5'));
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','cd=5'));
+		}
+		if(!isset($_COOKIE['eGroupWareLoginTime']))
+		{
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','cd=4'));
 		}
 		
 		// don't get login data again when $submit is true
