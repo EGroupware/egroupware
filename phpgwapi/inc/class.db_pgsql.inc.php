@@ -333,7 +333,15 @@ class db {
 			$this->Password = $adminpasswd;
 		}
 
-		system("createdb -h ".$this->Host." ". $currentDatabase, $outval);
+		if (! $this->Host)
+		{
+			system('createdb ' . $currentDatabase, $outval);
+		}
+		else
+		{
+			system('createdb -h ' . $this->Host . ' ' . $currentDatabase, $outval);
+		}
+
 		if($outval != 0) 
 		{
         	/* either the rights r not available or the postmaster is not running .... */
