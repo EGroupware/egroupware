@@ -26,6 +26,7 @@ aruba	common	en	ARUBA
 august	common	en	August
 australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
+author	common	en	Author
 autosave default category	common	en	Autosave Default Category
 azerbaijan	common	en	AZERBAIJAN
 bad login or password	login	en	Bad login or password
@@ -377,6 +378,7 @@ united arab emirates	common	en	UNITED ARAB EMIRATES
 united kingdom	common	en	UNITED KINGDOM
 united states	common	en	UNITED STATES
 united states minor outlying islands	common	en	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	en	Unknown
 update	common	en	Update
 url	common	en	URL
 uruguay	common	en	URUGUAY
