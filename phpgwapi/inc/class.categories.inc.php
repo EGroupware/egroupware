@@ -581,6 +581,7 @@
 			if ($values['parent'] > 0)
 			{
 				$values['level'] = $this->id2name($values['parent'],'level')+1;
+				$values['main'] = $this->id2name($values['parent'],'main');
 			}
 
 			$values['descr'] = $this->db->db_addslashes($values['descr']);
