@@ -710,7 +710,10 @@
 		{
 			$ab_id = $GLOBALS['HTTP_POST_VARS']['entry']['ab_id'] ? $GLOBALS['HTTP_POST_VARS']['entry']['ab_id'] : $GLOBALS['HTTP_POST_VARS']['ab_id'];
 			$confirm = $GLOBALS['HTTP_GET_VARS']['confirm'] ? $GLOBALS['HTTP_GET_VARS']['confirm'] :$GLOBALS['HTTP_POST_VARS']['confirm'];
-
+			if (!$ab_id)
+			{
+				$ab_id = $GLOBALS['HTTP_GET_VARS']['ab_id'];		// else plain Link in delete does not work
+			}
 			if (!$ab_id)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
@@ -718,7 +721,7 @@
 
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
-			if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) && $check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id'])
+			if (!(($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
