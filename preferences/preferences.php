@@ -21,7 +21,7 @@
 	include('../header.inc.php');
 
 	$user    = get_var('user',Array('POST'));
-	$global  = get_var('global',Array('POST'));
+	$forced  = get_var('forced',Array('POST'));
 	$default = get_var('default',Array('POST'));
 
 	$GLOBALS['appname'] = get_var('appname',Array('GET'));
