@@ -40,6 +40,11 @@
 		$phpgw->common->hook('logout');
 		$phpgw->session->destroy();
 	}
+	else
+	{
+		$phpgw->log->message('W-VerifySession, could not verify session durring logout');
+		$phpgw->log->commit();
+	}
 	Setcookie('sessionid');
 	Setcookie('kp3');
 	Setcookie('domain');
