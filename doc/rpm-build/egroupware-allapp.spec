@@ -13,7 +13,7 @@ Summary: eGroupWare is a web-based groupware suite written in php.
                                                                                                                              
 Group: Web/Database
 License: GPL/LGPL
-URL: http://www.phpgroupware.org/
+URL: http://www.egroupware.org/
 Source0:  http://download.sourceforge.net/egroupware/eGroupWare-%{version}-%{packaging}.tar.bz2
 BuildRoot: /tmp/%{packagename}-buildroot
 Requires: php >= 4.0.6
