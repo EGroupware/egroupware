@@ -265,6 +265,7 @@
 			print_r($columns);
 			die ("\n\n!!! Column '$column' does NOT exist !!!\n\n");
 		}
+		$data->type = strtolower($data->type);
 		if ($data->type != $type && !in_array($data->type,$alternate_types[$type]))
 		{
 			print_r($columns);
