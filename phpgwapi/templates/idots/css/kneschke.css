@@ -1,0 +1,275 @@
+/*
+	StyleSheet coding standards:
+
+	1. use lowercase if possible
+
+	2. format styles like this:
+	
+		body
+		{
+			font-size: 12px;
+			font-family: Verdana, Arial, Helvetica, sans-serif
+		}
+
+	3. existing html elements on top of the document, then all self defined .classes and at last all self defined #id's.
+
+	4. close every property with ; also the last one.
+*/
+
+body 
+{
+	background-image:url(../images/body-background.png);
+	font-size: 11px; 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	padding:14px;
+/*	margin:14px;*/
+}
+
+a:link
+{
+	color: #006699; 
+	text-decoration: none;
+	font-size: 11px;
+}
+
+a:visited 
+{
+	color: #006699; 
+	text-decoration: none;
+	font-size: 11px;
+}
+
+a:hover 
+{
+	color: #ff9933; text-decoration: underline;
+	font-size: 11px;
+}
+
+a:active 
+{
+	color: #006699; 
+	text-decoration: underline;
+	font-size: 11px;
+}
+
+input 
+{
+	font-size: 11px; 
+	color: #006699; 
+	font-family: Arial, Helvetica, sans-serif;
+	border: 1px #bbbbbb solid;
+}
+
+select 
+{
+	font-size: 11px; 
+	color: #006699; 
+	font-family: Arial, Helvetica, sans-serif;
+	border: 1px #bbbbbb solid;
+}
+
+td
+{
+	font-size: 11px;
+}
+
+.divSidebox 
+{
+	position:relative;
+	width: 160px; 
+	border-right: #9c9c9c 1px solid; 
+	border-top: #9c9c9c 1px solid; 
+	border-left: #9c9c9c 1px solid; 
+	border-bottom: #9c9c9c 1px solid
+}
+
+.divSideboxHeader 
+{
+	text-align:center;
+	bbackground-image:url(../images/sidebox-header-background.png);
+	bbackground-repeat: repeat-x;
+	background-color:#dddddd;
+	height:12px;
+	padding-top:2px;
+	padding-bottom:0px;
+	font-size:10px;
+	color:#666666;
+}
+
+a.divSideboxEntry, .divSideboxEntry
+{
+	text-align:left;
+	height:16px;
+	background-color:#eeeeee;
+}
+a.appTitles,.appTitles
+{
+	font-size: 10px; 
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
+}
+
+a.textSidebox
+{
+	font-size: 10px; 
+	border-top: #aaaaaa 0px none;
+}
+
+.textSidebox
+{
+	font-size: 10px; 
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
+	border-top: #aaaaaa 1px solid;
+	
+}
+
+.sideboxSpace
+{
+	height:9px;
+}
+
+.greyLine
+{
+	margin:1px;
+	border-top-color:#7e7e7e;
+	border-top-width:1px;
+	border-top-style:solid;
+	height:1px;
+}
+
+#divMain
+{
+	background-color:white;
+	margin-top: 9px;
+/*	margin-left: 14px;
+	margin-right: 14px;*/
+	padding:4px;
+	border-color:#7e7e7e;
+	border-width:1px;
+	border-style:solid;
+}
+
+#divLogo
+{
+	position:absolute;
+	left:20px;
+	top:14px;
+	z-index:51;
+}
+
+#divAppIconBar
+{
+	background-color:white;
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	background-image: url(../images/background-icon-bar.png); 
+	background-repeat: repeat-x
+}
+
+#divAppTextBar
+{
+	background-color:white;
+}
+
+#divStatusBar
+{
+	background-color:white;
+	height:15px;
+	padding-left:170px;
+	margin-top: 13px;
+	margin-bottom: 2px;
+}
+
+#divSubContainer
+{
+	margin-top: 2px;
+	margin-bottom: 4px;
+}
+
+#tdSidebox
+{
+	width:170px;
+	background-color:white;
+}
+
+#tdAppbox
+{
+	background-color:white;
+	padding:0px;
+}
+#divSideboxContainer
+{
+	position:relative;
+	width:150px;
+	top:0px;
+	left:0px;
+	background-color:white;
+	border-color:red;
+	border-width:1px;
+	border-style:solid;
+	z-index:40;
+}
+
+#divAppboxHeader
+{
+	background-image:url(../images/appbox-header-background.png);
+	background-repeat: repeat-x;
+	height:10px;
+	text-align:center;
+	font-size:9px;
+	font-weight:bold;
+	color:#666666;
+	padding-top:5px;
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+}
+
+#divAppbox
+{
+	width:100%;
+	background-color:#f7f7f7;
+	padding:5px;
+/*	height:200px;*/
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+}
+
+#user_info
+{
+	color: #666666;
+	font-size: 9px;
+}
+
+#admin_info
+{
+	position:relative;
+	text-align:right;
+}
+
+#divPoweredBy 
+{
+	bottom:14px;
+	font-size: 9px;
+	color: #000000;
+	text-align:center;
+	width:99%;
+}
+
