@@ -45,6 +45,9 @@
 	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
 	$tmpl = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
 
+	// read the images from the login-template-set, not the (maybe not even set) users template-set
+	$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
+
 	// This is used for system downtime, to prevent new logins.
 	if($GLOBALS['phpgw_info']['server']['deny_all_logins'])
 	{
