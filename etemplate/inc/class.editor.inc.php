@@ -181,7 +181,16 @@
 			$this->etemplate->size = $content['size'];
 			$this->etemplate->style = $content['style'];
 
-			$this->etemplate->data = array($content['width']+$content['height']+$content['class']);
+			$opts = array();
+			$names = array('width','height','class');
+			while (list(,$opt) = each($names))
+			{
+				if (is_array($content[$opt]))
+				{
+					$opts += $content[$opt];
+				}
+			}
+			$this->etemplate->data = array($opts);
 			$row = 1; $col = 0;
 			while (isset($content[$name = $this->etemplate->num2chrs($col) . $row]))
 			{
