@@ -19,12 +19,12 @@
 
   $db2 = $phpgw->db;
 
-  $phpgw->db->query("SELECT datetime, mdatetime, cal_id FROM calendar_entry ORDER BY cal_id",__LINE__,__FILE__);
-  if($phpgw-db->num_rows()) {
-    while($phpgw->db-next_record()) {
-      $datetime = $phpgw->db->f("datetime") - ((60*60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
-      $mdatetime = $phpgw->db->f("mdatetime") - ((60*60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
-      $db2->query("UPDATE calendar_entry SET datetime=".$datetime.", mdatetime=".$mdatetime." WHERE cal_id=".$phpgw->db->f("cal_id"),__LINE__,__FILE__);
+  $phpgw->db->query("SELECT cal_datetime, cal_mdatetime, cal_id FROM calendar_entry ORDER BY cal_id",__LINE__,__FILE__);
+  if($phpgw->db->num_rows()) {
+    while($phpgw->db->next_record()) {
+      $datetime = $phpgw->db->f("cal_datetime") - ((60*60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
+      $mdatetime = $phpgw->db->f("cal_mdatetime") - ((60*60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
+      $db2->query("UPDATE calendar_entry SET cal_datetime=".$datetime.", cal_mdatetime=".$mdatetime." WHERE cal_id=".$phpgw->db->f("cal_id"),__LINE__,__FILE__);
     }
   }
 ?>
