@@ -53,11 +53,7 @@
        $phpgw_info["user"]["kp3"] = $kp3;
 
        $phpgw_info_flags    = $phpgw_info["flags"];
-       if (PHP_VERSION > "4.0.3pl1") {
-          $phpgw_info       = unserialize($db->f("session_info"));
-       } else {
-          $phpgw_info       = unserialize(stripslashes($db->f("session_info")));
-       }
+       $phpgw_info          = unserialize($db->f("session_info"));
 
        $phpgw_info["flags"] = $phpgw_info_flags;
 
