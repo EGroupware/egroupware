@@ -202,6 +202,22 @@
 			$this->cal->expunge();
 		}
 
+		function delete_calendar($owner)
+		{
+			$this->makeobj();
+			$this->cal->delete_calendar($owner);
+		}
+
+		function change_owner($account_id,$new_owner)
+		{
+			global $phpgw_info;
+			if($phpgw_info['server']['calendar_type'] == 'sql')
+			{
+				$this->so->cal->query('UPDATE phpgw_cal SET owner='.$new_owner.' WHERE owner='.$account_id,__LINE__,__FILE__);
+				$this->so->cal->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);
+			}
+		}
+
 		function set_status($id,$status)
 		{
 			$this->makeobj();

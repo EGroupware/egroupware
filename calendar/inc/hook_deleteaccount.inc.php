@@ -17,15 +17,14 @@
 		global $account_id, $new_owner;
 	}
 
-	$calendar = CreateObject('calendar.calendar');
-	$calendar->open('INBOX',$account_id,'');
+	$cal = CreateObject('calendar.bocalendar');
 
 	if(intval($new_owner)==0)
 	{
-		$calendar->delete_calendar(intval($account_id));
+		$cal->delete_calendar(intval($account_id));
 	}
 	else
 	{
-		$calendar->change_owner(intval($account_id),intval($new_owner));
+		$cal->change_owner(intval($account_id),intval($new_owner));
 	}
 ?>

@@ -19,6 +19,7 @@
 		var $public_functions = Array(
 			'read_entry'	=> True,
 			'delete_entry' => True,
+			'delete_calendar'	=> True,
 			'update'       => True,
 			'preferences'  => True,
 			'store_to_cache'	=> True
@@ -247,6 +248,24 @@
    			}
 			}
 			return $cd;
+		}
+
+		function delete_calendar($owner)
+		{
+			global $phpgw_info;
+			if($phpgw_info['user']['apps']['admin'])
+			{
+				$this->so->delete_calendar($owner);
+			}
+		}
+
+		function change_owner($account_id,$new_owner)
+		{
+			global $phpgw_info;
+			if($phpgw_info['server']['calendar_type'] == 'sql')
+			{
+				$this->so->change_owner($account_id,$new_owner);
+			}
 		}
 
 		function expunge()
