@@ -92,6 +92,7 @@ select
 td
 {
 	font-size: 11px;
+	text-align:left;
 	/*	padding-top:1px;
 	padding-bottom:1px;*/
 }
