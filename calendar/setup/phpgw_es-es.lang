@@ -20,6 +20,7 @@ alarm for %1 at %2 in %3	calendar	es-es	Alarma para %1 en %2 in %3
 alarm management	calendar	es-es	Gestión de alarmas
 alarm-management	calendar	es-es	Gestión de alarmas
 alarms	calendar	es-es	Alarmas
+all categories	calendar	es-es	Todas las categorías
 all day	calendar	es-es	Todo el día
 are you sure you want to delete this country ?	calendar	es-es	¿Seguro que quiere borrar este país?
 are you sure you want to delete this holiday ?	calendar	es-es	¿Seguro que desea borrar esta fiesta?
@@ -61,6 +62,7 @@ default appointment length (in minutes)	calendar	es-es	duración por defecto de l
 default calendar filter	calendar	es-es	Filtro por defecto del calendario
 default calendar view	calendar	es-es	Vista por defecto del calendario
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	es-es	Longitud predeterminada de los eventos nuevos. La longitud es en minutos, ej. 60 = 1 hora.
+default week view	calendar	es-es	Vista semanal predeterminada
 defines the size in minutes of the lines in the day view.	calendar	es-es	Define el tamaño en minutos de las línes de la vista de diario.
 delete a single entry by passing the id.	calendar	es-es	Borrar una entrada simple pasando el id.
 delete an entire users calendar.	calendar	es-es	Borrar todo el calendario de un usuario.
@@ -69,13 +71,16 @@ delete series	calendar	es-es	Borrar series
 delete single	calendar	es-es	Borrar simple
 deleted	calendar	es-es	Eliminado
 description	calendar	es-es	Descripción
+determining window width ...	calendar	es-es	Determinando el ancho de la ventana...
 disable	calendar	es-es	Desactivar
 disabled	calendar	es-es	desactivado
 display interval in day view	calendar	es-es	Mostrar intervalo en vista diaria
 display mini calendars when printing	calendar	es-es	Mostrar minicalendarios al imprimir
 display status of events	calendar	es-es	Mostrar estado de los eventos
+displayed view	calendar	es-es	Vista mostrada
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	es-es	Muestra la vista predeterminada del calendario en la página de inicio de eGroupWare
 displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	es-es	¿Mostrar la vista predeterminada en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio)?
+do you want a weekview with or without weekend?	calendar	es-es	¿Desea una vista de la semana con o sin fin de semana?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	es-es	¿Desea que se le notifiquen citas nuevas o modificadas? Se le notificará de los cambios que haga usted mismo.<br>Puede limitar las notificaciones para sólo ciertos cambios. Cada elemento incluye toda la notificación listada encima. Todas las modificaciones incluyen cambios de título, participantes, pero no las respuestas de los participantes. Si el dueño de un evento solicitó alguna notificación, siempre obtendrá las respuestas de aceptación o rechazo del participante.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	es-es	¿Desea recibir regularmente por correo un resumen de sus citas?<br>El resumen se le enviará a su correo electrónico habitual el mismo día por la mañana o el lunes para resúmenes semanales.<br>Sólo se envía si hay citas en ese día o esa semana.
 do you wish to autoload calendar holidays files dynamically?	admin	es-es	¿Desea cargar automáticamente en el calendario los ficheros de fiestas?
@@ -158,8 +163,11 @@ monthly	calendar	es-es	Mensualmente
 monthly (by date)	calendar	es-es	Mensual (por fecha)
 monthly (by day)	calendar	es-es	Mensual (por día)
 monthview	calendar	es-es	Vista mensual
+needs javascript to be enabled !!!	calendar	es-es	¡Necesita tener javascript activado!
 new entry	calendar	es-es	Nueva entrada
 new name must not exist and not be empty!!!	calendar	es-es	El nuevo nombre no debe existir previamente ni estar en blanco
+next day	calendar	es-es	dia siguiente
+no filter	calendar	es-es	Sin filtro
 no matches found	calendar	es-es	No se encontraron coincidencias
 no matches found.	calendar	es-es	No se encontraron coincidencias.
 no response	calendar	es-es	Sin respuesta
@@ -197,6 +205,7 @@ planner by user	calendar	es-es	Planificador por usuario
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	es-es	Por favor, confirme, acepte, rechace o examine los cambios en la entrada correspondiente en su calendario
 please enter a filename !!!	calendar	es-es	Por favor, introduzca un nombre de fichero
 preselected group for entering the planner	calendar	es-es	Grupo preseleccionado para entrar en el planificador
+previous day	calendar	es-es	dia anterior
 print calendars in black & white	calendar	es-es	Imprimir calendario en blanco y negro
 print the mini calendars	calendar	es-es	Imprimir minicalendarios
 printer friendly	calendar	es-es	Versión para impresión
@@ -227,6 +236,7 @@ sa	calendar	es-es	Sa
 sat	calendar	es-es	Sáb
 scheduling conflict	calendar	es-es	Conflicto de calendario
 search results	calendar	es-es	Resultados de la búsqueda
+select a %1	calendar	es-es	Seleccionar un %1
 selected contacts (%1)	calendar	es-es	Contactos seleccionados (%1)
 send updates via email	common	es-es	Enviar actualizaciones por correo electrónico
 send/receive updates via email	calendar	es-es	Enviar y recibir actualizaciones por correo electrónico
@@ -243,6 +253,11 @@ show default view on main screen	calendar	es-es	Mostrar la vista predeterminada 
 show high priority events on main screen	calendar	es-es	Mostrar eventos de alta prioridad en la pantalla principal
 show invitations you rejected	calendar	es-es	Mostar invitaciones rechazadas por usted
 show list of upcoming events	calendar	es-es	Mostrar la lista de eventos próximos
+show next seven days	calendar	es-es	Mostrar los próximos siete días
+show only one day	calendar	es-es	Mostrar sólo un día
+show the calendar of multiple users	calendar	es-es	Mostrar el calendario de varios usuarios
+show this month	calendar	es-es	Mostrar este mes
+show this week	calendar	es-es	Mostrar esta semana
 single event	calendar	es-es	evento simple
 sorry, the owner has just deleted this event	calendar	es-es	Lo sentimos, el propietario acaba de eliminar este evento
 sorry, this event does not exist	calendar	es-es	Lo sentimos, este evento no existe
@@ -288,6 +303,7 @@ today	calendar	es-es	Hoy
 translation	calendar	es-es	Traducción
 tu	calendar	es-es	M
 tue	calendar	es-es	Mar
+two dayview	calendar	es-es	Dos vistas del día
 update a single entry by passing the fields.	calendar	es-es	Actualizar una entrada simple pasando los campos.
 updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
@@ -298,9 +314,12 @@ week	calendar	es-es	Semana
 weekday starts on	calendar	es-es	La semana empieza en
 weekly	calendar	es-es	Semanal
 weekview	calendar	es-es	Vista semanal
+weekview including weekend	calendar	es-es	Vista semanal incluyendo el fin de semana
+weekview without weekend	calendar	es-es	Vista semanal sin fin de semana
 when creating new events default set to private	calendar	es-es	Crear nuevos eventos como privados
 which events do you want to see when you enter the calendar.	calendar	es-es	¿Qué eventos quiere ver al entrar al calendario?
 which of calendar view do you want to see, when you start calendar ?	calendar	es-es	¿Qué vista del calendario quiere ver cuando entra al calendario?
+wk	calendar	es-es	Trabajo
 work day ends on	calendar	es-es	Los días laborables acaban en
 work day starts on	calendar	es-es	Los días laborables empiezan en
 workdayends	calendar	es-es	Final del día laborable
