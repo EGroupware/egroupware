@@ -129,7 +129,7 @@
 							$users[$member['account_id']] = $GLOBALS['phpgw']->common->grab_owner_name($member['account_id']);
 						}
 					}
-					$groups[$id] = lang('group').' '.$this->id2name($id);
+					$groups[$id] = $GLOBALS['phpgw']->common->grab_owner_name($id);
 				}
 			}
 			// sort users and groups alphabeticaly and put the groups behind the users
@@ -155,7 +155,7 @@
 				'element_id'  => $element_id,
 				'single'      => !$lines,	// single selection, closes after the first selection
 			));
-			$popup_options = 'width=600,height=400,toolbar=no,scrollbars=auto,resizable=yes';
+			$popup_options = 'width=600,height=400,toolbar=no,scrollbars=yes,resizable=yes';
 			$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			$single = (int) !$lines;
 			if (!$lines)
@@ -462,7 +462,7 @@
 				'left'  => $this->nextmatchs->left('/index.php',$start,$total,$link_data+array('query'=>$query)),
 				'right' => $this->nextmatchs->right('/index.php',$start,$total,$link_data+array('query'=>$query)),
 				'lang_showing' => ($query ? lang("Search %1 '%2'",lang($this->query_types[$query_type]),$query) :
-					lang('Group').' '.$this->id2name($group_id)).': '.$this->nextmatchs->show_hits($total,$start),
+					$GLOBALS['phpgw']->common->grab_owner_name($group_id)).': '.$this->nextmatchs->show_hits($total,$start),
 			));
 
 // -------------------------- end nextmatch ------------------------------------

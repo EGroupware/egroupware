@@ -69,7 +69,7 @@
 	}
 </style>
 
-<div id="divMain" style="height: 315px">
+<div id="divMain">
 <table border="0" width="100%">
 	<tr>
 		<td width="20%" rowspan="3">{accountsel_icon}</td>
@@ -121,9 +121,7 @@
 				<tr bgcolor="{tr_color}">
 					<td><a href="{link_user_group}" title="{lang_list_members}">{name_user_group}</a></td>
 					<td align="center">
-					<form>
 						<input type="image" src="{img}" onclick="{onclick}; return false;" title="{lang_select_group}">
-					</form>
 					</td>
 				</tr>
 <!-- END group_cal -->
@@ -176,9 +174,7 @@
 		<td>{firstname}</td>
 		<td>{lastname}</td>
 		<td align="center">
-			<form>
-				<input type="image" src="{img}" onclick="{onclick}; return false;" title="{lang_select_user}">
-			</form>
+			<input type="image" src="{img}" onclick="{onclick}; return false;" title="{lang_select_user}">
 		</td>
 	</tr>
 
