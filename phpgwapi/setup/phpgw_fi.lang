@@ -1,0 +1,427 @@
+access	common	fi	Käyttöoikeus
+access not permitted	common	fi	Ei pääsyä
+acl	common	fi	ACL
+active	common	fi	Aktiivinen
+add	common	fi	Lisää
+add category	common	fi	Lisää luokka
+add x category for	common	fi	Lisää %1 luokka
+add sub	common	fi	Lisää ala
+admin	common	fi	Admin
+administration	common	fi	Ylläpto
+afghanistan	common	fi	AFGANISTAN
+albania	common	fi	ALBANIA
+algeria	common	fi	ALGERIA
+all	common	fi	Kaikki
+american samoa	common	fi	AMERIKAN SAMOA
+andorra	common	fi	ANDORRA
+angola	common	fi	ANGOLA
+anguilla	common	fi	ANGUILLA
+antarctica	common	fi	ETELÄNAPAMANNER
+antigua and barbuda	common	fi	ANTIGUA JA BARBUDA
+april	common	fi	Huhtikuu
+are you sure you want to delete this entry ?	common	fi	Haluatko poistaa kohteen?
+argentina	common	fi	ARGENTIINA
+armenia	common	fi	ARMENIA
+aruba	common	fi	ARUBA
+august	common	fi	Elokuu
+australia	common	fi	AUSTRALIA
+austria	common	fi	ITÄVALTA
+author	common	fi	Luonut
+autosave default category	common	fi	Tallenna oletusluokka automaattisesti
+azerbaijan	common	fi	AZERBAIJAN
+back	common	fi	Takaisin
+bad login or password	login	fi	Tunnus tai salasana ei kelpaa
+bahamas	common	fi	BAHAMA
+bahrain	common	fi	BAHRAIN
+bangladesh	common	fi	BANGLADESH
+barbados	common	fi	BARBADOS
+belarus	common	fi	VALKOVENÄJÄ
+belgium	common	fi	BELGIA
+belize	common	fi	BELIZE
+benin	common	fi	BENIN
+bermuda	common	fi	BERMUDA
+bhutan	common	fi	BHUTAN
+bolivia	common	fi	BOLIVIA
+bosnia and herzegovina	common	fi	BOSNIA JA HERZEGOVINA
+botswana	common	fi	BOTSWANA
+bouvet island	common	fi	BOUVET SAARET
+brazil	common	fi	BRASILIA
+british indian ocean territory	common	fi	BRITTILÄINEN INTIAN VALTAMEREN ALUA
+brunei darussalam	common	fi	BRUNEI DARUSSALAM
+bulgaria	common	fi	BULGARIA
+burkina faso	common	fi	BURKINA FASO
+burundi	common	fi	BURUNDI
+cambodia	common	fi	KAMPUTSEA
+cameroon	common	fi	CAMERUN
+canada	common	fi	KANADA
+cancel	common	fi	Peruuta
+cape verde	common	fi	CAPE VERDE
+categories	common	fi	Luokat
+categories for	common	fi	luokat kohteelle
+category	common	fi	Luokka
+category x has been added !	common	fi	Luokka %1 lisätty !
+category x has been updated !	common	fi	Luokka %1 päivitetty !
+cayman islands	common	fi	CAYMAN SAARET
+central african republic	common	fi	KESKI-AFRIKAN TASAVALTA
+chad	common	fi	CHAD
+change	common	fi	Muuta
+charset	common	fi	iso-8859-1
+chile	common	fi	CHILE
+china	common	fi	KIINA
+choose the category	common	fi	Valitse luokka
+choose the parent category	common	fi	Valitse yläluokka
+christmas island	common	fi	JOULUSAARET
+clear	common	fi	Tyhjennä
+clear form	common	fi	Tyhjennä lomake
+cocos (keeling) islands	common	fi	KOOKOSSAARET (KEELING)
+colombia	common	fi	KOLUMBIA
+comoros	common	fi	COMOROS
+congo	common	fi	KONGO
+congo, the democratic republic of the	common	fi	KONGON KANSANTASAVALTA
+cook islands	common	fi	COOK-SAARET
+copy	common	fi	Kopioi
+costa rica	common	fi	COSTA RICA
+cote d ivoire	common	fi	NORSUNLUURANNIKKO
+create	common	fi	Luo
+created by	common	fi	Luonut
+croatia	common	fi	KROATIA
+cuba	common	fi	KUUBA
+currency	common	fi	Valuutta
+current	common	fi	Nykyinen
+current users	common	fi	Nykyiset käyttäjät
+cyprus	common	fi	KYPROS
+czech republic	common	fi	TSEKIN TASAVALTA
+date	common	fi	Päivä
+date due	common	fi	Takaraja
+december	common	fi	Joulukuu
+default category	common	fi	Oletusluokka
+delete	common	fi	Poista
+denmark	common	fi	TANSKA
+description	common	fi	Kuvaus
+detail	common	fi	Tieto
+details	common	fi	Tiedot
+disabled	common	fi	Ei käytössä
+djibouti	common	fi	DJIBOUTI
+do you also want to delete all subcategories ?	common	fi	Poistetaanko myös kaikki alaluokat?
+dominica	common	fi	DOMINICA
+dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
+done	common	fi	Valmis
+e-mail	common	fi	E-Mail
+east timor	common	fi	ITÄ-TIMOR
+ecuador	common	fi	ECUADOR
+edit	common	fi	Muokkaa
+edit categories	common	fi	Muokkaa luokkia
+edit category	common	fi	Muokkaa luokkaa
+edit x category for	common	fi	Muokkaa %1 luokkaa
+egypt	common	fi	EGYPTI
+el salvador	common	fi	EL SALVADOR
+email	common	fi	E-Mail
+enabled	common	fi	Käytössä
+end date	common	fi	Loppumispäivä
+end time	common	fi	Loppumisaika
+entry has been deleted sucessfully	common	fi	Kohde poistettu
+entry updated sucessfully	common	fi	Kohde päivitetty
+equatorial guinea	common	fi	EQUATORIAL GUINEA
+eritrea	common	fi	ERITREA
+error	common	fi	Virhe
+error creating x x directory	common	fi	Virhe luotaessa hakemistoa %1%2
+error deleting x x directory	common	fi	Virhe poistettaessa hakemistoa %1%2
+error renaming x x directory	common	fi	Virhe vaihdettasessa hakemisto %1%2 nimeä
+estonia	common	fi	VIRO
+ethiopia	common	fi	ETIOPIA
+falkland islands (malvinas)	common	fi	FALKLAND-SAARET
+faroe islands	common	fi	FÄRSAARET
+february	common	fi	Helmikuu
+fields	common	fi	Kentät
+fiji	common	fi	FIJI
+files	common	fi	Tiedostot
+filter	common	fi	Rajaus
+finland	common	fi	SUOMI
+first name	common	fi	Etunimi
+firstname	common	fi	Etunimi
+force selectbox	common	fi	Pakota-valintalista
+france	common	fi	RANSKA
+french guiana	common	fi	RANSKAN GUINEA
+french polynesia	common	fi	RANSKAN POLYNESIA
+french southern territories	common	fi	RANSKAN ETELÄISET SIIRTOMAAT
+friday	common	fi	Perjantai
+ftp	common	fi	FTP
+gabon	common	fi	GABON
+gambia	common	fi	GAMBIA
+georgia	common	fi	GEORGIA
+germany	common	fi	SAKSA
+ghana	common	fi	GHANA
+gibraltar	common	fi	GIBRALTAR
+global	common	fi	Yleinen
+global public	common	fi	Yleinen Julkinen
+grant access	common	fi	Anna pääsy
+greece	common	fi	KREIKKA
+greenland	common	fi	GRÖNLANTI
+grenada	common	fi	GRENADA
+group	common	fi	Ryhmä
+group access	common	fi	Ryhmän pääsy
+group public	common	fi	Ryhmä Julkinen
+groups	common	fi	Ryhmät
+guadeloupe	common	fi	GUADELOUPE
+guam	common	fi	GUAM
+guatemala	common	fi	GUATEMALA
+guinea	common	fi	GUINEA
+guinea-bissau	common	fi	GUINEA-BISSAU
+guyana	common	fi	GUYANA
+haiti	common	fi	HAITI
+heard island and mcdonald islands	common	fi	HEARD-SAARET JA MCDONALD-SAARET
+help	common	fi	Ohje
+high	common	fi	Korkea
+highest	common	fi	Korkein
+holy see (vatican city state)	common	fi	VATIKAANI
+home	common	fi	Koti
+honduras	common	fi	HONDURAS
+hong kong	common	fi	HONG KONG
+hungary	common	fi	UNKARI
+iceland	common	fi	ISLANTI
+india	common	fi	INTIA
+indonesia	common	fi	INDONESIA
+iran, islamic republic of	common	fi	IRANIN ISLAMILAINEN TASAVALTA
+iraq	common	fi	IRAQ
+ireland	common	fi	IRLANTI
+israel	common	fi	ISRAEL
+it has been more then x days since you changed your password	common	fi	It has been more then %1 days since you changed your password
+it is recommended that you run setup to upgrade your tables to the current version	common	fi	It is recommended that you run setup to upgrade your tables to the current version.
+italy	common	fi	ITALIA
+jamaica	common	fi	JAMAICA
+january	common	fi	Tammikuu
+japan	common	fi	JAPANI
+jordan	common	fi	JORDANIA
+july	common	fi	Heinäkuu
+june	common	fi	Kesäkuu
+kazakstan	common	fi	KAZAKSTAN
+kenya	common	fi	KENIA
+kiribati	common	fi	KIRIBATI
+korea, democratic peoples republic of	common	fi	KOREAN DEMOKRAATTINEN KANSANTASAVALTA
+korea, republic of	common	fi	KOREAN TASAVALTA
+kuwait	common	fi	KUWAIT
+kyrgyzstan	common	fi	KYRGYZSTAN
+language	common	fi	Kieli
+lao peoples democratic republic	common	fi	LAON DEMOKRAATTINEN KANSANTASAVALTA
+last name	common	fi	Sukunimi
+lastname	common	fi	Sukunimi
+latvia	common	fi	LATVIA
+lebanon	common	fi	LIBANON
+lesotho	common	fi	LESOTHO
+liberia	common	fi	LIBERIA
+libyan arab jamahiriya	common	fi	LIBYAN ARAB JAMAHIRIYA
+liechtenstein	common	fi	LIECHTENSTEIN
+list	common	fi	Lista
+lithuania	common	fi	LIETTUA
+login	common	fi	Kirjaudu
+logout	common	fi	Poistu
+low	common	fi	Matala
+lowest	common	fi	Matalin
+luxembourg	common	fi	LUXEMBURG
+macau	common	fi	MACAU
+macedonia, the former yugoslav republic of	common	fi	MAKEDONIA, ENTINEN JUGOSLAVIAN TASAVALTA
+madagascar	common	fi	MADAGASCAR
+main category	common	fi	Pääluokka
+main screen	common	fi	Päänäyttö
+malawi	common	fi	MALAWI
+malaysia	common	fi	MALESIA
+maldives	common	fi	MALEDIIVIT
+mali	common	fi	MALI
+malta	common	fi	MALTA
+manual	common	fi	Käsin
+march	common	fi	Maaliskuu
+marshall islands	common	fi	MARSHALL-SAARET
+martinique	common	fi	MARTINIQUE
+mauritania	common	fi	MAURITANIA
+mauritius	common	fi	MAURITIUS
+may	common	fi	Toukokuu
+mayotte	common	fi	MAYOTTE
+medium	common	fi	Normaali
+message	common	fi	Viesti
+mexico	common	fi	MEKSIKO
+micronesia, federated states of	common	fi	MICRONESIAN LIITTOVALTIO
+moldova, republic of	common	fi	MOLDOVAN TASAVALTA
+monaco	common	fi	MONACO
+monday	common	fi	Maanantai
+mongolia	common	fi	MONGOLIA
+montserrat	common	fi	MONTSERRAT
+morocco	common	fi	MAROCCO
+mozambique	common	fi	MOZAMBIQUE
+myanmar	common	fi	MYANMAR
+name	common	fi	Nimi
+namibia	common	fi	NAMIBIA
+nauru	common	fi	NAURU
+nepal	common	fi	NEPAL
+netherlands	common	fi	ALANKOMAAT (HOLLANTI)
+netherlands antilles	common	fi	ALANKOMAIDEN ANTILLIT
+new caledonia	common	fi	UUSI KALEDONIA
+new entry added sucessfully	common	fi	Uusi kohde lisätty
+new main category	common	fi	Uusi pääluokka
+new zealand	common	fi	UUSI SEELANTI
+next	common	fi	Seuraava
+nicaragua	common	fi	NICARAGUA
+niger	common	fi	NIGER
+nigeria	common	fi	NIGERIA
+niue	common	fi	NIUE
+no	common	fi	Ei
+no subject	common	fi	Ei aihetta
+none	common	fi	Ei mitään
+norfolk island	common	fi	NORFOLK ISLAND
+normal	common	fi	Normaali
+northern mariana islands	common	fi	POHJOISET MARIAANIEN SAARET
+norway	common	fi	NORJA
+note	common	fi	Viesti
+notes	common	fi	Viestit
+notify window	common	fi	Huomautusikkuna
+november	common	fi	Marraskuu
+october	common	fi	Lokakuu
+ok	common	fi	OK
+oman	common	fi	OMAN
+only yours	common	fi	vain sinun
+open notify window	common	fi	Avaa huomautusikkuna
+original	common	fi	Alkuperäinen
+other	common	fi	Muu
+overview	common	fi	Yleiset
+owner	common	fi	Omistaja
+pakistan	common	fi	PAKISTAN
+palau	common	fi	PALAU
+palestinian territory, occupied	common	fi	PALESTIINALAISET ALUEET, MIEHITETYT
+panama	common	fi	PANAMA
+papua new guinea	common	fi	PAPUA UUSI GUINEA
+paraguay	common	fi	PARAGUAY
+parent category	common	fi	Yläluokka
+password	common	fi	Salasana
+password has been updated	common	fi	Salasana päivitetty
+personal	common	fi	Henkilökohtainen
+peru	common	fi	PERU
+philippines	common	fi	FILIPPIINIT
+pitcairn	common	fi	PITCAIRN
+please enter a name	common	fi	Anna nimi !
+please run setup to become current	common	fi	Aja setup-sovellus päivittääksesi
+please set your preferences for this application	common	fi	Tarkista tämän sovelluksen asetukset
+poland	common	fi	PUOLA
+portugal	common	fi	PORTUGALI
+powered by phpgroupware version x	common	fi	Tämä on <a href="http://www.phpgroupware.org">phpGroupWare</a> versio %1
+preferences	common	fi	Asetukset
+print	common	fi	Tulosta
+priority	common	fi	Tärkeys
+private	common	fi	Yksityinen
+public	common	fi	julkinen
+puerto rico	common	fi	PUERTO RICO
+qatar	common	fi	QATAR
+read	common	fi	Lue
+rename	common	fi	Nimeä uudelleen
+reunion	common	fi	REUNION
+romania	common	fi	ROMANIA
+russian federation	common	fi	VENÄJÄN FEDERAATIO
+rwanda	common	fi	RWANDA
+saint helena	common	fi	SAINT HELENA
+saint kitts and nevis	common	fi	SAINT KITTS JA NEVIS
+saint lucia	common	fi	SAINT LUCIA
+saint pierre and miquelon	common	fi	SAINT PIERRE JA MIQUELON
+saint vincent and the grenadines	common	fi	SAINT VINCENT JA GRENADIINIT
+samoa	common	fi	SAMOA
+san marino	common	fi	SAN MARINO
+sao tome and principe	common	fi	SAO TOME JA PRINCIPE
+saturday	common	fi	Lauantai
+saudi arabia	common	fi	SAUDI ARABIA
+save	common	fi	Tallenna
+search	common	fi	Etsi
+section	common	fi	Osio
+select category	common	fi	Valitse luokka
+senegal	common	fi	SENEGAL
+september	common	fi	Syyskuu
+session has been killed	common	fi	Istunto keskeytetty
+seychelles	common	fi	SEYCHELLES
+show all	common	fi	näytä kaikki
+showing x	common	fi	näytän %1
+showing x - x of x	common	fi	näytän %1 - %2 / %3
+sierra leone	common	fi	SIERRA LEONE
+singapore	common	fi	SINGAPORE
+slovakia	common	fi	SLOVAKIA
+slovenia	common	fi	SLOVENIA
+solomon islands	common	fi	SOLOMON SAARET
+somalia	common	fi	SOMALIA
+sorry, your login has expired	login	fi	Valitan, käyttäjätunnuksesi on vanhentunut
+south africa	common	fi	ETELÄ-AFRIKKA
+south georgia and the south sandwich islands	common	fi	ETELÄ-GEORGIA JA ETELÄISET SANDWICH-SAARET
+spain	common	fi	ESPANJA
+sri lanka	common	fi	SRI LANKA
+start date	common	fi	Alkupäivä
+start time	common	fi	Alkuaika
+status	common	fi	Tila
+subject	common	fi	Aihe
+submit	common	fi	Lähetä
+sudan	common	fi	SUDAN
+sunday	common	fi	Sunnuntai
+suriname	common	fi	SURINAM
+svalbard and jan mayen	common	fi	SVALBARD JA JAN MAYEN
+swaziland	common	fi	SWAZIMAA
+sweden	common	fi	RUOTSI
+switzerland	common	fi	SVEITSI
+syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
+taiwan, province of china	common	fi	TAIWAN, KIINAN PROVINSSI
+tajikistan	common	fi	TAJIKISTAN
+tanzania, united republic of	common	fi	TANSANIA, YHDISTYNYT TASAVALTA
+thailand	common	fi	THAIMAA
+the api is current	common	fi	API on ajan tasalla
+the api requires an upgrade	common	fi	API vaatii päivityksen
+the following applications require upgrades	common	fi	Nämä sovellukset vaativat päivityksen
+this application is current	common	fi	Sovellus on ajan tasalla
+this application requires an upgrade	common	fi	Sovellus vaatii päivityksen
+this name has been used already	common	fi	Nimi on jo käytössä !
+thursday	common	fi	Torstai
+time	common	fi	Aika
+time zone	common	fi	Aikavyöhyke
+time zone offset	common	fi	Aikaero
+title	common	fi	Otsikko
+togo	common	fi	TOGO
+tokelau	common	fi	TOKELAU
+tonga	common	fi	TONGA
+total	common	fi	Yhteensä
+trinidad and tobago	common	fi	TRINIDAD JA TOBAGO
+tuesday	common	fi	Tiistai
+tunisia	common	fi	TUNISIA
+turkey	common	fi	TURKKI
+turkmenistan	common	fi	TURKMENISTAN
+turks and caicos islands	common	fi	TURKS JA CAICOS -SAARET
+tuvalu	common	fi	TUVALU
+uganda	common	fi	UGANDA
+ukraine	common	fi	UKRAINA
+united arab emirates	common	fi	YHDISTYNEET ARABIEMIRAATIT
+united kingdom	common	fi	YHDISTYNEET KUNINGASKUNNAT
+united states	common	fi	YHDYSVALLAT
+united states minor outlying islands	common	fi	YHDYSVALTOJEN SAARIOSAVALTIOT
+unknown	common	fi	Tuntematon
+update	common	fi	Päivitä
+url	common	fi	URL
+uruguay	common	fi	URUGUAY
+user	common	fi	Käyttäjä
+username	common	fi	Käyttäjätunnus
+users	common	fi	käyttäjät
+users choice	common	fi	Käyttäjä valitsee
+uzbekistan	common	fi	UZBEKISTAN
+vanuatu	common	fi	VANUATU
+venezuela	common	fi	VENEZUELA
+viet nam	common	fi	VIETNAM
+view	common	fi	Näytä
+virgin islands, british	common	fi	NEITSYTSAARET, U.K.
+virgin islands, u.s.	common	fi	NEITSYTSAARET, U.S.
+wallis and futuna	common	fi	WALLIS JA FUTUNA
+wednesday	common	fi	Keskiviikko
+western sahara	common	fi	LÄNSI-SAHARA
+which groups	common	fi	Mitkä ryhmät
+written by:	common	fi	Kirjoittanut:
+yemen	common	fi	JEMEN
+yes	common	fi	Kyllä
+you are running a newer version of phpGroupWare than your database is setup for	common	fi	phpGroupWare:n versio on uudempi kuin tietokannan rakenne.
+you have been successfully logged out	login	fi	Istuntosi on päättynyt
+you have selected an invalid date	common	fi	Päivä ei kelpaa !
+you have selected an invalid main category	common	fi	Pääluokka ei kelpaa !
+your search returned 1 match	common	fi	haku palautti yhden kohteen
+your search returned x matchs	common	fi	haku palautti %1 kohdetta
+your session could not be verified.	login	fi	Istuntoasi ei voitu varmentaa.
+your settings have been updated	common	fi	Asetukset päivitetty
+yugoslavia	common	fi	JUGOSLAVIA
+zambia	common	fi	ZAMBIA
+zimbabwe	common	fi	ZIMBABWE
