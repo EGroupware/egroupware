@@ -27,7 +27,7 @@
 	$t->set_file(array( "edit"	=> "edit.tpl"));
 
 	if (! $ab_id) {
-		Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/","cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -92,7 +92,7 @@
 		//}
 		addressbook_update_entry($ab_id,$userid,$fields);
 
-		Header("Location: " . $phpgw->link("/addressbook/view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
+		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
 		$phpgw->common->phpgw_exit();
 	}
 

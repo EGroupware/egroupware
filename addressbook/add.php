@@ -29,8 +29,7 @@
 	$this = CreateObject("phpgwapi.contacts");
 	
 	if ($AddVcard){
-		Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] .
-			"/addressbook/vcardin.php"));
+		Header("Location: " . $phpgw->link("/addressbook/vcardin.php"));
 	} else if ($add_email) {
 		list($fields["firstname"],$fields["lastname"]) = explode(" ", $name);
 		$fields["email"] = $add_email;
@@ -85,14 +84,14 @@
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
 		$ab_id = addressbook_get_lastid();
 
-		Header("Location: " . $phpgw->link("/addressbook/view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
+		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
 		$phpgw->common->phpgw_exit();
 	}
 
 	$t->set_var("lang_ok",lang("ok"));
 	$t->set_var("lang_clear",lang("clear"));
 	$t->set_var("lang_cancel",lang("cancel"));
-	$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php?sort=$sort&order=$order&filter=$filter&start=$start"));
+	$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start"));
 	$t->parse("out","add");
 	$t->pparse("out","add");
 	

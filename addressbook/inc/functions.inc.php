@@ -290,7 +290,7 @@
 		}
 
 		if ($action) {
-			echo "<FORM action=\"".$phpgw->link($action)."\" method=\"post\">\n";
+			echo "<FORM action=\"".$phpgw->link('/addressbook/' . $action)."\" method=\"post\">\n";
 		}
 
 		// test:
