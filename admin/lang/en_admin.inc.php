@@ -36,7 +36,6 @@
        case "active":			$s = "Active";				break;
        case "disabled":			$s = "Disabled";			break;
        case "last time read":	$s = "Last Time Read";		break;
-       case "manager":			$s = "Manager";				break;
        case "permissions":		$s = "Permissions";			break;
        case "title":			$s = "Title";				break;
        case "enabled":			$s = "Enabled";				break;
