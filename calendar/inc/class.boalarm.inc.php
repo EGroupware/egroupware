@@ -15,7 +15,7 @@
 	/* $Id$ */
 
 	define('PHPGW_ACL_DELETEALARM',PHPGW_ACL_DELETE);	// for now
-	define('PHPGW_ACL_SETALARM',PHPGW_ACL_WRITE);
+	define('PHPGW_ACL_SETALARM',PHPGW_ACL_EDIT);
 	define('PHPGW_ACL_READALARM',PHPGW_ACL_READ);
 
 	class boalarm
