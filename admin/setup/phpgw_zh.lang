@@ -1,360 +1,361 @@
-%1 - %2 of %3 user accounts	admin	zh	%3¸öuser accountsÖĞµÄ%1¡ª%2
-%1 not found or not executable !!!	admin	zh	%1ÕÒ²»µ½»òÎŞ·¨Ö´ĞĞ!!!
-(stored password will not be shown here)	admin	zh	(´Ë´¦²»ÏÔÊ¾±£´æ¹ıµÄÃÜÂë)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(ÇëÊ¹ÓÃ<br><a href="setup/" target="setup">°²×°³ÌĞò</a>À´°²×°ĞÂµÄÓ¦ÓÃ³ÌĞò [Manage Applications] !!!)
-accesslog and bruteforce defense	admin	zh	·ÃÎÊÈÕÖ¾ºÍ×Öµä¹¥»÷·ÀÓù
-account active	admin	zh	ÆôÓÃÕÊ»§
-account has been created	common	zh	ÕÊ»§ÒÑ´´½¨
-account has been deleted	common	zh	ÕÊ»§ÒÑÉ¾³ı
-account has been updated	common	zh	ÕÊ»§ÒÑ¸üĞÂ
-account list	admin	zh	ÕÊ»§ÁĞ±í
-account permissions	admin	zh	ÕÊ»§È¨ÏŞ
-account preferences	admin	zh	ÕÊ»§¸öĞÔ»¯ÅäÖÃ
-acl manager	admin	zh	ACL¹ÜÀíÆ÷
-acl rights	admin	zh	ACLÈ¨ÏŞ
-action	admin	zh	²Ù×÷
-add a category	admin	zh	Ìí¼ÓÀà±ğ
-add a group	admin	zh	Ìí¼Ó×é
-add a new account.	admin	zh	Ìí¼ÓĞÂÕÊ»§
-add a subcategory	admin	zh	Ìí¼Ó×ÓÀà±ğ
-add a user	admin	zh	Ìí¼ÓÓÃ»§
-add account	admin	zh	Ìí¼ÓÕÊ»§
-add application	admin	zh	Ìí¼ÓÓ¦ÓÃ³ÌĞò
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	zh	Ïò¸Ã×éÌí¼Ó×Ô´´½¨ÓÃ»§ (Áô¿ÕÔòÊ¹ÓÃÄ¬ÈÏÉèÖÃ.)
-add global category	admin	zh	Ìí¼ÓÈ«¾ÖÀà±ğ
-add global category for %1	admin	zh	Îª%1Ìí¼ÓÈ«¾ÖÀà±ğ
-add group	admin	zh	Ìí¼Ó×é
-add new account	admin	zh	Ìí¼ÓĞÂÕÊ»§
-add new application	admin	zh	Ìí¼ÓĞÂµÄÓ¦ÓÃ³ÌĞò
-add peer server	admin	zh	Ìí¼Ó¶ÔµÈ·şÎñÆ÷
-add sub-category	admin	zh	Ìí¼Ó×ÓÀà±ğ
-admin email	admin	zh	Email¹ÜÀí
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	ÏòÕâĞ©EmailµØÖ··¢ËÍÍ¨¸æ·â½û (ÒÔ¶ººÅ·Ö¸ô)£¬Áô¿ÕÔò²»·¢ËÍÍ¨¸æ
-admin name	admin	zh	Ãû³Æ¹ÜÀí
-administration	admin	zh	ÏµÍ³¹ÜÀí
-admins	admin	zh	ÏµÍ³¹ÜÀí
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh	¼¸´ÎµÇÂ¼Ê§°Üºó£¬·â½ûÕË»§(Ä¬ÈÏÖµ3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zh	¼¸´ÎµÇÂ¼Ê§°Üºó£¬·â½ûIPµØÖ·?
-all records and account information will be lost!	admin	zh	ËùÓĞµÄ¼ÇÂ¼ºÍÕË»§ĞÅÏ¢¶¼½«¶ªÊ§!
-all users	admin	zh	ËùÓĞÓÃ»§
-allow anonymous access to this app	admin	zh	ÔÊĞíÄäÃûÓÃ»§·ÃÎÊ´ËÓ¦ÓÃ³ÌĞò
-anonymous user	admin	zh	ÄäÃûÓÃ»§
-anonymous user (not shown in list sessions)	admin	zh	ÄäÃûÓÃ»§(ÁĞ¾Ù»á»°Ê±²»ÏÔÊ¾)
-appearance	admin	zh	Íâ¹Û
-application	admin	zh	Ó¦ÓÃ³ÌĞò
-application name	admin	zh	Ó¦ÓÃ³ÌĞòÃû³Æ
-application title	admin	zh	Ó¦ÓÃ³ÌĞò±êÌâ
-applications	admin	zh	Ó¦ÓÃ³ÌĞò
-applications list	admin	zh	Ó¦ÓÃ³ÌĞòÁĞ±í
-apply	admin	zh	Ó¦ÓÃ
-are you sure you want to delete the application %1 ?	admin	zh	È·¶¨ÒªÉ¾³ıÓ¦ÓÃ³ÌĞò%1Âğ?
-are you sure you want to delete this account ?	admin	zh	È·¶¨ÒªÉ¾³ı¸ÃÕË»§Âğ?
-are you sure you want to delete this application ?	admin	zh	È·¶¨ÒªÉ¾³ı¸ÃÓ¦ÓÃ³ÌĞòÂğ?
-are you sure you want to delete this category ?	common	zh	È·¶¨ÒªÉ¾³ı¸ÃÀà±ğÂğ?
-are you sure you want to delete this global category ?	admin	zh	È·¶¨ÒªÉ¾³ı¸ÃÈ«¾ÖÀà±ğÂğ?
-are you sure you want to delete this group ?	admin	zh	È·¶¨ÒªÉ¾³ı¸Ã×éÂğ?
-are you sure you want to delete this server?	admin	zh	È·¶¨ÒªÉ¾³ı¸Ã·şÎñÆ÷Âğ?
-are you sure you want to kill this session ?	admin	zh	È·¶¨ÒªÖĞÖ¹¸Ã»á»°Âğ?
-async services last executed	admin	zh	Òì²½·şÎñ×î½üÒÑÖ´ĞĞ¹ı
-asynchronous timed services	admin	zh	Òì²½¶¨Ê±·şÎñ
-asyncservices not yet installed or other error (%1) !!!	admin	zh	Òì²½·şÎñÉĞÎ´°²×°»òÆäËû´íÎó(´íÎóºÅ£º%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh	ÔÚFTPÖĞ³¢ÊÔÊ¹ÓÃÕıÈ·µÄmimetypeÀ´Ìæ´úÄ¬ÈÏµÄapplication/otect-stream
-authentication / accounts	admin	zh	Éí·İÑéÖ¤/ÕË»§
-auto create account records for authenticated users	admin	zh	×Ô¶¯ÎªÒÑÍ¨¹ıÉí·İÑéÖ¤µÄÓÃ»§´´½¨ÕÊ»§¼ÇÂ¼
-back to the list	admin	zh	·µ»ØÁĞ±í
+ï»¿%1 - %2 of %3 user accounts	admin	zh	%3ä¸ªuser accountsä¸­çš„%1â€”%2
+%1 not found or not executable !!!	admin	zh	%1æ‰¾ä¸åˆ°æˆ–æ— æ³•æ‰§è¡Œ!!!
+(stored password will not be shown here)	admin	zh	(æ­¤å¤„ä¸æ˜¾ç¤ºä¿å­˜è¿‡çš„å¯†ç )
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(è¯·ä½¿ç”¨<br><a href="setup/" target="setup">å®‰è£…ç¨‹åº</a>æ¥å®‰è£…æ–°çš„åº”ç”¨ç¨‹åº [Manage Applications] !!!)
+accesslog and bruteforce defense	admin	zh	è®¿é—®æ—¥å¿—å’Œå­—å…¸æ”»å‡»é˜²å¾¡
+account active	admin	zh	å¯ç”¨å¸æˆ·
+account has been created	common	zh	å¸æˆ·å·²åˆ›å»º
+account has been deleted	common	zh	å¸æˆ·å·²åˆ é™¤
+account has been updated	common	zh	å¸æˆ·å·²æ›´æ–°
+account list	admin	zh	å¸æˆ·åˆ—è¡¨
+account permissions	admin	zh	å¸æˆ·æƒé™
+account preferences	admin	zh	å¸æˆ·ä¸ªæ€§åŒ–é…ç½®
+acl manager	admin	zh	ACLç®¡ç†å™¨
+acl rights	admin	zh	ACLæƒé™
+action	admin	zh	æ“ä½œ
+add a category	admin	zh	æ·»åŠ ç±»åˆ«
+add a group	admin	zh	æ·»åŠ ç»„
+add a new account.	admin	zh	æ·»åŠ æ–°å¸æˆ·
+add a subcategory	admin	zh	æ·»åŠ å­ç±»åˆ«
+add a user	admin	zh	æ·»åŠ ç”¨æˆ·
+add account	admin	zh	æ·»åŠ å¸æˆ·
+add application	admin	zh	æ·»åŠ åº”ç”¨ç¨‹åº
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	zh	å‘è¯¥ç»„æ·»åŠ è‡ªåˆ›å»ºç”¨æˆ· (ç•™ç©ºåˆ™ä½¿ç”¨é»˜è®¤è®¾ç½®.)
+add global category	admin	zh	æ·»åŠ å…¨å±€ç±»åˆ«
+add global category for %1	admin	zh	ä¸º%1æ·»åŠ å…¨å±€ç±»åˆ«
+add group	admin	zh	æ·»åŠ ç»„
+add new account	admin	zh	æ·»åŠ æ–°å¸æˆ·
+add new application	admin	zh	æ·»åŠ æ–°çš„åº”ç”¨ç¨‹åº
+add peer server	admin	zh	æ·»åŠ å¯¹ç­‰æœåŠ¡å™¨
+add sub	admin	zh	æ·»åŠ å­ç±»åˆ«
+add sub-category	admin	zh	æ·»åŠ å­ç±»åˆ«
+admin email	admin	zh	Emailç®¡ç†
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	å‘è¿™äº›Emailåœ°å€å‘é€é€šå‘Šå°ç¦ (ä»¥é€—å·åˆ†éš”)ï¼Œç•™ç©ºåˆ™ä¸å‘é€é€šå‘Š
+admin name	admin	zh	åç§°ç®¡ç†
+administration	admin	zh	ç³»ç»Ÿç®¡ç†
+admins	admin	zh	ç³»ç»Ÿç®¡ç†
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh	å‡ æ¬¡ç™»å½•å¤±è´¥åï¼Œå°ç¦è´¦æˆ·(é»˜è®¤å€¼3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zh	å‡ æ¬¡ç™»å½•å¤±è´¥åï¼Œå°ç¦IPåœ°å€?
+all records and account information will be lost!	admin	zh	æ‰€æœ‰çš„è®°å½•å’Œè´¦æˆ·ä¿¡æ¯éƒ½å°†ä¸¢å¤±!
+all users	admin	zh	æ‰€æœ‰ç”¨æˆ·
+allow anonymous access to this app	admin	zh	å…è®¸åŒ¿åç”¨æˆ·è®¿é—®æ­¤åº”ç”¨ç¨‹åº
+anonymous user	admin	zh	åŒ¿åç”¨æˆ·
+anonymous user (not shown in list sessions)	admin	zh	åŒ¿åç”¨æˆ·(åˆ—ä¸¾ä¼šè¯æ—¶ä¸æ˜¾ç¤º)
+appearance	admin	zh	å¤–è§‚
+application	admin	zh	åº”ç”¨ç¨‹åº
+application name	admin	zh	åº”ç”¨ç¨‹åºåç§°
+application title	admin	zh	åº”ç”¨ç¨‹åºæ ‡é¢˜
+applications	admin	zh	åº”ç”¨ç¨‹åº
+applications list	admin	zh	åº”ç”¨ç¨‹åºåˆ—è¡¨
+apply	admin	zh	åº”ç”¨
+are you sure you want to delete the application %1 ?	admin	zh	ç¡®å®šè¦åˆ é™¤åº”ç”¨ç¨‹åº%1å—?
+are you sure you want to delete this account ?	admin	zh	ç¡®å®šè¦åˆ é™¤è¯¥è´¦æˆ·å—?
+are you sure you want to delete this application ?	admin	zh	ç¡®å®šè¦åˆ é™¤è¯¥åº”ç”¨ç¨‹åºå—?
+are you sure you want to delete this category ?	common	zh	ç¡®å®šè¦åˆ é™¤è¯¥ç±»åˆ«å—?
+are you sure you want to delete this global category ?	admin	zh	ç¡®å®šè¦åˆ é™¤è¯¥å…¨å±€ç±»åˆ«å—?
+are you sure you want to delete this group ?	admin	zh	ç¡®å®šè¦åˆ é™¤è¯¥ç»„å—?
+are you sure you want to delete this server?	admin	zh	ç¡®å®šè¦åˆ é™¤è¯¥æœåŠ¡å™¨å—?
+are you sure you want to kill this session ?	admin	zh	ç¡®å®šè¦ä¸­æ­¢è¯¥ä¼šè¯å—?
+async services last executed	admin	zh	å¼‚æ­¥æœåŠ¡æœ€è¿‘å·²æ‰§è¡Œè¿‡
+asynchronous timed services	admin	zh	å¼‚æ­¥å®šæ—¶æœåŠ¡
+asyncservices not yet installed or other error (%1) !!!	admin	zh	å¼‚æ­¥æœåŠ¡å°šæœªå®‰è£…æˆ–å…¶ä»–é”™è¯¯(é”™è¯¯å·ï¼š%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh	åœ¨FTPä¸­å°è¯•ä½¿ç”¨æ­£ç¡®çš„mimetypeæ¥æ›¿ä»£é»˜è®¤çš„application/otect-stream
+authentication / accounts	admin	zh	èº«ä»½éªŒè¯/è´¦æˆ·
+auto create account records for authenticated users	admin	zh	è‡ªåŠ¨ä¸ºå·²é€šè¿‡èº«ä»½éªŒè¯çš„ç”¨æˆ·åˆ›å»ºå¸æˆ·è®°å½•
+back to the list	admin	zh	è¿”å›åˆ—è¡¨
 bi-dir passthrough	admin	zh	bi-dir passthrough
 bi-directional	admin	zh	bi-directional
-bottom	admin	zh	µ×²¿
-calculate next run	admin	zh	¼Æ»®ÏÂ´ÎÔËĞĞ
-can change password	admin	zh	ÔÊĞí¸ü¸ÄÃÜÂë
-cancel testjob!	admin	zh	È¡Ïû²âÊÔÈÎÎñ!
-categories list	admin	zh	Àà±ğÁĞ±í
-category %1 has been saved !	admin	zh	Àà±ğ%1ÒÑ±£´æ!
-category list	admin	zh	Àà±ğÁĞ±í
-change acl rights	admin	zh	¸ü¸ÄACLÈ¨ÏŞ
-change config settings	admin	zh	¸ü¸ÄÅäÖÃ
-change main screen message	admin	zh	¸ü¸ÄÖ÷Ò³ÃæĞÅÏ¢
-check ip address of all sessions	admin	zh	¼ì²éËùÓĞ»á»°µÄIPµØÖ·
+bottom	admin	zh	åº•éƒ¨
+calculate next run	admin	zh	è®¡åˆ’ä¸‹æ¬¡è¿è¡Œ
+can change password	admin	zh	å…è®¸æ›´æ”¹å¯†ç 
+cancel testjob!	admin	zh	å–æ¶ˆæµ‹è¯•ä»»åŠ¡!
+categories list	admin	zh	ç±»åˆ«åˆ—è¡¨
+category %1 has been saved !	admin	zh	ç±»åˆ«%1å·²ä¿å­˜!
+category list	admin	zh	ç±»åˆ«åˆ—è¡¨
+change acl rights	admin	zh	æ›´æ”¹ACLæƒé™
+change config settings	admin	zh	æ›´æ”¹é…ç½®
+change main screen message	admin	zh	æ›´æ”¹ä¸»é¡µé¢ä¿¡æ¯
+check ip address of all sessions	admin	zh	æ£€æŸ¥æ‰€æœ‰ä¼šè¯çš„IPåœ°å€
 check items to <b>%1</b> to %2 for %3	admin	zh	Check items to <b>%1</b> to %2 for %3
-country selection	admin	zh	Ñ¡Ôñ¹ú¼Ò/µØÇø
-create group	admin	zh	´´½¨×é
+country selection	admin	zh	é€‰æ‹©å›½å®¶/åœ°åŒº
+create group	admin	zh	åˆ›å»ºç»„
 crontab only (recomended)	admin	zh	crontab only (recomended)
-data	admin	zh	Êı¾İ
-day	admin	zh	ĞÇÆÚ
-day of week<br>(0-6, 0=sun)	admin	zh	ĞÇÆÚ<br>(0-6, 0=ĞÇÆÚÈÕ)
-default	admin	zh	Ä¬ÈÏÖµ
-default file system space per user	admin	zh	Ã¿¸öÓÃ»§µÄÄ¬ÈÏÎÄ¼şÏµÍ³¿Õ¼ä
-default file system space per user/group ?	admin	zh	Ã¿¸öÓÃ»§/×éµÄÄ¬ÈÏÎÄ¼şÏµÍ³¿Õ¼ä?
-deinstall crontab	admin	zh	Ğ¶ÔØ crontab
-delete account	admin	zh	É¾³ıÕË»§
-delete all records	admin	zh	É¾³ıËùÓĞ¼ÇÂ¼
-delete application	admin	zh	É¾³ıÓ¦ÓÃ³ÌĞò
-delete category	admin	zh	É¾³ıÀà±ğ
-delete group	admin	zh	É¾³ı×é
-delete peer server	admin	zh	É¾³ı¶ÔµÈ·şÎñÆ÷
-delete the category	admin	zh	É¾³ı¸ÃÀà±ğ
-delete the group	admin	zh	É¾³ı¸Ã×é
-delete this category	admin	zh	É¾³ıÕâ¸öÀà±ğ
-delete this group	admin	zh	É¾³ıÕâ¸ö×é
-delete this user	admin	zh	É¾³ıÕâ¸öÓÃ»§
-deny access to access log	admin	zh	½ûÖ¹¶Ô·ÃÎÊÈÕÖ¾µÄ·ÃÎÊ
-deny access to application registery	admin	zh	½ûÖ¹·ÃÎÊÓ¦ÓÃ³ÌĞò×¢²áÏî
-deny access to applications	admin	zh	½ûÖ¹·ÃÎÊÓ¦ÓÃ³ÌĞò
-deny access to asynchronous timed services	admin	zh	½ûÖ¹·ÃÎÊÒì²½¶¨Ê±·şÎñ
-deny access to current sessions	admin	zh	½ûÖ¹·ÃÎÊµ±Ç°»á»°
-deny access to error log	admin	zh	½ûÖ¹·ÃÎÊ´íÎóÈÕÖ¾
-deny access to global categories	admin	zh	½ûÖ¹·ÃÎÊÈ«¾ÖÀà±ğ
-deny access to groups	admin	zh	½ûÖ¹·ÃÎÊ×é
-deny access to mainscreen message	admin	zh	½ûÖ¹·ÃÎÊÖ÷Ò³ÃæĞÅÏ¢
-deny access to peer servers	admin	zh	½ûÖ¹·ÃÎÊ¶ÔµÈ½ø³Ì
-deny access to phpinfo	admin	zh	½ûÖ¹·ÃÎÊPHPĞÅÏ¢
-deny access to site configuration	admin	zh	½ûÖ¹·ÃÎÊÕ¾µãÅäÖÃ
-deny access to user accounts	admin	zh	½ûÖ¹·ÃÎÊÓÃ»§ÕË»§
-deny all users access to grant other users access to their entries ?	admin	zh	½ûÖ¹ÓÃ»§·ÃÎÊËûÈËÕË»§?
-description can not exceed 255 characters in length !	admin	zh	ËµÃ÷µÄ³¤¶È²»ÄÜ³¬¹ı255¸ö×Ö·û!
-disable "auto completion" of the login form	admin	zh	½ûÓÃµÇÂ¼¿òÖĞµÄ×Ô¶¯Íê³É¹¦ÄÜ
-disabled (not recomended)	admin	zh	½ûÓÃ(²»ÍÆ¼ö)
-display	admin	zh	ÏÔÊ¾
-do not delete the category and return back to the list	admin	zh	ÇëÎğÉ¾³ı¸ÃÀà±ğ£¬·µ»ØÁĞ±í
-do you also want to delete all global subcategories ?	admin	zh	È·¶¨Ò²ÒªÉ¾³ıËùÓĞµÄÈ«¾Ö×ÓÀà±ğÂğ?
-do you want to delete all global subcategories ?	admin	zh	È·¶¨ÒªÉ¾³ıËùÓĞµÄÈ«¾Ö×ÓÀà±ğÂğ?
-do you want to move all global subcategories one level down ?	admin	zh	È·¶¨Òª°ÑËùÓĞµÄÈ«¾Ö×ÓÀà±ğÏòÏÂÒÆ¶¯Ò»¼¶Âğ?
-edit account	admin	zh	±à¼­ÕË»§
-edit application	admin	zh	±à¼­Ó¦ÓÃ³ÌĞò
-edit global category	admin	zh	±à¼­È«¾ÖÀà±ğ
-edit global category for %1	admin	zh	±à¼­È«¾ÖÀà±ğ%1Îª
-edit group	admin	zh	±à¼­×é
-edit login screen message	admin	zh	±à¼­µÇÂ¼Ò³ÃæĞÅÏ¢
-edit main screen message	admin	zh	±à¼­Ö÷Ò³ÃæĞÅÏ¢
-edit peer server	admin	zh	±à¼­¶ÔµÈ·şÎñÆ÷
-edit table format	admin	zh	±à¼­±íµ¥¸ñÊ½
-edit this category	admin	zh	±à¼­¸ÃÀà±ğ
-edit this group	admin	zh	±à¼­¸Ã×é
-edit this user	admin	zh	±à¼­¸ÃÓÃ»§
-edit user	admin	zh	±à¼­ÓÃ»§
-edit user account	admin	zh	±à¼­ÓÃ»§ÕË»§
-enable debug-messages	admin	zh	ÏÔÊ¾µ÷ÊÔĞÅÏ¢
-enabled - hidden from navbar	admin	zh	ÔÚ¹¤¾ßÖĞÒş²Ø
-enter a description for the category	admin	zh	ÊäÈëÀà±ğËµÃ÷
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh	ÇëËæ»úÊäÈëÒ»Ğ©ÎÄ±¾£¬ÓÃÓÚ<br>¼ÓÃÜÓ¦ÓÃ³ÌĞòµÄ»á»°(ĞèÒªmcrypt)
-enter the background color for the login page	admin	zh	µÇÂ¼Ò³ÃæµÄ±³¾°ÑÕÉ«
-enter the background color for the site title	admin	zh	Õ¾µãÃû³ÆµÄ±³¾°ÑÕÉ«
-enter the file name of your logo	admin	zh	»Õ±êÎÄ¼şµÄÃû³Æ
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh	ÇëÊäÈëÁÙÊ±ÎÄ¼şµÄÍêÕûÂ·¾¶¡£<br>ÀıÈç: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	ÇëÊäÈëÓÃ»§ºÍ×éµÄÍêÕûÂ·¾¶¡£<br>ÀıÈç: /files, E:\FILES
-enter the hostname of the machine on which this server is running	admin	zh	ÇëÊäÈë·şÎñÆ÷ËùÔÚÖ÷»úµÄÃû³Æ
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zh	ÇëÊäÈëphpGroupWareµÄÍøÖ·¡£<br>ÀıÈç£º http://www.domain.com/phpgroupware &nbsp; »òÕß &nbsp; /phpgroupware<br><b>²»ÄÜÒÔ/½áÎ²</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	zh	ÇëÊäÈëÒª²éÕÒµÄ×Ö·û´®¡£ÒªÏÔÊ¾ËùÓĞÌõÄ¿£¬´Ë´¦Áô¿Õ²¢µã»÷Ìá½»°´Å¥
-enter the site password for peer servers	admin	zh	ÇëÊäÈë¶ÔµÈ·şÎñÆ÷Õ¾µãµÄÃÜÂë
-enter the site username for peer servers	admin	zh	ÇëÊäÈë¶ÔµÈ·şÎñÆ÷Õ¾µãµÄÓÃ»§Ãû
-enter the title for your site	admin	zh	Õ¾µã±êÌâ
-enter the title of your logo	admin	zh	»Õ±êÃû³Æ
-enter the url where your logo should link to	admin	zh	»Õ±êËùÁ´½ÓµÄÍøÖ·
-enter your default ftp server	admin	zh	ÇëÊäÈëÄ¬ÈÏµÄFTP·şÎñÆ÷
-enter your http proxy server	admin	zh	ÇëÊäÈëHTTP´úÀí·şÎñÆ÷
-enter your http proxy server port	admin	zh	ÇëÊäÈëHTTP´úÀí·şÎñÆ÷µÄ¶Ë¿ÚºÅ
-error canceling timer, maybe there's none set !!!	admin	zh	È¡Ïû¶¨Ê±Æ÷Ê±³ö´í£¬¿ÉÄÜ²¢Ã»ÓĞÉèÖÃ¶¨Ê±Æ÷!!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	zh	ÉèÖÃ¶¨Ê±Æ÷Ê±³ö´í£¬Óï·¨²»ÕıÈ·»ò¶¨Ê±Æ÷ÕıÔÚÔËĞĞ!!!
-error: %1 not found or other error !!!	admin	zh	´íÎó: ÎŞ·¨ÕÒµ½%1»òÆäËûÔ­Òò!!!
-expires	admin	zh	ÕË»§ÓĞĞ§ÆÚÏŞ
-fallback (after each pageview)	admin	zh	ÔÚÃ¿¸öÒ³ÃæÇëÇóºó·µ»Ø
-file space	admin	zh	ÎÄ¼ş¿Õ¼ä
-file space must be an integer	admin	zh	ÎÄ¼ş¿Õ¼ä±ØĞëÎªÕûÊı
-find and register all application hooks	admin	zh	²éÕÒ²¢×¢²áËùÓĞÓ¦ÓÃ³ÌĞòHooks
+data	admin	zh	æ•°æ®
+day	admin	zh	æ˜ŸæœŸ
+day of week<br>(0-6, 0=sun)	admin	zh	æ˜ŸæœŸ<br>(0-6, 0=æ˜ŸæœŸæ—¥)
+default	admin	zh	é»˜è®¤å€¼
+default file system space per user	admin	zh	æ¯ä¸ªç”¨æˆ·çš„é»˜è®¤æ–‡ä»¶ç³»ç»Ÿç©ºé—´
+default file system space per user/group ?	admin	zh	æ¯ä¸ªç”¨æˆ·/ç»„çš„é»˜è®¤æ–‡ä»¶ç³»ç»Ÿç©ºé—´?
+deinstall crontab	admin	zh	å¸è½½ crontab
+delete account	admin	zh	åˆ é™¤è´¦æˆ·
+delete all records	admin	zh	åˆ é™¤æ‰€æœ‰è®°å½•
+delete application	admin	zh	åˆ é™¤åº”ç”¨ç¨‹åº
+delete category	admin	zh	åˆ é™¤ç±»åˆ«
+delete group	admin	zh	åˆ é™¤ç»„
+delete peer server	admin	zh	åˆ é™¤å¯¹ç­‰æœåŠ¡å™¨
+delete the category	admin	zh	åˆ é™¤è¯¥ç±»åˆ«
+delete the group	admin	zh	åˆ é™¤è¯¥ç»„
+delete this category	admin	zh	åˆ é™¤è¿™ä¸ªç±»åˆ«
+delete this group	admin	zh	åˆ é™¤è¿™ä¸ªç»„
+delete this user	admin	zh	åˆ é™¤è¿™ä¸ªç”¨æˆ·
+deny access to access log	admin	zh	ç¦æ­¢å¯¹è®¿é—®æ—¥å¿—çš„è®¿é—®
+deny access to application registery	admin	zh	ç¦æ­¢è®¿é—®åº”ç”¨ç¨‹åºæ³¨å†Œé¡¹
+deny access to applications	admin	zh	ç¦æ­¢è®¿é—®åº”ç”¨ç¨‹åº
+deny access to asynchronous timed services	admin	zh	ç¦æ­¢è®¿é—®å¼‚æ­¥å®šæ—¶æœåŠ¡
+deny access to current sessions	admin	zh	ç¦æ­¢è®¿é—®å½“å‰ä¼šè¯
+deny access to error log	admin	zh	ç¦æ­¢è®¿é—®é”™è¯¯æ—¥å¿—
+deny access to global categories	admin	zh	ç¦æ­¢è®¿é—®å…¨å±€ç±»åˆ«
+deny access to groups	admin	zh	ç¦æ­¢è®¿é—®ç»„
+deny access to mainscreen message	admin	zh	ç¦æ­¢è®¿é—®ä¸»é¡µé¢ä¿¡æ¯
+deny access to peer servers	admin	zh	ç¦æ­¢è®¿é—®å¯¹ç­‰è¿›ç¨‹
+deny access to phpinfo	admin	zh	ç¦æ­¢è®¿é—®PHPä¿¡æ¯
+deny access to site configuration	admin	zh	ç¦æ­¢è®¿é—®ç«™ç‚¹é…ç½®
+deny access to user accounts	admin	zh	ç¦æ­¢è®¿é—®ç”¨æˆ·è´¦æˆ·
+deny all users access to grant other users access to their entries ?	admin	zh	ç¦æ­¢ç”¨æˆ·è®¿é—®ä»–äººè´¦æˆ·?
+description can not exceed 255 characters in length !	admin	zh	è¯´æ˜çš„é•¿åº¦ä¸èƒ½è¶…è¿‡255ä¸ªå­—ç¬¦!
+disable "auto completion" of the login form	admin	zh	ç¦ç”¨ç™»å½•æ¡†ä¸­çš„è‡ªåŠ¨å®ŒæˆåŠŸèƒ½
+disabled (not recomended)	admin	zh	ç¦ç”¨(ä¸æ¨è)
+display	admin	zh	æ˜¾ç¤º
+do not delete the category and return back to the list	admin	zh	è¯·å‹¿åˆ é™¤è¯¥ç±»åˆ«ï¼Œè¿”å›åˆ—è¡¨
+do you also want to delete all global subcategories ?	admin	zh	ç¡®å®šä¹Ÿè¦åˆ é™¤æ‰€æœ‰çš„å…¨å±€å­ç±»åˆ«å—?
+do you want to delete all global subcategories ?	admin	zh	ç¡®å®šè¦åˆ é™¤æ‰€æœ‰çš„å…¨å±€å­ç±»åˆ«å—?
+do you want to move all global subcategories one level down ?	admin	zh	ç¡®å®šè¦æŠŠæ‰€æœ‰çš„å…¨å±€å­ç±»åˆ«å‘ä¸‹ç§»åŠ¨ä¸€çº§å—?
+edit account	admin	zh	ç¼–è¾‘è´¦æˆ·
+edit application	admin	zh	ç¼–è¾‘åº”ç”¨ç¨‹åº
+edit global category	admin	zh	ç¼–è¾‘å…¨å±€ç±»åˆ«
+edit global category for %1	admin	zh	ç¼–è¾‘å…¨å±€ç±»åˆ«%1ä¸º
+edit group	admin	zh	ç¼–è¾‘ç»„
+edit login screen message	admin	zh	ç¼–è¾‘ç™»å½•é¡µé¢ä¿¡æ¯
+edit main screen message	admin	zh	ç¼–è¾‘ä¸»é¡µé¢ä¿¡æ¯
+edit peer server	admin	zh	ç¼–è¾‘å¯¹ç­‰æœåŠ¡å™¨
+edit table format	admin	zh	ç¼–è¾‘è¡¨å•æ ¼å¼
+edit this category	admin	zh	ç¼–è¾‘è¯¥ç±»åˆ«
+edit this group	admin	zh	ç¼–è¾‘è¯¥ç»„
+edit this user	admin	zh	ç¼–è¾‘è¯¥ç”¨æˆ·
+edit user	admin	zh	ç¼–è¾‘ç”¨æˆ·
+edit user account	admin	zh	ç¼–è¾‘ç”¨æˆ·è´¦æˆ·
+enable debug-messages	admin	zh	æ˜¾ç¤ºè°ƒè¯•ä¿¡æ¯
+enabled - hidden from navbar	admin	zh	åœ¨å·¥å…·ä¸­éšè—
+enter a description for the category	admin	zh	è¾“å…¥ç±»åˆ«è¯´æ˜
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh	è¯·éšæœºè¾“å…¥ä¸€äº›æ–‡æœ¬ï¼Œç”¨äº<br>åŠ å¯†åº”ç”¨ç¨‹åºçš„ä¼šè¯(éœ€è¦mcrypt)
+enter the background color for the login page	admin	zh	ç™»å½•é¡µé¢çš„èƒŒæ™¯é¢œè‰²
+enter the background color for the site title	admin	zh	ç«™ç‚¹åç§°çš„èƒŒæ™¯é¢œè‰²
+enter the file name of your logo	admin	zh	å¾½æ ‡æ–‡ä»¶çš„åç§°
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh	è¯·è¾“å…¥ä¸´æ—¶æ–‡ä»¶çš„å®Œæ•´è·¯å¾„ã€‚<br>ä¾‹å¦‚: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	è¯·è¾“å…¥ç”¨æˆ·å’Œç»„çš„å®Œæ•´è·¯å¾„ã€‚<br>ä¾‹å¦‚: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	zh	è¯·è¾“å…¥æœåŠ¡å™¨æ‰€åœ¨ä¸»æœºçš„åç§°
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zh	è¯·è¾“å…¥phpGroupWareçš„ç½‘å€ã€‚<br>ä¾‹å¦‚ï¼š http://www.domain.com/phpgroupware &nbsp; æˆ–è€… &nbsp; /phpgroupware<br><b>ä¸èƒ½ä»¥/ç»“å°¾</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	zh	è¯·è¾“å…¥è¦æŸ¥æ‰¾çš„å­—ç¬¦ä¸²ã€‚è¦æ˜¾ç¤ºæ‰€æœ‰æ¡ç›®ï¼Œæ­¤å¤„ç•™ç©ºå¹¶ç‚¹å‡»æäº¤æŒ‰é’®
+enter the site password for peer servers	admin	zh	è¯·è¾“å…¥å¯¹ç­‰æœåŠ¡å™¨ç«™ç‚¹çš„å¯†ç 
+enter the site username for peer servers	admin	zh	è¯·è¾“å…¥å¯¹ç­‰æœåŠ¡å™¨ç«™ç‚¹çš„ç”¨æˆ·å
+enter the title for your site	admin	zh	ç«™ç‚¹æ ‡é¢˜
+enter the title of your logo	admin	zh	å¾½æ ‡åç§°
+enter the url where your logo should link to	admin	zh	å¾½æ ‡æ‰€é“¾æ¥çš„ç½‘å€
+enter your default ftp server	admin	zh	è¯·è¾“å…¥é»˜è®¤çš„FTPæœåŠ¡å™¨
+enter your http proxy server	admin	zh	è¯·è¾“å…¥HTTPä»£ç†æœåŠ¡å™¨
+enter your http proxy server port	admin	zh	è¯·è¾“å…¥HTTPä»£ç†æœåŠ¡å™¨çš„ç«¯å£å·
+error canceling timer, maybe there's none set !!!	admin	zh	å–æ¶ˆå®šæ—¶å™¨æ—¶å‡ºé”™ï¼Œå¯èƒ½å¹¶æ²¡æœ‰è®¾ç½®å®šæ—¶å™¨!!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	zh	è®¾ç½®å®šæ—¶å™¨æ—¶å‡ºé”™ï¼Œè¯­æ³•ä¸æ­£ç¡®æˆ–å®šæ—¶å™¨æ­£åœ¨è¿è¡Œ!!!
+error: %1 not found or other error !!!	admin	zh	é”™è¯¯: æ— æ³•æ‰¾åˆ°%1æˆ–å…¶ä»–åŸå› !!!
+expires	admin	zh	è´¦æˆ·æœ‰æ•ˆæœŸé™
+fallback (after each pageview)	admin	zh	åœ¨æ¯ä¸ªé¡µé¢è¯·æ±‚åè¿”å›
+file space	admin	zh	æ–‡ä»¶ç©ºé—´
+file space must be an integer	admin	zh	æ–‡ä»¶ç©ºé—´å¿…é¡»ä¸ºæ•´æ•°
+find and register all application hooks	admin	zh	æŸ¥æ‰¾å¹¶æ³¨å†Œæ‰€æœ‰åº”ç”¨ç¨‹åºHooks
 for the times above	admin	zh	for the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	zh	for the times below (empty values count as '*', all empty = every minute)
 force selectbox	admin	zh	Force Selectbox
-global categories	common	zh	È«¾ÖÀà±ğ
-group ?	admin	zh	×é?
-group has been added	common	zh	×éÒÑÌí¼Ó
-group has been deleted	common	zh	×éÒÑÉ¾³ı
-group has been updated	common	zh	×éÒÑ¸üĞÂ
-group list	admin	zh	×éÁĞ±í
-group manager	admin	zh	×é¹ÜÀí
-group name	admin	zh	×éÃû³Æ
-hide php information	admin	zh	Òş²ØphpĞÅÏ¢
-home directory	admin	zh	Ö÷Ä¿Â¼
-host information	admin	zh	Ö÷»úĞÅÏ¢
-hour<br>(0-23)	admin	zh	Ğ¡Ê±<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh	·ÃÎÊÈÕÖ¾ÖĞµÄÌõÄ¿±£Áô¶à¾ÃºóÉ¾³ı(Ä¬ÈÏÖµ90Ìì)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	zh	ÕË»§ºÍIPµØÖ·µÄ·â½ûÊ±¼ä(Ä¬ÈÏÖµ30·ÖÖÓ)
-idle	admin	zh	·¢´ô
+global categories	admin	zh	å…¨å±€ç±»åˆ«
+group ?	admin	zh	ç»„?
+group has been added	common	zh	ç»„å·²æ·»åŠ 
+group has been deleted	common	zh	ç»„å·²åˆ é™¤
+group has been updated	common	zh	ç»„å·²æ›´æ–°
+group list	admin	zh	ç»„åˆ—è¡¨
+group manager	admin	zh	ç»„ç®¡ç†
+group name	admin	zh	ç»„åç§°
+hide php information	admin	zh	éšè—phpä¿¡æ¯
+home directory	admin	zh	ä¸»ç›®å½•
+host information	admin	zh	ä¸»æœºä¿¡æ¯
+hour<br>(0-23)	admin	zh	å°æ—¶<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh	è®¿é—®æ—¥å¿—ä¸­çš„æ¡ç›®ä¿ç•™å¤šä¹…ååˆ é™¤(é»˜è®¤å€¼90å¤©)?
+how many minutes should an account or ip be blocked (default 30) ?	admin	zh	è´¦æˆ·å’ŒIPåœ°å€çš„å°ç¦æ—¶é—´(é»˜è®¤å€¼30åˆ†é’Ÿ)
+idle	admin	zh	å‘å‘†
 if no acl records for user or any group the user is a member of	admin	zh	If no ACL records for user or any group the user is a member of
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	Èç¹ûÊ¹ÓÃLDAP£¬ÊÇ·ñĞèÒª¹ÜÀíÖ÷Ä¿Â¼ºÍµÇÂ¼shellµÄÊôĞÔ?
-inbound	admin	zh	ÈëÕ¾
-install crontab	admin	zh	°²×°crontab
-installed applications	common	zh	ÒÑ°²×°µÄÓ¦ÓÃ³ÌĞò
-installed crontab	admin	zh	ÒÑ°²×°µÄcrontab
-interface	admin	zh	½Ó¿Ú
-ip	admin	zh	IPµØÖ·
-jobs	admin	zh	ÈÎÎñ
-kill	admin	zh	ÖĞÖ¹
-kill session	admin	zh	ÖĞÖ¹»á»°
-last %1 logins	admin	zh	×î½ü%1´ÎµÇÂ¼
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	å¦‚æœä½¿ç”¨LDAPï¼Œæ˜¯å¦éœ€è¦ç®¡ç†ä¸»ç›®å½•å’Œç™»å½•shellçš„å±æ€§?
+inbound	admin	zh	å…¥ç«™
+install crontab	admin	zh	å®‰è£…crontab
+installed applications	common	zh	å·²å®‰è£…çš„åº”ç”¨ç¨‹åº
+installed crontab	admin	zh	å·²å®‰è£…çš„crontab
+interface	admin	zh	æ¥å£
+ip	admin	zh	IPåœ°å€
+jobs	admin	zh	ä»»åŠ¡
+kill	admin	zh	ä¸­æ­¢
+kill session	admin	zh	ä¸­æ­¢ä¼šè¯
+last %1 logins	admin	zh	æœ€è¿‘%1æ¬¡ç™»å½•
 last %1 logins for %2	admin	zh	Last %1 logins for %2
-last login	admin	zh	×î½üÒ»´ÎµÇÂ¼
-last login from	admin	zh	×î½üÒ»´ÎµÇÂ¼À´×Ô
-last time read	admin	zh	×î½üÒ»´Î¶ÁÈ¡Ê±¼ä
-ldap accounts context	admin	zh	LDAPÕË»§ÉÏÏÂÎÄ¹ØÏµ
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh	LDAPÄ¬ÈÏÖ÷Ä¿Â¼µÄÇ°×º(ÀıÈç /home ÊÇ /home/usernameµÄÇ°×º)
-ldap default shell (e.g. /bin/bash)	admin	zh	LDAPÄ¬ÈÏShell (ÀıÈç /bin/bash)
-ldap encryption type	admin	zh	LDAP¼ÓÃÜÀàĞÍ
-ldap groups context	admin	zh	LDAP×éÉÏÏÂÎÄ¹ØÏµ
-ldap host	admin	zh	LDAPÖ÷»úÃû
-ldap root password	admin	zh	LDAPÏµÍ³¹ÜÀíÔ±ÃÜÂë
+last login	admin	zh	æœ€è¿‘ä¸€æ¬¡ç™»å½•
+last login from	admin	zh	æœ€è¿‘ä¸€æ¬¡ç™»å½•æ¥è‡ª
+last time read	admin	zh	æœ€è¿‘ä¸€æ¬¡è¯»å–æ—¶é—´
+ldap accounts context	admin	zh	LDAPè´¦æˆ·ä¸Šä¸‹æ–‡å…³ç³»
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh	LDAPé»˜è®¤ä¸»ç›®å½•çš„å‰ç¼€(ä¾‹å¦‚ /home æ˜¯ /home/usernameçš„å‰ç¼€)
+ldap default shell (e.g. /bin/bash)	admin	zh	LDAPé»˜è®¤Shell (ä¾‹å¦‚ /bin/bash)
+ldap encryption type	admin	zh	LDAPåŠ å¯†ç±»å‹
+ldap groups context	admin	zh	LDAPç»„ä¸Šä¸‹æ–‡å…³ç³»
+ldap host	admin	zh	LDAPä¸»æœºå
+ldap root password	admin	zh	LDAPç³»ç»Ÿç®¡ç†å‘˜å¯†ç 
 ldap rootdn	admin	zh	LDAP rootdn
-leave the category untouched and return back to the list	admin	zh	²»¸ü¸ÄÀà±ğ£¬·µ»ØÁĞ±í
-leave the group untouched and return back to the list	admin	zh	²»¸ü¸Ä×é£¬·µ»ØÁĞ±í
-list config settings	admin	zh	ÁĞ³öÅäÖÃ
-list current sessions	admin	zh	ÁĞ¾Ùµ±Ç°»á»°
-list of current users	admin	zh	ÁĞ¾Ùµ±Ç°ÓÃ»§
-login history	admin	zh	µÇÂ¼ÀúÊ·¼ÇÂ¼
-login message	admin	zh	µÇÂ¼ĞÅÏ¢
-login screen	admin	zh	µÇÂ¼Ò³Ãæ
-login shell	admin	zh	µÇÂ¼shell
-login time	admin	zh	µÇÂ¼Ê±¼ä
-loginid	admin	zh	µÇÂ¼Ãû
-main screen message	admin	zh	Ö÷Ò³ÃæĞÅÏ¢
+leave the category untouched and return back to the list	admin	zh	ä¸æ›´æ”¹ç±»åˆ«ï¼Œè¿”å›åˆ—è¡¨
+leave the group untouched and return back to the list	admin	zh	ä¸æ›´æ”¹ç»„ï¼Œè¿”å›åˆ—è¡¨
+list config settings	admin	zh	åˆ—å‡ºé…ç½®
+list current sessions	admin	zh	åˆ—ä¸¾å½“å‰ä¼šè¯
+list of current users	admin	zh	åˆ—ä¸¾å½“å‰ç”¨æˆ·
+login history	admin	zh	ç™»å½•å†å²è®°å½•
+login message	admin	zh	ç™»å½•ä¿¡æ¯
+login screen	admin	zh	ç™»å½•é¡µé¢
+login shell	admin	zh	ç™»å½•shell
+login time	admin	zh	ç™»å½•æ—¶é—´
+loginid	admin	zh	ç™»å½•å
+main screen message	admin	zh	ä¸»é¡µé¢ä¿¡æ¯
 manager	admin	zh	Manager
-maximum account id (e.g. 65535 or 1000000)	admin	zh	ÕË»§idÊı×î´óÖµ (ÀıÈç 65535»ò1000000)
-maximum entries in click path history	admin	zh	µã»÷Â·¾¶ÀúÊ·¼ÇÂ¼ÖĞµÄ×î´óÌõÄ¿Êı
-message has been updated	admin	zh	ĞÅÏ¢ÒÑ¸üĞÂ
-method	admin	zh	·½·¨
-minimum account id (e.g. 500 or 100, etc.)	admin	zh	ÕË»§idÊı×îĞ¡Öµ (ÀıÈç 500»ò100)
-minute	admin	zh	·ÖÖÓ
-mode	admin	zh	Ä£Ê½
-month	admin	zh	ÔÂ
-new group name	admin	zh	ĞÂ½¨×éµÄÃû³Æ
-new password [ leave blank for no change ]	admin	zh	ĞÂÃÜÂë [Áô¿ÕÔòÈÔÊ¹ÓÃ¾ÉÃÜÂë]
-next run	admin	zh	ÏÂ´ÎÔËĞĞ
-no algorithms available	admin	zh	ÎŞ¿ÉÓÃËã·¨
-no jobs in the database !!!	admin	zh	Êı¾İ¿âÖĞÃ»ÓĞÈÎÎñ!!!
-no login history exists for this user	admin	zh	¸ÃÓÃ»§Ã»ÓĞµÇÂ¼ÀúÊ·¼ÇÂ¼
-no matches found	admin	zh	Ã»ÓĞÕÒµ½Æ¥ÅäµÄ½á¹û
-no modes available	admin	zh	ÎŞ¿ÉÓÃÄ£Ê½
-no permission to add groups	admin	zh	ÎŞÈ¨Ìí¼Ó×é
-no permission to add users	admin	zh	ÎŞÈ¨Ìí¼ÓÓÃ»§
-no permission to create groups	admin	zh	ÎŞÈ¨´´½¨×é
-note: ssl available only if php is compiled with curl support	admin	zh	×¢Òâ£º½öµ±Ê¹ÓÃcurlÖ§³Ö±àÒëphpÊ±£¬SSL¼ÓÃÜÓĞĞ§
-outbound	admin	zh	³öÕ¾
-passthrough	admin	zh	Í¨¹ı
-path information	admin	zh	Â·¾¶ĞÅÏ¢
-peer server list	admin	zh	¶ÔµÈ·şÎñÆ÷ÁĞ±í
-peer servers	admin	zh	¶ÔµÈ·şÎñÆ÷
-percent of users that logged out	admin	zh	ÒÑ×¢ÏúÓÃ»§µÄ°Ù·Ö±ÈÀı
+maximum account id (e.g. 65535 or 1000000)	admin	zh	è´¦æˆ·idæ•°æœ€å¤§å€¼ (ä¾‹å¦‚ 65535æˆ–1000000)
+maximum entries in click path history	admin	zh	ç‚¹å‡»è·¯å¾„å†å²è®°å½•ä¸­çš„æœ€å¤§æ¡ç›®æ•°
+message has been updated	admin	zh	ä¿¡æ¯å·²æ›´æ–°
+method	admin	zh	æ–¹æ³•
+minimum account id (e.g. 500 or 100, etc.)	admin	zh	è´¦æˆ·idæ•°æœ€å°å€¼ (ä¾‹å¦‚ 500æˆ–100)
+minute	admin	zh	åˆ†é’Ÿ
+mode	admin	zh	æ¨¡å¼
+month	admin	zh	æœˆ
+new group name	admin	zh	æ–°å»ºç»„çš„åç§°
+new password [ leave blank for no change ]	admin	zh	æ–°å¯†ç  [ç•™ç©ºåˆ™ä»ä½¿ç”¨æ—§å¯†ç ]
+next run	admin	zh	ä¸‹æ¬¡è¿è¡Œ
+no algorithms available	admin	zh	æ— å¯ç”¨ç®—æ³•
+no jobs in the database !!!	admin	zh	æ•°æ®åº“ä¸­æ²¡æœ‰ä»»åŠ¡!!!
+no login history exists for this user	admin	zh	è¯¥ç”¨æˆ·æ²¡æœ‰ç™»å½•å†å²è®°å½•
+no matches found	admin	zh	æ²¡æœ‰æ‰¾åˆ°åŒ¹é…çš„ç»“æœ
+no modes available	admin	zh	æ— å¯ç”¨æ¨¡å¼
+no permission to add groups	admin	zh	æ— æƒæ·»åŠ ç»„
+no permission to add users	admin	zh	æ— æƒæ·»åŠ ç”¨æˆ·
+no permission to create groups	admin	zh	æ— æƒåˆ›å»ºç»„
+note: ssl available only if php is compiled with curl support	admin	zh	æ³¨æ„ï¼šä»…å½“ä½¿ç”¨curlæ”¯æŒç¼–è¯‘phpæ—¶ï¼ŒSSLåŠ å¯†æœ‰æ•ˆ
+outbound	admin	zh	å‡ºç«™
+passthrough	admin	zh	é€šè¿‡
+path information	admin	zh	è·¯å¾„ä¿¡æ¯
+peer server list	admin	zh	å¯¹ç­‰æœåŠ¡å™¨åˆ—è¡¨
+peer servers	admin	zh	å¯¹ç­‰æœåŠ¡å™¨
+percent of users that logged out	admin	zh	å·²æ³¨é”€ç”¨æˆ·çš„ç™¾åˆ†æ¯”ä¾‹
 percent this user has logged out	admin	zh	Percent this user has logged out
-permissions	admin	zh	È¨ÏŞ
-permissions this group has	admin	zh	¸Ã×éÈ¨ÏŞ
-phpinfo	admin	zh	PHPĞÅÏ¢
-please enter a name	admin	zh	ÇëÊäÈëÃû³Æ
-please enter a name for that server !	admin	zh	ÇëÊäÈëÄÇÌ¨·şÎñÆ÷µÄÃû³Æ!
-please run setup to become current	admin	zh	ÇëÔËĞĞ°²×°³ÌĞòÒÔ³ÉÎªµ±Ç°
-please select	admin	zh	ÇëÑ¡Ôñ
-preferences	admin	zh	¸öĞÔ»¯ÅäÖÃ
-re-enter password	admin	zh	ÖØĞÂÊäÈëÃÜÂë
-read this list of methods.	admin	zh	¶ÁÈ¡·½·¨ÁĞ±í.
-register application hooks	admin	zh	×¢²áÓ¦ÓÃ³ÌĞòHooks
-remove all users from this group	admin	zh	É¾³ı¸Ã×éËùÓĞÓÃ»§
-remove all users from this group ?	admin	zh	É¾³ı¸Ã×éËùÓĞÓÃ»§?
-return to admin mainscreen	admin	zh	·µ»ØÏµÍ³¹ÜÀíÖ÷Ò³Ãæ
-return to view account	admin	zh	·µ»ØÖÁ²é¿´ÕË»§
-run asynchronous services	admin	zh	ÔËĞĞÒì²½·şÎñ
-save the category	admin	zh	±£´æÀà±ğ
-save the category and return back to the list	admin	zh	±£´æÀà±ğ²¢·µ»ØÁĞ±í
-search accounts	admin	zh	²éÕÒÕË»§
-search categories	admin	zh	²éÕÒÀà±ğ
-search groups	admin	zh	²éÕÒ×é
-search peer servers	admin	zh	²éÕÒ¶ÔµÈ·şÎñÆ÷
-security	admin	zh	°²È«
-select group managers	admin	zh	Ö¸¶¨×é¹ÜÀíÆ÷
-select permissions this group will have	admin	zh	Ö¸¶¨¸Ã×éÈ¨ÏŞ
-select the parent category. if this is a main category select no category	admin	zh	Ö¸¶¨¸¸Àà±ğ¡£Èôµ±Ç°ÎªÖ÷Àà±ğ£¬ÔòÓ¦Ö¸¶¨ÎŞÀà±ğ¡£
-select users for inclusion	admin	zh	Ñ¡ÔñÒª°üÀ¨µÄÓÃ»§
-select where you want to store/retrieve filesystem information	admin	zh	Ö¸¶¨ÓÃÓÚ´æÈ¡ÎÄ¼şÏµÍ³ĞÅÏ¢µÄÎ»ÖÃ
-select where you want to store/retrieve user accounts	admin	zh	Ö¸¶¨ÓÃÓÚ´æÈ¡ÓÃ»§ÕË»§µÄÎ»ÖÃ
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zh	Ö¸¶¨¸ÃÓ¦ÓÃ³ÌĞòÔÚ¹¤¾ßÀ¸ÉÏµÄÎ»ÖÃ£¬´ÓµÍ(×ó)µ½¸ß(ÓÒ)
-selectbox	admin	zh	Ñ¡Ôñ¿ò
-server %1 has been updated	admin	zh	·şÎñÆ÷%1ÒÑ¾­¸üĞÂ
-server list	admin	zh	·şÎñÆ÷ÁĞ±í
-server password	admin	zh	·şÎñÆ÷ÃÜÂë
-server type(mode)	admin	zh	·şÎñÆ÷ÀàĞÍ(Ä£Ê½)
-server url	admin	zh	·şÎñÆ÷ÍøÖ·
-server username	admin	zh	·şÎñÆ÷ÓÃ»§Ãû
-set preference values.	admin	zh	ÉèÖÃ¸öĞÔ»¯ÅäÖÃÖµ
-show 'powered by' logo on	admin	zh	ÔÚºÎ´¦ÏÔÊ¾Éè¼ÆÕß»Õ±ê:
-show access log	admin	zh	ÏÔÊ¾·ÃÎÊÈÕÖ¾
-show current action	admin	zh	ÏÔÊ¾µ±Ç°²Ù×÷
-show error log	admin	zh	ÏÔÊ¾´íÎóÈÕÖ¾
-show phpinfo()	admin	zh	ÏÔÊ¾phpinfo()
-show session ip address	admin	zh	ÏÔÊ¾»á»°IPµØÖ·
-site	admin	zh	Õ¾µã
-site configuration	common	zh	Õ¾µãÉèÖÃ
+permissions	admin	zh	æƒé™
+permissions this group has	admin	zh	è¯¥ç»„æƒé™
+phpinfo	admin	zh	ç³»ç»Ÿç¯å¢ƒä¿¡æ¯
+please enter a name	admin	zh	è¯·è¾“å…¥åç§°
+please enter a name for that server !	admin	zh	è¯·è¾“å…¥é‚£å°æœåŠ¡å™¨çš„åç§°!
+please run setup to become current	admin	zh	è¯·è¿è¡Œå®‰è£…ç¨‹åºä»¥æˆä¸ºå½“å‰
+please select	admin	zh	è¯·é€‰æ‹©
+preferences	admin	zh	ä¸ªæ€§åŒ–é…ç½®
+re-enter password	admin	zh	é‡æ–°è¾“å…¥å¯†ç 
+read this list of methods.	admin	zh	è¯»å–æ–¹æ³•åˆ—è¡¨.
+register application hooks	admin	zh	æ³¨å†Œåº”ç”¨ç¨‹åºHooks
+remove all users from this group	admin	zh	åˆ é™¤è¯¥ç»„æ‰€æœ‰ç”¨æˆ·
+remove all users from this group ?	admin	zh	åˆ é™¤è¯¥ç»„æ‰€æœ‰ç”¨æˆ·?
+return to admin mainscreen	admin	zh	è¿”å›ç³»ç»Ÿç®¡ç†ä¸»é¡µé¢
+return to view account	admin	zh	è¿”å›è‡³æŸ¥çœ‹è´¦æˆ·
+run asynchronous services	admin	zh	è¿è¡Œå¼‚æ­¥æœåŠ¡
+save the category	admin	zh	ä¿å­˜ç±»åˆ«
+save the category and return back to the list	admin	zh	ä¿å­˜ç±»åˆ«å¹¶è¿”å›åˆ—è¡¨
+search accounts	admin	zh	æŸ¥æ‰¾è´¦æˆ·
+search categories	admin	zh	æŸ¥æ‰¾ç±»åˆ«
+search groups	admin	zh	æŸ¥æ‰¾ç»„
+search peer servers	admin	zh	æŸ¥æ‰¾å¯¹ç­‰æœåŠ¡å™¨
+security	admin	zh	å®‰å…¨
+select group managers	admin	zh	æŒ‡å®šç»„ç®¡ç†å™¨
+select permissions this group will have	admin	zh	æŒ‡å®šè¯¥ç»„æƒé™
+select the parent category. if this is a main category select no category	admin	zh	æŒ‡å®šçˆ¶ç±»åˆ«ã€‚è‹¥å½“å‰ä¸ºä¸»ç±»åˆ«ï¼Œåˆ™åº”æŒ‡å®šæ— ç±»åˆ«ã€‚
+select users for inclusion	admin	zh	é€‰æ‹©è¦åŒ…æ‹¬çš„ç”¨æˆ·
+select where you want to store/retrieve filesystem information	admin	zh	æŒ‡å®šç”¨äºå­˜å–æ–‡ä»¶ç³»ç»Ÿä¿¡æ¯çš„ä½ç½®
+select where you want to store/retrieve user accounts	admin	zh	æŒ‡å®šç”¨äºå­˜å–ç”¨æˆ·è´¦æˆ·çš„ä½ç½®
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zh	æŒ‡å®šè¯¥åº”ç”¨ç¨‹åºåœ¨å·¥å…·æ ä¸Šçš„ä½ç½®ï¼Œä»ä½(å·¦)åˆ°é«˜(å³)
+selectbox	admin	zh	é€‰æ‹©æ¡†
+server %1 has been updated	admin	zh	æœåŠ¡å™¨%1å·²ç»æ›´æ–°
+server list	admin	zh	æœåŠ¡å™¨åˆ—è¡¨
+server password	admin	zh	æœåŠ¡å™¨å¯†ç 
+server type(mode)	admin	zh	æœåŠ¡å™¨ç±»å‹(æ¨¡å¼)
+server url	admin	zh	æœåŠ¡å™¨ç½‘å€
+server username	admin	zh	æœåŠ¡å™¨ç”¨æˆ·å
+set preference values.	admin	zh	è®¾ç½®ä¸ªæ€§åŒ–é…ç½®å€¼
+show 'powered by' logo on	admin	zh	åœ¨ä½•å¤„æ˜¾ç¤ºè®¾è®¡è€…å¾½æ ‡:
+show access log	admin	zh	æ˜¾ç¤ºè®¿é—®æ—¥å¿—
+show current action	admin	zh	æ˜¾ç¤ºå½“å‰æ“ä½œ
+show error log	admin	zh	æ˜¾ç¤ºé”™è¯¯æ—¥å¿—
+show phpinfo()	admin	zh	æ˜¾ç¤ºphpinfo()
+show session ip address	admin	zh	æ˜¾ç¤ºä¼šè¯IPåœ°å€
+site	admin	zh	ç«™ç‚¹
+site configuration	admin	zh	ç«™ç‚¹è®¾ç½®
 soap	admin	zh	SOAP
-sorry, that group name has already been taken.	admin	zh	±§Ç¸£¬¸Ã×éÃûÒÑ±»Õ¼ÓÃ.
-sorry, the above users are still a member of the group %1	admin	zh	±§Ç¸£¬ÒÔÉÏÓÃ»§Ò²ÊÇ%1×éµÄ³ÉÔ±
-sorry, the follow users are still a member of the group %1	admin	zh	±§Ç¸£¬ÒÔÏÂÓÃ»§Ò²ÊÇ%1×éµÄ³ÉÔ±
-sort the entries	admin	zh	°´ĞòÅÅÁĞÌõÄ¿
+sorry, that group name has already been taken.	admin	zh	æŠ±æ­‰ï¼Œè¯¥ç»„åå·²è¢«å ç”¨.
+sorry, the above users are still a member of the group %1	admin	zh	æŠ±æ­‰ï¼Œä»¥ä¸Šç”¨æˆ·ä¹Ÿæ˜¯%1ç»„çš„æˆå‘˜
+sorry, the follow users are still a member of the group %1	admin	zh	æŠ±æ­‰ï¼Œä»¥ä¸‹ç”¨æˆ·ä¹Ÿæ˜¯%1ç»„çš„æˆå‘˜
+sort the entries	admin	zh	æŒ‰åºæ’åˆ—æ¡ç›®
 ssl	admin	zh	SSL
-standard	admin	zh	±ê×¼
-start testjob!	admin	zh	Æô¶¯²âÊÔÈÎÎñ!
-submit changes	admin	zh	Ìá½»¸ü¸Ä
-submit the search string	admin	zh	Ìá½»²éÕÒ×Ö·û´®
-template selection	admin	zh	Ä£°æÑ¡Ôñ
-text entry	admin	zh	ÎÄ±¾ÌõÄ¿
-that application name already exists.	admin	zh	Ó¦ÓÃ³ÌĞòÃû³ÆÒÑ´æÔÚ.
-that application order must be a number.	admin	zh	Ó¦ÓÃ³ÌĞòµÄ´ÎĞò±ØĞëÎªÊı×Ö.
-that loginid has already been taken	admin	zh	¸ÃµÇÂ¼ÃûÒÑ±»Õ¼ÓÃ
-that name has been used already	admin	zh	¸ÃÃû³ÆÒÑ±»Õ¼ÓÃ
-that server name has been used already !	admin	zh	¸Ã·şÎñÆ÷Ãû³ÆÒÑ±»Õ¼ÓÃ!
-the api is current	admin	zh	APIµ±Ç°ÔÚÓÃ
-the api requires an upgrade	admin	zh	APIĞèÒªÉı¼¶
-the login and password can not be the same	admin	zh	µÇÂ¼Ãû²»ÄÜÓëÃÜÂëÒ»Ñù
-the loginid can not be more then 8 characters	admin	zh	loginid³¤¶È²»ÄÜ´óÓÚ8¸ö×Ö·û
-the testjob sends you a mail everytime it is called.	admin	zh	²âÊÔÈÎÎñ½«ÔÚÃ¿´ÎÆô¶¯Ê±ÏòÄú·¢ËÍEmail.
-the two passwords are not the same	admin	zh	Á½´ÎÊäÈëµÄÃÜÂë²»Í¬
-the users bellow are still members of group %1	admin	zh	ÒÔÏÂÓÃ»§Ò²ÊÇ%1×éµÄ³ÉÔ±
-they must be removed before you can continue	admin	zh	¼ÌĞøÖ®Ç°±ØĞëÉ¾³ıËüÃÇ
-this application is current	admin	zh	¸ÃÓ¦ÓÃ³ÌĞòµ±Ç°ÔÚÓÃ
-this application requires an upgrade	admin	zh	¸ÃÓ¦ÓÃ³ÌĞòĞèÒªÉı¼¶
-this category is currently being used by applications as a parent category	admin	zh	Ó¦ÓÃ³ÌĞòÕıÒÔ¸ÃÀà±ğ×÷Îª¸¸Àà±ğÊ¹ÓÃ
-timeout for application session data in seconds (default 86400 = 1 day)	admin	zh	Ó¦ÓÃ³ÌĞò»á»°Êı¾İ³¬Ê±Ê±ÏŞ£¬µ¥Î»£ºÃë(Ä¬ÈÏÖµ86400Ãë£¬¼´1Ìì)
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	zh	»á»°³¬Ê±Ê±ÏŞ£¬µ¥Î»£ºÃë(Ä¬ÈÏÖµ14400Ãë£¬¼´4Ğ¡Ê±)
-times	admin	zh	´ÎÊı
-top	admin	zh	¶¥²¿
-total records	admin	zh	¼ÇÂ¼×ÜÊı
-trust level	admin	zh	ĞÅÈÎ¼¶±ğ
-trust relationship	admin	zh	ĞÅÈÎ¹ØÏµ
-under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	zh	ÔÚWindowsÏµÍ³ÏÂ£¬µ±Ç°Ö»ÄÜÊ¹ÓÃºóÍËÄ£Ê½¡£ÕâÒâÎ¶×ÅÖ»ÔÚÃ¿¸öpageviewÖ®ºó¼ì²éÈÎÎñ!!!
-use cookies to pass sessionid	admin	zh	Ê¹ÓÃcookie´«µİ»á»°±êÊ¶
-use pure html compliant code (not fully working yet)	admin	zh	Ê¹ÓÃ´¿HTML¼æÈİ´úÂë(Ä¿Ç°ÈÔÎ´ÍêÈ«¿ÉÓÃ)
-use theme	admin	zh	Ê¹ÓÃÖ÷Ìâ
-user accounts	admin	zh	ÓÃ»§ÕÊ»§
-user data	admin	zh	ÓÃ»§Êı¾İ
-user groups	admin	zh	ÓÃ»§×é
-userdata	admin	zh	ÓÃ»§Êı¾İ
-users choice	admin	zh	ÓÃ»§µÄÑ¡Ôñ
-view access log	admin	zh	²é¿´·ÃÎÊÈÕÖ¾
-view account	admin	zh	²é¿´ÕÊ»§
-view category	admin	zh	²é¿´Àà±ğ
-view error log	admin	zh	²é¿´´íÎóÈÕÖ¾
-view sessions	admin	zh	²é¿´»á»°
-view this user	admin	zh	²é¿´¸ÃÓÃ»§
-view user account	admin	zh	²é¿´ÓÃ»§ÕÊ»§
-who would you like to transfer all records owned by the deleted user to?	admin	zh	ĞèÒª°Ñ±»É¾³ıÓÃ»§µÄËùÓĞ¼ÇÂ¼×ªÒÆ¸øË­?
-would you like phpgroupware to cache the phpgw info array ?	admin	zh	ĞèÒªphpGroupWare»º´æphpgwĞÅÏ¢Êı×éÂğ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	zh	¹ÜÀíÔ±µÇÂ¼Ê±£¬ÊÇ·ñ¼ì²éphpGroupWareµÄĞÂ°æ±¾?
-would you like phpgroupware to check for new application versions when admins login ?	admin	zh	¹ÜÀíÔ±µÇÂ¼Ê±£¬ÊÇ·ñ¼ì²éÓ¦ÓÃ³ÌĞòµÄĞÂ°æ±¾?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	µÇÂ¼Ê±£¬ÊÇ·ñ×Ô¶¯¼ÓÔØĞÂµÄÓïÑÔÎÄ¼ş?
-would you like to show each application's upgrade status ?	admin	zh	ÊÇ·ñÏÔÊ¾Ã¿¸öÓ¦ÓÃ³ÌĞòµÄÉı¼¶Çé¿ö?
+standard	admin	zh	æ ‡å‡†
+start testjob!	admin	zh	å¯åŠ¨æµ‹è¯•ä»»åŠ¡!
+submit changes	admin	zh	æäº¤æ›´æ”¹
+submit the search string	admin	zh	æäº¤æŸ¥æ‰¾å­—ç¬¦ä¸²
+template selection	admin	zh	æ¨¡ç‰ˆé€‰æ‹©
+text entry	admin	zh	æ–‡æœ¬æ¡ç›®
+that application name already exists.	admin	zh	åº”ç”¨ç¨‹åºåç§°å·²å­˜åœ¨.
+that application order must be a number.	admin	zh	åº”ç”¨ç¨‹åºçš„æ¬¡åºå¿…é¡»ä¸ºæ•°å­—.
+that loginid has already been taken	admin	zh	è¯¥ç™»å½•åå·²è¢«å ç”¨
+that name has been used already	admin	zh	è¯¥åç§°å·²è¢«å ç”¨
+that server name has been used already !	admin	zh	è¯¥æœåŠ¡å™¨åç§°å·²è¢«å ç”¨!
+the api is current	admin	zh	APIå½“å‰åœ¨ç”¨
+the api requires an upgrade	admin	zh	APIéœ€è¦å‡çº§
+the login and password can not be the same	admin	zh	ç™»å½•åä¸èƒ½ä¸å¯†ç ä¸€æ ·
+the loginid can not be more then 8 characters	admin	zh	loginidé•¿åº¦ä¸èƒ½å¤§äº8ä¸ªå­—ç¬¦
+the testjob sends you a mail everytime it is called.	admin	zh	æµ‹è¯•ä»»åŠ¡å°†åœ¨æ¯æ¬¡å¯åŠ¨æ—¶å‘æ‚¨å‘é€Email.
+the two passwords are not the same	admin	zh	ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸åŒ
+the users bellow are still members of group %1	admin	zh	ä»¥ä¸‹ç”¨æˆ·ä¹Ÿæ˜¯%1ç»„çš„æˆå‘˜
+they must be removed before you can continue	admin	zh	ç»§ç»­ä¹‹å‰å¿…é¡»åˆ é™¤å®ƒä»¬
+this application is current	admin	zh	è¯¥åº”ç”¨ç¨‹åºå½“å‰åœ¨ç”¨
+this application requires an upgrade	admin	zh	è¯¥åº”ç”¨ç¨‹åºéœ€è¦å‡çº§
+this category is currently being used by applications as a parent category	admin	zh	åº”ç”¨ç¨‹åºæ­£ä»¥è¯¥ç±»åˆ«ä½œä¸ºçˆ¶ç±»åˆ«ä½¿ç”¨
+timeout for application session data in seconds (default 86400 = 1 day)	admin	zh	åº”ç”¨ç¨‹åºä¼šè¯æ•°æ®è¶…æ—¶æ—¶é™ï¼Œå•ä½ï¼šç§’(é»˜è®¤å€¼86400ç§’ï¼Œå³1å¤©)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	zh	ä¼šè¯è¶…æ—¶æ—¶é™ï¼Œå•ä½ï¼šç§’(é»˜è®¤å€¼14400ç§’ï¼Œå³4å°æ—¶)
+times	admin	zh	æ¬¡æ•°
+top	admin	zh	é¡¶éƒ¨
+total records	admin	zh	è®°å½•æ€»æ•°
+trust level	admin	zh	ä¿¡ä»»çº§åˆ«
+trust relationship	admin	zh	ä¿¡ä»»å…³ç³»
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	zh	åœ¨Windowsç³»ç»Ÿä¸‹ï¼Œå½“å‰åªèƒ½ä½¿ç”¨åé€€æ¨¡å¼ã€‚è¿™æ„å‘³ç€åªåœ¨æ¯ä¸ªpageviewä¹‹åæ£€æŸ¥ä»»åŠ¡!!!
+use cookies to pass sessionid	admin	zh	ä½¿ç”¨cookieä¼ é€’ä¼šè¯æ ‡è¯†
+use pure html compliant code (not fully working yet)	admin	zh	ä½¿ç”¨çº¯HTMLå…¼å®¹ä»£ç (ç›®å‰ä»æœªå®Œå…¨å¯ç”¨)
+use theme	admin	zh	ä½¿ç”¨ä¸»é¢˜
+user accounts	admin	zh	ç”¨æˆ·å¸æˆ·
+user data	admin	zh	ç”¨æˆ·æ•°æ®
+user groups	admin	zh	ç”¨æˆ·ç»„
+userdata	admin	zh	ç”¨æˆ·æ•°æ®
+users choice	admin	zh	ç”¨æˆ·çš„é€‰æ‹©
+view access log	admin	zh	æŸ¥çœ‹è®¿é—®æ—¥å¿—
+view account	admin	zh	æŸ¥çœ‹å¸æˆ·
+view category	admin	zh	æŸ¥çœ‹ç±»åˆ«
+view error log	admin	zh	æŸ¥çœ‹é”™è¯¯æ—¥å¿—
+view sessions	admin	zh	æŸ¥çœ‹ä¼šè¯
+view this user	admin	zh	æŸ¥çœ‹è¯¥ç”¨æˆ·
+view user account	admin	zh	æŸ¥çœ‹ç”¨æˆ·å¸æˆ·
+who would you like to transfer all records owned by the deleted user to?	admin	zh	éœ€è¦æŠŠè¢«åˆ é™¤ç”¨æˆ·çš„æ‰€æœ‰è®°å½•è½¬ç§»ç»™è°?
+would you like phpgroupware to cache the phpgw info array ?	admin	zh	éœ€è¦phpGroupWareç¼“å­˜phpgwä¿¡æ¯æ•°ç»„å—?
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	zh	ç®¡ç†å‘˜ç™»å½•æ—¶ï¼Œæ˜¯å¦æ£€æŸ¥phpGroupWareçš„æ–°ç‰ˆæœ¬?
+would you like phpgroupware to check for new application versions when admins login ?	admin	zh	ç®¡ç†å‘˜ç™»å½•æ—¶ï¼Œæ˜¯å¦æ£€æŸ¥åº”ç”¨ç¨‹åºçš„æ–°ç‰ˆæœ¬?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	ç™»å½•æ—¶ï¼Œæ˜¯å¦è‡ªåŠ¨åŠ è½½æ–°çš„è¯­è¨€æ–‡ä»¶?
+would you like to show each application's upgrade status ?	admin	zh	æ˜¯å¦æ˜¾ç¤ºæ¯ä¸ªåº”ç”¨ç¨‹åºçš„å‡çº§æƒ…å†µ?
 xml-rpc	admin	zh	XML-RPC
-you have entered an invalid expiration date	admin	zh	ÊäÈëµÄÓĞĞ§ÆÚÏŞÎŞĞ§
-you must add at least 1 permission or group to this account	admin	zh	±ØĞëÖÁÉÙÎª´ËÕÊ»§Ìí¼ÓÒ»¸öÈ¨ÏŞ»ò×é
-you must enter a group name.	admin	zh	±ØĞëÊäÈë×éÃû.
-you must enter a lastname	admin	zh	±ØĞëÊäÈëĞÕ
-you must enter a loginid	admin	zh	±ØĞëÊäÈëµÇÂ¼ID
-you must enter an application name and title.	admin	zh	±ØĞëÎªÓ¦ÓÃ³ÌĞòÖ¸¶¨Ãû³ÆºÍ±êÌâ.
-you must enter an application name.	admin	zh	±ØĞëÎªÓ¦ÓÃ³ÌĞòÖ¸¶¨Ãû³Æ.
-you must enter an application title.	admin	zh	±ØĞëÎªÓ¦ÓÃ³ÌĞòÖ¸¶¨±êÌâ.
-you must select a file type	admin	zh	±ØĞëÑ¡ÔñÎÄ¼şÀàĞÍ
-you will need to remove the subcategories before you can delete this category	admin	zh	ÔÚÉ¾³ı¸ÃÀà±ğÇ°£¬±ØĞëÉ¾³ıËüµÄËùÓĞ×ÓÀà±ğ!
-primary Group	admin	zh	Ê×Ñ¡×é
+you have entered an invalid expiration date	admin	zh	è¾“å…¥çš„æœ‰æ•ˆæœŸé™æ— æ•ˆ
+you must add at least 1 permission or group to this account	admin	zh	å¿…é¡»è‡³å°‘ä¸ºæ­¤å¸æˆ·æ·»åŠ ä¸€ä¸ªæƒé™æˆ–ç»„
+you must enter a group name.	admin	zh	å¿…é¡»è¾“å…¥ç»„å.
+you must enter a lastname	admin	zh	å¿…é¡»è¾“å…¥å§“
+you must enter a loginid	admin	zh	å¿…é¡»è¾“å…¥ç™»å½•ID
+you must enter an application name and title.	admin	zh	å¿…é¡»ä¸ºåº”ç”¨ç¨‹åºæŒ‡å®šåç§°å’Œæ ‡é¢˜.
+you must enter an application name.	admin	zh	å¿…é¡»ä¸ºåº”ç”¨ç¨‹åºæŒ‡å®šåç§°.
+you must enter an application title.	admin	zh	å¿…é¡»ä¸ºåº”ç”¨ç¨‹åºæŒ‡å®šæ ‡é¢˜.
+you must select a file type	admin	zh	å¿…é¡»é€‰æ‹©æ–‡ä»¶ç±»å‹
+you will need to remove the subcategories before you can delete this category	admin	zh	åœ¨åˆ é™¤è¯¥ç±»åˆ«å‰ï¼Œå¿…é¡»åˆ é™¤å®ƒçš„æ‰€æœ‰å­ç±»åˆ«!
+primary Group	admin	zh	é¦–é€‰ç»„

@@ -1,103 +1,103 @@
-%1 already exists as a file	filemanager	zh	ÒÑ´æÔÚÎÄ¼ş%1
-application	filemanager	zh	Ó¦ÓÃ³ÌĞò
-back to file manager	filemanager	zh	·µ»ØÎÄ¼ş¹ÜÀíÆ÷
-cannot create directory because it begins or ends in a space	filemanager	zh	ÎŞ·¨´´½¨Ä¿Â¼£¬Ä¿Â¼Ãû¿ªÍ·»òÄ©Î²²»ÄÜ´øÓĞ¿Õ¸ñ
+ï»¿%1 already exists as a file	filemanager	zh	å·²å­˜åœ¨æ–‡ä»¶%1
+application	filemanager	zh	åº”ç”¨ç¨‹åº
+back to file manager	filemanager	zh	è¿”å›æ–‡ä»¶ç®¡ç†å™¨
+cannot create directory because it begins or ends in a space	filemanager	zh	æ— æ³•åˆ›å»ºç›®å½•ï¼Œç›®å½•åå¼€å¤´æˆ–æœ«å°¾ä¸èƒ½å¸¦æœ‰ç©ºæ ¼
 
-cannot replace %1 because it is a directory	filemanager	zh	%1ÊÇÄ¿Â¼£¬ÎŞ·¨±»Ìæ»»
+cannot replace %1 because it is a directory	filemanager	zh	%1æ˜¯ç›®å½•ï¼Œæ— æ³•è¢«æ›¿æ¢
 
-command sucessfully run	filemanager	zh	ÃüÁîÖ´ĞĞ
-³É¹¦
+command sucessfully run	filemanager	zh	å‘½ä»¤æ‰§è¡Œ
+æˆåŠŸ
 
-comment	filemanager	zh	×¢ÊÍ
+comment	filemanager	zh	æ³¨é‡Š
 
-comments cannot contain "%1"	filemanager	zh	×¢ÊÍ²»ÄÜ°üº¬"%1"
-copied %1 to %2	filemanager	zh	%1ÒÑ¸´ÖÆµ½%2
-copy to	filemanager	zh	¸´ÖÆµ½
-copy to:	filemanager	zh	¸´ÖÆµ½
+comments cannot contain "%1"	filemanager	zh	æ³¨é‡Šä¸èƒ½åŒ…å«"%1"
+copied %1 to %2	filemanager	zh	%1å·²å¤åˆ¶åˆ°%2
+copy to	filemanager	zh	å¤åˆ¶åˆ°
+copy to:	filemanager	zh	å¤åˆ¶åˆ°
 
-could not copy %1 to %2	filemanager	zh	ÎŞ·¨½«%1¸´ÖÆµ½%2
-could not create %1	filemanager	zh	ÎŞ·¨´´½¨%1
-could not create directory %1	filemanager	zh	ÎŞ·¨´´½¨Ä¿Â¼%1
-could not delete %1	filemanager	zh	ÎŞ·¨É¾³ı%1
-could not move %1 to %2	filemanager	zh	ÎŞ·¨½«%1ÒÆ¶¯µ½%2
-could not rename %1 to %2	filemanager	zh	ÎŞ·¨½«%1ÖØÃüÃûÎª%2
-could not save %1	filemanager	zh	ÎŞ·¨±£´æ%1
-create file	filemanager	zh	´´½¨ÎÄ¼ş
-create folder	filemanager	zh	´´½¨ÎÄ¼ş¼Ğ
+could not copy %1 to %2	filemanager	zh	æ— æ³•å°†%1å¤åˆ¶åˆ°%2
+could not create %1	filemanager	zh	æ— æ³•åˆ›å»º%1
+could not create directory %1	filemanager	zh	æ— æ³•åˆ›å»ºç›®å½•%1
+could not delete %1	filemanager	zh	æ— æ³•åˆ é™¤%1
+could not move %1 to %2	filemanager	zh	æ— æ³•å°†%1ç§»åŠ¨åˆ°%2
+could not rename %1 to %2	filemanager	zh	æ— æ³•å°†%1é‡å‘½åä¸º%2
+could not save %1	filemanager	zh	æ— æ³•ä¿å­˜%1
+create file	filemanager	zh	åˆ›å»ºæ–‡ä»¶
+create folder	filemanager	zh	åˆ›å»ºæ–‡ä»¶å¤¹
 
-created	filemanager	zh	ÒÑ´´½¨
+created	filemanager	zh	å·²åˆ›å»º
 
-created %1	filemanager	zh	%1ÒÑ´´½¨
-created by	filemanager	zh	´´½¨Õß
-created directory %1	filemanager	zh	Ä¿Â¼%1ÒÑ´´½¨
-date	filemanager	zh	ÈÕÆÚ
-default number of upload fields to show	filemanager	zh	ÏÔÊ¾µÄÄ¬ÈÏÉÏ´«ÇøÓòÊı
-delete	filemanager	zh	É¾³ı
-deleted %1	filemanager	zh	%1É¾³ı
-directory	filemanager	zh	Ä¿Â¼
-directory %1 already exists	filemanager	zh	Ä¿Â¼%1ÒÑ´æÔÚ
-directory %1 does not exist	filemanager	zh	Ä¿Â¼%1²»´æÔÚ
+created %1	filemanager	zh	%1å·²åˆ›å»º
+created by	filemanager	zh	åˆ›å»ºè€…
+created directory %1	filemanager	zh	ç›®å½•%1å·²åˆ›å»º
+date	filemanager	zh	æ—¥æœŸ
+default number of upload fields to show	filemanager	zh	æ˜¾ç¤ºçš„é»˜è®¤ä¸Šä¼ åŒºåŸŸæ•°
+delete	filemanager	zh	åˆ é™¤
+deleted %1	filemanager	zh	%1åˆ é™¤
+directory	filemanager	zh	ç›®å½•
+directory %1 already exists	filemanager	zh	ç›®å½•%1å·²å­˜åœ¨
+directory %1 does not exist	filemanager	zh	ç›®å½•%1ä¸å­˜åœ¨
 
-directory names cannot contain "%1"	filemanager	zh	Ä¿Â¼Ãû²»ÄÜ°üº¬"%1"
-display attributes	filemanager	zh	ÏÔÊ¾ÊôĞÔ
-download	filemanager	zh	ÏÂÔØ
-edit	filemanager	zh	±à¼­
-edit comments	filemanager	zh	±à¼­×¢ÊÍ
-error running command	filemanager	zh	ÃüÁîÖ´ĞĞ³ö´í
-execute	filemanager	zh	Ö´ĞĞ
-failed to create directory	filemanager	zh	´´½¨Ä¿Â¼Ê§°Ü
-file	filemanager	zh	ÎÄ¼ş
-file %1 already exists. please edit it or delete it first.	filemanager	zh	ÎÄ¼ş%1ÒÑ´æÔÚ£¬ÇëÏÈ±à¼­»òÉ¾³ıËü.
-file %1 could not be created.	filemanager	zh	ÎÄ¼ş %1 ²»ÄÜ´´½¨.
-file name	filemanager	zh	ÎÄ¼şÃû
-file names cannot contain "%1"	filemanager	zh	ÎÄ¼şÃû²»ÄÜ°üº¬"%1"
-file names cannot contain \ or /	filemanager	zh	ÎÄ¼şÃû²»ÄÜ°üº¬\»ò/
-filemanager	common	zh	ÎÄ¼ş¹ÜÀí
-filemanager preferences	filemanager	zh	ÎÄ¼ş¹ÜÀí¸öĞÔ»¯ÅäÖÃ
-files	filemanager	zh	ÎÄ¼ş
-folder	filemanager	zh	ÎÄ¼ş¼Ğ
-go to	filemanager	zh	Ìø×ªµ½
-go to %1	filemanager	zh	Ìø×ªµ½%1
-go to your home directory	filemanager	zh	Ìø×ªµ½Ö÷Ä¿Â¼
-go to:	filemanager	zh	Ìø×ªµ½£º
-home	filemanager	zh	Ö÷Ò³Ãæ
-locked	filemanager	zh	ÒÑËø¶¨
-mime type	filemanager	zh	MIMEÀàĞÍ
-modified	filemanager	zh	ÒÑĞŞ¸Ä
-modified by	filemanager	zh	ĞŞ¸ÄÕß
-move to	filemanager	zh	ÒÆ¶¯µ½
-move to:	filemanager	zh	ÒÆ¶¯µ½£º
-moved %1 to %2	filemanager	zh	%1ÒÑÒÆ¶¯µ½%2
-no version history for this file/directory	filemanager	zh	¸ÃÎÄ¼ş/ÎÄ¼ş¼ĞÎŞ°æ±¾ÀúÊ·
-operation	filemanager	zh	²Ù×÷
-owner	filemanager	zh	ËùÓĞÕß
-preview %1	filemanager	zh	Ô¤ÀÀ%1
-preview of %1	filemanager	zh	%1µÄÔ¤ÀÀ
-rename	filemanager	zh	ÖØÃüÃû
-renamed %1 to %2	filemanager	zh	 %1ÒÑÖØÃüÃûÎª%2
-replaced %1	filemanager	zh	%1ÒÑÌæ»»
-save %1	filemanager	zh	±£´æ%1
-save all	filemanager	zh	È«²¿±£´æ
-saved %1	filemanager	zh	%1ÒÑ±£´æ
-show	filemanager	zh	ÏÔÊ¾
-show ..	filemanager	zh	ÏÔÊ¾...
-show .files	filemanager	zh	ÏÔÊ¾.ÎÄ¼ş
-show command line (experimental. dangerous.)	filemanager	zh	ÏÔÊ¾ÃüÁîĞĞ(¾¯¸æ£º½öÓÃÓÚ²âÊÔ)
-show help	filemanager	zh	ÏÔÊ¾°ïÖú
-size	filemanager	zh	´óĞ¡
-sort by:	filemanager	zh	ÅÅĞò·½Ê½
-total files	filemanager	zh	ËùÓĞÎÄ¼ş
-unknown mime-type defaults to text/plain when viewing	filemanager	zh	ÒÔÎÄ±¾·½Ê½²é¿´Î´ÖªmimeÀàĞÍµÄÎÄ¼ş
-unused space	filemanager	zh	¿ÉÓÃ¿Õ¼ä
-up	filemanager	zh	ÉÏ¼¶Ä¿Â¼
-update	filemanager	zh	¸üĞÂ
-updated comment for %1	filemanager	zh	%1µÄ×¢ÊÍÒÑ¸üĞÂ
-upload fields	filemanager	zh	ÉÏ´«ÇøÓò
-upload files	filemanager	zh	ÉÏ´«ÎÄ¼ş
-used space	filemanager	zh	ÒÑÓÃ¿Õ¼ä
-users	filemanager	zh	ÓÃ»§
-version	filemanager	zh	°æ±¾
-view documents in new window	filemanager	zh	´ò¿ªĞÂ´°ÒÔ²é¿´ÎÄµµ
-view documents on server (if available)	filemanager	zh	¿ÉÄÜµÄ»°£¬ÔÚ·şÎñÆ÷ÉÏ²é¿´ÎÄµµ
-who	filemanager	zh	Ë­
-you do not have access to %1	filemanager	zh	ÎŞÈ¨·ÃÎÊ%1
+directory names cannot contain "%1"	filemanager	zh	ç›®å½•åä¸èƒ½åŒ…å«"%1"
+display attributes	filemanager	zh	æ˜¾ç¤ºå±æ€§
+download	filemanager	zh	ä¸‹è½½
+edit	filemanager	zh	ç¼–è¾‘
+edit comments	filemanager	zh	ç¼–è¾‘æ³¨é‡Š
+error running command	filemanager	zh	å‘½ä»¤æ‰§è¡Œå‡ºé”™
+execute	filemanager	zh	æ‰§è¡Œ
+failed to create directory	filemanager	zh	åˆ›å»ºç›®å½•å¤±è´¥
+file	filemanager	zh	æ–‡ä»¶
+file %1 already exists. please edit it or delete it first.	filemanager	zh	æ–‡ä»¶%1å·²å­˜åœ¨ï¼Œè¯·å…ˆç¼–è¾‘æˆ–åˆ é™¤å®ƒ.
+file %1 could not be created.	filemanager	zh	æ–‡ä»¶ %1 ä¸èƒ½åˆ›å»º.
+file name	filemanager	zh	æ–‡ä»¶å
+file names cannot contain "%1"	filemanager	zh	æ–‡ä»¶åä¸èƒ½åŒ…å«"%1"
+file names cannot contain \ or /	filemanager	zh	æ–‡ä»¶åä¸èƒ½åŒ…å«\æˆ–/
+filemanager	common	zh	æ–‡ä»¶ç®¡ç†
+filemanager preferences	filemanager	zh	æ–‡ä»¶ç®¡ç†ä¸ªæ€§åŒ–é…ç½®
+files	filemanager	zh	æ–‡ä»¶
+folder	filemanager	zh	æ–‡ä»¶å¤¹
+go to	filemanager	zh	è·³è½¬åˆ°
+go to %1	filemanager	zh	è·³è½¬åˆ°%1
+go to your home directory	filemanager	zh	è·³è½¬åˆ°ä¸»ç›®å½•
+go to:	filemanager	zh	è·³è½¬åˆ°ï¼š
+home	filemanager	zh	ä¸»é¡µé¢
+locked	filemanager	zh	å·²é”å®š
+mime type	filemanager	zh	MIMEç±»å‹
+modified	filemanager	zh	å·²ä¿®æ”¹
+modified by	filemanager	zh	ä¿®æ”¹è€…
+move to	filemanager	zh	ç§»åŠ¨åˆ°
+move to:	filemanager	zh	ç§»åŠ¨åˆ°ï¼š
+moved %1 to %2	filemanager	zh	%1å·²ç§»åŠ¨åˆ°%2
+no version history for this file/directory	filemanager	zh	è¯¥æ–‡ä»¶/æ–‡ä»¶å¤¹æ— ç‰ˆæœ¬å†å²
+operation	filemanager	zh	æ“ä½œ
+owner	filemanager	zh	æ‰€æœ‰è€…
+preview %1	filemanager	zh	é¢„è§ˆ%1
+preview of %1	filemanager	zh	%1çš„é¢„è§ˆ
+rename	filemanager	zh	é‡å‘½å
+renamed %1 to %2	filemanager	zh	 %1å·²é‡å‘½åä¸º%2
+replaced %1	filemanager	zh	%1å·²æ›¿æ¢
+save %1	filemanager	zh	ä¿å­˜%1
+save all	filemanager	zh	å…¨éƒ¨ä¿å­˜
+saved %1	filemanager	zh	%1å·²ä¿å­˜
+show	filemanager	zh	æ˜¾ç¤º
+show ..	filemanager	zh	æ˜¾ç¤º...
+show .files	filemanager	zh	æ˜¾ç¤º.æ–‡ä»¶
+show command line (experimental. dangerous.)	filemanager	zh	æ˜¾ç¤ºå‘½ä»¤è¡Œ(è­¦å‘Šï¼šä»…ç”¨äºæµ‹è¯•)
+show help	filemanager	zh	æ˜¾ç¤ºå¸®åŠ©
+size	filemanager	zh	å¤§å°
+sort by:	filemanager	zh	æ’åºæ–¹å¼
+total files	filemanager	zh	æ‰€æœ‰æ–‡ä»¶
+unknown mime-type defaults to text/plain when viewing	filemanager	zh	ä»¥æ–‡æœ¬æ–¹å¼æŸ¥çœ‹æœªçŸ¥mimeç±»å‹çš„æ–‡ä»¶
+unused space	filemanager	zh	å¯ç”¨ç©ºé—´
+up	filemanager	zh	ä¸Šçº§ç›®å½•
+update	filemanager	zh	æ›´æ–°
+updated comment for %1	filemanager	zh	%1çš„æ³¨é‡Šå·²æ›´æ–°
+upload fields	filemanager	zh	ä¸Šä¼ åŒºåŸŸ
+upload files	filemanager	zh	ä¸Šä¼ æ–‡ä»¶
+used space	filemanager	zh	å·²ç”¨ç©ºé—´
+users	filemanager	zh	ç”¨æˆ·
+version	filemanager	zh	ç‰ˆæœ¬
+view documents in new window	filemanager	zh	æ‰“å¼€æ–°çª—ä»¥æŸ¥çœ‹æ–‡æ¡£
+view documents on server (if available)	filemanager	zh	å¯èƒ½çš„è¯ï¼Œåœ¨æœåŠ¡å™¨ä¸ŠæŸ¥çœ‹æ–‡æ¡£
+who	filemanager	zh	è°
+you do not have access to %1	filemanager	zh	æ— æƒè®¿é—®%1

@@ -1,140 +1,140 @@
-%1 records imported	addressbook	zh	ÒÑµ¼Èë%1Ìõ¼ÇÂ¼
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh	ÒÑ¶ÁÈ¡%1Ìõ¼ÇÂ¼(µ«ÉĞÎ´µ¼Èë£¬Äú¿ÉÒÔ½øÈë%2£¬·µ»Ø%3£¬²¢ÇÒ²»¼ì²é²âÊÔµ¼Èë)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zh	<b>È±ÉÙ×ª»»ÀàĞÍ&lt;none&gt;</b>Çë´ÓÁĞ±íÖĞÑ¡ÔñÒ»¸ö×ª»»ÀàĞÍ
-@-eval() is only availible to admins!!!	addressbook	zh	Ö»ÓĞ¹ÜÀíÔ±¿Éµ÷ÓÃ@-eval()!!!
+ï»¿%1 records imported	addressbook	zh	å·²å¯¼å…¥%1æ¡è®°å½•
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh	å·²è¯»å–%1æ¡è®°å½•(ä½†å°šæœªå¯¼å…¥ï¼Œæ‚¨å¯ä»¥è¿›å…¥%2ï¼Œè¿”å›%3ï¼Œå¹¶ä¸”ä¸æ£€æŸ¥æµ‹è¯•å¯¼å…¥)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zh	<b>ç¼ºå°‘è½¬æ¢ç±»å‹&lt;none&gt;</b>è¯·ä»åˆ—è¡¨ä¸­é€‰æ‹©ä¸€ä¸ªè½¬æ¢ç±»å‹
+@-eval() is only availible to admins!!!	addressbook	zh	åªæœ‰ç®¡ç†å‘˜å¯è°ƒç”¨@-eval()!!!
 add a single entry by passing the fields.	addressbook	zh	Add a single entry by passing the fields.
-add custom field	addressbook	zh	Ìí¼Ó×Ô¶¨Òå×Ö¶Î
-address book	common	zh	Í¨Ñ¶Â¼
-address book - vcard in	addressbook	zh	Í¨Ñ¶Â¼¡ª¡ªµ¼ÈëvCard
-address book - view	addressbook	zh	Í¨Ñ¶Â¼¡ª¡ª²é¿´
-address line 2	addressbook	zh	µØÖ·2
-address line 3	addressbook	zh	µØÖ·3
-address type	addressbook	zh	µØÖ·ÀàĞÍ
-addressbook	common	zh	Í¨Ñ¶Â¼
-addressbook preferences	addressbook	zh	Í¨Ñ¶Â¼²ÎÊı
-addressbook-fieldname	addressbook	zh	Í¨Ñ¶Â¼-×Ö¶ÎÃû
-addvcard	addressbook	zh	µ¼ÈëvCard
-alt. csv import	addressbook	zh	µ¼ÈëCSVÎÄ¼ş
-are you sure you want to delete this field?	addressbook	zh	È·¶¨ÒªÉ¾³ı¸Ã×Ö¶ÎÂğ£¿
-bbs phone	addressbook	zh	BBSµç»°
-birthday	common	zh	ÉúÈÕ
-birthdays	common	zh	ÉúÈÕ
-blank	addressbook	zh	¿Õ°×
-business	common	zh	ÉÌÎñ
-business address type	addressbook	zh	µØÖ·ÀàĞÍ
-business city	addressbook	zh	³ÇÊĞ
-business country	addressbook	zh	¹ú¼Ò/µØÇø
+add custom field	addressbook	zh	æ·»åŠ è‡ªå®šä¹‰å­—æ®µ
+address book	common	zh	é€šè®¯å½•
+address book - vcard in	addressbook	zh	é€šè®¯å½•â€”â€”å¯¼å…¥vCard
+address book - view	addressbook	zh	é€šè®¯å½•â€”â€”æŸ¥çœ‹
+address line 2	addressbook	zh	åœ°å€2
+address line 3	addressbook	zh	åœ°å€3
+address type	addressbook	zh	åœ°å€ç±»å‹
+addressbook	common	zh	é€šè®¯å½•
+addressbook preferences	addressbook	zh	é€šè®¯å½•å‚æ•°
+addressbook-fieldname	addressbook	zh	é€šè®¯å½•-å­—æ®µå
+addvcard	addressbook	zh	å¯¼å…¥vCard
+alt. csv import	addressbook	zh	å¯¼å…¥CSVæ–‡ä»¶
+are you sure you want to delete this field?	addressbook	zh	ç¡®å®šè¦åˆ é™¤è¯¥å­—æ®µå—ï¼Ÿ
+bbs phone	addressbook	zh	BBSç”µè¯
+birthday	common	zh	ç”Ÿæ—¥
+birthdays	common	zh	ç”Ÿæ—¥
+blank	addressbook	zh	ç©ºç™½
+business	common	zh	å•†åŠ¡
+business address type	addressbook	zh	åœ°å€ç±»å‹
+business city	addressbook	zh	åŸå¸‚
+business country	addressbook	zh	å›½å®¶/åœ°åŒº
 business email	addressbook	zh	EMail
-business email type	addressbook	zh	EMailÀàĞÍ
-business fax	addressbook	zh	´«Õæ
-business phone	addressbook	zh	µç»°
-business state	addressbook	zh	Ê¡/×ÔÖÎÇø
-business street	addressbook	zh	½ÖµÀ
-business zip code	addressbook	zh	ÓÊÕş±àÂë
-car phone	addressbook	zh	³µÔØµç»°
-cell phone	addressbook	zh	ÊÖ»ú
-city	common	zh	³ÇÊĞ
-company	common	zh	¹«Ë¾
-company name	common	zh	¹«Ë¾Ãû³Æ
-contact	common	zh	ÁªÏµÈË
-contact application	admin	zh	ÁªÏµÈËÓ¦ÓÃ³ÌĞò
-contact settings	admin	zh	ÁªÏµÈËÅäÖÃ
-copied by %1, from record #%2.	addressbook	zh	¼ÇÂ¼ÒÑÓÉ%1´Ó%2¸´ÖÆ
-country	common	zh	¹ú¼Ò/µØÇø
-csv-fieldname	addressbook	zh	CSV-×Ö¶ÎÃû
-csv-filename	addressbook	zh	CSV-ÎÄ¼şÃû
-custom	addressbook	zh	×Ô¶¨Òå
-custom fields	addressbook	zh	×Ô¶¨Òå×Ö¶Î
-debug output in browser	addressbook	zh	ÏÔÊ¾µ÷ÊÔĞÅÏ¢
-default filter	addressbook	zh	Ä¬ÈÏÉ¸Ñ¡
+business email type	addressbook	zh	EMailç±»å‹
+business fax	addressbook	zh	ä¼ çœŸ
+business phone	addressbook	zh	ç”µè¯
+business state	addressbook	zh	çœ/è‡ªæ²»åŒº
+business street	addressbook	zh	è¡—é“
+business zip code	addressbook	zh	é‚®æ”¿ç¼–ç 
+car phone	addressbook	zh	è½¦è½½ç”µè¯
+cell phone	addressbook	zh	æ‰‹æœº
+city	common	zh	åŸå¸‚
+company	common	zh	å…¬å¸
+company name	common	zh	å…¬å¸åç§°
+contact	common	zh	è”ç³»äºº
+contact application	admin	zh	è”ç³»äººåº”ç”¨ç¨‹åº
+contact settings	admin	zh	è”ç³»äººé…ç½®
+copied by %1, from record #%2.	addressbook	zh	è®°å½•å·²ç”±%1ä»%2å¤åˆ¶
+country	common	zh	å›½å®¶/åœ°åŒº
+csv-fieldname	addressbook	zh	CSV-å­—æ®µå
+csv-filename	addressbook	zh	CSV-æ–‡ä»¶å
+custom	addressbook	zh	è‡ªå®šä¹‰
+custom fields	addressbook	zh	è‡ªå®šä¹‰å­—æ®µ
+debug output in browser	addressbook	zh	æ˜¾ç¤ºè°ƒè¯•ä¿¡æ¯
+default filter	addressbook	zh	é»˜è®¤ç­›é€‰
 delete a single entry by passing the id.	addressbook	zh	Delete a single entry by passing the id.
-department	common	zh	²¿ÃÅ
-domestic	addressbook	zh	¹úÄÚ
-download	addressbook	zh	ÏÂÔØ
-edit custom field	addressbook	zh	±à¼­×Ô¶¨Òå×Ö¶Î
-edit custom fields	admin	zh	±à¼­×Ô¶¨Òå×Ö¶Î
-export contacts	addressbook	zh	µ¼³öÁªÏµĞÅÏ¢
-export file name	addressbook	zh	µ¼³öÎÄ¼şÃû³Æ
-export from addressbook	addressbook	zh	´ÓÍ¨Ñ¶Â¼µ¼³ö
-extra	addressbook	zh	¸½¼ÓµÄ
-fax	addressbook	zh	´«Õæ
-fax number	common	zh	´«ÕæºÅ
-field %1 has been added !	addressbook	zh	×Ö¶Î%1ÒÑ¼ÓÈë!
-field %1 has been updated !	addressbook	zh	×Ö¶Î%1ÒÑ¸üĞÂ!
-field name	addressbook	zh	×Ö¶ÎÃû
-fields to show in address list	addressbook	zh	½«ÔÚµØÖ·ÁĞ±íÖĞÏÔÊ¾µÄ×Ö¶Î
-fieldseparator	addressbook	zh	×Ö¶Î·Ö¸ô·û
-full name	addressbook	zh	È«Ãû
+department	common	zh	éƒ¨é—¨
+domestic	addressbook	zh	å›½å†…
+download	addressbook	zh	ä¸‹è½½
+edit custom field	addressbook	zh	ç¼–è¾‘è‡ªå®šä¹‰å­—æ®µ
+edit custom fields	admin	zh	ç¼–è¾‘è‡ªå®šä¹‰å­—æ®µ
+export contacts	addressbook	zh	å¯¼å‡ºè”ç³»ä¿¡æ¯
+export file name	addressbook	zh	å¯¼å‡ºæ–‡ä»¶åç§°
+export from addressbook	addressbook	zh	ä»é€šè®¯å½•å¯¼å‡º
+extra	addressbook	zh	é™„åŠ çš„
+fax	addressbook	zh	ä¼ çœŸ
+fax number	common	zh	ä¼ çœŸå·
+field %1 has been added !	addressbook	zh	å­—æ®µ%1å·²åŠ å…¥!
+field %1 has been updated !	addressbook	zh	å­—æ®µ%1å·²æ›´æ–°!
+field name	addressbook	zh	å­—æ®µå
+fields to show in address list	addressbook	zh	å°†åœ¨åœ°å€åˆ—è¡¨ä¸­æ˜¾ç¤ºçš„å­—æ®µ
+fieldseparator	addressbook	zh	å­—æ®µåˆ†éš”ç¬¦
+full name	addressbook	zh	å…¨å
 geo	addressbook	zh	GEO
-grant addressbook access	common	zh	ÊÚÈ¨Í¨Ñ¶Â¼·ÃÎÊ
-home address type	addressbook	zh	µØÖ·ÀàĞÍ
-home city	addressbook	zh	³ÇÊĞ
-home country	addressbook	zh	¹ú¼Ò/µØÇø
+grant addressbook access	common	zh	æˆæƒé€šè®¯å½•è®¿é—®
+home address type	addressbook	zh	åœ°å€ç±»å‹
+home city	addressbook	zh	åŸå¸‚
+home country	addressbook	zh	å›½å®¶/åœ°åŒº
 home email	addressbook	zh	EMail
-home email type	addressbook	zh	EMailÀàĞÍ
-home phone	addressbook	zh	µç»°
-home state	addressbook	zh	Ê¡/×ÔÖÎÇø
-home street	addressbook	zh	½ÖµÀ
-home zip code	addressbook	zh	ÓÊÕş±àÂë
-import	addressbook	zh	µ¼Èë
-import contacts	addressbook	zh	µ¼ÈëÁªÏµÈË
-import csv-file into addressbook	addressbook	zh	µ¼ÈëCSVÎÄ¼ş
-import file	addressbook	zh	µ¼ÈëÎÄ¼ş
-import from ldif, csv, or vcard	addressbook	zh	´ÓLDIF¡¢CSV»òvCardµ¼Èë
-import from outlook	addressbook	zh	´ÓOutlookµ¼Èë
-international	addressbook	zh	¹ú¼Ê
-isdn phone	addressbook	zh	ISDNµç»°
-label	addressbook	zh	¸½×¢
+home email type	addressbook	zh	EMailç±»å‹
+home phone	addressbook	zh	ç”µè¯
+home state	addressbook	zh	çœ/è‡ªæ²»åŒº
+home street	addressbook	zh	è¡—é“
+home zip code	addressbook	zh	é‚®æ”¿ç¼–ç 
+import	addressbook	zh	å¯¼å…¥
+import contacts	addressbook	zh	å¯¼å…¥è”ç³»äºº
+import csv-file into addressbook	addressbook	zh	å¯¼å…¥CSVæ–‡ä»¶
+import file	addressbook	zh	å¯¼å…¥æ–‡ä»¶
+import from ldif, csv, or vcard	addressbook	zh	ä»LDIFã€CSVæˆ–vCardå¯¼å…¥
+import from outlook	addressbook	zh	ä»Outlookå¯¼å…¥
+international	addressbook	zh	å›½é™…
+isdn phone	addressbook	zh	ISDNç”µè¯
+label	addressbook	zh	é™„æ³¨
 ldap context for contacts	admin	zh	LDAP context for contacts
 ldap host for contacts	admin	zh	LDAP host for contacts
 ldap root dn for contacts	admin	zh	LDAP root dn for contacts
 ldap root pw for contacts	admin	zh	LDAP root pw for contacts
 ldif	addressbook	zh	LDIF
-line 2	addressbook	zh	µÚ2ĞĞ
-message phone	addressbook	zh	¶ÌĞÅµç»°
-middle name	addressbook	zh	Ãû×Ö
-mobile	addressbook	zh	ÒÆ¶¯µÄ
-mobile phone	addressbook	zh	ÒÆ¶¯µç»°
-modem phone	addressbook	zh	Modemµç»°
-no vcard	addressbook	zh	ÎŞvCard
-number of records to read (<=200)	addressbook	zh	´ı¶ÁÈ¡¼ÇÂ¼Êı (<=200)
-other number	addressbook	zh	ÆäËûÊı×Ö
-other phone	addressbook	zh	ÆäËûµç»°
-pager	common	zh	Ñ°ºô
-parcel	addressbook	zh	°ü¹ü
-phone number	common	zh	µç»°ºÅÂë
-phone numbers	common	zh	µç»°ºÅÂë
-please enter a name for that field !	addressbook	zh	ÇëÊäÈë¸Ã×Ö¶ÎÃû!
-postal	common	zh	ÓÊÕş
-pref	addressbook	zh	Ê×Ñ¡
-prefix	addressbook	zh	³ÆÎ½
-public key	addressbook	zh	¹«Ô¿
-read a list of entries.	addressbook	zh	¶ÁÈ¡Ò»¸öÌõÄ¿.
+line 2	addressbook	zh	ç¬¬2è¡Œ
+message phone	addressbook	zh	çŸ­ä¿¡ç”µè¯
+middle name	addressbook	zh	åå­—
+mobile	addressbook	zh	ç§»åŠ¨çš„
+mobile phone	addressbook	zh	ç§»åŠ¨ç”µè¯
+modem phone	addressbook	zh	Modemç”µè¯
+no vcard	addressbook	zh	æ— vCard
+number of records to read (<=200)	addressbook	zh	å¾…è¯»å–è®°å½•æ•° (<=200)
+other number	addressbook	zh	å…¶ä»–æ•°å­—
+other phone	addressbook	zh	å…¶ä»–ç”µè¯
+pager	common	zh	å¯»å‘¼
+parcel	addressbook	zh	åŒ…è£¹
+phone number	common	zh	ç”µè¯å·ç 
+phone numbers	common	zh	ç”µè¯å·ç 
+please enter a name for that field !	addressbook	zh	è¯·è¾“å…¥è¯¥å­—æ®µå!
+postal	common	zh	é‚®æ”¿
+pref	addressbook	zh	é¦–é€‰
+prefix	addressbook	zh	ç§°è°“
+public key	addressbook	zh	å…¬é’¥
+read a list of entries.	addressbook	zh	è¯»å–ä¸€ä¸ªæ¡ç›®.
 read a single entry by passing the id and fieldlist.	addressbook	zh	Read a single entry by passing the id and fieldlist.
-record access	addressbook	zh	·ÃÎÊÈ¨ÏŞ
-record owner	addressbook	zh	ËùÓĞÕß
-retrieve contacts	admin	zh	È¡µÃÁªÏµĞÅÏ¢
-select where you want to store	admin	zh	Ñ¡Ôñ±£´æÎ»ÖÃ
-show birthday reminders on main screen	addressbook	zh	ÔÚÖ÷Ò³ÃæÉÏÌáĞÑÉúÈÕ
-startrecord	addressbook	zh	ÆğÊ¼¼ÇÂ¼
-state	common	zh	Ê¡/×ÔÖÎÇø
-street	common	zh	½ÖµÀ
-suffix	addressbook	zh	ºó×º
-test import (show importable records <u>only</u> in browser)	addressbook	zh	µ¼Èë²âÊÔ(<u>½ö</u> ½öÏÔÊ¾¿Éµ¼Èë¼ÇÂ¼)
-that field name has been used already !	addressbook	zh	¸Ã×Ö¶ÎÃûÒÑ±»Õ¼ÓÃ!
-this person's first name was not in the address book.	addressbook	zh	Í¨Ñ¶Â¼ÖĞÎŞ´ËÈËÃû.
-this person's last name was not in the address book.	addressbook	zh	Í¨Ñ¶Â¼ÖĞÎŞ´ËĞÕÊÏ.
-today is %1's birthday!	common	zh	½ñÌìÊÇ%1µÄÉúÈÕ!
-tomorrow is %1's birthday.	common	zh	Ã÷ÌìÊÇ%1µÄÉúÈÕ¡£
+record access	addressbook	zh	è®¿é—®æƒé™
+record owner	addressbook	zh	æ‰€æœ‰è€…
+retrieve contacts	admin	zh	å–å¾—è”ç³»ä¿¡æ¯
+select where you want to store	admin	zh	é€‰æ‹©ä¿å­˜ä½ç½®
+show birthday reminders on main screen	addressbook	zh	åœ¨ä¸»é¡µé¢ä¸Šæé†’ç”Ÿæ—¥
+startrecord	addressbook	zh	èµ·å§‹è®°å½•
+state	common	zh	çœ/è‡ªæ²»åŒº
+street	common	zh	è¡—é“
+suffix	addressbook	zh	åç¼€
+test import (show importable records <u>only</u> in browser)	addressbook	zh	å¯¼å…¥æµ‹è¯•(<u>ä»…</u> ä»…æ˜¾ç¤ºå¯å¯¼å…¥è®°å½•)
+that field name has been used already !	addressbook	zh	è¯¥å­—æ®µåå·²è¢«å ç”¨!
+this person's first name was not in the address book.	addressbook	zh	é€šè®¯å½•ä¸­æ— æ­¤äººå.
+this person's last name was not in the address book.	addressbook	zh	é€šè®¯å½•ä¸­æ— æ­¤å§“æ°.
+today is %1's birthday!	common	zh	ä»Šå¤©æ˜¯%1çš„ç”Ÿæ—¥!
+tomorrow is %1's birthday.	common	zh	æ˜å¤©æ˜¯%1çš„ç”Ÿæ—¥ã€‚
 update a single entry by passing the fields.	addressbook	zh	Update a single entry by passing the fields.
-use country list	addressbook	zh	Ê¹ÓÃ¡°¹ú¼Ò/µØÇø¡±ÁĞ±í
+use country list	addressbook	zh	ä½¿ç”¨â€œå›½å®¶/åœ°åŒºâ€åˆ—è¡¨
 vcard	common	zh	vCard
-vcards require a first name entry.	addressbook	zh	vCards±ØĞë°üº¬¡°Ãû×Ö¡±ÌõÄ¿.
-vcards require a last name entry.	addressbook	zh	Vcards±ØĞë°üº¬¡°ĞÕ¡±ÌõÄ¿.
-video phone	addressbook	zh	¿ÉÊÓµç»°
-voice phone	addressbook	zh	ÓïÒôµç»°
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh	¾¯¸æ!! ½öµ±Äú²»Ê¹ÓÃÁªÏµĞÅÏ¢À´½øĞĞÕË»§´æ´¢Ê±£¬LDAP²ÅÊÇÓĞĞ§µÄ£¡
-work phone	addressbook	zh	¹¤×÷µç»°
-you must select a vcard. (*.vcf)	addressbook	zh	±ØĞëÑ¡ÔñÒ»¸övCard. (*.vcf)
-you must select at least 1 column to display	addressbook	zh	ÖÁÉÙ±ØĞëÑ¡ÔñÒ»ÁĞÏÔÊ¾
-zip code	common	zh	ÓÊÕş±àÂë
+vcards require a first name entry.	addressbook	zh	vCardså¿…é¡»åŒ…å«â€œåå­—â€æ¡ç›®.
+vcards require a last name entry.	addressbook	zh	Vcardså¿…é¡»åŒ…å«â€œå§“â€æ¡ç›®.
+video phone	addressbook	zh	å¯è§†ç”µè¯
+voice phone	addressbook	zh	è¯­éŸ³ç”µè¯
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh	è­¦å‘Š!! ä»…å½“æ‚¨ä¸ä½¿ç”¨è”ç³»ä¿¡æ¯æ¥è¿›è¡Œè´¦æˆ·å­˜å‚¨æ—¶ï¼ŒLDAPæ‰æ˜¯æœ‰æ•ˆçš„ï¼
+work phone	addressbook	zh	å·¥ä½œç”µè¯
+you must select a vcard. (*.vcf)	addressbook	zh	å¿…é¡»é€‰æ‹©ä¸€ä¸ªvCard. (*.vcf)
+you must select at least 1 column to display	addressbook	zh	è‡³å°‘å¿…é¡»é€‰æ‹©ä¸€åˆ—æ˜¾ç¤º
+zip code	common	zh	é‚®æ”¿ç¼–ç 

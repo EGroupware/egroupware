@@ -51,7 +51,7 @@ because the enable flag for this app is set to 0, or is undefined	setup	zh	ÒòÎª¸
 bottom	setup	zh	µ×²¿
 cancel	setup	zh	È¡Ïû
 cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	zh	È¨ÏŞ²»×ã£¬ÎŞ·¨´´½¨ÎÄ¼şheader.inc.php¡£<br>Äú¿ÉÒÔ³¢ÊÔ%1¸ÃÎÄ¼ş¡£
-charset	setup	zh	gb18030
+charset	setup	zh	utf-8
 check ip address of all sessions	setup	zh	¼ì²éËùÓĞ»á»°µÄIPµØÖ·
 click <a href="index.php">here</a> to return to setup.	setup	zh	µã»÷<a href="index.php">´Ë´¦</a>·µ»Ø°²×°.
 click here	setup	zh	µã»÷´Ë´¦
