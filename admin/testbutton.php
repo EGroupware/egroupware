@@ -18,11 +18,12 @@
 
 	$button = CreateObject('phpgwapi.graphics');
 
+	$button->parseHTTPPostVars();
 	$button->createInputButton(lang('save'), 'save');
 
-	if (isset($submit)) print "it workied<br>";
+	if (isset($submit)) print "is worked $submit<br>";
 
-	print "<form>";
+	print "<form method=post>";
 	print $button->createInputButton("Lars is the best ;)",'submit');
 	print "<br>the same as ascii<br>";
 	print $button->createInputButton("Lars is the best ;)",'submit','ascii');
