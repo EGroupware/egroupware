@@ -24,7 +24,10 @@
   /* $Id$ */
 
 
-	// THIS NEEDS WORK!!!!!!!!! - Milosch
+	/*
+	THIS NEEDS WORK!!!!!!!!! - Milosch
+	But it is a lot closer now...
+	*/
 
 	$phpgw_info['server']['global_denied_users'] = array();
 	$phpgw_info['server']['global_denied_groups'] = array();
@@ -35,12 +38,23 @@
 		var $contacts;
 		var $account_id;
 		var $data;
+		var $debug = False;
+		var $qcols = array(
+			'fn'                     => 'fn',
+			'n_given'                => 'n_given',
+			'n_family'               => 'n_family',
+			'account_lastlogin'      => 'account_lastlogin',
+			'account_lastloginfrom'  => 'account_lastloginfrom',
+			'account_lastpwd_change' => 'account_lastpwd_change',
+			'account_status'         => 'account_status',
+			'account_expires'        => 'account_expires'
+		);
 
 		function accounts_()
 		{
 			global $phpgw;
 			$this->db       = $phpgw->db;
-			$this->contacts = CreateObject('phpgwapi.contacts');
+			$this->contacts = CreateObject('phpgwapi.contacts',0);
 		}
 
 		function makeobj()
@@ -53,18 +67,12 @@
 
 		function read_repository()
 		{
-			$qcols = array(
-				'n_given'                => 'n_given',
-				'n_family'               => 'n_family',
-				'account_lastlogin'      => 'account_lastlogin',
-				'account_lastloginfrom'  => 'account_lastloginfrom',
-				'account_lastpwd_change' => 'account_lastpwd_change',
-				'account_status'         => 'account_status'
-			);
+			$this->makeobj();
 
-			$allValues = $this->contacts->read_single_entry($this->account_id,$qcols);
+			$allValues = $this->contacts->read_single_entry($this->account_id,$this->qcols);
 
 			/* Now dump it into the array */
+			$this->data['userid']            = $allValues[0]['lid'];
 			$this->data['account_id']	     = $allValues[0]['id'];
 			$this->data['account_lid'] 	     = $allValues[0]['lid'];
 			$this->data['account_type']      = $allValues[0]['tid'];
@@ -75,13 +83,15 @@
 			$this->data['lastloginfrom']     = $allValues[0]['account_lastloginfrom'];
 			$this->data['lastpasswd_change'] = $allValues[0]['account_lastpwd_change'];
 			$this->data['status']            = $allValues[0]['account_status'];
-			$this->data['status'] = 'A';
+			$this->data['expires']           = $allValues[0]['account_expires'];
 
 			return $this->data;
 		}
 
 		function save_repository()
 		{
+			$this->makeobj();
+
 			$entry['id']                        = $this->data['account_id'];
 			$entry['lid']                       = $this->data['account_lid'];
 			$entry['tid']                       = $this->data['account_type'];
@@ -92,8 +102,9 @@
 			$entry['account_lastloginfrom']     = $this->data['lastloginfrom'];
 			$entry['account_lastpasswd_change'] = $this->data['lastpwd_change'];
 			$entry['account_status']            = $this->data['status'];
+			$entry['account_expires']           = $this->data['expires'];
 
-			$this->contacts->update($this->account_id,$entry);
+			$this->contacts->update($entry['id'],$this->account_id,$entry);
 		}
 
 		function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
@@ -115,6 +126,7 @@
 		function get_list($_type='both')
 		{
 			global $phpgw;
+			$this->makeobj();
 
 			switch($_type)
 			{
@@ -128,21 +140,20 @@
 					$filter = 'tid=u,tid=g';
 			}
 
-			$allValues = $this->contacts->read(0,0,$qcols,'',$filter);
+			$allValues = $this->contacts->read(0,0,$this->qcols,'',$filter);
 
-			// get user information for each user/group
-			for($i=0;$i<count($allValues);$i++) {
+			/* get user information for each user/group */
+			for($i=0;$i<count($allValues);$i++)
+			{
 				$accounts[] = Array(
 					'account_id'        => $allValues[$i]['id'],
 					'account_lid'       => $allValues[$i]['lid'],
 					'account_type'      => $allValues[$i]['tid'],
 					'account_firstname' => $allValues[$i]['n_given'],
-					'account_lastname'  => $allValues[$i]['n_family']
+					'account_lastname'  => $allValues[$i]['n_family'],
+					'account_status'    => $allValues[$i]['account_status'],
+					'account_expires'   => $allValues[$i]['account_expires']
 				);
-
-				$this->db->query("SELECT account_status FROM phpgw_accounts WHERE account_id='" . $allValues[$i]['id'] . "'",__LINE__,__FILE__);
-				$this->db->next_record();
-				$accounts[$i]['account_status'] = $this->db->f('account_status');
 			}
 
 			return $accounts;
@@ -154,9 +165,12 @@
 			$this->makeobj();
 			$allValues = $this->contacts->read(0,0,$qcols,'',"lid=".$account_lid);
 
-			if($allValues[0]['id']) {
+			if($allValues[0]['id'])
+			{
 				return intval($allValues[0]['id']);
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -165,12 +179,13 @@
 		{
 			global $phpgw, $phpgw_info;
 			$this->makeobj();
+
 			$allValues = $this->contacts->read_single_entry($account_id);
-			echo '<br>id2name: '.$allValues[0]['lid'];
+			if($this->debug) { echo '<br>id2name: '.$allValues[0]['lid']; }
 
 			if($allValues[0]['lid'])
 			{
-				return intval($allValues[0]['lid']);
+				return $allValues[0]['lid'];
 			}
 			else
 			{
@@ -186,7 +201,8 @@
 
 			$allValues = $this->contacts->read_single_entry($account_id);
 
-			if ($allValues[0]['tid']) {
+			if ($allValues[0]['tid'])
+			{
 				return $allValues[0]['tid'];
 			}
 			else
@@ -205,7 +221,8 @@
 				$account_lid = $this->id2name($account_id);
 			}
 
-			$allValues = $this->contacts->read(0,0,$qcols,'','lid='.$account_lid);
+			$allValues = $this->contacts->read(0,0,array('n_given' => 'n_given'),'','lid='.$account_lid);
+
 			if ($allValues[0]['id'])
 			{
 				return True;
@@ -216,24 +233,66 @@
 			}
 		}
 
-		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='',$account_home='',$account_shell='')
+		function create($account_info)
 		{
 			global $phpgw_info, $phpgw;
 
 			$owner = $phpgw_info['user']['account_id'];
-			$entry['n_given']  = $account_firstname;
-			$entry['n_family'] = $account_lastname;
-			$entry['password'] = $account_pwd;
-			$entry['status']   = $account_status;
+			$entry['id']       = $account_info['account_id'];
+			$entry['lid']      = $account_info['account_lid'];
+			$entry['n_given']  = $account_info['account_firstname'];
+			$entry['n_family'] = $account_info['account_lastname'];
+			$entry['password'] = $account_info['account_passwd'];
+			$entry['account_status']   = $account_info['account_status'];
+			$entry['account_expires']  = $account_info['account_expires'];
 
 			// 'public' access, no category id, tid set to account_type
-			$this->contacts->add($owner,$entry,'public','',$account_type);
+			$this->contacts->add($owner,$entry,'public','',$account_info['account_type']);
 			return;
 		}
 
-		function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
+		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
-			print 'not done until now auto_generate class.accounts_contacts.inc.php<br>';
-			exit;
+			global $phpgw, $phpgw_info;
+
+			if (! $expiredate)
+			{
+				// expire in 30 days by default
+				$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
+			}
+
+			$acct_info = array(
+				'account_lid'       => $accountname,
+				'account_type'      => 'u',
+				'account_passwd'    => $passwd,
+				'account_firstname' => '',
+				'account_lastname'  => '',
+				'account_status'    => $account_status,
+				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
+			);
+			$this->create($acct_info);
+			$accountid = $this->name2id($accountname);
+
+			$this->db->transaction_begin();
+			if (!$default_prefs)
+			{
+				$default_prefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
+//				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+				$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')");
+			}
+
+			if (!$default_acls)
+			{
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '1', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+			}
+			$this->db->transaction_commit();
+			return $accountid;
 		}
 	}
