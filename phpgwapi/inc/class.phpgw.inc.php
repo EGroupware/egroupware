@@ -113,9 +113,9 @@
       if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
       $this->accounts = CreateObject("phpgwapi.accounts");
       $this->preferences = CreateObject("phpgwapi.preferences");
-      $this->applications = CreateObject("phpgwapi.applications");
       $this->session = CreateObject("phpgwapi.sessions");
       $this->acl = CreateObject("phpgwapi.acl");
+      $this->applications = CreateObject("phpgwapi.applications");
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         $log = explode("@",$login);
         $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
