@@ -2007,18 +2007,18 @@
 
 			$var = Array(
 				'bg_text'=>	$this->theme['bg_text'],
-				'name'	=>	$event->title
+				'name'	=>	$event['title']
 			);
 			$p->set_var($var);
 			unset($var);
 
 			// Some browser add a \n when its entered in the database. Not a big deal
 			// this will be printed even though its not needed.
-			if (nl2br($event['description']))
+			if ($event['description'])
 			{
 				$var[] = Array(
 					'field'	=>	lang('Description'),
-					'data'	=>	nl2br($event['description'])
+					'data'	=>	$event['description']
 				);
 			}
 
