@@ -180,7 +180,7 @@
 		* disable selection of new timeframe
 		*
 		*/
-		function diableSelection ()
+		function disableSelection ()
 		{
 			$this->selection=0;
 		}
