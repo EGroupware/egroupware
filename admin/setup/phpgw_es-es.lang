@@ -1,395 +1,398 @@
-%1 - %2 of %3 user accounts	admin	es	%1 - %2 de %3 cuentas de usuario
-%1 not found or not executable !!!	admin	es	No se encontró %1 o no es un ejecutable
-(stored password will not be shown here)	admin	es	(las claves guardadas no se mostrarán aquí)
-accesslog and bruteforce defense	admin	es	Defensa de acceso al registro y fuerza bruta
-account active	admin	es	Cuenta activa
-account has been created	common	es	La cuenta ha sido creada
-account has been deleted	common	es	La cuenta ha sido eliminada
-account has been updated	common	es	La cuenta ha sido actualizada
-account list	admin	es	Lista de cuentas
-account permissions	admin	es	Permisos de la cuenta
-account preferences	admin	es	Preferencias de la cuenta
-acl manager	admin	es	Manejo de LCA
-acl rights	admin	es	Permisos de LCA
-action	admin	es	Acción
-active	admin	es	Activo
-add a category	admin	es	Añadir una categoría
-add a group	admin	es	Añadir un grupo
-add a new account.	admin	es	Añadir una nueva cuenta.
-add a subcategory	admin	es	Añadir una subcategoría
-add a user	admin	es	Añadir un usuario
-add account	admin	es	Añadir una cuenta
-add application	admin	es	Añadir aplicación
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	es	Añadir usuarios creados automaticamente al siguiente grupo (se usara 'Default' si no especifica ninguno.)
-add global category	admin	es	Añadir categoría global
-add global category for %1	admin	es	Añadir categoría global para %1
-add group	admin	es	Añadir grupo
-add new account	admin	es	Añadir una nueva cuenta
-add new application	admin	es	Añadir nueva aplicación
-add peer server	admin	es	Añadir Servidor Par
-add sub-category	admin	es	Añadir subcategoría
-admin email	admin	es	Administrador E-mail
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	es	Direcciones de correo del administrador (separadas por comas) para notificar los bloqueos (en blanco para no notificar)
-admin name	admin	es	Nombre del Administrador
-admin options	admin	es	Opciones de Administración
-administration	admin	es	Administración
-admins	admin	es	Administradores
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	es	¿Después de cuántos intentos fallidos de conectar debe bloquearse una cuenta? (predeterminado, 3)
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	es	¿Después de cuántos intentos fallidos de conectar debe bloquearse una IP? (predeterminado, 3)
-all records and account information will be lost!	admin	es	¡Se perderán todos los registros e información de las cuentas!
-all users	admin	es	Todos los usuarios
-allow anonymous access to this app	admin	es	Permitir acceso anónimo a esta aplicación
-anonymous user	admin	es	Usuario anónimo
-anonymous user (not shown in list sessions)	admin	es	Usuario anónimo (no se muestra en las listas de sesiones)
-appearance	admin	es	Aspecto
-application	admin	es	Aplicación
-application name	admin	es	Nombre de la aplicación
-application title	admin	es	Titulo de la aplicación
-applications	admin	es	Aplicaciones
-applications list	admin	es	Lista de aplicaciones
-apply	admin	es	aplicar
-are you sure you want to delete the application %1 ?	admin	es	¿Está seguro de que quiere borrar la aplicación?
-are you sure you want to delete this account ?	admin	es	¿Está seguro de querer borrar esta cuenta?
-are you sure you want to delete this application ?	admin	es	¿Está seguro de querer borrar esta aplicación?
-are you sure you want to delete this category ?	common	es	¿Está seguro de querer borrar esta categoria?
-are you sure you want to delete this global category ?	admin	es	¿Está seguro de que quiere borrar la categoría global?
-are you sure you want to delete this group ?	admin	es	¿Está seguro de querer borrar este grupo?
-are you sure you want to delete this server ?	admin	es	¿ Está seguro de querer borrar este servidor ?
-are you sure you want to delete this server?	admin	es	¿Está seguro de que quiere borrar este servidor?
-are you sure you want to kill this session ?	admin	es	¿Está seguro de querer matar esta sesión?
-async services last executed	admin	es	Últimos servicios asíncronos ejecutados
-asynchronous timed services	admin	es	Servicios asíncronos programados
-asyncservices not yet installed or other error (%1) !!!	admin	es	Servicios asíncronos que todavía no están instalados u otro error (%1)
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	es	Intentar usar el tipo MIME correcto para FTP en vez de 'application/octet-stream'
-authentication / accounts	admin	es	Identificación / Cuentas
-auto create account records for authenticated users	admin	es	Crear cuentas automáticamente para usuarios autenticados
-back to the list	admin	es	volver a la lista
-bi-dir passthrough	admin	es	bidireccional pasante
-bi-directional	admin	es	bidireccional
-bookeeping admins	admin	es	Administradores de Contabilidad
-bottom	admin	es	Debajo
-calculate next run	admin	es	Calcular la siguiente ejecución
-can change password	admin	es	Puede cambiar la contraseña
-cancel testjob!	admin	es	Cancelar trabajo de pruebas
-categories list	admin	es	Lista de categorías
-category %1 has been saved !	admin	es	La categoría %1 ha sido guardada
-category list	admin	es	Lista de categorías
-change acl rights	admin	es	cambiar permisos de ACL
-change config settings	admin	es	Cambiar opciones de configuración
-change main screen message	admin	es	Cambiar mensaje de la pantalla principal
-check ip address of all sesions	admin	es	Verificar la direccion IP de todas las sesiones
-check ip address of all sessions	admin	es	Comprobar la ip de todas las sesiones
-check items to <b>%1</b> to %2 for %3	admin	es	Comprobar elementos a <b>%1</b> a %2 para %3
-configuration	admin	es	Configuración
-country selection	admin	es	Seleccionar país
-create group	admin	es	Crear grupo
-crontab only (recomended)	admin	es	Sólo mediante crontab (recomendado)
-data	admin	es	Datos
-day	admin	es	Día
-day of week<br>(0-6, 0=sun)	admin	es	Día de la semana<br>(0-6, 0=Dom)
-default	admin	es	Predeterminado
-default file system space per user	admin	es	Espacio por defecto en el sistema de archivos por usuario
-default file system space per user/group ?	admin	es	Espacio por defecto en el sistema de archivos por usuario/grupo
-deinstall crontab	admin	es	Desinstalar crontab
-delete account	admin	es	Borrar cuenta
-delete all records	admin	es	Borrar todos los registros
-delete application	admin	es	Borrar aplicación
-delete category	admin	es	Borrar categoría
-delete group	admin	es	Borrar grupo
-delete peer server	admin	es	Borrar servidor peer
-delete the category	admin	es	borrar la categoría
-delete the group	admin	es	borrar el grupo
-delete this category	admin	es	borrar esta categoría
-delete this group	admin	es	borrar este grupo
-delete this user	admin	es	borrar este usuario
-deny access to access log	admin	es	Denegar acceso al registro de accesos
-deny access to application registery	admin	es	Denegar acceso al registro de aplicaciones
-deny access to applications	admin	es	Denegar acceso a aplicaciones
-deny access to asynchronous timed services	admin	es	Denegar acceso a los servicios asíncronos programados
-deny access to current sessions	admin	es	Denegar acceso a las sesiones actuales
-deny access to error log	admin	es	Denegar acceso al registro de errores
-deny access to global categories	admin	es	Denegar acceso a las categorias globales
-deny access to groups	admin	es	Denegar acceso a grupos
-deny access to mainscreen message	admin	es	Denegar acceso al mensaje de la pantalla principal
-deny access to peer servers	admin	es	Denegar acceso a servidores pares
-deny access to phpinfo	admin	es	Denegar acceso a phpinfo
-deny access to site configuration	admin	es	Denegar acceso a la configuración del sitio
-deny access to user accounts	admin	es	Denegar acceso a las cuentas de usuario
-deny all users access to grant other users access to their entries ?	admin	es	¿Prohibir a los usuarios ceder acceso a otros usuarios para sus registros?
-description can not exceed 255 characters in length !	admin	es	¡La descripción no puede exceder de 255 caracteres!
-disable "auto completion" of the login form	admin	es	Desactivar completado automático en el formulario de inicio de sesión
-disabled	admin	es	Deshabilitado
-disabled (not recomended)	admin	es	desactivado (no se recomienda)
-display	admin	es	Mostrar
-do not delete the category and return back to the list	admin	es	NO borrar la categoría y volver a la lista
-do you also want to delete all global subcategories ?	admin	es	¿ Desea tambien eliminar todas las subcategorias globales?
-do you want to delete all global subcategories ?	admin	es	¿Desea borrar todas las subcategorías globales?
-do you want to move all global subcategories one level down ?	admin	es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
-edit account	admin	es	Editar cuenta
-edit application	admin	es	Editar aplicación
-edit cvs repository list	admin	es	Editar Lista de Sitios CVS
-edit global category	admin	es	Editar categoria global
-edit global category for %1	admin	es	Editar categoría global para %1
-edit group	admin	es	Editar Grupo
-edit job status id table	admin	es	Editar Tabla de ID de Estados de Trabajos
-edit location table	admin	es	Editar Tabla de Ubicaciones
-edit login screen message	admin	es	Editar mensaje de la pantalla de ingreso
-edit main screen message	admin	es	Editar mensaje de la pantalla principal
-edit peer server	admin	es	Editar servidores pares
-edit table format	admin	es	Editar formato de tabla
-edit this category	admin	es	editar esta categoría
-edit this group	admin	es	editar este grupo
-edit this user	admin	es	editar este usuario
-edit user	admin	es	editar usuario
-edit user account	admin	es	Editar cuenta del usuario
-edit work catagory table	admin	es	Editar Tabla de Categorias de Trabajos
-enable debug-messages	admin	es	Activar mensajes de depuración
-enabled	admin	es	Habilitado
-enabled - hidden from navbar	admin	es	Habilitado - Esconder de la Barra
-enter a description for the category	admin	es	introduzca una descripción para esta categoría
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	es	Introduzca texto aleatorio para la encriptación <br> de la sesion (requiere mcrypt)
-enter the background color for the login page	admin	es	Introduzca el color de fondo para la página de inicio de sesión
-enter the background color for the site title	admin	es	Introduzca el color de fondo para el título del sitio
-enter the file name of your logo	admin	es	Introduzca el nombre del fichero del logo
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es	Introduzca la ruta complets para los archivos temporales.<br> Ejemplos: /files , E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:\FILES
-enter the hostname of the machine on which this server is running	admin	es	Introduzca el nombre completo de la máquina sobre la cual corre este servidor
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	es	Introduzca la dirección URL de phpGroupWare.<br>Ejemplo: http://www.dominio.com/phpgroupware o /phpgroupware.<br><b>Sin barra al final</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	es	Introduzca la cadena de búsqueda. Para mostrar todas las entradas, vacíe este campo y pulse el botón ENVIAR otra vez.
-enter the site password for peer servers	admin	es	Introduzca la clave del sitio para servidores pares
-enter the site username for peer servers	admin	es	Introduzca el usuario del sitio para servidores pares
-enter the title for your site	admin	es	Introduzca el titulo para su sitio
-enter the title of your logo	admin	es	Introduzca el título del logo
-enter the url where your logo should link to	admin	es	Introduzca la url a donde apunte el logo
-enter your default ftp server	admin	es	Introduzca su servidor FTP por defecto
-enter your http proxy server	admin	es	Introduzca su servidor proxy HTTP
-enter your http proxy server port	admin	es	Introduzca el puerto de su servidor proxy HTTP
-error canceling timer, maybe there's none set !!!	admin	es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	es	Error al configurar el temporizador. La sintaxis es incorrecta o puede que haya uno que ya se esté ejecutándo.
-error: %1 not found or other error !!!	admin	es	Error: no se encontró %1 u otro error
-expires	admin	es	Expira
-fallback (after each pageview)	admin	es	Activar tras fallo (después de ver cada página)
-file space	admin	es	Espacio en el fichero
-file space must be an integer	admin	es	El espacio en el fichero debe ser un entero
-find and register all aplication hooks	admin	es	Encontrar y registrar todos los enlaces a aplicaciones
-find and register all application hooks	admin	es	Encontrar y registrar todos los "hooks" de las aplicaciones
-for the times above	admin	es	durante las veces indicadas arroba
-for the times below (empty values count as '*', all empty = every minute)	admin	es	para las veces indicadas debajo (valores vacíos cuentan como '*', todos vacío = cada minuto)
-force selectbox	admin	es	Forzar Caja de Seleccion
-forum administration	admin	es	Administracion de Foros
-global categories	common	es	Categorias Globales
-global options	admin	es	Opciones Globales
-group ?	admin	es	¿Grupo?
-group has been added	common	es	El grupo ha sido agregado
-group has been deleted	common	es	El grupo ha sido eliminado
-group has been updated	common	es	El grupo ha sido actualizado
-group list	admin	es	Lista de grupos
-group manager	admin	es	Administrador de grupos
-group name	admin	es	Nombre del Grupo
-hide php information	admin	es	Ocultar informacion de PHP
-home directory	admin	es	Directorio principal
-host information	admin	es	Informacion del servidor
-hour<br>(0-23)	admin	es	Hora<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	es	¿Cuántos días deben permanecer las entradas en el registro de acceso, antes de borrarlas? (por defecto, 90)
-how many minutes should an account or ip be blocked (default 30) ?	admin	es	¿Cuántos minutos debe permanecer bloqueada una cuenta o una IP? (por defecto, 30)
-idle	admin	es	inactivo
-if no acl records for user or any group the user is a member of	admin	es	Si no se encuentran registros ACL del usuario y grupo, entonces el usuario es miembro de
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	es	Si se usa LDAP, ¿desea manejar los atributos del directorio de inicio y la cuenta?
-if using ldap, do you want to manage homedirectory and loginshell attributes?  admin	es	es	
-inbound	admin	es	entrantes
-install crontab	admin	es	Instalar crontab
-installed applications	common	es	Aplicaciones instaladas
-installed crontab	admin	es	Crontab instalado
-interface	admin	es	Interfaz
-ip	admin	es	IP
-jobs	admin	es	Trabajos
-kill	admin	es	Matar
-kill session	admin	es	Matar sesión
-last %1 logins	admin	es	Ultimos %1 ingresos
-last %1 logins for %2	admin	es	Ultimos %1 ingresos de %2
-last login	admin	es	Ultimo ingreso
-last login from	admin	es	Ultimo ingreso desde
-last time read	admin	es	Ultima lectura
-ldap accounts context	admin	es	Contexto de las cuentas LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	es	Prefijo del directorio de inicio LDAP por defecto (ejemplo /directorio/usuario)
-ldap default shell (e.g. /bin/bash)	admin	es	Shell LDAP por defecto (ej. /bin/bash)
-ldap encryption type	admin	es	Tipo de cifrado LDAP
-ldap groups context	admin	es	Contexto de grupos LDAP
-ldap host	admin	es	Servidor LDAP
-ldap root password	admin	es	Clave de superusuario LDAP
-ldap rootdn	admin	es	LDAP rootdn
-leave the category untouched and return back to the list	admin	es	dejar la categoría intacta y volver a la lista
-leave the group untouched and return back to the list	admin	es	Dejar el grupo intacto y volver a la lista
-list config settings	admin	es	Lista de las opciones de configuración
-list current sessions	admin	es	Lista de las sesiones actuales
-list of current users	admin	es	Lista de usuarios presentes
-login history	admin	es	Historial de accesos
-login message	admin	es	Mensaje de inicio de sesión
-login screen	admin	es	Pantalla de inicio de sesión
-login shell	admin	es	Shell de inicio de sesión
-login time	admin	es	Hora de Acceso
-loginid	admin	es	LoginID
-main screen message	admin	es	Mensaje de la Pantalla Principal
-manage fields	admin	es	Manejar Campos
-manager	admin	es	Manager
-maximum account id (e.g. 65535 or 1000000)	admin	es	Maximo id de cuenta (ej. 65535 o 1000000)
-maximum entries in click path history	admin	es	Número máximo de entradas en la ruta del historial de pulsar con el ratón
-message has been updated	admin	es	el mensaje ha sido actualizado
-method	admin	es	Método
-minimum account id (e.g. 500 or 100, etc.)	admin	es	Minimo id de cuenta (ej. 500 o 100, etc.)
-minute	admin	es	Minuxto
-mode	admin	es	Modo
-month	admin	es	Mes
-never	admin	es	Nunca
-new group name	admin	es	Nuevo nombre de grupo
-new password [ leave blank for no change ]	admin	es	Nueva contraseña [ Deje es blanco para NO cambiar ]
-news	admin	es	Noticias
-next run	admin	es	Siguiente ejecución
-no algorithms available	admin	es	no hay algoritmos disponibles
-no jobs in the database !!!	admin	es	¡No hay trabajos en la base de datos!
-no login history exists for this user	admin	es	No existen registros de acceso para este usuario
-no matches found	admin	es	No se encontraron resultados
-no modes available	admin	es	no hay modos disponibles
-no permission to add groups	admin	es	no tiene permiso para añadir grupos
-no permission to add users	admin	es	no tiene permiso para añadir usuarios
-no permission to create groups	admin	es	no tiene permiso para crear grupos
-note: ssl available only if php is compiled with curl support	admin	es	Nota: SSL disponible sólo si PHP está compilado con soporte curl
-outbound	admin	es	Notas
-passthough	admin	es	Pasante
-passthrough	admin	es	
-path information	admin	es	Informacion de Rutas
-peer server list	admin	es	Lista de servidores peer
-peer servers	admin	es	Servidores Pares
-percent of users that logged out	admin	es	Porcentaje de usuarios que salieron
-percent this user has logged out	admin	es	Porcentaje que este usuario ha salido
-permissions	admin	es	Permisos
-permissions this group has	admin	es	Permisos que tiene este grupo
-phpinfo	admin	es	Informacion de PHP
-phpsysinfo	admin	es	SysInfo
-please enter a name	admin	es	Por favor ingrese un nombre
-please enter a name for that server !	admin	es	Por favor ingrese un nombre para  ese sevidor!
-please run setup to become current	admin	es	Por favor ejecute Setup para actualizar
-please select	admin	es	Por favor, seleccione
-preferences	admin	es	Preferencias
-primary group	admin	es	grupo principal
-re-enter password	admin	es	Re-Ingresar contraseña
-read this list of methods.	admin	es	Leer esta lista de métodos
-register application hooks	admin	es	Registrar "hooks" de la aplicación
-remove all users from this group	admin	es	Borrar todos los usuarios de este grupo
-remove all users from this group ?	admin	es	¿Borrar todos los usuarios de este grupo?
-return to admin mainscreen	admin	es	volver a la pantalla principal de administración
-return to view account	admin	es	Volver a ver cuenta
-run asynchronous services	admin	es	Ejecutar servicios asíncronos
-save the category	admin	es	guardar la categoría
-save the category and return back to the list	admin	es	guardar la categoría y volver a la lista
-search accounts	admin	es	Buscar cuentas
-search categories	admin	es	Buscar categorías
-search groups	admin	es	Buscar grupos
-search peer servers	admin	es	Buscar servidores "peer"
-security	admin	es	Seguridad
-select group managers	admin	es	Seleccionar administradores de grupo
-select permissions this group will have	admin	es	Selecciones los permisos que tendra este grupo
-select the parent category. if this is a main category select no category	admin	es	Seleccione la categoría superior. Si ésta es una categoría principal seleccione SIN CATEGORIA
-select users for inclusion	admin	es	Seleccionar usuarios para inclusión
-select where you want to store/retrieve filesystem information	admin	es	Seleccione donde desea almacenar informacion del sistema de archivos
-select where you want to store/retrieve user accounts	admin	es	Seleccione donde desea almacenar informacion de las cuentas de usuario
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	es	Seleccione el lugar que desea que la aplicacion ocupe en la barra, de abajo (izquiera) a arriba (derecha)
-selectbox	admin	es	Cuadro de selección
-server %1 has been updated	admin	es	El servidor %1 ha sido actualizado
-server list	admin	es	Listado de servidores
-server name	admin	es	Nombre del servidor
-server password	admin	es	Clave del servidor
-server type(mode)	admin	es	Tipo (modo) del servidor
-server url	admin	es	Dirección URL
-server username	admin	es	Usuario del servidor
-set preference values.	admin	es	Establecer valores para las preferencias
-set preferences value	admin	es	Establecer valores de las preferencias
-show 'powered by' logo on	admin	es	Mostrar logo de 'potenciado por' en
-show access log	admin	es	Mostrar registro de acceso
-show current action	admin	es	Mostrar acción actual
-show error log	admin	es	Mostrar registro de errores
-show phpinfo()	admin	es	Mostrar phpinfo()
-show session ip address	admin	es	Mostar la dirección IP de la sesión
-site	admin	es	Sitios
-site configuration	common	es	Configuracion del Sitio
-site links	admin	es	Enlaces a Sitios
-soap	admin	es	SOAP
-sorry, that group name has already been taken.	admin	es	Este nombre de grupo ya esta siendo utilizado.
-sorry, the above users are still a member of the group %1	admin	es	Lo siento, los usuarios de encima todavía son miembros del grupo %1
-sorry, the follow users are still a member of the group %1	admin	es	Los siguientes usuarios aun son miembros del grupo %1
-sort the entries	admin	es	ordenar las entradas
-ssl	admin	es	ssl
-standard	admin	es	estándar
-start testjob!	admin	es	Iniciar el trabajo de pruebas
-status	admin	es	Estado
-submit changes	admin	es	Enviar cambios
-submit the search string	admin	es	Enviar la cadena de búsqueda
-template selection	admin	es	Selección de plantilla
-text entry	admin	es	Entrada de texto
-that application name already exists.	admin	es	Ese nombre de aplicación ya existe.
-that application name has already been taken	admin	es	Ese nombre de aplicacion ya esta siendo utilizado
-that application order must be a number	admin	es	Ese orden debe ser numerico
-that application order must be a number.	admin	es	El orden de la aplicación debe ser un número.
-that loginid has already been taken	admin	es	Ese nombre de usuario ya está siendo utilizado
-that name has been used already	admin	es	Ese nombre ya ha sido usado
-that server name has been used already !	admin	es	Ese nombre de servidor ya ha sido usado!
-the api is current	admin	es	La API está actualizada
-the api requires an upgrade	admin	es	La API requiere ser actualizada
-the groups must include the primary group	admin	es	Los grupos deben incluir el grupo principal
-the login and password can not be the same	admin	es	El login y la contraseña NO pueden ser iguales
-the loginid can not be more then 8 characters	admin	es	El nombre de usuario no puede ser mayor a 8 caracteres
-the testjob sends you a mail everytime it is called.	admin	es	El trabajo de prueba le envía un correo cada vez que se ejecuta
-the two passwords are not the same	admin	es	Las dos contraseñas no son iguales
-the users bellow are still members of group %1	admin	es	Los usuarios de debajo todavía son miembros del grupo %1
-they must be removed before you can continue	admin	es	Estos deben ser removidos para poder continuar
-this application is current	admin	es	Esta aplicacion esta actualizada
-this application requires an upgrade	admin	es	Esta aplicacion requiere ser actualizada
-this category is currently being used by applications as a parent category	admin	es	Esta categoria esta siendo usada por las aplicaciones como categoria padre.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	es	Tiempo de espera para los datos de la sesión en segundos (por defecto 86400 = 1 día)
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	es	Tiempo de espera para las sesiones en segundos (por defecto 14400 = 4 horas)
-times	admin	es	Veces
-timetrack	admin	es	Seguimiento del Tiempo
-title	admin	es	Titulo
-top	admin	es	Superior
-total records	admin	es	Total de Registros
-trust level	admin	es	Nivel de confianza
-trust relationship	admin	es	Relaciones de confianza
-under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	es	Bajo windows, sólo puede usar el modo de protección contra fallos de momento. Esto quiere decir que los trabajos sólo se comprueban después de que la página ya se ha visto.
-use cookies to pass sessionid	admin	es	Usar cookies para almacenar sesiones
-use pure html compliant code (not fully working yet)	admin	es	Usar codigo HTML puro (no completado)
-use theme	admin	es	Usar tema
-user accounts	admin	es	Cuentas de usuario
-user data	admin	es	Datos del usuario
-user groups	admin	es	Grupos de usuarios
-userdata	admin	es	Datos del Usuario
-users choice	admin	es	A eleccion del Usuario
-view access log	admin	es	Ver registro de acceso
-view account	admin	es	Ver cuenta
-view category	admin	es	Ver categoría
-view error log	admin	es	Ver registro de errores
-view sessions	admin	es	Ver sesiones
-view system informations	admin	es	Ver Informacion del Sistema
-view this user	admin	es	ver este usuario
-view user account	admin	es	ver cuenta de usuario
-who would you like to transfer all records owned by the deleted user to?	admin	es	¿A quién desea transferirle todos los registros del usuario eliminado?
-would you like phpgroupware to cache the phpgw info array ?	admin	es	¿Desea que phpGroupWare almacene en memoria el array phpgw info?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	es	¿Desea que phpGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
-would you like phpgroupware to check for new application versions when admins login ?	admin	es	¿Desea que phpGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	es	¿Desea cargar automáticamente nuevos ficheros de idioma (al iniciar la sesión)?
-would you like to show each application's upgrade status ?	admin	es	Desea mostrar el estado de actualizacion de cada aplicacion?
-xml-rpc	admin	es	XML-RPC
-you have entered an invalid expiration date	admin	es	Ha ingresado una fecha de expiracion invalida
-you must add at least 1 permission or group to this account	admin	es	Debe añadir al menos 1 permiso o grupo para esta cuenta
-you must add at least 1 permission to this account	admin	es	Debe agregar por lo menos 1 permiso para esta cuenta.
-you must enter a group name	admin	es	Debe entrar un grupo de usuario
-you must enter a group name.	admin	es	Debe introducir un nombre de grupo
-you must enter a lastname	admin	es	Debe introducir los apellidos
-you must enter a loginid	admin	es	Debe introducir un nombre de usuario
-you must enter a password	admin	es	Debe entrar una contraseña
-you must enter an application name	admin	es	Debe entrar un nombre para la aplicación.
-you must enter an application name and title.	admin	es	Debe introducir un nombre y título para la aplicación.
-you must enter an application name.	admin	es	Debe introducir un nombre de aplicación
-you must enter an application title	admin	es	Debe entrar un titulo para la aplicación.
-you must enter an application title.	admin	es	Debe introducir un título para la aplicación
-you must select a file type	admin	es	Debe seleccionar un tipo de archivo
-you will need to remove the subcategories before you can delete this category	admin	es	Debera eliminar las subcategorías antes de poder borrar esta categoría
+%1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuario
+%1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
+(stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
+(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	ll
+(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, use<br><a href="setup/" target="setup">Instalación</a> [Administrar aplicaciones] !!!)
+(to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, use<br><a href="setup/" target="setup">Instalación</a> [Administrar aplicaciones] !!!)
+accesslog and bruteforce defense	admin	es-es	Defensa de acceso al registro y fuerza bruta
+account active	admin	es-es	Cuenta activa
+account has been created	common	es-es	La cuenta ha sido creada
+account has been deleted	common	es-es	La cuenta ha sido eliminada
+account has been updated	common	es-es	La cuenta ha sido actualizada
+account list	admin	es-es	Lista de cuentas
+account permissions	admin	es-es	Permisos de la cuenta
+account preferences	admin	es-es	Preferencias de la cuenta
+acl manager	admin	es-es	Manejo de LCA
+acl rights	admin	es-es	Permisos de LCA
+action	admin	es-es	Acción
+active	admin	es-es	Activo
+add a category	admin	es-es	Añadir una categoría
+add a group	admin	es-es	Añadir un grupo
+add a new account.	admin	es-es	Añadir una nueva cuenta.
+add a subcategory	admin	es-es	Añadir una subcategoría
+add a user	admin	es-es	Añadir un usuario
+add account	admin	es-es	Añadir una cuenta
+add application	admin	es-es	Añadir aplicación
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	es-es	Añadir usuarios creados automaticamente al siguiente grupo (se usara 'Default' si no especifica ninguno.)
+add global category	admin	es-es	Añadir categoría global
+add global category for %1	admin	es-es	Añadir categoría global para %1
+add group	admin	es-es	Añadir grupo
+add new account	admin	es-es	Añadir una nueva cuenta
+add new application	admin	es-es	Añadir nueva aplicación
+add peer server	admin	es-es	Añadir Servidor Par
+add sub-category	admin	es-es	Añadir subcategoría
+admin email	admin	es-es	Administrador E-mail
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	es-es	Direcciones de correo del administrador (separadas por comas) para notificar los bloqueos (en blanco para no notificar)
+admin name	admin	es-es	Nombre del Administrador
+admin options	admin	es-es	Opciones de Administración
+administration	admin	es-es	Administración
+admins	admin	es-es	Administradores
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conectar debe bloquearse una cuenta? (predeterminado, 3)
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conectar debe bloquearse una IP? (predeterminado, 3)
+all records and account information will be lost!	admin	es-es	¡Se perderán todos los registros e información de las cuentas!
+all users	admin	es-es	Todos los usuarios
+allow anonymous access to this app	admin	es-es	Permitir acceso anónimo a esta aplicación
+anonymous user	admin	es-es	Usuario anónimo
+anonymous user (not shown in list sessions)	admin	es-es	Usuario anónimo (no se muestra en las listas de sesiones)
+appearance	admin	es-es	Aspecto
+application	admin	es-es	Aplicación
+application name	admin	es-es	Nombre de la aplicación
+application title	admin	es-es	Titulo de la aplicación
+applications	admin	es-es	Aplicaciones
+applications list	admin	es-es	Lista de aplicaciones
+apply	admin	es-es	aplicar
+are you sure you want to delete the application %1 ?	admin	es-es	¿Está seguro de que quiere borrar la aplicación?
+are you sure you want to delete this account ?	admin	es-es	¿Está seguro de querer borrar esta cuenta?
+are you sure you want to delete this application ?	admin	es-es	¿Está seguro de querer borrar esta aplicación?
+are you sure you want to delete this category ?	common	es-es	¿Está seguro de querer borrar esta categoria?
+are you sure you want to delete this global category ?	admin	es-es	¿Está seguro de que quiere borrar la categoría global?
+are you sure you want to delete this group ?	admin	es-es	¿Está seguro de querer borrar este grupo?
+are you sure you want to delete this server ?	admin	es-es	¿ Está seguro de querer borrar este servidor ?
+are you sure you want to delete this server?	admin	es-es	¿Está seguro de que quiere borrar este servidor?
+are you sure you want to kill this session ?	admin	es-es	¿Está seguro de querer matar esta sesión?
+async services last executed	admin	es-es	Últimos servicios asíncronos ejecutados
+asynchronous timed services	admin	es-es	Servicios asíncronos programados
+asyncservices not yet installed or other error (%1) !!!	admin	es-es	Servicios asíncronos que todavía no están instalados u otro error (%1)
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	es-es	Intentar usar el tipo MIME correcto para FTP en vez de 'application/octet-stream'
+authentication / accounts	admin	es-es	Identificación / Cuentas
+auto create account records for authenticated users	admin	es-es	Crear cuentas automáticamente para usuarios autenticados
+back to the list	admin	es-es	volver a la lista
+bi-dir passthrough	admin	es-es	bidireccional pasante
+bi-directional	admin	es-es	bidireccional
+bookeeping admins	admin	es-es	Administradores de Contabilidad
+bottom	admin	es-es	Debajo
+calculate next run	admin	es-es	Calcular la siguiente ejecución
+can change password	admin	es-es	Puede cambiar la contraseña
+cancel testjob!	admin	es-es	Cancelar trabajo de pruebas
+categories list	admin	es-es	Lista de categorías
+category %1 has been saved !	admin	es-es	La categoría %1 ha sido guardada
+category list	admin	es-es	Lista de categorías
+change acl rights	admin	es-es	cambiar permisos de ACL
+change config settings	admin	es-es	Cambiar opciones de configuración
+change main screen message	admin	es-es	Cambiar mensaje de la pantalla principal
+check ip address of all sesions	admin	es-es	Verificar la direccion IP de todas las sesiones
+check ip address of all sessions	admin	es-es	Comprobar la ip de todas las sesiones
+check items to <b>%1</b> to %2 for %3	admin	es-es	Comprobar elementos a <b>%1</b> a %2 para %3
+configuration	admin	es-es	Configuración
+country selection	admin	es-es	Seleccionar país
+create group	admin	es-es	Crear grupo
+crontab only (recomended)	admin	es-es	Sólo mediante crontab (recomendado)
+data	admin	es-es	Datos
+day	admin	es-es	Día
+day of week<br>(0-6, 0=sun)	admin	es-es	Día de la semana<br>(0-6, 0=Dom)
+default	admin	es-es	Predeterminado
+default file system space per user	admin	es-es	Espacio por defecto en el sistema de archivos por usuario
+default file system space per user/group ?	admin	es-es	Espacio por defecto en el sistema de archivos por usuario/grupo
+deinstall crontab	admin	es-es	Desinstalar crontab
+delete account	admin	es-es	Borrar cuenta
+delete all records	admin	es-es	Borrar todos los registros
+delete application	admin	es-es	Borrar aplicación
+delete category	admin	es-es	Borrar categoría
+delete group	admin	es-es	Borrar grupo
+delete peer server	admin	es-es	Borrar servidor peer
+delete the category	admin	es-es	borrar la categoría
+delete the group	admin	es-es	borrar el grupo
+delete this category	admin	es-es	borrar esta categoría
+delete this group	admin	es-es	borrar este grupo
+delete this user	admin	es-es	borrar este usuario
+deny access to access log	admin	es-es	Denegar acceso al registro de accesos
+deny access to application registery	admin	es-es	Denegar acceso al registro de aplicaciones
+deny access to applications	admin	es-es	Denegar acceso a aplicaciones
+deny access to asynchronous timed services	admin	es-es	Denegar acceso a los servicios asíncronos programados
+deny access to current sessions	admin	es-es	Denegar acceso a las sesiones actuales
+deny access to error log	admin	es-es	Denegar acceso al registro de errores
+deny access to global categories	admin	es-es	Denegar acceso a las categorias globales
+deny access to groups	admin	es-es	Denegar acceso a grupos
+deny access to mainscreen message	admin	es-es	Denegar acceso al mensaje de la pantalla principal
+deny access to peer servers	admin	es-es	Denegar acceso a servidores pares
+deny access to phpinfo	admin	es-es	Denegar acceso a phpinfo
+deny access to site configuration	admin	es-es	Denegar acceso a la configuración del sitio
+deny access to user accounts	admin	es-es	Denegar acceso a las cuentas de usuario
+deny all users access to grant other users access to their entries ?	admin	es-es	¿Prohibir a los usuarios ceder acceso a otros usuarios para sus registros?
+description can not exceed 255 characters in length !	admin	es-es	¡La descripción no puede exceder de 255 caracteres!
+disable "auto completion" of the login form	admin	es-es	Desactivar completado automático en el formulario de inicio de sesión
+disabled	admin	es-es	Deshabilitado
+disabled (not recomended)	admin	es-es	desactivado (no se recomienda)
+display	admin	es-es	Mostrar
+do not delete the category and return back to the list	admin	es-es	NO borrar la categoría y volver a la lista
+do you also want to delete all global subcategories ?	admin	es-es	¿ Desea tambien eliminar todas las subcategorias globales?
+do you want to delete all global subcategories ?	admin	es-es	¿Desea borrar todas las subcategorías globales?
+do you want to move all global subcategories one level down ?	admin	es-es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
+edit account	admin	es-es	Editar cuenta
+edit application	admin	es-es	Editar aplicación
+edit cvs repository list	admin	es-es	Editar Lista de Sitios CVS
+edit global category	admin	es-es	Editar categoria global
+edit global category for %1	admin	es-es	Editar categoría global para %1
+edit group	admin	es-es	Editar Grupo
+edit job status id table	admin	es-es	Editar Tabla de ID de Estados de Trabajos
+edit location table	admin	es-es	Editar Tabla de Ubicaciones
+edit login screen message	admin	es-es	Editar mensaje de la pantalla de ingreso
+edit main screen message	admin	es-es	Editar mensaje de la pantalla principal
+edit peer server	admin	es-es	Editar servidores pares
+edit table format	admin	es-es	Editar formato de tabla
+edit this category	admin	es-es	editar esta categoría
+edit this group	admin	es-es	editar este grupo
+edit this user	admin	es-es	editar este usuario
+edit user	admin	es-es	editar usuario
+edit user account	admin	es-es	Editar cuenta del usuario
+edit work catagory table	admin	es-es	Editar Tabla de Categorias de Trabajos
+enable debug-messages	admin	es-es	Activar mensajes de depuración
+enabled	admin	es-es	Habilitado
+enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la Barra
+enter a description for the category	admin	es-es	introduzca una descripción para esta categoría
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	es-es	Introduzca texto aleatorio para la encriptación <br> de la sesion (requiere mcrypt)
+enter the background color for the login page	admin	es-es	Introduzca el color de fondo para la página de inicio de sesión
+enter the background color for the site title	admin	es-es	Introduzca el color de fondo para el título del sitio
+enter the file name of your logo	admin	es-es	Introduzca el nombre del fichero del logo
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta complets para los archivos temporales.<br> Ejemplos: /files , E:FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:FILES
+enter the hostname of the machine on which this server is running	admin	es-es	Introduzca el nombre completo de la máquina sobre la cual corre este servidor
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la dirección URL de phpGroupWare.<br>Ejemplo: http://www.dominio.com/phpgroupware o /phpgroupware.<br><b>Sin barra al final</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	es-es	Introduzca la cadena de búsqueda. Para mostrar todas las entradas, vacíe este campo y pulse el botón ENVIAR otra vez.
+enter the site password for peer servers	admin	es-es	Introduzca la clave del sitio para servidores pares
+enter the site username for peer servers	admin	es-es	Introduzca el usuario del sitio para servidores pares
+enter the title for your site	admin	es-es	Introduzca el titulo para su sitio
+enter the title of your logo	admin	es-es	Introduzca el título del logo
+enter the url where your logo should link to	admin	es-es	Introduzca la url a donde apunte el logo
+enter your default ftp server	admin	es-es	Introduzca su servidor FTP por defecto
+enter your http proxy server	admin	es-es	Introduzca su servidor proxy HTTP
+enter your http proxy server port	admin	es-es	Introduzca el puerto de su servidor proxy HTTP
+error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	es-es	Error al configurar el temporizador. La sintaxis es incorrecta o puede que haya uno que ya se esté ejecutándo.
+error: %1 not found or other error !!!	admin	es-es	Error: no se encontró %1 u otro error
+expires	admin	es-es	Expira
+fallback (after each pageview)	admin	es-es	Activar tras fallo (después de ver cada página)
+file space	admin	es-es	Espacio en el fichero
+file space must be an integer	admin	es-es	El espacio en el fichero debe ser un entero
+find and register all aplication hooks	admin	es-es	Encontrar y registrar todos los enlaces a aplicaciones
+find and register all application hooks	admin	es-es	Encontrar y registrar todos los "hooks" de las aplicaciones
+for the times above	admin	es-es	durante las veces indicadas arroba
+for the times below (empty values count as '*', all empty = every minute)	admin	es-es	para las veces indicadas debajo (valores vacíos cuentan como '*', todos vacío = cada minuto)
+force selectbox	admin	es-es	Forzar Caja de Seleccion
+forum administration	admin	es-es	Administracion de Foros
+global categories	common	es-es	Categorias Globales
+global options	admin	es-es	Opciones Globales
+group ?	admin	es-es	¿Grupo?
+group has been added	common	es-es	El grupo ha sido agregado
+group has been deleted	common	es-es	El grupo ha sido eliminado
+group has been updated	common	es-es	El grupo ha sido actualizado
+group list	admin	es-es	Lista de grupos
+group manager	admin	es-es	Administrador de grupos
+group name	admin	es-es	Nombre del Grupo
+hide php information	admin	es-es	Ocultar informacion de PHP
+home directory	admin	es-es	Directorio principal
+host information	admin	es-es	Informacion del servidor
+hour<br>(0-23)	admin	es-es	Hora<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	es-es	¿Cuántos días deben permanecer las entradas en el registro de acceso, antes de borrarlas? (por defecto, 90)
+how many minutes should an account or ip be blocked (default 30) ?	admin	es-es	¿Cuántos minutos debe permanecer bloqueada una cuenta o una IP? (por defecto, 30)
+idle	admin	es-es	inactivo
+if no acl records for user or any group the user is a member of	admin	es-es	Si no se encuentran registros ACL del usuario y grupo, entonces el usuario es miembro de
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	es-es	Si se usa LDAP, ¿desea manejar los atributos del directorio de inicio y la cuenta?
+if using ldap, do you want to manage homedirectory and loginshell attributes?  admin	es	es-es	
+inbound	admin	es-es	entrantes
+install crontab	admin	es-es	Instalar crontab
+installed applications	common	es-es	Aplicaciones instaladas
+installed crontab	admin	es-es	Crontab instalado
+interface	admin	es-es	Interfaz
+ip	admin	es-es	IP
+jobs	admin	es-es	Trabajos
+kill	admin	es-es	Matar
+kill session	admin	es-es	Matar sesión
+last %1 logins	admin	es-es	Ultimos %1 ingresos
+last %1 logins for %2	admin	es-es	Ultimos %1 ingresos de %2
+last login	admin	es-es	Ultimo ingreso
+last login from	admin	es-es	Ultimo ingreso desde
+last time read	admin	es-es	Ultima lectura
+ldap accounts context	admin	es-es	Contexto de las cuentas LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	es-es	Prefijo del directorio de inicio LDAP por defecto (ejemplo /directorio/usuario)
+ldap default shell (e.g. /bin/bash)	admin	es-es	Shell LDAP por defecto (ej. /bin/bash)
+ldap encryption type	admin	es-es	Tipo de cifrado LDAP
+ldap groups context	admin	es-es	Contexto de grupos LDAP
+ldap host	admin	es-es	Servidor LDAP
+ldap root password	admin	es-es	Clave de superusuario LDAP
+ldap rootdn	admin	es-es	LDAP rootdn
+leave the category untouched and return back to the list	admin	es-es	dejar la categoría intacta y volver a la lista
+leave the group untouched and return back to the list	admin	es-es	Dejar el grupo intacto y volver a la lista
+list config settings	admin	es-es	Lista de las opciones de configuración
+list current sessions	admin	es-es	Lista de las sesiones actuales
+list of current users	admin	es-es	Lista de usuarios presentes
+login history	admin	es-es	Historial de accesos
+login message	admin	es-es	Mensaje de inicio de sesión
+login screen	admin	es-es	Pantalla de inicio de sesión
+login shell	admin	es-es	Shell de inicio de sesión
+login time	admin	es-es	Hora de Acceso
+loginid	admin	es-es	LoginID
+main screen message	admin	es-es	Mensaje de la Pantalla Principal
+manage fields	admin	es-es	Manejar Campos
+manager	admin	es-es	Manager
+maximum account id (e.g. 65535 or 1000000)	admin	es-es	Maximo id de cuenta (ej. 65535 o 1000000)
+maximum entries in click path history	admin	es-es	Número máximo de entradas en la ruta del historial de pulsar con el ratón
+message has been updated	admin	es-es	el mensaje ha sido actualizado
+method	admin	es-es	Método
+minimum account id (e.g. 500 or 100, etc.)	admin	es-es	Minimo id de cuenta (ej. 500 o 100, etc.)
+minute	admin	es-es	Minuxto
+mode	admin	es-es	Modo
+month	admin	es-es	Mes
+never	admin	es-es	Nunca
+new group name	admin	es-es	Nuevo nombre de grupo
+new password [ leave blank for no change ]	admin	es-es	Nueva contraseña [ Deje es blanco para NO cambiar ]
+news	admin	es-es	Noticias
+next run	admin	es-es	Siguiente ejecución
+no algorithms available	admin	es-es	no hay algoritmos disponibles
+no jobs in the database !!!	admin	es-es	¡No hay trabajos en la base de datos!
+no login history exists for this user	admin	es-es	No existen registros de acceso para este usuario
+no matches found	admin	es-es	No se encontraron resultados
+no modes available	admin	es-es	no hay modos disponibles
+no permission to add groups	admin	es-es	no tiene permiso para añadir grupos
+no permission to add users	admin	es-es	no tiene permiso para añadir usuarios
+no permission to create groups	admin	es-es	no tiene permiso para crear grupos
+note: ssl available only if php is compiled with curl support	admin	es-es	Nota: SSL disponible sólo si PHP está compilado con soporte curl
+outbound	admin	es-es	Notas
+passthough	admin	es-es	Pasante
+passthrough	admin	es-es	
+path information	admin	es-es	Informacion de Rutas
+peer server list	admin	es-es	Lista de servidores peer
+peer servers	admin	es-es	Servidores Pares
+percent of users that logged out	admin	es-es	Porcentaje de usuarios que salieron
+percent this user has logged out	admin	es-es	Porcentaje que este usuario ha salido
+permissions	admin	es-es	Permisos
+permissions this group has	admin	es-es	Permisos que tiene este grupo
+phpinfo	admin	es-es	Informacion de PHP
+phpsysinfo	admin	es-es	SysInfo
+please enter a name	admin	es-es	Por favor ingrese un nombre
+please enter a name for that server !	admin	es-es	Por favor ingrese un nombre para  ese sevidor!
+please run setup to become current	admin	es-es	Por favor ejecute Setup para actualizar
+please select	admin	es-es	Por favor, seleccione
+preferences	admin	es-es	Preferencias
+primary group	admin	es-es	grupo principal
+re-enter password	admin	es-es	Re-Ingresar contraseña
+read this list of methods.	admin	es-es	Leer esta lista de métodos
+register application hooks	admin	es-es	Registrar "hooks" de la aplicación
+remove all users from this group	admin	es-es	Borrar todos los usuarios de este grupo
+remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de este grupo?
+return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
+return to view account	admin	es-es	Volver a ver cuenta
+run asynchronous services	admin	es-es	Ejecutar servicios asíncronos
+save the category	admin	es-es	guardar la categoría
+save the category and return back to the list	admin	es-es	guardar la categoría y volver a la lista
+search accounts	admin	es-es	Buscar cuentas
+search categories	admin	es-es	Buscar categorías
+search groups	admin	es-es	Buscar grupos
+search peer servers	admin	es-es	Buscar servidores "peer"
+security	admin	es-es	Seguridad
+select group managers	admin	es-es	Seleccionar administradores de grupo
+select permissions this group will have	admin	es-es	Selecciones los permisos que tendra este grupo
+select the parent category. if this is a main category select no category	admin	es-es	Seleccione la categoría superior. Si ésta es una categoría principal seleccione SIN CATEGORIA
+select users for inclusion	admin	es-es	Seleccionar usuarios para inclusión
+select where you want to store/retrieve filesystem information	admin	es-es	Seleccione donde desea almacenar informacion del sistema de archivos
+select where you want to store/retrieve user accounts	admin	es-es	Seleccione donde desea almacenar informacion de las cuentas de usuario
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	es-es	Seleccione el lugar que desea que la aplicacion ocupe en la barra, de abajo (izquiera) a arriba (derecha)
+selectbox	admin	es-es	Cuadro de selección
+server %1 has been updated	admin	es-es	El servidor %1 ha sido actualizado
+server list	admin	es-es	Listado de servidores
+server name	admin	es-es	Nombre del servidor
+server password	admin	es-es	Clave del servidor
+server type(mode)	admin	es-es	Tipo (modo) del servidor
+server url	admin	es-es	Dirección URL
+server username	admin	es-es	Usuario del servidor
+set preference values.	admin	es-es	Establecer valores para las preferencias
+set preferences value	admin	es-es	Establecer valores de las preferencias
+show 'powered by' logo on	admin	es-es	Mostrar logo de 'potenciado por' en
+show access log	admin	es-es	Mostrar registro de acceso
+show current action	admin	es-es	Mostrar acción actual
+show error log	admin	es-es	Mostrar registro de errores
+show phpinfo()	admin	es-es	Mostrar phpinfo()
+show session ip address	admin	es-es	Mostar la dirección IP de la sesión
+site	admin	es-es	Sitios
+site configuration	common	es-es	Configuracion del Sitio
+site links	admin	es-es	Enlaces a Sitios
+soap	admin	es-es	SOAP
+sorry, that group name has already been taken.	admin	es-es	Este nombre de grupo ya esta siendo utilizado.
+sorry, the above users are still a member of the group %1	admin	es-es	Lo siento, los usuarios de encima todavía son miembros del grupo %1
+sorry, the follow users are still a member of the group %1	admin	es-es	Los siguientes usuarios aun son miembros del grupo %1
+sort the entries	admin	es-es	ordenar las entradas
+ssl	admin	es-es	ssl
+standard	admin	es-es	estándar
+start testjob!	admin	es-es	Iniciar el trabajo de pruebas
+status	admin	es-es	Estado
+submit changes	admin	es-es	Enviar cambios
+submit the search string	admin	es-es	Enviar la cadena de búsqueda
+template selection	admin	es-es	Selección de plantilla
+text entry	admin	es-es	Entrada de texto
+that application name already exists.	admin	es-es	Ese nombre de aplicación ya existe.
+that application name has already been taken	admin	es-es	Ese nombre de aplicacion ya esta siendo utilizado
+that application order must be a number	admin	es-es	Ese orden debe ser numerico
+that application order must be a number.	admin	es-es	El orden de la aplicación debe ser un número.
+that loginid has already been taken	admin	es-es	Ese nombre de usuario ya está siendo utilizado
+that name has been used already	admin	es-es	Ese nombre ya ha sido usado
+that server name has been used already !	admin	es-es	Ese nombre de servidor ya ha sido usado!
+the api is current	admin	es-es	La API está actualizada
+the api requires an upgrade	admin	es-es	La API requiere ser actualizada
+the groups must include the primary group	admin	es-es	Los grupos deben incluir el grupo principal
+the login and password can not be the same	admin	es-es	El login y la contraseña NO pueden ser iguales
+the loginid can not be more then 8 characters	admin	es-es	El nombre de usuario no puede ser mayor a 8 caracteres
+the testjob sends you a mail everytime it is called.	admin	es-es	El trabajo de prueba le envía un correo cada vez que se ejecuta
+the two passwords are not the same	admin	es-es	Las dos contraseñas no son iguales
+the users bellow are still members of group %1	admin	es-es	Los usuarios de debajo todavía son miembros del grupo %1
+they must be removed before you can continue	admin	es-es	Estos deben ser removidos para poder continuar
+this application is current	admin	es-es	Esta aplicacion esta actualizada
+this application requires an upgrade	admin	es-es	Esta aplicacion requiere ser actualizada
+this category is currently being used by applications as a parent category	admin	es-es	Esta categoria esta siendo usada por las aplicaciones como categoria padre.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	es-es	Tiempo de espera para los datos de la sesión en segundos (por defecto 86400 = 1 día)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	es-es	Tiempo de espera para las sesiones en segundos (por defecto 14400 = 4 horas)
+times	admin	es-es	Veces
+timetrack	admin	es-es	Seguimiento del Tiempo
+title	admin	es-es	Titulo
+top	admin	es-es	Superior
+total records	admin	es-es	Total de Registros
+trust level	admin	es-es	Nivel de confianza
+trust relationship	admin	es-es	Relaciones de confianza
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	es-es	Bajo windows, sólo puede usar el modo de protección contra fallos de momento. Esto quiere decir que los trabajos sólo se comprueban después de que la página ya se ha visto.
+use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
+use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (no completado)
+use theme	admin	es-es	Usar tema
+user accounts	admin	es-es	Cuentas de usuario
+user data	admin	es-es	Datos del usuario
+user groups	admin	es-es	Grupos de usuarios
+userdata	admin	es-es	Datos del Usuario
+users choice	admin	es-es	A eleccion del Usuario
+view access log	admin	es-es	Ver registro de acceso
+view account	admin	es-es	Ver cuenta
+view category	admin	es-es	Ver categoría
+view error log	admin	es-es	Ver registro de errores
+view sessions	admin	es-es	Ver sesiones
+view system informations	admin	es-es	Ver Informacion del Sistema
+view this user	admin	es-es	ver este usuario
+view user account	admin	es-es	ver cuenta de usuario
+who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
+would you like phpgroupware to cache the phpgw info array ?	admin	es-es	¿Desea que phpGroupWare almacene en memoria el array phpgw info?
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que phpGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
+would you like phpgroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que phpGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	es-es	¿Desea cargar automáticamente nuevos ficheros de idioma (al iniciar la sesión)?
+would you like to show each application's upgrade status ?	admin	es-es	Desea mostrar el estado de actualizacion de cada aplicacion?
+xml-rpc	admin	es-es	XML-RPC
+you have entered an invalid expiration date	admin	es-es	Ha ingresado una fecha de expiracion invalida
+you must add at least 1 permission or group to this account	admin	es-es	Debe añadir al menos 1 permiso o grupo para esta cuenta
+you must add at least 1 permission to this account	admin	es-es	Debe agregar por lo menos 1 permiso para esta cuenta.
+you must enter a group name	admin	es-es	Debe entrar un grupo de usuario
+you must enter a group name.	admin	es-es	Debe introducir un nombre de grupo
+you must enter a lastname	admin	es-es	Debe introducir los apellidos
+you must enter a loginid	admin	es-es	Debe introducir un nombre de usuario
+you must enter a password	admin	es-es	Debe entrar una contraseña
+you must enter an application name	admin	es-es	Debe entrar un nombre para la aplicación.
+you must enter an application name and title.	admin	es-es	Debe introducir un nombre y título para la aplicación.
+you must enter an application name.	admin	es-es	Debe introducir un nombre de aplicación
+you must enter an application title	admin	es-es	Debe entrar un titulo para la aplicación.
+you must enter an application title.	admin	es-es	Debe introducir un título para la aplicación
+you must select a file type	admin	es-es	Debe seleccionar un tipo de archivo
+you will need to remove the subcategories before you can delete this category	admin	es-es	Debera eliminar las subcategorías antes de poder borrar esta categoría
