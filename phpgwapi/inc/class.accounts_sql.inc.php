@@ -75,10 +75,9 @@
 		{
 			$this->db->query("UPDATE phpgw_accounts SET account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "', account_expires='" . $this->data['expires']
-				. ($this->data['account_lid']?"', account_lid='".$this->data['account_lid']:'')
-				. "' WHERE account_id='"
-				. $this->account_id . "'",__LINE__,__FILE__);
+				. $this->data['status'] . "', account_expires=" . $this->data['expires']
+				. ($this->data['account_lid']?", account_lid='".$this->data['account_lid']."'":'')
+				. " WHERE account_id='".$this->account_id . "'",__LINE__,__FILE__);
 		}
 
 		function delete($accountid = '')
@@ -290,7 +289,7 @@
 				. $account_info['account_lid'] . "','" . $account_info['account_type'] . "','"
 				. md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
 				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status']
-				. "','" . $account_info['account_expires'] . "')",__LINE__,__FILE__);
+				. "'," . $account_info['account_expires'] . ")",__LINE__,__FILE__);
 
 			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
 			if($accountid && is_object($GLOBALS['phpgw']->preferences))
