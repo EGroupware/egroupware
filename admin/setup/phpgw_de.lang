@@ -1,6 +1,7 @@
 account active	admin	de	Konto aktiv
 account permissions	admin	de	Zugriffsrechte
 action	admin	de	Aktion
+add global category	admin	de	Globale Kategorie hinzuf&uuml;gen
 add new account	admin	de	Neues Konto hinzufügen
 add new application	admin	de	Neue Anwendung hinzufügen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
@@ -19,6 +20,7 @@ disabled	admin	de	Deaktiviert
 display	admin	de	Bezeichnung
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
 edit application	admin	de	Anwendung editieren
+edit global category	admin	de	Globale Kategorie editieren
 edit group	admin	de	Gruppe editieren
 edit user account	admin	de	Benutzerkonto editieren
 enabled	admin	de	Verfügbar
@@ -53,6 +55,7 @@ select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte f
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 site	admin	de	Site
+site configuration	admin	de	Konfiguration der Anwendung
 sorry, that group name has already been taking.	admin	de	Dieser Gruppenname ist bereits vergeben.
 sorry, the follow users are still a member of the group x	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
 submit changes	admin	de	Änderungen Speichern

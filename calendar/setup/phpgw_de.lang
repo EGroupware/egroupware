@@ -7,6 +7,7 @@ calendar	common	de	Kalender
 calendar preferences	common	de	Kalender Einstellungen
 calendar - add	calendar	de	Kalendereintrag hinzufügen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
+calendar holiday management	admin	Kalender Ferien-Verwaltung
 daily	calendar	de	Täglich
 daily matrix view	calendar	de	Matrix-Ansicht des Tages
 days repeated	calendar	de	wiederholte Tage

@@ -15,7 +15,6 @@ are you sure you want to delete this application ?	admin	en	Are you sure you wan
 are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
 change main screen message	admin	en	Change main screen message
-city	admin	en	City
 create group	admin	en	Create Group
 disabled	admin	en	Disabled
 display	admin	en	Display
@@ -49,8 +48,6 @@ login shell	admin	en	Login shell
 login time	admin	en	Login Time
 main screen message	admin	en	Main screen message
 manager	admin	en	Manager
-metar	admin	en	Metar
-minutes between reloads	admin	en	Minutes between Reloads
 new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 no matchs found	admin	en	No matchs found
@@ -66,6 +63,7 @@ select permissions this group will have	admin	en	Select permissions this group w
 select users for inclusion	admin	en	Select users for inclusion
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right)
 site	admin	en	Site
+site configuration	admin	en	Site configuration
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
 station	admin	en	Station
