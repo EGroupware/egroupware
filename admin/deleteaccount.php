@@ -38,7 +38,7 @@
 		$account_id = rawurlencode($account_id);
 		
 		// Find out who the new owner is of the deleted users records...
-		$str = '<select name="new_owner" size="5">'."\n";;
+		$str = '<select name="new_owner" size="5">'."\n";
 		$users = $phpgw->accounts->get_list('accounts');
 		$c_users = count($users);
 		$str .= '<option value="0">Delete All Records</option>'."\n";
@@ -77,9 +77,7 @@
 		$phpgw->common->hook_single('deleteaccount','preferences');
 		$phpgw->common->hook_single('deleteaccount','admin');
 		
-		$sep = $phpgw->common->filesystem_separator();
-
-		$basedir = $phpgw_info['server']['files_dir'] . $sep . 'users' . $sep;
+		$basedir = $phpgw_info['server']['files_dir'] . SEP . 'users' . SEP;
 
 		if (! @rmdir($basedir . $lid))
 		{
@@ -91,5 +89,6 @@
 		}
 
 		Header("Location: " . $phpgw->link("/admin/accounts.php","cd=$cd"));
+		$phpgw->common->phpgw_exit();
 	}
 ?>
