@@ -35,7 +35,8 @@
 																// size: -1=Single+not assigned, 0=Single, >0=Multiple
 			'select-year'     => 'Select Year',
 			'select-month'    => 'Select Month',
-			'select-day'      => 'Select Day'
+			'select-day'      => 'Select Day',
+			'select-app'      => 'Select Application'
 		);
 		var $monthnames = array(
 			0  => '',
@@ -473,6 +474,40 @@
 						$cell['sel_options'][$d] = $d;
 					}
 					$cell['no_lang'] = True;
+					break;
+					
+				case 'select-app':	// type2: ''=users enabled apps, 'installed', 'all' = not installed ones too
+					$apps = array();
+					foreach ($GLOBALS['phpgw_info']['apps'] as $app => $data)
+					{
+						if (!$type2 || $GLOBALS['phpgw_info']['user']['apps'][$app])
+						{
+							$apps[$app] = $data['title'] ? $data['title'] : lang($app);
+						}
+					}
+					if ($type2 == 'all')
+					{
+						$dir = opendir(PHPGW_SERVER_ROOT);
+						while ($file = readdir($dir))
+						{
+							if (@is_dir(PHPGW_SERVER_ROOT."/$file/setup") && $file[0] != '.' &&
+							    !isset($apps[$app = basename($file)]))
+							{
+								$apps[$app] = $app . ' (*)';
+							}
+						}
+						closedir($dir);
+					}
+					$apps_lower = $apps;	// case-in-sensitve sort
+					foreach ($apps_lower as $app => $title)
+					{
+						$apps_lower[$app] = strtolower($title);
+					}
+					asort($apps_lower);
+					foreach ($apps_lower as $app => $title)
+					{
+						$cell['sel_options'][$app] = $apps[$app];
+					}
 					break;
 			}
 			if ($rows > 1)

@@ -30,7 +30,6 @@
 		var $table;		// used table
 		var $messages = array(
 			'not_found' => 'Not found !!!',
-			'select_one' => 'Select one ...',
 			'writen' => 'File writen',
 			'error_writing' => 'Error: writing file (no write-permission for the webserver) !!!',
 			'no_write_necessary' => 'Table unchanged, no write necessary !!!',
@@ -80,12 +79,6 @@
 			if (!is_array($GLOBALS['phpgw_info']['apps']) || !count($GLOBALS['phpgw_info']['apps']))
 			{
 				ExecMethod('phpgwapi.applications.read_installed_apps');
-			}
-			$this->apps = array();
-			reset($GLOBALS['phpgw_info']['apps']);
-			while (list($name,$data) = each($GLOBALS['phpgw_info']['apps']))
-			{
-				$this->apps[$name] = $data['title'];
 			}
 			if ($lang_on_messages)
 			{
@@ -227,8 +220,7 @@
 			}
 			$sel_options = array(
 				'table_name' => $table_names,
-				'type' => $this->types,
-				'app' => array('' => $this->messages['select_one']) + $this->apps
+				'type' => $this->types
 			);
 			if ($this->table != '' && isset($this->data[$this->table]))
 			{

@@ -176,8 +176,10 @@ select account	etemplate	en	Select Account
 select an app first !!!	etemplate	en	Select an app first !!!
 select an app to search in	etemplate	en	Select an App to search in
 select an application	etemplate	en	Select an application
+select an application, (*) = uninstalled	etemplate	en	Select an application, (*) = uninstalled
 select an entry to link with	etemplate	en	Select an entry to link with
 select an table of the application	etemplate	en	Select an table of the application
+select application	etemplate	en	Select Application
 select category	etemplate	en	Select Category
 select country	etemplate	en	Select Country
 select day	etemplate	en	Select Day

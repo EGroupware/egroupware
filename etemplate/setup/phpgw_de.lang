@@ -71,6 +71,7 @@ embeded css styles, eg. '.red { background: red; }' (note the '.' before the cla
 enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	etemplate	de	Suchmuster eingeben
+enter filename to upload and attach, use [browse...	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
 enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
 enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
@@ -98,6 +99,7 @@ go to the next page of entries	etemplate	de	gehe zur nächsten Seite
 go to the previous page of entries	etemplate	de	gehe zur vorherigen Seite
 hbox	etemplate	de	HBox
 height	etemplate	de	Höhe
+height of row (in % or pixel), disable row: [! = not	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Höhe der Tabelle in % oder Punkten
 height, disabled	etemplate	de	Höhe, Deaktiviert
@@ -119,6 +121,7 @@ insert new row in front of first line	etemplate	de	Neue Zeile vor dieser einfüge
 integer	etemplate	de	Ganzzahl
 key	etemplate	de	Schlüssel
 label	etemplate	de	Beschriftung
+label:[bold	Array	de	Array
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	de	Beschriftung:[bold][italic] Text:[len][,max] Zahlen:[min][,[max][,len]] mehrz.Text:[Zeilen][,Spalten] Radiok.:Wert Templ.:[IndexInContent] Auswahl:[mehrzeilig] Datum:[Format: zB. 'Y-m-d']
 lang	etemplate	de	Sprache
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhänige Template ('' ließt die bevorzugte Sprache, benutze 'default' für das standard Template '')
@@ -133,13 +136,13 @@ name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des phpGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
 name of table to add	etemplate	de	Name der zuzufügenden Tabelle
+name of the etemplate, should be in form application.function[.subtemplate	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf ein reserviertes Wort von SQL sein, am besten alle mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
 new search	etemplate	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%s' exists !!!	etemplate	de	Neuere Version '%s' existiert !!!
 nextmatch	etemplate	de	Nextmatch
-no	etemplate	de	Nein
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
 nullable	etemplate	de	Nullable
@@ -174,9 +177,10 @@ select access	etemplate	de	Zugriff auswählen
 select account	etemplate	de	Benutzer auswählen
 select an app first !!!	etemplate	de	Bitte wählen Sie zuerst ein Anwendung aus !!!
 select an app to search in	etemplate	de	Anwendung zum Durchsuchen auswählen
-select an application	etemplate	de	Anwendung auswählen
+select an application, (*) = uninstalled	etemplate	de	Anwendung auswählen, (*) = nicht installiert
 select an entry to link with	etemplate	de	Eintrag zum Verküpfen auswählen
 select an table of the application	etemplate	de	Tabelle der Anwendung auswählen
+select application	etemplate	de	Anwendung auswählen
 select category	etemplate	de	Kategorie auswählen
 select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
