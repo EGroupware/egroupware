@@ -53,7 +53,7 @@
 		function datetime()
 		{
 			$this->tz_offset = 3600 * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
-			print_debug('datetime::datetime::gmtnow',$this->gmtnow);
+			print_debug('datetime::datetime::gmtnow',$this->gmtnow,'api');
 
 			$error_occured = True;
 			// If we already have a GMT time, no need to do this again.
@@ -88,8 +88,8 @@
 				$array = explode(' ',$line);
 				// host: 129.6.15.28
 				// Value returned is 52384 02-04-20 13:55:29 50 0 0   9.2 UTC(NIST) *
-				print_debug('Server datetime',time());
-				print_debug('Temporary NTP datetime',$line);
+				print_debug('Server datetime',time(),'api');
+				print_debug('Temporary NTP datetime',$line,'api');
 				if ($array[5] == 4)
 				{
 					$error_occured = True;
@@ -99,8 +99,8 @@
 					$date = explode('-',$array[1]);
 					$time = explode(':',$array[2]);
 					$this->gmtnow = mktime(intval($time[0]),intval($time[1]),intval($time[2]),intval($date[1]),intval($date[2]),intval($date[0]) + 2000);
-					print_debug('Temporary RFC epoch',$this->gmtnow);
-					print_debug('GMT',date('Ymd H:i:s',$this->gmtnow));
+					print_debug('Temporary RFC epoch',$this->gmtnow,'api');
+					print_debug('GMT',date('Ymd H:i:s',$this->gmtnow),'api');
 				}
 			}
 			else
@@ -136,20 +136,20 @@
 			$time = strip_tags($file[55]);
 			$date = strip_tags($file[56]);
 
-			print_debug('GMT DateTime',$date.' '.$time);
+			print_debug('GMT DateTime',$date.' '.$time,'api');
 			$dt_array = explode(' ',$date);
 			$temp_datetime = $dt_array[0].' '.substr($dt_array[2],0,-1).' '.substr($dt_array[1],0,3).' '.$dt_array[3].' '.$time.' GMT';
-			print_debug('Reformulated GMT DateTime',$temp_datetime);
+			print_debug('Reformulated GMT DateTime',$temp_datetime,'api');
 			$this->gmtnow = $this->convert_rfc_to_epoch($temp_datetime);
-			print_debug('this->gmtnow',$this->gmtnow);
-			print_debug('server time',$server_time);
-			print_debug('server DateTime',date('D, d M Y H:i:s',$server_time));
+			print_debug('this->gmtnow',$this->gmtnow,'api');
+			print_debug('server time',$server_time,'api');
+			print_debug('server DateTime',date('D, d M Y H:i:s',$server_time),'api');
 			return intval(($server_time - $this->gmtnow) / 3600);
 		}
 
 		function getbestguess()
 		{
-			print_debug('datetime::datetime::debug: Inside getting from local server');
+			print_debug('datetime::datetime::debug: Inside getting from local server','api');
 			$server_time = time();
 			// Calculate GMT time...
 			// If DST, add 1 hour...
