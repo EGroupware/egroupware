@@ -301,7 +301,7 @@
 			/* Open the (uploaded) zip file */
 			$zip  = zip_open($filename);
 
-			$temp = tempnam('/tmp','zip2vcf');
+			$temp = tempnam('/tmp','zip2contact');
 			/* Open a temp file for read/write */
 			$fp   = fopen($temp, 'w+');
 
@@ -323,7 +323,12 @@
 					zip_entry_close($dirent);
 				}
 			}
+			/* Close the zip file resource handle */
+			zip_close($zip);
+
+			/* Set the file pointer of our new file to the beginning for use by the import routines */
 			rewind($fp);
+
 			return $fp;
 		}
 
