@@ -126,5 +126,6 @@
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','firstname','True','addressbook')");
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','lastname','True','addressbook')");
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','company','True','addressbook')");
-    
+
+  $db->query("insert into config (config_name, config_value) values ('phpgroupware_api_version','" . $phpgw_info["server"]["version"] . "')");
 ?>

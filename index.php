@@ -33,8 +33,17 @@
   $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"addressbook",True);
   $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"email",True);
   $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"calendar",True);
+  
+  if ($phpgw_info["user"]["apps"]["admin"]) {
+     if ($phpgw_info["server"]["version"] > $phpgw_info["server"]["phpgroupware_api_version"]) {
+        echo "<p><b>" . lang("Your are running a newer version of phpGroupWare then your database is setup for")
+           . "<br>" . lang("It is recommend that you run setup to upgrade your tables to the current version")
+           . "</b>";
+     
+     }
+  }
 
-  if ($phpgw_info["user"]["permissions"]["admin"] && $phpgw_info["server"]["checkfornewversion"]) {
+  if ($phpgw_info["user"]["apps"]["admin"] && $phpgw_info["server"]["checkfornewversion"]) {
      $phpgw->network->set_addcrlf(False);
      if ($phpgw->network->open_port("phpgroupware.org",80,30)) {
 	 $phpgw->network->write_port("GET /currentversion HTTP/1.0\nHOST: www.phpgroupware.org\n\n");

@@ -310,6 +310,10 @@
   v0_9_2to0_9_3pre5();
   $db->query("update applications set app_version='".$phpgw_info["server"]["version"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps')");
 
+  $db->query("update config set config_value='" . $phpgw_info["server"]["version"] . "' where "
+           . "config_name='phpgroupware_api_version'");
+
+
   if (!$didupgrade == True){
     echo "  <tr bgcolor=\"e6e6e6\">\n";
     echo "    <td>No table changes were needed. The script only updated your version setting.</td>\n";

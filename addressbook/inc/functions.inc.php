@@ -12,31 +12,49 @@
 
   /* $Id$ */
 
+  $abc = array('company'   => 'company',		  // AddressBook Columns and their descriptions
+               'firstname' => 'first name',
+               'lastname'  => 'last name',
+               'email'     => 'email',
+               'wphone'    => 'work phone',
+               'hphone'      => 'home phone',
+               'fax'       => 'fax',
+               'pager'     => 'pager',
+               'mphone'    => 'mobile phone',
+               'ophone'    => 'other phone',
+               'street'    => 'street',
+               'city'      => 'city',
+               'state'     => 'state',
+               'zip'       => 'zip code',
+               'bday'      => 'birthday',
+               'url'       => 'URL'
+              );
+
   function form($format,$action,$title,$fields)
   {
       global $phpgw;
       global $phpgw_info;
 
-      $email	= $fields["email"];
-      $firstname = $fields["firstname"];
-      $lastname = $fields["lastname"];
-      $title    = $fields["title"];
-      $hphone	= $fields["hphone"];
-      $wphone	= $fields["wphone"];
-      $fax	= $fields["fax"];
-      $pager	= $fields["pager"];
-      $mphone	= $fields["mphone"];
-      $ophone	= $fields["ophone"];
-      $street	= $fields["street"];
-      $address2 = $fields["address2"];
-      $city	= $fields["city"];
-      $state	= $fields["state"];
-      $zip	= $fields["zip"];
-      $bday	= $fields["bday"];
-      $notes	= $fields["notes"];
-      $access   = $fields["access"];
-      $ab_company  = $fields["company"];
-      $company_id  = $fields["company_id"];
+      $email        = $fields["email"];
+      $firstname    = $fields["firstname"];
+      $lastname     = $fields["lastname"];
+      $title        = $fields["title"];
+      $hphone       = $fields["hphone"];
+      $wphone	   = $fields["wphone"];
+      $fax	      = $fields["fax"];
+      $pager	    = $fields["pager"];
+      $mphone	   = $fields["mphone"];
+      $ophone	   = $fields["ophone"];
+      $street	   = $fields["street"];
+      $address2     = $fields["address2"];
+      $city	     = $fields["city"];
+      $state        = $fields["state"];
+      $zip	      = $fields["zip"];
+      $bday	     = $fields["bday"];
+      $notes	    = $fields["notes"];
+      $access       = $fields["access"];
+      $ab_company   = $fields["company"];
+      $company_id   = $fields["company_id"];
       $company_name = $fields["company_name"];
 
     if ($format != "view") {

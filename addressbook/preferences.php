@@ -47,17 +47,18 @@
       // I need to create a common function to handle displaying multiable columns
     
       echo '<tr bgcolor="' . $phpgw_info["theme"]["th_bg"] . '"><td colspan="3">&nbsp;</td></tr>';
-      $abc = get_abc();		# AddressBook Columns
       $i = 0; $j = 0;
       $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
       echo '<tr bgcolor="' . $tr_color . '">';
       while (list($col, $descr) = each($abc)) {
+//       echo "<br>test: $col - $i $j - " . count($abc);
          $i++; $j++;
+
          echo '<td><input type="checkbox" name="ab_selected[' . $col . ']" value="True"'
             . ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . $descr
             . '</option></td>';
 
-         if ($i ==3) {
+         if ($i == 3) {
             echo "</tr>";
             $i = 0;
          }
@@ -66,6 +67,12 @@
             echo '<tr bgcolor="' . $tr_color . '">';
          }
          if ($j == count($abc)) {
+            if ($i == 1) {
+               echo "<td>&nbsp;</td><td>&nbsp;</td>";
+            }
+            if ($i == 2) {
+               echo "<td>&nbsp;</td>";
+            }
             echo "</tr>";
          }
       }

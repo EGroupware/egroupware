@@ -223,8 +223,9 @@
     PRIMARY KEY (message_id,app_name,lang)
   )";
   $db->query($sql);
-  
-  $sql = "create table domains (
+
+  // I decied too hold off on this table until 0.9.4pre1 (jengo)  
+/*  $sql = "create table domains (
     domain_id       int NOT NULL auto_increment,
     domain_name     varchar(255),
     domain_database varchar(255),
@@ -232,5 +233,6 @@
     primary key(domain_id)
   )";
   $db->query($sql);
+*/
 
 ?>

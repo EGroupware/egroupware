@@ -52,7 +52,7 @@
        . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
        . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
        . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
-       . "'%$query%' OR c.company_name like '%$query%')");
+       . "'%$query%' OR c.company_name like '%$query%' OR a.ab_url like '%$query%')");
 //       . "'%$query%' OR c.company_name like '%$query%')"
 //       . " $ordermethod limit $limit");
      } else {
@@ -62,7 +62,7 @@
        . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
        . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
        . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
-       . "'%$query%' OR ab_company like '%$query%')");
+       . "'%$query%' OR ab_company like '%$query%' OR ab_url like '%$query$%')");
 //       . "'%$query%' OR ab_company like '%$query%')"
 //       . " $ordermethod limit $limit");
      }
@@ -100,39 +100,17 @@
   <table width=75% border=0 cellspacing=1 cellpadding=3>
     <tr bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>">
     <?php
-       if ($phpgw_info["user"]["preferences"]["addressbook"]["company"]) {
-          echo '<td height="21">';
-          echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-          echo $phpgw->nextmatchs->show_sort_order($sort,$company_sortorder,$order,"index.php",lang("Company Name"));
-          echo '</font></td>';
-       }
-       if ($phpgw_info["user"]["preferences"]["addressbook"]["lastname"]) {
-           echo '<td height="21">';
-           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_lastname",$order,"index.php",
-                              lang("Last Name"));
-           echo '</font></td>';
-       }
-       if ($phpgw_info["user"]["preferences"]["addressbook"]["firstname"]) {
-           echo '<td height="21">';
-           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_firstname",$order,"index.php",
-                              lang("First Name"));
-           echo '</font></td>';
-        }
-       if ($phpgw_info["user"]["preferences"]["addressbook"]["email"]) {
-           echo '<td height="21">';
-           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_email",$order,"index.php",
-                              lang("Email"));
-           echo '</font></td>';
-       }
-       if ($phpgw_info["user"]["preferences"]["addressbook"]["wphone"]) {
-           echo '<td height="21">';
-           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_wphone",$order,"index.php",
-                              lang("Work Phone"));
-           echo '</font></td>';
+       while ($column = each($abc)) {
+          if ($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
+             echo '<td height="21">';
+             echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
+             echo $phpgw->nextmatchs->show_sort_order($sort,"ab_" . $column[0],$order,"index.php",lang($column[1]));
+             echo '</font></td>';
+             echo "\n";
+             
+             // To be used when displaying the rows
+             $columns_to_display[$column[0]] = True;
+          }
        }
     ?>
 
@@ -149,97 +127,80 @@
     </tr>
   </form>
 
-
 <?php
   if ($query) {
-   if($phpgw_info["apps"]["timetrack"]["enabled"]){
-     $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
-       . "a.ab_email,a.ab_wphone,c.company_name "
-       . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
-       . "AND $filtermethod AND (a.ab_lastname like '"
-       . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
-       . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
-       . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
-       . "'%$query%' OR c.company_name like '%$query%') $ordermethod limit $limit");
-   } else {
-     $phpgw->db->query("SELECT ab_id,ab_owner,ab_firstname,ab_lastname,"
-       . "ab_email,ab_wphone,ab_company "
-       . "from addressbook "
-       . "WHERE $filtermethod AND (ab_lastname like '"
-       . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
-       . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
-       . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
-       . "'%$query%' OR ab_company like '%$query%') $ordermethod limit $limit");
-   }
+     if ($phpgw_info["apps"]["timetrack"]["enabled"]){
+        $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
+                        . "a.ab_email,a.ab_wphone,c.company_name "
+                        . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
+                        . "AND $filtermethod AND (a.ab_lastname like '"
+                        . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
+                        . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
+                        . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
+                        . "'%$query%' OR c.company_name like '%$query%') $ordermethod limit $limit");
+     } else {
+       $phpgw->db->query("SELECT ab_id,ab_owner,ab_firstname,ab_lastname,"
+                       . "ab_email,ab_wphone,ab_company "
+                       . "from addressbook "
+                       . "WHERE $filtermethod AND (ab_lastname like '"
+                       . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
+                       . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
+                       . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
+                       . "'%$query%' OR ab_company like '%$query%') $ordermethod limit $limit");
+    }
   } else {
-   if($phpgw_info["apps"]["timetrack"]["enabled"]){
-     $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
-       . "a.ab_email,a.ab_wphone,c.company_name "
-       . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
-       . "AND $filtermethod $ordermethod limit $limit");
-   } else {
-     $phpgw->db->query("SELECT ab_id,ab_owner,ab_firstname,ab_lastname,"
-       . "ab_email,ab_wphone,ab_company "
-       . "from addressbook "
-       . "WHERE $filtermethod $ordermethod limit $limit");
-   }
-  }
+    if ($phpgw_info["apps"]["timetrack"]["enabled"]){
+       $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
+                       . "a.ab_email,a.ab_wphone,c.company_name "
+                       . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
+                       . "AND $filtermethod $ordermethod limit $limit");
+    } else {
+       $phpgw->db->query("SELECT * from addressbook WHERE $filtermethod $ordermethod limit $limit");
+    }
+  }		// else $query
 
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+    echo '<tr bgcolor="#' . $tr_color . '">';
+    
+    while ($column = each($columns_to_display)) {
+       if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
+          if ($column[0] == "company") {
+             $field   = $phpgw->db->f("company_name");
+          } else {
+             $field = $phpgw->db->f("ab_company");
+          }
+       } else {
+          $field = $phpgw->db->f("ab_" . $column[0]);
+       }
 
-    $firstname	= $phpgw->db->f("ab_firstname");
-    $lastname 	= $phpgw->db->f("ab_lastname");
-    $email        = $phpgw->db->f("ab_email");
-    if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
-      $company   = $phpgw->db->f("company_name");
-    } else {
-      $company   = $phpgw->db->f("ab_company");
+       if (! $field) {
+          $field = "&nbsp;";
+       } else {
+          $field = htmlentities($field);
+       }
+
+       // Some fields require special formating.       
+       if ($column[0] == "url") {
+          echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+             . '<a href="' . $field . '" target="_top">' . $field. '</a></font></td>';          
+       } else if ($column[0] == "email") {
+          if ($phpgw_info["user"]["apps"]["email"]) {
+             echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+                . '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
+                                            "to=" . urlencode($field)) . '" target="_top">' . $field . '</a></font></td>';
+          } else {
+             echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+                . '<a href="mailto:' . $field . '" target="_top">' . $field. '</a></font></td>';
+          }
+       } else {
+          echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
+             . $field . '</font></td>';
+       }
+       
     }
-    $wphone      = $phpgw->db->f("ab_wphone");
-    $ab_id	   = $phpgw->db->f("ab_id");
-
-    if ($firstname == "") $firstname = "&nbsp;";
-    if ($lastname  == "") $lastname  = "&nbsp;";
-    if ($email     == "") $email     = "&nbsp;";
-    if ($company   == "") $company   = "&nbsp;";
-    if ($wphone    == "") $wphone    = "&nbsp;";
-
     ?>
-    <?php
-     echo '<tr bgcolor="#'.$tr_color.'";>';
-     if ($phpgw_info["user"]["preferences"]["addressbook"]["company"]) {
-         echo '<td valign=top>';
-         echo '<font face=Arial, Helvetica, sans-serif size=2>';
-         echo $company;
-         echo '</font></td>';
-     };
-     if ($phpgw_info["user"]["preferences"]["addressbook"]["lastname"]) {
-         echo '<td valign=top>';
-         echo '<font face=Arial, Helvetica, sans-serif size=2>';
-         echo $lastname;
-         echo '</font></td>';
-     };
-     if ($phpgw_info["user"]["preferences"]["addressbook"]["firstname"]) {
-         echo '<td valign=top>';
-         echo '<font face=Arial, Helvetica, sans-serif size=2>';
-         echo $firstname;
-         echo '</font></td>';
-     };
-     if ($phpgw_info["user"]["preferences"]["addressbook"]["email"]) {
-         echo '<td valign=top>';
-         echo '<font face=Arial, Helvetica, sans-serif size=2>';
-         echo '<a href="mailto:' . $email . '">' . $email . '</a>';
-         echo '</font></td>';
-     };
-     if ($phpgw_info["user"]["preferences"]["addressbook"]["wphone"]) {
-         echo '<td valign=top>';
-         echo '<font face=Arial, Helvetica, sans-serif size=2>';
-         echo $wphone;
-         echo '</font></td>';
-     };
-     ?>
-       <td valign=top width=3%>
+    <td valign=top width=3%>
 	<font face=Arial, Helvetica, sans-serif size=2>
           <a href="<?php echo $phpgw->link("view.php","ab_id=$ab_id&start=$start&order=$order&filter="
 								 . "$filter&query=$query&sort=$sort");

@@ -294,17 +294,19 @@
      
       if ($currentver == "0.9.3pre4") {
         $db->query("alter table config change config_name config_name varchar(255) NOT NULL");
-        $db->query("create table domains (domain_id int NOT NULL auto_increment, domain_name varchar(255),"
-         . "domain_database varchar(255),domain_status enum('Active,Disabled'),primary key(domain_id))");
+
+        // I decied too hold off on this table until 0.9.4pre1 (jengo)
+//        $db->query("create table domains (domain_id int NOT NULL auto_increment, domain_name varchar(255),"
+//         . "domain_database varchar(255),domain_status enum('Active,Disabled'),primary key(domain_id))");
         $currentver = "0.9.3pre5";
         update_version_table();
       }
       if ($currentver == "0.9.3pre5") {
         $db->query("CREATE TABLE categories (
-          cat_id int(9) DEFAULT '0' NOT NULL auto_increment,
-          account_id int(11) DEFAULT '0' NOT NULL,
-          app_name varchar(25) NOT NULL,
-          cat_name varchar(150) NOT NULL,
+          cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
+          account_id      int(11) DEFAULT '0' NOT NULL,
+          app_name        varchar(25) NOT NULL,
+          cat_name        varchar(150) NOT NULL,
           cat_description text NOT NULL,
           PRIMARY KEY (cat_id))"
         );
@@ -330,6 +332,9 @@
   v9072000to0_9_1();
   v0_9_1to0_9_2();
   v0_9_2to0_9_3();
+  
+  $db->query("update config set config_value='" . $phpgw_info["server"]["version"] . "' where "
+           . "config_name='phpgroupware_api_version'");
 
   if (!$tablechanges == True){
     echo "  <tr bgcolor=\"e6e6e6\">\n";
