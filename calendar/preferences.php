@@ -32,6 +32,7 @@
 		$phpgw->preferences->add('calendar','defaultcalendar');
 		$phpgw->preferences->add('calendar','defaultfilter');
 		$phpgw->preferences->add('calendar','locale');
+		$phpgw->preferences->add('calendar','interval');
 		if ($mainscreen_showevents == True)
 		{
 			$phpgw->preferences->add('calendar','mainscreen_showevents');
@@ -184,6 +185,30 @@
 //		. '<option value="public+group"'.$selected['public+group'].'>'.lang('global public and group public').'</option>'
 		. '</select>';
 	display_item(lang('Default calendar filter'),$str);
+
+	$selected = array();
+	$selected[intval($phpgw_info['user']['preferences']['calendar']['interval'])] = ' selected';
+	if (! isset($phpgw_info['user']['preferences']['calendar']['interval']))
+	{
+		$selected[60] = ' selected';
+	}
+	$var = Array(
+		5	=> '5',
+		10	=> '10',
+		15	=> '15',
+		20	=> '20',
+		30	=> '30',
+		45	=> '45',
+		60	=> '60'
+	);
+	
+	$str = '<select name="interval">';
+	while(list($key,$value) = each($var))
+	{
+		$str .= '<option value="'.$key.'"'.$selected[$key].'>'.$value.'</option>';
+	}
+	$str .= '</select>';
+	display_item(lang('Display interval in Day View'),$str);
 
 	$str = '<input type="checkbox" name="send_updates" value="True"'.($phpgw_info['user']['preferences']['calendar']['send_updates'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['send_updates'] == True?' checked':'').'>';
 	display_item(lang('Send/receive updates via email'),$str);
