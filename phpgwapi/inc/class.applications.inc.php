@@ -28,6 +28,10 @@
     var $user_apps = Array();
     var $group_apps = Array();
 
+    function applications($var="")
+    {
+    }
+
     function users_enabled_apps()
     {
        global $phpgw, $phpgw_info;
@@ -76,7 +80,7 @@
         }
       }
       if($owner_found) {
-        $acl_apps = $phpgw->acl->get_app_list_for_id('run', 1, 'u', $lid);
+        $acl_apps = $phpgw->acl->get_app_list_for_id('run', 1, 'u', $owner_id);
         if ($acl_apps != False){
           reset ($acl_apps);
           while (list(,$value) = each($acl_apps)){
@@ -100,11 +104,13 @@
 
     function read_group_apps($group_id) {
       global $phpgw, $phpgw_info;
+      $group_found = False;
       if(gettype($group_id) == "integer") {
         $group_found = True;
       } elseif(gettype($group_id) == "string") {
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='".$group_id."'",__LINE__,__FILE__);
         if($phpgw->db->num_rows()) {
+          settype($group_id,"integer");
           $phpgw->db->next_record();
           $group_id = $phpgw->db->f("group_id");
           $group_found = True;
