@@ -32,7 +32,11 @@
     echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
     exit;
   } unset($d1);unset($d2);unset($d3);
-
+		
+		/*!
+		@class common
+		@abstract common class that contains commonly used functions
+		*/
   class common
   {
     var $phpgw;
@@ -41,6 +45,12 @@
     var $crypto;
 
     // Convert an array into the format needed for the access column.
+		/*!
+		@functionn array_to_string
+		@abstract Convert an array into the format needed for the access column
+		@param $access
+		@param $array
+		*/
     function array_to_string($access,$array)
     {
       $s = '';
@@ -60,6 +70,12 @@
 
 
     // This is used for searching the access fields
+		/*!
+		@function sql_search
+		@abstract this function is used for searching the access fields
+		@param $table
+		@param $owner 
+		*/
     function sql_search($table,$owner=0)
     {
       global $phpgw, $phpgw_info;
@@ -78,6 +94,11 @@
     }
 
     // return a array of installed languages
+		/*!
+		@function getInstalledLanguages
+		@abstract return an array of installed languages
+		@result $installedLanguages; an array containing the installed languages
+		*/
     function getInstalledLanguages()
     {
     	global $phpgw;
@@ -94,6 +115,12 @@
     // return the preferred language of the users
     // it's using HTTP_ACCEPT_LANGUAGE (send from the users browser)
     // and ...(to find out which languages are installed)
+		/*!
+		@function getPreferredLanguage
+		@abstract return the preferred langugae of the users
+		@discussion it uses HTTP_ACCEPT_LANGUAGE (from the users browser) <br>
+		and .... to find out which languages are installed
+		*/
     function getPreferredLanguage()
     {
         global $HTTP_ACCEPT_LANGUAGE;
@@ -127,6 +154,13 @@
     }      
 
     // connect to the ldap server and return a handle
+		/*!
+		@function ldapConnect
+		@abstract connect to the ldap server and return a handle
+		@param $host ldap host
+		@param $dn ldap_root_dn
+		@param $passwd ldap_root_pw
+		*/
     function ldapConnect($host = '', $dn = '', $passwd = '')
     {
 	   	global $phpgw_info;
@@ -161,6 +195,13 @@
 
     // This function is used if the developer wants to stop a running app in the middle of execution
     // We may need to do some clean up before hand
+		/*!
+		@function phpgw_exit
+		@abstract function to stop running an app
+		@discussion used to stop running an app in the middle of execution <br>
+		There may need to be some cleanup before hand
+		@param $call_footer boolean value to if true then call footer else exit
+		*/
     function phpgw_exit($call_footer = False)
     {
        global $phpgw;
@@ -171,7 +212,11 @@
        $phpgw->db->disconnect();
        exit;
     }
-
+		/*!
+		@function randomstring
+		@abstract return a random string of size $size
+		@param $size int-size of random string to return
+		*/
     function randomstring($size)
     {
       $s = '';
@@ -192,7 +237,11 @@
     {
        return filesystem_separator();
     }
-
+		/*!
+		@function error_list
+		@abstract ???
+		@param $error ???
+		*/
     function error_list($error)
     {
        $html_error = '<table border="0" width="50%"><tr><td align="right"><b>' . lang('error') . '</b>: </td><td align="left">' . $error[0] . '</td></tr>';
@@ -202,7 +251,14 @@
        }
        return $html_error . '</table>';
     }
-
+		/*!
+		@function check_owner
+		@abstract none yet
+		@param $record ?
+		@param $link ?
+		@param $label ?
+		@param $extravars
+		*/
     function check_owner($record,$link,$label,$extravars = '')
     {
        global $phpgw, $phpgw_info;
@@ -220,7 +276,13 @@
 
       return $s;
     }    
-
+		/*!
+		@function display_fullname
+		@abstract return the fullname of a user
+		@param $lid user id?
+		@param $firstname firstname
+		@param $lastname lastname
+		*/
     function display_fullname($lid = '', $firstname = '', $lastname = '')
     {
       if (! $lid && ! $firstname && ! $lastname) {
@@ -244,7 +306,11 @@
       }
       return $s;
     }
-
+		/*!
+		@function grab_owner_name
+		@abstract grab the owner name
+		@param $id account id
+		*/
     function grab_owner_name($id)
     {
       global $phpgw;
@@ -311,7 +377,9 @@
        $output_text .= "</table>\n";
        return $output_text;
     }
-
+		/*!
+		@function get_app_dir
+		*/
     function get_app_dir($appname = ''){
       global $phpgw_info;
       if ($appname == '') { 
