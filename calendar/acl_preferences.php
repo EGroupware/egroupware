@@ -63,7 +63,8 @@
     }
 // Group records
     $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
-    
+
+    @reset($$group_variable);
     while(list($group_id,$acllist) = each($$group_variable)) {
       $totalacl = 0;
       while(list($acl,$permission) = each($acllist)) {
@@ -75,6 +76,7 @@
 // User records
     $user_variable = 'u_'.$phpgw_info["flags"]["currentapp"];
     
+    @reset($$user_variable);
     while(list($user_id,$acllist) = each($$user_variable)) {
       $totalacl = 0;
       while(list($acl,$permission) = each($acllist)) {
