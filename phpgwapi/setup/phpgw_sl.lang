@@ -1,0 +1,642 @@
+%1 email addresses inserted	common	sl	Vnešenih %1 enaslovov.
+%1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1eGroupWare%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
+(shift-)click or drag to change value	jscalendar	sl	(Shift)-klik ali povleci-in-spusti za spremembo vrednosti.
+- click on any of the time parts to increase it	jscalendar	sl	- Kliknite na katerikoli del časa za njegovo povečanje.
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	sl	- Držite miškin gumb na kateremkoli od zgornjih gumbov za hitrejši izbor.
+- or click and drag for faster selection.	jscalendar	sl	- ali kliknite in povlecite za hitrejši izbor.
+- or shift-click to decrease it	jscalendar	sl	- ali kliknite s Shift za njegovo zmanjšanje.
+- use the %1, %2 buttons to select month	jscalendar	sl	- Uporabite gumba %1, %2 za izbor meseca.
+- use the %1, %2 buttons to select year	jscalendar	sl	- Uporabite gumba %1, %2 za izbor leta.
+00 (disable)	admin	sl	00 (izklopi)
+13 (ntp)	admin	sl	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	sl	3 - število zankov za okrajšavo dneva
+3 number of chars for month-shortcut	jscalendar	sl	3 - število znakov za okrajšavo meseca
+80 (http)	admin	sl	80 (http)
+about	common	sl	Vizitka
+about %1	common	sl	Vizitka %1
+about the calendar	jscalendar	sl	O koledarju
+about this editor	htmlarea	sl	O urejevalniku
+access	common	sl	Dostopnost
+access not permitted	common	sl	Dostop ni dovoljen.
+account has been created	common	sl	Uporabniški račun je bil ustvarjen.
+account has been deleted	common	sl	Uporabniški račun je bil izbrisan.
+account has been updated	common	sl	Uporabniški račun je bil osvežen.
+account is expired	common	sl	Račun je potekel.
+acl	common	sl	ACL
+action	common	sl	Akcija
+active	common	sl	Aktiven
+add	common	sl	Dodaj
+add %1 category for	common	sl	Dodaj kategorijo %1 za
+add category	common	sl	Dodaj kategorijo
+add sub	common	sl	Dodaj pod
+addressbook	common	sl	Adresar
+admin	common	sl	Admin
+administration	common	sl	Administracija
+afghanistan	common	sl	AFGANISTAN
+albania	common	sl	ALBANIJA
+algeria	common	sl	ALŽIRIJA
+all	common	sl	Vse
+all fields	common	sl	Vsa polja
+alphabet	common	sl	a,b,c,č,d,e,f,g,h,i,j,k,l,m,n,o,p,r,s,š,t,u,v,z,ž
+american samoa	common	sl	AMERIŠKA SAMOA
+andorra	common	sl	ANDORA
+angola	common	sl	ANGOLA
+anguilla	common	sl	ANGVILA
+antarctica	common	sl	ANTARKTIKA
+antigua and barbuda	common	sl	ANTIGVA IN BARBUDA
+apply	common	sl	Uporabi
+april	common	sl	April
+are you sure you want to delete these entries ?	common	sl	Ste prepričani, da želite izbrisati te vnose?
+are you sure you want to delete this entry ?	common	sl	Ste prepričani, da želite izbrisati ta vnos?
+argentina	common	sl	ARGENTINA
+armenia	common	sl	ARMENIJA
+aruba	common	sl	ARUBA
+august	common	sl	Avgust
+australia	common	sl	AVSTRALIJA
+austria	common	sl	AVSTRIJA
+author	common	sl	Avtor
+autohide sidebox menus	common	sl	Avtomatsko skrivanje  stranskih menujev
+automatically hide the sidebox menus?	common	sl	Avtomatsko skrijem stranske menuje?
+autosave default category	common	sl	Samodejno shrani privzeto kategorijo
+azerbaijan	common	sl	AZARBEJDŽAN
+back	common	sl	Nazaj
+back to user login	common	sl	Nazaj na uporabniški login
+background color	htmlarea	sl	Barva ozadja
+bad login or password	common	sl	Napačno uporabniško ime ali geslo
+bahamas	common	sl	BAHAMI
+bahrain	common	sl	BAHRAIN
+bangladesh	common	sl	BANGLADEŠ
+barbados	common	sl	BARBADOS
+bcc	common	sl	Skrita kopija
+belarus	common	sl	BELARUS
+belgium	common	sl	BELGIJA
+belize	common	sl	BELIZE
+benin	common	sl	BENIN
+bermuda	common	sl	BERMUDA
+bhutan	common	sl	BUTAN
+blocked, too many attempts	common	sl	Zaklenjeno: preveč poskusov.
+bold	htmlarea	sl	Krepko
+bolivia	common	sl	BOLIVIJA
+bosnia and herzegovina	common	sl	BOSNA IN HERCEGOVINA
+botswana	common	sl	BOCVANA
+bouvet island	common	sl	OTOČJE BOUVET
+brazil	common	sl	BRAZILIJA
+british indian ocean territory	common	sl	BRITANSKO INDIJSKO OTOČJE
+brunei darussalam	common	sl	BRUNEI DARUSSALAM
+bulgaria	common	sl	BOLGARIJA
+bulleted list	htmlarea	sl	Seznam alinej
+burkina faso	common	sl	BURKINA FASO
+burundi	common	sl	BURUNDI
+calendar	common	sl	Koledar
+cambodia	common	sl	KAMBODŽA
+cameroon	common	sl	KAMERUN
+canada	common	sl	KANADA
+cancel	common	sl	Prekliči
+cape verde	common	sl	CAPE VERDE
+categories	common	sl	Kategorije
+categories for	common	sl	kategorije za
+category	common	sl	Kategorija
+category %1 has been added !	common	sl	Dodana je bila kategorija %1!
+category %1 has been updated !	common	sl	Osvežena je bila kategorija %1!
+cayman islands	common	sl	KAJMANSKI OTOKI
+cc	common	sl	Kopija
+central african republic	common	sl	CENTRALNOAFRIŠKA REPUBLIKA
+chad	common	sl	ČAD
+change	common	sl	Spremeni
+charset	common	sl	UTF-8
+check installation	common	sl	Preveri namestitev
+chile	common	sl	ČILE
+china	common	sl	KITAJSKA
+choose the category	common	sl	Izberi kategorijo
+choose the parent category	common	sl	Izberi nadrejeno kategorijo
+christmas island	common	sl	BOŽIČNI OTOK
+clear	common	sl	Izprazni
+clear form	common	sl	Izprazni formo
+click	common	sl	Klikni
+click or mouse over to show menus	common	sl	Klik ali prehod z mišjo za skritje menujev
+click or mouse over to show menus?	common	sl	Kliknem ali prehod z mišjo za skritje menujev?
+close	common	sl	Zapri
+cocos (keeling) islands	common	sl	KOKOSOVI (KEELINGOVI) OTOKI
+colombia	common	sl	KOLUMBIJA
+comoros	common	sl	KOMORI
+company	common	sl	Podjetje
+congo	common	sl	KONGO
+congo, the democratic republic of the	common	sl	KONGO, DEMOKRATIČNA REPUBLIKA
+cook islands	common	sl	COOKOVI OTOKI
+copy	common	sl	Kopiraj
+copy selection	htmlarea	sl	Kopiraj izbor
+costa rica	common	sl	KOSTARIKA
+cote d ivoire	common	sl	COTE D IVOIRE
+create	common	sl	Ustvari
+created by	common	sl	Ustvaril
+croatia	common	sl	HRVAŠKA
+cuba	common	sl	KUBA
+currency	common	sl	Valuta
+current	common	sl	Trenutno
+current style	htmlarea	sl	Trenutni slog
+current users	common	sl	Trenutni uporabniki
+cut selection	htmlarea	sl	Izreži izbor
+cyprus	common	sl	CIPER
+czech republic	common	sl	ČEŠKA REPUBLIKA
+date	common	sl	Datum
+date due	common	sl	Rok
+date selection:	jscalendar	sl	Izbor datuma
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sl	Vrata za datum in čas. Če uporabljate vrata 13, prosim, nastavite ustrezne parametre požarnega zidu preden potrdite to stran.<br> (Vrata: 13/  Strežnik: 129.6.15.28)
+december	common	sl	December
+decrease indent	htmlarea	sl	Zmanjšaj zamik
+default category	common	sl	Privzeta kategorija
+delete	common	sl	Briši
+denmark	common	sl	DANSKA
+description	common	sl	Opis
+detail	common	sl	Podrobnost
+details	common	sl	Pordrobnosti
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogoči izvajanje skripte za izogib hrošča pri prikazu transparentnih PNG slik v Microsoft Internet Explorerju 5.5 in višjih?
+disable internet explorer png-image-bugfix	common	sl	Onemogoči NS IE izogib hrošča?
+disable slider effects	common	sl	Onemogoči efekte drsnika
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sl	Onemogoči animirane efekte drsnika, ko se pokažejo ali skrijejo menuji na strani? Opera in Konquereor uporabniko verjetno morajo izbrati to opcijo.
+disabled	common	sl	Onemogočeno
+display %s first	jscalendar	sl	Pokaži najprej %1
+display monday first	common	sl	Najprej ponedeljek
+display sunday first	common	sl	Najprej nedelja
+djibouti	common	sl	DŽIBUTI
+do you also want to delete all subcategories ?	common	sl	Ali želite izbrisati tudi podkategorije?
+domain	common	sl	Domena
+domain name for mail-address, eg. "%1"	common	sl	ime domene za elektronski naslov, npr. "%1"
+domestic	common	sl	Domač
+dominica	common	sl	DOMINIKA
+dominican republic	common	sl	DOMINIKANSKA REPUBLIKA
+done	common	sl	Končano
+drag to move	jscalendar	sl	Povleci za premik
+e-mail	common	sl	Epošta
+east timor	common	sl	VZHODNI TIMOR
+ecuador	common	sl	EKVADOR
+edit	common	sl	Popravi
+edit %1 category for	common	sl	Popravi kategorijo %1 za
+edit categories	common	sl	Popravi kategorije
+edit category	common	sl	Popravi kategorijo
+egroupware api version %1	common	sl	eGroupWare API različica %1
+egroupware: login blocked for user '%1', ip %2	common	sl	eGroupWare: prijava uporabnika '%1' na IPju '%2' onemogočena.
+egypt	common	sl	EGIPT
+el salvador	common	sl	EL SALVADOR
+email	common	sl	Epošta
+email-address of the user, eg. "%1"	common	sl	enaslov uporabnika, npr. "%1"
+enabled	common	sl	Omogočeno
+end date	common	sl	Končni datum
+end time	common	sl	Končni čas
+enlarge editor	htmlarea	sl	Povečaj urejevalnik
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL eGroupWare. Primer: http://www.domain.com/egroupware &nbsp; ali &nbsp; /egroupware<br><b>Brez zaključne poševnice!</b>
+entry has been deleted sucessfully	common	sl	Vnos je bil uspešno izbrisan.
+entry updated sucessfully	common	sl	Vnos je bil uspešno osvežen.
+equatorial guinea	common	sl	EKVATORIALNA GVINEJA
+eritrea	common	sl	ERITREJA
+error	common	sl	Napaka
+error creating %1 %2 directory	common	sl	Napaka ob ustvarjanju %1 %2 direktorija.
+error deleting %1 %2 directory	common	sl	Napaka ob brisanju %1 %2 direktorija.
+error renaming %1 %2 directory	common	sl	Napaka ob preimoenovanju %1 %2 direktorija.
+estonia	common	sl	ESTONIJA
+ethiopia	common	sl	ETIOPIJA
+exact	common	sl	natančno
+falkland islands (malvinas)	common	sl	FALKLANDSKO OTOČJE (MALVINI)
+faroe islands	common	sl	OTOČJE FAROE
+fax number	common	sl	št. faksa
+february	common	sl	Februar
+fields	common	sl	Polja
+fiji	common	sl	FIDŽI
+files	common	sl	Datoteke
+filter	common	sl	Sito
+finland	common	sl	FINSKA
+first name	common	sl	Ime
+first name of the user, eg. "%1"	common	sl	ime uporabnika, npr. "%1"
+first page	common	sl	Prva stran
+firstname	common	sl	Ime
+fixme!	common	sl	POPRAVI!
+font color	htmlarea	sl	Barva pisave
+force selectbox	common	sl	Prisili izbiro
+france	common	sl	FRANCIJA
+french guiana	common	sl	FRANCOSKA GVAJANA
+french polynesia	common	sl	FRANCOSKA POLINEZIJA
+french southern territories	common	sl	FRANCOSKI JUŽNI TERITORIJ
+friday	common	sl	Petek
+ftp	common	sl	FTP
+fullname	common	sl	Polno ime
+gabon	common	sl	GABON
+gambia	common	sl	GAMBIJA
+general menu	common	sl	Splošni meni
+georgia	common	sl	GRUZIJA
+germany	common	sl	NEMČIJA
+ghana	common	sl	GANA
+gibraltar	common	sl	GIBRALTAR
+global	common	sl	Globalno
+global public	common	sl	Splošna javnost
+go today	jscalendar	sl	Danes
+grant access	common	sl	Dovoli dostop
+greece	common	sl	GRČIJA
+greenland	common	sl	GRENLANDIJA
+grenada	common	sl	GRENADA
+group	common	sl	Skupina
+group access	common	sl	Dostop skupine
+group has been added	common	sl	Skupina je bila dodana.
+group has been deleted	common	sl	Skupina je bila izbrisana.
+group has been updated	common	sl	Skupina je bila osvežena.
+group name	common	sl	Ime skupine
+group public	common	sl	Javnost skupine
+groups	common	sl	Skupine
+groups with permission for %1	common	sl	Skupine z dovoljenjem za
+groups without permission for %1	common	sl	Skupine brez dovoljenja za
+guadeloupe	common	sl	GVADALUPA
+guam	common	sl	GVAM
+guatemala	common	sl	GVATEMALA
+guinea	common	sl	GVINEJA
+guinea-bissau	common	sl	GVINEJA-BISSAU
+guyana	common	sl	GVAJANA
+haiti	common	sl	HAITI
+heard island and mcdonald islands	common	sl	OTOK HERAD IN MCDONALDOVI OTOKI
+help	common	sl	Pomoč
+help using editor	htmlarea	sl	Pomoč pri uporabi urejevalnika
+high	common	sl	Visoko
+highest	common	sl	Najvišje
+holy see (vatican city state)	common	sl	SVETI SEDEŽ (MESTNA DRŽAVA VATIKAN)
+home	common	sl	Domov
+home email	common	sl	Domač poštni naslov
+honduras	common	sl	HONDURAS
+hong kong	common	sl	HONG KONG
+horizontal rule	htmlarea	sl	Vodoravno ravnilo
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sl	Koliko ikon naj se pokaže na orodni vrstici na vrhu strani? Preostale ikone gredo v dodaten menu, ki ga je moč priklicati s pomočjo ikone na desni strani orodne vrstice.
+hungary	common	sl	MADŽARSKA
+iceland	common	sl	ISLANDIJA
+increase indent	htmlarea	sl	Povečaj zamik
+india	common	sl	INDIJA
+indonesia	common	sl	INDONEZIJA
+insert all %1 addresses of the %2 contacts in %3	common	sl	Vstavi vseh %1 naslovov %2 kontaktov v %3
+insert image	htmlarea	sl	Vstavi sliko
+insert table	htmlarea	sl	Vstavi tabelo
+insert web link	htmlarea	sl	Vstavi spletno povezavo
+international	common	sl	Mednarodno
+invalid ip address	common	sl	Napačna IP številka
+invalid password	common	sl	Napačno geslo
+iran, islamic republic of	common	sl	IRAN, ISLAMSKA REPUBLIKA
+iraq	common	sl	IRAK
+ireland	common	sl	IRSKA
+israel	common	sl	IZRAEL
+it has been more then %1 days since you changed your password	common	sl	Od zadnje menjave gesla je preteklo že več kot %1 dni.
+it is recommended that you run setup to upgrade your tables to the current version	common	sl	Priporočamo, da poženete namestitev (setup) za nadgradnjo tabel na trenutno različico.
+italic	common	sl	Poševno
+italy	common	sl	ITALIJA
+jamaica	common	sl	JAMAJKA
+january	common	sl	Januar
+japan	common	sl	JAPONSKA
+jordan	common	sl	JORDANIJA
+july	common	sl	Julij
+jun	common	sl	Jun
+june	common	sl	Junij
+justify center	htmlarea	sl	Poravnaj v sredi
+justify full	htmlarea	sl	Polno poravnaj
+justify left	htmlarea	sl	Poravnaj levo
+justify right	htmlarea	sl	Poravnaj desno
+kazakstan	common	sl	KAZAHSTAN
+kenya	common	sl	KENIJA
+keywords	common	sl	Ključne  besede
+kiribati	common	sl	KIRIBATI
+korea, democratic peoples republic of	common	sl	KOREJA, DEMOKRATIČNA REPUBLIKA
+korea, republic of	common	sl	KOREJA, REPUBLIKA
+kuwait	common	sl	KUVAJT
+kyrgyzstan	common	sl	KIRGISTAN
+language	common	sl	Jezik
+lao peoples democratic republic	common	sl	LAO, LJUDSKA DEMOKRATIČNA REPUBLIKA
+last name	common	sl	Priimek
+last name of the user, eg. "%1"	common	sl	priimek uporabnika, npr. "%1"
+last page	common	sl	Zadnja stran
+lastname	common	sl	Priimek
+latvia	common	sl	LATVIJA
+lebanon	common	sl	LIBANON
+lesotho	common	sl	LESOTO
+liberia	common	sl	LIBERIJA
+libyan arab jamahiriya	common	sl	LIBIJSKA ARABSKA JAMAHIRIJA
+license	common	sl	Licenca
+liechtenstein	common	sl	LICHTENSTEIN
+list	common	sl	Seznam
+list members	common	sl	Seznam članstva
+lithuania	common	sl	LITVA
+local	common	sl	Lokalno
+login	common	sl	Prijava
+loginid	common	sl	ID ob prijavi
+logout	common	sl	Odjava
+low	common	sl	Nizko
+lowest	common	sl	Najnižje
+luxembourg	common	sl	LUKSEMBURG
+macau	common	sl	MAKU
+macedonia, the former yugoslav republic of	common	sl	MAKEDONIJA, BIVŠA JUGOSLOVANSA REPUBLIKA
+madagascar	common	sl	MADAGASKAR
+mail domain, eg. "%1"	common	sl	poštna domena, npr. "%1"
+main category	common	sl	Osnovna kategorija
+main screen	common	sl	Osnovni zaslon
+maintainer	common	sl	Vzdrževalec
+malawi	common	sl	MALAWI
+malaysia	common	sl	MALEZIJA
+maldives	common	sl	MALDIVI
+mali	common	sl	MALI
+malta	common	sl	MALTA
+manual	common	sl	Priročnik
+march	common	sl	Marec
+marshall islands	common	sl	MARSHALLOVO OTOČJE
+martinique	common	sl	MARTINIQUE
+mauritania	common	sl	MAVRETANIJA
+mauritius	common	sl	MAVRITIUS
+max number of icons in navbar	common	sl	NAjvečje število ikon v orodni vrstici
+may	common	sl	Maj
+mayotte	common	sl	MAYOTTE
+medium	common	sl	Srednje
+menu	common	sl	Meni
+message	common	sl	Sporočilo
+mexico	common	sl	MEHIKA
+micronesia, federated states of	common	sl	MIKRONEZIJA, ZDRUŽENE DRŽAVE
+moldova, republic of	common	sl	MOLDOVA, REPUBLIKA
+monaco	common	sl	MONAKO
+monday	common	sl	Ponedeljek
+mongolia	common	sl	MONGOLIJA
+montserrat	common	sl	MONTSERRAT
+morocco	common	sl	MAROKO
+mozambique	common	sl	MOZAMBIK
+myanmar	common	sl	MJANMAR
+name	common	sl	Ime
+name of the user, eg. "%1"	common	sl	ime uporabnika, npr. "%1"
+namibia	common	sl	NAMIBIJA
+nauru	common	sl	NAURU
+nepal	common	sl	NEPAL
+netherlands	common	sl	NIZOZEMSKA
+netherlands antilles	common	sl	NIZOZEMSKI ANTILI
+never	common	sl	Nikoli
+new caledonia	common	sl	NOVA KALEDONIJA
+new entry added sucessfully	common	sl	Nov vnos je uspešno dodan.
+new main category	common	sl	Nova osnovna kategorija
+new value	common	sl	Nova vrednost
+new zealand	common	sl	NOVA ZELANDIJA
+next	common	sl	Naslednji
+next month (hold for menu)	jscalendar	sl	Naslednji mesec (drži za meni)
+next page	common	sl	Naslednja stran
+next year (hold for menu)	jscalendar	sl	Naslednje leto
+nicaragua	common	sl	NIKARAGVA
+niger	common	sl	NIGER
+nigeria	common	sl	NIGERIJA
+niue	common	sl	NIVE
+no	common	sl	Ne
+no entries found, try again ...	common	sl	Ne najdem vnosov. Poskusi ponovno...
+no history for this record	common	sl	Ni zgodovine za ta zapis.
+no subject	common	sl	Brez zadeve
+none	common	sl	Noben
+norfolk island	common	sl	OTOK NORFOLK
+normal	common	sl	Normalno
+northern mariana islands	common	sl	SEVERNI MARIANSKI OTOKI
+norway	common	sl	NORVEŠKA
+not assigned	common	sl	ni dodeljeno
+note	common	sl	Opomba
+notes	common	sl	Opombe
+notify window	common	sl	Okno za opozorila
+november	common	sl	November
+october	common	sl	Oktober
+ok	common	sl	OK
+old value	common	sl	Stara vrednost
+oman	common	sl	OMAN
+on *nix systems please type: %1	common	sl	Na UNIXu podobnih sistemih vnesite: %1
+on mouse over	common	sl	Ob prehodu z mišjo
+only private	common	sl	samo zasebno
+only yours	common	sl	samo vaše
+open notify window	common	sl	Odpri okno z opozorilom
+open popup window	common	sl	Odpri popup okno
+ordered list	htmlarea	sl	Urejen seznam
+original	common	sl	Original
+other	common	sl	Ostalo
+overview	common	sl	Pregled
+owner	common	sl	Lastnik
+page	common	sl	Stran
+page was generated in %1 seconds	common	sl	Stran je bila izdelana v %1 sekundah
+pakistan	common	sl	PAKISTAN
+palau	common	sl	PALAU
+palestinian territory, occupied	common	sl	PALESTINSKI TERITORIJ, OKUPIRAN
+panama	common	sl	PANAMA
+papua new guinea	common	sl	PAPUA NOVA GVINEJA
+paraguay	common	sl	PARAGVAJ
+parcel	common	sl	Paket
+parent category	common	sl	Nadrejena kategorija
+password	common	sl	Geslo
+password could not be changed	common	sl	Gesla ni mogoče zamenjati.
+password has been updated	common	sl	Geslo je bilo zamenjano.
+paste from clipboard	htmlarea	sl	Prilepi z odložišča
+path	htmlarea	sl	Pot
+path to user and group files has to be outside of the webservers document-root!!!	common	sl	Pot do uporabniških in skupinskih datotek NE SME BITI podrejena korenski mapi spletišča.
+pattern for search in addressbook	common	sl	Vzorec za iskanje v adresarju
+pattern for search in calendar	common	sl	Vzorec za iskanje v koledarju
+pattern for search in projects	common	sl	Vzorec za iskanje med projektih
+permissions to the files/users directory	common	sl	dovoljenja za datoteke/uporabniški direktorij
+personal	common	sl	Zasebno
+peru	common	sl	PERU
+philippines	common	sl	FILIPINI
+phone number	common	sl	telefonska številka
+pitcairn	common	sl	PITCARIN
+please %1 by hand	common	sl	Prosimo, ročno %1
+please enter a name	common	sl	Prosimo, vnesite ime!
+please run setup to become current	common	sl	Prosimo poženite namestitve za osvežitev.
+please select	common	sl	Prosimo izberite
+please set your global preferences	common	sl	Prosimo, vnesite splošne nastavitve.
+please set your preferences for this application	common	sl	Prosimo, vnesite nastavitve za to aplikacijo!
+please wait...	common	sl	Prosimo, počakajte...
+poland	common	sl	POLJSKA
+portugal	common	sl	PORTUGALSKA
+postal	common	sl	Poštno
+powered by egroupware version %1	common	sl	Poganja <a href="http://www.egroupware.org">eGroupWare</a> različica %1
+powered by phpgroupware version %1	common	sl	Teče na <a href="http://www.egroupware.org">eGroupware</a> različica %1
+preferences	common	sl	Nastavitve
+preferences for the idots template set	common	sl	Nastavitve predloge idots
+prev. month (hold for menu)	jscalendar	sl	Prejšnji mesesc (držite za meni)
+prev. year (hold for menu)	jscalendar	sl	Prejšnje leto (držite za meni)
+previous page	common	sl	Prejšnja stran
+print	common	sl	Natisni
+priority	common	sl	Prioriteta
+private	common	sl	Zasebno
+project	common	sl	Projekt
+public	common	sl	javno
+puerto rico	common	sl	PUERTO RICO
+qatar	common	sl	KATAR
+read	common	sl	Beri
+read this list of methods.	common	sl	Preberi ta seznam metod.
+redoes your last action	htmlarea	sl	Ponovi vašo zadnjo akcijo
+reject	common	sl	Zavrni
+remove selected accounts	common	sl	odstrani izbrane račune
+rename	common	sl	Preimenuj
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	sl	Vrne poln seznam uporabnikov sistema. Pozor: seznam je lahko precej dolg.
+returns an array of todo items	common	sl	Vrne seznam opravil.
+returns struct of users application access	common	sl	Vrne strukturo z uporabnikovim dostopanjem do programov.
+reunion	common	sl	REUNION
+romania	common	sl	ROMUNIJA
+russian federation	common	sl	RUSKA FEDERACIJA
+rwanda	common	sl	RUANDA
+saint helena	common	sl	SVETA HELENA
+saint kitts and nevis	common	sl	SVETA KITTS IN NEVIS
+saint lucia	common	sl	SVETA LUCIJA
+saint pierre and miquelon	common	sl	SVETA PIERRE IN MIQUELON
+saint vincent and the grenadines	common	sl	SVETI VINCENT IN GRENADINES
+samoa	common	sl	SAMOA
+san marino	common	sl	SAN MARINO
+sao tome and principe	common	sl	SAO TOME IN PRINCIPE
+saturday	common	sl	Sobota
+saudi arabia	common	sl	SAVDSKA ARABIJA
+save	common	sl	Shrani
+search	common	sl	Išči
+search %1 '%2'	common	sl	Išči %1 '%2'
+search or select accounts	common	sl	Išči ali izberi uporabniške račune
+section	common	sl	Izbor
+select	common	sl	Izberi
+select all %1 %2 for %3	common	sl	Izberi vse %1 %2 za %3
+select category	common	sl	Izberi kategorijo
+select date	common	sl	Izberi datum
+select group	common	sl	Izberi skupino
+select home email address	common	sl	Izberi domač enaslov
+select one	common	sl	Izberi
+select user	common	sl	Izberi uporabnika
+select work email address	common	sl	Izberi službeni enaslov
+selection	common	sl	Izbor
+send	common	sl	Pošlji
+senegal	common	sl	SENEGAL
+september	common	sl	September
+server %1 has been added	common	sl	Dodan je bil strežnik %1.
+server name	common	sl	Ime strežnika
+session has been killed	common	sl	Seja je bila prisilno prekinjena.
+setup	common	sl	Namestitev
+setup main menu	common	sl	Glavni menu namestitve
+seychelles	common	sl	SEJEŠELI
+show all	common	sl	prikaži vse
+show all categorys	common	sl	Pokaži vse kategorije
+show menu	common	sl	Pokaži menu
+show page generation time	common	sl	Pokaži čas generiranja strani
+show page generation time on the bottom of the page?	common	sl	Pokažem čas generiranja strani na njenem dnu?
+show_more_apps	common	sl	Pokaži več aplikacij
+showing %1	common	sl	prikazanih %1
+showing %1 - %2 of %3	common	sl	prikazani %1 - %2 od %3
+sierra leone	common	sl	SIERRA LEONE
+singapore	common	sl	SINGAPUR
+slovakia	common	sl	SLOVAŠKA
+slovenia	common	sl	SLOVENIJA
+solomon islands	common	sl	SOLOMONOVI OTOKI
+somalia	common	sl	SOMALIJA
+sorry, your login has expired	login	sl	Oprostite, vaša prijava je potekla.
+south africa	common	sl	JUŽNA AFRIKA
+south georgia and the south sandwich islands	common	sl	JUŽNA GEORGIJA IN JUŽNO OTOČJE SANDWICH
+spain	common	sl	ŠPANIJA
+sri lanka	common	sl	ŠRI LANKA
+start date	common	sl	Začetni datum
+start time	common	sl	Začetni čas
+start with	common	sl	začni z
+status	common	sl	Status
+strikethrough	htmlarea	sl	Prečrtano
+subject	common	sl	Zadeva
+submit	common	sl	Pošlji
+subscript	htmlarea	sl	kot indeks
+substitutions and their meanings:	common	sl	Nadomestila in njihov pomen
+sudan	common	sl	SUDAN
+sunday	common	sl	Nedelja
+superscript	htmlarea	sl	kot potenca
+suriname	common	sl	SURINAM
+svalbard and jan mayen	common	sl	SVALBARD IN JAN MAJEN
+swaziland	common	sl	SVAZILAND
+sweden	common	sl	ŠVEDSKA
+switzerland	common	sl	ŠVICA
+syrian arab republic	common	sl	SIRIJA, ARABSKA REPUBLIKA
+taiwan	common	sl	TAJVAN
+tajikistan	common	sl	TADŽIKISTAN
+tanzania, united republic of	common	sl	TANZANIJA, ZDRUŽENA REPUBLIKA
+thailand	common	sl	TAJSKA
+the api is current	common	sl	API je aktualen
+the api requires an upgrade	common	sl	API je potrebno obnoviti
+the following applications require upgrades	common	sl	Naslednje aplikacije je potrebno nadgraditi
+the mail server returned	common	sl	Poštni strežnik je vrnil
+this application is current	common	sl	Aplikacija je aktualna
+this application requires an upgrade	common	sl	Aplikacijo je potrebno obnoviti
+this name has been used already	common	sl	To ime je že uporabljeno!
+thursday	common	sl	Četrtek
+time	common	sl	Čas
+time selection:	jscalendar	sl	Izbor časa:
+time zone	common	sl	Časovna cona
+time zone offset	common	sl	Zamik časovne cone
+title	common	sl	Naslov
+to	common	sl	Naslov:
+to correct this error for the future you will need to properly set the	common	sl	Za odpravo ponavljanja te napake bo potrebno pravilno nastaviti
+to go back to the msg list, click <a href= %1 >here</a>	common	sl	Da pridete nazaj na seznam sporočil, kliknite <a href="%1">tu</a>.
+today	common	sl	Danes
+todays date, eg. "%1"	common	sl	današnji datum, npr. "%1"
+toggle first day of week	jscalendar	sl	Zamenjajte prvi dan v tednu
+toggle html source	htmlarea	sl	Preklopi HTML vir
+togo	common	sl	TOGO
+tokelau	common	sl	TOKELAU
+tonga	common	sl	TONGO
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sl	Preveč neuspešnih poskusov prijave: %1 za uporabnika %2, %3 za IP %4.
+total	common	sl	Skupaj
+trinidad and tobago	common	sl	TRINIDAD IN TOBAGO
+tuesday	common	sl	Četrtek
+tunisia	common	sl	TUNIZIJA
+turkey	common	sl	TURČIJA
+turkmenistan	common	sl	TURKMENISTAN
+turks and caicos islands	common	sl	TURKS IN CAICOS OTOKI
+tuvalu	common	sl	TUVALU
+uganda	common	sl	UGANDA
+ukraine	common	sl	UKRAJINA
+underline	htmlarea	sl	Podčrtano
+undoes your last action	htmlarea	sl	PRekliče vašo zadnjo akcijo.
+united arab emirates	common	sl	ZDRUŽENI ARABSKI EMIRATI
+united kingdom	common	sl	ZDRUŽENO KRALJESTVO
+united states	common	sl	ZDRUŽENE DRŽAVE
+united states minor outlying islands	common	sl	CELINSKE ZDRUŽENE DRŽAVE
+unknown	common	sl	Neznano
+update	common	sl	Obnovi
+url	common	sl	URL
+uruguay	common	sl	URUGVAJ
+use button to search for	common	sl	Uporabi gumb za iskanje
+use button to search for address	common	sl	Uporabi gumb za iskanje naslova
+use button to search for calendarevent	common	sl	Uporabi gumb za iskanje dogodka v koledarju
+use button to search for project	common	sl	Uporabi gumb za iskanje projekta
+user	common	sl	Uporabnik
+user accounts	common	sl	uporabniško ime
+user groups	common	sl	uporabniška skupina
+username	common	sl	Uporabniško ime
+users	common	sl	uporabniki
+users choice	common	sl	Uporabniški izbor
+uzbekistan	common	sl	UZBEKISATAN
+vanuatu	common	sl	VANUATU
+venezuela	common	sl	VENEZUELA
+version	common	sl	Različica
+viet nam	common	sl	VIETNAM
+view	common	sl	Pregled
+virgin islands, british	common	sl	DEVIŠKI OTOKI (BRITANSKI)
+virgin islands, u.s.	common	sl	DEVIŠKI OTOKI (ZDA)
+wallis and futuna	common	sl	WALLIS IN FUTUNA
+wednesday	common	sl	Sreda
+welcome	common	sl	Dobrodošli!
+western sahara	common	sl	ZAHODNA SAHARA
+which groups	common	sl	Katere skupine
+wk	jscalendar	sl	wk
+work email	common	sl	Službeni enaslov.
+written by:	common	sl	Napisal:
+year	common	sl	Leto
+yemen	common	sl	JEMEN
+yes	common	sl	Da
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	sl	Ste v TEKST načinu. Uporabite ikono [<>] za preklop nazaj v WYSIWYG.
+you are required to change your password during your first login	common	sl	Ob prvi prijavi morate zamenjati geslo
+you are running a newer version of phpgroupware than your database is setup for	common	sl	Uporabljate novejšo različico egroupware, kot je nameščena v bazi podatkov.
+you have been successfully logged out	login	sl	Bili ste uspešno odjavljeni.
+you have not entered a title	common	sl	Niste vnesli naslova
+you have not entered a valid date	common	sl	Niste vnesli veljavnega datuma
+you have not entered a valid time of day	common	sl	Niste vnesli veljavnega časa v dnevu
+you have not entered participants	common	sl	Niste vnesli udeležencev
+you have selected an invalid date	common	sl	Izbrali ste napačen datum
+you have selected an invalid main category	common	sl	Izbrali ste napačno osnovno kategorijo
+you have successfully logged out	common	sl	Bili ste uspešno odjavljeni
+you need to add the webserver user '%1' to the group '%2'.	common	sl	Uporabnika '%1' je potrebno dodati skupini '%2'.
+your message could <b>not</b> be sent!<br>	common	sl	Vaše sporočilo <b>ni<b> bilo poslano! <br>
+your message has been sent	common	sl	Vaše sporočilo je bilo poslano.
+your search returned %1 matchs	common	sl	najdenih %1 zadetkov
+your search returned 1 match	common	sl	najden 1 zadetek.
+your session could not be verified.	login	sl	Vaša seja ne more biti potrjena.
+your settings have been updated	common	sl	Vaše nastavitve so bile osvežene.
+yugoslavia	common	sl	JUGOSLAVIJA
+zambia	common	sl	ZAMBIJA
+zimbabwe	common	sl	ZIMBABWE
