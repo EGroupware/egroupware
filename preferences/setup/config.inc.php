@@ -151,6 +151,7 @@
     </tr>
 
    <?php $selected = array(); ?>
+<!--
    <tr bgcolor="e6e6e6">
      <td>Default file system space per user/group ?:</td>
      <td>
@@ -165,3 +166,4 @@
       </select>
      </td>
     </tr>
+-->
