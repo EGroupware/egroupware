@@ -47,29 +47,30 @@
       $access = $phpgw->accounts->array_to_string($access,$n_groups);
     }
 
-    $this->id        = $ab_id;
-    $this->company   = $company;
-    $this->firstname = $firstname;
-    $this->lastname  = $lastname;
-    $this->email     = $email;
-    $this->title     = $title;
-    $this->wphone    = $wphone;
-    $this->hphone    = $hphone;
-    $this->fax       = $fax;
-    $this->pager     = $pager;
-    $this->mphone    = $mphone;
-    $this->ophone    = $ophone;
-    $this->street    = $street;
-    $this->address2  = $address2;
-    $this->city      = $city;
-    $this->state     = $state;
-    $this->zip       = $zip;
-    $this->bday      = $bday;
-    $this->url       = $url;
-    $this->notes     = $notes;
-    $this->access    = $access;
+    $this->id         = $ab_id;
+    $this->company    = $company;
+    $this->company_id = $company_id;
+    $this->firstname  = $firstname;
+    $this->lastname   = $lastname;
+    $this->email      = $email;
+    $this->title      = $title;
+    $this->wphone     = $wphone;
+    $this->hphone     = $hphone;
+    $this->fax        = $fax;
+    $this->pager      = $pager;
+    $this->mphone     = $mphone;
+    $this->ophone     = $ophone;
+    $this->street     = $street;
+    $this->address2   = $address2;
+    $this->city       = $city;
+    $this->state      = $state;
+    $this->zip        = $zip;
+    $this->bday       = $bday;
+    $this->url        = $url;
+    $this->notes      = $notes;
+    $this->access     = $access;
 
-    $this->update_entry($this);
+    $this->update_entry();
     
     Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter="
       . "$filter&start=$start"));
