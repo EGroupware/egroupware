@@ -119,16 +119,24 @@
 		@param $link ?
 		@param $extravars ?
 		*/
-		function set_link($align,$img,$link,$extravars)
+		function set_link($align,$img,$link,$alt,$extravars)
 		{
-			global $phpgw;
+			global $phpgw, $phpgw_info;
 
 			$hidden = '';
 			while(list($var,$value) = each($extravars))
 			{
-				if((is_int($value) && $value == 0) || $value)
+				if(((is_int($value) && $value == 0) || $value))
 				{
-					$hidden .= '      <input type="hidden" name="'.$var.'" value="'.$value.'">'."\n";
+					if(is_int($value))
+					{
+						$param = intval($value);
+					}
+					else
+					{
+						$param = '"'.$value.'"';
+					}
+					$hidden .= '     <input type="hidden" name="'.$var.'" value='.$param.'>'."\n";
 				}
 			}
 
@@ -149,9 +157,12 @@
 			$var = Array(
 				'align'	=> $align,
 				'action'	=> ($this->action?$this->page():$phpgw->link($link)),
-				'hidden'	=> $hidden,
+				'form_name'	=> $img,
+				'hidden'	=> substr($hidden,0,strlen($hidden)-1),
 				'img'	=> $phpgw->common->image('phpgwapi',$img),
-				'border'	=> $border
+				'label'	=> $alt,
+				'border'	=> $border,
+				'start'	=> $extravars['start']
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','form');
@@ -202,7 +213,7 @@
 				if(is_string($extradata))
 				{
 					$extraparams = explode('&',$extradata);
-					$c_extraparams = count($extraparams);
+					$c_extraparams = count($extraparams) + 1;
 					for($i=0;$i<$c_extraparams;$i++)
 					{
 						if($extraparams[$i])
@@ -255,7 +266,7 @@
 			if (($start != 0) && ($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
-				$ret_str .= $this->set_link('left','first.gif',$scriptname,$extravars);
+				$ret_str .= $this->set_link('left','first.gif',$scriptname,'First page',$extravars);
 			}
 			else
 			{
@@ -274,7 +285,7 @@
 					$extravars['start'] = ($start - $this->maxmatches);
 				}
 
-				$ret_str .= $this->set_link('left','left.gif',$scriptname,$extravars);
+				$ret_str .= $this->set_link('left','left.gif',$scriptname,'Previous page',$extravars);
 			}
 			else
 			{
@@ -310,8 +321,8 @@
 
 			if (($total > $this->maxmatches) && ($total > $start + $this->maxmatches))
 			{
-				$extravars['start'] = ($start+$this->maxmatches);
-				$ret_str .= $this->set_link('right','right.gif',$scriptname,$extravars);
+				$extravars['start'] = ($start + $this->maxmatches);
+				$ret_str .= $this->set_link('right','right.gif',$scriptname,'Next page',$extravars);
 			}
 			else
 			{
@@ -320,8 +331,8 @@
 
 			if (($start != $total - $this->maxmatches) && (($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
-				$extravars['start'] = ($total-$this->maxmatches);
-				$ret_str .= $this->set_link('right','last.gif',$scriptname,$extravars);
+				$extravars['start'] = ($total - $this->maxmatches);
+				$ret_str .= $this->set_link('right','last.gif',$scriptname,'Next page',$extravars);
 			}
 			else
 			{
@@ -459,10 +470,10 @@
 						$filter = $filter_obj[$index][0];
 					}
 
-					$str .= '<option value="' . $filter_obj[$index][0] . '"'.($filter == $filter_obj[$index][0]?' selected':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
+					$str .= '         <option value="' . $filter_obj[$index][0] . '"'.($filter == $filter_obj[$index][0]?' selected':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
 				}
 
-				$str = '<select name="filter" onChange="this.form.submit()">'."\n" . $str . '</select>'."\n";
+				$str = '        <select name="filter" onChange="this.form.submit()">'."\n" . $str . '        </select>';
 				$this->template->set_var('select',$str);
 				$this->template->set_var('lang_filter',lang('Filter'));
 			}
