@@ -94,136 +94,136 @@ class calendar_
 		
 		if($this->stream->num_rows() > 0)
 		{
-			$event = CreateObject('calendar.calendar_item');
-			$event->start = new calendar_time;
-			$event->end = new calendar_time;
-			$event->recur_enddate = new calendar_time;
+			$this->event = CreateObject('calendar.calendar_item');
+			$this->event->start = new calendar_time;
+			$this->event->end = new calendar_time;
+			$this->event->recur_enddate = new calendar_time;
 
 			$this->stream->next_record();
 			// Load the calendar event data from the db into $event structure
 			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
 			
 			// This is the preferred method once everything is normalized...
-			//$event->owner = $this->user;
+			//$this->event->owner = $this->user;
 			// But until then, do it this way...
 		//Legacy Support
-			$event->owner = $this->stream->f('cal_owner');
+			$this->event->owner = $this->stream->f('cal_owner');
 			
 			// This is the preferred method once everything is normalized...
-			//$event->id = $event_id;
+			//$this->event->id = $event_id;
 			// But until then, do it this way...
 		//Legacy Support
-			$event->id = intval($this->stream->f('cal_id'));
+			$this->event->id = intval($this->stream->f('cal_id'));
 			
 			// This is the preferred method once everything is normalized...
-			//$event->public = $this->stream->f('public');
+			//$this->event->public = $this->stream->f('public');
 			// But until then, do it this way...
 		//Legacy Support
-			$event->access = $this->stream->f('cal_access');
+			$this->event->access = $this->stream->f('cal_access');
 		//Legacy Support (New)
-			$event->public = ($this->stream->f('cal_access')=='private'?0:1);
+			$this->event->public = ($this->stream->f('cal_access')=='private'?0:1);
 
 			// This is the preferred method once everything is normalized...
-			//$event->category = $this->stream->f('category');
+			//$this->event->category = $this->stream->f('category');
 			// But until then, do it this way...
 		//Legacy Support (New)
-			$event->category = 'Unfiled';
+			$this->event->category = 'Unfiled';
 
 			// This is the preferred method once everything is normalized...
-			//$event->title = $phpgw->strip_html($this->stream->f('title'));
+			//$this->event->title = $phpgw->strip_html($this->stream->f('title'));
 			// But until then, do it this way...
 		//Legacy Support
-			$event->name = $phpgw->strip_html($this->stream->f('cal_name'));
+			$this->event->name = $phpgw->strip_html($this->stream->f('cal_name'));
 		//Legacy Support (New)
-			$event->title = $phpgw->strip_html($this->stream->f('cal_name'));
+			$this->event->title = $phpgw->strip_html($this->stream->f('cal_name'));
 			
 			// This is the preferred method once everything is normalized...
-			//$event->title = $phpgw->strip_html($this->stream->f('description'));
+			//$this->event->title = $phpgw->strip_html($this->stream->f('description'));
 			// But until then, do it this way...
 		//Legacy Support
 		//Legacy Support (New)
-			$event->description = $phpgw->strip_html($this->stream->f('cal_description'));
+			$this->event->description = $phpgw->strip_html($this->stream->f('cal_description'));
 
 			// This is the preferred method once everything is normalized...
-			//$event->alarm = intval($this->stream->f('alarm'));
+			//$this->event->alarm = intval($this->stream->f('alarm'));
 			// But until then, do it this way...
 		//Legacy Support (New)
-			$event->alarm = 0;
+			$this->event->alarm = 0;
 			
 			// This is the preferred method once everything is normalized...
-			//$event->start = unserialize($this->stream->f('start'));
+			//$this->event->start = unserialize($this->stream->f('start'));
 			// But until then, do it this way...
 		//Legacy Support
-			$event->datetime = $this->stream->f('cal_datetime');
-			$date = $this->localdates($event->datetime);
-			$event->day = $date['day'];
-			$event->month = $date['month'];
-			$event->year = $date['year'];
+			$this->event->datetime = $this->stream->f('cal_datetime');
+			$date = $this->localdates($this->event->datetime);
+			$this->event->day = $date['day'];
+			$this->event->month = $date['month'];
+			$this->event->year = $date['year'];
 
-			$time = $this->splittime($phpgw->common->show_date($event->datetime,'His'));
-			$event->hour   = (int)$time['hour'];
-			$event->minute = (int)$time['minute'];
-			$event->ampm   = $time['ampm'];
+			$time = $this->splittime($phpgw->common->show_date($this->event->datetime,'His'));
+			$this->event->hour   = (int)$time['hour'];
+			$this->event->minute = (int)$time['minute'];
+			$this->event->ampm   = $time['ampm'];
 
 		//Legacy Support (New)
 			$datetime = $this->localdates($this->stream->f('cal_datetime'));
-			$event->start->year	= $datetime['year'];
-			$event->start->month	= $datetime['month'];
-			$event->start->mday	= $datetime['day'];
-			$event->start->hour	= $datetime['hour'];
-			$event->start->min	= $datetime['minute'];
-			$event->start->sec	= $datetime['second'];
-			$event->start->alarm	= 0;
+			$this->event->start->year	= $datetime['year'];
+			$this->event->start->month	= $datetime['month'];
+			$this->event->start->mday	= $datetime['day'];
+			$this->event->start->hour	= $datetime['hour'];
+			$this->event->start->min	= $datetime['minute'];
+			$this->event->start->sec	= $datetime['second'];
+			$this->event->start->alarm	= 0;
 			
 
 		//Legacy Support
-			$event->mdatetime = $this->stream->f('cal_mdatetime');
-			$date = $this->localdates($event->mdatetime);
-			$event->mod_day = $date['day'];
-			$event->mod_month = $date['month'];
-			$event->mod_year = $date['year'];
+			$this->event->mdatetime = $this->stream->f('cal_mdatetime');
+			$date = $this->localdates($this->event->mdatetime);
+			$this->event->mod_day = $date['day'];
+			$this->event->mod_month = $date['month'];
+			$this->event->mod_year = $date['year'];
 
-			$time = $this->splittime($phpgw->common->show_date($event->mdatetime,'His'));
-			$event->mod_hour = (int)$time['hour'];
-			$event->mod_minute = (int)$time['minute'];
-			$event->mod_second = (int)$time['second'];
-			$event->mod_ampm = $time['ampm'];
+			$time = $this->splittime($phpgw->common->show_date($this->event->mdatetime,'His'));
+			$this->event->mod_hour = (int)$time['hour'];
+			$this->event->mod_minute = (int)$time['minute'];
+			$this->event->mod_second = (int)$time['second'];
+			$this->event->mod_ampm = $time['ampm'];
 
 
 			// This is the preferred method once everything is normalized...
-			//$event->end = unserialize($this->stream->f('end'));
+			//$this->event->end = unserialize($this->stream->f('end'));
 			// But until then, do it this way...
 		//Legacy Support
-			$event->edatetime = $this->stream->f('cal_edatetime');
-			$date = $this->localdates($event->edatetime);
-			$event->end_day = $date['day'];
-			$event->end_month = $date['month'];
-			$event->end_year = $date['year'];
+			$this->event->edatetime = $this->stream->f('cal_edatetime');
+			$date = $this->localdates($this->event->edatetime);
+			$this->event->end_day = $date['day'];
+			$this->event->end_month = $date['month'];
+			$this->event->end_year = $date['year'];
 
-			$time = $this->splittime($phpgw->common->show_date($event->edatetime,'His'));
-			$event->end_hour = (int)$time['hour'];
-			$event->end_minute = (int)$time['minute'];
-			$event->end_second = (int)$time['second'];
-			$event->end_ampm = $time['ampm'];
+			$time = $this->splittime($phpgw->common->show_date($this->event->edatetime,'His'));
+			$this->event->end_hour = (int)$time['hour'];
+			$this->event->end_minute = (int)$time['minute'];
+			$this->event->end_second = (int)$time['second'];
+			$this->event->end_ampm = $time['ampm'];
 
 		//Legacy Support (New)
 			$datetime = $this->localdates($this->stream->f('cal_edatetime'));
-			$event->end->year	= $datetime['year'];
-			$event->end->month	= $datetime['month'];
-			$event->end->mday	= $datetime['day'];
-			$event->end->hour	= $datetime['hour'];
-			$event->end->min	= $datetime['minute'];
-			$event->end->sec	= $datetime['second'];
-			$event->end->alarm	= 0;
+			$this->event->end->year	= $datetime['year'];
+			$this->event->end->month	= $datetime['month'];
+			$this->event->end->mday	= $datetime['day'];
+			$this->event->end->hour	= $datetime['hour'];
+			$this->event->end->min	= $datetime['minute'];
+			$this->event->end->sec	= $datetime['second'];
+			$this->event->end->alarm	= 0;
 
 		//Legacy Support
-			$event->priority = $this->stream->f('cal_priority');
+			$this->event->priority = $this->stream->f('cal_priority');
 			if($this->stream->f('cal_group'))
 			{
 				$groups = explode(',',$this->stream->f('cal_group'));
 				for($j=1;$j<count($groups) - 1;$j++)
 				{
-					$event->groups[] = $groups[$j];
+					$this->event->groups[] = $groups[$j];
 				}
 			}
 
@@ -239,107 +239,107 @@ class calendar_
 				$this->stream->next_record();
 
 				// This is the preferred method once everything is normalized...
-				//$event->recur_type = intval($this->stream->f('recur_type'));
+				//$this->event->recur_type = intval($this->stream->f('recur_type'));
 				// But until then, do it this way...
 		//Legacy Support
 				$rpt_type = strtolower($this->stream->f('cal_type'));
-				$event->rpt_type = !$rpt_type?'none':$rpt_type;
+				$this->event->rpt_type = !$rpt_type?'none':$rpt_type;
 				
 		//Legacy Support (New)
-				switch($event->rpt_type)
+				switch($this->event->rpt_type)
 				{
 					case 'none':
-						$event->recur_type = RECUR_NONE;
+						$this->event->recur_type = RECUR_NONE;
 						break;
 					case 'daily':
-						$event->recur_type = RECUR_DAILY;
+						$this->event->recur_type = RECUR_DAILY;
 						break;
 					case 'weekly':
-						$event->recur_type = RECUR_WEEKLY;
+						$this->event->recur_type = RECUR_WEEKLY;
 						break;
 					case 'monthlybydate':
-						$event->recur_type = RECUR_MONTHLY_MDAY;
+						$this->event->recur_type = RECUR_MONTHLY_MDAY;
 						break;
 					case 'monthlybyday':
-						$event->recur_type = RECUR_MONTHLY_WDAY;
+						$this->event->recur_type = RECUR_MONTHLY_WDAY;
 						break;
 					case 'yearly':
-						$event->recur_type = RECUR_YEARLY;
+						$this->event->recur_type = RECUR_YEARLY;
 						break;
 				}
 				
 				// This is the preferred method once everything is normalized...
-				//$event->recur_interval = intval($this->stream->f('recur_interval'));
+				//$this->event->recur_interval = intval($this->stream->f('recur_interval'));
 				// But until then, do it this way...
 		//Legacy Support
-				$event->rpt_freq = (int)$this->stream->f('cal_frequency');
+				$this->event->rpt_freq = (int)$this->stream->f('cal_frequency');
 		//Legacy Support (New)
-				$event->recur_interval = (int)$this->stream->f('cal_frequency');
+				$this->event->recur_interval = (int)$this->stream->f('cal_frequency');
 
 				// This is the preferred method once everything is normalized...
-				//$event->recur_enddate = unserialize($this->stream->f('recur_enddate'));
+				//$this->event->recur_enddate = unserialize($this->stream->f('recur_enddate'));
 				// But until then, do it this way...
 		//Legacy Support
-				$event->recur_use_end = $this->stream->f('cal_use_end');
-				if($event->recur_use_end == True)
+				$this->event->recur_use_end = $this->stream->f('cal_use_end');
+				if($this->event->recur_use_end == True)
 				{
-		//Legacy Support
-					$event->rpt_end = $this->stream->f('cal_end');
 					$date = $this->localdates($this->stream->f('cal_end'));
-					$event->rpt_end_day = (int)$date['day'];
-					$event->rpt_end_month = (int)$date['month'];
-					$event->rpt_end_year = (int)$date['year'];
+		//Legacy Support
+					$this->event->rpt_end = $this->stream->f('cal_end');
+					$this->event->rpt_end_day = (int)$date['day'];
+					$this->event->rpt_end_month = (int)$date['month'];
+					$this->event->rpt_end_year = (int)$date['year'];
 					
 		//Legacy Support (New)
-					$event->recur_enddate->year	= $date['year'];
-					$event->recur_enddate->month	= $date['month'];
-					$event->recur_enddate->mday	= $date['day'];
-					$event->recur_enddate->hour	= $date['hour'];
-					$event->recur_enddate->min	= $date['minute'];
-					$event->recur_enddate->sec	= $date['second'];
-					$event->recur_enddate->alarm	= 0;
+					$this->event->recur_enddate->year	= $date['year'];
+					$this->event->recur_enddate->month	= $date['month'];
+					$this->event->recur_enddate->mday	= $date['day'];
+					$this->event->recur_enddate->hour	= $date['hour'];
+					$this->event->recur_enddate->min	= $date['minute'];
+					$this->event->recur_enddate->sec	= $date['second'];
+					$this->event->recur_enddate->alarm	= 0;
 				}
 				else
 				{
 		//Legacy Support
-					$event->rpt_end = 0;
-					$event->rpt_end_day = 0;
-					$event->rpt_end_month = 0;
-					$event->rpt_end_year = 0;
+					$this->event->rpt_end = 0;
+					$this->event->rpt_end_day = 0;
+					$this->event->rpt_end_month = 0;
+					$this->event->rpt_end_year = 0;
 
 		//Legacy Support (New)
-					$event->recur_enddate->year	= 0;
-					$event->recur_enddate->month	= 0;
-					$event->recur_enddate->mday	= 0;
-					$event->recur_enddate->hour	= 0;
-					$event->recur_enddate->min	= 0;
-					$event->recur_enddate->sec	= 0;
-					$event->recur_enddate->alarm	= 0;
+					$this->event->recur_enddate->year	= 0;
+					$this->event->recur_enddate->month	= 0;
+					$this->event->recur_enddate->mday	= 0;
+					$this->event->recur_enddate->hour	= 0;
+					$this->event->recur_enddate->min	= 0;
+					$this->event->recur_enddate->sec	= 0;
+					$this->event->recur_enddate->alarm	= 0;
 				}
 				
 				// This is the preferred method once everything is normalized...
-				//$event->recur_data = $this->stream->f('recur_data');
+				//$this->event->recur_data = $this->stream->f('recur_data');
 				// But until then, do it this way...
 		//Legacy Support
 				$rpt_days = strtoupper($this->stream->f('cal_rpt_days'));
-				$event->rpt_days = $rpt_days;
-				$event->rpt_sun = (substr($rpt_days,0,1)=='Y'?1:0);
-				$event->rpt_mon = (substr($rpt_days,1,1)=='Y'?1:0);
-				$event->rpt_tue = (substr($rpt_days,2,1)=='Y'?1:0);
-				$event->rpt_wed = (substr($rpt_days,3,1)=='Y'?1:0);
-				$event->rpt_thu = (substr($rpt_days,4,1)=='Y'?1:0);
-				$event->rpt_fri = (substr($rpt_days,5,1)=='Y'?1:0);
-				$event->rpt_sat = (substr($rpt_days,6,1)=='Y'?1:0);
+				$this->event->rpt_days = $rpt_days;
+				$this->event->rpt_sun = (substr($rpt_days,0,1)=='Y'?1:0);
+				$this->event->rpt_mon = (substr($rpt_days,1,1)=='Y'?1:0);
+				$this->event->rpt_tue = (substr($rpt_days,2,1)=='Y'?1:0);
+				$this->event->rpt_wed = (substr($rpt_days,3,1)=='Y'?1:0);
+				$this->event->rpt_thu = (substr($rpt_days,4,1)=='Y'?1:0);
+				$this->event->rpt_fri = (substr($rpt_days,5,1)=='Y'?1:0);
+				$this->event->rpt_sat = (substr($rpt_days,6,1)=='Y'?1:0);
 
 		//Legacy Support (New)
-				$event->recur_data = 0;
-				$event->recur_data += (substr($rpt_days,0,1)=='Y'?M_SUNDAY:0);
-				$event->recur_data += (substr($rpt_days,1,1)=='Y'?M_MONDAY:0);
-				$event->recur_data += (substr($rpt_days,2,1)=='Y'?M_TUESDAY:0);
-				$event->recur_data += (substr($rpt_days,3,1)=='Y'?M_WEDNESDAY:0);
-				$event->recur_data += (substr($rpt_days,4,1)=='Y'?M_THURSDAY:0);
-				$event->recur_data += (substr($rpt_days,5,1)=='Y'?M_FRIDAY:0);
-				$event->recur_data += (substr($rpt_days,6,1)=='Y'?M_SAYURDAY:0);
+				$this->event->recur_data = 0;
+				$this->event->recur_data += (substr($rpt_days,0,1)=='Y'?M_SUNDAY:0);
+				$this->event->recur_data += (substr($rpt_days,1,1)=='Y'?M_MONDAY:0);
+				$this->event->recur_data += (substr($rpt_days,2,1)=='Y'?M_TUESDAY:0);
+				$this->event->recur_data += (substr($rpt_days,3,1)=='Y'?M_WEDNESDAY:0);
+				$this->event->recur_data += (substr($rpt_days,4,1)=='Y'?M_THURSDAY:0);
+				$this->event->recur_data += (substr($rpt_days,5,1)=='Y'?M_FRIDAY:0);
+				$this->event->recur_data += (substr($rpt_days,6,1)=='Y'?M_SAYURDAY:0);
 			}
 			
 		//Legacy Support
@@ -348,19 +348,19 @@ class calendar_
 			{
 				while($this->stream->next_record())
 				{
-					$event->participants[] = $this->stream->f('cal_login');
-					$event->status[] = $this->stream->f('cal_status');
+					$this->event->participants[] = $this->stream->f('cal_login');
+					$this->event->status[] = $this->stream->f('cal_status');
 				}
 			}
 		}
 		else
 		{
-			$event = False;
+			$this->event = False;
 		}
       
 		$this->stream->unlock();
 
-		return $event;
+		return $this->event;
 	}
 
 	function list_events($mcal_stream,$startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endYear='')
@@ -402,7 +402,7 @@ class calendar_
 		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
 		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
 		$this->stream->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
-		$this->stream->query('DELETE FROM calendar_entry WHERE cal_id='.$event_id[$i],__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
 		$this->stream->unlock();
 	}
 
@@ -422,6 +422,44 @@ class calendar_
 	{
 		$this->event = CreateObject('calendar.calendar_item');
 		return True;
+	}
+
+	function event_set_category($stream,$category='')
+	{
+		$this->event->category = $category;
+		return True;
+	}
+
+	function event_set_title($stream,$title='')
+	{
+		$this->event->title = $title;
+		return True;
+	}
+
+	function event_set_description($stream,$description='')
+	{
+		$this->event->description = $description;
+		return True;
+	}
+
+	function event_set_start($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	{
+		$this->event->start->year = $year;
+		$this->event->start->month = $month;
+		$this->event->start->day = $day;
+		$this->event->start->hour = $hour;
+		$this->event->start->min = $min;
+		$this->event->start->sec = $sec;
+	}
+
+	function event_set_end($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	{
+		$this->event->end->year = $year;
+		$this->event->end->month = $month;
+		$this->event->end->day = $day;
+		$this->event->end->hour = $hour;
+		$this->event->end->min = $min;
+		$this->event->end->sec = $sec;
 	}
 
 	/***************** Local functions for SQL based Calendar *****************/
@@ -577,6 +615,7 @@ class calendar_
 		}
 		
 		$this->stream->unlock();
+		return True;
 	}
 // End of ICal style support.......
 

@@ -128,14 +128,7 @@ class calendar extends calendar_
 
 	function check_perms($needed)
 	{
-		if($this->rights & $needed)
-		{
-			return True;
-		}
-		else
-		{
-			return False;
-		}
+		return (!!($this->rights & $needed) == True);
 	}
 
 	function get_weekday_start($year,$month,$day) {

@@ -125,16 +125,18 @@ class calendar_
 	  
 		if($options != '')
 		{
-			$event = mcal_fetch_event($mcal_stream,$event_id,$options);
+			$this->event = mcal_fetch_event($mcal_stream,$event_id,$options);
 		}
 		else
 		{
-			$event = mcal_fetch_event($mcal_stream,$event_id);
+			$this->event = mcal_fetch_event($mcal_stream,$event_id);
 		}
 
-		// Need to load the $this->event variable with the data from the mcal_fetch_event() call
-		// Use http://www.php.net/manual/en/function.mcal-fetch-event.phpas the reference
-
+		// Need to load the $this->event variable with the $event structure from
+		// the mcal_fetch_event() call
+		// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
+		// This only needs legacy support
+		
 		return $this->event;
 	}
 
@@ -221,7 +223,105 @@ class calendar_
 	
 	function event_init($stream)
 	{
+		$this->event = CreateObject('calendar.calendar_item');
 		return mcal_event_init($stream);
 	}
 
+	function event_set_category($stream,$category='')
+	{
+		$this->event->category = $category;
+		return mcal_event_set_category($stream,$this->event->category);
+	}
+	
+	function event_set_title($stream,$title='')
+	{
+		$this->event->title = $title;
+		return mcal_event_set_title($stream,$this->event->title);
+	}
+
+	function event_set_description($stream,$description='')
+	{
+		$this->event->description = $description;
+		return mcal_event_set_description($stream,$this->event->description);
+	}
+
+	function event_set_start($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	{
+		$this->event->start->year = $year;
+		$this->event->start->month = $month;
+		$this->event->start->day = $day;
+		$this->event->start->hour = $hour;
+		$this->event->start->min = $min;
+		$this->event->start->sec = $sec;
+		
+		if($sec == 0)
+		{
+			if($min == 0)
+			{
+				if($hour == 0)
+				{
+					if($day == 0)
+					{
+						return mcal_event_set_start($stream,$year,$month);
+					}
+					else
+					{
+						return mcal_event_set_start($stream,$year,$month,$day);
+					}
+				}
+				else
+				{
+					return mcal_event_set_start($stream,$year,$month,$day,$hour);
+				}
+			}
+			else
+			{
+				return mcal_event_set_start($stream,$year,$month,$day,$hour,$min);
+			}
+		}
+		else
+		{
+			return mcal_event_set_start($stream,$year,$month,$day,$hour,$min,$sec);
+		}
+	}
+
+	function event_set_end($stream,$year,$month,$day=0,$hour=0,$min=0,$sec=0)
+	{
+		$this->event->end->year = $year;
+		$this->event->end->month = $month;
+		$this->event->end->day = $day;
+		$this->event->end->hour = $hour;
+		$this->event->end->min = $min;
+		$this->event->end->sec = $sec;
+		
+		if($sec == 0)
+		{
+			if($min == 0)
+			{
+				if($hour == 0)
+				{
+					if($day == 0)
+					{
+						return mcal_event_set_end($stream,$year,$month);
+					}
+					else
+					{
+						return mcal_event_set_end($stream,$year,$month,$day);
+					}
+				}
+				else
+				{
+					return mcal_event_set_end($stream,$year,$month,$day,$hour);
+				}
+			}
+			else
+			{
+				return mcal_event_set_end($stream,$year,$month,$day,$hour,$min);
+			}
+		}
+		else
+		{
+			return mcal_event_set_end($stream,$year,$month,$day,$hour,$min,$sec);
+		}
+	}
 }
