@@ -200,7 +200,8 @@
 			$processed = Array();
 			foreach($accounts as $uid => $data)
 			{
-				if ($uid == $owner) continue;	// no need to grant to self
+				if ($data['account_type'] == 'u' && $uid == $owner)
+					continue;	/* no need to grant to self if user */
 
 				if ($data['account_type'] != $header_type)
 				{
