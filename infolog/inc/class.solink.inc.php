@@ -16,11 +16,14 @@
 	/*!
 	@class solink
 	@author ralfbecker
+	@copyright GPL - GNU General Public License
 	@abstract generalized linking between entries of phpGroupware apps - DB layer
-	@discussion This class is to access the links in the DB
-	@discussion Links have to ends each pointing two an entry, each entry is a double:
-	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'
-	@discussion id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
+	@discussion This class is to access the links in the DB<br>
+		Links have to ends each pointing two an entry, each entry is a double:<br>
+		app   app-name or directory-name of an phpgw application, eg. 'infolog'<br>
+		id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
+	@note All vars passed to this class are run either through addslashes or intval 
+		to prevent query insertion and to get pgSql 7.3 compatibility.
 	*/
 	class solink 				// DB-Layer
 	{
@@ -70,7 +73,7 @@
 			{
 				return False;	// dont link to self or other nosense
 			}
-			if ($this->get_link($app1,$id1,$app2,$id2))
+			if ($link = $this->get_link($app1,$id1,$app2,$id2))
 			{
 				return $link['link_id'];	// link alread exist
 			}
@@ -78,13 +81,17 @@
 			{
 				$owner = $this->user;
 			}
-			$remark = $this->db->db_addslashes($remark);
+			$vars2addslashes = array('app1','id1','app2','id2','remark');
+			foreach ($vars2addslashes as $var)
+			{
+				$$var = $this->db->db_addslashes($$var);
+			}
 			if (!$lastmod)
 			{
 				$lastmod = time();
 			}
 			$sql = "INSERT INTO $this->db_name (link_app1,link_id1,link_app2,link_id2,link_remark,link_lastmod,link_owner) ".
-			       " VALUES ('$app1','$id1','$app2','$id2','$remark',$lastmod,$owner)";
+			       " VALUES ('$app1','$id1','$app2','$id2','$remark',".intval($lastmod).','.intval($owner).')';
 
 			if ($this->debug)
 			{
@@ -108,6 +115,11 @@
 		{
 			$links = array();
 
+			$vars2addslashes = array('app','id','only_app','order');
+			foreach ($vars2addslashes as $var)
+			{
+				$$var = $this->db->db_addslashes($$var);
+			}
 			$sql = "SELECT * FROM $this->db_name".
 					 " WHERE (link_app1 = '$app' AND link_id1 = '$id')".
 					 " OR (link_app2 = '$app' AND link_id2 = '$id')".
@@ -131,14 +143,14 @@
 				{
 					$link = array(
 						'app'  => $row['link_app2'],
-						'id'   => stripslashes($row['link_id2'])
+						'id'   => $row['link_id2']
 					);
 				}
 				else
 				{
 					$link = array(
 						'app'  => $row['link_app1'],
-						'id'   => stripslashes($row['link_id1'])
+						'id'   => $row['link_id1']
 					);
 				}
 				if ($only_app && $not_only == ($link['app'] == $only_app) ||
@@ -146,7 +158,7 @@
 				{
 					continue;
 				}
-				$link['remark']  = stripslashes($row['link_remark']);
+				$link['remark']  = $row['link_remark'];
 				$link['owner']   = $row['link_owner'];
 				$link['lastmod'] = $row['link_lastmod'];
 				$link['link_id'] = $row['link_id'];
@@ -174,13 +186,18 @@
 			$sql = "SELECT * FROM $this->db_name WHERE ";
 			if (intval($app_link_id) > 0)
 			{
-				$sql .= "link_id=$app_link_id";
+				$sql .= 'link_id='.intval($app_link_id);
 			}
 			else
 			{
 				if ($app_link_id == '' || $id == '' || $app2 == '' || $id2 == '')
 				{
 					return False;
+				}
+				$vars2addslashes = array('app_link_id','id','app2','id2');
+				foreach ($vars2addslashes as $var)
+				{
+					$$var = $this->db->db_addslashes($$var);
 				}
 				$sql .= "(link_app1='$app_link_id' AND link_id1='$id' AND link_app2='$app2' AND link_id2='$id2') OR".
 				        "(link_app2='$app_link_id' AND link_id2='$id' AND link_app1='$app2' AND link_id1='$id2')";
@@ -199,9 +216,9 @@
 		}
 
 		/*!
-      @function unlink
-      @syntax unlink( $link_id,$app='',$id='',$owner='',$app2='',$id2='' )
-      @author ralfbecker
+		@function unlink
+		@syntax unlink( $link_id,$app='',$id='',$owner='',$app2='',$id2='' )
+		@author ralfbecker
 		@abstract Remove link with $link_id or all links matching given params
 		@param $link_id link-id to remove if > 0
 		@param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params
@@ -210,9 +227,9 @@
 		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
 		{
 			$sql = "DELETE FROM $this->db_name WHERE ";
-			if ($link_id > 0)
+			if (intval($link_id) > 0)
 			{
-				$sql .= "link_id=$link_id";
+				$sql .= 'link_id='.intval($link_id);
 			}
 			elseif ($app == '' AND $owner == '')
 			{
@@ -220,6 +237,11 @@
 			}
 			else
 			{
+				$vars2addslashes = array('app','id','app2','id2');
+				foreach ($vars2addslashes as $var)
+				{
+					$$var = $this->db->db_addslashes($$var);
+				}
 				if ($app != '' && $app2 == '')
 				{
 					$sql .= "((link_app1='$app'";
@@ -238,7 +260,7 @@
 				}
 				if ($owner != '')
 				{
-					$sql .= ($app != '' ? ' AND ' : '') . "link_owner='$owner'";
+					$sql .= ($app != '' ? ' AND ' : '') . 'link_owner='.intval($owner);
 				}
 			}
 			if ($this->debug)
@@ -251,9 +273,9 @@
 		}
 
 		/*!
-      @function chown
-      @syntax chown( $owner,$new_owner )
-      @author ralfbecker
+		@function chown
+		@syntax chown( $owner,$new_owner )
+		@author ralfbecker
 		@abstract Changes ownership of all links from $owner to $new_owner
 		@discussion This is needed when a user/account gets deleted
 		@discussion Does NOT change the modification-time
@@ -261,11 +283,11 @@
 		*/
 		function chown($owner,$new_owner)
 		{
-			if ($owner <= 0 || $new_owner <= 0)
+			if (intval($owner) <= 0 || intval($new_owner) <= 0)
 			{
 				return 0;
 			}
-			$this->db->query("UPDATE $this->db_name SET owner=$new_owner WHERE owner=$owner",__LINE__,__FILE__);
+			$this->db->query("UPDATE $this->db_name SET owner=".intval($new_owner).' WHERE owner='.intval($owner),__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}

@@ -19,11 +19,18 @@
 	/*!
 	@class bolink
 	@author ralfbecker
+	@copyright GPL - GNU General Public License
 	@abstract generalized linking between entries of phpGroupware apps - BO layer
-	@discussion This class is the BO-layer of the links
-	@discussion Links have two ends each pointing to an entry, each entry is a double:
-	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'
-	@discussion id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
+	@discussion This class is the BO-layer of the links<br>
+		Links have two ends each pointing to an entry, each entry is a double:<br>
+		app   app-name or directory-name of an phpgw application, eg. 'infolog'<br>
+		id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'<br>
+		The BO-layer implementes 2 extra features on top of the so-layer:<br>
+		1) It handles links to not already existing entries. This is used by the eTemplate link-widget, which allows to
+			setup links even for new / not already existing entries, before they get saved.
+			In that case you have to set the first id to 0 for the link-function and pass the array returned in that id 
+			(not the return-value) after saveing your new entry again to the link function.<br>
+		2) Attaching files: they are saved in the vfs and not the link-table (!).
 	*/
 	class bolink extends solink
 	{
@@ -54,13 +61,7 @@
 					'menuaction' => 'calendar.uicalendar.view'
 				),
 				'view_id' => 'cal_id'
-			), /*
-			'email' => array(
-				'view' => array(
-					'menuaction' => 'email.uimessage.message'
-				),
-				'view_id' => 'msgball[acctnum:folder:msgnum]'	// id is a tupple/array, fields separated by ':'
-			), */
+			), 
 			'infolog' => array(
 				'query' => 'infolog.boinfolog.link_query',
 				'title' => 'infolog.boinfolog.link_title',
@@ -70,13 +71,27 @@
 				),
 				'view_id' => 'action_id',
 			),
+/*
+			'email' => array(
+				'view' => array(
+					'menuaction' => 'email.uimessage.message'
+				),
+				'view_id' => 'msgball[acctnum:folder:msgnum]'	// id is a tupple/array, fields separated by ':'
+			),
+ */
 		);
 		var $vfs;
-		var $vfs_basedir='/infolog';
-		var $vfs_appname='file';	// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
+		var $vfs_basedir='/infolog';	// might changes to links if class gets imported in the api
+		var $vfs_appname='file';		// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
 		var $valid_pathes = array();
 		var $send_file_ips = array();
 
+		/*!
+		@function bolink
+		@syntax bolink(   )
+		@author ralfbecker
+		@abstract constructor
+		*/
 		function bolink( )
 		{
 			$this->solink( );					// call constructor of derived class
@@ -115,26 +130,26 @@
 
 		/*!
 		@function link
-		@syntax link(  $app1,$id1,$app2,$id2='',$remark='',$user=0  )
+		@syntax link(  $app1,&$id1,$app2,$id2='',$remark='',$user=0  )
 		@author ralfbecker
 		@abstract creats a link between $app1,$id1 and $app2,$id2 - $id1 does NOT need to exist yet
 		@param $app1 app of $id1
 		@param $id1 id of item to linkto or 0 if item not yet created or array with links 
-			of not created item or $file-array if $app1 == $this->vfs_appname (see below)
+			of not created item or $file-array if $app1 == $this->vfs_appname (see below).
+			If $id==0 it will be set on return to an array with the links for the new item.
 		@param $app2 app of 2.linkend or array with links ($id2 not used)
-		@param $id2 id of 2. item of $file-array if $app2 == $this->vfs_appname (see below)
-		@param $file array with informations about the file in format of the etemplate file-type
-		@param $file['name'] name of the file (no directory)
-		@param $file['type'] mine-type of the file
-		@param $file['tmp_name'] name of the uploaded file (incl. directory)
-		@param $file['path'] path of the file on the client computer
-		@param $file['ip'] of the client
-		@discussion path and ip are only needed if u want a symlink (if possible)
+		@param $id2 id of 2. item of $file-array if $app2 == $this->vfs_appname (see below)<br>
+			$file array with informations about the file in format of the etemplate file-type<br>
+			$file['name'] name of the file (no directory)<br>
+			$file['type'] mine-type of the file<br>
+			$file['tmp_name'] name of the uploaded file (incl. directory)<br>
+			$file['path'] path of the file on the client computer<br>
+			$file['ip'] of the client (path and ip in $file are only needed if u want a symlink (if possible))
 		@param $remark Remark to be saved with the link (defaults to '')
 		@param $owner Owner of the link (defaults to user)
-		@discussion Does NOT check if link already exists
-		@result False (for db or param-error) or link_id on success
-		@result if $id1==0 or already an array: $id1 is array with links
+		@discussion Does NOT check if link already exists.<br> 
+			File-attachments return a negative link-id !!!
+		@result False (for db or param-error) or on success link_id (Please not the return-value of $id1)
 		*/
 		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
 		{
@@ -256,7 +271,7 @@
 		@param $app_link_id > 0 link_id of link or app-name of link
 		@param $id,$app2,$id2 other param of the link if not link_id given
 		@result array with link-data or False
-		@disscussion If $id is an array (links not yet created) only link_ids are allowed.
+		@discussion If $id is an array (links not yet created) only link_ids are allowed.
 		*/ 
 		function get_link($app_link_id,$id='',$app2='',$id2='')
 		{
@@ -291,7 +306,7 @@
 		@param $link_id link-id to remove if > 0
 		@param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params
 		@discussion Note: if $link_id != '' and $id is an array: unlink removes links from that array only
-		@discussion       unlink has to be called with &$id so see the result !!!
+			unlink has to be called with &$id so see the result !!!
 		@result the number of links deleted
 		*/
 		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
@@ -325,7 +340,7 @@
 		@function app_list
 		@syntax app_list(   )
 		@author ralfbecker
-		@abstrac get list/array of link-aware apps the user has rights to use
+		@abstract get list/array of link-aware apps the user has rights to use
 		@result array( $app => lang($app), ... )
 		*/
 		function app_list( )
@@ -503,17 +518,17 @@
 		}
 
 		/*!
-		@function vfs_path
-		@syntax vfs_path ( $app,$id,$file='' )
+		@function attach_file
+		@syntax attach_file ( $app,$id,$file,$comment='' )
 		@abstract Put a file to the corrosponding place in the VFS and set the attributes
 		@param $app/$id entry which should the file should be linked with
 		@param $file array with informations about the file in format of the etemplate file-type
-		@param $file['name'] name of the file (no directory)
-		@param $file['type'] mine-type of the file
-		@param $file['tmp_name'] name of the uploaded file (incl. directory)
-		@param $file['path'] path of the file on the client computer
-		@param $file['ip'] of the client
-		@discussion path and ip are only needed if u want a symlink (if possible)
+			$file['name'] name of the file (no directory)
+			$file['type'] mine-type of the file
+			$file['tmp_name'] name of the uploaded file (incl. directory)
+			$file['path'] path of the file on the client computer
+			$file['ip'] of the client (path and ip are only needed if u want a symlink (if possible))
+		@param $comment
 		*/
 		function attach_file($app,$id,$file,$comment='')
 		{
