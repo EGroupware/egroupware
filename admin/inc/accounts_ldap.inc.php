@@ -204,7 +204,7 @@
 
      $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
-     if (! @mkdir($basedir . $n_loginid, 0707)) {
+     if (! mkdir($basedir . $account_info["loginid"], 0707)) {
         $cd = 36;
      } else {
         $cd = 28;
@@ -281,8 +281,6 @@
   {
     global $phpgw_info, $phpgw, $ldap;
 
-    #ldap_delete($ldap,"ou=phpgwpreferences,".$account_id);
-    
     //delete sub dn's
     $sri = ldap_search($ldap, $phpgw_info["server"]["ldap_context"], "objectclass=phpgw_*");
     $allValues = ldap_get_entries($ldap, $sri);
@@ -293,7 +291,44 @@
     	ldap_delete($ldap,$allValues[$i]["dn"]);
     	#print ldap_error($ldap);
     } 
+    
+    //before we delete the data in ldaptree, we need to fetch the uid, 
+    //to be able to delete the sql stuff
+    $sri = ldap_read($ldap,$account_id,"objectclass=*");
+    $allValues = ldap_get_entries($ldap, $sri);
+
     ldap_delete($ldap,$account_id);
+
+    // set $account_id to uidnumber for sql
+    $account_id = $allValues[0]["uidnumber"][0];    
+
+    $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
+    $phpgw->db->next_record();
+    $lid = $phpgw->db->f(0);
+
+    $table_locks = array('preferences','todo','addressbook','accounts');
+
+    $phpgw->calendar->delete($lid);
+
+    $phpgw->db->lock($table_locks);
+
+    $phpgw->db->query("delete from todo where todo_owner='".$account_id."'");
+    $phpgw->db->query("delete from addressbook where ab_owner='".$account_id."'");
+    $phpgw->db->query("delete from accounts where account_id='".$account_id."'");
+    $phpgw->db->query("delete from preferences where preference_owner='".$account_id."'");
+
+    $phpgw->db->unlock();
+
+    $sep = $phpgw->common->filesystem_separator();
+
+    $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
+
+    if (! @rmdir($basedir . $lid)) {
+       $cd = 34;
+    } else {
+       $cd = 29;
+    }
+    return $cd;
   }
 
   function account_exsists($loginid)
