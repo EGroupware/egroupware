@@ -10,21 +10,16 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 	/* $Id$ */
-	
-	// Delete all records for a user
-	if (floor(phpversion()) == 4)
-	{
-		global $account_id, $new_owner;
-	}
 
+	// Delete all records for a user
 	$cal = CreateObject('calendar.bocalendar');
 
-	if(intval($new_owner)==0)
+	if(intval($GLOBALS['HTTP_POST_VARS']['new_owner'])==0)
 	{
-		$cal->delete_calendar(intval($account_id));
+		$cal->delete_calendar(intval($GLOBALS['HTTP_POST_VARS']['account_id']));
 	}
 	else
 	{
-		$cal->change_owner(intval($account_id),intval($new_owner));
+		$cal->change_owner(intval($GLOBALS['HTTP_POST_VARS']['account_id']),intval($GLOBALS['HTTP_POST_VARS']['new_owner']));
 	}
 ?>
