@@ -142,8 +142,6 @@
 	* limiting and selecting what to print                                     *
 	\**************************************************************************/
 
-	include ('../phpgwapi/inc/class.Template.inc.php');
-
 	if (!isset($GLOBALS['HTTP_GET_VARS']['object_type']))
 	{
 		$GLOBALS['object_type'] = 'function';
@@ -314,5 +312,40 @@
 	{
 		$doc_array = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
 	}
+
+	include ('../phpgwapi/inc/class.Template.inc.php');
+	$curdir = getcwd();
+	$GLOBALS['template'] = new template($curdir);
+
+	$output_format = 'html';
+	$GLOBALS['template']->set_file(array('tpl_file' => 'inlinedocparser_'.$output_format.'.tpl',));
+	$GLOBALS['template']->set_block('tpl_file','border_top');
+	$GLOBALS['template']->set_block('tpl_file', 'group');
+	$GLOBALS['template']->set_block('tpl_file', 'object');
+	$GLOBALS['template']->set_block('tpl_file','border_bottom');
+	$GLOBALS['template']->set_block('tpl_file','abstract');
+	$GLOBALS['template']->set_block('tpl_file','params');
+	$GLOBALS['template']->set_block('tpl_file','param_entry');
+
+	$GLOBALS['template']->fp('doc','border_top',True);
+	reset($doc_array);
+	while(list($group_key, $group_value) = each($doc_array))
+	{
+		$GLOBALS['template']->set_var('group_name',$group_key);
+		/* This is where most of the work in creating the output gets done */
+		while(list($object_key, $object_value) = each($group_value))
+		{
+			$GLOBALS['template']->set_var('object_name',$object_key);
+//			while(list($object_key, $object_value) = each($group_value))
+//			{
+//			}
+
+			$GLOBALS['template']->fp('group_contents','object',True);
+		}
+		$GLOBALS['template']->fp('doc','group',True);
+	}
+	$GLOBALS['template']->fp('doc','border_bottom',True);
+	$GLOBALS['template']->pfp('out', 'doc');
+	
 	array_print($doc_array);
 ?>
