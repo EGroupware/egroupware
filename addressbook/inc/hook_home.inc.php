@@ -85,7 +85,7 @@
 		{
 			$portalbox->data[] = array(
 				'text' => lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
-				'link' = >$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
+				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
 			);
 //			$tmp = '<a href="'
 //				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
