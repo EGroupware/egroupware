@@ -22,7 +22,9 @@
 
 		function index()
 		{
-			$section     = addslashes($_POST['section']);
+
+		   $html = createObject('phpgwapi.html');
+		   $section     = addslashes($_POST['section']);
 			$select_lang = addslashes($_POST['select_lang']);
 			$message     = addslashes($_POST['message']);
 
@@ -52,7 +54,7 @@
 					. "$section' AND lang='$select_lang'",__LINE__,__FILE__);
 				$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_lang VALUES ('$section" . "_message','$section','$select_lang','"
 					. $message . "')",__LINE__,__FILE__);
-				$message = '<center>'.lang('message has been updated').'</center>';
+					$feedback_message = '<center>'.lang('message has been updated').'</center>';
 				
 				$section = '';
 			}
@@ -76,13 +78,19 @@
 			{
 				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
 			}
-			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
 
+			
+
+			
 			if (empty($section))
 			{
-				$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index'));
+
+			   $GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
+			   $GLOBALS['phpgw']->common->phpgw_header();
+			   echo parse_navbar();
+				  
+			   
+			   $GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index'));
 				$GLOBALS['phpgw']->template->set_var('tr_color',$GLOBALS['phpgw_info']['theme']['th_bg']);
 				$GLOBALS['phpgw']->template->set_var('value','&nbsp;');
 				$GLOBALS['phpgw']->template->fp('rows','row_2',True);
@@ -127,11 +135,28 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->db->query("SELECT content FROM phpgw_lang WHERE lang='$select_lang' AND message_id='$section"
+			   $GLOBALS['phpgw']->db->query("SELECT content FROM phpgw_lang WHERE lang='$select_lang' AND message_id='$section"
 				. "_message'",__LINE__,__FILE__);
 				$GLOBALS['phpgw']->db->next_record();
+				
 				$current_message = $GLOBALS['phpgw']->db->f('content');
+				
+				if($_POST[htmlarea])
+				{
+				   $text_or_htmlarea=$html->htmlarea('message',stripslashes($current_message),'','','TableOperations,ContextMenu,SpellChecker');
+				   $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WSIWYG-editor').'">';
+				}
+				else
+				{
+				   $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' . stripslashes($current_message) . '</textarea>';
+				   $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('activate WSIWYG-editor').'">';
 
+				}			   
+
+				$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
+				$GLOBALS['phpgw']->common->phpgw_header();
+				echo parse_navbar();
+				
 				$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index'));
 				$GLOBALS['phpgw']->template->set_var('select_lang',$select_lang);
 				$GLOBALS['phpgw']->template->set_var('section',$section);
@@ -141,19 +166,23 @@
 
 				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 				$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
-				$GLOBALS['phpgw']->template->set_var('value','<textarea name="message" cols="50" rows="10" wrap="virtual">' . stripslashes($current_message) . '</textarea>');
+
+				
+				$GLOBALS['phpgw']->template->set_var('value',$text_or_htmlarea);
+				
+				
+				
 				$GLOBALS['phpgw']->template->fp('rows','row_2',True);
 
 				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 				$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
 				$GLOBALS['phpgw']->template->set_var('value','<input type="submit" name="submit" value="' . lang('Save')
-					. '"><input type="submit" name="cancel" value="'. lang('cancel') .'">'
-				);
+				. '"><input type="submit" name="cancel" value="'. lang('cancel') .'">'.$htmlarea_button);
 				$GLOBALS['phpgw']->template->fp('rows','row_2',True);
 			}
 
 			$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
-			$GLOBALS['phpgw']->template->set_var('error_message',$message);
+			$GLOBALS['phpgw']->template->set_var('error_message',$feedback_message);
 			$GLOBALS['phpgw']->template->pfp('out','form');
 		}
 	}
