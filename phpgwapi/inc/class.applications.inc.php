@@ -125,7 +125,6 @@
     function save_apps(){
       global $phpgw, $phpgw_info;
       $num_rows = $phpgw->acl->delete("%%", "run", $this->account_id, $this->account_type);
-//      echo "(applications) Number Rows effected : ".$num_rows."<br>\n";
       reset($this->account_apps);
       while($app = each($this->account_apps)) {
         if(!$phpgw_info["apps"][$app[0]]["enabled"]) { continue; }
