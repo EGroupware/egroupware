@@ -1,8 +1,8 @@
 <?php
   /**************************************************************************\
   * eGroupWare                                                               *
-  * http://www.egroupware.org                                              *
-  * Written by Mark Peters <skeeter@phpgroupware.org>                        *
+  * http://www.egroupware.org                                                *
+  * Written by Miles Lott <milos@groupwhere.org>                             *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *

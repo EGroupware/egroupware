@@ -14,7 +14,7 @@
 
 	function formatted_list($name,$list,$id='',$default=False,$java=False)
 	{
-		if ($java)
+		if($java)
 		{
 			$jselect = ' onChange="this.form.submit();"';
 		}
@@ -24,10 +24,10 @@
 		{
 			$select .= '<option value="">' . lang('Please Select') . '</option>'."\n";
 		}
-		while (list($key,$val) = each($list))
+		while(list($key,$val) = each($list))
 		{
 			$select .= '<option value="' . $key . '"';
-			if ($key == $id && $id != '')
+			if($key == $id && $id != '')
 			{
 				$select .= ' selected';
 			}
@@ -43,16 +43,16 @@
 	/* Return a select form element with the categories option dialog in it */
 	function cat_option($cat_id='',$notall=False,$java=True,$multiple=False)
 	{
-		if ($java)
+		if($java)
 		{
 			$jselect = ' onChange="this.form.submit();"';
 		}
 		/* Setup all and none first */
 		$cats_link  = "\n" .'<select name="cat_id'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
-		if (!$notall)
+		if(!$notall)
 		{
 			$cats_link .= '<option value=""';
-			if ($cat_id=="all")
+			if($cat_id == 'all')
 			{
 				$cats_link .= ' selected';
 			}
@@ -119,8 +119,8 @@
 			'pubkey'              => 'public key',
 			'note'                => 'notes'
 		);
-	
-		if ($abc[$column])
+
+		if($abc[$column])
 		{
 			return lang($abc[$column]);
 		}
@@ -135,15 +135,15 @@
 		$i = 0; $j = 0;
 		$fields = array();
 		@reset($GLOBALS['phpgw_info']['user']['preferences']['addressbook']);
-		while (list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
+		while(list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
 		{
-			if ( substr($col,0,6) == 'extra_' )
+			if( substr($col,0,6) == 'extra_' )
 			{
 				$fields[$j]['name'] = str_replace('extra_','',$col);
 				$fields[$j]['name'] = str_replace(' ','_',$fields[$j]['name']);
 				$fields[$j]['id'] = $i;
 
-				if ($query && ($fields[$j]['name'] != $query))
+				if($query && ($fields[$j]['name'] != $query))
 				{
 					unset($fields[$j]['name']);
 					unset($fields[$j]['id']);
@@ -163,13 +163,13 @@
 	function save_custom_field($old='',$new='')
 	{
 		$GLOBALS['phpgw']->preferences->read_repository($GLOBALS['phpgw_info']['user']['account_id']);
-		if ($old)
+		if($old)
 		{
-			$GLOBALS['phpgw']->preferences->delete("addressbook","extra_".$old);
+			$GLOBALS['phpgw']->preferences->delete('addressbook','extra_'.$old);
 		}
 		if($new)
 		{
-			$GLOBALS['phpgw']->preferences->add("addressbook","extra_".$new);
+			$GLOBALS['phpgw']->preferences->add('addressbook','extra_'.$new);
 		}
 		$GLOBALS['phpgw']->preferences->save_repository(1);
 	}

@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$d1 = strtolower(substr(PHPGW_APP_INC,0,3));
-	if($d1 == 'htt' || $d1 == 'ftp' )
+	if($d1 == 'htt' || $d1 == 'ftp')
 	{
 		echo "Failed attempt to break in via an old Security Hole!<br>\n";
 		$GLOBALS['phpgw']->common->phpgw_exit();
@@ -22,7 +22,7 @@
 	$tmp_app_inc = PHPGW_APP_INC;
 	define('PHPGW_APP_INC',$GLOBALS['phpgw']->common->get_inc_dir('addressbook'));
 
-	if ($GLOBALS['phpgw_info']['user']['apps']['addressbook']
+	if($GLOBALS['phpgw_info']['user']['apps']['addressbook']
 		&& $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
 		echo "\n<!-- Birthday info -->\n";
