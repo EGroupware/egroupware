@@ -197,7 +197,7 @@
       <font face="'.$phpgw_info["theme"]["font"].'" size=2>
         <a href="'.$phpgw->link("vcardout.php","ab_id=$ab_id&start=$start&order=$order&filter="
                 . "$filter&query=$query&sort=$sort").'
-        ">'.lang("VCard").'</a>
+        ">'.lang("vcard").'</a>
       </font>
      </td>
     <td valign="top" width="5%">
@@ -214,7 +214,7 @@
   $t->set_var("th_font",$phpgw_info["theme"]["font"]);
   $t->set_var("th_text",$phpgw_info["theme"]["th_text"]);
   $t->set_var("lang_add",lang("Add"));
-  $t->set_var("lang_addvcard",lang("Add VCard"));
+  $t->set_var("lang_addvcard",lang("AddVCard"));
   $t->set_var("lang_view",lang("View"));
   $t->set_var("lang_vcard",lang("VCard"));
   $t->set_var("lang_edit",lang("Edit"));
