@@ -201,7 +201,7 @@
 	}
 
 	/* This initializes the users portal_order preference if it does not exist. */
-	if(!is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+	if(!is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']) && $GLOBALS['phpgw_info']['apps'])
 	{
 		$GLOBALS['phpgw']->preferences->delete('portal_order');
 		@reset($GLOBALS['phpgw_info']['apps']);
@@ -243,13 +243,16 @@
 	@reset($sorted_apps);
 	$GLOBALS['phpgw']->common->hook('home',$sorted_apps);
 
-	$GLOBALS['phpgw']->preferences->delete('portal_order');
-	@reset($GLOBALS['portal_order']);
-	while(list($app_order,$app_id) = each($GLOBALS['portal_order']))
+	if($GLOBALS['portal_order'])
 	{
-		$GLOBALS['phpgw']->preferences->add('portal_order',$app_order,$app_id);
+		$GLOBALS['phpgw']->preferences->delete('portal_order');
+		@reset($GLOBALS['portal_order']);
+		while(list($app_order,$app_id) = each($GLOBALS['portal_order']))
+		{
+			$GLOBALS['phpgw']->preferences->add('portal_order',$app_order,$app_id);
+		}
+		$GLOBALS['phpgw']->preferences->save_repository();
 	}
-	$GLOBALS['phpgw']->preferences->save_repository();
 	
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();
