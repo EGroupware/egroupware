@@ -77,6 +77,7 @@ default status for a new log entry	infolog	es-es	Estado predeterminado para una 
 delegation	infolog	es-es	Delegación
 delete	infolog	es-es	Eliminar
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	es-es	Borrar todas la "sub-algo" (si no hay, las "subs" ocuparán el lugar superior cuando proceda)
+delete one record by passing its id.	infolog	es-es	Borrar un registro pasando su id.
 delete the entry	infolog	es-es	Eliminar la entrada
 delete this entry	infolog	es-es	eliminar esta entrada
 deletes the selected typ	infolog	es-es	elimina el tipo seleccionado
@@ -135,6 +136,7 @@ length<br>rows	infolog	es-es	Longitud<br>Filas
 link	infolog	es-es	Enlace
 links	infolog	es-es	Enlaces
 links of this entry	infolog	es-es	Enlaces de la entrada
+list all categories	infolog	es-es	Lista de todas las categorías
 list no subs/childs	infolog	es-es	No listar subs/hijos
 longer textual description	infolog	es-es	descripción larga de la entrada
 low	infolog	es-es	baja
@@ -182,12 +184,14 @@ priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
 re:	infolog	es-es	Re:
+read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
 reject	infolog	es-es	rechazar
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
 responsible	infolog	es-es	Responsable
 responsible user, priority, ...	infolog	es-es	usuario responsable, prioridad, ...
+returns a list / search for records.	infolog	es-es	Devuelve una lista o busca registros
 save	infolog	es-es	Guardar
 saves the changes made and leaves	infolog	es-es	guardar los cambios realizados y salir
 saves this entry	infolog	es-es	Guardar esta entrada
@@ -251,6 +255,7 @@ view the parent of this entry and all his subs	infolog	es-es	Ver el padre de est
 view this linked entry in its application	infolog	es-es	ver esta entrada vinculada en su aplicación
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	es-es	Cuándo se debe iniciar las tareas pendientes o llamada de teléfono. Se muestra en la fecha del filtro o al abrir manualmente en la página de inicio
 will-call	infolog	es-es	va a llamar
+write (add or update) a record by passing its fields.	infolog	es-es	Escribir (añadir o actualizar) un registro pasando sus campos.
 yes - delete	infolog	es-es	Sí - Eliminar
 you can't delete one of the stock types !!!	infolog	es-es	¡¡No puede borrar uno de los tipos almacenados!!
 you have entered an invalid ending date	infolog	es-es	Ha introducido una fecha de finalización que no es válida

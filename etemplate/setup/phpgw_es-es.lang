@@ -9,6 +9,9 @@
 %s notranslation	etemplate	es-es	%s sin traducción
 %s onchange	etemplate	es-es	%s al cambiar
 %s readonly	etemplate	es-es	%s de sólo lectura
+'%1' has an invalid format !!!	etemplate	es-es	¡¡¡'%1' no tiene un formato válido!!!
+'%1' is not a valid floatingpoint number !!!	etemplate	es-es	¡¡¡'%1' no es un número válido de coma flotante!!!
+'%1' is not a valid integer !!!	etemplate	es-es	¡¡¡'%1' no es un entero válido!!!
 a pattern to be searched for	etemplate	es-es	un patrón de búsqueda
 add a new column (after the existing ones)	etemplate	es-es	Añadir una columna nueva (detrás de las existentes)
 add a new multi-column index	etemplate	es-es	Añadir un nuevo índice multicolumna
@@ -111,6 +114,7 @@ exchange this two columns	etemplate	es-es	Intercambiar estas dos columnas
 export the loaded etemplate into a xml-file	etemplate	es-es	Exportar la plantilla cargada en un fichero xml
 export xml	etemplate	es-es	Exportar XML
 extensions loaded:	etemplate	es-es	Extensiones cargadas:
+field must not be empty !!!	etemplate	es-es	¡¡¡Los campos no deben estar vacíos!!!
 file	etemplate	es-es	Fichero
 file contains more than one etemplate, last one is shown !!!	etemplate	es-es	El fichero contiene más de una plantilla. Sólo se mostrará la última.
 file writen	etemplate	es-es	Fichero guardado
@@ -118,6 +122,7 @@ fileupload	etemplate	es-es	Subir fichero
 first	etemplate	es-es	Primero
 floating point	etemplate	es-es	Punto flotante
 foreign key	etemplate	es-es	Clave ajena
+formatted text (html)	etemplate	es-es	Texto con formato (HTML)
 go to the first entry	etemplate	es-es	Ir a la primera entrada
 go to the last entry	etemplate	es-es	Ir a la última entrada
 go to the next page of entries	etemplate	es-es	Ir a la página siguiente de las entradas
@@ -171,6 +176,8 @@ new search	etemplate	es-es	Nueva búsqueda
 new table created	etemplate	es-es	Se ha creado una tabla nueva
 newer version '%1' exists !!!	etemplate	es-es	¡Existe una versión '%1' más reciente!
 nextmatch	etemplate	es-es	Siguiente coincidencia
+nextmatch filterheader	etemplate	es-es	Cabecera de filtro de siguiente coincidencia
+nextmatch sortheader	etemplate	es-es	Cabecera de orden de siguiente coincidencia
 no file	etemplate	es-es	sin fichero
 no filename given or selected via browse...	etemplate	es-es	no se indicó un nombre de fichero ni se selección mediante Examinar...
 not null	etemplate	es-es	NO NULO
@@ -266,6 +273,8 @@ update a single entry by passing the fields.	etemplate	es-es	Actualizar una únic
 update from version '%s' to	etemplate	es-es	Actualizar de la versión '%s' a
 upload	etemplate	es-es	Subir a un servidor
 value	etemplate	es-es	Valor
+value has to be at least '%1' !!!	etemplate	es-es	¡¡¡El valor tiene que ser al menos '%1'!!!
+value has to be at maximum '%1' !!!	etemplate	es-es	¡¡¡El valor tiene que ser como máximo '%1'!!!
 vbox	etemplate	es-es	VBox
 version	etemplate	es-es	Versión
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	es-es	número de la versión, en formato mayor.menor.revisión.número (por ej. 0.9.13.001, con todos los números rellenos con ceros)

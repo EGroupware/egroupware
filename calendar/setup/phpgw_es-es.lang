@@ -132,7 +132,6 @@ if you dont set a password here, the information is availible to everyone, who k
 ignore conflict	calendar	es-es	Ignorar conflicto
 import	calendar	es-es	Importar
 import csv-file	common	es-es	Importar fichero CSV
-import csv-file into calendar	calendar	es-es	
 interval	calendar	es-es	Intervalo
 intervals in day view	calendar	es-es	Intervalos en la vista de día
 intervals per day in planner view	calendar	es-es	Intervalos por día en la vista del planificador
@@ -141,6 +140,8 @@ last	calendar	es-es	último
 lastname of person to notify	calendar	es-es	Apellido de la persona a la que notificar
 length shown<br>(emtpy for full length)	calendar	es-es	Longitud mostrada<br>(vació para longitud completa)
 length<br>(<= 255)	calendar	es-es	Longitud<br>(<=255)
+link	calendar	es-es	Vínculo
+link to view the event	calendar	es-es	Vínculo para ver el evento
 list all categories.	calendar	es-es	Listar todas las categorías
 load [iv]cal	calendar	es-es	Cargar [iv]Cal
 location	calendar	es-es	Lugar
@@ -170,7 +171,6 @@ notification messages for your responses	calendar	es-es	Mensajes de notificación
 number of intervals per day in planner view	calendar	es-es	Número de intervalos por día en la vista del planificador
 number of months	calendar	es-es	Número de meses
 number of records to read (%1)	calendar	es-es	Número de registros a leer (%1)
-number of records to read (<=200)	calendar	es-es	
 observance rule	calendar	es-es	Regla de observación
 occurence	calendar	es-es	Ocurrencia
 old startdate	calendar	es-es	Fecha de inicio antigua
@@ -195,6 +195,7 @@ planner	calendar	es-es	Planificador
 planner by category	calendar	es-es	Planificador por categorías
 planner by user	calendar	es-es	Planificador por usuario
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	es-es	Por favor, confirme, acepte, rechace o examine los cambios en la entrada correspondiente en su calendario
+please enter a filename !!!	calendar	es-es	Por favor, introduzca un nombre de fichero
 preselected group for entering the planner	calendar	es-es	Grupo preseleccionado para entrar en el planificador
 print calendars in black & white	calendar	es-es	Imprimir calendario en blanco y negro
 print the mini calendars	calendar	es-es	Imprimir minicalendarios

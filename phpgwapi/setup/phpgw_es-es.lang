@@ -1,4 +1,5 @@
 %1 email addresses inserted	common	es-es	%1 direcciones de correo insertadas
+%1 is not executable by the webserver !!!	common	es-es	%1 no tiene permiso de ejecución para el servidor web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
 (shift-)click or drag to change value	jscalendar	es-es	Pulse mayúsculas o arrastre para cambiar el valor
 - click on any of the time parts to increase it	jscalendar	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
@@ -9,6 +10,8 @@
 - use the %1, %2 buttons to select year	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el año
 00 (disable)	admin	es-es	00 (desactivar)
 13 (ntp)	admin	es-es	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del día
+3 number of chars for month-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del mes
 80 (http)	admin	es-es	80 (http)
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
@@ -37,6 +40,7 @@ afghanistan	common	es-es	AFGHANISTAN
 albania	common	es-es	ALBANIA
 algeria	common	es-es	ARGELIA
 all	common	es-es	Todos
+all fields	common	es-es	todos los campos
 alphabet	common	es-es	a,b,c,ch,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	es-es	AMERICAN SAMOA
 andorra	common	es-es	ANDORRA
@@ -160,6 +164,7 @@ disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de 
 disable slider effects	common	es-es	Desactivar efectos deslizantes
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
 disabled	common	es-es	Deshabilitado
+display %s first	jscalendar	es-es	Mostrar %s primero
 display monday first	jscalendar	es-es	Mostrar el lunes primero
 display sunday first	jscalendar	es-es	Mostar el domingo primero
 djibouti	common	es-es	DJIBOUTI
@@ -201,6 +206,7 @@ error deleting %1 %2 directory	common	es-es	Error eliminando el directorio %1 %2
 error renaming %1 %2 directory	common	es-es	Error renombrando el directorio %1 %2
 estonia	common	es-es	ESTONIA
 ethiopia	common	es-es	ETHIOPIA
+exact	common	es-es	exacto
 exit	common	es-es	Salir
 expires	common	es-es	Expira
 falkland islands (malvinas)	common	es-es	MALVINAS
@@ -298,6 +304,7 @@ january	common	es-es	Enero
 japan	common	es-es	JAPAN
 jordan	common	es-es	JORDAN
 july	common	es-es	Julio
+jun	common	es-es	Jun
 june	common	es-es	Junio
 justify center	htmlarea	es-es	Centrar
 justify full	htmlarea	es-es	Justificado
@@ -325,6 +332,7 @@ libyan arab jamahiriya	common	es-es	LIBYAN ARAB JAMAHIRIYA
 license	common	es-es	Licencia
 liechtenstein	common	es-es	LIECHTENSTEIN
 list	common	es-es	Lista
+list members	common	es-es	Lista de miembros
 lithuania	common	es-es	LITHUANIA
 local	common	es-es	Local
 login	common	es-es	Entrar
@@ -417,6 +425,7 @@ original	common	es-es	Original
 other	common	es-es	Otros
 overview	common	es-es	Resumen
 owner	common	es-es	Due&ntilde;o
+page	common	es-es	Página
 page was generated in %1 seconds	common	es-es	La página se generó en %1 segundos
 pakistan	common	es-es	PAKISTAN
 palau	common	es-es	PALAU
@@ -471,6 +480,7 @@ read this list of methods.	common	es-es	Leer esta lista de métodos
 redoes your last action	htmlarea	es-es	Rehace la última acción
 registration	common	es-es	Registracion
 reject	common	es-es	Rechazar
+remove selected accounts	common	es-es	borrar las cuentas seleccionadas
 rename	common	es-es	Renombrar
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-es	Devuelve una lista completa de las cuentas del sistema. Aviso: puede ser bastante largo
 returns an array of todo items	common	es-es	Devuelve un array de elementos pendientes
@@ -491,6 +501,8 @@ saturday	common	es-es	Sábado
 saudi arabia	common	es-es	SAUDI ARABIA
 save	common	es-es	Grabar
 search	common	es-es	Buscar
+search %1 '%2'	common	es-es	Buscar %1 '%2'
+search or select accounts	common	es-es	Buscar o seleccionar cuentas
 section	common	es-es	Sección
 select	common	es-es	Seleccionar
 select all %1 %2 for %3	common	es-es	Seleccionar todos los %1 %2 para %3
@@ -501,6 +513,7 @@ select home email address	common	es-es	Seleccionar dirección de correo inicial
 select one	common	es-es	Seleccionar uno
 select user	common	es-es	Seleccionar usuario
 select work email address	common	es-es	Seleccionar dirección de correo del trabajo
+selection	common	es-es	Selección
 send	common	es-es	Enviar
 senegal	common	es-es	SENEGAL
 september	common	es-es	Septiembre
@@ -533,6 +546,7 @@ spain	common	es-es	ESPAÑA
 sri lanka	common	es-es	SRI LANKA
 start date	common	es-es	Fecha de inicio
 start time	common	es-es	Hora de inicio
+start with	common	es-es	empieza por
 status	common	es-es	Estado
 strikethrough	htmlarea	es-es	Tachado
 subject	common	es-es	Asunto
@@ -570,7 +584,6 @@ to	common	es-es	Para
 to correct this error for the future you will need to properly set the	common	es-es	Para corregir este error para el futuro necesitará configurar adecuadamente el
 to go back to the msg list, click <a href= %1 >here</a>	common	es-es	Psra volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 to go back to the msg list, click <a href= %1?sessionid=69211c0c32aa5581c5d69abdbcac4d64 >here</a>	common	es-es	Para volver a la lista de mensajes, pulse <a href="%1">aquí</a>
-to go back to the msg list, click <a href= %1?sessionid=7fe5595a67d8747e64c2b92411ceaf31 >here</a>	common	es-es	
 to go back to the msg list, click <a href= %1?sessionid=c0878fba5e3f2f6230f04199a7af15c6 >here</a>	common	es-es	Para volver a la lista de menseajes, pulse <a href="%1">aquí</a>
 to go back to the msg list, click <a href= %1?sessionid=e8b5fbb098cb6b1e628cc61a5b848229 >here</a>	common	es-es	Para volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 today	common	es-es	Hoy
@@ -645,6 +658,7 @@ you have not entered participants	common	es-es	No ha introducido participantes
 you have selected an invalid date	common	es-es	La fecha seleccionada no es válida
 you have selected an invalid main category	common	es-es	La categoría principal seleccionada no es válida
 you have successfully logged out	common	es-es	Ha terminado la sesión correctamente
+you need to add the webserver user '%1' to the group '%2'.	common	es-es	Necesita añadir el usuario del servidor web '%1' al grupo '%2'.
 your message as been sent	common	es-es	Su mensaje fue enviado
 your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>
 your message has been sent	common	es-es	Su mensaje ha sido enviado

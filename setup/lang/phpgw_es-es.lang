@@ -7,6 +7,7 @@
 13 (ntp)	setup	es-es	13 (ntp)
 80 (http)	setup	es-es	80 (http)
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	<b>Esto creará 1 cuenta de administrador y 3 de demostración</b><br>Los nombres de usuario y contraseñas son: demo/guest, demo2/guest y demo3/guest.
+accounts existing	setup	es-es	Existen cuentas
 actions	setup	es-es	Acciones
 add a domain	setup	es-es	Añadir un dominio
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	es-es	Añadir usuarios creados automáticamente a este grupo (Si está vacío, se le asignará el grupo predeterminado)
@@ -23,6 +24,7 @@ all applications	setup	es-es	Todas las aplicaciones
 all core tables and the admin and preferences applications	setup	es-es	Todas las tablas principales y las aplicaciones de preferencias y administración
 all users	setup	es-es	Todos los usuarios
 analysis	setup	es-es	Análisis
+and reload your webserver, so the above changes take effect !!!	setup	es-es	Y reiniciar el servidor web, para que los cambios de arriba tengan efecto
 app details	setup	es-es	Detalles de la Apliación
 app install/remove/upgrade	setup	es-es	Instalación/Eliminación/Actualización de la Aplicación
 app process	setup	es-es	Proceso de la aplicación
@@ -67,10 +69,12 @@ check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking extension %1 is loaded or loadable	setup	es-es	Comprobando si se puede cargar o está cargada la extensión %1
 checking file-permissions of %1 for %2: %3	setup	es-es	Comprobando permisos de %1 para %2: %3
+checking for gd support...	setup	es-es	Comprobando el soporte GD...
 checking php.ini	setup	es-es	Comprobando php.ini
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
+click here to re-run the installation tests	setup	es-es	Pulse aquí para volver a ejecutar las pruebas de instalación
 completed	setup	es-es	Completado
 config password	setup	es-es	Contraseña de configuración
 config username	setup	es-es	Usuario de configuración
@@ -86,6 +90,7 @@ convert	setup	es-es	Convertir
 could not open header.inc.php for writing!	setup	es-es	¡No se pudo abrir header.inc.php para escribir!
 country selection	setup	es-es	Seleccionar país
 create	setup	es-es	Crear
+create admin account	setup	es-es	Crear cuenta de administración
 create database	setup	es-es	Crear base de datos
 create demo accounts	setup	es-es	Crear cuentas de demostración
 create one now	setup	es-es	Crear una ahora
@@ -93,6 +98,7 @@ create the empty database -	setup	es-es	Crear la base de datos en blanco
 create the empty database and grant user permissions -	setup	es-es	Crear la base de datos en blanco y conceder permisos de usuarios -
 create your header.inc.php	setup	es-es	Crear un header.inc.php propio
 created	setup	es-es	creado
+created header.inc.php!	setup	es-es	Fichero header.inc.php creado
 creating tables	setup	es-es	Creando Tablas
 current system-charset	setup	es-es	Juego de caracteres actual del sistema
 current system-charset is %1, click %2here%3 to change it.	setup	es-es	El juego de caracteres del sistema es actualmente %1. Pulse %2aquí%3 para cambiarlo.
@@ -138,9 +144,7 @@ enable mcrypt	setup	es-es	Activar MCrypt
 enter some random text for app session encryption	setup	es-es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	es-es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación<br>cifrado (necesita mcrypt)
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	es-es	Introduzca la ruta completa para los ficheros temporales.<br>Ejemplo: /tmp, C:TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	setup	es-es	
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br>Ejemplo: /files, E:FILES
-enter the full path for users and group files.<br>examples: /files, e:files	setup	es-es	
 enter the hostname of the machine on which this server is running	setup	es-es	Introduzca el nombre de la máquina en la se está ejecutando esta instalación
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	es-es	Introduzca la URL de eGroupWare.<br>Ejemplo: http://www.dominio.com/egroupware o &nbsp; /egroupware<br><b>Sin barra invertida al final</b>
 enter the site password for peer servers	setup	es-es	Introduzca la contraseña del sitio para los servidores peer
@@ -151,6 +155,8 @@ enter your http proxy server	setup	es-es	Introduzca el servidor proxy HTTP
 enter your http proxy server password	setup	es-es	Introduzca la contraseña del servidor proxy HTTP
 enter your http proxy server port	setup	es-es	Introduzca el puerto del servidor proxy HTTP
 enter your http proxy server username	setup	es-es	Introduzca el usuario del servidor proxy HTTP
+error in admin-creation !!!	setup	es-es	Error al crear administrador
+error in group-creation !!!	setup	es-es	Error al crear grupo
 export egroupware accounts from sql to ldap	setup	es-es	Exportar cuentas de eGroupWare de SQL a LDAP
 export has been completed!  you will need to set the user passwords manually.	setup	es-es	Se ha completado la exportación. Necesitará poner la contraseña del usuario manualmente.
 export phpgroupware accounts from sql to ldap	setup	es-es	Exportar las cuentas de eGroupWare de SQL a LDAP
@@ -183,6 +189,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you did not receive any errors, your applications have been	setup	es-es	Si no ha recibido ningún eror, sus aplicaciones han sido
 if you did not receive any errors, your tables have been	setup	es-es	Si no ha recibido ningún error, sus tablas han sido
 if you running this the first time, don't forget to manualy %1 !!!	setup	es-es	¡¡Si está ejecutando la aplicación por primera vez, no olvide %1 manualmente!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	es-es	Si solamente usa idiomas del mismo juego de caracteres (por ejemplo, los occidentales), entonces no necesita un juego de caracteres para el sistema
 image type selection order	setup	es-es	Orden de selección del tipo de imagen
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	es-es	Importar cuentas de LDAP a la tabla da cuentas de eGroupWare (para una nueva instalación usando cuentas SQL)
 import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	es-es	Importar cuentas de LDAP a la tabla de cuentas de eGroupWare (para una instalación nueva que usa cuentas SQL)
@@ -219,6 +226,7 @@ ldap modify	setup	es-es	Modificar LDAP
 ldap root password	setup	es-es	Contraseña del administrador LDAP
 ldap rootdn	setup	es-es	rootdn LDAP
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones o redes (p. ej. 10.1.1,127.0.0.1)
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones, redes o máquinas (p. ej. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	es-es	Iniciar sesión en mysql -
 logout	setup	es-es	Cerrar sesión
 makesure	setup	es-es	Asegúrese de que su base de datos está creada y que los permisos están configurados
@@ -246,6 +254,7 @@ name of db user phpgroupware uses to connect	setup	es-es	Nombre del usuario de l
 never	setup	es-es	nunca
 new	setup	es-es	Nueva
 no	setup	es-es	No
+no accounts existing	setup	es-es	No existen cuentas
 no algorithms available	setup	es-es	no hay algortimos disponibles
 no microsoft sql server support found. disabling	setup	es-es	No se encontró soporte para Microsoft SQL Server. Desactivando.
 no modes available	setup	es-es	No hay modos disponibles
@@ -269,6 +278,7 @@ one week	setup	es-es	una semana
 only add languages that are not in the database already	setup	es-es	Sólo añade los nuevos idiomas que no están ya en la base de datos
 only add new phrases	setup	es-es	Sólo añade las nuevas frases
 or	setup	es-es	o
+or %1continue to the header admin%2	setup	es-es	o %1Continuar al administrador de encabezados%2
 or http://webdav.domain.com (webdav)	setup	es-es	o http://webdav.dominio.com (WebDAV)
 or we can attempt to create the database for you:	setup	es-es	O podemos intentar crear la base de datos automáticamente
 password needed for configuration	setup	es-es	Contraseña necesaria para la configuración
@@ -284,6 +294,7 @@ please check read/write permissions on directories, or back up and use another o
 please configure egroupware for your environment	setup	es-es	Por favor, configure eGroupWare para su entorno
 please configure phpgroupware for your environment	setup	es-es	Por favor, configure eGroupware para su entorno
 please consult the %1.	setup	es-es	Por favor, consulte el %1
+please fix the above errors (%1) and warnings(%2)	setup	es-es	Por favor, corrija los errores de arriba (%1) y avisos (%2)
 please fix the above errors (%1) and warnings(%2) and	setup	es-es	Por favor, corrija los errores (%1) y advertencias (%2) de arriba y
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	es-es	Por favor, corrija los errores (%1) y advertencias (%2) de encima y %3continúe con el Administrador de encabezados%4
 please install	setup	es-es	Por favor, instale
@@ -314,6 +325,7 @@ requires reinstall or manual repair	setup	es-es	Requiere reinstalación o reparac
 requires upgrade	setup	es-es	Requiere actualización
 resolve	setup	es-es	Resolver
 return to setup	setup	es-es	Volver a la instalación
+run installation tests	setup	es-es	Ejecutar pruebas de instalación
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	es-es	safe_mode está activado, lo cual suele ser bueno y hace que su instalación sea más segura.
 sample configuration not found. using built in defaults	setup	es-es	No se encontró una configuración de ejemplo. Usando los valores predefinidos.
 save	setup	es-es	Guardar
@@ -327,7 +339,6 @@ select where you want to store/retrieve file contents	setup	es-es	Seleccione dón
 select where you want to store/retrieve filesystem information	setup	es-es	Seleccione dónde quiere guardar/recuperar información del sistema de ficheros
 select where you want to store/retrieve user accounts	setup	es-es	Seleccione dónde quiere guardar/recuperar información de las cuentas de usuario
 select which group(s) will be exported (group membership will be maintained)	setup	es-es	Seleccione qué grupos se exportarán (se mantendrán las pertenencias del grupo)
-select which group(s) will be exported (group membership will be maintained) setup	es	es-es	
 select which group(s) will be imported (group membership will be maintained)	setup	es-es	Seleccione qué grupos se importarán (se mantendrán las pertenencias del grupo)
 select which group(s) will be modified (group membership will be maintained)	setup	es-es	Seleccione qué grupos se modificarán (se mantendrán las pertenencias del grupo)
 select which languages you would like to use	setup	es-es	Seleccione que idiomas prefiere usted usar
@@ -344,6 +355,7 @@ server root	setup	es-es	Raíz del servidor
 sessions type	setup	es-es	Tipo de sesiones
 set	setup	es-es	set
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	es-es	Ponga "old" para versiones anteriores a la 2.4.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	es-es	Poner el juego de caracteres del sistema en UTF-8 (unicode) permite coexistir datos de juegos de caracteres distintos.
 settings	setup	es-es	Configuración
 setup	setup	es-es	Instalación
 setup demo accounts in ldap	setup	es-es	Instalar cuentas de demostración en LDAP
@@ -355,10 +367,11 @@ some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas 
 sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas (predeterminado - md5)
 start the postmaster	setup	es-es	Iniciar el postmaster
 status	setup	es-es	Estado
-step %1 - simple application management	setup	es-es	Paso %1 - Administración simple de aplicaciones
+step %1 - admin account	setup	es-es	Paso %1 - Cuentra de administración
+step %1 - advanced application management	setup	es-es	Paso %1 - Administración avanzada de aplicaciones
 step %1 - configuration	setup	es-es	Paso %1 - Configuración
 step %1 - language management	setup	es-es	Paso %1 - Administración de idiomas
-step %1 - advanced application management	setup	es-es	Paso %1 - Administración avanzada de aplicaciones
+step %1 - simple application management	setup	es-es	Paso %1 - Administración simple de aplicaciones
 submit	setup	es-es	Enviar
 table change messages	setup	es-es	Mensajes de cambios en las tablas
 tables dropped	setup	es-es	tablas eliminadas
@@ -370,6 +383,8 @@ text entry	setup	es-es	Entrada de texto
 the %1 extension is needed, if you plan to use a %2 database.	setup	es-es	La extensión %1 es necesaria si tiene previsto usar una base de datos %2.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	es-es	El tipo de base de datos en predeterminados (%1) no está soportado en este servidor. Usando el primer tipo soportado
 the file	setup	es-es	el fichero
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	es-es	El primer paso al instalar eGroupWare es asegurarse que el entorno tiene la conifguración necesaria para ejecutar la aplicación correctamente.
+the following applications need to be upgraded:	setup	es-es	Las siguientes aplicaciones necesitan una actualización:
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	es-es	La extensión imap es necesaria por las dos aplicaciones de correo, incluso si usa pop3.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the table definition was correct, and the tables were installed	setup	es-es	La definición de la tabla era correcta, y se instalaron las tablas
@@ -422,6 +437,8 @@ view	setup	es-es	Ver
 warning!	setup	es-es	¡Aviso!
 we can proceed	setup	es-es	Podemos proceder
 we will automatically update your tables/records to %1	setup	es-es	Actualizaremos automáticamente sus tablas/registros a %1
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	es-es	Ahora se ejecutarán una serie de pruebas, que pueden durar unos pocos minutos. Pulse el enlace de debajo para proceder.
+welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación de eGroupWare
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	es-es	¿Qué tipo de gestión de sesiones prefiere? (PHP4 puede dar mejor rendimiento)
 which database type do you want to use with egroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
 which database type do you want to use with phpgroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
@@ -439,7 +456,6 @@ you appear to be running a pre-beta version of egroupware.<br>these versions are
 you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	es-es	Parece que está ejecutando una versión pre-beta de eGroupWare.<br>Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas enla configuración.<br>Puede actualizar primero a la 0.9.10 (la última versión con soporte para actualizar pre-betas)<br>y luego actualizar desde ahí a la versión actual.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	es-es	Parece que está ejecutando una versión antigua de PHP<br>Se recomienda que actualice a una nueva versión.<br>Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en eGroupWare.<br><br>Por favor, actualice al menos a la versión %1
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	es-es	Parece que tiene una versión antigua de PHP<br>Se recomienda que se actualice a una versión nueva.<br>La versión anterior de PHP puede no ejecutarse correctamente en eGroupWare.<br><br>Por favor, actualice como mínimo a la versión %1
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup es	es-es	
 you appear to be running version %1 of egroupware	setup	es-es	Parece que está ejecutando la versión %1 de eGroupWare
 you appear to be running version %1 of phpgroupware	setup	es-es	Parece que está ejecutando la versión %1 de eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	es-es	Parece que está usando una versión de PHP anterior a la 4.1.0. Necesita tener 4.1.0 o superior.
@@ -475,6 +491,7 @@ your database is working, but you dont have any applications installed	setup	es-
 your header admin password is not set. please set it now!	setup	es-es	La contraseña de administrador de cabeceras no está configurada. Por favor, ponga una ahora.
 your header.inc.php needs upgrading.	setup	es-es	Su header.inc.php necesita actualización
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	es-es	Su header.inc.php necesita actualización.<br><blink><b class="msg">¡ATENCION!</b></blink><br><b>¡HAGA COPIAS DE SEGURIDAD!</b>
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	es-es	Su instalación de PHP no tiene el soporte apropiado de GD. Necesita la versión 1.8 de la librería gd o superior para ver diagamas de Gantt en los proyectos.
 your tables are current	setup	es-es	Sus tablas están actualizadas
 your tables may be altered and you may lose data	setup	es-es	Sus tablas pueden ser alteradas y usted puede perder información
 your tables will be dropped and you will lose data	setup	es-es	¡¡Sus tablas serán eliminadas y usted perderá la información que hubiese en ellas!!
