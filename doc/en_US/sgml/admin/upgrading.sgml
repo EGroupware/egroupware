@@ -8,7 +8,7 @@ Follow these steps to upgrade a CVS install (please adjust to your server's conf
 </para>
 <blockquote><literallayout>
 <userinput># cd /home/httpd/html/phpgroupware</userinput>
-<userinput># cvs update -Pd</userinput>
+<userinput># cvs update -dP</userinput>
 </literallayout></blockquote>
 <para>
 After updating from CVS, be sure to return to the configuration page [/setup] and update any necessary tables.
