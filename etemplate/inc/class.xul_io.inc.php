@@ -212,11 +212,11 @@
 							$tab->set_attribute('statustext',$helps[$n]);
 							$child->add_node($tab);
 
-							$grid = new xmlnode('grid');
-							$grid->set_attribute('id',$names[$n]);
-							$child2->add_node($grid);
-							$embeded = new etemplate($names[$n]);
+							$embeded = new etemplate($names[$n],$etempl->as_array());
 							$this->etempl2grid($embeded,&$root,$embeded_too);
+							$grid = new xmlnode('grid');
+							$grid->set_attribute('id',$embeded->name);
+							$child2->add_node($grid);
 							unset($embeded);
 						}
 						break;

@@ -62,6 +62,13 @@
 			);
 			$this->soetemplate();
 
+			$tname = &$name;
+			if (is_array($name))
+			{
+				$tname = &$name['name'];
+			}
+			$tname = (strstr($tname,'.') === False ? (is_array($load_via) ? $load_via['name'] : $load_via).'.':'').$tname;
+
 			if (empty($name) || !$this->read($name,'','',0,'',$load_via))
 			{
 				$this->init($name);
