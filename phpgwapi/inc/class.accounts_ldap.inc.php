@@ -77,9 +77,9 @@
 				$this->data['account_lid'] = $allValues[0]['uid'][0];
 				$this->data['firstname']   = $GLOBALS['phpgw']->translation->convert($allValues[0]['givenname'][0],'utf-8');
 				$this->data['lastname']    = $GLOBALS['phpgw']->translation->convert($allValues[0]['sn'][0],'utf-8');
-				if(isset($allValues[0]['email'][0]))
+				if(isset($allValues[0]['mail'][0]))
 				{
-					$this->data['mailaddress'] = $allValues[0]['email'][0];
+					$this->data['mailaddress'] = $allValues[0]['mail'][0];
 				}
 			}
 			$this->data['account_dn']  = $allValues[0]['dn'];
