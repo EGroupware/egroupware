@@ -536,7 +536,7 @@
 					$coldata = $entries[$i][$column];
 					/* echo '<br>coldata="' . $coldata . '"'; */
 					/* Some fields require special formatting. */
-					if($column[0] == 'url')
+					if($column == 'url')
 					{
 						if(!empty($coldata) && (substr($coldata,0,7) != 'http://'))
 						{
@@ -545,12 +545,22 @@
 						$ref='<a href="'.$coldata.'" target="_new">';
 						$data=$coldata.'</a>';
 					}
-					elseif(($column[0] == 'email') || ($column[0] == 'email_home'))
+					elseif(($column == 'email') || ($column == 'email_home'))
 					{
 						if($GLOBALS['phpgw_info']['user']['apps']['email'])
 						{
 							$ref = '<a href="'
 								. $GLOBALS['phpgw']->link('/email/compose.php','to=' . urlencode($coldata))
+								. '" target="_new">';
+						}
+						elseif($GLOBALS['phpgw_info']['user']['apps']['felamimail'])
+						{
+							$link_data = array(
+								'menuaction' => 'felamimail.uicompose.compose',
+								'send_to'    => base64_encode($coldata)
+							);
+							$ref = '<a href="'
+								. $GLOBALS['phpgw']->link('/index.php',$link_data)
 								. '" target="_new">';
 						}
 						else
