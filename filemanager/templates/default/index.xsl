@@ -5,12 +5,13 @@
 			<xsl:attribute name="method">post</xsl:attribute>
 			<xsl:apply-templates select="index" />
 			<xsl:apply-templates select="files" />
-			<xsl:apply-templates select="body_data" />
 			<xsl:apply-templates select="buttons" />
 			<hr />
 			<xsl:apply-templates select="uploads" />
+			<xsl:call-template name="add_moz_sidebar" />
 		</form>
 		</center>
+		<xsl:apply-templates select="body_data" />
 	</xsl:template>
 
 	<xsl:template match="index">
@@ -71,6 +72,7 @@
 			
 	</xsl:template>
 	
+	<!--The template for each file -->
 	<xsl:template match="file">
 		  <tr>
 		  		<xsl:choose>
@@ -107,5 +109,27 @@
 	<xsl:template match="uploads" >
 		<xsl:apply-templates/>
 	</xsl:template>
+	<!--Debug output-->
+	<xsl:template match="body_data">
+		<div style="border:1px dashed #000000; background-color: yellow;">
+			<b>Debug output</b><br/>
+			<xsl:copy-of select="." />
+		</div>
+	</xsl:template>
 	
-
+	<!--This bit of Javascript will create a mozilla sidebar -->
+	<xsl:template name="add_moz_sidebar">
+		<script language="JavaScript"> 
+			<xsl:text  disable-output-escaping = "yes">
+				function addMozillaPanel() {
+					var getURL_ID = document.getElementById("getURL");
+						if ((typeof window.sidebar == "object") &amp;&amp; (typeof window.sidebar.addPanel == "function")) 
+						{ 
+							window.sidebar.addPanel ("</xsl:text><xsl:value-of select="sidebar/label" /><xsl:text>", 
+							window.location.href+"&amp;template=moz_sidebar&amp;noheader=1",""); 
+						}
+					}
+			</xsl:text>
+		</script>
+		<a href="javascript:addMozillaPanel();"><xsl:value-of select="sidebar/link_label" /></a>
+	</xsl:template>
