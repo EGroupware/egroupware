@@ -644,34 +644,38 @@
 		@function insall
 		@abstract installs /phpgwapi/cron/asyncservices.php as cron-job
 		@syntax install($times)
-		@param $times array with keys 'min','hour','day','month','dow', not set is equal to '*'
-		@result the times asyncservices are run or False if they are not installed or 0 if crontab not found
+		@param $times array with keys 'min','hour','day','month','dow', not set is equal to '*'.
+			False means de-install our own crontab line
+		@result the times asyncservices are run, False if they are not installed,
+			0 if crontab not found and ' ' if crontab is deinstalled
 		@note Not implemented for Windows at the moment, always returns 0
 		*/
 		function install($times)
 		{
-			if ($this->only_fallback) {
+			if ($this->only_fallback && $times !== False) {
 				return 0;
 			}
 			$this->installed();	// find other installed cronlines
 
 			if (($crontab = popen('/bin/sh -c "'.$this->crontab.' -" 2>&1','w')) !== False)
 			{
-				$cron_units = array('min','hour','day','month','dow');
-				foreach($cron_units as $cu)
-				{
-					$cronline .= (isset($times[$cu]) ? $times[$cu] : '*') . ' ';
-				}
-				$cronline .= $this->php.' -q '.$this->cronline."\n";
-				//echo "<p>Installing: '$cronline'</p>\n";
-				fwrite($crontab,$cronline);
-				
 				foreach ($this->other_cronlines as $cronline)
 				{
 					fwrite($crontab,$cronline);		// preserv the other lines
 				}
+				if ($times !== False)
+				{
+					$cron_units = array('min','hour','day','month','dow');
+					foreach($cron_units as $cu)
+					{
+						$cronline .= (isset($times[$cu]) ? $times[$cu] : '*') . ' ';
+					}
+					$cronline .= $this->php.' -q '.$this->cronline."\n";
+					//echo "<p>Installing: '$cronline'</p>\n";
+					fwrite($crontab,$cronline);
+				}
 				@pclose($crontab);
 			}
-			return $this->installed();
+			return $times !== False ? $this->installed() : ' ';
 		}
 	}

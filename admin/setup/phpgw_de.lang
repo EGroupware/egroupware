@@ -86,6 +86,7 @@ day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
 default	admin	de	Vorgabe
 default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
+deinstall crontab	admin	de	Crontab deinstallieren
 delete account	admin	de	Benutzerkonto löschen
 delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
@@ -115,10 +116,10 @@ description can not exceed 255 characters in length !	admin	de	Die Beschreibung 
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	Anzeigen
-do not delete the category and return back to the list	admin	de	
+do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
 do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globale Unterkategorien löschen ?
-do you want to move all global subcategories one level down ?	admin	de	
+do you want to move all global subcategories one level down ?	admin	de	Wollen sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
@@ -204,8 +205,8 @@ ldap groups context	admin	de	LDAP Kontext für Gruppen
 ldap host	admin	de	LDAP Host
 ldap root password	admin	de	LDAP Root Passwort
 ldap rootdn	admin	de	LDAP rootdn
-leave the category untouched and return back to the list	admin	de	
-leave the group untouched and return back to the list	admin	de	
+leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
+leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
@@ -259,7 +260,7 @@ read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "hooks" der Anwendungen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe
-return to admin mainscreen	admin	de	
+return to admin mainscreen	admin	de	zum Adminstrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
@@ -272,7 +273,7 @@ section	admin	de	Abschnitt
 security	admin	de	Sicherheit
 select group managers	admin	de	Gruppenmanager auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
-select the parent category. if this is a main category select no category	admin	de	
+select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn das eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
 select where you want to store/retrieve filesystem information	admin	de	Wo wollen Sie Datei Informationen ablegen / lesen
 select where you want to store/retrieve user accounts	admin	de	Wo wollen Sie die Benutzerkonten speichern
@@ -346,6 +347,7 @@ view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 would you like phpgroupware to cache the phpgw info array ?	admin	de	Soll phpGroupWare das phpgw info Array cachen ?
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	de	Soll phpGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich der Administrator einlogt ?
 would you like phpgroupware to check for new application versions when admins login ?	admin	de	Soll phpGroupWare auf neue Programm-Versionen pr&uuml;fen, wenn sich ein Administrator anmeldet ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
@@ -354,6 +356,7 @@ you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ab
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
+you must enter a lastname	admin	de	Sie müssen einen Nachname angeben
 you must enter a loginid	admin	de	Sie müssen einen Benutzername angeben
 you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
 you must enter an application name.	admin	de	Sie müssen der Anwendung einen Namen geben.
