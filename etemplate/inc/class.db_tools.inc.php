@@ -166,7 +166,7 @@
 				}
 				else // import
 				{
-					$oProc = CreateObject('phpgwapi.schema_proc','mysql');
+					$oProc = CreateObject('phpgwapi.schema_proc',$GLOBALS['phpgw_info']['server']['db_type']);
 					$oProc->m_odb = $GLOBALS['phpgw']->db;
 					$oProc->m_oTranslator->_GetColumns($oProc,$content['new_table_name'],$nul);
 
@@ -302,7 +302,7 @@
 				$col_defs['fk'] = $table['fk'][$col_name];
 				if (isset($col_defs['default']) && $col_defs['default'] == '')
 				{
-					$col_defs['default'] = "''";	// spezial value for empty, but set, default
+					$col_defs['default'] = is_int($col_defs['default']) ? '0' : "''";	// spezial value for empty, but set, default
 				}
 				$col_defs['n'] = $n;
 
