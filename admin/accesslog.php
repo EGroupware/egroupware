@@ -71,6 +71,9 @@
     $t->set_var("row_lo",$li);
     $t->set_var("row_total",$total);
 
+    if ($phpgw->db->num_rows() == 1) {
+       $t->set_var("output","");
+    }
     if ($phpgw->db->num_rows() != ++$i) {
        $t->parse("output","row",True);
     }

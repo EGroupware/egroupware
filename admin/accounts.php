@@ -87,6 +87,9 @@
     $t->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "con="
 				 . $phpgw->db->f("con")) . '"> ' . lang_common("View") . ' </a>');
 
+    if ($phpgw->db->num_rows() == 1) {
+       $t->set_var("output","");
+    }
     if ($phpgw->db->num_rows() != ++$i) {
        $t->parse("output","row",True);
     }
