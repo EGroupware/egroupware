@@ -1,52 +1,72 @@
+%1 records imported	addressbook	it	%1 record importati
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibiletornare %2indietro%3  e deselezionare Test Importazione)
+%1 records read (not yet imported, you may go back and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibile tornare indietro e deselezionare Test
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione &lt;nessuno&gt; non è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
+add a single entry by passing the fields.	addressbook	it	
 add custom field	addressbook	it	Aggiungi campo personalizzato
-addressbook	common	it	Rubrica
 address book	common	it	Rubrica
-addressbook preferences	addressbook	it	Preferenze della Rubrica
+address book - vcard in	addressbook	it	Rubrica - VCard in
 address book - view	addressbook	it	Rubrica - visualizza
 address line 2	addressbook	it	Indirizzo linea 2
 address line 3	addressbook	it	Indirizzo linea 3
 address type	addressbook	it	Tipo di indirizzo
-addvcard	common	it	Aggiungi Vcard
+addressbook	common	it	Rubrica
+addressbook preferences	addressbook	it	Preferenze della Rubrica
+addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
+addvcard	addressbook	it	Aggiungi Vcard
 alt. csv import	addressbook	it	Importazione CSV Alternativa
 are you sure you want to delete this field?	addressbook	it	Sei sicuro di voler eliminare questo campo?
 bbs phone	addressbook	it	Telefono BBS
-birthday	addressbook	it	Data di nascita
+birthday	common	it	Data di nascita
+birthdays	common	it	Compleanni
 blank	addressbook	it	In bianco
-<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione &lt;nessuno&gt; non è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
-business address type	addressbook	it	Tipo di indirizzo dell'ufficio
-business city	common	it	Città Ufficio
 business	common	it	Ufficio
-business country	common	it	Nazione Ufficio
-business email	common	it	Email Ufficio
-business email type	common	it	Tipo email ufficio
-business fax	common	it	Fax ufficio
-business phone	common	it	Telefono ufficio
-business state	common	it	Provincia ufficio
-business street	common	it	Via ufficio
-business zip code	common	it	CAP ufficio
+business address type	addressbook	it	Tipo di indirizzo dell'ufficio
+business city	addressbook	it	Città Ufficio
+business country	addressbook	it	Nazione Ufficio
+business email	addressbook	it	Email Ufficio
+business email type	addressbook	it	Tipo email ufficio
+business fax	addressbook	it	Fax ufficio
+business phone	addressbook	it	Telefono ufficio
+business state	addressbook	it	Provincia ufficio
+business street	addressbook	it	Via ufficio
+business zip code	addressbook	it	CAP ufficio
 car phone	addressbook	it	Telefono veicolare
 cell phone	addressbook	it	Telefono cellulare
 city	common	it	Città
 company	common	it	Società
 company name	common	it	Nome società
-contact application	admin	it	Applicativo Contatti
 contact	common	it	Contatto
+contact application	admin	it	Applicativo Contatti
 contact settings	admin	it	Impostazioni Contatto
 country	common	it	Nazione
+csv-fieldname	addressbook	it	CSV Nome del Campo
+csv-filename	addressbook	it	CSV Nome del File
+custom	addressbook	it	Personalizzato
 custom fields	addressbook	it	Campi Personalizzati
+debug output in browser	addressbook	it	
 default filter	addressbook	it	Filtro predefinito
+delete a single entry by passing the id.	addressbook	it	
 department	common	it	Divisione
+domestic	addressbook	it	Interno
+download	addressbook	it	Download
 edit custom field	addressbook	it	Modifica campo personalizzato
 edit custom fields	admin	it	Modifica campi personalizzati
 export contacts	addressbook	it	Esporta Contatti
 export file name	addressbook	it	Esporta nome file
+export from addressbook	addressbook	it	Esporta dalla Rubrica
 extra	addressbook	it	Extra
+fax	addressbook	it	Fax
 fax number	common	it	Numero Fax
+field %1 has been added !	addressbook	it	Il campo %1 è stato aggiunto!
+field %1 has been updated !	addressbook	it	Il campo %1 è stato aggiornato!
 field name	addressbook	it	Nome Campo
 fields to show in address list	addressbook	it	Campi da visualizzare nella lista degli indirizzi
+fieldseparator	addressbook	it	Separatore dei campi
 full name	addressbook	it	Nome completo
 geo	addressbook	it	GEO
-grant addressbook access        common  it	Permetti accesso alla Rubrica
+grant addressbook access	common	it	Permetti accesso alla Rubrica
+grant addressbook access        common  it	Permetti accesso alla Rubrica	it	
 home address type	addressbook	it	Tipo indirizzo Abitazione
 home city	addressbook	it	Città Abitazione
 home country	addressbook	it	Nazione Abitazione
@@ -56,8 +76,11 @@ home phone	addressbook	it	Telefono Abitazione
 home state	addressbook	it	Provincia Abitazione
 home street	addressbook	it	Via Abitazione
 home zip code	addressbook	it	CAP Abitazione
+import	addressbook	it	Importa
 import contacts	addressbook	it	Importa Contatti
+import csv-file into addressbook	addressbook	it	Importa file CSV nella Rubrica
 import file	addressbook	it	Importa File
+import from ldif, csv, or vcard	addressbook	it	Importa daLDIF, CSV, or VCard
 import from outlook	addressbook	it	Importa da Outlook
 international	addressbook	it	Internazionale
 isdn phone	addressbook	it	Telefono ISDN
@@ -66,6 +89,7 @@ ldap context for contacts	admin	it	Contesto LDAP per i contatti
 ldap host for contacts	admin	it	Server LDAP per i contatti
 ldap root dn for contacts	admin	it	root dn LDAP per i contatti
 ldap root pw for contacts	admin	it	password di root LDAP per i contatti
+ldif	addressbook	it	LDIF
 line 2	addressbook	it	Linea 2
 message phone	addressbook	it	Telefono per Messaggi
 middle name	addressbook	it	Secondo Nome
@@ -73,33 +97,53 @@ mobile	addressbook	it	Mobile
 mobile phone	addressbook	it	Telefono Mobile
 modem phone	addressbook	it	Telefono Modem
 no vcard	addressbook	it	Nessuna VCard
+number of records to read (<=200)	addressbook	it	Numero di record da leggere (<200)
+on	addressbook	it	
 other number	addressbook	it	Altro Numero
 other phone	addressbook	it	Altro Telefono
-pager	addressbook	it	Teledrin
+pager	common	it	Teledrin
 parcel	addressbook	it	Parcel
 phone number	common	it	Numero di Telefono
-phone numbers	addressbook	it	Numeri di telefono
+phone numbers	common	it	Numeri di telefono
+please enter a name for that field !	addressbook	it	Per favore inserire un nome per qesto campo
+please select	addressbook	it	Per favore selezionare
 please set your preferences for this app	addressbook	it	Per favore, imposta le tue preferenze per questa applicazione
-postal	addressbook	it	Postal
+postal	common	it	Postal
 pref	addressbook	it	pref
 prefix	addressbook	it	Prefisso
 public key	addressbook	it	Chiave Pubblica
+read a list of entries.	addressbook	it	Leggi una lista di inserimenti
+read a single entry by passing the id and fieldlist.	addressbook	it	
+read this list of methods.	addressbook	it	Leggi lista dei metodi
 record access	addressbook	it	Accesso alla scheda
 record owner	addressbook	it	Proprietario della scheda
 retrieve contacts	admin	it	recupera i contatti
+select	addressbook	it	Seleziona
 select where you want to store	admin	it	Seleziona dove vuoi memorizzare
 show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
-state	addressbook	it	Provincia
-street	addressbook	it	Via
+startrecord	addressbook	it	Record Iniziale
+state	common	it	Provincia
+street	common	it	Via
 successfully imported %1 records into your addressbook.	addressbook	it	Nella tua rubrica sono state importate con successo %1 schede.
 suffix	addressbook	it	Suffisso
+test import (show importable records <u>only</u> in browser)	addressbook	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
+that field name has been used already !	addressbook	it	Il nome di campo è già stato utilizzato
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
+this person's last name was not in the address book.	addressbook	it	Il cognome di questa persona non è nella rubrica
 today is %1's birthday!	common	it	Oggi è il compleanno di %1!
 tomorrow is %1's birthday.	common	it	Domani è il compleanno di %1.
+translation	addressbook	it	Traduzione
+update a single entry by passing the fields.	addressbook	it	
+use country list	addressbook	it	Usa la lista delle nazioni
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
+vcards require a last name entry.	addressbook	it	Le Vcards richiedono un valore per il cognome
 video phone	addressbook	it	Videotelefono
 voice phone	addressbook	it	Telefono Vocale
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 work phone	addressbook	it	Telefono Ufficio
-zip code	addressbook	it	CAP
+you appear to be running	addressbook	it	
+you must select a vcard. (*.vcf)	addressbook	it	Bisogna selezionare una vcard (*.vcf)
+you must select at least 1 column to display	addressbook	it	Bisogna selezionare almeno una colonna da visualizzare
+zip code	common	it	CAP
+

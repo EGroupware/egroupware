@@ -1,14 +1,115 @@
-fax	infolog	it	Fax
+		it	
+%1 records imported	infolog	it	%1 record importati
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	it	%1 record letti (non ancora importati, è possibile tornare indietro e deselezionare Test Importazione)
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	it	
+accept	infolog	it	accetta
+access denied	infolog	it	Accesso Negato
 action	infolog	it	Azione
-duration	infolog	it	Durata
-today	infolog	it	Oggi
-from	infolog	it	Da
-download	infolog	it	Scarica
-done	infolog	it	Finito
-owner	infolog	it	Proprietario
-from	infolog	it	Da
+add	infolog	it	Aggiungi
+add a file	infolog	it	Aggiungi File
 add sub	infolog	it	Aggiungi Sub
-are you sure you want to delete this entry	infolog	it	Sei sicuro di voler cancellare quasta nota ?
+all	infolog	it	Tutto
+are you sure you want to delete this entry	infolog	it	Sei sicuro di voler cancellare questa nota ?
+attach file	infolog	it	Allega File
+back to projectlist	infolog	it	Indietro alla lista dei Progetti
+billed	infolog	it	fatturato
+both	infolog	it	entrambi
+call	infolog	it	chiamata
+category	infolog	it	Categoria
+close	infolog	it	Chiudi
+comment	infolog	it	Commento
+configuration	infolog	it	Configurazione
+confirm	infolog	it	conferma
+csv-fieldname	infolog	it	CSV Nome del Campo
+csv-filename	infolog	it	CSV Nome del File
+csv-import	common	it	CSV Importa
+datecreated	infolog	it	data creazione
+days	infolog	it	giorni
+default filter for infolog	infolog	it	Filtro di default per InfoLog
+description	infolog	it	Descrizione
+description can not exceed 8000 characters in length	infolog	it	La descrizione non può essere più lunga di 8000 caratteri
+done	infolog	it	Finito
+download	infolog	it	Scarica
+duration	infolog	it	Durata
+enddate	infolog	it	Data Fine
+enddate can not be before startdate	infolog	it	La data finale non può precedere la data iniziale
+entry and all files	infolog	it	Inserimenti e tutti i files
+fax	infolog	it	Fax
+fieldseparator	infolog	it	Separatore campi
+finish	infolog	it	finito
+from	infolog	it	Da
+high	infolog	it	Alta
+import	infolog	it	Importa
+info log	common	it	InfoLog
+infolog	common	it	InfoLog
+infolog - delete	infolog	it	InfoLog - Cancella
+infolog - edit	infolog	it	InfoLog - Modifica
+infolog - import csv-file	infolog	it	InfoLog - Importa File CSV
+infolog - new	infolog	it	InfoLog - Nuovo
+infolog - new subproject	infolog	it	InfoLog - Nuovo Sottoprogetto
+infolog - subprojects from	infolog	it	InfoLog - Sottoprogetto da
+infolog preferences	common	it	InfoLog Preferenze
+infolog-fieldname	infolog	it	InfoLog - Nome del Campo
+invalid filename	infolog	it	Nome di Campo non valido
+last changed	infolog	it	ultima modifica
+list no subs/childs	infolog	it	Non elencare Sub/figli
+low	infolog	it	Bassa
+no - cancel	infolog	it	No - Annulla
+no entries found, try again ...	infolog	it	nessun risulato, prova ancora...
+no filter	infolog	it	Nessun Filtro
+none	infolog	it	Nessuno
+normal	infolog	it	Normale
+not	infolog	it	non
+not assigned	infolog	it	non assegnato
+note	infolog	it	Nota
+number of records to read (<=200)	infolog	it	Numero di records da leggere (<=200)
+offer	infolog	it	offerta
+ongoing	infolog	it	in corso
+open	infolog	it	aperta
+overdue	infolog	it	scaduto
+own	infolog	it	proprio
+own open	infolog	it	proprio aperta
+own overdue	infolog	it	propri scaduti
+own upcoming	infolog	it	proprio in arrivo
+owner	infolog	it	Proprietario
+path on (web-)serverside<br>eg. /var/samba/share	infolog	it	percorso lato (web)server<br>es. /var/samba/Share
+pattern for search in addressbook	infolog	it	stringa da ricercare nella rubrica
+pattern for search in projects	infolog	it	stringa da ricercare nei progetti
+phone	infolog	it	Chiamata Telefonica
+phone/email	infolog	it	Telefono/Email
+phonecall	infolog	it	Chiamata Telefonica
+priority	infolog	it	Priorità
+private	infolog	it	Privato
+project	infolog	it	Progetto
+re:	infolog	it	Re:
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	it	espressione regolare per indirizzi IP Locali<br>es.^192\.168\.1\.
+responsible	infolog	it	Responsabile
+search for:	infolog	it	Cerca:
+select	infolog	it	Seleziona
+show full usernames	infolog	it	Mostra nomi utente completi
+show open events: tasks/calls/notes on main screen	infolog	it	Mostra gli eventi ancora aperti: Task/Chiamate/Note sulla schermata principale
+startdate	infolog	it	Data Inizio
+startrecord	infolog	it	Record Iniziale
 sub	infolog	it	sotto
-urgency	infolog	it	Urgenza
+subject	infolog	it	Oggetto
+task	infolog	it	Da Fare
+test import (show importable records <u>only</u> in browser)	infolog	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
+today	infolog	it	Oggi
 translation	infolog	it	Traduzione
+type	infolog	it	Tipo
+upcoming	infolog	it	in arrivo
+urgency	infolog	it	Urgenza
+urgent	infolog	it	urgente
+use button to search for	infolog	it	utilizzare il pulsante per cercare
+use button to search for address	infolog	it	utilizzare il pulsante per cercare un indirizzo
+use button to search for project	infolog	it	utilizzare il pulsante per cercare un progetto
+valid path on clientside<br>eg. \\server\share or e:\	infolog	it	percorsi validi lato client<br>es. \\Server\Share or e:\
+view other subs	infolog	it	visualizza altri sub
+view subs	infolog	it	visualizza sub
+will-call	infolog	it	chiamerà
+yes - delete	infolog	it	Sì - Cancella
+you have entered an invalid enddate	infolog	it	E' stata inserita una data di fine non valida
+you have entered an invalid ending date	infolog	it	E' stata inserita una data di fine non valida
+you have entered an invalid starting date	infolog	it	E' stata inserita una data di inizio non valida
+you must enter a subject or a description	infolog	it	E' necessario inserire un oggetto o una descrizione
+

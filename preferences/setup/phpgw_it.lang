@@ -1,3 +1,8 @@
+		it	
+%1 - preferences	preferences	it	%1 - Preferenze
+12 hour	preferences	it	12 ore
+24 hour	preferences	it	24 ore
+acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state aggiornate
 change your password	preferences	it	Cambia la tua password
 change your profile	preferences	it	Cambia il tuo profilo
 change your settings	preferences	it	Cambia le tue impostazioni
@@ -5,8 +10,10 @@ country selection	preferences	it	Selezione Nazione
 date format	preferences	it	Formato data
 default application	preferences	it	Applicazione preferita
 default preferences	preferences	it	Preferenze Predefinite
+description can not exceed 255 characters in length !	preferences	it	La descrizione non può essere più lunga di 255 caratteri!
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
+error: there was a problem finding the preference file for %1 in %2	preferences	it	Errore: c'è stato un errore nel trovare il file delle preferenze per %1 in %2
 forced preferences	preferences	it	Preferenze Forzate
 icons and text	preferences	it	Icone e testo
 icons only	preferences	it	Solo icone
@@ -23,13 +30,15 @@ show navigation bar as	preferences	it	Mostra la barra di navigazione come
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
 template selection	admin	it	Selezione Aspetto
 text only	preferences	it	Solo Testo
-theme (colors/fonts) selection	preferences	it	Selezione tema (colori/caratteri)
 the two passwords are not the same	preferences	it	Le due password non sono uguali
-this server is located in the %1 timezone	preferences	it	 Questo server è situato nel fuso orario %1
+theme (colors/fonts) selection	preferences	it	Selezione tema (colori/caratteri)
+this server is located in the %1 timezone	preferences	it	Questo server è situato nel fuso orario %1
 time format	preferences	it	Formato ora
 use selectbox	preferences	it	Usa men&ugrave;
 use text entry	preferences	it	Usa testo
-your current theme is: %1	preferences	it	il tuo tema %1
+users choice	preferences	it	Scelta dell'utente
+you do not have permission to set acl\'s in this mode!	preferences	it	Non sei autorizzato ad impostare l'ACL in questo modo!
 you must enter a password	preferences	it	Devi inserire una password
+your current theme is: %1	preferences	it	il tuo tema è: %1
 your preferences	preferences	it	Tue Preferenze
 

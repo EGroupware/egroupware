@@ -1,124 +1,271 @@
+(stored password will not be shown here)	admin	it	(Le password memorizzate non verranno mostrate qui)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	it	(Per installare nuove applicazioni utilizzare<br><a href="setup/" target="setup">Setup</a> [Gestionie Applicazioni] !!!)
 account active	admin	it	Account attivo
+account has been created	common	it	L'account è stato creato
+account has been deleted	common	it	L'account è stato eliminato
+account has been updated	common	it	L'account è stato aggiornato
 account permissions	admin	it	Permessi dell'account
+account preferences	admin	it	Preferenze dell'account
+acl manager	admin	it	Gestione ACL
+acl rights	admin	it	Diritti ACL
 action	admin	it	Azione
-active	admin	it	Attivo
+add a new account.	admin	it	Aggiungi un nuovo account.
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	it	Aggiungi a questo gruppo gli utenti creati automaticamente (verrà usato 'Default' se questo valore risulta vuoto.)
 add global category	admin	it	Aggiungi categoria globale
+add global category for %1	admin	it	Aggiungi categoria globale per  %1
 add new account	admin	it	Aggiungi un nuovo account
 add new application	admin	it	Aggiungi una nuova applicazione
-admin options	admin	it	Opzioni di Amministrazione
-allow anonymous access to this app	admin	it
-Consenti accesso anonimo a questa applicazione
+add peer server	admin	it	Aggiungi Peer Server
+admin email	admin	it	Email Amministratore
+admin name	admin	it	Nome Amministratore
+administration	admin	it	Amministrazione
+admins	admin	it	Amministratori
 all records and account information will be lost!	admin	it	Tutte le registrazioni e le informazioni dell'account andranno perse!
+all users	admin	it	Tutti gli utenti
+allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa applicazione
 anonymous user	admin	it	Utente anonimo
+application	admin	it	Applicazione
 application name	admin	it	Nome applicazione
-applications	admin	it	Applicazioni
 application title	admin	it	Titolo applicazione
-are you sure you want to delete this account ?	admin	it	Sei sicuro di voler cancellare questo account ?
-are you sure you want to delete this application ?	admin	it	Sei sicuro di voler cancellare questa applicazione ?
-are you sure you want to delete this group ?	admin	it	Sei sicuro di voler cancellare questo gruppo ?
-are you sure you want to kill this session ?	admin	it	Sei sicuro di voler terminare questa sessione ?
+applications	admin	it	Applicazioni
+are you sure you want to delete this account ?	admin	it	Sei sicuro di voler cancellare questo account?
+are you sure you want to delete this application ?	admin	it	Sei sicuro di voler cancellare questa applicazione?
+are you sure you want to delete this category ?	common	it	Sei sicuro di voler cancellare questa categoria?
+are you sure you want to delete this group ?	admin	it	Sei sicuro di voler cancellare questo gruppo?
+are you sure you want to delete this server?	admin	it	Sei sicuro di voler cancellare questo server?
+are you sure you want to kill this session ?	admin	it	Sei sicuro di voler terminare questa sessione?
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	it	Cerca di usare il mimetype corretto per l'FTP invece di quello di default 'application/octet-stream'
+authentication / accounts	admin	it	Autenticazion / Account
+auto create account records for authenticated users	admin	it	Crea automaticamente gli account per gli utenti autenticati
+bi-dir passthrough	admin	it	passthrough bidirezionale
+bi-directional	admin	it	bidirezionale
+bottom	admin	it	in fondo
+calendar holiday management	admin	it	Gestione Festivit&agrave;
+category %1 has been added !	admin	it	La categoria %1 è stata aggiunta!
 category description	admin	it	Descrizione categoria
+category list	admin	it	Lista categorie
 category name	admin	it	Nome categoria
-category %1 has been added !	admin	it	La categoria %1 è stata aggiunta !
+change forum settings	admin	it	Cambia le preferenze dei Forum
 change main screen message	admin	it	Modifica messaggio della schermata principale
+check ip address of all sessions	admin	it	controlla l'indirizzo ip di tutte le sessioni
+check items to <b>%1</b> to %2 for %3	admin	it	Controlla oggetti  a <b>%1</b> a %2 per %3
 city	admin	it	Città
 country selection	admin	it	Selezione Nazione
 create group	admin	it	Crea gruppo
+cron	admin	it	cron
+daily comics	admin	it	Fumetti Quotidiani
+default	admin	it	Default
+default file system space per user	admin	it	Spazio di filesystem per utente
+default file system space per user/group ?	admin	it	Spazio di filesystem per utente/gruppo?
+delete all records	admin	it	Elimina tutto
+deny access to application registery	admin	it	Nega l'accesso alla registrazione applicazioni
+deny access to applications	admin	it	Nega l'accesso alle applicazioni
+deny access to current sessions	admin	it	Nega l'accesso alla sessione corrente
+deny access to error log	admin	it	Nega l'accesso all'error log
+deny access to global categories	admin	it	Nega l'accesso alle categorie globali
+deny access to groups	admin	it	Nega l'accesso ai gruppi
+deny access to mainscreen message	admin	it	Nega l'accesso a messaggio di benvenuto
+deny access to peer servers	admin	it	Nega l'accesso ai peer servers
+deny access to phpinfo	admin	it	Nega l'accesso al phpinfo
+deny access to session log	admin	it	Nega l'accesso al log della sessione
+deny access to site configuration	admin	it	Nega l'accesso alla configurazione del sito
+deny access to user accounts	admin	it	Nega l'accesso alla gestione degli account utente
+deny all users access to grant other users access to their entries ?	admin	it	
 description	admin	it	Descrizione
+description can not exceed 255 characters in length !	admin	it	La descrizione non può essere più luga di 255 caratteri!
 disabled	admin	it	Disabilitato
 display	admin	it	Visualizza
+do you also want to delete all global subcategories ?	admin	it	Vuoi cancellare anche tutte le sottocategorie globali?
 edit application	admin	it	Modifica Applicazione
+edit global category	admin	it	Modifica la categoria globale
+edit global category for %1	admin	it	Modifica la categoria globale per %1
 edit group	admin	it	Modifica Gruppo
 edit login screen message	admin	it	Modifica il messaggio della schermata di login
+edit main screen message	admin	it	Modifica il messaggio della schermata principale
+edit peer server	admin	it	Modifica Peer Server
+edit table format	admin	it	Modifica il formato della tabella
 edit user account	admin	it	Modifica account dell'utente
 enabled	admin	it	Attivo
 enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	it	Inserisci del testo casuale per las cifratura di app_session (richiede mcrypt)
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	it	Inserisci l'hostname della macchina su cui sta girando questo server
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di phpGroupWare.<br>Esempio: http://www.domain.com/phpgroupware &nbsp; o &nbsp; /phpgroupware<br><b>senza slash finale</b>
+enter the site password for peer servers	admin	it	Inserisci la password per i peer server
+enter the site username for peer servers	admin	it	Inserisci il nome utente per i peer server
+enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
+enter your default ftp server	admin	it	Inserire il server FTP di default
+enter your http proxy server	admin	it	Inserire il proxy HTTP
+enter your http proxy server port	admin	it	Inserire la porta del proxy HTTP
 expires	admin	it	Scade
+file space	admin	it	Spazio per i file
+file space must be an integer	admin	it	Lo spazio per i file deve essere un intero
+find and register all application hooks	admin	it	Trova e registra tutti gli hook delle applicazioni
+force selectbox	admin	it	Forza elenco a discesa
 forecast	admin	it	Previsione
 forecast zone	admin	it	Zona di previsione
 fzone	admin	it	ZonaF
 global categories	admin	it	Categorie Globali
+global comics	admin	it	Fumetti Disponibili
+global options	admin	it	Opzioni Globali
+group ?	admin	it	gruppo ?
+group has been added	common	it	Il gruppo è stato aggiunto
+group has been deleted	common	it	Il gruppo è stato cancellato
+group has been updated	common	it	Il gruppo è stato modificato
+group manager	admin	it	Gestore del Gruppo
 group name	admin	it	Nome Gruppo
 hide php information	admin	it	nascondi informazioni php
 home directory	admin	it	Cartella Personale
+host information	admin	it	Informazioni host
 id	admin	it	ID
 idle	admin	it	inattivo
+if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di 
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	it	Nel caso si utilizzi LDAP, vuoi gestire gli attributi di homedirectory e shell di login?
+images	admin	it	Immagini
+inbound	admin	it	in ingresso
+inc	admin	it	inc
 installed applications	common	it	Applicazioni Installate
+interface	admin	it	Interfaccia
 ip	admin	it	IP
 kill	admin	it	Termina
+kill session	admin	it	Termina sessione
 language	admin	it	Lingua
+last %1 logins	admin	it	Ultimi %1 login
+last %1 logins for %2	admin	it	Ultimi %1 login per %2
 last login	admin	it	ultimo login
 last login from	admin	it	ultimo login da
 last time read	admin	it	Ultima volta letto
-last %1 logins	admin	it	Ultimi %1 login
-listings displayed	admin	it	Elementi Visualizzati
+ldap accounts context	admin	it	contesto account LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	it	prefisso di default per le homedirectory LDAP (es. /home per /home/username)
+ldap default shell (e.g. /bin/bash)	admin	it	shel di default LDAP (es: /bin/bash)
+ldap encryption type	admin	it	tipo di cifratura LDAP
+ldap groups context	admin	it	contesto gruppi LDAP
+ldap host	admin	it	host LDAP
+ldap root password	admin	it	password di root LDAP
+ldap rootdn	admin	it	LDAP rootdn
 list of current users	admin	it	lista utenti attivi
-loginid	admin	it	LoginID
+listings displayed	admin	it	Elementi Visualizzati
+login history	admin	it	Cronologia Collegamenti
 login screen	admin	it	Schermata di login
 login shell	admin	it	Shell di login
 login time	admin	it	Ora Login
+loginid	admin	it	LoginID
 main screen message	admin	it	Messaggio nella schermata principale
 manager	admin	it	Manager
+maximum account id (e.g. 65535 or 1000000)	admin	it	ID massimo per l'account (es. 65535 or 100000, etc.)
 message has been updated	admin	it	il messaggio &egrave; stato aggiornato
 metar	admin	it	Metar
+minimum account id (e.g. 500 or 100, etc.)	admin	it	ID minimo per l'account (es. 500 or 100, etc.)
+mode	admin	it	Modalità
 never	admin	it	Mai
 new group name	admin	it	Nome nuovo gruppo
 new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in bianco per non cambiarla ]
+no algorithms available	admin	it	nessun algoritmo disponibile
+no login history exists for this user	admin	it	Non esiste una cronologia di login per questo utente
 no matches found	admin	it	Nessuna corrispondenza trovata.
+no modes available	admin	it	nessuna modalità disponibile
+note: ssl available only if php is compiled with curl support	admin	it	Nota: SSL dispobile solo con il PHP compilato con il supporto curl
+outbound	admin	it	in uscita
+passthrough	admin	it	passthrough
+path information	admin	it	Informazioni sul Path
+peer servers	admin	it	Peer servers
 percent of users that logged out	admin	it	Percentuale di utenti che sono usciti dal sistema in maniera corretta
+percent this user has logged out	admin	it	Percentuale di logout di quest'utente
 permissions	admin	it	Permessi
 permissions this group has	admin	it	Permessi che questo gruppo ha
 php information	admin	it	Informazioni su PHP
-please enter a name for that category !	admin	it	Please enter a name for that category !
+phpinfo	admin	it	phpinfo
+please enter a name	admin	it	Per favore inserisci un nome
+please enter a name for that category !	admin	it	Please enter a name for that category!
+please enter a name for that server !	admin	it	Per favore inserisciun nome per quel server
+please run setup to become current	admin	it	Per favore lancia il setup
+please select	admin	it	Per favore selezionare
+preferences	admin	it	Preferenze
+preso.		it	
 re-enter password	admin	it	Reinserisci la password
+read this list of methods.	admin	it	Leggi questa lista dei metodi
 region	admin	it	Regione
 regions	admin	it	Regioni
 remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gruppo
+reset comic data	admin	it	Cancella i dati sui Fumetti
+return to view account	admin	it	RItorna alla visualizzazone dell'account
 section	admin	it	Selezione
+security	admin	it	Sicurezza
+select group managers	admin	it	Seleziona i Gestori del Gruppo
 select parent category	admin	it	Seleziona categoria superiore
 select permissions this group will have	admin	it	Seleziona i permessi che questo gruppo avrà
 select users for inclusion	admin	it	Seleziona utenti per l'inclusione
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	it	Seleziona in quale punto della Barra di Navigazione, dal più basso (sinistra) al più alto (destra)
+select where you want to store/retrieve filesystem information	admin	it	seleziona il modo per memorizzare/recuperare le informazioni sul filesystem
+select where you want to store/retrieve user accounts	admin	it	seleziona il modo per memorizzare/recuperare gli account utente
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	it	Seleziona in quale punto della Barra di Navigazione, dal più basso (sinistra) al più alto (destra), deve apparire questa applicazione
+selectbox	admin	it	Elenco a discesa
+server %1 has been updated	admin	it	il Server %1 è stato aggiornato
+server list	admin	it	Elenco dei Server
+server password	admin	it	Password per il Server
+server type(mode)	admin	it	Typo di Server (modo)
+server url	admin	it	URL del Server
+server username	admin	it	Username per il server
+set preference values.	admin	it	Imposta i valori delle preferenze
+show 'powered by' logo on	admin	it	Visualizza il logo 'creato con'
 site	admin	it	Sito
 site configuration	admin	it	Configurazione per tutto il Sito
-sorry, that group name has already been taking. admin	it Peccato, quel nome di gruppo &egrave; gi&agrave; stato
-preso.
+sorry, that group name has already been taken.	admin	it	Spiacente, questo nome di gruppo è già stato utilizzato
+sorry, that group name has already been taking. admin	it Peccato, quel nome di gruppo &egrave; gi&agrave; stato	it	
+sorry, the above users are still a member of the group %1	admin	it	Spiacente, l'utente è ancora membro del gruppo %1
 sorry, the follow users are still a member of the group %1	admin	it	Peccato, i seguenti utenti sono ancora membri del gruppo %1
+squirrelmail	admin	it	Squirrelmail
 station	admin	it	Stazione
 stations	admin	it	Stazioni
 submit changes	admin	it	Invia Cambiamenti
 table	admin	it	Tabella
 template selection	admin	it	Aspetto selezionabili
+text entry	admin	it	Inserimento di Testo
+that application name already exists.	admin	it	Quel nome di applicazoine esiste già
+that application order must be a number.	admin	it	Quel numero d'ordine deve essere un numero
 that category name has been used already !	admin	it	Quel nome di categoria &egrave; gi&agrave; stato usato !
 that loginid has already been taken	admin	it	Quel nome utente è già stato scelto
+that name has been used already	admin	it	Quel nome è già stato utilizzato
+that server name has been used already !	admin	it	Questo nome di server è già stato utilizzato!
+the api is current	admin	it	Le API sono aggiornate
+the api requires an upgrade	admin	it	Le API hanno bisogno di essere aggiornate
 the login and password can not be the same	admin	it	La login e la pasword non possono essere uguali
-they must be removed before you can continue	admin	it	Devono essere rimossi prima di proseguire
-total records	admin	it	Inserimenti totali
-update	admin	it	aggiorna
-user accounts	admin	it	Account utenti
-user groups	admin	it	Gruppi utenti
-view access log	admin	it	Visualizza elenco collegamenti
-view user account	admin	it	Visualizza account dell'utente
-view sessions	admin	it	Visualizza sessioni
-you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
-you must enter an application name and title.	admin	it	Devi inserire un nome e un titolo per l'applicazione.
-you must select a file type	admin	it	Devi selezionare un tipo-file
-zone	admin	it	Zone
-squirrelmail	admin	it	Squirrelmail
-images	admin	it	Immagini
+the loginid can not be more then 8 characters	admin	it	La loginid non può essere più lunga di 8 caratteri
+the two passwords are not the same	admin	it	Le due password non coincidono
 themes	admin	it	Temi
-cron	admin	it	cron
-inc	admin	it	inc
+they must be removed before you can continue	admin	it	Devono essere rimossi prima di proseguire
+this application is current	admin	it	Questa è l'applicazione corrente
+this application requires an upgrade	admin	it	Questa applicazione ha bisogno di un aggiornamento
+this category is currently being used by applications as a parent category	admin	it	Questa categoria è attualmente utilizzata dalle applicazioni come categoria padre
 todo	admin	it	Da-fare
+top	admin	it	in alto
+total records	admin	it	Inserimenti totali
+trust level	admin	it	Livello di Fiducia
+trust relationship	admin	it	Relazioni Fidate
+update	admin	it	aggiorna
+use cookies to pass sessionid	admin	it	utilizza i cookie per passare l'id di sessione
+use pure html compliant code (not fully working yet)	admin	it	Usa codice HTML compliant (non completamente implementato)
+use theme	admin	it	Utilizza il tema
+user accounts	admin	it	Account utenti
+user data	admin	it	dati utente
+user groups	admin	it	Gruppi utenti
+userdata	admin	it	dati utente
+users choice	admin	it	Scelta dell'utente
+view access log	admin	it	Visualizza elenco collegamenti
+view error log	admin	it	Visualizza il log degli errori
+view sessions	admin	it	Visualizza sessioni
+view user account	admin	it	Visualizza account dell'utente
 who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
-delete all records	admin	it	Elimina tutto
-phpinfo	admin	it	phpinfo
-calendar holiday management	admin	it	Gestione Festivit&agrave;
-change forum settings	admin	it	Cambia le preferenze dei Forum
-daily comics	admin	it	Fumetti Quotidiani
-global options	admin	it	Opzioni Globali
-global comics	admin	it	Fumetti Disponibili
-reset comic data	admin	it	Cancella i dati sui Fumetti
-enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
-show 'powered by' logo on 	admin	it	Visualizza il logo 'creato con'
-
+would you like phpgroupware to cache the phpgw info array ?	admin	it	Vuoi che phpGroupWare utilizzi la cache per l'array phpgw info?
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che phpGroupWare controlli se c'è una nuova versione<br> ogni volta che si collega un ammionistratore?
+would you like to show each application's upgrade status ?	admin	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
+you have entered an invalid expiration date	admin	it	Hai inserito una data di scadenza non valida
+you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
+you must enter a group name.	admin	it	Devi inserire un nome di gruppo
+you must enter a loginid	admin	it	Devi inserire un titolo un id di login
+you must enter an application name and title.	admin	it	Devi inserire un nome e un titolo per l'applicazione.
+you must enter an application name.	admin	it	Devi inserire un nome per l'applicazione
+you must enter an application title.	admin	it	Devi inserire un titolo per l'applicazione
+you must select a file type	admin	it	Devi selezionare un tipo-file
+you will need to remove the subcategories before you can delete this category	admin	it	E' necessario rimuovere le sottocategorie prima di cancellare questa categoria
+zone	admin	it	Zone
