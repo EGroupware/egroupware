@@ -199,12 +199,16 @@
 			if (!$referer)
 				$referer = $HTTP_REFERER;
 
-			$url = parse_url($referer);
-			$referer = str_replace($phpgw_info['server']['webserver_url'],'',
-										  $url['path']);
+			//echo "<p>get_referer: referer=$referer, webserver_url=".$phpgw_info['server']['webserver_url'];
+
+			$url = parse_url(str_replace($phpgw_info['server']['webserver_url'],'',
+										  		  $referer));
+			$referer = $url['path'];
+
 			if ($url['query'])
 				$referer .= '?'.$url['query'];
-			//echo "<p>referer: $HTTP_REFERER --> $referer</p>";
+
+			//echo " --> $referer</p>";
 
 			return $referer;
 		}
