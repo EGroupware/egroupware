@@ -28,17 +28,26 @@
 		*/
 	class nextmatchs
 	{
+		var $maxmatches;
+		var $action;
+		
 		function nextmatchs()
 		{
-			global $phpgw_info;
+			global $phpgw_info, $menuaction;
 
-			if ($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0)
+			if(isset($phpgw_info['user']['preferences']['common']['maxmatchs']) &&
+				intval($phpgw_info['user']['preferences']['common']['maxmatchs']) > 0)
 			{
-				$this->maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
+				$this->maxmatches = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
 			}
 			else
 			{
-				$this->maxmatchs = 15;
+				$this->maxmatches = 15;
+			}
+
+			if(isset($menuaction))
+			{
+				$this->action = $menuaction;
 			}
 		}
 
@@ -50,13 +59,43 @@
 		@param $img_src ?
 		@param $label ?
 		*/
-		function set_icon(&$tpl,$align,$img_src,$label)
+		function set_icon($align,$img,$label)
 		{
-			$tpl->set_var('align',$align);
-			$tpl->set_var('img_src',PHPGW_IMAGES_DIR . $img_src);
-			$tpl->set_var('label',lang($label));
-			$tpl->parse('out','link',True);
+			global $phpgw;
+			
+			$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(
+				Array(
+					'link' => 'nextmatchs_link.tpl'
+				)
+			);
+
+			$var = Array(
+				'align'	=> $align,
+				'img'	=> $phpgw->common->image('phpgwapi',$img),
+				'label'	=> lang($label)
+			);
+			$tpl->set_var($var);
+			return $tpl->fp('out','link');
 		}
+
+		
+		/*!
+		@function page
+		@abstract ?
+		*/
+		function page($extravars='')
+		{
+			global $phpgw;
+
+			if($extravars && substr($extravars,0,1)!='&')
+			{
+				$extravars = '&'.$extravars;
+			}
+
+			return $phpgw->link('/index.php','menuaction='.$this->action.$extravars);
+		}
+		
 		/*!
 		@function set_link
 		@abstract ?
@@ -66,19 +105,34 @@
 		@param $link ?
 		@param $extravars ?
 		*/
-		function set_link(&$tpl,$align,$img_src,$label,$link,$extravars)
+		function set_link($align,$img,$link,$extravars)
 		{
 			global $phpgw;
 
-			$tpl->set_var('align',$align);
-			if ($link)
+			$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(
+				Array(
+					'_out'	=> 'nextmatchs_form.tpl'
+				)
+			);
+			
+			$hidden = '';
+			while(list($var,$value) = each($extravars))
 			{
-				$tpl->set_var('a_open','<a href="' . $phpgw->link($link,$extravars) . '">');
-				$tpl->set_var('a_close','</a>');
+				if((is_int($value) && $value == 0) || $value)
+				{
+					$hidden .= '      <input type="hidden" name="'.$var.'" value="'.$value.'">'."\n";
+				}
 			}
-			$tpl->set_var('img_src',PHPGW_IMAGES_DIR . $img_src);
-			$tpl->set_var('label',lang($label));
-			$tpl->parse('out','link',True);		
+
+			$var = Array(
+				'align'	=> $align,
+				'action'	=> ($this->action?$this->page():$phpgw->link($link)),
+				'hidden'	=> $hidden,
+				'img'	=> $phpgw->common->image('phpgwapi',$img)
+			);
+			$tpl->set_var($var);
+			return $tpl->fp('out','_out');
 		}
 
 		/*!
@@ -98,41 +152,65 @@
 		{
 			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
 			$start = $localstart;
-			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(array(
-				'nextmatchs' => 'nextmatchs.tpl'
-			));
-			$_query = stripslashes($query);
+			$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+			$tpl->set_file(
+				Array(
+					'nextmatchs' => 'nextmatchs.tpl'
+				)
+			);
 
-			$tpl->set_var('form_action',$phpgw->link($sn, $extra));
-			$tpl->set_var('filter_value',$filter);
-			$tpl->set_var('qfield_value',$qfield);
-			$tpl->set_var('start_value',$start);
-			$tpl->set_var('order_value',$order);
-			$tpl->set_var('sort_value',$sort);
-			$tpl->set_var('query_value',urlencode($_query));
-			$tpl->set_var('table_width',$twidth);
-			$tpl->set_var('th_bg',$phpgw_info['theme']['th_bg']);
-
-			$tpl->set_var('left',$this->left($sn,$start,$total,$extra));
-
-			if ($showsearch == 1)
-			{
-				$tpl->set_var(search,$this->search($search_obj));
-			}
-
-			if ($filter_obj)
-			{
-				$tpl->set_var('filter',$this->filter($filter_obj,$yours));
-			}
-			else
-			{
-				$tpl->set_var('filter','');
-			}
-			$tpl->set_var('right',$this->right($sn,$start,$total,$extra));
-
+			$var = Array(
+				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
+				'filter_value'	=> $filter,
+				'qfield'	=> $qfield,
+				'start_value'	=> $start,
+				'order_value'	=> $order,
+				'sort_value'	=> $sort,
+				'query_value'	=> urlencode(stripslashes($query)),
+				'table_width'	=> $twidth,
+				'th_bg'	=> $phpgw_info['theme']['th_bg'],
+				'left'	=> $this->left($sn,$start,$total,$extra),
+				'search'	=> ($showsearch?$this->search($search_obj):''),
+				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):''),
+				'right'	=> $this->right($sn,$start,$total,$extra)
+			);
+			$tpl->set_var($var);
 			return $tpl->fp('out','nextmatchs');
-		} 
+		}
+
+		function split_extras($extravars,$extradata)
+		{
+			if($extradata)
+			{
+				if(is_string($extradata))
+				{
+					$extraparams = explode('&',$extradata);
+					$c_extraparams = count($extraparams);
+					for($i=0;$i<$c_extraparams;$i++)
+					{
+						if($extraparams[$i])
+						{
+							list($var,$value) = explode('=',$extraparams[$i]);
+							if($var != 'menuaction')
+							{
+								$extravars[$var] = $value;
+							}
+						}
+					}
+				}
+				elseif(is_array($extradata))
+				{
+					while(list($var,$value) = each($extradata))
+					{
+						if($var != 'menuaction')
+						{
+							$extravars[$var] = $value;
+						}
+					}
+				}
+			}
+			return $extravars;
+		}
 		/*!
 		@function left
 		@abstract ?
@@ -144,47 +222,49 @@
 		function left($scriptname,$start,$total,$extradata = '')
 		{
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
-			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(array(
-				'link' => 'nextmatchs_link.tpl'
-			));
-			$_query = stripslashes($query);
+			
+			$extravars = Array(
+				'order'	=> $order,
+				'filter'	=> $filter,
+				'q_field'	=> $qfield,
+				'sort'	=> $sort,
+				'query'	=> urlencode(stripslashes($query))
+			);
 
-//			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
-			$maxmatchs = $this->maxmatchs;
+			$extravars = $this->split_extras($extravars,$extradata);
 
-			if (($start != 0) && ($start > $maxmatchs))
+			$ret_str = '';
+			
+			if (($start != 0) && ($start > $this->maxmatches))
 			{
-				$this->set_link(&$tpl,'left','/first.gif','First page',$scriptname,'start=0&order=' . $order . '&filter='
-						. $filter . '&qfield=' . $qfield . '&sort=' . $sort . '&query=' . urlencode($_query) . $extradata);
+				$extravars['start'] = 0;
+				$ret_str .= $this->set_link('left','first.gif',$scriptname,$extravars);
 			}
 			else
 			{
-				$this->set_icon(&$tpl,'left','/first-grey.gif','First page');
+				$ret_str .= $this->set_icon('left','first-grey.gif','First page');
 			}
 
 			if ($start != 0)
 			{
 				// Changing the sorting order screaws up the starting number
-				if (($start - $maxmatchs) < 0)
+				if (($start - $this->maxmatches) < 0)
 				{
-					$t_start = 0;
+					$extravars['start'] = 0;
 				}
 				else
 				{
-					$t_start = ($start - $maxmatchs);
+					$extravars['start'] = ($start - $this->maxmatches);
 				}
 
-				$this->set_link(&$tpl,'left','/left.gif','Previous page',$scriptname,'start=' . $t_start
-					. '&order=' . $order . '&filter=' . $filter . '&qfield=' . $qfield . '&sort=' . $sort
-					. '&query=' . urlencode($_query) . $extradata);
+				$ret_str .= $this->set_link('left','left.gif',$scriptname,$extravars);
 			}
 			else
 			{
-				$this->set_icon(&$tpl,'left','/left-grey.gif','Previous page');
+				$ret_str .= $this->set_icon('left','left-grey.gif','Previous page');
 			}
 
-			return $tpl->fp('out_','out');
+			return $ret_str;
 		} /* left() */
 		
 		/*!
@@ -198,38 +278,40 @@
 		function right($scriptname,$start,$total,$extradata = '')
 		{
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
-			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(array(
-				'link' => 'nextmatchs_link.tpl'
-			));
-//			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
-			$maxmatchs = $this->maxmatchs;
+			
+			$extravars = Array(
+				'order'	=> $order,
+				'filter'	=> $filter,
+				'q_field'	=> $qfield,
+				'sort'	=> $sort,
+				'query'	=> urlencode(stripslashes($query))
+			);
 
-			$_query = stripslashes($query);
+			$extravars = $this->split_extras($extravars,$extradata);
 
-			if (($total > $maxmatchs) && ($total > $start + $maxmatchs))
+			$ret_str = '';
+
+			if (($total > $this->maxmatches) && ($total > $start + $this->maxmatches))
 			{
-				$this->set_link(&$tpl,'right','/right.gif','Next page',$scriptname,'start='
-					. ($start+$maxmatchs) . '&order=' . $order . '&filter=' . $filter . '&qfield=' . $qfield
-					. '&sort=' . $sort . '&query=' . urlencode($_query) . $extradata);
+				$extravars['start'] = ($start+$this->maxmatches);
+				$ret_str .= $this->set_link('right','right.gif',$scriptname,$extravars);
 			}
 			else
 			{
-				$this->set_icon(&$tpl,'right','/right-grey.gif','Next page');
+				$ret_str .= $this->set_icon('right','right-grey.gif','Next page');
 			}
 
-			if (($start != $total - $maxmatchs) && (($total - $maxmatchs) > ($start + $maxmatchs)))
+			if (($start != $total - $this->maxmatches) && (($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
-				$this->set_link(&$tpl,'right','/last.gif','Last page',$scriptname,'start='
-					. ($total-$maxmatchs) . '&order=' . $order . '&filter=' . $filter . '&qfield=' .$qfield
-					. '&sort=' . $sort . '&query=' . urlencode($_query) . $extradata);
+				$extravars['start'] = ($total-$this->maxmatches);
+				$ret_str .= $this->set_link('right','last.gif',$scriptname,$extravars);
 			}
 			else
 			{
-				$this->set_icon(&$tpl,'right','/last-grey.gif','Last page');
+				$ret_str .= $this->set_icon('right','last-grey.gif','Last page');
 			}
 
-			return $tpl->fp('out_','out');
+			return $ret_str;
 		} /* right() */
 		
 		/*!
@@ -241,9 +323,11 @@
 		{
 			global $query;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(array(
-				'search' => 'nextmatchs_search.tpl'
-			));
+			$tpl->set_file(
+				Array(
+					'search' => 'nextmatchs_search.tpl'
+				)
+			);
 
 			$_query = stripslashes($query);
 
@@ -254,10 +338,13 @@
 				$_query = ereg_replace('"','',$_query);
 			}
 
-			$tpl->set_var('query_value',stripslashes($_query));
-			$tpl->set_var('searchby',$this->searchby($search_obj));
-			$tpl->set_var('lang_search',lang('Search'));
+			$var = Array(
+				'query_value'	=> stripslashes($_query),
+				'searchby'	=> $this->searchby($search_obj),
+				'lang_search'	=> lang('Search')
+			);
 
+			$tpl->set_var($var);
 			return $tpl->fp('out','search');
 		} /* search() */
 
@@ -295,10 +382,9 @@
 		{
 			global $qfield, $phpgw, $phpgw_info;
 
+			$str = '';
 			if (is_array($search_obj))
 			{
-				$str = '<select name="qfield">';
-
 				$indexlimit = count($search_obj);
 				for ($index=0; $index<$indexlimit; $index++)
 				{
@@ -307,16 +393,9 @@
 						$qfield = $search_obj[$index][0];
 					}
 
-					$str .= '<option value="' . $search_obj[$index][0] . '"';
-
-					if ($qfield == $search_obj[$index][0])
-					{
-						$str .= ' selected';
-					}
-
-					$str .= '>' . lang($search_obj[$index][1]) . '</option>';
+					$str .= '<option value="' . $search_obj[$index][0] . '"' . ($qfield == $search_obj[$index][0]?' selected':'') . '>' . lang($search_obj[$index][1]) . '</option>';
 				}
-				$str .= '</select>' . "\n";
+				$str = '<select name="qfield">' . $str . '</select>' . "\n";
 			}
 			return $str;
 		} /* searchby() */
@@ -330,9 +409,11 @@
 		{
 			global $filter, $phpgw, $phpgw_info;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_file(array(
-				'filter' => 'nextmatchs_filter.tpl'
-			));
+			$tpl->set_file(
+				Array(
+					'filter' => 'nextmatchs_filter.tpl'
+				)
+			);
 
 			if (is_long($filter_obj))
 			{
@@ -362,7 +443,7 @@
 
 			if (is_array($filter_obj))
 			{
-				$str .='<select name="filter" onChange="this.form.submit()">'."\n";
+				$str = '';
 
 				$indexlimit = count($filter_obj);
 
@@ -373,17 +454,10 @@
 						$filter = $filter_obj[$index][0];
 					}
 
-					$str .= '<option value="' . $filter_obj[$index][0] . '"';
-
-					if ($filter == $filter_obj[$index][0])
-					{
-						$str .= ' selected';
-					}
-
-					$str .= '>' . $filter_obj[$index][1] . '</option>'."\n";
+					$str .= '<option value="' . $filter_obj[$index][0] . '"'.($filter == $filter_obj[$index][0]?' selected':'') . '>' . $filter_obj[$index][1] . '</option>'."\n";
 				}
 
-				$str .= '</select>'."\n";
+				$str = '<select name="filter" onChange="this.form.submit()">'."\n" . $str . '</select>'."\n";
 				$tpl->set_var('select',$str);
 				$tpl->set_var('lang_filter',lang('Filter'));
 			}
@@ -443,7 +517,6 @@
 		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_a_href=True)
 		{
 			global $phpgw, $filter, $qfield, $start, $query;
-			$_query = stripslashes($query);
 
 			if (($order == $var) && ($sort == 'ASC'))
 			{
@@ -458,15 +531,17 @@
 				$sort = 'ASC';
 			}
 
+			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$filter.'&qfield='.$qfield.'&start='.$start.'&query='.urlencode(stripslashes($query)).$extra;
+
+			$link = ($this->action?$this->page($extravar):$phpgw->link($program,$extravar));
+
 			if ($build_a_href)
 			{
-				return '<a href="' . $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
-					. "qfield=$qfield&start=$start&query=" . urlencode($_query) . $extra) . '">' . $text . '</a>';
+				return '<a href="' . $link . '">' . $text . '</a>';
 			}
 			else
 			{
-				return $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
-					. "qfield=$qfield&start=$start&query=" . urlencode($_query) . $extra);
+				return $link;
 			}
 		}
 
@@ -474,33 +549,28 @@
 		{
 			global $phpgw, $filter, $qfield, $start, $query;
 
-			return '<a href="' . $phpgw->link($program,"sort=$sort&order=$order&filter=$filter&"
-				. "qfield=$qfield&start=$start" . $extra) . '">' . $text . '</a>';
+			$extravar = 'sort='.$sort.'&order='.$order.'&filter='.$filter.'&qfield='.$qfield.'&start='.$start.$extra;
+			return '<a href="' . ($this->action?$this->page($extravar):$phpgw->link($program,$extravar)) . '">' . $text . '</a>';
 		}
 
-		function show_hits($total_records = '',$start)
+		function show_hits($total_records='',$start=0)
 		{
-			global $phpgw_info;
-
-			$limit = $this->maxmatchs;
-
-			if ($total_records > $limit)
+			if ($total_records > $this->maxmatches)
 			{
-				if ($start + $limit > $total_records)
+				if ($start + $this->maxmatches > $total_records)
 				{
 					$end = $total_records;
 				}
 				else
 				{
-					$end = $start + $limit;
+					$end = $start + $this->maxmatches;
 				}
-				$f = lang('showing x - x of x',($start + 1),$end,$total_records);
+				return lang('showing x - x of x',($start + 1),$end,$total_records);
 			}
 			else
 			{
-				$f = lang('showing x',$total_records);
+				return lang('showing x',$total_records);
 			}
-			return $f;
 		}
 	}		// End of nextmatchs class
 ?>
