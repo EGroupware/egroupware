@@ -51,7 +51,8 @@
 		{
 			if ($upgrademethod == 'dumpold')
 			{
-				$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_lang",__LINE__,__FILE__);
+				// dont delete the custom main- & loginscreen messages every time
+				$GLOBALS['phpgw_setup']->db->query("DELETE FROM phpgw_lang where app_name != 'mainscreen' AND app_name != 'loginscreen'",__LINE__,__FILE__);
 				//echo '<br>Test: dumpold';
 			}
 			while (list($null,$lang) = each($lang_selected))
