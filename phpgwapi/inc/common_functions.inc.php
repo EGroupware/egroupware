@@ -195,6 +195,7 @@
 	*/
 	function safe_args($expected, $recieved, $line='??', $file='??')
 	{
+echo '$recieved:<pre>'; print_r($recieved); echo '</pre>';
 		/* This array will contain all the required fields */
 		$required = Array();
 
@@ -223,7 +224,7 @@
 			{
 		    for ($i = 0; $i < $num; $i++)
 				{
-					if(isset($recieved[$i]) && $recieved[$i] != '##DEFAULT##')
+					if(isset($recieved[$i]) && $recieved[$i] !== '##DEFAULT##')
 					{
 						if(sanitize($recieved[$i],$expected[$i]['type']))
 						{
@@ -247,7 +248,7 @@
  				}
 				while(list($key,$val) = each($recieved[0]))
 				{
-					if($val != '##DEFAULT##')
+					if($val !== '##DEFAULT##')
 					{
 						if(sanitize($val,$types[$key]) == True)
 						{
@@ -672,7 +673,6 @@
 		{
 			if ($p1 == '_UNDEF_' && $p1 != 1)
 			{
-				echo('$obj = new ' . $classname . ';');
 				$obj = new $classname;
 			}
 			else
