@@ -99,3 +99,8 @@ Tentative	calendar	de	Vorl‰ufige Zusage
 Calendar settings	calendar	de	Kalendar Einstellungen
 Do you wish to autoload calendar holidays files dynamically?	calendar	de	Sollen die Feiertage automatisch geladen werden?
 Location to autoload from	calendar	de	Wo sollen sie geladen werden
+Send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen via EMail
+Display status of events	calendar	de	Status von Terminen anzeigen
+When creating new events default set to private	calendar	de	neue Termine sind privat
+Display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
+Print calendars in black & white	calendar	de	Kalender in Schwarz und Weiﬂ drucken
