@@ -29,6 +29,8 @@
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('infolog');
 			$this->user   = $GLOBALS['phpgw_info']['user']['account_id'];
 
+			$this->links = CreateObject('infolog.solink');
+
 			$this->read( $info_id );
 		}
 				
@@ -173,6 +175,16 @@
 				{
 					$this->data[$key] = stripslashes($this->data[$key]);
 				}
+				$links = $this->links->get_links('infolog',$this->data['info_id']);
+				while (list($nul,$link) = each($links))
+				{
+					if ($link['app'] == 'addressbook')
+						$this->data['info_addr_id'] = $link['id'];
+					if ($link['app'] == 'projects')
+						$this->data['info_proj_id'] = $link['id'];
+					if ($link['app'] == 'calendar')
+						$this->data['info_event_id'] = $link['id'];
+				}
 			}
 			return $this->data;         
 		}
@@ -183,6 +195,8 @@
 				. "$info_id' AND ((info_access='public' and info_owner != '$this->user')"
 				. " or (info_owner='$this->user'))" ,__LINE__,__FILE__);
 				
+			$this->links->unlink(0,'infolog',$info_id);
+
 			if ($this->data['info_id'] == $info_id)
 			{
 				$this->init( );            
@@ -199,6 +213,9 @@
 
 					$this->data[$key] = $val;   // update internal data
 
+					if ($key == 'info_addr_id' || $key == 'info_proj_id' || $key == 'info_event_id')
+						continue;	// not longer in infolog-table
+
 					if ($this->maybe_slashes[$key])
 					{
 						$val = addslashes($val);
@@ -208,11 +225,12 @@
 					$query .= ($query ? ',' : '')."$key='$val'";
 				}
 			}
-			if ($values['info_id'])
+			if (($this->data['info_id'] = $values['info_id']) > 0)
 			{
 				$query = "UPDATE phpgw_infolog SET $query where info_id='".$values['info_id']."'";
-				$this->db->query($query,__LINE__,__FILE__);         
-				$this->data['info_id'] = $values['info_id'];
+				$this->db->query($query,__LINE__,__FILE__);
+
+				$this->links->unlink(0,'infolog',$values['info_id']);
 			}
 			else
 			{
@@ -220,6 +238,14 @@
 				$this->db->query($query,__LINE__,__FILE__);
 				$this->data['info_id']=$this->db->get_last_insert_id('phpgw_infolog','info_id');
 			}
+			// echo "<p>soinfolog.write values= "; _debug_array($values);
+			// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
+			if ($this->data['info_addr_id'])
+				$this->links->link('infolog',$this->data['info_id'],'addressbook',$this->data['info_addr_id']);
+			if ($this->data['info_proj_id'])
+				$this->links->link('infolog',$this->data['info_id'],'projects',$this->data['info_proj_id']);
+			if ($this->data['info_event_id'])
+				$this->links->link('infolog',$this->data['info_id'],'calendar',$this->data['info_event_id']);
 		}
 
 		function anzSubs( $info_id )
@@ -235,6 +261,23 @@
 		function readIdArray($order,$sort,$filter,$cat_id,$query,$action,$action_id,
 									$ordermethod,&$start,&$total)
 		{
+			//echo "<p>soinfolog.readIdArray(action='$action',action_id='$action_id')</p>\n";
+			$action2app = array(
+				'addr' => 'addressbook',
+				'proj' => 'projects',
+				'event' => 'calendar'
+			);
+			if ($action != '' && $action2app[$action] != '')
+			{
+				$links = $this->links->get_links($action2app[$action],$action_id);
+				$ids = array();
+				while (list($nul,$link) = each($links))
+				{
+					$ids[''.$link['id']] = 0;
+				}
+				//echo "<p>soinfolog.readIdArray($action,$action_id) ids ="; _debug_array($ids);
+				return $ids;
+			}
 			if ($order)
 			{
 			  $ordermethod = 'order by ' . $order . ' ' . $sort;
@@ -250,7 +293,7 @@
 
 			if ($cat_id)
 			{
-			  $filtermethod .= " AND info_cat='$cat_id' "; 
+			  $filtermethod .= " AND info_cat='$cat_id' ";
 			}
 			switch ($action)
 			{
