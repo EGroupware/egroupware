@@ -21,7 +21,7 @@
 	   - Added feature to check for new releases of phpGW
 	   - Added feature to filter out entrys only within a certain group.
 	     This is for the todo list and addressbook.
-	   - Added a search field and next matchs icons to account form.
+	   - Added a search field and next matchs icons to accounts and groups form.
 
 [08152000] - Fixed a problem with the calendar not showing the months in the users
 	     langague preference.
