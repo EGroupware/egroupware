@@ -421,21 +421,22 @@
 			}
 
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $this->user_context, "uid=$account_lid");
+
+			$sri = ldap_search($ds, $this->group_context, "(&(cn=$account_lid)(phpgwaccounttype=g))");
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]['gidnumber'][0])
+			{
+				$name_list[$account_lid] = intval($allValues[0]['gidnumber'][0]);
+			}
+
+			$sri = ldap_search($ds, $this->user_context, "(&(uid=$account_lid)(phpgwaccounttype=u))");
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if ($allValues[0]['uidnumber'][0])
 			{
 				/* $name_list[$account_lid] = intval($allValues[0]['uidnumber'][0]); */
 				return intval($allValues[0]['uidnumber'][0]);
-			}
-
-			$sri = ldap_search($ds, $this->group_context, "cn=$account_lid");
-			$allValues = ldap_get_entries($ds, $sri);
-
-			if ($allValues[0]['gidnumber'][0])
-			{
-				$name_list[$account_lid] = intval($allValues[0]['gidnumber'][0]);
 			}
 
 			return $name_list[$account_lid];
@@ -451,16 +452,19 @@
 			}
 
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $this->user_context, "uidnumber=$account_id");
+
+			$allValues = array();
+			$sri = ldap_search($ds, $this->group_context, "(&(gidnumber=$account_id)(phpgwaccounttype=g))");
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]['uid'][0])
+			if ($allValues[0]['cn'][0])
 			{
-				$id_list[$account_id] = $allValues[0]['uid'][0];
+				$id_list[$account_id] = $allValues[0]['cn'][0];
 				return $id_list[$account_id];
 			}
 
-			$sri = ldap_search($ds, $this->group_context, "gidnumber=$account_id");
+			$allValues = array();
+			$sri = ldap_search($ds, $this->user_context, "(&(uidnumber=$account_id)(phpgwaccounttype=u))");
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if ($allValues[0]['uid'][0])
@@ -483,7 +487,9 @@
 			}
 
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $this->user_context, "uid=$account_id");
+
+			$allValues = array();
+			$sri = ldap_search($ds, $this->group_context, "(&(gidnumber=$account_id)(phpgwaccounttype=g))");
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if ($allValues[0]['phpgwaccounttype'][0])
@@ -493,8 +499,7 @@
 			}
 
 			$allValues = array();
-
-			$sri = ldap_search($ds, $this->group_context, "cn=$account_id");
+			$sri = ldap_search($ds, $this->user_context, "(&(uidnumber=$account_id)(phpgwaccounttype=u))");
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if ($allValues[0]['phpgwaccounttype'][0])
