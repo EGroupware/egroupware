@@ -123,16 +123,16 @@
 	}
 
 	$GLOBALS['phpgw_setup']->html->show_header('LDAP Modify','','config',$ConfigDomain);
-
-	if ($submit)
+	$setup_complete = False;
+	if (isset($_POST['submit']))
 	{
 		$acl = CreateObject('phpgwapi.acl');
 		$acl->db = $GLOBALS['phpgw_setup']->db;
-		if ($ldapgroups)
+		if (isset($_POST['ldapgroups']))
 		{
 			$groups = CreateObject('phpgwapi.accounts');
 			$groups->db = $GLOBALS['phpgw_setup']->db;
-			while (list($key,$groupid) = each($ldapgroups))
+			while (list($key,$groupid) = each($_POST['ldapgroups']))
 			{
 				$id_exist = 0;
 				$entry = array();
@@ -242,11 +242,11 @@
 			}
 		}
 
-		if($users)
+		if(isset($_POST['users']))
 		{
 			$accounts = CreateObject('phpgwapi.accounts');
 			$accounts->db = $GLOBALS['phpgw_setup']->db;
-			while (list($key,$id) = each($users))
+			while (list($key,$id) = each($_POST['users']))
 			{
 				$id_exist = 0;
 				$thisacctid  = $account_info[$id]['uidnumber'][0];
@@ -273,6 +273,7 @@
 					{
 						reset($entry[0]['objectclass']);
 						$replace['objectclass'] = $entry[0]['objectclass'];
+						unset($replace['objectclass']['count']);
 						$replace['objectclass'][]       = 'phpgwAccount';
 						ldap_mod_replace($ldap,$thisdn,$replace);
 						unset($replace);
@@ -308,10 +309,10 @@
 					However, if no groups were imported, we do need to give each user
 					apps access
 					*/
-					if(!$ldapgroups)
+					if(empty($_POST['ldapgroups']))
 					{
-						@reset($s_apps);
-						while (list($key,$app) = @each($s_apps))
+						@reset($_POST['s_apps']);
+						while (list($key,$app) = @each($_POST['s_apps']))
 						{
 							$acl->delete($app,'run',1);
 							$acl->add($app,'run',1);
@@ -326,7 +327,7 @@
 					This is typically an exception to apps for run rights
 					as a group member.
 					*/
-					for ($a=0;$a<count($admins);$a++)
+					for ($a=0;$a<count($_POST['admins']);$a++)
 					{
 						if ($admins[$a] == $thisacctid)
 						{
@@ -342,10 +343,10 @@
 		$setup_complete = True;
 	}
 
-	if ($error)
+	if (isset($_GET['error']))
 	{
 		/* echo '<br><center><b>Error:</b> '.$error.'</center>'; */
-		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$error);
+		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$_GET['error']);
 	}
 
 	if ($setup_complete)
@@ -363,22 +364,26 @@
 	$setup_tpl->set_block('ldap','submit','submit');
 	$setup_tpl->set_block('ldap','footer','footer');
 
+	$user_list = '';
 	while (list($key,$account) = @each($account_info))
 	{
-		$user_list .= '<option value="' . $account['uidnumber'][0] . '">' . utf8_decode($account['cn'][0]) . '(' . $account['uid'][0] . ')</option>';
+		$user_list .= '<option value="' . $account['uidnumber'][0] . '">' . utf8_decode($account['cn'][0]) . ' (' . $account['uid'][0] . ')</option>';
 	}
 
+	$admin_list = '';
 	@reset($account_info);
 	while (list($key,$account) = @each($account_info))
 	{
-		$admin_list .= '<option value="' . $account['uidnumber'][0] . '">' . utf8_decode($account['cn'][0]) . '(' . $account['uid'][0] . ')</option>';
+		$admin_list .= '<option value="' . $account['uidnumber'][0] . '">' . utf8_decode($account['cn'][0]) . ' (' . $account['uid'][0] . ')</option>';
 	}
 
+	$group_list = '';
 	while (list($key,$group) = @each($group_info))
 	{
 		$group_list .= '<option value="' . $group['gidnumber'][0] . '">' . utf8_decode($group['cn'][0])  . '</option>';
 	}
 
+	$app_list = '';
 	while(list($appname,$apptitle) = each($apps))
 	{
 		if($appname == 'admin' ||
