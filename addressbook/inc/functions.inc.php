@@ -20,13 +20,18 @@
 
 	$grants = $phpgw->acl->get_grants('addressbook');
 
-	if(!isset($owner) || !$owner) {
+	if(!isset($owner) || !$owner)
+	{
 		$owner = $phpgw_info['user']['account_id'];
 		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-	} else {
-		if($grants[$owner]) {
+	}
+	else
+	{
+		if($grants[$owner])
+		{
 			$rights = $grants[$owner];
-			if (!($rights & PHPGW_ACL_READ)) {
+			if (!($rights & PHPGW_ACL_READ))
+			{
 				$owner = $phpgw_info['user']['account_id'];
 				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
 			}
@@ -82,14 +87,17 @@
 	// Return a select form element with the categories option dialog in it
 	function cat_option($cat_id='',$notall=False,$java=True) {
 		global $phpgw_info;
-		if ($java) {
+		if ($java)
+		{
 			$jselect = ' onChange="this.form.submit();"';
 		}
 		// Setup all and none first
 		$cats_link  = "\n" .'<select name="cat_id"' .$jselect .">\n";
-		if (!$notall) {
+		if (!$notall)
+		{
 			$cats_link .= '<option value=""';
-			if ($cat_id=="all") {
+			if ($cat_id=="all")
+			{
 				$cats_link .= ' selected';
 			}
 			$cats_link .= '>'.lang("all").'</option>'."\n";
@@ -103,84 +111,97 @@
 	}
 
 	### SET THE FONT TO DEFAULT IF IT DOESNT EXISTS ###
-	function set_font() {
-		if($phpgw_info["user"]["preferences"]["notes"]["notes_font"] == "") {
+	function set_font()
+	{
+		if($phpgw_info["user"]["preferences"]["notes"]["notes_font"] == "")
+		{
 			$font = "Arial";
 			return $font;
-		} else {
+		}
+		else
+		{
 			$font = $phpgw_info["user"]["preferences"]["notes"]["notes_font"];
 			return $font;
 		}
 	}
 
 	### SET FONT SIZE ####
-	function set_font_size() {
+	function set_font_size()
+	{
 		if($phpgw_info["user"]["preferences"]["notes"]["notes_font_size"] == "") {
 			$font_size = "3";
 			return $font_size;
-		} else {
+		}
+		else
+		{
 			$font_size = $phpgw_info["user"]["preferences"]["notes"]["notes_font_size"];
 			return $font_size;
 		}
 	}
 
 	// this cleans up the fieldnames for display
-	function display_name($column) {
+	function display_name($column)
+	{
 		$abc = array(
-			"fn"                  => "full name",
-			"sound"               => "Sound",
-			"org_name"            => "company name",
-			"org_unit"            => "department",
-			"title"               => "title",
-			"n_prefix"            => "prefix",
-			"n_given"             => "first name",
-			"n_middle"            => "middle name",
-			"n_family"            => "last name",
-			"n_suffix"            => "suffix",
-			"label"               => "label",
-			"adr_one_street"      => "business street",
-			"adr_one_locality"    => "business city",
-			"adr_one_region"      => "business state",
-			"adr_one_postalcode"  => "business zip code",
-			"adr_one_countryname" => "business country",
-			"adr_one_type"        => "business address type",
-			"adr_two_street"      => "home street",
-			"adr_two_locality"    => "home city",
-			"adr_two_region"      => "home state",
-			"adr_two_postalcode"  => "home zip code",
-			"adr_two_countryname" => "home country",
-			"adr_two_type"        => "home address type",
-			"tz"                  => "time zone",
-			"geo"                 => "geo",
-			"tel_work"            => "business phone",
-			"tel_home"            => "home phone",
-			"tel_voice"           => "voice phone",
-			"tel_msg"             => "message phone",
-			"tel_fax"             => "fax",
-			"tel_pager"           => "pager",
-			"tel_cell"            => "mobile phone",
-			"tel_bbs"             => "bbs phone",
-			"tel_modem"           => "modem phone",
-			"tel_isdn"            => "isdn phone",
-			"tel_car"             => "car phone",
-			"tel_video"           => "video phone",
+			'fn'                  => 'full name',
+			'sound'               => 'Sound',
+			'org_name'            => 'company name',
+			'org_unit'            => 'department',
+			'title'               => 'title',
+			'n_prefix'            => 'prefix',
+			'n_given'             => 'first name',
+			'n_middle'            => 'middle name',
+			'n_family'            => 'last name',
+			'n_suffix'            => 'suffix',
+			'label'               => 'label',
+			'adr_one_street'      => 'business street',
+			'adr_one_locality'    => 'business city',
+			'adr_one_region'      => 'business state',
+			'adr_one_postalcode'  => 'business zip code',
+			'adr_one_countryname' => 'business country',
+			'adr_one_type'        => 'business address type',
+			'adr_two_street'      => 'home street',
+			'adr_two_locality'    => 'home city',
+			'adr_two_region'      => 'home state',
+			'adr_two_postalcode'  => 'home zip code',
+			'adr_two_countryname' => 'home country',
+			'adr_two_type'        => 'home address type',
+			'tz'                  => 'time zone',
+			'geo'                 => 'geo',
+			'tel_work'            => 'business phone',
+			'tel_home'            => 'home phone',
+			'tel_voice'           => 'voice phone',
+			'tel_msg'             => 'message phone',
+			'tel_fax'             => 'fax',
+			'tel_pager'           => 'pager',
+			'tel_cell'            => 'mobile phone',
+			'tel_bbs'             => 'bbs phone',
+			'tel_modem'           => 'modem phone',
+			'tel_isdn'            => 'isdn phone',
+			'tel_car'             => 'car phone',
+			'tel_video'           => 'video phone',
 
-			"tel_prefer"          => "preferred phone",
-			"email"               => "business email",
-			"email_type"          => "business email type",
-			"email_home"          => "home email",
-			"email_home_type"     => "home email type",
-			"address2"            => "address line 2",
-			"address3"            => "address line 3",
-			"ophone"              => "Other Phone",
-			"bday"                => "birthday",
-			"url"                 => "url",
-			"pubkey"              => "public key",
-			"note"                => "notes"
+			'tel_prefer'          => 'preferred phone',
+			'email'               => 'business email',
+			'email_type'          => 'business email type',
+			'email_home'          => 'home email',
+			'email_home_type'     => 'home email type',
+			'address2'            => 'address line 2',
+			'address3'            => 'address line 3',
+			'ophone'              => 'Other Phone',
+			'bday'                => 'birthday',
+			'url'                 => 'url',
+			'pubkey'              => 'public key',
+			'note'                => 'notes'
 		);
-
-		while($name = each($abc) ) {
-			if ($column == $name[0]) { return lang($name[1]); }
+		
+		if ($abc[$column])
+		{
+			return lang($abc[$column]);
+		}
+		else
+		{
+			return;
 		}
 	}
 
@@ -333,14 +354,19 @@
 
 		$cats_link    = cat_option($cat_id,True);
 
-		if ($access == 'private') {
+		if ($access == 'private')
+		{
 			$access_check = ' checked';
-		} else {
+		}
+		else
+		{
 			$access_check = '';
 		}
 
-		if ($customfields) {
-			while(list($name,$value) = each($customfields)) {
+		if ($customfields)
+		{
+			while(list($name,$value) = each($customfields))
+			{
 				$custom .= '
   <tr>
     <td></td>
@@ -357,13 +383,16 @@
 
 		$this = CreateObject("phpgwapi.contacts");
 
-		if ($format != "view") {
+		if ($format != "view")
+		{
 			// Preferred phone number radio buttons
 			$pref[0] = "<font size=\"-2\">";
 			$pref[1] = "(".lang('pref').")</font>";
-			while (list($name,$val) = each($this->tel_types)) {
+			while (list($name,$val) = each($this->tel_types))
+			{
 				$str[$name] = "\n".'      <input type="radio" name="tel_prefer" value="'.$name.'"';
-				if ($name == $preferred) {
+				if ($name == $preferred)
+				{
 					$str[$name] .= ' checked';
 				}
 				$str[$name] .= '>';
@@ -371,77 +400,90 @@
 				$t->set_var("pref_".$name,$str[$name]);
 			}
 
-			if (strlen($bday) > 2) {
+			if (strlen($bday) > 2)
+			{
 				list( $month, $day, $year ) = split( '/', $bday );
 				$temp_month[$month] = "SELECTED";
 				$bday_month = "<select name=bday_month>"
-							. "<option value=\"\" $temp_month[0]> </option>"
-							. "<option value=1  $temp_month[1]>"  . lang("january")   . "</option>" 
-							. "<option value=2  $temp_month[2]>"  . lang("february")  . "</option>"
-							. "<option value=3  $temp_month[3]>"  . lang("march")     . "</option>"
-							. "<option value=4  $temp_month[4]>"  . lang("april")     . "</option>"
-							. "<option value=5  $temp_month[5]>"  . lang("may")       . "</option>"
-							. "<option value=6  $temp_month[6]>"  . lang("june")      . "</option>" 
-							. "<option value=7  $temp_month[7]>"  . lang("july")      . "</option>"
-							. "<option value=8  $temp_month[8]>"  . lang("august")    . "</option>"
-							. "<option value=9  $temp_month[9]>"  . lang("september") . "</option>"
-							. "<option value=10 $temp_month[10]>" . lang("october")   . "</option>"
-							. "<option value=11 $temp_month[11]>" . lang("november")  . "</option>"
-							. "<option value=12 $temp_month[12]>" . lang("december")  . "</option>"
-							. "</select>";
+					. "<option value=\"\" $temp_month[0]> </option>"
+					. "<option value=1  $temp_month[1]>"  . lang("january")   . "</option>" 
+					. "<option value=2  $temp_month[2]>"  . lang("february")  . "</option>"
+					. "<option value=3  $temp_month[3]>"  . lang("march")     . "</option>"
+					. "<option value=4  $temp_month[4]>"  . lang("april")     . "</option>"
+					. "<option value=5  $temp_month[5]>"  . lang("may")       . "</option>"
+					. "<option value=6  $temp_month[6]>"  . lang("june")      . "</option>" 
+					. "<option value=7  $temp_month[7]>"  . lang("july")      . "</option>"
+					. "<option value=8  $temp_month[8]>"  . lang("august")    . "</option>"
+					. "<option value=9  $temp_month[9]>"  . lang("september") . "</option>"
+					. "<option value=10 $temp_month[10]>" . lang("october")   . "</option>"
+					. "<option value=11 $temp_month[11]>" . lang("november")  . "</option>"
+					. "<option value=12 $temp_month[12]>" . lang("december")  . "</option>"
+					. "</select>";
 				$bday_day   = '<input maxlength="2" name="bday_day" value="' . $day . '" size="2">';
 				$bday_year  = '<input maxlength="4" name="bday_year" value="' . $year . '" size="4">';
-			} else {
+			}
+			else
+			{
 				$bday_month = "<select name=bday_month>"
-							. "<option value=\"\" SELECTED> </option>"
-							. "<option value=1>"  . lang("january")   . "</option>"
-							. "<option value=2>"  . lang("february")  . "</option>"
-							. "<option value=3>"  . lang("march")     . "</option>"
-							. "<option value=4>"  . lang("april")     . "</option>"
-							. "<option value=5>"  . lang("may")       . "</option>"
-							. "<option value=6>"  . lang("june")      . "</option>"
-							. "<option value=7>"  . lang("july")      . "</option>"
-							. "<option value=8>"  . lang("august")    . "</option>"
-							. "<option value=9>"  . lang("september") . "</option>"
-							. "<option value=10>" . lang("october")   . "</option>"
-							. "<option value=11>" . lang("november")  . "</option>"
-							. "<option value=12>" . lang("december")  . "</option>"
-							. "</select>";
+					. "<option value=\"\" SELECTED> </option>"
+					. "<option value=1>"  . lang("january")   . "</option>"
+					. "<option value=2>"  . lang("february")  . "</option>"
+					. "<option value=3>"  . lang("march")     . "</option>"
+					. "<option value=4>"  . lang("april")     . "</option>"
+					. "<option value=5>"  . lang("may")       . "</option>"
+					. "<option value=6>"  . lang("june")      . "</option>"
+					. "<option value=7>"  . lang("july")      . "</option>"
+					. "<option value=8>"  . lang("august")    . "</option>"
+					. "<option value=9>"  . lang("september") . "</option>"
+					. "<option value=10>" . lang("october")   . "</option>"
+					. "<option value=11>" . lang("november")  . "</option>"
+					. "<option value=12>" . lang("december")  . "</option>"
+					. "</select>";
 				$bday_day  = '<input name="bday_day" size="2" maxlength="2">';
 				$bday_year = '<input name="bday_year" size="4" maxlength="4">';
 			}
 
 			$time_zone = "<select name=\"timezone\">\n";
-			for ($i = -23; $i<24; $i++) {
+			for ($i = -23; $i<24; $i++)
+			{
 				$time_zone .= "<option value=\"$i\"";
 				if ($i == $timezone)
+				{
 					$time_zone .= " selected";
+				}
 				if ($i < 1)
+				{
 					$time_zone .= ">$i</option>\n";
+				}
 				else
+				{
 					$time_zone .= ">+$i</option>\n";
+				}
 			}
 			$time_zone .= "</select>\n";
 
 			$email_type = '<select name=email_type>';
-			while ($type = each($this->email_types)) {
+			while ($type = each($this->email_types))
+			{
 				$email_type .= '<option value="'.$type[0].'"';
 				if ($type[0] == $emailtype) { $email_type .= ' selected'; }
-					$email_type .= '>'.$type[1].'</option>';
+				$email_type .= '>'.$type[1].'</option>';
 			}
 			$email_type .= "</select>";
 
 			reset($this->email_types);
 			$hemail_type = '<select name=hemail_type>';
-			while ($type = each($this->email_types)) {
+			while ($type = each($this->email_types))
+			{
 				$hemail_type .= '<option value="'.$type[0].'"';
 				if ($type[0] == $hemailtype) { $hemail_type .= ' selected'; }
-					$hemail_type .= '>'.$type[1].'</option>';
+				$hemail_type .= '>'.$type[1].'</option>';
 			}
 			$hemail_type .= "</select>";
 
 			reset($this->adr_types);
-			while (list($type,$val) = each($this->adr_types)) {
+			while (list($type,$val) = each($this->adr_types))
+			{
 				$badrtype .= "\n".'<INPUT type="checkbox" name="one_'.$type.'"';
 				$ot = 'one_'.$type;
 				eval("
@@ -453,7 +495,8 @@
 			}
 
 			reset($this->adr_types);
-			while (list($type,$val) = each($this->adr_types)) {
+			while (list($type,$val) = each($this->adr_types))
+			{
 				$hadrtype .= "\n".'<INPUT type="checkbox" name="two_'.$type.'"';
 				$tt = 'two_'.$type;
 				eval("
@@ -464,26 +507,32 @@
 				$hadrtype .= '>'.$val;
 			}
 
-			$notes	 = '<TEXTAREA cols="60" name="notes" rows="4">' . $notes . '</TEXTAREA>';
-			$label   = '<TEXTAREA cols="60" name="label" rows="6">' . $label . '</TEXTAREA>';
-			$pubkey  = '<TEXTAREA cols="60" name="pubkey" rows="6">' . $pubkey . '</TEXTAREA>';
-		} else {
-			$notes	= "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
+			$notes  = '<TEXTAREA cols="60" name="notes" rows="4">' . $notes . '</TEXTAREA>';
+			$label  = '<TEXTAREA cols="60" name="label" rows="6">' . $label . '</TEXTAREA>';
+			$pubkey = '<TEXTAREA cols="60" name="pubkey" rows="6">' . $pubkey . '</TEXTAREA>';
+		}
+		else
+		{
+			$notes = "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
 					. $notes . "</TEXTAREA></form>";
 			if ($bday == "//")
+			{
 				$bday = "";
+			}
 		}
 
-		if ($action) {
+		if ($action)
+		{
 			echo '<FORM action="' . $phpgw->link('/addressbook/' . $action, 'referer='.urlencode($referer)).'" method="post">';
 		}
 
-		if (! ereg("^http://",$url)) {
+		if (!ereg("^http://",$url))
+		{
 			$url = "http://". $url;
 		} 
 
 		$birthday = $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
-					. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
+			. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
 		if ($format == 'edit')
 		{
 			$create .= '<tr><td><font size="-1">' . lang("Created by") . ':</font></td>'
@@ -594,10 +643,13 @@
 
 		$t->set_var('lang_cats',lang('Category'));
 		$t->set_var('cats_link',$cats_link);
-		if ($customfields) {
+		if ($customfields)
+		{
 			$t->set_var('lang_custom',lang('Custom Fields').':');
 			$t->set_var("custom",$custom);
-		} else {
+		}
+		else
+		{
 			$t->set_var("lang_custom",'');
 			$t->set_var("custom",'');
 		}
