@@ -15,6 +15,7 @@ account preferences	common	en	Account Preferences
 acl	common	en	ACL
 action	admin	en	Action
 active	admin	en	Active
+add a note for x	notes	en	Add a note for %1
 add a single phrase	transy	en	Add a single phrase
 add	bookkeeping	en	Add
 add category	common	en	Add Category
@@ -116,6 +117,8 @@ change your settings	preferences	en	Change your Settings
 charset	common	en	iso-8859-1
 chat	common	en	Chat
 choose a font	notes	en	Choose a font
+choose a category	common	en	Choose a category
+choose the category	common	en	Choose the category
 choose the font size	notes	en	Choose the font size
 city	addressbook	en	City
 city	admin	en	City
@@ -401,7 +404,7 @@ normal	common	en	Normal
 no subject	common	en	No Subject
 no response	calendar	en	No Response
 not applicable	weather	en	Not Applicable
-note has been added for x	notes	en	Note has been added for %1
+note has been added for x !	notes	en	Note has been added for %1 !
 notes	common	en	Notes
 notes categories	common	en	Notes categories
 notes list	notes	en	Notes list
@@ -424,7 +427,7 @@ owner	common	en	Owner
 pager	addressbook	en	Pager
 parcel	addressbook	en	Parcel
 parent category	common	en	Parent Category
-parent project	todo	en	parent project
+parent project	todo	en	Parent Project
 participant	calendar	en	Participant
 participants	calendar	en	Participants
 participates	calendar	en	Participates
