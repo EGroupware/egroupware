@@ -359,10 +359,10 @@
 
 				//echo '<br>first total="'.$total.'"';
 				// Now, remove duplicate rows
-				if (floor(phpversion()) == 4) {
-					$tmp = array_unique($ldap_fields);
-					$ldap_fields = $tmp;
-				} else {
+				//if (floor(phpversion()) == 4) {
+			//		$tmp = array_unique($ldap_fields);
+			//		$ldap_fields = $tmp;
+			//	} else {
 					$ldap_fields = $this->asortbyindex($ldap_fields,'uidnumber');
 					reset($ldap_fields);
 					if (count($ldap_fields) > 0) {
@@ -380,7 +380,7 @@
 						}
 						$ldap_fields = $uniquearray;
 					}
-				} // end version check
+			//	} // end version check
 
 				$this->total_records = count($ldap_fields);
 				//echo '<br>total="'.$this->total_records.'"';

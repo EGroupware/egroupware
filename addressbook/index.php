@@ -41,18 +41,17 @@
 		}
 	}
 
-	if ($cat_id=='') {
-		$cat_id = $phpgw_info["user"]["preferences"]["addressbook"]["default_category"];
-	} 
 	if($ncat_id || ($ncat_id==0)) {
 		$cat_id = $ncat_id;
 	}
-
+	if ($cat_id=='') {
+		$cat_id = $phpgw_info["user"]["preferences"]["addressbook"]["default_category"];
+	} 
 	if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"]) {
 		$phpgw->preferences->delete("addressbook","default_category");
-		$phpgw->preferences->add("addressbook","default_category",$cat_id);
-		$phpgw->preferences->save_repository();
+		$phpgw->preferences->add("addressbook","default_category",$ncat_id);
 	}
+	$phpgw->preferences->save_repository();
 
  	$extrafields = array(
 		"ophone"   => "ophone",
