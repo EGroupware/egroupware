@@ -41,6 +41,12 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			if ($cell['type'] == 'link-to' && ($cell['readonly'] || $readonlys))
+			{
+				// readonly ==> omit the whole widget
+				$cell = $tmpl->empty_cell();
+				return;
+			}
 			if ($cell['type'] == 'link-string')
 			{
 				$str = '';

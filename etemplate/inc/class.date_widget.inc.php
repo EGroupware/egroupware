@@ -126,6 +126,7 @@
 					$cell['no_lang'] = True;
 					$cell['label'] = strlen($cell['label']) > 1 ? lang($cell['label']) : $cell['label'];
 				}
+				unset($cell['size']);
 				return True;
 			}
 			$tpl = new etemplate;
