@@ -100,8 +100,6 @@
       if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
       $this->accounts = CreateObject("phpgwapi.accounts");
       $this->preferences = CreateObject("phpgwapi.preferences", 0);
-
-      include($phpgw_info["server"]["api_inc"] . "/class.crypto.inc.php");
       $this->session = CreateObject("phpgwapi.sessions");
 
       if ($phpgw_info["flags"]["currentapp"] == "login") {

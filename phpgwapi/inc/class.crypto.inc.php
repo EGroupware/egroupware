@@ -15,10 +15,11 @@
     var $td = False;		// Handle for mcrypt
     var $iv = "";
     var $key = "";
-    function crypto($key,$iv)
+    function crypto($vars)
     {
       global $phpgw, $phpgw_info;
-
+      $key = $vars[0];
+      $iv = $vars[1];
       if ($phpgw_info["server"]["mcrypt_enabled"] && extension_loaded("mcrypt")) {
       	if ($phpgw_info["server"]["versions"]["mcrypt"] == "old") {
           $this->td = false;

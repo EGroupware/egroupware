@@ -37,10 +37,10 @@
        $phpgw->common->key .= $sessionid;
        $phpgw->common->key .= $kp3;
        $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
-       // not working properly
-       //$phpgw->crypto = CreateObject("phpgwapi.crypto", $phpgw->common->key.",".$phpgw->common->iv);
 
-       $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
+       $cryptovars[0] = $phpgw->common->key;      
+       $cryptovars[1] = $phpgw->common->iv;      
+       $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
 
        $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
        $db->next_record();
@@ -126,7 +126,9 @@
        $phpgw->common->key .= $phpgw_info["user"]["sessionid"];
        $phpgw->common->key .= $phpgw_info["user"]["kp3"];
        $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
-       $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
+       $cryptovars[0] = $phpgw->common->key;      
+       $cryptovars[1] = $phpgw->common->iv;      
+       $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
 
        $phpgw_info["user"]["passwd"]    = $phpgw->common->encrypt($passwd);
  
