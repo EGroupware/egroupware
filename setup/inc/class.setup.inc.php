@@ -64,14 +64,14 @@
 			$phpgw_domain = $GLOBALS['phpgw_domain'];
 			$phpgw_info   = $GLOBALS['phpgw_info'];
 
-			$FormLogout   = $HTTP_GET_VARS['FormLogout'];
+			$FormLogout   = $HTTP_GET_VARS['FormLogout']    ? $HTTP_GET_VARS['FormLogout']    : $HTTP_POST_VARS['FormLogout'];
 			$ConfigLogin  = $HTTP_POST_VARS['ConfigLogin']  ? $HTTP_POST_VARS['ConfigLogin']  : $HTTP_COOKIE_VARS['ConfigLogin'];
 			$HeaderLogin  = $HTTP_POST_VARS['HeaderLogin']  ? $HTTP_POST_VARS['HeaderLogin']  : $HTTP_COOKIE_VARS['HeaderLogin'];
 			$FormDomain   = $HTTP_POST_VARS['FormDomain'];
 			$FormPW       = $HTTP_POST_VARS['FormPW'];
 			$ConfigDomain = $HTTP_POST_VARS['ConfigDomain'] ? $HTTP_POST_VARS['ConfigDomain'] : $HTTP_COOKIE_VARS['ConfigDomain'];
 			$ConfigPW     = $HTTP_POST_VARS['ConfigPW']     ? $HTTP_POST_VARS['ConfigPW']     : $HTTP_COOKIE_VARS['ConfigPW'];
-			$HeaderPW     = $HTTP_POST_VARS['HeaderPW'] ? $HTTP_POST_VARS['HeaderPW'] : $HTTP_COOKIE_VARS['HeaderPW'];
+			$HeaderPW     = $HTTP_COOKIE_VARS['HeaderPW']   ? $HTTP_COOKIE_VARS['HeaderPW']   : $HTTP_POST_VARS['HeaderPW'];
 			$ConfigLang   = $HTTP_POST_VARS['ConfigLang']   ? $HTTP_POST_VARS['ConfigLang']   : $HTTP_COOKIE_VARS['ConfigLang'];
 
 			if (isset($FormLogout))
