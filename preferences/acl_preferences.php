@@ -42,7 +42,7 @@
 	{
 		global $phpgw_info, $p;
 
-		$p->set_var($acl,$label.$phpgw_info['flags']['currentapp'].'['.$id.']['.$right.']');
+		$p->set_var($acl,$label.$phpgw_info['flags']['currentapp'].'['.$id.'_'.$right.']');
 		$rights_set = (($rights & $right)?' checked':'');
 		if ($is_group)
 		{
@@ -105,8 +105,8 @@
 		{
 			$acl->delete($phpgw_info['flags']['currentapp'],$to_remove[$i]);
 		}
-		
-		// Group records
+
+		/* Group records */
 		$group_variable = 'g_'.$phpgw_info['flags']['currentapp'];
 
 		if (!$$group_variable)
@@ -114,23 +114,24 @@
 			$$group_variable = array();
 		}
 		@reset($$group_variable);
-		while(list($group_id,$acllist) = each($$group_variable))
+		$totalacl = array();
+		while(list($rowinfo,$perm) = each($$group_variable))
 		{
-			$totalacl = 0;
-			while(list($right,$permission) = each($acllist))
-			{
-				$totalacl += $right;
-			}
-
+			list($group_id,$rights) = split('_',$rowinfo);
+			$totalacl[$group_id] += $rights;
+		}
+		@reset($totalacl);
+		while(list($group_id,$rights) = @each($totalacl))
+		{
 			if($is_group)
 			{
-				$totalacl &= ~PHPGW_ACL_PRIVATE;			// Don't allow group-grants to grant private
+				$rights &= ~PHPGW_ACL_PRIVATE;		/* Don't allow group-grants to grant private */
 			}
 
-			$acl->add($phpgw_info['flags']['currentapp'],$group_id,$totalacl);
+			$acl->add($phpgw_info['flags']['currentapp'],$group_id,$rights);
 		}
 
-		// User records
+		/* User records */
 		$user_variable = 'u_'.$phpgw_info['flags']['currentapp'];
 
 		if (!$$user_variable)
@@ -138,20 +139,21 @@
 			$$user_variable = array();
 		}
 		@reset($$user_variable);
-		while(list($user_id,$acllist) = each($$user_variable))
+		$totalacl = array();
+		while(list($rowinfo,$perm) = each($$user_variable))
 		{
-			$totalacl = 0;
-			while(list($right,$permission) = each($acllist))
-			{
-				$totalacl += $right;
-			}
-
+			list($user_id,$rights) = split('_',$rowinfo);
+			$totalacl[$user_id] += $rights;
+		}
+		@reset($totalacl);
+		while(list($user_id,$rights) = @each($totalacl))
+		{
 			if($is_group)
 			{
-				$totalacl &= ~ PHPGW_ACL_PRIVATE;			// Don't allow group-grants to grant private
+				$rights &= ~ PHPGW_ACL_PRIVATE;		/* Don't allow group-grants to grant private */
 			}
 
-			$acl->add($phpgw_info['flags']['currentapp'],$user_id,$totalacl);
+			$acl->add($phpgw_info['flags']['currentapp'],$user_id,$rights);
 		}
 		$acl->save_repository();
 	}
