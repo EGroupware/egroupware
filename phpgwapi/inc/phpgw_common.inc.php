@@ -578,7 +578,7 @@
         include($phpgw_info["server"]["app_inc"]."/functions.inc.php");
        }
 
-       if (file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
+       if (! $phpgw_info["flags"]["noappnavbar"] && file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
           include($phpgw_info["server"]["app_inc"]."/header.inc.php");
        }
     }
