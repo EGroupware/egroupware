@@ -74,7 +74,7 @@
 			if ($link)
 			{
 				$tpl->set_var('a_open','<a href="' . $phpgw->link($link,$extravars) . '">');
-				$tpl->set_var('a_closed','</a>');
+				$tpl->set_var('a_close','</a>');
 			}
 			$tpl->set_var('img_src',PHPGW_IMAGES_DIR . $img_src);
 			$tpl->set_var('label',lang($label));
