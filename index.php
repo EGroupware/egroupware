@@ -69,6 +69,12 @@
 	{
 //		eval("\$GLOBALS['obj']->$method();");
 		execmethod($GLOBALS['HTTP_GET_VARS']['menuaction']);
+		unset($app);
+		unset($obj);
+		unset($class);
+		unset($method);
+		unset($invalid_data);
+		unset($api_requested);
 	}
 	else
 	{
