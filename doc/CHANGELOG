@@ -1,0 +1,187 @@
+[08--2000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
+	     properly
+	   - remove all remaining references to $dbase and $phpgw_db we are now using
+	     $phpgw->db for database stuff
+	   - Added unlock() in halt() for the database class.  This should help prevent
+	     database lockups if the program executes some invailed SQL.
+	   - Moved around the directory layout.  The include files and images are now
+	     in the applications directory.
+
+[08152000] - Fixed a problem with the calendar not showing the months in the users
+	     langague preference.
+	   - Added the new alpha human resources section
+	   - Added the new alpha inventory program
+	   - Added new global var $phpgw_flags
+	     replaces $currentapp, $noheader, $nonavbar
+	   - Small change in the API with the lang files.
+	   - Added missing files for french
+	   - pop_sort() accelerated by using temp file for storing header
+	     information - speed factor > 2 for re-sorts!
+	   - Added a temp quick fix for PostgreSQL not working in the calendar
+	     I am using the old code, so there might be bugs.  This is
+	     just until we can find a better solution.
+	   - Added a warning message if users are still apart of a group thats
+	     about to be deleted.
+	   - a bunch of error messages where shown when some header info was
+	     split into multiple lines (on pop account), and address info
+	     could not be built in this case. Fixed.
+	   - Added Dutch and Korean langague support
+	   - Added default app and default sorting order preference
+	   - Fixed multipart handling on pop3
+	   - Added config option for where the "Powered by" can go, top or bottom
+	   - add/edit/delete accounts code has been cleaned up greatly.
+	   - Better error control in the accounts section
+	   - Fixed check_owner() in session class not reporting the owner properly
+
+[08072000] - Fixed current users next matchs icons not showing up properly
+	   - Added support to save sent-messages into Sent folder
+	   - Fixed bug where users always see the mail server connection
+	     error on a new installation
+	   - Added cookie support so you can save your session id as a cookie
+	   - Fixed permission bug in preferences with anonymous users
+	   - Fixed permission bug in calendar
+	   - Greatly improved ftp app
+	   - Started adding the new manager permission
+	   - Added link in the admin section to find out your phpinfo()
+	   - A few bug fixes in the admin section
+
+[08042000] - Fixed repeating events in calendar day view
+           - Started refering to modules as applications
+	   - Fixed todo list not showing list properly
+	   - Started adding new application layout
+	   - Clean up documentation
+	   - Added better german langague file support.
+	   - Fixed addressbook not showing the group access properly
+	   - Added nextmatchs to email
+	   - Deleting a message will now forward you to the next message
+	     instead of the inbox.
+	   - Added spanish, Itailian and Norwegien lang files.
+	   - EMail now supports POP-3
+	   - Next matchs icons in email
+	   - Many other fixes and features that we can't remeber :)
+
+[07122000] - Added multi-langague support
+	   - Added confirms before records are deleted.
+	   - Fixed the footer not being called in the calendar
+	   - Fixed the todo list not showing the list properly
+	   - Added date format thanks vinz
+	   - Renamed session.class to session.inc.php
+	   - Added feature to allow stale uploads to be deleted on
+	     systems that don't support cron
+	   - Fixed calendar searchs
+	   - Added preferences to have text under icons on navigation bar
+
+[07062000] - Fixed javascript pop-up window upadting wrong fields.
+	     thanks vinz
+	   - Fixed security hole in logout.php
+	   - Added support support for todo list showing who created
+	     the record.
+	   - Added support for date due in todo list.
+	   - Fixed bug in killsession.php thanks vinz
+	   - Added support for day view in calendar
+	   - Added support for hovering descriptions using the alt tag
+	   - Added support for newsheadlines program
+	     thanks Mark Peters <mpeters@satx.rr.com>
+	   - The calendar sports a new layout.
+	   - Started converting HTML to be HTML 4.0 complient
+	   - Added new filemanager program
+	   - New experimental look for the user section.
+
+[06302000] - Moved around the inc directorys for better security.
+	   - Fixed the file attachments and parse errors.
+	   - Fixed file uploads for Windows thanks vinz
+	   - Added to bring you back to the same folder you are in
+	     (email) thanks smoser
+	   - Fixed directorys not be deleted properly and should
+	     now work under windows.
+	   - Updated docs a little
+	   - Include pre-alpha release of trouble ticket system
+	   - A few other small bug fixes.
+
+[06272000] - Updated most of the docs for the new name (phpGroupWare)
+	   - Resolve a few issues with installing on PHP 4.
+	   - editaccounts.php3 now updated the calendar tables properly
+	   - Cleaned up groups.inc and removed no longer used and repeated code
+	   - Fixed broken link in calendar
+	   - Renamed all .php3 so program works in PHP 4.
+	   - Added next and previous links in calendar year view
+	   - Printer friendly version of the calendar no longer show the
+	     navigation bar on top
+
+[06222000] - Fixed problem with timeformat only showing up if you have calendar
+	     access.
+	   - Added support to select from a few pre-defined date formats
+	     Anyone have suggestions on some more ?
+	   - Fixed problem with create_tables.mysql for calendar global events
+	     thanks Vincent Larchet <vinz@users.sourceforge.net>
+	   - Added support for multiable file uploads.
+	   - Fixed table locking issues in editaccount.php3
+	   - There is now a config option to point to a differant directory	     that webdistro is install on.
+	   - A couple of other small bug fixes and code cleanup.
+	   - Fixed a problem with email signatures not working
+
+[06172000] - Added db_lock() and db_unlock.  That should fix the table locking
+	     problems.
+	   - Fixed problem with filtering in todo list.
+	   - Fixed admin viewaccount.php3 not showing permissions properly.
+
+[06162000] - included new theme thanks Marl <marl@users.sourceforge.net>
+	   - Made sure that the docs where included this time.
+	   - Fixed javascript error in edit_entry.php thanks marvinhorst
+	   - Fixed problem with edit_entry.php not including current users
+	     loginid
+	   - Renamed functions.inc to calendar.inc to make things easier to
+	     understand.
+	   - Renamed all .php file to .php3
+	   - Fixed small calendar days, Sa and Su where backwords.
+	   - Removed cal_eventid from webcal_entry_repeats, wasn't needed and	     was causing problems.
+	   - Fixed a few problems with create_tables.*
+	   - Global public items should now work in the calendar
+	   - Added feature to change users passwords (admin)
+	   - Update some of the docs.
+	   - Renamed and merged some files in the calendar.
+	   - Added percent of users that logged out to accesslog
+
+[06092000] - Fixed lastlogin information that wasn't updating.
+	   - Added table locks in edit_entry_handler.php (calendar)
+	   - Added feature to annoy users that haven't changed there
+	     password for more then 30 days.
+	   - Added javascript popup window for addressbook in email
+	     Thanks Brian King <bking@affcu.com>
+
+[06082000] - Added new groups class
+	   - Combined permissions and preferences into session.inc
+	   - Renamed session.inc to webdistro_common.inc
+	   - Fixed blank items showing up in the todo list.
+	   - Cleaned up create_tables.*  Took out all of the uneeded things.
+	   - Included a new theme, it looks pretty bad on some computers.
+	     But, we need to test things out a little with it.
+
+[06052000] - Fixed a few permission bugs in the addressbook
+	   - Started converting all programs to use the new session class
+	   - Light code cleanup
+	   - Fixed parse errors in a few places
+	   - Added timezone support
+	   - Updated stalesessions.pl
+	   - Fixed a few possiable security problems with addressbook
+
+[06032000] - Fixed problems editing accounts using postgresql
+	   - Fixed problems creating account in create_tables.*
+	   - Admin section updated.  Sorting features. New layout for current
+	     sessions.
+	   - login.php3 Fixed problem with it not updating users lastlogin
+	   - Fixed problems with adding events to the calendar.
+	   - Fixed problems with repeating events with a frequency of more
+	     then 1.  I think I have finally narrowed most of the problems
+	     down.
+	   - Addressbook had the city and street mixed. Thanks Eric Degner
+	   - Added feature to show who created the addressbook entry.
+	     I will add support for this in the todolist later.
+	   - Cleaned up some unneeded files in some of the directorys.
+	   - Added next and previous link in message.php3 for email.
+	   - Converted program to start using the new permissions and
+	     preferences class.
+	   - Fixed session table for mysql
+
+[06022000] - Calendar bug fixes and code cleanup.
+	   - Security fix for login.php3

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>  phpGroupWare Application Development: Guidelines</TITLE>
+ <LINK HREF="phpGW_Developers-HOWTO-3.html" REL=next>
+ <LINK HREF="phpGW_Developers-HOWTO-1.html" REL=previous>
+ <LINK HREF="phpGW_Developers-HOWTO.html#toc2" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="phpGW_Developers-HOWTO-3.html">Next</A>
+<A HREF="phpGW_Developers-HOWTO-1.html">Previous</A>
+<A HREF="phpGW_Developers-HOWTO.html#toc2">Contents</A>
+<HR>
+<H2><A NAME="s2">2. Guidelines</A></H2>
+
+<H2><A NAME="ss2.1">2.1 Requirements</A>
+</H2>
+
+<P>These guidelines must be followed for any application that wants considered for inclusion into phpGroupWare proper.
+<P>It must run on PHP3 and PHP4. <BR>
+SQL statements must be compatible with both MySQL and PostgreSQL.<BR>
+It must use our default header.inc.php include.<BR>
+It must use our <CODE>$phpgw_link($url)</CODE> for all links (this is for session support).<BR>
+It must respect phpGW group rights and phpGW user permissions.<BR>
+It must use our directory structure, template support and lang (multi-language) support.<BR>
+Where possible it should run on both Unix and NT platforms.
+<P>For applications that do not meet these requirements, we will store them in a seperate location, indicating their status.<BR>
+If you need help converting your application to templates and our lang support, we will try to connect you with someone to help.
+<H2><A NAME="ss2.2">2.2 Writing/porting your application</A>
+</H2>
+
+<H3>Include files</H3>
+
+<P>Each PHP page you write will need to include the header.inc.php along with a few variables.<BR>
+This is done by putting this at the top of each PHP page.
+<HR>
+<PRE>
+  &lt;?php
+  $phpgw_flags["currentapp"] = "newapp";
+  include("../header.inc.php");
+  ?>
+</PRE>
+<HR>
+
+Of course change application name to fit.<BR>
+This will include the standard functions, verify the sessionid,  rights to the application, and will toss in the navbar.
+<P>If you have other includes, or functions that need to be inserted/run before the navbar replace
+<HR>
+<PRE>
+  $phpgw_flags["currentapp"] = "newapp";
+</PRE>
+<HR>
+
+with
+<HR>
+<PRE>
+  $phpgw_flags["currentapp"] = "newapp";
+  $phpgw_flags["nonavbar"] = True;
+</PRE>
+<HR>
+
+Then when you are done you need to display the navbar by adding this line:
+<HR>
+<PRE>
+     $phpgw->common->navbar();
+</PRE>
+<HR>
+<HR>
+<A HREF="phpGW_Developers-HOWTO-3.html">Next</A>
+<A HREF="phpGW_Developers-HOWTO-1.html">Previous</A>
+<A HREF="phpGW_Developers-HOWTO.html#toc2">Contents</A>
+</BODY>
+</HTML>

@@ -1,0 +1,35 @@
+Let me take a few minutes to explain codes.  This is a system that I have been
+using for years now to forward generic information to another program.  
+Recently I have noticed that all of my programs are differant.  So, I am 
+creating a sort of standard for my self.  It you need to tell the user that
+they have been logged off successfully.  Would you send the whole string to
+login.php or just send a number ?  Even though I call them codes, I use the 
+variable cd in the program.  They are checked through check_code(int code).
+
+BTW: Some of these do not apply to this program, the are for completly seperate
+programs.  But, might apply to any developing anyone else does.  Feel free to
+come up with some of your own.
+
+code	Meaning
+-----------------------
+0	Successfully logged off
+2	Login expired
+5	Bad login or password
+13	Message has been sent
+14	New entry added successfully
+15	Entry updated successfully
+16	Entry deleted successfully
+17	Problem proccessing your request
+18	Password changed
+19	Session killed
+22	Database error
+23	Search returned no matchs
+25	out of order
+26	invalied date
+27	Account updated
+28	Account created
+29	Account deleted
+30	Settings updated
+31	User group added
+32	User group deleted
+33	User group updated

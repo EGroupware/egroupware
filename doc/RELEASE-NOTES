@@ -1,0 +1,4 @@
+This release requires you to change your addressbook table.  You need to add the field company varchar(255) after the notes field.
+
+The groups table has changed greatly. This should be the last changed the groups table requires
+for quite a while.

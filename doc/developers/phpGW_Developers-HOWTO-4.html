@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>  phpGroupWare Application Development: Infastructure</TITLE>
+ <LINK HREF="phpGW_Developers-HOWTO-5.html" REL=next>
+ <LINK HREF="phpGW_Developers-HOWTO-3.html" REL=previous>
+ <LINK HREF="phpGW_Developers-HOWTO.html#toc4" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="phpGW_Developers-HOWTO-5.html">Next</A>
+<A HREF="phpGW_Developers-HOWTO-3.html">Previous</A>
+<A HREF="phpGW_Developers-HOWTO.html#toc4">Contents</A>
+<HR>
+<H2><A NAME="s4">4. Infastructure</A></H2>
+
+<H2><A NAME="ss4.1">4.1 Overview</A>
+</H2>
+
+<P>phpGroupWare attempts to provide developers with a sound directory structure to work from.<BR>
+The directory layout may seem complex at first, but after some use, you will see that it is designed to accommidate a large number of applications and functions.
+<H2><A NAME="ss4.2">4.2 Directory tree</A>
+</H2>
+
+<P>
+<PRE>
+.-- addressbook
+|-- admin
+|-- calendar
+|-- cron
+|-- doc
+|-- email
+|-- filemanager
+|-- files
+|   |-- groups
+|   `-- users
+|-- headlines
+|-- inc
+|   |-- addressbook
+|   |-- calendar
+|   |-- core
+|   |-- email
+|   |-- headlines
+|   |-- lang
+|   |   |-- en
+|   |   |-- gr
+|   |   `-- sp
+|   `-- templates
+|       |-- default
+|       |   |-- addressbook
+|       |   |-- admin
+|       |   |-- calendar
+|       |   |-- common
+|       |   |-- email
+|       |   |-- filemanager
+|       |   |-- headlines
+|       |   |-- preferences
+|       |   |-- todo
+|       |   `-- tts
+|       `-- icons
+|           |-- email
+|           |-- calendar
+|           `-- tts
+|-- preferences
+|-- themes
+|-- todo
+`-- tts  
+    `-- newapp
+        `-- icons
+        |   `-- navbar.gif
+        `-- inc
+        |   |-- header.inc.php
+        |   `-- footer.inc.php
+        |-- lang
+        |   `-- en
+        |       `-- newapp.inc.php
+        `-- template       
+            `-- default
+  
+</PRE>
+<H2><A NAME="ss4.3">4.3 The lang Directory</A>
+</H2>
+
+<P>The lang directory is pretty basic. The lang files are simply named appname.inc.php.
+<PRE>
+.-- inc
+    `-- lang
+        |-- en
+        |   |-- admin.inc.php
+        |   |-- common.inc.php
+        |   |-- login.inc.php
+        |   |-- todo.inc.php
+        |   |-- addressbook.inc.php
+        |   |-- calendar.inc.php
+        |   |-- filemanager.inc.php
+        |   `-- preferences.inc.php
+        |-- de
+        |   |-- admin.inc.php
+        |   |-- common.inc.php
+        |   |-- login.inc.php
+        |   |-- todo.inc.php
+        |   |-- addressbook.inc.php
+        |   |-- calendar.inc.php
+        |   |-- filemanager.inc.php
+        |   `-- preferences.inc.php
+        `-- sp
+            |-- admin.inc.php
+            |-- common.inc.php
+            |-- login.inc.php
+            |-- todo.inc.php
+            |-- addressbook.inc.php
+            |-- calendar.inc.php
+            |-- filemanager.inc.php
+            `-- preferences.inc.php
+  
+</PRE>
+<HR>
+<A HREF="phpGW_Developers-HOWTO-5.html">Next</A>
+<A HREF="phpGW_Developers-HOWTO-3.html">Previous</A>
+<A HREF="phpGW_Developers-HOWTO.html#toc4">Contents</A>
+</BODY>
+</HTML>

@@ -1,0 +1,264 @@
+  phpGroupWare HOWTO
+  Joseph Engo <jengo@phpgroupware.org>, Dan Kuykendall
+  <dan@kuykendall.org>
+  v1.0, 7 July 2000
+
+  This document explains how to install and configure phpGroupWare.
+  ______________________________________________________________________
+
+  Table of Contents
+
+
+  1. Introduction
+
+     1.1 What is phpGroupWare and why should I use it?
+
+  2. Installation
+
+     2.1 Requirements
+     2.2 Tested Systems
+     2.3 Tested Systems
+        2.3.1 Installation with MySQL
+        2.3.2 Installation with PostgreSQL
+     2.4 Configure phpGroupWare
+
+  3. About this document
+
+     3.1 New versions
+     3.2 Comments
+     3.3 History
+     3.4 Version History
+     3.5 Copyrights and Trademarks
+     3.6 Acknowledgements and Thanks
+
+
+  ______________________________________________________________________
+
+  11..  IInnttrroodduuccttiioonn
+
+  phpGroupWare is a web based groupware application that includes
+  integrated features such as email, calendar, todo list, address book,
+  file manager, headline news, and a trouble ticket system.
+
+  It should run on all systems where PHP is avalible and currently
+  supports MySQL and PostgreSQL.
+
+  11..11..  WWhhaatt iiss pphhppGGrroouuppWWaarree aanndd wwhhyy sshhoouulldd II uussee iitt??
+
+  phpGroupWare is:
+
+  phpGroupWare is a web based groupware application that includes
+  integrated features such as email, calendar, todo list, address book,
+  file manager, headline news, and a trouble ticket system.
+
+
+  You should use it if:
+
+  You would like a powerful groupware system that can be access from
+  anywhere on the Internet.  For companies with a distributed user base,
+  it's an ideal solution. Oh, and did I mention that its FREE?
+
+  22..  IInnssttaallllaattiioonn
+
+  22..11..  RReeqquuiirreemmeennttss
+
+  You will need PHP compiled and installed on your system.  You will
+  also need MySQL or PostgreSQL setup.  If you are planning on using the
+  email system, you will need to have an IMAP server installed and IMAP
+  support compiled into PHP.  You can have it installed as an Apache
+  module or command line version, the Apache module is prefered.  We
+  will assume that you are running on a Linux or other Unix system for
+  these steps.  Windows is supported, but there is no documentation for
+  it currently.
+
+  22..22..  TTeesstteedd SSyysstteemmss
+
+  On Linux 2.2.x
+
+  +o  PHP 3.0.15+ / PHP 4.0.x
+
+  +o  Apache 1.3.x
+
+  +o  MySQL 3.22.25 or PostgreSQL 7.0.x
+
+  +o  Courier-IMAP 0.33+
+
+  We have reports of it working on Windows NT, but no details at this
+  time.
+
+  22..33..  TTeesstteedd SSyysstteemmss
+
+  After you have met the system requirements, unpack the tarball in the
+  html directory of your webserver. (eg, /home/httpd/html)
+
+  The first step is to setup the database and create the tables needed.
+  In the doc directory there is a file called create_tables.(name of
+  your database)
+
+  22..33..11..  IInnssttaallllaattiioonn wwiitthh MMyySSQQLL
+
+  We will assume that you are using the database named phpgroupware.
+
+  $ mysql phpgroupware -u username -p < create_tables.mysql
+
+  22..33..22..  IInnssttaallllaattiioonn wwiitthh PPoossttggrreeSSQQLL
+
+  We will assume that you are using the database named phpgroupware.
+
+  $ psql -d phpgroupware -U username < create_tables.pgsql
+
+  22..44..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
+
+  Change to the inc directory.
+  Edit the file called config.inc.php to point to the location of your
+  include files.
+
+       Some people might prefer to install their include files in a directory
+       which is not world viewable.  For this, you will need to move every-
+       thing except config.inc.php into another directory and point con-
+       fig.inc.php to that directory.  For most installations, the current
+       location of these file should be fine.
+
+
+  Edit globalconfig.inc.php to reflect your system settings.  You can
+  choose which programs you would like to have available to your system.
+  For example, if you do not have access to a IMAP server, you can
+  change $installed["email"] = "Y";  to $installed["email"] = "N";
+  This would make this program unavaiable to all users regardless of
+  their permissions.
+
+  If you are using the email system you will need to create a temporary
+  directory where file uploads will be stored.  For security reasons,
+  you should chown nobody.nobody and chmod 700 to that directory.
+  Depending on your system configuration.  Default installs of Apache
+  normally run as the user nobody.  You may need your system
+  administrator to do this for you if you do not have root access.
+
+  If you do not have access to root, create this file and run it.
+
+    <?php
+      if (mkdir("/path/to/temp/directory",0700)) {
+        echo "Directory created successfully";
+      } else {
+        echo "Error creating directory";
+      }
+
+
+  If you have access to cron, you may want to setup the files in the
+  cron directory.
+
+  stalesessions.pl - There are 2 reasons for this file.
+
+  +o  Users always forget to logout. This way the session doesn't sit
+     around forever, creating a possible security risk.
+
+  +o  The email system requires plain text passwords which are stored in
+     the sessions table.
+
+  This file is not required, you can simply uncomment the lines
+  indicated in session.class in update_dla().  This will require an
+  extra query during every transaction which could cause performance
+  problems.  Also, if there are no logins in a few days, they will sit
+  around and wait for someone to login before they are deleted.  If you
+  go this route, you will need to edit the number of seconds until they
+  are deleted.  It defaults to 2 hours (7200 secs).  If you choose to
+  use the cron program, simply edit the settings for your database and
+  uncomment the line for your database type.
+
+  stale_uploads.pl - This will delete file attachments for messages that
+  where not completed.  If a users browser crashes, internet connection
+  dies, etc, their files will sit there forever unless deleted.  You
+  could add a few lines to logout.php that will look in the temp
+  directory for any stale uploads and delete them.  But, once again, it
+  becomes a performance issue.
+
+  If your config is setup properly you can now login.  Point your
+  browser to the installed location and login with the username demo and
+  the password is 1234
+  At this point it would be a good idea to create a new user and delete
+  the old one.
+
+  33..  AAbboouutt tthhiiss ddooccuummeenntt
+
+  33..11..  NNeeww vveerrssiioonnss
+
+  The newest version of this document can be found on our website
+  <http://www.phpgroupware.org> as SGML source, HTML, or TEXT.
+
+  33..22..  CCoommmmeennttss
+
+  Comments on this HOWTO should be directed to the phpGroupWare
+  developers mailing list phpgroupware-developers@lists.sourceforge.net
+  <mailto:phpgroupware-developers@lists.sourceforge.net>.
+
+  To subscribe, go to http://sourceforge.net/mail/?group_id=7305
+  <http://sourceforge.net/mail/?group_id=7305>
+
+
+
+  33..33..  HHiissttoorryy
+
+  This document was started by Joseph Engo and reworked by Dan
+  Kuykendall.
+
+  33..44..  VVeerrssiioonn HHiissttoorryy
+
+  Old Version
+
+
+  +o  Created by Jengo, wasn't in SGML HOWTO format.
+
+  v1.0 (July 6, 2000)
+
+
+  +o  Built proper SGML version.
+
+  +o  Included the FAQ.
+
+  +o  Other minor additions.
+
+  33..55..  CCooppyyrriigghhttss aanndd TTrraaddeemmaarrkkss
+
+  Copyright (c)  Dan Kuykendall.  Permission is granted to copy,
+  distribute and/or modify this document under the terms of the GNU Free
+  Documentation License, Version 1.1 or any later version published by
+  the Free Software Foundation
+
+  A copy of the license is available at GNU Free Documentation License
+  <http://www.gnu.org/copyleft/fdl.txt>.
+
+  33..66..  AAcckknnoowwlleeddggeemmeennttss aanndd TThhaannkkss
+
+  Thanks to Joesph Engo for starting phpGroupWare (at the time called
+  webdistro) and the core of this HOWTO.  Thanks to all the developers
+  and users who contribute to making phpGroupWare such a success.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

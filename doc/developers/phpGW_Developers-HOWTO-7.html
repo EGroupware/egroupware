@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>  phpGroupWare Application Development: Using Language Support</TITLE>
+ <LINK HREF="phpGW_Developers-HOWTO-8.html" REL=next>
+ <LINK HREF="phpGW_Developers-HOWTO-6.html" REL=previous>
+ <LINK HREF="phpGW_Developers-HOWTO.html#toc7" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="phpGW_Developers-HOWTO-8.html">Next</A>
+<A HREF="phpGW_Developers-HOWTO-6.html">Previous</A>
+<A HREF="phpGW_Developers-HOWTO.html#toc7">Contents</A>
+<HR>
+<H2><A NAME="s7">7. Using Language Support</A></H2>
+
+<H2><A NAME="ss7.1">7.1 Overview</A>
+</H2>
+
+<P>phpGroupWare is built using a multi-language support scheme. This means the pages can be translated to other languages
+very easily. It is done thru a series of lang files, which can be translated and selected by the user.
+<H2><A NAME="ss7.2">7.2 How to use lang support</A>
+</H2>
+
+<P>Some instructions on using the lang files.<BR>
+Under inc/lang there needs to be a sub-directory for each langague.  Inside the
+directory there are a number of files for each application.  There is one common file
+which contains a list of words that all applications use.  ie, add, delete, edit, etc...<BR>
+Words that are specific to a application should be stored with that applications include file.
+<HR>
+<PRE>
+  function lang_todo($message, $m1 = "", $m2 = "", $m3 = "", $m4 = "")
+  {
+    $message = strtolower($message);
+    switch($message)
+    {
+       case "urgency": $s = "Urgency"; break;
+       case "completed": $s = "completed"; break;
+       [ snip ]
+       default: $s = "&lt;b&gt;*&lt;/b&gt; " . $message;
+    }
+    return $s;
+  }
+  
+</PRE>
+<HR>
+
+The list of words in the left column should always be written in english.  The
+second column is used to return those words in that includes language.  <CODE>$m1, $m2,
+$m3, and $m4</CODE> are used to pass extra data to be place in the middle of a sentence.<BR>
+For example:
+<PRE>
+You have 29 new messages!
+</PRE>
+
+The default should return a bold faced * and the word that wasn't found. This allows users to notice that something is missing in the files and make changes if
+necessary.
+<HR>
+<A HREF="phpGW_Developers-HOWTO-8.html">Next</A>
+<A HREF="phpGW_Developers-HOWTO-6.html">Previous</A>
+<A HREF="phpGW_Developers-HOWTO.html#toc7">Contents</A>
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+<?php
+  /**************************************************************************\
+  * phpGroupWare - preferences                                               *
+  * http://www.phpgroupware.org                                              *
+  * Written by Joseph Engo <jengo@phpgroupware.org>                          *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+  /* $Id$ */
+
+  //$phpgw_flags = array("noheader" => True, "nonavbar" => True);
+
+  $phpgw_flags["currentapp"] = "preferences";
+  include("../header.inc.php");
+  if ($phpgw_info["user"]["permissions"]["anonymous"]) {
+     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
+     exit;
+  }
+
+  echo "<br><a href=\"" . $phpgw->link("changepassword.php") . "\">"
+     . lang_pref("change your password") . "</a>";
+  echo "<br><a href=\"" . $phpgw->link("changetheme.php") . "\">"
+     . lang_pref("select different theme") . "</a>";
+  echo "<br><a href=\"" . $phpgw->link("settings.php") . "\">"
+     . lang_pref("change your settings") . "</a>";
+  echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"
+     . lang_pref("change your profile") . "</a>";
+  if ($phpgw_info["user"]["permissions"]["nntp"])
+    echo "<br><a href=\"" . $phpgw->link("nntp.php") . "\">"
+       . lang_pref("monitor newsgroups") . "</a>";
+
+  include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

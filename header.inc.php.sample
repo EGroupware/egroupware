@@ -1,0 +1,30 @@
+<?php
+  /**************************************************************************\
+  * phpGroupWare                                                             *
+  * http://www.phpgroupware.org                                              *
+  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+  /* $Id$ */
+
+  /**************************************************************************\
+  * !!!!!!! EDIT THIS LINE !!!!!!!!                                          *
+  * This setting allows you to easily move the include directory             *
+  * simply point this to your inc dir and then edit the globalconfig.inc.php *
+  * to fit your site, and you should be up and running.                      *
+  \**************************************************************************/
+
+  $phpgw_info["server"]["include_root"]	= "/path/to/phpGroupWare/inc";
+  /* This is the basic include needed on each page for phpGroupWare application compliance */
+  $phpgw_flags["htmlcompliant"] = True;
+
+  /**************************************************************************\
+  * Do not edit this line                                                   *
+  \**************************************************************************/
+  include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw.inc.php");
+?>
