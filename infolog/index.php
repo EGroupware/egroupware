@@ -146,9 +146,7 @@
 
 	 // ---------- end nextmatch template --------------------
 
-	 $limit = $db->limit($start);
-
-	 $db->query($q="SELECT * FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod $limit",__LINE__,__FILE__);
+	 $db->limit_query($q="SELECT * FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod",$start,__LINE__,__FILE__);
 	 
 	 while ($db->next_record()) {
 		  // ========================================
