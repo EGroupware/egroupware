@@ -37,7 +37,7 @@
   $phpgw->db->next_record();
 
   $total = $phpgw->db->f(0);
-  $limit = $phpgw->nextmatchs->sql_limit($start);
+  $limit = $phpgw->db->limit($start,$total);
   
   $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
   $phpgw->template->set_var("left_nextmatchs",$phpgw->nextmatchs->left("groups.php",$start,$total));
@@ -48,7 +48,7 @@
   $phpgw->template->set_var("header_edit",lang("Edit"));
   $phpgw->template->set_var("header_delete",lang("Delete"));
 
-  $phpgw->db->query("select * from groups $querymethod $ordermethod limit $limit");
+  $phpgw->db->query("select * from groups $querymethod $ordermethod $limit");
   while ($phpgw->db->next_record()) {
      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
  
