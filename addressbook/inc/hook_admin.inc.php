@@ -15,9 +15,9 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
-		'Site Configuration'	=> $phpgw->link('/admin/config.php','appname=' . $appname)
+		'Site Configuration'	=> $GLOBALS['phpgw']->link('/admin/config.php','appname=' . $appname)
 	);
 //Do not modify below this line
-	display_section($GLOBALS['appname'],$title,$file);
+	display_section($appname,$title,$file);
 }
 ?>
