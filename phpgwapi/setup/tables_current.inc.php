@@ -25,6 +25,7 @@
 		),
 		'phpgw_applications' => array(
 			'fd' => array(
+				'app_id' => array('type' => 'auto', 'precision' => 4, 'nullable' => false),
 				'app_name' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
 				'app_title' => array('type' => 'varchar', 'precision' => 50),
 				'app_enabled' => array('type' => 'int', 'precision' => 4),
@@ -32,7 +33,7 @@
 				'app_tables' => array('type' => 'varchar', 'precision' => 255),
 				'app_version' => array('type' => 'varchar', 'precision' => 20, 'nullable' => false, 'default' => '0.0')
 			),
-			'pk' => array(),
+			'pk' => array('app_id'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array('app_name')

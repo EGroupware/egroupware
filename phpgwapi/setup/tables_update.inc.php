@@ -2161,4 +2161,49 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.13.014';
+	function phpgwapi_upgrade0_9_13_014()
+	{
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_applications SET app_order=100 WHERE app_order IS NULL");
+		$GLOBALS['phpgw_setup']->oProc->query("SELECT * FROM phpgw_applications");
+		while ($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			$app_name[]	= $GLOBALS['phpgw_setup']->oProc->f('app_name');
+			$app_title[]	= $GLOBALS['phpgw_setup']->oProc->f('app_title');
+			$app_enabled[]	= $GLOBALS['phpgw_setup']->oProc->f('app_enabled');
+			$app_order[]	= $GLOBALS['phpgw_setup']->oProc->f('app_order');
+			$app_tables[]	= $GLOBALS['phpgw_setup']->oProc->f('app_tables');
+			$app_version[]	= $GLOBALS['phpgw_setup']->oProc->f('app_version');
+		}
+
+		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_applications');
+
+		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+			'phpgw_applications', array(
+				'fd' => array(
+					'app_id' => array('type' => 'auto', 'precision' => 4, 'nullable' => false),
+					'app_name' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
+					'app_title' => array('type' => 'varchar', 'precision' => 50),
+					'app_enabled' => array('type' => 'int', 'precision' => 4),
+					'app_order' => array('type' => 'int', 'precision' => 4),
+					'app_tables' => array('type' => 'varchar', 'precision' => 255),
+					'app_version' => array('type' => 'varchar', 'precision' => 20, 'nullable' => false, 'default' => '0.0')
+				),
+				'pk' => array('app_id'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array('app_name')
+			)
+		);
+
+		$rec_count = count($app_name);
+		for($rec_loop=0;$rec_loop<$rec_count;$rec_loop++)
+		{
+			$GLOBALS['phpgw_setup']->oProc->query('INSERT INTO phpgw_applications(app_id,app_name,app_title,app_enabled,app_order,app_tables,app_version) '
+				. 'VALUES('.($rec_loop + 1).",'".$app_name[$rec_loop]."','".$app_title[$rec_loop]."',".$app_enabled[$rec_loop].','.$app_order[$rec_loop].",'".$app_tables[$rec_loop]."','".$app_version[$rec_loop]."')");
+		}
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.13.015';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
