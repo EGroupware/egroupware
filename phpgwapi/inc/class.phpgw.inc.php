@@ -82,7 +82,7 @@
       if ($phpgw_info["flags"]["currentapp"] == "login") {
          $this->db->query("select * from config",__LINE__,__FILE__);
          while($this->db->next_record()) {
-           $phpgw_info["server"][$this->db->f("config_name")] = $this->db->f("config_value");
+           $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
          }
       } else {
       	 $config_var = array("encryptkey","auth_type","account_repository");
@@ -93,7 +93,7 @@
       	 }
          $this->db->query("select * from config where $c",__LINE__,__FILE__);
          while($this->db->next_record()) {
-           $phpgw_info["server"][$this->db->f("config_name")] = $this->db->f("config_value");
+           $phpgw_info["server"][$this->db->f("config_name")] = stripslashes($this->db->f("config_value"));
          }
       }
 
@@ -155,7 +155,7 @@
         */
         //$patched_php_self = str_replace("/php4/php/phpgroupware", "/phpgroupware", $PHP_SELF);
         $patched_php_self = $PHP_SELF;
-        $url = (strlen($url_root[0])? $url_root[0].'/':'') . $url_root[2] . $patched_php_self;
+        $url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2] . $patched_php_self;
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) &&
