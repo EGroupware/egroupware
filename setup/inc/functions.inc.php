@@ -99,7 +99,7 @@
 
 	function lang_select()
 	{
-		$ConfigLang = $GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] : $GLOBALS['HTTP_POST_VARS']['ConfigLang']; 
+		$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
 
 		$select = '<select name="ConfigLang">' . "\n";
 		$languages = get_langs();
