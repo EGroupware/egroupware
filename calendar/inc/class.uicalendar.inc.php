@@ -36,6 +36,7 @@
 			'mini_calendar' => True,
 			'index' => True,
 			'month' => True,
+			'get_month' => True,
 			'week'  => True,
 			'year' => True,
 			'view' => True,
@@ -247,6 +248,19 @@
 
 		function month()
 		{
+			if (!$this->bo->printer_friendly)
+			{
+				unset($GLOBALS['phpgw_info']['flags']['noheader']);
+				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+				unset($GLOBALS['phpgw_info']['flags']['noappheader']);
+				unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
+				$GLOBALS['phpgw']->common->phpgw_header();
+			}
+			echo $this->get_month();
+		}
+
+		function get_month()
+		{
 			$this->bo->read_holidays();
 
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
@@ -300,15 +314,6 @@
 				'print'						=>	$print
 			);
 
-			if (!$this->bo->printer_friendly)
-			{
-				unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				unset($GLOBALS['phpgw_info']['flags']['noappheader']);
-				unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
-				$GLOBALS['phpgw']->common->phpgw_header();
-			}
-			
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
 			$p->set_file(
@@ -317,10 +322,21 @@
 				)
 			);
 			$p->set_var($var);
-			$p->pparse('out','index_t');
+			return $p->fp('out','index_t');
 		}
 
 		function week()
+		{
+			if (!$this->bo->printer_friendly)
+			{
+				unset($GLOBALS['phpgw_info']['flags']['noheader']);
+				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+				$GLOBALS['phpgw']->common->phpgw_header();
+			}
+			echo $this->get_week();
+		}
+
+		function get_week()
 		{
 			$this->bo->read_holidays();
 
@@ -403,13 +419,6 @@
 				'print'						=>	$print
 			);
 
-			if (!$this->bo->printer_friendly)
-			{
-				unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				$GLOBALS['phpgw']->common->phpgw_header();
-			}
-			
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(
 				Array(
@@ -417,7 +426,7 @@
 				)
 			);
 			$p->set_var($var);
-			$p->pparse('out','week_t');
+			return $p->fp('out','week_t');
 		}
 
 		function year()
@@ -427,6 +436,19 @@
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 				$GLOBALS['phpgw']->common->phpgw_header();
+			}
+			else
+			{
+				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
+			}
+			echo $this->get_year();
+		}
+
+
+		functiong get_year()
+		{
+			if(!$this->bo->printer_friendly)
+			{
 				$print = '';
 				$left_link = '<a href="'.$this->page('year','&year='.($this->bo->year - 1)).'">&lt;&lt;</a>';
 				$right_link = '<a href="'.$this->page('year','&year='.($this->bo->year + 1)).'">&gt;&gt;</a>';
@@ -440,7 +462,6 @@
 				$right_link = '';
 				$link = '';
 				$printer = '';
-				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 			}
 
 			$var = Array(
@@ -483,7 +504,7 @@
 					$p->parse('row','month_sep',True);
 				}
 			}
-			$p->pparse('out','year_t');
+			return $p->fp('out','year_t');
 		}
 		
 		function view($vcal_id=0,$cal_date=0)
@@ -998,7 +1019,7 @@
 
 			$var = Array(
 				'printer_friendly'		=> $printer,
-				'bg_text'			=> $GLOBALS['phpgw_info']['theme']['bg_text'],
+				'bg_text'			=> $this->theme['bg_text'],
 				'daily_events'			=> $this->print_day(
 					Array(
 						'year'	=> $this->bo->year,

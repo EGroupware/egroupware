@@ -26,27 +26,29 @@
 	{
 		$time = time() - ((60*60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
 		$GLOBALS['date'] = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
+		$GLOBALS['g_year'] = substr($GLOBALS['date'],0,4);
+		$GLOBALS['g_month'] = substr($GLOBALS['date'],4,2);
+		$GLOBALS['g_day'] = substr($GLOBALS['date'],6,2);
 		$GLOBALS['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
-		$cal = CreateObject('calendar.uicalendar');
-		$extra_data = "\n".'<td>'."\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
-			. $cal->mini_calendar(
-				Array(
-					'day'		=> $cal->bo->day,
-					'month'	=> $cal->bo->month,
-					'year'	=> $cal->bo->year,
-					'link'	=> 'day'
-				)
-			).'</td><td align="center"><table border="0" width="100%" cellspacing="0" cellpadding="0">'
-			. '<tr><td align="center">'.lang($GLOBALS['phpgw']->common->show_date($time,'F')).' '.$cal->bo->day.', '
-			.$cal->bo->year.'</td></tr><tr><td bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_text']
-			.'" valign="top">'.$cal->print_day(
-				Array(
-					'year'	=> $cal->bo->year,
-					'month'	=> $cal->bo->month,
-					'day'		=> $cal->bo->day
-				)
-			).'</td></tr></table>'."\n".'</td>'."\n".'</tr>'."\n".'</table>'."\n".'</td>'."\n";
-			
+		$GLOBALS['css'] = "\n".'<STYLE type="text/css">'."\n".'<!--'."\n"
+			. ExecMethod('calendar.uicalendar.css').'-->'."\n".'</style>';
+
+		$page_ = explode('.',$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']);
+		$_page = $page_[0];
+		if ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year'))
+		{
+			$_page = 'month';
+//			$GLOBALS['phpgw']->preferences->add('calendar','defaultcalendar','month');
+//			$GLOBALS['phpgw']->preferences->save_repository();
+		}
+
+		if(!@file_exists(PHPGW_INCLUDE_ROOT.'/calendar/inc/hook_home_'.$_page.'.inc.php'))
+		{
+			$_page = 'day';
+		}
+		include(PHPGW_INCLUDE_ROOT.'/calendar/inc/hook_home_'.$_page.'.inc.php');
+		
+
 		$title = '<font color="#FFFFFF">'.lang('Calendar').'</font>';
 		
 		$portalbox = CreateObject('phpgwapi.listbox',
@@ -78,7 +80,7 @@
 
 		$portalbox->data = Array();
 
-		echo "\n".'<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($extra_data)."\n".'<!-- END Calendar info -->'."\n";
+		echo "\n".'<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($GLOBALS['extra_data'])."\n".'<!-- END Calendar info -->'."\n";
 		unset($cal);
 	} 
 	flush();
