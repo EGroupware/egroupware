@@ -381,7 +381,7 @@
 			}
 			$log .= "\t</tr>\n</table>\n";
 
-			$GLOBALS['phpgw']->template->set_var('anz_imported',$debug ? lang('%1 records read (not yet imported, you may go back and uncheck Test Import)',
+			$GLOBALS['phpgw']->template->set_var('anz_imported',$debug ? lang('%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)',
 				$anz,'<a href="javascript:history.back()">','</a>') :
 				lang('%1 records imported',$anz));
 			$GLOBALS['phpgw']->template->set_var('log',$log);
