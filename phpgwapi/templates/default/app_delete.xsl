@@ -2,7 +2,7 @@
 
 	<xsl:template match="delete">
 		<xsl:call-template name="app_header"/>
-			<table border="0" cellpadding="2" cellspacing="4" align="center">
+			<table cellpadding="2" cellspacing="2" align="center">
 				<tr>
 					<td align="center" colspan="2"><xsl:value-of select="lang_confirm_msg"/></td>
 				</tr>
@@ -11,7 +11,7 @@
 						<xsl:variable name="delete_action"><xsl:value-of select="delete_action"/></xsl:variable>
 						<xsl:variable name="lang_yes"><xsl:value-of select="lang_yes"/></xsl:variable>
 						<form method="POST" action="{$delete_action}">
-							<input type="submit" name="confirm" value="{$lang_yes}"/>
+							<input type="submit" class="forms" name="confirm" value="{$lang_yes}"/>
 						</form>
 					</td>
 					<td align="right">

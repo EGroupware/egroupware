@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 
 	<xsl:template name="app_header">
-		<table border="0" cellpadding="2" cellspacing="4" width="98%" align="center">
+		<table cellpadding="2" cellspacing="2" width="98%" align="center">
 			<tr>
 				<td class="appheader"><xsl:value-of select="appname"/></td>
 			</tr>
