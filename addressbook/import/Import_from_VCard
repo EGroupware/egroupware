@@ -30,7 +30,6 @@
 		var $type = 'vcard';
 
 		var $import = array(
-			"fn"       => "fn",
 			"n"        => "n",
 			"sound"    => "sound",
 			"bday"     => "bday",
@@ -44,26 +43,60 @@
 			"adr"      => "adr",
 			"label"    => "label",
 			"tel"      => "tel",
-			"email"    => "email",
+			"email"    => "email"
 		);
 
-		var $grouping = array("a.","b.","c.","d.");
+		var $grouping = array("A\.","B\.","C\.","D\.");
+
+		var $names = array(
+			"family" => "family",
+			"given"  => "given",
+			"middle" => "middle",
+			"prefix" => "prefix",
+			"suffix" => "suffix"
+		);
+
+		var $adr_types = array(
+			"DOM"    => "dom",
+			"INTL"   => "intl",
+			"PARCEL" => "parcel",
+			"POSTAL" => "postal",
+			"WORK"   => "one",
+			"HOME"   => "two"
+		);
+
+		// Used to set preferred number field
+		var $tel_types = array(
+			"PREF"  => "tel_prefer",
+			"WORK"  => "tel_work",
+			"HOME"  => "tel_home",
+			"VOICE" => "tel_voice",
+			"FAX"   => "tel_fax",
+			"MSG"   => "tel_msg",
+			"CELL"  => "tel_cell",
+			"PAGER" => "tel_pager",
+			"BBS"   => "tel_bbs",
+			"MODEM" => "tel_modem",
+			"CAR"   => "tel_car",
+			"ISDN"  => "tel_isdn",
+			"VIDEO" => "tel_video"
+		);
 
 		function import_start_file($buffer,$j="",$k="") {
+			$this->id = 0;
 			return $buffer;
 		}
 
 		function import_start_record($buffer) {
-			$top=array();
 			++$this->id;
-			$this->currentrecord = $top;
+			$this->currentrecord = array();
 			return $buffer;
 		}
 
 		function import_new_attrib($buffer,$name,$value) {
 			$value = trim($value);
-			$value = str_replace("\n","<BR>",$value);
-			$value = str_replace("\r","",$value);
+			$value = ereg_replace("=0D=0A","\n",$value);
+			//echo '<br>'.$this->id.": ".$name.' => '.$value;
 			$this->currentrecord += array($name => $value);
 
 			return $buffer;
@@ -74,6 +107,7 @@
 			$buffer[$this->id]="";
 			while ( list($name, $value) = each($this->currentrecord)) {
 				$buffer[$this->id][$name] = $value;
+				//$buffer[$this->id]["private"] = $private;
 				//echo '<br>'.$name.' => '.$value;
 			}
 			return $buffer;
@@ -86,14 +120,198 @@
 			echo '<br>'; 
 			for ($i=1;$i<=count($buffer);$i++) {
 				while ( list($name,$value) = @each($buffer[$i]) ) {
-					echo '<br>'.$i.': '.$name.' => '.$value;
-					$entry[$i][$name] = $value;
+					$field  = split(";",$name);
+					reset($this->grouping);
+					$field[0] = ereg_replace("A\.","",$field[0]);
+					$field[0] = ereg_replace("B\.","",$field[0]);
+					$field[0] = ereg_replace("C\.","",$field[0]);
+					$field[0] = ereg_replace("D\.","",$field[0]);
+					$values = split(";",$value);
+					if ($field[1]) {
+						//echo $field[0];
+						switch ($field[0]) {
+							case "ADR":
+								switch ($field[1]) {
+									case "INTL":
+										break;
+									case "DOM":
+										break;
+									case "PARCEL":
+										break;
+									case "POSTAL":
+										break;
+									case "WORK":
+										if (!$buffer[$i]["adr_one_street"]) {
+											$buffer[$i]["address2"]            = $values[1];
+											$buffer[$i]["adr_one_street"]      = $values[2];
+											$buffer[$i]["adr_one_locality"]    = $values[3];
+											$buffer[$i]["adr_one_region"]      = $values[4];
+											$buffer[$i]["adr_one_postalcode"]  = $values[5];
+											$buffer[$i]["adr_one_countryname"] = $values[6];
+										}
+										break;
+									case "HOME":
+										$buffer[$i]["adr_two_street"]      = $values[2];
+										$buffer[$i]["adr_two_locality"]    = $values[3];
+										$buffer[$i]["adr_two_region"]      = $values[4];
+										$buffer[$i]["adr_two_postalcode"]  = $values[5];
+										$buffer[$i]["adr_two_countryname"] = $values[6];									
+										break;
+									default:
+										if (!$buffer[$i]["adr_one_street"]) {
+											$buffer[$i]["address2"]            = $values[1];
+											$buffer[$i]["adr_one_street"]      = $values[2];
+											$buffer[$i]["adr_one_locality"]    = $values[3];
+											$buffer[$i]["adr_one_region"]      = $values[4];
+											$buffer[$i]["adr_one_postalcode"]  = $values[5];
+											$buffer[$i]["adr_one_countryname"] = $values[6];
+										}
+										break;
+								}
+								break;
+							case "TEL":
+								switch ($field[1]) {
+									case "PREF":
+										echo $field[2]." is preferred";
+										if ($field[2]) {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[2]) . ";";
+										}
+										break;
+									case "WORK":
+										$buffer[$i]["tel_work"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "HOME":
+										$buffer[$i]["tel_home"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "VOICE":
+										$buffer[$i]["tel_voice"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "FAX":
+										$buffer[$i]["tel_fax"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "MSG":
+										$buffer[$i]["tel_msg"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "CELL":
+										$buffer[$i]["tel_cell"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "PAGER":
+										$buffer[$i]["tel_pager"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "BBS":
+										$buffer[$i]["tel_bbs"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "MODEM":
+										$buffer[$i]["tel_modem"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "CAR":
+										$buffer[$i]["tel_car"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "ISDN":
+										$buffer[$i]["tel_isdn"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									case "VIDEO":
+										$buffer[$i]["tel_video"] = $values[0];
+										if ($field[2] == "PREF") {
+											$buffer[$i]["tel_prefer"] .= strtolower($field[1]) . ";";
+										}
+										break;
+									default:
+										break;
+								}
+								break;
+							case "EMAIL":
+								switch ($field[1]) {
+									default:
+										break;
+								}
+							default:
+								break;
+						}
+					} else {
+						switch ($field[0]) {
+							case "N":
+								reset($this->names);
+								$j=0;
+								while(list($myname,$myval) = each($this->names) ) {
+									$namel = "n_".$myname;
+									$buffer[$i][$namel] = $values[$j];
+									$j++;
+								}
+								break;
+							case "FN":
+								$buffer[$i]["fn"] = $values[0];
+								break;
+							case "TITLE":
+								$buffer[$i]["title"] = $values[0];
+								break;
+							case "TZ":
+								$buffer[$i]["tz"] = $values[0];
+								break;
+							case "GEO":
+								$buffer[$i]["geo"] = $values[0];
+								break;
+							case "URL":
+								$buffer[$i]["url"] = $values[0];
+								break;
+							case "NOTE":
+								$buffer[$i]["note"] = ereg_replace("=0D=0A","\n",$values[0]);
+								break;
+							case "KEY":
+								$buffer[$i]["key"] = ereg_replace("=0D=0A","\n",$values[0]);
+								break;
+							case "LABEL":
+								$buffer[$i]["label"] = ereg_replace("=0D=0A","\n",$values[0]);
+								break;
+						}
+					}
+				}
+				$buffer[$i]["tel_prefer"]   = substr($buffer[$i]["tel_prefer"],0,-1);
+				$buffer[$i]["adr_one_type"] = substr($buffer[$i]["adr_one_type"],0,-1);
+				$buffer[$i]["adr_two_type"] = substr($buffer[$i]["adr_two_type"],0,-1);
+				echo '<br>';
+				reset($contacts->stock_contact_fields);
+				while (list($fname,$fvalue) = each($contacts->stock_contact_fields)) {
+					echo '<br>'.$i.': '.$fname.' => '.$buffer[$i][$fvalue];
 				}
 				echo '<br>';
 				//$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
 			}
-			$num = $i - 1;
-			return "Successfully imported $num records into your addressbook.";
+			//$num = $i - 1;
+			//return "Successfully imported $num records into your addressbook.";
 		}
 	}
 ?>
