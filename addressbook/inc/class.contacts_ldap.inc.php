@@ -413,7 +413,7 @@
 			//		$ldap_fields = $tmp;
 			//	} else {
 					$ldap_fields = $this->asortbyindex($ldap_fields,'uidnumber');
-					reset($ldap_fields);
+					@reset($ldap_fields);
 					if (count($ldap_fields) > 0)
 					{
 						for ($a = 0; $a < count($ldap_fields); $a++)
