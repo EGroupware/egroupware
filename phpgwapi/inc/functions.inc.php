@@ -46,7 +46,8 @@
 		$classpart = explode (".", $classname);
 		$appname = $classpart[0];
 		$classname = $classpart[1];
-		if (!$phpgw_info["flags"]["included_classes"][$classname]){
+		if (!isset($phpgw_info['flags']['included_classes'][$classname])
+		|| !$phpgw_info["flags"]["included_classes"][$classname]){
 			$phpgw_info["flags"]["included_classes"][$classname] = True;   
 			include(PHPGW_INCLUDE_ROOT."/".$appname."/inc/class.".$classname.".inc.php");
 		}
@@ -424,7 +425,8 @@
 		/*************************************************************************\
 		* Load the header unless the developer turns it off                       *
 		\*************************************************************************/
-		if (! $phpgw_info["flags"]["noheader"]) {
+		if (!isset($phpgw_info['flags']['noheader']) ||
+		    !$phpgw_info['flags']['noheader']) {
 			$phpgw->common->phpgw_header();
 		}
 
@@ -435,8 +437,11 @@
 		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC."/functions.inc.php")){
 			include(PHPGW_APP_INC . "/functions.inc.php");
 		}
-		if (!$phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"] &&
-		file_exists(PHPGW_APP_INC . "/header.inc.php")) {
+		if ((!isset($phpgw_info['flags']['noheader']) || 
+		     !$phpgw_info["flags"]["noheader"]) && 
+		    (!isset($phpgw_info['flags']['noappheader']) ||
+		     !$phpgw_info["flags"]["noappheader"]) &&
+		    file_exists(PHPGW_APP_INC . "/header.inc.php")) {
 			include(PHPGW_APP_INC . "/header.inc.php");
 		}
 	}

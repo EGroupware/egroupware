@@ -574,7 +574,8 @@
 				// Its up to the app to pass this value. (jengo)
 				// Putting it into the app requires a massive number of updates in email app. 
 				// Until that happens this needs to stay here (seek3r)
-				if ($phpgw_info['flags']['newsmode'])
+				if (isset($phpgw_info['flags']['newsmode']) && 
+					$phpgw_info['flags']['newsmode'])
 				{
 					$url .= '&newsmode=on';
 				}

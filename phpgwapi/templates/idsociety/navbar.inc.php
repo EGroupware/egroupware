@@ -25,11 +25,6 @@
 		$tpl->set_var('img_root_roll',PHPGW_IMAGES_DIR . '/rollover');
 		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
 
-		if ($phpgw_info['flags']['navbar_target'])
-		{
-			$target = ' target="' . $phpgw_info['flags']['navbar_target'] . '"';
-		}
-
 #  echo '<pre>'; print_r($phpgw_info['navbar']); echo '</pre>';  
 		while ($app = each($phpgw_info['navbar']))
 		{
@@ -42,9 +37,14 @@
 				$img_src_out = $phpgw_info['server']['webserver_url'] . '/' . $app[0] . '/templates/idsociety/images/navbar.gif';
 
 // onMouseOver="two.src='rollover/admin_over.gif'" onMouseOut="two.src='images/admin.gif'"><img src="images/admin.gif" border="0" name="two"
-				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"' . $target . ' onMouseOver="'
-					. $app[0] . '.src=\'' . $img_src_over . '\'" onMouseOut="' . $app[0] . '.src=\'' . $img_src_out . '\'">';
-           
+				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"';
+				if (isset($phpgw_info['flags']['navbar_target']) &&
+				    $phpgw_info['flags']['navbar_target'])
+				{
+					$applications .= ' target="' . $phpgw_info['flags']['navbar_target'] . '"';
+				}
+
+				$applications .= 'onMouseOver="' . $app[0] . '.src=\'' . $img_src_over . '\'" onMouseOut="' . $app[0] . '.src=\'' . $img_src_out . '\'">';
 				$applications .= $title . '</a></td></tr>';
 				$applications .= "\n";
 			}

@@ -351,17 +351,24 @@
 				$a[] = $firstname;
 			}
 
-			switch(count($a))
+			if(isset($a))
 			{
-				case 0:
-					return $lid;
-					break;
-				case 1:
-					return '&lt;' . $lid . '&gt; ' . $a[0];
-					break;
-				case 2:
-					return '&lt;' . $lid . '&gt; ' . implode(', ',$a);
-					break;
+				switch(count($a))
+				{
+					case 0:
+						return $lid;
+						break;
+					case 1:
+						return '&lt;' . $lid . '&gt; ' . $a[0];
+						break;
+					case 2:
+						return '&lt;' . $lid . '&gt; ' . implode(', ',$a);
+						break;
+				}
+			}
+			else
+			{
+				return $lid;
 			}
 		}
 
