@@ -25,11 +25,11 @@
 		Header('Location: ' . $phpgw->link('/addressbook/index.php'));
 	}
 
-	$this = CreateObject('phpgwapi.contacts');
-	$fields = $this->read_single_entry($ab_id,array('owner' => 'owner'));
+	$contacts = CreateObject('phpgwapi.contacts');
+	$fields = $contacts->read_single_entry($ab_id,array('owner' => 'owner'));
 	//$record_owner = $fields[0]['owner'];
 
-	if (! $this->check_perms($this->grants[$fields[0]['owner']],PHPGW_ACL_DELETE) && $fields[0]['owner'] != $phpgw_info['user']['account_id'])
+	if (! $contacts->check_perms($contacts->grants[$fields[0]['owner']],PHPGW_ACL_DELETE) && $fields[0]['owner'] != $phpgw_info['user']['account_id'])
 	{
 		Header('Location: '
 			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
@@ -57,8 +57,8 @@
 	}
 	else
 	{
-		$this->account_id = $phpgw_info['user']['account_id'];
-		$this->delete($ab_id);
+		$contacts->account_id = $phpgw_info['user']['account_id'];
+		$contacts->delete($ab_id);
 
 		@Header('Location: ' . $phpgw->link('/addressbook/index.php',
 			"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));

@@ -49,7 +49,7 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			$this->db         = $phpgw->db;
+			$this->db = $phpgw->db;
 			if($useacl)
 			{
 				$this->grants = $phpgw->acl->get_grants('addressbook');
@@ -183,7 +183,7 @@
 
 			$this->db2 = $this->db;
  
-			$this->db->query("select id,lid,tid,owner,access,cat_id $t_fields from $this->std_table WHERE id='$id'");
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='$id'");
 			$this->db->next_record();
 
 			$return_fields[0]['id']        = $this->db->f('id'); // unique id
@@ -221,7 +221,7 @@
 				}
 			}
 
-			$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
+			$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
 			while ($this->db2->next_record())
 			{
 				// If its not in the list to be returned, don't return it.
@@ -256,7 +256,7 @@
 
 			$id = $this->db->f(0);
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]['id']		= $this->db->f('id');
@@ -294,7 +294,7 @@
 				}
 			}
 
-			$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
+			$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
 			while ($this->db2->next_record())
 			{
 				// If its not in the list to be returned, don't return it.
@@ -307,8 +307,8 @@
 			return $return_fields;
 		}
 
-		// send this the range, query, sort, order and whatever fields you want to see
-		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="")
+		/* send this the range, query, sort, order and whatever fields you want to see */
+		function read($start=0,$limit=0,$fields="",$query="",$filter="",$sort="",$order="")
 		{
 			global $phpgw,$phpgw_info;
 
@@ -318,24 +318,17 @@
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 			if (count($stock_fieldnames))
 			{
-				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",")
+				$t_fields = ',' . implode(',',$stock_fieldnames);
+				if ($t_fields == ',')
 				{
 					unset($t_fields);
 				}
 			}
 
-			// turn filter's a=b,c=d OR a=b into an array
-			if ($filter) {
-				$extra_stock = array(
-					'id'     => 'id',
-					'tid'    => 'tid',
-					'lid'    => 'lid',
-					'owner'  => 'owner',
-					'access' => 'access',
-					'cat_id' => 'cat_id'
-				);
-				$check_stock = $this->stock_contact_fields + $extra_stock;
+			/* turn filter's a=b,c=d OR a=b into an array */
+			if ($filter)
+			{
+				$check_stock = $this->stock_contact_fields + $this->non_contact_fields;
 
 				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
 				$filterarray = split(',',$filter);
@@ -344,7 +337,7 @@
 					$i=0;
 					for ($i=0;$i<count($filterarray);$i++)
 					{
-						list($name,$value) = split("=",$filterarray[$i]);
+						list($name,$value) = split('=',$filterarray[$i]);
 						if ($name)
 						{
 							if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#"; }
@@ -357,28 +350,27 @@
 					list($name,$value) = split('=',$filter);
 					if ($DEBUG)
 					{
-						echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#";
+						echo '<br>DEBUG - Filter intermediate strings 1: #'.$name.'# => #'.$value.'#';
 					}
 					$filterfields = array($name => $value);
 				}
 
-				// now check each element of the array and convert into SQL for queries
-				// below
+				/* now check each element of the array and convert into SQL for queries below */
 				$i=0;
 				reset($filterfields);
 				while (list($name,$value) = each($filterfields))
 				{
-					if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 2: #".$name."# => #".$value."#"; }
+					if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 2: #'.$name.'# => #'.$value.'#'; }
 					$isstd=0;
 					if ($name && empty($value))
 					{
-						if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is empty (NULL)"; }
+						if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is empty (NULL)'; }
 						while (list($fname,$fvalue)=each($check_stock))
 						{
 							if ($fvalue==$name)
 							{
 								$filterlist .= $name.' is NULL,';
-								if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is a stock field"; }
+								if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is a stock field'; }
 								break;
 							}
 						}
@@ -392,7 +384,6 @@
 							{
 								if ($name == 'cat_id')
 								{
-									// This is the alternative to CONCAT, since it is mysql-only
 									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."='".$value."');";
 								}
 								elseif (gettype($value) == "integer")
@@ -412,11 +403,6 @@
 				$filterlist  = substr($filterlist,0,-1);
 				$filterlist  = ereg_replace(";"," AND ",$filterlist);
 				
-				// echo "<p>contacts->read(): filterlist=\"$filterlist\" -->";	// allow multiple (','-separated) cat's per address
-				//$filterlist = ereg_replace('cat_id=[\']*([0-9]+)[\']*',"CONCAT(',',cat_id,',') LIKE '%,\\1,%'",$filterlist);
-				// echo "\"$filterlist\"</p>\n";
-				// Oops, CONCAT is mysql-only, this is now handled explicitly above for cat_id
-
 				if ($DEBUG)
 				{
 					echo "<br>DEBUG - Filter output string: #".$filterlist."#";
@@ -495,65 +481,50 @@
 			
 			$filtermethod = "";
 			
-			// This logic allows you to limit rows, or not.
-			// The export feature, for example, does not limit rows.
-			// This way, it can retrieve all rows at once.
-			if ($start && $offset) {
-				$limit = $this->db->limit($start,$offset);
-			} elseif ($start && !$offset) {
-				$limit = "";
-			} elseif(!$start && !$offset) {
-				$limit = "";
-			} else { #(!$start && $offset) {
-				$start = 0;
-				$limit = $this->db->limit($start,$offset);
-			}
-
-			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
-
 			if ($query)
 			{
-				$this->db3->query("SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
+				$sql = "SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
 					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
 					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
 					. "adr_one_postalcode LIKE '%$query%' OR adr_one_countryname LIKE '%$query%' OR "
 					. "adr_two_street LIKE '%$query%' OR adr_two_locality LIKE '%$query%' OR adr_two_region LIKE '%$query%' OR "
 					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
-					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod,__LINE__,__FILE__); 
-				$this->total_records = $this->db3->num_rows();
-
-				$this->db->query("SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
-					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
-					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
-					. "adr_one_postalcode LIKE '%$query%' OR adr_one_countryname LIKE '%$query%' OR "
-					. "adr_two_street LIKE '%$query%' OR adr_two_locality LIKE '%$query%' OR adr_two_region LIKE '%$query%' OR "
-					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
-					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod . " "
-					. $limit,__LINE__,__FILE__);
+					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod;
 			}
 			else
 			{
-				$this->db3->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
-					. $filtermethod,__LINE__,__FILE__);
-				$this->total_records = $this->db3->num_rows();
-
-				$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
-				. $filtermethod . " " . $ordermethod . " " . $limit,__LINE__,__FILE__);
+				$sql = "SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
+					. $filtermethod . " " . $ordermethod;
 			}
 
-			if ($DEBUG) { echo "<br>SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere . $filtermethod; }
+			if ($DEBUG) { echo "<br>$sql"; }
+
+			$this->db2 = $this->db;
+			$this->db2->query($sql,__LINE__,__FILE__);
+
+			$this->total_records = $this->db2->num_rows();
+
+			if ($start && $limit)
+			{
+				$this->db->limit_query($sql,array($start,$limit),__LINE__,__FILE__);
+			}
+			elseif (!$limit)
+			{
+				$this->db->query($sql,__LINE__,__FILE__);
+			}
+			else
+			{
+				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
+			}
 
 			$i=0;
 			while ($this->db->next_record())
 			{
-				// unique id, lid for group/account records,
-				// type id (g/u) for groups/accounts, and
-				// id of owner/parent for the record
 				$return_fields[$i]['id']     = $this->db->f('id');
 				$return_fields[$i]['lid']    = $this->db->f('lid');
 				$return_fields[$i]['tid']    = $this->db->f('tid');
 				$return_fields[$i]['owner']  = $this->db->f('owner');
-				$return_fields[$i]['access'] = $this->db->f('access'); // public/private
+				$return_fields[$i]['access'] = $this->db->f('access');
 				$return_fields[$i]['cat_id'] = $this->db->f('cat_id');
 
 				if (gettype($stock_fieldnames) == 'array')
@@ -565,11 +536,9 @@
 					reset($stock_fieldnames);
 				}
 				$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
-					. $this->db->f("id") . "'" .$filterextra,__LINE__,__FILE__);
+					. $this->db->f('id') . "'" .$filterextra,__LINE__,__FILE__);
 				while ($this->db2->next_record())
 				{
-					// If its not in the list to be returned, don't return it.
-					// This is still quicker then 5(+) separate queries
 					if ($extra_fields[$this->db2->f('contact_name')])
 					{
 						$return_fields[$i][$this->db2->f('contact_name')] = $this->db2->f('contact_value');
@@ -584,26 +553,25 @@
 		{
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
-			//$this->db->lock(array("contacts"));
 			if ($fields['lid'])
 			{
 				$lid[0] = 'lid,';
 				$lid[1] = $fields['lid']."','";
 			}
-			$this->db->query("insert into $this->std_table (owner,access,cat_id,tid,".$lid[0]
+			$this->db->query("INSERT INTO $this->std_table (owner,access,cat_id,tid,".$lid[0]
 				. implode(",",$this->stock_contact_fields)
-				. ") values ('$owner','$access','$cat_id','$tid','".$lid[1]
+				. ") VALUES ('$owner','$access','$cat_id','$tid','".$lid[1]
 				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
-			$this->db->query("select max(id) from $this->std_table ",__LINE__,__FILE__);
+			$this->db->query("SELECT max(id) FROM $this->std_table ",__LINE__,__FILE__);
 			$this->db->next_record();
 			$id = $this->db->f(0);
-			//$this->db->unlock();
+
 			if (count($extra_fields))
 			{
 				while (list($name,$value) = each($extra_fields))
 				{
-					$this->db->query("insert into $this->ext_table values ('$id','" . $this->account_id . "','"
+					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $this->account_id . "','"
 						. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 				}
 			}
@@ -611,7 +579,7 @@
 
 		function field_exists($id,$field_name)
 		{
-			$this->db->query("select count(*) from $this->ext_table where contact_id='$id' and contact_name='"
+			$this->db->query("SELECT COUNT(*) FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0);
@@ -619,20 +587,20 @@
 
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
-			$this->db->query("insert into $this->ext_table values ($id,'$owner','" . addslashes($field_name)
+			$this->db->query("INSERT INTO $this->ext_table VALUES ($id,'$owner','" . addslashes($field_name)
 			. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
 		}
 
 		function delete_single_extra_field($id,$field_name)
 		{
-			$this->db->query("delete from $this->ext_table where contact_id='$id' and contact_name='"
+			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
 		function update($id,$owner,$fields,$access='',$cat_id='',$tid='n')
 		{
 			// First make sure that id number exists
-			$this->db->query("select count(*) from $this->std_table where id='$id'",__LINE__,__FILE__);
+			$this->db->query("SELECT COUNT(*) FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
 			if (!$this->db->f(0))
 			{
@@ -651,7 +619,7 @@
 				{
 					unset($field_s);
 				}
-				$this->db->query("update $this->std_table set access='$access',cat_id='$cat_id', tid='$tid' $fields_s where "
+				$this->db->query("UPDATE $this->std_table SET access='$access',cat_id='$cat_id', tid='$tid' $fields_s WHERE "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 
@@ -665,9 +633,9 @@
 					}
 					else
 					{
-						$this->db->query("update $this->ext_table set contact_value='" . addslashes($x_value)
-						. "',contact_owner='$owner' where contact_name='" . addslashes($x_name)
-						. "' and contact_id='$id'",__LINE__,__FILE__);
+						$this->db->query("UPDATE $this->ext_table SET contact_value='" . addslashes($x_value)
+						. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
+						. "' AND contact_id='$id'",__LINE__,__FILE__);
 					}
 				}
 				else
@@ -685,8 +653,8 @@
 				return False;
 			}
 
-			$this->db->query("update $this->std_table set owner='$new_owner' WHERE owner=$old_owner",__LINE__,__FILE__);
-			$this->db->query("update $this->ext_table set contact_owner='$new_owner' WHERE contact_owner=$old_owner",__LINE__,__FILE__);
+			$this->db->query("UPDATE $this->std_table SET owner='$new_owner' WHERE owner=$old_owner",__LINE__,__FILE__);
+			$this->db->query("UPDATE $this->ext_table SET contact_owner='$new_owner' WHERE contact_owner=$old_owner",__LINE__,__FILE__);
 
 			return;
 		}
@@ -694,8 +662,8 @@
 		// This is where the real work of delete() is done, shared class file contains calling function
 		function delete_($id)
 		{
-			$this->db->query("delete from $this->std_table where id='$id'",__LINE__,__FILE__);
-			$this->db->query("delete from $this->ext_table where contact_id='$id'",__LINE__,__FILE__);
+			$this->db->query("DELETE FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
+			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id'",__LINE__,__FILE__);
 		}
 
 		// This is for the admin script deleteaccount.php

@@ -23,12 +23,12 @@
 
 	include('../header.inc.php');
 
-	$this = CreateObject('phpgwapi.contacts');
+	$contacts = CreateObject('phpgwapi.contacts');
 
 	// First, make sure they have permission to this entry
 	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
 
-	if ( !$this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_EDIT) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
+	if ( !$contacts->check_perms($contacts->grants[$check[0]['owner']],PHPGW_ACL_EDIT) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
 	{
 		Header("Location: "
 			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
@@ -69,7 +69,7 @@
 			'address3' => 'address3'
 		);
 
-		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+		$qfields = $contacts->stock_contact_fields + $extrafields + $customfields;
 		$fields = addressbook_read_entry($ab_id,$qfields);
 		addressbook_form('edit','edit.php',lang('Edit'),$fields[0],$customfields);
 
@@ -91,7 +91,7 @@
 		$t->set_var('lang_submit',lang('submit'));
 		$t->set_var('cancel_link','<form method="POST" action="' . $phpgw->link("/addressbook/index.php") . '">');
 
-		if (($this->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $phpgw_info['user']['account_id'])
+		if (($contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $phpgw_info['user']['account_id'])
 		{
 			$t->set_var('delete_link','<form method="POST" action="'.$phpgw->link("/addressbook/delete.php") . '">');
 			$t->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
@@ -153,9 +153,9 @@
 		$fields['adr_one_postalcode']	= $bzip;
 		$fields['adr_one_countryname']	= $bcountry;
 
-		reset($this->adr_types);
+		reset($contacts->adr_types);
 		$typed = '';
-		while (list($type,$val) = each($this->adr_types))
+		while (list($type,$val) = each($contacts->adr_types))
 		{
 			$ftype = 'one_'.$type;
 			eval("if (\$\$ftype=='on') { \$typed .= \$type . ';'; }");
@@ -171,9 +171,9 @@
 		$fields['adr_two_postalcode']	= $hzip;
 		$fields['adr_two_countryname']	= $hcountry;
 
-		reset($this->adr_types);
+		reset($contacts->adr_types);
 		$typed = '';
-		while (list($type,$val) = each($this->adr_types))
+		while (list($type,$val) = each($contacts->adr_types))
 		{
 			$ftype = 'two_'.$type;
 			eval("if (\$\$ftype=='on') { \$typed .= \$type . ';'; }");
@@ -214,7 +214,7 @@
 			$fields['cat_id'] = $cat_id;
 		}					
 
-		if (($this->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
+		if (($contacts->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 		{
 			$userid = $check[0]['owner'];
 		}

@@ -23,7 +23,7 @@
 
 	include('../header.inc.php');
 
-	$this = CreateObject('phpgwapi.contacts');
+	$contacts = CreateObject('phpgwapi.contacts');
 
  	$extrafields = array(
 		'ophone'   => 'ophone',
@@ -45,7 +45,7 @@
 		}
 	}
 
-	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+	$qfields = $contacts->stock_contact_fields + $extrafields + $customfields;
 
 	if ($submit)
 	{

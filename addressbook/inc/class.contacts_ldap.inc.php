@@ -311,7 +311,7 @@
 
 		// send this the range, query, sort, order and whatever fields you want to see
 		// 'rights' and 'access' are  unused at this time
-		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="")
+		function read($start=0,$limit=0,$fields="",$query="",$filter="",$sort="",$order="")
 		{
 			global $phpgw,$phpgw_info;
 
@@ -464,15 +464,22 @@
 			// This logic allows you to limit rows, or not.
 			// The export feature, for example, does not limit rows.
 			// This way, it can retrieve all rows at once.
-			if ($start && $offset) {
-				$limit = $start + $offset;;
-			} elseif ($start && !$offset) {
+			if ($start && $limit)
+			{
+				$limit = $start + $limit;
+			}
+			elseif ($start && !$limit)
+			{
 				$limit = $start;
-			} elseif(!$start && !$offset) {
+			}
+			elseif(!$start && !$limit)
+			{
 				$limit = $this->total_records;
-			} else { #(!$start && $offset) {
+			}
+			else
+			{ #(!$start && $limit) {
 				$start = 0;
-				$limit = $offset;
+				$limit = $limit;
 			}
 			//echo '('.$start.','.$limit.')';
 

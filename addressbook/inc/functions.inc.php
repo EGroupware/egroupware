@@ -113,8 +113,9 @@
 		$phpgw->preferences->save_repository(1);
 	}
 
-	// Return a select form element with the categories option dialog in it
-	function cat_option($cat_id='',$notall=False,$java=True,$multiple=False) {
+	/* Return a select form element with the categories option dialog in it */
+	function cat_option($cat_id='',$notall=False,$java=True,$multiple=False)
+	{
 		global $phpgw_info;
 		if ($java)
 		{
@@ -132,38 +133,39 @@
 			$cats_link .= '>'.lang("all").'</option>'."\n";
 		}
 
-		// Get global and app-specific category listings
+		/* Get global and app-specific category listings */
 		$cats       = CreateObject('phpgwapi.categories');
 		$cats_link .= $cats->formated_list('select','all',$cat_id,True);
 		$cats_link .= '</select>'."\n";
 		return $cats_link;
 	}
 
-	### SET THE FONT TO DEFAULT IF IT DOESNT EXISTS ###
+	/* SET THE FONT TO DEFAULT IF IT DOESNT EXISTS */
 	function set_font()
 	{
-		if($phpgw_info["user"]["preferences"]["notes"]["notes_font"] == "")
+		if($phpgw_info['user']['preferences']['notes']['notes_font'] == '')
 		{
 			$font = "Arial";
 			return $font;
 		}
 		else
 		{
-			$font = $phpgw_info["user"]["preferences"]["notes"]["notes_font"];
+			$font = $phpgw_info['user']['preferences']['notes']['notes_font'];
 			return $font;
 		}
 	}
 
-	### SET FONT SIZE ####
+	/* SET FONT SIZE */
 	function set_font_size()
 	{
-		if($phpgw_info["user"]["preferences"]["notes"]["notes_font_size"] == "") {
+		if($phpgw_info['user']['preferences']['notes']['notes_font_size'] == '')
+		{
 			$font_size = "3";
 			return $font_size;
 		}
 		else
 		{
-			$font_size = $phpgw_info["user"]["preferences"]["notes"]["notes_font_size"];
+			$font_size = $phpgw_info['user']['preferences']['notes']['notes_font_size'];
 			return $font_size;
 		}
 	}
@@ -234,7 +236,7 @@
 		}
 	}
 
-	function addressbook_strip_html($dirty = "")
+	function addressbook_strip_html($dirty = '')
 	{
 		global $phpgw;
 		if ($dirty == ""){$dirty = array();}
@@ -247,81 +249,81 @@
 		return $cleaned;
 	}
 
-	function addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid="")
+	function addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid='')
 	{
-		global $this,$rights;
+		global $contacts,$rights;
 		$readrights = $rights & PHPGW_ACL_READ;
-		$entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order,$readrights);
+		$entries = $contacts->read($start,$offset,$qcols,$query,$qfilter,$sort,$order,$readrights);
 		$cleaned = addressbook_strip_html($entries);
 		return $cleaned;
 	}
 
-	function addressbook_read_entry($id,$fields,$userid="")
+	function addressbook_read_entry($id,$fields,$userid='')
 	{
-		global $this,$rights;
+		global $contacts,$rights;
 		if ($rights & PHPGW_ACL_READ)
 		{
-			$entry = $this->read_single_entry($id,$fields);
+			$entry = $contacts->read_single_entry($id,$fields);
 			$cleaned = addressbook_strip_html($entry);
 			return $cleaned;
 		}
 		else
 		{
-			$rtrn = array("No access" => "No access");
+			$rtrn = array('No access' => 'No access');
 			return $rtrn;
 		}
 	}
 
 	function addressbook_read_last_entry($fields)
 	{
-		global $this,$rights;
+		global $contacts,$rights;
 		if ($rights & PHPGW_ACL_READ)
 		{
-			$entry = $this->read_last_entry($fields);
+			$entry = $contacts->read_last_entry($fields);
 			$cleaned = addressbook_strip_html($entry);
 			return $cleaned;
 		}
 		else
 		{
-			$rtrn = array("No access" => "No access");
+			$rtrn = array('No access' => 'No access');
 			return $rtrn;
 		}
 	}
 
 	function addressbook_add_entry($userid,$fields,$access='',$cat_id='',$tid='n')
 	{
-		global $this,$rights;
+		global $contacts,$rights;
 		if ($rights & PHPGW_ACL_ADD)
 		{
-			$this->add($userid,$fields,$access,$cat_id,$tid);
+			$contacts->add($userid,$fields,$access,$cat_id,$tid);
 		}
 		return;
 	}
 
 	function addressbook_get_lastid()
 	{
-		global $this;
-	 	$entry = $this->read_last_entry();
-		$ab_id = $entry[0]["id"];
+		global $contacts;
+	 	$entry = $contacts->read_last_entry();
+		$ab_id = $entry[0]['id'];
 		return $ab_id;
 	}
 
 	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id)
 	{
-		global $this,$rights;
+		global $contacts,$rights;
 		if ($rights & PHPGW_ACL_EDIT)
 		{
-			$this->update($id,$userid,$fields,$access,$cat_id);
+			$contacts->update($id,$userid,$fields,$access,$cat_id);
 		}
 		return;
 	}
 
 	// Folowing used for add/edit
-	function addressbook_form($format,$action,$title="",$fields="",$customfields="",$cat_id="")
+	function addressbook_form($format,$action,$title='',$fields='',$customfields='',$cat_id='')
 	{
 		global $phpgw,$phpgw_info,$referer;
 
-		$t = new Template(PHPGW_APP_TPL);
+		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_file(array('form' => 'form.tpl'));
 		//$t->set_block('form','add','add');
 		//$t->set_block('form','edit','edit');
@@ -422,14 +424,14 @@
 			}
 		}
 
-		$this = CreateObject("phpgwapi.contacts");
+		$c = CreateObject("phpgwapi.contacts");
 
 		if ($format != "view")
 		{
 			// Preferred phone number radio buttons
 			$pref[0] = "<font size=\"-2\">";
 			$pref[1] = "(".lang('pref').")</font>";
-			while (list($name,$val) = each($this->tel_types))
+			while (list($name,$val) = each($c->tel_types))
 			{
 				$str[$name] = "\n".'      <input type="radio" name="tel_prefer" value="'.$name.'"';
 				if ($name == $preferred)
@@ -504,7 +506,7 @@
 			$time_zone .= "</select>\n";
 
 			$email_type = '<select name=email_type>';
-			while ($type = each($this->email_types))
+			while ($type = each($c->email_types))
 			{
 				$email_type .= '<option value="'.$type[0].'"';
 				if ($type[0] == $emailtype) { $email_type .= ' selected'; }
@@ -512,9 +514,9 @@
 			}
 			$email_type .= "</select>";
 
-			reset($this->email_types);
+			reset($c->email_types);
 			$hemail_type = '<select name=hemail_type>';
-			while ($type = each($this->email_types))
+			while ($type = each($c->email_types))
 			{
 				$hemail_type .= '<option value="'.$type[0].'"';
 				if ($type[0] == $hemailtype) { $hemail_type .= ' selected'; }
@@ -522,8 +524,8 @@
 			}
 			$hemail_type .= "</select>";
 
-			reset($this->adr_types);
-			while (list($type,$val) = each($this->adr_types))
+			reset($c->adr_types);
+			while (list($type,$val) = each($c->adr_types))
 			{
 				$badrtype .= "\n".'<INPUT type="checkbox" name="one_'.$type.'"';
 				$ot = 'one_'.$type;
@@ -535,8 +537,8 @@
 				$badrtype .= '>'.$val;
 			}
 
-			reset($this->adr_types);
-			while (list($type,$val) = each($this->adr_types))
+			reset($c->adr_types);
+			while (list($type,$val) = each($c->adr_types))
 			{
 				$hadrtype .= "\n".'<INPUT type="checkbox" name="two_'.$type.'"';
 				$tt = 'two_'.$type;
@@ -718,12 +720,12 @@
 		$t->pfp('out','form');
 	} //end form function
 
-	function parsevcard($filename,$access='')
+	function OLDparsevcard($filename,$access='')
 	{
 		global $phpgw;
 		global $phpgw_info;
 
-		$vcard = fopen($filename, "r");
+		$vcard = fopen($filename, 'r');
 		// Make sure we have a file to read.
 		if (!$vcard) {
 			fclose($vcard);
@@ -1081,8 +1083,8 @@
 		echo '<br>company: '.$fields["org_name"];
 		exit;
 		*/
-		$this = CreateObject("phpgwapi.contacts");
-		$this->add($phpgw_info["user"]["account_id"],$fields);
+		$c = CreateObject("phpgwapi.contacts");
+		$c->add($phpgw_info["user"]["account_id"],$fields);
 	}
 
 ?>

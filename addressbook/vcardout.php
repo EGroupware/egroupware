@@ -42,11 +42,11 @@
 		$phpgw->common->phpgw_exit();
 	}
 
-	$this = CreateObject('phpgwapi.contacts');
+	$contacts = CreateObject('phpgwapi.contacts');
 
 	// First, make sure they have permission to this entry
 	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
-	$perms = $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_READ);
+	$perms = $contacts->check_perms($contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
 	if ( (!$perms) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
 	{
@@ -56,7 +56,7 @@
 	}
 
  	$extrafields = array('address2' => 'address2');
-	$qfields = $this->stock_contact_fields + $extrafields;
+	$qfields = $contacts->stock_contact_fields + $extrafields;
 
 	$fieldlist = addressbook_read_entry($ab_id,$qfields);
 	$fields = $fieldlist[0];

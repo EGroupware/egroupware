@@ -1,16 +1,17 @@
 <?php
-/**************************************************************************\
-* phpGroupWare - addressbook                                               *
-* http://www.phpgroupware.org                                              *
-* Written by Joseph Engo <jengo@phpgroupware.org>                          *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
+  /**************************************************************************\
+  * phpGroupWare - Addressbook                                               *
+  * http://www.phpgroupware.org                                              *
+  * Written by Joseph Engo <jengo@phpgroupware.org> and                      *
+  * Miles Lott <miloschphpgroupware.org>                                     *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
 
-/* $Id$ */
+  /* $Id$ */
 
 	$phpgw_info['flags'] = array(
 		'currentapp' => 'addressbook',
@@ -27,9 +28,8 @@
 	$t->set_block('addressbook_list_t','row','row');
 	$t->set_block('addressbook_list_t','addressbook_footer','addressbook_footer');
 
-	$this = CreateObject('phpgwapi.contacts');
-	//$this->delete_all($phpgw_info['user']['account_id']);
-	//exit;
+	$contacts = CreateObject('phpgwapi.contacts');
+
 	$customfields = array();
 	while (list($col,$descr) = @each($phpgw_info['user']['preferences']['addressbook']))
 	{
@@ -57,24 +57,24 @@
 		'address2' => 'address2',
 		'address3' => 'address3'
 	);
-	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+	/* $qfields = $contacts->stock_contact_fields + $extrafields + $customfields; */
 
-	// create column list and the top row of the table based on user prefs
-	while ($column = each($this->stock_contact_fields))
+	/* create column list and the top row of the table based on user prefs */
+	while ($column = each($contacts->stock_contact_fields))
 	{
 		$test = strtolower($column[0]);
 		if (isset($phpgw_info['user']['preferences']['addressbook'][$test]) &&
 			$phpgw_info['user']['preferences']['addressbook'][$test])
 		{
 			$showcol = display_name($column[0]);
-			$cols .= "  <td height=\"21\">\n";
+			$cols .= '  <td height="21">' . "\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 			$cols .= $phpgw->nextmatchs->show_sort_order($sort,
 				$column[0],$order,"/addressbook/index.php",$showcol,"&cat_id=".$cat_id);
 			$cols .= "</font>\n  </td>";
 			$cols .= "\n";
 
-			// To be used when displaying the rows
+			/* To be used when displaying the rows */
 			$columns_to_display[$column[0]] = True;
 		}
 	}
@@ -87,15 +87,15 @@
 			$phpgw_info['user']['preferences']['addressbook'][$test])
 		{
 			$showcol = display_name($column[0]);
-			// This must be a custom field
+			/* This must be a custom field */
 			if (!$showcol) { $showcol = $column[1]; }
-			$cols .= "  <td height=\"21\">\n";
+			$cols .= '  <td height="21">' . "\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 			$cols .= $showcol;
 			$cols .= "</font>\n  </td>";
 			$cols .= "\n";
 
-			// To be used when displaying the rows
+			/* To be used when displaying the rows */
 			$columns_to_display[$column[0]] = True;
 		}
 	}
@@ -108,11 +108,11 @@
 	if($phpgw_info['user']['preferences']['common']['maxmatchs'] &&
 		$phpgw_info['user']['preferences']['common']['maxmatchs'] > 0)
 	{
-		$offset = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+		$limit = $phpgw_info['user']['preferences']['common']['maxmatchs'];
 	}
 	else
 	{
-		$offset = 30;
+		$limit = 30;
 	}
 
 	if (!$filter)
@@ -140,7 +140,7 @@
 		case 'none':
 			break;
 		case 'private':
-			$qfilter .= ',access=private';	// fall through
+			$qfilter .= ',access=private';	/* fall through */
 		case 'yours':
 			$qfilter .= ',owner='.$phpgw_info['user']['account_id'];
 			break;
@@ -152,7 +152,7 @@
 		$qfilter .= ',cat_id='.$cat_id;
 	}		
 
-	// Check if prefs were set, if not, create some defaults
+	/* Check if prefs were set, if not, create some defaults */
 	if (!$columns_to_display )
 	{
 		$columns_to_display = array(
@@ -161,13 +161,13 @@
 			'org_name' => 'org_name'
 		);
 		$columns_to_display = $columns_to_display + $customfields;
-		// No prefs,. so cols above may have been set to "" or a bunch of <td></td>
+		/* No prefs,. so cols above may have been set to "" or a bunch of <td></td> */
 		$cols="";
 		while ($column = each($columns_to_display))
 		{
 			$showcol = display_name($column[0]);
 			if (!$showcol) { $showcol = $column[1]; }
-			$cols .= "  <td height=\"21\">\n";
+			$cols .= '  <td height="21">' . "\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 			$cols .= $phpgw->nextmatchs->show_sort_order($sort,
 				$column[0],$order,"/addressbook/index.php",$showcol,"&cat_id=$cat_id");
@@ -183,42 +183,27 @@
 	if ($nosearch && !$query)
 	{
 		$entries = array();
-		$this->total_records = 0;
+		$contacts->total_records = 0;
 	}
 	else
 	{
 		/* read the entry list */
-		$entries = addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid);
+		$entries = addressbook_read_entries($start,$limit,$qcols,$query,$qfilter,$sort,$order,$userid);
 	}
 
 	$search_filter = $phpgw->nextmatchs->show_tpl('/addressbook/index.php',
-		$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query&cat_id=$cat_id","75%",
+		$start, $contacts->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query&cat_id=$cat_id","75%",
 		$phpgw_info["theme"]["th_bg"],1,1,1,1);
 
-	if ($this->total_records > $phpgw_info['user']['preferences']['common']['maxmatchs'])
-	{
-		if ($start + $phpgw_info['user']['preferences']['common']['maxmatchs'] > $this->total_records)
-		{
-			$end = $this->total_records;
-		}
-		else
-		{
-			$end = $start + $phpgw_info['user']['preferences']['common']['maxmatchs'];
-		}
-		$lang_showing=lang('showing x - x of x',($start + 1),$end,$this->total_records);
-	}
-	else
-	{
-		$lang_showing=lang('showing x',$this->total_records);
-	}
+	$lang_showing = $phpgw->nextmatchs->show_hits($contacts->total_records,$start);
 
-	// set basic vars and parse the header
+	/* set basic vars and parse the header */
 	$t->set_var(font,$phpgw_info['theme']['font']);
 	$t->set_var('lang_view',lang('View'));
 	$t->set_var('lang_vcard',lang('VCard'));
 	$t->set_var('lang_edit',lang('Edit'));
 	$t->set_var('lang_owner',lang('Owner'));
-	
+
 	$t->set_var('searchreturn',$noprefs . ' ' . $searchreturn);
 	$t->set_var('lang_showing',$lang_showing);
 	$t->set_var('search_filter',$search_filter);
@@ -251,11 +236,12 @@
 	$t->set_var('start',$start);
 	$t->set_var('filter',$filter);
 	$t->set_var('cols',$cols);
-	
+
 	$t->pparse('out','addressbook_header');
 
-	// Show the entries
-	for ($i=0;$i<count($entries);$i++) // each entry
+	/* Show the entries */
+	/* each entry */
+	for ($i=0;$i<count($entries);$i++)
 	{
 		$t->set_var('columns','');
 		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -263,11 +249,12 @@
 		$myid    = $entries[$i]['id'];
 		$myowner = $entries[$i]['owner'];
 
-		while ($column = each($columns_to_display)) // each entry column
+		/* each entry column */
+		while ($column = each($columns_to_display))
 		{
-			$ref=$data="";
+			$ref = $data='';
 			$coldata = $entries[$i][$column[0]];
-			// Some fields require special formatting.
+			/* Some fields require special formatting. */
 			if ($column[0] == 'url')
 			{
 				if ( !empty($coldata) && (substr($coldata,0,7) != 'http://') ) { $coldata = 'http://' . $coldata; }
@@ -284,11 +271,11 @@
 				{
 					$ref='<a href="mailto:'.$coldata.'">';
 				}
-				$data=$coldata."</a>";
+				$data=$coldata . '</a>';
 			}
-			else // But these do not
+			else /* But these do not */
 			{
-				$ref=""; $data=$coldata;
+				$ref = ''; $data = $coldata;
 			}
 			$t->set_var('col_data',$ref.$data);
 			$t->parse('columns','column',True);
@@ -305,12 +292,12 @@
 			$t->set_var('row_view_link','');
 			$t->set_var('lang_view',lang('Private'));
 		}
-		
+
 		$t->set_var('row_vcard_link',$phpgw->link('/addressbook/vcardout.php',
 			"ab_id=$myid&start=$start&sort=$sort&order=$order&filter="
 			. "$filter&query=$query&sort=$sort&cat_id=$cat_id"));
-//			echo '<br>: ' . $this->grants[$myowner] . ' - ' . $myowner;
-		if ($this->check_perms($this->grants[$myowner],PHPGW_ACL_EDIT) || $myowner == $phpgw_info['user']['account_id'])
+/*			echo '<br>: ' . $contacts->grants[$myowner] . ' - ' . $myowner; */
+		if ($contacts->check_perms($contacts->grants[$myowner],PHPGW_ACL_EDIT) || $myowner == $phpgw_info['user']['account_id'])
 		{
 			$t->set_var('row_edit','<a href="' . $phpgw->link("/addressbook/edit.php",
 				"ab_id=$myid&start=$start&sort=$sort&order=$order&filter="
@@ -320,12 +307,12 @@
 		{
 			$t->set_var('row_edit','&nbsp;');
 		}
-		
+
 		$t->set_var('row_owner',$phpgw->accounts->id2name($myowner));
-		
+
 		$t->parse('rows','row',True);
 		$t->pparse('out','row');
-		reset($columns_to_display); // If we don't reset it, our inside while won't loop
+		reset($columns_to_display);
 	}
 
 	$t->pparse('out','addressbook_footer');

@@ -22,11 +22,11 @@
 
 	include('../header.inc.php');
 
-	$this = CreateObject("phpgwapi.contacts");
+	$contacts = CreateObject("phpgwapi.contacts");
 
 	// First, make sure they have permission to this entry
 	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
-	$perms = $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_READ);
+	$perms = $contacts->check_perms($contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
 	if ( (!$perms) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
 	{
@@ -63,7 +63,7 @@
 		}
 	}
 
-	while ($column = each($this->stock_contact_fields))
+	while ($column = each($contacts->stock_contact_fields))
 	{
 		if (isset($phpgw_info['user']['preferences']['addressbook'][$column[0]]) &&
 			$phpgw_info['user']['preferences']['addressbook'][$column[0]])
@@ -98,7 +98,7 @@
 		'address2' => 'address2',
 		'address3' => 'address3'
 	);
-	$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+	$qfields = $contacts->stock_contact_fields + $extrafields + $customfields;
 
 	$fields = addressbook_read_entry($ab_id,$qfields);
 
@@ -137,7 +137,7 @@
 			$t->set_var('th_bg',$tr_color);
 			$coldata = $fields[0][$column];
 			// Some fields require special formatting.
-			if ( ($column == "note" || $column == "label" || $column == "pubkey") && $coldata )
+			if ( ($column == 'note' || $column == 'pubkey') && $coldata )
 			{
 				$datarray = explode ("\n",$coldata);
 				if ($datarray[1])
@@ -159,6 +159,10 @@
 				{
 					$data = $coldata;
 				}
+			}
+			elseif($column == 'label' && $coldata)
+			{
+				$data .= $contacts->formatted_address($fields[0]['id'],'',False);
 			}
 			elseif ($column == "url" && $coldata)
 			{
@@ -203,11 +207,11 @@
 	$cats = explode(',',$fields[0]['cat_id']);
 	if ($cats[1])
 	{
-		while (list($key,$thiscat) = each($cats))
+		while (list($key,$contactscat) = each($cats))
 		{
-			if ($thiscat)
+			if ($contactscat)
 			{
-				$catinfo = $cat->return_single($thiscat);
+				$catinfo = $cat->return_single($contactscat);
 				$catname .= $catinfo[0]['name'] . '; ';
 			}
 		}
@@ -285,7 +289,7 @@
 
 	$common_vars = array('sort' => $sort,'order' => $order,'filter' => $filter,'start' => $start); // common vars for all buttons
 
-	if (($this->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $phpgw_info['user']['account_id']))
+	if (($contacts->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $phpgw_info['user']['account_id']))
 	{
 		$extra_vars = array('cd' => 16,'query' => $query,'cat_id' => $cat_id);
 

@@ -72,10 +72,10 @@
 		if ($private == '') { $private = 'public'; }
 		$row=0;
 		$buffer=array();
-		$this = new import_conv;
-		$buffer = $this->import_start_file($buffer);
+		$contacts = new import_conv;
+		$buffer = $contacts->import_start_file($buffer);
 		$fp=fopen($tsvfile,'r');
-		if ($this->type == 'csv')
+		if ($contacts->type == 'csv')
 		{
 			while ($data = fgetcsv($fp,8000,','))
 			{
@@ -84,27 +84,27 @@
 				if ($row == 1)
 				{
 					// Changed here to ignore the header, set to our array
-					while(list($lhs,$rhs) = each($this->import))
+					while(list($lhs,$rhs) = each($contacts->import))
 					{
 						$header[] = $lhs;
 					}
 				}
 				else
 				{
-					$buffer = $this->import_start_record($buffer);
+					$buffer = $contacts->import_start_record($buffer);
 					for ($c=0; $c<$num; $c++ )
 					{
 						//Send name/value pairs along with the buffer
-						if ($this->import[$header[$c]] != '' && $data[$c] != '')
+						if ($contacts->import[$header[$c]] != '' && $data[$c] != '')
 						{
-							$buffer = $this->import_new_attrib($buffer, $this->import[$header[$c]],$data[$c]);
+							$buffer = $contacts->import_new_attrib($buffer, $contacts->import[$header[$c]],$data[$c]);
 						}
 					}
-					$buffer = $this->import_end_record($buffer,$private);
+					$buffer = $contacts->import_end_record($buffer,$private);
 				}
 			}
 		}
-		elseif ($this->type == 'ldif')
+		elseif ($contacts->type == 'ldif')
 		{
 			while ($data = fgets($fp,8000))
 			{
@@ -112,7 +112,7 @@
 				list($name,$value,$extra) = split(':', $data);
 				if (substr($name,0,2) == 'dn')
 				{
-					$buffer = $this->import_start_record($buffer);
+					$buffer = $contacts->import_start_record($buffer);
 				}
 				
 				$test = trim($value);
@@ -144,14 +144,14 @@
 						$value = $url. ':' . $value;
 					}
 					//echo '<br>'.$j.': '.$name.' => '.$value;
-					if ($this->import[$name] != '' && $value != '')
+					if ($contacts->import[$name] != '' && $value != '')
 					{
-						$buffer = $this->import_new_attrib($buffer, $this->import[$name],$value);
+						$buffer = $contacts->import_new_attrib($buffer, $contacts->import[$name],$value);
 					}
 				}
 				else
 				{
-					$buffer = $this->import_end_record($buffer,$private);
+					$buffer = $contacts->import_end_record($buffer,$private);
 				}
 			}
 		}
@@ -170,28 +170,28 @@
 
 				if (strtolower(substr($name,0,5)) == 'begin')
 				{
-					$buffer = $this->import_start_record($buffer);
+					$buffer = $contacts->import_start_record($buffer);
 				}
 				if ($name && $value)
 				{
-					reset($this->import);
-					while ( list($fname,$fvalue) = each($this->import) )
+					reset($contacts->import);
+					while ( list($fname,$fvalue) = each($contacts->import) )
 					{
-						if ( strstr(strtolower($name), $this->import[$fname]) )
+						if ( strstr(strtolower($name), $contacts->import[$fname]) )
 						{
-							$buffer = $this->import_new_attrib($buffer,$name,$value);
+							$buffer = $contacts->import_new_attrib($buffer,$name,$value);
 						}
 					}
 				}
 				else
 				{
-					$buffer = $this->import_end_record($buffer);
+					$buffer = $contacts->import_end_record($buffer);
 				}
 			}
 		}
 
 		fclose($fp);
-		$buffer = $this->import_end_file($buffer,$private,$cat_id);
+		$buffer = $contacts->import_end_file($buffer,$private,$cat_id);
 
 		if ($download == '')
 		{

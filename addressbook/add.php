@@ -29,7 +29,7 @@
 	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$t->set_file(array('add' => 'add.tpl'));
 
-	$this = CreateObject('phpgwapi.contacts');
+	$contacts = CreateObject('phpgwapi.contacts');
 
 	// Read in user custom fields, if any
 	$phpgw->preferences->read_repository();
@@ -79,7 +79,7 @@
 			'address2' => 'address2',
 			'address3' => 'address3'
 		);
-		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+		$qfields = $contacts->stock_contact_fields + $extrafields + $customfields;
 		$addnew = unserialize(rawurldecode($fields));
 		$addnew['note'] .= "\nCopied from ".$phpgw->accounts->id2name($addnew['owner']).", record #".$addnew['id'].".";
 		$addnew['owner'] = $phpgw_info['user']['account_id'];
@@ -144,9 +144,9 @@
 		$fields['adr_one_postalcode']	= $bzip;
 		$fields['adr_one_countryname']	= $bcountry;
 
-		reset($this->adr_types);
+		reset($contacts->adr_types);
 		$typed = '';
-		while (list($type,$val) = each($this->adr_types))
+		while (list($type,$val) = each($contacts->adr_types))
 		{
 			$ftype = 'one_'.$type;
 			eval("if (\$\$ftype=='on') { \$typed .= \$type . ';'; }");
@@ -162,9 +162,9 @@
 		$fields['adr_two_postalcode']	= $hzip;
 		$fields['adr_two_countryname']	= $hcountry;
 
-		reset($this->adr_types);
+		reset($contacts->adr_types);
 		$typed = '';
-		while (list($type,$val) = each($this->adr_types))
+		while (list($type,$val) = each($contacts->adr_types))
 		{
 			$ftype = 'two_'.$type;
 			eval("if (\$\$ftype=='on') { \$typed \.= \$type . ';'; }");

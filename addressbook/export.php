@@ -97,7 +97,7 @@
 		{
 			include (PHPGW_APP_ROOT . SEP . 'export' . SEP . $conv_type);
 			$buffer=array();
-			$this = new export_conv;
+			$contacts = new export_conv;
 
 			// Read in user custom fields, if any
 			$customfields = array();
@@ -115,32 +115,32 @@
 				'address2' => 'address2',
 				'address3' => 'address3'
 			);
-			if ($this->type != 'vcard')
+			if ($contacts->type != 'vcard')
 			{
-				$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
+				$contacts->qfields = $contacts->stock_contact_fields;# + $extrafields;# + $customfields;
 			}
 
 			if (!empty($cat_id))
 			{
-				$buffer = $this->export_start_file($buffer,$cat_id);
+				$buffer = $contacts->export_start_file($buffer,$cat_id);
 			}
 			else
 			{
-			$buffer = $this->export_start_file($buffer);
+			$buffer = $contacts->export_start_file($buffer);
 			}
 
-			for ($i=0;$i<count($this->ids);$i++)
+			for ($i=0;$i<count($contacts->ids);$i++)
 			{
-				$buffer = $this->export_start_record($buffer);
-				while( list($name,$value) = each($this->currentrecord) )
+				$buffer = $contacts->export_start_record($buffer);
+				while( list($name,$value) = each($contacts->currentrecord) )
 				{
-					$buffer = $this->export_new_attrib($buffer,$name,$value);
+					$buffer = $contacts->export_new_attrib($buffer,$name,$value);
 				}
-				$buffer = $this->export_end_record($buffer);
+				$buffer = $contacts->export_end_record($buffer);
 			}
 
 			// Here, buffer becomes a string suitable for printing
-			$buffer = $this->export_end_file($buffer);
+			$buffer = $contacts->export_end_file($buffer);
 
 			$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 		}
