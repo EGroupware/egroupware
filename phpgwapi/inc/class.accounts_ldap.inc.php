@@ -372,43 +372,44 @@
 
 			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
 				. "account_firstname, account_lastname, account_status) values ('" . $account_id . "','" . $account_info['lid']
-				. "','" . $account_info['type'] . "','" . md5($account_info['paswd']) . "', '" . $account_info['firstname']
+				. "','" . $account_info['type'] . "','" . md5($account_info['passwd']) . "', '" . $account_info['firstname']
 				. "','" . $account_info['lastname'] . "','" . $account_info['status'] . "','" . $account_info['expires']
 				. "')",__LINE__,__FILE__);
 
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'],'uid=' . $account_info['lid']);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry['uidnumber']          = $account_id;
-			$entry['gidnumber']          = $account_id;
-			$entry['uid']                = $account_lid;
-			$entry['cn']                 = sprintf('%s %s', $account_firstname, $account_lastname);
-			$entry['sn']                 = $account_lastname;
-			$entry['givenname']          = $account_firstname;
-			$entry['userpassword']       = $phpgw->common->encrypt_password($account_pwd);
+			$entry['uidnumber']    = $account_id;
+			$entry['gidnumber']    = $account_id;
+			$entry['uid']          = $account_info['lid'];
+			$entry['cn']           = sprintf('%s %s', $account_firstname, $account_info['lastname']);
+			$entry['sn']           = $account_info['lastname'];
+			$entry['givenname']    = $account_info['firstname'];
+			$entry['userpassword'] = $phpgw->common->encrypt_password($account_info['passwd']);
 
-			if ($phpgw_info['server']['ldap_extra_attributes'] && $account_type != 'g')
+			if ($phpgw_info['server']['ldap_extra_attributes'] && $account_info['type'] != 'g')
 			{
 				if ($account_home)
 				{
-					$entry['homedirectory']     = $account_home;
+					$entry['homedirectory'] = $account_info['homedirectory'];
 				}
 				else
 				{
-					$entry['homedirectory']     = $phpgw_info['server']['ldap_account_home'].SEP.$account_lid;
+					$entry['homedirectory'] = $phpgw_info['server']['ldap_account_home'].SEP.$account_info['lid'];
 				}
 
 				if ($account_shell)
 				{
-					$entry['loginshell']        = $account_shell;
+					$entry['loginshell'] = $account_info['loginshell'];
 				}
 				else
 				{
-					$entry['loginshell']        = $phpgw_info['server']['ldap_account_shell'];
+					$entry['loginshell'] = $phpgw_info['server']['ldap_account_shell'];
 				}
 			}
 
-			if ($allValues[0]['dn']) {
+			if ($allValues[0]['dn'])
+			{
 				// This should keep the password from being overwritten here ?
 				unset($entry['userpassword']);
 
@@ -438,7 +439,7 @@
 //					$tmpentry["objectclass"][1] = 'posixGroup';
 //				}
 //				else
-				if ($account_type == 'u')
+				if ($account_info['type'] == 'u')
 				{
 					$tmpentry['objectclass'][0] = 'top';
 					$tmpentry['objectclass'][1] = 'person';
@@ -450,16 +451,18 @@
 				}
 
 				ldap_modify($ds, $allValues[0]['dn'], $tmpentry);
-			} else {
+			}
+			else
+			{
 //				if ($account_type == "g")
 //				{
 //					$entry["objectclass"][0] = 'top';
 //					$entry["objectclass"][1] = 'posixGroup';
 //				}
 //				else
-				if ($account_type == 'u')
+				if ($account_info['type'] == 'u')
 				{
-					$dn = 'uid=' . $account_lid . ',' . $phpgw_info['server']['ldap_context'];
+					$dn = 'uid=' . $account_info['lid'] . ',' . $phpgw_info['server']['ldap_context'];
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'person';
 					$entry['objectclass'][2] = 'organizationalPerson';
