@@ -83,7 +83,10 @@
 			$this->data["firstname"]   	= $allValues[0]["givenname"][0];
 			$this->data["lastname"]    	= $allValues[0]["sn"][0];
 			$this->data["fullname"]    	= $allValues[0]["cn"][0];
-
+			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+				$this->data["homedirectory"]  = $allValues[0]["homedirectory"][0];
+				$this->data["loginshell"] = $allValues[0]["loginshell"][0];
+			}
 			$this->db->query("select * from phpgw_accounts where account_id='" . $this->data["account_id"] . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
@@ -105,9 +108,14 @@
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry["cn"] 		= sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
-			$entry["sn"]		= $this->data["lastname"];
-			$entry["givenname"]	= $this->data["firstname"];
+			$entry["cn"] 		    = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
+			$entry["sn"]		    = $this->data["lastname"];
+			$entry["givenname"]	    = $this->data["firstname"];
+
+			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+				$entry["homedirectory"] = $this->data["homedirectory"];
+				$entry["loginshell"]    = $this->data["loginshell"];
+			}
 
 			ldap_modify($ds, $allValues[0]["dn"], $entry);
 			#print ldap_error($ds);
@@ -289,7 +297,7 @@
 			return $rtrn;
 		}
 
-		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='')
+		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='',$account_home='',$account_shell='')
 		{
 			global $phpgw_info, $phpgw;
 
@@ -327,6 +335,26 @@
 			$entry["objectclass"][2]	= 'account';
 			$entry["objectclass"][3]	= 'posixAccount';
 			$entry["objectclass"][4]	= 'shadowAccount';
+
+			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+				if ($account_home)
+				{
+					$entry["homedirectory"]     = $account_home;
+				}
+				else
+				{
+					$entry["homedirectory"]     = $phpgw_info["server"]["ldap_account_home"].SEP.$account_lid;
+				}
+
+				if ($account_shell)
+				{
+					$entry["loginshell"]        = $account_shell;
+				}
+				else
+				{
+					$entry["loginshell"]        = $phpgw_info["server"]["ldap_account_shell"];
+				}
+			}
 
 			if ($allValues[0]["dn"]) {
 				// This should keep the password from being overwritten here ?
