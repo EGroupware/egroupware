@@ -1,0 +1,123 @@
+access	common	hu	Hozzáférés
+access type	common	hu	Hozzáférés típusa
+account has been created	common	hu	Hozzáférés létrehozva
+account has been deleted	common	hu	Hozzáférés törölve
+account has been updated	common	hu	Hozzáférés módosítva
+account preferences	common	hu	Hozzáférés tulajdonságok
+add	common	hu	Hozzáad
+admin	common	hu	Admin
+administration	common	hu	Adminisztráció
+april	common	hu	Április
+are you sure you want to delete this entry ?	common	hu	Biztosan törölni akarja ezt a bejegyzést?
+august	common	hu	Augusztus
+cancel	common	hu	Mégse
+change	common	hu	Változtat
+charset	common	hu	iso-8859-2
+clear	common	hu	Töröl
+clear form	common	hu	Tiszta lap
+copy	common	hu	Másol
+create	common	hu	Létrehoz
+created by	common	hu	Készítette
+current users	common	hu	Aktuális felhasználók
+date	common	hu	Dátum
+december	common	hu	December
+delete	common	hu	Töröl
+done	common	hu	Kész
+e-mail	common	hu	E-Mail
+e-mail preferences	common	hu	E-Mail tulajdonságok
+edit	common	hu	Módosít
+email	common	hu	E-Mail
+entry has been deleted sucessfully	common	hu	Bejegyzés törölve
+entry updated sucessfully	common	hu	Bejegyzés módosítva
+error	common	hu	Hiba
+exit	common	hu	Kilép
+february	common	hu	Február
+filter	common	hu	Szûrõ
+first name	common	hu	Keresztnév
+friday	common	hu	Péntek
+ftp	common	hu	FTP
+global public	common	hu	Publikus
+group access	common	hu	Csoportos hozzáférés
+group has been added	common	hu	Csoport hozzáadva
+group has been deleted	common	hu	Csoport törölve
+group has been updated	common	hu	Csoport módosítva
+group public	common	hu	Csoporton belül publikus
+groups	common	hu	Csoportok
+help	common	hu	Súgó
+high	common	hu	Sürgõs
+home	common	hu	Kezdõlap
+it has been more then %1 days since you changed your password	common	hu	Több mint %1 nap telt el az utolsó jelszómódosítás óta
+january	common	hu	Január
+july	common	hu	Július
+june	common	hu	Június
+last name	common	hu	Családnév
+last page	common	hu	Utolsó oldal
+login	common	hu	Belépés
+logout	common	hu	Kilépés
+low	common	hu	Alacsony
+march	common	hu	Március
+may	common	hu	Május
+medium	common	hu	Közepes
+monday	common	hu	Hétfõ
+name	common	hu	Név
+new entry added sucessfully	common	hu	Új bejegyzés hozzáadva
+new phrase has been added	common	hu	Új kifejezés hozzáadva
+next page	common	hu	következõ oldal
+no	common	hu	Nem
+none	common	hu	Nincs
+normal	common	hu	Normál
+november	common	hu	November
+october	common	hu	Október
+ok	common	hu	OK
+on *nix systems please type: %1	common	hu	*nix rendszereken üsse be: %1
+only yours	common	hu	csak sajátot
+original	common	hu	Eredeti
+password	common	hu	Jelszó
+password has been updated	common	hu	Jelszó módosítva
+permissions to the files/users directory	common	hu	a files/users könyvtár jogai
+please %1 by hand	common	hu	Kérem %1 kézzel
+powered by phpgroupware version %1	common	hu	eGroupWare %1
+preferences	common	hu	Tulajdonságok
+previous page	common	hu	Elõzõ oldal
+print	common	hu	Nyomtat
+priority	common	hu	Prioritás
+private	common	hu	Privát
+rename	common	hu	Átnevez
+saturday	common	hu	Szombat
+save	common	hu	Elment
+search	common	hu	Keres
+september	common	hu	Szeptember
+session has been killed	common	hu	Aktív bejelentkezés kitiltva
+show all	common	hu	mindet megmutat
+showing %1	common	hu	%1 listázva
+showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
+sorry, there was a problem processing your request.	common	hu	Hiba történt a kérelem feldolgozásakor!
+submit	common	hu	Elküld
+sunday	common	hu	Vasárnap
+thursday	common	hu	Csütörtök
+time	common	hu	Idõ
+to correct this error for the future you will need to properly set the	common	hu	A hiba kijavításához helyesen kell beállítani a
+total	common	hu	összesen
+tuesday	common	hu	Kedd
+updated	common	hu	Módosítva
+users	common	hu	felhasználók
+view	common	hu	Megtekint
+wednesday	common	hu	Szerda
+which groups	common	hu	melyik csoport
+yes	common	hu	Igen
+you are required to change your password during your first login	common	hu	Elsõ bejelentkezéskor meg kell változtatnia a jelszavát
+you have 1 new message!	common	hu	1 új üzenete van!
+you have %1 new messages!	common	hu	%1 új üzenete van!
+your message has been sent	common	hu	Üzenet elküldve
+your search returned 1 match	common	hu	Keresés végeredménye: 1 találat
+your search returned %1 matchs	common	hu	Keresés végeredménye: %1 találat
+your settings have been updated	common	hu	A beállításai módosításra kerültek
+bad login or password	common	hu	Rossz felhasználó vagy jelszó
+login	login	hu	Belépés
+password	login	hu	Jelszó
+phpgroupware login	login	hu	phpGroupWare bejelentkezés
+sorry, your login has expired	login	hu	A hozzáférése lejárt
+use cookies	login	hu	használ sütit
+username	login	hu	Felhasználó
+you have been successfully logged out	login	hu	Sikeresen kijelentkezett a rendszerbõl
+your session could not be verified.	login	hu	A hozzáférése nem ellenõrizhetõ.
