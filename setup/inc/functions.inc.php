@@ -103,13 +103,16 @@
 		return $languages;
 	}
 
-	function lang_select($onChange=False)
+	function lang_select($onChange=False,$ConfigLang='')
 	{
-		$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
-
+		if (!$ConfigLang)
+		{
+			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
+		}
 		$select = '<select name="ConfigLang"'.($onChange ? ' onChange="this.form.submit();"' : '').'>' . "\n";
 		$languages = get_langs();
-		while(list($null,$data) = each($languages))
+		usort($languages,create_function('$a,$b','return strcmp($a[\'descr\'],$b[\'descr\']);'));
+		foreach($languages as $data)
 		{
 			if($data['available'] && !empty($data['lang']))
 			{

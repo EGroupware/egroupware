@@ -198,14 +198,14 @@
 					while (list($null,$line) = @each($raw_file))
 					{
 						list($message_id,$app_name,$GLOBALS['phpgw_setup']->db_lang,$content) = explode("\t",$line);
-						$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(chop(substr($message_id,0,MAX_MESSAGE_ID_LENGTH)));
+						$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(strtolower(chop(substr($message_id,0,MAX_MESSAGE_ID_LENGTH))));
 						/* echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id; */
 						$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
 						$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
 						$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
 
-						$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='$message_id' and lang='"
-							. $GLOBALS['phpgw_setup']->db_lang . "'",__LINE__,__FILE__);
+						$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='$message_id' AND lang='"
+							. $GLOBALS['phpgw_setup']->db_lang . "' AND (app_name='$app_name' OR (app_name='common' AND content='$content'))",__LINE__,__FILE__);
 						$GLOBALS['phpgw_setup']->db->next_record();
 
 						if ($GLOBALS['phpgw_setup']->db->f(0) == 0)

@@ -38,6 +38,7 @@ authentication / accounts	setup	en	Authentication / Accounts
 auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
+back to the previous screen	setup	en	Back to the previous screen
 backupwarn	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
 because an application it depends upon was upgraded	setup	en	because an application it depends upon was upgraded
 because it depends upon	setup	en	because it depends upon

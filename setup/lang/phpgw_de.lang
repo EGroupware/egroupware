@@ -40,6 +40,7 @@ authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifiziere Benutzer automatisch anlegen
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab am
 available version	setup	de	Verfügbare Version
+back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
 backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, da&szlig; dieses Script Ihre bestehenden Daten besch&auml;digt !<br><strong>Diese automatisierten Scripts k&ouml;nnen leicht Ihre Daten besch&auml;digen !.</strong><br
 because an application it depends upon was upgraded	setup	de	da eine Applikation von der sie abhängt upgeradet wurde
 because it depends upon	setup	de	weil es abhängt von
@@ -221,7 +222,7 @@ only add new phrases	setup	de	Nur neue Begriffe hinzufügen
 or	setup	de	oder
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für sie anzulegen:
-password needed for configuration	setup	de	Passwork wird für die Konfiguration benötigt
+password needed for configuration	setup	de	Password wird für die Konfiguration benötgt
 password of db user	setup	de	Passwort des Datenbank Benutzers
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht überein, bitte nocheinmal eingeben
 path information	setup	de	Pfadinformationen
@@ -235,7 +236,7 @@ please consult the %1.	setup	de	Bitte konsultieren sie das %1.
 please install	setup	de	Bitte installieren
 please login	setup	de	Bitte einlogen
 please login to phpgroupware and run the admin application for additional site configuration	setup	de	Bitte in phpGroupWare einloggen und die Administration für weitere Konfigurationen aufrufen.
-please wait...	setup	de	Please Wait...
+please wait...	setup	de	Bitte warten ...
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
 post-install dependency failure	setup	de	Abhängigkeitsfehler nach der Installation

@@ -147,13 +147,14 @@
 			$GLOBALS['setup_tpl']->set_var('ConfigLoginMSG',@$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG']);
 			$GLOBALS['setup_tpl']->set_var('HeaderLoginMSG',@$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG']);
 
+			$GLOBALS['setup_tpl']->set_var('lang_select',lang_select());
+
 			if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == '10')
 			{
 				/*
 				 Begin use SUB-TEMPLATE login_stage_header,
 				 fills V_login_stage_header used inside of login_main.tpl
 				*/
-				$GLOBALS['setup_tpl']->set_var('lang_select',lang_select());
 				if (count($GLOBALS['phpgw_domain']) > 1)
 				{
 					foreach($GLOBALS['phpgw_domain'] as $domain => $data)

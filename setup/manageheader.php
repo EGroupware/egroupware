@@ -22,6 +22,7 @@
 	include('./inc/functions.inc.php');
 
 	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
+	$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
 	unset($setup_info);
 	#include('../version.inc.php');
 
@@ -59,6 +60,7 @@
 		{
 			$GLOBALS['phpgw_setup']->html->show_header('Error',True);
 			echo $errors;
+			echo '<p><input type="submit" value="'.lang('Back to the previous screen').'" onClick="history.back()"></p>';
 			exit;
 		}
 	}
@@ -183,10 +185,9 @@
 
 			$detected = '';
 
-			if (!$ConfigLang)
+			if (!get_var('ConfigLang',array('POST','COOKIE')))
 			{
-				$_POST['ConfigLang'] = 'en';
-				$detected .= '<br><form action="manageheader.php" method="Post">Please Select your language '.lang_select(True)."</form>\n";
+				$detected .= '<br><form action="manageheader.php" method="Post">Please Select your language '.lang_select(True,'en')."</form>\n";
 			}
 
 			$detected .= '<table border="0" width="100%" cellspacing="0" cellpadding="0" style="{ border: 1px solid #000000; }">' . "\n";

@@ -105,7 +105,7 @@
 							foreach($lines as $line)
 							{
 								list($message_id,$app_name,,$content) = explode("\t",$line);
-								$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(substr(chop($message_id),0,MAX_MESSAGE_ID_LENGTH));
+								$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH));
 								$app_name = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
 								$content = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
 								
@@ -123,7 +123,7 @@
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
-								$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='$message_id' and lang='$lang' and (app_name='$app_name' or app_name='common')",__LINE__,__FILE__);
+								$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND (app_name='$app_name' OR app_name='common') AND content='$content'",__LINE__,__FILE__);
 								$GLOBALS['phpgw_setup']->db->next_record();
 
 								if ($GLOBALS['phpgw_setup']->db->f(0) == 0)
@@ -195,7 +195,7 @@
 			}
 			$select_box_desc = lang('Select which languages you would like to use');
 			$select_box = '';
-			$GLOBALS['phpgw_setup']->db->query($q="select lang_id,lang_name from phpgw_languages where available='Yes'");
+			$GLOBALS['phpgw_setup']->db->query($q="SELECT lang_id,lang_name FROM phpgw_languages WHERE available='Yes' ORDER BY lang_name");
 			while ($GLOBALS['phpgw_setup']->db->next_record())
 			{
 				$id = $GLOBALS['phpgw_setup']->db->f('lang_id');
