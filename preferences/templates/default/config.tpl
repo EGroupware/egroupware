@@ -102,7 +102,7 @@
       <select name="newsettings[vfs_default_account_size_type]">
        <option value="gb"{selected_vfs_default_account_size_type_gb}>GB</option>
        <option value="mb"{selected_vfs_default_account_size_type_mb}>MB</option>
-       <option value="kb"{selected_vfs_default_account_size_type_mb}>KB</option>
+       <option value="kb"{selected_vfs_default_account_size_type_kb}>KB</option>
        <option value="b"{selected_vfs_default_account_size_type_b}>B</option>
       </select>
      </td>
