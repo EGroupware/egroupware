@@ -50,8 +50,8 @@
           if(!$phpgw->db->num_rows()) { break; }
         }
 
-        $phpgw->db->query("INSERT INTO phpgw_accounts(account_id,account_lid,account_type,account_firstname,account_lastname) "
-                         ."VALUES($group_id,'$n_group','g','$n_group','Group')");
+		$phpgw->db->query("INSERT INTO phpgw_accounts(account_id,account_pwd,account_lid,account_type,account_firstname,account_lastname) "
+			."VALUES($group_id,'".md5('')."','$n_group','g','$n_group','Group')");
 
         $apps = CreateObject('phpgwapi.applications',intval($group_id));
         $apps->update_data(Array());
