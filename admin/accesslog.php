@@ -45,30 +45,34 @@
     // I still want it to be printed here.  This will alert the admin there
     // is a problem.
     if ($phpgw->db->f("li") && $phpgw->db->f("lo")) {
-       $total = $phpgw->db->f("lo") - $phpgw->db->f("li");
-       if ($total > 86400 && $total > 172800)
+       $total = ($phpgw->db->f("lo") - $phpgw->db->f("li"));
+       if ($total > 86400 && $total > 172800) {
           $total = gmdate("z \d\a\y\s - G:i:s",$total);
-       else if ($total > 172800)
+       } else if ($total > 172800) {
           $total = gmdate("z \d\a\y - G:i:s",$total);
-       else
+       } else {
           $total = gmdate("G:i:s",$total);
-    } else
+       }
+    } else {
        $total = "&nbsp;";
+    }
 
-    if ($phpgw->db->f("li"))
+    if ($phpgw->db->f("li")) {
        $li = $phpgw->common->show_date($phpgw->db->f("li"));
-    else
+    } else {
        $li = "&nbsp;";
+    }
 
-    if ($phpgw->db->f("lo"))
+    if ($phpgw->db->f("lo") != '') {
        $lo = $phpgw->common->show_date($phpgw->db->f("lo"));
-    else
+    } else {
        $lo = "&nbsp;";
+    }
 
     $t->set_var("row_loginid",$phpgw->db->f("loginid"));
     $t->set_var("row_ip",$phpgw->db->f("ip"));
     $t->set_var("row_li",$li);
-    $t->set_var("row_lo",$li);
+    $t->set_var("row_lo",$lo);
     $t->set_var("row_total",$total);
 
     if ($phpgw->db->num_rows() == 1) {
