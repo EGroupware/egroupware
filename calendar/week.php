@@ -152,10 +152,10 @@
 
     //$date = $i + ($j * 24 * 3600);
 /*    $thirsday=$j+24*3600*4;
-    if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "Sunday" && $j == 0) {
+    if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Sunday" && $j == 0) {
        echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' .(int)((date("z",$thirsday)+7)/7) . '</a></font>';
     }
-    if ($phpgw_info["user"]["preferences"]["weekdaystarts"] == "Monday" && $j == 1) {
+    if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday" && $j == 1) {
        echo '<font size=-2><a href="' . $phpgw->link("week.php","date=" . date("Ymd",$date)) . '">week ' . (int)((date("z",$thirsday)+7)/7) . '</a></font>';
     }*/
     

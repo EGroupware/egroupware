@@ -12,6 +12,9 @@
 		- Now ISO 639 compliant with language translation id.
 		- Applied Patch #101828 - Swedish lang translation.  Thanks Kjell Claesson <keyson@users.sourceforge.net>
 		- Fixed group management with new groups and navbar problems.
+		- Changed around the way the preferences work.  The $phpgw_info array is also handled a little
+		  differently for preferences.  It now looks like:
+		  $phpgw_info["user"]["preferences"][appname][preference name]
 
 [0.9.1] - Fixed a few missing variables with templates.
 	    - editing a product in the inventory program now forwards you back to the category

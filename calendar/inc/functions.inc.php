@@ -410,7 +410,7 @@
          if ($phpgw->db->f(2) == 3)
 	    echo "<font color=\"CC0000\">";	// ***** put into theme
 	 if ($phpgw->db->f(3) > 0) {
-	    if ($phpgw_info["user"]["preferences"]["timeformat"] == "24")
+	    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "24")
 	       printf ("%02d:%02d",$phpgw->db->f(3) / 10000, ($phpgw->db->f(3) / 100) % 100);
             else {
                $h = ((int)($phpgw->db->f(3) / 10000)) % 12;
@@ -443,7 +443,7 @@
     global $phpgw, $phpgw_info;
     $hour = (int)($time / 10000);
     $min  = ($time / 100) % 100;
-    if ($phpgw_info["user"]["preferences"]["timeformat"] == "12") {
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
        $ampm = $hour >= 12 ? "pm" : "am";
        $hour %= 12;
        if ($hour == 0)
@@ -554,8 +554,8 @@
 
   $phpgw->db->query($sql);
   $hour_arr = Array();
-  $first_hour = ($phpgw_info["user"]["preferences"]["workdaystarts"] + 1);
-  $last_hour  = ($phpgw_info["user"]["preferences"]["workdayends"] + 1);
+  $first_hour = ($phpgw_info["user"]["preferences"]["common"]["workdaystarts"] + 1);
+  $last_hour  = ($phpgw_info["user"]["preferences"]["common"]["workdayends"] + 1);
 
   $rowspan_arr = Array();
 

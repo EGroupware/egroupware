@@ -63,7 +63,7 @@
   // first check for any schedule conflicts
   if (strlen($hour) > 0) {
     $date = mktime(0,0,0,$month,$day,$year);
-    if ($phpgw_info["user"]["preferences"]["timeformat"] == "12") {
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
       $hour %= 12;
       if ($ampm == "pm")
 	$hour += 12;
@@ -131,7 +131,7 @@ if (! $error) {
   $date = mktime(0,0,0,$month,$day,$year);
   $sql .= date("Ymd", $date) . ", ";
   if (strlen($hour) > 0) {
-    if ($phpgw_info["user"]["preferences"]["timeformat"] == "12") {
+    if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
       $hour %= 12;
       if ($ampm == "pm")
        $hour += 12;

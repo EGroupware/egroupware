@@ -183,7 +183,7 @@ function validate_and_submit() {
 <?php
   $h12 = $hour;
   $amsel = "CHECKED"; $pmsel = "";
-  if ($phpgw_info["user"]["preferences"]["timeformat"] == "12") {
+  if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
      if ($h12 < 12) {
         $amsel = "CHECKED"; $pmsel = "";
      } else {
@@ -200,7 +200,7 @@ function validate_and_submit() {
     echo $h12;?>" MAXLENGTH=2>:<INPUT NAME="minute" SIZE=2 VALUE="<?php
     if ($hour > 0) printf ("%02d", $minute); ?>" MAXLENGTH=2>
 <?php
-  if ($phpgw_info["user"]["preferences"]["timeformat"] == "12") {
+  if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
      echo "<INPUT TYPE=radio NAME=ampm VALUE=\"am\" $amsel>am\n";
      echo "<INPUT TYPE=radio NAME=ampm VALUE=\"pm\" $pmsel>pm\n";
   }

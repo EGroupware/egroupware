@@ -49,7 +49,7 @@
   </tr>
 
   <?php
-    $t_weekday[$phpgw_info["user"]["preferences"]["weekdaystarts"]] = " selected";
+    $t_weekday[$phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]] = " selected";
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
   ?>
   <tr bgcolor="<?php echo $tr_color; ?>">
@@ -61,7 +61,7 @@
 	</select>
   </td>
 <?php
-  $t_workdaystarts[$phpgw_info["user"]["preferences"]["workdaystarts"]] = " selected";
+  $t_workdaystarts[$phpgw_info["user"]["preferences"]["calendar"]["workdaystarts"]] = " selected";
   $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 ?>
   <tr bgcolor="<?php echo $tr_color; ?>">
@@ -77,7 +77,7 @@
    </td>
   </tr>
   <?php
-    $t_workdayends[$phpgw_info["user"]["preferences"]["workdayends"]] = " selected";
+    $t_workdayends[$phpgw_info["user"]["preferences"]["calendar"]["workdayends"]] = " selected";
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
   ?>
   <tr bgcolor="<?php echo $tr_color; ?>">
