@@ -282,7 +282,7 @@
 				{
 					$title = $app_name = $this->db->f('app_name');
 
-					if (@is_array($GLOBALS['phpgw_info']['user']['preferences']) &
+					if (@is_array($GLOBALS['phpgw_info']['user']['preferences']) &&
 					    ($t = lang($app_name)) != $app_name.'*')
 					{
 						$title = $t;
