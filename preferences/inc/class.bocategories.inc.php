@@ -101,9 +101,9 @@
 			return $this->cats->exists($data['type'],$data['cat_name'],$data['cat_id']);
 		}
 
-		function formatted_list($format,$type,$cat_parent,$public_cats)
+		function formatted_list($format,$type,$cat_parent,$global_cats)
 		{
-			return $this->cats->formated_list($format,$type,$cat_parent,$public_cats);
+			return $this->cats->formated_list($format,$type,$cat_parent,$global_cats);
 		}
 
 		function delete($cat_id,$subs)

@@ -53,7 +53,6 @@
 				'sort'  => $this->sort,
 				'order' => $this->order
 			);
-
 			$this->bo->save_sessiondata($data,$cats_app);
 		}
 
@@ -75,7 +74,6 @@
 			$this->t->set_var('lang_add',lang('Add'));
 			$this->t->set_var('lang_reset',lang('Clear Form'));
 		}
-
 
 		function cat_data($edata,$data)
 		{
@@ -207,7 +205,6 @@
 				{
 					$name = '<font color="FF0000"><b>' . $GLOBALS['phpgw']->strip_html($cats[$i]['name']) . '</b></font>' . $appendix;
 					$descr = '<font color="FF0000"><b>' . $descr . '</b></font>';
-					$data = '<font color="FF0000"><b>' . $data . '</b></font>';
 				}
 
 				$this->t->set_var(array('name' => $name,
@@ -227,8 +224,8 @@
 				}
 				else
 				{
-					$t->set_var('add_sub','');
-					$t->set_var('lang_sub_entry','&nbsp;');
+					$this->t->set_var('add_sub','');
+					$this->t->set_var('lang_sub_entry','&nbsp;');
 				}
 
 				$link_data['cat_id'] = $cats[$i]['id'];
@@ -261,7 +258,7 @@
 
 		function add()
 		{
-			global $cats_app, $extra, $global_cats, $cats_level, $cat_data;
+			global $cats_app, $extra, $global_cats, $cats_level;
 
 			$link_data = array
 			(
@@ -368,7 +365,7 @@
 
 		function edit()
 		{
-			global $cats_app, $extra, $global_cats, $cats_level, $cat_id, $cat_data;
+			global $cats_app, $extra, $global_cats, $cats_level, $cat_id;
 
 			$link_data = array
 			(
@@ -393,7 +390,7 @@
 			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'];
 			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
 			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
-	//		$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
+			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
 			$cat_access			= $GLOBALS['HTTP_POST_VARS']['cat_access'];
 
 			$this->t->set_file(array('form' => 'category_form.tpl'));
@@ -470,7 +467,6 @@
 				$edata = explode(',',$extra);
 
 				$data = unserialize($cats[0]['data']);
-				$cat_data = array();
 				for($i=0;$i<count($edata);$i++)
 				{
 					$this->t->set_var('td_data','<input name="cat_data[' . $edata[$i] . ']" size="50" value="' . $data[$edata[$i]] . '">');
