@@ -1,0 +1,109 @@
+access	common	pt-br	Accesso
+access type	common	pt-br	Tipo de acesso
+account has been created	common	pt-br	Conta foi criada
+account has been deleted	common	pt-br	Conta foi apagada
+account has been updated	common	pt-br	Conta foi atualizada
+add	common	pt-br	Adicionar
+admin	common	pt-br	Administrador
+administration	common	pt-br	Administracao
+april	common	pt-br	Abril
+august	common	pt-br	Agosto
+cancel	common	pt-br	Cancelar
+change	common	pt-br	Mudar
+charset	common	pt-br	iso-8859-1
+clear	common	pt-br	Cancelar
+clear form	common	pt-br	Limpar Formulario
+copy	common	pt-br	Copiar
+create	common	pt-br	Criar
+created by	common	pt-br	Criado por
+current users	common	pt-br	Usuarios ativos
+date	common	pt-br	Data
+december	common	pt-br	Dezembro
+delete	common	pt-br	Cancelar
+done	common	pt-br	Pronto
+email	common	pt-br	E-Mail
+e-mail	common	pt-br	E-Mail
+edit	common	pt-br	Modificar
+email	common	pt-br	E-Mail
+entry has been deleted sucessfully	common	pt-br	Entrada apagada com sucesso
+entry updated sucessfully	common	pt-br	Entrada modificada com sucesso
+error	common	pt-br	Erro
+exit	common	pt-br	Saida
+february	common	pt-br	Fevereiro
+filter	common	pt-br	Filtro
+first name	common	pt-br	Primeiro Nome
+friday	common	pt-br	Sexta
+ftp	common	pt-br	FTP
+global public	common	pt-br	Publico Global
+group access	common	pt-br	Acesso Grupo
+group has been added	common	pt-br	Grupo Adicionado
+group has been deleted	common	pt-br	Grupo cancelado
+group has been updated	common	pt-br	Grupo atualizado
+group public	common	pt-br	Grupo Publico
+groups	common	pt-br	Grupos
+help	common	pt-br	Ajuda
+high	common	pt-br	Alta
+home	common	pt-br	Pagina Inicial
+it has been more then %1 days since you changed your password	common	pt-br	Ja passaram-se mais de %1 dias desde que vc mudou sua senha
+january	common	pt-br	Janeiro
+july	common	pt-br	Julho
+june	common	pt-br	Junho
+last name	common	pt-br	Ultimo nome
+last page	common	pt-br	ultima pagina
+login	common	pt-br	Login
+logout	common	pt-br	Logout
+low	common	pt-br	Baixa
+march	common	pt-br	Marco
+may	common	pt-br	Maio
+medium	common	pt-br	Media
+monday	common	pt-br	Segunda
+name	common	pt-br	Nome
+new entry added sucessfully	common	pt-br	Entrada adicionada corretamente
+next page	common	pt-br	proxima pagina
+no	common	pt-br	Nao
+none	common	pt-br	Nenhuma
+normal	common	pt-br	Normal
+november	common	pt-br	Novembro
+october	common	pt-br	Outubro
+ok	common	pt-br	OK
+only yours	common	pt-br	so as suas
+password	common	pt-br	Senha
+password has been updated	common	pt-br	Senha foi alterada
+preferences	common	pt-br	Preferencas
+previous page	common	pt-br	pagina anterior
+priority	common	pt-br	Prioridade
+private	common	pt-br	Privado
+rename	common	pt-br	Renomiar
+saturday	common	pt-br	Sabado
+save	common	pt-br	Salvar
+search	common	pt-br	Procura
+september	common	pt-br	Setembro
+session has been killed	common	pt-br	Sessao foi morta
+show all	common	pt-br	mostra tudo
+showing %1	common	pt-br	Visualizando %1
+showing %1 - %2 of %3	common	pt-br	Visualizando %1 - %2 de %3
+sorry, there was a problem proccesing your request.	common	pt-br	Desculpe, ocorreu um problema processando sua requisicao.
+submit	common	pt-br	Inserir
+sunday	common	pt-br	Domingo
+thursday	common	pt-br	Quinta
+time	common	pt-br	Hora
+total	common	pt-br	Total
+tuesday	common	pt-br	Terca
+updated	common	pt-br	Atualizado
+view	common	pt-br	Visualizar
+wednesday	common	pt-br	Quarta
+which groups	common	pt-br	Qual grupo
+yes	common	pt-br	Sim
+you have 1 new message!	common	pt-br	Voce tem 1 nova mensagem!
+you have %1 new messages!	common	pt-br	Voce tem %1 novas mensagens!
+your message as been sent	common	pt-br	Sua mensagem foi enviada
+your search returned 1 match	common	pt-br	sua pesquisa retornou 1 correspondecia
+your search returned %1 matchs	common	pt-br	Sua pesquisa retornou %1 correspondencias
+your settings have been updated	common	pt-br	suas preferencias foram atualizadas
+bad login or password	common	pt-br	login ou senha incorreta
+login	login	pt-br	Login
+password	login	pt-br	Password
+sorry, your login has expired	login	pt-br	Desculpe, sua conta expiorou
+use cookies	login	pt-br	usa i cookie
+username	login	pt-br	Nome Utente
+you have been successfully logged out	login	pt-br	Voce foi desconectado com sucesso

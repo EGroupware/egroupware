@@ -936,4 +936,22 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.006';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.99.006';
+	function phpgwapi_upgrade0_9_99_006()
+	{
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET available='Yes' WHERE lang_id='pt'");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.007';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.99.007';
+	function phpgwapi_upgrade0_9_99_007()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_languages', 'lang_id', array('type' => 'varchar','precision' => '5','nullable' => False));
+		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('pt-br','Brazil','Yes')");
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.008';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>
