@@ -456,6 +456,7 @@ uploads a backup and installs it on your db	setup	de	lädt eine Datensicherung ho
 uploads a backup to the backup-dir, from where you can restore it	setup	de	Läde eine Datensicherung in das Datensicherungsverzeichnis, von wo sie diese zurücksichern können
 use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
+use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)	setup	de	utf-8 (Unicode) als Systemzeichensatz benutzen (empfohlen wenn Sie Sprachen mit verschiedenem Zeichensätzen verwenden oder ihrer Sprache utf-8 als Zeichensatz verwendet)
 user account prefix	setup	de	Präfix für Benutzernamen
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
@@ -518,6 +519,5 @@ your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisi
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br><blink><b class="msg">WARNUNG!</b></blink><br><b>MACHEN SIE EINE SICHERUNG!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	de	Ihre PHP Installation hat nicht die benötigte GD Unterstützung. Die Anwendung Projekte benötigen die GD Bibliothek in der Version 1.8 um Gantcharts anzeigen zu können.
 your tables are current	setup	de	Ihre Tabellen sind aktuell
-your tables may be altered and you may lose data	setup	de	Ihre Tabellen könnten verändert werden, und Sie könnten Daten verlieren!
-your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden und Sie werden Daten verlieren!
+your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden und Sie werden alle Daten verlieren!
 your temporary directory '%1' %2	setup	de	Ihr temporäres Verzeichnis '%1' %2

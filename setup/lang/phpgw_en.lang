@@ -452,6 +452,7 @@ uploads a backup and installs it on your db	setup	en	uploads a backup and instal
 uploads a backup to the backup-dir, from where you can restore it	setup	en	uploads a backup to the backup-dir, from where you can restore it
 use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
+use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)	setup	en	use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)
 user account prefix	setup	en	User account prefix
 usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice
@@ -514,6 +515,5 @@ your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgradin
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><b class="msg">WARNING!</b></blink><br><b>MAKE BACKUPS!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	en	Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.
 your tables are current	setup	en	Your tables are current
-your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
 your temporary directory '%1' %2	setup	en	Your temporary directory '%1' %2

@@ -230,6 +230,8 @@
 			$setup_tpl->set_var('proceed',lang('We can proceed'));
 			$setup_tpl->set_var('coreapps',lang('all applications'));
 			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
+			$setup_tpl->set_var('lang_system_charset',lang('use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)'));
+			$setup_tpl->set_var('utf8_checked',lang('charset') == 'uft-8' ? 'checked' : '');
 			$setup_tpl->set_var('lang_restore',lang('Or you can install a previous backup.'));
 			$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 				'<input type="submit" name="upload" value="'.htmlspecialchars(lang('install backup')).'" title="'.htmlspecialchars(lang("uploads a backup and installs it on your DB")).'" />');
@@ -252,7 +254,7 @@
 			$setup_tpl->set_var('language_management',lang('Manage Languages'));
 			$setup_tpl->set_var('uninstall_all_applications',lang('Uninstall all applications'));
 			$setup_tpl->set_var('dont_touch_my_data',lang('Dont touch my data'));
-			$setup_tpl->set_var('dropwarn',lang('Your tables may be altered and you may lose data'));
+			$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));
 
 			$setup_tpl->parse('V_db_stage_4','B_db_stage_4');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_4');
@@ -320,7 +322,7 @@
 					else
 					{
 						$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
-						$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
+						$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True,$_REQUEST['system_charset']);
 						$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					}
 					break;

@@ -68,8 +68,9 @@
 
 		{dbexists}<br>
         <input type="hidden" name="action" value="Install">
-		<input type="submit" name="label" value="{install}"> {coreapps}<br>
-		<input type="checkbox" name="debug" value="1"> {lang_debug}
+		<input type="checkbox" name="debug" value="1"> {lang_debug}<br>
+		<input type="checkbox" name="system_charset" value="utf-8" {utf8_checked}> {lang_system_charset}<br>
+		<input type="submit" name="label" value="{install}"> {coreapps}
 		<hr>
 		{lang_restore}<br>
 		{upload}
@@ -94,10 +95,10 @@
 		<input type="hidden" name="useglobalconfigsettings">
 		<input type="hidden" name="action" value="Upgrade">
 		<input type="checkbox" name="backup" value="1" checked="1"> {lang_backup}<br>
-		<input type="submit" name="label" value="{upgrade}"><br>
 		<input type="checkbox" name="debug" value="1"> {lang_debug}<br>
+		<input type="submit" name="label" value="{upgrade}"><br>
 		</form>
-
+		<hr>
 		<form method="POST" action="index.php">
 		<input type="hidden" name="oldversion" value="{oldver}">
 		<input type="hidden" name="useglobalconfigsettings">
