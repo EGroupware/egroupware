@@ -407,4 +407,54 @@
 			}
 			return $old;
 		}
+
+		/*!
+		@function read
+		@abstract Reads an eTemplate from the cache or database / filesystem (and updates the cache)
+		@param as discripted in soetemplate::read
+		@result True if a fitting template is found, else False
+		*/
+		function read($name,$template='default',$lang='default',$group=0,$version='')
+		{
+			$cname = ($template == '' ? 'default' : $template).'/'.$name.($lang == 'default' ? '' : '.'.$lang);
+
+			if (isset($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]))
+			{
+				reset($this->db_cols);
+				while (list($db_col,$col) = each($this->db_cols))
+				{
+					$this->$col = $GLOBALS['phpgw_info']['etemplate']['cache'][$cname][$col];
+				}
+				$this->rows = count($this->data) - 1;
+				$this->cols = count($this->data[1]); // 1 = first row, not 0
+				echo "\n<!-- $cname read from cache -->\n";
+				return True;
+			}
+			if (!soetemplate::read($name,$template,$lang,$group,$version))
+				return False;
+
+			echo "\n<!-- $cname read & cache updated -->\n";
+			$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $this->as_array(1);
+
+			return true;
+		}
+
+		/*!
+		@function save
+		@abstract saves eTemplate-object to db and update the cache
+		@params keys see soetemplate::save
+		@result the number of affected rows, 1 should be ok, 0 somethings wrong
+		*/
+		function save($name='',$template='.',$lang='.',$group='',$version='.')
+		{
+			$result = soetemplate::save($name,$template,$lang,$group,$version);
+
+			if ($result)
+			{
+				$cname = ($template == '' ? 'default' : $template).'/'.$name.($lang == 'default' ? '' : '.'.$lang);
+
+				$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $this->as_array(1);
+			}
+			return $result;
+		}
 	};
