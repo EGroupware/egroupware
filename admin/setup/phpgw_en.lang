@@ -64,6 +64,10 @@ async services last executed	admin	en	Async services last executed
 asynchronous timed services	admin	en	Asynchronous timed services
 asyncservices not yet installed or other error (%1) !!!	admin	en	asyncservices not yet installed or other error (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
+attribute accountstatus explained	admin	en	This handles the attribute <b><i>-accountStatus-</i></b> from the QMAIL schema.
+attribute mail explained	admin	en	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the eGW internal email field.
+attribute mailalternateaddress explained	admin	en	This handles the attribute <b><i>-mailAlternateAddress-</i></b> from the QMAIL schema and can be handled as virtual maps or aliases.
+attribute mailforwardingaddress explained	admin	en	This handles the attribute <b><i>-mailForwardingAddress-</i></b> from QMAIL Schema and must not be empty if assigned.
 authentication / accounts	admin	en	Authentication / Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users
 back to the list	admin	en	back to the list
@@ -175,6 +179,7 @@ error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running !!!
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error !!!
 expires	admin	en	Expires
+explanation of ldapman	admin	en	This module has been tested so far for POSTFIX,LDAP,Courier-IMAP and need the schemas  CORE and QMAIL (OID7914). More details about using and configuring this systrem can be found in README.ldapman in the doc folder of ADMIN.
 fallback (after each pageview)	admin	en	fallback (after each pageview)
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer

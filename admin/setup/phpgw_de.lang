@@ -65,6 +65,10 @@ async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
 asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst is noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden den richtigen MINE-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream"
+attribute accountstatus explained	admin	de	Dies betrifft das Attribut <b>-accountStatus-</b> aus dem QMAIL Schema
+attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als Emailadresse innerhalb eGW verwendet.
+attribute mailalternateaddress explained	admin	de	Dies betrifft das Attribut <b>-mailAlternateAddress-</b> aus dem QMAIL Schema. Das experimentelle Schema verwendet dies auch als Alias für mailLocalAddress.
+attribute mailforwardingaddress explained	admin	de	Dies betrifft das Attribut <b>-mailForwardingAddress-</b> aus dem QMAIL Schema. Darf nicht leer sein. Der Begriff mailRoutingAddress wurde hierfür früher als Alias verwendet.
 authentication / accounts	admin	de	Benutzerauthentifizierung/Benutzerkonten
 auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten für authentifizierte Benutzer anlegen
 back to the list	admin	de	Zurück zur Liste
@@ -177,6 +181,7 @@ error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Testjobs, falsche Syntax oder es läuft schon einer!!!
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!!!
 expires	admin	de	abgelaufen
+explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
 file space	admin	de	Dateiraum
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein

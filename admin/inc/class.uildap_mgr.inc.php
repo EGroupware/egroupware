@@ -62,7 +62,9 @@
 			$this->t->set_var("lang_edit_email_settings",lang("edit email settings"));
 			$this->t->set_var("lang_ready",lang("Done"));
 			$this->t->set_var("link_back",$phpgw->link('/admin/accounts.php'));
+			$this->t->set_var("info_icon",PHPGW_IMAGES_DIR.'/info.gif');
 			
+						
 			$linkData = array
 			(
 				'menuaction'	=> 'admin.uildap_mgr.saveUserData',
@@ -91,8 +93,17 @@
 				}
 			
 				$this->t->set_var("mail",$userData["mail"]);
-//				$this->t->set_var("mailAlternateAddress",'');
-				$this->t->set_var("mailForwardingAddress",$userData["mailForwardingAddress"]);
+				//$this->t->set_var("mailAlternateAddress",''); could be deleted?
+
+				if ($userData["mailForwardingAddress"] == "") 
+				{
+					$this->t->set_var("mailForwardingAddress",$userData["mail"]);
+				}
+				else
+				{
+					$this->t->set_var("mailForwardingAddress",$userData["mailForwardingAddress"]);
+				}
+
 				$this->t->set_var("options_mailAlternateAddress",$options_mailAlternateAddress);
 				
 				$this->t->set_var("uid",rawurlencode($_accountData["dn"]));
@@ -151,9 +162,12 @@
 			if($HTTP_POST_VARS["add_mailAlternateAddress"]) $bo_action='add_mailAlternateAddress';
 			if($HTTP_POST_VARS["remove_mailAlternateAddress"]) $bo_action='remove_mailAlternateAddress';
 			if($HTTP_POST_VARS["save"]) $bo_action='save';
-			
-			$this->boldapmgr->saveUserData($_GET['account_id'], $formData, $bo_action);
 
+			if (!$HTTP_POST_VARS["mail"]== "")	//attribute 'mail'is not allowed to be empty
+			{
+// error generator necessary!!
+				$this->boldapmgr->saveUserData($_GET['account_id'], $formData, $bo_action);
+			}
 			if ($bo_action == 'save')
 			{
 				// read date fresh from ldap storage
@@ -185,8 +199,13 @@
 			$this->t->set_var('lang_0forunlimited',lang('leave empty for no quota'));
 			$this->t->set_var('lang_forward_only',lang('forward only'));
 			$this->t->set_var('lang_mailAliases',lang('Aliases'));
+			$this->t->set_var('lang_info_mailAliases',lang('Attribute mailAlternateAddress explained'));
 			$this->t->set_var('lang_masterEmailAddress',lang('Main Email-Address'));
+			$this->t->set_var('lang_info_masterEmailAddress',lang('Attribute mail explained'));
 			$this->t->set_var('lang_RouteMailsTo',lang('Route all Mails to'));
+			$this->t->set_var('lang_info_RouteMailsTo',lang('Attribute mailForwardingAddress explained'));
+			$this->t->set_var('lang_info_AccountActive',lang('Attribute accountstatus explained'));
+			$this->t->set_var('lang_info_UsageHints',lang('Explanation of LDAPMAN'));
 		}
 	}
 ?>

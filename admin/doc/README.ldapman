@@ -1,0 +1,16 @@
+The add-on LDAP-Manager for Admin currently manages the following configuration:
+
+1. Postfix 2.x
+2. LDAP v3
+3. Courier-Imap 3.x
+
+Example for Postfix-configuration:
+
+
+
+
+Usage of LDAP schemas:
+
+core.schema
+qmail.schema
+
