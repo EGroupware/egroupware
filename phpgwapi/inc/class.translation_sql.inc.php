@@ -47,6 +47,10 @@
 
 		function translation($warnings = False)
 		{
+			for ($i = 1; $i <= 9; $i++)
+			{
+				$this->placeholders[] = '%'.$i;
+			}
 			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			if (!isset($GLOBALS['phpgw_setup']))
 			{
@@ -137,27 +141,36 @@
 		*/
 		function translate($key, $vars=false, $not_found='*' )
 		{
-			if (!$vars)
-			{
-				$vars = array();
-			}
 			if (!is_array(@$GLOBALS['lang']) || !count($GLOBALS['lang']))
 			{
 				$this->init();
 			}
 			$ret = $key.$not_found;	// save key if we dont find a translation
 
-			$key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
-
 			if (isset($GLOBALS['lang'][$key]))
 			{
 				$ret = $GLOBALS['lang'][$key];
 			}
-			$ndx = 1;
-			foreach($vars as $val)
+			else
 			{
-				$ret = preg_replace( "/%$ndx/", $val, $ret );
-				++$ndx;
+				$new_key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
+
+				if (isset($GLOBALS['lang'][$new_key]))
+				{
+					// we save the original key for performance
+					$ret = $GLOBALS['lang'][$key] = $GLOBALS['lang'][$new_key];
+				}
+			}
+			if (is_array($vars) && count($vars))
+			{
+				if (count($vars) > 1)
+				{
+					$ret = str_replace($this->placeholders,$vars,$ret);
+				}
+				else
+				{
+					$ret = str_replace('%1',$vars[0],$ret);
+				}
 			}
 			return $ret;
 		}
