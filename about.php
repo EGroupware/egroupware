@@ -11,44 +11,46 @@
 
   /* $Id$ */
 
-	$phpgw_info["flags"]["currentapp"] = "about";
-	include("header.inc.php");
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'about';
+	$GLOBALS['phpgw_info']['flags']['disable_Template_class'] = True;
+	include('header.inc.php');
 
+	$app = $HTTP_GET_VARS['app'];
 	if ($app)
 	{
-		$included = $phpgw->common->hook_single("about",$app);
+		$included = $GLOBALS['phpgw']->common->hook_single('about',$app);
 	}
 	else
 	{
 		$api_only = True;
 	}
 
-	$tpl = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('phpgwapi'));
+	$tpl = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'));
 	$tpl->set_file(array(
-		"phpgw_about"         => "about.tpl",
-		"phpgw_about_unknown" => "about_unknown.tpl"
+		'phpgw_about'         => 'about.tpl',
+		'phpgw_about_unknown' => 'about_unknown.tpl'
 	));
 
-	$tpl->set_var("webserver_url",$phpgw->common->get_image_path('phpgwapi'));
-	$tpl->set_var("phpgw_version","phpGroupWare API version " . $phpgw_info["server"]["versions"]["phpgwapi"]);
+	$tpl->set_var('webserver_url',$GLOBALS['phpgw']->common->get_image_path('phpgwapi'));
+	$tpl->set_var('phpgw_version','phpGroupWare API version ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 	if ($included)
 	{
-		$tpl->set_var("phpgw_app_about",about_app("",""));
+		$tpl->set_var('phpgw_app_about',about_app('',''));
 		//about_app($tpl,"phpgw_app_about");
 	}
 	else
 	{
 		if ($api_only)
 		{
-			$tpl->set_var("phpgw_app_about","");
+			$tpl->set_var('phpgw_app_about','');
 		}
 		else
 		{
-			$tpl->set_var("app_header",$app);
-			$tpl->parse("phpgw_app_about","phpgw_about_unknown");
+			$tpl->set_var('app_header',$app);
+			$tpl->parse('phpgw_app_about','phpgw_about_unknown');
 		}
 	}
 
-	$tpl->pparse("out","phpgw_about");
-	$phpgw->common->phpgw_footer();
+	$tpl->pparse('out','phpgw_about');
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
