@@ -22,13 +22,13 @@ add a new entry	infolog	nl	Een nieuw infolog toevoegen
 add a new note	infolog	nl	Een nieuwe notitie toevoegen
 add a new phonecall	infolog	nl	Een nieuw telefoongesprek toevoegen
 add a new sub-task, -note, -call to this entry	infolog	nl	Een nieuwe subtaak, subnotitie, subtelefoongesprek aan dit infolog toevoegen
-add a new todo	infolog	nl	Een nieuwe Te-doen toevoegen
+add a new todo	infolog	nl	Een nieuwe taak toevoegen
 add file	infolog	nl	Bestand toevoegen
 add sub	infolog	nl	Sub toevoegen
 add:	infolog	nl	Toevoegen:
 all	infolog	nl	Alles
 all links and attachments	infolog	nl	alle links en bijlagen
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	nl	Toestaan de status van een infolog te wijzigen, bijv. een te-doen op status klaar zetten (waarden zijn onafhankelijk van infolog-type)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	nl	Toestaan de status van een infolog te wijzigen, bijv. een taak op status klaar zetten (waarden zijn onafhankelijk van infolog-type)
 applies the changes	infolog	nl	maakt de veranderingen actief
 are you shure you want to delete this entry ?	infolog	nl	Weet u zeker dat deze infolog wilt verwijderen
 are you sure you want to delete this entry	infolog	nl	Weet u zeker dat u deze infolog wilt verwijderen
@@ -204,15 +204,15 @@ startrecord	infolog	nl	Startregel
 status	infolog	nl	Status
 sub	infolog	nl	Onderliggende
 subject	infolog	nl	Onderwerp
-task	infolog	nl	Te-doen
+task	infolog	nl	taak
 test import (show importable records <u>only</u> in browser)	infolog	nl	Test Import (te importeren record weergeven in uw browser)
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	nl	De naam voor intern gebruik (tot 20 karakters). Als u deze wijzigd zal bestaande data ontoegankelijk worden
 the text displayed to the user	infolog	nl	De tekst die wordt weergegeven aan de gebruiker
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	nl	Dit is het filter dat InfoLog standaard gebruikt wanneer u InfoLog opent. Filters geven een selectie weer van het totale aantal infologs. Er zijn filters voor AFGEWERKTE, OPENSTAANDE of TOEKOMSTIGE infologs voor U of ALLE gebruikers.
-til when should the todo or phonecall be finished	infolog	nl	Wanneer moet de Te-doen of het telefoongesprek afgehandeld zijn?
+til when should the todo or phonecall be finished	infolog	nl	Wanneer moet de taak of het telefoongesprek afgehandeld zijn?
 to many might exceed your execution-time-limit	infolog	nl	Te veel kan mogelijk de uitvoertijd van dit programme overschrijden.
 today	infolog	nl	Vandaag
-todo	infolog	nl	Te-doen
+todo	infolog	nl	taak
 translation	infolog	nl	Vertaling
 typ	infolog	nl	Type
 typ '%1' already exists !!!	infolog	nl	Type '%1' bestaat al !!!
