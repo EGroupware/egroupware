@@ -127,9 +127,11 @@
           exit;
         }
         $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
-        $this->applications = CreateObject("phpgwapi.applications", array(intval($phpgw_info["user"]["account_id"]),'u'));
-        $phpgw_info["user"]["preferences"] = $this->preferences->get_saved_preferences();
-        $phpgw_info["user"]["apps"] = $this->applications->enabled_apps();
+        $this->applications = CreateObject("phpgwapi.applications", intval($phpgw_info["user"]["account_id"]));
+        $this->acl = CreateObject("phpgwapi.acl", intval($phpgw_info["user"]["account_id"]));
+        $phpgw_info["user"]["acl"] = $this->acl->read_repository();
+        $phpgw_info["user"]["preferences"] = $this->preferences->read_repository();
+        $phpgw_info["user"]["apps"] = $this->applications->read_repository();
         @reset($phpgw_info["user"]["apps"]);
       }
       $this->translation = CreateObject("phpgwapi.translation");

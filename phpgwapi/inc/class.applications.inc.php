@@ -26,65 +26,108 @@
   {
     var $account_id;
     var $account_type;
-    var $account_apps = Array(Array());
+    var $data = Array();
     var $db;
 
-    function applications($params = "")
+    /**************************************************************************\
+    * Standard constructor for setting $this->account_id                       *
+    \**************************************************************************/
+    function applications($account_id = "")
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if (is_array($params)) {
-        if (isset($params[1])){ 
-          $this->account_type = $params[1];
-        }else{
-          $this->account_type = "u";
-        }
-        if ($params[0] == ""){ 
-          $this->account_id = $phpgw_info["user"]["account_id"]; 
-        } elseif (is_long($params[0])) {
-          $this->account_id = $params[0];
-        } elseif(is_string($params[0])) {
-          if ($this->account_type = "u"){
-            $this->account_id = $phpgw->accounts->username2userid($params[0]);
-          }else{
-            $this->account_id = $phpgw->accounts->groupname2groupid($params[0]);
-          }
-        }
-      }else{
+      if ($account_id == ""){ 
         $this->account_id = $phpgw_info["user"]["account_id"]; 
-        $this->account_type = "u";
+      } elseif (is_long($account_id)) {
+        $this->account_id = $account_id;
+      } elseif(is_string($account_id)) {
+        $this->account_id = $phpgw->accounts->name2id($account_id);
       }
+      $this->account_type = $phpgw->accounts->get_type($account_id);
     }
 
-    function enabled_apps()
+    /**************************************************************************\
+    * These are the standard $this->account_id specific functions              *
+    \**************************************************************************/
+
+    function read_repository()
     {
       global $phpgw, $phpgw_info;
       if (gettype($phpgw_info["apps"]) != "array") {
         $this->read_installed_apps();
       }
-      @reset($phpgw_info["apps"]);
+      $this->data = Array();
+      reset($phpgw_info["apps"]);
       while ($app = each($phpgw_info["apps"])) {
-        if ($this->account_type == "g") {
-          $check = $phpgw->acl->check_specific("run",1,$app[0], $this->account_id, "g");
-        }else{
-          $check = $phpgw->acl->check("run",1,$app[0], $this->account_id);
-        }
+        $check = $phpgw->acl->check("run",1,$app[0]);
         if ($check) {
-          $this->account_apps[$app[0]] = array("title" => $phpgw_info["apps"][$app[0]]["title"], "name" => $app[0], "enabled" => True, "status" => $phpgw_info["apps"][$app[0]]["status"]);
+          $this->data[$app[0]] = array("title" => $phpgw_info["apps"][$app[0]]["title"], "name" => $app[0], "enabled" => True, "status" => $phpgw_info["apps"][$app[0]]["status"]);
         } 
       }
-      return $this->account_apps;
+      reset($this->data);
+      return $this->data;
     }
+
+    function read() {
+      if (count($this->data) == 0){ $this->read_repository(); }
+      reset($this->data);
+      return $this->data;
+    }
+
+    function add($apps) {
+      global $phpgw_info;
+      if(gettype($apps) == "array") {
+        while($app = each($apps)) {
+          $this->data[$app[1]] = array("title" => $phpgw_info["apps"][$app[1]]["title"], "name" => $app[1], "enabled" => True, "status" => $phpgw_info["apps"][$app[1]]["status"]);
+        }
+      } elseif(gettype($apps) == "string") {
+          $this->data[$apps] = array("title" => $phpgw_info["apps"][$apps]["title"], "name" => $apps, "enabled" => True, "status" => $phpgw_info["apps"][$apps]["status"]);
+      }
+      reset($this->data);
+      return $this->data;
+    }
+
+    function delete($appname) {
+      if($this->data[$appname]) {
+        unset($this->data[$appname]);
+      }
+      reset($this->data);
+      return $this->data;
+    }
+
+    function update_data($data) {
+      reset($data);
+      $this->data = Array();
+      $this->data = $data;
+      reset($this->data);
+      return $this->data;
+    }
+   
+    function save_repository(){
+      global $phpgw;
+      $num_rows = $phpgw->acl->delete("%%", "run", $this->account_id);
+      reset($this->data);
+      while($app = each($this->data)) {
+        if(!$this->is_system_enabled($app[0])) { continue; }
+        $phpgw->acl->add($app[0],'run',$this->account_id,1);
+      }
+      reset($this->data);
+      return $this->data;
+    }
+
+    /**************************************************************************\
+    * These are the non-standard $this->account_id specific functions          *
+    \**************************************************************************/
 
     function app_perms()
     {
       global $phpgw, $phpgw_info;
-      if (count($this->account_apps) == 0) {
-        $this->enabled_apps();
+      if (count($this->data) == 0) {
+        $this->read_repository();
       }
-      @reset($this->account_apps);
-      while (list ($key) = each ($this->account_apps)) {
-          $app[] = $this->account_apps[$key]["name"];
+      @reset($this->data);
+      while (list ($key) = each ($this->data)) {
+          $app[] = $this->data[$key]["name"];
       }
       return $app;
     }
@@ -96,52 +139,27 @@
       }
       @reset($phpgw_info["apps"]);
       while ($app = each($phpgw_info["apps"])) {
-        if ($phpgw->acl->check_specific("run",1,$app[0], $this->account_id, $this->account_type) && $this->is_system_enabled($app[0])) {
-          $this->account_apps[$app[0]] = array("title" => $phpgw_info["apps"][$app[0]]["title"], "name" => $app[0], "enabled" => True, "status" => $phpgw_info["apps"][$app[0]]["status"]);
+        if ($phpgw->acl->check_specific("run",1,$app[0], $this->account_id) && $this->is_system_enabled($app[0])) {
+          $this->data[$app[0]] = array("title" => $phpgw_info["apps"][$app[0]]["title"], "name" => $app[0], "enabled" => True, "status" => $phpgw_info["apps"][$app[0]]["status"]);
         } 
       }
-      return $this->account_apps;
+      reset($this->data);
+      return $this->data;
     }
 
-    function add_app($apps) {
-      if(gettype($apps) == "array") {
-        while($app = each($apps)) {
-          $this->account_apps[$app[1]] = array("title" => $phpgw_info["apps"][$app[1]]["title"], "name" => $app[1], "enabled" => True, "status" => $phpgw_info["apps"][$app[1]]["status"]);
-        }
-      } elseif(gettype($apps) == "string") {
-          $this->account_apps[$apps] = array("title" => $phpgw_info["apps"][$apps]["title"], "name" => $apps, "enabled" => True, "status" => $phpgw_info["apps"][$apps]["status"]);
-      }
-      reset($this->account_apps);
-      return $this->account_apps;
-    }
-
-    function delete_app($appname) {
-      unset($this->account_apps[$appname]);
-      reset($this->account_apps);
-      return $this->account_apps;
-    }
-    
-    function save_apps(){
-      global $phpgw, $phpgw_info;
-      $num_rows = $phpgw->acl->delete("%%", "run", $this->account_id, $this->account_type);
-      reset($this->account_apps);
-      while($app = each($this->account_apps)) {
-        if(!$phpgw_info["apps"][$app[0]]["enabled"]) { continue; }
-        $phpgw->acl->add($app[0],'run',$this->account_id,$this->account_type,1);
-      }
-      reset($this->account_apps);
-      return $this->account_apps;
-    }
+    /**************************************************************************\
+    * These are the generic functions. Not specific to $this->account_id       *
+    \**************************************************************************/
 
     function read_installed_apps(){
-      global $phpgw, $phpgw_info;
+      global $phpgw_info;
       $this->db->query("select * from applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         while ($this->db->next_record()) {
           $name = $this->db->f("app_name");
           $title  = $this->db->f("app_title");
           $status = $this->db->f("app_enabled");
-          $phpgw_info["apps"][$name] = array("title" => $title, "name" => $name, "enabled" => True, "status" => $status);
+          $phpgw_info["apps"]["$name"] = array("title" => $title, "name" => $name, "enabled" => True, "status" => $status);
         }
       }
     }

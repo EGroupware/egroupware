@@ -95,9 +95,9 @@
     {
       global $phpgw_info, $phpgw;
 
-      if (gettype($id) == "string") { $id = $this->username2userid($id); }
+      if (gettype($id) == "string") { $id = $this->name2id($id); }
       $groups = Array();
-      $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", intval($id));
+      $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, intval($id));
       if ($group_memberships) {
         for ($idx=0; $idx<count($group_memberships); $idx++){
           $groups[$group_memberships[$idx]] = 1;
@@ -108,7 +108,11 @@
       }
     }
 
-    function read_group_names($lid = "")
+    function read_group_names($lid = ""){
+      return $this->security_equals($lid);
+    }
+
+    function security_equals($lid = "")
     {
        global $phpgw, $phpgw_info;
 
@@ -163,24 +167,25 @@
        return $accounts;
     }
 
-    function username2userid($user_name)
+    function name2id($account_name)
     {
       global $phpgw, $phpgw_info;
 
-      $this->db->query("SELECT account_id FROM accounts WHERE account_lid='".$user_name."'",__LINE__,__FILE__);
+      $this->db->query("SELECT account_id FROM accounts WHERE account_lid='".$account_name."'",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         $this->db->next_record();
+
         return $this->db->f("account_id");
       }else{
         return False;
       }
     }
 
-    function userid2username($user_id)
+    function id2name($account_id)
     {
       global $phpgw, $phpgw_info;
 
-      $this->db->query("SELECT account_lid FROM accounts WHERE account_id='".$user_id."'",__LINE__,__FILE__);
+      $this->db->query("SELECT account_lid FROM accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         $this->db->next_record();
         return $this->db->f("account_lid");
@@ -189,32 +194,22 @@
       }
     }
 
-    function groupname2groupid($group_name)
+    function get_type($account_id)
     {
       global $phpgw, $phpgw_info;
 
-      $this->db->query("SELECT group_id FROM groups WHERE group_name='".$group_name."'",__LINE__,__FILE__);
+/*
+      $this->db->query("SELECT account_type FROM accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         $this->db->next_record();
-        return $this->db->f("group_id");
+        return $this->db->f("account_type");
       }else{
         return False;
       }
+*/
+return "u";      
     }
 
-    function groupid2groupname($group_id)
-    {
-      global $phpgw, $phpgw_info;
-
-      $this->db->query("SELECT group_name FROM groups WHERE group_id='".$group_id."'",__LINE__,__FILE__);
-      if($this->db->num_rows()) {
-        $this->db->next_record();
-        return $this->db->f("group_name");
-      }else{
-        return False;
-      }
-    }
-    
     function exists($accountname){
       $this->db->query("SELECT account_id FROM accounts WHERE account_lid='".$accountname."'",__LINE__,__FILE__);
       if($this->db->num_rows()) {
