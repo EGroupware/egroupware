@@ -20,8 +20,13 @@
 		function add_user($userData)
 		{
 			$userData['account_expires']	= $userData['expires'];
-			$userData['account_email'] 	= $userData['email'];
-			
+
+
+			if($userData['email'] != "")
+			{
+				$userData['account_email'] = $userData['email'];
+			}
+					
 			$GLOBALS['phpgw']->db->lock(
 				Array(
 					'phpgw_accounts',
