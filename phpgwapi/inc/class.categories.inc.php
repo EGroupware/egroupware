@@ -414,8 +414,12 @@
 			return $this->db->f('cat_id');
 		}
 
-		function id2name($cat_id, $item = 'name')
+		function id2name($cat_id = '', $item = 'name')
 		{
+			if ($cat_id == '')
+			{
+				return '--';
+			}
 			switch($item)
 			{
 				case 'name':	$value = 'cat_name'; break;
