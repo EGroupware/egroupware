@@ -119,8 +119,11 @@
 					$whereclause = '';
 			}
 
-			if ($query)
+			if($query)
 			{
+				$query = ereg_replace("'",'',$query);
+				$query = ereg_replace('"','',$query);
+
 				if ($whereclause)
 				{
 					$whereclause .= ' AND ( ';
