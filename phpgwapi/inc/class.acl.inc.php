@@ -67,7 +67,7 @@
 
 			if ((int)$this->account_id != (int)$account_id)
 			{
-				$this->account_id = get_account_id((int)$account_id,@GLOBALS['egw_info']['user']['account_id']);
+				$this->account_id = get_account_id((int)$account_id,@$GLOBALS['egw_info']['user']['account_id']);
 			}
 		}
 
@@ -199,7 +199,7 @@
 			if ($appname == False)
 			{
 				settype($appname,'string');
-				$appname = GLOBALS['egw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 			$this->data[] = array('appname' => $appname, 'location' => $location, 'account' => $this->account_id, 'rights' => $rights);
 			reset($this->data);
@@ -220,7 +220,7 @@
 			if ($appname == False)
 			{
 				settype($appname,'string');
-				$appname = GLOBALS['egw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 			$count = count($this->data);
 			reset ($this->data);
@@ -295,10 +295,10 @@
 			if ($appname == False)
 			{
 				settype($appname,'string');
-				$appname = GLOBALS['egw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 			$count = count($this->data);
-			if ($count == 0 && GLOBALS['egw_info']['server']['acl_default'] != 'deny')
+			if ($count == 0 && $GLOBALS['egw_info']['server']['acl_default'] != 'deny')
 			{
 				return True;
 			}
@@ -346,11 +346,11 @@
 			if ($appname == False)
 			{
 				settype($appname,'string');
-				$appname = GLOBALS['egw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 
 			$count = count($this->data);
-			if ($count == 0 && GLOBALS['egw_info']['server']['acl_default'] != 'deny')
+			if ($count == 0 && $GLOBALS['egw_info']['server']['acl_default'] != 'deny')
 			{
 				return True;
 			}
@@ -397,7 +397,7 @@
 			// User piece
 			$sql = "select acl_location, acl_rights from phpgw_acl where acl_appname = '$app' ";
 			$sql .= " and (acl_account in ('".$this->account_id."', 0"; // group 0 covers all users
-			$equalto = GLOBALS['egw']->accounts->security_equals($this->account_id);
+			$equalto = $GLOBALS['egw']->accounts->security_equals($this->account_id);
 			if (is_array($equalto) && count($equalto) > 0)
 			{
 				for ($idx = 0; $idx < count($equalto); ++$idx)
@@ -440,11 +440,11 @@
 		{
 			if ($appname == False)
 			{
-				$appname = GLOBALS['egw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 
 			$count = count($this->data);
-			if ($count == 0 && GLOBALS['egw_info']['server']['acl_default'] != 'deny'){ return True; }
+			if ($count == 0 && $GLOBALS['egw_info']['server']['acl_default'] != 'deny'){ return True; }
 			$rights = 0;
 
 			reset ($this->data);
@@ -614,7 +614,7 @@
 		{
 			if ($app == False)
 			{
-				$app = GLOBALS['egw_info']['flags']['currentapp'];
+				$app = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 			$sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and ";
 			$sql .= "acl_location = '".$location."'";
@@ -657,7 +657,7 @@
 				$cache_accountid[$accountid] = $account_id;
 			}
 			$db2 = clone($this->db);
-			$memberships = GLOBALS['egw']->accounts->membership($account_id);
+			$memberships = $GLOBALS['egw']->accounts->membership($account_id);
 			$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
 				. 'acl_account in ';
 			$security = '('.$account_id;
@@ -700,7 +700,7 @@
 
 			if ($app=='')
 			{
-				$app = GLOBALS['egw_info']['flags']['currentapp'];
+				$app = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 
 			$sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and "
@@ -720,7 +720,7 @@
 			$accounts = Array();
 			if ($db2->num_rows() == 0)
 			{
-				$grants[GLOBALS['egw_info']['user']['account_id']] = ~0;
+				$grants[$GLOBALS['egw_info']['user']['account_id']] = ~0;
 				return $grants;
 			}
 			while ($db2->next_record())
@@ -768,7 +768,7 @@
 				}
 				reset($accounts[$grantor]);
 			}
-			$grants[GLOBALS['egw_info']['user']['account_id']] = ~0;
+			$grants[$GLOBALS['egw_info']['user']['account_id']] = ~0;
 
 			return $grants;
 		}
