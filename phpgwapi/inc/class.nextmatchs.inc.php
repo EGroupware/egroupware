@@ -20,7 +20,6 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	/*!
@@ -433,9 +432,18 @@
 		*/
 		function search($search_obj=0)
 		{
-			$_query = stripslashes($GLOBALS['query']);
+			if (is_array($search_obj))
+			{
+				$params		= $search_obj;
+				$_query		= stripslashes($params['query']);
+				$search_obj	= $params['search_obj'];
+			}
+			else
+			{
+				$_query = stripslashes($GLOBALS['query']);
+			}
 
-			// If the place a " in there search, it will mess everything up
+			// If the place a in there search, it will mess everything up
 			// Our only option is to remove it
 			if (ereg('"',$_query))
 			{
@@ -506,7 +514,16 @@
 		*/
 		function filter($filter_obj,$yours=0)
 		{
-			global $filter;
+			if (is_array($yours))
+			{
+				$params	= $yours;
+				$filter	= $params['filter'];
+				$yours	= $params['yours'];
+			}
+			else
+			{
+				$filter = $GLOBALS['HTTP_POST_VARS']['filter'] ? $GLOBALS['HTTP_POST_VARS']['filter'] : $GLOBALS['HTTP_GET_VARS']['filter'];
+			}
 
 			if (is_long($filter_obj))
 			{
@@ -668,7 +685,7 @@
 		@abstract ?
 		@param $old_sort : the current sort value
 		@param $new_sort : the sort value you want if you click on this
-		@param $default_order : user's preference for ordering list items (force this when a new [different] sorting is requested)
+		@param $default_order : users preference for ordering list items (force this when a new [different] sorting is requested)
 		@param $order : the current order (will be flipped if old_sort = new_sort)
 		@param $program : script file name
 		@param $text : Text the link will show
@@ -699,7 +716,7 @@
 			}
 			else
 			{
-				//user has selected a new sort scheme, reset the order to user's default
+				//user has selected a new sort scheme, reset the order to users default
 				$our_order = $default_order;
 			}
 
