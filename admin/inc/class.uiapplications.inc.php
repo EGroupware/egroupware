@@ -309,7 +309,7 @@
 						'n_app_name'   => $n_app_name,
 						'n_app_status' => $n_app_status,
 						'app_order'    => $app_order,
-						'old_app_name' => $app_name
+						'old_app_name' => urldecode($app_name)
 					));
 
 					$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiapplications.get_list&start='.$start);
