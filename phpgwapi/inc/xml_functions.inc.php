@@ -363,18 +363,9 @@
 				// and say we've found a value
 				$GLOBALS['_xh'][$parser]['lv']=2; 
 			}
-			if (isset($GLOBALS['_xh'][$parser]['qt']) && $GLOBALS['_xh'][$parser]['qt'])
-			{
-				// quoted string: replace characters that eval would
-				// do special things with
-				$GLOBALS['_xh'][$parser]['ac'].=str_replace('$', '\$',
-					str_replace('"', '\"', 
-					str_replace(chr(92),$GLOBALS['xmlrpc_backslash'], $data)));
-			}
-			else 
-			{
-				$GLOBALS['_xh'][$parser]['ac'].=$data;
-			}
+			$GLOBALS['_xh'][$parser]['ac'].=str_replace('$', '\$',
+				str_replace('"', '\"', 
+				str_replace(chr(92),$GLOBALS['xmlrpc_backslash'], $data)));
 		}
 	}
 
@@ -387,7 +378,9 @@
 				$GLOBALS['_xh'][$parser]['qt']=1; 
 				$GLOBALS['_xh'][$parser]['lv']=2; 
 			}
-			$GLOBALS['_xh'][$parser]['ac'].=$data;
+			$GLOBALS['_xh'][$parser]['ac'].=str_replace('$', '\$',
+				str_replace('"', '\"', 
+				str_replace(chr(92),$GLOBALS['xmlrpc_backslash'], $data)));
 		}
 	}
 
