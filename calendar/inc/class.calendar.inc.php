@@ -208,7 +208,7 @@ class calendar extends calendar_
 		return $str;
 	}
 
-	function is_private($cal_info,$owner,$field)
+	function is_private($event,$owner,$field)
 	{
 		global $phpgw, $phpgw_info;
 
@@ -216,17 +216,17 @@ class calendar extends calendar_
 		if ($owner == $phpgw_info['user']['account_id'] || $owner == 0 || $this->check_perms(16) == True)
 		{
 		}
-		elseif ($cal_info->access == 'private')
+		elseif ($event->public == False)
 		{
 			$is_private = True;
 		}
-		elseif($cal_info->access == 'group')
+		elseif($event->access == 'group')
 		{
 			$is_private = True;
 			$groups = $phpgw->accounts->memberships($owner);
 			while ($group = each($groups))
 			{
-				if (strpos(' '.$cal_info->groups.' ',','.$group[1]['account_id']).',')
+				if (strpos(' '.$event->groups.' ',','.$group[1]['account_id'].','))
 				{
 					$is_private = False;
 				}
@@ -237,13 +237,13 @@ class calendar extends calendar_
 		{
 			$str = 'private';
 		}
-		elseif (strlen($cal_info->$field) > 19)
+		elseif (strlen($event->$field) > 19)
 		{
-			$str = substr($cal_info->$field, 0 , 19) . '...';
+			$str = substr($event->$field, 0 , 19) . '...';
 		}
 		else
 		{
-			$str = $cal_info->$field;
+			$str = $event->$field;
 		}
 
 		$str .= ' ('.$this->get_long_status($this->users_status).')';
