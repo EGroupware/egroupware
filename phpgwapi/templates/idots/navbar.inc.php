@@ -170,8 +170,21 @@
 		else
 		{
 			$var['icon_or_star']='<font color="#ff9933">*</font>';
-			$var['lang_item']=lang($item_text);
-			$var['item_link']=$item_link;
+			if (is_array($item_link))
+			{
+				if (isset($item_link['icon']))
+				{
+					$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
+					$var['icon_or_star'] = $GLOBALS['phpgw']->common->image($app,$item_link['icon']);
+				}
+				$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
+				$var['item_link'] = $item_link['link'];
+			}
+			else
+			{
+				$var['lang_item']=lang($item_text);
+				$var['item_link']=$item_link;
+			}
 			$GLOBALS['idots_tpl']->set_var($var);		
 			$GLOBALS['idots_tpl']->pparse('out','extra_block_row');
 		}
