@@ -206,7 +206,7 @@ which groups	common	de	Welche Gruppen
 written by:	common	de	Geschrieben von:
 yes	common	de	ja
 you are running a newer version of phpGroupWare than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.  
-you have selected an invalid date	common	en	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
+you have selected an invalid date	common	de	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
 you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your search returned x matchs	common	de	Ihre Suche ergab %1 Treffer
