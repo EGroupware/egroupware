@@ -242,8 +242,12 @@
 			// connect to ldap server
 			if (! $ds = ldap_connect($host))
 			{
-				$GLOBALS['phpgw']->log->message('F-Abort, Failed connecting to LDAP server');
-				$GLOBALS['phpgw']->log->commit();
+				/* log does not exist in setup(, yet) */
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					$GLOBALS['phpgw']->log->message('F-Abort, Failed connecting to LDAP server');
+					$GLOBALS['phpgw']->log->commit();
+				}
 
 				printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
 				return False;
