@@ -31,7 +31,11 @@
 			{
 				$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			}
-			$this->html = CreateObject('calendar.html');
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
+			$this->html = &$GLOBALS['phpgw']->html;
 		}
 
 		function index($error='')
