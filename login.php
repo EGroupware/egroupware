@@ -35,7 +35,6 @@
 */
 
   $phpgw_info["server"]["template_dir"] = PHPGW_SERVER_ROOT."/phpgwapi/templates/default";
-//  $tmpl = new Template($phpgw_info["server"]["template_dir"]);
   $tmpl = CreateObject("phpgwapi.Template", $phpgw_info["server"]["template_dir"]);
 
   if (! $deny_login && ! $phpgw_info["server"]["show_domain_selectbox"]) {
@@ -95,7 +94,7 @@
      deny_login();
   }
   
-  if (isset($PHP_AUTH_USER)) {
+  if ($phpgw_info["server"]["auth_type"] == "http" && isset($PHP_AUTH_USER)) {
     $submit = True;
     $login = $PHP_AUTH_USER;
     $passwd = $PHP_AUTH_PW;
