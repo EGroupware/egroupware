@@ -46,14 +46,15 @@
 			"adr_one_type"        => "ADR;TYPE;WORK",
 			"adr_two_type"        => "ADR;TYPE;HOME",
 			"tel_prefer"          => "TEL;PREFER",
-			"email_type"          => "MAIL;TYPE;WORK",
-			"email_home_type"     => "MAIL;TYPE;HOME",
+			"email_type"          => "EMAIL;TYPE;WORK",
+			"email_home_type"     => "EMAIL;TYPE;HOME",
 
 			"adr_one_street"      => "ADR;WORK;STREET",
 			"adr_one_locality"    => "ADR;WORK;LOCALITY", 
 			"adr_one_region"      => "ADR;WORK;REGION", 
 			"adr_one_postalcode"  => "ADR;WORK;POSTALCODE",
 			"adr_one_countryname" => "ADR;WORK;COUNTRYNAME",
+			"address2"            => "EXT",
 			"label"               => "LABEL",
 
 			"adr_two_street"      => "ADR;HOME;STREET",
@@ -74,8 +75,8 @@
 			"tel_car"             => "TEL;CAR",
 			"tel_isdn"            => "TEL;ISDN",
 			"tel_video"           => "TEL;VIDEO",
-			"email"               => "MAIL;WORK",
-			"email_home"          => "MAIL;HOME",
+			"email"               => "EMAIL;WORK",
+			"email_home"          => "EMAIL;HOME",
 		);
 
 		// make sure to order how we ask for these
@@ -251,15 +252,19 @@
 											break;
 									}
 									break;
-								case "MAIL":
+								case "EMAIL":
 									switch($mult[1]) {
+										case "TYPE":
+											if ($mult[2] == "WORK") { $emailtype  = ";".$buffer[$i][$value]; }
+											if ($mult[2] == "HOME") { $hemailtype = ";".$buffer[$i][$value]; }
+											break;
 										case "WORK":
 											$newval = "A.".$value;
-											$entries .= $newval.":".$buffer[$i][$value]."\r\n";
+											$entries .= $newval.$emailtype.":".$buffer[$i][$value]."\r\n";
 											break;
 										case "HOME":
 											$newval = "B.".$value;
-											$entries .= $newval.":".$buffer[$i][$value]."\r\n";
+											$entries .= $newval.$hemailtype.":".$buffer[$i][$value]."\r\n";
 											break;
 										default:
 											break;
@@ -279,8 +284,9 @@
 				}
 				$workattr = ereg_replace("ADR;","",$workattr);
 				$homeattr = ereg_replace("ADR;","",$homeattr);
-				if ($workaddr) {$work = "A.ADR;".$workattr.":".substr($workaddr,0,-1)."\r\n"; }
-				if ($homeaddr) {$home = "B.ADR;".$homeattr.":".substr($homeaddr,0,-1)."\r\n"; }
+				if (!$buffer[$i]['EXT']) { $buffer[$i]['EXT'] = ";"; }
+				if ($workaddr) {$work = "A.ADR;".$workattr.":;".$buffer[$i]['EXT'].substr($workaddr,0,-1)."\r\n"; }
+				if ($homeaddr) {$home = "B.ADR;".$homeattr.":;;".substr($homeaddr,0,-1)."\r\n"; }
 				$entries .= $work.$home."END:VCARD\r\n";
 				$entries .= "\r\n";
 			}
