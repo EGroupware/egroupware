@@ -42,7 +42,7 @@
 				<!-- BEGIN top_part -->
 				<table width="100%" height="100%" cellspacing="2" cellpadding="2" valign="top">
 					<tr>
-						<td width="131" height="30" valign="bottom" class="top_top"><a href="" target="blank" onMouseover="window.status='phpGroupWare --> home'; return true;" onMouseout="window.status=''; return true;" class="bottom">[phpGroupWare]</a></td>
+						<td width="23%" height="30" valign="bottom" class="top_top"><a href="" target="blank" onMouseover="window.status='phpGroupWare --> home'; return true;" onMouseout="window.status=''; return true;" class="bottom">[phpGroupWare]</a></td>
 						<td height="30" width="19%" valign="bottom" class="user_info">[<xsl:value-of select="user_info_name"/>]</td>
 						<xsl:choose>
 							<xsl:when test="current_users">
@@ -72,7 +72,7 @@
 					</tr>
 				</table>
 				<!-- END top_part -->
-				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
+				<table width="100%" height="100%" cellspacing="0" cellpadding="0" valign="top">
 					<tr valign="top" width="100%">
 						<td width="131">
 						<!-- BEGIN left_part -->
@@ -82,17 +82,17 @@
 						<!-- END left_part -->
 						</td>
 						<td height="100%" width="100%" valign="top" align="center">
-							<table valign="top" cellpadding="2" cellspacing="2" width="100%">
-								<tr>
-									<td>
-										<xsl:choose>
-											<xsl:when test="app_header">
+							<table valign="top" cellpadding="2" cellspacing="0" width="100%">
+								<xsl:choose>
+									<xsl:when test="app_header">
+										<tr>
+											<td>
 												<xsl:attribute name="class">app_header</xsl:attribute>
 												<xsl:value-of disable-output-escaping="yes" select="app_header"/>
-											</xsl:when>
-										</xsl:choose>
-									</td>
-								</tr>
+											</td>
+										</tr>
+									</xsl:when>
+								</xsl:choose>
 								<tr>
 									<td align="center">
 							<xsl:choose>
@@ -156,7 +156,7 @@
 	<xsl:variable name="css"><xsl:value-of select="css"/></xsl:variable>
 		<tr>
 			<td height="30" width="131" valign="bottom" class="left">
-				<table class="left_app">
+				<table class="left_app" cellpadding="2" cellspacing="2">
 					<tr>
 						<td class="left_app">
 							<a href="{$url}" onMouseOver="window.status='{$statustext}'; return true;" onMouseOut="window.status='';return true;" class="{$css}">[<xsl:value-of select="title"/>]</a>
