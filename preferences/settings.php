@@ -103,7 +103,7 @@
             $phpgw->db->next_record();
 
             if ($phpgw->db->f("preference_value") == "") {
-               $phpgw_info["user"]["preferences"]["common"]["lang"] = "EN";
+               $phpgw_info["user"]["preferences"]["common"]["lang"] = "en";
             }
             $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; 
             $strSql = "SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'";
@@ -114,7 +114,7 @@
                    if ($phpgw->db->f("lang_id") == $phpgw_info["user"]["preferences"]["common"]["lang"]) {
                       echo " selected";
                    }
-                } elseif ($phpgw->db->f("lang_id") == "EN") {
+                } elseif ($phpgw->db->f("lang_id") == "en") {
                    echo " selected";
                 }
                 echo ">" . $phpgw->db->f("lang_name") . "</option>";
@@ -150,17 +150,29 @@
 					 . "</option>";
                }
              }
-           ?></select>
-          </td>
-         </tr>
+          ?></select>
+        </td>
+       </tr>
 
-         <tr>
-          <td colspan="2" align="center">
-           <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
-          </td>
-         </tr>
-       </table>
-      </form>
+       <tr>
+        <td><?php echo lang("Currency"); ?></td>
+        <td>
+         <?php
+           if (! isset($phpgw_info["user"]["preferences"]["common"]["currency"])) {
+              $phpgw_info["user"]["preferences"]["common"]["currency"] = '$';
+           }
+         ?>
+         <input name="currency" value="<?php echo $phpgw_info["user"]["preferences"]["common"]["currency"]; ?>">
+        </td>
+       </tr>
+
+       <tr>
+        <td colspan="2" align="center">
+         <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
+        </td>
+       </tr>
+      </table>
+     </form>
 
  <?php
   } else {
@@ -174,6 +186,7 @@
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"timeformat","common");
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"lang","common");
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"default_app","common");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"currency","common");
 
      if ($navbar_text) {
         $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"navbar_text","common");
