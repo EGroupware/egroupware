@@ -56,7 +56,7 @@
        if (PHP_VERSION > "4.0.3pl1") {
           $phpgw_info       = unserialize($db->f("session_info"));
        } else {
-          $phpgw_info       = unserialize(stripslashes($db->f("session_info")));       
+          $phpgw_info       = unserialize(stripslashes($db->f("session_info")));
        }
 
        $phpgw_info["flags"] = $phpgw_info_flags;
@@ -77,6 +77,8 @@
        if (! $phpgw_info["user"]["userid"] ) {
           return False;
        } else {
+          $phpgw->preferences->preferences = $phpgw_info["user"]["preferences"];
+          $phpgw->preferences->account_id = $phpgw_info["user"]["account_id"];
           return True;
        }
     }

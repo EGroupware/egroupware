@@ -184,7 +184,10 @@
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
         $this->auth          = new auth;
-	$this->preferences   = new preferences($phpgw_info["user"]["account_lid"]);
+	$this->preferences   = new preferences();
+        $this->preferences->preferences = $phpgw_info["user"]["preferences"];
+        $this->preferences->account_id = $phpgw_info["user"]["account_id"];
+
      }
       $this->accounts      = new accounts;
       $this->translation   = new translation;
