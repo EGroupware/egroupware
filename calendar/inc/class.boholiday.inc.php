@@ -237,10 +237,10 @@
 				}
 				else
 				{
-					$pos = strpos(' '.$GLOBALS['phpgw_info']['server']['webserver_url'],$HTTP_HOST);
+					$pos = strpos(' '.$GLOBALS['phpgw_info']['server']['webserver_url'],$_SERVER['HTTP_HOST']);
 					if($pos == 0)
 					{
-						switch($SERVER_PORT)
+						switch($_SERVER['SERVER_PORT'])
 						{
 							case 80:
 								$http_protocol = 'http://';
@@ -249,16 +249,16 @@
 								$http_protocol = 'https://';
 								break;
 						}
-						$server_host = $http_protocol.$HTTP_HOST.$GLOBALS['phpgw_info']['server']['webserver_url'];
+						$server_host = $http_protocol.$_SERVER['HTTP_HOST'].$GLOBALS['phpgw_info']['server']['webserver_url'];
 					}
 					else
 					{
 						$server_host = $GLOBALS['phpgw_info']['server']['webserver_url'];
 					}
-					$load_from = $server_host.'/calendar/setup';
+					$load_from = $server_host.'/calendar/egroupware.org';
 				}
 //				echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale)."<br>\n";
-				$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale));
+				$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale).'csv');
 				if (!$lines)
 				{
 					return false;

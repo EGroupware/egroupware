@@ -18,7 +18,7 @@
 	}
 
 	$send_back_to = str_replace('&locale='.$_POST['locale'],'',$send_back_to);
-	$file = './holidays.'.$_POST['locale'];
+	$file = './holidays.'.$_POST['locale'].'.csv';
 	if(!file_exists($file))
 	{
 		if (count($_POST['name']))
