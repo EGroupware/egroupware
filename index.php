@@ -14,6 +14,7 @@
 
   if (! $sessionid) {
      Header("Location: login.php");
+     exit;
   }
 
   $phpgw_flags = array("noheader" => True, "nonavbar" => True, "currentapp" => "home");

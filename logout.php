@@ -52,19 +52,19 @@
 
 
   if ($phpgw->session->verify($sessionid)) {
-     if (file_exists($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id)) {
-        $dh = opendir($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id);
+     if (file_exists($phpgw_info["server"]["temp_dir"] . $sep . $sessionid)) {
+        $dh = opendir($phpgw_info["server"]["temp_dir"] . $sep . $sessionid);
         while ($file = readdir($dh)) {
           if ($file != "." && $file != "..") {
-             unlink($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id
+             unlink($phpgw_info["server"]["temp_dir"] . $sep . $sessionid
 	         . $sep . $file);
           }
 
         }
-        rmdir($phpgw_info["server"]["temp_dir"] . $sep . $phpgw->session->id);
+        rmdir($phpgw_info["server"]["temp_dir"] . $sep . $sessionid);
      }
-     $phpgw->session->destroy($phpgw->session->id);
-     $phpgw->db->query("delete from app_sessions where sessionid='" . $phpgw->session->id . "'");
+     $phpgw->session->destroy($sessionid);
+     $phpgw->db->query("delete from app_sessions where sessionid='" . $sessionid . "'");
   }
 
   Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=1");
