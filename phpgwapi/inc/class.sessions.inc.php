@@ -124,7 +124,7 @@
 
 			$phpgw_info['user']['account_id'] = $this->account_id;
 			
-			$this->read_repositories($phpgw_info['server']['cache_phpgw_info']);
+			$this->read_repositories(@$phpgw_info['server']['cache_phpgw_info']);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
 				$phpgw->log->message('W-VerifySession, account loginid %1 is expired',$this->account_lid);
