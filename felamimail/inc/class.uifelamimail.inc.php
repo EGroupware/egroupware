@@ -454,7 +454,7 @@
 			(
 				'menuaction'	=> 'emailadmin.ui.listProfiles'
 			);
-			$this->t->set_var('emailadmin_url',$GLOBALS['phpgw']->link('/index.php',$linkData));
+			$this->t->set_var('lang_go_emailadmin', lang('use <a href="%1">EmailAdmin</a> to create profiles', $GLOBALS['phpgw']->link('/index.php',$linkData)));
 			
 			$this->t->set_var('back_url',$GLOBALS['phpgw']->link('/admin/index.php'));
 			
