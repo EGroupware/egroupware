@@ -45,11 +45,11 @@
 					$sTranslated = 'text';
 					break;
 				case 'char':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("char(%d)", $iPrecision);
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  'text';
 					}
@@ -61,15 +61,15 @@
 					$sTranslated =  sprintf("decimal(%d,%d)", $iPrecision, $iScale);
 					break;
 				case 'float':
-					if ($iPrecision == 4 || $iPrecision == 8)
+					if($iPrecision == 4 || $iPrecision == 8)
 					{
 						$sTranslated =  sprintf("float%d", $iPrecision);
 					}
 					break;
 				case 'int':
-					if ($iPrecision == 2 || $iPrecision == 4 || $iPrecision == 8)
+					if($iPrecision == 2 || $iPrecision == 4 || $iPrecision == 8)
 					{
-						$sTranslated =  sprintf("int%d", $iPrecision);
+						$sTranslated = sprintf("int%d", $iPrecision);
 					}
 					break;
 				case 'longtext':
@@ -82,11 +82,11 @@
 					$sTranslated = 'timestamp';
 					break;
 				case 'varchar':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("varchar(%d)", $iPrecision);
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  'text';
 					}
@@ -97,7 +97,7 @@
 
 		function TranslateDefault($sDefault)
 		{
-			switch ($sDefault)
+			switch($sDefault)
 			{
 				case 'current_date':
 				case 'current_timestamp':
@@ -126,11 +126,11 @@
 					break;
 				case 'bpchar':
 				case 'char':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated = "'type' => 'char', 'precision' => $iPrecision";
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  "'type' => 'text'";
 					}
@@ -152,11 +152,11 @@
 					$sTranslated = "'type' => 'timestamp'";
 					break;
 				case 'varchar':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  "'type' => 'varchar', 'precision' => $iPrecision";
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  "'type' => 'text'";
 					}
@@ -185,7 +185,7 @@
 			return "INDEX($sFields)";
 		}
 
-		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = '', $sAlteredColumn = '', $sAlteredColumnType = '')
+		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn='', $sAlteredColumn='', $sAlteredColumnType='')
 		{
 			$sdb = $oProc->m_odb;
 			$sdc = $oProc->m_odb;
@@ -198,23 +198,29 @@
 
 			$query = "SELECT a.attname,a.attnum FROM pg_attribute a,pg_class b WHERE ";
 			$query .= "b.oid=a.attrelid AND a.attnum>0 and b.relname='$sTableName'";
-			if ($sDropColumn != '')
+			if($sDropColumn != '')
 			{
 				$query .= " AND a.attname != '$sDropColumn'";
 			}
 			$query .= ' ORDER BY a.attnum';
 
+//			echo '_GetColumns: ' . $query;
+
 			$oProc->m_odb->query($query);
-			while ($oProc->m_odb->next_record())
+			while($oProc->m_odb->next_record())
 			{
-				if ($sColumns != '')
+				if($sColumns != '')
 				{
 					$sColumns .= ',';
 				}
 
 				$sFieldName = $oProc->m_odb->f(0);
-				$sColumns .= $sFieldName;
-				if ($sAlteredColumn == $sFieldName && $sAlteredColumnType != '')
+				/* Failsafe in case the query still includes the column to be dropped */
+				if($sFieldName != $sDropColumn)
+				{
+					$sColumns .= $sFieldName;
+				}
+				if($sAlteredColumn == $sFieldName && $sAlteredColumnType != '')
 				{
 					$sColumns .= '::' . $sAlteredColumnType;
 				}
@@ -241,12 +247,12 @@
 					ORDER BY a.attnum";
 			/* attnum field type length lengthvar notnull(Yes/No) */
 			$sdb->query($sql_get_fields);
-			while ($sdb->next_record())
+			while($sdb->next_record())
 			{
 				$colnum  = $sdb->f(0);
 				$colname = $sdb->f(1);
 
-				if ($sdb->f(5) == 'Yes')
+				if($sdb->f(5) == 'Yes')
 				{
 					$null = "'nullable' => True";
 				}
@@ -255,17 +261,17 @@
 					$null = "'nullable' => False";
 				}
 
-				if ($sdb->f(2) == 'numeric')
+				if($sdb->f(2) == 'numeric')
 				{
 					$prec  = $sdb->f(3);
 					$scale = $sdb->f(4);
 				}
-				elseif ($sdb->f(3) > 0)
+				elseif($sdb->f(3) > 0)
 				{
 					$prec  = $sdb->f(3);
 					$scale = 0;
 				}
-				elseif ($sdb->f(4) > 0)
+				elseif($sdb->f(4) > 0)
 				{
 					$prec = $sdb->f(4) - 4;
 					$scale = 0;
@@ -288,9 +294,9 @@
 					";
 				$sdc->query($sql_get_default);
 				$sdc->next_record();
-				if ($sdc->f(0))
+				if($sdc->f(0))
 				{
-					if (ereg('nextval',$sdc->f(0)))
+					if(strstr($sdc->f(0),'nextval'))
 					{
 						$default = '';
 						$nullcomma = '';
@@ -306,7 +312,7 @@
 					$default = '';
 					$nullcomma = '';
 				}
-				$default = ereg_replace("''","'",$default);
+				$default = str_replace("''","'",$default);
 
 				$this->sCol[] = "\t\t\t\t'" . $colname . "' => array(" . $type . ',' . $null . $nullcomma . $default . '),' . "\n";
 			}
@@ -334,14 +340,14 @@
 				ORDER BY 
 					index_name, tab_name, column_name";
 			$sdc->query($sql_pri_keys);
-			while ($sdc->next_record())
+			while($sdc->next_record())
 			{
 				//echo '<br> checking: ' . $sdc->f(4);
-				if ($sdc->f(4) == 't')
+				if($sdc->f(4) == 't')
 				{
 					$this->pk[] = $sdc->f(2);
 				}
-				if ($sdc->f(3) == 't')
+				if($sdc->f(3) == 't')
 				{
 					$this->uc[] = $sdc->f(2);
 				}
@@ -349,21 +355,21 @@
 			/* ugly as heck, but is here to chop the trailing comma on the last element (for php3) */
 			$this->sCol[count($this->sCol) - 1] = substr($this->sCol[count($this->sCol) - 1],0,-2) . "\n";
 
-			return false;
+			return False;
 		}
 
 		function _CopyAlteredTable($oProc, &$aTables, $sSource, $sDest)
 		{
 			$oDB = $oProc->m_odb;
-			$oProc->m_odb->query("select * from $sSource");
-			while ($oProc->m_odb->next_record())
+			$oProc->m_odb->query("SELECT * FROM $sSource");
+			while($oProc->m_odb->next_record())
 			{
 				$sSQL = "INSERT INTO $sDest (";
 				$i=0;
 				@reset($aTables[$sDest]['fd']);
-				while (list($name,$arraydef) = each($aTables[$sDest]['fd']))
+				while(list($name,$arraydef) = each($aTables[$sDest]['fd']))
 				{
-					if ($i > 0)
+					if($i > 0)
 					{
 						$sSQL .= ',';
 					}
@@ -374,17 +380,17 @@
 
 				$sSQL .= ') VALUES (';
 				@reset($aTables[$sDest]['fd']);
-				$i=0;
-				while (list($name,$arraydef) = each($aTables[$sDest]['fd']))
+				$i = 0;
+				while(list($name,$arraydef) = each($aTables[$sDest]['fd']))
 				{
-					if ($i > 0)
+					if($i > 0)
 					{
 						$sSQL .= ',';
 					}
 
-					if ($oProc->m_odb->f($name) != null)
+					if($oProc->m_odb->f($name) != null)
 					{
-						switch ($arraydef['type'])
+						switch($arraydef['type'])
 						{
 							case 'blob':
 							case 'char':
@@ -395,7 +401,7 @@
 								$sSQL .= "'" . $oProc->m_odb->db_addslashes($oProc->m_odb->f($name)) . "'";
 								break;
 							default:
-								$sSQL .= intval($oProc->m_odb->f($name));
+								$sSQL .= (int)$oProc->m_odb->f($name);
 						}
 					}
 					else
@@ -414,12 +420,11 @@
 
 		function GetSequenceForTable($oProc,$table,&$sSequenceName)
 		{
-			global $DEBUG;
-			if($DEBUG) { echo '<br>GetSequenceForTable: ' . $table; }
+			if($GLOBALS['DEBUG']) { echo '<br>GetSequenceForTable: ' . $table; }
 
 			$oProc->m_odb->query("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relname LIKE 'seq_$table' AND relkind='S' ORDER BY relname",__LINE__,__FILE__);
 			$oProc->m_odb->next_record();
-			if ($oProc->m_odb->f('relname'))
+			if($oProc->m_odb->f('relname'))
 			{
 				$sSequenceName = $oProc->m_odb->f('relname');
 			}
@@ -428,11 +433,11 @@
 
 		function GetSequenceFieldForTable($oProc,$table,&$sField)
 		{
-			global $DEBUG;
-			if($DEBUG) { echo '<br>GetSequenceFieldForTable: You rang?'; }
+			if($GLOBALS['DEBUG']) { echo '<br>GetSequenceFieldForTable: You rang?'; }
+
 			$oProc->m_odb->query("SELECT a.attname FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$table' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$table%' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 			$oProc->m_odb->next_record();
-			if ($oProc->m_odb->f('attname'))
+			if($oProc->m_odb->f('attname'))
 			{
 				$sField = $oProc->m_odb->f('attname');
 			}
@@ -441,11 +446,10 @@
 
 		function DropSequenceForTable($oProc,$table)
 		{
-			global $DEBUG;
-			if($DEBUG) { echo '<br>DropSequenceForTable: ' . $table; }
+			if($GLOBALS['DEBUG']) { echo '<br>DropSequenceForTable: ' . $table; }
 
 			$this->GetSequenceForTable($oProc,$table,$sSequenceName);
-			if ($sSequenceName)
+			if($sSequenceName)
 			{
 				$oProc->m_odb->query("DROP SEQUENCE " . $sSequenceName,__LINE__,__FILE__);
 			}
@@ -457,12 +461,17 @@
 			$this->DropSequenceForTable($oProc,$sTableName);
 
 			return $oProc->m_odb->query("DROP TABLE " . $sTableName) &&
-			       $this->DropSequenceForTable($oProc, $sTableName);
+				$this->DropSequenceForTable($oProc, $sTableName);
 		}
 
 		function DropColumn($oProc, &$aTables, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
 		{
-			if ($bCopyData)
+			if($GLOBALS['DEBUG'])
+			{
+				echo '<br>DropColumn: table=' . $sTableName . ', column=' . $sColumnName;
+			}
+
+			if($bCopyData)
 			{
 				$oProc->m_odb->query("SELECT * INTO $sTableName" . "_tmp FROM $sTableName");
 			}
@@ -475,7 +484,7 @@
 				$oProc->m_odb->query($sSequenceSQL);
 			}
 			$query = "CREATE TABLE $sTableName ($sTableSQL)";
-			if (!$bCopyData)
+			if(!$bCopyData)
 			{
 				return !!($oProc->m_odb->query($query));
 			}
@@ -489,31 +498,33 @@
 
 		function RenameTable($oProc, &$aTables, $sOldTableName, $sNewTableName)
 		{
-			global $DEBUG;
-			if ($DEBUG) { echo '<br>RenameTable(): Fetching old sequence for: ' . $sOldTableName; }
+			if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Fetching old sequence for: ' . $sOldTableName; }
 			$this->GetSequenceForTable($oProc,$sOldTableName,$sSequenceName);
-			if ($DEBUG) { echo ' - ' . $sSequenceName; }
-			if ($DEBUG) { echo '<br>RenameTable(): Fetching sequence field for: ' . $sOldTableName; }
-			$this->GetSequenceFieldForTable($oProc,$sOldTableName,$sField);
-			if ($DEBUG) { echo ' - ' . $sField; }
 
-			if ($sSequenceName)
+			if($GLOBALS['DEBUG']) { echo ' - ' . $sSequenceName; }
+
+			if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Fetching sequence field for: ' . $sOldTableName; }
+			$this->GetSequenceFieldForTable($oProc,$sOldTableName,$sField);
+
+			if($GLOBALS['DEBUG']) { echo ' - ' . $sField; }
+
+			if($sSequenceName)
 			{
 				$oProc->m_odb->query("SELECT last_value FROM seq_$sOldTableName",__LINE__,__FILE__);
 				$oProc->m_odb->next_record();
 				$lastval = $oProc->m_odb->f(0);
 
-				if ($DEBUG) { echo '<br>RenameTable(): dropping old sequence: ' . $sSequenceName . ' used on field: ' . $sField; }
+				if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): dropping old sequence: ' . $sSequenceName . ' used on field: ' . $sField; }
 				$this->DropSequenceForTable($oProc,$sOldTableName);
 
-				if ($lastval)
+				if($lastval)
 				{
 					$lastval = ' start ' . $lastval;
 				}
 				$this->GetSequenceSQL($sNewTableName,$sSequenceSQL);
-				if ($DEBUG) { echo '<br>RenameTable(): Making new sequence using: ' . $sSequenceSQL . $lastval; }
+				if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Making new sequence using: ' . $sSequenceSQL . $lastval; }
 				$oProc->m_odb->query($sSequenceSQL . $lastval,__LINE__,__FILE__);
-				if ($DEBUG) { echo '<br>RenameTable(): Altering column default for: ' . $sField; }
+				if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Altering column default for: ' . $sField; }
 				$oProc->m_odb->query("ALTER TABLE $sOldTableName ALTER $sField SET DEFAULT nextval('seq_" . $sNewTableName . "')",__LINE__,__FILE__);
 			}
 
@@ -540,14 +551,14 @@
 			 This really needs testing - it can affect primary keys, and other table-related objects
 			 like sequences and such
 			*/
-			if ($bCopyData)
+			if($bCopyData)
 			{
 				$oProc->m_odb->query("SELECT * INTO $sTableName" . "_tmp FROM $sTableName");
 			}
 
 			$this->DropTable($oProc, $aTables, $sTableName);
 
-			if (!$bCopyData)
+			if(!$bCopyData)
 			{
 				return $this->CreateTable($oProc, $aTables, $sTableName, $oProc->m_aTables[$sTableName], false);
 			}
@@ -562,14 +573,14 @@
 
 		function AlterColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef, $bCopyData = true)
 		{
-			if ($bCopyData)
+			if($bCopyData)
 			{
 				$oProc->m_odb->query("SELECT * INTO $sTableName" . "_tmp FROM $sTableName");
 			}
 
 			$this->DropTable($oProc, $aTables, $sTableName);
 
-			if (!$bCopyData)
+			if(!$bCopyData)
 			{
 				return $this->CreateTable($oProc, $aTables, $sTableName, $aTables[$sTableName], True);
 			}
@@ -591,12 +602,12 @@
 
 		function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)
 		{
-			if (isset($aColumnDef['default']))	// pgsql cant add a colum with a default
+			if(isset($aColumnDef['default']))	// pgsql cant add a colum with a default
 			{
 				$default = $aColumnDef['default'];
 				unset($aColumnDef['default']);
 			}
-			if (isset($aColumnDef['nullable']) && !$aColumnDef['nullable'])	// pgsql cant add a column not nullable
+			if(isset($aColumnDef['nullable']) && !$aColumnDef['nullable'])	// pgsql cant add a column not nullable
 			{
 				$notnull = !$aColumnDef['nullable'];
 				unset($aColumnDef['nullable']);
@@ -604,7 +615,7 @@
 			$oProc->_GetFieldSQL($aColumnDef, $sFieldSQL);
 			$query = "ALTER TABLE $sTableName ADD COLUMN $sColumnName $sFieldSQL";
 
-			if (($Ok = !!($oProc->m_odb->query($query))) && isset($default))
+			if(($Ok = !!($oProc->m_odb->query($query))) && isset($default))
 			{
 				$query = "ALTER TABLE $sTableName ALTER COLUMN $sColumnName SET DEFAULT '$default';\n";
 
@@ -612,7 +623,7 @@
 				
 				$Ok = !!($oProc->m_odb->query($query));
 
-				if ($OK && $notnull)
+				if($OK && $notnull)
 				{
 					// unfortunally this is pgSQL >= 7.3
 					//$query .= "ALTER TABLE $sTableName ALTER COLUMN $sColumnName SET NOT NULL;\n";
@@ -632,13 +643,12 @@
 
 		function CreateTable($oProc, $aTables, $sTableName, $aTableDef, $bCreateSequence = true)
 		{
-			global $DEBUG;
-			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
+			if($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 			{
 				/* create sequence first since it will be needed for default */
-				if ($bCreateSequence && $sSequenceSQL != '')
+				if($bCreateSequence && $sSequenceSQL != '')
 				{
-					if ($DEBUG) { echo '<br>Making sequence using: ' . $sSequenceSQL; }
+					if($GLOBALS['DEBUG']) { echo '<br>Making sequence using: ' . $sSequenceSQL; }
 					$oProc->m_odb->query($sSequenceSQL);
 				}
 
