@@ -80,7 +80,7 @@
 		@param $filter_obj ?
 		@param $showsearch ?
 		*/
-		function show_tpl($sn,$start,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1)
+		function show_tpl($sn,$start,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0)
 		{
 			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
@@ -107,7 +107,7 @@
 
 			if ($filter_obj)
 			{
-				$tpl->set_var('filter',$this->filter($filter_obj));
+				$tpl->set_var('filter',$this->filter($filter_obj,$yours));
 			}
 			else
 			{
@@ -295,7 +295,7 @@
 		@abstract ?
 		@param $filter_obj
 		*/  
-		function filter($filter_obj)
+		function filter($filter_obj,$yours=0)
 		{
 			global $filter, $phpgw, $phpgw_info;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
@@ -309,9 +309,18 @@
 				{
 //					$user_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
 					$indexlimit = count($user_groups);
-              
-					$filter_obj = array(array('none',lang('Show all')),
-                                  array('private',lang('Only yours')));
+					
+					if ($yours)
+					{
+						$filter_obj = array(array('none',lang('Show all')),
+							array('yours',lang('Only yours')),
+							array('private',lang('private')));
+					}
+					else
+					{
+						$filter_obj = array(array('none',lang('Show all')),
+							array('private',lang('private')));
+					}
 					for ($index=0; $index<$indexlimit; $index++)
 					{
 						$filter_obj[2+$index][0] = $user_groups[$index]['account_id'];
