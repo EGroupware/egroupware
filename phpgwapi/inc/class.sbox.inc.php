@@ -126,25 +126,42 @@
         return $out;
      }
   
-  	function getYears($name, $selected=0, $startYear=0)
-     {
+		function getYears($name, $selected = 0, $startYear = 0, $endyear = 0)
+		{
   
-  	if(!$startYear) $startYear = date('Y');
-     	$out = '<select name="'.$name.'">'."\n";
-  		
-  		$out .= '<option value=""';
-  		if($selected == 0 OR $selected == '') $out .= ' SELECTED';
-  		$out .= '></option>'."\n";
-  		
-  		for($i=$startYear - 1;$i<$startYear + 5;$i++)
-  		{              
-  			$out .= '<option value="'.$i.'"';
-  			if($selected==$i) $out .= ' SELECTED';
-  			$out .= '>'.$i.'</option>'."\n";
-  		}
-        $out .= '</select>'."\n";
-        return $out;
-     }
+			if (!$startYear)
+			{
+				$startYear = date('Y') - 2;
+			}
+
+			if (!$endyear)
+			{
+				$endyear = date('Y') + 5;
+			}
+
+			$out = '<select name="'.$name.'">'."\n";
+
+			$out .= '<option value=""';
+			if ($selected == 0 OR $selected == '')
+			{
+				$out .= ' SELECTED';
+			}
+			$out .= '></option>'."\n";
+
+			// We need to add some good error checking here.
+			for ($i=$startYear;$i<$endyear; $i++)
+			{
+				$out .= '<option value="'.$i.'"';
+				if ($selected==$i)
+				{
+					$out .= ' SELECTED';
+				}
+				$out .= '>'.$i.'</option>'."\n";
+			}
+			$out .= '</select>'."\n";
+
+			return $out;
+		}
   
   	function getPercentage($name, $selected=0)
      {
