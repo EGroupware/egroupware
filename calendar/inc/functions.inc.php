@@ -31,6 +31,8 @@
 		$owner = 0;
 	}
 
+	settype($owner,'integer');
+
 	if(!isset($owner) || !$owner || ($owner == $phpgw_info['user']['account_id']))
 	{
 		$owner = $phpgw_info['user']['account_id'];
