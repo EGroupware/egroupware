@@ -277,9 +277,20 @@
 						$method = $methName;
 						$tmp = explode('.',$methName);
 						$methName = $tmp[2];
-						$listmeth = $tmp[0] . '.' . $tmp[1] . '.' . 'list_methods';
-						$dmap = ExecMethod($listmeth,'xmlrpc');
+						$service  = $tmp[1];
+						$class    = $tmp[0];
+						if(ereg('^service',$method))
+						{
+							$t = 'phpgwapi.' . $class . '.exec';
+							$dmap = ExecMethod($t,array($service,'list_methods','xmlrpc'));
+						}
+						else
+						{
+							$listmeth = $tmp[0] . '.' . $service . '.' . 'list_methods';
+							$dmap = ExecMethod($listmeth,'xmlrpc');
+						}
 						$this->dmap = $dmap;
+						/* _debug_array($this->dmap);exit; */
 					}
 				}
 				if (isset($dmap[$methName]['function']))
@@ -317,8 +328,14 @@
 								// _debug_array($params);
 								$this->reqtoarray($params);
 								//_debug_array($this->req_array);
-
-								$res = ExecMethod($method,$this->req_array);
+								if(ereg('^service',$method))
+								{
+									$res = ExecMethod('phpgwapi.service.exec',array($service,$methName,$this->req_array));
+								}
+								else
+								{
+									$res = ExecMethod($method,$this->req_array);
+								}
 								/* $res = ExecMethod($method,$params); */
 								/* _debug_array($res);exit; */
 								$this->resp_struct = array();
