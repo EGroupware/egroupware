@@ -59,6 +59,7 @@
 
 		function set_langs()
 		{
+			$this->t->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 			$this->t->set_var('lang_access',lang('Private'));
 			$this->t->set_var('lang_save',lang('Save'));
 			$this->t->set_var('user_name',$this->user);
@@ -88,10 +89,17 @@
 				'cats_level'	=> $cats_level
 			);
 
+			if ($extra)
+			{
+				$edata = explode(',',$extra);
+			}
+
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$this->t->set_file(array('cat_list_t' => 'listcats.tpl'));
+			$this->t->set_file(array('cat_list_t'	=> 'listcats.tpl',
+									'data_column'	=> 'listcats.tpl'));
+			$this->t->set_block('cat_list_t','data_column','column');
 			$this->t->set_block('cat_list_t','cat_list','list');
 
 			$this->set_langs();
@@ -106,8 +114,13 @@
 				$this->start = 0;
 			}
 
+			if (!$global_cats)
+			{
+				$global_cats = False;
+			}
+
 			$this->bo->cats->app_name = $cats_app;
-			$cats = $this->bo->get_list();
+			$cats = $this->bo->get_list($global_cats);
 
 //--------------------------------- nextmatch --------------------------------------------
 
@@ -122,19 +135,20 @@
 
 //------------------- list header variable template-declarations ------------------------- 
 
-			$this->t->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 			$this->t->set_var('sort_name',$this->nextmatchs->show_sort_order($this->sort,'cat_name',$this->order,'/index.php',lang('Name'),$link_data));
 			$this->t->set_var('sort_description',$this->nextmatchs->show_sort_order($this->sort,'cat_description',$this->order,'/index.php',lang('Description'),$link_data));
 
-			if ($extra)
+			if (is_array($edata))
 			{
-				$this->t->set_var('sort_data','<td bgcolor="' . $GLOBALS['phpgw_info']['theme']['th_bg'] . '">'
-											. $this->nextmatchs->show_sort_order($this->sort,'cat_data',
-												$this->order,'/index.php',lang($extra),$link_data) . '</td>');
+				for($i=0;$i<count($edata);$i++)
+				{
+					$this->t->set_var('th_data','<td bgcolor="' . $GLOBALS['phpgw_info']['theme']['th_bg'] . '">' . lang($edata[$i]) . '</td>');
+					$this->t->fp('column','data_column',True);
+				}
 			}
 			else
 			{
-				$this->t->set_var('sort_data','');
+				$this->t->set_var('th_data','');
 			}
 
 // -------------------------- end header declaration --------------------------------------
@@ -164,18 +178,23 @@
 				$descr = $GLOBALS['phpgw']->strip_html($cats[$i]['description']);
 				if (!$descr) { $descr = '&nbsp;'; }
 
-				if ($extra)
+				if (is_array($edata))
 				{
-					$data = $cats[$i]['data'];
-					if (! $data)
+					$data = unserialize($cats[$i]['data']);
+					if (! is_array($data))
 					{
-						$data  = '&nbsp;';
+						$holder = '<td>&nbsp;</td>' . "\n";
+						$placeholder = str_repeat($holder,count($edata));
+						$this->t->set_var('td_data',$placeholder);
 					}
-					$this->t->set_var('td_data','<td>' . $data . '</td>');
-				}
-				else
-				{
-					$this->t->set_var('td_data','');
+					else
+					{
+						for ($j=0;$j<count($edata);$j++)
+						{
+							$td_data .= '<td>' . $data[$edata[$j]] . '</td>' . "\n";
+						}
+						$this->t->set_var('td_data',$td_data);
+					}
 				}
 
 				if ($level == 0)
@@ -236,7 +255,7 @@
 
 		function add()
 		{
-			global $cats_app, $extra, $global_cats, $cats_level;
+			global $cats_app, $extra, $global_cats, $cats_level, $cat_data;
 
 			$link_data = array
 			(
@@ -255,10 +274,11 @@
 			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'] ? $GLOBALS['HTTP_POST_VARS']['cat_parent'] : $GLOBALS['HTTP_GET_VARS']['cat_parent'];
 			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
 			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
-			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
+//			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
 			$cat_access			= $GLOBALS['HTTP_POST_VARS']['cat_access'];
 
 			$this->t->set_file(array('form' => 'category_form.tpl'));
+			$this->t->set_block('form','data_row','row');
 			$this->t->set_block('form','add','addhandle');
 			$this->t->set_block('form','edit','edithandle');
 
@@ -273,6 +293,8 @@
 
 			if ($submit)
 			{
+				$data = serialize($cat_data);
+
 				$values = array
 				(
 					'id'		=> '',
@@ -280,7 +302,7 @@
 					'descr'		=> $cat_description,
 					'name'		=> $cat_name,
 					'access'	=> $cat_access,
-					'data'		=> $cat_data
+					'data'		=> $data
 				);
 
 				$error = $this->bo->check_values($values);
@@ -331,13 +353,14 @@
 
 			if ($extra)
 			{
-				$this->t->set_var('td_data','<input name="cat_data" size="50" value="' . $GLOBALS['phpgw']->strip_html($cat_data) . '">');
-				$this->t->set_var('lang_data',lang($extra));
-			}
-			else
-			{
-				$this->t->set_var('td_data','');
-				$this->t->set_var('lang_data','');
+				$edata = explode(',',$extra);
+				$cat_data = array();
+				for($i=0;$i<count($edata);$i++)
+				{
+					$this->t->set_var('td_data','<input name="cat_data[' . $edata[$i] . ']" size="50" value="' . $cat_data[$edata[$i]] . '">');
+					$this->t->set_var('lang_data',lang($edata[$i]));
+					$this->t->fp('row','data_row',True);
+				}
 			}
 
 			$link_data['menuaction']	= 'preferences.uicategories.index';
@@ -350,7 +373,7 @@
 
 		function edit()
 		{
-			global $cats_app, $extra, $global_cats, $cats_level, $cat_id;
+			global $cats_app, $extra, $global_cats, $cats_level, $cat_id, $cat_data;
 
 			$link_data = array
 			(
@@ -375,10 +398,11 @@
 			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'];
 			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
 			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
-			$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
+	//		$cat_data			= $GLOBALS['HTTP_POST_VARS']['cat_data'];
 			$cat_access			= $GLOBALS['HTTP_POST_VARS']['cat_access'];
 
 			$this->t->set_file(array('form' => 'category_form.tpl'));
+			$this->t->set_block('form','data_row','row');
 			$this->t->set_block('form','add','addhandle');
 			$this->t->set_block('form','edit','edithandle');
 
@@ -393,6 +417,8 @@
 
 			if ($submit)
 			{
+				$data = serialize($cat_data);
+
 				$values = array
 				(
 					'id'		=> $cat_id,
@@ -400,7 +426,7 @@
 					'descr'		=> $cat_description,
 					'name'		=> $cat_name,
 					'access'	=> $cat_access,
-					'data'		=> $cat_data
+					'data'		=> $data
 				);
 
 				$error = $this->bo->check_values($values);
@@ -451,7 +477,21 @@
 			$this->t->set_var('category_list',$cats_list);
 
 			$this->t->set_var('access','<input type="checkbox" name="cat_access" value="True"'
-										. ($cat_access == True ?' checked':'') . '>');
+										. ($cats[0]['access'] == private ?' checked':'') . '>');
+
+			if ($extra)
+			{
+				$edata = explode(',',$extra);
+
+				$data = unserialize($cats[0]['data']);
+				$cat_data = array();
+				for($i=0;$i<count($edata);$i++)
+				{
+					$this->t->set_var('td_data','<input name="cat_data[' . $edata[$i] . ']" size="50" value="' . $data[$edata[$i]] . '">');
+					$this->t->set_var('lang_data',lang($edata[$i]));
+					$this->t->fp('row','data_row',True);
+				}
+			}
 
 			if ($cats[0]['owner'] == $this->account)
 			{

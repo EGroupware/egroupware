@@ -23,10 +23,16 @@
 		<td>{lang_descr}</td>
 		<td colspan="2"><textarea name="cat_description" rows="4" cols="50" wrap="virtual">{cat_description}</textarea></td>
 	</tr>
+
+<!-- BEGIN data_row -->
+
 	<tr>
 		<td>{lang_data}</td>
 		<td>{td_data}</td>
 	</tr>
+
+<!-- END data_row -->
+
 	<tr>
 		<td>{lang_access}</td>
 		<td colspan="2">{access}</td>

@@ -68,9 +68,9 @@
 			$this->order  = $data['order'];
 		}
 
-		function get_list()
+		function get_list($global_cats)
 		{
-			return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,True);
+			return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,$global_cats);
 		}
 
 		function save_cat($values)

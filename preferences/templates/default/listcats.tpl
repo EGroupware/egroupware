@@ -1,34 +1,40 @@
 <!-- $Id$ -->
 
 <center>
-<table border="0" cellspacing="0" cellpadding="0" width="80%">
-		<tr>
-			<td colspan="3" width="80%" align="center" bgcolor="#c9c9c9"><b>{lang_app}&nbsp;{title_categories}:&nbsp;{user_name}<b/></td>
-		</tr> 
-		<tr>
-			<td colspan="3" align=left>
-				<table border="0" width="100%">
-					<tr>
-					{left}
-						<td align="center">{lang_showing}</td>
-					{right}
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td colspan="3" align=right>
-				<form method="post" action="{actionurl}">
+<table border="0" cellspacing="2" cellpadding="2" width="87%">
+	<tr>
+		<td colspan="3" width="87%" align="center" bgcolor="#c9c9c9"><b>{lang_app}&nbsp;{title_categories}:&nbsp;{user_name}<b/></td>
+	</tr>
+	<tr>
+		<td colspan="3" align=left>
+			<table border="0" width="100%">
+				<tr>
+				{left}
+					<td align="center">{lang_showing}</td>
+				{right}
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td colspan="3" align=right>
+			<form method="post" action="{actionurl}">
 				<input type="text" name="query">&nbsp;<input type="submit" name="search" value="{lang_search}">
 				</form></td>
-		</tr>
+	</tr>
 </table>
-<table border="0" cellspacing="2" cellpadding="2" width="80%">
+<table border="0" cellspacing="2" cellpadding="2" width="87%">
 	<tr bgcolor="{th_bg}">
 		<td bgcolor="{th_bg}">{sort_name}</td>
 		<td bgcolor="{th_bg}">{sort_description}</td>
-		{sort_data}
+
+<!-- BEGIN data_column -->
+
+		{th_data}
+
+<!-- END data_column -->
+
 		<td bgcolor="{th_bg}" align="center">{lang_app}</td>
 		<td bgcolor="{th_bg}" align=center>{lang_sub}</td>
 		<td bgcolor="{th_bg}" align=center>{lang_edit}</td>
@@ -52,7 +58,7 @@
 <!-- BEGINN add   -->
 
 </table>
-<table border="0" cellspacing="2" cellpadding="2" width="80%">
+<table border="0" cellspacing="2" cellpadding="2" width="87%">
 	<tr valign="bottom">
 		<td width="50%">
 			<form method="POST" action="{add_action}">
