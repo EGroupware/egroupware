@@ -145,7 +145,8 @@
 		/*!
 		@function writeLangFile
 		@abstract writes langfile with all templates and messages registered here
-		@discussion can be called via http://domain/phpgroupware/index.php?et_media.et_media.writeLangFile
+		@discussion can be called via [write Langfile] in the eTemplate editor or
+		@discussion http://domain/phpgroupware/index.php?et_media.et_media.writeLangFile
 		*/
 		function writeLangFile()
 		{
