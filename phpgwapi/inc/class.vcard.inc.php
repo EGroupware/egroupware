@@ -1,12 +1,9 @@
 <?php
   /**************************************************************************\
   * phpGroupWare API - VCard import/export class                             *
-  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * This file written by Miles Lott <milos@groupwhere.org>                   *
   * Parse vcards->contacts class fields, and vice-versa                      *
-  * Copyright (C) 2001 Miles Lott                                            *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * Copyright (C) 2001-2004 Miles Lott                                       *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -116,7 +113,7 @@
 		*/
 		function in_file($filename='')
 		{
-			if (!$filename)
+			if(!$filename)
 			{
 				return array();
 			}
@@ -124,22 +121,22 @@
 			$buffer = array();
 			
 			$fp = fopen($filename,'r');
-			while ($data = fgets($fp,8000))
+			while($data = fgets($fp,8000))
 			{
 				list($name,$value,$extra) = split(':', $data);
-				if (substr($value,0,5) == 'http')
+				if(substr($value,0,5) == 'http')
 				{
 					$value = $value . ':'.$extra;
 				}
-				if ($name && $value)
+				if($name && $value)
 				{
 					reset($this->import);
-					while ( list($fname,$fvalue) = each($this->import) )
+					while(list($fname,$fvalue) = each($this->import))
 					{
-						if ( strstr(strtolower($name), $this->import[$fname]) )
+						if(strstr(strtolower($name), $this->import[$fname]))
 						{
 							$value = trim($value);
-							$value = ereg_replace("=0D=0A","\n",$value);
+							$value = str_replace('=0D=0A',"\n",$value);
 							$buffer += array($name => $value);
 						}
 					}
@@ -169,7 +166,7 @@
 				'address3' => 'address3'
 			);
 
-			while (list($fname,$fvalue) = each($all_fields))
+			while(list($fname,$fvalue) = each($all_fields))
 			{
 				if($buffer[$fname])
 				{
@@ -188,37 +185,37 @@
 		function _parse_in($buffer)
 		{
 			/* Following is a lot of pain and little magic */
-			while ( list($name,$value) = @each($buffer) )
+			while(list($name,$value) = @each($buffer))
 			{
 				$field  = split(';',$name);
-				$field[0] = ereg_replace("A\.",'',$field[0]);
-				$field[0] = ereg_replace("B\.",'',$field[0]);
-				$field[0] = ereg_replace("C\.",'',$field[0]);
-				$field[0] = ereg_replace("D\.",'',$field[0]);
+				$field[0] = str_replace("A\.",'',$field[0]);
+				$field[0] = str_replace("B\.",'',$field[0]);
+				$field[0] = str_replace("C\.",'',$field[0]);
+				$field[0] = str_replace("D\.",'',$field[0]);
 				$values = split(';',$value);
-				if ($field[1])
+				if($field[1])
 				{
 					//echo $field[0];
-					switch ($field[0])
+					switch($field[0])
 					{
 						case 'LABEL':
-							$entry['label'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['label'] = str_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'NOTE':
-							$entry['note'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['note'] = str_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'ADR':
-							switch ($field[1])
+							switch($field[1])
 							{
 								case 'INTL':
-									switch ($field[2])
+									switch($field[2])
 									{
 										case 'WORK':
-											if ( !stristr($buffer['adr_one_type'],$field[1]))
+											if(!stristr($buffer['adr_one_type'],$field[1]))
 											{
 												$entry['adr_one_type'] .= 'intl;';
 											}
-											if (!$buffer['adr_one_street'])
+											if(!$buffer['adr_one_street'])
 											{
 												$entry['address2']            = $values[1];
 												$entry['adr_one_street']      = $values[2];
@@ -229,11 +226,11 @@
 											}
 											break;
 										case 'HOME':
-											if ( !stristr($buffer['adr_two_type'],$field[1]) )
+											if(!stristr($buffer['adr_two_type'],$field[1]))
 											{
 												$entry['adr_two_type'] .= 'intl;';
 											}
-											if (!$buffer['adr_two_street'])
+											if(!$buffer['adr_two_street'])
 											{
 												$entry['adr_two_street']      = $values[2];
 												$entry['adr_two_locality']    = $values[3];
@@ -247,14 +244,14 @@
 									}
 									break;
 								case 'DOM':
-									switch ($field[2])
+									switch($field[2])
 									{
 										case 'WORK':
-											if ( !stristr($buffer['adr_one_type'],$field[1]))
+											if(!stristr($buffer['adr_one_type'],$field[1]))
 											{
 												$entry['adr_one_type'] .= 'dom;';
 											}
-											if (!$buffer['adr_one_street'])
+											if(!$buffer['adr_one_street'])
 											{
 												$entry['address2']            = $values[1];
 												$entry['adr_one_street']      = $values[2];
@@ -265,11 +262,11 @@
 											}
 											break;
 										case 'HOME':
-											if ( !stristr($buffer['adr_two_type'],$field[1]) )
+											if(!stristr($buffer['adr_two_type'],$field[1]))
 											{
 												$entry['adr_two_type'] .= 'dom;';
 											}
-											if (!$buffer['adr_two_street'])
+											if(!$buffer['adr_two_street'])
 											{
 												$entry['adr_two_street']      = $values[2];
 												$entry['adr_two_locality']    = $values[3];
@@ -283,14 +280,14 @@
 									}
 									break;
 								case 'PARCEL':
-									switch ($field[2])
+									switch($field[2])
 									{
 										case 'WORK':
-											if ( !stristr($buffer['adr_one_type'],$field[1]))
+											if(!stristr($buffer['adr_one_type'],$field[1]))
 											{
 												$entry['adr_one_type'] .= 'parcel;';
 											}
-											if (!$buffer['adr_one_street'])
+											if(!$buffer['adr_one_street'])
 											{
 												$entry['address2']            = $values[1];
 												$entry['adr_one_street']      = $values[2];
@@ -301,11 +298,11 @@
 											}
 											break;
 										case 'HOME':
-											if ( !stristr($buffer['adr_two_type'],$field[1]) )
+											if(!stristr($buffer['adr_two_type'],$field[1]))
 											{
 												$entry['adr_two_type'] .= 'parcel;';
 											}
-											if (!$buffer['adr_two_street'])
+											if(!$buffer['adr_two_street'])
 											{
 												$entry['adr_two_street']      = $values[2];
 												$entry['adr_two_locality']    = $values[3];
@@ -319,14 +316,14 @@
 									}
 									break;
 								case 'POSTAL':
-									switch ($field[2])
+									switch($field[2])
 									{
 										case 'WORK':
-											if ( !stristr($buffer['adr_one_type'],$field[1]))
+											if(!stristr($buffer['adr_one_type'],$field[1]))
 											{
 												$entry['adr_one_type'] .= 'postal;';
 											}
-											if (!$buffer['adr_one_street'])
+											if(!$buffer['adr_one_street'])
 											{
 												$entry['address2']            = $values[1];
 												$entry['adr_one_street']      = $values[2];
@@ -337,11 +334,11 @@
 											}
 											break;
 										case 'HOME':
-											if ( !stristr($buffer['adr_two_type'],$field[1]) )
+											if(!stristr($buffer['adr_two_type'],$field[1]))
 											{
 												$entry['adr_two_type'] .= 'postal;';
 											}
-											if (!$buffer['adr_two_street'])
+											if(!$buffer['adr_two_street'])
 											{
 												$entry['adr_two_street']      = $values[2];
 												$entry['adr_two_locality']    = $values[3];
@@ -355,7 +352,7 @@
 									}
 									break;
 								case 'WORK':
-									if (!$buffer['adr_one_street'])
+									if(!$buffer['adr_one_street'])
 									{
 										$entry['address2']            = $values[1];
 										$entry['adr_one_street']      = $values[2];
@@ -373,7 +370,7 @@
 									$entry['adr_two_countryname'] = $values[6];
 									break;
 								default:
-									if (!$buffer['adr_one_street'])
+									if(!$buffer['adr_one_street'])
 									{
 										$entry['address2']            = $values[1];
 										$entry['adr_one_street']      = $values[2];
@@ -386,106 +383,105 @@
 							}
 							break;
 						case 'TEL': 	// RB 2001/05/07 added for Lotus Organizer ueses TEL;{WORK|HOME};{VOICE|FAX}[;PREF]
-							if ($field[2] == 'FAX' && ($field[1] == 'WORK' || $field[i] == 'HOME'))
+							if($field[2] == 'FAX' && ($field[1] == 'WORK' || $field[i] == 'HOME'))
 							{
-								/* TODO This is PHP4 only */
 								array_shift($field);	// --> ignore the WORK or HOME if FAX follows, HOME;FAX and HOME;TEL are maped later
 							}
-							switch ($field[1])
+							switch($field[1])
 							{
 								case 'PREF':
 									//echo $field[2].' is preferred';
-									if ($field[2])
+									if($field[2])
 									{
 										$buffer['tel_prefer'] .= strtolower($field[2]) . ';';
 									}
 									break;
 								case 'WORK':	// RB don't overwrite TEL;WORK;VOICE (main nr.) with TEL;WORK, TEL;WORK --> tel_isdn
 									$entry[$buffer['tel_work'] ? 'tel_isdn' : 'tel_work'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'HOME':	// RB don't overwrite TEL;HOME;VOICE (main nr.) with TEL;HOME, TEL;HOME --> ophone
 									$entry[$buffer['tel_home'] ? 'ophone' : 'tel_home' ] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'VOICE':
 									$entry['tel_voice'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'FAX':
-									if ($entry['tel_fax'])
+									if($entry['tel_fax'])
 									{
 										// RB don't overwrite TEL;WORK;FAX with TEL;HOME;FAX, TEL;HOME;FAX --> ophone
-									   $entry['ophone'] = $values[0] . ' Fax';
-									   break;
+										$entry['ophone'] = $values[0] . ' Fax';
+										break;
 									}
 									$entry['tel_fax'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'MSG':
 									$entry['tel_msg'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'CELL':
 									$entry['tel_cell'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'PAGER':
 									$entry['tel_pager'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'BBS':
 									$entry['tel_bbs'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'MODEM':
 									$entry['tel_modem'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'CAR':
 									$entry['tel_car'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'ISDN':
 									$entry['tel_isdn'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'VIDEO':
 									$entry['tel_video'] = $values[0];
-									if ($field[2] == 'PREF')
+									if($field[2] == 'PREF')
 									{
 										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
@@ -495,7 +491,7 @@
 							}
 							break;
 						case 'EMAIL':
-							switch ($field[1])
+							switch($field[1])
 							{
 								case 'WORK':
 									$entry['email'] = $values[0];
@@ -510,7 +506,7 @@
 									{
 										$entry['email_type'] = $field[2];
 									}
-									elseif (!$buffer['email'])
+									elseif(!$buffer['email'])
 									{
 										$entry['email'] = $values[0];
 										$entry['email_type'] = $field[1];
@@ -527,12 +523,12 @@
 				}
 				else
 				{
-					switch ($field[0])
+					switch($field[0])
 					{
 						case 'N':
 							reset($this->names);
 							$j=0;
-							while(list($myname,$myval) = each($this->names) )
+							while(list($myname,$myval) = each($this->names))
 							{
 								$namel = 'n_' . $myname;
 								$entry[$namel] = $values[$j];
@@ -555,19 +551,23 @@
 							$entry['url'] = $values[0];
 							break;
 						case 'NOTE':
-							$entry['note'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['note'] = str_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'KEY':
-							$entry['key'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['key'] = str_replace('=0D=0A',"\n",$values[0]);
 							break;
 						case 'LABEL':
-							$entry['label'] = ereg_replace('=0D=0A',"\n",$values[0]);
+							$entry['label'] = str_replace('=0D=0A',"\n",$values[0]);
 							break;
-						case 'BDAY': #1969-12-31
+						case 'BDAY': #1969-12-31 OR 19691231
 							$tmp = split('-',$values[0]);
-							if ($tmp[0])
+							if($tmp[0])
 							{
 								$entry['bday'] = $tmp[1] . '/' . $tmp[2] . '/' . $tmp[0];
+							}
+							elseif(strlen($values[0]) == 8)
+							{
+								$entry['bday'] = substr($values[0],0,4) . '/' . substr($values[0],4,2) . '/' . substr($values[0],6,2);
 							}
 							break;
 						case 'ORG':	// RB 2001/05/07 added for Lotus Organizer: ORG:Company;Department
@@ -581,11 +581,11 @@
 			$entry['adr_one_type'] = substr($buffer['adr_one_type'],0,-1);
 			$entry['adr_two_type'] = substr($buffer['adr_two_type'],0,-1);
 			
-			if (count($street = split("\r*\n",$buffer['adr_one_street'],3)) > 1)
+			if(count($street = split("\r*\n",$buffer['adr_one_street'],3)) > 1)
 			{
 				$entry['adr_one_street'] = $street[0];			// RB 2001/05/08 added for Lotus Organizer to split multiline adresses
-				$entry['address2']		  = $street[1];
-				$entry['address3']		  = $street[2];
+				$entry['address2'] = $street[1];
+				$entry['address3'] = $street[2];
 			}
 
 			return $entry;
@@ -593,7 +593,7 @@
 
 		// Takes an array of contacts class fields/values, turns it into a vcard string:
 		//
-		// for ($i=0;$i<count($buffer);$i++) {
+		// for($i=0;$i<count($buffer);$i++) {
 		//     $vcards .= $this->vcard->out($buffer[$i]);
 		// }
 		//
@@ -602,29 +602,35 @@
 			$entry   = '';
 			$header  = 'BEGIN:VCARD' . "\n";
 			$header .= 'VERSION:2.1' . "\n";
-			$header .= 'X-PHPGROUPWARE-FILE-AS:phpGroupWare.org' . "\n";
+			$header .= 'X-EGROUPWARE-FILE-AS:eGroupWare.org' . "\n";
 
 			reset($this->export);
-			while ( list($name,$value) = each($this->export) )
+			while(list($name,$value) = each($this->export))
 			{
-				if (!empty($buffer[$value]))
+				if(!empty($buffer[$value]))
 				{
 					$mult = explode(';',$value);
-					if (!$mult[1])
+					if(!$mult[1])
 					{ // Normal
-						if (strstr($buffer[$value],"\r\n") || strstr($buffer[$value],"\n"))
+						if(strstr($buffer[$value],"\r\n") || strstr($buffer[$value],"\n"))
 						{
-							$buffer[$value] = ereg_replace("\r\n","=0D=0A",$buffer[$value]);
-							$buffer[$value] = ereg_replace("\n","=0D=0A",$buffer[$value]);
+							$buffer[$value] = str_replace("\r\n","=0D=0A",$buffer[$value]);
+							$buffer[$value] = str_replace("\n","=0D=0A",$buffer[$value]);
 							$entry .= $value . ';QUOTED-PRINTABLE:' . $buffer[$value]."\n";
 						}
-						elseif ($value == 'BDAY')
+						elseif($value == 'BDAY')
 						{
 							$tmp = split('/',$buffer[$value]); # 12/31/1969 -> 1969-12-31
-							if ($tmp[0])
+							if($tmp[0])
 							{
-								if (strlen($tmp[0]) == 1) { $tmp[0] = '0'.$tmp[0]; }
-								if (strlen($tmp[0]) == 1) { $tmp[1] = '0'.$tmp[1]; }
+								if(strlen($tmp[0]) == 1)
+								{
+									$tmp[0] = '0'.$tmp[0];
+								}
+								if(strlen($tmp[0]) == 1)
+								{
+									$tmp[1] = '0'.$tmp[1];
+								}
 								$entry .= 'BDAY:' . $tmp[2] . '-' . $tmp[0] . '-' . $tmp[1] . "\n";
 							}
 						}
@@ -635,10 +641,10 @@
 					}
 					else
 					{
-						switch ($mult[0])
+						switch($mult[0])
 						{
 							case 'N':
-								switch ($mult[1])
+								switch($mult[1])
 								{
 									case 'PREFIX':
 										$prefix    = ';' . $buffer[$value];
@@ -658,7 +664,7 @@
 								}
 								break;
 							case 'ORG':
-								switch ($mult[1])
+								switch($mult[1])
 								{
 									case 'NAME':
 										$org_name = $buffer[$value];
@@ -669,18 +675,18 @@
 								}
 								break;
 							case 'ADR':
-								switch ($mult[1])
+								switch($mult[1])
 								{
 									case 'TYPE':
 										$types = explode(';',$buffer[$value]);
-										if ($types[1])
+										if($types[1])
 										{
-											while ( $type = each($types) )
+											while($type = each($types))
 											{
 												$typei[$i][$mult[2]] .= ';' . strtoupper($type[1]);
 											}
 										}
-										elseif ($types[0])
+										elseif($types[0])
 										{
 											$typei[$i][$mult[2]] .= ';' . strtoupper($types[0]);
 										}
@@ -707,20 +713,20 @@
 								{
 									case 'PREFER':
 										$prefer = explode(';',$buffer[$value]);
-										if ($prefer[1])
+										if($prefer[1])
 										{
-											while ($pref = strtoupper(each($prefer)))
+											while($pref = strtoupper(each($prefer)))
 											{
 												$prefi[$i][$pref] = ';PREF';
 											}
 											//echo 'PREF1';
 										}
-										elseif ($prefer[0])
+										elseif($prefer[0])
 										{
 											$prefi[$i][strtoupper($prefer[0])] = ';PREF';
 											//echo 'PREF='.strtoupper($prefer[0]);
 										}
-										elseif ($buffer[$value])
+										elseif($buffer[$value])
 										{
 											$prefi[$i][$buffer[$value]] = ';PREF';
 											//echo 'PREF3';
@@ -742,8 +748,14 @@
 								switch($mult[1])
 								{
 									case 'TYPE':
-										if ($mult[2] == 'WORK') { $emailtype  = ';' . $buffer[$value]; }
-										if ($mult[2] == 'HOME') { $hemailtype = ';' . $buffer[$value]; }
+										if($mult[2] == 'WORK')
+										{
+											$emailtype  = ';' . $buffer[$value];
+										}
+										if($mult[2] == 'HOME')
+										{
+											$hemailtype = ';' . $buffer[$value];
+										}
 										break;
 									case 'WORK':
 										$newval = 'A.'.$value;
@@ -759,54 +771,57 @@
 								break;
 							default:
 								break;
-						} //end switch ($mult[0])
+						} //end switch($mult[0])
 					} //end else
-				} //end if (!empty)
+				} //end if(!empty)
 			} //end while
 
-			if ($lastname && $firstname)
+			if($lastname && $firstname)
 			{
 				$entries .= $header;
 				$entries .= 'N:' . $lastname . $firstname . $middle . $prefix . $suffix . "\n";
 				$entries .= $entry;
 
-				if (!$buffer['FN'])
+				if(!$buffer['FN'])
 				{
-					if ($lastname || $firstname )
+					if($lastname || $firstname)
 					{
 						$entries .= 'FN:' . substr($firstname,1) . ' ' . $lastname . "\n";
 					}
 				}
-				if ($org_name || $org_unit)
+				if($org_name || $org_unit)
 				{
 					$entries .= 'ORG:' . $org_name . $org_unit . "\n";
 				}
 
-				$workattr = ereg_replace('ADR;','',$workattr);
-				$homeattr = ereg_replace('ADR;','',$homeattr);
-				if (!$buffer['EXT']) { $buffer['EXT'] = ';'; }
-				if ($workaddr)
+				$workattr = str_replace('ADR;','',$workattr);
+				$homeattr = str_replace('ADR;','',$homeattr);
+				if(!$buffer['EXT'])
+				{
+					$buffer['EXT'] = ';';
+				}
+				if($workaddr)
 				{
 					$work = 'A.ADR;' . $workattr . ':;' . $buffer['EXT'] . substr($workaddr,0,-1) . "\n";
-					if (!$buffer['LABEL'])
+					if(!$buffer['LABEL'])
 					{
 						$wlabel = substr($workaddr,0,-1);
-						$wlabel = ereg_replace(';','=0D=0A',$wlabel);
-						//$wlabel = ereg_replace('(',',',$wlabel);
-						//$wlabel = ereg_replace(')',',',$wlabel);
+						$wlabel = str_replace(';','=0D=0A',$wlabel);
+						//$wlabel = str_replace('(',',',$wlabel);
+						//$wlabel = str_replace(')',',',$wlabel);
 						$wlabel = 'LABEL;WORK;QUOTED-PRINTABLE:' . $wlabel . "\n";
 					}
 				}
-				if ($homeaddr)
+				if($homeaddr)
 				{
 					$home = 'B.ADR;'.$homeattr.':;;'.substr($homeaddr,0,-1)."\n";
 					$hlabel = substr($homeaddr,0,-1);
-					$hlabel = ereg_replace(';','=0D=0A',$hlabel);
-					//$hlabel = ereg_replace('(',',',$hlabel);
-					//$hlabel = ereg_replace(')',',',$hlabel);
+					$hlabel = str_replace(';','=0D=0A',$hlabel);
+					//$hlabel = str_replace('(',',',$hlabel);
+					//$hlabel = str_replace(')',',',$hlabel);
 					$hlabel = 'LABEL;HOME;QUOTED-PRINTABLE:' . $hlabel . "\n";
 				}
-				$entries = ereg_replace('PUBKEY','KEY',$entries);
+				$entries = str_replace('PUBKEY','KEY',$entries);
 				$entries .= $work . $home . $wlabel . $hlabel . 'END:VCARD' . "\n";
 				$entries .= "\n";
 
