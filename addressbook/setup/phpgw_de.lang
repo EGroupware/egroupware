@@ -97,7 +97,7 @@ label	addressbook	de	Adreßetikett
 ldap context for contacts	admin	de	LDAP Kontext für Kontakte
 ldap host for contacts	admin	de	LDAP Host für Kontakte
 ldap root dn for contacts	admin	de	LDAP rootdn für Kontakte
-ldap root pw for contacts	admin	de	LDAP Paswort für Kontakte
+ldap root pw for contacts	admin	de	LDAP Passwort für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
