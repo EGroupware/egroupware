@@ -643,7 +643,7 @@
 						@reset($test);
 						while(list($x,$value) = @each($test))
 						{
-							$currentver = $setup_info[$key]['currentver'];
+							$this->currentversion = $currentver = $setup_info[$key]['currentver'];
 
 							/* build upgrade function name */
 							$function = $appname . '_upgrade' . str_replace(".", '_', $value);
@@ -718,6 +718,16 @@
 										$GLOBALS['phpgw_setup']->register_app($appname);
 										$GLOBALS['phpgw_setup']->register_hooks($appname);
 									}
+									// is the next update the one we need?
+									if ($success && $test[$x+1] != $success &&
+										($num = array_search($success,$test)) !== False)
+									{
+										// do we have the needed update somewhere else in the row?
+										// if yes, position the array-pointer just before that update and continue
+										reset($test);
+										while((list($x,$value) = each($test)) && $x < $num-1);
+										continue;
+									}
 								}
 								else
 								{
@@ -737,6 +747,17 @@
 								if($DEBUG) { echo '<br>process->upgrade(): running baseline delta only: ' . $function . '...'; }
 								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = True;
 								$success = $function();
+								
+								// is the next update the one we need?
+								if ($success && $test[$x+1] != $success &&
+									($num = array_search($success,$test)) !== False)
+								{
+									// do we have the needed update somewhere else in the row?
+									// if yes, position the array-pointer just before that update and continue
+									reset($test);
+									while((list($x,$value) = each($test)) && $x < $num-1);
+									continue;
+								}
 							}
 							else
 							{
