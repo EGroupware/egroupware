@@ -39,7 +39,7 @@
 		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
 			$phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
 			$columns_to_display[$column[0]] = True;
-			$colname[$column[0]] = $column[1];
+			$colname[$column[0]] = $column[0];
 		}
 	}
 
