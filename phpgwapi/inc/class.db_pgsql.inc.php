@@ -69,6 +69,8 @@ class db {
   {
      global $phpgw_info;
 
+		echo '<b>Warning: limit() is no longer used, use limit_query()</b>';
+
      if ($start == 0) {
         $s = "limit " . $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
      } else {
@@ -109,21 +111,37 @@ class db {
     return $this->Query_ID;
   }
 
-  // public: perform a query with limited result set
-  function limit_query($Query_String, $offset, $num_rows, $line = '', $file = '')
-  {
-    global $phpgw_info;
+	// public: perform a query with limited result set
+	function limit_query($Query_String, $_offset, $line = '', $file = '')
+	{
+		global $phpgw_info;
 
-    if ($this->Debug)
-      printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
+		if (is_array($_offset))
+		{
+			list($offset,$num_rows) = $_offset;
+		}
+		else
+		{
+			$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+			$offset = $_offset;
+		}
 
-    if (!IsSet($num_rows) || $num_rows < 1)
-      $num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+		if ($offset == 0)
+		{
+			$Query_String .= ' LIMIT ' . $num_rows;
+		}
+		else
+		{
+			$Query_String .= ' LIMIT ' . $num_rows . ',' . $offset;
+		}
 
-    $Query_String .= ' LIMIT ' . $offset . ',' . $num_rows;
+		if ($this->Debug)
+		{
+			printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
+		}
 
-    return $this->query($Query_String, $line, $file);
-  }
+		return $this->query($Query_String, $line, $file);
+	}
 
   // public: discard the query result
   function free() {
