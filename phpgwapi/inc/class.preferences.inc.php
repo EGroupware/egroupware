@@ -563,7 +563,7 @@
 						continue;
 					}
 					$this->quote($value);
-					$value = addslashes(serialize($value));	// this addslashes is for the database
+					$value = $this->db->db_addslashes(serialize($value));	// this addslashes is for the database
 					$app = $this->db->db_addslashes($app);
 
 					$this->db->query($sql = "INSERT INTO phpgw_preferences"

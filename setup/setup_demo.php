@@ -145,7 +145,7 @@
 
 			foreach ($defaultprefs as $app => $prefs)
 			{
-				$prefs = addslashes(serialize($prefs));
+				$prefs = $GLOBALS['phpgw_setup']->db->db_addslashes(serialize($prefs));
 				$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_preferences(preference_owner,preference_app,preference_value) VALUES($accountid,'$app','$prefs')",__FILE__,__LINE__);
 			}
 		}

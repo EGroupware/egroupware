@@ -619,7 +619,7 @@
 			foreach ($this->db_cols as $db_col => $col)
 			{
 				$sql .= $db_col . ',';
-				$vals .= $db_col == 'et_group' ? intval($data[$col]).',' : "'" . addslashes($data[$col]) . "',";
+				$vals .= $db_col == 'et_group' ? intval($data[$col]).',' : "'" . $this->db->db_addslashes($data[$col]) . "',";
 			}
 			$sql[strlen($sql)-1] = ')';
 			$sql .= " VALUES ($vals";
@@ -688,7 +688,7 @@
 				$str = '$templ_data[] = array(';
 				for (reset($this->db_cols); list($db_col,$name) = each($this->db_cols); )
 				{
-					$str .= "'$name' => '".addslashes($this->db->f($db_col))."',";
+					$str .= "'$name' => '".$this->db->db_addslashes($this->db->f($db_col))."',";
 				}
 				$str .= ");\n\n";
 				fwrite($f,$str);

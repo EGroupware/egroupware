@@ -114,9 +114,9 @@
 			{
 				case 'current_date':
 				case 'current_timestamp':
-					return 'now';
+					$sDefault = 'now';
 			}
-			return $sDefault;
+			return "'$sDefault'";
 		}
 
 		/* Inverse of above, convert sql column types to array info */

@@ -393,10 +393,6 @@
 			else
 			{
 				$appstbl = 'phpgw_applications';
-				if($this->amorethanb($setup_info['phpgwapi']['currentver'],'0.9.13.014'))
-				{
-					$use_appid = True;
-				}
 			}
 
 			if($GLOBALS['DEBUG'])
@@ -422,26 +418,9 @@
 						.$appname."_tables_prefix','".$setup_info[$appname]['tables_prefix']."')";
 					$this->db->query($sql,__LINE__,__FILE__);
 				}
-				if($use_appid)
-				{
-					$this->db->query("SELECT MAX(app_id) FROM $appstbl");
-					$this->db->next_record();
-					if($this->db->f(0))
-					{
-						$app_id = ($this->db->f(0) + 1) . ',';
-						$app_idstr = 'app_id,';
-					}
-					else
-					{
-						srand(100000);
-						$app_id = rand(1,100000) . ',';
-						$app_idstr = 'app_id,';
-					}
-				}
 				$this->db->query("INSERT INTO $appstbl "
-					. "($app_idstr app_name,app_enabled,app_order,app_tables,app_version) "
+					. "(app_name,app_enabled,app_order,app_tables,app_version) "
 					. "VALUES ("
-					. $app_id
 					. "'" . $setup_info[$appname]['name'] . "',"
 					. $enable . ","
 					. (int)$setup_info[$appname]['app_order'] . ","

@@ -941,7 +941,7 @@
 			else
 			{
 				$base_sep = $sep;
-				if (ereg ("^$this->basedir" . $sep, $string))
+				if (substr($string,0,strlen($this->basedir)+1) == $this->basedir . $sep)
 				{
 					$base = $this->basedir . $sep;
 				}

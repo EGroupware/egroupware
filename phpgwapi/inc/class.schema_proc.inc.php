@@ -491,20 +491,24 @@
 			// Translate the type for the DBMS
 			if($sFieldSQL = $this->m_oTranslator->TranslateType($sType, $iPrecision, $iScale))
 			{
-				if(!$bNullable)
+				if(strpos(strtolower($sFieldSQL),'null')===false)
 				{
-					if(strpos(strtolower($sFieldSQL),' not null')===false)
+					if(!$bNullable)
 					{
 						$sFieldSQL .= ' NOT NULL';
 					}
+					elseif ($this->m_oTranslator->b_needExplicitNULL)
+					{
+						$sFieldSQL .= ' NULL';
+					}
 				}
-
 				if(isset($aField['default']))
 				{
 					if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Calling TranslateDefault for "' . $aField['default'] . '"'; }
 					// Get default DDL - useful for differences in date defaults (eg, now() vs. getdate())
-					$sTranslatedDefault = $aField['default'] == '0' ? $aField['default'] : $this->m_oTranslator->TranslateDefault($aField['default']);
-					$sFieldSQL .= " DEFAULT '$sTranslatedDefault'";
+
+					$sFieldSQL .= ' DEFAULT ' . (is_numeric($aField['default']) ? $aField['default'] :
+						$this->m_oTranslator->TranslateDefault($aField['default']));
 				}
 				if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Outgoing SQL:   ' . $sFieldSQL; }
 				return true;
@@ -552,6 +556,7 @@
 			{
 				return True;
 			}
+			$aIXSQL = array();
 			foreach($aFields as $mFields)
 			{
 				$options = False;
@@ -561,6 +566,10 @@
 					{
 						$options = @$mFields['options'][$this->sType];	// db-specific options, eg. index-type
 						unset($mFields['options']);
+					}
+					if ($options === false)
+					{
+						continue;	// dont create index for that db, eg. cant index text
 					}
 					$mFields = implode(',',$mFields);
 				}

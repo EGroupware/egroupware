@@ -181,6 +181,12 @@
 
 			if (!$this->Link_ID)
 			{
+				foreach(array('Host','Database','User','Password') as $name)
+				{
+					$$name = $this->$name;
+				}
+				$type = $this->Type;
+
 				switch($this->Type)	// convert to ADO db-type-names
 				{
 					case 'pgsql':
@@ -190,13 +196,12 @@
 							" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
 						$User = $Password = $Database = '';	// to indicate $Host is a connection-string
 						break;
+					case 'mssql':
+						if ($this->Port) $Host .= ','.$this->Port;
+						break;
 					default:
-						$Host = $this->Host . ($this->Port ? ':'.$this->Port : '');
-						foreach(array('Database','User','Password') as $name)
-						{
-							$$name = $this->$name;
-						}
-						$type = $this->Type;
+						if ($this->Port) $Host .= ':'.$this->Port;
+						break;
 				}
 
 				if (!is_object($GLOBALS['phpgw']->ADOdb) ||	// we have no connection so far
@@ -228,6 +233,15 @@
 						return 0;	// in case error-reporting = 'no'
 					}
 					//echo "new ADOdb connection<pre>".print_r($GLOBALS['phpgw']->ADOdb,True)."</pre>\n";
+
+					if ($this->Type == 'mssql')
+					{
+						// this is the format ADOdb expects
+						$this->Link_ID->Execute('SET DATEFORMAT ymd');
+						// sets the limit to the maximum
+						ini_set('mssql.textlimit',2147483647);
+						ini_set('mssql.sizelimit',2147483647);
+					}
 				}
 				else
 				{
@@ -682,7 +696,7 @@
 		function haltmsg($msg)
 		{
 			printf("<p><b>Database error:</b> %s<br>\n", $msg);
-			if ($this->Errno != "0" && $this->Error != "()")
+			if (($this->Errno || $this->Error) && $this->Error != "()")
 			{
 				printf("<b>$this->Type Error</b>: %s (%s)<br>\n",$this->Errno,$this->Error);
 			}
@@ -943,6 +957,10 @@
 						break;	// ADOdb has no BlobEncode for mysql and returns an unquoted string !!!
 					}
 					return "'" . $this->Link_ID->BlobEncode($value) . "'";
+				case 'date':
+					return $this->Link_ID->DBDate($value);
+				case 'timestamp':
+					return $this->Link_ID->DBTimeStamp($value);
 			}
 			return $this->Link_ID->quote($value);
 		}

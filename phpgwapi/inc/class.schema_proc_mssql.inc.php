@@ -23,6 +23,7 @@
 		var $fk = array();
 		var $ix = array();
 		var $uc = array();
+		var $b_needExplicitNULL = true;	// no definition means NOT NULL for mssql
 
 		function schema_proc_mssql()
 		{
@@ -36,7 +37,7 @@
 			switch($sType)
 			{
 				case 'auto':
-					$sTranslated = 'int identity(1,1)';
+					$sTranslated = 'int identity(1,1) NOT NULL';
 					break;
 				case 'blob':
 					$sTranslated = 'image'; /* wonder how well PHP will support this??? */
@@ -91,11 +92,11 @@
 					$sTranslated = 'bit';
 					break;
 				case 'varchar':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if ($iPrecision > 0 && $iPrecision <= 256)
 					{
 						$sTranslated =  sprintf("varchar(%d)", $iPrecision);
 					}
-					if ($iPrecision > 255)
+					if ($iPrecision > 256)
 					{
 						$sTranslated =  'text';
 					}
@@ -113,7 +114,7 @@
 				return 'GetDate()';
 			}
 
-			return $sDefault;
+			return "'$sDefault'";
 		}
 
 		// Inverse of above, convert sql column types to array info
@@ -200,9 +201,12 @@
 			return "UNIQUE($sFields)";
 		}
 
-		function GetIXSQL($sFields)
+		function GetIXSQL($sFields,&$append,$options,$sTableName)
 		{
-			return "INDEX($sFields)";
+			$append = True;
+			$ixFields = str_replace(',','_',$sFields);
+			$index = $sTableName . '_' . $ixFields . '_idx';
+			return "CREATE INDEX $index ON $sTableName ($sFields);\n";
 		}
 
 		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn = '')
@@ -342,7 +346,15 @@
 					$oProc->m_odb->query($sSequenceSQL);
 				}
 
+				if($append_ix)
+				{
+					$query = "CREATE TABLE $sTableName ($sTableSQL";
+				}
+				else
+				{
 				$query = "CREATE TABLE $sTableName ($sTableSQL)";
+				}
+
 				return !!($oProc->m_odb->query($query));
 			}
 

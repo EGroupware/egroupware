@@ -492,7 +492,12 @@
 				foreach(explode(',',$query['order']) as $val)
 				{
 					$val = trim($val);
-					$order[] = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
+					$val = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
+					if ($val == 'info_des' && $this->db->Type == 'mssql')
+					{
+						$val = "CAST($val AS varchar)";
+					}
+					$order[] = $val;
 				}
 				$ordermethod = 'ORDER BY ' . implode(',',$order) . ' ' . $query['sort'];
 			}
@@ -547,14 +552,16 @@
 			if ($action == '' || $action == 'sp' || count($links))
 			{
 				$sql_query = "FROM phpgw_infolog $join WHERE ($filtermethod $pid $sql_query) $link_extra";
-				$this->db->query($sql='SELECT DISTINCT phpgw_infolog.info_id '.$sql_query,__LINE__,__FILE__);
+				// mssql cant use DISTICT of text columns (info_des) are involved
+				$distinct = $this->db->Type != 'mssql' ? 'DISTINCT' : '';
+				$this->db->query($sql="SELECT $distinct phpgw_infolog.info_id ".$sql_query,__LINE__,__FILE__);
 				$query['total'] = $this->db->num_rows();
 
 				if (!$query['start'] || $query['start'] > $query['total'])
 				{
 					$query['start'] = 0;
 				}
-				$this->db->limit_query($sql="SELECT DISTINCT phpgw_infolog.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
+				$this->db->limit_query($sql="SELECT $distinct phpgw_infolog.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
 				//echo "<p>sql='$sql'</p>\n";
 				while ($this->db->next_record())
 				{

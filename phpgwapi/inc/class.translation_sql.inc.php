@@ -422,7 +422,7 @@
 								
 								// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
 								list($message_id,$app_name,,$content) = explode("\t",$line);
-								$content=str_replace("\n",'',$content);
+								$content=str_replace(array("\n","\r"),'',$content);
 								$message_id = substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH);
 								$app_name = chop($app_name);
 								$raw[$app_name][$message_id] = $content;
