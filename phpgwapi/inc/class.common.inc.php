@@ -297,7 +297,7 @@
 		/*!
 		@function display_fullname
 		@abstract return the fullname of a user
-		@param $lid user id?
+		@param $lid account loginid
 		@param $firstname firstname
 		@param $lastname lastname
 		*/
