@@ -436,11 +436,11 @@
 
 		if ($phpgw_info['server']['force_theme'] == 'user_choice')
 		{
-			$theme_to_load = $phpgw_info['user']['preferences']['common']['theme'];
+			$theme_to_load = (isset($phpgw_info['user']['preferences']['common']['theme'])?$phpgw_info['user']['preferences']['common']['theme']:'default');
 		}
 		else
 		{
-			$theme_to_load = $phpgw_info['server']['force_theme'];
+			$theme_to_load = (isset($phpgw_info['server']['force_theme'])?$phpgw_info['server']['force_theme']:'default');
 		}
 
 		if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $theme_to_load . '.theme'))
