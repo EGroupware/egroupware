@@ -93,6 +93,7 @@
 			list($value['cat_id']) = $value['cat_id'];
 			list($value['filter']) = $value['filter'];
 			list($value['filter2'])= $value['filter2'];
+			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 
 			$templ->loop = False;
