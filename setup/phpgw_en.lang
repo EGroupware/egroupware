@@ -141,6 +141,7 @@ currency	common	en	Currency
 current_file	filemanager	en	Current File
 current users	common	en	Current users
 custom	common	en	Custom
+custom email settings	email	en	custom email settings
 custom fields	addressbook	en	Custom Fields
 daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
@@ -481,6 +482,7 @@ repeat type	calendar	en	Repeat type
 repetition	calendar	en	Repetition
 reply all	email	en	Reply All
 reply	email	en	Reply
+replyto	email	en	ReplyTo
 reports	bookkeeping	en	Reports
 sa	calendar	en	Sa
 sat	calendar	en	Sat
@@ -517,6 +519,7 @@ showing # x of x	weather	en	showing # %1 of %2
 showing x - x of x	common	en	showing %1 - %2 of %3
 show navigation bar as	preferences	en	Show navigation bar as
 show new messages on main screen	email	en	Show new messages on main screen
+show sender's email address with name	email	en	Show sender's email address with name
 show text on navigation icons	preferences	en	Show text on navigation icons
 site	admin	en	Site
 size	email	en	Size
