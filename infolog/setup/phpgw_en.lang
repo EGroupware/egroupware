@@ -20,7 +20,7 @@ add	infolog	en	Add
 add a file	infolog	en	Add a file
 add a new entry	infolog	en	Add a new Entry
 add a new note	infolog	en	Add a new Note
-add a new phonecall	infolog	en	Add a new Phonecall
+add a new phonecall	infolog	en	Add a new Phone Call
 add a new sub-task, -note, -call to this entry	infolog	en	Add a new sub-task, -note, -call to this entry
 add a new todo	infolog	en	Add a new ToDo
 add file	infolog	en	Add file
@@ -49,7 +49,7 @@ click here to start the search	infolog	en	click here to start the search
 close	infolog	en	Close
 comment	infolog	en	Comment
 configuration	infolog	en	Configuration
-confirm	infolog	en	confirm
+confirm	infolog	en	Confirm
 contact	infolog	en	Contact
 create new links	infolog	en	Create new links
 creates a new field	infolog	en	creates a new field
@@ -91,8 +91,8 @@ edit or create categories for ingolog	infolog	en	Edit or create categories for I
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
 empty for all	infolog	en	empty for all
-enddate	infolog	en	Enddate
-enddate can not be before startdate	infolog	en	Enddate can not be before startdate
+enddate	infolog	en	End Date
+enddate can not be before startdate	infolog	en	End date can not be before start date
 enter a custom contact, leave empty if linked entry should be used	infolog	en	enter a custom contact, leave empty if linked entry should be used
 enter a custom phone/email, leave empty if linked entry should be used	infolog	en	enter a custom phone/email, leave empty if linked entry should be used
 enter a textual description of the log-entry	infolog	en	enter a textual description of the log-entry
@@ -120,7 +120,7 @@ infolog preferences	common	en	InfoLog preferences
 infolog-fieldname	infolog	en	Info Log-Fieldname
 invalid filename	infolog	en	Invalid filename
 label<br>helptext	infolog	en	Label<br>Helptext
-last changed	infolog	en	last changed
+last changed	infolog	en	Last changed
 last modified	infolog	en	Last modified
 leave without saveing the entry	infolog	en	leave without saveing the entry
 leaves without saveing	infolog	en	leaves without saveing
@@ -165,9 +165,9 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	en	path on (web-)server
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	infolog	en	
 pattern for search in projects	infolog	en	pattern for search in Projects
-phone	infolog	en	Phonecall
+phone	infolog	en	Phone Call
 phone/email	infolog	en	Phone/Email
-phonecall	infolog	en	Phonecall
+phonecall	infolog	en	Phone Call
 priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
@@ -189,7 +189,7 @@ select a responsible user: a person you want to delegate this task	infolog	en	se
 select a typ to edit it's status-values or delete it	infolog	en	select a type to edit it's status-values or delete it
 select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
-should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog display your open entries - not finised tasks, phone calls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
@@ -198,8 +198,8 @@ show full usernames	infolog	en	Show full usernames
 show in the infolog list	infolog	en	Show in the InfoLog list
 show open entries: tasks/calls/notes on main screen	infolog	en	Show open entries: Tasks/Calls/Notes on main screen
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
-startdate	infolog	en	Startdate
-startdate enddate	infolog	en	Startdate Enddate
+startdate	infolog	en	Start Date
+startdate enddate	infolog	en	Start Date End Date
 startrecord	infolog	en	Startrecord
 status	infolog	en	Status
 sub	infolog	en	Sub
@@ -209,7 +209,7 @@ test import (show importable records <u>only</u> in browser)	infolog	en	Test Imp
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	en	the name used internaly (<= 32 chars), changeing it makes existing data unavailible
 the text displayed to the user	infolog	en	the text displayed to the user
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
-til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phonecall be finished
+til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phone call be finished
 to many might exceed your execution-time-limit	infolog	en	to many might exceed your execution-time-limit
 today	infolog	en	Today
 todo	infolog	en	ToDo
@@ -217,7 +217,7 @@ translation	infolog	en	Translation
 typ	infolog	en	Type
 typ '%1' already exists !!!	infolog	en	Type '%1' already exists !!!
 type	infolog	en	Type
-type of the log-entry: note, phonecall or todo	infolog	en	Type of the log-entry: Note, Phonecall or ToDo
+type of the log-entry: note, phonecall or todo	infolog	en	Type of the log-entry: Note, Phone call or ToDo
 unlink	infolog	en	Unlink
 upcoming	infolog	en	upcoming
 urgency	infolog	en	urgency
@@ -232,7 +232,7 @@ view parent	infolog	en	View parent
 view subs	infolog	en	view Subs
 view the parent of this entry and all his subs	infolog	en	View the parent of this entry and all his subs
 view this linked entry in its application	infolog	en	view this linked entry in its application
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
 will-call	infolog	en	will call
 yes - delete	infolog	en	Yes - Delete
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
