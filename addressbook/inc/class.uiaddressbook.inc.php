@@ -987,7 +987,7 @@
 
 #			it's better to use $GLOBALS['phpgw_info']['server']['webserver_url'] instead of '/phpgroupware'
 #			right?
-#			and why do we replace /phpgroupware from the url, we already a perfect url?
+#			and why do we replace /phpgroupware from the url, we already have a perfect url?
 
 #			$this->template->set_var('done_button',$this->html_1button_form('DoneForm','Done',
 #				$referer ? ereg_replace('/phpgroupware','',$referer) : $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list')));
