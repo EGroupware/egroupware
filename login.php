@@ -28,12 +28,10 @@
     Setcookie("kp3");
   }
 */
-  $deny_login = False; 
+  $deny_login = False;
 
   $tmpl = new Template($phpgw_info["server"]["template_dir"]);
-
-  $tmpl->set_file(array("login"  => "login.tpl",
-                        "login2" => "login2.tpl"));
+  $tmpl->set_file(array("login"  => "login.tpl"));
 
   // When I am updating my server, I don't want people logging in a messing 
   // things up.
@@ -120,7 +118,6 @@
   $tmpl->set_var("lang_password",lang("password"));
   $tmpl->set_var("lang_login",lang("login"));
 
-  $tmpl->parse("login2out","login2");
   $tmpl->parse("loginout", "login");
   $tmpl->p("loginout");
 ?>
