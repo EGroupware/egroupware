@@ -53,10 +53,11 @@
 				$app_name = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
-			$this->account_id = $account_id;
-			$this->app_name   = $app_name;
-			$this->db         = $GLOBALS['phpgw']->db;
-			$this->grants     = $GLOBALS['phpgw']->acl->get_grants($app_name);
+			$this->account_id	= $account_id;
+			$this->app_name		= $app_name;
+			$this->db			= $GLOBALS['phpgw']->db;
+			$this->db2			= $this->db;
+			$this->grants		= $GLOBALS['phpgw']->acl->get_grants($app_name);
 		}
 
 		/*!
@@ -75,7 +76,7 @@
 				case 'appandsubs':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
 				case 'noglobal':	$s = " AND cat_appname != '" . $this->app_name . "'"; break;
 				case 'noglobalapp':	$s = " AND cat_appname = '" . $this->app_name . "' AND cat_owner != '" . $this->account_id . "'"; break;
-				default:            return False;
+				default:			return False;
 			}
 			return $s;
 		}
@@ -90,12 +91,12 @@
 		{
 			switch($for)
 			{
-				case 'app':         $w = " WHERE cat_appname='" . $this->app_name . "'"; break;
-				case 'appandmains': $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
-				case 'appandsubs':  $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
-				case 'subs':        $w = " WHERE cat_parent != '0'"; break;
-				case 'mains':       $w = " WHERE cat_parent = '0'"; break;
-				default:            return False;
+				case 'app':			$w = " WHERE cat_appname='" . $this->app_name . "'"; break;
+				case 'appandmains':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
+				case 'appandsubs':	$w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
+				case 'subs':		$w = " WHERE cat_parent != '0'"; break;
+				case 'mains':		$w = " WHERE cat_parent = '0'"; break;
+				default:			return False;
 			}
 
 			$this->db->query("SELECT COUNT(cat_id) FROM phpgw_categories $w",__LINE__,__FILE__);
@@ -195,6 +196,9 @@
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 				. $parent_filter . $querymethod . $filter;
 			
+			$this->db2->query($sql,__LINE__,__FILE__);
+			$this->total_records = $this->db2->num_rows();
+
 			if ($limit)
 			{
 				$this->db->limit_query($sql . $ordermethod,$start,__LINE__,__FILE__);
@@ -203,8 +207,6 @@
 			{
 				$this->db->query($sql . $ordermethod,__LINE__,__FILE__);
 			}
-
-			$this->total_records = $this->db->num_rows();
 
 			return $this->db2cats();
 		}
@@ -269,6 +271,9 @@
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 					. $querymethod;
 
+			$this->db2->query($sql . $parent_select,__LINE__,__FILE__);
+			$total_mains = $this->db2->num_rows();
+
 			if ($limit)
 			{
 				$this->db->limit_query($sql . $parent_select . $ordermethod,$start,__LINE__,__FILE__);
@@ -284,6 +289,9 @@
 			for ($i=0;$i < $num_cats;$i++)
 			{
 				$sub_select = " AND cat_parent='" . $cats[$i]['cat_id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
+
+				$this->db2->query($sql . $sub_select,__LINE__,__FILE__);
+				$total_subs += $this->db2->num_rows();
 
 				if ($limit)
 				{
@@ -316,7 +324,8 @@
 					$num_cats = count($cats);
 				}
 			}
-			$this->total_records = count($cats);
+			//$this->total_records = count($cats);
+			$this->total_records = $total_mains + $total_subs;
 			return $cats;
 		}
 
