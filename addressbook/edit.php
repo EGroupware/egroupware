@@ -204,9 +204,12 @@
 			$fields['access'] = 'public';
 		}
 
-		$fields['cat_id'] = is_array($cat_id) ? implode(',',$cat_id) : $cat_id;
-		// make sure commas surround each value
-		$fields['cat_id'] = ',' . $fields['cat_id'] . ',';
+		if ($fields['cat_id'])
+		{
+			$fields['cat_id'] = is_array($cat_id) ? implode(',',$cat_id) : $cat_id;
+			// make sure commas surround each value
+			$fields['cat_id'] = ',' . $fields['cat_id'] . ',';
+		}
 
 		if (($this->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 		{

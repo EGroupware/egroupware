@@ -218,6 +218,7 @@
 	}
 	else
 	{
+		$fields[0]['cat_id'] = ereg_replace(',','',$fields[0]['cat_id']);
 		$catinfo = $cat->return_single($fields[0]['cat_id']);
 		$catname = $catinfo[0]['name'];
 		if (!$cat_id)
