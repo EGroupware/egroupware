@@ -1,12 +1,32 @@
+%1 email addresses inserted	common	it	%1 indirizzi email inseriti
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite multiutente, web-based scritta in %3PHP%4.
+(shift-)click or drag to change value	common	it	(Shift-)Click o drag per cambiare valore
+- click on any of the time parts to increase it	common	it	- Premi su ogni parte della data per aumentarla
+- hold mouse button on any of the above buttons for faster selection.	common	it	- Premi il bottone del mouse button on uno dei pulsanti sottostanti per una selezione veloce.
+- or click and drag for faster selection.	common	it	- o click e drag per una selezione rapida.
+- or shift-click to decrease it	common	it	- or Shift-click per diminuirlo
+- use the %1, %2 buttons to select month	common	it	- Usa il bottone %1, %2 per selezionare il mese
+- use the %1, %2 buttons to select year	common	it	- Usa il bottone %1, %2 per selezionare l'anno
+00 (disable)	admin	it	00 (disabilitato)
+13 (ntp)	admin	it	13 (ntp)
+80 (http)	admin	it	80 (http)
+about	common	it	About
+about %1	common	it	About %1
 access	common	it	Accesso
 access not permitted	common	it	Accesso non permesso
+account has been created	common	it	Account creato
+account has been deleted	common	it	Account cancellato
+account has been updated	common	it	Account modificato
+account is expired	common	it	L'account è scaduto
 acl	common	it	ACL
+action	common	it	Azione
 active	common	it	Attivo
 add	common	it	Aggiungi
-add category	common	it	Aggiungi una categoria
 add %1 category for	common	it	Aggiungi categoria %1 per
+add category	common	it	Aggiungi una categoria
 add sub	common	it	Aggiungi Sub
-admin	common	it	Amministrazione
+addressbook	common	it	Rubrica
+admin	common	it	Amministra
 administration	common	it	Amministrazione
 afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
@@ -18,7 +38,9 @@ angola	common	it	ANGOLA
 anguilla	common	it	ANGUILLA
 antarctica	common	it	ANTARTICO
 antigua and barbuda	common	it	ANTIGUA E BARBUDA
+apply	common	it	Applica
 april	common	it	Aprile
+are you sure you want to delete these entries ?	common	it	Sei sicuro di voler cancellare queste note ?
 are you sure you want to delete this entry ?	common	it	Sei sicuro di voler cancellare questa nota?
 argentina	common	it	ARGENTINA
 armenia	common	it	ARMENIA
@@ -27,32 +49,37 @@ august	common	it	Agosto
 australia	common	it	AUSTRALIA
 austria	common	it	AUSTRIA
 author	common	it	Autore
+autohide sidebox menu's	common	it	Nascondi automaticamente i menu laterali
+automacally hide the sidebox menu's?	common	it	Nascondi automaticamente i menu laterali?
 autosave default category	common	it	Categoria default per il salvataggio automatico
 azerbaijan	common	it	AZERBAIJAN
 back	common	it	Indietro
+back to user login	common	it	Torna al login utenti
 bad login or password	common	it	Nome utente o password sbagliati
 bahamas	common	it	BAHAMAS
 bahrain	common	it	BAHRAIN
 bangladesh	common	it	BANGLADESH
 barbados	common	it	BARBADOS
-based on	common	it	Basato su
+bcc	common	it	Bcc
 belarus	common	it	BELARUS
 belgium	common	it	BELGIO
 belize	common	it	BELIZE
 benin	common	it	BENIN
 bermuda	common	it	BERMUDA
 bhutan	common	it	BHUTAN
+blocked, too many attempts	common	it	Bloccato, troppi tentativi
 bolivia	common	it	BOLIVIA
 bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
 botswana	common	it	BOTSWANA
 bouvet island	common	it	BOUVET ISLAND
 brazil	common	it	BRASILE
-british indian ocean territory	common	it	BRITISH INDIAN OCEAN TERRITORY
+british indian ocean territory	common	it	TERRITORI BRITANNICI OCEANO INDIANO
 brunei darussalam	common	it	BRUNEI DARUSSALAM
 bulgaria	common	it	BULGARIA
 burkina faso	common	it	BURKINA FASO
 burundi	common	it	BURUNDI
-cambodia	common	it	CAMBODIA
+calendar	common	it	Agenda
+cambodia	common	it	CAMBOGIA
 cameroon	common	it	CAMEROON
 canada	common	it	CANADA
 cancel	common	it	Cancella
@@ -63,10 +90,12 @@ category	common	it	Categoria
 category %1 has been added !	common	it	La categoria %1 &egrave; stata aggiunta!
 category %1 has been updated !	common	it	La categoria %1 &egrave; stata aggiornata!
 cayman islands	common	it	ISOLE CAYMAN
+cc	common	it	Cc
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
 change	common	it	Cambia
 charset	common	it	iso-8859-1
+check installation	common	it	Controllo installazione
 chile	common	it	CILE
 china	common	it	CINA
 choose the category	common	it	Scegli una categoria
@@ -74,9 +103,14 @@ choose the parent category	common	it	scegli la categoria padre
 christmas island	common	it	ISOLA DI NATALE
 clear	common	it	Pulisci
 clear form	common	it	Cancella il modulo
+click	common	it	Click
+click or mouse over to show menu's	common	it	Click o Mouse Over per visualizzare i menu
+click or mouse over to show menu's?	common	it	Click o Mouse Over per visualizzare i menu?
+close	common	it	Chiudi
 cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
 colombia	common	it	COLOMBIA
 comoros	common	it	COMORE
+company	common	it	Azienda
 congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
 cook islands	common	it	ISOLE COOK
@@ -94,6 +128,8 @@ cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
 date	common	it	Data
 date due	common	it	Data richiesta
+date selection:	common	it	Selezione data:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Datetime port.<br>Per usare la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	it	Dicembre
 default category	common	it	Categoria Predefinita
 delete	common	it	Elimina
@@ -101,22 +137,35 @@ denmark	common	it	DANIMARCA
 description	common	it	Descrizione
 detail	common	it	Dettaglio
 details	common	it	Dettagli
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilita lo script per sistemare il bug di Internet Explorer 5.5 and superiore nella visualizzazione delle trasparenze nelle immagini PNG?
+disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
+disable slider effects	common	it	Disabilita l'effetto effects slider
+disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	it	Disabilita l'effetto animato degli slider quando visualizzi o nascondi i menu nella pagina? Gli utenti di Opera e Konqueror dovrebbero farlo.
 disabled	common	it	Disabilitato
+display monday first	common	it	Visualizza prima Lunedì
+display sunday first	common	it	Visualizza prima Domenica
 djibouti	common	it	DJIBOUTI
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sottocategorie?
+domain	common	it	Dominio
+domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo email, es. "%1"
+domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
 done	common	it	Finito
+drag to move	common	it	Trascina per spostare
 e-mail	common	it	E-Mail
 east timor	common	it	TIMOR EST
 ecuador	common	it	EQUADOR
 edit	common	it	Modifica
-edit category	common	it	Modifica Categoria
-edit categories	common	it	Modifica Categorie
 edit %1 category for	common	it	Modifica %1 categorie per
+edit categories	common	it	Modifica Categorie
+edit category	common	it	Modifica Categoria
+egroupware api version %1	common	it	Versione delle API eGroupWare  %1
+egroupware: login blocked for user '%1', ip %2	common	it	eGroupWare: login bloccato per l'utente '%1', IP %2
 egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
 email	common	it	E-Mail
+email-address of the user, eg. "%1"	common	it	Indirizzo email per l'utente, es. "%1"
 enabled	common	it	Abilitato
 end date	common	it	Data Fine
 end time	common	it	Ora Fine
@@ -132,6 +181,7 @@ estonia	common	it	ESTONIA
 ethiopia	common	it	ETIOPIA
 falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
 faroe islands	common	it	ISOLE FAROE
+fax number	common	it	numero di fax
 february	common	it	Febbraio
 fields	common	it	Campi
 fiji	common	it	FIJI
@@ -139,7 +189,10 @@ files	common	it	File
 filter	common	it	Filtro
 finland	common	it	FINLANDIA
 first name	common	it	Nome
+first name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
+first page	common	it	Prima pagina
 firstname	common	it	Nome
+fixme!	common	it	FIXME!
 force selectbox	common	it	Forza Menu a discesa
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
@@ -147,22 +200,31 @@ french polynesia	common	it	POLINESIA FRANCESE
 french southern territories	common	it	FRENCH SOUTHERN TERRITORIES
 friday	common	it	Venerdì
 ftp	common	it	FTP
+fullname	common	it	Nome completo
 gabon	common	it	GABON
 gambia	common	it	GAMBIA
+general menu	common	it	Menu Principale
 georgia	common	it	GEORGIA
 germany	common	it	GERMANIA
 ghana	common	it	GHANA
 gibraltar	common	it	GIBILTERRA
 global	common	it	Globale
 global public	common	it	Pubblico Globale
+go today	common	it	Vai a Oggi
 grant access	common	it	Permetti Accesso
 greece	common	it	GRECIA
 greenland	common	it	GROENLANDIA
 grenada	common	it	GRENADA
 group	common	it	Gruppo
 group access	common	it	Accesso Gruppo
+group has been added	common	it	Gruppo aggiunto
+group has been deleted	common	it	Gruppo cancellato
+group has been updated	common	it	Gruppo modificato
+group name	common	it	nome gruppo
 group public	common	it	Gruppo Pubblico
 groups	common	it	Gruppi
+groups with permission for %1	common	it	Grouppi con permessi per %1
+groups without permission for %1	common	it	Gruppi senza permessi per %1
 guadeloupe	common	it	GUADALUPA
 guam	common	it	GUAM
 guatemala	common	it	GUATEMALA
@@ -176,12 +238,18 @@ high	common	it	Alta
 highest	common	it	Più Alta
 holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITT&Agrave; DEL VATICANO)
 home	common	it	Home
+home email	common	it	email di casa
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizzionali vanno in un menu pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
 hungary	common	it	UNGHERIA
 iceland	common	it	ISLANDA
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
+insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
+international	common	it	Internazionale
+invalid ip address	common	it	Indirizzo IP sbagliato
+invalid password	common	it	Password sbagliata
 iran, islamic republic of	common	it	IRAN, REPUBBLICA ISLAMICA DELL
 iraq	common	it	IRAQ
 ireland	common	it	IRLANDA
@@ -197,6 +265,7 @@ july	common	it	Luglio
 june	common	it	Giugno
 kazakstan	common	it	KAZAKISTAN
 kenya	common	it	KENIA
+keywords	common	it	Keywords
 kiribati	common	it	KIRIBATI
 korea, democratic peoples republic of	common	it	KOREA, REPUBBLICA POPOLARE
 korea, republic of	common	it	KOREA, REPUBBLICA
@@ -205,16 +274,21 @@ kyrgyzstan	common	it	KYRGYZSTAN
 language	common	it	Lingua
 lao peoples democratic republic	common	it	REPUBBLICA DEMOCRATICA POPOLARE DEL LAOS
 last name	common	it	Cognome
+last name of the user, eg. "%1"	common	it	Cognome dell'utente, es. "%1"
+last page	common	it	Ultima pagina
 lastname	common	it	Cognome
 latvia	common	it	LATVIA
 lebanon	common	it	LIBANO
 lesotho	common	it	LESOTHO
 liberia	common	it	LIBERIA
 libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
+license	common	it	Licenza
 liechtenstein	common	it	LIECHTENSTEIN
 list	common	it	Lista
 lithuania	common	it	LITUANIA
+local	common	it	Locale
 login	common	it	Login
+loginid	common	it	LoginID
 logout	common	it	Logout
 low	common	it	Bassa
 lowest	common	it	Più Bassa
@@ -222,8 +296,10 @@ luxembourg	common	it	LUSSEMBURGO
 macau	common	it	MACAO
 macedonia, the former yugoslav republic of	common	it	MACEDONIA, EX REPUBBLICA DI YUGOSLAVIA
 madagascar	common	it	MADAGASCAR
+mail domain, eg. "%1"	common	it	dominio email, es. "%1"
 main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
+maintainer	common	it	Mantenitore
 malawi	common	it	MALAWI
 malaysia	common	it	MALESIA
 maldives	common	it	MALDIVE
@@ -235,9 +311,11 @@ marshall islands	common	it	ISOLE MARSHALL
 martinique	common	it	MARTINICA
 mauritania	common	it	MAURITANIA
 mauritius	common	it	MAURITIUS
+max number of icons in navbar	common	it	Numero massimo di icone della barra di navigazione
 may	common	it	Maggio
 mayotte	common	it	MAYOTTE
 medium	common	it	Media
+menu	common	it	Menu
 message	common	it	Messaggio
 mexico	common	it	MESSICO
 micronesia, federated states of	common	it	MICRONESIA, STATI FEDERATI DELLA
@@ -250,68 +328,105 @@ morocco	common	it	MAROCCO
 mozambique	common	it	MOZAMBICO
 myanmar	common	it	MYANMAR
 name	common	it	Nome
+name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
 namibia	common	it	NAMIBIA
 nauru	common	it	NAURU
 nepal	common	it	NEPAL
 netherlands	common	it	OLANDA
 netherlands antilles	common	it	ANTILLE OLANDESI
+never	common	it	Mai
 new caledonia	common	it	NUOVA CALEDONIA
 new entry added sucessfully	common	it	Nuovo appuntamento aggiunto con successo
 new main category	common	it	Nuova categoria principale
+new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
 next	common	it	Avanti
+next month (hold for menu)	common	it	Mese successivo (premi per menu)
+next page	common	it	Pagina successiva
+next year (hold for menu)	common	it	Anno successivo (premi per menu)
 nicaragua	common	it	NICARAGUA
 niger	common	it	NIGER
 nigeria	common	it	NIGERIA
 niue	common	it	NIUE
 no	common	it	No
+no entries found, try again ...	common	it	nessun risultato, prova ancora ...
+no history for this record	common	it	Nessuna history per questo record
 no subject	common	it	Nessun Oggetto
 none	common	it	Nessuno
 norfolk island	common	it	ISOLE NORFOLK
 normal	common	it	Normale
 northern mariana islands	common	it	ISOLE NORTHERN MARIANA
 norway	common	it	NORVEGIA
+not assigned	common	it	non assegnato
 note	common	it	Nota
 notes	common	it	Note
 notify window	common	it	Finestra di Notifica
 november	common	it	Novembre
 october	common	it	Ottobre
 ok	common	it	OK
+old value	common	it	Vecchio Valore
 oman	common	it	OMAN
+on *nix systems please type: %1	common	it	Sui sistemi *nix inserisci: %1
+on mouse over	common	it	Sul Mouse Over
+only private	common	it	solo privati
 only yours	common	it	solo tuoi
 open notify window	common	it	Apri finestra di Notifica
+open popup window	common	it	Apro finestra popup
 original	common	it	Originale
 other	common	it	Altro
 overview	common	it	Overview
 owner	common	it	Proprietario
+page was generated in %1 seconds	common	it	La pagina è stata generata in %1 secondi
 pakistan	common	it	PAKISTAN
 palau	common	it	PALAU
 palestinian territory, occupied	common	it	PALESTINA, TERRITORI OCCUPATI DELLA
 panama	common	it	PANAMA
 papua new guinea	common	it	PAPUA NUOVA GUINEA
 paraguay	common	it	PARAGUAY
+parcel	common	it	Parcella
 parent category	common	it	Categoria padre
 password	common	it	Password
-password has been updated	common	it	La password è stata aggiornata
+password could not be changed	common	ir	La oassword non può essere cambiato
+password has been updated	common	it	La password è stata modificata
+path to user and group files has to be outside of the webservers document-root!!!	common	it	Il path per i files degli utenti e dei gruppi DEVE ESSERE ESTERNA alladocument-root del webserver!!!
+pattern for search in addressbook	common	it	Pattern per la Ricerca nella Rubrica
+pattern for search in calendar	common	it	Pattern per la Ricerca nell'Agenda
+pattern for search in projects	common	it	Pattern per la Ricerca nei Progetti
+permissions to the files/users directory	common	it	permessi per la directory dei files/utenti
 personal	common	it	Personale
 peru	common	it	PERU
 philippines	common	it	FILIPPINE
+phone number	common	ut	numero telefonico
 pitcairn	common	it	PITCAIRN
+please %1 by hand	common	it	Per favore %1 a mano
 please enter a name	common	it	Per favore inserisci un nome!
 please run setup to become current	common	it	Per favore esegui setup per aggiornare
-please set your preferences for this app	common	it	Per favore specifica le tue preferenze per questa applicazione
+please select	common	it	Per favore Seleziona
+please set your global preferences	common	it	Per favore imposta le preferenze globali!
+please set your preferences for this app	common	it	Per favore imposta le preferenze per questa applicazione
+please wait...	common	it	Attendere per Favore...
 poland	common	it	POLONIA
 portugal	common	it	PORTOGALLO
+postal	common	it	Postale
 powered by phpgroupware version %1	common	it	Creato con <a href="http://www.phpgroupware.org">phpGroupWare</a> versione %1
 preferences	common	it	Preferenze
+prev. month (hold for menu)	common	it	Mese precedente (premi per menu)
+prev. year (hold for menu)	common	it	Anno precedente (premi per menu)
+previous page	common	it	Pagina precedente
 print	common	it	Stampa
 priority	common	it	Priorità
 private	common	it	Privato
+project	common	it	Progetto
 public	common	it	pubblico
 puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
 read	common	it	Leggi
+read this list of methods.	common	it	Legge questa lista di metodi.
+reject	common	it	Rifiuta
 rename	common	it	Rinomina
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
+returns an array of todo items	common	it	Restituisce un array delle cose da fare
+returns struct of users application access	common	it	Restituisce la struttura degli accessi alle applicazioni
 reunion	common	it	REUNION
 romania	common	it	ROMANIA
 russian federation	common	it	FEDERAZIONE RUSSA
@@ -329,12 +444,29 @@ saudi arabia	common	it	ARABIA SAUDITA
 save	common	it	Salva
 search	common	it	Cerca
 section	common	it	Sezione
-select category	common	it	Seleziona categoria
+select	common	ir	Seleziona
+select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
+select category	common	it	Selezione categoria
+select date	common	it	Selezione data
+select group	common	it	Selezione gruppo
+select home email address	common	it	Selezione indirizzo email di casa
+select one	common	it	Seleziona uno
+select user	common	it	Selezione utente
+select work email address	common	it	Selezione indirizzio email del lavoro
+send	common	it	Invia
 senegal	common	it	SENEGAL
 september	common	it	Settembre
+server %1 has been added	common	it	Server %1 aggiunto
+server name	common	it	Nome Server
 session has been killed	common	it	La sessione è stata terminata
+setup	common	it	Setup
+setup main menu	common	it	Main Menu Setup
 seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
+show all categorys	common	it	Visualizza tutte le categorie
+show page generation time	common	it	Visualizza il tempo di generazione della pagina
+show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina?
+show_more_apps	common	it	ancora
 showing %1	common	it	visualizzati %1
 showing %1 - %2 of %3	common	it	visualizzo %1 - %2 di %3
 sierra leone	common	it	SIERRA LEONE
@@ -353,6 +485,7 @@ start time	common	it	Ora Inizio
 status	common	it	Status
 subject	common	it	Oggetto
 submit	common	it	Invia
+substitutions and their meanings:	common	it	Sostituzione dei significati:
 sudan	common	it	SUDAN
 sunday	common	it	Domenica
 suriname	common	it	SURINAME
@@ -368,17 +501,26 @@ thailand	common	it	TAILANDIA
 the api is current	common	it	L'API è aggiornata
 the api requires an upgrade	common	it	L'API necessita di un aggiornamento
 the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
+the mail server returned	common	it	Il mail server ha risposto
 this application is current	common	it	Questa applicazione è aggiornata
 this application requires an upgrade	common	it	Questa applicazione richiede un aggiornamento
 this name has been used already	common	it	Questo nome è già stato usato!
 thursday	common	it	Giovedì
 time	common	it	Ora
 time zone	common	it	Fuso orario
+time selection:	common	it	Selezione Ora:
 time zone offset	common	it	Differenza di fuso orario
 title	common	it	Titolo
+to	common	it	To
+to correct this error for the future you will need to properly set the	common	it	Per correggere questo errore devi selezionare correttamente il
+to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare alla lista dei messaggi, premi <a href="%1">qui</a>
+today	common	it	Oggi
+todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
+toggle first day of week	common	it	Togli il primo giorno della settimana
 togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	it	Troppi tentativi di login falliti: %1 per l'utente '%2', %3 dall'IP %4
 total	common	it	Totale
 trinidad and tobago	common	it	TRINIDAD E TOBAGO
 tuesday	common	it	Martedì
@@ -397,30 +539,49 @@ unknown	common	it	Sconosciuto
 update	common	it	Aggiorna
 url	common	it	URL
 uruguay	common	it	URUGUAY
+use button to search for	common	it	usa il Pulsante per cercare 
+use button to search for address	common	it	usa il Pulsante per cercare l'Indirizzo
+use button to search for calendarevent	common	it	usa il Pulsante per cercare un Evento in Agenda
+use button to search for project	common	it	usa il Pulsante per cercare un Progetto
 user	common	it	Utente
+user accounts	common	it	account utente
+user groups	common	it	gruppi utente
 username	common	it	Username
 users	common	it	Utenti
 users choice	common	it	Scelta Utente
 uzbekistan	common	it	UZBEKISTAN
 vanuatu	common	it	VANUATU
 venezuela	common	it	VENEZUELA
+version	common	it	Versione
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
 virgin islands, u.s.	common	it	ISOLE VERGINI, U.S.
 wallis and futuna	common	it	WALLIS E FUTUNA
 wednesday	common	it	Mercoledì
+welcome	common	it	Benvenuto
 western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
+wk	common	it	wk
+work email	common	it	email di lavoro
 written by:	common	it	Scritto da:
+year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
+you are required to change your password during your first login	common	it	Ti sarà richiesto di cambiare la password al primo login
 you are running a newer version of phpGroupWare than your database is setup for	common	it	Stai utilizzando una versione più recente di phpGroupWare rispetto a quella per cui il tuo database è stato installato.
 you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
+you have not entered a title	common	it	Non hai inserito un titolo
+you have not entered a valid date	common	it	Non hai inserito una data valida
+you have not entered a valid time of day	common	it	Non hai inserito un ora del giorno valida
+you have not entered participants	common	it	Non hai inserito participanti
 you have selected an invalid date	common	it	Hai selezionato una data non valida!
 you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
-your search returned 1 match	common	it	la tua ricerca ha restituito un risultato
+you have successfully logged out	common	it	Sei stato sconnesso correttamente
+your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
+your message has been sent	common	it	Il tuo messaggio è stato inviato
 your search returned %1 matchs	common	it	la tua ricerca ha resttuito %1 risultati
+your search returned 1 match	common	it	la tua ricerca ha restituito un risultato
 your session could not be verified.	login	it	La tua sessione non può essere verificata.
 your settings have been updated	common	it	I tuoi settaggi sono aggiornati
 yugoslavia	common	it	YUGOSLAVIA
