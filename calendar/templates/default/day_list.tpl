@@ -11,7 +11,7 @@
 </div>
 <!-- END day -->
 <!-- BEGIN day_row -->
-    {event}
+    <font style="font-size: 8pt;">{event}</font>
 <!-- END day_row -->
 <!-- BEGIN day_event_on -->
 	<font class="event-on">{event}</font>

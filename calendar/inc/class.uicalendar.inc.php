@@ -3357,8 +3357,8 @@
 			$p->set_unknowns('keep');
 
 			$tpl = 'day_cal.tpl';
-			if(intval($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])==2 &&
-				$GLOBALS[phpgw_info][flags][currentapp] == 'home')
+			if((int)($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])==2 &&
+				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'home')
 			{
 				$tpl = 'day_list.tpl';
 			}
@@ -3376,8 +3376,8 @@
 
 			$date_to_eval = sprintf("%04d%02d%02d",$params['year'],$params['month'],$params['day']);
 
-			$day_start = mktime(intval($this->bo->prefs['calendar']['workdaystarts']),0,0,$params['month'],$params['day'],$params['year']);
-			$day_end = mktime(intval($this->bo->prefs['calendar']['workdayends']),0,1,$params['month'],$params['day'],$params['year']);
+			$day_start = mktime((int)($this->bo->prefs['calendar']['workdaystarts']),0,0,$params['month'],$params['day'],$params['year']);
+			$day_end = mktime((int)($this->bo->prefs['calendar']['workdayends']),0,1,$params['month'],$params['day'],$params['year']);
 			$daily = $this->set_week_array($GLOBALS['phpgw']->datetime->get_weekday_start($params['year'],$params['month'],$params['day']),$this->theme['row_on'],True);
 			print_debug('Date to Eval',$date_to_eval);
 			$events_to_show = array();
