@@ -43,11 +43,31 @@
 			{
 				$GLOBALS['phpgw_info']['server']['mail_port'] = '110';
 			}
+ 			elseif ($GLOBALS['phpgw_info']['server']['mail_server_type']=='imaps')
+ 			{
+ 				$GLOBALS['phpgw_info']['server']['mail_port'] = '993';
+ 			}
+ 			elseif ($GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3s')
+ 			{
+ 				$GLOBALS['phpgw_info']['server']['mail_port'] = '995';
+ 			}
 
 			if( $GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3')
 			{
 				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server'].'/pop3'
 					.':'.$GLOBALS['phpgw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
+ 			}
+ 			elseif ( $GLOBALS['phpgw_info']['server']['mail_server_type']=='imaps' )
+ 			{
+ 				// IMAPS support:
+ 				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server']."/ssl/novalidate-cert"
+                                         .':993}INBOX', $username , $passwd);
+ 			}
+ 			elseif ( $GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3s' )
+ 			{
+ 				// POP3S support:
+ 				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server']."/ssl/novalidate-cert"
+                                         .':995}INBOX', $username , $passwd);
 			}
 			else
 			{

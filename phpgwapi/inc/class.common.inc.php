@@ -1863,6 +1863,14 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				$prefs['email']['mail_port'] = '110';
 			}
+ 			elseif ($prefs['email']['mail_server_type']=='imaps')
+ 			{
+ 				$prefs['email']['mail_port'] = '993';
+ 			}
+ 			elseif ($prefs['email']['mail_server_type']=='pop3s')
+ 			{
+ 				$prefs['email']['mail_port'] = '995';
+ 			}
 			// This is going to be used to switch to the nntp class
 			if (isset($GLOBALS['phpgw_info']['flags']['newsmode']) &&
 				$GLOBALS['phpgw_info']['flags']['newsmode'])
