@@ -42,6 +42,11 @@ define('MSG_DELETED',0);
 define('MSG_MODIFIED',1);
 define('MSG_ADDED',2);
 
+define('REJECTED',0);
+define('NO_RESPONSE',1);
+define('TENTATIVE',2);
+define('ACCEPTED',3);
+
 class calendar__
 {
 	var $event;

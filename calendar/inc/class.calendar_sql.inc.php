@@ -910,6 +910,18 @@ class calendar_ extends calendar__
 		$this->event->participants = $participants;
 		return True;
 	}
+
+	function set_status($id,$owner,$status)
+	{
+		$status_code_short = Array(
+			REJECTED =>	'R',
+			NO_RESPONSE	=> 'U',
+			TENTATIVE	=>	'T',
+			ACCEPTED	=>	'A'
+		);
+		$this->stream->query("UPDATE calendar_entry_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
+		return True;
+	}
 	
 // End of ICal style support.......
 

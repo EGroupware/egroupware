@@ -4,7 +4,7 @@
   * http://www.phpgroupware.org                                              *
   * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
   *          http://www.radix.net/~cknudsen                                  *
-  * Written by Mark Peters <skeeter@phpgroupware.org>                        *
+  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -13,32 +13,35 @@
   \**************************************************************************/
 
 	/* $Id$ */
-
-	global $msgtype, $owner, $rights;
-
-	$d1 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
-	if($d1 == 'htt' || $d1 == 'ftp')
-	{
-		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
-		$phpgw->common->phpgw_exit();
-	}
-	unset($d1);
-
-	$tmp_app_inc = $phpgw_info['server']['app_inc'];
-	$phpgw_info['server']['app_inc'] = $phpgw->common->get_inc_dir('calendar');
-
-	include($phpgw_info['server']['app_inc'].'/functions.inc.php');
-
-	$str = '';
-
-	$msg_type = explode(';',$msgtype);
-	$id_array = explode('=',$msg_type[2]);
-	$id = intval(substr($id_array[1],1,strlen($id_array[1])-2));
-
-	echo 'Event ID: '.$id."<br>\n";
+	$phpgw_info['flags']['currentapp'] = 'calendar';
+	include('../header.inc.php');
 
 	$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
 	$event = $phpgw->calendar->fetch_event($cal_stream,$id);
+
+	reset($event->participants);
+	$participating = False;
+	for($j=0;$j<count($event->participants);$j++)
+	{
+		if($event->participants[$j] == $owner)
+		{
+			$participating = True;
+		}
+	}
+
+	if($participating == False)
+	{
+		echo '<center>The user '.$phpgw->common->grab_owner($owner).' is not participating in this event!</center>';
+		$phpgw->common->footer();
+		$phpgw->common->phpgw_exit();
+	}
+
+	if($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == False)
+	{
+		echo '<center>You do not have permission to edit this appointment!</center>';
+		$phpgw->common->footer();
+		$phpgw->common->phpgw_exit();
+	}
 
 	reset($event->participants);
 
@@ -46,13 +49,8 @@
 	$freetime = $phpgw->calendar->localdates(mktime(0,0,0,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset);
 	echo $phpgw->calendar->timematrix($freetime,$phpgw->calendar->splittime('000000',False),0,$event->participants);
 
-	echo '</td></tr><tr><td>';
-
 	echo $phpgw->calendar->view_event($event);
 
-	echo '</td></tr><td align="center"><tr>';
-
 	echo $phpgw->calendar->get_response();
-	
-	$phpgw_info['server']['app_inc'] = $tmp_app_inc;
+	$phpgw->common->phpgw_footer();	
 ?>
