@@ -18,6 +18,8 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+  
   function is_odd($n)
   {
      $ln = substr($n,-1);
@@ -33,12 +35,12 @@
   }
 
   if ($submit) {
-     $phpgw->db->query("select group_name from groups where group_id=$group_id");
+     $phpgw->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=$group_id");
      $phpgw->db->next_record();
 
-     $old_group_name = $phpgw->db->f("group_name");
+     $old_group_name = $phpgw->db->f("account_lid");
 
-     $phpgw->db->query("select count(*) from groups where group_name='" . $n_group . "'");
+     $phpgw->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='" . $n_group . "'");
      $phpgw->db->next_record();
 
      if ($phpgw->db->f(0) != 0 && $n_group != $old_group_name) {
@@ -119,27 +121,27 @@
      }
   }
 
-  $phpgw->template->set_file(array("form"	=> "groups_form.tpl"));
+  $p->set_file(array("form"	=> "groups_form.tpl"));
   
   if ($error) {
      $phpgw->common->phpgw_header();
      echo parse_navbar();
-     $phpgw->template->set_var("error","<p><center>$error</center>");
+     $p->set_var("error","<p><center>$error</center>");
   } else {
-     $phpgw->template->set_var("error","");
+     $p->set_var("error","");
   }
 
   if ($submit) {
-     $phpgw->template->set_var("group_name_value",$n_group_name);
+     $p->set_var("group_name_value",$n_group_name);
 
      for ($i=0; $i<count($n_users); $i++) {
         $selected_users[$n_user[$i]] = " selected";
      }
   } else {
-     $phpgw->db->query("select group_name from groups where group_id=$group_id");
+     $phpgw->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=$group_id");
      $phpgw->db->next_record();
 
-     $phpgw->template->set_var("group_name_value",$phpgw->db->f("group_name"));
+     $p->set_var("group_name_value",$phpgw->db->f("account_id"));
 
      $group_user = $phpgw->acl->get_ids_for_location($group_id,1,'phpgw_group','u');
 
@@ -152,27 +154,27 @@
      $db_perms = $apps->read_account_specific();
   }
 
-  $phpgw->db->query("select * from groups where group_id=$group_id");
+  $phpgw->db->query("SELECT * FROM phpgw_accounts WHERE account_id=$group_id");
   $phpgw->db->next_record();
 
-  $phpgw->template->set_var("form_action",$phpgw->link("editgroup.php"));
-  $phpgw->template->set_var("hidden_vars","<input type=\"hidden\" name=\"group_id\" value=\"" . $group_id . "\">");
+  $p->set_var("form_action",$phpgw->link("editgroup.php"));
+  $p->set_var("hidden_vars","<input type=\"hidden\" name=\"group_id\" value=\"" . $group_id . "\">");
 
-  $phpgw->template->set_var("lang_group_name",lang("group name"));
-  $phpgw->template->set_var("group_name_value",$phpgw->db->f("group_name"));
+  $p->set_var("lang_group_name",lang("group name"));
+  $p->set_var("group_name_value",$phpgw->db->f("account_lid"));
 
-  $phpgw->db->query("select count(*) from accounts where account_status !='L'");
+  $phpgw->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_status !='L' AND account_type='u'");
   $phpgw->db->next_record();
 
   if ($phpgw->db->f(0) < 5) {
-     $phpgw->template->set_var("select_size",$phpgw->db->f(0));
+     $p->set_var("select_size",$phpgw->db->f(0));
   } else {
-     $phpgw->template->set_var("select_size","5");
+     $p->set_var("select_size","5");
   }
 
-  $phpgw->template->set_var("lang_include_user",lang("Select users for inclusion"));
-  $phpgw->db->query("SELECT account_id,account_firstname,account_lastname,account_lid FROM accounts where "
-	  	        . "account_status != 'L' ORDER BY account_lastname,account_firstname,account_lid asc");
+  $p->set_var("lang_include_user",lang("Select users for inclusion"));
+  $phpgw->db->query("SELECT account_id,account_firstname,account_lastname,account_lid FROM phpgw_accounts WHERE "
+	  	        . "account_status != 'L' AND account_type='u' ORDER BY account_lastname,account_firstname,account_lid asc");
   while ($phpgw->db->next_record()) {
      $user_list .= "<option value=\"" . $phpgw->db->f("account_id") . "\""
     	            . $selected_users[$phpgw->db->f("account_id")] . ">"
@@ -180,11 +182,12 @@
 						       $phpgw->db->f("account_firstname"),
 						       $phpgw->db->f("account_lastname")) . "</option>";
   }
-  $phpgw->template->set_var("user_list",$user_list);
+  $p->set_var("user_list",$user_list);
 
-  $phpgw->template->set_var("lang_permissions",lang("Permissions this group has"));
+  $p->set_var("lang_permissions",lang("Permissions this group has"));
 
   $i = 0;
+  reset($phpgw_info["apps"]);
   $sorted_apps = $phpgw_info["apps"];
   @asort($sorted_apps);
   @reset($sorted_apps);
@@ -223,11 +226,11 @@
      $i++;
   }
 
-  $phpgw->template->set_var("permissions_list",$perm_html);	
+  $p->set_var("permissions_list",$perm_html);	
   
-  $phpgw->template->set_var("lang_submit_button",lang("submit changes"));
+  $p->set_var("lang_submit_button",lang("submit changes"));
 
-  $phpgw->template->pparse("out","form");
+  $p->pparse("out","form");
 
   $phpgw->common->phpgw_footer();
 ?>

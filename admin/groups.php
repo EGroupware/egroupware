@@ -15,63 +15,64 @@
   $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  $phpgw->template->set_file(array("list"   => "groups.tpl",
-              			         "row"    => "groups_row.tpl"));
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+  $p->set_file(array("list"   => "groups.tpl",
+                     "row"    => "groups_row.tpl"));
 
   if (! $start)
      $start = 0;
 
   if ($order)
-      $ordermethod = "order by $order $sort";
+      $ordermethod = "ORDER BY $order $sort";
    else
-      $ordermethod = "order by group_name asc";
+      $ordermethod = "ORDER BY account_lid asc";
 
   if (! $sort)
      $sort = "asc";
 
   if ($query) {
-     $querymethod = " where group_name like '%$query%'";
+     $querymethod = "AND account_lid like '%$query%'";
   }
 
-  $phpgw->db->query("select count(*) from groups $querymethod");
+  $phpgw->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='g' $querymethod");
   $phpgw->db->next_record();
 
   $total = $phpgw->db->f(0);
   $limit = $phpgw->db->limit($start,$total);
   
-  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $phpgw->template->set_var("left_nextmatchs",$phpgw->nextmatchs->left("groups.php",$start,$total));
-  $phpgw->template->set_var("right_nextmatchs",$phpgw->nextmatchs->right("groups.php",$start,$total));
-  $phpgw->template->set_var("lang_groups",lang("user groups"));
+  $p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+  $p->set_var("left_nextmatchs",$phpgw->nextmatchs->left("groups.php",$start,$total));
+  $p->set_var("right_nextmatchs",$phpgw->nextmatchs->right("groups.php",$start,$total));
+  $p->set_var("lang_groups",lang("user groups"));
 
-  $phpgw->template->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"group_name",$order,"groups.php",lang("name")));
-  $phpgw->template->set_var("header_edit",lang("Edit"));
-  $phpgw->template->set_var("header_delete",lang("Delete"));
+  $p->set_var("sort_name",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"groups.php",lang("name")));
+  $p->set_var("header_edit",lang("Edit"));
+  $p->set_var("header_delete",lang("Delete"));
 
-  $phpgw->db->query("select * from groups $querymethod $ordermethod $limit");
+  $phpgw->db->query("SELECT * FROM phpgw_accounts WHERE account_type='g' $querymethod $ordermethod $limit");
   while ($phpgw->db->next_record()) {
      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
  
-     $phpgw->template->set_var("tr_color",$tr_color);
+     $p->set_var("tr_color",$tr_color);
  
-     $group_name = $phpgw->db->f("group_name");
+     $group_name = $phpgw->db->f("account_lid");
  
      if (! $group_name)  $group_name  = '&nbsp;';
 
-     $phpgw->template->set_var("group_name",$group_name); 
-     $phpgw->template->set_var("edit_link",'<a href="' . $phpgw->link("editgroup.php","group_id=" . $phpgw->db->f("group_id")) . '"> ' . lang("Edit") . ' </a>');
-     $phpgw->template->set_var("delete_link",'<a href="' . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("group_id")) . '"> ' . lang("Delete") . ' </a>');
+     $p->set_var("group_name",$group_name); 
+     $p->set_var("edit_link",'<a href="' . $phpgw->link("editgroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Edit") . ' </a>');
+     $p->set_var("delete_link",'<a href="' . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Delete") . ' </a>');
  
-     $phpgw->template->parse("rows","row",True);
+     $p->parse("rows","row",True);
   }
 
-  $phpgw->template->set_var("new_action",$phpgw->link("newgroup.php"));
-  $phpgw->template->set_var("lang_add",lang("add"));
+  $p->set_var("new_action",$phpgw->link("newgroup.php"));
+  $p->set_var("lang_add",lang("add"));
 
-  $phpgw->template->set_var("search_action",$phpgw->link("groups.php"));
-  $phpgw->template->set_var("lang_search",lang("search"));
+  $p->set_var("search_action",$phpgw->link("groups.php"));
+  $p->set_var("lang_search",lang("search"));
 
-  $phpgw->template->pparse("out","list");
+  $p->pparse("out","list");
 
   $phpgw->common->phpgw_footer();
 ?>
