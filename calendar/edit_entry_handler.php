@@ -133,10 +133,10 @@
 				$phpgw->calendar->event_set_recur_weekly($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval,$recur_data);
 				break;
 			case RECUR_MONTHLY_MDAY:
-				$phpgw->calendar->event_set_recur_mday($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
+				$phpgw->calendar->event_set_recur_monthly_mday($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
 			case RECUR_MONTHLY_WDAY:
-				$phpgw->calendar->event_set_recur_wday($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
+				$phpgw->calendar->event_set_recur_monthly_wday($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
 			case RECUR_YEARLY:
 				$phpgw->calendar->event_set_recur_yearly($cal_stream,$recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
