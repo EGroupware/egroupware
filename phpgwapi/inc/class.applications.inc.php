@@ -348,7 +348,7 @@
 
       if($this->account_id) {
         $db2 = $phpgw->db;
-        $db2->query("UPDATE account SET account_permissions = '".$this->user_app_string()."' WHERE account_id=".$this->account_id,__LINE__,__FILE__);
+        $db2->query("UPDATE accounts SET account_permissions = '".$this->user_app_string()."' WHERE account_id=".$this->account_id,__LINE__,__FILE__);
         $phpgw->acl->remove_locations("run");
         reset($this->user_apps);
         while($app = each($this->user_apps)) {
