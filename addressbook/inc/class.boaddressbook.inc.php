@@ -125,7 +125,10 @@
 				$this->filter = $_filter;
 			}
 
-			if($this->debug) { $this->_debug_sqsof(); }
+			if($this->debug)
+			{
+				$this->_debug_sqsof();
+			}
 		}
 
 		function _debug_sqsof()
@@ -150,7 +153,7 @@
 			  in which case the input might be an array.  The server always calls
 			  this function to fill the server dispatch map using a string.
 			*/
-			if (is_array($_type))
+			if(is_array($_type))
 			{
 				$_type = $_type['type'] ? $_type['type'] : $_type[0];
 			}
@@ -202,9 +205,12 @@
 
 		function save_sessiondata($data)
 		{
-			if ($this->use_session)
+			if($this->use_session)
 			{
-				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
+				if($this->debug)
+				{
+					echo '<br>Save:'; _debug_array($data);
+				}
 				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
 			}
 		}
@@ -212,7 +218,10 @@
 		function read_sessiondata()
 		{
 			$data = $GLOBALS['phpgw']->session->appsession('session_data','addressbook');
-			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
+			if($this->debug)
+			{
+				echo '<br>Read:'; _debug_array($data);
+			}
 
 			$this->start  = $data['start'];
 			$this->limit  = $data['limit'];
@@ -226,7 +235,7 @@
 
 		function strip_html($dirty = '')
 		{
-			if ($dirty == '')
+			if($dirty == '')
 			{
 				$dirty = array();
 			}
@@ -234,7 +243,7 @@
 			{
 				if(gettype($dirty[$i]) == 'array')
 				{
-					while (list($name,$value) = @each($dirty[$i]))
+					while(list($name,$value) = @each($dirty[$i]))
 					{
 						$cleaned[$i][$name] = $GLOBALS['phpgw']->strip_html($dirty[$i][$name]);
 					}
@@ -251,7 +260,10 @@
 		{
 			$entries = $this->so->read_entries($data);
 			$this->total = $this->so->contacts->total_records;
-			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
+			if($this->debug)
+			{
+				echo '<br>Total records="' . $this->total . '"';
+			}
 			return $this->strip_html($entries);
 		}
 
@@ -313,8 +325,11 @@
 			global $name,$referer;
 
 			$named = explode(' ', $name);
-			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
-			if ($names[2])
+			for($i=count($named);$i>=0;$i--)
+			{
+				$names[$i] = $named[$i];
+			}
+			if($names[2])
 			{
 				$fields['n_given']  = $names[0];
 				$fields['n_middle'] = $names[1];
@@ -358,13 +373,13 @@
 		function save_preferences($prefs,$other,$qfields,$fcat_id)
 		{
 			$GLOBALS['phpgw']->preferences->read_repository();
-			if (is_array($prefs))
+			if(is_array($prefs))
 			{
 				/* _debug_array($prefs);exit; */
-				while (list($pref,$x) = each($qfields))
+				while(list($pref,$x) = each($qfields))
 				{
 					/* echo '<br>checking: ' . $pref . '=' . $prefs[$pref]; */
-					if ($prefs[$pref] == 'on')
+					if($prefs[$pref] == 'on')
 					{
 						$GLOBALS['phpgw']->preferences->add('addressbook',$pref,'addressbook_on');
 					}
@@ -378,19 +393,19 @@
 			if(is_array($other))
 			{
 				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
-	 			if ($other['mainscreen_showbirthdays'])
+	 			if($other['mainscreen_showbirthdays'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
-	 			if ($other['default_filter'])
+	 			if($other['default_filter'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
-	 			if ($other['autosave_category'])
+	 			if($other['autosave_category'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','autosave_category',True);
 				}

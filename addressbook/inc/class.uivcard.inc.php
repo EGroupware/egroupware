@@ -26,7 +26,7 @@
 			'out' => True
 		);
 
-	 	var $extrafields = array(
+		var $extrafields = array(
 			'ophone'   => 'ophone',
 			'address2' => 'address2',
 			'address3' => 'address3'
@@ -34,9 +34,7 @@
 
 		function uivcard()
 		{
-			global $phpgw;
-
-			$this->template = $phpgw->template;
+			$this->template = $GLOBALS['phpgw']->template;
 			$this->contacts = CreateObject('phpgwapi.contacts');
 			$this->browser  = CreateObject('phpgwapi.browser');
 			$this->vcard    = CreateObject('phpgwapi.vcard');
@@ -45,14 +43,14 @@
 
 		function in()
 		{
-			global $phpgw,$phpgw_info,$action;
+			$action = $GLOBALS['HTTP_POST_VARS']['action'];
 
-			$phpgw->common->phpgw_header();
+			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			echo '<body bgcolor="' . $phpgw_info['theme']['bg_color'] . '">';
+			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
   
-			if ($action == 'GetFile')
+			if($action == 'GetFile')
 			{
 				echo '<b><center>' . lang('You must select a vcard. (*.vcf)') . '</b></center><br><br>';
 			}
@@ -60,7 +58,7 @@
 			$this->template->set_file(array('vcardin' => 'vcardin.tpl'));
 
 			$this->template->set_var('vcard_header','<p>&nbsp;<b>' . lang('Address book - VCard in') . '</b><hr><p>');
-			$this->template->set_var('action_url',$phpgw->link('/index.php','menuaction=addressbook.boaddressbook.add_vcard'));
+			$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.boaddressbook.add_vcard'));
 			$this->template->set_var('lang_access',lang('Access'));
 			$this->template->set_var('lang_groups',lang('Which groups'));
 			$this->template->set_var('access_option',$access_option);
@@ -68,36 +66,36 @@
 
 			$this->template->pparse('out','vcardin');
 
-			$phpgw->common->phpgw_footer();
+			$GLOBALS['phpgw']->common->phpgw_footer();
 		}
 
 		function out()
 		{
-			global $phpgw,$phpgw_info,$ab_id,$nolname,$nofname;
+			global $ab_id,$nolname,$nofname;
 
-			if ($nolname || $nofname)
+			if($nolname || $nofname)
 			{
-				$phpgw->common->phpgw_header();
+				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 			}
 
-			if (!$ab_id)
+			if(!$ab_id)
 			{
-				Header('Location: ' . $phpgw->link('/addressbook/index.php'));
-				$phpgw->common->phpgw_exit();
+				Header('Location: ' . $GLOBALS['phpgw']->link('/addressbook/index.php'));
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
 			// First, make sure they have permission to this entry
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner')));
 			$perms = $this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
-			if ( (!$perms) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
+			if((!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']))
 			{
-				Header("Location: " . $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
-				$phpgw->common->phpgw_exit();
+				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-		 	$extrafields = array('address2' => 'address2');
+			$extrafields = array('address2' => 'address2');
 			$qfields = $this->contacts->stock_contact_fields + $extrafields;
 
 			$fieldlist = $this->bo->read_entry(array('id' => $ab_id, 'fields' => $qfields));
@@ -124,49 +122,49 @@
 				if($lastname == '')
 				{
 					/* Run away here. */
-					Header('Location: ' . $phpgw->link('/index.php',"menuaction=addressbook.uivcard.out&nolname=1&ab_id=$ab_id"));
+					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uivcard.out&nolname=1&ab_id=' . $ab_id));
 				}
 				if($firstname == '')
 				{
-					Header('Location: ' . $phpgw->link('/index.php',"menuaction=addressbook.uivcard.out&nofname=1&ab_id=$ab_id"));
+					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uivcard.out&nofname=1&ab_id=' . $ab_id));
 				}
 
 				if ($email)
 				{
 					$fn =  explode('@',$email);
-					$filename = sprintf("%s.vcf", $fn[0]);
+					$filename = sprintf('%s.vcf', $fn[0]);
 				}
 				elseif ($hemail)
 				{
 					$fn =  explode('@',$hemail);
-					$filename = sprintf("%s.vcf", $fn[0]);
+					$filename = sprintf('%s.vcf', $fn[0]);
 				}
 				else
 				{
 					$fn = strtolower($firstname);
-					$filename = sprintf("%s.vcf", $fn);
+					$filename = sprintf('%s.vcf', $fn);
 				}
 
 				// set translation variable
 				$myexport = $this->vcard->export;
 				// check that each $fields exists in the export array and
 				// set a new array to equal the translation and original value
-				while( list($name,$value) = each($fields) )
+				while(list($name,$value) = each($fields))
 				{
-					if ($myexport[$name] && ($value != "") )
+					if($myexport[$name] && ($value != ''))
 					{
-						//echo '<br>'.$name."=".$fields[$name]."\n";
+						//echo '<br>'.$name.'='.$fields[$name]."\n";
 						$buffer[$myexport[$name]] = $value;
 					}
 				}
 
 				// create a vcard from this translated array
-			    $entry = $this->vcard->out($buffer);
+				$entry = $this->vcard->out($buffer);
 				// print it using browser class for headers
 				// filename, mimetype, no length, default nocache True
 				$this->browser->content_header($filename,'text/x-vcard');
 				echo $entry;
-				$phpgw->common->exit;
+				$GLOBALS['phpgw']->common->exit;
 			} /* !nolname && !nofname */
 
 			if($nofname)
@@ -174,8 +172,7 @@
 				echo '<br><br><center>';
 				echo lang("This person's first name was not in the address book.") .'<br>';
 				echo lang('Vcards require a first name entry.') . '<br><br>';
-				echo '<a href="' . $phpgw->link('/addressbook/index.php',
-					"order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id") . '">' . lang('OK') . '</a>';
+				echo '<a href="' . $GLOBALS['phpgw']->link('/addressbook/index.php') . '">' . lang('OK') . '</a>';
 				echo '</center>';
 			}
 
@@ -184,14 +181,13 @@
 				echo '<br><br><center>';
 				echo lang("This person's last name was not in the address book.") . '<br>';
 				echo lang('Vcards require a last name entry.') . '<br><br>';
-				echo '<a href="' . $phpgw->link('/addressbook/index.php',
-					"order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id") . '">' . lang('OK') . '</a>';
+				echo '<a href="' . $GLOBALS['phpgw']->link('/addressbook/index.php') . '">' . lang('OK') . '</a>';
 				echo '</center>';
 			}
 
 			if($nolname || $nofname)
 			{
-				$phpgw->common->phpgw_footer();
+				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 		}
 	}

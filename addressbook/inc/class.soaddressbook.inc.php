@@ -71,7 +71,7 @@
 
 		function read_entry($id,$fields)
 		{
-			if ($this->rights & PHPGW_ACL_READ)
+			if($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_single_entry($id,$fields);
 			}
@@ -84,7 +84,7 @@
 
 		function read_last_entry($fields)
 		{
-			if ($this->rights & PHPGW_ACL_READ)
+			if($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_last_entry($fields);
 			}
@@ -102,7 +102,7 @@
 			{
 				$fields['tid'] = 'n';
 			}
-			if ($this->rights & PHPGW_ACL_ADD)
+			if($this->rights & PHPGW_ACL_ADD)
 			{
 				$ab_id  = $fields['ab_id'];
 				$owner  = $fields['owner'];
@@ -129,7 +129,7 @@
 
 		function update_entry($fields)
 		{
-			if ($this->rights & PHPGW_ACL_EDIT)
+			if($this->rights & PHPGW_ACL_EDIT)
 			{
 				$ab_id  = $fields['ab_id'];
 				$owner  = $fields['owner'];
@@ -148,7 +148,7 @@
 
 		function delete_entry($data)
 		{
-			if ($this->rights & PHPGW_ACL_DELETE)
+			if($this->rights & PHPGW_ACL_DELETE)
 			{
 				$this->contacts->delete($data['id']);
 			}

@@ -49,16 +49,16 @@
 		/* Return a select form element with the categories option dialog in it */
 		function cat_option($cat_id='',$notall=False,$java=True,$multiple=False)
 		{
-			if ($java)
+			if($java)
 			{
 				$jselect = ' onChange="this.form.submit();"';
 			}
 			/* Setup all and none first */
 			$cats_link  = "\n" .'<select name="fcat_id'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
-			if (!$notall)
+			if(!$notall)
 			{
 				$cats_link .= '<option value=""';
-				if ($cat_id=='all')
+				if($cat_id=='all')
 				{
 					$cats_link .= ' selected';
 				}
@@ -75,11 +75,11 @@
 		{
 			global $convert,$download,$tsvfile,$private,$conv_type,$fcat_id;
 
-			if ($convert)
+			if($convert)
 			{
 				$buffer = $this->bo->import($tsvfile,$conv_type,$private,$fcat_id);
 
-				if ($download == '')
+				if($download == '')
 				{
 					if($conv_type == 'Debug LDAP' || $conv_type == 'Debug SQL' )
 					{
@@ -115,9 +115,9 @@
 
 				$dir_handle = opendir(PHPGW_APP_INC . SEP . 'import');
 				$i=0; $myfilearray = '';
-				while ($file = readdir($dir_handle))
+				while($file = readdir($dir_handle))
 				{
-					if ((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'import' . SEP . $file) )
+					if((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'import' . SEP . $file) )
 					{
 						$myfilearray[$i] = $file;
 						$i++;
@@ -125,7 +125,7 @@
 				}
 				closedir($dir_handle);
 				sort($myfilearray);
-				for ($i=0;$i<count($myfilearray);$i++)
+				for($i=0;$i<count($myfilearray);$i++)
 				{
 					$fname = ereg_replace('_',' ',$myfilearray[$i]);
 					$conv .= '<OPTION VALUE="' . $myfilearray[$i].'">' . $fname . '</OPTION>';
@@ -166,11 +166,11 @@
 		{
 			global $convert,$tsvfilename,$cat_id,$download,$conv_type;
 
-			if ($convert)
+			if($convert)
 			{
 				$buffer = $this->bo->export($conv_type,$cat_id);
 
-				if ($conv_type == 'none')
+				if($conv_type == 'none')
 				{
 					$GLOBALS['phpgw_info']['flags']['noheader'] = False;
 					$GLOBALS['phpgw_info']['flags']['noheader'] = True;
@@ -182,7 +182,7 @@
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 
-				if ( ($download == 'on') || ($o->type == 'pdb') )
+				if(($download == 'on') || ($o->type == 'pdb'))
 				{
 					// filename, default application/octet-stream, length of file, default nocache True
 					$this->browser->content_header($tsvfilename,'application/octet-stream',strlen($buffer));
@@ -208,9 +208,9 @@
 
 				$dir_handle = opendir(PHPGW_APP_INC. SEP . 'export');
 				$i=0; $myfilearray = '';
-				while ($file = readdir($dir_handle))
+				while($file = readdir($dir_handle))
 				{
-					if ((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'export' . SEP . $file) )
+					if((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'export' . SEP . $file) )
 					{
 						$myfilearray[$i] = $file;
 						$i++;
@@ -218,7 +218,7 @@
 				}
 				closedir($dir_handle);
 				sort($myfilearray);
-				for ($i=0;$i<count($myfilearray);$i++)
+				for($i=0;$i<count($myfilearray);$i++)
 				{
 					$fname = ereg_replace('_',' ',$myfilearray[$i]);
 					$conv .= '        <option value="'.$myfilearray[$i].'">'.$fname.'</option>'."\n";

@@ -66,12 +66,12 @@
 			$GLOBALS['phpgw']->template->set_var('lang_done',lang('Done'));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/admin/index.php'));
 
-			if (!$start)
+			if(!$start)
 			{
 				$start = 0;
 			}
 
-			if (!$sort)
+			if(!$sort)
 			{
 				$sort = 'ASC';
 			}
@@ -92,7 +92,7 @@
 			$GLOBALS['phpgw']->template->set_var('lang_edit',lang('Edit'));
 			$GLOBALS['phpgw']->template->set_var('lang_delete',lang('Delete'));
 
-			for ($i=0;$i<count($fields);$i++)
+			for($i=0;$i<count($fields);$i++)
 			{
 				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 				$GLOBALS['phpgw']->template->set_var(tr_color,$tr_color);
@@ -136,22 +136,22 @@
 			$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
 			$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
 
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
+			if($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				$errorcount = 0;
 
-				if (!$field_name)
+				if(!$field_name)
 				{
 					$error[$errorcount++] = lang('Please enter a name for that field !');
 				}
 
 				$fields = $this->read_custom_fields($start,$limit,$field_name);
-				if ($fields[0]['name'])
+				if($fields[0]['name'])
 				{
 					$error[$errorcount++] = lang('That field name has been used already !');
 				}
 
-				if (! $error)
+				if(!$error)
 				{
 					$field_name = addslashes($field_name);
 					$this->save_custom_field($field,$field_name);
@@ -161,15 +161,15 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			if ($errorcount)
+			if($errorcount)
 			{
 				$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
 			}
-			if (($submit) && (! $error) && (! $errorcount))
+			if(($submit) && (! $error) && (! $errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message',lang('Field x has been added !', $field_name));
 			}
-			if ((! $submit) && (! $error) && (! $errorcount))
+			if((! $submit) && (! $error) && (! $errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message','');
 			}
@@ -202,7 +202,6 @@
 				echo lang('access not permitted');
 				$GLOBALS['phpgw']->common->phpgw_footer();
 				$GLOBALS['phpgw']->common->phpgw_exit();
-
 			}
 
 			$field      = $GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field'];
@@ -212,7 +211,7 @@
 			$sort       = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
 			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
 
-			if (!$field)
+			if(!$field)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&sort=$sort&query=$query&start=$start"));
 			}
@@ -226,14 +225,17 @@
 				. '<input type="hidden" name="start" value="' . $start . '">' . "\n"
 				. '<input type="hidden" name="field" value="' . $field . '">' . "\n";
 
-			if ($submit)
+			if($submit)
 			{
 				$errorcount = 0;
-				if (!$field_name) { $error[$errorcount++] = lang('Please enter a name for that field!'); }
+				if(!$field_name)
+				{
+					$error[$errorcount++] = lang('Please enter a name for that field!');
+				}
 
 				$field_name = addslashes($field_name);
 
-				if (! $error)
+				if(!$error)
 				{
 					$this->save_custom_field($field,$field_name);
 				}
@@ -242,20 +244,20 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			if ($errorcount)
+			if($errorcount)
 			{
 				$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
 			}
-			if (($submit) && (! $error) && (! $errorcount))
+			if(($submit) && (! $error) && (! $errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message',lang('Field x has been updated !', $field_name));
 			}
-			if ((! $submit) && (! $error) && (! $errorcount))
+			if((!$submit) && (! $error) && (! $errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message','');
 			}
 
-			if ($submit)
+			if($submit)
 			{
 				$field = $field_name;
 			}
@@ -294,12 +296,12 @@
 			$query    = $GLOBALS['HTTP_POST_VARS']['query'] ? $GLOBALS['HTTP_POST_VARS']['query'] : $GLOBALS['HTTP_GET_VARS']['query'];
 			$sort     = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
 
-			if (!$field)
+			if(!$field)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'));
 			}
 
-			if ($GLOBALS['HTTP_POST_VARS']['confirm'])
+			if($GLOBALS['HTTP_POST_VARS']['confirm'])
 			{
 				$this->save_custom_field($field);
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
@@ -343,15 +345,15 @@
 			$i = 0; $j = 0;
 			$fields = array();
 			@reset($GLOBALS['phpgw_info']['user']['preferences']['addressbook']);
-			while (list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
+			while(list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
 			{
-				if ( substr($col,0,6) == 'extra_' )
+				if(substr($col,0,6) == 'extra_')
 				{
 					$fields[$j]['name'] = ereg_replace('extra_','',$col);
 					$fields[$j]['name'] = ereg_replace(' ','_',$fields[$j]['name']);
 					$fields[$j]['id'] = $i;
 
-					if ($query && ($fields[$j]['name'] != $query))
+					if($query && ($fields[$j]['name'] != $query))
 					{
 						unset($fields[$j]['name']);
 						unset($fields[$j]['id']);
@@ -371,7 +373,7 @@
 		function save_custom_field($old='',$new='')
 		{
 			$GLOBALS['phpgw']->preferences->read_repository($GLOBALS['phpgw_info']['user']['account_id']);
-			if ($old)
+			if($old)
 			{
 				$GLOBALS['phpgw']->preferences->delete("addressbook","extra_".$old);
 			}

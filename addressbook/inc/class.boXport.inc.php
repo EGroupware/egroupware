@@ -75,7 +75,10 @@
 		function read_sessiondata()
 		{
 			$data = $GLOBALS['phpgw']->session->appsession('session_data','addressbook');
-			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
+			if($this->debug)
+			{
+				echo '<br>Read:'; _debug_array($data);
+			}
 
 			$this->start  = $data['start'];
 			$this->limit  = $data['limit'];
@@ -90,20 +93,23 @@
 		{
 			include (PHPGW_APP_INC . '/import/' . $conv_type);
 
-			if ($private == '') { $private = 'public'; }
+			if($private == '')
+			{
+				$private = 'public';
+			}
 			$row = 0;
 			$buffer = array();
 			$contacts = new import_conv;
 
 			$buffer = $contacts->import_start_file($buffer);
 			$fp = fopen($tsvfile,'r');
-			if ($contacts->type == 'csv')
+			if($contacts->type == 'csv')
 			{
-				while ($data = fgetcsv($fp,8000,','))
+				while($data = fgetcsv($fp,8000,','))
 				{
 					$num = count($data);
 					$row++;
-					if ($row == 1)
+					if($row == 1)
 					{
 						$header = $data;
 						/* Changed here to ignore the header, set to our array
@@ -116,10 +122,10 @@
 					else
 					{
 						$buffer = $contacts->import_start_record($buffer);
-						for ($c=0; $c<$num; $c++ )
+						for($c=0; $c<$num; $c++)
 						{
 							//Send name/value pairs along with the buffer
-							if ($contacts->import[$header[$c]] != '' && $data[$c] != '')
+							if($contacts->import[$header[$c]] != '' && $data[$c] != '')
 							{
 								$buffer = $contacts->import_new_attrib($buffer, $contacts->import[$header[$c]],$data[$c]);
 							}
@@ -128,25 +134,25 @@
 					}
 				}
 			}
-			elseif ($contacts->type == 'ldif')
+			elseif($contacts->type == 'ldif')
 			{
-				while ($data = fgets($fp,8000))
+				while($data = fgets($fp,8000))
 				{
 					$url = "";
 					list($name,$value,$extra) = split(':', $data);
-					if (substr($name,0,2) == 'dn')
+					if(substr($name,0,2) == 'dn')
 					{
 						$buffer = $contacts->import_start_record($buffer);
 					}
 					
 					$test = trim($value);
-					if ($name && !empty($test) && $extra)
+					if($name && !empty($test) && $extra)
 					{
 						// Probable url string
 						$url = $test;
 						$value = $extra;
 					}
-					elseif ($name && empty($test) && $extra)
+					elseif($name && empty($test) && $extra)
 					{
 						// Probable multiline encoding
 						$newval = base64_decode(trim($extra));
@@ -154,15 +160,15 @@
 						//echo $name.':'.$value;
 					}
 
-					if ($name && $value)
+					if($name && $value)
 					{
 						$test = split(',mail=',$value);
-						if ($test[1])
+						if($test[1])
 						{
 							$name = "mail";
 							$value = $test[1];
 						}
-						if ($url)
+						if($url)
 						{
 							$name = "homeurl";
 							$value = $url. ':' . $value;
@@ -181,32 +187,32 @@
 			}
 			else
 			{
-				while ($data = fgets($fp,8000))
+				while($data = fgets($fp,8000))
 				{
 					$data = trim($data);
 					// RB 2001/05/07 added for Lotus Organizer
-					while (substr($data,-1) == '=')
+					while(substr($data,-1) == '=')
 					{
 						// '=' at end-of-line --> line to be continued with next line
 						$data = substr($data,0,-1) . trim(fgets($fp,8000));
 					}
-					if (strstr($data,';ENCODING=QUOTED-PRINTABLE'))
+					if(strstr($data,';ENCODING=QUOTED-PRINTABLE'))
 					{
 						// RB 2001/05/07 added for Lotus Organizer
 						$data = quoted_printable_decode(str_replace(';ENCODING=QUOTED-PRINTABLE','',$data));
 					}
 					list($name,$value) = explode(':', $data,2); // RB 2001/05/09 to allow ':' in Values (not only in URL's)
 
-					if (strtolower(substr($name,0,5)) == 'begin')
+					if(strtolower(substr($name,0,5)) == 'begin')
 					{
 						$buffer = $contacts->import_start_record($buffer);
 					}
-					if ($name && $value)
+					if($name && $value)
 					{
 						reset($contacts->import);
-						while ( list($fname,$fvalue) = each($contacts->import) )
+						while(list($fname,$fvalue) = each($contacts->import))
 						{
-							if ( strstr(strtolower($name), $contacts->import[$fname]) )
+							if(strstr(strtolower($name), $contacts->import[$fname]))
 							{
 								$buffer = $contacts->import_new_attrib($buffer,$name,$value);
 							}
@@ -227,14 +233,14 @@
 		function export($conv_type,$cat_id='')
 		{
 			include (PHPGW_APP_INC . '/export/' . $conv_type);
-			$buffer=array();
+			$buffer   = array();
 			$contacts = new export_conv;
 
 			// Read in user custom fields, if any
 			$customfields = array();
-			while (list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
+			while(list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
 			{
-			if ( substr($col,0,6) == 'extra_' )
+			if(substr($col,0,6) == 'extra_')
 				{
 					$field = ereg_replace('extra_','',$col);
 						$field = ereg_replace(' ','_',$field);
@@ -246,12 +252,12 @@
 				'address2' => 'address2',
 				'address3' => 'address3'
 			);
-			if ($contacts->type != 'vcard')
+			if($contacts->type != 'vcard')
 			{
 				$contacts->qfields = $contacts->stock_contact_fields;# + $extrafields;# + $customfields;
 			}
 
-			if (!empty($cat_id))
+			if(!empty($cat_id))
 			{
 				$buffer = $contacts->export_start_file($buffer,$cat_id);
 			}
@@ -260,10 +266,10 @@
 				$buffer = $contacts->export_start_file($buffer);
 			}
 
-			for ($i=0;$i<count($contacts->ids);$i++)
+			for($i=0;$i<count($contacts->ids);$i++)
 			{
 				$buffer = $contacts->export_start_record($buffer);
-				while( list($name,$value) = each($contacts->currentrecord) )
+				while(list($name,$value) = each($contacts->currentrecord))
 				{
 					$buffer = $contacts->export_new_attrib($buffer,$name,$value);
 				}

@@ -75,7 +75,10 @@
 			$this->order    = $this->bo->order;
 			$this->filter   = $this->bo->filter;
 			$this->cat_id   = $this->bo->cat_id;
-			if($this->debug) { $this->_debug_sqsof(); }
+			if($this->debug)
+			{
+				$this->_debug_sqsof();
+			}
 		}
 
 		function _debug_sqsof()
@@ -110,7 +113,7 @@
 
 		function formatted_list($name,$list,$id='',$default=False,$java=False)
 		{
-			if ($java)
+			if($java)
 			{
 				$jselect = ' onChange="this.form.submit();"';
 			}
@@ -120,10 +123,10 @@
 			{
 				$select .= '<option value="">' . lang('Please Select') . '</option>'."\n";
 			}
-			while (list($key,$val) = each($list))
+			while(list($key,$val) = each($list))
 			{
 				$select .= '<option value="' . $key . '"';
-				if ($key == $id && $id != '')
+				if($key == $id && $id != '')
 				{
 					$select .= ' selected';
 				}
@@ -140,10 +143,10 @@
 		{
 			$fields = array();
 			@reset($this->prefs);
-			while (list($col,$descr) = @each($this->prefs))
+			while(list($col,$descr) = @each($this->prefs))
 			{
 				$tmp = '';
-				if ( substr($col,0,6) == 'extra_' )
+				if(substr($col,0,6) == 'extra_')
 				{
 					$tmp = ereg_replace('extra_','',$col);
 					$tmp = ereg_replace(' ','_',$tmp);
@@ -157,7 +160,7 @@
 		function save_custom_field($old='',$new='')
 		{
 			$GLOBALS['phpgw']->preferences->read_repository($GLOBALS['phpgw_info']['user']['account_id']);
-			if ($old)
+			if($old)
 			{
 				$GLOBALS['phpgw']->preferences->delete('addressbook','extra_' . $old);
 			}
@@ -171,25 +174,25 @@
 		/* Return a select form element with the categories option dialog in it */
 		function cat_option($cat_id='',$notall=False,$java=True,$multiple=False)
 		{
-			if ($java)
+			if($java)
 			{
 				$jselect = ' onChange="this.form.submit();"';
 			}
 			/* Setup all and none first */
-			$cats_link  = "\n" .'<select name="fcat_id'.($multiple?'[]':'').'"' .$jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
-			if (!$notall)
+			$cats_link  = "\n" . '<select name="fcat_id' . ($multiple?'[]':'') . '"' . $jselect . ($multiple ? 'multiple size="3"' : '') . ">\n";
+			if(!$notall)
 			{
 				$cats_link .= '<option value=""';
-				if ($cat_id=="all")
+				if($cat_id == 'all')
 				{
 					$cats_link .= ' selected';
 				}
-				$cats_link .= '>'.lang("all").'</option>'."\n";
+				$cats_link .= '>' . lang("all") . '</option>'."\n";
 			}
 
 			/* Get global and app-specific category listings */
 			$cats_link .= $this->cat->formated_list('select','all',$cat_id,True);
-			$cats_link .= '</select>'."\n";
+			$cats_link .= '</select>' . "\n";
 			return $cats_link;
 		}
 
@@ -248,7 +251,7 @@
 				'note'                => 'notes'
 			);
 
-			if ($abc[$column])
+			if($abc[$column])
 			{
 				return lang($abc[$column]);
 			}
@@ -271,11 +274,11 @@
 
 			$customfields = $this->read_custom_fields();
 
-			if (!isset($this->cat_id))
+			if(!isset($this->cat_id))
 			{
 				$this->cat_id = $this->prefs['default_category'];
 			} 
-			if ($this->prefs['autosave_category'])
+			if($this->prefs['autosave_category'])
 			{
 				$GLOBALS['phpgw']->preferences->read_repository();
 				$GLOBALS['phpgw']->preferences->delete('addressbook','default_category');
@@ -285,10 +288,10 @@
 
 			/* $qfields = $contacts->stock_contact_fields + $extrafields + $customfields; */
 			/* create column list and the top row of the table based on user prefs */
-			while ($column = each($this->contacts->stock_contact_fields))
+			while($column = each($this->contacts->stock_contact_fields))
 			{
 				$test = strtolower($column[0]);
-				if (isset($this->prefs[$test]) && $this->prefs[$test])
+				if(isset($this->prefs[$test]) && $this->prefs[$test])
 				{
 					$showcol = $this->display_name($column[0]);
 					$cols .= '  <td height="21">' . "\n";
@@ -304,14 +307,17 @@
 			}
 			/* Setup the columns for non-standard fields, since we don't allow sorting */
 			$nonstd = $this->extrafields + $customfields;
-			while ($column = each($nonstd))
+			while($column = each($nonstd))
 			{
 				$test = strtolower($column[1]);
-				if (isset($this->prefs[$test]) && $this->prefs[$test])
+				if(isset($this->prefs[$test]) && $this->prefs[$test])
 				{
 					$showcol = $this->display_name($column[0]);
 					/* This must be a custom field */
-					if (!$showcol) { $showcol = $column[1]; }
+					if(!$showcol)
+					{
+						$showcol = $column[1];
+					}
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 					$cols .= $showcol;
@@ -323,7 +329,7 @@
 				}
 			}
 			/* Check if prefs were set, if not, create some defaults */
-			if (!$columns_to_display )
+			if(!$columns_to_display )
 			{
 				$columns_to_display = array(
 					'n_given'  => 'n_given',
@@ -333,10 +339,13 @@
 				$columns_to_display = $columns_to_display + $customfields;
 				/* No prefs,. so cols above may have been set to '' or a bunch of <td></td> */
 				$cols='';
-				while ($column = each($columns_to_display))
+				while($column = each($columns_to_display))
 				{
 					$showcol = $this->display_name($column[0]);
-					if (!$showcol) { $showcol = $column[1]; }
+					if(!$showcol)
+					{
+						$showcol = $column[1];
+					}
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 					$cols .= $GLOBALS['phpgw']->nextmatchs->show_sort_order($this->sort,
@@ -347,7 +356,7 @@
 				$noprefs=lang('Please set your preferences for this application');
 			}
 
-			if (!$this->start)
+			if(!$this->start)
 			{
 				$this->start = 0;
 			}
@@ -363,7 +372,7 @@
 			}
 
 			/*global $filter; */
-			if (empty($this->filter) || !isset($this->filter))
+			if(empty($this->filter) || !isset($this->filter))
 			{
 				if($this->prefs['default_filter'])
 				{
@@ -381,7 +390,7 @@
 			else they may be accounts, etc.
 			*/
 			$qfilter = 'tid=n';
-			switch ($this->filter)
+			switch($this->filter)
 			{
 				case 'blank':
 					$nosearch = True;
@@ -396,17 +405,17 @@
 				default:
 					$qfilter .= ',owner=' . $this->filter;
 			}
-			if ($this->cat_id)
+			if($this->cat_id)
 			{
 				$qfilter .= ',cat_id='.$this->cat_id;
 			}
  
-			if (!$userid)
+			if(!$userid)
 			{
 				$userid = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 
-			if ($nosearch && !$this->query)
+			if($nosearch && !$this->query)
 			{
 				$entries = array();
 				$total_records = 0;
@@ -480,7 +489,7 @@
 
 			/* Show the entries */
 			/* each entry */
-			for ($i=0;$i<count($entries);$i++)
+			for($i=0;$i<count($entries);$i++)
 			{
 				$this->template->set_var('columns','');
 				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
@@ -490,42 +499,46 @@
 
 				/* each entry column */
 				@reset($columns_to_display);
-				while ($column = @each($columns_to_display))
+				while($column = @each($columns_to_display))
 				{
-					$ref = $data='';
+					$ref = $data = '';
 					$coldata = $entries[$i][$column[0]];
 					/* echo '<br>coldata="' . $coldata . '"'; */
 					/* Some fields require special formatting. */
-					if ($column[0] == 'url')
+					if($column[0] == 'url')
 					{
-						if ( !empty($coldata) && (substr($coldata,0,7) != 'http://') ) { $coldata = 'http://' . $coldata; }
-						$ref='<a href="'.$coldata.'" target="_new">';
-						$data=$coldata.'</a>';
-					}
-					elseif ( ($column[0] == 'email') || ($column[0] == 'email_home') )
-					{
-						if ($GLOBALS['phpgw_info']['user']['apps']['email'])
+						if(!empty($coldata) && (substr($coldata,0,7) != 'http://'))
 						{
-							$ref='<a href="'.$GLOBALS['phpgw']->link("/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+							$coldata = 'http://' . $coldata;
+						}
+						$ref  = '<a href="' . $coldata . '" target="_new">';
+						$data = $coldata . '</a>';
+					}
+					elseif(($column[0] == 'email') || ($column[0] == 'email_home'))
+					{
+						if($GLOBALS['phpgw_info']['user']['apps']['email'])
+						{
+							$ref = '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=email.uicompose.compose&to=' . urlencode($coldata)) . '" target="_new">';
 						}
 						else
 						{
-							$ref='<a href="mailto:'.$coldata.'">';
+							$ref = '<a href="mailto:'.$coldata.'">';
 						}
-						$data=$coldata . '</a>';
+						$data = $coldata . '</a>';
 					}
 					else /* But these do not */
 					{
-						$ref = ''; $data = $coldata;
+						$ref  = '';
+						$data = $coldata;
 					}
-					$this->template->set_var('col_data',$ref.$data);
+					$this->template->set_var('col_data',$ref . $data);
 					$this->template->parse('columns','column',True);
 				}
 
-				if (1)
+				if(1)
 				{
 					$this->template->set_var('row_view_link',$GLOBALS['phpgw']->link('/index.php',
-						'menuaction=addressbook.uiaddressbook.view&ab_id='.$entries[$i]['id']));
+						'menuaction=addressbook.uiaddressbook.view&ab_id=' . $entries[$i]['id']));
 				}
 				else
 				{
@@ -535,8 +548,10 @@
 
 				$this->template->set_var('row_vcard_link',$GLOBALS['phpgw']->link('/index.php',
 					'menuaction=addressbook.uivcard.out&ab_id='.$entries[$i]['id']));
+
 				/* echo '<br>: ' . $contacts->grants[$myowner] . ' - ' . $myowner; */
-				if ($this->contacts->check_perms($this->contacts->grants[$myowner],PHPGW_ACL_EDIT) || $myowner == $GLOBALS['phpgw_info']['user']['account_id'])
+				if($this->contacts->check_perms($this->contacts->grants[$myowner],PHPGW_ACL_EDIT) ||
+					$myowner == $GLOBALS['phpgw_info']['user']['account_id'])
 				{
 					$this->template->set_var('row_edit','<a href="' . $GLOBALS['phpgw']->link('/index.php',
 						'menuaction=addressbook.uiaddressbook.edit&ab_id='.$entries[$i]['id']) . '">' . lang('Edit') . '</a>');
@@ -565,11 +580,11 @@
 			$add_email = $GLOBALS['HTTP_POST_VARS']['add_email'] ? $GLOBALS['HTTP_POST_VARS']['add_email'] : $GLOBALS['HTTP_GET_VARS']['add_email'];
 
 			$named = explode(' ', $name);
-			for ($i=count($named);$i>=0;$i--)
+			for($i=count($named);$i>=0;$i--)
 			{
 				$names[$i] = $named[$i];
 			}
-			if ($names[2])
+			if($names[2])
 			{
 				$fields['n_given']  = $names[0];
 				$fields['n_middle'] = $names[1];
@@ -613,7 +628,7 @@
 
 		function add()
 		{
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
+			if($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				$fields = $this->get_form();
 
@@ -647,13 +662,14 @@
 
 		function edit()
 		{
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
+			if($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
 				$_fields = $this->get_form();
 				/* _debug_array($_fields);exit; */
 				$check = $this->bo->read_entry(array('id' => $_fields['ab_id'], 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
-				if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) && $check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id'])
+				if(($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_EDIT) &&
+					$check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id'])
 				{
 					$userid = $check[0]['owner'];
 				}
@@ -677,8 +693,8 @@
 			/* First, make sure they have permission to this entry */
 			$check = $this->bo->read_entry(array('id' => $GLOBALS['HTTP_GET_VARS']['ab_id'], 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
-			if ( !$this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_EDIT) &&
-				($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']) )
+			if(!$this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_EDIT) &&
+				($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
@@ -708,7 +724,8 @@
 			$this->template->set_var('cancel_link','<form method="POST" action="'
 				. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index') . '">');
 
-			if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id'])
+			if(($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) ||
+				$check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				$this->template->set_var('delete_link','<form method="POST" action="'.$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.delete') . '">');
 				$this->template->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
@@ -721,18 +738,19 @@
 		{
 			$ab_id = $GLOBALS['HTTP_POST_VARS']['entry']['ab_id'] ? $GLOBALS['HTTP_POST_VARS']['entry']['ab_id'] : $GLOBALS['HTTP_POST_VARS']['ab_id'];
 			$confirm = $GLOBALS['HTTP_GET_VARS']['confirm'] ? $GLOBALS['HTTP_GET_VARS']['confirm'] :$GLOBALS['HTTP_POST_VARS']['confirm'];
-			if (!$ab_id)
+			if(!$ab_id)
 			{
 				$ab_id = $GLOBALS['HTTP_GET_VARS']['ab_id'];		// else plain Link in delete does not work
 			}
-			if (!$ab_id)
+			if(!$ab_id)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 			}
 
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
 
-			if (!(($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id']))
+			if(!(($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) ||
+				$check[0]['owner'] == $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
@@ -740,7 +758,7 @@
 
 			$this->template->set_file(array('delete' => 'delete.tpl'));
 
-			if ($confirm != 'true')
+			if($confirm != 'true')
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
@@ -772,18 +790,18 @@
 			$tmp = $check[0]['owner'];
 			$perms = $this->contacts->check_perms($this->contacts->grants[$tmp],PHPGW_ACL_READ);
 
-			if ( (!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']) )
+			if((!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			if (!$ab_id)
+			if(!$ab_id)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
-			elseif (!$submit && $ab_id)
+			elseif(!$submit && $ab_id)
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
@@ -797,9 +815,9 @@
 
 			$customfields = $this->read_custom_fields();
 			/* _debug_array($this->prefs); */
-			while (list($column,$x) = each($this->contacts->stock_contact_fields))
+			while(list($column,$x) = each($this->contacts->stock_contact_fields))
 			{
-				if (isset($this->prefs[$column]) && $this->prefs[$column])
+				if(isset($this->prefs[$column]) && $this->prefs[$column])
 				{
 					$columns_to_display[$column] = True;
 					$colname[$column] = $column;
@@ -807,7 +825,7 @@
 			}
 
 			/* No prefs? */
-			if (!$columns_to_display )
+			if(!$columns_to_display )
 			{
 				$columns_to_display = array(
 					'n_given'    => 'n_given',
@@ -818,7 +836,7 @@
 					'email'      => 'email',
 					'email_home' => 'email_home'
 				);
-				while ($column = each($columns_to_display))
+				while($column = each($columns_to_display))
 				{
 					$colname[$column[0]] = $column[1];
 				}
@@ -832,7 +850,7 @@
 
 			$record_owner = $fields[0]['owner'];
 
-			if ($fields[0]['access'] == 'private')
+			if($fields[0]['access'] == 'private')
 			{
 				$access_check = lang('private');
 			}
@@ -844,7 +862,7 @@
 			$this->template->set_var('lang_viewpref',lang('Address book - view') . $noprefs);
 
 			@reset($qfields);
-			while (list($column,$null) = @each($qfields))
+			while(list($column,$null) = @each($qfields))
 			{
 				if($this->display_name($colname[$column]))
 				{
@@ -859,20 +877,20 @@
 					$this->template->set_var('display_col',ucfirst($column));
 				}
 				$ref = $data = '';
-				if ($fields[0][$column])
+				if($fields[0][$column])
 				{
 					$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 					$this->template->set_var('th_bg',$tr_color);
 					$coldata = $fields[0][$column];
 					/* Some fields require special formatting. */
-					if ( ($column == 'note' || $column == 'pubkey') && $coldata )
+					if(($column == 'note' || $column == 'pubkey') && $coldata)
 					{
 						$datarray = explode ("\n",$coldata);
-						if ($datarray[1])
+						if($datarray[1])
 						{
-							while (list($key,$info) = each ($datarray))
+							while(list($key,$info) = each ($datarray))
 							{
-								if ($key)
+								if($key)
 								{
 									$data .= '</td></tr><tr bgcolor="'.$tr_color.'"><td width="30%">&nbsp;</td><td width="70%">' .$info;
 								}
@@ -893,14 +911,14 @@
 					{
 						$data .= $this->contacts->formatted_address($fields[0]['id'],'',False);
 					}
-					elseif ($column == 'url' && $coldata)
+					elseif($column == 'url' && $coldata)
 					{
 						$ref = '<a href="' . $coldata . '" target="_new">';
 						$data = $coldata . '</a>';
 					}
-					elseif ( (($column == 'email') || ($column == 'email_home')) && $coldata)
+					elseif((($column == 'email') || ($column == 'email_home')) && $coldata)
 					{
-						if ($GLOBALS['phpgw_info']['user']['apps']['email'])
+						if($GLOBALS['phpgw_info']['user']['apps']['email'])
 						{
 							$ref='<a href="' . $GLOBALS['phpgw']->link('/email/compose.php','to='
 								. urlencode($coldata)) . '" target="_new">';
@@ -917,7 +935,7 @@
 						$ref = ''; $data = $coldata;
 					}
 
-					if (!$data)
+					if(!$data)
 					{
 						$this->template->set_var('ref_data','&nbsp;');
 					}
@@ -934,17 +952,17 @@
 			$fields['cat_id'] = is_array($this->cat_id) ? implode(',',$this->cat_id) : $this->cat_id;
 
 			$cats = explode(',',$fields[0]['cat_id']);
-			if ($cats[1])
+			if($cats[1])
 			{
-				while (list($key,$contactscat) = each($cats))
+				while(list($key,$contactscat) = each($cats))
 				{
-					if ($contactscat)
+					if($contactscat)
 					{
 						$catinfo = $this->cat->return_single(intval($contactscat));
 						$catname .= $catinfo[0]['name'] . '; ';
 					}
 				}
-				if (!$this->cat_id)
+				if(!$this->cat_id)
 				{
 					$this->cat_id = $cats[0];
 				}
@@ -954,13 +972,16 @@
 				$fields[0]['cat_id'] = ereg_replace(',','',$fields[0]['cat_id']);
 				$catinfo = $this->cat->return_single(intval($fields[0]['cat_id']));
 				$catname = $catinfo[0]['name'];
-				if (!$this->cat_id)
+				if(!$this->cat_id)
 				{
 					$this->cat_id = $fields[0]['cat_id'];
 				}
 			}
 
-			if (!$catname) { $catname = lang('none'); }
+			if(!$catname)
+			{
+				$catname = lang('none');
+			}
 
 			/* These are in the footer */
 			$this->template->set_var('lang_owner',lang('Record owner'));
@@ -970,11 +991,12 @@
 			$this->template->set_var('lang_category',lang('Category'));
 			$this->template->set_var('catname',$catname);
 
-			if (($this->contacts->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $GLOBALS['phpgw_info']['user']['account_id']))
+			if(($this->contacts->grants[$record_owner] & PHPGW_ACL_EDIT) ||
+				($record_owner == $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				$extra_vars = array('cd' => 16,'query' => $this->query,'cat_id' => $this->cat_id);
 
-				if ($referer)
+				if($referer)
 				{
 					$extra_vars += array('referer' => urlencode($referer));
 				}
@@ -985,7 +1007,7 @@
 			$this->template->set_var('copy_button',$this->html_1button_form('submit','copy',
 				$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.copy&ab_id=' . $fields[0]['id'])));
 
-			if ($fields[0]['n_family'] && $fields[0]['n_given'])
+			if($fields[0]['n_family'] && $fields[0]['n_given'])
 			{
 				$this->template->set_var('vcard_button',$this->html_1button_form('VCardForm','VCard',
 					$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$ab_id)));
@@ -1024,14 +1046,14 @@
 
 			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
 
-			if ($submit)
+			if($submit)
 			{
 				$totalerrors = 0;
-				if (!count($prefs))
+				if(!count($prefs))
 				{
 					$errors[$totalerrors++] = lang('You must select at least 1 column to display');
 				}
-				if (!$totalerrors)
+				if(!$totalerrors)
 				{
 					@reset($qfields);
 					$this->bo->save_preferences($prefs,$other,$qfields,$fcat_id);
@@ -1041,7 +1063,7 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			if ($totalerrors)
+			if($totalerrors)
 			{
 				echo '<p><center>' . $GLOBALS['phpgw']->common->error_list($errors) . '</center>';
 			}
@@ -1053,18 +1075,21 @@
 			$i = 0; $j = 0;
 			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 
-			while (list($col, $descr) = each($qfields))
+			while(list($col, $descr) = each($qfields))
 			{
 				/* echo '<br>test: $col - $i $j - ' . count($abc); */
 				$i++; $j++;
 				$showcol = $this->display_name($col);
-				if (!$showcol) { $showcol = $col; }
+				if(!$showcol)
+				{
+					$showcol = $col;
+				}
 				/* yank the *'s prior to testing for a valid column description */
 				$coltest = ereg_replace('\*','',$showcol);
-				if ($coltest)
+				if($coltest)
 				{
 					$this->template->set_var($col,$showcol);
-					if ($GLOBALS['phpgw_info']['user']['preferences']['addressbook'][$col])
+					if($GLOBALS['phpgw_info']['user']['preferences']['addressbook'][$col])
 					{
 						$this->template->set_var($col.'_checked',' checked');
 					}
@@ -1075,7 +1100,7 @@
 				}
 			}
 
-			if ($customfields)
+			if($customfields)
 			{
 				$custom_var = '
   <tr>
@@ -1084,7 +1109,7 @@
     <td></td>
   </tr>
 ';
-				while( list($cf) = each($customfields) )
+				while(list($cf) = each($customfields))
 				{
 					$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 					$custom_var .= "\n" . '<tr bgcolor="' . $tr_color . '">' . "\n";
@@ -1105,7 +1130,7 @@
 			$this->template->set_var(tr_color,$tr_color);
 			$this->template->set_var('lang_showbirthday',lang('show birthday reminders on main screen'));
 
-			if ($this->prefs['mainscreen_showbirthdays'])
+			if($this->prefs['mainscreen_showbirthdays'])
 			{
 				$this->template->set_var('show_birthday',' checked');
 			}
@@ -1123,7 +1148,7 @@
 			$this->template->set_var('filter_select',$this->formatted_list('other[default_filter]',$list,$this->prefs['default_filter']));
 
 			$this->template->set_var('lang_autosave',lang('Autosave default category'));
-			if ($this->prefs['autosave_category'])
+			if($this->prefs['autosave_category'])
 			{
 				$this->template->set_var('autosave',' checked');
 			}
@@ -1162,14 +1187,14 @@
 			}
 			/* _debug_array($entry); exit; */
 
-			if (!$entry['bday_month'] && !$entry['bday_day'] && !$entry['bday_year'])
+			if(!$entry['bday_month'] && !$entry['bday_day'] && !$entry['bday_year'])
 			{
 				$fields['bday'] = '';
 			}
 			else
 			{
 				$bday_day = $entry['bday_day'];
-				if (strlen($bday_day) == 1)
+				if(strlen($bday_day) == 1)
 				{
 					$bday_day = '0' . $entry['bday_day'];
 				}
@@ -1186,9 +1211,9 @@
 			$fields['n_middle']				= $entry['middle'];
 			$fields['n_prefix']				= $entry['prefix'];
 			$fields['n_suffix']				= $entry['suffix'];
-			if ($entry['prefix']) { $pspc = ' '; }
-			if ($entry['middle']) { $mspc = ' '; } else { $nspc = ' '; }
-			if ($entry['suffix']) { $sspc = ' '; }
+			if($entry['prefix']) { $pspc = ' '; }
+			if($entry['middle']) { $mspc = ' '; } else { $nspc = ' '; }
+			if($entry['suffix']) { $sspc = ' '; }
 			$fields['fn']					= $entry['prefix'].$pspc.$entry['firstname'].$nspc.$mspc.$entry['middle'].$mspc.$entry['lastname'].$sspc.$entry['suffix'];
 			$fields['email']				= $entry['email'];
 			$fields['email_type']			= $entry['email_type'];
@@ -1256,7 +1281,7 @@
 			$fields['adr_two_type'] = substr($typeb,0,-1);
 
 			$custom = $this->read_custom_fields();
-			while (list($name,$val) = @each($custom))
+			while(list($name,$val) = @each($custom))
 			{
 				$fields[$name] = $entry[$val];
 			}
@@ -1267,7 +1292,7 @@
 			$fields['note']		= $entry['notes'];
 			$fields['label']	= $entry['label'];
 
-			if ($entry['access'] == True)
+			if($entry['access'] == True)
 			{
 				$fields['access'] = 'private';
 			}
@@ -1276,7 +1301,7 @@
 				$fields['access'] = 'public';
 			}
 
-			if (is_array($fcat_id))
+			if(is_array($fcat_id))
 			{
 				$fields['cat_id'] = count($fcat_id) > 1 ? ','.implode(',',$fcat_id).',' : $fcat_id[0];
 			}
@@ -1287,7 +1312,7 @@
 
 			$fields['ab_id']   = $entry['ab_id'];
 			$fields['tid']     = $entry['tid'];
-			if (!$fields['tid'])
+			if(!$fields['tid'])
 			{
 				$fields['tid'] = 'n';
 			}
@@ -1304,7 +1329,7 @@
 
 			$this->template->set_file(array('form' => 'form.tpl'));
 
-			if ( ($GLOBALS['phpgw_info']['server']['countrylist'] == 'user_choice' &&
+			if(($GLOBALS['phpgw_info']['server']['countrylist'] == 'user_choice' &&
 				$GLOBALS['phpgw_info']['user']['preferences']['common']['countrylist'] == 'use_select') ||
 				($GLOBALS['phpgw_info']['server']['countrylist'] == 'force_select'))
 			{
@@ -1371,7 +1396,7 @@
 			}
 			$cats_link = $this->cat_option($cat_id,True,False,True);
 
-			if ($access == 'private')
+			if($access == 'private')
 			{
 				$access_check = ' checked';
 			}
@@ -1380,7 +1405,7 @@
 				$access_check = '';
 			}
 
-			if ($customfields)
+			if($customfields)
 			{
 				while(list($name,$value) = each($customfields))
 				{
@@ -1395,15 +1420,15 @@
 				}
 			}
 
-			if ($format != "view")
+			if($format != "view")
 			{
 				/* Preferred phone number radio buttons */
 				$pref[0] = '<font size="-2">';
 				$pref[1] = '(' . lang('pref') . ')</font>';
-				while (list($name,$val) = each($this->contacts->tel_types))
+				while(list($name,$val) = each($this->contacts->tel_types))
 				{
 					$str[$name] = "\n".'      <input type="radio" name="entry[tel_prefer]" value="'.$name.'"';
-					if ($name == $preferred)
+					if($name == $preferred)
 					{
 						$str[$name] .= ' checked';
 					}
@@ -1412,7 +1437,7 @@
 					$this->template->set_var("pref_".$name,$str[$name]);
 				}
 
-				if (strlen($bday) > 2)
+				if(strlen($bday) > 2)
 				{
 					list( $month, $day, $year ) = split( '/', $bday );
 					$temp_month[$month] = ' selected';
@@ -1456,14 +1481,14 @@
 				}
 
 				$time_zone = '<select name="entry[timezone]">' . "\n";
-				for ($i = -23; $i<24; $i++)
+				for($i = -23; $i<24; $i++)
 				{
 					$time_zone .= '<option value="' . $i . '"';
-					if ($i == $timezone)
+					if($i == $timezone)
 					{
 						$time_zone .= ' selected';
 					}
-					if ($i < 1)
+					if($i < 1)
 					{
 						$time_zone .= '>' . $i . '</option>' . "\n";
 					}
@@ -1475,26 +1500,32 @@
 				$time_zone .= '</select>' . "\n";
 
 				$email_type = '<select name=entry[email_type]>';
-				while ($type = each($this->contacts->email_types))
+				while($type = each($this->contacts->email_types))
 				{
 					$email_type .= '<option value="' . $type[0] . '"';
-					if ($type[0] == $emailtype) { $email_type .= ' selected'; }
+					if($type[0] == $emailtype)
+					{
+						$email_type .= ' selected';
+					}
 					$email_type .= '>' . $type[1] . '</option>';
 				}
 				$email_type .= '</select>';
 
 				reset($this->contacts->email_types);
 				$hemail_type = '<select name=entry[hemail_type]>';
-				while ($type = each($this->contacts->email_types))
+				while($type = each($this->contacts->email_types))
 				{
 					$hemail_type .= '<option value="' . $type[0] . '"';
-					if ($type[0] == $hemailtype) { $hemail_type .= ' selected'; }
+					if($type[0] == $hemailtype)
+					{
+						$hemail_type .= ' selected';
+					}
 					$hemail_type .= '>' . $type[1] . '</option>';
 				}
 				$hemail_type .= '</select>';
 
 				reset($this->contacts->adr_types);
-				while (list($type,$val) = each($this->contacts->adr_types))
+				while(list($type,$val) = each($this->contacts->adr_types))
 				{
 					$badrtype .= "\n".'<INPUT type="checkbox" name="entry[one_'.$type.']"';
 					$ot = 'one_'.$type;
@@ -1507,7 +1538,7 @@
 				}
 
 				reset($this->contacts->adr_types);
-				while (list($type,$val) = each($this->contacts->adr_types))
+				while(list($type,$val) = each($this->contacts->adr_types))
 				{
 					$hadrtype .= "\n".'<INPUT type="checkbox" name="entry[two_'.$type.']"';
 					$tt = 'two_'.$type;
@@ -1527,25 +1558,25 @@
 			{
 				$notes = '<form><TEXTAREA cols="60" name="entry[notes]" rows="4">'
 					. $notes . '</TEXTAREA></form>';
-				if ($bday == '//')
+				if($bday == '//')
 				{
 					$bday = '';
 				}
 			}
 
-			if ($action)
+			if($action)
 			{
 				echo '<FORM action="' . $GLOBALS['phpgw']->link('/index.php', $action . '&referer='.urlencode($referer)).'" method="post">';
 			}
 
-			if (!ereg('^http://',$url))
+			if(!ereg('^http://',$url))
 			{
 				$url = 'http://' . $url;
 			} 
 
 			$birthday = $GLOBALS['phpgw']->common->dateformatorder($bday_year,$bday_month,$bday_day)
 				. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
-			if ($format == 'edit')
+			if($format == 'edit')
 			{
 				$create .= '<tr bgcolor="' . $GLOBALS['phpgw_info']['theme']['th_bg'] . '"><td colspan="2"><font size="-1">' . lang("Created by") . ':</font></td>'
 					. '<td colspan="3"><font size="-1">'
@@ -1620,7 +1651,7 @@
 			$this->template->set_var('bzip',$bzip);
 			$this->template->set_var('lang_bcountry',lang('Business Country'));
 			$this->template->set_var('bcountry',$bcountry);
-			if ($countrylist)
+			if($countrylist)
 			{
 				$this->template->set_var('bcountry',$GLOBALS['phpgw']->country->form_select($bcountry,'entry[bcountry]'));
 			}
@@ -1646,7 +1677,7 @@
 			$this->template->set_var('lang_hzip',lang('Home Zip Code'));
 			$this->template->set_var('hzip',$hzip);
 			$this->template->set_var('lang_hcountry',lang('Home Country'));
-			if ($countrylist)
+			if($countrylist)
 			{
 				$this->template->set_var('hcountry',$GLOBALS['phpgw']->country->form_select($hcountry,'entry[hcountry]'));
 			}
@@ -1670,7 +1701,7 @@
 
 			$this->template->set_var('lang_cats',lang('Category'));
 			$this->template->set_var('cats_link',$cats_link);
-			if ($customfields)
+			if($customfields)
 			{
 				$this->template->set_var('lang_custom',lang('Custom Fields').':');
 				$this->template->set_var('custom',$custom);
