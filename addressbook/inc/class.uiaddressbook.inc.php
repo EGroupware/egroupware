@@ -681,6 +681,11 @@
 
 			$fields['ab_id']   = $entry['ab_id'];
 			$fields['tid']     = $entry['tid'];
+			if (!$fields['tid'])
+			{
+				$fields['tid'] = 'n';
+			}
+
 			$fields['referer'] = $entry['referer'];
 			/* _debug_array($fields);exit; */
 			return $fields;
@@ -1086,7 +1091,7 @@
 
 		function add_email()
 		{
-			global $phpgw_info,$name,$referer;
+			global $phpgw,$phpgw_info,$name,$refereri,$add_email;
 
 			$named = explode(' ', $name);
 			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
@@ -1107,7 +1112,7 @@
 			$referer = urlencode($referer);
 
 			$this->bo->add_entry($phpgw_info['user']['account_id'],$fields);
-			$ab_id = $this->get_lastid();
+			$ab_id = $this->bo->get_lastid();
 
 			Header('Location: '
 				. $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
@@ -1446,7 +1451,10 @@
 			{
 				$extra_vars = array('cd' => 16,'query' => $this->query,'cat_id' => $this->cat_id);
 
-				if ($referer) $extra_vars += array( 'referer' => urlencode($referer));
+				if ($referer)
+				{
+					$extra_vars += array('referer' => urlencode($referer));
+				}
 
 				$this->template->set_var('edit_button',$this->html_1button_form('edit','Edit',array(),'/index.php','menuaction=addressbook.uiaddressbook.edit&ab_id=' .$ab_id));
 			}

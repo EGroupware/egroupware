@@ -59,7 +59,7 @@
 			$this->template->set_file(array('vcardin' => 'vcardin.tpl'));
 
 			$this->template->set_var('vcard_header','<p>&nbsp;<b>' . lang('Address book - VCard in') . '</b><hr><p>');
-			$this->template->set_var('action_url',$phpgw->link('/addressbook/main.php','menuaction=addressbook.boaddressbook.add_vcard'));
+			$this->template->set_var('action_url',$phpgw->link('/index.php','menuaction=addressbook.boaddressbook.add_vcard'));
 			$this->template->set_var('lang_access',lang('Access'));
 			$this->template->set_var('lang_groups',lang('Which groups'));
 			$this->template->set_var('access_option',$access_option);
@@ -92,7 +92,7 @@
 
 			if ( (!$perms) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
 			{
-				Header("Location: " . $phpgw->link('/addressbook/main.php','menuaction=addressbook.uiaddressbook.get_list'));
+				Header("Location: " . $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 				$phpgw->common->phpgw_exit();
 			}
 
@@ -123,11 +123,11 @@
 				if($lastname == '')
 				{
 					/* Run away here. */
-					Header('Location: ' . $phpgw->link('/addressbook/main.php',"menuaction=addressbook.uivcard.out&nolname=1&ab_id=$ab_id"));
+					Header('Location: ' . $phpgw->link('/index.php',"menuaction=addressbook.uivcard.out&nolname=1&ab_id=$ab_id"));
 				}
 				if($firstname == '')
 				{
-					Header('Location: ' . $phpgw->link('/addressbook/main.php',"menuaction=addressbook.uivcard.out&nofname=1&ab_id=$ab_id"));
+					Header('Location: ' . $phpgw->link('/index.php',"menuaction=addressbook.uivcard.out&nofname=1&ab_id=$ab_id"));
 				}
 
 				if ($email)

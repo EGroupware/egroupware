@@ -138,7 +138,7 @@
 
 			if($uploadedfile == 'none' || $uploadedfile == '')
 			{
-				Header('Location: ' . $phpgw->link('/addressbook/main.php','menuaction=addressbook.uivcard.in&action=GetFile'));
+				Header('Location: ' . $phpgw->link('/index.php','menuaction=addressbook.uivcard.in&action=GetFile'));
 			}
 			else
 			{
@@ -165,7 +165,7 @@
 				/* Delete the temp file. */
 				unlink($filename);
 				unlink($filename . '.info');
-				Header('Location: ' . $phpgw->link('/addressbook/main.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id));
+				Header('Location: ' . $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id));
 			}
 		}
 
@@ -193,7 +193,7 @@
 			$ab_id = $this->get_lastid();
 
 			Header('Location: '
-				. $phpgw->link('/addressbook/main.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
+				. $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
 		}
 
 		function OLDcopy_entry($ab_id)
@@ -217,7 +217,7 @@
 			}
 
 			$ab_id = $this->get_lastid();
-			Header("Location: " . $phpgw->link('/addressbook/main.php',"menuaction=addressbook.uiaddressbook.edit&ab_id=$ab_id"));
+			Header("Location: " . $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.edit&ab_id=$ab_id"));
 		}
 
 		function add_entry($userid,$fields)

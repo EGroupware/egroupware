@@ -236,7 +236,7 @@
 					$phpgw->common->phpgw_header();
 					echo parse_navbar();
 					echo "<pre>$buffer</pre>";
-					echo '<a href="'.$phpgw->link('/addressbook/main.php','menuaction=addressbook.uiaddressbook.get_list') . '">'.lang("OK").'</a>';
+					echo '<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list') . '">'.lang("OK").'</a>';
 					$phpgw->common->phpgw_footer();
 				}
 			}
@@ -245,14 +245,14 @@
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
 				echo "<pre>$buffer</pre>";
-				echo '<a href="'.$phpgw->link('/addressbook/main.php','menuaction=addressbook.uiaddressbook.get_list'). '">'.lang("OK").'</a>';
+				echo '<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'). '">'.lang("OK").'</a>';
 				$phpgw->common->phpgw_footer();
 			}
 		}
 
-		function export()
+		function export($cat_id='')
 		{
-			global $phpgw_info;
+			global $phpgw_info,$conv_type;
 
 			include (PHPGW_APP_INC . '/export/' . $conv_type);
 			$buffer=array();
@@ -285,7 +285,7 @@
 			}
 			else
 			{
-			$buffer = $contacts->export_start_file($buffer);
+				$buffer = $contacts->export_start_file($buffer);
 			}
 
 			for ($i=0;$i<count($contacts->ids);$i++)

@@ -34,17 +34,18 @@
 		{
 			global $phpgw;
 
-			$this->template = &$phpgw->template;
+			$this->template = $phpgw->template;
 			$this->cat      = CreateObject('phpgwapi.categories');
 			$this->bo       = CreateObject('addressbook.boXport',True);
+			$this->browser  = CreateObject('phpgwapi.browser');
 
-			$this->start    = &$this->bo->start;
-			$this->limit    = &$this->bo->limit;
-			$this->query    = &$this->bo->query;
-			$this->sort     = &$this->bo->sort;
-			$this->order    = &$this->bo->order;
-			$this->filter   = &$this->bo->filter;
-			$this->cat_id   = &$this->bo->cat_id;
+			$this->start    = $this->bo->start;
+			$this->limit    = $this->bo->limit;
+			$this->query    = $this->bo->query;
+			$this->sort     = $this->bo->sort;
+			$this->order    = $this->bo->order;
+			$this->filter   = $this->bo->filter;
+			$this->cat_id   = $this->bo->cat_id;
 		}
 
 		/* Return a select form element with the categories option dialog in it */
@@ -94,7 +95,7 @@
 						$phpgw->common->phpgw_header();
 						echo parse_navbar();
 						echo "<pre>$buffer</pre>";
-						echo '<a href="'.$phpgw->link('/addressbook/main.php','menuaction=addressbook.uiaddressbook.get_list') . '">'.lang("OK").'</a>';
+						echo '<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list') . '">'.lang("OK").'</a>';
 						$phpgw->common->phpgw_footer();
 					}
 				}
@@ -103,7 +104,7 @@
 					$phpgw->common->phpgw_header();
 					echo parse_navbar();
 					echo "<pre>$buffer</pre>";
-					echo '<a href="'.$phpgw->link('/addressbook/main.php','menuaction=addressbook.uiaddressbook.get_list'). '">'.lang("OK").'</a>';
+					echo '<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'). '">'.lang("OK").'</a>';
 					$phpgw->common->phpgw_footer();
 				}
 
@@ -136,11 +137,11 @@
 
 				$this->template->set_var('lang_cancel',lang('Cancel'));
 				$this->template->set_var('lang_cat',lang('Select Category'));
-				$this->template->set_var('cancel_url',$phpgw->link('/addressbook/main.php','menuaction=addressbook.uiaddressbook.get_list'));
+				$this->template->set_var('cancel_url',$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 				$this->template->set_var('navbar_bg',$phpgw_info['theme']['navbar_bg']);
 				$this->template->set_var('navbar_text',$phpgw_info['theme']['navbar_text']);
 				$this->template->set_var('import_text',lang('Import from LDIF, CSV, or VCard'));
-				$this->template->set_var('action_url',$phpgw->link('/addressbook/main.php','menuaction=addressbook.boXport.import'));
+				$this->template->set_var('action_url',$phpgw->link('/index.php','menuaction=addressbook.boXport.import'));
 				$this->template->set_var('cat_link',$this->cat_option($this->cat_id,True,False));
 				$this->template->set_var('tsvfilename','');
 				$this->template->set_var('conv',$conv);
@@ -160,11 +161,11 @@
 
 		function export()
 		{
-			global $phpgw,$phpgw_info,$convert,$tsvfilename;
+			global $phpgw,$phpgw_info,$convert,$tsvfilename,$cat_id,$download,$conv_type;
 
 			if ($convert)
 			{
-				$buffer = $this->bo->export();
+				$buffer = $this->bo->export($cat_id);
 
 				if ($conv_type == 'none')
 				{
@@ -173,7 +174,7 @@
 					$phpgw->common->phpgw_header();
 					echo parse_navbar();
 					echo lang('<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list');
-					echo '&nbsp<a href="'.$phpgw->link('/addressbook/main.php','menuaction=addressbook.uiXport.export') . '">'.lang('OK').'</a>';
+					echo '&nbsp<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiXport.export') . '">' . lang('OK') . '</a>';
 					$phpgw->common->phpgw_footer();
 					$phpgw->common->phpgw_exit();
 				}
@@ -181,15 +182,17 @@
 				if ( ($download == 'on') || ($o->type == 'pdb') )
 				{
 					// filename, default application/octet-stream, length of file, default nocache True
-					$phpgw->browser->content_header($tsvfilename,'application/octet-stream',strlen($buffer));
+					$this->browser->content_header($tsvfilename,'application/octet-stream',strlen($buffer));
 					echo $buffer;
 				}
 				else
 				{
+					$phpgw->common->phpgw_header();
+					echo parse_navbar();
 					echo "<pre>\n";
 					echo $buffer;
 					echo "\n</pre>\n";
-					echo '<a href="'.$phpgw->link('/addressbook/index.php','menuaction=addressbook.uiaddressbook.get_list') . '">'.lang('OK').'</a>';
+					echo '<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiXport.export') . '">' . lang('OK') . '</a>';
 					$phpgw->common->phpgw_footer();
 				}
 			}
@@ -226,7 +229,7 @@
 				$this->template->set_var('navbar_bg',$phpgw_info['theme']['navbar_bg']);
 				$this->template->set_var('navbar_text',$phpgw_info['theme']['navbar_text']);
 				$this->template->set_var('export_text',lang('Export from Addressbook'));
-				$this->template->set_var('action_url',$phpgw->link('/addressbook/export.php'));
+				$this->template->set_var('action_url',$phpgw->link('/index.php','menuaction=addressbook.uiXport.export'));
 				$this->template->set_var('filename',lang('Export file name'));
 				$this->template->set_var('conv',$conv);
 				$this->template->set_var('debug',lang(''));
