@@ -13,6 +13,7 @@
 	   - Changed the icon for NNTP.
 	   - Changed the way session->create() makes the random number. This should fix
 	     the problems on NT.
+	   - Added HTTP Proxy support to phpgw_network.
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly
