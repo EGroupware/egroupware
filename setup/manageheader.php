@@ -48,14 +48,16 @@
 		'pgsql'  => 'PostgreSQL',
 		'mysql'  => 'MySQL',
 		'mssql'  => 'MS SQL Server',
-		'oracle' => 'Oracle'
+		'oracle' => 'Oracle',
+		'sapdb'  => 'SAP/Max DB',
 	);
 
 	$default_db_ports = array(
 		'pgsql'  => 5432,
 		'mysql'  => 3306,
 		'mssql'  => 1433,
-		'oracle' => 1521
+		'oracle' => 1521,
+		'sapdb'  => '',
 	);
 
 	function check_form_values()
@@ -276,6 +278,16 @@
 			else
 			{
 				$detected .= lang('No Microsoft SQL Server support found. Disabling') . '<br>' . "\n";
+			}
+			if(extension_loaded('odbc'))
+			{
+				$detected .= lang('You appear to have ODBC support enabled') . '<br>' . "\n";
+				// databases supported by the ODBC driver
+				$supported_db[] = 'sapdb';
+			}
+			else
+			{
+				$detected .= lang('No ODBC support found. Disabling') . '<br>' . "\n";
 			}
 /*
 			if(extension_loaded('oci8'))
