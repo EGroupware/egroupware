@@ -1,3 +1,4 @@
+<!-- BEGIN addressbook/setup/config.inc.php -->
    <tr bgcolor="FFFFFF">
     <td colspan="2">&nbsp;</td>
    </tr>
