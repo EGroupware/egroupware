@@ -31,8 +31,8 @@
 				'link'	=> 'day'
 			)
 		).'</td><td align="center"><table border="0" width="100%" cellspacing="0" cellpadding="0">'
-		. '<tr><td align="center">'.lang($GLOBALS['phpgw']->common->show_date($time,'F')).' '.$GLOBALS['g_day'].', '
-		.$GLOBALS['g_year'].'</td></tr><tr><td bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_text']
+		. '<tr><td align="center">'.ExecMethod('calendar.bocalendar.long_date',time())
+		.'</td></tr><tr><td bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_text']
 		.'" valign="top">'.ExecMethod('calendar.uicalendar.print_day',
 			Array(
 				'year'	=> $GLOBALS['g_year'],
