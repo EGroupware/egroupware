@@ -210,8 +210,12 @@ a.textSidebox
 	background-image:url(../images/appbox-header-background.png);
 	background-repeat: repeat-x;
 	height:36px;
+	line-height:28px;
 	text-align:center;
-	font-size:22px;
+/*	padding-top:7px;*/
+	padding-bottom:0px;
+	font-size:14px;
+	font-weight:bold;
 	color:#666666;
 	border-top-color:#9c9c9c;
 	border-top-width:1px;
