@@ -307,7 +307,7 @@
 			{
 				if ($filter_obj == 1)
 				{
-					$user_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
+//					$user_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
 					$indexlimit = count($user_groups);
               
 					$filter_obj = array(array('none',lang('Show all')),
