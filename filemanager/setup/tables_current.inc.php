@@ -33,7 +33,8 @@
 				'directory' => array('type' => 'text','nullable' => True),
 				'name' => array('type' => 'text','nullable' => False),
 				'link_directory' => array('type' => 'text','nullable' => True),
-				'link_name' => array('type' => 'text','nullable' => True)
+				'link_name' => array('type' => 'text','nullable' => True),
+				'version' => array('type' => 'varchar', 'precision' => 30,'nullable' => False,'default' => '0.0.0.0')
 			),
 			'pk' => array('file_id'),
 			'fk' => array(),

@@ -43,4 +43,16 @@
 		return $setup_info['phpwebhosting']['currentver'];
 	}
 
+	$test[] = '0.9.13.004';
+	function phpwebhosting_upgrade0_9_13_004()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->AddColumn('phpgw_vfs', 'version', array ('type' => 'varchar', 'precision' => 30,'nullable' => False, 'default' => '0.0.0.0'));
+
+		$setup_info['phpwebhosting']['currentver'] = '0.9.13.005';
+
+		return $setup_info['phpwebhosting']['currentver'];
+	}
+
 ?>
