@@ -98,7 +98,7 @@
 				}
 				else
 				{
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid password';
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
 				}
