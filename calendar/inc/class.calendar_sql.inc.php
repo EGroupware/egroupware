@@ -14,12 +14,8 @@
 
   /* $Id$ */
 
-class calendar_
+class calendar_ extends calendar__
 {
-	var $stream;
-	var $user;
-	var $event;
-
 	var $cal_event;
 	var $today = Array('raw','day','month','year','full','dow','dm','bd');
 
@@ -388,11 +384,23 @@ class calendar_
 	function append_event($mcal_stream)
 	{
 		$this->save_event($this->event);
+		$this->send_update(MSG_ADDED,$this->event->participants,'',$this->event);
 		return $this->event->id;
 	}
 
 	function store_event($mcal_stream)
 	{
+		if($this->event->id != 0)
+		{
+			$new_event = $this->event;
+			$old_event = $this->fetch_event($this->stream,$new_event->id);
+			$this->prepare_recipients($new_event,$old_event);
+			$this->event = $new_event;
+		}
+		else
+		{
+			$this->send_update(MSG_ADDED,$this->event->participants,'',$this->event);
+		}
 		return $this->save_event($this->event);
 	}
 
@@ -720,56 +728,6 @@ class calendar_
 	
 	/***************** Local functions for SQL based Calendar *****************/
 
-	function set_common_recur($year,$month,$day)
-	{
-		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
-		{
-			$this->event->rpt_end_use = 0;
-			$this->event->rpt_end = 0;
-			$this->event->rpt_end_day = 0;
-			$this->event->rpt_end_month = 0;
-			$this->event->rpt_end_year = 0;
-		}
-		else
-		{
-			$this->event->rpt_end_use = 1;
-			$this->event->rpt_end = mktime(0,0,0,intval($month),intval($day),intval($year));
-			$this->event->rpt_end -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-			$this->event->rpt_end_day = intval($day);
-			$this->event->rpt_end_month = intval($month);
-			$this->event->rpt_end_year = intval($year);
-		}
-		$this->event->rpt_sun = 0;
-		$this->event->rpt_mon = 0;
-		$this->event->rpt_tue = 0;
-		$this->event->rpt_wed = 0;
-		$this->event->rpt_thu = 0;
-		$this->event->rpt_fri = 0;
-		$this->event->rpt_sat = 0;
-		$this->event->rpt_days = 'nnnnnnn';
-		$this->event->rpt_freq = intval($interval);
-
-	// Legacy Support (New)
-		$this->event->recur_interval = intval($interval);
-		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
-		{
-			$this->event->recur_enddate->year = 0;
-			$this->event->recur_enddate->month = 0;
-			$this->event->recur_enddate->mday = 0;
-		}
-		else
-		{
-			$this->event->recur_enddate->year = intval($year);
-			$this->event->recur_enddate->month = intval($month);
-			$this->event->recur_enddate->mday = intval($day);
-		}
-		$this->event->recur_enddate->hour = 0;
-		$this->event->recur_enddate->min = 0;
-		$this->event->recur_enddate->sec = 0;
-		$this->event->recur_enddate->alarm = 0;
-		$this->event->recur_data = 0;
-	}
-
 	function get_event_ids($search_repeats=False,$extra='')
 	{
 		$retval = Array();
@@ -823,18 +781,18 @@ class calendar_
 			$event->id = $this->stream->f('cal_id');
 		}
 
-		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-		{
-			if ($event->ampm == 'pm' && ($event->hour < 12 && $event->hour <> 12))
-			{
-				$event->hour += 12;
-			}
-			
-			if ($event->end_ampm == 'pm' && ($event->end_hour < 12 && $event->end_hour <> 12))
-			{
-				$event->end_hour += 12;
-			}
-		}
+//		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+//		{
+//			if ($event->ampm == 'pm' && ($event->hour < 12 && $event->hour <> 12))
+//			{
+//				$event->hour += 12;
+//			}
+//			
+//			if ($event->end_ampm == 'pm' && ($event->end_hour < 12 && $event->end_hour <> 12))
+//			{
+//				$event->end_hour += 12;
+//			}
+//		}
 		$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 		$date = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
 		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;

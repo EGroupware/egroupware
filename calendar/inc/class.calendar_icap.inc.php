@@ -11,12 +11,9 @@
   \**************************************************************************/
 
   /* $Id$ */
-class calendar_
-{
-	var $stream;
-	var $user;
-	var $event;
 
+class calendar_ extends calendar__
+{
 	function open($calendar='',$user='',$passwd='',$options='')
 	{
 		global $phpgw, $phpgw_info;
@@ -258,7 +255,7 @@ class calendar_
 	// Legacy Support (New)
 		$this->event->start->year = $year;
 		$this->event->start->month = $month;
-		$this->event->start->day = $day;
+		$this->event->start->mday = $day;
 		$this->event->start->hour = $hour;
 		$this->event->start->min = $min;
 		$this->event->start->sec = $sec;
@@ -308,7 +305,7 @@ class calendar_
 	// Legacy Support (New)
 		$this->event->end->year = $year;
 		$this->event->end->month = $month;
-		$this->event->end->day = $day;
+		$this->event->end->mday = $day;
 		$this->event->end->hour = $hour;
 		$this->event->end->min = $min;
 		$this->event->end->sec = $sec;
@@ -352,6 +349,7 @@ class calendar_
 
 	function event_set_class($stream,$class)
 	{
+		$this->event->public = $class;
 		return mcal_event_set_class($stream,$class);
 	}
 

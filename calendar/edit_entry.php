@@ -51,14 +51,14 @@
 
 	if ($id > 0)
 	{
-		$cal = $phpgw->calendar->getevent(intval($id));
-		$cal_info = $cal[0];
+		$cal_stream = $phpgw->calendar->open('INBOX',intval($cal_info->owner),'');
+		$event = $phpgw->calendar->fetch_event($cal_stream,intval($id));
 
 		$can_edit = False;
 		
-		if(($cal_info->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
+		if(($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
 		{
-			if($cal_info->access=='private')
+			if($event->public != True)
 			{
 				if($phpgw->calendar->check_perms(16) == True)
 				{
@@ -73,22 +73,21 @@
 
 		if($can_edit == False)
 		{
-			header('Location: '.$phpgw->link('view.php','id='.$id.'&owner='.$owner));
+			header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/view.php','id='.$id.'&owner='.$owner));
 		}
 
-		if($cal_info->rpt_end_use == False)
+		if($event->rpt_end_use == False)
 		{
-			$cal_info->rpt_end = $cal_info->datetime + 86400;
+			$event->rpt_end = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) + 86400;
 		}
 	}
 	elseif(isset($readsess))
 	{
-//		$cal_info = ;
-		$cal_info = $phpgw->session->appsession('entry','calendar');
+		$event = $phpgw->session->appsession('entry','calendar');
 		
-		if($cal_info->owner == 0)
+		if($event->owner == 0)
 		{
-			$cal_info->owner = $owner;
+			$event->owner = $owner;
 		}
 		
 		$can_edit = True;
@@ -97,11 +96,13 @@
 	{
 		if($phpgw->calendar->check_perms(PHPGW_ACL_ADD) == False)
 		{
-			header('Location: '.$phpgw->link('view.php','id='.$id.'&owner='.$owner));
+			header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/view.php','id='.$id.'&owner='.$owner));
 		}
 
-		$cal_info->id = 0;
-		$cal_info->owner = $owner;
+		$cal_stream = $phpgw->calendar->open('INBOX',intval($cal_info->owner),'');
+		$phpgw->calendar->event_init($cal_stream);
+		$phpgw->calendar->event->id = 0;
+
 		$can_edit = True;
 
 		if (!isset($hour))
@@ -122,14 +123,13 @@
 			$thisminute = (int)$minute;
 		}
 
-		$datetime = $phpgw->calendar->makegmttime($thishour,$thisminute,0,$thismonth,$thisday,$thisyear);
-		$cal_info->datetime = $datetime['raw'];
-		$cal_info->edatetime = $cal_info->datetime;
-		$cal_info->name = "";
-		$cal_info->description = "";
-		$cal_info->priority = 2;
+		$phpgw->calendar->event_set_start($cal_stream,$thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
+		$phpgw->calendar->event_set_end($cal_stream,$thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
+		$phpgw->calendar->event_set_title($cal_stream,'');
+		$phpgw->calendar->event_set_description($cal_stream,'');
+		$phpgw->calendar->event->priority = 2;
 
-		$cal_info->rpt_end = $cal_info->datetime + 86400;
+		$phpgw->calendar->event_set_recur_none($cal_stream);
 	}
 
 	$phpgw->common->phpgw_header();
@@ -137,15 +137,13 @@
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 	$templates = Array(
-								'edit_entry_begin'=>	'edit.tpl',
-								'list'				=>	'list.tpl',
-								'hr'					=> 'hr.tpl',
-								'edit_entry_end'	=> 'edit.tpl',
-								'form_button'		=>	'form_button_script.tpl'
+		'edit_entry_begin'=>	'edit.tpl',
+		'list'				=>	'list.tpl',
+		'hr'					=> 'hr.tpl',
+		'edit_entry_end'	=> 'edit.tpl',
+		'form_button'		=>	'form_button_script.tpl'
 	);
 	$p->set_file($templates);
-
-//	$p->set_block('edit_entry_begin','list','hr','edit_entry_end','form_button');
 
 	if($id > 0)
 	{
@@ -156,14 +154,14 @@
 		$action = lang('Calendar - Add');
 	}
 
-	$common_hidden = '<input type="hidden" name="cal[id]" value="'.$cal_info->id.'">'."\n"
-						. '<input type="hidden" name="cal[owner]" value="'.$owner.'">'."\n"
+	$common_hidden = '<input type="hidden" name="cal[id]" value="'.$phpgw->calendar->event->id.'">'."\n"
+						. '<input type="hidden" name="cal[owner]" value="'.$phpgw->calendar->event->owner.'">'."\n"
 						. '<input type="hidden" name="owner" value="'.$owner.'">'."\n";
 						
 	$vars = Array(
 						'bg_color'			=>	$phpgw_info['theme']['bg_text'],
 						'calendar_action'	=>	$action,
-						'action_url'		=>	$phpgw->link('edit_entry_handler.php'),
+						'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry_handler.php'),
 						'common_hidden'	=>	$common_hidden
 	);
 	
@@ -171,27 +169,27 @@
 	$p->parse('out','edit_entry_begin');
 
 // Brief Description
-	display_item(lang('Brief Description'),'<input name="cal[name]" size="25" value="'.$cal_info->name.'">');
+	display_item(lang('Brief Description'),'<input name="cal[name]" size="25" value="'.$phpgw->calendar->event->title.'">');
 
 // Full Description
-	display_item(lang('Full Description'),'<textarea name="cal[description]" rows="5" cols="40" wrap="virtual">'.$cal_info->description.'</textarea>');
+	display_item(lang('Full Description'),'<textarea name="cal[description]" rows="5" cols="40" wrap="virtual">'.$phpgw->calendar->event->description.'</textarea>');
 
 // Date
-	$day_html = $sb->getDays('cal[day]',intval($phpgw->common->show_date($cal_info->datetime,'d')));
-	$month_html = $sb->getMonthText('cal[month]',intval($phpgw->common->show_date($cal_info->datetime,'n')));
-	$year_html = $sb->getYears('cal[year]',intval($phpgw->common->show_date($cal_info->datetime,'Y')),intval($phpgw->common->show_date($cal_info->datetime,'Y')));
+	$day_html = $sb->getDays('cal[day]',intval($phpgw->common->show_date($phpgw->calendar->event->datetime,'d')));
+	$month_html = $sb->getMonthText('cal[month]',intval($phpgw->common->show_date($phpgw->calendar->event->datetime,'n')));
+	$year_html = $sb->getYears('cal[year]',intval($phpgw->common->show_date($phpgw->calendar->event->datetime,'Y')),intval($phpgw->common->show_date($phpgw->calendar->event->datetime,'Y')));
 	display_item(lang('Start Date'),$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
 
 // Time
 	$amsel = ' checked'; $pmsel = '';
 	if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
 	{
-		if ($cal_info->ampm == 'pm')
+		if ($phpgw->calendar->event->start->hour >= 12)
 		{
 			$amsel = ''; $pmsel = ' checked';
 		}
 	}
-	$str = '<input name="cal[hour]" size="2" VALUE="'.$phpgw->common->show_date($cal_info->datetime,$hourformat).'" maxlength="2">:<input name="cal[minute]" size="2" value="'.$phpgw->common->show_date($cal_info->datetime,'i').'" maxlength="2">';
+	$str = '<input name="cal[hour]" size="2" VALUE="'.$phpgw->common->show_date($phpgw->calendar->event->datetime,$hourformat).'" maxlength="2">:<input name="cal[minute]" size="2" value="'.$phpgw->common->show_date($phpgw->calendar->event->datetime,'i').'" maxlength="2">';
 	if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
 	{
 		$str .= '<input type="radio" name="cal[ampm]" value="am"'.$amsel.'>am';
@@ -201,22 +199,22 @@
 	display_item(lang('Start Time'),$str);
 
 // End Date
-	$day_html = $sb->getDays('cal[end_day]',intval($phpgw->common->show_date($cal_info->edatetime,'d')));
-	$month_html = $sb->getMonthText('cal[end_month]',intval($phpgw->common->show_date($cal_info->edatetime,'n')));
-	$year_html = $sb->getYears('cal[end_year]',intval($phpgw->common->show_date($cal_info->edatetime,'Y')),intval($phpgw->common->show_date($cal_info->edatetime,'Y')));
+	$day_html = $sb->getDays('cal[end_day]',intval($phpgw->common->show_date($phpgw->calendar->event->edatetime,'d')));
+	$month_html = $sb->getMonthText('cal[end_month]',intval($phpgw->common->show_date($phpgw->calendar->event->edatetime,'n')));
+	$year_html = $sb->getYears('cal[end_year]',intval($phpgw->common->show_date($phpgw->calendar->event->edatetime,'Y')),intval($phpgw->common->show_date($phpgw->calendar->event->edatetime,'Y')));
 	display_item(lang('End Date'),$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
 
 // End Time
 	$amsel = ' checked'; $pmsel = '';
 	if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
 	{
-		if ($cal_info->end_ampm == 'pm')
+		if ($phpgw->calendar->event->end->hour >= 12)
 		{
 			$amsel = ''; $pmsel = ' checked';
 		}
 	}
 
-	$str = '<input name="cal[end_hour]" size="2" VALUE="'.$phpgw->common->show_date($cal_info->edatetime,$hourformat).'" maxlength="2">:<input name="cal[end_minute]" size="2" value="'.$phpgw->common->show_date($cal_info->edatetime,'i').'" maxlength="2">';
+	$str = '<input name="cal[end_hour]" size="2" VALUE="'.$phpgw->common->show_date($phpgw->calendar->event->edatetime,$hourformat).'" maxlength="2">:<input name="cal[end_minute]" size="2" value="'.$phpgw->common->show_date($phpgw->calendar->event->edatetime,'i').'" maxlength="2">';
 	if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
 	{
 		$str .= '<input type="radio" name="cal[end_ampm]" value="am"'.$amsel.'>am';
@@ -226,11 +224,11 @@
     display_item(lang("End Time"),$str);
 
 // Priority
-	display_item(lang('Priority'),$sb->getPriority('cal[priority]',$cal_info->priority));
+	display_item(lang('Priority'),$sb->getPriority('cal[priority]',$phpgw->calendar->event->priority));
 
 // Access
 	$str = '<input type="checkbox" name="cal[access]" value="private"';
-	if($cal_info->access=='private')
+	if($phpgw->calendar->event->public != True)
 	{
 		$str .= ' checked';
 	}
@@ -281,9 +279,9 @@
 		$size = $num_users;
 	}
 	$str = "\n".'   <select name="cal[participants][]" multiple size="5">'."\n";
-	for ($l=0;$l<count($cal_info->participants);$l++)
+	for ($l=0;$l<count($phpgw->calendar->event->participants);$l++)
 	{
-		$parts[$cal_info->participants[$l]] = ' selected';
+		$parts[$phpgw->calendar->event->participants[$l]] = ' selected';
 	}
     
 	@asort($users);
@@ -302,9 +300,9 @@
 	$participate = False;
 	if($id)
 	{
-		for($i=0;$i<count($cal_info->participants);$i++)
+		for($i=0;$i<count($phpgw->calendar->event->participants);$i++)
 		{
-			if($cal_info->participants[$i] == $owner)
+			if($phpgw->calendar->event->participants[$i] == $owner)
 			{
 				$participate = True;
 			}
@@ -324,68 +322,71 @@
 	$p->set_var('hr_text','<center><b>'.lang('Repeating Event Information').'</b></center><br>');
 	$p->parse('output','hr',True);
 	$str = '<select name="cal[rpt_type]">';
-	$rpt_type_str = Array(
-									'none',
-									'daily',
-									'weekly',
-									'monthlybyday',
-									'monthlybydate',
-									'yearly'
+	$rpt_type = Array(
+		RECUR_NONE,
+		RECUR_DAILY,
+		RECUR_WEEKLY,
+		RECUR_MONTHLY_WDAY,
+		RECUR_MONTHLY_MDAY,
+		RECUR_YEARLY
 	);
 	$rpt_type_out = Array(
-									'none' => 'None',
-									'daily' => 'Daily',
-									'weekly' => 'Weekly',
-									'monthlybyday' => 'Monthly (by day)',
-									'monthlybydate' => 'Monthly (by date)',
-									'yearly' => 'Yearly'
+		RECUR_NONE => 'None',
+		RECUR_DAILY => 'Daily',
+		RECUR_WEEKLY => 'Weekly',
+		RECUR_MONTHLY_WDAY => 'Monthly (by day)',
+		RECUR_MONTHLY_MDAY => 'Monthly (by date)',
+		RECUR_YEARLY => 'Yearly'
 	);
-	for($l=0;$l<count($rpt_type_str);$l++)
+	for($l=0;$l<count($rpt_type);$l++)
 	{
-		$str .= '<option value="'.$rpt_type_str[$l].'"';
-		if(!strcmp($cal_info->rpt_type,$rpt_type_str[$l]))
+		$str .= '<option value="'.$rpt_type[$l].'"';
+		if($phpgw->calendar->event->recur_type == $rpt_type[$l])
 		{
 			$str .= ' selected';
 		}
-		$str .= '>'.lang($rpt_type_out[$rpt_type_str[$l]]).'</option>';
+		$str .= '>'.lang($rpt_type_out[$rpt_type[$l]]).'</option>';
 	}
 	$str .= '</select>';
 	display_item(lang('Repeat Type'),$str);
 
 	$p->set_var('field',lang('Repeat End Date'));
 	$str = '<input type="checkbox" name="cal[rpt_use_end]" value="y"';
-	
-	if($cal_info->rpt_use_end)
+
+	if($phpgw->calendar->event->recur_enddate->year != 0 && $phpgw->calendar->event->recur_enddate->month != 0 && $phpgw->calendar->event->recur_enddate->mday != 0)
 	{
 		$str .= ' checked';
 	}
 	
 	$str .= '>'.lang('Use End Date').'  ';
 
-	$day_html = $sb->getDays('cal[rpt_day]',intval($phpgw->common->show_date($cal_info->rpt_end,'d')));
-	$month_html = $sb->getMonthText('cal[rpt_month]',intval($phpgw->common->show_date($cal_info->rpt_end,'n')));
-	$year_html = $sb->getYears('cal[rpt_year]',intval($phpgw->common->show_date($cal_info->rpt_end,'Y')),intval($phpgw->common->show_date($cal_info->rpt_end,'Y')));
+	$recur_end = mktime($phpgw->calendar->recur_enddate->hour,$phpgw->calendar->recur_enddate->min,$phpgw->calendar->recur_enddate->sec,$phpgw->calendar->recur_enddate->month,$phpgw->calendar->recur_enddate->mday,$phpgw->calendar->recur_enddate->year);
+	$recur_end -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+	
+	$day_html = $sb->getDays('cal[rpt_day]',intval($phpgw->common->show_date($recur_end,'d')));
+	$month_html = $sb->getMonthText('cal[rpt_month]',intval($phpgw->common->show_date($recur_end,'n')));
+	$year_html = $sb->getYears('cal[rpt_year]',intval($phpgw->common->show_date($recur_end,'Y')),intval($phpgw->common->show_date($recur_end,'Y')));
 	$str .= $phpgw->common->dateformatorder($year_html,$month_html,$day_html);
 
 	display_item(lang('Repeat End Date'),$str);
 
-	$str  = '<input type="checkbox" name="cal[rpt_sun]" value="1"'.($cal_info->rpt_sun?' checked':'').'> '.lang('Sunday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_mon]" value="1"'.($cal_info->rpt_mon?' checked':'').'> '.lang('Monday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_tue]" value="1"'.($cal_info->rpt_tue?' checked':'').'> '.lang('Tuesday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_wed]" value="1"'.($cal_info->rpt_wed?' checked':'').'> '.lang('Wednesday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_thu]" value="1"'.($cal_info->rpt_thu?' checked':'').'> '.lang('Thursday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_fri]" value="1"'.($cal_info->rpt_fri?' checked':'').'> '.lang('Friday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_sat]" value="1"'.($cal_info->rpt_sat?' checked':'').'> '.lang('Saturday').' ';
+	$str  = '<input type="checkbox" name="cal[rpt_sun]" value="'.M_SUNDAY.'"'.(($phpgw->calendar->event->recur_data & M_SUNDAY) ?' checked':'').'> '.lang('Sunday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_mon]" value="'.M_MONDAY.'"'.(($phpgw->calendar->event->recur_data & M_MONDAY) ?' checked':'').'> '.lang('Monday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_tue]" value="'.M_TUESDAY.'"'.(($phpgw->calendar->event->recur_data & M_TUESDAY) ?' checked':'').'> '.lang('Tuesday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_wed]" value="'.M_WEDNESDAY.'"'.(($phpgw->calendar->event->recur_data & M_WEDNESDAY) ?' checked':'').'> '.lang('Wednesday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_thu]" value="'.M_THURSDAY.'"'.(($phpgw->calendar->event->recur_data & M_THURSDAY) ?' checked':'').'> '.lang('Thursday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_fri]" value="'.M_FRIDAY.'"'.(($phpgw->calendar->event->recur_data & M_FRIDAY) ?' checked':'').'> '.lang('Friday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_sat]" value="'.M_SATURDAY.'"'.(($phpgw->calendar->event->recur_data & M_SATURDAY) ?' checked':'').'> '.lang('Saturday').' ';
 
 	display_item(lang('Repeat Day').'<br>'.lang('(for weekly)'),$str);
 
-	display_item(lang('Frequency'),'<input name="cal[rpt_freq]" size="4" maxlength="4" value="'.$cal_info->rpt_freq.'">');
+	display_item(lang('Frequency'),'<input name="cal[rpt_freq]" size="4" maxlength="4" value="'.$phpgw->calendar->event->recur_interval.'">');
 
 	$p->set_var('submit_button',lang('Submit'));
 
 	if ($id > 0)
 	{
-		$p->set_var('action_url_button',$phpgw->link('delete.php','id='.$id));
+		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id));
 		$p->set_var('action_text_button',lang('Delete'));
 		$p->set_var('action_confirm_button',"onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"");
 		$p->parse('delete_button','form_button');

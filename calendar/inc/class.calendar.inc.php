@@ -43,6 +43,7 @@ if($phpgw_info['server']['calendar_type'] == 'mcal' && extension_loaded('mcal') 
 }
 // The following line can be removed when vCalendar is implemented....
 $phpgw_info['server']['calendar_type'] = 'sql';
+include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar__.inc.php');
 include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_'.$phpgw_info['server']['calendar_type'].'.inc.php');
 
 class calendar extends calendar_
@@ -124,35 +125,6 @@ class calendar extends calendar_
 		{
 			return -1;
 		}
-	}
-
-	function send_update($event)
-	{
-		global $phpgw, $phpgw_info;
-		
-		$msg = CreateObject('email.send');
-
-		$subject = 'Calendar Event #'.$event->id.': '.$event->start->year.' '.lang(date(mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year),'F')).' '.$event->start->mday.'  '.$event->start->hour.':'.$event->start->min.':'.$event->start->sec.'Z';
-		$body = 'An event in your calendar @ '.$phpgw_info['server']['site_title'].' has been altered.  Please review it now.';
-		$msgtype = 'phpGW-calendar-'.$event->id;
-
-		$to = '';
-		for($i=0;$i<count($event->participants);$i++)
-		{
-			if($event->participants[$i] != $phpgw_info['user']['account_id'])
-			{
-				if($to != '')
-				{
-					$to .= ', ';
-				}
-				$preferences = CreateObject('phpgwapi.preferences',$event->participants[$i]);
-				$part_prefs = $preferences->read_repository();
-				$part_prefs = $phpgw->common->create_emailpreferences($part_prefs,$event->participants[$i]);
-				$to .= $part_prefs['email']['address'];
-			}
-		}
-		$msg->msg('email',$to,$subject,$body,$msgtype);
-		unset($msg);
 	}
 
 	function set_filter()
@@ -588,7 +560,7 @@ class calendar extends calendar_
 
 		if($this->printer_firendly == False)
 		{
-			$month = '<a href="' . $phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','month='.date('m',$date['raw']).'&year='.date('Y',$date['raw']).'&owner='.$this->owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year . '</a>';
+			$month = '<a href="' . $phpgw->link('/calendar/month.php','month='.date('m',$date['raw']).'&year='.date('Y',$date['raw']).'&owner='.$this->owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year . '</a>';
 		}
 		else
 		{
@@ -601,8 +573,8 @@ class calendar extends calendar_
 			'bgcolor'			=>	$phpgw_info['theme']['bg_color'],
 			'bgcolor1'			=>	$phpgw_info['theme']['bg_color'],
 			'month'				=>	$month,
-			'prevmonth'			=>	$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ago.'&owner='.$this->owner),
-			'nextmonth'			=>	$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ahead.'&owner='.$this->owner),
+			'prevmonth'			=>	$phpgw->link('/calendar/month.php','date='.$month_ago.'&owner='.$this->owner),
+			'nextmonth'			=>	$phpgw->link('/calendar/month.php','date='.$month_ahead.'&owner='.$this->owner),
 			'bgcolor2'			=>	$phpgw_info['theme']['cal_dayview']
 		);
 
@@ -634,7 +606,7 @@ class calendar extends calendar_
 					
 					if(!$this->printer_friendly)
 					{
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day'].'&owner='.$this->owner).'" class="minicalendar">';
+						$str .= '<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day'].'&owner='.$this->owner).'" class="minicalendar">';
 					}
 					
 					$str .= $cal['day'];
@@ -848,13 +820,13 @@ class calendar extends calendar_
 					
 					if($this->check_perms(PHPGW_ACL_ADD) == True)
 					{
-						$new_event_link .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$this->owner).'">';
+						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$this->owner).'">';
 						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" ';
 						$new_event_link .= 'alt="'.lang('New Entry').'" ';
 						$new_event_link .= 'border="0" align="right">';
 						$new_event_link .= '</a>';
 					}
-					$day_number = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
+					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
 				}
 				else
 				{
@@ -899,7 +871,7 @@ class calendar extends calendar_
 						if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 						{
 							$var = Array(
-								'link_link'			=>	$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
+								'link_link'			=>	$phpgw->link('/calendar/view.php','id='.$lr_events->id.'&owner='.$owner),
 								'lang_view'			=>	lang('View this entry'),
 								'pic_image'			=>	$this->image_dir.'/'.$pict,
 								'description'		=>	$description
@@ -974,7 +946,7 @@ class calendar extends calendar_
 				{
 					if(!$this->printer_friendly)
 					{
-						$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/week.php','date='.$date['full'].'&owner='.$this->owner).'">week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7).'</a>';
+						$str = '<a href="'.$phpgw->link('/calendar/week.php','date='.$date['full'].'&owner='.$this->owner).'">week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7).'</a>';
 					}
 					else
 					{
@@ -1119,8 +1091,8 @@ class calendar extends calendar_
 		
 		if (($this->printer_friendly == False) && (($description == 'private' && $this->check_perms(16)) || ($description != 'private'))  && $this->check_perms(PHPGW_ACL_EDIT))
 		{
-			$time[$ind] .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url']
-								.'/calendar/view.php','id='.$event->id.'&owner='.$this->owner)
+			$time[$ind] .= '<a href="'.$phpgw->link('/calendar/view.php',
+								  'id='.$event->id.'&owner='.$this->owner)
 								. "\" onMouseOver=\"window.status='"
 								. lang('View this entry')."'; return true;\">";
 		}
@@ -1359,9 +1331,9 @@ class calendar extends calendar_
 			
 			if(($this->printer_friendly == False) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
-				$open_link .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url']
-								. '/calendar/edit_entry.php','year='.$date['year']
-								. '&month='.$date['month'].'&day='.$date['day']
+				$open_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php',
+								  'year='.$date['year'].'&month='.$date['month']
+								. '&day='.$date['day']
 								. '&hour='.substr($dtime,0,strpos($dtime,':'))
 								. '&minute='.substr($dtime,strpos($dtime,':')+1,2).'&owner='.$this->owner).'">';
 								

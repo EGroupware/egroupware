@@ -131,7 +131,7 @@
 	if($cal_info->owner == $phpgw_info['user']['account_id'] && $participate)
 	{
 		display_item(lang('Created by'),'<a href="'
-			.$phpgw->link('viewmatrix.php','participants='.$cal_info->owner.'&date='.$cal_info->year.$cal_info->month.$cal_info->day.'&matrixtype=free/busy&owner='.$owner)
+			.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/viewmatrix.php','participants='.$cal_info->owner.'&date='.$cal_info->year.$cal_info->month.$cal_info->day.'&matrixtype=free/busy&owner='.$owner)
 			.'">'.$phpgw->common->grab_owner_name($cal_info->owner).'</a>');
 	}
 	else
@@ -235,7 +235,7 @@
 
 	if (($cal_info->owner == $owner) && ($rights & PHPGW_ACL_EDIT))
 	{
-		$p->set_var('action_url_button',$phpgw->link('edit_entry.php','id='.$id.'&owner='.$owner));
+		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','id='.$id.'&owner='.$owner));
 		$p->set_var('action_text_button','  '.lang('Edit').'  ');
 		$p->set_var('action_confirm_button','');
 		$p->parse('edit_button','form_button');
@@ -247,7 +247,7 @@
 
 	if (($cal_info->owner == $owner) && ($rights & PHPGW_ACL_DELETE))
 	{
-		$p->set_var('action_url_button',$phpgw->link('delete.php','id='.$id.'&owner='.$owner));
+		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner));
 		$p->set_var('action_text_button',lang('Delete'));
 		$p->set_var('action_confirm_button',"onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"");
 		$p->parse('delete_button','form_button');

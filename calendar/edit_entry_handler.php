@@ -169,7 +169,7 @@
 
 	if($datetime_check)
 	{
-		Header('Location: '.$phpgw->link('edit_entry.php','readsess='.$cal_info->id.'&cd='.$datetime_check));
+		Header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','readsess='.$cal_info->id.'&cd='.$datetime_check));
 		$phpgw->common->phpgw_exit();
 	}
 	elseif($overlapping_events)
@@ -238,7 +238,7 @@
 		$p->set_var($var);
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('','readsess='.$cal_info->id.'&year='.$cal_info->year.'&month='.$cal_info->month.'&day='.$cal_info->day),
+							'action_url_button'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry_handler.php','readsess='.$cal_info->id.'&year='.$cal_info->year.'&month='.$cal_info->month.'&day='.$cal_info->day),
 							'action_text_button'		=>	lang('Ignore Conflict'),
 							'action_confirm_button'	=>	''
 		);
@@ -247,7 +247,7 @@
 		$p->parse('resubmit_button','form_button');
 
 		$var = Array(
-							'action_url_button'		=>	$phpgw->link('edit_entry.php','readsess='.$cal_info->id.'&year='.$cal_info->year.'&month='.$cal_info->month.'&day='.$cal_info->day),
+							'action_url_button'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','readsess='.$cal_info->id.'&year='.$cal_info->year.'&month='.$cal_info->month.'&day='.$cal_info->day),
 							'action_text_button'		=>	lang('Re-Edit Event'),
 							'action_confirm_button'	=>	''
 		);
@@ -297,7 +297,7 @@
 				break;
 		}
 		$phpgw->calendar->store_event($cal_stream);
-		Header('Location: '.$phpgw->link('index.php','year='.$cal_info->year.'&month='.$cal_info->month.'&cd=14&owner='.$owner));
+		Header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php','year='.$cal_info->year.'&month='.$cal_info->month.'&cd=14&owner='.$owner));
 	}
 	$phpgw->common->phpgw_footer();
 ?>

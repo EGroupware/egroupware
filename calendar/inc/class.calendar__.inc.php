@@ -1,0 +1,224 @@
+<?php
+  /**************************************************************************\
+  * phpGroupWare - Calendar                                                  *
+  * http://www.phpgroupware.org                                              *
+  * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
+  *          http://www.radix.net/~cknudsen                                  *
+  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+	/* $Id$ */
+
+define('MSG_DELETED',0);
+define('MSG_MODIFIED',1);
+define('MSG_ADDED',2);
+
+class calendar__
+{
+	var $event;
+	var $stream;
+	var $user;
+	var $modified;
+	var $deleted;
+	var $added;
+
+	function send_update($msg_type,$participants,$old_event=False,$new_event=False)
+	{
+		global $phpgw, $phpgw_info;
+		
+		$temp_tz_offset = $phpgw_info['user']['preferences']['common']['tz_offset'];
+		$temp_timeformat = $phpgw_info['user']['preferences']['common']['timeformat'];
+		$temp_dateformat = $phpgw_info['user']['preferences']['common']['dateformat'];
+
+		$tz_offset = ((60 * 60) * intval($temp_tz_offset));
+		
+		$send = CreateObject('phpgwapi.send');
+
+		switch($msg_type)
+		{
+			case MSG_DELETED:
+				$action = 'Deleted ';
+				$event_id = $old_event->id;
+				$msgtype = '';
+				break;
+			case MSG_MODIFIED:
+				$action = 'Modified ';
+				$event_id = $old_event->id;
+				$msgtype = 'Calendar-Version: '.$phpgw_info['server']['versions']['calendar'].'; Calendar-Id: '.$new_event->id;
+				break;
+			case MSG_ADDED:
+				$action = 'Added ';
+				$event_id = $old_event->id;
+				$msgtype = 'Calendar-Version: '.$phpgw_info['server']['versions']['calendar'].'; Calendar-Id: '.$new_event->id;
+				break;
+		}
+
+		if($old_event != False)
+		{
+			$old_event_datetime = mktime($old_event->start->hour,$old_event->start->min,$old_event->start->sec,$old_event->start->month,$old_event->start->mday,$old_event->start->year) - $tz_offset;
+		}
+		
+		if($new_event != False)
+		{
+			$new_event_datetime = mktime($new_event->start->hour,$new_event->start->min,$new_event->start->sec,$new_event->start->month,$new_event->start->mday,$new_event->start->year) - $tz_offset;
+		}
+
+		for($i=0;$i<count($participants);$i++)
+		{
+			if($participants[$i] != $phpgw_info['user']['account_id'])
+			{
+				$preferences = CreateObject('phpgwapi.preferences',$participants[$i]);
+				$part_prefs = $preferences->read_repository();
+				if(!isset($part_prefs['calendar']['send_updates']) || $part_prefs['calendar']['send_updates'] == False)
+				{
+					continue;
+				}
+				$part_prefs = $phpgw->common->create_emailpreferences($part_prefs,$participants[$i]);
+				$to = $part_prefs['email']['address'];
+
+				$phpgw_info['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
+				$phpgw_info['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
+				$phpgw_info['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
+
+				if($old_event != False)
+				{
+					$old_event_date = $phpgw->common->show_date($old_event_datetime);
+				}
+				
+				if($new_event != False)
+				{
+					$new_event_date = $phpgw->common->show_date($new_event_datetime);
+				}
+				
+				switch($msg_type)
+				{
+					case MSG_DELETED:
+						$action_date = $old_event_date;
+						$body = 'Your meeting scehduled for '.$old_event_date.' has been canceled';
+						break;
+					case MSG_MODIFIED:
+						$action_date = $new_event_date;
+						$body = 'Your meeting that had been scheduled for '.$old_event_date.' has been rescheduled to '.$new_event_date;
+						break;
+					case MSG_ADDED:
+						$action_date = $new_event_date;
+						$body = 'You have a meeting scheduled for '.$new_event_date;
+						break;
+				}
+				$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' L';
+				$send->msg('email',$to,$subject,$body,$msgtype);
+			}
+		}
+		unset($send);
+		
+		$phpgw_info['user']['preferences']['common']['tz_offset'] = $temp_tz_offset;
+		$phpgw_info['user']['preferences']['common']['timeformat'] = $temp_timeformat;
+		$phpgw_info['user']['preferences']['common']['dateformat'] = $temp_dateformat;
+	}
+
+	function prepare_recipients($new_event,$old_event)
+	{
+		for($i=0;$i<count($old_event->participants);$i++)
+		{
+			$delete = True;
+			for($k=0;$k<count($new_event->participants);$k++)
+			{
+				if($new_event->participants[$k] == $old_event->participants[$i])
+				{
+					$delete = False;
+					$this->modified[] = $new_event->participants[$k];
+				}
+			}
+			if($delete == True)
+			{
+				$this->deleted[] = $old_event->participants[$i];
+			}
+		}
+		for($i=0;$i<count($new_event->participants);$i++)
+		{
+			$add = True;
+			for($k=0;$k<count($old_event->participants);$k++)
+			{
+				if($new_event->participants[$i] == $old_event->participants[$k])
+				{
+					$add = False;
+				}
+			}
+			if($add == True)
+			{
+				$this->added[] = $new_event->participants[$i];
+			}
+		}
+		
+      if(count($this->added) > 0 || count($this->modified) > 0 || count($this->deleted) > 0)
+      {
+			if(count($this->added) > 0)
+			{
+				$this->send_update(MSG_ADDED,$this->added,'',$new_event);
+			}
+			if(count($this->modified) > 0)
+			{
+				$this->send_update(MSG_MODIFIED,$this->modified,$old_event,$new_event);
+			}
+			if(count($this->deleted) > 0)
+			{
+				$this->send_update(MSG_DELETED,$this->deleted,$old_event);
+			}
+		}
+	}
+
+	function set_common_recur($year,$month,$day)
+	{
+		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
+		{
+			$this->event->rpt_end_use = 0;
+			$this->event->rpt_end = 0;
+			$this->event->rpt_end_day = 0;
+			$this->event->rpt_end_month = 0;
+			$this->event->rpt_end_year = 0;
+		}
+		else
+		{
+			$this->event->rpt_end_use = 1;
+			$this->event->rpt_end = mktime(0,0,0,intval($month),intval($day),intval($year));
+			$this->event->rpt_end -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+			$this->event->rpt_end_day = intval($day);
+			$this->event->rpt_end_month = intval($month);
+			$this->event->rpt_end_year = intval($year);
+		}
+		$this->event->rpt_sun = 0;
+		$this->event->rpt_mon = 0;
+		$this->event->rpt_tue = 0;
+		$this->event->rpt_wed = 0;
+		$this->event->rpt_thu = 0;
+		$this->event->rpt_fri = 0;
+		$this->event->rpt_sat = 0;
+		$this->event->rpt_days = 'nnnnnnn';
+		$this->event->rpt_freq = intval($interval);
+
+	// Legacy Support (New)
+		$this->event->recur_interval = intval($interval);
+		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
+		{
+			$this->event->recur_enddate->year = 0;
+			$this->event->recur_enddate->month = 0;
+			$this->event->recur_enddate->mday = 0;
+		}
+		else
+		{
+			$this->event->recur_enddate->year = intval($year);
+			$this->event->recur_enddate->month = intval($month);
+			$this->event->recur_enddate->mday = intval($day);
+		}
+		$this->event->recur_enddate->hour = 0;
+		$this->event->recur_enddate->min = 0;
+		$this->event->recur_enddate->sec = 0;
+		$this->event->recur_enddate->alarm = 0;
+		$this->event->recur_data = 0;
+	}
+}
