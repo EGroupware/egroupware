@@ -451,7 +451,7 @@
 	****************************************************************/
 	function xmlrpc_decode($xmlrpc_val)
 	{
-		$kind = $xmlrpc_val->kindOf();
+		$kind = @$xmlrpc_val->kindOf();
 
 		if($kind == "scalar")
 		{
@@ -537,4 +537,137 @@
 		}
 		return $xmlrpc_val;
 	}
+
+	// listMethods: either a string, or nothing
+	$_xmlrpcs_listMethods_sig = array(array($xmlrpcArray, $xmlrpcString), array($xmlrpcArray));
+	$_xmlrpcs_listMethods_doc = 'This method lists all the methods that the XML-RPC server knows how to dispatch';
+	function _xmlrpcs_listMethods($server, $m)
+	{
+		global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
+
+		$v     =  CreateObject('phpgwapi.xmlrpcval');
+		$dmap  = $server->dmap;
+		$outAr = array();
+		for(reset($dmap); list($key, $val) = each($dmap); )
+		{
+			$outAr[] = CreateObject('phpgwapi.xmlrpcval',$key, 'string');
+		}
+		$dmap = $_xmlrpcs_dmap;
+		for(reset($dmap); list($key, $val) = each($dmap); )
+		{
+			$outAr[] = CreateObject('phpgwapi.xmlrpcval',$key, 'string');
+		}
+		$v->addArray($outAr);
+		return CreateObject('phpgwapi.xmlrpcresp',$v);
+	}
+
+	$_xmlrpcs_methodSignature_sig=array(array($xmlrpcArray, $xmlrpcString));
+	$_xmlrpcs_methodSignature_doc='Returns an array of known signatures (an array of arrays) for the method name passed. If no signatures are known, returns a none-array (test for type != array to detect missing signature)';
+	function _xmlrpcs_methodSignature($server, $m)
+	{
+		global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
+
+		$methName = $m->getParam(0);
+		$methName = $methName->scalarval();
+		if (ereg("^system\.", $methName))
+		{
+			$dmap = $_xmlrpcs_dmap;
+			$sysCall = 1;
+		}
+		else
+		{
+			$dmap = $server->dmap;
+			$sysCall = 0;
+		}
+		//	print "<!-- ${methName} -->\n";
+		if (isset($dmap[$methName]))
+		{
+			if ($dmap[$methName]['signature'])
+			{
+				$sigs = array();
+				$thesigs=$dmap[$methName]['signature'];
+				for($i=0; $i<sizeof($thesigs); $i++)
+				{
+					$cursig = array();
+					$inSig  = $thesigs[$i];
+					for($j=0; $j<sizeof($inSig); $j++)
+					{
+						$cursig[] = CreateObject('phpgwapi.xmlrpcval',$inSig[$j], 'string');
+					}
+					$sigs[] = CreateObject('phpgwapi.xmlrpcval',$cursig, 'array');
+				}
+				$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$sigs, 'array'));
+			}
+			else
+			{
+				$r = CreateObject('phpgwapi.xmlrpcresp', CreateObject('phpgwapi.xmlrpcval','undef', 'string'));
+			}
+		}
+		else
+		{
+			$r = CreateObject('phpgwapi.xmlrpcresp',0,$xmlrpcerr['introspect_unknown'],$xmlrpcstr['introspect_unknown']);
+		}
+		return $r;
+	}
+
+	$_xmlrpcs_methodHelp_sig = array(array($xmlrpcString, $xmlrpcString));
+	$_xmlrpcs_methodHelp_doc = 'Returns help text if defined for the method passed, otherwise returns an empty string';
+	function _xmlrpcs_methodHelp($server, $m)
+	{
+		global $xmlrpcerr, $xmlrpcstr, $_xmlrpcs_dmap;
+
+		$methName = $m->getParam(0);
+		$methName = $methName->scalarval();
+		if (ereg("^system\.", $methName))
+		{
+			$dmap = $_xmlrpcs_dmap; $sysCall=1;
+		}
+		else
+		{
+			$dmap = $server->dmap; $sysCall=0;
+		}
+		//	print "<!-- ${methName} -->\n";
+		if (isset($dmap[$methName]))
+		{
+			if ($dmap[$methName]['docstring'])
+			{
+				$r = CreateObject('phpgwapi.xmlrpcresp', CreateObject('phpgwapi.xmlrpcval',$dmap[$methName]['docstring']),'string');
+			}
+			else
+			{
+				$r = CreateObject('phpgwapi.xmlrpcresp', CreateObject('phpgwapi.xmlrpcval'), 'string');
+			}
+		}
+		else
+		{
+			$r = CreateObject('phpgwapi.xmlrpcresp',0,$xmlrpcerr['introspect_unknown'],$xmlrpcstr['introspect_unknown']);
+		}
+		return $r;
+	}
+
+	$_xmlrpcs_dmap=array(
+		'system.listMethods' => array(
+			'function'  => '_xmlrpcs_listMethods',
+			'signature' => $_xmlrpcs_listMethods_sig,
+			'docstring' => $_xmlrpcs_listMethods_doc
+		),
+		'system.methodHelp' => array(
+			'function'  => '_xmlrpcs_methodHelp',
+			'signature' => $_xmlrpcs_methodHelp_sig,
+			'docstring' => $_xmlrpcs_methodHelp_doc
+		),
+		'system.methodSignature' => array(
+			'function'  => '_xmlrpcs_methodSignature',
+			'signature' => $_xmlrpcs_methodSignature_sig,
+			'docstring' => $_xmlrpcs_methodSignature_doc
+		)
+	);
+
+	$_xmlrpc_debuginfo = '';
+	function xmlrpc_debugmsg($m)
+	{
+		global $_xmlrpc_debuginfo;
+		$_xmlrpc_debuginfo = $_xmlrpc_debuginfo . $m . "\n";
+	}
+
 ?>
