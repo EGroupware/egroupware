@@ -53,7 +53,7 @@
 		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
-		$t->set_var("import_text",lang("Import from Outlook or LDIF - not working"));
+		$t->set_var("import_text",lang("Import from Outlook"));
 		$t->set_var("action_url",$phpgw->link("/addressbook/import.php"));
 		$t->set_var("tsvfilename","");
 		$t->set_var("conv",$conv);
