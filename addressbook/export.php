@@ -47,10 +47,12 @@
 		sort($myfilearray);
 		for ($i=0;$i<count($myfilearray);$i++) {
 			$fname = ereg_replace('_',' ',$myfilearray[$i]);
-			$conv .= '<OPTION VALUE="'.$myfilearray[$i].'">'.$fname.'</OPTION>';
+			$conv .= '        <OPTION VALUE="'.$myfilearray[$i].'">'.$fname.'</OPTION>'."\n";
 		}
 
 		$t->set_var("lang_cancel",lang("Cancel"));
+		$t->set_var("lang_cat",lang("Select Category"));
+		$t->set_var("cat_id",cat_option($cat_id,'ncat_id',True));
 		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
@@ -88,7 +90,7 @@
 			$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
 		}
 
-		$buffer = $this->export_start_file($buffer);
+		$buffer = $this->export_start_file($buffer,$ncat_id);
 		
 		for ($i=0;$i<count($this->ids);$i++) {
 			$buffer = $this->export_start_record($buffer);
