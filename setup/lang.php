@@ -122,6 +122,6 @@
    </tr>
   </table>
 <?php
-    echo '<center><input type="submit" name="submit" value="Install"></center>';
+    echo '<center><input type="submit" name="submit" value="Install"> <input type="submit" name="submit" value="Cancel"></center>';
   }
   }

@@ -214,6 +214,7 @@
       break;
   }
 
+/* I will probably not need this section at all
   echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 4 - Add-on Application Installation</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
   switch($phpgw_info["setup"]["stage"]["apps"]){
     case 1:
@@ -226,6 +227,7 @@
       echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Not ready for this stage yet.</td></tr>';
       break;
   }
+*/
   echo '</table>';
   echo "</body></html>";
 ?>
