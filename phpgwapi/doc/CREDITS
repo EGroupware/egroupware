@@ -30,10 +30,10 @@
 - Developed/Maintains NNTP application
 - Helps with almost all other applications as well
 
-* Bettina Gille (aka ceb) <aeb@hansenet.de>
+* Bettina Gille (aka ceb) <ceb@phpgroupware.org>
 - Developed/Maintains the categories class
 - Works on core API
-- Develops/Maintains the projects, inv, stocks and netsaint <http://www.netsaint.org/> applications
+- Develops/Maintains the projects, inventory, stocks, notes and netsaint <http://www.netsaint.org/> applications
 
 * Lars Kneschke (aka knecke) <lars@kneschke.de>
 - Works on LDAP support for accounts and authentication
