@@ -99,7 +99,13 @@ a.appTitles,.appTitles
 	padding-bottom:2px;
 }
 
-a.textSidebox,.textSidebox
+a.textSidebox
+{
+	font-size: 10px; 
+	border-top: #ffffff 0px none;
+}
+
+.textSidebox
 {
 	font-size: 10px; 
 	height:18px;
