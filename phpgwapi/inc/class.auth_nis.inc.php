@@ -36,7 +36,7 @@
 			$map = "passwd.byname";
 			if( !empty($GLOBALS['phpgw_info']['server']['nis_map']) )
 			{
-				$map = $GLOBALS['phpgw_info']['server']['nis_map']);
+				$map = $GLOBALS['phpgw_info']['server']['nis_map'];
 			}
 			$entry = yp_match( $domain, $map, $username );
 
