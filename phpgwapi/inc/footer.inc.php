@@ -60,6 +60,10 @@
 			include(PHPGW_APP_INC . '/footer.inc.php');
 		}
 	}
+	if ($GLOBALS['phpgw_info']['flags']['need_footer'])
+	{
+		echo $GLOBALS['phpgw_info']['flags']['need_footer'];
+	}
 	if(function_exists('parse_navbar_end'))
 	{
 		parse_navbar_end();
