@@ -1,20 +1,14 @@
-﻿%1 already exists as a file	filemanager	zh	已存在文件%1
+%1 already exists as a file	filemanager	zh	已存在文件%1
 application	filemanager	zh	应用程序
 back to file manager	filemanager	zh	返回文件管理器
 cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录，目录名开头或末尾不能带有空格
-
 cannot replace %1 because it is a directory	filemanager	zh	%1是目录，无法被替换
-
-command sucessfully run	filemanager	zh	命令执行
-成功
-
+command sucessfully run	filemanager	zh	命令执行成功
 comment	filemanager	zh	注释
-
 comments cannot contain "%1"	filemanager	zh	注释不能包含"%1"
 copied %1 to %2	filemanager	zh	%1已复制到%2
 copy to	filemanager	zh	复制到
 copy to:	filemanager	zh	复制到
-
 could not copy %1 to %2	filemanager	zh	无法将%1复制到%2
 could not create %1	filemanager	zh	无法创建%1
 could not create directory %1	filemanager	zh	无法创建目录%1
@@ -24,9 +18,7 @@ could not rename %1 to %2	filemanager	zh	无法将%1重命名为%2
 could not save %1	filemanager	zh	无法保存%1
 create file	filemanager	zh	创建文件
 create folder	filemanager	zh	创建文件夹
-
 created	filemanager	zh	已创建
-
 created %1	filemanager	zh	%1已创建
 created by	filemanager	zh	创建者
 created directory %1	filemanager	zh	目录%1已创建
@@ -37,7 +29,6 @@ deleted %1	filemanager	zh	%1删除
 directory	filemanager	zh	目录
 directory %1 already exists	filemanager	zh	目录%1已存在
 directory %1 does not exist	filemanager	zh	目录%1不存在
-
 directory names cannot contain "%1"	filemanager	zh	目录名不能包含"%1"
 display attributes	filemanager	zh	显示属性
 download	filemanager	zh	下载
