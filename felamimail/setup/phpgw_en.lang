@@ -128,6 +128,7 @@ from(a->z)	felamimail	en	From (A->Z)
 from(z->a)	felamimail	en	From (Z->A)
 full name	felamimail	en	Full Name
 have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	en	Have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about Squirrelmail.<br>
+Header Lines	felamimail	en	Header Lines
 hide header	felamimail	en	hide header
 html	felamimail	en	HTML
 icons and text	felamimail	en	Icons and text
@@ -177,6 +178,7 @@ match	felamimail	en	Match
 matches	felamimail	en	matches
 matches regexp	felamimail	en	matches regexp
 medium gray	felamimail	en	Medium Gray
+message	felamimail	en	Message
 message highlighting	felamimail	en	Message Highlighting
 message list	felamimail	en	Message List
 messages	felamimail	en	messages
