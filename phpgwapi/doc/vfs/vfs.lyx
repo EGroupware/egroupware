@@ -1,0 +1,1933 @@
+#LyX 1.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 2.16
+\textclass linuxdoc
+\language default
+\inputencoding latin1
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 0
+\paperorientation portrait
+\secnumdepth 5
+\tocdepth 5
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Title
+\added_space_top vfill \added_space_bottom vfill 
+phpgwapi - VFS Class
+\layout Author
+
+Jason Wies
+\layout Date
+
+June 2001
+\layout Abstract
+
+The VFS, or Virtual File System, handles all file system activity for phpGroupWa
+re.
+\layout Section
+
+Introduction and Purpose
+\begin_inset LatexCommand \label{sec:introduction}
+
+\end_inset 
+
+
+\layout Standard
+
+The latest version of the VFS for phpGroupWare combines actual file system
+ manipulation with fully integrated database support.
+ It features nearly transparent handling of files and directories, as well
+ as files inside and outside the virtual root.
+ This document is intended to provide API and application developers with
+ a guide to incorporating the VFS into their work.
+\layout Section
+
+Basics
+\begin_inset LatexCommand \label{sec:basics}
+
+\end_inset 
+
+
+\layout Subsection
+
+Prerequisites
+\begin_inset LatexCommand \label{sec:prerequisites}
+
+\end_inset 
+
+
+\layout Standard
+
+You must explicitly enable the VFS class.
+ To do this, set 
+\begin_inset Quotes eld
+\end_inset 
+
+enable_vfs_class
+\begin_inset Quotes erd
+\end_inset 
+
+ to True in $phpgw_info["flags"].
+ An example:
+\layout Verbatim
+
+$phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
+\layout Verbatim
+
+"noheader" => False,
+\layout Verbatim
+
+"noappheader" => False,
+\layout Verbatim
+
+"enable_vfs_class" => True,
+\layout Verbatim
+
+"enable_browser_class" => True);
+\layout Subsection
+
+Concepts
+\begin_inset LatexCommand \label{sec:concepts}
+
+\end_inset 
+
+
+\layout Standard
+
+The VFS in located in phpgwapi/inc/class.vfs.inc.php.
+ You can look over it, but I don't suggest trying to understand how it works.
+ It isn't necessary to know its internals to use it, but you may find the
+ inline comments helpful.
+ The basic things to keep in mind:
+\layout Itemize
+
+Files and directories are synonymous in almost all cases
+\layout Verbatim
+
+$phpgw->vfs->mv (
+\begin_inset Quotes eld
+\end_inset 
+
+file1
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+dir/file2
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Verbatim
+
+$phpgw->vfs->mv (
+\begin_inset Quotes eld
+\end_inset 
+
+dir1
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+dir/dir1
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Verbatim
+
+$phpgw->vfs->rm (
+\begin_inset Quotes eld
+\end_inset 
+
+file
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Verbatim
+
+$phpgw->vfs->rm (
+\begin_inset Quotes eld
+\end_inset 
+
+dir
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Standard
+
+All work as you would except them to.
+ The major exception is:
+\layout Verbatim
+
+$phpgw->vfs->touch (
+\begin_inset Quotes eld
+\end_inset 
+
+file
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Standard
+
+vs.
+\layout Verbatim
+
+$phpgw->vfs->mkdir (
+\begin_inset Quotes eld
+\end_inset 
+
+dir
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Itemize
+
+Users and groups and synonymous
+\layout Standard
+
+As far as the actual paths are concerned, users and groups are the same.
+ The VFS has no built in ACL support, so /home/username works the same as
+ /home/groupname.
+ See the note on AC L support in the Notes section.
+\layout Itemize
+
+You should never have to know the real path of files
+\layout Standard
+
+One of the VFS's responsibilities is to translate paths for you.
+ While you certainly 
+\emph on 
+can
+\emph default 
+ operate using full paths, it is much simpler to use the virtual paths.
+ For example, instead of using:
+\layout Verbatim
+
+$phpgw->vfs->cp (
+\begin_inset Quotes eld
+\end_inset 
+
+/var/www/phpgroupware/files/home/user/file1
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+/var/www/phpgroupware/files/home/user/file2
+\begin_inset Quotes erd
+\end_inset 
+
+, array (RELATIVE_NONE|VFS_REAL, RELATIVE_NONE|VFS_REAL));
+\layout Standard
+
+you might use
+\layout Verbatim
+
+$phpgw->vfs->cp (
+\begin_inset Quotes eld
+\end_inset 
+
+/home/user/file1
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+/home/user/file2
+\begin_inset Quotes erd
+\end_inset 
+
+, array (RELATIVE_NONE, RELATIVE_NONE));
+\layout Standard
+
+(We'll get to the RELATIVE's in a minute.)
+\layout Standard
+
+Site administrators should be able to move their files dir around on their
+ system and know that everything will continue to work smoothly.
+\layout Itemize
+
+Relativity is 
+\emph on 
+vital
+\layout Standard
+
+Relativity is a new feature in the VFS, and its importance cannot be stressed
+ enough.
+ It will make your life much easier, especially for file system intensive
+ applications, but it will take some getting used to.
+ If something doesn't work right the first time, chances are great it has
+ to do with incorrect relativity settings.
+ We will deal with relativity in depth in the Relativity section.
+\layout Section
+
+Basic Functions
+\begin_inset LatexCommand \label{sec:basic_functions}
+
+\end_inset 
+
+
+\layout Standard
+
+These are two functions you'll need to know before we get into relativity.
+\layout Subsection
+
+path_parts ()
+\begin_inset LatexCommand \label{sec:path_parts}
+
+\end_inset 
+
+
+\layout Standard
+
+The job of path_parts () is to translate any given file location into its
+ many component parts for any relativity.
+ The prototype for path_parts () is:
+\layout Verbatim
+
+function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object
+ = True)
+\layout Standard
+
+$string is the path you want to translate, $relatives is the standard relativity
+ array, and $object specifies how you would like the return value: if $object
+ is True, an object will be returned; if $object is False, an array will
+ be returned.
+ I think you'll find the object easier to deal with, and we'll be using
+ it throughout this document.
+ The most important returned values (but not all) for path_parts () are:
+\layout Verbatim
+
+fake_full_path
+\layout Verbatim
+
+fake_leading_dirs
+\layout Verbatim
+
+fake_extra_path
+\layout Verbatim
+
+fake_name
+\layout Verbatim
+
+real_full_path
+\layout Verbatim
+
+real_leading_dirs
+\layout Verbatim
+
+real_extra_path
+\layout Verbatim
+
+real_name
+\layout Standard
+
+Just like you would think, fake_full_path contains the full virtual path
+ of $string, and real_full_path contains the full real path of $string.
+ The fake_name and real_name variables should always be the same, and contain
+ the final file or directory name.
+ The leading_dirs contain everything except the name, and the extra_path
+ is everything from the / before 
+\begin_inset Quotes eld
+\end_inset 
+
+home
+\begin_inset Quotes erd
+\end_inset 
+
+ to the end of the leading_dirs.
+ To better illustrate, here is an example:
+\layout Verbatim
+
+$p = $phpgw->vfs->path_parts (
+\begin_inset Quotes eld
+\end_inset 
+
+/home/jason/dir/file
+\begin_inset Quotes erd
+\end_inset 
+
+, array (RELATIVE_NONE));
+\layout Itemize
+
+$p->fake_full_path - /home/jason/dir/file
+\layout Itemize
+
+$p->fake_leading_dirs - /home/jason/dir
+\layout Itemize
+
+$p->fake_extra_path - home/jason/dir
+\layout Itemize
+
+$p->fake_name - file
+\layout Itemize
+
+$p->real_full_path - /var/www/phpgroupware/files/home/jason/dir/file
+\layout Itemize
+
+$p->real_leading_dirs - /var/www/phpgroupware/files/home/jason/dir 
+\layout Itemize
+
+$p->real_extra_path - home/jason/dir
+\layout Itemize
+
+$p->real_name - file
+\layout Standard
+
+As you can see, path_parts () is a very useful function and will save you
+ from doing those darn substr ()'s yourself.
+ For those of you used to the prior VFS, note that 
+\emph on 
+getabsolutepath () is depreciated
+\emph default 
+.
+ getabsolutepath () still exists (albeit in a much different form), and
+ is responsible for some of the path translation, but it is an 
+\emph on 
+internal
+\emph default 
+ function only.
+ Applications should only use path_parts ().
+ We have shown you how to use path_parts () so you can experiment with it
+ using different paths and relativities as we relativity in Section\SpecialChar ~
+
+\begin_inset LatexCommand \ref{sec:relativity}
+
+\end_inset 
+
+.
+\layout Subsection
+
+cd ()
+\begin_inset LatexCommand \label{sec:cd}
+
+\end_inset 
+
+
+\layout Standard
+
+Ok, one more thing before we discuss relativity, and that is the cd () function.
+ Part of the overall goal for the VFS in phpGroupWare is to give the user
+ a seamless experience during their session.
+ For example, if they upload a file using a file manager to /home/my_group/proje
+ct1, and then go to download an email attachment, the default directory
+ will be /home/my_group/project1.
+ This is accomplished using the cd () function.
+ The prototype and examples: 
+\layout Verbatim
+
+function cd ($target = "/", $relative = True, $relatives = array (RELATIVE_CURRE
+NT))
+\layout Verbatim
+
+$phpgw->vfs->cd (
+\begin_inset Quotes eld
+\end_inset 
+
+/
+\begin_inset Quotes erd
+\end_inset 
+
+);     /* cd to their home directory */
+\layout Verbatim
+
+$phpgw->vfs->cd (
+\begin_inset Quotes eld
+\end_inset 
+
+/home/jason/dir
+\begin_inset Quotes erd
+\end_inset 
+
+, False, array (RELATIVE_NONE)); /* cd to /home/jason/dir */
+\layout Verbatim
+
+$phpgw->vfs->cd (
+\begin_inset Quotes eld
+\end_inset 
+
+dir2
+\begin_inset Quotes erd
+\end_inset 
+
+, True); /* When following the above, cd's to /home/jason/dir/dir2 */
+\layout Standard
+
+If $relatives is True, the $target is simply appended to the current path.
+ If you want to know what the current path is, use $phpgw->vfs->pwd ().
+\layout Standard
+
+Now you're ready for relativity.
+\layout Section
+
+Relativity
+\begin_inset LatexCommand \label{sec:relativity}
+
+\end_inset 
+
+
+\layout Standard
+
+Ok, just one last thing before we get into relativity.
+ You will notice throughout the examples the use of $fakebase.
+ $fakebase is by default 
+\begin_inset Quotes eld
+\end_inset 
+
+/home
+\begin_inset Quotes erd
+\end_inset 
+
+.
+ The old VFS was hard-coded to use 
+\begin_inset Quotes eld
+\end_inset 
+
+/home
+\begin_inset Quotes erd
+\end_inset 
+
+, but the naming choice for this is now up to administrators.
+ See the 
+\begin_inset Quotes eld
+\end_inset 
+
+Notes -> Fakebase directory
+\begin_inset Quotes erd
+\end_inset 
+
+ section for more information.
+ Throughout the rest of this document, you will see $fakebase used in calls
+ to the VFS, and /home used in actual paths.
+ 
+\emph on 
+You should always use $fakebase when making applications.
+ 
+\emph default 
+I suggest doing $fakebase = $phpgw->vfs->fakebase; right off the bat to
+ keep things neater.
+\layout Subsection
+
+What is it and how does it work?
+\layout Standard
+
+One of the design challenges for a Virtual File System is to try to figure
+ out whether the calling application is referring to a file inside or outside
+ the virtual root, and if inside, exactly where.
+ To solve this problem, the phpGroupWare VFS uses RELATIVE defines that
+ are used in bitmasks passed to each function.
+ The result is that any set of different relativities can be used in combination
+ with each other.
+ Let's look at a few examples.
+ Say you want to move 
+\begin_inset Quotes eld
+\end_inset 
+
+logo.png
+\begin_inset Quotes erd
+\end_inset 
+
+ from the user's home directory to the current directory.
+ 
+\layout Verbatim
+
+$phpgw->vfs->mv (
+\begin_inset Quotes eld
+\end_inset 
+
+logo.png
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+
+\begin_inset Quotes erd
+\end_inset 
+
+, array (RELATIVE_USER, RELATIVE_ALL));
+\layout Standard
+
+RELATIVE_USER means relative to the user's home directory.
+ RELATIVE_ALL means relative to the current directory, as set by cd () and
+ as reported by pwd ().
+ So if the current directory was 
+\begin_inset Quotes eld
+\end_inset 
+
+$fakebase/my_group/project1
+\begin_inset Quotes erd
+\end_inset 
+
+, the call to mv () would be processed as:
+\layout Verbatim
+
+MOVE 
+\begin_inset Quotes eld
+\end_inset 
+
+$fakebase/jason/logo.png
+\begin_inset Quotes erd
+\end_inset 
+
+ TO 
+\begin_inset Quotes eld
+\end_inset 
+
+$fakebase/my_group/project1/logo.png
+\begin_inset Quotes erd
+\end_inset 
+
+
+\layout Standard
+
+and the actual file system call would be:
+\layout Verbatim
+
+rename (
+\begin_inset Quotes eld
+\end_inset 
+
+/var/www/phpgroupware/files/home/jason/logo.php
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+/var/www/phpgroupware/files/home/my_group/project1/logo.png
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Standard
+
+Those used to the old VFS will note that you do not have to translate the
+ path beforehand.
+ Let's look at another example.
+ Suppose you were moving an email attachment stored in phpGroupWare's temporary
+ directory to the 
+\begin_inset Quotes eld
+\end_inset 
+
+attachments
+\begin_inset Quotes erd
+\end_inset 
+
+ directory within the user's home directory (we're assuming the attachments
+ directory exists).
+ Note that the temporary directory is 
+\emph on 
+outside
+\emph default 
+ the virtual root.
+\layout Verbatim
+
+$phpgw->vfs->mv (
+\begin_inset Quotes eld
+\end_inset 
+
+$phpgw_info[server][temp_dir]/$randomdir/$randomfile
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+attachments/actual_name.ext
+\begin_inset Quotes erd
+\end_inset 
+
+, array (RELATIVE_NONE|VFS_REAL, RELATIVE_USER));
+\layout Standard
+
+$randomdir and $randomfile are what the directory and file might be called
+ before they are given a proper name by the user, which is actual_name.ext
+ in this example.
+ RELATIVE_NONE is the define for using full path names.
+ However, RELATIVE_NONE is still relative to the virtual root, so we pass
+ along VFS_REAL as well, to say that the file is 
+\emph on 
+outside
+\emph default 
+ the virtual root, somewhere else in the file system.
+ Once again, RELATIVE_USER means relative to the user's home directory.
+ So the actual file system call might look like this (keep in mind that
+ $randomdir and $randomfile are just random strings):
+\layout Verbatim
+
+rename (
+\begin_inset Quotes eld
+\end_inset 
+
+/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+/var/www/phpgroupware/files/home/users/jason/attachments/actual_name.ext
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Standard
+
+Of course you don't have to know that, nor should you be concerned with
+ it; you can take it for granted that the VFS will translate the paths correctly.
+ Let's take a look at one more example, this time using the RELATIVE_USER_APP
+ define.
+ RELATIVE_USER_APP is used to store quasi-hidden application files, similar
+ to the Unix convention of ~/.appname.
+ It simply appends .appname to the user's home directory.
+ For example, if you were making an HTML editor application named htmledit,
+ and wanted to keep a backup file in case something goes wrong, you would
+ use RELATIVE_USER_APP to store it:
+\layout Verbatim
+
+$phpgw->vfs->write (
+\begin_inset Quotes eld
+\end_inset 
+
+file.name~
+\begin_inset Quotes erd
+\end_inset 
+
+, array (RELATIVE_USER_APP), $contents);
+\layout Standard
+
+This assumes that ~/.htmledit exists of course.
+ The backup file 
+\begin_inset Quotes eld
+\end_inset 
+
+file.name~
+\begin_inset Quotes erd
+\end_inset 
+
+ would then be written in $fakebase/jason/.htmledit/file.name~.
+ Note that storing files like this might not be as good of a solution as
+ storing them in the temporary directory or in the database.
+ But it is there in case you need it.
+\layout Subsection
+
+Complete List
+\begin_inset LatexCommand \label{sec:relatives_complete_list}
+
+\end_inset 
+
+
+\layout Standard
+
+Here is the complete list of RELATIVE defines, and what they do:
+\layout Description
+
+RELATIVE_ROOT Don't translate the path at all.
+ Just prepends a /.
+ You'll probably want to use RELATIVE_NONE though, which handles both virtual
+ and real files.
+\layout Description
+
+RELATIVE_USER User's home directory
+\layout Description
+
+RELATIVE_CURR_USER Current user's home directory.
+ If the current directory is $fakebase/my_group/project1, this will return
+ is $fakebase/my_group
+\layout Description
+
+RELATIVE_USER_APP Append .appname to the user's home directory, where appname
+ is the current application's appname
+\layout Description
+
+RELATIVE_PATH DO NOT USE.
+ Relative to the current directory, used in RELATIVE_ALL
+\layout Description
+
+RELATIVE_NONE Not relative to anything.
+ Use this with VFS_REAL for files outside the virtual root.
+ Note that using RELATIVE_NONE by itself still means relative to the virtual
+ root
+\layout Description
+
+RELATIVE_CURRENT An alias for the currently set RELATIVE define, or RELATIVE_ALL
+ if none is set (see the Defaults section)
+\layout Description
+
+VFS_REAL File is outside of the virtual root.
+ Usually used with RELATIVE_NONE
+\layout Description
+
+RELATIVE_ALL Relative to the current directory.
+ Use RELATIVE_ALL
+\emph on 
+ 
+\emph default 
+instead of RELATIVE_PATH
+\layout Subsection
+
+Defaults
+\begin_inset LatexCommand \label{sec:relatives_defaults}
+
+\end_inset 
+
+
+\layout Standard
+
+You might be thinking to yourself that passing along RELATIVE defines with
+ every VFS call is overkill, especially if your application always uses
+ the same relativity.
+ The default RELATIVE define for all VFS calls is RELATIVE_CURRENT.
+ RELATIVE_CURRENT itself defaults to RELATIVE_ALL (relative to the current
+ path), 
+\emph on 
+unless
+\emph default 
+ your application sets a specific relativity.
+ If your application requires most of the work to be done outside of the
+ virtual root, you may wish to set RELATIVE_CURRENT to RELATIVE_NONE|VFS_REAL.
+ set_relative () is the function to do this.
+ For example:
+\layout Verbatim
+
+$phpgw->vfs->set_relative (RELATIVE_NONE|VFS_REAL);
+\layout Verbatim
+
+$phpgw->vfs->read (
+\begin_inset Quotes eld
+\end_inset 
+
+/etc/passwd
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Verbatim
+
+$phpgw->vfs->cp (
+\begin_inset Quotes eld
+\end_inset 
+
+/usr/include/stdio.h
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+/tmp/stdio.h
+\begin_inset Quotes erd
+\end_inset 
+
+);
+\layout Verbatim
+
+$phpgw->vfs->cp (
+\begin_inset Quotes eld
+\end_inset 
+
+/usr/share/pixmaps/yes.xpm
+\begin_inset Quotes erd
+\end_inset 
+
+, 
+\begin_inset Quotes eld
+\end_inset 
+
+icons/yes.xpm
+\begin_inset Quotes erd
+\end_inset 
+
+, array (RELATIVE_CURRENT, RELATIVE_USER));
+\layout Standard
+
+You should notice that no relativity array is needed in the other calls
+ that refer to files outside the virtual root, but one is needed for calls
+ that include files inside the virtual root.
+ Any RELATIVE define can be set as the default and works in the same fashion.
+ To retrieve the currently set define, use get_relative ().
+ Note that the relativity is reset after each page request; that is, it's
+ good only for the life of the current page loading, and is not stored in
+ session management.
+\layout Section
+
+Function reference
+\begin_inset LatexCommand \label{sec:function_reference}
+
+\end_inset 
+
+
+\layout Subsection
+
+About
+\begin_inset LatexCommand \label{sec:function_reference_about}
+
+\end_inset 
+
+
+\layout Standard
+
+This function reference is periodically auto-generated from the inline comments
+ in phpgwapi/inc/class.vfs.inc.php.
+ For the most up-to-date (and nicer looking) reference, see class.vfs.inc.php.
+ This reference is created as a separate DocBook document (using the inline2lyx.p
+l script), so it might look a bit out of place.
+\layout Subsection
+
+class vfs
+\begin_inset LatexCommand \label{sec:		class vfs}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: virtual file system
+\layout Standard
+
+description: Authors: Zone, Seek3r
+\layout Subsection
+
+class path_class
+\begin_inset LatexCommand \label{sec:	class path_class}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: helper class for path_parts
+\layout Subsection
+
+ vfs
+\begin_inset LatexCommand \label{sec:	 vfs}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: constructor, sets up variables
+\layout Verbatim
+
+function vfs ()
+\layout Subsection
+
+ set_relative
+\begin_inset LatexCommand \label{sec:	 set_relative}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Set path relativity
+\layout Standard
+
+param: $mask Relative bitmask (see RELATIVE_ defines)
+\layout Verbatim
+
+function set_relative ($mask)
+\layout Subsection
+
+ get_relative
+\begin_inset LatexCommand \label{sec:	 get_relative}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Return relativity bitmask
+\layout Standard
+
+discussion: Returns relativity bitmask, or the default of "completely relative"
+ if unset
+\layout Verbatim
+
+function get_relative ()
+\layout Subsection
+
+  sanitize
+\begin_inset LatexCommand \label{sec: 	 sanitize}
+
+\end_inset 
+
+
+\layout Standard
+
+ abstract: Removes leading .'s from $string
+\layout Standard
+
+discussion: You should not pass all filenames through sanitize () unless
+ you plan on rejecting
+\layout Standard
+
+.files.
+  Instead, pass the name through securitycheck () first, and if it fails,
+\layout Standard
+
+pass it through sanitize
+\layout Standard
+
+param: $string string to sanitize
+\layout Standard
+
+result: $string without it's leading .'s
+\layout Verbatim
+
+function sanitize ($string)
+\layout Subsection
+
+ securitycheck
+\begin_inset LatexCommand \label{sec:	 securitycheck}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Security check function
+\layout Standard
+
+discussion: Checks for basic violations such as ..
+\layout Standard
+
+If securitycheck () fails, run your string through vfs->sanitize ()
+\layout Standard
+
+param: $string string to check security of
+\layout Standard
+
+result: Boolean True/False.
+  True means secure, False means insecure
+\layout Verbatim
+
+function securitycheck ($string)
+\layout Subsection
+
+ db_clean
+\begin_inset LatexCommand \label{sec:	 db_clean}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Clean $string for use in database queries
+\layout Standard
+
+param: $string String to clean
+\layout Standard
+
+result: Cleaned version of $string
+\layout Verbatim
+
+function db_clean ($string)
+\layout Subsection
+
+ path_parts
+\begin_inset LatexCommand \label{sec:	 path_parts}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: take a real or fake pathname and return an array of its component
+ parts
+\layout Standard
+
+param: $string full real or fake path
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+param: $object True returns an object instead of an array
+\layout Standard
+
+result: $rarray/$robject Array or object containing the fake and real component
+ parts of the path
+\layout Standard
+
+discussion: Returned values are:
+\layout Standard
+
+mask
+\layout Standard
+
+outside
+\layout Standard
+
+fake_full_path
+\layout Standard
+
+fake_leading_dirs
+\layout Standard
+
+fake_extra_path
+\layout Standard
+
+fake_name
+\layout Standard
+
+real_full_path
+\layout Standard
+
+real_leading_dirs
+\layout Standard
+
+real_extra_path
+\layout Standard
+
+real_name
+\layout Standard
+
+fake_full_path_clean
+\layout Standard
+
+fake_leading_dirs_clean
+\layout Standard
+
+fake_extra_path_clean
+\layout Standard
+
+fake_name_clean
+\layout Standard
+
+real_full_path_clean
+\layout Standard
+
+real_leading_dirs_clean
+\layout Standard
+
+real_extra_path_clean
+\layout Standard
+
+real_name_clean
+\layout Standard
+
+"clean" values are run through vfs->db_clean () and
+\layout Standard
+
+are safe for use in SQL queries that use key='value'
+\layout Standard
+
+They should be used ONLY for SQL queries, so are used
+\layout Standard
+
+mostly internally
+\layout Standard
+
+mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
+\layout Standard
+
+and is used internally
+\layout Standard
+
+outside is boolean, True if $relatives contains VFS_REAL
+\layout Verbatim
+
+function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object
+ = True)
+\layout Subsection
+
+ getabsolutepath
+\begin_inset LatexCommand \label{sec:	 getabsolutepath}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: get the absolute path
+\layout Standard
+
+param: $target defaults to False, directory/file to get path of, relative
+ to $relatives[0]
+\layout Standard
+
+param: $mask Relativity bitmask (see RELATIVE_ defines).
+  RELATIVE_CURRENT means use $this->relative
+\layout Standard
+
+param: $fake Returns the "fake" path, ie /home/user/dir/file (not always
+ possible.
+  use path_parts () instead)
+\layout Standard
+
+result: $basedir Full fake or real path
+\layout Verbatim
+
+function getabsolutepath ($target = False, $relatives = array (RELATIVE_CURRENT)
+, $fake = True)
+\layout Subsection
+
+ cd
+\begin_inset LatexCommand \label{sec:	 cd}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Change directory
+\layout Standard
+
+discussion: To cd to the files root "/", use cd ("/", False, array (RELATIVE_NON
+E));
+\layout Standard
+
+param: $target default "/".
+  directory to cd into.
+  if "/" and $relative is True, uses "/home/<working_lid>";
+\layout Standard
+
+param: $relative default True/relative means add target to current path,
+ else pass $relative as mask to getabsolutepath()
+\layout Verbatim
+
+function cd ($target = "/", $relative = True, $relatives = array (RELATIVE_CURRE
+NT))
+\layout Subsection
+
+ pwd
+\begin_inset LatexCommand \label{sec:	 pwd}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: current working dir
+\layout Standard
+
+param: $full default True returns full fake path, else just the extra dirs
+ (false strips the leading /)
+\layout Standard
+
+result: $currentdir currentdir
+\layout Verbatim
+
+function pwd ($full = True)
+\layout Subsection
+
+ read
+\begin_inset LatexCommand \label{sec:	 read}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: return file contents
+\layout Standard
+
+param: $file filename
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: $contents Contents of $file, or False if file cannot be read
+\layout Verbatim
+
+function read ($file, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ write
+\begin_inset LatexCommand \label{sec:	 write}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: write to a file
+\layout Standard
+
+param: $file file name
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+param: $contents contents
+\layout Standard
+
+result: Boolean True/False
+\layout Verbatim
+
+function write ($file, $relatives = array (RELATIVE_CURRENT), $contents)
+\layout Subsection
+
+ touch
+\begin_inset LatexCommand \label{sec:	 touch}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Create blank file $file or set the modification time and modified
+ by of $file to current time and user
+\layout Standard
+
+param: $file File to touch or set modifies
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: Boolean True/False
+\layout Verbatim
+
+function touch ($file, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ cp
+\begin_inset LatexCommand \label{sec:	 cp}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: copy file
+\layout Standard
+
+param: $from from file/directory
+\layout Standard
+
+param: $to to file/directory
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: boolean True/False
+\layout Verbatim
+
+function cp ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT)
+)
+\layout Subsection
+
+ mv
+\begin_inset LatexCommand \label{sec:	 mv}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: move file/directory
+\layout Standard
+
+param: $from from file/directory
+\layout Standard
+
+param: $to to file/directory
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: boolean True/False
+\layout Verbatim
+
+function mv ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT)
+)
+\layout Subsection
+
+ move
+\begin_inset LatexCommand \label{sec:	 move}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: shortcut to mv
+\layout Verbatim
+
+function move ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURREN
+T))
+\layout Subsection
+
+ rm
+\begin_inset LatexCommand \label{sec:	 rm}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: delete file/directory
+\layout Standard
+
+param: $string file/directory to delete
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: boolean True/False
+\layout Verbatim
+
+function rm ($string, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ delete
+\begin_inset LatexCommand \label{sec:	 delete}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: shortcut to rm
+\layout Verbatim
+
+function delete ($string, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ mkdir
+\begin_inset LatexCommand \label{sec:	 mkdir}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: make a new directory
+\layout Standard
+
+param: $dir Directory name
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: boolean True on success
+\layout Verbatim
+
+function mkdir ($dir, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ set_attributes
+\begin_inset LatexCommand \label{sec:	 set_attributes}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Update database entry for $file with the attributes in $attributes
+\layout Standard
+
+param: $file file/directory to update
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+param: $attributes keyed array of attributes.
+  key is attribute name, value is attribute value
+\layout Standard
+
+result: Boolean True/False
+\layout Standard
+
+discussion: Valid attributes are:
+\layout Standard
+
+owner_id
+\layout Standard
+
+createdby_id
+\layout Standard
+
+modifiedby_id
+\layout Standard
+
+created
+\layout Standard
+
+modified
+\layout Standard
+
+size
+\layout Standard
+
+mime_type
+\layout Standard
+
+deleteable
+\layout Standard
+
+comment
+\layout Standard
+
+app
+\layout Verbatim
+
+function set_attributes ($file, $relatives = array (RELATIVE_CURRENT), $attribut
+es = array ())
+\layout Subsection
+
+ correct_attributes
+\begin_inset LatexCommand \label{sec:	 correct_attributes}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Set the correct attributes for $string (e.g.
+ owner)
+\layout Standard
+
+param: $string File/directory to correct attributes of
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: Boolean True/False
+\layout Verbatim
+
+function correct_attributes ($string, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ file_type
+\begin_inset LatexCommand \label{sec:	 file_type}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: return file/dir type (MIME or other)
+\layout Standard
+
+param: $file File or directory path (/home/user/dir/dir2/dir3, /home/user/dir/di
+r2/file)
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: MIME type, "Directory", or nothing if MIME type is not known
+\layout Verbatim
+
+function file_type ($file, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ file_exists
+\begin_inset LatexCommand \label{sec:	 file_exists}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: check if file/directory exists
+\layout Standard
+
+param: $string file/directory to check existance of
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: Boolean True/False
+\layout Verbatim
+
+function file_exists ($string, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ checkperms
+\begin_inset LatexCommand \label{sec:	 checkperms}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: Check if you have write access to create files in $dir
+\layout Standard
+
+discussion: This isn't perfect, because vfs->touch () returns True even
+\layout Standard
+
+if only the database entry worked.
+  ACLs need to be
+\layout Standard
+
+implemented for better permission checking.
+  It's
+\layout Standard
+
+also pretty slow, so I wouldn't recommend using it
+\layout Standard
+
+often
+\layout Standard
+
+param: $dir Directory to check access of
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+result: Boolean True/False
+\layout Verbatim
+
+function checkperms ($dir, $relatives = array (RELATIVE_CURRENT))
+\layout Subsection
+
+ ls
+\begin_inset LatexCommand \label{sec:	 ls}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: get directory listing
+\layout Standard
+
+discussion: Note: the entries are not guaranteed to be returned in any logical
+ order
+\layout Standard
+
+param: $dir Directory
+\layout Standard
+
+param: $relatives Relativity array
+\layout Standard
+
+param: $checksubdirs Boolean, recursively list all sub directories as well?
+\layout Standard
+
+param: $mime_type Only return entries matching MIME-type $mime_type.
+  Can be "Directory" or "
+\backslash 
+" for those without MIME types
+\layout Standard
+
+param: $nofiles Boolean.
+  True means you want to return just the information about the directory
+ $dir.
+  If $dir is a file, $nofiles is implied.
+  This is the equivalent of 'ls -ld $dir'
+\layout Standard
+
+result: array of arrays.
+  Subarrays contain full info for each file/dir.
+\layout Verbatim
+
+function ls ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs
+ = True, $mime_type = False, $nofiles = False)
+\layout Subsection
+
+ dir
+\begin_inset LatexCommand \label{sec:	 dir}
+
+\end_inset 
+
+
+\layout Standard
+
+abstract: shortcut to ls
+\layout Verbatim
+
+function dir ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs
+ = True, $mime_type = False, $nofiles = False)
+\layout Section
+
+Notes
+\begin_inset LatexCommand \label{sec:notes}
+
+\end_inset 
+
+
+\layout Subsection
+
+Database
+\begin_inset LatexCommand \label{sec:database}
+
+\end_inset 
+
+
+\layout Standard
+
+Data about the files and directories within the virtual root is kept in
+ the SQL database.
+ Currently, this information includes:
+\layout Itemize
+
+File ID (used internally, primary key for table)
+\layout Itemize
+
+Owner ID (phpGW account_id)
+\layout Itemize
+
+Created by ID (phpGW account_id)
+\layout Itemize
+
+Modified by ID (phpGW account_id)
+\layout Itemize
+
+Created (date)
+\layout Itemize
+
+Modified (date)
+\layout Itemize
+
+Size (bytes)
+\layout Itemize
+
+MIME type
+\layout Itemize
+
+Deleteable (Y/N/Other?)
+\layout Itemize
+
+Comment
+\layout Itemize
+
+App (appname of application that created the file)
+\layout Itemize
+
+Directory (directory the file or directory is in)
+\layout Itemize
+
+Name (name of file or directory)
+\layout Standard
+
+The internal names of these (the database column names) are stored in the
+ $phpgw->vfs->attributes array, which is useful for loops, and is guaranteed
+ to be up-to-date.
+\layout Standard
+
+\layout Standard
+
+Note that no information is kept about files outside the virtual root.
+ If a file is moved outside, all records of it are delete from the database.
+ If a file is moved into the virtual root, some information, specifically
+ MIME-type, is not stored in the database.
+ The vital information has defaults: owner is based on where the file is
+ being stored; size is correctly read; deleteable is set to Y.
+\layout Subsection
+
+ACL support
+\begin_inset LatexCommand \label{sec:acl_support}
+
+\end_inset 
+
+
+\layout Standard
+
+Because of the many different ways the VFS can be used, complete ACL support
+ is not built in.
+ There is a bit of access control built in, just because of the way database
+ queries are made.
+ However, that is a discussion beyond the scope of this document.
+ Full ACL support may be added at a later time.
+ For now, it is fairly easy to add basic access control to your application
+ by matching path expressions.
+ The VFS always follows the same naming convention of $fakebase/userorgroup.
+ So if you need to check if a user has access to $fakebase/whatever/dir/file,
+ you need only know if they their username is 'whatever' or if they belong
+ to the group 'whatever', and that the group has access to your application.
+ Here is an example from PHPWebHosting:
+\layout Verbatim
+
+###
+\layout Verbatim
+
+# First we get their memberships
+\layout Verbatim
+
+###
+\layout Verbatim
+
+\layout Verbatim
+
+$memberships = $phpgw->accounts->memberships ($account_id);
+\layout Verbatim
+
+\layout Verbatim
+
+###
+\layout Verbatim
+
+# We determine if they're in their home directory or a group's directory
+\layout Verbatim
+
+# If they request a group's directory, we ensure they have access to the
+ group,
+\layout Verbatim
+
+# and the group has access to the app
+\layout Verbatim
+
+###
+\layout Verbatim
+
+\layout Verbatim
+
+if ((preg_match ("+^$fakebase
+\backslash 
+/(.*)(
+\backslash 
+/|$)+U", $path, $matches)) && $matches[1] != $account_lid)
+\layout Verbatim
+
+{
+\layout Verbatim
+
+     $phpgw->vfs->working_id = $phpgw->accounts->name2id ($matches[1]);
+\layout Verbatim
+
+     reset ($memberships);
+\layout Verbatim
+
+     while (list ($num, $group_array) = each ($memberships))
+\layout Verbatim
+
+     {
+\layout Verbatim
+
+          if ($matches[1] == $group_array["account_name"])
+\layout Verbatim
+
+          {
+\layout Verbatim
+
+               $group_ok = 1;
+\layout Verbatim
+
+               break;
+\layout Verbatim
+
+          }
+\layout Verbatim
+
+     }
+\layout Verbatim
+
+     if (!$group_ok)
+\layout Verbatim
+
+     {
+\layout Verbatim
+
+          echo $phpgw->common->error_list (array ("You do not have access
+ to group/directory $matches[1]"));
+\layout Verbatim
+
+          exit;
+\layout Verbatim
+
+     }
+\layout Verbatim
+
+}
+\layout Standard
+
+You should also check if the group has access to your appilcation.
+\layout Subsection
+
+Function aliases
+\begin_inset LatexCommand \label{sec:function_aliases}
+
+\end_inset 
+
+
+\layout Standard
+
+You might have noticed there are some functions that just pass the arguments
+ on to other functions.
+ These are provided in part because of legacy and in part for convenience.
+ You can use either.
+ Here is the list (alias -> actual):
+\layout Itemize
+
+copy -> cp
+\layout Itemize
+
+move -> rm
+\layout Itemize
+
+delete -> rm
+\layout Itemize
+
+dir -> ls
+\layout Subsection
+
+Fakebase directory (changing /home)
+\begin_inset LatexCommand \label{sec:fakebase}
+
+\end_inset 
+
+
+\layout Standard
+
+The old VFS was hard-coded to use "/home" as the fake base directory, even
+ though the user never saw it.
+ With the new system, crafty administrators may wish to change "/home" to
+ something else, say "/users" or "/public_html".
+ The fake base directory name is stored in $phpgw->vfs->fakebase, and changing
+ it will transparently change it throughout the VFS and all applications.
+ However, this must be done 
+\emph on 
+before
+\emph default 
+ any data is in the VFS database.
+ If you wish to change it afterwords, you'll have to manually update the
+ database, replacing the old value with the new value.
+ 
+\emph on 
+Application programmers need to recognize that /home is not absolute, and
+ use $phpgw->vfs->fakebase instead
+\emph default 
+.
+ I suggest setting $fakebase = $phpgw->vfs->fakebase; right off the bat
+ to keep things neater.
+\the_end

@@ -1,0 +1,910 @@
+
+
+phpgwapi - VFS Class
+
+Jason Wies
+
+June 2001
+
+Abstract
+
+The VFS, or Virtual File System, handles all file system activity for
+phpGroupWare.
+
+1 Introduction and Purpose<sec:introduction>
+
+The latest version of the VFS for phpGroupWare combines actual file
+system manipulation with fully integrated database support. It features
+nearly transparent handling of files and directories, as well as files
+inside and outside the virtual root. This document is intended to
+provide API and application developers with a guide to incorporating
+the VFS into their work.
+
+2 Basics<sec:basics>
+
+2.1 Prerequisites<sec:prerequisites>
+
+You must explicitly enable the VFS class. To do this, set "enable_vfs_class"
+to True in $phpgw_info["flags"]. An example:
+
+$phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
+
+"noheader" => False,
+
+"noappheader" => False,
+
+"enable_vfs_class" => True,
+
+"enable_browser_class" => True);
+
+2.2 Concepts<sec:concepts>
+
+The VFS in located in phpgwapi/inc/class.vfs.inc.php. You can look
+over it, but I don't suggest trying to understand how it works. It
+isn't necessary to know its internals to use it, but you may find
+the inline comments helpful. The basic things to keep in mind:
+
+* Files and directories are synonymous in almost all cases
+
+$phpgw->vfs->mv ("file1", "dir/file2");
+
+$phpgw->vfs->mv ("dir1", "dir/dir1");
+
+$phpgw->vfs->rm ("file");
+
+$phpgw->vfs->rm ("dir");
+
+All work as you would except them to. The major exception is:
+
+$phpgw->vfs->touch ("file");
+
+vs.
+
+$phpgw->vfs->mkdir ("dir");
+
+* Users and groups and synonymous
+
+As far as the actual paths are concerned, users and groups are the
+same. The VFS has no built in ACL support, so /home/username works
+the same as /home/groupname. See the note on AC L support in the Notes
+section.
+
+* You should never have to know the real path of files
+
+One of the VFS's responsibilities is to translate paths for you. While
+you certainly can operate using full paths, it is much simpler to
+use the virtual paths. For example, instead of using:
+
+$phpgw->vfs->cp ("/var/www/phpgroupware/files/home/user/file1", "/var/www/phpgroupware/files/home/user/file2",
+array (RELATIVE_NONE|VFS_REAL, RELATIVE_NONE|VFS_REAL));
+
+you might use
+
+$phpgw->vfs->cp ("/home/user/file1", "/home/user/file2", array (RELATIVE_NONE,
+RELATIVE_NONE));
+
+(We'll get to the RELATIVE's in a minute.)
+
+Site administrators should be able to move their files dir around on
+their system and know that everything will continue to work smoothly.
+
+* Relativity is vital
+
+Relativity is a new feature in the VFS, and its importance cannot be
+stressed enough. It will make your life much easier, especially for
+file system intensive applications, but it will take some getting
+used to. If something doesn't work right the first time, chances are
+great it has to do with incorrect relativity settings. We will deal
+with relativity in depth in the Relativity section.
+
+3 Basic Functions<sec:basic_functions>
+
+These are two functions you'll need to know before we get into relativity.
+
+3.1 path_parts ()<sec:path_parts>
+
+The job of path_parts () is to translate any given file location into
+its many component parts for any relativity. The prototype for path_parts
+() is:
+
+function path_parts ($string, $relatives = array (RELATIVE_CURRENT),
+$object = True)
+
+$string is the path you want to translate, $relatives is the standard
+relativity array, and $object specifies how you would like the return
+value: if $object is True, an object will be returned; if $object
+is False, an array will be returned. I think you'll find the object
+easier to deal with, and we'll be using it throughout this document.
+The most important returned values (but not all) for path_parts ()
+are:
+
+fake_full_path
+
+fake_leading_dirs
+
+fake_extra_path
+
+fake_name
+
+real_full_path
+
+real_leading_dirs
+
+real_extra_path
+
+real_name
+
+Just like you would think, fake_full_path contains the full virtual
+path of $string, and real_full_path contains the full real path of
+$string. The fake_name and real_name variables should always be the
+same, and contain the final file or directory name. The leading_dirs
+contain everything except the name, and the extra_path is everything
+from the / before "home" to the end of the leading_dirs. To better
+illustrate, here is an example:
+
+$p = $phpgw->vfs->path_parts ("/home/jason/dir/file", array (RELATIVE_NONE));
+
+* $p->fake_full_path - /home/jason/dir/file
+
+* $p->fake_leading_dirs - /home/jason/dir
+
+* $p->fake_extra_path - home/jason/dir
+
+* $p->fake_name - file
+
+* $p->real_full_path - /var/www/phpgroupware/files/home/jason/dir/file
+
+* $p->real_leading_dirs - /var/www/phpgroupware/files/home/jason/dir 
+
+* $p->real_extra_path - home/jason/dir
+
+* $p->real_name - file
+
+As you can see, path_parts () is a very useful function and will save
+you from doing those darn substr ()'s yourself. For those of you used
+to the prior VFS, note that getabsolutepath () is depreciated. getabsolutepath
+() still exists (albeit in a much different form), and is responsible
+for some of the path translation, but it is an internal function only.
+Applications should only use path_parts (). We have shown you how
+to use path_parts () so you can experiment with it using different
+paths and relativities as we relativity in Section [sec:relativity].
+
+3.2 cd ()<sec:cd>
+
+Ok, one more thing before we discuss relativity, and that is the cd
+() function. Part of the overall goal for the VFS in phpGroupWare
+is to give the user a seamless experience during their session. For
+example, if they upload a file using a file manager to /home/my_group/project1,
+and then go to download an email attachment, the default directory
+will be /home/my_group/project1. This is accomplished using the cd
+() function. The prototype and examples: 
+
+function cd ($target = "/", $relative = True, $relatives = array (RELATIVE_CURRENT))
+
+$phpgw->vfs->cd ("/");     /* cd to their home directory */
+
+$phpgw->vfs->cd ("/home/jason/dir", False, array (RELATIVE_NONE));
+/* cd to /home/jason/dir */
+
+$phpgw->vfs->cd ("dir2", True); /* When following the above, cd's to
+/home/jason/dir/dir2 */
+
+If $relatives is True, the $target is simply appended to the current
+path. If you want to know what the current path is, use $phpgw->vfs->pwd
+().
+
+Now you're ready for relativity.
+
+4 Relativity<sec:relativity>
+
+Ok, just one last thing before we get into relativity. You will notice
+throughout the examples the use of $fakebase. $fakebase is by default
+"/home". The old VFS was hard-coded to use "/home", but the naming
+choice for this is now up to administrators. See the "Notes -> Fakebase
+directory" section for more information. Throughout the rest of this
+document, you will see $fakebase used in calls to the VFS, and /home
+used in actual paths. You should always use $fakebase when making
+applications. I suggest doing $fakebase = $phpgw->vfs->fakebase; right
+off the bat to keep things neater.
+
+4.1 What is it and how does it work?
+
+One of the design challenges for a Virtual File System is to try to
+figure out whether the calling application is referring to a file
+inside or outside the virtual root, and if inside, exactly where.
+To solve this problem, the phpGroupWare VFS uses RELATIVE defines
+that are used in bitmasks passed to each function. The result is that
+any set of different relativities can be used in combination with
+each other. Let's look at a few examples. Say you want to move "logo.png"
+from the user's home directory to the current directory. 
+
+$phpgw->vfs->mv ("logo.png", "", array (RELATIVE_USER, RELATIVE_ALL));
+
+RELATIVE_USER means relative to the user's home directory. RELATIVE_ALL
+means relative to the current directory, as set by cd () and as reported
+by pwd (). So if the current directory was "$fakebase/my_group/project1",
+the call to mv () would be processed as:
+
+MOVE "$fakebase/jason/logo.png" TO "$fakebase/my_group/project1/logo.png"
+
+and the actual file system call would be:
+
+rename ("/var/www/phpgroupware/files/home/jason/logo.php", "/var/www/phpgroupware/files/home/my_group/project1/logo.png");
+
+Those used to the old VFS will note that you do not have to translate
+the path beforehand. Let's look at another example. Suppose you were
+moving an email attachment stored in phpGroupWare's temporary directory
+to the "attachments" directory within the user's home directory (we're
+assuming the attachments directory exists). Note that the temporary
+directory is outside the virtual root.
+
+$phpgw->vfs->mv ("$phpgw_info[server][temp_dir]/$randomdir/$randomfile",
+"attachments/actual_name.ext", array (RELATIVE_NONE|VFS_REAL, RELATIVE_USER));
+
+$randomdir and $randomfile are what the directory and file might be
+called before they are given a proper name by the user, which is actual_name.ext
+in this example. RELATIVE_NONE is the define for using full path names.
+However, RELATIVE_NONE is still relative to the virtual root, so we
+pass along VFS_REAL as well, to say that the file is outside the virtual
+root, somewhere else in the file system. Once again, RELATIVE_USER
+means relative to the user's home directory. So the actual file system
+call might look like this (keep in mind that $randomdir and $randomfile
+are just random strings):
+
+rename ("/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M", "/var/www/phpgroupware/files/home/users/jason/attachments/actual_name.ext");
+
+Of course you don't have to know that, nor should you be concerned
+with it; you can take it for granted that the VFS will translate the
+paths correctly. Let's take a look at one more example, this time
+using the RELATIVE_USER_APP define. RELATIVE_USER_APP is used to store
+quasi-hidden application files, similar to the Unix convention of
+~/.appname. It simply appends .appname to the user's home directory.
+For example, if you were making an HTML editor application named htmledit,
+and wanted to keep a backup file in case something goes wrong, you
+would use RELATIVE_USER_APP to store it:
+
+$phpgw->vfs->write ("file.name~", array (RELATIVE_USER_APP), $contents);
+
+This assumes that ~/.htmledit exists of course. The backup file "file.name~"
+would then be written in $fakebase/jason/.htmledit/file.name~. Note
+that storing files like this might not be as good of a solution as
+storing them in the temporary directory or in the database. But it
+is there in case you need it.
+
+4.2 Complete List<sec:relatives_complete_list>
+
+Here is the complete list of RELATIVE defines, and what they do:
+
+RELATIVE_ROOT Don't translate the path at all. Just prepends a /.
+  You'll probably want to use RELATIVE_NONE though, which handles
+  both virtual and real files.
+
+RELATIVE_USER User's home directory
+
+RELATIVE_CURR_USER Current user's home directory. If the current
+  directory is $fakebase/my_group/project1, this will return is $fakebase/my_group
+
+RELATIVE_USER_APP Append .appname to the user's home directory, where
+  appname is the current application's appname
+
+RELATIVE_PATH DO NOT USE. Relative to the current directory, used
+  in RELATIVE_ALL
+
+RELATIVE_NONE Not relative to anything. Use this with VFS_REAL for
+  files outside the virtual root. Note that using RELATIVE_NONE by
+  itself still means relative to the virtual root
+
+RELATIVE_CURRENT An alias for the currently set RELATIVE define,
+  or RELATIVE_ALL if none is set (see the Defaults section)
+
+VFS_REAL File is outside of the virtual root. Usually used with RELATIVE_NONE
+
+RELATIVE_ALL Relative to the current directory. Use RELATIVE_ALL
+  instead of RELATIVE_PATH
+
+4.3 Defaults<sec:relatives_defaults>
+
+You might be thinking to yourself that passing along RELATIVE defines
+with every VFS call is overkill, especially if your application always
+uses the same relativity. The default RELATIVE define for all VFS
+calls is RELATIVE_CURRENT. RELATIVE_CURRENT itself defaults to RELATIVE_ALL
+(relative to the current path), unless your application sets a specific
+relativity. If your application requires most of the work to be done
+outside of the virtual root, you may wish to set RELATIVE_CURRENT
+to RELATIVE_NONE|VFS_REAL. set_relative () is the function to do this.
+For example:
+
+$phpgw->vfs->set_relative (RELATIVE_NONE|VFS_REAL);
+
+$phpgw->vfs->read ("/etc/passwd");
+
+$phpgw->vfs->cp ("/usr/include/stdio.h", "/tmp/stdio.h");
+
+$phpgw->vfs->cp ("/usr/share/pixmaps/yes.xpm", "icons/yes.xpm", array
+(RELATIVE_CURRENT, RELATIVE_USER));
+
+You should notice that no relativity array is needed in the other calls
+that refer to files outside the virtual root, but one is needed for
+calls that include files inside the virtual root. Any RELATIVE define
+can be set as the default and works in the same fashion. To retrieve
+the currently set define, use get_relative (). Note that the relativity
+is reset after each page request; that is, it's good only for the
+life of the current page loading, and is not stored in session management.
+
+5 Function reference<sec:function_reference>
+
+5.1 About<sec:function_reference_about>
+
+This function reference is periodically auto-generated from the inline
+comments in phpgwapi/inc/class.vfs.inc.php. For the most up-to-date
+(and nicer looking) reference, see class.vfs.inc.php. This reference
+is created as a separate DocBook document (using the inline2lyx.pl
+script), so it might look a bit out of place.
+
+5.2 class vfs<sec:		class vfs>
+
+abstract: virtual file system
+
+description: Authors: Zone, Seek3r
+
+5.3 class path_class<sec:	class path_class>
+
+abstract: helper class for path_parts
+
+5.4  vfs<sec:	 vfs>
+
+abstract: constructor, sets up variables
+
+function vfs ()
+
+5.5  set_relative<sec:	 set_relative>
+
+abstract: Set path relativity
+
+param: $mask Relative bitmask (see RELATIVE_ defines)
+
+function set_relative ($mask)
+
+5.6  get_relative<sec:	 get_relative>
+
+abstract: Return relativity bitmask
+
+discussion: Returns relativity bitmask, or the default of "completely
+relative" if unset
+
+function get_relative ()
+
+5.7   sanitize<sec: 	 sanitize>
+
+ abstract: Removes leading .'s from $string
+
+discussion: You should not pass all filenames through sanitize () unless
+you plan on rejecting
+
+.files.  Instead, pass the name through securitycheck () first, and
+if it fails,
+
+pass it through sanitize
+
+param: $string string to sanitize
+
+result: $string without it's leading .'s
+
+function sanitize ($string)
+
+5.8  securitycheck<sec:	 securitycheck>
+
+abstract: Security check function
+
+discussion: Checks for basic violations such as ..
+
+If securitycheck () fails, run your string through vfs->sanitize ()
+
+param: $string string to check security of
+
+result: Boolean True/False.  True means secure, False means insecure
+
+function securitycheck ($string)
+
+5.9  db_clean<sec:	 db_clean>
+
+abstract: Clean $string for use in database queries
+
+param: $string String to clean
+
+result: Cleaned version of $string
+
+function db_clean ($string)
+
+5.10  path_parts<sec:	 path_parts>
+
+abstract: take a real or fake pathname and return an array of its component
+parts
+
+param: $string full real or fake path
+
+param: $relatives Relativity array
+
+param: $object True returns an object instead of an array
+
+result: $rarray/$robject Array or object containing the fake and real
+component parts of the path
+
+discussion: Returned values are:
+
+mask
+
+outside
+
+fake_full_path
+
+fake_leading_dirs
+
+fake_extra_path
+
+fake_name
+
+real_full_path
+
+real_leading_dirs
+
+real_extra_path
+
+real_name
+
+fake_full_path_clean
+
+fake_leading_dirs_clean
+
+fake_extra_path_clean
+
+fake_name_clean
+
+real_full_path_clean
+
+real_leading_dirs_clean
+
+real_extra_path_clean
+
+real_name_clean
+
+"clean" values are run through vfs->db_clean () and
+
+are safe for use in SQL queries that use key='value'
+
+They should be used ONLY for SQL queries, so are used
+
+mostly internally
+
+mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
+
+and is used internally
+
+outside is boolean, True if $relatives contains VFS_REAL
+
+function path_parts ($string, $relatives = array (RELATIVE_CURRENT),
+$object = True)
+
+5.11  getabsolutepath<sec:	 getabsolutepath>
+
+abstract: get the absolute path
+
+param: $target defaults to False, directory/file to get path of, relative
+to $relatives[0]
+
+param: $mask Relativity bitmask (see RELATIVE_ defines).  RELATIVE_CURRENT
+means use $this->relative
+
+param: $fake Returns the "fake" path, ie /home/user/dir/file (not always
+possible.  use path_parts () instead)
+
+result: $basedir Full fake or real path
+
+function getabsolutepath ($target = False, $relatives = array (RELATIVE_CURRENT),
+$fake = True)
+
+5.12  cd<sec:	 cd>
+
+abstract: Change directory
+
+discussion: To cd to the files root "/", use cd ("/", False, array
+(RELATIVE_NONE));
+
+param: $target default "/".  directory to cd into.  if "/" and $relative
+is True, uses "/home/<working_lid>";
+
+param: $relative default True/relative means add target to current
+path, else pass $relative as mask to getabsolutepath()
+
+function cd ($target = "/", $relative = True, $relatives = array (RELATIVE_CURRENT))
+
+5.13  pwd<sec:	 pwd>
+
+abstract: current working dir
+
+param: $full default True returns full fake path, else just the extra
+dirs (false strips the leading /)
+
+result: $currentdir currentdir
+
+function pwd ($full = True)
+
+5.14  read<sec:	 read>
+
+abstract: return file contents
+
+param: $file filename
+
+param: $relatives Relativity array
+
+result: $contents Contents of $file, or False if file cannot be read
+
+function read ($file, $relatives = array (RELATIVE_CURRENT))
+
+5.15  write<sec:	 write>
+
+abstract: write to a file
+
+param: $file file name
+
+param: $relatives Relativity array
+
+param: $contents contents
+
+result: Boolean True/False
+
+function write ($file, $relatives = array (RELATIVE_CURRENT), $contents)
+
+5.16  touch<sec:	 touch>
+
+abstract: Create blank file $file or set the modification time and
+modified by of $file to current time and user
+
+param: $file File to touch or set modifies
+
+param: $relatives Relativity array
+
+result: Boolean True/False
+
+function touch ($file, $relatives = array (RELATIVE_CURRENT))
+
+5.17  cp<sec:	 cp>
+
+abstract: copy file
+
+param: $from from file/directory
+
+param: $to to file/directory
+
+param: $relatives Relativity array
+
+result: boolean True/False
+
+function cp ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+
+5.18  mv<sec:	 mv>
+
+abstract: move file/directory
+
+param: $from from file/directory
+
+param: $to to file/directory
+
+param: $relatives Relativity array
+
+result: boolean True/False
+
+function mv ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+
+5.19  move<sec:	 move>
+
+abstract: shortcut to mv
+
+function move ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+
+5.20  rm<sec:	 rm>
+
+abstract: delete file/directory
+
+param: $string file/directory to delete
+
+param: $relatives Relativity array
+
+result: boolean True/False
+
+function rm ($string, $relatives = array (RELATIVE_CURRENT))
+
+5.21  delete<sec:	 delete>
+
+abstract: shortcut to rm
+
+function delete ($string, $relatives = array (RELATIVE_CURRENT))
+
+5.22  mkdir<sec:	 mkdir>
+
+abstract: make a new directory
+
+param: $dir Directory name
+
+param: $relatives Relativity array
+
+result: boolean True on success
+
+function mkdir ($dir, $relatives = array (RELATIVE_CURRENT))
+
+5.23  set_attributes<sec:	 set_attributes>
+
+abstract: Update database entry for $file with the attributes in $attributes
+
+param: $file file/directory to update
+
+param: $relatives Relativity array
+
+param: $attributes keyed array of attributes.  key is attribute name,
+value is attribute value
+
+result: Boolean True/False
+
+discussion: Valid attributes are:
+
+owner_id
+
+createdby_id
+
+modifiedby_id
+
+created
+
+modified
+
+size
+
+mime_type
+
+deleteable
+
+comment
+
+app
+
+function set_attributes ($file, $relatives = array (RELATIVE_CURRENT),
+$attributes = array ())
+
+5.24  correct_attributes<sec:	 correct_attributes>
+
+abstract: Set the correct attributes for $string (e.g. owner)
+
+param: $string File/directory to correct attributes of
+
+param: $relatives Relativity array
+
+result: Boolean True/False
+
+function correct_attributes ($string, $relatives = array (RELATIVE_CURRENT))
+
+5.25  file_type<sec:	 file_type>
+
+abstract: return file/dir type (MIME or other)
+
+param: $file File or directory path (/home/user/dir/dir2/dir3, /home/user/dir/dir2/file)
+
+param: $relatives Relativity array
+
+result: MIME type, "Directory", or nothing if MIME type is not known
+
+function file_type ($file, $relatives = array (RELATIVE_CURRENT))
+
+5.26  file_exists<sec:	 file_exists>
+
+abstract: check if file/directory exists
+
+param: $string file/directory to check existance of
+
+param: $relatives Relativity array
+
+result: Boolean True/False
+
+function file_exists ($string, $relatives = array (RELATIVE_CURRENT))
+
+5.27  checkperms<sec:	 checkperms>
+
+abstract: Check if you have write access to create files in $dir
+
+discussion: This isn't perfect, because vfs->touch () returns True
+even
+
+if only the database entry worked.  ACLs need to be
+
+implemented for better permission checking.  It's
+
+also pretty slow, so I wouldn't recommend using it
+
+often
+
+param: $dir Directory to check access of
+
+param: $relatives Relativity array
+
+result: Boolean True/False
+
+function checkperms ($dir, $relatives = array (RELATIVE_CURRENT))
+
+5.28  ls<sec:	 ls>
+
+abstract: get directory listing
+
+discussion: Note: the entries are not guaranteed to be returned in
+any logical order
+
+param: $dir Directory
+
+param: $relatives Relativity array
+
+param: $checksubdirs Boolean, recursively list all sub directories
+as well?
+
+param: $mime_type Only return entries matching MIME-type $mime_type.
+ Can be "Directory" or "\" for those without MIME types
+
+param: $nofiles Boolean.  True means you want to return just the information
+about the directory $dir.  If $dir is a file, $nofiles is implied.
+ This is the equivalent of 'ls -ld $dir'
+
+result: array of arrays.  Subarrays contain full info for each file/dir.
+
+function ls ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs
+= True, $mime_type = False, $nofiles = False)
+
+5.29  dir<sec:	 dir>
+
+abstract: shortcut to ls
+
+function dir ($dir = False, $relatives = array (RELATIVE_CURRENT),
+$checksubdirs = True, $mime_type = False, $nofiles = False)
+
+6 Notes<sec:notes>
+
+6.1 Database<sec:database>
+
+Data about the files and directories within the virtual root is kept
+in the SQL database. Currently, this information includes:
+
+* File ID (used internally, primary key for table)
+
+* Owner ID (phpGW account_id)
+
+* Created by ID (phpGW account_id)
+
+* Modified by ID (phpGW account_id)
+
+* Created (date)
+
+* Modified (date)
+
+* Size (bytes)
+
+* MIME type
+
+* Deleteable (Y/N/Other?)
+
+* Comment
+
+* App (appname of application that created the file)
+
+* Directory (directory the file or directory is in)
+
+* Name (name of file or directory)
+
+The internal names of these (the database column names) are stored
+in the $phpgw->vfs->attributes array, which is useful for loops, and
+is guaranteed to be up-to-date.
+
+Note that no information is kept about files outside the virtual root.
+If a file is moved outside, all records of it are delete from the
+database. If a file is moved into the virtual root, some information,
+specifically MIME-type, is not stored in the database. The vital information
+has defaults: owner is based on where the file is being stored; size
+is correctly read; deleteable is set to Y.
+
+6.2 ACL support<sec:acl_support>
+
+Because of the many different ways the VFS can be used, complete ACL
+support is not built in. There is a bit of access control built in,
+just because of the way database queries are made. However, that is
+a discussion beyond the scope of this document. Full ACL support may
+be added at a later time. For now, it is fairly easy to add basic
+access control to your application by matching path expressions. The
+VFS always follows the same naming convention of $fakebase/userorgroup.
+So if you need to check if a user has access to $fakebase/whatever/dir/file,
+you need only know if they their username is 'whatever' or if they
+belong to the group 'whatever', and that the group has access to your
+application. Here is an example from PHPWebHosting:
+
+###
+
+# First we get their memberships
+
+###
+
+$memberships = $phpgw->accounts->memberships ($account_id);
+
+###
+
+# We determine if they're in their home directory or a group's directory
+
+# If they request a group's directory, we ensure they have access to
+the group,
+
+# and the group has access to the app
+
+###
+
+if ((preg_match ("+^$fakebase\/(.*)(\/|$)+U", $path, $matches)) && $matches[1]
+!= $account_lid)
+
+{
+
+     $phpgw->vfs->working_id = $phpgw->accounts->name2id ($matches[1]);
+
+     reset ($memberships);
+
+     while (list ($num, $group_array) = each ($memberships))
+
+     {
+
+          if ($matches[1] == $group_array["account_name"])
+
+          {
+
+               $group_ok = 1;
+
+               break;
+
+          }
+
+     }
+
+     if (!$group_ok)
+
+     {
+
+          echo $phpgw->common->error_list (array ("You do not have
+access to group/directory $matches[1]"));
+
+          exit;
+
+     }
+
+}
+
+You should also check if the group has access to your appilcation.
+
+6.3 Function aliases<sec:function_aliases>
+
+You might have noticed there are some functions that just pass the
+arguments on to other functions. These are provided in part because
+of legacy and in part for convenience. You can use either. Here is
+the list (alias -> actual):
+
+* copy -> cp
+
+* move -> rm
+
+* delete -> rm
+
+* dir -> ls
+
+6.4 Fakebase directory (changing /home)<sec:fakebase>
+
+The old VFS was hard-coded to use "/home" as the fake base directory,
+even though the user never saw it. With the new system, crafty administrators
+may wish to change "/home" to something else, say "/users" or "/public_html".
+The fake base directory name is stored in $phpgw->vfs->fakebase, and
+changing it will transparently change it throughout the VFS and all
+applications. However, this must be done before any data is in the
+VFS database. If you wish to change it afterwords, you'll have to
+manually update the database, replacing the old value with the new
+value. Application programmers need to recognize that /home is not
+absolute, and use $phpgw->vfs->fakebase instead. I suggest setting
+$fakebase = $phpgw->vfs->fakebase; right off the bat to keep things
+neater.
