@@ -160,7 +160,7 @@
 		/*!
 		@function single_tpl
 		@abstract call the hooks for a single application, return output from the hook
-		@discussion This is only used so far for the wcm app (website hook) - Milosch.
+		@discussion This is a BROKEN function on php3... wcm is not using it anymore
 		@param $location hook location - required
 		@param $appname application name - optional
 		*/
@@ -178,7 +178,8 @@
 				if(@file_exists($f) &&
 					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
 				{
-					return include($f);
+					eval('$retval = include(\$f);');
+					return $retval;
 				}
 				else
 				{
