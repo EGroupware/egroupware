@@ -394,7 +394,7 @@
 			{
 				$serverid = $this->serverid;
 			}
-			$sql = "SELECT * FROM $this->table WHERE server_id=" . intval($serverid);
+			$sql = "SELECT * FROM ".$this->table." WHERE server_id=" . intval($serverid);
 			$this->db->query($sql,__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
