@@ -655,68 +655,6 @@
 		return $r;
 	}
 
-	/*
-	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_listApps_doc'] = 'Returns a list of installed phpgw apps';
-	function _xmlrpcs_listApps($server,$m)
-	{
-		$m->getParam(0);
-		$GLOBALS['phpgw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
-		if($GLOBALS['phpgw']->db->num_rows())
-		{
-			while ($GLOBALS['phpgw']->db->next_record())
-			{
-				$name   = $GLOBALS['phpgw']->db->f('app_name');
-				$title  = $GLOBALS['phpgw']->db->f('app_title');
-				$status = $GLOBALS['phpgw']->db->f('app_enabled');
-				$version= $GLOBALS['phpgw']->db->f('app_version');
-				$apps[$name] = CreateObject('phpgwapi.xmlrpcval',
-					array(
-						'title'  => CreateObject('phpgwapi.xmlrpcval',$title,'string'),
-						'name'   => CreateObject('phpgwapi.xmlrpcval',$name,'string'),
-						'status' => CreateObject('phpgwapi.xmlrpcval',$status,'string'),
-						'version'=> CreateObject('phpgwapi.xmlrpcval',$version,'string')
-					),
-					'struct'
-				);
-			}
-		}
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$apps, 'struct'));
-	}
-	*/
-
-	$GLOBALS['_xmlrpcs_get_appbyname_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_get_appbyname_doc'] = 'Returns an array of information for the requested application name';
-	function _xmlrpcs_get_appbyname($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.get_appbyname',$app->scalarval());
-	}
-
-	$GLOBALS['_xmlrpcs_get_appbyid_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_get_appbyid_doc'] = 'Returns an array of information for the requested application ID';
-	function _xmlrpcs_get_appbyid($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.get_appbyid',$app->scalarval());
-	}
-
-	$GLOBALS['_xmlrpcs_find_new_app_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
-	$GLOBALS['_xmlrpcs_find_new_app_doc'] = 'Returns an array of information for the requested application ID';
-	function _xmlrpcs_find_new_app($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.find_new_app',$app->scalarval());
-	}
-
-	$GLOBALS['_xmlrpcs_package_app_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_package_app_doc'] = 'Package an application for transport back to the calling client';
-	function _xmlrpcs_package_app($server,$m)
-	{
-		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.package_app',$app->scalarval());
-	}
-
 	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
 	function _xmlrpcs_login($server,$m)
@@ -791,27 +729,75 @@
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}
 
+	$GLOBALS['_xmlrpcs_list_apps_sig'] = array(array(xmlrpcStruct));
+	$GLOBALS['_xmlrpcs_list_apps_doc'] = 'Returns an array of information for all applications';
+	function _xmlrpcs_list_apps($server,$m)
+	{
+		return ExecMethod('phpgwapi.app_registry.list_apps');
+	}
+
+	$GLOBALS['_xmlrpcs_get_appbyname_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_get_appbyname_doc'] = 'Returns an array of information for the requested application name';
+	function _xmlrpcs_get_appbyname($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.get_appbyname',$app->scalarval());
+	}
+
+	$GLOBALS['_xmlrpcs_get_appbyid_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_get_appbyid_doc'] = 'Returns an array of information for the requested application ID';
+	function _xmlrpcs_get_appbyid($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.get_appbyid',$app->scalarval());
+	}
+
+	$GLOBALS['_xmlrpcs_find_new_app_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
+	$GLOBALS['_xmlrpcs_find_new_app_doc'] = 'Returns an array of information for the requested application ID';
+	function _xmlrpcs_find_new_app($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.find_new_app',$app->scalarval());
+	}
+
+	$GLOBALS['_xmlrpcs_package_app_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_package_app_doc'] = 'Package an application for transport back to the calling client';
+	function _xmlrpcs_package_app($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.package_app',$app->scalarval());
+	}
 	$GLOBALS['_xmlrpcs_dmap'] = array(
 		'system.listMethods' => array(
 			'function'  => '_xmlrpcs_listMethods',
 			'signature' => $GLOBALS['_xmlrpcs_listMethods_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_listMethods_doc']
 		),
-		'system.methodHelp' => array(
-			'function'  => '_xmlrpcs_methodHelp',
-			'signature' => $GLOBALS['_xmlrpcs_methodHelp_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_methodHelp_doc']
-		),
 		'system.methodSignature' => array(
 			'function'  => '_xmlrpcs_methodSignature',
 			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
 		),
+		'system.methodHelp' => array(
+			'function'  => '_xmlrpcs_methodHelp',
+			'signature' => $GLOBALS['_xmlrpcs_methodHelp_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_methodHelp_doc']
+		),
+		'system.login'  => array(
+			'function'  => '_xmlrpcs_login',
+			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_login_doc']
+		),
+		'system.logout'  => array(
+			'function'  => '_xmlrpcs_logout',
+			'signature' => $GLOBALS['_xmlrpcs_logout_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_logout_doc']
+		),
 		/*
-		'system.listApps' => array(
-			'function'  => '_xmlrpcs_listApps',
-			'signature' => $GLOBALS['_xmlrpcs_listApps_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
+		'system.list_apps' => array(
+			'function'  => '_xmlrpcs_list_apps',
+			'signature' => $GLOBALS['_xmlrpcs_list_apps_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_list_apps_doc']
 		),
 		*/
 		'system.get_appbyname' => array(
@@ -833,16 +819,6 @@
 			'function'  => '_xmlrpcs_package_app',
 			'signature' => $GLOBALS['_xmlrpcs_package_app_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_package_app_doc']
-		),
-		'system.login'  => array(
-			'function'  => '_xmlrpcs_login',
-			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_login_doc']
-		),
-		'system.logout'  => array(
-			'function'  => '_xmlrpcs_logout',
-			'signature' => $GLOBALS['_xmlrpcs_logout_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_logout_doc']
 		)
 	);
 

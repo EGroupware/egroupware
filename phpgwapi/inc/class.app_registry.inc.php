@@ -37,7 +37,8 @@
 			'get_appbyid'           => True,
 			'get_appbyname'         => True,
 			'find_new_app'          => True,
-			'package_app'           => True
+			'package_app'           => True,
+			'list_apps'             => True
 		);
 
 		var $soap_functions = array();
@@ -498,5 +499,29 @@
 			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->dir_file,'struct'));
 		}
 
+		function list_apps()
+		{
+			$this->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+			if($this->db->num_rows())
+			{
+				while ($this->db->next_record())
+				{
+					$name   = $this->db->f('app_name');
+					$title  = $this->db->f('app_title');
+					$status = $this->db->f('app_enabled');
+					$version= $this->db->f('app_version');
+					$apps[$name] = CreateObject('phpgwapi.xmlrpcval',
+						array(
+							'title'  => CreateObject('phpgwapi.xmlrpcval',$title,'string'),
+							'name'   => CreateObject('phpgwapi.xmlrpcval',$name,'string'),
+							'status' => CreateObject('phpgwapi.xmlrpcval',$status,'string'),
+							'version'=> CreateObject('phpgwapi.xmlrpcval',$version,'string')
+						),
+						'struct'
+					);
+				}
+			}
+			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$apps, 'struct'));
+		}
 	}
 ?>
