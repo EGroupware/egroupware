@@ -64,14 +64,21 @@
      $phpgw->templater_color = $phpgw->nextmatchs->alternate_row_color($phpgw->templater_color);
      $phpgw->template->set_var("tr_color",$phpgw->templater_color);
 
-     $phpgw->template->set_var("row_loginid",$phpgw->db->f("session_lid"));
+     if (ereg("@",$phpgw->db->f("session_lid"))) {
+        $t = split("@",$phpgw->db->f("session_lid"));
+        $loginid = $t[0];
+     } else {
+        $loginid = $phpgw->db->f("session_lid");
+     }
+
+     $phpgw->template->set_var("row_loginid",$loginid);
      $phpgw->template->set_var("row_ip",$phpgw->db->f("session_ip"));
      $phpgw->template->set_var("row_logintime",$phpgw->common->show_date($phpgw->db->f("session_logintime")));
      $phpgw->template->set_var("row_idle",gmdate("G:i:s",(time() - $phpgw->db->f("session_dla"))));
 
      if ($phpgw->db->f("session_id") != $phpgw_info["user"]["sessionid"]) {
         $phpgw->template->set_var("row_kill",'<a href="' . $phpgw->link("killsession.php","ksession="
-		                        . $phpgw->db->f("session_id") . "&kill=true\">" . lang("Kill")).'</a>');
+		                        . $phpgw->db->f("session_id") . "&kill=true") . "\">" . lang("Kill").'</a>');
      } else {
     	$phpgw->template->set_var("row_kill","&nbsp;");
      }
