@@ -150,7 +150,7 @@
 				$this->db->query("delete from phpgw_preferences where preference_owner='" . $this->account_id
 						. "'",__LINE__,__FILE__);
 	 
-				if ($PHP_VERSION < "4.0.0")
+				if (phpversion() < "4.0.0")
 				{
 					$pref_info = addslashes(serialize($this->data));
 				}
