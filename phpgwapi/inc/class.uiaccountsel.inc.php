@@ -203,7 +203,8 @@
 			$order = get_var('order',array('POST','GET'),'account_lid');
 			$sort = get_var('sort',array('POST','GET'),'ASC');
 
-			echo "<p>uiaccountsel::popup(): app='$app', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
+			//echo "<p>uiaccountsel::popup(): app='$app', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
+
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
 			$GLOBALS['phpgw']->template->set_root($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'));
