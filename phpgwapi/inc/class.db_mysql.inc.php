@@ -542,9 +542,11 @@
 			$this->Error = @mysql_error($this->Link_ID);	// need to be BEFORE unlock,
 			$this->Errno = @mysql_errno($this->Link_ID);	// else we get its error or none
 			
-			$this->unlock();	/* Just in case there is a table currently locked */
-
-			if($this->Halt_On_Error == 'no')
+			if ($this->Link_ID)		// only if we have a link, else infinite loop
+			{
+				$this->unlock();	/* Just in case there is a table currently locked */
+			}
+			if ($this->Halt_On_Error == "no")
 			{
 				return;
 			}
