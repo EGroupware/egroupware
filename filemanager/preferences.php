@@ -81,7 +81,7 @@
 	$templates = array (
 		'pref'			=> 'pref.tpl',
 		'pref_colspan'	=> 'pref_colspan.tpl',
-		'pref_list'		=>	'pref_list.tpl',
+		'pref_list'		=>	'pref_list.tpl'
 	);
 	$p->set_file ($templates);
 

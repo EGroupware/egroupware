@@ -7,13 +7,13 @@
 $phpwh_debug = 0;
 
 @reset ($GLOBALS['HTTP_POST_VARS']);
-while (list ($name,) = each ($GLOBALS['HTTP_POST_VARS']))
+while (list ($name,) = @each ($GLOBALS['HTTP_POST_VARS']))
 {
 	$$name = $GLOBALS['HTTP_POST_VARS'][$name];
 }
 
 @reset ($GLOBALS['HTTP_GET_VARS']);
-while (list ($name,) = each ($GLOBALS['HTTP_GET_VARS']))
+while (list ($name,) = @each ($GLOBALS['HTTP_GET_VARS']))
 {
 	$$name = $GLOBALS['HTTP_GET_VARS'][$name];
 }
@@ -235,7 +235,13 @@ if (($path == $GLOBALS['homedir'])
 )
 {
 	$GLOBALS['phpgw']->vfs->override_acl = 1;
-	$GLOBALS['phpgw']->vfs->mkdir (array ('string' => $GLOBALS['homedir'], 'relatives' => array (RELATIVE_NONE)));
+
+	if (!$GLOBALS['phpgw']->vfs->mkdir (array ('string' => $GLOBALS['homedir'], 'relatives' => array (RELATIVE_NONE))))
+	{
+		$p = $phpgw->vfs->path_parts (array ('string' => $GLOBALS['homedir'], 'relatives' => array (RELATIVE_NONE)));
+		echo $GLOBALS['phpgw']->common->error_list (array ('Could not create directory ' . $GLOBALS['homedir'] . ' (' . $p->real_full_path . ')'));
+	}
+
 	$GLOBALS['phpgw']->vfs->override_acl = 0;
 }
 elseif (preg_match ('|^'.$GLOBALS['fakebase'].'\/(.*)$|U', $path, $matches))

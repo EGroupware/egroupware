@@ -9,7 +9,7 @@ include("../header.inc.php");
 
 /*
 	General format for output is:
-	function - current directory - input[...] - what output should be - what output was
+	sequence number - function - current directory - input[...] - what output should be - what output was
 */
 
 html_break (1);
@@ -28,8 +28,6 @@ $currentapp = $phpgw_info["flags"]["currentapp"];
 
 $sequence_num = 1;
 $phpgw->vfs->cd ();
-//$phpgw->common->phpgw_footer ();
-//$phpgw->common->phpgw_exit ();
 $io = array ("" => "$homedir", "dir" => "$homedir/dir", "dir/file" => "$homedir/dir/file", "dir/dir2" => "$homedir/dir/dir2", "dir/dir2/file" => "$homedir/dir/dir2/file", "`~!@#$%^&*()-_=+/|[{]};:'\",<.>?" => "$homedir/`~!@#$%^&*()-_=+/|[{]};:'\",<.>?");
 
 while (list ($i, $o) = each ($io))
@@ -80,7 +78,7 @@ while (list ($i, $o) = each ($io))
 $sequence_num = 4;
 $cd = "";
 $phpgw->vfs->cd (array(
-		'string'	=> $cd,
+		'string'	=> $cd
 	)
 );
 $relatives = array (RELATIVE_USER);
@@ -101,7 +99,7 @@ $cd = "test2/test4";
 $phpgw->vfs->cd (array(
 		'string'	=> $cd,
 		'relative'	=> False,
-		'relatives'	=> array (RELATIVE_NONE),
+		'relatives'	=> array (RELATIVE_NONE)
 	)
 );
 $relatives = array (RELATIVE_NONE);
@@ -121,7 +119,7 @@ $cd = "test3/test5";
 $phpgw->vfs->cd (array(
 		'string'	=> $cd,
 		'relative'	=> False,
-		'relatives'	=> array (RELATIVE_NONE),
+		'relatives'	=> array (RELATIVE_NONE)
 	)
 );
 $relatives = array (RELATIVE_USER_APP);
@@ -270,6 +268,8 @@ while (list ($i, $o) = each ($io))
 
 # end of path_parts tests
 ###
+
+$phpgw->vfs->cd ();
 
 html_break (2);
 html_text_bold ("The less output, the better.  Please file errors as a " . html_link ("https://sourceforge.net/tracker/?group_id=7305&atid=107305", "bug report", True, False) .  ". Be sure to include the system information line at the top, and anything special about your setup.  Thanks!");

@@ -367,7 +367,7 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linko
 		$href = SEP . $href;
 
 		/* $phpgw->link requires that the extra vars be passed separately */
-		$link_parts = explode ("?", $href, 2);
+		$link_parts = explode ("?", $href);
 		$address = $GLOBALS['phpgw']->link ($link_parts[0], $link_parts[1]);
 	}
 	else

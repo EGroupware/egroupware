@@ -181,7 +181,7 @@
 		*/
 		function get_relative ()
 		{
-			if (isset ($this->relative))
+			if (isset ($this->relative) && $this->relative)
 			{
 				return $this->relative;
 			}
@@ -1051,7 +1051,7 @@
 				$basedir = ereg_replace ($sep . $sep, $sep, $basedir);
 			}
 
-			$basedir = ereg_replace ($sep.'$', '', $basedir);
+			$basedir = ereg_replace ($sep . '$', '', $basedir);
 
 			return $basedir;
 		}
@@ -2685,8 +2685,6 @@
 		*/
 		function get_ext_mime_type ($data)
 		{
-			static $mimetype = Array();
-			
 			if (!is_array ($data))
 			{
 				$data = array ();
@@ -2701,11 +2699,6 @@
 			$parts=explode('.',strtolower($file));
 			$ext=$parts[(sizeof($parts)-1)];
 
-			if(isset($mimetype[$ext]))
-			{
-				return $mimetype[$ext];
-			}
- 
 			for($i=0;$i<sizeof($contents);$i++)
 			{
 				if (!ereg("^#",$contents[$i]))
@@ -2717,17 +2710,14 @@
 						{
 							if($line[$j] == $ext)
 							{
-								$mimetype[$ext] =  $line[0];
-								return $mimetype[$ext];
+								return $line[0];
 							}
 						}
 					}
 				}
 			}
 
-			$mimetype[$ext] = '';
-
-			return $mimetype[$ext];
+			return '';
  		}
  
 		/*!

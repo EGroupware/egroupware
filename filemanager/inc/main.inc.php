@@ -179,7 +179,16 @@ function string_encode ($string, $return = False)
 {
 	if (preg_match ("/=(.*)(&|$)/U", $string))
 	{
-		$rstring = preg_replace ("/=(.*)(&|$)/Ue", "'=' . rawurlencode (base64_encode ('\\1')) . '\\2'", $string);
+		$rstring = $string;
+
+		preg_match_all ("/=(.*)(&|$)/U", $string, $matches, PREG_SET_ORDER);
+
+		reset ($matches);
+		while (list (,$match_array) = each ($matches))
+		{
+			$var_encoded = rawurlencode (base64_encode ($match_array[1]));
+			$rstring = str_replace ($match_array[0], '=' . $var_encoded . $match_array[2], $rstring);
+		}
 	}
 	elseif (ereg ('^'.$GLOBALS['hostname'], $string))
 	{
