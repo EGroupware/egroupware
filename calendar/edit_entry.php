@@ -282,7 +282,7 @@
 	@reset($users);
 	while ($user = each($users))
 	{
-		if($user[0] != $owner && $phpgw->accounts->exists($user[0]) == True)
+		if($user[0] != $owner && $phpgw->accounts->exists(intval($user[0])) == True)
 		{
 			$str .= '    <option value="' . $user[0] . '"'.$parts[$user[0]].'>('.$phpgw->accounts->get_type($user[0]).') '.$user[1].'</option>'."\n";
 		}

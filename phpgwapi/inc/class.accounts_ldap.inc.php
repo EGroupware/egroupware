@@ -219,9 +219,9 @@
 			if (gettype($account_id) == "string") {
 				$account_id = $this->name2id($account_id);
 			}
-			$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id='".$account_id."'";
+			$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id=".$account_id;
 			$this->db->query($sql,__LINE__,__FILE__);
-			if ($this->db->num_rows()) {
+			if ($this->db->num_rows() == 1) {
 				return True;
 			} else {
 				return False;
