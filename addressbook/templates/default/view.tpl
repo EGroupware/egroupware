@@ -11,7 +11,7 @@
   <TR> 
    <TD align="left">
      {edit_link}
-     <input type="submit" name="edit" value="{lang_edit}">
+     {edit_button}
     </form>
    </TD>
    <TD align="left">

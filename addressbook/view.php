@@ -27,7 +27,7 @@
 	// First, make sure they have permission to this entry
 	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
 
-	if (! $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_PRIVATE) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
+	if (! $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_READ) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 	{
 		Header("Location: "
 			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
@@ -113,10 +113,10 @@
 	}
 
 	$cat = CreateObject('phpgwapi.categories');
-	$catinfo  = $cat->return_single($cat_id);
+//	$catinfo  = $cat->return_single($cat_id);
 	$catname  = $catinfo[0]["name"];
 	$cat->app_name = "phpgw";
-	$catinfo  = $cat->return_single($cat_id);
+//	$catinfo  = $cat->return_single($cat_id);
 	$catname .= $catinfo[0]["name"];
 	if (!$catname) { $catname = lang('none'); }
 
@@ -131,11 +131,11 @@
 
 	$sfields = rawurlencode(serialize($fields[0]));
 
-	if ($rights & PHPGW_ACL_EDIT) {
-		$editlink = '<form method="POST" action="'.$phpgw->link("/addressbook/edit.php","ab_id=$ab_id&start=$start&sort=$sort&order=$order&cat_id=$cat_id"
-			. "&query=$query&sort=$sort").'">';
-	} else {
-		$editlink = '';
+	if ($this->grants[$record_owner] & PHPGW_ACL_EDIT || $record_owner == $phpgw_info['user']['account_id'])
+	{
+		$t->set_var('edit_link','<form method="POST" action="'.$phpgw->link("/addressbook/edit.php","ab_id=$ab_id&start=$start&sort=$sort&order=$order&cat_id=$cat_id"
+			. "&query=$query&sort=$sort").'">');
+		$t->set_var('edit_button','<input type="submit" name="edit" value="' . lang('Edit') . '">');
 	}
 
 	$copylink  = '<form method="POST" action="'
@@ -155,18 +155,15 @@
 	$t->set_var("cols",$columns_html);
 	$t->set_var("lang_ok",lang("ok"));
 	$t->set_var("lang_done",lang("done"));
-	$t->set_var("lang_edit",lang("edit"));
 	$t->set_var("lang_copy",lang("copy"));
 	$t->set_var("copy_fields",$sfields);
 	$t->set_var("lang_submit",lang("submit"));
 	$t->set_var("lang_vcard",lang("vcard"));
 	$t->set_var("done_link",$donelink);
-	$t->set_var("edit_link",$editlink);
 	$t->set_var("copy_link",$copylink);
 	$t->set_var("vcard_link",$vcardlink);
 
-	$t->parse("out","view");
-	$t->pparse("out","view");
+	$t->pfp("out","view");
 
 	$phpgw->common->phpgw_footer();
 ?>
