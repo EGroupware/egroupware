@@ -356,14 +356,45 @@
 			if ($query) {
 				$ldap_fields = array();
 				$total = 0;
+				// Query each field seperately instead of using ldap OR search.
+				// It seems PHP cannot do this correctly.
+				reset($stock_fieldnames);
 				while (list($name,$value) = each($stock_fieldnames) ) {
 					$lquery = $value.'=*'.$query.'*';
 					//echo $lquery; exit;
 					$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], $lquery);
+					// append the results
 					$ldap_fields += ldap_get_entries($this->ldap, $sri);
+					// add the # rows to our total
 					$total = $total + ldap_count_entries($this->ldap, $sri);
 				}
-				$this->total_records = $total;
+
+				echo '<br>first total="'.$total.'"';
+
+				// Now, remove duplicate rows
+				$tmp = array_unique($ldap_fields);
+				$ldap_fields = $tmp;
+/*
+				$ldap_fields = $this->asortbyindex($ldap_fields,'uidnumber');
+				reset($ldap_fields);
+				if (count($ldap_fields) > 0) {
+					for ($a = 0; $a < count($ldap_fields); $a++) {
+						if ($ldap_fields[$a]) {
+							echo '<br>comparing "'.$ldap_fields[$a]['uidnumber'][0]
+								.'" to "'.$ldap_fields[$a - 1]['uidnumber'][0].'"';
+							if (($ldap_fields[$a]['uidnumber'][0] <> $ldap_fields[$a - 1]['uidnumber'][0])
+								) {
+								$uniquearray[$a] = $ldap_fields[$a];
+							} else {
+								echo '<br>deleting "'.$ldap_fields[$a -1 ]['uidnumber'][0];
+							}
+						}
+					}
+					$ldap_fields = $uniquearray;
+				}
+*/
+				$this->total_records = count($ldap_fields);
+				echo '<br>total="'.$this->total_records.'"';
 			}  else  {
 				$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "phpgwowner=*");
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
@@ -433,15 +464,15 @@
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			$free = 0;
+			$this->nextid = $phpgw->common->last_id("contacts");
 			// Loop until we find a free id
 			while (!$free) {
+				$ldap_fields = "";
 				$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$this->nextid);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 				if ($ldap_fields[0]['dn'][0]) {
 					$this->nextid = $phpgw->common->next_id("contacts");
-					next;
 				} else {
-					$this->nextid = $phpgw->common->next_id("contacts");
 					$free = True;
 				}
 			}
