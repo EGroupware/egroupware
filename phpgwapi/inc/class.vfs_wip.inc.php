@@ -47,6 +47,8 @@
 
 	class path_class
 	{
+		var $mask;
+		var $outside;
 		var $fake_full_path;
 		var $fake_leading_dirs;
 		var $fake_extra_path;
@@ -185,6 +187,8 @@ class vfs
 	@param $object True returns an object instead of an array
 	@result $rarray/$robject Array or object containing the fake and real component parts of the path
 	@discussion Returned values are:
+			mask
+			outside
 			fake_full_path
 			fake_leading_dirs
 			fake_extra_path
@@ -205,6 +209,9 @@ class vfs
 		are safe for use in SQL queries that use key='value'
 		They should be used ONLY for SQL queries, so are used
 		mostly internally
+		mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
+		and is used internally
+		outside is boolean, True if $relatives contains VFS_REAL
 	*/
 
 	function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object = True)
@@ -212,9 +219,17 @@ class vfs
 		global $phpgw, $phpgw_info;
 		$sep = $phpgw_info["server"]["dir_separator"];
 
+		$rarray["mask"] = RELATIVE_NONE;
+
 		if (!($relatives[0] & VFS_REAL))
 		{
+			$rarray["outside"] = False;
 			$fake = True;
+		}
+		else
+		{
+			$rarray["outside"] = True;
+			$rarray["mask"] |= VFS_REAL;
 		}
 
 		$string = $this->getabsolutepath ($string, array ($relatives[0]), $fake);
@@ -289,7 +304,7 @@ class vfs
 		   which would create an endless loop
 		*/
 		$count = count ($rarray);
-		reset ($array);
+		reset ($rarray);
 		for ($i = 0; (list ($key, $value) = each ($rarray)) && $i != $count; $i++)
 		{
 			$rarray[$key . "_clean"] = $this->db_clean ($value);
@@ -552,14 +567,14 @@ class vfs
 		   If $file doesn't exist, touch () creates both the file and the database entry
 		   If $file does exist, touch () sets the modification time and modified by
 		*/
-		$this->touch ($p->fake_full_path, array (RELATIVE_NONE));
+		$this->touch ($p->fake_full_path, array ($p->mask));
 
 		if ($fp = fopen ($p->real_full_path, "w"))
 		{
 			fwrite ($fp, $contents, strlen ($contents));
 			fclose ($fp);
 
-			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("size" => filesize ($p->real_full_path)));
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("size" => filesize ($p->real_full_path)));
 			return True;
 		}
 		else
@@ -593,20 +608,25 @@ class vfs
 		*/
 		$rr = touch ($p->real_full_path);
 
-		/* We, however, have to decide this ourselves */
-		if ($this->file_exists ($p->fake_full_path, array (RELATIVE_NONE)))
+		if ($p->outside)
 		{
-			$vr = $this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("modifiedby_id" => $account_id, "modified" => date ("Y-m-d")));
+			return $rr;
+		}
+
+		/* We, however, have to decide this ourselves */
+		if ($this->file_exists ($p->fake_full_path, array ($p->mask)))
+		{
+			$vr = $this->set_attributes ($p->fake_full_path, array ($p->mask), array ("modifiedby_id" => $account_id, "modified" => date ("Y-m-d")));
 		}
 		else
 		{
 			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '$p->fake_leading_dirs_clean', '$p->fake_name_clean')", __LINE__, __FILE__);
 
-			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp));
-			$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp));
+			$this->correct_attributes ($p->fake_full_path, array ($p->mask));
 		}
 
-		if ($tr || $vr || $query)
+		if ($rr || $vr || $query)
 		{
 			return True;
 		}
@@ -643,31 +663,34 @@ class vfs
 			{
 				return False;
 			}
-			else
+
+			if ($t->outside)
 			{
-				$size = filesize ($t->real_full_path);
-
-				$query = $phpgw->db->query ("SELECT size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
-				$phpgw->db->next_record ();
-				$record = $phpgw->db->Record;
-
-				if ($this->file_exists ($to, array ($relatives[1])))
-				{
-					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'", __LINE__, __FILE__);
-
-					$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
-				}
-				else
-				{
-					$this->touch ($t->fake_full_path, array (RELATIVE_NONE));
-
-					$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
-				}
-
-				$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
-
 				return True;
 			}
+
+			$size = filesize ($t->real_full_path);
+
+			$query = $phpgw->db->query ("SELECT size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
+			$phpgw->db->next_record ();
+			$record = $phpgw->db->Record;
+
+			if ($this->file_exists ($to, array ($relatives[1])))
+			{
+				$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'", __LINE__, __FILE__);
+
+				$this->set_attributes ($t->fake_full_path, array ($t->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
+			}
+			else
+			{
+				$this->touch ($t->fake_full_path, array ($t->mask));
+
+				$this->set_attributes ($t->fake_full_path, array ($t->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
+			}
+
+			$this->correct_attributes ($t->fake_full_path, array ($t->mask));
+
+			return True;
 		}
 		else	/* It's a directory */
 		{
@@ -675,16 +698,16 @@ class vfs
 			$this->mkdir ($to, array ($relatives[1]));
 
 			/* Next, we create all the directories below the initial directory */
-			$ls = $this->ls ($f->fake_full_path, array (RELATIVE_NONE), True, "Directory");
+			$ls = $this->ls ($f->fake_full_path, array ($f->mask), True, "Directory");
 
 			while (list ($num, $entry) = each ($ls))
 			{
 				$newdir = ereg_replace ("^$f->fake_full_path", "$t->fake_full_path", $entry["directory"]);
-				$this->mkdir ("$newdir/$entry[name]", array (RELATIVE_NONE));
+				$this->mkdir ("$newdir/$entry[name]", array ($t->mask));
 			}
 
 			/* Lastly, we copy the files over */
-			$ls = $this->ls ($f->fake_full_path, array (RELATIVE_NONE));
+			$ls = $this->ls ($f->fake_full_path, array ($f->mask));
 
 			while (list ($num, $entry) = each ($ls))
 			{
@@ -694,7 +717,7 @@ class vfs
 				}
 
 				$newdir = ereg_replace ("^$f->fake_full_path", "$t->fake_full_path", $entry["directory"]);
-				$this->cp ("$entry[directory]/$entry[name]", "$newdir/$entry[name]", array (RELATIVE_NONE, RELATIVE_NONE));
+				$this->cp ("$entry[directory]/$entry[name]", "$newdir/$entry[name]", array ($f->mask, $t->mask));
 			}
 
 			return True;
@@ -729,7 +752,7 @@ class vfs
 		umask (000);
 
 		/* We can't move directories into themselves */
-		if (($this->file_type ($f->fake_full_path, array (RELATIVE_NONE)) == "Directory") && ereg ("^$f->fake_full_path", $t->fake_full_path))
+		if (($this->file_type ($f->fake_full_path, array ($f->mask)) == "Directory") && ereg ("^$f->fake_full_path", $t->fake_full_path))
 		{
 			if (($t->fake_full_path == $f->fake_full_path) || substr ($t->fake_full_path, strlen ($f->fake_full_path), 1) == "/")
 			{
@@ -737,25 +760,49 @@ class vfs
 			}
 		}
 
-		if ($this->file_exists ($f->fake_full_path, array (RELATIVE_NONE)))
+		if ($this->file_exists ($f->fake_full_path, array ($f->mask)))
 		{
 			/* We get the listing now, because it will change after we update the database */
-			$ls = $this->ls ($f->fake_full_path, array (RELATIVE_NONE));
+			$ls = $this->ls ($f->fake_full_path, array ($f->mask));
 
-			$this->delete ($t->fake_full_path, array (RELATIVE_NONE));
-			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name_clean', directory='$t->fake_leading_dirs_clean' WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
+			$this->rm ($t->fake_full_path, array ($t->mask));
 
-			$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("modifiedby_id" => $account_id, modified => $this->now));
-			$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
+			/*
+			   If the from file is outside, it won't have a database entry,
+			   so we have to touch it and find the size
+			*/
+			if ($f->outside)
+			{
+				$size = filesize ($f->real_full_path);
+
+				$this->touch ($t->fake_full_path, $t->mask);
+				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET size=$size WHERE directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'");
+			}
+			elseif (!$t->outside)
+			{
+				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name_clean', directory='$t->fake_leading_dirs_clean' WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
+			}
+
+			$this->set_attributes ($t->fake_full_path, array ($t->mask), array ("modifiedby_id" => $account_id, modified => $this->now));
+			$this->correct_attributes ($t->fake_full_path, array ($t->mask));
 
 			$rr = rename ($f->real_full_path, $t->real_full_path);
+
+			/*
+			   This removes the original entry from the database
+			   The actual file is already deleted because of the rename () above
+			*/
+			if ($t->outside)
+			{
+				$this->rm ($f->fake_full_path, $f->mask);
+			}
 		}
 		else
 		{
 			return False;
 		}
 
-		if ($this->file_type ($t->fake_full_path, array (RELATIVE_NONE)) == "Directory")
+		if ($this->file_type ($t->fake_full_path, array ($t->mask)) == "Directory")
 		{
 			/* We got $ls from above, before we renamed the directory */
 			while (list ($num, $entry) = each ($ls))
@@ -764,7 +811,7 @@ class vfs
 				$newdir_clean = $this->db_clean ($newdir);
 
 				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET directory='$newdir_clean' WHERE file_id='$entry[file_id]'", __LINE__, __FILE__);
-				$this->correct_attributes ("$newdir/$entry[name]", array (RELATIVE_NONE));
+				$this->correct_attributes ("$newdir/$entry[name]", array ($t->mask));
 			}
 		}
 
@@ -827,7 +874,7 @@ class vfs
 		}
 		else
 		{
-			$ls = $this->ls ($p->fake_full_path, array (RELATIVE_NONE));
+			$ls = $this->ls ($p->fake_full_path, array ($p->mask));
 
 			/* First, we cycle through the entries and delete the files */
 			while (list ($num, $entry) = each ($ls))
@@ -837,7 +884,7 @@ class vfs
 					continue;
 				}
 
-				$this->rm ("$entry[directory]/$entry[name]", array (RELATIVE_NONE));
+				$this->rm ("$entry[directory]/$entry[name]", array ($p->mask));
 			}
 
 			/* Now we cycle through again and delete the directories */
@@ -850,7 +897,7 @@ class vfs
 				}
 
 				/* Only the best in confusing recursion */
-				$this->rm ("$entry[directory]/$entry[name]", array (RELATIVE_NONE));
+				$this->rm ("$entry[directory]/$entry[name]", array ($p->mask));
 			}
 
 			/* Last, we delete the directory itself */
@@ -903,13 +950,13 @@ class vfs
 		}
 		else
 		{
-			if (!$this->file_exists ($p->fake_leading_dirs . "/" . $dir, array (RELATIVE_NONE)))
+			if (!$this->file_exists ($p->fake_leading_dirs . "/" . $dir, array ($p->mask)))
 			{
 				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
 
-				$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp));
+				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp));
 
-				$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
+				$this->correct_attributes ($p->fake_full_path, array ($p->mask));
 			}
 			else
 			{
@@ -1005,20 +1052,20 @@ class vfs
 
 		if ($p->fake_leading_dirs != $fakebase && $p->fake_leading_dirs != "/")
 		{
-			$ls_array = $this->ls ($p->fake_leading_dirs, array (RELATIVE_NONE), False, False, True);
-			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("owner_id" => $ls_array["owner_id"]));
+			$ls_array = $this->ls ($p->fake_leading_dirs, array ($p->mask), False, False, True);
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $ls_array["owner_id"]));
 
 			return True;
 		}
 		elseif (preg_match ("+^$fakebase\/(.*)$+U", $p->fake_full_path, $matches))
 		{
-			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("owner_id" => $matches[1]));
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $matches[1]));
 
 			return True;
 		}
 		else
 		{
-			$this->set_attributes ($p->fake_full_name, array (RELATIVE_NONE), array ("owner_id" => 0));
+			$this->set_attributes ($p->fake_full_name, array ($p->mask), array ("owner_id" => 0));
 
 			return True;
 		}
@@ -1058,6 +1105,13 @@ class vfs
 		global $phpgw;
 
 		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		if ($p->outside)
+		{
+			$rr = file_exists ($p->real_full_path);
+
+			return $rr;
+		}
 
 		$query = $phpgw->db->query ("SELECT name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 
@@ -1133,9 +1187,9 @@ class vfs
 		$dir = $p->fake_full_path;
 
 		/* If they pass us a file or $nofiles is set, return the info for $dir only */
-		if ((($type = $this->file_type ($dir, array (RELATIVE_NONE))) != "Directory") || ($nofiles))
+		if ((($type = $this->file_type ($dir, array ($p->mask))) != "Directory") || ($nofiles))
 		{
-			$p = $this->path_parts ($dir, array (RELATIVE_NONE));
+			$p = $this->path_parts ($dir, array ($p->mask));
 
 			$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 
