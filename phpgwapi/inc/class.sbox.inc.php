@@ -624,4 +624,78 @@
 		{
 			return($this->country_array[$selected]);
 		}
+
+		function formatted_address($country = '',$id = '',$fields = '',$business = True)
+		{
+			global $phpgw,$phpgw_info,$d;
+
+			$font = $phpgw_info['theme']['font'];
+
+			$d = CreateObject('phpgwapi.contacts');
+
+			$address = $d->read_single_entry($id,$fields);
+
+			$a = '<table border="0" cellpadding="2" cellspacing="2"' . "\n";
+			$a .= '<tr>' . "\n";
+			$a .= '<td><font face="' . $font . '">' . $address[0]['title'] . '</font></td>' . "\n";
+			$a .= '</tr>' . "\n";
+			$a .= '<tr>' . "\n";
+			$a .= '<td><font face="' . $font . '">' . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'] . '</font></td>' . "\n";
+			$a .= '</tr>' . "\n";
+			$a .= '<tr>' . "\n";
+			$a .= '<td><font face="' . $font . '">' . $address[0]['org_name'] . '</font></td>' . "\n";
+			$a .= '</tr>' . "\n";
+			$a .= '<tr>' . "\n";
+			$a .= '<td><font face="' . $font . '">' . $address[0]['org_unit'] . '</font></td>' . "\n";
+			$a .= '</tr>' . "\n";
+			$a .= '<tr>' . "\n";
+
+			if ($business)
+			{
+				$street = $address[0]['adr_one_street'];
+				$city = $address[0]['adr_one_locality'];
+				$zip = $address[0]['adr_one_postalcode'];
+				$state = $address[0]['adr_one_region'];
+				$newcountry = $address[0]['address_one_countryname'];
+			}
+			else
+			{
+				$street = $address[0]['adr_two_street'];
+				$city = $address[0]['adr_two_locality'];
+				$zip = $address[0]['adr_two_postalcode'];
+				$state = $address[0]['adr_two_region'];
+				$newcountry = $address[0]['address_two_countryname'];
+			}
+
+			$a .= '<td><font face="' . $font . '">' . $street . '</font></td>' . "\n";
+			$a .= '</tr>' . "\n";
+			$a .= '<tr>' . "\n";
+
+			if ($newcountry)
+			{
+				$country = $newcountry;
+			}
+
+			if ($country == 'DE')
+			{
+				$a .= '<td><font face="' . $font . '">' . $city . '</font></td>' . "\n";
+				$a .= '</tr>' . "\n";
+				$a .= '<tr>' . "\n";
+				$a .= '<td><font face="' . $font . '">' . $zip . '</font></td>' . "\n";
+			}
+
+			if ($country == 'US')
+			{
+				$a .= '<td><font face="' . $font . '">' . $city  . ',&nbsp;' . $state . '&bbsp;' . $zip . '</font></td>' . "\n";
+			}
+
+			$a .= '</tr>' . "\n";
+			$a .= '<tr>' . "\n";
+			$a .= '<td><font face="' . $font . '">' . lang($country) . '</font></td>' . "\n";
+			$a .= '</tr>' . "\n";
+			$a .= '</table>' . "\n";
+
+			return $a;
+		}
 	}
+?>
