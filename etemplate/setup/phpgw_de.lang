@@ -71,7 +71,8 @@ embeded css styles, eg. '.red { background: red; }' (note the '.' before the cla
 enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	etemplate	de	Suchmuster eingeben
-enter filename to upload and attach, use [browse...	etemplate	de	Dateiname zum Hochlanden und Anhängen, [Browse...] zum Durchuchen verwendne
+enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
+enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
 error: webserver is not allowed to write into '%s' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%s' !!!
@@ -86,6 +87,7 @@ export the loaded etemplate into a xml-file	etemplate	de	das geladene eTemplate 
 export xml	etemplate	de	XML Export
 extensions loaded:	etemplate	de	Erweiterungen geladen:
 file	etemplate	de	Datei
+file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
 floating point	etemplate	de	Gleitkommawert
@@ -96,7 +98,7 @@ go to the next page of entries	etemplate	de	gehe zur nächsten Seite
 go to the previous page of entries	etemplate	de	gehe zur vorherigen Seite
 hbox	etemplate	de	HBox
 height	etemplate	de	Höhe
-height of row (in % or pixel), disable row: [! = not	etemplate	de	Höhe der Zeile (in % oder Punkten), deaktiviert Zeile: [! = nicht]<Wert>[=<Test>] zb. '!@data' deaktiviert dieZeile wenn der Inhalt von data leer ist
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Höhe der Tabelle in % oder Punkten
 height, disabled	etemplate	de	Höhe, Deaktiviert
 help	etemplate	de	Hilfe
@@ -130,10 +132,11 @@ load this template into the editor	etemplate	de	lädt diese Template zum Bearbeit
 name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des phpGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
-name of table to add	etemplate	de	Name der zuzufügenden Tabelle 
+name of table to add	etemplate	de	Name der zuzufügenden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf ein reserviertes Wort von SQL sein, am besten alle mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
 new search	etemplate	de	Neue Suche
+new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%s' exists !!!	etemplate	de	Neuere Version '%s' existiert !!!
 nextmatch	etemplate	de	Nextmatch
 no	etemplate	de	Nein
@@ -148,6 +151,7 @@ optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
 options	etemplate	de	Optionen
 overflow	etemplate	de	Überbreite
 padding	etemplate	de	Innenabstand
+please enter table-name first !!!	etemplate	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
 precision	etemplate	de	Genauigkeit
 primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
@@ -168,6 +172,7 @@ select a category	etemplate	de	eine Kategorie auswählen
 select a primary contact, to show in the list	etemplate	de	einen Hauptkontakt auswählen, der in der Auflistung mit angezeigt wird
 select access	etemplate	de	Zugriff auswählen
 select account	etemplate	de	Benutzer auswählen
+select an app first !!!	etemplate	de	Bitte wählen Sie zuerst ein Anwendung aus !!!
 select an app to search in	etemplate	de	Anwendung zum Durchsuchen auswählen
 select an application	etemplate	de	Anwendung auswählen
 select an entry to link with	etemplate	de	Eintrag zum Verküpfen auswählen
@@ -185,15 +190,18 @@ select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen aus
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
 show	etemplate	de	Anzeigen
+show (no save)	etemplate	de	Anzeigen (nicht speichern)
 show values	etemplate	de	Werte anzeigen
 showing	etemplate	de	zeigt
 shows / allows you to enter values into the etemplate for testing	etemplate	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
 shows/displays etemplate for testing, does not save it before	etemplate	de	zeigt eTemplate zum Testen an, speichert es NICHT davor
 spacing	etemplate	de	Zellenabstand
 span, class	etemplate	de	Span, Class
+stack	etemplate	de	Stapel
 start a new search, cancel this link	etemplate	de	neue Suche Starten, diese Verknüpfung abbrechen
 start new search for the above pattern	etemplate	de	neue Suche für das obige Muster starten
 submitbutton	etemplate	de	Schaltfläche
+table unchanged, no write necessary !!!	etemplate	de	Tabelle nicht geändert, kein schreiben notwendig !!!
 tablename	etemplate	de	Tabellenname
 tabs	etemplate	de	Karteikarten
 template	etemplate	de	Template
@@ -218,6 +226,7 @@ version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.0
 view this linked entry in its application	etemplate	de	Zeige diesen Eintrag in seiner Anwendung an
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatich (der Browser entscheidet)
 width	etemplate	de	Breite
+width of col (in % or pixel), disable col: [! = not	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Breite der Tabelle in % oder Punkten
 width, disabled	etemplate	de	Breite, Deaktiviert
@@ -227,4 +236,3 @@ write tables	etemplate	de	Tabelle Schreiben
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das setup Verzeichnis der Anwendung
 xml-file to import	etemplate	de	XML Datei zum Importieren
 xslt template	etemplate	de	XSLT Template
-yes	etemplate	de	Ja

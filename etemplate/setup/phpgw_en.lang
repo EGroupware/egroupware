@@ -5,6 +5,7 @@
 %s notranslation	etemplate	en	%s NoTranslation
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s readonly
+-1	etemplate	en	-1
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
 add column	etemplate	en	Add Column
@@ -72,6 +73,7 @@ enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
 enter a search pattern	etemplate	en	Enter a search pattern
 enter filename to upload and attach, use [browse...] to search for it	etemplate	en	Enter filename to upload and attach, use [Browse...] to search for it
+enter the new version number here (> old_version), empty for no update-file	etemplate	en	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%s' !!!	etemplate	en	Error: webserver is not allowed to write into '%s' !!!
@@ -86,6 +88,7 @@ export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemp
 export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
 file	etemplate	en	File
+file writen	etemplate	en	File writen
 fileupload	etemplate	en	FileUpload
 first	etemplate	en	First
 floating point	etemplate	en	Floating Point
@@ -134,6 +137,7 @@ name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 new search	etemplate	en	New search
+new table created	etemplate	en	New table created
 newer version '%s' exists !!!	etemplate	en	newer version '%s' exists !!!
 nextmatch	etemplate	en	Nextmatch
 no	etemplate	en	No
@@ -148,6 +152,7 @@ optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
+please enter table-name first !!!	etemplate	en	Please enter table-name first !!!
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
@@ -168,6 +173,7 @@ select a category	etemplate	en	select a Category
 select a primary contact, to show in the list	etemplate	en	Select a primary contact, to show in the list
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
+select an app first !!!	etemplate	en	Select an app first !!!
 select an app to search in	etemplate	en	Select an App to search in
 select an application	etemplate	en	Select an application
 select an entry to link with	etemplate	en	Select an entry to link with
@@ -185,15 +191,18 @@ select this etemplate to delete it	etemplate	en	select this eTemplate to delete 
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox
 show	etemplate	en	Show
+show (no save)	etemplate	en	Show (no save)
 show values	etemplate	en	Show Values
 showing	etemplate	en	showing
 shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
 spacing	etemplate	en	Spacing
 span, class	etemplate	en	Span, Class
+stack	etemplate	en	Stack
 start a new search, cancel this link	etemplate	en	start a new search, cancel this link
 start new search for the above pattern	etemplate	en	start new search for the above pattern
 submitbutton	etemplate	en	Submitbutton
+table unchanged, no write necessary !!!	etemplate	en	Table unchanged, no write necessary !!!
 tablename	etemplate	en	TableName
 tabs	etemplate	en	Tabs
 template	etemplate	en	Template
