@@ -113,7 +113,7 @@
 
 			if ($GLOBALS['appname'])
 			{
-				$this->template->set_var('title_categories',lang('%1 Global categories',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
+				$this->template->set_var('title_categories',lang('%1 global categories',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
 			}
 			else
 			{
@@ -211,7 +211,7 @@
 			(
 				'menuaction'	=> 'admin.uicategories.index',
 				'appname'		=> $GLOBALS['appname']
-			));
+			);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
@@ -285,7 +285,7 @@
 			(
 				'menuaction'	=> 'admin.uicategories.index',
 				'appname'		=> $GLOBALS['appname']
-			));
+			);
 
 			if (!$this->cat_id)
 			{
