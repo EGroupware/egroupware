@@ -227,7 +227,7 @@
 		*/
 		function convert($data,$from='iso-8859-1',$to='utf-8')
 		{
-			if ($from == $to)
+			if ($from == $to || !$from || !$to)
 			{
 				return $data;
 			}
