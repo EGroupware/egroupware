@@ -109,7 +109,7 @@
   $t->set_var("filter",$filter);
   $t->set_var("qfield",$qfield);
   $t->set_var("query",$query);
-  $t->set_var("actionurl",$phpgw->link("add.php?sort=$sort&order=$order&filter=$filter&start=$start"));
+  $t->set_var("actionurl",$phpgw->link("add.php","sort=$sort&order=$order&filter=$filter&start=$start"));
   $t->set_var("start",$start);
   $t->set_var("filter",$filter);
   $t->set_var("cols",$this->cols);
