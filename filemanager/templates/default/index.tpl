@@ -1,6 +1,10 @@
 <!-- BEGIN index -->
 <table width="100%" border="1" cols="{colspan}">
  <tr>
+  <td align="center" colspan="{colspan}">{error}
+  </td>
+ </tr>
+ <tr>
   <td align="center" colspan="{colspan}">
    <form action="{form_action}" method="post">
    <table width="100%" border="1">
