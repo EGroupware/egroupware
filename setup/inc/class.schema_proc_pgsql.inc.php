@@ -390,7 +390,7 @@
 								$sSQL .= "'" . $oProc->m_odb->db_addslashes($oProc->m_odb->f($i)) . "'";
 								break;
 							default:
-								$sSQL .= $oProc->m_odb->f($i);
+								$sSQL .= intval($oProc->m_odb->f($i));
 						}
 					}
 					else
