@@ -112,11 +112,9 @@
 		// public: perform a query with limited result set
 		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
 		{
-			global $phpgw_info;
-
 			if (! $num_rows)
 			{
-				$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+				$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 
 			if ($this->Debug)
@@ -303,7 +301,6 @@
 		/* private: error handling */
 		function halt($msg, $line = '', $file = '')
 		{
-			global $phpgw;
 			$this->unlock();
 
 			$this->Errno = 1;
@@ -333,7 +330,7 @@
 			if ($this->Halt_On_Error != "report")
 			{
 				echo "<p><b>Session halted.</b>";
-				$phpgw->common->phpgw_exit(True);
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 		}
 

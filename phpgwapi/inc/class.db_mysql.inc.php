@@ -146,17 +146,15 @@
 
 		function limit($start)
 		{
-			global $phpgw_info;
-
 			echo '<b>Warning: limit() is no longer used, use limit_query()</b>';
 
 			if ($start == 0)
 			{
-				$s = 'limit ' . $phpgw_info['user']['preferences']['common']['maxmatchs'];
+				$s = 'limit ' . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 			else
 			{
-				$s = "limit $start," . $phpgw_info['user']['preferences']['common']['maxmatchs'];
+				$s = "limit $start," . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 			return $s;
 		}
@@ -213,11 +211,9 @@
 		// public: perform a query with limited result set
 		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
 		{
-			global $phpgw_info;
-
 			if (! $num_rows)
 			{
-				$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+				$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 
 			if ($offset == 0)
@@ -542,7 +538,6 @@
 		/* private: error handling */
 		function halt($msg, $line = '', $file = '')
 		{
-			global $phpgw;
 			$this->unlock();	/* Just in case there is a table currently locked */
 
 			$this->Error = @mysql_error($this->Link_ID);
@@ -565,7 +560,7 @@
 			if ($this->Halt_On_Error != "report")
 			{
 				echo "<p><b>Session halted.</b>";
-				$phpgw->common->phpgw_exit(True);
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 		}
 
