@@ -18,21 +18,37 @@ function check_all(which)
   }
 }
 </script>
+<style type="text/css">
+	.letter_box,.letter_box_active {
+		background-color: #D3DCE3;
+		width: 25px;
+		border: 1px solid #D3DCE3;
+		text-align: center;
+		cursor: pointer;
+		cusror: hand;
+	}
+	.letter_box_active {
+		font-weight: bold;
+		background-color: #E8F0F0;
+	}
+	.letter_box_active,.letter_box:hover {
+		border: 1px solid black;
+		background-color: #E8F0F0;
+	}
+</style>
 <div align="center">
 {lang_showing}
 <br>{searchreturn}
 {search_filter}
-<!-- <table width="95%" border="1" cellspacing="1" cellpadding="3">
-<form name="addr_type" action="{self_url}" method="POST">
-<tr bgcolor="{th_bg}"><td>{lang_show}&nbsp;&nbsp;{contact_type_list}</td></tr></form>
-</table>-->
-<table width="95%" border="1" cellspacing="1" cellpadding="3">
-<tr>{alphalinks}
+
+<table width="95%" border="0">
+<tr>
+	{alphalinks}
 </tr>
 </table>
 <table width="95%" border="0" cellspacing="1" cellpadding="3">
 <form name="addr_index" action="{action_url}" method="POST">
-<tr bgcolor="{th_bg}">{cols}
+<tr class="th">{cols}
   <td width="5%" height="21"><font face="Arial, Helvetica, sans-serif" size="-1">{lang_actions}</font>
   &nbsp;<a href="javascript:check_all('select')"><img src="{check}" border="0" height="16" width="21" alt="{select_all}"></a></td>
 </tr>
@@ -58,7 +74,7 @@ function check_all(which)
  </form>
  </table>
  <table border="0" cellspacing="0" cellpadding="2">
-	 <tr bgcolor="{th_bg}"> 
+	 <tr class="th">
      <form action="{add_url}" method="post"><td><input type="submit" name="Add" value="{lang_add}" /></td></form>
      <form action="{vcard_url}"  method="post"><td><input type="submit" name="AddVcard" value="{lang_addvcard}" /></td></form>
      <form action="{import_url}" method="post"><td><input type="submit" name="Import" value="{lang_import}" /></td></form>
@@ -74,5 +90,6 @@ function check_all(which)
  </div>
 <!-- END addressbook_footer -->
 
-<!-- BEGIN addressbook_alpha --><td bgcolor="{charbgcolor}" align="center" onMouseOver="this.style.backgroundColor='{charhovbgcolor}';" onMouseOut="this.style.backgroundColor='{charbgcolor}';" onClick="window.location='{charlink}';"><a href="{charlink}"><font color="{charcolor}">{char}</a></font></td>
+<!-- BEGIN addressbook_alpha -->
+<td class="{charclass}" onclick="location.href='{charlink}';">{char}</td>
 <!-- END addressbook_alpha -->
