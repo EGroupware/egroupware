@@ -28,16 +28,9 @@
 			list(,$this->user_agent,$this->ua_version) = $parts;
 			$this->user_agent = strtolower($this->user_agent);
 
-			$this->prefered_img_title = $this->user_agent == 'mozilla' && $this->ua_version < 5 ? 'alt' : 'title';
-			//echo "<p>HTTP_USER_AGENT='$GLOBALS[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
-
-			$this->document_root = $_SERVER['DOCUMENT_ROOT'];
-			// this is because some webservers report their docroot without the leading slash
-			if (!is_dir($this->document_root) && is_dir('/'.$this->document_root))
-			{
-				$this->document_root = '/' . $this->document_root;
-			}
-			//echo "<p>_SERVER[DOCUMENT_ROOT]='$_SERVER[DOCUMENT_ROOT]', this->document_root='$this->document_root'</p>\n";
+			$this->netscape4 = $this->user_agent == 'mozilla' && $this->ua_version < 5;
+			$this->prefered_img_title = $this->netscape4 ? 'alt' : 'title';
+			//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
 
 			if ($GLOBALS['phpgw']->translation)
 			{
@@ -373,6 +366,24 @@
 			return $html;
 		}
 
+		function progressbar( $percent,$title='',$options='',$width='',$color='',$height='' )
+		{
+			$percent = (int) $percent;
+			if (!$width) $width = '30px';
+			if (!$height)$height= '5px';
+			if (!$color) $color = '#D00000';
+			$title = $title ? $this->htmlspecialchars($title) : $percent.'%';
+
+			if ($this->netscape4)
+			{
+				return $title;
+			}
+			return '<div title="'.$title.'" '.$options.
+				' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px;'.
+				(stristr($options,'onclick="') ? ' cursor: pointer; cursor: hand;' : '').'">'."\n\t".
+				'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';" />'."\n</div>\n";
+		}
+
 		function image( $app,$name,$title='',$options='' )
 		{
 			$name = str_replace(array('.gif','.GIF','.png','.PNG'),'',$name);
@@ -381,8 +392,13 @@
 			{
 				$path = $name;		// name may already contain absolut path
 			}
-			if (!@is_readable($this->document_root . $path))
+			if (!@is_readable(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$path)))
 			{
+				// if the image-name is a percentage, use a progressbar
+				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
+				{
+					return $this->progressbar($percent,$title);
+				}
 				return $title;
 			}
 			if ($title)
