@@ -86,10 +86,12 @@
 		@param              options for field 'name'. ($content['options-name'] is possible too !!!)
 		@param $readonlys Array with field-names as keys for fields with should be readonly
 		@param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
-		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $HTTP_POST_VARS['id'] for the $method-call
+		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) 
+			sets $HTTP_POST_VARS['id'] for the $method-call
+		@param $return_html if true, dont show the page, just return the html
 		@result nothing
 		*/
-		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$changes='')
+		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$changes='',$return_html=False)
 		{
 			//echo "<br>globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', this->java_script() = '".$this->java_script()."'\n";
 			if (!$sel_options)
@@ -116,7 +118,7 @@
 			if ($this->stable)
 			{
 				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
-				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && !$return_html)
 				{
 					$GLOBALS['phpgw_info']['flags']['java_script'] = $this->include_java_script(2);
 					$GLOBALS['phpgw']->common->phpgw_header();
@@ -166,6 +168,10 @@
 				'hooked' => $hooked
 			),$id);
 
+			if ($return_html)
+			{
+				return $html;
+			}
 			if ($this->stable)
 			{
 				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
