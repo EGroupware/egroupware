@@ -47,7 +47,7 @@
 								'month' => date('m',$day),
 								'day'   => date('d',$day)
 							));
-		$extra_data .= '<font class="event-off" style="font-weight: bold">&nbsp;&nbsp&nbsp;'.date('l',$day) .'</font><br />' . $dayprint;
+		$extra_data .= '<font class="event-off" style="font-weight: bold">&nbsp;&nbsp&nbsp;'.lang(date('l',$day)) .'</font><br />' . $dayprint;
 	}
 	$extra_data .= '</td></tr></table>'."\n";
 
