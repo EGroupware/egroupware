@@ -35,10 +35,9 @@
 		{
 			global $phpgw, $phpgw_info;
 
-	      $this->db = $phpgw->db;
+			$this->db = $phpgw->db;
 
-			if (! isset($account_id))
-			{
+			if ($account_id != False) {
 				$this->account_id = $account_id;
 			}
 		}
