@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare                                                               *
+  * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -37,7 +37,7 @@ function about_app()
 	);
 
 	$s = "<table width='70%' cellpadding='4'>\n<tr>
-		  <td align='left'><img src='$icon' alt=\"$info[title]\" /></td><td align='left'><h2>$info[title]</h2></td></tr>";
+		  <td align='left'><img src='$icon' alt=\"$info[title]\" /></td><td align='left'><h2>$info[title]</h2></td></tr>"; 
 	
 	if ($info['description'])
 	{
@@ -124,7 +124,7 @@ function about_app()
 		}
 	}
 
-	$title = isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : 'phpGroupWare';
+	$title = isset($GLOBALS['phpgw_info']['apps'][$app]) ? $GLOBALS['phpgw_info']['apps'][$app]['title'] : 'eGroupWare';
 	$GLOBALS['phpgw_info']['flags']['app_header'] = lang('About %1',$title);
 	$GLOBALS['phpgw']->common->phpgw_header();
 	$tpl->pparse('out','phpgw_about');

@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - InfoLog: CSV - Import                                     *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - InfoLog: CSV - Import                                       *
+  * http://www.egroupware.org                                                *
   * Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
