@@ -248,12 +248,18 @@
 			return $headers;
 		}
 
-		function get_referer($vars=array('sort','order','query','start','filter','cat_id'))
+		function get_referer($vars)
 		{
+			if(!$vars)
+			{
+				$vars=array('sort','order','query','start','filter','cat_id');
+			}
 			global $HTTP_REFERER,$referer;
 
 			if (!$referer)
+			{
 				$referer = $HTTP_REFERER;
+			}
 
 			$url = parse_url(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',$referer));
 
@@ -266,7 +272,9 @@
 			{
 				$args = array();
 				if ($url['query'])
+				{
 					$args[] = $url['query'];
+				}
 			}
 			$query_arr = array( );
 			while (list($null,$arg) = each($args))
@@ -279,14 +287,18 @@
 			{
 				global $$var;								// merge in HTTP_{POST|GET}_VARS
 				if (isset($$var))
+				{
 					$query_arr[$var] = $$var;
+				}
 			}
 			$qstr = '';
 			reset ($query_arr);
 			while (list($var,$val) = each($query_arr))
 			{
 				if ($val && !($val == 'none' && $var == 'filter'))
+				{
 					$qstr .= ($qstr ? '&' : '?')."$var=$val";
+				}
 			}
 			//echo "<p>qstr='$qstr'</p>\n";
 			return $url['path'] . $qstr;
