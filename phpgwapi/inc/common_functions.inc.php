@@ -890,9 +890,7 @@
 	{
 		if(floor(phpversion()) > 4)
 		{
-//			$b = $a->__clone();
-//			$b = clone $a;
-			$b = $a;
+			$b = clone($a);
 		}
 		else
 		{
@@ -1237,6 +1235,17 @@
 		if (is_array($GLOBALS[$where]))
 		{
 			_check_script_tag($GLOBALS[$where],$where);
+		}
+	}
+	
+	if(floor(phpversion()) <= 4)
+	{
+		/**
+		 * clone function for php4, use as $new_obj = clone($old_obj);
+		 */
+		function clone($obj)
+		{
+			return $obj;
 		}
 	}
 ?>
