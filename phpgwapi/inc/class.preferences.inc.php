@@ -42,7 +42,8 @@
 //echo "Account ID (After Initializing) = ".$this->account_id."<br>\n";
 
       if ($load_pref) {
-        $db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
+        $db2->query("SELECT preference_value FROM preferences WHERE preference_owner='"
+                  . $this->account_id . "'",__LINE__,__FILE__);
         $db2->next_record();
         $pref_info = $db2->f("preference_value");
         $this->preference = unserialize($pref_info);

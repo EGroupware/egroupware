@@ -25,7 +25,7 @@
         $this->app_name   = $app_name;
         $this->db         = $phpgw->db;
 
-        $this->db->query("select * from phpgw_categories where cat_owner='$account_id' and app_name='"
+        $this->db->query("select * from phpgw_categories where cat_owner='$account_id' and cat_appname='"
                        . "$app_name'",__LINE__,__FILE__);
         while ($this->db->next_record()) {
            $this->cats[]["id"]          = $this->db->f("cat_id");
@@ -37,17 +37,17 @@
      }
 
      // Return into a select box, list or other formats
-     function list()
+     function lista()
      {
-     
+
      }
-  
-     function add($app_name,$cat_name,$cat_parent,$cat_description = "", $cat_data = "")
+
+     function add($cat_name,$cat_parent,$cat_description = "", $cat_data = "")
      {
         $this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_appname,cat_name,"
                        . "cat_description,cat_data) values ('$cat_parent','" . $this->account_id . "','"
-                       . "$app_name','" . addslashes($cat_name) . "','" . addslashes($cat_description)
-                       . "','$cat_data'",__LINE__,__FILE__);
+                       . $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
+                       . "','$cat_data')",__LINE__,__FILE__);
      }
 
      function delete($cat_id)
