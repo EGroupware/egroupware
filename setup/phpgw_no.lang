@@ -114,7 +114,7 @@ group has been updated	common	no	Gruppe har blitt oppdatert
 group name	admin	no	Gruppe Navn
 group public	common	no	Gruppe Public
 groups	common	no	Grupper
-groupsfile_perm_error	filemanager	no	For å rette opp denne feilen må du sette adgangsinnstillingene korrekt for filer/gruppe directory.<BR> På *nix systemer vennligst skriv: chmod 707
+groupsfile_perm_error	filemanager	no	For å rette opp denne feilen må du sette adgangsinnstillingene korrekt for filer/gruppe directory.<BR> På *nix systemer vennligst skriv: chmod 770
 group_files	filemanager	no	gruppe filer
 headline sites	admin	no	Headline Siter
 headlines	common	no	Headlines
@@ -276,7 +276,7 @@ use end date	calendar	no	Bruk sluttdato
 user accounts	admin	no	Bruker accounts
 user groups	admin	no	Bruker Grupper
 username	login	no	Brukernavn
-usersfile_perm_error	filemanager	no	For å rette opp denne feilen må du sette adgangsinnstillingene korrekt for filer/bruker directory.<BR> På *nix systemer vennligst skriv: chmod 707
+usersfile_perm_error	filemanager	no	For å rette opp denne feilen må du sette adgangsinnstillingene korrekt for filer/bruker directory.<BR> På *nix systemer vennligst skriv: chmod 770
 view	common	no	Vis
 view access log	admin	no	Vis Access Log
 view sessions	admin	no	Vis sessions

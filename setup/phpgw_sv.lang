@@ -190,7 +190,7 @@ group public	common	sv	Grupp Public
 group public only	calendar	sv	Endast grupp publikt
 group_files	filemanager	sv	grupp filer
 groups	common	sv	Grupper
-groupsfile_perm_error	filemanager	sv	För att rätta till detta felet måste du ändra rättigheterna på filer/group directory.<BR> På *nix system normalt skriv: chmod 707
+groupsfile_perm_error	filemanager	sv	För att rätta till detta felet måste du ändra rättigheterna på filer/group directory.<BR> På *nix system normalt skriv: chmod 770
 headline sites	admin	sv	Headline Sites
 headlines	common	sv	Headlines
 help	common	sv	Hjälp
@@ -455,7 +455,7 @@ user accounts	admin	sv	Användar konton
 user groups	admin	sv	Användar Grupper
 username	login	sv	Användarnamn
 users	common	sv	användare
-usersfile_perm_error	filemanager	sv	För att rätta till detta felet måste du ändra rättigheterna på filer/users directory.<BR> På *nix system normalt skriv: chmod 707
+usersfile_perm_error	filemanager	sv	För att rätta till detta felet måste du ändra rättigheterna på filer/users directory.<BR> På *nix system normalt skriv: chmod 770
 vcard	common	sv	VKort
 view	common	sv	Visa
 view access log	admin	sv	Visa Access Log

@@ -255,7 +255,7 @@ group name	admin	nl	Groepsnaam
 group public	common	nl	Toegang voor groep
 group_files	filemanager	nl	groepsbestanden
 groups	common	nl	Groepen
-groupsfile_perm_error	filemanager	nl	Om deze fout te verhelpen dient u de rechten op de files/groups directory aan te passen.<br>Op *nix systemen typt u: chmod 707
+groupsfile_perm_error	filemanager	nl	Om deze fout te verhelpen dient u de rechten op de files/groups directory aan te passen.<br>Op *nix systemen typt u: chmod 770
 headline sites	admin	nl	Krantekoppen Sites
 headlines	common	nl	Krantekoppen
 help	common	nl	Help
@@ -613,7 +613,7 @@ User statistics	projects	nl	Gebruikersstatistieken
 username	login	nl	gebruikersnaam
 Username	projects	nl	Gebruikersnaam
 users	common	nl	gebruikers
-usersfile_perm_error	filemanager	nl	Om deze fout te verhelpen dient u de rechten op de files/groups directory aan te passen.<br>Op *nix systemen typt u: chmod 707
+usersfile_perm_error	filemanager	nl	Om deze fout te verhelpen dient u de rechten op de files/groups directory aan te passen.<br>Op *nix systemen typt u: chmod 770
 vacation hours per year	common	nl	Jaarlijks aantal verlofuren
 vacation hours used	common	nl	Gebruikte verlofuren
 view	common	nl	Bekijken

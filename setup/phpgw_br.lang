@@ -107,7 +107,7 @@ group has been updated	common	br	Grupo atualizado
 group name	admin	br	Nome do Grupo
 group public	common	br	Grupo Publico
 groups	common	br	Grupos
-groupsfile_perm_error	filemanager	br	Para corrigir este erro voce deve configurar corretamente as permissoes neste diretorio e o grupo.<BR> Nos sistemas *ix digite: chmod 707
+groupsfile_perm_error	filemanager	br	Para corrigir este erro voce deve configurar corretamente as permissoes neste diretorio e o grupo.<BR> Nos sistemas *ix digite: chmod 770
 group_files	filemanager	br	Arquivo do grupo
 headline sites	admin	br	Headlines
 headlines	common	br	headlines
@@ -265,7 +265,7 @@ use end date	calendar	br	Usar data final
 user accounts	admin	br	Contas de Usuarios
 user groups	admin	br	Grupos de Usuarios
 username	login	br	Nome Utente
-usersfile_perm_error	filemanager	br	Para corrigir este erro voce deve configurar corretamente as perimissoes nos diretoriosi.<BR> Nos sistemas *ix digite: chmod 707
+usersfile_perm_error	filemanager	br	Para corrigir este erro voce deve configurar corretamente as perimissoes nos diretoriosi.<BR> Nos sistemas *ix digite: chmod 770
 view	common	br	Visualizar
 view access log	admin	br	Visualiza Log de acesso
 view sessions	admin	br	Visualiza Sessao

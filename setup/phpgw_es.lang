@@ -163,7 +163,7 @@ group has been updated	common	es	Grupo actualizado
 group name	admin	es	Nombre Grupo
 group public	common	es	Grupo Publico
 groups	common	es	Grupos
-groupsfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> es sistemas unix use: chmod 707
+groupsfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> es sistemas unix use: chmod 770
 group_files	filemanager	es	grupo de archivos
 headline sites	admin	es	Sitios encabezados de noticias
 headlines	common	es	Encabezados
@@ -405,7 +405,7 @@ user accounts	admin	es	Cuentas de usuario
 user groups	admin	es	Grupos de usuarios
 username	login	es	Usuario
 users	common	es	usuarios
-usersfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> es sistemas unix use: chmod 707
+usersfile_perm_error	filemanager	es	Para corregir este error necesitara setear apropiadamente los permisos del usuario/directorio.<BR> es sistemas unix use: chmod 770
 view	common	es	Ver
 view access log	admin	es	Ver log de acceso
 view sessions	admin	es	Ver sesiones

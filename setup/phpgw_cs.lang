@@ -121,7 +121,7 @@ group has been updated	common	cs	Skupina byla upravena
 group name	admin	cs	Jméno skupiny
 group public	common	cs	Veøejný pro skupiny
 groups	common	cs	Skupiny
-groupsfile_perm_error	filemanager	cs	K opravì této chyby potøebujete správnì nastavit pøístupová práva do adresáøe files/users.<BR> Na *NIXových  systémech prosím napi¹te: chmod 707
+groupsfile_perm_error	filemanager	cs	K opravì této chyby potøebujete správnì nastavit pøístupová práva do adresáøe files/users.<BR> Na *NIXových  systémech prosím napi¹te: chmod 770
 group_files	filemanager	cs	skupinové soubory
 headline sites	admin	cs	Sítì s novými èlánky
 headlines	common	cs	Zprávy
@@ -296,7 +296,7 @@ user accounts	admin	cs	U¾ivatelské úèty
 user groups	admin	cs	U¾ivatelské skupiny
 username	login	cs	U¾ivatelské jméno
 users	common	cs	u¾ivatelé
-usersfile_perm_error	filemanager	cs	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
+usersfile_perm_error	filemanager	cs	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 770
 view	common	cs	Prohlédnout
 view access log	admin	cs	Uka¾ záznam pøístupù
 view sessions	admin	cs	Uka¾ relace

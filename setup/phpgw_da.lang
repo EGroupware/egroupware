@@ -254,7 +254,7 @@ group name	admin	da	Gruppenavn
 group public	common	da	Adgang til gruppe
 group_files	filemanager	da	Gruppefiler
 groups	common	da	Grupper
-groupsfile_perm_error	filemanager	da	For at rette denne fejl må Du opsætte rettighederne til fil/gruppe mapperne.<br>På *nix systemer taster Du: chmod 707
+groupsfile_perm_error	filemanager	da	For at rette denne fejl må Du opsætte rettighederne til fil/gruppe mapperne.<br>På *nix systemer taster Du: chmod 770
 headline sites	admin	da	Overskrift sites
 headlines	common	da	Overskrifter
 help	common	da	Hjælp
@@ -612,7 +612,7 @@ User statistics	projects	da	Bruger statistikker
 username	login	da	Brugernavn
 Username	projects	da	Brugernavn
 users	common	da	Brugere
-usersfile_perm_error	filemanager	da	For at rette denne fejl skal adgangsindstillingerne for fil/bruger mapperne sættes korrekt.<BR>På *nix systemer taster Du: chmod 707
+usersfile_perm_error	filemanager	da	For at rette denne fejl skal adgangsindstillingerne for fil/bruger mapperne sættes korrekt.<BR>På *nix systemer taster Du: chmod 770
 vacation hours per year	common	da	Antal ferie timer om året
 vacation hours used	common	da	Anvendte ferie timer
 view	common	da	Se

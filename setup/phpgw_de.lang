@@ -209,7 +209,7 @@ group public	common	de	Group Public
 group public only	common	de	nur Gruppen
 group_files	filemanager	de	Gruppen Dateien
 groups	common	de	Gruppen
-groupsfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, müssen die korrekten Zugriffsrechte für die Verzeichnisse files/groups erstellt werden.<BR> Auf *nix Systemen dient dazu folgender Befehl: chmod 707
+groupsfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, müssen die korrekten Zugriffsrechte für die Verzeichnisse files/groups erstellt werden.<BR> Auf *nix Systemen dient dazu folgender Befehl: chmod 770
 headline preferences	common	de	Schlagzeilen Einstellungen
 headline sites	admin	de	Sites für Schlagzeilen
 headlines	common	de	Schlagzeilen
@@ -512,7 +512,7 @@ user groups	admin	de	Benutzergruppen
 username	login	de	Benutzername
 users	common	de	Benutzer
 vcard	addressbook	de	VCard
-vcard      common   de      Visitenkarte
+vcard	common	de	Visitenkarte
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 verdana	notes	de	Verdana
 very large	notes	de	Sehr Groß

@@ -127,7 +127,7 @@ group has been updated	common	ko	그룹이 변경되었습니다.
 group name	admin	ko	그룹이름
 group public	common	ko	그룹내 공개
 groups	common	ko	그룹
-groupsfile_perm_error	filemanager	ko	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 707
+groupsfile_perm_error	filemanager	ko	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 770
 group_files	filemanager	ko	그룹 파일들
 headline sites	admin	ko	헤드라인 사이트
 headlines	common	ko	헤드라인
@@ -318,7 +318,7 @@ user accounts	admin	ko	사용자 계정
 user groups	admin	ko	사용자 그룹
 username	login	ko	사용자ID
 users	common	ko	사용자
-usersfile_perm_error	filemanager	ko	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
+usersfile_perm_error	filemanager	ko	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 770
 view	common	ko	보기
 view access log	admin	ko	접속 로그 보기
 view sessions	admin	ko	세션 보기

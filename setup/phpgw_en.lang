@@ -208,7 +208,7 @@ group public	common	en	Group Public
 group public only	calendar	en	Group Public Only
 group_files	filemanager	en	group files
 groups	common	en	Groups
-groupsfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 707
+groupsfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 770
 headline preferences	common	en	Headline preferences
 headline sites	admin	en	Headline Sites
 headlines	common	en	Headlines
@@ -346,7 +346,7 @@ permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
-personalized notes for	notes	en	Personalized notes for  
+personalized notes for	notes	en	Personalized notes for
 phpgroupware login	login	en	phpGroupWare login
 phrase in english	transy	en	Phrase in English
 phrase in new language	transy	en	Phrase in new language
@@ -502,7 +502,7 @@ user accounts	admin	en	User accounts
 user groups	admin	en	User groups
 username	login	en	Username
 users	common	en	users
-usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
+usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 770
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 verdana	notes	en	Verdana

@@ -146,7 +146,7 @@ group has been updated	all	fr	Le groupe a &eacute;t&eacute;Group mis &agrave; jo
 group name	all	fr	Nom de groupe
 group public	all	fr	Publique par groupe
 groups	all	fr	Groupes
-groupsfile_perm_error	all	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/groups.<BR> Sur un system *nix tappez: chmod 707
+groupsfile_perm_error	all	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/groups.<BR> Sur un system *nix tappez: chmod 770
 group_files	all	fr	Fichiers de groupe
 headline sites	all	fr	Sites d'Headline
 headlines	all	fr	Headlines
@@ -375,7 +375,7 @@ user accounts	all	fr	Comptes utilisateurs
 user groups	all	fr	Groupes d'utilisateurs
 username	all	fr	Nom d'utilisateur
 users	all	fr	Utilisateurs
-usersfile_perm_error	all	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/users/.<BR> Sur un system *nix tappez: chmod 707
+usersfile_perm_error	all	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/users/.<BR> Sur un system *nix tappez: chmod 770
 view	all	fr	Voir
 view access log	all	fr	Voir les log d'acc&egrave;s
 view sessions	all	fr	Voir les sessions

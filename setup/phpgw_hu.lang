@@ -170,7 +170,7 @@ group name	admin	hu	Csoport neve
 group public	common	hu	Csoporton belül publikus
 group public only	calendar	hu	Csak csoport publikus
 groups	common	hu	Csoportok
-groupsfile_perm_error	filemanager	hu	A hiba kijavításához helyesen kell beállítani a files/users könyvtár jogosultságát.<BR>*nix rendszereken: chmod 707
+groupsfile_perm_error	filemanager	hu	A hiba kijavításához helyesen kell beállítani a files/users könyvtár jogosultságát.<BR>*nix rendszereken: chmod 770
 group_files	filemanager	hu	Csoportfájlok
 headline sites	admin	hu	Fõcím oldalak
 headlines	common	hu	Fejlécek
@@ -419,7 +419,7 @@ user accounts	admin	hu	Felhasználói hozzáférések
 user groups	admin	hu	Felhasználói csoportok
 username	login	hu	Felhasználó
 users	common	hu	felhasználók
-usersfile_perm_error	filemanager	hu	A hiba kijavításához helyesen kell beállítani a files/users könyvtár jogosultságát.<BR>*nix rendszereken: chmod 707
+usersfile_perm_error	filemanager	hu	A hiba kijavításához helyesen kell beállítani a files/users könyvtár jogosultságát.<BR>*nix rendszereken: chmod 770
 view	common	hu	Megtekint
 view access log	admin	hu	Elérési napló megtekintése
 view sessions	admin	hu	Kapcsolatok megtekintése

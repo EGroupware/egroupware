@@ -95,7 +95,7 @@ group has been updated	common	it	Il gruppo è stato aggiornato
 group name	admin	it	Nome Gruppo
 group public	common	it	Gruppo Pubblico
 groups	common	it	Gruppi
-groupsfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e dei gruppi.<BR> Nei sistemi *nix digita: chmod 707
+groupsfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e dei gruppi.<BR> Nei sistemi *nix digita: chmod 770
 group_files	filemanager	it	file del gruppo
 headline sites	admin	it	Siti con titoli
 headlines	common	it	Titoli
@@ -237,7 +237,7 @@ use end date	calendar	it	Usa data finale
 user accounts	admin	it	Account Utenti
 user groups	admin	it	gruppi di utenti
 username	login	it	Nome Utente
-usersfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e degli utenti.<BR> Nei sistemi *nix digita: chmod 707
+usersfile_perm_error	filemanager	it	Per correggere questo errore devi impostare correttamente i permessi nelle directory dei file e degli utenti.<BR> Nei sistemi *nix digita: chmod 770
 view	common	it	Visualizza
 view access log	admin	it	Visualizza Log di accesso
 view sessions	admin	it	Visualizza sessioni
