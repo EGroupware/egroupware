@@ -95,7 +95,6 @@
 				}
 				$this->output['listbox'] = $var;
 			}
-
 			$this->set_internal($extra_data);
 			return $this->draw_box();
 		}
@@ -124,7 +123,6 @@
 				}
 				$this->output['listbox'] = $var;
 			}
-
 			$this->set_xinternal($extra_data);
 			return $this->draw_box();
 		}

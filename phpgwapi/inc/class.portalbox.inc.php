@@ -108,22 +108,20 @@
 			}
 		}
 
-		function set_internal($data='')
+		function set_internal($extra_data = '')
 		{
-			if($data=='' && !count($this->data))
+			if($extra_data !='')
 			{
-				$data = '';
+				$this->output['extrabox'] = $extra_data;
 			}
-			$this->output['extrabox'] = $data;
 		}
 
-		function set_xinternal($data='')
+		function set_xinternal($extra_data='')
 		{
-			if($data=='' && !count($this->data))
+			if($extra_data !='')
 			{
-				$data = '';
+				$this->output['xextrabox'] = $extra_data;
 			}
-			$this->output['xextrabox'] = $data;
 		}
 
 		function draw_box()

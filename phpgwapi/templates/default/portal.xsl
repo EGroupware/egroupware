@@ -24,6 +24,8 @@
 										</td>
 									</tr>
 								</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
 								<xsl:when test="extrabox">
 									<tr>
 										<td>
@@ -31,13 +33,13 @@
 										</td>
 									</tr>
 								</xsl:when>
-								<xsl:otherwise>
+								<xsl:when test="xextrabox">
 									<tr>
 										<td>
 											<xsl:call-template name="extrabox"/>
 										</td>
 									</tr>
-								</xsl:otherwise>
+								</xsl:when>
 							</xsl:choose>
    						</table>
   					</td>
