@@ -41,6 +41,7 @@ language	preferences	sl	Jezik
 max matches per page	preferences	sl	Največ zadetkov na stran
 max number of icons in navbar	preferences	sl	Največje število ikon v navigacijski vrstici
 no default	preferences	sl	Ni privzetih vrednosti
+note: this feature does *not* change your email password. this will	preferences	sl	Pozor: to *NE* bo zamenjalo geslo vaše E-pošte. To bo
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sl	Opomba: Ta možnost *ne* spremeni vašega E-poštnega gesla. Spremeniti ga boste moral ročno.
 please, select a new theme	preferences	sl	Izberite novo temo
 popup with search	preferences	sl	Okno za iskanje

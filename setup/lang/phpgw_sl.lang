@@ -7,6 +7,7 @@
 00 (disable)	setup	sl	00 (onemogoči / priporočeno)
 13 (ntp)	setup	sl	13 (ntp)
 80 (http)	setup	sl	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sl	uporaba <b>nabora znakov</b>(uporabite UTF-8, če načrtujete uporabo jezikov z neASCII kodnimi tabelami):
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sl	<b>Kreiran bo en administratorski in trije demo računi</b><br>Uporabniška imena in gesla bodo: demo/guest, demo2/guest in demo3/guest.
 accounts existing	setup	sl	Račun obstaja
 actions	setup	sl	Akcije
@@ -20,9 +21,11 @@ admin password to header manager	setup	sl	Geslo za upravljanje konfiguracijske d
 admin user for header manager	setup	sl	Upravljalec - uporabnik za konfiguracijske datoteke
 admin username	setup	sl	Uporabniško ime upravljalca
 admins	setup	sl	Upravljalci
+after backing up your tables first.	setup	sl	Takoj ko bodo arhivirane tabele.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	sl	Po prenosu datoteke jo shranite v isti direktorij, kjer je header.inc.php. Potem kliknite "Nadaljevanje".
 all applications	setup	sl	vse aplikacije
 all core tables and the admin and preferences applications	setup	sl	vse osnovne tabele in aplikaciji admin ter nastavitve
+all languages (incl. not listed ones)	setup	sl	vsi jeziki (vključno s temi, ki jih ni na seznamu)
 all users	setup	sl	Vsi uporabniki
 analysis	setup	sl	Analiza
 and reload your webserver, so the above changes take effect !!!	setup	sl	IN ponovno zaženite spletni strežnik, da bodo spremembe uveljavljene!!!
@@ -39,6 +42,7 @@ application: %1, file: %2, line: "%3"	setup	sl	Aplikacija: %1, Datoteka: %2, Vrs
 are you sure you want to delete your existing tables and data?	setup	sl	Ste prepričani, da želite izbrisati vse obstoječe tabele in podatke?
 are you sure?	setup	sl	STE PREPRIČANI?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	sl	Na vašo zahtevo bo skripta poizkusila ustvariti podatkovno bazo in ji določiti pravice dostopa.
+at your request, this script is going to attempt to install a previous backup	setup	sl	Na vašo zahtevo bo skripta poizkusila povrniti arhiv
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	sl	Na vašo zahtevo bo skripta poizkusila namestiti osnovne tabele in aplikaciji Admin ter Nastavitve.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	sl	Na vašo zahtevo bo skripta poizkusila posodobiti vaše aplikacije z najnovejšimi različicami.
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	sl	Na vašo zahtevo bo skripta poizkusila nadgraditi vaše podatkovne tabele v nov format.
@@ -51,6 +55,16 @@ auto-created user accounts expire	setup	sl	Avtomatično ustvarjeni uporabniški 
 available version	setup	sl	Razpoložljiva različica
 back to the previous screen	setup	sl	Nazaj na prejšnji zaslon
 back to user login	setup	sl	Nazaj na uporabniško prijavo
+back's up your db now, this might take a view minutes	setup	sl	arhiviram podatkovno bazo, kar lahko traja nekaj minut
+backup '%1' deleted	setup	sl	arhiv '%1' zbrisan
+backup '%1' renamed to '%2'	setup	sl	arhiv '%1' preimenovan v '%2'
+backup '%1' restored	setup	sl	arhiv '%1' obnovljen
+backup and restore	setup	sl	arhiviranje in obnavljanje
+backup failed	setup	sl	Arhiviranje je spodletelo
+backup finished	setup	sl	arhiviranje dokončano
+backup now	setup	sl	arhiviraj takoj
+backup sets	setup	sl	arhivski nizi
+backup started, this might take a view minutes ...	setup	sl	zaganjam arhiviranje, ki lahko traja nekaj minut ...
 backupwarn	setup	sl	toda, <u>zelo priporočamo izdelavo rezervne kopije</u> vaših podatkov, če skripta le te poškoduje. <br><strong>Samodejne skripte lahko zaradi nepredvidenih okoliščin uničijo vaše podatke.</strong> <br><em>Preden nadaljujete, izdelajte rezervno kopijo podatkov!</em>
 because an application it depends upon was upgraded	setup	sl	ker je bila aplikacija, od katere je odvisen, nadgrajena
 because it depends upon	setup	sl	ker je odvisen od
@@ -61,6 +75,7 @@ because of a failed upgrade or install	setup	sl	zaradi neuspešne nadgradnje ali
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	sl	zaradi neuspešne nadgradnje, ali pa je podatkovna baza novejša od nameščene različice aplikacije
 because the enable flag for this app is set to 0, or is undefined	setup	sl	ker je označba za vklop aplikacije nastavljena na 0, ali pa je nedefinirana
 bottom	setup	sl	dno
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>these automated scripts can easily destroy your data.</strong>	setup	sl	ampak <u>močno priporočam izdelavo rezervne kopije</u> vseh tabel v primeru, da skripta poškoduje podatke.<br><strong>Samodejne skripte lahko celo uničijo podatke</strong>.
 cancel	setup	sl	Prekini
 cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	sl	Zaradi nastavitev pravic dostopa do datotek ne morem ustvariti datoteke header.inc.php.<br> Namesto tega jo lahko %1.
 change system-charset	setup	sl	Spremeni sistemski nabor znakov
@@ -85,6 +100,7 @@ configuration completed	setup	sl	Konfiguriranje dokončano
 configuration password	setup	sl	Geslo za konfiguriranje
 configuration user	setup	sl	Uporabnik konfiguracije
 configure now	setup	sl	Konfiguriraj sedaj
+confirm to delete this backup?	setup	sl	Potrdite brisanje tega arhiva
 contain	setup	sl	vsebuje
 continue	setup	sl	Nadaljuj
 continue to the header admin	setup	sl	Nadaljuj na nastavitve glave
@@ -92,6 +108,7 @@ convert	setup	sl	Pretvori
 could not open header.inc.php for writing!	setup	sl	Ne morem odpreti header.inc.php za pisanje!
 country selection	setup	sl	Izbor države
 create	setup	sl	Kreiraj
+create a backup before upgrading the db	setup	sl	arhiviraj podatke pred posodobitvijo podatkovne baze
 create admin account	setup	sl	Kreiraj upravljalski račun
 create database	setup	sl	Kreiraj podatkovno bazo
 create demo accounts	setup	sl	Kreiraj demo uporabniške račune.
@@ -108,6 +125,9 @@ current version	setup	sl	Trenutna različica
 currently installed languages: %1 <br>	setup	sl	Trenutno nameščeni jeziki: %1<br>
 database successfully converted from '%1' to '%2'	setup	sl	Podatkovna baza je bila uspešno prevedena iz '%1' v '%2'.
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	sl	Vrata za datum.<br>Če uporabljate vrata 13, prosim, da ustrezno prilagodite pravila požarnega zidu, preden potrdite podatke na tej strani. <br>(Vrata: 13 / Strežnik: 129.6.15.28)
+day	setup	sl	dan
+day of week<br>(0-6, 0=sunday)	setup	sl	dan v tednu<br>(0-6, 0=nedelja)
+db backup and restore	setup	sl	Arhiviranje in obnavljanje podatkovne baze
 db host	setup	sl	Podatkovni strežnik
 db name	setup	sl	Ime podatkovne baze
 db password	setup	sl	Geslo podatkovne baze
@@ -132,6 +152,7 @@ developers' table schema toy	setup	sl	Razvijalčeva shema tabel
 did not find any valid db support!	setup	sl	Ne najdem delujoče podpore za podatkovno bazo.
 do you want persistent connections (higher performance, but consumes more resources)	setup	sl	Ali želite trajne povezave (večja učinkovitost, vendar večja poraba sistemskih sredstev)?
 do you want to manage homedirectory and loginshell attributes?	setup	sl	Ali želite upravljati domači direktorij in lastnosti prijavne lupine
+does not exist	setup	sl	ne obstaja
 domain	setup	sl	Domena
 domain select box on login	setup	sl	Izbor domene ob prijavi
 dont touch my data	setup	sl	Ne spreminjaj mojih podatkov
@@ -147,6 +168,7 @@ enter some random text for app session encryption	setup	sl	Vnesite nekaj naklju�
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	sl	Vnesite nekaj naključnega besedila za <br>kriptiranje aplikacijskih sej (zahteva Mcrypt).
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	sl	Vnesite polno pot do začasnih datotek.<br>Na primer: /tmp, c:\temp
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	sl	Vnesite polno pot do uporabniških datotek.<br>Na primer: /files, c:\files
+enter the full path to the backup directory.<br>if empty: files directory	setup	sl	Vpišite pot do arhivske mape.<br>Če je prazno bo uporabljena splošna pot za datoteke
 enter the hostname of the machine on which this server is running	setup	sl	Vnesite ime strežnika, na katerem teče projekt
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	sl	Vnesite eGroupWareov URL na vašem računalniku.<br>Na primer: http://www.podjetje.si/egroupware &nbsp; ali &nbsp; /egroupware<br><b>Naslov naj bo brez zaključne poševnice</b>
 enter the site password for peer servers	setup	sl	Vnesite geslo za vzporedne strežnike.
@@ -165,6 +187,7 @@ export sql users to ldap	setup	sl	Izvozi SQL uporabniške račune v LDAP
 false	setup	sl	Ne
 file	setup	sl	DATOTEKA
 file type, size, version, etc.	setup	sl	tip datoteke, velikost, različica itd.
+filename	setup	sl	ime datoteke
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	sl	Za novo namestitev, izberite uvoz. Za pretvorbo obstoječega SQL računa v LDAP, izberite izvoz.
 force selectbox	setup	sl	Vsili izbirna polja
 found existing configuration file. loading settings from the file...	setup	sl	Našel sem obstoječo konfiguracijsko datoteko. Nalagam nastavitve iz te datoteke...
@@ -172,14 +195,16 @@ go back	setup	sl	Pojdi nazaj
 go to	setup	sl	Pojdi na
 grant access	setup	sl	Dovoli dostop
 has a version mismatch	setup	sl	ima neskladje med različicami
+header 0assword	setup	sl	Geslo glave
 header admin login	setup	sl	Prijava upravljalca glave
 header password	setup	sl	Geslo upravljalca glave
-header username	setup	sl	Uporabniško ime upravljalca glave
+header username	setup	sl	Uporabniško ime glave
 historylog removed	setup	sl	Odstranjen dnevnik
 hooks deregistered	setup	sl	kljuke odregistrirane
 hooks registered	setup	sl	kljuke registrirane
 host information	setup	sl	Podatki o strežniku
 hostname/ip of database server	setup	sl	Ime/IP podatkovnega strežnika
+hour (0-24)	setup	sl	ura (0-24)
 however, the application is otherwise installed	setup	sl	Vendar je aplikacija nameščena
 however, the application may still work	setup	sl	Vendar aplikacija še vedno deluje
 if no acl records for user or any group the user is a member of	setup	sl	Če ni ACL zapisov za uporabnika ali katerokoli skupino, katere član je
@@ -202,6 +227,7 @@ insanity	setup	sl	Norost
 install	setup	sl	Namesti
 install all	setup	sl	Namesti vse
 install applications	setup	sl	Namesti aplikacije
+install backup	setup	sl	namesti arhiviranje
 install language	setup	sl	Namesti jezik
 installed	setup	sl	nameščen
 instructions for creating the database in %1:	setup	sl	Navodila za izdelavo podatkovne baze v %1:
@@ -209,6 +235,8 @@ invalid ip address	setup	sl	Napačen IP naslov
 invalid password	setup	sl	Napačno geslo
 is broken	setup	sl	je pretrgan
 is disabled	setup	sl	je onemogočen
+is in the webservers docroot	setup	sl	je v "docroot" mapi spletnega strežnika
+is not writeable by the webserver	setup	sl	ni zapisljiv s strani spletnega strežnika
 ldap account import/export	setup	sl	Uvoz/izvoz LDAP računov
 ldap accounts configuration	setup	sl	Konfiguriranje LDAP računov
 ldap accounts context	setup	sl	Kontekst LDAP računov
@@ -243,20 +271,24 @@ mcrypt settings (requires mcrypt php extension)	setup	sl	Mcrypt nastavitve (zaht
 mcrypt version	setup	sl	Različica mcrypt
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sl	Omejitev spomina (memory_limit) je nastavljena na manj kot 16 Mb: nekatere aplikacije v eGW potrebujejo več kot priporočljivih 8 Mb zato se lahko pojavijo občasne napake
 minimum account id (e.g. 500 or 100, etc.)	setup	sl	Najnižji ID računa (npr. 500 ali 100)
+minute	setup	sl	minuta
 modifications have been completed!	setup	sl	Spremembe so končane.
 modify	setup	sl	Spremeni
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	sl	Prilagodi obstoječo LDAP zbirko računov za uporabo z eGroupWare (za novo namestitev, ki uporablja LDAP račune)
+month	setup	sl	mesec
 multi-language support setup	setup	sl	Namestitev večjezične podpore
 name of database	setup	sl	Ime podatkovne baze
 name of db user egroupware uses to connect	setup	sl	Uporabniško ime za dostop do podatkovne baze
 never	setup	sl	nikoli
 new	setup	sl	Novo
+next run	setup	sl	naslednji zagon
 no	setup	sl	Ne
 no accounts existing	setup	sl	Noben račun ne obstaja
 no algorithms available	setup	sl	ni razpoložljivih algoritmov
 no microsoft sql server support found. disabling	setup	sl	Ne najdem podpore za MS SQL strežnik. Onemogočam.
 no modes available	setup	sl	ni razpoložljivih načinov
 no mysql support found. disabling	setup	sl	Ni podpore za MySQL. Onemogočam.
+no odbc support found. disabling	setup	sl	Ni podpore za ODBC. Onemogočam.
 no oracle-db support found. disabling	setup	sl	Ni podpore za Oracle podatkovni strežnik. Onemogočam.
 no postgres-db support found. disabling	setup	sl	Ni podpore za PostgreSQL podatkovni stre�nik. Onemogo&#269;am.
 no postgresql support found. disabling	setup	sl	Ni podpore za PostgreSQL podatkovni strežnik. Onemogočam.
@@ -279,6 +311,7 @@ or	setup	sl	ali
 or %1continue to the header admin%2	setup	sl	ali %1nadaljuj  v nastavitve glave%2
 or http://webdav.domain.com (webdav)	setup	sl	ali http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	sl	Ali pa lahko poizkusim ustvariti podatkovno bazo za vas:
+or you can install a previous backup.	setup	sl	Lahko pa povrnete prejšnji arhiv.
 password needed for configuration	setup	sl	Geslo, potrebno za konfiguriranje
 password of db user	setup	sl	Geslo za dostop do baze
 passwords did not match, please re-enter	setup	sl	Gesli se ne ujemata, prosim, ponovite
@@ -314,15 +347,23 @@ registered	setup	sl	registriran
 rejected lines	setup	sl	Zavržene vrstice
 remove	setup	sl	Odstrani
 remove all	setup	sl	Odstrani vse
+rename	setup	sl	preimenuj
 requires reinstall or manual repair	setup	sl	Potrebuje namestitev ali ročno popravljanje
 requires upgrade	setup	sl	Potrebuje posodobitev
 resolve	setup	sl	Razreši
+restore	setup	sl	obnovi
+restore failed	setup	sl	Obnovitev je splodletela
+restore finished	setup	sl	obnovitev končana
+restore started, this might take a view minutes ...	setup	sl	obnovitev se je začela kar lahko traja nekaj minut
+restoring a backup will delete/replace all content in your database. are you sure?	setup	sl	Obnova rezervne kopije bo zbrisala/zamenjala vso vsebino podatkovne baze. Ste prepričani?
 return to setup	setup	sl	Vrnitev v namestitev
 run installation tests	setup	sl	Poženi namestitvene teste
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	sl	Vrednost "safe_mode" je nastavljena na "On", kar na splošno pomeni bolj varno namestitev.
 sample configuration not found. using built in defaults	setup	sl	Ne najdem predloge za konfiguracijo. Uporabljam privzete vrednosti.
 save	setup	sl	Shrani
 save this text as contents of your header.inc.php	setup	sl	Shrani besedilo kot vsebino vaše header.inc.php datoteke
+schedule	setup	sl	urnik
+scheduled backups	setup	sl	urnik arhiviranja
 select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	sl	Označite aplikacijo, vnesite ciljno različico, in pošljite procesu to različico.<br>Če ne boste vnesli različice, se bodo za aplikacijo namestile le osnovne tabele. <br><blink>POSTOPEK BO NAJPREJ IZBRISAL VSE TABELE APLIKACIJE!</blink>
 select one...	setup	sl	izberite enega...
 select the default applications to which your users will have access	setup	sl	Izberite privzete aplikacije, do katerih bodo imeli dostop vaši uporabniki.
@@ -356,6 +397,7 @@ setup main menu	setup	sl	Namesti glavni meni
 setup the database	setup	sl	Namesti podatkovno bazo
 setup/config admin login	setup	sl	Namesti/Konfiguriraj prijavo upravljalca
 show 'powered by' logo on	setup	sl	Pokaži "teče na" logotip na
+size	setup	sl	velikost
 some or all of its tables are missing	setup	sl	Manjka nekaj ali vse njene tabele
 sql encryption type	setup	sl	Enkripcija za SQL geslo (privzeta je MD5)
 start the postmaster	setup	sl	Poženi "postmasterja"
@@ -363,8 +405,10 @@ status	setup	sl	Status
 step %1 - admin account	setup	sl	Korak %1 - upravljalski račun
 step %1 - advanced application management	setup	sl	Korak %1 - zahtevno upravljanje aplikacij
 step %1 - configuration	setup	sl	Korak %1 - konfiguracija
+step %1 - db backup and restore	setup	sl	Korak %1 - arhiviranje in obnavljanje podatkovne baze
 step %1 - language management	setup	sl	Korak %1 - upravljanje z jeziki
 step %1 - simple application management	setup	sl	Korak %1 - preprosto upravljanje aplikacij
+succesfully uploaded file %1	setup	sl	uspešen prenos datoteke %1
 table change messages	setup	sl	Obvestila o spremembi tabel
 tables dropped	setup	sl	tabele odstranjene
 tables installed, unless there are errors printed above	setup	sl	tabele nameščene, razen če so zgoraj izpisane napake
@@ -386,6 +430,7 @@ there was a problem trying to connect to your ldap server. <br>	setup	sl	Napaka 
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	sl	Napaka pri povezovanju z LDAP strežnikom.<br>Prosim, preverite nastavitve LDAP strežnika.
 this has to be outside the webservers document-root!!!	setup	sl	To mora biti izven strežnikovega spletnega področja!
 this might take a while, please wait ...	setup	sl	To lahko traja nekaj časa, prosim počakajte ...
+this program lets you backup your database, schedule a backup or restore it.	setup	sl	Ta program vam omogoča arhiviranje vaše podatkovne baze, upravljanje urnikov arhiviranja ali pa restavriranje arhiva.
 this program will convert your database to a new system-charset.	setup	sl	Ta program bo prevedel podatkovno bazo na nov sistemski nabor znakov.
 this program will help you upgrade or install different languages for egroupware	setup	sl	Ta program vam bo pomagal pri posodabljanju ali namestitvi različnih jezikov za eGroupWare.
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	sl	V tem odseku boste izvozili uporabnike in skupine iz tabel podatkovne baze v vaše LDAP drevo.
@@ -411,6 +456,9 @@ upgrade	setup	sl	Posodobi
 upgrade all	setup	sl	Posodobi vse
 upgraded	setup	sl	posodobljeno
 upgrading tables	setup	sl	Posodabljanje tabel
+upload backup	setup	sl	prenos arhiva
+uploads a backup and installs it on your db	setup	sl	prenese arhiv in ga namesti v podatkovno bazo
+uploads a backup to the backup-dir, from where you can restore it	setup	sl	prenese arhiv v arhivsko mapo, od koder ga lahko obnovite
 use cookies to pass sessionid	setup	sl	Uporabi piškotke za pošiljanje ID-ja sej
 use pure html compliant code (not fully working yet)	setup	sl	Uporabi popolnoma standardno HTML kodo (še ne deluje)
 user account prefix	setup	sl	Predpona uporabniškega računa
@@ -434,6 +482,7 @@ would you like egroupware to check for a new version<br>when admins login ?	setu
 would you like to show each application's upgrade status ?	setup	sl	Ali želite pokazati stanje nadgradnje aplikacije?
 writable by the webserver	setup	sl	spletni strežnik lahko zapisuje
 write config	setup	sl	Zapiši konfiguracijo
+year	setup	sl	leto
 yes	setup	sl	Da
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	sl	Videti je, da uporabljate pred-beta različico phpGroupWare.<br> Te različice niso več podprte in nadgradnja z njih ni mogoča.<br> Prosimo, da najprej nadgradite na 0.9.10, (zadnja različica, ki podpira pred-beta posodabljanje) <br> in potem nadgradite na posodobljeno različico.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	sl	Videti je, da uporabljate staro različico PHP.<br>Priporočamo, da nadgradite na novo različico.<br>Starejše različice morda ne bodo pravilno izvajale eGroupWare programov, če jih sploh bodo.<br><br>Prosim, nadgradite vsaj na PHP različico %1.
@@ -442,11 +491,12 @@ you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or 
 you appear to be using php3. disabling php4 sessions support	setup	sl	Videti je, da uporabljate PHP3. Onemogočam podporo za PHP4 seje.
 you appear to be using php4. enabling php4 sessions support	setup	sl	Videti je, da uporabljate PHP4. Omogočam podporo za PHP4 seje.
 you appear to have microsoft sql server support enabled	setup	sl	Videti je, da imate omogočeno podporo MS SQL podatkovnega strežnika.
-you appear to have mysql support enabled	setup	sl	Videti je, da imate omogočeno podporo MySQL podatkovnega strežnika.
-you appear to have oracle support enabled	setup	sl	Videti je, da imate omogočeno podporo Oracle podatkovnega strežnika.
-you appear to have oracle v8 (oci) support enabled	setup	sl	Videti je, da imate omogočeno podporo Oracle V8 (OCI) podatkovnega strežnika.
+you appear to have mysql support enabled	setup	sl	Videti je, da imate omogočeno podporo za MySQL podatkovni strežnik.
+you appear to have odbc support enabled	setup	sl	Videti je, da imate omogočeno podporo za ODBC dostop do podatkov.
+you appear to have oracle support enabled	setup	sl	Videti je, da imate omogočeno podporo za Oracle podatkovni strežnik.
+you appear to have oracle v8 (oci) support enabled	setup	sl	Videti je, da imate omogočeno podporo za Oracle V8 (OCI) podatkovni strežnik.
 you appear to have postgres-db support enabled	setup	sl	Videti je, da imate omogo&#269;eno podporo Postgres SQL podatkovnega stre�nika.
-you appear to have postgresql support enabled	setup	sl	Videti je, da imate omogočeno podporo PostgreSQL podatkovnega strežnika.
+you appear to have postgresql support enabled	setup	sl	Videti je, da imate omogočeno podporo za PostgreSQL podatkovni strežnik.
 you appear to have xml support enabled	setup	sl	Videti je, da imate omogočeno podporo XML.
 you are ready for this stage, but this stage is not yet written.<br>	setup	sl	Pripravljeni ste za ta korak vendar še ni zapisan.<br>
 you didn't enter a config password for domain %1	setup	sl	Niste vnesli konfiguracijskega gesla za domeno %1
@@ -464,13 +514,16 @@ you will need to load the proper schema into your ldap server - see phpgwapi/doc
 you're using an old configuration file format...	setup	sl	Uporabljate star format konfiguracijskih datotek.
 you're using an old header.inc.php version...	setup	sl	Uporabljate staro različico header.inc.php.
 your applications are current	setup	sl	Vaše aplikacije so najnovejše
+your backup directory '%1' %2	setup	sl	Vaša arhivska mapa '%1' %2
 your database does not exist	setup	sl	Vaša podatkovna baza ne obstaja.
 your database is not working!	setup	sl	Vaša podatkovna baza ne deluje.
 your database is working, but you dont have any applications installed	setup	sl	Vaša podatkovna baza deluje, a nimate nameščenih nobenih aplikacij.
-your header admin password is not set. please set it now!	setup	sl	Vaše upravljalsko geslo ni nastavljeno. Prosim, vnesite ga sedaj.
+your files directory '%1' %2	setup	sl	Vaša splošna mapa za datoteke '%1' %2
+your header admin password is not set. please set it now!	setup	sl	Vaše upravljalsko geslo NI nastavljeno. Prosim, vnesite ga sedaj.
 your header.inc.php needs upgrading.	setup	sl	Vaša header.inc.php datoteka je potrebna posodobitve.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	sl	Vaša header.inc.php datoteka je potrebna posodobitve.<br><blink><b class="msg">POZOR!</b></blink><br><b>Naredite rezervno kopijo datoteke in vseh podatkov!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	sl	Vaša PHP namestitev nima GD (vsaj različico 1.8) podpore, ki je potrebna za prikazovanje Gantovih preglednic v projektih.
 your tables are current	setup	sl	Vaše tabele so najnovejše
 your tables may be altered and you may lose data	setup	sl	Vaše tabele se lahko spremenijo. Obstaja možnost, da pri tem izgubite podatke.
 your tables will be dropped and you will lose data	setup	sl	Vaše tabele bodo odstranjene. Pri tem boste izgubili podatke!
+your temporary directory '%1' %2	setup	sl	Vaša začasna mapa '%1' %2
