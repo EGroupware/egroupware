@@ -519,65 +519,36 @@
 	$test[] = '0.9.14.003';
 	function phpgwapi_upgrade0_9_14_003()
 	{
-		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
-		// as 0.9.15.xxx are already used in HEAD
-
-		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
-
-		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		// goes direct to 0.9.14.500
+		return phpgwapi_upgrade0_9_14_002();
 	}
 
 	$test[] = '0.9.14.004';
 	function phpgwapi_upgrade0_9_14_004()
 	{
-		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
-		// as 0.9.15.xxx are already used in HEAD
-
-		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
-
-		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		// goes direct to 0.9.14.500
+		return phpgwapi_upgrade0_9_14_002();
 	}
 
 	$test[] = '0.9.14.005';
 	function phpgwapi_upgrade0_9_14_005()
 	{
-		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
-		// as 0.9.15.xxx are already used in HEAD
-
-		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
-
-		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		// goes direct to 0.9.14.500
+		return phpgwapi_upgrade0_9_14_002();
 	}
 
 	$test[] = '0.9.14.006';
 	function phpgwapi_upgrade0_9_14_006()
 	{
-		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
-		// as 0.9.15.xxx are already used in HEAD
+		// goes direct to 0.9.14.500
+		return phpgwapi_upgrade0_9_14_002();
+	}
 
-		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
-
-		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	$test[] = '0.9.14.007';
+	function phpgwapi_upgrade0_9_14_007()
+	{
+		// goes direct to 0.9.14.500
+		return phpgwapi_upgrade0_9_14_002();
 	}
 
 	$test[] = '0.9.14.500';
