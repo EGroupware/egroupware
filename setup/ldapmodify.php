@@ -110,7 +110,7 @@
 		$group_info = array();
 	}
 
-	$GLOBALS['phpgw_setup']->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_title",__LINE__,__FILE__);
+	$GLOBALS['phpgw_setup']->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_name",__LINE__,__FILE__);
 	while ($GLOBALS['phpgw_setup']->db->next_record())
 	{
 		$apps[$GLOBALS['phpgw_setup']->db->f('app_name')] = lang($GLOBALS['phpgw_setup']->db->f('app_name'));
@@ -188,39 +188,42 @@
 					}
 
 					/* Now make the members a member of this group in phpgw. */
-					while (list($key,$members) = each($thismembers))
+					if(is_array($thismembers))
 					{
-						if ($key == 'count')
+						foreach($thismembers as $key => $members)
 						{
-							continue;
-						}
-						/* echo '<br>members: ' . $members; */
-						$tmpid = 0;
-						@reset($account_info);
-						while(list($x,$y) = each($account_info))
-						{
-							/* echo '<br>checking: '.$y['account_lid']; */
-							if ($members == $y['account_lid'])
+							if ($key == 'count')
 							{
-								$tmpid = $y['account_id'];
+								continue;
 							}
-						}
-						// Insert acls for this group based on memberuid field.
-						// Since the group has app rights, we don't need to give users
-						//  these rights.  Instead, we maintain group membership here.
-						if($tmpid)
-						{
-							$acl->account_id = intval($tmpid);
-							$acl->read_repository();
-
-							$acl->delete('phpgw_group',$thisacctid,1);
-							$acl->add('phpgw_group',$thisacctid,1);
-
-							// Now add the acl to let them change their password
-							$acl->delete('preferences','changepassword',1);
-							$acl->add('preferences','changepassword',1);
-
-							$acl->save_repository();
+							/* echo '<br>members: ' . $members; */
+							$tmpid = 0;
+							@reset($account_info);
+							while(list($x,$y) = each($account_info))
+							{
+								/* echo '<br>checking: '.$y['account_lid']; */
+								if ($members == $y['account_lid'])
+								{
+									$tmpid = $y['account_id'];
+								}
+							}
+							// Insert acls for this group based on memberuid field.
+							// Since the group has app rights, we don't need to give users
+							//  these rights.  Instead, we maintain group membership here.
+							if($tmpid)
+							{
+								$acl->account_id = intval($tmpid);
+								$acl->read_repository();
+	
+								$acl->delete('phpgw_group',$thisacctid,1);
+								$acl->add('phpgw_group',$thisacctid,1);
+	
+								// Now add the acl to let them change their password
+								$acl->delete('preferences','changepassword',1);
+								$acl->add('preferences','changepassword',1);
+	
+								$acl->save_repository();
+							}
 						}
 					}
 					/* Now give this group some rights */
@@ -362,18 +365,18 @@
 
 	while (list($key,$account) = @each($account_info))
 	{
-		$user_list .= '<option value="' . $account['uidnumber'][0] . '">' . $account['cn'][0] . '(' . $account['uid'][0] . ')</option>';
+		$user_list .= '<option value="' . $account['uidnumber'][0] . '">' . utf8_decode($account['cn'][0]) . '(' . $account['uid'][0] . ')</option>';
 	}
 
 	@reset($account_info);
 	while (list($key,$account) = @each($account_info))
 	{
-		$admin_list .= '<option value="' . $account['uidnumber'][0] . '">' . $account['cn'][0] . '(' . $account['uid'][0] . ')</option>';
+		$admin_list .= '<option value="' . $account['uidnumber'][0] . '">' . utf8_decode($account['cn'][0]) . '(' . $account['uid'][0] . ')</option>';
 	}
 
 	while (list($key,$group) = @each($group_info))
 	{
-		$group_list .= '<option value="' . $group['gidnumber'][0] . '">' . $group['cn'][0]  . '</option>';
+		$group_list .= '<option value="' . $group['gidnumber'][0] . '">' . utf8_decode($group['cn'][0])  . '</option>';
 	}
 
 	while(list($appname,$apptitle) = each($apps))
