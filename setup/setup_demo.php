@@ -76,6 +76,7 @@
     $sql = "insert into phpgw_accounts";
     $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
     $sql .= "values (2, 'demo2', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo2', 'Account', ".time().", 'A')";
+    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('2', '$defaultprefs')");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', 2, 'u', 0)") ;
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', 2, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', 2, 'u', 1)");
@@ -89,7 +90,7 @@
     $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
     $sql .= "values (3, 'demo3', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo3', 'Account', ".time().", 'A')";
     $phpgw_setup->db->query($sql);
-    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
+    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('3', '$defaultprefs')");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', 3, 'u', 0)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', 3, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', 3, 'u', 1)");
@@ -104,7 +105,7 @@
     $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
     $sql .= "values (4, '$username', 'u', '".md5($passwd)."', '$fname', '$lname', ".time().", 'A')";
     $phpgw_setup->db->query($sql);
-    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
+    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('4', '$defaultprefs')");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', 4, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '2', 4, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('admin', 'run', 4, 'u', 1)");

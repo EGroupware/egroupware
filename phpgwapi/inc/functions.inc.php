@@ -245,31 +245,32 @@
   	!$phpgw_info["flags"]["nocommon_preferences"]) {
       if (!isset($phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) ||
 	    !$phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
-        $phpgw->preferences->change("common","maxmatchs",15);
+//        $phpgw->preferences->change("common","maxmatchs",15);
+        $phpgw->preferences->add("common","maxmatchs",15);
         $preferences_update = True;
       }
       if (!isset($phpgw_info["user"]["preferences"]["common"]["theme"]) ||
 	    !$phpgw_info["user"]["preferences"]["common"]["theme"]) {
-        $phpgw->preferences->change("common","theme","default");
+        $phpgw->preferences->add("common","theme","default");
         $preferences_update = True;
       }
       if (!isset($phpgw_info["user"]["preferences"]["common"]["dateformat"]) ||
 	    !$phpgw_info["user"]["preferences"]["common"]["dateformat"]) {
-        $phpgw->preferences->change("common","dateformat","m/d/Y");
+        $phpgw->preferences->add("common","dateformat","m/d/Y");
         $preferences_update = True;
       }
       if (!isset($phpgw_info["user"]["preferences"]["common"]["timeformat"]) ||
 	    !$phpgw_info["user"]["preferences"]["common"]["timeformat"]) {
-        $phpgw->preferences->change("common","timeformat",12);
+        $phpgw->preferences->add("common","timeformat",12);
         $preferences_update = True;
       }
       if (!isset($phpgw_info["user"]["preferences"]["common"]["lang"]) ||
 	    !$phpgw_info["user"]["preferences"]["common"]["lang"]) {
-	      $phpgw->preferences->change("common","lang",$phpgw->common->getPreferredLanguage());
+	      $phpgw->preferences->add("common","lang",$phpgw->common->getPreferredLanguage());
         $preferences_update = True;
       }
       if ($preferences_update) {
-        $phpgw->preferences->commit(__LINE__,__FILE__);
+        $phpgw->preferences->save_repository();
       }
       unset($preferences_update);
     }

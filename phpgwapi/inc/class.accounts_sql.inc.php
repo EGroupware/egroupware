@@ -38,7 +38,7 @@
       $this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
       $this->db->next_record();
 
-      $this->data["userid"]            = $this->db->f("account_id");
+      $this->data["userid"]            = $this->db->f("account_lid");
       $this->data["account_id"]        = $this->db->f("account_id");
       $this->data["account_lid"]       = $this->db->f("account_lid");
       $this->data["firstname"]         = $this->db->f("account_firstname");
@@ -114,10 +114,8 @@
       global $phpgw, $phpgw_info;
       if (gettype($account_id) == "string") { 
         $account_id = $this->name2id($account_id);
-        $sql = "SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_id."'";
-      }else{
-        $sql = "SELECT account_id FROM phpgw_accounts WHERE account_id='".$account_id."'";
       }
+      $sql = "SELECT account_id FROM phpgw_accounts WHERE account_id='".$account_id."'";
       $this->db->query($sql,__LINE__,__FILE__);
       if ($this->db->num_rows()) {
          return True;

@@ -56,12 +56,12 @@
     {
       global $phpgw, $phpgw_info;
       $sql = "select * from phpgw_acl where (acl_account in (".$this->account_id.", 0"; 
-      $equalto = $phpgw->accounts->security_equals($this->account_id);
-      if (is_array($equalto) && count($equalto) > 0){
-        for ($idx = 0; $idx < count($equalto); ++$idx){
-          $sql .= ",".$equalto[$idx][0];
-        }
-      }
+//      $equalto = $phpgw->accounts->security_equals($this->account_id);
+//      if (is_array($equalto) && count($equalto) > 0){
+//        for ($idx = 0; $idx < count($equalto); ++$idx){
+//          $sql .= ",".$equalto[$idx][0];
+//        }
+//      }
       $sql .= "))";
       $this->db->query($sql ,__LINE__,__FILE__);
       $count = $this->db->num_rows();

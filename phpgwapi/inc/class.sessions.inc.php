@@ -63,7 +63,8 @@
           $t = explode("@",$db->f("session_lid"));
           $phpgw_info["user"]["userid"]      = $t[0];
 
-          //$phpgw->accounts->sync(__LINE__,__FILE__);
+//          $phpgw->accounts->account_id = $phpgw->accounts->name2id($phpgw_info["user"]["account_lid"]);
+//          $phpgw_info["user"] = $phpgw->accounts->read_repository();
 
           // Now we need to re-read eveything
           $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
@@ -75,14 +76,12 @@
        $phpgw_info_flags    = $phpgw_info["flags"];
        $phpgw_info          = $phpgw->crypto->decrypt($db->f("session_info"));
        $phpgw_info["flags"] = $phpgw_info_flags;
-
        $userid_array = explode("@",$db->f("session_lid"));
        $phpgw_info["user"]["userid"] = $userid_array[0];
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
-          return False;
+//          return False;
        }
-
        if (PHP_OS != "Windows" && (! $phpgw_info["user"]["session_ip"] || $phpgw_info["user"]["session_ip"] != $this->getuser_ip())){
           return False;
        }
@@ -113,11 +112,10 @@
     function create($login,$passwd)
     {
        global $phpgw_info, $phpgw;
- 
+
        $this->clean_sessions();
        $login_array = explode("@", $login);
        $phpgw_info["user"]["userid"] = $login_array[0];
- 
        if ($phpgw_info["server"]["global_denied_users"][$phpgw_info["user"]["userid"]]) {
           return False;
        }
@@ -126,19 +124,17 @@
           return False;
           exit;
        }
-       $accts = CreateObject("phpgwapi.accounts");
+       //$accts = CreateObject("phpgwapi.accounts");
        
-       if (!$accts->exists($phpgw_info["user"]["userid"])) {
-          $accts->auto_generate($phpgw_info["user"]["userid"], $passwd);
-       }
+       //if (!$accts->exists($phpgw_info["user"]["userid"])) {
+       //   $accts->auto_generate($phpgw_info["user"]["userid"], $passwd);
+       //}
 
        $phpgw->accounts->account_id = $phpgw->accounts->name2id($phpgw_info["user"]["userid"]);
-       $phpgw->accounts->read();
 
        $t_domain = $phpgw_info["user"]["domain"];        // We loose this info on the next line
        $phpgw_info["user"] = $phpgw->accounts->read_repository();
        $phpgw_info["user"]["domain"] = $t_domain;
-
        $phpgw_info["user"]["sessionid"] = md5($phpgw->common->randomstring(10));
        $phpgw_info["user"]["kp3"]       = md5($phpgw->common->randomstring(15));
 
@@ -166,12 +162,23 @@
        }
 
        $phpgw_info["user"]["session_ip"] = $this->getuser_ip();
-
+       $phpgw_info["user"]["session_lid"] = $phpgw_info["user"]["account_lid"]."@".$phpgw_info["user"]["domain"];
+       $phpgw_info_temp["user"]        = $phpgw_info["user"];
+       $phpgw_info_temp["apps"]        = $phpgw_info["apps"];
+       $phpgw_info_temp["server"]      = $phpgw_info["server"];
+       $phpgw_info_temp["hooks"]       = $phpgw->hooks->read();
+       $phpgw_info_temp["user"]["preferences"] = $phpgw_info["user"]["preferences"];
+       $phpgw_info_temp["user"]["kp3"] = "";
+       if ($PHP_VERSION < "4.0.0") {
+          $info_string = addslashes($phpgw->crypto->encrypt($phpgw_info_temp));
+       } else {
+          $info_string = $phpgw->crypto->encrypt($phpgw_info_temp);       
+       }
        $phpgw->db->query("insert into phpgw_sessions values ('" . $phpgw_info["user"]["sessionid"]
                        . "','".$login."','" . $this->getuser_ip() . "','"
-                       . time() . "','" . time() . "','')",__LINE__,__FILE__);
+                       . time() . "','" . time() . "','".$info_string."')",__LINE__,__FILE__);
 
-       $phpgw->accounts->save_repository();
+       //$phpgw->accounts->save_repository();
 
        $phpgw->db->query("insert into phpgw_access_log values ('" . $phpgw_info["user"]["sessionid"] . "','"
                        . "$login','" . $this->getuser_ip() . "','" . time()

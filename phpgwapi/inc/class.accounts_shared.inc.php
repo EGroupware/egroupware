@@ -46,6 +46,14 @@
       return $this->data;
     }
 
+    function update_data($data) {
+      reset($data);
+      $this->data = Array();
+      $this->data = $data;
+      reset($this->data);
+      return $this->data;
+    }
+
     function memberships($account_id = False)
     {
       global $phpgw_info, $phpgw;

@@ -39,13 +39,10 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id == False){ 
-        $this->account_id = $phpgw_info["user"]["account_id"]; 
-      } elseif (is_long($account_id)) {
-        $this->account_id = $account_id;
-      } elseif(is_string($account_id)) {
-        $this->account_id = $phpgw->accounts->name2id($account_id);
-      }
+      if ($account_id == ""){ $account_id = $phpgw_info["user"]["account_id"]; }
+      elseif (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
+      $this->account_id = $account_id;
+//echo "prefs loaded for: ".$this->account_id."<br>";
     }
 
     /**************************************************************************\
@@ -120,6 +117,16 @@
       $this->data = $data;
       reset($this->data);
       return $this->data;
+    }
+
+// legacy support
+    function change($app_name,$var,$value = "")
+    {
+      return $this->add($app_name,$var,$value);
+    }
+    function commit()
+    {
+      return $this->save_repository();
     }
 
   } //end of preferences class
