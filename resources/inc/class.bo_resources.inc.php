@@ -48,6 +48,7 @@ class bo_resources
 						'quantity'		=> '',
 						'useable'		=> '',
 						'bookable'		=> '',
+						'buyable'		=> '',
 						'cat_id'		=> '',
 						'location'		=> ''
 					));
