@@ -324,8 +324,14 @@ class nextmatchs
 
   // Postgre and MySQL switch the vars in limit.  This will make it easier
   // if there are any other databases that pull this.
+
+  // NOTE!!  This is is NO longer used.  Use db->limit() instead.
+  // This is here for people to get there code up to date.
+
   function sql_limit($start)
   {
+    echo "<center><b>WARNING:</b> Do not use sql_limit() anymore.  Use db->limit() from now on.</center>";
+    
     global $phpgw_info;
     $max = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
 

@@ -97,6 +97,16 @@ class db {
     return mysql_close($this->Link_ID);
   }
 
+  function limit($start,$offset)
+  {
+     if ($start == 0) {
+        $s = "limit $start";
+     } else {
+        $s = "limit $start,$offset";
+     }
+     return $s;
+  }
+
   /* public: discard the query result */
   function free() {
       @mysql_free_result($this->Query_ID);

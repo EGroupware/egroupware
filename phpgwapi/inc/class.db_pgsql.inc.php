@@ -61,6 +61,16 @@ class db {
 	  }
   }
 
+  function limit($start,$offset)
+  {
+     if ($start == 0) {
+        $s = "limit $offset";
+     } else {
+        $s = "limit $offset,$start";
+     }
+     return $s;
+  }
+
   // This only affects systems not using persistant connections
   function disconnect()
   {

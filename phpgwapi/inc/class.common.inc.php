@@ -447,13 +447,8 @@
       }      
     }
 
-    function navbar($called_directly = True)
-    {
-       // This is only temp, until will change everything to use the new method
-       if ($called_directly) {
-          echo '<center><b>Warning: You can no longer call navbar() directly, use echo parse_navbar() from now on.</b></center>';
-       }
-    
+    function navbar()
+    {    
        global $phpgw_info, $phpgw;
 
        $phpgw_info["navbar"]["home"]["title"] = "Home";
