@@ -84,7 +84,7 @@
 						$tdwidth = 100/($max_icons+2);
 					}
 
-					$app_icons .= '<td width="'.$tdwidth.'%" height="66" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
+					$app_icons .= '<td width="'.$tdwidth.'%" height="66" valign="bottom" align="center" style="text-align:center"><a href="' . $app_data['url'] . '"';
 
 					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
 					{
@@ -93,7 +93,7 @@
 
 					$app_icons .= '>' . $icon . '</a></td>';
 
-					$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$app_data['url'] . '"';
+					$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$app_data['url'] . '"';
 
 					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
 					{
@@ -151,9 +151,9 @@
 
 			if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']!='no')
 			{
-				$app_icons .= '<td width="'.$tdwidth.'%"height="32" valign="bottom" align="center"><a 
+				$app_icons .= '<td width="'.$tdwidth.'%" height="32" valign="bottom" align="center" style="text-align:center"><a 
 href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['phpgw_info']['navbar']['logout']['icon'].'"></a></td>';
-				$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'">'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'</a></td>';
+				$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'">'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'</a></td>';
 
 			}
 //			$var['app_icons'] = $app_icons;
