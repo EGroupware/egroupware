@@ -91,7 +91,7 @@
 		$fields["tel_fax"]				= $fax;
 		$fields["tel_pager"]			= $pager;
 		$fields["tel_cell"]				= $mphone;
-		$fields["tel_msg"]				= $ophone;
+		$fields["tel_msg"]				= $msgphone;
 		$fields["tel_prefer"]           = $tel_prefer;
 
 		$fields["adr_one_street"]		= $bstreet;
@@ -131,7 +131,7 @@
 			eval("if (\$name\) { \$cust \.= \$\$name; }");
 			if ($cust) { $fields[$name] = $cust; }
 		}
-
+		$fields["ophone"]               = $ophone;
 		$fields["tz"]					= $timezone;
 		$fields["bday"]					= $bday;
 		$fields["url"]					= $url;
