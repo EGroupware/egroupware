@@ -99,7 +99,7 @@
 
   <table width=75% border=0 cellspacing=1 cellpadding=3>
     <tr bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>">
-    <?php    
+    <?php
        while ($column = each($abc)) {
           if ($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
              echo '<td height="21">';
@@ -117,6 +117,11 @@
       <td width="3%" height="21">
        <font face="Arial, Helvetica, sans-serif" size="-1">
          <?php echo lang("View"); ?>
+       </font>
+      </td>
+      <td width="3%" height="21">
+       <font face="Arial, Helvetica, sans-serif" size="-1">
+         Vcard
        </font>
       </td>
       <td width="5%" height="21">
@@ -206,6 +211,13 @@
 	  ?>"> <?php echo lang("View"); ?> </a>
      </font>
     </td>
+     <td valign=top width=3%>
+      <font face="<?php echo $phpgw_info["theme"]["font"]; ?>" size=2>
+        <a href="<?php echo $phpgw->link("vcardout.php","ab_id=$ab_id&start=$start&order=$order&filter="
+                . "$filter&query=$query&sort=$sort");
+        ?>">Vcard</a>
+      </font>
+     </td>
     <td valign="top" width="5%">
      <font face="<?php echo $phpgw_info["theme"]["font"]; ?>" size="2">
       <?php echo $phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")); ?>
@@ -231,7 +243,12 @@
           <input type="submit" name="Add" value="<?php echo lang("Add"); ?>">
         </div>
       </td>
-      <td width="72%">&nbsp;</td>
+      <td width="8%">
+        <div align="right">
+         <input type="submit" name="AddVcard" value="Add Vcard">
+        </div>
+      </td>
+      <td width="64%">&nbsp;</td>
       <td width="24%">&nbsp;</td>
     </tr>
   </table>
