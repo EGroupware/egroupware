@@ -1,7 +1,7 @@
 body,p,td,th,table,input,form,option
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
+	font-family: Georgia,Times New Roman,Times,serif;
+	font-size: 11pt;
 	font-style: normal;
 	font-weight: normal;
 	line-height: normal;
@@ -32,6 +32,39 @@ a.th,a.th_text
 {
 	font-weight: bold;
 }
+
+.top_top
+{
+	background: url(../images/menu_filler.png);
+}
+
+.top
+{
+	background: url(../images/blue_filler.png);
+	color: #FFFFFF;
+}
+
+.menubar
+{
+	background: url(../images/menu_bar_bg.png);
+	color: #FFFFFF;
+}
+
+.menubar_left
+{
+	background: url(../images/menu_bar_left.png);
+}
+
+.menubar_right
+{
+	background: url(../images/menu_bar_right.png);
+}
+
+.left
+{
+	background: url(../images/side_bar_bg.png);
+}
+
 
 table.portal
 {
