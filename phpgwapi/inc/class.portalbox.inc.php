@@ -3,10 +3,10 @@
 	* phpGroupWare API - Portal Box manager                                    *
 	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
 	* Helps manage the portal boxes for phpGroupWares main page                *
-	* Copyright (C) 2000 - 2002  Joseph Engo                                   *
+	* Copyright (C) 2000 - 2003  Joseph Engo                                   *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* http://www.phpgroupware.org                                              * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -145,22 +145,27 @@
 					'close',
 					'edit'
 				);
+
+				if ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'funkwerk')
+				{
+					$up = 
+					$down = '[->]';
+					$question = '[?]';
+					$close = '[x]';
+					$edit = '[' . lang('edit') . ']';
+				}
+
 				@reset($control_array);
 				while(list($key,$param) = each($control_array))
 				{
 					if(isset($this->$param) && $this->$param)
 					{
-						$image_width = 15;
-						if($param == 'edit')
-						{
-							$image_width = 30;
-						}
-
 						$control_link[] = array
 						(
 							'param_url' 			=> $this->$param,
 							'link_img'				=> $GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button'),
-							'img_width'				=> $image_width,
+							'link_icon'				=> '[ ' . lang($param) . ' ]',
+							'img_width'				=> ($param=='edit'?'30':'15'),
 							'lang_param_statustext'	=> lang($param)
 						);
 					}
