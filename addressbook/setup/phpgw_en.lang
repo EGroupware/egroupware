@@ -34,11 +34,13 @@ contact	common	en	Contact
 contact settings	admin	en	Contact Settings
 country	common	en	Country
 custom fields	addressbook	en	Custom Fields
+debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
 department	common	en	Department
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
+enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 extra	addressbook	en	Extra
@@ -60,6 +62,7 @@ home zip code	addressbook	en	Home ZIP Code
 import contacts	addressbook	en	Import Contacts
 import file	addressbook	en	Import File
 import from outlook	addressbook	en	Import from Outlook
+In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.       <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.       <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>
 isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
 ldap context for contacts	admin	en	LDAP context for contacts
@@ -67,6 +70,7 @@ ldap host for contacts	admin	en	LDAP host for contacts
 ldap root dn for contacts	admin	en	LDAP root dn for contacts
 ldap root pw for contacts	admin	en	LDAP root pw for contacts
 line 2	addressbook	en	Line 2
+mark records as private	addressbook	en	Mark records as private
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile

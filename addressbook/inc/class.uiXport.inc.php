@@ -134,8 +134,15 @@
 				$this->template->set_var('lang_cancel',lang('Cancel'));
 				$this->template->set_var('lang_cat',lang('Select Category'));
 				$this->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
+				$this->template->set_var('conversion',lang('Select the type of conversion'));
+				$this->template->set_var('export_path',lang('Enter the path to the export file here'));
 				$this->template->set_var('navbar_bg',$GLOBALS['phpgw_info']['theme']['navbar_bg']);
 				$this->template->set_var('navbar_text',$GLOBALS['phpgw_info']['theme']['navbar_text']);
+				$this->template->set_var('mark_private',lang('Mark records as private'));
+				$this->template->set_var('lang_cancel',lang('Debug output in browser'));
+				$this->template->set_var('help_import',lang('In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>'));
+				$this->template->set_var('none',lang('none'));
+				$this->template->set_var('debug_browser',lang('Debug output in browser'));
 				$this->template->set_var('import_text',lang('Import from LDIF, CSV, or VCard'));
 				$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import'));
 				$this->template->set_var('cat_link',$this->cat_option($this->cat_id,True,False));
