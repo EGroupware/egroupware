@@ -129,34 +129,34 @@
     // connect to the ldap server and return a handle
     function ldapConnect($host = '', $dn = '', $passwd = '')
     {
-   	global $phpgw_info;
+	   	global $phpgw_info;
    	
-   	if (! $host) {
-   	   $host = $phpgw_info['server']['ldap_host'];
-   	}
+	   	if (! $host) {
+	   	   $host = $phpgw_info['server']['ldap_host'];
+	   	}
 
-   	if (! $dn) {
-   	   $dn = $phpgw_info['server']['ldap_root_dn'];
-   	}
+	   	if (! $dn) {
+	   	   $dn = $phpgw_info['server']['ldap_root_dn'];
+	   	}
 
-   	if (! $passwd) {
-   	   $passwd = $phpgw_info['server']['ldap_root_passwd'];
-   	}
+	   	if (! $passwd) {
+   		   $passwd = $phpgw_info['server']['ldap_root_pw'];
+   		}
 
 	
-   	// connect to ldap server
-   	if (! $ds = ldap_connect($host)) {
-  		printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
-		  return False;
-   	}
+   		// connect to ldap server
+   		if (! $ds = ldap_connect($host)) {
+  			printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
+			return False;
+	   	}
 
-   	// bind as admin, we not to able to do everything
-   	if (! ldap_bind($ds,$dn,$passwd)) {
-  		printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
-		  return False;
-   	}
+   		// bind as admin, we not to able to do everything
+   		if (! ldap_bind($ds,$dn,$passwd)) {
+  			printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
+			return False;
+	   	}
 
-   	return $ds;
+	   	return $ds;
     }
 
     // This function is used if the developer wants to stop a running app in the middle of execution
