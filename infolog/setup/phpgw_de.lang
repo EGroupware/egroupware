@@ -46,7 +46,7 @@ back to projectlist	infolog	de	Zurück zur Gesamtliste
 view other subs	infolog	de	andere Teileprojekte anzeigen
 action	infolog	de	Befehle
 showing x - x of x	infolog	de	Einträge %1 - %2 von %3
-datecreated	infolog	de	Erstellt am
+datecreated	infolog	de	letzte Änderung
 you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum angegeben
 you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
 owner	infolog	de	Erstellt von
