@@ -228,12 +228,10 @@ function validate_and_submit() {
  <TD><SELECT NAME="access">
   <OPTION VALUE="private"<?php
    if ($access == "private" || ! $id) echo " SELECTED";?>><?php echo lang("Private"); ?></option>
-
-  <OPTION VALUE="group"<?php
-   if ($access == "public" || strlen($access)) echo " SELECTED";?>><?php echo lang("Group Public"); ?></option>
   <OPTION VALUE="public"<?php
    if ($access == "public") echo " SELECTED"; ?>><?php echo lang("Global Public"); ?></option>
-
+  <OPTION VALUE="group"<?php
+   if ($access == "public" || strlen($access)) echo " SELECTED";?>><?php echo lang("Group Public"); ?></option>
   </SELECT>
  </TD>
  </tr>
