@@ -26,6 +26,8 @@
 	{
 		var $dmap = array();
 		var $authed = False;
+		var $req_array = array();
+		var $resp_struct = array();
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
@@ -131,18 +133,30 @@
 					}
 					else
 					{
-						$this->req_array[] = $_req;
+						$this->req_array = $_req->getval();
 					}
 					break;
 				case 'array':
 					@reset($_req);
+					$ele = array();
 					while(list($key,$val) = @each($_req))
 					{
-						$this->req_array[$key] = $this->reqtoarray($val,True);
+						if($recursed)
+						{
+							$ele[$key] = $this->reqtoarray($val,True);
+						}
+						else
+						{
+							$this->req_array[$key] = $this->reqtoarray($val,True);
+						}
+					}
+					if($recursed)
+					{
+						return $ele;
 					}
 					break;
 				case 'string':
-				case 'int':
+				case 'integer':
 					if($recursed)
 					{
 						return $_req;
@@ -163,6 +177,7 @@
 			{
 				case 'array':
 					@reset($_res);
+					$ele = array();
 					while(list($key,$val) = @each($_res))
 					{
 						$ele[$key] = $this->build_resp($val,True);
@@ -300,45 +315,13 @@
 								$params = $p->getval();
 
 								// _debug_array($params);
-								if(gettype($params) == 'array')
-								{
-									@reset($params);
-									while(list($key,$val) = @each($params))
-									{
-										if(gettype($val) == 'array')
-										{
-											@reset($val);
-											while(list($key1,$val1) = @each($val))
-											{
-												$tmp = '';
-												if(get_class($val1) == 'xmlrpcval')
-												{
-													$tmp[$key1] = $val1->getval();
-													// echo '<br>Adding xmlrpc val1: ' . $tmp[$key1] . "\n";
-												}
-												else
-												{
-													// echo '<br>Adding val1: ' . $val1 . "\n";
-													$tmp[$key1] = $val1;
-												}
-											}
-											$_params[$key] = $tmp;
-										}
-										else
-										{
-											// echo '<br>Adding val: ' . $val . "\n";
-											$_params[$key] = $val;
-										}
-									}
-									$params = $_params;
-								}
-								//$this->reqtoarray($params);
+								$this->reqtoarray($params);
 								//_debug_array($this->req_array);
 
-								/* $res = ExecMethod($method,$this->req_array); */
-								$res = ExecMethod($method,$params);
+								$res = ExecMethod($method,$this->req_array);
+								/* $res = ExecMethod($method,$params); */
 								/* _debug_array($res);exit; */
-								$this->resp_struct = '';
+								$this->resp_struct = array();
 								$this->build_resp($res);
 								/*_debug_array($this->resp_struct); */
 
