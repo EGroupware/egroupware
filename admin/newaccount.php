@@ -116,10 +116,10 @@
   $t->set_var("n_passwd_2_value",$n_passwd_2);
 
   $t->set_var("lang_firstname",lang("First Name"));
-  $t->set_var("n_firstname_value",$firstname);
+  $t->set_var("n_firstname_value",$n_firstname);
 
   $t->set_var("lang_lastname",lang("Last Name"));
-  $t->set_var("n_lastname_value",$lastname);
+  $t->set_var("n_lastname_value",$n_lastname);
 
   $t->set_var("lang_groups",lang("Groups"));
   $group_select = '<select name="n_groups[]" multiple>';
