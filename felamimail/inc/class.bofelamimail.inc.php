@@ -1,9 +1,9 @@
 <?php
 	/***************************************************************************\
-	* phpGroupWare - FeLaMiMail                                                 *
+	* eGroupWare - FeLaMiMail                                                   *
 	* http://www.linux-at-work.de                                               *
 	* http://www.phpgw.de                                                       *
-	* http://www.phpgroupware.org                                               *
+	* http://www.egroupware.org                                                 *
 	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
 	* -------------------------------------------------                         *
 	* This program is free software; you can redistribute it and/or modify it   *
@@ -107,20 +107,20 @@
 		
 		function adminMenu()
 		{
-		    if ($GLOBALS['phpgw_info']['server']['account_repository'] == "ldap")
-		    {
-    		        $data = Array
-		        (
-				'description'   => 'email settings',
-				'url'           => '/index.php',
-				'extradata'     => 'menuaction=emailadmin.uiuserdata.editUserData'
-			);
+ 			if ($GLOBALS['phpgw_info']['server']['account_repository'] == "ldap")
+			{
+    		        	$data = Array
+		        	(
+					'description'   => 'email settings',
+					'url'           => '/index.php',
+					'extradata'     => 'menuaction=emailadmin.uiuserdata.editUserData'
+				);
 			
-			//Do not modify below this line
-			global $menuData;
+				//Do not modify below this line
+				global $menuData;
 			
-			$menuData[] = $data;
-		    }
+				$menuData[] = $data;
+			}
 		}
 		
 		function appendMessage($_folderName, $_header, $_body, $_flags)
@@ -493,9 +493,8 @@
 					is_array(imap_list($this->mbox,$mailboxString,'INBOX')))
 				{
 					$folders['INBOX'] = 'INBOX';
-					return $folders;
 				}
-				return false;
+				return $folders;
 			}
 		}
 		
