@@ -84,6 +84,37 @@
 		}
 
 		$cal_info->owner=$owner;
+
+		$parts = $cal_info->participants;
+		$part = Array();
+		for($i=0;$i<count($parts);$i++)
+		{
+			$acct_type = $phpgw->accounts->get_type(intval($parts[$i]));
+			if($acct_type == 'u')
+			{
+				$part[$parts[$i]] = 1;
+			}
+			elseif($acct_type == 'g')
+			{
+				$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
+				$members = $acct->members(intval($parts[$i]));
+				unset($acct);
+				if($members == False)
+				{
+					continue;
+				}
+				while($member = each($members))
+				{
+					$part[$member[1]['account_id']] = 1;
+				}
+			}
+		}
+
+		$cal_info->participants = Array();
+		while($parts = each($part))
+		{
+			$cal_info->participants[] = $parts[0];
+		}
 		
 		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
 		{
