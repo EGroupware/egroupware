@@ -2123,4 +2123,15 @@
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.012';
 		return $setup_info['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.13.012';
+	function phpgwapi_upgrade0_9_13_012()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->AlterColumn('phpgw_applications', 'app_tables', array('type' => 'text'));
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.013';
+		return $setup_info['phpgwapi']['currentver'];
+	}
 ?>
