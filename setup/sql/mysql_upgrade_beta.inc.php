@@ -770,6 +770,18 @@
         )";
         @$db->query($sql);
 
+      	$db->query("DROP TABLE phpgw_sessions",__LINE__,__FILE__);
+        $sql = "CREATE TABLE phpgw_sessions (
+          session_id        varchar(255) NOT NULL,
+          session_lid       varchar(255),
+          session_ip        varchar(255),
+          session_logintime int(11),
+          session_dla       int(11),
+          session_info      text,
+          UNIQUE sessionid (session_id)
+        )";
+        $db->query($sql);  
+
         // upgrade code ends here
         $currentver = "0.9.8pre3";
         update_version_table();

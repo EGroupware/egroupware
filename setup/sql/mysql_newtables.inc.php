@@ -57,20 +57,18 @@
   $db->query($sql);  
 
   $sql = "CREATE TABLE preferences (
-    preference_owner   varchar(20),
-    preference_name    varchar(50),
-    preference_value   varchar(50),
-    preference_appname varchar(50)
+    preference_owner       int,
+    preference_value       text
   )";
   $db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_sessions (
     session_id        varchar(255) NOT NULL,
     session_lid       varchar(255),
-    session_pwd       varchar(255),
     session_ip        varchar(255),
     session_logintime int(11),
     session_dla       int(11),
+    session_info      text,
     UNIQUE sessionid (session_id)
   )";
   $db->query($sql);  
@@ -291,7 +289,7 @@
           )";
   $db->query($sql);
 
-  $currentver = "0.9.7";
+  $currentver = "0.9.8pre3";
   $oldversion = $currentver;
   update_version_table();
 ?>
