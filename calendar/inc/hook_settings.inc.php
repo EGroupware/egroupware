@@ -176,3 +176,14 @@
 
 	create_check_box('Print calendars in black & white','print_black_white',
 		'Should the printer friendly view be in black & white or in color (as in normal view)?');
+
+	$freebusy_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$GLOBALS['phpgw_info']['user']['account_lid'].'&password='.$GLOBALS['phpgw_info']['user']['preferences']['calendar']['freebusy_pw'];
+	if ($freebusy_url[0] == '/')
+	{
+		$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
+	}
+	$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
+	create_check_box('Make freebusy information availible to not loged in persons?','freebusy',
+		$freebusy_help,'',False);
+	create_input_box('Password for not loged in users to your freebusy information?','freebusy_pw',
+		'If you dont set a password here, the information is availible to everyone, who knows the URL!!!');

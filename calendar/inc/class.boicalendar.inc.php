@@ -81,7 +81,8 @@
 	{
 		var $public_functions = array(
 			'import' => True,
-			'export' => True
+			'export' => True,
+			'freebusy' => True,
 		);
 
 		var $ical;
@@ -2846,7 +2847,7 @@
 			$str .= $this->fold('PRODID'.$this->build_text($ical['prodid'],'prodid'));
 			$str .= $this->fold('VERSION'.$this->build_text($ical['version'],'version'));
 			$str .= $this->fold('METHOD'.$this->build_text($ical['method'],'method'));
-			while(list($key,$vtype) = each($var))
+			foreach($var as $vtype)
 			{
 				if($ical[$vtype])
 				{
@@ -3344,9 +3345,10 @@
 
 		function export($params)
 		{
-			$event_id = ($params['l_event_id']?$params['l_event_id']:$GLOBALS['HTTP_GET_VARS']['cal_id']);
+			$event_id = $params['l_event_id'] ? $params['l_event_id'] : $_GET['cal_id'];
 			$this->chunk_split = $params['chunk_split'];
-			$method = ($params['method']?$params['method']:"publish");
+			$method = $params['method'] ? $params['method'] : 'publish';
+			$vtype = $params['vtype'] ? $params['vtype'] : 'event';
 
 			$string_array = Array(
 				'summary'		=> 'description',
@@ -3369,7 +3371,7 @@
 
 			$ical = $this->new_ical();
 
-			$this->set_var($ical['prodid'],'value','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
+			$this->set_var($ical['prodid'],'value','-//eGroupWare//eGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
 			$this->set_var($ical['version'],'value','2.0');
 			$this->set_var($ical['method'],'value',strtoupper($method));
 
@@ -3395,14 +3397,16 @@
 				$so_event = $GLOBALS['uicalendar']->bo->so;
 			}
 
-			while(list($key,$value) = each($ids))
+			foreach($ids as $event)
 			{
 				$ical_event = Array();
-				$event = $so_event->read_entry($value);
-
+				if (!is_array($event))
+				{
+					$event = $so_event->read_entry($event);
+				}
 				if($event['alarm'])
 				{
-					while(list($dummy,$alarm) = each($event['alarm']))
+					foreach($event['alarm'] as $alarm)
 					{
 						$ical_temp = Array();
 						$ical_temp['action']['value'] = 'DISPLAY';
@@ -3428,8 +3432,7 @@
 				$this->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'vevent');
 				$mod_mktime = $so_event->maketime($event['modtime']);
 				$this->parse_value($ical_event,'last_modified',date('Ymd\THis\Z',$mod_mktime),'vevent');
-				@reset($string_array);
-				while(list($ical_value,$event_value) = each($string_array))
+				foreach($string_array as $ical_value => $event_value)
 				{
 					if($event[$event_value])
 					{
@@ -3440,9 +3443,7 @@
 				if ($event['category'])
 				{
 					$cats->categories(0,'calendar');
-					$category = explode(',',$event['category']);
-					@reset($category);
-					while(list($key,$cat) = each($category))
+					foreach(explode(',',$event['category']) as $cat)
 					{
 						$_cat = $cats->return_single($cat);
 						$cat_string[] = $_cat[0]['name'];
@@ -3457,8 +3458,7 @@
 					{
 						$db = $GLOBALS['phpgw']->db;
 					}
-					@reset($event['participants']);
-					while(list($part,$status) = each($event['participants']))
+					foreach($event['participants'] as $part => $status)
 					{
 						$GLOBALS['phpgw']->accounts->get_account_name($part,$lid,$fname,$lname);
 						$name = $fname.' '.$lname;
@@ -3555,8 +3555,7 @@
 					$exceptions = $event['recur_exception'];
 					if(is_array($exceptions))
 					{
-						@reset($exceptions);
-						while(list($key,$except_datetime) = each($exceptions))
+						foreach($exceptions as $except_datetime)
 						{
 							$ical_event['exdate'][] = $this->switch_date(date('Ymd\THis\Z',$except_datetime));
 						}
@@ -3565,8 +3564,46 @@
 				$ical_events[] = $ical_event;
 			}
 
-			$ical['event'] = $ical_events;
-			return $this->build_ical($ical);
+			$ical[$vtype] = $ical_events;
+
+			// iCals are by default utf-8
+			return $GLOBALS['phpgw']->translation->convert($this->build_ical($ical),$GLOBALS['phpgw']->translation->charset(),'utf-8');
+		}
+
+		function freebusy($params=False)
+		{
+			if (!$params) $params = $_GET;
+			$user  = is_numeric($params['user']) ? (int) $params['user'] : $GLOBALS['phpgw']->accounts->name2id($params['user']);
+			$start = isset($params['start']) ? $params['start'] : date('Ymd');
+			$end   = isset($params['end']) ? $params['end'] : (date('Y')+1).date('md');
+
+			$this->bo = CreateObject('calendar.bocalendar');
+			$events_per_day = $this->bo->store_to_cache(array(
+				'owner'  => $user,
+				'syear'  => (int) substr($start,0,4),
+				'smonth' => (int) substr($start,4,2),
+				'sday'   => (int) substr($start,6,2),
+				'eyear'  => (int) substr($end,0,4),
+				'emonth' => (int) substr($end,4,2),
+				'eday'   => (int) substr($end,6,2),
+				'no_doubles' => True,	// report events only on the startday
+			));
+			if (!is_array($events_per_day)) $events_per_day = array();
+			$ids = array();
+			foreach($events_per_day as $day => $events)
+			{
+				foreach($events as $event)
+				{
+					$ids[] = $event;
+				}
+			}
+			$browser = CreateObject('phpgwapi.browser');
+			$browser->content_header($GLOBALS['phpgw']->accounts->id2name($user).'.ifb','text/calendar');
+
+			echo $this->export(array(
+				'vtype'      => 'freebusy',
+				'l_event_id' => $ids,
+			));
 		}
 
 		function debug($str='')

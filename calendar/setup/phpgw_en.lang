@@ -12,6 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 add a single entry by passing the fields.	calendar	en	Add a single entry by passing the fields.
 add alarm	calendar	en	Add Alarm
 add contact	calendar	en	Add Contact
+add or update a single entry by passing the fields.	calendar	en	Add or update a single entry by passing the fields.
 added	calendar	en	Added
 address book	calendar	en	Address Book
 alarm	calendar	en	Alarm
@@ -26,6 +27,10 @@ are you sure\nyou want to\ndelete these alarms?	calendar	en	Are you sure\nyou wa
 are you sure\nyou want to\ndelete this entry ?	calendar	en	Are you sure\nyou want to\ndelete this entry ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this entry ?\n\nThis will delete\nthis entry for all users.
 are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this single occurence ?\n\nThis will delete\nthis entry for all users.
+are you surenyou want tondelete these alarms?	calendar	en	
+are you surenyou want tondelete this entry ?	calendar	en	
+are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	en	
+are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	en	
 before the event	calendar	en	before the event
 brief description	calendar	en	Brief Description
 business	calendar	en	Business
@@ -73,7 +78,7 @@ disabled	calendar	en	disabled
 display interval in day view	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
-displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	en	Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	en	Do you want to receive a regulary summary of your appointsments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summarys.<br>It is only sent when you have any appointments on that day or week.
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
@@ -108,6 +113,7 @@ fri	calendar	en	Fri
 full description	calendar	en	Full Description
 fullname of person to notify	calendar	en	Fullname of person to notify
 generate printer-friendly version	calendar	en	Generate printer-friendly version
+global categories	calendar	en	Global Categories
 global public and group public	calendar	en	Global Public and group public
 global public only	calendar	en	Global Public Only
 go!	calendar	en	Go!
@@ -124,6 +130,7 @@ hours	calendar	en	hours
 i participate	calendar	en	I Participate
 ical / rfc2445	calendar	en	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays falling on a weekend, are taken on the monday after.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	en	If you dont set a password here, the information is availible to everyone, who knows the URL!!!
 ignore conflict	calendar	en	Ignore Conflict
 import	calendar	en	Import
 import csv-file	common	en	Import CSV-File
@@ -135,9 +142,11 @@ last	calendar	en	last
 lastname of person to notify	calendar	en	Lastname of person to notify
 length shown<br>(emtpy for full length)	calendar	en	Length shown<br>(emtpy for full length)
 length<br>(<= 255)	calendar	en	Length<br>(<= 255)
+list all categories.	calendar	en	List all categories.
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
+make freebusy information availible to not loged in persons?	calendar	en	Make freebusy information availible to not loged in persons?
 matrixview	calendar	en	Matrix View
 minutes	calendar	en	minutes
 mo	calendar	en	M
@@ -178,6 +187,7 @@ overlap holiday	calendar	en	overlap holiday
 participant	calendar	en	Participant
 participants	calendar	en	Participants
 participates	calendar	en	Participates
+password for not loged in users to your freebusy information?	calendar	en	Password for not loged in users to your freebusy information?
 people holiday	calendar	en	people holiday
 permission denied	calendar	en	Permission denied
 planner	calendar	en	Planner
@@ -222,6 +232,7 @@ set a year only for one-time / non-regular holidays.	calendar	en	Set a Year only
 set new events to private	calendar	en	Set new events to private
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	en	Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	en	Should the mini calendars by printed / displayed in the printer friendly views ?
 should the printer friendly view be in black & white or in color (as in normal view)?	calendar	en	Should the printer friendly view be in black & white or in color (as in normal view)?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	en	Should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?
@@ -248,6 +259,7 @@ test import (show importable records <u>only</u> in browser)	calendar	en	Test Im
 text	calendar	en	Text
 th	calendar	en	T
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	en	The following conflicts with the suggested time:<ul>%1</ul>
+the freebusy information for user '%1' is not availible to not loged in users !!!	calendar	en	The freebusy information for user '%1' is not availible to not loged in users !!!
 the user %1 is not participating in this event!	calendar	en	The user %1 is not participating in this event!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	en	There was an error trying to connect to your news server.<br>Please contact your admin to check the news servername, username or password.
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
@@ -275,6 +287,7 @@ today	calendar	en	Today
 translation	calendar	en	Translation
 tu	calendar	en	T
 tue	calendar	en	Tue
+unknow user '%1' !!!	calendar	en	Unknow user '%1' !!!
 update a single entry by passing the fields.	calendar	en	Update a single entry by passing the fields.
 updated	calendar	en	Updated
 use end date	calendar	en	Use End date
@@ -291,6 +304,7 @@ which of calendar view do you want to see, when you start calendar ?	calendar	en
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
 workdayends	calendar	en	workdayends
+wrong password for user '%1' !!!	calendar	en	Wrong password for user '%1' !!!
 yearly	calendar	en	Yearly
 yearview	calendar	en	Year View
 you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurence, not both !!!
