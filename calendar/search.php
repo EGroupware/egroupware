@@ -45,21 +45,25 @@
      $ids = array();
      $words = split(" ", $keywords);
      for ($i = 0; $i < count($words); $i++) {
-         $sql = "SELECT DISTINCT webcal_entry.cal_id, webcal_entry.cal_name, "
-              . "webcal_entry.cal_date,webcal_entry_repeats.cal_type "
-              . "FROM webcal_entry, webcal_entry_user, webcal_entry_repeats, "
-	         . "webcal_entry_groups WHERE (UPPER(webcal_entry.cal_name) LIKE UPPER('%"
-              . $words[$i] . "%') OR UPPER(webcal_entry.cal_description) "
-              . "LIKE UPPER('%" .  $words[$i] . "%')) AND (webcal_entry_user.cal_login = '"
-	         . $phpgw_info["user"]["account_id"] . "' OR (webcal_entry.cal_access='public' "
-	         . sql_search_calendar() . ")) ORDER BY cal_date";
+         $sql = "SELECT DISTINCT calendar_entry.cal_id, calendar_entry.cal_name, "
+              . "calendar_entry.cal_datetime "
+              . "FROM calendar_entry, calendar_entry_user "
+	      . "WHERE "
+	      . "(UPPER(calendar_entry.cal_name) LIKE UPPER('%".$words[$i]."%') OR "
+	      . " UPPER(calendar_entry.cal_description) LIKE UPPER('%".$words[$i]."%')) AND "
+	      . "calendar_entry_user.cal_id=calendar_entry.cal_id AND "
+	      . "(((calendar_entry_user.cal_login=".$phpgw_info["user"]["account_id"].") AND "
+	      . "(calendar_entry.cal_access='private')) "
+	      . $phpgw->calendar->group_search()
+	      . "OR calendar_entry.cal_access='public') "
+	      . "ORDER BY cal_datetime";
 
          $phpgw->db->query($sql);
          while ($phpgw->db->next_record()) {
             $matches++;
             $ids[strval( $phpgw->db->f(0) )]++;
             $info[strval( $phpgw->db->f(0) )] = $phpgw->db->f(1) . " ("
-                                         . date_to_str($phpgw->db->f(2)) . ")";
+                                         . $phpgw->common->show_date($phpgw->db->f(2)) . ")";
          }
      }
   }
