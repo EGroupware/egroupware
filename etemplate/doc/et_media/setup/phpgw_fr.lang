@@ -1,0 +1,23 @@
+%d matches on search criteria	et_media	fr	%d occurences sur les critères de recherche
+author	et_media	fr	Auteur
+cancel	et_media	fr	Annuler
+clears the form, without changing anything	et_media	fr	Remet à vide le formulaire, sans rien changer
+click here to edit the entry	et_media	fr	Cliquez ici pour modifier l'entrée
+delete	et_media	fr	Effacer
+deletes an entry	et_media	fr	Efface une entrée
+description	et_media	fr	Description
+edit	et_media	fr	Modifier
+entry saved	et_media	fr	Entrée enregistrée
+error: writeing !!!	et_media	fr	Erreur: à l'écriture !!!
+etemplates mediadb	et_media	fr	eTemplates MediaDB
+here goes the name of the publication / record	et_media	fr	Ici on met le nom de la publication / l'enregistrement
+name	et_media	fr	Nom
+nothing matched search criteria !!!	et_media	fr	Aucune occurence sur les critères de recherche !!!
+please use name, first name	et_media	fr	SVP utilisez nom, prénom
+read	et_media	fr	Lire
+reads or searches for entries matching the criteria above	et_media	fr	Lit ou recherche des entrées qui correspondent aux critères ci-dessus
+save	et_media	fr	Enregistrer
+saves the change to the db	et_media	fr	Enregistre les changements dans la base de données
+select the type fitting most	et_media	fr	Choisissez le type qui correspond le mieux
+type	et_media	fr	Type
+we have a fulltext search using that description	et_media	fr	Nous avons une recherche en texte intégral qui utilise cette description
