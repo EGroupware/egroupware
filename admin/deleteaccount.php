@@ -30,6 +30,8 @@
   }
 
   if (($account_id) && (! $confirm)) {
+     // the account can have special chars/white spaces, if it is a ldap dn
+     $account_id = rawurlencode($account_id);
      ?>
      <center>
       <table border=0 with=65%>
