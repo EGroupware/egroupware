@@ -174,7 +174,8 @@
 		{
 			$string = preg_replace('/\0+/', '', $string);
 			$string = preg_replace('/(\\\\0)+/', '', $string);
-			$string = preg_replace('/\xad+/', '', $string); # deals with Opera "feature"
+			# commented out, because it breaks chinese chars
+			#$string = preg_replace('/\xad+/', '', $string); # deals with Opera "feature"
 			return $string;
 		} # function _no_null
 
