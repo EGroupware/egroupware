@@ -72,14 +72,14 @@
 
        <?php if ($phpgw_info["server"]["usrtplchoice"] == "user_choice"){ ?>
        <tr>
-         <?php $selected[$phpgw_info["user"]["preferences"]["common"]["template_set"]] = " selected"; ?>
+         <?php $selected_template[$phpgw_info["user"]["preferences"]["common"]["template_set"]] = " selected"; ?>
         <td>Interface/Template Selection:<br></td>
         <td>
          <select name="settings[template_set]">
         <?php
           $templates = $phpgw->common->list_templates();
           while (list ($key, $value) = each ($templates)){
-            echo '<option value="'.$key.'" '.$selected[$key].'>'.$templates[$key]["title"].'</option>';
+            echo '<option value="'.$key.'" '.$selected_template[$key].'>'.$templates[$key]["title"].'</option>';
           }
         ?>
          </select>
@@ -88,14 +88,14 @@
       <?php } ?>
 
        <tr>
-         <?php $selected[$phpgw_info["user"]["preferences"]["common"]["theme"]] = " selected"; ?>
+         <?php $selected_theme[$phpgw_info["user"]["preferences"]["common"]["theme"]] = " selected"; ?>
         <td>Theme (colors/fonts) Selection:<br></td>
         <td>
          <select name="settings[theme]">
         <?php
           $themes = $phpgw->common->list_themes();
           while (list ($key, $value) = each ($themes)){
-            echo '<option value="'.$value.'" '.$selected[$value].'>'.$value.'</option>';
+            echo '<option value="'.$value.'" '.$selected_theme[$value].'>'.$value.'</option>';
           }
         ?>
          </select>
