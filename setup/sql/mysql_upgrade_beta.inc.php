@@ -1385,6 +1385,16 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre23';
 	}
 
+	$test[] = '0.9.10pre23';
+	function upgrade0_9_10pre23()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("UPDATE phpgw_addressbook SET tid='n' WHERE tid is null",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
+	}
 
   reset ($test);
   while (list ($key, $value) = each ($test)){
