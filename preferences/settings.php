@@ -35,9 +35,10 @@
        </tr>
 
        <tr>
+         <?php $selected[$phpgw_info["user"]["preferences"]["common"]["template_set"]] = " selected"; ?>
         <td>Interface/Template Selection:<br></td>
         <td>
-         <select name="$selected[$phpgw_info["user"]["preferences"]["common"]["template_set"]]">
+         <select name="settings[template_set]">
         <?php
           $templates = $phpgw->common->list_templates();
           while (list ($key, $value) = each ($templates)){
