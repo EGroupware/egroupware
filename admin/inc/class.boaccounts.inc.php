@@ -474,6 +474,7 @@
 			if($group_info['account_name'] && $old_group_info['account_lid'] <> $group_info['account_name'])
 			{
 				$group->data['account_lid'] = $group_info['account_name'];
+				$group->data['firstname'] = $group_info['account_name'];
 
 				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
 				if (! @rename($basedir . $old_group_info['account_lid'], $basedir . $group_info['account_name']))
