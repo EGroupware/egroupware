@@ -617,7 +617,7 @@
 
 			if (!$values['parent'] || $values['parent'] == 0)
 			{
-				$this->db->query("UPDATE phpgw_categories SET cat_main=" . $max . " WHERE cat_id=" . $max,__LINE__,__FILE__);
+				$this->db->query('UPDATE phpgw_categories SET cat_main=' . $max . ' WHERE cat_id=' . $max,__LINE__,__FILE__);
 			}
 			return $max;
 		}
@@ -770,8 +770,7 @@
 				}
 				else
 				{
-					$values['main']		= intval($values['cat_id']);
-					$values['parent']	= $values['level'] = 0;	// parent need to be set to 0, as it can be ''
+					$values['main'] = intval($values['cat_id']);
 				}
 			}
 
@@ -780,7 +779,7 @@
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $values['name'] . "', cat_description='" . $values['descr']
 					. "', cat_data='" . $values['data'] . "', cat_parent=" . intval($values['parent']) . ", cat_access='"
-					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . $values['level'] . ", last_mod=" . time()
+					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . intval($values['level']) . ", last_mod=" . time()
 					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($values['cat_id']);
 			$this->db->query($sql,__LINE__,__FILE__);
 			return intval($values['cat_id']);
@@ -813,12 +812,6 @@
 				$cat_id	= $data['cat_id'];
 				$item	= (isset($data['item'])?$data['item']:'name');
 			}
-
-			if ($cat_id == '')
-			{
-				return '--';
-			}
-
 			switch($item)
 			{
 				case 'name':	$value = 'cat_name'; break;
@@ -829,12 +822,10 @@
 				case 'parent':	$value = 'cat_parent'; break;
 			}
 
-			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id=" . $cat_id,__LINE__,__FILE__);
-			$this->db->next_record();
-
-			if ($this->db->f($value))
+			$this->db->query('SELECT ' . $value . ' FROM phpgw_categories WHERE cat_id=' . intval($cat_id),__LINE__,__FILE__);
+			if ($this->db->next_record())
 			{
-				return $this->db->f($value);
+				return $this->db->f(0);
 			}
 			else
 			{
