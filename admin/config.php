@@ -71,7 +71,7 @@
 	echo parse_navbar();
 
 	$t->set_var('title',lang('Site Configuration'));
-	$t->set_var('action_url',$phpgw->link('/admin/config.php'));
+	$t->set_var('action_url',$phpgw->link('/admin/config.php','appname=' . $appname));
 	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 	$t->set_var('th_text',$phpgw_info['theme']['th_text']);
 	$t->set_var('row_on',$phpgw_info['theme']['row_on']);
