@@ -18,8 +18,8 @@
 	include($appdir . 'tables_update_0_9_14.inc.php');
 
 	/* This is since the last release */
-	$test[] = '0.9.13.017';
-	function phpgwapi_upgrade0_9_13_017()
+	$test[] = '0.9.13.018';
+	function phpgwapi_upgrade0_9_13_018()
 	{
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.001';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
