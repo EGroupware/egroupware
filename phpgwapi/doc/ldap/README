@@ -1,3 +1,10 @@
 The following are for use with openldap 1.X
 	phpgw.oc.conf	defines the phpgwAccount objectclass
 	phpgw.at.conf	defines our special attributes
+
+They should be copied to /etc/openldap and added to
+/etc/openldap/slapd.conf:
+
+include		/etc/openldap/phpgw.oc.conf
+include		/etc/openldap/phpgw.at.conf
+
