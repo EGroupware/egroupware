@@ -39,15 +39,22 @@
 		}
 	}
 
+	if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"] && $cat_id) {
+		$phpgw->preferences->delete("addressbook","default_category");
+		$phpgw->preferences->add("addressbook","default_category",$cat_id);
+		$phpgw->preferences->save_repository();
+	}
+
+
 	if ($AddVcard){
 		Header("Location: " . $phpgw->link("/addressbook/vcardin.php"));
 	} else if ($add_email) {
 		list($fields["firstname"],$fields["lastname"]) = explode(" ", $name);
 		$fields["email"] = $add_email;
-		addressbook_form("","add.php","Add",$fields);
+		addressbook_form("","add.php","Add",$fields,'',$cat_id);
 	} else if (! $submit && ! $add_email) {
 		// Default
-		addressbook_form("","add.php","Add","",$customfields);
+		addressbook_form("","add.php","Add","",$customfields,$cat_id);
 	} elseif ($submit && $fields) {
 		// This came from the view form, Copy entry
 		$extrafields = array(

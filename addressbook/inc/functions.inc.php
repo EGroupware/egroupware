@@ -33,6 +33,7 @@
 		}
 	}
 
+	// Return a select form element with the categories options in it
 	function cat_option($cat_id='',$notall=False) {
 		global $phpgw_info;
 		// Setup all and none first
@@ -53,12 +54,7 @@
 
 		// Get global and app-specific category listings
 		$cats       = CreateObject('phpgwapi.categories');
-
-		$cats->categories($phpgw_info['user']['account_id'],'phpgw');
-		$cats_link .= $cats->formated_list('select','',$cat_id);
-
-		$cats->categories($phpgw_info['user']['account_id'],'addressbook');
-		$cats_link .= $cats->formated_list('select','',$cat_id);
+		$cats_link .= $cats->formated_list('select','all',$cat_id,True);
 		$cats_link .= '</select>';
 		return $cats_link;
 	}
@@ -198,7 +194,7 @@
 	}
 
 	// Folowing used for add/edit
-	function addressbook_form($format,$action,$title="",$fields="",$customfields="") {
+	function addressbook_form($format,$action,$title="",$fields="",$customfields="",$cat_id="") {
 		global $phpgw, $phpgw_info;
      
 		$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
@@ -258,8 +254,10 @@
 		$url          = $fields["url"];
 		$pubkey       = $fields["pubkey"];
 		$access       = $fields["access"];
-		$cat_id       = $fields["cat_id"];
-	
+		if(!$cat_id) {
+			$cat_id   = $fields["cat_id"];
+		}
+
 		$cats_link    = cat_option($cat_id,True);
 
 		if ($access == 'private') {
