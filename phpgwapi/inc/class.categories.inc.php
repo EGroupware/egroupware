@@ -322,6 +322,7 @@
 				return $s;
 			}
 		}
+
 		/*!
 		@function add
 		@abstract add categories
@@ -330,43 +331,31 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '',$cat_access = '',$cat_main)
+		function add($cat_values)
 		{
-
-			if ($cat_parent && (!$cat_main))
+			if ($cat_values['parent'] && $cat_values['parent'] != 0)
 			{
-				$cat_main = $cat_parent;
+				$cat_values['main'] = $this->id2name($cat_values['parent'],'main');
+				$cat_values['level'] = $this->id2name($cat_values['parent'],'level')+1;
 			}
 
-			if ($cat_main && ($cat_main > 0))
+			$cat_values[descr] = addslashes($cat_values['descr']);
+			$cat_values['name'] = addslashes($cat_values['name']);
+
+			$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
+							. "cat_description,cat_data,cat_main,cat_level) values ('" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access'] . "','"
+							. $this->app_name . "','" . $cat_values['name'] . "','" . $cat_values['descr']
+							. "','" . $cat_values['data'] . "','" . $cat_values['main'] . "','" . $cat_values['level'] . "')",__LINE__,__FILE__);
+
+			if (!$cat_values['parent'] || $cat_values['parent'] == 0)
 			{
-				if (!$cat_parent)
-				{
-					$cat_parent = $cat_main;
-				}
-
-				$this->db2->query("select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
-				$this->db2->next_record();
-				$cat_level = $this->db2->f('cat_level')+1;
-
-				$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
-								. "cat_description,cat_data,cat_main,cat_level) values ('$cat_parent','" . $this->account_id . "','$cat_access','"
-								. $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
-								. "','$cat_data','$cat_main','$cat_level')",__LINE__,__FILE__);
-			}
-			else 
-			{
-				$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
-								. "cat_description,cat_data,cat_main,cat_level) values ('$cat_parent','" . $this->account_id . "','$cat_access','"
-								. $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
-								. "','$cat_data','$cat_main','$cat_level')",__LINE__,__FILE__);
-
 				$this->db2->query("select max(cat_id) as max from phpgw_categories",__LINE__,__FILE__);
 				$this->db2->next_record();
 				$this->db->query("update phpgw_categories set cat_main='" . $this->db2->f('max') . "' where cat_id='"
 								. $this->db2->f('max') . "'",__LINE__,__FILE__);
 			}
 		}
+
 		/*!
 		@function delete
 		@abstract delete category
@@ -390,31 +379,27 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '',$cat_access = '',$cat_main)
+		function edit($cat_values)
 		{
-			if ($cat_parent && (!$cat_main))
+			if ($cat_values['parent'] && ($cat_values['parent'] != 0))
 			{
-				$cat_main = $cat_parent;
-			}
-
-			if ($cat_parent && ($cat_parent > 0))
-			{
-				$this->db2->query("select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
-				$this->db2->next_record();
-				$cat_level = $this->db2->f('cat_level')+1;
-
-				$this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
-								. "cat_description='" . addslashes($cat_description) . "', cat_data='"
-								. "$cat_data', cat_parent='$cat_parent', cat_access='$cat_access', cat_main='$cat_main', cat_level='$cat_level' "
-								. "where cat_appname='" . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
+				$cat_values['main'] = $this->id2name($cat_values['parent'],'main');
+				$cat_values['level'] = $this->id2name($cat_values['parent'],'level')+1;
 			}
 			else
 			{
-				$this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
-								. "cat_description='" . addslashes($cat_description) . "', cat_data='"
-								. "$cat_data', cat_parent='$cat_parent', cat_access='$cat_access', cat_main='$cat_id', cat_level='$cat_level' "
-								. "where cat_appname='" . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
+				$cat_values['main'] = $cat_values['id'];
+				$cat_values['level'] = 0;
 			}
+
+			$cat_values['descr'] = addslashes($cat_values['descr']);
+			$cat_values['name'] = addslashes($cat_values['name']);
+
+			$this->db->query("update phpgw_categories set cat_name='" . $cat_values['name'] . "', cat_description='"
+							. $cat_values['descr'] . "', cat_data='" . $cat_values['data'] . "', cat_parent='"
+							. $cat_values['parent'] . "', cat_access='" . $cat_values['access'] . "', cat_main='"
+							. $cat_values['main'] . "', cat_level='" . $cat_values['level'] . "' "
+							. "where cat_appname='" . $this->app_name . "' and cat_id='" . $cat_values['id'] . "'",__LINE__,__FILE__);
 		}
 
 		function name2id($cat_name)
@@ -433,6 +418,7 @@
 				case 'name':	$value = 'cat_name'; break;
 				case 'owner':	$value = 'cat_owner'; break;
 				case 'main':	$value = 'cat_main'; break;
+				case 'level':	$value = 'cat_level'; break;
 			 }
 
 			$this->db->query("select $value from phpgw_categories where cat_id='"
