@@ -87,7 +87,7 @@
 		$fields["tel_home"]				= $hphone;
 		$fields["tel_fax"]				= $fax;
 		$fields["tel_pager"]			= $pager;
-		$fields["tel_cel"]				= $mphone;
+		$fields["tel_cell"]				= $mphone;
 		$fields["tel_msg"]				= $ophone;
 		$fields["tel_prefer"]           = $tel_prefer;
 
