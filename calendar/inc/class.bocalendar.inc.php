@@ -134,7 +134,7 @@
 			$owner = (isset($GLOBALS['HTTP_GET_VARS']['owner'])?$GLOBALS['HTTP_GET_VARS']['owner']:'');
 			$owner = ($owner=='' && isset($GLOBALS['HTTP_POST_VARS']['owner'])?$GLOBALS['HTTP_POST_VARS']['owner']:$owner);
 
-			if(isset($owner))
+			if(isset($owner) && $owner!='')
 			{
 				$this->owner = intval($owner);
 			}
