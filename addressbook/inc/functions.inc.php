@@ -37,16 +37,16 @@
 	function cat_option($cat_id='',$notall=False,$java=True) {
 		global $phpgw_info;
 		if ($java) {
-			$jselect = " onChange=\"this.form.submit();\"";
+			$jselect = ' onChange="this.form.submit();"';
 		}
 		// Setup all and none first
-		$cats_link  = "\n<select name=\"cat_id\"$jselect>\n";
+		$cats_link  = "\n" .'<select name="cat_id"' .$jselect .">\n";
 		if (!$notall) {
-			$cats_link .= "<option value=\"\"";
+			$cats_link .= '<option value=""';
 			if ($cat_id=="all") {
-				$cats_link .= " selected";
+				$cats_link .= ' selected';
 			}
-			$cats_link .= "></option>".lang("all")."\n";
+			$cats_link .= '>'.lang("all").'</option>'."\n";
 		}
 
 		// Get global and app-specific category listings
