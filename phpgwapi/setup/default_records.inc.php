@@ -152,6 +152,7 @@
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name, available) VALUES ('zu','Zulu','No')");
 
 	$oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','sessions_checkip','True')");
+	$oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','image_type','1')");
 
 	$oProc->query("INSERT INTO phpgw_interserv(server_name,server_host,server_url,trust_level,trust_rel,server_mode) VALUES ('eGW demo',NULL,'http://www.egroupware.org/egroupware/xmlrpc.php',99,0,'xmlrpc')");
 
