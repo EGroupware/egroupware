@@ -201,11 +201,11 @@ class calendar extends calendar_
 
 	function link_to_entry($event,$month,$day,$year)
 	{
-		global $phpgw, $phpgw_info;
+		global $phpgw, $phpgw_info, $grants;
 
 		$str = '';
 		$is_private = $this->is_private($event,$this->owner);
-		$editable = ((!$this->printer_friendly) || ((($is_private && (!!($grants[$this->owner] & PHPGW_ACL_PRIVATE) == True)) || !$is_private) && (!!($grants[$this->owner] & PHPGW_ACL_EDIT) == True)));
+		$editable = ((!$this->printer_friendly) && (($is_private && ($grants[$this->owner] & PHPGW_ACL_PRIVATE)) || !$is_private));
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('remove');
 		$templates = Array(
@@ -344,7 +344,7 @@ class calendar extends calendar_
 		global $phpgw, $phpgw_info, $grants;
 
 		if($owner == 0) { $owner = $phpgw_info['user']['account_id']; }
-		if ($owner == $phpgw_info['user']['account_id'] || (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True) || ($event->public == 1))
+		if ($owner == $phpgw_info['user']['account_id'] || ($grants[$owner] & PHPGW_ACL_PRIVATE) || ($event->public == 1))
 		{
 			$is_private  = False;
 		}
