@@ -31,7 +31,6 @@
 		$phpgw->preferences->add('calendar','workdayends');
 		$phpgw->preferences->add('calendar','defaultcalendar');
 		$phpgw->preferences->add('calendar','defaultfilter');
-		$phpgw->preferences->add('calendar','locale');
 		$phpgw->preferences->add('calendar','interval');
 		if ($mainscreen_showevents == True)
 		{
@@ -222,9 +221,6 @@
 	$str = '<input type="checkbox" name="display_minicals" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_minicals'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_minicals'] == True?' checked':'').'>';
 	display_item(lang('Display mini calendars when printing'),$str);
 
-	$country = CreateObject('phpgwapi.country');
-	display_item(lang('Select country for including holidays'),$country->form_select($phpgw_info['user']['preferences']['calendar']['locale'],'locale'));
-	
 	$p->pparse('out','pref');
 	$phpgw->common->phpgw_footer();
 ?>
