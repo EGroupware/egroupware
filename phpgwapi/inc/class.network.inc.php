@@ -78,7 +78,10 @@
 			if(floor(phpversion()) == 4)
 			{
 				$this->socket = fsockopen($server,$port,$errcode,$errmsg,$timeout);
-				socket_set_timeout($this->socket,$timeout,0);
+				if($this->socket)
+				{
+					socket_set_timeout($this->socket,$timeout,0);
+				}
 			}
 			else
 			{
