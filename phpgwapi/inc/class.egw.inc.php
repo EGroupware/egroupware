@@ -26,15 +26,15 @@
 	/* $Id$ */
 
 	/**
-	* Parent class for the phpgwAPI
+	* Parent class for the egwAPI
 	* Parent class. Has a few functions but is more importantly used as a parent class for everything else.
 	* @author	Dan Kuykendall <dan@kuykendall.org>
 	* @copyright LGPL
-	* @package phpgwapi
+	* @package api
 	* @access	public
 	*/
 
-	class phpgw
+	class egw
 	{
 		var $accounts;
 		var $applications;
