@@ -35,9 +35,10 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","groups"));
 
+        $phpgw->accounts->add_app($n_group_permissions);        
         $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
 				. "('$n_group','"
-				. $phpgw->accounts->array_to_string("none",$n_group_permissions) . "')");
+				. $phpgw->accounts->add_app("",True) . "')");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
         $phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
