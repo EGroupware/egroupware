@@ -1,4 +1,4 @@
-This is a preliminary etiquette doc for phpGroupWare. Please check it from time to
+This is a preliminary etiquette doc for eGroupWare. Please check it from time to
 time for updates:
 
 phpGroupWare is a large project, with possibly over 50 developers at the time
@@ -6,9 +6,8 @@ of this writing. In its current location, it is impossible to restrict access
 for each developer to a particular module or application. As such, it is
 important that some basic rules be followed when developing in CVS:
 
-1.  Many of the developers, and all of the core developers, frequent the IRC
-	channel #phpgroupware on irc.openprojects.net. Please take the time to
-	drop by and introduce yourself.
+1.  Many of the developers frequent the IRC channel #egroupware on
+	irc.freenode.net. Please take the time to drop by and introduce yourself.
 
 2.  Please see the coding_standard.txt document in this folder for some basic
 	guidelines for code formatting. PHP can be interpreted in many forms,
@@ -21,7 +20,7 @@ important that some basic rules be followed when developing in CVS:
 	head of each file.
 
 4.  If you are unable to contact the author, please contact at least one of the
-	project leads [Seek3r, jengo, skeeter, Milosch, ceb] or a core developer.
+	project leads [ ralf, lars, reinerj ] or a core developer.
 
 5.  If you have just joined the project, or have always kept to your own
 	application, etc., then please exercise caution when committing changes
@@ -45,8 +44,8 @@ important that some basic rules be followed when developing in CVS:
 	API or of another application's tables.
 
 8.  Before importing a new application, or adding many files | directories to
-	existing modules, please contact one of the project leads [Seek3r, jengo,
-	skeeter, Milosch, ceb].
+	existing modules, please contact one of the project leads [ ralf, lars,
+	reinerj ].
 
 9.  Please do not import a new application that does not have some basic
 	functionality in place or at least a description and basic documentation.
