@@ -413,16 +413,19 @@
 							$lines = file($appfile);
 							foreach($lines as $line)
 							{
-								$line = eregi_replace("\t+", "\t", $line);
-								$_f_buffer = split("\t", $line);
-								if( count($_f_buffer) > 4 )
-								{
-									$this->line_rejected[] = Array("appfile" => $appfile, "line" => $line);
-								}
-								
 								// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
-								list($message_id,$app_name,,$content) = explode("\t",$line);
+								list($message_id,$app_name,,$content) = $_f_buffer = explode("\t",$line);
 								$content=str_replace(array("\n","\r"),'',$content);
+
+								if( count($_f_buffer) != 4 )
+								{
+									$line_display = str_replace(array("\t","\n"),
+										array("<font color='red'><b>\\t</b></font>","<font color='red'><b>\\n</b></font>"), $line);
+									$this->line_rejected[] = array(
+										'appfile' => $appfile,
+										'line'    => $line_display,
+									);
+								}
 								$message_id = substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH);
 								$app_name = chop($app_name);
 								$raw[$app_name][$message_id] = $content;
