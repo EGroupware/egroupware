@@ -36,7 +36,7 @@
 			switch($sType)
 			{
 				case 'auto':
-					$sTranslated = 'int(11) auto_increment';
+					$sTranslated = 'int(11) auto_increment not null';
 					break;
 				case 'blob':
 					$sTranslated = 'blob';
