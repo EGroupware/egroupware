@@ -2,7 +2,7 @@
   /**************************************************************************\
   * phpGroupWare                                                             *
   * http://www.phpgroupware.org                                              *
-  * Written by Mark Peters <skeeter@phpgroupware.org>                          *
+  * Written by Mark Peters <skeeter@phpgroupware.org>                        *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -11,24 +11,23 @@
   \**************************************************************************/
 	/* $Id$ */
 
-	$send_back_to = str_replace('submitlocale','holiday_admin',$HTTP_REFERER);
-	$send_back_to = str_replace('submit','admin',$HTTP_REFERER);	// 0.9.14.xxx
-	if(!$locale)
+	$send_back_to = str_replace('submit','admin',$_SERVER['HTTP_REFERER']);
+	if(!$_POST['locale'])
 	{
 		Header('Location: '.$send_back_to);
 	}
 
-	$send_back_to = str_replace('&locale='.$locale,'',$send_back_to);
-	$file = './holidays.'.$locale;
+	$send_back_to = str_replace('&locale='.$_POST['locale'],'',$send_back_to);
+	$file = './holidays.'.$_POST['locale'];
 	if(!file_exists($file))
 	{
-		if (count($name))
+		if (count($_POST['name']))
 		{
-			$c_holidays = count($name);
+			$c_holidays = count($_POST['name']);
 			$fp = fopen($file,'w');
 			for($i=0;$i<$c_holidays;$i++)
 			{
-				fwrite($fp,$locale."\t".$name[$i]."\t".$day[$i]."\t".$month[$i]."\t".$occurence[$i]."\t".$dow[$i]."\t".$observance[$i]."\n");
+				fwrite($fp,$_POST['locale']."\t".$_POST['name'][$i]."\t".$_POST['day'][$i]."\t".$_POST['month'][$i]."\t".$_POST['occurence'][$i]."\t".$_POST['dow'][$i]."\t".$_POST['observance'][$i]."\n");
 			}
 			fclose($fp);
 		}
@@ -40,16 +39,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>phpGroupWare.org: There is already a holiday-file for '<?php echo $locale; ?>' !!!</title>
+	<title>eGroupWare.org: There is already a holiday-file for '<?php echo $_GET['locale']; ?>' !!!</title>
 </head>
 <body>
-	<h1>There is already a holiday-file for '<?php echo $locale; ?>' !!!</h1>
+	<h1>There is already a holiday-file for '<?php echo $_GET['locale']; ?>' !!!</h1>
 
-	<p>If you think your version of the holidays for '<?php echo $locale; ?>' should replace
-	the existing one, please <a href="<?php echo $HTTP_REFERER; ?>&download=1">download</a> the file
-	and <a href="mailto:phpgroupware-developers@gnu.org">mail it</a> to us.</p>
+	<p>If you think your version of the holidays for '<?php echo $_GET['locale']; ?>' should replace
+	the existing one, please <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>&download=1">download</a> the file
+	and <a href="mailto:egroupware-developers@lists.sourceforge.net">mail it</a> to us.</p>
 
-	<p>To get back to your own phpGroupWare-install <a href="<?php echo $send_back_to; ?>">click here</a>.</p>
+	<p>To get back to your own eGroupWare-install <a href="<?php echo $send_back_to; ?>">click here</a>.</p>
 </body>
 </html>
 <?php

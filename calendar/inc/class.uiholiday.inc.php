@@ -468,7 +468,7 @@
 			}
 			else
 			{
-				$action = 'http://www.phpgroupware.org/cal/accept_holiday.php';
+				$action = 'http://www.egroupware.org/cal/accept_holiday.php';
 			}
 			$GLOBALS['phpgw_info']['flags']['noappheader']	= True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
@@ -482,16 +482,12 @@
 			echo '<input type="hidden" name="locale" value="'.$this->bo->locales[0].'">'."\n";
 			for($i=0;$i<$c_holidays;$i++)
 			{
-				echo '<input type="hidden" name="name[]" value="'.$holidays[$i]['name'].'">'."\n"
+				echo '<input type="hidden" name="name[]" value="'.htmlspecialchars($holidays[$i]['name']).'">'."\n"
 					. '<input type="hidden" name="day[]" value="'.$holidays[$i]['day'].'">'."\n"
 					. '<input type="hidden" name="month[]" value="'.$holidays[$i]['month'].'">'."\n"
 					. '<input type="hidden" name="occurence[]" value="'.$holidays[$i]['occurence'].'">'."\n"
 					. '<input type="hidden" name="dow[]" value="'.$holidays[$i]['dow'].'">'."\n"
 					. '<input type="hidden" name="observance[]" value="'.$holidays[$i]['observance_rule'].'">'."\n";
-			}
-			if ($mailto)
-			{
-				echo "<input type='submit' value='Mail to $mailto'>\n";
 			}
 			echo "</form>\n</body>\n</head>";
 		}
