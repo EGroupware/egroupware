@@ -1,9 +1,11 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Setup                                                     *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Setup                                                       *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
-	* This file written by Miles Lott<milosch@phpgroupware.org>                *
+	* This file written by Miles Lott <milos@groupwhere.org>                   *
+	*  Originally written for phpGroupWare.                                    *
+	* (C) 2001-2004 Miles Lott                                                 *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
