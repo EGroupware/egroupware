@@ -92,13 +92,6 @@
 			$account_expires = -1;
 		}
 
-		/*
-		if (preg_match ("/\D/", $account_file_space_number))
-		{
-			$error[$totalerrors++] = lang ('File space must be an integer');
-		}
-		*/
-
 		if (! $error)
 		{
 			$phpgw->db->lock(array(
@@ -118,7 +111,6 @@
 				'account_lastname'  => $account_lastname,
 				'account_status'    => $account_status,
 				'account_expires'   => $account_expires
-				/* 'account_file_space' => $account_file_space_number . "-" . $account_file_space_type */
 			);
 			$phpgw->accounts->create($account_info);
 
@@ -186,7 +178,7 @@
 				$phpgw->common->hook_single('add_def_pref','admin');
 				while ($apps = each($apps_after))
 				{
-					if ($apps[0] != 'admin')
+					if (strcasecmp ($apps[0], 'admin') != 0)
 					{
 						$phpgw->common->hook_single('add_def_pref', $apps[1]);
 					}
@@ -313,32 +305,6 @@
 	$groups_select .= '</select>';
 	$p->set_var('groups_select',$groups_select);
 	/* end groups list */
-
-	/*
-	if (!$account_file_space_number)
-	{
-		$account_file_space_number = $phpgw_info['server']['vfs_default_account_size_number'];
-	}
-	if (!$account_file_space_type)
-	{
-		$account_file_space_type = $phpgw_info['server']['vfs_default_account_size_type'];
-	}
-	$account_file_space_type_selected[$account_file_space_type] = "selected";
-
-	$account_file_space = '
-		<input type=text name="account_file_space_number" value="' . $account_file_space_number . '" size="7">';
-	$account_file_space_select ='<select name="account_file_space_type">';
-	$account_file_space_types = array ("gb", "mb", "kb", "b");
-	while (list ($num, $type) = each ($account_file_space_types))
-	{
-		$account_file_space_select .= "<option value=$type " . $account_file_space_type_selected[$type] . ">" . strtoupper ($type) . "</option>";
-	}
-	$account_file_space_select .= '</select>';
-
-	$p->set_var ('lang_file_space', "File space");
-	$p->set_var ('account_file_space', $account_file_space);
-	$p->set_var ('account_file_space_select', $account_file_space_select);
-	*/
 
 	$i = 0;
 	$phpgw->applications->read_installed_apps();
