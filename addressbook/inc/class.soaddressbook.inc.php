@@ -21,7 +21,7 @@
 
 		function soaddressbook()
 		{
-			if (!is_object($GLOBALS['phpgw']->contacts))
+			if(!is_object($GLOBALS['phpgw']->contacts))
 			{
 				$GLOBALS['phpgw']->contacts = CreateObject('phpgwapi.contacts');
 			}
@@ -72,7 +72,7 @@
 
 		function get_lastid()
 		{
-		 	$entry = $this->contacts->read_last_entry();
+			$entry = $this->contacts->read_last_entry();
 			return $entry[0]['id'];
 		}
 

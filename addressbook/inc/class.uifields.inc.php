@@ -45,10 +45,10 @@
 			));
 			$GLOBALS['phpgw']->template->set_block('field_list_t','field_list','list');
 
-			$field  = $GLOBALS['HTTP_POST_VARS']['field'];
-			$start  = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
-			$query  = $GLOBALS['HTTP_POST_VARS']['query'] ? $GLOBALS['HTTP_POST_VARS']['query'] : $GLOBALS['HTTP_GET_VARS']['query'];
-			$sort   = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
+			$field = $_POST['field'];
+			$start = $_POST['start'] ? $_POST['start'] : $_GET['start'];
+			$query = $_POST['query'] ? $_POST['query'] : $_GET['query'];
+			$sort  = $_POST['sort']  ? $_POST['sort']  : $_GET['sort'];
 
 			$common_hidden_vars =
 				'<input type="hidden" name="sort"   value="' . $sort   . '">' . "\n"
@@ -134,12 +134,12 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$field      = stripslashes($GLOBALS['HTTP_POST_VARS']['field']);
-			$field_name = stripslashes($GLOBALS['HTTP_POST_VARS']['field_name']);
-			$start      = $GLOBALS['HTTP_POST_VARS']['start'];
-			$query      = $GLOBALS['HTTP_POST_VARS']['query'];
-			$sort       = $GLOBALS['HTTP_POST_VARS']['sort'];
-			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
+			$field      = stripslashes($_POST['field']);
+			$field_name = stripslashes($_POST['field_name']);
+			$start      = $_POST['start'];
+			$query      = $_POST['query'];
+			$sort       = $_POST['sort'];
+			$submit     = $_POST['submit'];
 
 			$GLOBALS['phpgw']->template->set_file(array('form' => 'field_form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
@@ -173,11 +173,11 @@
 			{
 				$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
 			}
-			if(($submit) && (! $error) && (! $errorcount))
+			if(($submit) && (!$error) && (!$errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message',lang('Field %1 has been added !', $field_name));
 			}
-			if((!$submit) && (! $error) && (! $errorcount))
+			if((!$submit) && (!$error) && (!$errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message','');
 			}
@@ -211,14 +211,14 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$field      = stripslashes($GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field']);
-			$field_name = stripslashes($GLOBALS['HTTP_POST_VARS']['field_name']);
-			$start      = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
-			$query      = $GLOBALS['HTTP_POST_VARS']['query'] ? $GLOBALS['HTTP_POST_VARS']['query'] : $GLOBALS['HTTP_GET_VARS']['query'];
-			$sort       = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
-			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
+			$field      = stripslashes($_POST['field'] ? $_POST['field'] : $_GET['field']);
+			$field_name = stripslashes($_POST['field_name']);
+			$start      = $_POST['start'] ? $_POST['start'] : $_GET['start'];
+			$query      = $_POST['query'] ? $_POST['query'] : $_GET['query'];
+			$sort       = $_POST['sort']  ? $_POST['sort']  : $_GET['sort'];
+			$submit     = $_POST['submit'];
 
-			if (!$field)
+			if(!$field)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&sort=$sort&query=$query&start=$start"));
 			}
@@ -253,7 +253,7 @@
 			{
 				$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
 			}
-			if(($submit) && (! $error) && (!$errorcount))
+			if(($submit) && (!$error) && (!$errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message',lang('Field %1 has been updated !', $field_name));
 			}
@@ -304,18 +304,18 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$field    = $GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field'];
-			$field_id = $GLOBALS['HTTP_POST_VARS']['field_id'] ? $GLOBALS['HTTP_POST_VARS']['field_id'] : $GLOBALS['HTTP_GET_VARS']['field_id'];
-			$start    = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
-			$query    = $GLOBALS['HTTP_POST_VARS']['query'] ? $GLOBALS['HTTP_POST_VARS']['query'] : $GLOBALS['HTTP_GET_VARS']['query'];
-			$sort     = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
+			$field    = $_POST['field'] ? $_POST['field'] : $_GET['field'];
+			$field_id = $_POST['field_id'] ? $_POST['field_id'] : $_GET['field_id'];
+			$start    = $_POST['start'] ? $_POST['start'] : $_GET['start'];
+			$query    = $_POST['query'] ? $_POST['query'] : $_GET['query'];
+			$sort     = $_POST['sort']  ? $_POST['sort']  : $_GET['sort'];
 
 			if(!$field)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'));
 			}
 
-			if($GLOBALS['HTTP_POST_VARS']['confirm'])
+			if($_POST['confirm'])
 			{
 				$this->save_custom_field($field);
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));

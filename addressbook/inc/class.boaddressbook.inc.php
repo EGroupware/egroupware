@@ -112,7 +112,7 @@
 			{
 				$this->cat_id = -1;
 			}
-			
+
 			if(isset($_sort)   && !empty($_sort))
 			{
 				if($this->debug) { echo '<br>overriding $sort: "' . $this->sort . '" now "' . $_sort . '"'; }
@@ -161,7 +161,7 @@
 			  in which case the input might be an array.  The server always calls
 			  this function to fill the server dispatch map using a string.
 			*/
-			if (is_array($_type))
+			if(is_array($_type))
 			{
 				$_type = $_type['type'] ? $_type['type'] : $_type[0];
 			}
@@ -213,7 +213,7 @@
 
 		function save_sessiondata($data)
 		{
-			if ($this->use_session)
+			if($this->use_session)
 			{
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
 				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
@@ -235,17 +235,17 @@
 			if($this->debug) { echo '<br>read_sessiondata();'; $this->_debug_sqsof(); }
 		}
 
-		function strip_html($dirty = '')
+		function strip_html($dirty='')
 		{
-			if ($dirty == '')
+			if($dirty == '')
 			{
 				$dirty = array();
 			}
 			for($i=0;$i<count($dirty);$i++)
 			{
-				if(gettype($dirty[$i]) == 'array')
+				if(@is_array($dirty[$i]))
 				{
-					while (list($name,$value) = @each($dirty[$i]))
+					while(list($name,$value) = @each($dirty[$i]))
 					{
 						$cleaned[$i][$name] = $GLOBALS['phpgw']->strip_html($dirty[$i][$name]);
 					}
@@ -263,12 +263,12 @@
 			$entries = $this->so->read_entries($data);
 			$this->total = $this->so->contacts->total_records;
 			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
-			return (is_array($entries) ? $this->strip_html($entries) : array());
+			return(is_array($entries) ? $this->strip_html($entries) : array());
 		}
 
 		function read_entry($data)
 		{
-			if ($this->check_perms($data,PHPGW_ACL_READ))
+			if($this->check_perms($data,PHPGW_ACL_READ))
 			{
 				$entry = $this->so->read_entry($data['id'],$data['fields']);
 				return $this->strip_html($entry);
@@ -278,7 +278,7 @@
 
 		function read_last_entry($fields)
 		{
-			if ($this->check_perms($fields,PHPGW_ACL_READ))
+			if($this->check_perms($fields,PHPGW_ACL_READ))
 			{
 				$entry = $this->so->read_last_entry($fields);
 				return $this->strip_html($entry);
@@ -296,10 +296,10 @@
 			{
 				$uploaddir = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP;
 
-				srand((double)microtime()*1000000);
+				srand((double)microtime() * 1000000);
 				$random_number = rand(100000000,999999999);
 				$newfilename = md5("$uploadedfile, $uploadedfile_name, "
-					. time() . getenv("REMOTE_ADDR") . $random_number );
+					. time() . getenv('REMOTE_ADDR') . $random_number);
 
 				copy($uploadedfile, $uploaddir . $newfilename);
 				$ftp = fopen($uploaddir . $newfilename . '.info','w');
@@ -323,7 +323,7 @@
 				unlink($filename);
 				unlink($filename . '.info');
 
-				return (int)$ab_id;
+				return(int)$ab_id;
 			}
 		}
 
@@ -332,8 +332,8 @@
 			global $name,$referer;
 
 			$named = explode(' ', $name);
-			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
-			if ($names[2])
+			for($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
+			if($names[2])
 			{
 				$fields['n_given']  = $names[0];
 				$fields['n_middle'] = $names[1];
@@ -380,7 +380,7 @@
 
 		function update_entry($fields)
 		{
-			if ($this->check_perms($fields,PHPGW_ACL_EDIT))
+			if($this->check_perms($fields,PHPGW_ACL_EDIT))
 			{
 				return $this->so->update_entry($fields);
 			}
@@ -389,15 +389,15 @@
 
 		function delete_entry($addr)
 		{
-			if (!is_array($addr))
+			if(!is_array($addr))
 			{
-				$id = intval($addr);
+				$id = (int)$addr;
 			}
 			else
 			{
-				if (is_numeric($addr[0]))	// xmlrpc liefert array($id)
+				if(is_numeric($addr[0]))	// xmlrpc liefert array($id)
 				{
-					$id = intval($addr[0]);
+					$id = (int)$addr[0];
 				}
 				else
 				{
@@ -405,7 +405,7 @@
 				}
 			}
 
-			if ($this->check_perms($id,PHPGW_ACL_DELETE))
+			if($this->check_perms($id,PHPGW_ACL_DELETE))
 			{
 				return $this->so->delete_entry($id);
 			}
@@ -430,13 +430,13 @@
 		function save_preferences($prefs,$other,$qfields,$fcat_id)
 		{
 			$GLOBALS['phpgw']->preferences->read_repository();
-			if (is_array($prefs))
+			if(is_array($prefs))
 			{
 				/* _debug_array($prefs);exit; */
-				while (list($pref,$x) = each($qfields))
+				while(list($pref,$x) = each($qfields))
 				{
 					/* echo '<br>checking: ' . $pref . '=' . $prefs[$pref]; */
-					if ($prefs[$pref] == 'on')
+					if($prefs[$pref] == 'on')
 					{
 						$GLOBALS['phpgw']->preferences->add('addressbook',$pref,'addressbook_on');
 					}
@@ -449,19 +449,19 @@
 			if(is_array($other))
 			{
 				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
-	 			if ($other['mainscreen_showbirthdays'])
+				if($other['mainscreen_showbirthdays'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
-	 			if ($other['default_filter'])
+				if($other['default_filter'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',$other['default_filter']);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
-	 			if ($other['autosave_category'])
+				if($other['autosave_category'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','autosave_category',True);
 				}

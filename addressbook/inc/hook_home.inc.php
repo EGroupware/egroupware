@@ -5,7 +5,7 @@
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  Free Software Foundation; either version 2 of the License, or(at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
 
@@ -19,7 +19,7 @@
 	}
 	unset($d1);
 
-	if ($GLOBALS['phpgw_info']['user']['apps']['addressbook']
+	if($GLOBALS['phpgw_info']['user']['apps']['addressbook']
 		&& $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
 		echo "\n<!-- Birthday info -->\n";
@@ -30,7 +30,7 @@
 			'n_family' => 'n_family',
 			'bday'     => 'bday'
 		);
-		$now = time() - ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+		$now = time() - ((60 * 60) * (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
 		$today = $GLOBALS['phpgw']->common->show_date($now,'n/d/');
 		
 		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
@@ -67,15 +67,15 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			if (substr($val['bday'],0,strlen($today)) == $today)
+			if(substr($val['bday'],0,strlen($today)) == $today)
 			{
 				$portalbox->data[] = array(
 					'text' => lang("Today is %1's birthday!", $val['n_given'] . ' ' . $val['n_family']),
-					'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id'])
+					'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id'])
 				);
 			}
 //			$tmp = '<a href="'
-//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
 //				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 //			echo '<tr><td align="left">' . lang("Today is %1's birthday!", $tmp) . '</td></tr>' . "\n";
 		}
@@ -86,7 +86,7 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			if (substr($val['bday'],0,strlen($tomorrow)) == $tomorrow)
+			if(substr($val['bday'],0,strlen($tomorrow)) == $tomorrow)
 			{
 				$portalbox->data[] = array(
 					'text' => lang("Tomorrow is %1's birthday.",$val['n_given'] . ' ' . $val['n_family']),
@@ -94,7 +94,7 @@
 				);
 			}
 //			$tmp = '<a href="'
-//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
 //				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
 //			echo '<tr><td align="left">' . lang("Tomorrow is %1's birthday.", $tmp) . '</td></tr>' . "\n";
 		}

@@ -64,7 +64,7 @@
 				$this->query  = $_query;
 			}
 
-			if(isset($GLOBALS['HTTP_POST_VARS']['fcat_id']) || isset($GLOBALS['HTTP_POST_VARS']['fcat_id']))
+			if(isset($_POST['fcat_id']) || isset($_POST['fcat_id']))
 			{
 				$this->cat_id = $_fcat_id;
 			}

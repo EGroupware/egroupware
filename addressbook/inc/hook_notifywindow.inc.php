@@ -33,7 +33,7 @@
 			'n_family' => 'n_family',
 			'bday'     => 'bday'
 		);
-		$now = time() - ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+		$now = time() - ((60 * 60) * (int)$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
 		$today = $GLOBALS['phpgw']->common->show_date($now,'n/d/');
 //		echo $today."\n";
 
@@ -42,7 +42,7 @@
 		while(list($key,$val) = @each($bdays))
 		{
 			$tmp = '<a href="'
-				. $GLOBALS['phpgw']->link('/.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']) . '">'
+				. $GLOBALS['phpgw']->link('/.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 			echo '<tr><td align="left">' . lang("Today is %1's birthday!", $tmp) . "</td></tr>\n";
 		}
@@ -55,7 +55,7 @@
 		while(list($key,$val) = @each($bdays))
 		{
 			$tmp = '<a href="'
-				. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']) . '">'
+				. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 			echo '<tr><td align="left">' . lang("Tomorrow is %1's birthday.", $tmp) . "</td></tr>\n";
 		}

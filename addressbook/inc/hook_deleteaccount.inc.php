@@ -14,12 +14,12 @@
 
 	$contacts = CreateObject('phpgwapi.contacts');
 
-	if(intval($GLOBALS['HTTP_POST_VARS']['new_owner'])==0)
+	if((int)$_POST['new_owner'] == 0)
 	{
-		$contacts->delete_all(intval($GLOBALS['HTTP_POST_VARS']['account_id']));
+		$contacts->delete_all((int)$_POST['account_id']);
 	}
 	else
 	{
-		$contacts->change_owner(intval($GLOBALS['HTTP_POST_VARS']['account_id']),intval($GLOBALS['HTTP_POST_VARS']['new_owner']));
+		$contacts->change_owner((int)$_POST['account_id'],(int)$_POST['new_owner']);
 	}
 ?>
