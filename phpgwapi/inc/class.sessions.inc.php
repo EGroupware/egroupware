@@ -149,7 +149,10 @@
 
 			$userid_array = explode('@',$db->f('session_lid'));
 // Thinking this might solve auth_http problems
-			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
+			if(@$userid_array[1] == '')
+			{
+				$userid_array[1] = 'default';
+			}
 			$this->account_lid = $userid_array[0];
 			$this->update_dla();
 			$this->account_id = $GLOBALS['phpgw']->accounts->name2id($this->account_lid);
@@ -164,13 +167,16 @@
 			$this->read_repositories(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info']);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
-				$GLOBALS['phpgw']->log->message(array(
-					'text' => 'W-VerifySession, account loginid %1 is expired',
-					'p1'   => $this->account_lid,
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['phpgw']->log->commit();
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-VerifySession, account loginid %1 is expired',
+						'p1'   => $this->account_lid,
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
+					$GLOBALS['phpgw']->log->commit();
+				}
 				return False;
 			}
 
@@ -182,14 +188,17 @@
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
 			{
-				$GLOBALS['phpgw']->log->message(array(
-					'text' => 'W-VerifySession, the domains %1 and %2 don\t match',
-					'p1'   => $userid_array[1],
-					'p2'   => $GLOBALS['phpgw_info']['user']['domain'],
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['phpgw']->log->commit();
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-VerifySession, the domains %1 and %2 don\'t match',
+						'p1'   => $userid_array[1],
+						'p2'   => $GLOBALS['phpgw_info']['user']['domain'],
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
+					$GLOBALS['phpgw']->log->commit();
+				}
 
 				return False;
 			}
@@ -198,15 +207,18 @@
 			{
 				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
 				{
-					// This needs some better wording
-					$GLOBALS['phpgw']->log->message(array(
-						'text' => 'W-VerifySession, IP %1 doesn\'t match IP %2 in session table',
-						'p1'   => $this->getuser_ip(),
-						'p2'   => $GLOBALS['phpgw_info']['user']['session_ip'],
-						'line' => __LINE__,
-						'file' => __FILE__
-					));
-					$GLOBALS['phpgw']->log->commit();
+					if(is_object($GLOBALS['phpgw']->log))
+					{
+						// This needs some better wording
+						$GLOBALS['phpgw']->log->message(array(
+							'text' => 'W-VerifySession, IP %1 doesn\'t match IP %2 in session table',
+							'p1'   => $this->getuser_ip(),
+							'p2'   => $GLOBALS['phpgw_info']['user']['session_ip'],
+							'line' => __LINE__,
+							'file' => __FILE__
+						));
+						$GLOBALS['phpgw']->log->commit();
+					}
 
 					return False;
 				}
@@ -219,13 +231,16 @@
 
 			if (! $this->account_lid)
 			{
-				// This needs some better wording
-				$GLOBALS['phpgw']->log->message(array(
-					'text' => 'W-VerifySession, account_id is empty',
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['phpgw']->log->commit();
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					// This needs some better wording
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-VerifySession, account_id is empty',
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
+					$GLOBALS['phpgw']->log->commit();
+				}
 
 				return False;
 			}
@@ -330,13 +345,16 @@
 			$this->read_repositories(False);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
-				$GLOBALS['phpgw']->log->message(array(
-					'text' => 'W-LoginFailure, account loginid %1 is expired',
-					'p1'   => $this->account_lid,
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['phpgw']->log->commit();
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-LoginFailure, account loginid %1 is expired',
+						'p1'   => $this->account_lid,
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
+					$GLOBALS['phpgw']->log->commit();
+				}
 
 				return False;
 			}
@@ -432,14 +450,17 @@
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
 			{
-				$GLOBALS['phpgw']->log->message(array(
-					'text' => 'W-VerifySession, the domains %1 and %2 don\t match',
-					'p1'   => $userid_array[1],
-					'p2'   => $GLOBALS['phpgw_info']['user']['domain'],
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['phpgw']->log->commit();
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-VerifySession, the domains %1 and %2 don\t match',
+						'p1'   => $userid_array[1],
+						'p2'   => $GLOBALS['phpgw_info']['user']['domain'],
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
+					$GLOBALS['phpgw']->log->commit();
+				}
 
 				return False;
 			}
@@ -448,15 +469,18 @@
 			{
 				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
 				{
-					// This needs some better wording
-					$GLOBALS['phpgw']->log->message(array(
-						'text' => 'W-VerifySession, IP %1 doesn\'t match IP %2 in session table',
-						'p1'   => $this->getuser_ip(),
-						'p2'   => $GLOBALS['phpgw_info']['user']['session_ip'],
-						'line' => __LINE__,
-						'file' => __FILE__
-					));
-					$GLOBALS['phpgw']->log->commit();
+					if(is_object($GLOBALS['phpgw']->log))
+					{
+						// This needs some better wording
+						$GLOBALS['phpgw']->log->message(array(
+							'text' => 'W-VerifySession, IP %1 doesn\'t match IP %2 in session table',
+							'p1'   => $this->getuser_ip(),
+							'p2'   => $GLOBALS['phpgw_info']['user']['session_ip'],
+							'line' => __LINE__,
+							'file' => __FILE__
+						));
+						$GLOBALS['phpgw']->log->commit();
+					}
 
 					return False;
 				}
@@ -469,13 +493,16 @@
 
 			if (! $this->account_lid)
 			{
-				// This needs some better wording
-				$GLOBALS['phpgw']->log->message(array(
-					'text' => 'W-VerifySession, account_id is empty',
-					'line' => __LINE__,
-					'file' => __FILE__
-				));
-				$GLOBALS['phpgw']->log->commit();
+				if(is_object($GLOBALS['phpgw']->log))
+				{
+					// This needs some better wording
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-VerifySession, account_id is empty',
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
+					$GLOBALS['phpgw']->log->commit();
+				}
 
 				return False;
 			}
