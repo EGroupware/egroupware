@@ -450,7 +450,7 @@
 		/***************************************************************************\
 		* These lines load up the themes data and put them into the templates class *
 		\***************************************************************************/
-		$GLOBALS['phpgw']->common->load_theme_data();
+		//$GLOBALS['phpgw']->common->load_theme_data();
 		
 		if(!PHPGW_USE_FRAMES || (PHPGW_USE_FRAMES && PHPGW_FRAME_PART != 'body'))
 		{
