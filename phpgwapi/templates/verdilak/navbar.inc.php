@@ -91,7 +91,7 @@
 			$db  = $phpgw->db;
 			$db->query("select count(*) from phpgw_sessions where session_flags != 'A'");
 			$db->next_record();
-			$tpl->set_var('current_users','<a href="' . $phpgw->link('/admin/currentusers.php') . '">&nbsp;'
+			$tpl->set_var('current_users','<a style="font-family: Geneva,Arial,Helvetica,sans-serif; font-size: 12pt;" href="' . $phpgw->link('/admin/currentusers.php') . '">&nbsp;'
 				. lang('Current users') . ': ' . $db->f(0) . '</a>');
 		}
 		$tpl->set_var('user_info',$phpgw->common->display_fullname() . ' - '

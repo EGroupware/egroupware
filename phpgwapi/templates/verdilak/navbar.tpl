@@ -22,7 +22,7 @@
       {current_users}
      </td>
      <td align="right">
-      {powered_by}
+      <font style="font-family: Geneva,Arial,Helvetica,sans-serif; font-size: 12pt;">{powered_by}</font>
      </td>
     </tr>
    </table>
