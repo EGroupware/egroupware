@@ -19,7 +19,7 @@
 					'menuaction'   => 'calendar.uipreferences.preferences'
 				)
 			),
-		'Grant Access' => $GLOBALS['phpgw']->link('/preferences/acl_preferences.php','acl_app='.$appname),
+		'Grant Access'  => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
 		'Edit Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app='.$appname.'&cats_level=True&global_cats=True')
 	);
 //Do not modify below this line
