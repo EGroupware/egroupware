@@ -80,44 +80,72 @@
         $error .= "<br>You must select at least 1 application";
      }
 
-     if (! $error) {
-        while ($account = each($account_info)) {
-          // do some checks before we try to import the data
-          if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
-            @reset($s_apps);
-            while ($app = each($s_apps)) {
-              $sql = "DELETE FROM phpgw_acl WHERE acl_appname='".$app[1]."' AND acl_location='run' AND acl_account="
-                   . $account[1]["account_id"];
-              $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
-                   
-              $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
-                   . " values('".$app[1]."','run',".$account[1]["account_id"].",1)";
-              $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
-            }
-            $sql = "DELETE FROM phpgw_acl WHERE acl_appname='admin' AND acl_location='run' AND acl_account="
-                 . $account[1]["account_id"];
-            $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
-			
-			for ($a=0;$a<count($admins);$a++) {
-				if ($admins[$a] == $account[1]["account_id"]) {
-	    	        $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
-    	    	         . " values('admin','run',".$account[1]["account_id"].",1)";
-            		$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
-				}
-			}
+	if (! $error) {
+		// This section is being modified to use the accounts and acl classes soon
+		// Create a default group
+		$defaultgroupid = mt_rand (100, 600000);
+		$sql = "insert into phpgw_accounts";
+		$sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
+		$sql .= "values (".$defaultgroupid.", 'Default', 'g', '".md5($passwd)."', 'Default', 'Group', ".time().", 'A')";
+		$phpgw_setup->db->query($sql);
+		// Give the group access to apps
+		while ($app = each($s_apps)) {
+			$sql = "DELETE FROM phpgw_acl WHERE acl_appname='".$app[1]."' AND acl_location='run' AND acl_account="
+				. $defaultgroupid;
+			$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
 
-            $phpgw_setup->db->query("SELECT account_id FROM phpgw_accounts WHERE account_id=" . $account[1]["account_id"]
-                 . " AND account_lid='" . $account[1]["account_lid"] . "'");
-            if(!$phpgw_setup->db->num_rows() && $account[1]["account_lid"]) {
-              $phpgw_setup->db->query("insert into phpgw_accounts (account_id,account_lid,account_pwd,account_type,"
-                   . "account_status,account_lastpwd_change) values (" . $account[1]["account_id"] . ",'"
-                   . $account[1]["account_lid"] . "','x','u','A',".time().")",__LINE__,__FILE__);
-            }
-        }
-        $setup_complete = True;
-     }
-  }
-  
+			$sql = "INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
+				. " VALUES('".$app[1]."','run',".$defaultgroupid.",1)";
+			$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+		}
+
+		while ($account = each($account_info)) {
+			// do some checks before we try to import the data
+			if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
+/*				// This is where each new user was given app rights, instead of per the group
+				@reset($s_apps);
+				while ($app = each($s_apps)) {
+					$sql = "DELETE FROM phpgw_acl WHERE acl_appname='".$app[1]."' AND acl_location='run' AND acl_account="
+						. $account[1]["account_id"];
+					$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+
+					$sql = "INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
+						. " VALUES('".$app[1]."','run',".$account[1]["account_id"].",1)";
+					$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+				} */
+
+				// Cleanup admin permissions
+				$sql = "DELETE FROM phpgw_acl WHERE acl_appname='admin' AND acl_location='run' AND acl_account="
+					. $account[1]["account_id"];
+				$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+
+				// Give the user admin only if we asked for them to have it
+				for ($a=0;$a<count($admins);$a++) {
+					if ($admins[$a] == $account[1]["account_id"]) {
+						$sql = "INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
+							. " VALUES('admin','run',".$account[1]["account_id"].",1)";
+						$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+					}
+				}
+
+				// Actually create the account
+				$phpgw_setup->db->query("SELECT account_id FROM phpgw_accounts WHERE account_id=" . $account[1]["account_id"]
+					. " AND account_lid='" . $account[1]["account_lid"] . "'");
+				if(!$phpgw_setup->db->num_rows() && $account[1]["account_lid"]) {
+					$phpgw_setup->db->query("INSERT INTO phpgw_accounts (account_id,account_lid,account_pwd,account_type,"
+						. "account_status,account_lastpwd_change) VALUES (" . $account[1]["account_id"] . ",'"
+						. $account[1]["account_lid"] . "','x','u','A',".time().")",__LINE__,__FILE__);
+				}
+
+				// Now make them a member of the default group
+				$sql = "INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
+					. " VALUES('phpgw_group',".$defaultgroupid.",".$account[1]["account_id"].",'1')";
+				$phpgw_setup->db->query($sql);
+			}
+	        $setup_complete = True;
+		}
+	}
+
   // Add a check to see if there is no users in LDAP, if not create a default user.
 
   $phpgw_setup->show_header();
