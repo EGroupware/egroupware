@@ -991,7 +991,7 @@
 			reset($phpgw_info['user']['apps']);
 			while ($permission = each($phpgw_info['user']['apps']))
 			{
-				$f = PHPGW_SERVER_ROOT . sep . $permission[0] . sep . 'inc' . sep . 'hook_' . $location . '.inc.php';
+				$f = PHPGW_SERVER_ROOT . SEP . $permission[0] . SEP . 'inc' . SEP . 'hook_' . $location . '.inc.php';
 	
 				if (file_exists($f))
 				{
