@@ -42,6 +42,7 @@
 			'import_dump'	=> True,
 			'writeLangFile' => True
 		);
+		var $debug;		// =1 show some debug-messages, = 'app.name' show messages only for eTemplate 'app.name'
 		var $name;		// name of the template, e.g. 'infolog.edit'
 		var $template;	// '' = default (not 'default')
 		var $lang;		// '' if general template else language short, e.g. 'de'
@@ -74,7 +75,14 @@
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
-			$this->read($name,$template,$lang,$group,$version,$rows,$cols);
+			if (empty($name))
+			{
+				$this->init($name,$template,$lang,$group,$version,$rows,$cols);
+			}
+			else
+			{
+				$this->read($name,$template,$lang,$group,$version,$rows,$cols);
+			}
 		}
 
 		/*!
@@ -157,7 +165,10 @@
 		function read($name,$template='default',$lang='default',$group=0,$version='')
 		{
 			$this->init($name,$template,$lang,$group,$version);
-
+			if ($this->debug == 1 || $this->debug == $this->name)
+			{
+				echo "<p>soetemplate::read('$this->name','$this->template','$this->lang','$this->version')</p>\n";
+			}
 			if ($GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'files' && $this->readfile())
 			{
 				return True;
@@ -201,10 +212,15 @@
 			}
 			$sql .= " ORDER BY et_lang DESC,et_template DESC,et_version DESC";
 
+			if ($this->debug == $this->name)
+			{
+				echo "<p>soetemplate::read: sql='$sql'</p>\n";
+			}
 			$this->db->query($sql,__LINE__,__FILE__);
 			if (!$this->db->next_record())
 			{
-				return $this->readfile();
+				$version = $this->version;
+				return $this->readfile() && (empty($version) || $version == $this->version);
 			}
 			$this->db2obj();
 
@@ -229,7 +245,10 @@
 
 			if ($this->name == '' || $app == '' || $name == '' || !@file_exists($file) || !($f = @fopen($file,'r')))
 			{
-				//echo "<p>Can't open '$file' !!!</p>\n";
+				if ($this->debug == 1 || $this->debug == $this->name)
+				{
+					echo "<p>Can't open '$file' !!!</p>\n";
+				}
 				return False;
 			}
 			$xul = fread ($f, filesize ($file));
@@ -239,7 +258,7 @@
 			{
 				$this->xul_io = CreateObject('etemplate.xul_io');
 			}
-			if ($this->xul_io->import(&$this,$xul) != '')
+			if (!is_array($this->xul_io->import(&$this,$xul)))
 			{
 				return False;
 			}

@@ -408,17 +408,63 @@
 			return $old;
 		}
 
-		/*!
-		@function read
-		@abstract Reads an eTemplate from the cache or database / filesystem (and updates the cache)
-		@param as discripted in soetemplate::read
-		@result True if a fitting template is found, else False
-		*/
-		function read($name,$template='default',$lang='default',$group=0,$version='')
-		{
-			$cname = ($template == '' ? 'default' : $template).'/'.$name.($lang == 'default' ? '' : '.'.$lang);
 
-			if (isset($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]))
+		function cache_name($name='',$template='default',$lang='default')
+		{
+			if (empty($name))
+			{
+				$name     = $this->name;
+				$template = $this->template;
+				$lang     = $this->lang;
+			}
+			elseif (is_array($name))
+			{
+				$template = $name['template'];
+				$lang     = $name['lang'];
+				$name     = $name['name'];
+			}
+			if (empty($template))
+			{
+				$template = 'default';
+			}
+			$cname = $template . '/' . $name . (!empty($lang) && $lang != 'default' ? '.' . $lang : '');
+			//echo "cache_name('$name','$template','$lang') = '$cname'";
+
+			return $cname;
+		}
+
+		/*!
+		@function store_in_cache()
+		@abstract stores the etemplate in the cache in phpgw_info
+		*/
+		function store_in_cache()
+		{
+			//echo "<p>store_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
+			$GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
+		}
+
+		function in_cache($name,$template='default',$lang='default',$group=0,$version='')
+		{
+			$cname = $this->cache_name($name,$template,$lang);
+			if (is_array($name))
+			{
+				$version = $name['version'];
+				$name    = $name['name'];
+			}
+			if (!isset($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]) ||
+			    !empty($version) && $GLOBALS['phpgw_info']['etemplate']['cache'][$cname]['version'] != $version)
+			{
+				//echo " NOT found in cache</p>\n";
+				return False;
+			}
+			//echo " found in cache</p>\n";
+			return $cname;
+		}
+
+		function read_from_cache($name,$template='default',$lang='default',$group=0,$version='')
+		{
+			//if (is_array($name)) $version = $name['version']; echo "<p>read_from_cache(,,,version='$version'): ";
+			if ($cname = $this->in_cache($name,$template,$lang,$group))
 			{
 				reset($this->db_cols);
 				while (list($db_col,$col) = each($this->db_cols))
@@ -427,16 +473,28 @@
 				}
 				$this->rows = count($this->data) - 1;
 				$this->cols = count($this->data[1]); // 1 = first row, not 0
-				echo "\n<!-- $cname read from cache -->\n";
 				return True;
 			}
-			if (!soetemplate::read($name,$template,$lang,$group,$version))
-				return False;
+			return False;
+		}
 
-			echo "\n<!-- $cname read & cache updated -->\n";
-			$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $this->as_array(1);
-
-			return true;
+		/*!
+		@function read
+		@abstract Reads an eTemplate from the cache or database / filesystem (and updates the cache)
+		@param as discripted in soetemplate::read
+		@result True if a fitting template is found, else False
+		*/
+		function read($name,$template='default',$lang='default',$group=0,$version='')
+		{
+			if (!$this->read_from_cache($name,$template,$lang,$group,$version))
+			{
+				if (!soetemplate::read($name,$template,$lang,$group,$version))
+				{
+					return False;
+				}
+				$this->store_in_cache();
+			}
+			return True;
 		}
 
 		/*!
@@ -447,13 +505,9 @@
 		*/
 		function save($name='',$template='.',$lang='.',$group='',$version='.')
 		{
-			$result = soetemplate::save($name,$template,$lang,$group,$version);
-
-			if ($result)
+			if ($result = soetemplate::save($name,$template,$lang,$group,$version))
 			{
-				$cname = ($template == '' ? 'default' : $template).'/'.$name.($lang == 'default' ? '' : '.'.$lang);
-
-				$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $this->as_array(1);
+				$this->store_in_cache();
 			}
 			return $result;
 		}

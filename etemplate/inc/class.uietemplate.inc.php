@@ -51,7 +51,7 @@
 			$this->html = CreateObject('etemplate.html');	// should  be in the api (older version in infolog)
 			$this->sbox = CreateObject('etemplate.sbox2');	// older version is in the api
 
-			if (!$this->read($name,$template,$lang,$group,$version))
+			if (empty($name) || !$this->read($name,$template,$lang,$group,$version))
 			{
 				$this->init($name,$template,$lang,$group,$version,$rows,$cols);
 				return False;
