@@ -376,7 +376,7 @@
 					$fwhere = ' WHERE '; $fand = ' AND ';
 				}
 			} else {
-				$filtermethod = "WHERE (tid='n' OR tid is null)";
+				$filtermethod = " AND (tid='n' OR tid is null)";
 			}
 
 			if (!$filtermethod) {
