@@ -32,7 +32,7 @@
 	/*!
 	@function CreateObject
 	@abstract Load a class and include the class file if not done so already.
-	@discussion Author: mdean <br>
+	@discussion Author: mdean, milosch (thanks to jengo and ralf)<br>
 	This function is used to create an instance of a class,  
 	and if the class file has not been included it will do so. <br>
 	Syntax: CreateObject('app.class', 'constructor_params'); <br>
@@ -40,8 +40,11 @@
 	@param $classname name of class
 	@param $p1-$p16 class parameters (all optional)
 	*/
-	function CreateObject($classname, $p1='')
-/*	function CreateObject($classname, $p1='',$p2='',$p3='',$p4='',$p5='',$p6='',$p7='',$p8='',$p9='',$p10='',$p11='',$p12='',$p13='',$p14='',$p15='',$p16='')*/
+	function CreateObject($classname,
+		$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
+		$p5='_UNDEF_',$p6='_UNDEF_',$p7='_UNDEF_',$p8='_UNDEF_',
+		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
+		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
 	{
 		global $phpgw, $phpgw_info, $phpgw_domain;
 		$classpart = explode (".", $classname);
@@ -53,14 +56,29 @@
 			$phpgw_info['flags']['included_classes'][$classname] = True;   
 			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
-		if ($p1 == '')
+		if ($p1 == '_UNDEF_')
 		{
 			$obj = new $classname;
 		}
 		else
 		{
-			/* $obj = new $classname($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16); */
-			$obj = new $classname($p1);
+			$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
+			$i = 1;
+			$code = "\$obj = new \$classname(";
+			while (list($x,$test) = each($input))
+			{
+				if ($test == '_UNDEF_' || $i == 17)
+				{
+					break;
+				}
+				else
+				{
+					$code .= "\$p" . $i . ',';
+				}
+				$i++;
+			}
+			$code = substr($code,0,-1) . ');';
+			eval($code);
 		}
 		return $obj;
 	}
