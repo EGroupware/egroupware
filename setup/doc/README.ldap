@@ -21,7 +21,8 @@ in setup:
 	 LDAP acl rights to READ data from any entry in the accounts and groups contexts.  By
 	 context, we mean the ou in which this information is stored, e.g. ou=People,dc=domain,dc=com
 	 and ou=Group,dc=domain,dc=com.
-  c. follow the link:
+  c. Be sure to also configure a valid LDAP encryption type.  This will depend on your system.
+  d. follow the link:
  'Import accounts from LDAP to the eGroupWare accounts table (for a new install using SQL accounts)'
 
   This is on the page after submitting the configuration in step 2.  This runs
@@ -29,7 +30,7 @@ in setup:
   wish to copy from ldap into sql.  You can then authenticate using LDAP, and
   the account usernames and other data will be copied to our SQL accounts table.
 
-2. If you want to store account information in LDAP:
+2. If you want to store account information in an existing LDAP tree:
   a. Install the LDAP schema per directions in phpgwapi/doc/ldap/README.
   b. Configure eGroupWare to use LDAP auth and LDAP accounts (Step 2)
   c. Configure a valid LDAP host, LDAP accounts context, and LDAP groups context,
@@ -38,7 +39,8 @@ in setup:
 	 LDAP acl rights to WRITE data to any entry in the accounts and groups contexts.  By
 	 context, we mean the ou in which this information is stored, e.g. ou=People,dc=domain,dc=com
 	 and ou=Group,dc=domain,dc=com.
-  d. follow the link in setup:
+  d. Be sure to also configure a valid LDAP encryption type.  This will depend on your system.
+  e. follow the link in setup:
      'Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)'
 
 	 This is on the page after submitting the configuration in step 2.  This runs
@@ -46,8 +48,24 @@ in setup:
 	 wish to modify in LDAP for use with eGroupWare.  It will add the necessary objectclass
 	 and attributes to existing LDAP entries.
 
+3. If you want to store account information in a new LDAP tree only for eGroupWare:
+  a. Install the LDAP schema per directions in phpgwapi/doc/ldap/README.
+  b. Configure eGroupWare to use LDAP auth and LDAP accounts (Step 2)
+  c. Configure a valid LDAP host, LDAP accounts context, and LDAP groups context,
+     LDAP rootdn, and LDAP root password.  The rootdn/rootpw can match what is setup
+	 as the rootdn/rootpw in, e.g., slapd.conf.  Or it could be a user who is granted
+	 LDAP acl rights to WRITE data to any entry in the accounts and groups contexts.  By
+	 context, we mean the ou in which this information is stored, e.g. ou=People,dc=domain,dc=com
+	 and ou=Group,dc=domain,dc=com.
+  d. Be sure to also configure a valid LDAP encryption type.  This will depend on your system.
+  e. follow the link in setup: 'Setup demo accounts in LDAP'
+     
+	 This is on the page after submitting the configuration in step 2.  This runs
+	 setup/setup_demo.php, which creates an admin account you specify, and optionally
+	 the demo, demo2, and demo3 user accounts.  The admin account password is configurable
+	 here, and the demo accounts will have their passwords set to 'guest'
+
 NOTES:
 	1. Copying data from LDAP to SQL currently does not transfer the userPassword attr.
 	  You would need to create those values manually in SQL if you want to migrate from
 	  LDAP to SQL auth.  However, using LDAP and auth and SQL accounts, this is not a concern.
-
