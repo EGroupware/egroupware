@@ -14,8 +14,9 @@
 
 	/*!
 	@class datefield_widget
+	@author ralfbecker
 	@abstract widget that reads date in via 3 input-fields
-	@note This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
+	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class datefield_widget
 	{

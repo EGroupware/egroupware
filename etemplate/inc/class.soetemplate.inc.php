@@ -14,6 +14,7 @@
 
 	/*!
 	@class soetemplate
+	@author ralfbecker
 	@abstract Storage Objects: Everything to store and retrive the eTemplates.
 	@discussion eTemplates are stored in the db in table 'phpgw_etemplate' and gets distributed
 	@discussion through the file 'etemplates.inc.php' in the setup dir of each app. That file gets
@@ -79,7 +80,7 @@
 		@function num2chrs
 		@abstract generates column-names from index: 'A', 'B', ..., 'AA', 'AB', ..., 'ZZ' (not more!)
 		@param $num index to generate name from 1 => 'A'
-		@returns the name
+		@result the name
 		*/
 		function num2chrs($num)
 		{
@@ -97,7 +98,7 @@
 		/*!
 		@function empty_cell
 		@abstracts constructor for a new / empty cell (nothing fancy so far)
-		@returns the cell
+		@result the cell
 		*/
 		function empty_cell()
 		{
@@ -150,7 +151,7 @@
 		@param $template as '' loads the prefered template 'default' loads the default one '' in the db
 		@param $lang as '' loads the pref. lang 'default' loads the default one '' in the db
 		@param $group is NOT used / implemented yet
-		@returns True if a fitting template is found, else False
+		@result True if a fitting template is found, else False
 		*/
 		function read($name,$template='default',$lang='default',$group=0,$version='')
 		{
@@ -242,12 +243,14 @@
 		}
 
 		/*!
-		@function compress_array($arr)
+		@function compress_array
+		@syntax compress_array( $arr )
+		@author ralfbecker
 		@abstract to save space in the db all empty values in the array got unset
 		@discussion The never-'' type field ensures a cell does not disapear completely.
 		@discussion Calls it self recursivly for arrays / the rows
 		@param $arr the array to compress
-		@returns the compressed array
+		@result the compressed array
 		*/
 		function compress_array($arr)
 		{
@@ -273,7 +276,7 @@
 		@function as_array
 		@abstract returns obj-data as array
 		@param $data_too 0 = no data array, 1 = data array too, 2 = serialize data array
-		@returns the array
+		@result the array
 		*/
 		function as_array($data_too=0)
 		{
@@ -297,7 +300,7 @@
 		@function save
 		@abstract saves eTemplate-object to db, can be used as saveAs by giving keys as params
 		@params keys see class
-		@returns the number of affected rows, 1 should be ok, 0 somethings wrong
+		@result the number of affected rows, 1 should be ok, 0 somethings wrong
 		*/
 		function save($name='',$template='.',$lang='.',$group='',$version='.')
 		{
@@ -366,7 +369,7 @@
 		/*!
 		@function delete
 		@abstract Deletes the eTemplate from the db, object itself is unchanged
-		@returns the number of affected rows, 1 should be ok, 0 somethings wrong
+		@result the number of affected rows, 1 should be ok, 0 somethings wrong
 		*/
 		function delete()
 		{
@@ -383,7 +386,7 @@
 		@function dump2setup
 		@abstract dumps all eTemplates to <app>/setup/etemplates.inc.php for distribution
 		@param $app app- or template-name
-		@returns the number of templates dumped as message
+		@result the number of templates dumped as message
 		*/
 		function dump2setup($app)
 		{
@@ -425,8 +428,8 @@
 		/*!
 		@function getToTranslate
 		@abstract extracts all texts: labels and helptexts from an eTemplate-object
-		@note some extensions use a '|' to squezze multiple texts in a label or help field
-		@returns array with messages as key AND value
+		@discussion some extensions use a '|' to squezze multiple texts in a label or help field
+		@result array with messages as key AND value
 		*/
 		function getToTranslate()
 		{
@@ -454,7 +457,7 @@
 		@function getToTranslateApp
 		@abstract Read all eTemplates of an app an extracts the texts to an array
 		@param $app name of the app
-		@returns the array with texts
+		@result the array with texts
 		*/
 		function getToTranslateApp($app)
 		{
@@ -478,7 +481,7 @@
 		@param $lang language the messages in the template are, defaults to 'en'
 		@param $additional extra texts to translate, if you pass here an array with all messages and
 		@param             select-options they get writen too (form is <unique key> => <message>)
-		@returns message with number of messages written (total and new)
+		@result message with number of messages written (total and new)
 		*/
 		function writeLangFile($app,$lang='en',$additional='')
 		{
@@ -540,7 +543,7 @@
 		@function import_dump
 		@abstract Imports the dump-file /$app/setup/etempplates.inc.php unconditional (!)
 		@param $app app name
-		@returns message with number of templates imported
+		@result message with number of templates imported
 		*/
 		function import_dump($app)
 		{

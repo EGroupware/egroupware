@@ -14,6 +14,7 @@
 
 /*!
 @class so_sql
+@author ralfbecker
 @abstract generalized SQL Storage Object
 @discussion the class can be used in following ways:
 @discussion 1) by calling the constructor with an app and table-name or
@@ -50,7 +51,9 @@ class so_sql
 	var $non_db_cols = array();
 
 	/*!
-	@function so_sql($app='',$table='')
+	@function so_sql
+	@syntax so_sql( $app='',$table='' )
+	@author ralfbecker
 	@abstract constructor of the class
 	@discussion NEED to be called from the constructor of the derived class
 	@param $app, $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
@@ -73,7 +76,9 @@ class so_sql
 	}
 
 	/*!
-	@function setup_table($app,$table)
+	@function setup_table
+	@syntax setup_table( $app,$table )
+	@author ralfbecker
 	@abstract reads table-definition from <app>/setup/tables_current.inc.php
 	@discussion Does NOT set a different internal-data-name. If you want this, you have to do so
 	@discussion in a derifed class !!!
@@ -110,7 +115,9 @@ class so_sql
 	}
 
 	/*!
-	@function so_data_merge($new)
+	@function so_data_merge
+	@syntax so_data_merge( $new )
+	@author ralfbecker
 	@abstract merges in new values from the given new data-array
 	@param $new array in form col => new_value with values to set
 	*/
@@ -182,7 +189,7 @@ class so_sql
 	@function so_sql_init
 	@abstract initializes data with the content of key
 	@param $keys array with keys in form internalName => value
-	@returns void
+	@result void
 	*/
 	function so_sql_init($keys=array())
 	{
@@ -207,7 +214,7 @@ class so_sql
 	@function so_sql_read
 	@abstract reads row matched by key and puts all cols in the data array
 	@param $keys array with keys in form internalName => value, may be a scalar value if only one key
-	@returns data array if row could be retrived else False and data = array()
+	@result data array if row could be retrived else False and data = array()
 	*/
 	function so_sql_read($keys)
 	{
@@ -274,7 +281,7 @@ class so_sql
 	@function so_sql_save
 	@abstracts saves the content of data to the db
 	@param $keys if given $keys are copied to data before saveing => allows a save as
-	@returns 0 on success and errno != 0 else
+	@result 0 on success and errno != 0 else
 	*/
 	function so_sql_save($keys='')
 	{
@@ -338,7 +345,7 @@ class so_sql
 	@function so_sql_delete
 	@abstract deletes row representing keys in internal data or the supplied $keys if != ''
 	@param $keys if not '', array with col => value pairs to characterise the rows to delete
-	@returns affected rows, should be 1 if ok, 0 if an error
+	@result affected rows, should be 1 if ok, 0 if an error
 	*/
 	function so_sql_delete($keys='')
 	{
@@ -386,7 +393,7 @@ class so_sql
 	@param $order_by fieldnames + {ASC|DESC} separated by colons ','
 	@param $wildcard string appended befor and after each criteria
 	@param $empty False=empty criteria are ignored in query, True=empty have to be empty in row
-	@returns array of matching rows (the row is an array of the cols) or False
+	@result array of matching rows (the row is an array of the cols) or False
 	*/
 	function so_sql_search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False)
 	{
@@ -433,10 +440,12 @@ class so_sql
 	}
 
 	/*!
-	@function so_sql_not_unique($data='')
+	@function so_sql_not_unique
+	@syntax so_sql_not_unique( $data='' )
+	@author ralfbecker
 	@abstract Check if values for unique keys are unique
 	@param $data data-set to check, defaults to $this->data
-	@returns 0: all keys are unique, 1: first key not unique, 2: ...
+	@result 0: all keys are unique, 1: first key not unique, 2: ...
 	*/
 	function so_sql_not_unique($data='')
 	{
@@ -465,7 +474,9 @@ class so_sql
 	}
 
 	/*!
-	@function not_unique($data='')
+	@function not_unique
+	@syntax not_unique( $data='' )
+	@author ralfbecker
 	@abstract just an convinient alias for so_sql_search, might be reimplemented in derived class
 	@parms as for so_sql_not_unique
 	*/

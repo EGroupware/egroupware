@@ -65,7 +65,9 @@
 ';
 
 		/*!
-		@function db_tools()
+		@function db_tools
+		@syntax db_tools(  )
+		@author ralfbecker
 		@abstract constructor of class
 		*/
 		function db_tools($lang_on_messages=True)
@@ -92,7 +94,9 @@
 		}
 
 		/*!
-		@function edit($content='',$msg='')
+		@function edit
+		@syntax edit( $content='',$msg='' )
+		@author ralfbecker
 		@abstract this is the table editor (and the callback/submit-method too)
 		*/
 		function edit($content='',$msg = '')
@@ -241,13 +245,15 @@
 		}
 
 		/*!
-		@function needs_save($cont='',$posted_app='',$posted_table='',$edited_table='')
+		@function needs_save
+		@syntax needs_save( $cont='',$posted_app='',$posted_table='',$edited_table='' )
+		@author ralfbecker
 		@abstract checks if table was changed and if so offers user to save changes
 		@param $cont the content of the form (if called by process_exec)
 		@param $posted_app the app the table is from
 		@param $posted_table the table-name
 		@param $edited_table the edited table-definitions
-		@returns only if no changes
+		@result only if no changes
 		*/
 		function needs_save($cont='',$posted_app='',$posted_table='',$edited_table='')
 		{
@@ -320,10 +326,12 @@
 		}
 
 		/*!
-		@function table2content($table)
+		@function table2content
+		@syntax table2content( $table )
+		@author ralfbecker
 		@abstract creates content-array from a $table
 		@param $table table-definition, eg. $phpgw_baseline[$table_name]
-		@returns content-array
+		@result content-array
 		*/
 		function table2content($table)
 		{
@@ -351,10 +359,12 @@
 		}
 
 		/*!
-		@function content2table($content)
+		@function content2table
+		@syntax content2table( $content )
+		@author ralfbecker
 		@abstract creates table-definition from posted content
 		@param $content posted content-array
-		@returns table-definition
+		@result table-definition
 		*/
 		function content2table($content)
 		{
@@ -426,11 +436,13 @@
 		}
 
 		/*!
-		@function read($app,&$phpgw_baseline)
+		@function read
+		@syntax read( $app,&$phpgw_baseline )
+		@author ralfbecker
 		@abstract includes $app/setup/tables_current.inc.php
 		@param $app application name
 		@param $phpgw_baseline where to put the data
-		@returns True if file found, False else
+		@result True if file found, False else
 		*/
 		function read($app,&$phpgw_baseline)
 		{
@@ -508,7 +520,9 @@
 		}
 
 		/*!
-		@function write($app,$phpgw_baseline)
+		@function write
+		@syntax write( $app,$phpgw_baseline )
+		@author ralfbecker
 		@abstract writes tabledefinitions $phpgw_baseline to file /$app/setup/tables_current.inc.php
 		@param $app app-name
 		@param $phpgw_baseline tabledefinitions
@@ -552,7 +566,9 @@
 		}
 
 		/*!
-		@function setup_version($app,$new = '',$tables='')
+		@function setup_version
+		@syntax setup_version( $app,$new = '',$tables='' )
+		@author ralfbecker
 		@abstract reads and updates the version in file $app/setup/setup.inc.php if $new != ''
 		@return the version or False if the file could not be read or written
 		*/
@@ -599,7 +615,9 @@
 		}
 
 		/*!
-		@function update($app,$current,$version)
+		@function update
+		@syntax update( $app,$current,$version )
+		@author ralfbecker
 		@abstract updates file /$app/setup/tables_update.inc.php to reflect changes in $current
 		@param $app app-name
 		@param $current new tabledefinitions
@@ -759,9 +777,11 @@
 		}
 
 		/*!
-		@function normalize($table)
+		@function normalize
+		@syntax normalize( $table )
+		@author ralfbecker
 		@abstract sets all nullable properties to True or False
-		@returns the new array
+		@result the new array
 		*/
 		function normalize($table)
 		{
@@ -788,9 +808,11 @@
 		}
 
 		/*!
-		@function tables_identical($old,$new)
+		@function tables_identical
+		@syntax tables_identical( $old,$new )
+		@author ralfbecker
 		@abstract compares two table-definitions
-		@returns True if they are identical or False else
+		@result True if they are identical or False else
 		*/
 		function tables_identical($a,$b)
 		{

@@ -14,9 +14,10 @@
 
 	/*!
 	@class tab_widget
+	@author ralfbecker
 	@abstract widget that shows one row of tabs and an other row with the eTemplate of the selected tab
-	@note see the example in 'etemplate.tab_widget.test' (use show to view it)
-	@note This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
+	@discussion see the example in 'etemplate.tab_widget.test' (use show to view it)
+	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class tab_widget
 	{

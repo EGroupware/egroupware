@@ -16,6 +16,7 @@
 
 	/*!
 	@class boetemplate
+	@author ralfbecker
 	@abstract Buiseness Objects for eTemplates
 	@discussion Not so much so far, as the most logic is still in the UI-class
 	@param $types,$alings converts internal names/values to (more) human readible ones
@@ -65,7 +66,9 @@
 		}
 
 		/*!
-		@function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
+		@function expand_name
+		@syntax expand_name( $name,$c,$row,$c_='',$row_='',$cont='' )
+		@author ralfbecker
 		@abstract allows a few variables (eg. row-number) to be used in field-names
 		@discussion This is mainly used for autorepeat, but other use is possible.
 		@discussion You need to be aware of the rules PHP uses to expand vars in strings, a name
@@ -123,7 +126,7 @@
 		@param &$idx_cname returns the basename for the form-name: is $idx if only one value
 		@param       (no ',') is given in size (name (not template-fields) are always only one value)
 		@param $check_col boolean to check for col- or row-autorepeat
-		@returns true if cell is autorepeat (has index with vars / '$') or false otherwise
+		@result true if cell is autorepeat (has index with vars / '$') or false otherwise
 		*/
 		function autorepeat_idx($cell,$c,$r,&$idx,&$idx_cname,$check_col=False)
 		{
@@ -171,7 +174,9 @@
 		}
 
 		/*!
-		@function save_appsession($data,$id='')
+		@function save_appsession
+		@syntax save_appsession( $data,$id='' )
+		@author ralfbecker
 		@abstract saves content,readonlys,template-keys, ... via the appsession function
 		@discussion As a user may open several windows with the same content/template wie generate a location-id from microtime
 		@discussion which is used as location for appsession to descriminate between the different windows. This location-id
@@ -179,7 +184,7 @@
 		@discussion from the session-id which is constant for all windows opened in one session.
 		@param $data the data to save
 		@param $id the id to use or '' to generate a new id
-		@returns the location-id
+		@result the location-id
 		*/
 		function save_appsession($data,$id='')
 		{
@@ -193,10 +198,12 @@
 		}
 
 		/*!
-		@function get_appsession($id)
+		@function get_appsession
+		@syntax get_appsession( $id )
+		@author ralfbecker
 		@abstract gets content,readonlys,template-keys, ... back from the appsession function
 		@param $id the location-id
-		@returns the session-data
+		@result the session-data
 		*/
 		function get_appsession($id)
 		{
@@ -208,9 +215,11 @@
 		}
 
 		/*!
-		@function get_cell_attribute($name,$attr)
+		@function get_cell_attribute
+		@syntax get_cell_attribute( $name,$attr )
+		@author ralfbecker
 		@abstract gets an attribute in a named cell
-		@returns the attribute or False if named cell not found
+		@result the attribute or False if named cell not found
 		*/
 		function get_cell_attribute($name,$attr)
 		{
@@ -232,9 +241,11 @@
 		}
 
 		/*!
-		@function set_cell_attribute($name,$attr,$val)
+		@function set_cell_attribute
+		@syntax set_cell_attribute( $name,$attr,$val )
+		@author ralfbecker
 		@abstract set an attribute in a named cell
-		@returns the number of changed cells
+		@result the number of changed cells
 		*/
 		function set_cell_attribute($name,$attr,$val)
 		{
@@ -257,9 +268,11 @@
 		}
 
 		/*!
-		@function set_cell_attribute($name,$attr,$val)
+		@function set_cell_attribute
+		@syntax set_cell_attribute( $name,$attr,$val )
+		@author ralfbecker
 		@abstract set an attribute in a named cell
-		@returns the number of changed cells
+		@result the number of changed cells
 		*/
 		function set_cell_attribute($name,$attr,$val)
 		{
@@ -282,7 +295,9 @@
 		}
 
 		/*!
-		@function disable_cells($name)
+		@function disable_cells
+		@syntax disable_cells( $name )
+		@author ralfbecker
 		@abstract disables all cells with name == $name
 		*/
 		function disable_cells($name)
@@ -291,10 +306,12 @@
 		}
 
 		/*!
-		@function loadExtension($name,$ui='')
+		@function loadExtension
+		@syntax loadExtension( $name,$ui='' )
+		@author ralfbecker
 		@abstact trys to load the Extension / Widget-class from the app or etemplate
 		@param $name name of the extension the classname should be class.${name}_widget.inc.php
-		@note the $name might be "$name.$app" to give a app-name (default is the current app)
+		@discussion the $name might be "$name.$app" to give a app-name (default is the current app)
 		*/
 		function loadExtension($name,&$parent,$ui='html')
 		{
@@ -327,7 +344,9 @@
 		}
 
 		/*!
-		@function isset_array($arr,$idx)
+		@function isset_array
+		@syntax isset_array( $arr,$idx )
+		@author ralfbecker
 		@abstract checks if idx, which may contain ONE subindex is set in array
 		*/
 		function isset_array($arr,$idx)
@@ -377,10 +396,12 @@
 		}
 
 		/*!
-		@function complete_array_merge($old,$new)
+		@function complete_array_merge
+		@syntax complete_array_merge( $old,$new )
+		@author ralfbecker
 		@abstract merges $old and $new, content of $new has precedence over $old
-		@note THIS IS NOT THE SAME AS PHP4: array_merge (as it calls itself recursive for values which are arrays,
-		@note if there key does NOT start with a '_' (array_merge just overwrites the old (sub)array)
+		@discussion THIS IS NOT THE SAME AS PHP4: array_merge (as it calls itself recursive for values which are arrays,
+		@discussion if there key does NOT start with a '_' (array_merge just overwrites the old (sub)array)
 		*/
 		function complete_array_merge($old,$new)
 		{

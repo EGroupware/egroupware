@@ -14,8 +14,9 @@
 
 	/*!
 	@class date_widget
+	@author ralfbecker
 	@abstract widget that reads dates in via 3 select-boxes
-	@note This widget is generates html vi the sbox-class, so it does not work (without an extra implementation) in an other UI
+	@discussion This widget is generates html vi the sbox-class, so it does not work (without an extra implementation) in an other UI
 	*/
 	class date_widget
 	{

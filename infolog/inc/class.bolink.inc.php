@@ -20,11 +20,12 @@
 
 	/*!
 	@class bolink
+	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - BO layer
 	@discussion This class is the BO-layer of the links
-	@note Links have to ends each pointing to an entry, an entry is a double:
-	@note app   app-name or directory-name of an phpgw application, eg. 'infolog'
-	@note id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
+	@discussion Links have to ends each pointing to an entry, an entry is a double:
+	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'
+	@discussion id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
 	*/
 	class bolink extends solink
 	{
@@ -85,9 +86,11 @@
 		}
 
 		/*!
-		@function query($app,$pattern)
+		@function query
+		@syntax query( $app,$pattern )
+		@author ralfbecker
 		@abstract Searches for a $pattern in the entries of $app
-		@returns an array of $id => $title pairs
+		@result an array of $id => $title pairs
 		*/
 		function query($app,$pattern)
 		{
@@ -101,9 +104,11 @@
 		}
 
 		/*!
-		@function title($app,$id)
+		@function title
+		@syntax title( $app,$id )
+		@author ralfbecker
 		@abstract returns the title (short description) of entry $id and $app
-		@returns the title
+		@result the title
 		*/
 		function title($app,$id)
 		{
@@ -117,7 +122,9 @@
 		}
 
 		/*!
-		@function calendar_title( $id )
+		@function calendar_title
+		@syntax calendar_title(  $id  )
+		@author ralfbecker
 		@abstract get title for an event, should be moved to bocalendar.link_title
 		*/
 		function calendar_title( $event )
@@ -142,7 +149,9 @@
 		}
 
 		/*!
-		@function calendar_query( $pattern )
+		@function calendar_query
+		@syntax calendar_query(  $pattern  )
+		@author ralfbecker
 		@abstract query calendar for an event $matching pattern, should be moved to bocalendar.link_query
 		*/
 		function calendar_query($pattern)
@@ -162,7 +171,9 @@
 		}
 
 		/*!
-		@function addressbook_title( $id )
+		@function addressbook_title
+		@syntax addressbook_title(  $id  )
+		@author ralfbecker
 		@abstract get title for an address, should be moved to boaddressbook.link_title
 		*/
 		function addressbook_title( $addr )
@@ -195,7 +206,9 @@
 		}
 
 		/*!
-		@function addressbook_query( $pattern )
+		@function addressbook_query
+		@syntax addressbook_query(  $pattern  )
+		@author ralfbecker
 		@abstract query addressbook for $pattern, should be moved to boaddressbook.link_query
 		*/
 		function addressbook_query( $pattern )
@@ -213,7 +226,9 @@
 		}
 
 		/*!
-		@function projects_title( $id )
+		@function projects_title
+		@syntax projects_title(  $id  )
+		@author ralfbecker
 		@abstract get title for a project, should be moved to boprojects.link_title
 		*/
 		function projects_title( $proj )
@@ -232,7 +247,9 @@
 		}
 
 		/*!
-		@function projects_query( $pattern )
+		@function projects_query
+		@syntax projects_query(  $pattern  )
+		@author ralfbecker
 		@abstract query for projects matching $pattern, should be moved to boprojects.link_query
 		*/
 		function projects_title( $pattern )

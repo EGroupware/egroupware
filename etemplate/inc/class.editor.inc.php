@@ -434,10 +434,12 @@
 		}
 
 		/*!
-		@function scan_for_extensions()
+		@function scan_for_extensions
+		@syntax scan_for_extensions(  )
+		@author ralfbecker
 		@abstract search the inc-dirs of etemplate and the app whichs template is edited for extensions / custom widgets
-		@note extensions are class-files in $app/inc/class.${name}_widget.inc.php
-		@returns array with name => human_name of the extensions found
+		@discussion extensions are class-files in $app/inc/class.${name}_widget.inc.php
+		@result array with name => human_name of the extensions found
 		*/
 		function scan_for_extensions($app='etemplate')
 		{

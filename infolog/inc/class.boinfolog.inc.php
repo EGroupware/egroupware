@@ -446,7 +446,9 @@
 			return False;
 		}
 		/*!
-		@function link_title( $id )
+		@function link_title
+		@syntax link_title(  $id  )
+		@author ralfbecker
 		@abstract get title for an infolog entry identified by $id
 		*/
 		function link_title( $info )
@@ -459,7 +461,9 @@
 		}
 
 		/*!
-		@function link_query( $pattern )
+		@function link_query
+		@syntax link_query(  $pattern  )
+		@author ralfbecker
 		@abstract query infolog for entries matching $pattern
 		*/
 		function link_title( $pattern )

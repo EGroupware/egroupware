@@ -67,7 +67,7 @@ class html
 	@parm $vars query or array ('name' => 'value', ...) with query
 	@example link('/index.php?menuaction=infolog.uiinfolog.get_list',array('info_id' => 123))
 	@example  = 'http://domain/phpgw-path/index.php?menuaction=infolog.uiinfolog.get_list&info_id=123'
-	@returns absolut link already run through $phpgw->link
+	@result absolut link already run through $phpgw->link
 	*/
 	function link($url,$vars='')
 	{
@@ -124,7 +124,7 @@ class html
 	@example                                2 => 'cell2', 3 => 'cell3', '.3' => 'width="10%"' ),
 	@example                 '.1' => 'BGCOLOR="#0000FF"' );
 	@example table($rows,'WIDTH="100%"') = '<table WIDTH="100%"><tr><td colspan=3>cell1</td><td>cell2</td><td width="10%">cell3</td></tr></table>'
-	@returns string with html-code of the table
+	@result string with html-code of the table
 	*/
 	function table($rows,$options = '')
 	{
@@ -200,7 +200,7 @@ class html
 	@param $options String (or Array) with option-values eg. '100%,,1'
 	@param $names String (or Array) with the option-names eg. 'WIDTH,HEIGHT,BORDER'
 	@example formatOptions('100%,,1','WIDTH,HEIGHT,BORDER') = ' WIDTH="100%" BORDER="1"'
-	@returns option string
+	@result option string
 	*/
 	function formatOptions($options,$names)
 	{
@@ -217,7 +217,7 @@ class html
 	/*!
 	@function nextMatchStyles
 	@abstract returns simple stylesheet for nextmatch row-colors
-	@returns the classes 'nmh' = nextmatch header, 'nmr0'+'nmr1' = alternating rows
+	@result the classes 'nmh' = nextmatch header, 'nmr0'+'nmr1' = alternating rows
 	*/
 	function nextMatchStyles()
 	{

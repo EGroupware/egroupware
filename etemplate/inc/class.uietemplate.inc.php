@@ -16,6 +16,7 @@
 
 	/*!
 	@class etemplate
+	@author ralfbecker
 	@abstract creates dialogs / HTML-forms from eTemplate descriptions
 	@discussion etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
 	@example $tmpl = CreateObject('etemplate.etemplate','app.template.name');
@@ -76,7 +77,7 @@
 		@param $readonlys Array with field-names as keys for fields with should be readonly
 		@param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
 		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $HTTP_POST_VARS['id'] for the $method-call
-		@returns nothing
+		@result nothing
 		*/
 		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$changes='')
 		{
@@ -191,7 +192,7 @@
 		@param $cname basename of names for form-elements, means index in $HTTP_POST_VARS
 		@param        eg. $cname='cont', element-name = 'name' returned content in $HTTP_POST_VARS['cont']['name']
 		@param $show_xxx row,col name/index for name expansion
-		@returns the generated HTML
+		@result the generated HTML
 		*/
 		function show($content,$sel_options='',$readonlys='',$cname='cont',$show_c=0,$show_row=0)
 		{
@@ -311,7 +312,7 @@
 		@discussion calls show to generate included eTemplates. Again only an INTERMAL function.
 		@param $cell array with data of the cell: name, type, ...
 		@param for rest see show
-		@returns the generated HTML
+		@result the generated HTML
 		*/
 		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span)
 		{
@@ -583,7 +584,7 @@
 		@param $vars HTTP_POST_VARS on first call, later (deeper recursions) subscripts of it
 		@param $readonly array with cell- / var-names which should NOT return content (this is to workaround browsers who not understand READONLY correct)
 		@param $cname basename of our returnt content (same as in call to show)
-		@returns the adjusted content (by using the var-param &$content)
+		@result the adjusted content (by using the var-param &$content)
 		*/
 		function process_show(&$content,$readonlys='')
 		{
@@ -699,7 +700,9 @@
 		}
 
 		/*!
-		@function process_show_cell($cell,$name,$c,$r,$readonlys,&$value)
+		@function process_show_cell
+		@syntax process_show_cell( $cell,$name,$c,$r,$readonlys,&$value )
+		@author ralfbecker
 		@abstract makes necessary adjustments on $value eTemplate / form gots submitted
 		@discussion This is only an internal function, dont call it direct use only exec
 		@discussion process_show recursivly calls itself for the included eTemplates.
@@ -708,7 +711,7 @@
 		@param $c,$r col,row index
 		@param $readonlys readonlys-array to pass on for templates
 		@param &$value value to change
-		@returns if $value is set
+		@result if $value is set
 		*/
 		function process_show_cell($cell,$name,$c,$r,$readonlys,&$value)
 		{
@@ -811,10 +814,12 @@
 		}
 
 		/*!
-		@function java_script($consider_not_tested_as_enabled = True)
+		@function java_script
+		@syntax java_script( $consider_not_tested_as_enabled = True )
+		@author ralfbecker
 		@abstract is javascript enabled?
 		@discussion this should be tested by the api at login
-		@returns true if javascript is enabled or not yet tested
+		@result true if javascript is enabled or not yet tested
 		*/
 		function java_script($consider_not_tested_as_enabled = True)
 		{
@@ -825,7 +830,9 @@
 		}
 
 		/*!
-		@function include_java_script()
+		@function include_java_script
+		@syntax include_java_script(  )
+		@author ralfbecker
 		@abstract returns the javascript to be included by exec
 		*/
 		function include_java_script()

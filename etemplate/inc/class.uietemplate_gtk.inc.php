@@ -16,6 +16,7 @@
 
 	/*!
 	@class etemplate
+	@author ralfbecker
 	@abstract creates dialogs / HTML-forms from eTemplate descriptions
 	@discussion etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
 	@example $tmpl = CreateObject('etemplate.etemplate','app.template.name');
@@ -77,7 +78,7 @@
 		@param $readonlys Array with field-names as keys for fields with should be readonly
 		@param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
 		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $HTTP_POST_VARS['id'] for the $method-call
-		@returns nothing
+		@result nothing
 		*/
 		function exec($method,$content,$sel_options='',$readonlys='',$preserv='')
 		{
@@ -154,7 +155,7 @@
 		/*!
 		@function process_show
 		@abstract this is only an empty function for the GTK ui
-		@returns the adjusted content (in the simplest case that would be $content)
+		@result the adjusted content (in the simplest case that would be $content)
 		*/
 		function process_show(&$content,$readonlys='')
 		{
@@ -263,7 +264,7 @@
 		@param $cname basename of names for form-elements, means index in $HTTP_POST_VARS
 		@param        eg. $cname='cont', element-name = 'name' returned content in $HTTP_POST_VARS['cont']['name']
 		@param $show_xxx row,col name/index for name expansion
-		@returns the generated HTML
+		@result the generated HTML
 		*/
 		function show(&$result,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0)
 		{
@@ -433,7 +434,7 @@
 		@discussion calls show to generate included eTemplates. Again only an INTERMAL function.
 		@param $cell array with data of the cell: name, type, ...
 		@param for rest see show
-		@returns the generated HTML
+		@result the generated HTML
 		*/
 		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$result)
 		{

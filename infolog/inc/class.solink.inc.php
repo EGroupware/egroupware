@@ -14,11 +14,12 @@
 
 	/*!
 	@class solink
+	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - DB layer
 	@discussion This class is to access the links in the DB
-	@note Links have to ends each pointing to an entry, an entry is a double:
-	@note app   app-name or directory-name of an phpgw application, eg. 'infolog'
-	@note id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
+	@discussion Links have to ends each pointing to an entry, an entry is a double:
+	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'
+	@discussion id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
 	*/
 	class solink 				// DB-Layer
 	{
@@ -35,7 +36,9 @@
 		var $debug = 0;
 
 		/*!
-		@function solink( )
+		@function solink
+		@syntax solink(   )
+		@author ralfbecker
 		@abstract constructor
 		*/
 		function solink( )
@@ -45,12 +48,14 @@
 		}
 
 		/*!
-		@function link( $app1,$name1,$id1,$app2,$name2,$id2,$remark='',$user=0 )
+		@function link
+		@syntax link(  $app1,$name1,$id1,$app2,$name2,$id2,$remark='',$user=0  )
+		@author ralfbecker
 		@abstract creats a link between $app1,$name1,$id1 and $app2,$name2,$id2
 		@param $remark Remark to be saved with the link (defaults to '')
 		@param $owner Owner of the link (defaults to user)
-		@note Does NOT check if link already exists
-		@returns db-errno or -1 (for param-error) or 0 for success
+		@discussion Does NOT check if link already exists
+		@result db-errno or -1 (for param-error) or 0 for success
 		*/
 		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0 )
 		{
@@ -82,11 +87,13 @@
 		}
 
 		/*!
-		@function get_links( $app,$name,$id,$only_app='',$only_name='',$order='link_lastmod DESC' )
+		@function get_links
+		@syntax get_links(  $app,$name,$id,$only_app='',$only_name='',$order='link_lastmod DESC'  )
+		@author ralfbecker
 		@abstract returns array of links to $app,$name,$id
 		@param $only_app if set return only links from $only_app (eg. only addressbook-entries)
 		@param $order defaults to newest links first
-		@returns array of links or empty array if no matching links found
+		@result array of links or empty array if no matching links found
 		*/
 		function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
 		{
@@ -136,11 +143,13 @@
 		}
 
 		/*!
-      @function unlink($link_id,$app='',$id='',$owner='')
+      @function unlink
+      @syntax unlink( $link_id,$app='',$id='',$owner='' )
+      @author ralfbecker
 		@abstract Remove link with $link_id or all links matching given params
 		@param $link_id link-id to remove if > 0
 		@param $app,$id,$owner if $link_id <= 0: removes all links matching the non-empty params
-		@returns the number of links deleted
+		@result the number of links deleted
 		*/
 		function unlink($link_id,$app='',$id='',$owner='')
 		{
@@ -181,11 +190,13 @@
 		}
 
 		/*!
-      @function chown($owner,$new_owner)
+      @function chown
+      @syntax chown( $owner,$new_owner )
+      @author ralfbecker
 		@abstract Changes ownership of all links from $owner to $new_owner
 		@discussion This is needed when a user/account gets deleted
-		@note Does NOT change the modification-time
-		@returns the number of links changed
+		@discussion Does NOT change the modification-time
+		@result the number of links changed
 		*/
 		function chown($owner,$new_owner)
 		{

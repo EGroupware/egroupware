@@ -20,11 +20,12 @@
 
 	/*!
 	@class uilink
+	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - HTML UI layer
 	@discussion This class is the UI to show/modify the links
-	@note Links have to ends each pointing to an entry, an entry is a double:
-	@note app   app-name or directory-name of an phpgw application, eg. 'infolog'
-	@note id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
+	@discussion Links have to ends each pointing to an entry, an entry is a double:
+	@discussion app   app-name or directory-name of an phpgw application, eg. 'infolog'
+	@discussion id    this is the id, eg. an integer or a tupple like '0:INBOX:1234'
 	*/
 	class uilink extends bolink
 	{
@@ -38,7 +39,9 @@
 		}
 
 		/*!
-		@function getEntry($name)
+		@function getEntry
+		@syntax getEntry( $name )
+		@author ralfbecker
 		@abstract HTML UI to query user for one side of a link: an entry of a supported app
 		*/
 		function getEntry()
@@ -46,7 +49,9 @@
       }
 
 		/*!
-		@function show($app,$id)
+		@function show
+		@syntax show( $app,$id )
+		@author ralfbecker
 		@abstract HTML UI to show & delete existing links to $app,$id and to make new links
 		@discussion this should be called by each link-supporting app at the bottom of its view-entry-page
 		*/
