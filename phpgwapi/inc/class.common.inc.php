@@ -935,25 +935,34 @@
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image].'/'.$image;
 			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.png']))
-			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.png'].'/'.$image.'.png';
-			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.jpg']))
-			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.jpg'].'/'.$image.'.jpg';
-			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.gif']))
-			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.gif'].'/'.$image.'.gif';
-			}
-			elseif(isset($this->found_files['phpgwapi'][$image]))
-			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image].'/'.$image;
-			}
 			else
 			{
-				$imgfile = '';
+				// searching the image in the api-dirs
+				if (!isset($this->found_files['phpgwapi']))
+				{
+					$this->find_image('phpgwapi','');
+				}
+
+				if(isset($this->found_files['phpgwapi'][$image.'.png']))
+				{
+					$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.png'].'/'.$image.'.png';
+				}
+				elseif(isset($this->found_files['phpgwapi'][$image.'.jpg']))
+				{
+					$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.jpg'].'/'.$image.'.jpg';
+				}
+				elseif(isset($this->found_files['phpgwapi'][$image.'.gif']))
+				{
+					$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.gif'].'/'.$image.'.gif';
+				}
+				elseif(isset($this->found_files['phpgwapi'][$image]))
+				{
+					$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image].'/'.$image;
+				}
+				else
+				{
+					$imgfile = '';
+				}
 			}
 			return $imgfile;
 		}
