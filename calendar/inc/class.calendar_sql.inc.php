@@ -77,6 +77,19 @@ class calendar_ extends calendar__
     
 	function delete_calendar($stream='',$calendar='')
 	{
+		$this->stream->query('SELECT cal_id FROM calendar_entry WHERE cal_owner='.$calendar,__LINE__,__FILE__);
+		if($this->stream->num_rows())
+		{
+			while($this->stream->next_record())
+			{
+				$this->delete_event($stream,intval($this->stream->f('cal_id')));
+			}
+			$this->expunge($stream);
+		}
+		$this->stream->lock(array('calendar_entry_user'));
+		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_login='.$calendar,__LINE__,__FILE__);
+		$this->stream->unlock();
+			
 		return $calendar;
 	}
 
