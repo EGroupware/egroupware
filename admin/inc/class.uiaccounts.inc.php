@@ -1068,10 +1068,19 @@
 			);
 			$t->set_var($var);
 		*/
+			$accountPrefix = '';
+			if(isset($GLOBALS['phpgw_info']['server']['account_prefix']))
+			{
+				$accountPrefix = $GLOBALS['phpgw_info']['server']['account_prefix'];
+				if (preg_match ("/^$accountPrefix(.*)/i", $userData['account_lid'], $matches))
+				{
+					$userData['account_lid'] = $matches[1];
+				}
+			}
 			$var = Array(
 				'input_expires' => $jscal->input('expires',$userData['expires']<0?'':($userData['expires']?$userData['expires']:time()+(60*60*24*7))),
 				'lang_never'    => lang('Never'),
-				'account_lid'   => '<input name="account_lid" value="' . $userData['account_lid'] . '">',
+				'account_lid'   => $accountPrefix.'<input name="account_lid" value="' . $userData['account_lid'] . '">',
 				'lang_homedir'  => $lang_homedir,
 				'lang_shell'    => $lang_shell,
 				'homedirectory' => $homedirectory,

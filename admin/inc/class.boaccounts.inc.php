@@ -304,12 +304,18 @@
 				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
+			
+			$accountPrefix = '';
+			if(isset($GLOBALS['phpgw_info']['server']['account_prefix']))
+			{
+				$accountPrefix = $GLOBALS['phpgw_info']['server']['account_prefix'];
+			}
 
 			if ($_POST['submit'])
 			{
 				$userData = array(
 					'account_type'          => 'u',
-					'account_lid'           => $_POST['account_lid'],
+					'account_lid'           => $accountPrefix.$_POST['account_lid'],
 					'account_firstname'     => $_POST['account_firstname'],
 					'account_lastname'      => $_POST['account_lastname'],
 					'account_passwd'        => $_POST['account_passwd'],
@@ -568,11 +574,17 @@
 				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
+			
+			$accountPrefix = '';
+			if(isset($GLOBALS['phpgw_info']['server']['account_prefix']))
+			{
+				$accountPrefix = $GLOBALS['phpgw_info']['server']['account_prefix'];
+			}
 
 			if ($_POST['submit'])
 			{
 				$userData = array(
-					'account_lid'           => $_POST['account_lid'],
+					'account_lid'           => $accountPrefix.$_POST['account_lid'],
 					'firstname'             => $_POST['account_firstname'],
 					'lastname'              => $_POST['account_lastname'],
 					'account_passwd'        => $_POST['account_passwd'],
