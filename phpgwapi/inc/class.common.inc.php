@@ -649,7 +649,8 @@
 				$GLOBALS['phpgw_info']['server']['usrtplchoice'] = 'user_choice';
 			}
 
-			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' &&
+			if (($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
+				!isset($GLOBALS['phpgw_info']['server']['template_set'])) &&
 				isset($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']))
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'];
