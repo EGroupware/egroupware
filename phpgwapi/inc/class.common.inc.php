@@ -607,7 +607,7 @@
     /* Then add the rest */
     reset ($phpgw_info["user"]["app_perms"]);
     while (list (, $appname) = each ($phpgw_info["user"]["app_perms"])){
-      if ($appname != "" && $completed_hooks[$appname] != True){
+      if (gettype($appname) != "array" && $appname != "" && $completed_hooks[$appname] != True){
         $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
       	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
     	  if (file_exists($f)) {include($f);}
