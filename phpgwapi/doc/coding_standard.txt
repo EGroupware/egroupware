@@ -11,33 +11,40 @@ It should look like this:
 6) Do not document every bit of code in comments. PHP is an interpreted language and it will be nasty on performance
 
 7) Use switch statements where many elseif's are going to be used. Switch is faster and I like it better!
-8) If statement formats
-Choice 1:
-if ($var == 'example'){
-	echo 'This is only an example';
-}else{
-	echo 'This is not a test. This is the real thing';
-}
+8) If statement need to follow the following format
 
-Choice 2:
-if ($var == 'example'){ echo 'An example'; }
+	if ($var == 'example')
+	{
+		echo 'This is only an example';
+	}
+	else
+	{
+		echo 'This is not a test. This is the real thing';
+	}
 
-(I prefer that choice 2 should not be used when there is an else involved.)
+	Do NOT make if statements like this
+	if ($var == 'example'){ echo 'An example'; }
+
 All other styles are not to be used. This is it. Use it or I will personally come and nag you to death.
 
 
 9) class/function format
-class testing 
-{
-	function print_to_screen() {
-		global phpgw, phpgw_info;
-		if ($var == 'example'){
-			echo 'This is only an example';
-		}else{
-			echo 'This is not a test. This is the real thing';
+	class testing 
+	{
+		function print_to_screen()
+		{
+			global phpgw, phpgw_info;
+
+			if ($var == 'example')
+			{
+				echo 'This is only an example';
+			}
+			else
+			{
+				echo 'This is not a test. This is the real thing';
+			}
 		}
 	}
-}
 
 Notice that when defining a class we break from the norm (putting } on same line as statement) and move the { to the next line. Dont ask me why, but this is what I/we do.
 
