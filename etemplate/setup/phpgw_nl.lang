@@ -1,15 +1,9 @@
-%1 (%2 new) messages writen for application \'%3\' and languages \'%4\'	etemplate	nl	%1 (%2 nieuwe) berichten geschreven voor applicatie '%3' en talen '%4'
-%1 (%2 new) messages writen for application \\\'%3\\\' and languages \\\'%4\\\'	etemplate	nl	%1 (%2 nieuwe) berichten geschreven voor applicatie '%3' en talen '%4'
-%1 (%2 new) messages writen for application \\\\\\\'%3\\\\\\\' and languages \\\\\\\'%4\\\\\\\'	etemplate	nl	%1 (%2 nieuwe) berichten geschreven voor applicatie '%3' en talen '%4'
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	nl	%1 (%2 nieuwe) berichten geschreven voor applicatie '%3' en talen '%4'
 %1 etemplates deleted	etemplate	nl	%1 eTemplates verwijderd
-%1 etemplates for application \'%2\' dumped to \'%3\'	etemplate	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
-%1 etemplates for application \\\'%2\\\' dumped to \\\'%3\\\'	etemplate	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
-%1 etemplates for application \\\\\\\'%2\\\\\\\' dumped to \\\\\\\'%3\\\\\\\'	etemplate	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
+%1 etemplates for application '%2' dumped to '%3'	etemplate	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
 %1 etemplates found	etemplate	nl	%1 eTemplates gevonden
 %1 matches on search criteria	etemplate	nl	%1 komt overeen met zoekcriteria
-%1 new etemplates imported for application \'%2\'	etemplate	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
-%1 new etemplates imported for application \\\'%2\\\'	etemplate	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
-%1 new etemplates imported for application \\\\\\\'%2\\\\\\\'	etemplate	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
+%1 new etemplates imported for application '%2'	etemplate	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
 %s disabled	etemplate	nl	%s uitgeschakeld
 %s needed	etemplate	nl	%s nodig
 %s notranslation	etemplate	nl	%s GeenVertaling
@@ -60,21 +54,15 @@ edit	etemplate	nl	Wijzigen
 enter a search pattern	etemplate	nl	Geef een zoekpatroon
 entry saved	etemplate	nl	Record opgelagen
 error: template not found !!!	etemplate	nl	Fout: Template niet gevonden !!!
-error: webserver is not allowed to write into \'%1\' !!!	etemplate	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
-error: webserver is not allowed to write into \\\'%1\\\' !!!	etemplate	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
-error: webserver is not allowed to write into \\\\\\\'%1\\\\\\\' !!!	etemplate	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
 error: while saveing !!!	etemplate	nl	Fou: tijdens opslaan !!!
 error: writeing !!!	etemplate	nl	Fout tijdens schrijven !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	nl	Fout bij het schrijven (geen schrijfrechten voor de webserver) !!!
 etemplate	common	nl	eTemplate
-etemplate \'%1\' imported, use save to put it in the database	etemplate	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
-etemplate \'%1\' written to \'%2\'	etemplate	nl	eTemplate '%1' geschreven naar '%2'
-etemplate \\\'%1\\\' imported, use save to put it in the database	etemplate	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
-etemplate \\\'%1\\\' written to \\\'%2\\\'	etemplate	nl	eTemplate '%1' geschreven naar '%2'
-etemplate \\\\\\\'%1\\\\\\\' imported, use save to put it in the database	etemplate	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
-etemplate \\\\\\\'%1\\\\\\\' written to \\\\\\\'%2\\\\\\\'	etemplate	nl	eTemplate '%1' geschreven naar '%2'
+etemplate '%1' imported, use save to put it in the database	etemplate	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
+etemplate '%1' written to '%2'	etemplate	nl	eTemplate '%1' geschreven naar '%2'
 etemplate editor	etemplate	nl	eTemplate Editor
-etemplate referenz	etemplate	nl	eTemplate Referentie
+etemplate reference	etemplate	nl	eTemplate Referentie
 etemplate tutorial	etemplate	nl	eTemplate Tutorial
 export xml	etemplate	nl	Exporteer XML
 field must not be empty !!!	etemplate	nl	Veld mag niet leeg zijn !!!
@@ -104,8 +92,7 @@ name	etemplate	nl	Naam
 name of table to add	etemplate	nl	Naam van de toe te voegen tabel
 new search	etemplate	nl	Nieuwe zoekopdracht
 new table created	etemplate	nl	Nieuwe tabel gemaakt
-newer version \'%1\' exists !!!	etemplate	nl	niewere versie '%1' bestaat reeds !!!
-newer version \\\'%1\\\' exists !!!	etemplate	nl	niewere versie '%1' bestaat reeds !!!
+newer version '%1' exists !!!	etemplate	nl	niewere versie '%1' bestaat reeds !!!
 no file	etemplate	nl	geen bestand
 no filename given or selected via browse...	etemplate	nl	geen bestandsnaam ingevoerd of geselecteerd met Bladeren ...
 not null	etemplate	nl	NIET NULL
@@ -160,12 +147,8 @@ type of the column	etemplate	nl	Kolomtype
 unique	etemplate	nl	Uniek
 upload	etemplate	nl	Upload
 value	etemplate	nl	Waarde
-value has to be at least \'%1\' !!!	etemplate	nl	Waarde moet op z'n minst '%1' zijn !!!
-value has to be at least \\\'%1\\\' !!!	etemplate	nl	Waarde moet op z'n minst '%1' zijn !!!
-value has to be at least \\\\\\\'%1\\\\\\\' !!!	etemplate	nl	Waarde moet op z'n minst '%1' zijn !!!
-value has to be at maximum \'%1\' !!!	etemplate	nl	Waarde kan op hoogstens '%1' zijn !!!
-value has to be at maximum \\\'%1\\\' !!!	etemplate	nl	Waarde kan op hoogstens '%1' zijn !!!
-value has to be at maximum \\\\\\\'%1\\\\\\\' !!!	etemplate	nl	Waarde kan op hoogstens '%1' zijn !!!
+value has to be at least '%1' !!!	etemplate	nl	Waarde moet op z'n minst '%1' zijn !!!
+value has to be at maximum '%1' !!!	etemplate	nl	Waarde kan op hoogstens '%1' zijn !!!
 vbox	etemplate	nl	VBox
 version	etemplate	nl	Versie
 width	etemplate	nl	Breedte

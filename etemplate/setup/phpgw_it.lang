@@ -105,7 +105,7 @@ etemplate	common	it	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	it	eTemplate '%1' imported, use Save to put it in the database
 etemplate '%1' written to '%2'	etemplate	it	eTemplate '%1' scritto su '%2'
 etemplate editor	etemplate	it	Editor eTemplate
-etemplate referenz	etemplate	it	eTemplate Referenz
+etemplate reference	etemplate	it	eTemplate Referenz
 etemplate tutorial	etemplate	it	Tutorial eTemplate
 exchange this row with the one above	etemplate	it	exchange this row with the one above
 exchange this two columns	etemplate	it	exchange this two columns

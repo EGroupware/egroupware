@@ -106,7 +106,7 @@ etemplate	common	zt	樣板管理
 etemplate '%1' imported, use save to put it in the database	etemplate	zt	匯入了樣板 '%1' ，點選儲存來將它放入資料庫中
 etemplate '%1' written to '%2'	etemplate	zt	樣板 '%1' 另存成 '%2'
 etemplate editor	etemplate	zt	樣板編輯器
-etemplate referenz	etemplate	zt	樣板參考
+etemplate reference	etemplate	zt	樣板參考
 etemplate tutorial	etemplate	zt	樣板教學
 exchange this row with the one above	etemplate	zt	用上面的資料與這一列交換
 exchange this two columns	etemplate	zt	交換這兩個欄位

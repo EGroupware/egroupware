@@ -106,7 +106,7 @@ etemplate	common	sl	ePredloga
 etemplate '%1' imported, use save to put it in the database	etemplate	sl	ePredloga '%1' uvožena, uporabite Shrani za vnos v podatkovno bazo
 etemplate '%1' written to '%2'	etemplate	sl	ePredloga '%1' zapisana v '%2'
 etemplate editor	etemplate	sl	ePredloga - urejevalnik
-etemplate referenz	etemplate	sl	ePredloga - sklici
+etemplate reference	etemplate	sl	ePredloga - sklici
 etemplate tutorial	etemplate	sl	ePredloga - priročnik
 exchange this row with the one above	etemplate	sl	zamenjaj to vrstico z gornjo
 exchange this two columns	etemplate	sl	zamenjaj ta dva stolpca

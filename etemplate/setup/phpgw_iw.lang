@@ -100,7 +100,7 @@ error: writing file (no write-permission for the webserver) !!!	etemplate	iw	(!�
 etemplate '%1' imported, use save to put it in the database	etemplate	iw	הובא, השתמש ב-[שמור] כדי להכניס אותו לבסיס הנתונים eTemplate-ה
 etemplate '%1' written to '%2'	etemplate	iw	%1 נכתב אל %2 eTemplate-ה
 etemplate editor	etemplate	iw	eTemplate עורך
-etemplate referenz	etemplate	iw	eTemplate מדריך
+etemplate reference	etemplate	iw	eTemplate מדריך
 etemplate tutorial	etemplate	iw	eTemplate-שיעור פרטי ב
 exchange this row with the one above	etemplate	iw	החלף בין שורה זו לשורה מעליה
 exchange this two columns	etemplate	iw	החלף בין שתי עמודות הללו

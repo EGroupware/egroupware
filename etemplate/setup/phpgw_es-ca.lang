@@ -104,7 +104,7 @@ etemplate	common	es-ca	Plantilla
 etemplate '%1' imported, use save to put it in the database	etemplate	es-ca	Plantilla '%1' importada. Use Guardar para ponerla en la base de datos
 etemplate '%1' written to '%2'	etemplate	es-ca	La plantilla '%1' se ha guardado en '%2'
 etemplate editor	etemplate	es-ca	Editor de plantillas
-etemplate referenz	etemplate	es-ca	Referencia de plantillas
+etemplate reference	etemplate	es-ca	Referencia de plantillas
 etemplate tutorial	etemplate	es-ca	Tutorial de plantillas
 exchange this row with the one above	etemplate	es-ca	Intercambiar esta fila con la de encima
 exchange this two columns	etemplate	es-ca	Intercambiar estas dos columnas

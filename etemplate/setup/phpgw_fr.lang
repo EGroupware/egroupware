@@ -105,7 +105,7 @@ etemplate	common	fr	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	fr	eTemplate '%1' importé, utilisez Enregistrer pour le mettre dans la base de données
 etemplate '%1' written to '%2'	etemplate	fr	eTemplate '%1' écrit dans '%2'
 etemplate editor	etemplate	fr	Editeur d'eTemplate
-etemplate referenz	etemplate	fr	Référence eTemplate
+etemplate reference	etemplate	fr	Référence eTemplate
 etemplate tutorial	etemplate	fr	Tutoriel eTemplate
 exchange this row with the one above	etemplate	fr	Echanger cette ligne avec celle du dessus
 exchange this two columns	etemplate	fr	Echanger ces deux colonnes

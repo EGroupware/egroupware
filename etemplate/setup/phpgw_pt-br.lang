@@ -105,7 +105,7 @@ etemplate	common	pt-br	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	pt-br	eTemplate '%1' importado, use Salvar para colocá-lo na base de dados
 etemplate '%1' written to '%2'	etemplate	pt-br	eTemplate '%1' escrito para '%2'
 etemplate editor	etemplate	pt-br	eTemplate Editor
-etemplate referenz	etemplate	pt-br	eTemplate Referência
+etemplate reference	etemplate	pt-br	eTemplate Referência
 etemplate tutorial	etemplate	pt-br	eTemplate Tutorial
 exchange this row with the one above	etemplate	pt-br	troque esta linha com a acima
 exchange this two columns	etemplate	pt-br	troque estas duas colunas

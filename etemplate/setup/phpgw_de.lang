@@ -108,7 +108,7 @@ etemplate	common	de	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
 etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' geschrieben
 etemplate editor	etemplate	de	eTemplate Editor
-etemplate referenz	etemplate	de	eTemplate Handbuch
+etemplate reference	etemplate	de	eTemplate Handbuch
 etemplate tutorial	etemplate	de	eTemplate Einführung
 exchange this row with the one above	etemplate	de	diese Zeile mit der darüber austauschen
 exchange this two columns	etemplate	de	diese beiden Spalten austauschen

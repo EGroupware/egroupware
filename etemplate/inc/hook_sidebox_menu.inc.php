@@ -35,8 +35,8 @@
 			'target' => 'docs'
 		),
 		array(
-			'text'   => 'eTemplate Referenz',
-			'link'   => $docs.'referenz.html',
+			'text'   => 'eTemplate Reference',
+			'link'   => $docs.'reference.html',
 			'target' => 'docs'
 		),
 		array(

@@ -106,7 +106,7 @@ etemplate	common	sv	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	sv	eTemplate '%1' importerad, använd Spara för att skriva i databasen
 etemplate '%1' written to '%2'	etemplate	sv	eTemplate '%1' skriven till '%2'
 etemplate editor	etemplate	sv	eTemplate Editor
-etemplate referenz	etemplate	sv	eTemplate Referens
+etemplate reference	etemplate	sv	eTemplate Referens
 etemplate tutorial	etemplate	sv	eTemplate Hjälpinnehåll
 exchange this row with the one above	etemplate	sv	Byt denna rad mot den ovan
 exchange this two columns	etemplate	sv	Byt dessa två kolumner
