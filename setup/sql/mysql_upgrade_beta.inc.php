@@ -1253,6 +1253,54 @@
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre16';
 	}
+	
+    $test[] = '0.9.10pre16';
+    function upgrade0_9_10pre16() {
+		global $phpgw_info, $phpgw_setup;
+		$db1 = $phpgw_setup->db;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add pubkey text");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel tel_work varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel tel_home varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel tel_fax  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_work tel_msg varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_home tel_cell varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_voice tel_voice varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_msg tel_pager varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_fax tel_bbs varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_work tel_modem varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_home tel_car varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_voice tel_isdn varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_msg tel_video varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_prefer tel_prefer varchar(32)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email email varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_tyoe email_type varchar(32) DEFAULT 'INTERNET' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_work email_home varchar(64)");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_home email_home_type varchar(32) DEFAULT 'INTERNET' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop b_tel_prefer");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_prefer");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop b_tel_fax");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_work");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_home");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_voice");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_msg");
+		$phpgw_setup->db->query("alter table phpgw_addressbook drop c_tel_fax");
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='mphone'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set tel_cell=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='url'";
+				$db1->query($delete);
+			}
+		}
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre17';
+	}
 
   reset ($test);
   while (list ($key, $value) = each ($test)){

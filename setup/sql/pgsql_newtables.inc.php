@@ -101,66 +101,66 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "create table phpgw_addressbook (
+  $sql = "CREATE TABLE phpgw_addressbook (
+     id    int(8) NOT NULL auto_increment,
+     lid   varchar(32),
+     tid   char(1),
+     owner int(8),
 
-                    id                  serial,
-                    lid                 varchar(32),
-                    tid                 char(1),
-                    owner               int,
-                    fn                  varchar(64),
-                    sound               varchar(64),
-                    org_name            varchar(64),
-                    org_unit            varchar(64),
-                    title               varchar(64),
-                    n_family            varchar(64),
-                    n_given             varchar(64),
-                    n_middle            varchar(64),
-                    n_prefix            varchar(64),
-                    n_suffix            varchar(64),
-                    label               text,       
-                    adr_poaddr          varchar(64),
-                    adr_extaddr         varchar(64),
-                    adr_street          varchar(64),
-                    adr_locality        varchar(32),
-                    adr_region          varchar(32),
-                    adr_postalcode      varchar(32),
-                    adr_countryname     varchar(32),
-                    adr_work            char(1) DEFAULT 'n' NOT NULL,
-                    adr_home            char(1) DEFAULT 'n' NOT NULL,
-                    adr_parcel          char(1) DEFAULT 'n' NOT NULL,
-                    adr_postal          char(1) DEFAULT 'n' NOT NULL,
-                    tz                  varchar(8),
-                    geo                 varchar(32),
-					url					varchar(128),
-					bday				varchar(32),
-					note				text,
-                    a_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
-                    a_tel_work          char(1) DEFAULT 'n' NOT NULL,
-                    a_tel_home          char(1) DEFAULT 'n' NOT NULL,
-                    a_tel_voice         char(1) DEFAULT 'n' NOT NULL,
-                    a_tel_msg           char(1) DEFAULT 'n' NOT NULL,
-                    a_tel_fax           char(1) DEFAULT 'n' NOT NULL,
-                    a_tel_prefer        char(1) DEFAULT 'n' NOT NULL,
-                    b_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
-                    b_tel_work          char(1) DEFAULT 'n' NOT NULL,
-                    b_tel_home          char(1) DEFAULT 'n' NOT NULL,
-                    b_tel_voice         char(1) DEFAULT 'n' NOT NULL,
-                    b_tel_msg           char(1) DEFAULT 'n' NOT NULL,
-                    b_tel_fax           char(1) DEFAULT 'n' NOT NULL,
-                    b_tel_prefer        char(1) DEFAULT 'n' NOT NULL,
-                    c_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
-                    c_tel_work          char(1) DEFAULT 'n' NOT NULL,
-                    c_tel_home          char(1) DEFAULT 'n' NOT NULL,
-                    c_tel_voice         char(1) DEFAULT 'n' NOT NULL,
-                    c_tel_msg           char(1) DEFAULT 'n' NOT NULL,
-                    c_tel_fax           char(1) DEFAULT 'n' NOT NULL,
-                    c_tel_prefer        char(1) DEFAULT 'n' NOT NULL,
-                    d_emailtype         text check(d_emailtype in('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX')) DEFAULT 'INTERNET' NOT NULL,
-                    d_email             varchar(64),
-                    d_email_work        char(1) DEFAULT 'n' NOT NULL,
-                    d_email_home        char(1) DEFAULT 'n' NOT NULL,
-                    UNIQUE (id)
-		    )";
+     fn       varchar(64),
+     n_family varchar(64),
+     n_given  varchar(64),
+     n_middle varchar(64),
+     n_prefix varchar(64),
+     n_suffix varchar(64),
+     sound    varchar(64),
+     bday     varchar(32),
+     note     text,
+     tz       varchar(8),
+     geo      varchar(32),
+     url      varchar(128),
+     pubkey   text,
+
+     org_name varchar(64),
+     org_unit varchar(64),
+     title    varchar(64),
+
+     adr_one_street      varchar(64),
+     adr_one_locality    varchar(32),
+     adr_one_region      varchar(32),
+     adr_one_postalcode  varchar(32),
+     adr_one_countryname varchar(32),
+     adr_one_type        varchar(64),
+     label text,
+
+     adr_two_street      varchar(64),
+     adr_two_locality    varchar(32),
+     adr_two_region      varchar(32),
+     adr_two_postalcode  varchar(32),
+     adr_two_countryname varchar(32),
+     adr_two_type        varchar(64),
+
+     tel_work   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_home   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_voice  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_fax    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_msg    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_cell   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_pager  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_bbs    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_modem  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_car    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_isdn   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_video  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+     tel_prefer varchar(32),
+
+     email varchar(64),
+     email_type varchar(32) DEFAULT 'INTERNET',
+     email_home varchar(64),
+     email_home_type varchar(32) DEFAULT 'INTERNET',
+     PRIMARY KEY (id),
+     UNIQUE id (id)
+   )";
 
   $phpgw_setup->db->query($sql);
 
@@ -311,7 +311,7 @@
           );";
   $phpgw_setup->db->query($sql);  
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre16';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre17';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>

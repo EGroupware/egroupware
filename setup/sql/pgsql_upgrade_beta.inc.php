@@ -1447,6 +1447,122 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre16';
 	}
 
+    $test[] = '0.9.10pre16';
+    function upgrade0_9_10pre16() {
+		global $phpgw_info, $phpgw_setup;
+		$db1 = $phpgw_setup->db;
+
+		$sql="CREATE TABLE phpgw_addressbook_temp (
+		   id    int(8) NOT NULL auto_increment,
+		   lid   varchar(32),
+		   tid   char(1),
+		   owner int(8),
+		   fn       varchar(64),
+		   n_family varchar(64),
+		   n_given  varchar(64),
+		   n_middle varchar(64),
+		   n_prefix varchar(64),
+		   n_suffix varchar(64),
+		   sound    varchar(64),
+		   bday     varchar(32),
+		   note     text,
+		   tz       varchar(8),
+		   geo      varchar(32),
+		   url      varchar(128),
+		   pubkey   text,
+		   org_name varchar(64),
+		   org_unit varchar(64),
+		   title    varchar(64),
+		   adr_one_street      varchar(64),
+		   adr_one_locality    varchar(32),
+		   adr_one_region      varchar(32),
+		   adr_one_postalcode  varchar(32),
+		   adr_one_countryname varchar(32),
+		   adr_one_type        varchar(64),
+		   label text,
+		   adr_two_street      varchar(64),
+		   adr_two_locality    varchar(32),
+		   adr_two_region      varchar(32),
+		   adr_two_postalcode  varchar(32),
+		   adr_two_countryname varchar(32),
+		   adr_two_type        varchar(64),
+		   tel_work   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_home   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_voice  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_fax    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_msg    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_cell   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_pager  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_bbs    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_modem  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_car    varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_isdn   varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_video  varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+		   tel_prefer varchar(32),
+		   email varchar(64),
+		   email_type varchar(32) DEFAULT 'INTERNET',
+		   email_home varchar(64),
+		   email_home_type varchar(32) DEFAULT 'INTERNET',
+		   PRIMARY KEY (id),
+		   UNIQUE id (id)
+		)";
+
+		$phpgw_setup->db->query($sql);
+
+		$phpgw_setup->db->query("SELECT * FROM phpgw_addressbook");
+		while ($phpgw_setup->db->next_record()) {
+                    $fields['id']                  = $phpgw_setup->db->f("id");
+                    $fields['owner']               = $phpgw_setup->db->f("owner");
+                    $fields['n_given']             = $phpgw_setup->db->f("firstname");
+                    $fields['n_family']            = $phpgw_setup->db->f("lastname");
+                    $fields['email']               = $phpgw_setup->db->f("d_email");
+					$fields['email_type']          = $phpgw_setup->db->f("d_email_type");
+                    $fields['tel_home']            = $phpgw_setup->db->f("hphone");
+                    $fields['tel_work']            = $phpgw_setup->db->f("wphone");
+                    $fields['tel_fax']             = $phpgw_setup->db->f("fax");
+                    $fields['fn']                  = $phpgw_setup->db->f("fn");
+                    $fields['org_name']            = $phpgw_setup->db->f("org_name");
+                    $fields['title']               = $phpgw_setup->db->f("title");
+                    $fields['adr_one_street']      = $phpgw_setup->db->f("adr_street");
+                    $fields['adr_one_locality']    = $phpgw_setup->db->f("adr_locality");
+                    $fields['adr_one_region']      = $phpgw_setup->db->f("adr_region");
+                    $fields['adr_one_postalcode']  = $phpgw_setup->db->f("adr_postalcode");
+                    $fields['adr_one_countryname'] = $phpgw_setup->db->f("adr_countryname");
+                    $fields['bday']                = $phpgw_setup->db->f("bday");
+                    $fields['note']                = $phpgw_setup->db->f("note");
+                    $fields['url']                 = $phpgw_setup->db->f("url");
+
+			$sql="INSERT INTO phpgw_addressbook_temp (org_name,n_given,n_family,fn,email,email_type,title,tel_work,"
+				. "tel_home,tel_fax,adr_one_street,adr_one_locality,adr_one_region,adr_one_postalcode,adr_one_countryname,"
+				. "owner,bday,url,note)"
+				. " VALUES ('".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
+				. $fields["fn"]."','".$fields["email"]."','".$fields["email_type"]."','".$fields["title"]."','".$fields["tel_work"]."','"
+				. $fields["tel_home"]."','".$fields["tel_fax"] ."','".$fields["adr_one_street"]."','"
+				. $fields["adr_one_locality"]."','".$fields["adr_one_region"]."','".$fields["adr_one_postalcode"]."','"
+				. $fields["adr_one_countryname"]."','".$fields["owner"] ."','".$fields["bday"]."','".$fields["url"]."','".$fields["note"]."')";
+
+			$db1->query($sql,__LINE__,__FILE__);
+		}
+
+		$phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
+		$phpgw_setup->db->query("ALTER TABLE phpgw_addressbook_temp RENAME TO phpgw_addressbook",__LINE__,__FILE__);
+
+		$sql = "SELECT * FROM phpgw_addressbook_extra WHERE contact_name='mphone'";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		while($phpgw_setup->db->next_record()) {
+			$cid   = $phpgw_setup->db->f("contact_id");
+			$cvalu = $phpgw_setup->db->f("contact_value");
+			if ($cvalu) {
+				$update = "UPDATE phpgw_addressbook set tel_cell=" . $cvalu . " WHERE id=" . $cid;
+				$db1->query($update);
+				$delete = "DELETE FROM phpgw_addressbook_extra WHERE contact_id=" . $cid . " AND contact_name='url'";
+				$db1->query($delete);
+			}
+		}
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre17';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
