@@ -248,6 +248,7 @@ import file	addressbook	de	Datei importieren
 import from outlook	addressbook	de	Aus Outlook importieren
 import lang set	transy	de	Sprachset importieren
 installed applications	admin	de	Installierte Anwendungen
+interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 international	addressbook	de	international
 intl	common	de	International
 inventory	common	de	Inventar
@@ -476,6 +477,7 @@ that site has already been entered	admin	de	Diese Site wurde bereits eingegeben
 the following conflicts with the suggested time:<ul>x</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
 the login and password can not be the same	admin	de	Login und Passwort dürfen nicht identisch sein
 the two passwords are not the same	common	de	Die Eingaben stimmen nicht überein
+theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
 there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	de	Die Verbindung zum Mailserver ist leider fehlgeschlagen.<br>Bitte prüfen sie Ihren Usernamen und Ihr Passwort, oder setzen Sie sich mit Ihrem Administrator in Verbindung.
 they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
 this folder is empty	email	de	Dieser Ordner ist leer
