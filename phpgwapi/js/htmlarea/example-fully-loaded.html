@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>Example of HTMLArea 3.0</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- load the main HTMLArea files -->
+<script type="text/javascript" src="htmlarea.js"></script>
+<script type="text/javascript" src="lang/en.js"></script>
+<script type="text/javascript" src="dialog.js"></script>
+<!-- <script type="text/javascript" src="popupdiv.js"></script> -->
+<script type="text/javascript" src="popupwin.js"></script>
+
+<!-- load the plugins -->
+<script type="text/javascript">
+      // WARNING: using this interface to load plugin
+      // will _NOT_ work if plugins do not have the language
+      // loaded by HTMLArea.
+
+      // In other words, this function generates SCRIPT tags
+      // that load the plugin and the language file, based on the
+      // global variable HTMLArea.I18N.lang (defined in the lang file,
+      // in our case "lang/en.js" loaded above).
+
+      // If this lang file is not found the plugin will fail to
+      // load correctly and nothing will work.
+
+      HTMLArea.loadPlugin("TableOperations");
+      HTMLArea.loadPlugin("SpellChecker");
+</script>
+
+<style type="text/css">
+@import url(htmlarea.css);
+
+html, body {
+  font-family: Verdana,sans-serif;
+  background-color: #fea;
+  color: #000;
+}
+a:link, a:visited { color: #00f; }
+a:hover { color: #048; }
+a:active { color: #f00; }
+
+textarea { background-color: #fff; border: 1px solid 00f; }
+</style>
+
+<script type="text/javascript">
+var editor = null;
+function initEditor() {
+  // create an editor for the "ta" textbox
+  editor = new HTMLArea("ta");
+
+  // register the SpellChecker plugin
+  editor.registerPlugin("TableOperations");
+
+  // register the SpellChecker plugin
+  editor.registerPlugin("SpellChecker");
+
+  editor.generate();
+  return false;
+}
+
+function insertHTML() {
+  var html = prompt("Enter some HTML code here");
+  if (html) {
+    editor.insertHTML(html);
+  }
+}
+function highlight() {
+  editor.surroundHTML('<span style="background-color: yellow">', '</span>');
+}
+</script>
+
+</head>
+
+<!-- use <body onload="HTMLArea.replaceAll()" if you don't care about
+     customizing the editor.  It's the easiest way! :) -->
+<body onload="initEditor()">
+
+<h1>HTMLArea 3.0</h1>
+
+<p>A replacement for <code>TEXTAREA</code> elements.  &copy; <a
+href="http://interactivetools.com">InteractiveTools.com</a>, 2003.</p>
+
+<p>Plugins:
+      <tt>TableOperations<tt> |
+      <tt>SpellChecker</tt>
+</p>
+
+<form action="test.cgi" method="post" id="edit" name="edit">
+
+<textarea id="ta" name="ta" style="width:100%" rows="24" cols="80">
+
+      <h1>This is the fully loaded HTMLArea ;-)</h1>
+
+      <p>It loads all the plugins that have been developed so far.</p>
+
+      <table style="background-color: #99f; border: 1px dashed #08f; width:
+        60%; border-collapse: collapse;" align="center">
+        <tr style="background-color: #fdd">
+          <td style="font-weight: bold; border: 1px solid #000;">Plugin</td>
+          <td style="font-weight: bold; border: 1px solid #000;">Sponsor</td>
+        </tr>
+
+        <tr>
+          <td style="font-family: monospace">TableOperations</td>
+          <td><a href="http://bloki.com">Zapatec, Inc.</a></td>
+        </tr>
+
+        <tr>
+          <td style="font-family: monospace">SpellChecker</td>
+          <td><a href="http://americanbible.org">Amerian Bible Society</a></td>
+        </tr>
+      </table>
+
+</textarea>
+
+<p />
+
+<input type="submit" name="ok" value="  submit  " />
+<input type="button" name="ins" value="  insert html  " onclick="return insertHTML();" />
+<input type="button" name="hil" value="  highlight text  " onclick="return highlight();" />
+
+<a href="javascript:mySubmit()">submit</a>
+
+<script type="text/javascript">
+function mySubmit() {
+// document.edit.save.value = "yes";
+document.edit.onsubmit(); // workaround browser bugs.
+document.edit.submit();
+};
+</script>
+
+</form>
+
+</body>
+</html>

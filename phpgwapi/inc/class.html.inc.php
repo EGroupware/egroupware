@@ -16,6 +16,7 @@
 	{
 		var $user_agent,$ua_version;	// 'mozilla','msie','konqueror'
 		var $prefered_img_title;
+		var $charset,$phpgwapi_js_url;
 
 		function html()
 		{
@@ -42,6 +43,7 @@
 			{
 				$this->charset = $GLOBALS['phpgw']->translation->charset();
 			}
+			$this->phpgwapi_js_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js';
 		}
 
 		function htmlspecialchars($str)
@@ -49,15 +51,16 @@
 			return htmlspecialchars($str,ENT_COMPAT,$this->charset);
 		}
 
-		/*
-		* Function:		Allows to show and select one item from an array
-		*	Parameters:		$name		string with name of the submitted var which holds the key of the selected item form array
-		*						$key		key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
-		*						$arr		array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
-		*						$no_lang	if !$no_lang send items through lang()
-		*						$options	additional options (e.g. 'multiple')
-		* On submit		$XXX		is the key of the selected item (XXX is the content of $name)
-		* Returns:			string to set for a template or to echo into html page
+		/*!
+		@function select
+		@abstract allows to show and select one item from an array
+		@param $name	string with name of the submitted var which holds the key of the selected item form array
+		@param $key		key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
+		@param $arr		array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
+		@param $no_lang	if !$no_lang send items through lang()
+		@param $options	additional options (e.g. 'width')
+		@param $multiple number of lines for a multiselect, default 0 = no multiselect
+		@returns string to set for a template or to echo into html page
 		*/
 		function select($name, $key, $arr=0,$no_lang=0,$options='',$multiple=0)
 		{
@@ -86,7 +89,7 @@
 
 				if("$k" == "$key" || strstr(",$key,",",$k,"))
 				{
-					$out .= " selected";
+					$out .= ' selected="1"';
 				}
 				$out .= ">" . ($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
 			}
@@ -123,6 +126,51 @@
 		function textarea($name,$value='',$options='' )
 		{
 			return "<textarea name=\"$name\" $options>".$this->htmlspecialchars($value)."</textarea>\n";
+		}
+
+		/*!
+		@function htmlarea
+		@syntax htmlarea( $name,$content='',$width=False,$height=False )
+		@author ralfbecker
+		@abstract creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
+		@param $name string name and id of the input-field
+		@param $content string of the htmlarea (will be run through htmlspecialchars !!!), default ''
+		@param $style string inline styles, eg. dimension of textarea element
+		*/
+		function htmlarea($name,$content='',$style='width:100%; min-width:500px; height:300px;')
+		{
+			if (!is_object($GLOBALS['phpgw']->js))
+			{
+				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+			}
+			if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'htmlarea'))
+			{
+				$GLOBALS['phpgw']->js->validate_file('htmlarea','htmlarea');
+				$GLOBALS['phpgw']->js->validate_file('htmlarea','dialog');
+				$lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+				if ($lang == 'en')	// other lang-files are utf-8 only and incomplete (crashes htmlarea as of 3.0beta)
+				{
+					$GLOBALS['phpgw']->js->validate_file('htmlarea',"lang/$lang");
+				}
+				else
+				{
+					$GLOBALS['phpgw_info']['flags']['java_script'] .=
+'<script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',$GLOBALS['phpgw']->link('/phpgwapi/inc/htmlarea-lang.php',array('lang'=>$lang))).'"></script>'."\n";
+				}
+				$GLOBALS['phpgw_info']['flags']['java_script'] .=
+'<style type="text/css">@import url(/egroupware/phpgwapi/js/htmlarea/htmlarea.css);</style>
+<script type="text/javascript">
+var htmlareaConfig = new HTMLArea.Config();
+htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
+</script>\n";
+			}
+			$id = str_replace(array('[',']'),array('_',''),$name);	// no brakets in the id allowed by js
+
+			$GLOBALS['phpgw']->js->set_onload("HTMLArea.replace('$id',htmlareaConfig);");
+
+			if (!empty($style)) $style = " style=\"$style\"";
+
+			return "<textarea name=\"$name\" id=\"$id\"$style>".$this->htmlspecialchars($content)."</textarea>\n";
 		}
 
 		function input($name,$value='',$type='',$options='' )
@@ -203,7 +251,7 @@
 
 		function checkbox($name,$value='')
 		{
-			return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . " />\n";
+			return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked="1"' : '') . " />\n";
 		}
 
 		function form($content,$hidden_vars,$url,$url_vars='',$name='',$options='',$method='POST')
