@@ -536,7 +536,7 @@ yemen	common	de	YEMEN
 yes	common	de	Ja
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you are running a newer version of phpgroupware than your database is setup for	common	de	Die Datenbank ist nicht auf dem Stand Ihrer phpGrouWare Version.
-you have been successfully logged out	login	de	Abmeldung erfolgreich
+you have been successfully logged out	login	de	Abmelden erfolgreich
 you have not entered a title	common	de	Sie haben keinen Titel eingegeben
 you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
 you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben
