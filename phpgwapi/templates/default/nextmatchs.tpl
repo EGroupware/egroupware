@@ -30,7 +30,7 @@
 <!-- BEGIN form -->
     <td width="2%" align="{align}">
      <form method="POST" action="{action}">
-{hidden}      <input type="image" src="{img}" border="0">
+{hidden}      <input type="image" src="{img}" border="{border}">
      <form>
     </td>
 <!-- END form -->
@@ -42,7 +42,7 @@
 
 
 <!-- BEGIN link -->
-   <td width="2%" align="{align}"><img src="{img}" border="0" width="12" height="12" alt="{label}"></td>
+   <td width="2%" align="{align}"><img src="{img}" border="{border}" width="12" height="12" alt="{label}"></td>
 <!-- END link -->
 
 

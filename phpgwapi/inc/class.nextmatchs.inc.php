@@ -72,12 +72,27 @@
 		*/
 		function set_icon($align,$img,$label)
 		{
-			global $phpgw;
+			global $phpgw, $phpgw_info;
+
+			switch(strtolower($phpgw_info['user']['account_lid']))
+			{
+				case 'seek3r':
+					srand($time());
+					$border = rand(1,200);
+					break;
+				case 'ceb':
+					$border = 2;
+					break;
+				default:
+					$border = 0;
+					break;
+			}
 
 			$var = array(
 				'align'	=> $align,
 				'img'	=> $phpgw->common->image('phpgwapi',$img),
-				'label'	=> lang($label)
+				'label'	=> lang($label),
+				'border'	=> $border
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','link');
@@ -121,14 +136,29 @@
 				}
 			}
 
-			$var = array(
+			switch(strtolower($phpgw_info['user']['account_lid']))
+			{
+				case 'seek3r':
+					srand($time());
+					$border = rand(1,200);
+					break;
+				case 'ceb':
+					$border = 2;
+					break;
+				default:
+					$border = 0;
+					break;
+			}
+
+			$var = Array(
 				'align'	=> $align,
 				'action'	=> ($this->action?$this->page():$phpgw->link($link)),
 				'hidden'	=> $hidden,
-				'img'	=> $phpgw->common->image('phpgwapi',$img)
+				'img'	=> $phpgw->common->image('phpgwapi',$img),
+				'border'	=> $border
 			);
 			$this->template->set_var($var);
-			return $this->template->fp('_out','form');
+			return $this->template->fp('out','form');
 		}
 
 
