@@ -29,6 +29,8 @@
 	z-index:9;
 }
 
+body { background: #ffffff; }
+
 </style>
 </head>
 <body bgcolor="#ffffff">
@@ -39,7 +41,7 @@
 <center>{lang_message}</center>
 <p>&nbsp;</p>
 <form name="login_form" method="post" action="{login_url}">
-<table class=sidebox cellspacing=1 cellpadding=0  border=0  align=center>
+<table class=sidebox cellspacing=1 cellpadding=0  border=1  align=center>
 <tr> 
 <td class="sideboxtitle" align="center"  height=28>{website_title}</td>
 </tr>
