@@ -45,6 +45,7 @@ class bo_resources
 		$rows = array( 0 => array(	'id'			=> '',
 						'name' 			=> '',
 						'short_description' 	=> '',
+						'quantity'		=> '',
 						'useable'		=> '',
 						'bookable'		=> '',
 						'cat_id'		=> '',
