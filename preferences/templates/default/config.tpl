@@ -114,6 +114,7 @@
      </select>
     </td>
    </tr>
+<!--
    <tr bgcolor="{row_off}">
      <td>{lang_Default_file_system_space_per_user}/{lang_group_?}:</td>
      <td>
@@ -126,6 +127,7 @@
       </select>
      </td>
     </tr>
+-->
 <!-- END body -->
 
 <!-- BEGIN footer -->
