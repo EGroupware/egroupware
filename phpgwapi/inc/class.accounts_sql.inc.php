@@ -330,9 +330,9 @@
 			$db = $GLOBALS['phpgw']->db;
 			$db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$account_id,__LINE__,__FILE__);
 			$db->next_record();
-			$$account_name[$account_id]['lid']   = $$db->f('account_lid');
-			$$account_name[$account_id]['fname'] = $$db->f('account_firstname');
-			$$account_name[$account_id]['lname'] = $$db->f('account_lastname');
+			$$account_name[$account_id]['lid']   = $db->f('account_lid');
+			$$account_name[$account_id]['fname'] = $db->f('account_firstname');
+			$$account_name[$account_id]['lname'] = $db->f('account_lastname');
 			$lid   = $account_name[$account_id]['lid'];
 			$fname = $account_name[$account_id]['fname'];
 			$lname = $account_name[$account_id]['lname'];
