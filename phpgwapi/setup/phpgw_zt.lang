@@ -433,7 +433,7 @@ personal	common	zt	個人
 peru	common	zt	PERU
 philippines	common	zt	PHILIPPINES
 phone number	common	zt	電話
-phpgroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
+egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
 pitcairn	common	zt	PITCAIRN
 please %1 by hand	common	zt	請手動 %1
 please enter a name	common	zt	請輸入名稱！

@@ -433,7 +433,7 @@ personal	common	zh	个人
 peru	common	zh	秘鲁
 philippines	common	zh	菲律宾
 phone number	common	zh	电话号码
-phpgroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
+egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
 pitcairn	common	zh	皮特凯恩
 please %1 by hand	common	zh	请手动%1
 please enter a name	common	zh	请输入名称!

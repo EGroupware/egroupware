@@ -115,7 +115,6 @@ your settings have been updated	common	hu	A beállításai módosításra kerültek
 bad login or password	common	hu	Rossz felhasználó vagy jelszó
 login	login	hu	Belépés
 password	login	hu	Jelszó
-phpgroupware login	login	hu	eGroupWare bejelentkezés
 sorry, your login has expired	login	hu	A hozzáférése lejárt
 use cookies	login	hu	használ sütit
 username	login	hu	Felhasználó

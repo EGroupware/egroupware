@@ -63,7 +63,7 @@
 		{
 			if ($_mode == 'graphic' && extension_loaded('gd'))
 			{
-				return '<input type="image" src="/phpgroupware/phpgwapi/templates/default/images/'.$this->createImage($_text).'" border="0" name="'.$_name.'">';
+				return '<input type="image" src="/egroupware/phpgwapi/templates/default/images/'.$this->createImage($_text).'" border="0" name="'.$_name.'">';
 			}
 			else
 			{

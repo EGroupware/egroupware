@@ -215,7 +215,6 @@ your settings have been updated	common	ja	Your settings have been Updated
 bad login or password	common	ja	パスワードが誤っています
 login	login	ja	ログイン
 password	login	ja	パスワード
-phpgroupware login	login	ja	eGroupWare login
 sorry, your login has expired	login	ja	ログイン有効期限が切れました
 use cookies	login	ja	Cookie を使用
 username	login	ja	ユーザ名
