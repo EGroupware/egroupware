@@ -1255,15 +1255,6 @@
 	$test[] = '0.9.11.002';
 	function phpgwapi_upgrade0_9_11_002()
 	{
-		global $setup_info;
-		$setup_info['phpgwapi']['currentver'] = '0.9.11.003';
-		return $setup_info['phpgwapi']['currentver'];
-		//return True;
-	}
-
-	$test[] = '0.9.11.002';
-	function upgrade0_9_11_002()
-	{
 		global $phpgw_info, $phpgw_setup;
 
 		$phpgw_setup->oProc->AddColumn('phpgw_categories','cat_main',array('type' => 'int', 'precision' => 4, 'default' => 0, 'nullable' => False));
