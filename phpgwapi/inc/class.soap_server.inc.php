@@ -9,7 +9,7 @@ class soap_server
 	{
 		// create empty dispatch map
 		$this->dispatch_map = array();
-		$this->debug_flag = False;
+		$this->debug_flag = True;
 		$this->debug_str = '';
 		$this->headers = '';
 		$this->request = '';
@@ -111,12 +111,18 @@ class soap_server
 		}
 		else
 		{
+			/* phpgroupware customization - createobject based on methodname */
+			list($app,$class,$method) = explode('.',$this->methodname);
+			$obj = CreateObject(sprintf('%s.%s',$app,$class));
+			/*
 			// "method not found" fault here
-			$this->debug("method '$this->methodname' not found!");
+			$this->debug("method '$obj->method' not found!");
 			$this->result = "fault: method not found";
-			$this->make_fault("Server","method '$this->methodname' not defined in service '$this->service'");
+			$this->make_fault("Server","method '$obj->method' not defined in service '$this->service'");
 			return $this->fault();
+			*/
 		}
+
 		// if fault occurred during message parsing
 		if($parser->fault())
 		{
@@ -141,12 +147,21 @@ class soap_server
 			$this->debug($parser->debug_str);
 			if(get_class($request_val) == "soapval")
 			{
-				// verify that soapval objects in request match the methods signature
+				if (is_object($obj))
+				{
+					/* Add the function to the server map */
+					$in  = "array('" . implode("','",$obj->soap_functions[$method]['in']) . "')";
+					$out = "array('" . implode("','",$obj->soap_functions[$method]['out']) . "')";
+					$evalmap  = "\$this->add_to_map(\$this->methodname,$in,$out);";
+					eval($evalmap);
+				}
+				/* verify that soapval objects in request match the methods signature */
 				if($this->verify_method($request_val))
 				{
 					$this->debug("request data - name: $request_val->name, type: $request_val->type, value: $request_val->value");
 					if($this->input_value)
-					{// decode the soapval object, and pass resulting values to the requested method
+					{
+						/* decode the soapval object, and pass resulting values to the requested method */
 						if(!$request_data = $request_val->decode())
 						{
 							$this->make_fault("Server","Unable to decode response from soapval object into native php type.");
@@ -155,61 +170,101 @@ class soap_server
 						$this->debug("request data: $request_data");
 					}
 
-					// if there are return values
+					/* if there are return values */
 					if($this->return_type = $this->get_return_type())
 					{
 						$this->debug("got return type: '$this->return_type'");
-						// if there are parameters to pass
+						/* if there are parameters to pass */
 						if($request_data)
 						{
-							// call method with parameters
-							$this->debug("about to call method '$this->methodname'");
-							if(!$method_response = call_user_func_array("$this->methodname",$request_data))
+							if (is_object($obj))
 							{
-								$this->make_fault("Server","Method call failed for '$this->methodname' with params: ".join(",",$request_data));
+								$code = "\$method_response = call_user_method(\$method,\$obj,";
+								$this->debug("about to call method '$class -> $method'");
+							}
+							else
+							{
+								$code = "\$method_response = call_user_func(\$this->methodname,";
+								$this->debug("about to call method '$this->methodname'");
+							}
+							/* call method with parameters */
+							$this->debug("about to call method '$class -> $method'");
+							while(list($x,$y) = each($request_data))
+							{
+								$code .= "\$request_data[$x]" . ',';
+							}
+							$code = substr($code,0,-1) .");";
+							if(eval($code))
+							{
+								if (is_object($obj))
+								{
+									$this->make_fault("Server","Method call failed for '$obj->method' with params: ".join(",",$request_data));
+								}
+								else
+								{
+									$this->make_fault("Server","Method call failed for '$this->methodname' with params: ".join(",",$request_data));
+								}
 								return $this->fault();
 							}
 						}
 						else
 						{
-							// call method w/ no parameters
-							$this->debug("about to call method '$this->methodname'");
-							if(!$method_response = call_user_func("$this->methodname"))
+							/* call method w/ no parameters */
+							if (is_object($obj))
 							{
-								$this->make_fault("Server","Method call failed for '$this->methodname' with no params");
-								return $this->fault();
+								$this->debug("about to call method '$obj->method'");
+								if(!$method_response = call_user_method($method,$obj))
+								{
+									$this->make_fault("Server","Method call failed for '$obj->method' with no params");
+									return $this->fault();
+								}
+							}
+							else
+							{
+								$this->debug("about to call method '$this->methodname'");
+								if(!$method_response = call_user_func($this->methodname))
+								{
+									$this->make_fault("Server","Method call failed for '$this->methodname' with no params");
+									return $this->fault();
+								}
 							}
 						}
-					// no return values
+					/* no return values */
 					}
 					else
 					{
 						if($request_data)
 						{
-							// call method with parameters
-							$this->debug("about to call method '$this->methodname'");
-							call_user_func_array("$this->methodname",$request_data);
+							/* call method with parameters */
+							$code = "\$method_response = call_user_method(\$method,\$obj,";
+							while(list($x,$y) = each($request_data))
+							{
+								$code .= "\$request_data[$x]" . ',';
+							}
+							$code = substr($code,0,-1) .");";
+							$this->debug("about to call method '$obj->method'");
+							eval($code);
 						}
 						else
 						{
-							// call method w/ no parameters
-							$this->debug("about to call method '$this->methodname'");
-							call_user_func("$this->methodname",$request_data);
+							/* call method w/ no parameters */
+							$this->debug("about to call method '$obj->method'");
+							call_user_method($method,$obj);
 						}
 					}
 
-					// create soap_val object w/ return values from method, use method signature to determine type
+					/* create soap_val object w/ return values from method, use method signature to determine type */
 					if(get_class($method_response) != "soapval")
 					{
-						$return_val = CreateObject('phpgwapi.soapval',$this->methodname,$this->return_type,$method_response);
+						$return_val = CreateObject('phpgwapi.soapval',$method,$this->return_type,$method_response);
 					}
 					else
 					{
 						$return_val = $method_response;
 					}
 					$this->debug($return_val->debug_str);
-					// response object is a soap_msg object
-					$return_msg =  CreateObject('phpgwapi.soapmsg',$this->methodname."Response",array($return_val),$this->service);
+					/* response object is a soap_msg object */
+					$return_msg =  CreateObject('phpgwapi.soapmsg',$method."Response",array($return_val),$this->service);
 					if($this->debug_flag)
 					{
 						$return_msg->debug_flag = true;
