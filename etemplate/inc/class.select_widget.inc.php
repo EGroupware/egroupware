@@ -205,7 +205,7 @@
 						{
 							$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($cat['app_name']) . '&gt;';
 						}
-						if ($tmpl->stable)
+						if (!$tmpl->xslt)
 						{
 							$cell['sel_options'][$cat['id']] = $s;	// 0.9.14 only
 						}
