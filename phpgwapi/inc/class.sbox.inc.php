@@ -94,55 +94,55 @@
   
   	function getMonthText($name, $selected=0)
   	{
-  		$out = "<select name=\"$name\">\n";
-  		
-  		for($i=0;$i<count($this->monthnames);$i++)
+  		$out = '<select name="'.$name.'">'."\n";
+  		$c_monthnames = count($this->monthnames);
+  		for($i=0;$i<$c_monthnames;$i++)
   		{              
-  			$out .= "<option value=\"$i\"";
-  			if($selected==$i) $out .= " SELECTED";
-  			$out .= ">"; 
-  			if($this->monthnames[$i]!="") 
+  			$out .= '<option value="'.$i.'"';
+  			if($selected==$i) $out .= ' SELECTED';
+  			$out .= '>'; 
+  			if($this->monthnames[$i]!='')
   				$out .= lang($this->monthnames[$i]);
   			else
-  				$out .= "";
-  			$out .= "</option>\n";
+  				$out .= '';
+  			$out .= '</option>'."\n";
   		}
-        $out .= "</select>\n";
+        $out .= '</select>'."\n";
         return $out;
      }
      
      function getDays($name, $selected=0)
      {
-     	$out = "<select name=\"$name\">\n";
+     	$out = '<select name="'.$name.'">'."\n";
   		
   		for($i=0;$i<32;$i++)
   		{              
-  			if($i==0) $val = ""; else $val = $i;
-  			$out .= "<option value=\"$val\"";
-  			if($selected==$i) $out .= " SELECTED";
-  			$out .= ">$val</option>\n";
+  			if($i==0) $val = ''; else $val = $i;
+  			$out .= '<option value="'.$val.'"';
+  			if($selected==$i) $out .= ' SELECTED';
+  			$out .= '>'.$val.'</option>'."\n";
   		}
-        $out .= "</select>\n";
+        $out .= '</select>'."\n";
         return $out;
      }
   
   	function getYears($name, $selected=0, $startYear=0)
      {
   
-  	if(!$startYear) $startYear = date("Y");
-     	$out = "<select name=\"$name\">\n";
+  	if(!$startYear) $startYear = date('Y');
+     	$out = '<select name="'.$name.'">'."\n";
   		
-  		$out .= "<option value=\"\"";
-  		if($selected == 0 OR $selected == "") $out .= " SELECTED";
-  		$out .= "></option>\n";
+  		$out .= '<option value=""';
+  		if($selected == 0 OR $selected == '') $out .= ' SELECTED';
+  		$out .= '></option>'."\n";
   		
   		for($i=$startYear - 1;$i<$startYear + 5;$i++)
   		{              
-  			$out .= "<option value=\"$i\"";
-  			if($selected==$i) $out .= " SELECTED";
-  			$out .= ">$i</option>\n";
+  			$out .= '<option value="'.$i.'"';
+  			if($selected==$i) $out .= ' SELECTED';
+  			$out .= '>'.$i.'</option>'."\n";
   		}
-        $out .= "</select>\n";
+        $out .= '</select>'."\n";
         return $out;
      }
   
