@@ -462,11 +462,11 @@
 		}
 	}
 
-	function reg_var($varname, $method = 'any', $valuetype = 'alphanumeric',$default_value='',$register=True)
+	function reg_var($varname, $method='any', $valuetype='alphanumeric',$default_value='',$register=True)
 	{
-		if($method == 'any')
+		if($method == 'any' || $method == array('any'))
 		{
-			$method = Array('POST','GET','COOKIE','SERVER','GLOBAL','DEFAULT');
+			$method = Array('POST','GET','COOKIE','SERVER','FILES','GLOBAL','DEFAULT');
 		}
 		elseif(!is_array($method))
 		{
@@ -502,6 +502,21 @@
 					else
 					{
 						$meth = 'HTTP_'.strtoupper($method[$i]).'_VARS';
+					}
+					if(@isset($GLOBALS[$meth][$varname]))
+					{
+						$value = $GLOBALS[$meth][$varname];
+						$i = $cnt+1;
+					}
+					break;
+				case 'FILES':
+					if(phpversion() >= '4.1.0')
+					{
+						$meth = '_FILES';
+					}
+					else
+					{
+						$meth = 'HTTP_POST_FILES';
 					}
 					if(@isset($GLOBALS[$meth][$varname]))
 					{
@@ -600,6 +615,10 @@
 	*/
 	function get_var($variable,$method='any',$default_value='')
 	{
+		if(!@is_array($method))
+		{
+			$method = array($method);
+		}
 		return reg_var($variable,$method,'any',$default_value,False);
 	}
 
