@@ -119,7 +119,7 @@
 		}
 
 		/* Inverse of above, convert sql column types to array info */
-		function rTranslateType($sType, $iPrecision = 0, $iScale = 0, &$sTranslated = '')
+		function rTranslateType($sType, $iPrecision = 0, $iScale = 0, $sTranslated = '')
 		{
 			$sTranslated = '';
 			if ($sType == 'int' || $sType == 'tinyint' ||  $sType == 'smallint' || $sType == 'bigint')
