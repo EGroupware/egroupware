@@ -12,7 +12,6 @@
 	/* $Id$ */
 
 	$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
-	$p       = $GLOBALS['HTTP_POST_VARS']['p'];
 	$user    = $GLOBALS['HTTP_POST_VARS']['user'];
 	$global  = $GLOBALS['HTTP_POST_VARS']['global'];
 	$default = $GLOBALS['HTTP_POST_VARS']['default'];
