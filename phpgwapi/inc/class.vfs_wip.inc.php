@@ -674,6 +674,15 @@ class vfs
 
 		umask (000);
 
+		/* We can't move directories into themselves */
+		if (($this->file_type ($f->fake_full_path, array (RELATIVE_NONE)) == "Directory") && ereg ("^$f->fake_full_path", $t->fake_full_path))
+		{
+			if (($t->fake_full_path == $f->fake_full_path) || substr ($t->fake_full_path, strlen ($f->fake_full_path), 1) == "/")
+			{
+				return False;
+			}
+		}
+
 		if ($this->file_exists ($f->fake_full_path, array (RELATIVE_NONE)))
 		{
 			/* We get the listing now, because it will change after we update the database */
