@@ -1463,7 +1463,7 @@
 				$h12 = $hour;
 			}
 
-			if ($sec)
+			if ($sec !== '')
 			{
 				$sec = ":$sec";
 			}
