@@ -48,12 +48,12 @@
            $filter = " and cat_id='$id'";
         }
 
-        $this->db->query("select * from phpgw_categories where cat_owner='"
-                       . $this->account_id . "' and cat_appname='"
+        $this->db->query("select * from phpgw_categories where cat_appname='"
                        . $this->app_name . "' $filter",__LINE__,__FILE__);
         $i = 0;
         while ($this->db->next_record()) {
            $cats[$i]['id']          = $this->db->f('cat_id');
+           $cats[$i]['owner']       = $this->db->f('cat_owner');
            $cats[$i]['parent']      = $this->db->f('cat_parent');
            $cats[$i]['name']        = $this->db->f('cat_name');
            $cats[$i]['description'] = $this->db->f('cat_description');
@@ -87,7 +87,7 @@
         $filter = $this->filter($type);
 
         if ($format == 'select') {
-           $this->db->query("select * from phpgw_categories where cat_owner='" . $this->account_id
+           $this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name
                            . "' $filter",__LINE__,__FILE__);
            while ($this->db->next_record()) {
               $s .= '<option value="' . $this->db->f('cat_id') . '"';
@@ -112,16 +112,16 @@
 
      function delete($cat_id)
      {
-        $this->db->query("delete from phpgw_categories where cat_id='$cat_id' and cat_owner='"
-                  . $this->account_id . "'",__LINE__,__FILE__);
+        $this->db->query("delete from phpgw_categories where cat_id='$cat_id' and cat_appname='"
+                  . $this->app_name . "'",__LINE__,__FILE__);
      }
 
      function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '')
      {
          $this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
                         . "cat_description='" . addslashes($cat_description) . "', cat_data='"
-                        . "$cat_data', cat_parent='$cat_parent' where cat_owner='"
-                        . $this->account_id . "' and cat_id='$cat_id'",__LINE__,__FILE__);
+                        . "$cat_data', cat_parent='$cat_parent' where cat_appname='"
+                        . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
      }
 
      function return_name($cat_id)
@@ -141,9 +141,8 @@
         $filter = $this->filter($type);
 
         $this->db->query("select count(*) from phpgw_categories where cat_name='"
-                       . addslashes($cat_name) . "' and cat_owner='"
-                       . $this->account_id . "' and cat_appname='"
-                       . $this->appname . "' $filter",__LINE__,__FILE__);
+                       . addslashes($cat_name) . "' and cat_appname='"
+                       . $this->app_name . "' $filter",__LINE__,__FILE__);
         $this->db->next_record();
         if ($this->db->f(0)) {
            return True;
