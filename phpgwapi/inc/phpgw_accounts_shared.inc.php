@@ -197,34 +197,40 @@
 
   class preferences
   {
-    var $account_id = 0;
+    var $account_id;
     var $preference;
 
     function preferences($account_id)
     {
       global $phpgw;
+//      echo "Account ID (Initializing) = ".$account_id."<br>\n";
 
+  
       $db2 = $phpgw->db;
       $load_pref = True;
       if (is_long($account_id) && $account_id) {
-	$this->account_id = $account_id;
+        $this->account_id = $account_id;
       } elseif(is_string($account_id)) {
-	$db2->query("SELECT account_id FROM accounts WHERE account_lid='".$account_id."'",__LINE__,__FILE__);
-	if($db2->num_rows()) {
-	  $db2->next_record();
-	  $this->account_id = $db2->f("account_id");
-	} else {
-	  $load_pref = False;
-	}
+        $db2->query("SELECT account_id FROM accounts WHERE account_lid='".$account_id."'",__LINE__,__FILE__);
+        if($db2->num_rows()) {
+          $db2->next_record();
+          $this->account_id = $db2->f("account_id");
+        } else {
+          $load_pref = False;
+        }
       } else {
-	$load_pref = False;
+        $load_pref = False;
       }
 
+//echo "Load Pref = $load_pref<br>\n";
+//echo "Account ID (After Initializing) = ".$this->account_id."<br>\n";
+
       if ($load_pref) {
-	$db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
-	$db2->next_record();
-	$pref_info = $db2->f("preference_value");
-	$this->preference = unserialize($pref_info);
+        $db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
+        $db2->next_record();
+        $pref_info = $db2->f("preference_value");
+        $this->preference = unserialize($pref_info);
+//	echo "Preferences = ".$this->get_preferences()."<br>\n";
       }
     }
 
@@ -234,23 +240,22 @@
       global $phpgw, $phpgw_info;
 
       //echo "<br>commit called<br>Line: $line<br>File: $file".$phpgw_info["user"]["account_id"]."<br>";
-    
       if ($this->account_id) {
         $db = $phpgw->db;
 
-        $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
+        $db->query("delete from preferences where preference_owner=" . $this->account_id,__LINE__,__FILE__);
 
         if ($PHP_VERSION < "4.0.0") {
-	  $pref_info = addslashes(serialize($this->preference));
-	} else {
-	  $pref_info = serialize($this->preference);
-	}
+          $pref_info = addslashes(serialize($this->preference));
+        } else {
+          $pref_info = serialize($this->preference);
+        }
 
         $db->query("insert into preferences (preference_owner,preference_value) values ("
                   . $this->account_id . ",'" . $pref_info . "')",__LINE__,__FILE__);
 
         if ($phpgw_info["user"]["account_id"] == $this->account_id) {
-	  $phpgw->preferences->preference = $this->get_preferences();
+          $phpgw->preferences->preference = $this->get_preferences();
           $phpgw->accounts->sync(__LINE__,__FILE__);
         }
       }

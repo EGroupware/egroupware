@@ -192,7 +192,7 @@
           Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
           exit;
         }
-        $this->preferences = new preferences($phpgw_info["user"]["account_id"]);
+        $this->preferences = new preferences(intval($phpgw_info["user"]["account_id"]));
      }
 
       $this->translation   = new translation;
@@ -339,10 +339,10 @@
   $phpgw->phpgw_();
   if ($phpgw_info["flags"]["currentapp"] != "login" &&
       $phpgw_info["flags"]["currentapp"] != "logout") {
-     if (! $phpgw->session->verify()) {
-        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
-        exit;
-     }
+//     if (! $phpgw->session->verify()) {
+//        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
+//        exit;
+//     }
      load_optional();
 
      phpgw_fillarray();
@@ -380,6 +380,7 @@
          $preferences_update = True;
       }
       if ($preferences_update) {
+      echo "Committing new preferences<br>\n";
          $phpgw->preferences->commit(__LINE__,__FILE__);
       }
       unset($preferences_update);
