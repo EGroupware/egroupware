@@ -151,6 +151,18 @@
       global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
       if ($url == $PHP_SELF){ $url = ""; } //fix problems when PHP_SELF if used as the param
       if (! $kp3) { $kp3 = $phpgw_info["user"]["kp3"]; }
+
+      // Explicit hack to work around problems with php running as CGI on windows
+      // please let us know if this doesn't work for you!
+      if (! $url && (PHP_OS == "Windows" || PHP_OS == "OS/2" || PHP_OS == "WIN32" || PHP_OS == "WIN16")) {
+        $exe = strpos($PHP_SELF,"php.exe");
+	if ($exe != false) {
+          $exe += 7; // strlen("php.exe")
+          $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
+          $url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2];
+	  $url .= substr($PHP_SELF,$exe,strlen($PHP_SELF)-$exe);
+        }
+      }
       if (! $url) {
         $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
         /* Some hosting providers have their paths screwy.
