@@ -127,7 +127,10 @@
 */
 
 		// If the application has a header include, we now include it
-		if ($phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"])
+		if ((isset($phpgw_info["flags"]["noheader"]) &&
+		     $phpgw_info['flags']['noheader']) &&
+		    (isset($phpgw_info['flags']['noappheader']) && 
+		     !$phpgw_info["flags"]["noappheader"]))
 		{
 		
 		}
