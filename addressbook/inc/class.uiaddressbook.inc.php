@@ -417,10 +417,7 @@
 
 			/* set basic vars and parse the header */
 			$GLOBALS['phpgw']->template->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
-			$GLOBALS['phpgw']->template->set_var('lang_view',lang('View'));
-			$GLOBALS['phpgw']->template->set_var('lang_vcard',lang('VCard'));
-			$GLOBALS['phpgw']->template->set_var('lang_edit',lang('Edit'));
-			$GLOBALS['phpgw']->template->set_var('lang_owner',lang('Owner'));
+			$GLOBALS['phpgw']->template->set_var('lang_actions',lang('Actions'));
 
 			$GLOBALS['phpgw']->template->set_var('searchreturn',$noprefs . ' ' . $searchreturn);
 			$GLOBALS['phpgw']->template->set_var('lang_showing',$lang_showing);
@@ -500,31 +497,36 @@
 					$GLOBALS['phpgw']->template->parse('columns','column',True);
 				}
 
-				if (1)
-				{
-					$GLOBALS['phpgw']->template->set_var('row_view_link',$GLOBALS['phpgw']->link('/index.php',
-					'menuaction=addressbook.uiaddressbook.view&ab_id='.$entries[$i]['id']));
-				}
-				else
-				{
-					$GLOBALS['phpgw']->template->set_var('row_view_link','');
-					$GLOBALS['phpgw']->template->set_var('lang_view',lang('Private'));
-				}
+				$actions = '<a href="'.
+					$GLOBALS['phpgw']->link('/index.php',array(
+						'menuaction' => 'addressbook.uiaddressbook.view',
+						'ab_id'      => $entries[$i]['id']
+					)).'"><img src="'.
+					$GLOBALS['phpgw']->common->image('addressbook','view').
+					'" border="0" title="'.lang('View').'"></a> ';
 
-				$GLOBALS['phpgw']->template->set_var('row_vcard_link',$GLOBALS['phpgw']->link('/index.php',
-				'menuaction=addressbook.uivcard.out&ab_id='.$entries[$i]['id']));
-				/* echo '<br>: ' . $contacts->grants[$myowner] . ' - ' . $myowner; */
 				if ($this->bo->check_perms($entries[$i],PHPGW_ACL_EDIT))
 				{
-					$GLOBALS['phpgw']->template->set_var('row_edit','<a href="' . $GLOBALS['phpgw']->link('/index.php',
-					'menuaction=addressbook.uiaddressbook.edit&ab_id='.$entries[$i]['id']) . '">' . lang('Edit') . '</a>');
-				}
-				else
-				{
-					$GLOBALS['phpgw']->template->set_var('row_edit','&nbsp;');
+					$actions .= '<a href="' .
+						$GLOBALS['phpgw']->link('/index.php',array(
+							'menuaction' => 'addressbook.uiaddressbook.edit',
+							'ab_id'      => $entries[$i]['id']
+						)).'"><img src="'.
+						$GLOBALS['phpgw']->common->image('addressbook','edit').
+						'" border="0" title="'.lang('Edit').'"></a> ';
 				}
 
-				$GLOBALS['phpgw']->template->set_var('row_owner',$GLOBALS['phpgw']->accounts->id2name($myowner));
+				if ($this->bo->check_perms($entries[$i],PHPGW_ACL_DELETE))
+				{
+					$actions .= '<a href="' .
+						$GLOBALS['phpgw']->link('/index.php',array(
+							'menuaction' => 'addressbook.uiaddressbook.delete',
+							'ab_id'      => $entries[$i]['id']
+						)).'"><img src="'.
+						$GLOBALS['phpgw']->common->image('addressbook','delete').
+						'" border="0" title="'.lang('Delete').'"></a>';
+				}
+				$GLOBALS['phpgw']->template->set_var('actions',$actions);
 
 				$GLOBALS['phpgw']->template->parse('rows','row',True);
 				$GLOBALS['phpgw']->template->pparse('out','row');
@@ -907,7 +909,7 @@
 				}
 			}
 			/* Following cleans up view_row, since we were only using it to fill {cols} */
-			$GLOBALS['phpgw']->template->set_var('view_row','');
+			//$GLOBALS['phpgw']->template->set_var('view_row','');
 
 			$fields['cat_id'] = is_array($this->cat_id) ? implode(',',$this->cat_id) : $this->cat_id;
 
@@ -937,16 +939,32 @@
 					$this->cat_id = $fields[0]['cat_id'];
 				}
 			}
+			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+			$GLOBALS['phpgw']->template->set_var(array(
+				'ref_data' => $GLOBALS['phpgw']->common->grab_owner_name($record_owner),
+				'display_col' => lang('Record owner'),
+				'th_bg' => $tr_color
+			));
+			$GLOBALS['phpgw']->template->parse('cols','view_row',True);
 
-			if (!$catname) { $catname = lang('none'); }
+			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+			$GLOBALS['phpgw']->template->set_var(array(
+				'ref_data' => $access_check,
+				'display_col' => lang('Record access'),
+				'th_bg' => $tr_color
+			));
+			$GLOBALS['phpgw']->template->parse('cols','view_row',True);
 
-			/* These are in the footer */
-			$GLOBALS['phpgw']->template->set_var('lang_owner',lang('Record owner'));
-			$GLOBALS['phpgw']->template->set_var('owner',$GLOBALS['phpgw']->common->grab_owner_name($record_owner));
-			$GLOBALS['phpgw']->template->set_var('lang_access',lang('Record access'));
-			$GLOBALS['phpgw']->template->set_var('access',$access_check);
-			$GLOBALS['phpgw']->template->set_var('lang_category',lang('Category'));
-			$GLOBALS['phpgw']->template->set_var('catname',$catname);
+			if ($catname)
+			{
+				$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
+				$GLOBALS['phpgw']->template->set_var(array(
+					'ref_data' => $catname,
+					'display_col' => lang('Category'),
+					'th_bg' => $tr_color
+				));
+				$GLOBALS['phpgw']->template->parse('cols','view_row',True);
+			}
 
 			if (($this->bo->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $GLOBALS['phpgw_info']['user']['account_id']))
 			{

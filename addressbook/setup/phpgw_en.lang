@@ -1,7 +1,9 @@
 %1 records imported	addressbook	en	%1 records imported
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+(e.g. 1969)	addressbook	en	(e.g. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
+actions	addressbook	en	Actions
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add custom field	addressbook	en	Add Custom Field
 address book	common	en	Address Book
@@ -37,6 +39,7 @@ charset of file	addressbook	en	Charset of file
 city	common	en	City
 company	common	en	Company
 company name	common	en	Company Name
+configuration	common	en	Configuration
 contact	common	en	Contact
 contact application	admin	en	Contact application
 contact settings	admin	en	Contact Settings

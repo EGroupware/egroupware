@@ -1,7 +1,9 @@
 %1 records imported	addressbook	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import auschalten)
+(e.g. 1969)	addressbook	de	(zB. 1966)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp &lt;none&gt; konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstype aus der Liste
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verfügbar für Administratoren!!!
+actions	addressbook	de	Befehle
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 address book	common	de	Adressbuch
@@ -37,6 +39,7 @@ charset of file	addressbook	de	Zeichensatz der Datei
 city	common	de	Stadt
 company	common	de	Firma
 company name	common	de	Firmenname
+configuration	common	de	Konfiguration
 contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
 contact settings	admin	de	Kontakt Einstellungen

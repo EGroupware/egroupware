@@ -436,7 +436,7 @@
 				if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 				{
 					$GLOBALS['phpgw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
-						$values,$values['access'],$values['cat_id']);
+						$values);
 					// echo "<p>adding: ".print_r($values)."</p>\n";
 				}
 			}
