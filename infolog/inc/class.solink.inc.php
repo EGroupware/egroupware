@@ -48,7 +48,7 @@
 		*/
 		function solink( )
 		{
-			$this->db     = $GLOBALS['phpgw']->db;
+			$this->db     = clone($GLOBALS['phpgw']->db);
 			$this->db->set_app('infolog');
 			$this->user   = $GLOBALS['phpgw_info']['user']['account_id'];
 		}
