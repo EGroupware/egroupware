@@ -32,6 +32,8 @@
         - Added default filter to calendar preferences.
         - Merged in patch for track_vars in calendar for PHP 3
           Thanks bwulf
+        - Merged in patch for Danish translation
+          Thanks again zaphod
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
