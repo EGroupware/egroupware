@@ -161,8 +161,7 @@
 			{
 				$sql = ' AND ((';
 
-				reset ($this->meta_types);
-				while (list ($num, $type) = each ($this->meta_types))
+				foreach ($this->meta_types as $num => $type)
 				{
 					if ($num)
 						$sql .= ' AND ';
@@ -726,8 +725,7 @@
 
 			if (is_array ($memberships))
 			{
-				reset ($memberships);
-				while (list ($num, $group_array) = each ($memberships))
+				foreach ($memberships as $group_array)
 				{
 					if ($owner_id == $group_array['account_id'])
 					{
@@ -746,8 +744,7 @@
 			/* Add privileges from the groups this user belongs to */
 			if (is_array ($memberships))
 			{
-				reset ($memberships);
-				while (list ($num, $group_array) = each ($memberships))
+				foreach ($memberships as $group_array)
 				{
 					$rights |= $acl->get_rights ($group_array['account_id']);
 				}
@@ -1267,15 +1264,12 @@
 				);
 
 				/* Next, we create all the directories below the initial directory */
-				$ls = $this->ls (array(
+				foreach($this->ls (array(
 						'string'	=> $f->fake_full_path,
 						'relatives'	=> array ($f->mask),
 						'checksubdirs'	=> True,
 						'mime_type'	=> 'Directory'
-					)
-				);
-
-				while (list ($num, $entry) = each ($ls))
+					)) as $entry)
 				{
 					$newdir = ereg_replace ("^$f->fake_full_path", "$t->fake_full_path", $entry['directory']);
 					$this->mkdir (array(
@@ -1286,13 +1280,10 @@
 				}
 
 				/* Lastly, we copy the files over */
-				$ls = $this->ls (array(
+				foreach($this->ls (array(
 						'string'	=> $f->fake_full_path,
 						'relatives'	=> array ($f->mask)
-					)
-				);
-
-				while (list ($num, $entry) = each ($ls))
+					)) as $entry)
 				{
 					if ($entry['mime_type'] == 'Directory')
 					{
@@ -1521,7 +1512,7 @@
 			)
 			{
 				/* We got $ls from above, before we renamed the directory */
-				while (list ($num, $entry) = each ($ls))
+				foreach ($ls as $entry)
 				{
 					$newdir = ereg_replace ("^$f->fake_full_path", $t->fake_full_path, $entry['directory']);
 					$newdir_clean = $this->clean_string (array ('string' => $newdir));
@@ -1647,7 +1638,7 @@
 				);
 
 				/* First, we cycle through the entries and delete the files */
-				while (list ($num, $entry) = each ($ls))
+				foreach($ls as $entry)
 				{
 					if ($entry['mime_type'] == 'Directory')
 					{
@@ -1662,8 +1653,7 @@
 				}
 
 				/* Now we cycle through again and delete the directories */
-				reset ($ls);
-				while (list ($num, $entry) = each ($ls))
+				foreach ($ls as $entry)
 				{
 					if ($entry['mime_type'] != 'Directory')
 					{
@@ -1769,7 +1759,18 @@
 
 			if ($this->file_actions)
 			{
-				if (!@mkdir ($p->real_full_path, 0770))
+				if (!@is_dir($p->real_leading_dirs_clean))	// eg. /home or /group does not exist
+				{
+					if (!@mkdir($p->real_leading_dirs_clean,0770))	// ==> create it
+					{
+						return False;
+					}
+				}
+				if (@is_dir($p->real_full_path))	// directory already exists
+				{
+					$this->update_real($data,True);		// update its contents
+				}
+				elseif (!@mkdir ($p->real_full_path, 0770))
 				{
 					return False;
 				}
@@ -1969,13 +1970,10 @@
 
 			$change_attributes = 0;
 
-			reset ($this->attributes);
-			while (list ($num, $attribute) = each ($this->attributes))
+			foreach ($this->attributes as $attribute)
 			{
 				if (isset ($data['attributes'][$attribute]))
 				{
-					$$attribute = $data['attributes'][$attribute];
-
 					/*
 					   Indicate that the EDITED_COMMENT operation needs to be journaled,
 					   but only if the comment changed
@@ -1985,22 +1983,23 @@
 						$edited_comment = 1;
 					}
 
-					$$attribute = $this->clean_string (array ('string' => $$attribute));
-
 					if ($change_attributes > 0)
 					{
 						$sql .= ', ';
 					}
 
-					$sql .= "$attribute='" . $$attribute . "'";
+					$sql .= "$attribute='" . $this->clean_string (array ('string' => $data['attributes'][$attribute])) . "'";
 
 					$change_attributes++;
 				}
 			}
 
+			if (!$change_attributes)
+			{
+				return True;	// nothing to do
+			}
 			$sql .= " WHERE file_id='$record[file_id]'";
 			$sql .= $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE));
-
 			$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
 
 			if ($query) 
@@ -2241,15 +2240,12 @@
 				return $size;
 			}
 
-			$ls_array = $this->ls (array(
+			foreach($this->ls (array(
 					'string'	=> $p->fake_full_path,
 					'relatives'	=> array ($p->mask),
 					'checksubdirs'	=> $data['checksubdirs'],
 					'nofiles'	=> !$data['checksubdirs']
-				)
-			);
-
-			while (list ($num, $file_array) = each ($ls_array))
+				)) as $file_array)
 			{
 				/*
 				   Make sure the file is in the directory we want, and not
@@ -2357,8 +2353,7 @@
 				/* SELECT all, the, attributes */
 				$sql = 'SELECT ';
 
-				reset ($this->attributes);
-				while (list ($num, $attribute) = each ($this->attributes))
+				foreach ($this->attributes as $num => $attribute)
 				{
 					if ($num)
 					{
@@ -2377,8 +2372,7 @@
 
 				/* We return an array of one array to maintain the standard */
 				$rarray = array ();
-				reset ($this->attributes);
-				while (list ($num, $attribute) = each ($this->attributes))
+				foreach($this->attributes as $attribute)
 				{
 					if ($attribute == 'mime_type' && !$record[$attribute])
 					{
@@ -2442,8 +2436,7 @@
 			/* SELECT all, the, attributes FROM phpgw_vfs WHERE file=$dir */
 			$sql = 'SELECT ';
 
-			reset ($this->attributes);
-			while (list ($num, $attribute) = each ($this->attributes))
+			foreach($this->attributes as $num => $attribute)
 			{
 				if ($num)
 				{
@@ -2483,8 +2476,7 @@
 					continue;
 				}
 
-				reset ($this->attributes);
-				while (list ($num, $attribute) = each ($this->attributes))
+				foreach($this->attributes as $attribute)
 				{
 					if ($attribute == 'mime_type' && !$record[$attribute])
 					{
@@ -2510,7 +2502,7 @@
 		/*
 		 * See vfs_shared
 		 */
-		function update_real ($data)
+		function update_real ($data,$recursive = False)
 		{
 			if (!is_array ($data))
 			{
@@ -2563,7 +2555,7 @@
 					$rarray = array ();
 				}
 
-				while (list ($num, $file_array) = each ($rarray))
+				foreach($rarray as $num => $file_array)
 				{
 					$p2 = $this->path_parts (array(
 							'string'	=> $file_array['directory'] . '/' . $file_array['name'],
@@ -2588,22 +2580,18 @@
 								'relatives'	=> array (RELATIVE_NONE)
 							)
 						);
-
-						$this->set_attributes (array(
-								'string'	=> $p2->fake_full_path,
-								'relatives'	=> array (RELATIVE_NONE),
-								'attributes'	=> $set_attributes_array
-							)
-						);
 					}
-					else
+					$this->set_attributes (array(
+							'string'	=> $p2->fake_full_path,
+							'relatives'	=> array (RELATIVE_NONE),
+							'attributes'	=> $set_attributes_array
+						)
+					);
+					if ($recursive && $file_array['mime_type'] == 'Directory')
 					{
-						$this->set_attributes (array(
-								'string'	=> $p2->fake_full_path,
-								'relatives'	=> array (RELATIVE_NONE),
-								'attributes'	=> $set_attributes_array
-							)
-						);
+						$dir_data = $data;
+						$dir_data['string'] = $file_array['directory'] . '/' . $file_array['name'];
+						$this->update_real($dir_data,$recursive);
 					}
 				}
 			}
