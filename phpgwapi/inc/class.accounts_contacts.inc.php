@@ -28,7 +28,7 @@
 	THIS NEEDS WORK!!!!!!!!! - Milosch
 	But it is a lot closer now...
 	*/
-	$phpgw_info['server']['global_denied_users'] = array(
+	$GLOBALS['phpgw_info']['server']['global_denied_users'] = array(
 		'root'     => True, 'bin'      => True, 'daemon'   => True,
 		'adm'      => True, 'lp'       => True, 'sync'     => True,
 		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
@@ -47,7 +47,7 @@
 		'backup'   => True
 	);
 
-	$phpgw_info['server']['global_denied_groups'] = array(
+	$GLOBALS['phpgw_info']['server']['global_denied_groups'] = array(
 		'root'      => True, 'bin'       => True, 'daemon'    => True,
 		'sys'       => True, 'adm'       => True, 'tty'       => True,
 		'disk'      => True, 'lp'        => True, 'mem'       => True,
@@ -84,8 +84,7 @@
 
 		function accounts_()
 		{
-			global $phpgw;
-			$this->db       = $phpgw->db;
+			$this->db       = $GLOBALS['phpgw']->db;
 			$this->contacts = CreateObject('phpgwapi.contacts',0);
 		}
 
@@ -147,7 +146,6 @@
 
 		function delete($accountid = '')
 		{
-			global $phpgw, $phpgw_info;
 			$this->makeobj();
 
 			if($this->debug) { echo '<br>Deleting entry:<br>' . $account_id; }
@@ -157,7 +155,6 @@
 
 		function get_list($_type='both')
 		{
-			global $phpgw;
 			$this->makeobj();
 
 			switch($_type)
@@ -199,7 +196,7 @@
 
 			if($allValues[0]['id'])
 			{
-				return intval($allValues[0]['id']);
+				return (int)$allValues[0]['id'];
 			}
 			else
 			{
@@ -209,7 +206,6 @@
 
 		function id2name($account_id)
 		{
-			global $phpgw, $phpgw_info;
 			$this->makeobj();
 
 			$allValues = $this->contacts->read_single_entry($account_id);
@@ -227,7 +223,6 @@
 
 		function get_type($accountid = '')
 		{
-			global $phpgw, $phpgw_info;
 			$this->makeobj();
 			$account_id = get_account_id($accountid);
 
@@ -246,7 +241,7 @@
 		function exists($account_lid)
 		{
 			$this->makeobj();
-			if(gettype($account_lid) == 'integer')
+			if(is_int($account_lid))
 			{
 				$account_id = $account_lid;
 				settype($account_lid,'string');
@@ -267,14 +262,13 @@
 
 		function create($account_info)
 		{
-			global $phpgw_info, $phpgw;
 			$this->makeobj();
 
 			if (!$$account_info['account_id'])
 			{
 				$account_info['account_id'] = $this->get_nextid();
 			}
-			$owner = $phpgw_info['user']['account_id'];
+			$owner = $GLOBALS['phpgw_info']['user']['account_id'];
 			$entry['id']       = $account_info['account_id'];
 			$entry['lid']      = $account_info['account_lid'];
 			$entry['n_given']  = $account_info['account_firstname'];
@@ -291,8 +285,6 @@
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
-			global $phpgw, $phpgw_info;
-
 			if (! $expiredate)
 			{
 				// expire in 30 days by default
@@ -306,7 +298,7 @@
 				'account_firstname' => '',
 				'account_lastname'  => '',
 				'account_status'    => $account_status,
-				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
+				'account_expires'   => mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate))
 			);
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
