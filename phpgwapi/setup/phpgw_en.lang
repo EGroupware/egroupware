@@ -7,7 +7,6 @@ account has been updated	common	en	Account has been updated
 account preferences	common	en	Account Preferences
 acl	common	en	ACL
 active	common	en	Active
-add category	common	en	Add Category
 add	common	en	Add
 add x category for	common	en	Add %1 category for
 address book	common	en	Address Book
@@ -41,7 +40,6 @@ category x has been added !	common	en	Category %1 has been added !
 category x has been updated !	common	en	Category %1 has been updated !
 change	common	en	Change
 charset	common	en	iso-8859-1
-chat	common	en	Chat
 choose a category	common	en	Choose a category
 choose the parent category	common	en	Choose the parent category
 clear	common	en	Clear
@@ -63,7 +61,6 @@ domestic	common	en	Domestic
 done	common	en	Done
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 edit	common	en	Edit
-edit category	common	en	Edit Category
 edit categories	common	en	Edit Categories
 edit x category for	common	en	Edit %1 category for
 e-mail	common	en	E-Mail
@@ -92,6 +89,7 @@ friday	common	en	Friday
 ftp	common	en	FTP
 global	common	en	Global
 global public	common	en	Global Public
+grant	access	common	en	Grant access
 grant addressbook access	common	en	Grant Addressbook Access
 grant calendar access	common	en	Grant Calendar Access
 grant todo access	common	en	Grant Todo Access

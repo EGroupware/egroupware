@@ -23,7 +23,4 @@ text only	preferences	ja	テキストのみ
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
 this server is located in the x timezone	preferences	ja	 タイムゾーン
 time format	preferences	ja	時間書式
-todo categories	preferences	ja	カテゴリ設定
-weather	preferences	ja	お天気ユーザ設定
-weather center	preferences	ja	お天気センター
 your current theme is: x	preferences	ja	</b>

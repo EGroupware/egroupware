@@ -14,8 +14,6 @@ are you sure you want to delete this account ?	admin	ja	このアカウントを削除して
 are you sure you want to delete this application ?	admin	ja	このアプリケーションを削除してもよろしいですか。
 are you sure you want to delete this group ?	admin	ja	このグループを削除してもよろしいですか。
 are you sure you want to kill this session ?	admin	ja	このセッションを切断してもよろしいですか。
-category description	admin	ja	カテゴリ詳細
-category name	admin	ja	カテゴリ名
 change main screen message	admin	ja	メイン画面メッセージ変更
 city	admin	ja	市区町村
 create group	admin	ja	グループ作成
@@ -65,7 +63,6 @@ percent of users that logged out	admin	ja	ユーザのログアウト率
 permissions	admin	ja	パーミッション
 permissions this group has	admin	ja	利用可能アプリケーション
 php information	admin	ja	PHPインフォメーション
-please enter a name for that category !	admin	ja	カテゴリ名を入力して下さい。
 re-enter password	admin	ja	パスワード再入力
 region	admin	ja	地域
 regions	admin	ja	地域
@@ -92,7 +89,6 @@ user groups	admin	ja	ユーザグループ
 view access log	admin	ja	アクセスログ参照
 view sessions	admin	ja	セッション参照
 view user account	admin	ja	ユーザアカウント表示
-weather center	admin	ja	お天気センター
 who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの記録を転送するユーザを選択してください。
 you must add at least 1 permission or group to this account	admin	ja	少なくとも１つの権限かグループを指定してください。
 you must add at least 1 permission to this account	admin	ja	利用可能アプリケーションを指定してください。
