@@ -35,7 +35,7 @@
     {
       global $phpgw, $phpgw_info;
       $this->db = $phpgw->db;
-      if ($account_id == False){ $this->account_id = $account_id; }
+      if ($account_id != False){ $this->account_id = $account_id; }
     }
 
     /**************************************************************************\
@@ -72,7 +72,7 @@
         while($app = each($apps)) {
           $this->data[$app[1]] = array("title" => $phpgw_info["apps"][$app[1]]["title"], "name" => $app[1], "enabled" => True, "status" => $phpgw_info["apps"][$app[1]]["status"]);
         }
-      } elseif(gettype($apps) == "string") {
+      } elseif(gettype($apps)) {
           $this->data[$apps] = array("title" => $phpgw_info["apps"][$apps]["title"], "name" => $apps, "enabled" => True, "status" => $phpgw_info["apps"][$apps]["status"]);
       }
       reset($this->data);
@@ -97,11 +97,11 @@
    
     function save_repository(){
       global $phpgw;
-      $num_rows = $phpgw->acl->delete("%%", "run", $this->account_id);
+      $num_rows = $phpgw->acl->delete_repository("%%", 'run', $this->account_id);
       reset($this->data);
       while($app = each($this->data)) {
         if(!$this->is_system_enabled($app[0])) { continue; }
-        $phpgw->acl->add($app[0],'run',$this->account_id,1);
+        $phpgw->acl->add_repository($app[0],'run',$this->account_id,1);
       }
       reset($this->data);
       return $this->data;
@@ -126,13 +126,14 @@
 
     function read_account_specific() {
       global $phpgw, $phpgw_info;
-      if (gettype($phpgw_info["apps"]) != "array") {
+      if (gettype($phpgw_info['apps']) != 'array') {
         $this->read_installed_apps();
       }
-      @reset($phpgw_info["apps"]);
-      while ($app = each($phpgw_info["apps"])) {
-        if ($phpgw->acl->check_specific("run",1,$app[0], $this->account_id) && $this->is_system_enabled($app[0])) {
-          $this->data[$app[0]] = array("title" => $phpgw_info["apps"][$app[0]]["title"], "name" => $app[0], "enabled" => True, "status" => $phpgw_info["apps"][$app[0]]["status"]);
+      $app_list = $phpgw->acl->get_app_list_for_id('run',1,$this->account_id);
+      @reset($app_list);
+      while ($app = each($app_list)) {
+        if ($this->is_system_enabled($app[1])) {
+          $this->data[$app[1]] = array('title' => $phpgw_info['apps'][$app[1]]['title'], 'name' => $app[1], 'enabled' => True, 'status' => $phpgw_info['apps'][$app[1]]['status']);
         } 
       }
       reset($this->data);

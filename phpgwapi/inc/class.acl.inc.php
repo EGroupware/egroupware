@@ -270,15 +270,15 @@ It should use the values in the $this->data
       global $phpgw, $phpgw_info;
       if ($account_id == False){ $account_id = $this->account_id; }
       $sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = '$location' and ";
-      $sql .= "acl_account = ".$account_id;
+      $sql .= 'acl_account = '.$account_id;
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
       while ($this->db->next_record()) {
-        if ($this->db->f("acl_rights") == 0){ return False; }
-        $rights |= $this->db->f("acl_rights");
+        if ($this->db->f('acl_rights') == 0){ return False; }
+        $rights |= $this->db->f('acl_rights');
         if (!!($rights & $required) == True){
-          $apps[] = $this->db->f("acl_appname");
+          $apps[] = $this->db->f('acl_appname');
         }
       }
       return $apps;
