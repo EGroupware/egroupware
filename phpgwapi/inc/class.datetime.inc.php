@@ -427,10 +427,11 @@
 		@abstract Get the number of days between two dates
 		@author Steven Cramer/Ralf Becker
 		@param $m1 - Month_1, $d1 - Day_1, $y1 - Year_1, $m2 - Month_2, $d2 - Day_2, $y2 - Year_2
+		@note the last param == 0, ensures that the calculation is always done without daylight-saveing
 		*/
 		function days_between($m1,$d1,$y1,$m2,$d2,$y2)
 		{
-			return intval((mktime(0,0,0,$m2,$d2,$y2) - mktime(0,0,0,$m1,$d1,$y1)) / 86400);
+			return intval((mktime(0,0,0,$m2,$d2,$y2,0) - mktime(0,0,0,$m1,$d1,$y1,0)) / 86400);
 		}
 
 		function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
