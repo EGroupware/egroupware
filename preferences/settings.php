@@ -33,6 +33,21 @@
            echo $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]; ?>" size="2">
         </td>
        </tr>
+
+       <tr>
+        <td>Interface/Template Selection:<br></td>
+        <td>
+         <select name="$selected[$phpgw_info["user"]["preferences"]["common"]["template_set"]]">
+        <?php
+          $templates = $phpgw->common->list_templates();
+          while (list ($key, $value) = each ($templates)){
+            echo '<option value="'.$key.'" '.$selected[$key].'>'.$templates[$key]["title"].'</option>';
+          }
+        ?>
+         </select>
+        </td>
+       </tr>
+
        <tr>
         <td><?php echo lang("Show navigation bar as"); ?>: </td>
         <td>

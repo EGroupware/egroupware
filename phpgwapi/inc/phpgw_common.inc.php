@@ -331,6 +331,26 @@
       }      
     }
 
+    function list_templates(){
+      global $phpgw_info;
+      $d = dir($phpgw_info["server"]["server_root"]."/phpgwapi/templates");
+      while($entry=$d->read()) {
+        if ($entry != "CVS" && $entry != "." && $entry != ".."){
+          $list[$entry]["name"] = $entry;
+          $f = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/".$entry."/details.inc.php";
+          if (file_exists ($f)){
+            include($f);
+            $list[$entry]["title"] = "Use ".$phpgw_info["template"][$entry]["title"]."interface";
+          }else{
+            $list[$entry]["title"] = $entry;
+          }
+        }
+      }
+      $d->close();
+      reset ($list);
+      return $list;
+    }
+
     function get_tpl_dir($appname = ""){
       global $phpgw_info;
       if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
