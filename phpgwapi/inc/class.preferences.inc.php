@@ -239,6 +239,7 @@
 
 			if ($GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $this->account_id == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
+				$GLOBALS['phpgw']->session->delete_cache($this->account_id);
 				$GLOBALS['phpgw']->session->read_repositories(False);
 			}
 			
@@ -261,6 +262,12 @@
 				$this->db->query("insert into phpgw_preferences values ('$account_id','"
 					. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
 			}
+			
+			if ($GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $account_id == $GLOBALS['phpgw_info']['user']['account_id'])
+			{
+				$GLOBALS['phpgw']->session->read_repositories(False);
+			}
+
 		}
 
 		/*!
@@ -507,6 +514,7 @@
 			// are we dealing with the default email account or an extra email account?
 			if (!(isset($acctnum)) || ((string)$acctnum == ''))
 			{
+				settype($acctnum,'integer');
 				// account 0 is the default email account
 				$acctnum = 0;
 				// $prefs stays AS IS!
