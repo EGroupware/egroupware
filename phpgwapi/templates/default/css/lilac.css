@@ -1,0 +1,153 @@
+body
+{
+	margin-right: 0em;
+	margin-left: 0em;
+	margin-top: 0em;
+	margin-bottom: 0em;
+	background-color: #FFFFFF;
+}
+
+table
+{
+	border-width: 0;
+}
+
+td
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	color: #000000;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:link
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: maroon;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:visited
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: maroon;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:active
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: maroon;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+a:hover
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: red;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+.navbar
+{
+	background-color: #967FF4;
+	color: #000000;
+}
+
+.navbar:spezial_logo
+{
+	background-image: url(logo_967FF4.gif);	
+}
+
+.row_on
+{
+	background-color: #CCCCFF;
+}
+
+.row_off
+{
+	background-color: #E4DFFF;
+}
+
+.th
+{
+	background-color: #9999FF;
+}
+
+.th_bright
+{
+	background-color: #CCCCFF;
+}
+
+.th_text
+{
+	font-style: bold;
+	font-weight: bold;
+	color: #000000;
+}
+
+.appheader
+{
+	font-style: bold;
+	font-weight: bold;
+	background-color: #CCCCFF;
+}
+
+.functionmsg
+{
+	font-style: bold;
+	font-weight: bold;
+}
+
+.forms
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+.cal_today
+{
+	background-color: #FFFFCC;
+}
+
+.email_folder
+{
+	background-color: #666699;
+	color: #FFFFFF;
+}
