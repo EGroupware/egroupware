@@ -27,7 +27,7 @@
 		function service_todo()
 		{
 			$this->provider = $GLOBALS['phpgw_info']['todo_service'] ? $GLOBALS['phpgw_info']['todo_service'] : 'todo';
-			$this->svc = $this->provider . '.bo' . $this->provider;
+			$this->svc = $this->provider . '.bo';
 			$type = $this->type ? $this->type : 'xmlrpc';
 			$this->function_map = ExecMethod($this->svc . '.list_methods',$type);
 		}

@@ -27,7 +27,7 @@
 		function service_notes()
 		{
 			$this->provider = $GLOBALS['phpgw_info']['notes_service'] ? $GLOBALS['phpgw_info']['notes_service'] : 'notes';
-			$this->svc = $this->provider . '.bo' . $this->provider;
+			$this->svc = $this->provider . '.bo';
 			$type = $this->type ? $this->type : 'xmlrpc';
 			$this->function_map = ExecMethod($this->svc . '.list_methods',$type);
 		}
