@@ -133,10 +133,6 @@
 				<td><xsl:value-of disable-output-escaping="yes" select="item_1"/></td>
 			</tr>
 			<tr>
-				<td valign="top" align="right">2</td>
-				<td><xsl:value-of disable-output-escaping="yes" select="item_2"/></td>
-			</tr>
-			<tr>
 				<td colspan="2">
 					<table width="80%" bgcolor="#ccddeb">
 						<tr>
@@ -176,9 +172,14 @@
 							<td><xsl:value-of select="lang_birthday"/>:</td>
 						</tr>
 					</table>
-					<xsl:value-of disable-output-escaping="yes" select="end"/><br/>
-					<xsl:value-of disable-output-escaping="yes" select="access_descr"/><br/>
 				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><xsl:value-of disable-output-escaping="yes" select="access_descr"/></td>
+			</tr>
+			<tr>
+				<td valign="top" align="right">2</td>
+				<td><xsl:value-of disable-output-escaping="yes" select="item_2"/></td>
 			</tr>
 		</table>
 	</xsl:template>

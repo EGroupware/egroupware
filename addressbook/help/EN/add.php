@@ -45,7 +45,6 @@
 		'lang_pager'			=> 'Pager',
 		'lang_othernumber'		=> 'Other number',
 		'lang_birthday'			=> 'Birthday',
-		'end'					=> 'Simply fill in the fields, and click OK.',
 		'access_descr'			=> 'Access can be restricted to private, overriding acl preferences settings.
 									From preferences, you can grant access to users to the be able to view, 
 									edit, and even delete your entries.'
