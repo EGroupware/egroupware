@@ -88,7 +88,7 @@
 				'nextmatchs' => 'nextmatchs.tpl'
 			));
 
-			$tpl->set_var('form_action',$phpgw->link($sn));
+			$tpl->set_var('form_action',$phpgw->link($sn, $extra));
 			$tpl->set_var('filter_value',$filter);
 			$tpl->set_var('qfield_value',$qfield);
 			$tpl->set_var('start_value',$start);

@@ -1093,7 +1093,7 @@
 			{
 				$prefs['email']['mail_port'] = '143';
 			}
-			elseif ($prefs['mail']['mail_server_type']=='pop3')
+			elseif ($prefs['email']['mail_server_type']=='pop3')
 			{
 				$prefs['email']['mail_port'] = '110';
 			}

@@ -202,14 +202,14 @@ function diableSelection ()
 * @return string	html code for the matrix
 */
 
-function out ()
+function out($form_link)
 {
 	// get days of desired month (month submitted in constructor)
 	$in = getdate(mktime(0,0,0, $this->month+1,0,$this->year));
 	$this->sumdays = $in[mday];
 	$this->monthname = $in[month];
 	
-	$this->out_monthyear();
+	$this->out_monthyear($form_link);
 	
 	echo "<div align=\"center\">\n";
 	echo "<table border=0>\n";
@@ -286,11 +286,11 @@ function out_ruler ()
 *
 */
 
-function out_monthyear ()
+function out_monthyear($form_link)
 {
    global $phpgw;
 
-	echo "<form action=\"" . $phpgw->link() . "\" method=\"post\">\n";
+	echo "<form action=\"" . $form_link . "\" method=\"post\">\n";
 	echo "<table border=0 width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">";
 	echo "<tr>\n";
 	echo "<td align=\"center\"><h2>"; echo $this->monthname; echo " "; echo $this->year; echo "</h2></td>\n";
