@@ -363,7 +363,7 @@
 				// do special things with
 				$GLOBALS['_xh'][$parser]['ac'].=str_replace('$', '\$',
 					str_replace('"', '\"', 
-					str_replace(chr(92),xmlrpc_backslash, $data)));
+					str_replace(chr(92),$GLOBALS['xmlrpc_backslash'], $data)));
 			}
 			else 
 			{
@@ -628,7 +628,30 @@
 		return $r;
 	}
 
-	$GLOBALS['_xmlrpcs_dmap']=array(
+	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcString, xmlrpcString));
+	$GLOBALS['_xmlrpcs_listApps_doc'] = 'Returns a list of installed phpgw apps';
+	function _xmlrpcs_listApps()
+	{
+		$GLOBALS['phpgw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+		if($GLOBALS['phpgw']->db->num_rows())
+		{
+			while ($GLOBALS['phpgw']->db->next_record())
+			{
+				$name   = $GLOBALS['phpgw']->db->f('app_name');
+				$title  = $GLOBALS['phpgw']->db->f('app_title');
+				$status = $GLOBALS['phpgw']->db->f('app_enabled');
+				$apps[$name] = array(
+					'title'  => $title,
+					'name'   => $name,
+					'status' => $status
+				);
+			}
+			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$apps, 'struct'));
+		}
+		return $r;
+	}
+
+	$GLOBALS['_xmlrpcs_dmap'] = array(
 		'system.listMethods' => array(
 			'function'  => '_xmlrpcs_listMethods',
 			'signature' => $GLOBALS['_xmlrpcs_listMethods_sig'],
@@ -643,6 +666,11 @@
 			'function'  => '_xmlrpcs_methodSignature',
 			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
+		),
+		'system.listApps' => array(
+			'function'  => '_xmlrpcs_listApps',
+			'signature' => $GLOBALS['_xmlrpcs_listApps_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
 		)
 	);
 
