@@ -22,14 +22,25 @@
         2.3.2 Installation with PostgreSQL
      2.4 Configure phpGroupWare
 
-  3. About this document
+  3. Testing the install
 
-     3.1 New versions
-     3.2 Comments
-     3.3 History
-     3.4 Version History
-     3.5 Copyrights and Trademarks
-     3.6 Acknowledgements and Thanks
+  4. Installing additional applications
+
+  5. Trouble-shooting
+
+     5.1 I get "Unable to open mailbox" when using the email application
+     5.2 It seems to hang when I try to read my mail
+     5.3 When I log in I see the directory listing instead of a web page
+     5.4 I get garbage that looks like code when I go to the phpGroupWare URL
+
+  6. About this document
+
+     6.1 New versions
+     6.2 Comments
+     6.3 History
+     6.4 Version History
+     6.5 Copyrights and Trademarks
+     6.6 Acknowledgments and Thanks
 
 
   ______________________________________________________________________
@@ -40,7 +51,7 @@
   integrated features such as email, calendar, todo list, address book,
   file manager, headline news, and a trouble ticket system.
 
-  It should run on all systems where PHP is avalible and currently
+  It should run on all systems where PHP is available and currently
   supports MySQL and PostgreSQL.
 
   11..11..  WWhhaatt iiss pphhppGGrroouuppWWaarree aanndd wwhhyy sshhoouulldd II uussee iitt??
@@ -50,6 +61,7 @@
   phpGroupWare is a web based groupware application that includes
   integrated features such as email, calendar, todo list, address book,
   file manager, headline news, and a trouble ticket system.
+
 
 
   You should use it if:
@@ -66,7 +78,7 @@
   also need MySQL or PostgreSQL setup.  If you are planning on using the
   email system, you will need to have an IMAP server installed and IMAP
   support compiled into PHP.  You can have it installed as an Apache
-  module or command line version, the Apache module is prefered.  We
+  module or command line version, the Apache module is preferred.  We
   will assume that you are running on a Linux or other Unix system for
   these steps.  Windows is supported, but there is no documentation for
   it currently.
@@ -83,7 +95,10 @@
 
   +o  Courier-IMAP 0.33+
 
-  We have reports of it working on Windows NT and OS/2.
+  +o  qmail 1.03 (using the qmail POP3 server)
+
+  We have reports of it working on Windows NT and OS/2, and using Oracle
+  as the database.
 
   22..33..  TTeesstteedd SSyysstteemmss
 
@@ -112,10 +127,18 @@
 
   $ psql -d phpgroupware -U username < lang.sql
 
+
+
+
   22..44..  CCoonnffiigguurree pphhppGGrroouuppWWaarree
 
+  Copy the header.inc.php.sample file to header.inc.php and edit the
+  file, following the directions in the comments.
+
   Change to the inc directory.
-  Edit globalconfig.inc.php to reflect your system settings.
+  Copy globalconfig.inc.php.sample to globalconfig.inc.php and edit it
+  to reflect your system settings, again following the comments in the
+  file.
 
   If you are using the email system you will need to create a temporary
   directory where file uploads will be stored.  For security reasons,
@@ -125,10 +148,6 @@
   administrator to do this for you if you do not have root access.
 
   If you do not have access to root, create this file and run it.
-
-
-
-
 
     <?php
       if (mkdir("/path/to/temp/directory",0700)) {
@@ -150,30 +169,188 @@
      the sessions table.
 
   This file is not required, you can simply disable cron_apps in the
-  admin -> applications section to clean out the sessions table durring
+  admin -> applications section to clean out the sessions table during
   login and logout.
 
   stale_uploads.pl - This will delete file attachments for messages that
-  where not completed.  If a users browser crashes, internet connection
+  where not completed.  If a users browser crashes, Internet connection
   dies, etc, their files will sit there forever unless deleted.  You
   could add a few lines to logout.php that will look in the temp
   directory for any stale uploads and delete them.  But, once again, it
   becomes a performance issue.
 
+  33..  TTeessttiinngg tthhee iinnssttaallll
+
   If your config is setup properly you can now login.  Point your
   browser to the installed location and login with the username demo and
   the password is 1234
-  At this point it would be a good idea to create a new user and delete
-  the old one.
+  At this point it would be a good idea to create a new user with
+  administrative privileges and delete the old one.
 
-  33..  AAbboouutt tthhiiss ddooccuummeenntt
+  44..  IInnssttaalllliinngg aaddddiittiioonnaall aapppplliiccaattiioonnss
 
-  33..11..  NNeeww vveerrssiioonnss
+  Once you have the core phpGroupWare install up and running, you may
+  want to download and install additional applications.
+
+  You should consult any README or INSTALL files that come with the new
+  application first, as most require you to create additional tables in
+  the database, and add additional translation data to the lang table
+  (typically a file called lang.sql)
+  You install the new application within the phpGroupWare install tree
+  by copying the application directory into the phpGroupWare install
+  location, and enabling the application through the Administration
+  page.
+
+  For example, this is the process to install the Headlines application
+  (see  <http://sourceforge.net/phpgwapps/> for more on this and other
+  applications).
+
+  +o  Download the .tar.gz file for the application, or check out the
+     source with cvs with
+
+     export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'
+     cvs login   (just hit enter if prompted for a password)
+     cvs co headlines
+
+
+
+  +o  Move the headlines directory into your phpGroupWare install
+     directory.
+
+  +o  Log into phpGroupWare as an administrative user, and go to the
+     Administration page.
+
+  +o  In the first section, choose the Applications link
+
+  +o  Click on add, and fill in the form.
+
+     AApppplliiccaattiioonn nnaammee
+        should be identical to the name of the directory you moved into
+        the phpGroupWare install, in this case use headlines
+
+     AApppplliiccaattiioonn TTiittllee
+        this is shown in the navigation bar and other places to refer to
+        the new application. Enter Headlines for this example.
+
+     EEnnaabblleedd
+        This can be used to disable an application for all users
+        temporially. You should normal check the box to enable the
+        application.
+
+  +o  Back in the Administration page, you need to enable the application
+     for specific users or user groups by editing them, and checking the
+     new Headlines box that appears in the middle of the account editing
+     page.
+
+  +o  Once you have added the Headlines app to your account, you should
+     see a Headlines entry in the Administration and Preferences pages,
+     and there should be an icon for the Headlines application in the
+     navigation bar.
+
+  +o  Once you enable a few of the Headlines sites through the
+     Administration page link, you should see headlines grabbed from the
+     sites you selected when you click on the Headlines icon in the
+     navigation bar.
+
+  55..  TTrroouubbllee--sshhoooottiinngg
+
+  WWAARRNNIINNGG!! phpGroupWare is still Beta software, expect some bugs along
+  the way. If you run into a problem not discussed here, contact us
+  through one of the methods listed on the website.
+
+  The phpGroupWare developers can often be seen hanging out in
+  #phpGroupWare on irc.openprojects.net if you require real-time help.
+
+
+  Also check the FAQ in this directory for additional common questions,
+  it is available as FAQ.sgml, FAQ.txt and FAQ.html
+
+
+  55..11..  II ggeett ""UUnnaabbllee ttoo ooppeenn mmaaiillbbooxx"" wwhheenn uussiinngg tthhee eemmaaiill aapppplliiccaattiioonn
+
+  At the time of this writing (2000-09-27) you must use the same
+  username and password in phpGroupWare that you use to log into your
+  mail server. If you change your password and it still isn't working,
+  try logging out of phpGroupWare (the rightmost icon in the navigation
+  bar) and then log back in.
+
+  An preference page to edit the email settings is being developed, and
+  should appear shortly after the first beta release.
+
+  55..22..  IItt sseeeemmss ttoo hhaanngg wwhheenn II ttrryy ttoo rreeaadd mmyy mmaaiill
+
+  This is often a problem if you are using POP3 instead of IMAP, and you
+  have more than a few hundred messages in your mailbox.
+
+  By default, php is set up to time-out a request that takes over 30
+  seconds to complete. phpGroupWare must do a lot of work the first time
+  your POP3 mailbox is opened, and every time you get new mail, which
+  may take more than the 30 second timeout.
+
+  You can either clean up your mailbox with another mail program, or add
+  the line
+
+  ______________________________________________________________________
+  set_time_limit(0);
+  ______________________________________________________________________
+
+
+  to the top of the inc/phpgwapi/phpgw_msg_pop3.inc.php file, just
+  before the line
+
+  class msg extends msg_common
+
+
+
+  If you choose to edit the file, be patient when loading a large POP3
+  mailbox - the author tested against a mailbox with 2500 messages in
+  it, but it took 15 minutes to load the page. We highly suggest you use
+  IMAP if you expect to have more than a few hundred messages in your
+  mailbox.
+
+  55..33..  WWhheenn II lloogg iinn II sseeee tthhee ddiirreeccttoorryy lliissttiinngg iinnsstteeaadd ooff aa wweebb ppaaggee
+
+  If you are using Apache, this often means you need to add .php to the
+  DirectoryIndex line in your httpd.conf file.
+
+  For example:
+
+  ______________________________________________________________________
+  DirectoryIndex index.php index.php3 index.html index.htm index.cgi
+  ______________________________________________________________________
+
+
+
+  55..44..  II ggeett ggaarrbbaaggee tthhaatt llooookkss lliikkee ccooddee wwhheenn II ggoo ttoo tthhee pphhppGGrroouuppWWaarree
+  UURRLL
+
+  This is often because you have php3 installed, which does not map .php
+  to the PHP engine.
+
+
+  For PHP3:
+
+  ______________________________________________________________________
+  AddType             application/x-httpd-php3 .php3 .php
+  ______________________________________________________________________
+
+
+  For PHP4:
+
+  ______________________________________________________________________
+  AddType             application/x-httpd-php .php3 .php
+  ______________________________________________________________________
+
+
+
+  66..  AAbboouutt tthhiiss ddooccuummeenntt
+
+  66..11..  NNeeww vveerrssiioonnss
 
   The newest version of this document can be found on our website
   <http://www.phpgroupware.org> as SGML source, HTML, or TEXT.
 
-  33..22..  CCoommmmeennttss
+  66..22..  CCoommmmeennttss
 
   Comments on this HOWTO should be directed to the phpGroupWare
   developers mailing list phpgroupware-developers@lists.sourceforge.net
@@ -182,12 +359,12 @@
   To subscribe, go to http://sourceforge.net/mail/?group_id=7305
   <http://sourceforge.net/mail/?group_id=7305>
 
-  33..33..  HHiissttoorryy
+  66..33..  HHiissttoorryy
 
   This document was started by Joseph Engo and reworked by Dan
   Kuykendall.
 
-  33..44..  VVeerrssiioonn HHiissttoorryy
+  66..44..  VVeerrssiioonn HHiissttoorryy
 
   Old Version
 
@@ -196,13 +373,23 @@
 
   v1.0 (July 6, 2000)
 
+
   +o  Built proper SGML version.
 
   +o  Included the FAQ.
 
   +o  Other minor additions.
 
-  33..55..  CCooppyyrriigghhttss aanndd TTrraaddeemmaarrkkss
+  v1.1 (September 27, 2000) - blinky
+
+
+  +o  Added Testing Install section
+
+  +o  Added Trouble-shooting section
+
+  +o  Added description of application installation
+
+  66..55..  CCooppyyrriigghhttss aanndd TTrraaddeemmaarrkkss
 
   Copyright (c)  Dan Kuykendall.  Permission is granted to copy,
   distribute and/or modify this document under the terms of the GNU Free
@@ -212,11 +399,22 @@
   A copy of the license is available at GNU Free Documentation License
   <http://www.gnu.org/copyleft/fdl.txt>.
 
-  33..66..  AAcckknnoowwlleeddggeemmeennttss aanndd TThhaannkkss
+  66..66..  AAcckknnoowwlleeddggmmeennttss aanndd TThhaannkkss
 
   Thanks to Joesph Engo for starting phpGroupWare (at the time called
   webdistro) and the core of this HOWTO.  Thanks to all the developers
   and users who contribute to making phpGroupWare such a success.
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -21,7 +21,7 @@
 <p>
   phpGroupWare is a web based groupware application that includes integrated features such as 
   email, calendar, todo list, address book, file manager, headline news, and a trouble ticket system.
-  <p>It should run on all systems where PHP is avalible and currently supports MySQL and PostgreSQL.
+  <p>It should run on all systems where PHP is available and currently supports MySQL and PostgreSQL.
 </p>
 <sect1>What is phpGroupWare and why should I use it?
 <p>
@@ -38,7 +38,7 @@
 <p>
   You will need PHP compiled and installed on your system.  You will also need MySQL or PostgreSQL setup. 
   If you are planning on using the email system, you will need to have an IMAP server installed and IMAP support compiled into PHP.
-  You can have it installed as an Apache module or command line version, the Apache module is prefered.
+  You can have it installed as an Apache module or command line version, the Apache module is preferred.
   We will assume that you are running on a Linux or other Unix system for these steps. 
   Windows is supported, but there is no documentation for it currently.
 </p>
@@ -50,9 +50,10 @@
     <item>Apache 1.3.x
     <item>MySQL 3.22.25 or PostgreSQL 7.0.x
     <item>Courier-IMAP 0.33+
+    <item>qmail 1.03 (using the qmail POP3 server)
   </itemize>
 
-  We have reports of it working on Windows NT and OS/2.
+  We have reports of it working on Windows NT and OS/2, and using Oracle as the database.
 </p>
 <sect1>Tested Systems
 <p>
@@ -78,8 +79,14 @@
 </p>
 <sect1>Configure phpGroupWare
 <p>
+  Copy the <tt>header.inc.php.sample</tt> file to 
+  <tt>header.inc.php</tt> and edit the file, following the
+  directions in the comments.
+<p>
   Change to the inc directory. <newline>
-  Edit globalconfig.inc.php to reflect your system settings.
+  Copy <tt>globalconfig.inc.php.sample</tt> to <tt>globalconfig.inc.php</tt>
+  and edit it to reflect your system settings, again following the
+  comments in the file.
 <p>
   If you are using the email system you will need to create a temporary directory 
   where file uploads will be stored.  For security reasons, you should <tt>chown
@@ -106,18 +113,138 @@
 </itemize>
 
   This file is not required, you can simply disable cron_apps in the admin -> applications section
-  to clean out the sessions table durring login and logout.
+  to clean out the sessions table during login and logout.
 <p>
   stale_uploads.pl - This will delete file attachments for messages that where not 
-  completed.  If a users browser crashes, internet connection dies, etc, their
+  completed.  If a users browser crashes, Internet connection dies, etc, their
   files will sit there forever unless deleted.  You could add a few lines to 
   logout.php that will look in the temp directory for any stale uploads and delete 
   them.  But, once again, it becomes a performance issue.
+</p>
+<sect>Testing the install
 <p>
   If your config is setup properly you can now login.  Point your browser to the 
   installed location and login with the username <tt>demo</tt> and the password is <tt>1234</tt><newline>
-  At this point it would be a good idea to create a new user and delete the old 
-  one.
+  At this point it would be a good idea to create a new user with administrative privileges and 
+  delete the old one.
+</p>
+<sect>Installing additional applications
+<p>
+Once you have the core phpGroupWare install up and running,
+you may want to download and install additional applications. 
+
+You should consult any <tt>README</tt> or <tt>INSTALL</tt>
+files that come with the new application first, as most require you
+to create additional tables in the database, and add additional
+translation data to the lang table (typically a file called <tt>lang.sql</tt>)
+
+You install the new application within the phpGroupWare install tree by
+copying the application directory into the phpGroupWare install location,
+and enabling the application through the Administration page. 
+
+For example, this is the process to install the
+Headlines application (see <url url="http://sourceforge.net/phpgwapps/"> for
+more on this and other applications).
+<itemize>
+<item>Download the .tar.gz file for the application, or check out the source
+with cvs with
+<verb>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'
+cvs login   (just hit enter if prompted for a password)
+cvs co headlines</verb>
+
+<item>Move the <tt>headlines</tt> directory into your phpGroupWare
+install directory.
+
+<item>Log into phpGroupWare as an administrative user, and go to the Administration page.
+
+<item>In the first section, choose the <tt>Applications</tt> link
+
+<item>Click on add, and fill in the form.
+<descrip>
+<tag/Application name/ should be identical to the name
+of the directory you moved into the phpGroupWare install, in this case use <tt>headlines</tt>
+<tag/Application Title/this is shown in the navigation bar and other places to refer to the
+new application. Enter <tt>Headlines</tt> for this example.
+<tag/Enabled/This can be used to disable an application for all users temporially. You
+should normal check the box to enable the application.
+</descrip>
+<item>Back in the Administration page, you need to enable the application for specific users
+or user groups by editing them, and checking the new <tt>Headlines</tt> box that appears
+in the middle of the account editing page.
+<item>Once you have added the Headlines app to your account, you should see a Headlines
+entry in the Administration and Preferences pages, and there should be an icon for
+the Headlines application in the navigation bar.
+<item>Once you enable a few of the Headlines sites through the Administration page link, you
+should see headlines grabbed from the sites you selected when you click on the Headlines
+icon in the navigation bar.
+</itemize>
+</p>
+<sect>Trouble-shooting
+<p>
+<bf>WARNING!</bf> phpGroupWare is still Beta software, expect some bugs
+along the way. If you run into a problem not discussed here, contact us
+through one of the methods listed on the website.
+
+The phpGroupWare developers can often be seen hanging out in #phpGroupWare
+on irc.openprojects.net if you require real-time help.
+
+Also check the FAQ in this directory for additional common questions,
+it is available as FAQ.sgml, FAQ.txt and FAQ.html
+
+<sect1>I get "Unable to open mailbox" when using the email application
+<P>At the time of this writing (2000-09-27) you must use the same
+username and password in phpGroupWare that you use to log into
+your mail server. If you change your password and it still isn't working,
+try logging out of phpGroupWare (the rightmost icon in the navigation bar)
+and then log back in.
+
+An preference page to edit the email settings is being developed, and should
+appear shortly after the first beta release.
+</p>
+
+<sect1>It seems to hang when I try to read my mail
+<P>This is often a problem if you are using POP3 instead of IMAP, and you have
+more than a few hundred messages in your mailbox.
+
+By default, php is set up to time-out a request that takes over 30 seconds
+to complete. phpGroupWare must do a lot of work the first time your POP3 mailbox
+is opened, and every time you get new mail, which may take more than the 30
+second timeout.
+
+You can either clean up your mailbox with another mail program, or
+add the line
+<code>
+set_time_limit(0);
+</code>
+to the top of the inc/phpgwapi/phpgw_msg_pop3.inc.php file, just before
+the line <verb>class msg extends msg_common</verb> 
+
+If you choose to edit the file, be patient when loading a large POP3
+mailbox - the author tested against a mailbox with 2500 messages in it,
+but it took 15 minutes to load the page. We highly suggest you use IMAP
+if you expect to have more than a few hundred messages in your mailbox.
+</p>
+
+<sect1>When I log in I see the directory listing instead of a web page
+<P>If you are using Apache, this often means you need to add 
+<tt>.php</tt> to the <tt>DirectoryIndex</tt> line in your httpd.conf file.
+
+For example:
+<code>
+DirectoryIndex index.php index.php3 index.html index.htm index.cgi
+</code>
+</p>
+<sect1>I get garbage that looks like code when I go to the phpGroupWare URL
+<P>This is often because you have php3 installed, which does not map <tt>.php</tt> to the PHP engine.
+
+For PHP3:
+<code>
+AddType             application/x-httpd-php3 .php3 .php
+</code>
+For PHP4:
+<code>
+AddType             application/x-httpd-php .php3 .php
+</code>
 </p>
 <sect>About this document
 <sect1>New versions 
@@ -153,6 +280,16 @@ name="http://sourceforge.net/mail/?group_id=7305">
   <item>Other minor additions.
 </itemize>
 </p>
+<p>
+ v1.1 (September 27, 2000) - blinky
+</p>
+<p>
+<itemize>
+  <item>Added Testing Install section
+  <item>Added Trouble-shooting section
+  <item>Added description of application installation
+</itemize>
+</p>
 <sect1>Copyrights and Trademarks 
 <p>
   Copyright (c)  Dan Kuykendall.
@@ -164,7 +301,7 @@ name="http://sourceforge.net/mail/?group_id=7305">
   A copy of the license is available at
   <url url="http://www.gnu.org/copyleft/fdl.txt" name="GNU Free Documentation License">.
 </p>
-<sect1>Acknowledgements and Thanks 
+<sect1>Acknowledgments and Thanks 
 <p>
   Thanks to Joesph Engo for starting phpGroupWare (at the time called webdistro) and the core of this HOWTO. 
   Thanks to all the developers and users who contribute to making phpGroupWare such a success.
