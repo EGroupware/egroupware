@@ -1,7 +1,0 @@
-# just add the following two lines to your $home/.cvswrappers file (if it
-# already exists and doesn't have these lines - otherwise just create this
-# file with those two lines). This guarantees that *.gif and *.jpg files will
-# always be marked as binaries - even if you forgot the -kb on adding them
-
-*.gif -k 'b'
-*.jpg -k 'b'
