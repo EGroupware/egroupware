@@ -24,12 +24,14 @@
                 . "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
                 . "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n"
                 . "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n"
+                . "<input type=\"hidden\" name=\"global_cats\" value=\"$global_cats\">\n"
                 . "<input type=\"hidden\" name=\"cats_level\" value=\"$cats_level\">\n"
                 . "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
-    if (! $cat_id) {
-     Header('Location: ' . $phpgw->link('/preferences/categories.php',"sort=$sort&order=$order&query=$query&start=$start"                                                                                                             
-					. "&filter=$filter&cats_app=$cats_app&extra=$extra&cats_level=$cats_level"));
+    if (! $cat_id)
+    {
+	Header('Location: ' . $phpgw->link('/preferences/categories.php',"sort=$sort&order=$order&query=$query&start=$start"                                                                                                             
+					. "&filter=$filter&cats_app=$cats_app&extra=$extra&cats_level=$cats_level&global_cats=$global_cats"));
     }
 
     $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
@@ -40,12 +42,14 @@
     $c = CreateObject('phpgwapi.categories');
     $c->app_name = $cats_app;
 
-    if ($submit) {
+    if ($submit)
+    {
 	$errorcount = 0;
 
 	if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
 
-	if (!$error) {
+	if (!$error)
+	{
     	    if (!$cat_parent) { $exists = $c->exists('mains',$cat_name,$cat_id); }
     	    else { $exists = $c->exists('subs',$cat_name,$cat_id); }
     	    if ($exists == True) { $error[$errorcount++] = lang('That category name has been used already !'); }
@@ -73,15 +77,34 @@
     $cat_main = $cats[0]['main'];
     $t->set_var('lang_main',lang('Main category'));
     $t->set_var('lang_new_main',lang('New main category'));
-    $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
 
-    if ($cats_level) {
+    if ($global_cats)
+    {
+	$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main,True));
+    }
+    else
+    {
+	$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
+    }
+
+    if ($cats_level) 
+    {
 	$cat_parent = $cats[0]['parent'];
-        $category_list = $c->formated_list('select','all',$cat_parent);
+
+	if ($global_cats)
+	{
+    	    $category_list = $c->formated_list('select','all',$cat_parent,True);
+	}
+	else
+	{
+    	    $category_list = $c->formated_list('select','all',$cat_parent);
+	}
+
         $t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Select parent category') . '</option>' . $category_list .'</select>');
         $t->set_var('lang_parent',lang('Parent category'));
     }
-    else {
+    else
+    {
         $t->set_var('lang_parent','');
         $t->set_var('category_select','');
     }
@@ -96,19 +119,28 @@
     $t->set_var('lang_name',lang('Name'));
     $t->set_var('lang_descr',lang('Description'));
     $t->set_var('lang_access',lang('Private'));
-    if ($cats[0]['access']=='private') { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
-    else { $t->set_var('access', '<input type="checkbox" name="access" value="True"'); }
+
+    if ($cats[0]['access']=='private')
+    {
+	$t->set_var('access', '<input type="checkbox" name="access" value="True" checked>');
+    }
+    else
+    {
+	$t->set_var('access', '<input type="checkbox" name="access" value="True"');
+    }
 
     $cat_id = $cats[0]['id'];
 
     $t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
     $t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
 
-    if ($extra) {
+    if ($extra)
+    {
 	$t->set_var('td_data','<input name="cat_data" size="50" value="' . $cats[0]['data'] . '">');
 	$t->set_var('lang_data',lang($extra));
     }
-    else {
+    else
+    {
 	$t->set_var('td_data','');
 	$t->set_var('lang_data','');
     }

@@ -9,6 +9,9 @@
     <td align="center">{lang_subs}</td>
     <td align="center">{subs}</td>
    </tr>
+
+<!-- BEGIN delete -->
+
    <tr>
     <td align="center">
     {hidden_vars}
@@ -18,4 +21,20 @@
    </tr>
   </table>
  </center>
+
+<!-- END delete -->
+
+<!-- BEGIN done -->
+
+    </form>
+    <tr>
+	<td align="center">
+	{hidden_vars}
+	<a href="{nolink}">{lang_done}</a></td>
+   </tr>
+  </table>
+ </center>
+
+<!-- END done -->
+
 <!-- END form -->

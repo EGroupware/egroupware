@@ -24,6 +24,7 @@
                 . "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
                 . "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
                 . "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n"
+                . "<input type=\"hidden\" name=\"global_cats\" value=\"$global_cats\">\n"
                 . "<input type=\"hidden\" name=\"cats_level\" value=\"$cats_level\">\n"
                 . "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
@@ -79,32 +80,59 @@
 
     $t->set_var('lang_main',lang('Main category'));
     $t->set_var('lang_new_main',lang('New main category'));
-    $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
 
-    if ($cats_level) {
-	$category_list = $c->formated_list('select','all',$cat_parent);
+    if ($global_cats)
+    {
+	$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main,True));
+    }
+    else
+    {
+	$t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
+    }
+
+    if ($cats_level)
+    {
+	if ($global_cats)
+	{
+	    $category_list = $c->formated_list('select','all',$cat_parent,True);
+	}
+	else
+	{
+	    $category_list = $c->formated_list('select','all',$cat_parent);
+	}
+
 	$t->set_var('category_select','<select name="cat_parent"><option value="">' . lang('Select parent category') . '</option>' . $category_list .'</select>');
 	$t->set_var('lang_parent',lang('Parent category'));
     }
-    else {
+    else
+    {
 	$t->set_var('lang_parent','');
 	$t->set_var('category_select','');
     }
 
     $t->set_var('lang_access',lang('Private'));
-    if ($access) { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
-    else { $t->set_var('access', '<input type="checkbox" name="access" value="True">'); }
+
+    if ($access)
+    {
+	$t->set_var('access', '<input type="checkbox" name="access" value="True" checked>');
+    }
+    else
+    {
+	$t->set_var('access', '<input type="checkbox" name="access" value="True">');
+    }
 
     $t->set_var('lang_name',lang('Name'));
     $t->set_var('lang_descr',lang('Description'));
     $t->set_var('cat_name',$cat_name);
     $t->set_var('cat_description',$cat_description);
 
-    if ($extra) {
+    if ($extra)
+    {
         $t->set_var('td_data','<input name="cat_data" size="50" value="' . $cat_data . '">');
 	$t->set_var('lang_data',lang($extra));
     }
-    else {
+    else
+    {
         $t->set_var('td_data','');
         $t->set_var('lang_data','');
     }
