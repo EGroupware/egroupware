@@ -82,7 +82,7 @@
             @reset($s_apps);
             while ($app = each($s_apps)) {
               $sql = "DELETE FROM phpgw_acl WHERE acl_appname='".$app[1]."' AND acl_location='run' AND acl_account="
-                   . $account[1]["account_id"]." AMD acl_account_type='u'";
+                   . $account[1]["account_id"]." AND acl_account_type='u'";
               $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
                    
               $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)"
@@ -90,7 +90,7 @@
               $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
             }
             $sql = "DELETE FROM phpgw_acl WHERE acl_appname='admin' AND acl_location='run' AND acl_account="
-                 . $account[1]["account_id"]." AMD acl_account_type='u'";
+                 . $account[1]["account_id"]." AND acl_account_type='u'";
             $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
 
             $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)"
