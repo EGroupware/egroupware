@@ -192,6 +192,7 @@ generate new lang.sql file	transy	en	Generate new lang.sql file
 generate printer-friendly version	calendar	en	Generate printer-friendly version
 geo	addressbook	en	GEO
 georgia	notes	en	Georgia
+global categories	common	en	Global Categories
 global public	common	en	Global Public
 global public and group public	calendar	en	Global Public and group public
 global public only	calendar	en	Global Public Only
