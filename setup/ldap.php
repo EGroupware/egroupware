@@ -21,7 +21,7 @@
 	include('./inc/functions.inc.php');
 
 	// Authorize the user to use setup app and load the database
-	if (!$phpgw_setup->auth('Config'))
+	if (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -34,7 +34,7 @@
 		exit;
 	}
 
-	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'ldap'   => 'ldap.tpl',
@@ -43,12 +43,12 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
-	$phpgw_setup->show_header(lang('LDAP Config'),'','ldap',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Config'),'','ldap',$ConfigDomain);
 
 	if ($error)
 	{
 		//echo '<br><center><b>Error:</b> '.$error.'</center>';
-		$phpgw_setup->show_alert_msg('Error',$error);
+		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$error);
 	}
 
 	$setup_tpl->set_block('ldap','header','header');
@@ -73,5 +73,5 @@
 	$setup_tpl->pfp('out','cancel_only');
 	$setup_tpl->pfp('out','footer');
 
-	$phpgw_setup->show_footer();
+	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>

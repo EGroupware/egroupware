@@ -23,14 +23,14 @@
 	include ('./inc/functions.inc.php');
 
 	// Check header and authentication
-	if (!$phpgw_setup->auth('Config'))
+	if (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
 	}
 	// Does not return unless user is authorized
 
-	$tpl_root = $GLOBALS['phpgw_setup']->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$GLOBALS['setup_tpl'] = CreateObject('phpgwapi.Template',$tpl_root);
 	$GLOBALS['setup_tpl']->set_file(array(
 		'T_head' => 'head.tpl',
@@ -87,15 +87,15 @@
 	}
 
 	$GLOBALS['phpgw_setup']->loaddb();
-	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->check_db();
+	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db();
 
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->get_versions();
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->get_versions();
 	//var_dump($GLOBALS['setup_info']);exit;
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->get_db_versions($GLOBALS['setup_info']);
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->get_db_versions($GLOBALS['setup_info']);
 	//var_dump($GLOBALS['setup_info']);exit;
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->compare_versions($GLOBALS['setup_info']);
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->compare_versions($GLOBALS['setup_info']);
 	//var_dump($GLOBALS['setup_info']);exit;
-	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->check_depends($GLOBALS['setup_info']);
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->detection->check_depends($GLOBALS['setup_info']);
 	//var_dump($GLOBALS['setup_info']);exit;
 	@ksort($GLOBALS['setup_info']);
 
@@ -106,7 +106,7 @@
 	}
 
 	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
-	$GLOBALS['phpgw_setup']->show_header(lang("Developers' Table Schema Toy"),False,'config',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$ConfigDomain);
 
 	if ($HTTP_POST_VARS['submit'])
 	{
@@ -127,7 +127,7 @@
 
 			// Drop newest tables
 			$terror[$appname]['tables'] = $GLOBALS['setup_info'][$appname]['tables'];
-			$GLOBALS['phpgw_setup']->process_droptables($terror,$GLOBALS['DEBUG']);
+			$GLOBALS['phpgw_setup']->process->droptables($terror,$GLOBALS['DEBUG']);
 			$terror[$appname]['tables'] = array();
 
 			// Reset tables field to baseline table names
@@ -145,13 +145,13 @@
 			{
 				echo '<br>Processing ' . $terror[$appname]['name'] . ' to ' . $version[$appname];
 
-				$terror = $GLOBALS['phpgw_setup']->process_droptables($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['phpgw_setup']->process->droptables($terror,$GLOBALS['DEBUG']);
 				$GLOBALS['phpgw_setup']->deregister_app($terror[$appname]['name']);
 
-				$terror = $GLOBALS['phpgw_setup']->process_baseline($terror,$GLOBALS['DEBUG']);
-				$terror = $GLOBALS['phpgw_setup']->process_test_data($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['phpgw_setup']->process->baseline($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['phpgw_setup']->process->test_data($terror,$GLOBALS['DEBUG']);
 
-				$terror = $GLOBALS['phpgw_setup']->process_upgrade($terror,$GLOBALS['DEBUG']);
+				$terror = $GLOBALS['phpgw_setup']->process->upgrade($terror,$GLOBALS['DEBUG']);
 			}
 			else
 			{
@@ -271,5 +271,5 @@
 	$GLOBALS['setup_tpl']->set_var('cancel',lang('Cancel'));
 	$GLOBALS['setup_tpl']->pparse('out','app_footer');
 	$GLOBALS['setup_tpl']->pparse('out','footer');
-	$GLOBALS['phpgw_setup']->show_footer();
+	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>

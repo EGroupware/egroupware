@@ -29,7 +29,7 @@
 
 	set_time_limit(0);
 
-	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
@@ -55,33 +55,33 @@
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_default','V_db_stage_default');
 
 	// Check header and authentication
-	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $phpgw_setup->check_header();
+	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $GLOBALS['phpgw_setup']->detection->check_header();
 	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
 	{
 		Header('Location: manageheader.php');
 		exit;
 	}
-	elseif (!$phpgw_setup->auth('Config'))
+	elseif (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
-		$phpgw_setup->show_header(lang('Please login'),True);
-		$phpgw_setup->login_form();
-		$phpgw_setup->show_footer();
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Please login'),True);
+		$GLOBALS['phpgw_setup']->html->login_form();
+		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}
 
-	$phpgw_setup->loaddb();
+	$GLOBALS['phpgw_setup']->loaddb();
 
 	/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
-	$phpgw_setup->clear_session_cache();
+	$GLOBALS['phpgw_setup']->clear_session_cache();
 
 	// Database actions
-	$setup_info = $phpgw_setup->get_versions();
-	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
+	$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
+	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db();
 	if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 1)
 	{
-		$setup_info = $phpgw_setup->get_versions();
-		$setup_info = $phpgw_setup->get_db_versions($setup_info);
-		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
+		$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
+		$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
+		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db();
 		if($GLOBALS['DEBUG'])
 		{
 			_debug_array($setup_info);
@@ -139,16 +139,16 @@
 	// Old PHP
 	if (phpversion() < '3.0.16')
 	{
-		$phpgw_setup->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],True);
-		$phpgw_setup->show_alert_msg('Error',
+		$GLOBALS['phpgw_setup']->html->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],True);
+		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',
 			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16'));
-		$phpgw_setup->show_footer();
+		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}
 	
 	// BEGIN setup page
 	
-	//$phpgw_setup->app_status();
+	//$GLOBALS['phpgw_setup']->app_status();
 	$GLOBALS['phpgw_info']['server']['app_images'] = 'templates/default/images';
 	$incomplete = $GLOBALS['phpgw_info']['server']['app_images'] . '/incomplete.gif';
 	$completed  = $GLOBALS['phpgw_info']['server']['app_images'] . '/completed.gif';
@@ -229,32 +229,33 @@
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_6_pre');
 			
 			// FIXME : CAPTURE THIS OUTPUT
-			$phpgw_setup->db->Halt_On_Error = 'report';
+			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'report';
 
 			switch ($GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'])
 			{
 				case 'dbcreate':
-					$phpgw_setup->db->create_database($db_root, $db_pass);
+					$GLOBALS['phpgw_setup']->db->create_database($db_root, $db_pass);
 					break;
 				case 'drop':
-					$setup_info = $phpgw_setup->get_versions($setup_info);
-					$setup_info = $phpgw_setup->process_droptables($setup_info);
+					$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions($setup_info);
+					$setup_info = $GLOBALS['phpgw_setup']->process->droptables($setup_info);
 					break;
 				case 'new':
 					/* process all apps and langs(last param True), excluding apps with the no_mass_update flag set. */
-					$setup_info = $phpgw_setup->upgrade_exclude($setup_info);
-					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$GLOBALS['DEBUG'],True);
+					$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
+					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$GLOBALS['DEBUG'],True);
+
 					$GLOBALS['included'] = True;
 					include('lang.php');
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 				case 'oldversion':
-					$setup_info = $phpgw_setup->process_pass($setup_info,'upgrade',$GLOBALS['DEBUG']);
+					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'upgrade',$GLOBALS['DEBUG']);
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 			}
 
-			$phpgw_setup->db->Halt_On_Error = 'no';
+			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
 
 			$setup_tpl->set_var('tableshave',lang('If you did not receive any errors, your applications have been'));
 			$setup_tpl->set_var('re-check_my_installation',lang('Re-Check My Installation'));
@@ -282,7 +283,7 @@
 
 	// Config Section
 	$setup_tpl->set_var('config_step_text',lang('Step 2 - Configuration'));
-	$GLOBALS['phpgw_info']['setup']['stage']['config'] = $phpgw_setup->check_config();
+	$GLOBALS['phpgw_info']['setup']['stage']['config'] = $GLOBALS['phpgw_setup']->detection->check_config();
 
 	// begin DEBUG code
 	//$GLOBALS['phpgw_info']['setup']['stage']['config'] = 10;
@@ -293,7 +294,7 @@
 		case 1:
 			$setup_tpl->set_var('config_status_img',$incomplete);
 			$setup_tpl->set_var('config_status_alt',lang('not completed'));
-			$btn_config_now = $phpgw_setup->make_frm_btn_simple(
+			$btn_config_now = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 				lang('Please configure phpGroupWare for your environment'),
 				'POST','config.php',
 				'submit',lang('Configure Now'),
@@ -304,21 +305,21 @@
 		case 10:
 			$setup_tpl->set_var('config_status_img',$completed);
 			$setup_tpl->set_var('config_status_alt',lang('completed'));
-			$btn_edit_config = $phpgw_setup->make_frm_btn_simple(
+			$btn_edit_config = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 				lang('Configuration completed'),
 				'POST','config.php',
 				'submit',lang('Edit Current Configuration'),
 				''
 			);
-			$phpgw_setup->db->query("select config_value FROM phpgw_config WHERE config_name='auth_type'");
-			$phpgw_setup->db->next_record();
-			if ($phpgw_setup->db->f(0) == 'ldap')
+			$GLOBALS['phpgw_setup']->db->query("select config_value FROM phpgw_config WHERE config_name='auth_type'");
+			$GLOBALS['phpgw_setup']->db->next_record();
+			if ($GLOBALS['phpgw_setup']->db->f(0) == 'ldap')
 			{
-				$phpgw_setup->db->query("select config_value FROM phpgw_config WHERE config_name='ldap_host'");
-				$phpgw_setup->db->next_record();
-				if ($phpgw_setup->db->f(0) != '')
+				$GLOBALS['phpgw_setup']->db->query("select config_value FROM phpgw_config WHERE config_name='ldap_host'");
+				$GLOBALS['phpgw_setup']->db->next_record();
+				if ($GLOBALS['phpgw_setup']->db->f(0) != '')
 				{
-					$btn_config_ldap = $phpgw_setup->make_frm_btn_simple(
+					$btn_config_ldap = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 						lang('LDAP account import/export'),
 						'POST','ldap.php',
 						'submit',lang('Configure Now'),
@@ -329,11 +330,11 @@
 				{
 					$btn_config_ldap = '';
 				}
-				$phpgw_setup->db->query("select config_value FROM phpgw_config WHERE config_name='webserver_url'");
-				$phpgw_setup->db->next_record();
-				if ($phpgw_setup->db->f(0))
+				$GLOBALS['phpgw_setup']->db->query("select config_value FROM phpgw_config WHERE config_name='webserver_url'");
+				$GLOBALS['phpgw_setup']->db->next_record();
+				if ($GLOBALS['phpgw_setup']->db->f(0))
 				{
-					$link_make_accts = $phpgw_setup->make_href_link_simple(
+					$link_make_accts = $GLOBALS['phpgw_setup']->html->make_href_link_simple(
 						'<br>',
 						'setup_demo.php',
 						lang('Click Here'),
@@ -349,7 +350,7 @@
 			else
 			{
 				$btn_config_ldap = '';
-				$link_make_accts = $phpgw_setup->make_href_link_simple(
+				$link_make_accts = $GLOBALS['phpgw_setup']->html->make_href_link_simple(
 					'<br>',
 					'setup_demo.php',
 					lang('Click Here'),
@@ -370,7 +371,7 @@
 
 	// Lang Section
 	$setup_tpl->set_var('lang_step_text',lang('Step 3 - Language Management'));
-	$GLOBALS['phpgw_info']['setup']['stage']['lang'] = $phpgw_setup->check_lang();
+	$GLOBALS['phpgw_info']['setup']['stage']['lang'] = $GLOBALS['phpgw_setup']->detection->check_lang();
 
 	// begin DEBUG code
 	//$GLOBALS['phpgw_info']['setup']['stage']['lang'] = 0;
@@ -381,7 +382,7 @@
 		case 1:
 			$setup_tpl->set_var('lang_status_img',$incomplete);
 			$setup_tpl->set_var('lang_status_alt','not completed');
-			$btn_install_lang = $phpgw_setup->make_frm_btn_simple(
+			$btn_install_lang = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 				lang('You do not have any languages installed. Please install one now <br>'),
 				'POST','lang.php',
 				'submit',lang('Install Language'),
@@ -405,7 +406,7 @@
 
 			$setup_tpl->set_var('lang_status_img',$completed);
 			$setup_tpl->set_var('lang_status_alt','completed');
-			$btn_manage_lang = $phpgw_setup->make_frm_btn_simple(
+			$btn_manage_lang = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 				lang('This stage is completed<br>') . lang('Currently installed languages: x <br>',$langs_list),
 				'POST','lang.php',
 				'submit',lang('Manage Languages'),
@@ -420,14 +421,14 @@
 	}
 
 	$setup_tpl->set_var('apps_step_text',lang('Step 4 - Advanced Application Management'));
-//	$GLOBALS['phpgw_info']['setup']['stage']['apps'] = $phpgw_setup->check_apps();
+//	$GLOBALS['phpgw_info']['setup']['stage']['apps'] = $GLOBALS['phpgw_setup']->check_apps();
 	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{
 		case 1:
 		case 10:
 			$setup_tpl->set_var('apps_status_img',$completed);
 			$setup_tpl->set_var('apps_status_alt',lang('completed'));
-			$btn_manage_apps = $phpgw_setup->make_frm_btn_simple(
+			$btn_manage_apps = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 				lang('This stage is completed<br>'),
 				'','applications.php',
 				'submit',lang('Manage Applications'),
@@ -441,7 +442,12 @@
 			break;
 	}
 
-	$phpgw_setup->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],False,'config',$GLOBALS['ConfigDomain'] . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'] . ')');
+	$GLOBALS['phpgw_setup']->html->show_header(
+		$GLOBALS['phpgw_info']['setup']['header_msg'],
+		False,
+		'config',
+		$GLOBALS['ConfigDomain'] . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'] . ')'
+	);
 	$setup_tpl->pparse('out','T_setup_main');
-	$phpgw_setup->show_footer();
+	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>

@@ -1,16 +1,16 @@
-phpGroupWare setup		May 2001
+phpGroupWare setup		March 2002 revised (5-2001)
 
 Class logical (?) organization map:
 
 	class.setup.inc.php					Global setup functions app/hook/login
 		|
-		class.setup_detection.inc.php	Detection of header, file and db versions
+		class.detection.inc.php	Detection of header, file and db versions
 		|
-		class.setup_lang.inc.php		Multi-lang functions for display
+		class.translation.inc.php		Multi-lang functions for display
 		|
-		class.setup_html.inc.php		HTML/template output functions
+		class.html.inc.php		HTML/template output functions
 		|
-		class.setup_process.inc.php		db processing functions/upgrade/install
+		class.process.inc.php		db processing functions/upgrade/install
 			|
 			class.schema_proc.inc.php				DB array <--> SQL and abstraction class
 				|

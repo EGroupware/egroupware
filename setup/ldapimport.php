@@ -21,7 +21,7 @@
 	include('./inc/functions.inc.php');
 
 	// Authorize the user to use setup app and load the database
-	if (!$phpgw_setup->auth('Config'))
+	if (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -39,10 +39,10 @@
 	$phpgw->common = CreateObject('phpgwapi.common');
 
 	$common = $phpgw->common;
-	$phpgw_setup->loaddb();
-	$phpgw->db = $phpgw_setup->db;
+	$GLOBALS['phpgw_setup']->loaddb();
+	$phpgw->db = $GLOBALS['phpgw_setup']->db;
 
-	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'ldap'   => 'ldap.tpl',
@@ -56,10 +56,10 @@
 	$phpgw->applications = CreateObject('phpgwapi.applications');
 	$applications        = $phpgw->applications;
 
-	$phpgw_setup->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%' OR config_name='account_repository'",__LINE__,__FILE__);
-	while ($phpgw_setup->db->next_record())
+	$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%' OR config_name='account_repository'",__LINE__,__FILE__);
+	while ($GLOBALS['phpgw_setup']->db->next_record())
 	{
-		$config[$phpgw_setup->db->f('config_name')] = $phpgw_setup->db->f('config_value');
+		$config[$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
 	}
 	$phpgw_info['server']['ldap_host']          = $config['ldap_host'];
 	$phpgw_info['server']['ldap_context']       = $config['ldap_context'];
@@ -128,11 +128,11 @@
 		$group_info = array();
 	}
 
-	$phpgw_setup->db->query("SELECT app_name,app_title FROM phpgw_applications WHERE app_enabled != '0' AND app_enabled != '3' AND "
+	$GLOBALS['phpgw_setup']->db->query("SELECT app_name,app_title FROM phpgw_applications WHERE app_enabled != '0' AND app_enabled != '3' AND "
 		. "app_name != 'administration' ORDER BY app_title",__LINE__,__FILE__);
-	while ($phpgw_setup->db->next_record())
+	while ($GLOBALS['phpgw_setup']->db->next_record())
 	{
-		$apps[$phpgw_setup->db->f('app_name')] = $phpgw_setup->db->f('app_title');
+		$apps[$GLOBALS['phpgw_setup']->db->f('app_name')] = $GLOBALS['phpgw_setup']->db->f('app_title');
 	}
 
 	if ($cancel)
@@ -170,7 +170,7 @@
 					if (!empty($thisacctid) && !empty($thisacctlid))
 					{
 						$accounts = CreateObject('phpgwapi.accounts',intval($thisacctid));
-						$accounts->db = $phpgw_setup->db;
+						$accounts->db = $GLOBALS['phpgw_setup']->db;
 
 						// Check if the account is already there.
 						// If so, we won't try to create it again.
@@ -202,7 +202,7 @@
 						//  these rights.  Instead, we make the user a member of the Default group
 						//  below.
 						$acl = CreateObject('phpgwapi.acl',intval($thisacctid));
-						$acl->db = $phpgw_setup->db;
+						$acl->db = $GLOBALS['phpgw_setup']->db;
 						$acl->read_repository();
 
 						// Only give them admin if we asked for them to have it.
@@ -250,7 +250,7 @@
 					if (!empty($thisacctid) && !empty($thisacctlid))
 					{
 						$groups = CreateObject('phpgwapi.accounts',intval($thisacctid));
-						$groups->db = $phpgw_setup->db;
+						$groups->db = $GLOBALS['phpgw_setup']->db;
 	
 						// Check if the account is already there.
 						// If so, we won't try to create it again.
@@ -303,7 +303,7 @@
 							if($tmpid)
 							{
 								$acl = CreateObject('phpgwapi.acl',$tmpid);
-								$acl->db = $phpgw_setup->db;
+								$acl->db = $GLOBALS['phpgw_setup']->db;
 								$acl->account_id = intval($tmpid);
 								$acl->read_repository();
 
@@ -320,7 +320,7 @@
 									App access is added below.
 								*/
 								$pref = CreateObject('phpgwapi.preferences',$tmpid);
-								$pref->db = $phpgw_setup->db;
+								$pref->db = $GLOBALS['phpgw_setup']->db;
 								$pref->account_id = intval($tmpid);
 								$pref->read_repository();
 								@reset($s_apps);
@@ -334,7 +334,7 @@
 						/* Now give this group some rights */
 						$phpgw_info['user']['account_id'] = $thisacctid;
 						$acl = CreateObject('phpgwapi.acl');
-						$acl->db = $phpgw_setup->db;
+						$acl->db = $GLOBALS['phpgw_setup']->db;
 						$acl->account_id = intval($thisacctid);
 						$acl->read_repository();
 						@reset($s_apps);
@@ -352,7 +352,7 @@
 			{
 				/* Create the 'Default' group */
 				$groups = CreateObject('phpgwapi.accounts',$defaultgroupid);
-				$groups->db = $phpgw_setup->db;
+				$groups->db = $GLOBALS['phpgw_setup']->db;
 
 				// Check if the group account is already there.
 				// If so, set our group_id to that account's id for use below.
@@ -381,7 +381,7 @@
 				$defaultgroupid = $acct->name2id('Default');
 
 				$acl = CreateObject('phpgwapi.acl',$defaultgroupid);
-				$acl->db = $phpgw_setup->db;
+				$acl->db = $GLOBALS['phpgw_setup']->db;
 				$acl->account_id = intval($defaultgroupid);
 				$acl->read_repository();
 				@reset($s_apps);
@@ -396,18 +396,18 @@
 		$setup_complete = True;
 	}
 
-	$phpgw_setup->show_header('LDAP Import','','ldapimport',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header('LDAP Import','','ldapimport',$ConfigDomain);
 
 	if ($error)
 	{
 		//echo '<br><center><b>Error:</b> '.$error.'</center>';
-		$phpgw_setup->show_alert_msg('Error',$error);
+		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$error);
 	}
 
 	if ($setup_complete)
 	{
 		echo lang('<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>');
-		$phpgw_setup->show_footer();
+		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}
 
@@ -476,5 +476,6 @@
 	$setup_tpl->pfp('out','app_list');
 	$setup_tpl->pfp('out','submit');
 	$setup_tpl->pfp('out','footer');
-	$phpgw_setup->show_footer();
+
+	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>

@@ -20,15 +20,15 @@
 	);
 	include ('./inc/functions.inc.php');
 
-	// Check header and authentication
-	if (!$phpgw_setup->auth('Config'))
+	/* Check header and authentication */
+	if (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
 	}
 	// Does not return unless user is authorized
 
-	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 
 	$download = $HTTP_POST_VARS['download'] ? $HTTP_POST_VARS['download'] : $HTTP_GET_VARS['download'];
@@ -70,14 +70,14 @@
 		$setup_tpl->set_block('sqlarr','sqlfooter','sqlfooter');
 	}
 
-	$phpgw_setup->loaddb();
+	$GLOBALS['phpgw_setup']->loaddb();
 
 	function parse_vars($table,$term)
 	{
 		$GLOBALS['setup_tpl']->set_var('table', $table);
 		$GLOBALS['setup_tpl']->set_var('term',$term);
 
-		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['phpgw_setup']->sql_to_array($table);
+		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['phpgw_setup']->process->sql_to_array($table);
 		$GLOBALS['setup_tpl']->set_var('arr',$arr);
 		if (count($pk) > 1)
 		{
@@ -169,7 +169,7 @@
 
 		if (!$download)
 		{
-			$phpgw_setup->show_header();
+			$GLOBALS['phpgw_setup']->html->show_header();
 		}
 
 		if ($showall)
@@ -182,7 +182,7 @@
 			$term = ',';
 			$dlstring .= printout('sqlheader');
 
-			$db = $phpgw_setup->db;
+			$db = $GLOBALS['phpgw_setup']->db;
 			$db->query('SHOW TABLES');
 			while($db->next_record())
 			{
@@ -236,7 +236,7 @@
 	}
 	else
 	{
-		$phpgw_setup->show_header();
+		$GLOBALS['phpgw_setup']->html->show_header();
 
 		$setup_tpl->set_var('action_url','sqltoarray.php');
 		$setup_tpl->set_var('lang_submit','Show selected');

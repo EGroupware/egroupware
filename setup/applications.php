@@ -31,7 +31,7 @@
 	set_time_limit(0);
 
 	// Check header and authentication
-	if (!$phpgw_setup->auth('Config'))
+	if (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -40,7 +40,7 @@
 
 	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
 
-	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head' => 'head.tpl',
@@ -96,16 +96,16 @@
 		}
 	}
 
-	$phpgw_setup->loaddb();
-	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
+	$GLOBALS['phpgw_setup']->loaddb();
+	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->detection->check_db();
 
-	$setup_info = $phpgw_setup->get_versions();
+	$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
 	//var_dump($setup_info);exit;
-	$setup_info = $phpgw_setup->get_db_versions($setup_info);
+	$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
 	//var_dump($setup_info);exit;
-	$setup_info = $phpgw_setup->compare_versions($setup_info);
+	$setup_info = $GLOBALS['phpgw_setup']->detection->compare_versions($setup_info);
 	//var_dump($setup_info);exit;
-	$setup_info = $phpgw_setup->check_depends($setup_info);
+	$setup_info = $GLOBALS['phpgw_setup']->detection->check_depends($setup_info);
 	//var_dump($setup_info);exit;
 	@ksort($setup_info);
 
@@ -117,7 +117,7 @@
 
 	if(@$HTTP_POST_VARS['submit'])
 	{
-		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 		$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
 		$setup_tpl->pparse('out','header');
 
@@ -133,20 +133,20 @@
 
 			if ($setup_info[$appname]['tables'])
 			{
-				$phpgw_setup->process_droptables($terror,$DEBUG);
+				$GLOBALS['phpgw_setup']->process->droptables($terror,$DEBUG);
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('tables dropped') . '.';
 			}
 
-			$phpgw_setup->deregister_app($setup_info[$appname]['name']);
+			$GLOBALS['phpgw_setup']->deregister_app($setup_info[$appname]['name']);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('deregistered') . '.';
 
 			if ($setup_info[$appname]['hooks'])
 			{
-				$phpgw_setup->deregister_hooks($setup_info[$appname]['name']);
+				$GLOBALS['phpgw_setup']->deregister_hooks($setup_info[$appname]['name']);
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks deregistered') . '.';
 			}
 
-			$terror = $phpgw_setup->process_drop_langs($terror,$DEBUG);
+			$terror = $GLOBALS['phpgw_setup']->process->drop_langs($terror,$DEBUG);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
 		}
 
@@ -157,26 +157,26 @@
 
 			if ($setup_info[$appname]['tables'])
 			{
-				$terror = $phpgw_setup->process_current($terror,$DEBUG);
-				$terror = $phpgw_setup->process_default_records($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process->current($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process->default_records($terror,$DEBUG);
 				echo '<br>' . $setup_info[$appname]['title'] . ' '
 					. lang('tables installed, unless there are errors printed above') . '.';
 			}
 			else
 			{
-				if ($phpgw_setup->app_registered($setup_info[$appname]['name']))
+				if ($GLOBALS['phpgw_setup']->app_registered($setup_info[$appname]['name']))
 				{
-					$phpgw_setup->update_app($setup_info[$appname]['name']);
+					$GLOBALS['phpgw_setup']->update_app($setup_info[$appname]['name']);
 				}
 				else
 				{
-					$phpgw_setup->register_app($setup_info[$appname]['name']);
+					$GLOBALS['phpgw_setup']->register_app($setup_info[$appname]['name']);
 				}
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('registered') . '.';
 
 				if ($setup_info[$appname]['hooks'])
 				{
-					$phpgw_setup->register_hooks($setup_info[$appname]['name']);
+					$GLOBALS['phpgw_setup']->register_hooks($setup_info[$appname]['name']);
 					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
 				}
 			}
@@ -185,7 +185,7 @@
 			{
 				$force_en = True;
 			}
-			$terror = $phpgw_setup->process_add_langs($terror,$DEBUG,$force_en);
+			$terror = $GLOBALS['phpgw_setup']->process->add_langs($terror,$DEBUG,$force_en);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations added') . '.';
 		}
 
@@ -194,7 +194,7 @@
 			$terror = array();
 			$terror[] = $setup_info[$appname];
 
-			$phpgw_setup->process_upgrade($terror,$DEBUG);
+			$GLOBALS['phpgw_setup']->process->upgrade($terror,$DEBUG);
 			if ($setup_info[$appname]['tables'])
 			{
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('tables upgraded') . '.';
@@ -205,7 +205,7 @@
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('upgraded') . '.';
 			}
 
-			$terror = $phpgw_setup->process_upgrade_langs($terror,$DEBUG);
+			$terror = $GLOBALS['phpgw_setup']->process->upgrade_langs($terror,$DEBUG);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations upgraded') . '.';
 		}
 
@@ -217,7 +217,7 @@
 	}
 	else
 	{
-		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 	}
 
 	if(@$HTTP_GET_VARS['detail'])
@@ -389,7 +389,7 @@
 					case 'C':
 						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']">');
 						$setup_tpl->set_var('upgrade','&nbsp;');
-						if (!$phpgw_setup->check_app_tables($value['name']))
+						if (!$GLOBALS['phpgw_setup']->detection->check_app_tables($value['name']))
 						{
 							// App installed and enabled, but some tables are missing
 							$setup_tpl->set_var('instimg','table.gif');
@@ -427,7 +427,7 @@
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
 						if (!@$value['currentver'])
 						{
-							if ($value['tables'] && $phpgw_setup->check_app_tables($value['name'],True))
+							if ($value['tables'] && $GLOBALS['phpgw_setup']->detection->check_app_tables($value['name'],True))
 							{
 								// Some tables missing
 								$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']">');
@@ -516,6 +516,6 @@
 		$setup_tpl->set_var('cancel',lang('Cancel'));
 		$setup_tpl->pparse('out','app_footer');
 		$setup_tpl->pparse('out','footer');
-		$phpgw_setup->show_footer();
+		$GLOBALS['phpgw_setup']->html->show_footer();
 	}
 ?>

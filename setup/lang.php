@@ -23,12 +23,12 @@
 		include('./inc/functions.inc.php');
 		// Authorize the user to use setup app and load the database
 		// Does not return unless user is authorized
-		if (!$phpgw_setup->auth('Config'))
+		if (!$GLOBALS['phpgw_setup']->auth('Config'))
 		{
 			Header('Location: index.php');
 			exit;
 		}
-		$phpgw_setup->loaddb();
+		$GLOBALS['phpgw_setup']->loaddb();
 
 		include(PHPGW_API_INC.'/class.common.inc.php');
 		$common = new common;
@@ -45,10 +45,10 @@
 		$submit              = True;
 	}
 
-	$setup_info_temp = $phpgw_setup->get_versions();
-	$setup_info = $phpgw_setup->get_db_versions($setup_info_temp);
+	$setup_info_temp = $GLOBALS['phpgw_setup']->detection->get_versions();
+	$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info_temp);
 
-	if($phpgw_setup->alessthanb($setup_info['phpgwapi']['currentver'], '0.9.15.002'))
+	if($GLOBALS['phpgw_setup']->alessthanb($setup_info['phpgwapi']['currentver'], '0.9.15.002'))
 	{
 		$langtbl  = 'lang';
 		$langstbl = 'languages';
@@ -63,12 +63,12 @@
 	{
 		$lang_selected = $HTTP_POST_VARS['lang_selected'];
 		$upgrademethod = $HTTP_POST_VARS['upgrademethod'];
-		$phpgw_setup->db->transaction_begin();
+		$GLOBALS['phpgw_setup']->db->transaction_begin();
 		if (count($lang_selected))
 		{
 			if ($upgrademethod == 'dumpold')
 			{
-				$phpgw_setup->db->query('DELETE FROM '.$langtbl,__LINE__,__FILE__);
+				$GLOBALS['phpgw_setup']->db->query('DELETE FROM '.$langtbl,__LINE__,__FILE__);
 				//echo '<br>Test: dumpold';
 			}
 			while (list($null,$lang) = each($lang_selected))
@@ -78,10 +78,10 @@
 				if ($upgrademethod == 'addonlynew')
 				{
 					//echo "<br>Test: addonlynew - select count(*) from lang where lang='$lang'";
-					$phpgw_setup->db->query("SELECT COUNT(*) FROM $langtbl WHERE lang='$lang'",__LINE__,__FILE__);
-					$phpgw_setup->db->next_record();
+					$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM $langtbl WHERE lang='$lang'",__LINE__,__FILE__);
+					$GLOBALS['phpgw_setup']->db->next_record();
 
-					if ($phpgw_setup->db->f(0) == 0)
+					if ($GLOBALS['phpgw_setup']->db->f(0) == 0)
 					{
 						//echo '<br>Test: addonlynew - True';
 						$addlang = True;
@@ -90,15 +90,15 @@
 				if (($addlang && $upgrademethod == 'addonlynew') || ($upgrademethod != 'addonlynew'))
 				{
 					//echo '<br>Test: loop above file()';
-					$setup_info = $phpgw_setup->get_versions();
-					$setup_info = $phpgw_setup->get_db_versions($setup_info);
+					$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
+					$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
 					$raw = $raw_file = array();
 					// Visit each app/setup dir, look for a lang file
 					while (list($key,$app) = each($setup_info))
 					{
 						$appfile = PHPGW_SERVER_ROOT . SEP . $app['name'] . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
 						//echo '<br>Checking in: ' . $app['name'];
-						if($phpgw_setup->app_registered($app['name']) && file_exists($appfile))
+						if($GLOBALS['phpgw_setup']->app_registered($app['name']) && file_exists($appfile))
 						{
 							//echo '<br>Including: ' . $appfile;
 							$raw[] = file($appfile);
@@ -110,21 +110,22 @@
 						while (list($_null,$line) = @each($raw_file))
 						{
 							$addit = False;
-							list($message_id,$app_name,$phpgw_setup->db_lang,$content) = explode("\t",$line);
-							$message_id = $phpgw_setup->db->db_addslashes(chop($message_id));
+							list($message_id,$app_name,$GLOBALS['phpgw_setup']->db_lang,$content) = explode("\t",$line);
+							$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($message_id));
 							//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
-							$app_name   = $phpgw_setup->db->db_addslashes(chop($app_name));
-							$phpgw_setup->db_lang    = $phpgw_setup->db->db_addslashes(chop($phpgw_setup->db_lang));
-							$content    = $phpgw_setup->db->db_addslashes(chop($content));
+							$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
+							$GLOBALS['phpgw_setup']->db_lang    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($GLOBALS['phpgw_setup']->db_lang));
+							$content    = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($content));
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
-								$phpgw_setup->db->query("SELECT COUNT(*) FROM $langtbl WHERE message_id='$message_id' and lang='$phpgw_setup->db_lang'",__LINE__,__FILE__);
-								$phpgw_setup->db->next_record();
+								$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(*) FROM $langtbl WHERE message_id='$message_id' and lang='"
+									. $GLOBALS['phpgw_setup']->db_lang . "'",__LINE__,__FILE__);
+								$GLOBALS['phpgw_setup']->db->next_record();
 
-								if ($phpgw_setup->db->f(0) == 0)
+								if ($GLOBALS['phpgw_setup']->db->f(0) == 0)
 								{
-									//echo '<br>Test: addmissing - True - Total: ' . $phpgw_setup->db->f(0);
+									//echo '<br>Test: addmissing - True - Total: ' . $GLOBALS['phpgw_setup']->db->f(0);
 									$addit = True;
 								}
 							}
@@ -133,15 +134,16 @@
 							{
 								if($message_id && $content)
 								{
-									// echo "<br>adding - insert into $langtbl(message_id,app_name,lang,content) values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
-									$phpgw_setup->db->query("INSERT into $langtbl(message_id,app_name,lang,content) VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')",__LINE__,__FILE__);
+									// echo "<br>adding - insert into $langtbl(message_id,app_name,lang,content) values ('$message_id','$app_name','" . $GLOBALS['phpgw_setup']->db_lang . "','$content')";
+									$GLOBALS['phpgw_setup']->db->query("INSERT into $langtbl(message_id,app_name,lang,content) VALUES ('$message_id','$app_name','"
+										. $GLOBALS['phpgw_setup']->db_lang . "','$content')",__LINE__,__FILE__);
 								}
 							}
 						}
 					}
 				}
 			}
-			$phpgw_setup->db->transaction_commit();
+			$GLOBALS['phpgw_setup']->db->transaction_commit();
 		}
 
 		if(!@$GLOBALS['included'])
@@ -160,7 +162,7 @@
 
 		if (!@$GLOBALS['included'])
 		{
-			$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
+			$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 			$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 			$setup_tpl->set_file(array(
 				'T_head' => 'head.tpl',
@@ -180,12 +182,12 @@
 
 			$select_box_desc = lang('Select which languages you would like to use');
 			$select_box_langs = '';
-			$phpgw_setup->db->query("select lang_id,lang_name from $langstbl where available='Yes'");
-			while ($phpgw_setup->db->next_record())
+			$GLOBALS['phpgw_setup']->db->query("select lang_id,lang_name from $langstbl where available='Yes'");
+			while ($GLOBALS['phpgw_setup']->db->next_record())
 			{
 				$select_box_langs .= 
-					'<option value="' . $phpgw_setup->db->f('lang_id') . '">'
-					. $phpgw_setup->db->f('lang_name') . '</option>'
+					'<option value="' . $GLOBALS['phpgw_setup']->db->f('lang_id') . '">'
+					. $GLOBALS['phpgw_setup']->db->f('lang_name') . '</option>'
 					."\n";
 			}
 
@@ -220,9 +222,9 @@
 			$setup_tpl->set_var('lang_cancel',lang('cancel'));
 
 			$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
-			$phpgw_setup->show_header("$stage_title",False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+			$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 			$setup_tpl->pparse('out','T_lang_main');
-			$phpgw_setup->show_footer();
+			$GLOBALS['phpgw_setup']->html->show_footer();
 		}
 	}
 ?>

@@ -19,17 +19,17 @@
 		'noapi' => True
 	);
 	include('./inc/functions.inc.php');
-	include('./inc/xml_functions.inc.php');
+	include(PHPGW_SERVER_ROOT . 'phpgwapi/inc/xml_functions.inc.php');
 
 	/* Check header and authentication */
-	if (!$phpgw_setup->auth('Config'))
+	if (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
 	}
 	// Does not return unless user is authorized
 
-	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
+	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 	$setup_tpl->set_file(array(
 		'T_head'   => 'head.tpl',
@@ -40,7 +40,7 @@
 	$host = 'us3.phpgroupware.org';
 	$path = '/cvsdemo/xmlrpc.php';
 
-	$phpgw_setup->show_header(lang('Application List'),True);
+	$GLOBALS['phpgw_setup']->html->show_header(lang('Application List'),True);
 
 	/* Login as demo */
 	$login = CreateObject(
@@ -98,5 +98,5 @@
 	$r = $c->send($logout);
 	$v = $r->value();
 
-	$phpgw_setup->show_footer();
+	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>
