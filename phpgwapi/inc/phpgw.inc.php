@@ -246,17 +246,18 @@
       if(substr($url ,0,$webserver_url_count) != $phpgw_info["server"]["webserver_url"]) {
         $app = $phpgw_info["flags"]["currentapp"];
         if($slash_check == "/") {
-          $app = ""; 
+          $url = $phpgw_info["server"]["webserver_url"].$url; 
         } elseif ($app == "home" || $app == "logout" || $app == "login"){
-          $app = "/"; 
+          $url = $phpgw_info["server"]["webserver_url"]."/".$url; 
         }else{ 
           /* This is going to be a problem for apps with subdirs. */
           /* we can work around it using $PHP_SELF, striping out the file name, */
-          /* and replacing it with the one we want. For now I will leave this alone.*/
-          
-          $app = "/".$app."/";
+          /* and replacing it with the one we want.*/
+          //$url = str_replace("$url", $SCRIPT_FILE, $url);
+
+          /* for now I will use this simplistic method */          
+          $url = $phpgw_info["server"]["webserver_url"]."/".$app."/".$url; 
         }
-        $url = $phpgw_info["server"]["webserver_url"].$app.$url; 
       } 
       return $url;
     }  
