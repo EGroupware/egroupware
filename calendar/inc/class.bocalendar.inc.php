@@ -302,8 +302,8 @@
 
 			$localtime = $GLOBALS['phpgw']->datetime->users_localtime;
 
-			$num_months = (int) get_var('num_month',array('GET','POST'),1);
-
+			$this->num_months = (int) get_var('num_months',array('GET','POST'),1);
+			
 			$this->date = (int) get_var('date',array('GET','POST'));
 			if($this->date)
 			{
