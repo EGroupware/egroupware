@@ -52,6 +52,11 @@
 				if($this->debug) { echo '<br>overriding start: "' . $this->start . '" now "' . $start . '"'; }
 				$this->start = $start;
 			}
+			else
+			{
+				$this->start = 0;
+			}
+
 			if((empty($query) && !empty($this->query)) || !empty($query))
 			{
 				if($this->debug) { echo '<br>setting query to: "' . $query . '"'; }

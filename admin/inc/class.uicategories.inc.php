@@ -125,11 +125,6 @@
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/admin/index.php'));
 
-			if(!$start)
-			{
-				$start = 0;
-			}
-
 			if (!$global_cats)
 			{
 				$global_cats = False;
@@ -295,9 +290,9 @@
 			}
 
 			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list(array('format'	=> 'select',
-																								'type'		=> 'all',
-																								'selected'	=> $parent,
-																								'globals'	=> $global_cats)));
+																									'type'		=> 'all',
+																									'selected'	=> $parent,
+																									'globals'	=> $global_cats)));
 
 			$GLOBALS['phpgw']->template->set_var('cat_name',$values['name']);
 			$GLOBALS['phpgw']->template->set_var('cat_description',$values['descr']);
@@ -343,8 +338,6 @@
 					$values['access'] = 'public';
 				}
 
-				//_debug_array($values);
-
 				$error = $this->bo->check_values($values);
 				if (is_array($error))
 				{
@@ -369,7 +362,7 @@
 			}
 
 			$link_data['menuaction'] = 'admin.uicategories.edit';
-			$link_data['cat_id']     = $this->cat_id;
+			$link_data['cat_id']	= $this->cat_id;
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$link_data['menuaction'] = 'admin.uicategories.delete';

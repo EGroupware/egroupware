@@ -19,6 +19,7 @@
 		var $query;
 		var $sort;
 		var $order;
+		var $cat_id;
 
 		function bocategories($cats_app)
 		{
@@ -81,7 +82,10 @@
 			$this->query	= $data['query'];
 			$this->sort		= $data['sort'];
 			$this->order	= $data['order'];
-			$this->cat_id	= $data['cat_id'];
+			if(isset($data['cat_id']))
+			{
+				$this->cat_id = $data['cat_id'];
+			}
 		}
 
 		function get_list($global_cats)

@@ -145,7 +145,7 @@
 			}
 
 			$filter = $this->filter($type);
-
+			
 			if (!$sort)
 			{
 				$sort = 'ASC';
@@ -194,7 +194,7 @@
 
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 				. $parent_filter . $querymethod . $filter;
-
+			
 			if ($limit)
 			{
 				$this->db->limit_query($sql . $ordermethod,$start,__LINE__,__FILE__);
@@ -330,23 +330,9 @@
 		{
 			$this->db->query('SELECT * FROM phpgw_categories WHERE cat_id=' . intval($id),__LINE__,__FILE__);
 
-			if ($this->db->next_record())
-			{
-				$cats = array
-				(
-					'cat_id'	=> $this->db->f('cat_id'),
-					'owner'		=> $this->db->f('cat_owner'),
-					'access'	=> $this->db->f('cat_access'),
-					'app_name'	=> $this->db->f('cat_appname'),
-					'main'		=> $this->db->f('cat_main'),
-					'level'		=> $this->db->f('cat_level'),
-					'parent'	=> $this->db->f('cat_parent'),
-					'name'		=> $this->db->f('cat_name'),
-					'descr'		=> $this->db->f('cat_description'),
-					'data'		=> $this->db->f('cat_data')
-				);
-			}
-			return $cats;
+			list($cat) = $this->db2cats();
+
+			return $cat;
 		}
 
 		/*!
@@ -539,8 +525,8 @@
 		{
 			if ($values['parent'] && $values['parent'] != 0)
 			{
-				$values['main']  = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
-				$values['level'] = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
+				$values['main']		= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
+				$values['level']	= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
 			}
 
 			$values['descr']	= $this->db->db_addslashes($values['descr']);
@@ -551,16 +537,10 @@
 				$id_col = 'cat_id,';
 				$id_val = $values['cat_id'].',';
 			}
-
 			$this->db->query("INSERT INTO phpgw_categories (${id_col}cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
 				. "cat_main,cat_level) VALUES ($id_val'" . intval($values['parent']) . "','" . $this->account_id . "','" . $values['access']
 				. "','" . $this->app_name . "','" . $values['name'] . "','" . $values['descr'] . "','" . $values['data']
 				. "','" . $values['main'] . "','" . $values['level'] . "')",__LINE__,__FILE__);
-
-			if (isset($values['cat_id']))
-			{
-				$max = intval($values['cat_id']);
-			}
 
 			$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
 
@@ -603,9 +583,9 @@
 					{
 						if ($cats[$i]['level'] == 1)
 						{
-							$this->db->query("UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main='" . intval($cats[$i]['id'])
-										. "' WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
-							$new_main = $cats[$i]['id'];
+							$this->db->query("UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main='" . intval($cats[$i]['cat_id'])
+										. "' WHERE cat_id='" . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+							$new_main = $cats[$i]['cat_id'];
 						}
 						else
 						{
@@ -620,7 +600,7 @@
 							}
 
 							$this->db->query("UPDATE phpgw_categories set cat_level='" . ($cats[$i]['level']-1) . "'" . $update_main . $update_parent 
-											. " WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+											. " WHERE cat_id='" . intval($cats[$i]['cat_id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 						}
 					}
 				}
@@ -634,7 +614,7 @@
 		{
 			if (!is_array($main))
 			{
-				$this->db->query("SELECT * from phpgw_categories WHERE cat_main = $main");
+				$this->db->query("SELECT * from phpgw_categories WHERE cat_main = $main",__LINE__,__FILE__);
 				$main = $this->db2cats();
 				//echo "main: "; _debug_array($main);
 			}
@@ -644,8 +624,8 @@
 				$cat = $main[$n];
 				if ($cat['parent'] == $parent)
 				{
-					//echo "Adding($cat['cat_id'])<br>";
-					$subs[] = $cat;
+					//echo "Adding($cat[cat_id])<br>";
+					$subs[$cat['cat_id']] = $cat;
 					$this->subs($cat['cat_id'],$subs,$main);
 				}
 			}
@@ -656,11 +636,28 @@
 			$id = $values['cat_id'];
 			$parent = $values['parent'];
 			$old_parent = $values['old_parent'];
-			$main = $old_parent ? intval($this->id2item(array('cat_id' => $old_parent,'item' => 'main'))) : $id;
-			//echo "<p>reparent($id,$parent,$old_parent,$main)</p>\n";
+			$main = $old_parent ? intval($this->id2name($old_parent,'main')) : $id;
+			//echo "<p>reparent: $id/$main: $old_parent --> $parent</p>\n";
 
 			$subs = array();
 			$this->subs($id,$subs,$main);
+         //echo "<p>subs($id) = "; _debug_array($subs);
+
+			if (isset($subs[$parent]))
+			{
+				//echo "<p>new parent $parent is sub of $id</p>\n";
+				$parent = $subs[$parent];
+				$parent['old_parent'] = $parent['parent'];
+				$parent['parent'] = intval($values['old_parent']);
+				$this->reparent($parent);
+
+				unset($parent['old_parent']);
+				unset($parent['main']);
+
+				$this->edit($parent);
+				$this->reparent($values);
+				return;
+			}
 
 			$new_main = $parent ? $this->id2name($parent,'main') : $id;
 			$new_parent_level = $parent ? $this->id2name($parent,'level') : -1;
@@ -672,6 +669,7 @@
 			{
 				$subs[$n]['main'] = $new_main;
 				$subs[$n]['level'] -= $level_adj;
+				//echo "<p>$n: id=".$subs[$n]['cat_id']." set main to $new_main, subs[$n] = \n"; _debug_array($subs[$n]);
 				$this->edit($subs[$n]);
 			}
 		}
@@ -693,17 +691,17 @@
 
 				$this->reparent($values);
 			}
-			else
+			if (!isset($values['main']) || !isset($values['level']))
 			{
 				if ($values['parent'] && ($values['parent'] != 0))
 				{
-					$values['main']  = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
-					$values['level'] = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
+					$values['main']		= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
+					$values['level']	= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
 				}
 				else
 				{
-					$values['main']  = intval($values['id']);
-					$values['level'] = 0;
+					$values['main']		= intval($values['cat_id']);
+					$values['parent']	= $values['level'] = 0;	// parent need to be set to 0, as it can be ''
 				}
 			}
 
@@ -714,7 +712,6 @@
 					. "', cat_data='" . $values['data'] . "', cat_parent=" . intval($values['parent']) . ", cat_access='"
 					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . $values['level']
 					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($values['cat_id']);
-
 			$this->db->query($sql,__LINE__,__FILE__);
 			return intval($values['cat_id']);
 		}
