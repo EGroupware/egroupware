@@ -76,7 +76,8 @@ import file	addressbook	es	Importar Archivo
 import from ldif, csv, or vcard	addressbook	es	Importar desde LDIF, CSV o VCard
 import from netscape	addressbook	es	Importar desde Netscape
 import from outlook	addressbook	es	Importar desde Outlook
-In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	es	Desde Outlook, seleccione su carpeta de contactos, seleccione <b>Importar y Exportar</b> del menu <b>Archivo</b> y exporte sus contactos en un archivo de Texto separado por comas (CSV).
+In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from	addressbook	es	<P>
+the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	es	Desde Outlook, seleccione su carpeta de contactos, seleccione <b>Importar y Exportar</b> del menu <b>Archivo</b> y exporte sus contactos en un archivo de Texto separado por comas (CSV).</P>
 international	common	es	Internacional
 isdn phone	addressbook	es	Telefono ISDN
 label	addressbook	es	Etiqueta

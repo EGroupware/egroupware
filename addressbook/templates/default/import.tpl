@@ -12,7 +12,7 @@
     <TR>
      <TD><FORM ENCTYPE="multipart/form-data" action="{action_url}" method="post">
             <OL>
-            <LI>{help_import}
+            <LI>{help_import} {help_import2}
             </LI>
             <LI>{export_path}:
               <INPUT NAME="tsvfile" SIZE="48" TYPE="file" VALUE="{tsvfilename}"><P></LI>
