@@ -8,7 +8,7 @@
 	* Copyright (C) 2002, 2003 Bettina Gille                                   *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org                                              * 
+	* http://www.phpgroupware.org                                              *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -185,10 +185,10 @@
 				$querymethod .= ' AND last_mod > ' . $lastmod;
 			}
 
-			if ($column)
+			if($column)
 			{
 				switch($column)
-				{	
+				{
 					case 'id': 			$table_column = ' cat_id '; break;
 					case 'owner': 		$table_column = ' cat_owner '; break;
 					case 'access': 		$table_column = ' cat_access '; break;
@@ -207,7 +207,7 @@
 				$table_column = ' * ';
 			}
 
-			$sql = "SELECT $table_column from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ')'
+			$sql = "SELECT $table_column FROM phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ')'
 				. $parent_filter . $querymethod . $filter;
 
 			$this->db2->query($sql,__LINE__,__FILE__);
@@ -309,7 +309,7 @@
 				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
 			}
 
-			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
+			$sql = "SELECT * FROM phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 					. $querymethod;
 
 			$this->db2->query($sql . $parent_select,__LINE__,__FILE__);
@@ -430,7 +430,7 @@
 		@abstract return into a select box, list or other formats
 		@param $format currently supports select (select box) or list
 		@param $type string - subs or mains
-		@param $selected - cat_id or array with cat_id values 
+		@param $selected - cat_id or array with cat_id values
 		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $s array - populated with categories
 		*/
@@ -602,7 +602,7 @@
 			$cat_id = (int)$cat_id;
 			if ($subs)
 			{
-				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
+				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id;
 			}
 
 			$this->db->query('DELETE FROM phpgw_categories WHERE cat_id=' . $cat_id . $subdelete . " AND cat_appname='"
@@ -614,7 +614,7 @@
 			$cat_id = (int)$cat_id;
 			if ($drop_subs)
 			{
-				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id; 
+				$subdelete = ' OR cat_parent=' . $cat_id . ' OR cat_main=' . $cat_id;
 			}
 
 			if ($modify_subs)
@@ -643,14 +643,14 @@
 							$update_parent = ',cat_parent=' . $new_parent;
 						}
 
-						$this->db->query('UPDATE phpgw_categories set cat_level=' . ($cats[$i]['level']-1) . $update_main . $update_parent 
-										. ' WHERE cat_id=' . (int)$cats[$i]['id'] . " AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
+						$this->db->query('UPDATE phpgw_categories set cat_level=' . ($cats[$i]['level']-1) . $update_main . $update_parent
+							. ' WHERE cat_id=' . (int)$cats[$i]['id'] . " AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 					}
 				}
 			}
 
 			$this->db->query('DELETE FROM phpgw_categories WHERE cat_id=' . $cat_id . $subdelete . " AND cat_appname='"
-							. $this->app_name . "'",__LINE__,__FILE__);
+				. $this->app_name . "'",__LINE__,__FILE__);
 		}
 
 		/*!
@@ -689,9 +689,9 @@
 			$values['name'] = $this->db->db_addslashes($values['name']);
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $values['name'] . "', cat_description='" . $values['descr']
-					. "', cat_data='" . $values['data'] . "', cat_parent=" . $values['parent'] . ", cat_access='"
-					. $values['access'] . "', cat_main=" . $values['main'] . ', cat_level=' . $values['level'] . ',last_mod=' . time()
-					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . $values['id'];
+				. "', cat_data='" . $values['data'] . "', cat_parent=" . $values['parent'] . ", cat_access='"
+				. $values['access'] . "', cat_main=" . $values['main'] . ', cat_level=' . $values['level'] . ',last_mod=' . time()
+				. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . $values['id'];
 
 			$this->db->query($sql,__LINE__,__FILE__);
 			return $values['id'];
@@ -700,7 +700,7 @@
 		function name2id($cat_name)
 		{
 			$this->db->query("SELECT cat_id FROM phpgw_categories WHERE cat_name='" . $this->db->db_addslashes($cat_name) . "' "
-							."AND cat_appname='" . $this->app_name . "' AND (cat_owner=" . $this->account_id . ' OR cat_owner=-1)',__LINE__,__FILE__);
+				."AND cat_appname='" . $this->app_name . "' AND (cat_owner=" . $this->account_id . ' OR cat_owner=-1)',__LINE__,__FILE__);
 
 			if(!$this->db->num_rows())
 			{
@@ -715,18 +715,18 @@
 		function id2name($cat_id = '', $item = 'name')
 		{
 			$cat_id = (int)$cat_id;
-			if ($cat_id == 0)
+			if($cat_id == 0)
 			{
 				return '--';
 			}
 			switch($item)
 			{
-				default:	//fall through
-				case 'name':	$value = 'cat_name'; break;
 				case 'owner':	$value = 'cat_owner'; break;
 				case 'main':	$value = 'cat_main'; break;
 				case 'level':	$value = 'cat_level'; break;
 				case 'parent':	$value = 'cat_parent'; break;
+				case 'name':
+				default:		$value = 'cat_parent'; break;
 			}
 
 			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id=" . $cat_id,__LINE__,__FILE__);
@@ -771,7 +771,7 @@
 
 			if ($cat_name)
 			{
-				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' "; 
+				$cat_exists = " cat_name='" . $this->db->db_addslashes($cat_name) . "' ";
 			}
 
 			if ($cat_id)
