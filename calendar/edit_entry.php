@@ -372,7 +372,7 @@
 	$str  = '<input type="checkbox" name="cal[rpt_sun]" value="'.M_SUNDAY.'"'.(($event->recur_data & M_SUNDAY) ?' checked':'').'> '.lang('Sunday').' ';
 	$str .= '<input type="checkbox" name="cal[rpt_mon]" value="'.M_MONDAY.'"'.(($event->recur_data & M_MONDAY) ?' checked':'').'> '.lang('Monday').' ';
 	$str .= '<input type="checkbox" name="cal[rpt_tue]" value="'.M_TUESDAY.'"'.(($event->recur_data & M_TUESDAY) ?' checked':'').'> '.lang('Tuesday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_wed]" value="'.M_WEDNESDAY.'"'.(($event->recur_data & M_WEDNESDAY) ?' checked':'').'> '.lang('Wednesday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_wed]" value="'.M_WEDNESDAY.'"'.(($event->recur_data & M_WEDNESDAY) ?' checked':'').'> '.lang('Wednesday').' <br>';
 	$str .= '<input type="checkbox" name="cal[rpt_thu]" value="'.M_THURSDAY.'"'.(($event->recur_data & M_THURSDAY) ?' checked':'').'> '.lang('Thursday').' ';
 	$str .= '<input type="checkbox" name="cal[rpt_fri]" value="'.M_FRIDAY.'"'.(($event->recur_data & M_FRIDAY) ?' checked':'').'> '.lang('Friday').' ';
 	$str .= '<input type="checkbox" name="cal[rpt_sat]" value="'.M_SATURDAY.'"'.(($event->recur_data & M_SATURDAY) ?' checked':'').'> '.lang('Saturday').' ';
