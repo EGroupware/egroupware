@@ -17,9 +17,19 @@
   
   $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
 
-  if (! ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
+  if (! @ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
      echo "<p><b>Error binding to LDAP server.  Check your config</b>";
      exit;
+  }
+
+  function getSearchLine($searchstring)
+  {
+     if (($searchstring=="*") || ($searchstring=="")) {
+        $searchline = "cn=*";
+     } else {
+        $searchline = sprintf("cn=*%s*",$searchstring);
+     }
+     return $searchline;
   }
 
   function descryptpass($userpass, $random)
@@ -41,10 +51,34 @@
   
     return $ldappassword;
   }
+  
+  // Not the best method, but it works for now.
+  function account_total()
+  {
+    global $phpgw_info, $ldap;
+
+    $filter = "(|(uid=*))";
+    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid"));
+    $info = ldap_get_entries($ldap, $sr);
+
+    return count($info);
+  }
 
   function account_read($method,$start,$sort,$order)
   {
+    global $phpgw_info, $ldap;
   
+    $filter = "(|(uid=*))";
+    $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("sn","givenname","uid"));
+    $info = ldap_get_entries($ldap, $sr);
+  
+    for ($i=0; $i<count($info); $i++) {
+       $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
+       $account_info[$i]["account_firstname"] = $info[$i]["givenname"][0];
+       $account_info[$i]["account_lastname"]  = $info[$i]["sn"][0];
+    }
+
+    return $account_info;
   }
   
   function account_add($account_info)

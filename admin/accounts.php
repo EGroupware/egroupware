@@ -46,7 +46,6 @@
   $account_info = account_read($method,$start,$sort,$order);
 
   while (list($null,$account) = each($account_info)) {
-    echo "<br>" . $account[1];
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var("tr_color",$tr_color);
 
@@ -71,10 +70,10 @@
     $t->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
 				     . $account["account_id"]) . '"> ' . lang("View") . ' </a>');
 
-    if ($phpgw->db->num_rows() == 1) {
+    if ($total == 1) {
        $t->set_var("output","");
     }
-    if ($phpgw->db->num_rows() != ++$i) {
+    if ($total != ++$i) {
        $t->parse("output","row",True);
     }
   }
