@@ -291,65 +291,65 @@
 	{
 		global $phpgw, $phpgw_info,$referer;
 
-		$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
-		$t->set_file(array( "form"	=> "form.tpl"));
+		$t = new Template(PHPGW_APP_TPL);
+		$t->set_file(array('form' => 'form.tpl'));
 		
-		$email        = $fields["email"];
-		$emailtype    = $fields["email_type"];
-		$hemail       = $fields["email_home"];
-		$hemailtype   = $fields["email_home_type"];
-		$firstname    = $fields["n_given"];
-		$middle       = $fields["n_middle"];
-		$prefix       = $fields["n_prefix"];
-		$suffix       = $fields["n_suffix"];
-		$lastname     = $fields["n_family"];
-		$title        = $fields["title"];
-		$wphone       = $fields["tel_work"];
-		$hphone       = $fields["tel_home"];
-		$fax          = $fields["tel_fax"];
-		$pager        = $fields["tel_pager"];
-		$mphone       = $fields["tel_cell"];
-		$ophone       = $fields["ophone"];
-		$msgphone     = $fields["tel_msg"];
-		$isdnphone    = $fields["tel_isdn"];
-		$carphone     = $fields["tel_car"];
-		$vidphone     = $fields["tel_video"];
-		$preferred    = $fields["tel_prefer"];
+		$email        = $fields['email'];
+		$emailtype    = $fields['email_type'];
+		$hemail       = $fields['email_home'];
+		$hemailtype   = $fields['email_home_type'];
+		$firstname    = $fields['n_given'];
+		$middle       = $fields['n_middle'];
+		$prefix       = $fields['n_prefix'];
+		$suffix       = $fields['n_suffix'];
+		$lastname     = $fields['n_family'];
+		$title        = $fields['title'];
+		$wphone       = $fields['tel_work'];
+		$hphone       = $fields['tel_home'];
+		$fax          = $fields['tel_fax'];
+		$pager        = $fields['tel_pager'];
+		$mphone       = $fields['tel_cell'];
+		$ophone       = $fields['ophone'];
+		$msgphone     = $fields['tel_msg'];
+		$isdnphone    = $fields['tel_isdn'];
+		$carphone     = $fields['tel_car'];
+		$vidphone     = $fields['tel_video'];
+		$preferred    = $fields['tel_prefer'];
 
-		$bstreet      = $fields["adr_one_street"];
-		$address2     = $fields["address2"];
-		$address3     = $fields["address3"];
-		$bcity        = $fields["adr_one_locality"];
-		$bstate       = $fields["adr_one_region"];
-		$bzip         = $fields["adr_one_postalcode"];
-		$bcountry     = $fields["adr_one_countryname"];
-		$one_dom      = $fields["one_dom"];
-		$one_intl     = $fields["one_intl"];
-		$one_parcel   = $fields["one_parcel"];
-		$one_postal   = $fields["one_postal"];
+		$bstreet      = $fields['adr_one_street'];
+		$address2     = $fields['address2'];
+		$address3     = $fields['address3'];
+		$bcity        = $fields['adr_one_locality'];
+		$bstate       = $fields['adr_one_region'];
+		$bzip         = $fields['adr_one_postalcode'];
+		$bcountry     = $fields['adr_one_countryname'];
+		$one_dom      = $fields['one_dom'];
+		$one_intl     = $fields['one_intl'];
+		$one_parcel   = $fields['one_parcel'];
+		$one_postal   = $fields['one_postal'];
 
-		$hstreet      = $fields["adr_two_street"];
-		$hcity        = $fields["adr_two_locality"];
-		$hstate       = $fields["adr_two_region"];
-		$hzip         = $fields["adr_two_postalcode"];
-		$hcountry     = $fields["adr_two_countryname"];
-		$btype        = $fields["adr_two_type"];
-		$two_dom      = $fields["two_dom"];
-		$two_intl     = $fields["two_intl"];
-		$two_parcel   = $fields["two_parcel"];
-		$two_postal   = $fields["two_postal"];
+		$hstreet      = $fields['adr_two_street'];
+		$hcity        = $fields['adr_two_locality'];
+		$hstate       = $fields['adr_two_region'];
+		$hzip         = $fields['adr_two_postalcode'];
+		$hcountry     = $fields['adr_two_countryname'];
+		$btype        = $fields['adr_two_type'];
+		$two_dom      = $fields['two_dom'];
+		$two_intl     = $fields['two_intl'];
+		$two_parcel   = $fields['two_parcel'];
+		$two_postal   = $fields['two_postal'];
 
-		$timezone     = $fields["tz"];
-		$bday         = $fields["bday"];
-		$notes        = stripslashes($fields["note"]);
-		$label        = stripslashes($fields["label"]);
-		$company      = $fields["org_name"];
-		$department   = $fields["org_unit"];
-		$url          = $fields["url"];
-		$pubkey       = $fields["pubkey"];
-		$access       = $fields["access"];
+		$timezone     = $fields['tz'];
+		$bday         = $fields['bday'];
+		$notes        = stripslashes($fields['note']);
+		$label        = stripslashes($fields['label']);
+		$company      = $fields['org_name'];
+		$department   = $fields['org_unit'];
+		$url          = $fields['url'];
+		$pubkey       = $fields['pubkey'];
+		$access       = $fields['access'];
 		if(!$cat_id) {
-			$cat_id   = $fields["cat_id"];
+			$cat_id   = $fields['cat_id'];
 		}
 
 		$cats_link    = cat_option($cat_id,True);
@@ -406,18 +406,18 @@
 				$temp_month[$month] = "SELECTED";
 				$bday_month = "<select name=bday_month>"
 					. "<option value=\"\" $temp_month[0]> </option>"
-					. "<option value=1  $temp_month[1]>"  . lang("january")   . "</option>" 
-					. "<option value=2  $temp_month[2]>"  . lang("february")  . "</option>"
-					. "<option value=3  $temp_month[3]>"  . lang("march")     . "</option>"
-					. "<option value=4  $temp_month[4]>"  . lang("april")     . "</option>"
-					. "<option value=5  $temp_month[5]>"  . lang("may")       . "</option>"
-					. "<option value=6  $temp_month[6]>"  . lang("june")      . "</option>" 
-					. "<option value=7  $temp_month[7]>"  . lang("july")      . "</option>"
-					. "<option value=8  $temp_month[8]>"  . lang("august")    . "</option>"
-					. "<option value=9  $temp_month[9]>"  . lang("september") . "</option>"
-					. "<option value=10 $temp_month[10]>" . lang("october")   . "</option>"
-					. "<option value=11 $temp_month[11]>" . lang("november")  . "</option>"
-					. "<option value=12 $temp_month[12]>" . lang("december")  . "</option>"
+					. "<option value=1  $temp_month[1]>"  . lang('january')   . "</option>" 
+					. "<option value=2  $temp_month[2]>"  . lang('february')  . "</option>"
+					. "<option value=3  $temp_month[3]>"  . lang('march')     . "</option>"
+					. "<option value=4  $temp_month[4]>"  . lang('april')     . "</option>"
+					. "<option value=5  $temp_month[5]>"  . lang('may')       . "</option>"
+					. "<option value=6  $temp_month[6]>"  . lang('june')      . "</option>" 
+					. "<option value=7  $temp_month[7]>"  . lang('july')      . "</option>"
+					. "<option value=8  $temp_month[8]>"  . lang('august')    . "</option>"
+					. "<option value=9  $temp_month[9]>"  . lang('september') . "</option>"
+					. "<option value=10 $temp_month[10]>" . lang('october')   . "</option>"
+					. "<option value=11 $temp_month[11]>" . lang('november')  . "</option>"
+					. "<option value=12 $temp_month[12]>" . lang('december')  . "</option>"
 					. "</select>";
 				$bday_day   = '<input maxlength="2" name="bday_day" value="' . $day . '" size="2">';
 				$bday_year  = '<input maxlength="4" name="bday_year" value="' . $year . '" size="4">';
@@ -426,18 +426,18 @@
 			{
 				$bday_month = "<select name=bday_month>"
 					. "<option value=\"\" SELECTED> </option>"
-					. "<option value=1>"  . lang("january")   . "</option>"
-					. "<option value=2>"  . lang("february")  . "</option>"
-					. "<option value=3>"  . lang("march")     . "</option>"
-					. "<option value=4>"  . lang("april")     . "</option>"
-					. "<option value=5>"  . lang("may")       . "</option>"
-					. "<option value=6>"  . lang("june")      . "</option>"
-					. "<option value=7>"  . lang("july")      . "</option>"
-					. "<option value=8>"  . lang("august")    . "</option>"
-					. "<option value=9>"  . lang("september") . "</option>"
-					. "<option value=10>" . lang("october")   . "</option>"
-					. "<option value=11>" . lang("november")  . "</option>"
-					. "<option value=12>" . lang("december")  . "</option>"
+					. "<option value=1>"  . lang('january')   . "</option>"
+					. "<option value=2>"  . lang('february')  . "</option>"
+					. "<option value=3>"  . lang('march')     . "</option>"
+					. "<option value=4>"  . lang('april')     . "</option>"
+					. "<option value=5>"  . lang('may')       . "</option>"
+					. "<option value=6>"  . lang('june')      . "</option>"
+					. "<option value=7>"  . lang('july')      . "</option>"
+					. "<option value=8>"  . lang('august')    . "</option>"
+					. "<option value=9>"  . lang('september') . "</option>"
+					. "<option value=10>" . lang('october')   . "</option>"
+					. "<option value=11>" . lang('november')  . "</option>"
+					. "<option value=12>" . lang('december')  . "</option>"
 					. "</select>";
 				$bday_day  = '<input name="bday_day" size="2" maxlength="2">';
 				$bday_year = '<input name="bday_year" size="4" maxlength="4">';
@@ -544,100 +544,100 @@
 			$create .= '';
 		}
  
-		$t->set_var("lang_home",lang("Home"));
-		$t->set_var("lang_business",lang("Business"));
-		$t->set_var("lang_personal",lang("Personal"));
+		$t->set_var('lang_home',lang('Home'));
+		$t->set_var('lang_business',lang('Business'));
+		$t->set_var('lang_personal',lang('Personal'));
 
-		$t->set_var("lang_lastname",lang("Last Name"));
-		$t->set_var("lastname",$lastname);
-		$t->set_var("lang_firstname",lang("First Name"));
-		$t->set_var("firstname",$firstname);
-		$t->set_var("lang_middle",lang("Middle Name"));
-		$t->set_var("middle",$middle);
-		$t->set_var("lang_prefix",lang("Prefix"));
-		$t->set_var("prefix",$prefix);
-		$t->set_var("lang_suffix",lang("Suffix"));
-		$t->set_var("suffix",$suffix);
-		$t->set_var("lang_birthday",lang("Birthday"));
-		$t->set_var("birthday",$birthday);
+		$t->set_var('lang_lastname',lang('Last Name'));
+		$t->set_var('lastname',$lastname);
+		$t->set_var('lang_firstname',lang('First Name'));
+		$t->set_var('firstname',$firstname);
+		$t->set_var('lang_middle',lang('Middle Name'));
+		$t->set_var('middle',$middle);
+		$t->set_var('lang_prefix',lang('Prefix'));
+		$t->set_var('prefix',$prefix);
+		$t->set_var('lang_suffix',lang('Suffix'));
+		$t->set_var('suffix',$suffix);
+		$t->set_var('lang_birthday',lang('Birthday'));
+		$t->set_var('birthday',$birthday);
 
-		$t->set_var("lang_company",lang("Company Name"));
-		$t->set_var("company",$company);
-		$t->set_var("lang_department",lang("Department"));
-		$t->set_var("department",$department);
-		$t->set_var("lang_title",lang("Title"));
-		$t->set_var("title",$title);
-		$t->set_var("lang_email",lang("Business Email"));
-		$t->set_var("email",$email);
-		$t->set_var("lang_email_type",lang("Business EMail Type"));
-		$t->set_var("email_type",$email_type);
-		$t->set_var("lang_url",lang("URL"));
-		$t->set_var("url",$url);
-		$t->set_var("lang_timezone",lang("time zone offset"));
-		$t->set_var("timezone",$time_zone);
-		$t->set_var("lang_fax",lang("Business Fax"));
-		$t->set_var("fax",$fax);
-		$t->set_var("lang_wphone",lang("Business Phone"));
-		$t->set_var("wphone",$wphone);
-		$t->set_var("lang_pager",lang("Pager"));
-		$t->set_var("pager",$pager);
-		$t->set_var("lang_mphone",lang("Cell Phone"));
-		$t->set_var("mphone",$mphone);
-		$t->set_var("lang_msgphone",lang("Message Phone"));
-		$t->set_var("msgphone",$msgphone);
-		$t->set_var("lang_isdnphone",lang("ISDN Phone"));
-		$t->set_var("isdnphone",$isdnphone);
-		$t->set_var("lang_carphone",lang("Car Phone"));
-		$t->set_var("carphone",$carphone);
-		$t->set_var("lang_vidphone",lang("Video Phone"));
-		$t->set_var("vidphone",$vidphone);
+		$t->set_var('lang_company',lang('Company Name'));
+		$t->set_var('company',$company);
+		$t->set_var('lang_department',lang('Department'));
+		$t->set_var('department',$department);
+		$t->set_var('lang_title',lang('Title'));
+		$t->set_var('title',$title);
+		$t->set_var('lang_email',lang('Business Email'));
+		$t->set_var('email',$email);
+		$t->set_var('lang_email_type',lang('Business EMail Type'));
+		$t->set_var('email_type',$email_type);
+		$t->set_var('lang_url',lang('URL'));
+		$t->set_var('url',$url);
+		$t->set_var('lang_timezone',lang('time zone offset'));
+		$t->set_var('timezone',$time_zone);
+		$t->set_var('lang_fax',lang('Business Fax'));
+		$t->set_var('fax',$fax);
+		$t->set_var('lang_wphone',lang('Business Phone'));
+		$t->set_var('wphone',$wphone);
+		$t->set_var('lang_pager',lang('Pager'));
+		$t->set_var('pager',$pager);
+		$t->set_var('lang_mphone',lang('Cell Phone'));
+		$t->set_var('mphone',$mphone);
+		$t->set_var('lang_msgphone',lang('Message Phone'));
+		$t->set_var('msgphone',$msgphone);
+		$t->set_var('lang_isdnphone',lang('ISDN Phone'));
+		$t->set_var('isdnphone',$isdnphone);
+		$t->set_var('lang_carphone',lang('Car Phone'));
+		$t->set_var('carphone',$carphone);
+		$t->set_var('lang_vidphone',lang('Video Phone'));
+		$t->set_var('vidphone',$vidphone);
 
-		$t->set_var("lang_ophone",lang("Other Number"));
-		$t->set_var("ophone",$ophone);
-		$t->set_var("lang_bstreet",lang("Business Street"));
-		$t->set_var("bstreet",$bstreet);
-		$t->set_var("lang_address2",lang("Address Line 2"));
-		$t->set_var("address2",$address2);
-		$t->set_var("lang_address3",lang("Address Line 3"));
-		$t->set_var("address3",$address3);
-		$t->set_var("lang_bcity",lang("Business City"));
-		$t->set_var("bcity",$bcity);
-		$t->set_var("lang_bstate",lang("Business State"));
-		$t->set_var("bstate",$bstate);
-		$t->set_var("lang_bzip",lang("Business Zip Code"));
-		$t->set_var("bzip",$bzip);
-		$t->set_var("lang_bcountry",lang("Business Country"));
-		$t->set_var("bcountry",$bcountry);
-		$t->set_var("lang_badrtype",lang("Address Type"));
-		$t->set_var("badrtype",$badrtype);
+		$t->set_var('lang_ophone',lang('Other Number'));
+		$t->set_var('ophone',$ophone);
+		$t->set_var('lang_bstreet',lang('Business Street'));
+		$t->set_var('bstreet',$bstreet);
+		$t->set_var('lang_address2',lang('Address Line 2'));
+		$t->set_var('address2',$address2);
+		$t->set_var('lang_address3',lang('Address Line 3'));
+		$t->set_var('address3',$address3);
+		$t->set_var('lang_bcity',lang('Business City'));
+		$t->set_var('bcity',$bcity);
+		$t->set_var('lang_bstate',lang('Business State'));
+		$t->set_var('bstate',$bstate);
+		$t->set_var('lang_bzip',lang('Business Zip Code'));
+		$t->set_var('bzip',$bzip);
+		$t->set_var('lang_bcountry',lang('Business Country'));
+		$t->set_var('bcountry',$bcountry);
+		$t->set_var('lang_badrtype',lang('Address Type'));
+		$t->set_var('badrtype',$badrtype);
 
-		$t->set_var("lang_hphone",lang("Home Phone"));
-		$t->set_var("hphone",$hphone);
-		$t->set_var("lang_hemail",lang("Home Email"));
-		$t->set_var("hemail",$hemail);
-		$t->set_var("lang_hemail_type",lang("Home EMail Type"));
-		$t->set_var("hemail_type",$hemail_type);
-		$t->set_var("lang_hstreet",lang("Home Street"));
-		$t->set_var("hstreet",$hstreet);
-		$t->set_var("lang_hcity",lang("Home City"));
-		$t->set_var("hcity",$hcity);
-		$t->set_var("lang_hstate",lang("Home State"));
-		$t->set_var("hstate",$hstate);
-		$t->set_var("lang_hzip",lang("Home Zip Code"));
-		$t->set_var("hzip",$hzip);
-		$t->set_var("lang_hcountry",lang("Home Country"));
-		$t->set_var("hcountry",$hcountry);
-		$t->set_var("lang_hadrtype",lang("Address Type"));
-		$t->set_var("hadrtype",$hadrtype);
+		$t->set_var('lang_hphone',lang('Home Phone'));
+		$t->set_var('hphone',$hphone);
+		$t->set_var('lang_hemail',lang('Home Email'));
+		$t->set_var('hemail',$hemail);
+		$t->set_var('lang_hemail_type',lang('Home EMail Type'));
+		$t->set_var('hemail_type',$hemail_type);
+		$t->set_var('lang_hstreet',lang('Home Street'));
+		$t->set_var('hstreet',$hstreet);
+		$t->set_var('lang_hcity',lang('Home City'));
+		$t->set_var('hcity',$hcity);
+		$t->set_var('lang_hstate',lang('Home State'));
+		$t->set_var('hstate',$hstate);
+		$t->set_var('lang_hzip',lang('Home Zip Code'));
+		$t->set_var('hzip',$hzip);
+		$t->set_var('lang_hcountry',lang('Home Country'));
+		$t->set_var('hcountry',$hcountry);
+		$t->set_var('lang_hadrtype',lang('Address Type'));
+		$t->set_var('hadrtype',$hadrtype);
 
-		$t->set_var("create",$create);
-		$t->set_var("lang_notes",lang("notes"));
-		$t->set_var("notes",$notes);
-		$t->set_var("lang_label",lang("label"));
-		$t->set_var("label",$label);
-		$t->set_var("lang_pubkey",lang("Public Key"));
-		$t->set_var("pubkey",$pubkey);
-		$t->set_var("access_check",$access_check);
+		$t->set_var('create',$create);
+		$t->set_var('lang_notes',lang('notes'));
+		$t->set_var('notes',$notes);
+		$t->set_var('lang_label',lang('label'));
+		$t->set_var('label',$label);
+		$t->set_var('lang_pubkey',lang('Public Key'));
+		$t->set_var('pubkey',$pubkey);
+		$t->set_var('access_check',$access_check);
 
 		$t->set_var('lang_private',lang('Private'));
 
@@ -646,16 +646,15 @@
 		if ($customfields)
 		{
 			$t->set_var('lang_custom',lang('Custom Fields').':');
-			$t->set_var("custom",$custom);
+			$t->set_var('custom',$custom);
 		}
 		else
 		{
-			$t->set_var("lang_custom",'');
-			$t->set_var("custom",'');
+			$t->set_var('lang_custom','');
+			$t->set_var('custom','');
 		}
 
-		$t->parse("out","form");
-		$t->pparse("out","form");
+		$t->pfp('out','form');
 	} //end form function
 
 	function parsevcard($filename,$access='')
