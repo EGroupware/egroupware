@@ -20,7 +20,7 @@ enabled	admin	hu	Engedélyezett
 enabled - hidden from navbar	admin	hu	Engedélyezve - Navbar-ban rejtve
 group name	admin	hu	Csoport neve
 idle	admin	hu	inaktív
-installed applications	admin	hu	Telepített alkalmazások
+installed applications	common	hu	Telepített alkalmazások
 ip	admin	hu	IP
 kill	admin	hu	Kitiltás
 last time read	admin	hu	Utolsó olvasás idõpontja

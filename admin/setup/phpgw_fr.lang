@@ -40,7 +40,7 @@ group name	admin	fr	Nom du groupe
 hide php information	admin	fr	Cacher les informations sur php
 home directory	admin	fr	Répertoire maison
 idle	admin	fr	Disponible
-installed applications	admin	fr	Applications installées
+installed applications	common	fr	Applications installées
 interface	admin	fr	Interface
 ip	admin	fr	IP
 kill	admin	fr	Tuer

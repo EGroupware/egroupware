@@ -62,7 +62,7 @@ host information	admin	en	Host information
 idle	admin	en	idle
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
-installed applications	admin	en	Installed applications
+installed applications	common	en	Installed applications
 interface	admin	en	Interface
 ip	admin	en	IP
 kill	admin	en	Kill

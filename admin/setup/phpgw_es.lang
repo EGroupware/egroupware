@@ -20,7 +20,7 @@ enabled	admin	es	Habilitado
 enabled - hidden from navbar	admin	es	Habilitado - Esconder es la Barra
 group name	admin	es	Nombre Grupo
 idle	admin	es	idle
-installed applications	admin	es	Aplicaciones Instaladas
+installed applications	common	es	Aplicaciones Instaladas
 ip	admin	es	IP
 kill	admin	es	Matar
 last time read	admin	es	Ultima lectura

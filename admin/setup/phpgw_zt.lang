@@ -62,7 +62,7 @@ host information	admin	zt	Host information
 idle	admin	zt	閒置時間
 if no acl records for user or any group the user is a member of	admin	zt	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zt	If using LDAP, do you want to manage homedirectory and loginshell attributes?
-installed applications	admin	zt	已安裝之應用程式
+installed applications	common	zt	已安裝之應用程式
 interface	admin	zt	介面
 ip	admin	zt	網路位址
 kill	admin	zt	終止

@@ -43,7 +43,7 @@ hide php information	admin	it	nascondi informazioni php
 home directory	admin	it	Cartella Personale
 id	admin	it	ID
 idle	admin	it	inattivo
-installed applications	admin	it	Applicazioni Installate
+installed applications	common	it	Applicazioni Installate
 ip	admin	it	IP
 kill	admin	it	Termina
 language	admin	it	Lingua

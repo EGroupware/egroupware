@@ -22,7 +22,7 @@ enabled	admin	sv	Aktiv
 enabled - hidden from navbar	admin	sv	Aktiv - Gömd på navbar
 group name	admin	sv	Grupp Namn
 idle	admin	sv	idle
-installed applications	admin	sv	Installerade applicationer
+installed applications	common	sv	Installerade applicationer
 ip	admin	sv	IP
 kill	admin	sv	Avsluta
 last time read	admin	sv	Läst sista gång

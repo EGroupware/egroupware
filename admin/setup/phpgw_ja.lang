@@ -85,7 +85,7 @@ home directory	admin	ja	home directory
 id	admin	ja	ID
 idle	admin	ja	アイドル
 inbound	admin	ja	内向き
-installed applications	admin	ja	アプリケーション一覧
+installed applications	common	ja	アプリケーション一覧
 interface	admin	ja	インタフェース
 ip	admin	ja	IP
 kill	admin	ja	切断

@@ -20,7 +20,7 @@ enabled	admin	nl	Ingeschakeld
 enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
 group name	admin	nl	Groepsnaam
 idle	admin	nl	inactief
-installed applications	admin	nl	Geinstalleerde toepassingen
+installed applications	common	nl	Geinstalleerde toepassingen
 ip	admin	nl	IP
 kill	admin	nl	Beeindigen
 last time read	admin	nl	Laatste keer gelezen

@@ -20,7 +20,7 @@ enabled	admin	da	Aktiveret
 enabled - hidden from navbar	admin	da	Aktiveret - skjult fra navigationsbjælken
 group name	admin	da	Gruppenavn
 idle	admin	da	Inaktiv
-installed applications	admin	da	Installerede applikationer
+installed applications	common	da	Installerede applikationer
 ip	admin	da	IP
 kill	admin	da	Fjern
 last time read	admin	da	Sidst læst
