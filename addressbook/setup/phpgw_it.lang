@@ -1,8 +1,10 @@
 %1 records imported	addressbook	it	%1 record importati
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibiletornare %2indietro%3  e deselezionare Test Importazione)
-%1 records read (not yet imported, you may go back and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibile tornare indietro e deselezionare Test
+(e.g. 1969)	addressbook	it	(e.s. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione &lt;nessuno&gt; non è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
-add a single entry by passing the fields.	addressbook	it	
+@-eval() is only availible to admins!!!	addressbook	it	@-eval() è disponibile solo agli amministratori!!!
+actions	addressbook	it	Azioni
+add a single entry by passing the fields.	addressbook	it	Aggiungi un solo elemento passando i campi.
 add custom field	addressbook	it	Aggiungi campo personalizzato
 address book	common	it	Rubrica
 address book - vcard in	addressbook	it	Rubrica - VCard in
@@ -33,12 +35,15 @@ business street	addressbook	it	Via ufficio
 business zip code	addressbook	it	CAP ufficio
 car phone	addressbook	it	Telefono veicolare
 cell phone	addressbook	it	Telefono cellulare
+charset of file	addressbook	it	Set di Caratteri del file
 city	common	it	Città
 company	common	it	Società
 company name	common	it	Nome società
+configuration	common	it	Configurazione
 contact	common	it	Contatto
 contact application	admin	it	Applicativo Contatti
 contact settings	admin	it	Impostazioni Contatto
+copied by %1, from record #%2.	addressbook	it	Copiato %1, dal record #%2.
 country	common	it	Nazione
 csv-fieldname	addressbook	it	CSV Nome del Campo
 csv-filename	addressbook	it	CSV Nome del File
@@ -50,8 +55,11 @@ delete a single entry by passing the id.	addressbook	it
 department	common	it	Divisione
 domestic	addressbook	it	Interno
 download	addressbook	it	Download
+download export file (uncheck to debug output in browser)	addressbook	it	Download del file export (Deseleziona per visualizzarlo nel browser)
 edit custom field	addressbook	it	Modifica campo personalizzato
 edit custom fields	admin	it	Modifica campi personalizzati
+empty for all	addressbook	it	per tutti vuoto
+enter the path to the exported file here	addressbook	it	Inserisci qui il path del file esportato
 export contacts	addressbook	it	Esporta Contatti
 export file name	addressbook	it	Esporta nome file
 export from addressbook	addressbook	it	Esporta dalla Rubrica
@@ -65,13 +73,13 @@ fields to show in address list	addressbook	it	Campi da visualizzare nella lista 
 fieldseparator	addressbook	it	Separatore dei campi
 full name	addressbook	it	Nome completo
 geo	addressbook	it	GEO
+global categories	addressbook	it	Categorie Globali
 grant addressbook access	common	it	Permetti accesso alla Rubrica
-grant addressbook access        common  it	Permetti accesso alla Rubrica	it	
 home address type	addressbook	it	Tipo indirizzo Abitazione
 home city	addressbook	it	Città Abitazione
 home country	addressbook	it	Nazione Abitazione
 home email	addressbook	it	Email Abitazione
-home email type	addressbook	it	Tipo di email a Casa
+home email type	addressbook	it	Tipo di email Abitazione
 home phone	addressbook	it	Telefono Abitazione
 home state	addressbook	it	Provincia Abitazione
 home street	addressbook	it	Via Abitazione
@@ -80,8 +88,10 @@ import	addressbook	it	Importa
 import contacts	addressbook	it	Importa Contatti
 import csv-file into addressbook	addressbook	it	Importa file CSV nella Rubrica
 import file	addressbook	it	Importa File
-import from ldif, csv, or vcard	addressbook	it	Importa daLDIF, CSV, or VCard
+import from ldif, csv, or vcard	addressbook	it	Importa da LDIF, CSV, or VCard
 import from outlook	addressbook	it	Importa da Outlook
+import next set	addressbook	it	Import il prossimo set
+import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato VCard.
 international	addressbook	it	Internazionale
 isdn phone	addressbook	it	Telefono ISDN
 label	addressbook	it	Etichetta
@@ -91,6 +101,7 @@ ldap root dn for contacts	admin	it	root dn LDAP per i contatti
 ldap root pw for contacts	admin	it	password di root LDAP per i contatti
 ldif	addressbook	it	LDIF
 line 2	addressbook	it	Linea 2
+mark records as private	addressbook	it	Marca i record come privati
 message phone	addressbook	it	Telefono per Messaggi
 middle name	addressbook	it	Secondo Nome
 mobile	addressbook	it	Mobile
@@ -98,7 +109,6 @@ mobile phone	addressbook	it	Telefono Mobile
 modem phone	addressbook	it	Telefono Modem
 no vcard	addressbook	it	Nessuna VCard
 number of records to read (<=200)	addressbook	it	Numero di record da leggere (<200)
-on	addressbook	it	
 other number	addressbook	it	Altro Numero
 other phone	addressbook	it	Altro Telefono
 pager	common	it	Teledrin
@@ -106,19 +116,18 @@ parcel	addressbook	it	Parcel
 phone number	common	it	Numero di Telefono
 phone numbers	common	it	Numeri di telefono
 please enter a name for that field !	addressbook	it	Per favore inserire un nome per qesto campo
-please select	addressbook	it	Per favore selezionare
-please set your preferences for this app	addressbook	it	Per favore, imposta le tue preferenze per questa applicazione
 postal	common	it	Postal
 pref	addressbook	it	pref
 prefix	addressbook	it	Prefisso
 public key	addressbook	it	Chiave Pubblica
 read a list of entries.	addressbook	it	Leggi una lista di inserimenti
 read a single entry by passing the id and fieldlist.	addressbook	it	
-read this list of methods.	addressbook	it	Leggi lista dei metodi
 record access	addressbook	it	Accesso alla scheda
 record owner	addressbook	it	Proprietario della scheda
 retrieve contacts	admin	it	recupera i contatti
-select	addressbook	it	Seleziona
+select all	addressbook	it	Seleziona tutto
+select the type of conversion	addressbook	it	Seleziona il tipo di conversione
+select the type of conversion:	addressbook	it	Seleziona il tipo di conversione:
 select where you want to store	admin	it	Seleziona dove vuoi memorizzare
 show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
 startrecord	addressbook	it	Record Iniziale
@@ -130,6 +139,7 @@ test import (show importable records <u>only</u> in browser)	addressbook	it	Test
 that field name has been used already !	addressbook	it	Il nome di campo è già stato utilizzato
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
 this person's last name was not in the address book.	addressbook	it	Il cognome di questa persona non è nella rubrica
+to many might exceed your execution-time-limit	addressbook	it	troppi potrebbero superare il limite del tempo di esecuzione
 today is %1's birthday!	common	it	Oggi è il compleanno di %1!
 tomorrow is %1's birthday.	common	it	Domani è il compleanno di %1.
 translation	addressbook	it	Traduzione
@@ -142,8 +152,7 @@ video phone	addressbook	it	Videotelefono
 voice phone	addressbook	it	Telefono Vocale
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 work phone	addressbook	it	Telefono Ufficio
-you appear to be running	addressbook	it	
 you must select a vcard. (*.vcf)	addressbook	it	Bisogna selezionare una vcard (*.vcf)
 you must select at least 1 column to display	addressbook	it	Bisogna selezionare almeno una colonna da visualizzare
 zip code	common	it	CAP
-
+zip_note	addressbook	it	<p><b>Note:</b> Il file deve essere uno zip contentente file .csv, .vcf, o .ldif.  Tuttavia, non mischiare i tipi di file da importare
