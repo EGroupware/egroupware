@@ -137,7 +137,7 @@
   if (isset($query) && $query) {
      if (isset($phpgw_info["apps"]["timetrack"]["enabled"]) &&
 	 $phpgw_info["apps"]["timetrack"]["enabled"]) {
-        $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
+        $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,a.ab_company_id,"
                         . "a.ab_email,a.ab_wphone,c.company_name,a.ab_hphone,a.ab_fax,a.ab_mphone "
                         . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
                         . "AND $filtermethod AND (a.ab_lastname like '"
@@ -169,18 +169,30 @@
     
     $ab_id = $phpgw->db->f("ab_id");
     
-    while ($column = each($columns_to_display)) {
-       if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
+       while ($column = each($columns_to_display)) {
           if ($column[0] == "company") {
-             $field   = $phpgw->db->f("company_name");
-          } else {
+        if ($phpgw_info["apps"]["timetrack"]["enabled"]) {        
+        $field   = $phpgw->db->f("company_name");
+             } else {
              $field = $phpgw->db->f("ab_company");
-          }
-       } else {
+             }
+          } else {
           $field = $phpgw->db->f("ab_" . $column[0]);
-       }
+          }
 
-       $field = $phpgw->strip_html($field);
+/*  
+       while ($column = each($columns_to_display)) {                                                                                     
+       if ($phpgw_info["apps"]["timetrack"]["enabled"]) {                                                                             
+          if ($column[0] == "company") {                                                                                              
+             $field   = $phpgw->db->f("company_name");                                                                                
+          } else {                                                                                                                    
+             $field = $phpgw->db->f("ab_company");                                                                                    
+          }                                                                                                                           
+       } else {                                                                                                                       
+          $field = $phpgw->db->f("ab_" . $column[0]);                                                                                 
+       }   */
+
+       $field = htmlentities($field);
 
        // Some fields require special formating.       
        if ($column[0] == "url") {
